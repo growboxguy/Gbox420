@@ -21,8 +21,7 @@ External light, humidity and temperature sensors connected over UTP cable
 Arduino controlling the LED COB lights
 ![alt text](https://lh3.googleusercontent.com/uFSBH5TT2EaEKr6cV1UqM_5PfG4ATpqilXDMEZxTxx3Qy18JCmlVoFfRVkALXTYOna-tuDUivfka7HD7I4TUDxPXBqD4W7aEM1B-DotJYhE2WEu-JrcyWCliqsgyKGTBHEB5h933)
 
-<div><img width="96" height="96" src="https://sites.google.com/site/growboxguy/home/gbox420.png" style="display:inline;float:left" ></div>
-	<div>
+<div><img width="96" height="96" src="https://sites.google.com/site/growboxguy/home/gbox420.png" style="display:inline;float:left" >
 		<a href="https://www.patreon.com/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/patreon.png" style="border:none;margin:0;padding:0px"></a>
 		<a href="https://www.facebook.com/Gbox420-1495966037151416/"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_facebook_1807546.png" style="border:none;margin:0;padding:0px"></a>
 		<a href="https://github.com/growboxguy/Gbox420"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_github.png" style="border:none;margin:0;padding:0px"></a>
@@ -38,5 +37,3 @@ Arduino controlling the LED COB lights
 			&nbsp;<a href="http://sites.google.com/site/growboxguy/">sites.google.com/site/growboxguy/</a>
 			</b>
 	</div>
-
-<!-- HTML CODE-->
