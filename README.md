@@ -2,8 +2,20 @@
 https://sites.google.com/site/growboxguy/arduino
 
 We build an Arduino based grow box monitoring and controlling system out of an old PC case with a power supply. The ATmega2560 microcontroller running the Arduino sketches is connected to the ESP8266 wifi chip with a custom ESP-Link firmware and reports sensor readings through PushingBox message API to Google Sheets. The ESP8266 wifi chip will act as an internet gateway and a web server at the same time, hosting a mobile friendly control and monitoring interface for the grow box. 
-
 ![alt text](https://docs.google.com/drawings/d/saJcW0ASTVO8vFDMZu1nxyQ/image?w=896&h=417&rev=986&ac=1&parent=13WdrW3qaUhXpjld2XEMji3r6EkQRwYiImda7D3szmkA)
+
+Website hosted by the ESP link, displaying sensor readings from Arduino
 ![alt text](https://lh6.googleusercontent.com/Q7CviRdc5dGbD8tyHI5lj1Z9tSE1Hl1tNV6eScdNlth4r2hYlj1uI-Kdv85KZcW4rLrM1pkxoVkLM3QKZe0QCQsP8f5jktpEer3btAU9ZXpUj2vGMS8KfEoqHiDXt28InjmjQrK3)
+
+Inside the PC case: Arduino, power meter, led driver and dimming circuit, 8 relays for controlling lights/fans and pumps
 ![alt text](https://lh3.googleusercontent.com/BEJLnPGh5m7ayeMAGi42AZ67JkaiOU0_59zkJpUlvnXy1n1U1YEZpEUPduRhplLtXshTBAq42mLORqmNPgFvO-C8O9eElPmEN8FRaZPhtGOkoEtiiq6UptZxyeFbR2k3dKeF35cc)
+
+External light, humidity and temperature sensors connected over UTP cable
+![alt text](https://lh3.googleusercontent.com/RLd_GoQMXbY5050mcR9KNx0QPErBM82_zoO1bI0QXvM9aEZs-W4VhJLuANACFuNkh4AJ44UfSpaVPoQbqDHBF1N5JQQuiBkkZO3jxBrlkcyDmmMHLocpfxEQKFOYy52wV3c6QkXO)
+
+Arduino controlling the LED COB lights
+![alt text](https://lh3.googleusercontent.com/uFSBH5TT2EaEKr6cV1UqM_5PfG4ATpqilXDMEZxTxx3Qy18JCmlVoFfRVkALXTYOna-tuDUivfka7HD7I4TUDxPXBqD4W7aEM1B-DotJYhE2WEu-JrcyWCliqsgyKGTBHEB5h933)
+
+The grow box that is going to receive the automation upgrade
 ![alt text](https://lh5.googleusercontent.com/NMUwOTTDus_pxTKW_P74ohs6fLb_kKiaCOYnFVQAbFU0yMe8a1c71M8uRPwVBlCtEN-VOqpKgRcSn0lmjAaRg_3V7xcarfl1BFd8sNAXtWeg036mOkCjjzP_8DmAswhYdLrRjDHi)
+
