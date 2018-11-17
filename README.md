@@ -7,6 +7,11 @@ We build an Arduino based grow box monitoring and controlling system out of an o
 Website hosted by the ESP link, displaying sensor readings from Arduino and controlling the grow box
 ![alt text](https://lh6.googleusercontent.com/Q7CviRdc5dGbD8tyHI5lj1Z9tSE1Hl1tNV6eScdNlth4r2hYlj1uI-Kdv85KZcW4rLrM1pkxoVkLM3QKZe0QCQsP8f5jktpEer3btAU9ZXpUj2vGMS8KfEoqHiDXt28InjmjQrK3)
 
+Google Sheets integrated into the grow box interface:
+![alt text](https://lh3.googleusercontent.com/41GrczKaTNOsarf77zMgRfFIXO0N6_M5OUkGF6ExIX2rAOiUb2TsIqysGyW5Wgh4zuC2HWapsesOLbXWYjlrfgbsEbyCvl771q10y_Fa7Fm9chMcJQheiQtlYBmARe-N49YC4Ujh)
+
+![alt text](https://lh3.googleusercontent.com/GYfuFEZYxv5bDz5c3xNUVWoYVUGvm7BrU0dTOZW3aT5HbDEg0XzhBQun3GnablQhYy24-9FeZQNwcu0NIn7_NnKEgtnC1NQ315UYyHmVLf3CL267afzK913bABHSn6Ym1bKlC4TW)
+
 Inside the PC case: Arduino, power meter, led driver and dimming circuit, 8 relays for controlling lights/fans and pumps
 ![alt text](https://lh3.googleusercontent.com/BEJLnPGh5m7ayeMAGi42AZ67JkaiOU0_59zkJpUlvnXy1n1U1YEZpEUPduRhplLtXshTBAq42mLORqmNPgFvO-C8O9eElPmEN8FRaZPhtGOkoEtiiq6UptZxyeFbR2k3dKeF35cc)
 
