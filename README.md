@@ -20,7 +20,7 @@
 </div>
 
 <div>
-We build an Arduino based grow box monitoring and controlling system out of an old PC case with a power supply. The ATmega2560 microcontroller running the Arduino sketches is connected to the ESP8266 wifi chip with a custom ESP-Link firmware and reports sensor readings through PushingBox message API to Google Sheets. The ESP8266 wifi chip will act as an internet gateway and a web server at the same time, hosting a mobile friendly control and monitoring interface for the grow box.
+We build an Arduino based grow box monitoring and controlling system out of an old PC case with a power supply. The ATmega2560 microcontroller running the Gbox420 sketch is connected to an ESP8266 wifi chip with a custom ESP-Link firmware and reports sensor readings through PushingBox message API to Google Sheets. The ESP8266 wifi chip will act as an internet gateway and a web server at the same time, hosting a mobile friendly control and monitoring interface for the grow box.
 </div>
 <div>
 <h2>Assembly guide: https://sites.google.com/site/growboxguy/arduino</h2>
