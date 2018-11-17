@@ -1,0 +1,2 @@
+IRReadOnlyRemote	KEYWORD1
+read				KEYWORD2

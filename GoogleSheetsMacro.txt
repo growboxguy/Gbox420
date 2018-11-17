@@ -1,0 +1,119 @@
+//Originally published by Mogsdad@Stackoverflow
+//Modified for jarkomdityaz.appspot.com
+//Modified for Hackster.io by Stephen Borsay
+//Modified for http://sites.google.com/site/growboxguy/
+/*
+PushingBox data structure:
+?BoxDate=$BoxDate$&BoxTempC=$BoxTempC$&BoxTempF=$BoxTempF$&Humidity=$Humidity$&Power=$Power$&Energy=$Energy$&Voltage=$Voltage$&Current=$Current$&PH=$PH$&Moisture=$Moisture$&isLightOn=$isLightOn$&Brightness=$Brightness$&LightReading=$LightReading$&isBright=$isBright$&Reservoir=$Reservoir$&InternalFan=$InternalFan$&ExhaustFan=$ExhaustFan$ 
+
+GET request query:
+https://script.google.com/macros/s/<gscript id>/exec?celData=data_here
+----------------------------------------------------------------------
+
+Received from Arduino in order:
+
+BoxDate
+BoxTempC
+BoxTempF
+Humidity
+Power
+Energy
+Voltage
+Current
+PH
+Moisture
+isLightOn
+Brightness
+LightReading
+isBright
+Reservoir
+InternalFan
+ExhaustFan
+
+*/
+
+function doGet(e) { 
+  Logger.log( JSON.stringify(e) );  // view parameters
+
+  var result = 'Ok'; // assume success
+
+  if (e.parameter == undefined) {
+    result = 'No Parameters';
+  }
+  else {
+    var id = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';//docs.google.com/spreadsheetURL/d
+    var sheet = SpreadsheetApp.openById(id).getActiveSheet();
+    var newRow = sheet.getLastRow() + 1;
+    var rowData = [];
+    rowData[0] = Utilities.formatDate(new Date(), 'GMT-4', 'yyyy-MM-dd_HH:mm:ss');  // Timestamp in column A
+    
+    for (var param in e.parameter) {
+      Logger.log('In for loop, param='+param);
+      var value = stripQuotes(e.parameter[param]);
+      Logger.log(param + ':' + e.parameter[param]);
+      switch (param) {
+ case 'BoxDate':
+          rowData[1] = value;
+          break;
+        case 'BoxTempC':
+          rowData[2] = value;
+          break;
+		 case 'BoxTempF':
+          rowData[3] = value;
+          break;
+        case 'Humidity':
+          rowData[4] = value;
+          break;
+        case 'Power':
+          rowData[5] = value;
+          break;
+        case 'Energy':
+          rowData[6] = value;
+          break;
+        case 'Voltage':
+          rowData[7] = value;
+          break;
+        case 'Current':
+          rowData[8] = value;
+          break;
+        case 'PH':
+          rowData[9] = value;
+          break;
+        case 'Moisture':
+          rowData[10] = value;
+          break;
+        case 'isLightOn':
+          rowData[11] = value;
+          break;
+        case 'Brightness':
+          rowData[12] = value;
+          break; 
+        case 'LightReading':
+          rowData[13] = value;
+          break; 
+        case 'isBright':
+          rowData[14] = value;
+          break; 
+        case 'Reservoir':
+          rowData[15] = value;
+          break;
+        case 'InternalFan':
+          rowData[16] = value;
+          break; 
+        case 'ExhaustFan':
+          rowData[17] = value;
+          break;
+        default:
+          result = "unsupported parameter";
+      }
+    }
+    Logger.log(JSON.stringify(rowData));
+    var newRange = sheet.getRange(newRow, 1, 1, rowData.length);
+    newRange.setValues([rowData]);
+  }
+  return ContentService.createTextOutput(result);
+}
+
+function stripQuotes( value ) {
+  return value.replace(/^["']|['"]$/g, "");
+}
