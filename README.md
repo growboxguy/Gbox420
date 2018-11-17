@@ -9,7 +9,7 @@
 <a href="https://www.tumblr.com/blog/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_tumblr_986957.png" style="border:none;margin:0;padding:0px"></a>
 <a href="https://twitter.com/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_4_939755.png" style="border:none;margin:0;padding:0px"></a>
 <a href="mailto:GrowBoxGuy@gmail.com"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_Android-Gmail_72149%20%281%29.png" style="border:none;margin:0;padding:0px"></a>
-</div><br>
+</div>
 <div style="display:inline!important">
 <b style="font-size:16px">
 <font color="#444444">&nbsp;Project made by </font>
