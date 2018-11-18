@@ -38,7 +38,6 @@ void ReadPH(){
 //***PC SPEAKER***
 void OnSound(){
   if(MySettings.isSoundEnabled){ 
-  Serial.print("OnSound");
   tone(BuzzerOutPin,500);
   delay(100);
   noTone(BuzzerOutPin);
@@ -50,7 +49,6 @@ void OnSound(){
 
 void OffSound(){
   if(MySettings.isSoundEnabled){ 
-  Serial.print("OffSound");
   tone(BuzzerOutPin,1000);
   delay(100);
   noTone(BuzzerOutPin);

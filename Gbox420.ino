@@ -18,6 +18,7 @@
   #include "SPI.h" //TFT Screen - communication
   #include "Adafruit_ILI9341.h" //TFT Screen - hardware specific driver
   #include "Adafruit_GFX.h" //TFT Screen - generic graphics driver
+  //#include "MemoryFree.h" //checking for remaining memory - only for debugging
 
 //Pins
   const byte BuzzerOutPin = 3; //PC speaker+ (red)
@@ -77,7 +78,7 @@
   bool isLightOn = true;  //Startup status for lights: True-ON / False-OFF
   bool isSoundEnabled = true;  //Enable PC speaker
   byte LightBrightness; //0 - 100 range for controlling led driver output
-  byte ScreenBacklight = 75; //4 digit display - backlight strenght (0-100)
+  byte DigitDisplayBacklight = 75; //4 digit display - backlight strenght (0-100)
   bool isInternalFanOn;  //Internal fan On/Off
   bool isInternalFanHigh; //Internal fan Low/High
   bool isExhaustFanOn;  //Exhaust fan On/Off
@@ -219,7 +220,7 @@ void setup() {     // put your setup code here, to run once:
   Screen.begin(); //start screen
   Screen.setRotation(ScreenRotation);
   DigitDisplay.begin(); //start 4 digit LED display
-  DigitDisplay.setBacklight(MySettings.ScreenBacklight); //set 4 digit LED display backlight intensity
+  DigitDisplay.setBacklight(MySettings.DigitDisplayBacklight); //set 4 digit LED display backlight intensity
   PowerSensor.setAddress(PowerSensorIP); //start power meter
   calibrateLights();
   if(MySettings.PressureSensorOffset == 1023) calibratePressureSensor();
@@ -253,6 +254,7 @@ void oneSecRun(){
 void fiveSecRun(){ 
   updateTime();  
   updateDisplay(); //Updates 4 digit display 
+  //Serial.println(freeMemory()); 
 }
 
 void minuteRun(){

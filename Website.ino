@@ -1,6 +1,4 @@
-
-
-void LoadCallback(const char * url) //called when website is loaded
+void LoadCallback(char * url) //called when website is loaded
 {
   Serial.print("LoadCB for URL: "); Serial.println(url);
   if (strcmp(url,"/GrowBox.html.json")==0){  
@@ -17,12 +15,12 @@ void LoadCallback(const char * url) //called when website is loaded
   WebServer.setArgInt(F("slider_brightness"), MySettings.LightBrightness);
   WebServer.setArgInt(F("num_brightness"), MySettings.LightBrightness);
 
-  WebServer.setArgInt(F("slider_digitDisplayBrightness"), MySettings.ScreenBacklight);
+  WebServer.setArgInt(F("slider_digitDisplayBrightness"), MySettings.DigitDisplayBacklight);
   WebServer.setArgInt(F("check_soundEnabled"), MySettings.isSoundEnabled);
   }
 }
 
-void RefreshCallback(const char * url) //called when website is refreshed
+void RefreshCallback(char * url) //called when website is refreshed
 { 
   Serial.print("RefreshCB for URL: "); Serial.println(url);
   if (strcmp(url,"/GrowBox.html.json")==0){   
@@ -70,7 +68,7 @@ void RefreshCallback(const char * url) //called when website is refreshed
 }
 
 //Called when any button on the website is pressed
-void ButtonPressCallback(const char *button)
+void ButtonPressCallback(char *button)
 {
   //Serial.println(button);
   if (strcmp(button,"btn_lightOn")==0) { turnLightON(); PlayOnSound=true;}
@@ -94,10 +92,10 @@ void ButtonPressCallback(const char *button)
 }
 
 //Called when any field on the website is updated
-void SetFieldCallback(const char * field){
+void SetFieldCallback(char * field){
   Serial.println(field);
   if(strcmp(field,"slider_brightness")==0) {setBrightness(WebServer.getArgInt()); }
-  else if(strcmp(field,"slider_digitDisplayBrightness")==0) {MySettings.ScreenBacklight=WebServer.getArgInt(); DigitDisplay.setBacklight(MySettings.ScreenBacklight); }
+  else if(strcmp(field,"slider_digitDisplayBrightness")==0) {MySettings.DigitDisplayBacklight=WebServer.getArgInt(); DigitDisplay.setBacklight(MySettings.DigitDisplayBacklight); }
   else if(strcmp(field,"check_timerEnabled")==0) {MySettings.isTimerEnabled = WebServer.getArgBoolean(); checkLightStatus(); if(MySettings.isTimerEnabled){ addToLog("Timer enabled"); PlayOnSound=true;} else {addToLog("Timer disabled");PlayOffSound=true;}}
   else if(strcmp(field,"check_soundEnabled")==0) {MySettings.isSoundEnabled = WebServer.getArgBoolean(); if(MySettings.isSoundEnabled){ addToLog("Sound enabled"); PlayOnSound=true;} else {addToLog("Sound disabled");}}
   else if(strcmp(field,"num_lightsOnHour")==0) {MySettings.LightOnHour = WebServer.getArgInt();  }

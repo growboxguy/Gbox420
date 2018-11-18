@@ -38,7 +38,7 @@ void setup() {  // put your setup code here, to run once:
 void loop() {  // put your main code here, to run repeatedly:
 //for(uint8_t rotation=0; rotation<4; rotation++) {
     //Serial.print("Screen rotation: "); Serial.println(rotation);
-    Screen.setRotation(3);
+    Screen.setRotation(1);
     testText();
     delay(50000);
  // }
@@ -49,14 +49,16 @@ void testText() {
   Screen.setCursor(0, 0);
   Screen.setTextColor(ILI9341_GREEN);
   Screen.setTextSize(4);
-  Screen.println("GrowBox Stats");
+  Screen.println("Gbox420");
   Screen.setTextColor(ILI9341_WHITE);  
-  Screen.setTextSize(1);
-  Screen.println("sites.google.com/site/growboxguy"); 
+  Screen.println("GrowBoxGuy`s DIY guide");
   Screen.setTextColor(ILI9341_RED); 
-  Screen.setTextSize(2);
-  Screen.println("DIY Grow Box guide");
-  Screen.setTextSize(1);
-  Screen.setTextColor(ILI9341_YELLOW);
-  Screen.println("Indoor gardening with Arduino");
+  Screen.setTextSize(3);
+  Screen.println("Indoor gardening");
+  Screen.println("with Arduino");
+  Screen.println();
+  Screen.setTextColor(ILI9341_BLUE);  
+  Screen.setTextSize(3);
+  Screen.println("sites.google.com/");
+  Screen.println("  site/growboxguy");
 }

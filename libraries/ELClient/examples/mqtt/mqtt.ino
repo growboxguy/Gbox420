@@ -8,7 +8,7 @@
 
 // Initialize a connection to esp-link using the normal hardware serial port both for
 // SLIP and for debug messages.
-ELClient esp(&Serial3);
+ELClient esp(&Serial, &Serial);
 
 // Initialize CMD client (for GetTime)
 ELClientCmd cmd(&esp);
@@ -69,8 +69,7 @@ void mqttPublished(void* response) {
 }
 
 void setup() {
-  Serial.begin(115200);    //2560mega console output
-  Serial3.begin(115200);  //wifi console output
+  Serial.begin(115200);
   Serial.println("EL-Client starting!");
 
   // Sync-up with esp-link, this is required at the start of any sketch and initializes the
@@ -118,5 +117,4 @@ void loop() {
 
     last = millis();
   }
-  
 }
