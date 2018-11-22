@@ -12,15 +12,15 @@
 		.tg .dataRows{font-size:13px;font-family:serif !important;text-align:center;vertical-align:top}
 		 button {margin:0px;padding:0px;height:23px;vertical-align:middle;align-items:center}
 		 h1 {padding:0px;margin:0px;}
-	</style>
+	</style>	
 	<div class="pure-g">
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:350px">	
 			<div class="card" style="width:90%;">
 				<h1>Box</h1>		
 				<table class="tg">				  
 				  <tr>
-				    <td class="headerRows"><span style="font-weight:bold">Last refresh</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Temp</span><br><span>(°C-°F)</span></td>
+				    <td class="headerRows"><span style="font-weight:bold">Last refresh</span><br><span>(yyyy/MM/dd)</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Temp</span><br><span>(°C/°F)</span></td>
 					<td class="headerRows"><span style="font-weight:bold">Humidity</span><br><span>(RH%)</span></td>
 				  </tr>
 				  <tr>
@@ -118,16 +118,19 @@
 				<h1>Aeroponics</h1>
 				<table class="tg">
 				  <tr>
-					<th class="headerRows"><span style="font-weight:bold">Pressure</span><span> (bar)</span></th>	
+					<th class="headerRows"><span style="font-weight:bold">Pressure</span><span>(bar/psi)</span></th>	
 					<th class="headerRows"><span style="font-weight:bold">Pump state</span></th>
-					<th class="headerRows"><span style="font-weight:bold">Pump health</span></th>					
+					<th class="headerRows"><span style="font-weight:bold">Pump status</span></th>					
 				  </tr>
 				  <tr>
 					<td id="tdAeroPressure" class="dataRows"></td>
 					<td id="tdisAeroPumpOn" class="dataRows"></td>
-					<td id="tdisAeroPumpBroken" class="dataRows"></td>
+					<td id="tdisAeroPumpDisabled" class="dataRows"></td>
 				  </tr>
-				 </table> 
+				</table>
+				<button id="btn_pumpRefill" type="button" align="rigth">Refill</button>
+				<button id="btn_pumpOff" type="button" align="rigth">Pump OFF</button>
+				<button id="btn_pumpReset" type="button" align="rigth">Reset pump</button>				 
 				<form>
 					Spray interval : <input style="width: 45px;" min=0 name="num_aeroInterval" type="number"/> min</br>
 					Spray duration: <input style="width: 45px;" min=0 name="num_aeroDuration" type="number"/> sec
@@ -135,12 +138,12 @@
 				</form>
 				<form>
 					Pump low : <input style="width: 50px;" min=0 max=8 name="num_aeroPressureLow" type="number" step="0.1"/> bar</br>
-					Pump high: <input style="width: 50px;" min=0 max=8 name="num_aeroPressureHigh" type="number" step="0.1"/> bar					
+					Pump high: <input style="width: 50px;" min=0 max=8 name	="num_aeroPressureHigh" type="number" step="0.1"/> bar					
 					<b><input type="submit"></b>
-				</form>	
-				<button id="btn_aeroSprayNow" type="button">Spray now</button>
-				<button id="btn_resetPump" type="button">Reset pump</button>
-				<button id="btn_pressureCalibrate" type="button">Calibrate</button>	
+				</form>				
+				<form><input type="checkbox" name="check_aeroSprayEnabled">Spray enabled <input style="margin-left:5px;" type="submit"></form>
+				<button id="btn_aeroSprayNow" type="button">Spray now</button> <button id="btn_aeroSprayOff" type="button">Spray OFF</button>
+				<form>0 pressure:<button id="btn_pressureCalibrate" type="button" style="margin-top:0px">Set</button> Offset: <input style="width: 50px;" min=0 max=5 name="num_aeroOffset" type="number" step="0.01"/><b> <input type="submit"></b></form>				
 			</div>
 			<div class="card" style="width:90%">
 				<h1>Reservoir</h1>
@@ -163,7 +166,7 @@
 			</div>					
 			<div class="card" style="width:90%">
 				<h1>Settings<button style="height:32px;width:32px;-webkit-appearance:none;border-radius:0;"  id="btn_ee" type="button"><img style="padding:0px;height:28px;width:28px;" src="https://sites.google.com/site/growboxguy/home/gbox420.png" /></button></h1>
-				<form>Set time: </br><input type=datetime-local step=1 name="time_toSet"/><input type="submit"/></form>
+				<form>Time:<input type=datetime-local step=1 name="time_toSet" style="width:200px;"/> <input type="submit"/></form>
 				<form>Backlight: Min<input style="width:100px;" type="range" name="slider_digitDisplayBrightness" min="0" max="100"/>Max <input type="submit"/></form>
 				<form><input type="checkbox" name="check_soundEnabled">Sound enabled<input style="margin-left:5px;" type="submit"></form>	
 				Trigger: <button id="btn_googleSheets" type="button">Google Sheets</button> <button id="btn_saveSettings" type="button">Save settings</button></br>							
@@ -171,22 +174,25 @@
 		</div>		
 	</div>
   </div> 
-	<div><img width="96" height="96" src="https://sites.google.com/site/growboxguy/home/gbox420.png" style="display:inline;float:left" ></div>
-	<div>
-		<a href="https://www.patreon.com/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/patreon.png" style="border:none;margin:0;padding:0px"></a>
-		<a href="https://www.facebook.com/Gbox420-1495966037151416/"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_facebook_1807546.png" style="border:none;margin:0;padding:0px"></a>
-		<a href="https://github.com/growboxguy/Gbox420"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_github.png" style="border:none;margin:0;padding:0px"></a>
-		<a href="https://plus.google.com/106380858241253565250"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_google__1807544.png" style="border:none;margin:0;padding:0px"></a>
-		<a href="https://www.tumblr.com/blog/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_tumblr_986957.png" style="border:none;margin:0;padding:0px"></a>
-		<a href="https://twitter.com/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_4_939755.png" style="border:none;margin:0;padding:0px"></a>
-		<a href="mailto:GrowBoxGuy@gmail.com"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_Android-Gmail_72149%20%281%29.png" style="border:none;margin:0;padding:0px"></a>
-	</div>
-	<div style="display:inline!important">
-			<b style="font-size:16px">
-			<font color="#444444">&nbsp;Project made by </font>
-			<font color="#00ab44">GrowBoxGuy</font><br>		
-			&nbsp;<a href="http://sites.google.com/site/growboxguy/">sites.google.com/site/growboxguy/</a>
-			</b>
-	</div>
+	<!-- Footer -->
+<div>
+<div><a target="_blank" href="https://sites.google.com/site/growboxguy/" width="96" height="96" style="display:inline;float:left" ><img src="https://sites.google.com/site/growboxguy/home/gbox420.png" width="96" height="96" style="display:inline;float:left" ></a>
+<a target="_blank" href="https://www.patreon.com/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/patreon.png" style="border:none;margin:0;padding:0px"></a>
+<a target="_blank" href="https://www.facebook.com/Gbox420-1495966037151416/"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_facebook_1807546.png" style="border:none;margin:0;padding:0px"></a>
+<a target="_blank" href="https://github.com/growboxguy/Gbox420"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_github.png" style="border:none;margin:0;padding:0px"></a>
+<a target="_blank" href="https://plus.google.com/106380858241253565250"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_google__1807544.png" style="border:none;margin:0;padding:0px"></a>
+<a target="_blank" href="https://www.tumblr.com/blog/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_tumblr_986957.png" style="border:none;margin:0;padding:0px"></a>
+<a target="_blank" href="https://twitter.com/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_4_939755.png" style="border:none;margin:0;padding:0px"></a>
+<a target="_blank" target="_top" href="mailto:GrowBoxGuy@gmail.com"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_Android-Gmail_72149%20%281%29.png" style="border:none;margin:0;padding:0px"></a>
+</div>
+<div style="display:inline!important">
+<b style="font-size:16px">
+<font color="#444444">&nbsp;Project made by </font>
+<font color="#00ab44">GrowBoxGuy</font><br>		
+&nbsp;<a target="_blank" href="https://sites.google.com/site/growboxguy/">sites.google.com/site/growboxguy/</a>
+</b>
+</div><br>
+</div>
+	<!-- /Footer -->
 </body>
 </html>

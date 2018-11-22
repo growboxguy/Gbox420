@@ -1,43 +1,47 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
-//Sketch for testing: Pressure sensor 0 - 1.2mPa , 0.5V - 4.5V sensor output
+//Sketch for testing: AeroPressure sensor 0 - 1.2mPa , 0.5V - 4.5V sensor output
 
 //Pins
-const byte PressureSensorInPin = A1; //analog port - Pressure sensor
+const byte AeroPressureSensorInPin = A1; //analog port - AeroPressure sensor
 
 //Global variables
-int PressureSensorOffSet = 1023 ;  //Lowest analog read value with 0 pressure
-int Reading;
-float Voltage;
-float Pressure;
-float PressurePSI;
+float AeroOffset = 0.5 ;  //Lowest voltage value with 0 AeroPressure
+float AeroPressure;
+float AeroPressurePSI;
 
 void setup() {
   Serial.begin(115200);
-  pinMode(PressureSensorInPin, INPUT);
-  calibratePressureSensor();
+  pinMode(AeroPressureSensorInPin, INPUT);
+  calibrateAeroPressureSensor();
 }
 
 void loop()
 {
-  Reading = analogRead(PressureSensorInPin) ;     //Sensor output reading 
-  Voltage = Reading * 5 / 1024 ;     //Sensor output voltage
-  Pressure = (Reading - PressureSensorOffSet) * 12 / (921 - PressureSensorOffSet);  //1.2mPa = 12 bar
-  PressurePSI = (Reading - PressureSensorOffSet) * 174 / (921 - PressureSensorOffSet);  //1.2mPa = 174 psi
+  float  Reading=0;
+  for(byte i=0;i<50;i++) { 
+   Reading+=analogRead(AeroPressureSensorInPin);
+   delay(20);
+  }
+  Reading = Reading /50;
+  float Voltage = ((float)Reading) * 5 / 1024 ;     //Sensor output voltage
+  AeroPressure = (2.7*(Voltage-AeroOffset)); // unit: bar / 100kPa
+  AeroPressurePSI = AeroPressure * 14.5038;  //psi
 
   Serial.print("Reading: "); Serial.println(Reading);
   Serial.print("Voltage: "); Serial.print(Voltage); Serial.println("V");
-  Serial.print("Pressure: "); Serial.print(Pressure, 1); Serial.println(" bar");
-  Serial.print("Pressure: "); Serial.print(PressurePSI, 1); Serial.println(" KPa");
+  Serial.print("Offset: "); Serial.print(AeroOffset); Serial.print("V, Offset compensated:");Serial.print(Voltage-AeroOffset); Serial.println("V");
+  Serial.print("Pressure: "); Serial.print(AeroPressure, 1); Serial.print(" bar / "); Serial.print(AeroPressurePSI, 1); Serial.println(" psi");
   Serial.println();
-  delay(1000);
+  delay(2000);
 }
 
-void calibratePressureSensor(){
-  for(byte i = 0; i<100;i++){
-  Reading = analogRead(PressureSensorInPin) ;  
-  if(Reading<PressureSensorOffSet) PressureSensorOffSet = Reading;
+void calibrateAeroPressureSensor(){
+  float sum = 0;
+  for(byte i = 0; i<50;i++){
+  sum += analogRead(AeroPressureSensorInPin) ; 
   delay(10);
-  }
-  Serial.print("Pressure sensor calibrated, offset: "); Serial.println(PressureSensorOffSet);
+  }  
+  AeroOffset = (sum/50)*5/1024;
+  Serial.print("Pressure sensor calibrated, offset voltage: "); Serial.println(AeroOffset); //expected ~0.5V
 }
 

@@ -88,4 +88,5 @@ void updateDisplay() { //Cycles through the different phases
       break;
   }
   CurrentStep++;  
+  CurrentStep = 15; //locked to Pressure for calibration
 }

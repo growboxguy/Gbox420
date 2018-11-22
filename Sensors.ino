@@ -19,19 +19,12 @@ void readSensors(){  //Sensor readings
 }
 
 //***PH METER***
-//Global variables for ReadPH funciton
-int SensorValue = 0; 
-unsigned long int Average;
-int Results[10];
-
-void ReadPH(){
-  for(int i=0;i<10;i++) { //take 10 readings
-   Results[i]=analogRead(PHMeterInPin);
+void ReadPH(){//uncalibrated code
+  unsigned long  Sum=0;
+  for(byte i=0;i<10;i++) { //take 10 readings
+   Sum+=analogRead(PHMeterInPin);
   }
-  Average=0;
-  for(int i=0;i<10;i++) 
-    Average+=Results[i];  //average of the 10 reads
-  float PHVoltage=(float)Average*5.0/1024/10;
+  float PHVoltage=(float)Sum/10*5.0/1024;
   PH = -5.70 * PHVoltage + 21.34;
 }
 

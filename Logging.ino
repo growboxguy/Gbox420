@@ -41,9 +41,9 @@ void logToSerial(){
   Serial.print(F("\tReservoir: (")); Serial.print(reservoirToPercent());  Serial.print(F(")\t"));  Serial.print(reservoirToText(true));
   Serial.print(F("\tInternal fan: "));Serial.print(fanSpeedToText(true));
   Serial.print(F("\tExhaust fan: "));Serial.println(fanSpeedToText(false));
-  Serial.print(F("\tPressure: "));Serial.print(AeroPressure);
+  Serial.print(F("\tPressure: "));Serial.print(AeroPressure);Serial.print("bar/");Serial.print(AeroPressurePSI);Serial.print("psi");
   Serial.print(F("\tLow: "));Serial.print(MySettings.AeroPressureLow);Serial.print(F("\tHigh: "));Serial.print(MySettings.AeroPressureHigh);
-  Serial.print(F("\tAeroInterval: "));Serial.print(MySettings.AeroInterval);Serial.print(F("\tAeroDuration: "));Serial.println(MySettings.AeroDuration);
+  Serial.print(F("\tAeroInterval: "));Serial.print(MySettings.AeroInterval);Serial.print(F("\tAeroDuration: "));Serial.print(MySettings.AeroDuration);Serial.print(F("\tAeroOffset: "));Serial.println(MySettings.AeroOffset);
 }
 
 
@@ -58,7 +58,7 @@ void addToLog(const char *message){
 }
 
 char * intToChar(int Number){
-  static char ReturnChar[8] = ""; //7 digits + null terminator
+  static char ReturnChar[8] = ""; //7 digits + null terminator max
   itoa(Number, ReturnChar, 10);
   return ReturnChar;
 }

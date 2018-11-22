@@ -2,11 +2,6 @@ void LoadCallback(char * url) //called when website is loaded
 {
   Serial.print("LoadCB for URL: "); Serial.println(url);
   if (strcmp(url,"/GrowBox.html.json")==0){  
-  WebServer.setArgInt(F("num_aeroInterval"), MySettings.AeroInterval/60000);
-  WebServer.setArgInt(F("num_aeroDuration"), MySettings.AeroDuration/1000);
-  WebServer.setArgString(F("num_aeroPressureLow"), (floatToChar(MySettings.AeroPressureLow)));
-  WebServer.setArgString(F("num_aeroPressureHigh"), (floatToChar(MySettings.AeroPressureHigh)));
-
   WebServer.setArgBoolean(F("check_timerEnabled"), MySettings.isTimerEnabled);
   WebServer.setArgInt(F("num_lightsOnHour"), MySettings.LightOnHour); 
   WebServer.setArgInt(F("num_lightsOnMinute"), MySettings.LightOnMinute); 
@@ -14,6 +9,12 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgInt(F("num_lightsOffMinute"),MySettings.LightOffMinute);
   WebServer.setArgInt(F("slider_brightness"), MySettings.LightBrightness);
   WebServer.setArgInt(F("num_brightness"), MySettings.LightBrightness);
+
+  WebServer.setArgInt(F("num_aeroInterval"), MySettings.AeroInterval/60000);
+  WebServer.setArgInt(F("num_aeroDuration"), MySettings.AeroDuration/1000);
+  WebServer.setArgString(F("num_aeroPressureLow"), floatToChar(MySettings.AeroPressureLow));
+  WebServer.setArgString(F("num_aeroPressureHigh"), floatToChar(MySettings.AeroPressureHigh));
+  WebServer.setArgBoolean(F("check_aeroSprayEnabled"), MySettings.isAeroSprayEnabled);
 
   WebServer.setArgInt(F("slider_digitDisplayBrightness"), MySettings.DigitDisplayBacklight);
   WebServer.setArgInt(F("check_soundEnabled"), MySettings.isSoundEnabled);
@@ -25,7 +26,7 @@ void RefreshCallback(char * url) //called when website is refreshed
   Serial.print("RefreshCB for URL: "); Serial.println(url);
   if (strcmp(url,"/GrowBox.html.json")==0){   
   WebServer.setArgString(F("tdTime"), CurrentTime); 
-  WebServer.setArgString(F("tdBoxTemp"),floatsToChar(BoxTempC,BoxTempF,"-"));
+  WebServer.setArgString(F("tdBoxTemp"),floatsToChar(BoxTempC,BoxTempF,"/"));
   WebServer.setArgString(F("tdHumidity"),floatToChar(Humidity));
   if(!MySettings.isInternalFanOn) WebServer.setArgString(F("tdInternalFanSpeed"),F("OFF")); else if(MySettings.isInternalFanHigh) WebServer.setArgString(F("tdInternalFanSpeed"),F("High"));else WebServer.setArgString(F("tdInternalFanSpeed"),F("Low"));
   if(!MySettings.isExhaustFanOn) WebServer.setArgString(F("tdExhaustFanSpeed"),F("OFF")); else if(MySettings.isExhaustFanHigh) WebServer.setArgString(F("tdExhaustFanSpeed"),F("High"));else WebServer.setArgString(F("tdExhaustFanSpeed"),F("Low"));
@@ -43,13 +44,13 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgString(F("tdLightOn"), intsToChar(MySettings.LightOnHour,MySettings.LightOnMinute,":")); 
   WebServer.setArgString(F("tdLightOff"), intsToChar(MySettings.LightOffHour,MySettings.LightOffMinute,":")); 
   
-
-  WebServer.setArgString("tdAeroPressure",floatToChar(AeroPressure));
+  WebServer.setArgString("tdAeroPressure",floatsToChar(AeroPressure,AeroPressurePSI,"/"));
   if(isAeroPumpOn) WebServer.setArgString(F("tdisAeroPumpOn"),F("ON")); else WebServer.setArgString(F("tdisAeroPumpOn"),F("OFF"));
-  if(isAeroPumpBroken) WebServer.setArgString(F("tdisAeroPumpBroken"),F("BROKEN")); else WebServer.setArgString(F("tdisAeroPumpBroken"),F("OK"));
-  
+  if(isAeroPumpDisabled) WebServer.setArgString(F("tdisAeroPumpDisabled"),F("DISABLED")); else WebServer.setArgString(F("tdisAeroPumpDisabled"),F("OK"));
+  WebServer.setArgFloat(F("num_aeroOffset"), MySettings.AeroOffset);
+    
   WebServer.setArgString(F("tdReservoir"),reservoirToText(false));
-  WebServer.setArgString(F("tdPH"),floatToChar(PH)); 
+  WebServer.setArgString(F("tdPH"),floatToChar(PH));  
   //WebServer.setArgString("tdMoisture",floatToChar(Moisture)); 
 
   //Log output  
@@ -77,16 +78,19 @@ void ButtonPressCallback(char *button)
   else if (strcmp(button,"btn_powersupplyOn")==0) { addToLog("Power supply ON"); MySettings.isPCPowerSupplyOn = true; PlayOnSound=true;}
   else if (strcmp(button,"btn_powersupplyOff")==0) { addToLog("Power supply OFF"); MySettings.isPCPowerSupplyOn = false;  PlayOffSound=true; }
   else if (strcmp(button,"btn_ee")==0) { addToLog("♬Easter egg♬");PlayEE = true; }
-  else if (strcmp(button,"btn_InternalFanOff")==0) { addToLog("Internal fan OFF"); MySettings.isInternalFanOn = false;PlayOffSound=true;}
+  else if (strcmp(button,"btn_InternalFanOff")==0) { addToLog("Internal fan OFF"); MySettings.isInternalFanOn = false;MySettings.isInternalFanHigh = false;PlayOffSound=true;}
   else if (strcmp(button,"btn_InternalFanLow")==0) { addToLog("Internal fan Low"); MySettings.isInternalFanHigh = false; MySettings.isInternalFanOn = true;PlayOnSound=true;}
   else if (strcmp(button,"btn_InternalFanHigh")==0) { addToLog("Internal fan High"); MySettings.isInternalFanHigh = true; MySettings.isInternalFanOn = true;PlayOnSound=true;}  
-  else if (strcmp(button,"btn_ExhaustFanOff")==0) { addToLog("Exhaust fan OFF"); MySettings.isExhaustFanOn = false;PlayOffSound=true;}
+  else if (strcmp(button,"btn_ExhaustFanOff")==0) { addToLog("Exhaust fan OFF"); MySettings.isExhaustFanOn = false;MySettings.isExhaustFanHigh = false;PlayOffSound=true;}
   else if (strcmp(button,"btn_ExhaustFanLow")==0) { addToLog("Exhaust fan Low"); MySettings.isExhaustFanHigh = false; MySettings.isExhaustFanOn = true;PlayOnSound=true;}
   else if (strcmp(button,"btn_ExhaustFanHigh")==0) { addToLog("Exhaust fan High"); MySettings.isExhaustFanHigh = true; MySettings.isExhaustFanOn = true;PlayOnSound=true;}
   else if (strcmp(button,"btn_googleSheets")==0) { reportToGoogleSheets();} 
   else if (strcmp(button,"btn_saveSettings")==0) { saveSettings();addToLog("Settings saved to EEPROM");}
-  else if (strcmp(button,"btn_aeroSprayNow")==0) { aeroSprayNow();}  
-  else if (strcmp(button,"btn_resetPump")==0) { isAeroPumpBroken = false;addToLog("Pump reset");}
+  else if (strcmp(button,"btn_aeroSprayNow")==0) { aeroSprayNow();}
+  else if (strcmp(button,"btn_aeroSprayOff")==0) { aeroSprayOff();}  
+  else if (strcmp(button,"btn_pumpRefill")==0) { aeroPumpRefill();}
+  else if (strcmp(button,"btn_pumpOff")==0) { aeroPumpOff();}  
+  else if (strcmp(button,"btn_pumpReset")==0) { aeroPumpReset();}
   else if (strcmp(button,"btn_pressureCalibrate")==0) { calibratePressureSensor();}
   saveSettings(); 
 }
@@ -106,7 +110,9 @@ void SetFieldCallback(char * field){
   else if(strcmp(field,"num_aeroDuration")==0) {setAeroDuration(WebServer.getArgInt()); addToLog("Spray time updated"); }
   else if(strcmp(field,"num_aeroPressureLow")==0) {MySettings.AeroPressureLow =  WebServer.getArgFloat(); }
   else if(strcmp(field,"num_aeroPressureHigh")==0) {MySettings.AeroPressureHigh = WebServer.getArgFloat(); addToLog("Pump settings updated");} 
+  else if(strcmp(field,"num_aeroOffset")==0) {MySettings.AeroOffset = WebServer.getArgFloat(); addToLog("Pressure sensor offset updated");} 
   else if(strcmp(field,"time_toSet")==0) {setTime(WebServer.getArgString()); }
+  else if(strcmp(field,"check_aeroSprayEnabled")==0) {MySettings.isAeroSprayEnabled=WebServer.getArgBoolean();if(MySettings.isAeroSprayEnabled){ addToLog("Aeroponics Spray enabled"); PlayOnSound=true;} else {addToLog("Aeroponics Spray disabled");PlayOffSound=true;} }
   saveSettings();
 } 
 

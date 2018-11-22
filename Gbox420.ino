@@ -70,7 +70,7 @@
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
   const byte PotStepping = 100;  // Digital potentiometer adjustment steps
   const unsigned long AeroPumpTimeout = 600000;  // Aeroponics - Max pump run time (10minutes)
-  const bool BlockLoadingSettings = false; //UPDATE THIS Set to true at first startup when EEPROM is empty OR
+  const bool BlockLoadingSettings = true; //UPDATE THIS Set to true at first startup when EEPROM is empty OR
                                           //if Settings stuct is changed, then save the settings to EEPRO from the website and change it back to false
 //Global variables
   struct Settings //Saved to EEPROM persistent storage
@@ -84,16 +84,17 @@
   bool isExhaustFanOn;  //Exhaust fan On/Off
   bool isExhaustFanHigh;  //Exhaust fan Low/High
   bool isTimerEnabled = false;  //Enable timer controlling lights
-  bool isPCPowerSupplyOn = false;  //Startup status for PC power supply: True-ON / False-OFF
+  bool isPCPowerSupplyOn = false;  //Startup status for PC power supply: True-ON / False-OFF 
   byte LightOnHour = 4;  //Light ON time - hour
   byte LightOnMinute = 20; //Light ON time - minute
   byte LightOffHour = 16; //Light OFF time - hour
   byte LightOffMinute = 20; //Light OFF time - minute
+  bool isAeroSprayEnabled = true;
   unsigned long AeroInterval = 300000; //Aeroponics - Spray every 5 minutes (300000 ms)
   unsigned long AeroDuration = 15000; //Aeroponics - Spray for 15 seconds (15000 ms)
   float AeroPressureLow= 5.5; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroPressureHigh = 7.0 ; //Aeroponics - Turn on pump below this pressure (bar)
-  int PressureSensorOffset = 1023; //Pressure sensor calibration - UPDATE THIS
+  float AeroOffset = 0.5; //Pressure sensor calibration - offset voltage
   };
   typedef struct Settings settings;  //create the settings type using the stucture
   settings MySettings;  //create a variable of "setting" type with "Setting structure"
@@ -130,8 +131,9 @@
   unsigned long AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
   bool isAeroSprayOn = false; //Aeroponics - Spray state, set to true to spay at power on
   bool isAeroPumpOn = false; //Aeroponics - High pressure pump state
-  bool isAeroPumpBroken = false; //Aeroponics - High pressure pump health
+  bool isAeroPumpDisabled = false; //Aeroponics - High pressure pump health
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
+  float AeroPressurePSI = 0.0;  //Aeroponics - Current pressure (psi)
   char LogMessage[LogLength]; //temp storage for assemling log messages
   char Logs[LogDepth][LogLength];  //two dimensional array for storing log histroy (array of char arrays)
   char WebMessage[512];   //buffer for REST API messages
@@ -223,7 +225,7 @@ void setup() {     // put your setup code here, to run once:
   DigitDisplay.setBacklight(MySettings.DigitDisplayBacklight); //set 4 digit LED display backlight intensity
   PowerSensor.setAddress(PowerSensorIP); //start power meter
   calibrateLights();
-  if(MySettings.PressureSensorOffset == 1023) calibratePressureSensor();
+  if(MySettings.AeroOffset == 1023) calibratePressureSensor();
   addToLog("Grow Box initialized");
 
   //triger all threads at startup
@@ -246,14 +248,15 @@ void loop() {  // put your main code here, to run repeatedly:
 void oneSecRun(){
   if(!digitalRead(PowerButtonInPin))MySettings.isLightOn = !MySettings.isLightOn;  //If the power button is held in at the time of the measure invert the light status
   turnLightOnOff(); 
-  checkAeroStatus();
+  checkAeroStatus();  
   relayCheck();
-  soundCheck(); 
+  soundCheck();  
 }
 
 void fiveSecRun(){ 
-  updateTime();  
-  updateDisplay(); //Updates 4 digit display 
+  updateTime();     
+  readSensors();
+  updateDisplay(); //Updates 4 digit display  
   //Serial.println(freeMemory()); 
 }
 
@@ -290,8 +293,7 @@ void setTime(char* dateToSet) {  //sets the real time clock
   Clock.writeProtect(true); //Re-enable write protection
 }
 
-int cropFromString(char* string,int start, int width)
-{
+int cropFromString(char* string,int start, int width){
   int value=0;
   for( int n=0; n < width; n++ )
     value = value * 10 + string[start+n] - '0';
@@ -323,5 +325,12 @@ void saveSettings(){ //do not put this in the loop, EEPROM has a write limit of 
 
 void loadSettings(){
   eeprom_read_block((void*)&MySettings, (void*)0, sizeof(MySettings));
+}
+
+void SendEmailAlert(char* AlertType){
+  memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
+  strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,AlertType);  
+  Serial.println(WebMessage);   
+  RestAPI.get(WebMessage);
 }
 

@@ -1,17 +1,24 @@
 void readAeroPressure(){
-  float Reading = analogRead(PressureSensorInPin) ;
-  AeroPressure = (Reading - MySettings.PressureSensorOffset) * 12 / (921 - MySettings.PressureSensorOffset);  //1.2mPa = 12 bar
+  float  Reading=0;
+  for(byte i=0;i<50;i++) { 
+   Reading+=analogRead(PressureSensorInPin);
+   delay(20);
+  }
+  Reading = Reading /50;
+  float Voltage = ((float)Reading) * 5 / 1024 ;
+  AeroPressure = (2.7*(Voltage-MySettings.AeroOffset)); // unit: bar / 100kPa
+  AeroPressurePSI = AeroPressure * 14.5038; 
 }
 
-void calibratePressureSensor(){
-  MySettings.PressureSensorOffset = 1023;
-  for(byte i = 0; i<100;i++){
-  int Reading = analogRead(PressureSensorInPin) ;  
-  if(Reading<MySettings.PressureSensorOffset) MySettings.PressureSensorOffset = Reading;
+void calibratePressureSensor(){  //Should only be called when there is 0 pressure
+  float sum = 0;
+  for(byte i = 0; i<50;i++){
+  sum += analogRead(PressureSensorInPin) ; 
   delay(10);
-  }
+  }  
+  MySettings.AeroOffset = (sum/50)*5/1024; //Reads voltage at 0 pressure
   strncpy(LogMessage,"Pressure sensor offset: ",LogLength);
-  strcat(LogMessage,intToChar(MySettings.PressureSensorOffset));
+  strcat(LogMessage,floatToChar(MySettings.AeroOffset));
   addToLog(LogMessage);
 }
 
@@ -25,12 +32,20 @@ void setAeroInterval(int interval){
   AeroSprayTimer = millis(); 
 }
 
-void aeroSprayNow(){  
-  AeroSprayTimer = millis(); 
-  isAeroSprayOn = true;
-  PlayOnSound = true;
-  relayCheck();
-  addToLog("Aeroponics Spraying");
+void aeroSprayNow(){   
+  if(MySettings.isAeroSprayEnabled){
+    AeroSprayTimer = millis();
+    isAeroSprayOn = true;
+    PlayOnSound = true;
+    relayCheck();
+    addToLog("Aeroponics Spraying");
+    }
+}
+
+void aeroSprayOff(){   
+    isAeroSprayOn = false;    
+    relayCheck();
+    addToLog("Aeroponics Spray OFF");
 }
 
 void checkAeroStatus(){
@@ -49,10 +64,12 @@ void checkAeroSprayTimer(){
   }
   else{ //if spray is off
     if(millis() - AeroSprayTimer >= MySettings.AeroInterval){ //if time to start spraying
+      if(MySettings.isAeroSprayEnabled){
       isAeroSprayOn = true;
       Serial.println("Starting spray");
       PlayOnSound = true;
-      AeroSprayTimer = millis(); 
+      AeroSprayTimer = millis();
+      }
     }
   }
 }
@@ -61,27 +78,45 @@ void checkAeroPump(){
   if(isAeroPumpOn){
     readAeroPressure();   
     if(AeroPressure >= MySettings.AeroPressureHigh){
-      isAeroPumpOn = false;
-      addToLog("Turning off pump");
-      PlayOffSound = true;
+      aeroPumpOff();
     }
     else if (millis() - AeroPumpTimer >= AeroPumpTimeout){
       isAeroPumpOn = false;      
-      isAeroPumpBroken = true;
+      isAeroPumpDisabled = true;
       addToLog("Pump failed, alerting");
       PlayOffSound = true;
-      memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
-      strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,PumpAlertDeviceID);  
-      Serial.println(WebMessage);   
-      RestAPI.get(WebMessage);
+      SendEmailAlert(PumpAlertDeviceID);
     }
   }
   else{
-    if(AeroPressure <= MySettings.AeroPressureLow && !isAeroPumpBroken){
-      AeroPumpTimer = millis();
-      isAeroPumpOn = true;
+    if(AeroPressure <= MySettings.AeroPressureLow && !isAeroPumpDisabled){
       addToLog("Turning on pump");
-      PlayOnSound = true;
+      aeroPumpOn();
     }
   }
 }
+
+void aeroPumpRefill(){  
+  addToLog("Refilling pressure tank");
+  aeroPumpOn();
+}
+
+void aeroPumpOn(){
+  isAeroPumpDisabled = false;
+  isAeroPumpOn = true;
+  AeroPumpTimer = millis();      
+  PlayOnSound = true;
+}
+
+void aeroPumpOff(){
+  isAeroPumpOn = false;
+  addToLog("Turning off pump");
+  PlayOffSound = true;
+}
+
+void aeroPumpReset(){
+  isAeroPumpDisabled = false;
+  isAeroPumpOn = false;
+  addToLog("Pump reset");
+}
+
