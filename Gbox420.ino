@@ -1,7 +1,7 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter,PH Meter calibration,MQTT implementation
+//TODO: flow meter,PH Meter calibration,MQTT implementation, ESPLink-GetTime as EPOCH date source
 
 //Libraries
   #include "Thread.h"  //Splitting functions to threads
@@ -14,6 +14,8 @@
   #include "ELClient.h"  // ESP-link
   #include "ELClientRest.h" // ESP-link - REST API
   #include "ELClientWebServer.h" //ESP-link - WebServer API
+  #include "ELClientCmd.h"  //ESP-link - Get current time from the internet using NTP
+  #include "ELClientMqtt.h" //ESP-link - MQTT protocol for sending and receiving IoT messages
   #include "DS1302.h" //Real time clock
   #include "SPI.h" //TFT Screen - communication
   #include "Adafruit_ILI9341.h" //TFT Screen - hardware specific driver
@@ -64,6 +66,8 @@
   const char PushingBoxDeviceID[]= "v755877CF53383E1"; //UPDATE THIS to your grow box logging scenario DeviceID from PushingBox
   const char ReservoirAlertDeviceID[]  = "v6DA52FDF6FCDF74";  //UPDATE THIS to your reservoir alert scenario DeviceID from PushingBox
   const char PumpAlertDeviceID[]  = "v9F3E0683C4B3B49";  //UPDATE THIS to your pump alert scenario DeviceID from PushingBox
+  const char* MqttPublish = "/growboxguy@gmail.com/Gbox420";
+  const char* MqttSubscribe = "/growboxguy@gmail.com/Gbox420Control";
   const uint8_t  DHTType=DHT22;  //specify temp/humidity sensor type: DHT21(AM2301) or DHT22(AM2302,AM2321)
   const byte ScreenRotation = 1;  //1,3:landscape 2,4:portrait
   const byte LogDepth = 8;  //Show X log entries on website
@@ -147,9 +151,11 @@
   ELClient ESPLink(&Serial3);  //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
   ELClientRest RestAPI(&ESPLink);    // ESP-link REST API
   ELClientWebServer WebServer(&ESPLink); //ESP-link WebServer API
+  ELClientCmd EspCmd(&ESPLink);//ESP-link - Get current time from the internet using NTP
+  ELClientMqtt Mqtt(&ESPLink); //ESP-link - MQTT protocol for sending and receiving IoT messages
   Adafruit_ILI9341 Screen = Adafruit_ILI9341(ScreenCS, ScreenDC, ScreenMOSI, ScreenSCK, ScreenReset, ScreenMISO);
 
-//Threading to ensure web interface resons to clicks
+//Threading to time tasks
   Thread OneSecThread = Thread();
   Thread FiveSecThread = Thread();
   Thread MinuteThread = Thread();
@@ -206,7 +212,8 @@ void setup() {     // put your setup code here, to run once:
   //Initialize web connections
   ESPLink.resetCb = resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
   resetWebServer();
-
+  setupMqtt();
+ 
   //Threading
   OneSecThread.setInterval(1000);
   OneSecThread.onRun(oneSecRun);
@@ -236,13 +243,18 @@ void setup() {     // put your setup code here, to run once:
   
   //Start interrupts 
   Timer3.initialize(500);
-  Timer3.attachInterrupt(processWebsite);
+  Timer3.attachInterrupt(processEspLink);
   Timer3.start();
 }
 
 void loop() {  // put your main code here, to run repeatedly:
-  ThreadControl.run();   
+  ThreadControl.run(); 
+  ESPLink.Process();  
   //while(Serial3.available()) Serial.println(Serial3.readString() ); //Read output of ESP Serial - For setup/debugging, comment the line out once wifi setup is complete
+}
+
+void processEspLink(){
+  ESPLink.Process();
 }
 
 void oneSecRun(){
@@ -265,6 +277,7 @@ void minuteRun(){
   checkLightStatus();    
   logToSerial();  //Logs sensor readings to Serial  
   logToScreen();  //Display sensore readings on lcd screen
+  mqttPublush();
 }
 
 void halfHourRun(){

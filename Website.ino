@@ -116,9 +116,6 @@ void SetFieldCallback(char * field){
   saveSettings();
 } 
 
-void processWebsite(){
-  ESPLink.Process();
-}
 
 // Callback made from esp-link to notify that it has just come out of a reset
 void resetWebServer(void) {  
