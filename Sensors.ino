@@ -28,29 +28,6 @@ void ReadPH(){//uncalibrated code
   PH = -5.70 * PHVoltage + 21.34;
 }
 
-//***PC SPEAKER***
-void OnSound(){
-  if(MySettings.isSoundEnabled){ 
-  tone(BuzzerOutPin,500);
-  delay(100);
-  noTone(BuzzerOutPin);
-  tone(BuzzerOutPin,1000);
-  delay(100);
-  noTone(BuzzerOutPin);
-  }
-} 
-
-void OffSound(){
-  if(MySettings.isSoundEnabled){ 
-  tone(BuzzerOutPin,1000);
-  delay(100);
-  noTone(BuzzerOutPin);
-  tone(BuzzerOutPin,500);
-  delay(100);
-  noTone(BuzzerOutPin);
-  }
-} 
-
 //***Moisture sensor***
 void ReadMoisture(){
   Moisture= analogRead(AMoistureSensorInPin);

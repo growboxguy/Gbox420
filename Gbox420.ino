@@ -1,7 +1,8 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter,PH Meter calibration,MQTT implementation, ESPLink-GetTime as EPOCH date source
+//TODO: flow meter,PH Meter calibration,MQTT implementation, Add NTP: ESPLink-GetTime as EPOCH date source, website variables with capital letters)
+//TODO: publish set of bookmarks useful for the box (Gbox420,Gbox420(FirstStartup),Pushingbox,DIoTY,Sheets..)
 
 //Libraries
   #include "Thread.h"  //Splitting functions to threads
@@ -66,8 +67,6 @@
   const char PushingBoxDeviceID[]= "v755877CF53383E1"; //UPDATE THIS to your grow box logging scenario DeviceID from PushingBox
   const char ReservoirAlertDeviceID[]  = "v6DA52FDF6FCDF74";  //UPDATE THIS to your reservoir alert scenario DeviceID from PushingBox
   const char PumpAlertDeviceID[]  = "v9F3E0683C4B3B49";  //UPDATE THIS to your pump alert scenario DeviceID from PushingBox
-  const char* MqttPublish = "/growboxguy@gmail.com/Gbox420";
-  const char* MqttSubscribe = "/growboxguy@gmail.com/Gbox420Control";
   const uint8_t  DHTType=DHT22;  //specify temp/humidity sensor type: DHT21(AM2301) or DHT22(AM2302,AM2321)
   const byte ScreenRotation = 1;  //1,3:landscape 2,4:portrait
   const byte LogDepth = 8;  //Show X log entries on website
@@ -249,12 +248,12 @@ void setup() {     // put your setup code here, to run once:
 
 void loop() {  // put your main code here, to run repeatedly:
   ThreadControl.run(); 
-  ESPLink.Process();  
   //while(Serial3.available()) Serial.println(Serial3.readString() ); //Read output of ESP Serial - For setup/debugging, comment the line out once wifi setup is complete
 }
 
 void processEspLink(){
   ESPLink.Process();
+
 }
 
 void oneSecRun(){
@@ -270,6 +269,7 @@ void fiveSecRun(){
   readSensors();
   updateDisplay(); //Updates 4 digit display  
   //Serial.println(freeMemory()); 
+  // Serial.println(EspCmd.GetTime());
 }
 
 void minuteRun(){
@@ -313,27 +313,9 @@ int cropFromString(char* string,int start, int width){
   return value;  
 }  
 
-void relayCheck(){
-  if(isAeroSprayOn) digitalWrite(Relay1OutPin, LOW); else digitalWrite(Relay1OutPin, HIGH); //True turns relay ON , False turns relay OFF  (LOW signal activates Relay) 
-  if(isAeroPumpOn) digitalWrite(Relay2OutPin, LOW); else digitalWrite(Relay2OutPin, HIGH);  
-  if(MySettings.isPCPowerSupplyOn) digitalWrite(Relay3OutPin, LOW); else digitalWrite(Relay3OutPin, HIGH);
-  if(MySettings.isInternalFanOn) digitalWrite(Relay4OutPin, LOW); else digitalWrite(Relay4OutPin, HIGH);
-  if(MySettings.isInternalFanHigh) digitalWrite(Relay5OutPin, LOW); else digitalWrite(Relay5OutPin, HIGH);
-  if(MySettings.isExhaustFanOn) digitalWrite(Relay6OutPin, LOW); else digitalWrite(Relay6OutPin, HIGH);
-  if(MySettings.isExhaustFanHigh) digitalWrite(Relay7OutPin, LOW); else digitalWrite(Relay7OutPin, HIGH);
-  if(MySettings.isLightOn) digitalWrite(Relay8OutPin, LOW); else digitalWrite(Relay8OutPin, HIGH);
-}
-
-void soundCheck(){
-  if(MySettings.isSoundEnabled){  
-    if (PlayOnSound)  {PlayOnSound = false;OnSound();}
-    if (PlayOffSound)  {PlayOffSound = false;OffSound();} 
-  }
-  if (PlayEE)  {PlayEE = false;EE();} 
-}
-
-void saveSettings(){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
+void saveSettings(bool LogChange){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
   eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings));
+  if(LogChange) addToLog("Settings saved to EEPROM");
 }
 
 void loadSettings(){

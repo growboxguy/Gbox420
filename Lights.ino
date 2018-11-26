@@ -22,6 +22,11 @@ void calibrateLights(){
   addToLog(LogMessage);
 } 
 
+void triggerCalibrateLights(){
+  CalibrateLights = true;
+  addToLog("Lights calibrating...");  
+}
+
 void stepOne(){  //Adjust Potentiometer by one
   digitalWrite(PotUDOutPin,isPotGettingHigh);  //true=HIGH=increase brightness
   digitalWrite(PotINCOutPin,HIGH);   //signal the change to the chip
@@ -49,19 +54,58 @@ void setBrightness(int NewBrightness){
 void turnLightON(){
    MySettings.isLightOn = true;
    addToLog("Light ON"); 
-   OnSound();
+   PlayOnSound=true;
 }
 
 void turnLightOFF(){
   MySettings.isLightOn = false;
   addToLog("Light OFF"); 
-  OffSound();
+  PlayOffSound=true; 
 }
 
 void turnLightOnOff(){
   if(CalibrateLights){CalibrateLights=false;calibrateLights();}
-  if(MySettings.isLightOn)digitalWrite(PowerLEDOutPin, HIGH); else digitalWrite(PowerLEDOutPin, LOW); //Turn on Power Led on PC case if light is on
-  if(MySettings.isLightOn) digitalWrite(Relay8OutPin, LOW); else digitalWrite(Relay8OutPin, HIGH); //True turns relay ON , False turns relay OFF  (LOW signal activates Relay)
+  if(MySettings.isLightOn){
+    digitalWrite(PowerLEDOutPin, HIGH); //Turn on Power Led on PC case if light is on
+    digitalWrite(Relay8OutPin, LOW); //True turns relay ON (LOW signal activates Relay)
+  }
+  else {
+    digitalWrite(PowerLEDOutPin, LOW); 
+    digitalWrite(Relay8OutPin, HIGH); //False turns relay OFF  
+  }
+}
+
+void setTimerOnOff(bool TimerState){
+  MySettings.isTimerEnabled = TimerState;
+  if(MySettings.isTimerEnabled){ 
+    checkLightStatus();
+    addToLog("Timer enabled");
+    PlayOnSound=true;
+    }
+  else {
+    addToLog("Timer disabled");
+    PlayOffSound=true;
+    }
+}
+
+void setLightsOnHour(int OnHour){
+  MySettings.LightOnHour = OnHour; 
+}
+
+void setLightsOnMinute(int OnMinute){
+  MySettings.LightOnMinute = OnMinute;
+  checkLightStatus();
+  addToLog("Light ON time updated"); 
+}
+
+void setLightsOffHour(int OffHour){
+  MySettings.LightOffHour = OffHour;
+}
+
+void setLightsOffMinute(int OffMinute){
+  MySettings.LightOffMinute = OffMinute;
+  checkLightStatus();
+  addToLog("Light OFF time updated");
 }
 
 void checkLightStatus() {  //fills the CurrentTime global variable

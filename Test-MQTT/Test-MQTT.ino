@@ -7,8 +7,8 @@
 #include <ELClientMqtt.h>
 
 //Global constants
-const char* MqttPublish = "/growboxguy@gmail.com/Gbox420/";
-const char* MqttSubscribe = "/growboxguy@gmail.com/Gbox420Control/";
+const char* MqttPublish = "/growboxguy@gmail.com/Gbox420";
+const char* MqttSubscribe = "/growboxguy@gmail.com/Gbox420C/#";
 
 //Component initialization
 ELClient ESPLink(&Serial3);
@@ -40,7 +40,7 @@ static uint32_t last;
 
 void loop() {
   ESPLink.Process();
-  if ( count == 0 || (millis()-last) > 10000) {
+  if ( count == 0 || (millis()-last) > 60000) {
     Serial.print("Publishing: ");
     Serial.println(count);
     char buf[18];
@@ -60,14 +60,21 @@ void mqttDisconnected(void* response) {
 }
 
 void mqttReceived(void* response) {
-  ELClientResponse *res = (ELClientResponse *)response;
+   ELClientResponse *res = (ELClientResponse *)response;
+  char topic[64];
+  char data[16]; 
+  ((*res).popString()).toCharArray(topic, 64);
+  ((*res).popString()).toCharArray(data, 16);
 
-  Serial.print("Received: topic=");
-  String topic = res->popString();
-  Serial.println(topic);
+  Serial.print("Received: ");Serial.print(topic);Serial.print(" - ");Serial.println(data);
 
-  Serial.print("data=");
-  String data = res->popString();
+  if (strcmp(topic,"LightsOn")==0) { turnLightON(); }
+  else if (strcmp(topic,"LightsOff")==0) { turnLightOFF(); }
+
+  Serial.println((*res).argc());
+  Serial.println((*res).cmd());
+  Serial.println((*res).value());
+  Serial.println((*res).popArgPtr(data));
   Serial.println(data);
 }
 

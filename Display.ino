@@ -90,3 +90,9 @@ void updateDisplay() { //Cycles through the different phases
   CurrentStep++;  
   CurrentStep = 15; //locked to Pressure for calibration
 }
+
+void setDigitDisplayBacklight(int Backlight){
+  MySettings.DigitDisplayBacklight=Backlight;
+  DigitDisplay.setBacklight(MySettings.DigitDisplayBacklight);
+}
+

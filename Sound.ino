@@ -1,3 +1,47 @@
+void soundCheck(){
+  if(MySettings.isSoundEnabled){  
+    if (PlayOnSound)  {PlayOnSound = false;OnSound();}
+    if (PlayOffSound)  {PlayOffSound = false;OffSound();} 
+  }
+  if (PlayEE)  {PlayEE = false;EE();} 
+}
+
+void OnSound(){
+  if(MySettings.isSoundEnabled){ 
+  tone(BuzzerOutPin,500);
+  delay(100);
+  noTone(BuzzerOutPin);
+  tone(BuzzerOutPin,1000);
+  delay(100);
+  noTone(BuzzerOutPin);
+  }
+} 
+
+void OffSound(){
+  if(MySettings.isSoundEnabled){ 
+  tone(BuzzerOutPin,1000);
+  delay(100);
+  noTone(BuzzerOutPin);
+  tone(BuzzerOutPin,500);
+  delay(100);
+  noTone(BuzzerOutPin);
+  }
+} 
+
+void setSoundOnOff(bool soundState){
+  MySettings.isSoundEnabled = soundState;
+  if(MySettings.isSoundEnabled){ 
+    addToLog("Sound enabled");
+    PlayOnSound=true;}
+  else {addToLog("Sound disabled");}
+}
+
+//EE Section
+void playEE(){
+  PlayEE = true;
+  addToLog("♬Easter egg♬");
+}
+
 int melody[] = {
   2637, 2637, 0, 2637,
   0, 2093, 2637, 0,

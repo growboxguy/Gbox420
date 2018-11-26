@@ -22,14 +22,25 @@ void calibratePressureSensor(){  //Should only be called when there is 0 pressur
   addToLog(LogMessage);
 }
 
-void setAeroDuration(int duration){  
-  MySettings.AeroDuration = WebServer.getArgInt() * 1000;
-  AeroSprayTimer = millis();  
-}
-
 void setAeroInterval(int interval){  
   MySettings.AeroInterval = interval * 60000; 
   AeroSprayTimer = millis(); 
+}
+
+void setAeroDuration(int duration){  
+  MySettings.AeroDuration = WebServer.getArgInt() * 1000;
+  AeroSprayTimer = millis(); 
+  addToLog("Spray time updated");  
+}
+
+void setAeroSprayOnOff(bool AeroState){
+  MySettings.isAeroSprayEnabled=AeroState;
+  if(MySettings.isAeroSprayEnabled){ 
+    addToLog("Aeroponics Spray enabled");
+    PlayOnSound=true;} 
+  else {
+    addToLog("Aeroponics Spray disabled");
+    PlayOffSound=true;}
 }
 
 void aeroSprayNow(){   
@@ -72,6 +83,20 @@ void checkAeroSprayTimer(){
       }
     }
   }
+}
+
+void setAeroPressureLow(float PressureLow){
+  MySettings.AeroPressureLow =  PressureLow;
+}
+
+void setAeroPressureHigh(float PressureHigh){
+  MySettings.AeroPressureHigh = PressureHigh;
+  addToLog("Pump settings updated");
+}
+
+void setAeroOffset(float Offset){
+  MySettings.AeroOffset = Offset;
+  addToLog("Pressure sensor offset updated");
 }
 
 void checkAeroPump(){
