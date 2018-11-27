@@ -77,7 +77,7 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttPumpOff)!=NULL) { aeroPumpOff();}  
   else if(strstr(topic,MqttPumpReset)!=NULL) { aeroPumpReset();}
   else if(strstr(topic,MqttPressureCalibrate)!=NULL) { calibratePressureSensor();}
-  else if(strstr(topic,MqttNtpTime)!=NULL) { Serial.print(EspCmd.GetTime());}//cannot be called from webite
+  else if(strstr(topic,MqttNtpTime)!=NULL) { UpdateNtpTime = true;}
 }
 
 void mqttPublush(){ //publish readings in JSON format
@@ -120,16 +120,16 @@ void mqttConnected(void* response) {
   strcat(MqttPath,MqttROOT);
   strcat(MqttPath,"#");
   Mqtt.subscribe(MqttPath);
-  addToLog("MQTT connected!");
+  Serial.print("MQTT connected!");
 }
 
 void mqttDisconnected(void* response) {
   MqttAlive = false;  
-  addToLog("MQTT disconnected");
+  Serial.print("MQTT disconnected");
 }
 
 void mqttPublished(void* response) {
-  addToLog("MQTT published");
+  Serial.print("MQTT published");
 }
 
 void setupMqtt(){

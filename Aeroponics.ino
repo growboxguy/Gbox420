@@ -36,10 +36,10 @@ void setAeroDuration(int duration){
 void setAeroSprayOnOff(bool AeroState){
   MySettings.isAeroSprayEnabled=AeroState;
   if(MySettings.isAeroSprayEnabled){ 
-    addToLog("Aeroponics Spray enabled");
+    addToLog("Aeroponics spray enabled");
     PlayOnSound=true;} 
   else {
-    addToLog("Aeroponics Spray disabled");
+    addToLog("Aeroponics spray disabled");
     PlayOffSound=true;}
 }
 
@@ -49,14 +49,14 @@ void aeroSprayNow(){
     isAeroSprayOn = true;
     PlayOnSound = true;
     relayCheck();
-    addToLog("Aeroponics Spraying");
+    addToLog("Aeroponics spraying");
     }
 }
 
 void aeroSprayOff(){   
     isAeroSprayOn = false;    
     relayCheck();
-    addToLog("Aeroponics Spray OFF");
+    addToLog("Aeroponics spray OFF");
 }
 
 void checkAeroStatus(){

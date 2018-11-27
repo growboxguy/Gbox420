@@ -2,22 +2,22 @@ void LoadCallback(char * url) //called when website is loaded
 {
   Serial.print("LoadCB for URL: "); Serial.println(url);
   if (strcmp(url,"/GrowBox.html.json")==0){  
-  WebServer.setArgBoolean(F("check_timerEnabled"), MySettings.isTimerEnabled);
-  WebServer.setArgInt(F("num_lightsOnHour"), MySettings.LightOnHour); 
-  WebServer.setArgInt(F("num_lightsOnMinute"), MySettings.LightOnMinute); 
-  WebServer.setArgInt(F("num_lightsOffHour"), MySettings.LightOffHour); 
-  WebServer.setArgInt(F("num_lightsOffMinute"),MySettings.LightOffMinute);
-  WebServer.setArgInt(F("slider_brightness"), MySettings.LightBrightness);
-  WebServer.setArgInt(F("num_brightness"), MySettings.LightBrightness);
+  WebServer.setArgBoolean(F("check_TimerEnabled"), MySettings.isTimerEnabled);
+  WebServer.setArgInt(F("num_LightsOnHour"), MySettings.LightOnHour); 
+  WebServer.setArgInt(F("num_LightsOnMinute"), MySettings.LightOnMinute); 
+  WebServer.setArgInt(F("num_LightsOffHour"), MySettings.LightOffHour); 
+  WebServer.setArgInt(F("num_LightsOffMinute"),MySettings.LightOffMinute);
+  WebServer.setArgInt(F("slider_Brightness"), MySettings.LightBrightness);
+  WebServer.setArgInt(F("num_Brightness"), MySettings.LightBrightness);
 
-  WebServer.setArgInt(F("num_aeroInterval"), MySettings.AeroInterval/60000);
-  WebServer.setArgInt(F("num_aeroDuration"), MySettings.AeroDuration/1000);
-  WebServer.setArgString(F("num_aeroPressureLow"), floatToChar(MySettings.AeroPressureLow));
-  WebServer.setArgString(F("num_aeroPressureHigh"), floatToChar(MySettings.AeroPressureHigh));
-  WebServer.setArgBoolean(F("check_aeroSprayEnabled"), MySettings.isAeroSprayEnabled);
+  WebServer.setArgInt(F("num_AeroInterval"), MySettings.AeroInterval/60000);
+  WebServer.setArgInt(F("num_AeroDuration"), MySettings.AeroDuration/1000);
+  WebServer.setArgString(F("num_AeroPressureLow"), floatToChar(MySettings.AeroPressureLow));
+  WebServer.setArgString(F("num_AeroPressureHigh"), floatToChar(MySettings.AeroPressureHigh));
+  WebServer.setArgBoolean(F("check_AeroSprayEnabled"), MySettings.isAeroSprayEnabled);
 
-  WebServer.setArgInt(F("slider_digitDisplayBrightness"), MySettings.DigitDisplayBacklight);
-  WebServer.setArgInt(F("check_soundEnabled"), MySettings.isSoundEnabled);
+  WebServer.setArgInt(F("slider_DigitDisplayBrightness"), MySettings.DigitDisplayBacklight);
+  WebServer.setArgInt(F("check_SoundEnabled"), MySettings.isSoundEnabled);
   }
 }
 
@@ -47,7 +47,7 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgString("tdAeroPressure",floatsToChar(AeroPressure,AeroPressurePSI,"/"));
   if(isAeroPumpOn) WebServer.setArgString(F("tdisAeroPumpOn"),F("ON")); else WebServer.setArgString(F("tdisAeroPumpOn"),F("OFF"));
   if(isAeroPumpDisabled) WebServer.setArgString(F("tdisAeroPumpDisabled"),F("DISABLED")); else WebServer.setArgString(F("tdisAeroPumpDisabled"),F("OK"));
-  WebServer.setArgFloat(F("num_aeroOffset"), MySettings.AeroOffset);
+  WebServer.setArgFloat(F("num_AeroOffset"), MySettings.AeroOffset);
     
   WebServer.setArgString(F("tdReservoir"),reservoirToText(false));
   WebServer.setArgString(F("tdPH"),floatToChar(PH));  
@@ -64,7 +64,7 @@ void RefreshCallback(char * url) //called when website is refreshed
    if(i > 0 ) strcat(WebMessage,",");
   }
   WebMessage[strlen(WebMessage)] = ']';
-  WebServer.setArgJson(F("list_serialLog"), WebMessage);
+  WebServer.setArgJson(F("list_SerialLog"), WebMessage);
   }
 }
 
@@ -72,48 +72,48 @@ void RefreshCallback(char * url) //called when website is refreshed
 void ButtonPressCallback(char *button)
 {
   //Serial.println(button);
-  if (strcmp(button,"btn_lightOn")==0) { turnLightON(); }
-  else if (strcmp(button,"btn_lightOff")==0) { turnLightOFF(); }
-  else if (strcmp(button,"btn_lightCalibrate")==0) {triggerCalibrateLights();}
-  else if (strcmp(button,"btn_powersupplyOn")==0) { powerSupplyOn();}
-  else if (strcmp(button,"btn_powersupplyOff")==0) { powerSupplyOff();}
-  else if (strcmp(button,"btn_ee")==0) { playEE(); }
+  if (strcmp(button,"btn_LightOn")==0) { turnLightON(); }
+  else if (strcmp(button,"btn_LightOff")==0) { turnLightOFF(); }
+  else if (strcmp(button,"btn_LightCalibrate")==0) {triggerCalibrateLights();}
+  else if (strcmp(button,"btn_PowersupplyOn")==0) { powerSupplyOn();}
+  else if (strcmp(button,"btn_PowersupplyOff")==0) { powerSupplyOff();}
+  else if (strcmp(button,"btn_Ee")==0) { playEE(); }
   else if (strcmp(button,"btn_InternalFanOff")==0) {internalFanOff();}
   else if (strcmp(button,"btn_InternalFanLow")==0) { internalFanLow();}
   else if (strcmp(button,"btn_InternalFanHigh")==0) {internalFanHigh(); }  
   else if (strcmp(button,"btn_ExhaustFanOff")==0) { exhaustFanOff();}
   else if (strcmp(button,"btn_ExhaustFanLow")==0) { exhaustFanLow();}
   else if (strcmp(button,"btn_ExhaustFanHigh")==0) { exhaustFanHigh();}
-  else if (strcmp(button,"btn_googleSheets")==0) { reportToGoogleSheets();} 
-  else if (strcmp(button,"btn_saveSettings")==0) { saveSettings(true);}
-  else if (strcmp(button,"btn_aeroSprayNow")==0) { aeroSprayNow();}
-  else if (strcmp(button,"btn_aeroSprayOff")==0) { aeroSprayOff();}  
-  else if (strcmp(button,"btn_pumpRefill")==0) { aeroPumpRefill();}
-  else if (strcmp(button,"btn_pumpOff")==0) { aeroPumpOff();}  
-  else if (strcmp(button,"btn_pumpReset")==0) { aeroPumpReset();}
-  else if (strcmp(button,"btn_pressureCalibrate")==0) { calibratePressureSensor();}
-  else if (strcmp(button,"btn_ntpTime")==0) { Serial.print(EspCmd.GetTime());} //takes too long to process
+  else if (strcmp(button,"btn_GoogleSheets")==0) { reportToGoogleSheets();} 
+  else if (strcmp(button,"btn_SaveSettings")==0) { saveSettings(true);}
+  else if (strcmp(button,"btn_AeroSprayNow")==0) { aeroSprayNow();}
+  else if (strcmp(button,"btn_AeroSprayOff")==0) { aeroSprayOff();}  
+  else if (strcmp(button,"btn_PumpRefill")==0) { aeroPumpRefill();}
+  else if (strcmp(button,"btn_PumpOff")==0) { aeroPumpOff();}  
+  else if (strcmp(button,"btn_PumpReset")==0) { aeroPumpReset();}
+  else if (strcmp(button,"btn_PressureCalibrate")==0) { calibratePressureSensor();}
+  else if (strcmp(button,"btn_NtpTime")==0) { UpdateNtpTime = true;} //takes too long to process
   saveSettings(false); 
 }
 
 //Called when any field on the website is updated
 void SetFieldCallback(char * field){
   Serial.println(field);
-  if(strcmp(field,"slider_brightness")==0) {setBrightness(WebServer.getArgInt());}
-  else if(strcmp(field,"slider_digitDisplayBrightness")==0) {setDigitDisplayBacklight(WebServer.getArgInt());}
-  else if(strcmp(field,"check_timerEnabled")==0) {setTimerOnOff(WebServer.getArgBoolean());}
-  else if(strcmp(field,"check_soundEnabled")==0) {setSoundOnOff(WebServer.getArgBoolean());}
-  else if(strcmp(field,"num_lightsOnHour")==0) {setLightsOnHour(WebServer.getArgInt());}
-  else if(strcmp(field,"num_lightsOnMinute")==0) {setLightsOnMinute(WebServer.getArgInt());}
-  else if(strcmp(field,"num_lightsOffHour")==0) {setLightsOffHour(WebServer.getArgInt());}
-  else if(strcmp(field,"num_lightsOffMinute")==0) {setLightsOffMinute(WebServer.getArgInt());}       
-  else if(strcmp(field,"num_aeroInterval")==0) { setAeroInterval(WebServer.getArgInt());}
-  else if(strcmp(field,"num_aeroDuration")==0) {setAeroDuration(WebServer.getArgInt());}
-  else if(strcmp(field,"num_aeroPressureLow")==0) {setAeroPressureLow(WebServer.getArgFloat());}
-  else if(strcmp(field,"num_aeroPressureHigh")==0) {setAeroPressureHigh(WebServer.getArgFloat());} 
-  else if(strcmp(field,"num_aeroOffset")==0) {setAeroOffset(WebServer.getArgFloat());} 
-  else if(strcmp(field,"time_toSet")==0) {setTime(WebServer.getArgString());}
-  else if(strcmp(field,"check_aeroSprayEnabled")==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
+  if(strcmp(field,"slider_Brightness")==0) {setBrightness(WebServer.getArgInt());}
+  else if(strcmp(field,"slider_DigitDisplayBrightness")==0) {setDigitDisplayBacklight(WebServer.getArgInt());}
+  else if(strcmp(field,"check_TimerEnabled")==0) {setTimerOnOff(WebServer.getArgBoolean());}
+  else if(strcmp(field,"check_SoundEnabled")==0) {setSoundOnOff(WebServer.getArgBoolean());}
+  else if(strcmp(field,"num_LightsOnHour")==0) {setLightsOnHour(WebServer.getArgInt());}
+  else if(strcmp(field,"num_LightsOnMinute")==0) {setLightsOnMinute(WebServer.getArgInt());}
+  else if(strcmp(field,"num_LightsOffHour")==0) {setLightsOffHour(WebServer.getArgInt());}
+  else if(strcmp(field,"num_LightsOffMinute")==0) {setLightsOffMinute(WebServer.getArgInt());}       
+  else if(strcmp(field,"num_AeroInterval")==0) { setAeroInterval(WebServer.getArgInt());}
+  else if(strcmp(field,"num_AeroDuration")==0) {setAeroDuration(WebServer.getArgInt());}
+  else if(strcmp(field,"num_AeroPressureLow")==0) {setAeroPressureLow(WebServer.getArgFloat());}
+  else if(strcmp(field,"num_AeroPressureHigh")==0) {setAeroPressureHigh(WebServer.getArgFloat());} 
+  else if(strcmp(field,"num_AeroOffset")==0) {setAeroOffset(WebServer.getArgFloat());} 
+  else if(strcmp(field,"time_ToSet")==0) {setTime(WebServer.getArgString());}
+  else if(strcmp(field,"check_AeroSprayEnabled")==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
   saveSettings(false);
 } 
 

@@ -1,13 +1,15 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter,PH Meter calibration,MQTT implementation, Add NTP: ESPLink-GetTime as EPOCH date source, website variables with capital letters)
+//TODO: flow meter,PH Meter calibration,  website variables with capital letters
 //TODO: publish set of bookmarks useful for the box (Gbox420,Gbox420(FirstStartup),Pushingbox,DIoTY,Sheets..)
 
 //Libraries
   #include "Thread.h"  //Splitting functions to threads
   #include "StaticThreadController.h"  //Grouping threads
   #include "TimerThree.h"  //Interrupt handling for webpage
+  #include "stdio.h"
+  #include "time.h"
   #include "DHT.h"  //DHT11 or DHT22 humidity and temperature sensor
   #include "SevenSegmentTM1637.h" // 4 digit LED display
   #include "SevenSegmentExtended.h" // 4 digit LED display
@@ -64,6 +66,8 @@
   const byte PressureSensorInPin = A1; //Signal(yellow) - Pressure sensor
 
 //Global constants
+  const int UTCOffsetHour = 1;  //UTC Time hour offset
+  const int UTCOffsetMinute = 0;  //UTC Time minute offset
   const char PushingBoxDeviceID[]= "v755877CF53383E1"; //UPDATE THIS to your grow box logging scenario DeviceID from PushingBox
   const char ReservoirAlertDeviceID[]  = "v6DA52FDF6FCDF74";  //UPDATE THIS to your reservoir alert scenario DeviceID from PushingBox
   const char PumpAlertDeviceID[]  = "v9F3E0683C4B3B49";  //UPDATE THIS to your pump alert scenario DeviceID from PushingBox
@@ -121,6 +125,7 @@
   bool PlayOnSound = false; //Turn on sound - website controls it
   bool PlayOffSound = false; //Turn off sound - website controls it
   bool PlayEE = false; //Surprise :) - website controls it
+  bool UpdateNtpTime = false; //When set to true clock is updated using NTP
   bool CalibrateLights = false; //Calibrate lights flag - website controls it
   int MaxLightReading = 0; // stores the highest light source strengt reading
   int MinLightReading = 1023; //stores the lowest light source strengt reading
@@ -268,8 +273,7 @@ void fiveSecRun(){
   updateTime();     
   readSensors();
   updateDisplay(); //Updates 4 digit display  
-  //Serial.println(freeMemory()); 
-  // Serial.println(EspCmd.GetTime());
+  //Serial.println(freeMemory());  
 }
 
 void minuteRun(){
@@ -287,8 +291,18 @@ void halfHourRun(){
 //Helper functions
 
 void updateTime() {  //fills the CurrentTime global variable
+  if(UpdateNtpTime)setNtpTime();
   Time Now = Clock.time();  // Get the current time and date from the chip.
   snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d",Now.yr, Now.mon, Now.date,Now.hr, Now.min, Now.sec);  //Format and store time
+}
+
+void setNtpTime(){
+   time_t now = EspCmd.GetTime() - UNIX_OFFSET + (UTCOffsetHour * 3600) + (UTCOffsetMinute * 60); //https://forum.arduino.cc/index.php?topic=567637.0
+   struct tm ts = *localtime(&now);
+   char FormattedTime[20];
+   strftime(FormattedTime, sizeof(FormattedTime), "%Y/%m/%d-%H:%M:%S", &ts);
+   setTime(FormattedTime);
+   UpdateNtpTime = false;
 }
 
 void setTime(char* dateToSet) {  //sets the real time clock
