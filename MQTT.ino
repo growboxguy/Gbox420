@@ -120,16 +120,16 @@ void mqttConnected(void* response) {
   strcat(MqttPath,MqttROOT);
   strcat(MqttPath,"#");
   Mqtt.subscribe(MqttPath);
-  Serial.print("MQTT connected!");
+  Serial.println("MQTT connected!");
 }
 
 void mqttDisconnected(void* response) {
   MqttAlive = false;  
-  Serial.print("MQTT disconnected");
+  Serial.println("MQTT disconnected");
 }
 
 void mqttPublished(void* response) {
-  Serial.print("MQTT published");
+  Serial.println("MQTT published");
 }
 
 void setupMqtt(){

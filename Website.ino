@@ -1,6 +1,6 @@
 void LoadCallback(char * url) //called when website is loaded
 {
-  Serial.print("LoadCB for URL: "); Serial.println(url);
+  //Serial.print("LoadCB for URL: "); Serial.println(url);
   if (strcmp(url,"/GrowBox.html.json")==0){  
   WebServer.setArgBoolean(F("check_TimerEnabled"), MySettings.isTimerEnabled);
   WebServer.setArgInt(F("num_LightsOnHour"), MySettings.LightOnHour); 
@@ -26,7 +26,7 @@ void LoadCallback(char * url) //called when website is loaded
 
 void RefreshCallback(char * url) //called when website is refreshed
 { 
-  Serial.print("RefreshCB for URL: "); Serial.println(url);
+  //Serial.print("RefreshCB for URL: "); Serial.println(url);
   if (strcmp(url,"/GrowBox.html.json")==0){   
   WebServer.setArgString(F("tdTime"), CurrentTime); 
   WebServer.setArgString(F("tdBoxTemp"),floatsToChar(BoxTempC,BoxTempF,"/"));
@@ -102,7 +102,7 @@ void ButtonPressCallback(char *button)
 
 //Called when any field on the website is updated
 void SetFieldCallback(char * field){
-  Serial.println(field);
+  //Serial.println(field);
   if(strcmp(field,"slider_Brightness")==0) {setBrightness(WebServer.getArgInt());}
   else if(strcmp(field,"slider_DigitDisplayBrightness")==0) {setDigitDisplayBacklight(WebServer.getArgInt());}
   else if(strcmp(field,"check_TimerEnabled")==0) {setTimerOnOff(WebServer.getArgBoolean());}

@@ -19,7 +19,7 @@ void ReportToGoogleSheets(bool LogMessage){
   strcat(WebMessage,"&Reservoir=");  strcat(WebMessage,intToChar(reservoirToPercent()));
   strcat(WebMessage,"&InternalFan="); strcat(WebMessage,fanSpeedToText(true));
   strcat(WebMessage,"&ExhaustFan="); strcat(WebMessage,fanSpeedToText(false)); 
-  Serial.print("Reporting to Google Sheets"); Serial.println(WebMessage);   
+  Serial.print("Reporting to Google Sheets: "); Serial.println(WebMessage);   
   RestAPI.get(WebMessage);
 }
 
@@ -42,7 +42,7 @@ void logToSerial(){
   Serial.print(F("\tInternal fan: "));Serial.print(fanSpeedToText(true));
   Serial.print(F("\tExhaust fan: "));Serial.println(fanSpeedToText(false));
   Serial.print(F("\tPressure: "));Serial.print(AeroPressure);Serial.print("bar/");Serial.print(AeroPressurePSI);Serial.print("psi");
-  Serial.print(F("\tLow: "));Serial.print(MySettings.AeroPressureLow);Serial.print(F("\tHigh: "));Serial.print(MySettings.AeroPressureHigh);
+  Serial.print(F("\tLow: "));Serial.print(MySettings.AeroPressureLow);Serial.print(F("\tHigh: "));Serial.println(MySettings.AeroPressureHigh);
   Serial.print(F("\tAeroInterval: "));Serial.print(MySettings.AeroInterval);Serial.print(F("\tAeroDuration: "));Serial.print(MySettings.AeroDuration);Serial.print(F("\tAeroOffset: "));Serial.println(MySettings.AeroOffset);
 }
 
