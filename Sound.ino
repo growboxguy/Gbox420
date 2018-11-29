@@ -15,7 +15,7 @@ void OnSound(){
   delay(100);
   noTone(BuzzerOutPin);
   }
-} 
+}
 
 void OffSound(){
   if(MySettings.isSoundEnabled){ 
@@ -26,7 +26,7 @@ void OffSound(){
   delay(100);
   noTone(BuzzerOutPin);
   }
-} 
+}
 
 void setSoundOnOff(bool soundState){
   MySettings.isSoundEnabled = soundState;

@@ -5,7 +5,7 @@ void calibrateLights(){
   MinLightReading = 1023;
   isPotGettingHigh = false;
   MySettings.isLightOn=true;
-  turnLightOnOff();
+  lightCheck();
   for (int steps = 0; steps < PotStepping; steps++) 
     {stepOne();}  //Sets the digital potentiometer to low irregardless what the stored startup value is
   MySettings.LightBrightness = 0;
@@ -14,13 +14,13 @@ void calibrateLights(){
   runToEnd();
   setBrightness(LastBrightness);
   MySettings.isLightOn=LastLightStatus;
-  turnLightOnOff();  
+  lightCheck();  
   strncpy(LogMessage,"New min/max: ",LogLength);
   strcat(LogMessage,intToChar(MinLightReading));
   strcat(LogMessage,"/");
   strcat(LogMessage,intToChar(MaxLightReading));
   addToLog(LogMessage);
-} 
+}
 
 void triggerCalibrateLights(){
   CalibrateLights = true;
@@ -63,7 +63,8 @@ void turnLightOFF(){
   PlayOffSound=true; 
 }
 
-void turnLightOnOff(){
+void lightCheck(){
+  if(!digitalRead(PowerButtonInPin))MySettings.isLightOn = !MySettings.isLightOn;  //If the power button is held in at the time of the measure invert the light status
   if(CalibrateLights){CalibrateLights=false;calibrateLights();}
   if(MySettings.isLightOn){
     digitalWrite(PowerLEDOutPin, HIGH); //Turn on Power Led on PC case if light is on
@@ -78,7 +79,7 @@ void turnLightOnOff(){
 void setTimerOnOff(bool TimerState){
   MySettings.isTimerEnabled = TimerState;
   if(MySettings.isTimerEnabled){ 
-    checkLightStatus();
+    checkLightTimer();
     addToLog("Timer enabled");
     PlayOnSound=true;
     }
@@ -94,7 +95,7 @@ void setLightsOnHour(int OnHour){
 
 void setLightsOnMinute(int OnMinute){
   MySettings.LightOnMinute = OnMinute;
-  checkLightStatus();
+  checkLightTimer();
   addToLog("Light ON time updated"); 
 }
 
@@ -104,11 +105,11 @@ void setLightsOffHour(int OffHour){
 
 void setLightsOffMinute(int OffMinute){
   MySettings.LightOffMinute = OffMinute;
-  checkLightStatus();
+  checkLightTimer();
   addToLog("Light OFF time updated");
 }
 
-void checkLightStatus() {  //fills the CurrentTime global variable
+void checkLightTimer() {  //fills the CurrentTime global variable
   if(MySettings.isTimerEnabled){
     Time Now = Clock.time();  // Get the current time and date from the chip.
     int CombinedOnTime = MySettings.LightOnHour * 100 + MySettings.LightOnMinute;

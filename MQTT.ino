@@ -69,7 +69,7 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttEe)!=NULL) { playEE(); }
   else if(strstr(topic,MqttInternalFan)!=NULL) {if(strcmp(data,"2")==0)internalFanHigh(); else if(strcmp(data,"1")==0)internalFanLow(); else if(strcmp(data,"0")==0)internalFanOff(); }
   else if(strstr(topic,MqttExhaustFan)!=NULL) {if(strcmp(data,"2")==0)exhaustFanHigh(); else if(strcmp(data,"1")==0)exhaustFanLow(); else if(strcmp(data,"0")==0)exhaustFanOff(); }
-  else if(strstr(topic,MqttGoogleSheets)!=NULL) { ReportToGoogleSheets();} 
+  else if(strstr(topic,MqttGoogleSheets)!=NULL) { ReportToGoogleSheets(true);} 
   else if(strstr(topic,MqttSaveSettings)!=NULL) { saveSettings(true);}
   else if(strstr(topic,MqttAeroSprayNow)!=NULL) { aeroSprayNow();}
   else if(strstr(topic,MqttAeroSprayOff)!=NULL) { aeroSprayOff();}  
@@ -80,8 +80,8 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttNtpTime)!=NULL) { UpdateNtpTime = true;}
 }
 
-void mqttPublush(){ //publish readings in JSON format
-  addToLog("Reporting to MQTT");
+void mqttPublush(bool LogMessage){ //publish readings in JSON format
+  if(LogMessage)addToLog("Reporting to MQTT");
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat(WebMessage,"{\"BoxDate\":\"");  strcat(WebMessage,CurrentTime);
   strcat(WebMessage,"\",\"BoxTempC\":\"");  strcat(WebMessage,floatToChar(BoxTempC));
@@ -104,10 +104,10 @@ void mqttPublush(){ //publish readings in JSON format
   memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable
   strcat(MqttPath,MqttROOT);
   strcat(MqttPath,MqttPUBLISH);
-  Serial.print(MqttPath); Serial.print(" - "); Serial.println(WebMessage);
+  Serial.print("Reporting to MQTT: ");Serial.print(MqttPath); Serial.print(" - "); Serial.println(WebMessage);
   Mqtt.publish(MqttPath, WebMessage);
 
-  if(millis() - LastHeartBeat > 1200000) //120sec - 2 reporting cycles, adjust this based on MQTT reporting frequency
+  if(millis() - LastHeartBeat > 1800000) //180sec - 3 reporting cycles, adjust this based on MQTT reporting frequency
     {
     bool MqttAlive = false;
     addToLog("MQTT Heartbeat stopped"); 

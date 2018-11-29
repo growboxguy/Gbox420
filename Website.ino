@@ -1,6 +1,6 @@
 void LoadCallback(char * url) //called when website is loaded
 {
-  //Serial.print("LoadCB for URL: "); Serial.println(url);
+  Serial.print("LoadCB for URL: "); Serial.println(url);
   if (strcmp(url,"/GrowBox.html.json")==0){  
   WebServer.setArgBoolean(F("check_TimerEnabled"), MySettings.isTimerEnabled);
   WebServer.setArgInt(F("num_LightsOnHour"), MySettings.LightOnHour); 
@@ -26,7 +26,7 @@ void LoadCallback(char * url) //called when website is loaded
 
 void RefreshCallback(char * url) //called when website is refreshed
 { 
-  //Serial.print("RefreshCB for URL: "); Serial.println(url);
+  Serial.print("RefreshCB for URL: "); Serial.println(url);
   if (strcmp(url,"/GrowBox.html.json")==0){   
   WebServer.setArgString(F("tdTime"), CurrentTime); 
   WebServer.setArgString(F("tdBoxTemp"),floatsToChar(BoxTempC,BoxTempF,"/"));
@@ -87,8 +87,8 @@ void ButtonPressCallback(char *button)
   else if (strcmp(button,"btn_ExhaustFanOff")==0) { exhaustFanOff();}
   else if (strcmp(button,"btn_ExhaustFanLow")==0) { exhaustFanLow();}
   else if (strcmp(button,"btn_ExhaustFanHigh")==0) { exhaustFanHigh();}
-  else if (strcmp(button,"btn_GoogleSheets")==0) { ReportToGoogleSheets();} 
-  else if (strcmp(button,"btn_Mqtt")==0) { mqttPublush();}
+  else if (strcmp(button,"btn_GoogleSheets")==0) { ReportToGoogleSheets(true);} 
+  else if (strcmp(button,"btn_Mqtt")==0) { mqttPublush(true);}
   else if (strcmp(button,"btn_SaveSettings")==0) { saveSettings(true);}
   else if (strcmp(button,"btn_AeroSprayNow")==0) { aeroSprayNow();}
   else if (strcmp(button,"btn_AeroSprayOff")==0) { aeroSprayOff();}  

@@ -8,8 +8,6 @@
   #include "Thread.h"  //Splitting functions to threads
   #include "StaticThreadController.h"  //Grouping threads
   #include "TimerThree.h"  //Interrupt handling for webpage
-  #include "Stdio.h"
-  #include "Time.h"
   #include "DHT.h"  //DHT11 or DHT22 humidity and temperature sensor
   #include "SevenSegmentTM1637.h" // 4 digit LED display
   #include "SevenSegmentExtended.h" // 4 digit LED display
@@ -20,6 +18,8 @@
   #include "ELClientCmd.h"  //ESP-link - Get current time from the internet using NTP
   #include "ELClientMqtt.h" //ESP-link - MQTT protocol for sending and receiving IoT messages
   #include "DS1302.h" //Real time clock
+  #include "Time.h"  //Time handling
+  #include "Stdio.h" //Time formatting
   #include "SPI.h" //TFT Screen - communication
   #include "Adafruit_ILI9341.h" //TFT Screen - hardware specific driver
   #include "Adafruit_GFX.h" //TFT Screen - generic graphics driver
@@ -77,10 +77,11 @@
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
   const byte PotStepping = 100;  // Digital potentiometer adjustment steps
   const unsigned long AeroPumpTimeout = 600000;  // Aeroponics - Max pump run time (10minutes)
-  const bool BlockLoadingSettings = false; //UPDATE THIS Set to true at first startup when EEPROM is empty OR
-                                          //if Settings stuct is changed, then save the settings to EEPRO from the website and change it back to false
-//Global variables
-  struct Settings //Saved to EEPROM persistent storage
+  const bool BlockLoadingSettings = true; //UPDATE THIS Set to true at first startup when EEPROM is empty OR 
+                                       //if Settings stuct is changed, then save the settings to EEPRO from the website and change it back to false
+
+//Settings saved to EEPROM persistent storage
+  struct Settings 
   {
   bool isLightOn = true;  //Startup status for lights: True-ON / False-OFF
   bool isSoundEnabled = true;  //Enable PC speaker
@@ -104,11 +105,11 @@
   float AeroOffset = 0.5; //Pressure sensor calibration - offset voltage
   bool ReportToGoogleSheets = true;
   bool ReportToMqtt = true;
-  bool ReportToSerial = true;
   };
   typedef struct Settings settings;  //create the settings type using the stucture
   settings MySettings;  //create a variable of "setting" type with "Setting structure"
 
+//Global variables
   float BoxTempC; // stores Temperature - Celsius
   float BoxTempF; // stores Temperature - Fahrenheit
   float Humidity; // stores relative humidity - %
@@ -248,7 +249,7 @@ void setup() {     // put your setup code here, to run once:
   minuteRun();
   halfHourRun();
   
-  //Start interrupts 
+  //Start interrupts to handle request from ESP-Link website
   Timer3.initialize(500);
   Timer3.attachInterrupt(processEspLink);
   Timer3.start();
@@ -264,9 +265,8 @@ void processEspLink(){
 }
 
 void oneSecRun(){
-  if(!digitalRead(PowerButtonInPin))MySettings.isLightOn = !MySettings.isLightOn;  //If the power button is held in at the time of the measure invert the light status
-  turnLightOnOff(); 
-  checkAeroStatus();  
+  lightCheck(); 
+  aeroCheck();  
   relayCheck();
   soundCheck();  
 }
@@ -274,60 +274,22 @@ void oneSecRun(){
 void fiveSecRun(){ 
   updateTime();     
   readSensors();
-  updateDisplay(); //Updates 4 digit display  
+  updateDisplay(); //Updates 7 digit display  
   //Serial.println(freeMemory());  
 }
 
 void minuteRun(){
-  readSensors(); 
-  checkLightStatus();    
-  if(MySettings.ReportToSerial)logToSerial();  //Logs sensor readings to Serial  
-  logToScreen();  //Display sensore readings on lcd screen
-  if(MySettings.ReportToMqtt) mqttPublush();
+  checkLightTimer(); 
+  logToSerial();  //Logs sensor readings to Serial  
+  logToScreen();  //Display sensore readings on lcd screen  
 }
 
 void halfHourRun(){
-  if(MySettings.ReportToGoogleSheets) ReportToGoogleSheets();  //uploads results to Google Sheets via the ESP REST API
+  if(MySettings.ReportToGoogleSheets) ReportToGoogleSheets(false);  //uploads readings to Google Sheets via ESP REST API
+  if(MySettings.ReportToMqtt) mqttPublush(false);  //publish readings via ESP MQTT API
 }
 
 //Helper functions
-
-void updateTime() {  //fills the CurrentTime global variable
-  if(UpdateNtpTime)setNtpTime();
-  Time Now = Clock.time();  // Get the current time and date from the chip.
-  snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d",Now.yr, Now.mon, Now.date,Now.hr, Now.min, Now.sec);  //Format and store time
-}
-
-void setNtpTime(){
-   time_t now = EspCmd.GetTime() - UNIX_OFFSET + (UTCOffsetHour * 3600) + (UTCOffsetMinute * 60); //https://forum.arduino.cc/index.php?topic=567637.0
-   struct tm ts = *localtime(&now);
-   char FormattedTime[20];
-   strftime(FormattedTime, sizeof(FormattedTime), "%Y/%m/%d-%H:%M:%S", &ts);
-   setTime(FormattedTime);
-   UpdateNtpTime = false;
-}
-
-void setTime(char* dateToSet) {  //sets the real time clock
-  addToLog(dateToSet);
-  int year    = cropFromString( dateToSet, 0, 4);
-  int month   = cropFromString( dateToSet, 5, 2);
-  int day     = cropFromString ( dateToSet, 8, 2);
-  int hour    = cropFromString ( dateToSet, 11, 2);
-  int minute  = cropFromString ( dateToSet, 14, 2);
-  int sec  = cropFromString ( dateToSet, 17, 2);  
-  Clock.writeProtect(false);  //Disable write protection
-  Time timeToSet(year,month,day,hour,minute,sec,Time::kSunday);
-  Clock.time(timeToSet);
-  Clock.halt(false);  //Enable setting the time
-  Clock.writeProtect(true); //Re-enable write protection
-}
-
-int cropFromString(char* string,int start, int width){
-  int value=0;
-  for( int n=0; n < width; n++ )
-    value = value * 10 + string[start+n] - '0';
-  return value;  
-}  
 
 void saveSettings(bool LogMessage){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
   eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings));
@@ -341,6 +303,6 @@ void loadSettings(){
 void SendEmailAlert(char* AlertType){
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,AlertType);  
-  Serial.println(WebMessage);   
+  //Serial.println(WebMessage);   
   RestAPI.get(WebMessage);
 }

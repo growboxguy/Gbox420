@@ -1,5 +1,5 @@
-void ReportToGoogleSheets(){
-  addToLog("Reporting to Google Sheets");
+void ReportToGoogleSheets(bool LogMessage){
+  if(LogMessage)addToLog("Reporting to Google Sheets");
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,PushingBoxDeviceID);
   strcat(WebMessage,"&BoxDate=");  strcat(WebMessage,CurrentTime);
@@ -19,7 +19,7 @@ void ReportToGoogleSheets(){
   strcat(WebMessage,"&Reservoir=");  strcat(WebMessage,intToChar(reservoirToPercent()));
   strcat(WebMessage,"&InternalFan="); strcat(WebMessage,fanSpeedToText(true));
   strcat(WebMessage,"&ExhaustFan="); strcat(WebMessage,fanSpeedToText(false)); 
-  Serial.println(WebMessage);   
+  Serial.print("Reporting to Google Sheets"); Serial.println(WebMessage);   
   RestAPI.get(WebMessage);
 }
 

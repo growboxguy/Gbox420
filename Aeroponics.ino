@@ -59,7 +59,7 @@ void aeroSprayOff(){
     addToLog("Aeroponics spray OFF");
 }
 
-void checkAeroStatus(){
+void aeroCheck(){
  checkAeroSprayTimer();
  checkAeroPump();
 }
@@ -144,4 +144,3 @@ void aeroPumpReset(){
   isAeroPumpOn = false;
   addToLog("Pump reset");
 }
-
