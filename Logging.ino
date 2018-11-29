@@ -1,4 +1,4 @@
-void reportToGoogleSheets(){
+void ReportToGoogleSheets(){
   addToLog("Reporting to Google Sheets");
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,PushingBoxDeviceID);

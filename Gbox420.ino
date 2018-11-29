@@ -1,15 +1,15 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter,PH Meter calibration,  website variables with capital letters
+//TODO: flow meter,PH Meter calibration
 //TODO: publish set of bookmarks useful for the box (Gbox420,Gbox420(FirstStartup),Pushingbox,DIoTY,Sheets..)
 
 //Libraries
   #include "Thread.h"  //Splitting functions to threads
   #include "StaticThreadController.h"  //Grouping threads
   #include "TimerThree.h"  //Interrupt handling for webpage
-  #include "stdio.h"
-  #include "time.h"
+  #include "Stdio.h"
+  #include "Time.h"
   #include "DHT.h"  //DHT11 or DHT22 humidity and temperature sensor
   #include "SevenSegmentTM1637.h" // 4 digit LED display
   #include "SevenSegmentExtended.h" // 4 digit LED display
@@ -77,7 +77,7 @@
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
   const byte PotStepping = 100;  // Digital potentiometer adjustment steps
   const unsigned long AeroPumpTimeout = 600000;  // Aeroponics - Max pump run time (10minutes)
-  const bool BlockLoadingSettings = true; //UPDATE THIS Set to true at first startup when EEPROM is empty OR
+  const bool BlockLoadingSettings = false; //UPDATE THIS Set to true at first startup when EEPROM is empty OR
                                           //if Settings stuct is changed, then save the settings to EEPRO from the website and change it back to false
 //Global variables
   struct Settings //Saved to EEPROM persistent storage
@@ -102,6 +102,9 @@
   float AeroPressureLow= 5.5; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroPressureHigh = 7.0 ; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroOffset = 0.5; //Pressure sensor calibration - offset voltage
+  bool ReportToGoogleSheets = true;
+  bool ReportToMqtt = true;
+  bool ReportToSerial = true;
   };
   typedef struct Settings settings;  //create the settings type using the stucture
   settings MySettings;  //create a variable of "setting" type with "Setting structure"
@@ -258,7 +261,6 @@ void loop() {  // put your main code here, to run repeatedly:
 
 void processEspLink(){
   ESPLink.Process();
-
 }
 
 void oneSecRun(){
@@ -279,13 +281,13 @@ void fiveSecRun(){
 void minuteRun(){
   readSensors(); 
   checkLightStatus();    
-  logToSerial();  //Logs sensor readings to Serial  
+  if(MySettings.ReportToSerial)logToSerial();  //Logs sensor readings to Serial  
   logToScreen();  //Display sensore readings on lcd screen
-  mqttPublush();
+  if(MySettings.ReportToMqtt) mqttPublush();
 }
 
 void halfHourRun(){
-   reportToGoogleSheets();  //uploads results to Google Sheets via the ESP REST API
+  if(MySettings.ReportToGoogleSheets) ReportToGoogleSheets();  //uploads results to Google Sheets via the ESP REST API
 }
 
 //Helper functions
@@ -327,9 +329,9 @@ int cropFromString(char* string,int start, int width){
   return value;  
 }  
 
-void saveSettings(bool LogChange){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
+void saveSettings(bool LogMessage){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
   eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings));
-  if(LogChange) addToLog("Settings saved to EEPROM");
+  if(LogMessage) addToLog("Settings saved to EEPROM");
 }
 
 void loadSettings(){
@@ -342,4 +344,3 @@ void SendEmailAlert(char* AlertType){
   Serial.println(WebMessage);   
   RestAPI.get(WebMessage);
 }
-

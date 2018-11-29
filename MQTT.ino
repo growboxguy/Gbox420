@@ -6,7 +6,7 @@ char MqttPath[64];
 //Global constants
 const char* MqttROOT = "/growboxguy@gmail.com/";
 const char* MqttPUBLISH = "Gbox420";
-const char* MqttLights = "Lights";
+const char* MqttLights = "Lights";  
 const char* MqttBrightness = "Brightness";
 const char* MqttDisplayBrightness = "DisplayBrightness";
 const char* MqttTimerEnabled = "TimerEnabled";
@@ -69,7 +69,7 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttEe)!=NULL) { playEE(); }
   else if(strstr(topic,MqttInternalFan)!=NULL) {if(strcmp(data,"2")==0)internalFanHigh(); else if(strcmp(data,"1")==0)internalFanLow(); else if(strcmp(data,"0")==0)internalFanOff(); }
   else if(strstr(topic,MqttExhaustFan)!=NULL) {if(strcmp(data,"2")==0)exhaustFanHigh(); else if(strcmp(data,"1")==0)exhaustFanLow(); else if(strcmp(data,"0")==0)exhaustFanOff(); }
-  else if(strstr(topic,MqttGoogleSheets)!=NULL) { reportToGoogleSheets();} 
+  else if(strstr(topic,MqttGoogleSheets)!=NULL) { ReportToGoogleSheets();} 
   else if(strstr(topic,MqttSaveSettings)!=NULL) { saveSettings(true);}
   else if(strstr(topic,MqttAeroSprayNow)!=NULL) { aeroSprayNow();}
   else if(strstr(topic,MqttAeroSprayOff)!=NULL) { aeroSprayOff();}  
@@ -145,4 +145,3 @@ void MqttHeartBeat(){
   MqttAlive = true;
   LastHeartBeat = millis();
 }
-

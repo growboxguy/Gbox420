@@ -1,6 +1,6 @@
 void LoadCallback(char * url) //called when website is loaded
 {
-  Serial.print("LoadCB for URL: "); Serial.println(url);
+  //Serial.print("LoadCB for URL: "); Serial.println(url);
   if (strcmp(url,"/GrowBox.html.json")==0){  
   WebServer.setArgBoolean(F("check_TimerEnabled"), MySettings.isTimerEnabled);
   WebServer.setArgInt(F("num_LightsOnHour"), MySettings.LightOnHour); 
@@ -16,6 +16,9 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgString(F("num_AeroPressureHigh"), floatToChar(MySettings.AeroPressureHigh));
   WebServer.setArgBoolean(F("check_AeroSprayEnabled"), MySettings.isAeroSprayEnabled);
 
+  WebServer.setArgBoolean(F("check_GoogleSheetsEnabled"), MySettings.ReportToGoogleSheets);
+  WebServer.setArgBoolean(F("check_MqttEnabled"), MySettings.ReportToMqtt);
+
   WebServer.setArgInt(F("slider_DigitDisplayBrightness"), MySettings.DigitDisplayBacklight);
   WebServer.setArgInt(F("check_SoundEnabled"), MySettings.isSoundEnabled);
   }
@@ -23,7 +26,7 @@ void LoadCallback(char * url) //called when website is loaded
 
 void RefreshCallback(char * url) //called when website is refreshed
 { 
-  Serial.print("RefreshCB for URL: "); Serial.println(url);
+  //Serial.print("RefreshCB for URL: "); Serial.println(url);
   if (strcmp(url,"/GrowBox.html.json")==0){   
   WebServer.setArgString(F("tdTime"), CurrentTime); 
   WebServer.setArgString(F("tdBoxTemp"),floatsToChar(BoxTempC,BoxTempF,"/"));
@@ -84,7 +87,8 @@ void ButtonPressCallback(char *button)
   else if (strcmp(button,"btn_ExhaustFanOff")==0) { exhaustFanOff();}
   else if (strcmp(button,"btn_ExhaustFanLow")==0) { exhaustFanLow();}
   else if (strcmp(button,"btn_ExhaustFanHigh")==0) { exhaustFanHigh();}
-  else if (strcmp(button,"btn_GoogleSheets")==0) { reportToGoogleSheets();} 
+  else if (strcmp(button,"btn_GoogleSheets")==0) { ReportToGoogleSheets();} 
+  else if (strcmp(button,"btn_Mqtt")==0) { mqttPublush();}
   else if (strcmp(button,"btn_SaveSettings")==0) { saveSettings(true);}
   else if (strcmp(button,"btn_AeroSprayNow")==0) { aeroSprayNow();}
   else if (strcmp(button,"btn_AeroSprayOff")==0) { aeroSprayOff();}  
@@ -92,7 +96,7 @@ void ButtonPressCallback(char *button)
   else if (strcmp(button,"btn_PumpOff")==0) { aeroPumpOff();}  
   else if (strcmp(button,"btn_PumpReset")==0) { aeroPumpReset();}
   else if (strcmp(button,"btn_PressureCalibrate")==0) { calibratePressureSensor();}
-  else if (strcmp(button,"btn_NtpTime")==0) { UpdateNtpTime = true;} //takes too long to process
+  else if (strcmp(button,"btn_NtpTime")==0) { UpdateNtpTime = true;}  
   saveSettings(false); 
 }
 
@@ -114,6 +118,9 @@ void SetFieldCallback(char * field){
   else if(strcmp(field,"num_AeroOffset")==0) {setAeroOffset(WebServer.getArgFloat());} 
   else if(strcmp(field,"time_ToSet")==0) {setTime(WebServer.getArgString());}
   else if(strcmp(field,"check_AeroSprayEnabled")==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
+  else if(strcmp(field,"check_GoogleSheetsEnabled")==0) {MySettings.ReportToGoogleSheets = WebServer.getArgBoolean();}
+  else if(strcmp(field,"check_MqttEnabled")==0) {MySettings.ReportToMqtt = WebServer.getArgBoolean();}
+  
   saveSettings(false);
 } 
 
