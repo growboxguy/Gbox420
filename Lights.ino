@@ -10,8 +10,8 @@ void calibrateLights(){
     {stepOne();}  //Sets the digital potentiometer to low irregardless what the stored startup value is
   MySettings.LightBrightness = 0;
   isPotGettingHigh = true;  //set next step direction
-  runToEnd();
-  runToEnd();
+  runToEnd(); //runs to highest value
+  runToEnd(); //runs to lowest value (same function)
   setBrightness(LastBrightness);
   MySettings.isLightOn=LastLightStatus;
   lightCheck();  

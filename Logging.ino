@@ -1,3 +1,24 @@
+void LogToSerials(char * TextToPrint,bool breakLine){
+  if(breakLine){
+    Serial.println(TextToPrint);
+    Serial3.println(TextToPrint);
+  }
+  else{
+    Serial.print(TextToPrint);
+    Serial3.print(TextToPrint);
+  }
+}
+
+void addToLog(const char *message){
+  LogToSerials(message,true);
+  for(int i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldes
+     memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
+     strncpy(Logs[i],Logs[i-1],LogLength ) ; 
+    }  
+  memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
+  strncpy(Logs[0],message,LogLength);  //instert new log to [0]
+}
+
 void ReportToGoogleSheets(bool LogMessage){
   if(LogMessage)addToLog("Reporting to Google Sheets");
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
@@ -38,24 +59,14 @@ void logToSerial(){
   if(isBright) Serial.print(F("\tIt is bright"));else Serial.print(F("\tIt is dark"));  
   Serial.print(F("\tBrightness: ")); Serial.print(MySettings.LightBrightness);
   Serial.print(F("\tLightReading: ")); Serial.print(LightReading); Serial.print(F(" - ")); Serial.print(LightReadingPercent); Serial.println(F("%"));
-  Serial.print(F("\tReservoir: (")); Serial.print(reservoirToPercent());  Serial.print(F(")\t"));  Serial.print(reservoirToText(true));
-  Serial.print(F("\tInternal fan: "));Serial.print(fanSpeedToText(true));
-  Serial.print(F("\tExhaust fan: "));Serial.println(fanSpeedToText(false));
+  Serial.print(F("\tInternal fan: "));Serial.print(fanSpeedToText(true));  Serial.print(F("\tExhaust fan: "));Serial.print(fanSpeedToText(false));
+  Serial.print(F("\tReservoir: (")); Serial.print(reservoirToPercent());  Serial.print(F(")\t"));  Serial.println(reservoirToText(true));
   Serial.print(F("\tPressure: "));Serial.print(AeroPressure);Serial.print("bar/");Serial.print(AeroPressurePSI);Serial.print("psi");
   Serial.print(F("\tLow: "));Serial.print(MySettings.AeroPressureLow);Serial.print(F("\tHigh: "));Serial.println(MySettings.AeroPressureHigh);
   Serial.print(F("\tAeroInterval: "));Serial.print(MySettings.AeroInterval);Serial.print(F("\tAeroDuration: "));Serial.print(MySettings.AeroDuration);Serial.print(F("\tAeroOffset: "));Serial.println(MySettings.AeroOffset);
 }
 
 
-void addToLog(const char *message){
-  Serial.println(message);
-  for(int i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldes
-     memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
-     strncpy(Logs[i],Logs[i-1],LogLength ) ; 
-    }  
-  memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
-  strncpy(Logs[0],message,LogLength);  //instert new log to [0]
-}
 
 char * intToChar(int Number){
   static char ReturnChar[8] = ""; //7 digits + null terminator max

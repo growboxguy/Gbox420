@@ -38,7 +38,6 @@ const char* MqttPressureCalibrate = "PressureCalibrate";
 const char* MqttNtpTime = "NtpTime";
 //const char* Mqtt = "";
 
-
 void mqttReceived(void* response) {
   ELClientResponse *res = (ELClientResponse *)response;
   char topic[64];
