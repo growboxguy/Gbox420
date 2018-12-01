@@ -139,9 +139,9 @@ void runToEnd(){  //Goes to Minimum or Maximum dimming, measure light intensity 
     if(LightReading < MinLightReading) MinLightReading = LightReading;
     if(StepCounter % 10 == 0)  //modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
       {  
-       if(isPotGettingHigh)Serial.print(StepCounter);
-       else Serial.print(PotStepping - StepCounter);
-       Serial.print(F("% - ")); Serial.println(LightReading);
+       if(isPotGettingHigh)LogToSerials(StepCounter,false);
+       else LogToSerials(PotStepping - StepCounter,false);
+       LogToSerials(F("% - "),false); LogToSerials(LightReading,true);
       }  
      StepCounter++;
   }

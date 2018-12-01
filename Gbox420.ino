@@ -256,8 +256,7 @@ void setup() {     // put your setup code here, to run once:
 }
 
 void loop() {  // put your main code here, to run repeatedly:
-  ThreadControl.run(); 
-  //while(Serial3.available()) Serial.println(Serial3.readString() ); //Read output of ESP Serial - For setup/debugging, comment the line out once wifi setup is complete
+  ThreadControl.run();  
 }
 
 void processEspLink(){
@@ -275,7 +274,7 @@ void fiveSecRun(){
   updateTime();     
   readSensors();
   updateDisplay(); //Updates 7 digit display  
-  //Serial.println(freeMemory());  
+  //LogToSerials(freeMemory(),true);  
 }
 
 void minuteRun(){
@@ -303,6 +302,6 @@ void loadSettings(){
 void SendEmailAlert(char* AlertType){
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,AlertType);  
-  //Serial.println(WebMessage);   
+  //LogToSerials(WebMessage,true);   
   RestAPI.get(WebMessage);
 }

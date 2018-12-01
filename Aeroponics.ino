@@ -68,7 +68,7 @@ void checkAeroSprayTimer(){
  if(isAeroSprayOn)    { //if spray is on
     if(millis() - AeroSprayTimer >= MySettings.AeroDuration){  //if time to stop spraying
       isAeroSprayOn = false;
-      Serial.println("Stopping spray");
+      LogToSerials("Stopping spray",true);
       PlayOffSound = true;
       AeroSprayTimer = millis();
     }
@@ -77,7 +77,7 @@ void checkAeroSprayTimer(){
     if(millis() - AeroSprayTimer >= MySettings.AeroInterval){ //if time to start spraying
       if(MySettings.isAeroSprayEnabled){
       isAeroSprayOn = true;
-      Serial.println("Starting spray");
+      LogToSerials("Starting spray",true);
       PlayOnSound = true;
       AeroSprayTimer = millis();
       }

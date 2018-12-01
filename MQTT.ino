@@ -45,7 +45,7 @@ void mqttReceived(void* response) {
   ((*res).popString()).toCharArray(topic, 64);
   ((*res).popString()).toCharArray(data, 16);
 
-  Serial.print("Received: ");Serial.print(topic);Serial.print(" - ");Serial.println(data);
+  LogToSerials("Received: ",false);LogToSerials(topic,false);LogToSerials(" - ",false);LogToSerials(data,true);
   if(strstr(topic,MqttPUBLISH)!=NULL) {MqttHeartBeat(); } //Subscribed to own MQTT feed: Confirming connection is still alive
   else if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(); else if(strcmp(data,"0")==0)turnLightOFF(); }
   else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data)); }
@@ -103,7 +103,7 @@ void mqttPublush(bool LogMessage){ //publish readings in JSON format
   memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable
   strcat(MqttPath,MqttROOT);
   strcat(MqttPath,MqttPUBLISH);
-  Serial.print("Reporting to MQTT: ");Serial.print(MqttPath); Serial.print(" - "); Serial.println(WebMessage);
+  LogToSerials("Reporting to MQTT: ",false);LogToSerials(MqttPath,false); LogToSerials(" - ",false); LogToSerials(WebMessage,true);
   Mqtt.publish(MqttPath, WebMessage);
 
   if(millis() - LastHeartBeat > 1800000) //180sec - 3 reporting cycles, adjust this based on MQTT reporting frequency
@@ -119,16 +119,16 @@ void mqttConnected(void* response) {
   strcat(MqttPath,MqttROOT);
   strcat(MqttPath,"#");
   Mqtt.subscribe(MqttPath);
-  Serial.println("MQTT connected!");
+  LogToSerials("MQTT connected!",true);
 }
 
 void mqttDisconnected(void* response) {
   MqttAlive = false;  
-  Serial.println("MQTT disconnected");
+  LogToSerials("MQTT disconnected",true);
 }
 
 void mqttPublished(void* response) {
-  Serial.println("MQTT published");
+  LogToSerials("MQTT published",true);
 }
 
 void setupMqtt(){

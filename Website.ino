@@ -1,6 +1,6 @@
 void LoadCallback(char * url) //called when website is loaded
 {
-  //Serial.print("LoadCB for URL: "); Serial.println(url);
+  //LogToSerials("LoadCB for URL: ",false); LogToSerials(url,true);
   if (strcmp(url,"/GrowBox.html.json")==0){  
   WebServer.setArgBoolean(F("check_TimerEnabled"), MySettings.isTimerEnabled);
   WebServer.setArgInt(F("num_LightsOnHour"), MySettings.LightOnHour); 
@@ -26,7 +26,7 @@ void LoadCallback(char * url) //called when website is loaded
 
 void RefreshCallback(char * url) //called when website is refreshed
 { 
-  //Serial.print("RefreshCB for URL: "); Serial.println(url);
+  //LogToSerials("RefreshCB for URL: ",false); LogToSerials(url,true);
   if (strcmp(url,"/GrowBox.html.json")==0){   
   WebServer.setArgString(F("tdTime"), CurrentTime); 
   WebServer.setArgString(F("tdBoxTemp"),floatsToChar(BoxTempC,BoxTempF,"/"));
@@ -74,7 +74,7 @@ void RefreshCallback(char * url) //called when website is refreshed
 //Called when any button on the website is pressed
 void ButtonPressCallback(char *button)
 {
-  //Serial.println(button);
+  //LogToSerials(button,true);
   if (strcmp(button,"btn_LightOn")==0) { turnLightON(); }
   else if (strcmp(button,"btn_LightOff")==0) { turnLightOFF(); }
   else if (strcmp(button,"btn_LightCalibrate")==0) {triggerCalibrateLights();}
@@ -102,7 +102,7 @@ void ButtonPressCallback(char *button)
 
 //Called when any field on the website is updated
 void SetFieldCallback(char * field){
-  //Serial.println(field);
+  //LogToSerials(field,true);
   if(strcmp(field,"slider_Brightness")==0) {setBrightness(WebServer.getArgInt());}
   else if(strcmp(field,"slider_DigitDisplayBrightness")==0) {setDigitDisplayBacklight(WebServer.getArgInt());}
   else if(strcmp(field,"check_TimerEnabled")==0) {setTimerOnOff(WebServer.getArgBoolean());}
@@ -128,8 +128,7 @@ void SetFieldCallback(char * field){
 void resetWebServer(void) {  
   addToLog("WebServer (re)starting");
   while(!ESPLink.Sync())  {
-    Serial.print(".");
-    Serial3.print(".");
+    LogToSerials(".",false);
     delay(500);
     };
   RestAPI.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets 

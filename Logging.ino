@@ -1,11 +1,56 @@
-void LogToSerials(char * TextToPrint,bool breakLine){
+void LogToSerials(const char * ToPrint,bool breakLine){
   if(breakLine){
-    Serial.println(TextToPrint);
-    Serial3.println(TextToPrint);
+    Serial.println(ToPrint);
+    Serial3.println(ToPrint);
   }
   else{
-    Serial.print(TextToPrint);
-    Serial3.print(TextToPrint);
+    Serial.print(ToPrint);
+    Serial3.print(ToPrint);
+  }
+}
+
+void LogToSerials(const __FlashStringHelper * ToPrint,bool breakLine){
+  if(breakLine){
+    Serial.println(ToPrint);
+    Serial3.println(ToPrint);
+  }
+  else{
+    Serial.print(ToPrint);
+    Serial3.print(ToPrint);
+  }
+}
+
+
+void LogToSerials(const int & ToPrint,bool breakLine){
+  if(breakLine){
+    Serial.println(ToPrint);
+    Serial3.println(ToPrint);
+  }
+  else{
+    Serial.print(ToPrint);
+    Serial3.print(ToPrint);
+  }
+}
+
+void LogToSerials(const long unsigned int& ToPrint,bool breakLine){
+  if(breakLine){
+    Serial.println(ToPrint);
+    Serial3.println(ToPrint);
+  }
+  else{
+    Serial.print(ToPrint);
+    Serial3.print(ToPrint);
+  }
+}
+
+void LogToSerials(const float & ToPrint,bool breakLine){
+  if(breakLine){
+    Serial.println(ToPrint);
+    Serial3.println(ToPrint);
+  }
+  else{
+    Serial.print(ToPrint);
+    Serial3.print(ToPrint);
   }
 }
 
@@ -40,30 +85,30 @@ void ReportToGoogleSheets(bool LogMessage){
   strcat(WebMessage,"&Reservoir=");  strcat(WebMessage,intToChar(reservoirToPercent()));
   strcat(WebMessage,"&InternalFan="); strcat(WebMessage,fanSpeedToText(true));
   strcat(WebMessage,"&ExhaustFan="); strcat(WebMessage,fanSpeedToText(false)); 
-  Serial.print("Reporting to Google Sheets: "); Serial.println(WebMessage);   
+  LogToSerials("Reporting to Google Sheets: ",false); LogToSerials(WebMessage,true);   
   RestAPI.get(WebMessage);
 }
 
 void logToSerial(){  
-  Serial.print(CurrentTime);
-  Serial.print(F("\tTempF: ")); Serial.print(BoxTempC); Serial.print(F("C"));
-  Serial.print(F("\tTempF: ")); Serial.print(BoxTempF); Serial.print(F("F"));
-  Serial.print(F("\tHumidity: ")); Serial.print(Humidity); Serial.print( F("%"));
-  Serial.print(F("\tPower: ")); Serial.print(Power); Serial.println(F("W")); 
-  Serial.print(F("\tEnergy: ")); Serial.print(Energy); Serial.print(F("Wh"));   
-  Serial.print(F("\tVoltage: ")); Serial.print(Voltage); Serial.print(F("V"));
-  Serial.print(F("\tCurrent: ")); Serial.print(Current); Serial.print(F("A"));
-  Serial.print(F("\tPH: ")); Serial.print(PH);
-  Serial.print(F("\tMoisture: ")); Serial.print(Moisture); Serial.println(F("% "));
-  if(MySettings.isLightOn) Serial.print(F("\tLight is on"));else Serial.print(F("\tLight is off"));  
-  if(isBright) Serial.print(F("\tIt is bright"));else Serial.print(F("\tIt is dark"));  
-  Serial.print(F("\tBrightness: ")); Serial.print(MySettings.LightBrightness);
-  Serial.print(F("\tLightReading: ")); Serial.print(LightReading); Serial.print(F(" - ")); Serial.print(LightReadingPercent); Serial.println(F("%"));
-  Serial.print(F("\tInternal fan: "));Serial.print(fanSpeedToText(true));  Serial.print(F("\tExhaust fan: "));Serial.print(fanSpeedToText(false));
-  Serial.print(F("\tReservoir: (")); Serial.print(reservoirToPercent());  Serial.print(F(")\t"));  Serial.println(reservoirToText(true));
-  Serial.print(F("\tPressure: "));Serial.print(AeroPressure);Serial.print("bar/");Serial.print(AeroPressurePSI);Serial.print("psi");
-  Serial.print(F("\tLow: "));Serial.print(MySettings.AeroPressureLow);Serial.print(F("\tHigh: "));Serial.println(MySettings.AeroPressureHigh);
-  Serial.print(F("\tAeroInterval: "));Serial.print(MySettings.AeroInterval);Serial.print(F("\tAeroDuration: "));Serial.print(MySettings.AeroDuration);Serial.print(F("\tAeroOffset: "));Serial.println(MySettings.AeroOffset);
+  LogToSerials(CurrentTime,false);
+  LogToSerials(F("\tTempF: "),false); LogToSerials(BoxTempC,false); LogToSerials(F("C"),false);
+  LogToSerials(F("\tTempF: "),false); LogToSerials(BoxTempF,false); LogToSerials(F("F"),false);
+  LogToSerials(F("\tHumidity: "),false); LogToSerials(Humidity,false); LogToSerials( F("%"),false);
+  LogToSerials(F("\tPower: "),false); LogToSerials(Power,false); LogToSerials(F("W"),true); 
+  LogToSerials(F("\tEnergy: "),false); LogToSerials(Energy,false); LogToSerials(F("Wh"),false);   
+  LogToSerials(F("\tVoltage: "),false); LogToSerials(Voltage,false); LogToSerials(F("V"),false);
+  LogToSerials(F("\tCurrent: "),false); LogToSerials(Current,false); LogToSerials(F("A"),false);
+  LogToSerials(F("\tPH: "),false); LogToSerials(PH,false);
+  LogToSerials(F("\tMoisture: "),false); LogToSerials(Moisture,false); LogToSerials(F("% "),true);
+  if(MySettings.isLightOn) LogToSerials(F("\tLight is on"),false);else LogToSerials(F("\tLight is off"),false);  
+  if(isBright) LogToSerials(F("\tIt is bright"),false);else LogToSerials(F("\tIt is dark"),false);  
+  LogToSerials(F("\tBrightness: "),false); LogToSerials(MySettings.LightBrightness,false);
+  LogToSerials(F("\tLightReading: "),false); LogToSerials(LightReading,false); LogToSerials(F(" - "),false); LogToSerials(LightReadingPercent,false); LogToSerials(F("%"),true);
+  LogToSerials(F("\tInternal fan: "),false);LogToSerials(fanSpeedToText(true),false);  LogToSerials(F("\tExhaust fan: "),false);LogToSerials(fanSpeedToText(false),false);
+  LogToSerials(F("\tReservoir: ("),false); LogToSerials(reservoirToPercent(),false);  LogToSerials(F(")\t"),false);  LogToSerials(reservoirToText(true),true);
+  LogToSerials(F("\tPressure: "),false);LogToSerials(AeroPressure,false);LogToSerials("bar/",false);LogToSerials(AeroPressurePSI,false);LogToSerials("psi",false);
+  LogToSerials(F("\tLow: "),false);LogToSerials(MySettings.AeroPressureLow,false);LogToSerials(F("\tHigh: "),false);LogToSerials(MySettings.AeroPressureHigh,true);
+  LogToSerials(F("\tAeroInterval: "),false);LogToSerials(MySettings.AeroInterval,false);LogToSerials(F("\tAeroDuration: "),false);LogToSerials(MySettings.AeroDuration,false);LogToSerials(F("\tAeroOffset: "),false);LogToSerials(MySettings.AeroOffset,true);
 }
 
 
