@@ -2,7 +2,7 @@
 //Sketch for testig: PC speaker
 
 //Pins
-const int BuzzerOutPin = 3;
+const int BuzzerOutPin = 4;
 const int BuiltInLEDOutPin = 13;
 
 //Global constants

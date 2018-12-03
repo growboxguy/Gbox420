@@ -27,7 +27,7 @@
   //#include "MemoryFree.h" //checking for remaining memory - only for debugging
 
 //Pins
-  const byte BuzzerOutPin = 3; //PC speaker+ (red)
+  const byte BuzzerOutPin = 4; //PC speaker+ (red)
   const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
   const byte PowerLEDOutPin = 46;  //PC case Power LED
   const byte HddLEDOutPin = 47; //PC case HDD LED
