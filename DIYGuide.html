@@ -6,11 +6,70 @@
 					padding: 0;
 					border: none;
 					width: 100%;					
-					height: 99vh;
+					height: 95vh;
 					overflow:hidden;
 					scrolling: no;
 					}
+					.tablink {
+					  background-color: #555;
+					  color: white;
+					  float: right;
+					  border: none;
+					  outline: none;
+					  cursor: pointer;
+					  padding: 5px 5px;
+					  font-size: 17px;
+					  width: 25%;
+					}
+
+					.tablink:hover {
+					  background-color: #777;
+					}
+
+					/* Style the tab content (and add height:100% for full page content) */
+					.tabcontent {
+					  color: white;
+					  display: none;
+					  padding: 0px;
+					  height: 100%;
+					}
+
 		</style>
-		<iframe src="https://sites.google.com/site/growboxguy/arduino"></iframe>
+		
+		
+		<button class="tablink" onclick="openPage('DIYGuide', this, 'green')" id="defaultOpen">DIY Guide</button>
+		<button class="tablink" onclick="openPage('HiveMQ', this, 'orange')">HiveMQ</button>
+
+		<div id="DIYGuide" class="tabcontent">
+		  <iframe src="https://sites.google.com/site/growboxguy/arduino"></iframe>
+		</div>
+		<div id="HiveMQ" class="tabcontent">
+		  <iframe src="http://www.hivemq.com/demos/websocket-client/"></iframe>
+		</div>
+<script>
+function openPage(pageName, elmnt, color) {
+    // Hide all elements with class="tabcontent" by default */
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    // Remove the background color of all tablinks/buttons
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+    }
+
+    // Show the specific tab content
+    document.getElementById(pageName).style.display = "block";
+
+    // Add the specific color to the button used to open the tab content
+    elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();		
+</script>		
 </body>
 </html>

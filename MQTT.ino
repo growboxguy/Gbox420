@@ -1,6 +1,6 @@
 //Global variables
 bool MqttAlive = false;
-long LastHeartBeat;
+unsigned long LastHeartBeat;
 char MqttPath[64];
 
 //Global constants

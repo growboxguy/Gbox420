@@ -1,9 +1,9 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter,PH Meter calibration,Free up Port3 (Might be needed to handle interrupts)
+//TODO: flow meter,PH Meter calibration,email alerts review
 //TODO: publish set of bookmarks useful for the box to the webinterface (Gbox420,Gbox420(FirstStartup),Pushingbox,DIoTY,Sheets..)
-//TODO: Assign unsigned to vairables where negativ numbers are not needed
+
 
 //Libraries
   #include "Thread.h"  //Splitting functions to threads
@@ -67,8 +67,8 @@
   const byte PressureSensorInPin = A1; //Signal(yellow) - Pressure sensor
 
 //Global constants
-  const int UTCOffsetHour = 1;  //UTC Time hour offset
-  const int UTCOffsetMinute = 0;  //UTC Time minute offset
+  const byte UTCOffsetHour = 1;  //UTC Time hour offset
+  const byte UTCOffsetMinute = 0;  //UTC Time minute offset
   const char PushingBoxDeviceID[]= "v755877CF53383E1"; //UPDATE THIS to your grow box logging scenario DeviceID from PushingBox
   const char ReservoirAlertDeviceID[]  = "v6DA52FDF6FCDF74";  //UPDATE THIS to your reservoir alert scenario DeviceID from PushingBox
   const char PumpAlertDeviceID[]  = "v9F3E0683C4B3B49";  //UPDATE THIS to your pump alert scenario DeviceID from PushingBox
@@ -99,8 +99,8 @@
   byte LightOffHour = 16; //Light OFF time - hour
   byte LightOffMinute = 20; //Light OFF time - minute
   bool isAeroSprayEnabled = true;
-  unsigned long AeroInterval = 300000; //Aeroponics - Spray every 5 minutes (300000 ms)
-  unsigned long AeroDuration = 15000; //Aeroponics - Spray for 15 seconds (15000 ms)
+  unsigned long AeroInterval = 5; //Aeroponics - Spray every 5 minutes
+  unsigned long AeroDuration = 15; //Aeroponics - Spray for 15 secondsf
   float AeroPressureLow= 5.5; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroPressureHigh = 7.0 ; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroOffset = 0.5; //Pressure sensor calibration - offset voltage
@@ -140,7 +140,7 @@
   int Moisture ; //Reading of moisture content
   byte MoisturePercentage ; //Moisture content relative to max,min values measued
   char CurrentTime[20];  //time gets read into this from clock  
-  long AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
+  unsigned long AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
   unsigned long AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
   bool isAeroSprayOn = false; //Aeroponics - Spray state, set to true to spay at power on
   bool isAeroPumpOn = false; //Aeroponics - High pressure pump state
@@ -300,7 +300,7 @@ void loadSettings(){
   eeprom_read_block((void*)&MySettings, (void*)0, sizeof(MySettings));
 }
 
-void SendEmailAlert(char* AlertType){
+void SendEmailAlert(const char* AlertType){
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,AlertType);  
   //LogToSerials(WebMessage,true);   

@@ -10,8 +10,8 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgInt(F("slider_Brightness"), MySettings.LightBrightness);
   WebServer.setArgInt(F("num_Brightness"), MySettings.LightBrightness);
 
-  WebServer.setArgInt(F("num_AeroInterval"), MySettings.AeroInterval/60000);
-  WebServer.setArgInt(F("num_AeroDuration"), MySettings.AeroDuration/1000);
+  WebServer.setArgInt(F("num_AeroInterval"), MySettings.AeroInterval);
+  WebServer.setArgInt(F("num_AeroDuration"), MySettings.AeroDuration);
   WebServer.setArgString(F("num_AeroPressureLow"), floatToChar(MySettings.AeroPressureLow));
   WebServer.setArgString(F("num_AeroPressureHigh"), floatToChar(MySettings.AeroPressureHigh));
   WebServer.setArgBoolean(F("check_AeroSprayEnabled"), MySettings.isAeroSprayEnabled);

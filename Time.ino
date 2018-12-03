@@ -29,8 +29,8 @@ void setTime(char* dateToSet) {  //sets the real time clock
 }
 
 int cropFromString(char* string,int start, int width){
-  int value=0;
-  for( int n=0; n < width; n++ )
+  byte value=0;
+  for( byte n=0; n < width; n++ )
     value = value * 10 + string[start+n] - '0';
   return value;  
 }

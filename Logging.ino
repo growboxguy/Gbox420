@@ -56,7 +56,7 @@ void LogToSerials(const float & ToPrint,bool breakLine){
 
 void addToLog(const char *message){
   LogToSerials(message,true);
-  for(int i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldes
+  for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldes
      memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
      strncpy(Logs[i],Logs[i-1],LogLength ) ; 
     }  

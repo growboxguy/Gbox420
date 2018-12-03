@@ -10,8 +10,8 @@
 		.tg th{border-style:solid;border-width:1px;font-size:14px;font-weight:normal;overflow:hidden;word-break:normal;}
 		.tg .headerRows{font-size:14px;font-family:serif !important;text-align:center;vertical-align:center}
 		.tg .dataRows{font-size:13px;font-family:serif !important;text-align:center;vertical-align:top}
-		 button {margin:0px;padding:0px;height:23px;vertical-align:middle;align-items:center}
-		 h1 {padding:0px;margin:0px;}
+		 button {margin:0px;padding:0px;height:24px;vertical-align:bottom;align-items:center;-webkit-appearance:button !important;line-height:normal}
+		 h1 {padding:0px;margin:0px;margin-bottom:6px;}
 	</style>	
 	<div class="pure-g">
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">	
@@ -136,7 +136,7 @@
 					Pump high: <input style="width: 50px;" min=0 max=8 name	="num_AeroPressureHigh" type="number" step="0.1"/> bar					
 					<input type="submit" value="Set">
 				</form>
-				<form>Offset: <input style="width: 50px;" min=0 max=5 name="num_AeroOffset" type="number" step="0.01"/> <input type="submit" value="Set"> <button id="btn_PressureCalibrate" type="button" style="margin-top:-2px">0 pressure</button></form>					
+				<form>Offset: <input style="width: 50px;" min=0 max=5 name="num_AeroOffset" type="number" step="0.01"/> <input type="submit" value="Set"> <button id="btn_PressureCalibrate" type="button" style="margin-top:0px">0 pressure</button></form>					
 				<form><input type="checkbox" name="check_AeroSprayEnabled">Spray enabled <input type="submit" value="Set"></form>
 				<form>
 					Spray interval : <input style="width: 45px;" min=0 name="num_AeroInterval" type="number"/> min</br>
@@ -163,12 +163,11 @@
 			<div class="card" style="width:90%">
 				<h1>Logs</h1>
 				<ul id="list_SerialLog"></ul>
-				<form><input type="checkbox" name="check_GoogleSheetsEnabled">Google Sheets <input type="submit" value="Set"></form>
-				<form><input type="checkbox" name="check_MqttEnabled">MQTT </input><input type="submit" value="Set"></form>
-				Trigger: <button id="btn_GoogleSheets" type="button">Google Sheets </button> <button id="btn_Mqtt" type="button">MQTT </button>
+				<form><input type="checkbox" name="check_GoogleSheetsEnabled">Google Sheets <input type="submit" value="Set"> <button id="btn_GoogleSheets" type="button" style="margin-top:0px">Trigger</button></form>
+				<form><input type="checkbox" name="check_MqttEnabled">MQTT </input><input type="submit" value="Set"> <button id="btn_Mqtt" type="button" style="margin-top:0px">Trigger</button></form>
 			</div>					
 			<div class="card" style="width:90%">
-				<h1>Settings<button style="height:32px;width:32px;-webkit-appearance:none;border-radius:0;"  id="btn_Ee" type="button"><img style="padding:0px;height:28px;width:28px;" src="https://sites.google.com/site/growboxguy/home/gbox420.png" /></button></h1>
+				<h1>Settings<button style="height:32px;width:32px;border-radius:0;"  id="btn_Ee" type="button"><img style="padding:0px;height:28px;width:28px;" src="https://sites.google.com/site/growboxguy/home/gbox420.png" /></button></h1>
 				<form><input type=datetime-local step=1 name="time_ToSet"/> <input type="submit" value="Set time"></form>
 				<button id="btn_NtpTime" type="button">NTP time</button></br>
 				<form>Backlight: Min<input style="width:100px;" type="range" name="slider_DigitDisplayBrightness" min="0" max="100"/>Max <input type="submit" value="Set"></form>

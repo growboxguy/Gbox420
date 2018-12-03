@@ -24,7 +24,7 @@ void logToScreen(){
   Screen.print(F(", Exhaust "));Screen.println(fanSpeedToText(false));
   Screen.setTextColor(ILI9341_GREEN);
   Screen.print(F("Pressure:"));Screen.print(AeroPressure);Screen.print(F(" ("));Screen.print(MySettings.AeroPressureLow);Screen.print(F("/"));Screen.print(MySettings.AeroPressureHigh);Screen.println(F(")"));
-  Screen.print(F("Interval:"));Screen.print(MySettings.AeroInterval/60000);Screen.print(F(", Duration:"));Screen.println(MySettings.AeroDuration/1000);
+  Screen.print(F("Interval:"));Screen.print(MySettings.AeroInterval);Screen.print(F(", Duration:"));Screen.println(MySettings.AeroDuration/1000);
 }
 
 //***4 digit display***
@@ -88,11 +88,10 @@ void updateDisplay() { //Cycles through the different phases
       break;
   }
   CurrentStep++;  
-  CurrentStep = 15; //locked to Pressure for calibration
+  //CurrentStep = 15; //locked to Pressure for calibration
 }
 
 void setDigitDisplayBacklight(int Backlight){
   MySettings.DigitDisplayBacklight=Backlight;
   DigitDisplay.setBacklight(MySettings.DigitDisplayBacklight);
 }
-

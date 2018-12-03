@@ -23,12 +23,12 @@ void calibratePressureSensor(){  //Should only be called when there is 0 pressur
 }
 
 void setAeroInterval(int interval){  
-  MySettings.AeroInterval = interval * 60000; 
+  MySettings.AeroInterval = interval; 
   AeroSprayTimer = millis(); 
 }
 
 void setAeroDuration(int duration){  
-  MySettings.AeroDuration = WebServer.getArgInt() * 1000;
+  MySettings.AeroDuration = duration;
   AeroSprayTimer = millis(); 
   addToLog("Spray time updated");  
 }
@@ -66,7 +66,7 @@ void aeroCheck(){
 
 void checkAeroSprayTimer(){
  if(isAeroSprayOn)    { //if spray is on
-    if(millis() - AeroSprayTimer >= MySettings.AeroDuration){  //if time to stop spraying
+    if(millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //if time to stop spraying (AeroDuration in Seconds)
       isAeroSprayOn = false;
       LogToSerials("Stopping spray",true);
       PlayOffSound = true;
@@ -74,7 +74,7 @@ void checkAeroSprayTimer(){
     }
   }
   else{ //if spray is off
-    if(millis() - AeroSprayTimer >= MySettings.AeroInterval){ //if time to start spraying
+    if(millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
       if(MySettings.isAeroSprayEnabled){
       isAeroSprayOn = true;
       LogToSerials("Starting spray",true);
