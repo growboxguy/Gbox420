@@ -1,8 +1,9 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter,PH Meter calibration
-//TODO: publish set of bookmarks useful for the box (Gbox420,Gbox420(FirstStartup),Pushingbox,DIoTY,Sheets..)
+//TODO: flow meter,PH Meter calibration,Free up Port3 (Might be needed to handle interrupts)
+//TODO: publish set of bookmarks useful for the box to the webinterface (Gbox420,Gbox420(FirstStartup),Pushingbox,DIoTY,Sheets..)
+//TODO: Assign unsigned to vairables where negativ numbers are not needed
 
 //Libraries
   #include "Thread.h"  //Splitting functions to threads
