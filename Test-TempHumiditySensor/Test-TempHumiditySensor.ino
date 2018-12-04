@@ -2,7 +2,7 @@
 //Sketch for testing: Humidity and temperature sensor
 
 //Libraries
-#include <DHT.h>;
+#include "DHT.h";
 
 //Pins
 const int TempSensorInPin=43;     // DAT digital input - DHT22 sensor

@@ -2,8 +2,8 @@
 //Sketch for testing: Set time on real time clock module. Update the timeToSet variable and run the sketch once.
 
 //Libraries
-#include <stdio.h>  //Format Real time clock output
-#include <DS1302.h>  //Real time clock
+#include "stdio.h"  //Format Real time clock output
+#include "DS1302.h"  //Real time clock
 
 //Pins
 const int ClockRSTPin   = 5;  // Reset -  Real time clock
@@ -34,5 +34,3 @@ String getTime() {
   snprintf(CurrentTime, sizeof(CurrentTime), "%04d-%02d-%02d %02d:%02d:%02d",Now.yr, Now.mon, Now.date,Now.hr, Now.min, Now.sec);
   return CurrentTime;
 }
-
-

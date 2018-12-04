@@ -41,9 +41,9 @@
   const byte DigitDisplayCLKOutPin = 31; //CLK - 4 digit LED display
   const byte DigitDisplayDI0OutPin = 30; //DIO - 4 digit LED display
   const byte TempSensorInPin = 43; //DAT - DHT22 temp/humidity sensor
-  const byte ClockRSTPin   = 5;  //Reset -  Real time clock
-  const byte ClockDATPin   = 6;  //Data -  Real time clock
-  const byte ClockCLKPin = 7;    //Serial Clock -  Real time clock
+  const byte ClockRSTPin = 5;  //Reset -  Real time clock
+  const byte ClockDATPin = 6;  //Data -  Real time clock
+  const byte ClockCLKPin = 7;  //Serial Clock -  Real time clock
   const byte Relay1OutPin = 22;  //Power relay Port 1 - Aeroponics solenoid
   const byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump
   const byte Relay3OutPin = 24;  //Power relay Port 3 - PC power supply
@@ -67,8 +67,8 @@
   const byte PressureSensorInPin = A1; //Signal(yellow) - Pressure sensor
 
 //Global constants
-  const byte UTCOffsetHour = 1;  //UTC Time hour offset
-  const byte UTCOffsetMinute = 0;  //UTC Time minute offset
+  const int UTCOffsetHour = 1;  //UTC Time hour offset
+  const int UTCOffsetMinute = 0;  //UTC Time minute offset
   const char PushingBoxDeviceID[]= "v755877CF53383E1"; //UPDATE THIS to your grow box logging scenario DeviceID from PushingBox
   const char ReservoirAlertDeviceID[]  = "v6DA52FDF6FCDF74";  //UPDATE THIS to your reservoir alert scenario DeviceID from PushingBox
   const char PumpAlertDeviceID[]  = "v9F3E0683C4B3B49";  //UPDATE THIS to your pump alert scenario DeviceID from PushingBox
@@ -272,7 +272,7 @@ void oneSecRun(){
 }
 
 void fiveSecRun(){ 
-  updateTime();     
+  getRTCTime();     
   readSensors();
   updateDisplay(); //Updates 7 digit display  
   //LogToSerials(freeMemory(),true);  

@@ -35,7 +35,7 @@ void setup()
  
 void loop()
 {
-     //Play first section
+  //Play first section
   firstSection();
  
   //Play second section

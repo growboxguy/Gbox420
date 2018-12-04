@@ -1,4 +1,4 @@
-void updateTime() {  //fills the CurrentTime global variable
+void getRTCTime() {  //fills the CurrentTime global variable
   if(UpdateNtpTime)setNtpTime();
   Time Now = Clock.time();  // Get the current time and date from the chip.
   snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d",Now.yr, Now.mon, Now.date,Now.hr, Now.min, Now.sec);  //Format and store time
@@ -28,8 +28,8 @@ void setTime(char* dateToSet) {  //sets the real time clock
   Clock.writeProtect(true); //Re-enable write protection
 }
 
-int cropFromString(char* string,int start, int width){
-  byte value=0;
+int cropFromString(char* string,byte start, byte width){
+  int value=0;
   for( byte n=0; n < width; n++ )
     value = value * 10 + string[start+n] - '0';
   return value;  
