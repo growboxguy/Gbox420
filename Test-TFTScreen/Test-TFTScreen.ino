@@ -36,12 +36,12 @@ void setup() {  // put your setup code here, to run once:
 }
 
 void loop() {  // put your main code here, to run repeatedly:
-//for(uint8_t rotation=0; rotation<4; rotation++) {
-    //Serial.print("Screen rotation: "); Serial.println(rotation);
-    Screen.setRotation(1);
+for(byte rotation=0; rotation<4; rotation++) {
+    Serial.print("Screen rotation: "); Serial.println(rotation);
+    Screen.setRotation(rotation);
     testText();
-    delay(50000);
- // }
+    delay(5000);
+  }
 }
 
 void testText() {

@@ -149,7 +149,7 @@
   float AeroPressurePSI = 0.0;  //Aeroponics - Current pressure (psi)
   char LogMessage[LogLength]; //temp storage for assemling log messages
   char Logs[LogDepth][LogLength];  //two dimensional array for storing log histroy (array of char arrays)
-  char WebMessage[512];   //buffer for REST API messages
+  char WebMessage[512];   //buffer for REST and MQTT API messages
 
 //Component initialization
   DS1302 Clock(ClockRSTPin, ClockDATPin, ClockCLKPin); //Real time clock

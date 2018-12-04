@@ -3,27 +3,32 @@
 
 //Libraries
 #include "ELClient.h"
-#include "ELClientCmd.h"
 #include "ELClientMqtt.h"
 
 //Global constants
-const char* MqttROOT = "/growboxguy@gmail.com/";
-const char* MqttPUBLISH = "Gbox420";
-const char* MqttInternalFan = "InternalFan"; //int, 3 options: 0-Off,1-Low,2-High
-const char* MqttBrightness = "Brightness";  //int
-const char* MqttTimerEnabled = "TimerEnabled"; //bool
-const char* MqttAeroPressureHigh = "AeroPressureHigh"; //float
-
+const char* MqttROOT = "/growboxguy@gmail.com/"; //Root of every MQTT message
+const char* MqttPUBLISH = "Gbox420";  //Readings get published under this topic
+const char* MqttInternalFan = "InternalFan"; //MQTT command the code responds to 
+const char* MqttBrightness = "Brightness";  //MQTT command the code responds to
+const char* MqttLightOn = "LightOn"; //MQTT command the code responds to
+const char* MqttAeroPressureHigh = "AeroPressureHigh"; //MQTT command the code responds to
+const char* MqttString = "MqttString"; //char
+    
 //Global variables
 bool MqttAlive = false;
-long LastHeartBeat;
+unsigned long LastHeartBeat;
+unsigned long LastPublish;
 char MqttPath[64];
-int count = 0;
-uint32_t last;
+int PublishedCounter = 0;
+//fake variables to report and update
+int InternalFan = 0;
+int LightBrightness = 50;
+bool LightOn=false;
+float AeroPressureHigh = 7.1;
+char TestString[30] = "Gbox420";
 
 //Component initialization
 ELClient ESPLink(&Serial3);
-ELClientCmd EspCmd(&ESPLink);
 ELClientMqtt Mqtt(&ESPLink);
 
 void setup() {
@@ -48,21 +53,30 @@ void setup() {
 
 void loop() {
   ESPLink.Process();
-  if ( count == 0 || (millis()-last) > 60000) {
+  if ( PublishedCounter == 0 || (millis()-LastPublish) > 10000) {
+    PublishedCounter++;
     mqttPublish();
+    LastPublish = millis(); 
   }
 }
 
-void mqttPublish(){
-  Serial.print(F("Reporting to MQTT: "));
-    Serial.println(count);
-    char message[18];
-    itoa(count++, message, 10);
-    memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable
+void mqttPublish(){ 
+    char WebMessage[512];   //buffer for MQTT API messages (severly oversized)
+    memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
+    strcat(WebMessage,"{\"Counter\":\"");  strcat(WebMessage,intToChar(PublishedCounter));
+    strcat(WebMessage,"\",\"InternalFan\":\""); strcat(WebMessage,intToChar(InternalFan));
+    strcat(WebMessage,"\",\"Brightness\":\"");  strcat(WebMessage,intToChar(LightBrightness));
+    strcat(WebMessage,"\",\"LightOn\":\"");  strcat(WebMessage,intToChar(LightOn)); //bool is int (0 or 1)
+    strcat(WebMessage,"\",\"AeroPressureHigh\":\"");  strcat(WebMessage,floatToChar(AeroPressureHigh));
+    strcat(WebMessage,"\",\"MqttString\":\"");  strcat(WebMessage,TestString);  
+    strcat(WebMessage,"\"}");  //closing the JSON formatted 
+      
+    memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable to store the Publish to path
     strcat(MqttPath,MqttROOT);
     strcat(MqttPath,MqttPUBLISH);
-    Mqtt.publish(MqttPath, message);    
-    last = millis();
+    
+    Serial.print(PublishedCounter); Serial.print(". publish to: ");Serial.print(MqttPath);Serial.print(" - ");Serial.println(WebMessage);
+    Mqtt.publish(MqttPath, WebMessage);       
 }
   
 void mqttConnected(void* response) {
@@ -81,58 +95,78 @@ void mqttReceived(void* response) {
   ((*res).popString()).toCharArray(data, 16);
 
   Serial.print(F("Received: "));Serial.print(topic);Serial.print(F(" - "));Serial.println(data);
-  
-  if(strstr(topic,MqttPUBLISH)!=NULL) {MqttHeartBeat(); } //Subscribed to own MQTT feed: Confirming connection is still alive
-  else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data)); }
-  else if(strstr(topic,MqttTimerEnabled)!=NULL) {setTimerOnOff(atoi(data));} //bool 
-  else if(strstr(topic,MqttInternalFan)!=NULL) {if(strcmp(data,"2")==0)internalFanHigh(); else if(strcmp(data,"1")==0)internalFanLow(); else if(strcmp(data,"0")==0)internalFanOff(); }
-  else if(strstr(topic,MqttAeroPressureHigh)!=NULL) {setAeroPressureHigh(atof(data));} 
+
+  //Checking what keyword the topic contains
+  if(strstr(topic,MqttPUBLISH)!=NULL) {MqttHeartBeat(); } //Subscribed to own MQTT Publish feed: Confirming last publish was successful
+  else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data)); } //expects int parameter
+  else if(strstr(topic,MqttLightOn)!=NULL) {setLightOnOff(atoi(data));} //expects bool parameter
+  else if(strstr(topic,MqttInternalFan)!=NULL) {setFanSpeed(atoi(data));} //expects int parameter, 3 options: 0-Off,1-Low,2-High
+  else if(strstr(topic,MqttAeroPressureHigh)!=NULL) {setAeroPressureHigh(atof(data));}  //expects float parameter
+  else if(strstr(topic,MqttString)!=NULL) {setMqttSting(data);}  //expects char array parameter
+}
+
+void mqttDisconnected(void* response) {
+  Serial.println(F("MQTT disconnected"));
+  MqttAlive = false;
+}
+
+void MqttHeartBeat(){
+  Serial.println(F("MQTT heartbeat received"));
+  MqttAlive = true;
+  LastHeartBeat = millis();
 }
 
 void mqttPublished(void* response) {
   Serial.println(F("MQTT published"));
 }
 
-void mqttDisconnected(void* response) {
-  Serial.println(F("MQTT disconnected"));
+//Methods for converting to char 
+char * intToChar(int Number){
+  static char ReturnChar[8] = ""; //7 digits + null terminator max
+  itoa(Number, ReturnChar, 10);
+  return ReturnChar;
 }
 
-void MqttHeartBeat(){
-  Serial.println(F("MQTT heartbeat received"));
+char * floatToChar(float Number){  
+  static char ReturnFloatChar[8] = ""; //4 digits + decimal sign + 2 decimals + null terminator
+  dtostrf(Number, 4, 2, ReturnFloatChar); 
+  return ReturnFloatChar;
 }
 
 //Fake methods getting triggered by MQTT messages
 
 void setAeroPressureHigh(float PressureHigh){
+  AeroPressureHigh = PressureHigh;
   Serial.print(F("Max pressure: "));Serial.println(PressureHigh);
 }
 
 void setBrightness(int brigtness){
+  LightBrightness = brigtness;
   Serial.print(F("Brightness: "));Serial.println(brigtness);
 }
 
-void setTimerOnOff(bool isTimerEnabled)
+void setLightOnOff(bool isLightOn)
 {
-if (isTimerEnabled) Serial.println(F("Timer enabled"));
-else Serial.println(F("Timer disabled"));  
+  LightOn =  isLightOn;
+  if (isLightOn) Serial.println(F("Fake light turned ON"));
+  else Serial.println(F("Fake light turned OFF"));
 }
 
-void turnLightON(){
-  Serial.println(F("Fake light turned ON"));
+void setMqttSting(char * StringToSet){
+  memset(&TestString[0], 0, sizeof(TestString)); 
+  strcpy(TestString, StringToSet);
+  Serial.print("Word of the day is: ");Serial.println(StringToSet);
 }
 
-void turnLightOFF(){
-  Serial.println(F("Fake light turned OFF"));
-}
-
-void internalFanHigh(){
-  Serial.println(F("Fake Internal fan High"));
-}
-
-void internalFanLow(){
-  Serial.println(F("Fake Internal fan Low"));
-}
-
-void internalFanOff(){
-  Serial.println(F("Fake Internal fan OFF"));
+void setFanSpeed(int FanSpeed){
+  InternalFan = FanSpeed;
+  if(FanSpeed==2){
+    Serial.println(F("Fake Internal fan High"));
+  } 
+  else if(FanSpeed==1){
+    Serial.println(F("Fake Internal fan Medium"));
+  } 
+  else if(FanSpeed==0){
+    Serial.println(F("Fake Internal fan Low"));
+  }  
 }
