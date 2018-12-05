@@ -6,8 +6,10 @@
 #include "ELClientMqtt.h"
 
 //Global constants
-const char* MqttROOT = "/growboxguy@gmail.com/"; //Root of every MQTT message
+const char* MqttROOT = "growboxguy@gmail.com/"; //UPDATE THIS - Root of every MQTT message, / at the end is important!
 const char* MqttPUBLISH = "Gbox420";  //Readings get published under this topic
+const char* MqttLwtTopic = "LWT";  //When the connection is lost to the MQTT broker, the broker will publish a final message to this topic
+const char* MqttLwtMessage = "Gbox420 Offline"; //this is the message subscribers will get under the topic specified by MqttLwtTopic variable
 const char* MqttInternalFan = "InternalFan"; //MQTT command the code responds to 
 const char* MqttBrightness = "Brightness";  //MQTT command the code responds to
 const char* MqttLightOn = "LightOn"; //MQTT command the code responds to
@@ -44,7 +46,10 @@ void setup() {
   Mqtt.disconnectedCb.attach(mqttDisconnected);
   Mqtt.publishedCb.attach(mqttPublished);
   Mqtt.dataCb.attach(mqttReceived);
-  Mqtt.lwt(F("/growboxguy@gmail.com/lwt"), F("Gbox420 Offline"), 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker, after Gbox420 has gone offline.
+  memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable to store the Publish to path
+  strcat(MqttPath,MqttROOT);
+  strcat(MqttPath,MqttLwtTopic);
+  Mqtt.lwt(MqttPath, MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker, after Gbox420 has gone offline.
   Mqtt.setup();
   Serial.println(F("MQTT initialized"));
 }

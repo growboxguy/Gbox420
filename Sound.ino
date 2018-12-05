@@ -139,7 +139,7 @@ int tempo[] = {
 };
 
 void EE() { 
-  Timer3.stop();  
+  Timer3.stop();  //temporary stop responding to the ESP-link website
   int size = sizeof(melody) / sizeof(int);
   for (int thisNote = 0; thisNote < size; thisNote++) {
     // to calculate the note duration, take one second
@@ -152,9 +152,10 @@ void EE() {
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);      
     // stop the tone playing:
-    buzz(BuzzerOutPin, 0, noteDuration);    
+    buzz(BuzzerOutPin, 0, noteDuration); 
+    wdt_reset(); //Reset Watchdog timeout to avoid Arduino reseting while playing the song   
   }
-  Timer3.start(); 
+  Timer3.start(); //Continue responding to the ESP-link website
 }
 
 void buzz(int targetPin, long frequency, long length) {

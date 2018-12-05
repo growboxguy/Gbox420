@@ -6,6 +6,7 @@
 
 
 //Libraries
+  #include "avr/wdt.h" //Watchdog timer
   #include "Thread.h"  //Splitting functions to threads
   #include "StaticThreadController.h"  //Grouping threads
   #include "TimerThree.h"  //Interrupt handling for webpage
@@ -174,6 +175,7 @@
 void setup() {     // put your setup code here, to run once:
   Serial.begin(115200);    //2560mega console output
   Serial3.begin(115200);  //wifi console output
+  wdt_enable(WDTO_8S); //Watchdog timer set to 8 seconds
   addToLog("GrowBox initializing...");
   if(!BlockLoadingSettings)loadSettings();
 
@@ -257,7 +259,7 @@ void setup() {     // put your setup code here, to run once:
 }
 
 void loop() {  // put your main code here, to run repeatedly:
-  ThreadControl.run();  
+  ThreadControl.run();    
 }
 
 void processEspLink(){
@@ -265,6 +267,7 @@ void processEspLink(){
 }
 
 void oneSecRun(){
+  wdt_reset(); //reset watchdog timeout
   lightCheck(); 
   aeroCheck();  
   relayCheck();
@@ -272,6 +275,7 @@ void oneSecRun(){
 }
 
 void fiveSecRun(){ 
+  wdt_reset(); //reset watchdog timeout
   getRTCTime();     
   readSensors();
   updateDisplay(); //Updates 7 digit display  
@@ -279,12 +283,14 @@ void fiveSecRun(){
 }
 
 void minuteRun(){
+  wdt_reset(); //reset watchdog timeout
   checkLightTimer(); 
   logToSerial();  //Logs sensor readings to Serial  
   logToScreen();  //Display sensore readings on lcd screen  
 }
 
 void halfHourRun(){
+  wdt_reset(); //reset watchdog timeout
   if(MySettings.ReportToGoogleSheets) ReportToGoogleSheets(false);  //uploads readings to Google Sheets via ESP REST API
   if(MySettings.ReportToMqtt) mqttPublush(false);  //publish readings via ESP MQTT API
 }

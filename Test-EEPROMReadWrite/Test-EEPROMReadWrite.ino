@@ -16,14 +16,16 @@ settings MySettings;  //create a variable of "setting" type with "Setting struct
 
 void setup() {
   Serial.begin(115200);
+  Serial.println("Original settings:");
   Serial.println(MySettings.TestInt);
   Serial.println(MySettings.TestFloat);
   Serial.println(MySettings.TestBool);
-  Serial.println(F("Saving setting to EEPROM"));
+  Serial.println(F("Saved setting to EEPROM"));
   eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings));  //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
 }
 
 void loop(void) {
+  Serial.println();
   Serial.println(F("Changing setting in memory"));
   MySettings.TestInt = 421;
   MySettings.TestFloat = 4.21;
@@ -31,17 +33,11 @@ void loop(void) {
   Serial.println(MySettings.TestInt);
   Serial.println(MySettings.TestFloat);
   Serial.println(MySettings.TestBool);
-  
-  Serial.println(F("Reading setting back from EEPROM"));
+  Serial.println();
+  Serial.println(F("Restoring setting from EEPROM"));
   eeprom_read_block((void*)&MySettings, (void*)0, sizeof(MySettings));
   Serial.println(MySettings.TestInt);
   Serial.println(MySettings.TestFloat);
   Serial.println(MySettings.TestBool);
-  delay(60000);
+  delay(86400000);
 }
-
-
-
-
-
-
