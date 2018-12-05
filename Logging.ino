@@ -129,8 +129,8 @@ char * intsToChar(int Number1, int Number2,const char * Separator){
   return ReturnChar;
 }
 
-char * floatToChar(float Number){  //4 digits + decimal sign + 2 decimals + null terminator
-  static char ReturnFloatChar[8] = "";
+char * floatToChar(float Number){ 
+  static char ReturnFloatChar[8] = "";  //4 digits + decimal sign + 2 decimals + null terminator
   dtostrf(Number, 4, 2, ReturnFloatChar); 
   return ReturnFloatChar;
 }

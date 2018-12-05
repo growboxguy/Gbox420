@@ -12,13 +12,11 @@ const char* MqttInternalFan = "InternalFan"; //MQTT command the code responds to
 const char* MqttBrightness = "Brightness";  //MQTT command the code responds to
 const char* MqttLightOn = "LightOn"; //MQTT command the code responds to
 const char* MqttAeroPressureHigh = "AeroPressureHigh"; //MQTT command the code responds to
-const char* MqttString = "MqttString"; //char
+const char* MqttString = "MqttString"; //MQTT command the code responds to
     
 //Global variables
-bool MqttAlive = false;
-unsigned long LastHeartBeat;
-unsigned long LastPublish;
 char MqttPath[64];
+unsigned long LastPublish;
 int PublishedCounter = 0;
 //fake variables to report and update
 int InternalFan = 0;
@@ -46,9 +44,9 @@ void setup() {
   Mqtt.disconnectedCb.attach(mqttDisconnected);
   Mqtt.publishedCb.attach(mqttPublished);
   Mqtt.dataCb.attach(mqttReceived);
-  Mqtt.lwt("/lwt", "offline", 0, 0); //declares what message should be sent on it's behalf by the broker, after Gbox420 has gone offline.
+  Mqtt.lwt(F("/growboxguy@gmail.com/lwt"), F("Gbox420 Offline"), 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker, after Gbox420 has gone offline.
   Mqtt.setup();
-  Serial.println(F("MQTT ready"));
+  Serial.println(F("MQTT initialized"));
 }
 
 void loop() {
@@ -107,13 +105,10 @@ void mqttReceived(void* response) {
 
 void mqttDisconnected(void* response) {
   Serial.println(F("MQTT disconnected"));
-  MqttAlive = false;
 }
 
 void MqttHeartBeat(){
   Serial.println(F("MQTT heartbeat received"));
-  MqttAlive = true;
-  LastHeartBeat = millis();
 }
 
 void mqttPublished(void* response) {
