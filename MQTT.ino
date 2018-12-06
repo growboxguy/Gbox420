@@ -1,11 +1,11 @@
 //Global variables
-bool MqttAlive = false;
-unsigned long LastHeartBeat;
 char MqttPath[64];
 
 //Global constants
 const char* MqttROOT = "/growboxguy@gmail.com/";
 const char* MqttPUBLISH = "Gbox420";
+const char* MqttLwtTopic = "LWT";  //When the connection is lost the MQTT broker will publish a final message to this topic
+const char* MqttLwtMessage = "Gbox420 Offline"; //this is the message subscribers will get under the topic specified by MqttLwtTopic variable
 const char* MqttLights = "Lights";  
 const char* MqttBrightness = "Brightness";
 const char* MqttDisplayBrightness = "DisplayBrightness";
@@ -46,8 +46,7 @@ void mqttReceived(void* response) {
   ((*res).popString()).toCharArray(data, 16);
 
   LogToSerials("Received: ",false);LogToSerials(topic,false);LogToSerials(" - ",false);LogToSerials(data,true);
-  if(strstr(topic,MqttPUBLISH)!=NULL) {MqttHeartBeat(); } //Subscribed to own MQTT feed: Confirming connection is still alive
-  else if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(); else if(strcmp(data,"0")==0)turnLightOFF(); }
+  if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(); else if(strcmp(data,"0")==0)turnLightOFF(); }
   else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data)); }
   else if(strstr(topic,MqttDisplayBrightness)!=NULL) {setDigitDisplayBacklight(atoi(data));}
   else if(strstr(topic,MqttTimerEnabled)!=NULL) {setTimerOnOff(atoi(data));} //bool 
@@ -104,17 +103,10 @@ void mqttPublush(bool LogMessage){ //publish readings in JSON format
   strcat(MqttPath,MqttROOT);
   strcat(MqttPath,MqttPUBLISH);
   LogToSerials("Reporting to MQTT: ",false);LogToSerials(MqttPath,false); LogToSerials(" - ",false); LogToSerials(WebMessage,true);
-  Mqtt.publish(MqttPath, WebMessage);
-
-  if(millis() - LastHeartBeat > 1800000) //180sec - 3 reporting cycles, adjust this based on MQTT reporting frequency
-    {
-    bool MqttAlive = false;
-    addToLog("MQTT Heartbeat stopped"); 
-    }
+  Mqtt.publish(MqttPath, WebMessage,0,1); //(topic,message,qos,retain)
 }
 
 void mqttConnected(void* response) {
-  MqttAlive = true;
   memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable
   strcat(MqttPath,MqttROOT);
   strcat(MqttPath,"#");
@@ -123,7 +115,6 @@ void mqttConnected(void* response) {
 }
 
 void mqttDisconnected(void* response) {
-  MqttAlive = false;  
   LogToSerials("MQTT disconnected",true);
 }
 
@@ -136,11 +127,9 @@ void setupMqtt(){
   Mqtt.disconnectedCb.attach(mqttDisconnected);
   Mqtt.publishedCb.attach(mqttPublished);
   Mqtt.dataCb.attach(mqttReceived);
-  Mqtt.lwt("/lwt", "offline", 0, 0); //declares what message should be sent on it's behalf by the broker, after Gbox420 has gone offline.
+  memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable to store the Publish to path
+  strcat(MqttPath,MqttROOT);
+  strcat(MqttPath,MqttLwtTopic);
+  Mqtt.lwt(MqttPath, MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker, after Gbox420 has gone offline.
   Mqtt.setup();
-}
-
-void MqttHeartBeat(){
-  MqttAlive = true;
-  LastHeartBeat = millis();
 }

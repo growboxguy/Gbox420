@@ -8,7 +8,7 @@
 //Global constants
 const char* MqttROOT = "growboxguy@gmail.com/"; //UPDATE THIS - Root of every MQTT message, / at the end is important!
 const char* MqttPUBLISH = "Gbox420";  //Readings get published under this topic
-const char* MqttLwtTopic = "LWT";  //When the connection is lost to the MQTT broker, the broker will publish a final message to this topic
+const char* MqttLwtTopic = "LWT";  //When the connection is lost the MQTT broker will publish a final message to this topic
 const char* MqttLwtMessage = "Gbox420 Offline"; //this is the message subscribers will get under the topic specified by MqttLwtTopic variable
 const char* MqttInternalFan = "InternalFan"; //MQTT command the code responds to 
 const char* MqttBrightness = "Brightness";  //MQTT command the code responds to
@@ -80,7 +80,7 @@ void mqttPublish(){
     strcat(MqttPath,MqttPUBLISH);
     
     Serial.print(PublishedCounter); Serial.print(". publish to: ");Serial.print(MqttPath);Serial.print(" - ");Serial.println(WebMessage);
-    Mqtt.publish(MqttPath, WebMessage);       
+    Mqtt.publish(MqttPath, WebMessage,0,1); //(topic,message,qos,retain)
 }
   
 void mqttConnected(void* response) {
@@ -102,8 +102,7 @@ void mqttReceived(void* response) {
   Serial.print(F("Received: "));Serial.print(topic);Serial.print(F(" - "));Serial.println(data);
 
   //Checking what keyword the topic contains
-  if(strstr(topic,MqttPUBLISH)!=NULL) {MqttHeartBeat(); } //Subscribed to own MQTT Publish feed: Confirming last publish was successful
-  else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data)); } //expects int parameter
+  if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data)); } //expects int parameter
   else if(strstr(topic,MqttLightOn)!=NULL) {setLightOnOff(atoi(data));} //expects bool parameter
   else if(strstr(topic,MqttInternalFan)!=NULL) {setFanSpeed(atoi(data));} //expects int parameter, 3 options: 0-Off,1-Low,2-High
   else if(strstr(topic,MqttAeroPressureHigh)!=NULL) {setAeroPressureHigh(atof(data));}  //expects float parameter
@@ -112,10 +111,6 @@ void mqttReceived(void* response) {
 
 void mqttDisconnected(void* response) {
   Serial.println(F("MQTT disconnected"));
-}
-
-void MqttHeartBeat(){
-  Serial.println(F("MQTT heartbeat received"));
 }
 
 void mqttPublished(void* response) {
