@@ -11,5 +11,6 @@ void setup ()  {
 
 void loop()
 {
-  //wdt_reset();// This needs to be called at least once every 8 seconds, else the Arduino will reset. Commented out to force a reset.
+  delay(1000);
+  //wdt_reset(); // This needs to be called at least once every 8 seconds, else the Arduino will reset. Commented out to force a reset.
 }

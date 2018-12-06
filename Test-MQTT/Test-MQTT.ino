@@ -51,7 +51,8 @@ void setup() {
   strcat(MqttPath,MqttLwtTopic);
   Mqtt.lwt(MqttPath, MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker, after Gbox420 has gone offline.
   Mqtt.setup();
-  Serial.println(F("MQTT initialized"));
+  Serial.println(F("MQTT initializing.."));
+  delay(5000); //gie 5seconds for MQTT to connect
 }
 
 void loop() {
@@ -88,6 +89,7 @@ void mqttConnected(void* response) {
   strcat(MqttPath,"#"); //subscribe to all subtopics of MQTT Root
   Mqtt.subscribe(MqttPath);
   Serial.println(F("MQTT connected!"));
+  Serial.print(F("Listening to: "));Serial.println(MqttPath);
 }
 
 void mqttReceived(void* response) {
