@@ -1,5 +1,5 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
-//Sketch for testing: PH meter.. code incomplete, calibration part missing
+//Sketch for testing: PH meter
 
 //Pins
 int PHMeterInPin = A15; //Po analog port - PH meter
@@ -9,20 +9,14 @@ void setup() {
 }
 
 void loop() {
-  int measure = analogRead(PHMeterInPin);
-  Serial.print("PH: ");
-  Serial.print(measure);
-
-  double voltage = 5 / 1024.0 * measure; //classic digital to voltage conversion
-  Serial.print("\tVoltage: ");
-  Serial.print(voltage, 3);
-
-  // PH_step = (voltage@PH7 - voltage@PH4) / (PH7 - PH4)
-  // PH_probe = PH7 - ((voltage@PH7 - voltage@probe) / PH_step)
-  float Po = 7 + ((2.5 - voltage) / 0.18);
-  Serial.print("\tPH: ");
-  Serial.print(Po, 3);
-
-  Serial.println("");
-  delay(2000);
+float  Reading=0;
+for(byte i=0;i<200;i++) { 
+   Reading+=analogRead(PHMeterInPin);
+   delay(100);
+}
+Reading = Reading /200; //Calculates average
+Serial.print("Analog reading: "); Serial.println(Reading);
+float PH = -0.031308*Reading + 22.612698;  //equation of the line
+Serial.print("PH: "); Serial.println(PH);
+Serial.println("");
 }

@@ -49,7 +49,7 @@ void setup() {
   memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable to store the Publish to path
   strcat(MqttPath,MqttROOT);
   strcat(MqttPath,MqttLwtTopic);
-  Mqtt.lwt(MqttPath, MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker, after Gbox420 has gone offline.
+  Mqtt.lwt(MqttPath, MqttLwtMessage, 0, 1); //(topic,message,QoS[only 0 supported],retain)
   Mqtt.setup();
   Serial.println(F("MQTT initializing.."));
   delay(5000); //gie 5seconds for MQTT to connect
@@ -80,7 +80,7 @@ void mqttPublish(){
     strcat(MqttPath,MqttPUBLISH);
     
     Serial.print(PublishedCounter); Serial.print(". publish to: ");Serial.print(MqttPath);Serial.print(" - ");Serial.println(WebMessage);
-    Mqtt.publish(MqttPath, WebMessage,0,1); //(topic,message,qos,retain)
+    Mqtt.publish(MqttPath, WebMessage,0,1); //(topic,message,QoS[only 0 supported],retain)
 }
   
 void mqttConnected(void* response) {

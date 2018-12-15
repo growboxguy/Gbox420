@@ -2,7 +2,7 @@
 //Sketch for grow box monitoring and controlling
 
 //TODO: flow meter,PH Meter calibration,email alerts review
-//TODO: publish set of bookmarks useful for the box to the webinterface (Gbox420,Gbox420(FirstStartup),Pushingbox,DIoTY,Sheets..)
+//TODO: publish set of bookmarks useful for the box to the webinterface (Gbox420,Pushingbox,DIoTY,Sheets..)
 
 
 //Libraries
@@ -31,7 +31,7 @@
   const byte BuzzerOutPin = 4; //PC speaker+ (red)
   const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
   const byte PowerLEDOutPin = 46;  //PC case Power LED
-  const byte HddLEDOutPin = 47; //PC case HDD LED
+  //const byte HddLEDOutPin = 47; //PC case HDD LED - rewired to ESP chip`s wifi status pin
   const byte PowerButtonInPin = 49;  //Power button 
   const byte LightSensorInPin = 36; //D0 - LM393 light sensor                                                                                                              
   const byte LightSensorAnalogInPin = A0; //A0 - LM393 light sensor
@@ -79,7 +79,7 @@
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
   const byte PotStepping = 100;  // Digital potentiometer adjustment steps
   const unsigned long AeroPumpTimeout = 600000;  // Aeroponics - Max pump run time (10minutes)
-  const bool BlockLoadingSettings = true; //UPDATE THIS Set to true at first startup when EEPROM is empty OR 
+  const bool BlockLoadingSettings = false; //UPDATE THIS Set to true at first startup when EEPROM is empty OR 
                                        //if Settings stuct is changed, then save the settings to EEPRO from the website and change it back to false
 
 //Settings saved to EEPROM persistent storage
@@ -198,7 +198,7 @@ void setup() {     // put your setup code here, to run once:
   pinMode(DigitDisplayCLKOutPin, OUTPUT);
   pinMode(DigitDisplayDI0OutPin, OUTPUT);  
   pinMode(PowerLEDOutPin, OUTPUT);
-  pinMode(HddLEDOutPin, OUTPUT);
+  //pinMode(HddLEDOutPin, OUTPUT);
   pinMode(PowerButtonInPin, INPUT_PULLUP);
   pinMode(PotCSOutPin, OUTPUT);
   pinMode(PotUDOutPin, OUTPUT);

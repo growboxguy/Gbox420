@@ -64,7 +64,10 @@ void turnLightOFF(){
 }
 
 void lightCheck(){
-  if(!digitalRead(PowerButtonInPin))MySettings.isLightOn = !MySettings.isLightOn;  //If the power button is held in at the time of the measure invert the light status
+  if(!digitalRead(PowerButtonInPin)){ //If the power button is kept pressed down
+    if(MySettings.isLightOn) turnLightOFF();
+    else turnLightON();  
+    }
   if(CalibrateLights){CalibrateLights=false;calibrateLights();}
   if(MySettings.isLightOn){
     digitalWrite(PowerLEDOutPin, HIGH); //Turn on Power Led on PC case if light is on
