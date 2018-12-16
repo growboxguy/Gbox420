@@ -2,7 +2,7 @@
 //Sketch for testing: PH meter
 
 //Pins
-int PHMeterInPin = A15; //Po analog port - PH meter
+int PHMeterInPin = A3; //Po analog port - PH meter
 
 void setup() {
   Serial.begin(115200);

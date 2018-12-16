@@ -79,7 +79,7 @@
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
   const byte PotStepping = 100;  // Digital potentiometer adjustment steps
   const unsigned long AeroPumpTimeout = 900000;  // Aeroponics - Max pump run time (15minutes)
-  const bool BlockLoadingSettings = true; //UPDATE THIS Set to true at first startup when EEPROM is empty OR 
+  const bool BlockLoadingSettings = false; //UPDATE THIS Set to true at first startup when EEPROM is empty OR 
                                        //if Settings stuct is changed, then save the settings to EEPRO from the website and change it back to false
 
 //Settings saved to EEPROM persistent storage
@@ -100,8 +100,8 @@
   byte LightOffHour = 16; //Light OFF time - hour
   byte LightOffMinute = 20; //Light OFF time - minute
   bool isAeroSprayEnabled = true;
-  unsigned long AeroInterval = 5; //Aeroponics - Spray every 5 minutes
-  unsigned long AeroDuration = 15; //Aeroponics - Spray for 15 secondsf
+  unsigned long AeroInterval = 15; //Aeroponics - Spray every 15 minutes
+  unsigned long AeroDuration = 5; //Aeroponics - Spray for 5 secondsf
   float AeroPressureLow= 5.5; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroPressureHigh = 7.0 ; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroOffset = 0.5; //Pressure sensor calibration - offset voltage
