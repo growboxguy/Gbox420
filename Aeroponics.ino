@@ -102,28 +102,20 @@ void setAeroOffset(float Offset){
 void checkAeroPump(){
   if(isAeroPumpOn){
     readAeroPressure();   
-    if(AeroPressure >= MySettings.AeroPressureHigh){
+    if(AeroPressure >= MySettings.AeroPressureHigh){ //If set high pressure is reached
       aeroPumpOff();
     }
-    else if (millis() - AeroPumpTimer >= AeroPumpTimeout){
-      isAeroPumpOn = false;      
-      isAeroPumpDisabled = true;
-      addToLog("Pump failed, alerting");
-      PlayOffSound = true;
+    if (millis() - AeroPumpTimer >= AeroPumpTimeout){ //have not reached high pressue within limit (15min)
+      aeroPumpDisable();
       SendEmailAlert(PumpAlertDeviceID);
+      addToLog("Pump failed, alert sent");      
     }
   }
   else{
-    if(AeroPressure <= MySettings.AeroPressureLow && !isAeroPumpDisabled){
-      addToLog("Turning on pump");
+    if(AeroPressure <= MySettings.AeroPressureLow && !isAeroPumpDisabled && checkQuietTime()){ //Pressure below low limit: turn on pump, pump not disabled and quiet time not active
       aeroPumpOn();
     }
   }
-}
-
-void aeroPumpRefill(){  
-  addToLog("Refilling pressure tank");
-  aeroPumpOn();
 }
 
 void aeroPumpOn(){
@@ -135,12 +127,69 @@ void aeroPumpOn(){
 
 void aeroPumpOff(){
   isAeroPumpOn = false;
-  addToLog("Turning off pump");
   PlayOffSound = true;
 }
 
-void aeroPumpReset(){
-  isAeroPumpDisabled = false;
-  isAeroPumpOn = false;
-  addToLog("Pump reset");
+void aeroPumpRefill(){  
+  addToLog("Refilling pressure tank");
+  aeroPumpOn();
+}
+
+void aeroPumpDisable(){
+  isAeroPumpDisabled = true;
+  aeroPumpOff();
+  addToLog("Pump disabled");
+}
+
+//Quiet time section
+bool checkQuietTime() {  
+  if(MySettings.isAeroQuietEnabled){
+    Time Now = Clock.time();  // Get the current time and date from the chip.
+    int CombinedFromTime = MySettings.AeroQuietFromHour * 100 + MySettings.AeroQuietFromMinute;
+    int CombinedToTime = MySettings.AeroQuietToHour * 100 + MySettings.AeroQuietToMinute;
+    int CombinedCurrentTime = Now.hr * 100 + Now.min;
+    if(CombinedFromTime <= CombinedToTime)  //no midnight turnover, Example: On 8:10, Off: 20:10
+    {
+      if(CombinedFromTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedToTime){
+        return false;} //does not allow runnign the pump
+      else  return true;  //allow running   
+    }
+    else   //midnight turnover, Example: On 21:20, Off: 9:20
+    {
+      if(CombinedFromTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedToTime){
+       return false; } //does not allow runnign the pump
+      else  return true;  //allow running    
+    }
+  }
+  else return true; //always allow if quiet mode is not enabled
+}
+
+void setQuietOnOff(bool State){
+  MySettings.isAeroQuietEnabled = State;
+  if(MySettings.isAeroQuietEnabled){ 
+    addToLog("Quiet mode enabled");
+    PlayOnSound=true;
+    }
+  else {
+    addToLog("Quiet mode disabled");
+    PlayOffSound=true;
+    }
+}
+
+void setQuietFromHour(int Hour){
+  MySettings.AeroQuietFromHour = Hour; 
+}
+
+void setQuietFromMinute(int Minute){
+  MySettings.AeroQuietFromMinute = Minute;
+  addToLog("Pump quiet From time updated"); 
+}
+
+void setQuietToHour(int Hour){
+  MySettings.AeroQuietToHour = Hour;
+}
+
+void setQuietToMinute(int Minute){
+  MySettings.AeroQuietToMinute = Minute;
+  addToLog("Pump quiet To time updated");
 }

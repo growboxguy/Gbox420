@@ -68,7 +68,7 @@
   const byte PressureSensorInPin = A1; //Signal(yellow) - Pressure sensor
 
 //Global constants
-  const int UTCOffsetHour = 1;  //UTC Time hour offset
+  const int UTCOffsetHour = 0;  //UTC Time hour offset (Can be adjusted on the Web interface too)
   const int UTCOffsetMinute = 0;  //UTC Time minute offset
   const char PushingBoxDeviceID[]= "v755877CF53383E1"; //UPDATE THIS to your grow box logging scenario DeviceID from PushingBox
   const char ReservoirAlertDeviceID[]  = "v6DA52FDF6FCDF74";  //UPDATE THIS to your reservoir alert scenario DeviceID from PushingBox
@@ -78,8 +78,8 @@
   const byte LogDepth = 8;  //Show X log entries on website
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
   const byte PotStepping = 100;  // Digital potentiometer adjustment steps
-  const unsigned long AeroPumpTimeout = 600000;  // Aeroponics - Max pump run time (10minutes)
-  const bool BlockLoadingSettings = false; //UPDATE THIS Set to true at first startup when EEPROM is empty OR 
+  const unsigned long AeroPumpTimeout = 900000;  // Aeroponics - Max pump run time (15minutes)
+  const bool BlockLoadingSettings = true; //UPDATE THIS Set to true at first startup when EEPROM is empty OR 
                                        //if Settings stuct is changed, then save the settings to EEPRO from the website and change it back to false
 
 //Settings saved to EEPROM persistent storage
@@ -105,6 +105,11 @@
   float AeroPressureLow= 5.5; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroPressureHigh = 7.0 ; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroOffset = 0.5; //Pressure sensor calibration - offset voltage
+  bool isAeroQuietEnabled = true;  //Enable/disable quiet time
+  byte AeroQuietFromHour = 21;  //Quiet time to block pump - hour
+  byte AeroQuietFromMinute = 00; //Quiet time to block pump - minute
+  byte AeroQuietToHour = 9; //Quiet time end - hour
+  byte AeroQuietToMinute = 00; //Quiet time end - minute
   bool ReportToGoogleSheets = true;
   bool ReportToMqtt = true;
   };

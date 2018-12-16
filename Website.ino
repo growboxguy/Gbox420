@@ -15,6 +15,11 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgString(F("num_AeroPressureLow"), floatToChar(MySettings.AeroPressureLow));
   WebServer.setArgString(F("num_AeroPressureHigh"), floatToChar(MySettings.AeroPressureHigh));
   WebServer.setArgBoolean(F("check_AeroSprayEnabled"), MySettings.isAeroSprayEnabled);
+  WebServer.setArgBoolean(F("check_AeroQuietEnabled"), MySettings.isAeroQuietEnabled);
+  WebServer.setArgInt(F("num_AeroQuietFromHour"), MySettings.AeroQuietFromHour); 
+  WebServer.setArgInt(F("num_AeroQuietFromMinute"), MySettings.AeroQuietFromMinute); 
+  WebServer.setArgInt(F("num_AeroQuietToHour"), MySettings.AeroQuietToHour); 
+  WebServer.setArgInt(F("num_AeroQuietToMinute"),MySettings.AeroQuietToMinute);
 
   WebServer.setArgBoolean(F("check_GoogleSheetsEnabled"), MySettings.ReportToGoogleSheets);
   WebServer.setArgBoolean(F("check_MqttEnabled"), MySettings.ReportToMqtt);
@@ -93,8 +98,7 @@ void ButtonPressCallback(char *button)
   else if (strcmp(button,"btn_AeroSprayNow")==0) { aeroSprayNow();}
   else if (strcmp(button,"btn_AeroSprayOff")==0) { aeroSprayOff();}  
   else if (strcmp(button,"btn_PumpRefill")==0) { aeroPumpRefill();}
-  else if (strcmp(button,"btn_PumpOff")==0) { aeroPumpOff();}  
-  else if (strcmp(button,"btn_PumpReset")==0) { aeroPumpReset();}
+  else if (strcmp(button,"btn_PumpDisable")==0) { aeroPumpDisable();}  
   else if (strcmp(button,"btn_PressureCalibrate")==0) { calibratePressureSensor();}
   else if (strcmp(button,"btn_NtpTime")==0) { UpdateNtpTime = true;}  
   saveSettings(false); 
@@ -115,7 +119,12 @@ void SetFieldCallback(char * field){
   else if(strcmp(field,"num_AeroDuration")==0) {setAeroDuration(WebServer.getArgInt());}
   else if(strcmp(field,"num_AeroPressureLow")==0) {setAeroPressureLow(WebServer.getArgFloat());}
   else if(strcmp(field,"num_AeroPressureHigh")==0) {setAeroPressureHigh(WebServer.getArgFloat());} 
-  else if(strcmp(field,"num_AeroOffset")==0) {setAeroOffset(WebServer.getArgFloat());} 
+  else if(strcmp(field,"num_AeroOffset")==0) {setAeroOffset(WebServer.getArgFloat());}
+  else if(strcmp(field,"check_AeroQuietEnabled")==0) {setQuietOnOff(WebServer.getArgBoolean());}
+  else if(strcmp(field,"num_AeroQuietFromHour")==0) {setQuietFromHour(WebServer.getArgInt());}
+  else if(strcmp(field,"num_AeroQuietFromMinute")==0) {setQuietFromMinute(WebServer.getArgInt());}
+  else if(strcmp(field,"num_AeroQuietToHour")==0) {setQuietToHour(WebServer.getArgInt());}
+  else if(strcmp(field,"num_AeroQuietToMinute")==0) {setQuietToMinute(WebServer.getArgInt());}  
   else if(strcmp(field,"time_ToSet")==0) {setTime(WebServer.getArgString());}
   else if(strcmp(field,"check_AeroSprayEnabled")==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
   else if(strcmp(field,"check_GoogleSheetsEnabled")==0) {MySettings.ReportToGoogleSheets = WebServer.getArgBoolean();}

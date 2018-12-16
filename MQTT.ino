@@ -32,8 +32,7 @@ const char* MqttSaveSettings = "SaveSettings";
 const char* MqttAeroSprayNow = "AeroSprayNow";
 const char* MqttAeroSprayOff = "AeroSprayOff";
 const char* MqttPumpRefill = "PumpRefill";
-const char* MqttPumpOff = "PumpOff";
-const char* MqttPumpReset = "PumpReset";
+const char* MqttPumpDisable = "PumpDisable";
 const char* MqttPressureCalibrate = "PressureCalibrate";
 const char* MqttNtpTime = "NtpTime";
 //const char* Mqtt = "";
@@ -72,8 +71,7 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttAeroSprayNow)!=NULL) { aeroSprayNow();}
   else if(strstr(topic,MqttAeroSprayOff)!=NULL) { aeroSprayOff();}  
   else if(strstr(topic,MqttPumpRefill)!=NULL) { aeroPumpRefill();}
-  else if(strstr(topic,MqttPumpOff)!=NULL) { aeroPumpOff();}  
-  else if(strstr(topic,MqttPumpReset)!=NULL) { aeroPumpReset();}
+  else if(strstr(topic,MqttPumpDisable)!=NULL) { aeroPumpDisable();}  
   else if(strstr(topic,MqttPressureCalibrate)!=NULL) { calibratePressureSensor();}
   else if(strstr(topic,MqttNtpTime)!=NULL) { UpdateNtpTime = true;}
 }

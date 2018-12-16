@@ -6,6 +6,7 @@ int PHMeterInPin = A15; //Po analog port - PH meter
 
 void setup() {
   Serial.begin(115200);
+  Serial.print("Starting to take PH readings...");
 }
 
 void loop() {
