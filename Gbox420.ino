@@ -79,7 +79,7 @@
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
   const byte PotStepping = 100;  // Digital potentiometer adjustment steps
   const unsigned long AeroPumpTimeout = 900000;  // Aeroponics - Max pump run time (15minutes)
-  const bool BlockLoadingSettings = false; //UPDATE THIS Set to true at first startup when EEPROM is empty OR 
+  const bool BlockLoadingSettings = true; //UPDATE THIS Set to true at first startup when EEPROM is empty OR 
                                        //if Settings stuct is changed, then save the settings to EEPRO from the website and change it back to false
 
 //Settings saved to EEPROM persistent storage
@@ -94,7 +94,7 @@
   bool isExhaustFanOn;  //Exhaust fan On/Off
   bool isExhaustFanHigh;  //Exhaust fan Low/High
   bool isTimerEnabled = false;  //Enable timer controlling lights
-  bool isPCPowerSupplyOn = false;  //Startup status for PC power supply: True-ON / False-OFF 
+  bool isPCPowerSupplyOn = true;  //Startup status for PC power supply: True-ON / False-OFF 
   byte LightOnHour = 4;  //Light ON time - hour
   byte LightOnMinute = 20; //Light ON time - minute
   byte LightOffHour = 16; //Light OFF time - hour
