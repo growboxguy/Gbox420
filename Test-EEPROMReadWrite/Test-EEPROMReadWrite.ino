@@ -4,14 +4,14 @@
 //Libraries
 #include "avr/eeprom.h"
 
-//Global variables - test values to write and read back
+byte Version= 5; //increment this when you update the default test values or stucture to invalidate the EEPROM stored settings
 struct TestValues //define how the stucture looks like
-{byte TestInt = 420; //When StructureVersion is changed these numbers get stored in EEPROM, else EEPROM content is loaded
-float TestFloat = 4.20;
-bool TestBool = true;
-char TestText[21]= "Gbox420";
-byte StructureVersion= 5; //increment this when you update the default test values or stucture to invalidate the EEPROM stored settings, do not update this value inside the loop
-
+{
+  int TestInt = 420; //When StructureVersion is changed these numbers get stored in EEPROM, else EEPROM content is loaded
+  float TestFloat = 4.20;
+  bool TestBool = true;
+  char TestText[21]= "Gbox420";
+  byte StructureVersion = Version;  //do not update this value inside the loop
 };
 typedef struct TestValues settings;  //create the "settings" type using the stucture
 settings MySettings;  //create a variable of type "settings"  with TestValues
