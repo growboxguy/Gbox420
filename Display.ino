@@ -24,7 +24,7 @@ void logToScreen(){
   Screen.print(F(", Exhaust "));Screen.println(fanSpeedToText(false));
   Screen.setTextColor(ILI9341_GREEN);
   Screen.print(F("Pressure:"));Screen.print(AeroPressure);Screen.print(F(" ("));Screen.print(MySettings.AeroPressureLow);Screen.print(F("/"));Screen.print(MySettings.AeroPressureHigh);Screen.println(F(")"));
-  Screen.print(F("Interval:"));Screen.print(MySettings.AeroInterval);Screen.print(F(", Duration:"));Screen.println(MySettings.AeroDuration/1000);
+  Screen.print(F("Interval:"));Screen.print(MySettings.AeroInterval);Screen.print(F(", Duration:"));Screen.println(MySettings.AeroDuration);
 }
 
 //***4 digit display***

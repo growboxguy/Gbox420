@@ -4,37 +4,21 @@
 //Libraries
 #include "avr/eeprom.h"
 
-byte Version= 5; //increment this when you update the default test values or stucture to invalidate the EEPROM stored settings
-struct TestValues //define how the stucture looks like
+byte Version= 6; //increment this when you update the test values or stucture to invalidate the EEPROM stored settings
+struct SettingsStructure //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
 {
-  int TestInt = 420; //When StructureVersion is changed these numbers get stored in EEPROM, else EEPROM content is loaded
+  int TestInt = 420; 
   float TestFloat = 4.20;
   bool TestBool = true;
-  char TestText[21]= "Gbox420";
+  char TestText[21]= "Gbox420"; //max 20 chars plus null terminator
   byte StructureVersion = Version;  //do not update this value inside the loop
 };
-typedef struct TestValues settings;  //create the "settings" type using the stucture
-settings MySettings;  //create a variable of type "settings"  with TestValues
+typedef struct SettingsStructure settings;  //create the "settings" type using the stucture
+settings MySettings;  //create a variable of type "settings"  with default values from SettingsStructure
 
 void setup() {
   Serial.begin(115200);
-  settings EEPROMSettings; //temporary storage with same "settings" type
-  Serial.print(F("Test values from sketch - Ver."));Serial.println(MySettings.StructureVersion);
-  printSettings(MySettings);
-  
-  eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));
-  Serial.print(F("Restored values - Ver."));Serial.println(EEPROMSettings.StructureVersion);
-  printSettings(EEPROMSettings); 
-  
-  if(EEPROMSettings.StructureVersion != MySettings.StructureVersion){
-    Serial.println(F("Change detected, updating EEPROM"));
-    saveSettings();
-  }
-  else {
-    Serial.println(F("Same structure version detected, applying restored settings"));
-    MySettings = EEPROMSettings;
-  }
-  Serial.println();
+  loadSettings();
 }
 
 void loop(void) {
@@ -57,6 +41,27 @@ void printSettings(settings ToPrint){
   Serial.print(F("\t"));Serial.println(ToPrint.TestFloat);
   Serial.print(F("\t"));Serial.println(ToPrint.TestBool);
   Serial.print(F("\t"));Serial.println(ToPrint.TestText);
+  Serial.println();
+}
+
+void loadSettings(){ 
+  settings EEPROMSettings; //temporary storage with same "settings" type
+  Serial.print(F("Test values from sketch - Ver."));Serial.println(MySettings.StructureVersion);
+  printSettings(MySettings);
+  
+  eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));
+  Serial.print(F("Restored values - Ver."));Serial.println(EEPROMSettings.StructureVersion);
+  printSettings(EEPROMSettings); 
+  
+  if(EEPROMSettings.StructureVersion != MySettings.StructureVersion){
+    Serial.print(F("Change detected, updating EEPROM..."));
+    saveSettings();
+  }
+  else {
+    Serial.print(F("Same structure version detected, applying restored settings..."));
+    MySettings = EEPROMSettings;
+  }
+  Serial.println("done");
   Serial.println();
 }
 

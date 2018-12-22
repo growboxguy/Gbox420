@@ -53,7 +53,7 @@
   const byte Relay6OutPin = 27;  //Power relay Port 6 - Exhauset fan Off/On
   const byte Relay7OutPin = 28;  //Power relay Port 7 - Exhauset fan Low/High
   const byte Relay8OutPin = 29;  //Power relay Port 8 - LED lights
-  const byte PHMeterInPin = A15;  //Po - PH meter
+  const byte PHMeterInPin = A3;  //Po - PH meter
   const byte AMoistureSensorInPin = A8; //A0 - Soil moisture sensor 
   const byte DMoistureSensorInPin = 45; //D0 - Soil moisture sensor
   const byte PotCSOutPin = 34;  //CS - X9C104 digital potentiometer  
@@ -79,11 +79,10 @@
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
   const byte PotStepping = 100;  // Digital potentiometer adjustment steps
   const unsigned long AeroPumpTimeout = 900000;  // Aeroponics - Max pump run time (15minutes)
-  const bool BlockLoadingSettings = true; //UPDATE THIS Set to true at first startup when EEPROM is empty OR 
-                                       //if Settings stuct is changed, then save the settings to EEPRO from the website and change it back to false
-
+ 
 //Settings saved to EEPROM persistent storage
-  struct Settings 
+  byte Version= 2; //increment this when you update the test values or change the stucture to invalidate the EEPROM stored settings
+  struct SettingsStructure //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   bool isLightOn = true;  //Startup status for lights: True-ON / False-OFF
   bool isSoundEnabled = true;  //Enable PC speaker
@@ -112,9 +111,10 @@
   byte AeroQuietToMinute = 00; //Quiet time end - minute
   bool ReportToGoogleSheets = true;
   bool ReportToMqtt = true;
+  byte StructureVersion = Version;  //do not update this value inside the loop
   };
-  typedef struct Settings settings;  //create the settings type using the stucture
-  settings MySettings;  //create a variable of "setting" type with "Setting structure"
+  typedef struct SettingsStructure settings;  //create the "settings" type using the stucture
+  settings MySettings;  //create a variable of type "settings"  with default values from SettingsStructure
 
 //Global variables
   float BoxTempC; // stores Temperature - Celsius
@@ -182,7 +182,7 @@ void setup() {     // put your setup code here, to run once:
   Serial3.begin(115200);  //wifi console output
   wdt_enable(WDTO_8S); //Watchdog timer set to 8 seconds
   addToLog("GrowBox initializing...");
-  if(!BlockLoadingSettings)loadSettings();
+  loadSettings();
 
    //Pin setup, defining what Pins are inputs/outputs and setting initial output signals
   pinMode(LightSensorInPin, INPUT);
@@ -252,8 +252,8 @@ void setup() {     // put your setup code here, to run once:
   addToLog("Grow Box initialized");
 
   //triger all threads at startup
-  oneSecRun();
-  fiveSecRun();
+  fiveSecRun(); //needs to run first to get sensor readings
+  oneSecRun();  
   minuteRun();
   halfHourRun();
   
@@ -272,6 +272,7 @@ void processEspLink(){
 }
 
 void oneSecRun(){
+  //addToLog("One sec trigger..");
   wdt_reset(); //reset watchdog timeout
   lightCheck(); 
   aeroCheck();  
@@ -279,15 +280,18 @@ void oneSecRun(){
   soundCheck();  
 }
 
-void fiveSecRun(){ 
+void fiveSecRun(){
+  //LogToSerials("Five sec trigger..",true);
   wdt_reset(); //reset watchdog timeout
   getRTCTime();     
   readSensors();
+  wdt_reset(); //reset watchdog timeout
   updateDisplay(); //Updates 7 digit display  
   //LogToSerials(freeMemory(),true);  
 }
 
 void minuteRun(){
+  //LogToSerials("Minute trigger..",true);
   wdt_reset(); //reset watchdog timeout
   checkLightTimer(); 
   logToSerial();  //Logs sensor readings to Serial  
@@ -295,6 +299,7 @@ void minuteRun(){
 }
 
 void halfHourRun(){
+  //LogToSerials("Half hour trigger..",true);
   wdt_reset(); //reset watchdog timeout
   if(MySettings.ReportToGoogleSheets) ReportToGoogleSheets(false);  //uploads readings to Google Sheets via ESP REST API
   if(MySettings.ReportToMqtt) mqttPublush(false);  //publish readings via ESP MQTT API
@@ -308,7 +313,17 @@ void saveSettings(bool LogMessage){ //do not put this in the loop, EEPROM has a 
 }
 
 void loadSettings(){
-  eeprom_read_block((void*)&MySettings, (void*)0, sizeof(MySettings));
+  settings EEPROMSettings; //temporary storage with same "settings" type
+  eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
+  if(EEPROMSettings.StructureVersion != MySettings.StructureVersion){
+    Serial.print(F("Change detected, updating EEPROM..."));
+    saveSettings(false);
+  }
+  else {
+    Serial.print(F("Same structure version detected, applying restored settings..."));
+    MySettings = EEPROMSettings;
+  }
+  Serial.println("done");
 }
 
 void SendEmailAlert(const char* AlertType){
