@@ -160,7 +160,7 @@ void store(){  //store current potentiometer value in the X9C104 memory for the 
 }
 
 const __FlashStringHelper * lightStatusToText(){
-   if(!MySettings.isLightOn) return F("ON");
+   if(MySettings.isLightOn) return F("ON");
    else return F("OFF");
 } 
 

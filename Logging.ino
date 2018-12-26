@@ -169,7 +169,7 @@ const __FlashStringHelper * exhaustFanSpeedToText(){
 }
 
 const __FlashStringHelper * powerSupplyToText(){
-   if(!MySettings.isPCPowerSupplyOn) return F("ON");
+   if(MySettings.isPCPowerSupplyOn) return F("ON");
    else return F("OFF");
 }
 
