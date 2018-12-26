@@ -17,7 +17,7 @@ void calibratePressureSensor(){  //Should only be called when there is 0 pressur
   delay(10);
   }  
   MySettings.AeroOffset = (sum/50)*5/1024; //Reads voltage at 0 pressure
-  strncpy(LogMessage,"Pressure sensor offset: ",LogLength);
+  strncpy_P(LogMessage,(PGM_P)F("Pressure sensor offset: "),LogLength);
   strcat(LogMessage,floatToChar(MySettings.AeroOffset));
   addToLog(LogMessage);
 }
@@ -161,13 +161,13 @@ bool checkQuietTime() {
     if(CombinedFromTime <= CombinedToTime)  //no midnight turnover, Example: On 8:10, Off: 20:10
     {
       if(CombinedFromTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedToTime){
-        return false;} //does not allow runnign the pump
+        return false;} //do not allow running the pump
       else  return true;  //allow running   
     }
     else   //midnight turnover, Example: On 21:20, Off: 9:20
     {
       if(CombinedFromTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedToTime){
-       return false; } //does not allow runnign the pump
+       return false; } //do not allow running the pump
       else  return true;  //allow running    
     }
   }

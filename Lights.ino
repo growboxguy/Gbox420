@@ -15,7 +15,7 @@ void calibrateLights(){
   setBrightness(LastBrightness);
   MySettings.isLightOn=LastLightStatus;
   lightCheck();  
-  strncpy(LogMessage,"New min/max: ",LogLength);
+  strncpy_P(LogMessage,(PGM_P)F("New min/max: "),LogLength);
   strcat(LogMessage,intToChar(MinLightReading));
   strcat_P(LogMessage,(PGM_P)F("/"));
   strcat(LogMessage,intToChar(MaxLightReading));
@@ -40,7 +40,7 @@ void stepOne(){  //Adjust Potentiometer by one
 }
 
 void setBrightness(int NewBrightness){
-  strncpy(LogMessage,"Brightness: ",LogLength);  
+  strncpy_P(LogMessage,(PGM_P)F("Brightness: "),LogLength);  
   strcat(LogMessage,intToChar(NewBrightness));
   strcat_P(LogMessage,(PGM_P)F("%"));
   addToLog(LogMessage);    
@@ -114,7 +114,7 @@ void setLightsOffMinute(int OffMinute){
 
 void checkLightTimer() {
   if(MySettings.isTimerEnabled){
-    Time Now = Clock.time();  // Get the current time and date from the chip.
+    Time Now = Clock.time();  // Get the current time and date from the Real Time Clock module.
     int CombinedOnTime = MySettings.LightOnHour * 100 + MySettings.LightOnMinute;
     int CombinedOffTime = MySettings.LightOffHour * 100 + MySettings.LightOffMinute;
     int CombinedCurrentTime = Now.hr * 100 + Now.min;

@@ -1,9 +1,8 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter,PH Meter calibration,email alerts review
+//TODO: flow meter,email alerts review
 //TODO: publish set of bookmarks useful for the box to the webinterface (Gbox420,Pushingbox,DIoTY,Sheets..)
-
 
 //Libraries
   #include "avr/wdt.h" //Watchdog timer
@@ -180,7 +179,7 @@
 void setup() {     // put your setup code here, to run once:
   Serial.begin(115200);    //2560mega console output
   Serial3.begin(115200);  //wifi console output
-  wdt_enable(WDTO_8S); //Watchdog timer set to 8 seconds
+  wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds
   addToLog(F("GrowBox initializing..."));
   loadSettings();
 
@@ -255,7 +254,7 @@ void setup() {     // put your setup code here, to run once:
   fiveSecRun(); //needs to run first to get sensor readings
   oneSecRun();  
   minuteRun();
-  halfHourRun();
+  //halfHourRun();
   
   //Start interrupts to handle request from ESP-Link website
   Timer3.initialize(500);
@@ -313,17 +312,17 @@ void saveSettings(bool LogMessage){ //do not put this in the loop, EEPROM has a 
 }
 
 void loadSettings(){
-  settings EEPROMSettings; //temporary storage with same "settings" type
+  settings EEPROMSettings; //temporary storage with "settings" type
   eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
   if(EEPROMSettings.StructureVersion != MySettings.StructureVersion){
-    Serial.print(F("Change detected, updating EEPROM..."));
+    LogToSerials(F("Change detected, updating EEPROM..."),false);
     saveSettings(false);
   }
   else {
-    Serial.print(F("Same structure version detected, applying restored settings..."));
+    LogToSerials(F("Same structure version detected, applying restored settings..."),false);
     MySettings = EEPROMSettings;
   }
-  Serial.println("done");
+  LogToSerials(F("done"),true);
 }
 
 void SendEmailAlert(const char* AlertType){

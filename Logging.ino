@@ -20,7 +20,6 @@ void LogToSerials(const __FlashStringHelper * ToPrint,bool breakLine){
   }
 }
 
-
 void LogToSerials(const int & ToPrint,bool breakLine){
   if(breakLine){
     Serial.println(ToPrint);
@@ -32,7 +31,7 @@ void LogToSerials(const int & ToPrint,bool breakLine){
   }
 }
 
-void LogToSerials(const long unsigned int& ToPrint,bool breakLine){
+void LogToSerials(const long unsigned int & ToPrint,bool breakLine){
   if(breakLine){
     Serial.println(ToPrint);
     Serial3.println(ToPrint);
@@ -56,7 +55,7 @@ void LogToSerials(const float & ToPrint,bool breakLine){
 
 void addToLog(const char *message){
   LogToSerials(message,true);
-  for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldes
+  for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
      memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
      strncpy(Logs[i],Logs[i-1],LogLength ) ; 
     }  
@@ -66,7 +65,7 @@ void addToLog(const char *message){
 
 void addToLog(const __FlashStringHelper *message){
   LogToSerials(message,true);
-  for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldes
+  for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
      memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
      strncpy(Logs[i],Logs[i-1],LogLength ) ; 
     }  
@@ -94,7 +93,7 @@ void ReportToGoogleSheets(bool LogMessage){
   strcat_P(WebMessage,(PGM_P)F("&isBright="));  strcat(WebMessage,intToChar(isBright));
   strcat_P(WebMessage,(PGM_P)F("&Reservoir="));  strcat(WebMessage,intToChar(reservoirToPercent()));
   strcat_P(WebMessage,(PGM_P)F("&InternalFan=")); strcat_P(WebMessage,(PGM_P)internalFanSpeedToText()); //strcat_P is the same as strcat, just for __FlashStringHelper type (stored in flash)
-  strcat_P(WebMessage,(PGM_P)F("&ExhaustFan=")); strcat_P(WebMessage,(PGM_P)exhaustFanSpeedToText()); 
+  strcat_P(WebMessage,(PGM_P)F("&ExhaustFan=")); strcat_P(WebMessage,(PGM_P)exhaustFanSpeedToText());
   LogToSerials(F("Reporting to Google Sheets: "),false); LogToSerials(WebMessage,true);   
   RestAPI.get(WebMessage);
 }
@@ -114,13 +113,14 @@ void logToSerial(){
   LogToSerials(F("\tBright: "),false); LogToSerials(isBrightToText(),false); 
   LogToSerials(F("\tBrightness: "),false); LogToSerials(MySettings.LightBrightness,false);
   LogToSerials(F("\tLightReading: "),false); LogToSerials(LightReading,false); LogToSerials(F(" - "),false); LogToSerials(LightReadingPercent,false); LogToSerials(F("%"),true);
+  LogToSerials(F("\tLightON: "),false); LogToSerials(timeToChar(MySettings.LightOnHour, MySettings.LightOnMinute),false);LogToSerials(F("\tLightOFF: "),false); LogToSerials(timeToChar(MySettings.LightOffHour, MySettings.LightOffMinute),true);
   LogToSerials(F("\tInternal fan: "),false);LogToSerials(internalFanSpeedToText(),false);  LogToSerials(F("\tExhaust fan: "),false);LogToSerials(exhaustFanSpeedToText(),false);
   LogToSerials(F("\tReservoir: ("),false); LogToSerials(reservoirToPercent(),false);  LogToSerials(F(")\t"),false);  LogToSerials(reservoirToText(true),true);
   LogToSerials(F("\tPressure: "),false);LogToSerials(AeroPressure,false);LogToSerials(F("bar/"),false);LogToSerials(AeroPressurePSI,false);LogToSerials(F("psi"),false);
-  LogToSerials(F("\tLow: "),false);LogToSerials(MySettings.AeroPressureLow,false);LogToSerials(F("\tHigh: "),false);LogToSerials(MySettings.AeroPressureHigh,true);
+  LogToSerials(F("\tLow: "),false);LogToSerials(MySettings.AeroPressureLow,false);LogToSerials(F("\tHigh: "),false);LogToSerials(MySettings.AeroPressureHigh,false);
+  LogToSerials(F("\tPumpState: "),false);LogToSerials(pumpStateToText(),false);LogToSerials(F("\tPumpStatus: "),false);LogToSerials(pumpStatusToText(),true);
   LogToSerials(F("\tAeroInterval: "),false);LogToSerials(MySettings.AeroInterval,false);LogToSerials(F("\tAeroDuration: "),false);LogToSerials(MySettings.AeroDuration,false);LogToSerials(F("\tAeroOffset: "),false);LogToSerials(MySettings.AeroOffset,true);
 }
-
 
 char * intToChar(int Number){
   static char ReturnChar[8] = ""; //7 digits + null terminator max
@@ -129,12 +129,8 @@ char * intToChar(int Number){
 }
 
 char * intsToChar(int Number1, int Number2,const char * Separator){
-  static char ReturnChar[12] = ""; //4 digit + separator + 4 digit + null
-  static char Number2Char[5] = ""; //4 digits + null
-  itoa(Number1, ReturnChar, 10);
-  strcat(ReturnChar,Separator);
-  itoa(Number2, Number2Char, 10);
-  strcat(ReturnChar,Number2Char);
+  static char ReturnChar[12] = ""; //5 digit + separator + 5 digit + null
+  snprintf(ReturnChar,12,"%d%s%d",Number1,Separator,Number2);
   return ReturnChar;
 }
 
@@ -179,7 +175,7 @@ const __FlashStringHelper * powerSupplyToText(){
 
 char * reservoirToText(bool includeHeader){
   static char ReturnChar [32]= "";
-  if(includeHeader){strcpy_P(ReturnChar,(PGM_P)F("Reservoir: E["));}
+  if(includeHeader){strcpy_P(ReturnChar,(PGM_P)F("Reservoir:E["));}
   else {strcpy_P(ReturnChar,(PGM_P)F("E["));}
   if(isWaterAboveCritical) strcat_P(ReturnChar,(PGM_P)F("#")); else strcat_P(ReturnChar,(PGM_P)F("-"));
   if(isWaterAboveLow) strcat_P(ReturnChar,(PGM_P)F("#")); else strcat_P(ReturnChar,(PGM_P)F("-"));
