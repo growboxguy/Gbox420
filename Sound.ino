@@ -31,15 +31,15 @@ void OffSound(){
 void setSoundOnOff(bool soundState){
   MySettings.isSoundEnabled = soundState;
   if(MySettings.isSoundEnabled){ 
-    addToLog("Sound enabled");
+    addToLog(F("Sound enabled"));
     PlayOnSound=true;}
-  else {addToLog("Sound disabled");}
+  else {addToLog(F("Sound disabled"));}
 }
 
 //EE Section
 void playEE(){
   PlayEE = true;
-  addToLog("♬Easter egg♬");
+  addToLog(F("♬Easter egg♬"));
 }
 
 int melody[] = {

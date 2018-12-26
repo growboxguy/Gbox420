@@ -19,15 +19,15 @@ void readSensors(){  //Sensor readings
 }
 
 //***PH METER***
-void ReadPH(){//uncalibrated code
+void ReadPH(){
   float  Reading=0;
   for(byte i=0;i<20;i++) { 
    Reading+=analogRead(PHMeterInPin);
    delay(50);
   }
   Reading = Reading /20; //Calculates average
-  Serial.print("Analog reading: "); Serial.println(Reading);
-  PH = -0.031308*Reading + 22.612698;  //equation of the line
+  //Serial.print("Analog reading: "); Serial.println(Reading);
+  PH = -0.031223*Reading + 23.376812;  //equation of the line
 }
 
 //***Moisture sensor***

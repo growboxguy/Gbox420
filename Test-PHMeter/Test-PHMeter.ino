@@ -9,7 +9,7 @@ float PH;
 
 void setup() {
   Serial.begin(115200);
-  Serial.print("Starting to take PH readings...");
+  Serial.println("Starting to take PH readings...");
 }
 
 void loop() {
@@ -20,7 +20,7 @@ for(byte i=0;i<200;i++) {
 }
 Reading = Reading /200; //Calculates average
 Serial.print("Analog reading: "); Serial.println(Reading);
-PH = -0.031308*Reading + 22.612698;  //equation of the line
+PH = -0.031223*Reading + 23.376812;  //equation of the line
 Serial.print("PH: "); Serial.println(PH);
 Serial.println("");
 }

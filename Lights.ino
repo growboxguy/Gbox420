@@ -17,14 +17,14 @@ void calibrateLights(){
   lightCheck();  
   strncpy(LogMessage,"New min/max: ",LogLength);
   strcat(LogMessage,intToChar(MinLightReading));
-  strcat(LogMessage,"/");
+  strcat_P(LogMessage,(PGM_P)F("/"));
   strcat(LogMessage,intToChar(MaxLightReading));
   addToLog(LogMessage);
 }
 
 void triggerCalibrateLights(){
   CalibrateLights = true;
-  addToLog("Lights calibrating...");  
+  addToLog(F("Lights calibrating..."));  
 }
 
 void stepOne(){  //Adjust Potentiometer by one
@@ -42,7 +42,7 @@ void stepOne(){  //Adjust Potentiometer by one
 void setBrightness(int NewBrightness){
   strncpy(LogMessage,"Brightness: ",LogLength);  
   strcat(LogMessage,intToChar(NewBrightness));
-  strcat(LogMessage,"%");
+  strcat_P(LogMessage,(PGM_P)F("%"));
   addToLog(LogMessage);    
   while(MySettings.LightBrightness != NewBrightness){
     if(NewBrightness < MySettings.LightBrightness)  isPotGettingHigh = false;
@@ -53,13 +53,13 @@ void setBrightness(int NewBrightness){
 
 void turnLightON(){
    MySettings.isLightOn = true;
-   addToLog("Light ON"); 
+   addToLog(F("Light ON")); 
    PlayOnSound=true;
 }
 
 void turnLightOFF(){
   MySettings.isLightOn = false;
-  addToLog("Light OFF"); 
+  addToLog(F("Light OFF")); 
   PlayOffSound=true; 
 }
 
@@ -83,11 +83,11 @@ void setTimerOnOff(bool TimerState){
   MySettings.isTimerEnabled = TimerState;
   if(MySettings.isTimerEnabled){ 
     checkLightTimer();
-    addToLog("Timer enabled");
+    addToLog(F("Timer enabled"));
     PlayOnSound=true;
     }
   else {
-    addToLog("Timer disabled");
+    addToLog(F("Timer disabled"));
     PlayOffSound=true;
     }
 }
@@ -99,7 +99,7 @@ void setLightsOnHour(int OnHour){
 void setLightsOnMinute(int OnMinute){
   MySettings.LightOnMinute = OnMinute;
   checkLightTimer();
-  addToLog("Light ON time updated"); 
+  addToLog(F("Light ON time updated")); 
 }
 
 void setLightsOffHour(int OffHour){
@@ -109,10 +109,10 @@ void setLightsOffHour(int OffHour){
 void setLightsOffMinute(int OffMinute){
   MySettings.LightOffMinute = OffMinute;
   checkLightTimer();
-  addToLog("Light OFF time updated");
+  addToLog(F("Light OFF time updated"));
 }
 
-void checkLightTimer() {  //fills the CurrentTime global variable
+void checkLightTimer() {
   if(MySettings.isTimerEnabled){
     Time Now = Clock.time();  // Get the current time and date from the chip.
     int CombinedOnTime = MySettings.LightOnHour * 100 + MySettings.LightOnMinute;
@@ -157,4 +157,14 @@ void store(){  //store current potentiometer value in the X9C104 memory for the 
   delay(50);
   digitalWrite(PotCSOutPin,LOW);
   digitalWrite(PotINCOutPin,LOW);
+}
+
+const __FlashStringHelper * lightStatusToText(){
+   if(!MySettings.isLightOn) return F("ON");
+   else return F("OFF");
+} 
+
+const __FlashStringHelper * isBrightToText(){
+   if(isBright) return F("YES");
+   else return F("NO");
 }

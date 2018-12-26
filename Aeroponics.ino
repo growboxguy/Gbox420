@@ -30,16 +30,16 @@ void setAeroInterval(int interval){
 void setAeroDuration(int duration){  
   MySettings.AeroDuration = duration;
   AeroSprayTimer = millis(); 
-  addToLog("Spray time updated");  
+  addToLog(F("Spray time updated"));  
 }
 
 void setAeroSprayOnOff(bool AeroState){
   MySettings.isAeroSprayEnabled=AeroState;
   if(MySettings.isAeroSprayEnabled){ 
-    addToLog("Aeroponics spray enabled");
+    addToLog(F("Aeroponics spray enabled"));
     PlayOnSound=true;} 
   else {
-    addToLog("Aeroponics spray disabled");
+    addToLog(F("Aeroponics spray disabled"));
     PlayOffSound=true;}
 }
 
@@ -49,14 +49,14 @@ void aeroSprayNow(){
     isAeroSprayOn = true;
     PlayOnSound = true;
     relayCheck();
-    addToLog("Aeroponics spraying");
+    addToLog(F("Aeroponics spraying"));
     }
 }
 
 void aeroSprayOff(){   
     isAeroSprayOn = false;    
     relayCheck();
-    addToLog("Aeroponics spray OFF");
+    addToLog(F("Aeroponics spray OFF"));
 }
 
 void aeroCheck(){
@@ -68,7 +68,7 @@ void checkAeroSprayTimer(){
  if(isAeroSprayOn)    { //if spray is on
     if(millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //if time to stop spraying (AeroDuration in Seconds)
       isAeroSprayOn = false;
-      LogToSerials("Stopping spray",true);
+      LogToSerials(F("Stopping spray"),true);
       PlayOffSound = true;
       AeroSprayTimer = millis();
     }
@@ -77,7 +77,7 @@ void checkAeroSprayTimer(){
     if(millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
       if(MySettings.isAeroSprayEnabled){
       isAeroSprayOn = true;
-      LogToSerials("Starting spray",true);
+      LogToSerials(F("Starting spray"),true);
       PlayOnSound = true;
       AeroSprayTimer = millis();
       }
@@ -91,12 +91,12 @@ void setAeroPressureLow(float PressureLow){
 
 void setAeroPressureHigh(float PressureHigh){
   MySettings.AeroPressureHigh = PressureHigh;
-  addToLog("Pump settings updated");
+  addToLog(F("Pump settings updated"));
 }
 
 void setAeroOffset(float Offset){
   MySettings.AeroOffset = Offset;
-  addToLog("Pressure sensor offset updated");
+  addToLog(F("Pressure sensor offset updated"));
 }
 
 void checkAeroPump(){
@@ -108,7 +108,7 @@ void checkAeroPump(){
     if (millis() - AeroPumpTimer >= AeroPumpTimeout){ //have not reached high pressue within limit (15min)
       aeroPumpDisable();
       SendEmailAlert(PumpAlertDeviceID);
-      addToLog("Pump failed, alert sent");      
+      addToLog(F("Pump failed, alert sent"));      
     }
   }
   else{
@@ -131,14 +131,24 @@ void aeroPumpOff(){
 }
 
 void aeroPumpRefill(){  
-  addToLog("Refilling pressure tank");
+  addToLog(F("Refilling pressure tank"));
   aeroPumpOn();
 }
 
 void aeroPumpDisable(){
   isAeroPumpDisabled = true;
   aeroPumpOff();
-  addToLog("Pump disabled");
+  addToLog(F("Pump disabled"));
+}
+
+const __FlashStringHelper * pumpStateToText()
+{
+if(isAeroPumpOn) return F("ON"); else return F("OFF");
+}
+
+const __FlashStringHelper * pumpStatusToText()
+{ 
+  if(isAeroPumpDisabled) return F("DISABLED"); else return F("OK");
 }
 
 //Quiet time section
@@ -167,11 +177,11 @@ bool checkQuietTime() {
 void setQuietOnOff(bool State){
   MySettings.isAeroQuietEnabled = State;
   if(MySettings.isAeroQuietEnabled){ 
-    addToLog("Quiet mode enabled");
+    addToLog(F("Quiet mode enabled"));
     PlayOnSound=true;
     }
   else {
-    addToLog("Quiet mode disabled");
+    addToLog(F("Quiet mode disabled"));
     PlayOffSound=true;
     }
 }
@@ -182,7 +192,7 @@ void setQuietFromHour(int Hour){
 
 void setQuietFromMinute(int Minute){
   MySettings.AeroQuietFromMinute = Minute;
-  addToLog("Pump quiet From time updated"); 
+  addToLog(F("Pump quiet From time updated")); 
 }
 
 void setQuietToHour(int Hour){
@@ -191,5 +201,5 @@ void setQuietToHour(int Hour){
 
 void setQuietToMinute(int Minute){
   MySettings.AeroQuietToMinute = Minute;
-  addToLog("Pump quiet To time updated");
+  addToLog(F("Pump quiet To time updated"));
 }

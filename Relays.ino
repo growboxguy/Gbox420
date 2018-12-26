@@ -11,55 +11,54 @@ void relayCheck(){
 
 void powerSupplyOn(){
   MySettings.isPCPowerSupplyOn = true;
-  addToLog("Power supply ON");
+  addToLog(F("Power supply ON"));
   PlayOnSound=true;
 }
 
 void powerSupplyOff(){
   MySettings.isPCPowerSupplyOn = false;
-  addToLog("Power supply OFF");
+  addToLog(F("Power supply OFF"));
   PlayOffSound=true;
 }
 
 void internalFanLow(){
   MySettings.isInternalFanHigh = false;
   MySettings.isInternalFanOn = true;
-  addToLog("Internal fan Low"); 
+  addToLog(F("Internal fan Low")); 
   PlayOnSound=true;
 }
 
 void internalFanHigh(){
   MySettings.isInternalFanHigh = true;
   MySettings.isInternalFanOn = true;
-  addToLog("Internal fan High");
+  addToLog(F("Internal fan High"));
   PlayOnSound=true;
 }
 
 void internalFanOff(){
    MySettings.isInternalFanOn = false;
    MySettings.isInternalFanHigh = false;
-   addToLog("Internal fan OFF");
+   addToLog(F("Internal fan OFF"));
    PlayOffSound=true;
 }
 
 void exhaustFanLow(){
   MySettings.isExhaustFanHigh = false;
   MySettings.isExhaustFanOn = true;
-  addToLog("Exhaust fan Low");
+  addToLog(F("Exhaust fan Low"));
   PlayOnSound=true;
 }
 
 void exhaustFanHigh(){
   MySettings.isExhaustFanHigh = true;
   MySettings.isExhaustFanOn = true;
-  addToLog("Exhaust fan High");
+  addToLog(F("Exhaust fan High"));
   PlayOnSound=true;
 }
 
 void exhaustFanOff(){
   MySettings.isExhaustFanOn = false;
   MySettings.isExhaustFanHigh = false;
-  addToLog("Exhaust fan OFF");
+  addToLog(F("Exhaust fan OFF"));
   PlayOffSound=true;
 }
-

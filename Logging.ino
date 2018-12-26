@@ -64,34 +64,44 @@ void addToLog(const char *message){
   strncpy(Logs[0],message,LogLength);  //instert new log to [0]
 }
 
+void addToLog(const __FlashStringHelper *message){
+  LogToSerials(message,true);
+  for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldes
+     memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
+     strncpy(Logs[i],Logs[i-1],LogLength ) ; 
+    }  
+  memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
+  strncpy_P(Logs[0],(PGM_P)message,LogLength);  //instert new log to [0]
+}
+
 void ReportToGoogleSheets(bool LogMessage){
-  if(LogMessage)addToLog("Reporting to Google Sheets");
+  if(LogMessage)addToLog(F("Reporting to Google Sheets"));
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
-  strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,PushingBoxDeviceID);
-  strcat(WebMessage,"&BoxDate=");  strcat(WebMessage,CurrentTime);
-  strcat(WebMessage,"&BoxTempC=");  strcat(WebMessage,floatToChar(BoxTempC));
-  strcat(WebMessage,"&BoxTempF=");  strcat(WebMessage,floatToChar(BoxTempF));
-  strcat(WebMessage,"&Humidity=");  strcat(WebMessage,floatToChar(Humidity));
-  strcat(WebMessage,"&Power=");  strcat(WebMessage,floatToChar(Power)); 
-  strcat(WebMessage,"&Energy=");  strcat(WebMessage,floatToChar(Energy));
-  strcat(WebMessage,"&Voltage=");  strcat(WebMessage,floatToChar(Voltage));
-  strcat(WebMessage,"&Current=");  strcat(WebMessage,floatToChar(Current));
-  strcat(WebMessage,"&PH=");  strcat(WebMessage,floatToChar(PH));
-  strcat(WebMessage,"&Moisture=");  strcat(WebMessage,floatToChar(Moisture));
-  strcat(WebMessage,"&isLightOn=");  strcat(WebMessage,intToChar(MySettings.isLightOn));
-  strcat(WebMessage,"&Brightness=");  strcat(WebMessage,intToChar(MySettings.LightBrightness));
-  strcat(WebMessage,"&LightReading=");  strcat(WebMessage,intToChar(LightReading));
-  strcat(WebMessage,"&isBright=");  strcat(WebMessage,intToChar(isBright));
-  strcat(WebMessage,"&Reservoir=");  strcat(WebMessage,intToChar(reservoirToPercent()));
-  strcat(WebMessage,"&InternalFan="); strcat(WebMessage,fanSpeedToText(true));
-  strcat(WebMessage,"&ExhaustFan="); strcat(WebMessage,fanSpeedToText(false)); 
-  LogToSerials("Reporting to Google Sheets: ",false); LogToSerials(WebMessage,true);   
+  strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,PushingBoxDeviceID);
+  strcat_P(WebMessage,(PGM_P)F("&BoxDate="));  strcat(WebMessage,CurrentTime);
+  strcat_P(WebMessage,(PGM_P)F("&BoxTempC="));  strcat(WebMessage,floatToChar(BoxTempC));
+  strcat_P(WebMessage,(PGM_P)F("&BoxTempF="));  strcat(WebMessage,floatToChar(BoxTempF));
+  strcat_P(WebMessage,(PGM_P)F("&Humidity="));  strcat(WebMessage,floatToChar(Humidity));
+  strcat_P(WebMessage,(PGM_P)F("&Power="));  strcat(WebMessage,floatToChar(Power)); 
+  strcat_P(WebMessage,(PGM_P)F("&Energy="));  strcat(WebMessage,floatToChar(Energy));
+  strcat_P(WebMessage,(PGM_P)F("&Voltage="));  strcat(WebMessage,floatToChar(Voltage));
+  strcat_P(WebMessage,(PGM_P)F("&Current="));  strcat(WebMessage,floatToChar(Current));
+  strcat_P(WebMessage,(PGM_P)F("&PH="));  strcat(WebMessage,floatToChar(PH));
+  strcat_P(WebMessage,(PGM_P)F("&Moisture="));  strcat(WebMessage,floatToChar(Moisture));
+  strcat_P(WebMessage,(PGM_P)F("&isLightOn="));  strcat(WebMessage,intToChar(MySettings.isLightOn));
+  strcat_P(WebMessage,(PGM_P)F("&Brightness="));  strcat(WebMessage,intToChar(MySettings.LightBrightness));
+  strcat_P(WebMessage,(PGM_P)F("&LightReading="));  strcat(WebMessage,intToChar(LightReading));
+  strcat_P(WebMessage,(PGM_P)F("&isBright="));  strcat(WebMessage,intToChar(isBright));
+  strcat_P(WebMessage,(PGM_P)F("&Reservoir="));  strcat(WebMessage,intToChar(reservoirToPercent()));
+  strcat_P(WebMessage,(PGM_P)F("&InternalFan=")); strcat_P(WebMessage,(PGM_P)internalFanSpeedToText()); //strcat_P is the same as strcat, just for __FlashStringHelper type (stored in flash)
+  strcat_P(WebMessage,(PGM_P)F("&ExhaustFan=")); strcat_P(WebMessage,(PGM_P)exhaustFanSpeedToText()); 
+  LogToSerials(F("Reporting to Google Sheets: "),false); LogToSerials(WebMessage,true);   
   RestAPI.get(WebMessage);
 }
 
 void logToSerial(){  
   LogToSerials(CurrentTime,false);
-  LogToSerials(F("\tTempF: "),false); LogToSerials(BoxTempC,false); LogToSerials(F("C"),false);
+  LogToSerials(F("\tTempC: "),false); LogToSerials(BoxTempC,false); LogToSerials(F("C"),false);
   LogToSerials(F("\tTempF: "),false); LogToSerials(BoxTempF,false); LogToSerials(F("F"),false);
   LogToSerials(F("\tHumidity: "),false); LogToSerials(Humidity,false); LogToSerials( F("%"),false);
   LogToSerials(F("\tPower: "),false); LogToSerials(Power,false); LogToSerials(F("W"),true); 
@@ -100,17 +110,16 @@ void logToSerial(){
   LogToSerials(F("\tCurrent: "),false); LogToSerials(Current,false); LogToSerials(F("A"),false);
   LogToSerials(F("\tPH: "),false); LogToSerials(PH,false);
   LogToSerials(F("\tMoisture: "),false); LogToSerials(Moisture,false); LogToSerials(F("% "),true);
-  if(MySettings.isLightOn) LogToSerials(F("\tLight is on"),false);else LogToSerials(F("\tLight is off"),false);  
-  if(isBright) LogToSerials(F("\tIt is bright"),false);else LogToSerials(F("\tIt is dark"),false);  
+  LogToSerials(F("\tLight: "),false); LogToSerials(lightStatusToText(),false); 
+  LogToSerials(F("\tBright: "),false); LogToSerials(isBrightToText(),false); 
   LogToSerials(F("\tBrightness: "),false); LogToSerials(MySettings.LightBrightness,false);
   LogToSerials(F("\tLightReading: "),false); LogToSerials(LightReading,false); LogToSerials(F(" - "),false); LogToSerials(LightReadingPercent,false); LogToSerials(F("%"),true);
-  LogToSerials(F("\tInternal fan: "),false);LogToSerials(fanSpeedToText(true),false);  LogToSerials(F("\tExhaust fan: "),false);LogToSerials(fanSpeedToText(false),false);
+  LogToSerials(F("\tInternal fan: "),false);LogToSerials(internalFanSpeedToText(),false);  LogToSerials(F("\tExhaust fan: "),false);LogToSerials(exhaustFanSpeedToText(),false);
   LogToSerials(F("\tReservoir: ("),false); LogToSerials(reservoirToPercent(),false);  LogToSerials(F(")\t"),false);  LogToSerials(reservoirToText(true),true);
-  LogToSerials(F("\tPressure: "),false);LogToSerials(AeroPressure,false);LogToSerials("bar/",false);LogToSerials(AeroPressurePSI,false);LogToSerials("psi",false);
+  LogToSerials(F("\tPressure: "),false);LogToSerials(AeroPressure,false);LogToSerials(F("bar/"),false);LogToSerials(AeroPressurePSI,false);LogToSerials(F("psi"),false);
   LogToSerials(F("\tLow: "),false);LogToSerials(MySettings.AeroPressureLow,false);LogToSerials(F("\tHigh: "),false);LogToSerials(MySettings.AeroPressureHigh,true);
   LogToSerials(F("\tAeroInterval: "),false);LogToSerials(MySettings.AeroInterval,false);LogToSerials(F("\tAeroDuration: "),false);LogToSerials(MySettings.AeroDuration,false);LogToSerials(F("\tAeroOffset: "),false);LogToSerials(MySettings.AeroOffset,true);
 }
-
 
 
 char * intToChar(int Number){
@@ -126,6 +135,12 @@ char * intsToChar(int Number1, int Number2,const char * Separator){
   strcat(ReturnChar,Separator);
   itoa(Number2, Number2Char, 10);
   strcat(ReturnChar,Number2Char);
+  return ReturnChar;
+}
+
+char * timeToChar(int Hour, int Minute){
+  static char ReturnChar[6] = ""; //2 digit + separator + 2 digit + null
+  sprintf (ReturnChar, "%02u:%02u", Hour, Minute);
   return ReturnChar;
 }
 
@@ -145,26 +160,32 @@ char * floatsToChar(float Number1, float Number2,const char * Separator){
   return ReturnChar;
 }
 
-char * fanSpeedToText(bool Internal){
-  static char ReturnChar [5]= "";
-  if(Internal){
-   if(!MySettings.isInternalFanOn) strcpy(ReturnChar,"OFF"); else if (MySettings.isInternalFanHigh) strcpy(ReturnChar,"HIGH"); else strcpy(ReturnChar,"LOW");
-  }
-  else{
-   if(!MySettings.isExhaustFanOn) strcpy(ReturnChar,"OFF"); else if (MySettings.isExhaustFanHigh) strcpy(ReturnChar,"HIGH"); else strcpy(ReturnChar,"LOW");
-  }
-  return ReturnChar;
+const __FlashStringHelper * internalFanSpeedToText(){
+   if(!MySettings.isInternalFanOn) return F("OFF");
+   else if (MySettings.isInternalFanHigh) return F("HIGH");
+   else return F("LOW");
+}
+
+const __FlashStringHelper * exhaustFanSpeedToText(){
+   if(!MySettings.isExhaustFanOn) return F("OFF");
+   else if (MySettings.isExhaustFanHigh) return F("HIGH");
+   else return F("LOW");
+}
+
+const __FlashStringHelper * powerSupplyToText(){
+   if(!MySettings.isPCPowerSupplyOn) return F("ON");
+   else return F("OFF");
 }
 
 char * reservoirToText(bool includeHeader){
   static char ReturnChar [32]= "";
-  if(includeHeader){strcpy(ReturnChar,"Reservoir: E[");}
-  else {strcpy(ReturnChar,"E[");}
-  if(isWaterAboveCritical) strcat(ReturnChar,"#"); else strcat(ReturnChar,"-");
-  if(isWaterAboveLow) strcat(ReturnChar,"#"); else strcat(ReturnChar,"-");
-  if(isWaterAboveMedium) strcat(ReturnChar,"#"); else strcat(ReturnChar,"-");
-  if(isWaterAboveFull) strcat(ReturnChar,"#"); else strcat(ReturnChar,"-");
-  strcat(ReturnChar,"]F");
+  if(includeHeader){strcpy_P(ReturnChar,(PGM_P)F("Reservoir: E["));}
+  else {strcpy_P(ReturnChar,(PGM_P)F("E["));}
+  if(isWaterAboveCritical) strcat_P(ReturnChar,(PGM_P)F("#")); else strcat_P(ReturnChar,(PGM_P)F("-"));
+  if(isWaterAboveLow) strcat_P(ReturnChar,(PGM_P)F("#")); else strcat_P(ReturnChar,(PGM_P)F("-"));
+  if(isWaterAboveMedium) strcat_P(ReturnChar,(PGM_P)F("#")); else strcat_P(ReturnChar,(PGM_P)F("-"));
+  if(isWaterAboveFull) strcat_P(ReturnChar,(PGM_P)F("#")); else strcat_P(ReturnChar,(PGM_P)F("-"));
+  strcat_P(ReturnChar,(PGM_P)F("]F"));
   return ReturnChar;
 }
 
@@ -172,7 +193,7 @@ int reservoirToPercent(){
   if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && isWaterAboveFull) return 100;
   else if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && !isWaterAboveFull) return 75;
   else if(isWaterAboveCritical && isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) return 50;
-  else if(isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) return 10;
+  else if(isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) return 25;
   else if(!isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) return 0;
   else return -1;
 }

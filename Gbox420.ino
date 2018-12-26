@@ -181,7 +181,7 @@ void setup() {     // put your setup code here, to run once:
   Serial.begin(115200);    //2560mega console output
   Serial3.begin(115200);  //wifi console output
   wdt_enable(WDTO_8S); //Watchdog timer set to 8 seconds
-  addToLog("GrowBox initializing...");
+  addToLog(F("GrowBox initializing..."));
   loadSettings();
 
    //Pin setup, defining what Pins are inputs/outputs and setting initial output signals
@@ -249,7 +249,7 @@ void setup() {     // put your setup code here, to run once:
   PowerSensor.setAddress(PowerSensorIP); //start power meter
   calibrateLights();
   if(MySettings.AeroOffset == 1023) calibratePressureSensor();
-  addToLog("Grow Box initialized");
+  addToLog(F("Grow Box initialized"));
 
   //triger all threads at startup
   fiveSecRun(); //needs to run first to get sensor readings
@@ -272,7 +272,7 @@ void processEspLink(){
 }
 
 void oneSecRun(){
-  //addToLog("One sec trigger..");
+  //LogToSerials(F("One sec trigger.."));
   wdt_reset(); //reset watchdog timeout
   lightCheck(); 
   aeroCheck();  
@@ -281,7 +281,7 @@ void oneSecRun(){
 }
 
 void fiveSecRun(){
-  //LogToSerials("Five sec trigger..",true);
+  //LogToSerials(F("Five sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   getRTCTime();     
   readSensors();
@@ -291,7 +291,7 @@ void fiveSecRun(){
 }
 
 void minuteRun(){
-  //LogToSerials("Minute trigger..",true);
+  //LogToSerials(F("Minute trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   checkLightTimer(); 
   logToSerial();  //Logs sensor readings to Serial  
@@ -299,7 +299,7 @@ void minuteRun(){
 }
 
 void halfHourRun(){
-  //LogToSerials("Half hour trigger..",true);
+  //LogToSerials(F("Half hour trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   if(MySettings.ReportToGoogleSheets) ReportToGoogleSheets(false);  //uploads readings to Google Sheets via ESP REST API
   if(MySettings.ReportToMqtt) mqttPublush(false);  //publish readings via ESP MQTT API
@@ -309,7 +309,7 @@ void halfHourRun(){
 
 void saveSettings(bool LogMessage){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
   eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings));
-  if(LogMessage) addToLog("Settings saved to EEPROM");
+  if(LogMessage) addToLog(F("Settings saved to EEPROM"));
 }
 
 void loadSettings(){
@@ -328,7 +328,7 @@ void loadSettings(){
 
 void SendEmailAlert(const char* AlertType){
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
-  strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,AlertType);  
+  strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,AlertType);  
   //LogToSerials(WebMessage,true);   
   RestAPI.get(WebMessage);
 }
