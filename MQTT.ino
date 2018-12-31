@@ -93,7 +93,7 @@ void mqttPublush(bool LogMessage){ //publish readings in JSON format
   strcat_P(WebMessage,(PGM_P)F("\",\"Brightness\":\""));  strcat(WebMessage,toText(MySettings.LightBrightness));
   strcat_P(WebMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(WebMessage,toText(LightReading));
   strcat_P(WebMessage,(PGM_P)F("\",\"isBright\":\""));  strcat(WebMessage,toText(isBright));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(WebMessage,toText(reservoirToPercent()));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(WebMessage,toText(reservoirPercent));
   strcat_P(WebMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat_P(WebMessage,(PGM_P)internalFanSpeedToText());
   strcat_P(WebMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat_P(WebMessage,(PGM_P)exhaustFanSpeedToText()); 
   strcat_P(WebMessage,(PGM_P)F("\"}"));

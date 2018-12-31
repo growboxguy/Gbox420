@@ -58,7 +58,7 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgString(F("tdisAeroPumpDisabled"),pumpStatusToText());
   WebServer.setArgFloat(F("num_AeroOffset"), MySettings.AeroOffset);
     
-  WebServer.setArgString(F("tdReservoir"),reservoirToText(false));
+  WebServer.setArgString(F("tdReservoir"),reservoirText);
   WebServer.setArgString(F("tdPH"),toText(PH));  
   //WebServer.setArgString("tdMoisture",toText(Moisture)); 
 

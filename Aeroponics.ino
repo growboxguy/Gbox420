@@ -107,8 +107,8 @@ void checkAeroPump(){
     }
     if (millis() - AeroPumpTimer >= AeroPumpTimeout){ //have not reached high pressue within limit (15min)
       aeroPumpDisable();
-      SendEmailAlert(PumpAlertDeviceID);
-      addToLog(F("Pump failed, alert sent"));      
+      sendEmailAlert(F("Aeroponics%20pump%20failed"),F("Aeroponics%20pump%20timed%20out%20during%20refill%20and%20got%20disabled.")); 
+      addToLog(F("Pump failed"));    
     }
   }
   else{

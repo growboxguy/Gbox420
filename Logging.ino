@@ -33,7 +33,7 @@ void addToLog(const __FlashStringHelper *message){
 void ReportToGoogleSheets(bool LogMessage){
   if(LogMessage)addToLog(F("Reporting to Google Sheets"));
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
-  strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,PushingBoxDeviceID);
+  strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,PushingBoxLogRelayID);
   strcat_P(WebMessage,(PGM_P)F("&BoxDate="));  strcat(WebMessage,CurrentTime);
   strcat_P(WebMessage,(PGM_P)F("&BoxTempC="));  strcat(WebMessage,toText(BoxTempC));
   strcat_P(WebMessage,(PGM_P)F("&BoxTempF="));  strcat(WebMessage,toText(BoxTempF));
@@ -48,7 +48,7 @@ void ReportToGoogleSheets(bool LogMessage){
   strcat_P(WebMessage,(PGM_P)F("&Brightness="));  strcat(WebMessage,toText(MySettings.LightBrightness));
   strcat_P(WebMessage,(PGM_P)F("&LightReading="));  strcat(WebMessage,toText(LightReading));
   strcat_P(WebMessage,(PGM_P)F("&isBright="));  strcat(WebMessage,toText(isBright));
-  strcat_P(WebMessage,(PGM_P)F("&Reservoir="));  strcat(WebMessage,toText(reservoirToPercent()));
+  strcat_P(WebMessage,(PGM_P)F("\tReservoir: (")); strcat(WebMessage,toText(reservoirPercent));  strcat_P(WebMessage,(PGM_P)F(")\t"));  strcat(WebMessage,reservoirText); 
   strcat_P(WebMessage,(PGM_P)F("&InternalFan=")); strcat_P(WebMessage,(PGM_P)internalFanSpeedToText()); //strcat_P is the same as strcat, just for __FlashStringHelper type (stored in flash)
   strcat_P(WebMessage,(PGM_P)F("&ExhaustFan=")); strcat_P(WebMessage,(PGM_P)exhaustFanSpeedToText());
   LogToSerials(F("Reporting to Google Sheets: "),false); LogToSerials(WebMessage,true);   
@@ -92,7 +92,7 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F("\tOffset: "));strcat(WebMessage,toText(MySettings.AeroOffset));
   strcat_P(WebMessage,(PGM_P)F("\n\r Reservoir\n\r "));  
   strcat_P(WebMessage,(PGM_P)F("\tPH: ")); strcat(WebMessage,toText(PH));
-  strcat_P(WebMessage,(PGM_P)F("\tReservoir: (")); strcat(WebMessage,toText(reservoirToPercent()));  strcat_P(WebMessage,(PGM_P)F(")\t"));  strcat(WebMessage,reservoirToText(true)); 
+  strcat_P(WebMessage,(PGM_P)F("\tReservoir: ")); strcat(WebMessage,reservoirText); 
   //strcat_P(WebMessage,(PGM_P)F("\tMoisture: ")); strcat(WebMessage,toText(Moisture)); strcat_P(WebMessage,(PGM_P)F("% ")); strcat_P(WebMessage,(PGM_P)F("\n\r "));
   strcat_P(WebMessage,(PGM_P)F("\n\r"));
  return WebMessage;
@@ -147,25 +147,4 @@ const __FlashStringHelper * exhaustFanSpeedToText(){
 const __FlashStringHelper * powerSupplyToText(){
    if(MySettings.isPCPowerSupplyOn) return F("ON");
    else return F("OFF");
-}
-
-char * reservoirToText(bool includeHeader){
-  static char ReturnChar [32]= "";
-  if(includeHeader){strcpy_P(ReturnChar,(PGM_P)F("Reservoir:E["));}
-  else {strcpy_P(ReturnChar,(PGM_P)F("E["));}
-  if(isWaterAboveCritical) strcat_P(ReturnChar,(PGM_P)F("#")); else strcat_P(ReturnChar,(PGM_P)F("-"));
-  if(isWaterAboveLow) strcat_P(ReturnChar,(PGM_P)F("#")); else strcat_P(ReturnChar,(PGM_P)F("-"));
-  if(isWaterAboveMedium) strcat_P(ReturnChar,(PGM_P)F("#")); else strcat_P(ReturnChar,(PGM_P)F("-"));
-  if(isWaterAboveFull) strcat_P(ReturnChar,(PGM_P)F("#")); else strcat_P(ReturnChar,(PGM_P)F("-"));
-  strcat_P(ReturnChar,(PGM_P)F("]F"));
-  return ReturnChar;
-}
-
-int reservoirToPercent(){
-  if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && isWaterAboveFull) return 100;
-  else if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && !isWaterAboveFull) return 75;
-  else if(isWaterAboveCritical && isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) return 50;
-  else if(isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) return 25;
-  else if(!isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) return 0;
-  else return -1;
 }

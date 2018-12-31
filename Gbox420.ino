@@ -69,9 +69,8 @@
 //Global constants
   const int UTCOffsetHour = 0;  //UTC Time hour offset (Can be adjusted on the Web interface too)
   const int UTCOffsetMinute = 0;  //UTC Time minute offset
-  const char PushingBoxDeviceID[]= "v755877CF53383E1"; //UPDATE THIS to your grow box logging scenario DeviceID from PushingBox
-  const char ReservoirAlertDeviceID[]  = "v6DA52FDF6FCDF74";  //UPDATE THIS to your reservoir alert scenario DeviceID from PushingBox
-  const char PumpAlertDeviceID[]  = "v9F3E0683C4B3B49";  //UPDATE THIS to your pump alert scenario DeviceID from PushingBox
+  const char PushingBoxLogRelayID[]= "v755877CF53383E1"; //UPDATE THIS to your grow box logging scenario DeviceID from PushingBox
+  const char PushingBoxEmailAlertID[]  = "vC5244859A2453AA";  //UPDATE THIS to your email alert scenario DeviceID from PushingBox
   const uint8_t  DHTType=DHT22;  //specify temp/humidity sensor type: DHT21(AM2301) or DHT22(AM2302,AM2321)
   const byte ScreenRotation = 1;  //1,3:landscape 2,4:portrait
   const byte LogDepth = 8;  //Show X log entries on website
@@ -128,10 +127,9 @@
   byte LightReadingPercent;  //Compared to calibrated min/max values what is the detected light level %
   bool isBright;  //Ligth sensor feedback: True-Bright / False-Dark
   bool isPotGettingHigh = false;  // Digital potentiometer direction, false: Decrease , true: Increase 
-  bool isWaterAboveCritical = false; //Water sensor, true if level reached
-  bool isWaterAboveLow = false; //Water sensor, true if level reached
-  bool isWaterAboveMedium = false; //Water sensor, true if level reached
-  bool isWaterAboveFull = false; //Water sensor, true if level reached
+  byte reservoirPercent =100;
+  char reservoirText[20]= "";
+  bool reservoirOK = true;
   bool PlayOnSound = false; //Turn on sound - website controls it
   bool PlayOffSound = false; //Turn off sound - website controls it
   bool PlayEE = false; //Surprise :) - website controls it
@@ -249,6 +247,7 @@ void setup() {     // put your setup code here, to run once:
   calibrateLights();
   if(MySettings.AeroOffset == 1023) calibratePressureSensor();
   addToLog(F("Grow Box initialized"));
+  sendEmailAlert(F("Grow%20box%20(re)started"),F("Grow%20box%20(re)started%2C%20was%20it%20on%20purpose%3F"));
 
   //triger all threads at startup
   fiveSecRun(); //needs to run first to get sensor readings
@@ -325,9 +324,10 @@ void loadSettings(){
   LogToSerials(F("done"),true);
 }
 
-void SendEmailAlert(const char* AlertType){
-  memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
-  strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,AlertType);  
-  //LogToSerials(WebMessage,true);   
+void sendEmailAlert(const __FlashStringHelper *title,const __FlashStringHelper *alert){
+  memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable  
+  strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,PushingBoxEmailAlertID); 
+  strcat_P(WebMessage,(PGM_P)F("&Title=")); strcat_P(WebMessage,(PGM_P)title);
+  strcat_P(WebMessage,(PGM_P)F("&Alert=")); strcat_P(WebMessage,(PGM_P)alert);   
   RestAPI.get(WebMessage);
 }

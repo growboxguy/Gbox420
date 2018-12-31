@@ -9,17 +9,14 @@ void readSensors(){  //Sensor readings
   Current = PowerSensor.current(PowerSensorIP);
   Power = PowerSensor.power(PowerSensorIP);
   Energy = PowerSensor.energy(PowerSensorIP) / 1000;  //total power consumption in kWh
-  ReadPH();
-  ReadMoisture();
-  isWaterAboveCritical = !digitalRead(WaterCriticalInPin);
-  isWaterAboveLow = !digitalRead(WaterLowInPin);
-  isWaterAboveMedium = !digitalRead(WaterMediumInPin);
-  isWaterAboveFull = !digitalRead(WaterFullInPin);
+  readPH();
+  readMoisture();
+  checkReservoir();
   readAeroPressure();
 }
 
 //***PH METER***
-void ReadPH(){
+void readPH(){
   float  Reading=0;
   for(byte i=0;i<20;i++) { 
    Reading+=analogRead(PHMeterInPin);
@@ -31,7 +28,7 @@ void ReadPH(){
 }
 
 //***Moisture sensor***
-void ReadMoisture(){
+void readMoisture(){
   Moisture= analogRead(AMoistureSensorInPin);
   isWet = !digitalRead(DMoistureSensorInPin);
   if(Moisture > MaxMoisture) MaxMoisture = Moisture;
