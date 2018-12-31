@@ -13,7 +13,7 @@ void logToScreen(){
   //Screen.setTextColor(ILI9341_YELLOW);Screen.setTextSize(2);
   Screen.print(F("Light:")); Screen.print(lightStatusToText()); Screen.print(F(",Bright:")); Screen.println(isBrightToText());
   Screen.print(F("Intensity:")); Screen.print(MySettings.LightBrightness);Screen.print(F(" ("));Screen.print(LightReading); Screen.print(F(" - ")); Screen.print( LightReadingPercent); Screen.println(F("%)"));
-  Screen.print(F("On:")); Screen.print(timeToChar(MySettings.LightOnHour, MySettings.LightOnMinute));Screen.print(F(",Off:")); Screen.println(timeToChar(MySettings.LightOffHour,MySettings.LightOffMinute));
+  Screen.print(F("On:")); Screen.print(timetoText(MySettings.LightOnHour, MySettings.LightOnMinute));Screen.print(F(",Off:")); Screen.println(timetoText(MySettings.LightOffHour,MySettings.LightOffMinute));
   Screen.setTextColor(ILI9341_MAGENTA);Screen.setTextSize(2);
   Screen.print(reservoirToText(true));Screen.print(F(",PH:"));Screen.println(PH);
   //Screen.setTextColor(ILI9341_CYAN);Screen.setTextSize(3);

@@ -12,8 +12,8 @@ void LoadCallback(char * url) //called when website is loaded
 
   WebServer.setArgInt(F("num_AeroInterval"), MySettings.AeroInterval);
   WebServer.setArgInt(F("num_AeroDuration"), MySettings.AeroDuration);
-  WebServer.setArgString(F("num_AeroPressureLow"), floatToChar(MySettings.AeroPressureLow));
-  WebServer.setArgString(F("num_AeroPressureHigh"), floatToChar(MySettings.AeroPressureHigh));
+  WebServer.setArgString(F("num_AeroPressureLow"), toText(MySettings.AeroPressureLow));
+  WebServer.setArgString(F("num_AeroPressureHigh"), toText(MySettings.AeroPressureHigh));
   WebServer.setArgBoolean(F("check_AeroSprayEnabled"), MySettings.isAeroSprayEnabled);
   WebServer.setArgBoolean(F("check_AeroQuietEnabled"), MySettings.isAeroQuietEnabled);
   WebServer.setArgInt(F("num_AeroQuietFromHour"), MySettings.AeroQuietFromHour); 
@@ -34,33 +34,33 @@ void RefreshCallback(char * url) //called when website is refreshed
   //LogToSerials(F("RefreshCB for URL: "),false); LogToSerials(url,true);
   if (strcmp(url,"/GrowBox.html.json")==0){   
   WebServer.setArgString(F("tdTime"), CurrentTime); 
-  WebServer.setArgString(F("tdBoxTemp"),floatsToChar(BoxTempC,BoxTempF,"/"));
-  WebServer.setArgString(F("tdHumidity"),floatToChar(Humidity));
+  WebServer.setArgString(F("tdBoxTemp"),toText(BoxTempC,BoxTempF,"/"));
+  WebServer.setArgString(F("tdHumidity"),toText(Humidity));
   WebServer.setArgString(F("tdInternalFanSpeed"),internalFanSpeedToText());
   WebServer.setArgString(F("tdExhaustFanSpeed"),exhaustFanSpeedToText());
 
   WebServer.setArgString(F("tdisPowersupplyOn"),powerSupplyToText()); 
-  WebServer.setArgString(F("tdPower"),floatToChar(Power));  
-  WebServer.setArgString(F("tdEnergy"),floatToChar(Energy));
-  WebServer.setArgString(F("tdVoltage"),floatToChar(Voltage));
-  WebServer.setArgString(F("tdCurrent"),floatToChar(Current)); 
+  WebServer.setArgString(F("tdPower"),toText(Power));  
+  WebServer.setArgString(F("tdEnergy"),toText(Energy));
+  WebServer.setArgString(F("tdVoltage"),toText(Voltage));
+  WebServer.setArgString(F("tdCurrent"),toText(Current)); 
 
   WebServer.setArgString(F("tdisLightOn"),lightStatusToText());
-  WebServer.setArgString(F("tdLightReading"),intsToChar(MySettings.LightBrightness, LightReading,"%-")); 
-  WebServer.setArgString(F("tdLightMinMax"),intsToChar(MinLightReading, MaxLightReading,"/"));
+  WebServer.setArgString(F("tdLightReading"),toText(MySettings.LightBrightness, LightReading,"%-")); 
+  WebServer.setArgString(F("tdLightMinMax"),toText(MinLightReading, MaxLightReading,"/"));
 
   WebServer.setArgString(F("tdisBright"),isBrightToText());
-  WebServer.setArgString(F("tdLightOn"), timeToChar(MySettings.LightOnHour,MySettings.LightOnMinute)); 
-  WebServer.setArgString(F("tdLightOff"), timeToChar(MySettings.LightOffHour,MySettings.LightOffMinute)); 
+  WebServer.setArgString(F("tdLightOn"), timetoText(MySettings.LightOnHour,MySettings.LightOnMinute)); 
+  WebServer.setArgString(F("tdLightOff"), timetoText(MySettings.LightOffHour,MySettings.LightOffMinute)); 
   
-  WebServer.setArgString("tdAeroPressure",floatsToChar(AeroPressure,AeroPressurePSI,"/"));
+  WebServer.setArgString("tdAeroPressure",toText(AeroPressure,AeroPressurePSI,"/"));
   WebServer.setArgString(F("tdisAeroPumpOn"),pumpStateToText());
   WebServer.setArgString(F("tdisAeroPumpDisabled"),pumpStatusToText());
   WebServer.setArgFloat(F("num_AeroOffset"), MySettings.AeroOffset);
     
   WebServer.setArgString(F("tdReservoir"),reservoirToText(false));
-  WebServer.setArgString(F("tdPH"),floatToChar(PH));  
-  //WebServer.setArgString("tdMoisture",floatToChar(Moisture)); 
+  WebServer.setArgString(F("tdPH"),toText(PH));  
+  //WebServer.setArgString("tdMoisture",toText(Moisture)); 
 
   //Log output  
   memset(&WebMessage[0], 0, sizeof(WebMessage));
@@ -81,8 +81,8 @@ void RefreshCallback(char * url) //called when website is refreshed
 void ButtonPressCallback(char *button)
 {
   //LogToSerials(button,true);
-  if (strcmp_P(button,(PGM_P)F("btn_LightOn"))==0) { turnLightON(); }
-  else if (strcmp_P(button,(PGM_P)F("btn_LightOff"))==0) { turnLightOFF(); }
+  if (strcmp_P(button,(PGM_P)F("btn_LightOn"))==0) { turnLightON(true); }
+  else if (strcmp_P(button,(PGM_P)F("btn_LightOff"))==0) { turnLightOFF(true); }
   else if (strcmp_P(button,(PGM_P)F("btn_LightCalibrate"))==0) {triggerCalibrateLights();}
   else if (strcmp_P(button,(PGM_P)F("btn_PowersupplyOn"))==0) { powerSupplyOn();}
   else if (strcmp_P(button,(PGM_P)F("btn_PowersupplyOff"))==0) { powerSupplyOff();}

@@ -1,49 +1,6 @@
-void LogToSerials(const char * ToPrint,bool breakLine){
-  if(breakLine){
-    Serial.println(ToPrint);
-    Serial3.println(ToPrint);
-  }
-  else{
-    Serial.print(ToPrint);
-    Serial3.print(ToPrint);
-  }
-}
-
-void LogToSerials(const __FlashStringHelper * ToPrint,bool breakLine){
-  if(breakLine){
-    Serial.println(ToPrint);
-    Serial3.println(ToPrint);
-  }
-  else{
-    Serial.print(ToPrint);
-    Serial3.print(ToPrint);
-  }
-}
-
-void LogToSerials(const int & ToPrint,bool breakLine){
-  if(breakLine){
-    Serial.println(ToPrint);
-    Serial3.println(ToPrint);
-  }
-  else{
-    Serial.print(ToPrint);
-    Serial3.print(ToPrint);
-  }
-}
-
-void LogToSerials(const long unsigned int & ToPrint,bool breakLine){
-  if(breakLine){
-    Serial.println(ToPrint);
-    Serial3.println(ToPrint);
-  }
-  else{
-    Serial.print(ToPrint);
-    Serial3.print(ToPrint);
-  }
-}
-
-void LogToSerials(const float & ToPrint,bool breakLine){
-  if(breakLine){
+template <class logLine>   //fuction template: LogToSerials can take any parameter type (int,float,bool,char..) https://en.cppreference.com/w/cpp/language/function_template
+void LogToSerials (logLine ToPrint,bool breakLine) {
+ if(breakLine){
     Serial.println(ToPrint);
     Serial3.println(ToPrint);
   }
@@ -78,20 +35,20 @@ void ReportToGoogleSheets(bool LogMessage){
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,PushingBoxDeviceID);
   strcat_P(WebMessage,(PGM_P)F("&BoxDate="));  strcat(WebMessage,CurrentTime);
-  strcat_P(WebMessage,(PGM_P)F("&BoxTempC="));  strcat(WebMessage,floatToChar(BoxTempC));
-  strcat_P(WebMessage,(PGM_P)F("&BoxTempF="));  strcat(WebMessage,floatToChar(BoxTempF));
-  strcat_P(WebMessage,(PGM_P)F("&Humidity="));  strcat(WebMessage,floatToChar(Humidity));
-  strcat_P(WebMessage,(PGM_P)F("&Power="));  strcat(WebMessage,floatToChar(Power)); 
-  strcat_P(WebMessage,(PGM_P)F("&Energy="));  strcat(WebMessage,floatToChar(Energy));
-  strcat_P(WebMessage,(PGM_P)F("&Voltage="));  strcat(WebMessage,floatToChar(Voltage));
-  strcat_P(WebMessage,(PGM_P)F("&Current="));  strcat(WebMessage,floatToChar(Current));
-  strcat_P(WebMessage,(PGM_P)F("&PH="));  strcat(WebMessage,floatToChar(PH));
-  strcat_P(WebMessage,(PGM_P)F("&Moisture="));  strcat(WebMessage,floatToChar(Moisture));
-  strcat_P(WebMessage,(PGM_P)F("&isLightOn="));  strcat(WebMessage,intToChar(MySettings.isLightOn));
-  strcat_P(WebMessage,(PGM_P)F("&Brightness="));  strcat(WebMessage,intToChar(MySettings.LightBrightness));
-  strcat_P(WebMessage,(PGM_P)F("&LightReading="));  strcat(WebMessage,intToChar(LightReading));
-  strcat_P(WebMessage,(PGM_P)F("&isBright="));  strcat(WebMessage,intToChar(isBright));
-  strcat_P(WebMessage,(PGM_P)F("&Reservoir="));  strcat(WebMessage,intToChar(reservoirToPercent()));
+  strcat_P(WebMessage,(PGM_P)F("&BoxTempC="));  strcat(WebMessage,toText(BoxTempC));
+  strcat_P(WebMessage,(PGM_P)F("&BoxTempF="));  strcat(WebMessage,toText(BoxTempF));
+  strcat_P(WebMessage,(PGM_P)F("&Humidity="));  strcat(WebMessage,toText(Humidity));
+  strcat_P(WebMessage,(PGM_P)F("&Power="));  strcat(WebMessage,toText(Power)); 
+  strcat_P(WebMessage,(PGM_P)F("&Energy="));  strcat(WebMessage,toText(Energy));
+  strcat_P(WebMessage,(PGM_P)F("&Voltage="));  strcat(WebMessage,toText(Voltage));
+  strcat_P(WebMessage,(PGM_P)F("&Current="));  strcat(WebMessage,toText(Current));
+  strcat_P(WebMessage,(PGM_P)F("&PH="));  strcat(WebMessage,toText(PH));
+  strcat_P(WebMessage,(PGM_P)F("&Moisture="));  strcat(WebMessage,toText(Moisture));
+  strcat_P(WebMessage,(PGM_P)F("&isLightOn="));  strcat(WebMessage,toText(MySettings.isLightOn));
+  strcat_P(WebMessage,(PGM_P)F("&Brightness="));  strcat(WebMessage,toText(MySettings.LightBrightness));
+  strcat_P(WebMessage,(PGM_P)F("&LightReading="));  strcat(WebMessage,toText(LightReading));
+  strcat_P(WebMessage,(PGM_P)F("&isBright="));  strcat(WebMessage,toText(isBright));
+  strcat_P(WebMessage,(PGM_P)F("&Reservoir="));  strcat(WebMessage,toText(reservoirToPercent()));
   strcat_P(WebMessage,(PGM_P)F("&InternalFan=")); strcat_P(WebMessage,(PGM_P)internalFanSpeedToText()); //strcat_P is the same as strcat, just for __FlashStringHelper type (stored in flash)
   strcat_P(WebMessage,(PGM_P)F("&ExhaustFan=")); strcat_P(WebMessage,(PGM_P)exhaustFanSpeedToText());
   LogToSerials(F("Reporting to Google Sheets: "),false); LogToSerials(WebMessage,true);   
@@ -99,60 +56,79 @@ void ReportToGoogleSheets(bool LogMessage){
 }
 
 void logToSerial(){  
-  LogToSerials(CurrentTime,false);
-  LogToSerials(F("\tTempC: "),false); LogToSerials(BoxTempC,false); LogToSerials(F("C"),false);
-  LogToSerials(F("\tTempF: "),false); LogToSerials(BoxTempF,false); LogToSerials(F("F"),false);
-  LogToSerials(F("\tHumidity: "),false); LogToSerials(Humidity,false); LogToSerials( F("%"),false);
-  LogToSerials(F("\tPower: "),false); LogToSerials(Power,false); LogToSerials(F("W"),true); 
-  LogToSerials(F("\tEnergy: "),false); LogToSerials(Energy,false); LogToSerials(F("Wh"),false);   
-  LogToSerials(F("\tVoltage: "),false); LogToSerials(Voltage,false); LogToSerials(F("V"),false);
-  LogToSerials(F("\tCurrent: "),false); LogToSerials(Current,false); LogToSerials(F("A"),false);
-  LogToSerials(F("\tPH: "),false); LogToSerials(PH,false);
-  LogToSerials(F("\tMoisture: "),false); LogToSerials(Moisture,false); LogToSerials(F("% "),true);
-  LogToSerials(F("\tLight: "),false); LogToSerials(lightStatusToText(),false); 
-  LogToSerials(F("\tBright: "),false); LogToSerials(isBrightToText(),false); 
-  LogToSerials(F("\tBrightness: "),false); LogToSerials(MySettings.LightBrightness,false);
-  LogToSerials(F("\tLightReading: "),false); LogToSerials(LightReading,false); LogToSerials(F(" - "),false); LogToSerials(LightReadingPercent,false); LogToSerials(F("%"),true);
-  LogToSerials(F("\tLightON: "),false); LogToSerials(timeToChar(MySettings.LightOnHour, MySettings.LightOnMinute),false);LogToSerials(F("\tLightOFF: "),false); LogToSerials(timeToChar(MySettings.LightOffHour, MySettings.LightOffMinute),true);
-  LogToSerials(F("\tInternal fan: "),false);LogToSerials(internalFanSpeedToText(),false);  LogToSerials(F("\tExhaust fan: "),false);LogToSerials(exhaustFanSpeedToText(),false);
-  LogToSerials(F("\tReservoir: ("),false); LogToSerials(reservoirToPercent(),false);  LogToSerials(F(")\t"),false);  LogToSerials(reservoirToText(true),true);
-  LogToSerials(F("\tPressure: "),false);LogToSerials(AeroPressure,false);LogToSerials(F("bar/"),false);LogToSerials(AeroPressurePSI,false);LogToSerials(F("psi"),false);
-  LogToSerials(F("\tLow: "),false);LogToSerials(MySettings.AeroPressureLow,false);LogToSerials(F("\tHigh: "),false);LogToSerials(MySettings.AeroPressureHigh,false);
-  LogToSerials(F("\tPumpState: "),false);LogToSerials(pumpStateToText(),false);LogToSerials(F("\tPumpStatus: "),false);LogToSerials(pumpStatusToText(),true);
-  LogToSerials(F("\tAeroInterval: "),false);LogToSerials(MySettings.AeroInterval,false);LogToSerials(F("\tAeroDuration: "),false);LogToSerials(MySettings.AeroDuration,false);LogToSerials(F("\tAeroOffset: "),false);LogToSerials(MySettings.AeroOffset,true);
+  LogToSerials(logToText(),false);
 }
 
-char * intToChar(int Number){
-  static char ReturnChar[8] = ""; //7 digits + null terminator max
+char * logToText(){
+  memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable 
+  strcat(WebMessage,CurrentTime);
+  strcat_P(WebMessage,(PGM_P)F("\n\r Box\n\r ")); 
+  strcat_P(WebMessage,(PGM_P)F("\tTempC: ")); strcat(WebMessage,toText(BoxTempC)); strcat_P(WebMessage,(PGM_P)F("C"));
+  strcat_P(WebMessage,(PGM_P)F("\tTempF: ")); strcat(WebMessage,toText(BoxTempF)); strcat_P(WebMessage,(PGM_P)F("F"));
+  strcat_P(WebMessage,(PGM_P)F("\tHumidity: ")); strcat(WebMessage,toText(Humidity)); strcat_P(WebMessage,(PGM_P)F("%"));
+  strcat_P(WebMessage,(PGM_P)F("\tInternal fan: "));strcat_P(WebMessage,(PGM_P)internalFanSpeedToText());
+  strcat_P(WebMessage,(PGM_P)F("\tExhaust fan: "));strcat_P(WebMessage,(PGM_P)exhaustFanSpeedToText());
+  strcat_P(WebMessage,(PGM_P)F("\n\r Power\n\r "));
+  strcat_P(WebMessage,(PGM_P)F("\t12V supply: ")); strcat_P(WebMessage,(PGM_P)powerSupplyToText());
+  strcat_P(WebMessage,(PGM_P)F("\tPower: ")); strcat(WebMessage,toText(Power)); strcat_P(WebMessage,(PGM_P)F("W")); 
+  strcat_P(WebMessage,(PGM_P)F("\tTotal: ")); strcat(WebMessage,toText(Energy)); strcat_P(WebMessage,(PGM_P)F("Wh"));   
+  strcat_P(WebMessage,(PGM_P)F("\tVoltage: ")); strcat(WebMessage,toText(Voltage)); strcat_P(WebMessage,(PGM_P)F("V"));
+  strcat_P(WebMessage,(PGM_P)F("\tCurrent: ")); strcat(WebMessage,toText(Current)); strcat_P(WebMessage,(PGM_P)F("A"));
+  strcat_P(WebMessage,(PGM_P)F("\n\r Lights\n\r "));
+  strcat_P(WebMessage,(PGM_P)F("\tLight: ")); strcat_P(WebMessage,(PGM_P)lightStatusToText()); 
+  strcat_P(WebMessage,(PGM_P)F("\tBrightness: ")); strcat(WebMessage,toText(MySettings.LightBrightness));
+  strcat_P(WebMessage,(PGM_P)F("\tLightReading: ")); strcat(WebMessage,toText(LightReading)); strcat_P(WebMessage,(PGM_P)F(" - "));strcat(WebMessage,toText(LightReadingPercent));  strcat_P(WebMessage,(PGM_P)F("%"));
+  strcat_P(WebMessage,(PGM_P)F("\tLight detected: ")); strcat_P(WebMessage,(PGM_P)isBrightToText()); 
+  strcat_P(WebMessage,(PGM_P)F("\tLightON: ")); strcat(WebMessage,timetoText(MySettings.LightOnHour, MySettings.LightOnMinute));
+  strcat_P(WebMessage,(PGM_P)F("\tLightOFF: ")); strcat(WebMessage,timetoText(MySettings.LightOffHour, MySettings.LightOffMinute));
+  strcat_P(WebMessage,(PGM_P)F("\n\r Aeroponics\n\r "));
+  strcat_P(WebMessage,(PGM_P)F("\tPressure: "));strcat(WebMessage,toText(AeroPressure));strcat_P(WebMessage,(PGM_P)F("bar/"));strcat(WebMessage,toText(AeroPressurePSI));strcat_P(WebMessage,(PGM_P)F("psi"));
+  strcat_P(WebMessage,(PGM_P)F("\tLow: "));strcat(WebMessage,toText(MySettings.AeroPressureLow));
+  strcat_P(WebMessage,(PGM_P)F("\tHigh: "));strcat(WebMessage,toText(MySettings.AeroPressureHigh));
+  strcat_P(WebMessage,(PGM_P)F("\tPumpState: "));strcat_P(WebMessage,(PGM_P)pumpStateToText());
+  strcat_P(WebMessage,(PGM_P)F("\tPumpStatus: "));strcat_P(WebMessage,(PGM_P)pumpStatusToText());
+  strcat_P(WebMessage,(PGM_P)F("\tInterval: "));strcat(WebMessage,toText(MySettings.AeroInterval));
+  strcat_P(WebMessage,(PGM_P)F("\tDuration: "));strcat(WebMessage,toText(MySettings.AeroDuration));
+  strcat_P(WebMessage,(PGM_P)F("\tOffset: "));strcat(WebMessage,toText(MySettings.AeroOffset));
+  strcat_P(WebMessage,(PGM_P)F("\n\r Reservoir\n\r "));  
+  strcat_P(WebMessage,(PGM_P)F("\tPH: ")); strcat(WebMessage,toText(PH));
+  strcat_P(WebMessage,(PGM_P)F("\tReservoir: (")); strcat(WebMessage,toText(reservoirToPercent()));  strcat_P(WebMessage,(PGM_P)F(")\t"));  strcat(WebMessage,reservoirToText(true)); 
+  //strcat_P(WebMessage,(PGM_P)F("\tMoisture: ")); strcat(WebMessage,toText(Moisture)); strcat_P(WebMessage,(PGM_P)F("% ")); strcat_P(WebMessage,(PGM_P)F("\n\r "));
+  strcat_P(WebMessage,(PGM_P)F("\n\r"));
+ return WebMessage;
+}
+
+char * toText(int Number){
+  static char ReturnChar[10] = ""; //9 digits + null terminator max
   itoa(Number, ReturnChar, 10);
   return ReturnChar;
 }
 
-char * intsToChar(int Number1, int Number2,const char * Separator){
+char * toText(int Number1, int Number2,const char * Separator){  //function overloading: Same camed function, different parameters
   static char ReturnChar[12] = ""; //5 digit + separator + 5 digit + null
   snprintf(ReturnChar,12,"%d%s%d",Number1,Separator,Number2);
   return ReturnChar;
 }
 
-char * timeToChar(int Hour, int Minute){
-  static char ReturnChar[6] = ""; //2 digit + separator + 2 digit + null
-  sprintf (ReturnChar, "%02u:%02u", Hour, Minute);
-  return ReturnChar;
-}
-
-char * floatToChar(float Number){ 
-  static char ReturnFloatChar[8] = "";  //4 digits + decimal sign + 2 decimals + null terminator
+char * toText(float Number){ 
+  static char ReturnFloatChar[10] = "";  //6 digits + decimal sign + 2 decimals + null terminator
   dtostrf(Number, 4, 2, ReturnFloatChar); 
   return ReturnFloatChar;
 }
 
-char * floatsToChar(float Number1, float Number2,const char * Separator){
+char * toText(float Number1, float Number2,const char * Separator){
   static char ReturnChar[18] = ""; 
   static char Number2Char[8] = ""; //4 digits + decimal sign + 2 decimals + null terminator
   dtostrf(Number1, 4, 2, ReturnChar); 
   strcat(ReturnChar,Separator);
   dtostrf(Number2, 4, 2, Number2Char); 
   strcat(ReturnChar,Number2Char);
+  return ReturnChar;
+}
+
+char * timetoText(int Hour, int Minute){
+  static char ReturnChar[6] = ""; //2 digit + separator + 2 digit + null
+  sprintf (ReturnChar, "%02u:%02u", Hour, Minute);
   return ReturnChar;
 }
 

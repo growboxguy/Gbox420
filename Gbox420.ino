@@ -80,7 +80,7 @@
   const unsigned long AeroPumpTimeout = 900000;  // Aeroponics - Max pump run time (15minutes)
  
 //Settings saved to EEPROM persistent storage
-  byte Version= 2; //increment this when you update the test values or change the stucture to invalidate the EEPROM stored settings
+  byte Version= 3; //increment this when you update the test values or change the stucture to invalidate the EEPROM stored settings
   struct SettingsStructure //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   bool isLightOn = true;  //Startup status for lights: True-ON / False-OFF
@@ -98,8 +98,8 @@
   byte LightOffHour = 16; //Light OFF time - hour
   byte LightOffMinute = 20; //Light OFF time - minute
   bool isAeroSprayEnabled = true;
-  unsigned long AeroInterval = 15; //Aeroponics - Spray every 15 minutes
-  unsigned long AeroDuration = 5; //Aeroponics - Spray for 5 secondsf
+  byte AeroInterval = 15; //Aeroponics - Spray every 15 minutes
+  byte AeroDuration = 3; //Aeroponics - Spray for 5 secondsf
   float AeroPressureLow= 5.5; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroPressureHigh = 7.0 ; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroOffset = 0.5; //Pressure sensor calibration - offset voltage

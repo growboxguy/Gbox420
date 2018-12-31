@@ -13,7 +13,6 @@ char Message[] = "GrowBoxGuy";
 
 //Global constants
 const char SheetsRelayDeviceID[] = "v420";  //Update this to your Google Sheets scenario DeviceID
-const char EmailAlertDeviceID[]  = "v421";  //Update this to your email alert scenario DeviceID
 
 //Component initialization
 ELClient esp(&Serial3);  //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
@@ -29,7 +28,6 @@ void setup() {
 
 void loop() {  // put your main code here, to run repeatedly:
 reportToGoogleSheets();
-sendEmailAlert();
 delay(60000);
 }
 
@@ -55,14 +53,6 @@ void reportToGoogleSheets(){
   Serial.println(WebMessage);   
   rest.get(WebMessage);
 } //api.pushingbox.com/pushingbox?devid=v420&Humidity=4.20&isLightOn=1&Brightness=80&Message=GrowBoxGuy
-
-void sendEmailAlert(){
-  Serial.println("Sending email alert");
-  memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
-  strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,EmailAlertDeviceID);  
-  Serial.println(WebMessage);   
-  rest.get(WebMessage);
-} //api.pushingbox.com/pushingbox?devid=v6DA52FDF6FCDF74
 
 char * intToChar(int Number){
 static char ReturnChar[8] = ""; //7 digits + null terminator

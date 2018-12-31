@@ -45,7 +45,7 @@ void mqttReceived(void* response) {
   ((*res).popString()).toCharArray(data, 16);
 
   LogToSerials(F("Received: "),false);LogToSerials(topic,false);LogToSerials(F(" - "),false);LogToSerials(data,true);
-  if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(); else if(strcmp(data,"0")==0)turnLightOFF(); }
+  if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(true); else if(strcmp(data,"0")==0)turnLightOFF(true); }
   else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data)); }
   else if(strstr(topic,MqttDisplayBrightness)!=NULL) {setDigitDisplayBacklight(atoi(data));}
   else if(strstr(topic,MqttTimerEnabled)!=NULL) {setTimerOnOff(atoi(data));} //bool 
@@ -80,20 +80,20 @@ void mqttPublush(bool LogMessage){ //publish readings in JSON format
   if(LogMessage)addToLog(F("Reporting to MQTT"));
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat_P(WebMessage,(PGM_P)F("{\"BoxDate\":\""));  strcat(WebMessage,CurrentTime);
-  strcat_P(WebMessage,(PGM_P)F("\",\"BoxTempC\":\""));  strcat(WebMessage,floatToChar(BoxTempC));
-  strcat_P(WebMessage,(PGM_P)F("\",\"BoxTempF\":\""));  strcat(WebMessage,floatToChar(BoxTempF));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Humidity\":\""));  strcat(WebMessage,floatToChar(Humidity));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Power\":\""));  strcat(WebMessage,floatToChar(Power)); 
-  strcat_P(WebMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(WebMessage,floatToChar(Energy));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(WebMessage,floatToChar(Voltage));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Current\":\""));  strcat(WebMessage,floatToChar(Current));
-  strcat_P(WebMessage,(PGM_P)F("\",\"PH\":\""));  strcat(WebMessage,floatToChar(PH));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Moisture\":\""));  strcat(WebMessage,floatToChar(Moisture));
-  strcat_P(WebMessage,(PGM_P)F("\",\"isLightOn\":\""));  strcat(WebMessage,intToChar(MySettings.isLightOn));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Brightness\":\""));  strcat(WebMessage,intToChar(MySettings.LightBrightness));
-  strcat_P(WebMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(WebMessage,intToChar(LightReading));
-  strcat_P(WebMessage,(PGM_P)F("\",\"isBright\":\""));  strcat(WebMessage,intToChar(isBright));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(WebMessage,intToChar(reservoirToPercent()));
+  strcat_P(WebMessage,(PGM_P)F("\",\"BoxTempC\":\""));  strcat(WebMessage,toText(BoxTempC));
+  strcat_P(WebMessage,(PGM_P)F("\",\"BoxTempF\":\""));  strcat(WebMessage,toText(BoxTempF));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Humidity\":\""));  strcat(WebMessage,toText(Humidity));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Power\":\""));  strcat(WebMessage,toText(Power)); 
+  strcat_P(WebMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(WebMessage,toText(Energy));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(WebMessage,toText(Voltage));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Current\":\""));  strcat(WebMessage,toText(Current));
+  strcat_P(WebMessage,(PGM_P)F("\",\"PH\":\""));  strcat(WebMessage,toText(PH));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Moisture\":\""));  strcat(WebMessage,toText(Moisture));
+  strcat_P(WebMessage,(PGM_P)F("\",\"isLightOn\":\""));  strcat(WebMessage,toText(MySettings.isLightOn));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Brightness\":\""));  strcat(WebMessage,toText(MySettings.LightBrightness));
+  strcat_P(WebMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(WebMessage,toText(LightReading));
+  strcat_P(WebMessage,(PGM_P)F("\",\"isBright\":\""));  strcat(WebMessage,toText(isBright));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(WebMessage,toText(reservoirToPercent()));
   strcat_P(WebMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat_P(WebMessage,(PGM_P)internalFanSpeedToText());
   strcat_P(WebMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat_P(WebMessage,(PGM_P)exhaustFanSpeedToText()); 
   strcat_P(WebMessage,(PGM_P)F("\"}"));

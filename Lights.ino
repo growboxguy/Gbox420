@@ -16,9 +16,9 @@ void calibrateLights(){
   MySettings.isLightOn=LastLightStatus;
   lightCheck();  
   strncpy_P(LogMessage,(PGM_P)F("New min/max: "),LogLength);
-  strcat(LogMessage,intToChar(MinLightReading));
+  strcat(LogMessage,toText(MinLightReading));
   strcat_P(LogMessage,(PGM_P)F("/"));
-  strcat(LogMessage,intToChar(MaxLightReading));
+  strcat(LogMessage,toText(MaxLightReading));
   addToLog(LogMessage);
 }
 
@@ -41,7 +41,7 @@ void stepOne(){  //Adjust Potentiometer by one
 
 void setBrightness(int NewBrightness){
   strncpy_P(LogMessage,(PGM_P)F("Brightness: "),LogLength);  
-  strcat(LogMessage,intToChar(NewBrightness));
+  strcat(LogMessage,toText(NewBrightness));
   strcat_P(LogMessage,(PGM_P)F("%"));
   addToLog(LogMessage);    
   while(MySettings.LightBrightness != NewBrightness){
@@ -51,22 +51,22 @@ void setBrightness(int NewBrightness){
   }
 }
 
-void turnLightON(){
+void turnLightON(bool LogMessage){
    MySettings.isLightOn = true;
-   addToLog(F("Light ON")); 
+   if(LogMessage)addToLog(F("Light ON")); 
    PlayOnSound=true;
 }
 
-void turnLightOFF(){
+void turnLightOFF(bool LogMessage){
   MySettings.isLightOn = false;
-  addToLog(F("Light OFF")); 
+  if(LogMessage)addToLog(F("Light OFF")); 
   PlayOffSound=true; 
 }
 
 void lightCheck(){
   if(!digitalRead(PowerButtonInPin)){ //If the power button is kept pressed down
-    if(MySettings.isLightOn) turnLightOFF();
-    else turnLightON();  
+    if(MySettings.isLightOn) turnLightOFF(true);
+    else turnLightON(true);  
     }
   if(CalibrateLights){CalibrateLights=false;calibrateLights();}
   if(MySettings.isLightOn){
@@ -121,14 +121,14 @@ void checkLightTimer() {
     if(CombinedOnTime <= CombinedOffTime)  //no midnight turnover, Example: On 8:10, Off: 20:10
     {
       if(CombinedOnTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedOffTime){
-        if(MySettings.isLightOn != true) turnLightON();}
-      else if(MySettings.isLightOn != false) turnLightOFF();     
+        if(MySettings.isLightOn != true) turnLightON(false);}
+      else if(MySettings.isLightOn != false) turnLightOFF(false);     
     }
     else   //midnight turnover, Example: On 21:20, Off: 9:20
     {
       if(CombinedOnTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedOffTime){
-       if(MySettings.isLightOn != true) turnLightON();}
-      else if(MySettings.isLightOn != false) turnLightOFF();    
+       if(MySettings.isLightOn != true) turnLightON(false);}
+      else if(MySettings.isLightOn != false) turnLightOFF(false);    
     }
   }
 }

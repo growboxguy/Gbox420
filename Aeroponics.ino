@@ -18,7 +18,7 @@ void calibratePressureSensor(){  //Should only be called when there is 0 pressur
   }  
   MySettings.AeroOffset = (sum/50)*5/1024; //Reads voltage at 0 pressure
   strncpy_P(LogMessage,(PGM_P)F("Pressure sensor offset: "),LogLength);
-  strcat(LogMessage,floatToChar(MySettings.AeroOffset));
+  strcat(LogMessage,toText(MySettings.AeroOffset));
   addToLog(LogMessage);
 }
 
