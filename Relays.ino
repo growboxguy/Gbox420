@@ -1,4 +1,4 @@
-void relayCheck(){
+void checkRelays(){
   if(isAeroSprayOn) digitalWrite(Relay1OutPin, LOW); else digitalWrite(Relay1OutPin, HIGH); //True turns relay ON , False turns relay OFF  (LOW signal activates Relay) 
   if(isAeroPumpOn) digitalWrite(Relay2OutPin, LOW); else digitalWrite(Relay2OutPin, HIGH);  
   if(MySettings.isPCPowerSupplyOn) digitalWrite(Relay3OutPin, LOW); else digitalWrite(Relay3OutPin, HIGH);
@@ -61,4 +61,21 @@ void exhaustFanOff(){
   MySettings.isExhaustFanHigh = false;
   addToLog(F("Exhaust fan OFF"));
   PlayOffSound=true;
+}
+
+const __FlashStringHelper * internalFanSpeedToText(){
+   if(!MySettings.isInternalFanOn) return F("OFF");
+   else if (MySettings.isInternalFanHigh) return F("HIGH");
+   else return F("LOW");
+}
+
+const __FlashStringHelper * exhaustFanSpeedToText(){
+   if(!MySettings.isExhaustFanOn) return F("OFF");
+   else if (MySettings.isExhaustFanHigh) return F("HIGH");
+   else return F("LOW");
+}
+
+const __FlashStringHelper * powerSupplyToText(){
+   if(MySettings.isPCPowerSupplyOn) return F("ON");
+   else return F("OFF");
 }

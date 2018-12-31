@@ -1,4 +1,4 @@
-void getRTCTime() {  //fills the CurrentTime global variable
+void getTime() {  //fills the CurrentTime global variable
   if(UpdateNtpTime)setNtpTime();
   Time Now = Clock.time();  // Get the current time and date from the chip.
   snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d",Now.yr, Now.mon, Now.date,Now.hr, Now.min, Now.sec);  //Format and store time

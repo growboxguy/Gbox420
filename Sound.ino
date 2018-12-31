@@ -1,4 +1,4 @@
-void soundCheck(){
+void checkSound(){
   if(MySettings.isSoundEnabled){  
     if (PlayOnSound)  {PlayOnSound = false;OnSound();}
     if (PlayOffSound)  {PlayOffSound = false;OffSound();} 

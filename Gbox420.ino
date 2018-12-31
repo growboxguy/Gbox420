@@ -272,16 +272,16 @@ void processEspLink(){
 void oneSecRun(){
   //LogToSerials(F("One sec trigger.."));
   wdt_reset(); //reset watchdog timeout
-  lightCheck(); 
-  aeroCheck();  
-  relayCheck();
-  soundCheck();  
+  checkLightStatus(); 
+  checkAero();  
+  checkRelays();
+  checkSound();  
 }
 
 void fiveSecRun(){
   //LogToSerials(F("Five sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout
-  getRTCTime();     
+  getTime();     
   readSensors();
   wdt_reset(); //reset watchdog timeout
   updateDisplay(); //Updates 7 digit display  
@@ -292,7 +292,7 @@ void minuteRun(){
   //LogToSerials(F("Minute trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   checkLightTimer(); 
-  logToSerial();  //Logs sensor readings to Serial  
+  LogToSerials(logToText(),true);  //Logs sensor readings to Serial  
   logToScreen();  //Display sensore readings on lcd screen  
 }
 
@@ -305,9 +305,9 @@ void halfHourRun(){
 
 //Helper functions
 
-void saveSettings(bool LogMessage){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
+void saveSettings(bool AddToLog){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
   eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings));
-  if(LogMessage) addToLog(F("Settings saved to EEPROM"));
+  if(AddToLog) addToLog(F("Settings saved to EEPROM"));
 }
 
 void loadSettings(){
@@ -315,16 +315,16 @@ void loadSettings(){
   eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
   if(EEPROMSettings.StructureVersion != MySettings.StructureVersion){
     LogToSerials(F("Change detected, updating EEPROM..."),false);
-    saveSettings(false);
+    saveSettings(false);  //overwrites stored settings with defaults from this sketch
   }
   else {
     LogToSerials(F("Same structure version detected, applying restored settings..."),false);
-    MySettings = EEPROMSettings;
+    MySettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
   }
   LogToSerials(F("done"),true);
 }
 
-void sendEmailAlert(const __FlashStringHelper *title,const __FlashStringHelper *alert){
+void sendEmailAlert(const __FlashStringHelper *title,const __FlashStringHelper *alert){ //Title and Alert need to be URL encoded: //Generate URL encoded strings: https://meyerweb.com/eric/tools/dencoder/
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable  
   strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,PushingBoxEmailAlertID); 
   strcat_P(WebMessage,(PGM_P)F("&Title=")); strcat_P(WebMessage,(PGM_P)title);

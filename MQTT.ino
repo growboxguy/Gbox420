@@ -5,7 +5,7 @@ char MqttPath[64];  //buffer
 const char* MqttROOT = "growboxguy@gmail.com/";
 const char* MqttPUBLISH = "Gbox420";
 const char* MqttLwtTopic = "LWT";  //When the connection is lost the MQTT broker will publish a final message to this topic
-const char* MqttLwtMessage = "Gbox420 Offline"; //this is the message subscribers will get under the topic specified by MqttLwtTopic variable
+const char* MqttLwtMessage = "Gbox420 Offline"; //this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the box goes offline
 const char* MqttLights = "Lights";  
 const char* MqttBrightness = "Brightness";
 const char* MqttDisplayBrightness = "DisplayBrightness";
@@ -37,6 +37,18 @@ const char* MqttPressureCalibrate = "PressureCalibrate";
 const char* MqttNtpTime = "NtpTime";
 //const char* Mqtt = "";
 
+void setupMqtt(){
+  Mqtt.connectedCb.attach(mqttConnected);
+  Mqtt.disconnectedCb.attach(mqttDisconnected);
+  Mqtt.publishedCb.attach(mqttPublished);
+  Mqtt.dataCb.attach(mqttReceived);
+  memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable to store the Publish to path
+  strcat(MqttPath,MqttROOT);
+  strcat(MqttPath,MqttLwtTopic);
+  Mqtt.lwt(MqttPath, MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
+  Mqtt.setup();
+}
+
 void mqttReceived(void* response) {
   ELClientResponse *res = (ELClientResponse *)response;
   char topic[64];
@@ -46,7 +58,7 @@ void mqttReceived(void* response) {
 
   LogToSerials(F("Received: "),false);LogToSerials(topic,false);LogToSerials(F(" - "),false);LogToSerials(data,true);
   if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(true); else if(strcmp(data,"0")==0)turnLightOFF(true); }
-  else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data)); }
+  else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data),true); }
   else if(strstr(topic,MqttDisplayBrightness)!=NULL) {setDigitDisplayBacklight(atoi(data));}
   else if(strstr(topic,MqttTimerEnabled)!=NULL) {setTimerOnOff(atoi(data));} //bool 
   else if(strstr(topic,MqttSoundEnabled)!=NULL) {setSoundOnOff(atoi(data));}
@@ -76,8 +88,8 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttNtpTime)!=NULL) { UpdateNtpTime = true;}
 }
 
-void mqttPublush(bool LogMessage){ //publish readings in JSON format
-  if(LogMessage)addToLog(F("Reporting to MQTT"));
+void mqttPublush(bool AddToLog){ //publish readings in JSON format
+  if(AddToLog)addToLog(F("Reporting to MQTT"));
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat_P(WebMessage,(PGM_P)F("{\"BoxDate\":\""));  strcat(WebMessage,CurrentTime);
   strcat_P(WebMessage,(PGM_P)F("\",\"BoxTempC\":\""));  strcat(WebMessage,toText(BoxTempC));
@@ -118,16 +130,4 @@ void mqttDisconnected(void* response) {
 
 void mqttPublished(void* response) {
   LogToSerials(F("MQTT published"),true);
-}
-
-void setupMqtt(){
-  Mqtt.connectedCb.attach(mqttConnected);
-  Mqtt.disconnectedCb.attach(mqttDisconnected);
-  Mqtt.publishedCb.attach(mqttPublished);
-  Mqtt.dataCb.attach(mqttReceived);
-  memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable to store the Publish to path
-  strcat(MqttPath,MqttROOT);
-  strcat(MqttPath,MqttLwtTopic);
-  Mqtt.lwt(MqttPath, MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker, after Gbox420 has gone offline.
-  Mqtt.setup();
 }

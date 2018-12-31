@@ -1,30 +1,85 @@
+void checkLightStatus(){
+  if(!digitalRead(PowerButtonInPin)){ //If the power button is kept pressed
+    if(MySettings.isLightOn) turnLightOFF(true);
+    else turnLightON(true);  
+    }
+  if(CalibrateLights){calibrateLights();}
+  if(MySettings.isLightOn){
+    digitalWrite(PowerLEDOutPin, HIGH); //Turn on Power Led on PC case if light is on
+    digitalWrite(Relay8OutPin, LOW); //True turns relay ON (LOW signal activates Relay)
+  }
+  else {
+    digitalWrite(PowerLEDOutPin, LOW); 
+    digitalWrite(Relay8OutPin, HIGH); //False turns relay OFF  
+  }
+}
+
+void checkLightTimer() {
+  if(MySettings.isTimerEnabled){
+    Time Now = Clock.time();  // Get the current time and date from the Real Time Clock module.
+    int CombinedOnTime = MySettings.LightOnHour * 100 + MySettings.LightOnMinute; //convert time to number, Example: 8:10=810, 20:10=2010
+    int CombinedOffTime = MySettings.LightOffHour * 100 + MySettings.LightOffMinute;
+    int CombinedCurrentTime = Now.hr * 100 + Now.min;
+    if(CombinedOnTime <= CombinedOffTime)  //no midnight turnover, Example: On 8:10, Off: 20:10
+    {
+      if(CombinedOnTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedOffTime){
+        if(MySettings.isLightOn != true) turnLightON(false);}
+      else if(MySettings.isLightOn != false) turnLightOFF(false);     
+    }
+    else   //midnight turnover, Example: On 21:20, Off: 9:20
+    {
+      if(CombinedOnTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedOffTime){
+       if(MySettings.isLightOn != true) turnLightON(false);}
+      else if(MySettings.isLightOn != false) turnLightOFF(false);    
+    }
+  }
+}
+
+void setBrightness(int NewBrightness, bool AddToLog){
+  if(AddToLog){
+    strncpy_P(LogMessage,(PGM_P)F("Brightness: "),LogLength);  
+    strcat(LogMessage,toText(NewBrightness));
+    strcat_P(LogMessage,(PGM_P)F("%"));
+    addToLog(LogMessage);
+  }    
+  while(MySettings.LightBrightness != NewBrightness){
+    if(NewBrightness < MySettings.LightBrightness)  isPotGettingHigh = false;
+    else isPotGettingHigh = true;
+    stepOne();
+  }
+}
+
+void storeBrightness(){  //store current potentiometer value in the X9C104 memory for the next power on. Write durability is only 100.000 writes, use with caution
+  digitalWrite(PotINCOutPin,HIGH);
+  digitalWrite(PotCSOutPin,HIGH);
+  delay(50);
+  digitalWrite(PotCSOutPin,LOW);
+  digitalWrite(PotINCOutPin,LOW);
+}
+
+void triggerCalibrateLights(){ //website signals to calibrate lights when checkLightStatus runs next
+  CalibrateLights = true; 
+}
+
 void calibrateLights(){
+  CalibrateLights=false;
   int LastBrightness = MySettings.LightBrightness;
   bool LastLightStatus = MySettings.isLightOn;
   MaxLightReading = 0;
   MinLightReading = 1023;
   isPotGettingHigh = false;
   MySettings.isLightOn=true;
-  lightCheck();
+  checkLightStatus();
   for (int steps = 0; steps < PotStepping; steps++) 
     {stepOne();}  //Sets the digital potentiometer to low irregardless what the stored startup value is
   MySettings.LightBrightness = 0;
   isPotGettingHigh = true;  //set next step direction
   runToEnd(); //runs to highest value
   runToEnd(); //runs to lowest value (same function)
-  setBrightness(LastBrightness);
+  setBrightness(LastBrightness,false);
   MySettings.isLightOn=LastLightStatus;
-  lightCheck();  
-  strncpy_P(LogMessage,(PGM_P)F("New min/max: "),LogLength);
-  strcat(LogMessage,toText(MinLightReading));
-  strcat_P(LogMessage,(PGM_P)F("/"));
-  strcat(LogMessage,toText(MaxLightReading));
-  addToLog(LogMessage);
-}
-
-void triggerCalibrateLights(){
-  CalibrateLights = true;
-  addToLog(F("Lights calibrating..."));  
+  checkLightStatus();  
+  addToLog(F("Lights calibrated"));
 }
 
 void stepOne(){  //Adjust Potentiometer by one
@@ -39,44 +94,34 @@ void stepOne(){  //Adjust Potentiometer by one
   else if(MySettings.LightBrightness > 0)  MySettings.LightBrightness--;
 }
 
-void setBrightness(int NewBrightness){
-  strncpy_P(LogMessage,(PGM_P)F("Brightness: "),LogLength);  
-  strcat(LogMessage,toText(NewBrightness));
-  strcat_P(LogMessage,(PGM_P)F("%"));
-  addToLog(LogMessage);    
-  while(MySettings.LightBrightness != NewBrightness){
-    if(NewBrightness < MySettings.LightBrightness)  isPotGettingHigh = false;
-    else isPotGettingHigh = true;
-    stepOne();
+void runToEnd(){  //Goes to Minimum or Maximum dimming, measure light intensity on the way
+  int StepCounter = 0;
+  while(StepCounter < PotStepping){ 
+    stepOne();      //step in one direction (Initially upwards) 
+    LightReading = 1023 - analogRead(LightSensorAnalogInPin);
+    if(LightReading > MaxLightReading) MaxLightReading = LightReading;
+    if(LightReading < MinLightReading) MinLightReading = LightReading;
+    if(StepCounter % 10 == 0)  //modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
+      {  
+       if(isPotGettingHigh)LogToSerials(StepCounter,false);
+       else LogToSerials(PotStepping - StepCounter,false);
+       LogToSerials(F("% - "),false); LogToSerials(LightReading,true);
+      }  
+     StepCounter++;
   }
+  isPotGettingHigh= !isPotGettingHigh;  // flip the direction for he next run
 }
 
-void turnLightON(bool LogMessage){
+void turnLightON(bool AddToLog){
    MySettings.isLightOn = true;
-   if(LogMessage)addToLog(F("Light ON")); 
+   if(AddToLog)addToLog(F("Light ON")); 
    PlayOnSound=true;
 }
 
-void turnLightOFF(bool LogMessage){
+void turnLightOFF(bool AddToLog){
   MySettings.isLightOn = false;
-  if(LogMessage)addToLog(F("Light OFF")); 
+  if(AddToLog)addToLog(F("Light OFF")); 
   PlayOffSound=true; 
-}
-
-void lightCheck(){
-  if(!digitalRead(PowerButtonInPin)){ //If the power button is kept pressed down
-    if(MySettings.isLightOn) turnLightOFF(true);
-    else turnLightON(true);  
-    }
-  if(CalibrateLights){CalibrateLights=false;calibrateLights();}
-  if(MySettings.isLightOn){
-    digitalWrite(PowerLEDOutPin, HIGH); //Turn on Power Led on PC case if light is on
-    digitalWrite(Relay8OutPin, LOW); //True turns relay ON (LOW signal activates Relay)
-  }
-  else {
-    digitalWrite(PowerLEDOutPin, LOW); 
-    digitalWrite(Relay8OutPin, HIGH); //False turns relay OFF  
-  }
 }
 
 void setTimerOnOff(bool TimerState){
@@ -110,53 +155,6 @@ void setLightsOffMinute(int OffMinute){
   MySettings.LightOffMinute = OffMinute;
   checkLightTimer();
   addToLog(F("Light OFF time updated"));
-}
-
-void checkLightTimer() {
-  if(MySettings.isTimerEnabled){
-    Time Now = Clock.time();  // Get the current time and date from the Real Time Clock module.
-    int CombinedOnTime = MySettings.LightOnHour * 100 + MySettings.LightOnMinute;
-    int CombinedOffTime = MySettings.LightOffHour * 100 + MySettings.LightOffMinute;
-    int CombinedCurrentTime = Now.hr * 100 + Now.min;
-    if(CombinedOnTime <= CombinedOffTime)  //no midnight turnover, Example: On 8:10, Off: 20:10
-    {
-      if(CombinedOnTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedOffTime){
-        if(MySettings.isLightOn != true) turnLightON(false);}
-      else if(MySettings.isLightOn != false) turnLightOFF(false);     
-    }
-    else   //midnight turnover, Example: On 21:20, Off: 9:20
-    {
-      if(CombinedOnTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedOffTime){
-       if(MySettings.isLightOn != true) turnLightON(false);}
-      else if(MySettings.isLightOn != false) turnLightOFF(false);    
-    }
-  }
-}
-
-void runToEnd(){  //Goes to Minimum or Maximum dimming, measure light intensity on the way
-  int StepCounter = 0;
-  while(StepCounter < PotStepping){ 
-    stepOne();      //step in one direction (Initially upwards) 
-    LightReading = 1023 - analogRead(LightSensorAnalogInPin);
-    if(LightReading > MaxLightReading) MaxLightReading = LightReading;
-    if(LightReading < MinLightReading) MinLightReading = LightReading;
-    if(StepCounter % 10 == 0)  //modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
-      {  
-       if(isPotGettingHigh)LogToSerials(StepCounter,false);
-       else LogToSerials(PotStepping - StepCounter,false);
-       LogToSerials(F("% - "),false); LogToSerials(LightReading,true);
-      }  
-     StepCounter++;
-  }
-  isPotGettingHigh= !isPotGettingHigh;  // flip the direction
-}
-
-void store(){  //store current potentiometer value in the X9C104 memory for the next power on. Write durability is only 100.000 writes, use with caution
-  digitalWrite(PotINCOutPin,HIGH);
-  digitalWrite(PotCSOutPin,HIGH);
-  delay(50);
-  digitalWrite(PotCSOutPin,LOW);
-  digitalWrite(PotINCOutPin,LOW);
 }
 
 const __FlashStringHelper * lightStatusToText(){

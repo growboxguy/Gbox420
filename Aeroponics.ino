@@ -1,3 +1,48 @@
+void checkAero(){
+ checkAeroSprayTimer();
+ checkAeroPump();
+}
+
+void checkAeroSprayTimer(){
+ if(isAeroSprayOn)    { //if spray is on
+    if(millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //if time to stop spraying (AeroDuration in Seconds)
+      isAeroSprayOn = false;
+      LogToSerials(F("Stopping spray"),true);
+      PlayOffSound = true;
+      AeroSprayTimer = millis();
+    }
+  }
+  else{ //if spray is off
+    if(millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
+      if(MySettings.isAeroSprayEnabled){
+      isAeroSprayOn = true;
+      LogToSerials(F("Starting spray"),true);
+      PlayOnSound = true;
+      AeroSprayTimer = millis();
+      }
+    }
+  }
+}
+
+void checkAeroPump(){
+  if(isAeroPumpOn){
+    readAeroPressure();   
+    if(AeroPressure >= MySettings.AeroPressureHigh){ //If set high pressure is reached
+      aeroPumpOff();
+    }
+    if (millis() - AeroPumpTimer >= AeroPumpTimeout){ //have not reached high pressue within limit (15min)
+      aeroPumpDisable();
+      sendEmailAlert(F("Aeroponics%20pump%20failed"),F("Aeroponics%20pump%20timed%20out%20during%20refill%20and%20got%20disabled.")); 
+      addToLog(F("Pump failed"));    
+    }
+  }
+  else{
+    if(AeroPressure <= MySettings.AeroPressureLow && !isAeroPumpDisabled && checkQuietTime()){ //Pressure below low limit: turn on pump, pump not disabled and quiet time not active
+      aeroPumpOn();
+    }
+  }
+}
+
 void readAeroPressure(){
   float  Reading=0;
   for(byte i=0;i<50;i++) { 
@@ -48,41 +93,15 @@ void aeroSprayNow(){
     AeroSprayTimer = millis();
     isAeroSprayOn = true;
     PlayOnSound = true;
-    relayCheck();
+    checkRelays();
     addToLog(F("Aeroponics spraying"));
     }
 }
 
 void aeroSprayOff(){   
     isAeroSprayOn = false;    
-    relayCheck();
+    checkRelays();
     addToLog(F("Aeroponics spray OFF"));
-}
-
-void aeroCheck(){
- checkAeroSprayTimer();
- checkAeroPump();
-}
-
-void checkAeroSprayTimer(){
- if(isAeroSprayOn)    { //if spray is on
-    if(millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //if time to stop spraying (AeroDuration in Seconds)
-      isAeroSprayOn = false;
-      LogToSerials(F("Stopping spray"),true);
-      PlayOffSound = true;
-      AeroSprayTimer = millis();
-    }
-  }
-  else{ //if spray is off
-    if(millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
-      if(MySettings.isAeroSprayEnabled){
-      isAeroSprayOn = true;
-      LogToSerials(F("Starting spray"),true);
-      PlayOnSound = true;
-      AeroSprayTimer = millis();
-      }
-    }
-  }
 }
 
 void setAeroPressureLow(float PressureLow){
@@ -97,25 +116,6 @@ void setAeroPressureHigh(float PressureHigh){
 void setAeroOffset(float Offset){
   MySettings.AeroOffset = Offset;
   addToLog(F("Pressure sensor offset updated"));
-}
-
-void checkAeroPump(){
-  if(isAeroPumpOn){
-    readAeroPressure();   
-    if(AeroPressure >= MySettings.AeroPressureHigh){ //If set high pressure is reached
-      aeroPumpOff();
-    }
-    if (millis() - AeroPumpTimer >= AeroPumpTimeout){ //have not reached high pressue within limit (15min)
-      aeroPumpDisable();
-      sendEmailAlert(F("Aeroponics%20pump%20failed"),F("Aeroponics%20pump%20timed%20out%20during%20refill%20and%20got%20disabled.")); 
-      addToLog(F("Pump failed"));    
-    }
-  }
-  else{
-    if(AeroPressure <= MySettings.AeroPressureLow && !isAeroPumpDisabled && checkQuietTime()){ //Pressure below low limit: turn on pump, pump not disabled and quiet time not active
-      aeroPumpOn();
-    }
-  }
 }
 
 void aeroPumpOn(){
@@ -151,7 +151,7 @@ const __FlashStringHelper * pumpStatusToText()
   if(isAeroPumpDisabled) return F("DISABLED"); else return F("OK");
 }
 
-//Quiet time section
+//Quiet time section: Blocks running the pump in a pre-defined time range
 bool checkQuietTime() {  
   if(MySettings.isAeroQuietEnabled){
     Time Now = Clock.time();  // Get the current time and date from the chip.

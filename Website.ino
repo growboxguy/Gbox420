@@ -1,3 +1,19 @@
+// Callback made from esp-link to notify that it has just come out of a reset
+void resetWebServer(void) {  
+  addToLog(F("WebServer (re)starting"));
+  while(!ESPLink.Sync())  {
+    LogToSerials(F("."),false);
+    delay(500);
+    };
+  RestAPI.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets 
+  WebServer.setup();
+  URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json"); //setup handling request from GrowBox.html
+  GrowBoxHandler->loadCb.attach(&LoadCallback);  //Called then the website loads initially
+  GrowBoxHandler->refreshCb.attach(&RefreshCallback); //Called periodically to refresh website content 
+  GrowBoxHandler->buttonCb.attach(&ButtonPressCallback); //Called when a button is pressed on the website
+  GrowBoxHandler->setFieldCb.attach(&SetFieldCallback); //Called when a field is changed on the website
+}
+
 void LoadCallback(char * url) //called when website is loaded
 {
   //LogToSerials(F("LoadCB for URL: "),false); LogToSerials(url,true);
@@ -61,26 +77,15 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgString(F("tdReservoir"),reservoirText);
   WebServer.setArgString(F("tdPH"),toText(PH));  
   //WebServer.setArgString("tdMoisture",toText(Moisture)); 
-
-  //Log output  
-  memset(&WebMessage[0], 0, sizeof(WebMessage));
-  strcat_P(WebMessage,(PGM_P)F("["));
-  for(int i=LogDepth-1;i >=0 ; i--)
-  {
-   strcat_P(WebMessage,(PGM_P)F("\""));
-   strcat(WebMessage,Logs[i]);
-   strcat_P(WebMessage,(PGM_P)F("\""));
-   if(i > 0 ) strcat_P(WebMessage,(PGM_P)F(","));
-  }
-  WebMessage[strlen(WebMessage)] = ']';
-  WebServer.setArgJson(F("list_SerialLog"), WebMessage);
+ 
+  WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON()); //Last events that happened in JSON format
   }
 }
 
 //Called when any button on the website is pressed
 void ButtonPressCallback(char *button)
 {
-  //LogToSerials(button,true);
+  //LogToSerials(button,true);  //for debugging: prints the button ID received from the website
   if (strcmp_P(button,(PGM_P)F("btn_LightOn"))==0) { turnLightON(true); }
   else if (strcmp_P(button,(PGM_P)F("btn_LightOff"))==0) { turnLightOFF(true); }
   else if (strcmp_P(button,(PGM_P)F("btn_LightCalibrate"))==0) {triggerCalibrateLights();}
@@ -107,8 +112,8 @@ void ButtonPressCallback(char *button)
 
 //Called when any field on the website is updated
 void SetFieldCallback(char * field){
-  //LogToSerials(field,true);
-  if(strcmp_P(field,(PGM_P)F("slider_Brightness"))==0) {setBrightness(WebServer.getArgInt());}
+  //LogToSerials(field,true);  //for debugging: prints the filed ID received from the website
+  if(strcmp_P(field,(PGM_P)F("slider_Brightness"))==0) {setBrightness(WebServer.getArgInt(),true);}
   else if(strcmp_P(field,(PGM_P)F("slider_DigitDisplayBrightness"))==0) {setDigitDisplayBacklight(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("check_TimerEnabled"))==0) {setTimerOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("check_SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}
@@ -129,24 +134,6 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("time_ToSet"))==0) {setTime(WebServer.getArgString());}
   else if(strcmp_P(field,(PGM_P)F("check_AeroSprayEnabled"))==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("check_GoogleSheetsEnabled"))==0) {MySettings.ReportToGoogleSheets = WebServer.getArgBoolean();}
-  else if(strcmp_P(field,(PGM_P)F("check_MqttEnabled"))==0) {MySettings.ReportToMqtt = WebServer.getArgBoolean();}
-  
+  else if(strcmp_P(field,(PGM_P)F("check_MqttEnabled"))==0) {MySettings.ReportToMqtt = WebServer.getArgBoolean();}  
   saveSettings(false);
 } 
-
-// Callback made from esp-link to notify that it has just come out of a reset
-void resetWebServer(void) {  
-  addToLog(F("WebServer (re)starting"));
-  while(!ESPLink.Sync())  {
-    LogToSerials(F("."),false);
-    delay(500);
-    };
-  RestAPI.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets 
-  WebServer.setup();
-  URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json"); //setup handling request from GrowBox.html
-  GrowBoxHandler->loadCb.attach(&LoadCallback);  //Called then the website loads initially
-  GrowBoxHandler->refreshCb.attach(&RefreshCallback); //Called periodically to refresh website content 
-  GrowBoxHandler->buttonCb.attach(&ButtonPressCallback); //Called when a button is pressed on the website
-  GrowBoxHandler->setFieldCb.attach(&SetFieldCallback); //Called when a field is changed on the website
-  addToLog(F("WebServer started")); 
-}
