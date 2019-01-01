@@ -16,10 +16,10 @@ void checkLightStatus(){
 
 void checkLightTimer() {
   if(MySettings.isTimerEnabled){
-    Time Now = Clock.time();  // Get the current time and date from the Real Time Clock module.
+    time_t Now = now();  // Get the current time
     int CombinedOnTime = MySettings.LightOnHour * 100 + MySettings.LightOnMinute; //convert time to number, Example: 8:10=810, 20:10=2010
     int CombinedOffTime = MySettings.LightOffHour * 100 + MySettings.LightOffMinute;
-    int CombinedCurrentTime = Now.hr * 100 + Now.min;
+    int CombinedCurrentTime = hour(Now) * 100 + minute(Now);
     if(CombinedOnTime <= CombinedOffTime)  //no midnight turnover, Example: On 8:10, Off: 20:10
     {
       if(CombinedOnTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedOffTime){

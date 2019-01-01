@@ -4,7 +4,7 @@ void logToScreen(){
   Screen.setTextColor(ILI9341_GREEN);Screen.setTextSize(3);  
   Screen.println(F("GrowBoxGuy")); 
   Screen.setTextColor(ILI9341_WHITE);Screen.setTextSize(2);  
-  Screen.println(CurrentTime);
+  Screen.println(getFormattedTime());
   Screen.setTextColor(ILI9341_ORANGE);Screen.setTextSize(3);
   Screen.print(BoxTempC); Screen.print(F("C,Hum:"));Screen.print(Humidity); Screen.println( F("%"));
   Screen.setTextColor(ILI9341_BLUE);

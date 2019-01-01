@@ -37,9 +37,10 @@ void checkAeroPump(){
     }
   }
   else{
-    if(AeroPressure <= MySettings.AeroPressureLow && !isAeroPumpDisabled && checkQuietTime()){ //Pressure below low limit: turn on pump, pump not disabled and quiet time not active
-      aeroPumpOn();
+    if( !isAeroPumpDisabled && checkQuietTime()){ //Pressure below low limit: turn on pump if its not disabled and quiet time not active
+      if(AeroPressure <= MySettings.AeroPressureLow)aeroPumpOn();
     }
+    
   }
 }
 
@@ -135,6 +136,11 @@ void aeroPumpRefill(){
   aeroPumpOn();
 }
 
+void aeroPumpStop(){ 
+  addToLog(F("Pump stopped")); 
+  aeroPumpOff();
+}
+
 void aeroPumpDisable(){
   isAeroPumpDisabled = true;
   aeroPumpOff();
@@ -152,12 +158,17 @@ const __FlashStringHelper * pumpStatusToText()
 }
 
 //Quiet time section: Blocks running the pump in a pre-defined time range
+unsigned long AeroLastRefill= 0;
 bool checkQuietTime() {  
   if(MySettings.isAeroQuietEnabled){
-    Time Now = Clock.time();  // Get the current time and date from the chip.
+    time_t Now = now(); // Get the current time
     int CombinedFromTime = MySettings.AeroQuietFromHour * 100 + MySettings.AeroQuietFromMinute;
     int CombinedToTime = MySettings.AeroQuietToHour * 100 + MySettings.AeroQuietToMinute;
-    int CombinedCurrentTime = Now.hr * 100 + Now.min;
+    int CombinedCurrentTime = hour(Now) * 100 + minute(Now);
+    if(MySettings.AeroRefillBeforeQuiet && !isAeroPumpDisabled && CombinedFromTime == CombinedCurrentTime && millis() - AeroLastRefill > 60000 ){
+      aeroPumpOn(); 
+      AeroLastRefill = millis();
+    }
     if(CombinedFromTime <= CombinedToTime)  //no midnight turnover, Example: On 8:10, Off: 20:10
     {
       if(CombinedFromTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedToTime){
@@ -182,6 +193,18 @@ void setQuietOnOff(bool State){
     }
   else {
     addToLog(F("Quiet mode disabled"));
+    PlayOffSound=true;
+    }
+}
+
+void setQuietRefillOnOff(bool State){
+  MySettings.AeroRefillBeforeQuiet = State;
+  if(MySettings.AeroRefillBeforeQuiet){ 
+    addToLog(F("Refill before quiet enabled"));
+    PlayOnSound=true;
+    }
+  else {
+    addToLog(F("Refill before quiet disabled"));
     PlayOffSound=true;
     }
 }

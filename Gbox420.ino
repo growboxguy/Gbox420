@@ -18,9 +18,7 @@
   #include "ELClientWebServer.h" //ESP-link - WebServer API
   #include "ELClientCmd.h"  //ESP-link - Get current time from the internet using NTP
   #include "ELClientMqtt.h" //ESP-link - MQTT protocol for sending and receiving IoT messages
-  #include "DS1302.h" //Real time clock
-  #include "Time.h"  //Time handling
-  #include "Stdio.h" //Time formatting
+  #include "TimeLib.h" //Keeping track of time
   #include "SPI.h" //TFT Screen - communication
   #include "Adafruit_ILI9341.h" //TFT Screen - hardware specific driver
   #include "Adafruit_GFX.h" //TFT Screen - generic graphics driver
@@ -41,9 +39,6 @@
   const byte DigitDisplayCLKOutPin = 31; //CLK - 4 digit LED display
   const byte DigitDisplayDI0OutPin = 30; //DIO - 4 digit LED display
   const byte TempSensorInPin = 43; //DAT - DHT22 temp/humidity sensor
-  const byte ClockRSTPin = 5;  //Reset -  Real time clock
-  const byte ClockDATPin = 6;  //Data -  Real time clock
-  const byte ClockCLKPin = 7;  //Serial Clock -  Real time clock
   const byte Relay1OutPin = 22;  //Power relay Port 1 - Aeroponics solenoid
   const byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump
   const byte Relay3OutPin = 24;  //Power relay Port 3 - PC power supply
@@ -79,7 +74,7 @@
   const unsigned long AeroPumpTimeout = 900000;  // Aeroponics - Max pump run time (15minutes)
  
 //Settings saved to EEPROM persistent storage
-  byte Version= 3; //increment this when you update the test values or change the stucture to invalidate the EEPROM stored settings
+  byte Version= 1; //increment this when you update the test values or change the stucture to invalidate the EEPROM stored settings
   struct SettingsStructure //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   bool isLightOn = true;  //Startup status for lights: True-ON / False-OFF
@@ -103,6 +98,7 @@
   float AeroPressureHigh = 7.0 ; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroOffset = 0.5; //Pressure sensor calibration - offset voltage
   bool isAeroQuietEnabled = true;  //Enable/disable quiet time
+  bool AeroRefillBeforeQuiet = true; //Enable/disable refill before quiet time
   byte AeroQuietFromHour = 21;  //Quiet time to block pump - hour
   byte AeroQuietFromMinute = 00; //Quiet time to block pump - minute
   byte AeroQuietToHour = 9; //Quiet time end - hour
@@ -114,7 +110,7 @@
   typedef struct SettingsStructure settings;  //create the "settings" type using the stucture
   settings MySettings;  //create a variable of type "settings"  with default values from SettingsStructure
 
-//Global variables
+//Global variable
   float BoxTempC; // stores Temperature - Celsius
   float BoxTempF; // stores Temperature - Fahrenheit
   float Humidity; // stores relative humidity - %
@@ -133,7 +129,6 @@
   bool PlayOnSound = false; //Turn on sound - website controls it
   bool PlayOffSound = false; //Turn off sound - website controls it
   bool PlayEE = false; //Surprise :) - website controls it
-  bool UpdateNtpTime = false; //When set to true clock is updated using NTP
   bool CalibrateLights = false; //Calibrate lights flag - website controls it
   int MaxLightReading = 0; // stores the highest light source strengt reading
   int MinLightReading = 1023; //stores the lowest light source strengt reading
@@ -141,8 +136,7 @@
   int MaxMoisture = 0; // stores the highest moisture reading
   int MinMoisture = 1023; //stores the lowest moisture reading
   int Moisture ; //Reading of moisture content
-  byte MoisturePercentage ; //Moisture content relative to max,min values measued
-  char CurrentTime[20];  //time gets read into this from clock  
+  byte MoisturePercentage ; //Moisture content relative to max,min values measued  
   unsigned long AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
   unsigned long AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
   bool isAeroSprayOn = false; //Aeroponics - Spray state, set to true to spay at power on
@@ -153,9 +147,9 @@
   char LogMessage[LogLength]; //temp storage for assemling log messages
   char Logs[LogDepth][LogLength];  //two dimensional array for storing log histroy (array of char arrays)
   char WebMessage[512];   //buffer for REST and MQTT API messages
+  char CurrentTime[20]; //buffer for getting current time
 
 //Component initialization
-  DS1302 Clock(ClockRSTPin, ClockDATPin, ClockCLKPin); //Real time clock
   DHT TempSensor(TempSensorInPin, DHTType); // Temp/Humidity sensor
   SevenSegmentExtended DigitDisplay(DigitDisplayCLKOutPin, DigitDisplayDI0OutPin); //4 digit LED Display
   PZEM004T PowerSensor(&Serial2);  // Power Sensor using hardware Serial 2, use software serial if needed
@@ -225,6 +219,9 @@ void setup() {     // put your setup code here, to run once:
   //Initialize web connections
   ESPLink.resetCb = resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
   resetWebServer();
+  ESPLink.Process();
+  setSyncProvider(getNtpTime); //points to method for updating time from NTP server
+  setSyncInterval(3600); //Sync time every hour
   setupMqtt();
  
   //Threading
@@ -280,8 +277,7 @@ void oneSecRun(){
 
 void fiveSecRun(){
   //LogToSerials(F("Five sec trigger.."),true);
-  wdt_reset(); //reset watchdog timeout
-  getTime();     
+  wdt_reset(); //reset watchdog timeout   
   readSensors();
   wdt_reset(); //reset watchdog timeout
   updateDisplay(); //Updates 7 digit display  
@@ -330,4 +326,28 @@ void sendEmailAlert(const __FlashStringHelper *title,const __FlashStringHelper *
   strcat_P(WebMessage,(PGM_P)F("&Title=")); strcat_P(WebMessage,(PGM_P)title);
   strcat_P(WebMessage,(PGM_P)F("&Alert=")); strcat_P(WebMessage,(PGM_P)alert);   
   RestAPI.get(WebMessage);
+}
+
+time_t getNtpTime(){
+  long LastRefresh = millis();
+  time_t NTPResponse = 0;
+  LogToSerials(F("Waiting for NTP time (30sec timeout)..."),false);
+  while(NTPResponse == 0 && millis() - LastRefresh < 30000){
+   NTPResponse = EspCmd.GetTime();
+   delay(50);
+   wdt_reset(); //reset watchdog timeout
+  }
+  if(NTPResponse == 0) {
+    addToLog(F("NTP time sync failed"));
+    sendEmailAlert(F("NTP%20time%20sync%20failed"),F("Could%20not%20get%20current%20time%20from%20NTP%20server%2C%20retrying%20in%20an%20hour.%0ADefaulted%20to%2000%3A00%3A00%20Thursday%2C%201%20January%201970."));  //https://meyerweb.com/eric/tools/dencoder/
+      
+  }
+  else addToLog(F("NTP time synchronized"));
+  return NTPResponse;
+}
+
+char * getFormattedTime(){
+  time_t Now = now(); // Get the current time and date from the TimeLib library
+  snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d",year(Now), month(Now), day(Now),hour(Now), minute(Now), second(Now)); // YYYY/MM/DD-HH:mm:SS formatted time will be stored in CurrentTime global variable
+  return CurrentTime;
 }

@@ -2,7 +2,7 @@ void ReportToGoogleSheets(bool AddToLog){
   if(AddToLog)addToLog(F("Reporting to Google Sheets"));
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,PushingBoxLogRelayID);
-  strcat_P(WebMessage,(PGM_P)F("&BoxDate="));  strcat(WebMessage,CurrentTime);
+  strcat_P(WebMessage,(PGM_P)F("&BoxDate="));  strcat(WebMessage,getFormattedTime());
   strcat_P(WebMessage,(PGM_P)F("&BoxTempC="));  strcat(WebMessage,toText(BoxTempC));
   strcat_P(WebMessage,(PGM_P)F("&BoxTempF="));  strcat(WebMessage,toText(BoxTempF));
   strcat_P(WebMessage,(PGM_P)F("&Humidity="));  strcat(WebMessage,toText(Humidity));
@@ -69,11 +69,9 @@ char* eventLogToJSON(){
   return WebMessage;
 }
 
-
-
 char * logToText(){
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable 
-  strcat(WebMessage,CurrentTime);
+  strcat(WebMessage,getFormattedTime());
   strcat_P(WebMessage,(PGM_P)F("\n\r Box - ")); 
   strcat_P(WebMessage,(PGM_P)F("TempC:")); strcat(WebMessage,toText(BoxTempC)); strcat_P(WebMessage,(PGM_P)F("C"));
   strcat_P(WebMessage,(PGM_P)F(" ; TempF:")); strcat(WebMessage,toText(BoxTempF)); strcat_P(WebMessage,(PGM_P)F("F"));

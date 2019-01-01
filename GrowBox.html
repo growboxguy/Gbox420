@@ -5,6 +5,11 @@
 	<style type="text/css">
 		.content {margin:0px; padding:0px;}
 		.pure-g {margin:0px; padding:0px;}
+		.test:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
 		.tg {margin:0px;width:100%;}
 		.tg td{border-style:solid;border-width:1px;font-size:14px;font-weight:normal;overflow:hidden;word-break:normal;}
 		.tg th{border-style:solid;border-width:1px;font-size:14px;font-weight:normal;overflow:hidden;word-break:normal;}
@@ -108,12 +113,27 @@
 				<input type="range" name="slider_Brightness" min="0" max="100" oninput="this.form.num_Brightness.value=this.value">
 				<input type="submit" value="Set">				
 				</form>				
-				<b>Timer</b><form><input type="checkbox" name="check_TimerEnabled">Enabled <input type="submit" value="Set"></form>
+				<b>Timer</b><form><label><input type="checkbox" name="check_TimerEnabled">Enabled </label><input type="submit" value="Set"></form>
 				<form>Turn ON : <input style="width: 35px;" min=0 max=23 name="num_LightsOnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="num_LightsOnMinute" type="number"/> <input type="submit" value="Set"></form>
 				<form>Turn OFF:<input style="width: 35px;" min=0 max=23 name="num_LightsOffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="num_LightsOffMinute" type="number"/> <input type="submit" value="Set"></form>
-			</div>			
+			</div>
+			<div class="card" style="width:90%">
+				<h1>Reservoir</h1>
+				<table class="tg">
+				  <tr>
+					<th class="headerRows"><span style="font-weight:bold">Level</span></th>	
+					<th class="headerRows"><span style="font-weight:bold">PH</span></th>
+					<!--<th class="headerRows"><span style="font-weight:bold"></span></th>-->					
+				  </tr>
+				  <tr>
+					<td id="tdReservoir" class="dataRows"></td>
+					<td id="tdPH" class="dataRows"></td>
+					<!--<td id="tdLastRefill" class="dataRows"></td>-->
+				  </tr>
+				 </table> 
+			</div>
 		</div> 
-		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">					
+		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">
 				<h1>Aeroponics</h1>
 				<table class="tg">
@@ -130,6 +150,7 @@
 				</table>
 				<b>Pump</b><br>
 				<button id="btn_PumpRefill" type="button" align="rigth" title="Reset status and refill pressure tank to High pressure">Refill</button>
+				<button id="btn_PumpStop" type="button" align="rigth" title="Stops the pump">Stop</button>
 				<button id="btn_PumpDisable" type="button" align="rigth" title="Stops and disables pump">Disable</button>				
 				<form>
 					Low : <input style="width: 50px;" min=0 max=8 name="num_AeroPressureLow" type="number" step="0.1"/> 
@@ -139,12 +160,14 @@
 				<form><button id="btn_PressureCalibrate" type="button" style="margin-top:0px" title="Use only when the tank is not pressurized!">Calibrate</button>
 				Offset: <input style="width: 50px;" min=0 max=5 name="num_AeroOffset" type="number" step="0.01"/> <input type="submit" value="Set">
 				</form>
-				<b>Quiet time</b><form><input type="checkbox" name="check_AeroQuietEnabled">Enabled <input type="submit" value="Set"></form>
-				<form>From:<input style="width: 35px;" min=0 max=23 name="num_AeroQuietFromHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="num_AeroQuietFromMinute" type="number"/> <input type="submit" value="Set"></form>
-				<form>To : <input style="width: 35px;" min=0 max=23 name="num_AeroQuietToHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="num_AeroQuietToMinute" type="number"/> <input type="submit" value="Set"></form>				
+				<b>Quiet time</b>
+					<form class="test"><label><input type="checkbox" name="check_AeroQuietEnabled">Enabled </label><input type="submit" value="Set"></form>
+					<form><label><input type="checkbox" name="check_AeroRefillBeforeQuiet" title="Before enabling quiet time refill the tank">Refill before </label><input type="submit" value="Set"></form>
+					<form>From:<input style="width: 35px;" min=0 max=23 name="num_AeroQuietFromHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="num_AeroQuietFromMinute" type="number"/> <input type="submit" value="Set"></form>
+					<form>To : <input style="width: 35px;" min=0 max=23 name="num_AeroQuietToHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="num_AeroQuietToMinute" type="number"/> <input type="submit" value="Set"></form>				
 				<b>Spray</b>
 				<form>
-					<input type="checkbox" name="check_AeroSprayEnabled">Enabled <input type="submit" value="Set">
+					<label><input type="checkbox" name="check_AeroSprayEnabled">Enabled </label><input type="submit" value="Set">
 					<button id="btn_AeroSprayNow" type="button">Spray now</button>
 					<button id="btn_AeroSprayOff" type="button">Spray OFF</button>
 				</form>
@@ -152,37 +175,19 @@
 					Interval: <input style="width: 40px;" min=0 name="num_AeroInterval" type="number"/> min<br>
 					Duration: <input style="width: 40px;" min=0 name="num_AeroDuration" type="number"/> sec
 					<input type="submit" value="Set">	
-				</form>			
-											
-			</div>
-			<div class="card" style="width:90%">
-				<h1>Reservoir</h1>
-				<table class="tg">
-				  <tr>
-					<th class="headerRows"><span style="font-weight:bold">Level</span></th>	
-					<th class="headerRows"><span style="font-weight:bold">PH</span></th>
-					<!--<th class="headerRows"><span style="font-weight:bold"></span></th>-->					
-				  </tr>
-				  <tr>
-					<td id="tdReservoir" class="dataRows"></td>
-					<td id="tdPH" class="dataRows"></td>
-					<!--<td id="tdLastRefill" class="dataRows"></td>-->
-				  </tr>
-				 </table> 
-			</div>	
+				</form>											
+			</div>			
 			<div class="card" style="width:90%">
 				<h1>Logs</h1>
 				<ul id="list_SerialLog"></ul>
-				<form><input type="checkbox" name="check_GoogleSheetsEnabled">Google Sheets <input type="submit" value="Set"> <button id="btn_GoogleSheets" type="button" style="margin-top:0px">Trigger</button></form>
-				<form><input type="checkbox" name="check_MqttEnabled">MQTT </input><input type="submit" value="Set"> <button id="btn_Mqtt" type="button" style="margin-top:0px">Trigger</button></form>
+				<form><label><input type="checkbox" name="check_GoogleSheetsEnabled">Google Sheets </label><input type="submit" value="Set"> <button id="btn_GoogleSheets" type="button" style="margin-top:0px">Trigger</button></form>
+				<form><label><input type="checkbox" name="check_MqttEnabled">MQTT </label></input><input type="submit" value="Set"> <button id="btn_Mqtt" type="button" style="margin-top:0px">Trigger</button></form>
 			</div>					
 			<div class="card" style="width:90%">
 				<h1>Settings<button style="height:32px;width:32px;border-radius:0;"  id="btn_Ee" type="button"><img style="padding:0px;height:28px;width:28px;" src="https://sites.google.com/site/growboxguy/home/gbox420.png" /></button></h1>
-				<form><input type=datetime-local step=1 name="time_ToSet"/> <input type="submit" value="Set time"></form>
-				<button id="btn_NtpTime" type="button">NTP time</button></br>
 				<form>Backlight: Min<input style="width:100px;" type="range" name="slider_DigitDisplayBrightness" min="0" max="100"/>Max <input type="submit" value="Set"></form>
-				<form><input type="checkbox" name="check_SoundEnabled">Sound enabled <input type="submit" value="Set"></form>	
-				<button id="btn_SaveSettings" type="button">Save settings</button></br>							
+				<form><label><input type="checkbox" name="check_SoundEnabled">Sound enabled </label><input type="submit" value="Set"></form>	
+				<button id="btn_SaveSettings" type="button" title="Force saving settings to EEPROM, runs automatically after a change">Save settings</button></br>							
 			</div>			
 		</div>		
 	</div>

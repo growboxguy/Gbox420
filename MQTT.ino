@@ -20,7 +20,6 @@ const char* MqttAeroDuration = "AeroDuration";
 const char* MqttAeroPressureLow = "AeroPressureLow";
 const char* MqttAeroPressureHigh = "AeroPressureHigh";
 const char* MqttAeroOffset = "AeroOffset";
-const char* MqttSetTime = "SetTime";
 const char* MqttAeroSprayEnabled = "AeroSprayEnabled";
 const char* MqttLightCalibrate = "LightCalibrate";
 const char* MqttPowersupply = "Powersupply";
@@ -34,7 +33,6 @@ const char* MqttAeroSprayOff = "AeroSprayOff";
 const char* MqttPumpRefill = "PumpRefill";
 const char* MqttPumpDisable = "PumpDisable";
 const char* MqttPressureCalibrate = "PressureCalibrate";
-const char* MqttNtpTime = "NtpTime";
 //const char* Mqtt = "";
 
 void setupMqtt(){
@@ -71,7 +69,6 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttAeroPressureLow)!=NULL) {setAeroPressureLow(atof(data));}
   else if(strstr(topic,MqttAeroPressureHigh)!=NULL) {setAeroPressureHigh(atof(data));} 
   else if(strstr(topic,MqttAeroOffset)!=NULL) {setAeroOffset(atof(data));} 
-  else if(strstr(topic,MqttSetTime)!=NULL) {setTime(data);}
   else if(strstr(topic,MqttAeroSprayEnabled)!=NULL) {setAeroSprayOnOff(atoi(data));}
   else if(strstr(topic,MqttLightCalibrate)!=NULL) {triggerCalibrateLights();}
   else if(strstr(topic,MqttPowersupply)!=NULL) { if(strcmp(data,"1")==0)powerSupplyOn(); else if(strcmp(data,"0")==0)powerSupplyOff(); }
@@ -85,13 +82,12 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttPumpRefill)!=NULL) { aeroPumpRefill();}
   else if(strstr(topic,MqttPumpDisable)!=NULL) { aeroPumpDisable();}  
   else if(strstr(topic,MqttPressureCalibrate)!=NULL) { calibratePressureSensor();}
-  else if(strstr(topic,MqttNtpTime)!=NULL) { UpdateNtpTime = true;}
 }
 
 void mqttPublush(bool AddToLog){ //publish readings in JSON format
   if(AddToLog)addToLog(F("Reporting to MQTT"));
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
-  strcat_P(WebMessage,(PGM_P)F("{\"BoxDate\":\""));  strcat(WebMessage,CurrentTime);
+  strcat_P(WebMessage,(PGM_P)F("{\"BoxDate\":\""));  strcat(WebMessage,getFormattedTime());
   strcat_P(WebMessage,(PGM_P)F("\",\"BoxTempC\":\""));  strcat(WebMessage,toText(BoxTempC));
   strcat_P(WebMessage,(PGM_P)F("\",\"BoxTempF\":\""));  strcat(WebMessage,toText(BoxTempF));
   strcat_P(WebMessage,(PGM_P)F("\",\"Humidity\":\""));  strcat(WebMessage,toText(Humidity));

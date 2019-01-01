@@ -1,6 +1,6 @@
 // Callback made from esp-link to notify that it has just come out of a reset
 void resetWebServer(void) {  
-  addToLog(F("WebServer (re)starting"));
+  LogToSerials(F("WebServer (re)starting..."),false);
   while(!ESPLink.Sync())  {
     LogToSerials(F("."),false);
     delay(500);
@@ -12,6 +12,7 @@ void resetWebServer(void) {
   GrowBoxHandler->refreshCb.attach(&RefreshCallback); //Called periodically to refresh website content 
   GrowBoxHandler->buttonCb.attach(&ButtonPressCallback); //Called when a button is pressed on the website
   GrowBoxHandler->setFieldCb.attach(&SetFieldCallback); //Called when a field is changed on the website
+  addToLog(F("WebServer started"));
 }
 
 void LoadCallback(char * url) //called when website is loaded
@@ -32,6 +33,7 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgString(F("num_AeroPressureHigh"), toText(MySettings.AeroPressureHigh));
   WebServer.setArgBoolean(F("check_AeroSprayEnabled"), MySettings.isAeroSprayEnabled);
   WebServer.setArgBoolean(F("check_AeroQuietEnabled"), MySettings.isAeroQuietEnabled);
+  WebServer.setArgBoolean(F("check_AeroRefillBeforeQuiet"), MySettings.AeroRefillBeforeQuiet);
   WebServer.setArgInt(F("num_AeroQuietFromHour"), MySettings.AeroQuietFromHour); 
   WebServer.setArgInt(F("num_AeroQuietFromMinute"), MySettings.AeroQuietFromMinute); 
   WebServer.setArgInt(F("num_AeroQuietToHour"), MySettings.AeroQuietToHour); 
@@ -49,7 +51,7 @@ void RefreshCallback(char * url) //called when website is refreshed
 { 
   //LogToSerials(F("RefreshCB for URL: "),false); LogToSerials(url,true);
   if (strcmp(url,"/GrowBox.html.json")==0){   
-  WebServer.setArgString(F("tdTime"), CurrentTime); 
+  WebServer.setArgString(F("tdTime"), getFormattedTime()); 
   WebServer.setArgString(F("tdBoxTemp"),toText(BoxTempC,BoxTempF,"/"));
   WebServer.setArgString(F("tdHumidity"),toText(Humidity));
   WebServer.setArgString(F("tdInternalFanSpeed"),internalFanSpeedToText());
@@ -104,9 +106,9 @@ void ButtonPressCallback(char *button)
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayNow"))==0) { aeroSprayNow();}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayOff"))==0) { aeroSprayOff();}  
   else if (strcmp_P(button,(PGM_P)F("btn_PumpRefill"))==0) { aeroPumpRefill();}
+  else if (strcmp_P(button,(PGM_P)F("btn_PumpStop"))==0) { aeroPumpStop();}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpDisable"))==0) { aeroPumpDisable();}  
   else if (strcmp_P(button,(PGM_P)F("btn_PressureCalibrate"))==0) { calibratePressureSensor();}
-  else if (strcmp_P(button,(PGM_P)F("btn_NtpTime"))==0) { UpdateNtpTime = true;}  
   saveSettings(false); 
 }
 
@@ -127,11 +129,11 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("num_AeroPressureHigh"))==0) {setAeroPressureHigh(WebServer.getArgFloat());} 
   else if(strcmp_P(field,(PGM_P)F("num_AeroOffset"))==0) {setAeroOffset(WebServer.getArgFloat());}
   else if(strcmp_P(field,(PGM_P)F("check_AeroQuietEnabled"))==0) {setQuietOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("check_AeroRefillBeforeQuiet"))==0) {setQuietRefillOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("num_AeroQuietFromHour"))==0) {setQuietFromHour(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("num_AeroQuietFromMinute"))==0) {setQuietFromMinute(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("num_AeroQuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("num_AeroQuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}  
-  else if(strcmp_P(field,(PGM_P)F("time_ToSet"))==0) {setTime(WebServer.getArgString());}
   else if(strcmp_P(field,(PGM_P)F("check_AeroSprayEnabled"))==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("check_GoogleSheetsEnabled"))==0) {MySettings.ReportToGoogleSheets = WebServer.getArgBoolean();}
   else if(strcmp_P(field,(PGM_P)F("check_MqttEnabled"))==0) {MySettings.ReportToMqtt = WebServer.getArgBoolean();}  
