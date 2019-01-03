@@ -135,7 +135,7 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("num_AeroQuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("num_AeroQuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}  
   else if(strcmp_P(field,(PGM_P)F("check_AeroSprayEnabled"))==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
-  else if(strcmp_P(field,(PGM_P)F("check_GoogleSheetsEnabled"))==0) {MySettings.ReportToGoogleSheets = WebServer.getArgBoolean();}
-  else if(strcmp_P(field,(PGM_P)F("check_MqttEnabled"))==0) {MySettings.ReportToMqtt = WebServer.getArgBoolean();}  
+  else if(strcmp_P(field,(PGM_P)F("check_GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("check_MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}  
   saveSettings(false);
 } 

@@ -1,10 +1,12 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter,email alerts review
+//TODO: flow meter
 //TODO: publish set of bookmarks useful for the box to the webinterface (Gbox420,Pushingbox,DIoTY,Sheets..)
 
 //Libraries
+  #include "420Pins.h" //Load pins layout file
+  #include "420Settings.h" //Load settings file
   #include "avr/wdt.h" //Watchdog timer
   #include "Thread.h"  //Splitting functions to threads
   #include "StaticThreadController.h"  //Grouping threads
@@ -23,92 +25,6 @@
   #include "Adafruit_ILI9341.h" //TFT Screen - hardware specific driver
   #include "Adafruit_GFX.h" //TFT Screen - generic graphics driver
   //#include "MemoryFree.h" //checking for remaining memory - only for debugging
-
-//Pins
-  const byte BuzzerOutPin = 4; //PC speaker+ (red)
-  const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
-  const byte PowerLEDOutPin = 46;  //PC case Power LED
-  //const byte HddLEDOutPin = 47; //PC case HDD LED - rewired to ESP chip`s wifi status pin
-  const byte PowerButtonInPin = 49;  //Power button 
-  const byte LightSensorInPin = 36; //D0 - LM393 light sensor                                                                                                              
-  const byte LightSensorAnalogInPin = A0; //A0 - LM393 light sensor
-  const byte WaterCriticalInPin = A4; //Water sensor1
-  const byte WaterLowInPin = A5;     //Water sensor2
-  const byte WaterMediumInPin = A6; //Water sensor3
-  const byte WaterFullInPin = A7; // Water sensor4
-  const byte DigitDisplayCLKOutPin = 31; //CLK - 4 digit LED display
-  const byte DigitDisplayDI0OutPin = 30; //DIO - 4 digit LED display
-  const byte TempSensorInPin = 43; //DAT - DHT22 temp/humidity sensor
-  const byte Relay1OutPin = 22;  //Power relay Port 1 - Aeroponics solenoid
-  const byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump
-  const byte Relay3OutPin = 24;  //Power relay Port 3 - PC power supply
-  const byte Relay4OutPin = 25;  //Power relay Port 4 - Internal fan Off/On
-  const byte Relay5OutPin = 26;  //Power relay Port 5 - Internal fan Low/High
-  const byte Relay6OutPin = 27;  //Power relay Port 6 - Exhauset fan Off/On
-  const byte Relay7OutPin = 28;  //Power relay Port 7 - Exhauset fan Low/High
-  const byte Relay8OutPin = 29;  //Power relay Port 8 - LED lights
-  const byte PHMeterInPin = A3;  //Po - PH meter
-  const byte AMoistureSensorInPin = A8; //A0 - Soil moisture sensor 
-  const byte DMoistureSensorInPin = 45; //D0 - Soil moisture sensor
-  const byte PotCSOutPin = 34;  //CS - X9C104 digital potentiometer  
-  const byte PotUDOutPin = 32;  //UD - X9C104 digital potentiometer
-  const byte PotINCOutPin = 33; //INC - X9C104 digital potentiometer
-  const byte ScreenReset = 37; //RESET(3.3V) - Screen Screen
-  const byte ScreenSCK = 38;  //SCK(3.3V) - Screen Screen
-  const byte ScreenMOSI = 39; //SDO/MOSI(3.3V) - Screen Screen
-  const byte ScreenMISO = 40; //SDI/MISO(3.3V), not used - Screen Screen 
-  const byte ScreenCS = 41;  //CS(3.3V) - Screen Screen
-  const byte ScreenDC = 42; //DC/RS(3.3V) - Screen Screen
-  const byte PressureSensorInPin = A1; //Signal(yellow) - Pressure sensor
-
-//Global constants
-  const int UTCOffsetHour = 0;  //UTC Time hour offset (Can be adjusted on the Web interface too)
-  const int UTCOffsetMinute = 0;  //UTC Time minute offset
-  const char PushingBoxLogRelayID[]= "v755877CF53383E1"; //UPDATE THIS to your grow box logging scenario DeviceID from PushingBox
-  const char PushingBoxEmailAlertID[]  = "vC5244859A2453AA";  //UPDATE THIS to your email alert scenario DeviceID from PushingBox
-  const uint8_t  DHTType=DHT22;  //specify temp/humidity sensor type: DHT21(AM2301) or DHT22(AM2302,AM2321)
-  const byte ScreenRotation = 1;  //1,3:landscape 2,4:portrait
-  const byte LogDepth = 8;  //Show X log entries on website
-  const byte LogLength = 31;  //30 characters + null terminator for one log entry
-  const byte PotStepping = 100;  // Digital potentiometer adjustment steps
-  const unsigned long AeroPumpTimeout = 900000;  // Aeroponics - Max pump run time (15minutes)
- 
-//Settings saved to EEPROM persistent storage
-  byte Version= 1; //increment this when you update the test values or change the stucture to invalidate the EEPROM stored settings
-  struct SettingsStructure //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
-  {
-  bool isLightOn = true;  //Startup status for lights: True-ON / False-OFF
-  bool isSoundEnabled = true;  //Enable PC speaker
-  byte LightBrightness; //0 - 100 range for controlling led driver output
-  byte DigitDisplayBacklight = 75; //4 digit display - backlight strenght (0-100)
-  bool isInternalFanOn;  //Internal fan On/Off
-  bool isInternalFanHigh; //Internal fan Low/High
-  bool isExhaustFanOn;  //Exhaust fan On/Off
-  bool isExhaustFanHigh;  //Exhaust fan Low/High
-  bool isTimerEnabled = false;  //Enable timer controlling lights
-  bool isPCPowerSupplyOn = true;  //Startup status for PC power supply: True-ON / False-OFF 
-  byte LightOnHour = 4;  //Light ON time - hour
-  byte LightOnMinute = 20; //Light ON time - minute
-  byte LightOffHour = 16; //Light OFF time - hour
-  byte LightOffMinute = 20; //Light OFF time - minute
-  bool isAeroSprayEnabled = true;
-  byte AeroInterval = 15; //Aeroponics - Spray every 15 minutes
-  byte AeroDuration = 3; //Aeroponics - Spray for 5 secondsf
-  float AeroPressureLow= 5.5; //Aeroponics - Turn on pump below this pressure (bar)
-  float AeroPressureHigh = 7.0 ; //Aeroponics - Turn on pump below this pressure (bar)
-  float AeroOffset = 0.5; //Pressure sensor calibration - offset voltage
-  bool isAeroQuietEnabled = true;  //Enable/disable quiet time
-  bool AeroRefillBeforeQuiet = true; //Enable/disable refill before quiet time
-  byte AeroQuietFromHour = 21;  //Quiet time to block pump - hour
-  byte AeroQuietFromMinute = 00; //Quiet time to block pump - minute
-  byte AeroQuietToHour = 9; //Quiet time end - hour
-  byte AeroQuietToMinute = 00; //Quiet time end - minute
-  bool ReportToGoogleSheets = true;
-  bool ReportToMqtt = true;
-  byte StructureVersion = Version;  //do not update this value inside the loop
-  };
-  typedef struct SettingsStructure settings;  //create the "settings" type using the stucture
-  settings MySettings;  //create a variable of type "settings"  with default values from SettingsStructure
 
 //Global variable
   float BoxTempC; // stores Temperature - Celsius
@@ -144,12 +60,13 @@
   bool isAeroPumpDisabled = false; //Aeroponics - High pressure pump health
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
   float AeroPressurePSI = 0.0;  //Aeroponics - Current pressure (psi)
-  char LogMessage[LogLength]; //temp storage for assemling log messages
-  char Logs[LogDepth][LogLength];  //two dimensional array for storing log histroy (array of char arrays)
   char WebMessage[512];   //buffer for REST and MQTT API messages
   char CurrentTime[20]; //buffer for getting current time
+  char LogMessage[LogLength]; //temp storage for assemling log messages
+  char Logs[LogDepth][LogLength];  //two dimensional array for storing log histroy (array of char arrays)
 
 //Component initialization
+  const uint8_t  DHTType=DHT22;  //specify temp/humidity sensor type: DHT21(AM2301) or DHT22(AM2302,AM2321)
   DHT TempSensor(TempSensorInPin, DHTType); // Temp/Humidity sensor
   SevenSegmentExtended DigitDisplay(DigitDisplayCLKOutPin, DigitDisplayDI0OutPin); //4 digit LED Display
   PZEM004T PowerSensor(&Serial2);  // Power Sensor using hardware Serial 2, use software serial if needed
@@ -339,10 +256,9 @@ time_t getNtpTime(){
   }
   if(NTPResponse == 0) {
     addToLog(F("NTP time sync failed"));
-    sendEmailAlert(F("NTP%20time%20sync%20failed"),F("Could%20not%20get%20current%20time%20from%20NTP%20server%2C%20retrying%20in%20an%20hour.%0ADefaulted%20to%2000%3A00%3A00%20Thursday%2C%201%20January%201970."));  //https://meyerweb.com/eric/tools/dencoder/
-      
+    sendEmailAlert(F("NTP%20time%20sync%20failed"),F("Could%20not%20get%20current%20time%20from%20NTP%20server%2C%20retrying%20in%20an%20hour.%0ADefaulted%20to%2000%3A00%3A00%20Thursday%2C%201%20January%201970."));  //https://meyerweb.com/eric/tools/dencoder/  
   }
-  else addToLog(F("NTP time synchronized"));
+  else LogToSerials(F("NTP time synchronized"),false);
   return NTPResponse;
 }
 

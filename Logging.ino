@@ -139,3 +139,27 @@ char * timetoText(int Hour, int Minute){
   sprintf (ReturnChar, "%02u:%02u", Hour, Minute);
   return ReturnChar;
 }
+
+void setReportToGoogleSheetsOnOff(bool State){
+  MySettings.ReportToGoogleSheets = State;
+  if(MySettings.ReportToGoogleSheets){ 
+    addToLog(F("Google Sheets enabled"));
+    PlayOnSound=true;
+    }
+  else {
+    addToLog(F("Google Sheets disabled"));
+    PlayOffSound=true;
+    }
+}
+
+void setReportToMqttOnOff(bool State){
+  MySettings.ReportToMqtt = State;
+  if(MySettings.ReportToMqtt){ 
+    addToLog(F("MQTT enabled"));
+    PlayOnSound=true;
+    }
+  else {
+    addToLog(F("MQTT disabled"));
+    PlayOffSound=true;
+    }
+}

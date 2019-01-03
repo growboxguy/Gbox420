@@ -33,18 +33,48 @@
 					  padding: 0px;
 					  height: 100%;
 					}
+					.link {
+					font-family: Tahoma;
+					font-size: 40px;
+					letter-spacing: 0px;
+					word-spacing: 0px;
+					color: #2C8E25;
+					font-weight: 700;
+					text-decoration: none solid rgb(68, 68, 68);
+					font-style: normal;
+					text-transform: capitalize;
+					}
+					.linkDescription {
+					font-family: Tahoma;
+					font-size: 18px;
+					color: black;
+					}
 
 		</style>
 		
-		
+		<div>		
+		<button class="tablink" onclick="openPage('Sheets', this, 'green')">Google Sheets</button>
+		<button class="tablink" onclick="openPage('Dioty', this, 'green')">Dioty</button>		
+		<button class="tablink" onclick="openPage('HiveMQ', this, 'green')">HiveMQ</button>
 		<button class="tablink" onclick="openPage('DIYGuide', this, 'green')" id="defaultOpen">DIY Guide</button>
-		<button class="tablink" onclick="openPage('HiveMQ', this, 'orange')">HiveMQ</button>
-
+		</div>
 		<div id="DIYGuide" class="tabcontent">
 		  <iframe src="https://sites.google.com/site/growboxguy/arduino"></iframe>
 		</div>
 		<div id="HiveMQ" class="tabcontent">
 		  <iframe src="http://www.hivemq.com/demos/websocket-client/"></iframe>
+		</div>
+		<div id="Sheets" class="tabcontent">
+		   <div style="float:right;overflow: auto">
+		   <br>
+			<a href="https://docs.google.com/spreadsheets" target="_blank" class="link">Google Sheets <img border="0" src="https://image.freepik.com/free-icon/add-new-tab-symbol_318-40646.jpg" width="100" height="100"><br><b class="linkDescription"> Open in new tab</b>	</a>
+		   </div>
+		</div>
+		<div id="Dioty" class="tabcontent">
+		   <div style="float:right;overflow: auto">
+		   <br>
+			<a href="http://www.dioty.co/mydioty" target="_blank" class="link">Dioty <img border="0" src="https://image.freepik.com/free-icon/add-new-tab-symbol_318-40646.jpg" width="100" height="100"><br><b class="linkDescription"> Open in new tab</b>	</a>
+		   </div>
 		</div>
 <script>
 function openPage(pageName, elmnt, color) {

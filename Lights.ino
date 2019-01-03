@@ -49,6 +49,24 @@ void setBrightness(int NewBrightness, bool AddToLog){
   }
 }
 
+unsigned long LastBrightnessAlertTime= 0;
+void checkBrightness(){
+  isBright = !digitalRead(LightSensorInPin);     // read the input pin: 0- light detected , 1 - no light detected. Had to invert signal from the sensor to make more sense.
+  LightReading = 1023 - analogRead(LightSensorAnalogInPin);
+  LightReadingPercent = map(LightReading,MinLightReading,MaxLightReading,0,100);
+
+  if(MySettings.isLightOn && !isBright && (LastBrightnessAlertTime == 0 || millis()-LastBrightnessAlertTime > 3600000)){ //if light should be ON but no light is detected and the last email was sent at least an hour ago
+    sendEmailAlert(F("No%20light%20detected"),F("No%20light%20was%20detected%20when%20lights%20should%20be%20ON."));  //https://meyerweb.com/eric/tools/dencoder/  
+    LastBrightnessAlertTime = millis();
+    addToLog("Lights ON, no light detected");
+  }
+  if(!MySettings.isLightOn && isBright && (LastBrightnessAlertTime == 0 || millis()-LastBrightnessAlertTime > 3600000)){ //if light should be ON but no light is detected and the last email was sent at least an hour ago
+    sendEmailAlert(F("Dark%20period%20interrupted"),F("Light%20was%20detected%20when%20lights%20should%20be%20OFF."));  //https://meyerweb.com/eric/tools/dencoder/  
+    LastBrightnessAlertTime = millis();
+    addToLog("Dark period interrupted");
+  }
+}
+
 void storeBrightness(){  //store current potentiometer value in the X9C104 memory for the next power on. Write durability is only 100.000 writes, use with caution
   digitalWrite(PotINCOutPin,HIGH);
   digitalWrite(PotCSOutPin,HIGH);

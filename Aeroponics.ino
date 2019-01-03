@@ -165,7 +165,7 @@ bool checkQuietTime() {
     int CombinedFromTime = MySettings.AeroQuietFromHour * 100 + MySettings.AeroQuietFromMinute;
     int CombinedToTime = MySettings.AeroQuietToHour * 100 + MySettings.AeroQuietToMinute;
     int CombinedCurrentTime = hour(Now) * 100 + minute(Now);
-    if(MySettings.AeroRefillBeforeQuiet && !isAeroPumpDisabled && CombinedFromTime == CombinedCurrentTime && millis() - AeroLastRefill > 60000 ){
+    if(MySettings.AeroRefillBeforeQuiet && !isAeroPumpDisabled && CombinedFromTime == CombinedCurrentTime && millis() - AeroLastRefill > 120000 ){
       aeroPumpOn(); 
       AeroLastRefill = millis();
     }
