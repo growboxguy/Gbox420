@@ -19,7 +19,6 @@ const char* MqttAeroInterval = "AeroInterval";
 const char* MqttAeroDuration = "AeroDuration";
 const char* MqttAeroPressureLow = "AeroPressureLow";
 const char* MqttAeroPressureHigh = "AeroPressureHigh";
-const char* MqttAeroOffset = "AeroOffset";
 const char* MqttAeroSprayEnabled = "AeroSprayEnabled";
 const char* MqttLightCalibrate = "LightCalibrate";
 const char* MqttPowersupply = "Powersupply";
@@ -68,7 +67,6 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttAeroDuration)!=NULL) {setAeroDuration(atoi(data));}
   else if(strstr(topic,MqttAeroPressureLow)!=NULL) {setAeroPressureLow(atof(data));}
   else if(strstr(topic,MqttAeroPressureHigh)!=NULL) {setAeroPressureHigh(atof(data));} 
-  else if(strstr(topic,MqttAeroOffset)!=NULL) {setAeroOffset(atof(data));} 
   else if(strstr(topic,MqttAeroSprayEnabled)!=NULL) {setAeroSprayOnOff(atoi(data));}
   else if(strstr(topic,MqttLightCalibrate)!=NULL) {triggerCalibrateLights();}
   else if(strstr(topic,MqttPowersupply)!=NULL) { if(strcmp(data,"1")==0)powerSupplyOn(); else if(strcmp(data,"0")==0)powerSupplyOff(); }
@@ -96,14 +94,14 @@ void mqttPublush(bool AddToLog){ //publish readings in JSON format
   strcat_P(WebMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(WebMessage,toText(Voltage));
   strcat_P(WebMessage,(PGM_P)F("\",\"Current\":\""));  strcat(WebMessage,toText(Current));
   strcat_P(WebMessage,(PGM_P)F("\",\"PH\":\""));  strcat(WebMessage,toText(PH));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Moisture\":\""));  strcat(WebMessage,toText(Moisture));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(WebMessage,toText(AeroPressure));
   strcat_P(WebMessage,(PGM_P)F("\",\"isLightOn\":\""));  strcat(WebMessage,toText(MySettings.isLightOn));
   strcat_P(WebMessage,(PGM_P)F("\",\"Brightness\":\""));  strcat(WebMessage,toText(MySettings.LightBrightness));
   strcat_P(WebMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(WebMessage,toText(LightReading));
   strcat_P(WebMessage,(PGM_P)F("\",\"isBright\":\""));  strcat(WebMessage,toText(isBright));
   strcat_P(WebMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(WebMessage,toText(reservoirPercent));
-  strcat_P(WebMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat_P(WebMessage,(PGM_P)internalFanSpeedToText());
-  strcat_P(WebMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat_P(WebMessage,(PGM_P)exhaustFanSpeedToText()); 
+  strcat_P(WebMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(true));
+  strcat_P(WebMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(false)); 
   strcat_P(WebMessage,(PGM_P)F("\"}"));
   memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable
   strcat(MqttPath,MqttROOT);

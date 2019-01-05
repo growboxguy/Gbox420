@@ -49,21 +49,23 @@ void setBrightness(int NewBrightness, bool AddToLog){
   }
 }
 
-unsigned long LastBrightnessAlertTime= 0;
-void checkBrightness(){
+void checkLightSensor(){
   isBright = !digitalRead(LightSensorInPin);     // read the input pin: 0- light detected , 1 - no light detected. Had to invert signal from the sensor to make more sense.
   LightReading = 1023 - analogRead(LightSensorAnalogInPin);
   LightReadingPercent = map(LightReading,MinLightReading,MaxLightReading,0,100);
-
-  if(MySettings.isLightOn && !isBright && (LastBrightnessAlertTime == 0 || millis()-LastBrightnessAlertTime > 3600000)){ //if light should be ON but no light is detected and the last email was sent at least an hour ago
-    sendEmailAlert(F("No%20light%20detected"),F("No%20light%20was%20detected%20when%20lights%20should%20be%20ON."));  //https://meyerweb.com/eric/tools/dencoder/  
-    LastBrightnessAlertTime = millis();
-    addToLog("Lights ON, no light detected");
+  if((MySettings.isLightOn && isBright) || (!MySettings.isLightOn && !isBright)){
+    if(!LightOK) sendEmailAlert(F("Lights OK"),F("Lights%20status%20recovered."));  //https://meyerweb.com/eric/tools/dencoder/  
+    LightOK = true; //everything OK: if lights are ON light is detected, when OFF no light is detected
   }
-  if(!MySettings.isLightOn && isBright && (LastBrightnessAlertTime == 0 || millis()-LastBrightnessAlertTime > 3600000)){ //if light should be ON but no light is detected and the last email was sent at least an hour ago
+  if(MySettings.isLightOn && !isBright && LightOK){ //if light should be ON but no light is detected and the light was OK before
+    sendEmailAlert(F("No%20light%20detected"),F("No%20light%20was%20detected%20when%20lights%20should%20be%20ON."));  //https://meyerweb.com/eric/tools/dencoder/  
+    LightOK = false;
+    addToLog(F("Lights ON, no light detected"));
+  }
+  if(!MySettings.isLightOn && isBright && LightOK){ //if light should be ON but no light is detected and the light was OK before
     sendEmailAlert(F("Dark%20period%20interrupted"),F("Light%20was%20detected%20when%20lights%20should%20be%20OFF."));  //https://meyerweb.com/eric/tools/dencoder/  
-    LastBrightnessAlertTime = millis();
-    addToLog("Dark period interrupted");
+    LightOK = false;
+    addToLog(F("Dark period interrupted"));
   }
 }
 
@@ -174,11 +176,6 @@ void setLightsOffMinute(int OffMinute){
   checkLightTimer();
   addToLog(F("Light OFF time updated"));
 }
-
-const __FlashStringHelper * lightStatusToText(){
-   if(MySettings.isLightOn) return F("ON");
-   else return F("OFF");
-} 
 
 const __FlashStringHelper * isBrightToText(){
    if(isBright) return F("YES");

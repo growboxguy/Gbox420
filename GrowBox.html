@@ -19,7 +19,30 @@
 		 h1 {padding:0px;margin:0px;margin-bottom:6px;}
 	</style>	
 	<div class="pure-g">
-		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">	
+		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
+		<div class="card" style="width:90%">	
+				<h1>Status</h1>	
+				<table class="tg">				  
+				  <tr>
+				    <td class="headerRows"><span style="font-weight:bold">Lights</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Aero</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Pump</td>
+					<td class="headerRows"><span style="font-weight:bold">Power</td>
+					<td class="headerRows"><span style="font-weight:bold">Vent</td>
+					<td class="headerRows"><span style="font-weight:bold">Reserv</td>
+					<td class="headerRows"><span style="font-weight:bold">PH</td>
+				  </tr>	
+				  <tr>
+					<td id="tdLightOK" class="dataRows"></td>
+					<td id="tdAeroOK" class="dataRows"></td>
+					<td id="tdAeroPumpOK" class="dataRows"></td>
+					<td id="tdPowerOK" class="dataRows"></td>
+					<td id="tdVentOK" class="dataRows"></td>
+					<td id="tdReservOK" class="dataRows"></td>
+					<td id="tdPhOK" class="dataRows"></td>
+				  </tr>					  
+				</table>									
+			</div>		
 			<div class="card" style="width:90%">
 				<h1>Box</h1>		
 				<table class="tg">				  
@@ -139,26 +162,22 @@
 				<table class="tg">
 				  <tr>
 					<th class="headerRows"><span style="font-weight:bold">Pressure</span><span>(bar/psi)</span></th>	
-					<th class="headerRows"><span style="font-weight:bold">Pump state</span></th>
-					<th class="headerRows"><span style="font-weight:bold">Pump status</span></th>					
+					<th class="headerRows"><span style="font-weight:bold">Pump state</span></th>				
 				  </tr>
 				  <tr>
 					<td id="tdAeroPressure" class="dataRows"></td>
 					<td id="tdisAeroPumpOn" class="dataRows"></td>
-					<td id="tdisAeroPumpDisabled" class="dataRows"></td>
 				  </tr>
 				</table>
 				<b>Pump</b><br>
-				<button id="btn_PumpRefill" type="button" align="rigth" title="Reset status and refill pressure tank to High pressure">Refill</button>
-				<button id="btn_PumpStop" type="button" align="rigth" title="Stops the pump">Stop</button>
-				<button id="btn_PumpDisable" type="button" align="rigth" title="Stops and disables pump">Disable</button>				
+				<button id="btn_PumpRefill" type="button" align="rigth" title="Reset status to OK and refill pressure tank to High pressure">Refill</button>
+				<button id="btn_PumpStop" type="button" align="rigth" title="Stops the pump and reset it status to OK">Stop</button>
+				<button id="btn_PumpDisable" type="button" align="rigth" title="Stops and disables pump">Disable</button>
+				<button id="btn_PressureCalibrate" type="button" style="margin-top:0px" title="Use only when the tank is not pressurized!">Calibrate</button>				
 				<form>
 					Low : <input style="width: 50px;" min=0 max=8 name="num_AeroPressureLow" type="number" step="0.1"/> 
 					High: <input style="width: 50px;" min=0 max=8 name	="num_AeroPressureHigh" type="number" step="0.1"/> bar					
 					<input type="submit" value="Set">
-				</form>
-				<form><button id="btn_PressureCalibrate" type="button" style="margin-top:0px" title="Use only when the tank is not pressurized!">Calibrate</button>
-				Offset: <input style="width: 50px;" min=0.0 max=5.0 name="num_AeroOffset" type="number" step="0.01"/> <input type="submit" value="Set">
 				</form>
 				<b>Quiet time</b>
 					<form class="test"><label><input type="checkbox" name="check_AeroQuietEnabled">Enabled </label><input type="submit" value="Set"></form>
@@ -168,8 +187,8 @@
 				<b>Spray</b>
 				<form>
 					<label><input type="checkbox" name="check_AeroSprayEnabled">Enabled </label><input type="submit" value="Set">
-					<button id="btn_AeroSprayNow" type="button">Spray now</button>
-					<button id="btn_AeroSprayOff" type="button">Spray OFF</button>
+					<button id="btn_AeroSprayNow" type="button">Spray</button>
+					<button id="btn_AeroSprayOff" type="button">OFF</button>
 				</form>
 				<form>
 					Interval: <input style="width: 40px;" min=0 name="num_AeroInterval" type="number"/> min<br>

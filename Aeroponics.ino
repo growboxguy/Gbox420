@@ -37,11 +37,28 @@ void checkAeroPump(){
     }
   }
   else{
-    if( !isAeroPumpDisabled && checkQuietTime()){ //Pressure below low limit: turn on pump if its not disabled and quiet time not active
+    if( AeroPumpOK && checkQuietTime()){ //Pressure below low limit: turn on pump if its not disabled and quiet time not active
       if(AeroPressure <= MySettings.AeroPressureLow)aeroPumpOn();
-    }
-    
+    }    
   }
+  //Alert checking
+    if(!AeroOK && AeroLowPressureAlert <=  AeroPressure && AeroPressure <= AeroHighPressureAlert){ //If pressure is between range
+       AeroOK = true;
+       sendEmailAlert(F("Aeroponics%20pressure%20OK"),F("Pressure%20level%20recovered."));  //https://meyerweb.com/eric/tools/dencoder/  
+    }
+   if(AeroOK && AeroPressure > AeroHighPressureAlert){ //If set high alert pressure is reached
+      aeroPumpOff(); //force pump off
+      aeroSprayNow(); //try to release pressure
+      AeroOK = false;
+      sendEmailAlert(F("Aeroponics%20pressure%20too%20high"),F("Pressure%20reached%20high%20alert%20limit.Pump%20stopped."));  //https://meyerweb.com/eric/tools/dencoder/ 
+      addToLog(F("High pressure warning"));
+    }
+   if(AeroOK && AeroPressure < AeroLowPressureAlert){ //If set low alert pressure is reached
+      if(AeroPumpOK) aeroPumpOn(); //turn pump on even under quiet time
+      AeroOK = false;
+      sendEmailAlert(F("Aeroponics%20pressure%20too%20low"),F("Pressure%20reached%20low%20alert%20limit.Pump%20started."));
+      addToLog(F("Low pressure warning"));
+    }
 }
 
 void readAeroPressure(){
@@ -52,7 +69,7 @@ void readAeroPressure(){
   }
   Reading = Reading /50;
   float Voltage = ((float)Reading) * 5 / 1024 ;
-  AeroPressure = (2.7*(Voltage-MySettings.AeroOffset)); // unit: bar / 100kPa
+  AeroPressure = (2.7*(Voltage-AeroOffset)); // unit: bar / 100kPa
   AeroPressurePSI = AeroPressure * 14.5038; 
 }
 
@@ -62,9 +79,9 @@ void calibratePressureSensor(){  //Should only be called when there is 0 pressur
   sum += analogRead(PressureSensorInPin) ; 
   delay(10);
   }  
-  MySettings.AeroOffset = (sum/50)*5/1024; //Reads voltage at 0 pressure
-  strncpy_P(LogMessage,(PGM_P)F("Pressure sensor offset: "),LogLength);
-  strcat(LogMessage,toText(MySettings.AeroOffset));
+  float AeroOffsetRecommendation = (sum/50)*5/1024; //Reads voltage at 0 pressure
+  strncpy_P(LogMessage,(PGM_P)F("0 pressure AeroOffset: "),LogLength);
+  strcat(LogMessage,toText(AeroOffsetRecommendation));
   addToLog(LogMessage);
 }
 
@@ -114,13 +131,8 @@ void setAeroPressureHigh(float PressureHigh){
   addToLog(F("Pump settings updated"));
 }
 
-void setAeroOffset(float Offset){
-  MySettings.AeroOffset = Offset;
-  addToLog(F("Pressure sensor offset updated"));
-}
-
 void aeroPumpOn(){
-  isAeroPumpDisabled = false;
+  AeroPumpOK = true;
   isAeroPumpOn = true;
   AeroPumpTimer = millis();      
   PlayOnSound = true;
@@ -137,25 +149,22 @@ void aeroPumpRefill(){
 }
 
 void aeroPumpStop(){ 
-  addToLog(F("Pump stopped")); 
+  addToLog(F("Pump stopped"));
+  AeroPumpOK = true; 
   aeroPumpOff();
 }
 
 void aeroPumpDisable(){
-  isAeroPumpDisabled = true;
   aeroPumpOff();
+  AeroPumpOK = false;
   addToLog(F("Pump disabled"));
 }
 
-const __FlashStringHelper * pumpStateToText()
-{
-if(isAeroPumpOn) return F("ON"); else return F("OFF");
-}
-
-const __FlashStringHelper * pumpStatusToText()
-{ 
-  if(isAeroPumpDisabled) return F("DISABLED"); else return F("OK");
-}
+const __FlashStringHelper * pumpStateToText(){
+   if(!AeroPumpOK) return F("DISABLED");
+   else if(isAeroPumpOn) return F("ON");
+   else return F("OFF");
+} 
 
 //Quiet time section: Blocks running the pump in a pre-defined time range
 unsigned long AeroLastRefill= 0;
@@ -165,7 +174,7 @@ bool checkQuietTime() {
     int CombinedFromTime = MySettings.AeroQuietFromHour * 100 + MySettings.AeroQuietFromMinute;
     int CombinedToTime = MySettings.AeroQuietToHour * 100 + MySettings.AeroQuietToMinute;
     int CombinedCurrentTime = hour(Now) * 100 + minute(Now);
-    if(MySettings.AeroRefillBeforeQuiet && !isAeroPumpDisabled && CombinedFromTime == CombinedCurrentTime && millis() - AeroLastRefill > 120000 ){
+    if(MySettings.AeroRefillBeforeQuiet && AeroPumpOK && CombinedFromTime == CombinedCurrentTime && millis() - AeroLastRefill > 120000 ){
       aeroPumpOn(); 
       AeroLastRefill = millis();
     }

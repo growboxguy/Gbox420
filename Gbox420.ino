@@ -1,8 +1,8 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter
-//TODO: publish set of bookmarks useful for the box to the webinterface (Gbox420,Pushingbox,DIoTY,Sheets..)
+//TODO: flow meter, automating ventilation
+//TODO: Pressure sensor calibration parameters to settign file as global constant
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -11,7 +11,7 @@
   #include "Thread.h"  //Splitting functions to threads
   #include "StaticThreadController.h"  //Grouping threads
   #include "TimerThree.h"  //Interrupt handling for webpage
-  #include "DHT.h"  //DHT11 or DHT22 humidity and temperature sensor
+  #include "DHT.h"  //DHT11 or DHT22 Digital Humidity and Temperature sensor
   #include "SevenSegmentTM1637.h" // 4 digit LED display
   #include "SevenSegmentExtended.h" // 4 digit LED display
   #include "PZEM004T.h"  //Power meter
@@ -26,7 +26,14 @@
   #include "Adafruit_GFX.h" //TFT Screen - generic graphics driver
   //#include "MemoryFree.h" //checking for remaining memory - only for debugging
 
-//Global variable
+//Global variables
+  bool LightOK = true; //Track component health, at startup assume every component is OK
+  bool AeroOK = true;  //Aeroponics - Pressure within range
+  bool AeroPumpOK = true; //Aeroponics - High pressure pump health
+  bool PowerOK = true; 
+  bool VentOK = true;
+  bool ReservOK = true;
+  bool PhOK = true;
   float BoxTempC; // stores Temperature - Celsius
   float BoxTempF; // stores Temperature - Fahrenheit
   float Humidity; // stores relative humidity - %
@@ -41,23 +48,16 @@
   bool isPotGettingHigh = false;  // Digital potentiometer direction, false: Decrease , true: Increase 
   byte reservoirPercent =100;
   char reservoirText[20]= "";
-  bool reservoirOK = true;
   bool PlayOnSound = false; //Turn on sound - website controls it
   bool PlayOffSound = false; //Turn off sound - website controls it
   bool PlayEE = false; //Surprise :) - website controls it
   bool CalibrateLights = false; //Calibrate lights flag - website controls it
   int MaxLightReading = 0; // stores the highest light source strengt reading
   int MinLightReading = 1023; //stores the lowest light source strengt reading
-  bool isWet = false; //Moisture content reaches pre-set threshold
-  int MaxMoisture = 0; // stores the highest moisture reading
-  int MinMoisture = 1023; //stores the lowest moisture reading
-  int Moisture ; //Reading of moisture content
-  byte MoisturePercentage ; //Moisture content relative to max,min values measued  
   unsigned long AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
   unsigned long AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
   bool isAeroSprayOn = false; //Aeroponics - Spray state, set to true to spay at power on
   bool isAeroPumpOn = false; //Aeroponics - High pressure pump state
-  bool isAeroPumpDisabled = false; //Aeroponics - High pressure pump health
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
   float AeroPressurePSI = 0.0;  //Aeroponics - Current pressure (psi)
   char WebMessage[512];   //buffer for REST and MQTT API messages
@@ -159,7 +159,6 @@ void setup() {     // put your setup code here, to run once:
   DigitDisplay.setBacklight(MySettings.DigitDisplayBacklight); //set 4 digit LED display backlight intensity
   PowerSensor.setAddress(PowerSensorIP); //start power meter
   calibrateLights();
-  if(MySettings.AeroOffset == 1023) calibratePressureSensor();
   addToLog(F("Grow Box initialized"));
   sendEmailAlert(F("Grow%20box%20(re)started"),F("Grow%20box%20(re)started%2C%20was%20it%20on%20purpose%3F"));
 
@@ -218,6 +217,15 @@ void halfHourRun(){
 
 //Helper functions
 
+void readSensors(){  //Sensor readings  
+  readDHTSensor();
+  checkLightSensor();
+  readPowerSensor();
+  readPH();
+  checkReservoir();
+  readAeroPressure();
+}
+
 void saveSettings(bool AddToLog){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
   eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings));
   if(AddToLog) addToLog(F("Settings saved to EEPROM"));
@@ -258,7 +266,7 @@ time_t getNtpTime(){
     addToLog(F("NTP time sync failed"));
     sendEmailAlert(F("NTP%20time%20sync%20failed"),F("Could%20not%20get%20current%20time%20from%20NTP%20server%2C%20retrying%20in%20an%20hour.%0ADefaulted%20to%2000%3A00%3A00%20Thursday%2C%201%20January%201970."));  //https://meyerweb.com/eric/tools/dencoder/  
   }
-  else LogToSerials(F("NTP time synchronized"),false);
+  else LogToSerials(F("NTP time synchronized"),true);
   return NTPResponse;
 }
 

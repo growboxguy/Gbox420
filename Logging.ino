@@ -11,14 +11,14 @@ void ReportToGoogleSheets(bool AddToLog){
   strcat_P(WebMessage,(PGM_P)F("&Voltage="));  strcat(WebMessage,toText(Voltage));
   strcat_P(WebMessage,(PGM_P)F("&Current="));  strcat(WebMessage,toText(Current));
   strcat_P(WebMessage,(PGM_P)F("&PH="));  strcat(WebMessage,toText(PH));
-  strcat_P(WebMessage,(PGM_P)F("&Moisture="));  strcat(WebMessage,toText(Moisture));
+  strcat_P(WebMessage,(PGM_P)F("&Pressure="));  strcat(WebMessage,toText(AeroPressure));
   strcat_P(WebMessage,(PGM_P)F("&isLightOn="));  strcat(WebMessage,toText(MySettings.isLightOn));
   strcat_P(WebMessage,(PGM_P)F("&Brightness="));  strcat(WebMessage,toText(MySettings.LightBrightness));
   strcat_P(WebMessage,(PGM_P)F("&LightReading="));  strcat(WebMessage,toText(LightReading));
   strcat_P(WebMessage,(PGM_P)F("&isBright="));  strcat(WebMessage,toText(isBright));
-  strcat_P(WebMessage,(PGM_P)F("&Reservoir: (")); strcat(WebMessage,toText(reservoirPercent)); 
-  strcat_P(WebMessage,(PGM_P)F("&InternalFan=")); strcat_P(WebMessage,(PGM_P)internalFanSpeedToText()); //strcat_P is the same as strcat, just for __FlashStringHelper type (stored in flash)
-  strcat_P(WebMessage,(PGM_P)F("&ExhaustFan=")); strcat_P(WebMessage,(PGM_P)exhaustFanSpeedToText());
+  strcat_P(WebMessage,(PGM_P)F("&Reservoir=")); strcat(WebMessage,toText(reservoirPercent)); 
+  strcat_P(WebMessage,(PGM_P)F("&InternalFan=")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(true)); //strcat_P is the same as strcat, just for __FlashStringHelper type (stored in flash)
+  strcat_P(WebMessage,(PGM_P)F("&ExhaustFan=")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(false));
   LogToSerials(F("Reporting to Google Sheets: "),false); LogToSerials(WebMessage,true);   
   RestAPI.get(WebMessage);
 }
@@ -76,16 +76,16 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F("TempC:")); strcat(WebMessage,toText(BoxTempC)); strcat_P(WebMessage,(PGM_P)F("C"));
   strcat_P(WebMessage,(PGM_P)F(" ; TempF:")); strcat(WebMessage,toText(BoxTempF)); strcat_P(WebMessage,(PGM_P)F("F"));
   strcat_P(WebMessage,(PGM_P)F(" ; Humidity:")); strcat(WebMessage,toText(Humidity)); strcat_P(WebMessage,(PGM_P)F("%"));
-  strcat_P(WebMessage,(PGM_P)F(" ; Internal fan:"));strcat_P(WebMessage,(PGM_P)internalFanSpeedToText());
-  strcat_P(WebMessage,(PGM_P)F(" ; Exhaust fan:"));strcat_P(WebMessage,(PGM_P)exhaustFanSpeedToText());
+  strcat_P(WebMessage,(PGM_P)F(" ; Internal fan:"));strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(true));
+  strcat_P(WebMessage,(PGM_P)F(" ; Exhaust fan:"));strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(false));
   strcat_P(WebMessage,(PGM_P)F("\n\r Power - "));
-  strcat_P(WebMessage,(PGM_P)F("12V supply:")); strcat_P(WebMessage,(PGM_P)powerSupplyToText());
+  strcat_P(WebMessage,(PGM_P)F("12V supply:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.isPCPowerSupplyOn));
   strcat_P(WebMessage,(PGM_P)F(" ; Power:")); strcat(WebMessage,toText(Power)); strcat_P(WebMessage,(PGM_P)F("W")); 
   strcat_P(WebMessage,(PGM_P)F(" ; Total:")); strcat(WebMessage,toText(Energy)); strcat_P(WebMessage,(PGM_P)F("Wh"));   
   strcat_P(WebMessage,(PGM_P)F(" ; Voltage:")); strcat(WebMessage,toText(Voltage)); strcat_P(WebMessage,(PGM_P)F("V"));
   strcat_P(WebMessage,(PGM_P)F(" ; Current:")); strcat(WebMessage,toText(Current)); strcat_P(WebMessage,(PGM_P)F("A"));
   strcat_P(WebMessage,(PGM_P)F("\n\r Lights - "));
-  strcat_P(WebMessage,(PGM_P)F("Light:")); strcat_P(WebMessage,(PGM_P)lightStatusToText()); 
+  strcat_P(WebMessage,(PGM_P)F("Light:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.isLightOn)); 
   strcat_P(WebMessage,(PGM_P)F(" ; Brightness:")); strcat(WebMessage,toText(MySettings.LightBrightness));
   strcat_P(WebMessage,(PGM_P)F(" ; LightReading:")); strcat(WebMessage,toText(LightReading)); strcat_P(WebMessage,(PGM_P)F(" - "));strcat(WebMessage,toText(LightReadingPercent));  strcat_P(WebMessage,(PGM_P)F("%"));
   strcat_P(WebMessage,(PGM_P)F(" ; Light detected:")); strcat_P(WebMessage,(PGM_P)isBrightToText()); 
@@ -96,13 +96,12 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F(" ; Low:"));strcat(WebMessage,toText(MySettings.AeroPressureLow));
   strcat_P(WebMessage,(PGM_P)F(" ; High:"));strcat(WebMessage,toText(MySettings.AeroPressureHigh));
   strcat_P(WebMessage,(PGM_P)F(" ; PumpState:"));strcat_P(WebMessage,(PGM_P)pumpStateToText());
-  strcat_P(WebMessage,(PGM_P)F(" ; PumpStatus:"));strcat_P(WebMessage,(PGM_P)pumpStatusToText());
+  strcat_P(WebMessage,(PGM_P)F(" ; PumpStatus:"));strcat_P(WebMessage,(PGM_P)pumpStateToText());
   strcat_P(WebMessage,(PGM_P)F(" ; Interval:"));strcat(WebMessage,toText(MySettings.AeroInterval));
   strcat_P(WebMessage,(PGM_P)F(" ; Duration:"));strcat(WebMessage,toText(MySettings.AeroDuration));
   strcat_P(WebMessage,(PGM_P)F("\n\r Reservoir - "));  
   strcat_P(WebMessage,(PGM_P)F("PH:")); strcat(WebMessage,toText(PH));
   strcat_P(WebMessage,(PGM_P)F(" ; Reservoir:")); strcat(WebMessage,reservoirText);  
-  //strcat_P(WebMessage,(PGM_P)F(" ; Moisture:")); strcat(WebMessage,toText(Moisture)); strcat_P(WebMessage,(PGM_P)F("% ")); strcat_P(WebMessage,(PGM_P)F("\n\r "));
   return WebMessage;
 }
 
@@ -139,6 +138,16 @@ char * timetoText(int Hour, int Minute){
   sprintf (ReturnChar, "%02u:%02u", Hour, Minute);
   return ReturnChar;
 }
+
+const __FlashStringHelper * stateToText(bool Status){
+   if(Status) return F("ON");
+   else return F("OFF");
+} 
+
+const __FlashStringHelper * statusToText(bool Status){
+   if(Status) return F("OK");
+   else return F("!!!");
+} 
 
 void setReportToGoogleSheetsOnOff(bool State){
   MySettings.ReportToGoogleSheets = State;

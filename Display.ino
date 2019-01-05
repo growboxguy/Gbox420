@@ -11,18 +11,18 @@ void logToScreen(){
   Screen.print(Power); Screen.print(F("W,"));Screen.print(Energy); Screen.println(F("kWh"));   
   Screen.setTextColor(ILI9341_RED);Screen.setTextSize(2);
   //Screen.setTextColor(ILI9341_YELLOW);Screen.setTextSize(2);
-  Screen.print(F("Light:")); Screen.print(lightStatusToText()); Screen.print(F(",Bright:")); Screen.println(isBrightToText());
+  Screen.print(F("Light:")); Screen.print(stateToText(MySettings.isLightOn)); Screen.print(F(",Bright:")); Screen.println(isBrightToText());
   Screen.print(F("Intensity:")); Screen.print(MySettings.LightBrightness);Screen.print(F(" ("));Screen.print(LightReading); Screen.print(F(" - ")); Screen.print( LightReadingPercent); Screen.println(F("%)"));
   Screen.print(F("On:")); Screen.print(timetoText(MySettings.LightOnHour, MySettings.LightOnMinute));Screen.print(F(",Off:")); Screen.println(timetoText(MySettings.LightOffHour,MySettings.LightOffMinute));
   Screen.setTextColor(ILI9341_MAGENTA);Screen.setTextSize(2);
   Screen.print(F("Reservoir:"));Screen.print(reservoirText);Screen.print(F(",PH:"));Screen.println(PH);
   //Screen.setTextColor(ILI9341_CYAN);Screen.setTextSize(3);
   Screen.setTextColor(ILI9341_WHITE);Screen.setTextSize(2);
-  Screen.print(F("Internal:"));Screen.print(internalFanSpeedToText());Screen.print(F(",Exhaust:"));Screen.println(exhaustFanSpeedToText());
+  Screen.print(F("Internal:"));Screen.print(fanSpeedToText(true));Screen.print(F(",Exhaust:"));Screen.println(fanSpeedToText(false));
   Screen.setTextColor(ILI9341_GREEN);
   Screen.print(F("Pressure:"));Screen.print(AeroPressure);Screen.print(F(" ("));Screen.print(MySettings.AeroPressureLow);Screen.print(F("/"));Screen.print(MySettings.AeroPressureHigh);Screen.println(F(")"));
   Screen.print(F("Interval:"));Screen.print(MySettings.AeroInterval);Screen.print(F(",Duration:"));Screen.println(MySettings.AeroDuration);
-  Screen.print(F("Pump:"));Screen.print(pumpStateToText());Screen.print(F("("));Screen.print(pumpStatusToText());Screen.println(F(")"));
+  Screen.print(F("Pump:"));Screen.print(pumpStateToText());Screen.print(F("("));Screen.print(pumpStateToText());Screen.println(F(")"));
 }
 
 //***4 digit display***
@@ -48,7 +48,7 @@ void updateDisplay() { //Cycles through the different phases
       DigitDisplay.print(F("LGHT"));
       break;
     case 5:
-      DigitDisplay.print(lightStatusToText());
+      DigitDisplay.print(stateToText(MySettings.isLightOn));
       break;
     case 6:
       DigitDisplay.print(F("Watt"));
@@ -66,13 +66,13 @@ void updateDisplay() { //Cycles through the different phases
       DigitDisplay.print(F("IFan"));
       break;
     case 11:
-      DigitDisplay.print(internalFanSpeedToText());
+      DigitDisplay.print(fanSpeedToText(true));
       break;
     case 12:
       DigitDisplay.print(F("EFan"));
       break;
     case 13:
-      DigitDisplay.print(exhaustFanSpeedToText());      
+      DigitDisplay.print(fanSpeedToText(false));      
       break;
     case 14:
       DigitDisplay.print(F("PRES"));

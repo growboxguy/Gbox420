@@ -24,8 +24,6 @@
   const byte Relay7OutPin = 28;  //Power relay Port 7 - Exhauset fan Low/High
   const byte Relay8OutPin = 29;  //Power relay Port 8 - LED lights
   const byte PHMeterInPin = A3;  //Po - PH meter
-  const byte AMoistureSensorInPin = A8; //A0 - Soil moisture sensor 
-  const byte DMoistureSensorInPin = 45; //D0 - Soil moisture sensor
   const byte PotCSOutPin = 34;  //CS - X9C104 digital potentiometer  
   const byte PotUDOutPin = 32;  //UD - X9C104 digital potentiometer
   const byte PotINCOutPin = 33; //INC - X9C104 digital potentiometer

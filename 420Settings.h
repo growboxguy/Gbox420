@@ -1,11 +1,16 @@
 //Default settings of the grow box
 
 //Global constants
-  const char PushingBoxLogRelayID[]= "v755877CF53383E1"; //UPDATE THIS to your grow box logging scenario DeviceID from PushingBox
-  const char PushingBoxEmailAlertID[]  = "vC5244859A2453AA";  //UPDATE THIS to your email alert scenario DeviceID from PushingBox
-  const byte ScreenRotation = 1;  //LCD screen rotation: 1,3:landscape 2,4:portrait
+  const char PushingBoxLogRelayID[]= "v755877CF53383E1"; //UPDATE THIS to your PushingBox logging scenario`s DeviceID  
+  const char PushingBoxEmailAlertID[]  = "vC5244859A2453AA";  //UPDATE THIS to your PushingBox email alert scenario`s DeviceID 
   const byte PotStepping = 100;  // Digital potentiometer adjustment steps
-  const int AeroPumpTimeout = 600000;  // Aeroponics - Max pump run time (10minutes)
+  const byte ScreenRotation = 1;  //LCD screen rotation: 1,3:landscape 2,4:portrait
+  const float AeroOffset = 0.5; //Pressure sensor calibration - offset voltage
+  const float AeroLowPressureAlert = 3.0; //Low pressure warning
+  const float AeroHighPressureAlert = 7.5; //High pressure warning  
+  const unsigned long AeroPumpTimeout = 600000;  // Aeroponics - Max pump run time (10minutes)
+  const float ReservoirPHLowAlert = 5.5; //Low pressure warning
+  const float ReservoirPHHighAlert = 6.8; //High pressure warning 
   const byte LogDepth = 8;  //Show X log entries on website
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
     
@@ -17,7 +22,6 @@
   byte AeroDuration = 3; //Aeroponics - Spray for 5 secondsf
   float AeroPressureLow= 5.5; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroPressureHigh = 7.0 ; //Aeroponics - Turn on pump below this pressure (bar)
-  float AeroOffset = 0.5; //Pressure sensor calibration - offset voltage
   bool isAeroSprayEnabled = true;  //Enable/disable misting
   bool isAeroQuietEnabled = true;  //Enable/disable quiet time
   bool AeroRefillBeforeQuiet = true; //Enable/disable refill before quiet time

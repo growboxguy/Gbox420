@@ -4,7 +4,7 @@
 //Modified for http://sites.google.com/site/growboxguy/
 /*
 PushingBox data structure:
-?BoxDate=$BoxDate$&BoxTempC=$BoxTempC$&BoxTempF=$BoxTempF$&Humidity=$Humidity$&Power=$Power$&Energy=$Energy$&Voltage=$Voltage$&Current=$Current$&PH=$PH$&Moisture=$Moisture$&isLightOn=$isLightOn$&Brightness=$Brightness$&LightReading=$LightReading$&isBright=$isBright$&Reservoir=$Reservoir$&InternalFan=$InternalFan$&ExhaustFan=$ExhaustFan$ 
+?BoxDate=$BoxDate$&BoxTempC=$BoxTempC$&BoxTempF=$BoxTempF$&Humidity=$Humidity$&Power=$Power$&Energy=$Energy$&Voltage=$Voltage$&Current=$Current$&PH=$PH$&Pressure=$Pressure$&isLightOn=$isLightOn$&Brightness=$Brightness$&LightReading=$LightReading$&isBright=$isBright$&Reservoir=$Reservoir$&InternalFan=$InternalFan$&ExhaustFan=$ExhaustFan$
 
 GET request query:
 https://script.google.com/macros/s/<gscript id>/exec?celData=data_here
@@ -21,7 +21,7 @@ Energy
 Voltage
 Current
 PH
-Moisture
+Pressure
 isLightOn
 Brightness
 LightReading
@@ -79,7 +79,7 @@ function doGet(e) {
         case 'PH':
           rowData[9] = value;
           break;
-        case 'Moisture':
+        case 'Pressure':
           rowData[10] = value;
           break;
         case 'isLightOn':

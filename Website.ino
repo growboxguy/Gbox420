@@ -50,20 +50,28 @@ void LoadCallback(char * url) //called when website is loaded
 void RefreshCallback(char * url) //called when website is refreshed
 { 
   //LogToSerials(F("RefreshCB for URL: "),false); LogToSerials(url,true);
-  if (strcmp(url,"/GrowBox.html.json")==0){   
+  if (strcmp(url,"/GrowBox.html.json")==0){ 
+  WebServer.setArgString(F("tdLightOK"), statusToText(LightOK)); 
+  WebServer.setArgString(F("tdAeroOK"),statusToText(AeroOK));
+  WebServer.setArgString(F("tdAeroPumpOK"),statusToText(AeroPumpOK));
+  WebServer.setArgString(F("tdPowerOK"),statusToText(PowerOK));
+  WebServer.setArgString(F("tdVentOK"),statusToText(VentOK));
+  WebServer.setArgString(F("tdReservOK"),statusToText(ReservOK));
+  WebServer.setArgString(F("tdPhOK"),statusToText(PhOK));
+      
   WebServer.setArgString(F("tdTime"), getFormattedTime()); 
   WebServer.setArgString(F("tdBoxTemp"),toText(BoxTempC,BoxTempF,"/"));
   WebServer.setArgString(F("tdHumidity"),toText(Humidity));
-  WebServer.setArgString(F("tdInternalFanSpeed"),internalFanSpeedToText());
-  WebServer.setArgString(F("tdExhaustFanSpeed"),exhaustFanSpeedToText());
+  WebServer.setArgString(F("tdInternalFanSpeed"),fanSpeedToText(true));
+  WebServer.setArgString(F("tdExhaustFanSpeed"),fanSpeedToText(false));
 
-  WebServer.setArgString(F("tdisPowersupplyOn"),powerSupplyToText()); 
+  WebServer.setArgString(F("tdisPowersupplyOn"),stateToText(MySettings.isPCPowerSupplyOn)); 
   WebServer.setArgString(F("tdPower"),toText(Power));  
   WebServer.setArgString(F("tdEnergy"),toText(Energy));
   WebServer.setArgString(F("tdVoltage"),toText(Voltage));
   WebServer.setArgString(F("tdCurrent"),toText(Current)); 
 
-  WebServer.setArgString(F("tdisLightOn"),lightStatusToText());
+  WebServer.setArgString(F("tdisLightOn"),stateToText(MySettings.isLightOn));
   WebServer.setArgString(F("tdLightReading"),toText(MySettings.LightBrightness, LightReading,"%-")); 
   WebServer.setArgString(F("tdLightMinMax"),toText(MinLightReading, MaxLightReading,"/"));
 
@@ -73,13 +81,10 @@ void RefreshCallback(char * url) //called when website is refreshed
   
   WebServer.setArgString("tdAeroPressure",toText(AeroPressure,AeroPressurePSI,"/"));
   WebServer.setArgString(F("tdisAeroPumpOn"),pumpStateToText());
-  WebServer.setArgString(F("tdisAeroPumpDisabled"),pumpStatusToText());
-  WebServer.setArgFloat(F("num_AeroOffset"), MySettings.AeroOffset);
     
   WebServer.setArgString(F("tdReservoir"),reservoirText);
   WebServer.setArgString(F("tdPH"),toText(PH));  
-  //WebServer.setArgString("tdMoisture",toText(Moisture)); 
- 
+
   WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON()); //Last events that happened in JSON format
   }
 }
@@ -127,7 +132,6 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("num_AeroDuration"))==0) {setAeroDuration(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("num_AeroPressureLow"))==0) {setAeroPressureLow(WebServer.getArgFloat());}
   else if(strcmp_P(field,(PGM_P)F("num_AeroPressureHigh"))==0) {setAeroPressureHigh(WebServer.getArgFloat());} 
-  else if(strcmp_P(field,(PGM_P)F("num_AeroOffset"))==0) {setAeroOffset(WebServer.getArgFloat());}
   else if(strcmp_P(field,(PGM_P)F("check_AeroQuietEnabled"))==0) {setQuietOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("check_AeroRefillBeforeQuiet"))==0) {setQuietRefillOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("num_AeroQuietFromHour"))==0) {setQuietFromHour(WebServer.getArgInt());}
