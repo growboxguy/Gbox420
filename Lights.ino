@@ -121,12 +121,14 @@ void runToEnd(){  //Goes to Minimum or Maximum dimming, measure light intensity 
     LightReading = 1023 - analogRead(LightSensorAnalogInPin);
     if(LightReading > MaxLightReading) MaxLightReading = LightReading;
     if(LightReading < MinLightReading) MinLightReading = LightReading;
-    //if(StepCounter % 10 == 0)  //prints measured light intensity every 10% using modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
-     // {  
-      // if(isPotGettingHigh)LogToSerials(StepCounter,false);
-      // else LogToSerials(PotStepping - StepCounter,false);
-      // LogToSerials(F("% - "),false); LogToSerials(LightReading,true);
-     // }  
+    if(debug){
+      if(StepCounter % 10 == 0)  //prints measured light intensity every 10% using modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
+        {  
+         if(isPotGettingHigh)LogToSerials(StepCounter,false);
+         else LogToSerials(PotStepping - StepCounter,false);
+         LogToSerials(F("% - "),false); LogToSerials(LightReading,true);
+        }
+    }  
     StepCounter++;
   }
   isPotGettingHigh= !isPotGettingHigh;  // flip the direction for he next run

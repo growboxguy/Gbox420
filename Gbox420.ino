@@ -1,7 +1,7 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter, Add PH meter raw reading to serial to help with calibration
+//TODO: flow meter
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -40,12 +40,13 @@
   float Energy; //Power sensor - Wh
   float Voltage; //Power sensor - V
   float Current; //Power sensor - A
-  float PH; //PH meter  
+  float PHRaw; //PH meter reading 
+  float PH; //PH meter calculated value  
   int LightReading;  //light sensor analog reading
   byte LightReadingPercent;  //Compared to calibrated min/max values what is the detected light level %
   bool isBright;  //Ligth sensor feedback: True-Bright / False-Dark
   bool isPotGettingHigh = false;  // Digital potentiometer direction, false: Decrease , true: Increase 
-  byte reservoirPercent =100;
+  byte reservoirLevel =4;
   char reservoirText[20]= "";
   bool PlayOnSound = false; //Turn on sound - website controls it
   bool PlayOffSound = false; //Turn off sound - website controls it
@@ -183,7 +184,7 @@ void processEspLink(){
 }
 
 void oneSecRun(){
-  //LogToSerials(F("One sec trigger.."));
+  if(debug)LogToSerials(F("One sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   checkLightStatus(); 
   checkAero();  
@@ -192,7 +193,7 @@ void oneSecRun(){
 }
 
 void fiveSecRun(){
-  //LogToSerials(F("Five sec trigger.."),true);
+  if(debug)LogToSerials(F("Five sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout   
   readSensors();
   wdt_reset(); //reset watchdog timeout
@@ -201,7 +202,7 @@ void fiveSecRun(){
 }
 
 void minuteRun(){
-  //LogToSerials(F("Minute trigger.."),true);
+  if(debug)LogToSerials(F("Minute trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   checkLightTimer(); 
   LogToSerials(logToText(),true);  //Logs sensor readings to Serial  
@@ -209,7 +210,7 @@ void minuteRun(){
 }
 
 void halfHourRun(){
-  //LogToSerials(F("Half hour trigger.."),true);
+  if(debug)LogToSerials(F("Half hour trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   if(MySettings.ReportToGoogleSheets) ReportToGoogleSheets(false);  //uploads readings to Google Sheets via ESP REST API
   if(MySettings.ReportToMqtt) mqttPublush(false);  //publish readings via ESP MQTT API
@@ -251,7 +252,7 @@ void sendEmailAlert(const __FlashStringHelper *title){ //Title needs to be URL e
   strcat_P(WebMessage,(PGM_P)F("&Title=")); strcat_P(WebMessage,(PGM_P)title);
   strcat_P(WebMessage,(PGM_P)F("&Log=")); logToJSON(false,true);  
   RestAPI.get(WebMessage);
-  //LogToSerials(WebMessage,true);
+  if(debug)LogToSerials(WebMessage,true);
 }
 
 void sendTestEmailAlert()

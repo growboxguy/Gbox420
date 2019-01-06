@@ -4,6 +4,10 @@
 //Pins
 int PHMeterInPin = A3; //Po analog port - PH meter
 
+//Global constants
+const float PHCalibrationSlope = -0.031332;  //Update this to your own calibration values
+const float PHCalibrationIntercept = 22.637144;  //Update this to your own calibration values
+
 //Global variables
 float PH;
 
@@ -20,7 +24,7 @@ for(byte i=0;i<200;i++) {
 }
 Reading = Reading /200; //Calculates average
 Serial.print("Analog reading: "); Serial.println(Reading);
-PH = -0.031223*Reading + 23.376812;  //equation of the line
+PH = PHCalibrationSlope*Reading + PHCalibrationIntercept;  //equation of the line
 Serial.print("PH: "); Serial.println(PH);
 Serial.println("");
 }

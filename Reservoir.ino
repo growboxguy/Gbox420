@@ -13,37 +13,37 @@ void checkReservoir(){
   if(isWaterAboveFull) strcat_P(reservoirText,(PGM_P)F("#")); else strcat_P(reservoirText,(PGM_P)F("-"));
   strcat_P(reservoirText,(PGM_P)F("]F"));
 
-  //Get percentage representation of reservoir level and send out email alerts
+  //Get number representation of reservoir level and send out email alerts: From 0-empty to 4-full
   if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && isWaterAboveFull) {
-    reservoirPercent= 100;
+    reservoirLevel= 4;
     if(!ReservOK){
       sendEmailAlert(F("Reservoir%20OK"));
       ReservOK = true;
     } 
   }
   else if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && !isWaterAboveFull) {
-    reservoirPercent= 75;
+    reservoirLevel= 3;
     if(!ReservOK){
       sendEmailAlert(F("Reservoir%20OK"));
       ReservOK = true;
     } 
   }
   else if(isWaterAboveCritical && isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) {
-    reservoirPercent= 50;
+    reservoirLevel= 2;
     if(!ReservOK){
       sendEmailAlert(F("Reservoir%20OK"));
       ReservOK = true;
     } 
   }
   else if(isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) {
-    reservoirPercent= 25;
+    reservoirLevel= 1;
     if(!ReservOK){
       sendEmailAlert(F("Reservoir%20OK"));
       ReservOK = true;
     }  
   }
   else if(!isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) {  
-    reservoirPercent= 0;
+    reservoirLevel= 0;
     if(ReservOK){
       sendEmailAlert(F("Reservoir%20is%20empty"));
       addToLog(F("Reservoir is empty"));
@@ -51,7 +51,7 @@ void checkReservoir(){
     }    
   }
   else {    //non-valid sensor combination was read like E[#--#]F
-    reservoirPercent= 0;
+    reservoirLevel= -1;
     if(ReservOK){
       sendEmailAlert(F("Reservoir%20sensor%20failed"));
       addToLog(F("Water sensor failed"));
@@ -63,13 +63,12 @@ void checkReservoir(){
 //***PH METER***
 void readPH(){
   float  Reading=0;
-  for(byte i=0;i<20;i++) { 
+  for(byte i=0;i<40;i++) { 
    Reading+=analogRead(PHMeterInPin);
-   delay(50);
+   delay(25);
   }
-  Reading = Reading /20; //Calculates average
-  //Serial.print("Analog reading: "); Serial.println(Reading);
-  PH = -0.031223*Reading + 23.376812;  //equation of the line
+  PHRaw = Reading /40; //Calculates average
+  PH = PHCalibrationSlope*PHRaw + PHCalibrationIntercept;  //equation of the line
 
   if(!PhOK && ReservoirPHLowAlert <= PH && PH <= ReservoirPHHighAlert ){
       sendEmailAlert(F("PH%20OK"));

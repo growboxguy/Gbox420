@@ -41,24 +41,28 @@ void checkAeroPump(){
       if(AeroPressure <= MySettings.AeroPressureLow)aeroPumpOn();
     }    
   }
-  //Alert checking
-    if(!AeroOK && AeroLowPressureAlert <=  AeroPressure && AeroPressure <= AeroHighPressureAlert){ //If pressure is between range
+  CheckAeroPumpAlerts();
+}
+
+void CheckAeroPumpAlerts()
+{
+  if(!AeroOK && AeroLowPressureAlert <=  AeroPressure && AeroPressure <= AeroHighPressureAlert){ //If pressure is between range and pressure was not OK at last check
        AeroOK = true;
        sendEmailAlert(F("Aeroponics%20pressure%20OK")); 
     }
-   if(AeroOK && AeroPressure > AeroHighPressureAlert){ //If set high alert pressure is reached
+   if(AeroOK && AeroPressure > AeroHighPressureAlert){ //If high pressure alert level is reached
       aeroPumpOff(); //force pump off
       aeroSprayNow(); //try to release pressure
       AeroOK = false;
       sendEmailAlert(F("Aeroponics%20pressure%20too%20high"));
       addToLog(F("High pressure warning"));
     }
-   if(AeroOK && AeroPressure < AeroLowPressureAlert){ //If set low alert pressure is reached
+   if(AeroOK && AeroPressure < AeroLowPressureAlert){ //If low pressure alert level is reached
       if(AeroPumpOK) aeroPumpOn(); //turn pump on even under quiet time
       AeroOK = false;
       sendEmailAlert(F("Aeroponics%20pressure%20too%20low"));
       addToLog(F("Low pressure warning"));
-    }
+    } 
 }
 
 void readAeroPressure(){
@@ -87,7 +91,7 @@ void calibratePressureSensor(){  //Should only be called when there is 0 pressur
 
 void setAeroInterval(int interval){  
   MySettings.AeroInterval = interval; 
-  AeroSprayTimer = millis(); 
+  AeroSprayTimer = millis();
 }
 
 void setAeroDuration(int duration){  

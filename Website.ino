@@ -17,9 +17,7 @@ void resetWebServer(void) {
 
 void LoadCallback(char * url) //called when website is loaded
 {
-  //LogToSerials(F("LoadCB for URL: "),false); LogToSerials(url,true);
   if (strcmp(url,"/GrowBox.html.json")==0){
-
   WebServer.setArgBoolean(F("check_AutoInternalFan"), MySettings.automaticInternalFan);
   WebServer.setArgString(F("num_InternalFanSwitchTemp"), toText(MySettings.internalFanSwitchTemp));
   WebServer.setArgBoolean(F("check_AutoExhaustFan"), MySettings.automaticExhaustFan);
@@ -51,13 +49,13 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgBoolean(F("check_MqttEnabled"), MySettings.ReportToMqtt);
 
   WebServer.setArgInt(F("slider_DigitDisplayBrightness"), MySettings.DigitDisplayBacklight);
+  WebServer.setArgInt(F("num_DigitDisplayValue"), MySettings.DigitDisplayValue);
   WebServer.setArgInt(F("check_SoundEnabled"), MySettings.isSoundEnabled);
   }
 }
 
 void RefreshCallback(char * url) //called when website is refreshed
 { 
-  //LogToSerials(F("RefreshCB for URL: "),false); LogToSerials(url,true);
   if (strcmp(url,"/GrowBox.html.json")==0){ 
   WebServer.setArgString(F("tdLightOK"), statusToText(LightOK)); 
   WebServer.setArgString(F("tdAeroOK"),statusToText(AeroOK));
@@ -100,7 +98,6 @@ void RefreshCallback(char * url) //called when website is refreshed
 //Called when any button on the website is pressed
 void ButtonPressCallback(char *button)
 {
-  //LogToSerials(button,true);  //for debugging: prints the button ID received from the website
   if (strcmp_P(button,(PGM_P)F("btn_LightOn"))==0) { turnLightON(true); }
   else if (strcmp_P(button,(PGM_P)F("btn_InternalFanOff"))==0) {internalFanOff();}
   else if (strcmp_P(button,(PGM_P)F("btn_InternalFanLow"))==0) { internalFanLow();}
@@ -128,7 +125,6 @@ void ButtonPressCallback(char *button)
 
 //Called when any field on the website is updated
 void SetFieldCallback(char * field){
-  //LogToSerials(field,true);  //for debugging: prints the filed ID received from the website
   if(strcmp_P(field,(PGM_P)F("slider_Brightness"))==0) {setBrightness(WebServer.getArgInt(),true);}
   else if(strcmp_P(field,(PGM_P)F("check_AutoInternalFan"))==0) {autoFanOnOff(WebServer.getArgBoolean(),true);}
   else if(strcmp_P(field,(PGM_P)F("num_InternalFanSwitchTemp"))==0) {setInternalSwitchTemp(WebServer.getArgInt());}
@@ -156,6 +152,7 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("check_AeroSprayEnabled"))==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("check_GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("check_MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
-  else if(strcmp_P(field,(PGM_P)F("slider_DigitDisplayBrightness"))==0) {setDigitDisplayBacklight(WebServer.getArgInt());}  
+  else if(strcmp_P(field,(PGM_P)F("slider_DigitDisplayBrightness"))==0) {setDigitDisplayBacklight(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("num_DigitDisplayValue"))==0) {setDigitDisplayValue(WebServer.getArgInt());} 
   saveSettings(false);
 } 

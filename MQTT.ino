@@ -9,6 +9,7 @@ const char* MqttLwtMessage = "Gbox420 Offline"; //this is the message subscriber
 const char* MqttLights = "Lights";  
 const char* MqttBrightness = "Brightness";
 const char* MqttDisplayBrightness = "DisplayBrightness";
+const char* MqttDisplayValue = "DisplayValue";
 const char* MqttTimerEnabled = "TimerEnabled";
 const char* MqttSoundEnabled = "SoundEnabled";
 const char* MqttLightsOnHour = "LightsOnHour";
@@ -57,6 +58,7 @@ void mqttReceived(void* response) {
   if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(true); else if(strcmp(data,"0")==0)turnLightOFF(true); }
   else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data),true); }
   else if(strstr(topic,MqttDisplayBrightness)!=NULL) {setDigitDisplayBacklight(atoi(data));}
+  else if(strstr(topic,MqttDisplayValue)!=NULL) {setDigitDisplayValue(atoi(data));}
   else if(strstr(topic,MqttTimerEnabled)!=NULL) {setTimerOnOff(atoi(data));} //bool 
   else if(strstr(topic,MqttSoundEnabled)!=NULL) {setSoundOnOff(atoi(data));}
   else if(strstr(topic,MqttLightsOnHour)!=NULL) {setLightsOnHour(atoi(data));}

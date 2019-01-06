@@ -70,7 +70,7 @@ char* logToJSON(bool AddToLog,bool Append){ //publish readings in JSON format
   strcat_P(WebMessage,(PGM_P)F("\",\"Brightness\":\""));  strcat(WebMessage,toText(MySettings.LightBrightness));
   strcat_P(WebMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(WebMessage,toText(LightReading));
   strcat_P(WebMessage,(PGM_P)F("\",\"isBright\":\""));  strcat(WebMessage,toText(isBright));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(WebMessage,toText(reservoirPercent));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(WebMessage,toText(reservoirLevel));
   strcat_P(WebMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(true));
   strcat_P(WebMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(false));
   strcat_P(WebMessage,(PGM_P)F("\"}"));
@@ -103,12 +103,11 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F("Pressure:"));strcat(WebMessage,toText(AeroPressure));strcat_P(WebMessage,(PGM_P)F("bar/"));strcat(WebMessage,toText(AeroPressurePSI));strcat_P(WebMessage,(PGM_P)F("psi"));
   strcat_P(WebMessage,(PGM_P)F(" ; Low:"));strcat(WebMessage,toText(MySettings.AeroPressureLow));
   strcat_P(WebMessage,(PGM_P)F(" ; High:"));strcat(WebMessage,toText(MySettings.AeroPressureHigh));
-  strcat_P(WebMessage,(PGM_P)F(" ; PumpState:"));strcat_P(WebMessage,(PGM_P)pumpStateToText());
-  strcat_P(WebMessage,(PGM_P)F(" ; PumpStatus:"));strcat_P(WebMessage,(PGM_P)pumpStateToText());
   strcat_P(WebMessage,(PGM_P)F(" ; Interval:"));strcat(WebMessage,toText(MySettings.AeroInterval));
   strcat_P(WebMessage,(PGM_P)F(" ; Duration:"));strcat(WebMessage,toText(MySettings.AeroDuration));
   strcat_P(WebMessage,(PGM_P)F("\n\r Reservoir - "));  
   strcat_P(WebMessage,(PGM_P)F("PH:")); strcat(WebMessage,toText(PH));
+  strcat_P(WebMessage,(PGM_P)F("(")); strcat(WebMessage,toText(PHRaw));strcat_P(WebMessage,(PGM_P)F(")"));
   strcat_P(WebMessage,(PGM_P)F(" ; Reservoir:")); strcat(WebMessage,reservoirText);  
   return WebMessage;
 }

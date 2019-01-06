@@ -22,15 +22,17 @@ void logToScreen(){
   Screen.setTextColor(ILI9341_GREEN);
   Screen.print(F("Pressure:"));Screen.print(AeroPressure);Screen.print(F(" ("));Screen.print(MySettings.AeroPressureLow);Screen.print(F("/"));Screen.print(MySettings.AeroPressureHigh);Screen.println(F(")"));
   Screen.print(F("Interval:"));Screen.print(MySettings.AeroInterval);Screen.print(F(",Duration:"));Screen.println(MySettings.AeroDuration);
-  Screen.print(F("Pump:"));Screen.print(pumpStateToText());Screen.print(F("("));Screen.print(pumpStateToText());Screen.println(F(")"));
+  Screen.print(F("Pump:"));Screen.print(pumpStateToText());
 }
 
 //***4 digit display***
-//Global variables for updateDisplay funciton
-int CurrentStep = 0;
+int CurrentStep = -1;
 const byte degreeSign = B11100011; //Used at Temp step
-void updateDisplay() { //Cycles through the different phases
-    DigitDisplay.clear();   
+void updateDisplay() { //Cycles through the different values
+    DigitDisplay.clear();
+    if(MySettings.DigitDisplayValue == -1) CurrentStep++;  //cycle the values
+    else CurrentStep= MySettings.DigitDisplayValue;  //lock to a single value
+       
     switch (CurrentStep) {
     case 0:
       DigitDisplay.print(F("Humi"));
@@ -79,17 +81,28 @@ void updateDisplay() { //Cycles through the different phases
       break;
     case 15:
       DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)AeroPressure , 100 * (AeroPressure - (int)AeroPressure));DigitDisplay.setColonOn(0);
+      break;
+    case 16:
+      DigitDisplay.print(F("PH"));
+      break;
+    case 17:
+      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)PH , 100 * (PH - (int)PH));DigitDisplay.setColonOn(0);
       CurrentStep = -1; //last step, reset counter
-      break;  
+      break;    
     default:      
       CurrentStep = -1; //nothing matched - reset counter
       break;
   }
-  CurrentStep++;  
-  //CurrentStep = 15; //locked to Pressure for calibration
 }
 
 void setDigitDisplayBacklight(int Backlight){
   MySettings.DigitDisplayBacklight=Backlight;
   DigitDisplay.setBacklight(MySettings.DigitDisplayBacklight);
+  addToLog(F("DigitDisplay brightness set"));
+}
+
+void setDigitDisplayValue(int Value){
+  MySettings.DigitDisplayValue=Value;
+  if(Value<0)addToLog(F("DigitDisplay cycle ON"));
+  else addToLog(F("DigitDisplay locked"));
 }

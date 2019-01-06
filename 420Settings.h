@@ -1,6 +1,7 @@
 //Default settings of the grow box
 
 //Global constants
+  const bool debug = false;
   const char PushingBoxLogRelayID[]= "v755877CF53383E1"; //UPDATE THIS to your PushingBox logging scenario`s DeviceID  
   const char PushingBoxEmailAlertID[]  = "vC5244859A2453AA";  //UPDATE THIS to your PushingBox email alert scenario`s DeviceID 
   const byte PotStepping = 100;  // Digital potentiometer adjustment steps
@@ -10,6 +11,8 @@
   const unsigned long AeroPumpTimeout = 600000;  // Aeroponics - Max pump run time (10minutes)
   const float PressureSensorOffset = 0.58;  //Pressure sensor voltage reading at 0 pressure
   const float PressureSensorVoltageToPressure = 2.7; //Pressure sensor voltage to pressure ratio
+  const float PHCalibrationSlope = -0.033256;  //Update this to your own PH meter calibration values
+  const float PHCalibrationIntercept = 24.08651;  //Update this to your own PH meter calibration values
   const float ReservoirPHLowAlert = 5.5; //Low pressure warning
   const float ReservoirPHHighAlert = 6.8; //High pressure warning
   const int AlertLowTemp = 15; //Low temp warning email
@@ -20,19 +23,19 @@
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
     
 //Settings saved to EEPROM persistent storage
-  byte Version= 4; //increment this when you update the test values or change the stucture to invalidate the EEPROM stored settings
+  byte Version= 5; //increment this when you update the test values or change the stucture to invalidate the EEPROM stored settings
   struct SettingsStructure //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   byte AeroInterval = 15; //Aeroponics - Spray every 15 minutes
-  byte AeroDuration = 3; //Aeroponics - Spray for 5 secondsf
+  byte AeroDuration = 2; //Aeroponics - Spray for 5 secondsf
   float AeroPressureLow= 5.5; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroPressureHigh = 7.0 ; //Aeroponics - Turn on pump below this pressure (bar)
   bool isAeroSprayEnabled = true;  //Enable/disable misting
   bool isAeroQuietEnabled = true;  //Enable/disable quiet time
   bool AeroRefillBeforeQuiet = true; //Enable/disable refill before quiet time
-  byte AeroQuietFromHour = 21;  //Quiet time to block pump - hour
+  byte AeroQuietFromHour = 22;  //Quiet time to block pump - hour
   byte AeroQuietFromMinute = 00; //Quiet time to block pump - minute
-  byte AeroQuietToHour = 9; //Quiet time end - hour
+  byte AeroQuietToHour = 8; //Quiet time end - hour
   byte AeroQuietToMinute = 00; //Quiet time end - minute
   
   bool isLightOn = true;  //Startup status for lights: True-ON / False-OFF
@@ -58,7 +61,8 @@
   bool ReportToGoogleSheets = true;
   bool ReportToMqtt = true;
   
-  byte DigitDisplayBacklight = 75; //4 digit display - backlight strenght (0-100)
+  byte DigitDisplayBacklight = 25; //4 digit display - backlight strenght (0-100)
+  int DigitDisplayValue = -1; //select which screen to display(0-15), -1 cycles through all screens
   bool isSoundEnabled = true;  //Enable PC speaker  
   byte StructureVersion = Version;
   };
