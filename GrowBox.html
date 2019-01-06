@@ -66,11 +66,25 @@
 				  </tr>				  
 				</table>
 				<b>Internal fan :</b>
+				<form>
+					<label><input type="checkbox" name="check_AutoInternalFan">Automatic low/high at: </label>
+					<input style="width: 35px;" min=10 max=50 name="num_InternalFanSwitchTemp" type="number"/><span> °C</span>
+					<input type="submit" value="Set">
+				</form>
 				<button id="btn_InternalFanOff" type="button">OFF</button>
 				<button id="btn_InternalFanLow" type="button">Low</button>
-				<button id="btn_InternalFanHigh" type="button">High</button></br>
-				
+				<button id="btn_InternalFanHigh" type="button">High</button></br>				
 				<b>Exhaust fan:</b>
+				<form>
+					<label><input type="checkbox" name="check_AutoExhaustFan">Automatic. Off humidity:</label>
+					<input style="width: 35px;" min=0 max=99 name="num_ExhaustFanOffHumid" type="number"/>
+					<input type="submit" value="Set">
+				</form>
+				<form>	
+					Low:<input style="width: 35px;" min=0 max=99 name="num_ExhaustFanLowHumid" type="number"/>
+					High:<input style="width: 35px;" min=0 max=99 name="num_ExhaustFanHighHumid" type="number"/>
+					<input type="submit" value="Set">
+				</form>
 				<button id="btn_ExhaustFanOff" type="button">OFF</button>
 				<button id="btn_ExhaustFanLow" type="button">Low</button>
 				<button id="btn_ExhaustFanHigh" type="button">High</button> 					
@@ -136,24 +150,10 @@
 				<input type="range" name="slider_Brightness" min="0" max="100" oninput="this.form.num_Brightness.value=this.value">
 				<input type="submit" value="Set">				
 				</form>				
-				<b>Timer</b><form><label><input type="checkbox" name="check_TimerEnabled">Enabled </label><input type="submit" value="Set"></form>
+				<b>Timer</b>
+				<form><label><input type="checkbox" name="check_TimerEnabled">Enabled </label><input type="submit" value="Set"></form>
 				<form>Turn ON : <input style="width: 35px;" min=0 max=23 name="num_LightsOnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="num_LightsOnMinute" type="number"/> <input type="submit" value="Set"></form>
 				<form>Turn OFF:<input style="width: 35px;" min=0 max=23 name="num_LightsOffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="num_LightsOffMinute" type="number"/> <input type="submit" value="Set"></form>
-			</div>
-			<div class="card" style="width:90%">
-				<h1>Reservoir</h1>
-				<table class="tg">
-				  <tr>
-					<th class="headerRows"><span style="font-weight:bold">Level</span></th>	
-					<th class="headerRows"><span style="font-weight:bold">PH</span></th>
-					<!--<th class="headerRows"><span style="font-weight:bold"></span></th>-->					
-				  </tr>
-				  <tr>
-					<td id="tdReservoir" class="dataRows"></td>
-					<td id="tdPH" class="dataRows"></td>
-					<!--<td id="tdLastRefill" class="dataRows"></td>-->
-				  </tr>
-				 </table> 
 			</div>
 		</div> 
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
@@ -195,7 +195,22 @@
 					Duration: <input style="width: 40px;" min=0 name="num_AeroDuration" type="number"/> sec
 					<input type="submit" value="Set">	
 				</form>											
-			</div>			
+			</div>	
+			<div class="card" style="width:90%">
+				<h1>Reservoir</h1>
+				<table class="tg">
+				  <tr>
+					<th class="headerRows"><span style="font-weight:bold">Level</span></th>	
+					<th class="headerRows"><span style="font-weight:bold">PH</span></th>
+					<!--<th class="headerRows"><span style="font-weight:bold"></span></th>-->					
+				  </tr>
+				  <tr>
+					<td id="tdReservoir" class="dataRows"></td>
+					<td id="tdPH" class="dataRows"></td>
+					<!--<td id="tdLastRefill" class="dataRows"></td>-->
+				  </tr>
+				 </table> 
+			</div>
 			<div class="card" style="width:90%">
 				<h1>Logs</h1>
 				<ul id="list_SerialLog"></ul>
@@ -206,7 +221,8 @@
 				<h1>Settings<button style="height:32px;width:32px;border-radius:0;"  id="btn_Ee" type="button"><img style="padding:0px;height:28px;width:28px;" src="https://sites.google.com/site/growboxguy/home/gbox420.png" /></button></h1>
 				<form>Backlight: Min<input style="width:100px;" type="range" name="slider_DigitDisplayBrightness" min="0" max="100"/>Max <input type="submit" value="Set"></form>
 				<form><label><input type="checkbox" name="check_SoundEnabled">Sound enabled </label><input type="submit" value="Set"></form>	
-				<button id="btn_SaveSettings" type="button" title="Force saving settings to EEPROM, runs automatically after a change">Save settings</button></br>							
+				<button id="btn_SaveSettings" type="button" title="Force saving settings to EEPROM, runs automatically after a change">Save settings</button>
+				<button id="btn_AlertTest" type="button" title="Trigger a test alert email">Alert Email</button></br>				
 			</div>			
 		</div>		
 	</div>

@@ -84,25 +84,7 @@ void mqttReceived(void* response) {
 
 void mqttPublush(bool AddToLog){ //publish readings in JSON format
   if(AddToLog)addToLog(F("Reporting to MQTT"));
-  memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
-  strcat_P(WebMessage,(PGM_P)F("{\"BoxDate\":\""));  strcat(WebMessage,getFormattedTime());
-  strcat_P(WebMessage,(PGM_P)F("\",\"BoxTempC\":\""));  strcat(WebMessage,toText(BoxTempC));
-  strcat_P(WebMessage,(PGM_P)F("\",\"BoxTempF\":\""));  strcat(WebMessage,toText(BoxTempF));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Humidity\":\""));  strcat(WebMessage,toText(Humidity));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Power\":\""));  strcat(WebMessage,toText(Power)); 
-  strcat_P(WebMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(WebMessage,toText(Energy));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(WebMessage,toText(Voltage));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Current\":\""));  strcat(WebMessage,toText(Current));
-  strcat_P(WebMessage,(PGM_P)F("\",\"PH\":\""));  strcat(WebMessage,toText(PH));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(WebMessage,toText(AeroPressure));
-  strcat_P(WebMessage,(PGM_P)F("\",\"isLightOn\":\""));  strcat(WebMessage,toText(MySettings.isLightOn));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Brightness\":\""));  strcat(WebMessage,toText(MySettings.LightBrightness));
-  strcat_P(WebMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(WebMessage,toText(LightReading));
-  strcat_P(WebMessage,(PGM_P)F("\",\"isBright\":\""));  strcat(WebMessage,toText(isBright));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(WebMessage,toText(reservoirPercent));
-  strcat_P(WebMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(true));
-  strcat_P(WebMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(false)); 
-  strcat_P(WebMessage,(PGM_P)F("\"}"));
+  logToJSON(false,false); //fills WebMessage global variable
   memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable
   strcat(MqttPath,MqttROOT);
   strcat(MqttPath,MqttPUBLISH);

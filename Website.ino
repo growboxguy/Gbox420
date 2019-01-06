@@ -18,7 +18,15 @@ void resetWebServer(void) {
 void LoadCallback(char * url) //called when website is loaded
 {
   //LogToSerials(F("LoadCB for URL: "),false); LogToSerials(url,true);
-  if (strcmp(url,"/GrowBox.html.json")==0){  
+  if (strcmp(url,"/GrowBox.html.json")==0){
+
+  WebServer.setArgBoolean(F("check_AutoInternalFan"), MySettings.automaticInternalFan);
+  WebServer.setArgString(F("num_InternalFanSwitchTemp"), toText(MySettings.internalFanSwitchTemp));
+  WebServer.setArgBoolean(F("check_AutoExhaustFan"), MySettings.automaticExhaustFan);
+  WebServer.setArgString(F("num_ExhaustFanHighHumid"), toText(MySettings.exhaustFanHighHumid));
+  WebServer.setArgString(F("num_ExhaustFanLowHumid"), toText(MySettings.exhaustFanLowHumid));
+  WebServer.setArgString(F("num_ExhaustFanOffHumid"), toText(MySettings.exhaustFanOffHumid));
+    
   WebServer.setArgBoolean(F("check_TimerEnabled"), MySettings.isTimerEnabled);
   WebServer.setArgInt(F("num_LightsOnHour"), MySettings.LightOnHour); 
   WebServer.setArgInt(F("num_LightsOnMinute"), MySettings.LightOnMinute); 
@@ -85,7 +93,7 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgString(F("tdReservoir"),reservoirText);
   WebServer.setArgString(F("tdPH"),toText(PH));  
 
-  WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON()); //Last events that happened in JSON format
+  WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON(false)); //Last events that happened in JSON format
   }
 }
 
@@ -94,26 +102,27 @@ void ButtonPressCallback(char *button)
 {
   //LogToSerials(button,true);  //for debugging: prints the button ID received from the website
   if (strcmp_P(button,(PGM_P)F("btn_LightOn"))==0) { turnLightON(true); }
-  else if (strcmp_P(button,(PGM_P)F("btn_LightOff"))==0) { turnLightOFF(true); }
-  else if (strcmp_P(button,(PGM_P)F("btn_LightCalibrate"))==0) {triggerCalibrateLights();}
-  else if (strcmp_P(button,(PGM_P)F("btn_PowersupplyOn"))==0) { powerSupplyOn();}
-  else if (strcmp_P(button,(PGM_P)F("btn_PowersupplyOff"))==0) { powerSupplyOff();}
-  else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { playEE(); }
   else if (strcmp_P(button,(PGM_P)F("btn_InternalFanOff"))==0) {internalFanOff();}
   else if (strcmp_P(button,(PGM_P)F("btn_InternalFanLow"))==0) { internalFanLow();}
   else if (strcmp_P(button,(PGM_P)F("btn_InternalFanHigh"))==0) {internalFanHigh(); }  
   else if (strcmp_P(button,(PGM_P)F("btn_ExhaustFanOff"))==0) { exhaustFanOff();}
   else if (strcmp_P(button,(PGM_P)F("btn_ExhaustFanLow"))==0) { exhaustFanLow();}
   else if (strcmp_P(button,(PGM_P)F("btn_ExhaustFanHigh"))==0) { exhaustFanHigh();}
-  else if (strcmp_P(button,(PGM_P)F("btn_GoogleSheets"))==0) { ReportToGoogleSheets(true);} 
-  else if (strcmp_P(button,(PGM_P)F("btn_Mqtt"))==0) { mqttPublush(true);}
-  else if (strcmp_P(button,(PGM_P)F("btn_SaveSettings"))==0) { saveSettings(true);}
+  else if (strcmp_P(button,(PGM_P)F("btn_PowersupplyOn"))==0) { powerSupplyOn();}
+  else if (strcmp_P(button,(PGM_P)F("btn_PowersupplyOff"))==0) { powerSupplyOff();}
+  else if (strcmp_P(button,(PGM_P)F("btn_LightOff"))==0) { turnLightOFF(true); }
+  else if (strcmp_P(button,(PGM_P)F("btn_LightCalibrate"))==0) {triggerCalibrateLights();}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayNow"))==0) { aeroSprayNow();}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayOff"))==0) { aeroSprayOff();}  
   else if (strcmp_P(button,(PGM_P)F("btn_PumpRefill"))==0) { aeroPumpRefill();}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpStop"))==0) { aeroPumpStop();}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpDisable"))==0) { aeroPumpDisable();}  
   else if (strcmp_P(button,(PGM_P)F("btn_PressureCalibrate"))==0) { calibratePressureSensor();}
+  else if (strcmp_P(button,(PGM_P)F("btn_GoogleSheets"))==0) { ReportToGoogleSheets(true);} 
+  else if (strcmp_P(button,(PGM_P)F("btn_Mqtt"))==0) { mqttPublush(true);}
+  else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { playEE(); }
+  else if (strcmp_P(button,(PGM_P)F("btn_SaveSettings"))==0) { saveSettings(true);}
+  else if (strcmp_P(button,(PGM_P)F("btn_AlertTest"))==0) { sendTestEmailAlert();}
   saveSettings(false); 
 }
 
@@ -121,7 +130,13 @@ void ButtonPressCallback(char *button)
 void SetFieldCallback(char * field){
   //LogToSerials(field,true);  //for debugging: prints the filed ID received from the website
   if(strcmp_P(field,(PGM_P)F("slider_Brightness"))==0) {setBrightness(WebServer.getArgInt(),true);}
-  else if(strcmp_P(field,(PGM_P)F("slider_DigitDisplayBrightness"))==0) {setDigitDisplayBacklight(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("check_AutoInternalFan"))==0) {autoFanOnOff(WebServer.getArgBoolean(),true);}
+  else if(strcmp_P(field,(PGM_P)F("num_InternalFanSwitchTemp"))==0) {setInternalSwitchTemp(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("check_AutoExhaustFan"))==0) {autoFanOnOff(WebServer.getArgBoolean(),false);}
+  else if(strcmp_P(field,(PGM_P)F("num_ExhaustFanHighHumid"))==0) {setExhaustHighHumidity(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("num_ExhaustFanLowHumid"))==0) {setExhaustLowHumidity(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("num_ExhaustFanOffHumid"))==0) {setExhaustOffHumidity(WebServer.getArgInt());}
+  
   else if(strcmp_P(field,(PGM_P)F("check_TimerEnabled"))==0) {setTimerOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("check_SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("num_LightsOnHour"))==0) {setLightsOnHour(WebServer.getArgInt());}
@@ -140,6 +155,7 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("num_AeroQuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}  
   else if(strcmp_P(field,(PGM_P)F("check_AeroSprayEnabled"))==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("check_GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
-  else if(strcmp_P(field,(PGM_P)F("check_MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}  
+  else if(strcmp_P(field,(PGM_P)F("check_MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("slider_DigitDisplayBrightness"))==0) {setDigitDisplayBacklight(WebServer.getArgInt());}  
   saveSettings(false);
 } 

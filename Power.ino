@@ -27,12 +27,12 @@ void readPowerSensor(){
   Power = PowerSensor.power(PowerSensorIP);
   Energy = PowerSensor.energy(PowerSensorIP) / 1000;  //total power consumption in kWh
   if(PowerOK && Voltage < 0) {
-    sendEmailAlert(F("Main%20power%20loss"),F("AC%20input%20lost."));  //https://meyerweb.com/eric/tools/dencoder/  
+    sendEmailAlert(F("AC%20input%20lost")); 
     PowerOK = false;
     addToLog(F("AC Power lost"));
   }
   if(!PowerOK && Voltage > 0){
-    sendEmailAlert(F("Main%20power%20recovered"),F("AC%20input%20recovered."));  //https://meyerweb.com/eric/tools/dencoder/  
+    sendEmailAlert(F("AC%20input%20recovered")); 
     PowerOK = true;
     addToLog(F("AC Power revovered"));
   }

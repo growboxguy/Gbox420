@@ -1,8 +1,7 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter, automating ventilation
-//TODO: Pressure sensor calibration parameters to settign file as global constant
+//TODO: flow meter, Add PH meter raw reading to serial to help with calibration
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -160,7 +159,6 @@ void setup() {     // put your setup code here, to run once:
   PowerSensor.setAddress(PowerSensorIP); //start power meter
   calibrateLights();
   addToLog(F("Grow Box initialized"));
-  sendEmailAlert(F("Grow%20box%20(re)started"),F("Grow%20box%20(re)started%2C%20was%20it%20on%20purpose%3F"));
 
   //triger all threads at startup
   fiveSecRun(); //needs to run first to get sensor readings
@@ -172,6 +170,8 @@ void setup() {     // put your setup code here, to run once:
   Timer3.initialize(500);
   Timer3.attachInterrupt(processEspLink);
   Timer3.start();
+
+  sendEmailAlert(F("Grow%20box%20(re)started"));
 }
 
 void loop() {  // put your main code here, to run repeatedly:
@@ -245,12 +245,19 @@ void loadSettings(){
   LogToSerials(F("done"),true);
 }
 
-void sendEmailAlert(const __FlashStringHelper *title,const __FlashStringHelper *alert){ //Title and Alert need to be URL encoded: //Generate URL encoded strings: https://meyerweb.com/eric/tools/dencoder/
+void sendEmailAlert(const __FlashStringHelper *title){ //Title needs to be URL encoded: https://meyerweb.com/eric/tools/dencoder/
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable  
   strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,PushingBoxEmailAlertID); 
   strcat_P(WebMessage,(PGM_P)F("&Title=")); strcat_P(WebMessage,(PGM_P)title);
-  strcat_P(WebMessage,(PGM_P)F("&Alert=")); strcat_P(WebMessage,(PGM_P)alert);   
+  strcat_P(WebMessage,(PGM_P)F("&Log=")); logToJSON(false,true);  
   RestAPI.get(WebMessage);
+  //LogToSerials(WebMessage,true);
+}
+
+void sendTestEmailAlert()
+{
+  sendEmailAlert(F("Test%20alert"));   //Encode text to be URL compatible: https://meyerweb.com/eric/tools/dencoder/ 
+  addToLog(F("Test alert email sent")); 
 }
 
 time_t getNtpTime(){
@@ -264,7 +271,7 @@ time_t getNtpTime(){
   }
   if(NTPResponse == 0) {
     addToLog(F("NTP time sync failed"));
-    sendEmailAlert(F("NTP%20time%20sync%20failed"),F("Could%20not%20get%20current%20time%20from%20NTP%20server%2C%20retrying%20in%20an%20hour.%0ADefaulted%20to%2000%3A00%3A00%20Thursday%2C%201%20January%201970."));  //https://meyerweb.com/eric/tools/dencoder/  
+    sendEmailAlert(F("NTP%20time%20sync%20failed")); 
   }
   else LogToSerials(F("NTP time synchronized"),true);
   return NTPResponse;

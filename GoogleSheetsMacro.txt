@@ -1,119 +1,37 @@
-//Originally published by Mogsdad@Stackoverflow
-//Modified for jarkomdityaz.appspot.com
-//Modified for Hackster.io by Stephen Borsay
-//Modified for http://sites.google.com/site/growboxguy/
 /*
-PushingBox data structure:
-?BoxDate=$BoxDate$&BoxTempC=$BoxTempC$&BoxTempF=$BoxTempF$&Humidity=$Humidity$&Power=$Power$&Energy=$Energy$&Voltage=$Voltage$&Current=$Current$&PH=$PH$&Pressure=$Pressure$&isLightOn=$isLightOn$&Brightness=$Brightness$&LightReading=$LightReading$&isBright=$isBright$&Reservoir=$Reservoir$&InternalFan=$InternalFan$&ExhaustFan=$ExhaustFan$
+GrowBoxGuy - http://sites.google.com/site/growboxguy/
+Pushing JSON formatted data to Google Sheets
+
+PushingBox data structure: Passes a single Log parameter with a JSON value
+?Log=$Log$
 
 GET request query:
-https://script.google.com/macros/s/<gscript id>/exec?celData=data_here
+https://script.google.com/macros/s/<gscript id>/exec?Log={JSONData}
 ----------------------------------------------------------------------
-
-Received from Arduino in order:
-
-BoxDate
-BoxTempC
-BoxTempF
-Humidity
-Power
-Energy
-Voltage
-Current
-PH
-Pressure
-isLightOn
-Brightness
-LightReading
-isBright
-Reservoir
-InternalFan
-ExhaustFan
-
 */
 
-function doGet(e) { 
-  Logger.log( JSON.stringify(e) );  // view parameters
-
-  var result = 'Ok'; // assume success
-
-  if (e.parameter == undefined) {
-    result = 'No Parameters';
+function doGet(data) { 
+  
+   //Getting the spreadsheet to paste the new data into
+  var id = '1dyuQo6rRitBX5po_U_EWCAhOtFgooCg4iaDYG_ft8Cg';  //docs.google.com/spreadsheetURL/d
+  var sheetActive = SpreadsheetApp.openById(id);
+  var sheet = sheetActive.getSheetByName("Log");
+  
+  //Processing the passed JSON parameter
+  var Log = JSON.parse(data.parameter.Log)
+  var keys = Object.keys(Log)
+  var Header = [];
+  var Data = [];  
+  Header.push("LogDate");  //Add first column: the log`s received date
+  Data.push(Utilities.formatDate(new Date(), 'GMT+1', 'yyyy/MM/dd-HH:mm:ss'));  // Generate timestamp 
+  
+  //Add all other columns from the JSON
+  for (var i in keys){
+    Header.push(keys[i]);  //store the name of the variable
+    Data.push(Log[keys[i]]);  //store the value of the variable
   }
-  else {
-    var id = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';//docs.google.com/spreadsheetURL/d
-    var sheet = SpreadsheetApp.openById(id).getActiveSheet();
-    var newRow = sheet.getLastRow() + 1;
-    var rowData = [];
-    rowData[0] = Utilities.formatDate(new Date(), 'GMT-4', 'yyyy-MM-dd_HH:mm:ss');  // Timestamp in column A
-    
-    for (var param in e.parameter) {
-      Logger.log('In for loop, param='+param);
-      var value = stripQuotes(e.parameter[param]);
-      Logger.log(param + ':' + e.parameter[param]);
-      switch (param) {
- case 'BoxDate':
-          rowData[1] = value;
-          break;
-        case 'BoxTempC':
-          rowData[2] = value;
-          break;
-		 case 'BoxTempF':
-          rowData[3] = value;
-          break;
-        case 'Humidity':
-          rowData[4] = value;
-          break;
-        case 'Power':
-          rowData[5] = value;
-          break;
-        case 'Energy':
-          rowData[6] = value;
-          break;
-        case 'Voltage':
-          rowData[7] = value;
-          break;
-        case 'Current':
-          rowData[8] = value;
-          break;
-        case 'PH':
-          rowData[9] = value;
-          break;
-        case 'Pressure':
-          rowData[10] = value;
-          break;
-        case 'isLightOn':
-          rowData[11] = value;
-          break;
-        case 'Brightness':
-          rowData[12] = value;
-          break; 
-        case 'LightReading':
-          rowData[13] = value;
-          break; 
-        case 'isBright':
-          rowData[14] = value;
-          break; 
-        case 'Reservoir':
-          rowData[15] = value;
-          break;
-        case 'InternalFan':
-          rowData[16] = value;
-          break; 
-        case 'ExhaustFan':
-          rowData[17] = value;
-          break;
-        default:
-          result = "unsupported parameter";
-      }
-    }
-    Logger.log(JSON.stringify(rowData));
-    var newRange = sheet.getRange(newRow, 1, 1, rowData.length);
-    newRange.setValues([rowData]);
-  }
-  return ContentService.createTextOutput(result);
-}
-
-function stripQuotes( value ) {
-  return value.replace(/^["']|['"]$/g, "");
+  
+  //Insert new data into spreadsheet
+  sheet.getRange(1,1,1,Header.length).setValues([Header])  //Update the headers 
+  sheet.appendRow(Data) //insert new line to the bottom
 }

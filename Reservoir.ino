@@ -17,43 +17,43 @@ void checkReservoir(){
   if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && isWaterAboveFull) {
     reservoirPercent= 100;
     if(!ReservOK){
-      sendEmailAlert(F("Reservoir%20recovered"),F("Reservoir%20level%20reading%20recovered."));
+      sendEmailAlert(F("Reservoir%20OK"));
       ReservOK = true;
     } 
   }
   else if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && !isWaterAboveFull) {
     reservoirPercent= 75;
     if(!ReservOK){
-      sendEmailAlert(F("Reservoir%20recovered"),F("Reservoir%20level%20reading%20recovered."));
+      sendEmailAlert(F("Reservoir%20OK"));
       ReservOK = true;
     } 
   }
   else if(isWaterAboveCritical && isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) {
     reservoirPercent= 50;
     if(!ReservOK){
-      sendEmailAlert(F("Reservoir%20recovered"),F("Reservoir%20level%20reading%20recovered."));
+      sendEmailAlert(F("Reservoir%20OK"));
       ReservOK = true;
     } 
   }
   else if(isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) {
     reservoirPercent= 25;
     if(!ReservOK){
-      sendEmailAlert(F("Reservoir%20recovered"),F("Reservoir%20level%20reading%20recovered."));
+      sendEmailAlert(F("Reservoir%20OK"));
       ReservOK = true;
     }  
   }
   else if(!isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) {  
     reservoirPercent= 0;
     if(ReservOK){
-      sendEmailAlert(F("Reservoir%20empty"),F("Reservoir%20is%20empty%20and%20needs%20to%20be%20refilled."));
-      addToLog(F("Reservoir empty"));
+      sendEmailAlert(F("Reservoir%20is%20empty"));
+      addToLog(F("Reservoir is empty"));
       ReservOK = false;
     }    
   }
   else {    //non-valid sensor combination was read like E[#--#]F
     reservoirPercent= 0;
     if(ReservOK){
-      sendEmailAlert(F("Reservoir%20sensor%20failed"),F("Unexpected%20reservoir%20level%20reading%2C%20check%20the%20water%20sensors."));
+      sendEmailAlert(F("Reservoir%20sensor%20failed"));
       addToLog(F("Water sensor failed"));
       ReservOK = false;
     }    
@@ -72,11 +72,11 @@ void readPH(){
   PH = -0.031223*Reading + 23.376812;  //equation of the line
 
   if(!PhOK && ReservoirPHLowAlert <= PH && PH <= ReservoirPHHighAlert ){
-      sendEmailAlert(F("PH%20recovered"),F("Reservoir%20PH%20optimal."));
+      sendEmailAlert(F("PH%20OK"));
       PhOK = true;
   } 
   if(PhOK && (PH < ReservoirPHLowAlert || ReservoirPHHighAlert < PH )){
-      sendEmailAlert(F("PH%20out%20of%20range"),F("Reservoir%20PH%20not%20optimal."));
+      sendEmailAlert(F("Reservoir%20PH%20not%20optimal"));
       addToLog(F("Reservoir PH not optimal"));
       PhOK = false;
   }  

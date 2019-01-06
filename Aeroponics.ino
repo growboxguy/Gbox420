@@ -32,7 +32,7 @@ void checkAeroPump(){
     }
     if (millis() - AeroPumpTimer >= AeroPumpTimeout){ //have not reached high pressue within limit (15min)
       aeroPumpDisable();
-      sendEmailAlert(F("Aeroponics%20pump%20failed"),F("Aeroponics%20pump%20timed%20out%20during%20refill%20and%20got%20disabled.")); 
+      sendEmailAlert(F("Aeroponics%20pump%20failed")); 
       addToLog(F("Pump failed"));    
     }
   }
@@ -44,19 +44,19 @@ void checkAeroPump(){
   //Alert checking
     if(!AeroOK && AeroLowPressureAlert <=  AeroPressure && AeroPressure <= AeroHighPressureAlert){ //If pressure is between range
        AeroOK = true;
-       sendEmailAlert(F("Aeroponics%20pressure%20OK"),F("Pressure%20level%20recovered."));  //https://meyerweb.com/eric/tools/dencoder/  
+       sendEmailAlert(F("Aeroponics%20pressure%20OK")); 
     }
    if(AeroOK && AeroPressure > AeroHighPressureAlert){ //If set high alert pressure is reached
       aeroPumpOff(); //force pump off
       aeroSprayNow(); //try to release pressure
       AeroOK = false;
-      sendEmailAlert(F("Aeroponics%20pressure%20too%20high"),F("Pressure%20reached%20high%20alert%20limit.Pump%20stopped."));  //https://meyerweb.com/eric/tools/dencoder/ 
+      sendEmailAlert(F("Aeroponics%20pressure%20too%20high"));
       addToLog(F("High pressure warning"));
     }
    if(AeroOK && AeroPressure < AeroLowPressureAlert){ //If set low alert pressure is reached
       if(AeroPumpOK) aeroPumpOn(); //turn pump on even under quiet time
       AeroOK = false;
-      sendEmailAlert(F("Aeroponics%20pressure%20too%20low"),F("Pressure%20reached%20low%20alert%20limit.Pump%20started."));
+      sendEmailAlert(F("Aeroponics%20pressure%20too%20low"));
       addToLog(F("Low pressure warning"));
     }
 }
@@ -69,7 +69,7 @@ void readAeroPressure(){
   }
   Reading = Reading /50;
   float Voltage = ((float)Reading) * 5 / 1024 ;
-  AeroPressure = (2.7*(Voltage-AeroOffset)); // unit: bar / 100kPa
+  AeroPressure = (PressureSensorVoltageToPressure*(Voltage-PressureSensorOffset)); // unit: bar / 100kPa
   AeroPressurePSI = AeroPressure * 14.5038; 
 }
 

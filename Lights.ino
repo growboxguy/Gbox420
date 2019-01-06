@@ -54,16 +54,16 @@ void checkLightSensor(){
   LightReading = 1023 - analogRead(LightSensorAnalogInPin);
   LightReadingPercent = map(LightReading,MinLightReading,MaxLightReading,0,100);
   if((MySettings.isLightOn && isBright) || (!MySettings.isLightOn && !isBright)){
-    if(!LightOK) sendEmailAlert(F("Lights OK"),F("Lights%20status%20recovered."));  //https://meyerweb.com/eric/tools/dencoder/  
+    if(!LightOK) sendEmailAlert(F("Lights%20OK")); 
     LightOK = true; //everything OK: if lights are ON light is detected, when OFF no light is detected
   }
   if(MySettings.isLightOn && !isBright && LightOK){ //if light should be ON but no light is detected and the light was OK before
-    sendEmailAlert(F("No%20light%20detected"),F("No%20light%20was%20detected%20when%20lights%20should%20be%20ON."));  //https://meyerweb.com/eric/tools/dencoder/  
+    sendEmailAlert(F("No%20light%20detected")); 
     LightOK = false;
     addToLog(F("Lights ON, no light detected"));
   }
   if(!MySettings.isLightOn && isBright && LightOK){ //if light should be ON but no light is detected and the light was OK before
-    sendEmailAlert(F("Dark%20period%20interrupted"),F("Light%20was%20detected%20when%20lights%20should%20be%20OFF."));  //https://meyerweb.com/eric/tools/dencoder/  
+    sendEmailAlert(F("Dark%20period%20interrupted")); 
     LightOK = false;
     addToLog(F("Dark period interrupted"));
   }
@@ -121,13 +121,13 @@ void runToEnd(){  //Goes to Minimum or Maximum dimming, measure light intensity 
     LightReading = 1023 - analogRead(LightSensorAnalogInPin);
     if(LightReading > MaxLightReading) MaxLightReading = LightReading;
     if(LightReading < MinLightReading) MinLightReading = LightReading;
-    if(StepCounter % 10 == 0)  //modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
-      {  
-       if(isPotGettingHigh)LogToSerials(StepCounter,false);
-       else LogToSerials(PotStepping - StepCounter,false);
-       LogToSerials(F("% - "),false); LogToSerials(LightReading,true);
-      }  
-     StepCounter++;
+    //if(StepCounter % 10 == 0)  //prints measured light intensity every 10% using modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
+     // {  
+      // if(isPotGettingHigh)LogToSerials(StepCounter,false);
+      // else LogToSerials(PotStepping - StepCounter,false);
+      // LogToSerials(F("% - "),false); LogToSerials(LightReading,true);
+     // }  
+    StepCounter++;
   }
   isPotGettingHigh= !isPotGettingHigh;  // flip the direction for he next run
 }
