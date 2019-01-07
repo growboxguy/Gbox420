@@ -2,7 +2,7 @@
 char MqttPath[64];  //buffer
 
 //Global constants
-const char* MqttROOT = "growboxguy@gmail.com/";
+const char* MqttROOT = "/growboxguy@gmail.com/";
 const char* MqttPUBLISH = "Gbox420";
 const char* MqttLwtTopic = "LWT";  //When the connection is lost the MQTT broker will publish a final message to this topic
 const char* MqttLwtMessage = "Gbox420 Offline"; //this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the box goes offline
@@ -82,6 +82,9 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttPumpRefill)!=NULL) { aeroPumpRefill();}
   else if(strstr(topic,MqttPumpDisable)!=NULL) { aeroPumpDisable();}  
   else if(strstr(topic,MqttPressureCalibrate)!=NULL) { calibratePressureSensor();}
+
+  mqttPublush(false); //send out a fresh report
+  
 }
 
 void mqttPublush(bool AddToLog){ //publish readings in JSON format

@@ -98,11 +98,11 @@ void updateDisplay() { //Cycles through the different values
 void setDigitDisplayBacklight(int Backlight){
   MySettings.DigitDisplayBacklight=Backlight;
   DigitDisplay.setBacklight(MySettings.DigitDisplayBacklight);
-  addToLog(F("DigitDisplay brightness set"));
+  addToLog(F("Digit display brightness set"));
 }
 
 void setDigitDisplayValue(int Value){
   MySettings.DigitDisplayValue=Value;
   if(Value<0)addToLog(F("DigitDisplay cycle ON"));
-  else addToLog(F("DigitDisplay locked"));
+  else addToLog(F("Digit display locked"));
 }

@@ -221,11 +221,8 @@
 				<h1>Settings<button style="height:32px;width:32px;border-radius:0;"  id="btn_Ee" type="button"><img style="padding:0px;height:28px;width:28px;" src="https://sites.google.com/site/growboxguy/home/gbox420.png" /></button></h1>
 				<form><label><input type="checkbox" name="check_SoundEnabled">Sound enabled </label><input type="submit" value="Set"></form>
 				<b>Digit display</b>
-				<form>
-				Backlight: Min<input style="width:100px;" type="range" name="slider_DigitDisplayBrightness" min="0" max="100"/>Max </br>
-				Lock to value: <input style="width: 35px;" min=-1 max=17 name="num_DigitDisplayValue" type="number" step="1"/>
-				<input type="submit" value="Set">
-				</form>					
+				<form>Backlight: Min<input style="width:100px;" type="range" name="slider_DigitDisplayBrightness" min="0" max="100"/>Max <input type="submit" value="Set"></form>
+				<form>Lock to value: <input style="width: 35px;" min=-1 max=17 name="num_DigitDisplayValue" type="number" step="1"/><input type="submit" value="Set"></form>					
 				<button id="btn_SaveSettings" type="button" title="Force saving settings to EEPROM, runs automatically after a change">Save settings</button>
 				<button id="btn_AlertTest" type="button" title="Trigger a test alert email">Alert Email</button></br>				
 			</div>			
