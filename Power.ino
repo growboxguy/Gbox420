@@ -27,13 +27,19 @@ void readPowerSensor(){
   Power = PowerSensor.power(PowerSensorIP);
   Energy = PowerSensor.energy(PowerSensorIP) / 1000;  //total power consumption in kWh
   if(PowerOK && Voltage < 0) {
-    sendEmailAlert(F("AC%20input%20lost")); 
-    PowerOK = false;
-    addToLog(F("AC Power lost"));
+    PowerAlertCount++;
+    if(PowerAlertCount>=ReadCountBeforeAlert){
+      sendEmailAlert(F("AC%20input%20lost")); 
+      PowerOK = false;
+      addToLog(F("AC Power lost"));
+    }
   }
-  if(!PowerOK && Voltage > 0){
-    sendEmailAlert(F("AC%20input%20recovered")); 
-    PowerOK = true;
-    addToLog(F("AC Power revovered"));
+  if(Voltage > 0){
+    PowerAlertCount = 0;
+    if(!PowerOK){
+      sendEmailAlert(F("AC%20input%20recovered"));
+      PowerOK = true;
+      addToLog(F("AC Power recovered")); 
+    }    
   }
 }

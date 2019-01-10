@@ -15,49 +15,48 @@ void checkReservoir(){
 
   //Get number representation of reservoir level and send out email alerts: From 0-empty to 4-full
   if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && isWaterAboveFull) {
-    reservoirLevel= 4;
-    if(!ReservOK){
-      sendEmailAlert(F("Reservoir%20OK"));
-      ReservOK = true;
-    } 
+    reservoirLevel= 4;    
   }
   else if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && !isWaterAboveFull) {
     reservoirLevel= 3;
-    if(!ReservOK){
-      sendEmailAlert(F("Reservoir%20OK"));
-      ReservOK = true;
-    } 
   }
   else if(isWaterAboveCritical && isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) {
-    reservoirLevel= 2;
-    if(!ReservOK){
-      sendEmailAlert(F("Reservoir%20OK"));
-      ReservOK = true;
-    } 
+    reservoirLevel= 2; 
   }
   else if(isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) {
     reservoirLevel= 1;
-    if(!ReservOK){
-      sendEmailAlert(F("Reservoir%20OK"));
-      ReservOK = true;
-    }  
   }
   else if(!isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) {  
-    reservoirLevel= 0;
-    if(ReservOK){
-      sendEmailAlert(F("Reservoir%20is%20empty"));
-      addToLog(F("Reservoir is empty"));
-      ReservOK = false;
-    }    
+    reservoirLevel= 0;  
   }
   else {    //non-valid sensor combination was read like E[#--#]F
-    reservoirLevel= -1;
-    if(ReservOK){
-      sendEmailAlert(F("Reservoir%20sensor%20failed"));
-      addToLog(F("Water sensor failed"));
-      ReservOK = false;
-    }    
+    reservoirLevel= -1;     
   }
+  checkReservoirAlert();
+}
+
+void checkReservoirAlert(){
+  if(reservoirLevel > 0){
+      ReservoirAlertCount = 0;
+      if(!ReservOK){
+        sendEmailAlert(F("Reservoir%20OK"));
+        ReservOK = true;
+      }
+  }
+  if(ReservOK && reservoirLevel <= 0){
+    ReservoirAlertCount++;
+    if(ReservoirAlertCount>=ReadCountBeforeAlert){
+      ReservOK = false;
+      if(reservoirLevel == 0){
+        sendEmailAlert(F("Reservoir%20is%20empty"));
+        addToLog(F("Reservoir is empty"));
+      }
+      else{
+        sendEmailAlert(F("Reservoir%20sensor%20failed"));
+        addToLog(F("Water sensor failed"));
+      }
+     }
+   }
 }
 
 //***PH METER***
@@ -68,15 +67,26 @@ void readPH(){
    delay(25);
   }
   PHRaw = Reading /40; //Calculates average
-  PH = PHCalibrationSlope*PHRaw + PHCalibrationIntercept;  //equation of the line
+  PH = PHCalibrationSlope*PHRaw + PHCalibrationIntercept;  //equation of the line  
+  checkPHAlert();
+}
 
-  if(!PhOK && ReservoirPHLowAlert <= PH && PH <= ReservoirPHHighAlert ){
-      sendEmailAlert(F("PH%20OK"));
-      PhOK = true;
+void checkPHAlert(){
+  if(MySettings.PHAlertLow <= PH && PH <= MySettings.PHAlertHigh ){
+      PHAlertCount = 0;
+      if(!PhOK){
+        sendEmailAlert(F("PH%20OK"));
+        PhOK = true;
+      }
   } 
-  if(PhOK && (PH < ReservoirPHLowAlert || ReservoirPHHighAlert < PH )){
-      sendEmailAlert(F("Reservoir%20PH%20not%20optimal"));
-      addToLog(F("Reservoir PH not optimal"));
-      PhOK = false;
-  }  
+  else{
+    if(PhOK){
+      PHAlertCount++;
+      if(PHAlertCount>=ReadCountBeforeAlert){
+        sendEmailAlert(F("Reservoir%20PH%20not%20optimal"));
+        addToLog(F("Reservoir PH not optimal"));
+        PhOK = false;
+      }
+    }    
+  }    
 }

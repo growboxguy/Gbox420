@@ -1,13 +1,13 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter
+//TODO: flow meter, remove separate email alert checkbox: add one global
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
   #include "420Settings.h" //Load settings file
   #include "avr/wdt.h" //Watchdog timer
-  #include "Thread.h"  //Splitting functions to threads
+  #include "Thread.h"  //Splitting functions to threads for timing
   #include "StaticThreadController.h"  //Grouping threads
   #include "TimerThree.h"  //Interrupt handling for webpage
   #include "DHT.h"  //DHT11 or DHT22 Digital Humidity and Temperature sensor
@@ -21,18 +21,24 @@
   #include "ELClientMqtt.h" //ESP-link - MQTT protocol for sending and receiving IoT messages
   #include "TimeLib.h" //Keeping track of time
   #include "SPI.h" //TFT Screen - communication
-  #include "Adafruit_ILI9341.h" //TFT Screen - hardware specific driver
   #include "Adafruit_GFX.h" //TFT Screen - generic graphics driver
+  #include "Adafruit_ILI9341.h" //TFT Screen - hardware specific driver
   //#include "MemoryFree.h" //checking for remaining memory - only for debugging
 
 //Global variables
   bool LightOK = true; //Track component health, at startup assume every component is OK
-  bool AeroOK = true;  //Aeroponics - Pressure within range
-  bool AeroPumpOK = true; //Aeroponics - High pressure pump health
+  bool PressureOK = true;  //Aeroponics - Pressure within range
+  bool PumpOK = true; //Aeroponics - High pressure pump health
   bool PowerOK = true; 
   bool VentOK = true;
   bool ReservOK = true;
-  bool PhOK = true;
+  bool PhOK = true;  
+  byte LightsAlertCount = 0;
+  byte PressureAlertCount = 0;
+  byte PowerAlertCount = 0;
+  byte VentilationAlertCount = 0;
+  byte ReservoirAlertCount = 0;
+  byte PHAlertCount = 0;
   float BoxTempC; // stores Temperature - Celsius
   float BoxTempF; // stores Temperature - Fahrenheit
   float Humidity; // stores relative humidity - %
@@ -43,7 +49,6 @@
   float PHRaw; //PH meter reading 
   float PH; //PH meter calculated value  
   int LightReading;  //light sensor analog reading
-  byte LightReadingPercent;  //Compared to calibrated min/max values what is the detected light level %
   bool isBright;  //Ligth sensor feedback: True-Bright / False-Dark
   bool isPotGettingHigh = false;  // Digital potentiometer direction, false: Decrease , true: Increase 
   byte reservoirLevel =4;
@@ -111,7 +116,6 @@ void setup() {     // put your setup code here, to run once:
   pinMode(DigitDisplayCLKOutPin, OUTPUT);
   pinMode(DigitDisplayDI0OutPin, OUTPUT);  
   pinMode(PowerLEDOutPin, OUTPUT);
-  //pinMode(HddLEDOutPin, OUTPUT);
   pinMode(PowerButtonInPin, INPUT_PULLUP);
   pinMode(PotCSOutPin, OUTPUT);
   pinMode(PotUDOutPin, OUTPUT);
@@ -139,7 +143,7 @@ void setup() {     // put your setup code here, to run once:
   ESPLink.Process();
   setSyncProvider(getNtpTime); //points to method for updating time from NTP server
   setSyncInterval(3600); //Sync time every hour
-  setupMqtt();
+  setupMqtt();  //logs ConnectedCB is XXXX to serial
  
   //Threading
   OneSecThread.setInterval(1000);
@@ -158,6 +162,7 @@ void setup() {     // put your setup code here, to run once:
   DigitDisplay.begin(); //start 4 digit LED display
   DigitDisplay.setBacklight(MySettings.DigitDisplayBacklight); //set 4 digit LED display backlight intensity
   PowerSensor.setAddress(PowerSensorIP); //start power meter
+  LogToSerials(F("Calibrating lights..."),false);
   calibrateLights();
   addToLog(F("Grow Box initialized"));
 
@@ -233,7 +238,7 @@ void saveSettings(bool AddToLog){ //do not put this in the loop, EEPROM has a wr
 }
 
 void loadSettings(){
-  settings EEPROMSettings; //temporary storage with "settings" type
+  Settings EEPROMSettings; //temporary storage with "settings" type
   eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
   if(EEPROMSettings.StructureVersion != MySettings.StructureVersion){
     LogToSerials(F("Change detected, updating EEPROM..."),false);
@@ -244,21 +249,6 @@ void loadSettings(){
     MySettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
   }
   LogToSerials(F("done"),true);
-}
-
-void sendEmailAlert(const __FlashStringHelper *title){ //Title needs to be URL encoded: https://meyerweb.com/eric/tools/dencoder/
-  memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable  
-  strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,PushingBoxEmailAlertID); 
-  strcat_P(WebMessage,(PGM_P)F("&Title=")); strcat_P(WebMessage,(PGM_P)title);
-  strcat_P(WebMessage,(PGM_P)F("&Log=")); logToJSON(false,true);  
-  RestAPI.get(WebMessage);
-  if(debug)LogToSerials(WebMessage,true);
-}
-
-void sendTestEmailAlert()
-{
-  sendEmailAlert(F("Test%20alert"));   //Encode text to be URL compatible: https://meyerweb.com/eric/tools/dencoder/ 
-  addToLog(F("Test alert email sent")); 
 }
 
 time_t getNtpTime(){

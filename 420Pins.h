@@ -4,7 +4,6 @@
   const byte BuzzerOutPin = 4; //PC speaker+ (red)
   const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
   const byte PowerLEDOutPin = 46;  //PC case Power LED
-  //const byte HddLEDOutPin = 47; //PC case HDD LED - rewired to ESP chip`s wifi status pin
   const byte PowerButtonInPin = 49;  //Power button 
   const byte LightSensorInPin = 36; //D0 - LM393 light sensor                                                                                                              
   const byte LightSensorAnalogInPin = A0; //A0 - LM393 light sensor

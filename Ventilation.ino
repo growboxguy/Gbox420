@@ -7,19 +7,28 @@ void readDHTSensor(){
 }
 
 void checkDHTAlerts(){
-  if(!VentOK && AlertLowTemp < BoxTempC  && BoxTempC < AlertHighTemp && AlertLowHumidity < Humidity  && Humidity < AlertHighHumidity){ //alert was active, but readings are back to normal
-    sendEmailAlert(F("Ventillation%20OK")); 
-    VentOK = true; //everything OK
+  if(!isnan(BoxTempC) && !isnan(Humidity) && MySettings.TempAlertLow <= BoxTempC  && BoxTempC <= MySettings.TempAlertHigh && MySettings.HumidityAlertLow <= Humidity  && Humidity <= MySettings.HumidityAlertHigh){ //readings are normal
+    VentilationAlertCount = 0;
+    if(!VentOK){ ////alert was active before
+      sendEmailAlert(F("Temp%20and%20Humidity%20OK")); 
+      VentOK = true; //everything OK
+    }
   }
-  if(VentOK && (isnan(BoxTempC) || BoxTempC < AlertLowTemp ||  AlertHighTemp < BoxTempC)){ //if temp out of limits, isnan-Returns true if float is Not A Numeber: DHT library returns NAN if the value cannot be read
-    sendEmailAlert(F("Temperature%20out%20of%20range")); 
-    VentOK = false;
-    addToLog(F("Temperature alert triggered"));
-  }
-  if(VentOK && (isnan(Humidity) || Humidity < AlertLowHumidity ||  AlertHighHumidity < Humidity)){ //if temp out of limits
-    sendEmailAlert(F("Humidity%20out%20of%20range")); 
-    VentOK = false;
-    addToLog(F("Humidity alert triggered"));
+  else {
+    if(VentOK){
+      VentilationAlertCount++;
+      if(VentilationAlertCount>=ReadCountBeforeAlert){
+        VentOK = false;
+        if(isnan(BoxTempC) || BoxTempC < MySettings.TempAlertLow ||  MySettings.TempAlertHigh < BoxTempC){ //if temp out of limits, isnan-Returns true if float is Not A Numeber: DHT library returns NAN if the value cannot be read
+        sendEmailAlert(F("Temperature%20out%20of%20range"));     
+        addToLog(F("Temperature alert triggered"));
+        }
+        if(isnan(Humidity) || Humidity < MySettings.HumidityAlertLow ||  MySettings.HumidityAlertHigh < Humidity){ //if temp out of limits
+        sendEmailAlert(F("Humidity%20out%20of%20range")); 
+        addToLog(F("Humidity alert triggered"));
+        }    
+      }
+     }
   }
 }
 

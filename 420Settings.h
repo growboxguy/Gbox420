@@ -1,30 +1,23 @@
 //Default settings of the grow box
 
 //Global constants
-  const bool debug = false;
+  const bool debug = false; //Logs debug messages to serial and web outputs 
   const char PushingBoxLogRelayID[]= "v755877CF53383E1"; //UPDATE THIS to your PushingBox logging scenario`s DeviceID  
-  const char PushingBoxEmailAlertID[]  = "vC5244859A2453AA";  //UPDATE THIS to your PushingBox email alert scenario`s DeviceID 
+  const char PushingBoxEmailRelayID[]  = "vC5244859A2453AA";  //UPDATE THIS to your PushingBox email alert scenario`s DeviceID 
   const byte PotStepping = 100;  // Digital potentiometer adjustment steps
   const byte ScreenRotation = 1;  //LCD screen rotation: 1,3:landscape 2,4:portrait
-  const float AeroLowPressureAlert = 3.0; //Low pressure warning
-  const float AeroHighPressureAlert = 7.5; //High pressure warning  
   const unsigned long AeroPumpTimeout = 600000;  // Aeroponics - Max pump run time (10minutes)
   const float PressureSensorOffset = 0.58;  //Pressure sensor voltage reading at 0 pressure
   const float PressureSensorVoltageToPressure = 2.7; //Pressure sensor voltage to pressure ratio
   const float PHCalibrationSlope = -0.033256;  //Update this to your own PH meter calibration values
   const float PHCalibrationIntercept = 24.08651;  //Update this to your own PH meter calibration values
-  const float ReservoirPHLowAlert = 5.5; //Low pressure warning
-  const float ReservoirPHHighAlert = 6.8; //High pressure warning
-  const int AlertLowTemp = 15; //Low temp warning email
-  const int AlertHighTemp = 35; //High temp warning email
-  const int AlertLowHumidity = 35; //Low humidity warning email
-  const int AlertHighHumidity = 75; //High humidity warning email
+  const byte ReadCountBeforeAlert = 5; //number of consecutive out of range sensor readings for the alert to trigger
   const byte LogDepth = 8;  //Show X log entries on website
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
     
 //Settings saved to EEPROM persistent storage
-  byte Version= 5; //increment this when you update the test values or change the stucture to invalidate the EEPROM stored settings
-  struct SettingsStructure //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
+  byte Version= 1; //increment this when you update the test values or change the stucture to invalidate the EEPROM stored settings
+  typedef struct //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   byte AeroInterval = 15; //Aeroponics - Spray every 15 minutes
   byte AeroDuration = 2; //Aeroponics - Spray for 5 secondsf
@@ -59,13 +52,22 @@
   bool isPCPowerSupplyOn = true;  //Startup status for PC power supply: True-ON / False-OFF, default:ON
   
   bool ReportToGoogleSheets = true;
-  bool ReportToMqtt = true;
+  bool ReportToMqtt = true;   
   
   byte DigitDisplayBacklight = 25; //4 digit display - backlight strenght (0-100)
   int DigitDisplayValue = -1; //select which screen to display(0-15), -1 cycles through all screens
   bool isSoundEnabled = true;  //Enable PC speaker  
-  byte StructureVersion = Version;
-  };
+ 
+  bool AlertEmails = true; //completely disable/enable email sending  
+  int TempAlertLow = 15; //Low temp warning email
+  int TempAlertHigh = 35; //High temp warning email
+  int HumidityAlertLow = 35; //Low humidity warning email
+  int HumidityAlertHigh = 75; //High humidity warning email
+  float PressureAlertLow = 3.0; //Low pressure warning
+  float PressureAlertHigh = 7.5; //High pressure warning  
+  float PHAlertLow = 5.5; //Low pressure warning
+  float PHAlertHigh = 6.8; //High pressure warning
 
-  typedef struct SettingsStructure settings;  //create the "settings" type using the stucture
-  settings MySettings;  //create a variable of type "settings"  with default values from SettingsStructure
+  byte StructureVersion = Version;  
+  } Settings;  //New type called: Settings
+  Settings MySettings;  //create a variable of type "Settings"  with default values from the struct

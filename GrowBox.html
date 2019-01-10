@@ -20,12 +20,12 @@
 	</style>	
 	<div class="pure-g">
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
-		<div class="card" style="width:90%">	
-				<h1>Status</h1>	
+			<div class="card" style="width:90%">	
+				<h1>Status<button style="height:32px;width:32px;border-radius:0;"  id="btn_Ee" type="button"><img style="padding:0px;height:28px;width:28px;" src="https://sites.google.com/site/growboxguy/home/gbox420.png" /></button></h1>
 				<table class="tg">				  
 				  <tr>
 				    <td class="headerRows"><span style="font-weight:bold">Lights</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Aero</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Pressure</span></td>
 					<td class="headerRows"><span style="font-weight:bold">Pump</td>
 					<td class="headerRows"><span style="font-weight:bold">Power</td>
 					<td class="headerRows"><span style="font-weight:bold">Vent</td>
@@ -34,60 +34,15 @@
 				  </tr>	
 				  <tr>
 					<td id="tdLightOK" class="dataRows"></td>
-					<td id="tdAeroOK" class="dataRows"></td>
-					<td id="tdAeroPumpOK" class="dataRows"></td>
+					<td id="tdPressureOK" class="dataRows"></td>
+					<td id="tdPumpOK" class="dataRows"></td>
 					<td id="tdPowerOK" class="dataRows"></td>
 					<td id="tdVentOK" class="dataRows"></td>
 					<td id="tdReservOK" class="dataRows"></td>
 					<td id="tdPhOK" class="dataRows"></td>
 				  </tr>					  
-				</table>									
-			</div>		
-			<div class="card" style="width:90%">
-				<h1>Box</h1>		
-				<table class="tg">				  
-				  <tr>
-				    <td class="headerRows"><span style="font-weight:bold">Last refresh</span><br><span>(yyyy/MM/dd)</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Temp</span><br><span>(°C/°F)</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Humidity</span><br><span>(RH%)</span></td>
-				  </tr>
-				  <tr>
-					<td id="tdTime" class="dataRows"></td>
-					<td id="tdBoxTemp" class="dataRows"></td>
-					<td id="tdHumidity" class="dataRows"></td>
-				  </tr>				  
-				  <tr>
-					<td class="headerRows"><span style="font-weight:bold">Internal fan</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Exhaust fan</span></td>
-				  </tr>
-				  <tr>
-					<td id="tdInternalFanSpeed" class="dataRows"></td>
-					<td id="tdExhaustFanSpeed" class="dataRows"></td>
-				  </tr>				  
 				</table>
-				<b>Internal fan :</b>
-				<form>
-					<label><input type="checkbox" name="check_AutoInternalFan">Automatic low/high at: </label>
-					<input style="width: 35px;" min=10 max=50 name="num_InternalFanSwitchTemp" type="number"/><span> °C</span>
-					<input type="submit" value="Set">
-				</form>
-				<button id="btn_InternalFanOff" type="button">OFF</button>
-				<button id="btn_InternalFanLow" type="button">Low</button>
-				<button id="btn_InternalFanHigh" type="button">High</button></br>				
-				<b>Exhaust fan:</b>
-				<form>
-					<label><input type="checkbox" name="check_AutoExhaustFan">Automatic. Off humidity:</label>
-					<input style="width: 35px;" min=0 max=99 name="num_ExhaustFanOffHumid" type="number"/>
-					<input type="submit" value="Set">
-				</form>
-				<form>	
-					Low:<input style="width: 35px;" min=0 max=99 name="num_ExhaustFanLowHumid" type="number"/>
-					High:<input style="width: 35px;" min=0 max=99 name="num_ExhaustFanHighHumid" type="number"/>
-					<input type="submit" value="Set">
-				</form>
-				<button id="btn_ExhaustFanOff" type="button">OFF</button>
-				<button id="btn_ExhaustFanLow" type="button">Low</button>
-				<button id="btn_ExhaustFanHigh" type="button">High</button> 					
+				<ul id="list_SerialLog"></ul>	
 			</div>
 			<div class="card" style="width:90%">
 				<h1>Power</h1>
@@ -112,11 +67,59 @@
 					<td id="tdCurrent" class="dataRows"></td>
 					<!--<td id="tdUnSpecified2" class="dataRows"></td>-->
 				  </tr>
-				 </table>
+				 </table><br>
 				<b>12V supply:</b>
 				<button id="btn_PowersupplyOn" type="button">Turn ON</button>
 				<button id="btn_PowersupplyOff" type="button">Turn OFF</button>			
+			</div>			
+			<div class="card" style="width:90%">
+				<h1>Box</h1>		
+				<table class="tg">				  
+				  <tr>
+				    <td class="headerRows"><span style="font-weight:bold">Last refresh</span><br><span>(yyyy/MM/dd)</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Temp</span><br><span>(°C/°F)</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Humidity</span><br><span>(RH%)</span></td>
+				  </tr>
+				  <tr>
+					<td id="tdTime" class="dataRows"></td>
+					<td id="tdBoxTemp" class="dataRows"></td>
+					<td id="tdHumidity" class="dataRows"></td>
+				  </tr>				  
+				  <tr>
+					<td class="headerRows"><span style="font-weight:bold">Internal fan</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Exhaust fan</span></td>
+				  </tr>
+				  <tr>
+					<td id="tdInternalFanSpeed" class="dataRows"></td>
+					<td id="tdExhaustFanSpeed" class="dataRows"></td>
+				  </tr>				  
+				</table>
+				<b>Internal fan :</b>
+				<button id="btn_InternalFanOff" type="button">OFF</button>
+				<button id="btn_InternalFanLow" type="button">Low</button>
+				<button id="btn_InternalFanHigh" type="button">High</button>
+				<form>
+					<label><input type="checkbox" name="AutoInternalFan">Automatic low/high at: </label>
+					<input style="width: 35px;" min=10 max=50 name="InternalFanSwitchTemp" type="number"/><span> °C</span>
+					<input type="submit" value="Set">
+				</form>						
+				<b>Exhaust fan:</b>
+				<button id="btn_ExhaustFanOff" type="button">OFF</button>
+				<button id="btn_ExhaustFanLow" type="button">Low</button>
+				<button id="btn_ExhaustFanHigh" type="button">High</button>
+				<form>
+					<label><input type="checkbox" name="AutoExhaustFan">Automatic. Off humidity:</label>
+					<input style="width: 35px;" min=0 max=99 name="ExhaustFanOffHumid" type="number"/>
+					<input type="submit" value="Set">
+				</form>
+				<form>	
+					Low:<input style="width: 35px;" min=0 max=99 name="ExhaustFanLowHumid" type="number"/>
+					High:<input style="width: 35px;" min=0 max=99 name="ExhaustFanHighHumid" type="number"/>
+					<input type="submit" value="Set">
+				</form>							
 			</div>		
+		</div>
+		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">		
 				<h1>Lights</h1>
 				<table class="tg">
@@ -143,20 +146,33 @@
 				 </table> 				
 				<button id="btn_LightOn" type="button">Turn ON</button>
 				<button id="btn_LightOff" type="button">Turn OFF</button>
-				<button id="btn_LightCalibrate" type="button" title="Measure light output at 0 and 100% brightness">Calibrate</button></br>
+				<button id="btn_LightCalibrate" type="button" title="Measure light output at 0 and 100% brightness">Calibrate</button><br>
 				<b>Brightness</b><br/>				
 				<form>
-				<input style="width:42px;" type="number" name="num_Brightness" min="0" max="100" oninput="this.form.slider_Brightness.value=this.value" />
-				<input type="range" name="slider_Brightness" min="0" max="100" oninput="this.form.num_Brightness.value=this.value">
+				<input style="width:42px;" type="number" name="Brightness" min="0" max="100" oninput="this.form.sliderBrightness.value=this.value" />
+				<input type="range" name="sliderBrightness" min="0" max="100" oninput="this.form.Brightness.value=this.value">
 				<input type="submit" value="Set">				
 				</form>				
 				<b>Timer</b>
-				<form><label><input type="checkbox" name="check_TimerEnabled">Enabled </label><input type="submit" value="Set"></form>
-				<form>Turn ON : <input style="width: 35px;" min=0 max=23 name="num_LightsOnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="num_LightsOnMinute" type="number"/> <input type="submit" value="Set"></form>
-				<form>Turn OFF:<input style="width: 35px;" min=0 max=23 name="num_LightsOffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="num_LightsOffMinute" type="number"/> <input type="submit" value="Set"></form>
+				<form><label><input type="checkbox" name="TimerEnabled">Enabled </label><input type="submit" value="Set"></form>
+				<form>Turn ON : <input style="width: 35px;" min=0 max=23 name="LightsOnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="LightsOnMinute" type="number"/> <input type="submit" value="Set"></form>
+				<form>Turn OFF:<input style="width: 35px;" min=0 max=23 name="LightsOffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="LightsOffMinute" type="number"/> <input type="submit" value="Set"></form>
+			</div>			
+			<div class="card" style="width:90%">
+				<h1>Reservoir</h1>
+				<table class="tg">
+					<tr>
+					 <th class="headerRows"><span style="font-weight:bold">Level</span></th>	
+					 <th class="headerRows"><span style="font-weight:bold">PH</span></th>
+					 <!--<th class="headerRows"><span style="font-weight:bold"></span></th>-->					
+					</tr>
+					<tr>
+					 <td id="tdReservoir" class="dataRows"></td>
+					 <td id="tdPH" class="dataRows"></td>
+					 <!--<td id="tdLastRefill" class="dataRows"></td>-->
+					</tr>
+				</table> 
 			</div>
-		</div> 
-		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">
 				<h1>Aeroponics</h1>
 				<table class="tg">
@@ -175,56 +191,26 @@
 				<button id="btn_PumpDisable" type="button" align="rigth" title="Stops and disables pump">Disable</button>
 				<button id="btn_PressureCalibrate" type="button" style="margin-top:0px" title="Use only when the tank is not pressurized!">Calibrate</button>				
 				<form>
-					Low : <input style="width: 50px;" min=0 max=8 name="num_AeroPressureLow" type="number" step="0.1"/> 
-					High: <input style="width: 50px;" min=0 max=8 name	="num_AeroPressureHigh" type="number" step="0.1"/> bar					
+					Low : <input style="width: 50px;" min=0 max=8 step="0.1" name="AeroPressureLow" type="number"/> 
+					High: <input style="width: 50px;" min=0 max=8 step="0.1" name="AeroPressureHigh" type="number"/> bar					
 					<input type="submit" value="Set">
 				</form>
 				<b>Quiet time</b>
-					<form class="test"><label><input type="checkbox" name="check_AeroQuietEnabled">Enabled </label><input type="submit" value="Set"></form>
-					<form><label><input type="checkbox" name="check_AeroRefillBeforeQuiet" title="Before enabling quiet time refill the tank">Refill before </label><input type="submit" value="Set"></form>
-					<form>From:<input style="width: 35px;" min=0 max=23 name="num_AeroQuietFromHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="num_AeroQuietFromMinute" type="number"/> <input type="submit" value="Set"></form>
-					<form>To : <input style="width: 35px;" min=0 max=23 name="num_AeroQuietToHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="num_AeroQuietToMinute" type="number"/> <input type="submit" value="Set"></form>				
+					<form class="test"><label><input type="checkbox" name="AeroQuietEnabled">Enabled </label><input type="submit" value="Set"></form>
+					<form><label><input type="checkbox" name="AeroRefillBeforeQuiet" title="Before enabling quiet time refill the tank">Refill before </label><input type="submit" value="Set"></form>
+					<form>From:<input style="width: 35px;" min=0 max=23 name="AeroQuietFromHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="AeroQuietFromMinute" type="number"/> <input type="submit" value="Set"></form>
+					<form>To : <input style="width: 35px;" min=0 max=23 name="AeroQuietToHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="AeroQuietToMinute" type="number"/> <input type="submit" value="Set"></form>				
 				<b>Spray</b>
 				<form>
-					<label><input type="checkbox" name="check_AeroSprayEnabled">Enabled </label><input type="submit" value="Set">
+					<label><input type="checkbox" name="AeroSprayEnabled">Enabled </label><input type="submit" value="Set">
 					<button id="btn_AeroSprayNow" type="button">Spray</button>
 					<button id="btn_AeroSprayOff" type="button">OFF</button>
 				</form>
 				<form>
-					Interval: <input style="width: 40px;" min=0 name="num_AeroInterval" type="number"/> min<br>
-					Duration: <input style="width: 40px;" min=0 name="num_AeroDuration" type="number"/> sec
+					Interval: <input style="width: 50px;" min=0 name="AeroInterval" type="number"/> min<br>
+					Duration: <input style="width: 50px;" min=0 name="AeroDuration" type="number"/> sec
 					<input type="submit" value="Set">	
 				</form>											
-			</div>	
-			<div class="card" style="width:90%">
-				<h1>Reservoir</h1>
-				<table class="tg">
-				  <tr>
-					<th class="headerRows"><span style="font-weight:bold">Level</span></th>	
-					<th class="headerRows"><span style="font-weight:bold">PH</span></th>
-					<!--<th class="headerRows"><span style="font-weight:bold"></span></th>-->					
-				  </tr>
-				  <tr>
-					<td id="tdReservoir" class="dataRows"></td>
-					<td id="tdPH" class="dataRows"></td>
-					<!--<td id="tdLastRefill" class="dataRows"></td>-->
-				  </tr>
-				 </table> 
-			</div>
-			<div class="card" style="width:90%">
-				<h1>Logs</h1>
-				<ul id="list_SerialLog"></ul>
-				<form><label><input type="checkbox" name="check_GoogleSheetsEnabled">Google Sheets </label><input type="submit" value="Set"> <button id="btn_GoogleSheets" type="button" style="margin-top:0px">Trigger</button></form>
-				<form><label><input type="checkbox" name="check_MqttEnabled">MQTT </label></input><input type="submit" value="Set"> <button id="btn_Mqtt" type="button" style="margin-top:0px">Trigger</button></form>
-			</div>					
-			<div class="card" style="width:90%">
-				<h1>Settings<button style="height:32px;width:32px;border-radius:0;"  id="btn_Ee" type="button"><img style="padding:0px;height:28px;width:28px;" src="https://sites.google.com/site/growboxguy/home/gbox420.png" /></button></h1>
-				<form><label><input type="checkbox" name="check_SoundEnabled">Sound enabled </label><input type="submit" value="Set"></form>
-				<b>Digit display</b>
-				<form>Backlight: Min<input style="width:100px;" type="range" name="slider_DigitDisplayBrightness" min="0" max="100"/>Max <input type="submit" value="Set"></form>
-				<form>Lock to value: <input style="width: 35px;" min=-1 max=17 name="num_DigitDisplayValue" type="number" step="1"/><input type="submit" value="Set"></form>					
-				<button id="btn_SaveSettings" type="button" title="Force saving settings to EEPROM, runs automatically after a change">Save settings</button>
-				<button id="btn_AlertTest" type="button" title="Trigger a test alert email">Alert Email</button></br>				
 			</div>			
 		</div>		
 	</div>

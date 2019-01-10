@@ -52,20 +52,29 @@ void setBrightness(int NewBrightness, bool AddToLog){
 void checkLightSensor(){
   isBright = !digitalRead(LightSensorInPin);     // read the input pin: 0- light detected , 1 - no light detected. Had to invert signal from the sensor to make more sense.
   LightReading = 1023 - analogRead(LightSensorAnalogInPin);
-  LightReadingPercent = map(LightReading,MinLightReading,MaxLightReading,0,100);
-  if((MySettings.isLightOn && isBright) || (!MySettings.isLightOn && !isBright)){
-    if(!LightOK) sendEmailAlert(F("Lights%20OK")); 
-    LightOK = true; //everything OK: if lights are ON light is detected, when OFF no light is detected
+  
+  if((MySettings.isLightOn && isBright) || (!MySettings.isLightOn && !isBright)){ //All OK: lights on&bright OR lights off&dark
+    LightsAlertCount=0;
+    if(!LightOK) {
+      sendEmailAlert(F("Lights%20OK")); 
+      LightOK = true;
+    }
   }
-  if(MySettings.isLightOn && !isBright && LightOK){ //if light should be ON but no light is detected and the light was OK before
-    sendEmailAlert(F("No%20light%20detected")); 
-    LightOK = false;
-    addToLog(F("Lights ON, no light detected"));
-  }
-  if(!MySettings.isLightOn && isBright && LightOK){ //if light should be ON but no light is detected and the light was OK before
-    sendEmailAlert(F("Dark%20period%20interrupted")); 
-    LightOK = false;
-    addToLog(F("Dark period interrupted"));
+  else{
+    if(LightOK){
+      LightsAlertCount++;
+      if(LightsAlertCount>=ReadCountBeforeAlert){
+       LightOK = false;
+       if(MySettings.isLightOn && !isBright){ //if light should be ON but no light is detected
+        sendEmailAlert(F("No%20light%20detected"));        
+        addToLog(F("Lights ON, no light detected"));
+       }
+       if(!MySettings.isLightOn && isBright){ //if light should be OFf but light is detected
+        sendEmailAlert(F("Dark%20period%20interrupted")); 
+        addToLog(F("Dark period interrupted"));
+       }
+      }
+    }
   }
 }
 
@@ -94,8 +103,11 @@ void calibrateLights(){
     {stepOne();}  //Sets the digital potentiometer to low irregardless what the stored startup value is
   MySettings.LightBrightness = 0;
   isPotGettingHigh = true;  //set next step direction
+  wdt_reset(); //reset watchdog timeout
   runToEnd(); //runs to highest value
+  wdt_reset(); //reset watchdog timeout
   runToEnd(); //runs to lowest value (same function)
+  wdt_reset(); //reset watchdog timeout
   setBrightness(LastBrightness,false);
   MySettings.isLightOn=LastLightStatus;
   checkLightStatus();  

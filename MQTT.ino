@@ -2,10 +2,11 @@
 char MqttPath[64];  //buffer
 
 //Global constants
-const char* MqttROOT = "/growboxguy@gmail.com/";
-const char* MqttPUBLISH = "Gbox420";
+const char* MqttROOT = "/growboxguy@gmail.com/";  //all mqtt messages have this root topic in front of them
+const char* MqttPUBLISH = "Gbox420"; //MQTT logs will be sent to this topic.
 const char* MqttLwtTopic = "LWT";  //When the connection is lost the MQTT broker will publish a final message to this topic
 const char* MqttLwtMessage = "Gbox420 Offline"; //this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the box goes offline
+
 const char* MqttLights = "Lights";  
 const char* MqttBrightness = "Brightness";
 const char* MqttDisplayBrightness = "DisplayBrightness";

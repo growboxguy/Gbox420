@@ -8,63 +8,81 @@ void resetWebServer(void) {
   RestAPI.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets 
   WebServer.setup();
   URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json"); //setup handling request from GrowBox.html
+  URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); //setup handling request from GrowBox.html
   GrowBoxHandler->loadCb.attach(&LoadCallback);  //Called then the website loads initially
   GrowBoxHandler->refreshCb.attach(&RefreshCallback); //Called periodically to refresh website content 
   GrowBoxHandler->buttonCb.attach(&ButtonPressCallback); //Called when a button is pressed on the website
   GrowBoxHandler->setFieldCb.attach(&SetFieldCallback); //Called when a field is changed on the website
+  SettingsHandler->loadCb.attach(&LoadCallback);  //Called then the website loads initially
+  SettingsHandler->refreshCb.attach(&RefreshCallback); //Called periodically to refresh website content 
+  SettingsHandler->buttonCb.attach(&ButtonPressCallback); //Called when a button is pressed on the website
+  SettingsHandler->setFieldCb.attach(&SetFieldCallback); //Called when a field is changed on the website
   addToLog(F("WebServer started"));
 }
 
 void LoadCallback(char * url) //called when website is loaded
 {
   if (strcmp(url,"/GrowBox.html.json")==0){
-  WebServer.setArgBoolean(F("check_AutoInternalFan"), MySettings.automaticInternalFan);
-  WebServer.setArgString(F("num_InternalFanSwitchTemp"), toText(MySettings.internalFanSwitchTemp));
-  WebServer.setArgBoolean(F("check_AutoExhaustFan"), MySettings.automaticExhaustFan);
-  WebServer.setArgString(F("num_ExhaustFanHighHumid"), toText(MySettings.exhaustFanHighHumid));
-  WebServer.setArgString(F("num_ExhaustFanLowHumid"), toText(MySettings.exhaustFanLowHumid));
-  WebServer.setArgString(F("num_ExhaustFanOffHumid"), toText(MySettings.exhaustFanOffHumid));
+  WebServer.setArgBoolean(F("AutoInternalFan"), MySettings.automaticInternalFan);
+  WebServer.setArgString(F("InternalFanSwitchTemp"), toText(MySettings.internalFanSwitchTemp));
+  WebServer.setArgBoolean(F("AutoExhaustFan"), MySettings.automaticExhaustFan);
+  WebServer.setArgString(F("ExhaustFanHighHumid"), toText(MySettings.exhaustFanHighHumid));
+  WebServer.setArgString(F("ExhaustFanLowHumid"), toText(MySettings.exhaustFanLowHumid));
+  WebServer.setArgString(F("ExhaustFanOffHumid"), toText(MySettings.exhaustFanOffHumid));
     
-  WebServer.setArgBoolean(F("check_TimerEnabled"), MySettings.isTimerEnabled);
-  WebServer.setArgInt(F("num_LightsOnHour"), MySettings.LightOnHour); 
-  WebServer.setArgInt(F("num_LightsOnMinute"), MySettings.LightOnMinute); 
-  WebServer.setArgInt(F("num_LightsOffHour"), MySettings.LightOffHour); 
-  WebServer.setArgInt(F("num_LightsOffMinute"),MySettings.LightOffMinute);
-  WebServer.setArgInt(F("slider_Brightness"), MySettings.LightBrightness);
-  WebServer.setArgInt(F("num_Brightness"), MySettings.LightBrightness);
+  WebServer.setArgBoolean(F("TimerEnabled"), MySettings.isTimerEnabled);
+  WebServer.setArgInt(F("LightsOnHour"), MySettings.LightOnHour); 
+  WebServer.setArgInt(F("LightsOnMinute"), MySettings.LightOnMinute); 
+  WebServer.setArgInt(F("LightsOffHour"), MySettings.LightOffHour); 
+  WebServer.setArgInt(F("LightsOffMinute"),MySettings.LightOffMinute);
+  WebServer.setArgInt(F("Brightness"), MySettings.LightBrightness);
+  WebServer.setArgInt(F("Brightness"), MySettings.LightBrightness);
 
-  WebServer.setArgInt(F("num_AeroInterval"), MySettings.AeroInterval);
-  WebServer.setArgInt(F("num_AeroDuration"), MySettings.AeroDuration);
-  WebServer.setArgString(F("num_AeroPressureLow"), toText(MySettings.AeroPressureLow));
-  WebServer.setArgString(F("num_AeroPressureHigh"), toText(MySettings.AeroPressureHigh));
-  WebServer.setArgBoolean(F("check_AeroSprayEnabled"), MySettings.isAeroSprayEnabled);
-  WebServer.setArgBoolean(F("check_AeroQuietEnabled"), MySettings.isAeroQuietEnabled);
-  WebServer.setArgBoolean(F("check_AeroRefillBeforeQuiet"), MySettings.AeroRefillBeforeQuiet);
-  WebServer.setArgInt(F("num_AeroQuietFromHour"), MySettings.AeroQuietFromHour); 
-  WebServer.setArgInt(F("num_AeroQuietFromMinute"), MySettings.AeroQuietFromMinute); 
-  WebServer.setArgInt(F("num_AeroQuietToHour"), MySettings.AeroQuietToHour); 
-  WebServer.setArgInt(F("num_AeroQuietToMinute"),MySettings.AeroQuietToMinute);
+  WebServer.setArgInt(F("AeroInterval"), MySettings.AeroInterval);
+  WebServer.setArgInt(F("AeroDuration"), MySettings.AeroDuration);
+  WebServer.setArgString(F("AeroPressureLow"), toText(MySettings.AeroPressureLow));
+  WebServer.setArgString(F("AeroPressureHigh"), toText(MySettings.AeroPressureHigh));
+  WebServer.setArgBoolean(F("AeroSprayEnabled"), MySettings.isAeroSprayEnabled);
+  WebServer.setArgBoolean(F("AeroQuietEnabled"), MySettings.isAeroQuietEnabled);
+  WebServer.setArgBoolean(F("AeroRefillBeforeQuiet"), MySettings.AeroRefillBeforeQuiet);
+  WebServer.setArgInt(F("AeroQuietFromHour"), MySettings.AeroQuietFromHour); 
+  WebServer.setArgInt(F("AeroQuietFromMinute"), MySettings.AeroQuietFromMinute); 
+  WebServer.setArgInt(F("AeroQuietToHour"), MySettings.AeroQuietToHour); 
+  WebServer.setArgInt(F("AeroQuietToMinute"),MySettings.AeroQuietToMinute);
+  }
+  
+  if (strcmp(url,"/Settings.html.json")==0){
+  WebServer.setArgInt(F("DigitDisplayBrightness"), MySettings.DigitDisplayBacklight);
+  WebServer.setArgInt(F("DigitDisplayValue"), MySettings.DigitDisplayValue);
+  WebServer.setArgInt(F("SoundEnabled"), MySettings.isSoundEnabled);
 
-  WebServer.setArgBoolean(F("check_GoogleSheetsEnabled"), MySettings.ReportToGoogleSheets);
-  WebServer.setArgBoolean(F("check_MqttEnabled"), MySettings.ReportToMqtt);
+  WebServer.setArgBoolean(F("GoogleSheetsEnabled"), MySettings.ReportToGoogleSheets);
+  WebServer.setArgBoolean(F("MqttEnabled"), MySettings.ReportToMqtt);
 
-  WebServer.setArgInt(F("slider_DigitDisplayBrightness"), MySettings.DigitDisplayBacklight);
-  WebServer.setArgInt(F("num_DigitDisplayValue"), MySettings.DigitDisplayValue);
-  WebServer.setArgInt(F("check_SoundEnabled"), MySettings.isSoundEnabled);
+  WebServer.setArgBoolean(F("AlertEmails"), MySettings.AlertEmails);
+  WebServer.setArgInt(F("TempAlertLow"), MySettings.TempAlertLow);
+  WebServer.setArgInt(F("TempAlertHigh"), MySettings.TempAlertHigh);
+  WebServer.setArgInt(F("HumidityAlertLow"), MySettings.HumidityAlertLow);
+  WebServer.setArgInt(F("HumidityAlertHigh"), MySettings.HumidityAlertHigh);
+  WebServer.setArgString(F("PressureAlertLow"), toText(MySettings.PressureAlertLow));
+  WebServer.setArgString(F("PressureAlertHigh"), toText(MySettings.PressureAlertHigh));
+  WebServer.setArgString(F("PHAlertLow"), toText(MySettings.PHAlertLow));
+  WebServer.setArgString(F("PHAlertHigh"), toText(MySettings.PHAlertHigh));  
   }
 }
 
 void RefreshCallback(char * url) //called when website is refreshed
 { 
-  if (strcmp(url,"/GrowBox.html.json")==0){ 
   WebServer.setArgString(F("tdLightOK"), statusToText(LightOK)); 
-  WebServer.setArgString(F("tdAeroOK"),statusToText(AeroOK));
-  WebServer.setArgString(F("tdAeroPumpOK"),statusToText(AeroPumpOK));
+  WebServer.setArgString(F("tdPressureOK"),statusToText(PressureOK));
+  WebServer.setArgString(F("tdPumpOK"),statusToText(PumpOK));
   WebServer.setArgString(F("tdPowerOK"),statusToText(PowerOK));
   WebServer.setArgString(F("tdVentOK"),statusToText(VentOK));
   WebServer.setArgString(F("tdReservOK"),statusToText(ReservOK));
   WebServer.setArgString(F("tdPhOK"),statusToText(PhOK));
-      
+  WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON(false)); //Last events that happened in JSON format
+  
+  if (strcmp(url,"/GrowBox.html.json")==0){      
   WebServer.setArgString(F("tdTime"), getFormattedTime()); 
   WebServer.setArgString(F("tdBoxTemp"),toText(BoxTempC,BoxTempF,"/"));
   WebServer.setArgString(F("tdHumidity"),toText(Humidity));
@@ -90,8 +108,6 @@ void RefreshCallback(char * url) //called when website is refreshed
     
   WebServer.setArgString(F("tdReservoir"),reservoirText);
   WebServer.setArgString(F("tdPH"),toText(PH));  
-
-  WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON(false)); //Last events that happened in JSON format
   }
 }
 
@@ -125,34 +141,46 @@ void ButtonPressCallback(char *button)
 
 //Called when any field on the website is updated
 void SetFieldCallback(char * field){
-  if(strcmp_P(field,(PGM_P)F("slider_Brightness"))==0) {setBrightness(WebServer.getArgInt(),true);}
-  else if(strcmp_P(field,(PGM_P)F("check_AutoInternalFan"))==0) {autoFanOnOff(WebServer.getArgBoolean(),true);}
-  else if(strcmp_P(field,(PGM_P)F("num_InternalFanSwitchTemp"))==0) {setInternalSwitchTemp(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("check_AutoExhaustFan"))==0) {autoFanOnOff(WebServer.getArgBoolean(),false);}
-  else if(strcmp_P(field,(PGM_P)F("num_ExhaustFanHighHumid"))==0) {setExhaustHighHumidity(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("num_ExhaustFanLowHumid"))==0) {setExhaustLowHumidity(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("num_ExhaustFanOffHumid"))==0) {setExhaustOffHumidity(WebServer.getArgInt());}
+  if(strcmp_P(field,(PGM_P)F("Brightness"))==0) {setBrightness(WebServer.getArgInt(),true);}
+  else if(strcmp_P(field,(PGM_P)F("AutoInternalFan"))==0) {autoFanOnOff(WebServer.getArgBoolean(),true);}
+  else if(strcmp_P(field,(PGM_P)F("InternalFanSwitchTemp"))==0) {setInternalSwitchTemp(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("AutoExhaustFan"))==0) {autoFanOnOff(WebServer.getArgBoolean(),false);}
+  else if(strcmp_P(field,(PGM_P)F("ExhaustFanHighHumid"))==0) {setExhaustHighHumidity(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("ExhaustFanLowHumid"))==0) {setExhaustLowHumidity(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("ExhaustFanOffHumid"))==0) {setExhaustOffHumidity(WebServer.getArgInt());}
   
-  else if(strcmp_P(field,(PGM_P)F("check_TimerEnabled"))==0) {setTimerOnOff(WebServer.getArgBoolean());}
-  else if(strcmp_P(field,(PGM_P)F("check_SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}
-  else if(strcmp_P(field,(PGM_P)F("num_LightsOnHour"))==0) {setLightsOnHour(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("num_LightsOnMinute"))==0) {setLightsOnMinute(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("num_LightsOffHour"))==0) {setLightsOffHour(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("num_LightsOffMinute"))==0) {setLightsOffMinute(WebServer.getArgInt());}       
-  else if(strcmp_P(field,(PGM_P)F("num_AeroInterval"))==0) { setAeroInterval(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("num_AeroDuration"))==0) {setAeroDuration(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("num_AeroPressureLow"))==0) {setAeroPressureLow(WebServer.getArgFloat());}
-  else if(strcmp_P(field,(PGM_P)F("num_AeroPressureHigh"))==0) {setAeroPressureHigh(WebServer.getArgFloat());} 
-  else if(strcmp_P(field,(PGM_P)F("check_AeroQuietEnabled"))==0) {setQuietOnOff(WebServer.getArgBoolean());}
-  else if(strcmp_P(field,(PGM_P)F("check_AeroRefillBeforeQuiet"))==0) {setQuietRefillOnOff(WebServer.getArgBoolean());}
-  else if(strcmp_P(field,(PGM_P)F("num_AeroQuietFromHour"))==0) {setQuietFromHour(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("num_AeroQuietFromMinute"))==0) {setQuietFromMinute(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("num_AeroQuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("num_AeroQuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}  
-  else if(strcmp_P(field,(PGM_P)F("check_AeroSprayEnabled"))==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
-  else if(strcmp_P(field,(PGM_P)F("check_GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
-  else if(strcmp_P(field,(PGM_P)F("check_MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
-  else if(strcmp_P(field,(PGM_P)F("slider_DigitDisplayBrightness"))==0) {setDigitDisplayBacklight(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("num_DigitDisplayValue"))==0) {setDigitDisplayValue(WebServer.getArgInt());} 
+  else if(strcmp_P(field,(PGM_P)F("TimerEnabled"))==0) {setTimerOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("LightsOnHour"))==0) {setLightsOnHour(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("LightsOnMinute"))==0) {setLightsOnMinute(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("LightsOffHour"))==0) {setLightsOffHour(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("LightsOffMinute"))==0) {setLightsOffMinute(WebServer.getArgInt());}       
+  else if(strcmp_P(field,(PGM_P)F("AeroInterval"))==0) { setAeroInterval(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("AeroDuration"))==0) {setAeroDuration(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("AeroPressureLow"))==0) {setAeroPressureLow(WebServer.getArgFloat());}
+  else if(strcmp_P(field,(PGM_P)F("AeroPressureHigh"))==0) {setAeroPressureHigh(WebServer.getArgFloat());} 
+  else if(strcmp_P(field,(PGM_P)F("AeroQuietEnabled"))==0) {setQuietOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("AeroRefillBeforeQuiet"))==0) {setQuietRefillOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("AeroQuietFromHour"))==0) {setQuietFromHour(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("AeroQuietFromMinute"))==0) {setQuietFromMinute(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("AeroQuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("AeroQuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}  
+  else if(strcmp_P(field,(PGM_P)F("AeroSprayEnabled"))==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
+  
+  else if(strcmp_P(field,(PGM_P)F("GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("DigitDisplayBrightness"))==0) {setDigitDisplayBacklight(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("DigitDisplayValue"))==0) {setDigitDisplayValue(WebServer.getArgInt());}
+  
+  else if(strcmp_P(field,(PGM_P)F("AlertEmails"))==0) {AlertEmailsOnOff(WebServer.getArgBoolean());}  
+  else if(strcmp_P(field,(PGM_P)F("TempAlertLow"))==0) {setTempAlertLow(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("TempAlertHigh"))==0) {setTempAlertHigh(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("HumidityAlertLow"))==0) {setHumidityAlertLow(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("HumidityAlertHigh"))==0) {setHumidityAlertHigh(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("PressureAlertLow"))==0) {setPressureAlertLow(WebServer.getArgFloat());}
+  else if(strcmp_P(field,(PGM_P)F("PressureAlertHigh"))==0) {setPressureAlertHigh(WebServer.getArgFloat());}
+  else if(strcmp_P(field,(PGM_P)F("PHAlertLow"))==0) {setPHAlertLow(WebServer.getArgFloat());}
+  else if(strcmp_P(field,(PGM_P)F("PHAlertHigh"))==0) {setPHAlertHigh(WebServer.getArgFloat());}
+  
   saveSettings(false);
 } 

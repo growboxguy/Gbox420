@@ -37,7 +37,7 @@ void checkAeroPump(){
     }
   }
   else{
-    if( AeroPumpOK && checkQuietTime()){ //Pressure below low limit: turn on pump if its not disabled and quiet time not active
+    if( PumpOK && checkQuietTime()){ //Pressure below low limit: turn on pump if its not disabled and quiet time not active
       if(AeroPressure <= MySettings.AeroPressureLow)aeroPumpOn();
     }    
   }
@@ -46,23 +46,32 @@ void checkAeroPump(){
 
 void CheckAeroPumpAlerts()
 {
-  if(!AeroOK && AeroLowPressureAlert <=  AeroPressure && AeroPressure <= AeroHighPressureAlert){ //If pressure is between range and pressure was not OK at last check
-       AeroOK = true;
-       sendEmailAlert(F("Aeroponics%20pressure%20OK")); 
+  if(MySettings.PressureAlertLow <= AeroPressure && AeroPressure <= MySettings.PressureAlertHigh){ //If pressure is between OK range
+     PressureAlertCount = 0; 
+       if(!PressureOK){ // pressure was not OK before
+       PressureOK = true;
+       sendEmailAlert(F("Aeroponics%20pressure%20OK"));
+       } 
+  }
+  else{
+    if(PressureOK){
+      PressureAlertCount++;
+      if(PressureAlertCount>=ReadCountBeforeAlert){
+        PressureOK = false;
+        if(AeroPressure > MySettings.PressureAlertHigh){ //If high pressure alert level is reached
+          aeroPumpOff(); //force pump off
+          aeroSprayNow(); //try to release pressure      
+          sendEmailAlert(F("Aeroponics%20pressure%20too%20high"));
+          addToLog(F("High pressure warning"));
+        }
+        if(AeroPressure < MySettings.PressureAlertLow){ //If low pressure alert level is reached
+          if(PumpOK) aeroPumpOn(); //turn pump on even under quiet time
+          sendEmailAlert(F("Aeroponics%20pressure%20too%20low"));
+          addToLog(F("Low pressure warning"));
+        } 
+      }
     }
-   if(AeroOK && AeroPressure > AeroHighPressureAlert){ //If high pressure alert level is reached
-      aeroPumpOff(); //force pump off
-      aeroSprayNow(); //try to release pressure
-      AeroOK = false;
-      sendEmailAlert(F("Aeroponics%20pressure%20too%20high"));
-      addToLog(F("High pressure warning"));
-    }
-   if(AeroOK && AeroPressure < AeroLowPressureAlert){ //If low pressure alert level is reached
-      if(AeroPumpOK) aeroPumpOn(); //turn pump on even under quiet time
-      AeroOK = false;
-      sendEmailAlert(F("Aeroponics%20pressure%20too%20low"));
-      addToLog(F("Low pressure warning"));
-    } 
+  }   
 }
 
 void readAeroPressure(){
@@ -136,7 +145,7 @@ void setAeroPressureHigh(float PressureHigh){
 }
 
 void aeroPumpOn(){
-  AeroPumpOK = true;
+  PumpOK = true;
   isAeroPumpOn = true;
   AeroPumpTimer = millis();      
   PlayOnSound = true;
@@ -154,18 +163,18 @@ void aeroPumpRefill(){
 
 void aeroPumpStop(){ 
   addToLog(F("Pump stopped"));
-  AeroPumpOK = true; 
+  PumpOK = true; 
   aeroPumpOff();
 }
 
 void aeroPumpDisable(){
   aeroPumpOff();
-  AeroPumpOK = false;
+  PumpOK = false;
   addToLog(F("Pump disabled"));
 }
 
 const __FlashStringHelper * pumpStateToText(){
-   if(!AeroPumpOK) return F("DISABLED");
+   if(!PumpOK) return F("DISABLED");
    else if(isAeroPumpOn) return F("ON");
    else return F("OFF");
 } 
@@ -178,7 +187,7 @@ bool checkQuietTime() {
     int CombinedFromTime = MySettings.AeroQuietFromHour * 100 + MySettings.AeroQuietFromMinute;
     int CombinedToTime = MySettings.AeroQuietToHour * 100 + MySettings.AeroQuietToMinute;
     int CombinedCurrentTime = hour(Now) * 100 + minute(Now);
-    if(MySettings.AeroRefillBeforeQuiet && AeroPumpOK && CombinedFromTime == CombinedCurrentTime && millis() - AeroLastRefill > 120000 ){
+    if(MySettings.AeroRefillBeforeQuiet && PumpOK && CombinedFromTime == CombinedCurrentTime && millis() - AeroLastRefill > 120000 ){
       aeroPumpOn(); 
       AeroLastRefill = millis();
     }

@@ -1,0 +1,109 @@
+  <!-- EspLink will add header here -->
+  <meta name="refresh-rate" content="5000" /> 
+  <!--meta http-equiv="refresh" content="30"-->
+  <div  class="content">
+	<style type="text/css">
+		.content {margin:0px; padding:0px;}
+		.pure-g {margin:0px; padding:0px;}
+		.test:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+		.tg {margin:0px;width:100%;}
+		.tg td{border-style:solid;border-width:1px;font-size:14px;font-weight:normal;overflow:hidden;word-break:normal;}
+		.tg th{border-style:solid;border-width:1px;font-size:14px;font-weight:normal;overflow:hidden;word-break:normal;}
+		.tg .headerRows{font-size:14px;font-family:serif !important;text-align:center;vertical-align:center}
+		.tg .dataRows{font-size:13px;font-family:serif !important;text-align:center;vertical-align:top}
+		 button {margin:0px;padding:0px;height:24px;vertical-align:bottom;align-items:center;-webkit-appearance:button !important;line-height:normal}
+		 h1 {padding:0px;margin:0px;margin-bottom:6px;}
+	</style>	
+	<div class="pure-g">
+		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
+			<div class="card" style="width:90%">
+				<h1>Settings</h1>
+				<button id="btn_SaveSettings" type="button" title="Force saving settings to EEPROM, runs automatically after a change">Save settings</button><br>
+				<form><label><input type="checkbox" name="SoundEnabled">Sound enabled </label><input type="submit" value="Set"></form>
+				<b>Digit display</b>
+				<form>Backlight: Min<input style="width:100px;" type="range" name="DigitDisplayBrightness" min="0" max="100"/>Max <input type="submit" value="Set"></form>
+				<form>Lock to value: <input style="width: 35px;" min=-1 max=17 name="DigitDisplayValue" type="number" step="1"/> <input type="submit" value="Set"></form>					
+				<b>Reporting</b>
+				<form><label><input type="checkbox" name="MqttEnabled">MQTT </label></input><input type="submit" value="Set"> <button id="btn_Mqtt" type="button" style="margin-top:0px">Trigger</button></form>
+				<form><label><input type="checkbox" name="GoogleSheetsEnabled">Google Sheets </label><input type="submit" value="Set"> <button id="btn_GoogleSheets" type="button" style="margin-top:0px">Trigger</button></form>
+			</div>
+			<div class="card" style="width:90%">
+				<h1>Email alerts</h1>
+				<form><label><input type="checkbox" name="AlertEmails">Alert emails </label><input type="submit" value="Set"> <button id="btn_AlertTest" type="button" title="Trigger a test alert email">Test Email</button></form>		
+				<b>Alerts thresholds</b>
+				<form>
+					Temp Low:<input style="width: 35px;" min=-20 max=100 name="TempAlertLow" type="number"/> 
+					High:<input style="width: 35px;" min=-20 max=100 name="TempAlertHigh" type="number"/>					
+					<input type="submit" value="Set">
+				</form>
+				<form>
+					Humidity Low:<input style="width: 35px;" min=0 max=100 name="HumidityAlertLow" type="number"/> 
+					High: <input style="width: 35px;"  min=0 max=100 name="HumidityAlertHigh" type="number"/>					
+					<input type="submit" value="Set">
+				</form>
+				<form>
+					Pressure Low:<input style="width: 45px;" min=0 max=8 step="0.1" name="PressureAlertLow" type="number"/> 
+					High:<input style="width: 45px;" min=0 max=8 step="0.1" name="PressureAlertHigh" type="number"/>					
+					<input type="submit" value="Set">
+				</form>
+				<form>
+					PH Low:<input style="width: 45px;" min=0 max=14 step="0.1" name="PHAlertLow" type="number"/> 
+					High:<input style="width: 45px;" min=0 max=14 step="0.1" name="PHAlertHigh" type="number"/>					
+					<input type="submit" value="Set">
+				</form>
+			</div>		
+		</div>
+		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
+			<div class="card" style="width:90%">	
+				<h1>Status<button style="height:32px;width:32px;border-radius:0;"  id="btn_Ee" type="button"><img style="padding:0px;height:28px;width:28px;" src="https://sites.google.com/site/growboxguy/home/gbox420.png" /></button></h1>
+				<table class="tg">				  
+				  <tr>
+				    <td class="headerRows"><span style="font-weight:bold">Lights</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Pressure</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Pump</td>
+					<td class="headerRows"><span style="font-weight:bold">Power</td>
+					<td class="headerRows"><span style="font-weight:bold">Vent</td>
+					<td class="headerRows"><span style="font-weight:bold">Reserv</td>
+					<td class="headerRows"><span style="font-weight:bold">PH</td>
+				  </tr>	
+				  <tr>
+					<td id="tdLightOK" class="dataRows"></td>
+					<td id="tdPressureOK" class="dataRows"></td>
+					<td id="tdPumpOK" class="dataRows"></td>
+					<td id="tdPowerOK" class="dataRows"></td>
+					<td id="tdVentOK" class="dataRows"></td>
+					<td id="tdReservOK" class="dataRows"></td>
+					<td id="tdPhOK" class="dataRows"></td>
+				  </tr>					  
+				</table>
+				<ul id="list_SerialLog"></ul>	
+			</div>		
+		</div>		
+	</div>
+  </div> 
+	<!-- Footer -->
+<div>
+<div><a target="_blank" href="https://sites.google.com/site/growboxguy/" width="96" height="96" style="display:inline;float:left" ><img src="https://sites.google.com/site/growboxguy/home/gbox420.png" width="96" height="96" style="display:inline;float:left" ></a>
+<a target="_blank" href="https://www.patreon.com/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/patreon.png" style="border:none;margin:0;padding:0px"></a>
+<a target="_blank" href="https://www.facebook.com/Gbox420-1495966037151416/"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_facebook_1807546.png" style="border:none;margin:0;padding:0px"></a>
+<a target="_blank" href="https://github.com/growboxguy/Gbox420"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_github.png" style="border:none;margin:0;padding:0px"></a>
+<a target="_blank" href="https://plus.google.com/106380858241253565250"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_google__1807544.png" style="border:none;margin:0;padding:0px"></a>
+<a target="_blank" href="https://www.tumblr.com/blog/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_tumblr_986957.png" style="border:none;margin:0;padding:0px"></a>
+<a target="_blank" href="https://twitter.com/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_4_939755.png" style="border:none;margin:0;padding:0px"></a>
+<a target="_blank" target="_top" href="mailto:GrowBoxGuy@gmail.com"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_Android-Gmail_72149%20%281%29.png" style="border:none;margin:0;padding:0px"></a>
+</div>
+<div style="display:inline!important">
+<b style="font-size:16px">
+<font color="#444444">&nbsp;Project made by </font>
+<font color="#00ab44">GrowBoxGuy</font><br>		
+&nbsp;<a target="_blank" href="https://sites.google.com/site/growboxguy/">sites.google.com/site/growboxguy/</a>
+</b>
+</div><br>
+</div>
+	<!-- /Footer -->
+</body>
+</html>
