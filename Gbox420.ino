@@ -1,7 +1,7 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter, remove separate email alert checkbox: add one global
+//TODO: flow meter
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -29,12 +29,12 @@
   bool LightOK = true; //Track component health, at startup assume every component is OK
   bool PressureOK = true;  //Aeroponics - Pressure within range
   bool PumpOK = true; //Aeroponics - High pressure pump health
-  bool PowerOK = true; 
-  bool VentOK = true;
-  bool ReservOK = true;
-  bool PhOK = true;  
-  byte LightsAlertCount = 0;
-  byte PressureAlertCount = 0;
+  bool PowerOK = true; //AC voltage present
+  bool VentOK = true; //Temperatur and humidity withing range
+  bool ReservOK = true; //Reservoir not empty
+  bool PhOK = true;  //Nutrient solution PH within range
+  byte LightsAlertCount = 0;  //Counters of out of range readings before triggering an alert
+  byte PressureAlertCount = 0; //All counters are compared agains ReadCountBeforeAlert from 420Settings
   byte PowerAlertCount = 0;
   byte VentilationAlertCount = 0;
   byte ReservoirAlertCount = 0;
@@ -43,22 +43,22 @@
   float BoxTempF; // stores Temperature - Fahrenheit
   float Humidity; // stores relative humidity - %
   float Power; //Power sensor - W
-  float Energy; //Power sensor - Wh
+  float Energy; //Power sensor - Wh Total consumption 
   float Voltage; //Power sensor - V
   float Current; //Power sensor - A
   float PHRaw; //PH meter reading 
-  float PH; //PH meter calculated value  
+  float PH; //Calculated PH  
   int LightReading;  //light sensor analog reading
-  bool isBright;  //Ligth sensor feedback: True-Bright / False-Dark
+  bool isBright;  //Ligth sensor digital feedback: True-Bright / False-Dark
   bool isPotGettingHigh = false;  // Digital potentiometer direction, false: Decrease , true: Increase 
-  byte reservoirLevel =4;
-  char reservoirText[20]= "";
-  bool PlayOnSound = false; //Turn on sound - website controls it
-  bool PlayOffSound = false; //Turn off sound - website controls it
+  byte reservoirLevel = 4;
+  char reservoirText[9]= "E[####]F";
+  bool PlayOnSound = false; //Play on beep flag - website controls it
+  bool PlayOffSound = false; //Play off beep flag - website controls it
   bool PlayEE = false; //Surprise :) - website controls it
   bool CalibrateLights = false; //Calibrate lights flag - website controls it
-  int MaxLightReading = 0; // stores the highest light source strengt reading
-  int MinLightReading = 1023; //stores the lowest light source strengt reading
+  int MaxLightReading = 0; // stores the highest light sensor analog reading
+  int MinLightReading = 1023; //stores the lowest light sensor analog reading
   unsigned long AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
   unsigned long AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
   bool isAeroSprayOn = false; //Aeroponics - Spray state, set to true to spay at power on
@@ -67,7 +67,7 @@
   float AeroPressurePSI = 0.0;  //Aeroponics - Current pressure (psi)
   char WebMessage[512];   //buffer for REST and MQTT API messages
   char CurrentTime[20]; //buffer for getting current time
-  char LogMessage[LogLength]; //temp storage for assemling log messages
+  char LogMessage[LogLength]; //temp storage for assembling log messages
   char Logs[LogDepth][LogLength];  //two dimensional array for storing log histroy (array of char arrays)
 
 //Component initialization
@@ -92,12 +92,12 @@
 
 void setup() {     // put your setup code here, to run once:
   Serial.begin(115200);    //2560mega console output
-  Serial3.begin(115200);  //wifi console output
-  wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds
+  Serial3.begin(115200);  //esp wifi console output
+  wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 minutes assume a lockup and reset sketch
   addToLog(F("GrowBox initializing..."));
   loadSettings();
 
-   //Pin setup, defining what Pins are inputs/outputs and setting initial output signals
+   //Pin setup, defining what Pins are inputs/outputs and setting initial output signals. Pins are defined in 420Pins.h tab
   pinMode(LightSensorInPin, INPUT);
   pinMode(WaterCriticalInPin, INPUT_PULLUP);
   pinMode(WaterLowInPin, INPUT_PULLUP);
@@ -127,8 +127,8 @@ void setup() {     // put your setup code here, to run once:
   pinMode(ScreenMISO, INPUT);
   pinMode(ScreenSCK, OUTPUT);
   digitalWrite(PotCSOutPin,LOW); //CS input is low when the chip is active, https://www.intersil.com/content/dam/intersil/documents/x9c1/x9c102-103-104-503.pdf
-  digitalWrite(BuiltInLEDOutPin, LOW); //without this LED would be randomly on or off when the board is powered on
-  digitalWrite(Relay1OutPin, HIGH); //default OFF
+  digitalWrite(BuiltInLEDOutPin, LOW); //LED OFF,without this LED would be randomly on or off when the board is powered on
+  digitalWrite(Relay1OutPin, HIGH); //default OFF (Uses negative logic - HIGH turns relay off, LOW on) 
   digitalWrite(Relay2OutPin, HIGH); 
   digitalWrite(Relay3OutPin, HIGH);
   digitalWrite(Relay4OutPin, HIGH);
@@ -139,13 +139,13 @@ void setup() {     // put your setup code here, to run once:
     
   //Initialize web connections
   ESPLink.resetCb = resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
-  resetWebServer();
-  ESPLink.Process();
+  resetWebServer();  //reset the WebServer
+  ESPLink.Process();  //Process any command from ESP-Link
   setSyncProvider(getNtpTime); //points to method for updating time from NTP server
   setSyncInterval(3600); //Sync time every hour
-  setupMqtt();  //logs ConnectedCB is XXXX to serial
+  setupMqtt();  //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
  
-  //Threading
+  //Threading - Linking functions to threads and setting how often they should be called
   OneSecThread.setInterval(1000);
   OneSecThread.onRun(oneSecRun);
   FiveSecThread.setInterval(5000);
@@ -157,11 +157,11 @@ void setup() {     // put your setup code here, to run once:
 
   //Start devices
   TempSensor.begin(); //start humidity/temp sensor
-  Screen.begin(); //start screen
+  Screen.begin(); //start LCD screen
   Screen.setRotation(ScreenRotation);
   DigitDisplay.begin(); //start 4 digit LED display
   DigitDisplay.setBacklight(MySettings.DigitDisplayBacklight); //set 4 digit LED display backlight intensity
-  PowerSensor.setAddress(PowerSensorIP); //start power meter
+  PowerSensor.setAddress(PowerSensorIP); //start power meter, pass mandatory fake IP address
   LogToSerials(F("Calibrating lights..."),false);
   calibrateLights();
   addToLog(F("Grow Box initialized"));
@@ -170,10 +170,10 @@ void setup() {     // put your setup code here, to run once:
   fiveSecRun(); //needs to run first to get sensor readings
   oneSecRun();  
   minuteRun();
-  //halfHourRun();
+  halfHourRun();
   
-  //Start interrupts to handle request from ESP-Link website
-  Timer3.initialize(500);
+  //Start interrupts to handle request from ESP-Link firmware
+  Timer3.initialize(500);  //check every 0.5sec, using a larger interval can cause web requests to time out
   Timer3.attachInterrupt(processEspLink);
   Timer3.start();
 
@@ -181,11 +181,11 @@ void setup() {     // put your setup code here, to run once:
 }
 
 void loop() {  // put your main code here, to run repeatedly:
-  ThreadControl.run();    
+  ThreadControl.run();    //loop only checks if it's time to trigger one of the threads
 }
 
 void processEspLink(){
-  ESPLink.Process();
+  ESPLink.Process();  //Interrupt calls this every 0.5 sec and process any request coming from th ESP-Link
 }
 
 void oneSecRun(){
@@ -211,7 +211,7 @@ void minuteRun(){
   wdt_reset(); //reset watchdog timeout
   checkLightTimer(); 
   LogToSerials(logToText(),true);  //Logs sensor readings to Serial  
-  logToScreen();  //Display sensore readings on lcd screen  
+  logToScreen();  //Display sensore readings on LCD screen  
 }
 
 void halfHourRun(){
@@ -223,7 +223,7 @@ void halfHourRun(){
 
 //Helper functions
 
-void readSensors(){  //Sensor readings  
+void readSensors(){  //Bundles functions to get sensor readings  
   readDHTSensor();
   checkLightSensor();
   readPowerSensor();

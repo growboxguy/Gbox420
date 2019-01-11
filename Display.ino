@@ -35,59 +35,59 @@ void updateDisplay() { //Cycles through the different values
        
     switch (CurrentStep) {
     case 0:
-      DigitDisplay.print(F("Humi"));
-      break;
-    case 1:
-      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)Humidity , 100 * (Humidity - (int)Humidity));DigitDisplay.setColonOn(0);      
-      break;
-    case 2:
       DigitDisplay.print(F("Temp"));
       break;
-    case 3:
+    case 1:
       DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)BoxTempC , 100 * (BoxTempC - (int)BoxTempC));DigitDisplay.printRaw(degreeSign, 3);DigitDisplay.setColonOn(0);
       break;
+    case 2:      
+      DigitDisplay.print(F("Humi"));
+      break;
+    case 3:
+      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)Humidity , 100 * (Humidity - (int)Humidity));DigitDisplay.setColonOn(0);      
+      break;    
     case 4:
-      DigitDisplay.print(F("LGHT"));
-      break;
-    case 5:
-      DigitDisplay.print(stateToText(MySettings.isLightOn));
-      break;
-    case 6:
-      DigitDisplay.print(F("Watt"));
-      break;
-    case 7:
-      DigitDisplay.print((int)Power);
-      break;      
-    case 8:
-      DigitDisplay.print(F("Sum"));
-      break;
-    case 9:
-      DigitDisplay.print((int)Energy);
-      break; 
-    case 10:
-      DigitDisplay.print(F("IFan"));
-      break;
-    case 11:
-      DigitDisplay.print(fanSpeedToText(true));
-      break;
-    case 12:
-      DigitDisplay.print(F("EFan"));
-      break;
-    case 13:
-      DigitDisplay.print(fanSpeedToText(false));      
-      break;
-    case 14:
       DigitDisplay.print(F("PRES"));
       break;
-    case 15:
+    case 5:
       DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)AeroPressure , 100 * (AeroPressure - (int)AeroPressure));DigitDisplay.setColonOn(0);
       break;
-    case 16:
+    case 6:
       DigitDisplay.print(F("PH"));
       break;
-    case 17:
+    case 7:
       DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)PH , 100 * (PH - (int)PH));DigitDisplay.setColonOn(0);
-      CurrentStep = -1; //last step, reset counter
+      break; 
+    case 8:
+      DigitDisplay.print(F("Watt"));
+      break;
+    case 9:
+      DigitDisplay.print((int)Power);
+      break;
+    case 10:
+      DigitDisplay.print(F("Sum"));
+      break;
+    case 11:
+      DigitDisplay.print((int)Energy);
+      break;     
+    case 12:
+      DigitDisplay.print(F("LGHT"));
+      break;
+    case 13:
+      DigitDisplay.print(stateToText(MySettings.isLightOn));
+      break;
+    case 14:
+      DigitDisplay.print(F("IFan"));
+      break;
+    case 15:
+      DigitDisplay.print(fanSpeedToText(true));
+      break;
+    case 16:
+      DigitDisplay.print(F("EFan"));
+      break;
+    case 17:
+      DigitDisplay.print(fanSpeedToText(false));
+      CurrentStep = -1; //last step, reset counter      
       break;    
     default:      
       CurrentStep = -1; //nothing matched - reset counter
@@ -103,6 +103,6 @@ void setDigitDisplayBacklight(int Backlight){
 
 void setDigitDisplayValue(int Value){
   MySettings.DigitDisplayValue=Value;
-  if(Value<0)addToLog(F("DigitDisplay cycle ON"));
+  if(Value<0)addToLog(F("Digit display cycle ON"));
   else addToLog(F("Digit display locked"));
 }
