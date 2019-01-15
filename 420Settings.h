@@ -16,7 +16,7 @@
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
     
 //Settings saved to EEPROM persistent storage
-  byte Version= 1; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
+  byte Version= 2; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
   typedef struct //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   byte AeroInterval = 15; //Aeroponics - Spray every 15 minutes
@@ -27,9 +27,10 @@
   bool isAeroQuietEnabled = true;  //Enable/disable quiet time then pump should not run
   bool AeroRefillBeforeQuiet = true; //Enable/disable refill before quiet time
   byte AeroQuietFromHour = 22;  //Quiet time to block pump - hour
-  byte AeroQuietFromMinute = 00; //Quiet time to block pump - minute
+  byte AeroQuietFromMinute = 0; //Quiet time to block pump - minute
   byte AeroQuietToHour = 8; //Quiet time end - hour
-  byte AeroQuietToMinute = 00; //Quiet time end - minute
+  byte AeroQuietToMinute = 0; //Quiet time end - minute
+  bool isAirPumpOn = true;  //Startup status for Reservoir Air Pump: True-ON / False-OFF, default:ON
   
   bool isLightOn = true;  //Startup status for lights: True-ON / False-OFF
   byte LightBrightness = 0; //Light intensity: 0 - 100 range for controlling led driver output  
@@ -49,7 +50,6 @@
   bool isInternalFanHigh = false; //Internal fan Low/High, default:Low
   bool isExhaustFanOn = false;  //Exhaust fan On/Off, default:OFF
   bool isExhaustFanHigh = false;  //Exhaust fan Low/High, default:Low
-  bool isPCPowerSupplyOn = true;  //Startup status for PC power supply: True-ON / False-OFF, default:ON
   
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
   bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker

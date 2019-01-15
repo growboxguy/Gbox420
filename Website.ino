@@ -36,7 +36,7 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgInt(F("LightsOffHour"), MySettings.LightOffHour); 
   WebServer.setArgInt(F("LightsOffMinute"),MySettings.LightOffMinute);
   WebServer.setArgInt(F("Brightness"), MySettings.LightBrightness);
-  WebServer.setArgInt(F("Brightness"), MySettings.LightBrightness);
+  WebServer.setArgInt(F("sliderBrightness"), MySettings.LightBrightness);
 
   WebServer.setArgInt(F("AeroInterval"), MySettings.AeroInterval);
   WebServer.setArgInt(F("AeroDuration"), MySettings.AeroDuration);
@@ -73,6 +73,7 @@ void LoadCallback(char * url) //called when website is loaded
 
 void RefreshCallback(char * url) //called when website is refreshed
 { 
+  WebServer.setArgString(F("Time"), getFormattedTime()); 
   WebServer.setArgString(F("tdLightOK"), statusToText(LightOK)); 
   WebServer.setArgString(F("tdPressureOK"),statusToText(PressureOK));
   WebServer.setArgString(F("tdPumpOK"),statusToText(PumpOK));
@@ -83,13 +84,11 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON(false)); //Last events that happened in JSON format
   
   if (strcmp(url,"/GrowBox.html.json")==0){      
-  WebServer.setArgString(F("tdTime"), getFormattedTime()); 
   WebServer.setArgString(F("tdBoxTemp"),toText(BoxTempC,BoxTempF,"/"));
   WebServer.setArgString(F("tdHumidity"),toText(Humidity));
   WebServer.setArgString(F("tdInternalFanSpeed"),fanSpeedToText(true));
   WebServer.setArgString(F("tdExhaustFanSpeed"),fanSpeedToText(false));
-
-  WebServer.setArgString(F("tdisPowersupplyOn"),stateToText(MySettings.isPCPowerSupplyOn)); 
+ 
   WebServer.setArgString(F("tdPower"),toText(Power));  
   WebServer.setArgString(F("tdEnergy"),toText(Energy));
   WebServer.setArgString(F("tdVoltage"),toText(Voltage));
@@ -105,6 +104,7 @@ void RefreshCallback(char * url) //called when website is refreshed
   
   WebServer.setArgString("tdAeroPressure",toText(AeroPressure,AeroPressurePSI,"/"));
   WebServer.setArgString(F("tdisAeroPumpOn"),pumpStateToText());
+  WebServer.setArgString(F("tdisAirPumpOn"),stateToText(MySettings.isAirPumpOn));
     
   WebServer.setArgString(F("tdReservoir"),reservoirText);
   WebServer.setArgString(F("tdPH"),toText(PH));  
@@ -121,8 +121,8 @@ void ButtonPressCallback(char *button)
   else if (strcmp_P(button,(PGM_P)F("btn_ExhaustFanOff"))==0) { exhaustFanOff();}
   else if (strcmp_P(button,(PGM_P)F("btn_ExhaustFanLow"))==0) { exhaustFanLow();}
   else if (strcmp_P(button,(PGM_P)F("btn_ExhaustFanHigh"))==0) { exhaustFanHigh();}
-  else if (strcmp_P(button,(PGM_P)F("btn_PowersupplyOn"))==0) { powerSupplyOn();}
-  else if (strcmp_P(button,(PGM_P)F("btn_PowersupplyOff"))==0) { powerSupplyOff();}
+  else if (strcmp_P(button,(PGM_P)F("btn_AirPumpOn"))==0) { airPumpOn();}
+  else if (strcmp_P(button,(PGM_P)F("btn_AirPumpOff"))==0) { airPumpOff();}
   else if (strcmp_P(button,(PGM_P)F("btn_LightOff"))==0) { turnLightOFF(true); }
   else if (strcmp_P(button,(PGM_P)F("btn_LightCalibrate"))==0) {triggerCalibrateLights();}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayNow"))==0) { aeroSprayNow();}

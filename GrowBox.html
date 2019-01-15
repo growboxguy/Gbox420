@@ -21,7 +21,7 @@
 	<div class="pure-g">
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">	
-				<h1>Status<button style="height:32px;width:32px;border-radius:0;"  id="btn_Ee" type="button"><img style="padding:0px;height:28px;width:28px;" src="https://sites.google.com/site/growboxguy/home/gbox420.png" /></button></h1>
+				<h1><span id="Time"></span></h1>				
 				<table class="tg">				  
 				  <tr>
 				    <td class="headerRows"><span style="font-weight:bold">Lights</span></td>
@@ -48,40 +48,27 @@
 				<h1>Power</h1>
 			    <table class="tg">
 				  <tr>
-					<th class="headerRows"><span style="font-weight:bold">12V Supply</span></th>
-					<th class="headerRows"><span style="font-weight:bold">Power</span> (W)</th>
-					<th class="headerRows"><span style="font-weight:bold">Total</span> (kWh)</th>					
+					<th class="headerRows"><span style="font-weight:bold">Power</span><br>(W)</th>
+					<th class="headerRows"><span style="font-weight:bold">Total</span><br>(kWh)</th>
+					<th class="headerRows"><span style="font-weight:bold">Voltage</span><br>(V)</th>
+					<th class="headerRows"><span style="font-weight:bold">Current</span><br>(A)</th>					
 				  </tr>
 				  <tr>
-					<td id="tdisPowersupplyOn" class="dataRows"></td>
 					<td id="tdPower" class="dataRows"></td>
 					<td id="tdEnergy" class="dataRows"></td>
-				  </tr>
-				  <tr>
-					<th class="headerRows"><span style="font-weight:bold">Voltage</span> (V)</th>
-					<th class="headerRows"><span style="font-weight:bold">Current</span> (A)</th>
-					<!--<th class="headerRows"><span style="font-weight:bold"></span></th>-->					
-				  </tr>
-				  <tr>
 					<td id="tdVoltage" class="dataRows"></td>
 					<td id="tdCurrent" class="dataRows"></td>
-					<!--<td id="tdUnSpecified2" class="dataRows"></td>-->
-				  </tr>
-				 </table><br>
-				<b>12V supply:</b>
-				<button id="btn_PowersupplyOn" type="button">Turn ON</button>
-				<button id="btn_PowersupplyOff" type="button">Turn OFF</button>			
+				  </tr>				  
+				 </table>		
 			</div>			
 			<div class="card" style="width:90%">
 				<h1>Box</h1>		
 				<table class="tg">				  
 				  <tr>
-				    <td class="headerRows"><span style="font-weight:bold">Last refresh</span><br><span>(yyyy/MM/dd)</span></td>
 					<td class="headerRows"><span style="font-weight:bold">Temp</span><br><span>(°C/°F)</span></td>
 					<td class="headerRows"><span style="font-weight:bold">Humidity</span><br><span>(RH%)</span></td>
 				  </tr>
 				  <tr>
-					<td id="tdTime" class="dataRows"></td>
 					<td id="tdBoxTemp" class="dataRows"></td>
 					<td id="tdHumidity" class="dataRows"></td>
 				  </tr>				  
@@ -164,14 +151,17 @@
 					<tr>
 					 <th class="headerRows"><span style="font-weight:bold">Level</span></th>	
 					 <th class="headerRows"><span style="font-weight:bold">PH</span></th>
-					 <!--<th class="headerRows"><span style="font-weight:bold"></span></th>-->					
+					 <th class="headerRows"><span style="font-weight:bold">Air pump</span></th>					
 					</tr>
 					<tr>
 					 <td id="tdReservoir" class="dataRows"></td>
 					 <td id="tdPH" class="dataRows"></td>
-					 <!--<td id="tdLastRefill" class="dataRows"></td>-->
+					 <td id="tdisAirPumpOn" class="dataRows"></td>
 					</tr>
-				</table> 
+				</table>
+				<b>Air pump:</b>
+				<button id="btn_AirPumpOn" type="button">Turn ON</button>
+				<button id="btn_AirPumpOff" type="button">Turn OFF</button>	
 			</div>
 			<div class="card" style="width:90%">
 				<h1>Aeroponics</h1>

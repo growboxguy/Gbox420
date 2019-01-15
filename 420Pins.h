@@ -16,7 +16,7 @@
   const byte TempSensorInPin = 43; //DAT - DHT22 temp/humidity sensor
   const byte Relay1OutPin = 22;  //Power relay Port 1 - Aeroponics solenoid
   const byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump
-  const byte Relay3OutPin = 24;  //Power relay Port 3 - PC power supply
+  const byte Relay3OutPin = 24;  //Power relay Port 3 - Reservoir air pump
   const byte Relay4OutPin = 25;  //Power relay Port 4 - Internal fan Off/On
   const byte Relay5OutPin = 26;  //Power relay Port 5 - Internal fan Low/High
   const byte Relay6OutPin = 27;  //Power relay Port 6 - Exhaust fan Off/On

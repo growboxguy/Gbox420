@@ -87,8 +87,7 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F(" ; Internal fan:"));strcat_P(WebMessage,(PGM_P)fanSpeedToText(true));
   strcat_P(WebMessage,(PGM_P)F(" ; Exhaust fan:"));strcat_P(WebMessage,(PGM_P)fanSpeedToText(false));
   strcat_P(WebMessage,(PGM_P)F("\n\r Power - "));
-  strcat_P(WebMessage,(PGM_P)F("12V supply:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.isPCPowerSupplyOn));
-  strcat_P(WebMessage,(PGM_P)F(" ; Power:")); strcat(WebMessage,toText(Power)); strcat_P(WebMessage,(PGM_P)F("W")); 
+  strcat_P(WebMessage,(PGM_P)F("Power:")); strcat(WebMessage,toText(Power)); strcat_P(WebMessage,(PGM_P)F("W")); 
   strcat_P(WebMessage,(PGM_P)F(" ; Total:")); strcat(WebMessage,toText(Energy)); strcat_P(WebMessage,(PGM_P)F("Wh"));   
   strcat_P(WebMessage,(PGM_P)F(" ; Voltage:")); strcat(WebMessage,toText(Voltage)); strcat_P(WebMessage,(PGM_P)F("V"));
   strcat_P(WebMessage,(PGM_P)F(" ; Current:")); strcat(WebMessage,toText(Current)); strcat_P(WebMessage,(PGM_P)F("A"));
@@ -108,7 +107,8 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F("\n\r Reservoir - "));  
   strcat_P(WebMessage,(PGM_P)F("PH:")); strcat(WebMessage,toText(PH));
   strcat_P(WebMessage,(PGM_P)F("(")); strcat(WebMessage,toText(PHRaw));strcat_P(WebMessage,(PGM_P)F(")"));
-  strcat_P(WebMessage,(PGM_P)F(" ; Reservoir:")); strcat(WebMessage,reservoirText);  
+  strcat_P(WebMessage,(PGM_P)F(" ; Reservoir:")); strcat(WebMessage,reservoirText);
+  strcat_P(WebMessage,(PGM_P)F(" ; AirPump:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.isAirPumpOn));  
   return WebMessage;
 }
 

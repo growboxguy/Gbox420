@@ -23,7 +23,7 @@ const char* MqttAeroPressureLow = "AeroPressureLow";
 const char* MqttAeroPressureHigh = "AeroPressureHigh";
 const char* MqttAeroSprayEnabled = "AeroSprayEnabled";
 const char* MqttLightCalibrate = "LightCalibrate";
-const char* MqttPowersupply = "Powersupply";
+const char* MqttAirPump = "AirPump";
 const char* MqttEe = "Ee";
 const char* MqttInternalFan = "InternalFan";
 const char* MqttExhaustFan = "ExhaustFan";
@@ -72,7 +72,7 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttAeroPressureHigh)!=NULL) {setAeroPressureHigh(atof(data));} 
   else if(strstr(topic,MqttAeroSprayEnabled)!=NULL) {setAeroSprayOnOff(atoi(data));}
   else if(strstr(topic,MqttLightCalibrate)!=NULL) {triggerCalibrateLights();}
-  else if(strstr(topic,MqttPowersupply)!=NULL) { if(strcmp(data,"1")==0)powerSupplyOn(); else if(strcmp(data,"0")==0)powerSupplyOff(); }
+  else if(strstr(topic,MqttAirPump)!=NULL) { if(strcmp(data,"1")==0)airPumpOn(); else if(strcmp(data,"0")==0)airPumpOff(); }
   else if(strstr(topic,MqttEe)!=NULL) { playEE(); }
   else if(strstr(topic,MqttInternalFan)!=NULL) {if(strcmp(data,"2")==0)internalFanHigh(); else if(strcmp(data,"1")==0)internalFanLow(); else if(strcmp(data,"0")==0)internalFanOff(); }
   else if(strstr(topic,MqttExhaustFan)!=NULL) {if(strcmp(data,"2")==0)exhaustFanHigh(); else if(strcmp(data,"1")==0)exhaustFanLow(); else if(strcmp(data,"0")==0)exhaustFanOff(); }

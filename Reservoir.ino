@@ -1,3 +1,15 @@
+void airPumpOn(){
+  MySettings.isAirPumpOn = true;
+  addToLog(F("Air pump ON"));
+  PlayOnSound=true;
+}
+
+void airPumpOff(){
+  MySettings.isAirPumpOn = false;
+  addToLog(F("Air pump OFF"));
+  PlayOffSound=true;
+}
+
 void checkReservoir(){
   bool isWaterAboveCritical = !digitalRead(WaterCriticalInPin);  //Water sensor, true if level reached
   bool isWaterAboveLow = !digitalRead(WaterLowInPin);
