@@ -1,7 +1,6 @@
 //Default settings of the grow box
 
 //Global constants
-  const bool debug = false; //Logs debug messages to serial and web outputs 
   const char PushingBoxLogRelayID[]= "v755877CF53383E1"; //UPDATE THIS to your PushingBox logging scenario`s DeviceID  
   const char PushingBoxEmailRelayID[]  = "vC5244859A2453AA";  //UPDATE THIS to your PushingBox email alert scenario`s DeviceID 
   const byte PotStepping = 100;  // Digital potentiometer adjustment step count
@@ -14,9 +13,10 @@
   const byte ReadCountBeforeAlert = 5; //number of consecutive out of range sensor readings for the email alert to trigger
   const byte LogDepth = 8;  //Show X log entries on website
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
+  const float DividingFactor = 10.9663;  //Voltage dividing factor on the ATXPowerGood input = Calibration voltage / Voltage over 100KOhm resistor
     
 //Settings saved to EEPROM persistent storage
-  byte Version= 2; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
+  byte Version= 3; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
   typedef struct //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   byte AeroInterval = 15; //Aeroponics - Spray every 15 minutes
@@ -56,7 +56,8 @@
   
   byte DigitDisplayBacklight = 25; //4 digit display - backlight strenght (0-100)
   int DigitDisplayValue = -1; //select which sensor reading to display(0-17), -1 cycles through all values
-  bool isSoundEnabled = true;  //Enable PC speaker  
+  bool isSoundEnabled = true;  //Enable PC speaker
+  bool isDebugEnabled = false; //Logs debug messages to serial and web outputs  
  
   bool AlertEmails = true; //disable/enable email sending  
   int TempAlertLow = 15; //Low temp warning email

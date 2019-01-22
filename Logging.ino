@@ -159,6 +159,17 @@ const __FlashStringHelper * statusToText(bool Status){
    else return F("!!!");
 } 
 
+void setDebugOnOff(bool State){
+  MySettings.isDebugEnabled = State;
+  if(MySettings.isDebugEnabled){ 
+    addToLog(F("Debug enabled"));
+    PlayOnSound=true;}
+  else {
+    addToLog(F("Debug disabled"));
+    PlayOffSound=true;
+    }
+}
+
 void setReportToGoogleSheetsOnOff(bool State){
   MySettings.ReportToGoogleSheets = State;
   if(MySettings.ReportToGoogleSheets){ 

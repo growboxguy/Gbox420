@@ -12,7 +12,6 @@ const char* MqttBrightness = "Brightness";
 const char* MqttDisplayBrightness = "DisplayBrightness";
 const char* MqttDisplayValue = "DisplayValue";
 const char* MqttTimerEnabled = "TimerEnabled";
-const char* MqttSoundEnabled = "SoundEnabled";
 const char* MqttLightsOnHour = "LightsOnHour";
 const char* MqttLightsOnMinute = "LightsOnMinute";
 const char* MqttLightsOffHour = "LightsOffHour";
@@ -27,6 +26,8 @@ const char* MqttAirPump = "AirPump";
 const char* MqttEe = "Ee";
 const char* MqttInternalFan = "InternalFan";
 const char* MqttExhaustFan = "ExhaustFan";
+const char* MqttSoundEnabled = "Sound";
+const char* MqttDebugEnabled = "Debug";
 const char* MqttGoogleSheets = "GoogleSheets";
 const char* MqttSaveSettings = "SaveSettings";
 const char* MqttAeroSprayNow = "AeroSprayNow";
@@ -61,7 +62,6 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttDisplayBrightness)!=NULL) {setDigitDisplayBacklight(atoi(data));}
   else if(strstr(topic,MqttDisplayValue)!=NULL) {setDigitDisplayValue(atoi(data));}
   else if(strstr(topic,MqttTimerEnabled)!=NULL) {setTimerOnOff(atoi(data));} //bool 
-  else if(strstr(topic,MqttSoundEnabled)!=NULL) {setSoundOnOff(atoi(data));}
   else if(strstr(topic,MqttLightsOnHour)!=NULL) {setLightsOnHour(atoi(data));}
   else if(strstr(topic,MqttLightsOnMinute)!=NULL) {setLightsOnMinute(atoi(data));}
   else if(strstr(topic,MqttLightsOffHour)!=NULL) {setLightsOffHour(atoi(data));}
@@ -76,6 +76,8 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttEe)!=NULL) { playEE(); }
   else if(strstr(topic,MqttInternalFan)!=NULL) {if(strcmp(data,"2")==0)internalFanHigh(); else if(strcmp(data,"1")==0)internalFanLow(); else if(strcmp(data,"0")==0)internalFanOff(); }
   else if(strstr(topic,MqttExhaustFan)!=NULL) {if(strcmp(data,"2")==0)exhaustFanHigh(); else if(strcmp(data,"1")==0)exhaustFanLow(); else if(strcmp(data,"0")==0)exhaustFanOff(); }
+  else if(strstr(topic,MqttSoundEnabled)!=NULL) {setSoundOnOff(atoi(data));}
+  else if(strstr(topic,MqttDebugEnabled)!=NULL) {setDebugOnOff(atoi(data));}
   else if(strstr(topic,MqttGoogleSheets)!=NULL) { ReportToGoogleSheets(true);} 
   else if(strstr(topic,MqttSaveSettings)!=NULL) { saveSettings(true);}
   else if(strstr(topic,MqttAeroSprayNow)!=NULL) { aeroSprayNow();}

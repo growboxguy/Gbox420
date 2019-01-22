@@ -13,8 +13,8 @@
 		.tg {margin:0px;width:100%;}
 		.tg td{border-style:solid;border-width:1px;font-size:14px;font-weight:normal;overflow:hidden;word-break:normal;}
 		.tg th{border-style:solid;border-width:1px;font-size:14px;font-weight:normal;overflow:hidden;word-break:normal;}
-		.tg .headerRows{font-size:14px;font-family:serif !important;text-align:center;vertical-align:center}
-		.tg .dataRows{font-size:13px;font-family:serif !important;text-align:center;vertical-align:top}
+		.tg .headerRows{font-size:14px;font-family:serif !important;text-align:center;vertical-align:center;line-height:20px;}
+		.tg .dataRows{font-size:13px;font-family:serif !important;text-align:center;vertical-align:top;line-height:20px;}
 		 button {margin:0px;padding:0px;height:24px;vertical-align:bottom;align-items:center;-webkit-appearance:button !important;line-height:normal}
 		 h1 {padding:0px;margin:0px;margin-bottom:6px;}
 	</style>	
@@ -24,19 +24,21 @@
 				<h1><span id="Time"></span></h1>				
 				<table class="tg">				  
 				  <tr>
+				  	<td class="headerRows"><span style="font-weight:bold">AC</td>
+					<td class="headerRows"><span style="font-weight:bold">DC</td>
 				    <td class="headerRows"><span style="font-weight:bold">Lights</span></td>
 					<td class="headerRows"><span style="font-weight:bold">Pressure</span></td>
 					<td class="headerRows"><span style="font-weight:bold">Pump</td>
-					<td class="headerRows"><span style="font-weight:bold">Power</td>
 					<td class="headerRows"><span style="font-weight:bold">Vent</td>
 					<td class="headerRows"><span style="font-weight:bold">Reserv</td>
 					<td class="headerRows"><span style="font-weight:bold">PH</td>
 				  </tr>	
 				  <tr>
+				  	<td id="tdACPowerOK" class="dataRows"></td>
+					<td id="tdDCPowerOK" class="dataRows"></td>
 					<td id="tdLightOK" class="dataRows"></td>
 					<td id="tdPressureOK" class="dataRows"></td>
 					<td id="tdPumpOK" class="dataRows"></td>
-					<td id="tdPowerOK" class="dataRows"></td>
 					<td id="tdVentOK" class="dataRows"></td>
 					<td id="tdReservOK" class="dataRows"></td>
 					<td id="tdPhOK" class="dataRows"></td>
@@ -67,19 +69,15 @@
 				  <tr>
 					<td class="headerRows"><span style="font-weight:bold">Temp</span><br><span>(°C/°F)</span></td>
 					<td class="headerRows"><span style="font-weight:bold">Humidity</span><br><span>(RH%)</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Internal<br>fan</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Exhaust<br>fan</span></td>
 				  </tr>
 				  <tr>
 					<td id="tdBoxTemp" class="dataRows"></td>
 					<td id="tdHumidity" class="dataRows"></td>
-				  </tr>				  
-				  <tr>
-					<td class="headerRows"><span style="font-weight:bold">Internal fan</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Exhaust fan</span></td>
-				  </tr>
-				  <tr>
 					<td id="tdInternalFanSpeed" class="dataRows"></td>
 					<td id="tdExhaustFanSpeed" class="dataRows"></td>
-				  </tr>				  
+				  </tr>
 				</table>
 				<b>Internal fan :</b>
 				<button id="btn_InternalFanOff" type="button">OFF</button>
@@ -177,7 +175,7 @@
 				</table>
 				<b>Pump</b><br>
 				<button id="btn_PumpRefill" type="button" align="rigth" title="Reset status to OK and refill pressure tank to High pressure">Refill</button>
-				<button id="btn_PumpStop" type="button" align="rigth" title="Stops the pump and reset it status to OK">Stop</button>
+				<button id="btn_PumpStop" type="button" align="rigth" title="Stops the pump and reset it status to OK">OFF</button>
 				<button id="btn_PumpDisable" type="button" align="rigth" title="Stops and disables pump">Disable</button>
 				<button id="btn_PressureCalibrate" type="button" style="margin-top:0px" title="Use only when the tank is not pressurized!">Calibrate</button>				
 				<form>
@@ -185,22 +183,22 @@
 					High: <input style="width: 50px;" min=0 max=8 step="0.1" name="AeroPressureHigh" type="number"/> bar					
 					<input type="submit" value="Set">
 				</form>
-				<b>Quiet time</b>
-					<form class="test"><label><input type="checkbox" name="AeroQuietEnabled">Enabled </label><input type="submit" value="Set"></form>
-					<form><label><input type="checkbox" name="AeroRefillBeforeQuiet" title="Before enabling quiet time refill the tank">Refill before </label><input type="submit" value="Set"></form>
-					<form>From:<input style="width: 35px;" min=0 max=23 name="AeroQuietFromHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="AeroQuietFromMinute" type="number"/> <input type="submit" value="Set"></form>
-					<form>To : <input style="width: 35px;" min=0 max=23 name="AeroQuietToHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="AeroQuietToMinute" type="number"/> <input type="submit" value="Set"></form>				
 				<b>Spray</b>
 				<form>
 					<label><input type="checkbox" name="AeroSprayEnabled">Enabled </label><input type="submit" value="Set">
 					<button id="btn_AeroSprayNow" type="button">Spray</button>
 					<button id="btn_AeroSprayOff" type="button">OFF</button>
-				</form>
+				</form>				
 				<form>
 					Interval: <input style="width: 50px;" min=0 name="AeroInterval" type="number"/> min<br>
 					Duration: <input style="width: 50px;" min=0 name="AeroDuration" type="number"/> sec
 					<input type="submit" value="Set">	
-				</form>											
+				</form>
+				<b>Quiet time</b>
+					<form class="test"><label><input type="checkbox" name="AeroQuietEnabled">Enabled </label><input type="submit" value="Set"></form>
+					<form><label><input type="checkbox" name="AeroRefillBeforeQuiet" title="Before enabling quiet time refill the tank">Refill before </label><input type="submit" value="Set"></form>
+					<form>From:<input style="width: 35px;" min=0 max=23 name="AeroQuietFromHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="AeroQuietFromMinute" type="number"/> <input type="submit" value="Set"></form>
+					<form>To : <input style="width: 35px;" min=0 max=23 name="AeroQuietToHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="AeroQuietToMinute" type="number"/> <input type="submit" value="Set"></form>				
 			</div>			
 		</div>		
 	</div>

@@ -14,20 +14,50 @@ void readPowerSensor(){
   Current = PowerSensor.current(PowerSensorIP);
   Power = PowerSensor.power(PowerSensorIP);
   Energy = PowerSensor.energy(PowerSensorIP) / 1000;  //total power consumption in kWh
-  if(PowerOK && Voltage < 0) {
-    PowerAlertCount++;
-    if(PowerAlertCount>=ReadCountBeforeAlert){
+  if(ACPowerOK && Voltage < 0) {
+    ACPowerAlertCount++;
+    if(ACPowerAlertCount>=ReadCountBeforeAlert){
       sendEmailAlert(F("AC%20input%20lost")); 
-      PowerOK = false;
+      ACPowerOK = false;
       addToLog(F("AC Power lost"));
     }
   }
   if(Voltage > 0){
-    PowerAlertCount = 0;
-    if(!PowerOK){
+    ACPowerAlertCount = 0;
+    if(!ACPowerOK){
       sendEmailAlert(F("AC%20input%20recovered"));
-      PowerOK = true;
+      ACPowerOK = true;
       addToLog(F("AC Power recovered")); 
+    }    
+  }
+}
+
+void readATXPowerGood(){   
+  float Reading=0;
+  for (byte i=0;i<10;i++) {
+        Reading += analogRead(ATXPowerGoodInPin);
+        delay(10);
+  }   
+  Reading = (Reading / 10 * 5) / 1024.0 * DividingFactor;  //using a voltage divider circuit to protect from voltage spikes up to ~50V
+  if(MySettings.isDebugEnabled){
+    LogToSerials(F("ATXPowerGood voltage: "),false);
+    LogToSerials(Reading,true);
+    }
+  
+  if(DCPowerOK && ( Reading < 4 || Reading > 6)) {  //ATX Power Good pin is not at expected 5V, signaling a problem with the power supply or the voltage divider
+    DCPowerAlertCount++;
+    if(DCPowerAlertCount>=ReadCountBeforeAlert){
+      sendEmailAlert(F("DC%20input%20lost")); 
+      DCPowerOK = false;
+      addToLog(F("DC Power lost"));
+    }
+  }
+  if(Reading > 4 && Reading < 6){  //ATX Power Good pin is at ~5V, signaling DC power output is OK
+    DCPowerAlertCount = 0;
+    if(!DCPowerOK){
+      sendEmailAlert(F("DC%20input%20recovered"));
+      DCPowerOK = true;
+      addToLog(F("DC Power recovered")); 
     }    
   }
 }

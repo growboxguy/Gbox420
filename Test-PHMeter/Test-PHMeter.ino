@@ -17,7 +17,11 @@ void setup() {
 }
 
 void loop() {
-float  Reading=0;
+readPH();
+}
+
+void readPH(){
+  float  Reading=0;
 for(byte i=0;i<200;i++) { 
    Reading+=analogRead(PHMeterInPin);
    delay(100);

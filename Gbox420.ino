@@ -29,13 +29,15 @@
   bool LightOK = true; //Track component health, at startup assume every component is OK
   bool PressureOK = true;  //Aeroponics - Pressure within range
   bool PumpOK = true; //Aeroponics - High pressure pump health
-  bool PowerOK = true; //AC voltage present
+  bool ACPowerOK = true; //AC voltage present
+  bool DCPowerOK = true; //DC voltage present
   bool VentOK = true; //Temperatur and humidity withing range
   bool ReservOK = true; //Reservoir not empty
   bool PhOK = true;  //Nutrient solution PH within range
   byte LightsAlertCount = 0;  //Counters of out of range readings before triggering an alert
   byte PressureAlertCount = 0; //All counters are compared agains ReadCountBeforeAlert from 420Settings
-  byte PowerAlertCount = 0;
+  byte ACPowerAlertCount = 0;
+  byte DCPowerAlertCount = 0;
   byte VentilationAlertCount = 0;
   byte ReservoirAlertCount = 0;
   byte PHAlertCount = 0;
@@ -98,6 +100,7 @@ void setup() {     // put your setup code here, to run once:
   loadSettings();
 
    //Pin setup, defining what Pins are inputs/outputs and setting initial output signals. Pins are defined in 420Pins.h tab
+  pinMode(ATXPowerGoodInPin, INPUT);
   pinMode(LightSensorInPin, INPUT);
   pinMode(WaterCriticalInPin, INPUT_PULLUP);
   pinMode(WaterLowInPin, INPUT_PULLUP);
@@ -189,7 +192,7 @@ void processEspLink(){
 }
 
 void oneSecRun(){
-  if(debug)LogToSerials(F("One sec trigger.."),true);
+  if(MySettings.isDebugEnabled)LogToSerials(F("One sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   checkLightStatus(); 
   checkAero();  
@@ -198,7 +201,7 @@ void oneSecRun(){
 }
 
 void fiveSecRun(){
-  if(debug)LogToSerials(F("Five sec trigger.."),true);
+  if(MySettings.isDebugEnabled)LogToSerials(F("Five sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout   
   readSensors();
   wdt_reset(); //reset watchdog timeout
@@ -207,7 +210,7 @@ void fiveSecRun(){
 }
 
 void minuteRun(){
-  if(debug)LogToSerials(F("Minute trigger.."),true);
+  if(MySettings.isDebugEnabled)LogToSerials(F("Minute trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   checkLightTimer(); 
   LogToSerials(logToText(),true);  //Logs sensor readings to Serial  
@@ -215,7 +218,7 @@ void minuteRun(){
 }
 
 void halfHourRun(){
-  if(debug)LogToSerials(F("Half hour trigger.."),true);
+  if(MySettings.isDebugEnabled)LogToSerials(F("Half hour trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   if(MySettings.ReportToGoogleSheets) ReportToGoogleSheets(false);  //uploads readings to Google Sheets via ESP REST API
   if(MySettings.ReportToMqtt) mqttPublush(false);  //publish readings via ESP MQTT API
@@ -227,6 +230,7 @@ void readSensors(){  //Bundles functions to get sensor readings
   readDHTSensor();
   checkLightSensor();
   readPowerSensor();
+  readATXPowerGood();
   readPH();
   checkReservoir();
   readAeroPressure();

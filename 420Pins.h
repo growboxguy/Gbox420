@@ -1,6 +1,7 @@
 //Pins for connecting components
 //https://sites.google.com/site/growboxguy/arduino/components
 
+  const byte ATXPowerGoodInPin = A2; //5V signal from ATX powersupply, ON if DC power output is OK
   const byte BuzzerOutPin = 4; //PC speaker+ (red)
   const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
   const byte PowerLEDOutPin = 46;  //PC case Power LED

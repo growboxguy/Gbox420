@@ -1,8 +1,12 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for testing: Reporting to Google Sheets using ESP-Link REST API
+//Update the SheetsRelayDeviceID constant before uploading!
 
 //Libraries
 #include "ELClientRest.h" // ESP-link - REST API
+
+//Global constants
+const char SheetsRelayDeviceID[] = "v420";  //Update this to your Google Sheets scenario DeviceID
 
 //Global variables - fake data to report
 char WebMessage[512];   //buffer for GoogleSheets report
@@ -11,18 +15,15 @@ bool isLightOn = true;
 int Brightness =80;
 char Message[] = "GrowBoxGuy";
 
-//Global constants
-const char SheetsRelayDeviceID[] = "v420";  //Update this to your Google Sheets scenario DeviceID
-
 //Component initialization
-ELClient esp(&Serial3);  //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
-ELClientRest rest(&esp);    // ESP-link REST API
+ELClient ESPLink(&Serial3);  //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
+ELClientRest RestAPI(&ESPLink);    // ESP-link REST API
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);    //2560mega console output
   Serial3.begin(115200);  //wifi console output
-  esp.resetCb = ResetWebServer;  //Callback subscription: When wifi is reset, restart the webServer
+  ESPLink.resetCb = ResetWebServer;  //Callback subscription: When wifi is reset, restart the webServer
   ResetWebServer();
 }
 
@@ -33,12 +34,12 @@ delay(60000);
 
 void ResetWebServer(void) {  
   Serial.println("WebServer (re)starting");
-  while(!esp.Sync())  {
+  while(!ESPLink.Sync())  {
     Serial.print(".");
     Serial3.print(".");
     delay(500);
     };
-  rest.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets 
+  RestAPI.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets 
   Serial.println("WebServer started"); 
 }
 
@@ -46,13 +47,15 @@ void reportToGoogleSheets(){
   Serial.println("Reporting to Google Sheets");
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,SheetsRelayDeviceID);
-  strcat(WebMessage,"&Humidity=");  strcat(WebMessage,floatToChar(Humidity));  
-  strcat(WebMessage,"&isLightOn=");  strcat(WebMessage,intToChar(isLightOn));
-  strcat(WebMessage,"&Brightness=");  strcat(WebMessage,intToChar(Brightness));  
-  strcat(WebMessage,"&Message=");  strcat(WebMessage,Message); 
+  strcat_P(WebMessage,(PGM_P)F("&Log="));
+  strcat_P(WebMessage,(PGM_P)F("{\"Humidity\":\""));  strcat(WebMessage,floatToChar(Humidity));
+  strcat_P(WebMessage,(PGM_P)F("\",\"isLightOn\":\""));  strcat(WebMessage,intToChar(isLightOn));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Brightness\":\""));  strcat(WebMessage,intToChar(Brightness));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Message\":\""));  strcat(WebMessage,Message);  
+  strcat_P(WebMessage,(PGM_P)F("\"}"));
   Serial.println(WebMessage);   
-  rest.get(WebMessage);
-} //api.pushingbox.com/pushingbox?devid=v420&Humidity=4.20&isLightOn=1&Brightness=80&Message=GrowBoxGuy
+  RestAPI.get(WebMessage);
+} //api.pushingbox.com/pushingbox?devid=v420&Log={"Humidity":"4.20","isLightOn":"1","Brightness":"80","Message":"GrowBoxGuy"}
 
 char * intToChar(int Number){
 static char ReturnChar[8] = ""; //7 digits + null terminator

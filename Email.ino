@@ -5,9 +5,9 @@ void sendEmailAlert(const __FlashStringHelper *title){ //Title needs to be URL e
   strcat_P(WebMessage,(PGM_P)F("&Title=")); strcat_P(WebMessage,(PGM_P)title);
   strcat_P(WebMessage,(PGM_P)F("&Log=")); logToJSON(false,true);  
   RestAPI.get(WebMessage);
-  if(debug)LogToSerials(WebMessage,true);
+  if(MySettings.isDebugEnabled)LogToSerials(WebMessage,true);
   }
-  else if(debug){
+  else if(MySettings.isDebugEnabled){
     LogToSerials(F("Alert email suppressed: "),false);
     LogToSerials(title,true);
     }

@@ -28,8 +28,8 @@ void OffSound(){
   }
 }
 
-void setSoundOnOff(bool soundState){
-  MySettings.isSoundEnabled = soundState;
+void setSoundOnOff(bool State){
+  MySettings.isSoundEnabled = State;
   if(MySettings.isSoundEnabled){ 
     addToLog(F("Sound enabled"));
     PlayOnSound=true;}

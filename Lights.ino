@@ -133,7 +133,7 @@ void runToEnd(){  //Goes to Minimum or Maximum dimming, measure light intensity 
     LightReading = 1023 - analogRead(LightSensorAnalogInPin);
     if(LightReading > MaxLightReading) MaxLightReading = LightReading;
     if(LightReading < MinLightReading) MinLightReading = LightReading;
-    if(debug){
+    if(MySettings.isDebugEnabled){
       if(StepCounter % 10 == 0)  //prints measured light intensity every 10% using modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
         {  
          if(isPotGettingHigh)LogToSerials(StepCounter,false);

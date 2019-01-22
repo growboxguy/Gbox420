@@ -51,11 +51,11 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgInt(F("AeroQuietToMinute"),MySettings.AeroQuietToMinute);
   }
   
-  if (strcmp(url,"/Settings.html.json")==0){
+  if (strcmp(url,"/Settings.html.json")==0){  
+  WebServer.setArgInt(F("SoundEnabled"), MySettings.isSoundEnabled);
+  WebServer.setArgInt(F("DebugEnabled"), MySettings.isDebugEnabled);
   WebServer.setArgInt(F("DigitDisplayBrightness"), MySettings.DigitDisplayBacklight);
   WebServer.setArgInt(F("DigitDisplayValue"), MySettings.DigitDisplayValue);
-  WebServer.setArgInt(F("SoundEnabled"), MySettings.isSoundEnabled);
-
   WebServer.setArgBoolean(F("GoogleSheetsEnabled"), MySettings.ReportToGoogleSheets);
   WebServer.setArgBoolean(F("MqttEnabled"), MySettings.ReportToMqtt);
 
@@ -77,7 +77,8 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgString(F("tdLightOK"), statusToText(LightOK)); 
   WebServer.setArgString(F("tdPressureOK"),statusToText(PressureOK));
   WebServer.setArgString(F("tdPumpOK"),statusToText(PumpOK));
-  WebServer.setArgString(F("tdPowerOK"),statusToText(PowerOK));
+  WebServer.setArgString(F("tdACPowerOK"),statusToText(ACPowerOK));
+  WebServer.setArgString(F("tdDCPowerOK"),statusToText(DCPowerOK));
   WebServer.setArgString(F("tdVentOK"),statusToText(VentOK));
   WebServer.setArgString(F("tdReservOK"),statusToText(ReservOK));
   WebServer.setArgString(F("tdPhOK"),statusToText(PhOK));
@@ -150,7 +151,6 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("ExhaustFanOffHumid"))==0) {setExhaustOffHumidity(WebServer.getArgInt());}
   
   else if(strcmp_P(field,(PGM_P)F("TimerEnabled"))==0) {setTimerOnOff(WebServer.getArgBoolean());}
-  else if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("LightsOnHour"))==0) {setLightsOnHour(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("LightsOnMinute"))==0) {setLightsOnMinute(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("LightsOffHour"))==0) {setLightsOffHour(WebServer.getArgInt());}
@@ -166,7 +166,9 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("AeroQuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("AeroQuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}  
   else if(strcmp_P(field,(PGM_P)F("AeroSprayEnabled"))==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
-  
+
+  else if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("DebugEnabled"))==0) {setDebugOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("DigitDisplayBrightness"))==0) {setDigitDisplayBacklight(WebServer.getArgInt());}
