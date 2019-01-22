@@ -24,8 +24,6 @@ We build an Arduino based grow box monitoring and controlling system out of an o
 <h2>Assembly guide: https://sites.google.com/site/growboxguy/arduino</h2>
 </div>
 
-<div>
-Overview
 ![alt text](https://docs.google.com/drawings/d/saJcW0ASTVO8vFDMZu1nxyQ/image?w=896&h=417&rev=986&ac=1&parent=13WdrW3qaUhXpjld2XEMji3r6EkQRwYiImda7D3szmkA)
 
 Website hosted by the ESP link, displaying sensor readings from Arduino and controlling the grow box
@@ -47,5 +45,3 @@ Google Sheets integrated into the grow box interface:
 ![alt text](https://lh3.googleusercontent.com/41GrczKaTNOsarf77zMgRfFIXO0N6_M5OUkGF6ExIX2rAOiUb2TsIqysGyW5Wgh4zuC2HWapsesOLbXWYjlrfgbsEbyCvl771q10y_Fa7Fm9chMcJQheiQtlYBmARe-N49YC4Ujh)
 
 ![alt text](https://lh3.googleusercontent.com/GYfuFEZYxv5bDz5c3xNUVWoYVUGvm7BrU0dTOZW3aT5HbDEg0XzhBQun3GnablQhYy24-9FeZQNwcu0NIn7_NnKEgtnC1NQ315UYyHmVLf3CL267afzK913bABHSn6Ym1bKlC4TW)
-
-</div>
