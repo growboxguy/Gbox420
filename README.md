@@ -25,6 +25,7 @@ We build an Arduino based grow box monitoring and controlling system out of an o
 </div>
 
 <div>
+Overview
 ![alt text](https://docs.google.com/drawings/d/saJcW0ASTVO8vFDMZu1nxyQ/image?w=896&h=417&rev=986&ac=1&parent=13WdrW3qaUhXpjld2XEMji3r6EkQRwYiImda7D3szmkA)
 
 Website hosted by the ESP link, displaying sensor readings from Arduino and controlling the grow box
