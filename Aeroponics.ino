@@ -7,6 +7,7 @@ void checkAeroSprayTimer(){
  if(isAeroSprayOn)    { //if spray is on
     if(millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //if time to stop spraying (AeroDuration in Seconds)
       isAeroSprayOn = false;
+      checkRelays();
       LogToSerials(F("Stopping spray"),true);
       PlayOffSound = true;
       AeroSprayTimer = millis();
@@ -16,6 +17,7 @@ void checkAeroSprayTimer(){
     if(millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
       if(MySettings.isAeroSprayEnabled){
         isAeroSprayOn = true;
+        checkRelays();
         LogToSerials(F("Starting spray"),true);
         PlayOnSound = true;
         AeroSprayTimer = millis();
@@ -83,7 +85,7 @@ void readAeroPressure(){
   }
   Reading = Reading /50;
   float Voltage = ((float)Reading) * 5 / 1024 ;
-  AeroPressure = (PressureSensorVoltageToPressure*(Voltage-PressureSensorOffset)); // unit: bar / 100kPa
+  AeroPressure = (MySettings.PressureSensorRatio*(Voltage-MySettings.PressureSensorOffset)); // unit: bar / 100kPa
   AeroPressurePSI = AeroPressure * 14.5038; 
 }
 
@@ -97,6 +99,16 @@ void calibratePressureSensor(){  //Should only be called when there is 0 pressur
   strncpy_P(LogMessage,(PGM_P)F("0 pressure AeroOffset: "),LogLength);
   strcat(LogMessage,toText(AeroOffsetRecommendation));
   addToLog(LogMessage);
+}
+
+void setPressureSensorOffset(float Value){
+  MySettings.PressureSensorOffset = Value;
+  addToLog(F("Pressure offset updated"));  
+}
+
+void setPressureSensorRatio(float Value){
+  MySettings.PressureSensorRatio = Value;
+  addToLog(F("Pressure/voltage ratio updated"));  
 }
 
 void setAeroInterval(int interval){  
@@ -148,12 +160,14 @@ void setAeroPressureHigh(float PressureHigh){
 void aeroPumpOn(){
   PumpOK = true;
   isAeroPumpOn = true;
+  checkRelays();
   AeroPumpTimer = millis();      
   PlayOnSound = true;
 }
 
 void aeroPumpOff(){
   isAeroPumpOn = false;
+  checkRelays();
   PlayOffSound = true;
 }
 

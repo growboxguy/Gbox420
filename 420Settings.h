@@ -1,4 +1,6 @@
 //Default settings of the grow box
+//If you are new here: 
+
 
 //Global constants
   const char PushingBoxLogRelayID[]= "v755877CF53383E1"; //UPDATE THIS to your PushingBox logging scenario`s DeviceID  
@@ -6,17 +8,13 @@
   const byte PotStepping = 100;  // Digital potentiometer adjustment step count
   const byte ScreenRotation = 1;  //LCD screen rotation: 1,3:landscape 2,4:portrait
   const unsigned long AeroPumpTimeout = 360000;  // Aeroponics - Max pump run time (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
-  const float PressureSensorOffset = 0.58;  //Pressure sensor calibration: voltage reading at 0 pressure
-  const float PressureSensorVoltageToPressure = 2.7; //Pressure sensor voltage to pressure ratio
-  const float PHCalibrationSlope = -0.033256;  //Update this to your own PH meter calibration values
-  const float PHCalibrationIntercept = 24.08651;  //Update this to your own PH meter calibration values
-  const byte ReadCountBeforeAlert = 5; //number of consecutive out of range sensor readings for the email alert to trigger
-  const byte LogDepth = 8;  //Show X log entries on website
+  const byte ReadCountBeforeAlert = 5; //number of consecutive out of range sensor readings before the email alert is triggered
+  const byte LogDepth = 12;  //Show X log entries on website
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
-  const float DividingFactor = 10.9663;  //Voltage dividing factor on the ATXPowerGood input = Calibration voltage / Voltage over 100KOhm resistor
+  const float DividingFactor = 4.7;  //Voltage dividing factor on the ATXPowerGood input = Measured voltage / Voltage over voltage devider
     
 //Settings saved to EEPROM persistent storage
-  byte Version= 3; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
+  byte Version= 4; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
   typedef struct //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   byte AeroInterval = 15; //Aeroponics - Spray every 15 minutes
@@ -68,6 +66,11 @@
   float PressureAlertHigh = 7.5; //High pressure warning  
   float PHAlertLow = 5.5; //Low pressure warning
   float PHAlertHigh = 6.5; //High pressure warning
+
+  float PressureSensorOffset = 0.57;        //Pressure sensor calibration: voltage reading at 0 pressure
+  float PressureSensorRatio = 2.7;          //Pressure sensor voltage to pressure ratio
+  float PHCalibrationSlope = -0.033256;     //Update this to your own PH meter calibration values
+  float PHCalibrationIntercept = 24.08651;  //Update this to your own PH meter calibration values
 
   byte StructureVersion = Version;  
   } Settings;  //New type called: Settings

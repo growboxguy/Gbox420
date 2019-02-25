@@ -1,7 +1,16 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
 
-//TODO: flow meter
+//HELLO, You are probably here looking for the following tabs:
+// 420Pins.h : Modify the Pin assignment
+// 420Settings.h : First time setup or changing the default settings
+
+//TODO: 
+//Flow meter
+//EC meter
+//High pressure pump timeout adjustment on Settings page
+//Pushingbox ID adjustment on Settings - Email alerts
+//Check for pressure change during pump on
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -177,7 +186,7 @@ void setup() {     // put your setup code here, to run once:
   
   //Start interrupts to handle request from ESP-Link firmware
   Timer3.initialize(500);  //check every 0.5sec, using a larger interval can cause web requests to time out
-  Timer3.attachInterrupt(processEspLink);
+  Timer3.attachInterrupt(processTimeCriticalStuff);
   Timer3.start();
 
   sendEmailAlert(F("Grow%20box%20(re)started"));
@@ -187,7 +196,7 @@ void loop() {  // put your main code here, to run repeatedly:
   ThreadControl.run();    //loop only checks if it's time to trigger one of the threads
 }
 
-void processEspLink(){
+void processTimeCriticalStuff(){
   ESPLink.Process();  //Interrupt calls this every 0.5 sec and process any request coming from th ESP-Link
 }
 
@@ -231,7 +240,7 @@ void readSensors(){  //Bundles functions to get sensor readings
   checkLightSensor();
   readPowerSensor();
   readATXPowerGood();
-  readPH();
+  readPH(false);
   checkReservoir();
   readAeroPressure();
 }

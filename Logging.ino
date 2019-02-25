@@ -125,9 +125,16 @@ char * toText(int Number1, int Number2,const char * Separator){  //function over
 }
 
 char * toText(float Number){ 
-  static char ReturnFloatChar[10] = "";  //6 digits + decimal sign + 2 decimals + null terminator
+  static char ReturnFloatChar[10] = "";  //1 sign (if negative) + 5 digits + decimal sign + 2 decimals + null terminator
   if(isnan(Number)) Number= -1.0;
   dtostrf(Number, 4, 2, ReturnFloatChar); 
+  return ReturnFloatChar;
+}
+
+char * toPrecisionText(float Number){ 
+  static char ReturnFloatChar[14] = "";  //1 sign (if negative) + 5 digits + decimal sign + 6 decimals + null terminator
+  if(isnan(Number)) Number= -1.0;
+  dtostrf(Number, 9, 6, ReturnFloatChar); 
   return ReturnFloatChar;
 }
 

@@ -68,6 +68,11 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgString(F("PressureAlertHigh"), toText(MySettings.PressureAlertHigh));
   WebServer.setArgString(F("PHAlertLow"), toText(MySettings.PHAlertLow));
   WebServer.setArgString(F("PHAlertHigh"), toText(MySettings.PHAlertHigh));  
+
+  WebServer.setArgString(F("PHCalibrationSlope"), toPrecisionText(MySettings.PHCalibrationSlope));
+  WebServer.setArgString(F("PHCalibrationIntercept"), toPrecisionText(MySettings.PHCalibrationIntercept)); 
+  WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(MySettings.PressureSensorOffset));
+  WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(MySettings.PressureSensorRatio)); 
   }
 }
 
@@ -131,12 +136,18 @@ void ButtonPressCallback(char *button)
   else if (strcmp_P(button,(PGM_P)F("btn_PumpRefill"))==0) { aeroPumpRefill();}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpStop"))==0) { aeroPumpStop();}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpDisable"))==0) { aeroPumpDisable();}  
-  else if (strcmp_P(button,(PGM_P)F("btn_PressureCalibrate"))==0) { calibratePressureSensor();}
   else if (strcmp_P(button,(PGM_P)F("btn_GoogleSheets"))==0) { ReportToGoogleSheets(true);} 
   else if (strcmp_P(button,(PGM_P)F("btn_Mqtt"))==0) { mqttPublush(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { playEE(); }
   else if (strcmp_P(button,(PGM_P)F("btn_SaveSettings"))==0) { saveSettings(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_AlertTest"))==0) { sendTestEmailAlert();}
+  else if (strcmp_P(button,(PGM_P)F("btn_DigitDisplayLoop"))==0) { setDigitDisplayLoop();}
+  else if (strcmp_P(button,(PGM_P)F("btn_DigitDisplayLockTemp"))==0) { setDigitDisplayLockTemp();}
+  else if (strcmp_P(button,(PGM_P)F("btn_DigitDisplayLockPH"))==0) { setDigitDisplayLockPH(); }
+  else if (strcmp_P(button,(PGM_P)F("btn_DigitDisplayLockPressure"))==0) { setDigitDisplayLockPressure();}
+  else if (strcmp_P(button,(PGM_P)F("btn_DigitDisplayLockWattage"))==0) { setDigitDisplayLockWattage();}
+  else if (strcmp_P(button,(PGM_P)F("btn_PressureCalibrate"))==0) { calibratePressureSensor();}
+  else if (strcmp_P(button,(PGM_P)F("btn_PHCalibrate"))==0) { readPH(true);}
   saveSettings(false); 
 }
 
@@ -183,6 +194,11 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("PressureAlertHigh"))==0) {setPressureAlertHigh(WebServer.getArgFloat());}
   else if(strcmp_P(field,(PGM_P)F("PHAlertLow"))==0) {setPHAlertLow(WebServer.getArgFloat());}
   else if(strcmp_P(field,(PGM_P)F("PHAlertHigh"))==0) {setPHAlertHigh(WebServer.getArgFloat());}
+
+  else if(strcmp_P(field,(PGM_P)F("PHCalibrationSlope"))==0) {setPHCalibrationSlope(WebServer.getArgFloat());}
+  else if(strcmp_P(field,(PGM_P)F("PHCalibrationIntercept"))==0) {setPHCalibrationIntercept(WebServer.getArgFloat());}
+  else if(strcmp_P(field,(PGM_P)F("PressureSensorOffset"))==0) {setPressureSensorOffset(WebServer.getArgFloat());}
+  else if(strcmp_P(field,(PGM_P)F("PressureSensorRatio"))==0) {setPressureSensorRatio(WebServer.getArgFloat());}
   
   saveSettings(false);
 } 

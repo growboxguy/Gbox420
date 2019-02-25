@@ -6,7 +6,7 @@
 #include "ELClientRest.h" // ESP-link - REST API
 
 //Global constants
-const char SheetsRelayDeviceID[] = "v420";  //Update this to your Google Sheets scenario DeviceID
+const char PushingBoxLogRelayID[]= "v420"; //UPDATE THIS to your PushingBox logging scenario`s DeviceID 
 
 //Global variables - fake data to report
 char WebMessage[512];   //buffer for GoogleSheets report
@@ -46,7 +46,7 @@ void ResetWebServer(void) {
 void reportToGoogleSheets(){
   Serial.println("Reporting to Google Sheets");
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
-  strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,SheetsRelayDeviceID);
+  strcat(WebMessage,"/pushingbox?devid="); strcat(WebMessage,PushingBoxLogRelayID);
   strcat_P(WebMessage,(PGM_P)F("&Log="));
   strcat_P(WebMessage,(PGM_P)F("{\"Humidity\":\""));  strcat(WebMessage,floatToChar(Humidity));
   strcat_P(WebMessage,(PGM_P)F("\",\"isLightOn\":\""));  strcat(WebMessage,intToChar(isLightOn));

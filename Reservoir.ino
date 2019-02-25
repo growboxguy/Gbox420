@@ -72,15 +72,32 @@ void checkReservoirAlert(){
 }
 
 //***PH METER***
-void readPH(){
+void readPH(bool ShowRaw){
   float  Reading=0;
   for(byte i=0;i<40;i++) { 
    Reading+=analogRead(PHMeterInPin);
    delay(25);
   }
   PHRaw = Reading /40; //Calculates average
-  PH = PHCalibrationSlope*PHRaw + PHCalibrationIntercept;  //equation of the line  
+  if(ShowRaw)
+  {
+  strncpy_P(LogMessage,(PGM_P)F("PH analog read: "),LogLength);
+  strcat(LogMessage,toText(PHRaw));
+  addToLog(LogMessage);
+  }
+  PH = MySettings.PHCalibrationSlope*PHRaw + MySettings.PHCalibrationIntercept;  //equation of the line  
   checkPHAlert();
+}
+
+
+void setPHCalibrationSlope(float Value){
+  MySettings.PHCalibrationSlope = Value;
+  addToLog(F("PH slope updated"));
+}
+
+void setPHCalibrationIntercept(float Value){
+  MySettings.PHCalibrationIntercept = Value;
+  addToLog(F("PH intercept updated"));
 }
 
 void checkPHAlert(){

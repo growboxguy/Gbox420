@@ -1,5 +1,6 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for testig: PC case LEDs and Power button
+//Holding the power button triggers a state change of the power LED. Optionally  hook up the HDD LED to Arduino port 47 for it to play the SOS signal. 
 
 //Pins
 const int PowerLEDOutPin = 46;  // Digital output - PC case Power LED
@@ -34,5 +35,3 @@ delay(duration);
 digitalWrite(HddLEDOutPin, LOW);
 delay(duration);
 }
-
-

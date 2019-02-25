@@ -5,8 +5,8 @@
 int PHMeterInPin = A3; //Po analog port - PH meter
 
 //Global constants
-const float PHCalibrationSlope = -0.031332;  //Update this to your own calibration values
-const float PHCalibrationIntercept = 22.637144;  //Update this to your own calibration values
+float PHCalibrationSlope = -0.031332;      //Update this to your own calibration values
+float PHCalibrationIntercept = 22.637144;  //Update this to your own calibration values
 
 //Global variables
 float PH;

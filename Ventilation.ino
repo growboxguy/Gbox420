@@ -131,7 +131,7 @@ void setExhaustLowHumidity(int Humidity){
 
 void setExhaustHighHumidity(int Humidity){
   MySettings.exhaustFanHighHumid = Humidity;
-  addToLog(F("ExhaustFan limits updated"));
+  addToLog(F("Exhaust fan limits updated"));
 }
 
 const __FlashStringHelper * fanSpeedToText(bool Internal){

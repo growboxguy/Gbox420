@@ -8,7 +8,7 @@
 char WebMessage[512];
 
 //Global constants
-const char PushingBoxEmailAlertID[]  = "vC5244859A2453AA";  //Update this to your email alert scenario DeviceID
+const char PushingBoxEmailAlertID[]  = "vC5244859A2453AA";  //UPDATE THIS to your PushingBox email alert scenario`s DeviceID 
 
 //Component initialization
 ELClient ESPLink(&Serial3);  //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
@@ -38,12 +38,12 @@ void ResetWebServer(void) {
   Serial.println("WebServer started"); 
 }
 
-void sendEmailAlert(const __FlashStringHelper *title,const __FlashStringHelper *alert){
+void sendEmailAlert(const __FlashStringHelper *title,const __FlashStringHelper *body){
   Serial.println("Sending email alert");
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,PushingBoxEmailAlertID); 
   strcat_P(WebMessage,(PGM_P)F("&Title=")); strcat_P(WebMessage,(PGM_P)title);
-  strcat_P(WebMessage,(PGM_P)F("&Alert=")); strcat_P(WebMessage,(PGM_P)alert); 
+  strcat_P(WebMessage,(PGM_P)F("&Log=")); strcat_P(WebMessage,(PGM_P)body); 
   Serial.println(WebMessage);   
   RestAPI.get(WebMessage);
 }

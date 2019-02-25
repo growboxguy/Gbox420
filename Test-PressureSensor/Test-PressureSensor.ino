@@ -5,7 +5,8 @@
 const byte AeroPressureSensorInPin = A1; //analog port - AeroPressure sensor
 
 //Global variables
-float AeroOffset = 0.5 ;  //Lowest voltage value with 0 AeroPressure
+float PressureSensorOffset = 0.57 ;  //Lowest voltage value with 0 AeroPressure
+float PressureSensorRatio = 2.7; //Pressure sensor voltage to pressure ratio
 float AeroPressure;
 float AeroPressurePSI;
 
@@ -24,12 +25,12 @@ void loop()
   }
   Reading = Reading /50;
   float Voltage = ((float)Reading) * 5 / 1024 ;     //Sensor output voltage
-  AeroPressure = (2.7*(Voltage-AeroOffset)); // unit: bar / 100kPa
+  AeroPressure = (PressureSensorRatio*(Voltage-PressureSensorOffset)); // unit: bar / 100kPa
   AeroPressurePSI = AeroPressure * 14.5038;  //psi
 
   Serial.print("Reading: "); Serial.println(Reading);
   Serial.print("Voltage: "); Serial.print(Voltage); Serial.println("V");
-  Serial.print("Offset: "); Serial.print(AeroOffset); Serial.print("V, Offset compensated:");Serial.print(Voltage-AeroOffset); Serial.println("V");
+  Serial.print("Offset: "); Serial.print(PressureSensorOffset); Serial.print("V, Offset compensated:");Serial.print(Voltage-PressureSensorOffset); Serial.println("V");
   Serial.print("Pressure: "); Serial.print(AeroPressure, 1); Serial.print(" bar / "); Serial.print(AeroPressurePSI, 1); Serial.println(" psi");
   Serial.println();
   delay(2000);
@@ -41,7 +42,6 @@ void calibrateAeroPressureSensor(){
   sum += analogRead(AeroPressureSensorInPin) ; 
   delay(10);
   }  
-  AeroOffset = (sum/50)*5/1024;
-  Serial.print("Pressure sensor calibrated, offset voltage: "); Serial.println(AeroOffset); //expected ~0.5V
+  PressureSensorOffset = (sum/50)*5/1024;
+  Serial.print("Pressure sensor calibrated, offset voltage: "); Serial.println(PressureSensorOffset); //expected ~0.5V
 }
-

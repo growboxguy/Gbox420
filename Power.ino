@@ -38,7 +38,7 @@ void readATXPowerGood(){
         Reading += analogRead(ATXPowerGoodInPin);
         delay(10);
   }   
-  Reading = (Reading / 10 * 5) / 1024.0 * DividingFactor;  //using a voltage divider circuit to protect from voltage spikes up to ~50V
+  Reading = (Reading / 10 * 5) / 1024.0 * DividingFactor;  //using a voltage divider circuit to protect from voltage spikes up to ~20V
   if(MySettings.isDebugEnabled){
     LogToSerials(F("ATXPowerGood voltage: "),false);
     LogToSerials(Reading,true);

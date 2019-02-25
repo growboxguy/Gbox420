@@ -27,7 +27,14 @@
 				<form><label><input type="checkbox" name="DebugEnabled">Debug enabled </label><input type="submit" value="Set"></form>
 				<b>Digit display</b>
 				<form>Backlight: Min<input style="width:100px;" type="range" name="DigitDisplayBrightness" min="0" max="100"/>Max <input type="submit" value="Set"></form>
-				<form>Lock to value: <input style="width: 35px;" min=-1 max=17 name="DigitDisplayValue" type="number" step="1"/> <input type="submit" value="Set"></form>					
+				<form>
+					Lock to value: <input style="width: 35px;" min=-1 max=17 name="DigitDisplayValue" type="number" step="1"/> <input type="submit" value="Set">
+					<button id="btn_DigitDisplayLoop" type="button" style="margin-top:0px">Loop</button>
+				</form>
+				<button id="btn_DigitDisplayLockTemp" type="button" style="margin-top:0px">Temp</button>
+				<button id="btn_DigitDisplayLockPH" type="button" style="margin-top:0px">PH</button>
+				<button id="btn_DigitDisplayLockPressure" type="button" style="margin-top:0px">Pressure</button>
+				<button id="btn_DigitDisplayLockWattage" type="button" style="margin-top:0px">Wattage</button><br>								
 				<b>Reporting</b>
 				<form><label><input type="checkbox" name="MqttEnabled">MQTT </label></input><input type="submit" value="Set"> <button id="btn_Mqtt" type="button" style="margin-top:0px">Trigger</button></form>
 				<form><label><input type="checkbox" name="GoogleSheetsEnabled">Google Sheets </label><input type="submit" value="Set"> <button id="btn_GoogleSheets" type="button" style="margin-top:0px">Trigger</button></form>
@@ -84,7 +91,24 @@
 				  </tr>					  
 				</table>
 				<ul id="list_SerialLog"></ul>	
-			</div>		
+			</div>
+			<div class="card" style="width:90%">
+				<h1>Calibration</h1>				
+				<b>PH meter</b>
+				<form>
+					Slope:<input style="width: 80px;" name="PHCalibrationSlope" type="text"/> 
+					Intercept:<input style="width: 80px;" name="PHCalibrationIntercept" type="text"/>
+					<input type="submit" value="Set">
+					<button id="btn_PHCalibrate" type="button" style="margin-top:0px" title="Displays the analog PH value for a calibration point">Read raw</button>					
+				</form>
+				<b>Pressure sensor</b>
+				<form>
+					Offset:<input style="width: 80px;" name="PressureSensorOffset" type="text"/> 
+					Ratio: <input style="width: 80px;" title="Voltage to pressure ratio" name="PressureSensorRatio" type="text"/>					
+					<input type="submit" value="Set">
+					<button id="btn_PressureCalibrate" type="button" style="margin-top:0px" title="Use only when the tank is not pressurized!">Read offset</button>
+				</form>				
+			</div>					
 		</div>		
 	</div>
   </div> 

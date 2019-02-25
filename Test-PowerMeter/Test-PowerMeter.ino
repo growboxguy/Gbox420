@@ -1,5 +1,6 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for testing: Power meter
+//Displays the measured voltage, current, actual and total energy consumption and prints it on the Serial output every 5 seconds.
 
 //Libraries
 #include "SoftwareSerial.h" // Arduino IDE >1.6.6
@@ -25,5 +26,5 @@ void loop() {
   Serial.print(p);Serial.print("W; ");
   float e = pzem.energy(ip);
   Serial.print(e);Serial.println("Wh; ");
-  delay(1000);
+  delay(5000);
 }

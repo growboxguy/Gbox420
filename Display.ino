@@ -101,6 +101,31 @@ void setDigitDisplayBacklight(int Backlight){
   addToLog(F("Digit display brightness set"));
 }
 
+void setDigitDisplayLoop(){
+  MySettings.DigitDisplayValue = -1;
+  addToLog(F("Display set to loop"));
+}
+
+void setDigitDisplayLockTemp(){
+  MySettings.DigitDisplayValue = 1;
+  addToLog(F("Display locked to Temp"));
+}
+
+void setDigitDisplayLockPressure(){
+  MySettings.DigitDisplayValue = 5;
+  addToLog(F("Display locked to Pressure"));
+}
+
+void setDigitDisplayLockPH(){
+  MySettings.DigitDisplayValue = 7;
+  addToLog(F("Display locked to PH"));
+}
+
+void setDigitDisplayLockWattage(){
+  MySettings.DigitDisplayValue = 9;
+  addToLog(F("Display locked to Wattage"));
+}
+
 void setDigitDisplayValue(int Value){
   MySettings.DigitDisplayValue=Value;
   if(Value<0)addToLog(F("Digit display cycle ON"));
