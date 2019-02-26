@@ -3,6 +3,7 @@
 
   const byte ATXPowerGoodInPin = A2; //5V signal from ATX powersupply, ON if DC power output is OK
   const byte BuzzerOutPin = 4; //PC speaker+ (red)
+  const byte DimmingOutPin = 9; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
   const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
   const byte PowerLEDOutPin = 46;  //PC case Power LED
   const byte PowerButtonInPin = 48;  //Power button 
@@ -24,9 +25,6 @@
   const byte Relay7OutPin = 28;  //Power relay Port 7 - Exhaust fan Low/High
   const byte Relay8OutPin = 29;  //Power relay Port 8 - LED lights
   const byte PHMeterInPin = A3;  //Po - PH meter
-  const byte PotCSOutPin = 34;  //CS - X9C104 digital potentiometer  
-  const byte PotUDOutPin = 32;  //UD - X9C104 digital potentiometer
-  const byte PotINCOutPin = 33; //INC - X9C104 digital potentiometer
   const byte ScreenReset = 37; //RESET(3.3V) - Screen Screen
   const byte ScreenSCK = 38;  //SCK(3.3V) - Screen Screen
   const byte ScreenMOSI = 39; //SDO/MOSI(3.3V) - Screen Screen

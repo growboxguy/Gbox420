@@ -42,11 +42,7 @@ void setBrightness(int NewBrightness, bool AddToLog){
     strcat_P(LogMessage,(PGM_P)F("%"));
     addToLog(LogMessage);
   }    
-  while(MySettings.LightBrightness != NewBrightness){
-    if(NewBrightness < MySettings.LightBrightness)  isPotGettingHigh = false;
-    else isPotGettingHigh = true;
-    stepOne();
-  }
+  analogWrite(DimmingOutPin, map(NewBrightness,0,100,MaxDimming,0) ); //mapping 0% brightness to MaxDimming(92%) duty cycle, and 100% brighness to 0% dimming duty cycle
 }
 
 void checkLightSensor(){
@@ -78,72 +74,30 @@ void checkLightSensor(){
   }
 }
 
-void storeBrightness(){  //store current potentiometer value in the X9C104 memory for the next power on. Write durability is only 100.000 writes, use with caution
-  digitalWrite(PotINCOutPin,HIGH);
-  digitalWrite(PotCSOutPin,HIGH);
-  delay(50);
-  digitalWrite(PotCSOutPin,LOW);
-  digitalWrite(PotINCOutPin,LOW);
-}
-
 void triggerCalibrateLights(){ //website signals to calibrate lights when checkLightStatus runs next
   CalibrateLights = true; 
 }
 
 void calibrateLights(){
-  CalibrateLights=false;
-  int LastBrightness = MySettings.LightBrightness;
+  CalibrateLights=false;  
   bool LastLightStatus = MySettings.isLightOn;
-  MaxLightReading = 0;
-  MinLightReading = 1023;
-  isPotGettingHigh = false;
   MySettings.isLightOn=true;
-  checkLightStatus();
-  for (int steps = 0; steps < PotStepping; steps++) 
-    {stepOne();}  //Sets the digital potentiometer to low irregardless what the stored startup value is
-  MySettings.LightBrightness = 0;
-  isPotGettingHigh = true;  //set next step direction
-  wdt_reset(); //reset watchdog timeout
-  runToEnd(); //runs to highest value
-  wdt_reset(); //reset watchdog timeout
-  runToEnd(); //runs to lowest value (same function)
-  wdt_reset(); //reset watchdog timeout
-  setBrightness(LastBrightness,false);
-  MySettings.isLightOn=LastLightStatus;
-  checkLightStatus();  
-  addToLog(F("Lights calibrated"));
-}
-
-void stepOne(){  //Adjust Potentiometer by one
-  digitalWrite(PotUDOutPin,isPotGettingHigh);  //true=HIGH=increase brightness
-  digitalWrite(PotINCOutPin,HIGH);   //signal the change to the chip
-  if(MySettings.isSoundEnabled){ tone(BuzzerOutPin,MySettings.LightBrightness * 10); }
-  delay(10);  //delay super oversized, https://www.intersil.com/content/dam/intersil/documents/x9c1/x9c102-103-104-503.pdf  
-  digitalWrite(PotINCOutPin,LOW);
-  delay(10);
-  noTone(BuzzerOutPin);
-  if(isPotGettingHigh && (MySettings.LightBrightness < PotStepping))  MySettings.LightBrightness++;
-  else if(MySettings.LightBrightness > 0)  MySettings.LightBrightness--;
-}
-
-void runToEnd(){  //Goes to Minimum or Maximum dimming, measure light intensity on the way
-  int StepCounter = 0;
-  while(StepCounter < PotStepping){ 
-    stepOne();      //step in one direction (Initially upwards) 
-    LightReading = 1023 - analogRead(LightSensorAnalogInPin);
-    if(LightReading > MaxLightReading) MaxLightReading = LightReading;
-    if(LightReading < MinLightReading) MinLightReading = LightReading;
-    if(MySettings.isDebugEnabled){
-      if(StepCounter % 10 == 0)  //prints measured light intensity every 10% using modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
-        {  
-         if(isPotGettingHigh)LogToSerials(StepCounter,false);
-         else LogToSerials(PotStepping - StepCounter,false);
-         LogToSerials(F("% - "),false); LogToSerials(LightReading,true);
-        }
-    }  
-    StepCounter++;
+  checkLightStatus();  //apply turning the lights on
+  setBrightness(0,false);
+  delay(100); //wait for light output change
+  MinLightReading = 1023 - analogRead(LightSensorAnalogInPin);
+  setBrightness(100,false);
+  delay(100); //wait for light output change
+  MaxLightReading = 1023 - analogRead(LightSensorAnalogInPin);
+  
+  if(MySettings.isDebugEnabled){
+         LogToSerials(F("0% - "),false); LogToSerials(MinLightReading,false);
+         LogToSerials(F(", 100% - "),false); LogToSerials(MaxLightReading,true);
   }
-  isPotGettingHigh= !isPotGettingHigh;  // flip the direction for he next run
+  setBrightness(MySettings.LightBrightness,false);
+  MySettings.isLightOn=LastLightStatus;
+  checkLightStatus();
+  addToLog(F("Lights calibrated"));
 }
 
 void turnLightON(bool AddToLog){

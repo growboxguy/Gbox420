@@ -61,7 +61,6 @@
   float PH; //Calculated PH  
   int LightReading;  //light sensor analog reading
   bool isBright;  //Ligth sensor digital feedback: True-Bright / False-Dark
-  bool isPotGettingHigh = false;  // Digital potentiometer direction, false: Decrease , true: Increase 
   byte reservoirLevel = 4;
   char reservoirText[9]= "E[####]F";
   bool PlayOnSound = false; //Play on beep flag - website controls it
@@ -129,16 +128,13 @@ void setup() {     // put your setup code here, to run once:
   pinMode(DigitDisplayDI0OutPin, OUTPUT);  
   pinMode(PowerLEDOutPin, OUTPUT);
   pinMode(PowerButtonInPin, INPUT_PULLUP);
-  pinMode(PotCSOutPin, OUTPUT);
-  pinMode(PotUDOutPin, OUTPUT);
-  pinMode(PotINCOutPin, OUTPUT);
+  pinMode(DimmingOutPin, OUTPUT);
   pinMode(ScreenReset, OUTPUT);
   pinMode(ScreenDC, OUTPUT);
   pinMode(ScreenCS, OUTPUT);
   pinMode(ScreenMOSI, OUTPUT);
   pinMode(ScreenMISO, INPUT);
   pinMode(ScreenSCK, OUTPUT);
-  digitalWrite(PotCSOutPin,LOW); //CS input is low when the chip is active, https://www.intersil.com/content/dam/intersil/documents/x9c1/x9c102-103-104-503.pdf
   digitalWrite(BuiltInLEDOutPin, LOW); //LED OFF,without this LED would be randomly on or off when the board is powered on
   digitalWrite(Relay1OutPin, HIGH); //default OFF (Uses negative logic - HIGH turns relay off, LOW on) 
   digitalWrite(Relay2OutPin, HIGH); 

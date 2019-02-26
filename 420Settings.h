@@ -1,15 +1,13 @@
-//Default settings of the grow box
-//If you are new here: 
-
+//Default settings of the grow box can be adjusted here
 
 //Global constants
   const char PushingBoxLogRelayID[]= "v755877CF53383E1"; //UPDATE THIS to your PushingBox logging scenario`s DeviceID  
   const char PushingBoxEmailRelayID[]  = "vC5244859A2453AA";  //UPDATE THIS to your PushingBox email alert scenario`s DeviceID 
-  const byte PotStepping = 100;  // Digital potentiometer adjustment step count
+  const byte MaxDimming = 235; //Sets the maximum dimming duty cycle to 92% (255*0.92=~235). 255=100% dimming (LED drivers usually do not support full dimming, check the specification before changing this!)
   const byte ScreenRotation = 1;  //LCD screen rotation: 1,3:landscape 2,4:portrait
   const unsigned long AeroPumpTimeout = 360000;  // Aeroponics - Max pump run time (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
   const byte ReadCountBeforeAlert = 5; //number of consecutive out of range sensor readings before the email alert is triggered
-  const byte LogDepth = 12;  //Show X log entries on website
+  const byte LogDepth = 10;  //Show X log entries on website
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
   const float DividingFactor = 4.7;  //Voltage dividing factor on the ATXPowerGood input = Measured voltage / Voltage over voltage devider
     
@@ -55,7 +53,7 @@
   byte DigitDisplayBacklight = 25; //4 digit display - backlight strenght (0-100)
   int DigitDisplayValue = -1; //select which sensor reading to display(0-17), -1 cycles through all values
   bool isSoundEnabled = true;  //Enable PC speaker
-  bool isDebugEnabled = false; //Logs debug messages to serial and web outputs  
+  bool isDebugEnabled = true; //Logs debug messages to serial and web outputs  
  
   bool AlertEmails = true; //disable/enable email sending  
   int TempAlertLow = 15; //Low temp warning email
