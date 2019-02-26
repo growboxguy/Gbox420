@@ -5,21 +5,24 @@
 //PWM dimming duty cycle 0 (No dimming) - 235 (Dimm to 8%, Lowest allowed dimming by Meanweell is 6%)
 
 //Pins
-const byte OptocouplerBase = 9; //Optocoupler PC817 base over 1K resistor
+const byte DimmingOutPin = 9; //Optocoupler PC817 base over 1K resistor
 
+//Global constants
+const byte MaxDimming = 235; //Sets the maximum dimming duty cycle to 92% (255*0.92=~235). 255=100% dimming (LED drivers usually do not support full dimming, check the specification before changing this!)
+ 
 //Global variables
 byte LightBrightness = 0;   //Light intensity: Adjusts PWM duty cycle
 bool isGettingHigh = true;
 
 void setup() {  // put your setup code here, to run once:
  Serial.begin(115200);
- pinMode(OptocouplerBase, OUTPUT);
+ pinMode(DimmingOutPin, OUTPUT);
  Serial.println("Starting dimming test...");
 }
 
 void loop() { // put your main code here, to run repeatedly:
 while(0 <= LightBrightness && LightBrightness <= 100){    
-  analogWrite(OptocouplerBase, map(LightBrightness,0,100,235,0) ); //mapping 0% output to 92% (235/255) duty cycle, and 100% output to 0% (0/255) duty cycle
+  analogWrite(DimmingOutPin, map(LightBrightness,0,100,MaxDimming,0) ); //mapping 0% brightness to MaxDimming(92%) duty cycle, and 100% brighness to 0% dimming duty cycle
   if(LightBrightness % 10 == 0)  //modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
    { 
     Serial.print(LightBrightness); Serial.println("%");

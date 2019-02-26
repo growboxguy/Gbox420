@@ -7,7 +7,7 @@
   const byte ScreenRotation = 1;  //LCD screen rotation: 1,3:landscape 2,4:portrait
   const unsigned long AeroPumpTimeout = 360000;  // Aeroponics - Max pump run time (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
   const byte ReadCountBeforeAlert = 5; //number of consecutive out of range sensor readings before the email alert is triggered
-  const byte LogDepth = 10;  //Show X log entries on website
+  const byte LogDepth = 10;  //Show X log entries on website, do not go above 10
   const byte LogLength = 31;  //30 characters + null terminator for one log entry
   const float DividingFactor = 4.7;  //Voltage dividing factor on the ATXPowerGood input = Measured voltage / Voltage over voltage devider
     

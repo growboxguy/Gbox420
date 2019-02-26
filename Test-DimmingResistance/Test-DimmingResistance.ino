@@ -8,6 +8,7 @@ const int PotINCOutPin = 33;  // Digital output - X9C104 digital potentiometer I
 
 //Global variables
 bool isGettingHigh = true;  //true-Increse, false-Decrease resistance
+byte LightBrightness = 0; //Light intensity: 0 - 100 range for controlling led driver output  
 
 void setup() {  // put your setup code here, to run once:
 Serial.begin(115200);
@@ -51,4 +52,13 @@ digitalWrite(PotCSOutPin,HIGH);
 delay(50);
 digitalWrite(PotCSOutPin,LOW);
 digitalWrite(PotINCOutPin,LOW);
+}
+
+
+void setBrightness(int NewBrightness){ //not used in this example, 
+    while(MySettings.LightBrightness != NewBrightness){
+    if(NewBrightness < MySettings.LightBrightness)  isPotGettingHigh = false;
+    else isPotGettingHigh = true;
+    stepOne();
+  }
 }
