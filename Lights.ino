@@ -36,13 +36,14 @@ void checkLightTimer() {
 }
 
 void setBrightness(int NewBrightness, bool AddToLog){
+  MySettings.LightBrightness = NewBrightness;
   if(AddToLog){
     strncpy_P(LogMessage,(PGM_P)F("Brightness: "),LogLength);  
-    strcat(LogMessage,toText(NewBrightness));
+    strcat(LogMessage,toText(MySettings.LightBrightness));
     strcat_P(LogMessage,(PGM_P)F("%"));
     addToLog(LogMessage);
   }    
-  analogWrite(DimmingOutPin, map(NewBrightness,0,100,MaxDimming,0) ); //mapping 0% brightness to MaxDimming(92%) duty cycle, and 100% brighness to 0% dimming duty cycle
+  analogWrite(DimmingOutPin, map(MySettings.LightBrightness,0,100,MaxDimming,0) ); //mapping 0% brightness to MaxDimming(92%) duty cycle, and 100% brighness to 0% dimming duty cycle
 }
 
 void checkLightSensor(){
@@ -81,21 +82,22 @@ void triggerCalibrateLights(){ //website signals to calibrate lights when checkL
 void calibrateLights(){
   CalibrateLights=false;  
   bool LastLightStatus = MySettings.isLightOn;
+  byte LastLightBrightness = MySettings.LightBrightness;
   MySettings.isLightOn=true;
   checkLightStatus();  //apply turning the lights on
   setBrightness(0,false);
-  delay(100); //wait for light output change
+  delay(2000); //wait for light output change
   MinLightReading = 1023 - analogRead(LightSensorAnalogInPin);
   setBrightness(100,false);
-  delay(100); //wait for light output change
+  delay(2000); //wait for light output change
   MaxLightReading = 1023 - analogRead(LightSensorAnalogInPin);
   
   if(MySettings.isDebugEnabled){
          LogToSerials(F("0% - "),false); LogToSerials(MinLightReading,false);
          LogToSerials(F(", 100% - "),false); LogToSerials(MaxLightReading,true);
   }
-  setBrightness(MySettings.LightBrightness,false);
-  MySettings.isLightOn=LastLightStatus;
+  setBrightness(LastLightBrightness,false); //restore original brightness
+  MySettings.isLightOn=LastLightStatus; //restore original state
   checkLightStatus();
   addToLog(F("Lights calibrated"));
 }

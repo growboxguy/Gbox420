@@ -1,7 +1,7 @@
 //Pins for connecting components
 //https://sites.google.com/site/growboxguy/arduino/components
 
-  const byte ATXPowerGoodInPin = A2; //5V signal from ATX powersupply, ON if DC power output is OK
+  const byte ATXPowerGoodInPin = 35; //5V signal from ATX powersupply, inverted by optocoupler: LOW if DC power output is OK
   const byte BuzzerOutPin = 4; //PC speaker+ (red)
   const byte DimmingOutPin = 9; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
   const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing

@@ -33,18 +33,14 @@ void readPowerSensor(){
 }
 
 void readATXPowerGood(){   
-  float Reading=0;
-  for (byte i=0;i<10;i++) {
-        Reading += analogRead(ATXPowerGoodInPin);
-        delay(10);
-  }   
-  Reading = (Reading / 10 * 5) / 1024.0 * DividingFactor;  //using a voltage divider circuit to protect from voltage spikes up to ~20V
-  if(MySettings.isDebugEnabled){
-    LogToSerials(F("ATXPowerGood voltage: "),false);
-    LogToSerials(Reading,true);
+  bool ATXStateOK = !digitalRead(ATXPowerGoodInPin); //inverting the reading to compensate the inverting optocoupler. True:DC power OK, False:DC power not OK
+
+    if(MySettings.isDebugEnabled){
+    LogToSerials(F("ATXPowerGood reading: "),false);
+    LogToSerials(ATXStateOK,true);
     }
-  
-  if(DCPowerOK && ( Reading < 4 || Reading > 6)) {  //ATX Power Good pin is not at expected 5V, signaling a problem with the power supply or the voltage divider
+    
+  if(DCPowerOK && !ATXStateOK) {  //ATX Power Good pin is not at expected 5V, signaling a problem with the power supply or the voltage divider
     DCPowerAlertCount++;
     if(DCPowerAlertCount>=ReadCountBeforeAlert){
       sendEmailAlert(F("DC%20input%20lost")); 
@@ -52,9 +48,9 @@ void readATXPowerGood(){
       addToLog(F("DC Power lost"));
     }
   }
-  if(Reading > 4 && Reading < 6){  //ATX Power Good pin is at ~5V, signaling DC power output is OK
+  if(ATXStateOK){  //ATX Power Good pin is at ~5V, signaling DC power output is OK
     DCPowerAlertCount = 0;
-    if(!DCPowerOK){
+    if(!DCPowerOK){ //if it was in failed state before
       sendEmailAlert(F("DC%20input%20recovered"));
       DCPowerOK = true;
       addToLog(F("DC Power recovered")); 

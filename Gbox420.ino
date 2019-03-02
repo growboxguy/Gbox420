@@ -108,7 +108,7 @@ void setup() {     // put your setup code here, to run once:
   loadSettings();
 
    //Pin setup, defining what Pins are inputs/outputs and setting initial output signals. Pins are defined in 420Pins.h tab
-  pinMode(ATXPowerGoodInPin, INPUT);
+  pinMode(ATXPowerGoodInPin, INPUT_PULLUP);
   pinMode(LightSensorInPin, INPUT);
   pinMode(WaterCriticalInPin, INPUT_PULLUP);
   pinMode(WaterLowInPin, INPUT_PULLUP);
