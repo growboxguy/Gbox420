@@ -61,7 +61,10 @@
 					<td id="tdVoltage" class="dataRows"></td>
 					<td id="tdCurrent" class="dataRows"></td>
 				  </tr>				  
-				 </table>		
+				 </table>
+				<b>ATX power supply:</b>
+				<button id="btn_ATXOn" type="button">ON</button>
+				<button id="btn_ATXOff" type="button">OFF</button>					 
 			</div>			
 			<div class="card" style="width:90%">
 				<h1>Box</h1>		
@@ -129,8 +132,8 @@
 					<td id="tdLightOff" class="dataRows"></td>
 				  </tr>
 				 </table> 				
-				<button id="btn_LightOn" type="button">Turn ON</button>
-				<button id="btn_LightOff" type="button">Turn OFF</button>
+				<button id="btn_LightOn" type="button">ON</button>
+				<button id="btn_LightOff" type="button">OFF</button>
 				<button id="btn_LightCalibrate" type="button" title="Measure light output at 0 and 100% brightness">Calibrate</button><br>
 				<b>Brightness</b><br/>				
 				<form>
@@ -140,8 +143,8 @@
 				</form>				
 				<b>Timer</b>
 				<form><label><input type="checkbox" name="TimerEnabled">Enabled </label><input type="submit" value="Set"></form>
-				<form>Turn ON : <input style="width: 35px;" min=0 max=23 name="LightsOnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="LightsOnMinute" type="number"/> <input type="submit" value="Set"></form>
-				<form>Turn OFF:<input style="width: 35px;" min=0 max=23 name="LightsOffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="LightsOffMinute" type="number"/> <input type="submit" value="Set"></form>
+				<form>ON : <input style="width: 35px;" min=0 max=23 name="LightsOnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="LightsOnMinute" type="number"/> <input type="submit" value="Set"></form>
+				<form>OFF:<input style="width: 35px;" min=0 max=23 name="LightsOffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="LightsOffMinute" type="number"/> <input type="submit" value="Set"></form>
 			</div>			
 			<div class="card" style="width:90%">
 				<h1>Reservoir</h1>
@@ -149,17 +152,19 @@
 					<tr>
 					 <th class="headerRows"><span style="font-weight:bold">Level</span></th>	
 					 <th class="headerRows"><span style="font-weight:bold">PH</span></th>
+					 <th class="headerRows"><span style="font-weight:bold">Temp</span></th>	
 					 <th class="headerRows"><span style="font-weight:bold">Air pump</span></th>					
 					</tr>
 					<tr>
 					 <td id="tdReservoir" class="dataRows"></td>
 					 <td id="tdPH" class="dataRows"></td>
+					 <td id="tdReservoirTemp" class="dataRows"></td>
 					 <td id="tdisAirPumpOn" class="dataRows"></td>
 					</tr>
 				</table>
 				<b>Air pump:</b>
-				<button id="btn_AirPumpOn" type="button">Turn ON</button>
-				<button id="btn_AirPumpOff" type="button">Turn OFF</button>	
+				<button id="btn_AirPumpOn" type="button">ON</button>
+				<button id="btn_AirPumpOff" type="button">OFF</button>	
 			</div>
 			<div class="card" style="width:90%">
 				<h1>Aeroponics</h1>
@@ -178,8 +183,8 @@
 				<button id="btn_PumpStop" type="button" align="rigth" title="Stops the pump and reset it status to OK">OFF</button>
 				<button id="btn_PumpDisable" type="button" align="rigth" title="Stops and disables pump">Disable</button>								
 				<form>
-					Low : <input style="width: 60px;" min=0 max=145 step="0.1" name="AeroPressureLow" type="number"/> 
-					High: <input style="width: 60px;" min=0 max=145 step="0.1" name="AeroPressureHigh" type="number"/> 					
+					Low : <input style="width: 55px;" min=0 max=145 step="0.1" name="AeroPressureLow" type="number"/> 
+					High: <input style="width: 55px;" min=0 max=145 step="0.1" name="AeroPressureHigh" type="number"/> 					
 					<input type="submit" value="Set">
 				</form>
 				<b>Spray</b>

@@ -7,7 +7,7 @@ void checkAeroSprayTimer(){
  if(isAeroSprayOn)    { //if spray is on
     if(millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //if time to stop spraying (AeroDuration in Seconds)
       isAeroSprayOn = false;
-      checkRelays();
+      checkSwitches();
       logToSerials(F("Stopping spray"),true);
       PlayOffSound = true;
       AeroSprayTimer = millis();
@@ -17,7 +17,7 @@ void checkAeroSprayTimer(){
     if(millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
       if(MySettings.isAeroSprayEnabled){
         isAeroSprayOn = true;
-        checkRelays();
+        checkSwitches();
         logToSerials(F("Starting spray"),true);
         PlayOnSound = true;
         AeroSprayTimer = millis();
@@ -139,14 +139,14 @@ void aeroSprayNow(){
     AeroSprayTimer = millis();
     isAeroSprayOn = true;
     PlayOnSound = true;
-    checkRelays();
+    checkSwitches();
     addToLog(F("Aeroponics spraying"));
     }
 }
 
 void aeroSprayOff(){   
     isAeroSprayOn = false;    
-    checkRelays();
+    checkSwitches();
     addToLog(F("Aeroponics spray OFF"));
 }
 
@@ -162,14 +162,14 @@ void setAeroPressureHigh(float PressureHigh){
 void aeroPumpOn(){
   PumpOK = true;
   isAeroPumpOn = true;
-  checkRelays();
+  checkSwitches();
   AeroPumpTimer = millis();      
   PlayOnSound = true;
 }
 
 void aeroPumpOff(){
   isAeroPumpOn = false;
-  checkRelays();
+  checkSwitches();
   PlayOffSound = true;
 }
 

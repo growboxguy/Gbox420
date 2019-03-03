@@ -116,10 +116,11 @@ void RefreshCallback(char * url) //called when website is refreshed
   
   WebServer.setArgString("tdAeroPressure",toText(AeroPressure));
   WebServer.setArgString(F("tdisAeroPumpOn"),pumpStateToText());
-  WebServer.setArgString(F("tdisAirPumpOn"),stateToText(MySettings.isAirPumpOn));
-    
+      
   WebServer.setArgString(F("tdReservoir"),reservoirText);
-  WebServer.setArgString(F("tdPH"),toText(PH));  
+  WebServer.setArgString(F("tdPH"),toText(PH));
+  WebServer.setArgString(F("tdReservoirTemp"),toText(ReservoirTemp));
+  WebServer.setArgString(F("tdisAirPumpOn"),stateToText(MySettings.isAirPumpOn));  
   }
 }
 
@@ -127,6 +128,7 @@ void RefreshCallback(char * url) //called when website is refreshed
 void ButtonPressCallback(char *button)
 {
   if (strcmp_P(button,(PGM_P)F("btn_LightOn"))==0) { turnLightON(true); }
+  else if (strcmp_P(button,(PGM_P)F("btn_LightOff"))==0) { turnLightOFF(true); }
   else if (strcmp_P(button,(PGM_P)F("btn_InternalFanOff"))==0) {internalFanOff();}
   else if (strcmp_P(button,(PGM_P)F("btn_InternalFanLow"))==0) { internalFanLow();}
   else if (strcmp_P(button,(PGM_P)F("btn_InternalFanHigh"))==0) {internalFanHigh(); }  
@@ -135,7 +137,8 @@ void ButtonPressCallback(char *button)
   else if (strcmp_P(button,(PGM_P)F("btn_ExhaustFanHigh"))==0) { exhaustFanHigh();}
   else if (strcmp_P(button,(PGM_P)F("btn_AirPumpOn"))==0) { airPumpOn();}
   else if (strcmp_P(button,(PGM_P)F("btn_AirPumpOff"))==0) { airPumpOff();}
-  else if (strcmp_P(button,(PGM_P)F("btn_LightOff"))==0) { turnLightOFF(true); }
+  else if (strcmp_P(button,(PGM_P)F("btn_ATXOn"))==0) { TurnATXOn();}
+  else if (strcmp_P(button,(PGM_P)F("btn_ATXOff"))==0) { TurnATXOff();}
   else if (strcmp_P(button,(PGM_P)F("btn_LightCalibrate"))==0) {triggerCalibrateLights();}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayNow"))==0) { aeroSprayNow();}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayOff"))==0) { aeroSprayOff();}  
@@ -152,7 +155,7 @@ void ButtonPressCallback(char *button)
   else if (strcmp_P(button,(PGM_P)F("btn_DigitDisplayLockPressure"))==0) { setDigitDisplayLockPressure();}
   else if (strcmp_P(button,(PGM_P)F("btn_DigitDisplayLockWattage"))==0) { setDigitDisplayLockWattage();}
   else if (strcmp_P(button,(PGM_P)F("btn_PressureCalibrate"))==0) { calibratePressureSensor();}
-  else if (strcmp_P(button,(PGM_P)F("btn_PHCalibrate"))==0) { readPH(true);}
+  else if (strcmp_P(button,(PGM_P)F("btn_PHCalibrate"))==0) { readReservoirPH(true);}
   saveSettings(false); 
 }
 

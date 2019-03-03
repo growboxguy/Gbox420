@@ -8,23 +8,24 @@
 //TODO: 
 //Flow meter
 //EC meter
-//High pressure pump timeout adjustment on Settings page
-//Pushingbox ID adjustment on Settings - Email alerts
-//Check for pressure change during pump on
+//Document 3 new optocouplers: PWM dimming, ATX Power Good detection, ATX OnOff
+//Document reservoir temp sensor
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
   #include "420Settings.h" //Load settings file
   #include "avr/wdt.h" //Watchdog timer
-  #include "Thread.h"  //Splitting functions to threads for timing
+  #include "Thread.h" //Splitting functions to threads for timing
   #include "StaticThreadController.h"  //Grouping threads
   #include "TimerThree.h"  //Interrupt handling for webpage
   #include "DHT.h"  //DHT11 or DHT22 Digital Humidity and Temperature sensor
-  #include "SevenSegmentTM1637.h" // 4 digit LED display
-  #include "SevenSegmentExtended.h" // 4 digit LED display
-  #include "PZEM004T.h"  //Power meter
-  #include "ELClient.h"  // ESP-link
-  #include "ELClientRest.h" // ESP-link - REST API
+  #include "OneWire.h"; //DS18B20 waterproof temperature sensor
+  #include "DallasTemperature.h"; //DS18B20 waterproof temperature sensor
+  #include "SevenSegmentTM1637.h" //4 digit LED display
+  #include "SevenSegmentExtended.h" //4 digit LED display
+  #include "PZEM004T.h" //Power meter
+  #include "ELClient.h" //ESP-link
+  #include "ELClientRest.h" //ESP-link - REST API
   #include "ELClientWebServer.h" //ESP-link - WebServer API
   #include "ELClientCmd.h"  //ESP-link - Get current time from the internet using NTP
   #include "ELClientMqtt.h" //ESP-link - MQTT protocol for sending and receiving IoT messages
@@ -50,10 +51,12 @@
   int VentilationAlertCount = 0;
   int ReservoirAlertCount = 0;
   int PHAlertCount = 0;
-  float IntTemp; // stores Temperature - Celsius
-  float IntHumidity; // stores relative humidity - %
-  float ExtTemp; // stores Temperature - Celsius
-  float ExtHumidity; // stores relative humidity - %
+  bool isATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
+  float IntTemp; //Internal Temperature - Celsius
+  float IntHumidity; //Internal relative humidity - %
+  float ExtTemp; //External Temperature - Celsius
+  float ExtHumidity; //External relative humidity - %
+  float ReservoirTemp; //Reservoir water temperature
   float Power; //Power sensor - W
   float Energy; //Power sensor - Wh Total consumption 
   float Voltage; //Power sensor - V
@@ -82,8 +85,10 @@
 
 //Component initialization
   const uint8_t  DHTType=DHT22;  //specify temp/humidity sensor type: DHT21(AM2301) or DHT22(AM2302,AM2321)
-  DHT InternalDHTSensor(InternalDHTSensorInPin, DHTType); // Internal Temp/Humidity sensor
-  DHT ExternalDHTSensor(ExternalDHTSensorInPin, DHTType); // External Temp/Humidity sensor
+  DHT InternalDHTSensor(InternalDHTSensorInPin, DHTType); //Internal Temp/Humidity sensor (DHT22)
+  DHT ExternalDHTSensor(ExternalDHTSensorInPin, DHTType); //External Temp/Humidity sensor (DHT22)
+  OneWire ReservoirTempSensorWire(ReservoirTempSensorInPin); //Reservoir waterproof temperature sensor (DS18B20)
+  DallasTemperature ReservoirTempSensor(&ReservoirTempSensorWire); //Reservoir waterproof temperature sensor (DS18B20)
   SevenSegmentExtended DigitDisplay(DigitDisplayCLKOutPin, DigitDisplayDI0OutPin); //4 digit LED Display
   PZEM004T PowerSensor(&Serial2);  // Power Sensor using hardware Serial 2, use software serial if needed
   IPAddress PowerSensorIP(192,168,1,1); // Power Sensor address (fake,just needs something set)
@@ -110,6 +115,7 @@ void setup() {     // put your setup code here, to run once:
 
    //Pin setup, defining what Pins are inputs/outputs and setting initial output signals. Pins are defined in 420Pins.h tab
   pinMode(ATXPowerGoodInPin, INPUT_PULLUP);
+  pinMode(ATXPowerONOutPin, OUTPUT);
   pinMode(LightSensorInPin, INPUT);
   pinMode(WaterCriticalInPin, INPUT_PULLUP);
   pinMode(WaterLowInPin, INPUT_PULLUP);
@@ -137,6 +143,7 @@ void setup() {     // put your setup code here, to run once:
   pinMode(ScreenMISO, INPUT);
   pinMode(ScreenSCK, OUTPUT);
   digitalWrite(BuiltInLEDOutPin, LOW); //LED OFF,without this LED would be randomly on or off when the board is powered on
+  digitalWrite(ATXPowerONOutPin, LOW);  //Avoids random ON/OFF state at startup
   digitalWrite(Relay1OutPin, HIGH); //default OFF (Uses negative logic - HIGH turns relay off, LOW on) 
   digitalWrite(Relay2OutPin, HIGH); 
   digitalWrite(Relay3OutPin, HIGH);
@@ -144,7 +151,7 @@ void setup() {     // put your setup code here, to run once:
   digitalWrite(Relay5OutPin, HIGH);
   digitalWrite(Relay6OutPin, HIGH);
   digitalWrite(Relay7OutPin, HIGH); 
-  digitalWrite(Relay8OutPin, HIGH); 
+  digitalWrite(Relay8OutPin, HIGH);
     
   //Initialize web connections
   ESPLink.resetCb = resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
@@ -167,6 +174,7 @@ void setup() {     // put your setup code here, to run once:
   //Start devices
   InternalDHTSensor.begin(); //start humidity/temp sensor
   ExternalDHTSensor.begin(); //start external humidity/temp sensor
+  ReservoirTempSensor.begin();
   Screen.begin(); //start LCD screen
   Screen.setRotation(ScreenRotation);
   DigitDisplay.begin(); //start 4 digit LED display
@@ -203,7 +211,7 @@ void oneSecRun(){
   wdt_reset(); //reset watchdog timeout
   checkLightStatus(); 
   checkAero();  
-  checkRelays();
+  checkSwitches();
   checkSound();  
 }
 
@@ -238,7 +246,7 @@ void readSensors(){  //Bundles functions to get sensor readings
   checkLightSensor();
   readPowerSensor();
   readATXPowerGood();
-  readPH(false);
+  readReservoirPH(false);
   checkReservoir();
   readAeroPressure();
 }
@@ -306,6 +314,6 @@ else return (round(Value*180) + 3200.0)/100.0;
 }
 
 float convertBetweenPressureUnits(float Value){
-if(MySettings.MetricSystemEnabled) return round(Value / 0.145038)/100.0;
-else return round(Value*1450.38)/100.0;
+if(MySettings.MetricSystemEnabled) return round(Value / 1.45038)/10.0;
+else return round(Value*145.038)/10.0;
 }

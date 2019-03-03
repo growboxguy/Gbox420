@@ -2,6 +2,7 @@
 //https://sites.google.com/site/growboxguy/arduino/components
 
   const byte ATXPowerGoodInPin = 35; //5V signal from ATX powersupply, inverted by optocoupler: LOW if DC power output is OK
+  const byte ATXPowerONOutPin = 34; //Turns ATX power supply on by connecting ATX PowerON pin to GND through an optocupler
   const byte BuzzerOutPin = 4; //PC speaker+ (red)
   const byte DimmingOutPin = 9; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
   const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
@@ -17,6 +18,7 @@
   const byte DigitDisplayDI0OutPin = 30; //DIO - 4 digit LED display
   const byte InternalDHTSensorInPin = 43; //DAT - DHT22 temp/humidity sensor, internally mounted
   const byte ExternalDHTSensorInPin = 44; //DAT - DHT22 temp/humidity sensor, externally mounted
+  const byte ReservoirTempSensorInPin = 45;  //Data(yellow) - DS18B20 waterproof temp sensor 
   const byte Relay1OutPin = 22;  //Power relay Port 1 - Aeroponics solenoid
   const byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump
   const byte Relay3OutPin = 24;  //Power relay Port 3 - Reservoir air pump

@@ -11,6 +11,8 @@ void airPumpOff(){
 }
 
 void checkReservoir(){
+  readReservoirTemp(); //Check water temperature
+  
   bool isWaterAboveCritical = !digitalRead(WaterCriticalInPin);  //Water sensor, true if level reached
   bool isWaterAboveLow = !digitalRead(WaterLowInPin);
   bool isWaterAboveMedium = !digitalRead(WaterMediumInPin);
@@ -26,24 +28,12 @@ void checkReservoir(){
   strcat_P(reservoirText,(PGM_P)F("]F"));
 
   //Get number representation of reservoir level and send out email alerts: From 0-empty to 4-full
-  if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && isWaterAboveFull) {
-    reservoirLevel= 4;    
-  }
-  else if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && !isWaterAboveFull) {
-    reservoirLevel= 3;
-  }
-  else if(isWaterAboveCritical && isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) {
-    reservoirLevel= 2; 
-  }
-  else if(isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) {
-    reservoirLevel= 1;
-  }
-  else if(!isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) {  
-    reservoirLevel= 0;  
-  }
-  else {    //non-valid sensor combination was read like E[#--#]F
-    reservoirLevel= -1;     
-  }
+  if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && isWaterAboveFull) reservoirLevel= 4;
+  else if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && !isWaterAboveFull) reservoirLevel= 3;
+  else if(isWaterAboveCritical && isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) reservoirLevel= 2;
+  else if(isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) reservoirLevel= 1;
+  else if(!isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) reservoirLevel= 0;
+  else reservoirLevel= -1; //non-valid sensor combination was read like E[#--#]F
   checkReservoirAlert();
 }
 
@@ -71,8 +61,15 @@ void checkReservoirAlert(){
    }
 }
 
-//***PH METER***
-void readPH(bool ShowRaw){
+//***Temperature sensor***
+void readReservoirTemp(){
+ ReservoirTempSensor.requestTemperatures(); 
+ if(MySettings.MetricSystemEnabled) ReservoirTemp = ReservoirTempSensor.getTempCByIndex(0);
+ else ReservoirTemp = ReservoirTempSensor.getTempFByIndex(0); 
+}
+
+//***PH meter***
+void readReservoirPH(bool ShowRaw){
   float  Reading=0;
   for(byte i=0;i<40;i++) { 
    Reading+=analogRead(PHMeterInPin);

@@ -1,12 +1,16 @@
-void checkRelays(){
+void checkSwitches(){
+  //Relay array
   if(isAeroSprayOn) digitalWrite(Relay1OutPin, LOW); else digitalWrite(Relay1OutPin, HIGH); //True turns relay ON , False turns relay OFF  (LOW signal activates Relay) 
-  if(isAeroPumpOn) digitalWrite(Relay2OutPin, LOW); else digitalWrite(Relay2OutPin, HIGH);  
+  if(isAeroPumpOn) digitalWrite(Relay2OutPin, LOW); else digitalWrite(Relay2OutPin, HIGH); 
   if(MySettings.isAirPumpOn) digitalWrite(Relay3OutPin, LOW); else digitalWrite(Relay3OutPin, HIGH);
   if(MySettings.isInternalFanOn) digitalWrite(Relay4OutPin, LOW); else digitalWrite(Relay4OutPin, HIGH);
   if(MySettings.isInternalFanHigh) digitalWrite(Relay5OutPin, LOW); else digitalWrite(Relay5OutPin, HIGH);
   if(MySettings.isExhaustFanOn) digitalWrite(Relay6OutPin, LOW); else digitalWrite(Relay6OutPin, HIGH);
   if(MySettings.isExhaustFanHigh) digitalWrite(Relay7OutPin, LOW); else digitalWrite(Relay7OutPin, HIGH);
   if(MySettings.isLightOn) digitalWrite(Relay8OutPin, LOW); else digitalWrite(Relay8OutPin, HIGH);
+
+  //Optocoupler
+  if(isATXPowerSupplyOn) digitalWrite(ATXPowerONOutPin, HIGH); else digitalWrite(ATXPowerONOutPin, LOW); 
 }
 
 void readPowerSensor(){
@@ -30,6 +34,16 @@ void readPowerSensor(){
       addToLog(F("AC Power recovered")); 
     }    
   }
+}
+
+void TurnATXOn(){
+  isATXPowerSupplyOn = true;
+  addToLog(F("ATX power supply ON")); 
+}
+
+void TurnATXOff(){
+  isATXPowerSupplyOn = false;
+  addToLog(F("ATX power supply OFF"));
 }
 
 void readATXPowerGood(){   
