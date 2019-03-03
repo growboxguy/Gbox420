@@ -67,13 +67,13 @@
 				<h1>Box</h1>		
 				<table class="tg">				  
 				  <tr>
-					<td class="headerRows"><span style="font-weight:bold">Temp</span><br><span>(°C/°F)</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Humidity</span><br><span>(RH%)</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Temp</span><br><span>ext/int</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Humidity</span><br>ext/int<span></span></td>
 					<td class="headerRows"><span style="font-weight:bold">Internal<br>fan</span></td>
 					<td class="headerRows"><span style="font-weight:bold">Exhaust<br>fan</span></td>
 				  </tr>
 				  <tr>
-					<td id="tdBoxTemp" class="dataRows"></td>
+					<td id="tdTemp" class="dataRows"></td>
 					<td id="tdHumidity" class="dataRows"></td>
 					<td id="tdInternalFanSpeed" class="dataRows"></td>
 					<td id="tdExhaustFanSpeed" class="dataRows"></td>
@@ -85,7 +85,7 @@
 				<button id="btn_InternalFanHigh" type="button">High</button>
 				<form>
 					<label><input type="checkbox" name="AutoInternalFan">Automatic low/high at: </label>
-					<input style="width: 35px;" min=10 max=50 name="InternalFanSwitchTemp" type="number"/><span> °C</span>
+					<input style="width: 45px;" min=0 max=255 name="InternalFanSwitchTemp" type="number"/><span>° </span>
 					<input type="submit" value="Set">
 				</form>						
 				<b>Exhaust fan:</b>
@@ -165,7 +165,7 @@
 				<h1>Aeroponics</h1>
 				<table class="tg">
 				  <tr>
-					<th class="headerRows"><span style="font-weight:bold">Pressure</span><span>(bar/psi)</span></th>	
+					<th class="headerRows"><span style="font-weight:bold">Pressure</span></span></th>	
 					<th class="headerRows"><span style="font-weight:bold">Pump state</span></th>				
 				  </tr>
 				  <tr>
@@ -178,8 +178,8 @@
 				<button id="btn_PumpStop" type="button" align="rigth" title="Stops the pump and reset it status to OK">OFF</button>
 				<button id="btn_PumpDisable" type="button" align="rigth" title="Stops and disables pump">Disable</button>								
 				<form>
-					Low : <input style="width: 50px;" min=0 max=8 step="0.1" name="AeroPressureLow" type="number"/> 
-					High: <input style="width: 50px;" min=0 max=8 step="0.1" name="AeroPressureHigh" type="number"/> bar					
+					Low : <input style="width: 60px;" min=0 max=145 step="0.1" name="AeroPressureLow" type="number"/> 
+					High: <input style="width: 60px;" min=0 max=145 step="0.1" name="AeroPressureHigh" type="number"/> 					
 					<input type="submit" value="Set">
 				</form>
 				<b>Spray</b>
@@ -192,12 +192,7 @@
 					Interval: <input style="width: 50px;" min=0 name="AeroInterval" type="number"/> min<br>
 					Duration: <input style="width: 50px;" min=0 name="AeroDuration" type="number"/> sec
 					<input type="submit" value="Set">	
-				</form>
-				<b>Quiet time</b>
-					<form class="test"><label><input type="checkbox" name="AeroQuietEnabled">Enabled </label><input type="submit" value="Set"></form>
-					<form><label><input type="checkbox" name="AeroRefillBeforeQuiet" title="Before enabling quiet time refill the tank">Refill before </label><input type="submit" value="Set"></form>
-					<form>From:<input style="width: 35px;" min=0 max=23 name="AeroQuietFromHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="AeroQuietFromMinute" type="number"/> <input type="submit" value="Set"></form>
-					<form>To : <input style="width: 35px;" min=0 max=23 name="AeroQuietToHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="AeroQuietToMinute" type="number"/> <input type="submit" value="Set"></form>				
+				</form>							
 			</div>			
 		</div>		
 	</div>

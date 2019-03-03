@@ -1,5 +1,5 @@
 void checkSound(){
-  if(MySettings.isSoundEnabled){  
+  if(MySettings.SoundEnabled){  
     if (PlayOnSound)  {PlayOnSound = false;OnSound();}
     if (PlayOffSound)  {PlayOffSound = false;OffSound();} 
   }
@@ -7,7 +7,7 @@ void checkSound(){
 }
 
 void OnSound(){
-  if(MySettings.isSoundEnabled){ 
+  if(MySettings.SoundEnabled){ 
   tone(BuzzerOutPin,500);
   delay(100);
   noTone(BuzzerOutPin);
@@ -18,7 +18,7 @@ void OnSound(){
 }
 
 void OffSound(){
-  if(MySettings.isSoundEnabled){ 
+  if(MySettings.SoundEnabled){ 
   tone(BuzzerOutPin,1000);
   delay(100);
   noTone(BuzzerOutPin);
@@ -29,8 +29,8 @@ void OffSound(){
 }
 
 void setSoundOnOff(bool State){
-  MySettings.isSoundEnabled = State;
-  if(MySettings.isSoundEnabled){ 
+  MySettings.SoundEnabled = State;
+  if(MySettings.SoundEnabled){ 
     addToLog(F("Sound enabled"));
     PlayOnSound=true;}
   else {addToLog(F("Sound disabled"));}

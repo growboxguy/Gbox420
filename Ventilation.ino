@@ -1,13 +1,20 @@
 void readDHTSensor(){
-  Humidity = TempSensor.readHumidity();
-  BoxTempC= TempSensor.readTemperature();
-  BoxTempF = BoxTempC *1.8 + 32;
+  IntHumidity = InternalDHTSensor.readHumidity();
+  ExtHumidity = ExternalDHTSensor.readHumidity();
+  if(MySettings.MetricSystemEnabled){
+    IntTemp= InternalDHTSensor.readTemperature();
+    ExtTemp = ExternalDHTSensor.readTemperature();
+  }
+  else {
+    IntTemp = InternalDHTSensor.readTemperature() *1.8 + 32;
+    ExtTemp = ExternalDHTSensor.readTemperature() *1.8 + 32;
+  }
   checkDHTAlerts();
   checkFanAutomation();
 }
 
 void checkDHTAlerts(){
-  if(!isnan(BoxTempC) && !isnan(Humidity) && MySettings.TempAlertLow <= BoxTempC  && BoxTempC <= MySettings.TempAlertHigh && MySettings.HumidityAlertLow <= Humidity  && Humidity <= MySettings.HumidityAlertHigh){ //readings are normal
+  if(!isnan(IntTemp) && !isnan(IntHumidity) && MySettings.TempAlertLow <= IntTemp  && IntTemp <= MySettings.TempAlertHigh && MySettings.HumidityAlertLow <= IntHumidity  && IntHumidity <= MySettings.HumidityAlertHigh){ //readings are normal
     VentilationAlertCount = 0;
     if(!VentOK){ ////alert was active before
       sendEmailAlert(F("Temp%20and%20Humidity%20OK")); 
@@ -17,13 +24,13 @@ void checkDHTAlerts(){
   else {
     if(VentOK){
       VentilationAlertCount++;
-      if(VentilationAlertCount>=ReadCountBeforeAlert){
+      if(VentilationAlertCount>=MySettings.ReadCountBeforeAlert){
         VentOK = false;
-        if(isnan(BoxTempC) || BoxTempC < MySettings.TempAlertLow ||  MySettings.TempAlertHigh < BoxTempC){ //if temp out of limits, isnan-Returns true if float is Not A Numeber: DHT library returns NAN if the value cannot be read
+        if(isnan(IntTemp) || IntTemp < MySettings.TempAlertLow ||  MySettings.TempAlertHigh < IntTemp){ //if temp out of limits, isnan-Returns true if float is Not A Numeber: DHT library returns NAN if the value cannot be read
         sendEmailAlert(F("Temperature%20out%20of%20range"));     
         addToLog(F("Temperature alert triggered"));
         }
-        if(isnan(Humidity) || Humidity < MySettings.HumidityAlertLow ||  MySettings.HumidityAlertHigh < Humidity){ //if temp out of limits
+        if(isnan(IntHumidity) || IntHumidity < MySettings.HumidityAlertLow ||  MySettings.HumidityAlertHigh < IntHumidity){ //if temp out of limits
         sendEmailAlert(F("Humidity%20out%20of%20range")); 
         addToLog(F("Humidity alert triggered"));
         }    
@@ -33,19 +40,19 @@ void checkDHTAlerts(){
 }
 
 void checkFanAutomation(){
-    if(MySettings.automaticInternalFan && !MySettings.isInternalFanHigh && BoxTempC > MySettings.internalFanSwitchTemp){ //if temp is above the limit turn the fan to High
+    if(MySettings.automaticInternalFan && !MySettings.isInternalFanHigh && IntTemp > MySettings.internalFanSwitchTemp){ //if temp is above the limit turn the fan to High
     internalFanHigh();
   }
-  if(MySettings.automaticInternalFan && MySettings.isInternalFanHigh && BoxTempC < (MySettings.internalFanSwitchTemp-3)){ //backward switch only if temp is 3 degrees below limit: avoids constant switching
+  if(MySettings.automaticInternalFan && MySettings.isInternalFanHigh && IntTemp < (MySettings.internalFanSwitchTemp-3)){ //backward switch only if temp is 3 degrees below limit: avoids constant switching
     internalFanLow();
   }
-  if(MySettings.automaticExhaustFan && MySettings.isExhaustFanOn && Humidity < MySettings.exhaustFanOffHumid){ //Humidity below Off limit: turn exhaust off
+  if(MySettings.automaticExhaustFan && MySettings.isExhaustFanOn && IntHumidity < MySettings.exhaustFanOffHumid){ //Humidity below Off limit: turn exhaust off
     exhaustFanOff();
   }
-  if(MySettings.automaticExhaustFan && !MySettings.isExhaustFanHigh && MySettings.exhaustFanHighHumid < Humidity){ //Humidity above High limit: set exhaust High
+  if(MySettings.automaticExhaustFan && !MySettings.isExhaustFanHigh && MySettings.exhaustFanHighHumid < IntHumidity){ //Humidity above High limit: set exhaust High
     exhaustFanHigh();
   }
-  if(MySettings.automaticExhaustFan && ((!MySettings.isExhaustFanOn && MySettings.exhaustFanLowHumid < Humidity) || (MySettings.isExhaustFanHigh && Humidity < MySettings.exhaustFanLowHumid))){ //if exhaust was OFF and humidity gets above LOW limit, or if exhaust was High and humidity gets below LOW limit: Turn the fan LOW
+  if(MySettings.automaticExhaustFan && ((!MySettings.isExhaustFanOn && MySettings.exhaustFanLowHumid < IntHumidity) || (MySettings.isExhaustFanHigh && IntHumidity < MySettings.exhaustFanLowHumid))){ //if exhaust was OFF and humidity gets above LOW limit, or if exhaust was High and humidity gets below LOW limit: Turn the fan LOW
     exhaustFanLow();
   }
 }

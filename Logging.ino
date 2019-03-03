@@ -1,14 +1,14 @@
 void ReportToGoogleSheets(bool AddToLog){
   if(AddToLog)addToLog(F("Reporting to Google Sheets"));
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
-  strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,PushingBoxLogRelayID);
+  strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,MySettings.PushingBoxLogRelayID);
   strcat_P(WebMessage,(PGM_P)F("&Log="));logToJSON(false,true);  
-  LogToSerials(F("Reporting to Google Sheets: "),false); LogToSerials(WebMessage,true);   
+  logToSerials(F("Reporting to Google Sheets: "),false); logToSerials(WebMessage,true);   
   RestAPI.get(WebMessage);
 }
 
-template <class logLine>   //fuction template: LogToSerials can take any parameter type (int,float,bool,char..) https://en.cppreference.com/w/cpp/language/function_template
-void LogToSerials (logLine ToPrint,bool breakLine) {
+template <class logLine>   //fuction template: logToSerials can take any parameter type (int,float,bool,char..) https://en.cppreference.com/w/cpp/language/function_template
+void logToSerials (logLine ToPrint,bool breakLine) {
  if(breakLine){
     Serial.println(ToPrint);
     Serial3.println(ToPrint);
@@ -20,23 +20,23 @@ void LogToSerials (logLine ToPrint,bool breakLine) {
 }
 
 void addToLog(const char *message){
-  LogToSerials(message,true);
+  logToSerials(message,true);
   for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
      memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
-     strncpy(Logs[i],Logs[i-1],LogLength ) ; 
+     strncpy(Logs[i],Logs[i-1],MaxTextLength ) ; 
     }  
   memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
-  strncpy(Logs[0],message,LogLength);  //instert new log to [0]
+  strncpy(Logs[0],message,MaxTextLength);  //instert new log to [0]
 }
 
 void addToLog(const __FlashStringHelper *message){ //function overloading: same function name, different parameter type 
-  LogToSerials(message,true);
+  logToSerials(message,true);
   for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
      memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
-     strncpy(Logs[i],Logs[i-1],LogLength ) ; 
+     strncpy(Logs[i],Logs[i-1],MaxTextLength ) ; 
     }  
   memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
-  strncpy_P(Logs[0],(PGM_P)message,LogLength);  //instert new log to [0]
+  strncpy_P(Logs[0],(PGM_P)message,MaxTextLength);  //instert new log to [0]
 }
 
 char* eventLogToJSON(bool Append){
@@ -57,9 +57,10 @@ char* logToJSON(bool AddToLog,bool Append){ //publish readings in JSON format
   if(AddToLog)addToLog(F("Reporting to MQTT"));
   if(!Append)memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat_P(WebMessage,(PGM_P)F("{\"BoxDate\":\""));  strcat(WebMessage,getFormattedTime());
-  strcat_P(WebMessage,(PGM_P)F("\",\"BoxTempC\":\""));  strcat(WebMessage,toText(BoxTempC));
-  strcat_P(WebMessage,(PGM_P)F("\",\"BoxTempF\":\""));  strcat(WebMessage,toText(BoxTempF));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Humidity\":\""));  strcat(WebMessage,toText(Humidity));
+  strcat_P(WebMessage,(PGM_P)F("\",\"IntTemp\":\""));  strcat(WebMessage,toText(IntTemp));
+  strcat_P(WebMessage,(PGM_P)F("\",\"IntHumidity\":\""));  strcat(WebMessage,toText(IntHumidity));
+  strcat_P(WebMessage,(PGM_P)F("\",\"ExtTemp\":\""));  strcat(WebMessage,toText(ExtTemp));
+  strcat_P(WebMessage,(PGM_P)F("\",\"ExtHumidity\":\""));  strcat(WebMessage,toText(ExtHumidity));
   strcat_P(WebMessage,(PGM_P)F("\",\"Power\":\""));  strcat(WebMessage,toText(Power)); 
   strcat_P(WebMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(WebMessage,toText(Energy));
   strcat_P(WebMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(WebMessage,toText(Voltage));
@@ -81,9 +82,10 @@ char * logToText(){
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable 
   strcat(WebMessage,getFormattedTime());
   strcat_P(WebMessage,(PGM_P)F("\n\r Box - ")); 
-  strcat_P(WebMessage,(PGM_P)F("TempC:")); strcat(WebMessage,toText(BoxTempC)); strcat_P(WebMessage,(PGM_P)F("C"));
-  strcat_P(WebMessage,(PGM_P)F(" ; TempF:")); strcat(WebMessage,toText(BoxTempF)); strcat_P(WebMessage,(PGM_P)F("F"));
-  strcat_P(WebMessage,(PGM_P)F(" ; Humidity:")); strcat(WebMessage,toText(Humidity)); strcat_P(WebMessage,(PGM_P)F("%"));
+  strcat_P(WebMessage,(PGM_P)F("IntTemp:")); strcat(WebMessage,toText(IntTemp)); if(MySettings.MetricSystemEnabled)strcat_P(WebMessage,(PGM_P)F("C")); else strcat_P(WebMessage,(PGM_P)F("F"));
+  strcat_P(WebMessage,(PGM_P)F(" ; IntHumidity:")); strcat(WebMessage,toText(IntHumidity)); strcat_P(WebMessage,(PGM_P)F("%"));
+  strcat_P(WebMessage,(PGM_P)F("ExtTemp:")); strcat(WebMessage,toText(ExtTemp)); if(MySettings.MetricSystemEnabled)strcat_P(WebMessage,(PGM_P)F("C")); else strcat_P(WebMessage,(PGM_P)F("F"));
+  strcat_P(WebMessage,(PGM_P)F(" ; ExtHumidity:")); strcat(WebMessage,toText(ExtHumidity)); strcat_P(WebMessage,(PGM_P)F("%"));
   strcat_P(WebMessage,(PGM_P)F(" ; Internal fan:"));strcat_P(WebMessage,(PGM_P)fanSpeedToText(true));
   strcat_P(WebMessage,(PGM_P)F(" ; Exhaust fan:"));strcat_P(WebMessage,(PGM_P)fanSpeedToText(false));
   strcat_P(WebMessage,(PGM_P)F("\n\r Power - "));
@@ -99,7 +101,7 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F(" ; LightON:")); strcat(WebMessage,timetoText(MySettings.LightOnHour, MySettings.LightOnMinute));
   strcat_P(WebMessage,(PGM_P)F(" ; LightOFF:")); strcat(WebMessage,timetoText(MySettings.LightOffHour, MySettings.LightOffMinute));
   strcat_P(WebMessage,(PGM_P)F("\n\r Aeroponics - "));
-  strcat_P(WebMessage,(PGM_P)F("Pressure:"));strcat(WebMessage,toText(AeroPressure));strcat_P(WebMessage,(PGM_P)F("bar/"));strcat(WebMessage,toText(AeroPressurePSI));strcat_P(WebMessage,(PGM_P)F("psi"));
+  strcat_P(WebMessage,(PGM_P)F("Pressure:"));strcat(WebMessage,toText(AeroPressure));if(MySettings.MetricSystemEnabled)strcat_P(WebMessage,(PGM_P)F("bar"));else strcat_P(WebMessage,(PGM_P)F("psi"));
   strcat_P(WebMessage,(PGM_P)F(" ; Low:"));strcat(WebMessage,toText(MySettings.AeroPressureLow));
   strcat_P(WebMessage,(PGM_P)F(" ; High:"));strcat(WebMessage,toText(MySettings.AeroPressureHigh));
   strcat_P(WebMessage,(PGM_P)F(" ; Interval:"));strcat(WebMessage,toText(MySettings.AeroInterval));
@@ -167,8 +169,8 @@ const __FlashStringHelper * statusToText(bool Status){
 } 
 
 void setDebugOnOff(bool State){
-  MySettings.isDebugEnabled = State;
-  if(MySettings.isDebugEnabled){ 
+  MySettings.DebugEnabled = State;
+  if(MySettings.DebugEnabled){ 
     addToLog(F("Debug enabled"));
     PlayOnSound=true;}
   else {
@@ -199,4 +201,10 @@ void setReportToMqttOnOff(bool State){
     addToLog(F("MQTT disabled"));
     PlayOffSound=true;
     }
+}
+
+void setPushingBoxLogRelayID(char * ID){  
+  strncpy(MySettings.PushingBoxLogRelayID,ID,MaxTextLength);
+  addToLog(F("Sheets log relay ID updated")); 
+  logToSerials(F("New PushingBox DeviceID: "),false);logToSerials(MySettings.PushingBoxLogRelayID,true); 
 }

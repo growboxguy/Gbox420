@@ -57,7 +57,7 @@ void checkReservoirAlert(){
   }
   if(ReservOK && reservoirLevel <= 0){
     ReservoirAlertCount++;
-    if(ReservoirAlertCount>=ReadCountBeforeAlert){
+    if(ReservoirAlertCount>=MySettings.ReadCountBeforeAlert){
       ReservOK = false;
       if(reservoirLevel == 0){
         sendEmailAlert(F("Reservoir%20is%20empty"));
@@ -81,7 +81,7 @@ void readPH(bool ShowRaw){
   PHRaw = Reading /40; //Calculates average
   if(ShowRaw)
   {
-  strncpy_P(LogMessage,(PGM_P)F("PH analog read: "),LogLength);
+  strncpy_P(LogMessage,(PGM_P)F("PH analog read: "),MaxTextLength);
   strcat(LogMessage,toText(PHRaw));
   addToLog(LogMessage);
   }
@@ -111,7 +111,7 @@ void checkPHAlert(){
   else{
     if(PhOK){
       PHAlertCount++;
-      if(PHAlertCount>=ReadCountBeforeAlert){
+      if(PHAlertCount>=MySettings.ReadCountBeforeAlert){
         sendEmailAlert(F("Reservoir%20PH%20not%20optimal"));
         addToLog(F("Reservoir PH not optimal"));
         PhOK = false;

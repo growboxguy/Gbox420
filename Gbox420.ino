@@ -43,16 +43,17 @@
   bool VentOK = true; //Temperatur and humidity withing range
   bool ReservOK = true; //Reservoir not empty
   bool PhOK = true;  //Nutrient solution PH within range
-  byte LightsAlertCount = 0;  //Counters of out of range readings before triggering an alert
-  byte PressureAlertCount = 0; //All counters are compared agains ReadCountBeforeAlert from 420Settings
-  byte ACPowerAlertCount = 0;
-  byte DCPowerAlertCount = 0;
-  byte VentilationAlertCount = 0;
-  byte ReservoirAlertCount = 0;
-  byte PHAlertCount = 0;
-  float BoxTempC; // stores Temperature - Celsius
-  float BoxTempF; // stores Temperature - Fahrenheit
-  float Humidity; // stores relative humidity - %
+  int LightsAlertCount = 0;  //Counters of out of range readings before triggering an alert
+  int PressureAlertCount = 0; //All counters are compared agains ReadCountBeforeAlert from 420Settings before triggering an alert
+  int ACPowerAlertCount = 0;
+  int DCPowerAlertCount = 0;
+  int VentilationAlertCount = 0;
+  int ReservoirAlertCount = 0;
+  int PHAlertCount = 0;
+  float IntTemp; // stores Temperature - Celsius
+  float IntHumidity; // stores relative humidity - %
+  float ExtTemp; // stores Temperature - Celsius
+  float ExtHumidity; // stores relative humidity - %
   float Power; //Power sensor - W
   float Energy; //Power sensor - Wh Total consumption 
   float Voltage; //Power sensor - V
@@ -74,15 +75,15 @@
   bool isAeroSprayOn = false; //Aeroponics - Spray state, set to true to spay at power on
   bool isAeroPumpOn = false; //Aeroponics - High pressure pump state
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
-  float AeroPressurePSI = 0.0;  //Aeroponics - Current pressure (psi)
   char WebMessage[512];   //buffer for REST and MQTT API messages
   char CurrentTime[20]; //buffer for getting current time
-  char LogMessage[LogLength]; //temp storage for assembling log messages
-  char Logs[LogDepth][LogLength];  //two dimensional array for storing log histroy (array of char arrays)
+  char LogMessage[MaxTextLength]; //temp storage for assembling log messages
+  char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy (array of char arrays)
 
 //Component initialization
   const uint8_t  DHTType=DHT22;  //specify temp/humidity sensor type: DHT21(AM2301) or DHT22(AM2302,AM2321)
-  DHT TempSensor(TempSensorInPin, DHTType); // Temp/Humidity sensor
+  DHT InternalDHTSensor(InternalDHTSensorInPin, DHTType); // Internal Temp/Humidity sensor
+  DHT ExternalDHTSensor(ExternalDHTSensorInPin, DHTType); // External Temp/Humidity sensor
   SevenSegmentExtended DigitDisplay(DigitDisplayCLKOutPin, DigitDisplayDI0OutPin); //4 digit LED Display
   PZEM004T PowerSensor(&Serial2);  // Power Sensor using hardware Serial 2, use software serial if needed
   IPAddress PowerSensorIP(192,168,1,1); // Power Sensor address (fake,just needs something set)
@@ -164,13 +165,14 @@ void setup() {     // put your setup code here, to run once:
   HalfHourThread.onRun(halfHourRun);
 
   //Start devices
-  TempSensor.begin(); //start humidity/temp sensor
+  InternalDHTSensor.begin(); //start humidity/temp sensor
+  ExternalDHTSensor.begin(); //start external humidity/temp sensor
   Screen.begin(); //start LCD screen
   Screen.setRotation(ScreenRotation);
   DigitDisplay.begin(); //start 4 digit LED display
   DigitDisplay.setBacklight(MySettings.DigitDisplayBacklight); //set 4 digit LED display backlight intensity
   PowerSensor.setAddress(PowerSensorIP); //start power meter, pass mandatory fake IP address
-  LogToSerials(F("Calibrating lights..."),false);
+  logToSerials(F("Calibrating lights..."),false);
   calibrateLights();
   addToLog(F("Grow Box initialized"));
 
@@ -197,7 +199,7 @@ void processTimeCriticalStuff(){
 }
 
 void oneSecRun(){
-  if(MySettings.isDebugEnabled)LogToSerials(F("One sec trigger.."),true);
+  if(MySettings.DebugEnabled)logToSerials(F("One sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   checkLightStatus(); 
   checkAero();  
@@ -206,24 +208,24 @@ void oneSecRun(){
 }
 
 void fiveSecRun(){
-  if(MySettings.isDebugEnabled)LogToSerials(F("Five sec trigger.."),true);
+  if(MySettings.DebugEnabled)logToSerials(F("Five sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout   
   readSensors();
   wdt_reset(); //reset watchdog timeout
   updateDisplay(); //Updates 7 digit display  
-  //LogToSerials(freeMemory(),true);  
+  //logToSerials(freeMemory(),true);  
 }
 
 void minuteRun(){
-  if(MySettings.isDebugEnabled)LogToSerials(F("Minute trigger.."),true);
+  if(MySettings.DebugEnabled)logToSerials(F("Minute trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   checkLightTimer(); 
-  LogToSerials(logToText(),true);  //Logs sensor readings to Serial  
+  logToSerials(logToText(),true);  //Logs sensor readings to Serial  
   logToScreen();  //Display sensore readings on LCD screen  
 }
 
 void halfHourRun(){
-  if(MySettings.isDebugEnabled)LogToSerials(F("Half hour trigger.."),true);
+  if(MySettings.DebugEnabled)logToSerials(F("Half hour trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   if(MySettings.ReportToGoogleSheets) ReportToGoogleSheets(false);  //uploads readings to Google Sheets via ESP REST API
   if(MySettings.ReportToMqtt) mqttPublush(false);  //publish readings via ESP MQTT API
@@ -242,7 +244,7 @@ void readSensors(){  //Bundles functions to get sensor readings
 }
 
 void saveSettings(bool AddToLog){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
-  eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings));
+  eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings)); //update_block only writes the bytes that changed
   if(AddToLog) addToLog(F("Settings saved to EEPROM"));
 }
 
@@ -250,20 +252,20 @@ void loadSettings(){
   Settings EEPROMSettings; //temporary storage with "settings" type
   eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
   if(EEPROMSettings.StructureVersion != MySettings.StructureVersion){
-    LogToSerials(F("Change detected, updating EEPROM..."),false);
+    logToSerials(F("Change detected, updating EEPROM..."),false);
     saveSettings(false);  //overwrites stored settings with defaults from this sketch
   }
   else {
-    LogToSerials(F("Same structure version detected, applying restored settings..."),false);
+    logToSerials(F("Same structure version detected, applying restored settings..."),false);
     MySettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
   }
-  LogToSerials(F("done"),true);
+  logToSerials(F("done"),true);
 }
 
 time_t getNtpTime(){
   long LastRefresh = millis();
   time_t NTPResponse = 0;
-  LogToSerials(F("Waiting for NTP time (30sec timeout)..."),false);
+  logToSerials(F("Waiting for NTP time (30sec timeout)..."),false);
   while(NTPResponse == 0 && millis() - LastRefresh < 30000){
    NTPResponse = EspCmd.GetTime();
    delay(50);
@@ -273,7 +275,7 @@ time_t getNtpTime(){
     addToLog(F("NTP time sync failed"));
     sendEmailAlert(F("NTP%20time%20sync%20failed")); 
   }
-  else LogToSerials(F("NTP time synchronized"),true);
+  else logToSerials(F("NTP time synchronized"),true);
   return NTPResponse;
 }
 
@@ -281,4 +283,29 @@ char * getFormattedTime(){
   time_t Now = now(); // Get the current time and date from the TimeLib library
   snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d",year(Now), month(Now), day(Now),hour(Now), minute(Now), second(Now)); // YYYY/MM/DD-HH:mm:SS formatted time will be stored in CurrentTime global variable
   return CurrentTime;
+}
+
+void setMetricSystemEnabled(bool MetricEnabled){
+  if(MetricEnabled != MySettings.MetricSystemEnabled){  //if there was a change
+    MySettings.MetricSystemEnabled = MetricEnabled;
+    MySettings.internalFanSwitchTemp = convertBetweenTempUnits(MySettings.internalFanSwitchTemp);
+    MySettings.TempAlertLow= convertBetweenTempUnits(MySettings.TempAlertLow);
+    MySettings.TempAlertHigh= convertBetweenTempUnits(MySettings.TempAlertHigh);
+    MySettings.AeroPressureLow=convertBetweenPressureUnits(MySettings.AeroPressureLow);
+    MySettings.AeroPressureHigh=convertBetweenPressureUnits(MySettings.AeroPressureHigh);
+    MySettings.PressureAlertLow=convertBetweenPressureUnits(MySettings.PressureAlertLow);
+    MySettings.PressureAlertHigh=convertBetweenPressureUnits(MySettings.PressureAlertHigh);
+  }    
+  if(MySettings.MetricSystemEnabled) addToLog(F("Using Metric units"));
+  else addToLog(F("Using Imperial units"));  
+}
+
+float convertBetweenTempUnits(float Value){
+if(MySettings.MetricSystemEnabled) return round((Value-32) * 55.555555)/100.0;
+else return (round(Value*180) + 3200.0)/100.0;
+}
+
+float convertBetweenPressureUnits(float Value){
+if(MySettings.MetricSystemEnabled) return round(Value / 0.145038)/100.0;
+else return round(Value*1450.38)/100.0;
 }

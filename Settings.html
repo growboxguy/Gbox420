@@ -22,10 +22,16 @@
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">
 				<h1>Settings<button style="height:32px;width:32px;border-radius:0;"  id="btn_Ee" type="button"><img style="padding:0px;height:28px;width:28px;" src="https://sites.google.com/site/growboxguy/home/gbox420.png" /></button></h1>
-				<button id="btn_SaveSettings" type="button" title="Force saving settings to EEPROM, runs automatically after a change">Save settings</button><br>
 				<form><label><input type="checkbox" name="SoundEnabled">Sound enabled </label><input type="submit" value="Set"></form>
-				<form><label><input type="checkbox" name="DebugEnabled">Debug enabled </label><input type="submit" value="Set"></form>
-				<b>Digit display</b>
+				<form><label><input type="checkbox" name="DebugEnabled" title="Debug entres on Serial log">Debug enabled </label><input type="submit" value="Set"></form>
+				<form><label><input type="checkbox" name="MetricSystemEnabled" title="Use imperial units(F,PSI) or metric (C,bar)">Metric units </label><input type="submit" value="Set"></form>				
+				<b>Reporting</b>
+				<form><label><input type="checkbox" name="MqttEnabled">MQTT </label><input type="submit" value="Set"> <button id="btn_Mqtt" type="button" style="margin-top:0px">Trigger</button></form>
+				<form><label><input type="checkbox" name="GoogleSheetsEnabled">Google Sheets </label><input type="submit" value="Set"> <button id="btn_GoogleSheets" type="button" style="margin-top:0px">Trigger</button></form>
+				<form>RelayID:<input type="text" name="PushingBoxLogRelayID"  style="width: 150px;" title="DeviceID of the PushingBox logging scenario"/><input type="submit" value="Set"></form>
+			</div>
+			<div class="card" style="width:90%">
+				<h1>Digit Display</h1>				
 				<form>Backlight: Min<input style="width:100px;" type="range" name="DigitDisplayBrightness" min="0" max="100"/>Max <input type="submit" value="Set"></form>
 				<form>
 					Lock to value: <input style="width: 35px;" min=-1 max=17 name="DigitDisplayValue" type="number" step="1"/> <input type="submit" value="Set">
@@ -34,18 +40,17 @@
 				<button id="btn_DigitDisplayLockTemp" type="button" style="margin-top:0px">Temp</button>
 				<button id="btn_DigitDisplayLockPH" type="button" style="margin-top:0px">PH</button>
 				<button id="btn_DigitDisplayLockPressure" type="button" style="margin-top:0px">Pressure</button>
-				<button id="btn_DigitDisplayLockWattage" type="button" style="margin-top:0px">Wattage</button><br>								
-				<b>Reporting</b>
-				<form><label><input type="checkbox" name="MqttEnabled">MQTT </label></input><input type="submit" value="Set"> <button id="btn_Mqtt" type="button" style="margin-top:0px">Trigger</button></form>
-				<form><label><input type="checkbox" name="GoogleSheetsEnabled">Google Sheets </label><input type="submit" value="Set"> <button id="btn_GoogleSheets" type="button" style="margin-top:0px">Trigger</button></form>
-			</div>
+				<button id="btn_DigitDisplayLockWattage" type="button" style="margin-top:0px">Wattage</button><br>		
+			</div>		
 			<div class="card" style="width:90%">
 				<h1>Email alerts</h1>
 				<form><label><input type="checkbox" name="AlertEmails">Alert emails </label><input type="submit" value="Set"> <button id="btn_AlertTest" type="button" title="Trigger a test alert email">Test Email</button></form>		
+				<form>RelayID:<input type="text" name="PushingBoxEmailRelayID"  style="width: 160px;" title="DeviceID of the PushingBox email relay scenario"/><input type="submit" value="Set"></form>
 				<b>Alerts thresholds</b>
+				<form>Alert after:<input style="width: 45px;" min=1 max=999 name="ReadCountBeforeAlert" type="number" title="Nr of consecutive out of range readings before triggering an alert"/> readings <input type="submit" value="Set"></form>
 				<form>
-					Temp Low:<input style="width: 35px;" min=-20 max=100 name="TempAlertLow" type="number"/> 
-					High:<input style="width: 35px;" min=-20 max=100 name="TempAlertHigh" type="number"/>					
+					Temp Low:<input style="width: 45px;" min=0 max=255 name="TempAlertLow" type="number"/> 
+					High:<input style="width: 45px;" min=0 max=255 name="TempAlertHigh" type="number"/>					
 					<input type="submit" value="Set">
 				</form>
 				<form>
@@ -54,13 +59,13 @@
 					<input type="submit" value="Set">
 				</form>
 				<form>
-					Pressure Low:<input style="width: 45px;" min=0 max=8 step="0.1" name="PressureAlertLow" type="number"/> 
-					High:<input style="width: 45px;" min=0 max=8 step="0.1" name="PressureAlertHigh" type="number"/>					
+					Pressure Low:<input style="width: 60px;" min=0 max=145 step="0.1" name="PressureAlertLow" type="number"/> 
+					High:<input style="width: 60px;" min=0 max=145 step="0.1" name="PressureAlertHigh" type="number"/>					
 					<input type="submit" value="Set">
 				</form>
 				<form>
-					PH Low:<input style="width: 45px;" min=0 max=14 step="0.1" name="PHAlertLow" type="number"/> 
-					High:<input style="width: 45px;" min=0 max=14 step="0.1" name="PHAlertHigh" type="number"/>					
+					PH Low:<input style="width: 50px;" min=0 max=14 step="0.1" name="PHAlertLow" type="number"/> 
+					High:<input style="width: 50px;" min=0 max=14 step="0.1" name="PHAlertHigh" type="number"/>					
 					<input type="submit" value="Set">
 				</form>
 			</div>		
@@ -94,21 +99,28 @@
 			</div>
 			<div class="card" style="width:90%">
 				<h1>Calibration</h1>				
-				<b>PH meter</b>
+				<b>PH meter </b><button id="btn_PHCalibrate" type="button" style="margin-top:0px" title="Displays the analog PH value for a calibration point">Read raw</button>
 				<form>
 					Slope:<input style="width: 80px;" name="PHCalibrationSlope" type="text"/> 
 					Intercept:<input style="width: 80px;" name="PHCalibrationIntercept" type="text"/>
-					<input type="submit" value="Set">
-					<button id="btn_PHCalibrate" type="button" style="margin-top:0px" title="Displays the analog PH value for a calibration point">Read raw</button>					
+					<input type="submit" value="Set">										
 				</form>
-				<b>Pressure sensor</b>
+				<b>Pressure sensor </b><button id="btn_PressureCalibrate" type="button" style="margin-top:0px" title="Use only when the tank is not pressurized!">Read offset</button>
 				<form>
 					Offset:<input style="width: 80px;" name="PressureSensorOffset" type="text"/> 
 					Ratio: <input style="width: 80px;" title="Voltage to pressure ratio" name="PressureSensorRatio" type="text"/>					
-					<input type="submit" value="Set">
-					<button id="btn_PressureCalibrate" type="button" style="margin-top:0px" title="Use only when the tank is not pressurized!">Read offset</button>
+					<input type="submit" value="Set">					
 				</form>				
-			</div>					
+			</div>
+			<div class="card" style="width:90%">
+				<h1>Aeroponics</h1>
+				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="AeroPumpTimeout" type="number" title="Maximum high pressure tank refill time, if reached pump is considered broken"/> sec <input type="submit" value="Set"></form>
+				<b>Quiet time</b>
+					<form class="test"><label><input type="checkbox" name="AeroQuietEnabled">Enabled </label><input type="submit" value="Set"></form>
+					<form><label><input type="checkbox" name="AeroRefillBeforeQuiet" title="Before enabling quiet time refill the tank">Refill before </label><input type="submit" value="Set"></form>
+					<form>From:<input style="width: 35px;" min=0 max=23 name="AeroQuietFromHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="AeroQuietFromMinute" type="number"/> <input type="submit" value="Set"></form>
+					<form>To : <input style="width: 35px;" min=0 max=23 name="AeroQuietToHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="AeroQuietToMinute" type="number"/> <input type="submit" value="Set"></form>			
+			</div>				
 		</div>		
 	</div>
   </div> 

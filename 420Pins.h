@@ -15,7 +15,8 @@
   const byte WaterFullInPin = A7; // Water sensor4
   const byte DigitDisplayCLKOutPin = 31; //CLK - 4 digit LED display
   const byte DigitDisplayDI0OutPin = 30; //DIO - 4 digit LED display
-  const byte TempSensorInPin = 43; //DAT - DHT22 temp/humidity sensor
+  const byte InternalDHTSensorInPin = 43; //DAT - DHT22 temp/humidity sensor, internally mounted
+  const byte ExternalDHTSensorInPin = 44; //DAT - DHT22 temp/humidity sensor, externally mounted
   const byte Relay1OutPin = 22;  //Power relay Port 1 - Aeroponics solenoid
   const byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump
   const byte Relay3OutPin = 24;  //Power relay Port 3 - Reservoir air pump

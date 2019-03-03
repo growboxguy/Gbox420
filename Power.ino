@@ -16,7 +16,7 @@ void readPowerSensor(){
   Energy = PowerSensor.energy(PowerSensorIP) / 1000;  //total power consumption in kWh
   if(ACPowerOK && Voltage < 0) {
     ACPowerAlertCount++;
-    if(ACPowerAlertCount>=ReadCountBeforeAlert){
+    if(ACPowerAlertCount>=MySettings.ReadCountBeforeAlert){
       sendEmailAlert(F("AC%20input%20lost")); 
       ACPowerOK = false;
       addToLog(F("AC Power lost"));
@@ -34,15 +34,10 @@ void readPowerSensor(){
 
 void readATXPowerGood(){   
   bool ATXStateOK = !digitalRead(ATXPowerGoodInPin); //inverting the reading to compensate the inverting optocoupler. True:DC power OK, False:DC power not OK
-
-    if(MySettings.isDebugEnabled){
-    LogToSerials(F("ATXPowerGood reading: "),false);
-    LogToSerials(ATXStateOK,true);
-    }
-    
+   
   if(DCPowerOK && !ATXStateOK) {  //ATX Power Good pin is not at expected 5V, signaling a problem with the power supply or the voltage divider
     DCPowerAlertCount++;
-    if(DCPowerAlertCount>=ReadCountBeforeAlert){
+    if(DCPowerAlertCount>=MySettings.ReadCountBeforeAlert){
       sendEmailAlert(F("DC%20input%20lost")); 
       DCPowerOK = false;
       addToLog(F("DC Power lost"));

@@ -56,7 +56,7 @@ void mqttReceived(void* response) {
   ((*res).popString()).toCharArray(topic, 64);
   ((*res).popString()).toCharArray(data, 16);
 
-  LogToSerials(F("Received: "),false);LogToSerials(topic,false);LogToSerials(F(" - "),false);LogToSerials(data,true);
+  logToSerials(F("Received: "),false);logToSerials(topic,false);logToSerials(F(" - "),false);logToSerials(data,true);
   if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(true); else if(strcmp(data,"0")==0)turnLightOFF(true); }
   else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data),true); }
   else if(strstr(topic,MqttDisplayBrightness)!=NULL) {setDigitDisplayBacklight(atoi(data));}
@@ -96,7 +96,7 @@ void mqttPublush(bool AddToLog){ //publish readings in JSON format
   memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable
   strcat(MqttPath,MqttROOT);
   strcat(MqttPath,MqttPUBLISH);
-  LogToSerials(F("Reporting to MQTT: "),false);LogToSerials(MqttPath,false); LogToSerials(F(" - "),false); LogToSerials(WebMessage,true);
+  logToSerials(F("Reporting to MQTT: "),false);logToSerials(MqttPath,false); logToSerials(F(" - "),false); logToSerials(WebMessage,true);
   Mqtt.publish(MqttPath, WebMessage,0,1); //(topic,message,qos,retain)
 }
 
@@ -105,13 +105,13 @@ void mqttConnected(void* response) {
   strcat(MqttPath,MqttROOT);
   strcat_P(MqttPath,(PGM_P)F("#"));
   Mqtt.subscribe(MqttPath);
-  LogToSerials(F("MQTT connected!"),true);
+  logToSerials(F("MQTT connected!"),true);
 }
 
 void mqttDisconnected(void* response) {
-  LogToSerials(F("MQTT disconnected"),true);
+  logToSerials(F("MQTT disconnected"),true);
 }
 
 void mqttPublished(void* response) {
-  LogToSerials(F("MQTT published"),true);
+  logToSerials(F("MQTT published"),true);
 }

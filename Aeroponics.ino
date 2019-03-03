@@ -8,7 +8,7 @@ void checkAeroSprayTimer(){
     if(millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //if time to stop spraying (AeroDuration in Seconds)
       isAeroSprayOn = false;
       checkRelays();
-      LogToSerials(F("Stopping spray"),true);
+      logToSerials(F("Stopping spray"),true);
       PlayOffSound = true;
       AeroSprayTimer = millis();
     }
@@ -18,7 +18,7 @@ void checkAeroSprayTimer(){
       if(MySettings.isAeroSprayEnabled){
         isAeroSprayOn = true;
         checkRelays();
-        LogToSerials(F("Starting spray"),true);
+        logToSerials(F("Starting spray"),true);
         PlayOnSound = true;
         AeroSprayTimer = millis();
       }
@@ -32,7 +32,7 @@ void checkAeroPump(){
     if(AeroPressure >= MySettings.AeroPressureHigh){ //If set high pressure is reached
       aeroPumpOff();
     }
-    if (millis() - AeroPumpTimer >= AeroPumpTimeout){ //have not reached high pressue within timeout limit
+    if (millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout){ //have not reached high pressue within timeout limit
       aeroPumpDisable();
       sendEmailAlert(F("Aeroponics%20pump%20failed")); 
       addToLog(F("Pump failed"));    
@@ -57,18 +57,20 @@ void CheckAeroPumpAlerts()
        } 
   }
   else{
+    if(AeroPressure > MySettings.PressureAlertHigh){ //Pressure over limit - emergency spraying
+          aeroPumpOff(); //force pump off
+          aeroSprayNow(); //try to release pressure  
+    }
     if(PressureOK){
       PressureAlertCount++;
-      if(PressureAlertCount>=ReadCountBeforeAlert){
+      if(PressureAlertCount>=MySettings.ReadCountBeforeAlert){
         PressureOK = false;
-        if(AeroPressure > MySettings.PressureAlertHigh){ //If high pressure alert level is reached
-          aeroPumpOff(); //force pump off
-          aeroSprayNow(); //try to release pressure      
+        if(AeroPressure > MySettings.PressureAlertHigh){ //If high pressure alert level is reached   
           sendEmailAlert(F("Aeroponics%20pressure%20too%20high"));
           addToLog(F("High pressure warning"));
         }
         if(AeroPressure < MySettings.PressureAlertLow){ //If low pressure alert level is reached
-          if(PumpOK) aeroPumpOn(); //turn pump on even under quiet time
+          //if(PumpOK) aeroPumpOn(); //Uncomment this to turn pump on even under quiet time
           sendEmailAlert(F("Aeroponics%20pressure%20too%20low"));
           addToLog(F("Low pressure warning"));
         } 
@@ -85,8 +87,8 @@ void readAeroPressure(){
   }
   Reading = Reading /50;
   float Voltage = ((float)Reading) * 5 / 1024 ;
-  AeroPressure = (MySettings.PressureSensorRatio*(Voltage-MySettings.PressureSensorOffset)); // unit: bar / 100kPa
-  AeroPressurePSI = AeroPressure * 14.5038; 
+  if(MySettings.MetricSystemEnabled) AeroPressure = MySettings.PressureSensorRatio*(Voltage-MySettings.PressureSensorOffset); // unit: bar / 100kPa
+  else AeroPressure = MySettings.PressureSensorRatio*(Voltage-MySettings.PressureSensorOffset) * 14.5038;  //unit: PSI
 }
 
 void calibratePressureSensor(){  //Should only be called when there is 0 pressure
@@ -96,7 +98,7 @@ void calibratePressureSensor(){  //Should only be called when there is 0 pressur
   delay(10);
   }  
   float AeroOffsetRecommendation = (sum/50)*5/1024; //Reads voltage at 0 pressure
-  strncpy_P(LogMessage,(PGM_P)F("0 pressure AeroOffset: "),LogLength);
+  strncpy_P(LogMessage,(PGM_P)F("0 pressure AeroOffset: "),MaxTextLength);
   strcat(LogMessage,toText(AeroOffsetRecommendation));
   addToLog(LogMessage);
 }
@@ -192,12 +194,12 @@ const __FlashStringHelper * pumpStateToText(){
    if(!PumpOK) return F("DISABLED");
    else if(isAeroPumpOn) return F("ON");
    else return F("OFF");
-} 
+}
 
 //Quiet time section: Blocks running the pump in a pre-defined time range
 unsigned long AeroLastRefill= 0;
 bool checkQuietTime() {  
-  if(MySettings.isAeroQuietEnabled){
+  if(MySettings.AeroQuietEnabled){
     time_t Now = now(); // Get the current time
     int CombinedFromTime = MySettings.AeroQuietFromHour * 100 + MySettings.AeroQuietFromMinute;
     int CombinedToTime = MySettings.AeroQuietToHour * 100 + MySettings.AeroQuietToMinute;
@@ -222,9 +224,15 @@ bool checkQuietTime() {
   else return true; //always allow if quiet mode is not enabled
 }
 
+void setAeroPumpTimeout(int Timeout)
+{
+MySettings.AeroPumpTimeout = (unsigned long)Timeout * 1000;
+addToLog(F("Aero pump timeout updated"));
+}
+
 void setQuietOnOff(bool State){
-  MySettings.isAeroQuietEnabled = State;
-  if(MySettings.isAeroQuietEnabled){ 
+  MySettings.AeroQuietEnabled = State;
+  if(MySettings.AeroQuietEnabled){ 
     addToLog(F("Quiet mode enabled"));
     PlayOnSound=true;
     }

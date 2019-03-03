@@ -1,18 +1,13 @@
 //Default settings of the grow box can be adjusted here
 
 //Global constants
-  const char PushingBoxLogRelayID[]= "v755877CF53383E1"; //UPDATE THIS to your PushingBox logging scenario`s DeviceID  
-  const char PushingBoxEmailRelayID[]  = "vC5244859A2453AA";  //UPDATE THIS to your PushingBox email alert scenario`s DeviceID 
   const byte MaxDimming = 235; //Sets the maximum dimming duty cycle to 92% (255*0.92=~235). 255=100% dimming (LED drivers usually do not support full dimming, check the specification before changing this!)
   const byte ScreenRotation = 1;  //LCD screen rotation: 1,3:landscape 2,4:portrait
-  const unsigned long AeroPumpTimeout = 360000;  // Aeroponics - Max pump run time (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
-  const byte ReadCountBeforeAlert = 5; //number of consecutive out of range sensor readings before the email alert is triggered
-  const byte LogDepth = 10;  //Show X log entries on website, do not go above 10
-  const byte LogLength = 31;  //30 characters + null terminator for one log entry
-  const float DividingFactor = 4.7;  //Voltage dividing factor on the ATXPowerGood input = Measured voltage / Voltage over voltage devider
-    
+  const byte LogDepth = 10;  //Show X number of log entries on website, do not go above 10
+  const byte MaxTextLength = 31;  //30 characters + null terminator for one log entry
+   
 //Settings saved to EEPROM persistent storage
-  byte Version= 4; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
+  byte Version= 5; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
   typedef struct //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   byte AeroInterval = 15; //Aeroponics - Spray every 15 minutes
@@ -20,14 +15,15 @@
   float AeroPressureLow= 5.5; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroPressureHigh = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)
   bool isAeroSprayEnabled = true;  //Enable/disable misting
-  bool isAeroQuietEnabled = true;  //Enable/disable quiet time then pump should not run
+  bool AeroQuietEnabled = true;  //Enable/disable quiet time then pump should not run
   bool AeroRefillBeforeQuiet = true; //Enable/disable refill before quiet time
   byte AeroQuietFromHour = 22;  //Quiet time to block pump - hour
   byte AeroQuietFromMinute = 0; //Quiet time to block pump - minute
   byte AeroQuietToHour = 8; //Quiet time end - hour
   byte AeroQuietToMinute = 0; //Quiet time end - minute
-  bool isAirPumpOn = true;  //Startup status for Reservoir Air Pump: True-ON / False-OFF, default:ON
-  
+  bool isAirPumpOn = false;  //Startup status for Reservoir Air Pump: True-ON / False-OFF, default:ON
+  long unsigned AeroPumpTimeout = 360000;  // Aeroponics - Max pump run time in miliseconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
+ 
   bool isLightOn = true;  //Startup status for lights: True-ON / False-OFF
   byte LightBrightness = 0; //Light intensity: 0 - 100 range for controlling led driver output  
   byte LightOnHour = 4;  //Light ON time - hour
@@ -46,16 +42,20 @@
   bool isInternalFanHigh = false; //Internal fan Low/High, default:Low
   bool isExhaustFanOn = false;  //Exhaust fan On/Off, default:OFF
   bool isExhaustFanHigh = false;  //Exhaust fan Low/High, default:Low
-  
+   
+  bool SoundEnabled = true;  //Enable PC speaker
+  bool DebugEnabled = true; //Logs debug messages to serial and web outputs
+  bool MetricSystemEnabled = true; //Swith between Imperial/Metric units  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
   bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
-  
+  char PushingBoxLogRelayID[MaxTextLength]= "v755877CF53383E1"; //UPDATE THIS DeviceID of the PushingBox logging scenario 
+
   byte DigitDisplayBacklight = 25; //4 digit display - backlight strenght (0-100)
-  int DigitDisplayValue = -1; //select which sensor reading to display(0-17), -1 cycles through all values
-  bool isSoundEnabled = true;  //Enable PC speaker
-  bool isDebugEnabled = true; //Logs debug messages to serial and web outputs  
- 
-  bool AlertEmails = true; //disable/enable email sending  
+  int DigitDisplayValue = -1; //select which sensor reading to display(0-17), -1 cycle through all values
+    
+  bool AlertEmails = true; //disable/enable email sending
+  char PushingBoxEmailRelayID[MaxTextLength]  = "vC5244859A2453AA";  //UPDATE THIS DeviceID of the PushingBox email alert scenario
+  int ReadCountBeforeAlert = 12; //number of consecutive out of range sensor readings before the email alert is triggered (5sec between reads -> 12= Out of range reading through 1 minute)  
   int TempAlertLow = 15; //Low temp warning email
   int TempAlertHigh = 35; //High temp warning email
   int HumidityAlertLow = 35; //Low humidity warning email

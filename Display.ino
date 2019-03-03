@@ -6,7 +6,7 @@ void logToScreen(){
   Screen.setTextColor(ILI9341_WHITE);Screen.setTextSize(2);  
   Screen.println(getFormattedTime());
   Screen.setTextColor(ILI9341_ORANGE);Screen.setTextSize(3);
-  Screen.print(BoxTempC); Screen.print(F("C,Hum:"));Screen.print(Humidity); Screen.println( F("%"));
+  Screen.print(IntTemp); if(MySettings.MetricSystemEnabled)Screen.print(F("C,Hum:"));else Screen.print(F("F,Hum:"));Screen.print(IntHumidity); Screen.println( F("%"));
   Screen.setTextColor(ILI9341_BLUE);
   Screen.print(Power); Screen.print(F("W,"));Screen.print(Energy); Screen.println(F("kWh"));   
   Screen.setTextColor(ILI9341_RED);Screen.setTextSize(2);
@@ -38,13 +38,13 @@ void updateDisplay() { //Cycles through the different values
       DigitDisplay.print(F("Temp"));
       break;
     case 1:
-      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)BoxTempC , 100 * (BoxTempC - (int)BoxTempC));DigitDisplay.printRaw(degreeSign, 3);DigitDisplay.setColonOn(0);
+      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)IntTemp , 100 * (IntTemp - (int)IntTemp));DigitDisplay.printRaw(degreeSign, 3);DigitDisplay.setColonOn(0);
       break;
     case 2:      
       DigitDisplay.print(F("Humi"));
       break;
     case 3:
-      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)Humidity , 100 * (Humidity - (int)Humidity));DigitDisplay.setColonOn(0);      
+      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)IntHumidity , 100 * (IntHumidity - (int)IntHumidity));DigitDisplay.setColonOn(0);      
       break;    
     case 4:
       DigitDisplay.print(F("PRES"));

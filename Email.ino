@@ -1,22 +1,35 @@
 void sendEmailAlert(const __FlashStringHelper *title){ //Title needs to be URL encoded: https://meyerweb.com/eric/tools/dencoder/
   if(MySettings.AlertEmails){
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable  
-  strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,PushingBoxEmailRelayID); 
+  strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,MySettings.PushingBoxEmailRelayID); 
   strcat_P(WebMessage,(PGM_P)F("&Title=")); strcat_P(WebMessage,(PGM_P)title);
   strcat_P(WebMessage,(PGM_P)F("&Log=")); logToJSON(false,true);  
   RestAPI.get(WebMessage);
-  if(MySettings.isDebugEnabled)LogToSerials(WebMessage,true);
+  if(MySettings.DebugEnabled)logToSerials(WebMessage,true);
   }
-  else if(MySettings.isDebugEnabled){
-    LogToSerials(F("Alert email suppressed: "),false);
-    LogToSerials(title,true);
+  else if(MySettings.DebugEnabled){
+    logToSerials(F("Alert email suppressed: "),false);
+    logToSerials(title,true);
     }
+}
+
+void setPushingBoxEmailRelayID(char * ID)
+{
+  strncpy(MySettings.PushingBoxEmailRelayID,ID,MaxTextLength);
+  addToLog(F("Email relay ID updated")); 
+  logToSerials(F("New PushingBox DeviceID: "),false);logToSerials(MySettings.PushingBoxEmailRelayID,true); 
 }
 
 void sendTestEmailAlert()
 {
   sendEmailAlert(F("Test%20alert"));   //Encode text to be URL compatible: https://meyerweb.com/eric/tools/dencoder/ 
   addToLog(F("Test alert email sent")); 
+}
+
+void setReadCountBeforeAlert(byte Count)
+{
+  MySettings.ReadCountBeforeAlert = Count;
+  addToLog(F("Alert trigger updated"));  
 }
 
 void AlertEmailsOnOff(bool Status){  

@@ -38,7 +38,7 @@ void checkLightTimer() {
 void setBrightness(int NewBrightness, bool AddToLog){
   MySettings.LightBrightness = NewBrightness;
   if(AddToLog){
-    strncpy_P(LogMessage,(PGM_P)F("Brightness: "),LogLength);  
+    strncpy_P(LogMessage,(PGM_P)F("Brightness: "),MaxTextLength);  
     strcat(LogMessage,toText(MySettings.LightBrightness));
     strcat_P(LogMessage,(PGM_P)F("%"));
     addToLog(LogMessage);
@@ -60,7 +60,7 @@ void checkLightSensor(){
   else{
     if(LightOK){
       LightsAlertCount++;
-      if(LightsAlertCount>=ReadCountBeforeAlert){
+      if(LightsAlertCount>=MySettings.ReadCountBeforeAlert){
        LightOK = false;
        if(MySettings.isLightOn && !isBright){ //if light should be ON but no light is detected
         sendEmailAlert(F("No%20light%20detected"));        
@@ -92,9 +92,9 @@ void calibrateLights(){
   delay(2000); //wait for light output change
   MaxLightReading = 1023 - analogRead(LightSensorAnalogInPin);
   
-  if(MySettings.isDebugEnabled){
-         LogToSerials(F("0% - "),false); LogToSerials(MinLightReading,false);
-         LogToSerials(F(", 100% - "),false); LogToSerials(MaxLightReading,true);
+  if(MySettings.DebugEnabled){
+         logToSerials(F("0% - "),false); logToSerials(MinLightReading,false);
+         logToSerials(F(", 100% - "),false); logToSerials(MaxLightReading,true);
   }
   setBrightness(LastLightBrightness,false); //restore original brightness
   MySettings.isLightOn=LastLightStatus; //restore original state
