@@ -10,6 +10,7 @@
 //EC meter
 //Document 3 new optocouplers: PWM dimming, ATX Power Good detection, ATX OnOff
 //Document reservoir temp sensor
+//Document 2nd external temp sensor
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
