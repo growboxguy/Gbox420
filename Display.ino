@@ -11,11 +11,11 @@ void logToScreen(){
   Screen.print(Power); Screen.print(F("W,"));Screen.print(Energy); Screen.println(F("kWh"));   
   Screen.setTextColor(ILI9341_RED);Screen.setTextSize(2);
   //Screen.setTextColor(ILI9341_YELLOW);Screen.setTextSize(2);
-  Screen.print(F("Light:")); Screen.print(stateToText(MySettings.isLightOn)); Screen.print(F(",Bright:")); Screen.println(isBrightToText());
+  Screen.print(F("Light:")); Screen.print(stateToText(MySettings.LightOn)); Screen.print(F(",Bright:")); Screen.println(BrightToText());
   Screen.print(F("Intensity:")); Screen.print(MySettings.LightBrightness);Screen.print(F("% - "));Screen.println(LightReading);
   Screen.print(F("On:")); Screen.print(timetoText(MySettings.LightOnHour, MySettings.LightOnMinute));Screen.print(F(",Off:")); Screen.println(timetoText(MySettings.LightOffHour,MySettings.LightOffMinute));
   Screen.setTextColor(ILI9341_MAGENTA);Screen.setTextSize(2);
-  Screen.print(F("Reservoir:"));Screen.print(reservoirText);Screen.print(F(",PH:"));Screen.println(PH);
+  Screen.print(F("Reservoir:"));Screen.print(ReservoirText);Screen.print(F(",PH:"));Screen.println(PH);
   //Screen.setTextColor(ILI9341_CYAN);Screen.setTextSize(3);
   Screen.setTextColor(ILI9341_WHITE);Screen.setTextSize(2);
   Screen.print(F("Internal:"));Screen.print(fanSpeedToText(true));Screen.print(F(",Exhaust:"));Screen.println(fanSpeedToText(false));
@@ -74,7 +74,7 @@ void updateDisplay() { //Cycles through the different values
       DigitDisplay.print(F("LGHT"));
       break;
     case 13:
-      DigitDisplay.print(stateToText(MySettings.isLightOn));
+      DigitDisplay.print(stateToText(MySettings.LightOn));
       break;
     case 14:
       DigitDisplay.print(F("IFan"));

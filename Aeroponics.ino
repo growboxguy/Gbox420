@@ -4,9 +4,9 @@ void checkAero(){
 }
 
 void checkAeroSprayTimer(){
- if(isAeroSprayOn)    { //if spray is on
+ if(AeroSprayOn)    { //if spray is on
     if(millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //if time to stop spraying (AeroDuration in Seconds)
-      isAeroSprayOn = false;
+      AeroSprayOn = false;
       checkSwitches();
       logToSerials(F("Stopping spray"),true);
       PlayOffSound = true;
@@ -15,8 +15,8 @@ void checkAeroSprayTimer(){
   }
   else{ //if spray is off
     if(millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
-      if(MySettings.isAeroSprayEnabled){
-        isAeroSprayOn = true;
+      if(MySettings.AeroSprayEnabled){
+        AeroSprayOn = true;
         checkSwitches();
         logToSerials(F("Starting spray"),true);
         PlayOnSound = true;
@@ -27,7 +27,7 @@ void checkAeroSprayTimer(){
 }
 
 void checkAeroPump(){
-  if(isAeroPumpOn){
+  if(AeroPumpOn){
     readAeroPressure();   
     if(AeroPressure >= MySettings.AeroPressureHigh){ //If set high pressure is reached
       aeroPumpOff();
@@ -125,8 +125,8 @@ void setAeroDuration(int duration){
 }
 
 void setAeroSprayOnOff(bool State){
-  MySettings.isAeroSprayEnabled=State;
-  if(MySettings.isAeroSprayEnabled){ 
+  MySettings.AeroSprayEnabled=State;
+  if(MySettings.AeroSprayEnabled){ 
     addToLog(F("Aeroponics spray enabled"));
     PlayOnSound=true;} 
   else {
@@ -135,9 +135,9 @@ void setAeroSprayOnOff(bool State){
 }
 
 void aeroSprayNow(){   
-  if(MySettings.isAeroSprayEnabled){
+  if(MySettings.AeroSprayEnabled){
     AeroSprayTimer = millis();
-    isAeroSprayOn = true;
+    AeroSprayOn = true;
     PlayOnSound = true;
     checkSwitches();
     addToLog(F("Aeroponics spraying"));
@@ -145,7 +145,7 @@ void aeroSprayNow(){
 }
 
 void aeroSprayOff(){   
-    isAeroSprayOn = false;    
+    AeroSprayOn = false;    
     checkSwitches();
     addToLog(F("Aeroponics spray OFF"));
 }
@@ -161,14 +161,14 @@ void setAeroPressureHigh(float PressureHigh){
 
 void aeroPumpOn(){
   PumpOK = true;
-  isAeroPumpOn = true;
+  AeroPumpOn = true;
   checkSwitches();
   AeroPumpTimer = millis();      
   PlayOnSound = true;
 }
 
 void aeroPumpOff(){
-  isAeroPumpOn = false;
+  AeroPumpOn = false;
   checkSwitches();
   PlayOffSound = true;
 }
@@ -192,7 +192,7 @@ void aeroPumpDisable(){
 
 const __FlashStringHelper * pumpStateToText(){
    if(!PumpOK) return F("DISABLED");
-   else if(isAeroPumpOn) return F("ON");
+   else if(AeroPumpOn) return F("ON");
    else return F("OFF");
 }
 

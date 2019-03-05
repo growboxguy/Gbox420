@@ -1,11 +1,11 @@
 void airPumpOn(){
-  MySettings.isAirPumpOn = true;
+  MySettings.AirPumpOn = true;
   addToLog(F("Air pump ON"));
   PlayOnSound=true;
 }
 
 void airPumpOff(){
-  MySettings.isAirPumpOn = false;
+  MySettings.AirPumpOn = false;
   addToLog(F("Air pump OFF"));
   PlayOffSound=true;
 }
@@ -19,37 +19,37 @@ void checkReservoir(){
   bool isWaterAboveFull = !digitalRead(WaterFullInPin);
 
   //Get text representation of reservoir level: E[----]F / E[#---]F / E[##--]F / E[###-] / E[####]
-  memset(&reservoirText, 0, sizeof(reservoirText));  //clear variable   
-  strcpy_P(reservoirText,(PGM_P)F("E["));
-  if(isWaterAboveCritical) strcat_P(reservoirText,(PGM_P)F("#")); else strcat_P(reservoirText,(PGM_P)F("-"));
-  if(isWaterAboveLow) strcat_P(reservoirText,(PGM_P)F("#")); else strcat_P(reservoirText,(PGM_P)F("-"));
-  if(isWaterAboveMedium) strcat_P(reservoirText,(PGM_P)F("#")); else strcat_P(reservoirText,(PGM_P)F("-"));
-  if(isWaterAboveFull) strcat_P(reservoirText,(PGM_P)F("#")); else strcat_P(reservoirText,(PGM_P)F("-"));
-  strcat_P(reservoirText,(PGM_P)F("]F"));
+  memset(&ReservoirText, 0, sizeof(ReservoirText));  //clear variable   
+  strcpy_P(ReservoirText,(PGM_P)F("E["));
+  if(isWaterAboveCritical) strcat_P(ReservoirText,(PGM_P)F("#")); else strcat_P(ReservoirText,(PGM_P)F("-"));
+  if(isWaterAboveLow) strcat_P(ReservoirText,(PGM_P)F("#")); else strcat_P(ReservoirText,(PGM_P)F("-"));
+  if(isWaterAboveMedium) strcat_P(ReservoirText,(PGM_P)F("#")); else strcat_P(ReservoirText,(PGM_P)F("-"));
+  if(isWaterAboveFull) strcat_P(ReservoirText,(PGM_P)F("#")); else strcat_P(ReservoirText,(PGM_P)F("-"));
+  strcat_P(ReservoirText,(PGM_P)F("]F"));
 
   //Get number representation of reservoir level and send out email alerts: From 0-empty to 4-full
-  if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && isWaterAboveFull) reservoirLevel= 4;
-  else if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && !isWaterAboveFull) reservoirLevel= 3;
-  else if(isWaterAboveCritical && isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) reservoirLevel= 2;
-  else if(isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) reservoirLevel= 1;
-  else if(!isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) reservoirLevel= 0;
-  else reservoirLevel= -1; //non-valid sensor combination was read like E[#--#]F
+  if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && isWaterAboveFull) ReservoirLevel= 4;
+  else if(isWaterAboveCritical && isWaterAboveLow && isWaterAboveMedium && !isWaterAboveFull) ReservoirLevel= 3;
+  else if(isWaterAboveCritical && isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) ReservoirLevel= 2;
+  else if(isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) ReservoirLevel= 1;
+  else if(!isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) ReservoirLevel= 0;
+  else ReservoirLevel= -1; //non-valid sensor combination was read like E[#--#]F
   checkReservoirAlert();
 }
 
 void checkReservoirAlert(){
-  if(reservoirLevel > 0){
+  if(ReservoirLevel > 0){
       ReservoirAlertCount = 0;
       if(!ReservOK){
         sendEmailAlert(F("Reservoir%20OK"));
         ReservOK = true;
       }
   }
-  if(ReservOK && reservoirLevel <= 0){
+  if(ReservOK && ReservoirLevel <= 0){
     ReservoirAlertCount++;
     if(ReservoirAlertCount>=MySettings.ReadCountBeforeAlert){
       ReservOK = false;
-      if(reservoirLevel == 0){
+      if(ReservoirLevel == 0){
         sendEmailAlert(F("Reservoir%20is%20empty"));
         addToLog(F("Reservoir is empty"));
       }

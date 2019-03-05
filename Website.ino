@@ -23,14 +23,14 @@ void resetWebServer(void) {
 void LoadCallback(char * url) //called when website is loaded
 {
   if (strcmp(url,"/GrowBox.html.json")==0){
-  WebServer.setArgBoolean(F("AutoInternalFan"), MySettings.automaticInternalFan);
-  WebServer.setArgString(F("InternalFanSwitchTemp"), toText(MySettings.internalFanSwitchTemp));
-  WebServer.setArgBoolean(F("AutoExhaustFan"), MySettings.automaticExhaustFan);
-  WebServer.setArgString(F("ExhaustFanHighHumid"), toText(MySettings.exhaustFanHighHumid));
-  WebServer.setArgString(F("ExhaustFanLowHumid"), toText(MySettings.exhaustFanLowHumid));
-  WebServer.setArgString(F("ExhaustFanOffHumid"), toText(MySettings.exhaustFanOffHumid));
+  WebServer.setArgBoolean(F("AutoInternalFan"), MySettings.AutomaticInternalFan);
+  WebServer.setArgString(F("InternalFanSwitchTemp"), toText(MySettings.InternalFanSwitchTemp));
+  WebServer.setArgBoolean(F("AutoExhaustFan"), MySettings.AutomaticExhaustFan);
+  WebServer.setArgString(F("ExhaustFanHighHumid"), toText(MySettings.ExhaustFanHighHumid));
+  WebServer.setArgString(F("ExhaustFanLowHumid"), toText(MySettings.ExhaustFanLowHumid));
+  WebServer.setArgString(F("ExhaustFanOffHumid"), toText(MySettings.ExhaustFanOffHumid));
     
-  WebServer.setArgBoolean(F("TimerEnabled"), MySettings.isTimerEnabled);
+  WebServer.setArgBoolean(F("TimerEnabled"), MySettings.TimerEnabled);
   WebServer.setArgInt(F("LightsOnHour"), MySettings.LightOnHour); 
   WebServer.setArgInt(F("LightsOnMinute"), MySettings.LightOnMinute); 
   WebServer.setArgInt(F("LightsOffHour"), MySettings.LightOffHour); 
@@ -42,7 +42,7 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgInt(F("AeroDuration"), MySettings.AeroDuration);
   WebServer.setArgString(F("AeroPressureLow"), toText(MySettings.AeroPressureLow));
   WebServer.setArgString(F("AeroPressureHigh"), toText(MySettings.AeroPressureHigh));
-  WebServer.setArgBoolean(F("AeroSprayEnabled"), MySettings.isAeroSprayEnabled);
+  WebServer.setArgBoolean(F("AeroSprayEnabled"), MySettings.AeroSprayEnabled);
   }
   
   if (strcmp(url,"/Settings.html.json")==0){  
@@ -106,21 +106,21 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgString(F("tdVoltage"),toText(Voltage));
   WebServer.setArgString(F("tdCurrent"),toText(Current)); 
 
-  WebServer.setArgString(F("tdisLightOn"),stateToText(MySettings.isLightOn));
+  WebServer.setArgString(F("tdLightOn"),stateToText(MySettings.LightOn));
   WebServer.setArgString(F("tdLightReading"),toText(MySettings.LightBrightness, LightReading,"%-")); 
   WebServer.setArgString(F("tdLightMinMax"),toText(MinLightReading, MaxLightReading,"/"));
 
-  WebServer.setArgString(F("tdisBright"),isBrightToText());
+  WebServer.setArgString(F("tdBright"),BrightToText());
   WebServer.setArgString(F("tdLightOn"), timetoText(MySettings.LightOnHour,MySettings.LightOnMinute)); 
   WebServer.setArgString(F("tdLightOff"), timetoText(MySettings.LightOffHour,MySettings.LightOffMinute)); 
   
   WebServer.setArgString("tdAeroPressure",toText(AeroPressure));
-  WebServer.setArgString(F("tdisAeroPumpOn"),pumpStateToText());
+  WebServer.setArgString(F("tdAeroPumpOn"),pumpStateToText());
       
-  WebServer.setArgString(F("tdReservoir"),reservoirText);
+  WebServer.setArgString(F("tdReservoir"),ReservoirText);
   WebServer.setArgString(F("tdPH"),toText(PH));
   WebServer.setArgString(F("tdReservoirTemp"),toText(ReservoirTemp));
-  WebServer.setArgString(F("tdisAirPumpOn"),stateToText(MySettings.isAirPumpOn));  
+  WebServer.setArgString(F("tdAirPumpOn"),stateToText(MySettings.AirPumpOn));  
   }
 }
 

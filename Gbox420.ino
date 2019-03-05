@@ -10,7 +10,7 @@
 //EC meter
 //Document 3 new optocouplers: PWM dimming, ATX Power Good detection, ATX OnOff
 //Document reservoir temp sensor
-//Document 2nd external temp sensor
+//Document 2nd external temp sensor, add readins to LDC screen
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -52,12 +52,11 @@
   int VentilationAlertCount = 0;
   int ReservoirAlertCount = 0;
   int PHAlertCount = 0;
-  bool isATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
+  bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
   float IntTemp; //Internal Temperature - Celsius
   float IntHumidity; //Internal relative humidity - %
   float ExtTemp; //External Temperature - Celsius
   float ExtHumidity; //External relative humidity - %
-  float ReservoirTemp; //Reservoir water temperature
   float Power; //Power sensor - W
   float Energy; //Power sensor - Wh Total consumption 
   float Voltage; //Power sensor - V
@@ -65,9 +64,10 @@
   float PHRaw; //PH meter reading 
   float PH; //Calculated PH  
   int LightReading;  //light sensor analog reading
-  bool isBright;  //Ligth sensor digital feedback: True-Bright / False-Dark
-  byte reservoirLevel = 4;
-  char reservoirText[9]= "E[####]F";
+  bool Bright;  //Ligth sensor digital feedback: True-Bright / False-Dark
+  byte ReservoirLevel = 4;
+  char ReservoirText[9]= "E[####]F";
+  float ReservoirTemp; //Reservoir water temperature
   bool PlayOnSound = false; //Play on beep flag - website controls it
   bool PlayOffSound = false; //Play off beep flag - website controls it
   bool PlayEE = false; //Surprise :) - website controls it
@@ -76,8 +76,8 @@
   int MinLightReading = 1023; //stores the lowest light sensor analog reading
   unsigned long AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
   unsigned long AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
-  bool isAeroSprayOn = false; //Aeroponics - Spray state, set to true to spay at power on
-  bool isAeroPumpOn = false; //Aeroponics - High pressure pump state
+  bool AeroSprayOn = false; //Aeroponics - Spray state, set to true to spay at power on
+  bool AeroPumpOn = false; //Aeroponics - High pressure pump state
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
   char WebMessage[512];   //buffer for REST and MQTT API messages
   char CurrentTime[20]; //buffer for getting current time
@@ -297,7 +297,7 @@ char * getFormattedTime(){
 void setMetricSystemEnabled(bool MetricEnabled){
   if(MetricEnabled != MySettings.MetricSystemEnabled){  //if there was a change
     MySettings.MetricSystemEnabled = MetricEnabled;
-    MySettings.internalFanSwitchTemp = convertBetweenTempUnits(MySettings.internalFanSwitchTemp);
+    MySettings.InternalFanSwitchTemp = convertBetweenTempUnits(MySettings.InternalFanSwitchTemp);
     MySettings.TempAlertLow= convertBetweenTempUnits(MySettings.TempAlertLow);
     MySettings.TempAlertHigh= convertBetweenTempUnits(MySettings.TempAlertHigh);
     MySettings.AeroPressureLow=convertBetweenPressureUnits(MySettings.AeroPressureLow);

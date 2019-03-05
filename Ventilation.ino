@@ -40,69 +40,69 @@ void checkDHTAlerts(){
 }
 
 void checkFanAutomation(){
-    if(MySettings.automaticInternalFan && !MySettings.isInternalFanHigh && IntTemp > MySettings.internalFanSwitchTemp){ //if temp is above the limit turn the fan to High
+    if(MySettings.AutomaticInternalFan && !MySettings.InternalFanHigh && IntTemp > MySettings.InternalFanSwitchTemp){ //if temp is above the limit turn the fan to High
     internalFanHigh();
   }
-  if(MySettings.automaticInternalFan && MySettings.isInternalFanHigh && IntTemp < (MySettings.internalFanSwitchTemp-3)){ //backward switch only if temp is 3 degrees below limit: avoids constant switching
+  if(MySettings.AutomaticInternalFan && MySettings.InternalFanHigh && IntTemp < (MySettings.InternalFanSwitchTemp-3)){ //backward switch only if temp is 3 degrees below limit: avoids constant switching
     internalFanLow();
   }
-  if(MySettings.automaticExhaustFan && MySettings.isExhaustFanOn && IntHumidity < MySettings.exhaustFanOffHumid){ //Humidity below Off limit: turn exhaust off
+  if(MySettings.AutomaticExhaustFan && MySettings.ExhaustFanOn && IntHumidity < MySettings.ExhaustFanOffHumid){ //Humidity below Off limit: turn exhaust off
     exhaustFanOff();
   }
-  if(MySettings.automaticExhaustFan && !MySettings.isExhaustFanHigh && MySettings.exhaustFanHighHumid < IntHumidity){ //Humidity above High limit: set exhaust High
+  if(MySettings.AutomaticExhaustFan && !MySettings.ExhaustFanHigh && MySettings.ExhaustFanHighHumid < IntHumidity){ //Humidity above High limit: set exhaust High
     exhaustFanHigh();
   }
-  if(MySettings.automaticExhaustFan && ((!MySettings.isExhaustFanOn && MySettings.exhaustFanLowHumid < IntHumidity) || (MySettings.isExhaustFanHigh && IntHumidity < MySettings.exhaustFanLowHumid))){ //if exhaust was OFF and humidity gets above LOW limit, or if exhaust was High and humidity gets below LOW limit: Turn the fan LOW
+  if(MySettings.AutomaticExhaustFan && ((!MySettings.ExhaustFanOn && MySettings.ExhaustFanLowHumid < IntHumidity) || (MySettings.ExhaustFanHigh && IntHumidity < MySettings.ExhaustFanLowHumid))){ //if exhaust was OFF and humidity gets above LOW limit, or if exhaust was High and humidity gets below LOW limit: Turn the fan LOW
     exhaustFanLow();
   }
 }
 
 void internalFanLow(){
-  MySettings.isInternalFanHigh = false;
-  MySettings.isInternalFanOn = true;
+  MySettings.InternalFanHigh = false;
+  MySettings.InternalFanOn = true;
   addToLog(F("Internal fan Low")); 
   PlayOnSound=true;
 }
 
 void internalFanHigh(){
-  MySettings.isInternalFanHigh = true;
-  MySettings.isInternalFanOn = true;
+  MySettings.InternalFanHigh = true;
+  MySettings.InternalFanOn = true;
   addToLog(F("Internal fan High"));
   PlayOnSound=true;
 }
 
 void internalFanOff(){
-   MySettings.isInternalFanOn = false;
-   MySettings.isInternalFanHigh = false;
+   MySettings.InternalFanOn = false;
+   MySettings.InternalFanHigh = false;
    addToLog(F("Internal fan OFF"));
    PlayOffSound=true;
 }
 
 void exhaustFanLow(){
-  MySettings.isExhaustFanHigh = false;
-  MySettings.isExhaustFanOn = true;
+  MySettings.ExhaustFanHigh = false;
+  MySettings.ExhaustFanOn = true;
   addToLog(F("Exhaust fan Low"));
   PlayOnSound=true;
 }
 
 void exhaustFanHigh(){
-  MySettings.isExhaustFanHigh = true;
-  MySettings.isExhaustFanOn = true;
+  MySettings.ExhaustFanHigh = true;
+  MySettings.ExhaustFanOn = true;
   addToLog(F("Exhaust fan High"));
   PlayOnSound=true;
 }
 
 void exhaustFanOff(){
-  MySettings.isExhaustFanOn = false;
-  MySettings.isExhaustFanHigh = false;
+  MySettings.ExhaustFanOn = false;
+  MySettings.ExhaustFanHigh = false;
   addToLog(F("Exhaust fan OFF"));
   PlayOffSound=true;
 }
 
 void autoFanOnOff(bool Status,bool Internal){
   if(Internal){
-    MySettings.automaticInternalFan = Status;
-    if(MySettings.automaticInternalFan){
+    MySettings.AutomaticInternalFan = Status;
+    if(MySettings.AutomaticInternalFan){
       addToLog(F("Internal fan automatic"));
       PlayOnSound=true;
       }
@@ -112,8 +112,8 @@ void autoFanOnOff(bool Status,bool Internal){
       }
   }
   else{
-    MySettings.automaticExhaustFan = Status;
-    if(MySettings.automaticExhaustFan){
+    MySettings.AutomaticExhaustFan = Status;
+    if(MySettings.AutomaticExhaustFan){
       addToLog(F("Exhaust fan automatic"));
       PlayOnSound=true;
       }
@@ -125,44 +125,44 @@ void autoFanOnOff(bool Status,bool Internal){
 }
 
 void setInternalSwitchTemp(int Temp){
-  MySettings.internalFanSwitchTemp = Temp;
+  MySettings.InternalFanSwitchTemp = Temp;
 }
 
 void setExhaustOffHumidity(int Humidity){
-  MySettings.exhaustFanOffHumid = Humidity;
+  MySettings.ExhaustFanOffHumid = Humidity;
 }
 
 void setExhaustLowHumidity(int Humidity){
-  MySettings.exhaustFanLowHumid = Humidity;
+  MySettings.ExhaustFanLowHumid = Humidity;
 }
 
 void setExhaustHighHumidity(int Humidity){
-  MySettings.exhaustFanHighHumid = Humidity;
+  MySettings.ExhaustFanHighHumid = Humidity;
   addToLog(F("Exhaust fan limits updated"));
 }
 
 const __FlashStringHelper * fanSpeedToText(bool Internal){
   if(Internal){
-   if(!MySettings.isInternalFanOn) return F("OFF");
-   else if (MySettings.isInternalFanHigh) return F("HIGH");
+   if(!MySettings.InternalFanOn) return F("OFF");
+   else if (MySettings.InternalFanHigh) return F("HIGH");
    else return F("LOW");
   }
   else{
-   if(!MySettings.isExhaustFanOn) return F("OFF");
-   else if (MySettings.isExhaustFanHigh) return F("HIGH");
+   if(!MySettings.ExhaustFanOn) return F("OFF");
+   else if (MySettings.ExhaustFanHigh) return F("HIGH");
    else return F("LOW");
   }
 }
 
 const __FlashStringHelper * fanSpeedToNumber(bool internal){
    if(internal){
-   if(!MySettings.isInternalFanOn) return F("0");
-   else if (MySettings.isInternalFanHigh) return F("2");
+   if(!MySettings.InternalFanOn) return F("0");
+   else if (MySettings.InternalFanHigh) return F("2");
    else return F("1");
   }
   else{
-   if(!MySettings.isExhaustFanOn) return F("0");
-   else if (MySettings.isExhaustFanHigh) return F("2");
+   if(!MySettings.ExhaustFanOn) return F("0");
+   else if (MySettings.ExhaustFanHigh) return F("2");
    else return F("1");
   }
 }

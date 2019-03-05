@@ -58,20 +58,21 @@ char* logToJSON(bool AddToLog,bool Append){ //publish readings in JSON format
   if(!Append)memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat_P(WebMessage,(PGM_P)F("{\"BoxDate\":\""));  strcat(WebMessage,getFormattedTime());
   strcat_P(WebMessage,(PGM_P)F("\",\"IntTemp\":\""));  strcat(WebMessage,toText(IntTemp));
-  strcat_P(WebMessage,(PGM_P)F("\",\"IntHumidity\":\""));  strcat(WebMessage,toText(IntHumidity));
   strcat_P(WebMessage,(PGM_P)F("\",\"ExtTemp\":\""));  strcat(WebMessage,toText(ExtTemp));
+  strcat_P(WebMessage,(PGM_P)F("\",\"IntHumidity\":\""));  strcat(WebMessage,toText(IntHumidity));
   strcat_P(WebMessage,(PGM_P)F("\",\"ExtHumidity\":\""));  strcat(WebMessage,toText(ExtHumidity));
   strcat_P(WebMessage,(PGM_P)F("\",\"Power\":\""));  strcat(WebMessage,toText(Power)); 
   strcat_P(WebMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(WebMessage,toText(Energy));
   strcat_P(WebMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(WebMessage,toText(Voltage));
   strcat_P(WebMessage,(PGM_P)F("\",\"Current\":\""));  strcat(WebMessage,toText(Current));
-  strcat_P(WebMessage,(PGM_P)F("\",\"PH\":\""));  strcat(WebMessage,toText(PH));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(WebMessage,toText(AeroPressure));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Lights\":\""));  strcat(WebMessage,toText(MySettings.isLightOn));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Lights\":\""));  strcat(WebMessage,toText(MySettings.LightOn));
   strcat_P(WebMessage,(PGM_P)F("\",\"Brightness\":\""));  strcat(WebMessage,toText(MySettings.LightBrightness));
   strcat_P(WebMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(WebMessage,toText(LightReading));
-  strcat_P(WebMessage,(PGM_P)F("\",\"isBright\":\""));  strcat(WebMessage,toText(isBright));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(WebMessage,toText(reservoirLevel));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Bright\":\""));  strcat(WebMessage,toText(Bright));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(WebMessage,toText(ReservoirLevel));
+  strcat_P(WebMessage,(PGM_P)F("\",\"ReservoirTemp\":\""));  strcat(WebMessage,toText(ReservoirTemp));
+  strcat_P(WebMessage,(PGM_P)F("\",\"PH\":\""));  strcat(WebMessage,toText(PH));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(WebMessage,toText(AeroPressure));
   strcat_P(WebMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(true));
   strcat_P(WebMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(false));
   strcat_P(WebMessage,(PGM_P)F("\"}"));
@@ -94,10 +95,10 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F(" ; Voltage:")); strcat(WebMessage,toText(Voltage)); strcat_P(WebMessage,(PGM_P)F("V"));
   strcat_P(WebMessage,(PGM_P)F(" ; Current:")); strcat(WebMessage,toText(Current)); strcat_P(WebMessage,(PGM_P)F("A"));
   strcat_P(WebMessage,(PGM_P)F("\n\r Lights - "));
-  strcat_P(WebMessage,(PGM_P)F("Light:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.isLightOn)); 
+  strcat_P(WebMessage,(PGM_P)F("Light:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.LightOn)); 
   strcat_P(WebMessage,(PGM_P)F(" ; Brightness:")); strcat(WebMessage,toText(MySettings.LightBrightness));
   strcat_P(WebMessage,(PGM_P)F(" ; LightReading:")); strcat(WebMessage,toText(LightReading));
-  strcat_P(WebMessage,(PGM_P)F(" ; Light detected:")); strcat_P(WebMessage,(PGM_P)isBrightToText()); 
+  strcat_P(WebMessage,(PGM_P)F(" ; Light detected:")); strcat_P(WebMessage,(PGM_P)BrightToText()); 
   strcat_P(WebMessage,(PGM_P)F(" ; LightON:")); strcat(WebMessage,timetoText(MySettings.LightOnHour, MySettings.LightOnMinute));
   strcat_P(WebMessage,(PGM_P)F(" ; LightOFF:")); strcat(WebMessage,timetoText(MySettings.LightOffHour, MySettings.LightOffMinute));
   strcat_P(WebMessage,(PGM_P)F("\n\r Aeroponics - "));
@@ -109,8 +110,8 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F("\n\r Reservoir - "));  
   strcat_P(WebMessage,(PGM_P)F("PH:")); strcat(WebMessage,toText(PH));
   strcat_P(WebMessage,(PGM_P)F("(")); strcat(WebMessage,toText(PHRaw));strcat_P(WebMessage,(PGM_P)F(")"));
-  strcat_P(WebMessage,(PGM_P)F(" ; Reservoir:")); strcat(WebMessage,reservoirText);
-  strcat_P(WebMessage,(PGM_P)F(" ; AirPump:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.isAirPumpOn));  
+  strcat_P(WebMessage,(PGM_P)F(" ; Reservoir:")); strcat(WebMessage,ReservoirText);
+  strcat_P(WebMessage,(PGM_P)F(" ; AirPump:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.AirPumpOn));  
   return WebMessage;
 }
 
