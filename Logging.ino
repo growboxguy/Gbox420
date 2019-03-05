@@ -87,7 +87,7 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F("\n\r Box - ")); 
   strcat_P(WebMessage,(PGM_P)F("IntTemp:")); strcat(WebMessage,toText(IntTemp)); if(MySettings.MetricSystemEnabled)strcat_P(WebMessage,(PGM_P)F("C")); else strcat_P(WebMessage,(PGM_P)F("F"));
   strcat_P(WebMessage,(PGM_P)F(" ; IntHumidity:")); strcat(WebMessage,toText(IntHumidity)); strcat_P(WebMessage,(PGM_P)F("%"));
-  strcat_P(WebMessage,(PGM_P)F("ExtTemp:")); strcat(WebMessage,toText(ExtTemp)); if(MySettings.MetricSystemEnabled)strcat_P(WebMessage,(PGM_P)F("C")); else strcat_P(WebMessage,(PGM_P)F("F"));
+  strcat_P(WebMessage,(PGM_P)F(" ; ExtTemp:")); strcat(WebMessage,toText(ExtTemp)); if(MySettings.MetricSystemEnabled)strcat_P(WebMessage,(PGM_P)F("C")); else strcat_P(WebMessage,(PGM_P)F("F"));
   strcat_P(WebMessage,(PGM_P)F(" ; ExtHumidity:")); strcat(WebMessage,toText(ExtHumidity)); strcat_P(WebMessage,(PGM_P)F("%"));
   strcat_P(WebMessage,(PGM_P)F(" ; Internal fan:"));strcat_P(WebMessage,(PGM_P)fanSpeedToText(true));
   strcat_P(WebMessage,(PGM_P)F(" ; Exhaust fan:"));strcat_P(WebMessage,(PGM_P)fanSpeedToText(false));
@@ -109,8 +109,9 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F(" ; High:"));strcat(WebMessage,toText(MySettings.AeroPressureHigh));
   strcat_P(WebMessage,(PGM_P)F(" ; Interval:"));strcat(WebMessage,toText(MySettings.AeroInterval));
   strcat_P(WebMessage,(PGM_P)F(" ; Duration:"));strcat(WebMessage,toText(MySettings.AeroDuration));
-  strcat_P(WebMessage,(PGM_P)F("\n\r Reservoir - "));  
-  strcat_P(WebMessage,(PGM_P)F("PH:")); strcat(WebMessage,toText(PH));
+  strcat_P(WebMessage,(PGM_P)F("\n\r Reservoir - "));
+  strcat_P(WebMessage,(PGM_P)F("Temp:")); strcat(WebMessage,toText(ReservoirTemp));  
+  strcat_P(WebMessage,(PGM_P)F(" ; PH:")); strcat(WebMessage,toText(PH));
   strcat_P(WebMessage,(PGM_P)F("(")); strcat(WebMessage,toText(PHRaw));strcat_P(WebMessage,(PGM_P)F(")"));
   strcat_P(WebMessage,(PGM_P)F(" ; Reservoir:")); strcat(WebMessage,ReservoirText);
   strcat_P(WebMessage,(PGM_P)F(" ; AirPump:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.AirPumpOn));  
