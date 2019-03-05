@@ -106,7 +106,7 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgString(F("tdVoltage"),toText(Voltage));
   WebServer.setArgString(F("tdCurrent"),toText(Current)); 
 
-  WebServer.setArgString(F("tdLightOn"),stateToText(MySettings.LightOn));
+  WebServer.setArgString(F("tdLightStatus"),stateToText(MySettings.LightStatus));
   WebServer.setArgString(F("tdLightReading"),toText(MySettings.LightBrightness, LightReading,"%-")); 
   WebServer.setArgString(F("tdLightMinMax"),toText(MinLightReading, MaxLightReading,"/"));
 

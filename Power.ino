@@ -7,7 +7,7 @@ void checkSwitches(){
   if(MySettings.InternalFanHigh) digitalWrite(Relay5OutPin, LOW); else digitalWrite(Relay5OutPin, HIGH);
   if(MySettings.ExhaustFanOn) digitalWrite(Relay6OutPin, LOW); else digitalWrite(Relay6OutPin, HIGH);
   if(MySettings.ExhaustFanHigh) digitalWrite(Relay7OutPin, LOW); else digitalWrite(Relay7OutPin, HIGH);
-  if(MySettings.LightOn) digitalWrite(Relay8OutPin, LOW); else digitalWrite(Relay8OutPin, HIGH);
+  if(MySettings.LightStatus) digitalWrite(Relay8OutPin, LOW); else digitalWrite(Relay8OutPin, HIGH);
 
   //Optocoupler
   if(ATXPowerSupplyOn) digitalWrite(ATXPowerONOutPin, HIGH); else digitalWrite(ATXPowerONOutPin, LOW); 

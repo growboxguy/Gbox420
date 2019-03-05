@@ -24,7 +24,7 @@
   bool AirPumpOn = false;  //Startup status for Reservoir Air Pump: True-ON / False-OFF, default:ON
   long unsigned AeroPumpTimeout = 360000;  // Aeroponics - Max pump run time in miliseconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
  
-  bool LightOn = true;  //Startup status for lights: True-ON / False-OFF
+  bool LightStatus = true;  //Startup status for lights: True-ON / False-OFF
   byte LightBrightness = 0; //Light intensity: 0 - 100 range for controlling led driver output  
   byte LightOnHour = 4;  //Light ON time - hour
   byte LightOnMinute = 20; //Light ON time - minute
@@ -48,13 +48,13 @@
   bool MetricSystemEnabled = true; //Swith between Imperial/Metric units  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
   bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
-  char PushingBoxLogRelayID[MaxTextLength]= "v755877CF53383E1"; //UPDATE THIS DeviceID of the PushingBox logging scenario 
+  char PushingBoxLogRelayID[MaxTextLength]= "v420"; //UPDATE THIS DeviceID of the PushingBox logging scenario 
 
   byte DigitDisplayBacklight = 25; //4 digit display - backlight strenght (0-100)
   int DigitDisplayValue = -1; //select which sensor reading to display(0-17), -1 cycle through all values
     
   bool AlertEmails = true; //disable/enable email sending
-  char PushingBoxEmailRelayID[MaxTextLength]  = "vC5244859A2453AA";  //UPDATE THIS DeviceID of the PushingBox email alert scenario
+  char PushingBoxEmailRelayID[MaxTextLength]  = "v420";  //UPDATE THIS DeviceID of the PushingBox email alert scenario
   int ReadCountBeforeAlert = 12; //number of consecutive out of range sensor readings before the email alert is triggered (5sec between reads -> 12= Out of range reading through 1 minute)  
   int TempAlertLow = 15; //Low temp warning email
   int TempAlertHigh = 35; //High temp warning email

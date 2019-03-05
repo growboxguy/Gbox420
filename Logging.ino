@@ -61,20 +61,22 @@ char* logToJSON(bool AddToLog,bool Append){ //publish readings in JSON format
   strcat_P(WebMessage,(PGM_P)F("\",\"ExtTemp\":\""));  strcat(WebMessage,toText(ExtTemp));
   strcat_P(WebMessage,(PGM_P)F("\",\"IntHumidity\":\""));  strcat(WebMessage,toText(IntHumidity));
   strcat_P(WebMessage,(PGM_P)F("\",\"ExtHumidity\":\""));  strcat(WebMessage,toText(ExtHumidity));
+  strcat_P(WebMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(true));
+  strcat_P(WebMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(false));
   strcat_P(WebMessage,(PGM_P)F("\",\"Power\":\""));  strcat(WebMessage,toText(Power)); 
   strcat_P(WebMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(WebMessage,toText(Energy));
   strcat_P(WebMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(WebMessage,toText(Voltage));
   strcat_P(WebMessage,(PGM_P)F("\",\"Current\":\""));  strcat(WebMessage,toText(Current));
-  strcat_P(WebMessage,(PGM_P)F("\",\"Lights\":\""));  strcat(WebMessage,toText(MySettings.LightOn));
+  strcat_P(WebMessage,(PGM_P)F("\",\"Lights\":\""));  strcat(WebMessage,toText(MySettings.LightStatus));
   strcat_P(WebMessage,(PGM_P)F("\",\"Brightness\":\""));  strcat(WebMessage,toText(MySettings.LightBrightness));
   strcat_P(WebMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(WebMessage,toText(LightReading));
   strcat_P(WebMessage,(PGM_P)F("\",\"Bright\":\""));  strcat(WebMessage,toText(Bright));
   strcat_P(WebMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(WebMessage,toText(ReservoirLevel));
-  strcat_P(WebMessage,(PGM_P)F("\",\"ReservoirTemp\":\""));  strcat(WebMessage,toText(ReservoirTemp));
   strcat_P(WebMessage,(PGM_P)F("\",\"PH\":\""));  strcat(WebMessage,toText(PH));
+  strcat_P(WebMessage,(PGM_P)F("\",\"ReservoirTemp\":\""));  strcat(WebMessage,toText(ReservoirTemp));
   strcat_P(WebMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(WebMessage,toText(AeroPressure));
-  strcat_P(WebMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(true));
-  strcat_P(WebMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(false));
+  strcat_P(WebMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(WebMessage,toText(MySettings.AeroInterval));
+  strcat_P(WebMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(WebMessage,toText(MySettings.AeroDuration));
   strcat_P(WebMessage,(PGM_P)F("\"}"));
   return WebMessage;
 }
@@ -95,7 +97,7 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F(" ; Voltage:")); strcat(WebMessage,toText(Voltage)); strcat_P(WebMessage,(PGM_P)F("V"));
   strcat_P(WebMessage,(PGM_P)F(" ; Current:")); strcat(WebMessage,toText(Current)); strcat_P(WebMessage,(PGM_P)F("A"));
   strcat_P(WebMessage,(PGM_P)F("\n\r Lights - "));
-  strcat_P(WebMessage,(PGM_P)F("Light:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.LightOn)); 
+  strcat_P(WebMessage,(PGM_P)F("Light:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.LightStatus)); 
   strcat_P(WebMessage,(PGM_P)F(" ; Brightness:")); strcat(WebMessage,toText(MySettings.LightBrightness));
   strcat_P(WebMessage,(PGM_P)F(" ; LightReading:")); strcat(WebMessage,toText(LightReading));
   strcat_P(WebMessage,(PGM_P)F(" ; Light detected:")); strcat_P(WebMessage,(PGM_P)BrightToText()); 

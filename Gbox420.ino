@@ -10,7 +10,7 @@
 //EC meter
 //Document 3 new optocouplers: PWM dimming, ATX Power Good detection, ATX OnOff
 //Document reservoir temp sensor
-//Document 2nd external temp sensor, add readins to LDC screen
+//Document 2nd external temp sensor, add readings to LDC screen
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -210,8 +210,8 @@ void processTimeCriticalStuff(){
 void oneSecRun(){
   if(MySettings.DebugEnabled)logToSerials(F("One sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout
-  checkLightStatus(); 
   checkAero();  
+  checkLightStatus();
   checkSwitches();
   checkSound();  
 }
@@ -230,7 +230,7 @@ void minuteRun(){
   wdt_reset(); //reset watchdog timeout
   checkLightTimer(); 
   logToSerials(logToText(),true);  //Logs sensor readings to Serial  
-  logToScreen();  //Display sensore readings on LCD screen  
+  logToScreen();  //Display sensor readings on LCD screen  
 }
 
 void halfHourRun(){

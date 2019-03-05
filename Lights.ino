@@ -1,10 +1,10 @@
 void checkLightStatus(){
   if(!digitalRead(PowerButtonInPin)){ //If the power button is kept pressed
-    if(MySettings.LightOn) turnLightOFF(true);
+    if(MySettings.LightStatus) turnLightOFF(true);
     else turnLightON(true);  
     }
   if(CalibrateLights){calibrateLights();}
-  if(MySettings.LightOn){
+  if(MySettings.LightStatus){
     digitalWrite(PowerLEDOutPin, HIGH); //Turn on Power Led on PC case if light is on
     digitalWrite(Relay8OutPin, LOW); //True turns relay ON (LOW signal activates Relay)
   }
@@ -23,14 +23,14 @@ void checkLightTimer() {
     if(CombinedOnTime <= CombinedOffTime)  //no midnight turnover, Example: On 8:10, Off: 20:10
     {
       if(CombinedOnTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedOffTime){
-        if(MySettings.LightOn != true) turnLightON(false);}
-      else if(MySettings.LightOn != false) turnLightOFF(false);     
+        if(MySettings.LightStatus != true) turnLightON(false);}
+      else if(MySettings.LightStatus != false) turnLightOFF(false);     
     }
     else   //midnight turnover, Example: On 21:20, Off: 9:20
     {
       if(CombinedOnTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedOffTime){
-       if(MySettings.LightOn != true) turnLightON(false);}
-      else if(MySettings.LightOn != false) turnLightOFF(false);    
+       if(MySettings.LightStatus != true) turnLightON(false);}
+      else if(MySettings.LightStatus != false) turnLightOFF(false);    
     }
   }
 }
@@ -50,7 +50,7 @@ void checkLightSensor(){
   Bright = !digitalRead(LightSensorInPin);     // read the input pin: 0- light detected , 1 - no light detected. Had to invert signal from the sensor to make more sense.
   LightReading = 1023 - analogRead(LightSensorAnalogInPin);
   
-  if((MySettings.LightOn && Bright) || (!MySettings.LightOn && !Bright)){ //All OK: lights on&bright OR lights off&dark
+  if((MySettings.LightStatus && Bright) || (!MySettings.LightStatus && !Bright)){ //All OK: lights on&bright OR lights off&dark
     LightsAlertCount=0;
     if(!LightOK) {
       sendEmailAlert(F("Lights%20OK")); 
@@ -62,11 +62,11 @@ void checkLightSensor(){
       LightsAlertCount++;
       if(LightsAlertCount>=MySettings.ReadCountBeforeAlert){
        LightOK = false;
-       if(MySettings.LightOn && !Bright){ //if light should be ON but no light is detected
+       if(MySettings.LightStatus && !Bright){ //if light should be ON but no light is detected
         sendEmailAlert(F("No%20light%20detected"));        
         addToLog(F("Lights ON, no light detected"));
        }
-       if(!MySettings.LightOn && Bright){ //if light should be OFf but light is detected
+       if(!MySettings.LightStatus && Bright){ //if light should be OFf but light is detected
         sendEmailAlert(F("Dark%20period%20interrupted")); 
         addToLog(F("Dark period interrupted"));
        }
@@ -81,9 +81,9 @@ void triggerCalibrateLights(){ //website signals to calibrate lights when checkL
 
 void calibrateLights(){
   CalibrateLights=false;  
-  bool LastLightStatus = MySettings.LightOn;
+  bool LastLightStatus = MySettings.LightStatus;
   byte LastLightBrightness = MySettings.LightBrightness;
-  MySettings.LightOn=true;
+  MySettings.LightStatus=true;
   checkLightStatus();  //apply turning the lights on
   setBrightness(0,false);
   delay(2000); //wait for light output change
@@ -97,19 +97,19 @@ void calibrateLights(){
          logToSerials(F(", 100% - "),false); logToSerials(MaxLightReading,true);
   }
   setBrightness(LastLightBrightness,false); //restore original brightness
-  MySettings.LightOn=LastLightStatus; //restore original state
+  MySettings.LightStatus=LastLightStatus; //restore original state
   checkLightStatus();
   addToLog(F("Lights calibrated"));
 }
 
 void turnLightON(bool AddToLog){
-   MySettings.LightOn = true;
+   MySettings.LightStatus = true;
    if(AddToLog)addToLog(F("Light ON")); 
    PlayOnSound=true;
 }
 
 void turnLightOFF(bool AddToLog){
-  MySettings.LightOn = false;
+  MySettings.LightStatus = false;
   if(AddToLog)addToLog(F("Light OFF")); 
   PlayOffSound=true; 
 }
