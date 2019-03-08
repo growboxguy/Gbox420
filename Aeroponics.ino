@@ -59,7 +59,7 @@ void CheckAeroPumpAlerts()
   else{
     if(AeroPressure > MySettings.PressureAlertHigh){ //Pressure over limit - emergency spraying
           aeroPumpOff(); //force pump off
-          aeroSprayNow(); //try to release pressure  
+          aeroSprayNow(true); //try to release pressure  
     }
     if(PressureOK){
       PressureAlertCount++;
@@ -134,13 +134,14 @@ void setAeroSprayOnOff(bool State){
     PlayOffSound=true;}
 }
 
-void aeroSprayNow(){   
+void aeroSprayNow(bool TooHighPressure){   
   if(MySettings.AeroSprayEnabled){
     AeroSprayTimer = millis();
     AeroSprayOn = true;
     PlayOnSound = true;
     checkSwitches();
-    addToLog(F("Aeroponics spraying"));
+    if(TooHighPressure) addToLog(F("High pressure limit,spraying"));
+    else addToLog(F("Aeroponics spraying"));
     }
 }
 
@@ -197,7 +198,7 @@ const __FlashStringHelper * pumpStateToText(){
 }
 
 //Quiet time section: Blocks running the pump in a pre-defined time range
-unsigned long AeroLastRefill= 0;
+uint32_t AeroLastRefill= 0;
 bool checkQuietTime() {  
   if(MySettings.AeroQuietEnabled){
     time_t Now = now(); // Get the current time
@@ -226,7 +227,7 @@ bool checkQuietTime() {
 
 void setAeroPumpTimeout(int Timeout)
 {
-MySettings.AeroPumpTimeout = (unsigned long)Timeout * 1000;
+MySettings.AeroPumpTimeout = (uint32_t)Timeout * 1000;
 addToLog(F("Aero pump timeout updated"));
 }
 

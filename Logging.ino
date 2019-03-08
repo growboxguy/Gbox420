@@ -39,7 +39,7 @@ void addToLog(const __FlashStringHelper *message){ //function overloading: same 
   strncpy_P(Logs[0],(PGM_P)message,MaxTextLength);  //instert new log to [0]
 }
 
-char* eventLogToJSON(bool Append){
+char* eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   if(!Append)memset(&WebMessage[0], 0, sizeof(WebMessage));
   strcat_P(WebMessage,(PGM_P)F("["));
   for(int i=LogDepth-1;i >=0 ; i--)
@@ -57,10 +57,10 @@ char* logToJSON(bool AddToLog,bool Append){ //publish readings in JSON format
   if(AddToLog)addToLog(F("Reporting to MQTT"));
   if(!Append)memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat_P(WebMessage,(PGM_P)F("{\"BoxDate\":\""));  strcat(WebMessage,getFormattedTime());
-  strcat_P(WebMessage,(PGM_P)F("\",\"IntTemp\":\""));  strcat(WebMessage,toText(IntTemp));
-  strcat_P(WebMessage,(PGM_P)F("\",\"ExtTemp\":\""));  strcat(WebMessage,toText(ExtTemp));
-  strcat_P(WebMessage,(PGM_P)F("\",\"IntHumidity\":\""));  strcat(WebMessage,toText(IntHumidity));
-  strcat_P(WebMessage,(PGM_P)F("\",\"ExtHumidity\":\""));  strcat(WebMessage,toText(ExtHumidity));
+  strcat_P(WebMessage,(PGM_P)F("\",\"InternalTemp\":\""));  strcat(WebMessage,toText(InternalTemp));
+  strcat_P(WebMessage,(PGM_P)F("\",\"ExternalTemp\":\""));  strcat(WebMessage,toText(ExternalTemp));
+  strcat_P(WebMessage,(PGM_P)F("\",\"InternalHumidity\":\""));  strcat(WebMessage,toText(InternalHumidity));
+  strcat_P(WebMessage,(PGM_P)F("\",\"ExternalHumidity\":\""));  strcat(WebMessage,toText(ExternalHumidity));
   strcat_P(WebMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(true));
   strcat_P(WebMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat_P(WebMessage,(PGM_P)fanSpeedToNumber(false));
   strcat_P(WebMessage,(PGM_P)F("\",\"Power\":\""));  strcat(WebMessage,toText(Power)); 
@@ -85,10 +85,10 @@ char * logToText(){
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable 
   strcat(WebMessage,getFormattedTime());
   strcat_P(WebMessage,(PGM_P)F("\n\r Box - ")); 
-  strcat_P(WebMessage,(PGM_P)F("IntTemp:")); strcat(WebMessage,toText(IntTemp)); if(MySettings.MetricSystemEnabled)strcat_P(WebMessage,(PGM_P)F("C")); else strcat_P(WebMessage,(PGM_P)F("F"));
-  strcat_P(WebMessage,(PGM_P)F(" ; IntHumidity:")); strcat(WebMessage,toText(IntHumidity)); strcat_P(WebMessage,(PGM_P)F("%"));
-  strcat_P(WebMessage,(PGM_P)F(" ; ExtTemp:")); strcat(WebMessage,toText(ExtTemp)); if(MySettings.MetricSystemEnabled)strcat_P(WebMessage,(PGM_P)F("C")); else strcat_P(WebMessage,(PGM_P)F("F"));
-  strcat_P(WebMessage,(PGM_P)F(" ; ExtHumidity:")); strcat(WebMessage,toText(ExtHumidity)); strcat_P(WebMessage,(PGM_P)F("%"));
+  strcat_P(WebMessage,(PGM_P)F("InternalTemp:")); strcat(WebMessage,toText(InternalTemp)); if(MySettings.MetricSystemEnabled)strcat_P(WebMessage,(PGM_P)F("C")); else strcat_P(WebMessage,(PGM_P)F("F"));
+  strcat_P(WebMessage,(PGM_P)F(" ; InternalHumidity:")); strcat(WebMessage,toText(InternalHumidity)); strcat_P(WebMessage,(PGM_P)F("%"));
+  strcat_P(WebMessage,(PGM_P)F(" ; ExternalTemp:")); strcat(WebMessage,toText(ExternalTemp)); if(MySettings.MetricSystemEnabled)strcat_P(WebMessage,(PGM_P)F("C")); else strcat_P(WebMessage,(PGM_P)F("F"));
+  strcat_P(WebMessage,(PGM_P)F(" ; ExternalHumidity:")); strcat(WebMessage,toText(ExternalHumidity)); strcat_P(WebMessage,(PGM_P)F("%"));
   strcat_P(WebMessage,(PGM_P)F(" ; Internal fan:"));strcat_P(WebMessage,(PGM_P)fanSpeedToText(true));
   strcat_P(WebMessage,(PGM_P)F(" ; Exhaust fan:"));strcat_P(WebMessage,(PGM_P)fanSpeedToText(false));
   strcat_P(WebMessage,(PGM_P)F("\n\r Power - "));
@@ -119,34 +119,34 @@ char * logToText(){
 }
 
 char * toText(int Number){
-  static char ReturnChar[10] = ""; //9 digits + null terminator max
-  itoa(Number, ReturnChar, 10);
+  static char ReturnChar[12] = ""; //sign + 10 digits + null terminator. Supports 32bit int of Arduino Due
+  itoa(Number, ReturnChar, 12);
   return ReturnChar;
 }
 
 char * toText(int Number1, int Number2,const char * Separator){  //function overloading: Same named function, different parameters
-  static char ReturnChar[12] = ""; //5 digit + separator + 5 digit + null
-  snprintf(ReturnChar,12,"%d%s%d",Number1,Separator,Number2);
+  static char ReturnChar[25] = ""; //sign + 10 digit + separator(max 3) + 10 digit + null terminator.
+  snprintf(ReturnChar,24,"%d%s%d",Number1,Separator,Number2);
   return ReturnChar;
 }
 
 char * toText(float Number){ 
-  static char ReturnFloatChar[10] = "";  //1 sign (if negative) + 5 digits + decimal sign + 2 decimals + null terminator
+  static char ReturnFloatChar[12] = "";  //1 sign (if negative) + 7 digits + decimal sign + 2 decimals + null terminator
   if(isnan(Number)) Number= -1.0;
-  dtostrf(Number, 4, 2, ReturnFloatChar); 
+  dtostrf(Number, 4, 2, ReturnFloatChar); //minimum 4 long
   return ReturnFloatChar;
 }
 
 char * toPrecisionText(float Number){ 
-  static char ReturnFloatChar[14] = "";  //1 sign (if negative) + 5 digits + decimal sign + 6 decimals + null terminator
+  static char ReturnFloatChar[12] = "";  //1 sign (if negative) + 3 digits + decimal sign + 6 decimals + null terminator
   if(isnan(Number)) Number= -1.0;
-  dtostrf(Number, 9, 6, ReturnFloatChar); 
+  dtostrf(Number, 8, 6, ReturnFloatChar); 
   return ReturnFloatChar;
 }
 
 char * toText(float Number1, float Number2,const char * Separator){
-  static char ReturnChar[18] = ""; 
-  static char Number2Char[8] = ""; //4 digits + decimal sign + 2 decimals + null terminator
+  static char ReturnChar[24] = ""; 
+  static char Number2Char[12] = "";
   if(isnan(Number1)) Number1= -1.0;
   if(isnan(Number2)) Number2= -1.0;
   dtostrf(Number1, 4, 2, ReturnChar); 

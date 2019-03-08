@@ -10,7 +10,7 @@
 //EC meter
 //Document 3 new optocouplers: PWM dimming, ATX Power Good detection, ATX OnOff
 //Document reservoir temp sensor
-//Document 2nd external temp sensor, add readings to LDC screen
+//Document 2nd external temp sensor, add readings to LCD screen
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -53,10 +53,10 @@
   int ReservoirAlertCount = 0;
   int PHAlertCount = 0;
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
-  float IntTemp; //Internal Temperature - Celsius
-  float IntHumidity; //Internal relative humidity - %
-  float ExtTemp; //External Temperature - Celsius
-  float ExtHumidity; //External relative humidity - %
+  float InternalTemp; //Internal Temperature - Celsius
+  float InternalHumidity; //Internal relative humidity - %
+  float ExternalTemp; //External Temperature - Celsius
+  float ExternalHumidity; //External relative humidity - %
   float Power; //Power sensor - W
   float Energy; //Power sensor - Wh Total consumption 
   float Voltage; //Power sensor - V
@@ -74,8 +74,8 @@
   bool CalibrateLights = false; //Calibrate lights flag - website controls it
   int MaxLightReading = 0; // stores the highest light sensor analog reading
   int MinLightReading = 1023; //stores the lowest light sensor analog reading
-  unsigned long AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
-  unsigned long AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
+  uint32_t AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
+  uint32_t AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
   bool AeroSprayOn = false; //Aeroponics - Spray state, set to true to spay at power on
   bool AeroPumpOn = false; //Aeroponics - High pressure pump state
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
@@ -271,20 +271,25 @@ void loadSettings(){
   logToSerials(F("done"),true);
 }
 
+bool SyncInProgress=false;
 time_t getNtpTime(){
-  long LastRefresh = millis();
   time_t NTPResponse = 0;
-  logToSerials(F("Waiting for NTP time (30sec timeout)..."),false);
-  while(NTPResponse == 0 && millis() - LastRefresh < 30000){
-   NTPResponse = EspCmd.GetTime();
-   delay(50);
-   wdt_reset(); //reset watchdog timeout
-  }
-  if(NTPResponse == 0) {
-    addToLog(F("NTP time sync failed"));
-    sendEmailAlert(F("NTP%20time%20sync%20failed")); 
-  }
-  else logToSerials(F("NTP time synchronized"),true);
+  if(!SyncInProgress){ //blocking calling the sync again in an interrupt
+    SyncInProgress = true;
+    uint32_t LastRefresh = millis();  
+    logToSerials(F("Waiting for NTP time (30sec timeout)..."),false);  
+    while(NTPResponse == 0 && millis() - LastRefresh < 30000){
+     NTPResponse = EspCmd.GetTime();
+     delay(500);
+     wdt_reset(); //reset watchdog timeout
+    }
+    SyncInProgress = false;
+    if(NTPResponse == 0) {
+      addToLog(F("NTP time sync failed"));
+      sendEmailAlert(F("NTP%20time%20sync%20failed")); 
+    }
+    else logToSerials(F("NTP time synchronized"),true);
+    }
   return NTPResponse;
 }
 

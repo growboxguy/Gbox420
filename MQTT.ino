@@ -80,7 +80,7 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttDebugEnabled)!=NULL) {setDebugOnOff(atoi(data));}
   else if(strstr(topic,MqttGoogleSheets)!=NULL) { ReportToGoogleSheets(true);} 
   else if(strstr(topic,MqttSaveSettings)!=NULL) { saveSettings(true);}
-  else if(strstr(topic,MqttAeroSprayNow)!=NULL) { aeroSprayNow();}
+  else if(strstr(topic,MqttAeroSprayNow)!=NULL) { aeroSprayNow(false);}
   else if(strstr(topic,MqttAeroSprayOff)!=NULL) { aeroSprayOff();}  
   else if(strstr(topic,MqttPumpRefill)!=NULL) { aeroPumpRefill();}
   else if(strstr(topic,MqttPumpDisable)!=NULL) { aeroPumpDisable();}  

@@ -6,8 +6,8 @@ void logToScreen(){
   Screen.setTextColor(ILI9341_WHITE);Screen.setTextSize(2);  
   Screen.println(getFormattedTime());
   Screen.setTextColor(ILI9341_ORANGE);
-  Screen.print(F("External:"));Screen.print(ExtTemp); if(MySettings.MetricSystemEnabled)Screen.print(F("C,"));else Screen.print(F("F,"));Screen.print(ExtHumidity); Screen.println(F("%"));
-  Screen.print(F("Internal:"));Screen.print(IntTemp); if(MySettings.MetricSystemEnabled)Screen.print(F("C,"));else Screen.print(F("F,"));Screen.print(IntHumidity); Screen.println(F("%"));
+  Screen.print(F("External:"));Screen.print(ExternalTemp); if(MySettings.MetricSystemEnabled)Screen.print(F("C,"));else Screen.print(F("F,"));Screen.print(ExternalHumidity); Screen.println(F("%"));
+  Screen.print(F("Internal:"));Screen.print(InternalTemp); if(MySettings.MetricSystemEnabled)Screen.print(F("C,"));else Screen.print(F("F,"));Screen.print(InternalHumidity); Screen.println(F("%"));
   Screen.setTextColor(ILI9341_BLUE);
   Screen.print(F("Power:"));Screen.print(Power); Screen.print(F("W,"));Screen.print(Energy); Screen.println(F("kWh"));   
   Screen.setTextColor(ILI9341_RED);
@@ -40,13 +40,13 @@ void updateDisplay() { //Cycles through the different values
       DigitDisplay.print(F("Temp"));
       break;
     case 1:
-      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)IntTemp , 100 * (IntTemp - (int)IntTemp));DigitDisplay.printRaw(degreeSign, 3);DigitDisplay.setColonOn(0);
+      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)InternalTemp , 100 * (InternalTemp - (int)InternalTemp));DigitDisplay.printRaw(degreeSign, 3);DigitDisplay.setColonOn(0);
       break;
     case 2:      
       DigitDisplay.print(F("Humi"));
       break;
     case 3:
-      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)IntHumidity , 100 * (IntHumidity - (int)IntHumidity));DigitDisplay.setColonOn(0);      
+      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)InternalHumidity , 100 * (InternalHumidity - (int)InternalHumidity));DigitDisplay.setColonOn(0);      
       break;    
     case 4:
       DigitDisplay.print(F("PRES"));

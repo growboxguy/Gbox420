@@ -96,8 +96,8 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON(false)); //Last events that happened in JSON format
   
   if (strcmp(url,"/GrowBox.html.json")==0){      
-  WebServer.setArgString(F("tdTemp"),toText(ExtTemp,IntTemp,"/"));
-  WebServer.setArgString(F("tdHumidity"),toText(ExtHumidity,IntHumidity,"/"));
+  WebServer.setArgString(F("tdTemp"),toText(ExternalTemp,InternalTemp,"/"));
+  WebServer.setArgString(F("tdHumidity"),toText(ExternalHumidity,InternalHumidity,"/"));
   WebServer.setArgString(F("tdInternalFanSpeed"),fanSpeedToText(true));
   WebServer.setArgString(F("tdExhaustFanSpeed"),fanSpeedToText(false));
  
@@ -140,7 +140,7 @@ void ButtonPressCallback(char *button)
   else if (strcmp_P(button,(PGM_P)F("btn_ATXOn"))==0) { TurnATXOn();}
   else if (strcmp_P(button,(PGM_P)F("btn_ATXOff"))==0) { TurnATXOff();}
   else if (strcmp_P(button,(PGM_P)F("btn_LightCalibrate"))==0) {triggerCalibrateLights();}
-  else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayNow"))==0) { aeroSprayNow();}
+  else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayNow"))==0) { aeroSprayNow(false);}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayOff"))==0) { aeroSprayOff();}  
   else if (strcmp_P(button,(PGM_P)F("btn_PumpRefill"))==0) { aeroPumpRefill();}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpStop"))==0) { aeroPumpStop();}

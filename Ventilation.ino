@@ -1,20 +1,24 @@
 void readDHTSensor(){
-  IntHumidity = InternalDHTSensor.readHumidity();
-  ExtHumidity = ExternalDHTSensor.readHumidity();
+  InternalHumidity = InternalDHTSensor.readHumidity();
+  ExternalHumidity = ExternalDHTSensor.readHumidity();
   if(MySettings.MetricSystemEnabled){
-    IntTemp= InternalDHTSensor.readTemperature();
-    ExtTemp = ExternalDHTSensor.readTemperature();
+    InternalTemp= InternalDHTSensor.readTemperature();
+    ExternalTemp = ExternalDHTSensor.readTemperature();
   }
   else {
-    IntTemp = InternalDHTSensor.readTemperature() *1.8 + 32;
-    ExtTemp = ExternalDHTSensor.readTemperature() *1.8 + 32;
+    InternalTemp = InternalDHTSensor.readTemperature() *1.8 + 32;
+    ExternalTemp = ExternalDHTSensor.readTemperature() *1.8 + 32;
   }
+  if(isnan(InternalHumidity)) InternalHumidity= -1.0;
+  if(isnan(ExternalHumidity)) ExternalHumidity= -1.0;
+  if(isnan(InternalTemp)) InternalTemp= -1.0;
+  if(isnan(ExternalTemp)) ExternalTemp= -1.0;
   checkDHTAlerts();
   checkFanAutomation();
 }
 
 void checkDHTAlerts(){
-  if(!isnan(IntTemp) && !isnan(IntHumidity) && MySettings.TempAlertLow <= IntTemp  && IntTemp <= MySettings.TempAlertHigh && MySettings.HumidityAlertLow <= IntHumidity  && IntHumidity <= MySettings.HumidityAlertHigh){ //readings are normal
+  if(!isnan(InternalTemp) && !isnan(InternalHumidity) && MySettings.TempAlertLow <= InternalTemp  && InternalTemp <= MySettings.TempAlertHigh && MySettings.HumidityAlertLow <= InternalHumidity  && InternalHumidity <= MySettings.HumidityAlertHigh){ //readings are normal
     VentilationAlertCount = 0;
     if(!VentOK){ ////alert was active before
       sendEmailAlert(F("Temp%20and%20Humidity%20OK")); 
@@ -26,11 +30,11 @@ void checkDHTAlerts(){
       VentilationAlertCount++;
       if(VentilationAlertCount>=MySettings.ReadCountBeforeAlert){
         VentOK = false;
-        if(isnan(IntTemp) || IntTemp < MySettings.TempAlertLow ||  MySettings.TempAlertHigh < IntTemp){ //if temp out of limits, isnan-Returns true if float is Not A Numeber: DHT library returns NAN if the value cannot be read
+        if(isnan(InternalTemp) || InternalTemp < MySettings.TempAlertLow ||  MySettings.TempAlertHigh < InternalTemp){ //if temp out of limits, isnan-Returns true if float is Not A Numeber: DHT library returns NAN if the value cannot be read
         sendEmailAlert(F("Temperature%20out%20of%20range"));     
         addToLog(F("Temperature alert triggered"));
         }
-        if(isnan(IntHumidity) || IntHumidity < MySettings.HumidityAlertLow ||  MySettings.HumidityAlertHigh < IntHumidity){ //if temp out of limits
+        if(isnan(InternalHumidity) || InternalHumidity < MySettings.HumidityAlertLow ||  MySettings.HumidityAlertHigh < InternalHumidity){ //if temp out of limits
         sendEmailAlert(F("Humidity%20out%20of%20range")); 
         addToLog(F("Humidity alert triggered"));
         }    
@@ -40,19 +44,19 @@ void checkDHTAlerts(){
 }
 
 void checkFanAutomation(){
-    if(MySettings.AutomaticInternalFan && !MySettings.InternalFanHigh && IntTemp > MySettings.InternalFanSwitchTemp){ //if temp is above the limit turn the fan to High
+    if(MySettings.AutomaticInternalFan && !MySettings.InternalFanHigh && InternalTemp > MySettings.InternalFanSwitchTemp){ //if temp is above the limit turn the fan to High
     internalFanHigh();
   }
-  if(MySettings.AutomaticInternalFan && MySettings.InternalFanHigh && IntTemp < (MySettings.InternalFanSwitchTemp-3)){ //backward switch only if temp is 3 degrees below limit: avoids constant switching
+  if(MySettings.AutomaticInternalFan && MySettings.InternalFanHigh && InternalTemp < (MySettings.InternalFanSwitchTemp-3)){ //backward switch only if temp is 3 degrees below limit: avoids constant switching
     internalFanLow();
   }
-  if(MySettings.AutomaticExhaustFan && MySettings.ExhaustFanOn && IntHumidity < MySettings.ExhaustFanOffHumid){ //Humidity below Off limit: turn exhaust off
+  if(MySettings.AutomaticExhaustFan && MySettings.ExhaustFanOn && InternalHumidity < MySettings.ExhaustFanOffHumid){ //Humidity below Off limit: turn exhaust off
     exhaustFanOff();
   }
-  if(MySettings.AutomaticExhaustFan && !MySettings.ExhaustFanHigh && MySettings.ExhaustFanHighHumid < IntHumidity){ //Humidity above High limit: set exhaust High
+  if(MySettings.AutomaticExhaustFan && !MySettings.ExhaustFanHigh && MySettings.ExhaustFanHighHumid < InternalHumidity){ //Humidity above High limit: set exhaust High
     exhaustFanHigh();
   }
-  if(MySettings.AutomaticExhaustFan && ((!MySettings.ExhaustFanOn && MySettings.ExhaustFanLowHumid < IntHumidity) || (MySettings.ExhaustFanHigh && IntHumidity < MySettings.ExhaustFanLowHumid))){ //if exhaust was OFF and humidity gets above LOW limit, or if exhaust was High and humidity gets below LOW limit: Turn the fan LOW
+  if(MySettings.AutomaticExhaustFan && ((!MySettings.ExhaustFanOn && MySettings.ExhaustFanLowHumid < InternalHumidity) || (MySettings.ExhaustFanHigh && InternalHumidity < MySettings.ExhaustFanLowHumid))){ //if exhaust was OFF and humidity gets above LOW limit, or if exhaust was High and humidity gets below LOW limit: Turn the fan LOW
     exhaustFanLow();
   }
 }

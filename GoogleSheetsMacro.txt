@@ -13,7 +13,7 @@ https://script.google.com/macros/s/<gscript id>/exec?Log={JSONData}
 function doGet(data) { 
   
    //Getting the spreadsheet to paste the new data into
-  var id = '1dyuQo6rRitBX5po_U_EWCAhOtFgooCg4iaDYG_ft8Cg';  //docs.google.com/spreadsheetURL/d
+  var id = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';  //docs.google.com/spreadsheetURL/d/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  UPDATE THIS: insert the ID of your log collector Google Sheet
   var sheetActive = SpreadsheetApp.openById(id);
   var sheet = sheetActive.getSheetByName("Log");
   
@@ -23,7 +23,7 @@ function doGet(data) {
   var Header = [];
   var Data = [];  
   Header.push("LogDate");  //Add first column: the log`s received date
-  Data.push(Utilities.formatDate(new Date(), 'GMT+1', 'yyyy/MM/dd-HH:mm:ss'));  // Generate timestamp 
+  Data.push(Utilities.formatDate(new Date(), 'GMT+1', 'yyyy/MM/dd-HH:mm:ss'));  // Generate timestamp, UPDATE THIS: adjust time zone
   
   //Add all other columns from the JSON
   for (var i in keys){
@@ -32,6 +32,6 @@ function doGet(data) {
   }
   
   //Insert new data into spreadsheet
-  sheet.getRange(1,1,1,Header.length).setValues([Header])  //Update the headers 
+  sheet.getRange(1,1,1,Header.length).setValues([Header])  //Inserting the headers 
   sheet.appendRow(Data) //insert new line to the bottom
 }

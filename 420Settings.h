@@ -22,7 +22,7 @@
   byte AeroQuietToHour = 8; //Quiet time end - hour
   byte AeroQuietToMinute = 0; //Quiet time end - minute
   bool AirPumpOn = false;  //Startup status for Reservoir Air Pump: True-ON / False-OFF, default:ON
-  long unsigned AeroPumpTimeout = 360000;  // Aeroponics - Max pump run time in miliseconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
+  uint32_t AeroPumpTimeout = 360000;  // Aeroponics - Max pump run time in miliseconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
  
   bool LightStatus = true;  //Startup status for lights: True-ON / False-OFF
   byte LightBrightness = 0; //Light intensity: 0 - 100 range for controlling led driver output  
