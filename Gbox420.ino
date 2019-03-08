@@ -20,8 +20,8 @@
   #include "StaticThreadController.h"  //Grouping threads
   #include "TimerThree.h"  //Interrupt handling for webpage
   #include "DHT.h"  //DHT11 or DHT22 Digital Humidity and Temperature sensor
-  #include "OneWire.h"; //DS18B20 waterproof temperature sensor
-  #include "DallasTemperature.h"; //DS18B20 waterproof temperature sensor
+  #include "OneWire.h" //DS18B20 waterproof temperature sensor
+  #include "DallasTemperature.h" //DS18B20 waterproof temperature sensor
   #include "SevenSegmentTM1637.h" //4 digit LED display
   #include "SevenSegmentExtended.h" //4 digit LED display
   #include "PZEM004T.h" //Power meter
@@ -80,7 +80,7 @@
   bool AeroPumpOn = false; //Aeroponics - High pressure pump state
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
   char WebMessage[512];   //buffer for REST and MQTT API messages
-  char CurrentTime[20]; //buffer for getting current time
+  char CurrentTime[20]; //buffer for storing current time
   char LogMessage[MaxTextLength]; //temp storage for assembling log messages
   char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy (array of char arrays)
 
@@ -243,13 +243,13 @@ void halfHourRun(){
 //Helper functions
 
 void readSensors(){  //Bundles functions to get sensor readings  
+  readAeroPressure();
   readDHTSensor();
   checkLightSensor();
   readPowerSensor();
   readATXPowerGood();
   readReservoirPH(false);
-  checkReservoir();
-  readAeroPressure();
+  checkReservoir();  
 }
 
 void saveSettings(bool AddToLog){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles

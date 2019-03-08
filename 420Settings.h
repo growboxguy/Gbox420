@@ -7,51 +7,51 @@
   const byte MaxTextLength = 31;  //30 characters + null terminator for one log entry
    
 //Settings saved to EEPROM persistent storage
-  byte Version= 5; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
+  byte Version= 6; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
   typedef struct //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
-  byte AeroInterval = 15; //Aeroponics - Spray every 15 minutes
-  byte AeroDuration = 1; //Aeroponics - Spray time in seconds
-  float AeroPressureLow= 5.5; //Aeroponics - Turn on pump below this pressure (bar)
-  float AeroPressureHigh = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)
+  bool AirPumpOn = true;  //Startup status for Reservoir Air Pump: True-ON / False-OFF, default:ON
   bool AeroSprayEnabled = true;  //Enable/disable misting
+  byte AeroInterval = 15; //Aeroponics - Spray every 15 minutes
+  byte AeroDuration = 2; //Aeroponics - Spray time in seconds
+  float AeroPressureLow= 5.0; //Aeroponics - Turn on pump below this pressure (bar)
+  float AeroPressureHigh = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)
+  uint32_t AeroPumpTimeout = 360000;  // Aeroponics - Max pump run time in miliseconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
   bool AeroQuietEnabled = false;  //Enable/disable quiet time then pump should not run
   bool AeroRefillBeforeQuiet = true; //Enable/disable refill before quiet time
-  byte AeroQuietFromHour = 22;  //Quiet time to block pump - hour
+  byte AeroQuietFromHour = 23;  //Quiet time to block pump - hour
   byte AeroQuietFromMinute = 0; //Quiet time to block pump - minute
-  byte AeroQuietToHour = 8; //Quiet time end - hour
+  byte AeroQuietToHour = 6; //Quiet time end - hour
   byte AeroQuietToMinute = 0; //Quiet time end - minute
-  bool AirPumpOn = false;  //Startup status for Reservoir Air Pump: True-ON / False-OFF, default:ON
-  uint32_t AeroPumpTimeout = 360000;  // Aeroponics - Max pump run time in miliseconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
- 
+  
+  bool TimerEnabled = true;  //Enable timer controlling lights
   bool LightStatus = true;  //Startup status for lights: True-ON / False-OFF
-  byte LightBrightness = 0; //Light intensity: 0 - 100 range for controlling led driver output  
+  byte LightBrightness = 15; //Light intensity: 0 - 100 range for controlling led driver output  
   byte LightOnHour = 4;  //Light ON time - hour
   byte LightOnMinute = 20; //Light ON time - minute
   byte LightOffHour = 16; //Light OFF time - hour
-  byte LightOffMinute = 20; //Light OFF time - minute
-  bool TimerEnabled = true;  //Enable timer controlling lights  
+  byte LightOffMinute = 20; //Light OFF time - minute  
 
   bool AutomaticInternalFan = true;  //Adjust internal fan based on temperature
-  int InternalFanSwitchTemp = 25; // Above limit turn the internal fan to High, turn to Low if limit-3 degrees is reached.
   bool AutomaticExhaustFan = true;  //Adjust exhaust fan based on temp and humidity
-  int ExhaustFanHighHumid = 65; //Above set humidity turn exhaust fan High if automatic fan control is enabled
-  int ExhaustFanLowHumid = 55; //Above set humidity turn exhaust fan Low if automatic fan control is enabled
-  int ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
   bool InternalFanOn = true;  //Internal fan On/Off, default:ON
   bool InternalFanHigh = false; //Internal fan Low/High, default:Low
-  bool ExhaustFanOn = false;  //Exhaust fan On/Off, default:OFF
+  bool ExhaustFanOn = true;  //Exhaust fan On/Off, default:OFF
   bool ExhaustFanHigh = false;  //Exhaust fan Low/High, default:Low
+  int InternalFanSwitchTemp = 25; // Above limit turn the internal fan to High, turn to Low if limit-3 degrees is reached.
+  byte ExhaustFanHighHumid = 65; //Above set humidity turn exhaust fan High if automatic fan control is enabled,has to match default unit type(Metric C or Imperial K)
+  byte ExhaustFanLowHumid = 55; //Above set humidity turn exhaust fan Low if automatic fan control is enabled
+  byte ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
    
   bool SoundEnabled = true;  //Enable PC speaker
   bool DebugEnabled = true; //Logs debug messages to serial and web outputs
-  bool MetricSystemEnabled = true; //Swith between Imperial/Metric units  
+  bool MetricSystemEnabled = true; //Swith between Imperial/Metric units. If changed update the default temp and pressure defaults.  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
   bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
   char PushingBoxLogRelayID[MaxTextLength]= "v420"; //UPDATE THIS DeviceID of the PushingBox logging scenario 
 
   byte DigitDisplayBacklight = 25; //4 digit display - backlight strenght (0-100)
-  int DigitDisplayValue = -1; //select which sensor reading to display(0-17), -1 cycle through all values
+  byte DigitDisplayValue = 0; //select which sensor reading to display(1-18), 0 cycle through all values
     
   bool AlertEmails = true; //disable/enable email sending
   char PushingBoxEmailRelayID[MaxTextLength]  = "v420";  //UPDATE THIS DeviceID of the PushingBox email alert scenario

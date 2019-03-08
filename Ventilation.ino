@@ -9,10 +9,6 @@ void readDHTSensor(){
     InternalTemp = InternalDHTSensor.readTemperature() *1.8 + 32;
     ExternalTemp = ExternalDHTSensor.readTemperature() *1.8 + 32;
   }
-  if(isnan(InternalHumidity)) InternalHumidity= -1.0;
-  if(isnan(ExternalHumidity)) ExternalHumidity= -1.0;
-  if(isnan(InternalTemp)) InternalTemp= -1.0;
-  if(isnan(ExternalTemp)) ExternalTemp= -1.0;
   checkDHTAlerts();
   checkFanAutomation();
 }

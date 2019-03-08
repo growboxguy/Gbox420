@@ -28,71 +28,71 @@ void logToScreen(){
 }
 
 //***4 digit display***
-int CurrentStep = -1;
+int CurrentStep = 0;
 const byte degreeSign = B11100011; //Used at Temp step
 void updateDisplay() { //Cycles through the different values
     DigitDisplay.clear();
-    if(MySettings.DigitDisplayValue == -1) CurrentStep++;  //cycle the values
+    if(MySettings.DigitDisplayValue == 0) CurrentStep++;  //cycle the values
     else CurrentStep= MySettings.DigitDisplayValue;  //lock to a single value
        
     switch (CurrentStep) {
-    case 0:
+    case 1:
       DigitDisplay.print(F("Temp"));
       break;
-    case 1:
+    case 2:
       DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)InternalTemp , 100 * (InternalTemp - (int)InternalTemp));DigitDisplay.printRaw(degreeSign, 3);DigitDisplay.setColonOn(0);
       break;
-    case 2:      
+    case 3:      
       DigitDisplay.print(F("Humi"));
       break;
-    case 3:
+    case 4:
       DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)InternalHumidity , 100 * (InternalHumidity - (int)InternalHumidity));DigitDisplay.setColonOn(0);      
       break;    
-    case 4:
+    case 5:
       DigitDisplay.print(F("PRES"));
       break;
-    case 5:
+    case 6:
       DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)AeroPressure , 100 * (AeroPressure - (int)AeroPressure));DigitDisplay.setColonOn(0);
       break;
-    case 6:
+    case 7:
       DigitDisplay.print(F("PH"));
       break;
-    case 7:
+    case 8:
       DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)PH , 100 * (PH - (int)PH));DigitDisplay.setColonOn(0);
       break; 
-    case 8:
+    case 9:
       DigitDisplay.print(F("Watt"));
       break;
-    case 9:
+    case 10:
       DigitDisplay.print((int)Power);
       break;
-    case 10:
+    case 11:
       DigitDisplay.print(F("Sum"));
       break;
-    case 11:
+    case 12:
       DigitDisplay.print((int)Energy);
       break;     
-    case 12:
+    case 13:
       DigitDisplay.print(F("LGHT"));
       break;
-    case 13:
+    case 14:
       DigitDisplay.print(stateToText(MySettings.LightStatus));
       break;
-    case 14:
+    case 15:
       DigitDisplay.print(F("IFan"));
       break;
-    case 15:
+    case 16:
       DigitDisplay.print(fanSpeedToText(true));
       break;
-    case 16:
+    case 17:
       DigitDisplay.print(F("EFan"));
       break;
-    case 17:
+    case 18:
       DigitDisplay.print(fanSpeedToText(false));
-      CurrentStep = -1; //last step, reset counter      
+      CurrentStep = 0; //last step, reset counter      
       break;    
     default:      
-      CurrentStep = -1; //nothing matched - reset counter
+      CurrentStep = 0; //nothing matched - reset counter
       break;
   }
 }
@@ -104,27 +104,27 @@ void setDigitDisplayBacklight(int Backlight){
 }
 
 void setDigitDisplayLoop(){
-  MySettings.DigitDisplayValue = -1;
+  MySettings.DigitDisplayValue = 0;
   addToLog(F("Display set to loop"));
 }
 
 void setDigitDisplayLockTemp(){
-  MySettings.DigitDisplayValue = 1;
+  MySettings.DigitDisplayValue = 2;
   addToLog(F("Display locked to Temp"));
 }
 
 void setDigitDisplayLockPressure(){
-  MySettings.DigitDisplayValue = 5;
+  MySettings.DigitDisplayValue = 6;
   addToLog(F("Display locked to Pressure"));
 }
 
 void setDigitDisplayLockPH(){
-  MySettings.DigitDisplayValue = 7;
+  MySettings.DigitDisplayValue = 8;
   addToLog(F("Display locked to PH"));
 }
 
 void setDigitDisplayLockWattage(){
-  MySettings.DigitDisplayValue = 9;
+  MySettings.DigitDisplayValue = 10;
   addToLog(F("Display locked to Wattage"));
 }
 
