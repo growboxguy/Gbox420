@@ -37,57 +37,69 @@ void updateDisplay() { //Cycles through the different values
        
     switch (CurrentStep) {
     case 1:
-      DigitDisplay.print(F("Temp"));
+      DigitDisplay.print(F("ITmp"));
       break;
     case 2:
       DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)InternalTemp , 100 * (InternalTemp - (int)InternalTemp));DigitDisplay.printRaw(degreeSign, 3);DigitDisplay.setColonOn(0);
       break;
     case 3:      
-      DigitDisplay.print(F("Humi"));
+      DigitDisplay.print(F("IHum"));
       break;
     case 4:
       DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)InternalHumidity , 100 * (InternalHumidity - (int)InternalHumidity));DigitDisplay.setColonOn(0);      
-      break;    
+      break;
     case 5:
-      DigitDisplay.print(F("PRES"));
+      DigitDisplay.print(F("ITmp"));
       break;
     case 6:
-      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)AeroPressure , 100 * (AeroPressure - (int)AeroPressure));DigitDisplay.setColonOn(0);
+      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)InternalTemp , 100 * (InternalTemp - (int)InternalTemp));DigitDisplay.printRaw(degreeSign, 3);DigitDisplay.setColonOn(0);
       break;
-    case 7:
-      DigitDisplay.print(F("PH"));
+    case 7:      
+      DigitDisplay.print(F("IHum"));
       break;
     case 8:
-      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)PH , 100 * (PH - (int)PH));DigitDisplay.setColonOn(0);
-      break; 
+      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)InternalHumidity , 100 * (InternalHumidity - (int)InternalHumidity));DigitDisplay.setColonOn(0);      
+      break;    
     case 9:
-      DigitDisplay.print(F("Watt"));
+      DigitDisplay.print(F("PRES"));
       break;
     case 10:
-      DigitDisplay.print((int)Power);
+      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)AeroPressure , 100 * (AeroPressure - (int)AeroPressure));DigitDisplay.setColonOn(0);
       break;
     case 11:
-      DigitDisplay.print(F("Sum"));
+      DigitDisplay.print(F("PH"));
       break;
     case 12:
-      DigitDisplay.print((int)Energy);
-      break;     
+      DigitDisplay.setColonOn(1);DigitDisplay.printDualCounter((int)PH , 100 * (PH - (int)PH));DigitDisplay.setColonOn(0);
+      break; 
     case 13:
-      DigitDisplay.print(F("LGHT"));
+      DigitDisplay.print(F("Watt"));
       break;
     case 14:
-      DigitDisplay.print(stateToText(MySettings.LightStatus));
+      DigitDisplay.print((int)Power);
       break;
     case 15:
-      DigitDisplay.print(F("IFan"));
+      DigitDisplay.print(F("Sum"));
       break;
     case 16:
-      DigitDisplay.print(fanSpeedToText(true));
-      break;
+      DigitDisplay.print((int)Energy);
+      break;     
     case 17:
-      DigitDisplay.print(F("EFan"));
+      DigitDisplay.print(F("LGHT"));
       break;
     case 18:
+      DigitDisplay.print(stateToText(MySettings.LightStatus));
+      break;
+    case 19:
+      DigitDisplay.print(F("IFan"));
+      break;
+    case 20:
+      DigitDisplay.print(fanSpeedToText(true));
+      break;
+    case 21:
+      DigitDisplay.print(F("EFan"));
+      break;
+    case 22:
       DigitDisplay.print(fanSpeedToText(false));
       CurrentStep = 0; //last step, reset counter      
       break;    
@@ -114,17 +126,17 @@ void setDigitDisplayLockTemp(){
 }
 
 void setDigitDisplayLockPressure(){
-  MySettings.DigitDisplayValue = 6;
+  MySettings.DigitDisplayValue = 10;
   addToLog(F("Display locked to Pressure"));
 }
 
 void setDigitDisplayLockPH(){
-  MySettings.DigitDisplayValue = 8;
+  MySettings.DigitDisplayValue = 12;
   addToLog(F("Display locked to PH"));
 }
 
 void setDigitDisplayLockWattage(){
-  MySettings.DigitDisplayValue = 10;
+  MySettings.DigitDisplayValue = 14;
   addToLog(F("Display locked to Wattage"));
 }
 
