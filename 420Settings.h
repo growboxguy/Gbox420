@@ -10,6 +10,7 @@
   byte Version= 6; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
   typedef struct //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
+  bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
   bool AirPumpOn = true;  //Startup status for Reservoir Air Pump: True-ON / False-OFF, default:ON
   bool AeroSprayEnabled = true;  //Enable/disable misting
   byte AeroInterval = 15; //Aeroponics - Spray every 15 minutes

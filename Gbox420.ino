@@ -8,9 +8,6 @@
 //TODO: 
 //Flow meter
 //EC meter
-//Document 3 new optocouplers: PWM dimming, ATX Power Good detection, ATX OnOff
-//Document reservoir temp sensor
-//Document 2nd external temp sensor, add readings to LCD screen
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -52,7 +49,6 @@
   int VentilationAlertCount = 0;
   int ReservoirAlertCount = 0;
   int PHAlertCount = 0;
-  bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
   float InternalTemp; //Internal Temperature - Celsius
   float InternalHumidity; //Internal relative humidity - %
   float ExternalTemp; //External Temperature - Celsius

@@ -10,7 +10,7 @@ void checkSwitches(){
   if(MySettings.LightStatus) digitalWrite(Relay8OutPin, LOW); else digitalWrite(Relay8OutPin, HIGH);
 
   //Optocoupler
-  if(ATXPowerSupplyOn) digitalWrite(ATXPowerONOutPin, HIGH); else digitalWrite(ATXPowerONOutPin, LOW); 
+  if(MySettings.ATXPowerSupplyOn) digitalWrite(ATXPowerONOutPin, HIGH); else digitalWrite(ATXPowerONOutPin, LOW); 
 }
 
 void readPowerSensor(){
@@ -37,12 +37,12 @@ void readPowerSensor(){
 }
 
 void TurnATXOn(){
-  ATXPowerSupplyOn = true;
+  MySettings.ATXPowerSupplyOn = true;
   addToLog(F("ATX power supply ON")); 
 }
 
 void TurnATXOff(){
-  ATXPowerSupplyOn = false;
+  MySettings.ATXPowerSupplyOn = false;
   addToLog(F("ATX power supply OFF"));
 }
 
