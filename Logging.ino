@@ -1,3 +1,7 @@
+
+
+
+
 void ReportToGoogleSheets(bool AddToLog){
   if(AddToLog)addToLog(F("Reporting to Google Sheets"));
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
@@ -120,7 +124,7 @@ char * logToText(){
 
 char * toText(int Number){
   static char ReturnChar[12] = ""; //sign + 10 digits + null terminator. Supports 32bit int of Arduino Due
-  itoa(Number, ReturnChar, 12);
+  itoa(Number, ReturnChar, 10);
   return ReturnChar;
 }
 

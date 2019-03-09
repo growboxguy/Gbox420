@@ -158,8 +158,9 @@ void setup() {     // put your setup code here, to run once:
   ESPLink.resetCb = resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
   resetWebServer();  //reset the WebServer
   ESPLink.Process();  //Process any command from ESP-Link
-  setSyncProvider(getNtpTime); //points to method for updating time from NTP server
-  setSyncInterval(3600); //Sync time every hour
+  setTime(getNtpTime());
+  //setSyncProvider((time_t)getNtpTime); //points to method for updating time from NTP server
+  //setSyncInterval(3600); //Sync time every hour
   setupMqtt();  //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
  
   //Threading - Linking functions to threads and setting how often they should be called

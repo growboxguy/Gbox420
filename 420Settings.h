@@ -32,19 +32,19 @@
   byte LightOffHour = 16; //Light OFF time - hour
   byte LightOffMinute = 20; //Light OFF time - minute  
 
-  bool AutomaticInternalFan = true;  //Adjust internal fan based on temperature
-  bool AutomaticExhaustFan = true;  //Adjust exhaust fan based on temp and humidity
+  bool AutomaticInternalFan = false;  //Adjust internal fan based on temperature
+  bool AutomaticExhaustFan = false;  //Adjust exhaust fan based on temp and humidity
   bool InternalFanOn = true;  //Internal fan On/Off, default:ON
-  bool InternalFanHigh = false; //Internal fan Low/High, default:Low
+  bool InternalFanHigh = true; //Internal fan Low/High, default:Low
   bool ExhaustFanOn = true;  //Exhaust fan On/Off, default:OFF
-  bool ExhaustFanHigh = false;  //Exhaust fan Low/High, default:Low
+  bool ExhaustFanHigh = true;  //Exhaust fan Low/High, default:Low
   int InternalFanSwitchTemp = 25; // Above limit turn the internal fan to High, turn to Low if limit-3 degrees is reached.
   byte ExhaustFanHighHumid = 65; //Above set humidity turn exhaust fan High if automatic fan control is enabled,has to match default unit type(Metric C or Imperial K)
   byte ExhaustFanLowHumid = 55; //Above set humidity turn exhaust fan Low if automatic fan control is enabled
   byte ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
    
   bool SoundEnabled = true;  //Enable PC speaker
-  bool DebugEnabled = true; //Logs debug messages to serial and web outputs
+  bool DebugEnabled = false; //Logs debug messages to serial and web outputs
   bool MetricSystemEnabled = true; //Swith between Imperial/Metric units. If changed update the default temp and pressure defaults.  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
   bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
@@ -60,8 +60,8 @@
   int TempAlertHigh = 35; //High temp warning email
   int HumidityAlertLow = 35; //Low humidity warning email
   int HumidityAlertHigh = 70; //High humidity warning email
-  float PressureAlertLow = 3.0; //Low pressure warning
-  float PressureAlertHigh = 7.5; //High pressure warning  
+  float PressureAlertLow = 4.0; //Low pressure warning
+  float PressureAlertHigh = 8.0; //High pressure warning  
   float PHAlertLow = 5.5; //Low pressure warning
   float PHAlertHigh = 6.5; //High pressure warning
 
