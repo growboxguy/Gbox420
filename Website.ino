@@ -104,7 +104,8 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgString(F("tdPower"),toText(Power));  
   WebServer.setArgString(F("tdEnergy"),toText(Energy));
   WebServer.setArgString(F("tdVoltage"),toText(Voltage));
-  WebServer.setArgString(F("tdCurrent"),toText(Current)); 
+  WebServer.setArgString(F("tdCurrent"),toText(Current));
+  WebServer.setArgString(F("tdATXStatus"),stateToText(MySettings.ATXPowerSupplyOn)); 
 
   WebServer.setArgString(F("tdLightStatus"),stateToText(MySettings.LightStatus));
   WebServer.setArgString(F("tdLightReading"),toText(MySettings.LightBrightness, LightReading,"%-")); 

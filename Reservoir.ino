@@ -71,11 +71,11 @@ void readReservoirTemp(){
 //***PH meter***
 void readReservoirPH(bool ShowRaw){
   float  Reading=0;
-  for(byte i=0;i<40;i++) { 
+  for(byte i=0;i<50;i++) { 
    Reading+=analogRead(PHMeterInPin);
-   delay(25);
+   delay(20);
   }
-  PHRaw = Reading /40; //Calculates average
+  PHRaw = Reading /50; //Calculates average
   if(ShowRaw)
   {
   strncpy_P(LogMessage,(PGM_P)F("PH analog read: "),MaxTextLength);

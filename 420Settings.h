@@ -4,10 +4,10 @@
   const byte MaxDimming = 235; //Sets the maximum dimming duty cycle to 92% (255*0.92=~235). 255=100% dimming (LED drivers usually do not support full dimming, check the specification before changing this!)
   const byte ScreenRotation = 1;  //LCD screen rotation: 1,3:landscape 2,4:portrait
   const byte LogDepth = 10;  //Show X number of log entries on website, do not go above 10
-  const byte MaxTextLength = 31;  //30 characters + null terminator for one log entry
+  const byte MaxTextLength = 31;  //Default char* buffer size: 30 characters + null terminator, used for logging and converting to text
    
 //Settings saved to EEPROM persistent storage
-  byte Version= 6; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
+  byte Version= 7; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
   typedef struct //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)

@@ -1,7 +1,3 @@
-
-
-
-
 void ReportToGoogleSheets(bool AddToLog){
   if(AddToLog)addToLog(F("Reporting to Google Sheets"));
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
@@ -123,34 +119,34 @@ char * logToText(){
 }
 
 char * toText(int Number){
-  static char ReturnChar[12] = ""; //sign + 10 digits + null terminator. Supports 32bit int of Arduino Due
+  static char ReturnChar[MaxTextLength] = "";
   itoa(Number, ReturnChar, 10);
   return ReturnChar;
 }
 
 char * toText(int Number1, int Number2,const char * Separator){  //function overloading: Same named function, different parameters
-  static char ReturnChar[25] = ""; //sign + 10 digit + separator(max 3) + 10 digit + null terminator.
-  snprintf(ReturnChar,24,"%d%s%d",Number1,Separator,Number2);
+  static char ReturnChar[MaxTextLength] = ""; 
+  snprintf(ReturnChar,MaxTextLength,"%d%s%d",Number1,Separator,Number2);
   return ReturnChar;
 }
 
 char * toText(float Number){ 
-  static char ReturnFloatChar[12] = "";  //1 sign (if negative) + 7 digits + decimal sign + 2 decimals + null terminator
+  static char ReturnFloatChar[MaxTextLength] = ""; 
   if(isnan(Number)) Number= -1.0;
-  dtostrf(Number, 4, 2, ReturnFloatChar); //minimum 4 long
+  dtostrf(Number, 4, 2, ReturnFloatChar); //minimum 4 char total lengt, with 2 decimals
   return ReturnFloatChar;
 }
 
 char * toPrecisionText(float Number){ 
-  static char ReturnFloatChar[12] = "";  //1 sign (if negative) + 3 digits + decimal sign + 6 decimals + null terminator
+  static char ReturnFloatChar[MaxTextLength] = "";
   if(isnan(Number)) Number= -1.0;
-  dtostrf(Number, 8, 6, ReturnFloatChar); 
+  dtostrf(Number, 8, 6, ReturnFloatChar); //minimum 8 char total lengt, with 6 decimals
   return ReturnFloatChar;
 }
 
 char * toText(float Number1, float Number2,const char * Separator){
-  static char ReturnChar[24] = ""; 
-  static char Number2Char[12] = "";
+  static char ReturnChar[MaxTextLength] = ""; 
+  static char Number2Char[MaxTextLength] = "";
   if(isnan(Number1)) Number1= -1.0;
   if(isnan(Number2)) Number2= -1.0;
   dtostrf(Number1, 4, 2, ReturnChar); 
@@ -161,7 +157,7 @@ char * toText(float Number1, float Number2,const char * Separator){
 }
 
 char * timetoText(int Hour, int Minute){
-  static char ReturnChar[6] = ""; //2 digit + separator + 2 digit + null
+  static char ReturnChar[MaxTextLength] = ""; //2 digit + separator + 2 digit + null
   sprintf (ReturnChar, "%02u:%02u", Hour, Minute);
   return ReturnChar;
 }

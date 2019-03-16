@@ -13,6 +13,7 @@
   #include "420Pins.h" //Load pins layout file
   #include "420Settings.h" //Load settings file
   #include "avr/wdt.h" //Watchdog timer
+  #include "avr/boot.h" //Watchdog timer related bug fix
   #include "Thread.h" //Splitting functions to threads for timing
   #include "StaticThreadController.h"  //Grouping threads
   #include "TimerThree.h"  //Interrupt handling for webpage
@@ -107,6 +108,7 @@ void setup() {     // put your setup code here, to run once:
   Serial.begin(115200);    //2560mega console output
   Serial3.begin(115200);  //esp wifi console output
   wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 minutes assume a lockup and reset sketch
+  boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
   addToLog(F("GrowBox initializing..."));
   loadSettings();
 
