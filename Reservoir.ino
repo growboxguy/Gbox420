@@ -37,28 +37,35 @@ void checkReservoir(){
   checkReservoirAlert();
 }
 
+bool PrevoiusReservoirRead = true;
 void checkReservoirAlert(){
   if(ReservoirLevel > 0){
-      ReservoirAlertCount = 0;
-      if(!ReservOK){
+    if(PrevoiusReservoirRead != true){ReservoirTriggerCount = 0;}
+    else{ if(!ReservOK)ReservoirTriggerCount++; } 
+    PrevoiusReservoirRead = true;
+    
+    if(!ReservOK && ReservoirTriggerCount>=MySettings.ReadCountBeforeAlert){
         sendEmailAlert(F("Reservoir%20OK"));
         ReservOK = true;
-      }
+     }
   }
-  if(ReservOK && ReservoirLevel <= 0){
-    ReservoirAlertCount++;
-    if(ReservoirAlertCount>=MySettings.ReadCountBeforeAlert){
+  else{
+    if(PrevoiusReservoirRead != false){ReservoirTriggerCount = 0;}
+    else{ if(ReservOK)ReservoirTriggerCount++; } 
+    PrevoiusReservoirRead = false;
+
+    if(ReservOK && ReservoirTriggerCount>=MySettings.ReadCountBeforeAlert){
       ReservOK = false;
       if(ReservoirLevel == 0){
         sendEmailAlert(F("Reservoir%20is%20empty"));
         addToLog(F("Reservoir is empty"));
-      }
+        }
       else{
         sendEmailAlert(F("Reservoir%20sensor%20failed"));
         addToLog(F("Water sensor failed"));
-      }
+        }
      }
-   }
+   }  
 }
 
 //***Temperature sensor***
@@ -97,22 +104,27 @@ void setPHCalibrationIntercept(float Value){
   addToLog(F("PH intercept updated"));
 }
 
+bool PreviousPhRead = true;
 void checkPHAlert(){
-  if(MySettings.PHAlertLow <= PH && PH <= MySettings.PHAlertHigh ){
-      PHAlertCount = 0;
-      if(!PhOK){
+  if(MySettings.PHAlertLow <= PH && PH <= MySettings.PHAlertHigh ){ //PH within range
+    if(PreviousPhRead != true){PHTriggerCount = 0;}
+    else {if(!PhOK) {PHTriggerCount++;}}
+    PreviousPhRead = true;
+      
+    if(!PhOK && PHTriggerCount>=MySettings.ReadCountBeforeAlert){
         sendEmailAlert(F("PH%20OK"));
         PhOK = true;
       }
   } 
-  else{
-    if(PhOK){
-      PHAlertCount++;
-      if(PHAlertCount>=MySettings.ReadCountBeforeAlert){
+  else{  //PH out of range
+    if(PreviousPhRead != false){PHTriggerCount = 0;}
+    else {if(PhOK) {PHTriggerCount++;}}
+    PreviousPhRead = false;
+    
+    if(PhOK && PHTriggerCount>=MySettings.ReadCountBeforeAlert){
         sendEmailAlert(F("Reservoir%20PH%20not%20optimal"));
         addToLog(F("Reservoir PH not optimal"));
         PhOK = false;
-      }
-    }    
-  }    
-}
+        }
+     }    
+ }    

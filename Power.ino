@@ -13,27 +13,35 @@ void checkSwitches(){
   if(MySettings.ATXPowerSupplyOn) digitalWrite(ATXPowerONOutPin, HIGH); else digitalWrite(ATXPowerONOutPin, LOW); 
 }
 
+bool PreviousACRead = true;
 void readPowerSensor(){
   Voltage = PowerSensor.voltage(PowerSensorIP);
   Current = PowerSensor.current(PowerSensorIP);
   Power = PowerSensor.power(PowerSensorIP);
   Energy = PowerSensor.energy(PowerSensorIP) / 1000;  //total power consumption in kWh
-  if(ACPowerOK && Voltage < 0) {
-    ACPowerAlertCount++;
-    if(ACPowerAlertCount>=MySettings.ReadCountBeforeAlert){
-      sendEmailAlert(F("AC%20input%20lost")); 
-      ACPowerOK = false;
-      addToLog(F("AC Power lost"));
-    }
-  }
+
   if(Voltage > 0){
-    ACPowerAlertCount = 0;
-    if(!ACPowerOK){
-      sendEmailAlert(F("AC%20input%20recovered"));
+    if(PreviousACRead != true){ACPowerTriggerCount = 0;}
+    else {if(!ACPowerOK) {ACPowerTriggerCount++;}}
+    PreviousACRead = true;
+    
+    if(!ACPowerOK && ACPowerTriggerCount>=MySettings.ReadCountBeforeAlert){
+      sendEmailAlert(F("AC%20input%20recovered"));      
+      addToLog(F("AC Power recovered"));
       ACPowerOK = true;
-      addToLog(F("AC Power recovered")); 
     }    
   }
+  else{
+    if(PreviousACRead != false){ACPowerTriggerCount = 0;}
+    else {if(ACPowerOK) {ACPowerTriggerCount++;}}
+    PreviousACRead = false;
+
+    if(ACPowerOK && ACPowerTriggerCount>=MySettings.ReadCountBeforeAlert){
+      sendEmailAlert(F("AC%20input%20lost"));      
+      addToLog(F("AC Power lost"));
+      ACPowerOK = false;
+    }
+  }  
 }
 
 void TurnATXOn(){
@@ -46,23 +54,30 @@ void TurnATXOff(){
   addToLog(F("ATX power supply OFF"));
 }
 
+bool PreviousDCRead = true;
 void readATXPowerGood(){   
   bool ATXStateOK = !digitalRead(ATXPowerGoodInPin); //inverting the reading to compensate the inverting optocoupler. True:DC power OK, False:DC power not OK
-   
-  if(DCPowerOK && !ATXStateOK) {  //ATX Power Good pin is not at expected 5V, signaling a problem with the power supply or the voltage divider
-    DCPowerAlertCount++;
-    if(DCPowerAlertCount>=MySettings.ReadCountBeforeAlert){
+
+  if(ATXStateOK){  //ATX Power Good pin is at ~5V, signaling DC power output is OK
+    if(PreviousDCRead != true){DCPowerTriggerCount = 0;}
+    else {if(!DCPowerOK) {DCPowerTriggerCount++;}}
+    PreviousDCRead = true;
+
+    if(!DCPowerOK && DCPowerTriggerCount>=MySettings.ReadCountBeforeAlert){ //if DC power was in failed state before
+      sendEmailAlert(F("DC%20input%20recovered"));
+      addToLog(F("DC Power recovered"));
+      DCPowerOK = true; 
+    }    
+  }
+  else{      
+    if(PreviousDCRead != false){DCPowerTriggerCount = 0;}
+    else {if(DCPowerOK) {DCPowerTriggerCount++;}}
+    PreviousDCRead = false;
+    
+    if(DCPowerOK && DCPowerTriggerCount>=MySettings.ReadCountBeforeAlert) {  
       sendEmailAlert(F("DC%20input%20lost")); 
       DCPowerOK = false;
       addToLog(F("DC Power lost"));
-    }
-  }
-  if(ATXStateOK){  //ATX Power Good pin is at ~5V, signaling DC power output is OK
-    DCPowerAlertCount = 0;
-    if(!DCPowerOK){ //if it was in failed state before
-      sendEmailAlert(F("DC%20input%20recovered"));
-      DCPowerOK = true;
-      addToLog(F("DC Power recovered")); 
-    }    
-  }
+      }
+    }  
 }

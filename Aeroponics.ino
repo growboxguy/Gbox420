@@ -47,11 +47,15 @@ void checkAeroPump(){
   CheckAeroPumpAlerts();
 }
 
+bool PrevoiusPressureRead = true;
 void CheckAeroPumpAlerts()
 {
   if(MySettings.PressureAlertLow <= AeroPressure && AeroPressure <= MySettings.PressureAlertHigh){ //If pressure is between OK range
-     PressureAlertCount = 0; 
-       if(!PressureOK){ // pressure was not OK before
+    if(PrevoiusPressureRead != true){PressureTriggerCount = 0;}
+    else{ if(!PressureOK)PressureTriggerCount++; } 
+    PrevoiusPressureRead = true;     
+     
+    if(!PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){ // pressure was not OK before
        PressureOK = true;
        sendEmailAlert(F("Aeroponics%20pressure%20OK"));
        } 
@@ -61,9 +65,11 @@ void CheckAeroPumpAlerts()
           aeroPumpOff(); //force pump off
           aeroSprayNow(true); //try to release pressure  
     }
-    if(PressureOK){
-      PressureAlertCount++;
-      if(PressureAlertCount>=MySettings.ReadCountBeforeAlert){
+    if(PrevoiusPressureRead != false){PressureTriggerCount = 0;}
+    else{ if(PressureOK)PressureTriggerCount++; } 
+    PrevoiusPressureRead = false;  
+    
+    if(PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){
         PressureOK = false;
         if(AeroPressure > MySettings.PressureAlertHigh){ //If high pressure alert level is reached   
           sendEmailAlert(F("Aeroponics%20pressure%20too%20high"));
@@ -75,8 +81,7 @@ void CheckAeroPumpAlerts()
           addToLog(F("Low pressure warning"));
         } 
       }
-    }
-  }   
+   }     
 }
 
 void readAeroPressure(){

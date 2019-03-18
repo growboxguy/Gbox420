@@ -13,30 +13,35 @@ void readDHTSensor(){
   checkFanAutomation();
 }
 
+bool PreviousVentilationReading = true;
 void checkDHTAlerts(){
   if(!isnan(InternalTemp) && !isnan(InternalHumidity) && MySettings.TempAlertLow <= InternalTemp  && InternalTemp <= MySettings.TempAlertHigh && MySettings.HumidityAlertLow <= InternalHumidity  && InternalHumidity <= MySettings.HumidityAlertHigh){ //readings are normal
-    VentilationAlertCount = 0;
-    if(!VentOK){ ////alert was active before
+    if(PreviousVentilationReading != true){VentilationTriggerCount = 0;}
+    else {if(!VentOK) {VentilationTriggerCount++;}}
+    PreviousVentilationReading = true;
+    
+    if(!VentOK && VentilationTriggerCount>=MySettings.ReadCountBeforeAlert){ //alert was active before
       sendEmailAlert(F("Temp%20and%20Humidity%20OK")); 
       VentOK = true; //everything OK
     }
   }
   else {
-    if(VentOK){
-      VentilationAlertCount++;
-      if(VentilationAlertCount>=MySettings.ReadCountBeforeAlert){
+    if(PreviousVentilationReading != false){VentilationTriggerCount = 0;}
+    else {if(VentOK) {VentilationTriggerCount++;}}
+    PreviousVentilationReading = false;
+    
+    if(VentOK && VentilationTriggerCount>=MySettings.ReadCountBeforeAlert){
         VentOK = false;
         if(isnan(InternalTemp) || InternalTemp < MySettings.TempAlertLow ||  MySettings.TempAlertHigh < InternalTemp){ //if temp out of limits, isnan-Returns true if float is Not A Numeber: DHT library returns NAN if the value cannot be read
-        sendEmailAlert(F("Temperature%20out%20of%20range"));     
-        addToLog(F("Temperature alert triggered"));
-        }
+          sendEmailAlert(F("Temperature%20out%20of%20range"));     
+          addToLog(F("Temperature alert triggered"));
+          }
         if(isnan(InternalHumidity) || InternalHumidity < MySettings.HumidityAlertLow ||  MySettings.HumidityAlertHigh < InternalHumidity){ //if temp out of limits
-        sendEmailAlert(F("Humidity%20out%20of%20range")); 
-        addToLog(F("Humidity alert triggered"));
-        }    
+          sendEmailAlert(F("Humidity%20out%20of%20range")); 
+          addToLog(F("Humidity alert triggered"));
+          }    
       }
-     }
-  }
+    }  
 }
 
 void checkFanAutomation(){

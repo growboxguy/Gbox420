@@ -46,33 +46,38 @@ void setBrightness(int NewBrightness, bool AddToLog){
   analogWrite(DimmingOutPin, map(MySettings.LightBrightness,0,100,MaxDimming,0) ); //mapping 0% brightness to MaxDimming(92%) duty cycle, and 100% brighness to 0% dimming duty cycle
 }
 
+bool PreviousLightRead = true;
 void checkLightSensor(){
   Bright = !digitalRead(LightSensorInPin);     // read the input pin: 0- light detected , 1 - no light detected. Had to invert signal from the sensor to make more sense.
   LightReading = 1023 - analogRead(LightSensorAnalogInPin);
   
   if((MySettings.LightStatus && Bright) || (!MySettings.LightStatus && !Bright)){ //All OK: lights on&bright OR lights off&dark
-    LightsAlertCount=0;
-    if(!LightOK) {
+    if(PreviousLightRead != false){LightsTriggerCount = 0;}
+    else{ if(!LightOK)ReservoirTriggerCount++; } 
+    PreviousLightRead = true;
+    
+    if(!LightOK && LightsTriggerCount>=MySettings.ReadCountBeforeAlert) {
       sendEmailAlert(F("Lights%20OK")); 
       LightOK = true;
     }
   }
   else{
-    if(LightOK){
-      LightsAlertCount++;
-      if(LightsAlertCount>=MySettings.ReadCountBeforeAlert){
+    if(PreviousLightRead != true){LightsTriggerCount = 0;}
+    else{ if(LightOK)ReservoirTriggerCount++; } 
+    PreviousLightRead = false;
+    
+    if(LightOK && LightsTriggerCount>=MySettings.ReadCountBeforeAlert){
        LightOK = false;
        if(MySettings.LightStatus && !Bright){ //if light should be ON but no light is detected
         sendEmailAlert(F("No%20light%20detected"));        
         addToLog(F("Lights ON, no light detected"));
        }
-       if(!MySettings.LightStatus && Bright){ //if light should be OFf but light is detected
+       if(!MySettings.LightStatus && Bright){ //if light should be OFF but light is detected
         sendEmailAlert(F("Dark%20period%20interrupted")); 
         addToLog(F("Dark period interrupted"));
-       }
-      }
-    }
-  }
+        }
+     }
+   }  
 }
 
 void triggerCalibrateLights(){ //website signals to calibrate lights when checkLightStatus runs next

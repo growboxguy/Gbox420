@@ -43,13 +43,13 @@
   bool VentOK = true; //Temperatur and humidity withing range
   bool ReservOK = true; //Reservoir not empty
   bool PhOK = true;  //Nutrient solution PH within range
-  int LightsAlertCount = 0;  //Counters of out of range readings before triggering an alert
-  int PressureAlertCount = 0; //All counters are compared agains ReadCountBeforeAlert from 420Settings before triggering an alert
-  int ACPowerAlertCount = 0;
-  int DCPowerAlertCount = 0;
-  int VentilationAlertCount = 0;
-  int ReservoirAlertCount = 0;
-  int PHAlertCount = 0;
+  int LightsTriggerCount = 0;  //Counters of out of range readings before triggering an alert
+  int PressureTriggerCount = 0; //All counters are compared agains ReadCountBeforeAlert from 420Settings before triggering an alert
+  int ACPowerTriggerCount = 0;
+  int DCPowerTriggerCount = 0;
+  int VentilationTriggerCount = 0;
+  int ReservoirTriggerCount = 0;
+  int PHTriggerCount = 0;
   float InternalTemp; //Internal Temperature - Celsius
   float InternalHumidity; //Internal relative humidity - %
   float ExternalTemp; //External Temperature - Celsius
@@ -315,10 +315,10 @@ void setMetricSystemEnabled(bool MetricEnabled){
 
 float convertBetweenTempUnits(float Value){
 if(MySettings.MetricSystemEnabled) return round((Value-32) * 55.555555)/100.0;
-else return (round(Value*180) + 3200.0)/100.0;
+else return round(Value*180 + 3200.0)/100.0;
 }
 
 float convertBetweenPressureUnits(float Value){
-if(MySettings.MetricSystemEnabled) return round(Value / 1.45038)/10.0;
-else return round(Value*145.038)/10.0;
+if(MySettings.MetricSystemEnabled) return round(Value / 0.145038)/100.0;
+else return round(Value*1450.38)/100.0;
 }
