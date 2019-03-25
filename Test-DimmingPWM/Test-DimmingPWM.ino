@@ -5,7 +5,7 @@
 //PWM dimming duty cycle 0 (No dimming) - 235 (Dimm to 8%, Lowest allowed dimming by Meanweell is 6%)
 
 //Pins
-const byte DimmingOutPin = 9; //Optocoupler PC817 base over 1K resistor
+const byte DimmingOutPin = 11; //Optocoupler PC817 base over 1K resistor
 
 //Global constants
 const byte MaxDimming = 235; //Sets the maximum dimming duty cycle to 92% (255*0.92=~235). 255=100% dimming (LED drivers usually do not support full dimming, check the specification before changing this!)

@@ -10,7 +10,7 @@
   const byte WaterFullInPin = A7; // Water sensor4
   
   const byte BuzzerOutPin = 4; //PC speaker+ (red)
-  const byte DimmingOutPin = 9; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
+  const byte DimmingOutPin = 11; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
   const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
   const byte Relay1OutPin = 22;  //Power relay Port 1 - Aeroponics solenoid
   const byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump
