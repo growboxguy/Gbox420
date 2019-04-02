@@ -5,6 +5,7 @@
   const byte ScreenRotation = 1;  //LCD screen rotation: 1,3:landscape 2,4:portrait
   const byte LogDepth = 10;  //Show X number of log entries on website, do not go above 10
   const byte MaxTextLength = 31;  //Default char* buffer size: 30 characters + null terminator, used for logging and converting to text
+  const bool AeroPressureTankPresent = false;  //If pressure tank is present in the aeroponics setup
    
 //Settings saved to EEPROM persistent storage
   byte Version= 7; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
@@ -13,11 +14,11 @@
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
   bool AirPumpOn = true;  //Startup status for Reservoir Air Pump: True-ON / False-OFF, default:ON
   bool AeroSprayEnabled = true;  //Enable/disable misting
-  byte AeroInterval = 15; //Aeroponics - Spray every 15 minutes
-  byte AeroDuration = 2; //Aeroponics - Spray time in seconds
+  uint32_t AeroInterval = 15; //Aeroponics - Spray every 15 minutes
+  uint32_t AeroDuration = 2; //Aeroponics - Spray time in seconds
   float AeroPressureLow= 5.0; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroPressureHigh = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)
-  uint32_t AeroPumpTimeout = 360000;  // Aeroponics - Max pump run time in miliseconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
+  uint32_t AeroPumpTimeout = 360;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
   bool AeroQuietEnabled = false;  //Enable/disable quiet time then pump should not run
   bool AeroRefillBeforeQuiet = true; //Enable/disable refill before quiet time
   byte AeroQuietFromHour = 23;  //Quiet time to block pump - hour

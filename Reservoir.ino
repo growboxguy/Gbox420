@@ -10,6 +10,11 @@ void airPumpOff(){
   PlayOffSound=true;
 }
 
+void ReservoirRefill(){  
+  addToLog(F("Refilling..not implemented"));
+
+}
+
 void checkReservoir(){
   readReservoirTemp(); //Check water temperature
   

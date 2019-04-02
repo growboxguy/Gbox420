@@ -164,7 +164,8 @@
 					 <td id="tdAirPumpOn" class="dataRows"></td>
 					</tr>
 				</table>
-				<b>Air pump:</b>
+				<button id="btn_ReservoirRefill" type="button" align="rigth" title="Reset pump status to OK and refill reservoir">Refill</button>
+				<b> Air pump:</b>
 				<button id="btn_AirPumpOn" type="button">ON</button>
 				<button id="btn_AirPumpOff" type="button">OFF</button>	
 			</div>
@@ -181,8 +182,8 @@
 				  </tr>
 				</table>
 				<b>Pump</b><br>
-				<button id="btn_PumpRefill" type="button" align="rigth" title="Reset status to OK and refill pressure tank to High pressure">Refill</button>
-				<button id="btn_PumpStop" type="button" align="rigth" title="Stops the pump and reset it status to OK">OFF</button>
+				<button id="btn_PumpOn" type="button" align="rigth" title="Starts the pump and reset its status to OK">ON</button>
+				<button id="btn_PumpOff" type="button" align="rigth" title="Stops the pump and reset its status to OK">OFF</button>
 				<button id="btn_PumpDisable" type="button" align="rigth" title="Stops and disables pump">Disable</button>								
 				<form>
 					Low : <input style="width: 55px;" min=0 max=145 step="0.1" name="AeroPressureLow" type="number"/> 

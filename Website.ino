@@ -72,7 +72,7 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(MySettings.PressureSensorOffset));
   WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(MySettings.PressureSensorRatio));
 
-  WebServer.setArgInt(F("AeroPumpTimeout"), MySettings.AeroPumpTimeout / 1000);
+  WebServer.setArgInt(F("AeroPumpTimeout"), MySettings.AeroPumpTimeout);
   WebServer.setArgBoolean(F("AeroQuietEnabled"), MySettings.AeroQuietEnabled);
   WebServer.setArgBoolean(F("AeroRefillBeforeQuiet"), MySettings.AeroRefillBeforeQuiet);
   WebServer.setArgInt(F("AeroQuietFromHour"), MySettings.AeroQuietFromHour); 
@@ -143,8 +143,9 @@ void ButtonPressCallback(char *button)
   else if (strcmp_P(button,(PGM_P)F("btn_LightCalibrate"))==0) {triggerCalibrateLights();}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayNow"))==0) { aeroSprayNow(false);}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayOff"))==0) { aeroSprayOff();}  
-  else if (strcmp_P(button,(PGM_P)F("btn_PumpRefill"))==0) { aeroPumpRefill();}
-  else if (strcmp_P(button,(PGM_P)F("btn_PumpStop"))==0) { aeroPumpStop();}
+  else if (strcmp_P(button,(PGM_P)F("btn_ReservoirRefill"))==0) { ReservoirRefill();}
+  else if (strcmp_P(button,(PGM_P)F("btn_PumpOn"))==0) { aeroPumpOn(true);}
+  else if (strcmp_P(button,(PGM_P)F("btn_PumpOff"))==0) { aeroPumpOff(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpDisable"))==0) { aeroPumpDisable();}  
   else if (strcmp_P(button,(PGM_P)F("btn_GoogleSheets"))==0) { ReportToGoogleSheets(true);} 
   else if (strcmp_P(button,(PGM_P)F("btn_Mqtt"))==0) { mqttPublush(true);}
@@ -214,7 +215,7 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("AeroQuietFromMinute"))==0) {setQuietFromMinute(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("AeroQuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("AeroQuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}  
-  else if(strcmp_P(field,(PGM_P)F("AeroSprayEnabled"))==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("AeroSprayEnabled"))==0) {setAeroSolenoidOnOff(WebServer.getArgBoolean());}
     
   saveSettings(false);
 } 

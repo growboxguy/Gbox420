@@ -8,6 +8,7 @@
 //TODO: 
 //Flow meter
 //EC meter
+//Reservoir Refill button, CheckAeroPumpAlerts 
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -32,7 +33,7 @@
   #include "SPI.h" //TFT Screen - communication
   #include "Adafruit_GFX.h" //TFT Screen - generic graphics driver
   #include "Adafruit_ILI9341.h" //TFT Screen - hardware specific driver
-  //#include "MemoryFree.h" //checking for remaining memory - only for debugging
+  //#include "MemoryFree.h" //checking remaining memory - only for debugging
 
 //Global variables
   bool LightOK = true; //Track component health, at startup assume every component is OK
@@ -73,7 +74,7 @@
   int MinLightReading = 1023; //stores the lowest light sensor analog reading
   uint32_t AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
   uint32_t AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
-  bool AeroSprayOn = false; //Aeroponics - Spray state, set to true to spay at power on
+  bool AeroSolenoidOn = false; //Aeroponics - Spray state, set to true to spay at power on
   bool AeroPumpOn = false; //Aeroponics - High pressure pump state
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
   char WebMessage[512];   //buffer for REST and MQTT API messages
@@ -204,6 +205,7 @@ void loop() {  // put your main code here, to run repeatedly:
 
 void processTimeCriticalStuff(){
   ESPLink.Process();  //Interrupt calls this every 0.5 sec and process any request coming from th ESP-Link
+  if(AeroSolenoidOn || AeroPumpOn) checkAero();
 }
 
 void oneSecRun(){
@@ -211,7 +213,7 @@ void oneSecRun(){
   wdt_reset(); //reset watchdog timeout
   checkAero();  
   checkLightStatus();
-  checkSwitches();
+  checkRelays();
   checkSound();  
 }
 

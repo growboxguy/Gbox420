@@ -1,50 +1,117 @@
 void checkAero(){
- checkAeroSprayTimer();
- checkAeroPump();
+ if(AeroPressureTankPresent) checkAeroSprayTimer_WithPressureTank();
+ else checkAeroSprayTimer_WithoutPressureTank();
+ CheckAeroPumpAlerts();
 }
 
-void checkAeroSprayTimer(){
- if(AeroSprayOn)    { //if spray is on
+void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
+ readAeroPressure();   
+ if(AeroPressure >= MySettings.AeroPressureHigh){ //If set high pressure is reached
+      aeroPumpOff(false);
+ }
+ if(AeroSolenoidOn)    { //if spray is on   
+    if (millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout * 1000){ //have not reached high pressue within timeout limit
+      aeroPumpDisable();
+      sendEmailAlert(F("Aeroponics%20pump%20failed")); 
+      addToLog(F("Pump failed"));    
+    }
     if(millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //if time to stop spraying (AeroDuration in Seconds)
-      AeroSprayOn = false;
-      checkSwitches();
+      AeroSolenoidOn = false;
       logToSerials(F("Stopping spray"),true);
       PlayOffSound = true;
       AeroSprayTimer = millis();
     }
   }
   else{ //if spray is off
-    if(millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
-      if(MySettings.AeroSprayEnabled){
-        AeroSprayOn = true;
-        checkSwitches();
+    if(MySettings.AeroSprayEnabled && millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
+        AeroSolenoidOn = true;        
         logToSerials(F("Starting spray"),true);
         PlayOnSound = true;
         AeroSprayTimer = millis();
-      }
     }
+    if( PumpOK && checkQuietTime() && AeroPressure <= MySettings.AeroPressureLow){ //if pump is not disabled and quiet time not active and Pressure reached low limit: turn on pump 
+        aeroPumpOn(false);
+    }   
   }
+  checkRelays();
 }
 
-void checkAeroPump(){
-  if(AeroPumpOn){
-    readAeroPressure();   
-    if(AeroPressure >= MySettings.AeroPressureHigh){ //If set high pressure is reached
-      aeroPumpOff();
+void checkAeroSprayTimer_WithoutPressureTank(){ //pump directly connected to aeroponics tote
+ if(AeroPumpOn)    { //if pump is on
+    if(!AeroSolenoidOn && millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //bypass valve is closed and time to stop spraying (AeroDuration in Seconds)
+      AeroPumpOn = false;      
+      logToSerials(F("Stopping spray"),true);
+      AeroSprayTimer = millis();
     }
-    if (millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout){ //have not reached high pressue within timeout limit
-      aeroPumpDisable();
-      sendEmailAlert(F("Aeroponics%20pump%20failed")); 
-      addToLog(F("Pump failed"));    
-    }
-  }
-  else{
-    if( PumpOK && checkQuietTime()){ //if pump is not disabled and quiet time not active
-      if(AeroPressure <= MySettings.AeroPressureLow) //Pressure reached low limit: turn on pump 
-        aeroPumpOn();
+    else{
+      if (AeroSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout * 1000){ //self priming timeout reached, time to start spraying
+        AeroSolenoidOn = false; //Close bypass valve
+        logToSerials(F("Closing bypass, starting spray"),true);
+        AeroSprayTimer = millis();
+        }
+       }
+     }
+  else{ //pump is off
+    AeroSolenoidOn = false; //Should not leave the solenoid turned on
+    if(PumpOK && MySettings.AeroSprayEnabled  && millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
+      aeroPumpOn(false);               
     }    
   }
-  CheckAeroPumpAlerts();
+  checkRelays();
+}
+
+void aeroSprayNow(bool TooHighPressure){   
+  if(TooHighPressure || MySettings.AeroSprayEnabled){
+    AeroSprayTimer = millis();
+    AeroSolenoidOn = true;
+    if(!AeroPressureTankPresent){AeroPumpOn = true;AeroPumpTimer = millis();}    
+    checkRelays();
+    PlayOnSound = true;
+    if(TooHighPressure) addToLog(F("High pressure limit,spraying"));
+    else addToLog(F("Aeroponics spraying"));
+    }
+}
+
+void aeroSprayOff(){   
+    AeroSolenoidOn = false; 
+    if(!AeroPressureTankPresent) AeroPumpOn = false;  
+    checkRelays();
+    addToLog(F("Aeroponics spray OFF"));
+}
+
+void aeroPumpOn(bool AddToLog){
+  PumpOK = true;
+  AeroPumpOn = true;
+  AeroPumpTimer = millis();
+  checkRelays();
+  if(!AeroPressureTankPresent){AeroSolenoidOn = true;} //Open bypass valve
+  PlayOnSound = true;
+  if(AddToLog)addToLog(F("Pump ON")); 
+}
+
+void aeroPumpOff(bool AddToLog){  
+  PumpOK = true; 
+  AeroPumpOn = false;
+  if(!AeroPressureTankPresent){AeroSolenoidOn = false;} //Close bypass valve
+  checkRelays();
+  PlayOffSound = true;
+  if(AddToLog)addToLog(F("Pump OFF"));
+}
+
+void aeroPumpDisable(){
+  aeroPumpOff(false);
+  PumpOK = false;
+  addToLog(F("Pump disabled"));
+}
+
+void setAeroSolenoidOnOff(bool State){
+  MySettings.AeroSprayEnabled=State;
+  if(MySettings.AeroSprayEnabled){ 
+    addToLog(F("Aeroponics spray enabled"));
+    PlayOnSound=true;} 
+  else {
+    addToLog(F("Aeroponics spray disabled"));
+    PlayOffSound=true;}
 }
 
 bool PrevoiusPressureRead = true;
@@ -62,7 +129,7 @@ void CheckAeroPumpAlerts()
   }
   else{
     if(AeroPressure > MySettings.PressureAlertHigh){ //Pressure over limit - emergency spraying
-          aeroPumpOff(); //force pump off
+          aeroPumpOff(false); //force pump off
           aeroSprayNow(true); //try to release pressure  
     }
     if(PrevoiusPressureRead != false){PressureTriggerCount = 0;}
@@ -76,7 +143,7 @@ void CheckAeroPumpAlerts()
           addToLog(F("High pressure warning"));
         }
         if(AeroPressure < MySettings.PressureAlertLow){ //If low pressure alert level is reached
-          //if(PumpOK) aeroPumpOn(); //Uncomment this to turn pump on even under quiet time
+          //if(PumpOK) aeroPumpOn(false); //Uncomment this to turn pump on even under quiet time
           sendEmailAlert(F("Aeroponics%20pressure%20too%20low"));
           addToLog(F("Low pressure warning"));
         } 
@@ -129,32 +196,6 @@ void setAeroDuration(int duration){
   addToLog(F("Spray time updated"));  
 }
 
-void setAeroSprayOnOff(bool State){
-  MySettings.AeroSprayEnabled=State;
-  if(MySettings.AeroSprayEnabled){ 
-    addToLog(F("Aeroponics spray enabled"));
-    PlayOnSound=true;} 
-  else {
-    addToLog(F("Aeroponics spray disabled"));
-    PlayOffSound=true;}
-}
-
-void aeroSprayNow(bool TooHighPressure){   
-  if(MySettings.AeroSprayEnabled){
-    AeroSprayTimer = millis();
-    AeroSprayOn = true;
-    PlayOnSound = true;
-    checkSwitches();
-    if(TooHighPressure) addToLog(F("High pressure limit,spraying"));
-    else addToLog(F("Aeroponics spraying"));
-    }
-}
-
-void aeroSprayOff(){   
-    AeroSprayOn = false;    
-    checkSwitches();
-    addToLog(F("Aeroponics spray OFF"));
-}
 
 void setAeroPressureLow(float PressureLow){
   MySettings.AeroPressureLow =  PressureLow;
@@ -163,37 +204,6 @@ void setAeroPressureLow(float PressureLow){
 void setAeroPressureHigh(float PressureHigh){
   MySettings.AeroPressureHigh = PressureHigh;
   addToLog(F("Pump settings updated"));
-}
-
-void aeroPumpOn(){
-  PumpOK = true;
-  AeroPumpOn = true;
-  checkSwitches();
-  AeroPumpTimer = millis();      
-  PlayOnSound = true;
-}
-
-void aeroPumpOff(){
-  AeroPumpOn = false;
-  checkSwitches();
-  PlayOffSound = true;
-}
-
-void aeroPumpRefill(){  
-  addToLog(F("Refilling pressure tank"));
-  aeroPumpOn();
-}
-
-void aeroPumpStop(){ 
-  addToLog(F("Pump stopped"));
-  PumpOK = true; 
-  aeroPumpOff();
-}
-
-void aeroPumpDisable(){
-  aeroPumpOff();
-  PumpOK = false;
-  addToLog(F("Pump disabled"));
 }
 
 const __FlashStringHelper * pumpStateToText(){
@@ -211,7 +221,7 @@ bool checkQuietTime() {
     int CombinedToTime = MySettings.AeroQuietToHour * 100 + MySettings.AeroQuietToMinute;
     int CombinedCurrentTime = hour(Now) * 100 + minute(Now);
     if(MySettings.AeroRefillBeforeQuiet && PumpOK && CombinedFromTime == CombinedCurrentTime && millis() - AeroLastRefill > 120000 ){
-      aeroPumpOn(); 
+      aeroPumpOn(false); 
       AeroLastRefill = millis();
     }
     if(CombinedFromTime <= CombinedToTime)  //no midnight turnover, Example: On 8:10, Off: 20:10
@@ -232,7 +242,7 @@ bool checkQuietTime() {
 
 void setAeroPumpTimeout(int Timeout)
 {
-MySettings.AeroPumpTimeout = (uint32_t)Timeout * 1000;
+MySettings.AeroPumpTimeout = (uint32_t)Timeout;
 addToLog(F("Aero pump timeout updated"));
 }
 

@@ -124,6 +124,12 @@ char * toText(int Number){
   return ReturnChar;
 }
 
+char * toText(uint32_t Number){
+  static char ReturnChar[MaxTextLength] = "";
+  itoa(Number, ReturnChar, 10);
+  return ReturnChar;
+}
+
 char * toText(int Number1, int Number2,const char * Separator){  //function overloading: Same named function, different parameters
   static char ReturnChar[MaxTextLength] = ""; 
   snprintf(ReturnChar,MaxTextLength,"%d%s%d",Number1,Separator,Number2);

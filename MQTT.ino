@@ -70,7 +70,7 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttAeroDuration)!=NULL) {setAeroDuration(atoi(data));}
   else if(strstr(topic,MqttAeroPressureLow)!=NULL) {setAeroPressureLow(atof(data));}
   else if(strstr(topic,MqttAeroPressureHigh)!=NULL) {setAeroPressureHigh(atof(data));} 
-  else if(strstr(topic,MqttAeroSprayEnabled)!=NULL) {setAeroSprayOnOff(atoi(data));}
+  else if(strstr(topic,MqttAeroSprayEnabled)!=NULL) {setAeroSolenoidOnOff(atoi(data));}
   else if(strstr(topic,MqttLightCalibrate)!=NULL) {triggerCalibrateLights();}
   else if(strstr(topic,MqttAirPump)!=NULL) { if(strcmp(data,"1")==0)airPumpOn(); else if(strcmp(data,"0")==0)airPumpOff(); }
   else if(strstr(topic,MqttEe)!=NULL) { playEE(); }
@@ -82,7 +82,7 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttSaveSettings)!=NULL) { saveSettings(true);}
   else if(strstr(topic,MqttAeroSprayNow)!=NULL) { aeroSprayNow(false);}
   else if(strstr(topic,MqttAeroSprayOff)!=NULL) { aeroSprayOff();}  
-  else if(strstr(topic,MqttPumpRefill)!=NULL) { aeroPumpRefill();}
+  else if(strstr(topic,MqttPumpRefill)!=NULL) { ReservoirRefill();}
   else if(strstr(topic,MqttPumpDisable)!=NULL) { aeroPumpDisable();}  
   else if(strstr(topic,MqttPressureCalibrate)!=NULL) { calibratePressureSensor();}
 
