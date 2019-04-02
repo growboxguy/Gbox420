@@ -205,13 +205,13 @@ void loop() {  // put your main code here, to run repeatedly:
 
 void processTimeCriticalStuff(){
   ESPLink.Process();  //Interrupt calls this every 0.5 sec and process any request coming from th ESP-Link
-  if(AeroSolenoidOn || AeroPumpOn) checkAero();
+  if(AeroSolenoidOn || AeroPumpOn) checkAero(true);
 }
 
 void oneSecRun(){
   if(MySettings.DebugEnabled)logToSerials(F("One sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout
-  checkAero();  
+  checkAero(false);  
   checkLightStatus();
   checkRelays();
   checkSound();  

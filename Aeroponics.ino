@@ -1,13 +1,14 @@
-void checkAero(){
- if(AeroPressureTankPresent) checkAeroSprayTimer_WithPressureTank();
+void checkAero(bool Interrupt){
+ if(AeroPressureTankPresent) checkAeroSprayTimer_WithPressureTank(Interrupt);
  else checkAeroSprayTimer_WithoutPressureTank();
- CheckAeroPumpAlerts();
 }
 
-void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
- readAeroPressure();   
- if(AeroPressure >= MySettings.AeroPressureHigh){ //If set high pressure is reached
+void checkAeroSprayTimer_WithPressureTank(bool Interrupt){ //when pressure tank is connected
+ if(!Interrupt){
+  readAeroPressure(); 
+  if(AeroPressure >= MySettings.AeroPressureHigh){ //If set high pressure is reached
       aeroPumpOff(false);
+  }
  }
  if(AeroSolenoidOn)    { //if spray is on   
     if (millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout * 1000){ //have not reached high pressue within timeout limit
