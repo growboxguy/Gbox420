@@ -53,7 +53,7 @@ void checkLightSensor(){
   
   if((MySettings.LightStatus && Bright) || (!MySettings.LightStatus && !Bright)){ //All OK: lights on&bright OR lights off&dark
     if(PreviousLightRead != false){LightsTriggerCount = 0;}
-    else{ if(!LightOK)ReservoirTriggerCount++; } 
+    else{ if(!LightOK)LightsTriggerCount++; } 
     PreviousLightRead = true;
     
     if(!LightOK && LightsTriggerCount>=MySettings.ReadCountBeforeAlert) {
@@ -63,7 +63,7 @@ void checkLightSensor(){
   }
   else{
     if(PreviousLightRead != true){LightsTriggerCount = 0;}
-    else{ if(LightOK)ReservoirTriggerCount++; } 
+    else{ if(LightOK)LightsTriggerCount++; } 
     PreviousLightRead = false;
     
     if(LightOK && LightsTriggerCount>=MySettings.ReadCountBeforeAlert){
