@@ -1,0 +1,362 @@
+\hypertarget{_aeroponics_8ino}{}\section{D\+:/\+Google\+Drive/\+Arduino/\+Gbox420/\+Aeroponics.ino File Reference}
+\label{_aeroponics_8ino}\index{D:/GoogleDrive/Arduino/Gbox420/Aeroponics.ino@{D:/GoogleDrive/Arduino/Gbox420/Aeroponics.ino}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a6739327a66088500872a8ae0595a7972}{check\+Aero}} (bool Interrupt)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a626742301e1adc19de38ee242058d7f0}{check\+Aero\+Spray\+Timer\+\_\+\+With\+Pressure\+Tank}} (bool Interrupt)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_ae996899811e505867b71dde23b21cb87}{check\+Aero\+Spray\+Timer\+\_\+\+Without\+Pressure\+Tank}} ()
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a4591cb3c1e6630008edce8f01e4bc114}{aero\+Spray\+Now}} (bool Too\+High\+Pressure)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a4eccc064eadb2c65ea1bb74603bcb27a}{aero\+Spray\+Off}} ()
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_af4cfefde32e6a62145a0b74f678f658b}{aero\+Pump\+On}} (bool Add\+To\+Log)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_ac9ad9d76d41d75ac2874ccee33e08a62}{aero\+Pump\+Off}} (bool Add\+To\+Log)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a6dafc1be1d72b5c0533b7815b3b1b923}{aero\+Pump\+Disable}} ()
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_ad61360e89f656048b86e1e6ea838755a}{set\+Aero\+Solenoid\+On\+Off}} (bool State)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a584e06ce44ecff2d0382e2d4d209e4c1}{Check\+Aero\+Pump\+Alerts}} ()
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a932274759d0784478203f2e863206f95}{read\+Aero\+Pressure}} ()
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a258343773951853857b9e526171efd0b}{calibrate\+Pressure\+Sensor}} ()
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a0472e5352826e59a5c7dfa412ed359df}{set\+Pressure\+Sensor\+Offset}} (float Value)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a76c21e0dba5014e2f2cdb5739690170a}{set\+Pressure\+Sensor\+Ratio}} (float Value)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a6dd8d8bfdded279feb03a4192844b54f}{set\+Aero\+Interval}} (int interval)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_adcb385a6c69e09ad4ad1dd3cc1637694}{set\+Aero\+Duration}} (int duration)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_aaa624d869d52ed407c5a31a9131b8a39}{set\+Aero\+Pressure\+Low}} (float Pressure\+Low)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a1193a6a23d0e754645ed16bc2bd8b8ca}{set\+Aero\+Pressure\+High}} (float Pressure\+High)
+\item 
+const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$ \mbox{\hyperlink{_aeroponics_8ino_a9bce754224237f28c8829aa5ca525dbf}{pump\+State\+To\+Text}} ()
+\item 
+bool \mbox{\hyperlink{_aeroponics_8ino_a8ce2c963794ec52c6a3eb9e861f0a6d0}{check\+Quiet\+Time}} ()
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a3e14ba4db1e3a91a8703e58d3d3ddbaf}{set\+Aero\+Pump\+Timeout}} (int Timeout)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a7baea56d0669cb68d93b050a42de96fe}{set\+Quiet\+On\+Off}} (bool State)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a0cd33e49bb5cbaf7ad545d3b1d65283b}{set\+Quiet\+Refill\+On\+Off}} (bool State)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a913932a7a16c2d8a5f017b7dece91be0}{set\+Quiet\+From\+Hour}} (int Hour)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a932d3d547294916c9e3fa435a6c97103}{set\+Quiet\+From\+Minute}} (int Minute)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_af9578971f972999d11f358bc11eee209}{set\+Quiet\+To\+Hour}} (int Hour)
+\item 
+void \mbox{\hyperlink{_aeroponics_8ino_a156a9004b503cc67faa39b569f43f189}{set\+Quiet\+To\+Minute}} (int Minute)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{_aeroponics_8ino_ad04b57c789ee14d3cb605c29ee802570}{Prevoius\+Pressure\+Read}} = true
+\item 
+uint32\+\_\+t \mbox{\hyperlink{_aeroponics_8ino_a77df1b16c77d0eb7c47f8a15b6dfe425}{Aero\+Last\+Refill}} = 0
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{_aeroponics_8ino_a6dafc1be1d72b5c0533b7815b3b1b923}\label{_aeroponics_8ino_a6dafc1be1d72b5c0533b7815b3b1b923}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!aeroPumpDisable@{aeroPumpDisable}}
+\index{aeroPumpDisable@{aeroPumpDisable}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{aeroPumpDisable()}{aeroPumpDisable()}}
+{\footnotesize\ttfamily void aero\+Pump\+Disable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 102 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_ac9ad9d76d41d75ac2874ccee33e08a62}\label{_aeroponics_8ino_ac9ad9d76d41d75ac2874ccee33e08a62}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!aeroPumpOff@{aeroPumpOff}}
+\index{aeroPumpOff@{aeroPumpOff}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{aeroPumpOff()}{aeroPumpOff()}}
+{\footnotesize\ttfamily void aero\+Pump\+Off (\begin{DoxyParamCaption}\item[{bool}]{Add\+To\+Log }\end{DoxyParamCaption})}
+
+
+
+Definition at line 93 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_af4cfefde32e6a62145a0b74f678f658b}\label{_aeroponics_8ino_af4cfefde32e6a62145a0b74f678f658b}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!aeroPumpOn@{aeroPumpOn}}
+\index{aeroPumpOn@{aeroPumpOn}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{aeroPumpOn()}{aeroPumpOn()}}
+{\footnotesize\ttfamily void aero\+Pump\+On (\begin{DoxyParamCaption}\item[{bool}]{Add\+To\+Log }\end{DoxyParamCaption})}
+
+
+
+Definition at line 83 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a4591cb3c1e6630008edce8f01e4bc114}\label{_aeroponics_8ino_a4591cb3c1e6630008edce8f01e4bc114}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!aeroSprayNow@{aeroSprayNow}}
+\index{aeroSprayNow@{aeroSprayNow}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{aeroSprayNow()}{aeroSprayNow()}}
+{\footnotesize\ttfamily void aero\+Spray\+Now (\begin{DoxyParamCaption}\item[{bool}]{Too\+High\+Pressure }\end{DoxyParamCaption})}
+
+
+
+Definition at line 64 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a4eccc064eadb2c65ea1bb74603bcb27a}\label{_aeroponics_8ino_a4eccc064eadb2c65ea1bb74603bcb27a}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!aeroSprayOff@{aeroSprayOff}}
+\index{aeroSprayOff@{aeroSprayOff}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{aeroSprayOff()}{aeroSprayOff()}}
+{\footnotesize\ttfamily void aero\+Spray\+Off (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 76 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a258343773951853857b9e526171efd0b}\label{_aeroponics_8ino_a258343773951853857b9e526171efd0b}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!calibratePressureSensor@{calibratePressureSensor}}
+\index{calibratePressureSensor@{calibratePressureSensor}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{calibratePressureSensor()}{calibratePressureSensor()}}
+{\footnotesize\ttfamily void calibrate\+Pressure\+Sensor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 167 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a6739327a66088500872a8ae0595a7972}\label{_aeroponics_8ino_a6739327a66088500872a8ae0595a7972}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!checkAero@{checkAero}}
+\index{checkAero@{checkAero}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{checkAero()}{checkAero()}}
+{\footnotesize\ttfamily void check\+Aero (\begin{DoxyParamCaption}\item[{bool}]{Interrupt }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a584e06ce44ecff2d0382e2d4d209e4c1}\label{_aeroponics_8ino_a584e06ce44ecff2d0382e2d4d209e4c1}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!CheckAeroPumpAlerts@{CheckAeroPumpAlerts}}
+\index{CheckAeroPumpAlerts@{CheckAeroPumpAlerts}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{CheckAeroPumpAlerts()}{CheckAeroPumpAlerts()}}
+{\footnotesize\ttfamily void Check\+Aero\+Pump\+Alerts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 119 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_ae996899811e505867b71dde23b21cb87}\label{_aeroponics_8ino_ae996899811e505867b71dde23b21cb87}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!checkAeroSprayTimer\_WithoutPressureTank@{checkAeroSprayTimer\_WithoutPressureTank}}
+\index{checkAeroSprayTimer\_WithoutPressureTank@{checkAeroSprayTimer\_WithoutPressureTank}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{checkAeroSprayTimer\_WithoutPressureTank()}{checkAeroSprayTimer\_WithoutPressureTank()}}
+{\footnotesize\ttfamily void check\+Aero\+Spray\+Timer\+\_\+\+Without\+Pressure\+Tank (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 40 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a626742301e1adc19de38ee242058d7f0}\label{_aeroponics_8ino_a626742301e1adc19de38ee242058d7f0}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!checkAeroSprayTimer\_WithPressureTank@{checkAeroSprayTimer\_WithPressureTank}}
+\index{checkAeroSprayTimer\_WithPressureTank@{checkAeroSprayTimer\_WithPressureTank}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{checkAeroSprayTimer\_WithPressureTank()}{checkAeroSprayTimer\_WithPressureTank()}}
+{\footnotesize\ttfamily void check\+Aero\+Spray\+Timer\+\_\+\+With\+Pressure\+Tank (\begin{DoxyParamCaption}\item[{bool}]{Interrupt }\end{DoxyParamCaption})}
+
+
+
+Definition at line 6 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a8ce2c963794ec52c6a3eb9e861f0a6d0}\label{_aeroponics_8ino_a8ce2c963794ec52c6a3eb9e861f0a6d0}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!checkQuietTime@{checkQuietTime}}
+\index{checkQuietTime@{checkQuietTime}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{checkQuietTime()}{checkQuietTime()}}
+{\footnotesize\ttfamily bool check\+Quiet\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 218 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a9bce754224237f28c8829aa5ca525dbf}\label{_aeroponics_8ino_a9bce754224237f28c8829aa5ca525dbf}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!pumpStateToText@{pumpStateToText}}
+\index{pumpStateToText@{pumpStateToText}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{pumpStateToText()}{pumpStateToText()}}
+{\footnotesize\ttfamily const \+\_\+\+\_\+\+Flash\+String\+Helper$\ast$ pump\+State\+To\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 210 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a932274759d0784478203f2e863206f95}\label{_aeroponics_8ino_a932274759d0784478203f2e863206f95}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!readAeroPressure@{readAeroPressure}}
+\index{readAeroPressure@{readAeroPressure}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{readAeroPressure()}{readAeroPressure()}}
+{\footnotesize\ttfamily void read\+Aero\+Pressure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 155 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_adcb385a6c69e09ad4ad1dd3cc1637694}\label{_aeroponics_8ino_adcb385a6c69e09ad4ad1dd3cc1637694}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setAeroDuration@{setAeroDuration}}
+\index{setAeroDuration@{setAeroDuration}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setAeroDuration()}{setAeroDuration()}}
+{\footnotesize\ttfamily void set\+Aero\+Duration (\begin{DoxyParamCaption}\item[{int}]{duration }\end{DoxyParamCaption})}
+
+
+
+Definition at line 194 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a6dd8d8bfdded279feb03a4192844b54f}\label{_aeroponics_8ino_a6dd8d8bfdded279feb03a4192844b54f}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setAeroInterval@{setAeroInterval}}
+\index{setAeroInterval@{setAeroInterval}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setAeroInterval()}{setAeroInterval()}}
+{\footnotesize\ttfamily void set\+Aero\+Interval (\begin{DoxyParamCaption}\item[{int}]{interval }\end{DoxyParamCaption})}
+
+
+
+Definition at line 189 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a1193a6a23d0e754645ed16bc2bd8b8ca}\label{_aeroponics_8ino_a1193a6a23d0e754645ed16bc2bd8b8ca}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setAeroPressureHigh@{setAeroPressureHigh}}
+\index{setAeroPressureHigh@{setAeroPressureHigh}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setAeroPressureHigh()}{setAeroPressureHigh()}}
+{\footnotesize\ttfamily void set\+Aero\+Pressure\+High (\begin{DoxyParamCaption}\item[{float}]{Pressure\+High }\end{DoxyParamCaption})}
+
+
+
+Definition at line 205 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_aaa624d869d52ed407c5a31a9131b8a39}\label{_aeroponics_8ino_aaa624d869d52ed407c5a31a9131b8a39}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setAeroPressureLow@{setAeroPressureLow}}
+\index{setAeroPressureLow@{setAeroPressureLow}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setAeroPressureLow()}{setAeroPressureLow()}}
+{\footnotesize\ttfamily void set\+Aero\+Pressure\+Low (\begin{DoxyParamCaption}\item[{float}]{Pressure\+Low }\end{DoxyParamCaption})}
+
+
+
+Definition at line 201 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a3e14ba4db1e3a91a8703e58d3d3ddbaf}\label{_aeroponics_8ino_a3e14ba4db1e3a91a8703e58d3d3ddbaf}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setAeroPumpTimeout@{setAeroPumpTimeout}}
+\index{setAeroPumpTimeout@{setAeroPumpTimeout}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setAeroPumpTimeout()}{setAeroPumpTimeout()}}
+{\footnotesize\ttfamily void set\+Aero\+Pump\+Timeout (\begin{DoxyParamCaption}\item[{int}]{Timeout }\end{DoxyParamCaption})}
+
+
+
+Definition at line 244 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_ad61360e89f656048b86e1e6ea838755a}\label{_aeroponics_8ino_ad61360e89f656048b86e1e6ea838755a}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setAeroSolenoidOnOff@{setAeroSolenoidOnOff}}
+\index{setAeroSolenoidOnOff@{setAeroSolenoidOnOff}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setAeroSolenoidOnOff()}{setAeroSolenoidOnOff()}}
+{\footnotesize\ttfamily void set\+Aero\+Solenoid\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})}
+
+
+
+Definition at line 108 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a0472e5352826e59a5c7dfa412ed359df}\label{_aeroponics_8ino_a0472e5352826e59a5c7dfa412ed359df}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setPressureSensorOffset@{setPressureSensorOffset}}
+\index{setPressureSensorOffset@{setPressureSensorOffset}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setPressureSensorOffset()}{setPressureSensorOffset()}}
+{\footnotesize\ttfamily void set\+Pressure\+Sensor\+Offset (\begin{DoxyParamCaption}\item[{float}]{Value }\end{DoxyParamCaption})}
+
+
+
+Definition at line 179 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a76c21e0dba5014e2f2cdb5739690170a}\label{_aeroponics_8ino_a76c21e0dba5014e2f2cdb5739690170a}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setPressureSensorRatio@{setPressureSensorRatio}}
+\index{setPressureSensorRatio@{setPressureSensorRatio}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setPressureSensorRatio()}{setPressureSensorRatio()}}
+{\footnotesize\ttfamily void set\+Pressure\+Sensor\+Ratio (\begin{DoxyParamCaption}\item[{float}]{Value }\end{DoxyParamCaption})}
+
+
+
+Definition at line 184 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a913932a7a16c2d8a5f017b7dece91be0}\label{_aeroponics_8ino_a913932a7a16c2d8a5f017b7dece91be0}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setQuietFromHour@{setQuietFromHour}}
+\index{setQuietFromHour@{setQuietFromHour}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setQuietFromHour()}{setQuietFromHour()}}
+{\footnotesize\ttfamily void set\+Quiet\+From\+Hour (\begin{DoxyParamCaption}\item[{int}]{Hour }\end{DoxyParamCaption})}
+
+
+
+Definition at line 274 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a932d3d547294916c9e3fa435a6c97103}\label{_aeroponics_8ino_a932d3d547294916c9e3fa435a6c97103}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setQuietFromMinute@{setQuietFromMinute}}
+\index{setQuietFromMinute@{setQuietFromMinute}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setQuietFromMinute()}{setQuietFromMinute()}}
+{\footnotesize\ttfamily void set\+Quiet\+From\+Minute (\begin{DoxyParamCaption}\item[{int}]{Minute }\end{DoxyParamCaption})}
+
+
+
+Definition at line 278 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a7baea56d0669cb68d93b050a42de96fe}\label{_aeroponics_8ino_a7baea56d0669cb68d93b050a42de96fe}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setQuietOnOff@{setQuietOnOff}}
+\index{setQuietOnOff@{setQuietOnOff}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setQuietOnOff()}{setQuietOnOff()}}
+{\footnotesize\ttfamily void set\+Quiet\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})}
+
+
+
+Definition at line 250 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a0cd33e49bb5cbaf7ad545d3b1d65283b}\label{_aeroponics_8ino_a0cd33e49bb5cbaf7ad545d3b1d65283b}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setQuietRefillOnOff@{setQuietRefillOnOff}}
+\index{setQuietRefillOnOff@{setQuietRefillOnOff}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setQuietRefillOnOff()}{setQuietRefillOnOff()}}
+{\footnotesize\ttfamily void set\+Quiet\+Refill\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})}
+
+
+
+Definition at line 262 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_af9578971f972999d11f358bc11eee209}\label{_aeroponics_8ino_af9578971f972999d11f358bc11eee209}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setQuietToHour@{setQuietToHour}}
+\index{setQuietToHour@{setQuietToHour}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setQuietToHour()}{setQuietToHour()}}
+{\footnotesize\ttfamily void set\+Quiet\+To\+Hour (\begin{DoxyParamCaption}\item[{int}]{Hour }\end{DoxyParamCaption})}
+
+
+
+Definition at line 283 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_a156a9004b503cc67faa39b569f43f189}\label{_aeroponics_8ino_a156a9004b503cc67faa39b569f43f189}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!setQuietToMinute@{setQuietToMinute}}
+\index{setQuietToMinute@{setQuietToMinute}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{setQuietToMinute()}{setQuietToMinute()}}
+{\footnotesize\ttfamily void set\+Quiet\+To\+Minute (\begin{DoxyParamCaption}\item[{int}]{Minute }\end{DoxyParamCaption})}
+
+
+
+Definition at line 287 of file Aeroponics.\+ino.
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{_aeroponics_8ino_a77df1b16c77d0eb7c47f8a15b6dfe425}\label{_aeroponics_8ino_a77df1b16c77d0eb7c47f8a15b6dfe425}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!AeroLastRefill@{AeroLastRefill}}
+\index{AeroLastRefill@{AeroLastRefill}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{AeroLastRefill}{AeroLastRefill}}
+{\footnotesize\ttfamily uint32\+\_\+t Aero\+Last\+Refill = 0}
+
+
+
+Definition at line 217 of file Aeroponics.\+ino.
+
+\mbox{\Hypertarget{_aeroponics_8ino_ad04b57c789ee14d3cb605c29ee802570}\label{_aeroponics_8ino_ad04b57c789ee14d3cb605c29ee802570}} 
+\index{Aeroponics.ino@{Aeroponics.ino}!PrevoiusPressureRead@{PrevoiusPressureRead}}
+\index{PrevoiusPressureRead@{PrevoiusPressureRead}!Aeroponics.ino@{Aeroponics.ino}}
+\subsubsection{\texorpdfstring{PrevoiusPressureRead}{PrevoiusPressureRead}}
+{\footnotesize\ttfamily bool Prevoius\+Pressure\+Read = true}
+
+
+
+Definition at line 118 of file Aeroponics.\+ino.
+

@@ -145,7 +145,7 @@ void setup() {     // put your setup code here, to run once:
   pinMode(ScreenSCK, OUTPUT);
   digitalWrite(BuiltInLEDOutPin, LOW); //LED OFF,without this LED would be randomly on or off when the board is powered on
   digitalWrite(ATXPowerONOutPin, LOW);  //Avoids random ON/OFF state at startup
-  digitalWrite(Relay1OutPin, HIGH); //default OFF (Uses negative logic - HIGH turns relay off, LOW on) 
+  digitalWrite(Relay1OutPin, HIGH); //default OFF (negative logic - HIGH turns relay off, LOW on) 
   digitalWrite(Relay2OutPin, HIGH); 
   digitalWrite(Relay3OutPin, HIGH);
   digitalWrite(Relay4OutPin, HIGH);

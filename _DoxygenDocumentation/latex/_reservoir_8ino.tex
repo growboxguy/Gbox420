@@ -1,0 +1,158 @@
+\hypertarget{_reservoir_8ino}{}\section{D\+:/\+Google\+Drive/\+Arduino/\+Gbox420/\+Reservoir.ino File Reference}
+\label{_reservoir_8ino}\index{D:/GoogleDrive/Arduino/Gbox420/Reservoir.ino@{D:/GoogleDrive/Arduino/Gbox420/Reservoir.ino}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_reservoir_8ino_abaf5b082db42708d31242604cb3949bc}{air\+Pump\+On}} ()
+\item 
+void \mbox{\hyperlink{_reservoir_8ino_a9d7fc50335a0dfc970349fe10e10729f}{air\+Pump\+Off}} ()
+\item 
+void \mbox{\hyperlink{_reservoir_8ino_a06ca90b9184e86f42c4b2af23ec6aff8}{Reservoir\+Refill}} ()
+\item 
+void \mbox{\hyperlink{_reservoir_8ino_acccd6ce7bdb6313d49ed7e1d15c34ade}{check\+Reservoir}} ()
+\item 
+void \mbox{\hyperlink{_reservoir_8ino_aef2e5b8e1e004b338fd8a02f634bbcd4}{check\+Reservoir\+Alert}} ()
+\item 
+void \mbox{\hyperlink{_reservoir_8ino_a1611ada2370af3e62610eefcdb2cf7a8}{read\+Reservoir\+Temp}} ()
+\item 
+void \mbox{\hyperlink{_reservoir_8ino_a1966fd92f689285f43d071fc9b6cd0a9}{read\+Reservoir\+PH}} (bool Show\+Raw)
+\item 
+void \mbox{\hyperlink{_reservoir_8ino_a5a85422c02ae9a0c18492be078fab45a}{set\+P\+H\+Calibration\+Slope}} (float Value)
+\item 
+void \mbox{\hyperlink{_reservoir_8ino_a24d5d5316e33b75bccff61af79ccff8c}{set\+P\+H\+Calibration\+Intercept}} (float Value)
+\item 
+void \mbox{\hyperlink{_reservoir_8ino_a5f2df42c76b74fa92dc5a734984c5f72}{check\+P\+H\+Alert}} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{_reservoir_8ino_ad545309f7f16bb9eb70b9b7754376a10}{Prevoius\+Reservoir\+Read}} = true
+\item 
+bool \mbox{\hyperlink{_reservoir_8ino_aa4f528ca2547773eeb1bd328e0b4ecae}{Previous\+Ph\+Read}} = true
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{_reservoir_8ino_a9d7fc50335a0dfc970349fe10e10729f}\label{_reservoir_8ino_a9d7fc50335a0dfc970349fe10e10729f}} 
+\index{Reservoir.ino@{Reservoir.ino}!airPumpOff@{airPumpOff}}
+\index{airPumpOff@{airPumpOff}!Reservoir.ino@{Reservoir.ino}}
+\subsubsection{\texorpdfstring{airPumpOff()}{airPumpOff()}}
+{\footnotesize\ttfamily void air\+Pump\+Off (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 7 of file Reservoir.\+ino.
+
+\mbox{\Hypertarget{_reservoir_8ino_abaf5b082db42708d31242604cb3949bc}\label{_reservoir_8ino_abaf5b082db42708d31242604cb3949bc}} 
+\index{Reservoir.ino@{Reservoir.ino}!airPumpOn@{airPumpOn}}
+\index{airPumpOn@{airPumpOn}!Reservoir.ino@{Reservoir.ino}}
+\subsubsection{\texorpdfstring{airPumpOn()}{airPumpOn()}}
+{\footnotesize\ttfamily void air\+Pump\+On (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1 of file Reservoir.\+ino.
+
+\mbox{\Hypertarget{_reservoir_8ino_a5f2df42c76b74fa92dc5a734984c5f72}\label{_reservoir_8ino_a5f2df42c76b74fa92dc5a734984c5f72}} 
+\index{Reservoir.ino@{Reservoir.ino}!checkPHAlert@{checkPHAlert}}
+\index{checkPHAlert@{checkPHAlert}!Reservoir.ino@{Reservoir.ino}}
+\subsubsection{\texorpdfstring{checkPHAlert()}{checkPHAlert()}}
+{\footnotesize\ttfamily void check\+P\+H\+Alert (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 113 of file Reservoir.\+ino.
+
+\mbox{\Hypertarget{_reservoir_8ino_acccd6ce7bdb6313d49ed7e1d15c34ade}\label{_reservoir_8ino_acccd6ce7bdb6313d49ed7e1d15c34ade}} 
+\index{Reservoir.ino@{Reservoir.ino}!checkReservoir@{checkReservoir}}
+\index{checkReservoir@{checkReservoir}!Reservoir.ino@{Reservoir.ino}}
+\subsubsection{\texorpdfstring{checkReservoir()}{checkReservoir()}}
+{\footnotesize\ttfamily void check\+Reservoir (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 18 of file Reservoir.\+ino.
+
+\mbox{\Hypertarget{_reservoir_8ino_aef2e5b8e1e004b338fd8a02f634bbcd4}\label{_reservoir_8ino_aef2e5b8e1e004b338fd8a02f634bbcd4}} 
+\index{Reservoir.ino@{Reservoir.ino}!checkReservoirAlert@{checkReservoirAlert}}
+\index{checkReservoirAlert@{checkReservoirAlert}!Reservoir.ino@{Reservoir.ino}}
+\subsubsection{\texorpdfstring{checkReservoirAlert()}{checkReservoirAlert()}}
+{\footnotesize\ttfamily void check\+Reservoir\+Alert (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 46 of file Reservoir.\+ino.
+
+\mbox{\Hypertarget{_reservoir_8ino_a1966fd92f689285f43d071fc9b6cd0a9}\label{_reservoir_8ino_a1966fd92f689285f43d071fc9b6cd0a9}} 
+\index{Reservoir.ino@{Reservoir.ino}!readReservoirPH@{readReservoirPH}}
+\index{readReservoirPH@{readReservoirPH}!Reservoir.ino@{Reservoir.ino}}
+\subsubsection{\texorpdfstring{readReservoirPH()}{readReservoirPH()}}
+{\footnotesize\ttfamily void read\+Reservoir\+PH (\begin{DoxyParamCaption}\item[{bool}]{Show\+Raw }\end{DoxyParamCaption})}
+
+
+
+Definition at line 84 of file Reservoir.\+ino.
+
+\mbox{\Hypertarget{_reservoir_8ino_a1611ada2370af3e62610eefcdb2cf7a8}\label{_reservoir_8ino_a1611ada2370af3e62610eefcdb2cf7a8}} 
+\index{Reservoir.ino@{Reservoir.ino}!readReservoirTemp@{readReservoirTemp}}
+\index{readReservoirTemp@{readReservoirTemp}!Reservoir.ino@{Reservoir.ino}}
+\subsubsection{\texorpdfstring{readReservoirTemp()}{readReservoirTemp()}}
+{\footnotesize\ttfamily void read\+Reservoir\+Temp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 77 of file Reservoir.\+ino.
+
+\mbox{\Hypertarget{_reservoir_8ino_a06ca90b9184e86f42c4b2af23ec6aff8}\label{_reservoir_8ino_a06ca90b9184e86f42c4b2af23ec6aff8}} 
+\index{Reservoir.ino@{Reservoir.ino}!ReservoirRefill@{ReservoirRefill}}
+\index{ReservoirRefill@{ReservoirRefill}!Reservoir.ino@{Reservoir.ino}}
+\subsubsection{\texorpdfstring{ReservoirRefill()}{ReservoirRefill()}}
+{\footnotesize\ttfamily void Reservoir\+Refill (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 13 of file Reservoir.\+ino.
+
+\mbox{\Hypertarget{_reservoir_8ino_a24d5d5316e33b75bccff61af79ccff8c}\label{_reservoir_8ino_a24d5d5316e33b75bccff61af79ccff8c}} 
+\index{Reservoir.ino@{Reservoir.ino}!setPHCalibrationIntercept@{setPHCalibrationIntercept}}
+\index{setPHCalibrationIntercept@{setPHCalibrationIntercept}!Reservoir.ino@{Reservoir.ino}}
+\subsubsection{\texorpdfstring{setPHCalibrationIntercept()}{setPHCalibrationIntercept()}}
+{\footnotesize\ttfamily void set\+P\+H\+Calibration\+Intercept (\begin{DoxyParamCaption}\item[{float}]{Value }\end{DoxyParamCaption})}
+
+
+
+Definition at line 107 of file Reservoir.\+ino.
+
+\mbox{\Hypertarget{_reservoir_8ino_a5a85422c02ae9a0c18492be078fab45a}\label{_reservoir_8ino_a5a85422c02ae9a0c18492be078fab45a}} 
+\index{Reservoir.ino@{Reservoir.ino}!setPHCalibrationSlope@{setPHCalibrationSlope}}
+\index{setPHCalibrationSlope@{setPHCalibrationSlope}!Reservoir.ino@{Reservoir.ino}}
+\subsubsection{\texorpdfstring{setPHCalibrationSlope()}{setPHCalibrationSlope()}}
+{\footnotesize\ttfamily void set\+P\+H\+Calibration\+Slope (\begin{DoxyParamCaption}\item[{float}]{Value }\end{DoxyParamCaption})}
+
+
+
+Definition at line 102 of file Reservoir.\+ino.
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{_reservoir_8ino_aa4f528ca2547773eeb1bd328e0b4ecae}\label{_reservoir_8ino_aa4f528ca2547773eeb1bd328e0b4ecae}} 
+\index{Reservoir.ino@{Reservoir.ino}!PreviousPhRead@{PreviousPhRead}}
+\index{PreviousPhRead@{PreviousPhRead}!Reservoir.ino@{Reservoir.ino}}
+\subsubsection{\texorpdfstring{PreviousPhRead}{PreviousPhRead}}
+{\footnotesize\ttfamily bool Previous\+Ph\+Read = true}
+
+
+
+Definition at line 112 of file Reservoir.\+ino.
+
+\mbox{\Hypertarget{_reservoir_8ino_ad545309f7f16bb9eb70b9b7754376a10}\label{_reservoir_8ino_ad545309f7f16bb9eb70b9b7754376a10}} 
+\index{Reservoir.ino@{Reservoir.ino}!PrevoiusReservoirRead@{PrevoiusReservoirRead}}
+\index{PrevoiusReservoirRead@{PrevoiusReservoirRead}!Reservoir.ino@{Reservoir.ino}}
+\subsubsection{\texorpdfstring{PrevoiusReservoirRead}{PrevoiusReservoirRead}}
+{\footnotesize\ttfamily bool Prevoius\+Reservoir\+Read = true}
+
+
+
+Definition at line 45 of file Reservoir.\+ino.
+

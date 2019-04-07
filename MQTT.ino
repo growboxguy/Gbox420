@@ -70,7 +70,7 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttAeroDuration)!=NULL) {setAeroDuration(atoi(data));}
   else if(strstr(topic,MqttAeroPressureLow)!=NULL) {setAeroPressureLow(atof(data));}
   else if(strstr(topic,MqttAeroPressureHigh)!=NULL) {setAeroPressureHigh(atof(data));} 
-  else if(strstr(topic,MqttAeroSprayEnabled)!=NULL) {setAeroSolenoidOnOff(atoi(data));}
+  else if(strstr(topic,MqttAeroSprayEnabled)!=NULL) {setAeroSprayOnOff(atoi(data));}
   else if(strstr(topic,MqttLightCalibrate)!=NULL) {triggerCalibrateLights();}
   else if(strstr(topic,MqttAirPump)!=NULL) { if(strcmp(data,"1")==0)airPumpOn(); else if(strcmp(data,"0")==0)airPumpOff(); }
   else if(strstr(topic,MqttEe)!=NULL) { playEE(); }

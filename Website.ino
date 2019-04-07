@@ -215,7 +215,7 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("AeroQuietFromMinute"))==0) {setQuietFromMinute(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("AeroQuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("AeroQuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}  
-  else if(strcmp_P(field,(PGM_P)F("AeroSprayEnabled"))==0) {setAeroSolenoidOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("AeroSprayEnabled"))==0) {setAeroSprayOnOff(WebServer.getArgBoolean());}
     
   saveSettings(false);
 } 

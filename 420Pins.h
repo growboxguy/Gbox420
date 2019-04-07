@@ -9,6 +9,7 @@
   const byte WaterMediumInPin = A6; //Water sensor3
   const byte WaterFullInPin = A7; // Water sensor4
   
+  const int FlowMeterInPin = 2;     //Signal(yellow) - LM393 light sensor
   const byte BuzzerOutPin = 4; //PC speaker+ (red)
   const byte DimmingOutPin = 11; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
   const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing

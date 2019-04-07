@@ -2,7 +2,7 @@
 //Sketch for testing: Flow sensor for detecting liquid throughput
 
 //Pins
-const int FlowMeterInPin = 2;     //Signal(yellow) - LM393 light sensor
+const int FlowMeterInPin = 2;     //Signal(yellow) - water flow sensor
 
 //Global constants
 const byte SampleSize = 10;

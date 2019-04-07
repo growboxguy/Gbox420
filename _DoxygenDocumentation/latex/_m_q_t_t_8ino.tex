@@ -1,0 +1,482 @@
+\hypertarget{_m_q_t_t_8ino}{}\section{D\+:/\+Google\+Drive/\+Arduino/\+Gbox420/\+M\+Q\+TT.ino File Reference}
+\label{_m_q_t_t_8ino}\index{D:/GoogleDrive/Arduino/Gbox420/MQTT.ino@{D:/GoogleDrive/Arduino/Gbox420/MQTT.ino}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_m_q_t_t_8ino_ad05a6aa6821baf0d8fe74cf150c3c57c}{setup\+Mqtt}} ()
+\item 
+void \mbox{\hyperlink{_m_q_t_t_8ino_a5817593b2815aca99b49db41903204d3}{mqtt\+Received}} (void $\ast$response)
+\item 
+void \mbox{\hyperlink{_m_q_t_t_8ino_ac3c091acc43bad71dff31c5b163db0d6}{mqtt\+Publush}} (bool Add\+To\+Log)
+\item 
+void \mbox{\hyperlink{_m_q_t_t_8ino_a01bcd10c2afc9c7b39c5da283353945b}{mqtt\+Connected}} (void $\ast$response)
+\item 
+void \mbox{\hyperlink{_m_q_t_t_8ino_acb866f89716f9272ccada4f9c9c7d09c}{mqtt\+Disconnected}} (void $\ast$response)
+\item 
+void \mbox{\hyperlink{_m_q_t_t_8ino_a9b7c7d96670d3bcde774877e8995d105}{mqtt\+Published}} (void $\ast$response)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{_m_q_t_t_8ino_ab5c7ea7beebf38f09a21ee747b1c9a12}{Mqtt\+Path}} \mbox{[}64\mbox{]}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a89c1b9e2e7658f0cdb8b0bf58e72357b}{Mqtt\+R\+O\+OT}} = \char`\"{}/growboxguy@gmail.\+com/\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a344cb894a938ef9812583b932b27e291}{Mqtt\+P\+U\+B\+L\+I\+SH}} = \char`\"{}Gbox420\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a4167baa8d7d8ab8b721d5b13b0bba596}{Mqtt\+Lwt\+Topic}} = \char`\"{}L\+WT\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_ab489bce6689dd67335d708fbf2dbc518}{Mqtt\+Lwt\+Message}} = \char`\"{}Gbox420 Offline\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_aeff9dab1d68d9d398f57cde7f917cce5}{Mqtt\+Lights}} = \char`\"{}Lights\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_ae80a3bf9e4e5b642dedfcb2c4520f36d}{Mqtt\+Brightness}} = \char`\"{}Brightness\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a798f1d6dbe160e92c1bec131a99f9a73}{Mqtt\+Display\+Brightness}} = \char`\"{}Display\+Brightness\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_ae6d68e2f352746baea76bb4213c81638}{Mqtt\+Display\+Value}} = \char`\"{}Display\+Value\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a8c8ed013bfaa7bd42bd0ed0dcdf45198}{Mqtt\+Timer\+Enabled}} = \char`\"{}Timer\+Enabled\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_aa6deb166c98557809a49dd9bdcb8b138}{Mqtt\+Lights\+On\+Hour}} = \char`\"{}Lights\+On\+Hour\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a30d5be777446e70b4aacb0082045d41f}{Mqtt\+Lights\+On\+Minute}} = \char`\"{}Lights\+On\+Minute\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a357333d341895879b35e691ea3c907a8}{Mqtt\+Lights\+Off\+Hour}} = \char`\"{}Lights\+Off\+Hour\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a65bc5e01b994f39c867bfaadd9ce9ac4}{Mqtt\+Lights\+Off\+Minute}} = \char`\"{}Lights\+Off\+Minute\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_ae7516d1ca4ad337f9be7d07b556090e5}{Mqtt\+Aero\+Interval}} = \char`\"{}Aero\+Interval\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_aadecb272d7088d8582f2211588767076}{Mqtt\+Aero\+Duration}} = \char`\"{}Aero\+Duration\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a4d132761f4a34e3a7994eaa7e83bdae4}{Mqtt\+Aero\+Pressure\+Low}} = \char`\"{}Aero\+Pressure\+Low\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a16396abfa6768bb5f3d3229649b35cbd}{Mqtt\+Aero\+Pressure\+High}} = \char`\"{}Aero\+Pressure\+High\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a4f2fb832c7989ffd521a0326b4485c72}{Mqtt\+Aero\+Spray\+Enabled}} = \char`\"{}Aero\+Spray\+Enabled\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_ad41848e095e9dad7c7a19f24a6e8fb35}{Mqtt\+Light\+Calibrate}} = \char`\"{}Light\+Calibrate\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_af19f86a96d76f2d391f24f0c8ae7dde3}{Mqtt\+Air\+Pump}} = \char`\"{}Air\+Pump\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_ac32ae5db7c1567f25f76a9d7dc5ec11b}{Mqtt\+Ee}} = \char`\"{}Ee\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a52679e76004f891d67309cba0dc9ec44}{Mqtt\+Internal\+Fan}} = \char`\"{}Internal\+Fan\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a203a63a8683d6b4d289206d50906bc20}{Mqtt\+Exhaust\+Fan}} = \char`\"{}Exhaust\+Fan\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a621a8dc62df77639fa9a42bcce4f4e64}{Mqtt\+Sound\+Enabled}} = \char`\"{}Sound\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a9dd527bc8f7b6aa91ec01a19ada280b2}{Mqtt\+Debug\+Enabled}} = \char`\"{}Debug\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_acec4521927a00cc09dab2da8b60c2e95}{Mqtt\+Google\+Sheets}} = \char`\"{}Google\+Sheets\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a4734bf8d4d26cdd7e3e322caf27716e0}{Mqtt\+Save\+Settings}} = \char`\"{}Save\+Settings\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_afad460b71f5a1b80266f610462c30eb8}{Mqtt\+Aero\+Spray\+Now}} = \char`\"{}Aero\+Spray\+Now\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a18db3b99bbabfd1f942f9c966825bb6f}{Mqtt\+Aero\+Spray\+Off}} = \char`\"{}Aero\+Spray\+Off\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a0d26f68d4ae315e6af62e256d9dcab63}{Mqtt\+Pump\+Refill}} = \char`\"{}Pump\+Refill\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_a6bb873a0115e9d7a67eef723d5e5f48d}{Mqtt\+Pump\+Disable}} = \char`\"{}Pump\+Disable\char`\"{}
+\item 
+const char $\ast$ \mbox{\hyperlink{_m_q_t_t_8ino_aa71fb2965e72473393945684b3e97fee}{Mqtt\+Pressure\+Calibrate}} = \char`\"{}Pressure\+Calibrate\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{_m_q_t_t_8ino_a01bcd10c2afc9c7b39c5da283353945b}\label{_m_q_t_t_8ino_a01bcd10c2afc9c7b39c5da283353945b}} 
+\index{MQTT.ino@{MQTT.ino}!mqttConnected@{mqttConnected}}
+\index{mqttConnected@{mqttConnected}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{mqttConnected()}{mqttConnected()}}
+{\footnotesize\ttfamily void mqtt\+Connected (\begin{DoxyParamCaption}\item[{void $\ast$}]{response }\end{DoxyParamCaption})}
+
+
+
+Definition at line 103 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_acb866f89716f9272ccada4f9c9c7d09c}\label{_m_q_t_t_8ino_acb866f89716f9272ccada4f9c9c7d09c}} 
+\index{MQTT.ino@{MQTT.ino}!mqttDisconnected@{mqttDisconnected}}
+\index{mqttDisconnected@{mqttDisconnected}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{mqttDisconnected()}{mqttDisconnected()}}
+{\footnotesize\ttfamily void mqtt\+Disconnected (\begin{DoxyParamCaption}\item[{void $\ast$}]{response }\end{DoxyParamCaption})}
+
+
+
+Definition at line 111 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a9b7c7d96670d3bcde774877e8995d105}\label{_m_q_t_t_8ino_a9b7c7d96670d3bcde774877e8995d105}} 
+\index{MQTT.ino@{MQTT.ino}!mqttPublished@{mqttPublished}}
+\index{mqttPublished@{mqttPublished}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{mqttPublished()}{mqttPublished()}}
+{\footnotesize\ttfamily void mqtt\+Published (\begin{DoxyParamCaption}\item[{void $\ast$}]{response }\end{DoxyParamCaption})}
+
+
+
+Definition at line 115 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_ac3c091acc43bad71dff31c5b163db0d6}\label{_m_q_t_t_8ino_ac3c091acc43bad71dff31c5b163db0d6}} 
+\index{MQTT.ino@{MQTT.ino}!mqttPublush@{mqttPublush}}
+\index{mqttPublush@{mqttPublush}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{mqttPublush()}{mqttPublush()}}
+{\footnotesize\ttfamily void mqtt\+Publush (\begin{DoxyParamCaption}\item[{bool}]{Add\+To\+Log }\end{DoxyParamCaption})}
+
+
+
+Definition at line 93 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a5817593b2815aca99b49db41903204d3}\label{_m_q_t_t_8ino_a5817593b2815aca99b49db41903204d3}} 
+\index{MQTT.ino@{MQTT.ino}!mqttReceived@{mqttReceived}}
+\index{mqttReceived@{mqttReceived}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{mqttReceived()}{mqttReceived()}}
+{\footnotesize\ttfamily void mqtt\+Received (\begin{DoxyParamCaption}\item[{void $\ast$}]{response }\end{DoxyParamCaption})}
+
+
+
+Definition at line 52 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_ad05a6aa6821baf0d8fe74cf150c3c57c}\label{_m_q_t_t_8ino_ad05a6aa6821baf0d8fe74cf150c3c57c}} 
+\index{MQTT.ino@{MQTT.ino}!setupMqtt@{setupMqtt}}
+\index{setupMqtt@{setupMqtt}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{setupMqtt()}{setupMqtt()}}
+{\footnotesize\ttfamily void setup\+Mqtt (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 40 of file M\+Q\+T\+T.\+ino.
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{_m_q_t_t_8ino_aadecb272d7088d8582f2211588767076}\label{_m_q_t_t_8ino_aadecb272d7088d8582f2211588767076}} 
+\index{MQTT.ino@{MQTT.ino}!MqttAeroDuration@{MqttAeroDuration}}
+\index{MqttAeroDuration@{MqttAeroDuration}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttAeroDuration}{MqttAeroDuration}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Aero\+Duration = \char`\"{}Aero\+Duration\char`\"{}}
+
+
+
+Definition at line 20 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_ae7516d1ca4ad337f9be7d07b556090e5}\label{_m_q_t_t_8ino_ae7516d1ca4ad337f9be7d07b556090e5}} 
+\index{MQTT.ino@{MQTT.ino}!MqttAeroInterval@{MqttAeroInterval}}
+\index{MqttAeroInterval@{MqttAeroInterval}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttAeroInterval}{MqttAeroInterval}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Aero\+Interval = \char`\"{}Aero\+Interval\char`\"{}}
+
+
+
+Definition at line 19 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a16396abfa6768bb5f3d3229649b35cbd}\label{_m_q_t_t_8ino_a16396abfa6768bb5f3d3229649b35cbd}} 
+\index{MQTT.ino@{MQTT.ino}!MqttAeroPressureHigh@{MqttAeroPressureHigh}}
+\index{MqttAeroPressureHigh@{MqttAeroPressureHigh}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttAeroPressureHigh}{MqttAeroPressureHigh}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Aero\+Pressure\+High = \char`\"{}Aero\+Pressure\+High\char`\"{}}
+
+
+
+Definition at line 22 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a4d132761f4a34e3a7994eaa7e83bdae4}\label{_m_q_t_t_8ino_a4d132761f4a34e3a7994eaa7e83bdae4}} 
+\index{MQTT.ino@{MQTT.ino}!MqttAeroPressureLow@{MqttAeroPressureLow}}
+\index{MqttAeroPressureLow@{MqttAeroPressureLow}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttAeroPressureLow}{MqttAeroPressureLow}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Aero\+Pressure\+Low = \char`\"{}Aero\+Pressure\+Low\char`\"{}}
+
+
+
+Definition at line 21 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a4f2fb832c7989ffd521a0326b4485c72}\label{_m_q_t_t_8ino_a4f2fb832c7989ffd521a0326b4485c72}} 
+\index{MQTT.ino@{MQTT.ino}!MqttAeroSprayEnabled@{MqttAeroSprayEnabled}}
+\index{MqttAeroSprayEnabled@{MqttAeroSprayEnabled}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttAeroSprayEnabled}{MqttAeroSprayEnabled}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Aero\+Spray\+Enabled = \char`\"{}Aero\+Spray\+Enabled\char`\"{}}
+
+
+
+Definition at line 23 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_afad460b71f5a1b80266f610462c30eb8}\label{_m_q_t_t_8ino_afad460b71f5a1b80266f610462c30eb8}} 
+\index{MQTT.ino@{MQTT.ino}!MqttAeroSprayNow@{MqttAeroSprayNow}}
+\index{MqttAeroSprayNow@{MqttAeroSprayNow}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttAeroSprayNow}{MqttAeroSprayNow}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Aero\+Spray\+Now = \char`\"{}Aero\+Spray\+Now\char`\"{}}
+
+
+
+Definition at line 33 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a18db3b99bbabfd1f942f9c966825bb6f}\label{_m_q_t_t_8ino_a18db3b99bbabfd1f942f9c966825bb6f}} 
+\index{MQTT.ino@{MQTT.ino}!MqttAeroSprayOff@{MqttAeroSprayOff}}
+\index{MqttAeroSprayOff@{MqttAeroSprayOff}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttAeroSprayOff}{MqttAeroSprayOff}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Aero\+Spray\+Off = \char`\"{}Aero\+Spray\+Off\char`\"{}}
+
+
+
+Definition at line 34 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_af19f86a96d76f2d391f24f0c8ae7dde3}\label{_m_q_t_t_8ino_af19f86a96d76f2d391f24f0c8ae7dde3}} 
+\index{MQTT.ino@{MQTT.ino}!MqttAirPump@{MqttAirPump}}
+\index{MqttAirPump@{MqttAirPump}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttAirPump}{MqttAirPump}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Air\+Pump = \char`\"{}Air\+Pump\char`\"{}}
+
+
+
+Definition at line 25 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_ae80a3bf9e4e5b642dedfcb2c4520f36d}\label{_m_q_t_t_8ino_ae80a3bf9e4e5b642dedfcb2c4520f36d}} 
+\index{MQTT.ino@{MQTT.ino}!MqttBrightness@{MqttBrightness}}
+\index{MqttBrightness@{MqttBrightness}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttBrightness}{MqttBrightness}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Brightness = \char`\"{}Brightness\char`\"{}}
+
+
+
+Definition at line 11 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a9dd527bc8f7b6aa91ec01a19ada280b2}\label{_m_q_t_t_8ino_a9dd527bc8f7b6aa91ec01a19ada280b2}} 
+\index{MQTT.ino@{MQTT.ino}!MqttDebugEnabled@{MqttDebugEnabled}}
+\index{MqttDebugEnabled@{MqttDebugEnabled}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttDebugEnabled}{MqttDebugEnabled}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Debug\+Enabled = \char`\"{}Debug\char`\"{}}
+
+
+
+Definition at line 30 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a798f1d6dbe160e92c1bec131a99f9a73}\label{_m_q_t_t_8ino_a798f1d6dbe160e92c1bec131a99f9a73}} 
+\index{MQTT.ino@{MQTT.ino}!MqttDisplayBrightness@{MqttDisplayBrightness}}
+\index{MqttDisplayBrightness@{MqttDisplayBrightness}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttDisplayBrightness}{MqttDisplayBrightness}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Display\+Brightness = \char`\"{}Display\+Brightness\char`\"{}}
+
+
+
+Definition at line 12 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_ae6d68e2f352746baea76bb4213c81638}\label{_m_q_t_t_8ino_ae6d68e2f352746baea76bb4213c81638}} 
+\index{MQTT.ino@{MQTT.ino}!MqttDisplayValue@{MqttDisplayValue}}
+\index{MqttDisplayValue@{MqttDisplayValue}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttDisplayValue}{MqttDisplayValue}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Display\+Value = \char`\"{}Display\+Value\char`\"{}}
+
+
+
+Definition at line 13 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_ac32ae5db7c1567f25f76a9d7dc5ec11b}\label{_m_q_t_t_8ino_ac32ae5db7c1567f25f76a9d7dc5ec11b}} 
+\index{MQTT.ino@{MQTT.ino}!MqttEe@{MqttEe}}
+\index{MqttEe@{MqttEe}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttEe}{MqttEe}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Ee = \char`\"{}Ee\char`\"{}}
+
+
+
+Definition at line 26 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a203a63a8683d6b4d289206d50906bc20}\label{_m_q_t_t_8ino_a203a63a8683d6b4d289206d50906bc20}} 
+\index{MQTT.ino@{MQTT.ino}!MqttExhaustFan@{MqttExhaustFan}}
+\index{MqttExhaustFan@{MqttExhaustFan}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttExhaustFan}{MqttExhaustFan}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Exhaust\+Fan = \char`\"{}Exhaust\+Fan\char`\"{}}
+
+
+
+Definition at line 28 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_acec4521927a00cc09dab2da8b60c2e95}\label{_m_q_t_t_8ino_acec4521927a00cc09dab2da8b60c2e95}} 
+\index{MQTT.ino@{MQTT.ino}!MqttGoogleSheets@{MqttGoogleSheets}}
+\index{MqttGoogleSheets@{MqttGoogleSheets}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttGoogleSheets}{MqttGoogleSheets}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Google\+Sheets = \char`\"{}Google\+Sheets\char`\"{}}
+
+
+
+Definition at line 31 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a52679e76004f891d67309cba0dc9ec44}\label{_m_q_t_t_8ino_a52679e76004f891d67309cba0dc9ec44}} 
+\index{MQTT.ino@{MQTT.ino}!MqttInternalFan@{MqttInternalFan}}
+\index{MqttInternalFan@{MqttInternalFan}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttInternalFan}{MqttInternalFan}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Internal\+Fan = \char`\"{}Internal\+Fan\char`\"{}}
+
+
+
+Definition at line 27 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_ad41848e095e9dad7c7a19f24a6e8fb35}\label{_m_q_t_t_8ino_ad41848e095e9dad7c7a19f24a6e8fb35}} 
+\index{MQTT.ino@{MQTT.ino}!MqttLightCalibrate@{MqttLightCalibrate}}
+\index{MqttLightCalibrate@{MqttLightCalibrate}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttLightCalibrate}{MqttLightCalibrate}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Light\+Calibrate = \char`\"{}Light\+Calibrate\char`\"{}}
+
+
+
+Definition at line 24 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_aeff9dab1d68d9d398f57cde7f917cce5}\label{_m_q_t_t_8ino_aeff9dab1d68d9d398f57cde7f917cce5}} 
+\index{MQTT.ino@{MQTT.ino}!MqttLights@{MqttLights}}
+\index{MqttLights@{MqttLights}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttLights}{MqttLights}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Lights = \char`\"{}Lights\char`\"{}}
+
+
+
+Definition at line 10 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a357333d341895879b35e691ea3c907a8}\label{_m_q_t_t_8ino_a357333d341895879b35e691ea3c907a8}} 
+\index{MQTT.ino@{MQTT.ino}!MqttLightsOffHour@{MqttLightsOffHour}}
+\index{MqttLightsOffHour@{MqttLightsOffHour}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttLightsOffHour}{MqttLightsOffHour}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Lights\+Off\+Hour = \char`\"{}Lights\+Off\+Hour\char`\"{}}
+
+
+
+Definition at line 17 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a65bc5e01b994f39c867bfaadd9ce9ac4}\label{_m_q_t_t_8ino_a65bc5e01b994f39c867bfaadd9ce9ac4}} 
+\index{MQTT.ino@{MQTT.ino}!MqttLightsOffMinute@{MqttLightsOffMinute}}
+\index{MqttLightsOffMinute@{MqttLightsOffMinute}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttLightsOffMinute}{MqttLightsOffMinute}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Lights\+Off\+Minute = \char`\"{}Lights\+Off\+Minute\char`\"{}}
+
+
+
+Definition at line 18 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_aa6deb166c98557809a49dd9bdcb8b138}\label{_m_q_t_t_8ino_aa6deb166c98557809a49dd9bdcb8b138}} 
+\index{MQTT.ino@{MQTT.ino}!MqttLightsOnHour@{MqttLightsOnHour}}
+\index{MqttLightsOnHour@{MqttLightsOnHour}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttLightsOnHour}{MqttLightsOnHour}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Lights\+On\+Hour = \char`\"{}Lights\+On\+Hour\char`\"{}}
+
+
+
+Definition at line 15 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a30d5be777446e70b4aacb0082045d41f}\label{_m_q_t_t_8ino_a30d5be777446e70b4aacb0082045d41f}} 
+\index{MQTT.ino@{MQTT.ino}!MqttLightsOnMinute@{MqttLightsOnMinute}}
+\index{MqttLightsOnMinute@{MqttLightsOnMinute}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttLightsOnMinute}{MqttLightsOnMinute}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Lights\+On\+Minute = \char`\"{}Lights\+On\+Minute\char`\"{}}
+
+
+
+Definition at line 16 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_ab489bce6689dd67335d708fbf2dbc518}\label{_m_q_t_t_8ino_ab489bce6689dd67335d708fbf2dbc518}} 
+\index{MQTT.ino@{MQTT.ino}!MqttLwtMessage@{MqttLwtMessage}}
+\index{MqttLwtMessage@{MqttLwtMessage}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttLwtMessage}{MqttLwtMessage}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Lwt\+Message = \char`\"{}Gbox420 Offline\char`\"{}}
+
+
+
+Definition at line 8 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a4167baa8d7d8ab8b721d5b13b0bba596}\label{_m_q_t_t_8ino_a4167baa8d7d8ab8b721d5b13b0bba596}} 
+\index{MQTT.ino@{MQTT.ino}!MqttLwtTopic@{MqttLwtTopic}}
+\index{MqttLwtTopic@{MqttLwtTopic}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttLwtTopic}{MqttLwtTopic}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Lwt\+Topic = \char`\"{}L\+WT\char`\"{}}
+
+
+
+Definition at line 7 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_ab5c7ea7beebf38f09a21ee747b1c9a12}\label{_m_q_t_t_8ino_ab5c7ea7beebf38f09a21ee747b1c9a12}} 
+\index{MQTT.ino@{MQTT.ino}!MqttPath@{MqttPath}}
+\index{MqttPath@{MqttPath}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttPath}{MqttPath}}
+{\footnotesize\ttfamily char Mqtt\+Path\mbox{[}64\mbox{]}}
+
+
+
+Definition at line 2 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_aa71fb2965e72473393945684b3e97fee}\label{_m_q_t_t_8ino_aa71fb2965e72473393945684b3e97fee}} 
+\index{MQTT.ino@{MQTT.ino}!MqttPressureCalibrate@{MqttPressureCalibrate}}
+\index{MqttPressureCalibrate@{MqttPressureCalibrate}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttPressureCalibrate}{MqttPressureCalibrate}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Pressure\+Calibrate = \char`\"{}Pressure\+Calibrate\char`\"{}}
+
+
+
+Definition at line 37 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a344cb894a938ef9812583b932b27e291}\label{_m_q_t_t_8ino_a344cb894a938ef9812583b932b27e291}} 
+\index{MQTT.ino@{MQTT.ino}!MqttPUBLISH@{MqttPUBLISH}}
+\index{MqttPUBLISH@{MqttPUBLISH}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttPUBLISH}{MqttPUBLISH}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+P\+U\+B\+L\+I\+SH = \char`\"{}Gbox420\char`\"{}}
+
+
+
+Definition at line 6 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a6bb873a0115e9d7a67eef723d5e5f48d}\label{_m_q_t_t_8ino_a6bb873a0115e9d7a67eef723d5e5f48d}} 
+\index{MQTT.ino@{MQTT.ino}!MqttPumpDisable@{MqttPumpDisable}}
+\index{MqttPumpDisable@{MqttPumpDisable}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttPumpDisable}{MqttPumpDisable}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Pump\+Disable = \char`\"{}Pump\+Disable\char`\"{}}
+
+
+
+Definition at line 36 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a0d26f68d4ae315e6af62e256d9dcab63}\label{_m_q_t_t_8ino_a0d26f68d4ae315e6af62e256d9dcab63}} 
+\index{MQTT.ino@{MQTT.ino}!MqttPumpRefill@{MqttPumpRefill}}
+\index{MqttPumpRefill@{MqttPumpRefill}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttPumpRefill}{MqttPumpRefill}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Pump\+Refill = \char`\"{}Pump\+Refill\char`\"{}}
+
+
+
+Definition at line 35 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a89c1b9e2e7658f0cdb8b0bf58e72357b}\label{_m_q_t_t_8ino_a89c1b9e2e7658f0cdb8b0bf58e72357b}} 
+\index{MQTT.ino@{MQTT.ino}!MqttROOT@{MqttROOT}}
+\index{MqttROOT@{MqttROOT}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttROOT}{MqttROOT}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+R\+O\+OT = \char`\"{}/growboxguy@gmail.\+com/\char`\"{}}
+
+
+
+Definition at line 5 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a4734bf8d4d26cdd7e3e322caf27716e0}\label{_m_q_t_t_8ino_a4734bf8d4d26cdd7e3e322caf27716e0}} 
+\index{MQTT.ino@{MQTT.ino}!MqttSaveSettings@{MqttSaveSettings}}
+\index{MqttSaveSettings@{MqttSaveSettings}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttSaveSettings}{MqttSaveSettings}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Save\+Settings = \char`\"{}Save\+Settings\char`\"{}}
+
+
+
+Definition at line 32 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a621a8dc62df77639fa9a42bcce4f4e64}\label{_m_q_t_t_8ino_a621a8dc62df77639fa9a42bcce4f4e64}} 
+\index{MQTT.ino@{MQTT.ino}!MqttSoundEnabled@{MqttSoundEnabled}}
+\index{MqttSoundEnabled@{MqttSoundEnabled}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttSoundEnabled}{MqttSoundEnabled}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Sound\+Enabled = \char`\"{}Sound\char`\"{}}
+
+
+
+Definition at line 29 of file M\+Q\+T\+T.\+ino.
+
+\mbox{\Hypertarget{_m_q_t_t_8ino_a8c8ed013bfaa7bd42bd0ed0dcdf45198}\label{_m_q_t_t_8ino_a8c8ed013bfaa7bd42bd0ed0dcdf45198}} 
+\index{MQTT.ino@{MQTT.ino}!MqttTimerEnabled@{MqttTimerEnabled}}
+\index{MqttTimerEnabled@{MqttTimerEnabled}!MQTT.ino@{MQTT.ino}}
+\subsubsection{\texorpdfstring{MqttTimerEnabled}{MqttTimerEnabled}}
+{\footnotesize\ttfamily const char$\ast$ Mqtt\+Timer\+Enabled = \char`\"{}Timer\+Enabled\char`\"{}}
+
+
+
+Definition at line 14 of file M\+Q\+T\+T.\+ino.
+
