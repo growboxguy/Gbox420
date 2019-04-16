@@ -1,6 +1,6 @@
 void checkAero(bool Interrupt){
  if(!Interrupt)readAeroPressure(); //skip reading the pressure when called from an interrupt. (Within an Interroupt millis() counter doesn`t increase, so delay() never ends)
- if(AeroPressureTankPresent)  {
+ if(MySettings.AeroPressureTankPresent)  {
     checkAeroSprayTimer_WithPressureTank();
     if(!Interrupt)checkAeroPumpAlerts_WithPressureTank();
   }
@@ -50,8 +50,9 @@ void checkAeroSprayTimer_WithoutPressureTank(){ //pump directly connected to aer
       AeroSprayTimer = millis();
     }
     else{
-      if (AeroSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout * 1000){ //self priming timeout reached, time to start spraying
+      if (AeroSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPrimingTime * 1000){ //self priming timeout reached, time to start spraying
         AeroSolenoidOn = false; //Close bypass valve
+        stopFlowMeter();
         logToSerials(F("Closing bypass, starting spray"),true);
         AeroSprayTimer = millis();
         }
@@ -60,7 +61,8 @@ void checkAeroSprayTimer_WithoutPressureTank(){ //pump directly connected to aer
   else{ //pump is off
     AeroSolenoidOn = false; //Should not leave the solenoid turned on
     if(PumpOK && MySettings.AeroSprayEnabled  && millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
-      aeroPumpOn(false);               
+      aeroPumpOn(false);
+                     
     }    
   } 
 }
@@ -69,7 +71,11 @@ void aeroSprayNow(bool DueToHighPressure){
   if(MySettings.AeroSprayEnabled || DueToHighPressure){
     AeroSprayTimer = millis();
     AeroSolenoidOn = true;
-    if(!AeroPressureTankPresent){AeroPumpOn = true;AeroPumpTimer = millis();}    
+    if(!MySettings.AeroPressureTankPresent){
+        AeroPumpOn = true;
+        startFlowMeter();
+        AeroPumpTimer = millis();
+       }    
     checkRelays();
     PlayOnSound = true;
     if(DueToHighPressure) addToLog(F("Above pressure limit,spraying"));
@@ -79,7 +85,10 @@ void aeroSprayNow(bool DueToHighPressure){
 
 void aeroSprayOff(){   
     AeroSolenoidOn = false; 
-    if(!AeroPressureTankPresent) AeroPumpOn = false;  
+    if(!MySettings.AeroPressureTankPresent) {
+      AeroPumpOn = false; 
+      stopFlowMeter(); 
+    }
     checkRelays();
     addToLog(F("Aeroponics spray OFF"));
 }
@@ -88,16 +97,21 @@ void aeroPumpOn(bool AddToLog){
   PumpOK = true;
   AeroPumpOn = true;
   AeroPumpTimer = millis();  
-  if(!AeroPressureTankPresent){AeroSolenoidOn = true;} //Open bypass valve
+  if(!MySettings.AeroPressureTankPresent){ //Open bypass valve
+      startFlowMeter();
+      AeroSolenoidOn = true;
+    } 
   checkRelays();
   PlayOnSound = true;
   if(AddToLog)addToLog(F("Pump ON")); 
 }
 
 void aeroPumpOff(bool AddToLog){  
-  PumpOK = true; 
   AeroPumpOn = false;
-  if(!AeroPressureTankPresent){AeroSolenoidOn = false;} //Close bypass valve
+  if(!MySettings.AeroPressureTankPresent){ //Close bypass valve
+      AeroSolenoidOn = false;
+      stopFlowMeter();
+   } 
   checkRelays();
   PlayOffSound = true;
   if(AddToLog)addToLog(F("Pump OFF"));
@@ -190,10 +204,7 @@ void checkAeroPumpAlerts_WithoutPressureTank()
               } 
             }
          }
-    } 
-    else{ //if pump and bypass valve is on: Priming in progress, expected to detect water flow
-         //logToSerials(F("To be implemented: check for flow meter reading "),true); 
-    }
+    }     
   }
 }
 
@@ -292,6 +303,12 @@ MySettings.AeroPumpTimeout = (uint32_t)Timeout;
 addToLog(F("Aero pump timeout updated"));
 }
 
+void setAeroPrimingTime(int Timing)
+{
+MySettings.AeroPrimingTime = (uint32_t)Timing;
+addToLog(F("Aero priming time updated"));
+}
+
 void setQuietOnOff(bool State){
   MySettings.AeroQuietEnabled = State;
   if(MySettings.AeroQuietEnabled){ 
@@ -316,6 +333,19 @@ void setQuietRefillOnOff(bool State){
     }
 }
 
+void setAeroPressureTankOnOff(bool State){ //this change requires a different aeroponics setup
+  MySettings.AeroPressureTankPresent = State;  
+  if(MySettings.AeroPressureTankPresent){ 
+    addToLog(F("!Pressure tank mode!"));
+    PlayOnSound=true;
+    }
+  else {
+    addToLog(F("!Direct pump mode!"));
+    PlayOffSound=true;
+    }
+    aeroPumpDisable(); //for safety disable the pump 
+}
+
 void setQuietFromHour(int Hour){
   MySettings.AeroQuietFromHour = Hour; 
 }
@@ -332,4 +362,22 @@ void setQuietToHour(int Hour){
 void setQuietToMinute(int Minute){
   MySettings.AeroQuietToMinute = Minute;
   addToLog(F("Pump quiet To time updated"));
+}
+
+//***Flow meter***
+volatile unsigned int FlowPulseCount = 0; //volatile variables are stored in RAM: https://www.arduino.cc/reference/en/language/variables/variable-scope--qualifiers/volatile/
+void startFlowMeter(){
+  FlowPulseCount = 0;
+  attachInterrupt(digitalPinToInterrupt(FlowMeterInPin), flowPulseCounter, FALLING);  //Mega2560 support interrupts on port 2, 3, 18, 19, 20, 21  
+}
+
+void stopFlowMeter(){
+  detachInterrupt(digitalPinToInterrupt(FlowMeterInPin));  //Mega2560 support interrupts on port 2, 3, 18, 19, 20, 21  
+    strcpy(LogMessage,toText((uint32_t)FlowPulseCount));
+    strcat_P(LogMessage,(PGM_P)F(" pulses"));
+    addToLog(LogMessage);
+}
+
+void flowPulseCounter(){
+   ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { FlowPulseCount++; }
 }
