@@ -4,6 +4,8 @@
 
 add_executable(JsonDocumentTests
 	add.cpp
+	BasicJsonDocument.cpp
+	containsKey.cpp
 	createNested.cpp
 	DynamicJsonDocument.cpp
 	isNull.cpp

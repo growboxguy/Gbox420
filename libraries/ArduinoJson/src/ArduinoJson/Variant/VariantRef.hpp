@@ -9,8 +9,6 @@
 
 #include "../Memory/MemoryPool.hpp"
 #include "../Misc/Visitable.hpp"
-#include "../Numbers/parseFloat.hpp"
-#include "../Numbers/parseInteger.hpp"
 #include "../Operators/VariantOperators.hpp"
 #include "../Polyfills/type_traits.hpp"
 #include "VariantAs.hpp"
@@ -45,7 +43,7 @@ class VariantRefBase {
   template <typename T>
   FORCE_INLINE typename enable_if<is_integral<T>::value, bool>::type is()
       const {
-    return variantIsInteger(_data);
+    return variantIsInteger<T>(_data);
   }
   //
   // bool is<double>() const;
@@ -96,6 +94,10 @@ class VariantRefBase {
 
   FORCE_INLINE bool isNull() const {
     return variantIsNull(_data);
+  }
+
+  FORCE_INLINE bool isUndefined() const {
+    return !_data;
   }
 
   FORCE_INLINE size_t memoryUsage() const {
