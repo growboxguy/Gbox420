@@ -1,6 +1,17 @@
 ArduinoJson: change log
 =======================
 
+v6.10.0 (2019-03-22)
+-------
+
+* Fixed an integer overflow in the JSON deserializer
+* Added overflow handling in `JsonVariant::as<T>()` and `JsonVariant::is<T>()`.
+   - `as<T>()` returns `0` if the integer `T` overflows
+   - `is<T>()` returns `false` if the integer `T` overflows
+* Added `BasicJsonDocument` to support custom allocator (issue #876)
+* Added `JsonDocument::containsKey()` (issue #938)
+* Added `JsonVariant::containsKey()`
+
 v6.9.1 (2019-03-01)
 ------
 

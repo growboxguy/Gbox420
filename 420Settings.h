@@ -5,7 +5,6 @@
   const byte ScreenRotation = 1;  //LCD screen rotation: 1,3:landscape 2,4:portrait
   const byte LogDepth = 10;  //Show X number of log entries on website, do not go above 10
   const byte MaxTextLength = 31;  //Default char* buffer size: 30 characters + null terminator, used for logging and converting to text
-  const bool AeroPressureTankPresent = true;  //If pressure tank is present in the aeroponics setup
    
 //Settings saved to EEPROM persistent storage
   byte Version= 8; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
@@ -25,6 +24,7 @@
   byte AeroQuietFromMinute = 0; //Quiet time to block pump - minute
   byte AeroQuietToHour = 6; //Quiet time end - hour
   byte AeroQuietToMinute = 0; //Quiet time end - minute
+  bool AeroPressureTankPresent = true;  //If pressure tank is present in the aeroponics setup, CAUTION:Requires change in the aeroponics hardware too.
   
   bool TimerEnabled = true;  //Enable timer controlling lights
   bool LightStatus = true;  //Startup status for lights: True-ON / False-OFF

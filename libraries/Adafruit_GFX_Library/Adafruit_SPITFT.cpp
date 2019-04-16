@@ -510,9 +510,7 @@ void Adafruit_SPITFT::initSPI(uint32_t freq) {
     pinMode(_dc, OUTPUT);
     digitalWrite(_dc, HIGH); // Data mode
 
-    switch(connection) {
-
-      case TFT_HARD_SPI:
+    if(connection == TFT_HARD_SPI) {
 
 #if defined(SPI_HAS_TRANSACTION)
         hwspi.settings = SPISettings(freq, MSBFIRST, SPI_MODE0);
@@ -520,9 +518,8 @@ void Adafruit_SPITFT::initSPI(uint32_t freq) {
         hwspi._freq    = freq; // Save freq value for later
 #endif
         hwspi._spi->begin();
-        break;
 
-      case TFT_SOFT_SPI:
+    } else if(connection == TFT_SOFT_SPI) {
 
         pinMode(swspi._mosi, OUTPUT);
         digitalWrite(swspi._mosi, LOW);
@@ -531,9 +528,8 @@ void Adafruit_SPITFT::initSPI(uint32_t freq) {
         if(swspi._miso >= 0) {
             pinMode(swspi._miso, INPUT);
         }
-        break;
 
-      case TFT_PARALLEL:
+    } else { // TFT_PARALLEL
 
         // Initialize data pins.  We were only passed d0, so scan
         // the pin description list looking for the other pins.
@@ -577,8 +573,7 @@ void Adafruit_SPITFT::initSPI(uint32_t freq) {
             pinMode(tft8._rd, OUTPUT);
             digitalWrite(tft8._rd, HIGH);
         }
-        break;
-    } // end switch(connection)
+    }
 
     if(_rst >= 0) {
         // Toggle _rst low to reset
@@ -695,6 +690,7 @@ void Adafruit_SPITFT::initSPI(uint32_t freq) {
 
                     } else { // Parallel connection
 
+ #if defined(__SAMD51__)
                         int dmaChannel = dma.getChannel();
                         // Enable event output, use EVOSEL output
                         DMAC->Channel[dmaChannel].CHEVCTRL.bit.EVOE    = 1;
@@ -800,6 +796,7 @@ void Adafruit_SPITFT::initSPI(uint32_t freq) {
                             descriptor[d].DSTADDR.reg         =
                                (uint32_t)tft8.writePort;
                         }
+ #endif // __SAMD51
                     } // end parallel-specific DMA setup
 
                     lastFillColor = 0x0000;
@@ -826,8 +823,8 @@ void Adafruit_SPITFT::initSPI(uint32_t freq) {
             for all display types; not an SPI-specific function.
 */
 void Adafruit_SPITFT::startWrite(void) {
-    if(_cs >= 0) SPI_CS_LOW();
     SPI_BEGIN_TRANSACTION();
+    if(_cs >= 0) SPI_CS_LOW();
 }
 
 /*!
@@ -837,8 +834,8 @@ void Adafruit_SPITFT::startWrite(void) {
             for all display types; not an SPI-specific function.
 */
 void Adafruit_SPITFT::endWrite(void) {
-    SPI_END_TRANSACTION();
     if(_cs >= 0) SPI_CS_HIGH();
+    SPI_END_TRANSACTION();
 }
 
 
@@ -867,11 +864,33 @@ void Adafruit_SPITFT::writePixel(int16_t x, int16_t y, uint16_t color) {
 /*!
     @brief  Issue a series of pixels from memory to the display. Not self-
             contained; should follow startWrite() and setAddrWindow() calls.
-    @param  colors  Pointer to array of 16-bit pixel values in '565' RGB
-                    format.
-    @param  len     Number of elements in 'colors' array.
+    @param  colors     Pointer to array of 16-bit pixel values in '565' RGB
+                       format.
+    @param  len        Number of elements in 'colors' array.
+    @param  block      If true (default case if unspecified), function blocks
+                       until DMA transfer is complete. This is simply IGNORED
+                       if DMA is not enabled. If false, the function returns
+                       immediately after the last DMA transfer is started,
+                       and one should use the dmaWait() function before
+                       doing ANY other display-related activities (or even
+                       any SPI-related activities, if using an SPI display
+                       that shares the bus with other devices).
+    @param  bigEndian  If using DMA, and if set true, bitmap in memory is in
+                       big-endian order (most significant byte first). By
+                       default this is false, as most microcontrollers seem
+                       to be little-endian and 16-bit pixel values must be
+                       byte-swapped before issuing to the display (which tend
+                       to be big-endian when using SPI or 8-bit parallel).
+                       If an application can optimize around this -- for
+                       example, a bitmap in a uint16_t array having the byte
+                       values already reordered big-endian, this can save
+                       some processing time here, ESPECIALLY if using this
+                       function's non-blocking DMA mode. Not all cases are
+                       covered...this is really here only for SAMD DMA and
+                       much forethought on the application side.
 */
-void Adafruit_SPITFT::writePixels(uint16_t *colors, uint32_t len) {
+void Adafruit_SPITFT::writePixels(uint16_t *colors, uint32_t len,
+  bool block, bool bigEndian) {
 
     if(!len) return; // Avoid 0-byte transfers
 
@@ -890,47 +909,78 @@ void Adafruit_SPITFT::writePixels(uint16_t *colors, uint32_t len) {
             pinPeripheral(tft8._wr, wrPeripheral);
         }
  #endif // end __SAMD51__
-        while(len) {
-            int count = (len < maxSpan) ? len : maxSpan;
+        if(!bigEndian) { // Normal little-endian situation...
+            while(len) {
+                int count = (len < maxSpan) ? len : maxSpan;
 
-            // Because TFT and SAMD endianisms are different, must swap bytes
-            // from the 'colors' array passed into a DMA working buffer. This
-            // can take place while the prior DMA transfer is in progress,
-            // hence the need for two pixelBufs.
-            for(int i=0; i<count; i++) {
-                pixelBuf[pixelBufIdx][i] = __builtin_bswap16(*colors++);
+                // Because TFT and SAMD endianisms are different, must swap
+                // bytes from the 'colors' array passed into a DMA working
+                // buffer. This can take place while the prior DMA transfer
+                // is in progress, hence the need for two pixelBufs.
+                for(int i=0; i<count; i++) {
+                    pixelBuf[pixelBufIdx][i] = __builtin_bswap16(*colors++);
+                }
+                // The transfers themselves are relatively small, so we don't
+                // need a long descriptor list. We just alternate between the
+                // first two, sharing pixelBufIdx for that purpose.
+                descriptor[pixelBufIdx].SRCADDR.reg       =
+                  (uint32_t)pixelBuf[pixelBufIdx] + count * 2;
+                descriptor[pixelBufIdx].BTCTRL.bit.SRCINC = 1;
+                descriptor[pixelBufIdx].BTCNT.reg         = count * 2;
+                descriptor[pixelBufIdx].DESCADDR.reg      = 0;
+
+                while(dma_busy); // Wait for prior line to finish
+
+                // Move new descriptor into place...
+                memcpy(dptr, &descriptor[pixelBufIdx], sizeof(DmacDescriptor));
+                dma_busy = true;
+                dma.startJob();                // Trigger SPI DMA transfer
+                if(connection == TFT_PARALLEL) dma.trigger();
+                pixelBufIdx = 1 - pixelBufIdx; // Swap DMA pixel buffers
+
+                len -= count;
             }
-            // The transfers themselves are relatively small, so we don't
-            // need a long descriptor list. We just alternate between the
-            // first two, sharing pixelBufIdx for that purpose.
-            descriptor[pixelBufIdx].SRCADDR.reg       =
-              (uint32_t)pixelBuf[pixelBufIdx] + count * 2;
-            descriptor[pixelBufIdx].BTCTRL.bit.SRCINC = 1;
-            descriptor[pixelBufIdx].BTCNT.reg         = count * 2;
-            descriptor[pixelBufIdx].DESCADDR.reg      = 0;
+        } else { // bigEndian == true
+            // With big-endian pixel data, this can be handled as a single
+            // DMA transfer using chained descriptors. Even full screen, this
+            // needs only a relatively short descriptor list, each
+            // transferring a max of 32,767 (not 32,768) pixels. The list
+            // was allocated large enough to accommodate a full screen's
+            // worth of data, so this won't run past the end of the list.
+            int d, numDescriptors = (len + 32766) / 32767;
+            for(d=0; d<numDescriptors; d++) {
+                int count = (len < 32767) ? len : 32767;
+                descriptor[d].SRCADDR.reg       = (uint32_t)colors + count * 2;
+                descriptor[d].BTCTRL.bit.SRCINC = 1;
+                descriptor[d].BTCNT.reg         = count * 2;
+                descriptor[d].DESCADDR.reg      = (uint32_t)&descriptor[d+1];
+                len    -= count;
+                colors += count;
+            }
+            descriptor[d-1].DESCADDR.reg        = 0;
 
-            while(dma_busy); // Wait for prior line to finish
+            while(dma_busy); // Wait for prior transfer (if any) to finish
 
-            // Move new descriptor into place...
-            memcpy(dptr, &descriptor[pixelBufIdx], sizeof(DmacDescriptor));
+            // Move first descriptor into place and start transfer...
+            memcpy(dptr, &descriptor[0], sizeof(DmacDescriptor));
             dma_busy = true;
             dma.startJob();                // Trigger SPI DMA transfer
             if(connection == TFT_PARALLEL) dma.trigger();
-            pixelBufIdx = 1 - pixelBufIdx; // Swap DMA pixel buffers
+        } // end bigEndian
 
-            len -= count;
-        }
         lastFillColor = 0x0000; // pixelBuf has been sullied
         lastFillLen   = 0;
-        while(dma_busy);        // Wait for last line to complete
+        if(block) {
+            while(dma_busy);    // Wait for last line to complete
  #if defined(__SAMD51__)
-        if(connection == TFT_HARD_SPI) {
-            // See SAMD51 note in writeColor()
-            hwspi._spi->setDataMode(SPI_MODE0);
-        } else {
-            pinPeripheral(tft8._wr, PIO_OUTPUT); // Switch WR back to GPIO
-        }
+            if(connection == TFT_HARD_SPI) {
+                // See SAMD51 note in writeColor()
+                hwspi._spi->setDataMode(SPI_MODE0);
+            } else {
+                pinPeripheral(tft8._wr, PIO_OUTPUT); // Switch WR back to GPIO
+            }
  #endif // end __SAMD51__
+        }
         return;
     }
 #endif // end USE_SPI_DMA
@@ -940,6 +990,26 @@ void Adafruit_SPITFT::writePixels(uint16_t *colors, uint32_t len) {
     while(len--) {
         SPI_WRITE16(*colors++);
     }
+}
+
+/*!
+    @brief  Wait for the last DMA transfer in a prior non-blocking
+            writePixels() call to complete. This does nothing if DMA
+            is not enabled, and is not needed if blocking writePixels()
+            was used (as is the default case).
+*/
+void Adafruit_SPITFT::dmaWait(void) {
+#if defined(USE_SPI_DMA)
+    while(dma_busy);
+ #if defined(__SAMD51__)
+    if(connection == TFT_HARD_SPI) {
+        // See SAMD51 note in writeColor()
+        hwspi._spi->setDataMode(SPI_MODE0);
+    } else {
+        pinPeripheral(tft8._wr, PIO_OUTPUT); // Switch WR back to GPIO
+    }
+ #endif // end __SAMD51__
+#endif
 }
 
 /*!
@@ -978,7 +1048,8 @@ void Adafruit_SPITFT::writeColor(uint16_t color, uint32_t len) {
     }
 #else  // !ESP32
  #if defined(USE_SPI_DMA)
-    if((connection == TFT_HARD_SPI) || (connection == TFT_PARALLEL)) {
+    if(((connection == TFT_HARD_SPI) || (connection == TFT_PARALLEL)) &&
+       (len >= 16)) { // Don't bother with DMA on short pixel runs
         int i, d, numDescriptors;
         if(hi == lo) { // If high & low bytes are same...
             onePixelBuf = color;
@@ -1069,8 +1140,7 @@ void Adafruit_SPITFT::writeColor(uint16_t color, uint32_t len) {
 
     // All other cases (non-DMA hard SPI, bitbang SPI, parallel)...
 
-    switch(connection) {
-      case TFT_HARD_SPI:
+    if(connection == TFT_HARD_SPI) {
 #if defined(ESP8266)
         do {
             uint32_t pixelsThisPass = len;
@@ -1096,8 +1166,7 @@ void Adafruit_SPITFT::writeColor(uint16_t color, uint32_t len) {
  #endif
         }
 #endif // end !ESP8266
-        break;
-      case TFT_SOFT_SPI:
+    } else if(connection == TFT_SOFT_SPI) {
 #if defined(ESP8266)
         do {
             uint32_t pixelsThisPass = len;
@@ -1142,8 +1211,7 @@ void Adafruit_SPITFT::writeColor(uint16_t color, uint32_t len) {
  #endif // end !__AVR__
         }
 #endif // end !ESP8266
-        break;
-      case TFT_PARALLEL:
+    } else { // PARALLEL
         if(hi == lo) {
 #if defined(__AVR__)
             len            *= 2;
@@ -1180,7 +1248,6 @@ void Adafruit_SPITFT::writeColor(uint16_t color, uint32_t len) {
                 TFT_WR_STROBE();
             }
         }
-        break;
     }
 }
 
@@ -1565,6 +1632,51 @@ uint16_t Adafruit_SPITFT::color565(uint8_t red, uint8_t green, uint8_t blue) {
     return ((red & 0xF8) << 8) | ((green & 0xFC) << 3) | (blue >> 3);
 }
 
+/*!
+ @brief   Adafruit_SPITFT Send Command handles complete sending of commands and data
+ @param   commandByte       The Command Byte
+ @param   dataBytes         A pointer to the Data bytes to send
+ @param   numDataBytes      The number of bytes we should send
+ */
+void Adafruit_SPITFT::sendCommand(uint8_t commandByte, uint8_t *dataBytes, uint8_t numDataBytes) {
+    SPI_BEGIN_TRANSACTION();
+    if(_cs >= 0) SPI_CS_LOW();
+  
+    SPI_DC_LOW(); // Command mode
+    spiWrite(commandByte); // Send the command byte
+  
+    SPI_DC_HIGH();
+    for (int i=0; i<numDataBytes; i++) {
+      spiWrite(*dataBytes); // Send the data bytes
+      dataBytes++;
+    }
+  
+    if(_cs >= 0) SPI_CS_HIGH();
+    SPI_END_TRANSACTION();
+}
+
+/*!
+ @brief   Adafruit_SPITFT Send Command handles complete sending of commands and const data
+ @param   commandByte       The Command Byte
+ @param   dataBytes         A pointer to the Data bytes to send
+ @param   numDataBytes      The number of bytes we should send
+ */
+void Adafruit_SPITFT::sendCommand(uint8_t commandByte, const uint8_t *dataBytes, uint8_t numDataBytes) {
+    SPI_BEGIN_TRANSACTION();
+    if(_cs >= 0) SPI_CS_LOW();
+  
+    SPI_DC_LOW(); // Command mode
+    spiWrite(commandByte); // Send the command byte
+  
+    SPI_DC_HIGH();
+    for (int i=0; i<numDataBytes; i++) {
+      spiWrite(pgm_read_byte(dataBytes++)); // Send the data bytes
+    }
+  
+    if(_cs >= 0) SPI_CS_HIGH();
+    SPI_END_TRANSACTION();
+}
+
 
 // -------------------------------------------------------------------------
 // Lowest-level hardware-interfacing functions. Many of these are inline and
@@ -1626,8 +1738,7 @@ inline void Adafruit_SPITFT::SPI_END_TRANSACTION(void) {
     @param  b  8-bit value to write.
 */
 void Adafruit_SPITFT::spiWrite(uint8_t b) {
-    switch(connection) {
-      case TFT_HARD_SPI:
+    if(connection == TFT_HARD_SPI) {
 #if defined(__AVR__)
         for(SPDR = b; !(SPSR & _BV(SPIF)); );
 #elif defined(ESP8266) || defined(ESP32)
@@ -1635,8 +1746,7 @@ void Adafruit_SPITFT::spiWrite(uint8_t b) {
 #else
         hwspi._spi->transfer(b);
 #endif
-        break;
-      case TFT_SOFT_SPI:
+    } else if(connection == TFT_SOFT_SPI) {
         for(uint8_t bit=0; bit<8; bit++) {
             if(b & 0x80) SPI_MOSI_HIGH();
             else         SPI_MOSI_LOW();
@@ -1644,8 +1754,7 @@ void Adafruit_SPITFT::spiWrite(uint8_t b) {
             b <<= 1;
             SPI_SCK_LOW();
         }
-        break;
-      case TFT_PARALLEL:
+    } else { // TFT_PARALLEL
 #if defined(__AVR__)
         *tft8.writePort = b;
 #elif defined(USE_FAST_PINIO)
@@ -1653,7 +1762,6 @@ void Adafruit_SPITFT::spiWrite(uint8_t b) {
         else           *(volatile uint16_t *)tft8.writePort = b;
 #endif
         TFT_WR_STROBE();
-        break;
     }
 }
 
@@ -1684,10 +1792,9 @@ void Adafruit_SPITFT::writeCommand(uint8_t cmd) {
 uint8_t Adafruit_SPITFT::spiRead(void) {
     uint8_t  b = 0;
     uint16_t w = 0;
-    switch(connection) {
-      case TFT_HARD_SPI:
+    if(connection == TFT_HARD_SPI) {
         return hwspi._spi->transfer((uint8_t)0);
-      case TFT_SOFT_SPI:
+    } else if(connection == TFT_SOFT_SPI) {
         if(swspi._miso >= 0) {
             for(uint8_t i=0; i<8; i++) {
                 SPI_SCK_HIGH();
@@ -1697,8 +1804,7 @@ uint8_t Adafruit_SPITFT::spiRead(void) {
             }
         }
         return b;
-      // case TFT_PARALLEL:
-      default: // Avoids compiler warning about no return value
+    } else { // TFT_PARALLEL
         if(tft8._rd >= 0) {
 #if defined(USE_FAST_PINIO)
             TFT_RD_LOW();                       // Read line LOW
@@ -1853,8 +1959,7 @@ inline bool Adafruit_SPITFT::SPI_MISO_READ(void) {
     @param  w  16-bit value to write.
 */
 void Adafruit_SPITFT::SPI_WRITE16(uint16_t w) {
-    switch(connection) {
-      case TFT_HARD_SPI:
+    if(connection == TFT_HARD_SPI) {
 #if defined(__AVR__)
         for(SPDR = (w >> 8); (!(SPSR & _BV(SPIF))); );
         for(SPDR =  w      ; (!(SPSR & _BV(SPIF))); );
@@ -1864,8 +1969,7 @@ void Adafruit_SPITFT::SPI_WRITE16(uint16_t w) {
         hwspi._spi->transfer(w >> 8);
         hwspi._spi->transfer(w);
 #endif
-        break;
-      case TFT_SOFT_SPI:
+    } else if(connection == TFT_SOFT_SPI) {
         for(uint8_t bit=0; bit<16; bit++) {
             if(w & 0x8000) SPI_MOSI_HIGH();
             else           SPI_MOSI_LOW();
@@ -1873,8 +1977,7 @@ void Adafruit_SPITFT::SPI_WRITE16(uint16_t w) {
             SPI_SCK_LOW();
             w <<= 1;
         }
-        break;
-      case TFT_PARALLEL:
+    } else { // TFT_PARALLEL
 #if defined(__AVR__)
         *tft8.writePort = w >> 8;
         TFT_WR_STROBE();
@@ -1889,7 +1992,6 @@ void Adafruit_SPITFT::SPI_WRITE16(uint16_t w) {
         }
 #endif
         TFT_WR_STROBE();
-        break;
     }
 }
 
@@ -1904,8 +2006,7 @@ void Adafruit_SPITFT::SPI_WRITE16(uint16_t w) {
     @param  l  32-bit value to write.
 */
 void Adafruit_SPITFT::SPI_WRITE32(uint32_t l) {
-    switch(connection) {
-      case TFT_HARD_SPI:
+    if(connection == TFT_HARD_SPI) {
 #if defined(__AVR__)
         for(SPDR = (l >> 24); !(SPSR & _BV(SPIF)); );
         for(SPDR = (l >> 16); !(SPSR & _BV(SPIF)); );
@@ -1919,8 +2020,7 @@ void Adafruit_SPITFT::SPI_WRITE32(uint32_t l) {
         hwspi._spi->transfer(l >> 8);
         hwspi._spi->transfer(l);
 #endif
-        break;
-      case TFT_SOFT_SPI:
+    } else if(connection == TFT_SOFT_SPI) {
         for(uint8_t bit=0; bit<32; bit++) {
             if(l & 0x80000000) SPI_MOSI_HIGH();
             else               SPI_MOSI_LOW();
@@ -1928,8 +2028,7 @@ void Adafruit_SPITFT::SPI_WRITE32(uint32_t l) {
             SPI_SCK_LOW();
             l <<= 1;
         }
-        break;
-      case TFT_PARALLEL:
+    } else { // TFT_PARALLEL
 #if defined(__AVR__)
         *tft8.writePort = l >> 24;
         TFT_WR_STROBE();
@@ -1954,7 +2053,6 @@ void Adafruit_SPITFT::SPI_WRITE32(uint32_t l) {
         }
 #endif
         TFT_WR_STROBE();
-        break;
     }
 }
 

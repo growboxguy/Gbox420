@@ -1,12 +1,12 @@
 void checkAero(bool Interrupt){
  if(!Interrupt)readAeroPressure(); //skip reading the pressure when called from an interrupt. (Within an Interroupt millis() counter doesn`t increase, so delay() never ends)
- if(AeroPressureTankPresent)  {
+ if(MySettings.AeroPressureTankPresent)  {
     checkAeroSprayTimer_WithPressureTank();
-    checkAeroPumpAlerts_WithPressureTank();
+    if(!Interrupt)checkAeroPumpAlerts_WithPressureTank();
   }
  else {
   checkAeroSprayTimer_WithoutPressureTank();
-  checkAeroPumpAlerts_WithoutPressureTank();
+  if(!Interrupt)checkAeroPumpAlerts_WithoutPressureTank();
  }
  checkRelays();
 }
@@ -69,7 +69,7 @@ void aeroSprayNow(bool DueToHighPressure){
   if(MySettings.AeroSprayEnabled || DueToHighPressure){
     AeroSprayTimer = millis();
     AeroSolenoidOn = true;
-    if(!AeroPressureTankPresent){AeroPumpOn = true;AeroPumpTimer = millis();}    
+    if(!MySettings.AeroPressureTankPresent){AeroPumpOn = true;AeroPumpTimer = millis();}    
     checkRelays();
     PlayOnSound = true;
     if(DueToHighPressure) addToLog(F("Above pressure limit,spraying"));
@@ -79,7 +79,7 @@ void aeroSprayNow(bool DueToHighPressure){
 
 void aeroSprayOff(){   
     AeroSolenoidOn = false; 
-    if(!AeroPressureTankPresent) AeroPumpOn = false;  
+    if(!MySettings.AeroPressureTankPresent) AeroPumpOn = false;  
     checkRelays();
     addToLog(F("Aeroponics spray OFF"));
 }
@@ -88,7 +88,7 @@ void aeroPumpOn(bool AddToLog){
   PumpOK = true;
   AeroPumpOn = true;
   AeroPumpTimer = millis();  
-  if(!AeroPressureTankPresent){AeroSolenoidOn = true;} //Open bypass valve
+  if(!MySettings.AeroPressureTankPresent){AeroSolenoidOn = true;} //Open bypass valve
   checkRelays();
   PlayOnSound = true;
   if(AddToLog)addToLog(F("Pump ON")); 
@@ -97,7 +97,7 @@ void aeroPumpOn(bool AddToLog){
 void aeroPumpOff(bool AddToLog){  
   PumpOK = true; 
   AeroPumpOn = false;
-  if(!AeroPressureTankPresent){AeroSolenoidOn = false;} //Close bypass valve
+  if(!MySettings.AeroPressureTankPresent){AeroSolenoidOn = false;} //Close bypass valve
   checkRelays();
   PlayOffSound = true;
   if(AddToLog)addToLog(F("Pump OFF"));
@@ -192,7 +192,7 @@ void checkAeroPumpAlerts_WithoutPressureTank()
          }
     } 
     else{ //if pump and bypass valve is on: Priming in progress, expected to detect water flow
-         logToSerials(F("To be implemented: check for flow meter reading "),true); 
+         //logToSerials(F("To be implemented: check for flow meter reading "),true); 
     }
   }
 }
@@ -314,6 +314,19 @@ void setQuietRefillOnOff(bool State){
     addToLog(F("Refill before quiet disabled"));
     PlayOffSound=true;
     }
+}
+
+void setAeroPressureTankOnOff(bool State){ //this change requires a different aeroponics setup
+  MySettings.AeroPressureTankPresent = State;  
+  if(MySettings.AeroPressureTankPresent){ 
+    addToLog(F("!Pressure tank mode!"));
+    PlayOnSound=true;
+    }
+  else {
+    addToLog(F("!Direct pump mode!"));
+    PlayOffSound=true;
+    }
+    aeroPumpDisable(); //for safety disable the pump 
 }
 
 void setQuietFromHour(int Hour){
