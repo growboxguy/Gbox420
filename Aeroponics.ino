@@ -2,11 +2,11 @@ void checkAero(bool Interrupt){
  if(!Interrupt)readAeroPressure(); //skip reading the pressure when called from an interrupt. (Within an Interroupt millis() counter doesn`t increase, so delay() never ends)
  if(AeroPressureTankPresent)  {
     checkAeroSprayTimer_WithPressureTank();
-    checkAeroPumpAlerts_WithPressureTank();
+    if(!Interrupt)checkAeroPumpAlerts_WithPressureTank();
   }
  else {
   checkAeroSprayTimer_WithoutPressureTank();
-  checkAeroPumpAlerts_WithoutPressureTank();
+  if(!Interrupt)checkAeroPumpAlerts_WithoutPressureTank();
  }
  checkRelays();
 }
@@ -192,7 +192,7 @@ void checkAeroPumpAlerts_WithoutPressureTank()
          }
     } 
     else{ //if pump and bypass valve is on: Priming in progress, expected to detect water flow
-         logToSerials(F("To be implemented: check for flow meter reading "),true); 
+         //logToSerials(F("To be implemented: check for flow meter reading "),true); 
     }
   }
 }
