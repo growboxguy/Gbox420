@@ -73,6 +73,7 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(MySettings.PressureSensorRatio));
 
   WebServer.setArgInt(F("AeroPumpTimeout"), MySettings.AeroPumpTimeout);
+  WebServer.setArgInt(F("AeroPrimingTime"), MySettings.AeroPrimingTime);
   WebServer.setArgBoolean(F("AeroQuietEnabled"), MySettings.AeroQuietEnabled);
   WebServer.setArgBoolean(F("AeroRefillBeforeQuiet"), MySettings.AeroRefillBeforeQuiet);
   WebServer.setArgBoolean(F("AeroPressureTankPresent"), MySettings.AeroPressureTankPresent);  
@@ -210,6 +211,7 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("PressureSensorRatio"))==0) {setPressureSensorRatio(WebServer.getArgFloat());}
 
   else if(strcmp_P(field,(PGM_P)F("AeroPumpTimeout"))==0) {setAeroPumpTimeout(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("AeroPrimingTime"))==0) {setAeroPrimingTime(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("AeroQuietEnabled"))==0) {setQuietOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("AeroRefillBeforeQuiet"))==0) {setQuietRefillOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("AeroPressureTankPresent"))==0) {setAeroPressureTankOnOff(WebServer.getArgBoolean());}

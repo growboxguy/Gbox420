@@ -34,6 +34,7 @@
   #include "SPI.h" //TFT Screen - communication
   #include "Adafruit_GFX.h" //TFT Screen - generic graphics driver
   #include "Adafruit_ILI9341.h" //TFT Screen - hardware specific driver
+  #include "util/atomic.h" //Loading the ATOMIC_BLOCK macro, helps blocking interoups while commands in the block are running
   //#include "MemoryFree.h" //checking remaining memory - only for debugging
 
 //Global variables

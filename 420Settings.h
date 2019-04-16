@@ -7,7 +7,7 @@
   const byte MaxTextLength = 31;  //Default char* buffer size: 30 characters + null terminator, used for logging and converting to text
    
 //Settings saved to EEPROM persistent storage
-  byte Version= 8; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
+  byte Version= 9; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
   typedef struct //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
@@ -18,6 +18,7 @@
   float AeroPressureLow= 5.0; //Aeroponics - Turn on pump below this pressure (bar)
   float AeroPressureHigh = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)
   uint32_t AeroPumpTimeout = 360;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
+  uint32_t AeroPrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
   bool AeroQuietEnabled = false;  //Enable/disable quiet time then pump should not run
   bool AeroRefillBeforeQuiet = true; //Enable/disable refill before quiet time
   byte AeroQuietFromHour = 23;  //Quiet time to block pump - hour
