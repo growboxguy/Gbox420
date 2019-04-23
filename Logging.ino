@@ -1,4 +1,4 @@
-void ReportToGoogleSheets(bool AddToLog){
+void reportToGoogleSheets(bool AddToLog){
   if(AddToLog)addToLog(F("Reporting to Google Sheets"));
   memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
   strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,MySettings.PushingBoxLogRelayID);

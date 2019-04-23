@@ -145,11 +145,11 @@ void ButtonPressCallback(char *button)
   else if (strcmp_P(button,(PGM_P)F("btn_LightCalibrate"))==0) {triggerCalibrateLights();}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayNow"))==0) { aeroSprayNow(false);}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayOff"))==0) { aeroSprayOff();}  
-  else if (strcmp_P(button,(PGM_P)F("btn_ReservoirRefill"))==0) { ReservoirRefill();}
+  else if (strcmp_P(button,(PGM_P)F("btn_ReservoirRefill"))==0) { reservoirRefill();}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpOn"))==0) { aeroPumpOn(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpOff"))==0) { aeroPumpOff(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpDisable"))==0) { aeroPumpDisable();}  
-  else if (strcmp_P(button,(PGM_P)F("btn_GoogleSheets"))==0) { ReportToGoogleSheets(true);} 
+  else if (strcmp_P(button,(PGM_P)F("btn_GoogleSheets"))==0) { reportToGoogleSheets(true);} 
   else if (strcmp_P(button,(PGM_P)F("btn_Mqtt"))==0) { mqttPublush(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { playEE(); }
   else if (strcmp_P(button,(PGM_P)F("btn_AlertTest"))==0) { sendTestEmailAlert();}

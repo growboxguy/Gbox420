@@ -78,11 +78,11 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttExhaustFan)!=NULL) {if(strcmp(data,"2")==0)exhaustFanHigh(); else if(strcmp(data,"1")==0)exhaustFanLow(); else if(strcmp(data,"0")==0)exhaustFanOff(); }
   else if(strstr(topic,MqttSoundEnabled)!=NULL) {setSoundOnOff(atoi(data));}
   else if(strstr(topic,MqttDebugEnabled)!=NULL) {setDebugOnOff(atoi(data));}
-  else if(strstr(topic,MqttGoogleSheets)!=NULL) { ReportToGoogleSheets(true);} 
+  else if(strstr(topic,MqttGoogleSheets)!=NULL) { reportToGoogleSheets(true);} 
   else if(strstr(topic,MqttSaveSettings)!=NULL) { saveSettings(true);}
   else if(strstr(topic,MqttAeroSprayNow)!=NULL) { aeroSprayNow(false);}
   else if(strstr(topic,MqttAeroSprayOff)!=NULL) { aeroSprayOff();}  
-  else if(strstr(topic,MqttPumpRefill)!=NULL) { ReservoirRefill();}
+  else if(strstr(topic,MqttPumpRefill)!=NULL) { reservoirRefill();}
   else if(strstr(topic,MqttPumpDisable)!=NULL) { aeroPumpDisable();}  
   else if(strstr(topic,MqttPressureCalibrate)!=NULL) { calibratePressureSensor();}
 

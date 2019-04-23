@@ -10,14 +10,31 @@ void airPumpOff(){
   PlayOffSound=true;
 }
 
-void ReservoirRefill(){  
-  addToLog(F("Refilling..not implemented"));
+void reservoirRefill(){  
+  addToLog(F("Refilling reservoir"));
+  PumpOK = true; //reset pump status
+  ReservoirRefilling = true;
+  AeroTimer = millis();
+  if(!MySettings.AeroPressureTankPresent)  {
+      AeroSolenoidOn = true; //open bypass valve
+      startFlowMeter(); 
+    }
+  AeroPumpOn = true;
+  PlayOnSound = true;
+  checkRelays();
+}
 
+void checkRefillStatus(){  
+  if (!digitalRead(WaterFullInPin) || millis() - AeroTimer >= MySettings.AeroPumpTimeout * 1000){
+    aeroPumpOff(false); //shut the pump if the reservoir is full or timeout is reached
+    ReservoirRefilling = false;
+  } 
+  if(!digitalRead(WaterFullInPin)) addToLog(F("Reservoir refilled"));
+  else addToLog(F("Refill timed out"));
 }
 
 void checkReservoir(){
   readReservoirTemp(); //Check water temperature
-  
   bool isWaterAboveCritical = !digitalRead(WaterCriticalInPin);  //Water sensor, true if level reached
   bool isWaterAboveLow = !digitalRead(WaterLowInPin);
   bool isWaterAboveMedium = !digitalRead(WaterMediumInPin);
