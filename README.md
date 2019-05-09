@@ -8,15 +8,14 @@
 <a href="https://www.tumblr.com/blog/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_tumblr_986957.png" style="border:none;margin:0;padding:0px"></a>
 <a href="https://twitter.com/growboxguy"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_4_939755.png" style="border:none;margin:0;padding:0px"></a>
 <a href="mailto:GrowBoxGuy@gmail.com"><img width="48" height="48" src="https://sites.google.com/site/growboxguy/home/if_Android-Gmail_72149%20%281%29.png" style="border:none;margin:0;padding:0px"></a>
-</div><br>
+</div>
 <div style="display:inline!important">
 <b style="font-size:16px">
 <font color="#444444">&nbsp;Project made by </font>
 <font color="#00ab44">GrowBoxGuy</font><br>		
 &nbsp;<a href="http://sites.google.com/site/growboxguy/">sites.google.com/site/growboxguy/</a>
 </b>
-</div><br>
-
+</div>
 <h2>Assembly guide: https://sites.google.com/site/growboxguy/arduino</h2>
 
 <span>We build an Arduino based grow box monitoring and controlling system housed inside a PC case with a power supply. An</span> <span class="c2">[ATmega2560](https://www.google.com/url?q=http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2549-8-bit-AVR-Microcontroller-ATmega640-1280-1281-2560-2561_datasheet.pdf&sa=D&ust=1557436867103000)</span><span> microcontroller will be running the Arduino sketch interacting with sensors and controllers. Network connection will be provided by an</span><span> </span><span class="c2">[ESP8266](https://www.google.com/url?q=https://en.wikipedia.org/wiki/ESP8266&sa=D&ust=1557436867103000)</span><span>WiFi chip running a custom</span> <span class="c2">[ESP-Link](https://www.google.com/url?q=https://github.com/jeelabs/esp-link&sa=D&ust=1557436867104000)</span><span>firmware. Sensor readings will be relayed through</span> <span class="c2">[PushingBox](https://www.google.com/url?q=https://www.pushingbox.com&sa=D&ust=1557436867104000)</span><span> </span><span class="c1">message API to Google Sheets. The ESP8266 WiFi chip will act as an internet gateway and a web server at the same time, hosting a mobile friendly control and monitoring interface for the grow box.</span>
