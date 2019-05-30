@@ -52,7 +52,6 @@ void checkAeroSprayTimer_WithoutPressureTank(){ //pump directly connected to aer
     else{
       if (AeroSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPrimingTime * 1000){ //self priming timeout reached, time to start spraying
         AeroSolenoidOn = false; //Close bypass valve
-        stopFlowMeter();
         logToSerials(F("Closing bypass, starting spray"),true);
         AeroSprayTimer = millis();
         }
@@ -73,7 +72,6 @@ void aeroSprayNow(bool DueToHighPressure){
     AeroSolenoidOn = true;
     if(!MySettings.AeroPressureTankPresent){
         AeroPumpOn = true;
-        startFlowMeter();
         AeroPumpTimer = millis();
        }    
     checkRelays();
@@ -87,7 +85,6 @@ void aeroSprayOff(){
     AeroSolenoidOn = false; 
     if(!MySettings.AeroPressureTankPresent) {
       AeroPumpOn = false; 
-      stopFlowMeter(); 
     }
     checkRelays();
     addToLog(F("Aeroponics spray OFF"));
@@ -98,7 +95,6 @@ void aeroPumpOn(bool AddToLog){
   AeroPumpOn = true;
   AeroPumpTimer = millis();  
   if(!MySettings.AeroPressureTankPresent){ //Open bypass valve
-      startFlowMeter();
       AeroSolenoidOn = true;
     } 
   checkRelays();
@@ -110,7 +106,6 @@ void aeroPumpOff(bool AddToLog){
   AeroPumpOn = false;
   if(!MySettings.AeroPressureTankPresent){ //Close bypass valve
       AeroSolenoidOn = false;
-      stopFlowMeter();
    } 
   checkRelays();
   PlayOffSound = true;
@@ -362,22 +357,4 @@ void setQuietToHour(int Hour){
 void setQuietToMinute(int Minute){
   MySettings.AeroQuietToMinute = Minute;
   addToLog(F("Pump quiet To time updated"));
-}
-
-//***Flow meter***
-volatile unsigned int FlowPulseCount = 0; //volatile variables are stored in RAM: https://www.arduino.cc/reference/en/language/variables/variable-scope--qualifiers/volatile/
-void startFlowMeter(){
-  FlowPulseCount = 0;
-  attachInterrupt(digitalPinToInterrupt(FlowMeterInPin), flowPulseCounter, FALLING);  //Mega2560 support interrupts on port 2, 3, 18, 19, 20, 21  
-}
-
-void stopFlowMeter(){
-  detachInterrupt(digitalPinToInterrupt(FlowMeterInPin));  //Mega2560 support interrupts on port 2, 3, 18, 19, 20, 21  
-    strcpy(LogMessage,toText((uint32_t)FlowPulseCount));
-    strcat_P(LogMessage,(PGM_P)F(" pulses"));
-    addToLog(LogMessage);
-}
-
-void flowPulseCounter(){
-   ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { FlowPulseCount++; }
 }
