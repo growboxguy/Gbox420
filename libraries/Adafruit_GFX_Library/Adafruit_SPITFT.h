@@ -94,7 +94,7 @@ typedef volatile  PORT_t* PORTreg_t; ///< PORT register type
 // an enumerated type as the first argument: tft8 (for 8-bit parallel) or
 // tft16 (for 16-bit)...even though 16-bit isn't fully implemented or tested
 // and might never be, still needed that disambiguation from soft SPI.
-enum tftBusWidth { tft8, tft16 }; ///< For first arg to parallel constructor
+enum tftBusWidth { tft8bitbus, tft16bitbus }; ///< For first arg to parallel constructor
 
 // CLASS DEFINITION --------------------------------------------------------
 
@@ -181,14 +181,18 @@ class Adafruit_SPITFT : public Adafruit_GFX {
     // Brief comments here...documented more thoroughly in .cpp file.
 
     // Subclass' begin() function invokes this to initialize hardware.
+    // freq=0 to use default SPI speed. spiMode must be one of the SPI_MODEn
+    // values defined in SPI.h, which are NOT the same as 0 for SPI_MODE0,
+    // 1 for SPI_MODE1, etc...use ONLY the SPI_MODEn defines! Only!
     // Name is outdated (interface may be parallel) but for compatibility:
-    void         initSPI(uint32_t freq = 0); // 0 = use default SPI speed
+    void         initSPI(uint32_t freq = 0, uint8_t spiMode = SPI_MODE0);
     // Chip select and/or hardware SPI transaction start as needed:
     void         startWrite(void);
     // Chip deselect and/or hardware SPI transaction end as needed:
     void         endWrite(void);
     void         sendCommand(uint8_t commandByte, uint8_t *dataBytes = NULL, uint8_t numDataBytes = 0);
     void         sendCommand(uint8_t commandByte, const uint8_t *dataBytes, uint8_t numDataBytes);
+    uint8_t      readcommand8(uint8_t commandByte, uint8_t index = 0);
 
     // These functions require a chip-select and/or SPI transaction
     // around them. Higher-level graphics primitives might start a
@@ -392,6 +396,7 @@ class Adafruit_SPITFT : public Adafruit_GFX {
 #else
         uint32_t    _freq;         ///< SPI bitrate (if no SPI transactions)
 #endif
+        uint32_t    _mode;         ///< SPI data mode (transactions or no)
       } hwspi;                     ///< Hardware SPI values
       struct {                     //   Values specific to SOFTWARE SPI:
 #if defined(USE_FAST_PINIO)

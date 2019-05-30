@@ -255,9 +255,16 @@ Adafruit_SPITFT::Adafruit_SPITFT(uint16_t w, uint16_t h, int8_t cs,
     @param   rst       Arduino pin # for display reset (optional, display reset
                        can be tied to MCU reset, default of -1 means unused).
     @return  Adafruit_SPITFT object.
-    @note    Output pins are not initialized; application typically will
-             need to call subclass' begin() function, which in turn calls
-             this library's initSPI() function to initialize pins.
+    @note    Output pins are not initialized in constructor; application
+             typically will need to call subclass' begin() function, which
+             in turn calls this library's initSPI() function to initialize
+             pins. EXCEPT...if you have built your own SERCOM SPI peripheral
+             (calling the SPIClass constructor) rather than one of the
+             built-in SPI devices (e.g. &SPI, &SPI1 and so forth), you will
+             need to call the begin() function for your object as well as
+             pinPeripheral() for the MOSI, MISO and SCK pins to configure
+             GPIO manually. Do this BEFORE calling the display-specific
+             begin or init function. Unfortunate but unavoidable.
 */
 Adafruit_SPITFT::Adafruit_SPITFT(uint16_t w, uint16_t h, SPIClass *spiClass,
   int8_t cs, int8_t dc, int8_t rst) : Adafruit_GFX(w, h),
@@ -330,7 +337,7 @@ Adafruit_SPITFT::Adafruit_SPITFT(uint16_t w, uint16_t h, SPIClass *spiClass,
     @param   busWidth  If tft16 (enumeration in header file), is a 16-bit
                        parallel connection, else 8-bit.
                        16-bit isn't fully implemented or tested yet so
-                       applications should pass "tft8" for now...needed to
+                       applications should pass "tft8bitbus" for now...needed to
                        stick a required enum argument in there to
                        disambiguate this constructor from the soft-SPI case.
                        Argument is ignored on 8-bit architectures (no 'wide'
@@ -361,7 +368,7 @@ Adafruit_SPITFT::Adafruit_SPITFT(uint16_t w, uint16_t h, tftBusWidth busWidth,
     tft8._d0  = d0;
     tft8._wr  = wr;
     tft8._rd  = rd;
-    tft8.wide = (busWidth == tft16);
+    tft8.wide = (busWidth == tft16bitbus);
 #if defined(USE_FAST_PINIO)
  #if defined(HAS_PORT_SET_CLR)
   #if defined(CORE_TEENSY)
@@ -493,12 +500,17 @@ Adafruit_SPITFT::Adafruit_SPITFT(uint16_t w, uint16_t h, tftBusWidth busWidth,
                   is passed, will fall back on a device-specific value.
                   Value is ignored when using software SPI or parallel
                   connection.
+    @param  mode  SPI mode when using hardware SPI. MUST be one of the
+                  values SPI_MODE0, SPI_MODE1, SPI_MODE2 or SPI_MODE3
+                  defined in SPI.h. Do NOT attempt to pass '0' for SPI_MODE0
+                  and so forth...the values are NOT the same! Use ONLY the
+                  defines! (Pity it's not an enum.)
     @note   Another anachronistically-named function; this is called even
             when the display connection is parallel (not SPI). Also, this
             could probably be made private...quite a few class functions
             were generously put in the public section.
 */
-void Adafruit_SPITFT::initSPI(uint32_t freq) {
+void Adafruit_SPITFT::initSPI(uint32_t freq, uint8_t spiMode) {
 
     if(!freq) freq = DEFAULT_SPI_FREQ; // If no freq specified, use default
 
@@ -513,12 +525,48 @@ void Adafruit_SPITFT::initSPI(uint32_t freq) {
     if(connection == TFT_HARD_SPI) {
 
 #if defined(SPI_HAS_TRANSACTION)
-        hwspi.settings = SPISettings(freq, MSBFIRST, SPI_MODE0);
+        hwspi.settings = SPISettings(freq, MSBFIRST, spiMode);
 #else
-        hwspi._freq    = freq; // Save freq value for later
+        hwspi._freq    = freq;    // Save freq value for later
 #endif
-        hwspi._spi->begin();
-
+        hwspi._mode    = spiMode; // Save spiMode value for later
+        // Call hwspi._spi->begin() ONLY if this is among the 'established'
+        // SPI interfaces in variant.h. For DIY roll-your-own SERCOM SPIs,
+        // begin() and pinPeripheral() calls MUST be made in one's calling
+        // code, BEFORE the screen-specific begin/init function is called.
+        // Reason for this is that SPI::begin() makes its own calls to
+        // pinPeripheral() based on g_APinDescription[n].ulPinType, which
+        // on non-established SPI interface pins will always be PIO_DIGITAL
+        // or similar, while we need PIO_SERCOM or PIO_SERCOM_ALT...it's
+        // highly unique between devices and variants for each pin or
+        // SERCOM so we can't make those calls ourselves here. And the SPI
+        // device needs to be set up before calling this because it's
+        // immediately followed with initialization commands. Blargh.
+        if(
+#if !defined(SPI_INTERFACES_COUNT)
+            1
+#endif
+#if SPI_INTERFACES_COUNT > 0
+             (hwspi._spi == &SPI)
+#endif
+#if SPI_INTERFACES_COUNT > 1
+          || (hwspi._spi == &SPI1)
+#endif
+#if SPI_INTERFACES_COUNT > 2
+          || (hwspi._spi == &SPI2)
+#endif
+#if SPI_INTERFACES_COUNT > 3
+          || (hwspi._spi == &SPI3)
+#endif
+#if SPI_INTERFACES_COUNT > 4
+          || (hwspi._spi == &SPI4)
+#endif
+#if SPI_INTERFACES_COUNT > 5
+          || (hwspi._spi == &SPI5)
+#endif
+        ) {
+            hwspi._spi->begin();
+        }
     } else if(connection == TFT_SOFT_SPI) {
 
         pinMode(swspi._mosi, OUTPUT);
@@ -662,6 +710,16 @@ void Adafruit_SPITFT::initSPI(uint32_t freq) {
                         } else if(*(SERCOM **)hwspi._spi == &sercom5) {
                             dmac_id  = SERCOM5_DMAC_ID_TX;
                             data_reg = &SERCOM5->SPI.DATA.reg;
+#endif
+#if defined SERCOM6
+                        } else if(*(SERCOM **)hwspi._spi == &sercom6) {
+                            dmac_id  = SERCOM6_DMAC_ID_TX;
+                            data_reg = &SERCOM6->SPI.DATA.reg;
+#endif
+#if defined SERCOM7
+                        } else if(*(SERCOM **)hwspi._spi == &sercom7) {
+                            dmac_id  = SERCOM7_DMAC_ID_TX;
+                            data_reg = &SERCOM7->SPI.DATA.reg;
 #endif
                         }
                         dma.setPriority(DMA_PRIORITY_3);
@@ -972,14 +1030,14 @@ void Adafruit_SPITFT::writePixels(uint16_t *colors, uint32_t len,
         lastFillLen   = 0;
         if(block) {
             while(dma_busy);    // Wait for last line to complete
- #if defined(__SAMD51__)
+ #if defined(__SAMD51__) || defined(_SAMD21_)
             if(connection == TFT_HARD_SPI) {
-                // See SAMD51 note in writeColor()
-                hwspi._spi->setDataMode(SPI_MODE0);
+                // See SAMD51/21 note in writeColor()
+                hwspi._spi->setDataMode(hwspi._mode);
             } else {
                 pinPeripheral(tft8._wr, PIO_OUTPUT); // Switch WR back to GPIO
             }
- #endif // end __SAMD51__
+ #endif // end __SAMD51__ || _SAMD21_
         }
         return;
     }
@@ -1001,14 +1059,14 @@ void Adafruit_SPITFT::writePixels(uint16_t *colors, uint32_t len,
 void Adafruit_SPITFT::dmaWait(void) {
 #if defined(USE_SPI_DMA)
     while(dma_busy);
- #if defined(__SAMD51__)
+ #if defined(__SAMD51__) || defined(_SAMD21_)
     if(connection == TFT_HARD_SPI) {
-        // See SAMD51 note in writeColor()
-        hwspi._spi->setDataMode(SPI_MODE0);
+        // See SAMD51/21 note in writeColor()
+        hwspi._spi->setDataMode(hwspi._mode);
     } else {
         pinPeripheral(tft8._wr, PIO_OUTPUT); // Switch WR back to GPIO
     }
- #endif // end __SAMD51__
+ #endif // end __SAMD51__ || _SAMD21_
 #endif
 }
 
@@ -1124,11 +1182,13 @@ void Adafruit_SPITFT::writeColor(uint16_t color, uint32_t len) {
         // turns out to be MUCH slower on many graphics operations (as when
         // drawing lines, pixel-by-pixel), perhaps because it's a volatile
         // type and doesn't cache. Working on this.
-  #if defined(__SAMD51__)
+  #if defined(__SAMD51__) || defined(_SAMD21_)
         if(connection == TFT_HARD_SPI) {
             // SAMD51: SPI DMA seems to leave the SPI peripheral in a freaky
             // state on completion. Workaround is to explicitly set it back...
-            hwspi._spi->setDataMode(SPI_MODE0);
+            // (5/17/2019: apparently SAMD21 too, in certain cases, observed
+            // with ST7789 display.)
+            hwspi._spi->setDataMode(hwspi._mode);
         } else {
             pinPeripheral(tft8._wr, PIO_OUTPUT); // Switch WR back to GPIO
         }
@@ -1677,6 +1737,29 @@ void Adafruit_SPITFT::sendCommand(uint8_t commandByte, const uint8_t *dataBytes,
     SPI_END_TRANSACTION();
 }
 
+/*!
+ @brief   Read 8 bits of data from display configuration memory (not RAM).
+ This is highly undocumented/supported and should be avoided,
+ function is only included because some of the examples use it.
+ @param   commandByte
+ The command register to read data from.
+ @param   index
+ The byte index into the command to read from.
+ @return  Unsigned 8-bit data read from display register.
+ */
+/**************************************************************************/
+uint8_t Adafruit_SPITFT::readcommand8(uint8_t commandByte, uint8_t index) {
+  uint8_t result;
+  startWrite();
+  SPI_DC_LOW();     // Command mode
+  spiWrite(commandByte);
+  SPI_DC_HIGH();    // Data mode
+  do {
+    result = spiRead();
+  } while(index--); // Discard bytes up to index'th
+  endWrite();
+  return result;
+}
 
 // -------------------------------------------------------------------------
 // Lowest-level hardware-interfacing functions. Many of these are inline and
@@ -1707,7 +1790,7 @@ inline void Adafruit_SPITFT::SPI_BEGIN_TRANSACTION(void) {
         hwspi._spi->setClock(hwspi._freq);
  #endif
         hwspi._spi->setBitOrder(MSBFIRST);
-        hwspi._spi->setDataMode(SPI_MODE0);
+        hwspi._spi->setDataMode(hwspi._mode);
 #endif // end !SPI_HAS_TRANSACTION
     }
 }
