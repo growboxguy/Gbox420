@@ -6,7 +6,7 @@
 // 420Settings.h : First time setup or changing the default settings
 
 //TODO: 
-
+//Flow meter
 //EC meter
 //Reservoir Refill button, CheckAeroPumpAlerts 
 //MQTT reporting memory overflow
