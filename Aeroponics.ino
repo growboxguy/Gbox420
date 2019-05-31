@@ -201,6 +201,29 @@ void checkAeroPumpAlerts_WithoutPressureTank()
          }
     }     
   }
+  else  {//if pump is off: should be no pressure
+        if((MySettings.MetricSystemEnabled && AeroPressure <= 0.3 )  || (!MySettings.MetricSystemEnabled && AeroPressure <= 5)){ //Checking if readings are close to 0
+          if(PrevoiusPressureRead != true){PressureTriggerCount = 0;}
+          else{ if(!PressureOK)PressureTriggerCount++; } 
+          PrevoiusPressureRead = true;     
+           
+          if(!PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){ // pressure was not OK before
+             PressureOK = true;
+             sendEmailAlert(F("Aeroponics%20pressure%20OK"));
+             } 
+         }
+         else{ //if pressure is not OK
+            if(PrevoiusPressureRead != false){PressureTriggerCount = 0;}
+            else{ if(PressureOK)PressureTriggerCount++; } 
+            PrevoiusPressureRead = false;  
+            
+            if(PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){
+                PressureOK = false;
+                  sendEmailAlert(F("Aeroponics%20sensor%20malfunction"));
+                  addToLog(F("Pressure%20sensor%20malfunction"));
+              }
+           }     
+  }
 }
 
 void readAeroPressure(){
