@@ -6,7 +6,7 @@
 // 420Settings.h : First time setup or changing the default settings
 
 //TODO: 
-//Flow meter
+//Flow meter: Use LastPulseCount in determining priming is complete
 //EC meter
 //Reservoir Refill button, CheckAeroPumpAlerts 
 //MQTT reporting memory overflow
@@ -76,8 +76,11 @@
   int MinLightReading = 1023; //stores the lowest light sensor analog reading
   uint32_t AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
   uint32_t AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
+  uint32_t FlowMeterTimer = millis();  //Flow meter timer
+  unsigned int LastPulseCount = 0; //stores last pulse/sec value
   bool AeroSolenoidOn = false; //Aeroponics - Spray state, set to true to spay at power on
   bool AeroPumpOn = false; //Aeroponics - High pressure pump state
+  bool AeroPumpKeepOn = false; //Aeroponics - Keep High pressure pump running
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
   char WebMessage[512];   //buffer for REST and MQTT API messages
   char CurrentTime[20]; //buffer for storing current time
