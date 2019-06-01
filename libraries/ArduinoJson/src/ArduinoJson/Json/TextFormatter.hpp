@@ -52,14 +52,23 @@ class TextFormatter {
 
   template <typename T>
   void writeFloat(T value) {
-    if (isnan(value)) return writeRaw("NaN");
+    if (isnan(value)) return writeRaw(ARDUINOJSON_ENABLE_NAN ? "NaN" : "null");
 
+#if ARDUINOJSON_ENABLE_INFINITY
     if (value < 0.0) {
       writeRaw('-');
       value = -value;
     }
 
     if (isinf(value)) return writeRaw("Infinity");
+#else
+    if (isinf(value)) return writeRaw("null");
+
+    if (value < 0.0) {
+      writeRaw('-');
+      value = -value;
+    }
+#endif
 
     FloatParts<T> parts(value);
 

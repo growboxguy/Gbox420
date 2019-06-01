@@ -41,14 +41,14 @@
   bool InternalFanHigh = true; //Internal fan Low/High, default:Low
   bool ExhaustFanOn = true;  //Exhaust fan On/Off, default:OFF
   bool ExhaustFanHigh = true;  //Exhaust fan Low/High, default:Low
-  int InternalFanSwitchTemp = 25; // Above limit turn the internal fan to High, turn to Low if limit-3 degrees is reached.
-  byte ExhaustFanHighHumid = 65; //Above set humidity turn exhaust fan High if automatic fan control is enabled,has to match default unit type(Metric C or Imperial K)
+  int InternalFanSwitchTemp = 25; // Above limit turn the internal fan to High, turn to Low if limit-3 degrees is reached. Has to match default unit type(Metric C or Imperial K)
+  byte ExhaustFanHighHumid = 65; //Above set humidity turn exhaust fan High if automatic fan control is enabled
   byte ExhaustFanLowHumid = 55; //Above set humidity turn exhaust fan Low if automatic fan control is enabled
   byte ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
    
   bool SoundEnabled = true;  //Enable PC speaker
   bool DebugEnabled = false; //Logs debug messages to serial and web outputs
-  bool MetricSystemEnabled = true; //Swith between Imperial/Metric units. If changed update the default temp and pressure defaults.  
+  bool MetricSystemEnabled = true; //Swith between Imperial/Metric units. If changed update the default temp and pressure values.  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
   bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
   char PushingBoxLogRelayID[MaxTextLength]= "v420"; //UPDATE THIS DeviceID of the PushingBox logging scenario 

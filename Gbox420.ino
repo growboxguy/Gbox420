@@ -6,8 +6,10 @@
 // 420Settings.h : First time setup or changing the default settings
 
 //TODO: 
-//Remove flow meter
-//EC meter 
+//Flow meter: Use LastPulseCount in determining priming is complete
+//EC meter
+//Reservoir Refill button, CheckAeroPumpAlerts 
+//MQTT reporting memory overflow
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -63,7 +65,6 @@
   float PH; //Calculated PH  
   int LightReading;  //light sensor analog reading
   bool Bright;  //Ligth sensor digital feedback: True-Bright / False-Dark
-  bool ReservoirRefilling = false;  //true only during refilling the reservoir
   byte ReservoirLevel = 4;
   char ReservoirText[9]= "E[####]F";
   float ReservoirTemp; //Reservoir water temperature
@@ -74,9 +75,12 @@
   int MaxLightReading = 0; // stores the highest light sensor analog reading
   int MinLightReading = 1023; //stores the lowest light sensor analog reading
   uint32_t AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
-  uint32_t AeroTimer = millis();  //Aeroponics - Pump cycle timer
+  uint32_t AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
+  uint32_t FlowMeterTimer = millis();  //Flow meter timer
+  unsigned int LastPulseCount = 0; //stores last pulse/sec value
   bool AeroSolenoidOn = false; //Aeroponics - Spray state, set to true to spay at power on
   bool AeroPumpOn = false; //Aeroponics - High pressure pump state
+  bool AeroPumpKeepOn = false; //Aeroponics - Keep High pressure pump running
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
   char WebMessage[512];   //buffer for REST and MQTT API messages
   char CurrentTime[20]; //buffer for storing current time
@@ -205,7 +209,7 @@ void loop() {  // put your main code here, to run repeatedly:
 }
 
 void processTimeCriticalStuff(){
-  ESPLink.Process();  //Interrupt calls this every 0.5 sec and process any request coming from the ESP-Link firmware
+  ESPLink.Process();  //Interrupt calls this every 0.5 sec and process any request coming from th ESP-Link
   if(AeroSolenoidOn || AeroPumpOn) checkAero(true);
 }
 
@@ -238,7 +242,7 @@ void minuteRun(){
 void halfHourRun(){
   if(MySettings.DebugEnabled)logToSerials(F("Half hour trigger.."),true);
   wdt_reset(); //reset watchdog timeout
-  if(MySettings.ReportToGoogleSheets) reportToGoogleSheets(false);  //uploads readings to Google Sheets via ESP REST API
+  if(MySettings.ReportToGoogleSheets) ReportToGoogleSheets(false);  //uploads readings to Google Sheets via ESP REST API
   if(MySettings.ReportToMqtt) mqttPublush(false);  //publish readings via ESP MQTT API
 }
 

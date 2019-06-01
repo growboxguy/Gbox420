@@ -15,8 +15,8 @@ void logToScreen(){
   Screen.print(F("Intensity:")); Screen.print(MySettings.LightBrightness);Screen.print(F("% - "));Screen.println(LightReading);
   Screen.print(F("On:")); Screen.print(timetoText(MySettings.LightOnHour, MySettings.LightOnMinute));Screen.print(F(",Off:")); Screen.println(timetoText(MySettings.LightOffHour,MySettings.LightOffMinute));
   Screen.setTextColor(ILI9341_MAGENTA);
-  Screen.print(F("Reservoir:"));Screen.println(ReservoirText);
-  Screen.print(F(",PH:"));Screen.print(PH); Screen.print(F(",Temp:"));Screen.print(ReservoirTemp);if(MySettings.MetricSystemEnabled)Screen.println(F("C"));else Screen.println(F("F"));  
+  Screen.print(F("Reservoir:"));Screen.print(ReservoirText);Screen.print(F(",PH:"));Screen.println(PH);
+  Screen.print(F("Temp:"));Screen.print(ReservoirTemp);if(MySettings.MetricSystemEnabled)Screen.println(F("C"));else Screen.println(F("F"));  
   Screen.setTextColor(ILI9341_WHITE);
   Screen.print(F("Internal:"));Screen.print(fanSpeedToText(true));Screen.print(F(",Exhaust:"));Screen.println(fanSpeedToText(false));
   Screen.setTextColor(ILI9341_GREEN);
