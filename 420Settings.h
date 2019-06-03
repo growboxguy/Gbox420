@@ -11,7 +11,6 @@
   typedef struct //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
-  bool AirPumpOn = true;  //Startup status for Reservoir Air Pump: True-ON / False-OFF, default:ON
   bool AeroSprayEnabled = true;  //Enable/disable misting
   uint32_t AeroInterval = 15; //Aeroponics - Spray every 15 minutes
   uint32_t AeroDuration = 2; //Aeroponics - Spray time in seconds

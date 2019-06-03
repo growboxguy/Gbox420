@@ -122,8 +122,7 @@ void RefreshCallback(char * url) //called when website is refreshed
       
   WebServer.setArgString(F("tdReservoir"),ReservoirText);
   WebServer.setArgString(F("tdPH"),toText(PH));
-  WebServer.setArgString(F("tdReservoirTemp"),toText(ReservoirTemp));
-  WebServer.setArgString(F("tdAirPumpOn"),stateToText(MySettings.AirPumpOn));  
+  WebServer.setArgString(F("tdReservoirTemp"),toText(ReservoirTemp));  
   }
 }
 
@@ -138,17 +137,19 @@ void ButtonPressCallback(char *button)
   else if (strcmp_P(button,(PGM_P)F("btn_ExhaustFanOff"))==0) { exhaustFanOff();}
   else if (strcmp_P(button,(PGM_P)F("btn_ExhaustFanLow"))==0) { exhaustFanLow();}
   else if (strcmp_P(button,(PGM_P)F("btn_ExhaustFanHigh"))==0) { exhaustFanHigh();}
-  else if (strcmp_P(button,(PGM_P)F("btn_AirPumpOn"))==0) { airPumpOn();}
-  else if (strcmp_P(button,(PGM_P)F("btn_AirPumpOff"))==0) { airPumpOff();}
   else if (strcmp_P(button,(PGM_P)F("btn_ATXOn"))==0) { TurnATXOn();}
   else if (strcmp_P(button,(PGM_P)F("btn_ATXOff"))==0) { TurnATXOff();}
   else if (strcmp_P(button,(PGM_P)F("btn_LightCalibrate"))==0) {triggerCalibrateLights();}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayNow"))==0) { aeroSprayNow(false);}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayOff"))==0) { aeroSprayOff();}  
+<<<<<<< HEAD
   else if (strcmp_P(button,(PGM_P)F("btn_ReservoirRefill"))==0) { ReservoirRefill();}
+=======
+>>>>>>> master
   else if (strcmp_P(button,(PGM_P)F("btn_PumpOn"))==0) { aeroPumpOn(true,true);}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpOff"))==0) { aeroPumpOff(true);}
-  else if (strcmp_P(button,(PGM_P)F("btn_PumpDisable"))==0) { aeroPumpDisable();}  
+  else if (strcmp_P(button,(PGM_P)F("btn_PumpDisable"))==0) { aeroPumpDisable();}
+  else if (strcmp_P(button,(PGM_P)F("btn_AeroMix"))==0) { aeroMix();}    
   else if (strcmp_P(button,(PGM_P)F("btn_GoogleSheets"))==0) { ReportToGoogleSheets(true);} 
   else if (strcmp_P(button,(PGM_P)F("btn_Mqtt"))==0) { mqttPublush(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { playEE(); }

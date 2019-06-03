@@ -22,7 +22,6 @@ const char* MqttAeroPressureLow = "AeroPressureLow";
 const char* MqttAeroPressureHigh = "AeroPressureHigh";
 const char* MqttAeroSprayEnabled = "AeroSprayEnabled";
 const char* MqttLightCalibrate = "LightCalibrate";
-const char* MqttAirPump = "AirPump";
 const char* MqttEe = "Ee";
 const char* MqttInternalFan = "InternalFan";
 const char* MqttExhaustFan = "ExhaustFan";
@@ -32,7 +31,6 @@ const char* MqttGoogleSheets = "GoogleSheets";
 const char* MqttSaveSettings = "SaveSettings";
 const char* MqttAeroSprayNow = "AeroSprayNow";
 const char* MqttAeroSprayOff = "AeroSprayOff";
-const char* MqttPumpRefill = "PumpRefill";
 const char* MqttPumpDisable = "PumpDisable";
 const char* MqttPressureCalibrate = "PressureCalibrate";
 //const char* Mqtt = "";
@@ -72,7 +70,6 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttAeroPressureHigh)!=NULL) {setAeroPressureHigh(atof(data));} 
   else if(strstr(topic,MqttAeroSprayEnabled)!=NULL) {setAeroSprayOnOff(atoi(data));}
   else if(strstr(topic,MqttLightCalibrate)!=NULL) {triggerCalibrateLights();}
-  else if(strstr(topic,MqttAirPump)!=NULL) { if(strcmp(data,"1")==0)airPumpOn(); else if(strcmp(data,"0")==0)airPumpOff(); }
   else if(strstr(topic,MqttEe)!=NULL) { playEE(); }
   else if(strstr(topic,MqttInternalFan)!=NULL) {if(strcmp(data,"2")==0)internalFanHigh(); else if(strcmp(data,"1")==0)internalFanLow(); else if(strcmp(data,"0")==0)internalFanOff(); }
   else if(strstr(topic,MqttExhaustFan)!=NULL) {if(strcmp(data,"2")==0)exhaustFanHigh(); else if(strcmp(data,"1")==0)exhaustFanLow(); else if(strcmp(data,"0")==0)exhaustFanOff(); }
@@ -82,7 +79,6 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttSaveSettings)!=NULL) { saveSettings(true);}
   else if(strstr(topic,MqttAeroSprayNow)!=NULL) { aeroSprayNow(false);}
   else if(strstr(topic,MqttAeroSprayOff)!=NULL) { aeroSprayOff();}  
-  else if(strstr(topic,MqttPumpRefill)!=NULL) { ReservoirRefill();}
   else if(strstr(topic,MqttPumpDisable)!=NULL) { aeroPumpDisable();}  
   else if(strstr(topic,MqttPressureCalibrate)!=NULL) { calibratePressureSensor();}
 

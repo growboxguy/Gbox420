@@ -8,8 +8,8 @@
 //TODO: 
 //Flow meter: Use LastPulseCount in determining priming is complete
 //EC meter
-//Reservoir Refill button, CheckAeroPumpAlerts 
-//MQTT reporting memory overflow
+//Reservoir Refill button
+//MQTT reporting memory overflow?
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -78,7 +78,12 @@
   uint32_t AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
   uint32_t FlowMeterTimer = millis();  //Flow meter timer
   unsigned int LastPulseCount = 0; //stores last pulse/sec value
+<<<<<<< HEAD
   bool AeroSolenoidOn = false; //Aeroponics - Spray state, set to true to spay at power on
+=======
+  bool AeroSpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on. Only used with Pressure Tank option.
+  bool AeroBypassSolenoidOn = false; //Aeroponics - Controls the bypass valve, true opens the solenoid
+>>>>>>> master
   bool AeroPumpOn = false; //Aeroponics - High pressure pump state
   bool AeroPumpKeepOn = false; //Aeroponics - Keep High pressure pump running
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
@@ -209,8 +214,8 @@ void loop() {  // put your main code here, to run repeatedly:
 }
 
 void processTimeCriticalStuff(){
-  ESPLink.Process();  //Interrupt calls this every 0.5 sec and process any request coming from th ESP-Link
-  if(AeroSolenoidOn || AeroPumpOn) checkAero(true);
+  ESPLink.Process();  //Interrupt calls this every 0.5 sec to process any request coming from the ESP-Link hosted webpage
+  if(AeroSpraySolenoidOn || AeroBypassSolenoidOn || AeroPumpOn) checkAero(true);  //when the aeroponics is doing a time critical task (Priming, spraying)
 }
 
 void oneSecRun(){
