@@ -78,12 +78,8 @@
   uint32_t AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
   uint32_t FlowMeterTimer = millis();  //Flow meter timer
   unsigned int LastPulseCount = 0; //stores last pulse/sec value
-<<<<<<< HEAD
-  bool AeroSolenoidOn = false; //Aeroponics - Spray state, set to true to spay at power on
-=======
   bool AeroSpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on. Only used with Pressure Tank option.
   bool AeroBypassSolenoidOn = false; //Aeroponics - Controls the bypass valve, true opens the solenoid
->>>>>>> master
   bool AeroPumpOn = false; //Aeroponics - High pressure pump state
   bool AeroPumpKeepOn = false; //Aeroponics - Keep High pressure pump running
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
