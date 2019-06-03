@@ -114,7 +114,6 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F(" ; PH:")); strcat(WebMessage,toText(PH));
   strcat_P(WebMessage,(PGM_P)F("(")); strcat(WebMessage,toText(PHRaw));strcat_P(WebMessage,(PGM_P)F(")"));
   strcat_P(WebMessage,(PGM_P)F(" ; Reservoir:")); strcat(WebMessage,ReservoirText);
-  strcat_P(WebMessage,(PGM_P)F(" ; AirPump:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.AirPumpOn));  
   return WebMessage;
 }
 

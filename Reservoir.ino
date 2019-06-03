@@ -1,20 +1,3 @@
-void airPumpOn(){
-  MySettings.AirPumpOn = true;
-  addToLog(F("Air pump ON"));
-  PlayOnSound=true;
-}
-
-void airPumpOff(){
-  MySettings.AirPumpOn = false;
-  addToLog(F("Air pump OFF"));
-  PlayOffSound=true;
-}
-
-void ReservoirRefill(){  
-  addToLog(F("Refilling..not implemented"));
-
-}
-
 void checkReservoir(){
   readReservoirTemp(); //Check water temperature
   
