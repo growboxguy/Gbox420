@@ -144,7 +144,8 @@ void ButtonPressCallback(char *button)
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayOff"))==0) { aeroSprayOff();}  
   else if (strcmp_P(button,(PGM_P)F("btn_PumpOn"))==0) { aeroPumpOn(true,true);}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpOff"))==0) { aeroPumpOff(true);}
-  else if (strcmp_P(button,(PGM_P)F("btn_PumpDisable"))==0) { aeroPumpDisable();}  
+  else if (strcmp_P(button,(PGM_P)F("btn_PumpDisable"))==0) { aeroPumpDisable();}
+  else if (strcmp_P(button,(PGM_P)F("btn_AeroMix"))==0) { aeroMix();}    
   else if (strcmp_P(button,(PGM_P)F("btn_GoogleSheets"))==0) { ReportToGoogleSheets(true);} 
   else if (strcmp_P(button,(PGM_P)F("btn_Mqtt"))==0) { mqttPublush(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { playEE(); }

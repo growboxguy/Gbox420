@@ -61,7 +61,7 @@ void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
           AeroBypassSolenoidOn = true;  
           aeroPumpOn(false,false); 
         }  
-        if (AeroBypassSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPrimingTime * 1000){ //self priming timeout reached, time to start spraying
+        if (!AeroPumpKeepOn && AeroBypassSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPrimingTime * 1000){ //self priming timeout reached, time to start spraying
           if(MySettings.DebugEnabled)logToSerials(F("Starting refill"),true); 
           AeroBypassSolenoidOn = false;      
           AeroPumpTimer = millis(); //reset timer to start measuring spray time
@@ -73,19 +73,17 @@ void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
 void checkAeroSprayTimer_WithoutPressureTank(){ //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
  if(AeroPumpOn)    { //if pump is on
     if (millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout * 1000){ 
-      AeroPumpOn = false;
-      stopFlowMeter();
+      aeroPumpOff(false);
       logToSerials(F("Pump timeout reached"),true);
     }
-    if(!AeroPumpKeepOn && !AeroBypassSolenoidOn && millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //bypass valve is closed and time to stop spraying (AeroDuration in Seconds)
-      AeroPumpOn = false;      
+    if(!AeroPumpKeepOn && !AeroBypassSolenoidOn && AeroPumpOn && millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //bypass valve is closed and time to stop spraying (AeroDuration in Seconds)
+      aeroPumpOff(false);    
       logToSerials(F("Stopping spray"),true);
       AeroSprayTimer = millis();
     }
     else{
-      if (AeroBypassSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPrimingTime * 1000){ //self priming timeout reached, time to start spraying
+      if (!AeroPumpKeepOn && AeroBypassSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPrimingTime * 1000){ //self priming timeout reached, time to start spraying
         AeroBypassSolenoidOn = false; //Close bypass valve
-        stopFlowMeter();
         logToSerials(F("Closing bypass, starting spray"),true);
         AeroSprayTimer = millis();
         }
@@ -94,8 +92,7 @@ void checkAeroSprayTimer_WithoutPressureTank(){ //pump directly connected to aer
   else{ //pump is off
     AeroBypassSolenoidOn = false; //Should not leave the solenoid turned on
     if(PumpOK && MySettings.AeroSprayEnabled  && millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
-      aeroPumpOn(false,false);
-                     
+      aeroPumpOn(false,false);                     
     }    
   } 
 }
@@ -137,14 +134,12 @@ void aeroSprayOff(){
 void aeroPumpOn(bool CalledFromWebsite, bool KeepOn){
   AeroPumpKeepOn = KeepOn;
   AeroPumpOn = true;
-  AeroPumpTimer = millis();  
-  if(!MySettings.AeroPressureTankPresent){ 
-      startFlowMeter();      
-    } 
+  AeroPumpTimer = millis();
+  startFlowMeter(); 
   checkRelays();
-  PlayOnSound = true;
   if(CalledFromWebsite){
     addToLog(F("Pump ON"));
+    PlayOnSound = true;
     PumpOK = true; 
   }
 }
@@ -152,14 +147,13 @@ void aeroPumpOn(bool CalledFromWebsite, bool KeepOn){
 void aeroPumpOff(bool CalledFromWebsite){  
   AeroPumpKeepOn = false;
   AeroPumpOn = false;
-  if(!MySettings.AeroPressureTankPresent){ //only when there is no Pressure Tank connected
-      AeroBypassSolenoidOn = false; //Close bypass valve
-      stopFlowMeter();      
-   } 
+  AeroBypassSolenoidOn = false; //Close bypass valve
+  AeroPumpTimer = millis();
+  stopFlowMeter();           
   checkRelays();
-  PlayOffSound = true;
   if(CalledFromWebsite){ 
     addToLog(F("Pump OFF"));
+    PlayOffSound = true;
     PumpOK = true;
   }
 }
@@ -168,6 +162,18 @@ void aeroPumpDisable(){
   aeroPumpOff(false);
   PumpOK = false;
   addToLog(F("Pump disabled"));
+}
+
+void aeroMix(){
+  AeroPumpKeepOn = true;
+  PumpOK = true;
+  AeroPumpOn = true;
+  AeroBypassSolenoidOn = true;
+  AeroPumpTimer = millis();
+  startFlowMeter();      
+  checkRelays();
+  PlayOnSound = true;
+  addToLog(F("Mixing nutrients"));
 }
 
 void setAeroSprayOnOff(bool State){

@@ -65,8 +65,8 @@
 				  </tr>				  
 				 </table>
 				<b>ATX power supply:</b>
-				<button id="btn_ATXOn" type="button">ON</button>
-				<button id="btn_ATXOff" type="button">OFF</button>					 
+				<button id="btn_ATXOn" type="button" title="Turn ATX power supply ON">ON</button>
+				<button id="btn_ATXOff" type="button" title="Turn ATX power supply OFF">OFF</button>					 
 			</div>			
 			<div class="card" style="width:90%">
 				<h1>Box</h1>		
@@ -85,27 +85,27 @@
 				  </tr>
 				</table>
 				<b>Internal fan :</b>
-				<button id="btn_InternalFanOff" type="button">OFF</button>
-				<button id="btn_InternalFanLow" type="button">Low</button>
-				<button id="btn_InternalFanHigh" type="button">High</button>
+				<button id="btn_InternalFanOff" type="button" title="Turn internal fan OFF">OFF</button>
+				<button id="btn_InternalFanLow" type="button" title="Turn internal fan ON and set speed to LOW">Low</button>
+				<button id="btn_InternalFanHigh" type="button" title="Turn internal fan ON and set speed to HIGH">High</button>
 				<form>
 					<label><input type="checkbox" name="AutoInternalFan">Automatic low/high at: </label>
 					<input style="width: 45px;" min=0 max=255 name="InternalFanSwitchTemp" type="number"/><span>° </span>
-					<input type="submit" value="Set">
+					<input type="submit" value="Set" title="Enable/Disable automatic LOW/HIGH switch of internal fan based on internal temperature">
 				</form>						
 				<b>Exhaust fan:</b>
-				<button id="btn_ExhaustFanOff" type="button">OFF</button>
-				<button id="btn_ExhaustFanLow" type="button">Low</button>
-				<button id="btn_ExhaustFanHigh" type="button">High</button>
+				<button id="btn_ExhaustFanOff" type="button" title="Turn exhaust fan OFF">OFF</button>
+				<button id="btn_ExhaustFanLow" type="button" title="Turn exhaust fan ON and set speed to LOW">Low</button>
+				<button id="btn_ExhaustFanHigh" type="button" title="Turn exhaust fan ON and set speed to HIGH">High</button>
 				<form>
 					<label><input type="checkbox" name="AutoExhaustFan">Automatic. Off humidity:</label>
 					<input style="width: 35px;" min=0 max=99 name="ExhaustFanOffHumid" type="number"/>
-					<input type="submit" value="Set">
+					<input type="submit" value="Set" title="Enable/Disable automatic OFF/LOW/HIGH exhaust fan based on humidity and set OFF humidity">
 				</form>
 				<form>	
 					Low:<input style="width: 35px;" min=0 max=99 name="ExhaustFanLowHumid" type="number"/>
 					High:<input style="width: 35px;" min=0 max=99 name="ExhaustFanHighHumid" type="number"/>
-					<input type="submit" value="Set">
+					<input type="submit" value="Set" title="Set LOW and HIGH speed humidity leveles">
 				</form>							
 			</div>		
 		</div>
@@ -134,8 +134,8 @@
 					<td id="tdLightOff" class="dataRows"></td>
 				  </tr>
 				 </table> 				
-				<button id="btn_LightOn" type="button">ON</button>
-				<button id="btn_LightOff" type="button">OFF</button>
+				<button id="btn_LightOn" type="button" title="Turn grow lights ON">ON</button>
+				<button id="btn_LightOff" type="button" title="Turn grow lights OFF">OFF</button>
 				<button id="btn_LightCalibrate" type="button" title="Measure light output at 0 and 100% brightness">Calibrate</button><br>
 				<b>Brightness</b><br/>				
 				<form>
@@ -144,9 +144,9 @@
 				<input type="submit" value="Set">				
 				</form>				
 				<b>Timer</b>
-				<form><label><input type="checkbox" name="TimerEnabled">Enabled </label><input type="submit" value="Set"></form>
-				<form>ON : <input style="width: 35px;" min=0 max=23 name="LightsOnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="LightsOnMinute" type="number"/> <input type="submit" value="Set"></form>
-				<form>OFF:<input style="width: 35px;" min=0 max=23 name="LightsOffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="LightsOffMinute" type="number"/> <input type="submit" value="Set"></form>
+				<form><label><input type="checkbox" name="TimerEnabled">Enabled </label><input type="submit" value="Set" title="Change grow light bightness between 0%(max dimmind) and 100% (max output)"></form>
+				<form>ON : <input style="width: 35px;" min=0 max=23 name="LightsOnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="LightsOnMinute" type="number"/> <input type="submit" value="Set" title="Set grow light ON time"></form>
+				<form>OFF:<input style="width: 35px;" min=0 max=23 name="LightsOffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="LightsOffMinute" type="number"/> <input type="submit" value="Set" title="Set grow light OFF time"></form>
 			</div>			
 			<div class="card" style="width:90%">
 				<h1>Reservoir</h1>
@@ -178,22 +178,23 @@
 				<b>Pump</b><br>
 				<button id="btn_PumpOn" type="button" align="rigth" title="Starts the pump and reset its status to OK">ON</button>
 				<button id="btn_PumpOff" type="button" align="rigth" title="Stops the pump and reset its status to OK">OFF</button>
-				<button id="btn_PumpDisable" type="button" align="rigth" title="Stops and disables pump">Disable</button>								
+				<button id="btn_PumpDisable" type="button" align="rigth" title="Stops and disables pump">Disable</button>
+				<button id="btn_AeroMix" type="button" align="rigth" title="Mix nutrients: Starts pump and opens bypass valve">Mix</button>				
 				<form>
 					Low : <input style="width: 55px;" min=0 max=145 step="0.1" name="AeroPressureLow" type="number"/> 
 					High: <input style="width: 55px;" min=0 max=145 step="0.1" name="AeroPressureHigh" type="number"/> 					
-					<input type="submit" value="Set">
+					<input type="submit" value="Set" title="With Pressure tank: LOW=Start/HIGH:Stop refill. Without pressure tank: Expected pressure reading range while spraying">
 				</form>
 				<b>Spray</b>
 				<form>
-					<label><input type="checkbox" name="AeroSprayEnabled">Enabled </label><input type="submit" value="Set">
-					<button id="btn_AeroSprayNow" type="button">Spray</button>
-					<button id="btn_AeroSprayOff" type="button">OFF</button>
+					<label><input type="checkbox" name="AeroSprayEnabled">Enabled </label><input type="submit" value="Set" title="Enable/Disable spraying">
+					<button id="btn_AeroSprayNow" type="button" title="Spray now">Spray</button>
+					<button id="btn_AeroSprayOff" type="button" title="Stop spraying">OFF</button>
 				</form>				
 				<form>
 					Interval: <input style="width: 50px;" min=0 name="AeroInterval" type="number"/> min<br>
 					Duration: <input style="width: 50px;" min=0 name="AeroDuration" type="number"/> sec
-					<input type="submit" value="Set">	
+					<input type="submit" value="Set" title="Set how often a sray should start (Interval), and how long one spray should last (Duration)">	
 				</form>							
 			</div>			
 		</div>		
