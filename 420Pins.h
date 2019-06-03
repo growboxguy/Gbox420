@@ -13,9 +13,9 @@
   const byte BuzzerOutPin = 4; //PC speaker+ (red)
   const byte DimmingOutPin = 11; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
   const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
-  const byte Relay1OutPin = 22;  //Power relay Port 1 - Aeroponics solenoid
+  const byte Relay1OutPin = 22;  //Power relay Port 1 - Aeroponics spray solenoid (Only with Pressure Tank)
   const byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump
-  const byte Relay3OutPin = 24;  //Power relay Port 3 - Reservoir air pump
+  const byte Relay3OutPin = 24;  //Power relay Port 3 - Aeroponics bypass solenoid
   const byte Relay4OutPin = 25;  //Power relay Port 4 - Internal fan Off/On
   const byte Relay5OutPin = 26;  //Power relay Port 5 - Internal fan Low/High
   const byte Relay6OutPin = 27;  //Power relay Port 6 - Exhaust fan Off/On
