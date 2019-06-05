@@ -76,7 +76,8 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgInt(F("AeroPrimingTime"), MySettings.AeroPrimingTime);
   WebServer.setArgBoolean(F("AeroQuietEnabled"), MySettings.AeroQuietEnabled);
   WebServer.setArgBoolean(F("AeroRefillBeforeQuiet"), MySettings.AeroRefillBeforeQuiet);
-  WebServer.setArgBoolean(F("AeroPressureTankPresent"), MySettings.AeroPressureTankPresent);  
+  WebServer.setArgBoolean(F("AeroPressureTankPresent"), MySettings.AeroPressureTankPresent);
+  WebServer.setArgBoolean(F("AeroBlowOff"), MySettings.AeroBlowOff);  
   WebServer.setArgInt(F("AeroQuietFromHour"), MySettings.AeroQuietFromHour); 
   WebServer.setArgInt(F("AeroQuietFromMinute"), MySettings.AeroQuietFromMinute); 
   WebServer.setArgInt(F("AeroQuietToHour"), MySettings.AeroQuietToHour); 
@@ -212,6 +213,7 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("AeroQuietEnabled"))==0) {setQuietOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("AeroRefillBeforeQuiet"))==0) {setQuietRefillOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("AeroPressureTankPresent"))==0) {setAeroPressureTankOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("AeroBlowOff"))==0) {setAeroBlowOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("AeroQuietFromHour"))==0) {setQuietFromHour(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("AeroQuietFromMinute"))==0) {setQuietFromMinute(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("AeroQuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}

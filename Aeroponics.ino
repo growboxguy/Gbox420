@@ -73,12 +73,23 @@ void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
 }
 
 void checkAeroSprayTimer_WithoutPressureTank(){ //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
+ if (AeroBlowOffInProgress && millis() - AeroSprayTimer >= AeroBlowOffTime * 1000){   //checking pressure blow-off timeout
+      AeroBypassSolenoidOn = false; //Close bypass valve
+      AeroBlowOffInProgress = false;
+      logToSerials(F("Stopping blow-off"),true);
+ }
  if(AeroPumpOn)    { //if pump is on
-    if (millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout * 1000){ 
+    if (millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout * 1000){   //checking pump timeout
       aeroPumpOff(false);
       logToSerials(F("Pump timeout reached"),true);
     }
+    
     if(!AeroPumpKeepOn && !AeroBypassSolenoidOn && AeroPumpOn && millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //bypass valve is closed and time to stop spraying (AeroDuration in Seconds)
+      if(MySettings.AeroBlowOff){
+          AeroBypassSolenoidOn = true;
+          AeroBlowOffInProgress = true; //no extra time is needed, will use AeroSprayTimer
+          checkRelays();
+        }
       aeroPumpOff(false);    
       logToSerials(F("Stopping spray"),true);
       AeroSprayTimer = millis();
@@ -92,7 +103,7 @@ void checkAeroSprayTimer_WithoutPressureTank(){ //pump directly connected to aer
        }
      }
   else{ //pump is off
-    AeroBypassSolenoidOn = false; //Should not leave the solenoid turned on
+    if (!AeroBlowOffInProgress)AeroBypassSolenoidOn = false; //Should not leave the solenoid turned on
     if(PumpOK && MySettings.AeroSprayEnabled  && millis() - AeroSprayTimer >= MySettings.AeroInterval * 60000){ //if time to start spraying (AeroInterval in Minutes)
       aeroPumpOn(false,false);                     
     }    
@@ -149,7 +160,7 @@ void aeroPumpOn(bool CalledFromWebsite, bool KeepOn){
 void aeroPumpOff(bool CalledFromWebsite){  
   AeroPumpKeepOn = false;
   AeroPumpOn = false;
-  AeroBypassSolenoidOn = false; //Close bypass valve
+  if(!AeroBlowOffInProgress)AeroBypassSolenoidOn = false; //Close bypass valve
   AeroPumpTimer = millis();
   stopFlowMeter();           
   checkRelays();
@@ -420,6 +431,18 @@ void setAeroPressureTankOnOff(bool State){ //this change requires a different ae
     PlayOffSound=true;
     }
     aeroPumpDisable(); //for safety disable the pump 
+}
+
+void setAeroBlowOnOff(bool State){ //this change requires a different aeroponics setup
+  MySettings.AeroBlowOff = State;  
+  if(MySettings.AeroBlowOff){ 
+    addToLog(F("Blow-off enabled"));
+    PlayOnSound=true;
+    }
+  else {
+    addToLog(F("Blow-off disabled"));
+    PlayOffSound=true;
+    }
 }
 
 void setQuietFromHour(int Hour){

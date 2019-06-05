@@ -1,10 +1,11 @@
 //Default settings of the grow box can be adjusted here
 
 //Global constants
-  const byte MaxDimming = 235; //Sets the maximum dimming duty cycle to 92% (255*0.92=~235). 255=100% dimming (LED drivers usually do not support full dimming, check the specification before changing this!)
+  const byte MaxDimming = 235; //Sets the maximum LED dimming duty cycle to 92% (255*0.92=~235). 255=100% dimming (LED drivers usually do not support full dimming, check the specification before changing this!)
   const byte ScreenRotation = 1;  //LCD screen rotation: 1,3:landscape 2,4:portrait
   const byte LogDepth = 10;  //Show X number of log entries on website, do not go above 10
   const byte MaxTextLength = 31;  //Default char* buffer size: 30 characters + null terminator, used for logging and converting to text
+  const uint32_t AeroBlowOffTime = 3;  //In Seconds. Opens the bypass valve to quickly release pressure after a spray: Helps with more accurate spray timing.  Only used without the Pressure Tank option.
    
 //Settings saved to EEPROM persistent storage
   byte Version= 9; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
@@ -24,7 +25,8 @@
   byte AeroQuietFromMinute = 0; //Quiet time to block pump - minute
   byte AeroQuietToHour = 6; //Quiet time end - hour
   byte AeroQuietToMinute = 0; //Quiet time end - minute
-  bool AeroPressureTankPresent = true;  //If pressure tank is present in the aeroponics setup, CAUTION:Requires change in the aeroponics hardware too.
+  bool AeroPressureTankPresent = false;  //If pressure tank is present in the aeroponics setup, CAUTION:Requires change in the aeroponics hardware too.
+  bool AeroBlowOff = true;  //Enable bypass valve after a spray to release pressure instantly: Stops the spray faster. Only used without the Pressure Tank option.
   
   bool TimerEnabled = true;  //Enable timer controlling lights
   bool LightStatus = true;  //Startup status for lights: True-ON / False-OFF
