@@ -81,7 +81,7 @@
   bool AeroSpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on. Only used with the Pressure Tank option.
   bool AeroBypassSolenoidOn = false; //Aeroponics - Controls the bypass valve, true opens the solenoid
   bool AeroPumpOn = false; //Aeroponics - High pressure pump state
-  bool AeroPumpKeepOn = false; //Aeroponics - Keep High pressure pump running
+  bool AeroPumpKeepOn = false; //Aeroponics - Used to temporary suspend pump timers and keep the high pressure pump on. Do not change.
   bool AeroBlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
   char WebMessage[512];   //buffer for REST and MQTT API messages
