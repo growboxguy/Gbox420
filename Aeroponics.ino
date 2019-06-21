@@ -32,17 +32,24 @@ void checkAero(bool Interrupt){
 }
 
 void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
-  if(AeroPumpOn && (AeroPressure >= MySettings.AeroPressureHigh || millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout * 1000)){ //If set high pressure is reached or pump timeout reached
-      if(!AeroPumpKeepOn) { 
-        aeroPumpDisable();
-        sendEmailAlert(F("Aeroponics%20pump%20failed"));
-      }
-      aeroPumpOff(false);
-      logToSerials(F("Pump timeout reached"),true);
+  if(AeroPumpOn){ //if pump is on
+    if(AeroPressure >= MySettings.AeroPressureHigh){ //refill complete, target pressure reached
+     aeroPumpOff(false);
+     logToSerials(F("Pressure tank recharged"),true);
+    }
+    else{
+      if( millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout * 1000)){ //If pump timeout reached
+        aeroPumpOff(false);
+        if(!AeroBypassActive) {  //if bypass was not active and refill did not finish within timeout= pump must be broken
+          //aeroPumpDisable();  #Uncomment this to automatically disable pump if it is suspected to be broken
+          sendEmailAlert(F("Aeroponics%20pump%20failed"));
+        }
+        logToSerials(F("Pump timeout reached"),true);       
+      }      
+    }
   } 
 
- if(AeroSpraySolenoidOn)    { //if spray is on   
-
+ if(AeroSpraySolenoidOn){ //if spray is on
     if(millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //if time to stop spraying (AeroDuration in Seconds)
       AeroSpraySolenoidOn = false;
       logToSerials(F("Stopping spray"),true);
@@ -63,7 +70,7 @@ void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
           AeroBypassSolenoidOn = true;  
           aeroSprayNow(false);  
         }  
-        if (!AeroPumpKeepOn && AeroBypassSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPrimingTime * 1000){ //self priming timeout reached, time to start spraying
+        if (!AeroBypassActive && AeroBypassSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPrimingTime * 1000){ //self priming timeout reached, time to start spraying
           if(MySettings.DebugEnabled)logToSerials(F("Starting refill"),true); 
           AeroBypassSolenoidOn = false;      
           AeroPumpTimer = millis(); //reset timer to start measuring spray time
@@ -84,7 +91,7 @@ void checkAeroSprayTimer_WithoutPressureTank(){ //pump directly connected to aer
       logToSerials(F("Pump timeout reached"),true);
     }
     
-    if(!AeroPumpKeepOn && !AeroBypassSolenoidOn && AeroPumpOn && millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //bypass valve is closed and time to stop spraying (AeroDuration in Seconds)
+    if(!AeroBypassActive && !AeroBypassSolenoidOn && AeroPumpOn && millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //bypass valve is closed and time to stop spraying (AeroDuration in Seconds)
       if(MySettings.AeroBlowOff){
           AeroBypassSolenoidOn = true;
           AeroBlowOffInProgress = true; //no extra time is needed, will use AeroSprayTimer
@@ -95,7 +102,7 @@ void checkAeroSprayTimer_WithoutPressureTank(){ //pump directly connected to aer
       AeroSprayTimer = millis();
     }
     else{
-      if (!AeroPumpKeepOn && AeroBypassSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPrimingTime * 1000){ //self priming timeout reached, time to start spraying
+      if (!AeroBypassActive && AeroBypassSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPrimingTime * 1000){ //self priming timeout reached, time to start spraying
         AeroBypassSolenoidOn = false; //Close bypass valve
         logToSerials(F("Closing bypass, starting spray"),true);
         AeroSprayTimer = millis();
@@ -112,7 +119,7 @@ void checkAeroSprayTimer_WithoutPressureTank(){ //pump directly connected to aer
 
 void aeroSprayNow(bool DueToHighPressure){   
   if(MySettings.AeroSprayEnabled || DueToHighPressure){
-    AeroPumpKeepOn = false;
+    AeroBypassActive = false;
     AeroSprayTimer = millis();
     if(MySettings.AeroPressureTankPresent){
       AeroSpraySolenoidOn = true; 
@@ -145,7 +152,7 @@ void aeroSprayOff(){
 }
 
 void aeroPumpOn(bool CalledFromWebsite){
-  AeroPumpKeepOn   = CalledFromWebsite; //If called from the Web interface keep the pump on
+  AeroBypassActive   = CalledFromWebsite; //If called from the Web interface keep the pump on
   AeroPumpOn = true;
   AeroPumpTimer = millis();
   startFlowMeter(); 
@@ -158,7 +165,7 @@ void aeroPumpOn(bool CalledFromWebsite){
 }
 
 void aeroPumpOff(bool CalledFromWebsite){  
-  AeroPumpKeepOn = false;
+  AeroBypassActive = false;
   AeroPumpOn = false;
   if(!AeroBlowOffInProgress)AeroBypassSolenoidOn = false; //Close bypass valve
   AeroPumpTimer = millis();
@@ -167,7 +174,7 @@ void aeroPumpOff(bool CalledFromWebsite){
   if(CalledFromWebsite){ 
     addToLog(F("Pump OFF"));
     PlayOffSound = true;
-    PumpOK = true;
+    PumpOK = true; //re-enable pump 
   }
 }
 
@@ -178,9 +185,9 @@ void aeroPumpDisable(){
 }
 
 void aeroMix(){
-  AeroPumpKeepOn = true;
+  AeroPumpOn = true;    
+  AeroBypassActive = true; 
   PumpOK = true;
-  AeroPumpOn = true;
   AeroBypassSolenoidOn = true;
   AeroPumpTimer = millis();
   startFlowMeter();      
@@ -218,10 +225,10 @@ void checkAeroPumpAlerts_WithPressureTank()
          // aeroSprayNow(true); //try to release pressure  
     }
     if(PrevoiusPressureRead != false){PressureTriggerCount = 0;}
-    else{ if(PressureOK)PressureTriggerCount++; } 
+    else{ if(PressureOK)PressureTriggerCount++; }  //count out of range readings while pressure is considered OK and an alert is not active.
     PrevoiusPressureRead = false;  
     
-    if(PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){
+    if(PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){ //trigger an alert if the out of range reaing counter is above the limit
         PressureOK = false;
         if(AeroPressure > MySettings.PressureAlertHigh){ //If high pressure alert level is reached   
           sendEmailAlert(F("Aeroponics%20pressure%20too%20high"));

@@ -8,7 +8,7 @@
   const uint32_t AeroBlowOffTime = 3;  //In Seconds. Opens the bypass valve to quickly release pressure after a spray: Helps with more accurate spray timing.  Only used without the Pressure Tank option.
    
 //Settings saved to EEPROM persistent storage
-  byte Version= 9; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
+  byte Version= 10; //increment this when you change the Settings stucture to invalidate the EEPROM stored settings
   typedef struct //when Version is changed these values get stored in EEPROM, else EEPROM content is loaded
   {
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
@@ -69,11 +69,11 @@
   float PHAlertLow = 5.5; //Low pressure warning
   float PHAlertHigh = 6.5; //High pressure warning
 
-  float PressureSensorOffset = 0.57;        //Pressure sensor calibration: voltage reading at 0 pressure
-  float PressureSensorRatio = 2.7;          //Pressure sensor voltage to pressure ratio
   float PHCalibrationSlope = -0.033256;     //Update this to your own PH meter calibration values
   float PHCalibrationIntercept = 24.08651;  //Update this to your own PH meter calibration values
-
+  float PressureSensorOffset = 0.57;        //Pressure sensor calibration: voltage reading at 0 pressure
+  float PressureSensorRatio = 2.7;          //Pressure sensor voltage to pressure ratio
+  
   byte StructureVersion = Version;  
   } Settings;  //New type called: Settings
   Settings MySettings;  //create a variable of type "Settings"  with default values from the struct
