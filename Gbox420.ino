@@ -5,11 +5,8 @@
 // 420Pins.h : Modify the Pin assignment
 // 420Settings.h : First time setup or changing the default settings
 
-//TODO: 
-//Flow meter: Use LastPulseCount in determining priming is complete
+//TODO:  
 //EC meter
-//Reservoir Refill button
-//MQTT reporting memory overflow?
 //Restore defaults settings button needed
 
 //Libraries
@@ -35,7 +32,7 @@
   #include "SPI.h" //TFT Screen - communication
   #include "Adafruit_GFX.h" //TFT Screen - generic graphics driver
   #include "Adafruit_ILI9341.h" //TFT Screen - hardware specific driver
-  #include "util/atomic.h" //Loading the ATOMIC_BLOCK macro, helps blocking interoups while commands in the block are running
+
   //#include "MemoryFree.h" //checking remaining memory - only for debugging
 
 //Global variables
@@ -77,9 +74,6 @@
   int MinLightReading = 1023; //stores the lowest light sensor analog reading
   uint32_t AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
   uint32_t AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
-  uint32_t FlowMeterTimer = millis();  //Flow meter timer
-  unsigned int LastPulseCount = 0; //stores last pulse/sec value
-  bool AeroSpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on. Only used with the Pressure Tank option.
   bool AeroBypassSolenoidOn = false; //Aeroponics - Controls the bypass valve, true opens the solenoid
   bool AeroPumpOn = false; //Aeroponics - High pressure pump state
   bool AeroBypassActive = false; //Aeroponics - Used to temporary suspend pump timers and keep the high pressure pump on. Do not change.
@@ -213,7 +207,7 @@ void loop() {  // put your main code here, to run repeatedly:
 
 void processTimeCriticalStuff(){
   ESPLink.Process();  //Interrupt calls this every 0.5 sec to process any request coming from the ESP-Link hosted webpage
-  if(AeroSpraySolenoidOn || AeroBypassSolenoidOn || AeroPumpOn) checkAero(true);  //when the aeroponics is doing a time critical task (Priming, spraying)
+  if( AeroBypassSolenoidOn || AeroPumpOn) checkAero(true);  //when the aeroponics is doing a time critical task (Priming, spraying)
 }
 
 void oneSecRun(){
@@ -314,8 +308,6 @@ void setMetricSystemEnabled(bool MetricEnabled){
     MySettings.InternalFanSwitchTemp = convertBetweenTempUnits(MySettings.InternalFanSwitchTemp);
     MySettings.TempAlertLow= convertBetweenTempUnits(MySettings.TempAlertLow);
     MySettings.TempAlertHigh= convertBetweenTempUnits(MySettings.TempAlertHigh);
-    MySettings.AeroPressureLow=convertBetweenPressureUnits(MySettings.AeroPressureLow);
-    MySettings.AeroPressureHigh=convertBetweenPressureUnits(MySettings.AeroPressureHigh);
     MySettings.PressureAlertLow=convertBetweenPressureUnits(MySettings.PressureAlertLow);
     MySettings.PressureAlertHigh=convertBetweenPressureUnits(MySettings.PressureAlertHigh);
   }    

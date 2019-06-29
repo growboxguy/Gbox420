@@ -65,9 +65,7 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttLightsOffHour)!=NULL) {setLightsOffHour(atoi(data));}
   else if(strstr(topic,MqttLightsOffMinute)!=NULL) {setLightsOffMinute(atoi(data));}       
   else if(strstr(topic,MqttAeroInterval)!=NULL) { setAeroInterval(atoi(data));}
-  else if(strstr(topic,MqttAeroDuration)!=NULL) {setAeroDuration(atoi(data));}
-  else if(strstr(topic,MqttAeroPressureLow)!=NULL) {setAeroPressureLow(atof(data));}
-  else if(strstr(topic,MqttAeroPressureHigh)!=NULL) {setAeroPressureHigh(atof(data));} 
+  else if(strstr(topic,MqttAeroDuration)!=NULL) {setAeroDuration(atoi(data));} 
   else if(strstr(topic,MqttAeroSprayEnabled)!=NULL) {setAeroSprayOnOff(atoi(data));}
   else if(strstr(topic,MqttLightCalibrate)!=NULL) {triggerCalibrateLights();}
   else if(strstr(topic,MqttEe)!=NULL) { playEE(); }

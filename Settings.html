@@ -31,18 +31,6 @@
 				<form>RelayID:<input type="text" name="PushingBoxLogRelayID"  style="width: 150px;" title="DeviceID of the PushingBox logging scenario"/><input type="submit" value="Set"></form>
 			</div>
 			<div class="card" style="width:90%">
-				<h1>Aeroponics</h1>
-				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="AeroPumpTimeout" type="number" title="Maximum high pressure tank refill time, if reached pump is considered broken"/> sec <input type="submit" value="Set"></form>
-				<form>Pump priming time:<input style="width: 55px;" min=1 max=9999 name="AeroPrimingTime" type="number" title="At pump startup the bypass valve is open for X seconds"/> sec <input type="submit" value="Set"></form>
-				<form><label><input type="checkbox" name="AeroPressureTankPresent" title="CAUTION: Aeroponics hardware change is also required when changing this!!">Pressure tank present (!) </label><input type="submit" value="Set"></form>
-				<form><label><input type="checkbox" name="AeroBlowOff" title="Blow-off pressure after spray">Blow-off after spray </label><input type="submit" value="Set"></form>
-				<b>Quiet time</b>
-					<form class="test"><label><input type="checkbox" name="AeroQuietEnabled">Enabled </label><input type="submit" value="Set"></form>
-					<form><label><input type="checkbox" name="AeroRefillBeforeQuiet" title="Before enabling quiet time refill the tank">Refill before </label><input type="submit" value="Set"></form>
-					<form>From:<input style="width: 35px;" min=0 max=23 name="AeroQuietFromHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="AeroQuietFromMinute" type="number"/> <input type="submit" value="Set"></form>
-					<form>To : <input style="width: 35px;" min=0 max=23 name="AeroQuietToHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="AeroQuietToMinute" type="number"/> <input type="submit" value="Set"></form>			
-			</div>	
-			<div class="card" style="width:90%">
 				<h1>Digit Display</h1>				
 				<form>Backlight: Min<input style="width:100px;" type="range" name="DigitDisplayBrightness" min="0" max="100"/>Max <input type="submit" value="Set"></form>
 				<form>

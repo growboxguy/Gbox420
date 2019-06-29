@@ -105,8 +105,6 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F(" ; LightOFF:")); strcat(WebMessage,timetoText(MySettings.LightOffHour, MySettings.LightOffMinute));
   strcat_P(WebMessage,(PGM_P)F("\n\r Aeroponics - "));
   strcat_P(WebMessage,(PGM_P)F("Pressure:"));strcat(WebMessage,toText(AeroPressure));if(MySettings.MetricSystemEnabled)strcat_P(WebMessage,(PGM_P)F("bar"));else strcat_P(WebMessage,(PGM_P)F("psi"));
-  strcat_P(WebMessage,(PGM_P)F(" ; Low:"));strcat(WebMessage,toText(MySettings.AeroPressureLow));
-  strcat_P(WebMessage,(PGM_P)F(" ; High:"));strcat(WebMessage,toText(MySettings.AeroPressureHigh));
   strcat_P(WebMessage,(PGM_P)F(" ; Interval:"));strcat(WebMessage,toText(MySettings.AeroInterval));
   strcat_P(WebMessage,(PGM_P)F(" ; Duration:"));strcat(WebMessage,toText(MySettings.AeroDuration));
   strcat_P(WebMessage,(PGM_P)F("\n\r Reservoir - "));

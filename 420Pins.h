@@ -1,6 +1,7 @@
 //Pins for connecting components
 //https://sites.google.com/site/growboxguy/arduino/components
 
+ //Analog pins
   const byte LightSensorAnalogInPin = A0; //A0 - LM393 light sensor
   const byte PressureSensorInPin = A1; //Signal(yellow) - Pressure sensor
   const byte PHMeterInPin = A3;  //Po - PH meter
@@ -9,11 +10,11 @@
   const byte WaterMediumInPin = A6; //Water sensor3
   const byte WaterFullInPin = A7; // Water sensor4
   
-  const byte FlowMeterInPin = 2;     //Signal(yellow) - LM393 light sensor
+ //Digital pins
   const byte BuzzerOutPin = 4; //PC speaker+ (red)
   const byte DimmingOutPin = 11; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
   const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
-  const byte Relay1OutPin = 22;  //Power relay Port 1 - Aeroponics spray solenoid (Only with Pressure Tank)
+  const byte Relay1OutPin = 22;  //Power relay Port 1 - FREE
   const byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump
   const byte Relay3OutPin = 24;  //Power relay Port 3 - Aeroponics bypass solenoid
   const byte Relay4OutPin = 25;  //Power relay Port 4 - Internal fan Off/On
