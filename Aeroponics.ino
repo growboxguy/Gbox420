@@ -38,17 +38,29 @@ void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
      logToSerials(F("Pressure tank recharged"),true);
     }
     else{
-      if( millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout * 1000)){ //If pump timeout reached
+      if( millis() - AeroPumpTimer >= MySettings.AeroPumpTimeout * 1000){ //If pump timeout reached
         aeroPumpOff(false);
         if(!AeroBypassActive) {  //if bypass was not active and refill did not finish within timeout= pump must be broken
-          //aeroPumpDisable();  #Uncomment this to automatically disable pump if it is suspected to be broken
+          aeroPumpDisable();  //automatically disable pump if it is suspected to be broken
           sendEmailAlert(F("Aeroponics%20pump%20failed"));
         }
         logToSerials(F("Pump timeout reached"),true);       
-      }      
+      }
+       if (!AeroBypassActive && AeroBypassSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPrimingTime * 1000){ //self priming timeout reached, time to start refilling
+          if(MySettings.DebugEnabled)logToSerials(F("Starting refill"),true); 
+          AeroBypassSolenoidOn = false;      
+          AeroPumpTimer = millis(); //reset timer to start measuring spray time
+        }      
     }
-  } 
-
+  }
+  if( PumpOK && checkQuietTime() && AeroPressure <= MySettings.AeroPressureLow){ //if pump is not disabled and quiet time not active and Pressure reached low limit: turn on pump 
+        if(!AeroPumpOn && !AeroBypassSolenoidOn){ //start the bypass
+          if(MySettings.DebugEnabled)logToSerials(F("Starting bypass"),true);
+          AeroBypassSolenoidOn = true; 
+          AeroPumpOn = true;
+        }  
+       
+    }   
  if(AeroSpraySolenoidOn){ //if spray is on
     if(millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //if time to stop spraying (AeroDuration in Seconds)
       AeroSpraySolenoidOn = false;
@@ -63,19 +75,7 @@ void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
         PlayOnSound = true;
         if(MySettings.DebugEnabled)logToSerials(F("Starting spray"),true);
         AeroSprayTimer = millis();
-    }
-    if( PumpOK && checkQuietTime() && AeroPressure <= MySettings.AeroPressureLow){ //if pump is not disabled and quiet time not active and Pressure reached low limit: turn on pump 
-        if(!AeroPumpOn && !AeroBypassSolenoidOn){ //start the bypass
-          if(MySettings.DebugEnabled)logToSerials(F("Starting bypass"),true);
-          AeroBypassSolenoidOn = true;  
-          aeroSprayNow(false);  
-        }  
-        if (!AeroBypassActive && AeroBypassSolenoidOn && millis() - AeroPumpTimer >= MySettings.AeroPrimingTime * 1000){ //self priming timeout reached, time to start spraying
-          if(MySettings.DebugEnabled)logToSerials(F("Starting refill"),true); 
-          AeroBypassSolenoidOn = false;      
-          AeroPumpTimer = millis(); //reset timer to start measuring spray time
-        }
-    }   
+    }    
   }  
 }
 
