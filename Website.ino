@@ -30,7 +30,6 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgString(F("ExhaustFanLowHumid"), toText(MySettings.ExhaustFanLowHumid));
   WebServer.setArgString(F("ExhaustFanOffHumid"), toText(MySettings.ExhaustFanOffHumid));
     
-  WebServer.setArgBoolean(F("TimerEnabled"), MySettings.TimerEnabled);
   WebServer.setArgInt(F("LightsOnHour"), MySettings.LightOnHour); 
   WebServer.setArgInt(F("LightsOnMinute"), MySettings.LightOnMinute); 
   WebServer.setArgInt(F("LightsOffHour"), MySettings.LightOffHour); 
@@ -38,9 +37,10 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgInt(F("Brightness"), MySettings.LightBrightness);
   WebServer.setArgInt(F("sliderBrightness"), MySettings.LightBrightness);
 
+  WebServer.setArgInt(F("AeroPumpTimeout"), MySettings.AeroPumpTimeout);
+  WebServer.setArgInt(F("AeroPrimingTime"), MySettings.AeroPrimingTime);
   WebServer.setArgInt(F("AeroInterval"), MySettings.AeroInterval);
-  WebServer.setArgInt(F("AeroDuration"), MySettings.AeroDuration);
-  WebServer.setArgBoolean(F("AeroSprayEnabled"), MySettings.AeroSprayEnabled);
+  WebServer.setArgInt(F("AeroDuration"), MySettings.AeroDuration);  
   }
   
   if (strcmp(url,"/Settings.html.json")==0){  
@@ -68,11 +68,7 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgString(F("PHCalibrationSlope"), toPrecisionText(MySettings.PHCalibrationSlope));
   WebServer.setArgString(F("PHCalibrationIntercept"), toPrecisionText(MySettings.PHCalibrationIntercept)); 
   WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(MySettings.PressureSensorOffset));
-  WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(MySettings.PressureSensorRatio));
-
-  WebServer.setArgInt(F("AeroPumpTimeout"), MySettings.AeroPumpTimeout);
-  WebServer.setArgInt(F("AeroPrimingTime"), MySettings.AeroPrimingTime);  
-  WebServer.setArgBoolean(F("AeroBlowOff"), MySettings.AeroBlowOff);  
+  WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(MySettings.PressureSensorRatio));  
   }
 }
 
@@ -99,18 +95,19 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgString(F("tdEnergy"),toText(Energy));
   WebServer.setArgString(F("tdVoltage"),toText(Voltage));
   WebServer.setArgString(F("tdCurrent"),toText(Current));
-  WebServer.setArgString(F("tdATXStatus"),stateToText(MySettings.ATXPowerSupplyOn)); 
+  WebServer.setArgString(F("tdATXStatus"),onOffToText(MySettings.ATXPowerSupplyOn)); 
 
-  WebServer.setArgString(F("tdLightStatus"),stateToText(MySettings.LightStatus));
-  WebServer.setArgString(F("tdLightReading"),toText(MySettings.LightBrightness, LightReading,"%-")); 
-  WebServer.setArgString(F("tdLightMinMax"),toText(MinLightReading, MaxLightReading,"/"));
-
+  WebServer.setArgString(F("tdLightStatus"),onOffToText(MySettings.LightStatus));
+  WebServer.setArgString(F("tdLightReading"),toText(MySettings.LightBrightness, LightReading,"%-"));
   WebServer.setArgString(F("tdBright"),BrightToText());
+   
+  WebServer.setArgString(F("tdTimerEnabled"),enabledToText(MySettings.TimerEnabled));
   WebServer.setArgString(F("tdLightOn"), timetoText(MySettings.LightOnHour,MySettings.LightOnMinute)); 
   WebServer.setArgString(F("tdLightOff"), timetoText(MySettings.LightOffHour,MySettings.LightOffMinute)); 
   
   WebServer.setArgString("tdAeroPressure",toText(AeroPressure));
-  WebServer.setArgString(F("tdAeroPumpOn"),pumpStateToText());
+  WebServer.setArgString(F("tdAeroSprayEnabled"), enabledToText(MySettings.AeroSprayEnabled));
+  WebServer.setArgString(F("tdAeroPumpOn"),pumpOnOffToText());
       
   WebServer.setArgString(F("tdReservoir"),ReservoirText);
   WebServer.setArgString(F("tdPH"),toText(PH));
@@ -132,7 +129,11 @@ void ButtonPressCallback(char *button)
   else if (strcmp_P(button,(PGM_P)F("btn_ATXOn"))==0) { TurnATXOn();}
   else if (strcmp_P(button,(PGM_P)F("btn_ATXOff"))==0) { TurnATXOff();}
   else if (strcmp_P(button,(PGM_P)F("btn_LightCalibrate"))==0) {triggerCalibrateLights();}
-  else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayNow"))==0) { aeroSprayNow(false);}
+  else if (strcmp_P(button,(PGM_P)F("btn_LightTimerEnable"))==0) {setTimerOnOff(true);}
+  else if (strcmp_P(button,(PGM_P)F("btn_LightTimerDisable"))==0) {setTimerOnOff(false);}
+  else if (strcmp_P(button,(PGM_P)F("btn_SprayEnable"))==0) {setAeroSprayOnOff(true);}
+  else if (strcmp_P(button,(PGM_P)F("btn_SprayDisable"))==0) {setAeroSprayOnOff(false);}
+  else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayNow"))==0) { aeroSprayNow(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_AeroSprayOff"))==0) { aeroSprayOff();}  
   else if (strcmp_P(button,(PGM_P)F("btn_PumpOn"))==0) { aeroPumpOn(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_PumpOff"))==0) { aeroPumpOff(true);}
@@ -162,11 +163,13 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("ExhaustFanLowHumid"))==0) {setExhaustLowHumidity(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("ExhaustFanOffHumid"))==0) {setExhaustOffHumidity(WebServer.getArgInt());}
   
-  else if(strcmp_P(field,(PGM_P)F("TimerEnabled"))==0) {setTimerOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("LightsOnHour"))==0) {setLightsOnHour(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("LightsOnMinute"))==0) {setLightsOnMinute(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("LightsOffHour"))==0) {setLightsOffHour(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("LightsOffMinute"))==0) {setLightsOffMinute(WebServer.getArgInt());}       
+  else if(strcmp_P(field,(PGM_P)F("LightsOffMinute"))==0) {setLightsOffMinute(WebServer.getArgInt());}
+
+  else if(strcmp_P(field,(PGM_P)F("AeroPumpTimeout"))==0) {setAeroPumpTimeout(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("AeroPrimingTime"))==0) {setAeroPrimingTime(WebServer.getArgInt());} 
   else if(strcmp_P(field,(PGM_P)F("AeroInterval"))==0) { setAeroInterval(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("AeroDuration"))==0) {setAeroDuration(WebServer.getArgInt());} 
 
@@ -195,12 +198,7 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("PHCalibrationSlope"))==0) {setPHCalibrationSlope(WebServer.getArgFloat());}
   else if(strcmp_P(field,(PGM_P)F("PHCalibrationIntercept"))==0) {setPHCalibrationIntercept(WebServer.getArgFloat());}
   else if(strcmp_P(field,(PGM_P)F("PressureSensorOffset"))==0) {setPressureSensorOffset(WebServer.getArgFloat());}
-  else if(strcmp_P(field,(PGM_P)F("PressureSensorRatio"))==0) {setPressureSensorRatio(WebServer.getArgFloat());}
-
-  else if(strcmp_P(field,(PGM_P)F("AeroPumpTimeout"))==0) {setAeroPumpTimeout(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("AeroPrimingTime"))==0) {setAeroPrimingTime(WebServer.getArgInt());}  
-  else if(strcmp_P(field,(PGM_P)F("AeroBlowOff"))==0) {setAeroBlowOnOff(WebServer.getArgBoolean());}  
-  else if(strcmp_P(field,(PGM_P)F("AeroSprayEnabled"))==0) {setAeroSprayOnOff(WebServer.getArgBoolean());} 
+  else if(strcmp_P(field,(PGM_P)F("PressureSensorRatio"))==0) {setPressureSensorRatio(WebServer.getArgFloat());} 
     
   saveSettings(false);
 } 

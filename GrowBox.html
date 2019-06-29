@@ -116,20 +116,20 @@
 				  <tr>
 					<td class="headerRows"><span style="font-weight:bold">Lights</span><br></td>
 					<td class="headerRows"><span style="font-weight:bold">Brightness</span><br><span"><span style="font-weight:normal">(%-Sensor)</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Sensor</span><br><span style="font-weight:normal">(min/max)</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Light detected</span><br></td>
 				  </tr>
 				  <tr>
 					<td id="tdLightStatus" class="dataRows"></td>
 					<td id="tdLightReading" class="dataRows"></td>
-					<td id="tdLightMinMax" class="dataRows"></td>
+					<td id="tdBright" class="dataRows"></td>
 				  </tr>
 				  <tr>
-					<td class="headerRows"><span style="font-weight:bold">Light detected</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Timer</span></td>
 					<td class="headerRows"><span style="font-weight:bold">Light ON</span><br>(hh:mm)24h</td>
 					<td class="headerRows"><span style="font-weight:bold">Light OFF</span><br>(hh:mm)24h</td>
 				  </tr>
 				  <tr>
-					<td id="tdBright" class="dataRows"></td>
+					<td id="tdTimerEnabled" class="dataRows"></td>
 					<td id="tdLightOn" class="dataRows"></td>
 					<td id="tdLightOff" class="dataRows"></td>
 				  </tr>
@@ -137,14 +137,15 @@
 				<button id="btn_LightOn" type="button" title="Turn grow lights ON">ON</button>
 				<button id="btn_LightOff" type="button" title="Turn grow lights OFF">OFF</button>
 				<button id="btn_LightCalibrate" type="button" title="Measure light output at 0 and 100% brightness">Calibrate</button><br>
-				<b>Brightness</b><br/>				
+				<b>Brightness</b><br>				
 				<form>
 				<input style="width:42px;" type="number" name="Brightness" min="0" max="100" oninput="this.form.sliderBrightness.value=this.value" />
 				<input type="range" name="sliderBrightness" min="0" max="100" oninput="this.form.Brightness.value=this.value">
 				<input type="submit" value="Set">				
 				</form>				
-				<b>Timer</b>
-				<form><label><input type="checkbox" name="TimerEnabled">Enabled </label><input type="submit" value="Set" title="Change grow light bightness between 0%(max dimmind) and 100% (max output)"></form>
+				<b>Timer</b><br>
+				<button id="btn_LightTimerEnable" type="button" align="rigth" title="Enable light timer">Enable</button>
+				<button id="btn_LightTimerDisable" type="button" align="rigth" title="Disable light timer">Disable</button>
 				<form>ON : <input style="width: 35px;" min=0 max=23 name="LightsOnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="LightsOnMinute" type="number"/> <input type="submit" value="Set" title="Set grow light ON time"></form>
 				<form>OFF:<input style="width: 35px;" min=0 max=23 name="LightsOffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="LightsOffMinute" type="number"/> <input type="submit" value="Set" title="Set grow light OFF time"></form>
 			</div>			
@@ -167,11 +168,13 @@
 				<h1>Aeroponics</h1>
 				<table class="tg">
 				  <tr>
-					<th class="headerRows"><span style="font-weight:bold">Pressure</span></span></th>	
+					<th class="headerRows"><span style="font-weight:bold">Pressure</span></span></th>
+					<th class="headerRows"><span style="font-weight:bold">Spray</span></span></th>					
 					<th class="headerRows"><span style="font-weight:bold">Pump state</span></th>				
 				  </tr>
 				  <tr>
 					<td id="tdAeroPressure" class="dataRows"></td>
+					<td id="tdAeroSprayEnabled" class="dataRows"></td>
 					<td id="tdAeroPumpOn" class="dataRows"></td>
 				  </tr>
 				</table>
@@ -179,15 +182,14 @@
 				<button id="btn_PumpOn" type="button" align="rigth" title="Starts the pump and reset its status to OK">ON</button>
 				<button id="btn_PumpOff" type="button" align="rigth" title="Stops the pump and reset its status to OK">OFF</button>
 				<button id="btn_PumpDisable" type="button" align="rigth" title="Stops and disables pump">Disable</button>
-				<button id="btn_AeroMix" type="button" align="rigth" title="Mix nutrients: Starts pump and opens bypass valve">Mix</button></br>
+				<button id="btn_AeroMix" type="button" align="rigth" title="Mix nutrients: Starts pump and opens bypass valve">Mix</button><br>
 				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="AeroPumpTimeout" type="number" title="Maximum high pressure tank refill time, if reached pump is considered broken"/> sec <input type="submit" value="Set"></form>
 				<form>Pump priming time:<input style="width: 55px;" min=1 max=9999 name="AeroPrimingTime" type="number" title="At pump startup the bypass valve is open for X seconds"/> sec <input type="submit" value="Set"></form>				
-				<b>Spray</b>
-				<form>
-					<label><input type="checkbox" name="AeroSprayEnabled">Enabled </label><input type="submit" value="Set" title="Enable/Disable spraying">
-					<button id="btn_AeroSprayNow" type="button" title="Spray now">Spray</button>
-					<button id="btn_AeroSprayOff" type="button" title="Stop spraying">OFF</button>
-				</form>
+				<b>Spray</b><br>
+				<button id="btn_SprayEnable" type="button" align="rigth" title="Enable spray cycle timer">Enable</button>
+				<button id="btn_SprayDisable" type="button" align="rigth" title="Disable spray cycle timer">Disable</button>
+				<button id="btn_AeroSprayNow" type="button" title="Spray now and re-enable timer">Spray</button>
+				<button id="btn_AeroSprayOff" type="button" title="Stop spraying">OFF</button>				
 				<form>
 					Interval: <input style="width: 50px;" min=0 name="AeroInterval" type="number"/> min<br>
 					Duration: <input style="width: 50px;" min=0 name="AeroDuration" type="number"/> sec

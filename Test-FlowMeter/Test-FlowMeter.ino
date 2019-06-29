@@ -1,6 +1,9 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for testing: Flow sensor for detecting liquid throughput
 
+//Libraries
+#include "util/atomic.h" //Loading the ATOMIC_BLOCK macro, helps blocking interoups while commands in the block are running
+
 //Pins
 const byte FlowMeterInPin = 2;     //Signal(yellow) - water flow sensor
 
@@ -8,9 +11,11 @@ const byte FlowMeterInPin = 2;     //Signal(yellow) - water flow sensor
 const byte SampleSize = 10;
 
 //Global variables
-volatile unsigned int FlowPulseCount = 0;
+volatile unsigned int FlowPulseCount = 0; //volatile variables are stored in RAM: https://www.arduino.cc/reference/en/language/variables/variable-scope--qualifiers/volatile/
 byte SampleCounter = 0;
 unsigned int FlowTotalPulses = 0;
+uint32_t FlowMeterTimer = millis();  //Flow meter timer
+unsigned int LastPulseCount = 0; //stores last pulse/sec value
 
 void setup() {  // put your setup code here, to run once:
   Serial.begin(115200);
@@ -40,4 +45,35 @@ void loop() {  // put your main code here, to run repeatedly:
 void flowPulseCounter()
 {
   FlowPulseCount++;
+}
+
+void flowPulseCheck(){
+  if(millis() - FlowMeterTimer >= 1000) //Log after every second the pulse count
+      {
+        if(MySettings.DebugEnabled){
+          memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable  
+          strcat_P(WebMessage,(PGM_P)F("FlowMeter: "));
+          strcat(WebMessage,toText((uint32_t)FlowPulseCount)); 
+          strcat_P(WebMessage,(PGM_P)F(" pulse/sec"));
+          logToSerials(WebMessage,true);
+        }
+        LastPulseCount = FlowPulseCount;
+        FlowMeterTimer = millis();
+        FlowPulseCount = 0;
+      }
+}
+
+//***Flow meter***
+void startFlowMeter(){
+  attachInterrupt(digitalPinToInterrupt(FlowMeterInPin), flowPulseCounter, FALLING);  //Mega2560 support interrupts on port 2, 3, 18, 19, 20, 21  
+  FlowMeterTimer = millis();
+  FlowPulseCount = 0;
+}
+
+void stopFlowMeter(){
+  detachInterrupt(digitalPinToInterrupt(FlowMeterInPin));  //Mega2560 support interrupts on port 2, 3, 18, 19, 20, 21 
+}
+
+void flowPulseCounter(){
+   ATOMIC_BLOCK(ATOMIC_RESTORESTATE) { FlowPulseCount++; }
 }

@@ -46,8 +46,9 @@ void checkAeroSprayTimer(){ //pump directly connected to aeroponics tote, with a
   } 
 }
 
-void aeroSprayNow(bool DueToHighPressure){   
-  if(MySettings.AeroSprayEnabled || DueToHighPressure){
+void aeroSprayNow(bool CalledFromWebsite){ 
+  if(CalledFromWebsite)MySettings.AeroSprayEnabled = true;
+  if(MySettings.AeroSprayEnabled){
     AeroBypassActive = false;
     AeroSprayTimer = millis(); 
     PumpOK = true;
@@ -56,9 +57,8 @@ void aeroSprayNow(bool DueToHighPressure){
     AeroPumpTimer = millis();      
     checkRelays();
     PlayOnSound = true;
-    if(DueToHighPressure) addToLog(F("Above pressure limit,spraying"));
-    else addToLog(F("Aeroponics spraying"));
-    }
+    addToLog(F("Aeroponics spraying"));
+  }  
 }
 
 void aeroSprayOff(){    
@@ -225,7 +225,7 @@ void setAeroDuration(int duration){
   addToLog(F("Spray time updated"));  
 }
 
-const __FlashStringHelper * pumpStateToText(){
+const __FlashStringHelper * pumpOnOffToText(){
    if(!PumpOK) return F("DISABLED");
    else if(AeroPumpOn) return F("ON");
    else return F("OFF");

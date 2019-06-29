@@ -97,7 +97,7 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F(" ; Voltage:")); strcat(WebMessage,toText(Voltage)); strcat_P(WebMessage,(PGM_P)F("V"));
   strcat_P(WebMessage,(PGM_P)F(" ; Current:")); strcat(WebMessage,toText(Current)); strcat_P(WebMessage,(PGM_P)F("A"));
   strcat_P(WebMessage,(PGM_P)F("\n\r Lights - "));
-  strcat_P(WebMessage,(PGM_P)F("Light:")); strcat_P(WebMessage,(PGM_P)stateToText(MySettings.LightStatus)); 
+  strcat_P(WebMessage,(PGM_P)F("Light:")); strcat_P(WebMessage,(PGM_P)onOffToText(MySettings.LightStatus)); 
   strcat_P(WebMessage,(PGM_P)F(" ; Brightness:")); strcat(WebMessage,toText(MySettings.LightBrightness));
   strcat_P(WebMessage,(PGM_P)F(" ; LightReading:")); strcat(WebMessage,toText(LightReading));
   strcat_P(WebMessage,(PGM_P)F(" ; Light detected:")); strcat_P(WebMessage,(PGM_P)BrightToText()); 
@@ -165,7 +165,7 @@ char * timetoText(int Hour, int Minute){
   return ReturnChar;
 }
 
-const __FlashStringHelper * stateToText(bool Status){
+const __FlashStringHelper * onOffToText(bool Status){
    if(Status) return F("ON");
    else return F("OFF");
 } 
@@ -173,7 +173,12 @@ const __FlashStringHelper * stateToText(bool Status){
 const __FlashStringHelper * statusToText(bool Status){
    if(Status) return F("OK");
    else return F("!!!");
-} 
+}
+
+const __FlashStringHelper * enabledToText(bool Status){
+   if(Status) return F("ENABLED");
+   else return F("DISABLED");
+}
 
 void setDebugOnOff(bool State){
   MySettings.DebugEnabled = State;
