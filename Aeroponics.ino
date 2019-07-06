@@ -21,11 +21,9 @@ void checkAeroSprayTimer(){ //pump directly connected to aeroponics tote, with a
     }
     
     if(!AeroBypassActive && !AeroBypassSolenoidOn && AeroPumpOn && millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //bypass valve is closed and time to stop spraying (AeroDuration in Seconds)
-      if(MySettings.AeroBlowOff){
-          AeroBypassSolenoidOn = true;
-          AeroBlowOffInProgress = true; //no extra time is needed, will use AeroSprayTimer
-          checkRelays();
-        }
+      AeroBypassSolenoidOn = true;
+      AeroBlowOffInProgress = true; //no extra time is needed, will use AeroSprayTimer
+      checkRelays();
       aeroPumpOff(false);    
       logToSerials(F("Stopping spray"),true);
       AeroSprayTimer = millis();
@@ -241,16 +239,4 @@ void setAeroPrimingTime(int Timing)
 {
 MySettings.AeroPrimingTime = (uint32_t)Timing;
 addToLog(F("Aero priming time updated"));
-}
-
-void setAeroBlowOnOff(bool State){
-  MySettings.AeroBlowOff = State;  
-  if(MySettings.AeroBlowOff){ 
-    addToLog(F("Blow-off enabled"));
-    PlayOnSound=true;
-    }
-  else {
-    addToLog(F("Blow-off disabled"));
-    PlayOffSound=true;
-    }
 }

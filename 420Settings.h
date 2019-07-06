@@ -18,7 +18,6 @@
   uint32_t AeroDuration = 2; //Aeroponics - Spray time in seconds  
   uint32_t AeroPumpTimeout = 360;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
   uint32_t AeroPrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
-  bool AeroBlowOff = true;  //Enable bypass valve after a spray to release pressure instantly: Stops the spray faster. Only used without the Pressure Tank option.
   
   bool TimerEnabled = true;  //Enable timer controlling lights
   bool LightStatus = true;  //Startup status for lights: True-ON / False-OFF
