@@ -1,4 +1,4 @@
-void checkRelays(){
+void setRelays(){
   //Relay array
   if(AeroPumpOn) digitalWrite(Relay2OutPin, LOW); else digitalWrite(Relay2OutPin, HIGH); 
   if(AeroBypassSolenoidOn) digitalWrite(Relay3OutPin, LOW); else digitalWrite(Relay3OutPin, HIGH);

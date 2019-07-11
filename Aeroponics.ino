@@ -1,11 +1,11 @@
 void checkAero(bool Interrupt){
  checkAeroSprayTimer();
  if(!Interrupt) //Run some functions only when not called from an Interrupt. Within an Interroupt millis() counter doesn`t increase, so delay() never ends.
- {
-  readAeroPressure(); 
-  checkAeroPumpAlerts();
+ {  
+  checkAeroPumpAlerts(); 
+  if(AeroPumpOn & !AeroBypassSolenoidOn)readAeroPressure();  //When spraying is on: read the pressure 
  }
- checkRelays();
+ setRelays(); //function from the Power tab
 }
 
 void checkAeroSprayTimer(){ //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
@@ -23,7 +23,7 @@ void checkAeroSprayTimer(){ //pump directly connected to aeroponics tote, with a
     if(!AeroBypassActive && !AeroBypassSolenoidOn && AeroPumpOn && millis() - AeroSprayTimer >= MySettings.AeroDuration * 1000){  //bypass valve is closed and time to stop spraying (AeroDuration in Seconds)
       AeroBypassSolenoidOn = true;
       AeroBlowOffInProgress = true; //no extra time is needed, will use AeroSprayTimer
-      checkRelays();
+      setRelays();
       aeroPumpOff(false);    
       logToSerials(F("Stopping spray"),true);
       AeroSprayTimer = millis();
@@ -53,7 +53,7 @@ void aeroSprayNow(bool CalledFromWebsite){
     AeroPumpOn = true;
     AeroBypassSolenoidOn = true;
     AeroPumpTimer = millis();      
-    checkRelays();
+    setRelays();
     PlayOnSound = true;
     addToLog(F("Aeroponics spraying"));
   }  
@@ -62,7 +62,7 @@ void aeroSprayNow(bool CalledFromWebsite){
 void aeroSprayOff(){    
     AeroPumpOn = false; 
     AeroBypassSolenoidOn = false;
-    checkRelays();
+    setRelays();
     addToLog(F("Aeroponics spray OFF"));
 }
 
@@ -70,7 +70,7 @@ void aeroPumpOn(bool CalledFromWebsite){
   AeroBypassActive   = CalledFromWebsite; //If called from the Web interface keep the pump on
   AeroPumpOn = true;
   AeroPumpTimer = millis();
-  checkRelays();
+  setRelays();
   if(CalledFromWebsite){
     addToLog(F("Pump ON"));
     PlayOnSound = true;
@@ -83,7 +83,7 @@ void aeroPumpOff(bool CalledFromWebsite){
   AeroPumpOn = false;
   if(!AeroBlowOffInProgress)AeroBypassSolenoidOn = false; //Close bypass valve
   AeroPumpTimer = millis();         
-  checkRelays();
+  setRelays();
   if(CalledFromWebsite){ 
     addToLog(F("Pump OFF"));
     PlayOffSound = true;
@@ -103,7 +103,7 @@ void aeroMix(){
   PumpOK = true;
   AeroBypassSolenoidOn = true;
   AeroPumpTimer = millis();    
-  checkRelays();
+  setRelays();
   PlayOnSound = true;
   addToLog(F("Mixing nutrients"));
 }
@@ -178,17 +178,28 @@ void checkAeroPumpAlerts()
   }
 }
 
-void readAeroPressure(){
-  float  Reading=0;
-  for(byte i=0;i<50;i++) { 
-   Reading+=analogRead(PressureSensorInPin);
-   delay(20);
-  }
-  Reading = Reading /50;
-  float Voltage = ((float)Reading) * 5 / 1024 ;
+void readAeroPressure(){ 
+  int  Reading = calculateRollingAverage(analogRead(PressureSensorInPin));  
+  float Voltage = ((float)Reading) * 5 / 1024 ; 
   if(MySettings.MetricSystemEnabled) AeroPressure = MySettings.PressureSensorRatio*(Voltage-MySettings.PressureSensorOffset); // unit: bar / 100kPa
   else AeroPressure = MySettings.PressureSensorRatio*(Voltage-MySettings.PressureSensorOffset) * 14.5038;  //unit: PSI
 }
+
+int PreviousAeroPressure[RollingAverageQueueDepth]= {0};  //initialize array with all 0s
+byte OldestAeroPressureEntry = 0; //Points to the oldest reading
+int Sum = 0;
+int calculateRollingAverage(float LatestReading)
+{
+  Sum -= PreviousAeroPressure[OldestAeroPressureEntry]; //remove the oldest reading from the total
+  PreviousAeroPressure[OldestAeroPressureEntry] = LatestReading;  //replace the oldest reading
+  Sum += PreviousAeroPressure[OldestAeroPressureEntry++]; //Add the newest reading, then move the pointer to the oldest entry
+  if(OldestAeroPressureEntry = RollingAverageQueueDepth){ //reached the end of the queue
+    OldestAeroPressureEntry = 0;
+  }
+  return Sum / RollingAverageQueueDepth;
+}
+
+
 
 void calibratePressureSensor(){  //Should only be called when there is 0 pressure
   float sum = 0;

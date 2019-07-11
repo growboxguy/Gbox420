@@ -215,7 +215,7 @@ void oneSecRun(){
   wdt_reset(); //reset watchdog timeout
   checkAero(false);  
   checkLightStatus();
-  checkRelays();
+  setRelays();
   checkSound();  
 }
 
@@ -246,7 +246,6 @@ void halfHourRun(){
 //Helper functions
 
 void readSensors(){  //Bundles functions to get sensor readings  
-  readAeroPressure();
   readDHTSensor();
   checkLightSensor();
   readPowerSensor();
