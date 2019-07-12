@@ -2,8 +2,8 @@ void checkAero(bool Interrupt){
  checkAeroSprayTimer();
  if(!Interrupt) //Run some functions only when not called from an Interrupt. Within an Interroupt millis() counter doesn`t increase, so delay() never ends.
  {  
+  if(AeroPumpOn & !AeroBypassSolenoidOn)readAeroPressure();  //When spraying is on: read the pressure
   checkAeroPumpAlerts(); 
-  if(AeroPumpOn & !AeroBypassSolenoidOn)readAeroPressure();  //When spraying is on: read the pressure 
  }
  setRelays(); //function from the Power tab
 }
@@ -188,18 +188,25 @@ void readAeroPressure(){
 int PreviousAeroPressure[RollingAverageQueueDepth]= {0};  //initialize array with all 0s
 byte OldestAeroPressureEntry = 0; //Points to the oldest reading
 int Sum = 0;
-int calculateRollingAverage(float LatestReading)
+int calculateRollingAverage(int LatestReading)
 {
   Sum -= PreviousAeroPressure[OldestAeroPressureEntry]; //remove the oldest reading from the total
-  PreviousAeroPressure[OldestAeroPressureEntry] = LatestReading;  //replace the oldest reading
-  Sum += PreviousAeroPressure[OldestAeroPressureEntry++]; //Add the newest reading, then move the pointer to the oldest entry
-  if(OldestAeroPressureEntry = RollingAverageQueueDepth){ //reached the end of the queue
+  Sum += LatestReading; //Add the newest reading
+  PreviousAeroPressure[OldestAeroPressureEntry++] = LatestReading;  //replace the oldest reading, then move the pointer to the oldest entry 
+  if(OldestAeroPressureEntry == RollingAverageQueueDepth){ //reached the end of the queue
     OldestAeroPressureEntry = 0;
   }
-  return Sum / RollingAverageQueueDepth;
+  int Average = Sum / RollingAverageQueueDepth;
+  if(MySettings.DebugEnabled){
+    memset(&Message[0], 0, sizeof(Message));  //clear variable 
+    strcat(Message,toText(OldestAeroPressureEntry)); 
+    strcat_P(Message,(PGM_P)F(".PressureReading:")); strcat(Message,toText(LatestReading)); 
+    strcat_P(Message,(PGM_P)F(",Sum:")); strcat(Message,toText(Sum));
+    strcat_P(Message,(PGM_P)F(",Average:")); strcat(Message,toText(Average));
+    logToSerials(Message,true);
+  }
+  return Average;
 }
-
-
 
 void calibratePressureSensor(){  //Should only be called when there is 0 pressure
   float sum = 0;

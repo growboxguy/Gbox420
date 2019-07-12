@@ -4,7 +4,7 @@
   const byte MaxDimming = 235; //Sets the maximum LED dimming duty cycle to 92% (255*0.92=~235). 255=100% dimming (LED drivers usually do not support full dimming, check the specification before changing this!)
   const byte ScreenRotation = 1;  //LCD screen rotation: 1,3:landscape 2,4:portrait
   const byte LogDepth = 10;  //Show X number of log entries on website, do not go above 10
-  const byte RollingAverageQueueDepth = 10;  //How many previous sensor readings should be stored
+  const byte RollingAverageQueueDepth = 5;  //How many previous sensor readings should be stored
   const byte MaxTextLength = 31;  //Default char* buffer size: 30 characters + null terminator, used for logging and converting to text
   const uint32_t AeroBlowOffTime = 3;  //In Seconds. Opens the bypass valve to quickly release pressure after a spray: Helps with more accurate spray timing.
    

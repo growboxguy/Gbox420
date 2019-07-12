@@ -1,11 +1,11 @@
 void sendEmailAlert(const __FlashStringHelper *title){ //Title needs to be URL encoded: https://meyerweb.com/eric/tools/dencoder/
   if(MySettings.AlertEmails){
-  memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable  
-  strcat_P(WebMessage,(PGM_P)F("/pushingbox?devid=")); strcat(WebMessage,MySettings.PushingBoxEmailRelayID); 
-  strcat_P(WebMessage,(PGM_P)F("&Title=")); strcat_P(WebMessage,(PGM_P)title);
-  strcat_P(WebMessage,(PGM_P)F("&Log=")); logToJSON(false,true);  
-  RestAPI.get(WebMessage);
-  if(MySettings.DebugEnabled)logToSerials(WebMessage,true);
+  memset(&Message[0], 0, sizeof(Message));  //clear variable  
+  strcat_P(Message,(PGM_P)F("/pushingbox?devid=")); strcat(Message,MySettings.PushingBoxEmailRelayID); 
+  strcat_P(Message,(PGM_P)F("&Title=")); strcat_P(Message,(PGM_P)title);
+  strcat_P(Message,(PGM_P)F("&Log=")); logToJSON(false,true);  
+  RestAPI.get(Message);
+  if(MySettings.DebugEnabled)logToSerials(Message,true);
   }
   else if(MySettings.DebugEnabled){
     logToSerials(F("Alert email suppressed: "),false);

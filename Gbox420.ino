@@ -8,6 +8,7 @@
 //TODO:  
 //EC meter
 //Restore defaults settings button needed
+//calculateRollingAverage - Use it on all sensor readings
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
@@ -79,7 +80,7 @@
   bool AeroBypassActive = false; //Aeroponics - Used to temporary suspend pump timers and keep the high pressure pump on. Do not change.
   bool AeroBlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
-  char WebMessage[512];   //buffer for REST and MQTT API messages
+  char Message[512];   //buffer for REST and MQTT API messages
   char CurrentTime[20]; //buffer for storing current time
   char LogMessage[MaxTextLength]; //temp storage for assembling log messages
   char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy (array of char arrays)

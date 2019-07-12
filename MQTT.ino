@@ -84,12 +84,12 @@ void mqttReceived(void* response) {
 
 void mqttPublush(bool AddToLog){ //publish readings in JSON format
   if(AddToLog)addToLog(F("Reporting to MQTT"));
-  logToJSON(false,false); //fills WebMessage global variable
+  logToJSON(false,false); //fills Message global variable
   memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable
   strcat(MqttPath,MqttROOT);
   strcat(MqttPath,MqttPUBLISH);
-  logToSerials(F("Reporting to MQTT: "),false);logToSerials(MqttPath,false); logToSerials(F(" - "),false); logToSerials(WebMessage,true);
-  Mqtt.publish(MqttPath, WebMessage,0,1); //(topic,message,qos,retain)
+  logToSerials(F("Reporting to MQTT: "),false);logToSerials(MqttPath,false); logToSerials(F(" - "),false); logToSerials(Message,true);
+  Mqtt.publish(MqttPath, Message,0,1); //(topic,message,qos,retain)
 }
 
 void mqttConnected(void* response) {
