@@ -100,7 +100,7 @@ char * logToText(){
   strcat_P(Message,(PGM_P)F("Light:")); strcat_P(Message,(PGM_P)onOffToText(MySettings.LightStatus)); 
   strcat_P(Message,(PGM_P)F(" ; Brightness:")); strcat(Message,toText(MySettings.LightBrightness));
   strcat_P(Message,(PGM_P)F(" ; LightReading:")); strcat(Message,toText(LightReading));
-  strcat_P(Message,(PGM_P)F(" ; Light detected:")); strcat_P(Message,(PGM_P)BrightToText()); 
+  strcat_P(Message,(PGM_P)F(" ; Light detected:")); strcat_P(Message,(PGM_P)yesNoToText()); 
   strcat_P(Message,(PGM_P)F(" ; LightON:")); strcat(Message,timetoText(MySettings.LightOnHour, MySettings.LightOnMinute));
   strcat_P(Message,(PGM_P)F(" ; LightOFF:")); strcat(Message,timetoText(MySettings.LightOffHour, MySettings.LightOffMinute));
   strcat_P(Message,(PGM_P)F("\n\r Aeroponics - "));
@@ -113,71 +113,6 @@ char * logToText(){
   strcat_P(Message,(PGM_P)F("(")); strcat(Message,toText(PHRaw));strcat_P(Message,(PGM_P)F(")"));
   strcat_P(Message,(PGM_P)F(" ; Reservoir:")); strcat(Message,ReservoirText);
   return Message;
-}
-
-char * toText(int Number){
-  static char ReturnChar[MaxTextLength] = "";
-  itoa(Number, ReturnChar, 10);
-  return ReturnChar;
-}
-
-char * toText(uint32_t Number){
-  static char ReturnChar[MaxTextLength] = "";
-  itoa(Number, ReturnChar, 10);
-  return ReturnChar;
-}
-
-char * toText(int Number1, int Number2,const char * Separator){  //function overloading: Same named function, different parameters
-  static char ReturnChar[MaxTextLength] = ""; 
-  snprintf(ReturnChar,MaxTextLength,"%d%s%d",Number1,Separator,Number2);
-  return ReturnChar;
-}
-
-char * toText(float Number){ 
-  static char ReturnFloatChar[MaxTextLength] = ""; 
-  if(isnan(Number)) Number= -1.0;
-  dtostrf(Number, 4, 2, ReturnFloatChar); //minimum 4 char total lengt, with 2 decimals
-  return ReturnFloatChar;
-}
-
-char * toPrecisionText(float Number){ 
-  static char ReturnFloatChar[MaxTextLength] = "";
-  if(isnan(Number)) Number= -1.0;
-  dtostrf(Number, 8, 6, ReturnFloatChar); //minimum 8 char total lengt, with 6 decimals
-  return ReturnFloatChar;
-}
-
-char * toText(float Number1, float Number2,const char * Separator){
-  static char ReturnChar[MaxTextLength] = ""; 
-  static char Number2Char[MaxTextLength] = "";
-  if(isnan(Number1)) Number1= -1.0;
-  if(isnan(Number2)) Number2= -1.0;
-  dtostrf(Number1, 4, 2, ReturnChar); 
-  strcat(ReturnChar,Separator);
-  dtostrf(Number2, 4, 2, Number2Char); 
-  strcat(ReturnChar,Number2Char);
-  return ReturnChar;
-}
-
-char * timetoText(int Hour, int Minute){
-  static char ReturnChar[MaxTextLength] = ""; //2 digit + separator + 2 digit + null
-  sprintf (ReturnChar, "%02u:%02u", Hour, Minute);
-  return ReturnChar;
-}
-
-const __FlashStringHelper * onOffToText(bool Status){
-   if(Status) return F("ON");
-   else return F("OFF");
-} 
-
-const __FlashStringHelper * statusToText(bool Status){
-   if(Status) return F("OK");
-   else return F("!!!");
-}
-
-const __FlashStringHelper * enabledToText(bool Status){
-   if(Status) return F("ENABLED");
-   else return F("DISABLED");
 }
 
 void setDebugOnOff(bool State){

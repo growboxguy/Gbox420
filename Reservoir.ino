@@ -21,7 +21,7 @@ void checkReservoir(){
   else if(isWaterAboveCritical && isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) ReservoirLevel= 2;
   else if(isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) ReservoirLevel= 1;
   else if(!isWaterAboveCritical && !isWaterAboveLow && !isWaterAboveMedium && !isWaterAboveFull) ReservoirLevel= 0;
-  else ReservoirLevel= -1; //non-valid sensor combination was read like E[#--#]F
+  else ReservoirLevel= -1; //non-valid sensor combination, like E[#--#]F
   checkReservoirAlert();
 }
 
@@ -64,18 +64,14 @@ void readReservoirTemp(){
 }
 
 //***PH meter***
+RollingAvarage PHAverage;
 void readReservoirPH(bool ShowRaw){
-  float  Reading=0;
-  for(byte i=0;i<50;i++) { 
-   Reading+=analogRead(PHMeterInPin);
-   delay(20);
-  }
-  PHRaw = Reading /50; //Calculates average
+  float PHRaw = PHAverage.updateAverage(analogRead(PHMeterInPin));
   if(ShowRaw)
   {
-  strncpy_P(LogMessage,(PGM_P)F("PH analog read: "),MaxTextLength);
-  strcat(LogMessage,toText(PHRaw));
-  addToLog(LogMessage);
+  strncpy_P(Message,(PGM_P)F("PH analog read: "),MaxTextLength);
+  strcat(Message,toText(PHRaw));
+  addToLog(Message);
   }
   PH = MySettings.PHCalibrationSlope*PHRaw + MySettings.PHCalibrationIntercept;  //equation of the line  
   checkPHAlert();

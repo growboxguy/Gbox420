@@ -1,5 +1,5 @@
 void checkLightStatus(){
-  if(!digitalRead(PowerButtonInPin)){ //If the power button is kept pressed
+  if(!digitalRead(PowerButtonInPin)){ //If the power button is kept pressed down
     if(MySettings.LightStatus) turnLightOFF(true);
     else turnLightON(true);  
     }
@@ -38,10 +38,10 @@ void checkLightTimer() {
 void setBrightness(int NewBrightness, bool AddToLog){
   MySettings.LightBrightness = NewBrightness;
   if(AddToLog){
-    strncpy_P(LogMessage,(PGM_P)F("Brightness: "),MaxTextLength);  
-    strcat(LogMessage,toText(MySettings.LightBrightness));
-    strcat_P(LogMessage,(PGM_P)F("%"));
-    addToLog(LogMessage);
+    strncpy_P(Message,(PGM_P)F("Brightness: "),MaxTextLength);  
+    strcat(Message,toText(MySettings.LightBrightness));
+    strcat_P(Message,(PGM_P)F("%"));
+    addToLog(Message);
   }    
   analogWrite(DimmingOutPin, map(MySettings.LightBrightness,0,100,MaxDimming,0) ); //mapping 0% brightness to MaxDimming(92%) duty cycle, and 100% brighness to 0% dimming duty cycle
 }
@@ -80,7 +80,7 @@ void checkLightSensor(){
    }  
 }
 
-void triggerCalibrateLights(){ //website signals to calibrate lights when checkLightStatus runs next
+void triggerCalibrateLights(){ //website signals to calibrate lights the next time "checkLightStatus" function runs
   CalibrateLights = true; 
 }
 
@@ -150,9 +150,4 @@ void setLightsOffMinute(int OffMinute){
   MySettings.LightOffMinute = OffMinute;
   checkLightTimer();
   addToLog(F("Light OFF time updated"));
-}
-
-const __FlashStringHelper * BrightToText(){
-   if(Bright) return F("YES");
-   else return F("NO");
 }

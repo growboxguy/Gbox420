@@ -99,7 +99,7 @@ void RefreshCallback(char * url) //called when website is refreshed
 
   WebServer.setArgString(F("tdLightStatus"),onOffToText(MySettings.LightStatus));
   WebServer.setArgString(F("tdLightReading"),toText(MySettings.LightBrightness, LightReading,"%-"));
-  WebServer.setArgString(F("tdBright"),BrightToText());
+  WebServer.setArgString(F("tdBright"),yesNoToText());
    
   WebServer.setArgString(F("tdTimerEnabled"),enabledToText(MySettings.TimerEnabled));
   WebServer.setArgString(F("tdLightOn"), timetoText(MySettings.LightOnHour,MySettings.LightOnMinute)); 

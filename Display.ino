@@ -11,7 +11,7 @@ void logToScreen(){
   Screen.setTextColor(ILI9341_BLUE);
   Screen.print(F("Power:"));Screen.print(Power); Screen.print(F("W,"));Screen.print(Energy); Screen.println(F("kWh"));   
   Screen.setTextColor(ILI9341_RED);
-  Screen.print(F("Light:")); Screen.print(onOffToText(MySettings.LightStatus)); Screen.print(F(",Bright:")); Screen.println(BrightToText());
+  Screen.print(F("Light:")); Screen.print(onOffToText(MySettings.LightStatus)); Screen.print(F(",Bright:")); Screen.println(yesNoToText());
   Screen.print(F("Intensity:")); Screen.print(MySettings.LightBrightness);Screen.print(F("% - "));Screen.println(LightReading);
   Screen.print(F("On:")); Screen.print(timetoText(MySettings.LightOnHour, MySettings.LightOnMinute));Screen.print(F(",Off:")); Screen.println(timetoText(MySettings.LightOffHour,MySettings.LightOffMinute));
   Screen.setTextColor(ILI9341_MAGENTA);

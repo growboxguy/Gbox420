@@ -13,6 +13,7 @@
 //Libraries
   #include "420Pins.h" //Load pins layout file
   #include "420Settings.h" //Load settings file
+  //#include "_RollingAverage.h" //For smoothing out sensor readings
   #include "avr/wdt.h" //Watchdog timer
   #include "avr/boot.h" //Watchdog timer related bug fix
   #include "Thread.h" //Splitting functions to threads for timing
@@ -80,9 +81,8 @@
   bool AeroBypassActive = false; //Aeroponics - Used to temporary suspend pump timers and keep the high pressure pump on. Do not change.
   bool AeroBlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
   float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
-  char Message[512];   //buffer for REST and MQTT API messages
+  char Message[512];   //temp storage for assembling log messages, buffer for REST and MQTT API messages
   char CurrentTime[20]; //buffer for storing current time
-  char LogMessage[MaxTextLength]; //temp storage for assembling log messages
   char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy (array of char arrays)
 
 //Component initialization
@@ -294,33 +294,4 @@ time_t getNtpTime(){
     else logToSerials(F("NTP time synchronized"),true);
     }
   return NTPResponse;
-}
-
-char * getFormattedTime(){
-  time_t Now = now(); // Get the current time and date from the TimeLib library
-  snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d",year(Now), month(Now), day(Now),hour(Now), minute(Now), second(Now)); // YYYY/MM/DD-HH:mm:SS formatted time will be stored in CurrentTime global variable
-  return CurrentTime;
-}
-
-void setMetricSystemEnabled(bool MetricEnabled){
-  if(MetricEnabled != MySettings.MetricSystemEnabled){  //if there was a change
-    MySettings.MetricSystemEnabled = MetricEnabled;
-    MySettings.InternalFanSwitchTemp = convertBetweenTempUnits(MySettings.InternalFanSwitchTemp);
-    MySettings.TempAlertLow= convertBetweenTempUnits(MySettings.TempAlertLow);
-    MySettings.TempAlertHigh= convertBetweenTempUnits(MySettings.TempAlertHigh);
-    MySettings.PressureAlertLow=convertBetweenPressureUnits(MySettings.PressureAlertLow);
-    MySettings.PressureAlertHigh=convertBetweenPressureUnits(MySettings.PressureAlertHigh);
-  }    
-  if(MySettings.MetricSystemEnabled) addToLog(F("Using Metric units"));
-  else addToLog(F("Using Imperial units"));  
-}
-
-float convertBetweenTempUnits(float Value){
-if(MySettings.MetricSystemEnabled) return round((Value-32) * 55.555555)/100.0;
-else return round(Value*180 + 3200.0)/100.0;
-}
-
-float convertBetweenPressureUnits(float Value){
-if(MySettings.MetricSystemEnabled) return round(Value / 0.145038)/100.0;
-else return round(Value*1450.38)/100.0;
 }

@@ -178,35 +178,17 @@ void checkAeroPumpAlerts()
   }
 }
 
+RollingAvarage AeroPressureAverage;
 void readAeroPressure(){ 
-  int  Reading = calculateRollingAverage(analogRead(PressureSensorInPin));  
+  int  Reading = AeroPressureAverage.updateAverage(analogRead(PressureSensorInPin)); //calculateRollingAverage(analogRead(PressureSensorInPin));
+  if(MySettings.DebugEnabled){
+   //logToSerials(AeroPressureAverage.GetDebug(),true);
+  }  
   float Voltage = ((float)Reading) * 5 / 1024 ; 
   if(MySettings.MetricSystemEnabled) AeroPressure = MySettings.PressureSensorRatio*(Voltage-MySettings.PressureSensorOffset); // unit: bar / 100kPa
   else AeroPressure = MySettings.PressureSensorRatio*(Voltage-MySettings.PressureSensorOffset) * 14.5038;  //unit: PSI
 }
 
-int PreviousAeroPressure[RollingAverageQueueDepth]= {0};  //initialize array with all 0s
-byte OldestAeroPressureEntry = 0; //Points to the oldest reading
-int Sum = 0;
-int calculateRollingAverage(int LatestReading)
-{
-  Sum -= PreviousAeroPressure[OldestAeroPressureEntry]; //remove the oldest reading from the total
-  Sum += LatestReading; //Add the newest reading
-  PreviousAeroPressure[OldestAeroPressureEntry++] = LatestReading;  //replace the oldest reading, then move the pointer to the oldest entry 
-  if(OldestAeroPressureEntry == RollingAverageQueueDepth){ //reached the end of the queue
-    OldestAeroPressureEntry = 0;
-  }
-  int Average = Sum / RollingAverageQueueDepth;
-  if(MySettings.DebugEnabled){
-    memset(&Message[0], 0, sizeof(Message));  //clear variable 
-    strcat(Message,toText(OldestAeroPressureEntry)); 
-    strcat_P(Message,(PGM_P)F(".PressureReading:")); strcat(Message,toText(LatestReading)); 
-    strcat_P(Message,(PGM_P)F(",Sum:")); strcat(Message,toText(Sum));
-    strcat_P(Message,(PGM_P)F(",Average:")); strcat(Message,toText(Average));
-    logToSerials(Message,true);
-  }
-  return Average;
-}
 
 void calibratePressureSensor(){  //Should only be called when there is 0 pressure
   float sum = 0;
@@ -215,9 +197,9 @@ void calibratePressureSensor(){  //Should only be called when there is 0 pressur
   delay(10);
   }  
   float AeroOffsetRecommendation = (sum/50)*5/1024; //Reads voltage at 0 pressure
-  strncpy_P(LogMessage,(PGM_P)F("0 pressure AeroOffset: "),MaxTextLength);
-  strcat(LogMessage,toText(AeroOffsetRecommendation));
-  addToLog(LogMessage);
+  strncpy_P(Message,(PGM_P)F("0 pressure AeroOffset: "),MaxTextLength);
+  strcat(Message,toText(AeroOffsetRecommendation));
+  addToLog(Message);
 }
 
 void setPressureSensorOffset(float Value){
