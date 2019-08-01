@@ -9,8 +9,7 @@ class RollingAvarage
     byte Oldest = 0; //Points to the oldest reading       
 
   public:
-    RollingAvarage(){
-   }
+    RollingAvarage(){}
     
    int updateAverage(int LatestReading){
      Sum -= History[Oldest]; //remove the oldest reading from the total
