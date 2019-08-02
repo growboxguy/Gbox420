@@ -4,9 +4,8 @@
   static char Common::Message[512];
    
   void Common::refresh(){  //Called when component should refresh its state 
+  }  
 
-  }
-    
   static char * Common::getFormattedTime(){
     time_t Now = now(); // Get the current time and date from the TimeLib library
     snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d",year(Now), month(Now), day(Now),hour(Now), minute(Now), second(Now)); // YYYY/MM/DD-HH:mm:SS formatted time will be stored in CurrentTime global variable
@@ -131,4 +130,41 @@
   //  if(MySettings.MetricSystemEnabled) addToLog(F("Using Metric units"));
    // else addToLog(F("Using Imperial units"));  
   }  
+
+//////////////////////////////////////////////////////////////////
+//RollingAverage functions
+
+ int RollingAverage::getAverageInt(){
+  return (int)(Sum / RollingAverageQueueDepth);
+ }
+ 
+ float RollingAverage::getAverageFloat()
+ {
+  return (float)(Sum / RollingAverageQueueDepth) /100;
+ }
+ 
+ int RollingAverage::updateAverage(int LatestReading){
+     Sum -= History[Oldest]; //remove the oldest reading from the total
+     Sum += LatestReading; //Add the newest reading
+     History[Oldest++] = LatestReading;  //replace the oldest reading, then move the pointer to the oldest entry 
+     if(Oldest >= RollingAverageQueueDepth){ //reached the end of the queue
+       Oldest = 0;
+     }
+     int Average = Sum / RollingAverageQueueDepth;
+     if(Common::MySettings.DebugEnabled){  //THIS SECTION CAN BE REMOVED
+       memset(&Common::Message[0], 0, sizeof(Common::Message));  //clear variable       
+       strcat(Common::Message,Common::toText(Oldest));
+       strcat_P(Common::Message,(PGM_P)F(":Reading:")); strcat(Common::Message,Common::toText(LatestReading)); 
+       strcat_P(Common::Message,(PGM_P)F(",Sum:")); strcat(Common::Message,Common::toText(Sum));
+       strcat_P(Common::Message,(PGM_P)F(",Average:")); strcat(Common::Message,Common::toText(Average));
+       Common::logToSerials(Common::Message,true);
+     }
+      return Average;
+   }
+
+  float RollingAverage::updateAverage(float LatestReading){
+    float temp = LatestReading * 100;
+    int temp2 = updateAverage((int)temp);
+    return (float)temp2/100;
+  }
    

@@ -1,7 +1,5 @@
 #include "DHTSensor.h"
 
-
-
  void DHTSensor::refresh(){  //Called when component should refresh its state 
     if(MySettings.MetricSystemEnabled){ Temp -> updateAverage((float)(sensor -> readTemperature()));}
     else {Temp -> updateAverage( (float)(sensor -> readTemperature() *1.8 + 32));}
@@ -13,6 +11,7 @@
     sensor -> begin();  //dereference the pointer to the object and then call begin() on it. Same as (*sensor).begin();
     Temp = new RollingAverage();
     Humidity = new RollingAverage();
+    if(MySettings.DebugEnabled){logToSerials(F("DHT Sensor object created"),true);}
   }
 
   float DHTSensor::getTemp(){
@@ -24,9 +23,9 @@
   }
 
   char* DHTSensor::getTempText(){
-    return  tempToText(Temp -> getAverageFloat());
+    return tempToText(Temp -> getAverageFloat());
   }
   
   char* DHTSensor::getHumidityText(){
-    return  percentageToText(Humidity -> getAverageFloat());
+    return percentageToText(Humidity -> getAverageFloat());
   }
