@@ -1,62 +1,43 @@
+#include "Common.h" 
+//#include "420Settings.h"  //for storing/reading defaults
+#include "ELClient.h" //ESP-link
+#include "ELClientWebServer.h" //ESP-link - WebServer API
 #include "DHTSensor.h"
+#include "Lights.h"
+
+
+//TODO:
+//addToLog - make Log class
+//Convert Website to a Singleton class (Restricts the instantiation to one single instance) 
+//Make alerting a class, every object will have a "bool StatusOK" variable inherited from Common, Alerting will go throught all subscribed classes and check status
+//Subscribe to thread timer events using the attach method.
+//sendEmailAlert implementation
+//Sounds implementation
+//Light sensor to separate object from Light
 
 DHTSensor *InternalDHTSensor;
-
-//Analog pins
-  const byte LightSensorAnalogInPin = A0; //A0 - LM393 light sensor
-  const byte PressureSensorInPin = A1; //Signal(yellow) - Pressure sensor
-  const byte PHMeterInPin = A3;  //Po - PH meter
-  const byte WaterCriticalInPin = A4; //Water sensor1
-  const byte WaterLowInPin = A5;     //Water sensor2
-  const byte WaterMediumInPin = A6; //Water sensor3
-  const byte WaterFullInPin = A7; // Water sensor4
+DHTSensor *ExternalDHTSensor;
+Lights *GrowLights;
   
-//Digital pins
-  const byte BuzzerOutPin = 4; //PC speaker+ (red)
-  const byte DimmingOutPin = 11; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
-  const byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
-  const byte Relay1OutPin = 22;  //Power relay Port 1 - FREE
-  const byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump
-  const byte Relay3OutPin = 24;  //Power relay Port 3 - Aeroponics bypass solenoid
-  const byte Relay4OutPin = 25;  //Power relay Port 4 - Internal fan Off/On
-  const byte Relay5OutPin = 26;  //Power relay Port 5 - Internal fan Low/High
-  const byte Relay6OutPin = 27;  //Power relay Port 6 - Exhaust fan Off/On
-  const byte Relay7OutPin = 28;  //Power relay Port 7 - Exhaust fan Low/High
-  const byte Relay8OutPin = 29;  //Power relay Port 8 - LED lights
-  const byte DigitDisplayCLKOutPin = 31; //CLK - 4 digit LED display
-  const byte DigitDisplayDI0OutPin = 30; //DIO - 4 digit LED display
-  const byte ATXPowerONOutPin = 34; //Turns ATX power supply on by connecting ATX PowerON pin to GND through an optocupler
-  const byte ATXPowerGoodInPin = 35; //5V signal from ATX powersupply, inverted by optocoupler: LOW if DC power output is OK
-  const byte LightSensorInPin = 36; //D0 - LM393 light sensor
-  const byte ScreenReset = 37; //RESET(3.3V) - Screen Screen
-  const byte ScreenSCK = 38;  //SCK(3.3V) - Screen Screen
-  const byte ScreenMOSI = 39; //SDO/MOSI(3.3V) - Screen Screen
-  const byte ScreenMISO = 40; //SDI/MISO(3.3V), not needed - Screen Screen 
-  const byte ScreenCS = 41;  //CS(3.3V) - Screen Screen
-  const byte ScreenDC = 42; //DC/RS(3.3V) - Screen Screen
-  const byte InternalDHTSensorInPin = 43; //DAT - DHT22 temp/humidity sensor, internally mounted
-  const byte ExternalDHTSensorInPin = 44; //DAT - DHT22 temp/humidity sensor, externally mounted
-  const byte ReservoirTempSensorInPin = 45;  //Data(yellow) - DS18B20 waterproof temp sensor 
-  const byte PowerLEDOutPin = 46;  //PC case Power LED
-  const byte PowerButtonInPin = 48;  //Power button
-
+ELClient ESPLink(&Serial3);  //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
+ELClientWebServer WebServer(&ESPLink); //ESP-link WebServer API
 
 void setup() {  // put your setup code here, to run once:
   Serial.begin(115200);    //2560mega console output
   Serial3.begin(115200);  //esp wifi console output
-  char Message[512]; //initialize the temporary character buffer
+  loadSettings();
   
-  InternalDHTSensor = new DHTSensor(InternalDHTSensorInPin,DHT22);  //passing: Pin and Sensor type(DHT22/DHT11)
+  InternalDHTSensor = new DHTSensor(&Common::MySettings.InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type(DHT22/DHT11)
+  ExternalDHTSensor = new DHTSensor(&Common::MySettings.InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type(DHT22/DHT11)
+  GrowLights = new Lights(&Common::MySettings.Light1RelayPin,&Common::MySettings.Light1Status,&Common::MySettings.Light1Brightness,&Common::MySettings.Light1TimerEnabled,&Common::MySettings.LightOnHour,Common::MySettings.LightOnMinute,&Common::MySettings.LightOffHour,&Common::MySettings.LightOffMinute);   //Passing MySettings members as references: Changes get written back to MySettings and saved to EEPROM. (byte *)(((byte *)&Common::MySettings) + offsetof(Settings, LightOnHour))
 
+  //Initialize web connections
+  ESPLink.resetCb = resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
+  resetWebServer();  //reset the WebServer
+  ESPLink.Process();  //Process any command from ESP-Link
 }
 
 void loop() { // put your main code here, to run repeatedly:
   InternalDHTSensor -> refresh();
-  Serial.println(F("Printing floats:"));
-  Serial.println(InternalDHTSensor -> getTemp());  
-  Serial.println(InternalDHTSensor -> getHumidity());
-  Serial.println(F("Printing toText:"));
-  Serial.println(InternalDHTSensor -> getTempText());
-  Serial.println(InternalDHTSensor -> getHumidityText());
-  delay(5000);
+  ESPLink.Process();
 }

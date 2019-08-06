@@ -241,7 +241,7 @@ void halfHourRun(){
   if(MySettings.DebugEnabled)logToSerials(F("Half hour trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   if(MySettings.ReportToGoogleSheets) ReportToGoogleSheets(false);  //uploads readings to Google Sheets via ESP REST API
-  if(MySettings.ReportToMqtt) mqttPublush(false);  //publish readings via ESP MQTT API
+  if(MySettings.ReportToMqtt) mqttPublish(false);  //publish readings via ESP MQTT API
 }
 
 //Helper functions

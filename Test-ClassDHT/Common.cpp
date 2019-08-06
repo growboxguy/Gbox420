@@ -1,10 +1,20 @@
  #include "Common.h" 
 
   static Settings Common::MySettings;
-  static char Common::Message[512];
+  static char Common::Message[512]; //initialize the temporary character buffer
+  static char Common::CurrentTime[20]; 
    
   void Common::refresh(){  //Called when component should refresh its state 
+    if(MySettings.DebugEnabled){logToSerials(F("Common object refreshing"),true);}
   }  
+
+  static void addToLog(const __FlashStringHelper* Text){
+    ;
+  }
+
+  static void addToLog(const char* Text){
+    ;
+  }
 
   static char * Common::getFormattedTime(){
     time_t Now = now(); // Get the current time and date from the TimeLib library
@@ -72,7 +82,7 @@
     return ReturnChar;
   }
   
-  static char * Common::timeToText(int Hour, int Minute){
+  static char * Common::timeToText(byte Hour, byte Minute){
     static char ReturnChar[MaxTextLength] = ""; //2 digit + separator + 2 digit + null
     sprintf (ReturnChar, "%02u:%02u", Hour, Minute);
     return ReturnChar;
@@ -118,7 +128,7 @@
      else return F("DISABLED");
   }
   
-  static void Common::setMetricSystemEnabled(bool MetricEnabled){
+  static void Common::setMetricSystemEnabled(bool MetricEnabled){  //DOES NOT BELONG HERE??
     if(MetricEnabled != MySettings.MetricSystemEnabled){  //if there was a change
       MySettings.MetricSystemEnabled = MetricEnabled;
       MySettings.InternalFanSwitchTemp = convertBetweenTempUnits(MySettings.InternalFanSwitchTemp);

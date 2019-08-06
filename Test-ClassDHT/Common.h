@@ -4,15 +4,16 @@
 #define Common_H
 
 #include "Arduino.h"  //every inheriting class have Arduino commands available
-#include "Settings.h"  //for storing/reading defaults
+#include "420Settings.h"  //for storing/reading defaults
+#include "420Pins.h"  //Load Arduino pin layout
 #include "TimeLib.h" //Keeping track of time
 
 class Common{
   friend class RollingAverage;
   
   protected:
-    static char Message[512];   //temp storage for assembling log messages, buffer for REST and MQTT API messages
-    static char CurrentTime[20]; //buffer for storing current time
+    static char Message[];   //temp storage for assembling log messages, buffer for REST and MQTT API messages
+    static char CurrentTime[]; //buffer for storing current time
   
   public:
     static Settings MySettings;
@@ -23,6 +24,9 @@ class Common{
       if(breakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
       else{Serial.print(ToPrint);Serial3.print(ToPrint);}
     }
+
+    static void addToLog(const __FlashStringHelper* Text);
+    static void addToLog(const char* Text);
   
     static char * getFormattedTime();    
     static float convertBetweenTempUnits(float);
@@ -35,7 +39,7 @@ class Common{
     static char * toText(int Number1, int Number2,const char * Separator); 
     static char * toText(float Number1, float Number2,const char * Separator); 
     static char * toPrecisionText(float Number);  
-    static char * timeToText(int Hour, int Minute);
+    static char * timeToText(byte Hour, byte Minute);
     static char * tempToText(float Temp);
     static char * percentageToText(float Humidity);    
     static const __FlashStringHelper * onOffToText(bool Status);  

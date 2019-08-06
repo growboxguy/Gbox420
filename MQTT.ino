@@ -78,11 +78,11 @@ void mqttReceived(void* response) {
   else if(strstr(topic,MqttPumpDisable)!=NULL) { aeroPumpDisable();}  
   else if(strstr(topic,MqttPressureCalibrate)!=NULL) { calibratePressureSensor();}
 
-  mqttPublush(false); //send out a fresh report
+  mqttPublish(false); //send out a fresh report
   
 }
 
-void mqttPublush(bool AddToLog){ //publish readings in JSON format
+void mqttPublish(bool AddToLog){ //publish readings in JSON format
   if(AddToLog)addToLog(F("Reporting to MQTT"));
   logToJSON(false,false); //fills Message global variable
   memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable

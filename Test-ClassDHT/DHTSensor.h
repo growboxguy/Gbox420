@@ -6,20 +6,20 @@
 
 class DHTSensor : public Common
 {
-  private:
-  RollingAverage *Temp;
-  RollingAverage *Humidity;
-  DHT *sensor; //Pointer declaration, points to null initially 
-  byte pin;
-
-
   public:
-  DHTSensor(const byte _pin, const uint8_t _sensorType);
-  void refresh();  //Called when component should refresh its state
-  float getTemp();  
-  float getHumidity();
-  char* getTempText();  
-  char* getHumidityText();
+    DHTSensor(const byte _pin, const uint8_t _sensorType);
+    void refresh();  //Called when component should refresh its state
+    float getTemp();  
+    float getHumidity();
+    char* getTempText();  
+    char* getHumidityText();
+
+  
+  private:
+    RollingAverage *Temp;
+    RollingAverage *Humidity;
+    DHT *sensor; //Pointer declaration, points to null initially 
+    byte pin;
 };
 
 #endif

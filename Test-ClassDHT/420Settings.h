@@ -5,7 +5,9 @@ static const byte MaxTextLength = 32;  //Default char* buffer size: 31 character
 static const byte RollingAverageQueueDepth = 10;  //How many previous sensor readings should be stored
 
 typedef struct
-{    
+{ 
+  byte Version=3;
+    
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
   
   bool AeroSprayEnabled = true;  //Enable/disable misting
@@ -13,14 +15,21 @@ typedef struct
   uint32_t AeroDuration = 2; //Aeroponics - Spray time in seconds  
   uint32_t AeroPumpTimeout = 360;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
   uint32_t AeroPrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
-  
-  bool TimerEnabled = true;  //Enable timer controlling lights
-  bool LightStatus = true;  //Startup status for lights: True-ON / False-OFF
-  byte LightBrightness = 15; //Light intensity: 0 - 100 range for controlling led driver output  
-  byte LightOnHour = 4;  //Light ON time - hour
-  byte LightOnMinute = 20; //Light ON time - minute
-  byte LightOffHour = 16; //Light OFF time - hour
-  byte LightOffMinute = 20; //Light OFF time - minute  
+
+  byte InternalDHTSensorPin = 43; //DAT - DHT22 temp/humidity sensor, internally mounted
+  byte ExternalDHTSensorPin = 44; //DAT - DHT22 temp/humidity sensor, externally mounted
+
+  //Light1 settings
+  byte Light1RelayPin = 29;  //Power relay Port 8 - LED lights
+  byte Light1DimmingPin = 11; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
+  byte Light1DimmingLimit = 8;  //Blocks dimming below 8%, HLG drivers cannot fully dimm. Check the LED driver specification and adjust accordingly, only set 0 if it supports dimming fully! (Usually not the case..)
+  bool Light1Status = true;  //Startup status for lights: True-ON / False-OFF
+  byte Light1Brightness = 15; //Light intensity: 0 - 100 range for controlling led driver output
+  bool Light1TimerEnabled = true;  //Enable timer controlling lights  
+  byte Light1OnHour = 4;  //Light ON time - hour
+  byte Light1OnMinute = 20; //Light ON time - minute
+  byte Light1OffHour = 16; //Light OFF time - hour
+  byte Light1OffMinute = 20; //Light OFF time - minute  
 
   bool AutomaticInternalFan = false;  //Adjust internal fan based on temperature
   bool AutomaticExhaustFan = false;  //Adjust exhaust fan based on temp and humidity
@@ -34,7 +43,7 @@ typedef struct
   byte ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
    
   bool SoundEnabled = true;  //Enable PC speaker
-  bool DebugEnabled = true; //Logs debug messages to serial and web outputs
+  bool DebugEnabled = false; //Logs debug messages to serial and web outputs
   bool MetricSystemEnabled = true; //Swith between Imperial/Metric units. If changed update the default temp and pressure values.  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
   bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
@@ -58,10 +67,7 @@ typedef struct
   float PHCalibrationSlope = -0.033256;     //Update this to your own PH meter calibration values
   float PHCalibrationIntercept = 24.08651;  //Update this to your own PH meter calibration values
   float PressureSensorOffset = 0.57;        //Pressure sensor calibration: voltage reading at 0 pressure
-  float PressureSensorRatio = 2.7;          //Pressure sensor voltage to pressure ratio
-    
-  private:
-  const byte Version=1; 
+  float PressureSensorRatio = 2.7;          //Pressure sensor voltage to pressure ratio     
 }Settings;
 
 #endif
