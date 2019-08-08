@@ -1,4 +1,6 @@
 #include "Common.h" 
+#include "420Settings.h"  //for storing/reading defaults
+#include "420Pins.h"  //Load Arduino pin layout
 #include "avr/wdt.h" //Watchdog timer
 #include "avr/boot.h" //Watchdog timer related bug fix
 #include "MemoryFree.h" //checking remaining memory - only for debugging
@@ -18,6 +20,11 @@
 //sendEmailAlert implementation
 //Sounds implementation
 //Light sensor to separate object from Light
+
+//Global variables
+Settings MySettings;
+char Message[512];   //temp storage for assembling log messages, buffer for REST and MQTT API messages
+char CurrentTime[20]; //buffer for storing current time
 
 //Component initialization
 ELClient MyESPLink(&Serial3);  //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
@@ -44,9 +51,9 @@ void setup() {  // put your setup code here, to run once:
   Common::addToLog(F("GrowBox initializing..."));
   Common::loadSettings();
 
-  InternalDHTSensor = new DHTSensor(Common::MySettings.InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
-  ExternalDHTSensor = new DHTSensor(Common::MySettings.ExternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
-  Light1 = new Lights(Common::MySettings.Light1RelayPin,Common::MySettings.Light1DimmingPin,&Common::MySettings.Light1DimmingLimit,&Common::MySettings.Light1Status,&Common::MySettings.Light1Brightness,&Common::MySettings.Light1TimerEnabled,&Common::MySettings.Light1OnHour,&Common::MySettings.Light1OnMinute,&Common::MySettings.Light1OffHour,&Common::MySettings.Light1OffMinute);   //Passing MySettings members as references: Changes get written back to MySettings and saved to EEPROM. (byte *)(((byte *)&Common::MySettings) + offsetof(Settings, LightOnHour))
+  InternalDHTSensor = new DHTSensor(MySettings.InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
+  ExternalDHTSensor = new DHTSensor(MySettings.ExternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
+  Light1 = new Lights(MySettings.Light1RelayPin,MySettings.Light1DimmingPin,&MySettings.Light1DimmingLimit,&MySettings.Light1Status,&MySettings.Light1Brightness,&MySettings.Light1TimerEnabled,&MySettings.Light1OnHour,&MySettings.Light1OnMinute,&MySettings.Light1OffHour,&MySettings.Light1OffMinute);   //Passing MySettings members as references: Changes get written back to MySettings and saved to EEPROM. (byte *)(((byte *)&MySettings) + offsetof(Settings, LightOnHour))
   
   MyESPLink.resetCb = &resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
   resetWebServer();  //reset the WebServer  
@@ -87,13 +94,13 @@ void processTimeCriticalStuff(){
 }
 
 void oneSecRun(){
-  if(Common::MySettings.DebugEnabled)Common::logToSerials(F("One sec trigger.."),true);
+  if(MySettings.DebugEnabled)Common::logToSerials(F("One sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   
 }
 
 void fiveSecRun(){
-  if(Common::MySettings.DebugEnabled)Common::logToSerials(F("Five sec trigger.."),true);
+  if(MySettings.DebugEnabled)Common::logToSerials(F("Five sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout   
   Common::logToSerials(F("Free memory(bytes): "),false); Common::logToSerials(freeMemory(),true); 
   InternalDHTSensor -> refresh();
@@ -102,12 +109,12 @@ void fiveSecRun(){
 }
 
 void minuteRun(){
-  if(Common::MySettings.DebugEnabled)Common::logToSerials(F("Minute trigger.."),true);
+  if(MySettings.DebugEnabled)Common::logToSerials(F("Minute trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   
 }
 
 void halfHourRun(){
-  if(Common::MySettings.DebugEnabled)Common::logToSerials(F("Half hour trigger.."),true);
+  if(MySettings.DebugEnabled)Common::logToSerials(F("Half hour trigger.."),true);
   wdt_reset(); //reset watchdog timeout
 }

@@ -8,7 +8,6 @@
   }
 
   DHTSensor::DHTSensor(uint8_t _pin, uint8_t _sensorType){
-    logToSerials(_pin,true);
     sensor = new DHT(_pin,_sensorType);
     sensor -> begin();  //dereference the pointer to the object and then call begin() on it. Same as (*sensor).begin();
     logToSerials(sensor -> readTemperature(),true);

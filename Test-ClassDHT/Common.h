@@ -8,15 +8,17 @@
 #include "420Pins.h"  //Load Arduino pin layout
 #include "TimeLib.h" //Keeping track of time
 
+extern Settings MySettings;
+extern char Message[512];
+extern char CurrentTime[20]; 
+
 class Common{
   friend class RollingAverage;
   
   protected:
-    static char Message[];   //temp storage for assembling log messages, buffer for REST and MQTT API messages
-    static char CurrentTime[]; //buffer for storing current time
+
   
   public:
-    static Settings MySettings;
     virtual void refresh() = 0;  //every class needs to have an implementation of this method. Called when component should refresh its state (for example Reading temperature and humidity using the DHTsensor class)
     template <class logLine> //fuction template: logToSerials can take any parameter type (int,float,bool,char..) and print it to Arduino and ESP-link serial consoles.
     static void logToSerials (const logLine& ToPrint,bool breakLine) { 

@@ -41,52 +41,52 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
 void loadCallback(char * url) //called when website is loaded
 {
   if (strcmp(url,"/GrowBox.html.json")==0){
-  WebServer.setArgBoolean(F("AutoInternalFan"), Common::MySettings.AutomaticInternalFan);
-  WebServer.setArgString(F("InternalFanSwitchTemp"), Common::toText(Common::MySettings.InternalFanSwitchTemp));
-  WebServer.setArgBoolean(F("AutoExhaustFan"), Common::MySettings.AutomaticExhaustFan);
-  WebServer.setArgString(F("ExhaustFanHighHumid"), Common::toText(Common::MySettings.ExhaustFanHighHumid));
-  WebServer.setArgString(F("ExhaustFanLowHumid"), Common::toText(Common::MySettings.ExhaustFanLowHumid));
-  WebServer.setArgString(F("ExhaustFanOffHumid"), Common::toText(Common::MySettings.ExhaustFanOffHumid));
+  WebServer.setArgBoolean(F("AutoInternalFan"), MySettings.AutomaticInternalFan);
+  WebServer.setArgString(F("InternalFanSwitchTemp"), Common::toText(MySettings.InternalFanSwitchTemp));
+  WebServer.setArgBoolean(F("AutoExhaustFan"), MySettings.AutomaticExhaustFan);
+  WebServer.setArgString(F("ExhaustFanHighHumid"), Common::toText(MySettings.ExhaustFanHighHumid));
+  WebServer.setArgString(F("ExhaustFanLowHumid"), Common::toText(MySettings.ExhaustFanLowHumid));
+  WebServer.setArgString(F("ExhaustFanOffHumid"), Common::toText(MySettings.ExhaustFanOffHumid));
     
-  WebServer.setArgInt(F("Light1OnHour"), Common::MySettings.Light1OnHour); 
-  WebServer.setArgInt(F("Light1OnMinute"), Common::MySettings.Light1OnMinute); 
-  WebServer.setArgInt(F("Light1OffHour"), Common::MySettings.Light1OffHour); 
-  WebServer.setArgInt(F("Light1OffMinute"),Common::MySettings.Light1OffMinute);
-  WebServer.setArgInt(F("Light1Brightness"), Common::MySettings.Light1Brightness);
-  WebServer.setArgInt(F("Light1BrightnessSlider"), Common::MySettings.Light1Brightness);
+  WebServer.setArgInt(F("Light1OnHour"), MySettings.Light1OnHour); 
+  WebServer.setArgInt(F("Light1OnMinute"), MySettings.Light1OnMinute); 
+  WebServer.setArgInt(F("Light1OffHour"), MySettings.Light1OffHour); 
+  WebServer.setArgInt(F("Light1OffMinute"),MySettings.Light1OffMinute);
+  WebServer.setArgInt(F("Light1Brightness"), MySettings.Light1Brightness);
+  WebServer.setArgInt(F("Light1BrightnessSlider"), MySettings.Light1Brightness);
 
-  WebServer.setArgInt(F("AeroPumpTimeout"), Common::MySettings.AeroPumpTimeout);
-  WebServer.setArgInt(F("AeroPrimingTime"), Common::MySettings.AeroPrimingTime);
-  WebServer.setArgInt(F("AeroInterval"), Common::MySettings.AeroInterval);
-  WebServer.setArgInt(F("AeroDuration"), Common::MySettings.AeroDuration);  
+  WebServer.setArgInt(F("AeroPumpTimeout"), MySettings.AeroPumpTimeout);
+  WebServer.setArgInt(F("AeroPrimingTime"), MySettings.AeroPrimingTime);
+  WebServer.setArgInt(F("AeroInterval"), MySettings.AeroInterval);
+  WebServer.setArgInt(F("AeroDuration"), MySettings.AeroDuration);  
   }
   
   if (strcmp(url,"/Settings.html.json")==0){  
-  WebServer.setArgInt(F("SoundEnabled"), Common::MySettings.SoundEnabled);
-  WebServer.setArgInt(F("DebugEnabled"), Common::MySettings.DebugEnabled);
-  WebServer.setArgInt(F("MetricSystemEnabled"), Common::MySettings.MetricSystemEnabled);
-  WebServer.setArgInt(F("DigitDisplayBrightness"), Common::MySettings.DigitDisplayBacklight);
-  WebServer.setArgInt(F("DigitDisplayValue"), Common::MySettings.DigitDisplayValue);
-  WebServer.setArgBoolean(F("MqttEnabled"), Common::MySettings.ReportToMqtt);
-  WebServer.setArgBoolean(F("GoogleSheetsEnabled"), Common::MySettings.ReportToGoogleSheets);
-  WebServer.setArgString(F("PushingBoxLogRelayID"), Common::MySettings.PushingBoxLogRelayID);
+  WebServer.setArgInt(F("SoundEnabled"), MySettings.SoundEnabled);
+  WebServer.setArgInt(F("DebugEnabled"), MySettings.DebugEnabled);
+  WebServer.setArgInt(F("MetricSystemEnabled"), MySettings.MetricSystemEnabled);
+  WebServer.setArgInt(F("DigitDisplayBrightness"), MySettings.DigitDisplayBacklight);
+  WebServer.setArgInt(F("DigitDisplayValue"), MySettings.DigitDisplayValue);
+  WebServer.setArgBoolean(F("MqttEnabled"), MySettings.ReportToMqtt);
+  WebServer.setArgBoolean(F("GoogleSheetsEnabled"), MySettings.ReportToGoogleSheets);
+  WebServer.setArgString(F("PushingBoxLogRelayID"), MySettings.PushingBoxLogRelayID);
 
-  WebServer.setArgBoolean(F("AlertEmails"), Common::MySettings.AlertEmails);
-  WebServer.setArgString(F("PushingBoxEmailRelayID"), Common::MySettings.PushingBoxEmailRelayID);
-  WebServer.setArgInt(F("ReadCountBeforeAlert"), Common::MySettings.ReadCountBeforeAlert);
-  WebServer.setArgInt(F("TempAlertLow"), Common::MySettings.TempAlertLow);
-  WebServer.setArgInt(F("TempAlertHigh"), Common::MySettings.TempAlertHigh);
-  WebServer.setArgInt(F("HumidityAlertLow"), Common::MySettings.HumidityAlertLow);
-  WebServer.setArgInt(F("HumidityAlertHigh"), Common::MySettings.HumidityAlertHigh);
-  WebServer.setArgString(F("PressureAlertLow"), Common::toText(Common::MySettings.PressureAlertLow));
-  WebServer.setArgString(F("PressureAlertHigh"), Common::toText(Common::MySettings.PressureAlertHigh));
-  WebServer.setArgString(F("PHAlertLow"), Common::toText(Common::MySettings.PHAlertLow));
-  WebServer.setArgString(F("PHAlertHigh"), Common::toText(Common::MySettings.PHAlertHigh));  
+  WebServer.setArgBoolean(F("AlertEmails"), MySettings.AlertEmails);
+  WebServer.setArgString(F("PushingBoxEmailRelayID"), MySettings.PushingBoxEmailRelayID);
+  WebServer.setArgInt(F("ReadCountBeforeAlert"), MySettings.ReadCountBeforeAlert);
+  WebServer.setArgInt(F("TempAlertLow"), MySettings.TempAlertLow);
+  WebServer.setArgInt(F("TempAlertHigh"), MySettings.TempAlertHigh);
+  WebServer.setArgInt(F("HumidityAlertLow"), MySettings.HumidityAlertLow);
+  WebServer.setArgInt(F("HumidityAlertHigh"), MySettings.HumidityAlertHigh);
+  WebServer.setArgString(F("PressureAlertLow"), Common::toText(MySettings.PressureAlertLow));
+  WebServer.setArgString(F("PressureAlertHigh"), Common::toText(MySettings.PressureAlertHigh));
+  WebServer.setArgString(F("PHAlertLow"), Common::toText(MySettings.PHAlertLow));
+  WebServer.setArgString(F("PHAlertHigh"), Common::toText(MySettings.PHAlertHigh));  
 
-  WebServer.setArgString(F("PHCalibrationSlope"), Common::toPrecisionText(Common::MySettings.PHCalibrationSlope));
-  WebServer.setArgString(F("PHCalibrationIntercept"), Common::toPrecisionText(Common::MySettings.PHCalibrationIntercept)); 
-  WebServer.setArgString(F("PressureSensorOffset"), Common::toPrecisionText(Common::MySettings.PressureSensorOffset));
-  WebServer.setArgString(F("PressureSensorRatio"), Common::toPrecisionText(Common::MySettings.PressureSensorRatio));  
+  WebServer.setArgString(F("PHCalibrationSlope"), Common::toPrecisionText(MySettings.PHCalibrationSlope));
+  WebServer.setArgString(F("PHCalibrationIntercept"), Common::toPrecisionText(MySettings.PHCalibrationIntercept)); 
+  WebServer.setArgString(F("PressureSensorOffset"), Common::toPrecisionText(MySettings.PressureSensorOffset));
+  WebServer.setArgString(F("PressureSensorRatio"), Common::toPrecisionText(MySettings.PressureSensorRatio));  
   }
 }
 

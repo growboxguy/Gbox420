@@ -1,8 +1,5 @@
  #include "Common.h" 
 
-  static Settings Common::MySettings;
-  static char Common::Message[512]; //initialize the temporary character buffer
-  static char Common::CurrentTime[20]; 
   static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy (array of char arrays)
    
   void Common::refresh(){  //Called when component should refresh its state 
@@ -169,20 +166,20 @@
   }  
 
   static void Common::saveSettings(bool LogThis){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
-  eeprom_update_block((const void*)&Common::MySettings, (void*)0, sizeof(Common::MySettings)); //update_block only writes the bytes that changed
+  eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings)); //update_block only writes the bytes that changed
   if(LogThis) Common::addToLog(F("Settings saved to EEPROM"));
   }
   
   static void Common::loadSettings(){
     Settings EEPROMSettings; //temporary storage with "settings" type
     eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
-    if(EEPROMSettings.Version != Common::MySettings.Version){
+    if(EEPROMSettings.Version != MySettings.Version){
       Common::logToSerials(F("Change detected, updating EEPROM..."),false);
       saveSettings(false);  //overwrites stored settings with defaults from this sketch
     }
     else {
       Common::logToSerials(F("Same structure version detected, applying restored settings..."),false);
-      Common::MySettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
+      MySettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
     }
     Common::logToSerials(F("done"),true);
   }
@@ -207,13 +204,13 @@
        Oldest = 0;
      }
      int Average = Sum / RollingAverageQueueDepth;      
-      if(Common::MySettings.DebugEnabled){  
-       memset(&Common::Message[0], 0, sizeof(Common::Message));  //clear variable       
-       strcat(Common::Message,Common::toText(Oldest));
-       strcat_P(Common::Message,(PGM_P)F(":Reading:")); strcat(Common::Message,Common::toText(LatestReading)); 
-       strcat_P(Common::Message,(PGM_P)F(",Sum:")); strcat(Common::Message,Common::toText(Sum));
-       strcat_P(Common::Message,(PGM_P)F(",Average:")); strcat(Common::Message,Common::toText(Average));
-       Common::logToSerials(Common::Message,true);       
+      if(MySettings.DebugEnabled){  
+       memset(&Message[0], 0, sizeof(Message));  //clear variable       
+       strcat(Message,Common::toText(Oldest));
+       strcat_P(Message,(PGM_P)F(":Reading:")); strcat(Message,Common::toText(LatestReading)); 
+       strcat_P(Message,(PGM_P)F(",Sum:")); strcat(Message,Common::toText(Sum));
+       strcat_P(Message,(PGM_P)F(",Average:")); strcat(Message,Common::toText(Average));
+       Common::logToSerials(Message,true);       
      }
       return Average;
    }
