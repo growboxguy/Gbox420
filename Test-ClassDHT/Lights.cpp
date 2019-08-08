@@ -59,7 +59,7 @@ void Lights::setBrightness(byte Brightness, bool LogThis){
     strncpy_P(Message,(PGM_P)F("Brightness: "),MaxTextLength);  
     strcat(Message,toText(Brightness));
     strcat_P(Message,(PGM_P)F("%"));
-    //addToLog(Message);
+    addToLog(Message);
   }
 }
 
@@ -87,18 +87,18 @@ void Lights::calibrateLights(){
   setBrightness(LastBrightness,false); //restore original brightness
   Status=LastStatus; //restore original state
   checkLightStatus();
-  //addToLog(F("Lights calibrated"));
+  addToLog(F("Lights calibrated"));
 }
 
 void Lights::setLightOnOff(bool Status, bool LogThis){
    *(this -> Status) = Status;
    if(LogThis){
       if(Status){
-        //addToLog(F("Light ON"));
+        addToLog(F("Light ON"));
         //PlayOnSound=true;
       }
       else{
-        //addToLog(F("Light OFF")); 
+        addToLog(F("Light OFF")); 
         //PlayOffSound=true;
       }
    }
@@ -106,13 +106,13 @@ void Lights::setLightOnOff(bool Status, bool LogThis){
 
 void Lights::setTimerOnOff(bool TimerState){
   *(this -> TimerEnabled) = TimerState;
-  if(TimerEnabled){ 
+  if(*TimerEnabled){ 
     checkLightTimer();
-    //addToLog(F("Timer enabled"));
+    addToLog(F("Timer enabled"));
    // PlayOnSound=true;
     }
   else {
-    //addToLog(F("Timer disabled"));
+    addToLog(F("Timer disabled"));
    // PlayOffSound=true;
     }
 }
@@ -123,7 +123,7 @@ void Lights::setOnHour(byte OnHour){
 
 void Lights::setOnMinute(byte OnMinute){
   *(this -> OnMinute) = OnMinute;
-  //addToLog(F("Light ON time updated")); 
+  addToLog(F("Light ON time updated")); 
   logToSerials(F("Light ON time updated"),false);
   //logToSerials(timeToText(*OnHour,*OnMinute),true);
 }
@@ -134,7 +134,7 @@ void Lights::setOffHour(byte OffHour){
 
 void Lights::setOffMinute(byte OffMinute){
   *(this -> OffMinute) = OffMinute;
-  //addToLog(F("Light OFF time updated"));
+  addToLog(F("Light OFF time updated"));
   logToSerials(F("Light OFF time updated"),false);
 //  logToSerials(timeToText(*OffHour,*OffMinute),true);
 }

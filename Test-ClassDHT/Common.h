@@ -23,6 +23,7 @@ class Common{
       if(breakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
       else{Serial.print(ToPrint);Serial3.print(ToPrint);}
     }
+    static char* eventLogToJSON(bool Append); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]  
     static void addToLog(const __FlashStringHelper* Text);
     static void addToLog(const char* Text);
     static void saveSettings(bool LogThis);

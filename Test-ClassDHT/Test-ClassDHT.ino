@@ -9,8 +9,6 @@
 #include "StaticThreadController.h"  //Grouping threads
 #include "DHTSensor.h"
 #include "Lights.h"
-#include "Website.h"
-
 
 //TODO:
 //addToLog - make Log class
@@ -22,9 +20,8 @@
 //Light sensor to separate object from Light
 
 //Component initialization
-
 ELClient MyESPLink(&Serial3);  //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
-ELClientWebServer MyWebServer(&MyESPLink); //ESP-link WebServer API
+ELClientWebServer WebServer(&MyESPLink); //ESP-link WebServer API
 DHTSensor * InternalDHTSensor;  //Pointer to a Digital Humidity Sensor measuring the internal temperature of the grow box
 DHTSensor * ExternalDHTSensor; //Pointer to a Digital Humidity Sensor measuring the external temperature of the grow box
 Lights * Light1;  //Pointer to a Digital Humidity Sensor measuring the external temperature of the grow box
@@ -44,7 +41,7 @@ void setup() {  // put your setup code here, to run once:
   wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 minutes assume a lockup and reset sketch
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
   Common::logToSerials(F("GrowBox initializing..."),true);
-  //addToLog(F("GrowBox initializing..."));
+  Common::addToLog(F("GrowBox initializing..."));
   Common::loadSettings();
 
   InternalDHTSensor = new DHTSensor(Common::MySettings.InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
@@ -65,7 +62,7 @@ void setup() {  // put your setup code here, to run once:
   HalfHourThread.onRun(halfHourRun);
   
   Common::logToSerials(F("Grow Box initialized"),true);
-  //addToLog(F("Grow Box initialized"));
+  Common::addToLog(F("Grow Box initialized"));
 
    //triger all threads at startup
   fiveSecRun(); //needs to run first to get sensor readings

@@ -3,18 +3,45 @@
   static Settings Common::MySettings;
   static char Common::Message[512]; //initialize the temporary character buffer
   static char Common::CurrentTime[20]; 
+  static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy (array of char arrays)
    
   void Common::refresh(){  //Called when component should refresh its state 
     if(MySettings.DebugEnabled){logToSerials(F("Common object refreshing"),true);}
   }  
 
-  static void addToLog(const __FlashStringHelper* Text){
-    ;
+  static void Common::addToLog(const char *message){
+    logToSerials(message,true);
+    for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
+       memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
+       strncpy(Logs[i],Logs[i-1],MaxTextLength ) ; 
+      }  
+    memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
+    strncpy(Logs[0],message,MaxTextLength);  //instert new log to [0]
+  }
+  
+  static void Common::addToLog(const __FlashStringHelper *message){ //function overloading: same function name, different parameter type 
+    logToSerials(message,true);
+    for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
+       memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
+       strncpy(Logs[i],Logs[i-1],MaxTextLength ) ; 
+      }  
+    memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
+    strncpy_P(Logs[0],(PGM_P)message,MaxTextLength);  //instert new log to [0]
   }
 
-  static void addToLog(const char* Text){
-    ;
+  char* Common::eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
+  if(!Append)memset(&Message[0], 0, sizeof(Message));
+  strcat_P(Message,(PGM_P)F("["));
+  for(int i=LogDepth-1;i >=0 ; i--)
+  {
+   strcat_P(Message,(PGM_P)F("\""));
+   strcat(Message,Logs[i]);
+   strcat_P(Message,(PGM_P)F("\""));
+   if(i > 0 ) strcat_P(Message,(PGM_P)F(","));
   }
+  Message[strlen(Message)] = ']';
+  return Message;
+}
 
   static char * Common::getFormattedTime(){
     time_t Now = now(); // Get the current time and date from the TimeLib library
