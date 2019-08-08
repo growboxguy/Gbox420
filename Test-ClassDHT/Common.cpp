@@ -92,10 +92,10 @@
     static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same static variable
     dtostrf(Temp, 4, 2, ReturnChar); 
     if(MySettings.MetricSystemEnabled){      
-      strcat_P(ReturnChar,(PGM_P)F("C"));
+      strcat_P(ReturnChar,(PGM_P)F("°C"));
     }
     else{
-      strcat_P(ReturnChar,(PGM_P)F("F"));
+      strcat_P(ReturnChar,(PGM_P)F("°F"));
     }
     return ReturnChar;
   } 
@@ -141,6 +141,25 @@
    // else addToLog(F("Using Imperial units"));  
   }  
 
+  static void Common::saveSettings(bool LogThis){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
+  eeprom_update_block((const void*)&Common::MySettings, (void*)0, sizeof(Common::MySettings)); //update_block only writes the bytes that changed
+  if(LogThis) Common::addToLog(F("Settings saved to EEPROM"));
+  }
+  
+  static void Common::loadSettings(){
+    Settings EEPROMSettings; //temporary storage with "settings" type
+    eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
+    if(EEPROMSettings.Version != Common::MySettings.Version){
+      Common::logToSerials(F("Change detected, updating EEPROM..."),false);
+      saveSettings(false);  //overwrites stored settings with defaults from this sketch
+    }
+    else {
+      Common::logToSerials(F("Same structure version detected, applying restored settings..."),false);
+      Common::MySettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
+    }
+    Common::logToSerials(F("done"),true);
+  }
+
 //////////////////////////////////////////////////////////////////
 //RollingAverage functions
 
@@ -160,21 +179,20 @@
      if(Oldest >= RollingAverageQueueDepth){ //reached the end of the queue
        Oldest = 0;
      }
-     int Average = Sum / RollingAverageQueueDepth;
-     if(Common::MySettings.DebugEnabled){  //THIS SECTION CAN BE REMOVED
+     int Average = Sum / RollingAverageQueueDepth;      
+      if(Common::MySettings.DebugEnabled){  
        memset(&Common::Message[0], 0, sizeof(Common::Message));  //clear variable       
        strcat(Common::Message,Common::toText(Oldest));
        strcat_P(Common::Message,(PGM_P)F(":Reading:")); strcat(Common::Message,Common::toText(LatestReading)); 
        strcat_P(Common::Message,(PGM_P)F(",Sum:")); strcat(Common::Message,Common::toText(Sum));
        strcat_P(Common::Message,(PGM_P)F(",Average:")); strcat(Common::Message,Common::toText(Average));
-       Common::logToSerials(Common::Message,true);
+       Common::logToSerials(Common::Message,true);       
      }
       return Average;
    }
 
   float RollingAverage::updateAverage(float LatestReading){
-    float temp = LatestReading * 100;
-    int temp2 = updateAverage((int)temp);
-    return (float)temp2/100;
+    int temp = updateAverage((int)(LatestReading * 100));
+    return (float)temp/100;
   }
    

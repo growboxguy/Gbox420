@@ -1,6 +1,6 @@
 #include "Lights.h"
 
-Lights::Lights(byte *RelayPin,byte *DimmingPin, byte *DimmingLimit, bool *Status, byte *Brightness,bool *TimerEnabled,byte *OnHour,byte *OnMinute,byte *OffHour,byte *OffMinute){
+Lights::Lights(byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute){  //constructor
   this -> RelayPin = RelayPin;
   this -> DimmingPin = DimmingPin;
   this -> DimmingLimit = DimmingLimit;
@@ -11,6 +11,8 @@ Lights::Lights(byte *RelayPin,byte *DimmingPin, byte *DimmingLimit, bool *Status
   this -> OnMinute = OnMinute;
   this -> OffHour = OffHour;
   this -> OffMinute = OffMinute;
+  pinMode(RelayPin, OUTPUT);
+  pinMode(DimmingPin, OUTPUT);
   if(MySettings.DebugEnabled){logToSerials(F("Lights object created"),true);}
 }
 
@@ -65,6 +67,29 @@ void Lights::triggerCalibrateLights(){ //website signals to calibrate lights the
   CalibrateLights = true; 
 }
 
+void Lights::calibrateLights(){
+  CalibrateLights=false;  
+  bool* LastStatus = Status;
+  byte* LastBrightness = Brightness;
+  setLightOnOff(true,false);
+  checkLightStatus();  //apply turning the lights on
+  setBrightness(0,false);
+  delay(500); //wait for light output change
+  MinReading = 1023 - analogRead(LightSensorAnalogInPin);
+  setBrightness(100,false);
+  delay(500); //wait for light output change
+  MaxReading = 1023 - analogRead(LightSensorAnalogInPin);
+  
+  if(MySettings.DebugEnabled){
+         //logToSerials(F("0% - "),false); logToSerials(*MinReading,true);
+         //logToSerials(F(", 100% - "),false); logToSerials(*MaxReading,true);
+  }
+  setBrightness(LastBrightness,false); //restore original brightness
+  Status=LastStatus; //restore original state
+  checkLightStatus();
+  //addToLog(F("Lights calibrated"));
+}
+
 void Lights::setLightOnOff(bool Status, bool LogThis){
    *(this -> Status) = Status;
    if(LogThis){
@@ -99,7 +124,8 @@ void Lights::setOnHour(byte OnHour){
 void Lights::setOnMinute(byte OnMinute){
   *(this -> OnMinute) = OnMinute;
   //addToLog(F("Light ON time updated")); 
-  logToSerials(F("Light ON time updated"),false);logToSerials(timeToText(*LightOnHour,*LightOnMinute),true);
+  logToSerials(F("Light ON time updated"),false);
+  //logToSerials(timeToText(*OnHour,*OnMinute),true);
 }
 
 void Lights::setOffHour(byte OffHour){
@@ -109,5 +135,21 @@ void Lights::setOffHour(byte OffHour){
 void Lights::setOffMinute(byte OffMinute){
   *(this -> OffMinute) = OffMinute;
   //addToLog(F("Light OFF time updated"));
-  logToSerials(F("Light OFF time updated"),false);logToSerials(timeToText(*LightOffHour,*LightOffMinute),true);
+  logToSerials(F("Light OFF time updated"),false);
+//  logToSerials(timeToText(*OffHour,*OffMinute),true);
+}
+
+__FlashStringHelper* Lights::getTimerOnOffText(){
+  return enabledToText(*TimerEnabled);
+}
+
+__FlashStringHelper* Lights::getStatusText(){
+   return onOffToText(*Status);
+}
+    
+char * Lights::getOnTimeText(){
+   return timeToText(*OnHour,*OnMinute);
+}
+char * Lights::getOffTimeText(){
+   return timeToText(*OffHour,*OffMinute);
 }

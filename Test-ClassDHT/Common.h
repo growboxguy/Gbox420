@@ -18,16 +18,15 @@ class Common{
   public:
     static Settings MySettings;
     virtual void refresh() = 0;  //every class needs to have an implementation of this method. Called when component should refresh its state (for example Reading temperature and humidity using the DHTsensor class)
-       
     template <class logLine> //fuction template: logToSerials can take any parameter type (int,float,bool,char..) and print it to Arduino and ESP-link serial consoles.
     static void logToSerials (const logLine& ToPrint,bool breakLine) { 
       if(breakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
       else{Serial.print(ToPrint);Serial3.print(ToPrint);}
     }
-
     static void addToLog(const __FlashStringHelper* Text);
     static void addToLog(const char* Text);
-  
+    static void saveSettings(bool LogThis);
+    static void loadSettings();  
     static char * getFormattedTime();    
     static float convertBetweenTempUnits(float);
     static float convertBetweenPressureUnits(float);
@@ -45,7 +44,7 @@ class Common{
     static const __FlashStringHelper * onOffToText(bool Status);  
     static const __FlashStringHelper * yesNoToText(bool Status); 
     static const __FlashStringHelper * statusToText(bool Status);
-    static const __FlashStringHelper * enabledToText(bool Status);  
+    static const __FlashStringHelper * enabledToText(bool Status);      
 };
 
 class RollingAverage

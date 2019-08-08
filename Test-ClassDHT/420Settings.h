@@ -6,7 +6,7 @@ static const byte RollingAverageQueueDepth = 10;  //How many previous sensor rea
 
 typedef struct
 { 
-  byte Version=3;
+  byte Version=5;
     
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
   
@@ -16,8 +16,8 @@ typedef struct
   uint32_t AeroPumpTimeout = 360;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
   uint32_t AeroPrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
 
-  byte InternalDHTSensorPin = 43; //DAT - DHT22 temp/humidity sensor, internally mounted
-  byte ExternalDHTSensorPin = 44; //DAT - DHT22 temp/humidity sensor, externally mounted
+  uint8_t InternalDHTSensorPin = 43; //DAT - DHT22 temp/humidity sensor, internally mounted
+  uint8_t ExternalDHTSensorPin = 44; //DAT - DHT22 temp/humidity sensor, externally mounted
 
   //Light1 settings
   byte Light1RelayPin = 29;  //Power relay Port 8 - LED lights
@@ -43,7 +43,7 @@ typedef struct
   byte ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
    
   bool SoundEnabled = true;  //Enable PC speaker
-  bool DebugEnabled = false; //Logs debug messages to serial and web outputs
+  bool DebugEnabled = true; //Logs debug messages to serial and web outputs
   bool MetricSystemEnabled = true; //Swith between Imperial/Metric units. If changed update the default temp and pressure values.  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
   bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker

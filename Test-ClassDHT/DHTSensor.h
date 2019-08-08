@@ -7,7 +7,7 @@
 class DHTSensor : public Common
 {
   public:
-    DHTSensor(const byte _pin, const uint8_t _sensorType);
+    DHTSensor(uint8_t _pin, uint8_t _sensorType);
     void refresh();  //Called when component should refresh its state
     float getTemp();  
     float getHumidity();

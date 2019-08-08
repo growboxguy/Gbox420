@@ -18,7 +18,7 @@ class Lights : public Common
     byte* OffMinute; //Light OFF time - minute
 
   public:
-    Lights(byte *Pin, byte* DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
+    Lights(byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
     void refresh();  //Called when component should refresh its state
     void setBrightness(byte Brightness, bool AddToLog);     
     void triggerCalibrateLights();    //Website signals to calibrate the lights the next time the Light object gets CPU time       
@@ -28,48 +28,19 @@ class Lights : public Common
     void setOnMinute(byte OnMinute);    
     void setOffHour(byte OffHour);    
     void setOffMinute(byte OffMinute);
+    __FlashStringHelper * getTimerOnOffText(); 
+    __FlashStringHelper* getStatusText();   
+    char * getOnTimeText();    
+    char * getOffTimeText();
+   
   
   private:  
     bool CalibrateLights = false; //Stores the Calibration request
+    int MaxReading; // stores the highest light sensor analog reading
+    int MinReading; //stores the lowest light sensor analog reading  
     void calibrateLights(); //Actual calibration code, takes to long to run directly from a website command  (Case sensitive object names! :) )
     void checkLightStatus();    
-    void checkLightTimer();
-     
-
-    //light Sensor related - Need to split to separate class
-    void checkLightSensor();
-    bool PreviousLightRead = true;    
-    int LightReading;  //light sensor analog reading
-    bool Bright;  //Ligth sensor digital feedback: True-Bright / False-Dark 
-    int LightsTriggerCount = 0;  //Counters of out of range readings before triggering an alert
-    bool LightOK = true; //Track component health, at startup assume every component is OK
-    int MaxLightReading = 0; // stores the highest light sensor analog reading
-    int MinLightReading = 1023; //stores the lowest light sensor analog reading  
-    
-/*
-void calibrateLights(){
-  CalibrateLights=false;  
-  bool LastStatus = *Status;
-  byte LastLBrightness = *Brightness;
-  setLightOnOff(true,false);
-  checkLightStatus();  //apply turning the lights on
-  setBrightness(0,false);
-  delay(2000); //wait for light output change
-  MinLightReading = 1023 - analogRead(LightSensorAnalogInPin);
-  setBrightness(100,false);
-  delay(2000); //wait for light output change
-  MaxLightReading = 1023 - analogRead(LightSensorAnalogInPin);
-  
-  if(MySettings.DebugEnabled){
-         logToSerials(F("0% - "),false); logToSerials(MinLightReading,false);
-         logToSerials(F(", 100% - "),false); logToSerials(MaxLightReading,true);
-  }
-  setBrightness(LastLightBrightness,false); //restore original brightness
-  MySettings.LightStatus=LastLightStatus; //restore original state
-  checkLightStatus();
-  //addToLog(F("Lights calibrated"));
-}
-*/
+    void checkLightTimer(); 
 
 };
 
