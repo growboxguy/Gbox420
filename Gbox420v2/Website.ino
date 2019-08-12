@@ -1,4 +1,4 @@
-#include "Common.h"
+//#include "Common.h"
 
 /*
 Website::Website(HardwareSerial *SerialPort){
@@ -18,9 +18,9 @@ void refresh(){
 }
 
 void resetWebServer(void) {    // Callback made from esp-link to notify that it has just come out of a reset
-  Common::logToSerials(F("WebServer (re)starting..."),false);
+  logToSerials(F("WebServer (re)starting..."),false);
   while(!MyESPLink.Sync())  {
-    Common::logToSerials(F("."),false);
+    logToSerials(F("."),false);
     delay(500); 
     };
   //RestAPI.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets 
@@ -35,7 +35,7 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
   SettingsHandler->refreshCb.attach(&refreshCallback); //Called periodically to refresh website content 
   SettingsHandler->buttonCb.attach(&buttonPressCallback); //Called when a button is pressed on the website
   SettingsHandler->setFieldCb.attach(&setFieldCallback); //Called when a field is changed on the website
-  Common::addToLog(F("WebServer started"));
+  logToSerials(F("WebServer started"),true);
 }
 
 void loadCallback(char * url) //called when website is loaded
@@ -116,7 +116,7 @@ void buttonPressCallback(char *button)
   else if (strcmp_P(button,(PGM_P)F("btn_Light1TimerEnable"))==0) {GBox -> Light1 -> setTimerOnOff(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_Light1TimerDisable"))==0) {GBox -> Light1 -> setTimerOnOff(false);}
   
-  Common::saveSettings(false); 
+  saveSettings(false); 
 }
 
 //Called when any field on the website is updated
@@ -136,5 +136,5 @@ void setFieldCallback(char * field){
   //else if(strcmp_P(field,(PGM_P)F("PushingBoxLogRelayID"))==0) {setPushingBoxLogRelayID(WebServer.getArgString());}
  
     
-  Common::saveSettings(false);
+  saveSettings(false);
 } 

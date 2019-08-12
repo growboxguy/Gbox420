@@ -8,7 +8,8 @@
 #include "Thread.h" //Splitting functions to threads for timing
 #include "StaticThreadController.h"  //Grouping threads
 #include "Settings.h"  //for storing/reading defaults
-#include "Common.h" 
+#include "420Helpers.h"  //global functions
+#include "Common.h"   // Virtual class, parent of all components. Enforces common functionality
 #include "GrowBox.h" 
 
 //TODO:
@@ -20,6 +21,7 @@
 //Sounds implementation
 //Light sensor to separate object from Light
 //Add buttons to trigger runMinute,runHour for debugging
+//Implement all versions of logToSerials 
 
 //Global variables
 Settings MySettings;
@@ -41,11 +43,10 @@ GrowBox * GBox;
 void setup() {  // put your setup code here, to run once:
   Serial.begin(115200);    //2560mega console output
   Serial3.begin(115200);  //esp wifi console output
-  Common::logToSerials(F("GrowBox initializing..."),true);
-  Common::addToLog(F("GrowBox initializing..."));
+  logToSerials(F("GrowBox initializing..."),true);
   wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds assume a lockup and reset sketch
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
-  Common::loadSettings();
+  loadSettings();
   GBox = new GrowBox(&MySettings);
   
   MyESPLink.resetCb = &resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
@@ -61,7 +62,7 @@ void setup() {  // put your setup code here, to run once:
   HalfHourThread.setInterval(1800000);
   HalfHourThread.onRun(runHalfHour);
   
-  Common::logToSerials(F("Grow Box initialized"),true);
+  logToSerials(F("Grow Box initialized"),true);
   Common::addToLog(F("Grow Box initialized"));
 
    //Start interrupts to handle request from ESP-Link firmware
@@ -81,25 +82,27 @@ void processTimeCriticalStuff(){
 }
 
 void runSec(){
-  if(MySettings.DebugEnabled)Common::logToSerials(F("One sec trigger.."),true);
+  if(MySettings.DebugEnabled)logToSerials(F("One sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   
 }
 
 void runFiveSec(){
-  if(MySettings.DebugEnabled)Common::logToSerials(F("Five sec trigger.."),true);
+  if(MySettings.DebugEnabled)logToSerials(F("Five sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout   
-  Common::logToSerials(F("Free memory(bytes): "),false); Common::logToSerials(freeMemory(),true); 
+  static char ReturnChar[MaxTextLength] = "";
+  itoa(freeMemory(), ReturnChar, 10);
+  logToSerials(F("Free memory(bytes): "),false); logToSerials(ReturnChar,true); 
   GBox -> refresh();
 }
 
 void runMinute(){
-  if(MySettings.DebugEnabled)Common::logToSerials(F("Minute trigger.."),true);
+  if(MySettings.DebugEnabled)logToSerials(F("Minute trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   
 }
 
 void runHalfHour(){
-  if(MySettings.DebugEnabled)Common::logToSerials(F("Half hour trigger.."),true);
+  if(MySettings.DebugEnabled)logToSerials(F("Half hour trigger.."),true);
   wdt_reset(); //reset watchdog timeout
 }

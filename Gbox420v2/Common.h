@@ -4,12 +4,15 @@
 #define Common_H
 
 #include "Arduino.h"  //every inheriting class have Arduino commands available
-#include "Settings.h"  //for storing/reading defaults
 #include "TimeLib.h" //Keeping track of time
+#include "Settings.h"  //for storing/reading defaults
+#include "420Helpers.h"  //global functions
 
 extern Settings MySettings;
 extern char Message[512];
-extern char CurrentTime[20]; 
+extern char CurrentTime[20];
+extern template void logToSerials(const&,bool BreakLine);
+
 
 class Common{
   friend class RollingAverage;
@@ -19,18 +22,10 @@ class Common{
   
   public:
     virtual void refresh() = 0;  //every class needs to have an implementation of this method. Called when component should refresh its state (for example Reading temperature and humidity using the DHTsensor class)
-    template <class logLine> //fuction template: logToSerials can take any parameter type (int,float,bool,char..) and print it to Arduino and ESP-link serial consoles.
-    
-    static void logToSerials (const logLine& ToPrint,bool breakLine) { 
-      if(breakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
-      else{Serial.print(ToPrint);Serial3.print(ToPrint);}
-    }
-     
+
     static char* eventLogToJSON(bool Append); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]  
     static void addToLog(const __FlashStringHelper* Text);
     static void addToLog(const char* Text);
-    static void saveSettings(bool LogThis);
-    static void loadSettings();  
     static char * getFormattedTime();    
     static float convertBetweenTempUnits(float);
     static float convertBetweenPressureUnits(float);

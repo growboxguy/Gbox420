@@ -165,24 +165,7 @@
    // else addToLog(F("Using Imperial units"));  
   }  
 
-  static void Common::saveSettings(bool LogThis){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
-  eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings)); //update_block only writes the bytes that changed
-  if(LogThis) Common::addToLog(F("Settings saved to EEPROM"));
-  }
-  
-  static void Common::loadSettings(){
-    Settings EEPROMSettings; //temporary storage with "settings" type
-    eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
-    if(EEPROMSettings.Version != MySettings.Version){
-      Common::logToSerials(F("Change detected, updating EEPROM..."),false);
-      saveSettings(false);  //overwrites stored settings with defaults from this sketch
-    }
-    else {
-      Common::logToSerials(F("Same structure version detected, applying restored settings..."),false);
-      MySettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
-    }
-    Common::logToSerials(F("done"),true);
-  }
+ 
 
 //////////////////////////////////////////////////////////////////
 //RollingAverage functions
@@ -210,7 +193,7 @@
        strcat_P(Message,(PGM_P)F(":Reading:")); strcat(Message,Common::toText(LatestReading)); 
        strcat_P(Message,(PGM_P)F(",Sum:")); strcat(Message,Common::toText(Sum));
        strcat_P(Message,(PGM_P)F(",Average:")); strcat(Message,Common::toText(Average));
-       Common::logToSerials(Message,true);       
+       logToSerials(Message,true);       
      }
       return Average;
    }

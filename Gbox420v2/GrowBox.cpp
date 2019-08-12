@@ -9,7 +9,7 @@ GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
 }
 
 void GrowBox::refresh(){  //implementing the virtual refresh function from Common
- logToSerials(F("GrowBox object created"),true);
+ logToSerials(F("GrowBox object refreshing"),true);
     //triger all threads at startup
   runFiveSec(); //needs to run first to get sensor readings
   runSec();  
