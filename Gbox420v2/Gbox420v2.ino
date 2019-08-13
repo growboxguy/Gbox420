@@ -1,19 +1,18 @@
 #include "Arduino.h"  //every inheriting class have Arduino commands available
 #include "avr/wdt.h" //Watchdog timer
 #include "avr/boot.h" //Watchdog timer related bug fix
-#include "MemoryFree.h" //checking remaining memory - only for debugging
 #include "TimerThree.h"  //Interrupt handling for webpage
 #include "ELClient.h" //ESP-link
 #include "ELClientWebServer.h" //ESP-link - WebServer API
 #include "Thread.h" //Splitting functions to threads for timing
 #include "StaticThreadController.h"  //Grouping threads
-#include "Settings.h"  //for storing/reading defaults
+#include "420Settings.h"  //for storing/reading defaults
 #include "420Helpers.h"  //global functions
-#include "Common.h"   // Virtual class, parent of all components. Enforces common functionality
-#include "GrowBox.h" 
+#include "GrowBox.h" //Represents a complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //TODO:
 //addToLog - make Log class
+//Fix RollingAverage debug log
 //Convert Website to a Singleton class (Restricts the instantiation to one single instance) 
 //Make alerting a class, every object will have a "bool StatusOK" variable inherited from Common, Alerting will go throught all subscribed classes and check status
 //Subscribe to thread timer events using the attach method.
@@ -21,7 +20,6 @@
 //Sounds implementation
 //Light sensor to separate object from Light
 //Add buttons to trigger runMinute,runHour for debugging
-//Implement all versions of logToSerials 
 
 //Global variables
 Settings MySettings;
@@ -48,6 +46,7 @@ void setup() {  // put your setup code here, to run once:
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
   loadSettings();
   GBox = new GrowBox(&MySettings);
+  GBox -> refresh();
   
   MyESPLink.resetCb = &resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
   resetWebServer();  //reset the WebServer  
@@ -63,7 +62,6 @@ void setup() {  // put your setup code here, to run once:
   HalfHourThread.onRun(runHalfHour);
   
   logToSerials(F("Grow Box initialized"),true);
-  Common::addToLog(F("Grow Box initialized"));
 
    //Start interrupts to handle request from ESP-Link firmware
   Timer3.initialize(500);  //check every 0.5sec, using a larger interval can cause web requests to time out
@@ -84,25 +82,26 @@ void processTimeCriticalStuff(){
 void runSec(){
   if(MySettings.DebugEnabled)logToSerials(F("One sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout
-  
+  GBox -> runSec();
 }
 
 void runFiveSec(){
-  if(MySettings.DebugEnabled)logToSerials(F("Five sec trigger.."),true);
+  if(MySettings.DebugEnabled){
+    logToSerials(F("Five sec trigger.."),true);
+    getFreeMemory();
+  }
   wdt_reset(); //reset watchdog timeout   
-  static char ReturnChar[MaxTextLength] = "";
-  itoa(freeMemory(), ReturnChar, 10);
-  logToSerials(F("Free memory(bytes): "),false); logToSerials(ReturnChar,true); 
-  GBox -> refresh();
+  GBox -> runFiveSec();
 }
 
 void runMinute(){
   if(MySettings.DebugEnabled)logToSerials(F("Minute trigger.."),true);
   wdt_reset(); //reset watchdog timeout
-  
+  GBox -> runMinute();
 }
 
 void runHalfHour(){
   if(MySettings.DebugEnabled)logToSerials(F("Half hour trigger.."),true);
   wdt_reset(); //reset watchdog timeout
+  GBox -> runHalfHour();
 }

@@ -15,7 +15,7 @@ class Lights : public Common
     byte* OnHour;  //Light ON time - hour
     byte* OnMinute; //Light ON time - minute
     byte* OffHour;//Light OFF time - hour
-    byte* OffMinute; //Light OFF time - minute
+    byte* OffMinute; //Light OFF time - minute 
 
   public:
     Lights(byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
@@ -32,12 +32,12 @@ class Lights : public Common
     __FlashStringHelper* getStatusText();   
     char * getOnTimeText();    
     char * getOffTimeText();
+    int MaxReading; // stores the highest light sensor analog reading
+    int MinReading; //stores the lowest light sensor analog reading 
    
   
   private:  
     bool CalibrateLights = false; //Stores the Calibration request
-    int MaxReading; // stores the highest light sensor analog reading
-    int MinReading; //stores the lowest light sensor analog reading  
     void calibrateLights(); //Actual calibration code, takes to long to run directly from a website command  (Case sensitive object names! :) )
     void checkLightStatus();    
     void checkLightTimer(); 

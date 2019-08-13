@@ -1,14 +1,8 @@
-//#include "Common.h"
-
 /*
 Website::Website(HardwareSerial *SerialPort){
-
-
     //Initialize web connections
   MyESPLink -> resetCb = &resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
-  resetWebServer();  //reset the WebServer
-  
-      
+  resetWebServer();  //reset the WebServer 
   if(MySettings.DebugEnabled){logToSerials(F("Website object created"),true);}
 }
 */
@@ -26,7 +20,7 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
   //RestAPI.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets 
   WebServer.setup();
   URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json"); //setup handling request from GrowBox.html
-  URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); //setup handling request from GrowBox.html
+  URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); //setup handling request from Settings.html
   GrowBoxHandler->loadCb.attach(&loadCallback);  //Called then the website loads initially
   GrowBoxHandler->refreshCb.attach(&refreshCallback); //Called periodically to refresh website content 
   GrowBoxHandler->buttonCb.attach(&buttonPressCallback); //Called when a button is pressed on the website
@@ -42,11 +36,11 @@ void loadCallback(char * url) //called when website is loaded
 {
   if (strcmp(url,"/GrowBox.html.json")==0){
   WebServer.setArgBoolean(F("AutoInternalFan"), MySettings.AutomaticInternalFan);
-  WebServer.setArgString(F("InternalFanSwitchTemp"), Common::toText(MySettings.InternalFanSwitchTemp));
+  WebServer.setArgString(F("InternalFanSwitchTemp"), toText(MySettings.InternalFanSwitchTemp));
   WebServer.setArgBoolean(F("AutoExhaustFan"), MySettings.AutomaticExhaustFan);
-  WebServer.setArgString(F("ExhaustFanHighHumid"), Common::toText(MySettings.ExhaustFanHighHumid));
-  WebServer.setArgString(F("ExhaustFanLowHumid"), Common::toText(MySettings.ExhaustFanLowHumid));
-  WebServer.setArgString(F("ExhaustFanOffHumid"), Common::toText(MySettings.ExhaustFanOffHumid));
+  WebServer.setArgString(F("ExhaustFanHighHumid"), toText(MySettings.ExhaustFanHighHumid));
+  WebServer.setArgString(F("ExhaustFanLowHumid"), toText(MySettings.ExhaustFanLowHumid));
+  WebServer.setArgString(F("ExhaustFanOffHumid"), toText(MySettings.ExhaustFanOffHumid));
     
   WebServer.setArgInt(F("Light1OnHour"), MySettings.Light1OnHour); 
   WebServer.setArgInt(F("Light1OnMinute"), MySettings.Light1OnMinute); 
@@ -78,29 +72,29 @@ void loadCallback(char * url) //called when website is loaded
   WebServer.setArgInt(F("TempAlertHigh"), MySettings.TempAlertHigh);
   WebServer.setArgInt(F("HumidityAlertLow"), MySettings.HumidityAlertLow);
   WebServer.setArgInt(F("HumidityAlertHigh"), MySettings.HumidityAlertHigh);
-  WebServer.setArgString(F("PressureAlertLow"), Common::toText(MySettings.PressureAlertLow));
-  WebServer.setArgString(F("PressureAlertHigh"), Common::toText(MySettings.PressureAlertHigh));
-  WebServer.setArgString(F("PHAlertLow"), Common::toText(MySettings.PHAlertLow));
-  WebServer.setArgString(F("PHAlertHigh"), Common::toText(MySettings.PHAlertHigh));  
+  WebServer.setArgString(F("PressureAlertLow"), toText(MySettings.PressureAlertLow));
+  WebServer.setArgString(F("PressureAlertHigh"), toText(MySettings.PressureAlertHigh));
+  WebServer.setArgString(F("PHAlertLow"), toText(MySettings.PHAlertLow));
+  WebServer.setArgString(F("PHAlertHigh"), toText(MySettings.PHAlertHigh));  
 
-  WebServer.setArgString(F("PHCalibrationSlope"), Common::toPrecisionText(MySettings.PHCalibrationSlope));
-  WebServer.setArgString(F("PHCalibrationIntercept"), Common::toPrecisionText(MySettings.PHCalibrationIntercept)); 
-  WebServer.setArgString(F("PressureSensorOffset"), Common::toPrecisionText(MySettings.PressureSensorOffset));
-  WebServer.setArgString(F("PressureSensorRatio"), Common::toPrecisionText(MySettings.PressureSensorRatio));  
+  WebServer.setArgString(F("PHCalibrationSlope"), toPrecisionText(MySettings.PHCalibrationSlope));
+  WebServer.setArgString(F("PHCalibrationIntercept"), toPrecisionText(MySettings.PHCalibrationIntercept)); 
+  WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(MySettings.PressureSensorOffset));
+  WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(MySettings.PressureSensorRatio));  
   }
 }
 
 void refreshCallback(char * url) //called when website is refreshed
 { 
-  WebServer.setArgString(F("Time"), Common::getFormattedTime());
+  WebServer.setArgString(F("Time"), getFormattedTime());
   WebServer.setArgJson(F("list_SerialLog"), Common::eventLogToJSON(false)); //Last events that happened in JSON format
     
   if (strcmp(url,"/GrowBox.html.json")==0){  
   WebServer.setArgString(F("tdLight1Status"),GBox -> Light1 -> getStatusText());
   //WebServer.setArgString(F("tdLight1Reading"),toText(MySettings.LightBrightness, LightReading,"%-"));
   //WebServer.setArgString(F("tdBright"),yesNoToText());       
-  WebServer.setArgString(F("tdTemp"),Common::toText(GBox -> InternalDHTSensor -> getTemp(),GBox -> ExternalDHTSensor -> getTemp()," / "));
-  WebServer.setArgString(F("tdHumidity"),Common::toText(GBox -> InternalDHTSensor -> getHumidity(),GBox -> ExternalDHTSensor -> getHumidity()," / ")); 
+  WebServer.setArgString(F("tdTemp"),toText(GBox -> InternalDHTSensor -> getTemp(),GBox -> ExternalDHTSensor -> getTemp()," / "));
+  WebServer.setArgString(F("tdHumidity"),toText(GBox -> InternalDHTSensor -> getHumidity(),GBox -> ExternalDHTSensor -> getHumidity()," / ")); 
   WebServer.setArgString(F("tdLight1TimerEnabled"),GBox -> Light1 -> getTimerOnOffText());
   WebServer.setArgString(F("tdLight1On"), GBox -> Light1 -> getOnTimeText());
   WebServer.setArgString(F("tdLight1Off"), GBox -> Light1 -> getOffTimeText());  
