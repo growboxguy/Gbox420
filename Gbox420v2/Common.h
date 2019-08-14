@@ -18,7 +18,6 @@ class Common{
   friend class RollingAverage;
   
   protected:
-
   
   public:
     virtual void refresh() = 0;  //every class needs to have an implementation of this method. Called when component should refresh its state (for example Reading temperature and humidity using the DHTsensor class)

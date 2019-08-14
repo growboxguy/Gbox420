@@ -1,20 +1,20 @@
 /*
 Website::Website(HardwareSerial *SerialPort){
     //Initialize web connections
-  MyESPLink -> resetCb = &resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
+  ESPLink -> resetCb = &resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
   resetWebServer();  //reset the WebServer 
   if(MySettings.DebugEnabled){logToSerials(F("Website object created"),true);}
 }
 
 
 void refresh(){
-  MyESPLink.Process();  //Process any command from ESP-Link
+  ESPLink.Process();  //Process any command from ESP-Link
 }
 */
 
 void resetWebServer(void) {    // Callback made from esp-link to notify that it has just come out of a reset
   logToSerials(F("WebServer (re)starting..."),false);
-  while(!MyESPLink.Sync())  {
+  while(!ESPLink.Sync())  {
     logToSerials(F("."),false);
     delay(500); 
     };

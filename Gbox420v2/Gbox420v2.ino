@@ -1,14 +1,10 @@
-#include "Arduino.h"  //every inheriting class have Arduino commands available
-#include "avr/wdt.h" //Watchdog timer
-#include "avr/boot.h" //Watchdog timer related bug fix
-#include "TimerThree.h"  //Interrupt handling for webpage
-#include "ELClient.h" //ESP-link
-#include "ELClientWebServer.h" //ESP-link - WebServer API
-#include "Thread.h" //Splitting functions to threads for timing
-#include "StaticThreadController.h"  //Grouping threads
-#include "420Settings.h"  //for storing/reading defaults
-#include "420Helpers.h"  //global functions
-#include "GrowBox.h" //Represents a complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
+//GrowBoxGuy - http://sites.google.com/site/growboxguy/
+//Sketch for grow box monitoring and controlling
+//UNDER DEVELOPEMENT - This is the next generation of Gbox420 rewritten to depend fully on the web interface for control and feedback. 
+
+
+//HELLO, You are probably here looking for the following tab:
+// 420Settings.h : First time setup or changing the default settings and Modify the Pin assignment
 
 //TODO:
 //addToLog - make Log class
@@ -19,6 +15,25 @@
 //Sounds implementation
 //Light sensor to separate object from Light
 //Add buttons to trigger runMinute,runHour for debugging
+//HempyBucket controls
+//Aeroponics
+//Light sensor
+//PH sensor
+//Water temp sensor
+//Water level sensor
+
+#include "Arduino.h"  //every inheriting class have Arduino commands available
+#include "avr/wdt.h" //Watchdog timer
+#include "avr/boot.h" //Watchdog timer related bug fix
+#include "TimerThree.h"  //Interrupt handling for webpage
+#include "ELClient.h" //ESP-link
+#include "ELClientWebServer.h" //ESP-link - WebServer API
+#include "ELClientCmd.h"  //ESP-link - Get current time from the internet using NTP
+#include "Thread.h" //Splitting functions to threads for timing
+#include "StaticThreadController.h"  //Grouping threads
+#include "420Settings.h"  //for storing/reading defaults
+#include "420Helpers.h"  //global functions
+#include "GrowBox.h" //Represents a complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variables
 Settings MySettings;
@@ -26,8 +41,9 @@ char Message[512];   //temp storage for assembling log messages, buffer for REST
 char CurrentTime[20]; //buffer for storing current time
 
 //Component initialization
-ELClient MyESPLink(&Serial3);  //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
-ELClientWebServer WebServer(&MyESPLink); //ESP-link WebServer API
+ELClient ESPLink(&Serial3);  //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
+ELClientWebServer WebServer(&ESPLink); //ESP-link WebServer API
+ELClientCmd ESPCmd(&ESPLink);//ESP-link - Get current time from the internet using NTP
 GrowBox * GBox;
 
 //Threading to time tasks
@@ -47,8 +63,9 @@ void setup() {  // put your setup code here, to run once:
   GBox = new GrowBox(&MySettings);
   GBox -> refresh();
   
-  MyESPLink.resetCb = &resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
-  resetWebServer();  //reset the WebServer  
+  ESPLink.resetCb = &resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
+  resetWebServer();  //reset the WebServer 
+  setTime(getNtpTime()); 
   
   //Threading - Setting up threads and setting how often they should be called
   OneSecThread.setInterval(1000);
@@ -75,7 +92,7 @@ void loop() { // put your main code here, to run repeatedly:
 }
 
 void processTimeCriticalStuff(){
-  MyESPLink.Process();  //Interrupt calls this every 0.5 sec to process any request coming from the ESP-Link hosted webpage  
+  ESPLink.Process();  //Interrupt calls this every 0.5 sec to process any request coming from the ESP-Link hosted webpage  
 }
 
 void runSec(){

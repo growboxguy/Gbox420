@@ -25,10 +25,18 @@
 #include "Arduino.h"  //every inheriting class have Arduino commands available
 #include "TimeLib.h" //Keeping track of time
 #include "MemoryFree.h" //checking remaining memory - only for debugging
+#include "avr/wdt.h" //Watchdog timer
+#include "ELClient.h" //ESP-link
+#include "ELClientWebServer.h" //ESP-link - WebServer API
+#include "ELClientCmd.h"  //ESP-link - Get current time from the internet using NTP
 #include "420Settings.h"  //for storing/reading defaults
 
 extern Settings MySettings;
 extern char CurrentTime[20];
+extern ELClientCmd ESPCmd;
+
+//////////////////////////////////////////
+//Logging
 
 template <class logLine> static void logToSerials (const logLine& ToPrint,bool BreakLine) { 
   if(BreakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
@@ -44,6 +52,9 @@ static void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine) {
   if(BreakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
   else{Serial.print(ToPrint);Serial3.print(ToPrint);}
 }
+
+//////////////////////////////////////////
+//Settings
 
 static void saveSettings(bool LogThis){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
   eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings)); //update_block only writes the bytes that changed
@@ -64,17 +75,39 @@ static void loadSettings(){
   logToSerials(F("done"),true);
 }
 
+//////////////////////////////////////////
+//Time
+
 static char * getFormattedTime(){
   time_t Now = now(); // Get the current time and date from the TimeLib library
   snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d",year(Now), month(Now), day(Now),hour(Now), minute(Now), second(Now)); // YYYY/MM/DD-HH:mm:SS formatted time will be stored in CurrentTime global variable
   return CurrentTime;
 }  
 
-static char * getFreeMemory(){
-  static char ReturnChar[MaxTextLength] = "";
-  itoa(freeMemory(), ReturnChar, 10);
-  logToSerials(F("Free memory(bytes): "),false); logToSerials(&ReturnChar,true);
+static bool SyncInProgress=false;
+static time_t getNtpTime(){
+  time_t NTPResponse = 0;
+  if(!SyncInProgress){ //blocking calling the sync again in an interrupt
+    SyncInProgress = true;
+    uint32_t LastRefresh = millis();  
+    logToSerials(F("Waiting for NTP time (30sec timeout)..."),false);  
+    while(NTPResponse == 0 && millis() - LastRefresh < 30000){
+     NTPResponse = ESPCmd.GetTime();
+     delay(500);     
+     wdt_reset(); //reset watchdog timeout
+    }
+    SyncInProgress = false;
+    if(NTPResponse == 0) {
+      logToSerials(F("NTP time sync failed"),true);
+      //sendEmailAlert(F("NTP%20time%20sync%20failed")); 
+    }
+    else logToSerials(F("NTP time synchronized"),true);
+    }
+  return NTPResponse;
 }
+
+//////////////////////////////////////////
+//Conversions
 
 static float convertBetweenTempUnits(float Value){
 if(MySettings.MetricSystemEnabled) return round((Value-32) * 55.555555)/100.0;
@@ -85,6 +118,9 @@ static float convertBetweenPressureUnits(float Value){
   if(MySettings.MetricSystemEnabled) return round(Value / 0.145038)/100.0;
   else return round(Value*1450.38)/100.0;
 }
+
+//////////////////////////////////////////
+//Text formating
 
 static char * toText(int Number){
   static char ReturnChar[MaxTextLength] = "";
@@ -174,6 +210,15 @@ static const __FlashStringHelper * statusToText(bool Status){
 static const __FlashStringHelper * enabledToText(bool Status){
    if(Status) return F("ENABLED");
    else return F("DISABLED");
+}
+
+//////////////////////////////////////////
+//Debug
+
+static char * getFreeMemory(){
+  static char ReturnChar[MaxTextLength] = "";
+  itoa(freeMemory(), ReturnChar, 10);
+  logToSerials(F("Free memory(bytes): "),false); logToSerials(&ReturnChar,true);
 }
 
 #endif

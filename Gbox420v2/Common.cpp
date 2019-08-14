@@ -6,7 +6,7 @@
     if(MySettings.DebugEnabled){logToSerials(F("Common object refreshing"),true);}
   }  
 
-  static void Common::addToLog(const char *message){
+  static void Common::addToLog(const char *message){  //adds a log entry that is displayed on the web interface
     logToSerials(message,true);
     for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
        memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
