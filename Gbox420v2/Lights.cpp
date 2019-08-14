@@ -19,8 +19,8 @@ Lights::Lights(byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status,
 void Lights::refresh(){  //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
   if(MySettings.DebugEnabled){logToSerials(F("Lights refreshing"),true);}
   if(CalibrateLights){ calibrateLights(); } //If calibration was requested
-  void checkLightTimer(); 
-  void checkLightStatus(); 
+  checkLightTimer(); 
+  checkLightStatus(); 
 }
 
 void Lights::checkLightStatus(){
@@ -37,16 +37,30 @@ void Lights::checkLightTimer() {
     if(CombinedOnTime <= CombinedOffTime)  //no midnight turnover, Example: On 8:10, Off: 20:10
     {
       if(CombinedOnTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedOffTime){  //True: Light should be on
-        if(!*Status) setLightOnOff(true,false);} //If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
+        if(!*Status){   
+          setLightOnOff(true,false); //If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
+          if(MySettings.DebugEnabled)logToSerials(F("Timer:Light ON"),true);
+        } 
+      }
       else  //False: Light should be off
-        if(*Status) setLightOnOff(false,false);  //If status is ON: Turn OFF the lights (First bool), and do not add it to the log (Second bool)  
+        if(*Status) {  //If status is ON: Turn OFF the lights (First bool), and do not add it to the log (Second bool)
+          setLightOnOff(false,false);    
+          if(MySettings.DebugEnabled)logToSerials(F("Timer:Light OFF"),true);
+        }        
     }
     else   //midnight turnover, Example: On 21:20, Off: 9:20
     {
       if(CombinedOnTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedOffTime){
-       if(!*Status) setLightOnOff(true,false);}
+       if(!*Status) {
+        setLightOnOff(true,false);
+        if(MySettings.DebugEnabled)logToSerials(F("Timer:Light ON"),true);
+        }
+      }
       else 
-        if(*Status) setLightOnOff(false,false);    
+       if(*Status){
+        setLightOnOff(false,false);
+        if(MySettings.DebugEnabled)logToSerials(F("Timer:Light OFF"),true);    
+       }
     }
   }
 }
@@ -74,10 +88,10 @@ void Lights::calibrateLights(){
   checkLightStatus();  //apply turning the lights on
   setBrightness(0,false);
   delay(250); //wait for light output change
-  MinReading = 1023 - analogRead(MySettings.LightSensorAnalogInPin);
+  MinReading = 1023 - analogRead(MySettings.LightSensor1AnalogPin);
   setBrightness(100,false);
   delay(250); //wait for light output change
-  MaxReading = 1023 - analogRead(MySettings.LightSensorAnalogInPin);
+  MaxReading = 1023 - analogRead(MySettings.LightSensor1AnalogPin);
   
   if(MySettings.DebugEnabled){
          logToSerials(F("0% - "),false); logToSerials(&MinReading,true);

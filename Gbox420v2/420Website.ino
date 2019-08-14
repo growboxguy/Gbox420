@@ -91,9 +91,9 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
   WebServer.setArgJson(F("list_SerialLog"), Common::eventLogToJSON(false)); //Last events that happened in JSON format
     
   if (strcmp(url,"/GrowBox.html.json")==0){  
- WebServer.setArgString(F("tdLight1Status"),GBox -> Light1 -> getStatusText());
-  //WebServer.setArgString(F("tdLight1Reading"),toText(MySettings.LightBrightness, LightReading,"%-"));
-  //WebServer.setArgString(F("tdBright"),yesNoToText());       
+  WebServer.setArgString(F("tdLight1Status"),GBox -> Light1 -> getStatusText());
+  WebServer.setArgString(F("tdLight1Reading"),toText(MySettings.Light1Brightness, GBox -> LightSensor1 -> getReading(),"%-"));
+  WebServer.setArgString(F("tdBright"),GBox -> LightSensor1 -> getIsDarkText());       
   WebServer.setArgString(F("tdTemp"),toText(GBox -> ExternalDHTSensor -> getTemp(),GBox -> InternalDHTSensor -> getTemp()," / "));
   WebServer.setArgString(F("tdHumidity"),toText(GBox -> ExternalDHTSensor -> getHumidity(),GBox -> InternalDHTSensor -> getHumidity()," / ")); 
   WebServer.setArgString(F("tdLight1TimerEnabled"),GBox -> Light1 -> getTimerOnOffText());

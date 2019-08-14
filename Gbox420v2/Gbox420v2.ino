@@ -61,7 +61,6 @@ void setup() {  // put your setup code here, to run once:
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
   loadSettings();
   GBox = new GrowBox(&MySettings);
-  GBox -> refresh();
   
   ESPLink.resetCb = &resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
   resetWebServer();  //reset the WebServer 
@@ -84,6 +83,7 @@ void setup() {  // put your setup code here, to run once:
   Timer3.attachInterrupt(processTimeCriticalStuff);
   Timer3.start();
 
+  GBox -> refresh();
   //  sendEmailAlert(F("Grow%20box%20(re)started"));
 }
 

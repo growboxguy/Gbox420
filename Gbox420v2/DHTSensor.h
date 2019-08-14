@@ -16,8 +16,8 @@ class DHTSensor : public Common
 
   
   private:
-    RollingAverage *Temp;
-    RollingAverage *Humidity;
+    RollingAverage * Temp;
+    RollingAverage * Humidity;
     DHT *sensor; //Pointer declaration, points to null initially 
     byte pin;
 };

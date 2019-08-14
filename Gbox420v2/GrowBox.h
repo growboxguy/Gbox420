@@ -5,6 +5,7 @@
 //#include "420Settings.h"  //for storing/reading defaults
 #include "Common.h"
 #include "DHTSensor.h"
+#include "LightSensor.h"
 #include "Lights.h"
 
 class GrowBox : public Common
@@ -15,9 +16,10 @@ class GrowBox : public Common
   public:
   GrowBox(Settings *BoxSettings);
   void refresh();
-  DHTSensor * InternalDHTSensor;  //Pointer to a Digital Humidity Sensor measuring the internal temperature of the grow box
-  DHTSensor * ExternalDHTSensor; //Pointer to a Digital Humidity Sensor measuring the external temperature of the grow box
-  Lights * Light1;  //Pointer to a Digital Humidity Sensor measuring the external temperature of the grow box 
+  DHTSensor * InternalDHTSensor;  //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
+  DHTSensor * ExternalDHTSensor; //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
+  LightSensor * LightSensor1; //Pointer to a Light Sensor object measuring light intensity in the grow box
+  Lights * Light1;  //Pointer to a Light assembly 
   void runSec(); //triger all threads at startup
   void runFiveSec(); //needs to run first to get sensor readings
   void runMinute();

@@ -7,7 +7,7 @@ static const byte LogDepth = 10;  //Show X number of log entries on website, do 
 
 typedef struct
 { 
-  byte Version=6;
+  byte Version=7;
     
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
   
@@ -20,6 +20,10 @@ typedef struct
   uint8_t InternalDHTSensorPin = 43; //DAT - DHT22 temp/humidity sensor, internally mounted
   uint8_t ExternalDHTSensorPin = 44; //DAT - DHT22 temp/humidity sensor, externally mounted
 
+  //LightSensor1 settings
+  byte LightSensor1DigitalPin = 36; //D0 - LM393 light sensor
+  byte LightSensor1AnalogPin = A0; //A0 - LM393 light sensor   //A0 is just a variable that contains the actual pin number - https://github.com/arduino/ArduinoCore-avr/blob/master/variants/standard/pins_arduino.h#L56-L72
+ 
   //Light1 settings
   byte Light1RelayPin = 29;  //Power relay Port 8 - LED lights
   byte Light1DimmingPin = 11; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
@@ -71,7 +75,6 @@ typedef struct
   float PressureSensorRatio = 2.7;          //Pressure sensor voltage to pressure ratio 
 
 //Analog pins
-  byte LightSensorAnalogInPin = A0; //A0 - LM393 light sensor   //A0 is just a variable that contains the actual pin number - https://github.com/arduino/ArduinoCore-avr/blob/master/variants/standard/pins_arduino.h#L56-L72
   byte PressureSensorInPin = A1; //Signal(yellow) - Pressure sensor
   byte PHMeterInPin = A3;  //Po - PH meter
   byte WaterCriticalInPin = A4; //Water sensor1
@@ -91,7 +94,6 @@ typedef struct
   byte Relay7OutPin = 28;  //Power relay Port 7 - Exhaust fan Low/High
   byte ATXPowerONOutPin = 34; //Turns ATX power supply on by connecting ATX PowerON pin to GND through an optocupler
   byte ATXPowerGoodInPin = 35; //5V signal from ATX powersupply, inverted by optocoupler: LOW if DC power output is OK
-  byte LightSensorInPin = 36; //D0 - LM393 light sensor
   byte ReservoirTempSensorInPin = 45;  //Data(yellow) - DS18B20 waterproof temp sensor 
 
 }Settings;
