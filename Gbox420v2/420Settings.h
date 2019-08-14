@@ -7,7 +7,7 @@ static const byte LogDepth = 10;  //Show X number of log entries on website, do 
 
 typedef struct
 { 
-  byte Version=7;
+  byte Version=7;  //UPDATE this every time you change something in the stucture, that will force the EEPROM stored settings to update.
     
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
   

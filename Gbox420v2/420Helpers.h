@@ -184,10 +184,18 @@ static char * tempToText(float Temp){
   return ReturnChar;
 } 
 
-static char * percentageToText(float Humidity){
+static char * percentageToText(float Number){
   //char * ReturnChar = malloc(MaxTextLength * sizeof(char));  //allocate memory for every run - need to take care of freeing up the memory  after use
   static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same static variable
-  dtostrf(Humidity, 4, 2, ReturnChar);      
+  dtostrf(Number, 4, 2, ReturnChar);      
+  strcat_P(ReturnChar,(PGM_P)F("%"));  
+  return ReturnChar; 
+}
+
+static char * percentageToText(int Number){
+  //char * ReturnChar = malloc(MaxTextLength * sizeof(char));  //allocate memory for every run - need to take care of freeing up the memory  after use
+  static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same static variable
+  itoa(Number, ReturnChar, 10);      
   strcat_P(ReturnChar,(PGM_P)F("%"));  
   return ReturnChar; 
 }

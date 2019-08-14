@@ -67,7 +67,24 @@
 				<b>ATX power supply:</b>
 				<button id="btn_ATXOn" type="button" title="Turn ATX power supply ON">ON</button>
 				<button id="btn_ATXOff" type="button" title="Turn ATX power supply OFF">OFF</button>					 
-			</div>			
+			</div>
+			<div class="card" style="width:90%">
+				<h1>DHT Sensor</h1>		
+				<table class="tg">				  
+				  <tr>
+					<td class="headerRows"><span style="font-weight:bold">Internal</span><br><span>temp</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Internal</span><br>humidity<span></span></td>
+					<td class="headerRows"><span style="font-weight:bold">External</span><br><span>temp</span></td>
+					<td class="headerRows"><span style="font-weight:bold">External</span><br>humidity<span></span></td>
+				  </tr>
+				  <tr>
+					<td id="tdInternalTemp" class="dataRows"></td>
+					<td id="tdInternalHumidity" class="dataRows"></td>
+					<td id="tdExternalTemp" class="dataRows"></td>
+					<td id="tdExternalHumidity" class="dataRows"></td>
+				  </tr>
+				</table>						
+			</div>					
 			<div class="card" style="width:90%">
 				<h1>Box</h1>		
 				<table class="tg">				  
@@ -111,24 +128,31 @@
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">		
-				<h1>Light1</h1>
+				<h1>Light sensor 1</h1>
+				<table class="tg">
+				  <tr>
+					<td class="headerRows"><span style="font-weight:bold">Is dark</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Reading (%)</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Reading (Raw)</span></td>
+				  </tr>
+				  <tr>
+					<td id="tdLightSensor1IsDark" class="dataRows"></td>
+					<td id="tdLightSensor1Reading" class="dataRows"></td>
+					<td id="tdLightSensor1ReadingRaw" class="dataRows"></td>
+				  </tr>				 
+				</table> 				
+			</div>		
+			<div class="card" style="width:90%">		
+				<h1>Light 1</h1>
 				<table class="tg">
 				  <tr>
 					<td class="headerRows"><span style="font-weight:bold">Lights</span><br></td>
-					<td class="headerRows"><span style="font-weight:bold">Brightness</span><br><span"><span style="font-weight:normal">(%-Sensor)</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Light detected</span><br></td>
+					<td class="headerRows"><span style="font-weight:bold">Timer</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Light ON</span><br>24h (hh:mm)</td>
+					<td class="headerRows"><span style="font-weight:bold">Light OFF</span><br>24h (hh:mm)</td>
 				  </tr>
 				  <tr>
 					<td id="tdLight1Status" class="dataRows"></td>
-					<td id="tdLight1Reading" class="dataRows"></td>
-					<td id="tdLight1isBright" class="dataRows"></td>
-				  </tr>
-				  <tr>
-					<td class="headerRows"><span style="font-weight:bold">Timer</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Light ON</span><br>(hh:mm)24h</td>
-					<td class="headerRows"><span style="font-weight:bold">Light OFF</span><br>(hh:mm)24h</td>
-				  </tr>
-				  <tr>
 					<td id="tdLight1TimerEnabled" class="dataRows"></td>
 					<td id="tdLight1On" class="dataRows"></td>
 					<td id="tdLight1Off" class="dataRows"></td>

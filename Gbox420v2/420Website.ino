@@ -90,12 +90,15 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
   WebServer.setArgString(F("Time"), getFormattedTime());
   WebServer.setArgJson(F("list_SerialLog"), Common::eventLogToJSON(false)); //Last events that happened in JSON format
     
-  if (strcmp(url,"/GrowBox.html.json")==0){  
+  if (strcmp(url,"/GrowBox.html.json")==0){       
+  WebServer.setArgString(F("tdInternalTemp"),GBox -> InternalDHTSensor -> getTempText());
+  WebServer.setArgString(F("tdInternalHumidity"),GBox -> InternalDHTSensor -> getHumidityText());
+  WebServer.setArgString(F("tdExternalTemp"),GBox -> ExternalDHTSensor -> getTempText());
+  WebServer.setArgString(F("tdExternalHumidity"),GBox -> ExternalDHTSensor -> getHumidityText());
+  WebServer.setArgString(F("tdLightSensor1IsDark"),GBox -> LightSensor1 -> getIsDarkText());
+  WebServer.setArgString(F("tdLightSensor1Reading"),percentageToText(GBox -> LightSensor1 -> getReading())); //CALIBRATION NOT IMPLEMENTED
+  WebServer.setArgString(F("tdLightSensor1ReadingRaw"),GBox -> LightSensor1 -> getReadingText()); 
   WebServer.setArgString(F("tdLight1Status"),GBox -> Light1 -> getStatusText());
-  WebServer.setArgString(F("tdLight1Reading"),toText(MySettings.Light1Brightness, GBox -> LightSensor1 -> getReading(),"%-"));
-  WebServer.setArgString(F("tdBright"),GBox -> LightSensor1 -> getIsDarkText());       
-  WebServer.setArgString(F("tdTemp"),toText(GBox -> ExternalDHTSensor -> getTemp(),GBox -> InternalDHTSensor -> getTemp()," / "));
-  WebServer.setArgString(F("tdHumidity"),toText(GBox -> ExternalDHTSensor -> getHumidity(),GBox -> InternalDHTSensor -> getHumidity()," / ")); 
   WebServer.setArgString(F("tdLight1TimerEnabled"),GBox -> Light1 -> getTimerOnOffText());
   WebServer.setArgString(F("tdLight1On"), GBox -> Light1 -> getOnTimeText());
   WebServer.setArgString(F("tdLight1Off"), GBox -> Light1 -> getOffTimeText());  
