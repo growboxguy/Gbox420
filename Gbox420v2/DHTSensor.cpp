@@ -4,7 +4,7 @@
     if(MySettings.DebugEnabled){logToSerials(F("DHTSensor refreshing"),true);}
     if(MySettings.MetricSystemEnabled){ Temp -> updateAverage((float)(sensor -> readTemperature()));}
     else {Temp -> updateAverage( (float)(sensor -> readTemperature() *1.8 + 32));}
-    Humidity -> updateAverage((float)(sensor -> readHumidity()));
+    Humidity -> updateAverage((float)(sensor -> readHumidity()));  
   }
 
   DHTSensor::DHTSensor(uint8_t _pin, uint8_t _sensorType){

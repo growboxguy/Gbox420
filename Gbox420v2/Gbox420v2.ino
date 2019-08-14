@@ -12,7 +12,6 @@
 
 //TODO:
 //addToLog - make Log class
-//Fix RollingAverage debug log
 //Convert Website to a Singleton class (Restricts the instantiation to one single instance) 
 //Make alerting a class, every object will have a "bool StatusOK" variable inherited from Common, Alerting will go throught all subscribed classes and check status
 //Subscribe to thread timer events using the attach method.

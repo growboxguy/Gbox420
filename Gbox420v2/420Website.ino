@@ -5,11 +5,12 @@ Website::Website(HardwareSerial *SerialPort){
   resetWebServer();  //reset the WebServer 
   if(MySettings.DebugEnabled){logToSerials(F("Website object created"),true);}
 }
-*/
+
 
 void refresh(){
   MyESPLink.Process();  //Process any command from ESP-Link
 }
+*/
 
 void resetWebServer(void) {    // Callback made from esp-link to notify that it has just come out of a reset
   logToSerials(F("WebServer (re)starting..."),false);
@@ -32,7 +33,7 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
   logToSerials(F("WebServer started"),true);
 }
 
-void loadCallback(char * url) //called when website is loaded
+void loadCallback(char * url) //called when website is loaded. Do not call logToSerials within any methods used here!
 {
   if (strcmp(url,"/GrowBox.html.json")==0){
   WebServer.setArgBoolean(F("AutoInternalFan"), MySettings.AutomaticInternalFan);
@@ -84,25 +85,24 @@ void loadCallback(char * url) //called when website is loaded
   }
 }
 
-void refreshCallback(char * url) //called when website is refreshed
+void refreshCallback(char * url) //called when website is refreshed. Do not call logToSerials within any methods used here!
 { 
   WebServer.setArgString(F("Time"), getFormattedTime());
   WebServer.setArgJson(F("list_SerialLog"), Common::eventLogToJSON(false)); //Last events that happened in JSON format
     
   if (strcmp(url,"/GrowBox.html.json")==0){  
-  WebServer.setArgString(F("tdLight1Status"),GBox -> Light1 -> getStatusText());
+ WebServer.setArgString(F("tdLight1Status"),GBox -> Light1 -> getStatusText());
   //WebServer.setArgString(F("tdLight1Reading"),toText(MySettings.LightBrightness, LightReading,"%-"));
   //WebServer.setArgString(F("tdBright"),yesNoToText());       
-  WebServer.setArgString(F("tdTemp"),toText(GBox -> InternalDHTSensor -> getTemp(),GBox -> ExternalDHTSensor -> getTemp()," / "));
-  WebServer.setArgString(F("tdHumidity"),toText(GBox -> InternalDHTSensor -> getHumidity(),GBox -> ExternalDHTSensor -> getHumidity()," / ")); 
+  WebServer.setArgString(F("tdTemp"),toText(GBox -> ExternalDHTSensor -> getTemp(),GBox -> InternalDHTSensor -> getTemp()," / "));
+  WebServer.setArgString(F("tdHumidity"),toText(GBox -> ExternalDHTSensor -> getHumidity(),GBox -> InternalDHTSensor -> getHumidity()," / ")); 
   WebServer.setArgString(F("tdLight1TimerEnabled"),GBox -> Light1 -> getTimerOnOffText());
   WebServer.setArgString(F("tdLight1On"), GBox -> Light1 -> getOnTimeText());
   WebServer.setArgString(F("tdLight1Off"), GBox -> Light1 -> getOffTimeText());  
   }
 }
 
-//Called when any button on the website is pressed
-void buttonPressCallback(char *button)
+void buttonPressCallback(char *button)  //Called when any button on the website is pressed. Do not call logToSerials within any methods used here!
 {
   if (strcmp_P(button,(PGM_P)F("btn_Light1On"))==0) {GBox -> Light1 -> setLightOnOff(true,true); }
   else if (strcmp_P(button,(PGM_P)F("btn_Light1Off"))==0) {GBox -> Light1 -> setLightOnOff(false,true); }
@@ -113,8 +113,7 @@ void buttonPressCallback(char *button)
   saveSettings(false); 
 }
 
-//Called when any field on the website is updated
-void setFieldCallback(char * field){
+void setFieldCallback(char * field){  //Called when any field on the website is updated. Do not call logToSerials within any methods used here!
   if(strcmp_P(field,(PGM_P)F("Light1Brightness"))==0) {GBox -> Light1 -> setBrightness(WebServer.getArgInt(),true);}
   else if(strcmp_P(field,(PGM_P)F("Light1OnHour"))==0) {GBox -> Light1 -> setOnHour(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("Light1OnMinute"))==0) {GBox -> Light1 -> setOnMinute(WebServer.getArgInt());}

@@ -131,8 +131,6 @@ static char * toText(float Number1, float Number2,const char * Separator){
 }
 
 static char * timeToText(byte Hour, byte Minute){
-  logToSerials(Hour,true);
-  logToSerials(Minute,true);
   static char ReturnChar[MaxTextLength] = ""; //2 digit + separator + 2 digit + null
   sprintf (ReturnChar, "%02u:%02u", Hour, Minute);
   return ReturnChar;

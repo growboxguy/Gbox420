@@ -79,7 +79,7 @@
        strcat_P(Message,(PGM_P)F(":Reading:")); strcat(Message,toText(LatestReading)); 
        strcat_P(Message,(PGM_P)F(",Sum:")); strcat(Message,toText(Sum));
        strcat_P(Message,(PGM_P)F(",Average:")); strcat(Message,toText(Average));
-       logToSerials(Message,true);       
+       logToSerials(&Message,true);       
      }
       return Average;
    }
