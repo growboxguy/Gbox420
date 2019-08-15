@@ -12,6 +12,7 @@ class LightSensor : public Common
     void refresh();  //Called when component should refresh its state
     bool getIsDark(); //Ligth sensor digital feedback: True(Bright) or False(Dark)
     int getReading(); //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
+    int getReadingPercentage(); //Light sensor analog feedback relative to calibration values: 0 to 100%  //CALIBRATION NOT IMPLEMENTED
     const __FlashStringHelper * getIsDarkText();  
     char * getReadingText();
     

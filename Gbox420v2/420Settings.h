@@ -7,7 +7,7 @@ static const byte LogDepth = 10;  //Show X number of log entries on website, do 
 
 typedef struct
 { 
-  byte Version=7;  //UPDATE this every time you change something in the stucture, that will force the EEPROM stored settings to update.
+  byte Version=8;  //UPDATE this every time you change something in the stucture, that will force the EEPROM stored settings to update.
     
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
   
@@ -16,6 +16,9 @@ typedef struct
   uint32_t AeroDuration = 2; //Aeroponics - Spray time in seconds  
   uint32_t AeroPumpTimeout = 360;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
   uint32_t AeroPrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
+
+  byte Buzzer1Pin = 4; //PC speaker+ (red)
+  bool Buzzer1Enabled = true;  //Enable PC speaker
 
   uint8_t InternalDHTSensorPin = 43; //DAT - DHT22 temp/humidity sensor, internally mounted
   uint8_t ExternalDHTSensorPin = 44; //DAT - DHT22 temp/humidity sensor, externally mounted
@@ -47,7 +50,6 @@ typedef struct
   byte ExhaustFanLowHumid = 55; //Above set humidity turn exhaust fan Low if automatic fan control is enabled
   byte ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
    
-  bool SoundEnabled = true;  //Enable PC speaker
   bool DebugEnabled = true; //Logs debug messages to serial and web outputs
   bool MetricSystemEnabled = true; //Swith between Imperial/Metric units. If changed update the default temp and pressure values.  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
@@ -83,7 +85,7 @@ typedef struct
   byte WaterFullInPin = A7; // Water sensor4
   
 //Digital pins
-  byte BuzzerOutPin = 4; //PC speaker+ (red)
+
   byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
   byte Relay1OutPin = 22;  //Power relay Port 1 - FREE
   byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump

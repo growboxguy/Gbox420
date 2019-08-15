@@ -13,9 +13,10 @@ extern char Message[512];
 extern char CurrentTime[20];
 extern template void logToSerials(const*,bool BreakLine);
 
-
 class Common{
   friend class RollingAverage;
+
+  private:
   
   protected:
   
@@ -24,10 +25,7 @@ class Common{
     static char* eventLogToJSON(bool Append); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]  
     static void addToLog(const __FlashStringHelper* Text);
     static void addToLog(const char* Text);
-    static char * getFormattedTime();    
-
-    static void setMetricSystemEnabled(bool MetricEnabled);  
-     
+    static void setMetricSystemEnabled(bool MetricEnabled);       
 };
 
 class RollingAverage

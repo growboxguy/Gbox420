@@ -73,16 +73,16 @@
        Oldest = 0;
      }
      int Average = Sum / RollingAverageQueueDepth;      
-      if(MySettings.DebugEnabled){  
+     /* if(MySettings.DebugEnabled){  
        memset(&Message[0], 0, sizeof(Message));  //clear variable       
        strcat(Message,toText(Oldest));
        strcat_P(Message,(PGM_P)F(":Reading:")); strcat(Message,toText(LatestReading)); 
        strcat_P(Message,(PGM_P)F(",Sum:")); strcat(Message,toText(Sum));
        strcat_P(Message,(PGM_P)F(",Average:")); strcat(Message,toText(Average));
-       logToSerials(&Message,true);       
-     }
+       logToSerials(&Message,true);  
+      }  */    
       return Average;
-   }
+ }
 
   float RollingAverage::updateAverage(float LatestReading){
     int temp = updateAverage((int)(LatestReading * 100));

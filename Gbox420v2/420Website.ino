@@ -57,7 +57,7 @@ void loadCallback(char * url) //called when website is loaded. Do not call logTo
   }
   
   if (strcmp(url,"/Settings.html.json")==0){  
-  WebServer.setArgInt(F("SoundEnabled"), MySettings.SoundEnabled);
+  WebServer.setArgInt(F("SoundEnabled"), MySettings.Buzzer1Enabled);
   WebServer.setArgInt(F("DebugEnabled"), MySettings.DebugEnabled);
   WebServer.setArgInt(F("MetricSystemEnabled"), MySettings.MetricSystemEnabled);
   WebServer.setArgInt(F("DigitDisplayBrightness"), MySettings.DigitDisplayBacklight);
@@ -96,7 +96,7 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
   WebServer.setArgString(F("tdExternalTemp"),GBox -> ExternalDHTSensor -> getTempText());
   WebServer.setArgString(F("tdExternalHumidity"),GBox -> ExternalDHTSensor -> getHumidityText());
   WebServer.setArgString(F("tdLightSensor1IsDark"),GBox -> LightSensor1 -> getIsDarkText());
-  WebServer.setArgString(F("tdLightSensor1Reading"),percentageToText(GBox -> LightSensor1 -> getReading())); //CALIBRATION NOT IMPLEMENTED
+  WebServer.setArgString(F("tdLightSensor1Reading"),(PGM_P)GBox -> LightSensor1 -> getReadingPercentage());
   WebServer.setArgString(F("tdLightSensor1ReadingRaw"),GBox -> LightSensor1 -> getReadingText()); 
   WebServer.setArgString(F("tdLight1Status"),GBox -> Light1 -> getStatusText());
   WebServer.setArgString(F("tdLight1TimerEnabled"),GBox -> Light1 -> getTimerOnOffText());
@@ -112,7 +112,7 @@ void buttonPressCallback(char *button)  //Called when any button on the website 
   else if (strcmp_P(button,(PGM_P)F("btn_Light1Calibrate"))==0) {GBox -> Light1 -> triggerCalibrateLights();}
   else if (strcmp_P(button,(PGM_P)F("btn_Light1TimerEnable"))==0) {GBox -> Light1 -> setTimerOnOff(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_Light1TimerDisable"))==0) {GBox -> Light1 -> setTimerOnOff(false);}
-  
+  else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { GBox -> Buzzer1 ->playEE(); }
   saveSettings(false); 
 }
 
@@ -124,7 +124,7 @@ void setFieldCallback(char * field){  //Called when any field on the website is 
   else if(strcmp_P(field,(PGM_P)F("Light1OffMinute"))==0) {GBox -> Light1 -> setOffMinute(WebServer.getArgInt());} 
 
 
-  //else if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {GBox -> Buzzer1 -> setSoundOnOff(WebServer.getArgBoolean());}
   //else if(strcmp_P(field,(PGM_P)F("DebugEnabled"))==0) {setDebugOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("MetricSystemEnabled"))==0) {Common::setMetricSystemEnabled(WebServer.getArgBoolean());}
   //else if(strcmp_P(field,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}

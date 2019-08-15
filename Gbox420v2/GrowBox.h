@@ -7,6 +7,7 @@
 #include "DHTSensor.h"
 #include "LightSensor.h"
 #include "Lights.h"
+#include "Buzzer.h"
 
 class GrowBox : public Common
 {
@@ -16,6 +17,8 @@ class GrowBox : public Common
   public:
   GrowBox(Settings *BoxSettings);
   void refresh();
+  char * reportToSerials();
+  Buzzer * Buzzer1; //Pointer to a Piezo Buzzer - sound feedback
   DHTSensor * InternalDHTSensor;  //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   DHTSensor * ExternalDHTSensor; //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
   LightSensor * LightSensor1; //Pointer to a Light Sensor object measuring light intensity in the grow box

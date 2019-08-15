@@ -23,6 +23,10 @@ int LightSensor::getReading(){
   return LightReading -> getAverageInt();
 }
 
+int LightSensor::getReadingPercentage(){ 
+  return percentageToText(LightReading -> getAverageInt()); //CALIBRATION NOT IMPLEMENTED 
+}
+
 const __FlashStringHelper * LightSensor::getIsDarkText(){
   return yesNoToText(IsDark);
 }

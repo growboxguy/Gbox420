@@ -8,13 +8,10 @@
 
 //TODO:
 //addToLog - make Log class
-//Convert Website to a Singleton class (Restricts the instantiation to one single instance) 
 //Make alerting a class, every object will have a "bool StatusOK" variable inherited from Common, Alerting will go throught all subscribed classes and check status
 //Subscribe to thread timer events using the attach method.
 //sendEmailAlert implementation
 //Sounds implementation
-//Light sensor to separate object from Light
-//Add buttons to trigger runMinute,runHour for debugging
 //HempyBucket controls
 //Aeroponics
 //Light sensor
