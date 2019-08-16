@@ -1,3 +1,5 @@
+#include "420Helpers.h"
+
 /*
 Website::Website(HardwareSerial *SerialPort){
     //Initialize web connections

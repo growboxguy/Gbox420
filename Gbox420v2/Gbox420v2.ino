@@ -73,8 +73,6 @@ void setup() {  // put your setup code here, to run once:
   HalfHourThread.setInterval(1800000);
   HalfHourThread.onRun(runHalfHour);
   
-  logToSerials(F("Grow Box initialized"),true);
-
    //Start interrupts to handle request from ESP-Link firmware
   Timer3.initialize(500);  //check every 0.5sec, using a larger interval can cause web requests to time out
   Timer3.attachInterrupt(processTimeCriticalStuff);
@@ -82,10 +80,11 @@ void setup() {  // put your setup code here, to run once:
 
   GBox -> refresh();
   //  sendEmailAlert(F("Grow%20box%20(re)started"));
+  logToSerials(F("Setup ready, starting loops"),true);
 }
 
 void loop() { // put your main code here, to run repeatedly:
- ThreadControl.run();    //loop only checks if it's time to trigger one of the threads
+ ThreadControl.run();    //loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
 }
 
 void processTimeCriticalStuff(){

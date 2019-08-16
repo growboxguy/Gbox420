@@ -4,6 +4,7 @@ Buzzer::Buzzer(byte Pin, bool *Enabled){
   this -> Pin = Pin;
   this -> Enabled = Enabled;
   pinMode(Pin, OUTPUT);
+  pinMode(13, OUTPUT); //onboard LED
   if(MySettings.DebugEnabled){logToSerials(F("Buzzer object created"),true);}
 }
 
@@ -50,8 +51,12 @@ void Buzzer::setSoundOnOff(bool State){
   if(Enabled){ 
     addToLog(F("Sound enabled"));
     PlayOnSound=true;}
-  else {addToLog(F("Sound disabled"));}
+  else {
+    addToLog(F("Sound disabled"));
+    PlayOffSound=true;
+    }
 }
+
 
 //EE Section
 
@@ -156,8 +161,7 @@ const static byte Buzzer::tempo[] = {
 };
 
 void Buzzer::EE() { 
-  addToLog(F("♬Easter egg♬"));
-  digitalWrite(13, HIGH);
+  addToLog(F("♬Easter egg♬"));  
   int size = sizeof(melody) / sizeof(int);
   for (int thisNote = 0; thisNote < size; thisNote++) {
     // to calculate the note duration, take one second
@@ -173,10 +177,10 @@ void Buzzer::EE() {
     buzz(0, noteDuration); 
     wdt_reset(); //Reset Watchdog timeout to avoid Arduino reseting while playing the song   
   }
-  digitalWrite(13, LOW);
 }
 
 void Buzzer::buzz( uint32_t frequency, uint32_t length) {
+  digitalWrite(13, HIGH);
   uint32_t delayValue = 1000000 / frequency / 2; // calculate the delay value between transitions
   //// 1 second's worth of microseconds, divided by the frequency, then split in half since
   //// there are two phases to each cycle
@@ -188,5 +192,6 @@ void Buzzer::buzz( uint32_t frequency, uint32_t length) {
     delayMicroseconds(delayValue); // wait for the calculated delay value
     digitalWrite(Pin, LOW); // write the buzzer pin low to pull back the diaphram
     delayMicroseconds(delayValue); // wait again or the calculated delay value
-  }
+  }  
+  digitalWrite(13, LOW);
 }
