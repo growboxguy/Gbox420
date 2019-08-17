@@ -1,5 +1,7 @@
 #include "GrowBox.h"
 
+static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy displayed on the website (array of char arrays)
+
 GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   this -> BoxSettings = BoxSettings;
   Buzzer1 = new Buzzer(BoxSettings -> Buzzer1Pin,&BoxSettings -> Buzzer1Enabled);

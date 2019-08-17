@@ -1,10 +1,10 @@
 #include "DHTSensor.h"
 
  void DHTSensor::refresh(){  //Called when component should refresh its state 
-    if(MySettings.DebugEnabled){logToSerials(F("DHTSensor refreshing"),true);}
-    if(MySettings.MetricSystemEnabled){ Temp -> updateAverage((float)(sensor -> readTemperature()));}
-    else {Temp -> updateAverage( (float)(sensor -> readTemperature() *1.8 + 32));}
-    Humidity -> updateAverage((float)(sensor -> readHumidity()));  
+    if(MySettings.DebugEnabled){logToSerials(F("DHTSensor refreshing"),true);}    
+    if(MySettings.MetricSystemEnabled){ Temp -> updateAverage(sensor -> readTemperature());}
+    else {Temp -> updateAverage(sensor -> readTemperature() *1.8f + 32);}
+    Humidity -> updateAverage(sensor -> readHumidity());  
   }
 
   DHTSensor::DHTSensor(uint8_t _pin, uint8_t _sensorType){

@@ -3,8 +3,6 @@
 //////////////////////////////////////////
 //Logging
 
-
-
 void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine) { 
   if(BreakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
   else{Serial.print(ToPrint);Serial3.print(ToPrint);}
@@ -41,7 +39,7 @@ char * getFormattedTime(){
   return CurrentTime;
 }  
 
-bool SyncInProgress=false;
+static bool SyncInProgress=false;
 time_t getNtpTime(){
   time_t NTPResponse = 0;
   if(!SyncInProgress){ //blocking calling the sync again in an interrupt
@@ -80,39 +78,39 @@ float convertBetweenPressureUnits(float Value){
 //Text formating
 
 char * toText(int Number){
-  char ReturnChar[MaxTextLength] = "";
+  static char ReturnChar[MaxTextLength] = "";
   itoa(Number, ReturnChar, 10);
   return ReturnChar;
 }
 
-  char * toText(long Number){ 
-  char ReturnFloatChar[MaxTextLength] = ""; 
+char * toText(long Number){ 
+  static char ReturnFloatChar[MaxTextLength] = ""; 
   sprintf (ReturnFloatChar, "%ld", Number);
   return ReturnFloatChar;
 }
 
-char * toText(int Number1, int Number2,const char * Separator){  //function overloading: Same named function, different parameters
-  char ReturnChar[MaxTextLength] = ""; 
-  snprintf(ReturnChar,32,"%d%s%d",Number1,Separator,Number2);
-  return ReturnChar;
-}
-
 char * toText(float Number){ 
-  char ReturnFloatChar[MaxTextLength] = ""; 
+  static char ReturnFloatChar[MaxTextLength] = ""; 
   if(isnan(Number)) Number= -1.0;
   dtostrf(Number, 4, 2, ReturnFloatChar); //minimum 4 char total lengt (Including decimal and possible - sign), with 2 digits after the decimal point
   return ReturnFloatChar;
 }
 
 char * toPrecisionText(float Number){ 
-  char ReturnFloatChar[MaxTextLength] = "";
+  static char ReturnFloatChar[MaxTextLength] = "";
   if(isnan(Number)) Number= -1.0;
   dtostrf(Number, 8, 6, ReturnFloatChar); //minimum 8 char total lengt, with 6 decimals
   return ReturnFloatChar;
 }
 
+char * toText(int Number1, int Number2,const char * Separator){  //function overloading: Same named function, different parameters
+  static char ReturnChar[MaxTextLength] = ""; 
+  snprintf(ReturnChar,32,"%d%s%d",Number1,Separator,Number2);
+  return ReturnChar;
+}
+
 char * toText(float Number1, float Number2,const char * Separator){
-  char ReturnChar[MaxTextLength] = ""; 
+  static char ReturnChar[MaxTextLength] = ""; 
   char Number2Char[MaxTextLength] = "";
   if(isnan(Number1)) Number1= -1.0;
   if(isnan(Number2)) Number2= -1.0;
@@ -124,13 +122,13 @@ char * toText(float Number1, float Number2,const char * Separator){
 }
 
 char * timeToText(byte Hour, byte Minute){
-  char ReturnChar[MaxTextLength] = ""; //2 digit + separator + 2 digit + null
+  static char ReturnChar[MaxTextLength] = ""; //2 digit + separator + 2 digit + null
   sprintf (ReturnChar, "%02u:%02u", Hour, Minute);
   return ReturnChar;
 }  
 
 char * tempToText(float Temp){
-  char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
+  static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
   dtostrf(Temp, 4, 2, ReturnChar); 
   if(MySettings.MetricSystemEnabled){      
     strcat_P(ReturnChar,(PGM_P)F("°C"));
@@ -142,8 +140,8 @@ char * tempToText(float Temp){
 } 
 
 char * percentageToText(float Number){
-  //char * ReturnChar = malloc(MaxTextLength * sizeof(char));  //allocate memory for every run - need to take care of freeing up the memory  after use
-  char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
+  //static char * ReturnChar = malloc(MaxTextLength * sizeof(char));  //allocate memory for every run - need to take care of freeing up the memory  after use
+  static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
   dtostrf(Number, 4, 2, ReturnChar);      
   strcat_P(ReturnChar,(PGM_P)F("%"));  
   return ReturnChar; 
@@ -151,7 +149,7 @@ char * percentageToText(float Number){
 
 char * percentageToText(int Number){
   //char * ReturnChar = malloc(MaxTextLength * sizeof(char));  //allocate memory for every run - need to take care of freeing up the memory  after use
-  char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
+  static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
   itoa(Number, ReturnChar, 10);      
   strcat_P(ReturnChar,(PGM_P)F("%"));  
   return ReturnChar; 
@@ -181,7 +179,44 @@ const __FlashStringHelper * enabledToText(bool Status){
 //Debug
 
 char * getFreeMemory(){
-  char ReturnChar[MaxTextLength] = "";
+  static char ReturnChar[MaxTextLength] = "";
   itoa(freeMemory(), ReturnChar, 10);
   logToSerials(F("Free memory(bytes): "),false); logToSerials(&ReturnChar,true);
 }
+
+
+//////////////////////////////////////////////////////////////////
+//RollingAverage functions
+
+int RollingAverage::getAverageInt(){
+  return Sum / RollingAverageQueueDepth;
+}
+
+float RollingAverage::getAverageFloat(){
+  return Sum / RollingAverageQueueDepth /100.0f;
+}
+
+int RollingAverage::updateAverage(int LatestReading){
+   Sum -= History[Oldest]; //remove the oldest reading from the total
+   Sum += LatestReading; //Add the newest reading
+   History[Oldest++] = LatestReading;  //replace the oldest reading, then move the pointer to the oldest entry 
+   if(Oldest >= RollingAverageQueueDepth){ //reached the end of the queue
+     Oldest = 0;
+   }
+   int Average = Sum / RollingAverageQueueDepth;      
+   /* if(MySettings.DebugEnabled){ 
+     memset(&Message[0], 0, sizeof(Message));  //clear variable       
+     strcat(Message,toText(Oldest));
+     strcat_P(Message,(PGM_P)F(":Reading:")); strcat(Message,toText(LatestReading)); 
+     strcat_P(Message,(PGM_P)F(",Sum:")); strcat(Message,toText(Sum));
+     strcat_P(Message,(PGM_P)F(",Average:")); strcat(Message,toText(Average));
+     logToSerials(&Message,true);     
+   } */     
+   return Average;
+}
+
+float RollingAverage::updateAverage(float LatestReading){
+  int temp = updateAverage((int)(LatestReading * 100));
+  return temp/100.0f;
+}
+   

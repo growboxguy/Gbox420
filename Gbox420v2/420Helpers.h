@@ -12,6 +12,7 @@
 
 extern Settings MySettings;
 extern char CurrentTime[20];
+extern char Message[512];
 extern ELClientCmd ESPCmd;
 
 void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine);
@@ -37,14 +38,29 @@ const __FlashStringHelper * yesNoToText(bool Status);
 const __FlashStringHelper * statusToText(bool Status);
 const __FlashStringHelper * enabledToText(bool Status);
 
-template <class logLine> void logToSerials (logLine& ToPrint,bool BreakLine) { 
-  if(BreakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
-  else{Serial.print(ToPrint);Serial3.print(ToPrint);}
-}
 
 template <class logLine> void logToSerials (logLine* ToPrint,bool BreakLine) { 
   if(BreakLine){Serial.println((*ToPrint));Serial3.println((*ToPrint));}
   else{Serial.print((*ToPrint));Serial3.print((*ToPrint));}
 }
+
+template <class logLine> void logToSerials (logLine& ToPrint,bool BreakLine) { 
+  if(BreakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
+  else{Serial.print(ToPrint);Serial3.print(ToPrint);}
+}
+
+class RollingAverage
+{  
+  private:
+    long Sum = 0;
+    int History[RollingAverageQueueDepth] = {0}; //array to store historical readings, 10 readings default
+    byte Oldest = 0; //Points to the oldest reading      
+   
+  public:  
+    int updateAverage(int LatestReading);
+    float updateAverage(float LatestReading);
+    int getAverageInt();
+    float getAverageFloat();
+};
 
 #endif

@@ -2,6 +2,7 @@
 #define DHTSensor_H
 
 #include "Common.h"
+#include "420Helpers.h"
 #include "DHT.h"  //DHT11 or DHT22 Digital Humidity and Temperature sensor
 
 class DHTSensor : public Common

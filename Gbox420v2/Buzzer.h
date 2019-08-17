@@ -4,7 +4,8 @@
 #include "Common.h"
 //#include "TimerThree.h"  //Interrupt handling for webpage
 
-class Buzzer : public Common{
+class Buzzer : public Common
+{
   private:
     byte Pin; //Pin connecting the piezo buzzer positive(+) side over a 330Ω resistor)
     bool* Enabled;   //Sound ON or OFF
@@ -15,8 +16,8 @@ class Buzzer : public Common{
     void OnSound();
     void OffSound();
     void EE();
-    const static int melody[];
-    const static byte tempo[];
+    const PROGMEM static int melody[];
+    const PROGMEM static byte tempo[];
       
   protected:
   

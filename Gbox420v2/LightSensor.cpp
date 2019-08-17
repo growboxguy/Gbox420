@@ -12,7 +12,7 @@ LightSensor::LightSensor(byte DigitalPin, byte AnalogPin){ //constructor
 void LightSensor::refresh(){  //Called when component should refresh its state
   if(MySettings.DebugEnabled){logToSerials(F("LightSensor object refreshing"),true);}
   IsDark = digitalRead(DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected. ! inverts this
-  LightReading -> updateAverage((int)(1023 - analogRead(AnalogPin)));   
+  LightReading -> updateAverage(1023 - analogRead(AnalogPin));   
 }
 
 bool LightSensor::getIsDark(){ //Ligth sensor digital feedback: True(Dark) or False(Bright)  

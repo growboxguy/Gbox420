@@ -36,7 +36,7 @@ void Buzzer::OnSound(){
 }
 
 void Buzzer::OffSound(){
-  if(Enabled){ 
+  if(*Enabled){ 
   tone(Pin,1000);
   delay(100);
   noTone(Pin);
@@ -48,7 +48,7 @@ void Buzzer::OffSound(){
 
 void Buzzer::setSoundOnOff(bool State){
   Enabled = &State;
-  if(Enabled){ 
+  if(*Enabled){ 
     addToLog(F("Sound enabled"));
     PlayOnSound=true;}
   else {
@@ -64,7 +64,7 @@ void Buzzer::playEE(){
   PlayEE = true;
 }
 
-const static int Buzzer::melody[] = {
+const PROGMEM static int Buzzer::melody[] = {   //https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
   2637, 2637, 0, 2637,
   0, 2093, 2637, 0,
   3136, 0, 0,  0,
@@ -112,7 +112,7 @@ const static int Buzzer::melody[] = {
   233, 220, 208
 };
 
-const static byte Buzzer::tempo[] = {
+const PROGMEM static byte Buzzer::tempo[] = {
   12, 12, 12, 12,
   12, 12, 12, 12,
   12, 12, 12, 12,
@@ -161,14 +161,14 @@ const static byte Buzzer::tempo[] = {
 };
 
 void Buzzer::EE() { 
-  addToLog(F("♬Easter egg♬"));  
-  int size = sizeof(melody) / sizeof(int);
-  for (int thisNote = 0; thisNote < size; thisNote++) {
+  addToLog(F("♬Easter egg♬"));
+  //int size = sizeof(melody) / sizeof(int);  //this is equal 134: No sense calculating it every time, if you change the melody could come handy.
+  for (int thisNote = 0; thisNote < 134; thisNote++) {
     // to calculate the note duration, take one second
     // divided by the note type.
     //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
-    int noteDuration = 1000 / tempo[thisNote];
-    buzz(melody[thisNote], noteDuration);
+    int noteDuration = 1000 / (byte)pgm_read_word(&tempo[thisNote]);  //tempo is stored in PROGMEM (Flash), cannot read from it as RAM array (temp[thisNote] would not work) //https://forum.arduino.cc/index.php?topic=106603.0
+    buzz((int)pgm_read_word(&melody[thisNote]), noteDuration);
     // to distinguish the notes, set a minimum time between them.
     // the note's duration + 30% seems to work well:
     int pauseBetweenNotes = noteDuration * 1.30;
