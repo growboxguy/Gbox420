@@ -5,17 +5,19 @@
 #include "TimeLib.h" //Keeping track of time
 #include "420Settings.h"  //for storing/reading defaults
 #include "420Helpers.h"  //global functions
-#include "DHTSensor.h"
-#include "LightSensor.h"
-#include "Lights.h"
-#include "Buzzer.h"
 
-extern Settings MySettings;
+
+class DHTSensor;  //forward declaration of classes
+class LightSensor;
+class Lights;
+class Buzzer;
+
+extern Settings BoxSettings;
 extern char Message[512];
 extern char CurrentTime[20];
 extern template void logToSerials(const*,bool BreakLine);
 
-class GrowBox : Common
+class GrowBox
 {
   //friend class RollingAverage;
   protected:
@@ -36,6 +38,11 @@ class GrowBox : Common
   void runFiveSec(); //needs to run first to get sensor readings
   void runMinute();
   void runHalfHour(); 
+
+  char* eventLogToJSON(bool Append); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]  
+  void addToLog(const __FlashStringHelper* Text);
+  void addToLog(const char* Text);
+  void setMetricSystemEnabled(bool MetricEnabled); 
   
   private: 
   

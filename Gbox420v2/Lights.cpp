@@ -1,5 +1,5 @@
 #include "Lights.h"
-#include "GrowBox.h"
+#include "Buzzer.h"
 
 Lights::Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute){  //constructor
   this -> GBox = GBox;
@@ -20,7 +20,6 @@ Lights::Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte* DimmingLimit
 
 void Lights::refresh(){  //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Lights refreshing"),true);}
-  if(CalibrateLights){ calibrateLights(); } //If calibration was requested
   checkLightTimer(); 
   checkLightStatus(); 
 }
@@ -69,51 +68,24 @@ void Lights::checkLightTimer() {
 
 void Lights::setBrightness(byte Brightness, bool LogThis){
   *(this -> Brightness) = Brightness;      
-  analogWrite(*DimmingPin, map(Brightness,0,100,int(255.0*(100.0-(float)*DimmingLimit)/100.0),0)); //mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brigthness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
+  analogWrite(*DimmingPin, map(Brightness,0,100,int(255*(100-*DimmingLimit)/100.0f),0)); //mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brigthness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
   if(LogThis){
     strncpy_P(Message,(PGM_P)F("Brightness: "),MaxTextLength);  
     strcat(Message,toText(Brightness));
     strcat_P(Message,(PGM_P)F("%"));
-    addToLog(Message);
+    GBox -> addToLog(Message);
   }
-}
-
-void Lights::triggerCalibrateLights(){ //website signals to calibrate lights the next time "checkLightStatus" function runs
-  CalibrateLights = true; 
-}
-
-void Lights::calibrateLights(){
-  CalibrateLights=false;  
-  bool* LastStatus = Status;
-  byte* LastBrightness = Brightness;
-  setLightOnOff(true,false);
-  checkLightStatus();  //apply turning the lights on
-  setBrightness(0,false);
-  delay(250); //wait for light output change
-  MinReading = 1023 - analogRead(GBox -> BoxSettings -> LightSensor1AnalogPin);
-  setBrightness(100,false);
-  delay(250); //wait for light output change
-  MaxReading = 1023 - analogRead(GBox -> BoxSettings -> LightSensor1AnalogPin);
-  
-  if(GBox -> BoxSettings -> DebugEnabled){
-         logToSerials(F("0% - "),false); logToSerials(&MinReading,true);
-         logToSerials(F(", 100% - "),false); logToSerials(&MaxReading,true);
-  }
-  setBrightness(LastBrightness,false); //restore original brightness
-  Status=LastStatus; //restore original state
-  checkLightStatus();
-  addToLog(F("Lights calibrated"));
 }
 
 void Lights::setLightOnOff(bool Status, bool LogThis){
    *(this -> Status) = Status;
    if(LogThis){
       if(Status){
-        addToLog(F("Light ON"));
+        GBox -> addToLog(F("Light ON"));
         GBox -> Buzzer1 -> playOnSound();
       }
       else{
-        addToLog(F("Light OFF")); 
+        GBox -> addToLog(F("Light OFF")); 
         GBox -> Buzzer1 -> playOffSound();
       }
    }
@@ -124,12 +96,12 @@ void Lights::setTimerOnOff(bool TimerState){
   *(this -> TimerEnabled) = TimerState;
   if(*TimerEnabled){ 
     checkLightTimer();
-    addToLog(F("Timer enabled"));
-   // PlayOnSound=true;
+    GBox -> addToLog(F("Timer enabled"));
+    GBox -> Buzzer1 -> playOnSound();
     }
   else {
-    addToLog(F("Timer disabled"));
-   // PlayOffSound=true;
+    GBox -> addToLog(F("Timer disabled"));
+    GBox -> Buzzer1 -> playOffSound();
     }
 }
 
@@ -139,7 +111,7 @@ void Lights::setOnHour(byte OnHour){
 
 void Lights::setOnMinute(byte OnMinute){
   *(this -> OnMinute) = OnMinute;
-  addToLog(F("Light ON time updated")); 
+  GBox -> addToLog(F("Light ON time updated")); 
 }
 
 void Lights::setOffHour(byte OffHour){
@@ -148,7 +120,7 @@ void Lights::setOffHour(byte OffHour){
 
 void Lights::setOffMinute(byte OffMinute){
   *(this -> OffMinute) = OffMinute;
-  addToLog(F("Light OFF time updated"));
+  GBox -> addToLog(F("Light OFF time updated"));
 }
 
 __FlashStringHelper* Lights::getTimerOnOffText(){

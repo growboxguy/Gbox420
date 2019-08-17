@@ -1,11 +1,9 @@
 #ifndef Lights_H
 #define Lights_H
 
-#include "Common.h"
+#include "GrowBox.h"
 
-class GrowBox;
-
-class Lights : public Common
+class Lights
 {
   protected:
     GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
@@ -23,8 +21,7 @@ class Lights : public Common
   public:
     Lights(GrowBox * Gbox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
     void refresh();  //Called when component should refresh its state
-    void setBrightness(byte Brightness, bool AddToLog);     
-    void triggerCalibrateLights();    //Website signals to calibrate the lights the next time the Light object gets CPU time       
+    void setBrightness(byte Brightness, bool AddToLog);           
     void setLightOnOff(bool State,bool AddToLog);    
     void setTimerOnOff(bool State);    
     void setOnHour(byte OnHour);    
@@ -35,8 +32,7 @@ class Lights : public Common
     __FlashStringHelper* getStatusText();   
     char * getOnTimeText();    
     char * getOffTimeText();
-    int MaxReading; // stores the highest light sensor analog reading
-    int MinReading; //stores the lowest light sensor analog reading 
+
    
   
   private:  

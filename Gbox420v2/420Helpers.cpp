@@ -12,20 +12,20 @@ void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine) {
 //Settings
 
 void saveSettings(bool LogThis){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
-  eeprom_update_block((const void*)&MySettings, (void*)0, sizeof(MySettings)); //update_block only writes the bytes that changed
+  eeprom_update_block((const void*)&BoxSettings, (void*)0, sizeof(BoxSettings)); //update_block only writes the bytes that changed
   if(LogThis) logToSerials(F("Settings saved to EEPROM"),true);
 }
 
 void loadSettings(){
   Settings EEPROMSettings; //temporary storage with "Settings" type
   eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
-  if(EEPROMSettings.Version != MySettings.Version){
+  if(EEPROMSettings.Version != BoxSettings.Version){
     logToSerials(F("Change detected, updating EEPROM..."),false);
     saveSettings(false);  //overwrites stored settings with defaults from this sketch
   }
   else {
     logToSerials(F("Same structure version detected, applying restored settings..."),false);
-    MySettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
+    BoxSettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
   }
   logToSerials(F("done"),true);
 }
@@ -65,12 +65,12 @@ time_t getNtpTime(){
 //Conversions
 
 float convertBetweenTempUnits(float Value){
-if(MySettings.MetricSystemEnabled) return round((Value-32) * 55.555555)/100.0;
+if(BoxSettings.MetricSystemEnabled) return round((Value-32) * 55.555555)/100.0;
 else return round(Value*180 + 00.0)/100.0;
 }
 
 float convertBetweenPressureUnits(float Value){
-  if(MySettings.MetricSystemEnabled) return round(Value / 0.145038)/100.0;
+  if(BoxSettings.MetricSystemEnabled) return round(Value / 0.145038)/100.0;
   else return round(Value*1450.38)/100.0;
 }
 
@@ -130,7 +130,7 @@ char * timeToText(byte Hour, byte Minute){
 char * tempToText(float Temp){
   static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
   dtostrf(Temp, 4, 2, ReturnChar); 
-  if(MySettings.MetricSystemEnabled){      
+  if(BoxSettings.MetricSystemEnabled){      
     strcat_P(ReturnChar,(PGM_P)F("°C"));
   }
   else{
@@ -204,7 +204,7 @@ int RollingAverage::updateAverage(int LatestReading){
      Oldest = 0;
    }
    int Average = Sum / RollingAverageQueueDepth;      
-   /* if(MySettings.DebugEnabled){ 
+   /* if(BoxSettings.DebugEnabled){ 
      memset(&Message[0], 0, sizeof(Message));  //clear variable       
      strcat(Message,toText(Oldest));
      strcat_P(Message,(PGM_P)F(":Reading:")); strcat(Message,toText(LatestReading)); 

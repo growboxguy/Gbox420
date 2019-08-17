@@ -1,11 +1,12 @@
 #include "Buzzer.h" 
 
-Buzzer::Buzzer(byte Pin, bool *Enabled){
+Buzzer::Buzzer(GrowBox * GBox,byte Pin, bool *Enabled){
+  this -> GBox = GBox;
   this -> Pin = Pin;
   this -> Enabled = Enabled;
   pinMode(Pin, OUTPUT);
   pinMode(13, OUTPUT); //onboard LED
-  if(MySettings.DebugEnabled){logToSerials(F("Buzzer object created"),true);}
+  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Buzzer object created"),true);}
 }
 
 void Buzzer::refresh(){
@@ -49,16 +50,15 @@ void Buzzer::OffSound(){
 void Buzzer::setSoundOnOff(bool State){
   Enabled = &State;
   if(*Enabled){ 
-    addToLog(F("Sound enabled"));
+    GBox -> addToLog(F("Sound enabled"));
     PlayOnSound=true;}
   else {
-    addToLog(F("Sound disabled"));
+    GBox -> addToLog(F("Sound disabled"));
     PlayOffSound=true;
     }
 }
 
-
-//EE Section
+//EE Section, can delete everything below if you need to save space
 
 void Buzzer::playEE(){
   PlayEE = true;
@@ -161,7 +161,7 @@ const PROGMEM static byte Buzzer::tempo[] = {
 };
 
 void Buzzer::EE() { 
-  addToLog(F("♬Easter egg♬"));
+  GBox -> addToLog(F("♬Easter egg♬"));
   //int size = sizeof(melody) / sizeof(int);  //this is equal 134: No sense calculating it every time, if you change the melody could come handy.
   for (int thisNote = 0; thisNote < 134; thisNote++) {
     // to calculate the note duration, take one second

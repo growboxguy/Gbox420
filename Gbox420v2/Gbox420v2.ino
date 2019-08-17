@@ -33,7 +33,7 @@
 #include "GrowBox.h" //Represents a complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variables
-Settings MySettings;
+Settings BoxSettings;
 char Message[512];   //temp storage for assembling log messages, buffer for REST and MQTT API messages
 char CurrentTime[20]; //buffer for storing current time
 
@@ -41,7 +41,7 @@ char CurrentTime[20]; //buffer for storing current time
 ELClient ESPLink(&Serial3);  //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
 ELClientWebServer WebServer(&ESPLink); //ESP-link WebServer API
 ELClientCmd ESPCmd(&ESPLink);//ESP-link - Get current time from the internet using NTP
-GrowBox * GBox;
+GrowBox * GBox;  //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 //Threading to time tasks
   Thread OneSecThread = Thread();
@@ -57,7 +57,7 @@ void setup() {  // put your setup code here, to run once:
   wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds assume a lockup and reset sketch
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
   loadSettings();
-  GBox = new GrowBox(&MySettings);
+  GBox = new GrowBox(&BoxSettings);
   
   ESPLink.resetCb = &resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
   resetWebServer();  //reset the WebServer 
@@ -92,13 +92,13 @@ void processTimeCriticalStuff(){
 }
 
 void runSec(){
-  if(MySettings.DebugEnabled)logToSerials(F("One sec trigger.."),true);
+  if(BoxSettings.DebugEnabled)logToSerials(F("One sec trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   GBox -> runSec();
 }
 
 void runFiveSec(){
-  if(MySettings.DebugEnabled){
+  if(BoxSettings.DebugEnabled){
     logToSerials(F("Five sec trigger.."),true);
     getFreeMemory();
   }
@@ -107,13 +107,13 @@ void runFiveSec(){
 }
 
 void runMinute(){
-  if(MySettings.DebugEnabled)logToSerials(F("Minute trigger.."),true);
+  if(BoxSettings.DebugEnabled)logToSerials(F("Minute trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   GBox -> runMinute();
 }
 
 void runHalfHour(){
-  if(MySettings.DebugEnabled)logToSerials(F("Half hour trigger.."),true);
+  if(BoxSettings.DebugEnabled)logToSerials(F("Half hour trigger.."),true);
   wdt_reset(); //reset watchdog timeout
   GBox -> runHalfHour();
 }

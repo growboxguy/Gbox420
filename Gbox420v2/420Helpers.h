@@ -10,16 +10,14 @@
 #include "ELClientCmd.h"  //ESP-link - Get current time from the internet using NTP
 #include "420Settings.h"  //for storing/reading defaults
 
-extern Settings MySettings;
+extern Settings BoxSettings;
 extern char CurrentTime[20];
 extern char Message[512];
 extern ELClientCmd ESPCmd;
 
-void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine);
 time_t getNtpTime();
 char * getFreeMemory();
 char * getFormattedTime();
-
 void saveSettings(bool LogThis);
 void loadSettings();    
 float convertBetweenTempUnits(float);
@@ -37,17 +35,18 @@ const __FlashStringHelper * onOffToText(bool Status);
 const __FlashStringHelper * yesNoToText(bool Status); 
 const __FlashStringHelper * statusToText(bool Status);
 const __FlashStringHelper * enabledToText(bool Status);
-
-
+void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine);
 template <class logLine> void logToSerials (logLine* ToPrint,bool BreakLine) { 
   if(BreakLine){Serial.println((*ToPrint));Serial3.println((*ToPrint));}
   else{Serial.print((*ToPrint));Serial3.print((*ToPrint));}
 }
-
 template <class logLine> void logToSerials (logLine& ToPrint,bool BreakLine) { 
   if(BreakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
   else{Serial.print(ToPrint);Serial3.print(ToPrint);}
 }
+
+//////////////////////////////////////////////////////////////////
+//RollingAverage class: For smoothing sensor readyings
 
 class RollingAverage
 {  

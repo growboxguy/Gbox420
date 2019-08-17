@@ -1,16 +1,20 @@
 #include "GrowBox.h"
+#include "DHTSensor.h"
+#include "LightSensor.h"
+#include "Lights.h"
+#include "Buzzer.h"
 
 static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
 GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   this -> BoxSettings = BoxSettings;
-  Buzzer1 = new Buzzer(BoxSettings -> Buzzer1Pin,&BoxSettings -> Buzzer1Enabled);
-  InternalDHTSensor = new DHTSensor(BoxSettings -> InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
-  ExternalDHTSensor = new DHTSensor(BoxSettings -> ExternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
-  LightSensor1 = new LightSensor(BoxSettings ->  LightSensor1DigitalPin, BoxSettings ->  LightSensor1AnalogPin);
+  Buzzer1 = new Buzzer(this,BoxSettings -> Buzzer1Pin,&BoxSettings -> Buzzer1Enabled);
+  InternalDHTSensor = new DHTSensor(this, BoxSettings -> InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
+  ExternalDHTSensor = new DHTSensor(this, BoxSettings -> ExternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
+  LightSensor1 = new LightSensor(this, BoxSettings ->  LightSensor1DigitalPin, BoxSettings ->  LightSensor1AnalogPin);
   Light1 = new Lights(this,BoxSettings -> Light1RelayPin,BoxSettings -> Light1DimmingPin,&BoxSettings -> Light1DimmingLimit,&BoxSettings -> Light1Status,&BoxSettings -> Light1Brightness,&BoxSettings -> Light1TimerEnabled,&BoxSettings -> Light1OnHour,&BoxSettings -> Light1OnMinute,&BoxSettings -> Light1OffHour,&BoxSettings -> Light1OffMinute);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
   addToLog(F("Grow Box initialized"));
-  if(MySettings.DebugEnabled){logToSerials(F("GrowBox object created"),true);}
+  if(BoxSettings -> DebugEnabled){logToSerials(F("GrowBox object created"),true);}
 }
 
 void GrowBox::refresh(){  //implementing the virtual refresh function from Common
@@ -56,7 +60,7 @@ char * GrowBox::reportToSerials(){
 //  strcat_P(Message,(PGM_P)F(" ; Voltage:")); strcat(Message,toText(Voltage)); strcat_P(Message,(PGM_P)F("V"));
 //  strcat_P(Message,(PGM_P)F(" ; Current:")); strcat(Message,toText(Current)); strcat_P(Message,(PGM_P)F("A"));
   strcat_P(Message,(PGM_P)F("\n\r Light Sensor - "));
-  strcat_P(Message,(PGM_P)F(" ; Brightness:")); strcat(Message,toText(MySettings.Light1Brightness));
+  strcat_P(Message,(PGM_P)F(" ; Brightness:")); strcat(Message,toText(BoxSettings -> Light1Brightness));
   strcat_P(Message,(PGM_P)F(" ; LightReading:")); strcat(Message,LightSensor1 -> getReadingText());
   strcat_P(Message,(PGM_P)F(" (")); strcat(Message,LightSensor1 -> getReadingPercentage());strcat_P(Message,(PGM_P)F(")"));
   strcat_P(Message,(PGM_P)F("\n\r Lights - "));
@@ -65,11 +69,11 @@ char * GrowBox::reportToSerials(){
   strcat_P(Message,(PGM_P)F(" ; LightON:")); strcat(Message,Light1 -> getOnTimeText());
   strcat_P(Message,(PGM_P)F(" ; LightOFF:")); strcat(Message,Light1 -> getOffTimeText());
 /*  strcat_P(Message,(PGM_P)F("\n\r Aeroponics - "));
-  strcat_P(Message,(PGM_P)F("Pressure:"));strcat(Message,toText(AeroPressure));if(MySettings.MetricSystemEnabled)strcat_P(Message,(PGM_P)F("bar"));else strcat_P(Message,(PGM_P)F("psi"));
-  strcat_P(Message,(PGM_P)F(" ; Low:"));strcat(Message,toText(MySettings.AeroPressureLow));
-  strcat_P(Message,(PGM_P)F(" ; High:"));strcat(Message,toText(MySettings.AeroPressureHigh));
-  strcat_P(Message,(PGM_P)F(" ; Interval:"));strcat(Message,toText(MySettings.AeroInterval));
-  strcat_P(Message,(PGM_P)F(" ; Duration:"));strcat(Message,toText(MySettings.AeroDuration));
+  strcat_P(Message,(PGM_P)F("Pressure:"));strcat(Message,toText(AeroPressure));if(BoxSettings -> MetricSystemEnabled)strcat_P(Message,(PGM_P)F("bar"));else strcat_P(Message,(PGM_P)F("psi"));
+  strcat_P(Message,(PGM_P)F(" ; Low:"));strcat(Message,toText(BoxSettings -> AeroPressureLow));
+  strcat_P(Message,(PGM_P)F(" ; High:"));strcat(Message,toText(BoxSettings -> AeroPressureHigh));
+  strcat_P(Message,(PGM_P)F(" ; Interval:"));strcat(Message,toText(BoxSettings -> AeroInterval));
+  strcat_P(Message,(PGM_P)F(" ; Duration:"));strcat(Message,toText(BoxSettings -> AeroDuration));
   strcat_P(Message,(PGM_P)F("\n\r Reservoir - "));
   strcat_P(Message,(PGM_P)F("Temp:")); strcat(Message,toText(ReservoirTemp));  
   strcat_P(Message,(PGM_P)F(" ; PH:")); strcat(Message,toText(PH));
@@ -78,3 +82,50 @@ char * GrowBox::reportToSerials(){
  */
   logToSerials( &Message, true);
 }
+
+void GrowBox::addToLog(const char *message){  //adds a log entry that is displayed on the web interface
+  logToSerials(message,true);
+  for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
+     memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
+     strncpy(Logs[i],Logs[i-1],MaxTextLength ) ; 
+    }  
+  memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
+  strncpy(Logs[0],message,MaxTextLength);  //instert new log to [0]
+}
+
+void GrowBox::addToLog(const __FlashStringHelper *message){ //function overloading: same function name, different parameter type 
+  logToSerials(message,true);
+  for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
+     memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
+     strncpy(Logs[i],Logs[i-1],MaxTextLength ) ; 
+    }  
+  memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
+  strncpy_P(Logs[0],(PGM_P)message,MaxTextLength);  //instert new log to [0]
+}
+
+char* GrowBox::eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
+  if(!Append)memset(&Message[0], 0, sizeof(Message));
+  strcat_P(Message,(PGM_P)F("["));
+  for(int i=LogDepth-1;i >=0 ; i--)
+  {
+   strcat_P(Message,(PGM_P)F("\""));
+   strcat(Message,Logs[i]);
+   strcat_P(Message,(PGM_P)F("\""));
+   if(i > 0 ) strcat_P(Message,(PGM_P)F(","));
+  }
+  Message[strlen(Message)] = ']';
+  return Message;
+}
+
+void GrowBox::setMetricSystemEnabled(bool MetricEnabled){  //DOES NOT BELONG HERE??
+  if(MetricEnabled != BoxSettings -> MetricSystemEnabled){  //if there was a change
+    BoxSettings -> MetricSystemEnabled = MetricEnabled;
+    BoxSettings -> InternalFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> InternalFanSwitchTemp);
+    BoxSettings -> TempAlertLow= convertBetweenTempUnits(BoxSettings -> TempAlertLow);
+    BoxSettings -> TempAlertHigh= convertBetweenTempUnits(BoxSettings -> TempAlertHigh);
+    BoxSettings -> PressureAlertLow=convertBetweenPressureUnits(BoxSettings -> PressureAlertLow);
+    BoxSettings -> PressureAlertHigh=convertBetweenPressureUnits(BoxSettings -> PressureAlertHigh);
+  }    
+  if(BoxSettings -> MetricSystemEnabled) addToLog(F("Using Metric units"));
+  else addToLog(F("Using Imperial units"));  
+}  
