@@ -29,16 +29,18 @@ class Lights
     void setOffHour(byte OffHour);    
     void setOffMinute(byte OffMinute);
     __FlashStringHelper * getTimerOnOffText(); 
-    __FlashStringHelper* getStatusText();   
+    __FlashStringHelper* getStatusText(); 
+    byte getBrightness(); 
+    bool getStatus();
     char * getOnTimeText();    
     char * getOffTimeText();
-
+    void checkLightStatus();
    
   
   private:  
     bool CalibrateLights = false; //Stores the Calibration request
     void calibrateLights(); //Actual calibration code, takes to long to run directly from a website command  (Case sensitive object names! :) )
-    void checkLightStatus();    
+        
     void checkLightTimer(); 
 
 };

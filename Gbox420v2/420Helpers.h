@@ -60,6 +60,8 @@ class RollingAverage
     float updateAverage(float LatestReading);
     int getAverageInt();
     float getAverageFloat();
+    char * getAverageIntText();
+    char * getAverageFloatText();
 };
 
 #endif

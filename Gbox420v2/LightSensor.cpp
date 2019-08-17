@@ -1,4 +1,5 @@
 #include "LightSensor.h"
+#include "Lights.h"
 
 LightSensor::LightSensor(GrowBox * GBox, byte DigitalPin, byte AnalogPin){ //constructor
   this -> GBox = GBox;
@@ -26,8 +27,8 @@ int LightSensor::getReading(){
   return LightReading -> getAverageInt();
 }
 
-int LightSensor::getReadingPercentage(){ 
-  return percentageToText(LightReading -> getAverageInt()); //CALIBRATION NOT IMPLEMENTED 
+int LightSensor::getReadingPercentage(){   
+  return percentageToText(map(LightReading -> getAverageInt(),MinReading,MaxReading,0,100)); //https://www.arduino.cc/reference/en/language/functions/math/map/ 
 }
 
 const __FlashStringHelper * LightSensor::getIsDarkText(){
@@ -35,7 +36,15 @@ const __FlashStringHelper * LightSensor::getIsDarkText(){
 }
 
 char* LightSensor::getReadingText(){
-  return toText(LightReading -> getAverageInt());
+  static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
+  memset(&ReturnChar[0], 0, sizeof(ReturnChar));  //clear variable
+  strcat(ReturnChar,LightReading -> getAverageIntText());   
+  strcat_P(ReturnChar,(PGM_P)F(" [")); 
+  strcat(ReturnChar,toText(MinReading));
+  strcat_P(ReturnChar,(PGM_P)F("/"));
+  strcat(ReturnChar,toText(MaxReading));
+  strcat_P(ReturnChar,(PGM_P)F("]"));   
+  return ReturnChar;
 }
 
 void LightSensor::triggerCalibration(){ //website signals to calibrate light sensor MAX and MIN readings the next time a refresh runs
@@ -44,23 +53,22 @@ void LightSensor::triggerCalibration(){ //website signals to calibrate light sen
 
 void LightSensor::calibrate(){
   CalibrateRequested=false;  
-  bool * LastStatus = Status;
-  byte * LastBrightness = Brightness;
-  setLightOnOff(true,false);  //turn on light, without adding a log entry
-  checkLightStatus();  //apply turning the lights on
-  setBrightness(0,false);
-  delay(250); //wait for light output change
-  MinReading = 1023 - analogRead(GBox -> BoxSettings -> LightSensor1AnalogPin);
-  setBrightness(100,false);
-  delay(250); //wait for light output change
-  MaxReading = 1023 - analogRead(GBox -> BoxSettings -> LightSensor1AnalogPin);
-  
+  bool LastStatus = GBox -> Light1 -> getStatus();  //TODO: This should be more generic and support different Lights objects passed as a parameter
+  byte LastBrightness = GBox -> Light1 -> getBrightness();
+  GBox -> Light1 -> setLightOnOff(true,false);  //turn on light, without adding a log entry
+  GBox -> Light1 -> checkLightStatus();  //apply turning the lights on
+  GBox -> Light1 -> setBrightness(0,false);
+  delay(2500); //wait for light output change
+  MinReading = 1023 - analogRead(AnalogPin);
+  GBox -> Light1 -> setBrightness(100,false);
+  delay(2500); //wait for light output change
+  MaxReading = 1023 - analogRead(AnalogPin);
+  GBox -> Light1 -> setBrightness(LastBrightness,false); //restore original brightness, without adding a log entry
+  GBox -> Light1 -> setLightOnOff(LastStatus,false); //restore original state, without adding a log entry
+  GBox -> Light1 -> checkLightStatus();
+  GBox -> addToLog(F("Lights calibrated"));
   if(GBox -> BoxSettings -> DebugEnabled){
-         logToSerials(F("0% - "),false); logToSerials(&MinReading,true);
+         logToSerials(F("0% - "),false); logToSerials(&MinReading,false);
          logToSerials(F(", 100% - "),false); logToSerials(&MaxReading,true);
   }
-  setBrightness(LastBrightness,false); //restore original brightness
-  Status=LastStatus; //restore original state
-  checkLightStatus();
-  GBox -> addToLog(F("Lights calibrated"));
 }

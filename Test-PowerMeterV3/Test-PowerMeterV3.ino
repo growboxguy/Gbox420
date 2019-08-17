@@ -3,27 +3,25 @@
 //Displays the measured voltage, current, actual and total energy consumption and prints it on the Serial output every 5 seconds.
 
 //Libraries
-//#include "SoftwareSerial.h" // Arduino IDE >1.6.6
-#include "PZEM004T.h"
+#include "SoftwareSerial.h" // Arduino IDE >1.6.6
+#include "PZEM004Tv30.h"
 
 //Component initialization
-PZEM004T PowerSensor(&Serial2);
-IPAddress PowerSensorIP(192,168,1,1);
+PZEM004Tv30 PowerSensor(&Serial2);
 
 void setup() {
   Serial.begin(115200);
-  PowerSensor.setAddress(PowerSensorIP);
-
+  PowerSensor.resetEnergy();   //RESETS COUNTER!!!!!!
 }
 
 void loop() {
-  float v = PowerSensor.voltage(PowerSensorIP);
+  float v = PowerSensor.voltage();
   Serial.print(v);Serial.print("V; ");
-  float i = PowerSensor.current(PowerSensorIP);
+  float i = PowerSensor.current();
   Serial.print(i);Serial.print("A; ");   
-  float p = PowerSensor.power(PowerSensorIP);
+  float p = PowerSensor.power();
   Serial.print(p);Serial.print("W; ");
-  float e = PowerSensor.energy(PowerSensorIP);
+  float e = PowerSensor.energy();
   Serial.print(e);Serial.println("Wh; ");
   delay(2000);
 }

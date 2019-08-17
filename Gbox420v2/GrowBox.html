@@ -140,7 +140,8 @@
 					<td id="tdLightSensor1Reading" class="dataRows"></td>
 					<td id="tdLightSensor1ReadingRaw" class="dataRows"></td>
 				  </tr>				 
-				</table> 				
+				</table> 
+				<button id="btn_LightSensor1Calibrate" type="button" title="Measure light output at 0 and 100% brightness">Calibrate</button><br>
 			</div>		
 			<div class="card" style="width:90%">		
 				<h1>Lights</h1>
@@ -159,8 +160,7 @@
 				  </tr>
 				 </table> 				
 				<button id="btn_Light1On" type="button" title="Turn grow lights ON">ON</button>
-				<button id="btn_Light1Off" type="button" title="Turn grow lights OFF">OFF</button>
-				<button id="btn_Light1Calibrate" type="button" title="Measure light output at 0 and 100% brightness">Calibrate</button><br>
+				<button id="btn_Light1Off" type="button" title="Turn grow lights OFF">OFF</button><br>
 				<b>Brightness</b><br>				
 				<form>
 				<input style="width:42px;" type="number" name="Light1Brightness" min="0" max="100" oninput="this.form.Light1BrightnessSlider.value=this.value" />

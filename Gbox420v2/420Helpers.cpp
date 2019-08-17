@@ -196,6 +196,14 @@ float RollingAverage::getAverageFloat(){
   return Sum / RollingAverageQueueDepth /100.0f;
 }
 
+char * RollingAverage::getAverageIntText(){
+  return toText(Sum / RollingAverageQueueDepth);
+}
+
+char * RollingAverage::getAverageFloatText(){
+  return toText(Sum / RollingAverageQueueDepth /100.0f);
+}
+
 int RollingAverage::updateAverage(int LatestReading){
    Sum -= History[Oldest]; //remove the oldest reading from the total
    Sum += LatestReading; //Add the newest reading

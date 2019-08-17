@@ -23,7 +23,8 @@ class LightSensor
     byte AnalogPin; //A0 - LM393 light sensor analog in
     bool IsDark;   
     RollingAverage * LightReading;  //keeps an average of previous readings: Smoothens sensor readings
-    bool CalibrateRequested; 
+    bool CalibrateRequested;
+    void calibrate();
     int MaxReading; // stores the highest light sensor analog reading measured during calibration
     int MinReading; //stores the lowest light sensor analog reading measured during calibration
 };

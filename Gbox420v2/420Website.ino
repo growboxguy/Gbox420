@@ -100,11 +100,13 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
 
 void buttonPressCallback(char *button)  //Called when any button on the website is pressed. Do not call logToSerials within any methods used here!
 {
+  //GrowBox page
   if (strcmp_P(button,(PGM_P)F("btn_Light1On"))==0) {GBox -> Light1 -> setLightOnOff(true,true); }
   else if (strcmp_P(button,(PGM_P)F("btn_Light1Off"))==0) {GBox -> Light1 -> setLightOnOff(false,true); }
-  else if (strcmp_P(button,(PGM_P)F("btn_Light1Calibrate"))==0) {GBox -> Light1 -> triggerCalibrateLights();}
   else if (strcmp_P(button,(PGM_P)F("btn_Light1TimerEnable"))==0) {GBox -> Light1 -> setTimerOnOff(true);}
   else if (strcmp_P(button,(PGM_P)F("btn_Light1TimerDisable"))==0) {GBox -> Light1 -> setTimerOnOff(false);}
+  else if (strcmp_P(button,(PGM_P)F("btn_LightSensor1Calibrate"))==0) {GBox -> LightSensor1 -> triggerCalibration();}
+  //Settings page
   else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { GBox -> Buzzer1 ->playEE(); }
   saveSettings(false); 
 }

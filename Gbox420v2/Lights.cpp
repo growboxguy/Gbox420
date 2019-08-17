@@ -127,6 +127,14 @@ __FlashStringHelper* Lights::getTimerOnOffText(){
   return enabledToText(*TimerEnabled);
 }
 
+byte Lights::getBrightness(){
+   return *Brightness;
+}
+
+bool Lights::getStatus(){
+   return *Status;
+}
+
 __FlashStringHelper* Lights::getStatusText(){
    return onOffToText(*Status);
 }
