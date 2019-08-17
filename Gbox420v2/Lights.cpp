@@ -1,6 +1,8 @@
 #include "Lights.h"
+#include "GrowBox.h"
 
-Lights::Lights(byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute){  //constructor
+Lights::Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute){  //constructor
+  this -> GBox = GBox;
   this -> RelayPin = RelayPin;
   this -> DimmingPin = DimmingPin;
   this -> DimmingLimit = DimmingLimit;
@@ -13,11 +15,11 @@ Lights::Lights(byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status,
   this -> OffMinute = OffMinute;
   pinMode(RelayPin, OUTPUT);
   pinMode(DimmingPin, OUTPUT);
-  if(MySettings.DebugEnabled){logToSerials(F("Lights object created"),true);}
+  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Lights object created"),true);}
 }
 
 void Lights::refresh(){  //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
-  if(MySettings.DebugEnabled){logToSerials(F("Lights refreshing"),true);}
+  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Lights refreshing"),true);}
   if(CalibrateLights){ calibrateLights(); } //If calibration was requested
   checkLightTimer(); 
   checkLightStatus(); 
@@ -39,13 +41,13 @@ void Lights::checkLightTimer() {
       if(CombinedOnTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedOffTime){  //True: Light should be on
         if(!*Status){   
           setLightOnOff(true,false); //If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
-          if(MySettings.DebugEnabled)logToSerials(F("Timer:Light ON"),true);
+          if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light ON"),true);
         } 
       }
       else  //False: Light should be off
         if(*Status) {  //If status is ON: Turn OFF the lights (First bool), and do not add it to the log (Second bool)
           setLightOnOff(false,false);    
-          if(MySettings.DebugEnabled)logToSerials(F("Timer:Light OFF"),true);
+          if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light OFF"),true);
         }        
     }
     else   //midnight turnover, Example: On 21:20, Off: 9:20
@@ -53,13 +55,13 @@ void Lights::checkLightTimer() {
       if(CombinedOnTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedOffTime){
        if(!*Status) {
         setLightOnOff(true,false);
-        if(MySettings.DebugEnabled)logToSerials(F("Timer:Light ON"),true);
+        if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light ON"),true);
         }
       }
       else 
        if(*Status){
         setLightOnOff(false,false);
-        if(MySettings.DebugEnabled)logToSerials(F("Timer:Light OFF"),true);    
+        if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light OFF"),true);    
        }
     }
   }
@@ -88,12 +90,12 @@ void Lights::calibrateLights(){
   checkLightStatus();  //apply turning the lights on
   setBrightness(0,false);
   delay(250); //wait for light output change
-  MinReading = 1023 - analogRead(MySettings.LightSensor1AnalogPin);
+  MinReading = 1023 - analogRead(GBox -> BoxSettings -> LightSensor1AnalogPin);
   setBrightness(100,false);
   delay(250); //wait for light output change
-  MaxReading = 1023 - analogRead(MySettings.LightSensor1AnalogPin);
+  MaxReading = 1023 - analogRead(GBox -> BoxSettings -> LightSensor1AnalogPin);
   
-  if(MySettings.DebugEnabled){
+  if(GBox -> BoxSettings -> DebugEnabled){
          logToSerials(F("0% - "),false); logToSerials(&MinReading,true);
          logToSerials(F(", 100% - "),false); logToSerials(&MaxReading,true);
   }
@@ -108,11 +110,11 @@ void Lights::setLightOnOff(bool Status, bool LogThis){
    if(LogThis){
       if(Status){
         addToLog(F("Light ON"));
-        //PlayOnSound=true;
+        GBox -> Buzzer1 -> playOnSound();
       }
       else{
         addToLog(F("Light OFF")); 
-        //PlayOffSound=true;
+        GBox -> Buzzer1 -> playOffSound();
       }
    }
    checkLightStatus();

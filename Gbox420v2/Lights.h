@@ -3,9 +3,12 @@
 
 #include "Common.h"
 
+class GrowBox;
+
 class Lights : public Common
 {
   protected:
+    GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
     byte* RelayPin; //the Arduino pin controlling the AC relay
     byte* DimmingPin; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
     byte* DimmingLimit; //Sets the maximum LED dimming limit (Usually around 5%)
@@ -18,7 +21,7 @@ class Lights : public Common
     byte* OffMinute; //Light OFF time - minute 
 
   public:
-    Lights(byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
+    Lights(GrowBox * Gbox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
     void refresh();  //Called when component should refresh its state
     void setBrightness(byte Brightness, bool AddToLog);     
     void triggerCalibrateLights();    //Website signals to calibrate the lights the next time the Light object gets CPU time       

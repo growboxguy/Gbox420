@@ -19,10 +19,11 @@ class GrowBox : Common
 {
   //friend class RollingAverage;
   protected:
-  Settings * BoxSettings; 
+
   
   public:
   GrowBox(Settings *BoxSettings); //constructor
+  Settings * BoxSettings;
   Buzzer * Buzzer1; //Pointer to a Piezo Buzzer - sound feedback
   DHTSensor * InternalDHTSensor;  //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   DHTSensor * ExternalDHTSensor; //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
