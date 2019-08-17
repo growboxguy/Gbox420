@@ -1,5 +1,6 @@
 #include "Lights.h"
-#include "Buzzer.h"
+#include "GrowBox.h"
+#include "Sound.h"
 
 Lights::Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute){  //constructor
   this -> GBox = GBox;
@@ -21,7 +22,17 @@ Lights::Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte* DimmingLimit
 void Lights::refresh(){  //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Lights refreshing"),true);}
   checkLightTimer(); 
-  checkLightStatus(); 
+  checkLightStatus();
+  report();
+}
+
+void Lights::report(){
+  memset(&Message[0], 0, sizeof(Message));  //clear variable
+  strcat_P(Message,(PGM_P)F("Status:")); strcat_P(Message,(PGM_P) getStatusText()); 
+  strcat_P(Message,(PGM_P)F(" ; Brightness:")); strcat(Message,toText(*Brightness));
+  strcat_P(Message,(PGM_P)F(" ; LightON:")); strcat(Message,getOnTimeText());
+  strcat_P(Message,(PGM_P)F(" ; LightOFF:")); strcat(Message,getOffTimeText());
+  logToSerials( &Message, true);
 }
 
 void Lights::checkLightStatus(){
@@ -82,11 +93,11 @@ void Lights::setLightOnOff(bool Status, bool LogThis){
    if(LogThis){
       if(Status){
         GBox -> addToLog(F("Light ON"));
-        GBox -> Buzzer1 -> playOnSound();
+        GBox -> Sound1 -> playOnSound();
       }
       else{
         GBox -> addToLog(F("Light OFF")); 
-        GBox -> Buzzer1 -> playOffSound();
+        GBox -> Sound1 -> playOffSound();
       }
    }
    checkLightStatus();
@@ -97,11 +108,11 @@ void Lights::setTimerOnOff(bool TimerState){
   if(*TimerEnabled){ 
     checkLightTimer();
     GBox -> addToLog(F("Timer enabled"));
-    GBox -> Buzzer1 -> playOnSound();
+    GBox -> Sound1 -> playOnSound();
     }
   else {
     GBox -> addToLog(F("Timer disabled"));
-    GBox -> Buzzer1 -> playOffSound();
+    GBox -> Sound1 -> playOffSound();
     }
 }
 

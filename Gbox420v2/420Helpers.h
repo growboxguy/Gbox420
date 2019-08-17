@@ -35,15 +35,26 @@ const __FlashStringHelper * onOffToText(bool Status);
 const __FlashStringHelper * yesNoToText(bool Status); 
 const __FlashStringHelper * statusToText(bool Status);
 const __FlashStringHelper * enabledToText(bool Status);
-void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine);
-template <class logLine> void logToSerials (logLine* ToPrint,bool BreakLine) { 
+
+void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine,byte Indent=3);
+template <class logLine> void logToSerials (logLine* ToPrint,bool BreakLine,byte Indent=3) { 
+  while(Indent>0){
+     Serial.print(F(" "));
+     Indent--;
+  }
   if(BreakLine){Serial.println((*ToPrint));Serial3.println((*ToPrint));}
   else{Serial.print((*ToPrint));Serial3.print((*ToPrint));}
 }
-template <class logLine> void logToSerials (logLine& ToPrint,bool BreakLine) { 
+template <class logLine> void logToSerials (logLine& ToPrint,bool BreakLine,byte Indent=3) { 
+  while(Indent>0){
+     Serial.print(F(" "));
+     Indent--;
+  }
   if(BreakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
   else{Serial.print(ToPrint);Serial3.print(ToPrint);}
 }
+
+
 
 //////////////////////////////////////////////////////////////////
 //RollingAverage class: For smoothing sensor readyings

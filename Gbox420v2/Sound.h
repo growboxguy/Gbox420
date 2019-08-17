@@ -1,14 +1,15 @@
-#ifndef Buzzer_H
-#define Buzzer_H
+#ifndef Sound_H
+#define Sound_H
 
-#include "GrowBox.h"
-//#include "TimerThree.h"  //Interrupt handling for webpage
+#include "420Common.h"
 
-class Buzzer
+class GrowBox;  //forward declaration
+
+class Sound : public Common
 {
   private:
     GrowBox * GBox;
-    byte Pin; //Pin connecting the piezo buzzer positive(+) side over a 330Ω resistor)
+    byte Pin; //Pin connecting the piezo Sound positive(+) side over a 330Ω resistor)
     bool* Enabled;   //Sound ON or OFF
     bool PlayOnSound = false; //Play on beep flag - website controls it
     bool PlayOffSound = false; //Play off beep flag - website controls it
@@ -23,8 +24,9 @@ class Buzzer
   protected:
   
   public:
-    Buzzer(GrowBox * GBox,byte Pin, bool *Enabled);
+    Sound(GrowBox * GBox,byte Pin, bool *Enabled);
     void refresh();
+    void report();
     void setSoundOnOff(bool State);
     void playOnSound();
     void playOffSound();

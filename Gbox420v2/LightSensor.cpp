@@ -1,4 +1,5 @@
 #include "LightSensor.h"
+#include "GrowBox.h"
 #include "Lights.h"
 
 LightSensor::LightSensor(GrowBox * GBox, byte DigitalPin, byte AnalogPin){ //constructor
@@ -13,10 +14,19 @@ LightSensor::LightSensor(GrowBox * GBox, byte DigitalPin, byte AnalogPin){ //con
 }
 
 void LightSensor::refresh(){  //Called when component should refresh its state
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("LightSensor object refreshing"),true);}
+  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("LightSensor refreshing"),true);}
   if(CalibrateRequested){ calibrate(); } //If calibration was requested
   IsDark = digitalRead(DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected. ! inverts this
-  LightReading -> updateAverage(1023 - analogRead(AnalogPin));   
+  LightReading -> updateAverage(1023 - analogRead(AnalogPin)); 
+  report(); 
+}
+
+void LightSensor::report(){
+  memset(&Message[0], 0, sizeof(Message));  //clear variable
+  strcat_P(Message,(PGM_P)F("Light detected:")); strcat_P(Message,(PGM_P) getIsDarkText());
+  strcat_P(Message,(PGM_P)F(" ; LightReading:")); strcat(Message, getReadingText());
+  strcat_P(Message,(PGM_P)F(" (")); strcat(Message, getReadingPercentage());strcat_P(Message,(PGM_P)F(")"));
+  logToSerials( &Message, true);
 }
 
 bool LightSensor::getIsDark(){ //Ligth sensor digital feedback: True(Dark) or False(Bright)  
@@ -58,17 +68,17 @@ void LightSensor::calibrate(){
   GBox -> Light1 -> setLightOnOff(true,false);  //turn on light, without adding a log entry
   GBox -> Light1 -> checkLightStatus();  //apply turning the lights on
   GBox -> Light1 -> setBrightness(0,false);
-  delay(2500); //wait for light output change
+  delay(500); //wait for light output change
   MinReading = 1023 - analogRead(AnalogPin);
   GBox -> Light1 -> setBrightness(100,false);
-  delay(2500); //wait for light output change
+  delay(500); //wait for light output change
   MaxReading = 1023 - analogRead(AnalogPin);
   GBox -> Light1 -> setBrightness(LastBrightness,false); //restore original brightness, without adding a log entry
   GBox -> Light1 -> setLightOnOff(LastStatus,false); //restore original state, without adding a log entry
   GBox -> Light1 -> checkLightStatus();
   GBox -> addToLog(F("Lights calibrated"));
   if(GBox -> BoxSettings -> DebugEnabled){
-         logToSerials(F("0% - "),false); logToSerials(&MinReading,false);
-         logToSerials(F(", 100% - "),false); logToSerials(&MaxReading,true);
+         logToSerials(F("0% - "),false); logToSerials(&MinReading,false,0);
+         logToSerials(F(", 100% - "),false,0); logToSerials(&MaxReading,true,0);
   }
 }

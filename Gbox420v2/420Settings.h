@@ -17,8 +17,8 @@ typedef struct
   uint32_t AeroPumpTimeout = 360;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
   uint32_t AeroPrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
 
-  byte Buzzer1Pin = 4; //PC speaker+ (red)
-  bool Buzzer1Enabled = true;  //Enable PC speaker
+  byte Sound1Pin = 4; //PC speaker+ (red)
+  bool Sound1Enabled = true;  //Enable PC speaker
 
   uint8_t InternalDHTSensorPin = 43; //DAT - DHT22 temp/humidity sensor, internally mounted
   uint8_t ExternalDHTSensorPin = 44; //DAT - DHT22 temp/humidity sensor, externally mounted

@@ -3,10 +3,11 @@
 #include "DHTSensor.h"
 #include "LightSensor.h"
 #include "Lights.h"
-#include "Buzzer.h"
+#include "Sound.h"
+#include "PowerSensor.h"
 
 void resetWebServer(void) {    // Callback made from esp-link to notify that it has just come out of a reset
-  logToSerials(F("WebServer (re)starting..."),false);
+  logToSerials(F("WebServer (re)starting..."),false,0);
   while(!ESPLink.Sync())  {
     logToSerials(F("."),false);
     delay(500); 
@@ -50,7 +51,7 @@ void loadCallback(char * url) //called when website is loaded. Do not call logTo
   }
   
   if (strcmp(url,"/Settings.html.json")==0){  
-  WebServer.setArgInt(F("SoundEnabled"), BoxSettings.Buzzer1Enabled);
+  WebServer.setArgInt(F("SoundEnabled"), BoxSettings.Sound1Enabled);
   WebServer.setArgInt(F("DebugEnabled"), BoxSettings.DebugEnabled);
   WebServer.setArgInt(F("MetricSystemEnabled"), BoxSettings.MetricSystemEnabled);
   WebServer.setArgInt(F("DigitDisplayBrightness"), BoxSettings.DigitDisplayBacklight);
@@ -95,6 +96,13 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
   WebServer.setArgString(F("tdLight1TimerEnabled"),GBox -> Light1 -> getTimerOnOffText());
   WebServer.setArgString(F("tdLight1On"), GBox -> Light1 -> getOnTimeText());
   WebServer.setArgString(F("tdLight1Off"), GBox -> Light1 -> getOffTimeText());  
+
+  WebServer.setArgString(F("tdPower"),GBox -> PowerSensor1 -> getPowerText());  
+  WebServer.setArgString(F("tdEnergy"),GBox -> PowerSensor1 -> getEnergyText());  
+  WebServer.setArgString(F("tdVoltage"),GBox -> PowerSensor1 -> getVoltageText());  
+  WebServer.setArgString(F("tdCurrent"),GBox -> PowerSensor1 -> getCurrentText());  
+  WebServer.setArgString(F("tdFrequency"),GBox -> PowerSensor1 -> getFrequencyText());  
+  WebServer.setArgString(F("tdPowerFactor"),GBox -> PowerSensor1 -> getPowerFactorText());  
   }
 }
 
@@ -107,7 +115,7 @@ void buttonPressCallback(char *button)  //Called when any button on the website 
   else if (strcmp_P(button,(PGM_P)F("btn_Light1TimerDisable"))==0) {GBox -> Light1 -> setTimerOnOff(false);}
   else if (strcmp_P(button,(PGM_P)F("btn_LightSensor1Calibrate"))==0) {GBox -> LightSensor1 -> triggerCalibration();}
   //Settings page
-  else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { GBox -> Buzzer1 ->playEE(); }
+  else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { GBox -> Sound1 ->playEE(); }
   saveSettings(false); 
 }
 
@@ -119,8 +127,8 @@ void setFieldCallback(char * field){  //Called when any field on the website is 
   else if(strcmp_P(field,(PGM_P)F("Light1OffMinute"))==0) {GBox -> Light1 -> setOffMinute(WebServer.getArgInt());} 
 
 
-  else if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {GBox -> Buzzer1 -> setSoundOnOff(WebServer.getArgBoolean());}
-  //else if(strcmp_P(field,(PGM_P)F("DebugEnabled"))==0) {setDebugOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {GBox -> Sound1 -> setSoundOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("DebugEnabled"))==0) {GBox -> setDebugOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("MetricSystemEnabled"))==0) {GBox -> setMetricSystemEnabled(WebServer.getArgBoolean());}
   //else if(strcmp_P(field,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
   //else if(strcmp_P(field,(PGM_P)F("GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}

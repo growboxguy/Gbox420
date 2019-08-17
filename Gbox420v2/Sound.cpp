@@ -1,15 +1,16 @@
-#include "Buzzer.h" 
+#include "Sound.h" 
+#include "GrowBox.h"
 
-Buzzer::Buzzer(GrowBox * GBox,byte Pin, bool *Enabled){
+Sound::Sound(GrowBox * GBox,byte Pin, bool *Enabled){
   this -> GBox = GBox;
   this -> Pin = Pin;
   this -> Enabled = Enabled;
   pinMode(Pin, OUTPUT);
   pinMode(13, OUTPUT); //onboard LED
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Buzzer object created"),true);}
+  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Sound object created"),true);}
 }
 
-void Buzzer::refresh(){
+void Sound::refresh(){
   if(*Enabled){  
     if (PlayOnSound)  {PlayOnSound = false;OnSound();}
     if (PlayOffSound)  {PlayOffSound = false;OffSound();} 
@@ -17,15 +18,20 @@ void Buzzer::refresh(){
   if (PlayEE)  {PlayEE = false;EE();} 
 }
 
-void Buzzer::playOnSound(){
+void Sound::report(){
+ ; //nothing needs reporting
+}
+
+
+void Sound::playOnSound(){
   PlayOnSound = true;
 }
 
-void Buzzer::playOffSound(){
+void Sound::playOffSound(){
   PlayOffSound = true;
 } 
 
-void Buzzer::OnSound(){
+void Sound::OnSound(){
   if(Enabled){ 
   tone(Pin,500);
   delay(100);
@@ -36,7 +42,7 @@ void Buzzer::OnSound(){
   }
 }
 
-void Buzzer::OffSound(){
+void Sound::OffSound(){
   if(*Enabled){ 
   tone(Pin,1000);
   delay(100);
@@ -47,24 +53,25 @@ void Buzzer::OffSound(){
   }
 }
 
-void Buzzer::setSoundOnOff(bool State){
+void Sound::setSoundOnOff(bool State){
   Enabled = &State;
   if(*Enabled){ 
     GBox -> addToLog(F("Sound enabled"));
-    PlayOnSound=true;}
+    playOnSound();
+    }
   else {
     GBox -> addToLog(F("Sound disabled"));
-    PlayOffSound=true;
+    playOffSound();
     }
 }
 
 //EE Section, can delete everything below if you need to save space
 
-void Buzzer::playEE(){
+void Sound::playEE(){
   PlayEE = true;
 }
 
-const PROGMEM static int Buzzer::melody[] = {   //https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
+const PROGMEM static int Sound::melody[] = {   //https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
   2637, 2637, 0, 2637,
   0, 2093, 2637, 0,
   3136, 0, 0,  0,
@@ -112,7 +119,7 @@ const PROGMEM static int Buzzer::melody[] = {   //https://www.arduino.cc/referen
   233, 220, 208
 };
 
-const PROGMEM static byte Buzzer::tempo[] = {
+const PROGMEM static byte Sound::tempo[] = {
   12, 12, 12, 12,
   12, 12, 12, 12,
   12, 12, 12, 12,
@@ -160,7 +167,7 @@ const PROGMEM static byte Buzzer::tempo[] = {
   10, 10, 10  
 };
 
-void Buzzer::EE() { 
+void Sound::EE() { 
   GBox -> addToLog(F("♬Easter egg♬"));
   //int size = sizeof(melody) / sizeof(int);  //this is equal 134: No sense calculating it every time, if you change the melody could come handy.
   for (int thisNote = 0; thisNote < 134; thisNote++) {
@@ -179,7 +186,7 @@ void Buzzer::EE() {
   }
 }
 
-void Buzzer::buzz( uint32_t frequency, uint32_t length) {
+void Sound::buzz( uint32_t frequency, uint32_t length) {
   digitalWrite(13, HIGH);
   uint32_t delayValue = 1000000 / frequency / 2; // calculate the delay value between transitions
   //// 1 second's worth of microseconds, divided by the frequency, then split in half since
@@ -188,9 +195,9 @@ void Buzzer::buzz( uint32_t frequency, uint32_t length) {
   //// multiply frequency, which is really cycles per second, by the number of seconds to
   //// get the total number of cycles to produce
   for (uint32_t i = 0; i < numCycles; i++) { // for the calculated length of time...
-    digitalWrite(Pin, HIGH); // write the buzzer pin high to push out the diaphram
+    digitalWrite(Pin, HIGH); // write the Sound pin high to push out the diaphram
     delayMicroseconds(delayValue); // wait for the calculated delay value
-    digitalWrite(Pin, LOW); // write the buzzer pin low to pull back the diaphram
+    digitalWrite(Pin, LOW); // write the Sound pin low to pull back the diaphram
     delayMicroseconds(delayValue); // wait again or the calculated delay value
   }  
   digitalWrite(13, LOW);

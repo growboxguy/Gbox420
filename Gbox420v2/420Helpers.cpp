@@ -3,7 +3,11 @@
 //////////////////////////////////////////
 //Logging
 
-void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine) { 
+void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine,byte Indent) {
+  while(Indent>0){
+     Serial.print(F(" "));
+     Indent--;
+  }
   if(BreakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
   else{Serial.print(ToPrint);Serial3.print(ToPrint);}
 }
@@ -45,7 +49,7 @@ time_t getNtpTime(){
   if(!SyncInProgress){ //blocking calling the sync again in an interrupt
     SyncInProgress = true;
     uint32_t LastRefresh = millis();  
-    logToSerials(F("Waiting for NTP time (30sec timeout)..."),false);  
+    logToSerials(F("Waiting for NTP time (30sec timeout)..."),false,0);  
     while(NTPResponse == 0 && millis() - LastRefresh < 30000){
      NTPResponse = ESPCmd.GetTime();
      delay(500);     
@@ -181,7 +185,7 @@ const __FlashStringHelper * enabledToText(bool Status){
 char * getFreeMemory(){
   static char ReturnChar[MaxTextLength] = "";
   itoa(freeMemory(), ReturnChar, 10);
-  logToSerials(F("Free memory(bytes): "),false); logToSerials(&ReturnChar,true);
+  logToSerials(F("Free memory(bytes): "),false); logToSerials(&ReturnChar,true,0);
 }
 
 

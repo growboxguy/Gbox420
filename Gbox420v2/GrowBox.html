@@ -50,32 +50,35 @@
 				<h1>Power</h1>
 			    <table class="tg">
 				  <tr>
-					<th class="headerRows"><span style="font-weight:bold">Power</span><br>(W)</th>
-					<th class="headerRows"><span style="font-weight:bold">Total</span><br>(kWh)</th>
-					<th class="headerRows"><span style="font-weight:bold">Voltage</span><br>(V)</th>
-					<th class="headerRows"><span style="font-weight:bold">Current</span><br>(A)</th>
-					<th class="headerRows"><span style="font-weight:bold">ATX<br>status</span></th>					
+					<th class="headerRows"><span style="font-weight:bold">Power</span></th>
+					<th class="headerRows"><span style="font-weight:bold">Total</span></th>
+					<th class="headerRows"><span style="font-weight:bold">Voltage</span></th>						
 				  </tr>
 				  <tr>
 					<td id="tdPower" class="dataRows"></td>
 					<td id="tdEnergy" class="dataRows"></td>
 					<td id="tdVoltage" class="dataRows"></td>
+				  </tr>
+				  <tr>
+					<th class="headerRows"><span style="font-weight:bold">Current</span></th>
+					<th class="headerRows"><span style="font-weight:bold">Frequency</span></th>
+					<th class="headerRows"><span style="font-weight:bold">Power factor</span></th>						
+				  </tr>
+				  <tr>
 					<td id="tdCurrent" class="dataRows"></td>
-					<td id="tdATXStatus" class="dataRows"></td>
-				  </tr>				  
-				 </table>
-				<b>ATX power supply:</b>
-				<button id="btn_ATXOn" type="button" title="Turn ATX power supply ON">ON</button>
-				<button id="btn_ATXOff" type="button" title="Turn ATX power supply OFF">OFF</button>					 
+					<td id="tdFrequency" class="dataRows"></td>
+					<td id="tdPowerFactor" class="dataRows"></td>
+				  </tr>					  
+				 </table>						 
 			</div>
 			<div class="card" style="width:90%">
 				<h1>DHT Sensor</h1>		
 				<table class="tg">				  
 				  <tr>
-					<td class="headerRows"><span style="font-weight:bold">Internal</span><br><span>temp</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Internal</span><br>humidity<span></span></td>
-					<td class="headerRows"><span style="font-weight:bold">External</span><br><span>temp</span></td>
-					<td class="headerRows"><span style="font-weight:bold">External</span><br>humidity<span></span></td>
+					<td class="headerRows"><span style="font-weight:bold">Internal<br>temp</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Internal<br>humidity</span></td>
+					<td class="headerRows"><span style="font-weight:bold">External<br><span>temp</td>
+					<td class="headerRows"><span style="font-weight:bold">External<br>humidity</span></td>
 				  </tr>
 				  <tr>
 					<td id="tdInternalTemp" class="dataRows"></td>
@@ -89,8 +92,8 @@
 				<h1>Box</h1>		
 				<table class="tg">				  
 				  <tr>
-					<td class="headerRows"><span style="font-weight:bold">Temp</span><br><span>ext/int</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Humidity</span><br>ext/int<span></span></td>
+					<td class="headerRows"><span style="font-weight:bold">Temp<br>ext/int</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Humidity<br>ext/int<span></span></td>
 					<td class="headerRows"><span style="font-weight:bold">Internal<br>fan</span></td>
 					<td class="headerRows"><span style="font-weight:bold">Exhaust<br>fan</span></td>
 				  </tr>
@@ -132,7 +135,7 @@
 				<table class="tg">
 				  <tr>
 					<td class="headerRows"><span style="font-weight:bold">Is dark</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Reading (%)</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Reading</span></td>
 					<td class="headerRows"><span style="font-weight:bold">Reading (Raw)</span></td>
 				  </tr>
 				  <tr>
@@ -149,8 +152,8 @@
 				  <tr>
 					<td class="headerRows"><span style="font-weight:bold">Lights</span><br></td>
 					<td class="headerRows"><span style="font-weight:bold">Timer</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Light ON</span><br>24h (hh:mm)</td>
-					<td class="headerRows"><span style="font-weight:bold">Light OFF</span><br>24h (hh:mm)</td>
+					<td class="headerRows"><span style="font-weight:bold">Light ON</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Light OFF</span></td>
 				  </tr>
 				  <tr>
 					<td id="tdLight1Status" class="dataRows"></td>

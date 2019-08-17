@@ -1,9 +1,11 @@
 #ifndef Lights_H
 #define Lights_H
 
-#include "GrowBox.h"
+#include "420Common.h"
 
-class Lights
+class GrowBox;  //forward declaration
+
+class Lights : public Common
 {
   protected:
     GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
@@ -21,6 +23,7 @@ class Lights
   public:
     Lights(GrowBox * Gbox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
     void refresh();  //Called when component should refresh its state
+    void report();
     void setBrightness(byte Brightness, bool AddToLog);           
     void setLightOnOff(bool State,bool AddToLog);    
     void setTimerOnOff(bool State);    

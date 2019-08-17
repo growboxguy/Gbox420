@@ -1,16 +1,18 @@
 #ifndef DHTSensor_H
 #define DHTSensor_H
 
-#include "GrowBox.h"
-#include "420Helpers.h"
 #include "DHT.h"  //DHT11 or DHT22 Digital Humidity and Temperature sensor
+#include "420Common.h"
 
-class DHTSensor
+class GrowBox;  //forward declaration
+
+class DHTSensor : public Common
 {
   public:
     DHTSensor(GrowBox * GBox, uint8_t _pin, uint8_t _sensorType);
     GrowBox * GBox;
     void refresh();  //Called when component should refresh its state
+    void report();
     float getTemp();  
     float getHumidity();
     char* getTempText();  

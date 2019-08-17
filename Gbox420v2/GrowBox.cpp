@@ -2,23 +2,25 @@
 #include "DHTSensor.h"
 #include "LightSensor.h"
 #include "Lights.h"
-#include "Buzzer.h"
+#include "Sound.h"
+#include "PowerSensor.h"
 
 static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
 GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   this -> BoxSettings = BoxSettings;
-  Buzzer1 = new Buzzer(this,BoxSettings -> Buzzer1Pin,&BoxSettings -> Buzzer1Enabled);
+  Sound1 = new Sound(this,BoxSettings -> Sound1Pin,&BoxSettings -> Sound1Enabled);
   InternalDHTSensor = new DHTSensor(this, BoxSettings -> InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
   ExternalDHTSensor = new DHTSensor(this, BoxSettings -> ExternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
   LightSensor1 = new LightSensor(this, BoxSettings ->  LightSensor1DigitalPin, BoxSettings ->  LightSensor1AnalogPin);
   Light1 = new Lights(this,BoxSettings -> Light1RelayPin,BoxSettings -> Light1DimmingPin,&BoxSettings -> Light1DimmingLimit,&BoxSettings -> Light1Status,&BoxSettings -> Light1Brightness,&BoxSettings -> Light1TimerEnabled,&BoxSettings -> Light1OnHour,&BoxSettings -> Light1OnMinute,&BoxSettings -> Light1OffHour,&BoxSettings -> Light1OffMinute);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
-  addToLog(F("Grow Box initialized"));
+  PowerSensor1 = new PowerSensor(this,&Serial2);  
   if(BoxSettings -> DebugEnabled){logToSerials(F("GrowBox object created"),true);}
+  addToLog(F("GrowBox initialized"),0);
 }
 
 void GrowBox::refresh(){  //implementing the virtual refresh function from Common
- logToSerials(F("GrowBox object refreshing"),true);
+ logToSerials(F("GrowBox refreshing"),true,0);
     //triger all threads at startup
   runFiveSec(); //needs to run first to get sensor readings
   runSec();  
@@ -27,14 +29,15 @@ void GrowBox::refresh(){  //implementing the virtual refresh function from Commo
 }
 
 void GrowBox::runSec(){ 
-  Buzzer1 -> refresh();
+  Sound1 -> refresh();
 }
 
 void GrowBox::runFiveSec(){
+  report();  //Growbox reporting
   InternalDHTSensor -> refresh();
   ExternalDHTSensor -> refresh();
   LightSensor1 -> refresh();
-  reportToSerials();  //Logs sensor readings to Serial
+  PowerSensor1 -> refresh();
 }
 
 void GrowBox::runMinute(){
@@ -44,30 +47,11 @@ void GrowBox::runMinute(){
 void GrowBox::runHalfHour(){    
 }
 
-char * GrowBox::reportToSerials(){
+void GrowBox::report(){
   memset(&Message[0], 0, sizeof(Message));  //clear variable 
   strcat(Message,getFormattedTime());
-  strcat_P(Message,(PGM_P)F("\n\r DHT Sensor - ")); 
-  strcat_P(Message,(PGM_P)F("InternalTemp:")); strcat(Message,InternalDHTSensor -> getTempText());
-  strcat_P(Message,(PGM_P)F(" ; InternalHumidity:")); strcat(Message,InternalDHTSensor -> getHumidityText());
-  strcat_P(Message,(PGM_P)F(" ; ExternalTemp:")); strcat(Message,ExternalDHTSensor -> getTempText());
-  strcat_P(Message,(PGM_P)F(" ; ExternalHumidity:")); strcat(Message,ExternalDHTSensor -> getHumidityText());
-//  strcat_P(Message,(PGM_P)F(" ; Internal fan:"));strcat_P(Message,(PGM_P)fanSpeedToText(true));
-//  strcat_P(Message,(PGM_P)F(" ; Exhaust fan:"));strcat_P(Message,(PGM_P)fanSpeedToText(false));
-//  strcat_P(Message,(PGM_P)F("\n\r Power - "));
-//  strcat_P(Message,(PGM_P)F("Power:")); strcat(Message,toText(Power)); strcat_P(Message,(PGM_P)F("W")); 
-//  strcat_P(Message,(PGM_P)F(" ; Total:")); strcat(Message,toText(Energy)); strcat_P(Message,(PGM_P)F("Wh"));   
-//  strcat_P(Message,(PGM_P)F(" ; Voltage:")); strcat(Message,toText(Voltage)); strcat_P(Message,(PGM_P)F("V"));
-//  strcat_P(Message,(PGM_P)F(" ; Current:")); strcat(Message,toText(Current)); strcat_P(Message,(PGM_P)F("A"));
-  strcat_P(Message,(PGM_P)F("\n\r Light Sensor - "));
-  strcat_P(Message,(PGM_P)F(" ; Brightness:")); strcat(Message,toText(BoxSettings -> Light1Brightness));
-  strcat_P(Message,(PGM_P)F(" ; LightReading:")); strcat(Message,LightSensor1 -> getReadingText());
-  strcat_P(Message,(PGM_P)F(" (")); strcat(Message,LightSensor1 -> getReadingPercentage());strcat_P(Message,(PGM_P)F(")"));
-  strcat_P(Message,(PGM_P)F("\n\r Lights - "));
-  strcat_P(Message,(PGM_P)F("Status:")); strcat_P(Message,(PGM_P)Light1 -> getStatusText()); 
-  strcat_P(Message,(PGM_P)F(" ; Light detected:")); strcat_P(Message,(PGM_P)LightSensor1 -> getIsDarkText()); 
-  strcat_P(Message,(PGM_P)F(" ; LightON:")); strcat(Message,Light1 -> getOnTimeText());
-  strcat_P(Message,(PGM_P)F(" ; LightOFF:")); strcat(Message,Light1 -> getOffTimeText());
+ //strcat_P(Message,(PGM_P)F(" ; Internal fan:"));strcat_P(Message,(PGM_P)fanSpeedToText(true));
+ // strcat_P(Message,(PGM_P)F(" ; Exhaust fan:"));strcat_P(Message,(PGM_P)fanSpeedToText(false)); 
 /*  strcat_P(Message,(PGM_P)F("\n\r Aeroponics - "));
   strcat_P(Message,(PGM_P)F("Pressure:"));strcat(Message,toText(AeroPressure));if(BoxSettings -> MetricSystemEnabled)strcat_P(Message,(PGM_P)F("bar"));else strcat_P(Message,(PGM_P)F("psi"));
   strcat_P(Message,(PGM_P)F(" ; Low:"));strcat(Message,toText(BoxSettings -> AeroPressureLow));
@@ -80,27 +64,27 @@ char * GrowBox::reportToSerials(){
   strcat_P(Message,(PGM_P)F("(")); strcat(Message,toText(PHRaw));strcat_P(Message,(PGM_P)F(")"));
   strcat_P(Message,(PGM_P)F(" ; Reservoir:")); strcat(Message,ReservoirText);
  */
-  logToSerials( &Message, true);
+  logToSerials( &Message, true,0);
 }
 
-void GrowBox::addToLog(const char *message){  //adds a log entry that is displayed on the web interface
-  logToSerials(message,true);
+void GrowBox::addToLog(const char *Message,byte Indent){  //adds a log entry that is displayed on the web interface
+  logToSerials(Message,true,Indent);
   for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
      memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
      strncpy(Logs[i],Logs[i-1],MaxTextLength ) ; 
     }  
   memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
-  strncpy(Logs[0],message,MaxTextLength);  //instert new log to [0]
+  strncpy(Logs[0],Message,MaxTextLength);  //instert new log to [0]
 }
 
-void GrowBox::addToLog(const __FlashStringHelper *message){ //function overloading: same function name, different parameter type 
-  logToSerials(message,true);
+void GrowBox::addToLog(const __FlashStringHelper *Message,byte Indent){ //function overloading: same function name, different parameter type 
+  logToSerials(Message,true,Indent);
   for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
      memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
      strncpy(Logs[i],Logs[i-1],MaxTextLength ) ; 
     }  
   memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
-  strncpy_P(Logs[0],(PGM_P)message,MaxTextLength);  //instert new log to [0]
+  strncpy_P(Logs[0],(PGM_P)Message,MaxTextLength);  //instert new log to [0]
 }
 
 char* GrowBox::eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
@@ -115,6 +99,19 @@ char* GrowBox::eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Log
   }
   Message[strlen(Message)] = ']';
   return Message;
+}
+
+void GrowBox::setDebugOnOff(bool State){
+  BoxSettings -> DebugEnabled = State;
+  logToSerials(BoxSettings -> DebugEnabled,true);
+  if(BoxSettings -> DebugEnabled){ 
+    addToLog(F("Debug messages enabled"));
+    Sound1 -> playOnSound();
+    }
+  else {
+    addToLog(F("Debug messages disabled"));
+    Sound1 -> playOffSound();
+    }
 }
 
 void GrowBox::setMetricSystemEnabled(bool MetricEnabled){  //DOES NOT BELONG HERE??
