@@ -1,6 +1,7 @@
 #ifndef PowerSensor_H
 #define PowerSensor_H
 
+#define PZEM004_NO_SWSERIAL  //Singal not to load SoftwareSerial module
 #include "PZEM004Tv30.h" //for PZEM004T V3.0 model
 #include "420Common.h"
 

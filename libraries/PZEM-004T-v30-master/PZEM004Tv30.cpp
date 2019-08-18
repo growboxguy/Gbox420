@@ -48,23 +48,6 @@ void printBuf(uint8_t* buffer, uint16_t len){
 #endif
 }
 
-/*!
- * PZEM004Tv30::PZEM004Tv30
- *
- * Software Serial constructor
- *
- * @param receivePin RX pin
- * @param transmitPin TX pin
- * @param addr Slave address of device
-*/
-PZEM004Tv30::PZEM004Tv30(uint8_t receivePin, uint8_t transmitPin, uint8_t addr)
-{
-    SoftwareSerial *port = new SoftwareSerial(receivePin, transmitPin);
-    port->begin(PZEM_BAUD_RATE);
-    this->_serial = port;
-    this->_isSoft = true;
-    init(addr);
-}
 
 /*!
  * PZEM004Tv30::PZEM004Tv30
@@ -90,8 +73,7 @@ PZEM004Tv30::PZEM004Tv30(HardwareSerial* port, uint8_t addr)
 */
 PZEM004Tv30::~PZEM004Tv30()
 {
-    if(_isSoft)
-        delete this->_serial;
+  
 }
 
 /*!
@@ -502,7 +484,7 @@ void PZEM004Tv30::setCRC(uint8_t *buf, uint16_t len){
 uint16_t PZEM004Tv30::CRC16(const uint8_t *data, uint16_t len)
 {
     // Pre computed CRC table
-    static const uint16_t crcTable[] = {
+    static PROGMEM const uint16_t crcTable[] = {
         0X0000, 0XC0C1, 0XC181, 0X0140, 0XC301, 0X03C0, 0X0280, 0XC241,
         0XC601, 0X06C0, 0X0780, 0XC741, 0X0500, 0XC5C1, 0XC481, 0X0440,
         0XCC01, 0X0CC0, 0X0D80, 0XCD41, 0X0F00, 0XCFC1, 0XCE81, 0X0E40,
@@ -543,7 +525,7 @@ uint16_t PZEM004Tv30::CRC16(const uint8_t *data, uint16_t len)
     {
         nTemp = *data++ ^ crc;
         crc >>= 8;
-        crc ^= crcTable[nTemp];
+        crc ^= (int)pgm_read_word(&crcTable[nTemp]);
     }
     return crc;
 }

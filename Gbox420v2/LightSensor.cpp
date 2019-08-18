@@ -26,7 +26,7 @@ void LightSensor::report(){
   strcat_P(Message,(PGM_P)F("Light detected:")); strcat_P(Message,(PGM_P) getIsDarkText());
   strcat_P(Message,(PGM_P)F(" ; LightReading:")); strcat(Message, getReadingText());
   strcat_P(Message,(PGM_P)F(" (")); strcat(Message, getReadingPercentage());strcat_P(Message,(PGM_P)F(")"));
-  logToSerials( &Message, true);
+  logToSerials( &Message, true,4);
 }
 
 bool LightSensor::getIsDark(){ //Ligth sensor digital feedback: True(Dark) or False(Bright)  
@@ -76,9 +76,9 @@ void LightSensor::calibrate(){
   GBox -> Light1 -> setBrightness(LastBrightness,false); //restore original brightness, without adding a log entry
   GBox -> Light1 -> setLightOnOff(LastStatus,false); //restore original state, without adding a log entry
   GBox -> Light1 -> checkLightStatus();
-  GBox -> addToLog(F("Lights calibrated"));
+  GBox -> addToLog(F("Lights calibrated"),4);
   if(GBox -> BoxSettings -> DebugEnabled){
-         logToSerials(F("0% - "),false); logToSerials(&MinReading,false,0);
+         logToSerials(F("0% - "),false,4); logToSerials(&MinReading,false,0);
          logToSerials(F(", 100% - "),false,0); logToSerials(&MaxReading,true,0);
   }
 }

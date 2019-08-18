@@ -13,7 +13,7 @@ void DHTSensor::report(){
   memset(&Message[0], 0, sizeof(Message));  //clear variable
   strcat_P(Message,(PGM_P)F("Temp:")); strcat(Message, getTempText());
   strcat_P(Message,(PGM_P)F(" ; Humidity:")); strcat(Message, getHumidityText());
-  logToSerials( &Message, true);
+  logToSerials(&Message,true,4);
 }
 
 DHTSensor::DHTSensor(GrowBox * GBox, uint8_t _pin, uint8_t _sensorType){

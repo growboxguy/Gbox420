@@ -24,11 +24,11 @@ void loadSettings(){
   Settings EEPROMSettings; //temporary storage with "Settings" type
   eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
   if(EEPROMSettings.Version != BoxSettings.Version){
-    logToSerials(F("Change detected, updating EEPROM..."),false);
+    logToSerials(F("Settings version change detected, updating EEPROM..."),false);
     saveSettings(false);  //overwrites stored settings with defaults from this sketch
   }
   else {
-    logToSerials(F("Same structure version detected, applying restored settings..."),false);
+    logToSerials(F("Same settings version detected, applying EEPROM settings..."),false);
     BoxSettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
   }
   logToSerials(F("done"),true);

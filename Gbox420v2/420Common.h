@@ -8,7 +8,6 @@
 #include "420Settings.h"  //for storing/reading defaults
 #include "420Helpers.h"  //global functions
 
-
 extern Settings MySettings;
 extern char Message[512];
 extern char CurrentTime[20];

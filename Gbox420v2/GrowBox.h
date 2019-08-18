@@ -9,11 +9,6 @@ class Lights;
 class Sound;
 class PowerSensor;
 
-extern Settings BoxSettings;
-extern char Message[512];
-extern char CurrentTime[20];
-//extern template void logToSerials(*,bool BreakLine);
-
 class GrowBox : public Common
 {
   //friend class RollingAverage;

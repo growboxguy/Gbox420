@@ -1,7 +1,7 @@
 #include "PowerSensor.h"
 #include "GrowBox.h"
 
-PowerSensor::PowerSensor(GrowBox * Gbox,HardwareSerial * SerialPort){
+PowerSensor::PowerSensor(GrowBox * GBox,HardwareSerial * SerialPort){
   this -> GBox = GBox;
   Sensor = new PZEM004Tv30(SerialPort);
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("PowerSensor object created"),true);} 
@@ -24,9 +24,9 @@ void PowerSensor::report(){
   strcat_P(Message,(PGM_P)F(" ; Total:")); strcat(Message,toText(Energy)); strcat_P(Message,(PGM_P)F("Wh"));   
   strcat_P(Message,(PGM_P)F(" ; Voltage:")); strcat(Message,toText(Voltage)); strcat_P(Message,(PGM_P)F("V"));
   strcat_P(Message,(PGM_P)F(" ; Current:")); strcat(Message,toText(Current)); strcat_P(Message,(PGM_P)F("A"));
-  strcat_P(Message,(PGM_P)F(" ; Frequency:")); strcat(Message,toText(Frequency)); strcat_P(Message,(PGM_P)F("hz"));
+  strcat_P(Message,(PGM_P)F(" ; Frequency:")); strcat(Message,toText(Frequency)); strcat_P(Message,(PGM_P)F("Hz"));
   strcat_P(Message,(PGM_P)F(" ; PowerFactor:")); strcat(Message,toText(PowerFactor));
-  logToSerials( &Message, true);
+  logToSerials( &Message, true,4);
 }
 
 float PowerSensor::getPower(){

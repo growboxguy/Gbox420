@@ -50,9 +50,10 @@ void GrowBox::runHalfHour(){
 void GrowBox::report(){
   memset(&Message[0], 0, sizeof(Message));  //clear variable 
   strcat(Message,getFormattedTime());
- //strcat_P(Message,(PGM_P)F(" ; Internal fan:"));strcat_P(Message,(PGM_P)fanSpeedToText(true));
- // strcat_P(Message,(PGM_P)F(" ; Exhaust fan:"));strcat_P(Message,(PGM_P)fanSpeedToText(false)); 
-/*  strcat_P(Message,(PGM_P)F("\n\r Aeroponics - "));
+  /*
+  strcat_P(Message,(PGM_P)F(" ; Internal fan:"));strcat_P(Message,(PGM_P)fanSpeedToText(true));
+  strcat_P(Message,(PGM_P)F(" ; Exhaust fan:"));strcat_P(Message,(PGM_P)fanSpeedToText(false)); 
+  strcat_P(Message,(PGM_P)F("\n\r Aeroponics - "));
   strcat_P(Message,(PGM_P)F("Pressure:"));strcat(Message,toText(AeroPressure));if(BoxSettings -> MetricSystemEnabled)strcat_P(Message,(PGM_P)F("bar"));else strcat_P(Message,(PGM_P)F("psi"));
   strcat_P(Message,(PGM_P)F(" ; Low:"));strcat(Message,toText(BoxSettings -> AeroPressureLow));
   strcat_P(Message,(PGM_P)F(" ; High:"));strcat(Message,toText(BoxSettings -> AeroPressureHigh));
@@ -103,7 +104,6 @@ char* GrowBox::eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Log
 
 void GrowBox::setDebugOnOff(bool State){
   BoxSettings -> DebugEnabled = State;
-  logToSerials(BoxSettings -> DebugEnabled,true);
   if(BoxSettings -> DebugEnabled){ 
     addToLog(F("Debug messages enabled"));
     Sound1 -> playOnSound();

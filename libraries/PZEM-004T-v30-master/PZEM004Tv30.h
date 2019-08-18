@@ -21,7 +21,7 @@
 #include "WProgram.h"
 #endif
 
-// #define PZEM004_NO_SWSERIAL
+#define PZEM004_NO_SWSERIAL
 #if (not defined(PZEM004_NO_SWSERIAL)) && (defined(__AVR__) || defined(ESP8266))
 #define PZEM004_SOFTSERIAL
 #endif

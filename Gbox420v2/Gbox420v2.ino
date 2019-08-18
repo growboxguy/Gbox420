@@ -7,17 +7,18 @@
 // 420Settings.h : First time setup or changing the default settings and Modify the Pin assignment
 
 //TODO:
-//addToLog - make Log class
 //Make alerting a class, every object will have a "bool StatusOK" variable inherited from Common, Alerting will go throught all subscribed classes and check status
 //Subscribe to thread timer events using the attach method.
 //sendEmailAlert implementation
-//Sounds implementation
+//Refresh EEPROM with default settings button
+//Check Metric-Imperial temperature alert conversion
 //HempyBucket controls
 //Aeroponics
-//Light sensor
 //PH sensor
 //Water temp sensor
 //Water level sensor
+//Google Sheets reporint
+//MQTT reporting
 
 #include "Arduino.h"  //every inheriting class have Arduino commands available
 #include "avr/wdt.h" //Watchdog timer
@@ -97,12 +98,10 @@ void runSec(){
 }
 
 void runFiveSec(){
-  if(BoxSettings.DebugEnabled){
-    logToSerials(F("Five sec trigger.."),true,1);
-    getFreeMemory();
-  }
+  if(BoxSettings.DebugEnabled) logToSerials(F("Five sec trigger.."),true,1);
   wdt_reset(); //reset watchdog timeout   
   GBox -> runFiveSec();
+  if(BoxSettings.DebugEnabled) getFreeMemory();
 }
 
 void runMinute(){

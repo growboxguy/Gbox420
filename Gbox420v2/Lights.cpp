@@ -32,7 +32,7 @@ void Lights::report(){
   strcat_P(Message,(PGM_P)F(" ; Brightness:")); strcat(Message,toText(*Brightness));
   strcat_P(Message,(PGM_P)F(" ; LightON:")); strcat(Message,getOnTimeText());
   strcat_P(Message,(PGM_P)F(" ; LightOFF:")); strcat(Message,getOffTimeText());
-  logToSerials( &Message, true);
+  logToSerials( &Message, true,4);
 }
 
 void Lights::checkLightStatus(){
@@ -51,13 +51,13 @@ void Lights::checkLightTimer() {
       if(CombinedOnTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedOffTime){  //True: Light should be on
         if(!*Status){   
           setLightOnOff(true,false); //If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
-          if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light ON"),true);
+          if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light ON"),true,4);
         } 
       }
       else  //False: Light should be off
         if(*Status) {  //If status is ON: Turn OFF the lights (First bool), and do not add it to the log (Second bool)
           setLightOnOff(false,false);    
-          if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light OFF"),true);
+          if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light OFF"),true,4);
         }        
     }
     else   //midnight turnover, Example: On 21:20, Off: 9:20
@@ -65,13 +65,13 @@ void Lights::checkLightTimer() {
       if(CombinedOnTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedOffTime){
        if(!*Status) {
         setLightOnOff(true,false);
-        if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light ON"),true);
+        if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light ON"),true,4);
         }
       }
       else 
        if(*Status){
         setLightOnOff(false,false);
-        if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light OFF"),true);    
+        if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light OFF"),true,4);    
        }
     }
   }

@@ -71,7 +71,7 @@ void Sound::playEE(){
   PlayEE = true;
 }
 
-const PROGMEM static int Sound::melody[] = {   //https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
+const PROGMEM int Sound::melody[] = {   //https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
   2637, 2637, 0, 2637,
   0, 2093, 2637, 0,
   3136, 0, 0,  0,
@@ -119,7 +119,7 @@ const PROGMEM static int Sound::melody[] = {   //https://www.arduino.cc/referenc
   233, 220, 208
 };
 
-const PROGMEM static byte Sound::tempo[] = {
+const PROGMEM byte Sound::tempo[] = {
   12, 12, 12, 12,
   12, 12, 12, 12,
   12, 12, 12, 12,
@@ -177,8 +177,6 @@ void Sound::EE() {
     int noteDuration = 1000 / (byte)pgm_read_word(&tempo[thisNote]);  //tempo is stored in PROGMEM (Flash), cannot read from it as RAM array (temp[thisNote] would not work) //https://forum.arduino.cc/index.php?topic=106603.0
     buzz((int)pgm_read_word(&melody[thisNote]), noteDuration);
     // to distinguish the notes, set a minimum time between them.
-    // the note's duration + 30% seems to work well:
-    int pauseBetweenNotes = noteDuration * 1.30;
     delay(noteDuration);      
     // stop the tone playing:
     buzz(0, noteDuration); 
