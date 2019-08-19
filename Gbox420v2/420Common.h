@@ -1,4 +1,4 @@
-//This is a virtual class from which all other classes are derived (PH reader, Lights, DHTSensor..)
+//This is a virtual class from which all other classes are derived (GrowBox, PH reader, Lights, DHTSensor..)
 //Enforces a set of common functions all clases need to implement
 #ifndef Common_H
 #define Common_H
@@ -11,10 +11,10 @@
 extern Settings MySettings;
 extern char Message[512];
 extern char CurrentTime[20];
-//extern template void logToSerials(*,bool BreakLine);
 
 class Common{
   private:
+  bool AlertActive = true; //Every components starts out assuming it failed
   
   protected:
   

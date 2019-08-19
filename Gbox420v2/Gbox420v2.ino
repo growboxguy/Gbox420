@@ -2,7 +2,6 @@
 //Sketch for grow box monitoring and controlling
 //UNDER DEVELOPEMENT - This is the next generation of Gbox420 rewritten to depend fully on the web interface for control and feedback. 
 
-
 //HELLO, You are probably here looking for the following tab:
 // 420Settings.h : First time setup or changing the default settings and Modify the Pin assignment
 
@@ -10,8 +9,6 @@
 //Make alerting a class, every object will have a "bool StatusOK" variable inherited from Common, Alerting will go throught all subscribed classes and check status
 //Subscribe to thread timer events using the attach method.
 //sendEmailAlert implementation
-//Refresh EEPROM with default settings button
-//Check Metric-Imperial temperature alert conversion
 //HempyBucket controls
 //Aeroponics
 //PH sensor
@@ -19,6 +16,7 @@
 //Water level sensor
 //Google Sheets reporint
 //MQTT reporting
+//Support for storing multiple Settings objects in EEPROM (?Support for controlling 2 or more grow boxes from a single arduino? )
 
 #include "Arduino.h"  //every inheriting class have Arduino commands available
 #include "avr/wdt.h" //Watchdog timer
@@ -91,6 +89,9 @@ void processTimeCriticalStuff(){
   ESPLink.Process();  //Interrupt calls this every 0.5 sec to process any request coming from the ESP-Link hosted webpage  
 }
 
+//////////////////////////////////////////
+//Threads
+
 void runSec(){
   if(BoxSettings.DebugEnabled)logToSerials(F("One sec trigger.."),true,1);
   wdt_reset(); //reset watchdog timeout
@@ -114,4 +115,34 @@ void runHalfHour(){
   if(BoxSettings.DebugEnabled)logToSerials(F("Half hour trigger.."),true,1);
   wdt_reset(); //reset watchdog timeout
   GBox -> runHalfHour();
+}
+
+//////////////////////////////////////////
+//Settings
+
+void saveSettings(bool LogThis){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
+  eeprom_update_block((const void*)&BoxSettings, (void*)0, sizeof(BoxSettings)); //update_block only writes the bytes that changed
+  if(LogThis) logToSerials(F("Settings saved to EEPROM"),true);
+}
+
+void loadSettings(){
+  Settings EEPROMSettings; //temporary storage with "Settings" type
+  eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
+  if(EEPROMSettings.Version != BoxSettings.Version){
+    logToSerials(F("Settings version change detected, updating EEPROM..."),false);
+    saveSettings(false);  //overwrites stored settings with defaults from this sketch
+  }
+  else {
+    logToSerials(F("Same settings version detected, applying EEPROM settings..."),false);
+    BoxSettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
+  }
+  logToSerials(F("done"),true);
+}
+
+void restoreDefaults(){
+  logToSerials(F("Restoring settings from sketch defaults..."),false,0);
+  Settings DefaultSettings; //new "Settings" type objects with sketch defaults
+  memcpy(&BoxSettings,&DefaultSettings,sizeof(DefaultSettings));  
+  saveSettings(false);
+  GBox -> addToLog(F("Default settings restored"));
 }

@@ -13,28 +13,6 @@ void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine,byte Indent
 }
 
 //////////////////////////////////////////
-//Settings
-
-void saveSettings(bool LogThis){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
-  eeprom_update_block((const void*)&BoxSettings, (void*)0, sizeof(BoxSettings)); //update_block only writes the bytes that changed
-  if(LogThis) logToSerials(F("Settings saved to EEPROM"),true);
-}
-
-void loadSettings(){
-  Settings EEPROMSettings; //temporary storage with "Settings" type
-  eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
-  if(EEPROMSettings.Version != BoxSettings.Version){
-    logToSerials(F("Settings version change detected, updating EEPROM..."),false);
-    saveSettings(false);  //overwrites stored settings with defaults from this sketch
-  }
-  else {
-    logToSerials(F("Same settings version detected, applying EEPROM settings..."),false);
-    BoxSettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
-  }
-  logToSerials(F("done"),true);
-}
-
-//////////////////////////////////////////
 //Time
 
 char * getFormattedTime(){
@@ -69,13 +47,15 @@ time_t getNtpTime(){
 //Conversions
 
 float convertBetweenTempUnits(float Value){
+ logToSerials(F("DEBUG: "),false,0); logToSerials(Value,true,0);
+ logToSerials(F("DEBUG: "),false,0); logToSerials(BoxSettings.MetricSystemEnabled,true,0);
 if(BoxSettings.MetricSystemEnabled) return round((Value-32) * 55.555555)/100.0;
-else return round(Value*180 + 00.0)/100.0;
+else return round(Value*180 + 3200.0)/100.0f;
 }
 
 float convertBetweenPressureUnits(float Value){
   if(BoxSettings.MetricSystemEnabled) return round(Value / 0.145038)/100.0;
-  else return round(Value*1450.38)/100.0;
+  else return round(Value*1450.38)/100.0f;
 }
 
 //////////////////////////////////////////

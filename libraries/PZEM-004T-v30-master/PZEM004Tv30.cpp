@@ -525,7 +525,7 @@ uint16_t PZEM004Tv30::CRC16(const uint8_t *data, uint16_t len)
     {
         nTemp = *data++ ^ crc;
         crc >>= 8;
-        crc ^= (int)pgm_read_word(&crcTable[nTemp]);
+        crc ^= (uint16_t)pgm_read_word(&crcTable[nTemp]);
     }
     return crc;
 }

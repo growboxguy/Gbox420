@@ -115,7 +115,9 @@ void buttonPressCallback(char *button)  //Called when any button on the website 
   else if (strcmp_P(button,(PGM_P)F("btn_Light1TimerDisable"))==0) {GBox -> Light1 -> setTimerOnOff(false);}
   else if (strcmp_P(button,(PGM_P)F("btn_LightSensor1Calibrate"))==0) {GBox -> LightSensor1 -> triggerCalibration();}
   //Settings page
+  else if (strcmp_P(button,(PGM_P)F("btn_restoreDefaults"))==0) { restoreDefaults(); }
   else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { GBox -> Sound1 ->playEE(); }
+  
   saveSettings(false); 
 }
 

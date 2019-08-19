@@ -114,7 +114,7 @@ void GrowBox::setDebugOnOff(bool State){
     }
 }
 
-void GrowBox::setMetricSystemEnabled(bool MetricEnabled){  //DOES NOT BELONG HERE??
+void GrowBox::setMetricSystemEnabled(bool MetricEnabled){ 
   if(MetricEnabled != BoxSettings -> MetricSystemEnabled){  //if there was a change
     BoxSettings -> MetricSystemEnabled = MetricEnabled;
     BoxSettings -> InternalFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> InternalFanSwitchTemp);
