@@ -1,5 +1,4 @@
-#ifndef Helpers_H
-#define Helpers_H
+#pragma once
 
 #include "Arduino.h"  //every inheriting class have Arduino commands available
 #include "TimeLib.h" //Keeping track of time
@@ -36,18 +35,20 @@ const __FlashStringHelper * yesNoToText(bool Status);
 const __FlashStringHelper * statusToText(bool Status);
 const __FlashStringHelper * enabledToText(bool Status);
 
-void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine,byte Indent=3);
-template <class logLine> void logToSerials (logLine* ToPrint,bool BreakLine,byte Indent=3) { 
+void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine=true,byte Indent=3);  //logs to both Arduino and ESP Link serial console, 2 optional parameters to adding a break line at after printing and the indentation in front
+template <class logLine> void logToSerials (logLine* ToPrint,bool BreakLine=true,byte Indent=3) { 
   while(Indent>0){
      Serial.print(F(" "));
+     Serial3.print(F(" "));
      Indent--;
   }
   if(BreakLine){Serial.println((*ToPrint));Serial3.println((*ToPrint));}
   else{Serial.print((*ToPrint));Serial3.print((*ToPrint));}
 }
-template <class logLine> void logToSerials (logLine& ToPrint,bool BreakLine,byte Indent=3) { 
+template <class logLine> void logToSerials (logLine& ToPrint,bool BreakLine=true,byte Indent=3) { 
   while(Indent>0){
      Serial.print(F(" "));
+     Serial3.print(F(" "));
      Indent--;
   }
   if(BreakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
@@ -75,4 +76,17 @@ class RollingAverage
     char * getAverageFloatText();
 };
 
-#endif
+//////////////////////////////////////////////////////////////////
+//AlertHandler class: Tracking health of 
+
+class AlertHandler
+{  
+  private:
+    bool HealthOK = false;
+    bool LastCheckResult = true;
+    byte TriggerCount = 0 ; //Counts out of range readings
+   
+  public:  
+    //AlertHandler();  //default constuctor: automatically declared
+    bool reportHealth(bool HealthOK); //    
+};

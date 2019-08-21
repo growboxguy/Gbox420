@@ -1,5 +1,4 @@
-#ifndef PowerSensor_H
-#define PowerSensor_H
+#pragma once
 
 #define PZEM004_NO_SWSERIAL  //Singal not to load SoftwareSerial module
 #include "PZEM004Tv30.h" //for PZEM004T V3.0 model
@@ -44,5 +43,3 @@ class PowerSensor : public Common
     float PowerFactor;
     int Alarms;
 };
-
-#endif

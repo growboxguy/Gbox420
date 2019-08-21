@@ -1,5 +1,4 @@
-#ifndef GrowBox_H
-#define GrowBox_H
+#pragma once
 
 #include "420Common.h"
 
@@ -41,5 +40,3 @@ class GrowBox : public Common
   private: 
   
 };
-
-#endif

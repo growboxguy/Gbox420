@@ -1,5 +1,4 @@
-#ifndef Settings_H
-#define Settings_H
+#pragma once
 
 static const byte MaxTextLength = 32;  //Default char* buffer size: 31 characters + null terminator, used for logging and converting to text
 static const byte RollingAverageQueueDepth = 10;  //How many previous sensor readings should be stored
@@ -7,7 +6,7 @@ static const byte LogDepth = 10;  //Show X number of log entries on website, do 
 
 typedef struct
 { 
-  byte Version=11;  //UPDATE this every time you change something in the stucture, that will force the EEPROM stored settings to update.
+  byte Version=12;  //UPDATE this every time you change something in the stucture, that will force the EEPROM stored settings to update.
     
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
   
@@ -61,7 +60,7 @@ typedef struct
     
   bool AlertEmails = true; //disable/enable email sending
   char PushingBoxEmailRelayID[MaxTextLength]  = "v420";  //UPDATE THIS DeviceID of the PushingBox email alert scenario
-  int ReadCountBeforeAlert = 12; //number of consecutive out of range sensor readings before the email alert is triggered (5sec between reads -> 12= Out of range reading through 1 minute)  
+  int TriggerCountBeforeAlert = 12; //number of consecutive out of range sensor readings before the email alert is triggered (5sec between reads -> 12= Out of range reading through 1 minute)  
   int TempAlertLow = 15; //Low temp warning email
   int TempAlertHigh = 35; //High temp warning email
   int HumidityAlertLow = 35; //Low humidity warning email
@@ -99,5 +98,3 @@ typedef struct
   byte ReservoirTempSensorInPin = 45;  //Data(yellow) - DS18B20 waterproof temp sensor 
 
 }Settings;
-
-#endif

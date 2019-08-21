@@ -1,5 +1,4 @@
-#ifndef Lights_H
-#define Lights_H
+#pragma once
 
 #include "420Common.h"
 
@@ -47,5 +46,3 @@ class Lights : public Common
     void checkLightTimer(); 
 
 };
-
-#endif

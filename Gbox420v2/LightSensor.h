@@ -1,5 +1,4 @@
-#ifndef LightSensor_H
-#define LightSensor_H
+#pragma once
 
 #include "420Common.h"
 
@@ -31,5 +30,3 @@ class LightSensor : public Common
     int MaxReading; // stores the highest light sensor analog reading measured during calibration
     int MinReading; //stores the lowest light sensor analog reading measured during calibration
 };
-
-#endif

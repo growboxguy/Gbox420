@@ -1,5 +1,4 @@
-#ifndef DHTSensor_H
-#define DHTSensor_H
+#pragma once
 
 #include "DHT.h"  //DHT11 or DHT22 Digital Humidity and Temperature sensor
 #include "420Common.h"
@@ -24,5 +23,3 @@ class DHTSensor : public Common
     DHT *sensor; //Pointer declaration, points to null initially 
     byte pin;
 };
-
-#endif

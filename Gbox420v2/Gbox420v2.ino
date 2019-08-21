@@ -17,8 +17,9 @@
 //Google Sheets reporint
 //MQTT reporting
 //Support for storing multiple Settings objects in EEPROM (?Support for controlling 2 or more grow boxes from a single arduino? )
+//Change Serial and Serial3 t
 
-#include "Arduino.h"  //every inheriting class have Arduino commands available
+#include "Arduino.h" 
 #include "avr/wdt.h" //Watchdog timer
 #include "avr/boot.h" //Watchdog timer related bug fix
 #include "TimerThree.h"  //Interrupt handling for webpage
@@ -27,7 +28,7 @@
 #include "ELClientCmd.h"  //ESP-link - Get current time from the internet using NTP
 #include "Thread.h" //Splitting functions to threads for timing
 #include "StaticThreadController.h"  //Grouping threads
-#include "420Common.h"
+#include "420Common.h"  //Base class where plugins inherits from
 #include "GrowBox.h" //Represents a complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variables

@@ -6,6 +6,7 @@
 void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine,byte Indent) {
   while(Indent>0){
      Serial.print(F(" "));
+     Serial3.print(F(" "));
      Indent--;
   }
   if(BreakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
@@ -210,5 +211,36 @@ int RollingAverage::updateAverage(int LatestReading){
 float RollingAverage::updateAverage(float LatestReading){
   int temp = updateAverage((int)(LatestReading * 100));
   return temp/100.0f;
+}
+
+//////////////////////////////////////////////////////////////////
+//AlertHandler functions
+
+bool AlertHandler::reportHealth(bool ResultOK){  //true: Component passed checks, false: Failed at least one test
+  logToSerials(F("Health log received: "),false);
+  logToSerials(ResultOK,true);
+  if(ResultOK) //true: Component passed checks
+  {
+    if(LastCheckResult = false) { TriggerCount = 0;} //If previous reading failed, but this one passed: Reset the counter of repeating results
+    else {if(!HealthOK) {TriggerCount++;}} //If component is currently in failed status, count passed results
+    
+    if(!HealthOK && TriggerCount >= BoxSettings.TriggerCountBeforeAlert){  //If the same result came back multiple times (More than defined by TriggerCountBeforeAlert from the 420Settings.h ) change the component health state
+      //sendEmailAlert(F("AC%20input%20recovered"));      
+      logToSerials(F("Health recovered"),true);
+      HealthOK = true;
+    }    
+  }
+  else{ //false: Failed at least one test
+    if(LastCheckResult = true){TriggerCount = 0;}  //If previous reading passed, but this one failed: Reset the counter of repeating results 
+    else {if(HealthOK) {TriggerCount++;}}
+
+    if(HealthOK && TriggerCount >= BoxSettings.TriggerCountBeforeAlert){
+      //sendEmailAlert(F("AC%20input%20lost"));      
+      logToSerials(F("Health check failed"),true);
+      HealthOK = false;
+    }
+  }
+  LastCheckResult = ResultOK;
+  return HealthOK;
 }
    

@@ -1,5 +1,4 @@
-#ifndef Sound_H
-#define Sound_H
+#pragma once
 
 #include "420Common.h"
 
@@ -32,4 +31,3 @@ class Sound : public Common
     void playOffSound();
     void playEE();
 };
-#endif
