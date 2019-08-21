@@ -15,7 +15,7 @@ extern char Message[512];
 extern ELClientCmd ESPCmd;
 
 time_t getNtpTime();
-char * getFreeMemory();
+void getFreeMemory();
 char * getFormattedTime();
 void saveSettings(bool LogThis);
 void loadSettings();    

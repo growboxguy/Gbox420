@@ -163,7 +163,7 @@ const __FlashStringHelper * enabledToText(bool Status){
 //////////////////////////////////////////
 //Debug
 
-char * getFreeMemory(){
+void getFreeMemory(){
   static char ReturnChar[MaxTextLength] = "";
   itoa(freeMemory(), ReturnChar, 10);
   logToSerials(F("Free memory(bytes): "),false); logToSerials(&ReturnChar,true,0);
@@ -221,7 +221,7 @@ bool AlertHandler::reportHealth(bool ResultOK){  //true: Component passed checks
   logToSerials(ResultOK,true);
   if(ResultOK) //true: Component passed checks
   {
-    if(LastCheckResult = false) { TriggerCount = 0;} //If previous reading failed, but this one passed: Reset the counter of repeating results
+    if(LastCheckResult == false) { TriggerCount = 0;} //If previous reading failed, but this one passed: Reset the counter of repeating results
     else {if(!HealthOK) {TriggerCount++;}} //If component is currently in failed status, count passed results
     
     if(!HealthOK && TriggerCount >= BoxSettings.TriggerCountBeforeAlert){  //If the same result came back multiple times (More than defined by TriggerCountBeforeAlert from the 420Settings.h ) change the component health state
@@ -231,7 +231,7 @@ bool AlertHandler::reportHealth(bool ResultOK){  //true: Component passed checks
     }    
   }
   else{ //false: Failed at least one test
-    if(LastCheckResult = true){TriggerCount = 0;}  //If previous reading passed, but this one failed: Reset the counter of repeating results 
+    if(LastCheckResult == true){TriggerCount = 0;}  //If previous reading passed, but this one failed: Reset the counter of repeating results 
     else {if(HealthOK) {TriggerCount++;}}
 
     if(HealthOK && TriggerCount >= BoxSettings.TriggerCountBeforeAlert){

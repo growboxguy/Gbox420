@@ -1,7 +1,6 @@
 #include "420Helpers.h"
 #include "GrowBox.h"
 #include "DHTSensor.h"
-#include "LightSensor.h"
 #include "Lights.h"
 #include "Sound.h"
 #include "PowerSensor.h"
@@ -83,13 +82,13 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
 { 
   WebServer.setArgString(F("Time"), getFormattedTime());
   WebServer.setArgJson(F("list_SerialLog"), GBox -> eventLogToJSON(false)); //Last events that happened in JSON format
-  WebServer.setArgString(F("tdLightOK"), statusToText(LightOK)); 
-  WebServer.setArgString(F("tdPressureOK"),statusToText(PressureOK));
-  WebServer.setArgString(F("tdPumpOK"),statusToText(PumpOK));
-  WebServer.setArgString(F("tdACPowerOK"),statusToText(ACPowerOK));
-  WebServer.setArgString(F("tdDCPowerOK"),statusToText(DCPowerOK));
-  WebServer.setArgString(F("tdVentOK"),statusToText(VentOK));
-  WebServer.setArgString(F("tdReservOK"),statusToText(ReservOK));
+  // WebServer.setArgString(F("tdLightOK"), statusToText(LightOK)); 
+  // WebServer.setArgString(F("tdPressureOK"),statusToText(PressureOK));
+  // WebServer.setArgString(F("tdPumpOK"),statusToText(PumpOK));
+  // WebServer.setArgString(F("tdACPowerOK"),statusToText(ACPowerOK));
+  // WebServer.setArgString(F("tdDCPowerOK"),statusToText(DCPowerOK));
+  // WebServer.setArgString(F("tdVentOK"),statusToText(VentOK));
+  //WebServer.setArgString(F("tdReservOK"),statusToText(ReservOK));
     
   if (strcmp(url,"/GrowBox.html.json")==0){       
   WebServer.setArgString(F("tdInternalTemp"),GBox -> InternalDHTSensor -> getTempText());

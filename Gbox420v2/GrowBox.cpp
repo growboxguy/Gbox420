@@ -1,6 +1,5 @@
 #include "GrowBox.h"
 #include "DHTSensor.h"
-#include "LightSensor.h"
 #include "Lights.h"
 #include "Sound.h"
 #include "PowerSensor.h"
