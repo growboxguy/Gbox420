@@ -9,16 +9,18 @@
 #include "ELClientCmd.h"  //ESP-link - Get current time from the internet using NTP
 #include "420Settings.h"  //for storing/reading defaults
 
-extern Settings BoxSettings;
+class GrowBox;
+
+extern HardwareSerial& ArduinoSerial;
+extern HardwareSerial& ESPSerial;
+extern GrowBox * GBox;
 extern char CurrentTime[20];
 extern char Message[512];
 extern ELClientCmd ESPCmd;
 
 time_t getNtpTime();
 void getFreeMemory();
-char * getFormattedTime();
-void saveSettings(bool LogThis);
-void loadSettings();    
+char * getFormattedTime();  
 float convertBetweenTempUnits(float);
 float convertBetweenPressureUnits(float);    
 char * toText(int); 
@@ -38,21 +40,21 @@ const __FlashStringHelper * enabledToText(bool Status);
 void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine=true,byte Indent=3);  //logs to both Arduino and ESP Link serial console, 2 optional parameters to adding a break line at after printing and the indentation in front
 template <class logLine> void logToSerials (logLine* ToPrint,bool BreakLine=true,byte Indent=3) { 
   while(Indent>0){
-     Serial.print(F(" "));
-     Serial3.print(F(" "));
+     ArduinoSerial.print(F(" "));
+     ESPSerial.print(F(" "));
      Indent--;
   }
-  if(BreakLine){Serial.println((*ToPrint));Serial3.println((*ToPrint));}
-  else{Serial.print((*ToPrint));Serial3.print((*ToPrint));}
+  if(BreakLine){ArduinoSerial.println((*ToPrint));ESPSerial.println((*ToPrint));}
+  else{ArduinoSerial.print((*ToPrint));ESPSerial.print((*ToPrint));}
 }
 template <class logLine> void logToSerials (logLine& ToPrint,bool BreakLine=true,byte Indent=3) { 
   while(Indent>0){
-     Serial.print(F(" "));
-     Serial3.print(F(" "));
+     ArduinoSerial.print(F(" "));
+     ESPSerial.print(F(" "));
      Indent--;
   }
-  if(BreakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
-  else{Serial.print(ToPrint);Serial3.print(ToPrint);}
+  if(BreakLine){ArduinoSerial.println(ToPrint);ESPSerial.println(ToPrint);}
+  else{ArduinoSerial.print(ToPrint);ESPSerial.print(ToPrint);}
 }
 
 

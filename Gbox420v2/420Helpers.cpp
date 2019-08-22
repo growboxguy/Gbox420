@@ -1,16 +1,17 @@
 #include "420Helpers.h"
+#include "GrowBox.h"
 
 //////////////////////////////////////////
 //Logging
 
 void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine,byte Indent) {
   while(Indent>0){
-     Serial.print(F(" "));
-     Serial3.print(F(" "));
+     ArduinoSerial.print(F(" "));
+     ESPSerial.print(F(" "));
      Indent--;
   }
-  if(BreakLine){Serial.println(ToPrint);Serial3.println(ToPrint);}
-  else{Serial.print(ToPrint);Serial3.print(ToPrint);}
+  if(BreakLine){ArduinoSerial.println(ToPrint);ESPSerial.println(ToPrint);}
+  else{ArduinoSerial.print(ToPrint);ESPSerial.print(ToPrint);}
 }
 
 //////////////////////////////////////////
@@ -49,13 +50,13 @@ time_t getNtpTime(){
 
 float convertBetweenTempUnits(float Value){
  logToSerials(F("DEBUG: "),false,0); logToSerials(Value,true,0);
- logToSerials(F("DEBUG: "),false,0); logToSerials(BoxSettings.MetricSystemEnabled,true,0);
-if(BoxSettings.MetricSystemEnabled) return round((Value-32) * 55.555555)/100.0;
+ logToSerials(F("DEBUG: "),false,0); logToSerials(GBox -> BoxSettings -> MetricSystemEnabled,true,0);
+if(GBox -> BoxSettings -> MetricSystemEnabled) return round((Value-32) * 55.555555)/100.0;
 else return round(Value*180 + 3200.0)/100.0f;
 }
 
 float convertBetweenPressureUnits(float Value){
-  if(BoxSettings.MetricSystemEnabled) return round(Value / 0.145038)/100.0;
+  if(GBox -> BoxSettings -> MetricSystemEnabled) return round(Value / 0.145038)/100.0;
   else return round(Value*1450.38)/100.0f;
 }
 
@@ -115,7 +116,7 @@ char * timeToText(byte Hour, byte Minute){
 char * tempToText(float Temp){
   static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
   dtostrf(Temp, 4, 2, ReturnChar); 
-  if(BoxSettings.MetricSystemEnabled){      
+  if(GBox -> BoxSettings -> MetricSystemEnabled){      
     strcat_P(ReturnChar,(PGM_P)F("°C"));
   }
   else{
@@ -197,7 +198,7 @@ int RollingAverage::updateAverage(int LatestReading){
      Oldest = 0;
    }
    int Average = Sum / RollingAverageQueueDepth;      
-   /* if(BoxSettings.DebugEnabled){ 
+   /* if(GBox -> BoxSettings -> DebugEnabled){ 
      memset(&Message[0], 0, sizeof(Message));  //clear variable       
      strcat(Message,toText(Oldest));
      strcat_P(Message,(PGM_P)F(":Reading:")); strcat(Message,toText(LatestReading)); 
@@ -224,7 +225,7 @@ bool AlertHandler::reportHealth(bool ResultOK){  //true: Component passed checks
     if(LastCheckResult == false) { TriggerCount = 0;} //If previous reading failed, but this one passed: Reset the counter of repeating results
     else {if(!HealthOK) {TriggerCount++;}} //If component is currently in failed status, count passed results
     
-    if(!HealthOK && TriggerCount >= BoxSettings.TriggerCountBeforeAlert){  //If the same result came back multiple times (More than defined by TriggerCountBeforeAlert from the 420Settings.h ) change the component health state
+    if(!HealthOK && TriggerCount >= GBox -> BoxSettings -> TriggerCountBeforeAlert){  //If the same result came back multiple times (More than defined by TriggerCountBeforeAlert from the 420Settings.h ) change the component health state
       //sendEmailAlert(F("AC%20input%20recovered"));      
       logToSerials(F("Health recovered"),true);
       HealthOK = true;
@@ -234,7 +235,7 @@ bool AlertHandler::reportHealth(bool ResultOK){  //true: Component passed checks
     if(LastCheckResult == true){TriggerCount = 0;}  //If previous reading passed, but this one failed: Reset the counter of repeating results 
     else {if(HealthOK) {TriggerCount++;}}
 
-    if(HealthOK && TriggerCount >= BoxSettings.TriggerCountBeforeAlert){
+    if(HealthOK && TriggerCount >= GBox -> BoxSettings -> TriggerCountBeforeAlert){
       //sendEmailAlert(F("AC%20input%20lost"));      
       logToSerials(F("Health check failed"),true);
       HealthOK = false;

@@ -14,10 +14,9 @@
 //PH sensor
 //Water temp sensor
 //Water level sensor
-//Google Sheets reporint
+//Google Sheets reporting
 //MQTT reporting
-//Support for storing multiple Settings objects in EEPROM (?Support for controlling 2 or more grow boxes from a single arduino? )
-//Change Serial and Serial3 t
+//Support for storing multiple Settings objects in EEPROM (?Support for controlling more grow boxes from a single arduino? )
 
 #include "Arduino.h" 
 #include "avr/wdt.h" //Watchdog timer
@@ -32,12 +31,14 @@
 #include "GrowBox.h" //Represents a complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variables
-Settings BoxSettings;
+//Settings BoxSettings;   //Storeses every setting of the grow box. Written to EEPROM to keep settings between reboots 
 char Message[512];   //temp storage for assembling log messages, buffer for REST and MQTT API messages
 char CurrentTime[20]; //buffer for storing current time
 
 //Component initialization
-ELClient ESPLink(&Serial3);  //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
+HardwareSerial& ArduinoSerial = Serial;  //Reference to the Arduino Serial
+HardwareSerial& ESPSerial = Serial3;    //Reference to the ESP Link Serial
+ELClient ESPLink(&ESPSerial);  //ESP-link. Both SLIP and debug messages are sent to ESP over the ESP Serial link
 ELClientWebServer WebServer(&ESPLink); //ESP-link WebServer API
 ELClientCmd ESPCmd(&ESPLink);//ESP-link - Get current time from the internet using NTP
 GrowBox * GBox;  //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
@@ -50,13 +51,12 @@ GrowBox * GBox;  //Represents a Grow Box with all components (Lights, DHT sensor
   StaticThreadController<4> ThreadControl (&OneSecThread,&FiveSecThread,&MinuteThread,&HalfHourThread);
 
 void setup() {  // put your setup code here, to run once:
-  Serial.begin(115200);    //2560mega console output
-  Serial3.begin(115200);  //esp wifi console output
-  logToSerials(F("GrowBox initializing..."),true,0);
-  wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds assume a lockup and reset sketch
+  ArduinoSerial.begin(115200);    //2560mega console output
+  ESPSerial.begin(115200);  //esp wifi console output
+  logToSerials(F("GrowBox initializing..."),true,0); //logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0)
+  wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
-  loadSettings();
-  GBox = new GrowBox(&BoxSettings);
+  GBox = new GrowBox(loadSettings());
   
   ESPLink.resetCb = &resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
   resetWebServer();  //reset the WebServer 
@@ -94,26 +94,26 @@ void processTimeCriticalStuff(){
 //Threads
 
 void runSec(){
-  if(BoxSettings.DebugEnabled)logToSerials(F("One sec trigger.."),true,1);
+  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("One sec trigger.."),true,1);
   wdt_reset(); //reset watchdog timeout
   GBox -> runSec();
 }
 
 void runFiveSec(){
-  if(BoxSettings.DebugEnabled) logToSerials(F("Five sec trigger.."),true,1);
+  if(GBox -> BoxSettings -> DebugEnabled) logToSerials(F("Five sec trigger.."),true,1);
   wdt_reset(); //reset watchdog timeout   
   GBox -> runFiveSec();
-  if(BoxSettings.DebugEnabled) getFreeMemory();
+  if(GBox -> BoxSettings -> DebugEnabled) getFreeMemory();
 }
 
 void runMinute(){
-  if(BoxSettings.DebugEnabled)logToSerials(F("Minute trigger.."),true,1);
+  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Minute trigger.."),true,1);
   wdt_reset(); //reset watchdog timeout
   GBox -> runMinute();
 }
 
 void runHalfHour(){
-  if(BoxSettings.DebugEnabled)logToSerials(F("Half hour trigger.."),true,1);
+  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Half hour trigger.."),true,1);
   wdt_reset(); //reset watchdog timeout
   GBox -> runHalfHour();
 }
@@ -121,29 +121,32 @@ void runHalfHour(){
 //////////////////////////////////////////
 //Settings
 
-void saveSettings(bool LogThis){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
-  eeprom_update_block((const void*)&BoxSettings, (void*)0, sizeof(BoxSettings)); //update_block only writes the bytes that changed
+void saveSettings(bool LogThis, Settings * SettingsToSave){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
+  eeprom_update_block((const void*)SettingsToSave, (void*)0, sizeof(Settings)); //update_block only writes the bytes that changed
   if(LogThis) logToSerials(F("Settings saved to EEPROM"),true);
 }
 
-void loadSettings(){
+Settings* loadSettings(){
+  Settings* DefaultSettings = new Settings();  //This is where settings get are stored, first it takes the sketch default settings defined in 420Settings.h
   Settings EEPROMSettings; //temporary storage with "Settings" type
-  eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));  
-  if(EEPROMSettings.Version != BoxSettings.Version){
-    logToSerials(F("Settings version change detected, updating EEPROM..."),false);
-    saveSettings(false);  //overwrites stored settings with defaults from this sketch
+  eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));   //Load EEPROM stored settings into EEPROMSettings
+  if(DefaultSettings -> CompatibilityVersion != EEPROMSettings.CompatibilityVersion){  //Making sure the EEPROM loaded settings are compatible with the sketch
+    logToSerials(F("Incompatible stored settings detected, updating EEPROM..."),false);
+    saveSettings(false,DefaultSettings);  //overwrites stored settings with defaults from this sketch
   }
   else {
     logToSerials(F("Same settings version detected, applying EEPROM settings..."),false);
-    BoxSettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
+    //DefaultSettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
+    memcpy(DefaultSettings,&EEPROMSettings,sizeof(Settings)); 
   }
   logToSerials(F("done"),true);
+  return DefaultSettings;
 }
 
-void restoreDefaults(){
+void restoreDefaults(Settings* SettingsToOverwrite){
   logToSerials(F("Restoring settings from sketch defaults..."),false,0);
   Settings DefaultSettings; //new "Settings" type objects with sketch defaults
-  memcpy(&BoxSettings,&DefaultSettings,sizeof(DefaultSettings));  
-  saveSettings(false);
+  memcpy(&SettingsToOverwrite,&DefaultSettings,sizeof(Settings));  
+  saveSettings(false,SettingsToOverwrite );
   GBox -> addToLog(F("Default settings restored"));
 }

@@ -29,52 +29,52 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
 void loadCallback(char * url) //called when website is loaded. Do not call logToSerials within any methods used here!
 {
   if (strcmp(url,"/GrowBox.html.json")==0){
-  WebServer.setArgBoolean(F("AutoInternalFan"), BoxSettings.AutomaticInternalFan);
-  WebServer.setArgString(F("InternalFanSwitchTemp"), toText(BoxSettings.InternalFanSwitchTemp));
-  WebServer.setArgBoolean(F("AutoExhaustFan"), BoxSettings.AutomaticExhaustFan);
-  WebServer.setArgString(F("ExhaustFanHighHumid"), toText(BoxSettings.ExhaustFanHighHumid));
-  WebServer.setArgString(F("ExhaustFanLowHumid"), toText(BoxSettings.ExhaustFanLowHumid));
-  WebServer.setArgString(F("ExhaustFanOffHumid"), toText(BoxSettings.ExhaustFanOffHumid));
+  WebServer.setArgBoolean(F("AutoInternalFan"),GBox -> BoxSettings -> AutomaticInternalFan);
+  WebServer.setArgString(F("InternalFanSwitchTemp"), toText(GBox -> BoxSettings -> InternalFanSwitchTemp));
+  WebServer.setArgBoolean(F("AutoExhaustFan"), GBox -> BoxSettings -> AutomaticExhaustFan);
+  WebServer.setArgString(F("ExhaustFanHighHumid"), toText(GBox -> BoxSettings -> ExhaustFanHighHumid));
+  WebServer.setArgString(F("ExhaustFanLowHumid"), toText(GBox -> BoxSettings -> ExhaustFanLowHumid));
+  WebServer.setArgString(F("ExhaustFanOffHumid"), toText(GBox -> BoxSettings -> ExhaustFanOffHumid));
     
-  WebServer.setArgInt(F("Light1OnHour"), BoxSettings.Light1OnHour); 
-  WebServer.setArgInt(F("Light1OnMinute"), BoxSettings.Light1OnMinute); 
-  WebServer.setArgInt(F("Light1OffHour"), BoxSettings.Light1OffHour); 
-  WebServer.setArgInt(F("Light1OffMinute"),BoxSettings.Light1OffMinute);
-  WebServer.setArgInt(F("Light1Brightness"), BoxSettings.Light1Brightness);
-  WebServer.setArgInt(F("Light1BrightnessSlider"), BoxSettings.Light1Brightness);
+  WebServer.setArgInt(F("Light1OnHour"), GBox -> BoxSettings -> Light1OnHour); 
+  WebServer.setArgInt(F("Light1OnMinute"), GBox -> BoxSettings -> Light1OnMinute); 
+  WebServer.setArgInt(F("Light1OffHour"), GBox -> BoxSettings -> Light1OffHour); 
+  WebServer.setArgInt(F("Light1OffMinute"),GBox -> BoxSettings -> Light1OffMinute);
+  WebServer.setArgInt(F("Light1Brightness"), GBox -> BoxSettings -> Light1Brightness);
+  WebServer.setArgInt(F("Light1BrightnessSlider"), GBox -> BoxSettings -> Light1Brightness);
 
-  WebServer.setArgInt(F("AeroPumpTimeout"), BoxSettings.AeroPumpTimeout);
-  WebServer.setArgInt(F("AeroPrimingTime"), BoxSettings.AeroPrimingTime);
-  WebServer.setArgInt(F("AeroInterval"), BoxSettings.AeroInterval);
-  WebServer.setArgInt(F("AeroDuration"), BoxSettings.AeroDuration);  
+  WebServer.setArgInt(F("AeroPumpTimeout"), GBox -> BoxSettings -> AeroPumpTimeout);
+  WebServer.setArgInt(F("AeroPrimingTime"), GBox -> BoxSettings -> AeroPrimingTime);
+  WebServer.setArgInt(F("AeroInterval"), GBox -> BoxSettings -> AeroInterval);
+  WebServer.setArgInt(F("AeroDuration"), GBox -> BoxSettings -> AeroDuration);  
   }
   
   if (strcmp(url,"/Settings.html.json")==0){  
-  WebServer.setArgInt(F("SoundEnabled"), BoxSettings.Sound1Enabled);
-  WebServer.setArgInt(F("DebugEnabled"), BoxSettings.DebugEnabled);
-  WebServer.setArgInt(F("MetricSystemEnabled"), BoxSettings.MetricSystemEnabled);
-  WebServer.setArgInt(F("DigitDisplayBrightness"), BoxSettings.DigitDisplayBacklight);
-  WebServer.setArgInt(F("DigitDisplayValue"), BoxSettings.DigitDisplayValue);
-  WebServer.setArgBoolean(F("MqttEnabled"), BoxSettings.ReportToMqtt);
-  WebServer.setArgBoolean(F("GoogleSheetsEnabled"), BoxSettings.ReportToGoogleSheets);
-  WebServer.setArgString(F("PushingBoxLogRelayID"), BoxSettings.PushingBoxLogRelayID);
+  WebServer.setArgInt(F("SoundEnabled"), GBox -> BoxSettings -> Sound1Enabled);
+  WebServer.setArgInt(F("DebugEnabled"), GBox -> BoxSettings -> DebugEnabled);
+  WebServer.setArgInt(F("MetricSystemEnabled"), GBox -> BoxSettings -> MetricSystemEnabled);
+  WebServer.setArgInt(F("DigitDisplayBrightness"), GBox -> BoxSettings -> DigitDisplayBacklight);
+  WebServer.setArgInt(F("DigitDisplayValue"), GBox -> BoxSettings -> DigitDisplayValue);
+  WebServer.setArgBoolean(F("MqttEnabled"), GBox -> BoxSettings -> ReportToMqtt);
+  WebServer.setArgBoolean(F("GoogleSheetsEnabled"), GBox -> BoxSettings -> ReportToGoogleSheets);
+  WebServer.setArgString(F("PushingBoxLogRelayID"), GBox -> BoxSettings -> PushingBoxLogRelayID);
 
-  WebServer.setArgBoolean(F("AlertEmails"), BoxSettings.AlertEmails);
-  WebServer.setArgString(F("PushingBoxEmailRelayID"), BoxSettings.PushingBoxEmailRelayID);
-  WebServer.setArgInt(F("TriggerCountBeforeAlert"), BoxSettings.TriggerCountBeforeAlert);
-  WebServer.setArgInt(F("TempAlertLow"), BoxSettings.TempAlertLow);
-  WebServer.setArgInt(F("TempAlertHigh"), BoxSettings.TempAlertHigh);
-  WebServer.setArgInt(F("HumidityAlertLow"), BoxSettings.HumidityAlertLow);
-  WebServer.setArgInt(F("HumidityAlertHigh"), BoxSettings.HumidityAlertHigh);
-  WebServer.setArgString(F("PressureAlertLow"), toText(BoxSettings.PressureAlertLow));
-  WebServer.setArgString(F("PressureAlertHigh"), toText(BoxSettings.PressureAlertHigh));
-  WebServer.setArgString(F("PHAlertLow"), toText(BoxSettings.PHAlertLow));
-  WebServer.setArgString(F("PHAlertHigh"), toText(BoxSettings.PHAlertHigh));  
+  WebServer.setArgBoolean(F("AlertEmails"), GBox -> BoxSettings -> AlertEmails);
+  WebServer.setArgString(F("PushingBoxEmailRelayID"), GBox -> BoxSettings -> PushingBoxEmailRelayID);
+  WebServer.setArgInt(F("TriggerCountBeforeAlert"), GBox -> BoxSettings -> TriggerCountBeforeAlert);
+  WebServer.setArgInt(F("TempAlertLow"), GBox -> BoxSettings -> TempAlertLow);
+  WebServer.setArgInt(F("TempAlertHigh"), GBox -> BoxSettings -> TempAlertHigh);
+  WebServer.setArgInt(F("HumidityAlertLow"), GBox -> BoxSettings -> HumidityAlertLow);
+  WebServer.setArgInt(F("HumidityAlertHigh"), GBox -> BoxSettings -> HumidityAlertHigh);
+  WebServer.setArgString(F("PressureAlertLow"), toText(GBox -> BoxSettings -> PressureAlertLow));
+  WebServer.setArgString(F("PressureAlertHigh"), toText(GBox -> BoxSettings -> PressureAlertHigh));
+  WebServer.setArgString(F("PHAlertLow"), toText(GBox -> BoxSettings -> PHAlertLow));
+  WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> BoxSettings -> PHAlertHigh));  
 
-  WebServer.setArgString(F("PHCalibrationSlope"), toPrecisionText(BoxSettings.PHCalibrationSlope));
-  WebServer.setArgString(F("PHCalibrationIntercept"), toPrecisionText(BoxSettings.PHCalibrationIntercept)); 
-  WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(BoxSettings.PressureSensorOffset));
-  WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(BoxSettings.PressureSensorRatio));  
+  WebServer.setArgString(F("PHCalibrationSlope"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationSlope));
+  WebServer.setArgString(F("PHCalibrationIntercept"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationIntercept)); 
+  WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(GBox -> BoxSettings -> PressureSensorOffset));
+  WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(GBox -> BoxSettings -> PressureSensorRatio));  
   }
 }
 
@@ -121,10 +121,10 @@ void buttonPressCallback(char *button)  //Called when any button on the website 
   else if (strcmp_P(button,(PGM_P)F("btn_Light1TimerDisable"))==0) {GBox -> Light1 -> setTimerOnOff(false);}
   else if (strcmp_P(button,(PGM_P)F("btn_LightSensor1Calibrate"))==0) {GBox -> LightSensor1 -> triggerCalibration();}
   //Settings page
-  else if (strcmp_P(button,(PGM_P)F("btn_restoreDefaults"))==0) { restoreDefaults(); }
+  else if (strcmp_P(button,(PGM_P)F("btn_restoreDefaults"))==0) { restoreDefaults(GBox -> BoxSettings); }
   else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { GBox -> Sound1 ->playEE(); }
   
-  saveSettings(false); 
+  saveSettings(false,GBox -> BoxSettings); 
 }
 
 void setFieldCallback(char * field){  //Called when any field on the website is updated. Do not call logToSerials within any methods used here!
@@ -143,5 +143,5 @@ void setFieldCallback(char * field){  //Called when any field on the website is 
   //else if(strcmp_P(field,(PGM_P)F("PushingBoxLogRelayID"))==0) {setPushingBoxLogRelayID(WebServer.getArgString());}
  
     
-  saveSettings(false);
+  saveSettings(false,GBox -> BoxSettings);
 } 
