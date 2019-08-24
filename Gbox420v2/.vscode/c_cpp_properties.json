@@ -1,14 +1,23 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "Arduino",
             "includePath": [
+                "${workspaceRoot}"
+            ],
+            "browse": {
+               "path": [
                 "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\tools\\**",
                 "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\**",
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/../libraries/**",
-                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\**"
-            ],
+                "D:\\GoogleDrive\\Arduino\\Gbox420\\libraries\\**",
+                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\**",
+                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\cores\\arduino",
+                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\variants\\standard",
+                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\tools\\avr\\lib\\gcc\\avr\\5.4.0\\include",
+                "D:\\GoogleDrive\\Arduino\\ArduinoSDK"
+                ]
+            }  ,
             "defines": [
                 "_DEBUG",
                 "UNICODE",
@@ -17,7 +26,8 @@
             "intelliSenseMode": "msvc-x64",
             "forcedInclude": [
                 "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
-            ]
+            ],
+            "compilerPath": "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\tools\\avr\\bin\\avr-gcc.exe"
         }
     ],
     "version": 4

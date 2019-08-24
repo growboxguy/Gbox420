@@ -1,6 +1,3 @@
-#ifndef MY_HEADER_H
-#define MY_HEADER_H
-  
 #pragma once
 
 
@@ -43,5 +40,3 @@
   byte ATXPowerONOutPin = 34; //Turns ATX power supply on by connecting ATX PowerON pin to GND through an optocupler
   byte ATXPowerGoodInPin = 35; //5V signal from ATX powersupply, inverted by optocoupler: LOW if DC power output is OK
   byte ReservoirTempSensorInPin = 45;  //Data(yellow) - DS18B20 waterproof temp sensor 
-
- #endif
