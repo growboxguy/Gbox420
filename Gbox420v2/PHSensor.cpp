@@ -1,10 +1,10 @@
-#include "Reservoir.h"
+#include "PHSensor.h"
 #include "GrowBox.h"
 
 //////////////////////////////////////////
-//PHMeter functions
+//PHSensor functions
 
-PHMeter::PHMeter(GrowBox * GBox, byte Pin, float &Intercept, float &Slope){
+PHSensor::PHSensor(GrowBox * GBox, byte Pin, float &Intercept, float &Slope){
   this -> GBox = GBox;
   this -> Pin = Pin;
   this -> Intercept = Intercept;
@@ -13,31 +13,31 @@ PHMeter::PHMeter(GrowBox * GBox, byte Pin, float &Intercept, float &Slope){
   PH = new RollingAverage();
 }
 
-void PHMeter::refresh(){
+void PHSensor::refresh(){
   if(GBox -> BoxSettings -> DebugEnabled){ getPH(true); }
   else { getPH(false); }
 }
 
-void PHMeter::getPH(bool ShowRaw){
+void PHSensor::getPH(bool ShowRaw){
   float  Reading=0;
   int PHRaw = analogRead(Pin);
   if(ShowRaw)
   {
-  strncpy_P(Message,(PGM_P)F("PH analog read: "),MaxTextLength);
-  strcat(Message,toText(PHRaw));
-  GBox -> addToLog(Message);
+    strncpy_P(Message,(PGM_P)F("PH analog read: "),MaxTextLength);
+    strcat(Message,toText(PHRaw));
+    GBox -> addToLog(Message);
   } 
   PH -> updateAverage(Slope*PHRaw + Intercept); 
   //checkPHAlert();
 }
 
 
-void PHMeter::setSlope(float Value){
+void PHSensor::setSlope(float Value){
   Slope = Value;
   GBox -> addToLog(F("PH slope updated"));
 }
 
-void PHMeter::setIntercept(float Value){
+void PHSensor::setIntercept(float Value){
   Intercept = Value;
   GBox -> addToLog(F("PH intercept updated"));
 }

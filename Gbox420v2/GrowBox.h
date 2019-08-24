@@ -7,7 +7,9 @@ class LightSensor;
 class Lights;
 class Sound;
 class PowerSensor;
-class PHMeter;
+class PHSensor;
+class LightSensor;
+class PHSensor;
 
 class GrowBox : public Common
 {
@@ -25,7 +27,7 @@ class GrowBox : public Common
   Lights * Light1;  //Pointer to a Light assembly 
   Lights * Light2;  //Pointer to a Light assembly 
   PowerSensor * PowerSensor1;
-  PHMeter * PHMeter1;
+  PHSensor * PHSensor1;
   void refresh();
   void report();
  

@@ -4,7 +4,8 @@
 #include "Lights.h"
 #include "Sound.h"
 #include "PowerSensor.h"
-//#include "Reservoir.h"  //Classes: Reservoir, PHMeter and WaterTempSensor
+#include "LightSensor.h"
+#include "PHSensor.h" 
 
 static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
@@ -14,10 +15,9 @@ GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   InternalDHTSensor = new DHTSensor(this, InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
   ExternalDHTSensor = new DHTSensor(this, ExternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
   LightSensor1 = new LightSensor(this, LightSensor1DigitalPin, LightSensor1AnalogPin);
-  //Light1 = new Lights(this,Light1RelayPin,Light1DimmingPin,&BoxSettings -> Light1Status,&BoxSettings -> Light1Brightness,&BoxSettings -> Light1TimerEnabled,&BoxSettings -> Light1OnHour,&BoxSettings -> Light1OnMinute,&BoxSettings -> Light1OffHour,&BoxSettings -> Light1OffMinute);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
   Light1 = new Lights(this,Light1RelayPin,Light1DimmingPin,&BoxSettings -> Light1,8);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
   PowerSensor1 = new PowerSensor(this,&Serial2);
-  //PHMeter1 = new PHMeter(this, BoxSettings -> PHMeterInPin);
+  //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);
   if(BoxSettings -> DebugEnabled){logToSerials(F("GrowBox object created"),true);}
   addToLog(F("GrowBox initialized"),0);
 }
@@ -41,7 +41,7 @@ void GrowBox::runFiveSec(){
   ExternalDHTSensor -> refresh();
   LightSensor1 -> refresh();
   PowerSensor1 -> refresh();
-  //PHMeter1 -> refresh();
+  //PHSensor1 -> refresh();
 }
 
 void GrowBox::runMinute(){

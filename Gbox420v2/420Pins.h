@@ -16,8 +16,8 @@
 //Sound pins
   byte Sound1Pin = 4; //PC speaker+ (red)
 
-//PHMeter pins
-  byte PHMeterInPin = A3;  //PH meter - Po port
+//PHSensor pins
+  byte PHSensorInPin = A3;  //PH meter - Po port
 
 
 //Analog pins

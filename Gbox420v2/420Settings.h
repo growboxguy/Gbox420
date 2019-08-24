@@ -30,15 +30,15 @@ typedef struct
     byte OffMinute = 20; //Light OFF time - minute    
   }Light1,Lights2;
   
-//PHMeter1 settings
-  struct PHMeterSettings{
+//PHSensor1 settings  - Anybody knows how to handle multiple PH sensors with different inital calibration values?
+  struct PHSensorSettings{
     float PHCalibrationSlope = -0.033256;     //Update this to your own PH meter calibration values
     float PHCalibrationIntercept = 24.08651;  //Update this to your own PH meter calibration values
     float PressureSensorOffset = 0.57;        //Pressure sensor calibration: voltage reading at 0 pressure
     float PressureSensorRatio = 2.7;          //Pressure sensor voltage to pressure ratio
     float PHAlertLow = 5.5; //Low pressure warning
     float PHAlertHigh = 6.5; //High pressure warning
-  }PHMeter1;
+  }PHSensor1;
 
   bool AutomaticInternalFan = false;  //Adjust internal fan based on temperature
   bool AutomaticExhaustFan = false;  //Adjust exhaust fan based on temp and humidity

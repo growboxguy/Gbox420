@@ -3,21 +3,23 @@
         {
             "name": "Arduino",
             "includePath": [
-                "${workspaceRoot}"
+                "${workspaceRoot}",
+                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\**",
+                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\tools\\**"
             ],
             "browse": {
-               "path": [
-                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\tools\\**",
-                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\**",
-                "${workspaceFolder}/**",
-                "D:\\GoogleDrive\\Arduino\\Gbox420\\libraries\\**",
-                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\**",
-                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\cores\\arduino",
-                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\variants\\standard",
-                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\tools\\avr\\lib\\gcc\\avr\\5.4.0\\include",
-                "D:\\GoogleDrive\\Arduino\\ArduinoSDK"
+                "path": [
+                    "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\tools\\**",
+                    "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\**",
+                    "${workspaceFolder}/**",
+                    "D:\\GoogleDrive\\Arduino\\Gbox420\\libraries\\**",
+                    "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\**",
+                    "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\cores\\arduino",
+                    "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\variants\\standard",
+                    "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\tools\\avr\\lib\\gcc\\avr\\5.4.0\\include",
+                    "D:\\GoogleDrive\\Arduino\\ArduinoSDK"
                 ]
-            }  ,
+            },
             "defines": [
                 "_DEBUG",
                 "UNICODE",

@@ -1,5 +1,5 @@
 #pragma once
-//Defines 3 classes: Reservoir, PHMeter and WaterTempSensor
+//Defines 3 classes: Reservoir, PHSensor and WaterTempSensor
 
 #include "420Common.h"
 
@@ -15,7 +15,7 @@ class Reservoir : public Common
   
 };
 
-class PHMeter : public Common
+class PHSensor : public Common
 {
   private:
     GrowBox * GBox;
@@ -27,7 +27,7 @@ class PHMeter : public Common
   protected:
    
   public:
-    PHMeter(GrowBox * GBox, byte Pin, float &Intercept, float &Slope);
+    PHSensor(GrowBox * GBox, byte Pin, float &Intercept, float &Slope);
     void refresh();
     void report();
     void getPH(bool ShowRaw);
