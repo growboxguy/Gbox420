@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\tools\\**",
+                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\**",
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/../libraries/**",
+                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "intelliSenseMode": "msvc-x64",
+            "forcedInclude": [
+                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
+            ]
+        }
+    ],
+    "version": 4
+}
