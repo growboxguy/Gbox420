@@ -52,12 +52,12 @@ typedef struct
   byte ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
    
   bool DebugEnabled = true; //Logs debug messages to serial and web outputs
-  bool MetricSystemEnabled = true; //Swith between Imperial/Metric units. If changed update the default temp and pressure values.  
+  bool MetricSystemEnabled = true; //Switch between Imperial/Metric units. If changed update the default temp and pressure values.  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
   bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
   char PushingBoxLogRelayID[MaxTextLength]= "v420"; //UPDATE THIS DeviceID of the PushingBox logging scenario 
 
-  byte DigitDisplayBacklight = 25; //4 digit display - backlight strenght (0-100)
+  byte DigitDisplayBacklight = 25; //4 digit display - backlight strength (0-100)
   byte DigitDisplayValue = 0; //select which sensor reading to display(1-18), 0 cycle through all values
     
   bool AlertEmails = true; //disable/enable email sending

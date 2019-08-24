@@ -1,6 +1,6 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
-//UNDER DEVELOPEMENT - This is the next generation of Gbox420 rewritten to depend fully on the web interface for control and feedback. 
+//UNDER DEVELOPMENT - This is the next generation of Gbox420 rewritten to depend fully on the web interface for control and feedback. 
 
 //HELLO, You are probably here looking for the following tab:
 // 420Settings.h : First time setup or changing the default settings and Modify 
@@ -53,13 +53,13 @@ GrowBox * GBox;  //Represents a Grow Box with all components (Lights, DHT sensor
 
 void setup() {  // put your setup code here, to run once:
   ArduinoSerial.begin(115200);    //2560mega console output
-  ESPSerial.begin(115200);  //esp wifi console output
+  ESPSerial.begin(115200);  //esp WiFi console output
   logToSerials(F("GrowBox initializing..."),true,0); //logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0)
   wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
   GBox = new GrowBox(loadSettings());
   
-  ESPLink.resetCb = &resetWebServer;  //Callback subscription: When wifi reconnects, restart the WebServer
+  ESPLink.resetCb = &resetWebServer;  //Callback subscription: When WiFi reconnects, restart the WebServer
   resetWebServer();  //reset the WebServer 
   setTime(getNtpTime()); 
   

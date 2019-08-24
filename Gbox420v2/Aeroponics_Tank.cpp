@@ -68,7 +68,7 @@ void checkAeroPumpAlerts_WithPressureTank()
     else{ if(PressureOK)PressureTriggerCount++; }  //count out of range readings while pressure is considered OK and an alert is not active.
     PreviousPressureRead = false;  
     
-    if(PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){ //trigger an alert if the out of range reaing counter is above the limit
+    if(PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){ //trigger an alert if the out of range reading counter is above the limit
         PressureOK = false;
         if(AeroPressure > MySettings.PressureAlertHigh){ //If high pressure alert level is reached   
           sendEmailAlert(F("Aeroponics%20pressure%20too%20high"));

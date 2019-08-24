@@ -37,6 +37,6 @@
   byte Relay5OutPin = 26;  //Power relay Port 5 - Internal fan Low/High
   byte Relay6OutPin = 27;  //Power relay Port 6 - Exhaust fan Off/On
   byte Relay7OutPin = 28;  //Power relay Port 7 - Exhaust fan Low/High
-  byte ATXPowerONOutPin = 34; //Turns ATX power supply on by connecting ATX PowerON pin to GND through an optocupler
+  byte ATXPowerONOutPin = 34; //Turns ATX power supply on by connecting ATX PowerON pin to GND through an optocoupler
   byte ATXPowerGoodInPin = 35; //5V signal from ATX powersupply, inverted by optocoupler: LOW if DC power output is OK
   byte ReservoirTempSensorInPin = 45;  //Data(yellow) - DS18B20 waterproof temp sensor 

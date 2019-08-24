@@ -13,7 +13,7 @@ class LightSensor : public Common
     GrowBox * GBox;
     void refresh();  //Called when component should refresh its state
     void report();
-    bool getIsDark(); //Ligth sensor digital feedback: True(Bright) or False(Dark)
+    bool getIsDark(); //Light sensor digital feedback: True(Bright) or False(Dark)
     int getReading(); //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
     char * getReadingPercentage(); //Light sensor analog feedback relative to calibration values: 0 to 100%  //CALIBRATION NOT IMPLEMENTED
     const __FlashStringHelper * getIsDarkText();  

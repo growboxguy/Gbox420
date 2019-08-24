@@ -31,7 +31,7 @@ class GrowBox : public Common
   void refresh();
   void report();
  
-  void runSec(); //triger all threads at startup
+  void runSec(); //trigger all threads at startup
   void runFiveSec(); //needs to run first to get sensor readings
   void runMinute();
   void runHalfHour(); 
