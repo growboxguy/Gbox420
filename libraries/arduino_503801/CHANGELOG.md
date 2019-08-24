@@ -1,6 +1,11 @@
 ArduinoJson: change log
 =======================
 
+v6.11.5 (2019-08-23)
+-------
+
+* Added fallback implementations of `strlen_P()`, `strncmp_P()`, `strcmp_P()`, and `memcpy_P()` (issue #1073)
+
 v6.11.4 (2019-08-12)
 -------
 
