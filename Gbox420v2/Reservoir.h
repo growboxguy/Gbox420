@@ -1,5 +1,5 @@
 #pragma once
-//Defines 3 classes: Reservoir, PH Meter and WaterTempSensor
+//Defines 3 classes: Reservoir, PHMeter and WaterTempSensor
 
 #include "420Common.h"
 
@@ -19,7 +19,7 @@ class PHMeter : public Common
 {
   private:
     GrowBox * GBox;
-    RollingAverage PH;
+    RollingAverage * PH;
     float &Intercept;
     float &Slope;
     byte Pin;
@@ -28,6 +28,8 @@ class PHMeter : public Common
    
   public:
     PHMeter(GrowBox * GBox, byte Pin, float &Intercept, float &Slope);
+    void refresh();
+    void report();
     void getPH(bool ShowRaw);
     void setSlope(float Value);
     void setIntercept(float Value);    

@@ -7,6 +7,7 @@ class LightSensor;
 class Lights;
 class Sound;
 class PowerSensor;
+class PHMeter;
 
 class GrowBox : public Common
 {
@@ -22,7 +23,9 @@ class GrowBox : public Common
   DHTSensor * ExternalDHTSensor; //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
   LightSensor * LightSensor1; //Pointer to a Light Sensor object measuring light intensity in the grow box
   Lights * Light1;  //Pointer to a Light assembly 
+  Lights * Light2;  //Pointer to a Light assembly 
   PowerSensor * PowerSensor1;
+  PHMeter * PHMeter1;
   void refresh();
   void report();
  

@@ -5,22 +5,39 @@
 //////////////////////////////////////////////////////////////////
 //Lights functions
 
-Lights::Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute){  //constructor
+Lights::Lights(GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsSettings * LightDefaultSettings, byte DimmingLimit){
   this -> GBox = GBox;
   this -> RelayPin = RelayPin;
   this -> DimmingPin = DimmingPin;
-  this -> DimmingLimit = DimmingLimit;
-  this -> Status = Status;
-  this -> Brightness = Brightness;
-  this -> TimerEnabled = TimerEnabled;
-  this -> OnHour = OnHour;
-  this -> OnMinute = OnMinute;
-  this -> OffHour = OffHour;
-  this -> OffMinute = OffMinute;
+  this -> DimmingLimit = DimmingLimit; //Blocks dimming below a certain percentafe (default 8%), Most LED drivers cannot fully dimm, check the pecification and adjust accordingly, only set 0 if it supports dimming fully! (Usually not the case..)
+  Status = &LightDefaultSettings -> Status;
+  Brightness = &LightDefaultSettings -> Brightness;
+  TimerEnabled = &LightDefaultSettings -> TimerEnabled;
+  OnHour = &LightDefaultSettings -> OnHour;
+  OnMinute = &LightDefaultSettings -> OnMinute;
+  OffHour = &LightDefaultSettings -> OffHour;
+  OffMinute = &LightDefaultSettings -> OffMinute;
   pinMode(RelayPin, OUTPUT);
   pinMode(DimmingPin, OUTPUT);
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Lights object created"),true);}
 }
+
+//Lights::Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute){  //constructor
+//  this -> GBox = GBox;
+//  this -> RelayPin = RelayPin;
+//  this -> DimmingPin = DimmingPin;
+//  this -> DimmingLimit = DimmingLimit;
+//  this -> Status = Status;
+//  this -> Brightness = Brightness;
+//  this -> TimerEnabled = TimerEnabled;
+//  this -> OnHour = OnHour;
+//  this -> OnMinute = OnMinute;
+//  this -> OffHour = OffHour;
+//  this -> OffMinute = OffMinute;
+//  pinMode(RelayPin, OUTPUT);
+//  pinMode(DimmingPin, OUTPUT);
+//  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Lights object created"),true);}
+//}
 
 void Lights::refresh(){  //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Lights refreshing"),true);}
@@ -82,7 +99,7 @@ void Lights::checkLightTimer() {
 
 void Lights::setBrightness(byte Brightness, bool LogThis){
   *(this -> Brightness) = Brightness;      
-  analogWrite(DimmingPin, map(Brightness,0,100,int(255*(100-*DimmingLimit)/100.0f),0)); //mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brigthness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
+  analogWrite(DimmingPin, map(Brightness,0,100,int(255*(100-DimmingLimit)/100.0f),0)); //mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brigthness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
   if(LogThis){
     strncpy_P(Message,(PGM_P)F("Brightness: "),MaxTextLength);  
     strcat(Message,toText(Brightness));
@@ -139,10 +156,6 @@ void Lights::setOffMinute(byte OffMinute){
 
 const __FlashStringHelper* Lights::getTimerOnOffText(){
   return enabledToText(*TimerEnabled);
-}
-
-byte Lights::getBrightness(){
-   return *Brightness;
 }
 
 bool Lights::getStatus(){
@@ -226,7 +239,7 @@ void LightSensor::triggerCalibration(){ //website signals to calibrate light sen
 void LightSensor::calibrate(){
   CalibrateRequested=false;  
   bool LastStatus = GBox -> Light1 -> getStatus();  //TODO: This should be more generic and support different Lights objects passed as a parameter
-  byte LastBrightness = GBox -> Light1 -> getBrightness();
+  byte LastBrightness = *(GBox -> Light1 -> Brightness);
   GBox -> Light1 -> setLightOnOff(true,false);  //turn on light, without adding a log entry
   GBox -> Light1 -> checkLightStatus();  //apply turning the lights on
   GBox -> Light1 -> setBrightness(0,false);

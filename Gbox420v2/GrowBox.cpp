@@ -1,19 +1,23 @@
 #include "GrowBox.h"
+#include "420Pins.h"  //Arduino Pin layout
 #include "DHTSensor.h"
 #include "Lights.h"
 #include "Sound.h"
 #include "PowerSensor.h"
+//#include "Reservoir.h"  //Classes: Reservoir, PHMeter and WaterTempSensor
 
 static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
 GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   this -> BoxSettings = BoxSettings;
-  Sound1 = new Sound(this,BoxSettings -> Sound1Pin,&BoxSettings -> Sound1Enabled);
-  InternalDHTSensor = new DHTSensor(this, BoxSettings -> InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
-  ExternalDHTSensor = new DHTSensor(this, BoxSettings -> ExternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
-  LightSensor1 = new LightSensor(this, BoxSettings ->  LightSensor1DigitalPin, BoxSettings ->  LightSensor1AnalogPin);
-  Light1 = new Lights(this,BoxSettings -> Light1RelayPin,BoxSettings -> Light1DimmingPin,&BoxSettings -> Light1DimmingLimit,&BoxSettings -> Light1Status,&BoxSettings -> Light1Brightness,&BoxSettings -> Light1TimerEnabled,&BoxSettings -> Light1OnHour,&BoxSettings -> Light1OnMinute,&BoxSettings -> Light1OffHour,&BoxSettings -> Light1OffMinute);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
-  PowerSensor1 = new PowerSensor(this,&Serial2);  
+  Sound1 = new Sound(this,Sound1Pin,&BoxSettings -> Sound1Enabled);
+  InternalDHTSensor = new DHTSensor(this, InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
+  ExternalDHTSensor = new DHTSensor(this, ExternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
+  LightSensor1 = new LightSensor(this, LightSensor1DigitalPin, LightSensor1AnalogPin);
+  //Light1 = new Lights(this,Light1RelayPin,Light1DimmingPin,&BoxSettings -> Light1Status,&BoxSettings -> Light1Brightness,&BoxSettings -> Light1TimerEnabled,&BoxSettings -> Light1OnHour,&BoxSettings -> Light1OnMinute,&BoxSettings -> Light1OffHour,&BoxSettings -> Light1OffMinute);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
+  Light1 = new Lights(this,Light1RelayPin,Light1DimmingPin,&BoxSettings -> Light1,8);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
+  PowerSensor1 = new PowerSensor(this,&Serial2);
+  //PHMeter1 = new PHMeter(this, BoxSettings -> PHMeterInPin);
   if(BoxSettings -> DebugEnabled){logToSerials(F("GrowBox object created"),true);}
   addToLog(F("GrowBox initialized"),0);
 }
@@ -37,6 +41,7 @@ void GrowBox::runFiveSec(){
   ExternalDHTSensor -> refresh();
   LightSensor1 -> refresh();
   PowerSensor1 -> refresh();
+  //PHMeter1 -> refresh();
 }
 
 void GrowBox::runMinute(){

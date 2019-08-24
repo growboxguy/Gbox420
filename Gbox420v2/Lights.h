@@ -11,7 +11,8 @@ class Lights : public Common
     GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
 
   public:
-    Lights(GrowBox * Gbox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
+    //Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
+    Lights(GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsSettings * LightDefaultSettings, byte DimmingLimit=8);  //constructor
     void refresh();  //Called when component should refresh its state
     void report();
     void setBrightness(byte Brightness, bool AddToLog);           
@@ -23,12 +24,15 @@ class Lights : public Common
     void setOffMinute(byte OffMinute);
     const __FlashStringHelper * getTimerOnOffText(); 
     const __FlashStringHelper * getStatusText(); 
-    byte getBrightness(); 
     bool getStatus();
     char * getOnTimeText();    
     char * getOffTimeText();
     void checkLightStatus();
-   
+    byte* OnHour;  //Light ON time - hour
+    byte* OnMinute; //Light ON time - minute
+    byte* OffHour;//Light OFF time - hour
+    byte* OffMinute; //Light OFF time - minute
+    byte* Brightness; //Light intensity: 0 - 100 range for controlling led driver output    
   
   private:  
     bool CalibrateLights = false; //Stores the Calibration request
@@ -36,15 +40,9 @@ class Lights : public Common
     byte RelayPin; //the Arduino pin controlling the AC relay
     byte DimmingPin; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor    
     void checkLightTimer(); 
-    byte* DimmingLimit; //Sets the maximum LED dimming limit (Usually around 5%)
-    bool* Status;   //Lights ON or OFF
-    byte* Brightness; //Light intensity: 0 - 100 range for controlling led driver output  
+    byte DimmingLimit; //Sets the maximum LED dimming limit (Usually around 5%)
+    bool* Status;   //Lights ON or OFF 
     bool* TimerEnabled;  //Enable timer controlling lights: true - Timer enabled, false - Timer disabled   
-    byte* OnHour;  //Light ON time - hour
-    byte* OnMinute; //Light ON time - minute
-    byte* OffHour;//Light OFF time - hour
-    byte* OffMinute; //Light OFF time - minute 
-
 };
 
 class LightSensor : public Common

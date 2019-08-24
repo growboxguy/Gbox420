@@ -36,12 +36,12 @@ void loadCallback(char * url) //called when website is loaded. Do not call logTo
   WebServer.setArgString(F("ExhaustFanLowHumid"), toText(GBox -> BoxSettings -> ExhaustFanLowHumid));
   WebServer.setArgString(F("ExhaustFanOffHumid"), toText(GBox -> BoxSettings -> ExhaustFanOffHumid));
     
-  WebServer.setArgInt(F("Light1OnHour"), GBox -> BoxSettings -> Light1OnHour); 
-  WebServer.setArgInt(F("Light1OnMinute"), GBox -> BoxSettings -> Light1OnMinute); 
-  WebServer.setArgInt(F("Light1OffHour"), GBox -> BoxSettings -> Light1OffHour); 
-  WebServer.setArgInt(F("Light1OffMinute"),GBox -> BoxSettings -> Light1OffMinute);
-  WebServer.setArgInt(F("Light1Brightness"), GBox -> BoxSettings -> Light1Brightness);
-  WebServer.setArgInt(F("Light1BrightnessSlider"), GBox -> BoxSettings -> Light1Brightness);
+  WebServer.setArgInt(F("Light1OnHour"), *(GBox -> Light1 -> OnHour)); 
+  WebServer.setArgInt(F("Light1OnMinute"), *(GBox -> Light1 -> OnMinute)); 
+  WebServer.setArgInt(F("Light1OffHour"), *(GBox -> Light1 -> OffHour)); 
+  WebServer.setArgInt(F("Light1OffMinute"),*(GBox -> Light1 -> OffMinute));
+  WebServer.setArgInt(F("Light1Brightness"), *(GBox -> Light1 -> Brightness));
+  WebServer.setArgInt(F("Light1BrightnessSlider"), *(GBox -> Light1 -> Brightness));
 
   WebServer.setArgInt(F("AeroPumpTimeout"), GBox -> BoxSettings -> AeroPumpTimeout);
   WebServer.setArgInt(F("AeroPrimingTime"), GBox -> BoxSettings -> AeroPrimingTime);
@@ -60,21 +60,21 @@ void loadCallback(char * url) //called when website is loaded. Do not call logTo
   WebServer.setArgString(F("PushingBoxLogRelayID"), GBox -> BoxSettings -> PushingBoxLogRelayID);
 
   WebServer.setArgBoolean(F("AlertEmails"), GBox -> BoxSettings -> AlertEmails);
-  WebServer.setArgString(F("PushingBoxEmailRelayID"), GBox -> BoxSettings -> PushingBoxEmailRelayID);
-  WebServer.setArgInt(F("TriggerCountBeforeAlert"), GBox -> BoxSettings -> TriggerCountBeforeAlert);
-  WebServer.setArgInt(F("TempAlertLow"), GBox -> BoxSettings -> TempAlertLow);
-  WebServer.setArgInt(F("TempAlertHigh"), GBox -> BoxSettings -> TempAlertHigh);
-  WebServer.setArgInt(F("HumidityAlertLow"), GBox -> BoxSettings -> HumidityAlertLow);
-  WebServer.setArgInt(F("HumidityAlertHigh"), GBox -> BoxSettings -> HumidityAlertHigh);
-  WebServer.setArgString(F("PressureAlertLow"), toText(GBox -> BoxSettings -> PressureAlertLow));
-  WebServer.setArgString(F("PressureAlertHigh"), toText(GBox -> BoxSettings -> PressureAlertHigh));
-  WebServer.setArgString(F("PHAlertLow"), toText(GBox -> BoxSettings -> PHAlertLow));
-  WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> BoxSettings -> PHAlertHigh));  
+  //WebServer.setArgString(F("PushingBoxEmailRelayID"), GBox -> BoxSettings -> PushingBoxEmailRelayID);
+  //WebServer.setArgInt(F("TriggerCountBeforeAlert"), GBox -> BoxSettings -> TriggerCountBeforeAlert);
+  //WebServer.setArgInt(F("TempAlertLow"), GBox -> BoxSettings -> TempAlertLow);
+  //WebServer.setArgInt(F("TempAlertHigh"), GBox -> BoxSettings -> TempAlertHigh);
+  //WebServer.setArgInt(F("HumidityAlertLow"), GBox -> BoxSettings -> HumidityAlertLow);
+  //WebServer.setArgInt(F("HumidityAlertHigh"), GBox -> BoxSettings -> HumidityAlertHigh);
+  //WebServer.setArgString(F("PressureAlertLow"), toText(GBox -> BoxSettings -> PressureAlertLow));
+  //WebServer.setArgString(F("PressureAlertHigh"), toText(GBox -> BoxSettings -> PressureAlertHigh));
+  //WebServer.setArgString(F("PHAlertLow"), toText(GBox -> Reservoir -> PHAlertLow));
+  //WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> BoxSettings -> PHAlertHigh));  
 
-  WebServer.setArgString(F("PHCalibrationSlope"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationSlope));
-  WebServer.setArgString(F("PHCalibrationIntercept"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationIntercept)); 
-  WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(GBox -> BoxSettings -> PressureSensorOffset));
-  WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(GBox -> BoxSettings -> PressureSensorRatio));  
+//  WebServer.setArgString(F("PHCalibrationSlope"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationSlope));
+//  WebServer.setArgString(F("PHCalibrationIntercept"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationIntercept)); 
+//  WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(GBox -> BoxSettings -> PressureSensorOffset));
+//  WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(GBox -> BoxSettings -> PressureSensorRatio));  
   }
 }
 

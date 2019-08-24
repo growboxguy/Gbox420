@@ -9,6 +9,13 @@ PHMeter::PHMeter(GrowBox * GBox, byte Pin, float &Intercept, float &Slope){
   this -> Pin = Pin;
   this -> Intercept = Intercept;
   this -> Slope = Slope;
+  pinMode(Pin, INPUT);
+  PH = new RollingAverage();
+}
+
+void PHMeter::refresh(){
+  if(GBox -> BoxSettings -> DebugEnabled){ getPH(true); }
+  else { getPH(false); }
 }
 
 void PHMeter::getPH(bool ShowRaw){
@@ -20,7 +27,7 @@ void PHMeter::getPH(bool ShowRaw){
   strcat(Message,toText(PHRaw));
   GBox -> addToLog(Message);
   } 
-  PH.updateAverage(Slope*PHRaw + Intercept); 
+  PH -> updateAverage(Slope*PHRaw + Intercept); 
   //checkPHAlert();
 }
 
