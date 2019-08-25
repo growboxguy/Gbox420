@@ -17,13 +17,13 @@ static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing 
 GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   this -> BoxSettings = BoxSettings;
   Sound1 = new Sound(this,Sound1Pin,&BoxSettings -> Sound1Enabled);
-  InternalDHTSensor = new DHTSensor(this, InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
-  ExternalDHTSensor = new DHTSensor(this, ExternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
-  LightSensor1 = new LightSensor(this, LightSensor1DigitalPin, LightSensor1AnalogPin);
+  InternalDHTSensor = new DHTSensor(F("InternalDHTSensor"), this, InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
+  ExternalDHTSensor = new DHTSensor(F("ExternalDHTSensor"), this, ExternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
+  LightSensor1 = new LightSensor(F("LightSensor1"),this, LightSensor1DigitalPin, LightSensor1AnalogPin);
   Light1 = new Lights(this,Light1RelayPin,Light1DimmingPin,&BoxSettings -> Light1,8);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
   PowerSensor1 = new PowerSensor(this,&Serial2);
-  Aeroponics_Tank1 = new Aeroponics_Tank(this, AeroSpraySolenoidPin, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings ->Aeroponics_Tank1, &BoxSettings -> Aeroponics_Tank1_TankSpecific);
-  Aeroponics_NoTank1 = new Aeroponics_NoTank(this, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings -> Aeroponics_NoTank1);
+  Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, AeroSpraySolenoidPin, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings ->Aeroponics_Tank1, &BoxSettings -> Aeroponics_Tank1_TankSpecific);
+  Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings -> Aeroponics_NoTank1);
   //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);
   if(BoxSettings -> DebugEnabled){logToSerials(F("GrowBox object created"),true);}
   addToLog(F("GrowBox initialized"),0);

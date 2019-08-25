@@ -1,7 +1,7 @@
 #include "Aeroponics_Tank.h"
 #include "GrowBox.h"
 
-Aeroponics_Tank::Aeroponics_Tank(GrowBox * GBox, byte SpraySolenoidPin, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings) : Aeroponics(GBox, BypassSolenoidPin, PumpPin, DefaultSettings){  //constructor
+Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, byte SpraySolenoidPin, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings) : Aeroponics(Name, GBox, BypassSolenoidPin, PumpPin, DefaultSettings){  //constructor
   this -> SpraySolenoidPin = SpraySolenoidPin;
   PressureLow = &TankSpecificSettings -> PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
   PressureHigh = &TankSpecificSettings -> PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)

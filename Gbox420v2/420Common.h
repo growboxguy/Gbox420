@@ -8,22 +8,28 @@
 #include "420Settings.h"  //for loading defaults and storing/reading user settings 
 #include "420Helpers.h"  //global functions
 
+//class ELClientWebServer; //forward declaration
+
 extern Settings MySettings;
 extern char Message[512];
 extern char CurrentTime[20];
+extern ELClientWebServer WebServer;
 
 class Common{
   private:
 
   
   protected:
-    Common(){
-      //HealthStatus = new AlertHandler();
-    }
+    Common(const __FlashStringHelper * Name);
+
+    Common(){}
   
   public:
+    const __FlashStringHelper * Name; 
     virtual void refresh() = 0;  //every class needs to have an implementation of this method. Called when component should refresh its state (for example Reading temperature and humidity using the DHTsensor class)
     virtual void report() = 0;  //Prints current state of the object to the Serial outputs
     //AlertHandler * HealthStatus; //Tracks the state of a component  
-      
+    char * getWebsiteComponentName(const __FlashStringHelper * ComponentName);
+    void websiteLoadEvent();
+    void websiteRefreshEvent();
 };

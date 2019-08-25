@@ -30,6 +30,7 @@ class PHSensor : public Common
     PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope);
     void refresh();
     void report();
+    void websiteLoadEvent();
     void getPH(bool ShowRaw);
     void setSlope(float Value);
     void setIntercept(float Value);    

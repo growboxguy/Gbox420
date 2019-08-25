@@ -9,7 +9,7 @@ class GrowBox;  //forward declaration
 class Aeroponics_Tank : public Aeroponics
 {
     public:
-    Aeroponics_Tank(GrowBox * GBox, byte SpraySolenoidPin, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings);
+    Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, byte SpraySolenoidPin, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings);
    
     byte SpraySolenoidPin;
     bool PreviousPressureRead = true;

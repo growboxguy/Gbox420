@@ -5,7 +5,7 @@
 #include "Lights.h"
 #include "GrowBox.h"
 
-LightSensor::LightSensor(GrowBox * GBox, byte DigitalPin, byte AnalogPin){ //constructor
+LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, byte DigitalPin, byte AnalogPin): Common(Name){ //constructor
   this -> GBox = GBox;
   this -> DigitalPin = DigitalPin;
   this -> AnalogPin = AnalogPin;
@@ -31,6 +31,14 @@ void LightSensor::report(){
   strcat_P(Message,(PGM_P)F(" (")); strcat(Message, getReadingPercentage());strcat_P(Message,(PGM_P)F(")"));
   logToSerials( &Message, true,4);
 }
+
+void LightSensor::websiteRefreshEvent(){ //When the website is opened, load stuff once
+  //WebServer.setArgString(getWebsiteComponentName(F("IsDark")),getIsDarkText());
+  WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingPercentage());
+  WebServer.setArgString(getWebsiteComponentName(F("ReadingRaw")),getReadingText()); 
+} 
+
+ 
 
 bool LightSensor::getIsDark(){ //Light sensor digital feedback: True(Dark) or False(Bright)  
   return IsDark;

@@ -1,7 +1,7 @@
 #include "Aeroponics_NoTank.h"
 #include "GrowBox.h"
 
-Aeroponics_NoTank::Aeroponics_NoTank(GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings) : Aeroponics(&(*GBox), BypassSolenoidPin, PumpPin, &(*DefaultSettings)) {
+Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings) : Aeroponics(&(*Name), &(*GBox), BypassSolenoidPin, PumpPin, &(*DefaultSettings)) {
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_NoTank object created"),true);}
 }
 

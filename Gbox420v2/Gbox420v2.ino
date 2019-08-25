@@ -56,7 +56,7 @@ void setup() {  // put your setup code here, to run once:
   ArduinoSerial.begin(115200);    //2560mega console output
   ESPSerial.begin(115200);  //esp WiFi console output
   pinMode(13, OUTPUT); //onboard LED - Heartbeat every second to confirm code is running
-  logToSerials(F("GrowBox initializing..."),true,0); //logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0)
+  logToSerials(F("GrowBox initializing..."),true,0); //logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
   GBox = new GrowBox(loadSettings());

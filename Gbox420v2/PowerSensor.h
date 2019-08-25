@@ -16,6 +16,7 @@ class PowerSensor : public Common
     PowerSensor(GrowBox * Gbox,HardwareSerial * SerialPort);  //constructor    
     void refresh();  //Called when component should refresh its state
     void report();
+    void websiteLoadEvent();
     bool setPowerAlarm(int watts); //trigger alarm if max power consumption is exceeded
     bool getPowerAlarm();
     bool setAddress(uint8_t addr);

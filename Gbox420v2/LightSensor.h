@@ -9,10 +9,12 @@ class LightSensor : public Common
   protected:
 
   public:
-    LightSensor(GrowBox * GBox, byte DigitalPin, byte AnalogPin);
+    LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, byte DigitalPin, byte AnalogPin);
     GrowBox * GBox;
     void refresh();  //Called when component should refresh its state
     void report();
+    void websiteLoadEvent();
+    void websiteRefreshEvent();    
     bool getIsDark(); //Light sensor digital feedback: True(Bright) or False(Dark)
     int getReading(); //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
     char * getReadingPercentage(); //Light sensor analog feedback relative to calibration values: 0 to 100%  //CALIBRATION NOT IMPLEMENTED

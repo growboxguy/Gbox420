@@ -1,12 +1,20 @@
 #include "Aeroponics.h"
 #include "GrowBox.h"
 
-//This is a virtual class (cannot be instanciated), parent of two classes:
+// This is a virtual class (cannot be instanciated), parent of two classes:
 // -Aeroponics_NoTank: High pressure pump is directly connected to the aeroponics tote
 // -Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid (electric water valve)
 
 
-Aeroponics::Aeroponics(GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings){  //constructor
+void Aeroponics::websiteLoadEvent(){ //When the website is opened, load stuff once
+
+  WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), * PumpTimeout);
+  WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), * PrimingTime);
+  WebServer.setArgInt(getWebsiteComponentName(F("Interval")), * Interval);
+  WebServer.setArgInt(getWebsiteComponentName(F("Duration")), * Duration); 
+} 
+
+Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings) : Common(Name){  //constructor
     this -> GBox = GBox;
     this -> BypassSolenoidPin = BypassSolenoidPin;
     this -> PumpPin = PumpPin;

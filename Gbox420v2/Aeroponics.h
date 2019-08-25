@@ -8,7 +8,7 @@ class GrowBox;  //forward declaration
 class Aeroponics : public Common
 {
 public:
-    Aeroponics(GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings);
+    Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings);
     GrowBox * GBox;
 
     int AeroPressure = 6; //FAKE PRESSURE READING - REMOVE IT
@@ -33,6 +33,7 @@ public:
     void checkRelays(){logToSerials(F("checkRelays METHOD NOT IMPLEMENTED"),true,0);};
     virtual void refresh() = 0;  //Aeroponics class cannot be instantiated, 
     virtual void report() = 0;
+    void websiteLoadEvent();
     void setPumpOn(bool UserRequest);
     void setPumpOff(bool UserRequest);
     void PumpDisable();
@@ -40,11 +41,12 @@ public:
     void setSprayOnOff(bool State);
     void setInterval(int interval);
     void setDuration(int duration);
-
+    
     const __FlashStringHelper * pumpStateToText();
     uint32_t LastRefill= 0;
     void setAeroPumpTimeout(int Timeout);
     void setAeroPrimingTime(uint32_t Timing);
     void setAeroPressureTankOnOff(bool State);  //TODO: REMOVE THIS!
+
 };
 

@@ -47,17 +47,19 @@ void loadCallback(char * url) //called when website is loaded. Do not call logTo
   WebServer.setArgInt(F("Light1_Brightness"), *(GBox -> Light1 -> Brightness));
   WebServer.setArgInt(F("Light1_BrightnessSlider"), *(GBox -> Light1 -> Brightness));
 
-  //Aeroponics_Tank1 load
-  WebServer.setArgInt(F("Aeroponics_Tank1_PumpTimeout"), *(GBox -> Aeroponics_Tank1 -> PumpTimeout));
-  WebServer.setArgInt(F("Aeroponics_Tank1_PrimingTime"), *(GBox -> Aeroponics_Tank1 -> PrimingTime));
-  WebServer.setArgInt(F("Aeroponics_Tank1_Interval"), *(GBox -> Aeroponics_Tank1 -> Interval));
-  WebServer.setArgInt(F("Aeroponics_Tank1_Duration"), *(GBox -> Aeroponics_Tank1 -> Duration));
+  GBox -> Aeroponics_Tank1 -> websiteLoadEvent();
+  GBox -> Aeroponics_NoTank1 -> websiteLoadEvent();
+  // //Aeroponics_Tank1 load
+  // WebServer.setArgInt(F("Aeroponics_Tank1_PumpTimeout"), *(GBox -> Aeroponics_Tank1 -> PumpTimeout));
+  // WebServer.setArgInt(F("Aeroponics_Tank1_PrimingTime"), *(GBox -> Aeroponics_Tank1 -> PrimingTime));
+  // WebServer.setArgInt(F("Aeroponics_Tank1_Interval"), *(GBox -> Aeroponics_Tank1 -> Interval));
+  // WebServer.setArgInt(F("Aeroponics_Tank1_Duration"), *(GBox -> Aeroponics_Tank1 -> Duration));
 
-  //Aeroponics_NoTank1 load
-  WebServer.setArgInt(F("Aeroponics_NoTank1_PumpTimeout"), *(GBox -> Aeroponics_NoTank1 -> PumpTimeout));
-  WebServer.setArgInt(F("Aeroponics_NoTank1_PrimingTime"), *(GBox -> Aeroponics_NoTank1 -> PrimingTime));
-  WebServer.setArgInt(F("Aeroponics_NoTank1_Interval"), *(GBox -> Aeroponics_NoTank1 -> Interval));
-  WebServer.setArgInt(F("Aeroponics_NoTank1_Duration"), *(GBox -> Aeroponics_NoTank1 -> Duration)); 
+  // //Aeroponics_NoTank1 load
+  // WebServer.setArgInt(F("Aeroponics_NoTank1_PumpTimeout"), *(GBox -> Aeroponics_NoTank1 -> PumpTimeout));
+  // WebServer.setArgInt(F("Aeroponics_NoTank1_PrimingTime"), *(GBox -> Aeroponics_NoTank1 -> PrimingTime));
+  // WebServer.setArgInt(F("Aeroponics_NoTank1_Interval"), *(GBox -> Aeroponics_NoTank1 -> Interval));
+  // WebServer.setArgInt(F("Aeroponics_NoTank1_Duration"), *(GBox -> Aeroponics_NoTank1 -> Duration)); 
    
   }
   
@@ -103,23 +105,19 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
   //WebServer.setArgString(F("td_ReservOK"),statusToText(ReservOK));
     
   if (strcmp(url,"/GrowBox.html.json")==0){       
-  WebServer.setArgString(F("td_InternalTemp"),GBox -> InternalDHTSensor -> getTempText());
-  WebServer.setArgString(F("td_InternalHumidity"),GBox -> InternalDHTSensor -> getHumidityText());
-  WebServer.setArgString(F("td_ExternalTemp"),GBox -> ExternalDHTSensor -> getTempText());
-  WebServer.setArgString(F("td_ExternalHumidity"),GBox -> ExternalDHTSensor -> getHumidityText());
-  WebServer.setArgString(F("td_LightSensor1IsDark"),GBox -> LightSensor1 -> getIsDarkText());
-  WebServer.setArgString(F("td_LightSensor1Reading"),(PGM_P)GBox -> LightSensor1 -> getReadingPercentage());
-  WebServer.setArgString(F("td_LightSensor1ReadingRaw"),GBox -> LightSensor1 -> getReadingText()); 
+  GBox -> InternalDHTSensor -> websiteRefreshEvent();
+  GBox -> ExternalDHTSensor -> websiteRefreshEvent();
+  GBox -> LightSensor1 -> websiteRefreshEvent();
+
+ 
   
-
-
-
   //Light1
   WebServer.setArgString(F("td_Light1_Status"),GBox -> Light1 -> getStatusText());
   WebServer.setArgString(F("td_Light1_TimerEnabled"),GBox -> Light1 -> getTimerOnOffText());
   WebServer.setArgString(F("td_Light1_On"), GBox -> Light1 -> getOnTimeText());
   WebServer.setArgString(F("td_Light1_Off"), GBox -> Light1 -> getOffTimeText());  
 
+  //PowerSensor1
   WebServer.setArgString(F("td_Power"),GBox -> PowerSensor1 -> getPowerText());  
   WebServer.setArgString(F("td_Energy"),GBox -> PowerSensor1 -> getEnergyText());  
   WebServer.setArgString(F("td_Voltage"),GBox -> PowerSensor1 -> getVoltageText());  

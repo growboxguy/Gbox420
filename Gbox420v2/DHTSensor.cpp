@@ -1,7 +1,12 @@
 #include "DHTSensor.h"
 #include "GrowBox.h"
 
-DHTSensor::DHTSensor(GrowBox * GBox, uint8_t _pin, uint8_t _sensorType){
+void DHTSensor::websiteRefreshEvent(){ //When the website is opened, load stuff once
+  WebServer.setArgString(getWebsiteComponentName(F("Temp")), getTempText());
+  WebServer.setArgString(getWebsiteComponentName(F("Humidity")), getHumidityText()); 
+} 
+
+DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, uint8_t _pin, uint8_t _sensorType): Common(Name){
   this -> GBox = GBox;
   sensor = new DHT(_pin,_sensorType);
   sensor -> begin();  //dereference the pointer to the object and then call begin() on it. Same as (*sensor).begin();

@@ -13,6 +13,7 @@ class Lights : public Common
     Lights(GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsSettings * DefaultSettings, byte DimmingLimit=8);  //constructor
     void refresh();  //Called when component should refresh its state
     void report();
+    void websiteLoadEvent();
     void setBrightness(byte Brightness, bool AddToLog);           
     void setLightOnOff(bool State,bool AddToLog);    
     void setTimerOnOff(bool State);    
