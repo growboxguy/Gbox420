@@ -6,8 +6,8 @@
 //   }
 //   Reading = Reading /50;
 //   float Voltage = ((float)Reading) * 5 / 1024 ;
-//   if(MySettings.MetricSystemEnabled) AeroPressure = MySettings.PressureSensorRatio*(Voltage-MySettings.PressureSensorOffset); // unit: bar / 100kPa
-//   else AeroPressure = MySettings.PressureSensorRatio*(Voltage-MySettings.PressureSensorOffset) * 14.5038;  //unit: PSI
+//   if(GBox -> BoxSettings -> MetricSystemEnabled) AeroPressure = GBox -> BoxSettings -> PressureSensorRatio*(Voltage-GBox -> BoxSettings -> PressureSensorOffset); // unit: bar / 100kPa
+//   else AeroPressure = GBox -> BoxSettings -> PressureSensorRatio*(Voltage-GBox -> BoxSettings -> PressureSensorOffset) * 14.5038;  //unit: PSI
 // }
 
 
@@ -24,11 +24,11 @@
 // }
 
 // void setPressureSensorOffset(float Value){
-//   MySettings.PressureSensorOffset = Value;
+//   GBox -> BoxSettings -> PressureSensorOffset = Value;
 //   addToLog(F("Pressure offset updated"));  
 // }
 
 // void setPressureSensorRatio(float Value){
-//   MySettings.PressureSensorRatio = Value;
+//   GBox -> BoxSettings -> PressureSensorRatio = Value;
 //   addToLog(F("Pressure/voltage ratio updated"));  
 // }

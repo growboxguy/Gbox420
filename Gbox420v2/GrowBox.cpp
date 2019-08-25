@@ -6,6 +6,11 @@
 #include "PowerSensor.h"
 #include "LightSensor.h"
 #include "PHSensor.h" 
+#include "LightSensor.h"
+#include "PHSensor.h" 
+#include "Aeroponics_Tank.h" 
+#include "Aeroponics_Pump.h" 
+
 
 static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
@@ -17,6 +22,8 @@ GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   LightSensor1 = new LightSensor(this, LightSensor1DigitalPin, LightSensor1AnalogPin);
   Light1 = new Lights(this,Light1RelayPin,Light1DimmingPin,&BoxSettings -> Light1,8);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
   PowerSensor1 = new PowerSensor(this,&Serial2);
+  Aeroponics_Tank1 = new Aeroponics_Tank(this, AeroSpraySolenoidPin, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings ->AeroTank1, &BoxSettings -> AeroTank1TankSpecific);
+  Aeroponics_Pump1 = new Aeroponics_Pump(this, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings -> AeroPump1);
   //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);
   if(BoxSettings -> DebugEnabled){logToSerials(F("GrowBox object created"),true);}
   addToLog(F("GrowBox initialized"),0);
@@ -33,6 +40,8 @@ void GrowBox::refresh(){  //implementing the virtual refresh function from Commo
 
 void GrowBox::runSec(){ 
   Sound1 -> refresh();
+  Aeroponics_Pump1 -> refresh();
+  Aeroponics_Tank1 -> refresh();
 }
 
 void GrowBox::runFiveSec(){

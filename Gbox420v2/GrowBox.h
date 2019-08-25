@@ -9,6 +9,8 @@ class PowerSensor;
 class PHSensor;
 class LightSensor;
 class PHSensor;
+class Aeroponics_Pump;
+class Aeroponics_Tank;
 
 class GrowBox : public Common
 {
@@ -27,6 +29,8 @@ class GrowBox : public Common
   Lights * Light2;  //Pointer to a Light assembly 
   PowerSensor * PowerSensor1;
   PHSensor * PHSensor1;
+  Aeroponics_Tank * Aeroponics_Tank1;
+  Aeroponics_Pump * Aeroponics_Pump1;
   void refresh();
   void report();
  

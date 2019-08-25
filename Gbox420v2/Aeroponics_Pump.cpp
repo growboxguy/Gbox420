@@ -5,6 +5,10 @@ Aeroponics_Pump::Aeroponics_Pump(GrowBox * GBox, byte BypassSolenoidPin, byte Pu
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Pump object created"),true);}
 }
 
+ void Aeroponics_Pump::report(){
+   ;
+ }
+
 void Aeroponics_Pump::refresh(){ //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Pump refreshing"),true);}  
  if (BlowOffInProgress && millis() - SprayTimer >= (uint32_t)(BlowOffTime * 1000)){   //checking pressure blow-off timeout
@@ -42,6 +46,7 @@ void Aeroponics_Pump::refresh(){ //pump directly connected to aeroponics tote, w
   } 
 }
 
+
 void Aeroponics_Pump::aeroSprayNow(bool DueToHighPressure){   
   if(*SprayEnabled || DueToHighPressure){
     BypassActive = false;
@@ -63,12 +68,12 @@ void Aeroponics_Pump::aeroSprayNow(bool DueToHighPressure){
 // {
 //   if(PumpOn){ //Only if pump is running
 //     if(!BypassSolenoidOn){ //when bypass is closed and should be spraying
-//       if( MySettings.PressureAlertLow <= AeroPressure && AeroPressure <= MySettings.PressureAlertHigh){ //If pressure is between OK range
+//       if( GBox -> BoxSettings -> PressureAlertLow <= AeroPressure && AeroPressure <= GBox -> BoxSettings -> PressureAlertHigh){ //If pressure is between OK range
 //         if(PreviousPressureRead != true){PressureTriggerCount = 0;}
 //         else{ if(!PressureOK)PressureTriggerCount++; } 
 //         PreviousPressureRead = true;     
          
-//         if(!PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){ // pressure was not OK before
+//         if(!PressureOK && PressureTriggerCount>=GBox -> BoxSettings -> ReadCountBeforeAlert){ // pressure was not OK before
 //            PressureOK = true;
 //         //    sendEmailAlert(F("Aeroponics%20pressure%20OK"));
 //            } 
@@ -78,14 +83,14 @@ void Aeroponics_Pump::aeroSprayNow(bool DueToHighPressure){
 //           else{ if(PressureOK)PressureTriggerCount++; } 
 //           PreviousPressureRead = false;  
           
-//           if(PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){
+//           if(PressureOK && PressureTriggerCount>=GBox -> BoxSettings -> ReadCountBeforeAlert){
 //               PressureOK = false;
-//               if(AeroPressure > MySettings.PressureAlertHigh){ //If high pressure alert level is reached  
+//               if(AeroPressure > GBox -> BoxSettings -> PressureAlertHigh){ //If high pressure alert level is reached  
 //                 setPumpOff(false); //force pump off 
 //                 // sendEmailAlert(F("Aeroponics%20pressure%20too%20high"));
 //                 GBox -> addToLog(F("High pressure warning"));
 //               }
-//               if(AeroPressure < MySettings.PressureAlertLow){ //If low pressure alert level is reached
+//               if(AeroPressure < GBox -> BoxSettings -> PressureAlertLow){ //If low pressure alert level is reached
 //                 // sendEmailAlert(F("Aeroponics%20pressure%20too%20low"));
 //                 GBox -> addToLog(F("Low pressure warning"));
 //               } 
@@ -94,12 +99,12 @@ void Aeroponics_Pump::aeroSprayNow(bool DueToHighPressure){
 //     }     
 //   }
 //   else  {//if pump is off: should be no pressure
-//         if((MySettings.MetricSystemEnabled && AeroPressure <= 0.3 )  || (!MySettings.MetricSystemEnabled && AeroPressure <= 5)){ //Checking if readings are close to 0
+//         if((GBox -> BoxSettings -> MetricSystemEnabled && AeroPressure <= 0.3 )  || (!GBox -> BoxSettings -> MetricSystemEnabled && AeroPressure <= 5)){ //Checking if readings are close to 0
 //           if(PreviousPressureRead != true){PressureTriggerCount = 0;}
 //           else{ if(!PressureOK)PressureTriggerCount++; } 
 //           PreviousPressureRead = true;     
            
-//           if(!PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){ // pressure was not OK before
+//           if(!PressureOK && PressureTriggerCount>=GBox -> BoxSettings -> ReadCountBeforeAlert){ // pressure was not OK before
 //              PressureOK = true;
 //             //  sendEmailAlert(F("Aeroponics%20pressure%20OK"));
 //              } 
@@ -109,7 +114,7 @@ void Aeroponics_Pump::aeroSprayNow(bool DueToHighPressure){
 //             else{ if(PressureOK)PressureTriggerCount++; } 
 //             PreviousPressureRead = false;  
             
-//             if(PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){
+//             if(PressureOK && PressureTriggerCount>=GBox -> BoxSettings -> ReadCountBeforeAlert){
 //                 PressureOK = false;
 //                 //   sendEmailAlert(F("Aeroponics%20sensor%20malfunction"));
 //                   GBox -> addToLog(F("Pressure sensor malfunction"));

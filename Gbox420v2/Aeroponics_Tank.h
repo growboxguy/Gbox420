@@ -23,6 +23,7 @@ class Aeroponics_Tank : public Aeroponics
 
 
     void refresh();
+    void report();
     void checkAeroPumpAlerts_WithPressureTank();
     bool checkQuietTime();
     void setQuietFromHour(int Hour);

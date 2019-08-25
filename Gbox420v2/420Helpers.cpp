@@ -78,14 +78,14 @@ char * toText(long Number){
 char * toText(float Number){ 
   static char ReturnFloatChar[MaxTextLength] = ""; 
   if(isnan(Number)) Number= -1.0;
-  dtostrf(Number, 4, 2, ReturnFloatChar); //minimum 4 char total lengt (Including decimal and possible - sign), with 2 digits after the decimal point
+  dtostrf(Number, 4, 2, ReturnFloatChar); //minimum 4 char total length (Including decimal and possible - sign), with 2 digits after the decimal point
   return ReturnFloatChar;
 }
 
 char * toPrecisionText(float Number){ 
   static char ReturnFloatChar[MaxTextLength] = "";
   if(isnan(Number)) Number= -1.0;
-  dtostrf(Number, 8, 6, ReturnFloatChar); //minimum 8 char total lengt, with 6 decimals
+  dtostrf(Number, 8, 6, ReturnFloatChar); //minimum 8 char total length, with 6 decimals
   return ReturnFloatChar;
 }
 

@@ -156,6 +156,7 @@ void restoreDefaults(Settings* SettingsToOverwrite){
 }
 
 void HeartBeat(){
-  static bool pulseHigh = !pulseHigh;
+  static bool pulseHigh;
+  pulseHigh = !pulseHigh;
   digitalWrite(13, pulseHigh);
 }

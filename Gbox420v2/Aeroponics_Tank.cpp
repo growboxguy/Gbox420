@@ -12,6 +12,10 @@ Aeroponics_Tank::Aeroponics_Tank(GrowBox * GBox, byte SpraySolenoidPin, byte Byp
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Tank object created"),true);}
  }    
 
+ void Aeroponics_Tank::report(){
+   ;
+ }
+
 void Aeroponics_Tank::refresh(){ //when pressure tank is connected
 if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Tank refreshing"),true);}  
   if(PumpOn){ //if pump is on
@@ -29,7 +33,7 @@ if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Tank refreshi
         logToSerials(F("Pump timeout reached"),true);       
       }
        if (!BypassActive && BypassSolenoidOn && millis() - PumpTimer >= (uint32_t)(*PrimingTime * 1000)){ //self priming timeout reached, time to start refilling
-          if(MySettings.DebugEnabled)logToSerials(F("Starting refill"),true); 
+          if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Starting refill"),true); 
           BypassSolenoidOn = false;      
           PumpTimer = millis(); //reset timer to start measuring spray time
         }      
@@ -37,7 +41,7 @@ if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Tank refreshi
   }
   if( PumpOK && checkQuietTime() && AeroPressure <= *PressureLow){ //if pump is not disabled and quiet time not active and Pressure reached low limit: turn on pump 
         if(!PumpOn && !BypassSolenoidOn){ //start the bypass
-          if(MySettings.DebugEnabled)logToSerials(F("Starting bypass"),true);
+          if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Starting bypass"),true);
           BypassSolenoidOn = true; 
           PumpOn = true;
         }  
@@ -55,7 +59,7 @@ if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Tank refreshi
     if(*SprayEnabled && millis() - SprayTimer >= (uint32_t)(*Interval * 60000)){ //if time to start spraying (AeroInterval in Minutes)
         SpraySolenoidOn = true;
         GBox -> Sound1 -> playOnSound();
-        if(MySettings.DebugEnabled)logToSerials(F("Starting spray"),true);
+        if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Starting spray"),true);
         SprayTimer = millis();
     }    
   }  
@@ -63,18 +67,18 @@ if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Tank refreshi
 
 // void Aeroponics_Tank::checkAeroPumpAlerts_WithPressureTank()
 // {
-//   if(MySettings.PressureAlertLow <= AeroPressure && AeroPressure <= MySettings.PressureAlertHigh){ //If pressure is between OK range
+//   if(GBox -> BoxSettings -> PressureAlertLow <= AeroPressure && AeroPressure <= GBox -> BoxSettings -> PressureAlertHigh){ //If pressure is between OK range
 //     if(PreviousPressureRead != true){PressureTriggerCount = 0;}
 //     else{ if(!PressureOK)PressureTriggerCount++; } 
 //     PreviousPressureRead = true;     
      
-//     if(!PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){ // pressure was not OK before
+//     if(!PressureOK && PressureTriggerCount>=GBox -> BoxSettings -> ReadCountBeforeAlert){ // pressure was not OK before
 //        PressureOK = true;
 //     //    sendEmailAlert(F("Aeroponics%20pressure%20OK"));
 //        } 
 //   }
 //   else{
-//     if(AeroPressure > MySettings.PressureAlertHigh){ //Pressure over limit - emergency spraying
+//     if(AeroPressure > GBox -> BoxSettings -> PressureAlertHigh){ //Pressure over limit - emergency spraying
 //           setPumpOff(false); //force pump off
 //          // aeroSprayNow(true); //try to release pressure  
 //     }
@@ -82,13 +86,13 @@ if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Tank refreshi
 //     else{ if(PressureOK)PressureTriggerCount++; }  //count out of range readings while pressure is considered OK and an alert is not active.
 //     PreviousPressureRead = false;  
     
-//     if(PressureOK && PressureTriggerCount>=MySettings.ReadCountBeforeAlert){ //trigger an alert if the out of range reading counter is above the limit
+//     if(PressureOK && PressureTriggerCount>=GBox -> BoxSettings -> ReadCountBeforeAlert){ //trigger an alert if the out of range reading counter is above the limit
 //         PressureOK = false;
-//         if(AeroPressure > MySettings.PressureAlertHigh){ //If high pressure alert level is reached   
+//         if(AeroPressure > GBox -> BoxSettings -> PressureAlertHigh){ //If high pressure alert level is reached   
 //         //   sendEmailAlert(F("Aeroponics%20pressure%20too%20high"));
 //           GBox -> addToLog(F("High pressure warning"));
 //         }
-//         if(AeroPressure < MySettings.PressureAlertLow){ //If low pressure alert level is reached
+//         if(AeroPressure < GBox -> BoxSettings -> PressureAlertLow){ //If low pressure alert level is reached
 //           //if(PumpOK) setPumpOn(false); //Uncomment this to turn pump on even under quiet time
 //         //   sendEmailAlert(F("Aeroponics%20pressure%20too%20low"));
 //           GBox -> addToLog(F("Low pressure warning"));

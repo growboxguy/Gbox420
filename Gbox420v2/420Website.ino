@@ -5,6 +5,8 @@
 #include "Sound.h"
 #include "PowerSensor.h"
 #include "LightSensor.h"
+#include "Aeroponics_Pump.h"
+#include "Aeroponics_Tank.h"
 
 void resetWebServer(void) {    // Callback made from esp-link to notify that it has just come out of a reset
   logToSerials(F("WebServer (re)starting..."),false,0);
