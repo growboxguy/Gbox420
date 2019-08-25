@@ -1,5 +1,4 @@
 #pragma once
-
 #include "420Common.h"
 
 class GrowBox;  //forward declaration
@@ -11,7 +10,7 @@ class Lights : public Common
 
   public:
     //Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
-    Lights(GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsSettings * LightDefaultSettings, byte DimmingLimit=8);  //constructor
+    Lights(GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsSettings * DefaultSettings, byte DimmingLimit=8);  //constructor
     void refresh();  //Called when component should refresh its state
     void report();
     void setBrightness(byte Brightness, bool AddToLog);           

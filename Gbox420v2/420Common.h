@@ -1,7 +1,7 @@
 #pragma once   //header guard, same as the ifndef/define guard  https://en.wikipedia.org/wiki/Pragma_once
 
 //This is a virtual class from which all other classes are derived (GrowBox, PH reader, Lights, DHTSensor..)
-//Enforces a set of common functions all clases need to implement
+//Enforces a set of common functions all classes need to implement
 
 #include "Arduino.h"  //every inheriting class have Arduino commands available
 #include "TimeLib.h" //Keeping track of time

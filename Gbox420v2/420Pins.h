@@ -1,5 +1,9 @@
 #pragma once
 
+//Aeroponics pins
+  byte AeroSpraySolenoidPin = 22;  //Power relay Port 1 - Aeroponics spray solenoid (Only used with Aeroponics_Tank module)
+  byte AeroBypassSolenoidPin = 23; //Power relay Port 3 - Aeroponics bypass solenoid 
+  byte AeroPumpPin = 24;  //Power relay Port 2 - Aeroponics high pressure pump
 
 //DHTSensor pins
   uint8_t InternalDHTSensorPin = 43; //DAT - DHT22 temp/humidity sensor, internally mounted
@@ -30,9 +34,6 @@
 //Digital pins
 
   byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
-  byte Relay1OutPin = 22;  //Power relay Port 1 - FREE
-  byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump
-  byte Relay3OutPin = 24;  //Power relay Port 3 - Aeroponics bypass solenoid
   byte Relay4OutPin = 25;  //Power relay Port 4 - Internal fan Off/On
   byte Relay5OutPin = 26;  //Power relay Port 5 - Internal fan Low/High
   byte Relay6OutPin = 27;  //Power relay Port 6 - Exhaust fan Off/On

@@ -4,7 +4,7 @@
 //////////////////////////////////////////
 //PHSensor functions
 
-PHSensor::PHSensor(GrowBox * GBox, byte Pin, float &Intercept, float &Slope){
+PHSensor::PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope){
   this -> GBox = GBox;
   this -> Pin = Pin;
   this -> Intercept = Intercept;
@@ -27,17 +27,17 @@ void PHSensor::getPH(bool ShowRaw){
     strcat(Message,toText(PHRaw));
     GBox -> addToLog(Message);
   } 
-  PH -> updateAverage(Slope*PHRaw + Intercept); 
+  PH -> updateAverage((*Slope)*PHRaw + (*Intercept)); 
   //checkPHAlert();
 }
 
 
 void PHSensor::setSlope(float Value){
-  Slope = Value;
+  *Slope = Value;
   GBox -> addToLog(F("PH slope updated"));
 }
 
 void PHSensor::setIntercept(float Value){
-  Intercept = Value;
+  *Intercept = Value;
   GBox -> addToLog(F("PH intercept updated"));
 }

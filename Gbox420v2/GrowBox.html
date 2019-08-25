@@ -202,14 +202,14 @@
 				  <tr>
 					<td id="tdAeroPressure" class="dataRows"></td>
 					<td id="tdAeroSprayEnabled" class="dataRows"></td>
-					<td id="tdAeroPumpOn" class="dataRows"></td>
+					<td id="tdPumpOn" class="dataRows"></td>
 				  </tr>
 				</table>
 				<b>Pump</b><br>
 				<button id="btn_PumpOn" type="button" align="right" title="Starts the pump and reset its status to OK">ON</button>
 				<button id="btn_PumpOff" type="button" align="right" title="Stops the pump and reset its status to OK">OFF</button>
 				<button id="btn_PumpDisable" type="button" align="right" title="Stops and disables pump">Disable</button>
-				<button id="btn_AeroMix" type="button" align="right" title="Mix nutrients: Starts pump and opens bypass valve">Mix</button><br>
+				<button id="btn_Mix" type="button" align="right" title="Mix nutrients: Starts pump and opens bypass valve">Mix</button><br>
 				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="AeroPumpTimeout" type="number" title="Maximum high pressure tank refill time, if reached pump is considered broken"/> sec <input type="submit" value="Set"></form>
 				<form>Pump priming time:<input style="width: 55px;" min=1 max=9999 name="AeroPrimingTime" type="number" title="At pump startup the bypass valve is open for X seconds"/> sec <input type="submit" value="Set"></form>				
 				<b>Spray</b><br>
@@ -219,7 +219,7 @@
 				<button id="btn_AeroSprayOff" type="button" title="Stop spraying">OFF</button>				
 				<form>
 					Interval: <input style="width: 50px;" min=0 name="AeroInterval" type="number"/> min<br>
-					Duration: <input style="width: 50px;" min=0 name="AeroDuration" type="number"/> sec
+					Duration: <input style="width: 50px;" min=0 name="Duration" type="number"/> sec
 					<input type="submit" value="Set" title="Set how often a spray should start (Interval), and how long one spray should last (Duration)">	
 				</form>									
 			</div>			

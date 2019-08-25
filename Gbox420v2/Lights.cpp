@@ -5,18 +5,18 @@
 //////////////////////////////////////////////////////////////////
 //Lights functions
 
-Lights::Lights(GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsSettings * LightDefaultSettings, byte DimmingLimit){
+Lights::Lights(GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsSettings * DefaultSettings, byte DimmingLimit){
   this -> GBox = GBox;
   this -> RelayPin = RelayPin;
   this -> DimmingPin = DimmingPin;
   this -> DimmingLimit = DimmingLimit; //Blocks dimming below a certain percentafe (default 8%), Most LED drivers cannot fully dim, check the specification and adjust accordingly, only set 0 if it supports dimming fully! (Usually not the case..)
-  Status = &LightDefaultSettings -> Status;
-  Brightness = &LightDefaultSettings -> Brightness;
-  TimerEnabled = &LightDefaultSettings -> TimerEnabled;
-  OnHour = &LightDefaultSettings -> OnHour;
-  OnMinute = &LightDefaultSettings -> OnMinute;
-  OffHour = &LightDefaultSettings -> OffHour;
-  OffMinute = &LightDefaultSettings -> OffMinute;
+  Status = &DefaultSettings -> Status;
+  Brightness = &DefaultSettings -> Brightness;
+  TimerEnabled = &DefaultSettings -> TimerEnabled;
+  OnHour = &DefaultSettings -> OnHour;
+  OnMinute = &DefaultSettings -> OnMinute;
+  OffHour = &DefaultSettings -> OffHour;
+  OffMinute = &DefaultSettings -> OffMinute;
   pinMode(RelayPin, OUTPUT);
   pinMode(DimmingPin, OUTPUT);
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Lights object created"),true);}

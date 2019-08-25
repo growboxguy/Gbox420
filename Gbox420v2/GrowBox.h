@@ -1,5 +1,4 @@
 #pragma once
-
 #include "420Common.h"
 
 class DHTSensor;  //forward declaration of classes

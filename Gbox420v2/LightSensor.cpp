@@ -32,7 +32,7 @@ void LightSensor::report(){
   logToSerials( &Message, true,4);
 }
 
-bool LightSensor::getIsDark(){ //Ligth sensor digital feedback: True(Dark) or False(Bright)  
+bool LightSensor::getIsDark(){ //Light sensor digital feedback: True(Dark) or False(Bright)  
   return IsDark;
 }
 

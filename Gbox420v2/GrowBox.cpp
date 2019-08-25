@@ -59,10 +59,10 @@ void GrowBox::report(){
   strcat_P(Message,(PGM_P)F(" ; Exhaust fan:"));strcat_P(Message,(PGM_P)fanSpeedToText(false)); 
   strcat_P(Message,(PGM_P)F("\n\r Aeroponics - "));
   strcat_P(Message,(PGM_P)F("Pressure:"));strcat(Message,toText(AeroPressure));if(BoxSettings -> MetricSystemEnabled)strcat_P(Message,(PGM_P)F("bar"));else strcat_P(Message,(PGM_P)F("psi"));
-  strcat_P(Message,(PGM_P)F(" ; Low:"));strcat(Message,toText(BoxSettings -> AeroPressureLow));
-  strcat_P(Message,(PGM_P)F(" ; High:"));strcat(Message,toText(BoxSettings -> AeroPressureHigh));
+  strcat_P(Message,(PGM_P)F(" ; Low:"));strcat(Message,toText(BoxSettings -> PressureLow));
+  strcat_P(Message,(PGM_P)F(" ; High:"));strcat(Message,toText(BoxSettings -> PressureHigh));
   strcat_P(Message,(PGM_P)F(" ; Interval:"));strcat(Message,toText(BoxSettings -> AeroInterval));
-  strcat_P(Message,(PGM_P)F(" ; Duration:"));strcat(Message,toText(BoxSettings -> AeroDuration));
+  strcat_P(Message,(PGM_P)F(" ; Duration:"));strcat(Message,toText(BoxSettings -> Duration));
   strcat_P(Message,(PGM_P)F("\n\r Reservoir - "));
   strcat_P(Message,(PGM_P)F("Temp:")); strcat(Message,toText(ReservoirTemp));  
   strcat_P(Message,(PGM_P)F(" ; PH:")); strcat(Message,toText(PH));

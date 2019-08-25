@@ -29,6 +29,7 @@
 #include "Thread.h" //Splitting functions to threads for timing
 #include "StaticThreadController.h"  //Grouping threads
 #include "420Common.h"  //Base class where plugins inherits from
+//#include "420Pins.h"  //Arduino Pin layout
 #include "GrowBox.h" //Represents a complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variables
@@ -54,6 +55,7 @@ GrowBox * GBox;  //Represents a Grow Box with all components (Lights, DHT sensor
 void setup() {  // put your setup code here, to run once:
   ArduinoSerial.begin(115200);    //2560mega console output
   ESPSerial.begin(115200);  //esp WiFi console output
+  pinMode(13, OUTPUT); //onboard LED - Heartbeat every second to confirm code is running
   logToSerials(F("GrowBox initializing..."),true,0); //logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0)
   wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
@@ -95,27 +97,28 @@ void processTimeCriticalStuff(){
 //Threads
 
 void runSec(){
-  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("One sec trigger.."),true,1);
   wdt_reset(); //reset watchdog timeout
+  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("One sec trigger.."),true,1);  
+  HeartBeat();
   GBox -> runSec();
 }
 
 void runFiveSec(){
-  if(GBox -> BoxSettings -> DebugEnabled) logToSerials(F("Five sec trigger.."),true,1);
-  wdt_reset(); //reset watchdog timeout   
+  wdt_reset(); //reset watchdog timeout
+  if(GBox -> BoxSettings -> DebugEnabled) logToSerials(F("Five sec trigger.."),true,1);     
   GBox -> runFiveSec();
   if(GBox -> BoxSettings -> DebugEnabled) getFreeMemory();
 }
 
 void runMinute(){
-  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Minute trigger.."),true,1);
   wdt_reset(); //reset watchdog timeout
+  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Minute trigger.."),true,1);
   GBox -> runMinute();
 }
 
 void runHalfHour(){
-  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Half hour trigger.."),true,1);
   wdt_reset(); //reset watchdog timeout
+  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Half hour trigger.."),true,1);  
   GBox -> runHalfHour();
 }
 
@@ -150,4 +153,9 @@ void restoreDefaults(Settings* SettingsToOverwrite){
   memcpy(&SettingsToOverwrite,&DefaultSettings,sizeof(Settings));  
   saveSettings(false,SettingsToOverwrite );
   GBox -> addToLog(F("Default settings restored"));
+}
+
+void HeartBeat(){
+  static bool pulseHigh = !pulseHigh;
+  digitalWrite(13, pulseHigh);
 }

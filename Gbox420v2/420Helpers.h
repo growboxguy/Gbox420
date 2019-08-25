@@ -60,7 +60,7 @@ template <class logLine> void logToSerials (logLine& ToPrint,bool BreakLine=true
 
 
 //////////////////////////////////////////////////////////////////
-//RollingAverage class: For smoothing sensor readyings
+//RollingAverage class: For smoothing sensor readings
 
 class RollingAverage
 {  
@@ -89,6 +89,6 @@ class AlertHandler
     byte TriggerCount = 0 ; //Counts out of range readings
    
   public:  
-    //AlertHandler();  //default constuctor: automatically declared
+    //AlertHandler();  //default constructor: automatically declared
     bool reportHealth(bool HealthOK); //    
 };

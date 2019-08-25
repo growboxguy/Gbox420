@@ -1,206 +1,112 @@
-volatile unsigned int FlowPulseCount = 0; //volatile variables are stored in RAM: https://www.arduino.cc/reference/en/language/variables/variable-scope--qualifiers/volatile/
+#include "Aeroponics.h"
+#include "GrowBox.h"
 
-void checkAero(bool Interrupt){
- if(Interrupt) //Stuff to do only when called from an interrupt (When Solenoid or Pump is on)
-  {
-    if(millis() - FlowMeterTimer >= 1000) //Log after every second the pulse count
-      {
-        if(MySettings.DebugEnabled){
-          memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable  
-          strcat_P(WebMessage,(PGM_P)F("FlowMeter: "));
-          strcat(WebMessage,toText((uint32_t)FlowPulseCount)); 
-          strcat_P(WebMessage,(PGM_P)F(" pulse/sec"));
-          logToSerials(WebMessage,true);
-        }
-        LastPulseCount = FlowPulseCount;
-        FlowMeterTimer = millis();
-        FlowPulseCount = 0;
-      }
-  }
- else{
-  readAeroPressure(); //skip reading the pressure when called from an interrupt. (Within an interrupt millis() counter doesn`t increase, so delay() never ends)
- }
- if(MySettings.AeroPressureTankPresent)  {
-    checkAeroSprayTimer_WithPressureTank();
-    if(!Interrupt)checkAeroPumpAlerts_WithPressureTank();
-  }
- else {
-  checkAeroSprayTimer_WithoutPressureTank();
-  if(!Interrupt)checkAeroPumpAlerts_WithoutPressureTank();
- }
- checkRelays();
+Aeroponics::Aeroponics(GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings){  //constructor
+    this -> GBox = GBox;
+    this -> BypassSolenoidPin = BypassSolenoidPin;
+    this -> PumpPin = PumpPin;
+    SprayEnabled = &DefaultSettings -> SprayEnabled;  //Enable/disable misting
+    Interval = &DefaultSettings -> Interval; //Aeroponics - Spray every 15 minutes
+    Duration = &DefaultSettings -> Duration; //Aeroponics - Spray time in seconds
+    PressureLow = &DefaultSettings -> PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
+    PressureHigh = &DefaultSettings -> PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
+    PumpTimeout = &DefaultSettings -> PumpTimeout;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
+    PrimingTime = &DefaultSettings -> PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
 }
 
 
-
-
-
-void aeroSprayNow(bool DueToHighPressure){   
-  if(MySettings.AeroSprayEnabled || DueToHighPressure){
-    AeroBypassActive = false;
-    AeroSprayTimer = millis();
-    if(MySettings.AeroPressureTankPresent){
-      AeroSpraySolenoidOn = true; 
-    }
-    else{
-      PumpOK = true;
-      AeroPumpOn = true;
-      AeroBypassSolenoidOn = true;
-      startFlowMeter();
-      AeroPumpTimer = millis();
-    }    
-    checkRelays();
-    PlayOnSound = true;
-    if(DueToHighPressure) addToLog(F("Above pressure limit,spraying"));
-    else addToLog(F("Aeroponics spraying"));
-    }
-}
-
-void aeroSprayOff(){    
-    if(MySettings.AeroPressureTankPresent) {
-       AeroSpraySolenoidOn = false; 
-    }
-    else{
-      AeroPumpOn = false; 
-      AeroBypassSolenoidOn = false; 
-      stopFlowMeter(); 
-    }
-    checkRelays();
-    addToLog(F("Aeroponics spray OFF"));
-}
-
-void aeroPumpOn(bool CalledFromWebsite){
-  AeroBypassActive   = CalledFromWebsite; //If called from the Web interface keep the pump on
-  AeroPumpOn = true;
-  AeroPumpTimer = millis();
-  startFlowMeter(); 
+void Aeroponics::setPumpOn(bool CalledFromWebsite){
+  BypassActive  = CalledFromWebsite; //If called from the Web interface keep the pump on
+  PumpOn = true;
+  PumpTimer = millis();
   checkRelays();
   if(CalledFromWebsite){
-    addToLog(F("Pump ON"));
-    PlayOnSound = true;
+    GBox -> addToLog(F("Pump ON"));
+    GBox -> Sound1 -> playOnSound();
     PumpOK = true; 
   }
 }
 
-void aeroPumpOff(bool CalledFromWebsite){  
-  AeroBypassActive = false;
-  AeroPumpOn = false;
-  if(!AeroBlowOffInProgress)AeroBypassSolenoidOn = false; //Close bypass valve
-  AeroPumpTimer = millis();
-  stopFlowMeter();           
+void Aeroponics::setPumpOff(bool CalledFromWebsite){  
+  BypassActive = false;
+  PumpOn = false;
+  if(!BlowOffInProgress)BypassSolenoidOn = false; //Close bypass valve
+  PumpTimer = millis();        
   checkRelays();
   if(CalledFromWebsite){ 
-    addToLog(F("Pump OFF"));
-    PlayOffSound = true;
+    GBox -> addToLog(F("Pump OFF"));
+    GBox -> Sound1 -> playOffSound();
     PumpOK = true; //re-enable pump 
   }
 }
 
-void aeroPumpDisable(){
-  aeroPumpOff(false);
+void Aeroponics::PumpDisable(){
+  setPumpOff(false);
   PumpOK = false;
-  addToLog(F("Pump disabled"));
+  GBox -> addToLog(F("Pump disabled"));
 }
 
-void aeroMix(){
-  AeroPumpOn = true;    
-  AeroBypassActive = true; 
+void Aeroponics::Mix(){
+  PumpOn = true;    
+  BypassActive = true; 
   PumpOK = true;
-  AeroBypassSolenoidOn = true;
-  AeroPumpTimer = millis();
-  startFlowMeter();      
+  BypassSolenoidOn = true;
+  PumpTimer = millis();    
   checkRelays();
-  PlayOnSound = true;
-  addToLog(F("Mixing nutrients"));
+  GBox -> Sound1 -> playOnSound();
+  GBox -> addToLog(F("Mixing nutrients"));
 }
 
-void setAeroSprayOnOff(bool State){
-  MySettings.AeroSprayEnabled=State;
-  if(MySettings.AeroSprayEnabled){ 
-    addToLog(F("Aeroponics spray enabled"));
-    PlayOnSound=true;} 
+void Aeroponics::setSprayOnOff(bool State){
+  *SprayEnabled=State;
+  if(*SprayEnabled){ 
+    GBox -> addToLog(F("Aeroponics spray enabled"));
+    GBox -> Sound1 -> playOnSound();
+    } 
   else {
-    addToLog(F("Aeroponics spray disabled"));
-    PlayOffSound=true;}
+    GBox -> addToLog(F("Aeroponics spray disabled"));
+    GBox -> Sound1 -> playOffSound();
+    }
 }
 
-void setAeroInterval(int interval){  
-  MySettings.AeroInterval = interval; 
-  AeroSprayTimer = millis();
+void Aeroponics::setInterval(int interval){  
+  *Interval = interval; 
+  SprayTimer = millis();
 }
 
-void setAeroDuration(int duration){  
-  MySettings.AeroDuration = duration;
-  AeroSprayTimer = millis(); 
-  addToLog(F("Spray time updated"));  
+void Aeroponics::setDuration(int duration){  
+  *Duration = duration;
+  SprayTimer = millis(); 
+  GBox -> addToLog(F("Spray time updated"));  
 }
 
 
-void setAeroPressureLow(float PressureLow){
-  MySettings.AeroPressureLow =  PressureLow;
+void Aeroponics::setPressureLow(float PressureLow){
+  *(this -> PressureLow) =  PressureLow;
 }
 
-void setAeroPressureHigh(float PressureHigh){
-  MySettings.AeroPressureHigh = PressureHigh;
-  addToLog(F("Pump settings updated"));
+void Aeroponics::setPressureHigh(float PressureHigh){
+  *(this -> PressureHigh) = PressureHigh;
+  GBox -> addToLog(F("Pump settings updated"));
 }
 
-const __FlashStringHelper * pumpStateToText(){
+const __FlashStringHelper * Aeroponics::pumpStateToText(){
    if(!PumpOK) return F("DISABLED");
-   else if(AeroPumpOn) return F("ON");
-   else return F("OFF");
+   else if(PumpOn) return F("ON");
+   return F("OFF");
 }
 
-//Quiet time section: Blocks running the pump in a pre-defined time range
-uint32_t AeroLastRefill= 0;
-bool checkQuietTime() {  
-  if(MySettings.AeroQuietEnabled){
-    time_t Now = now(); // Get the current time
-    int CombinedFromTime = MySettings.AeroQuietFromHour * 100 + MySettings.AeroQuietFromMinute;
-    int CombinedToTime = MySettings.AeroQuietToHour * 100 + MySettings.AeroQuietToMinute;
-    int CombinedCurrentTime = hour(Now) * 100 + minute(Now);
-    if(MySettings.AeroRefillBeforeQuiet && PumpOK && CombinedFromTime == CombinedCurrentTime && millis() - AeroLastRefill > 120000 ){
-      aeroPumpOn(false); 
-      AeroLastRefill = millis();
-    }
-    if(CombinedFromTime <= CombinedToTime)  //no midnight turnover, Example: On 8:10, Off: 20:10
-    {
-      if(CombinedFromTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedToTime){
-        return false;} //do not allow running the pump
-      else  return true;  //allow running   
-    }
-    else   //midnight turnover, Example: On 21:20, Off: 9:20
-    {
-      if(CombinedFromTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedToTime){
-       return false; } //do not allow running the pump
-      else  return true;  //allow running    
-    }
-  }
-  else return true; //always allow if quiet mode is not enabled
-}
 
-void setAeroPumpTimeout(int Timeout)
+void Aeroponics::setAeroPumpTimeout(int Timeout)
 {
-MySettings.AeroPumpTimeout = (uint32_t)Timeout;
-addToLog(F("Aero pump timeout updated"));
+*PumpTimeout = (uint32_t)Timeout;
+GBox -> addToLog(F("Aero pump timeout updated"));
 }
 
-void setAeroPrimingTime(int Timing)
+void Aeroponics::setAeroPrimingTime(uint32_t Timing)
 {
-MySettings.AeroPrimingTime = (uint32_t)Timing;
-addToLog(F("Aero priming time updated"));
+*PrimingTime = (uint32_t)Timing;
+GBox -> addToLog(F("Aero priming time updated"));
 }
 
 
-
-void setAeroBlowOnOff(bool State){ //this change requires a different aeroponics setup
-  MySettings.AeroBlowOff = State;  
-  if(MySettings.AeroBlowOff){ 
-    addToLog(F("Blow-off enabled"));
-    PlayOnSound=true;
-    }
-  else {
-    addToLog(F("Blow-off disabled"));
-    PlayOffSound=true;
-    }
-}

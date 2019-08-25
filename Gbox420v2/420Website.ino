@@ -44,10 +44,10 @@ void loadCallback(char * url) //called when website is loaded. Do not call logTo
   WebServer.setArgInt(F("Light1Brightness"), *(GBox -> Light1 -> Brightness));
   WebServer.setArgInt(F("Light1BrightnessSlider"), *(GBox -> Light1 -> Brightness));
 
-  WebServer.setArgInt(F("AeroPumpTimeout"), GBox -> BoxSettings -> AeroPumpTimeout);
-  WebServer.setArgInt(F("AeroPrimingTime"), GBox -> BoxSettings -> AeroPrimingTime);
-  WebServer.setArgInt(F("AeroInterval"), GBox -> BoxSettings -> AeroInterval);
-  WebServer.setArgInt(F("AeroDuration"), GBox -> BoxSettings -> AeroDuration);  
+  // WebServer.setArgInt(F("AeroPumpTimeout"), GBox -> BoxSettings -> AeroPumpTimeout);
+  // WebServer.setArgInt(F("AeroPrimingTime"), GBox -> BoxSettings -> AeroPrimingTime);
+  // WebServer.setArgInt(F("AeroInterval"), GBox -> BoxSettings -> AeroInterval);
+  // WebServer.setArgInt(F("Duration"), GBox -> BoxSettings -> Duration);  
   }
   
   if (strcmp(url,"/Settings.html.json")==0){  

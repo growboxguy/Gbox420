@@ -6,7 +6,6 @@ Sound::Sound(GrowBox * GBox,byte Pin, bool *Enabled){
   this -> Pin = Pin;
   this -> Enabled = Enabled;
   pinMode(Pin, OUTPUT);
-  pinMode(13, OUTPUT); //onboard LED
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Sound object created"),true);}
 }
 
@@ -193,9 +192,9 @@ void Sound::buzz( uint32_t frequency, uint32_t length) {
   //// multiply frequency, which is really cycles per second, by the number of seconds to
   //// get the total number of cycles to produce
   for (uint32_t i = 0; i < numCycles; i++) { // for the calculated length of time...
-    digitalWrite(Pin, HIGH); // write the Sound pin high to push out the diaphram
+    digitalWrite(Pin, HIGH); // write the Sound pin high to push out the diaphragm
     delayMicroseconds(delayValue); // wait for the calculated delay value
-    digitalWrite(Pin, LOW); // write the Sound pin low to pull back the diaphram
+    digitalWrite(Pin, LOW); // write the Sound pin low to pull back the diaphragm
     delayMicroseconds(delayValue); // wait again or the calculated delay value
   }  
   digitalWrite(13, LOW);

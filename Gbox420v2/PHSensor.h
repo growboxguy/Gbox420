@@ -20,14 +20,14 @@ class PHSensor : public Common
   private:
     GrowBox * GBox;
     RollingAverage * PH;
-    float &Intercept;
-    float &Slope;
+    float * Intercept;
+    float * Slope;
     byte Pin;
   
   protected:
    
   public:
-    PHSensor(GrowBox * GBox, byte Pin, float &Intercept, float &Slope);
+    PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope);
     void refresh();
     void report();
     void getPH(bool ShowRaw);
