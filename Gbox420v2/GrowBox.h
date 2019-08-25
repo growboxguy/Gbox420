@@ -9,7 +9,7 @@ class PowerSensor;
 class PHSensor;
 class LightSensor;
 class PHSensor;
-class Aeroponics_Pump;
+class Aeroponics_NoTank;
 class Aeroponics_Tank;
 
 class GrowBox : public Common
@@ -30,7 +30,7 @@ class GrowBox : public Common
   PowerSensor * PowerSensor1;
   PHSensor * PHSensor1;
   Aeroponics_Tank * Aeroponics_Tank1;
-  Aeroponics_Pump * Aeroponics_Pump1;
+  Aeroponics_NoTank * Aeroponics_NoTank1;
   void refresh();
   void report();
  

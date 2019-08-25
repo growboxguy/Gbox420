@@ -1,39 +1,42 @@
 #include "Aeroponics.h"
 #include "GrowBox.h"
 
+//This is a virtual class (cannot be instanciated), parent of two classes:
+// -Aeroponics_NoTank: High pressure pump is directly connected to the aeroponics tote
+// -Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid (electric water valve)
+
+
 Aeroponics::Aeroponics(GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings){  //constructor
     this -> GBox = GBox;
     this -> BypassSolenoidPin = BypassSolenoidPin;
     this -> PumpPin = PumpPin;
     SprayEnabled = &DefaultSettings -> SprayEnabled;  //Enable/disable misting
     Interval = &DefaultSettings -> Interval; //Aeroponics - Spray every 15 minutes
-    Duration = &DefaultSettings -> Duration; //Aeroponics - Spray time in seconds
-    PressureLow = &DefaultSettings -> PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
-    PressureHigh = &DefaultSettings -> PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
+    Duration = &DefaultSettings -> Duration; //Aeroponics - Spray time in seconds    
     PumpTimeout = &DefaultSettings -> PumpTimeout;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
     PrimingTime = &DefaultSettings -> PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
 }
 
 
-void Aeroponics::setPumpOn(bool CalledFromWebsite){
-  BypassActive  = CalledFromWebsite; //If called from the Web interface keep the pump on
+void Aeroponics::setPumpOn(bool UserRequest){
+  BypassActive  = UserRequest; //If pump was turned on from the web interface first run an air bleeding cycle
   PumpOn = true;
   PumpTimer = millis();
   checkRelays();
-  if(CalledFromWebsite){
+  if(UserRequest){  //if the pump was turned on from the web interface, not by the automation
     GBox -> addToLog(F("Pump ON"));
     GBox -> Sound1 -> playOnSound();
     PumpOK = true; 
   }
 }
 
-void Aeroponics::setPumpOff(bool CalledFromWebsite){  
+void Aeroponics::setPumpOff(bool UserRequest){  
   BypassActive = false;
   PumpOn = false;
   if(!BlowOffInProgress)BypassSolenoidOn = false; //Close bypass valve
   PumpTimer = millis();        
   checkRelays();
-  if(CalledFromWebsite){ 
+  if(UserRequest){  //if the pump was turned off from the web interface, not by the automation
     GBox -> addToLog(F("Pump OFF"));
     GBox -> Sound1 -> playOffSound();
     PumpOK = true; //re-enable pump 
@@ -78,16 +81,6 @@ void Aeroponics::setDuration(int duration){
   *Duration = duration;
   SprayTimer = millis(); 
   GBox -> addToLog(F("Spray time updated"));  
-}
-
-
-void Aeroponics::setPressureLow(float PressureLow){
-  *(this -> PressureLow) =  PressureLow;
-}
-
-void Aeroponics::setPressureHigh(float PressureHigh){
-  *(this -> PressureHigh) = PressureHigh;
-  GBox -> addToLog(F("Pump settings updated"));
 }
 
 const __FlashStringHelper * Aeroponics::pumpStateToText(){

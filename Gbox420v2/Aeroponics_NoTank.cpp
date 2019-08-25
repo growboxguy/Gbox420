@@ -1,16 +1,16 @@
-#include "Aeroponics_Pump.h"
+#include "Aeroponics_NoTank.h"
 #include "GrowBox.h"
 
-Aeroponics_Pump::Aeroponics_Pump(GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings) : Aeroponics(&(*GBox), BypassSolenoidPin, PumpPin, &(*DefaultSettings)) {
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Pump object created"),true);}
+Aeroponics_NoTank::Aeroponics_NoTank(GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings) : Aeroponics(&(*GBox), BypassSolenoidPin, PumpPin, &(*DefaultSettings)) {
+  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_NoTank object created"),true);}
 }
 
- void Aeroponics_Pump::report(){
+ void Aeroponics_NoTank::report(){
    ;
  }
 
-void Aeroponics_Pump::refresh(){ //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Pump refreshing"),true);}  
+void Aeroponics_NoTank::refresh(){ //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
+  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_NoTank refreshing"),true);}  
  if (BlowOffInProgress && millis() - SprayTimer >= (uint32_t)(BlowOffTime * 1000)){   //checking pressure blow-off timeout
       BypassSolenoidOn = false; //Close bypass valve
       BlowOffInProgress = false;
@@ -47,7 +47,7 @@ void Aeroponics_Pump::refresh(){ //pump directly connected to aeroponics tote, w
 }
 
 
-void Aeroponics_Pump::aeroSprayNow(bool DueToHighPressure){   
+void Aeroponics_NoTank::aeroSprayNow(bool DueToHighPressure){   
   if(*SprayEnabled || DueToHighPressure){
     BypassActive = false;
     SprayTimer = millis();
@@ -64,7 +64,7 @@ void Aeroponics_Pump::aeroSprayNow(bool DueToHighPressure){
 
 
 
-// void Aeroponics_Pump::checkAeroPumpAlerts_WithoutPressureTank()
+// void Aeroponics_NoTank::checkAeroPumpAlerts_WithoutPressureTank()
 // {
 //   if(PumpOn){ //Only if pump is running
 //     if(!BypassSolenoidOn){ //when bypass is closed and should be spraying
@@ -124,7 +124,7 @@ void Aeroponics_Pump::aeroSprayNow(bool DueToHighPressure){
 // }
 
 
-void Aeroponics_Pump::aeroSprayOff(){    
+void Aeroponics_NoTank::aeroSprayOff(){    
     PumpOn = false; 
     BypassSolenoidOn = false; 
     checkRelays();

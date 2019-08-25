@@ -1,35 +1,37 @@
 #pragma once
 
+//Change this when you make change to the structure of the EEPROM stored part
+static const byte Version = 1;
+
 //THIS SECTION DOES NOT GET STORED IN EEPROM: They never change during runtime
 static const byte MaxTextLength = 32;  //Default char* buffer size: 31 characters + null terminator, used for logging and converting to text
 static const byte RollingAverageQueueDepth = 10;  //How many previous sensor readings should be stored
 static const byte LogDepth = 10;  //Show X number of log entries on website, do not go above 10
 
+
 //SAVED TO EEPROM
 typedef struct
-{ 
-  byte CompatibilityVersion=15;  //UPDATE this every time you change something in the stucture, that will force the EEPROM stored settings to update.
-    
+{     
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
   
 struct AeroponicsSettings{
     bool SprayEnabled = true;  //Enable/disable misting
     int Interval = 15; //Aeroponics - Spray every 15 minutes
     int Duration = 2; //Aeroponics - Spray time in seconds
-    float PressureLow= 5.0; //Aeroponics - Turn on pump below this pressure (bar)
-    float PressureHigh = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)
     int PumpTimeout = 360;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
     int PrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
- } AeroTank1,AeroPump1;
+ } Aeroponics_Tank1,Aeroponics_NoTank1;
 
   struct AeroponicsSettings_TankSpecific{  //Pressure tank specific settings
+    float PressureLow= 5.0; //Aeroponics - Turn on pump below this pressure (bar)
+    float PressureHigh = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)
     bool QuietEnabled = false;  //Enable/disable quiet time then pump should not run
     bool RefillBeforeQuiet = true; //Enable/disable refill before quiet time
     byte QuietFromHour = 23;  //Quiet time to block pump - hour
     byte QuietFromMinute = 0; //Quiet time to block pump - minute
     byte QuietToHour = 6; //Quiet time end - hour
     byte QuietToMinute = 0; //Quiet time end - minute
- } AeroTank1TankSpecific;
+ } Aeroponics_Tank1_TankSpecific;
 
   bool Sound1Enabled = true;  //Enable PC speaker
 
@@ -82,4 +84,6 @@ struct AeroponicsSettings{
   int HumidityAlertHigh = 70; //High humidity warning email
   float PressureAlertLow = 4.0; //Low pressure warning
   float PressureAlertHigh = 8.0; //High pressure warning 
-}Settings;
+
+  byte CompatibilityVersion=Version;  //Should always be the last value stored.
+   }Settings;

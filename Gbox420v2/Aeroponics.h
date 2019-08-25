@@ -28,22 +28,19 @@ public:
     bool * SprayEnabled;  //Enable/disable misting
     int * Interval; //Aeroponics - Spray every 15 minutes
     int * Duration; //Aeroponics - Spray time in seconds
-    float * PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
-    float * PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
     int * PumpTimeout;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
     int * PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
     void checkRelays(){logToSerials(F("checkRelays METHOD NOT IMPLEMENTED"),true,0);};
     virtual void refresh() = 0;  //Aeroponics class cannot be instantiated, 
     virtual void report() = 0;
-    void setPumpOn(bool CalledFromWebsite);
-    void setPumpOff(bool CalledFromWebsite);
+    void setPumpOn(bool UserRequest);
+    void setPumpOff(bool UserRequest);
     void PumpDisable();
     void Mix();
     void setSprayOnOff(bool State);
     void setInterval(int interval);
     void setDuration(int duration);
-    void setPressureLow(float PressureLow);
-    void setPressureHigh(float PressureHigh);
+
     const __FlashStringHelper * pumpStateToText();
     uint32_t LastRefill= 0;
     void setAeroPumpTimeout(int Timeout);

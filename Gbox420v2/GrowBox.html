@@ -34,14 +34,14 @@
 					<td class="headerRows"><span style="font-weight:bold">PH</td>
 				  </tr>	
 				  <tr>
-				  	<td id="tdACPowerOK" class="dataRows"></td>
-					<td id="tdDCPowerOK" class="dataRows"></td>
-					<td id="tdLightOK" class="dataRows"></td>
-					<td id="tdPressureOK" class="dataRows"></td>
-					<td id="tdPumpOK" class="dataRows"></td>
-					<td id="tdVentOK" class="dataRows"></td>
-					<td id="tdReservOK" class="dataRows"></td>
-					<td id="tdPhOK" class="dataRows"></td>
+				  	<td id="td_ACPowerOK" class="dataRows"></td>
+					<td id="td_DCPowerOK" class="dataRows"></td>
+					<td id="td_LightOK" class="dataRows"></td>
+					<td id="td_PressureOK" class="dataRows"></td>
+					<td id="td_PumpOK" class="dataRows"></td>
+					<td id="td_VentOK" class="dataRows"></td>
+					<td id="td_ReservOK" class="dataRows"></td>
+					<td id="td_PhOK" class="dataRows"></td>
 				  </tr>					  
 				</table>
 				<ul id="list_SerialLog"></ul>	
@@ -55,9 +55,9 @@
 					<th class="headerRows"><span style="font-weight:bold">Voltage</span></th>						
 				  </tr>
 				  <tr>
-					<td id="tdPower" class="dataRows"></td>
-					<td id="tdEnergy" class="dataRows"></td>
-					<td id="tdVoltage" class="dataRows"></td>
+					<td id="td_Power" class="dataRows"></td>
+					<td id="td_Energy" class="dataRows"></td>
+					<td id="td_Voltage" class="dataRows"></td>
 				  </tr>
 				  <tr>
 					<th class="headerRows"><span style="font-weight:bold">Current</span></th>
@@ -65,14 +65,14 @@
 					<th class="headerRows"><span style="font-weight:bold">Power factor</span></th>						
 				  </tr>
 				  <tr>
-					<td id="tdCurrent" class="dataRows"></td>
-					<td id="tdFrequency" class="dataRows"></td>
-					<td id="tdPowerFactor" class="dataRows"></td>
+					<td id="td_Current" class="dataRows"></td>
+					<td id="td_Frequency" class="dataRows"></td>
+					<td id="td_PowerFactor" class="dataRows"></td>
 				  </tr>					  
 				 </table>						 
 			</div>
 			<div class="card" style="width:90%">
-				<h1>DHT Sensor</h1>		
+				<h1>DHT sensor</h1>		
 				<table class="tg">				  
 				  <tr>
 					<td class="headerRows"><span style="font-weight:bold">Internal<br>temp</span></td>
@@ -81,10 +81,10 @@
 					<td class="headerRows"><span style="font-weight:bold">External<br>humidity</span></td>
 				  </tr>
 				  <tr>
-					<td id="tdInternalTemp" class="dataRows"></td>
-					<td id="tdInternalHumidity" class="dataRows"></td>
-					<td id="tdExternalTemp" class="dataRows"></td>
-					<td id="tdExternalHumidity" class="dataRows"></td>
+					<td id="td_InternalTemp" class="dataRows"></td>
+					<td id="td_InternalHumidity" class="dataRows"></td>
+					<td id="td_ExternalTemp" class="dataRows"></td>
+					<td id="td_ExternalHumidity" class="dataRows"></td>
 				  </tr>
 				</table>						
 			</div>					
@@ -98,10 +98,10 @@
 					<td class="headerRows"><span style="font-weight:bold">Exhaust<br>fan</span></td>
 				  </tr>
 				  <tr>
-					<td id="tdTemp" class="dataRows"></td>
-					<td id="tdHumidity" class="dataRows"></td>
-					<td id="tdInternalFanSpeed" class="dataRows"></td>
-					<td id="tdExhaustFanSpeed" class="dataRows"></td>
+					<td id="td_Temp" class="dataRows"></td>
+					<td id="td_Humidity" class="dataRows"></td>
+					<td id="td_InternalFanSpeed" class="dataRows"></td>
+					<td id="td_ExhaustFanSpeed" class="dataRows"></td>
 				  </tr>
 				</table>
 				<b>Internal fan :</b>
@@ -139,9 +139,9 @@
 					<td class="headerRows"><span style="font-weight:bold">Reading (Raw)</span></td>
 				  </tr>
 				  <tr>
-					<td id="tdLightSensor1IsDark" class="dataRows"></td>
-					<td id="tdLightSensor1Reading" class="dataRows"></td>
-					<td id="tdLightSensor1ReadingRaw" class="dataRows"></td>
+					<td id="td_LightSensor1IsDark" class="dataRows"></td>
+					<td id="td_LightSensor1Reading" class="dataRows"></td>
+					<td id="td_LightSensor1ReadingRaw" class="dataRows"></td>
 				  </tr>				 
 				</table> 
 				<button id="btn_LightSensor1Calibrate" type="button" title="Measure light output at 0 and 100% brightness">Calibrate</button><br>
@@ -156,25 +156,25 @@
 					<td class="headerRows"><span style="font-weight:bold">Light OFF</span></td>
 				  </tr>
 				  <tr>
-					<td id="tdLight1Status" class="dataRows"></td>
-					<td id="tdLight1TimerEnabled" class="dataRows"></td>
-					<td id="tdLight1On" class="dataRows"></td>
-					<td id="tdLight1Off" class="dataRows"></td>
+					<td id="td_Light1_Status" class="dataRows"></td>
+					<td id="td_Light1_TimerEnabled" class="dataRows"></td>
+					<td id="td_Light1_On" class="dataRows"></td>
+					<td id="td_Light1_Off" class="dataRows"></td>
 				  </tr>
 				 </table> 				
-				<button id="btn_Light1On" type="button" title="Turn grow lights ON">ON</button>
-				<button id="btn_Light1Off" type="button" title="Turn grow lights OFF">OFF</button><br>
+				<button id="btn_Light1_On" type="button" title="Turn grow lights ON">ON</button>
+				<button id="btn_Light1_Off" type="button" title="Turn grow lights OFF">OFF</button><br>
 				<b>Brightness</b><br>				
 				<form>
-				<input style="width:42px;" type="number" name="Light1Brightness" min="0" max="100" oninput="this.form.Light1BrightnessSlider.value=this.value" />
-				<input type="range" name="Light1BrightnessSlider" min="0" max="100" oninput="this.form.Light1Brightness.value=this.value">
+				<input style="width:4k2px;" type="number" name="Light1_Brightness" min="0" max="100" oninput="this.form.Light1_BrightnessSlider.value=this.value" />
+				<input type="range" name="Light1_BrightnessSlider" min="0" max="100" oninput="this.form.Light1_Brightness.value=this.value">
 				<input type="submit" value="Set">				
 				</form>				
 				<b>Timer</b><br>
-				<button id="btn_Light1TimerEnable" type="button" align="right" title="Enable light timer">Enable</button>
-				<button id="btn_Light1TimerDisable" type="button" align="right" title="Disable light timer">Disable</button>
-				<form>ON : <input style="width: 35px;" min=0 max=23 name="Light1OnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="Light1OnMinute" type="number"/> <input type="submit" value="Set" title="Set grow light ON time"></form>
-				<form>OFF:<input style="width: 35px;" min=0 max=23 name="Light1OffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="Light1OffMinute" type="number"/> <input type="submit" value="Set" title="Set grow light OFF time"></form>
+				<button id="btn_Light1_TimerEnable" type="button" align="right" title="Enable light timer">Enable</button>
+				<button id="btn_Light1_TimerDisable" type="button" align="right" title="Disable light timer">Disable</button>
+				<form>ON : <input style="width: 35px;" min=0 max=23 name="Light1_OnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="Light1_OnMinute" type="number"/> <input type="submit" value="Set" title="Set grow light ON time"></form>
+				<form>OFF:<input style="width: 35px;" min=0 max=23 name="Light1_OffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="Light1_OffMinute" type="number"/> <input type="submit" value="Set" title="Set grow light OFF time"></form>
 			</div>			
 			<div class="card" style="width:90%">
 				<h1>Reservoir</h1>
@@ -185,14 +185,15 @@
 					 <th class="headerRows"><span style="font-weight:bold">Temp</span></th>				
 					</tr>
 					<tr>
-					 <td id="tdReservoir" class="dataRows"></td>
-					 <td id="tdPH" class="dataRows"></td>
-					 <td id="tdReservoirTemp" class="dataRows"></td>
+					 <td id="td_Reservoir" class="dataRows"></td>
+					 <td id="td_PH" class="dataRows"></td>
+					 <td id="td_ReservoirTemp" class="dataRows"></td>
 					</tr>
 				</table>	
 			</div>
 			<div class="card" style="width:90%">
-				<h1>Aeroponics</h1>
+				<h1 style="margin:0px">Aeroponics</h1>
+				<font size="-1">With pressure tank</font>				
 				<table class="tg">
 				  <tr>
 					<th class="headerRows"><span style="font-weight:bold">Pressure</span></span></th>
@@ -200,9 +201,9 @@
 					<th class="headerRows"><span style="font-weight:bold">Pump state</span></th>				
 				  </tr>
 				  <tr>
-					<td id="tdAeroPressure" class="dataRows"></td>
-					<td id="tdAeroSprayEnabled" class="dataRows"></td>
-					<td id="tdPumpOn" class="dataRows"></td>
+					<td id="td_AeroPressure" class="dataRows"></td>
+					<td id="td_AeroSprayEnabled" class="dataRows"></td>
+					<td id="td_PumpOn" class="dataRows"></td>
 				  </tr>
 				</table>
 				<b>Pump</b><br>
@@ -210,19 +211,52 @@
 				<button id="btn_PumpOff" type="button" align="right" title="Stops the pump and reset its status to OK">OFF</button>
 				<button id="btn_PumpDisable" type="button" align="right" title="Stops and disables pump">Disable</button>
 				<button id="btn_Mix" type="button" align="right" title="Mix nutrients: Starts pump and opens bypass valve">Mix</button><br>
-				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="AeroPumpTimeout" type="number" title="Maximum high pressure tank refill time, if reached pump is considered broken"/> sec <input type="submit" value="Set"></form>
-				<form>Pump priming time:<input style="width: 55px;" min=1 max=9999 name="AeroPrimingTime" type="number" title="At pump startup the bypass valve is open for X seconds"/> sec <input type="submit" value="Set"></form>				
+				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="Aeroponics_Tank1_PumpTimeout" type="number" title="Maximum high pressure tank refill time, if reached pump is considered broken"/> sec <input type="submit" value="Set"></form>
+				<form>Pump priming time:<input style="width: 55px;" min=1 max=9999 name="Aeroponics_Tank1_PrimingTime" type="number" title="At pump startup the bypass valve is open for X seconds"/> sec <input type="submit" value="Set"></form>				
 				<b>Spray</b><br>
 				<button id="btn_SprayEnable" type="button" align="right" title="Enable spray cycle timer">Enable</button>
 				<button id="btn_SprayDisable" type="button" align="right" title="Disable spray cycle timer">Disable</button>
 				<button id="btn_AeroSprayNow" type="button" title="Spray now and re-enable timer">Spray</button>
 				<button id="btn_AeroSprayOff" type="button" title="Stop spraying">OFF</button>				
 				<form>
-					Interval: <input style="width: 50px;" min=0 name="AeroInterval" type="number"/> min<br>
-					Duration: <input style="width: 50px;" min=0 name="Duration" type="number"/> sec
+					Interval: <input style="width: 50px;" min=0 name="Aeroponics_Tank1_Interval" type="number"/> min<br>
+					Duration: <input style="width: 50px;" min=0 name="Aeroponics_Tank1_Duration" type="number"/> sec
 					<input type="submit" value="Set" title="Set how often a spray should start (Interval), and how long one spray should last (Duration)">	
 				</form>									
-			</div>			
+			</div>
+			<div class="card" style="width:90%">
+				<h1 style="margin:0px">Aeroponics</h1>
+				<font size="-1">Without pressure tank</font>
+				<table class="tg">
+				  <tr>
+					<th class="headerRows"><span style="font-weight:bold">Pressure</span></span></th>
+					<th class="headerRows"><span style="font-weight:bold">Spray</span></span></th>					
+					<th class="headerRows"><span style="font-weight:bold">Pump state</span></th>				
+				  </tr>
+				  <tr>
+					<td id="td_AeroPressure" class="dataRows"></td>
+					<td id="td_AeroSprayEnabled" class="dataRows"></td>
+					<td id="td_PumpOn" class="dataRows"></td>
+				  </tr>
+				</table>
+				<b>Pump</b><br>
+				<button id="btn_PumpOn" type="button" align="right" title="Starts the pump and reset its status to OK">ON</button>
+				<button id="btn_PumpOff" type="button" align="right" title="Stops the pump and reset its status to OK">OFF</button>
+				<button id="btn_PumpDisable" type="button" align="right" title="Stops and disables pump">Disable</button>
+				<button id="btn_Mix" type="button" align="right" title="Mix nutrients: Starts pump and opens bypass valve">Mix</button><br>
+				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="Aeroponics_NoTank1_PumpTimeout" type="number" title="Maximum high pressure tank refill time, if reached pump is considered broken"/> sec <input type="submit" value="Set"></form>
+				<form>Pump priming time:<input style="width: 55px;" min=1 max=9999 name="Aeroponics_NoTank1_PrimingTime" type="number" title="At pump startup the bypass valve is open for X seconds"/> sec <input type="submit" value="Set"></form>				
+				<b>Spray</b><br>
+				<button id="btn_SprayEnable" type="button" align="right" title="Enable spray cycle timer">Enable</button>
+				<button id="btn_SprayDisable" type="button" align="right" title="Disable spray cycle timer">Disable</button>
+				<button id="btn_AeroSprayNow" type="button" title="Spray now and re-enable timer">Spray</button>
+				<button id="btn_AeroSprayOff" type="button" title="Stop spraying">OFF</button>				
+				<form>
+					Interval: <input style="width: 50px;" min=0 name="Aeroponics_NoTank1_Interval" type="number"/> min<br>
+					Duration: <input style="width: 50px;" min=0 name="Aeroponics_NoTank1_Duration" type="number"/> sec
+					<input type="submit" value="Set" title="Set how often a spray should start (Interval), and how long one spray should last (Duration)">	
+				</form>									
+			</div>						
 		</div>		
 	</div>
   </div> 

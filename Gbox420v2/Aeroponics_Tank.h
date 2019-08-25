@@ -13,13 +13,14 @@ class Aeroponics_Tank : public Aeroponics
    
     byte SpraySolenoidPin;
     bool PreviousPressureRead = true;
-
+    float * PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
+    float * PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
+    bool * QuietEnabled;  //Quiet time when the pump should not run
+    bool * RefillBeforeQuiet; //Refill before quiet time
     byte * QuietFromHour;  //Quiet time to block pump - hour
     byte * QuietFromMinute; //Quiet time to block pump - minute
     byte * QuietToHour; //Quiet time end - hour
     byte * QuietToMinute; //Quiet time end - minute
-    bool * QuietEnabled;  //Enable/disable quiet time then pump should not run
-    bool * RefillBeforeQuiet; //Enable/disable refill before quiet time
 
 
     void refresh();
@@ -34,5 +35,8 @@ class Aeroponics_Tank : public Aeroponics
     void setQuietRefillOnOff(bool State); //TODO: Remove this
     void aeroSprayOff();
     void aeroSprayNow(bool DueToHighPressure);
+    void setPressureLow(float PressureLow);
+    void setPressureHigh(float PressureHigh);
+
 
 };

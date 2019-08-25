@@ -5,13 +5,13 @@
 #include "Sound.h"
 #include "PowerSensor.h"
 #include "LightSensor.h"
-#include "Aeroponics_Pump.h"
+#include "Aeroponics_NoTank.h"
 #include "Aeroponics_Tank.h"
 
 void resetWebServer(void) {    // Callback made from esp-link to notify that it has just come out of a reset
   logToSerials(F("WebServer (re)starting..."),false,0);
   while(!ESPLink.Sync())  {
-    logToSerials(F("."),false);
+    logToSerials(F("."),false,0);
     delay(500); 
     };
   //RestAPI.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets 
@@ -39,17 +39,26 @@ void loadCallback(char * url) //called when website is loaded. Do not call logTo
   WebServer.setArgString(F("ExhaustFanLowHumid"), toText(GBox -> BoxSettings -> ExhaustFanLowHumid));
   WebServer.setArgString(F("ExhaustFanOffHumid"), toText(GBox -> BoxSettings -> ExhaustFanOffHumid));
     
-  WebServer.setArgInt(F("Light1OnHour"), *(GBox -> Light1 -> OnHour)); 
-  WebServer.setArgInt(F("Light1OnMinute"), *(GBox -> Light1 -> OnMinute)); 
-  WebServer.setArgInt(F("Light1OffHour"), *(GBox -> Light1 -> OffHour)); 
-  WebServer.setArgInt(F("Light1OffMinute"),*(GBox -> Light1 -> OffMinute));
-  WebServer.setArgInt(F("Light1Brightness"), *(GBox -> Light1 -> Brightness));
-  WebServer.setArgInt(F("Light1BrightnessSlider"), *(GBox -> Light1 -> Brightness));
+  //Light1 load
+  WebServer.setArgInt(F("Light1_OnHour"), *(GBox -> Light1 -> OnHour)); 
+  WebServer.setArgInt(F("Light1_OnMinute"), *(GBox -> Light1 -> OnMinute)); 
+  WebServer.setArgInt(F("Light1_OffHour"), *(GBox -> Light1 -> OffHour)); 
+  WebServer.setArgInt(F("Light1_OffMinute"),*(GBox -> Light1 -> OffMinute));
+  WebServer.setArgInt(F("Light1_Brightness"), *(GBox -> Light1 -> Brightness));
+  WebServer.setArgInt(F("Light1_BrightnessSlider"), *(GBox -> Light1 -> Brightness));
 
-  // WebServer.setArgInt(F("AeroPumpTimeout"), GBox -> BoxSettings -> AeroPumpTimeout);
-  // WebServer.setArgInt(F("AeroPrimingTime"), GBox -> BoxSettings -> AeroPrimingTime);
-  // WebServer.setArgInt(F("AeroInterval"), GBox -> BoxSettings -> AeroInterval);
-  // WebServer.setArgInt(F("Duration"), GBox -> BoxSettings -> Duration);  
+  //Aeroponics_Tank1 load
+  WebServer.setArgInt(F("Aeroponics_Tank1_PumpTimeout"), *(GBox -> Aeroponics_Tank1 -> PumpTimeout));
+  WebServer.setArgInt(F("Aeroponics_Tank1_PrimingTime"), *(GBox -> Aeroponics_Tank1 -> PrimingTime));
+  WebServer.setArgInt(F("Aeroponics_Tank1_Interval"), *(GBox -> Aeroponics_Tank1 -> Interval));
+  WebServer.setArgInt(F("Aeroponics_Tank1_Duration"), *(GBox -> Aeroponics_Tank1 -> Duration));
+
+  //Aeroponics_NoTank1 load
+  WebServer.setArgInt(F("Aeroponics_NoTank1_PumpTimeout"), *(GBox -> Aeroponics_NoTank1 -> PumpTimeout));
+  WebServer.setArgInt(F("Aeroponics_NoTank1_PrimingTime"), *(GBox -> Aeroponics_NoTank1 -> PrimingTime));
+  WebServer.setArgInt(F("Aeroponics_NoTank1_Interval"), *(GBox -> Aeroponics_NoTank1 -> Interval));
+  WebServer.setArgInt(F("Aeroponics_NoTank1_Duration"), *(GBox -> Aeroponics_NoTank1 -> Duration)); 
+   
   }
   
   if (strcmp(url,"/Settings.html.json")==0){  
@@ -85,43 +94,48 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
 { 
   WebServer.setArgString(F("Time"), getFormattedTime());
   WebServer.setArgJson(F("list_SerialLog"), GBox -> eventLogToJSON(false)); //Last events that happened in JSON format
-  // WebServer.setArgString(F("tdLightOK"), statusToText(LightOK)); 
-  // WebServer.setArgString(F("tdPressureOK"),statusToText(PressureOK));
-  // WebServer.setArgString(F("tdPumpOK"),statusToText(PumpOK));
-  // WebServer.setArgString(F("tdACPowerOK"),statusToText(ACPowerOK));
-  // WebServer.setArgString(F("tdDCPowerOK"),statusToText(DCPowerOK));
-  // WebServer.setArgString(F("tdVentOK"),statusToText(VentOK));
-  //WebServer.setArgString(F("tdReservOK"),statusToText(ReservOK));
+  // WebServer.setArgString(F("td_LightOK"), statusToText(LightOK)); 
+  // WebServer.setArgString(F("td_PressureOK"),statusToText(PressureOK));
+  // WebServer.setArgString(F("td_PumpOK"),statusToText(PumpOK));
+  // WebServer.setArgString(F("td_ACPowerOK"),statusToText(ACPowerOK));
+  // WebServer.setArgString(F("td_DCPowerOK"),statusToText(DCPowerOK));
+  // WebServer.setArgString(F("td_VentOK"),statusToText(VentOK));
+  //WebServer.setArgString(F("td_ReservOK"),statusToText(ReservOK));
     
   if (strcmp(url,"/GrowBox.html.json")==0){       
-  WebServer.setArgString(F("tdInternalTemp"),GBox -> InternalDHTSensor -> getTempText());
-  WebServer.setArgString(F("tdInternalHumidity"),GBox -> InternalDHTSensor -> getHumidityText());
-  WebServer.setArgString(F("tdExternalTemp"),GBox -> ExternalDHTSensor -> getTempText());
-  WebServer.setArgString(F("tdExternalHumidity"),GBox -> ExternalDHTSensor -> getHumidityText());
-  WebServer.setArgString(F("tdLightSensor1IsDark"),GBox -> LightSensor1 -> getIsDarkText());
-  WebServer.setArgString(F("tdLightSensor1Reading"),(PGM_P)GBox -> LightSensor1 -> getReadingPercentage());
-  WebServer.setArgString(F("tdLightSensor1ReadingRaw"),GBox -> LightSensor1 -> getReadingText()); 
-  WebServer.setArgString(F("tdLight1Status"),GBox -> Light1 -> getStatusText());
-  WebServer.setArgString(F("tdLight1TimerEnabled"),GBox -> Light1 -> getTimerOnOffText());
-  WebServer.setArgString(F("tdLight1On"), GBox -> Light1 -> getOnTimeText());
-  WebServer.setArgString(F("tdLight1Off"), GBox -> Light1 -> getOffTimeText());  
+  WebServer.setArgString(F("td_InternalTemp"),GBox -> InternalDHTSensor -> getTempText());
+  WebServer.setArgString(F("td_InternalHumidity"),GBox -> InternalDHTSensor -> getHumidityText());
+  WebServer.setArgString(F("td_ExternalTemp"),GBox -> ExternalDHTSensor -> getTempText());
+  WebServer.setArgString(F("td_ExternalHumidity"),GBox -> ExternalDHTSensor -> getHumidityText());
+  WebServer.setArgString(F("td_LightSensor1IsDark"),GBox -> LightSensor1 -> getIsDarkText());
+  WebServer.setArgString(F("td_LightSensor1Reading"),(PGM_P)GBox -> LightSensor1 -> getReadingPercentage());
+  WebServer.setArgString(F("td_LightSensor1ReadingRaw"),GBox -> LightSensor1 -> getReadingText()); 
+  
 
-  WebServer.setArgString(F("tdPower"),GBox -> PowerSensor1 -> getPowerText());  
-  WebServer.setArgString(F("tdEnergy"),GBox -> PowerSensor1 -> getEnergyText());  
-  WebServer.setArgString(F("tdVoltage"),GBox -> PowerSensor1 -> getVoltageText());  
-  WebServer.setArgString(F("tdCurrent"),GBox -> PowerSensor1 -> getCurrentText());  
-  WebServer.setArgString(F("tdFrequency"),GBox -> PowerSensor1 -> getFrequencyText());  
-  WebServer.setArgString(F("tdPowerFactor"),GBox -> PowerSensor1 -> getPowerFactorText());  
+
+
+  //Light1
+  WebServer.setArgString(F("td_Light1_Status"),GBox -> Light1 -> getStatusText());
+  WebServer.setArgString(F("td_Light1_TimerEnabled"),GBox -> Light1 -> getTimerOnOffText());
+  WebServer.setArgString(F("td_Light1_On"), GBox -> Light1 -> getOnTimeText());
+  WebServer.setArgString(F("td_Light1_Off"), GBox -> Light1 -> getOffTimeText());  
+
+  WebServer.setArgString(F("td_Power"),GBox -> PowerSensor1 -> getPowerText());  
+  WebServer.setArgString(F("td_Energy"),GBox -> PowerSensor1 -> getEnergyText());  
+  WebServer.setArgString(F("td_Voltage"),GBox -> PowerSensor1 -> getVoltageText());  
+  WebServer.setArgString(F("td_Current"),GBox -> PowerSensor1 -> getCurrentText());  
+  WebServer.setArgString(F("td_Frequency"),GBox -> PowerSensor1 -> getFrequencyText());  
+  WebServer.setArgString(F("td_PowerFactor"),GBox -> PowerSensor1 -> getPowerFactorText());  
   }
 }
 
 void buttonPressCallback(char *button)  //Called when any button on the website is pressed. Do not call logToSerials within any methods used here!
 {
   //GrowBox page
-  if (strcmp_P(button,(PGM_P)F("btn_Light1On"))==0) {GBox -> Light1 -> setLightOnOff(true,true); }
-  else if (strcmp_P(button,(PGM_P)F("btn_Light1Off"))==0) {GBox -> Light1 -> setLightOnOff(false,true); }
-  else if (strcmp_P(button,(PGM_P)F("btn_Light1TimerEnable"))==0) {GBox -> Light1 -> setTimerOnOff(true);}
-  else if (strcmp_P(button,(PGM_P)F("btn_Light1TimerDisable"))==0) {GBox -> Light1 -> setTimerOnOff(false);}
+  if (strcmp_P(button,(PGM_P)F("btn_Light1_On"))==0) {GBox -> Light1 -> setLightOnOff(true,true); }
+  else if (strcmp_P(button,(PGM_P)F("btn_Light1_Off"))==0) {GBox -> Light1 -> setLightOnOff(false,true); }
+  else if (strcmp_P(button,(PGM_P)F("btn_Light1_TimerEnable"))==0) {GBox -> Light1 -> setTimerOnOff(true);}
+  else if (strcmp_P(button,(PGM_P)F("btn_Light1_TimerDisable"))==0) {GBox -> Light1 -> setTimerOnOff(false);}
   else if (strcmp_P(button,(PGM_P)F("btn_LightSensor1Calibrate"))==0) {GBox -> LightSensor1 -> triggerCalibration();}
   //Settings page
   else if (strcmp_P(button,(PGM_P)F("btn_restoreDefaults"))==0) { restoreDefaults(GBox -> BoxSettings); }
@@ -131,11 +145,11 @@ void buttonPressCallback(char *button)  //Called when any button on the website 
 }
 
 void setFieldCallback(char * field){  //Called when any field on the website is updated. Do not call logToSerials within any methods used here!
-  if(strcmp_P(field,(PGM_P)F("Light1Brightness"))==0) {GBox -> Light1 -> setBrightness(WebServer.getArgInt(),true);}
-  else if(strcmp_P(field,(PGM_P)F("Light1OnHour"))==0) {GBox -> Light1 -> setOnHour(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("Light1OnMinute"))==0) {GBox -> Light1 -> setOnMinute(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("Light1OffHour"))==0) {GBox -> Light1 -> setOffHour(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("Light1OffMinute"))==0) {GBox -> Light1 -> setOffMinute(WebServer.getArgInt());} 
+  if(strcmp_P(field,(PGM_P)F("Light1_Brightness"))==0) {GBox -> Light1 -> setBrightness(WebServer.getArgInt(),true);}
+  else if(strcmp_P(field,(PGM_P)F("Light1_OnHour"))==0) {GBox -> Light1 -> setOnHour(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("Light1_OnMinute"))==0) {GBox -> Light1 -> setOnMinute(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("Light1_OffHour"))==0) {GBox -> Light1 -> setOffHour(WebServer.getArgInt());}
+  else if(strcmp_P(field,(PGM_P)F("Light1_OffMinute"))==0) {GBox -> Light1 -> setOffMinute(WebServer.getArgInt());} 
 
 
   else if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {GBox -> Sound1 -> setSoundOnOff(WebServer.getArgBoolean());}
