@@ -1,14 +1,14 @@
 #include "PowerSensor.h"
 #include "GrowBox.h"
 
-PowerSensor::PowerSensor(GrowBox * GBox,HardwareSerial * SerialPort){
+PowerSensor::PowerSensor(const __FlashStringHelper * Name, GrowBox * GBox,HardwareSerial * SerialPort):Common(Name){
   this -> GBox = GBox;
   Sensor = new PZEM004Tv30(SerialPort);
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("PowerSensor object created"),true);} 
 }
 
 void PowerSensor::refresh(){
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("PowerSensor refreshing"),true);}
+  Common::refresh();
   Voltage = Sensor -> voltage();  //AC Voltage (V)
   Current = Sensor -> current(); //Current (A)
   Power = Sensor -> power(); //Actual power usage (W)

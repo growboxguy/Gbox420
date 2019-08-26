@@ -39,28 +39,9 @@ void loadCallback(char * url) //called when website is loaded. Do not call logTo
   WebServer.setArgString(F("ExhaustFanLowHumid"), toText(GBox -> BoxSettings -> ExhaustFanLowHumid));
   WebServer.setArgString(F("ExhaustFanOffHumid"), toText(GBox -> BoxSettings -> ExhaustFanOffHumid));
     
-  //Light1 load
-  WebServer.setArgInt(F("Light1_OnHour"), *(GBox -> Light1 -> OnHour)); 
-  WebServer.setArgInt(F("Light1_OnMinute"), *(GBox -> Light1 -> OnMinute)); 
-  WebServer.setArgInt(F("Light1_OffHour"), *(GBox -> Light1 -> OffHour)); 
-  WebServer.setArgInt(F("Light1_OffMinute"),*(GBox -> Light1 -> OffMinute));
-  WebServer.setArgInt(F("Light1_Brightness"), *(GBox -> Light1 -> Brightness));
-  WebServer.setArgInt(F("Light1_BrightnessSlider"), *(GBox -> Light1 -> Brightness));
-
+  GBox -> Light1 -> websiteLoadEvent();
   GBox -> Aeroponics_Tank1 -> websiteLoadEvent();
   GBox -> Aeroponics_NoTank1 -> websiteLoadEvent();
-  // //Aeroponics_Tank1 load
-  // WebServer.setArgInt(F("Aeroponics_Tank1_PumpTimeout"), *(GBox -> Aeroponics_Tank1 -> PumpTimeout));
-  // WebServer.setArgInt(F("Aeroponics_Tank1_PrimingTime"), *(GBox -> Aeroponics_Tank1 -> PrimingTime));
-  // WebServer.setArgInt(F("Aeroponics_Tank1_Interval"), *(GBox -> Aeroponics_Tank1 -> Interval));
-  // WebServer.setArgInt(F("Aeroponics_Tank1_Duration"), *(GBox -> Aeroponics_Tank1 -> Duration));
-
-  // //Aeroponics_NoTank1 load
-  // WebServer.setArgInt(F("Aeroponics_NoTank1_PumpTimeout"), *(GBox -> Aeroponics_NoTank1 -> PumpTimeout));
-  // WebServer.setArgInt(F("Aeroponics_NoTank1_PrimingTime"), *(GBox -> Aeroponics_NoTank1 -> PrimingTime));
-  // WebServer.setArgInt(F("Aeroponics_NoTank1_Interval"), *(GBox -> Aeroponics_NoTank1 -> Interval));
-  // WebServer.setArgInt(F("Aeroponics_NoTank1_Duration"), *(GBox -> Aeroponics_NoTank1 -> Duration)); 
-   
   }
   
   if (strcmp(url,"/Settings.html.json")==0){  
@@ -108,14 +89,10 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
   GBox -> InternalDHTSensor -> websiteRefreshEvent();
   GBox -> ExternalDHTSensor -> websiteRefreshEvent();
   GBox -> LightSensor1 -> websiteRefreshEvent();
-
+  GBox -> Light1 -> websiteRefreshEvent();
  
   
-  //Light1
-  WebServer.setArgString(F("td_Light1_Status"),GBox -> Light1 -> getStatusText());
-  WebServer.setArgString(F("td_Light1_TimerEnabled"),GBox -> Light1 -> getTimerOnOffText());
-  WebServer.setArgString(F("td_Light1_On"), GBox -> Light1 -> getOnTimeText());
-  WebServer.setArgString(F("td_Light1_Off"), GBox -> Light1 -> getOffTimeText());  
+   
 
   //PowerSensor1
   WebServer.setArgString(F("td_Power"),GBox -> PowerSensor1 -> getPowerText());  

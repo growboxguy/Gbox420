@@ -1,7 +1,7 @@
 #include "Sound.h" 
 #include "GrowBox.h"
 
-Sound::Sound(GrowBox * GBox,byte Pin, bool *Enabled){
+Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox,byte Pin, bool *Enabled):Common(Name){
   this -> GBox = GBox;
   this -> Pin = Pin;
   this -> Enabled = Enabled;

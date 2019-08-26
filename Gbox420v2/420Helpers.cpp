@@ -64,6 +64,12 @@ float convertBetweenPressureUnits(float Value){
 //////////////////////////////////////////
 //Text formating
 
+char * toText(const __FlashStringHelper * FlashText){   //Not every external library supports __FlashStringHelper class. This converts flash stored text to ram stored char *
+  static char ReturnChar[MaxTextLength] = "";
+  strcpy_P(ReturnChar, (PGM_P)FlashText);
+  return ReturnChar;
+}
+
 char * toText(int Number){
   static char ReturnChar[MaxTextLength] = "";
   itoa(Number, ReturnChar, 10);
@@ -126,6 +132,18 @@ char * tempToText(float Temp){
   return ReturnChar;
 } 
 
+char * pressureToText(float Pressure){
+  static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
+  dtostrf(Pressure, 4, 2, ReturnChar); 
+  if(GBox -> BoxSettings -> MetricSystemEnabled){      
+    strcat_P(ReturnChar,(PGM_P)F("bar"));
+  }
+  else{
+    strcat_P(ReturnChar,(PGM_P)F("psi"));
+  }
+  return ReturnChar;
+} 
+
 char * percentageToText(float Number){
   //static char * ReturnChar = malloc(MaxTextLength * sizeof(char));  //allocate memory for every run - need to take care of freeing up the memory  after use
   static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
@@ -142,24 +160,24 @@ char * percentageToText(int Number){
   return ReturnChar; 
 }
 
-const __FlashStringHelper * onOffToText(bool Status){
-   if(Status) return F("ON");
-   else return F("OFF");   
+char * onOffToText(bool Status){
+   if(Status) return (char *)"ON";
+   else return (char *)"OFF";   
 } 
 
-const __FlashStringHelper * yesNoToText(bool Status){
-   if(Status) return F("YES");
-   else return F("NO");
+char * yesNoToText(bool Status){
+   if(Status) return (char *)"YES";
+   else return (char *)"NO";
 }
 
-const __FlashStringHelper * statusToText(bool Status){
-   if(Status) return F("OK");
-   else return F("!!!");
+char * statusToText(bool Status){
+   if(Status) return (char *)"OK";
+   else return (char *)"!!!";
 }
 
-const __FlashStringHelper * enabledToText(bool Status){
-   if(Status) return F("ENABLED");
-   else return F("DISABLED");
+char * enabledToText(bool Status){
+   if(Status) return (char *)"ENABLED";
+   else return (char *)"DISABLED";
 }
 
 //////////////////////////////////////////

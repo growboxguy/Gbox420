@@ -25,8 +25,9 @@ class Common{
     Common(){}
   
   public:
+    bool DebugEnabled;
     const __FlashStringHelper * Name; 
-    virtual void refresh() = 0;  //every class needs to have an implementation of this method. Called when component should refresh its state (for example Reading temperature and humidity using the DHTsensor class)
+    virtual void refresh();  //every class needs to have an implementation of this method. Called when component should refresh its state (for example Reading temperature and humidity using the DHTsensor class)
     virtual void report() = 0;  //Prints current state of the object to the Serial outputs
     //AlertHandler * HealthStatus; //Tracks the state of a component  
     char * getWebsiteComponentName(const __FlashStringHelper * ComponentName);

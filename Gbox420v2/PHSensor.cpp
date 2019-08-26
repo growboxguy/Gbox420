@@ -14,6 +14,7 @@ PHSensor::PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope){
 }
 
 void PHSensor::refresh(){
+  Common::refresh();
   if(GBox -> BoxSettings -> DebugEnabled){ getPH(true); }
   else { getPH(false); }
 }

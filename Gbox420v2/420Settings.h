@@ -1,7 +1,7 @@
 #pragma once
 
 //Change this when you make change to the structure of the EEPROM stored part
-static const byte Version = 1;
+static const byte Version = 2;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: They never change during runtime
 static const byte MaxTextLength = 32;  //Default char* buffer size: 31 characters + null terminator, used for logging and converting to text
@@ -13,6 +13,7 @@ static const byte LogDepth = 10;  //Show X number of log entries on website, do 
 typedef struct
 {     
   bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
+  bool Sound1Enabled = true;  //Enable PC speaker / Piezo buzzer
   
 struct AeroponicsSettings{
     bool SprayEnabled = true;  //Enable/disable misting
@@ -33,7 +34,7 @@ struct AeroponicsSettings{
     byte QuietToMinute = 0; //Quiet time end - minute
  } Aeroponics_Tank1_TankSpecific;
 
-  bool Sound1Enabled = true;  //Enable PC speaker
+  
 
   struct LightsSettings{
     bool Status = true;  //Startup status for lights: True-ON / False-OFF

@@ -18,6 +18,7 @@
 //Google Sheets reporting
 //MQTT reporting
 //Support for storing multiple Settings objects in EEPROM (?Support for controlling more grow boxes from a single arduino? )
+//Add DebugEnabled to all classes, sets debug mode on-off per component
 
 #include "Arduino.h" 
 #include "avr/wdt.h" //Watchdog timer
@@ -139,7 +140,7 @@ Settings* loadSettings(){
     saveSettings(false,DefaultSettings);  //overwrites stored settings with defaults from this sketch
   }
   else {
-    logToSerials(F("Same settings version detected, applying EEPROM settings..."),false);
+    logToSerials(F("Same settings version detected, applying EEPROM settings..."),false,1);
     //DefaultSettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
     memcpy(DefaultSettings,&EEPROMSettings,sizeof(Settings)); 
   }

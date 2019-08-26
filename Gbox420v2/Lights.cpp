@@ -5,11 +5,11 @@
 //////////////////////////////////////////////////////////////////
 //Lights functions
 
-Lights::Lights(GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsSettings * DefaultSettings, byte DimmingLimit){
+Lights::Lights(const __FlashStringHelper * Name, GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsSettings * DefaultSettings, byte DimmingLimit) : Common(Name){
   this -> GBox = GBox;
   this -> RelayPin = RelayPin;
   this -> DimmingPin = DimmingPin;
-  this -> DimmingLimit = DimmingLimit; //Blocks dimming below a certain percentafe (default 8%), Most LED drivers cannot fully dim, check the specification and adjust accordingly, only set 0 if it supports dimming fully! (Usually not the case..)
+  this -> DimmingLimit = DimmingLimit; //Blocks dimming below a certain percentage (default 8%), Most LED drivers cannot fully dim, check the specification and adjust accordingly, only set 0 if it supports dimming fully! (Usually not the case..)
   Status = &DefaultSettings -> Status;
   Brightness = &DefaultSettings -> Brightness;
   TimerEnabled = &DefaultSettings -> TimerEnabled;
@@ -23,7 +23,7 @@ Lights::Lights(GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsS
 }
 
 void Lights::refresh(){  //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Lights refreshing"),true);}
+  Common::refresh();
   checkLightTimer(); 
   checkLightStatus();
   report();
@@ -31,12 +31,31 @@ void Lights::refresh(){  //makes the class non-virtual, by implementing the refr
 
 void Lights::report(){
   memset(&Message[0], 0, sizeof(Message));  //clear variable
-  strcat_P(Message,(PGM_P)F("Status:")); strcat_P(Message,(PGM_P) getStatusText()); 
+  strcat_P(Message,(PGM_P)F("Status:")); strcat(Message, getStatusText()); 
   strcat_P(Message,(PGM_P)F(" ; Brightness:")); strcat(Message,toText(*Brightness));
   strcat_P(Message,(PGM_P)F(" ; LightON:")); strcat(Message,getOnTimeText());
   strcat_P(Message,(PGM_P)F(" ; LightOFF:")); strcat(Message,getOffTimeText());
   logToSerials( &Message, true,4);
 }
+
+void Lights::websiteLoadEvent(){
+  //Light1 load
+  WebServer.setArgInt(getWebsiteComponentName(F("OnHour")), *OnHour); 
+  WebServer.setArgInt(getWebsiteComponentName(F("OnMinute")),  *OnMinute); 
+  WebServer.setArgInt(getWebsiteComponentName(F("OffHour")), *OffHour); 
+  WebServer.setArgInt(getWebsiteComponentName(F("OffMinute")),*OffMinute);
+  WebServer.setArgInt(getWebsiteComponentName(F("Brightness")), *Brightness);
+  WebServer.setArgInt(getWebsiteComponentName(F("BrightnessSlider")), *Brightness);
+}
+
+void Lights::websiteRefreshEvent(){
+//Light1
+  WebServer.setArgString(getWebsiteComponentName(F("Status")),getStatusText());
+  WebServer.setArgString(getWebsiteComponentName(F("TimerEnabled")), getTimerOnOffText());
+  WebServer.setArgString(getWebsiteComponentName(F("OnTime")), getOnTimeText());
+  WebServer.setArgString(getWebsiteComponentName(F("OffTime")), getOffTimeText()); 
+}
+
 
 void Lights::checkLightStatus(){
   if(*Status) digitalWrite(RelayPin, LOW); //True turns relay ON (LOW signal activates Relay)
@@ -137,7 +156,7 @@ void Lights::setOffMinute(byte OffMinute){
   GBox -> addToLog(F("Light OFF time updated"));
 }
 
-const __FlashStringHelper* Lights::getTimerOnOffText(){
+char *  Lights::getTimerOnOffText(){
   return enabledToText(*TimerEnabled);
 }
 
@@ -145,7 +164,7 @@ bool Lights::getStatus(){
    return *Status;
 }
 
-const __FlashStringHelper* Lights::getStatusText(){
+char *  Lights::getStatusText(){
    return onOffToText(*Status);
 }
     

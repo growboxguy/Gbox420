@@ -22,7 +22,8 @@ time_t getNtpTime();
 void getFreeMemory();
 char * getFormattedTime();  
 float convertBetweenTempUnits(float);
-float convertBetweenPressureUnits(float);    
+float convertBetweenPressureUnits(float); 
+char * toText(const __FlashStringHelper *);    
 char * toText(int); 
 char * toText(long); 
 char * toText(float);  //function overloading: Same named function, different parameter type 
@@ -31,11 +32,12 @@ char * toText(float Number1, float Number2,const char * Separator);
 char * toPrecisionText(float Number);  
 char * timeToText(byte Hour, byte Minute);
 char * tempToText(float Temp);
+char * pressureToText(float Pressure);
 char * percentageToText(float Humidity);    
-const __FlashStringHelper * onOffToText(bool Status);  
-const __FlashStringHelper * yesNoToText(bool Status); 
-const __FlashStringHelper * statusToText(bool Status);
-const __FlashStringHelper * enabledToText(bool Status);
+char * onOffToText(bool Status);  
+char * yesNoToText(bool Status); 
+char * statusToText(bool Status);
+char * enabledToText(bool Status);
 
 void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine=true,byte Indent=3);  //logs to both Arduino and ESP Link serial console, 2 optional parameters to adding a break line at after printing and the indentation in front
 template <class logLine> void logToSerials (logLine* ToPrint,bool BreakLine=true,byte Indent=3) { 

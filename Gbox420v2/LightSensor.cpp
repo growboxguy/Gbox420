@@ -17,7 +17,7 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, byte 
 }
 
 void LightSensor::refresh(){  //Called when component should refresh its state
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("LightSensor refreshing"),true);}
+  Common::refresh();
   if(CalibrateRequested){ calibrate(); } //If calibration was requested
   IsDark = digitalRead(DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected. ! inverts this
   LightReading -> updateAverage(1023 - analogRead(AnalogPin)); 
@@ -26,17 +26,28 @@ void LightSensor::refresh(){  //Called when component should refresh its state
 
 void LightSensor::report(){
   memset(&Message[0], 0, sizeof(Message));  //clear variable
-  strcat_P(Message,(PGM_P)F("Light detected:")); strcat_P(Message,(PGM_P) getIsDarkText());
+  strcat_P(Message,(PGM_P)F("Light detected:")); strcat(Message,getIsDarkText());
   strcat_P(Message,(PGM_P)F(" ; LightReading:")); strcat(Message, getReadingText());
   strcat_P(Message,(PGM_P)F(" (")); strcat(Message, getReadingPercentage());strcat_P(Message,(PGM_P)F(")"));
   logToSerials( &Message, true,4);
 }
 
 void LightSensor::websiteRefreshEvent(){ //When the website is opened, load stuff once
-  //WebServer.setArgString(getWebsiteComponentName(F("IsDark")),getIsDarkText());
+  WebServer.setArgString(getWebsiteComponentName(F("IsDark")),getIsDarkText());
   WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingPercentage());
   WebServer.setArgString(getWebsiteComponentName(F("ReadingRaw")),getReadingText()); 
 } 
+
+
+//  const char * name_p = reinterpret_cast<const char *>(name);
+
+//   uint8_t nlen = strlen_P(name_p);
+//   uint8_t vlen = strlen(value);
+//   char buf[nlen+vlen+3];
+//   buf[0] = WEB_JSON;
+//   strcpy_P(buf+1, name_p);
+//   strcpy(buf+2+nlen, value);
+//   _elc->Request(buf, nlen+vlen+2);
 
  
 
@@ -52,7 +63,7 @@ char * LightSensor::getReadingPercentage(){
   return percentageToText(map(LightReading -> getAverageInt(),MinReading,MaxReading,0,100)); //https://www.arduino.cc/reference/en/language/functions/math/map/ 
 }
 
-const __FlashStringHelper * LightSensor::getIsDarkText(){
+char * LightSensor::getIsDarkText(){
   return yesNoToText(IsDark);
 }
 

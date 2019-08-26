@@ -5,15 +5,6 @@
 // -Aeroponics_NoTank: High pressure pump is directly connected to the aeroponics tote
 // -Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid (electric water valve)
 
-
-void Aeroponics::websiteLoadEvent(){ //When the website is opened, load stuff once
-
-  WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), * PumpTimeout);
-  WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), * PrimingTime);
-  WebServer.setArgInt(getWebsiteComponentName(F("Interval")), * Interval);
-  WebServer.setArgInt(getWebsiteComponentName(F("Duration")), * Duration); 
-} 
-
 Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings) : Common(Name){  //constructor
     this -> GBox = GBox;
     this -> BypassSolenoidPin = BypassSolenoidPin;
@@ -25,6 +16,22 @@ Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, byte By
     PrimingTime = &DefaultSettings -> PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
 }
 
+void Aeroponics::websiteLoadEvent(){ //When the website is opened, load stuff once
+  WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *SprayEnabled);
+  WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *Interval);
+  WebServer.setArgInt(getWebsiteComponentName(F("Interval")), *Interval);
+  WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
+} 
+
+ void Aeroponics::report(){
+  memset(&Message[0], 0, sizeof(Message));  //clear variable  
+  strcat_P(Message,(PGM_P)F(" ; SprayEnabled:"));strcat(Message,yesNoToText(SprayEnabled));
+  strcat_P(Message,(PGM_P)F(" ; Interval:"));strcat(Message,toText(*Interval));
+  strcat_P(Message,(PGM_P)F(" ; Duration:"));strcat(Message,toText(*Duration));
+  strcat_P(Message,(PGM_P)F(" ; PumpTimeout:"));strcat(Message,toText(*PumpTimeout));
+  strcat_P(Message,(PGM_P)F(" ; PrimingTime:"));strcat(Message,toText(*PrimingTime));
+  logToSerials( &Message, true, 0); //Break line, No indentation needed: child class already printed it 
+ }
 
 void Aeroponics::setPumpOn(bool UserRequest){
   BypassActive  = UserRequest; //If pump was turned on from the web interface first run an air bleeding cycle

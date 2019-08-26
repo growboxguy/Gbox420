@@ -16,11 +16,25 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
  }    
 
  void Aeroponics_Tank::report(){
-   ;
+  memset(&Message[0], 0, sizeof(Message));  //clear variable  
+  strcat_P(Message,(PGM_P)F("Pressure:"));strcat(Message,pressureToText(AeroPressure));
+  strcat_P(Message,(PGM_P)F(" ["));strcat(Message,toText(*PressureLow,*PressureHigh,"/"));
+  strcat_P(Message,(PGM_P)F("]"));
+  logToSerials( &Message, false,4); //first print Aeroponics_Tank specific report, without a line break
+  
+  Aeroponics::report();  //then print parent class report
+  
+  memset(&Message[0], 0, sizeof(Message));    
+  strcat_P(Message,(PGM_P)F("QuietEnabled:"));strcat(Message,yesNoToText(*QuietEnabled));
+  strcat_P(Message,(PGM_P)F(" ; RefillBeforeQuiet:"));strcat(Message,yesNoToText(*RefillBeforeQuiet));
+  strcat_P(Message,(PGM_P)F(" ; QuietFrom:"));strcat(Message,timeToText(*QuietFromHour,*QuietFromMinute));
+  strcat_P(Message,(PGM_P)F(" ; QuietTo:"));strcat(Message,timeToText(*QuietToHour,*QuietToMinute));
+  logToSerials( &Message, true,4); //Print rarely used settings last
+  
  }
 
 void Aeroponics_Tank::refresh(){ 
-if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Tank refreshing"),true);}  
+  Common::refresh();
   if(PumpOn){ //if pump is on
     if(AeroPressure >= *PressureHigh){ //refill complete, target pressure reached
      setPumpOff(false);
@@ -66,6 +80,7 @@ if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Tank refreshi
         SprayTimer = millis();
     }    
   }  
+  report();
 }
 
 void Aeroponics_Tank::setPressureLow(float PressureLow){

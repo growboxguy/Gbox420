@@ -16,16 +16,16 @@ static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing 
 
 GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   this -> BoxSettings = BoxSettings;
-  Sound1 = new Sound(this,Sound1Pin,&BoxSettings -> Sound1Enabled);
+  Sound1 = new Sound(F("Sound1"), this, Sound1Pin, &BoxSettings -> Sound1Enabled);
   InternalDHTSensor = new DHTSensor(F("InternalDHTSensor"), this, InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
   ExternalDHTSensor = new DHTSensor(F("ExternalDHTSensor"), this, ExternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
-  LightSensor1 = new LightSensor(F("LightSensor1"),this, LightSensor1DigitalPin, LightSensor1AnalogPin);
-  Light1 = new Lights(this,Light1RelayPin,Light1DimmingPin,&BoxSettings -> Light1,8);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
-  PowerSensor1 = new PowerSensor(this,&Serial2);
+  LightSensor1 = new LightSensor(F("LightSensor1"), this, LightSensor1DigitalPin, LightSensor1AnalogPin);
+  Light1 = new Lights(F("Light1"), this,Light1RelayPin, Light1DimmingPin, &BoxSettings -> Light1, 8);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
+  PowerSensor1 = new PowerSensor(F("PowerSensor1"), this, &Serial2);
   Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, AeroSpraySolenoidPin, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings ->Aeroponics_Tank1, &BoxSettings -> Aeroponics_Tank1_TankSpecific);
   Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings -> Aeroponics_NoTank1);
   //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);
-  if(BoxSettings -> DebugEnabled){logToSerials(F("GrowBox object created"),true);}
+  if(BoxSettings -> DebugEnabled){logToSerials(F("GrowBox object created"), true,2);}
   addToLog(F("GrowBox initialized"),0);
 }
 
@@ -40,8 +40,6 @@ void GrowBox::refresh(){  //implementing the virtual refresh function from Commo
 
 void GrowBox::runSec(){ 
   Sound1 -> refresh();
-  Aeroponics_NoTank1 -> refresh();
-  Aeroponics_Tank1 -> refresh();
 }
 
 void GrowBox::runFiveSec(){
@@ -50,11 +48,17 @@ void GrowBox::runFiveSec(){
   ExternalDHTSensor -> refresh();
   LightSensor1 -> refresh();
   PowerSensor1 -> refresh();
+  Aeroponics_NoTank1 -> refresh();  //TODO: Still needs refresh linked into interrupt handling 
+  Aeroponics_Tank1 -> refresh(); //TODO: Still needs refresh linked into interrupt handling 
+  Light1 -> refresh();
   //PHSensor1 -> refresh();
 }
 
 void GrowBox::runMinute(){
-  Light1 -> refresh();
+  // Aeroponics_NoTank1 -> refresh();  //TODO: Still needs refresh linked into interrupt handling 
+  // Aeroponics_Tank1 -> refresh(); //TODO: Still needs refresh linked into interrupt handling 
+  // Light1 -> refresh();
+
 }
 
 void GrowBox::runHalfHour(){    
@@ -64,14 +68,8 @@ void GrowBox::report(){
   memset(&Message[0], 0, sizeof(Message));  //clear variable 
   strcat(Message,getFormattedTime());
   /*
-  strcat_P(Message,(PGM_P)F(" ; Internal fan:"));strcat_P(Message,(PGM_P)fanSpeedToText(true));
-  strcat_P(Message,(PGM_P)F(" ; Exhaust fan:"));strcat_P(Message,(PGM_P)fanSpeedToText(false)); 
-  strcat_P(Message,(PGM_P)F("\n\r Aeroponics - "));
-  strcat_P(Message,(PGM_P)F("Pressure:"));strcat(Message,toText(AeroPressure));if(BoxSettings -> MetricSystemEnabled)strcat_P(Message,(PGM_P)F("bar"));else strcat_P(Message,(PGM_P)F("psi"));
-  strcat_P(Message,(PGM_P)F(" ; Low:"));strcat(Message,toText(BoxSettings -> PressureLow));
-  strcat_P(Message,(PGM_P)F(" ; High:"));strcat(Message,toText(BoxSettings -> PressureHigh));
-  strcat_P(Message,(PGM_P)F(" ; Interval:"));strcat(Message,toText(BoxSettings -> AeroInterval));
-  strcat_P(Message,(PGM_P)F(" ; Duration:"));strcat(Message,toText(BoxSettings -> Duration));
+  
+  
   strcat_P(Message,(PGM_P)F("\n\r Reservoir - "));
   strcat_P(Message,(PGM_P)F("Temp:")); strcat(Message,toText(ReservoirTemp));  
   strcat_P(Message,(PGM_P)F(" ; PH:")); strcat(Message,toText(PH));

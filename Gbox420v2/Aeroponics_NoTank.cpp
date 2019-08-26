@@ -5,13 +5,16 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox *
   if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_NoTank object created"),true);}
 }
 
- void Aeroponics_NoTank::report(){
-   ;
+void Aeroponics_NoTank::report(){
+  memset(&Message[0], 0, sizeof(Message));  //clear variable  
+  strcat_P(Message,(PGM_P)F("BlowOffTime:"));strcat(Message,toText(BlowOffTime));
+  logToSerials(&Message, false,4); //first print Aeroponics_Tank specific report, without a line break
+  Aeroponics::report();  //then print parent class report
  }
 
 void Aeroponics_NoTank::refresh(){ //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_NoTank refreshing"),true);}  
- if (BlowOffInProgress && millis() - SprayTimer >= (uint32_t)(BlowOffTime * 1000)){   //checking pressure blow-off timeout
+  Common::refresh();
+  if (BlowOffInProgress && millis() - SprayTimer >= (uint32_t)(BlowOffTime * 1000)){   //checking pressure blow-off timeout
       BypassSolenoidOn = false; //Close bypass valve
       BlowOffInProgress = false;
       logToSerials(F("Stopping blow-off"),true);
@@ -44,6 +47,7 @@ void Aeroponics_NoTank::refresh(){ //pump directly connected to aeroponics tote,
       aeroSprayNow(false);                     
     }    
   } 
+  report();
 }
 
 

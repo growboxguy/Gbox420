@@ -13,7 +13,7 @@ class PowerSensor : public Common
     PZEM004Tv30 * Sensor; //for PZEM004T V3.0 model
     
   public:
-    PowerSensor(GrowBox * Gbox,HardwareSerial * SerialPort);  //constructor    
+    PowerSensor(const __FlashStringHelper * Name, GrowBox * Gbox,HardwareSerial * SerialPort);  //constructor    
     void refresh();  //Called when component should refresh its state
     void report();
     void websiteLoadEvent();

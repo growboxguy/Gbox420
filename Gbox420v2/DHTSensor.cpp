@@ -16,7 +16,7 @@ DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, uint8_t _
 }
 
 void DHTSensor::refresh(){  //Called when component should refresh its state 
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("DHTSensor refreshing"),true);}    
+  Common::refresh();
   if(GBox -> BoxSettings -> MetricSystemEnabled){ Temp -> updateAverage(sensor -> readTemperature());}
   else {Temp -> updateAverage(sensor -> readTemperature() *1.8f + 32);}
   Humidity -> updateAverage(sensor -> readHumidity());  

@@ -10,10 +10,11 @@ class Lights : public Common
 
   public:
     //Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
-    Lights(GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsSettings * DefaultSettings, byte DimmingLimit=8);  //constructor
+    Lights(const __FlashStringHelper * Name, GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsSettings * DefaultSettings, byte DimmingLimit=8);  //constructor
     void refresh();  //Called when component should refresh its state
     void report();
     void websiteLoadEvent();
+    void websiteRefreshEvent();
     void setBrightness(byte Brightness, bool AddToLog);           
     void setLightOnOff(bool State,bool AddToLog);    
     void setTimerOnOff(bool State);    
@@ -21,8 +22,8 @@ class Lights : public Common
     void setOnMinute(byte OnMinute);    
     void setOffHour(byte OffHour);    
     void setOffMinute(byte OffMinute);
-    const __FlashStringHelper * getTimerOnOffText(); 
-    const __FlashStringHelper * getStatusText(); 
+    char * getTimerOnOffText(); 
+    char * getStatusText(); 
     bool getStatus();
     char * getOnTimeText();    
     char * getOffTimeText();
