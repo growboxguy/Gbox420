@@ -19,6 +19,13 @@ void PHSensor::refresh(){
   else { getPH(false); }
 }
 
+void PHSensor::websiteLoadEvent(){ //When the website is opened, load stuff once
+  // WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *SprayEnabled);
+  // WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *Interval);
+  // WebServer.setArgInt(getWebsiteComponentName(F("Interval")), *Interval);
+  // WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
+} 
+
 void PHSensor::getPH(bool ShowRaw){
   float  Reading=0;
   int PHRaw = analogRead(Pin);

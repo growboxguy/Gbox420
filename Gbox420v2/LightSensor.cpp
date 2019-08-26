@@ -13,7 +13,7 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, byte 
   pinMode(AnalogPin, INPUT);
   LightReading = new RollingAverage();
   triggerCalibration();
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("LightSensor object created"),true);}
+  logToSerials(F("LightSensor object created"),true);
 }
 
 void LightSensor::refresh(){  //Called when component should refresh its state

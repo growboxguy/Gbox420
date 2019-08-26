@@ -6,7 +6,7 @@ Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox,byte Pin, bool *En
   this -> Pin = Pin;
   this -> Enabled = Enabled;
   pinMode(Pin, OUTPUT);
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Sound object created"),true);}
+  logToSerials(F("Sound object created"),true);
 }
 
 void Sound::refresh(){

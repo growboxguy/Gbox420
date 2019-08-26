@@ -186,7 +186,7 @@ char * enabledToText(bool Status){
 void getFreeMemory(){
   static char ReturnChar[MaxTextLength] = "";
   itoa(freeMemory(), ReturnChar, 10);
-  logToSerials(F("Free memory(bytes): "),false); logToSerials(&ReturnChar,true,0);
+  logToSerials(F("Free memory(bytes): "),false,2); logToSerials(&ReturnChar,true,0);
 }
 
 

@@ -19,7 +19,7 @@ Lights::Lights(const __FlashStringHelper * Name, GrowBox * GBox, byte RelayPin, 
   OffMinute = &DefaultSettings -> OffMinute;
   pinMode(RelayPin, OUTPUT);
   pinMode(DimmingPin, OUTPUT);
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Lights object created"),true);}
+  logToSerials(F("Lights object created"),true);
 }
 
 void Lights::refresh(){  //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')

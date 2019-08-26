@@ -6,7 +6,7 @@ Common::Common(const __FlashStringHelper * Name){
 }
 
 void Common::refresh(){
-  logToSerials(Name,false);logToSerials(F(" refreshing"),true,0);  
+  logToSerials(Name,false,2);logToSerials(F(" refreshing"),true,0);  
 }
 
 char * Common::getWebsiteComponentName(const __FlashStringHelper * ComponentName){

@@ -90,17 +90,9 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
   GBox -> ExternalDHTSensor -> websiteRefreshEvent();
   GBox -> LightSensor1 -> websiteRefreshEvent();
   GBox -> Light1 -> websiteRefreshEvent();
- 
-  
+  GBox -> PowerSensor1 -> websiteRefreshEvent();  
    
 
-  //PowerSensor1
-  WebServer.setArgString(F("td_Power"),GBox -> PowerSensor1 -> getPowerText());  
-  WebServer.setArgString(F("td_Energy"),GBox -> PowerSensor1 -> getEnergyText());  
-  WebServer.setArgString(F("td_Voltage"),GBox -> PowerSensor1 -> getVoltageText());  
-  WebServer.setArgString(F("td_Current"),GBox -> PowerSensor1 -> getCurrentText());  
-  WebServer.setArgString(F("td_Frequency"),GBox -> PowerSensor1 -> getFrequencyText());  
-  WebServer.setArgString(F("td_PowerFactor"),GBox -> PowerSensor1 -> getPowerFactorText());  
   }
 }
 

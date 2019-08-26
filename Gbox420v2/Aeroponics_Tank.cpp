@@ -12,7 +12,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
   QuietToHour = &TankSpecificSettings -> QuietToHour; //Quiet time end - hour
   QuietToMinute = &TankSpecificSettings -> QuietToMinute; //Quiet time end - minute
  
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("Aeroponics_Tank object created"),true);}
+  logToSerials(F("Aeroponics_Tank object created"),true);
  }    
 
  void Aeroponics_Tank::report(){

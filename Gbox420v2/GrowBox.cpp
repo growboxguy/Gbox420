@@ -25,7 +25,7 @@ GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, AeroSpraySolenoidPin, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings ->Aeroponics_Tank1, &BoxSettings -> Aeroponics_Tank1_TankSpecific);
   Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings -> Aeroponics_NoTank1);
   //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);
-  if(BoxSettings -> DebugEnabled){logToSerials(F("GrowBox object created"), true,2);}
+  logToSerials(F("GrowBox object created"), true,2);
   addToLog(F("GrowBox initialized"),0);
 }
 
