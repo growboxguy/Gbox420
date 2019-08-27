@@ -12,7 +12,7 @@ DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, uint8_t _
   sensor -> begin();  //dereference the pointer to the object and then call begin() on it. Same as (*sensor).begin();
   Temp = new RollingAverage();
   Humidity = new RollingAverage();
-  if(GBox -> BoxSettings -> DebugEnabled){logToSerials(F("DHT Sensor object created"),true);}
+  logToSerials(F("DHT Sensor object created"),true);
 }
 
 void DHTSensor::refresh(){  //Called when component should refresh its state 

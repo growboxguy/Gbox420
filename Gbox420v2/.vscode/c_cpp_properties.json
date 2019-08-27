@@ -5,14 +5,15 @@
             "includePath": [
                 "${workspaceRoot}",
                 "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\**",
-                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\tools\\**"
+                "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\tools\\**",
+                "D:\\GoogleDrive\\Arduino\\Gbox420\\libraries\\**"
             ],
             "browse": {
                 "path": [
                     "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\tools\\**",
                     "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\**",
                     "${workspaceFolder}/**",
-                    "D:\\GoogleDrive\\Arduino\\Gbox420\\libraries\\**",
+                    "D:\\GoogleDrive\\Arduino\\Gbox420\\libraries",
                     "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\**",
                     "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\cores\\arduino",
                     "D:\\GoogleDrive\\Arduino\\ArduinoSDK\\hardware\\arduino\\avr\\variants\\standard",
