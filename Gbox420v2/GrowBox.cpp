@@ -39,10 +39,12 @@ void GrowBox::refresh(){  //implementing the virtual refresh function from Commo
 }
 
 void GrowBox::runSec(){ 
+  if(DebugEnabled)logToSerials(F("One sec trigger.."),true,1);
   Sound1 -> refresh();
 }
 
 void GrowBox::runFiveSec(){
+  if(DebugEnabled)logToSerials(F("Five sec trigger.."),true,1); 
   report();  //Growbox reporting
   InternalDHTSensor -> refresh();
   ExternalDHTSensor -> refresh();
@@ -55,13 +57,15 @@ void GrowBox::runFiveSec(){
 }
 
 void GrowBox::runMinute(){
+  if(DebugEnabled)logToSerials(F("Minute trigger.."),true,1);
   // Aeroponics_NoTank1 -> refresh();  //TODO: Still needs refresh linked into interrupt handling 
   // Aeroponics_Tank1 -> refresh(); //TODO: Still needs refresh linked into interrupt handling 
   // Light1 -> refresh();
 
 }
 
-void GrowBox::runHalfHour(){    
+void GrowBox::runHalfHour(){   
+  if(DebugEnabled)logToSerials(F("Half hour trigger.."),true,1); 
 }
 
 void GrowBox::report(){

@@ -23,6 +23,13 @@ void Aeroponics::websiteLoadEvent(){ //When the website is opened, load stuff on
   WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
 } 
 
+// void Aeroponics::websiteRefreshEvent(){ //When the website is opened, load stuff once
+//   WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *SprayEnabled);
+//   WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *Interval);
+//   WebServer.setArgInt(getWebsiteComponentName(F("Interval")), *Interval);
+//   WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
+// }  
+
  void Aeroponics::report(){
   memset(&Message[0], 0, sizeof(Message));  //clear variable  
   strcat_P(Message,(PGM_P)F(" ; SprayEnabled:"));strcat(Message,yesNoToText(SprayEnabled));

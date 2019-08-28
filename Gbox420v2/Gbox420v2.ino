@@ -8,7 +8,6 @@
 
 //TODO:
 //Make alerting a class, every object will have a "bool StatusOK" variable inherited from Common, Alerting will go throught all subscribed classes and check status
-//Subscribe to thread timer events using the attach method.
 //sendEmailAlert implementation
 //HempyBucket controls
 //Aeroponics
@@ -47,11 +46,11 @@ ELClientCmd ESPCmd(&ESPLink);//ESP-link - Get current time from the internet usi
 GrowBox * GBox;  //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 //Threading to time tasks
-  Thread OneSecThread = Thread();
-  Thread FiveSecThread = Thread();
-  Thread MinuteThread = Thread();
-  Thread HalfHourThread = Thread();
-  StaticThreadController<4> ThreadControl (&OneSecThread,&FiveSecThread,&MinuteThread,&HalfHourThread);
+Thread OneSecThread = Thread();
+Thread FiveSecThread = Thread();
+Thread MinuteThread = Thread();
+Thread HalfHourThread = Thread();
+StaticThreadController<4> ThreadControl (&OneSecThread,&FiveSecThread,&MinuteThread,&HalfHourThread);
 
 void setup() {  // put your setup code here, to run once:
   ArduinoSerial.begin(115200);    //2560mega console output
@@ -98,28 +97,24 @@ void processTimeCriticalStuff(){
 //Threads
 
 void runSec(){
-  wdt_reset(); //reset watchdog timeout
-  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("One sec trigger.."),true,1);  
-  HeartBeat();
+  wdt_reset(); //reset watchdog timeout    
+  HeartBeat(); //Blinks built-in led
   GBox -> runSec();
 }
 
 void runFiveSec(){
-  wdt_reset(); //reset watchdog timeout
-  if(GBox -> BoxSettings -> DebugEnabled) logToSerials(F("Five sec trigger.."),true,1);     
+  wdt_reset();      
   GBox -> runFiveSec();
-  if(GBox -> BoxSettings -> DebugEnabled) getFreeMemory();
+  getFreeMemory();
 }
 
 void runMinute(){
-  wdt_reset(); //reset watchdog timeout
-  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Minute trigger.."),true,1);
+  wdt_reset(); 
   GBox -> runMinute();
 }
 
 void runHalfHour(){
-  wdt_reset(); //reset watchdog timeout
-  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Half hour trigger.."),true,1);  
+  wdt_reset();   
   GBox -> runHalfHour();
 }
 

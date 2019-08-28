@@ -13,17 +13,15 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
   QuietToMinute = &TankSpecificSettings -> QuietToMinute; //Quiet time end - minute
  
   logToSerials(F("Aeroponics_Tank object created"),true);
- }    
+ }   
 
  void Aeroponics_Tank::report(){
   memset(&Message[0], 0, sizeof(Message));  //clear variable  
   strcat_P(Message,(PGM_P)F("Pressure:"));strcat(Message,pressureToText(AeroPressure));
   strcat_P(Message,(PGM_P)F(" ["));strcat(Message,toText(*PressureLow,*PressureHigh,"/"));
   strcat_P(Message,(PGM_P)F("]"));
-  logToSerials( &Message, false,4); //first print Aeroponics_Tank specific report, without a line break
-  
-  Aeroponics::report();  //then print parent class report
-  
+  logToSerials( &Message, false,4); //first print Aeroponics_Tank specific report, without a line break  
+  Aeroponics::report();  //then print parent class report  
   memset(&Message[0], 0, sizeof(Message));    
   strcat_P(Message,(PGM_P)F("QuietEnabled:"));strcat(Message,yesNoToText(*QuietEnabled));
   strcat_P(Message,(PGM_P)F(" ; RefillBeforeQuiet:"));strcat(Message,yesNoToText(*RefillBeforeQuiet));
