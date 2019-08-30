@@ -24,10 +24,10 @@ void DHTSensor::refresh(){  //Called when component should refresh its state
 }
 
 void DHTSensor::report(){
-  memset(&Message[0], 0, sizeof(Message));  //clear variable
-  strcat_P(Message,(PGM_P)F("Temp:")); strcat(Message, getTempText());
-  strcat_P(Message,(PGM_P)F(" ; Humidity:")); strcat(Message, getHumidityText());
-  logToSerials(&Message,true,4);
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
+  strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage, getTempText());
+  strcat_P(LongMessage,(PGM_P)F(" ; Humidity:")); strcat(LongMessage, getHumidityText());
+  logToSerials(&LongMessage,true,4);
 }
 
 float DHTSensor::getTemp(){

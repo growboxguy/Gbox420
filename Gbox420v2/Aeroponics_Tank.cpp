@@ -16,18 +16,18 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
  }   
 
  void Aeroponics_Tank::report(){
-  memset(&Message[0], 0, sizeof(Message));  //clear variable  
-  strcat_P(Message,(PGM_P)F("Pressure:"));strcat(Message,pressureToText(AeroPressure));
-  strcat_P(Message,(PGM_P)F(" ["));strcat(Message,toText(*PressureLow,*PressureHigh,"/"));
-  strcat_P(Message,(PGM_P)F("]"));
-  logToSerials( &Message, false,4); //first print Aeroponics_Tank specific report, without a line break  
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
+  strcat_P(LongMessage,(PGM_P)F("Pressure:"));strcat(LongMessage,pressureToText(AeroPressure));
+  strcat_P(LongMessage,(PGM_P)F(" ["));strcat(LongMessage,toText(*PressureLow,*PressureHigh,"/"));
+  strcat_P(LongMessage,(PGM_P)F("]"));
+  logToSerials( &LongMessage, false,4); //first print Aeroponics_Tank specific report, without a line break  
   Aeroponics::report();  //then print parent class report  
-  memset(&Message[0], 0, sizeof(Message));    
-  strcat_P(Message,(PGM_P)F("QuietEnabled:"));strcat(Message,yesNoToText(*QuietEnabled));
-  strcat_P(Message,(PGM_P)F(" ; RefillBeforeQuiet:"));strcat(Message,yesNoToText(*RefillBeforeQuiet));
-  strcat_P(Message,(PGM_P)F(" ; QuietFrom:"));strcat(Message,timeToText(*QuietFromHour,*QuietFromMinute));
-  strcat_P(Message,(PGM_P)F(" ; QuietTo:"));strcat(Message,timeToText(*QuietToHour,*QuietToMinute));
-  logToSerials( &Message, true,4); //Print rarely used settings last
+  memset(&LongMessage[0], 0, sizeof(LongMessage));    
+  strcat_P(LongMessage,(PGM_P)F("QuietEnabled:"));strcat(LongMessage,yesNoToText(*QuietEnabled));
+  strcat_P(LongMessage,(PGM_P)F(" ; RefillBeforeQuiet:"));strcat(LongMessage,yesNoToText(*RefillBeforeQuiet));
+  strcat_P(LongMessage,(PGM_P)F(" ; QuietFrom:"));strcat(LongMessage,timeToText(*QuietFromHour,*QuietFromMinute));
+  strcat_P(LongMessage,(PGM_P)F(" ; QuietTo:"));strcat(LongMessage,timeToText(*QuietToHour,*QuietToMinute));
+  logToSerials( &LongMessage, true,4); //Print rarely used settings last
   
  }
 

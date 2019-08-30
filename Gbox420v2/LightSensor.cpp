@@ -25,11 +25,11 @@ void LightSensor::refresh(){  //Called when component should refresh its state
 }
 
 void LightSensor::report(){
-  memset(&Message[0], 0, sizeof(Message));  //clear variable
-  strcat_P(Message,(PGM_P)F("Light detected:")); strcat(Message,getIsDarkText());
-  strcat_P(Message,(PGM_P)F(" ; LightReading:")); strcat(Message, getReadingText());
-  strcat_P(Message,(PGM_P)F(" (")); strcat(Message, getReadingPercentage());strcat_P(Message,(PGM_P)F(")"));
-  logToSerials( &Message, true,4);
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
+  strcat_P(LongMessage,(PGM_P)F("Light detected:")); strcat(LongMessage,getIsDarkText());
+  strcat_P(LongMessage,(PGM_P)F(" ; LightReading:")); strcat(LongMessage, getReadingText());
+  strcat_P(LongMessage,(PGM_P)F(" (")); strcat(LongMessage, getReadingPercentage());strcat_P(LongMessage,(PGM_P)F(")"));
+  logToSerials( &LongMessage, true,4);
 }
 
 void LightSensor::websiteRefreshEvent(){ //When the website is opened, load stuff once

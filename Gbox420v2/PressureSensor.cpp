@@ -18,9 +18,9 @@
 //   delay(10);
 //   }  
 //   float AeroOffsetRecommendation = (sum/50)*5/1024; //Reads voltage at 0 pressure
-//   strncpy_P(LogMessage,(PGM_P)F("0 pressure AeroOffset: "),MaxTextLength);
-//   strcat(LogMessage,toText(AeroOffsetRecommendation));
-//   addToLog(LogMessage);
+//   strncpy_P(LongMessage,(PGM_P)F("0 pressure AeroOffset: "),MaxTextLength);
+//   strcat(LongMessage,toText(AeroOffsetRecommendation));
+//   addToLog(LongMessage);
 // }
 
 // void setPressureSensorOffset(float Value){

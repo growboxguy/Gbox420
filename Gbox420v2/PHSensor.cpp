@@ -31,9 +31,9 @@ void PHSensor::getPH(bool ShowRaw){
   int PHRaw = analogRead(Pin);
   if(ShowRaw)
   {
-    strncpy_P(Message,(PGM_P)F("PH analog read: "),MaxTextLength);
-    strcat(Message,toText(PHRaw));
-    GBox -> addToLog(Message);
+    strncpy_P(LongMessage,(PGM_P)F("PH analog read: "),MaxTextLength);
+    strcat(LongMessage,toText(PHRaw));
+    GBox -> addToLog(LongMessage);
   } 
   PH -> updateAverage((*Slope)*PHRaw + (*Intercept)); 
   //checkPHAlert();

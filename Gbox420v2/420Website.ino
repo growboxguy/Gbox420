@@ -98,6 +98,8 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
 
 void buttonPressCallback(char *button)  //Called when any button on the website is pressed. Do not call logToSerials within any methods used here!
 {
+  GBox -> Aeroponics_NoTank1 -> websiteBottonPressEvent(button);
+  
   //GrowBox page
   if (strcmp_P(button,(PGM_P)F("btn_Light1_On"))==0) {GBox -> Light1 -> setLightOnOff(true,true); }
   else if (strcmp_P(button,(PGM_P)F("btn_Light1_Off"))==0) {GBox -> Light1 -> setLightOnOff(false,true); }

@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:megaADK",
-    "port": "COM6",
+    "port": "COM4",
     "sketch": "Gbox420v2.ino",
     "output": "../../Gbox420v2Compile",
     "programmer": "AVR ISP"

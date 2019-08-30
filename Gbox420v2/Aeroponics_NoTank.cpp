@@ -6,9 +6,9 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox *
 }
 
 void Aeroponics_NoTank::report(){
-  memset(&Message[0], 0, sizeof(Message));  //clear variable  
-  strcat_P(Message,(PGM_P)F("BlowOffTime:"));strcat(Message,toText(BlowOffTime));
-  logToSerials(&Message, false,4); //first print Aeroponics_Tank specific report, without a line break
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
+  strcat_P(LongMessage,(PGM_P)F("BlowOffTime:"));strcat(LongMessage,toText(BlowOffTime));
+  logToSerials(&LongMessage, false,4); //first print Aeroponics_Tank specific report, without a line break
   Aeroponics::report();  //then print parent class report
  }
 

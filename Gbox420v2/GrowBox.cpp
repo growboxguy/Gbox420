@@ -69,62 +69,62 @@ void GrowBox::runHalfHour(){
 }
 
 void GrowBox::report(){
-  memset(&Message[0], 0, sizeof(Message));  //clear variable 
-  strcat(Message,getFormattedTime());
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable 
+  strcat(LongMessage,getFormattedTime());
   /*
   
   
-  strcat_P(Message,(PGM_P)F("\n\r Reservoir - "));
-  strcat_P(Message,(PGM_P)F("Temp:")); strcat(Message,toText(ReservoirTemp));  
-  strcat_P(Message,(PGM_P)F(" ; PH:")); strcat(Message,toText(PH));
-  strcat_P(Message,(PGM_P)F("(")); strcat(Message,toText(PHRaw));strcat_P(Message,(PGM_P)F(")"));
-  strcat_P(Message,(PGM_P)F(" ; Reservoir:")); strcat(Message,ReservoirText);
+  strcat_P(LongMessage,(PGM_P)F("\n\r Reservoir - "));
+  strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage,toText(ReservoirTemp));  
+  strcat_P(LongMessage,(PGM_P)F(" ; PH:")); strcat(LongMessage,toText(PH));
+  strcat_P(LongMessage,(PGM_P)F("(")); strcat(LongMessage,toText(PHRaw));strcat_P(LongMessage,(PGM_P)F(")"));
+  strcat_P(LongMessage,(PGM_P)F(" ; Reservoir:")); strcat(LongMessage,ReservoirText);
  */
-  logToSerials( &Message, true,0);
+  logToSerials( &LongMessage, true,0);
 }
 
-void GrowBox::addToLog(const char *Message,byte Indent){  //adds a log entry that is displayed on the web interface
-  logToSerials(Message,true,Indent);
+void GrowBox::addToLog(const char *LongMessage,byte Indent){  //adds a log entry that is displayed on the web interface
+  logToSerials(LongMessage,true,Indent);
   for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
      memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
      strncpy(Logs[i],Logs[i-1],MaxTextLength ) ; 
     }  
   memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
-  strncpy(Logs[0],Message,MaxTextLength);  //instert new log to [0]
+  strncpy(Logs[0],LongMessage,MaxTextLength);  //instert new log to [0]
 }
 
-void GrowBox::addToLog(const __FlashStringHelper *Message,byte Indent){ //function overloading: same function name, different parameter type 
-  logToSerials(Message,true,Indent);
+void GrowBox::addToLog(const __FlashStringHelper *LongMessage,byte Indent){ //function overloading: same function name, different parameter type 
+  logToSerials(LongMessage,true,Indent);
   for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
      memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
      strncpy(Logs[i],Logs[i-1],MaxTextLength ) ; 
     }  
   memset(&Logs[0], 0, sizeof(Logs[0]));  //clear variable
-  strncpy_P(Logs[0],(PGM_P)Message,MaxTextLength);  //instert new log to [0]
+  strncpy_P(Logs[0],(PGM_P)LongMessage,MaxTextLength);  //instert new log to [0]
 }
 
 char* GrowBox::eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
-  if(!Append)memset(&Message[0], 0, sizeof(Message));
-  strcat_P(Message,(PGM_P)F("["));
+  if(!Append)memset(&LongMessage[0], 0, sizeof(LongMessage));
+  strcat_P(LongMessage,(PGM_P)F("["));
   for(int i=LogDepth-1;i >=0 ; i--)
   {
-   strcat_P(Message,(PGM_P)F("\""));
-   strcat(Message,Logs[i]);
-   strcat_P(Message,(PGM_P)F("\""));
-   if(i > 0 ) strcat_P(Message,(PGM_P)F(","));
+   strcat_P(LongMessage,(PGM_P)F("\""));
+   strcat(LongMessage,Logs[i]);
+   strcat_P(LongMessage,(PGM_P)F("\""));
+   if(i > 0 ) strcat_P(LongMessage,(PGM_P)F(","));
   }
-  Message[strlen(Message)] = ']';
-  return Message;
+  LongMessage[strlen(LongMessage)] = ']';
+  return LongMessage;
 }
 
 void GrowBox::setDebugOnOff(bool State){
   BoxSettings -> DebugEnabled = State;
   if(BoxSettings -> DebugEnabled){ 
-    addToLog(F("Debug messages enabled"));
+    addToLog(F("Debug LongMessages enabled"));
     Sound1 -> playOnSound();
     }
   else {
-    addToLog(F("Debug messages disabled"));
+    addToLog(F("Debug LongMessages disabled"));
     Sound1 -> playOffSound();
     }
 }

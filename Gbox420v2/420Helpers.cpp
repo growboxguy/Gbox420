@@ -218,12 +218,12 @@ int RollingAverage::updateAverage(int LatestReading){
    }
    int Average = Sum / RollingAverageQueueDepth;      
    /* if(GBox -> BoxSettings -> DebugEnabled){ 
-     memset(&Message[0], 0, sizeof(Message));  //clear variable       
-     strcat(Message,toText(Oldest));
-     strcat_P(Message,(PGM_P)F(":Reading:")); strcat(Message,toText(LatestReading)); 
-     strcat_P(Message,(PGM_P)F(",Sum:")); strcat(Message,toText(Sum));
-     strcat_P(Message,(PGM_P)F(",Average:")); strcat(Message,toText(Average));
-     logToSerials(&Message,true);     
+     memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable       
+     strcat(LongMessage,toText(Oldest));
+     strcat_P(LongMessage,(PGM_P)F(":Reading:")); strcat(LongMessage,toText(LatestReading)); 
+     strcat_P(LongMessage,(PGM_P)F(",Sum:")); strcat(LongMessage,toText(Sum));
+     strcat_P(LongMessage,(PGM_P)F(",Average:")); strcat(LongMessage,toText(Average));
+     logToSerials(&LongMessage,true);     
    } */     
    return Average;
 }

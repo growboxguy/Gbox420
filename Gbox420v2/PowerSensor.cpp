@@ -19,14 +19,14 @@ void PowerSensor::refresh(){
 }
 
 void PowerSensor::report(){
-  memset(&Message[0], 0, sizeof(Message));  //clear variable
-  strcat_P(Message,(PGM_P)F("Power:")); strcat(Message,toText(Power)); strcat_P(Message,(PGM_P)F("W")); 
-  strcat_P(Message,(PGM_P)F(" ; Total:")); strcat(Message,toText(Energy)); strcat_P(Message,(PGM_P)F("Wh"));   
-  strcat_P(Message,(PGM_P)F(" ; Voltage:")); strcat(Message,toText(Voltage)); strcat_P(Message,(PGM_P)F("V"));
-  strcat_P(Message,(PGM_P)F(" ; Current:")); strcat(Message,toText(Current)); strcat_P(Message,(PGM_P)F("A"));
-  strcat_P(Message,(PGM_P)F(" ; Frequency:")); strcat(Message,toText(Frequency)); strcat_P(Message,(PGM_P)F("Hz"));
-  strcat_P(Message,(PGM_P)F(" ; PowerFactor:")); strcat(Message,toText(PowerFactor));
-  logToSerials( &Message, true,4);
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
+  strcat_P(LongMessage,(PGM_P)F("Power:")); strcat(LongMessage,toText(Power)); strcat_P(LongMessage,(PGM_P)F("W")); 
+  strcat_P(LongMessage,(PGM_P)F(" ; Total:")); strcat(LongMessage,toText(Energy)); strcat_P(LongMessage,(PGM_P)F("Wh"));   
+  strcat_P(LongMessage,(PGM_P)F(" ; Voltage:")); strcat(LongMessage,toText(Voltage)); strcat_P(LongMessage,(PGM_P)F("V"));
+  strcat_P(LongMessage,(PGM_P)F(" ; Current:")); strcat(LongMessage,toText(Current)); strcat_P(LongMessage,(PGM_P)F("A"));
+  strcat_P(LongMessage,(PGM_P)F(" ; Frequency:")); strcat(LongMessage,toText(Frequency)); strcat_P(LongMessage,(PGM_P)F("Hz"));
+  strcat_P(LongMessage,(PGM_P)F(" ; PowerFactor:")); strcat(LongMessage,toText(PowerFactor));
+  logToSerials( &LongMessage, true,4);
 }
 
 void PowerSensor::websiteRefreshEvent(){ //When the website is opened, load stuff once

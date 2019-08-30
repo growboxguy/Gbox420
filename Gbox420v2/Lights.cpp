@@ -30,12 +30,12 @@ void Lights::refresh(){  //makes the class non-virtual, by implementing the refr
 }
 
 void Lights::report(){
-  memset(&Message[0], 0, sizeof(Message));  //clear variable
-  strcat_P(Message,(PGM_P)F("Status:")); strcat(Message, getStatusText()); 
-  strcat_P(Message,(PGM_P)F(" ; Brightness:")); strcat(Message,toText(*Brightness));
-  strcat_P(Message,(PGM_P)F(" ; LightON:")); strcat(Message,getOnTimeText());
-  strcat_P(Message,(PGM_P)F(" ; LightOFF:")); strcat(Message,getOffTimeText());
-  logToSerials( &Message, true,4);
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
+  strcat_P(LongMessage,(PGM_P)F("Status:")); strcat(LongMessage, getStatusText()); 
+  strcat_P(LongMessage,(PGM_P)F(" ; Brightness:")); strcat(LongMessage,toText(*Brightness));
+  strcat_P(LongMessage,(PGM_P)F(" ; LightON:")); strcat(LongMessage,getOnTimeText());
+  strcat_P(LongMessage,(PGM_P)F(" ; LightOFF:")); strcat(LongMessage,getOffTimeText());
+  logToSerials( &LongMessage, true,4);
 }
 
 void Lights::websiteLoadEvent(){
@@ -103,10 +103,10 @@ void Lights::setBrightness(byte Brightness, bool LogThis){
   *(this -> Brightness) = Brightness;      
   analogWrite(DimmingPin, map(Brightness,0,100,int(255*(100-DimmingLimit)/100.0f),0)); //mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
   if(LogThis){
-    strncpy_P(Message,(PGM_P)F("Brightness: "),MaxTextLength);  
-    strcat(Message,toText(Brightness));
-    strcat_P(Message,(PGM_P)F("%"));
-    GBox -> addToLog(Message);
+    strncpy_P(LongMessage,(PGM_P)F("Brightness: "),MaxTextLength);  
+    strcat(LongMessage,toText(Brightness));
+    strcat_P(LongMessage,(PGM_P)F("%"));
+    GBox -> addToLog(LongMessage);
   }
 }
 

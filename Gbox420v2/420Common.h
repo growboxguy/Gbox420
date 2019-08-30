@@ -11,7 +11,8 @@
 //class ELClientWebServer; //forward declaration
 
 extern Settings MySettings;
-extern char Message[512];
+extern char ShortMessage[MaxTextLength];
+extern char LongMessage[512];
 extern char CurrentTime[20];
 extern ELClientWebServer WebServer;
 
@@ -30,7 +31,11 @@ class Common{
     virtual void refresh();  //every class needs to have an implementation of this method. Called when component should refresh its state (for example Reading temperature and humidity using the DHTsensor class)
     virtual void report() = 0;  //Prints current state of the object to the Serial outputs
     //AlertHandler * HealthStatus; //Tracks the state of a component  
-    char * getWebsiteComponentName(const __FlashStringHelper * ComponentName);
+    char * getWebsiteComponentName(const __FlashStringHelper * Name);
     void websiteLoadEvent();
     void websiteRefreshEvent();
+    void websiteBottonPressEvent(char * Button);
+    void websiteFormSubmitEvent(char * Button);
+    bool isThisMyComponent(char const * lookupName); //When it return true the component belongs to thos object
+    
 };

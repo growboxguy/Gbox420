@@ -23,21 +23,23 @@ void Aeroponics::websiteLoadEvent(){ //When the website is opened, load stuff on
   WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
 } 
 
-// void Aeroponics::websiteRefreshEvent(){ //When the website is opened, load stuff once
-//   WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *SprayEnabled);
-//   WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *Interval);
-//   WebServer.setArgInt(getWebsiteComponentName(F("Interval")), *Interval);
-//   WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
-// }  
+void Aeroponics::websiteBottonPressEvent(char * Button){ //When the website is opened, load stuff once
+  !isThisMyComponent(Button) ? return;  //check if component name matches class, and fills ShortMessage global variable with the button function of yes
+  if (strcmp_P(button,(PGM_P)F("btn_LightOn"))==0) { turnLightON(true); }
+  else if (strcmp_P(button,(PGM_P)F("btn_LightOff"))==0) { turnLightOFF(true); }
+  else if (strcmp_P(button,(PGM_P)F("btn_InternalFanOff"))==0) {internalFanOff();}
+  else if (strcmp_P(button,(PGM_P)F("btn_InternalFanLow"))==0) { internalFanLow();}
+  else if (strcmp_P(button,(PGM_P)F("btn_InternalFanHigh"))==0) {internalFanHigh(); } 
+}  
 
  void Aeroponics::report(){
-  memset(&Message[0], 0, sizeof(Message));  //clear variable  
-  strcat_P(Message,(PGM_P)F(" ; SprayEnabled:"));strcat(Message,yesNoToText(SprayEnabled));
-  strcat_P(Message,(PGM_P)F(" ; Interval:"));strcat(Message,toText(*Interval));
-  strcat_P(Message,(PGM_P)F(" ; Duration:"));strcat(Message,toText(*Duration));
-  strcat_P(Message,(PGM_P)F(" ; PumpTimeout:"));strcat(Message,toText(*PumpTimeout));
-  strcat_P(Message,(PGM_P)F(" ; PrimingTime:"));strcat(Message,toText(*PrimingTime));
-  logToSerials( &Message, true, 0); //Break line, No indentation needed: child class already printed it 
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
+  strcat_P(LongMessage,(PGM_P)F(" ; SprayEnabled:"));strcat(LongMessage,yesNoToText(SprayEnabled));
+  strcat_P(LongMessage,(PGM_P)F(" ; Interval:"));strcat(LongMessage,toText(*Interval));
+  strcat_P(LongMessage,(PGM_P)F(" ; Duration:"));strcat(LongMessage,toText(*Duration));
+  strcat_P(LongMessage,(PGM_P)F(" ; PumpTimeout:"));strcat(LongMessage,toText(*PumpTimeout));
+  strcat_P(LongMessage,(PGM_P)F(" ; PrimingTime:"));strcat(LongMessage,toText(*PrimingTime));
+  logToSerials( &LongMessage, true, 0); //Break line, No indentation needed: child class already printed it 
  }
 
 void Aeroponics::setPumpOn(bool UserRequest){
