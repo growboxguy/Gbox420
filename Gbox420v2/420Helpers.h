@@ -50,6 +50,7 @@ template <class logLine> void logToSerials (logLine* ToPrint,bool BreakLine=true
   if(BreakLine){ArduinoSerial.println((*ToPrint));ESPSerial.println((*ToPrint));}
   else{ArduinoSerial.print((*ToPrint));ESPSerial.print((*ToPrint));}
 }
+
 template <class logLine> void logToSerials (logLine& ToPrint,bool BreakLine=true,byte Indent=3) { 
   while(Indent>0){
      ArduinoSerial.print(F(" "));

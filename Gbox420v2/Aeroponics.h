@@ -34,7 +34,7 @@ public:
     virtual void refresh() = 0;  //Aeroponics class cannot be instantiated
     void report();
     void websiteLoadEvent();
-    void websiteBottonPressEvent(char * Button)
+    void websiteBottonPressEvent(char * Button);
     void setPumpOn(bool UserRequest);
     void setPumpOff(bool UserRequest);
     void PumpDisable();

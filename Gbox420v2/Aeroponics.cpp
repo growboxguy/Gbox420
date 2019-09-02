@@ -24,12 +24,24 @@ void Aeroponics::websiteLoadEvent(){ //When the website is opened, load stuff on
 } 
 
 void Aeroponics::websiteBottonPressEvent(char * Button){ //When the website is opened, load stuff once
-  !isThisMyComponent(Button) ? return;  //check if component name matches class, and fills ShortMessage global variable with the button function of yes
-  if (strcmp_P(button,(PGM_P)F("btn_LightOn"))==0) { turnLightON(true); }
-  else if (strcmp_P(button,(PGM_P)F("btn_LightOff"))==0) { turnLightOFF(true); }
-  else if (strcmp_P(button,(PGM_P)F("btn_InternalFanOff"))==0) {internalFanOff();}
-  else if (strcmp_P(button,(PGM_P)F("btn_InternalFanLow"))==0) { internalFanLow();}
-  else if (strcmp_P(button,(PGM_P)F("btn_InternalFanHigh"))==0) {internalFanHigh(); } 
+  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(&Button,true,0);
+  if(!isThisMyComponent(Button)) {  //check if component name matches class, and fills ShortMessage global variable with the button function of yes. 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name 
+    if(GBox -> BoxSettings -> DebugEnabled){
+      logToSerials(F("Matched and extracted function: "),false,3);
+      logToSerials(&ShortMessage,true,0);
+    }
+    if (strcmp_P(ShortMessage,(PGM_P)F("PumpOn"))==0) { setPumpOn(true); }
+    else if (strcmp_P(ShortMessage,(PGM_P)F("PumpOff"))==0) { setPumpOff(true); }
+    else if (strcmp_P(ShortMessage,(PGM_P)F("PumpDisable"))==0) { PumpDisable(); }
+    else if (strcmp_P(ShortMessage,(PGM_P)F("Mix"))==0) { Mix();}
+    else if (strcmp_P(ShortMessage,(PGM_P)F("SprayEnable"))==0) { setSprayOnOff(true); } 
+    else if (strcmp_P(ShortMessage,(PGM_P)F("SprayDisable"))==0) { setSprayOnOff(false); } 
+    //else if (strcmp_P(Button,(PGM_P)F("SprayNow"))==0) {spra(); } 
+    // else if (strcmp_P(Button,(PGM_P)F("SprayOff"))==0) {internalFanHigh(); } 
+  }
 }  
 
  void Aeroponics::report(){
