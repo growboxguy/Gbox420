@@ -25,6 +25,7 @@ class Aeroponics_Tank : public Aeroponics
 
     void refresh();
     void report();
+    void checkRelays();
     void checkAeroPumpAlerts_WithPressureTank();
     bool checkQuietTime();
     void setQuietFromHour(int Hour);
@@ -33,8 +34,8 @@ class Aeroponics_Tank : public Aeroponics
     void setQuietToMinute(int Minute);
     void setQuietOnOff(bool State);
     void setQuietRefillOnOff(bool State); //TODO: Remove this
-    void aeroSprayOff();
-    void aeroSprayNow(bool DueToHighPressure);
+    void sprayOff();
+    void sprayNow(bool DueToHighPressure);
     void setPressureLow(float PressureLow);
     void setPressureHigh(float PressureHigh);
 

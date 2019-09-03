@@ -105,18 +105,18 @@
 				  </tr>
 				</table>
 				<b>Internal fan :</b>
-				<button id="btn_InternalFanOff" type="button" title="Turn internal fan OFF">OFF</button>
-				<button id="btn_InternalFanLow" type="button" title="Turn internal fan ON and set speed to LOW">Low</button>
-				<button id="btn_InternalFanHigh" type="button" title="Turn internal fan ON and set speed to HIGH">High</button>
+				<button id="InternalFanOff" type="button" title="Turn internal fan OFF">OFF</button>
+				<button id="InternalFanLow" type="button" title="Turn internal fan ON and set speed to LOW">Low</button>
+				<button id="InternalFanHigh" type="button" title="Turn internal fan ON and set speed to HIGH">High</button>
 				<form>
 					<label><input type="checkbox" name="AutoInternalFan">Automatic low/high at: </label>
 					<input style="width: 45px;" min=0 max=255 name="InternalFanSwitchTemp" type="number"/><span>° </span>
 					<input type="submit" value="Set" title="Enable/Disable automatic LOW/HIGH switch of internal fan based on internal temperature">
 				</form>						
 				<b>Exhaust fan:</b>
-				<button id="btn_ExhaustFanOff" type="button" title="Turn exhaust fan OFF">OFF</button>
-				<button id="btn_ExhaustFanLow" type="button" title="Turn exhaust fan ON and set speed to LOW">Low</button>
-				<button id="btn_ExhaustFanHigh" type="button" title="Turn exhaust fan ON and set speed to HIGH">High</button>
+				<button id="ExhaustFanOff" type="button" title="Turn exhaust fan OFF">OFF</button>
+				<button id="ExhaustFanLow" type="button" title="Turn exhaust fan ON and set speed to LOW">Low</button>
+				<button id="ExhaustFanHigh" type="button" title="Turn exhaust fan ON and set speed to HIGH">High</button>
 				<form>
 					<label><input type="checkbox" name="AutoExhaustFan">Automatic. Off humidity:</label>
 					<input style="width: 35px;" min=0 max=99 name="ExhaustFanOffHumid" type="number"/>
@@ -144,7 +144,7 @@
 					<td id="LightSensor1_ReadingRaw" class="dataRows"></td>
 				  </tr>				 
 				</table> 
-				<button id="btn_LightSensor1Calibrate" type="button" title="Measure light output at 0 and 100% brightness">Calibrate</button><br>
+				<button id="LightSensor1Calibrate" type="button" title="Measure light output at 0 and 100% brightness">Calibrate</button><br>
 			</div>		
 			<div class="card" style="width:90%">		
 				<h1>Lights</h1>
@@ -171,8 +171,8 @@
 				<input type="submit" value="Set">				
 				</form>				
 				<b>Timer</b><br>
-				<button id="btn_Light1_TimerEnable" type="button" align="right" title="Enable light timer">Enable</button>
-				<button id="btn_Light1_TimerDisable" type="button" align="right" title="Disable light timer">Disable</button>
+				<button id="Light1_TimerEnable" type="button" align="right" title="Enable light timer">Enable</button>
+				<button id="Light1_TimerDisable" type="button" align="right" title="Disable light timer">Disable</button>
 				<form>ON : <input style="width: 35px;" min=0 max=23 name="Light1_OnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="Light1_OnMinute" type="number"/> <input type="submit" value="Set" title="Set grow light ON time"></form>
 				<form>OFF:<input style="width: 35px;" min=0 max=23 name="Light1_OffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="Light1_OffMinute" type="number"/> <input type="submit" value="Set" title="Set grow light OFF time"></form>
 			</div>			

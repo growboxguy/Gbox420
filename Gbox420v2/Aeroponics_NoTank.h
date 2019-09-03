@@ -15,6 +15,7 @@ public:
     void report();
     void checkAeroPumpAlerts_WithoutPressureTank();
     void setAeroBlowOnOff(bool State);
-    void aeroSprayOff();
-    void aeroSprayNow(bool DueToHighPressure);
+    void sprayOff();
+    void sprayNow(bool DueToHighPressure);
+    
 };

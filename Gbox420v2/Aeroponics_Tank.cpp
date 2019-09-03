@@ -11,9 +11,19 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
   QuietFromMinute = &TankSpecificSettings -> QuietFromMinute; //Quiet time to block pump - minute
   QuietToHour = &TankSpecificSettings -> QuietToHour; //Quiet time end - hour
   QuietToMinute = &TankSpecificSettings -> QuietToMinute; //Quiet time end - minute
+
+  pinMode(SpraySolenoidPin,OUTPUT);
+  pinMode(SpraySolenoidPin,HIGH);  //initialize off
  
   logToSerials(F("Aeroponics_Tank object created"),true);
  }   
+
+ void Aeroponics_Tank::checkRelays(){
+   logToSerials(F("Aeroponics_Tank checking relays:"),false,0);
+   logToSerials(SpraySolenoidOn,true,0);
+    if(SpraySolenoidOn) digitalWrite(SpraySolenoidPin, LOW); else digitalWrite(SpraySolenoidPin, HIGH); 
+    Aeroponics::checkRelays();
+  } 
 
  void Aeroponics_Tank::report(){
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
@@ -41,13 +51,13 @@ void Aeroponics_Tank::refresh(){
     else{
       if( millis() - PumpTimer >= (uint32_t)(*PumpTimeout * 1000)){ //If pump timeout reached
         setPumpOff(false); //turn of pump, 
-        if(!BypassActive) {  //if bypass was not active and refill did not finish within timeout= pump must be broken
+        if(!MixInProgress) {  //if bypass was not active and refill did not finish within timeout= pump must be broken
           PumpDisable();  //automatically disable pump if it is suspected to be broken
         //   sendEmailAlert(F("Aeroponics%20pump%20failed"));
         }
         logToSerials(F("Pump timeout reached"),true);       
       }
-       if (!BypassActive && BypassSolenoidOn && millis() - PumpTimer >= (uint32_t)(*PrimingTime * 1000)){ //self priming timeout reached, time to start refilling
+       if (!MixInProgress && BypassSolenoidOn && millis() - PumpTimer >= (uint32_t)(*PrimingTime * 1000)){ //self priming timeout reached, time to start refilling
           if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Starting refill"),true); 
           BypassSolenoidOn = false;      
           PumpTimer = millis(); //reset timer to start measuring spray time
@@ -105,7 +115,7 @@ void Aeroponics_Tank::setPressureHigh(float PressureHigh){
 //   else{
 //     if(AeroPressure > GBox -> BoxSettings -> PressureAlertHigh){ //Pressure over limit - emergency spraying
 //           setPumpOff(false); //force pump off
-//          // aeroSprayNow(true); //try to release pressure  
+//          // sprayNow(true); //try to release pressure  
 //     }
 //     if(PreviousPressureRead != false){PressureTriggerCount = 0;}
 //     else{ if(PressureOK)PressureTriggerCount++; }  //count out of range readings while pressure is considered OK and an alert is not active.
@@ -178,9 +188,9 @@ void Aeroponics_Tank::setQuietRefillOnOff(bool State){
 
 
 
-void Aeroponics_Tank::aeroSprayNow(bool DueToHighPressure){   
+void Aeroponics_Tank::sprayNow(bool DueToHighPressure){   
   if(*SprayEnabled || DueToHighPressure){
-    BypassActive = false;
+    MixInProgress = false;
     SprayTimer = millis();
     SpraySolenoidOn = true;     
     checkRelays();
@@ -190,7 +200,7 @@ void Aeroponics_Tank::aeroSprayNow(bool DueToHighPressure){
     }
 }
 
-void Aeroponics_Tank::aeroSprayOff(){    
+void Aeroponics_Tank::sprayOff(){    
     SpraySolenoidOn = false; 
     checkRelays();
     GBox -> addToLog(F("Aeroponics spray OFF"));

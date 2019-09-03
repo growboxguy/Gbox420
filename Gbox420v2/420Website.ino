@@ -102,11 +102,11 @@ void buttonPressCallback(char *button)  //Called when any button on the website 
   GBox -> Aeroponics_NoTank1 -> websiteBottonPressEvent(button);
   GBox -> Aeroponics_Tank1 -> websiteBottonPressEvent(button);
   //GrowBox page
-  if (strcmp_P(button,(PGM_P)F("btn_Light1_On"))==0) {GBox -> Light1 -> setLightOnOff(true,true); }
-  else if (strcmp_P(button,(PGM_P)F("btn_Light1_Off"))==0) {GBox -> Light1 -> setLightOnOff(false,true); }
-  else if (strcmp_P(button,(PGM_P)F("btn_Light1_TimerEnable"))==0) {GBox -> Light1 -> setTimerOnOff(true);}
-  else if (strcmp_P(button,(PGM_P)F("btn_Light1_TimerDisable"))==0) {GBox -> Light1 -> setTimerOnOff(false);}
-  else if (strcmp_P(button,(PGM_P)F("btn_LightSensor1Calibrate"))==0) {GBox -> LightSensor1 -> triggerCalibration();}
+  if (strcmp_P(button,(PGM_P)F("Light1_On"))==0) {GBox -> Light1 -> setLightOnOff(true,true); }
+  else if (strcmp_P(button,(PGM_P)F("Light1_Off"))==0) {GBox -> Light1 -> setLightOnOff(false,true); }
+  else if (strcmp_P(button,(PGM_P)F("Light1_TimerEnable"))==0) {GBox -> Light1 -> setTimerOnOff(true);}
+  else if (strcmp_P(button,(PGM_P)F("Light1_TimerDisable"))==0) {GBox -> Light1 -> setTimerOnOff(false);}
+  else if (strcmp_P(button,(PGM_P)F("LightSensor1Calibrate"))==0) {GBox -> LightSensor1 -> triggerCalibration();}
   //Settings page
   else if (strcmp_P(button,(PGM_P)F("btn_restoreDefaults"))==0) { restoreDefaults(GBox -> BoxSettings); }
   else if (strcmp_P(button,(PGM_P)F("btn_Ee"))==0) { GBox -> Sound1 ->playEE(); }

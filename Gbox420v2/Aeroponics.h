@@ -21,7 +21,7 @@ public:
     bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on. Only used with the Pressure Tank option.
     bool BypassSolenoidOn = false; //Aeroponics - Controls the bypass valve, true opens the solenoid
     bool PumpOn = false; //Aeroponics - High pressure pump state
-    bool BypassActive = false; //Aeroponics - Used to temporary suspend pump timers and keep the high pressure pump on. Do not change.
+    bool MixInProgress = false; //Aeroponics - Used to temporary suspend pump timers and keep the high pressure pump on. Do not change.
     bool BlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
    // float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
 
@@ -30,7 +30,7 @@ public:
     int * Duration; //Aeroponics - Spray time in seconds
     int * PumpTimeout;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
     int * PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
-    void checkRelays(){logToSerials(F("checkRelays METHOD NOT IMPLEMENTED"),true,0);};
+    void checkRelays();
     virtual void refresh() = 0;  //Aeroponics class cannot be instantiated
     void report();
     void websiteLoadEvent();
@@ -45,9 +45,9 @@ public:
     
     const __FlashStringHelper * pumpStateToText();
     uint32_t LastRefill= 0;
-    void setAeroPumpTimeout(int Timeout);
-    void setAeroPrimingTime(uint32_t Timing);
-    void setAeroPressureTankOnOff(bool State);  //TODO: REMOVE THIS!
-
+    void setPumpTimeout(int Timeout);
+    void setPrimingTime(uint32_t Timing);
+    virtual void sprayNow(bool DueToHighPressure) = 0;
+    virtual void sprayOff() = 0;
 };
 

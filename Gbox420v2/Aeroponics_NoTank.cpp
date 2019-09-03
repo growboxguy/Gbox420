@@ -25,47 +25,47 @@ void Aeroponics_NoTank::refresh(){ //pump directly connected to aeroponics tote,
       logToSerials(F("Pump timeout reached"),true);
     }
     
-    if(!BypassActive && !BypassSolenoidOn && PumpOn && millis() - SprayTimer >= (uint32_t)(*Duration * 1000)){  //bypass valve is closed and time to stop spraying (Duration in Seconds)
+    if(!MixInProgress && !BypassSolenoidOn && PumpOn && millis() - SprayTimer >= (uint32_t)(*Duration * 1000)){  //bypass valve is closed and time to stop spraying (Duration in Seconds)
       BypassSolenoidOn = true;
       BlowOffInProgress = true; //no extra time is needed, will use SprayTimer
       checkRelays();
-      setPumpOff(false);    
-      logToSerials(F("Stopping spray"),true);
-      SprayTimer = millis();
+      setPumpOff(false);
+      SprayTimer = millis();    
+      logToSerials(F("Stopping spray"),true);      
     }
     else{
-      if (!BypassActive && BypassSolenoidOn && millis() - PumpTimer >= (uint32_t)(*PrimingTime * 1000)){ //self priming timeout reached, time to start spraying
+      if (!MixInProgress && BypassSolenoidOn && millis() - PumpTimer >= (uint32_t)(*PrimingTime * 1000)){ //self priming timeout reached, time to start spraying
         BypassSolenoidOn = false; //Close bypass valve
-        logToSerials(F("Closing bypass, starting spray"),true);
+        checkRelays();
         SprayTimer = millis();
+        logToSerials(F("Closing bypass, starting spray"),true);        
         }
        }
   }
   else{ //pump is off
     if (!BlowOffInProgress)BypassSolenoidOn = false; //Should not leave the solenoid turned on
     if(PumpOK && *SprayEnabled  && millis() - SprayTimer >= (uint32_t)(*Interval * 60000)){ //if time to start spraying (AeroInterval in Minutes)
-      aeroSprayNow(false);                     
+      sprayNow(false);                     
     }    
   } 
   report();
 }
 
 
-void Aeroponics_NoTank::aeroSprayNow(bool DueToHighPressure){   
+void Aeroponics_NoTank::sprayNow(bool DueToHighPressure){   
   if(*SprayEnabled || DueToHighPressure){
-    BypassActive = false;
+    MixInProgress = false;
     SprayTimer = millis();
-      PumpOK = true;
-      PumpOn = true;
-      BypassSolenoidOn = true;
-      PumpTimer = millis();
+    PumpOK = true;
+    PumpOn = true;
+    BypassSolenoidOn = true;
+    PumpTimer = millis();
+    PrimingTime = millis();
     checkRelays();
     GBox -> Sound1 -> playOnSound();
-    if(DueToHighPressure) GBox -> addToLog(F("Above pressure limit,spraying"));
-    else GBox -> addToLog(F("Aeroponics spraying"));
+    logToSerials(F("Aeroponics spraying"),true,3);
     }
 }
-
 
 
 // void Aeroponics_NoTank::checkAeroPumpAlerts_WithoutPressureTank()
@@ -128,7 +128,7 @@ void Aeroponics_NoTank::aeroSprayNow(bool DueToHighPressure){
 // }
 
 
-void Aeroponics_NoTank::aeroSprayOff(){    
+void Aeroponics_NoTank::sprayOff(){    
     PumpOn = false; 
     BypassSolenoidOn = false; 
     checkRelays();

@@ -14,18 +14,36 @@ Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, byte By
     Duration = &DefaultSettings -> Duration; //Aeroponics - Spray time in seconds    
     PumpTimeout = &DefaultSettings -> PumpTimeout;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
     PrimingTime = &DefaultSettings -> PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
+
+    pinMode(BypassSolenoidPin,OUTPUT);
+    pinMode(BypassSolenoidPin,HIGH);  //initialize off
+    pinMode(PumpPin,OUTPUT);
+    pinMode(PumpPin,HIGH);  //initialize off
 }
 
+void Aeroponics::checkRelays(){
+    logToSerials(F("PumpOn: "),false,0);logToSerials(PumpOn,false,0);
+    if(PumpOn) {
+      digitalWrite(PumpPin, LOW);
+      logToSerials(F("ON"),false,2);
+     }
+    else {
+      digitalWrite(PumpPin, HIGH); 
+      logToSerials(F("OFF"),false,2);
+    } 
+    if(BypassSolenoidOn) digitalWrite(BypassSolenoidPin, LOW); else digitalWrite(BypassSolenoidPin, HIGH);
+  } 
+
 void Aeroponics::websiteLoadEvent(){ //When the website is opened, load stuff once
-  WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *SprayEnabled);
-  WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *Interval);
+  WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *PumpTimeout);
+  WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *PrimingTime);
   WebServer.setArgInt(getWebsiteComponentName(F("Interval")), *Interval);
   WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
 } 
 
 void Aeroponics::websiteBottonPressEvent(char * Button){ //When the website is opened, load stuff once
   if(GBox -> BoxSettings -> DebugEnabled)logToSerials(&Button,true,0);
-  if(!isThisMyComponent(Button)) {  //check if component name matches class, and fills ShortMessage global variable with the button function of yes. 
+  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
   else{ //if the component name matches with the object name 
@@ -39,8 +57,8 @@ void Aeroponics::websiteBottonPressEvent(char * Button){ //When the website is o
     else if (strcmp_P(ShortMessage,(PGM_P)F("Mix"))==0) { Mix();}
     else if (strcmp_P(ShortMessage,(PGM_P)F("SprayEnable"))==0) { setSprayOnOff(true); } 
     else if (strcmp_P(ShortMessage,(PGM_P)F("SprayDisable"))==0) { setSprayOnOff(false); } 
-    //else if (strcmp_P(Button,(PGM_P)F("SprayNow"))==0) {spra(); } 
-    // else if (strcmp_P(Button,(PGM_P)F("SprayOff"))==0) {internalFanHigh(); } 
+    else if (strcmp_P(ShortMessage,(PGM_P)F("SprayNow"))==0) {sprayNow(false); } 
+    else if (strcmp_P(ShortMessage,(PGM_P)F("SprayOff"))==0) {sprayOff(); } 
   }
 }  
 
@@ -55,7 +73,7 @@ void Aeroponics::websiteBottonPressEvent(char * Button){ //When the website is o
  }
 
 void Aeroponics::setPumpOn(bool UserRequest){
-  BypassActive  = UserRequest; //If pump was turned on from the web interface first run an air bleeding cycle
+  MixInProgress  = UserRequest; //If pump was turned on from the web interface first run an air bleeding cycle
   PumpOn = true;
   PumpTimer = millis();
   checkRelays();
@@ -67,7 +85,7 @@ void Aeroponics::setPumpOn(bool UserRequest){
 }
 
 void Aeroponics::setPumpOff(bool UserRequest){  
-  BypassActive = false;
+  MixInProgress = false;
   PumpOn = false;
   if(!BlowOffInProgress)BypassSolenoidOn = false; //Close bypass valve
   PumpTimer = millis();        
@@ -87,7 +105,7 @@ void Aeroponics::PumpDisable(){
 
 void Aeroponics::Mix(){
   PumpOn = true;    
-  BypassActive = true; 
+  MixInProgress = true; 
   PumpOK = true;
   BypassSolenoidOn = true;
   PumpTimer = millis();    
@@ -126,13 +144,13 @@ const __FlashStringHelper * Aeroponics::pumpStateToText(){
 }
 
 
-void Aeroponics::setAeroPumpTimeout(int Timeout)
+void Aeroponics::setPumpTimeout(int Timeout)
 {
 *PumpTimeout = (uint32_t)Timeout;
 GBox -> addToLog(F("Aero pump timeout updated"));
 }
 
-void Aeroponics::setAeroPrimingTime(uint32_t Timing)
+void Aeroponics::setPrimingTime(uint32_t Timing)
 {
 *PrimingTime = (uint32_t)Timing;
 GBox -> addToLog(F("Aero priming time updated"));

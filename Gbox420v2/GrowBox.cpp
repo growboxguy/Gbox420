@@ -39,7 +39,7 @@ void GrowBox::refresh(){  //implementing the virtual refresh function from Commo
 }
 
 void GrowBox::runSec(){ 
-  if(DebugEnabled)logToSerials(F("One sec trigger.."),true,1);
+  //if(DebugEnabled)logToSerials(F("One sec trigger.."),true,1);
   Sound1 -> refresh();
 }
 
