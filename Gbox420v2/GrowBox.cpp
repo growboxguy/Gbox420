@@ -44,15 +44,10 @@ void GrowBox::runSec(){
 }
 
 void GrowBox::runFiveSec(){
-  if(DebugEnabled)logToSerials(F("Five sec trigger.."),true,1); 
-  report();  //Growbox reporting
-  InternalDHTSensor -> refresh();
-  ExternalDHTSensor -> refresh();
-  LightSensor1 -> refresh();
-  PowerSensor1 -> refresh();
+  //if(DebugEnabled)logToSerials(F("Five sec trigger.."),true,1); 
   Aeroponics_NoTank1 -> refresh();  //TODO: Still needs refresh linked into interrupt handling 
-  Aeroponics_Tank1 -> refresh(); //TODO: Still needs refresh linked into interrupt handling 
-  Light1 -> refresh();
+  //Aeroponics_Tank1 -> refresh(); //TODO: Still needs refresh linked into interrupt handling 
+
   //PHSensor1 -> refresh();
 }
 
@@ -61,6 +56,12 @@ void GrowBox::runMinute(){
   // Aeroponics_NoTank1 -> refresh();  //TODO: Still needs refresh linked into interrupt handling 
   // Aeroponics_Tank1 -> refresh(); //TODO: Still needs refresh linked into interrupt handling 
   // Light1 -> refresh();
+  report();  //Growbox reporting
+  InternalDHTSensor -> refresh();
+  ExternalDHTSensor -> refresh();
+  LightSensor1 -> refresh();
+  PowerSensor1 -> refresh();
+  Light1 -> refresh();
 
 }
 

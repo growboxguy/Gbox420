@@ -79,7 +79,7 @@ class RollingAverage
     int getAverageInt();
     float getAverageFloat();
     char * getAverageIntText();
-    char * getAverageFloatText();
+  char * getAverageFloatText();
 };
 
 //////////////////////////////////////////////////////////////////

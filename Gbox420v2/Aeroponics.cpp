@@ -21,15 +21,12 @@ Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, byte By
     pinMode(PumpPin,HIGH);  //initialize off
 }
 
-void Aeroponics::checkRelays(){
-    logToSerials(F("PumpOn: "),false,0);logToSerials(PumpOn,false,0);
+void Aeroponics::checkRelays(){    
     if(PumpOn) {
       digitalWrite(PumpPin, LOW);
-      logToSerials(F("ON"),false,2);
      }
     else {
       digitalWrite(PumpPin, HIGH); 
-      logToSerials(F("OFF"),false,2);
     } 
     if(BypassSolenoidOn) digitalWrite(BypassSolenoidPin, LOW); else digitalWrite(BypassSolenoidPin, HIGH);
   } 
@@ -41,16 +38,19 @@ void Aeroponics::websiteLoadEvent(){ //When the website is opened, load stuff on
   WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
 } 
 
+void Aeroponics::websiteRefreshEvent(){ //When the website is opened, load stuff once
+  WebServer.setArgString(getWebsiteComponentName(F("SprayEnabled")), enabledToText(*SprayEnabled));
+  WebServer.setArgString(getWebsiteComponentName(F("Pressure")), pressureToText(AeroPressure));
+  WebServer.setArgString(getWebsiteComponentName(F("PumpState")), pumpStateToText());   
+  WebServer.setArgString(getWebsiteComponentName(F("BypassState")), onOffToText(BypassSolenoidOn)); 
+} 
+
+
 void Aeroponics::websiteBottonPressEvent(char * Button){ //When the website is opened, load stuff once
-  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(&Button,true,0);
   if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
-  else{ //if the component name matches with the object name 
-    if(GBox -> BoxSettings -> DebugEnabled){
-      logToSerials(F("Matched and extracted function: "),false,3);
-      logToSerials(&ShortMessage,true,0);
-    }
+  else{ //if the component name matches with the object name     
     if (strcmp_P(ShortMessage,(PGM_P)F("PumpOn"))==0) { setPumpOn(true); }
     else if (strcmp_P(ShortMessage,(PGM_P)F("PumpOff"))==0) { setPumpOff(true); }
     else if (strcmp_P(ShortMessage,(PGM_P)F("PumpDisable"))==0) { PumpDisable(); }
@@ -59,6 +59,28 @@ void Aeroponics::websiteBottonPressEvent(char * Button){ //When the website is o
     else if (strcmp_P(ShortMessage,(PGM_P)F("SprayDisable"))==0) { setSprayOnOff(false); } 
     else if (strcmp_P(ShortMessage,(PGM_P)F("SprayNow"))==0) {sprayNow(false); } 
     else if (strcmp_P(ShortMessage,(PGM_P)F("SprayOff"))==0) {sprayOff(); } 
+  }
+} 
+
+void Aeroponics::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once
+  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name     
+    if(strcmp_P(ShortMessage,(PGM_P)F("PumpTimeout"))==0) {setPumpTimeout(WebServer.getArgInt());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("PrimingTime"))==0) {setPrimingTime(WebServer.getArgInt());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("Duration"))==0) {setInterval(WebServer.getArgInt());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("Interval"))==0) {setDuration(WebServer.getArgInt());}    
+    //else if(strcmp_P(field,(PGM_P)F("QuietEnabled"))==0) {setQuietOnOff(WebServer.getArgBoolean());}
+    //else if(strcmp_P(field,(PGM_P)F("RefillBeforeQuiet"))==0) {setQuietRefillOnOff(WebServer.getArgBoolean());}
+    //else if(strcmp_P(field,(PGM_P)F("PressureTankPresent"))==0) {setPressureTankOnOff(WebServer.getArgBoolean());}
+    //else if(strcmp_P(field,(PGM_P)F("BlowOff"))==0) {setBlowOnOff(WebServer.getArgBoolean());}
+    // else if(strcmp_P(field,(PGM_P)F("QuietFromHour"))==0) {setQuietFromHour(WebServer.getArgInt());}
+    // else if(strcmp_P(field,(PGM_P)F("QuietFromMinute"))==0) {setQuietFromMinute(WebServer.getArgInt());}
+    // else if(strcmp_P(field,(PGM_P)F("QuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}
+    // else if(strcmp_P(field,(PGM_P)F("QuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}  
+    else if(strcmp_P(ShortMessage,(PGM_P)F("SprayEnabled"))==0) {setSprayOnOff(WebServer.getArgBoolean());}
+
   }
 }  
 
@@ -137,10 +159,10 @@ void Aeroponics::setDuration(int duration){
   GBox -> addToLog(F("Spray time updated"));  
 }
 
-const __FlashStringHelper * Aeroponics::pumpStateToText(){
-   if(!PumpOK) return F("DISABLED");
-   else if(PumpOn) return F("ON");
-   return F("OFF");
+char * Aeroponics::pumpStateToText(){
+   if(!PumpOK) return (char *)"DISABLED";
+   else if(PumpOn) return (char *)"ON";
+   return (char *)"OFF";
 }
 
 

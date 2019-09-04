@@ -87,7 +87,8 @@ void Aeroponics_Tank::refresh(){
         if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Starting spray"),true);
         SprayTimer = millis();
     }    
-  }  
+  } 
+  checkRelays(); 
   report();
 }
 

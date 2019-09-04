@@ -54,6 +54,8 @@ bool Common::isThisMyComponent(char const * lookupName){  //this is the name of 
       }      
     }
     //Serial.println("Match");
+    logToSerials(F("Extracted function: "),false,3);
+    logToSerials(&ShortMessage,true,0);
     return true;    
   }
   else{

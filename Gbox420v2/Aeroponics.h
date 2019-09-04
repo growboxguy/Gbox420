@@ -35,6 +35,8 @@ public:
     void report();
     void websiteLoadEvent();
     void websiteBottonPressEvent(char * Button);
+    void websiteFieldSubmitEvent(char * Field);
+    void websiteRefreshEvent();
     void setPumpOn(bool UserRequest);
     void setPumpOff(bool UserRequest);
     void PumpDisable();
@@ -43,7 +45,7 @@ public:
     void setInterval(int interval);
     void setDuration(int duration);
     
-    const __FlashStringHelper * pumpStateToText();
+    char * pumpStateToText();
     uint32_t LastRefill= 0;
     void setPumpTimeout(int Timeout);
     void setPrimingTime(uint32_t Timing);

@@ -44,24 +44,24 @@ void Aeroponics_NoTank::refresh(){ //pump directly connected to aeroponics tote,
   }
   else{ //pump is off
     if (!BlowOffInProgress)BypassSolenoidOn = false; //Should not leave the solenoid turned on
-    if(PumpOK && *SprayEnabled  && millis() - SprayTimer >= (uint32_t)(*Interval * 60000)){ //if time to start spraying (AeroInterval in Minutes)
+    if(PumpOK && *SprayEnabled  && ((millis() - SprayTimer) >= (uint32_t)(*Interval * 60000))){ //if time to start spraying (AeroInterval in Minutes)
       sprayNow(false);                     
     }    
   } 
+  checkRelays();
   report();
 }
 
 
 void Aeroponics_NoTank::sprayNow(bool DueToHighPressure){   
   if(*SprayEnabled || DueToHighPressure){
-    MixInProgress = false;
-    SprayTimer = millis();
+    MixInProgress = false;    
     PumpOK = true;
     PumpOn = true;
     BypassSolenoidOn = true;
-    PumpTimer = millis();
-    PrimingTime = millis();
     checkRelays();
+    PumpTimer = millis();
+    SprayTimer = millis();    
     GBox -> Sound1 -> playOnSound();
     logToSerials(F("Aeroponics spraying"),true,3);
     }

@@ -91,7 +91,8 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
   GBox -> LightSensor1 -> websiteRefreshEvent();
   GBox -> Light1 -> websiteRefreshEvent();
   GBox -> PowerSensor1 -> websiteRefreshEvent();  
-   
+  GBox -> Aeroponics_NoTank1 -> websiteRefreshEvent();
+  //GBox -> Aeroponics_Tank1 -> websiteRefreshEvent(); 
 
   }
 }
@@ -115,6 +116,10 @@ void buttonPressCallback(char *button)  //Called when any button on the website 
 }
 
 void setFieldCallback(char * field){  //Called when any field on the website is updated. Do not call logToSerials within any methods used here!
+  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(&field,true,0); 
+  GBox -> Aeroponics_NoTank1 -> websiteFieldSubmitEvent(field); 
+  GBox -> Aeroponics_Tank1 -> websiteFieldSubmitEvent(field);
+  
   if(strcmp_P(field,(PGM_P)F("Light1_Brightness"))==0) {GBox -> Light1 -> setBrightness(WebServer.getArgInt(),true);}
   else if(strcmp_P(field,(PGM_P)F("Light1_OnHour"))==0) {GBox -> Light1 -> setOnHour(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("Light1_OnMinute"))==0) {GBox -> Light1 -> setOnMinute(WebServer.getArgInt());}
