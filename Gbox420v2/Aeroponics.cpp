@@ -12,24 +12,21 @@ Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, byte By
     SprayEnabled = &DefaultSettings -> SprayEnabled;  //Enable/disable misting
     Interval = &DefaultSettings -> Interval; //Aeroponics - Spray every 15 minutes
     Duration = &DefaultSettings -> Duration; //Aeroponics - Spray time in seconds    
-    PumpTimeout = &DefaultSettings -> PumpTimeout;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
+    PumpTimeout = &DefaultSettings -> PumpTimeout;  // Aeroponics - Max pump run time in minutes, measue zero to max pressuretank refill time and adjust accordingly
     PrimingTime = &DefaultSettings -> PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
-
     pinMode(BypassSolenoidPin,OUTPUT);
-    pinMode(BypassSolenoidPin,HIGH);  //initialize off
+    pinMode(BypassSolenoidPin,HIGH);  //initialize in off state
     pinMode(PumpPin,OUTPUT);
-    pinMode(PumpPin,HIGH);  //initialize off
+    pinMode(PumpPin,HIGH);  //initialize in off state
 }
 
 void Aeroponics::checkRelays(){    
-    if(PumpOn) {
-      digitalWrite(PumpPin, LOW);
-     }
-    else {
-      digitalWrite(PumpPin, HIGH); 
-    } 
-    if(BypassSolenoidOn) digitalWrite(BypassSolenoidPin, LOW); else digitalWrite(BypassSolenoidPin, HIGH);
-  } 
+    if(PumpOn) digitalWrite(PumpPin, LOW);
+    else digitalWrite(PumpPin, HIGH); 
+
+    if(BypassSolenoidOn) digitalWrite(BypassSolenoidPin, LOW); 
+    else digitalWrite(BypassSolenoidPin, HIGH);
+} 
 
 void Aeroponics::websiteLoadEvent(){ //When the website is opened, load stuff once
   WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *PumpTimeout);
@@ -43,8 +40,7 @@ void Aeroponics::websiteRefreshEvent(){ //When the website is opened, load stuff
   WebServer.setArgString(getWebsiteComponentName(F("Pressure")), pressureToText(AeroPressure));
   WebServer.setArgString(getWebsiteComponentName(F("PumpState")), pumpStateToText());   
   WebServer.setArgString(getWebsiteComponentName(F("BypassState")), onOffToText(BypassSolenoidOn)); 
-} 
-
+}
 
 void Aeroponics::websiteBottonPressEvent(char * Button){ //When the website is opened, load stuff once
   if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
@@ -57,20 +53,16 @@ void Aeroponics::websiteBottonPressEvent(char * Button){ //When the website is o
     else if (strcmp_P(ShortMessage,(PGM_P)F("Mix"))==0) { Mix();}
     else if (strcmp_P(ShortMessage,(PGM_P)F("SprayEnable"))==0) { setSprayOnOff(true); } 
     else if (strcmp_P(ShortMessage,(PGM_P)F("SprayDisable"))==0) { setSprayOnOff(false); } 
-    else if (strcmp_P(ShortMessage,(PGM_P)F("SprayNow"))==0) {sprayNow(false); } 
-    else if (strcmp_P(ShortMessage,(PGM_P)F("SprayOff"))==0) {sprayOff(); } 
+    else if (strcmp_P(ShortMessage,(PGM_P)F("SprayNow"))==0) { sprayNow(false); } 
+    else if (strcmp_P(ShortMessage,(PGM_P)F("SprayOff"))==0) { sprayOff(); } 
   }
 } 
 
-void Aeroponics::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once
-  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
-  }
-  else{ //if the component name matches with the object name     
+void Aeroponics::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once 
     if(strcmp_P(ShortMessage,(PGM_P)F("PumpTimeout"))==0) {setPumpTimeout(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("PrimingTime"))==0) {setPrimingTime(WebServer.getArgInt());}
-    else if(strcmp_P(ShortMessage,(PGM_P)F("Duration"))==0) {setInterval(WebServer.getArgInt());}
-    else if(strcmp_P(ShortMessage,(PGM_P)F("Interval"))==0) {setDuration(WebServer.getArgInt());}    
+    else if(strcmp_P(ShortMessage,(PGM_P)F("Duration"))==0) {setDuration(WebServer.getArgInt());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("Interval"))==0) {setInterval(WebServer.getArgInt());}    
     //else if(strcmp_P(field,(PGM_P)F("QuietEnabled"))==0) {setQuietOnOff(WebServer.getArgBoolean());}
     //else if(strcmp_P(field,(PGM_P)F("RefillBeforeQuiet"))==0) {setQuietRefillOnOff(WebServer.getArgBoolean());}
     //else if(strcmp_P(field,(PGM_P)F("PressureTankPresent"))==0) {setPressureTankOnOff(WebServer.getArgBoolean());}
@@ -80,11 +72,9 @@ void Aeroponics::websiteFieldSubmitEvent(char * Field){ //When the website is op
     // else if(strcmp_P(field,(PGM_P)F("QuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}
     // else if(strcmp_P(field,(PGM_P)F("QuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}  
     else if(strcmp_P(ShortMessage,(PGM_P)F("SprayEnabled"))==0) {setSprayOnOff(WebServer.getArgBoolean());}
-
-  }
 }  
 
- void Aeroponics::report(){
+ void Aeroponics::report(){ //report status to Serial output, runs after the child class`s report function
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
   strcat_P(LongMessage,(PGM_P)F(" ; SprayEnabled:"));strcat(LongMessage,yesNoToText(SprayEnabled));
   strcat_P(LongMessage,(PGM_P)F(" ; Interval:"));strcat(LongMessage,toText(*Interval));
@@ -94,29 +84,29 @@ void Aeroponics::websiteFieldSubmitEvent(char * Field){ //When the website is op
   logToSerials( &LongMessage, true, 0); //Break line, No indentation needed: child class already printed it 
  }
 
-void Aeroponics::setPumpOn(bool UserRequest){
+void Aeroponics::setPumpOn(bool UserRequest){  //turns pump on, UserRequest is true if it was triggered from the website
+  if(UserRequest){  //if the pump was turned on from the web interface, not by the automation
+    GBox -> addToLog(F("Pump ON"));
+    GBox -> Sound1 -> playOnSound();
+    PumpOK = true; //re-enable pump 
+  }
   MixInProgress  = UserRequest; //If pump was turned on from the web interface first run an air bleeding cycle
   PumpOn = true;
   PumpTimer = millis();
   checkRelays();
-  if(UserRequest){  //if the pump was turned on from the web interface, not by the automation
-    GBox -> addToLog(F("Pump ON"));
-    GBox -> Sound1 -> playOnSound();
-    PumpOK = true; 
-  }
 }
 
-void Aeroponics::setPumpOff(bool UserRequest){  
-  MixInProgress = false;
-  PumpOn = false;
-  if(!BlowOffInProgress)BypassSolenoidOn = false; //Close bypass valve
-  PumpTimer = millis();        
-  checkRelays();
+void Aeroponics::setPumpOff(bool UserRequest){ 
   if(UserRequest){  //if the pump was turned off from the web interface, not by the automation
     GBox -> addToLog(F("Pump OFF"));
     GBox -> Sound1 -> playOffSound();
     PumpOK = true; //re-enable pump 
-  }
+  } 
+  MixInProgress = false;
+  PumpOn = false;
+  //if(!BlowOffInProgress)BypassSolenoidOn = false; //Close bypass valve
+  PumpTimer = millis();        
+  checkRelays();
 }
 
 void Aeroponics::PumpDisable(){
@@ -168,13 +158,13 @@ char * Aeroponics::pumpStateToText(){
 
 void Aeroponics::setPumpTimeout(int Timeout)
 {
-*PumpTimeout = (uint32_t)Timeout;
+*PumpTimeout = Timeout;
 GBox -> addToLog(F("Aero pump timeout updated"));
 }
 
-void Aeroponics::setPrimingTime(uint32_t Timing)
+void Aeroponics::setPrimingTime(int Timing)
 {
-*PrimingTime = (uint32_t)Timing;
+*PrimingTime = Timing;
 GBox -> addToLog(F("Aero priming time updated"));
 }
 

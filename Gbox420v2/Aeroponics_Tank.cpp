@@ -18,6 +18,15 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
   logToSerials(F("Aeroponics_Tank object created"),true);
  }   
 
+ void Aeroponics_Tank::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once
+  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name    
+    Aeroponics::websiteFieldSubmitEvent(Field);
+  }
+} 
+
  void Aeroponics_Tank::checkRelays(){
    logToSerials(F("Aeroponics_Tank checking relays:"),false,0);
    logToSerials(SpraySolenoidOn,true,0);
@@ -49,7 +58,7 @@ void Aeroponics_Tank::refresh(){
      logToSerials(F("Pressure tank recharged"),true);
     }
     else{
-      if( millis() - PumpTimer >= (uint32_t)(*PumpTimeout * 1000)){ //If pump timeout reached
+      if( millis() - PumpTimer >= ((uint32_t)*PumpTimeout * 60000)){ //If pump timeout reached
         setPumpOff(false); //turn of pump, 
         if(!MixInProgress) {  //if bypass was not active and refill did not finish within timeout= pump must be broken
           PumpDisable();  //automatically disable pump if it is suspected to be broken
@@ -57,7 +66,7 @@ void Aeroponics_Tank::refresh(){
         }
         logToSerials(F("Pump timeout reached"),true);       
       }
-       if (!MixInProgress && BypassSolenoidOn && millis() - PumpTimer >= (uint32_t)(*PrimingTime * 1000)){ //self priming timeout reached, time to start refilling
+       if (!MixInProgress && BypassSolenoidOn && millis() - PumpTimer >= ((uint32_t)*PrimingTime * 1000)){ //self priming timeout reached, time to start refilling
           if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Starting refill"),true); 
           BypassSolenoidOn = false;      
           PumpTimer = millis(); //reset timer to start measuring spray time
@@ -73,7 +82,7 @@ void Aeroponics_Tank::refresh(){
        
     }   
  if(SpraySolenoidOn){ //if spray is on
-    if(millis() - SprayTimer >= (uint32_t)(*Duration * 1000)){  //if time to stop spraying (Duration in Seconds)
+    if(millis() - SprayTimer >= ((uint32_t)*Duration * 1000)){  //if time to stop spraying (Duration in Seconds)
       SpraySolenoidOn = false;
       logToSerials(F("Stopping spray"),true);
       GBox -> Sound1 -> playOffSound();
@@ -81,7 +90,7 @@ void Aeroponics_Tank::refresh(){
     }
   }
   else{ //if spray is off
-    if(*SprayEnabled && millis() - SprayTimer >= (uint32_t)(*Interval * 60000)){ //if time to start spraying (AeroInterval in Minutes)
+    if(*SprayEnabled && millis() - SprayTimer >= ((uint32_t)*Interval * 60000)){ //if time to start spraying (AeroInterval in Minutes)
         SpraySolenoidOn = true;
         GBox -> Sound1 -> playOnSound();
         if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Starting spray"),true);

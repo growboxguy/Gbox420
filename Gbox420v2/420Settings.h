@@ -1,7 +1,7 @@
 #pragma once
 
 //Change this when you make change to the structure of the EEPROM stored part
-static const byte Version = 2;
+static const byte Version = 3;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: They never change during runtime
 static const byte MaxTextLength = 32;  //Default char* buffer size: 31 characters + null terminator, used for logging and converting to text
@@ -19,9 +19,13 @@ struct AeroponicsSettings{
     bool SprayEnabled = true;  //Enable/disable misting
     int Interval = 15; //Aeroponics - Spray every 15 minutes
     int Duration = 2; //Aeroponics - Spray time in seconds
-    int PumpTimeout = 360;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
+    int PumpTimeout = 6;  // Aeroponics - Max pump run time in minutes, measue zero to max pressuretank refill time and adjust accordingly
     int PrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
  } Aeroponics_Tank1,Aeroponics_NoTank1;
+
+struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific settings
+    int BlowOffTime = 3; //Aeroponics - BlowOff time in seconds: After spraying open the bypass valve for X seconds to release pressure
+ } Aeroponics_Tank1_NoTankSpecific;
 
   struct AeroponicsSettings_TankSpecific{  //Pressure tank specific settings
     float PressureLow= 5.0; //Aeroponics - Turn on pump below this pressure (bar)

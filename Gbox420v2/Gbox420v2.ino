@@ -19,6 +19,8 @@
 //Support for storing multiple Settings objects in EEPROM (?Support for controlling more grow boxes from a single arduino? )
 //Add DebugEnabled to all classes, sets debug mode on-off per component
 //Add debug message levels: 0-no debug, 1-Extra info, 2-Message, 3-Verbose
+//Find a better name for Aeroponics NoTank: DirectPump?
+
 
 #include "Arduino.h" 
 #include "avr/wdt.h" //Watchdog timer

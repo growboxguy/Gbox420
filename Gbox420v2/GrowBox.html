@@ -213,7 +213,7 @@
 				<button id="Aeroponics_Tank1_PumpOff" type="button" align="right" title="Stops the pump and reset its status to OK">OFF</button>
 				<button id="Aeroponics_Tank1_PumpDisable" type="button" align="right" title="Stops and disables pump">Disable</button>
 				<button id="Aeroponics_Tank1_Mix" type="button" align="right" title="Mix nutrients: Starts pump and opens bypass valve">Mix</button><br>
-				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="Aeroponics_Tank1_PumpTimeout" type="number" title="Maximum high pressure tank refill time, if reached pump is considered broken"/> sec <input type="submit" value="Set"></form>
+				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="Aeroponics_Tank1_PumpTimeout" type="number" title="Maximum high pressure tank refill time, if reached pump is considered broken"/> min <input type="submit" value="Set"></form>
 				<form>Pump priming time:<input style="width: 55px;" min=1 max=9999 name="Aeroponics_Tank1_PrimingTime" type="number" title="At pump startup the bypass valve is open for X seconds"/> sec <input type="submit" value="Set"></form>				
 				<b>Spray</b><br>
 				<button id="Aeroponics_Tank1_SprayEnable" type="button" align="right" title="Enable spray cycle timer">Enable</button>
@@ -221,8 +221,8 @@
 				<button id="Aeroponics_Tank1_SprayNow" type="button" title="Spray now and re-enable timer">Spray</button>
 				<button id="Aeroponics_Tank1_SprayOff" type="button" title="Stop spraying">OFF</button>				
 				<form>
-					Interval: <input style="width: 50px;" min=0 name="Aeroponics_Tank1_Interval" type="number"/> min<br>
-					Duration: <input style="width: 50px;" min=0 name="Aeroponics_Tank1_Duration" type="number"/> sec
+					Interval: <input style="width: 50px;" min=1 name="Aeroponics_Tank1_Interval" type="number"/> min<br>
+					Duration: <input style="width: 50px;" min=1 name="Aeroponics_Tank1_Duration" type="number"/> sec
 					<input type="submit" value="Set" title="Set how often a spray should start (Interval), and how long one spray should last (Duration)">	
 				</form>									
 			</div>
@@ -248,16 +248,17 @@
 				<button id="Aeroponics_NoTank1_PumpOff" type="button" align="right" title="Stops the pump and reset its status to OK">OFF</button>
 				<button id="Aeroponics_NoTank1_PumpDisable" type="button" align="right" title="Stops and disables pump">Disable</button>
 				<button id="Aeroponics_NoTank1_Mix" type="button" align="right" title="Mix nutrients: Starts pump and opens bypass valve">Mix</button><br>
-				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="Aeroponics_NoTank1_PumpTimeout" type="number" title="Maximum high pressure tank refill time, if reached pump is considered broken"/> sec <input type="submit" value="Set"></form>
+				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="Aeroponics_NoTank1_PumpTimeout" type="number" title="Maximum high pressure tank refill time, if reached pump is considered broken"/> min <input type="submit" value="Set"></form>
 				<form>Pump priming time:<input style="width: 55px;" min=1 max=9999 name="Aeroponics_NoTank1_PrimingTime" type="number" title="At pump startup the bypass valve is open for X seconds"/> sec <input type="submit" value="Set"></form>				
+				<form>Pump blowoff time:<input style="width: 55px;" min=1 max=9999 name="Aeroponics_NoTank1_BlowOffTime" type="number" title="After spraying open the bypass valve for X seconds to release pressure"/> sec <input type="submit" value="Set"></form>				
 				<b>Spray</b><br>
 				<button id="Aeroponics_NoTank1_SprayEnable" type="button" align="right" title="Enable spray cycle timer">Enable</button>
 				<button id="Aeroponics_NoTank1_SprayDisable" type="button" align="right" title="Disable spray cycle timer">Disable</button>
 				<button id="Aeroponics_NoTank1_SprayNow" type="button" title="Spray now and re-enable timer">Spray</button>
 				<button id="Aeroponics_NoTank1_SprayOff" type="button" title="Stop spraying">OFF</button>				
 				<form>
-					Interval: <input style="width: 50px;" min=0 name="Aeroponics_NoTank1_Interval" type="number"/> min<br>
-					Duration: <input style="width: 50px;" min=0 name="Aeroponics_NoTank1_Duration" type="number"/> sec
+					Interval: <input style="width: 50px;" min=1 name="Aeroponics_NoTank1_Interval" type="number"/> min<br>
+					Duration: <input style="width: 50px;" min=1 name="Aeroponics_NoTank1_Duration" type="number"/> sec
 					<input type="submit" value="Set" title="Set how often a spray should start (Interval), and how long one spray should last (Duration)">	
 				</form>									
 			</div>						

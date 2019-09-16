@@ -29,8 +29,8 @@ time_t getNtpTime(){
   if(!SyncInProgress){ //blocking calling the sync again in an interrupt
     SyncInProgress = true;
     uint32_t LastRefresh = millis();  
-    logToSerials(F("Waiting for NTP time (5sec timeout)..."),false,0);  
-    while(NTPResponse == 0 && millis() - LastRefresh < 5000){
+    logToSerials(F("Waiting for NTP time (15sec timeout)..."),false,0);  
+    while(NTPResponse == 0 && millis() - LastRefresh < 15000){
      NTPResponse = ESPCmd.GetTime();
      delay(500);
      logToSerials(F("."),false,0);

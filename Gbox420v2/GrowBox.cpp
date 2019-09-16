@@ -22,8 +22,8 @@ GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   LightSensor1 = new LightSensor(F("LightSensor1"), this, LightSensor1DigitalPin, LightSensor1AnalogPin);
   Light1 = new Lights(F("Light1"), this,Light1RelayPin, Light1DimmingPin, &BoxSettings -> Light1, 8);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
   PowerSensor1 = new PowerSensor(F("PowerSensor1"), this, &Serial2);
-  Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, AeroSpraySolenoidPin, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings ->Aeroponics_Tank1, &BoxSettings -> Aeroponics_Tank1_TankSpecific);
-  Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings -> Aeroponics_NoTank1);
+  //Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, AeroSpraySolenoidPin, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings ->Aeroponics_Tank1, &BoxSettings -> Aeroponics_Tank1_TankSpecific);
+  Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings -> Aeroponics_NoTank1, &BoxSettings -> Aeroponics_Tank1_NoTankSpecific);
   //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);
   logToSerials(F("GrowBox object created"), true,2);
   addToLog(F("GrowBox initialized"),0);
@@ -41,11 +41,12 @@ void GrowBox::refresh(){  //implementing the virtual refresh function from Commo
 void GrowBox::runSec(){ 
   //if(DebugEnabled)logToSerials(F("One sec trigger.."),true,1);
   Sound1 -> refresh();
+  Aeroponics_NoTank1 -> refresh();
 }
 
 void GrowBox::runFiveSec(){
   //if(DebugEnabled)logToSerials(F("Five sec trigger.."),true,1); 
-  Aeroponics_NoTank1 -> refresh();  //TODO: Still needs refresh linked into interrupt handling 
+  Aeroponics_NoTank1 -> report();  //TODO: Still needs refresh linked into interrupt handling 
   //Aeroponics_Tank1 -> refresh(); //TODO: Still needs refresh linked into interrupt handling 
 
   //PHSensor1 -> refresh();
