@@ -8,9 +8,9 @@
             "includePath": [
                 "/home/bit/Apps/arduino-1.8.10/tools/**",
                 "/home/bit/Apps/arduino-1.8.10/hardware/arduino/avr/**",
+                "/home/bit/Apps/arduino-1.8.10/hardware/tools/**",
                 "/home/bit/Apps/arduino-1.8.10/libraries/**",
-                "${workspaceRoot}",
-                "/home/bit/Apps/arduino-1.8.10/hardware/tools/**"
+                "${workspaceRoot}"                
             ],
             "forcedInclude": [
                 "/home/bit/Apps/arduino-1.8.10/hardware/arduino/avr/cores/arduino/Arduino.h"
