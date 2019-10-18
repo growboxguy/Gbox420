@@ -2,14 +2,20 @@
     "configurations": [
         {
             "name": "Linux",
+            "defines": [
+                "ARDUINO=10800"
+            ],
             "includePath": [
                 "/home/bit/Apps/arduino-1.8.10/tools/**",
-                "/home/bit/Apps/arduino-1.8.10/hardware/arduino/avr/**"
+                "/home/bit/Apps/arduino-1.8.10/hardware/arduino/avr/**",
+                "/home/bit/Apps/arduino-1.8.10/libraries/**",
+                "${workspaceRoot}",
+                "/home/bit/Apps/arduino-1.8.10/hardware/tools/**"
             ],
             "forcedInclude": [
                 "/home/bit/Apps/arduino-1.8.10/hardware/arduino/avr/cores/arduino/Arduino.h"
             ],
-            "intelliSenseMode": "gcc-x64",
+            "intelliSenseMode": "clang-x64",
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c11",
             "cppStandard": "c++17"
