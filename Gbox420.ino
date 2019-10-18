@@ -11,6 +11,7 @@
 //Reservoir Refill button
 //MQTT reporting memory overflow?
 //Restore defaults settings button needed
+//Alets class with bool flags any class can interact with (RaiseFlag, ClearFlag). HTML component name: OBJECTNAME_Alert
 
 //Libraries
   #include "420Pins.h" //Load pins layout file
