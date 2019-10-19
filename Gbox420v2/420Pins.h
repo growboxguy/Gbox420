@@ -5,17 +5,12 @@
   byte AeroBypassSolenoidPin = 23; //Power relay Port 3 - Aeroponics bypass solenoid 
   byte AeroPumpPin = 24;  //Power relay Port 2 - Aeroponics high pressure pump
 
-//DHTSensor pins
-  uint8_t InternalDHTSensorPin = 43; //DAT - DHT22 temp/humidity sensor, internally mounted
-  uint8_t ExternalDHTSensorPin = 44; //DAT - DHT22 temp/humidity sensor, externally mounted
+
 
 //LightSensor pins
   byte LightSensor1DigitalPin = 36; //D0 - LM393 light sensor
   byte LightSensor1AnalogPin = A0; //A0 - LM393 light sensor   //A0 is just a variable that contains the actual pin number - https://github.com/arduino/ArduinoCore-avr/blob/master/variants/standard/pins_arduino.h#L56-L72
 
-//Lights pins
- byte Light1RelayPin = 29;  //Power relay Port 8 - LED lights
- byte Light1DimmingPin = 11; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
 
 //Sound pins
   byte Sound1Pin = 4; //PC speaker+ (red)

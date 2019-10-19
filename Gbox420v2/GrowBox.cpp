@@ -17,10 +17,10 @@ static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing 
 GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   this -> BoxSettings = BoxSettings;
   Sound1 = new Sound(F("Sound1"), this, Sound1Pin, &BoxSettings -> Sound1Enabled);
-  InternalDHTSensor = new DHTSensor(F("InternalDHTSensor"), this, InternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
-  ExternalDHTSensor = new DHTSensor(F("ExternalDHTSensor"), this, ExternalDHTSensorPin,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
+  InternalDHTSensor = new DHTSensor(F("InternalDHTSensor"), this, &BoxSettings -> InternalDHTSensor,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
+  ExternalDHTSensor = new DHTSensor(F("ExternalDHTSensor"), this, &BoxSettings -> ExternalDHTSensor,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
   LightSensor1 = new LightSensor(F("LightSensor1"), this, LightSensor1DigitalPin, LightSensor1AnalogPin);
-  Light1 = new Lights(F("Light1"), this,Light1RelayPin, Light1DimmingPin, &BoxSettings -> Light1, 8);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
+  Light1 = new Lights(F("Light1"), this, &BoxSettings -> Light1);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
   PowerSensor1 = new PowerSensor(F("PowerSensor1"), this, &Serial2);
   //Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, AeroSpraySolenoidPin, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings ->Aeroponics_Tank1, &BoxSettings -> Aeroponics_Tank1_TankSpecific);
   Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings -> Aeroponics_NoTank1, &BoxSettings -> Aeroponics_Tank1_NoTankSpecific);
@@ -135,10 +135,12 @@ void GrowBox::setMetricSystemEnabled(bool MetricEnabled){
   if(MetricEnabled != BoxSettings -> MetricSystemEnabled){  //if there was a change
     BoxSettings -> MetricSystemEnabled = MetricEnabled;
     BoxSettings -> InternalFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> InternalFanSwitchTemp);
-    BoxSettings -> TempAlertLow= convertBetweenTempUnits(BoxSettings -> TempAlertLow);
-    BoxSettings -> TempAlertHigh= convertBetweenTempUnits(BoxSettings -> TempAlertHigh);
-    BoxSettings -> PressureAlertLow=convertBetweenPressureUnits(BoxSettings -> PressureAlertLow);
-    BoxSettings -> PressureAlertHigh=convertBetweenPressureUnits(BoxSettings -> PressureAlertHigh);
+    BoxSettings -> InternalDHTSensor.TempAlertLow= convertBetweenTempUnits(BoxSettings -> InternalDHTSensor.TempAlertLow);
+    BoxSettings -> InternalDHTSensor.TempAlertHigh= convertBetweenTempUnits(BoxSettings -> InternalDHTSensor.TempAlertHigh);
+    BoxSettings -> ExternalDHTSensor.TempAlertLow= convertBetweenTempUnits(BoxSettings -> ExternalDHTSensor.TempAlertLow);
+    BoxSettings -> ExternalDHTSensor.TempAlertHigh= convertBetweenTempUnits(BoxSettings -> ExternalDHTSensor.TempAlertHigh);
+    BoxSettings -> PressureSensor1.PressureAlertLow=convertBetweenPressureUnits(BoxSettings -> PressureSensor1.PressureAlertLow);
+    BoxSettings -> PressureSensor1.PressureAlertHigh=convertBetweenPressureUnits(BoxSettings -> PressureSensor1.PressureAlertHigh);
   }    
   if(BoxSettings -> MetricSystemEnabled) addToLog(F("Using Metric units"));
   else addToLog(F("Using Imperial units"));  

@@ -5,11 +5,11 @@
 //////////////////////////////////////////////////////////////////
 //Lights functions
 
-Lights::Lights(const __FlashStringHelper * Name, GrowBox * GBox, byte RelayPin, byte DimmingPin, Settings::LightsSettings * DefaultSettings, byte DimmingLimit) : Common(Name){
+Lights::Lights(const __FlashStringHelper * Name, GrowBox * GBox, Settings::LightsSettings * DefaultSettings) : Common(Name){
   this -> GBox = GBox;
-  this -> RelayPin = RelayPin;
-  this -> DimmingPin = DimmingPin;
-  this -> DimmingLimit = DimmingLimit; //Blocks dimming below a certain percentage (default 8%), Most LED drivers cannot fully dim, check the specification and adjust accordingly, only set 0 if it supports dimming fully! (Usually not the case..)
+  RelayPin = &DefaultSettings -> RelayPin;
+  DimmingPin = &DefaultSettings -> DimmingPin;
+  DimmingLimit = &DefaultSettings -> DimmingLimit; //Blocks dimming below a certain percentage (default 8%), Most LED drivers cannot fully dim, check the specification and adjust accordingly, only set 0 if it supports dimming fully! (Usually not the case..)
   Status = &DefaultSettings -> Status;
   Brightness = &DefaultSettings -> Brightness;
   TimerEnabled = &DefaultSettings -> TimerEnabled;
@@ -17,8 +17,8 @@ Lights::Lights(const __FlashStringHelper * Name, GrowBox * GBox, byte RelayPin, 
   OnMinute = &DefaultSettings -> OnMinute;
   OffHour = &DefaultSettings -> OffHour;
   OffMinute = &DefaultSettings -> OffMinute;
-  pinMode(RelayPin, OUTPUT);
-  pinMode(DimmingPin, OUTPUT);
+  pinMode(*RelayPin, OUTPUT);
+  pinMode(*DimmingPin, OUTPUT);
   logToSerials(F("Lights object created"),true);
 }
 
@@ -56,10 +56,24 @@ void Lights::websiteRefreshEvent(){
   WebServer.setArgString(getWebsiteComponentName(F("OffTime")), getOffTimeText()); 
 }
 
+void Lights::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once
+  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name     
+    if(strcmp_P(ShortMessage,(PGM_P)F("Brightness"))==0) {setBrightness(WebServer.getArgInt(),true);}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("OnHour"))==0) {setOnHour(WebServer.getArgInt());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("OnMinute"))==0) {setOnMinute(WebServer.getArgInt());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("OffHour"))==0) {setOffHour(WebServer.getArgInt());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("OffMinute"))==0) {setOffMinute(WebServer.getArgInt());} 
+  }
+  
+} 
+
 
 void Lights::checkLightStatus(){
-  if(*Status) digitalWrite(RelayPin, LOW); //True turns relay ON (LOW signal activates Relay)
-  else digitalWrite(RelayPin, HIGH); //HIGH turns relay OFF 
+  if(*Status) digitalWrite(*RelayPin, LOW); //True turns relay ON (LOW signal activates Relay)
+  else digitalWrite(*RelayPin, HIGH); //HIGH turns relay OFF 
 }
 
 void Lights::checkLightTimer() {
@@ -101,7 +115,7 @@ void Lights::checkLightTimer() {
 
 void Lights::setBrightness(byte Brightness, bool LogThis){
   *(this -> Brightness) = Brightness;      
-  analogWrite(DimmingPin, map(Brightness,0,100,int(255*(100-DimmingLimit)/100.0f),0)); //mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
+  analogWrite(DimmingPin, map(Brightness,0,100,int(255*(100-*DimmingLimit)/100.0f),0)); //mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
   if(LogThis){
     strncpy_P(LongMessage,(PGM_P)F("Brightness: "),MaxTextLength);  
     strcat(LongMessage,toText(Brightness));

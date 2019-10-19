@@ -1,7 +1,7 @@
 #pragma once
 
 //Change this when you make change to the structure of the EEPROM stored part
-static const byte Version = 3;
+static const byte Version = 6;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: They never change during runtime
 static const byte MaxTextLength = 32;  //Default char* buffer size: 31 characters + null terminator, used for logging and converting to text
@@ -38,9 +38,14 @@ struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific sett
     byte QuietToMinute = 0; //Quiet time end - minute
  } Aeroponics_Tank1_TankSpecific;
 
-  
-
   struct LightsSettings{
+    //Light specific settings, unique for each item, initialized via a consturctor
+    LightsSettings(byte RelayPin = 0, byte DimmingPin = 0,byte DimmingLimit = 0 ) : RelayPin(RelayPin),DimmingPin(DimmingPin),DimmingLimit(DimmingLimit) {}
+    byte RelayPin;  //Power relay Port 8 - LED lights
+    byte DimmingPin; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
+    byte DimmingLimit; //Sets the LED dimming limit (Usually around 5%)
+
+    //Default settings for all light objects
     bool Status = true;  //Startup status for lights: True-ON / False-OFF
     byte Brightness = 15; //Light intensity: 0 - 100 range for controlling led driver output
     bool TimerEnabled = true;  //Enable timer controlling lights  
@@ -48,17 +53,37 @@ struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific sett
     byte OnMinute = 20; //Light ON time - minute
     byte OffHour = 16; //Light OFF time - hour
     byte OffMinute = 20; //Light OFF time - minute    
-  }Light1,Lights2;
-  
-//PHSensor1 settings  - Anybody knows how to handle multiple PH sensors with different inital calibration values?
+  };  
+  struct LightsSettings Light1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 8}; //Creating a LightSettings instance, passing in the unique parameters
+    
   struct PHSensorSettings{
-    float PHCalibrationSlope = -0.033256;     //Update this to your own PH meter calibration values
-    float PHCalibrationIntercept = 24.08651;  //Update this to your own PH meter calibration values
-    float PressureSensorOffset = 0.57;        //Pressure sensor calibration: voltage reading at 0 pressure
-    float PressureSensorRatio = 2.7;          //Pressure sensor voltage to pressure ratio
+    PHSensorSettings(float PHCalibrationSlope = 0.0, float PHCalibrationIntercept = 0.0 ) : PHCalibrationSlope(PHCalibrationSlope),PHCalibrationIntercept(PHCalibrationIntercept) {}
+    float PHCalibrationSlope;     //Update this to your own PH meter calibration values
+    float PHCalibrationIntercept;  //Update this to your own PH meter calibration values    f
     float PHAlertLow = 5.5; //Low pressure warning
     float PHAlertHigh = 6.5; //High pressure warning
-  }PHSensor1;
+  };
+  struct PHSensorSettings PHSensor1 = {.PHCalibrationSlope = -0.033256, .PHCalibrationIntercept = 24.08651 };
+
+  struct PressureSensorSettings{
+    PressureSensorSettings(float PressureSensorOffset = 0.0, float PressureSensorRatio = 0.0 ) : PressureSensorOffset(PressureSensorOffset),PressureSensorRatio(PressureSensorRatio) {}
+    float PressureSensorOffset;        //Pressure sensor calibration: voltage reading at 0 pressure
+    float PressureSensorRatio;          //Pressure sensor voltage to pressure ratio
+    float PressureAlertLow = 4.0; //Low pressure warning
+    float PressureAlertHigh = 8.0; //High pressure warning 
+  };
+  struct PressureSensorSettings PressureSensor1 = {.PressureSensorOffset = 0.57, .PressureSensorRatio = 2.7 };
+
+  struct DHTSensorSettings{
+    DHTSensorSettings(byte Pin = 0 ) : Pin(Pin){}
+    byte Pin;
+    int TempAlertLow = 15; //Low temp warning email
+    int TempAlertHigh = 35; //High temp warning email
+    int HumidityAlertLow = 35; //Low humidity warning email
+    int HumidityAlertHigh = 70; //High humidity warning email
+  };
+  struct DHTSensorSettings InternalDHTSensor = {.Pin = 43 };
+  struct DHTSensorSettings ExternalDHTSensor = {.Pin = 44 };
 
   bool AutomaticInternalFan = false;  //Adjust internal fan based on temperature
   bool AutomaticExhaustFan = false;  //Adjust exhaust fan based on temp and humidity
@@ -83,12 +108,7 @@ struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific sett
   bool AlertEmails = true; //disable/enable email sending
   char PushingBoxEmailRelayID[MaxTextLength]  = "v420";  //UPDATE THIS DeviceID of the PushingBox email alert scenario
   int TriggerCountBeforeAlert = 12; //number of consecutive out of range sensor readings before the email alert is triggered (5sec between reads -> 12= Out of range reading through 1 minute)  
-  int TempAlertLow = 15; //Low temp warning email
-  int TempAlertHigh = 35; //High temp warning email
-  int HumidityAlertLow = 35; //Low humidity warning email
-  int HumidityAlertHigh = 70; //High humidity warning email
-  float PressureAlertLow = 4.0; //Low pressure warning
-  float PressureAlertHigh = 8.0; //High pressure warning 
+
 
   byte CompatibilityVersion=Version;  //Should always be the last value stored.
    }Settings;

@@ -4,5 +4,11 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"arduino.path": "/home/bit/Apps/arduino-1.8.10",
+		"arduino.logLevel": "verbose",
+		"arduino.additionalUrls": [
+			"http://arduino.esp8266.com/stable/package_esp8266com_index.json"
+		]
+	}
 }

@@ -8,7 +8,7 @@ class GrowBox;  //forward declaration
 class DHTSensor : public Common
 {
   public:
-    DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, uint8_t _pin, uint8_t _sensorType);
+    DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::DHTSensorSettings * DefaultSettings, uint8_t sensorType);
     GrowBox * GBox;
     void refresh();  //Called when component should refresh its state
     void report();
@@ -22,6 +22,5 @@ class DHTSensor : public Common
   private:
     RollingAverage * Temp;
     RollingAverage * Humidity;
-    DHT *sensor; //Pointer declaration, points to null initially 
-    byte pin;
+    DHT* Sensor; //Pointer declaration, points to null initially 
 };

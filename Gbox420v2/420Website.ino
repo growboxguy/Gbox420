@@ -119,15 +119,9 @@ void setFieldCallback(char * field){  //Called when any field on the website is 
   if(GBox -> BoxSettings -> DebugEnabled)logToSerials(&field,true,0); 
   GBox -> Aeroponics_NoTank1 -> websiteFieldSubmitEvent(field); 
   GBox -> Aeroponics_Tank1 -> websiteFieldSubmitEvent(field);
-  
-  if(strcmp_P(field,(PGM_P)F("Light1_Brightness"))==0) {GBox -> Light1 -> setBrightness(WebServer.getArgInt(),true);}
-  else if(strcmp_P(field,(PGM_P)F("Light1_OnHour"))==0) {GBox -> Light1 -> setOnHour(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("Light1_OnMinute"))==0) {GBox -> Light1 -> setOnMinute(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("Light1_OffHour"))==0) {GBox -> Light1 -> setOffHour(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("Light1_OffMinute"))==0) {GBox -> Light1 -> setOffMinute(WebServer.getArgInt());} 
+  GBox -> Light1 -> websiteFieldSubmitEvent(field);
 
-
-  else if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {GBox -> Sound1 -> setSoundOnOff(WebServer.getArgBoolean());}
+  if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {GBox -> Sound1 -> setSoundOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("DebugEnabled"))==0) {GBox -> setDebugOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("MetricSystemEnabled"))==0) {GBox -> setMetricSystemEnabled(WebServer.getArgBoolean());}
   //else if(strcmp_P(field,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}

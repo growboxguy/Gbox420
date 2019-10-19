@@ -6,10 +6,10 @@ void DHTSensor::websiteRefreshEvent(){ //When the website is opened, load stuff 
   WebServer.setArgString(getWebsiteComponentName(F("Humidity")), getHumidityText()); 
 } 
 
-DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, uint8_t _pin, uint8_t _sensorType): Common(Name){
+DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::DHTSensorSettings * DefaultSettings, uint8_t SensorType): Common(Name){
   this -> GBox = GBox;
-  sensor = new DHT(_pin,_sensorType);
-  sensor -> begin();  //dereference the pointer to the object and then call begin() on it. Same as (*sensor).begin();
+  Sensor = new DHT(*(&DefaultSettings -> Pin),SensorType);
+  Sensor -> begin();  //dereference the pointer to the object and then call begin() on it. Same as (*Sensor).begin();
   Temp = new RollingAverage();
   Humidity = new RollingAverage();
   logToSerials(F("DHT Sensor object created"),true);
@@ -17,9 +17,9 @@ DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, uint8_t _
 
 void DHTSensor::refresh(){  //Called when component should refresh its state 
   Common::refresh();
-  if(GBox -> BoxSettings -> MetricSystemEnabled){ Temp -> updateAverage(sensor -> readTemperature());}
-  else {Temp -> updateAverage(sensor -> readTemperature() *1.8f + 32);}
-  Humidity -> updateAverage(sensor -> readHumidity());  
+  if(GBox -> BoxSettings -> MetricSystemEnabled){ Temp -> updateAverage(Sensor -> readTemperature());}
+  else {Temp -> updateAverage(Sensor -> readTemperature() *1.8f + 32);}
+  Humidity -> updateAverage(Sensor -> readHumidity());  
   report();
 }
 

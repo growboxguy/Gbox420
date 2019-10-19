@@ -36,6 +36,6 @@ class Common{
     void websiteRefreshEvent();
     void websiteBottonPressEvent(char * Button);
     void websiteFieldSubmitEvent(char * Button);
-    bool isThisMyComponent(char const * lookupName); //When it return true the component belongs to thos object
+    bool isThisMyComponent(char const * lookupName); //When it return true the component belongs to this object
     
 };
