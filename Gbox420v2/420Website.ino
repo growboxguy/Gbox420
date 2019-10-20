@@ -45,11 +45,9 @@ void loadCallback(char * url) //called when website is loaded. Do not call logTo
   }
   
   if (strcmp(url,"/Settings.html.json")==0){  
-  WebServer.setArgInt(F("SoundEnabled"), GBox -> BoxSettings -> Sound1Enabled);
+  WebServer.setArgInt(F("SoundEnabled"), GBox -> BoxSettings -> SoundEnabled);
   WebServer.setArgInt(F("DebugEnabled"), GBox -> BoxSettings -> DebugEnabled);
   WebServer.setArgInt(F("MetricSystemEnabled"), GBox -> BoxSettings -> MetricSystemEnabled);
-  WebServer.setArgInt(F("DigitDisplayBrightness"), GBox -> BoxSettings -> DigitDisplayBacklight);
-  WebServer.setArgInt(F("DigitDisplayValue"), GBox -> BoxSettings -> DigitDisplayValue);
   WebServer.setArgBoolean(F("MqttEnabled"), GBox -> BoxSettings -> ReportToMqtt);
   WebServer.setArgBoolean(F("GoogleSheetsEnabled"), GBox -> BoxSettings -> ReportToGoogleSheets);
   WebServer.setArgString(F("PushingBoxLogRelayID"), GBox -> BoxSettings -> PushingBoxLogRelayID);

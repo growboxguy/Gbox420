@@ -5,27 +5,27 @@
 // -Aeroponics_NoTank: High pressure pump is directly connected to the aeroponics tote
 // -Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid (electric water valve)
 
-Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings) : Common(Name){  //constructor
+Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings) : Common(Name){  //constructor
     this -> GBox = GBox;
-    this -> BypassSolenoidPin = BypassSolenoidPin;
-    this -> PumpPin = PumpPin;
+    BypassSolenoidPin = &DefaultSettings -> BypassSolenoidPin;
+    PumpPin = &DefaultSettings -> PumpPin;
     SprayEnabled = &DefaultSettings -> SprayEnabled;  //Enable/disable misting
     Interval = &DefaultSettings -> Interval; //Aeroponics - Spray every 15 minutes
     Duration = &DefaultSettings -> Duration; //Aeroponics - Spray time in seconds    
     PumpTimeout = &DefaultSettings -> PumpTimeout;  // Aeroponics - Max pump run time in minutes, measue zero to max pressuretank refill time and adjust accordingly
     PrimingTime = &DefaultSettings -> PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
-    pinMode(BypassSolenoidPin,OUTPUT);
-    pinMode(BypassSolenoidPin,HIGH);  //initialize in off state
-    pinMode(PumpPin,OUTPUT);
-    pinMode(PumpPin,HIGH);  //initialize in off state
+    pinMode(*BypassSolenoidPin,OUTPUT);
+    pinMode(*BypassSolenoidPin,HIGH);  //initialize in off state
+    pinMode(*PumpPin,OUTPUT);
+    pinMode(*PumpPin,HIGH);  //initialize in off state
 }
 
 void Aeroponics::checkRelays(){    
-    if(PumpOn) digitalWrite(PumpPin, LOW);
-    else digitalWrite(PumpPin, HIGH); 
+    if(PumpOn) digitalWrite(*PumpPin, LOW);
+    else digitalWrite(*PumpPin, HIGH); 
 
-    if(BypassSolenoidOn) digitalWrite(BypassSolenoidPin, LOW); 
-    else digitalWrite(BypassSolenoidPin, HIGH);
+    if(BypassSolenoidOn) digitalWrite(*BypassSolenoidPin, LOW); 
+    else digitalWrite(*BypassSolenoidPin, HIGH);
 } 
 
 void Aeroponics::websiteLoadEvent(){ //When the website is opened, load stuff once

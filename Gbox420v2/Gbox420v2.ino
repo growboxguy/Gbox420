@@ -3,8 +3,8 @@
 //UNDER DEVELOPMENT - This is the next generation of Gbox420 rewritten to depend fully on the web interface for control and feedback. 
 
 //HELLO, You are probably here looking for the following tab:
-// 420Settings.h : First time setup or changing the default settings and Modify 
-// 420Pins.h : Modify the Pin assignment
+// 420Settings.h : Pin assignment, First time setup, Default settings 
+
 
 //TODO:
 //Make alerting a class, every object will have a "bool StatusOK" variable inherited from Common, Alerting will go throught all subscribed classes and check status

@@ -1,5 +1,4 @@
 #include "GrowBox.h"
-#include "420Pins.h"  //Arduino Pin layout
 #include "DHTSensor.h"
 #include "Lights.h"
 #include "Sound.h"
@@ -16,14 +15,14 @@ static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing 
 
 GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   this -> BoxSettings = BoxSettings;
-  Sound1 = new Sound(F("Sound1"), this, Sound1Pin, &BoxSettings -> Sound1Enabled);
+  Sound1 = new Sound(F("Sound1"), this, BoxSettings);
   InternalDHTSensor = new DHTSensor(F("InternalDHTSensor"), this, &BoxSettings -> InternalDHTSensor,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
   ExternalDHTSensor = new DHTSensor(F("ExternalDHTSensor"), this, &BoxSettings -> ExternalDHTSensor,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
-  LightSensor1 = new LightSensor(F("LightSensor1"), this, LightSensor1DigitalPin, LightSensor1AnalogPin);
+  LightSensor1 = new LightSensor(F("LightSensor1"), this, &BoxSettings -> LightSensor1);
   Light1 = new Lights(F("Light1"), this, &BoxSettings -> Light1);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
   PowerSensor1 = new PowerSensor(F("PowerSensor1"), this, &Serial2);
-  //Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, AeroSpraySolenoidPin, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings ->Aeroponics_Tank1, &BoxSettings -> Aeroponics_Tank1_TankSpecific);
-  Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, AeroBypassSolenoidPin, AeroPumpPin, &BoxSettings -> Aeroponics_NoTank1, &BoxSettings -> Aeroponics_Tank1_NoTankSpecific);
+  //Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, &BoxSettings ->Aeroponics_Tank1_Common, &BoxSettings -> Aeroponics_Tank1_Specific);
+  Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, &BoxSettings -> Aeroponics_NoTank1_Common, &BoxSettings -> Aeroponics_NoTank1_Specific);
   //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);
   logToSerials(F("GrowBox object created"), true,2);
   addToLog(F("GrowBox initialized"),0);

@@ -7,7 +7,7 @@ class GrowBox;  //forward declaration
 class Sound : public Common
 {
 public:
-    Sound(const __FlashStringHelper * Name, GrowBox * GBox,byte Pin, bool *Enabled);
+    Sound(const __FlashStringHelper * Name, GrowBox * GBox,Settings * DefaultSettings);
     void refresh();
     void report();
     void setSoundOnOff(bool State);
@@ -17,7 +17,7 @@ public:
 
 private:
   GrowBox * GBox;
-  byte Pin; //Pin connecting the piezo Sound positive(+) side over a 330Ω resistor)
+  byte* Pin; //Pin connecting the piezo Sound positive(+) side over a 330Ω resistor)
   bool* Enabled;   //Sound ON or OFF
   bool PlayOnSound = false; //Play on beep flag - website controls it
   bool PlayOffSound = false; //Play off beep flag - website controls it

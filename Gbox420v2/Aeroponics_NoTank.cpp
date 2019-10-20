@@ -1,7 +1,7 @@
 #include "Aeroponics_NoTank.h"
 #include "GrowBox.h"
 
-Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox * GBox, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific * NoTankSpecificSettings) : Aeroponics(&(*Name), &(*GBox), BypassSolenoidPin, PumpPin, &(*DefaultSettings)) {
+Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific * NoTankSpecificSettings) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings)) {
   BlowOffTime = &NoTankSpecificSettings -> BlowOffTime; //Aeroponics - Turn on pump below this pressure (bar)
   logToSerials(F("Aeroponics_NoTank object created"),true);
 }

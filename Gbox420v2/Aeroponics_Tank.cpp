@@ -1,8 +1,8 @@
 #include "Aeroponics_Tank.h"
 #include "GrowBox.h"
 
-Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, byte SpraySolenoidPin, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings) : Aeroponics(Name, GBox, BypassSolenoidPin, PumpPin, DefaultSettings){  //constructor
-  this -> SpraySolenoidPin = SpraySolenoidPin;
+Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings) : Aeroponics(Name, GBox, DefaultSettings){  //constructor
+  SpraySolenoidPin = &TankSpecificSettings -> SpraySolenoidPin;
   PressureLow = &TankSpecificSettings -> PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
   PressureHigh = &TankSpecificSettings -> PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
   QuietEnabled = &TankSpecificSettings -> QuietEnabled;  //Enable/disable quiet time then pump should not run
@@ -12,8 +12,8 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
   QuietToHour = &TankSpecificSettings -> QuietToHour; //Quiet time end - hour
   QuietToMinute = &TankSpecificSettings -> QuietToMinute; //Quiet time end - minute
 
-  pinMode(SpraySolenoidPin,OUTPUT);
-  pinMode(SpraySolenoidPin,HIGH);  //initialize off
+  pinMode(*SpraySolenoidPin,OUTPUT);
+  pinMode(*SpraySolenoidPin,HIGH);  //initialize off
  
   logToSerials(F("Aeroponics_Tank object created"),true);
  }   
@@ -30,7 +30,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
  void Aeroponics_Tank::checkRelays(){
    logToSerials(F("Aeroponics_Tank checking relays:"),false,0);
    logToSerials(SpraySolenoidOn,true,0);
-    if(SpraySolenoidOn) digitalWrite(SpraySolenoidPin, LOW); else digitalWrite(SpraySolenoidPin, HIGH); 
+    if(SpraySolenoidOn) digitalWrite(*SpraySolenoidPin, LOW); else digitalWrite(*SpraySolenoidPin, HIGH); 
     Aeroponics::checkRelays();
   } 
 

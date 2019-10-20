@@ -9,7 +9,7 @@ class LightSensor : public Common
   protected:
 
   public:
-    LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, byte DigitalPin, byte AnalogPin);
+    LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::LightSensorSettings * DefaultSettings);
     GrowBox * GBox;
     void refresh();  //Called when component should refresh its state
     void report();
@@ -23,8 +23,8 @@ class LightSensor : public Common
     void triggerCalibration();    //Website signals to calibrate the MAX/MIN readings the next time the object gets CPU time
     
   private: 
-    byte DigitalPin; //D0 - LM393 light sensor digital in
-    byte AnalogPin; //A0 - LM393 light sensor analog in
+    byte* DigitalPin; //D0 - LM393 light sensor digital in
+    byte* AnalogPin; //A0 - LM393 light sensor analog in
     bool IsDark;   
     RollingAverage * LightReading;  //keeps an average of previous readings: Smoothens sensor readings
     bool CalibrateRequested;

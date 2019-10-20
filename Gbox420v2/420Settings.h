@@ -1,46 +1,38 @@
 #pragma once
 
 //Change this when you make change to the structure of the EEPROM stored part
-static const byte Version = 6;
+static const byte Version = 8;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: They never change during runtime
 static const byte MaxTextLength = 32;  //Default char* buffer size: 31 characters + null terminator, used for logging and converting to text
 static const byte RollingAverageQueueDepth = 10;  //How many previous sensor readings should be stored
 static const byte LogDepth = 10;  //Show X number of log entries on website, do not go above 10
 
-
 //SAVED TO EEPROM
 typedef struct
-{     
-  bool ATXPowerSupplyOn = true; //ATX power supply ON(true) or OFF(false)
-  bool Sound1Enabled = true;  //Enable PC speaker / Piezo buzzer
-  
-struct AeroponicsSettings{
-    bool SprayEnabled = true;  //Enable/disable misting
-    int Interval = 15; //Aeroponics - Spray every 15 minutes
-    int Duration = 2; //Aeroponics - Spray time in seconds
-    int PumpTimeout = 6;  // Aeroponics - Max pump run time in minutes, measue zero to max pressuretank refill time and adjust accordingly
-    int PrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
- } Aeroponics_Tank1,Aeroponics_NoTank1;
+{  
+  byte SoundPin = 4; //PC speaker+ (red)   
+  bool SoundEnabled = true;  //Enable PC speaker / Piezo buzzer  
+  bool DebugEnabled = true; //Logs debug LongMessages to serial and web outputs
+  bool MetricSystemEnabled = true; //Switch between Imperial/Metric units. If changed update the default temp and pressure values.  
+  bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
+  bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
+  char PushingBoxLogRelayID[MaxTextLength]= "v420"; //UPDATE THIS DeviceID of the PushingBox logging scenario 
+    
+  bool AlertEmails = true; //disable/enable email sending
+  char PushingBoxEmailRelayID[MaxTextLength]  = "v420";  //UPDATE THIS DeviceID of the PushingBox email alert scenario
+  int TriggerCountBeforeAlert = 12; //number of consecutive out of range sensor readings before the email alert is triggered (5sec between reads -> 12= Out of range reading through 1 minute)  
 
-struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific settings
-    int BlowOffTime = 3; //Aeroponics - BlowOff time in seconds: After spraying open the bypass valve for X seconds to release pressure
- } Aeroponics_Tank1_NoTankSpecific;
-
-  struct AeroponicsSettings_TankSpecific{  //Pressure tank specific settings
-    float PressureLow= 5.0; //Aeroponics - Turn on pump below this pressure (bar)
-    float PressureHigh = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)
-    bool QuietEnabled = false;  //Enable/disable quiet time then pump should not run
-    bool RefillBeforeQuiet = true; //Enable/disable refill before quiet time
-    byte QuietFromHour = 23;  //Quiet time to block pump - hour
-    byte QuietFromMinute = 0; //Quiet time to block pump - minute
-    byte QuietToHour = 6; //Quiet time end - hour
-    byte QuietToMinute = 0; //Quiet time end - minute
- } Aeroponics_Tank1_TankSpecific;
+  struct LightSensorSettings{
+    LightSensorSettings(byte DigitalPin = 0, byte AnalogPin = 0 ) : DigitalPin(DigitalPin),AnalogPin(AnalogPin){}
+    byte DigitalPin;
+    byte AnalogPin;     
+  };
+  struct LightSensorSettings LightSensor1 = {.DigitalPin = 36 , .AnalogPin = A0};
 
   struct LightsSettings{
-    //Light specific settings, unique for each item, initialized via a consturctor
-    LightsSettings(byte RelayPin = 0, byte DimmingPin = 0,byte DimmingLimit = 0 ) : RelayPin(RelayPin),DimmingPin(DimmingPin),DimmingLimit(DimmingLimit) {}
+   //Light specific settings, unique for each item, initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
+    LightsSettings(byte RelayPin = 0, byte DimmingPin = 0,byte DimmingLimit = 0 ) : RelayPin(RelayPin),DimmingPin(DimmingPin),DimmingLimit(DimmingLimit) {} //Designated initializer 
     byte RelayPin;  //Power relay Port 8 - LED lights
     byte DimmingPin; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
     byte DimmingLimit; //Sets the LED dimming limit (Usually around 5%)
@@ -55,7 +47,18 @@ struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific sett
     byte OffMinute = 20; //Light OFF time - minute    
   };  
   struct LightsSettings Light1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 8}; //Creating a LightSettings instance, passing in the unique parameters
-    
+  
+  struct DHTSensorSettings{
+    DHTSensorSettings(byte Pin = 0 ) : Pin(Pin){}
+    byte Pin;
+    int TempAlertLow = 15; //Low temp warning email
+    int TempAlertHigh = 35; //High temp warning email
+    int HumidityAlertLow = 35; //Low humidity warning email
+    int HumidityAlertHigh = 70; //High humidity warning email
+  };
+  struct DHTSensorSettings InternalDHTSensor = {.Pin = 43 };
+  struct DHTSensorSettings ExternalDHTSensor = {.Pin = 44 };  
+
   struct PHSensorSettings{
     PHSensorSettings(float PHCalibrationSlope = 0.0, float PHCalibrationIntercept = 0.0 ) : PHCalibrationSlope(PHCalibrationSlope),PHCalibrationIntercept(PHCalibrationIntercept) {}
     float PHCalibrationSlope;     //Update this to your own PH meter calibration values
@@ -74,16 +77,47 @@ struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific sett
   };
   struct PressureSensorSettings PressureSensor1 = {.PressureSensorOffset = 0.57, .PressureSensorRatio = 2.7 };
 
-  struct DHTSensorSettings{
-    DHTSensorSettings(byte Pin = 0 ) : Pin(Pin){}
-    byte Pin;
-    int TempAlertLow = 15; //Low temp warning email
-    int TempAlertHigh = 35; //High temp warning email
-    int HumidityAlertLow = 35; //Low humidity warning email
-    int HumidityAlertHigh = 70; //High humidity warning email
+  struct AeroponicsSettings{ //Common settings for each inheriting class
+    AeroponicsSettings(byte BypassSolenoidPin = 0, byte PumpPin = 0 ) : BypassSolenoidPin(BypassSolenoidPin),PumpPin(PumpPin) {}
+    byte BypassSolenoidPin; //Power relay Port 3 - Aeroponics bypass solenoid 
+    byte PumpPin;  //Power relay Port 2 - Aeroponics high pressure pump
+    bool SprayEnabled = true;  //Enable/disable misting
+    int Interval = 15; //Aeroponics - Spray every 15 minutes
+    int Duration = 2; //Aeroponics - Spray time in seconds
+    int PumpTimeout = 6;  // Aeroponics - Max pump run time in minutes, measue zero to max pressuretank refill time and adjust accordingly
+    int PrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
   };
-  struct DHTSensorSettings InternalDHTSensor = {.Pin = 43 };
-  struct DHTSensorSettings ExternalDHTSensor = {.Pin = 44 };
+  struct AeroponicsSettings Aeroponics_Tank1_Common = {.BypassSolenoidPin = 30, .PumpPin = 31 };
+  struct AeroponicsSettings Aeroponics_NoTank1_Common = {.BypassSolenoidPin = 23, .PumpPin = 24 };
+
+  
+  struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific settings    
+    int BlowOffTime = 3; //Aeroponics - BlowOff time in seconds: After spraying open the bypass valve for X seconds to release pressure    
+  }Aeroponics_NoTank1_Specific;
+
+  struct AeroponicsSettings_TankSpecific{  //Pressure tank specific settings
+  AeroponicsSettings_TankSpecific(byte SpraySolenoidPin = 0) : SpraySolenoidPin(SpraySolenoidPin) {}
+    byte SpraySolenoidPin;  //Power relay Port 1 - Aeroponics spray solenoid (Only used with Aeroponics_Tank module)
+    float PressureLow= 5.0; //Aeroponics - Turn on pump below this pressure (bar)
+    float PressureHigh = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)
+    bool QuietEnabled = false;  //Enable/disable quiet time then pump should not run
+    bool RefillBeforeQuiet = true; //Enable/disable refill before quiet time
+    byte QuietFromHour = 23;  //Quiet time to block pump - hour
+    byte QuietFromMinute = 0; //Quiet time to block pump - minute
+    byte QuietToHour = 6; //Quiet time end - hour
+    byte QuietToMinute = 0; //Quiet time end - minute
+  };
+  struct AeroponicsSettings_TankSpecific Aeroponics_Tank1_Specific = {.SpraySolenoidPin= 22};
+
+/* THIS DOES NOT WORK
+   struct AeroponicsSettings_Tank {
+    union{
+      AeroponicsSettings_TankSpecific Specific;
+      AeroponicsSettings Common;      
+    };
+  };
+  struct AeroponicsSettings_Tank Aeroponics_Tank1 = { .Specific{.SpraySolenoidPin= 22}, .Common{.BypassSolenoidPin = 23, .PumpPin = 24 }};
+ */
 
   bool AutomaticInternalFan = false;  //Adjust internal fan based on temperature
   bool AutomaticExhaustFan = false;  //Adjust exhaust fan based on temp and humidity
@@ -95,20 +129,30 @@ struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific sett
   byte ExhaustFanHighHumid = 65; //Above set humidity turn exhaust fan High if automatic fan control is enabled
   byte ExhaustFanLowHumid = 55; //Above set humidity turn exhaust fan Low if automatic fan control is enabled
   byte ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
+
+//PHSensor pins
+  byte PHSensorInPin = A3;  //PH meter - Po port
+
+
+//Analog pins
+  byte PressureSensorInPin = A1; //Signal(yellow) - Pressure sensor
+  byte WaterCriticalInPin = A4; //Water sensor1
+  byte WaterLowInPin = A5;     //Water sensor2
+  byte WaterMediumInPin = A6; //Water sensor3
+  byte WaterFullInPin = A7; // Water sensor4
+  
+//Digital pins
+
+  byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
+  byte Relay4OutPin = 25;  //Power relay Port 4 - Internal fan Off/On
+  byte Relay5OutPin = 26;  //Power relay Port 5 - Internal fan Low/High
+  byte Relay6OutPin = 27;  //Power relay Port 6 - Exhaust fan Off/On
+  byte Relay7OutPin = 28;  //Power relay Port 7 - Exhaust fan Low/High
+  byte ATXPowerONOutPin = 34; //Turns ATX power supply on by connecting ATX PowerON pin to GND through an optocoupler
+  byte ATXPowerGoodInPin = 35; //5V signal from ATX powersupply, inverted by optocoupler: LOW if DC power output is OK
+  byte ReservoirTempSensorInPin = 45;  //Data(yellow) - DS18B20 waterproof temp sensor 
    
-  bool DebugEnabled = true; //Logs debug LongMessages to serial and web outputs
-  bool MetricSystemEnabled = true; //Switch between Imperial/Metric units. If changed update the default temp and pressure values.  
-  bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
-  bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
-  char PushingBoxLogRelayID[MaxTextLength]= "v420"; //UPDATE THIS DeviceID of the PushingBox logging scenario 
-
-  byte DigitDisplayBacklight = 25; //4 digit display - backlight strength (0-100)
-  byte DigitDisplayValue = 0; //select which sensor reading to display(1-18), 0 cycle through all values
-    
-  bool AlertEmails = true; //disable/enable email sending
-  char PushingBoxEmailRelayID[MaxTextLength]  = "v420";  //UPDATE THIS DeviceID of the PushingBox email alert scenario
-  int TriggerCountBeforeAlert = 12; //number of consecutive out of range sensor readings before the email alert is triggered (5sec between reads -> 12= Out of range reading through 1 minute)  
-
+  
 
   byte CompatibilityVersion=Version;  //Should always be the last value stored.
    }Settings;

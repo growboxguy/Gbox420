@@ -9,9 +9,9 @@ class GrowBox;  //forward declaration
 class Aeroponics_Tank : public Aeroponics
 {
     public:
-    Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, byte SpraySolenoidPin, byte BypassSolenoidPin, byte PumpPin, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings);
+    Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings);
    
-    byte SpraySolenoidPin;
+    byte* SpraySolenoidPin;
     bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on.
     bool PreviousPressureRead = true;
     float * PressureLow; //Aeroponics - Turn on pump below this pressure (bar)

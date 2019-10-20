@@ -5,12 +5,12 @@
 #include "Lights.h"
 #include "GrowBox.h"
 
-LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, byte DigitalPin, byte AnalogPin): Common(Name){ //constructor
+LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox,  Settings::LightSensorSettings * DefaultSettings): Common(Name){ //constructor
   this -> GBox = GBox;
-  this -> DigitalPin = DigitalPin;
-  this -> AnalogPin = AnalogPin;
-  pinMode(DigitalPin, INPUT);
-  pinMode(AnalogPin, INPUT);
+  this -> DigitalPin = &DefaultSettings -> DigitalPin;
+  this -> AnalogPin = &DefaultSettings -> AnalogPin;
+  pinMode(*DigitalPin, INPUT);
+  pinMode(*AnalogPin, INPUT);
   LightReading = new RollingAverage();
   triggerCalibration();
   logToSerials(F("LightSensor object created"),true);
@@ -19,8 +19,8 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, byte 
 void LightSensor::refresh(){  //Called when component should refresh its state
   Common::refresh();
   if(CalibrateRequested){ calibrate(); } //If calibration was requested
-  IsDark = digitalRead(DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected. ! inverts this
-  LightReading -> updateAverage(1023 - analogRead(AnalogPin)); 
+  IsDark = digitalRead(*DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected. ! inverts this
+  LightReading -> updateAverage(1023 - analogRead(*AnalogPin)); 
   report();
 }
 
@@ -91,10 +91,10 @@ void LightSensor::calibrate(){
   GBox -> Light1 -> checkLightStatus();  //apply turning the lights on
   GBox -> Light1 -> setBrightness(0,false);
   delay(500); //wait for light output change
-  MinReading = 1023 - analogRead(AnalogPin);
+  MinReading = 1023 - analogRead(*AnalogPin);
   GBox -> Light1 -> setBrightness(100,false);
   delay(500); //wait for light output change
-  MaxReading = 1023 - analogRead(AnalogPin);
+  MaxReading = 1023 - analogRead(*AnalogPin);
   GBox -> Light1 -> setBrightness(LastBrightness,false); //restore original brightness, without adding a log entry
   GBox -> Light1 -> setLightOnOff(LastStatus,false); //restore original state, without adding a log entry
   GBox -> Light1 -> checkLightStatus();

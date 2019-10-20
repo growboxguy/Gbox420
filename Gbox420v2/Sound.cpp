@@ -1,11 +1,11 @@
 #include "Sound.h" 
 #include "GrowBox.h"
 
-Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox,byte Pin, bool *Enabled):Common(Name){
+Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox,Settings * DefaultSettings):Common(Name){
   this -> GBox = GBox;
-  this -> Pin = Pin;
-  this -> Enabled = Enabled;
-  pinMode(Pin, OUTPUT);
+  this -> Pin = &DefaultSettings -> SoundPin;
+  this -> Enabled = &DefaultSettings -> SoundEnabled;
+  pinMode(*Pin, OUTPUT);
   logToSerials(F("Sound object created"),true);
 }
 
@@ -31,29 +31,29 @@ void Sound::playOffSound(){
 } 
 
 void Sound::OnSound(){
-  if(Enabled){ 
-  tone(Pin,500);
+  if(*Enabled){ 
+  tone(*Pin,500);
   delay(100);
-  noTone(Pin);
-  tone(Pin,1000);
+  noTone(*Pin);
+  tone(*Pin,1000);
   delay(100);
-  noTone(Pin);
+  noTone(*Pin);
   }
 }
 
 void Sound::OffSound(){
   if(*Enabled){ 
-  tone(Pin,1000);
+  tone(*Pin,1000);
   delay(100);
-  noTone(Pin);
-  tone(Pin,500);
+  noTone(*Pin);
+  tone(*Pin,500);
   delay(100);
-  noTone(Pin);
+  noTone(*Pin);
   }
 }
 
 void Sound::setSoundOnOff(bool State){
-  Enabled = &State;
+  *Enabled = State;
   if(*Enabled){ 
     GBox -> addToLog(F("Sound enabled"));
     playOnSound();
@@ -192,9 +192,9 @@ void Sound::buzz( uint32_t frequency, uint32_t length) {
   //// multiply frequency, which is really cycles per second, by the number of seconds to
   //// get the total number of cycles to produce
   for (uint32_t i = 0; i < numCycles; i++) { // for the calculated length of time...
-    digitalWrite(Pin, HIGH); // write the Sound pin high to push out the diaphragm
+    digitalWrite(*Pin, HIGH); // write the Sound pin high to push out the diaphragm
     delayMicroseconds(delayValue); // wait for the calculated delay value
-    digitalWrite(Pin, LOW); // write the Sound pin low to pull back the diaphragm
+    digitalWrite(*Pin, LOW); // write the Sound pin low to pull back the diaphragm
     delayMicroseconds(delayValue); // wait again or the calculated delay value
   }  
   digitalWrite(13, LOW);
