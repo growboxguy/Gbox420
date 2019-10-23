@@ -28,8 +28,8 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
 } 
 
  void Aeroponics_Tank::checkRelays(){
-   logToSerials(F("Aeroponics_Tank checking relays:"),false,0);
-   logToSerials(SpraySolenoidOn,true,0);
+   //logToSerials(F("Aeroponics_Tank checking relays:"),false,0);
+   //logToSerials(SpraySolenoidOn,true,0);
     if(SpraySolenoidOn) digitalWrite(*SpraySolenoidPin, LOW); else digitalWrite(*SpraySolenoidPin, HIGH); 
     Aeroponics::checkRelays();
   } 
@@ -98,7 +98,7 @@ void Aeroponics_Tank::refresh(){
     }    
   } 
   checkRelays(); 
-  report();
+  if(RefreshCounter++%60 == 0) report();  //Report only every 60 seconds - Refresh() function is called every second in the Aeroponics component
 }
 
 void Aeroponics_Tank::setPressureLow(float PressureLow){

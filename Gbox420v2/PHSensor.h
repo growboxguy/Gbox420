@@ -12,6 +12,12 @@ class Reservoir : public Common
   protected:
    
   public:
+    void refresh(){};
+    void report(){};
+    void websiteLoadEvent(char * url){};
+    void websiteFieldSubmitEvent(char * Button){};    
+    void websiteRefreshEvent(char * url){};
+    void websiteButtonPressEvent(char * Button){};
   
 };
 
@@ -29,8 +35,12 @@ class PHSensor : public Common
   public:
     PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope);
     void refresh();
-    void report();
-    void websiteLoadEvent();
+    void report(){};
+    void websiteLoadEvent(char * url);
+    void websiteFieldSubmitEvent(char * Button){};    
+    void websiteRefreshEvent(char * url){};
+    void websiteButtonPressEvent(char * Button){};
+
     void getPH(bool ShowRaw);
     void setSlope(float Value);
     void setIntercept(float Value);    

@@ -4,6 +4,8 @@
 PowerSensor::PowerSensor(const __FlashStringHelper * Name, GrowBox * GBox,HardwareSerial * SerialPort):Common(Name){
   this -> GBox = GBox;
   Sensor = new PZEM004Tv30(SerialPort);
+  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method
+  GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   logToSerials(F("PowerSensor object created"),true);
 }
 
@@ -29,7 +31,7 @@ void PowerSensor::report(){
   logToSerials( &LongMessage, true,4);
 }
 
-void PowerSensor::websiteRefreshEvent(){ //When the website is opened, load stuff once
+void PowerSensor::websiteRefreshEvent(char * url){ //When the website is opened, load stuff once
   WebServer.setArgString(getWebsiteComponentName(F("Power")), getPowerText());  
   WebServer.setArgString(getWebsiteComponentName(F("Energy")), getEnergyText());  
   WebServer.setArgString(getWebsiteComponentName(F("Voltage")), getVoltageText());  

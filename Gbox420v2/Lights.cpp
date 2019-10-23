@@ -19,6 +19,11 @@ Lights::Lights(const __FlashStringHelper * Name, GrowBox * GBox, Settings::Light
   OffMinute = &DefaultSettings -> OffMinute;
   pinMode(*RelayPin, OUTPUT);
   pinMode(*DimmingPin, OUTPUT);
+  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method  
+  GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the Website load queue: Calls the websiteLoadEvent(char * url) method
+  GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
+  GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
+  GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website field submit event  
   logToSerials(F("Lights object created"),true);
 }
 
@@ -38,7 +43,7 @@ void Lights::report(){
   logToSerials( &LongMessage, true,4);
 }
 
-void Lights::websiteLoadEvent(){
+void Lights::websiteLoadEvent(char * url){
   //Light1 load
   WebServer.setArgInt(getWebsiteComponentName(F("OnHour")), *OnHour); 
   WebServer.setArgInt(getWebsiteComponentName(F("OnMinute")),  *OnMinute); 
@@ -48,13 +53,14 @@ void Lights::websiteLoadEvent(){
   WebServer.setArgInt(getWebsiteComponentName(F("BrightnessSlider")), *Brightness);
 }
 
-void Lights::websiteRefreshEvent(){
+void Lights::websiteRefreshEvent(char * url){
 //Light1
   WebServer.setArgString(getWebsiteComponentName(F("Status")),getStatusText());
   WebServer.setArgString(getWebsiteComponentName(F("TimerEnabled")), getTimerOnOffText());
   WebServer.setArgString(getWebsiteComponentName(F("OnTime")), getOnTimeText());
   WebServer.setArgString(getWebsiteComponentName(F("OffTime")), getOffTimeText()); 
 }
+
 
 void Lights::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once
   if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
@@ -66,10 +72,20 @@ void Lights::websiteFieldSubmitEvent(char * Field){ //When the website is opened
     else if(strcmp_P(ShortMessage,(PGM_P)F("OnMinute"))==0) {setOnMinute(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("OffHour"))==0) {setOffHour(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("OffMinute"))==0) {setOffMinute(WebServer.getArgInt());} 
-  }
-  
+  }  
 } 
 
+void Lights::websiteButtonPressEvent(char * Button){ //When the website is opened, load stuff once
+  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name     
+    if (strcmp_P(ShortMessage,(PGM_P)F("On"))==0) {setLightOnOff(true,true); }
+      else if (strcmp_P(ShortMessage,(PGM_P)F("Off"))==0) {setLightOnOff(false,true); }
+      else if (strcmp_P(ShortMessage,(PGM_P)F("TimerEnable"))==0) {setTimerOnOff(true);}
+      else if (strcmp_P(ShortMessage,(PGM_P)F("TimerDisable"))==0) {setTimerOnOff(false);}
+  }  
+} 
 
 void Lights::checkLightStatus(){
   if(*Status) digitalWrite(*RelayPin, LOW); //True turns relay ON (LOW signal activates Relay)

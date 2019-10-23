@@ -7,6 +7,7 @@ static const byte Version = 8;
 static const byte MaxTextLength = 32;  //Default char* buffer size: 31 characters + null terminator, used for logging and converting to text
 static const byte RollingAverageQueueDepth = 10;  //How many previous sensor readings should be stored
 static const byte LogDepth = 10;  //Show X number of log entries on website, do not go above 10
+static const byte QueueDepth = 32;  //Limits the refresh queue depth. Memory usage is multiplied by the number of refresh queues!
 
 //SAVED TO EEPROM
 typedef struct

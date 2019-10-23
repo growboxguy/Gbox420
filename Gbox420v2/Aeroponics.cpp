@@ -6,7 +6,7 @@
 // -Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid (electric water valve)
 
 Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings) : Common(Name){  //constructor
-    this -> GBox = GBox;
+    this -> GBox = GBox;    
     BypassSolenoidPin = &DefaultSettings -> BypassSolenoidPin;
     PumpPin = &DefaultSettings -> PumpPin;
     SprayEnabled = &DefaultSettings -> SprayEnabled;  //Enable/disable misting
@@ -18,6 +18,11 @@ Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Setting
     pinMode(*BypassSolenoidPin,HIGH);  //initialize in off state
     pinMode(*PumpPin,OUTPUT);
     pinMode(*PumpPin,HIGH);  //initialize in off state
+    GBox -> AddToRefreshQueue_Sec(this);
+    GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the website load queue: Calls the websiteLoadEvent(char * url) method
+    GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
+    GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
+    GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
 }
 
 void Aeroponics::checkRelays(){    
@@ -28,21 +33,21 @@ void Aeroponics::checkRelays(){
     else digitalWrite(*BypassSolenoidPin, HIGH);
 } 
 
-void Aeroponics::websiteLoadEvent(){ //When the website is opened, load stuff once
+void Aeroponics::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
   WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *PumpTimeout);
   WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *PrimingTime);
   WebServer.setArgInt(getWebsiteComponentName(F("Interval")), *Interval);
   WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
 } 
 
-void Aeroponics::websiteRefreshEvent(){ //When the website is opened, load stuff once
+void Aeroponics::websiteRefreshEvent(char * url){ //When the website is opened, load stuff once
   WebServer.setArgString(getWebsiteComponentName(F("SprayEnabled")), enabledToText(*SprayEnabled));
   WebServer.setArgString(getWebsiteComponentName(F("Pressure")), pressureToText(AeroPressure));
   WebServer.setArgString(getWebsiteComponentName(F("PumpState")), pumpStateToText());   
   WebServer.setArgString(getWebsiteComponentName(F("BypassState")), onOffToText(BypassSolenoidOn)); 
 }
 
-void Aeroponics::websiteBottonPressEvent(char * Button){ //When the website is opened, load stuff once
+void Aeroponics::websiteButtonPressEvent(char * Button){ //When the website is opened, load stuff once
   if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }

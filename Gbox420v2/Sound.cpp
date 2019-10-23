@@ -6,6 +6,9 @@ Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox,Settings * Default
   this -> Pin = &DefaultSettings -> SoundPin;
   this -> Enabled = &DefaultSettings -> SoundEnabled;
   pinMode(*Pin, OUTPUT);
+  GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the Sec refresh queue: Calls the refresh() method 
+  GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
+  GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website field submit even 
   logToSerials(F("Sound object created"),true);
 }
 
@@ -17,10 +20,27 @@ void Sound::refresh(){
   if (PlayEE)  {PlayEE = false;EE();} 
 }
 
-void Sound::report(){
- ; //nothing needs reporting
+void Sound::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
+  WebServer.setArgInt(getWebsiteComponentName(F("Enabled")), GBox -> BoxSettings -> SoundEnabled);
+} 
+
+void Sound::websiteButtonPressEvent(char * Button){ //When a button is pressed on the website
+  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name   
+    if (strcmp_P(ShortMessage,(PGM_P)F("Ee"))==0) { playEE(); }
+  }  
 }
 
+void Sound::websiteFieldSubmitEvent(char * Field){ //When the website field is submitted
+  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name   
+    if(strcmp_P(ShortMessage,(PGM_P)F("SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}    
+  }  
+} 
 
 void Sound::playOnSound(){
   PlayOnSound = true;

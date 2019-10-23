@@ -12,10 +12,14 @@ class Fan : public Common
   public:
     Fan(const __FlashStringHelper * Name, GrowBox * GBox, uint8_t onOffpin, uint8_t speedPin);
     GrowBox * GBox;
+
     void refresh();  //Called when component should refresh its state
-    void report();
-    //void websiteLoadEvent();
-    void websiteRefreshEvent();
+    void report(){};
+    void websiteLoadEvent(char * url){};
+    void websiteRefreshEvent(char * url);
+    void websiteButtonPressEvent(char * Button){};
+    void websiteFieldSubmitEvent(char * Button){};
+
     void setOff();
     void setLowSpeed();  
     void setHighSpeed();

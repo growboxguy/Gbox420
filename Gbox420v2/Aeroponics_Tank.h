@@ -22,11 +22,11 @@ class Aeroponics_Tank : public Aeroponics
     byte * QuietFromMinute; //Quiet time to block pump - minute
     byte * QuietToHour; //Quiet time end - hour
     byte * QuietToMinute; //Quiet time end - minute
-
-
+    
     void refresh();
     void report();
     void websiteFieldSubmitEvent(char * Field);
+
     void checkRelays();
     void checkAeroPumpAlerts_WithPressureTank();
     bool checkQuietTime();

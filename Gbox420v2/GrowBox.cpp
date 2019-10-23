@@ -13,7 +13,7 @@
 
 static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
-GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
+GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Common(Name) { //Constructor
   this -> BoxSettings = BoxSettings;
   Sound1 = new Sound(F("Sound1"), this, BoxSettings);
   InternalDHTSensor = new DHTSensor(F("InternalDHTSensor"), this, &BoxSettings -> InternalDHTSensor,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
@@ -25,10 +25,13 @@ GrowBox::GrowBox(Settings *BoxSettings){ //Constructor
   Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, &BoxSettings -> Aeroponics_NoTank1_Common, &BoxSettings -> Aeroponics_NoTank1_Specific);
   //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);
   logToSerials(F("GrowBox object created"), true,2);
+  AddToRefreshQueue_FiveSec(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method  
+  AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
+  AddToWebsiteQueue_Refresh(this); //Subscribing to the Website field submit even
   addToLog(F("GrowBox initialized"),0);
 }
 
-void GrowBox::refresh(){  //implementing the virtual refresh function from Common
+void GrowBox::refreshAll(){  //implementing the virtual refresh function from Common
  logToSerials(F("GrowBox refreshing"),true,0);
     //trigger all threads at startup
   runFiveSec(); //needs to run first to get sensor readings
@@ -38,43 +41,37 @@ void GrowBox::refresh(){  //implementing the virtual refresh function from Commo
 }
 
 void GrowBox::runSec(){ 
-  //if(DebugEnabled)logToSerials(F("One sec trigger.."),true,1);
-  Sound1 -> refresh();
-  Aeroponics_NoTank1 -> refresh();
+  //if(DebugEnabled)logToSerials(F("One sec trigger.."),true,1);  
+  for(int i=0;i<refreshQueueLength_Sec;i++){
+   RefreshQueue_Sec[i] -> refresh();
+  }
 }
 
 void GrowBox::runFiveSec(){
-  //if(DebugEnabled)logToSerials(F("Five sec trigger.."),true,1); 
-  Aeroponics_NoTank1 -> report();  //TODO: Still needs refresh linked into interrupt handling 
-  //Aeroponics_Tank1 -> refresh(); //TODO: Still needs refresh linked into interrupt handling 
-
-  //PHSensor1 -> refresh();
+  if(DebugEnabled)logToSerials(F("Five sec trigger.."),true,1); 
+  for(int i=0;i<refreshQueueLength_FiveSec;i++){
+    RefreshQueue_FiveSec[i] -> refresh();
+  }
 }
 
 void GrowBox::runMinute(){
   if(DebugEnabled)logToSerials(F("Minute trigger.."),true,1);
-  // Aeroponics_NoTank1 -> refresh();  //TODO: Still needs refresh linked into interrupt handling 
-  // Aeroponics_Tank1 -> refresh(); //TODO: Still needs refresh linked into interrupt handling 
-  // Light1 -> refresh();
-  report();  //Growbox reporting
-  InternalDHTSensor -> refresh();
-  ExternalDHTSensor -> refresh();
-  LightSensor1 -> refresh();
-  PowerSensor1 -> refresh();
-  Light1 -> refresh();
-
+  for(int i=0;i<refreshQueueLength_Minute;i++){
+    RefreshQueue_Minute[i] -> refresh();
+  }
 }
 
 void GrowBox::runHalfHour(){   
-  if(DebugEnabled)logToSerials(F("Half hour trigger.."),true,1); 
+  if(DebugEnabled)logToSerials(F("Half hour trigger.."),true,1);
+  for(int i=0;i<refreshQueueLength_HalfHour;i++){
+    RefreshQueue_HalfHour[i] -> refresh();
+  } 
 }
 
-void GrowBox::report(){
+void GrowBox::refresh(){
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable 
   strcat(LongMessage,getFormattedTime());
-  /*
-  
-  
+  /*  
   strcat_P(LongMessage,(PGM_P)F("\n\r Reservoir - "));
   strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage,toText(ReservoirTemp));  
   strcat_P(LongMessage,(PGM_P)F(" ; PH:")); strcat(LongMessage,toText(PH));
@@ -84,6 +81,106 @@ void GrowBox::report(){
   logToSerials( &LongMessage, true,0);
 }
 
+void GrowBox::websiteRefreshEvent(char * url) //called when website is refreshed. Do not call logToSerials within any methods used here!
+{ 
+  WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON(false)); //Last events that happened in JSON format  
+}
+
+void GrowBox::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
+  if (strcmp(url,"/Settings.html.json")==0){  
+  WebServer.setArgInt(F("GBox1_DebugEnabled"), GBox -> BoxSettings -> DebugEnabled);
+  WebServer.setArgInt(F("GBox1_MetricSystemEnabled"), GBox -> BoxSettings -> MetricSystemEnabled);
+  WebServer.setArgBoolean(F("GBox1_MqttEnabled"), GBox -> BoxSettings -> ReportToMqtt);
+  WebServer.setArgBoolean(F("GBox1_GoogleSheetsEnabled"), GBox -> BoxSettings -> ReportToGoogleSheets);
+  WebServer.setArgString(F("GBox1_PushingBoxLogRelayID"), GBox -> BoxSettings -> PushingBoxLogRelayID);
+
+  WebServer.setArgBoolean(F("GBox1_AlertEmails"), GBox -> BoxSettings -> AlertEmails);
+  //WebServer.setArgString(F("PushingBoxEmailRelayID"), GBox -> BoxSettings -> PushingBoxEmailRelayID);
+  //WebServer.setArgInt(F("TriggerCountBeforeAlert"), GBox -> BoxSettings -> TriggerCountBeforeAlert);
+  //WebServer.setArgInt(F("TempAlertLow"), GBox -> BoxSettings -> TempAlertLow);
+  //WebServer.setArgInt(F("TempAlertHigh"), GBox -> BoxSettings -> TempAlertHigh);
+  //WebServer.setArgInt(F("HumidityAlertLow"), GBox -> BoxSettings -> HumidityAlertLow);
+  //WebServer.setArgInt(F("HumidityAlertHigh"), GBox -> BoxSettings -> HumidityAlertHigh);
+  //WebServer.setArgString(F("PressureAlertLow"), toText(GBox -> BoxSettings -> PressureAlertLow));
+  //WebServer.setArgString(F("PressureAlertHigh"), toText(GBox -> BoxSettings -> PressureAlertHigh));
+  //WebServer.setArgString(F("PHAlertLow"), toText(GBox -> Reservoir -> PHAlertLow));
+  //WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> BoxSettings -> PHAlertHigh));  
+
+//  WebServer.setArgString(F("PHCalibrationSlope"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationSlope));
+//  WebServer.setArgString(F("PHCalibrationIntercept"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationIntercept)); 
+//  WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(GBox -> BoxSettings -> PressureSensorOffset));
+//  WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(GBox -> BoxSettings -> PressureSensorRatio));  
+  }
+} 
+
+void GrowBox::websiteFieldSubmitEvent(char * Field){ //When the website field is submitted
+  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name   
+    if(strcmp_P(ShortMessage,(PGM_P)F("DebugEnabled"))==0) {setDebugOnOff(WebServer.getArgBoolean());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("MetricSystemEnabled"))==0) {setMetricSystemEnabled(WebServer.getArgBoolean());}
+     //else if(strcmp_P(ShortMessage,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
+    //else if(strcmp_P(ShortMessage,(PGM_P)F("GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
+    //else if(strcmp_P(ShortMessage,(PGM_P)F("PushingBoxLogRelayID"))==0) {setPushingBoxLogRelayID(WebServer.getArgString());}    
+  }  
+} 
+
+/* 
+void GrowBox::websiteButtonPressEvent(char * Button){ //When a button is pressed on the website
+  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name   
+    
+  }  
+}  
+*/
+
+//Refresh queues
+
+void GrowBox::AddToRefreshQueue_Sec(Common* Component){
+  if(QueueDepth>refreshQueueLength_Sec) RefreshQueue_Sec[refreshQueueLength_Sec++] = Component;
+  else addToLog(F("RefreshQueue_Sec overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+}
+
+void GrowBox::AddToRefreshQueue_FiveSec(Common* Component){
+  if(QueueDepth>refreshQueueLength_FiveSec) RefreshQueue_FiveSec[refreshQueueLength_FiveSec++] = Component;
+  else addToLog(F("RefreshQueue_FiveSec overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+}
+
+void GrowBox::AddToRefreshQueue_Minute(Common* Component){
+  if(QueueDepth>refreshQueueLength_Minute) RefreshQueue_Minute[refreshQueueLength_Minute++] = Component;
+  else addToLog(F("RefreshQueue_Minute overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+}
+
+void GrowBox::AddToRefreshQueue_HalfHour(Common* Component){
+  if(QueueDepth>refreshQueueLength_HalfHour) RefreshQueue_HalfHour[refreshQueueLength_HalfHour++] = Component;
+  else addToLog(F("RefreshQueue_HalfHour overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+}
+
+//Website queues
+void GrowBox::AddToWebsiteQueue_Load(Common* Component){
+  if(QueueDepth>WebsiteQueueLength_Load) WebsiteQueue_Load[WebsiteQueueLength_Load++] = Component;
+  else addToLog(F("WebsiteQueueLength_Load overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+}
+
+void GrowBox::AddToWebsiteQueue_Refresh(Common* Component){
+  if(QueueDepth>WebsiteQueueLength_Refresh) WebsiteQueue_Refresh[WebsiteQueueLength_Refresh++] = Component;
+  else addToLog(F("WebsiteQueueLength_Refresh overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+}
+
+void GrowBox::AddToWebsiteQueue_Button(Common* Component){
+  if(QueueDepth>WebsiteQueueLength_Button) WebsiteQueue_Button[WebsiteQueueLength_Button++] = Component;
+  else addToLog(F("WebsiteQueueLength_Button overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+}
+
+void GrowBox::AddToWebsiteQueue_Field(Common* Component){
+  if(QueueDepth>WebsiteQueueLength_Field) WebsiteQueue_Field[WebsiteQueueLength_Field++] = Component;
+  else addToLog(F("WebsiteQueueLength_Field overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+}
+
+//Even logs on the website
 void GrowBox::addToLog(const char *LongMessage,byte Indent){  //adds a log entry that is displayed on the web interface
   logToSerials(LongMessage,true,Indent);
   for(byte i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
@@ -118,6 +215,7 @@ char* GrowBox::eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Log
   return LongMessage;
 }
 
+//Settings
 void GrowBox::setDebugOnOff(bool State){
   BoxSettings -> DebugEnabled = State;
   if(BoxSettings -> DebugEnabled){ 
@@ -143,4 +241,4 @@ void GrowBox::setMetricSystemEnabled(bool MetricEnabled){
   }    
   if(BoxSettings -> MetricSystemEnabled) addToLog(F("Using Metric units"));
   else addToLog(F("Using Imperial units"));  
-}  
+}

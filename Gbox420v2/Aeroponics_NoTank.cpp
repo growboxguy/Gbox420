@@ -6,9 +6,9 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox *
   logToSerials(F("Aeroponics_NoTank object created"),true);
 }
 
-void Aeroponics_NoTank::websiteLoadEvent(){ //When the website is opened, load stuff once
+void Aeroponics_NoTank::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
   WebServer.setArgInt(getWebsiteComponentName(F("BlowOffTime")), *BlowOffTime);
-  Aeroponics::websiteLoadEvent(); 
+  Aeroponics::websiteLoadEvent(url); 
 }
 
 void Aeroponics_NoTank::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once
@@ -81,7 +81,7 @@ void Aeroponics_NoTank::refresh(){ //pump directly connected to aeroponics tote,
     }    
   } 
   checkRelays();
-  //report();
+  if(RefreshCounter++%60 == 0) report();  //Report only every 60 seconds - Refresh() function is called every second in the Aeroponics component
 }
 
 

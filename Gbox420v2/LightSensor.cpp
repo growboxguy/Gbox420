@@ -13,6 +13,9 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox,  Sett
   pinMode(*AnalogPin, INPUT);
   LightReading = new RollingAverage();
   triggerCalibration();
+  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method
+  GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
+  GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website refresh event
   logToSerials(F("LightSensor object created"),true);
 }
 
@@ -32,12 +35,20 @@ void LightSensor::report(){
   logToSerials( &LongMessage, true,4);
 }
 
-void LightSensor::websiteRefreshEvent(){ //When the website is opened, load stuff once
+void LightSensor::websiteRefreshEvent(char * url){ //When the website is opened, load stuff once
   WebServer.setArgString(getWebsiteComponentName(F("IsDark")),getIsDarkText());
   WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingPercentage());
   WebServer.setArgString(getWebsiteComponentName(F("ReadingRaw")),getReadingText()); 
 } 
 
+void LightSensor::websiteButtonPressEvent(char * Button){ //When the website is opened, load stuff once
+  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name     
+    if (strcmp_P(ShortMessage,(PGM_P)F("Calibrate"))==0) {triggerCalibration();}
+  }  
+} 
 
 //  const char * name_p = reinterpret_cast<const char *>(name);
 

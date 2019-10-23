@@ -10,10 +10,14 @@ class DHTSensor : public Common
   public:
     DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::DHTSensorSettings * DefaultSettings, uint8_t sensorType);
     GrowBox * GBox;
+
     void refresh();  //Called when component should refresh its state
     void report();
-    void websiteLoadEvent();
-    void websiteRefreshEvent();
+    void websiteLoadEvent(char * url){};
+    void websiteRefreshEvent(char * url);
+    void websiteButtonPressEvent(char * Button){};
+    void websiteFieldSubmitEvent(char * Button){};
+
     float getTemp();  
     float getHumidity();
     char* getTempText();  

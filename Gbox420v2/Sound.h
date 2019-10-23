@@ -9,7 +9,12 @@ class Sound : public Common
 public:
     Sound(const __FlashStringHelper * Name, GrowBox * GBox,Settings * DefaultSettings);
     void refresh();
-    void report();
+    void report(){};
+    void websiteLoadEvent(char * url);
+    void websiteRefreshEvent(char * url){};
+    void websiteFieldSubmitEvent(char * Button);
+    void websiteButtonPressEvent(char * Button);
+
     void setSoundOnOff(bool State);
     void playOnSound();
     void playOffSound();

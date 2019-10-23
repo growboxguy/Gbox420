@@ -27,11 +27,11 @@ public:
     int* PumpTimeout;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
     int* PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
     virtual void refresh() = 0;  //Due to the virtual function Aeroponics class cannot be instantiated
-    void report();
-    void websiteLoadEvent();
-    void websiteBottonPressEvent(char * Button);
-    void websiteFieldSubmitEvent(char * Field);
-    void websiteRefreshEvent();
+    virtual void report();
+    virtual void websiteLoadEvent(char * url);
+    virtual void websiteRefreshEvent(char * url);
+    virtual void websiteButtonPressEvent(char * Button);
+    virtual void websiteFieldSubmitEvent(char * Button);
     void checkRelays();
     void setPumpOn(bool UserRequest);
     void setPumpOff(bool UserRequest);
