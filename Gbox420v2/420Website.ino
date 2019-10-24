@@ -29,7 +29,7 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
   logToSerials(F("WebServer started"),true);
 }
 
-void loadCallback(char * url) //called when website is loaded. Do not call logToSerials within any methods used here!
+void loadCallback(char * url) //called when website is loaded.
 {
   //if (strcmp(url,"/GrowBox.html.json")==0){
   // WebServer.setArgBoolean(F("AutoInternalFan"),GBox -> BoxSettings -> AutomaticInternalFan);
@@ -44,7 +44,7 @@ void loadCallback(char * url) //called when website is loaded. Do not call logTo
 //}  
 }
 
-void refreshCallback(char * url) //called when website is refreshed. Do not call logToSerials within any methods used here!
+void refreshCallback(char * url) //called when website is refreshed.
 { 
   WebServer.setArgString(F("Time"), getFormattedTime());
   // WebServer.setArgString(F("td_LightOK"), statusToText(LightOK)); 
@@ -60,7 +60,7 @@ void refreshCallback(char * url) //called when website is refreshed. Do not call
   //}
 }
 
-void buttonPressCallback(char *button)  //Called when any button on the website is pressed. Do not call logToSerials within any methods used here!
+void buttonPressCallback(char *button)  //Called when any button on the website is pressed.
 {
   if(GBox -> BoxSettings -> DebugEnabled)logToSerials(&button,true,0);
   for(int i=0;i<GBox -> WebsiteQueueLength_Button;i++){
@@ -70,7 +70,7 @@ void buttonPressCallback(char *button)  //Called when any button on the website 
   saveSettings(false,GBox -> BoxSettings); 
 }
 
-void setFieldCallback(char * field){  //Called when any field on the website is updated. Do not call logToSerials within any methods used here!
+void setFieldCallback(char * field){  //Called when any field on the website is updated.
   if(GBox -> BoxSettings -> DebugEnabled)logToSerials(&field,true,0);   
   for(int i=0;i<GBox -> WebsiteQueueLength_Field;i++){
     GBox -> WebsiteQueue_Field[i] -> websiteFieldSubmitEvent(field);

@@ -7,7 +7,7 @@ class GrowBox;  //forward declaration
 class Sound : public Common
 {
 public:
-    Sound(const __FlashStringHelper * Name, GrowBox * GBox,Settings * DefaultSettings);
+    Sound(const __FlashStringHelper * Name, GrowBox * GBox, Settings::SoundSettings * DefaultSettings);
     void refresh();
     void report(){};
     void websiteLoadEvent(char * url);

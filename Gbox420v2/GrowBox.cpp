@@ -15,19 +15,19 @@ static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing 
 
 GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Common(Name) { //Constructor
   this -> BoxSettings = BoxSettings;
-  Sound1 = new Sound(F("Sound1"), this, BoxSettings);
-  InternalDHTSensor = new DHTSensor(F("InternalDHTSensor"), this, &BoxSettings -> InternalDHTSensor,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
-  ExternalDHTSensor = new DHTSensor(F("ExternalDHTSensor"), this, &BoxSettings -> ExternalDHTSensor,DHT22);  //passing: Pin and Sensor type: DHT22 or DHT11)
+  Sound1 = new Sound(F("Sound1"), this, &BoxSettings -> Sound1);
+  InternalDHTSensor = new DHTSensor(F("InternalDHTSensor"), this, &BoxSettings -> InternalDHTSensor);  //passing: Component name, GrowBox object the component belongs to, Default settings)
+  ExternalDHTSensor = new DHTSensor(F("ExternalDHTSensor"), this, &BoxSettings -> ExternalDHTSensor);  //passing: Component name, GrowBox object the component belongs to, Default settings)
   LightSensor1 = new LightSensor(F("LightSensor1"), this, &BoxSettings -> LightSensor1);
   Light1 = new Lights(F("Light1"), this, &BoxSettings -> Light1);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
   PowerSensor1 = new PowerSensor(F("PowerSensor1"), this, &Serial2);
   //Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, &BoxSettings ->Aeroponics_Tank1_Common, &BoxSettings -> Aeroponics_Tank1_Specific);
   Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, &BoxSettings -> Aeroponics_NoTank1_Common, &BoxSettings -> Aeroponics_NoTank1_Specific);
-  //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);
-  logToSerials(F("GrowBox object created"), true,2);
+  //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);  
   AddToRefreshQueue_FiveSec(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method  
   AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
-  AddToWebsiteQueue_Refresh(this); //Subscribing to the Website field submit even
+  AddToWebsiteQueue_Refresh(this); //Subscribing to the Website field submit event
+  logToSerials(F("GrowBox object created"), true,2);
   addToLog(F("GrowBox initialized"),0);
 }
 
@@ -81,7 +81,7 @@ void GrowBox::refresh(){
   logToSerials( &LongMessage, true,0);
 }
 
-void GrowBox::websiteRefreshEvent(char * url) //called when website is refreshed. Do not call logToSerials within any methods used here!
+void GrowBox::websiteRefreshEvent(char * url) //called when website is refreshed.
 { 
   WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON(false)); //Last events that happened in JSON format  
 }
@@ -93,7 +93,6 @@ void GrowBox::websiteLoadEvent(char * url){ //When the website is opened, load s
   WebServer.setArgBoolean(F("GBox1_MqttEnabled"), GBox -> BoxSettings -> ReportToMqtt);
   WebServer.setArgBoolean(F("GBox1_GoogleSheetsEnabled"), GBox -> BoxSettings -> ReportToGoogleSheets);
   WebServer.setArgString(F("GBox1_PushingBoxLogRelayID"), GBox -> BoxSettings -> PushingBoxLogRelayID);
-
   WebServer.setArgBoolean(F("GBox1_AlertEmails"), GBox -> BoxSettings -> AlertEmails);
   //WebServer.setArgString(F("PushingBoxEmailRelayID"), GBox -> BoxSettings -> PushingBoxEmailRelayID);
   //WebServer.setArgInt(F("TriggerCountBeforeAlert"), GBox -> BoxSettings -> TriggerCountBeforeAlert);
@@ -104,12 +103,11 @@ void GrowBox::websiteLoadEvent(char * url){ //When the website is opened, load s
   //WebServer.setArgString(F("PressureAlertLow"), toText(GBox -> BoxSettings -> PressureAlertLow));
   //WebServer.setArgString(F("PressureAlertHigh"), toText(GBox -> BoxSettings -> PressureAlertHigh));
   //WebServer.setArgString(F("PHAlertLow"), toText(GBox -> Reservoir -> PHAlertLow));
-  //WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> BoxSettings -> PHAlertHigh));  
-
-//  WebServer.setArgString(F("PHCalibrationSlope"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationSlope));
-//  WebServer.setArgString(F("PHCalibrationIntercept"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationIntercept)); 
-//  WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(GBox -> BoxSettings -> PressureSensorOffset));
-//  WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(GBox -> BoxSettings -> PressureSensorRatio));  
+  //WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> BoxSettings -> PHAlertHigh));
+  //WebServer.setArgString(F("PHCalibrationSlope"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationSlope));
+  //WebServer.setArgString(F("PHCalibrationIntercept"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationIntercept)); 
+  //WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(GBox -> BoxSettings -> PressureSensorOffset));
+  //WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(GBox -> BoxSettings -> PressureSensorRatio));  
   }
 } 
 
@@ -120,7 +118,7 @@ void GrowBox::websiteFieldSubmitEvent(char * Field){ //When the website field is
   else{ //if the component name matches with the object name   
     if(strcmp_P(ShortMessage,(PGM_P)F("DebugEnabled"))==0) {setDebugOnOff(WebServer.getArgBoolean());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("MetricSystemEnabled"))==0) {setMetricSystemEnabled(WebServer.getArgBoolean());}
-     //else if(strcmp_P(ShortMessage,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
+    //else if(strcmp_P(ShortMessage,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
     //else if(strcmp_P(ShortMessage,(PGM_P)F("GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
     //else if(strcmp_P(ShortMessage,(PGM_P)F("PushingBoxLogRelayID"))==0) {setPushingBoxLogRelayID(WebServer.getArgString());}    
   }  

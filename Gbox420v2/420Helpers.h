@@ -71,7 +71,8 @@ class RollingAverage
   private:
     long Sum = 0;
     int History[RollingAverageQueueDepth] = {0}; //array to store historical readings, 10 readings default
-    byte Oldest = 0; //Points to the oldest reading      
+    byte Oldest = 0; //Points to the oldest reading
+    bool ResetAverage = true; //When true the next reading will overwrite the previous readings (Reset the average to the current reading)   
    
   public:  
     int updateAverage(int LatestReading);
@@ -79,7 +80,7 @@ class RollingAverage
     int getAverageInt();
     float getAverageFloat();
     char * getAverageIntText();
-  char * getAverageFloatText();
+    char * getAverageFloatText();
 };
 
 //////////////////////////////////////////////////////////////////

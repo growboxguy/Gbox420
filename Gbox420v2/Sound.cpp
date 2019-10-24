@@ -1,10 +1,10 @@
 #include "Sound.h" 
 #include "GrowBox.h"
 
-Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox,Settings * DefaultSettings):Common(Name){
+Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox, Settings::SoundSettings * DefaultSettings):Common(Name){
   this -> GBox = GBox;
-  this -> Pin = &DefaultSettings -> SoundPin;
-  this -> Enabled = &DefaultSettings -> SoundEnabled;
+  Pin = &DefaultSettings -> Pin;
+  Enabled = &DefaultSettings -> Enabled;
   pinMode(*Pin, OUTPUT);
   GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the Sec refresh queue: Calls the refresh() method 
   GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
@@ -21,7 +21,7 @@ void Sound::refresh(){
 }
 
 void Sound::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
-  WebServer.setArgInt(getWebsiteComponentName(F("Enabled")), GBox -> BoxSettings -> SoundEnabled);
+  WebServer.setArgInt(getWebsiteComponentName(F("Enabled")), Enabled);
 } 
 
 void Sound::websiteButtonPressEvent(char * Button){ //When a button is pressed on the website

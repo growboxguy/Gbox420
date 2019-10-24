@@ -6,9 +6,9 @@ void DHTSensor::websiteRefreshEvent(char * url){ //When the website is opened, l
   WebServer.setArgString(getWebsiteComponentName(F("Humidity")), getHumidityText()); 
 } 
 
-DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::DHTSensorSettings * DefaultSettings, uint8_t SensorType): Common(Name){
+DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::DHTSensorSettings * DefaultSettings): Common(Name){
   this -> GBox = GBox;
-  Sensor = new DHT(*(&DefaultSettings -> Pin),SensorType);
+  Sensor = new DHT(*(&DefaultSettings -> Pin),*(&DefaultSettings -> Type));
   Sensor -> begin();  //dereference the pointer to the object and then call begin() on it. Same as (*Sensor).begin();
   Temp = new RollingAverage();
   Humidity = new RollingAverage();

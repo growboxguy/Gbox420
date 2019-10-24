@@ -8,7 +8,7 @@ class GrowBox;  //forward declaration
 class DHTSensor : public Common
 {
   public:
-    DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::DHTSensorSettings * DefaultSettings, uint8_t sensorType);
+    DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::DHTSensorSettings * DefaultSettings);
     GrowBox * GBox;
 
     void refresh();  //Called when component should refresh its state

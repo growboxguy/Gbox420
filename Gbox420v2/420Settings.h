@@ -1,7 +1,7 @@
 #pragma once
 
 //Change this when you make change to the structure of the EEPROM stored part
-static const byte Version = 8;
+static const byte Version = 9;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: They never change during runtime
 static const byte MaxTextLength = 32;  //Default char* buffer size: 31 characters + null terminator, used for logging and converting to text
@@ -12,8 +12,6 @@ static const byte QueueDepth = 32;  //Limits the refresh queue depth. Memory usa
 //SAVED TO EEPROM
 typedef struct
 {  
-  byte SoundPin = 4; //PC speaker+ (red)   
-  bool SoundEnabled = true;  //Enable PC speaker / Piezo buzzer  
   bool DebugEnabled = true; //Logs debug LongMessages to serial and web outputs
   bool MetricSystemEnabled = true; //Switch between Imperial/Metric units. If changed update the default temp and pressure values.  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
@@ -23,6 +21,13 @@ typedef struct
   bool AlertEmails = true; //disable/enable email sending
   char PushingBoxEmailRelayID[MaxTextLength]  = "v420";  //UPDATE THIS DeviceID of the PushingBox email alert scenario
   int TriggerCountBeforeAlert = 12; //number of consecutive out of range sensor readings before the email alert is triggered (5sec between reads -> 12= Out of range reading through 1 minute)  
+
+  struct SoundSettings{
+    SoundSettings(byte Pin = 0) : Pin(Pin){} 
+    byte Pin; //PC speaker+ (red)   
+    bool Enabled = true;  //Enable PC speaker / Piezo buzzer
+  };
+  struct SoundSettings Sound1 = {.Pin = 4};
 
   struct LightSensorSettings{
     LightSensorSettings(byte DigitalPin = 0, byte AnalogPin = 0 ) : DigitalPin(DigitalPin),AnalogPin(AnalogPin){}
@@ -50,15 +55,16 @@ typedef struct
   struct LightsSettings Light1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 8}; //Creating a LightSettings instance, passing in the unique parameters
   
   struct DHTSensorSettings{
-    DHTSensorSettings(byte Pin = 0 ) : Pin(Pin){}
+    DHTSensorSettings(byte Pin = 0 , byte Type = 0) : Pin(Pin),Type(Type){}
     byte Pin;
+    byte Type; //Defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
     int TempAlertLow = 15; //Low temp warning email
     int TempAlertHigh = 35; //High temp warning email
     int HumidityAlertLow = 35; //Low humidity warning email
     int HumidityAlertHigh = 70; //High humidity warning email
   };
-  struct DHTSensorSettings InternalDHTSensor = {.Pin = 43 };
-  struct DHTSensorSettings ExternalDHTSensor = {.Pin = 44 };  
+  struct DHTSensorSettings InternalDHTSensor = {.Pin = 43, .Type = 22 };
+  struct DHTSensorSettings ExternalDHTSensor = {.Pin = 44, .Type = 22 };  
 
   struct PHSensorSettings{
     PHSensorSettings(float PHCalibrationSlope = 0.0, float PHCalibrationIntercept = 0.0 ) : PHCalibrationSlope(PHCalibrationSlope),PHCalibrationIntercept(PHCalibrationIntercept) {}

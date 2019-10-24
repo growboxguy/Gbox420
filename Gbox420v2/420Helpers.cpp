@@ -96,13 +96,13 @@ char * toPrecisionText(float Number){
   return ReturnFloatChar;
 }
 
-char * toText(int Number1, int Number2,const char * Separator){  //function overloading: Same named function, different parameters
+char * toText(int Number1, int Number2,const char * Separator){ 
   static char ReturnChar[MaxTextLength] = ""; 
   snprintf(ReturnChar,32,"%d%s%d",Number1,Separator,Number2);
   return ReturnChar;
 }
 
-char * toText(float Number1, float Number2,const char * Separator){
+char * toText(float Number1, float Number2,const char * Separator){  //function overloading: Same named function, different parameter type
   static char ReturnChar[MaxTextLength] = ""; 
   char Number2Char[MaxTextLength] = "";
   if(isnan(Number1)) Number1= -1.0;
@@ -133,7 +133,7 @@ char * tempToText(float Temp){
 } 
 
 char * pressureToText(float Pressure){
-  static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
+  static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same ReturnChar variable
   dtostrf(Pressure, 4, 2, ReturnChar); 
   if(GBox -> BoxSettings -> MetricSystemEnabled){      
     strcat_P(ReturnChar,(PGM_P)F("bar"));
@@ -210,21 +210,32 @@ char * RollingAverage::getAverageFloatText(){
 }
 
 int RollingAverage::updateAverage(int LatestReading){
+  if(ResetAverage){
+    Oldest = 0;    
+    for(int i=0;i<RollingAverageQueueDepth;i++){
+      History[i] = LatestReading;
+    }
+    Sum = (long) LatestReading * RollingAverageQueueDepth;
+    ResetAverage = false;
+  }
+  else
+  {
    Sum -= History[Oldest]; //remove the oldest reading from the total
    Sum += LatestReading; //Add the newest reading
    History[Oldest++] = LatestReading;  //replace the oldest reading, then move the pointer to the oldest entry 
    if(Oldest >= RollingAverageQueueDepth){ //reached the end of the queue
      Oldest = 0;
-   }
-   int Average = Sum / RollingAverageQueueDepth;      
-   /* if(GBox -> BoxSettings -> DebugEnabled){ 
+   }   
+  } 
+  int Average = Sum / RollingAverageQueueDepth;        
+    if(GBox -> BoxSettings -> DebugEnabled){ 
      memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable       
      strcat(LongMessage,toText(Oldest));
      strcat_P(LongMessage,(PGM_P)F(":Reading:")); strcat(LongMessage,toText(LatestReading)); 
      strcat_P(LongMessage,(PGM_P)F(",Sum:")); strcat(LongMessage,toText(Sum));
      strcat_P(LongMessage,(PGM_P)F(",Average:")); strcat(LongMessage,toText(Average));
      logToSerials(&LongMessage,true);     
-   } */     
+   }      
    return Average;
 }
 
