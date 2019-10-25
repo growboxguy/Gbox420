@@ -25,26 +25,22 @@ Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Setting
     GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
 }
 
-void Aeroponics::checkRelays(){    
-    if(PumpOn) digitalWrite(*PumpPin, LOW);
-    else digitalWrite(*PumpPin, HIGH); 
-
-    if(BypassSolenoidOn) digitalWrite(*BypassSolenoidPin, LOW); 
-    else digitalWrite(*BypassSolenoidPin, HIGH);
-} 
-
 void Aeroponics::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
-  WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *PumpTimeout);
-  WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *PrimingTime);
-  WebServer.setArgInt(getWebsiteComponentName(F("Interval")), *Interval);
-  WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
+  if (strcmp(url,"/GrowBox.html.json")==0){
+    WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *PumpTimeout);
+    WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *PrimingTime);
+    WebServer.setArgInt(getWebsiteComponentName(F("Interval")), *Interval);
+    WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
+  }
 } 
 
 void Aeroponics::websiteRefreshEvent(char * url){ //When the website is opened, load stuff once
-  WebServer.setArgString(getWebsiteComponentName(F("SprayEnabled")), enabledToText(*SprayEnabled));
-  WebServer.setArgString(getWebsiteComponentName(F("Pressure")), pressureToText(AeroPressure));
-  WebServer.setArgString(getWebsiteComponentName(F("PumpState")), pumpStateToText());   
-  WebServer.setArgString(getWebsiteComponentName(F("BypassState")), onOffToText(BypassSolenoidOn)); 
+  if (strcmp(url,"/GrowBox.html.json")==0){
+    WebServer.setArgString(getWebsiteComponentName(F("SprayEnabled")), enabledToText(*SprayEnabled));
+    WebServer.setArgString(getWebsiteComponentName(F("Pressure")), pressureToText(AeroPressure));
+    WebServer.setArgString(getWebsiteComponentName(F("PumpState")), pumpStateToText());   
+    WebServer.setArgString(getWebsiteComponentName(F("BypassState")), onOffToText(BypassSolenoidOn)); 
+  }
 }
 
 void Aeroponics::websiteButtonPressEvent(char * Button){ //When the website is opened, load stuff once
@@ -88,6 +84,13 @@ void Aeroponics::websiteFieldSubmitEvent(char * Field){ //When the website is op
   strcat_P(LongMessage,(PGM_P)F(" ; PrimingTime:"));strcat(LongMessage,toText(*PrimingTime));
   logToSerials( &LongMessage, true, 0); //Break line, No indentation needed: child class already printed it 
  }
+
+void Aeroponics::checkRelays(){    
+    if(PumpOn) digitalWrite(*PumpPin, LOW);
+    else digitalWrite(*PumpPin, HIGH);
+    if(BypassSolenoidOn) digitalWrite(*BypassSolenoidPin, LOW); 
+    else digitalWrite(*BypassSolenoidPin, HIGH);
+} 
 
 void Aeroponics::setPumpOn(bool UserRequest){  //turns pump on, UserRequest is true if it was triggered from the website
   if(UserRequest){  //if the pump was turned on from the web interface, not by the automation
@@ -160,7 +163,6 @@ char * Aeroponics::pumpStateToText(){
    return (char *)"OFF";
 }
 
-
 void Aeroponics::setPumpTimeout(int Timeout)
 {
 *PumpTimeout = Timeout;
@@ -172,5 +174,3 @@ void Aeroponics::setPrimingTime(int Timing)
 *PrimingTime = Timing;
 GBox -> addToLog(F("Aero priming time updated"));
 }
-
-

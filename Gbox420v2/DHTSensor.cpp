@@ -1,11 +1,6 @@
 #include "DHTSensor.h"
 #include "GrowBox.h"
 
-void DHTSensor::websiteRefreshEvent(char * url){ //When the website is opened, load stuff once
-  WebServer.setArgString(getWebsiteComponentName(F("Temp")), getTempText());
-  WebServer.setArgString(getWebsiteComponentName(F("Humidity")), getHumidityText()); 
-} 
-
 DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::DHTSensorSettings * DefaultSettings): Common(Name){
   this -> GBox = GBox;
   Sensor = new DHT(*(&DefaultSettings -> Pin),*(&DefaultSettings -> Type));
@@ -16,6 +11,13 @@ DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings:
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   logToSerials(F("DHT Sensor object created"),true);
 }
+
+void DHTSensor::websiteRefreshEvent(char * url){ //When the website is opened, load stuff once
+  if (strcmp(url,"/GrowBox.html.json")==0){
+    WebServer.setArgString(getWebsiteComponentName(F("Temp")), getTempText());
+    WebServer.setArgString(getWebsiteComponentName(F("Humidity")), getHumidityText());
+  } 
+} 
 
 void DHTSensor::refresh(){  //Called when component should refresh its state 
   Common::refresh();

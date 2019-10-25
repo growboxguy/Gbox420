@@ -6,19 +6,16 @@ class GrowBox;  //forward declaration
 class Lights : public Common
 {
   protected:
-    GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
 
   public:
     //Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
     Lights(const __FlashStringHelper * Name, GrowBox * GBox, Settings::LightsSettings * DefaultSettings);  //constructor
-    
-    void refresh();  //Called when component should refresh its state
-    void report();
     void websiteLoadEvent(char * url);
     void websiteRefreshEvent(char * url);
-    void websiteFieldSubmitEvent(char * Field);
     void websiteButtonPressEvent(char * Button);
- 
+    void websiteFieldSubmitEvent(char * Field);
+    void refresh();  //Called when component should refresh its state
+    void report(); 
     void setBrightness(byte Brightness, bool AddToLog);           
     void setLightOnOff(bool State,bool AddToLog);    
     void setTimerOnOff(bool State);    
@@ -38,7 +35,8 @@ class Lights : public Common
     byte* OffMinute; //Light OFF time - minute
     byte* Brightness; //Light intensity: 0 - 100 range for controlling led driver output    
   
-  private:    
+  private:  
+    GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object  
     void calibrateLights(); //Actual calibration code, takes to long to run directly from a website command  (Case sensitive object names! :) )
     void checkLightTimer(); 
     bool CalibrateLights = false; //Stores the Calibration request

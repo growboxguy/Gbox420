@@ -1,9 +1,6 @@
 #include "PHSensor.h"
 #include "GrowBox.h"
 
-//////////////////////////////////////////
-//PHSensor functions
-
 PHSensor::PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope){
   this -> GBox = GBox;
   this -> Pin = Pin;
@@ -14,18 +11,18 @@ PHSensor::PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope){
   GBox -> AddToRefreshQueue_FiveSec(this);  //Subscribing to the FiveSec refresh queue: Calls the refresh() method
 }
 
-void PHSensor::refresh(){
-  Common::refresh();
-  if(GBox -> BoxSettings -> DebugEnabled){ getPH(true); }
-  else { getPH(false); }
-}
-
 void PHSensor::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
   // WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *SprayEnabled);
   // WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *Interval);
   // WebServer.setArgInt(getWebsiteComponentName(F("Interval")), *Interval);
   // WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
 } 
+
+void PHSensor::refresh(){
+  Common::refresh();
+  if(GBox -> BoxSettings -> DebugEnabled){ getPH(true); }
+  else { getPH(false); }
+}
 
 void PHSensor::getPH(bool ShowRaw){
   float  Reading=0;
@@ -39,7 +36,6 @@ void PHSensor::getPH(bool ShowRaw){
   PH -> updateAverage((*Slope)*PHRaw + (*Intercept)); 
   //checkPHAlert();
 }
-
 
 void PHSensor::setSlope(float Value){
   *Slope = Value;

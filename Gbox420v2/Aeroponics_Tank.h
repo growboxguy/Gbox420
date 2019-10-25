@@ -8,9 +8,11 @@ class GrowBox;  //forward declaration
 
 class Aeroponics_Tank : public Aeroponics
 {
-    public:
+  public:
     Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings);
-   
+    void websiteFieldSubmitEvent(char * Field);
+    void refresh();
+    void report();
     byte* SpraySolenoidPin;
     bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on.
     bool PreviousPressureRead = true;
@@ -21,12 +23,7 @@ class Aeroponics_Tank : public Aeroponics
     byte * QuietFromHour;  //Quiet time to block pump - hour
     byte * QuietFromMinute; //Quiet time to block pump - minute
     byte * QuietToHour; //Quiet time end - hour
-    byte * QuietToMinute; //Quiet time end - minute
-    
-    void refresh();
-    void report();
-    void websiteFieldSubmitEvent(char * Field);
-
+    byte * QuietToMinute; //Quiet time end - minute  
     void checkRelays();
     void checkAeroPumpAlerts_WithPressureTank();
     bool checkQuietTime();
@@ -40,6 +37,8 @@ class Aeroponics_Tank : public Aeroponics
     void sprayNow(bool DueToHighPressure);
     void setPressureLow(float PressureLow);
     void setPressureHigh(float PressureHigh);
+  
+  private:
 
-
+  protected:
 };

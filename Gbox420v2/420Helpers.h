@@ -61,8 +61,6 @@ template <class logLine> void logToSerials (logLine& ToPrint,bool BreakLine=true
   else{ArduinoSerial.print(ToPrint);ESPSerial.print(ToPrint);}
 }
 
-
-
 //////////////////////////////////////////////////////////////////
 //RollingAverage class: For smoothing sensor readings
 

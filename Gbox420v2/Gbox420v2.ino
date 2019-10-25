@@ -21,7 +21,7 @@
 //Add debug message levels: 0-no debug, 1-Extra info, 2-Message, 3-Verbose
 //Find a better name for Aeroponics NoTank: DirectPump?
 //Aeroponics_Tank1 -> websiteFieldSubmitEvent and Aeroponics_Tank1 -> websiteButtonPress events cause a crash
-//GBox -> BoxSettings -> SoundEnabled: Move this under the Sound class
+//Remove WaterTempSensor and Reservoir classes from PHSensor
 
 
 #include "Arduino.h" 
@@ -34,7 +34,6 @@
 #include "Thread.h" //Splitting functions to threads for timing
 #include "StaticThreadController.h"  //Grouping threads
 #include "420Common.h"  //Base class where plugins inherits from
-//#include "420Pins.h"  //Arduino Pin layout
 #include "GrowBox.h" //Represents a complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variables
@@ -65,8 +64,7 @@ void setup() {  // put your setup code here, to run once:
   logToSerials(F("GrowBox initializing..."),true,0); //logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
-  GBox = new GrowBox(F("GBox1"), loadSettings());  //This is the main object representing an entire Grow Box with all components in it.
-  
+  GBox = new GrowBox(F("GBox1"), loadSettings());  //This is the main object representing an entire Grow Box with all components in it.  
   ESPLink.resetCb = &resetWebServer;  //Callback subscription: When WiFi reconnects, restart the WebServer
   resetWebServer();  //reset the WebServer 
   setTime(getNtpTime()); 
@@ -124,6 +122,12 @@ void runHalfHour(){
   GBox -> runHalfHour();
 }
 
+void HeartBeat(){
+  static bool pulseHigh;
+  pulseHigh = !pulseHigh;
+  digitalWrite(13, pulseHigh);
+}
+
 //////////////////////////////////////////
 //Settings related functions
 
@@ -155,10 +159,4 @@ void restoreDefaults(Settings* SettingsToOverwrite){
   memcpy(&SettingsToOverwrite,&DefaultSettings,sizeof(Settings));  
   saveSettings(false,SettingsToOverwrite );
   GBox -> addToLog(F("Default settings restored"));
-}
-
-void HeartBeat(){
-  static bool pulseHigh;
-  pulseHigh = !pulseHigh;
-  digitalWrite(13, pulseHigh);
 }

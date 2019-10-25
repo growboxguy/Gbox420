@@ -7,7 +7,9 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox *
 }
 
 void Aeroponics_NoTank::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
-  WebServer.setArgInt(getWebsiteComponentName(F("BlowOffTime")), *BlowOffTime);
+  if (strcmp(url,"/GrowBox.html.json")==0){
+    WebServer.setArgInt(getWebsiteComponentName(F("BlowOffTime")), *BlowOffTime);
+  }
   Aeroponics::websiteLoadEvent(url); 
 }
 
@@ -19,14 +21,7 @@ void Aeroponics_NoTank::websiteFieldSubmitEvent(char * Field){ //When the websit
     if(strcmp_P(ShortMessage,(PGM_P)F("BlowOffTime"))==0) {setBlowOffTime(WebServer.getArgInt());}
     else Aeroponics::websiteFieldSubmitEvent(Field);
   }
-}  
-
-void Aeroponics_NoTank::report(){
-  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
-  strcat_P(LongMessage,(PGM_P)F("BlowOffTime:"));strcat(LongMessage,toText(*BlowOffTime));
-  logToSerials(&LongMessage, false,4); //first print Aeroponics_Tank specific report, without a line break
-  Aeroponics::report();  //then print parent class report
- }
+} 
 
 void Aeroponics_NoTank::refresh(){ //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
   Common::refresh();
@@ -84,6 +79,12 @@ void Aeroponics_NoTank::refresh(){ //pump directly connected to aeroponics tote,
   if(RefreshCounter++%60 == 0) report();  //Report only every 60 seconds - Refresh() function is called every second in the Aeroponics component
 }
 
+void Aeroponics_NoTank::report(){
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
+  strcat_P(LongMessage,(PGM_P)F("BlowOffTime:"));strcat(LongMessage,toText(*BlowOffTime));
+  logToSerials(&LongMessage, false,4); //first print Aeroponics_Tank specific report, without a line break
+  Aeroponics::report();  //then print parent class report
+ }
 
 void Aeroponics_NoTank::sprayNow(bool DueToHighPressure){   
   if(*SprayEnabled || DueToHighPressure){
@@ -99,6 +100,17 @@ void Aeroponics_NoTank::sprayNow(bool DueToHighPressure){
     }
 }
 
+void Aeroponics_NoTank::setBlowOffTime(int _BlowOffTime){
+  *BlowOffTime = _BlowOffTime;
+  GBox -> addToLog(F("Blowoff time updated"));
+}
+
+void Aeroponics_NoTank::sprayOff(){    
+    PumpOn = false; 
+    BypassSolenoidOn = false; 
+    checkRelays();
+    GBox -> addToLog(F("Aeroponics spray OFF"));
+}
 
 // void Aeroponics_NoTank::checkAlerts()
 // {
@@ -158,16 +170,3 @@ void Aeroponics_NoTank::sprayNow(bool DueToHighPressure){
 //            }     
 //   }
 // }
-
-
-void Aeroponics_NoTank::setBlowOffTime(int _BlowOffTime){
-  *BlowOffTime = _BlowOffTime;
-  GBox -> addToLog(F("Blowoff time updated"));
-}
-
-void Aeroponics_NoTank::sprayOff(){    
-    PumpOn = false; 
-    BypassSolenoidOn = false; 
-    checkRelays();
-    GBox -> addToLog(F("Aeroponics spray OFF"));
-}

@@ -17,14 +17,6 @@ extern char CurrentTime[20];
 extern ELClientWebServer WebServer;
 
 class Common{
-  private:
-
-  
-  protected:
-    Common(const __FlashStringHelper * Name);
-
-    Common(){}
-  
   public:
     bool DebugEnabled;
     byte RefreshCounter = 0; //counts how many times the refresh() function was called. Used for timing
@@ -38,4 +30,10 @@ class Common{
     bool isThisMyComponent(char const * lookupName); //When it return true the component belongs to this object  
     //AlertHandler * HealthStatus; //Tracks the state of a component  
     char * getWebsiteComponentName(const __FlashStringHelper * Name);
+  
+  private:
+  
+  protected:
+    Common(const __FlashStringHelper * Name); //Constructor
+    Common(){}  //Constructor
 };

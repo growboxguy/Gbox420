@@ -10,17 +10,16 @@
 #include "Aeroponics_Tank.h" 
 #include "Aeroponics_NoTank.h" 
 
-
 static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
 GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Common(Name) { //Constructor
   this -> BoxSettings = BoxSettings;
   Sound1 = new Sound(F("Sound1"), this, &BoxSettings -> Sound1);
+  Light1 = new Lights(F("Light1"), this, &BoxSettings -> Light1);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
+  LightSensor1 = new LightSensor(F("LightSensor1"), this, &BoxSettings -> LightSensor1);
+  PowerSensor1 = new PowerSensor(F("PowerSensor1"), this, &Serial2);
   InternalDHTSensor = new DHTSensor(F("InternalDHTSensor"), this, &BoxSettings -> InternalDHTSensor);  //passing: Component name, GrowBox object the component belongs to, Default settings)
   ExternalDHTSensor = new DHTSensor(F("ExternalDHTSensor"), this, &BoxSettings -> ExternalDHTSensor);  //passing: Component name, GrowBox object the component belongs to, Default settings)
-  LightSensor1 = new LightSensor(F("LightSensor1"), this, &BoxSettings -> LightSensor1);
-  Light1 = new Lights(F("Light1"), this, &BoxSettings -> Light1);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
-  PowerSensor1 = new PowerSensor(F("PowerSensor1"), this, &Serial2);
   //Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, &BoxSettings ->Aeroponics_Tank1_Common, &BoxSettings -> Aeroponics_Tank1_Specific);
   Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, &BoxSettings -> Aeroponics_NoTank1_Common, &BoxSettings -> Aeroponics_NoTank1_Specific);
   //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);  
@@ -29,56 +28,6 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   AddToWebsiteQueue_Refresh(this); //Subscribing to the Website field submit event
   logToSerials(F("GrowBox object created"), true,2);
   addToLog(F("GrowBox initialized"),0);
-}
-
-void GrowBox::refreshAll(){  //implementing the virtual refresh function from Common
- logToSerials(F("GrowBox refreshing"),true,0);
-    //trigger all threads at startup
-  runFiveSec(); //needs to run first to get sensor readings
-  runSec();  
-  runMinute();
-  runHalfHour();
-}
-
-void GrowBox::runSec(){ 
-  //if(DebugEnabled)logToSerials(F("One sec trigger.."),true,1);  
-  for(int i=0;i<refreshQueueLength_Sec;i++){
-   RefreshQueue_Sec[i] -> refresh();
-  }
-}
-
-void GrowBox::runFiveSec(){
-  if(DebugEnabled)logToSerials(F("Five sec trigger.."),true,1); 
-  for(int i=0;i<refreshQueueLength_FiveSec;i++){
-    RefreshQueue_FiveSec[i] -> refresh();
-  }
-}
-
-void GrowBox::runMinute(){
-  if(DebugEnabled)logToSerials(F("Minute trigger.."),true,1);
-  for(int i=0;i<refreshQueueLength_Minute;i++){
-    RefreshQueue_Minute[i] -> refresh();
-  }
-}
-
-void GrowBox::runHalfHour(){   
-  if(DebugEnabled)logToSerials(F("Half hour trigger.."),true,1);
-  for(int i=0;i<refreshQueueLength_HalfHour;i++){
-    RefreshQueue_HalfHour[i] -> refresh();
-  } 
-}
-
-void GrowBox::refresh(){
-  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable 
-  strcat(LongMessage,getFormattedTime());
-  /*  
-  strcat_P(LongMessage,(PGM_P)F("\n\r Reservoir - "));
-  strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage,toText(ReservoirTemp));  
-  strcat_P(LongMessage,(PGM_P)F(" ; PH:")); strcat(LongMessage,toText(PH));
-  strcat_P(LongMessage,(PGM_P)F("(")); strcat(LongMessage,toText(PHRaw));strcat_P(LongMessage,(PGM_P)F(")"));
-  strcat_P(LongMessage,(PGM_P)F(" ; Reservoir:")); strcat(LongMessage,ReservoirText);
- */
-  logToSerials( &LongMessage, true,0);
 }
 
 void GrowBox::websiteRefreshEvent(char * url) //called when website is refreshed.
@@ -134,6 +83,56 @@ void GrowBox::websiteButtonPressEvent(char * Button){ //When a button is pressed
   }  
 }  
 */
+
+void GrowBox::refresh(){
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable 
+  strcat(LongMessage,getFormattedTime());
+  /*  
+  strcat_P(LongMessage,(PGM_P)F("\n\r Reservoir - "));
+  strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage,toText(ReservoirTemp));  
+  strcat_P(LongMessage,(PGM_P)F(" ; PH:")); strcat(LongMessage,toText(PH));
+  strcat_P(LongMessage,(PGM_P)F("(")); strcat(LongMessage,toText(PHRaw));strcat_P(LongMessage,(PGM_P)F(")"));
+  strcat_P(LongMessage,(PGM_P)F(" ; Reservoir:")); strcat(LongMessage,ReservoirText);
+ */
+  logToSerials( &LongMessage, true,0);
+}
+
+void GrowBox::refreshAll(){  //implementing the virtual refresh function from Common
+  logToSerials(F("GrowBox refreshing"),true,0);
+  //trigger all threads at startup
+  runFiveSec(); //needs to run first to get sensor readings
+  runSec();  
+  runMinute();
+  runHalfHour();
+}
+
+void GrowBox::runSec(){ 
+  //if(DebugEnabled)logToSerials(F("One sec trigger.."),true,1);  
+  for(int i=0;i<refreshQueueLength_Sec;i++){
+   RefreshQueue_Sec[i] -> refresh();
+  }
+}
+
+void GrowBox::runFiveSec(){
+  if(DebugEnabled)logToSerials(F("Five sec trigger.."),true,1); 
+  for(int i=0;i<refreshQueueLength_FiveSec;i++){
+    RefreshQueue_FiveSec[i] -> refresh();
+  }
+}
+
+void GrowBox::runMinute(){
+  if(DebugEnabled)logToSerials(F("Minute trigger.."),true,1);
+  for(int i=0;i<refreshQueueLength_Minute;i++){
+    RefreshQueue_Minute[i] -> refresh();
+  }
+}
+
+void GrowBox::runHalfHour(){   
+  if(DebugEnabled)logToSerials(F("Half hour trigger.."),true,1);
+  for(int i=0;i<refreshQueueLength_HalfHour;i++){
+    RefreshQueue_HalfHour[i] -> refresh();
+  } 
+}
 
 //Refresh queues
 

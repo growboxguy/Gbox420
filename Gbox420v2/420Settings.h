@@ -96,7 +96,6 @@ typedef struct
   };
   struct AeroponicsSettings Aeroponics_Tank1_Common = {.BypassSolenoidPin = 30, .PumpPin = 31 };
   struct AeroponicsSettings Aeroponics_NoTank1_Common = {.BypassSolenoidPin = 23, .PumpPin = 24 };
-
   
   struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific settings    
     int BlowOffTime = 3; //Aeroponics - BlowOff time in seconds: After spraying open the bypass valve for X seconds to release pressure    
@@ -158,8 +157,6 @@ typedef struct
   byte ATXPowerONOutPin = 34; //Turns ATX power supply on by connecting ATX PowerON pin to GND through an optocoupler
   byte ATXPowerGoodInPin = 35; //5V signal from ATX powersupply, inverted by optocoupler: LOW if DC power output is OK
   byte ReservoirTempSensorInPin = 45;  //Data(yellow) - DS18B20 waterproof temp sensor 
-   
   
-
   byte CompatibilityVersion=Version;  //Should always be the last value stored.
    }Settings;

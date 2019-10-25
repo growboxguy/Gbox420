@@ -7,12 +7,16 @@ class GrowBox;  //forward declaration
 
 class Aeroponics : public Common
 {
-public:
+  public:
     Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings);
-    GrowBox* GBox;
+    virtual void websiteLoadEvent(char * url);
+    virtual void websiteRefreshEvent(char * url);
+    virtual void websiteButtonPressEvent(char * Button);
+    virtual void websiteFieldSubmitEvent(char * Field);
+    virtual void refresh() = 0;  //Due to the virtual function Aeroponics class cannot be instantiated
+    virtual void report();
     int AeroPressure = 6; //TODO: FAKE PRESSURE READING - REMOVE IT
     // float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
-    byte* PumpPin;
     bool PumpOK = true; //Aeroponics - High pressure pump health  
     bool PumpOn = false; //Aeroponics - High pressure pump state
     uint32_t PumpTimer = millis();  //Aeroponics - Pump cycle timer
@@ -26,12 +30,6 @@ public:
     int* Duration; //Aeroponics - Spray time in seconds
     int* PumpTimeout;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
     int* PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
-    virtual void refresh() = 0;  //Due to the virtual function Aeroponics class cannot be instantiated
-    virtual void report();
-    virtual void websiteLoadEvent(char * url);
-    virtual void websiteRefreshEvent(char * url);
-    virtual void websiteButtonPressEvent(char * Button);
-    virtual void websiteFieldSubmitEvent(char * Button);
     void checkRelays();
     void setPumpOn(bool UserRequest);
     void setPumpOff(bool UserRequest);
@@ -45,5 +43,11 @@ public:
     void setSprayOnOff(bool State);
     void setInterval(int interval);
     void setDuration(int duration);
+
+   private:
+
+   protected:
+    GrowBox * GBox;
+    byte* PumpPin;
 };
 

@@ -6,22 +6,17 @@ Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox, Settings::SoundSe
   Pin = &DefaultSettings -> Pin;
   Enabled = &DefaultSettings -> Enabled;
   pinMode(*Pin, OUTPUT);
-  GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the Sec refresh queue: Calls the refresh() method 
+  GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the Website load event 
+  GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press even 
   GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
-  GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website field submit even 
+  GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the Sec refresh queue: Calls the refresh() method 
   logToSerials(F("Sound object created"),true);
 }
 
-void Sound::refresh(){
-  if(*Enabled){  
-    if (PlayOnSound)  {PlayOnSound = false;OnSound();}
-    if (PlayOffSound)  {PlayOffSound = false;OffSound();} 
-  }
-  if (PlayEE)  {PlayEE = false;EE();} 
-}
-
 void Sound::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
-  WebServer.setArgInt(getWebsiteComponentName(F("Enabled")), Enabled);
+  if (strcmp(url,"/Settings.html.json")==0){
+    WebServer.setArgInt(getWebsiteComponentName(F("Enabled")), Enabled);
+  }
 } 
 
 void Sound::websiteButtonPressEvent(char * Button){ //When a button is pressed on the website
@@ -41,6 +36,14 @@ void Sound::websiteFieldSubmitEvent(char * Field){ //When the website field is s
     if(strcmp_P(ShortMessage,(PGM_P)F("SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}    
   }  
 } 
+
+void Sound::refresh(){
+  if(*Enabled){  
+    if (PlayOnSound)  {PlayOnSound = false;OnSound();}
+    if (PlayOffSound)  {PlayOffSound = false;OffSound();} 
+  }
+  if (PlayEE)  {PlayEE = false;EE();} 
+}
 
 void Sound::playOnSound(){
   PlayOnSound = true;

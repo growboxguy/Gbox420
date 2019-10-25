@@ -5,46 +5,45 @@
 
 class GrowBox;  //forward declaration 
 
-class Reservoir : public Common
-{
-  private:
-  
-  protected:
-   
-  public:
-    void refresh(){};
-    void report(){};
-    void websiteLoadEvent(char * url){};
-    void websiteFieldSubmitEvent(char * Button){};    
-    void websiteRefreshEvent(char * url){};
-    void websiteButtonPressEvent(char * Button){};
-  
-};
-
 class PHSensor : public Common
 {
+  public:
+    PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope);
+    void websiteLoadEvent(char * url);
+    void websiteRefreshEvent(char * url){};
+    void websiteButtonPressEvent(char * Button){};
+    void websiteFieldSubmitEvent(char * Field){};
+    void refresh();
+    void report(){}; //{} means this function is empty, it has no implementation in the cpp file
+    void getPH(bool ShowRaw);
+    void setSlope(float Value);
+    void setIntercept(float Value);
+
   private:
     GrowBox * GBox;
+    byte Pin;
     RollingAverage * PH;
     float * Intercept;
     float * Slope;
-    byte Pin;
   
-  protected:
-   
+  protected:    
+};
+
+class Reservoir : public Common
+{
   public:
-    PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope);
-    void refresh();
-    void report(){};
-    void websiteLoadEvent(char * url);
-    void websiteFieldSubmitEvent(char * Button){};    
+    void websiteLoadEvent(char * url){};
     void websiteRefreshEvent(char * url){};
     void websiteButtonPressEvent(char * Button){};
+    void websiteFieldSubmitEvent(char * Field){};  
+    void refresh(){};
+    void report(){};
 
-    void getPH(bool ShowRaw);
-    void setSlope(float Value);
-    void setIntercept(float Value);    
+  private:
+  
+  protected:  
 };
+
 
 class WaterTempSensor : public Common
 {

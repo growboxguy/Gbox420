@@ -2,9 +2,6 @@
 #include "GrowBox.h"
 #include "Sound.h"
 
-//////////////////////////////////////////////////////////////////
-//Lights functions
-
 Lights::Lights(const __FlashStringHelper * Name, GrowBox * GBox, Settings::LightsSettings * DefaultSettings) : Common(Name){
   this -> GBox = GBox;
   RelayPin = &DefaultSettings -> RelayPin;
@@ -27,40 +24,25 @@ Lights::Lights(const __FlashStringHelper * Name, GrowBox * GBox, Settings::Light
   logToSerials(F("Lights object created"),true);
 }
 
-void Lights::refresh(){  //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
-  Common::refresh();
-  checkLightTimer(); 
-  checkLightStatus();
-  report();
-}
-
-void Lights::report(){
-  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("Status:")); strcat(LongMessage, getStatusText()); 
-  strcat_P(LongMessage,(PGM_P)F(" ; Brightness:")); strcat(LongMessage,toText(*Brightness));
-  strcat_P(LongMessage,(PGM_P)F(" ; LightON:")); strcat(LongMessage,getOnTimeText());
-  strcat_P(LongMessage,(PGM_P)F(" ; LightOFF:")); strcat(LongMessage,getOffTimeText());
-  logToSerials( &LongMessage, true,4);
-}
-
 void Lights::websiteLoadEvent(char * url){
-  //Light1 load
-  WebServer.setArgInt(getWebsiteComponentName(F("OnHour")), *OnHour); 
-  WebServer.setArgInt(getWebsiteComponentName(F("OnMinute")),  *OnMinute); 
-  WebServer.setArgInt(getWebsiteComponentName(F("OffHour")), *OffHour); 
-  WebServer.setArgInt(getWebsiteComponentName(F("OffMinute")),*OffMinute);
-  WebServer.setArgInt(getWebsiteComponentName(F("Brightness")), *Brightness);
-  WebServer.setArgInt(getWebsiteComponentName(F("BrightnessSlider")), *Brightness);
+  if (strcmp(url,"/GrowBox.html.json")==0){
+    WebServer.setArgInt(getWebsiteComponentName(F("OnHour")), *OnHour); 
+    WebServer.setArgInt(getWebsiteComponentName(F("OnMinute")),  *OnMinute); 
+    WebServer.setArgInt(getWebsiteComponentName(F("OffHour")), *OffHour); 
+    WebServer.setArgInt(getWebsiteComponentName(F("OffMinute")),*OffMinute);
+    WebServer.setArgInt(getWebsiteComponentName(F("Brightness")), *Brightness);
+    WebServer.setArgInt(getWebsiteComponentName(F("BrightnessSlider")), *Brightness);
+  }
 }
 
 void Lights::websiteRefreshEvent(char * url){
-//Light1
-  WebServer.setArgString(getWebsiteComponentName(F("Status")),getStatusText());
-  WebServer.setArgString(getWebsiteComponentName(F("TimerEnabled")), getTimerOnOffText());
-  WebServer.setArgString(getWebsiteComponentName(F("OnTime")), getOnTimeText());
-  WebServer.setArgString(getWebsiteComponentName(F("OffTime")), getOffTimeText()); 
+  if (strcmp(url,"/GrowBox.html.json")==0){
+    WebServer.setArgString(getWebsiteComponentName(F("Status")),getStatusText());
+    WebServer.setArgString(getWebsiteComponentName(F("TimerEnabled")), getTimerOnOffText());
+    WebServer.setArgString(getWebsiteComponentName(F("OnTime")), getOnTimeText());
+    WebServer.setArgString(getWebsiteComponentName(F("OffTime")), getOffTimeText());
+  }
 }
-
 
 void Lights::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once
   if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
@@ -86,6 +68,22 @@ void Lights::websiteButtonPressEvent(char * Button){ //When the website is opene
       else if (strcmp_P(ShortMessage,(PGM_P)F("TimerDisable"))==0) {setTimerOnOff(false);}
   }  
 } 
+
+void Lights::refresh(){  //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
+  Common::refresh();
+  checkLightTimer(); 
+  checkLightStatus();
+  report();
+}
+
+void Lights::report(){
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
+  strcat_P(LongMessage,(PGM_P)F("Status:")); strcat(LongMessage, getStatusText()); 
+  strcat_P(LongMessage,(PGM_P)F(" ; Brightness:")); strcat(LongMessage,toText(*Brightness));
+  strcat_P(LongMessage,(PGM_P)F(" ; LightON:")); strcat(LongMessage,getOnTimeText());
+  strcat_P(LongMessage,(PGM_P)F(" ; LightOFF:")); strcat(LongMessage,getOffTimeText());
+  logToSerials( &LongMessage, true,4);
+}
 
 void Lights::checkLightStatus(){
   if(*Status) digitalWrite(*RelayPin, LOW); //True turns relay ON (LOW signal activates Relay)

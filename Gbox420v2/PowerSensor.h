@@ -1,50 +1,43 @@
 #pragma once
 
-#define PZEM004_NO_SWSERIAL  //Singal not to load SoftwareSerial module
-#include "PZEM004Tv30.h" //for PZEM004T V3.0 model
+#define PZEM004_NO_SWSERIAL  //Singals to the PZEM004Tv30 module to use HardwareSerial instead of SoftwareSerial
+#include "PZEM004Tv30.h" //3rd party module for the PZEM004T V3.0 power sensor
 #include "420Common.h"
 
 class GrowBox;  //forward declaration
 
 class PowerSensor : public Common
-{
-  protected:
-    GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
-    PZEM004Tv30 * Sensor; //for PZEM004T V3.0 model
-    
+{  
   public:
-    PowerSensor(const __FlashStringHelper * Name, GrowBox * Gbox,HardwareSerial * SerialPort);  //constructor    
-    void refresh();  //Called when component should refresh its state
-    void report();
-    void websiteLoadEvent(char * url){};
-    void websiteRefreshEvent(char * url);
-    void websiteFieldSubmitEvent(char * Button){};
-    void websiteButtonPressEvent(char * Button){};
-
-    bool setPowerAlarm(int watts); //trigger alarm if max power consumption is exceeded
-    bool getPowerAlarm();
-    bool setAddress(uint8_t addr);
-    uint8_t getAddress();
-    bool resetEnergy();
-    float getPower();    
-    float getEnergy();
-    float getVoltage();
-    float getCurrent();
-    float getFrequency();
-    float getPowerFactor();
-    char * getPowerText();
-    char * getEnergyText();    
-    char * getVoltageText();
-    char * getCurrentText();    
-    char * getFrequencyText();
-    char * getPowerFactorText();
-        
-  private:  
+    PowerSensor(const __FlashStringHelper * Name, GrowBox * Gbox,HardwareSerial * SerialPort);  //constructor  
     float Power; //Power sensor - W
     float Energy; //Power sensor - Wh Total consumption 
     float Voltage; //Power sensor - V
     float Current; //Power sensor - A
     float Frequency;
     float PowerFactor;
-    int Alarms;
+    int Alarms;  
+    void websiteLoadEvent(char * url){}; //{} means this function is empty, it has no implementation in the cpp file
+    void websiteRefreshEvent(char * url);
+    void websiteButtonPressEvent(char * Button){}; //{} means this function is empty, it has no implementation in the cpp file
+    void websiteFieldSubmitEvent(char * Button){}; //{} means this function is empty, it has no implementation in the cpp file
+    void refresh();  //Called when component should refresh its state
+    void report();
+    bool setPowerAlarm(int watts); //trigger alarm if max power consumption is exceeded
+    bool getPowerAlarm();
+    bool setAddress(uint8_t addr);
+    uint8_t getAddress();
+    bool resetEnergy();
+    char * getPowerText();
+    char * getEnergyText();    
+    char * getVoltageText();
+    char * getCurrentText();    
+    char * getFrequencyText();
+    char * getPowerFactorText();
+
+  private:
+    GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
+    PZEM004Tv30 * Sensor; //for PZEM004T V3.0 model
+
+  protected:
 };

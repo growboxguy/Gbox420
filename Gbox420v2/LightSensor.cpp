@@ -1,6 +1,3 @@
-
-//////////////////////////////////////////////////////////////////
-//LightSensor functions
 #include "LightSensor.h"
 #include "Lights.h"
 #include "GrowBox.h"
@@ -19,6 +16,23 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox,  Sett
   logToSerials(F("LightSensor object created"),true);
 }
 
+void LightSensor::websiteRefreshEvent(char * url){ //When the website is opened, load stuff once
+  if (strcmp(url,"/GrowBox.html.json")==0){
+    WebServer.setArgString(getWebsiteComponentName(F("IsDark")),getIsDarkText());
+    WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingPercentage());
+    WebServer.setArgString(getWebsiteComponentName(F("ReadingRaw")),getReadingText()); 
+  }
+} 
+
+void LightSensor::websiteButtonPressEvent(char * Button){ //When the website is opened, load stuff once
+  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name     
+    if (strcmp_P(ShortMessage,(PGM_P)F("Calibrate"))==0) {triggerCalibration();}
+  }  
+} 
+
 void LightSensor::refresh(){  //Called when component should refresh its state
   Common::refresh();
   if(CalibrateRequested){ calibrate(); } //If calibration was requested
@@ -35,48 +49,14 @@ void LightSensor::report(){
   logToSerials( &LongMessage, true,4);
 }
 
-void LightSensor::websiteRefreshEvent(char * url){ //When the website is opened, load stuff once
-  WebServer.setArgString(getWebsiteComponentName(F("IsDark")),getIsDarkText());
-  WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingPercentage());
-  WebServer.setArgString(getWebsiteComponentName(F("ReadingRaw")),getReadingText()); 
-} 
-
-void LightSensor::websiteButtonPressEvent(char * Button){ //When the website is opened, load stuff once
-  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
-  }
-  else{ //if the component name matches with the object name     
-    if (strcmp_P(ShortMessage,(PGM_P)F("Calibrate"))==0) {triggerCalibration();}
-  }  
-} 
-
 //  const char * name_p = reinterpret_cast<const char *>(name);
-
 //   uint8_t nlen = strlen_P(name_p);
 //   uint8_t vlen = strlen(value);
 //   char buf[nlen+vlen+3];
 //   buf[0] = WEB_JSON;
 //   strcpy_P(buf+1, name_p);
 //   strcpy(buf+2+nlen, value);
-//   _elc->Request(buf, nlen+vlen+2);
-
- 
-
-bool LightSensor::getIsDark(){ //Light sensor digital feedback: True(Dark) or False(Bright)  
-  return IsDark;
-}
-
-int LightSensor::getReading(){ 
-  return LightReading -> getAverageInt();
-}
-
-char * LightSensor::getReadingPercentage(){   
-  return percentageToText(map(LightReading -> getAverageInt(),MinReading,MaxReading,0,100)); //https://www.arduino.cc/reference/en/language/functions/math/map/ 
-}
-
-char * LightSensor::getIsDarkText(){
-  return yesNoToText(IsDark);
-}
+//   _elc->Request(buf, nlen+vlen+2); 
 
 char* LightSensor::getReadingText(){
   static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
@@ -114,4 +94,20 @@ void LightSensor::calibrate(){
          logToSerials(F("0% - "),false,4); logToSerials(&MinReading,false,0);
          logToSerials(F(", 100% - "),false,0); logToSerials(&MaxReading,true,0);
   }
+}
+
+bool LightSensor::getIsDark(){ //Light sensor digital feedback: True(Dark) or False(Bright)  
+  return IsDark;
+}
+
+int LightSensor::getReading(){ 
+  return LightReading -> getAverageInt();
+}
+
+char * LightSensor::getReadingPercentage(){   
+  return percentageToText(map(LightReading -> getAverageInt(),MinReading,MaxReading,0,100)); //https://www.arduino.cc/reference/en/language/functions/math/map/ 
+}
+
+char * LightSensor::getIsDarkText(){
+  return yesNoToText(IsDark);
 }

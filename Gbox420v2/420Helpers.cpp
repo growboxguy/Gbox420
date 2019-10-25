@@ -189,7 +189,6 @@ void getFreeMemory(){
   logToSerials(F("Free memory(bytes): "),false,2); logToSerials(&ReturnChar,true,0);
 }
 
-
 //////////////////////////////////////////////////////////////////
 //RollingAverage functions
 
@@ -274,4 +273,3 @@ bool AlertHandler::reportHealth(bool ResultOK){  //true: Component passed checks
   LastCheckResult = ResultOK;
   return HealthOK;
 }
-   

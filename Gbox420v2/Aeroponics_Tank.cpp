@@ -11,44 +11,19 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
   QuietFromMinute = &TankSpecificSettings -> QuietFromMinute; //Quiet time to block pump - minute
   QuietToHour = &TankSpecificSettings -> QuietToHour; //Quiet time end - hour
   QuietToMinute = &TankSpecificSettings -> QuietToMinute; //Quiet time end - minute
-
   pinMode(*SpraySolenoidPin,OUTPUT);
-  pinMode(*SpraySolenoidPin,HIGH);  //initialize off
- 
+  pinMode(*SpraySolenoidPin,HIGH);  //initialize off 
   logToSerials(F("Aeroponics_Tank object created"),true);
- }   
+}   
 
- void Aeroponics_Tank::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once
+void Aeroponics_Tank::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once
   if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
   else{ //if the component name matches with the object name    
     Aeroponics::websiteFieldSubmitEvent(Field);
   }
-} 
-
- void Aeroponics_Tank::checkRelays(){
-   //logToSerials(F("Aeroponics_Tank checking relays:"),false,0);
-   //logToSerials(SpraySolenoidOn,true,0);
-    if(SpraySolenoidOn) digitalWrite(*SpraySolenoidPin, LOW); else digitalWrite(*SpraySolenoidPin, HIGH); 
-    Aeroponics::checkRelays();
-  } 
-
- void Aeroponics_Tank::report(){
-  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
-  strcat_P(LongMessage,(PGM_P)F("Pressure:"));strcat(LongMessage,pressureToText(AeroPressure));
-  strcat_P(LongMessage,(PGM_P)F(" ["));strcat(LongMessage,toText(*PressureLow,*PressureHigh,"/"));
-  strcat_P(LongMessage,(PGM_P)F("]"));
-  logToSerials( &LongMessage, false,4); //first print Aeroponics_Tank specific report, without a line break  
-  Aeroponics::report();  //then print parent class report  
-  memset(&LongMessage[0], 0, sizeof(LongMessage));    
-  strcat_P(LongMessage,(PGM_P)F("QuietEnabled:"));strcat(LongMessage,yesNoToText(*QuietEnabled));
-  strcat_P(LongMessage,(PGM_P)F(" ; RefillBeforeQuiet:"));strcat(LongMessage,yesNoToText(*RefillBeforeQuiet));
-  strcat_P(LongMessage,(PGM_P)F(" ; QuietFrom:"));strcat(LongMessage,timeToText(*QuietFromHour,*QuietFromMinute));
-  strcat_P(LongMessage,(PGM_P)F(" ; QuietTo:"));strcat(LongMessage,timeToText(*QuietToHour,*QuietToMinute));
-  logToSerials( &LongMessage, true,4); //Print rarely used settings last
-  
- }
+}
 
 void Aeroponics_Tank::refresh(){ 
   Common::refresh();
@@ -81,7 +56,7 @@ void Aeroponics_Tank::refresh(){
         }  
        
     }   
- if(SpraySolenoidOn){ //if spray is on
+  if(SpraySolenoidOn){ //if spray is on
     if(millis() - SprayTimer >= ((uint32_t)*Duration * 1000)){  //if time to stop spraying (Duration in Seconds)
       SpraySolenoidOn = false;
       logToSerials(F("Stopping spray"),true);
@@ -99,6 +74,28 @@ void Aeroponics_Tank::refresh(){
   } 
   checkRelays(); 
   if(RefreshCounter++%60 == 0) report();  //Report only every 60 seconds - Refresh() function is called every second in the Aeroponics component
+}
+
+void Aeroponics_Tank::report(){
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
+  strcat_P(LongMessage,(PGM_P)F("Pressure:"));strcat(LongMessage,pressureToText(AeroPressure));
+  strcat_P(LongMessage,(PGM_P)F(" ["));strcat(LongMessage,toText(*PressureLow,*PressureHigh,"/"));
+  strcat_P(LongMessage,(PGM_P)F("]"));
+  logToSerials( &LongMessage, false,4); //first print Aeroponics_Tank specific report, without a line break  
+  Aeroponics::report();  //then print parent class report  
+  memset(&LongMessage[0], 0, sizeof(LongMessage));    
+  strcat_P(LongMessage,(PGM_P)F("QuietEnabled:"));strcat(LongMessage,yesNoToText(*QuietEnabled));
+  strcat_P(LongMessage,(PGM_P)F(" ; RefillBeforeQuiet:"));strcat(LongMessage,yesNoToText(*RefillBeforeQuiet));
+  strcat_P(LongMessage,(PGM_P)F(" ; QuietFrom:"));strcat(LongMessage,timeToText(*QuietFromHour,*QuietFromMinute));
+  strcat_P(LongMessage,(PGM_P)F(" ; QuietTo:"));strcat(LongMessage,timeToText(*QuietToHour,*QuietToMinute));
+  logToSerials( &LongMessage, true,4); //Print rarely used settings last  
+ }
+
+void Aeroponics_Tank::checkRelays(){
+  //logToSerials(F("Aeroponics_Tank checking relays:"),false,0);
+  //logToSerials(SpraySolenoidOn,true,0);
+  if(SpraySolenoidOn) digitalWrite(*SpraySolenoidPin, LOW); else digitalWrite(*SpraySolenoidPin, HIGH); 
+  Aeroponics::checkRelays();
 }
 
 void Aeroponics_Tank::setPressureLow(float PressureLow){
@@ -146,6 +143,8 @@ void Aeroponics_Tank::setPressureHigh(float PressureHigh){
 //    }     
 // }
 
+//Quiet time section: Blocks running the pump in a pre-defined time range
+
 void Aeroponics_Tank::setQuietOnOff(bool State){
   *QuietEnabled = State;
   if(*QuietEnabled){ 
@@ -158,7 +157,6 @@ void Aeroponics_Tank::setQuietOnOff(bool State){
     }
 }
 
-//Quiet time section: Blocks running the pump in a pre-defined time range
 bool Aeroponics_Tank::checkQuietTime() {  
   if(*QuietEnabled){
     time_t Now = now(); // Get the current time
@@ -195,8 +193,6 @@ void Aeroponics_Tank::setQuietRefillOnOff(bool State){
     GBox -> Sound1 -> playOffSound();
     }  
 }
-
-
 
 void Aeroponics_Tank::sprayNow(bool DueToHighPressure){   
   if(*SprayEnabled || DueToHighPressure){
