@@ -2,6 +2,7 @@
 #include "DHTSensor.h"
 #include "Lights.h"
 #include "Sound.h"
+#include "Fan.h"
 #include "PowerSensor.h"
 #include "LightSensor.h"
 #include "PHSensor.h" 
@@ -15,6 +16,8 @@ static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing 
 GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Common(Name) { //Constructor
   this -> BoxSettings = BoxSettings;
   Sound1 = new Sound(F("Sound1"), this, &BoxSettings -> Sound1);
+  InternalFan = new Fan(F("InternalFan"), this, &BoxSettings -> InternalFan);
+  ExhaustFan = new Fan(F("ExhaustFan"), this, &BoxSettings -> ExhaustFan);
   Light1 = new Lights(F("Light1"), this, &BoxSettings -> Light1);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
   LightSensor1 = new LightSensor(F("LightSensor1"), this, &BoxSettings -> LightSensor1);
   PowerSensor1 = new PowerSensor(F("PowerSensor1"), this, &Serial2);
@@ -228,7 +231,7 @@ void GrowBox::setDebugOnOff(bool State){
 void GrowBox::setMetricSystemEnabled(bool MetricEnabled){ 
   if(MetricEnabled != BoxSettings -> MetricSystemEnabled){  //if there was a change
     BoxSettings -> MetricSystemEnabled = MetricEnabled;
-    BoxSettings -> InternalFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> InternalFanSwitchTemp);
+    //BoxSettings -> InternalFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> InternalFanSwitchTemp);
     BoxSettings -> InternalDHTSensor.TempAlertLow= convertBetweenTempUnits(BoxSettings -> InternalDHTSensor.TempAlertLow);
     BoxSettings -> InternalDHTSensor.TempAlertHigh= convertBetweenTempUnits(BoxSettings -> InternalDHTSensor.TempAlertHigh);
     BoxSettings -> ExternalDHTSensor.TempAlertLow= convertBetweenTempUnits(BoxSettings -> ExternalDHTSensor.TempAlertLow);

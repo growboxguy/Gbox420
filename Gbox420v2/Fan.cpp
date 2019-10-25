@@ -1,5 +1,6 @@
 #include "Fan.h"
 #include "GrowBox.h"
+#include "Sound.h"
 
 // strcat_P(LongMessage,(PGM_P)F(" ; Internal fan:"));strcat(LongMessage,fanSpeedToText(true));
 // strcat_P(LongMessage,(PGM_P)F(" ; Exhaust fan:"));strcat(LongMessage,fanSpeedToText(false)); 
@@ -11,18 +12,92 @@
   // WebServer.setArgString(F("ExhaustFanLowHumid"), toText(GBox -> BoxSettings -> ExhaustFanLowHumid));
   // WebServer.setArgString(F("ExhaustFanOffHumid"), toText(GBox -> BoxSettings -> ExhaustFanOffHumid));
 
-Fan::Fan(const __FlashStringHelper * Name, GrowBox * GBox, uint8_t onOffPin, uint8_t speedPin) : Common(Name){
+Fan::Fan(const __FlashStringHelper * Name, GrowBox * GBox, Settings::FanSettings * DefaultSettings): Common(Name){
   this -> GBox = GBox;
-  this -> onOffPin = onOffPin;
-  this -> speedPin = speedPin;
-  logToSerials(F("Fan object created"),true);
+  OnOffPin = &DefaultSettings -> OnOffPin;
+  SpeedPin = &DefaultSettings -> SpeedPin;
+  State = &DefaultSettings -> State;
+  HighSpeed = &DefaultSettings -> HighSpeed;
+  pinMode(*OnOffPin, OUTPUT);
+  pinMode(*SpeedPin, OUTPUT);
+  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method
+  GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
+  GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website refresh event
+  logToSerials(F("Fan object created"),true,3);
 }
+
+void Fan::websiteRefreshEvent(char * url){ //When the website is opened, load stuff once
+  if (strcmp(url,"/GrowBox.html.json")==0){
+    WebServer.setArgString(getWebsiteComponentName(F("Status")), fanSpeedToText());
+  } 
+} 
+
+void Fan::websiteButtonPressEvent(char * Button){ //When the website is opened, load stuff once
+  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name     
+    if (strcmp_P(ShortMessage,(PGM_P)F("Off"))==0) {TurnOff();}
+    else if (strcmp_P(ShortMessage,(PGM_P)F("Low"))==0) {SetLowSpeed();}
+    else if (strcmp_P(ShortMessage,(PGM_P)F("High"))==0) {SetHighSpeed();}
+  }  
+} 
 
 void Fan::refresh(){
   Common::refresh();
- /*  if(MySettings.InternalFanOn) digitalWrite(Relay4OutPin, LOW); else digitalWrite(Relay4OutPin, HIGH);
-  if(MySettings.InternalFanHigh) digitalWrite(Relay5OutPin, LOW); else digitalWrite(Relay5OutPin, HIGH);
-  if(MySettings.ExhaustFanOn) digitalWrite(Relay6OutPin, LOW); else digitalWrite(Relay6OutPin, HIGH);
-  if(MySettings.ExhaustFanHigh) digitalWrite(Relay7OutPin, LOW); else digitalWrite(Relay7OutPin, HIGH);
-  */
+  checkFanStatus();
+  report();
+}
+
+void Fan::report(){
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
+  strcat_P(LongMessage,(PGM_P)F("Status:")); strcat(LongMessage,toText(*State));
+  strcat_P(LongMessage,(PGM_P)F(" ; High:")); strcat(LongMessage,toText(*HighSpeed));
+  strcat_P(LongMessage,(PGM_P)F(" ; Text:")); strcat(LongMessage,fanSpeedToText());
+  strcat_P(LongMessage,(PGM_P)F(" ; Number:")); strcat(LongMessage,fanSpeedToNumber());
+  logToSerials( &LongMessage, true,4);
+}
+
+void Fan::checkFanStatus(){
+ if(*State) digitalWrite(*OnOffPin, LOW); else digitalWrite(*OnOffPin, HIGH); //True turns relay ON (LOW signal activates Relay)
+ if(*HighSpeed) digitalWrite(*SpeedPin, LOW); else digitalWrite(*SpeedPin, HIGH);
+}
+
+void Fan::TurnOff(){
+  *State = false;
+  *HighSpeed = false;
+  checkFanStatus();
+  WebServer.setArgString(getWebsiteComponentName(F("Status")), fanSpeedToText());
+  GBox -> addToLog(F("Fan OFF"));
+  GBox -> Sound1 -> playOffSound();
+}
+
+void Fan::SetLowSpeed(){
+  *State = true;
+  *HighSpeed = false;
+  checkFanStatus();
+  WebServer.setArgString(getWebsiteComponentName(F("Status")), fanSpeedToText());
+  GBox -> addToLog(F("Fan speed LOW"));
+  GBox -> Sound1 -> playOnSound();
+}
+
+void Fan::SetHighSpeed(){
+  *State = true;
+  *HighSpeed = true;
+  checkFanStatus();
+  WebServer.setArgString(getWebsiteComponentName(F("Status")), fanSpeedToText());
+  GBox -> addToLog(F("Fan speed HIGH"));
+  GBox -> Sound1 -> playOnSound();
+}
+
+char * Fan::fanSpeedToText(){
+   if(!*State) return (char *)"OFF";
+   else if (*HighSpeed) return (char *)"HIGH";
+   else return (char *)"LOW";
+}
+
+char * Fan::fanSpeedToNumber(){
+   if(!*State) return (char *)"0";
+   else if (*HighSpeed) return (char *)"2";
+   else return (char *)"1";
 }

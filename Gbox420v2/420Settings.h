@@ -1,7 +1,7 @@
 #pragma once
 
 //Change this when you make change to the structure of the EEPROM stored part
-static const byte Version = 9;
+static const byte Version = 10;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: They never change during runtime
 static const byte MaxTextLength = 32;  //Default char* buffer size: 31 characters + null terminator, used for logging and converting to text
@@ -125,16 +125,24 @@ typedef struct
   struct AeroponicsSettings_Tank Aeroponics_Tank1 = { .Specific{.SpraySolenoidPin= 22}, .Common{.BypassSolenoidPin = 23, .PumpPin = 24 }};
  */
 
+struct FanSettings{
+    FanSettings(byte OnOffPin = 0 , byte SpeedPin = 0) : OnOffPin(OnOffPin),SpeedPin(SpeedPin){}
+    byte OnOffPin;
+    byte SpeedPin;
+    bool State = true;  //true - ON, false - OFF
+    bool HighSpeed = false; //true - High speed, false - Low speed
+  };
+  struct FanSettings InternalFan = {.OnOffPin = 25, .SpeedPin = 26 };
+  struct FanSettings ExhaustFan = {.OnOffPin = 27, .SpeedPin = 28 };
+
+/*   
   bool AutomaticInternalFan = false;  //Adjust internal fan based on temperature
   bool AutomaticExhaustFan = false;  //Adjust exhaust fan based on temp and humidity
-  bool InternalFanOn = true;  //Internal fan On/Off, default:ON
-  bool InternalFanHigh = true; //Internal fan Low/High, default:Low
-  bool ExhaustFanOn = true;  //Exhaust fan On/Off, default:OFF
-  bool ExhaustFanHigh = true;  //Exhaust fan Low/High, default:Low
   int InternalFanSwitchTemp = 25; // Above limit turn the internal fan to High, turn to Low if limit-3 degrees is reached. Has to match default unit type(Metric C or Imperial K)
   byte ExhaustFanHighHumid = 65; //Above set humidity turn exhaust fan High if automatic fan control is enabled
   byte ExhaustFanLowHumid = 55; //Above set humidity turn exhaust fan Low if automatic fan control is enabled
   byte ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
+*/
 
 //PHSensor pins
   byte PHSensorInPin = A3;  //PH meter - Po port
@@ -150,10 +158,6 @@ typedef struct
 //Digital pins
 
   byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
-  byte Relay4OutPin = 25;  //Power relay Port 4 - Internal fan Off/On
-  byte Relay5OutPin = 26;  //Power relay Port 5 - Internal fan Low/High
-  byte Relay6OutPin = 27;  //Power relay Port 6 - Exhaust fan Off/On
-  byte Relay7OutPin = 28;  //Power relay Port 7 - Exhaust fan Low/High
   byte ATXPowerONOutPin = 34; //Turns ATX power supply on by connecting ATX PowerON pin to GND through an optocoupler
   byte ATXPowerGoodInPin = 35; //5V signal from ATX powersupply, inverted by optocoupler: LOW if DC power output is OK
   byte ReservoirTempSensorInPin = 45;  //Data(yellow) - DS18B20 waterproof temp sensor 

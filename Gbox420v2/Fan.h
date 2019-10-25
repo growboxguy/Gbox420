@@ -10,23 +10,25 @@ class GrowBox;  //forward declaration
 class Fan : public Common
 {
   public:
-    Fan(const __FlashStringHelper * Name, GrowBox * GBox, uint8_t onOffpin, uint8_t speedPin);
+    Fan(const __FlashStringHelper * Name, GrowBox * GBox, Settings::FanSettings * DefaultSettings);
     GrowBox * GBox;
 
     void refresh();  //Called when component should refresh its state
-    void report(){};
+    void report();
     void websiteLoadEvent(char * url){};
     void websiteRefreshEvent(char * url);
-    void websiteButtonPressEvent(char * Button){};
-    void websiteFieldSubmitEvent(char * Button){};
-
-    void setOff();
-    void setLowSpeed();  
-    void setHighSpeed();
+    void websiteButtonPressEvent(char * Button);
+    void websiteFieldSubmitEvent(char * Field){};
+    void checkFanStatus();
+    void TurnOff();
+    void SetLowSpeed();
+    void SetHighSpeed();
+    char * fanSpeedToText();
+    char * fanSpeedToNumber();
   
   private:
     bool * State;
     bool * HighSpeed;     
-    byte onOffPin;
-    byte speedPin;
+    byte * OnOffPin;
+    byte * SpeedPin;
 };

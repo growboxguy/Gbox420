@@ -233,7 +233,7 @@ int RollingAverage::updateAverage(int LatestReading){
      strcat_P(LongMessage,(PGM_P)F(":Reading:")); strcat(LongMessage,toText(LatestReading)); 
      strcat_P(LongMessage,(PGM_P)F(",Sum:")); strcat(LongMessage,toText(Sum));
      strcat_P(LongMessage,(PGM_P)F(",Average:")); strcat(LongMessage,toText(Average));
-     logToSerials(&LongMessage,true);     
+     logToSerials(&LongMessage,true,4);     
    }      
    return Average;
 }

@@ -15,7 +15,7 @@ Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox, Settings::SoundSe
 
 void Sound::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/Settings.html.json")==0){
-    WebServer.setArgInt(getWebsiteComponentName(F("Enabled")), Enabled);
+    WebServer.setArgBoolean(getWebsiteComponentName(F("Enabled")), *Enabled);
   }
 } 
 

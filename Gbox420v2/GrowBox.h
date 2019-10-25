@@ -5,6 +5,7 @@ class DHTSensor;  //forward declaration of classes
 class LightSensor;
 class Lights;
 class Sound;
+class Fan;
 class PowerSensor;
 class PHSensor;
 class LightSensor;
@@ -17,7 +18,9 @@ class GrowBox : public Common
   public:
     GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings); //constructor
     Settings * BoxSettings;
-    Sound * Sound1; //Pointer to a Piezo Sound - sound feedback
+    Sound * Sound1; //Pointer to a Piezo speaker - sound feedback
+    Fan * InternalFan;  //Internal fan
+    Fan * ExhaustFan; //Exhaust fan
     DHTSensor * InternalDHTSensor;  //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
     DHTSensor * ExternalDHTSensor; //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
     LightSensor * LightSensor1; //Pointer to a Light Sensor object measuring light intensity in the grow box
