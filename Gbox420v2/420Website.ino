@@ -29,14 +29,14 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
   logToSerials(F("WebServer started"),true);
 }
 
-void loadCallback(char * url) //called when website is loaded.
+void loadCallback(__attribute__((unused)) char * url) //called when website is loaded.
 {
   for(int i=0;i<GBox -> WebsiteQueueLength_Load;i++){
     GBox -> WebsiteQueue_Load[i] -> websiteEvent_Load(url);
   } 
 }
 
-void refreshCallback(char * url) //called when website is refreshed.
+void refreshCallback(__attribute__((unused)) char * url) //called when website is refreshed.
 { 
   WebServer.setArgString(F("Time"), getFormattedTime());
   // WebServer.setArgString(F("td_LightOK"), statusToText(LightOK)); 

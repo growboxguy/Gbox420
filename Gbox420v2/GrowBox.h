@@ -31,9 +31,9 @@ class GrowBox : public Common
     PHSensor * PHSensor1;
     Aeroponics_Tank * Aeroponics_Tank1;
     Aeroponics_NoTank * Aeroponics_NoTank1;
-    void websiteEvent_Load(char * url);
-    void websiteEvent_Refresh(char * url);
-    void websiteEvent_Button(char * Button){};
+    void websiteEvent_Load(__attribute__((unused)) char * url);
+    void websiteEvent_Refresh(__attribute__((unused)) char * url);
+    //void websiteEvent_Button(char * Button);
     void websiteEvent_Field(char * Field);
     void refresh();
     void report(){};

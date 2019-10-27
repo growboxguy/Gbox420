@@ -16,7 +16,7 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox,  Sett
   logToSerials(F("LightSensor object created"),true);
 }
 
-void LightSensor::websiteEvent_Refresh(char * url){ //When the website is opened, load stuff once
+void LightSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("IsDark")),getIsDarkText());
     WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingPercentage());

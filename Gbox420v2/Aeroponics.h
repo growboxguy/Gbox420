@@ -9,10 +9,10 @@ class Aeroponics : public Common
 {
   public:
     Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings);
-    virtual void websiteEvent_Load(char * url);
-    virtual void websiteEvent_Refresh(char * url);
-    virtual void websiteEvent_Button(char * Button);
-    virtual void websiteEvent_Field(char * Field);
+    virtual void websiteEvent_Load(__attribute__((unused)) char * url);
+    virtual void websiteEvent_Refresh(__attribute__((unused)) char * url);
+    virtual void websiteEvent_Button(__attribute__((unused)) char * Button);
+    virtual void websiteEvent_Field(__attribute__((unused)) char * Field);
     virtual void refresh() = 0;  //Due to the virtual function Aeroponics class cannot be instantiated
     virtual void report();
     int AeroPressure = 6; //TODO: FAKE PRESSURE READING - REMOVE IT

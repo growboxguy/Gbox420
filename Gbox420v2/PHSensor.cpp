@@ -11,7 +11,7 @@ PHSensor::PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope){
   GBox -> AddToRefreshQueue_FiveSec(this);  //Subscribing to the FiveSec refresh queue: Calls the refresh() method
 }
 
-void PHSensor::websiteEvent_Load(char * url){ //When the website is opened, load stuff once
+void PHSensor::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
   // WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *SprayEnabled);
   // WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *Interval);
   // WebServer.setArgInt(getWebsiteComponentName(F("Interval")), *Interval);
@@ -25,7 +25,6 @@ void PHSensor::refresh(){
 }
 
 void PHSensor::getPH(bool ShowRaw){
-  float  Reading=0;
   int PHRaw = analogRead(Pin);
   if(ShowRaw)
   {

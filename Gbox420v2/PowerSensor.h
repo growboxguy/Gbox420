@@ -17,10 +17,10 @@ class PowerSensor : public Common
     float Frequency;
     float PowerFactor;
     int Alarms;  
-    void websiteEvent_Load(char * url){}; //{} means this function is empty, it has no implementation in the cpp file
-    void websiteEvent_Refresh(char * url);
-    void websiteEvent_Button(char * Button){}; //{} means this function is empty, it has no implementation in the cpp file
-    void websiteEvent_Field(char * Button){}; //{} means this function is empty, it has no implementation in the cpp file
+    //void websiteEvent_Load(__attribute__((unused)) char * url); //{} means this function is empty, it has no implementation in the cpp file
+    void websiteEvent_Refresh(__attribute__((unused)) char * url);
+    //void websiteEvent_Button(char * Button); //{} means this function is empty, it has no implementation in the cpp file
+    //void websiteEvent_Field(char * Field); //{} means this function is empty, it has no implementation in the cpp file
     void refresh();  //Called when component should refresh its state
     void report();
     bool setPowerAlarm(int watts); //trigger alarm if max power consumption is exceeded

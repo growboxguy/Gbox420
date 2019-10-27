@@ -10,7 +10,7 @@ class Aeroponics_NoTank : public Aeroponics
 {
   public:
     Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific * NoTankSpecificSettings);  //constructor
-    void websiteEvent_Load(char * url);
+    void websiteEvent_Load(__attribute__((unused)) char * url);
     void websiteEvent_Field(char * Field);
     void refresh();
     void report();

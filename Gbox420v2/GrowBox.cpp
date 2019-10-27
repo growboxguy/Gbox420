@@ -35,12 +35,12 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   addToLog(F("GrowBox initialized"),0);
 }
 
-void GrowBox::websiteEvent_Refresh(char * url) //called when website is refreshed.
+void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char * url) //called when website is refreshed.
 { 
   WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON(false)); //Last events that happened in JSON format  
 }
 
-void GrowBox::websiteEvent_Load(char * url){ //When the website is opened, load stuff once
+void GrowBox::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/Settings.html.json")==0){  
   WebServer.setArgInt(F("GBox1_DebugEnabled"), GBox -> BoxSettings -> DebugEnabled);
   WebServer.setArgInt(F("GBox1_MetricSystemEnabled"), GBox -> BoxSettings -> MetricSystemEnabled);

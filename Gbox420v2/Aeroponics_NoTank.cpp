@@ -6,7 +6,7 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox *
   logToSerials(F("Aeroponics_NoTank object created"),true);
 }
 
-void Aeroponics_NoTank::websiteEvent_Load(char * url){ //When the website is opened, load stuff once
+void Aeroponics_NoTank::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgInt(getWebsiteComponentName(F("BlowOffTime")), *BlowOffTime);
   }

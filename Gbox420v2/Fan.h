@@ -15,10 +15,10 @@ class Fan : public Common
 
     void refresh();  //Called when component should refresh its state
     void report();
-    void websiteEvent_Load(char * url){};
-    void websiteEvent_Refresh(char * url);
+    //void websiteEvent_Load(__attribute__((unused)) char * url);
+    void websiteEvent_Refresh(__attribute__((unused)) char * url);
     void websiteEvent_Button(char * Button);
-    void websiteEvent_Field(char * Field){};
+    //void websiteEvent_Field(char * Field);
     void checkFanStatus();
     void TurnOff();
     void SetLowSpeed();

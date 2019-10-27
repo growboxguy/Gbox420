@@ -15,14 +15,14 @@ PressureSensor::PressureSensor(const __FlashStringHelper * Name, GrowBox * GBox,
   logToSerials(F("DHT Sensor object created"),true);
 }
 
-void PressureSensor::websiteEvent_Load(char * url){
+void PressureSensor::websiteEvent_Load(__attribute__((unused)) char * url){
   if (strcmp(url,"/Settings.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Offset")), toPrecisionText(*Offset));
     WebServer.setArgString(getWebsiteComponentName(F("Ratio")), toPrecisionText(*Ratio));
   } 
 } 
 
-void PressureSensor::websiteEvent_Refresh(char * url){
+void PressureSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Pressure")), getPressureText());
   } 

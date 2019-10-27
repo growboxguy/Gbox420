@@ -9,10 +9,10 @@ class PHSensor : public Common
 {
   public:
     PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope);
-    void websiteEvent_Load(char * url);
-    void websiteEvent_Refresh(char * url){};
-    void websiteEvent_Button(char * Button){};
-    void websiteEvent_Field(char * Field){};
+    void websiteEvent_Load(__attribute__((unused)) char * url);
+    //void websiteEvent_Refresh(__attribute__((unused)) char * url);
+    //void websiteEvent_Button(char * Button);
+    //void websiteEvent_Field(char * Field);
     void refresh();
     void report(){}; //{} means this function is empty, it has no implementation in the cpp file
     void getPH(bool ShowRaw);

@@ -13,7 +13,7 @@ Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox, Settings::SoundSe
   logToSerials(F("Sound object created"),true);
 }
 
-void Sound::websiteEvent_Load(char * url){ //When the website is opened, load stuff once
+void Sound::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/Settings.html.json")==0){
     WebServer.setArgBoolean(getWebsiteComponentName(F("Enabled")), *Enabled);
   }

@@ -17,14 +17,14 @@ Lights::Lights(const __FlashStringHelper * Name, GrowBox * GBox, Settings::Light
   pinMode(*RelayPin, OUTPUT);
   pinMode(*DimmingPin, OUTPUT);
   GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method  
-  GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the Website load queue: Calls the websiteEvent_Load(char * url) method
+  GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the Website load queue: Calls the websiteEvent_Load(__attribute__((unused)) char * url) method
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
   GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website field submit event  
   logToSerials(F("Lights object created"),true);
 }
 
-void Lights::websiteEvent_Load(char * url){
+void Lights::websiteEvent_Load(__attribute__((unused)) char * url){
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgInt(getWebsiteComponentName(F("OnHour")), *OnHour); 
     WebServer.setArgInt(getWebsiteComponentName(F("OnMinute")),  *OnMinute); 
@@ -35,7 +35,7 @@ void Lights::websiteEvent_Load(char * url){
   }
 }
 
-void Lights::websiteEvent_Refresh(char * url){
+void Lights::websiteEvent_Refresh(__attribute__((unused)) char * url){
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Status")),getStatusText());
     WebServer.setArgString(getWebsiteComponentName(F("TimerEnabled")), getTimerOnOffText());
