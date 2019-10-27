@@ -12,7 +12,7 @@ DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings:
   logToSerials(F("DHT Sensor object created"),true);
 }
 
-void DHTSensor::websiteRefreshEvent(char * url){ //When the website is opened, load stuff once
+void DHTSensor::websiteEvent_Refresh(char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Temp")), getTempText());
     WebServer.setArgString(getWebsiteComponentName(F("Humidity")), getHumidityText());

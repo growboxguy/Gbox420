@@ -13,13 +13,13 @@ Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox, Settings::SoundSe
   logToSerials(F("Sound object created"),true);
 }
 
-void Sound::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
+void Sound::websiteEvent_Load(char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/Settings.html.json")==0){
     WebServer.setArgBoolean(getWebsiteComponentName(F("Enabled")), *Enabled);
   }
 } 
 
-void Sound::websiteButtonPressEvent(char * Button){ //When a button is pressed on the website
+void Sound::websiteEvent_Button(char * Button){ //When a button is pressed on the website
   if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
@@ -28,7 +28,7 @@ void Sound::websiteButtonPressEvent(char * Button){ //When a button is pressed o
   }  
 }
 
-void Sound::websiteFieldSubmitEvent(char * Field){ //When the website field is submitted
+void Sound::websiteEvent_Field(char * Field){ //When the website field is submitted
   if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }

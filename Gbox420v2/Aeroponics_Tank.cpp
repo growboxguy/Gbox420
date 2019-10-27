@@ -16,12 +16,12 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
   logToSerials(F("Aeroponics_Tank object created"),true);
 }   
 
-void Aeroponics_Tank::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once
+void Aeroponics_Tank::websiteEvent_Field(char * Field){ //When the website is opened, load stuff once
   if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
   else{ //if the component name matches with the object name    
-    Aeroponics::websiteFieldSubmitEvent(Field);
+    Aeroponics::websiteEvent_Field(Field);
   }
 }
 

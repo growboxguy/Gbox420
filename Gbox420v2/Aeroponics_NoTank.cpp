@@ -6,20 +6,20 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox *
   logToSerials(F("Aeroponics_NoTank object created"),true);
 }
 
-void Aeroponics_NoTank::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
+void Aeroponics_NoTank::websiteEvent_Load(char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgInt(getWebsiteComponentName(F("BlowOffTime")), *BlowOffTime);
   }
-  Aeroponics::websiteLoadEvent(url); 
+  Aeroponics::websiteEvent_Load(url); 
 }
 
-void Aeroponics_NoTank::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once
+void Aeroponics_NoTank::websiteEvent_Field(char * Field){ //When the website is opened, load stuff once
   if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
   else{ //if the component name matches with the object name     
     if(strcmp_P(ShortMessage,(PGM_P)F("BlowOffTime"))==0) {setBlowOffTime(WebServer.getArgInt());}
-    else Aeroponics::websiteFieldSubmitEvent(Field);
+    else Aeroponics::websiteEvent_Field(Field);
   }
 } 
 

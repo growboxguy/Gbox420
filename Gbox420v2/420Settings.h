@@ -76,13 +76,14 @@ typedef struct
   struct PHSensorSettings PHSensor1 = {.PHCalibrationSlope = -0.033256, .PHCalibrationIntercept = 24.08651 };
 
   struct PressureSensorSettings{
-    PressureSensorSettings(float PressureSensorOffset = 0.0, float PressureSensorRatio = 0.0 ) : PressureSensorOffset(PressureSensorOffset),PressureSensorRatio(PressureSensorRatio) {}
-    float PressureSensorOffset;        //Pressure sensor calibration: voltage reading at 0 pressure
-    float PressureSensorRatio;          //Pressure sensor voltage to pressure ratio
-    float PressureAlertLow = 4.0; //Low pressure warning
-    float PressureAlertHigh = 8.0; //High pressure warning 
+    PressureSensorSettings(byte Pin = 0, float Offset = 0.0, float Ratio = 0.0 ) : Pin(Pin),Offset(Offset),Ratio(Ratio) {}
+    byte Pin;
+    float Offset;        //Pressure sensor calibration: voltage reading at 0 pressure
+    float Ratio;          //Pressure sensor voltage to pressure ratio
+    float AlertLow = 4.0; //Low pressure warning
+    float AlertHigh = 8.0; //High pressure warning 
   };
-  struct PressureSensorSettings PressureSensor1 = {.PressureSensorOffset = 0.57, .PressureSensorRatio = 2.7 };
+  struct PressureSensorSettings PressureSensor1 = {.Pin = A1, .Offset = 0.57, .Ratio = 2.7 };
 
   struct AeroponicsSettings{ //Common settings for each inheriting class
     AeroponicsSettings(byte BypassSolenoidPin = 0, byte PumpPin = 0 ) : BypassSolenoidPin(BypassSolenoidPin),PumpPin(PumpPin) {}

@@ -19,13 +19,13 @@ Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Setting
     pinMode(*PumpPin,OUTPUT);
     pinMode(*PumpPin,HIGH);  //initialize in off state
     GBox -> AddToRefreshQueue_Sec(this);
-    GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the website load queue: Calls the websiteLoadEvent(char * url) method
+    GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the website load queue: Calls the websiteEvent_Load(char * url) method
     GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
     GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
     GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
 }
 
-void Aeroponics::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
+void Aeroponics::websiteEvent_Load(char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *PumpTimeout);
     WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *PrimingTime);
@@ -34,7 +34,7 @@ void Aeroponics::websiteLoadEvent(char * url){ //When the website is opened, loa
   }
 } 
 
-void Aeroponics::websiteRefreshEvent(char * url){ //When the website is opened, load stuff once
+void Aeroponics::websiteEvent_Refresh(char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("SprayEnabled")), enabledToText(*SprayEnabled));
     WebServer.setArgString(getWebsiteComponentName(F("Pressure")), pressureToText(AeroPressure));
@@ -43,7 +43,7 @@ void Aeroponics::websiteRefreshEvent(char * url){ //When the website is opened, 
   }
 }
 
-void Aeroponics::websiteButtonPressEvent(char * Button){ //When the website is opened, load stuff once
+void Aeroponics::websiteEvent_Button(char * Button){ //When the website is opened, load stuff once
   if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
@@ -59,7 +59,7 @@ void Aeroponics::websiteButtonPressEvent(char * Button){ //When the website is o
   }
 } 
 
-void Aeroponics::websiteFieldSubmitEvent(char * Field){ //When the website is opened, load stuff once 
+void Aeroponics::websiteEvent_Field(char * Field){ //When the website is opened, load stuff once 
     if(strcmp_P(ShortMessage,(PGM_P)F("PumpTimeout"))==0) {setPumpTimeout(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("PrimingTime"))==0) {setPrimingTime(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("Duration"))==0) {setDuration(WebServer.getArgInt());}

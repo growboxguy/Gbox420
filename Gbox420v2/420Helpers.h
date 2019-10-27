@@ -72,7 +72,8 @@ class RollingAverage
     byte Oldest = 0; //Points to the oldest reading
     bool ResetAverage = true; //When true the next reading will overwrite the previous readings (Reset the average to the current reading)   
    
-  public:  
+  public:
+    void resetAverage();
     int updateAverage(int LatestReading);
     float updateAverage(float LatestReading);
     int getAverageInt();

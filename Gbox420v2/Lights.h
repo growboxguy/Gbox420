@@ -10,10 +10,10 @@ class Lights : public Common
   public:
     //Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte* DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
     Lights(const __FlashStringHelper * Name, GrowBox * GBox, Settings::LightsSettings * DefaultSettings);  //constructor
-    void websiteLoadEvent(char * url);
-    void websiteRefreshEvent(char * url);
-    void websiteButtonPressEvent(char * Button);
-    void websiteFieldSubmitEvent(char * Field);
+    void websiteEvent_Load(char * url);
+    void websiteEvent_Refresh(char * url);
+    void websiteEvent_Button(char * Button);
+    void websiteEvent_Field(char * Field);
     void refresh();  //Called when component should refresh its state
     void report(); 
     void setBrightness(byte Brightness, bool AddToLog);           

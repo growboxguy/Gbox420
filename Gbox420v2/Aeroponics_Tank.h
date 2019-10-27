@@ -10,7 +10,7 @@ class Aeroponics_Tank : public Aeroponics
 {
   public:
     Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings);
-    void websiteFieldSubmitEvent(char * Field);
+    void websiteEvent_Field(char * Field);
     void refresh();
     void report();
     byte* SpraySolenoidPin;

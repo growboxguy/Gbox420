@@ -7,7 +7,7 @@
 #include "LightSensor.h"
 #include "PHSensor.h" 
 #include "LightSensor.h"
-#include "PHSensor.h" 
+#include "PressureSensor.h" 
 #include "Aeroponics_Tank.h" 
 #include "Aeroponics_NoTank.h" 
 
@@ -25,20 +25,22 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   ExternalDHTSensor = new DHTSensor(F("ExternalDHTSensor"), this, &BoxSettings -> ExternalDHTSensor);  //passing: Component name, GrowBox object the component belongs to, Default settings)
   //Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, &BoxSettings ->Aeroponics_Tank1_Common, &BoxSettings -> Aeroponics_Tank1_Specific);
   Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, &BoxSettings -> Aeroponics_NoTank1_Common, &BoxSettings -> Aeroponics_NoTank1_Specific);
+  PressureSensor1 = new PressureSensor(F("PressureSensor1"),this,&BoxSettings -> PressureSensor1);
   //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);  
   AddToRefreshQueue_FiveSec(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method  
-  AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
+  AddToWebsiteQueue_Load(this); //Subscribing to the Website field submit event
   AddToWebsiteQueue_Refresh(this); //Subscribing to the Website field submit event
+  AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
   logToSerials(F("GrowBox object created"), true,2);
   addToLog(F("GrowBox initialized"),0);
 }
 
-void GrowBox::websiteRefreshEvent(char * url) //called when website is refreshed.
+void GrowBox::websiteEvent_Refresh(char * url) //called when website is refreshed.
 { 
   WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON(false)); //Last events that happened in JSON format  
 }
 
-void GrowBox::websiteLoadEvent(char * url){ //When the website is opened, load stuff once
+void GrowBox::websiteEvent_Load(char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/Settings.html.json")==0){  
   WebServer.setArgInt(F("GBox1_DebugEnabled"), GBox -> BoxSettings -> DebugEnabled);
   WebServer.setArgInt(F("GBox1_MetricSystemEnabled"), GBox -> BoxSettings -> MetricSystemEnabled);
@@ -63,7 +65,7 @@ void GrowBox::websiteLoadEvent(char * url){ //When the website is opened, load s
   }
 } 
 
-void GrowBox::websiteFieldSubmitEvent(char * Field){ //When the website field is submitted
+void GrowBox::websiteEvent_Field(char * Field){ //When the website field is submitted
   if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
@@ -77,7 +79,7 @@ void GrowBox::websiteFieldSubmitEvent(char * Field){ //When the website field is
 } 
 
 /* 
-void GrowBox::websiteButtonPressEvent(char * Button){ //When a button is pressed on the website
+void GrowBox::websiteEvent_Button(char * Button){ //When a button is pressed on the website
   if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
@@ -236,8 +238,12 @@ void GrowBox::setMetricSystemEnabled(bool MetricEnabled){
     BoxSettings -> InternalDHTSensor.TempAlertHigh= convertBetweenTempUnits(BoxSettings -> InternalDHTSensor.TempAlertHigh);
     BoxSettings -> ExternalDHTSensor.TempAlertLow= convertBetweenTempUnits(BoxSettings -> ExternalDHTSensor.TempAlertLow);
     BoxSettings -> ExternalDHTSensor.TempAlertHigh= convertBetweenTempUnits(BoxSettings -> ExternalDHTSensor.TempAlertHigh);
-    BoxSettings -> PressureSensor1.PressureAlertLow=convertBetweenPressureUnits(BoxSettings -> PressureSensor1.PressureAlertLow);
-    BoxSettings -> PressureSensor1.PressureAlertHigh=convertBetweenPressureUnits(BoxSettings -> PressureSensor1.PressureAlertHigh);
+    BoxSettings -> PressureSensor1.AlertLow=convertBetweenPressureUnits(BoxSettings -> PressureSensor1.AlertLow);
+    BoxSettings -> PressureSensor1.AlertHigh=convertBetweenPressureUnits(BoxSettings -> PressureSensor1.AlertHigh);
+    PressureSensor1 -> Pressure -> resetAverage();
+    InternalDHTSensor -> Temp -> resetAverage(); 
+    ExternalDHTSensor -> Temp -> resetAverage();
+    refreshAll(); 
   }    
   if(BoxSettings -> MetricSystemEnabled) addToLog(F("Using Metric units"));
   else addToLog(F("Using Imperial units"));  

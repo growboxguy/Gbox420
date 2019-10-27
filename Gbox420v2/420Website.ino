@@ -32,7 +32,7 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
 void loadCallback(char * url) //called when website is loaded.
 {
   for(int i=0;i<GBox -> WebsiteQueueLength_Load;i++){
-    GBox -> WebsiteQueue_Load[i] -> websiteLoadEvent(url);
+    GBox -> WebsiteQueue_Load[i] -> websiteEvent_Load(url);
   } 
 }
 
@@ -47,7 +47,7 @@ void refreshCallback(char * url) //called when website is refreshed.
   // WebServer.setArgString(F("td_VentOK"),statusToText(VentOK));
   //WebServer.setArgString(F("td_ReservOK"),statusToText(ReservOK));
   for(int i=0;i<GBox -> WebsiteQueueLength_Refresh;i++){
-    GBox -> WebsiteQueue_Refresh[i] -> websiteRefreshEvent(url);
+    GBox -> WebsiteQueue_Refresh[i] -> websiteEvent_Refresh(url);
   }
   //}
 }
@@ -56,7 +56,7 @@ void buttonPressCallback(char *button)  //Called when any button on the website 
 {
   if(GBox -> BoxSettings -> DebugEnabled)logToSerials(&button,true,0);
   for(int i=0;i<GBox -> WebsiteQueueLength_Button;i++){
-    GBox -> WebsiteQueue_Button[i] -> websiteButtonPressEvent(button);
+    GBox -> WebsiteQueue_Button[i] -> websiteEvent_Button(button);
   }
   if (strcmp_P(ShortMessage,(PGM_P)F("RestoreDefaults"))==0) { restoreDefaults(GBox -> BoxSettings); }  
   saveSettings(false,GBox -> BoxSettings); 
@@ -65,7 +65,7 @@ void buttonPressCallback(char *button)  //Called when any button on the website 
 void setFieldCallback(char * field){  //Called when any field on the website is updated.
   if(GBox -> BoxSettings -> DebugEnabled)logToSerials(&field,true,0);   
   for(int i=0;i<GBox -> WebsiteQueueLength_Field;i++){
-    GBox -> WebsiteQueue_Field[i] -> websiteFieldSubmitEvent(field);
+    GBox -> WebsiteQueue_Field[i] -> websiteEvent_Field(field);
   }     
   saveSettings(false,GBox -> BoxSettings);
 } 

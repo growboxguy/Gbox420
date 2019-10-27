@@ -48,8 +48,9 @@ bool Common::isThisMyComponent(char const * lookupName){  //this is the name of 
       //Serial.print(RAMCurrentChar);
       *ReturnChar++ = RAMCurrentChar;
       if(RAMCurrentChar == 0) break;  //if we have reached the string termination sign. ( null terminator is the numerical value 0, sometimes also marked as '\0')   
-      if(SafetyCount > MaxTextLength){
-        //Serial.println("No match");
+      if(SafetyCount++ > MaxTextLength){
+        logToSerials(F("Component name too long: "),false,3);
+        logToSerials(lookupName,true,0);
        return false; 
       }      
     }

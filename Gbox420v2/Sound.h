@@ -8,10 +8,10 @@ class Sound : public Common
 {
 public:
     Sound(const __FlashStringHelper * Name, GrowBox * GBox, Settings::SoundSettings * DefaultSettings);
-    void websiteLoadEvent(char * url);
-    void websiteRefreshEvent(char * url){};  //{} means this function is empty, it has no implementation in the cpp file
-    void websiteFieldSubmitEvent(char * Field);
-    void websiteButtonPressEvent(char * Button);
+    void websiteEvent_Load(char * url);
+    void websiteEvent_Refresh(char * url){};  //{} means this function is empty, it has no implementation in the cpp file
+    void websiteEvent_Field(char * Field);
+    void websiteEvent_Button(char * Button);
     void refresh();
     void report(){};
     void setSoundOnOff(bool State);

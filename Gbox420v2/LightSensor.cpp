@@ -16,7 +16,7 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox,  Sett
   logToSerials(F("LightSensor object created"),true);
 }
 
-void LightSensor::websiteRefreshEvent(char * url){ //When the website is opened, load stuff once
+void LightSensor::websiteEvent_Refresh(char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("IsDark")),getIsDarkText());
     WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingPercentage());
@@ -24,7 +24,7 @@ void LightSensor::websiteRefreshEvent(char * url){ //When the website is opened,
   }
 } 
 
-void LightSensor::websiteButtonPressEvent(char * Button){ //When the website is opened, load stuff once
+void LightSensor::websiteEvent_Button(char * Button){ //When the website is opened, load stuff once
   if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }

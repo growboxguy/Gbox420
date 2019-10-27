@@ -9,10 +9,10 @@ class PHSensor : public Common
 {
   public:
     PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope);
-    void websiteLoadEvent(char * url);
-    void websiteRefreshEvent(char * url){};
-    void websiteButtonPressEvent(char * Button){};
-    void websiteFieldSubmitEvent(char * Field){};
+    void websiteEvent_Load(char * url);
+    void websiteEvent_Refresh(char * url){};
+    void websiteEvent_Button(char * Button){};
+    void websiteEvent_Field(char * Field){};
     void refresh();
     void report(){}; //{} means this function is empty, it has no implementation in the cpp file
     void getPH(bool ShowRaw);
@@ -27,30 +27,4 @@ class PHSensor : public Common
     float * Slope;
   
   protected:    
-};
-
-class Reservoir : public Common
-{
-  public:
-    void websiteLoadEvent(char * url){};
-    void websiteRefreshEvent(char * url){};
-    void websiteButtonPressEvent(char * Button){};
-    void websiteFieldSubmitEvent(char * Field){};  
-    void refresh(){};
-    void report(){};
-
-  private:
-  
-  protected:  
-};
-
-
-class WaterTempSensor : public Common
-{
-  private:
-  
-  protected:
-   
-  public:
-    
 };

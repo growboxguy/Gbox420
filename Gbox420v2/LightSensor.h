@@ -8,10 +8,10 @@ class LightSensor : public Common
 {
   public:
     LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::LightSensorSettings * DefaultSettings);
-    void websiteLoadEvent(char * url){};
-    void websiteRefreshEvent(char * url); 
-    void websiteButtonPressEvent(char * Button);
-    void websiteFieldSubmitEvent(char * Field){};
+    void websiteEvent_Load(char * url){};
+    void websiteEvent_Refresh(char * url); 
+    void websiteEvent_Button(char * Button);
+    void websiteEvent_Field(char * Field){};
     void refresh();  //Called when component should refresh its state
     void report();
     bool getIsDark(); //Light sensor digital feedback: True(Bright) or False(Dark)

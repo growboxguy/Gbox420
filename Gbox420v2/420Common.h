@@ -23,10 +23,10 @@ class Common{
     const __FlashStringHelper * Name; 
     virtual void refresh();  //every class needs to have an implementation of this method. Called when component should refresh its state (for example Reading temperature and humidity using the DHTsensor class)
     virtual void report() = 0;  //Prints current state of the object to the Serial outputs
-    virtual void websiteLoadEvent(char * url){};
-    virtual void websiteRefreshEvent(char * url){};
-    virtual void websiteButtonPressEvent(char * Button){};
-    virtual void websiteFieldSubmitEvent(char * Button){};
+    virtual void websiteEvent_Load(char * url){};
+    virtual void websiteEvent_Refresh(char * url){};
+    virtual void websiteEvent_Button(char * Button){};
+    virtual void websiteEvent_Field(char * Button){};
     bool isThisMyComponent(char const * lookupName); //When it return true the component belongs to this object  
     //AlertHandler * HealthStatus; //Tracks the state of a component  
     char * getWebsiteComponentName(const __FlashStringHelper * Name);

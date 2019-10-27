@@ -192,6 +192,10 @@ void getFreeMemory(){
 //////////////////////////////////////////////////////////////////
 //RollingAverage functions
 
+void RollingAverage::resetAverage(){
+  ResetAverage = true;
+}
+
 int RollingAverage::getAverageInt(){
   return Sum / RollingAverageQueueDepth;
 }

@@ -9,7 +9,7 @@ class Fan;
 class PowerSensor;
 class PHSensor;
 class LightSensor;
-class PHSensor;
+class PressureSensor;
 class Aeroponics_NoTank;
 class Aeroponics_Tank;
 
@@ -27,13 +27,14 @@ class GrowBox : public Common
     Lights * Light1;  //Pointer to a Light assembly 
     Lights * Light2;  //Pointer to a Light assembly 
     PowerSensor * PowerSensor1;
+    PressureSensor * PressureSensor1;
     PHSensor * PHSensor1;
     Aeroponics_Tank * Aeroponics_Tank1;
     Aeroponics_NoTank * Aeroponics_NoTank1;
-    void websiteLoadEvent(char * url);
-    void websiteRefreshEvent(char * url);
-    void websiteButtonPressEvent(char * Button){};
-    void websiteFieldSubmitEvent(char * Field);
+    void websiteEvent_Load(char * url);
+    void websiteEvent_Refresh(char * url);
+    void websiteEvent_Button(char * Button){};
+    void websiteEvent_Field(char * Field);
     void refresh();
     void report(){};
     void refreshAll();
