@@ -28,9 +28,10 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   PressureSensor1 = new PressureSensor(F("PressureSensor1"),this,&BoxSettings -> PressureSensor1);
   //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);  
   AddToRefreshQueue_FiveSec(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method  
-  AddToWebsiteQueue_Load(this); //Subscribing to the Website field submit event
-  AddToWebsiteQueue_Refresh(this); //Subscribing to the Website field submit event
+  AddToWebsiteQueue_Load(this); //Subscribing to the Website load event
+  AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
+  AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
   logToSerials(F("GrowBox object created"), true,2);
   addToLog(F("GrowBox initialized"),0);
 }
@@ -73,21 +74,21 @@ void GrowBox::websiteEvent_Field(char * Field){ //When the website field is subm
     if(strcmp_P(ShortMessage,(PGM_P)F("DebugEnabled"))==0) {setDebugOnOff(WebServer.getArgBoolean());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("MetricSystemEnabled"))==0) {setMetricSystemEnabled(WebServer.getArgBoolean());}
     //else if(strcmp_P(ShortMessage,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
-    //else if(strcmp_P(ShortMessage,(PGM_P)F("GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
     //else if(strcmp_P(ShortMessage,(PGM_P)F("PushingBoxLogRelayID"))==0) {setPushingBoxLogRelayID(WebServer.getArgString());}    
   }  
 } 
 
-/* 
+
 void GrowBox::websiteEvent_Button(char * Button){ //When a button is pressed on the website
   if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
   else{ //if the component name matches with the object name   
-    
+    if(strcmp_P(ShortMessage,(PGM_P)F("GoogleSheetsTrigger"))==0) {ReportToGoogleSheets(true);}    
   }  
 }  
-*/
+
 
 void GrowBox::refresh(){
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable 
@@ -247,4 +248,63 @@ void GrowBox::setMetricSystemEnabled(bool MetricEnabled){
   }    
   if(BoxSettings -> MetricSystemEnabled) addToLog(F("Using Metric units"));
   else addToLog(F("Using Imperial units"));  
+}
+
+//Google Sheets reporting
+
+void GrowBox::setReportToGoogleSheetsOnOff(bool State){
+  BoxSettings -> ReportToGoogleSheets = State;
+  if(State){ 
+    addToLog(F("Google Sheets enabled"));
+    Sound1 -> playOnSound();
+    }
+  else {
+    addToLog(F("Google Sheets disabled"));
+    Sound1 -> playOffSound();
+    }
+}
+
+void GrowBox::ReportToGoogleSheets(bool AddToLog){
+  if(AddToLog)addToLog(F("Reporting to Google Sheets"));
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
+  strcat_P(LongMessage,(PGM_P)F("/pushingbox?devid=")); strcat(LongMessage,BoxSettings -> PushingBoxLogRelayID);
+  strcat_P(LongMessage,(PGM_P)F("&Log="));logToJSON(false,true);  
+  logToSerials(F("Reporting to Google Sheets: "),false); logToSerials(LongMessage,true);   
+  RestAPI.get(LongMessage);
+}
+
+char* GrowBox::logToJSON(bool AddToLog,bool Append){ //publish readings in JSON format
+  if(AddToLog)addToLog(F("Reporting to Google Sheets"));
+  if(!Append)memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
+  strcat_P(LongMessage,(PGM_P)F("{\"BoxDate\":\""));  strcat(LongMessage,getFormattedTime());
+  strcat_P(LongMessage,(PGM_P)F("\",\"InternalTemp\":\""));  strcat(LongMessage,InternalDHTSensor -> getTempText() );
+  strcat_P(LongMessage,(PGM_P)F("\",\"ExternalTemp\":\""));  strcat(LongMessage,ExternalDHTSensor -> getTempText() );
+  strcat_P(LongMessage,(PGM_P)F("\",\"InternalHumidity\":\""));  strcat(LongMessage,InternalDHTSensor -> getHumidityText() );
+  strcat_P(LongMessage,(PGM_P)F("\",\"ExternalHumidity\":\""));  strcat(LongMessage,InternalDHTSensor -> getHumidityText() );
+  strcat_P(LongMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat_P(LongMessage,(PGM_P)InternalFan -> fanSpeedToNumber());
+  strcat_P(LongMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat_P(LongMessage,(PGM_P)ExhaustFan -> fanSpeedToNumber());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Power\":\""));  strcat(LongMessage,PowerSensor1 -> getPowerText()); 
+  strcat_P(LongMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(LongMessage,PowerSensor1 -> getEnergyText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(LongMessage,PowerSensor1 -> getVoltageText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Current\":\""));  strcat(LongMessage,PowerSensor1 -> getCurrentText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,PowerSensor1 -> getFrequencyText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,PowerSensor1 -> getPowerFactorText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Light1\":\""));  strcat(LongMessage,Light1 -> getStatusText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Status\":\""));  strcat(LongMessage,Light1 -> getStatusText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Brightness\":\""));  strcat(LongMessage,Light1 -> getBrightness());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Timer\":\""));  strcat(LongMessage,Light1 -> getTimerOnOffText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OnTime\":\""));  strcat(LongMessage,Light1 -> getOnTimeText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OffTime\":\""));  strcat(LongMessage,Light1 -> getOffTimeText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(LongMessage,LightSensor1 -> getReadingText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"IsDark\":\""));  strcat(LongMessage,LightSensor1 -> getIsDarkText());
+  //strcat_P(LongMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(LongMessage,toText(ReservoirLevel));
+  //strcat_P(LongMessage,(PGM_P)F("\",\"PH\":\""));  strcat(LongMessage,toText(PH));
+  //strcat_P(LongMessage,(PGM_P)F("\",\"ReservoirTemp\":\""));  strcat(LongMessage,toText(ReservoirTemp));
+  strcat_P(LongMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(LongMessage,PressureSensor1 -> getPressureText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aeroponics_NoTank1 -> getInterval());
+  strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aeroponics_NoTank1 -> getDuration());
+  //strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aeroponics_Tank1 -> getInterval());
+  //strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aeroponics_Tank1 -> getDuration());
+  strcat_P(LongMessage,(PGM_P)F("\"}"));
+  return LongMessage;
 }

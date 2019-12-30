@@ -43,6 +43,8 @@ class Aeroponics : public Common
     void setSprayOnOff(bool State);
     void setInterval(int interval);
     void setDuration(int duration);
+    char* getInterval();
+    char* getDuration();
 
    private:
 

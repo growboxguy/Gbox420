@@ -31,13 +31,14 @@
 #include "ELClient.h" //ESP-link
 #include "ELClientWebServer.h" //ESP-link - WebServer API
 #include "ELClientCmd.h"  //ESP-link - Get current time from the internet using NTP
+#include "ELClientRest.h" //ESP-link - REST API
 #include "Thread.h" //Splitting functions to threads for timing
 #include "StaticThreadController.h"  //Grouping threads
 #include "420Common.h"  //Base class where plugins inherits from
 #include "GrowBox.h" //Represents a complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variables
-//Settings BoxSettings;   //Storeses every setting of the grow box. Written to EEPROM to keep settings between reboots 
+//Settings BoxSettings;   //Store every setting of the grow box. Written to EEPROM to keep settings between reboots 
 char LongMessage[512];   //temp storage for assembling log LongMessages, buffer for REST and MQTT API LongMessages
 char ShortMessage[MaxTextLength];
 char CurrentTime[20]; //buffer for storing current time
@@ -47,7 +48,8 @@ HardwareSerial& ArduinoSerial = Serial;  //Reference to the Arduino Serial
 HardwareSerial& ESPSerial = Serial3;    //Reference to the ESP Link Serial
 ELClient ESPLink(&ESPSerial);  //ESP-link. Both SLIP and debug LongMessages are sent to ESP over the ESP Serial link
 ELClientWebServer WebServer(&ESPLink); //ESP-link WebServer API
-ELClientCmd ESPCmd(&ESPLink);//ESP-link - Get current time from the internet using NTP
+ELClientCmd ESPCmd(&ESPLink); //ESP-link - Get current time from the internet using NTP
+ELClientRest RestAPI(&ESPLink); //ESP-link REST API
 GrowBox * GBox;  //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 //Threading to time tasks
@@ -123,9 +125,9 @@ void runHalfHour(){
 }
 
 void HeartBeat(){
-  static bool pulseHigh;
-  pulseHigh = !pulseHigh;
-  digitalWrite(13, pulseHigh);
+  static bool ledStatus;
+  ledStatus = !ledStatus;
+  digitalWrite(13, ledStatus);
 }
 
 //////////////////////////////////////////
@@ -142,7 +144,7 @@ Settings* loadSettings(){
   eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));   //Load EEPROM stored settings into EEPROMSettings
   if(DefaultSettings -> CompatibilityVersion != EEPROMSettings.CompatibilityVersion){  //Making sure the EEPROM loaded settings are compatible with the sketch
     logToSerials(F("Incompatible stored settings detected, updating EEPROM..."),false);
-    saveSettings(false,DefaultSettings);  //overwrites stored settings with defaults from this sketch
+    saveSettings(false,DefaultSettings);  //overwrites EEPROM stored settings with defaults from this sketch
   }
   else {
     logToSerials(F("Same settings version detected, applying EEPROM settings..."),false,1);

@@ -14,7 +14,7 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
     logToSerials(F("."),false,0);
     delay(500); 
     };
-  //RestAPI.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets 
+  RestAPI.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets 
   WebServer.setup();
   URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json"); //setup handling request from GrowBox.html
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); //setup handling request from Settings.html

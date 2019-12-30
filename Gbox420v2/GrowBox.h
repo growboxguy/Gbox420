@@ -1,5 +1,6 @@
 #pragma once
 #include "420Common.h"
+#include "ELClientRest.h" //ESP-link - REST API
 
 class DHTSensor;  //forward declaration of classes
 class LightSensor;
@@ -12,6 +13,8 @@ class LightSensor;
 class PressureSensor;
 class Aeroponics_NoTank;
 class Aeroponics_Tank;
+
+extern ELClientRest RestAPI;
 
 class GrowBox : public Common
 { 
@@ -33,7 +36,7 @@ class GrowBox : public Common
     Aeroponics_NoTank * Aeroponics_NoTank1;
     void websiteEvent_Load(__attribute__((unused)) char * url);
     void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    //void websiteEvent_Button(char * Button);
+    void websiteEvent_Button(char * Button);
     void websiteEvent_Field(char * Field);
     void refresh();
     void report(){};
@@ -49,6 +52,8 @@ class GrowBox : public Common
     void addToLog(const char* Text,byte indent=3);
     void setDebugOnOff(bool State);
     void setMetricSystemEnabled(bool MetricEnabled); 
+    void setReportToGoogleSheetsOnOff(bool State);
+    void ReportToGoogleSheets(bool AddToLog);
 
     Common* RefreshQueue_Sec[QueueDepth];
     Common* RefreshQueue_FiveSec[QueueDepth]; 
@@ -66,6 +71,7 @@ class GrowBox : public Common
     byte WebsiteQueueLength_Refresh = 0;
     byte WebsiteQueueLength_Button = 0;
     byte WebsiteQueueLength_Field = 0;
+    char* logToJSON(bool AddToLog,bool Append);
     void AddToRefreshQueue_Sec(Common* Component);
     void AddToRefreshQueue_FiveSec(Common* Component);
     void AddToRefreshQueue_Minute(Common* Component);

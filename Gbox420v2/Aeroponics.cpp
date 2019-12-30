@@ -157,6 +157,14 @@ void Aeroponics::setDuration(int duration){
   GBox -> addToLog(F("Spray time updated"));  
 }
 
+char* Aeroponics::getInterval(){  
+  return toText(*Interval);
+}
+
+char* Aeroponics::getDuration(){  
+  return toText(*Duration);  
+}
+
 char * Aeroponics::pumpStateToText(){
    if(!PumpOK) return (char *)"DISABLED";
    else if(PumpOn) return (char *)"ON";

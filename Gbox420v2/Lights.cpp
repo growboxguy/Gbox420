@@ -192,6 +192,10 @@ bool Lights::getStatus(){
    return *Status;
 }
 
+char * Lights::getBrightness(){
+    return toText(*Brightness);
+}
+
 char *  Lights::getStatusText(){
    return onOffToText(*Status);
 }
