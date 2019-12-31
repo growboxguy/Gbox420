@@ -5,8 +5,20 @@ Common::Common(const __FlashStringHelper * Name){
     logToSerials(F("Initializing "),false,2);logToSerials(this ->Name,false,0);logToSerials(F("..."),false,0); //Prints "Initializing NAME..." to the console
 }
 
-void Common::refresh(){
-  logToSerials(Name,false,2);logToSerials(F(" refreshing"),true,0);  //Prints "NAME refreshing" to the console
+void Common::refresh_Sec(){
+  logToSerials(Name,false,2);logToSerials(F(" refreshing (1sec)"),true,0);  //Prints "NAME refreshing" to the console
+}
+
+void Common::refresh_FiveSec(){
+  logToSerials(Name,false,2);logToSerials(F(" refreshing (5sec)"),true,0);  //Prints "NAME refreshing" to the console
+}
+
+void Common::refresh_Minute(){
+  logToSerials(Name,false,2);logToSerials(F(" refreshing (1min)"),true,0);  //Prints "NAME refreshing" to the console
+}
+
+void Common::refresh_HalfHour(){
+  logToSerials(Name,false,2);logToSerials(F(" refreshing (30min)"),true,0);  //Prints "NAME refreshing" to the console
 }
 
 char * Common::getWebsiteComponentName(const __FlashStringHelper * ComponentName){

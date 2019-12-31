@@ -13,7 +13,7 @@ class PressureSensor : public Common
     void websiteEvent_Refresh(__attribute__((unused)) char * url);
     void websiteEvent_Button(char * Button);
     void websiteEvent_Field(char * Field);
-    void refresh();  //Called when component should refresh its state
+    void refresh_Minute();  //Called when component should refresh its state
     void report();
     bool PreviousPressureRead = true;
     void readPressure();

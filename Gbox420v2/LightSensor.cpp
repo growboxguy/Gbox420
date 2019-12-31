@@ -33,8 +33,8 @@ void LightSensor::websiteEvent_Button(char * Button){ //When the website is open
   }  
 } 
 
-void LightSensor::refresh(){  //Called when component should refresh its state
-  Common::refresh();
+void LightSensor::refresh_Minute(){  //Called when component should refresh its state
+  Common::refresh_Minute();
   if(CalibrateRequested){ calibrate(); } //If calibration was requested
   IsDark = digitalRead(*DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected. ! inverts this
   LightReading -> updateAverage(1023 - analogRead(*AnalogPin)); 

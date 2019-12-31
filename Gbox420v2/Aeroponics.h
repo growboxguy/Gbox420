@@ -13,7 +13,6 @@ class Aeroponics : public Common
     virtual void websiteEvent_Refresh(__attribute__((unused)) char * url);
     virtual void websiteEvent_Button(__attribute__((unused)) char * Button);
     virtual void websiteEvent_Field(__attribute__((unused)) char * Field);
-    virtual void refresh() = 0;  //Due to the virtual function Aeroponics class cannot be instantiated
     virtual void report();
     int AeroPressure = 6; //TODO: FAKE PRESSURE READING - REMOVE IT
     // float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)

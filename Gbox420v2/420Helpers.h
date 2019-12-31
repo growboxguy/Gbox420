@@ -26,7 +26,6 @@ float convertBetweenTempUnits(float);
 float convertBetweenPressureUnits(float); 
 char * toText(const __FlashStringHelper *);    
 char * toText(int);
-char * toText(bool); 
 char * toText(long); 
 char * toText(float);  //function overloading: Same named function, different parameter type 
 char * toText(int Number1, int Number2,const char * Separator); 

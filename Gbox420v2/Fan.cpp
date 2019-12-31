@@ -43,8 +43,8 @@ void Fan::websiteEvent_Button(char * Button){ //When the website is opened, load
   }  
 } 
 
-void Fan::refresh(){
-  Common::refresh();
+void Fan::refresh_Minute(){
+  Common::refresh_Minute();
   checkFanStatus();
   report();
 }

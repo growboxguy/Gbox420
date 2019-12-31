@@ -69,8 +69,8 @@ void Lights::websiteEvent_Button(char * Button){ //When the website is opened, l
   }  
 } 
 
-void Lights::refresh(){  //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
-  Common::refresh();
+void Lights::refresh_Minute(){  //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
+  Common::refresh_Minute();
   checkLightTimer(); 
   checkLightStatus();
   report();

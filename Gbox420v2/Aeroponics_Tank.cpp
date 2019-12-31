@@ -25,8 +25,8 @@ void Aeroponics_Tank::websiteEvent_Field(char * Field){ //When the website is op
   }
 }
 
-void Aeroponics_Tank::refresh(){ 
-  Common::refresh();
+void Aeroponics_Tank::refresh_Sec(){ 
+  Common::refresh_Sec();
   if(PumpOn){ //if pump is on
     if(AeroPressure >= *PressureHigh){ //refill complete, target pressure reached
      setPumpOff(false);

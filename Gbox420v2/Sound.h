@@ -12,7 +12,7 @@ public:
     //void websiteEvent_Refresh(__attribute__((unused)) char * url);  //{} means this function is empty, it has no implementation in the cpp file
     void websiteEvent_Field(char * Field);
     void websiteEvent_Button(char * Button);
-    void refresh();
+    void refresh_Sec();
     void report(){};
     void setSoundOnOff(bool State);
     void playOnSound();

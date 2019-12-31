@@ -27,7 +27,8 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, &BoxSettings -> Aeroponics_NoTank1_Common, &BoxSettings -> Aeroponics_NoTank1_Specific);
   PressureSensor1 = new PressureSensor(F("PressureSensor1"),this,&BoxSettings -> PressureSensor1);
   //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);  
-  AddToRefreshQueue_FiveSec(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method  
+  AddToRefreshQueue_FiveSec(this);  //Subscribing to the 5 seconds refresh queue: Calls the refresh_FiveSec() method 
+  AddToRefreshQueue_HalfHour(this);  //Subscribing to the 30 minutes refresh queue: Calls the refresh_HalfHour() method 
   AddToWebsiteQueue_Load(this); //Subscribing to the Website load event
   AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
@@ -90,7 +91,8 @@ void GrowBox::websiteEvent_Button(char * Button){ //When a button is pressed on 
 }  
 
 
-void GrowBox::refresh(){
+void GrowBox::refresh_Minute(){
+  Common::refresh_Minute();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable 
   strcat(LongMessage,getFormattedTime());
   /*  
@@ -103,6 +105,11 @@ void GrowBox::refresh(){
   logToSerials( &LongMessage, true,0);
 }
 
+void GrowBox::refresh_HalfHour(){
+  Common::refresh_HalfHour();
+  ReportToGoogleSheets(false);
+}
+
 void GrowBox::refreshAll(){  //implementing the virtual refresh function from Common
   logToSerials(F("GrowBox refreshing"),true,0);
   //trigger all threads at startup
@@ -113,30 +120,30 @@ void GrowBox::refreshAll(){  //implementing the virtual refresh function from Co
 }
 
 void GrowBox::runSec(){ 
-  //if(DebugEnabled)logToSerials(F("One sec trigger.."),true,1);  
+  if(DebugEnabled)logToSerials(F("One sec trigger.."),true,1);  
   for(int i=0;i<refreshQueueLength_Sec;i++){
-   RefreshQueue_Sec[i] -> refresh();
+   RefreshQueue_Sec[i] -> refresh_Sec();
   }
 }
 
 void GrowBox::runFiveSec(){
   if(DebugEnabled)logToSerials(F("Five sec trigger.."),true,1); 
   for(int i=0;i<refreshQueueLength_FiveSec;i++){
-    RefreshQueue_FiveSec[i] -> refresh();
+    RefreshQueue_FiveSec[i] -> refresh_FiveSec();
   }
 }
 
 void GrowBox::runMinute(){
   if(DebugEnabled)logToSerials(F("Minute trigger.."),true,1);
   for(int i=0;i<refreshQueueLength_Minute;i++){
-    RefreshQueue_Minute[i] -> refresh();
+    RefreshQueue_Minute[i] -> refresh_Minute();
   }
 }
 
 void GrowBox::runHalfHour(){   
   if(DebugEnabled)logToSerials(F("Half hour trigger.."),true,1);
   for(int i=0;i<refreshQueueLength_HalfHour;i++){
-    RefreshQueue_HalfHour[i] -> refresh();
+    RefreshQueue_HalfHour[i] -> refresh_HalfHour();
   } 
 }
 
@@ -269,9 +276,8 @@ void GrowBox::ReportToGoogleSheets(bool AddToLog){
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
   strcat_P(LongMessage,(PGM_P)F("/pushingbox?devid="));  
   strcat(LongMessage,BoxSettings -> PushingBoxLogRelayID);
-  strcat_P(LongMessage,(PGM_P)F("&Log="));  
-  //strcat_P(LongMessage,(PGM_P)F("{\"BoxDate\":\""));  strcat(LongMessage,getFormattedTime());  
-  strcat_P(LongMessage,(PGM_P)F("\",\"InternalTemp\":\""));  strcat(LongMessage,InternalDHTSensor -> getTempText(false));
+  strcat_P(LongMessage,(PGM_P)F("&Log={"));   
+  strcat_P(LongMessage,(PGM_P)F("\"InternalTemp\":\""));  strcat(LongMessage,InternalDHTSensor -> getTempText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"ExternalTemp\":\""));  strcat(LongMessage,ExternalDHTSensor -> getTempText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"InternalHumidity\":\""));  strcat(LongMessage,InternalDHTSensor -> getHumidityText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"ExternalHumidity\":\""));  strcat(LongMessage,InternalDHTSensor -> getHumidityText(false));

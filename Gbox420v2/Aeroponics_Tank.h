@@ -11,7 +11,7 @@ class Aeroponics_Tank : public Aeroponics
   public:
     Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings);
     void websiteEvent_Field(char * Field);
-    void refresh();
+    void refresh_Sec();
     void report();
     byte* SpraySolenoidPin;
     bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on.

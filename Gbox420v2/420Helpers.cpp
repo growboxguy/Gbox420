@@ -76,12 +76,6 @@ char * toText(int Number){
   return ReturnChar;
 }
 
-char * toText(bool Value){
-  return Value ? '1': '0';   //same as the commented 2 lines below
-  //if(Value) return '1';
-  //else return '0';
-}
-
 char * toText(long Number){ 
   static char ReturnFloatChar[MaxTextLength] = ""; 
   sprintf (ReturnFloatChar, "%ld", Number);

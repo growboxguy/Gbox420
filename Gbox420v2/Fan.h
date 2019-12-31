@@ -13,7 +13,7 @@ class Fan : public Common
     Fan(const __FlashStringHelper * Name, GrowBox * GBox, Settings::FanSettings * DefaultSettings);
     GrowBox * GBox;
 
-    void refresh();  //Called when component should refresh its state
+    void refresh_Minute();  //Called when component should refresh its state
     void report();
     //void websiteEvent_Load(__attribute__((unused)) char * url);
     void websiteEvent_Refresh(__attribute__((unused)) char * url);

@@ -20,8 +20,8 @@ void PowerSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //Wh
   }
 } 
 
-void PowerSensor::refresh(){
-  Common::refresh();
+void PowerSensor::refresh_Minute(){
+  Common::refresh_Minute();
   Voltage = Sensor -> voltage();  //AC Voltage (V)
   Current = Sensor -> current(); //Current (A)
   Power = Sensor -> power(); //Actual power usage (W)

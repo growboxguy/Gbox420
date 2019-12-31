@@ -19,8 +19,8 @@ void DHTSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When
   } 
 } 
 
-void DHTSensor::refresh(){  //Called when component should refresh its state 
-  Common::refresh();
+void DHTSensor::refresh_Minute(){  //Called when component should refresh its state 
+  Common::refresh_Minute();
   if(GBox -> BoxSettings -> MetricSystemEnabled){ Temp -> updateAverage(Sensor -> readTemperature());}
   else {Temp -> updateAverage(Sensor -> readTemperature() *1.8f + 32);}
   Humidity -> updateAverage(Sensor -> readHumidity());  

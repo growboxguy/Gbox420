@@ -8,7 +8,7 @@ PHSensor::PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope){
   this -> Slope = Slope;
   pinMode(Pin, INPUT);
   PH = new RollingAverage();
-  GBox -> AddToRefreshQueue_FiveSec(this);  //Subscribing to the FiveSec refresh queue: Calls the refresh() method
+  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the FiveSec refresh queue: Calls the refresh() method
 }
 
 void PHSensor::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
@@ -18,8 +18,8 @@ void PHSensor::websiteEvent_Load(__attribute__((unused)) char * url){ //When the
   // WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
 } 
 
-void PHSensor::refresh(){
-  Common::refresh();
+void PHSensor::refresh_Minute(){
+  Common::refresh_Minute();
   if(GBox -> BoxSettings -> DebugEnabled){ getPH(true); }
   else { getPH(false); }
 }

@@ -23,8 +23,8 @@ void Aeroponics_NoTank::websiteEvent_Field(char * Field){ //When the website is 
   }
 } 
 
-void Aeroponics_NoTank::refresh(){ //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
-  Common::refresh();
+void Aeroponics_NoTank::refresh_Sec(){ //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
+  Common::refresh_Sec();
   // Serial.print("SprayTimer: "); 
   // Serial.print(millis() - SprayTimer);  
   // Serial.print("/"); 

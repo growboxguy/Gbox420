@@ -47,8 +47,8 @@ void PressureSensor::websiteEvent_Field(char * Field){ //When the website is ope
   }
 } 
 
-void PressureSensor::refresh(){  //Called when component should refresh its state 
-  Common::refresh();
+void PressureSensor::refresh_Minute(){  //Called when component should refresh its state 
+  Common::refresh_Minute();
   readPressure();
   report();
 }

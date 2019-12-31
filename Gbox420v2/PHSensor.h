@@ -13,7 +13,7 @@ class PHSensor : public Common
     //void websiteEvent_Refresh(__attribute__((unused)) char * url);
     //void websiteEvent_Button(char * Button);
     //void websiteEvent_Field(char * Field);
-    void refresh();
+    void refresh_Minute();
     void report(){}; //{} means this function is empty, it has no implementation in the cpp file
     void getPH(bool ShowRaw);
     void setSlope(float Value);

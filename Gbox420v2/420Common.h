@@ -21,8 +21,10 @@ class Common{
     bool DebugEnabled;
     byte RefreshCounter = 0; //counts how many times the refresh() function was called. Used for timing
     const __FlashStringHelper * Name; 
-    virtual void refresh();  //every class needs to have an implementation of this method. Called when component should refresh its state (for example Reading temperature and humidity using the DHTsensor class)
-    virtual void report() = 0;  //Prints current state of the object to the Serial outputs
+    virtual void refresh_Sec();
+    virtual void refresh_FiveSec();
+    virtual void refresh_Minute();
+    virtual void refresh_HalfHour();
     virtual void websiteEvent_Load(__attribute__((unused)) char * url){};  //the "__attribute__((unused))" in front of the url parameter tells the compiler the variable is meant to be possibly unused. GCC will not produce an unused variable warning.
     virtual void websiteEvent_Refresh(__attribute__((unused)) char * url){};
     virtual void websiteEvent_Button(__attribute__((unused)) char * Button){};
