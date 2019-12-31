@@ -39,7 +39,7 @@
 
 //Global variables
 //Settings BoxSettings;   //Store every setting of the grow box. Written to EEPROM to keep settings between reboots 
-char LongMessage[512];   //temp storage for assembling log LongMessages, buffer for REST and MQTT API LongMessages
+char LongMessage[1024];   //temp storage for assembling log LongMessages, buffer for REST and MQTT API LongMessages
 char ShortMessage[MaxTextLength];
 char CurrentTime[20]; //buffer for storing current time
 
@@ -49,7 +49,7 @@ HardwareSerial& ESPSerial = Serial3;    //Reference to the ESP Link Serial
 ELClient ESPLink(&ESPSerial);  //ESP-link. Both SLIP and debug LongMessages are sent to ESP over the ESP Serial link
 ELClientWebServer WebServer(&ESPLink); //ESP-link WebServer API
 ELClientCmd ESPCmd(&ESPLink); //ESP-link - Get current time from the internet using NTP
-ELClientRest RestAPI(&ESPLink); //ESP-link REST API
+ELClientRest PushingBoxRestAPI(&ESPLink); //ESP-link REST API
 GrowBox * GBox;  //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 //Threading to time tasks

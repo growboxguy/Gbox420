@@ -28,11 +28,11 @@ class PowerSensor : public Common
     bool setAddress(uint8_t addr);
     uint8_t getAddress();
     bool resetEnergy();
-    char * getPowerText();
-    char * getEnergyText();    
-    char * getVoltageText();
-    char * getCurrentText();    
-    char * getFrequencyText();
+    char * getPowerText(bool IncludeUnits);
+    char * getEnergyText(bool IncludeUnits);   
+    char * getVoltageText(bool IncludeUnits);
+    char * getCurrentText(bool IncludeUnits);    
+    char * getFrequencyText(bool IncludeUnits);
     char * getPowerFactorText();
 
   private:

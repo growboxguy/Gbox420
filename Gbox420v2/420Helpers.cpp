@@ -38,10 +38,10 @@ time_t getNtpTime(){
     }
     SyncInProgress = false;
     if(NTPResponse == 0) {
-      logToSerials(F("NTP time sync failed"),true);
+      logToSerials(F("NTP time sync failed"),true,1);
       //sendEmailAlert(F("NTP%20time%20sync%20failed")); 
     }
-    else logToSerials(F("NTP time synchronized"),true);
+    else logToSerials(F(" time synchronized"),true,1);
     }
   return NTPResponse;
 }
@@ -74,6 +74,12 @@ char * toText(int Number){
   static char ReturnChar[MaxTextLength] = "";
   itoa(Number, ReturnChar, 10);
   return ReturnChar;
+}
+
+char * toText(bool Value){
+  return Value ? '1': '0';   //same as the commented 2 lines below
+  //if(Value) return '1';
+  //else return '0';
 }
 
 char * toText(long Number){ 

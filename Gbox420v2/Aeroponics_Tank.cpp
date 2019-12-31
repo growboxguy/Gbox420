@@ -13,7 +13,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
   QuietToMinute = &TankSpecificSettings -> QuietToMinute; //Quiet time end - minute
   pinMode(*SpraySolenoidPin,OUTPUT);
   pinMode(*SpraySolenoidPin,HIGH);  //initialize off 
-  logToSerials(F("Aeroponics_Tank object created"),true);
+  logToSerials(F("Aeroponics_Tank object created"),true,1);
 }   
 
 void Aeroponics_Tank::websiteEvent_Field(char * Field){ //When the website is opened, load stuff once

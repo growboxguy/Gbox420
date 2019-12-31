@@ -75,7 +75,7 @@ void GrowBox::websiteEvent_Field(char * Field){ //When the website field is subm
     else if(strcmp_P(ShortMessage,(PGM_P)F("MetricSystemEnabled"))==0) {setMetricSystemEnabled(WebServer.getArgBoolean());}
     //else if(strcmp_P(ShortMessage,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
-    //else if(strcmp_P(ShortMessage,(PGM_P)F("PushingBoxLogRelayID"))==0) {setPushingBoxLogRelayID(WebServer.getArgString());}    
+    else if(strcmp_P(ShortMessage,(PGM_P)F("PushingBoxLogRelayID"))==0) {setPushingBoxLogRelayID(WebServer.getArgString());}    
   }  
 } 
 
@@ -204,7 +204,7 @@ void GrowBox::addToLog(const __FlashStringHelper *LongMessage,byte Indent){ //fu
   strncpy_P(Logs[0],(PGM_P)LongMessage,MaxTextLength);  //instert new log to [0]
 }
 
-char* GrowBox::eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
+char * GrowBox::eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   if(!Append)memset(&LongMessage[0], 0, sizeof(LongMessage));
   strcat_P(LongMessage,(PGM_P)F("["));
   for(int i=LogDepth-1;i >=0 ; i--)
@@ -265,46 +265,45 @@ void GrowBox::setReportToGoogleSheetsOnOff(bool State){
 }
 
 void GrowBox::ReportToGoogleSheets(bool AddToLog){
-  if(AddToLog)addToLog(F("Reporting to Google Sheets"));
+  if(AddToLog)addToLog(F("Reporting to Google Sheets"),false);
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("/pushingbox?devid=")); strcat(LongMessage,BoxSettings -> PushingBoxLogRelayID);
-  strcat_P(LongMessage,(PGM_P)F("&Log="));logToJSON(false,true);  
-  logToSerials(F("Reporting to Google Sheets: "),false); logToSerials(LongMessage,true);   
-  RestAPI.get(LongMessage);
-}
-
-char* GrowBox::logToJSON(bool AddToLog,bool Append){ //publish readings in JSON format
-  if(AddToLog)addToLog(F("Reporting to Google Sheets"));
-  if(!Append)memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("{\"BoxDate\":\""));  strcat(LongMessage,getFormattedTime());
-  strcat_P(LongMessage,(PGM_P)F("\",\"InternalTemp\":\""));  strcat(LongMessage,InternalDHTSensor -> getTempText() );
-  strcat_P(LongMessage,(PGM_P)F("\",\"ExternalTemp\":\""));  strcat(LongMessage,ExternalDHTSensor -> getTempText() );
-  strcat_P(LongMessage,(PGM_P)F("\",\"InternalHumidity\":\""));  strcat(LongMessage,InternalDHTSensor -> getHumidityText() );
-  strcat_P(LongMessage,(PGM_P)F("\",\"ExternalHumidity\":\""));  strcat(LongMessage,InternalDHTSensor -> getHumidityText() );
-  strcat_P(LongMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat_P(LongMessage,(PGM_P)InternalFan -> fanSpeedToNumber());
-  strcat_P(LongMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat_P(LongMessage,(PGM_P)ExhaustFan -> fanSpeedToNumber());
-  strcat_P(LongMessage,(PGM_P)F("\",\"Power\":\""));  strcat(LongMessage,PowerSensor1 -> getPowerText()); 
-  strcat_P(LongMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(LongMessage,PowerSensor1 -> getEnergyText());
-  strcat_P(LongMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(LongMessage,PowerSensor1 -> getVoltageText());
-  strcat_P(LongMessage,(PGM_P)F("\",\"Current\":\""));  strcat(LongMessage,PowerSensor1 -> getCurrentText());
-  strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,PowerSensor1 -> getFrequencyText());
+  strcat_P(LongMessage,(PGM_P)F("/pushingbox?devid="));  
+  strcat(LongMessage,BoxSettings -> PushingBoxLogRelayID);
+  strcat_P(LongMessage,(PGM_P)F("&Log="));  
+  //strcat_P(LongMessage,(PGM_P)F("{\"BoxDate\":\""));  strcat(LongMessage,getFormattedTime());  
+  strcat_P(LongMessage,(PGM_P)F("\",\"InternalTemp\":\""));  strcat(LongMessage,InternalDHTSensor -> getTempText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"ExternalTemp\":\""));  strcat(LongMessage,ExternalDHTSensor -> getTempText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"InternalHumidity\":\""));  strcat(LongMessage,InternalDHTSensor -> getHumidityText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"ExternalHumidity\":\""));  strcat(LongMessage,InternalDHTSensor -> getHumidityText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat(LongMessage,InternalFan -> fanSpeedToNumber());
+  strcat_P(LongMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat(LongMessage,ExhaustFan -> fanSpeedToNumber());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Power\":\""));  strcat(LongMessage,PowerSensor1 -> getPowerText(false)); 
+  strcat_P(LongMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(LongMessage,PowerSensor1 -> getEnergyText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(LongMessage,PowerSensor1 -> getVoltageText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"Current\":\""));  strcat(LongMessage,PowerSensor1 -> getCurrentText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,PowerSensor1 -> getFrequencyText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,PowerSensor1 -> getPowerFactorText());
-  strcat_P(LongMessage,(PGM_P)F("\",\"Light1\":\""));  strcat(LongMessage,Light1 -> getStatusText());
-  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Status\":\""));  strcat(LongMessage,Light1 -> getStatusText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Status\":\""));  strcat(LongMessage,Light1 -> getStatusText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Brightness\":\""));  strcat(LongMessage,Light1 -> getBrightness());
-  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Timer\":\""));  strcat(LongMessage,Light1 -> getTimerOnOffText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Timer\":\""));  strcat(LongMessage,Light1 -> getTimerOnOffText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OnTime\":\""));  strcat(LongMessage,Light1 -> getOnTimeText());
   strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OffTime\":\""));  strcat(LongMessage,Light1 -> getOffTimeText());
-  strcat_P(LongMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(LongMessage,LightSensor1 -> getReadingText());
-  strcat_P(LongMessage,(PGM_P)F("\",\"IsDark\":\""));  strcat(LongMessage,LightSensor1 -> getIsDarkText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(LongMessage,LightSensor1 -> getReadingText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"IsDark\":\""));  strcat(LongMessage,LightSensor1 -> getIsDarkText(false));
   //strcat_P(LongMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(LongMessage,toText(ReservoirLevel));
   //strcat_P(LongMessage,(PGM_P)F("\",\"PH\":\""));  strcat(LongMessage,toText(PH));
   //strcat_P(LongMessage,(PGM_P)F("\",\"ReservoirTemp\":\""));  strcat(LongMessage,toText(ReservoirTemp));
-  strcat_P(LongMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(LongMessage,PressureSensor1 -> getPressureText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(LongMessage,PressureSensor1 -> getPressureText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aeroponics_NoTank1 -> getInterval());
   strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aeroponics_NoTank1 -> getDuration());
   //strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aeroponics_Tank1 -> getInterval());
-  //strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aeroponics_Tank1 -> getDuration());
+  //strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aeroponics_Tank1 -> getDuration());  
   strcat_P(LongMessage,(PGM_P)F("\"}"));
-  return LongMessage;
+  logToSerials(&LongMessage,true); //print the report command to console
+  PushingBoxRestAPI.get(LongMessage); //PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
+}
+
+void GrowBox::setPushingBoxLogRelayID(char * ID){  
+  strncpy(BoxSettings -> PushingBoxLogRelayID,ID,MaxTextLength);
+  addToLog(F("Sheets log relay ID updated"));
 }

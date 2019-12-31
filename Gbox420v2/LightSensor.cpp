@@ -13,14 +13,14 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox,  Sett
   GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website refresh event
-  logToSerials(F("LightSensor object created"),true);
+  logToSerials(F("LightSensor object created"),true,1);
 }
 
 void LightSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/GrowBox.html.json")==0){
-    WebServer.setArgString(getWebsiteComponentName(F("IsDark")),getIsDarkText());
+    WebServer.setArgString(getWebsiteComponentName(F("IsDark")),getIsDarkText(true));
     WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingPercentage());
-    WebServer.setArgString(getWebsiteComponentName(F("ReadingRaw")),getReadingText()); 
+    WebServer.setArgString(getWebsiteComponentName(F("ReadingRaw")),getReadingText(true)); 
   }
 } 
 
@@ -43,8 +43,8 @@ void LightSensor::refresh(){  //Called when component should refresh its state
 
 void LightSensor::report(){
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("Light detected:")); strcat(LongMessage,getIsDarkText());
-  strcat_P(LongMessage,(PGM_P)F(" ; LightReading:")); strcat(LongMessage, getReadingText());
+  strcat_P(LongMessage,(PGM_P)F("Light detected:")); strcat(LongMessage,getIsDarkText(true));
+  strcat_P(LongMessage,(PGM_P)F(" ; LightReading:")); strcat(LongMessage, getReadingText(true));
   strcat_P(LongMessage,(PGM_P)F(" (")); strcat(LongMessage, getReadingPercentage());strcat_P(LongMessage,(PGM_P)F(")"));
   logToSerials( &LongMessage, true,4);
 }
@@ -57,18 +57,6 @@ void LightSensor::report(){
 //   strcpy_P(buf+1, name_p);
 //   strcpy(buf+2+nlen, value);
 //   _elc->Request(buf, nlen+vlen+2); 
-
-char* LightSensor::getReadingText(){
-  static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
-  memset(&ReturnChar[0], 0, sizeof(ReturnChar));  //clear variable
-  strcat(ReturnChar,LightReading -> getAverageIntText());   
-  strcat_P(ReturnChar,(PGM_P)F(" [")); 
-  strcat(ReturnChar,toText(MinReading));
-  strcat_P(ReturnChar,(PGM_P)F("/"));
-  strcat(ReturnChar,toText(MaxReading));
-  strcat_P(ReturnChar,(PGM_P)F("]"));   
-  return ReturnChar;
-}
 
 void LightSensor::triggerCalibration(){ //website signals to calibrate light sensor MAX and MIN readings the next time a refresh runs
   CalibrateRequested = true; 
@@ -108,6 +96,22 @@ char * LightSensor::getReadingPercentage(){
   return percentageToText(map(LightReading -> getAverageInt(),MinReading,MaxReading,0,100)); //https://www.arduino.cc/reference/en/language/functions/math/map/ 
 }
 
-char * LightSensor::getIsDarkText(){
-  return yesNoToText(IsDark);
+char * LightSensor::getReadingText(bool IncludeMinMax){
+  if(IncludeMinMax){
+    static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
+    memset(&ReturnChar[0], 0, sizeof(ReturnChar));  //clear variable
+    strcat(ReturnChar,LightReading -> getAverageIntText());   
+    strcat_P(ReturnChar,(PGM_P)F(" [")); 
+    strcat(ReturnChar,toText(MinReading));
+    strcat_P(ReturnChar,(PGM_P)F("/"));
+    strcat(ReturnChar,toText(MaxReading));
+    strcat_P(ReturnChar,(PGM_P)F("]"));   
+    return ReturnChar;
+  }
+  else return LightReading -> getAverageIntText();
+}
+
+char * LightSensor::getIsDarkText(bool UseWords){
+  if(UseWords) return yesNoToText(IsDark);
+  else return toText((bool)IsDark);
 }

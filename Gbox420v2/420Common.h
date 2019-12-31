@@ -12,7 +12,7 @@
 
 extern Settings MySettings;
 extern char ShortMessage[MaxTextLength];
-extern char LongMessage[512];
+extern char LongMessage[1024];
 extern char CurrentTime[20];
 extern ELClientWebServer WebServer;
 

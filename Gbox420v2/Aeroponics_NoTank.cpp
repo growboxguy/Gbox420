@@ -3,7 +3,7 @@
 
 Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific * NoTankSpecificSettings) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings)) {
   BlowOffTime = &NoTankSpecificSettings -> BlowOffTime; //Aeroponics - Turn on pump below this pressure (bar)
-  logToSerials(F("Aeroponics_NoTank object created"),true);
+  logToSerials(F("Aeroponics_NoTank object created"),true,1);
 }
 
 void Aeroponics_NoTank::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once

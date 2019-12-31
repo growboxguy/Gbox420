@@ -10,7 +10,7 @@ Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox, Settings::SoundSe
   GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press even 
   GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
   GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the Sec refresh queue: Calls the refresh() method 
-  logToSerials(F("Sound object created"),true);
+  logToSerials(F("Sound object created"),true,1);
 }
 
 void Sound::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
@@ -33,15 +33,17 @@ void Sound::websiteEvent_Field(char * Field){ //When the website field is submit
     return;  //If did not match:return control to caller fuction
   }
   else{ //if the component name matches with the object name   
-    if(strcmp_P(ShortMessage,(PGM_P)F("SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}    
+    if(strcmp_P(ShortMessage,(PGM_P)F("Enabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}    
   }  
 } 
 
 void Sound::refresh(){
   if(*Enabled){  
-    if (PlayOnSound)  {PlayOnSound = false;OnSound();}
-    if (PlayOffSound)  {PlayOffSound = false;OffSound();} 
+    if (PlayOnSound) OnSound();
+    if (PlayOffSound) OffSound();
   }
+  PlayOnSound = false;
+  PlayOffSound = false;
   if (PlayEE)  {PlayEE = false;EE();} 
 }
 

@@ -157,11 +157,11 @@ void Aeroponics::setDuration(int duration){
   GBox -> addToLog(F("Spray time updated"));  
 }
 
-char* Aeroponics::getInterval(){  
+char * Aeroponics::getInterval(){  
   return toText(*Interval);
 }
 
-char* Aeroponics::getDuration(){  
+char * Aeroponics::getDuration(){  
   return toText(*Duration);  
 }
 

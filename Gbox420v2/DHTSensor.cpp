@@ -9,13 +9,13 @@ DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings:
   Humidity = new RollingAverage();
   GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
-  logToSerials(F("DHT Sensor object created"),true);
+  logToSerials(F("DHT Sensor object created"),true,1);
 }
 
 void DHTSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/GrowBox.html.json")==0){
-    WebServer.setArgString(getWebsiteComponentName(F("Temp")), getTempText());
-    WebServer.setArgString(getWebsiteComponentName(F("Humidity")), getHumidityText());
+    WebServer.setArgString(getWebsiteComponentName(F("Temp")), getTempText(true));
+    WebServer.setArgString(getWebsiteComponentName(F("Humidity")), getHumidityText(true));
   } 
 } 
 
@@ -29,8 +29,8 @@ void DHTSensor::refresh(){  //Called when component should refresh its state
 
 void DHTSensor::report(){
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage, getTempText());
-  strcat_P(LongMessage,(PGM_P)F(" ; Humidity:")); strcat(LongMessage, getHumidityText());
+  strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage, getTempText(true));
+  strcat_P(LongMessage,(PGM_P)F(" ; Humidity:")); strcat(LongMessage, getHumidityText(true));
   logToSerials(&LongMessage,true,4);
 }
 
@@ -42,10 +42,12 @@ float DHTSensor::getHumidity(){
   return Humidity -> getAverageFloat();
 }
 
-char* DHTSensor::getTempText(){
-  return tempToText(Temp -> getAverageFloat());
+char * DHTSensor::getTempText(bool IncludeUnits){
+  if(IncludeUnits) return tempToText(Temp -> getAverageFloat());
+  else return Temp -> getAverageFloatText();
 }
 
-char* DHTSensor::getHumidityText(){
-  return percentageToText(Humidity -> getAverageFloat());
+char * DHTSensor::getHumidityText(bool IncludeUnits){  
+  if(IncludeUnits) return percentageToText(Humidity -> getAverageFloat());
+  else return Humidity -> getAverageFloatText();
 }

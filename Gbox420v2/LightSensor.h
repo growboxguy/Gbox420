@@ -17,8 +17,8 @@ class LightSensor : public Common
     bool getIsDark(); //Light sensor digital feedback: True(Bright) or False(Dark)
     int getReading(); //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
     char * getReadingPercentage(); //Light sensor analog feedback relative to calibration values: 0 to 100%  //CALIBRATION NOT IMPLEMENTED
-    char * getIsDarkText();  
-    char * getReadingText();
+    char * getIsDarkText(bool UseWords);  
+    char * getReadingText(bool IncludeMinMax); //returns the current light sensor reading. If IncludeMinMax is set to true it also includes the calibated minimum and maximum readings
     void triggerCalibration();    //Website signals to calibrate the MAX/MIN readings the next time the object gets CPU time
     
   private:

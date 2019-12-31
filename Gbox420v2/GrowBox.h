@@ -14,7 +14,7 @@ class PressureSensor;
 class Aeroponics_NoTank;
 class Aeroponics_Tank;
 
-extern ELClientRest RestAPI;
+extern ELClientRest PushingBoxRestAPI;
 
 class GrowBox : public Common
 { 
@@ -47,9 +47,9 @@ class GrowBox : public Common
     void runMinute();
     void runHalfHour(); 
 
-    char* eventLogToJSON(bool Append); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]  
+    char * eventLogToJSON(bool Append); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]  
     void addToLog(const __FlashStringHelper* Text,byte indent=3);
-    void addToLog(const char* Text,byte indent=3);
+    void addToLog(const char * Text,byte indent=3);
     void setDebugOnOff(bool State);
     void setMetricSystemEnabled(bool MetricEnabled); 
     void setReportToGoogleSheetsOnOff(bool State);
@@ -71,7 +71,7 @@ class GrowBox : public Common
     byte WebsiteQueueLength_Refresh = 0;
     byte WebsiteQueueLength_Button = 0;
     byte WebsiteQueueLength_Field = 0;
-    char* logToJSON(bool AddToLog,bool Append);
+    void setPushingBoxLogRelayID(char * ID);
     void AddToRefreshQueue_Sec(Common* Component);
     void AddToRefreshQueue_FiveSec(Common* Component);
     void AddToRefreshQueue_Minute(Common* Component);

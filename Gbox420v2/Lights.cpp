@@ -21,7 +21,7 @@ Lights::Lights(const __FlashStringHelper * Name, GrowBox * GBox, Settings::Light
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
   GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website field submit event  
-  logToSerials(F("Lights object created"),true);
+  logToSerials(F("Lights object created"),true,1);
 }
 
 void Lights::websiteEvent_Load(__attribute__((unused)) char * url){
@@ -37,8 +37,8 @@ void Lights::websiteEvent_Load(__attribute__((unused)) char * url){
 
 void Lights::websiteEvent_Refresh(__attribute__((unused)) char * url){
   if (strcmp(url,"/GrowBox.html.json")==0){
-    WebServer.setArgString(getWebsiteComponentName(F("Status")),getStatusText());
-    WebServer.setArgString(getWebsiteComponentName(F("TimerEnabled")), getTimerOnOffText());
+    WebServer.setArgString(getWebsiteComponentName(F("Status")),getStatusText(true));
+    WebServer.setArgString(getWebsiteComponentName(F("TimerEnabled")), getTimerOnOffText(true));
     WebServer.setArgString(getWebsiteComponentName(F("OnTime")), getOnTimeText());
     WebServer.setArgString(getWebsiteComponentName(F("OffTime")), getOffTimeText());
   }
@@ -78,7 +78,7 @@ void Lights::refresh(){  //makes the class non-virtual, by implementing the refr
 
 void Lights::report(){
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("Status:")); strcat(LongMessage, getStatusText()); 
+  strcat_P(LongMessage,(PGM_P)F("Status:")); strcat(LongMessage, getStatusText(true)); 
   strcat_P(LongMessage,(PGM_P)F(" ; Brightness:")); strcat(LongMessage,toText(*Brightness));
   strcat_P(LongMessage,(PGM_P)F(" ; LightON:")); strcat(LongMessage,getOnTimeText());
   strcat_P(LongMessage,(PGM_P)F(" ; LightOFF:")); strcat(LongMessage,getOffTimeText());
@@ -184,8 +184,9 @@ void Lights::setOffMinute(byte OffMinute){
   GBox -> addToLog(F("Light OFF time updated"));
 }
 
-char *  Lights::getTimerOnOffText(){
-  return enabledToText(*TimerEnabled);
+char *  Lights::getTimerOnOffText(bool UseWords){
+  if(UseWords) return enabledToText(*TimerEnabled); //Returns ENABLED or DISABLED
+  else return toText(*TimerEnabled);  //Returns '1' or '0'
 }
 
 bool Lights::getStatus(){
@@ -196,8 +197,9 @@ char * Lights::getBrightness(){
     return toText(*Brightness);
 }
 
-char *  Lights::getStatusText(){
-   return onOffToText(*Status);
+char *  Lights::getStatusText(bool UseWords){
+   if(UseWords) return onOffToText(*Status);  //Returns ON or OFF
+   else return toText(*Status);  //Returns '1' or '0'
 }
     
 char * Lights::getOnTimeText(){

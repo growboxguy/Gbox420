@@ -14,7 +14,8 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
     logToSerials(F("."),false,0);
     delay(500); 
     };
-  RestAPI.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets 
+  if(PushingBoxRestAPI.begin("api.pushingbox.com") == 0){logToSerials(F("PushingBox RestAPI ready"),true,1);} //Pre-setup relay to Google Sheets 
+  else logToSerials(F("PushingBox RestAPI failed"),true,1); //If begin returns a negative number the initialization failed
   WebServer.setup();
   URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json"); //setup handling request from GrowBox.html
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); //setup handling request from Settings.html
@@ -26,7 +27,7 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
   SettingsHandler->refreshCb.attach(&refreshCallback); //Called periodically to refresh website content 
   SettingsHandler->buttonCb.attach(&buttonPressCallback); //Called when a button is pressed on the website
   SettingsHandler->setFieldCb.attach(&setFieldCallback); //Called when a field is changed on the website
-  logToSerials(F("WebServer started"),true);
+  logToSerials(F("WebServer started"),true,0);
 }
 
 void loadCallback(__attribute__((unused)) char * url) //called when website is loaded.

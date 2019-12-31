@@ -19,8 +19,8 @@ class DHTSensor : public Common
     void report();
     float getTemp();  
     float getHumidity();
-    char* getTempText();  
-    char* getHumidityText();
+    char * getTempText(bool IncludeUnits);  
+    char * getHumidityText(bool IncludeUnits);
   
   private:
     GrowBox * GBox;

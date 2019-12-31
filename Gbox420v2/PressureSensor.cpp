@@ -12,7 +12,7 @@ PressureSensor::PressureSensor(const __FlashStringHelper * Name, GrowBox * GBox,
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
   GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
-  logToSerials(F("DHT Sensor object created"),true);
+  logToSerials(F("DHT Sensor object created"),true,1);
 }
 
 void PressureSensor::websiteEvent_Load(__attribute__((unused)) char * url){
@@ -24,7 +24,7 @@ void PressureSensor::websiteEvent_Load(__attribute__((unused)) char * url){
 
 void PressureSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){
   if (strcmp(url,"/GrowBox.html.json")==0){
-    WebServer.setArgString(getWebsiteComponentName(F("Pressure")), getPressureText());
+    WebServer.setArgString(getWebsiteComponentName(F("Pressure")), getPressureText(true));
   } 
 } 
 
@@ -56,7 +56,7 @@ void PressureSensor::refresh(){  //Called when component should refresh its stat
 void PressureSensor::report(){
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
   strcat_P(LongMessage,(PGM_P)F("Pressure:")); 
-  strcat(LongMessage, getPressureText());
+  strcat(LongMessage, getPressureText(true));
   logToSerials(&LongMessage,true,4);
 }
 
@@ -83,8 +83,9 @@ float PressureSensor::getPressure(){
   return Pressure -> getAverageFloat();
 }
 
-char* PressureSensor::getPressureText(){
-  return pressureToText(Pressure -> getAverageFloat());
+char * PressureSensor::getPressureText(bool IncludeUnits){
+  if(IncludeUnits) return pressureToText(Pressure -> getAverageFloat());
+  else return Pressure -> getAverageFloatText();
 }
 
 void PressureSensor::setOffset(float Value){

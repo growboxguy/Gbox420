@@ -36,15 +36,15 @@ class Aeroponics : public Common
     void PumpDisable();
     void setPumpTimeout(int Timeout);
     void setPrimingTime(int Timing);
-    char* pumpStateToText();
+    char * pumpStateToText();
     void Mix();
     virtual void sprayNow(bool DueToHighPressure) = 0;
     virtual void sprayOff() = 0;
     void setSprayOnOff(bool State);
     void setInterval(int interval);
     void setDuration(int duration);
-    char* getInterval();
-    char* getDuration();
+    char * getInterval();
+    char * getDuration();
 
    private:
 

@@ -25,8 +25,8 @@ class Lights : public Common
     void setOffMinute(byte OffMinute);
     bool getStatus();
     char * getBrightness();
-    char * getTimerOnOffText(); 
-    char * getStatusText();    
+    char * getTimerOnOffText(bool UseText); 
+    char * getStatusText(bool UseText);    
     char * getOnTimeText();    
     char * getOffTimeText();
     void checkLightStatus();

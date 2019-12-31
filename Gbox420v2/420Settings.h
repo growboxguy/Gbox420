@@ -1,10 +1,10 @@
 #pragma once
 
 //Change this when you make change to the structure of the EEPROM stored part
-static const byte Version = 10;
+static const byte Version = 12;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: They never change during runtime
-static const byte MaxTextLength = 32;  //Default char* buffer size: 31 characters + null terminator, used for logging and converting to text
+static const byte MaxTextLength = 32;  //Default char * buffer size: 31 characters + null terminator, used for logging and converting to text
 static const byte RollingAverageQueueDepth = 10;  //How many previous sensor readings should be stored
 static const byte LogDepth = 10;  //Show X number of log entries on website, do not go above 10
 static const byte QueueDepth = 32;  //Limits the refresh queue depth. Memory usage is multiplied by the number of refresh queues!
@@ -16,10 +16,10 @@ typedef struct
   bool MetricSystemEnabled = true; //Switch between Imperial/Metric units. If changed update the default temp and pressure values.  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
   bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
-  char PushingBoxLogRelayID[MaxTextLength]= "v420"; //UPDATE THIS DeviceID of the PushingBox logging scenario 
+  char PushingBoxLogRelayID[MaxTextLength]= "v755877CF53383E1"; //UPDATE THIS DeviceID of the PushingBox logging scenario 
     
   bool AlertEmails = true; //disable/enable email sending
-  char PushingBoxEmailRelayID[MaxTextLength]  = "v420";  //UPDATE THIS DeviceID of the PushingBox email alert scenario
+  char PushingBoxEmailRelayID[MaxTextLength]  = "vC5244859A2453AA";  //UPDATE THIS DeviceID of the PushingBox email alert scenario
   int TriggerCountBeforeAlert = 12; //number of consecutive out of range sensor readings before the email alert is triggered (5sec between reads -> 12= Out of range reading through 1 minute)  
 
   struct SoundSettings{
