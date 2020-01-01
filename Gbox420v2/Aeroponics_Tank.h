@@ -13,7 +13,7 @@ class Aeroponics_Tank : public Aeroponics
     void websiteEvent_Field(char * Field);
     void refresh_Sec();
     void report();
-    byte* SpraySolenoidPin;
+    byte * SpraySolenoidPin;
     bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on.
     bool PreviousPressureRead = true;
     float * PressureLow; //Aeroponics - Turn on pump below this pressure (bar)

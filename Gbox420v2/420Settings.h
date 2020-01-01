@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 16;
+static const byte Version = 17;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: 
 //Global constants
@@ -89,7 +89,7 @@ typedef struct
     float AlertLow = 4.0; //Low pressure warning
     float AlertHigh = 8.0; //High pressure warning 
   };
-  struct PressureSensorSettings PressureSensor1 = {.Pin = A1, .Offset = 0.57, .Ratio = 2.7 };
+  struct PressureSensorSettings PressureSensor1 = {.Pin = A1, .Offset = 0.57, .Ratio = 2.7 }; //Pressure sensor Pin: Signal(yellow)
 
   struct AeroponicsSettings{ //Common settings for each inheriting class
     AeroponicsSettings(byte BypassSolenoidPin = 0, byte PumpPin = 0 ) : BypassSolenoidPin(BypassSolenoidPin),PumpPin(PumpPin) {}
@@ -132,7 +132,7 @@ typedef struct
   struct AeroponicsSettings_Tank Aeroponics_Tank1 = { .Specific{.SpraySolenoidPin= 22}, .Common{.BypassSolenoidPin = 23, .PumpPin = 24 }};
  */
 
-struct FanSettings{
+  struct FanSettings{
     FanSettings(byte OnOffPin = 0 , byte SpeedPin = 0) : OnOffPin(OnOffPin),SpeedPin(SpeedPin){}
     byte OnOffPin;
     byte SpeedPin;
@@ -142,11 +142,21 @@ struct FanSettings{
   struct FanSettings InternalFan = {.OnOffPin = 25, .SpeedPin = 26 };
   struct FanSettings ExhaustFan = {.OnOffPin = 27, .SpeedPin = 28 };
 
-struct WaterTempSensorSettings{
+  struct WaterTempSensorSettings{
     WaterTempSensorSettings(byte Pin = 0) : Pin(Pin){} 
     byte Pin;
   };
   struct WaterTempSensorSettings WaterTempSensor1 = {.Pin = 45}; //Data(yellow) - DS18B20 waterproof temp sensor 
+
+  struct WaterLevelSensorSettings{
+    WaterLevelSensorSettings(byte Pin_1 = 0,byte Pin_2 = 0,byte Pin_3 = 0,byte Pin_4 = 0) : Pin_1(Pin_1),Pin_2(Pin_2),Pin_3(Pin_3),Pin_4(Pin_4) {} 
+    byte Pin_1;  //Lowest water level
+    byte Pin_2;
+    byte Pin_3;
+    byte Pin_4;  //Full
+  };
+  struct WaterLevelSensorSettings WaterLevelSensor1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7, }; //Data(yellow) - DS18B20 waterproof temp sensor 
+
 /*   
   bool AutomaticInternalFan = false;  //Adjust internal fan based on temperature
   bool AutomaticExhaustFan = false;  //Adjust exhaust fan based on temp and humidity
@@ -155,13 +165,6 @@ struct WaterTempSensorSettings{
   byte ExhaustFanLowHumid = 55; //Above set humidity turn exhaust fan Low if automatic fan control is enabled
   byte ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
 */
-
-//Analog pins
-  byte PressureSensorInPin = A1; //Signal(yellow) - Pressure sensor
-  byte WaterCriticalInPin = A4; //Water sensor1
-  byte WaterLowInPin = A5;     //Water sensor2
-  byte WaterMediumInPin = A6; //Water sensor3
-  byte WaterFullInPin = A7; // Water sensor4
   
 //Digital pins
 
@@ -170,4 +173,4 @@ struct WaterTempSensorSettings{
   byte ATXPowerGoodInPin = 35; //5V signal from ATX powersupply, inverted by optocoupler: LOW if DC power output is OK
   
   byte CompatibilityVersion=Version;  //Should always be the last value stored.
-   }Settings;
+}Settings;

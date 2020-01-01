@@ -83,7 +83,7 @@ void setup() {  // put your setup code here, to run once:
   Timer3.attachInterrupt(processTimeCriticalStuff);
   Timer3.start();
 
-  GBox -> refreshAll();
+  GBox -> refreshAll(false);
   //  sendEmailAlert(F("Grow%20box%20(re)started"));
   logToSerials(F("Setup ready, starting loops:"),true,0);
 }

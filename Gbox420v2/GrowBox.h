@@ -14,6 +14,7 @@ class PressureSensor;
 class Aeroponics_NoTank;
 class Aeroponics_Tank;
 class WaterTempSensor;
+class WaterLevelSensor;
 
 extern ELClientRest PushingBoxRestAPI;
 
@@ -36,13 +37,15 @@ class GrowBox : public Common
     Aeroponics_Tank * Aeroponics_Tank1;
     Aeroponics_NoTank * Aeroponics_NoTank1;
     WaterTempSensor * WaterTempSensor1;
+    WaterLevelSensor * WaterLevelSensor1;
     void websiteEvent_Load(__attribute__((unused)) char * url);
     void websiteEvent_Refresh(__attribute__((unused)) char * url);
     void websiteEvent_Button(char * Button);
     void websiteEvent_Field(char * Field);
+    void refresh_FiveSec();
     void refresh_HalfHour();
-    void report(){};
-    void refreshAll();
+    void refreshAll(bool AddToLog);
+    bool refreshRequest = false; 
  
     void runReport(); 
     void runSec(); //trigger all threads at startup

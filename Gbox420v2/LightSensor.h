@@ -23,8 +23,8 @@ class LightSensor : public Common
     
   private:
     GrowBox * GBox;
-    byte* DigitalPin; //D0 - LM393 light sensor digital in
-    byte* AnalogPin; //A0 - LM393 light sensor analog in
+    byte * DigitalPin; //D0 - LM393 light sensor digital in
+    byte * AnalogPin; //A0 - LM393 light sensor analog in
     RollingAverage * LightReading;  //keeps an average of previous readings: Smoothens sensor readings
     bool IsDark;  
     bool CalibrateRequested;

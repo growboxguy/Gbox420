@@ -11,6 +11,7 @@
 #include "Aeroponics_Tank.h" 
 #include "Aeroponics_NoTank.h" 
 #include "WaterTempSensor.h"
+#include "WaterLevelSensor.h"
 
 static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
@@ -30,6 +31,8 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   PressureSensor1 = new PressureSensor(F("PressureSensor1"),this,&BoxSettings -> PressureSensor1);
   PHSensor1 = new PHSensor(F("PHSensor1"),this, &BoxSettings -> PHSensor1);  
   WaterTempSensor1 = new WaterTempSensor(F("WaterTempSensor1"),this,&BoxSettings -> WaterTempSensor1);
+  WaterLevelSensor1 = new WaterLevelSensor(F("WaterLevelSensor1"),this,&BoxSettings -> WaterLevelSensor1);
+  AddToRefreshQueue_FiveSec(this);  //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method 
   AddToRefreshQueue_HalfHour(this);  //Subscribing to the 30 minutes refresh queue: Calls the refresh_HalfHour() method 
   AddToWebsiteQueue_Load(this); //Subscribing to the Website load event
   AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
@@ -68,8 +71,7 @@ void GrowBox::websiteEvent_Field(char * Field){ //When the website field is subm
     else if(strcmp_P(ShortMessage,(PGM_P)F("GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("PushingBoxLogRelayID"))==0) {setPushingBoxLogRelayID(WebServer.getArgString());}    
   }  
-} 
-
+}
 
 void GrowBox::websiteEvent_Button(char * Button){ //When a button is pressed on the website
   if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
@@ -77,25 +79,26 @@ void GrowBox::websiteEvent_Button(char * Button){ //When a button is pressed on 
   }
   else{ //if the component name matches with the object name   
     if(strcmp_P(ShortMessage,(PGM_P)F("GoogleSheetsTrigger"))==0) {ReportToGoogleSheets(true);}
-    if(strcmp_P(ShortMessage,(PGM_P)F("ReportTrigger"))==0) {runReport();}  
+    else if(strcmp_P(ShortMessage,(PGM_P)F("ReportTrigger"))==0) {runReport();} 
+    else if(strcmp_P(ShortMessage,(PGM_P)F("Refresh"))==0) {refreshRequest = true;}   //Website signals to refresh all sensor readings
   }  
 }  
 
-  /*  
-  strcat_P(LongMessage,(PGM_P)F("\n\r Reservoir - "));
-  strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage,toText(ReservoirTemp));  
-  strcat_P(LongMessage,(PGM_P)F(" ; PH:")); strcat(LongMessage,toText(PH));
-  strcat_P(LongMessage,(PGM_P)F("(")); strcat(LongMessage,toText(PHRaw));strcat_P(LongMessage,(PGM_P)F(")"));
-  strcat_P(LongMessage,(PGM_P)F(" ; Reservoir:")); strcat(LongMessage,ReservoirText);
- */
+void GrowBox::refresh_FiveSec(){
+  if(BoxSettings -> DebugEnabled) Common::refresh_FiveSec();
+  if(refreshRequest) {
+    refreshRequest = false;
+    refreshAll(true);
+  }
+}
 
 void GrowBox::refresh_HalfHour(){
   if(BoxSettings -> DebugEnabled) Common::refresh_HalfHour();
   ReportToGoogleSheets(false);
 }
 
-void GrowBox::refreshAll(){  //implementing the virtual refresh function from Common
-  logToSerials(F("Refreshing all components:"),true,0);
+void GrowBox::refreshAll(bool AddToLog){  //implementing the virtual refresh function from Common
+  if(AddToLog)addToLog(F("Refresh triggered"),false);  
   //trigger all threads at startup
   runSec();
   runFiveSec(); 
@@ -250,7 +253,8 @@ void GrowBox::setMetricSystemEnabled(bool MetricEnabled){
     PressureSensor1 -> Pressure -> resetAverage();
     InternalDHTSensor -> Temp -> resetAverage(); 
     ExternalDHTSensor -> Temp -> resetAverage();
-    refreshAll(); 
+    WaterTempSensor1 -> Temp -> resetAverage();
+    refreshAll(false); 
   }    
   if(BoxSettings -> MetricSystemEnabled) addToLog(F("Using Metric units"));
   else addToLog(F("Using Imperial units"));  
@@ -295,9 +299,9 @@ void GrowBox::ReportToGoogleSheets(bool AddToLog){
   strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OffTime\":\""));  strcat(LongMessage,Light1 -> getOffTimeText());
   strcat_P(LongMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(LongMessage,LightSensor1 -> getReadingText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"IsDark\":\""));  strcat(LongMessage,LightSensor1 -> getIsDarkText(false));
-  //strcat_P(LongMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(LongMessage,toText(ReservoirLevel));
-  strcat_P(LongMessage,(PGM_P)F("\",\"PH\":\""));  strcat(LongMessage,PHSensor1 -> getPHText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"WaterLevel\":\""));  strcat(LongMessage,WaterLevelSensor1 -> getLevelText());
   strcat_P(LongMessage,(PGM_P)F("\",\"WaterTemp\":\""));  strcat(LongMessage,WaterTempSensor1 -> getTempText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"PH\":\""));  strcat(LongMessage,PHSensor1 -> getPHText());  
   strcat_P(LongMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(LongMessage,PressureSensor1 -> getPressureText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aeroponics_NoTank1 -> getInterval());
   strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aeroponics_NoTank1 -> getDuration());

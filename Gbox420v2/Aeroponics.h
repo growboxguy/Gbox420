@@ -21,7 +21,7 @@ class Aeroponics : public Common
     uint32_t PumpTimer = millis();  //Aeroponics - Pump cycle timer
     uint32_t SprayTimer = millis();  //Aeroponics - Spray cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/  
     uint32_t LastRefill= 0;  
-    byte* BypassSolenoidPin;
+    byte * BypassSolenoidPin;
     bool BypassSolenoidOn = false; //Aeroponics - Controls the bypass valve, true opens the solenoid    
     bool MixInProgress = false; //Aeroponics - Used to temporary suspend pump timer and keep the high pressure pump on. Do not change.
     bool* SprayEnabled;  //Enable/disable misting
@@ -49,6 +49,6 @@ class Aeroponics : public Common
 
    protected:
     GrowBox * GBox;
-    byte* PumpPin;
+    byte * PumpPin;
 };
 

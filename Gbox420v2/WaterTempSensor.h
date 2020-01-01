@@ -20,10 +20,11 @@ class WaterTempSensor : public Common
     void report();
     float getTemp();
     char * getTempText(bool IncludeUnits);
+    RollingAverage * Temp;
 
   private:
     GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
     OneWire * TempSensorWire;
     DallasTemperature * TempSensor;
-    RollingAverage * Temp;     
+         
 };

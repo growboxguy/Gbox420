@@ -9,7 +9,6 @@ class Sound : public Common
 public:
     Sound(const __FlashStringHelper * Name, GrowBox * GBox, Settings::SoundSettings * DefaultSettings);
     void websiteEvent_Load(__attribute__((unused)) char * url);
-    //void websiteEvent_Refresh(__attribute__((unused)) char * url);  //{} means this function is empty, it has no implementation in the cpp file
     void websiteEvent_Field(char * Field);
     void websiteEvent_Button(char * Button);
     void refresh_Sec();
@@ -20,7 +19,7 @@ public:
 
 private:
   GrowBox * GBox;
-  byte* Pin; //Pin connecting the piezo Sound positive(+) side over a 330Ω resistor)
+  byte * Pin; //Pin connecting the piezo Sound positive(+) side over a 330Ω resistor)
   bool* Enabled;   //Sound ON or OFF
   bool PlayOnSound = false; //Play on beep flag - website controls it
   bool PlayOffSound = false; //Play off beep flag - website controls it

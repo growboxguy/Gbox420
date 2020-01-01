@@ -64,7 +64,7 @@ void PHSensor::refresh_Minute(){
 }
 
 void PHSensor::updatePH(bool ShowRaw){
-  int PHRaw = analogRead(Pin);
+  int PHRaw = analogRead(*Pin);
   if(ShowRaw)
   {
     strncpy_P(LongMessage,(PGM_P)F("PH analog read: "),MaxTextLength);
