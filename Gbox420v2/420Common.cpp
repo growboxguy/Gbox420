@@ -33,7 +33,7 @@ char * Common::getWebsiteComponentName(const __FlashStringHelper * ComponentName
     return ReturnChar;
 }
 
-bool Common::isThisMyComponent(char const * lookupName){  //this is the name of the web component that triggered the action, in the form of: InstanceName_functionName . Examles: Light1_On , Light1_OnTime, LightSensor1_ReadingRaw from GrowBox.html 
+bool Common::isThisMyComponent(char const * lookupName){  //this is the name of the web component that triggered the action, in the form of: InstanceName_functionName . Examles: Light1_On , Light1_OnTime, LightSensor1_Raw from GrowBox.html 
   // Serial.print("Component :");
   // Serial.println(lookupName);
   // Serial.print("Object :");

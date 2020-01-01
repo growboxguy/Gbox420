@@ -1,13 +1,13 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 17;
+static const byte Version = 18;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: 
 //Global constants
 static const byte MaxTextLength = 32;  //Default char * buffer size: 31 characters + null terminator. Memory intense!
 static const byte RollingAverageQueueDepth = 10;  //How many previous sensor readings should be stored
-static const byte LogDepth = 10;  //Show X number of log entries on website, do not go above 10
+static const byte LogDepth = 8;  //Show X number of log entries on website. Max 1024bytes can be passed during a Website refresh
 static const byte QueueDepth = 64;  //Limits the maximum number of active modules. Memory intense!
 //Global variables
 extern char LongMessage[1024];   //temp storage for assembling long messages (REST API, MQTT API)
@@ -68,8 +68,8 @@ typedef struct
     int HumidityAlertLow = 35; //Low humidity warning email
     int HumidityAlertHigh = 70; //High humidity warning email
   };
-  struct DHTSensorSettings InternalDHTSensor = {.Pin = 43, .Type = 22 };
-  struct DHTSensorSettings ExternalDHTSensor = {.Pin = 44, .Type = 22 };  
+  struct DHTSensorSettings InDHT = {.Pin = 43, .Type = 22 };
+  struct DHTSensorSettings ExDHT = {.Pin = 44, .Type = 22 };  
 
   struct PHSensorSettings{
     PHSensorSettings(byte Pin = 0 ,float Slope = 0.0, float Intercept = 0.0 ) : Pin(Pin),Slope(Slope),Intercept(Intercept) {}
@@ -89,7 +89,7 @@ typedef struct
     float AlertLow = 4.0; //Low pressure warning
     float AlertHigh = 8.0; //High pressure warning 
   };
-  struct PressureSensorSettings PressureSensor1 = {.Pin = A1, .Offset = 0.57, .Ratio = 2.7 }; //Pressure sensor Pin: Signal(yellow)
+  struct PressureSensorSettings Pressure1 = {.Pin = A1, .Offset = 0.57, .Ratio = 2.7 }; //Pressure sensor Pin: Signal(yellow)
 
   struct AeroponicsSettings{ //Common settings for each inheriting class
     AeroponicsSettings(byte BypassSolenoidPin = 0, byte PumpPin = 0 ) : BypassSolenoidPin(BypassSolenoidPin),PumpPin(PumpPin) {}
@@ -101,12 +101,12 @@ typedef struct
     int PumpTimeout = 6;  // Aeroponics - Max pump run time in minutes, measue zero to max pressuretank refill time and adjust accordingly
     int PrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
   };
-  struct AeroponicsSettings Aeroponics_Tank1_Common = {.BypassSolenoidPin = 30, .PumpPin = 31 };
-  struct AeroponicsSettings Aeroponics_NoTank1_Common = {.BypassSolenoidPin = 23, .PumpPin = 24 };
+  struct AeroponicsSettings Aero_T1_Common = {.BypassSolenoidPin = 30, .PumpPin = 31 };
+  struct AeroponicsSettings Aero_NT1_Common = {.BypassSolenoidPin = 23, .PumpPin = 24 };
   
   struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific settings    
     int BlowOffTime = 3; //Aeroponics - BlowOff time in seconds: After spraying open the bypass valve for X seconds to release pressure    
-  }Aeroponics_NoTank1_Specific;
+  }Aero_NT1_Specific;
 
   struct AeroponicsSettings_TankSpecific{  //Pressure tank specific settings
   AeroponicsSettings_TankSpecific(byte SpraySolenoidPin = 0) : SpraySolenoidPin(SpraySolenoidPin) {}
@@ -120,7 +120,7 @@ typedef struct
     byte QuietToHour = 6; //Quiet time end - hour
     byte QuietToMinute = 0; //Quiet time end - minute
   };
-  struct AeroponicsSettings_TankSpecific Aeroponics_Tank1_Specific = {.SpraySolenoidPin= 22};
+  struct AeroponicsSettings_TankSpecific Aero_T1_Specific = {.SpraySolenoidPin= 22};
 
 /* THIS DOES NOT WORK
    struct AeroponicsSettings_Tank {
@@ -129,7 +129,7 @@ typedef struct
       AeroponicsSettings Common;      
     };
   };
-  struct AeroponicsSettings_Tank Aeroponics_Tank1 = { .Specific{.SpraySolenoidPin= 22}, .Common{.BypassSolenoidPin = 23, .PumpPin = 24 }};
+  struct AeroponicsSettings_Tank Aero_T1 = { .Specific{.SpraySolenoidPin= 22}, .Common{.BypassSolenoidPin = 23, .PumpPin = 24 }};
  */
 
   struct FanSettings{
@@ -139,14 +139,14 @@ typedef struct
     bool State = true;  //true - ON, false - OFF
     bool HighSpeed = false; //true - High speed, false - Low speed
   };
-  struct FanSettings InternalFan = {.OnOffPin = 25, .SpeedPin = 26 };
-  struct FanSettings ExhaustFan = {.OnOffPin = 27, .SpeedPin = 28 };
+  struct FanSettings InFan = {.OnOffPin = 25, .SpeedPin = 26 };
+  struct FanSettings ExFan = {.OnOffPin = 27, .SpeedPin = 28 };
 
   struct WaterTempSensorSettings{
     WaterTempSensorSettings(byte Pin = 0) : Pin(Pin){} 
     byte Pin;
   };
-  struct WaterTempSensorSettings WaterTempSensor1 = {.Pin = 45}; //Data(yellow) - DS18B20 waterproof temp sensor 
+  struct WaterTempSensorSettings WaterTemp1 = {.Pin = 45}; //Data(yellow) - DS18B20 waterproof temp sensor 
 
   struct WaterLevelSensorSettings{
     WaterLevelSensorSettings(byte Pin_1 = 0,byte Pin_2 = 0,byte Pin_3 = 0,byte Pin_4 = 0) : Pin_1(Pin_1),Pin_2(Pin_2),Pin_3(Pin_3),Pin_4(Pin_4) {} 
@@ -155,15 +155,15 @@ typedef struct
     byte Pin_3;
     byte Pin_4;  //Full
   };
-  struct WaterLevelSensorSettings WaterLevelSensor1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7, }; //Data(yellow) - DS18B20 waterproof temp sensor 
+  struct WaterLevelSensorSettings WaterLevel1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7, }; //Data(yellow) - DS18B20 waterproof temp sensor 
 
 /*   
-  bool AutomaticInternalFan = false;  //Adjust internal fan based on temperature
-  bool AutomaticExhaustFan = false;  //Adjust exhaust fan based on temp and humidity
-  int InternalFanSwitchTemp = 25; // Above limit turn the internal fan to High, turn to Low if limit-3 degrees is reached. Has to match default unit type(Metric C or Imperial K)
-  byte ExhaustFanHighHumid = 65; //Above set humidity turn exhaust fan High if automatic fan control is enabled
-  byte ExhaustFanLowHumid = 55; //Above set humidity turn exhaust fan Low if automatic fan control is enabled
-  byte ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
+  bool AutomaticInFan = false;  //Adjust internal fan based on temperature
+  bool AutomaticExFan = false;  //Adjust exhaust fan based on temp and humidity
+  int InFanSwitchTemp = 25; // Above limit turn the internal fan to High, turn to Low if limit-3 degrees is reached. Has to match default unit type(Metric C or Imperial K)
+  byte ExFanHighHumid = 65; //Above set humidity turn exhaust fan High if automatic fan control is enabled
+  byte ExFanLowHumid = 55; //Above set humidity turn exhaust fan Low if automatic fan control is enabled
+  byte ExFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
 */
   
 //Digital pins

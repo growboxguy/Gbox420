@@ -5,12 +5,12 @@
 // strcat_P(LongMessage,(PGM_P)F(" ; Internal fan:"));strcat(LongMessage,fanSpeedToText(true));
 // strcat_P(LongMessage,(PGM_P)F(" ; Exhaust fan:"));strcat(LongMessage,fanSpeedToText(false)); 
   //if (strcmp(url,"/GrowBox.html.json")==0){
-  // WebServer.setArgBoolean(F("AutoInternalFan"),GBox -> BoxSettings -> AutomaticInternalFan);
-  // WebServer.setArgString(F("InternalFanSwitchTemp"), toText(GBox -> BoxSettings -> InternalFanSwitchTemp));
-  // WebServer.setArgBoolean(F("AutoExhaustFan"), GBox -> BoxSettings -> AutomaticExhaustFan);
-  // WebServer.setArgString(F("ExhaustFanHighHumid"), toText(GBox -> BoxSettings -> ExhaustFanHighHumid));
-  // WebServer.setArgString(F("ExhaustFanLowHumid"), toText(GBox -> BoxSettings -> ExhaustFanLowHumid));
-  // WebServer.setArgString(F("ExhaustFanOffHumid"), toText(GBox -> BoxSettings -> ExhaustFanOffHumid));
+  // WebServer.setArgBoolean(F("AutoInFan"),GBox -> BoxSettings -> AutomaticInFan);
+  // WebServer.setArgString(F("InFanSwitchTemp"), toText(GBox -> BoxSettings -> InFanSwitchTemp));
+  // WebServer.setArgBoolean(F("AutoExFan"), GBox -> BoxSettings -> AutomaticExFan);
+  // WebServer.setArgString(F("ExFanHighHumid"), toText(GBox -> BoxSettings -> ExFanHighHumid));
+  // WebServer.setArgString(F("ExFanLowHumid"), toText(GBox -> BoxSettings -> ExFanLowHumid));
+  // WebServer.setArgString(F("ExFanOffHumid"), toText(GBox -> BoxSettings -> ExFanOffHumid));
 
 Fan::Fan(const __FlashStringHelper * Name, GrowBox * GBox, Settings::FanSettings * DefaultSettings): Common(Name){
   this -> GBox = GBox;

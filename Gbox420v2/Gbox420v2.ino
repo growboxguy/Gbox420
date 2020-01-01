@@ -18,7 +18,7 @@
 //Add DebugEnabled to all classes, sets debug mode on-off per component
 //Add debug message levels: 0-no debug, 1-Extra info, 2-Message, 3-Verbose
 //Find a better name for Aeroponics NoTank: DirectPump?
-//Aeroponics_Tank1 -> websiteEvent_Field and Aeroponics_Tank1 -> websiteButtonPress events cause a crash
+//Aero_T1 -> websiteEvent_Field and Aero_T1 -> websiteButtonPress events cause a crash
 //Remove WaterTempSensor and Reservoir classes from PHSensor
 
 #include "Arduino.h" 

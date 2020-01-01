@@ -19,9 +19,9 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox,  Sett
 
 void LightSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/GrowBox.html.json")==0){
-    WebServer.setArgString(getWebsiteComponentName(F("IsDark")),getIsDarkText(true));
+    WebServer.setArgString(getWebsiteComponentName(F("Dark")),getDarkText(true));
     WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingPercentage());
-    WebServer.setArgString(getWebsiteComponentName(F("ReadingRaw")),getReadingText(true)); 
+    WebServer.setArgString(getWebsiteComponentName(F("Raw")),getReadingText(true)); 
   }
 } 
 
@@ -37,14 +37,14 @@ void LightSensor::websiteEvent_Button(char * Button){ //When the website is open
 void LightSensor::refresh_Minute(){  //Called when component should refresh its state
   if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   if(CalibrateRequested){ calibrate(); } //If calibration was requested
-  IsDark = digitalRead(*DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected. ! inverts this
+  Dark = digitalRead(*DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected. ! inverts this
   LightReading -> updateAverage(1023 - analogRead(*AnalogPin)); 
 }
 
 void LightSensor::report(){
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("Light detected:")); strcat(LongMessage,getIsDarkText(true));
+  strcat_P(LongMessage,(PGM_P)F("Light detected:")); strcat(LongMessage,getDarkText(true));
   strcat_P(LongMessage,(PGM_P)F(" ; LightReading:")); strcat(LongMessage, getReadingText(true));
   strcat_P(LongMessage,(PGM_P)F(" (")); strcat(LongMessage, getReadingPercentage());strcat_P(LongMessage,(PGM_P)F(")"));
   logToSerials( &LongMessage, true,1);
@@ -85,8 +85,8 @@ void LightSensor::calibrate(){
   }
 }
 
-bool LightSensor::getIsDark(){ //Light sensor digital feedback: True(Dark) or False(Bright)  
-  return IsDark;
+bool LightSensor::getDark(){ //Light sensor digital feedback: True(Dark) or False(Bright)  
+  return Dark;
 }
 
 int LightSensor::getReading(){ 
@@ -112,7 +112,7 @@ char * LightSensor::getReadingText(bool IncludeMinMax){
   else return LightReading -> getAverageIntText();
 }
 
-char * LightSensor::getIsDarkText(bool UseWords){
-  if(UseWords) return yesNoToText(IsDark);
-  else return toText((bool)IsDark);
+char * LightSensor::getDarkText(bool UseWords){
+  if(UseWords) return yesNoToText(Dark);
+  else return toText((bool)Dark);
 }

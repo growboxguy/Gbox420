@@ -19,19 +19,19 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   this -> BoxSettings = BoxSettings;
   logToSerials(F(" "),true,0); //add a breakrow to console log
   Sound1 = new Sound(F("Sound1"), this, &BoxSettings -> Sound1);
-  InternalFan = new Fan(F("InternalFan"), this, &BoxSettings -> InternalFan);
-  ExhaustFan = new Fan(F("ExhaustFan"), this, &BoxSettings -> ExhaustFan);
+  InFan = new Fan(F("InFan"), this, &BoxSettings -> InFan);
+  ExFan = new Fan(F("ExFan"), this, &BoxSettings -> ExFan);
   Light1 = new Lights(F("Light1"), this, &BoxSettings -> Light1);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
   LightSensor1 = new LightSensor(F("LightSensor1"), this, &BoxSettings -> LightSensor1);
-  PowerSensor1 = new PowerSensor(F("PowerSensor1"), this, &Serial2);
-  InternalDHTSensor = new DHTSensor(F("InternalDHTSensor"), this, &BoxSettings -> InternalDHTSensor);  //passing: Component name, GrowBox object the component belongs to, Default settings)
-  ExternalDHTSensor = new DHTSensor(F("ExternalDHTSensor"), this, &BoxSettings -> ExternalDHTSensor);  //passing: Component name, GrowBox object the component belongs to, Default settings)
-  //Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, &BoxSettings ->Aeroponics_Tank1_Common, &BoxSettings -> Aeroponics_Tank1_Specific);
-  Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, &BoxSettings -> Aeroponics_NoTank1_Common, &BoxSettings -> Aeroponics_NoTank1_Specific);
-  PressureSensor1 = new PressureSensor(F("PressureSensor1"),this,&BoxSettings -> PressureSensor1);
+  Power1 = new PowerSensor(F("Power1"), this, &Serial2);
+  InDHT = new DHTSensor(F("InDHT"), this, &BoxSettings -> InDHT);  //passing: Component name, GrowBox object the component belongs to, Default settings)
+  ExDHT = new DHTSensor(F("ExDHT"), this, &BoxSettings -> ExDHT);  //passing: Component name, GrowBox object the component belongs to, Default settings)
+  //Aero_T1 = new Aeroponics_Tank(F("Aero_T1"), this, &BoxSettings ->Aero_T1_Common, &BoxSettings -> Aero_T1_Specific);
+  Aero_NT1 = new Aeroponics_NoTank(F("Aero_NT1"), this, &BoxSettings -> Aero_NT1_Common, &BoxSettings -> Aero_NT1_Specific);
+  Pressure1 = new PressureSensor(F("Pressure1"),this,&BoxSettings -> Pressure1);
   PHSensor1 = new PHSensor(F("PHSensor1"),this, &BoxSettings -> PHSensor1);  
-  WaterTempSensor1 = new WaterTempSensor(F("WaterTempSensor1"),this,&BoxSettings -> WaterTempSensor1);
-  WaterLevelSensor1 = new WaterLevelSensor(F("WaterLevelSensor1"),this,&BoxSettings -> WaterLevelSensor1);
+  WaterTemp1 = new WaterTempSensor(F("WaterTemp1"),this,&BoxSettings -> WaterTemp1);
+  WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"),this,&BoxSettings -> WaterLevel1);
   AddToRefreshQueue_FiveSec(this);  //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method 
   AddToRefreshQueue_HalfHour(this);  //Subscribing to the 30 minutes refresh queue: Calls the refresh_HalfHour() method 
   AddToWebsiteQueue_Load(this); //Subscribing to the Website load event
@@ -243,17 +243,17 @@ void GrowBox::setDebugOnOff(bool State){
 void GrowBox::setMetricSystemEnabled(bool MetricEnabled){ 
   if(MetricEnabled != BoxSettings -> MetricSystemEnabled){  //if there was a change
     BoxSettings -> MetricSystemEnabled = MetricEnabled;
-    //BoxSettings -> InternalFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> InternalFanSwitchTemp);
-    BoxSettings -> InternalDHTSensor.TempAlertLow= convertBetweenTempUnits(BoxSettings -> InternalDHTSensor.TempAlertLow);
-    BoxSettings -> InternalDHTSensor.TempAlertHigh= convertBetweenTempUnits(BoxSettings -> InternalDHTSensor.TempAlertHigh);
-    BoxSettings -> ExternalDHTSensor.TempAlertLow= convertBetweenTempUnits(BoxSettings -> ExternalDHTSensor.TempAlertLow);
-    BoxSettings -> ExternalDHTSensor.TempAlertHigh= convertBetweenTempUnits(BoxSettings -> ExternalDHTSensor.TempAlertHigh);
-    BoxSettings -> PressureSensor1.AlertLow=convertBetweenPressureUnits(BoxSettings -> PressureSensor1.AlertLow);
-    BoxSettings -> PressureSensor1.AlertHigh=convertBetweenPressureUnits(BoxSettings -> PressureSensor1.AlertHigh);
-    PressureSensor1 -> Pressure -> resetAverage();
-    InternalDHTSensor -> Temp -> resetAverage(); 
-    ExternalDHTSensor -> Temp -> resetAverage();
-    WaterTempSensor1 -> Temp -> resetAverage();
+    //BoxSettings -> InFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> InFanSwitchTemp);
+    BoxSettings -> InDHT.TempAlertLow= convertBetweenTempUnits(BoxSettings -> InDHT.TempAlertLow);
+    BoxSettings -> InDHT.TempAlertHigh= convertBetweenTempUnits(BoxSettings -> InDHT.TempAlertHigh);
+    BoxSettings -> ExDHT.TempAlertLow= convertBetweenTempUnits(BoxSettings -> ExDHT.TempAlertLow);
+    BoxSettings -> ExDHT.TempAlertHigh= convertBetweenTempUnits(BoxSettings -> ExDHT.TempAlertHigh);
+    BoxSettings -> Pressure1.AlertLow=convertBetweenPressureUnits(BoxSettings -> Pressure1.AlertLow);
+    BoxSettings -> Pressure1.AlertHigh=convertBetweenPressureUnits(BoxSettings -> Pressure1.AlertHigh);
+    Pressure1 -> Pressure -> resetAverage();
+    InDHT -> Temp -> resetAverage(); 
+    ExDHT -> Temp -> resetAverage();
+    WaterTemp1 -> Temp -> resetAverage();
     refreshAll(false); 
   }    
   if(BoxSettings -> MetricSystemEnabled) addToLog(F("Using Metric units"));
@@ -280,33 +280,33 @@ void GrowBox::ReportToGoogleSheets(bool AddToLog){
   strcat_P(LongMessage,(PGM_P)F("/pushingbox?devid="));  
   strcat(LongMessage,BoxSettings -> PushingBoxLogRelayID);
   strcat_P(LongMessage,(PGM_P)F("&Log={"));   
-  strcat_P(LongMessage,(PGM_P)F("\"InternalTemp\":\""));  strcat(LongMessage,InternalDHTSensor -> getTempText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"ExternalTemp\":\""));  strcat(LongMessage,ExternalDHTSensor -> getTempText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"InternalHumidity\":\""));  strcat(LongMessage,InternalDHTSensor -> getHumidityText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"ExternalHumidity\":\""));  strcat(LongMessage,ExternalDHTSensor -> getHumidityText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat(LongMessage,InternalFan -> fanSpeedToNumber());
-  strcat_P(LongMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat(LongMessage,ExhaustFan -> fanSpeedToNumber());
-  strcat_P(LongMessage,(PGM_P)F("\",\"Power\":\""));  strcat(LongMessage,PowerSensor1 -> getPowerText(false)); 
-  strcat_P(LongMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(LongMessage,PowerSensor1 -> getEnergyText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(LongMessage,PowerSensor1 -> getVoltageText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"Current\":\""));  strcat(LongMessage,PowerSensor1 -> getCurrentText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,PowerSensor1 -> getFrequencyText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,PowerSensor1 -> getPowerFactorText());
+  strcat_P(LongMessage,(PGM_P)F("\"InternalTemp\":\""));  strcat(LongMessage,InDHT -> getTempText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"ExternalTemp\":\""));  strcat(LongMessage,ExDHT -> getTempText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"InternalHumidity\":\""));  strcat(LongMessage,InDHT -> getHumidityText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"ExternalHumidity\":\""));  strcat(LongMessage,ExDHT -> getHumidityText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"InFan\":\"")); strcat(LongMessage,InFan -> fanSpeedToNumber());
+  strcat_P(LongMessage,(PGM_P)F("\",\"ExFan\":\"")); strcat(LongMessage,ExFan -> fanSpeedToNumber());
+  strcat_P(LongMessage,(PGM_P)F("\",\"Power\":\""));  strcat(LongMessage,Power1 -> getPowerText(false)); 
+  strcat_P(LongMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(LongMessage,Power1 -> getEnergyText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(LongMessage,Power1 -> getVoltageText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"Current\":\""));  strcat(LongMessage,Power1 -> getCurrentText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,Power1 -> getFrequencyText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,Power1 -> getPowerFactorText());
   strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Status\":\""));  strcat(LongMessage,Light1 -> getStatusText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Brightness\":\""));  strcat(LongMessage,Light1 -> getBrightness());
   strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Timer\":\""));  strcat(LongMessage,Light1 -> getTimerOnOffText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OnTime\":\""));  strcat(LongMessage,Light1 -> getOnTimeText());
   strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OffTime\":\""));  strcat(LongMessage,Light1 -> getOffTimeText());
   strcat_P(LongMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(LongMessage,LightSensor1 -> getReadingText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"IsDark\":\""));  strcat(LongMessage,LightSensor1 -> getIsDarkText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"WaterLevel\":\""));  strcat(LongMessage,WaterLevelSensor1 -> getLevelText());
-  strcat_P(LongMessage,(PGM_P)F("\",\"WaterTemp\":\""));  strcat(LongMessage,WaterTempSensor1 -> getTempText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"Dark\":\""));  strcat(LongMessage,LightSensor1 -> getDarkText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"WaterLevel\":\""));  strcat(LongMessage,WaterLevel1 -> getLevelText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"WaterTemp\":\""));  strcat(LongMessage,WaterTemp1 -> getTempText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"PH\":\""));  strcat(LongMessage,PHSensor1 -> getPHText());  
-  strcat_P(LongMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(LongMessage,PressureSensor1 -> getPressureText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aeroponics_NoTank1 -> getInterval());
-  strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aeroponics_NoTank1 -> getDuration());
-  //strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aeroponics_Tank1 -> getInterval());
-  //strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aeroponics_Tank1 -> getDuration());  
+  strcat_P(LongMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(LongMessage,Pressure1 -> getPressureText(false));
+  strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aero_NT1 -> getInterval());
+  strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aero_NT1 -> getDuration());
+  //strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aero_T1 -> getInterval());
+  //strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aero_T1 -> getDuration());  
   strcat_P(LongMessage,(PGM_P)F("\"}"));
   if(BoxSettings -> DebugEnabled){ //print the report command to console
     logToSerials(F("api.pushingbox.com"),false,4);

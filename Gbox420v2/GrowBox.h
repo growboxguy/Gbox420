@@ -24,20 +24,20 @@ class GrowBox : public Common
     GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings); //constructor
     Settings * BoxSettings;
     Sound * Sound1; //Pointer to a Piezo speaker - sound feedback
-    Fan * InternalFan;  //Internal fan
-    Fan * ExhaustFan; //Exhaust fan
-    DHTSensor * InternalDHTSensor;  //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
-    DHTSensor * ExternalDHTSensor; //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
+    Fan * InFan;  //Internal fan
+    Fan * ExFan; //Exhaust fan
+    DHTSensor * InDHT;  //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
+    DHTSensor * ExDHT; //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
     LightSensor * LightSensor1; //Pointer to a Light Sensor object measuring light intensity in the grow box
     Lights * Light1;  //Pointer to a Light assembly 
     Lights * Light2;  //Pointer to a Light assembly 
-    PowerSensor * PowerSensor1;
-    PressureSensor * PressureSensor1;
+    PowerSensor * Power1;
+    PressureSensor * Pressure1;
     PHSensor * PHSensor1;
-    Aeroponics_Tank * Aeroponics_Tank1;
-    Aeroponics_NoTank * Aeroponics_NoTank1;
-    WaterTempSensor * WaterTempSensor1;
-    WaterLevelSensor * WaterLevelSensor1;
+    Aeroponics_Tank * Aero_T1;
+    Aeroponics_NoTank * Aero_NT1;
+    WaterTempSensor * WaterTemp1;
+    WaterLevelSensor * WaterLevel1;
     void websiteEvent_Load(__attribute__((unused)) char * url);
     void websiteEvent_Refresh(__attribute__((unused)) char * url);
     void websiteEvent_Button(char * Button);
