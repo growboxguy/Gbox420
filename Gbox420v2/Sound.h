@@ -13,7 +13,6 @@ public:
     void websiteEvent_Field(char * Field);
     void websiteEvent_Button(char * Button);
     void refresh_Sec();
-    void report(){};
     void setSoundOnOff(bool State);
     void playOnSound();
     void playOffSound();

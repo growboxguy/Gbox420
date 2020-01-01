@@ -7,7 +7,8 @@ PressureSensor::PressureSensor(const __FlashStringHelper * Name, GrowBox * GBox,
   Ratio = &DefaultSettings -> Ratio;
   Offset = &DefaultSettings -> Offset;
   Pressure = new RollingAverage();
-  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method
+  GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
+  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh_Minute() method
   GBox -> AddToWebsiteQueue_Load(this); //Subscribing to the Website load event
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
@@ -50,10 +51,10 @@ void PressureSensor::websiteEvent_Field(char * Field){ //When the website is ope
 void PressureSensor::refresh_Minute(){  //Called when component should refresh its state 
   Common::refresh_Minute();
   readPressure();
-  report();
 }
 
 void PressureSensor::report(){
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
   strcat_P(LongMessage,(PGM_P)F("Pressure:")); 
   strcat(LongMessage, getPressureText(true));

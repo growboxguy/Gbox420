@@ -117,55 +117,68 @@ void GrowBox::refreshAll(){  //implementing the virtual refresh function from Co
   runSec();  
   runMinute();
   runHalfHour();
+  runReport();
+}
+
+void GrowBox::runReport(){ 
+  if(DebugEnabled)logToSerials(F("Report trigger.."),true,1);  
+  for(int i=0;i<reportQueueItemCount;i++){
+   ReportQueue[i] -> report();
+  }
 }
 
 void GrowBox::runSec(){ 
   if(DebugEnabled)logToSerials(F("One sec trigger.."),true,1);  
-  for(int i=0;i<refreshQueueLength_Sec;i++){
+  for(int i=0;i<refreshQueueItemCount_Sec;i++){
    RefreshQueue_Sec[i] -> refresh_Sec();
   }
 }
 
 void GrowBox::runFiveSec(){
   if(DebugEnabled)logToSerials(F("Five sec trigger.."),true,1); 
-  for(int i=0;i<refreshQueueLength_FiveSec;i++){
+  for(int i=0;i<refreshQueueItemCount_FiveSec;i++){
     RefreshQueue_FiveSec[i] -> refresh_FiveSec();
   }
 }
 
 void GrowBox::runMinute(){
   if(DebugEnabled)logToSerials(F("Minute trigger.."),true,1);
-  for(int i=0;i<refreshQueueLength_Minute;i++){
+  for(int i=0;i<refreshQueueItemCount_Minute;i++){
     RefreshQueue_Minute[i] -> refresh_Minute();
   }
 }
 
 void GrowBox::runHalfHour(){   
   if(DebugEnabled)logToSerials(F("Half hour trigger.."),true,1);
-  for(int i=0;i<refreshQueueLength_HalfHour;i++){
+  for(int i=0;i<refreshQueueItemCount_HalfHour;i++){
     RefreshQueue_HalfHour[i] -> refresh_HalfHour();
   } 
 }
 
-//Refresh queues
+//Queues
+
+void GrowBox::AddToReportQueue(Common* Component){
+  if(QueueDepth>reportQueueItemCount) ReportQueue[reportQueueItemCount++] = Component;
+  else addToLog(F("Report queue overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+}
 
 void GrowBox::AddToRefreshQueue_Sec(Common* Component){
-  if(QueueDepth>refreshQueueLength_Sec) RefreshQueue_Sec[refreshQueueLength_Sec++] = Component;
+  if(QueueDepth>refreshQueueItemCount_Sec) RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
   else addToLog(F("RefreshQueue_Sec overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
 }
 
 void GrowBox::AddToRefreshQueue_FiveSec(Common* Component){
-  if(QueueDepth>refreshQueueLength_FiveSec) RefreshQueue_FiveSec[refreshQueueLength_FiveSec++] = Component;
+  if(QueueDepth>refreshQueueItemCount_FiveSec) RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
   else addToLog(F("RefreshQueue_FiveSec overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
 }
 
 void GrowBox::AddToRefreshQueue_Minute(Common* Component){
-  if(QueueDepth>refreshQueueLength_Minute) RefreshQueue_Minute[refreshQueueLength_Minute++] = Component;
+  if(QueueDepth>refreshQueueItemCount_Minute) RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
   else addToLog(F("RefreshQueue_Minute overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
 }
 
 void GrowBox::AddToRefreshQueue_HalfHour(Common* Component){
-  if(QueueDepth>refreshQueueLength_HalfHour) RefreshQueue_HalfHour[refreshQueueLength_HalfHour++] = Component;
+  if(QueueDepth>refreshQueueItemCount_HalfHour) RefreshQueue_HalfHour[refreshQueueItemCount_HalfHour++] = Component;
   else addToLog(F("RefreshQueue_HalfHour overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
 }
 
@@ -229,11 +242,11 @@ char * GrowBox::eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Lo
 void GrowBox::setDebugOnOff(bool State){
   BoxSettings -> DebugEnabled = State;
   if(BoxSettings -> DebugEnabled){ 
-    addToLog(F("Debug LongMessages enabled"));
+    addToLog(F("Debug messages enabled"));
     Sound1 -> playOnSound();
     }
   else {
-    addToLog(F("Debug LongMessages disabled"));
+    addToLog(F("Debug messages disabled"));
     Sound1 -> playOffSound();
     }
 }

@@ -75,11 +75,11 @@ void Aeroponics_NoTank::refresh_Sec(){ //pump directly connected to aeroponics t
       sprayNow(false);                     
     }    
   } 
-  checkRelays();
-  if(RefreshCounter++%60 == 0) report();  //Report only every 60 seconds - Refresh() function is called every second in the Aeroponics component
+  checkRelays();  
 }
 
 void Aeroponics_NoTank::report(){
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
   strcat_P(LongMessage,(PGM_P)F("BlowOffTime:"));strcat(LongMessage,toText(*BlowOffTime));
   logToSerials(&LongMessage, false,4); //first print Aeroponics_Tank specific report, without a line break

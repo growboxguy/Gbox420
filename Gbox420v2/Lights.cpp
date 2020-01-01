@@ -16,7 +16,8 @@ Lights::Lights(const __FlashStringHelper * Name, GrowBox * GBox, Settings::Light
   OffMinute = &DefaultSettings -> OffMinute;
   pinMode(*RelayPin, OUTPUT);
   pinMode(*DimmingPin, OUTPUT);
-  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh() method  
+  GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
+  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh_Minute() method  
   GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the Website load queue: Calls the websiteEvent_Load(__attribute__((unused)) char * url) method
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
@@ -73,10 +74,10 @@ void Lights::refresh_Minute(){  //makes the class non-virtual, by implementing t
   Common::refresh_Minute();
   checkLightTimer(); 
   checkLightStatus();
-  report();
 }
 
 void Lights::report(){
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
   strcat_P(LongMessage,(PGM_P)F("Status:")); strcat(LongMessage, getStatusText(true)); 
   strcat_P(LongMessage,(PGM_P)F(" ; Brightness:")); strcat(LongMessage,toText(*Brightness));

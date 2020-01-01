@@ -23,7 +23,6 @@
 //Aeroponics_Tank1 -> websiteEvent_Field and Aeroponics_Tank1 -> websiteButtonPress events cause a crash
 //Remove WaterTempSensor and Reservoir classes from PHSensor
 
-
 #include "Arduino.h" 
 #include "avr/wdt.h" //Watchdog timer
 #include "avr/boot.h" //Watchdog timer related bug fix
@@ -37,16 +36,15 @@
 #include "420Common.h"  //Base class where plugins inherits from
 #include "GrowBox.h" //Represents a complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
-//Global variables
-//Settings BoxSettings;   //Store every setting of the grow box. Written to EEPROM to keep settings between reboots 
-char LongMessage[1024];   //temp storage for assembling log LongMessages, buffer for REST and MQTT API LongMessages
-char ShortMessage[MaxTextLength];
-char CurrentTime[20]; //buffer for storing current time
+//Global variable initialization
+char LongMessage[] = "";   //temp storage for assembling long messages (REST API, MQTT API)
+char ShortMessage[] = "";  //temp storage for assembling short messages (Log entries, Error messages)
+char CurrentTime[] = ""; //buffer for storing current time in text
 
 //Component initialization
 HardwareSerial& ArduinoSerial = Serial;  //Reference to the Arduino Serial
 HardwareSerial& ESPSerial = Serial3;    //Reference to the ESP Link Serial
-ELClient ESPLink(&ESPSerial);  //ESP-link. Both SLIP and debug LongMessages are sent to ESP over the ESP Serial link
+ELClient ESPLink(&ESPSerial);  //ESP-link. Both SLIP and debug messages are sent to ESP over the ESP Serial link
 ELClientWebServer WebServer(&ESPLink); //ESP-link WebServer API
 ELClientCmd ESPCmd(&ESPLink); //ESP-link - Get current time from the internet using NTP
 ELClientRest PushingBoxRestAPI(&ESPLink); //ESP-link REST API
@@ -66,6 +64,7 @@ void setup() {  // put your setup code here, to run once:
   logToSerials(F("GrowBox initializing..."),true,0); //logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
+  
   GBox = new GrowBox(F("GBox1"), loadSettings());  //This is the main object representing an entire Grow Box with all components in it.  
   ESPLink.resetCb = &resetWebServer;  //Callback subscription: When WiFi reconnects, restart the WebServer
   resetWebServer();  //reset the WebServer 
@@ -117,6 +116,8 @@ void runFiveSec(){
 void runMinute(){
   wdt_reset(); 
   GBox -> runMinute();
+  wdt_reset(); 
+  GBox -> runReport();
 }
 
 void runHalfHour(){
@@ -131,7 +132,7 @@ void HeartBeat(){
 }
 
 //////////////////////////////////////////
-//Settings related functions
+//EEPROM stored Settings related functions
 
 void saveSettings(bool LogThis, Settings * SettingsToSave){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
   eeprom_update_block((const void*)SettingsToSave, (void*)0, sizeof(Settings)); //update_block only writes the bytes that changed

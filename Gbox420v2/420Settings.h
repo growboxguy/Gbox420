@@ -1,18 +1,23 @@
 #pragma once
 
-//Change this when you make change to the structure of the EEPROM stored part
+//Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
 static const byte Version = 12;
 
-//THIS SECTION DOES NOT GET STORED IN EEPROM: They never change during runtime
-static const byte MaxTextLength = 32;  //Default char * buffer size: 31 characters + null terminator, used for logging and converting to text
+//THIS SECTION DOES NOT GET STORED IN EEPROM: 
+//Global constants
+static const byte MaxTextLength = 32;  //Default char * buffer size: 31 characters + null terminator. Memory intense!
 static const byte RollingAverageQueueDepth = 10;  //How many previous sensor readings should be stored
 static const byte LogDepth = 10;  //Show X number of log entries on website, do not go above 10
-static const byte QueueDepth = 32;  //Limits the refresh queue depth. Memory usage is multiplied by the number of refresh queues!
+static const byte QueueDepth = 64;  //Limits the maximum number of active modules. Memory intense!
+//Global variables
+extern char LongMessage[1024];   //temp storage for assembling long messages (REST API, MQTT API)
+extern char ShortMessage[128];  //temp storage for assembling short messages (Log entries, Error messages)
+extern char CurrentTime[20]; //buffer for storing current time in text
 
-//SAVED TO EEPROM
+//SAVED TO EEPROM - Settings struct
 typedef struct
 {  
-  bool DebugEnabled = true; //Logs debug LongMessages to serial and web outputs
+  bool DebugEnabled = true; //Logs debug messages to serial and web outputs
   bool MetricSystemEnabled = true; //Switch between Imperial/Metric units. If changed update the default temp and pressure values.  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
   bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker

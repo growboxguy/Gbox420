@@ -1,5 +1,8 @@
 #pragma once
 
+//This is a collection of common functions that all classes (GrowBox, PH reader, Lights, DHTSensor..) can use
+//Needs to be included in every module's header (.h) file:  #include "420Common.h"
+
 #include "Arduino.h"  //every inheriting class have Arduino commands available
 #include "TimeLib.h" //Keeping track of time
 #include "MemoryFree.h" //checking remaining memory - only for debugging
@@ -9,16 +12,17 @@
 #include "ELClientCmd.h"  //ESP-link - Get current time from the internet using NTP
 #include "420Settings.h"  //for storing/reading defaults
 
+//Forward declaration
 class GrowBox;
-
+extern ELClientCmd ESPCmd;
 extern HardwareSerial& ArduinoSerial;
 extern HardwareSerial& ESPSerial;
 extern GrowBox * GBox;
-extern char CurrentTime[20];
-extern char ShortMessage[MaxTextLength];
 extern char LongMessage[1024];
-extern ELClientCmd ESPCmd;
+extern char ShortMessage[128];
+extern char CurrentTime[20];
 
+//Class specific variables
 time_t getNtpTime();
 void getFreeMemory();
 char * getFormattedTime();  
@@ -39,6 +43,9 @@ char * onOffToText(bool Status);
 char * yesNoToText(bool Status); 
 char * statusToText(bool Status);
 char * enabledToText(bool Status);
+
+//////////////////////////////////////////////////////////////////
+//Logging to Arduino Serial and ESP-link's Microcontroller Console (uC Console)
 
 void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine=true,byte Indent=3);  //logs to both Arduino and ESP Link serial console, 2 optional parameters to adding a break line at after printing and the indentation in front
 template <class logLine> void logToSerials (logLine* ToPrint,bool BreakLine=true,byte Indent=3) { 

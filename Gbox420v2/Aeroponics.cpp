@@ -18,8 +18,9 @@ Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Setting
     pinMode(*BypassSolenoidPin,HIGH);  //initialize in off state
     pinMode(*PumpPin,OUTPUT);
     pinMode(*PumpPin,HIGH);  //initialize in off state
-    GBox -> AddToRefreshQueue_Sec(this);
-    GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the website load queue: Calls the websiteEvent_Load(__attribute__((unused)) char * url) method
+    GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
+    GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the Sec refresh queue: Calls the refresh_sec() method
+    GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the website load queue: Calls the websiteEvent_Load method
     GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
     GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
     GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event

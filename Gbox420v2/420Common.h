@@ -8,19 +8,18 @@
 #include "420Settings.h"  //for loading defaults and storing/reading user settings 
 #include "420Helpers.h"  //global functions
 
-//class ELClientWebServer; //forward declaration
-
+//forward declaration
 extern Settings MySettings;
-extern char ShortMessage[MaxTextLength];
 extern char LongMessage[1024];
+extern char ShortMessage[128];
 extern char CurrentTime[20];
 extern ELClientWebServer WebServer;
 
 class Common{
   public:
-    bool DebugEnabled;
-    byte RefreshCounter = 0; //counts how many times the refresh() function was called. Used for timing
+    bool DebugEnabled;    
     const __FlashStringHelper * Name; 
+    virtual void report();
     virtual void refresh_Sec();
     virtual void refresh_FiveSec();
     virtual void refresh_Minute();

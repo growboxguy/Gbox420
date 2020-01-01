@@ -8,6 +8,7 @@ PHSensor::PHSensor(GrowBox * GBox, byte Pin, float * Intercept, float * Slope){
   this -> Slope = Slope;
   pinMode(Pin, INPUT);
   PH = new RollingAverage();
+  GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
   GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the FiveSec refresh queue: Calls the refresh() method
 }
 
@@ -17,6 +18,13 @@ void PHSensor::websiteEvent_Load(__attribute__((unused)) char * url){ //When the
   // WebServer.setArgInt(getWebsiteComponentName(F("Interval")), *Interval);
   // WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration); 
 } 
+
+void PHSensor::report(){
+  Common::report();
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
+  strcat_P(LongMessage,(PGM_P)F("PH:")); strcat(LongMessage,PH -> getAverageFloatText());  
+  logToSerials( &LongMessage, true,4);
+}
 
 void PHSensor::refresh_Minute(){
   Common::refresh_Minute();

@@ -43,6 +43,7 @@ class GrowBox : public Common
     void report(){};
     void refreshAll();
  
+    void runReport(); 
     void runSec(); //trigger all threads at startup
     void runFiveSec(); //needs to run first to get sensor readings
     void runMinute();
@@ -53,9 +54,11 @@ class GrowBox : public Common
     void addToLog(const char * Text,byte indent=3);
     void setDebugOnOff(bool State);
     void setMetricSystemEnabled(bool MetricEnabled); 
-    void setReportToGoogleSheetsOnOff(bool State);
+    void setPushingBoxLogRelayID(char * ID);
     void ReportToGoogleSheets(bool AddToLog);
+    void setReportToGoogleSheetsOnOff(bool State);
 
+    Common* ReportQueue[QueueDepth];
     Common* RefreshQueue_Sec[QueueDepth];
     Common* RefreshQueue_FiveSec[QueueDepth]; 
     Common* RefreshQueue_Minute[QueueDepth];
@@ -64,15 +67,19 @@ class GrowBox : public Common
     Common* WebsiteQueue_Refresh[QueueDepth]; 
     Common* WebsiteQueue_Button[QueueDepth];
     Common* WebsiteQueue_Field[QueueDepth];
-    byte refreshQueueLength_Sec = 0;
-    byte refreshQueueLength_FiveSec = 0;
-    byte refreshQueueLength_Minute = 0;
-    byte refreshQueueLength_HalfHour = 0;
+    
+    //Tracking queue item count
+    byte reportQueueItemCount = 0;
+    byte refreshQueueItemCount_Sec = 0;
+    byte refreshQueueItemCount_FiveSec = 0;
+    byte refreshQueueItemCount_Minute = 0;
+    byte refreshQueueItemCount_HalfHour = 0;
     byte WebsiteQueueLength_Load = 0;
     byte WebsiteQueueLength_Refresh = 0;
     byte WebsiteQueueLength_Button = 0;
     byte WebsiteQueueLength_Field = 0;
-    void setPushingBoxLogRelayID(char * ID);
+    
+    void AddToReportQueue(Common* Component);
     void AddToRefreshQueue_Sec(Common* Component);
     void AddToRefreshQueue_FiveSec(Common* Component);
     void AddToRefreshQueue_Minute(Common* Component);

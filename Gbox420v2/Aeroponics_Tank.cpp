@@ -72,11 +72,11 @@ void Aeroponics_Tank::refresh_Sec(){
         SprayTimer = millis();
     }    
   } 
-  checkRelays(); 
-  if(RefreshCounter++%60 == 0) report();  //Report only every 60 seconds - Refresh() function is called every second in the Aeroponics component
+  checkRelays();  
 }
 
 void Aeroponics_Tank::report(){
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
   strcat_P(LongMessage,(PGM_P)F("Pressure:"));strcat(LongMessage,pressureToText(AeroPressure));
   strcat_P(LongMessage,(PGM_P)F(" ["));strcat(LongMessage,toText(*PressureLow,*PressureHigh,"/"));

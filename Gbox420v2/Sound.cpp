@@ -9,7 +9,7 @@ Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox, Settings::SoundSe
   GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the Website load event 
   GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press even 
   GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
-  GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the Sec refresh queue: Calls the refresh() method 
+  GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the Sec refresh queue: Calls the refresh_sec() method 
   logToSerials(F("Sound object created"),true,1);
 }
 

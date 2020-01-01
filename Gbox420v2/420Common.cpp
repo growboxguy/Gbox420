@@ -2,7 +2,11 @@
 
 Common::Common(const __FlashStringHelper * Name){
     this -> Name = Name;
-    logToSerials(F("Initializing "),false,2);logToSerials(this ->Name,false,0);logToSerials(F("..."),false,0); //Prints "Initializing NAME..." to the console
+    logToSerials(F("Initializing "),false,2);logToSerials(this ->Name,false,0);logToSerials(F("..."),false,0); //Prints "Initializing NAME..." to the console    
+}
+
+void Common::report(){
+   logToSerials(Name,false,3);logToSerials(F(": "),false,0);  //Prints "NAME: " to the console
 }
 
 void Common::refresh_Sec(){
