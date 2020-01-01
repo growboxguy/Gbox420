@@ -49,7 +49,7 @@ void PressureSensor::websiteEvent_Field(char * Field){ //When the website is ope
 } 
 
 void PressureSensor::refresh_Minute(){  //Called when component should refresh its state 
-  Common::refresh_Minute();
+  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   readPressure();
 }
 
@@ -58,7 +58,7 @@ void PressureSensor::report(){
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
   strcat_P(LongMessage,(PGM_P)F("Pressure:")); 
   strcat(LongMessage, getPressureText(true));
-  logToSerials(&LongMessage,true,4);
+  logToSerials(&LongMessage,true,1);
 }
 
 

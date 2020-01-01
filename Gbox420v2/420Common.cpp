@@ -6,23 +6,23 @@ Common::Common(const __FlashStringHelper * Name){
 }
 
 void Common::report(){
-   logToSerials(Name,false,3);logToSerials(F(": "),false,0);  //Prints "NAME: " to the console
+   logToSerials(Name,false,4);logToSerials(F("-"),false,1);  //Prints "NAME: " to the console
 }
 
 void Common::refresh_Sec(){
-  logToSerials(Name,false,2);logToSerials(F(" refreshing (1sec)"),true,0);  //Prints "NAME refreshing" to the console
+  logToSerials(Name,false,2);logToSerials(F("refreshing (1sec)"),true,1);  //Prints "NAME refreshing" to the console
 }
 
 void Common::refresh_FiveSec(){
-  logToSerials(Name,false,2);logToSerials(F(" refreshing (5sec)"),true,0);  //Prints "NAME refreshing" to the console
+  logToSerials(Name,false,2);logToSerials(F("refreshing (5sec)"),true,1);  //Prints "NAME refreshing" to the console
 }
 
 void Common::refresh_Minute(){
-  logToSerials(Name,false,2);logToSerials(F(" refreshing (1min)"),true,0);  //Prints "NAME refreshing" to the console
+  logToSerials(Name,false,2);logToSerials(F("refreshing (1min)"),true,1);  //Prints "NAME refreshing" to the console
 }
 
 void Common::refresh_HalfHour(){
-  logToSerials(Name,false,2);logToSerials(F(" refreshing (30min)"),true,0);  //Prints "NAME refreshing" to the console
+  logToSerials(Name,false,2);logToSerials(F("refreshing (30min)"),true,1);  //Prints "NAME refreshing" to the console
 }
 
 char * Common::getWebsiteComponentName(const __FlashStringHelper * ComponentName){
@@ -71,7 +71,7 @@ bool Common::isThisMyComponent(char const * lookupName){  //this is the name of 
       }      
     }
     //Serial.println("Match");
-    logToSerials(F("Extracted function: "),false,3);
+    logToSerials(F("Extracted function: "),false,1);
     logToSerials(&ShortMessage,true,0);
     return true;    
   }

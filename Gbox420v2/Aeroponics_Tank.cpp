@@ -26,7 +26,7 @@ void Aeroponics_Tank::websiteEvent_Field(char * Field){ //When the website is op
 }
 
 void Aeroponics_Tank::refresh_Sec(){ 
-  Common::refresh_Sec();
+  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Sec();
   if(PumpOn){ //if pump is on
     if(AeroPressure >= *PressureHigh){ //refill complete, target pressure reached
      setPumpOff(false);
@@ -81,14 +81,14 @@ void Aeroponics_Tank::report(){
   strcat_P(LongMessage,(PGM_P)F("Pressure:"));strcat(LongMessage,pressureToText(AeroPressure));
   strcat_P(LongMessage,(PGM_P)F(" ["));strcat(LongMessage,toText(*PressureLow,*PressureHigh,"/"));
   strcat_P(LongMessage,(PGM_P)F("]"));
-  logToSerials( &LongMessage, false,4); //first print Aeroponics_Tank specific report, without a line break  
+  logToSerials( &LongMessage, false,1); //first print Aeroponics_Tank specific report, without a line break  
   Aeroponics::report();  //then print parent class report  
   memset(&LongMessage[0], 0, sizeof(LongMessage));    
   strcat_P(LongMessage,(PGM_P)F("QuietEnabled:"));strcat(LongMessage,yesNoToText(*QuietEnabled));
   strcat_P(LongMessage,(PGM_P)F(" ; RefillBeforeQuiet:"));strcat(LongMessage,yesNoToText(*RefillBeforeQuiet));
   strcat_P(LongMessage,(PGM_P)F(" ; QuietFrom:"));strcat(LongMessage,timeToText(*QuietFromHour,*QuietFromMinute));
   strcat_P(LongMessage,(PGM_P)F(" ; QuietTo:"));strcat(LongMessage,timeToText(*QuietToHour,*QuietToMinute));
-  logToSerials( &LongMessage, true,4); //Print rarely used settings last  
+  logToSerials( &LongMessage, true,1); //Print rarely used settings last  
  }
 
 void Aeroponics_Tank::checkRelays(){

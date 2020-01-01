@@ -24,7 +24,7 @@ void Aeroponics_NoTank::websiteEvent_Field(char * Field){ //When the website is 
 } 
 
 void Aeroponics_NoTank::refresh_Sec(){ //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
-  Common::refresh_Sec();
+  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Sec();
   // Serial.print("SprayTimer: "); 
   // Serial.print(millis() - SprayTimer);  
   // Serial.print("/"); 
@@ -82,7 +82,7 @@ void Aeroponics_NoTank::report(){
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
   strcat_P(LongMessage,(PGM_P)F("BlowOffTime:"));strcat(LongMessage,toText(*BlowOffTime));
-  logToSerials(&LongMessage, false,4); //first print Aeroponics_Tank specific report, without a line break
+  logToSerials(&LongMessage, false,1); //first print Aeroponics_Tank specific report, without a line break
   Aeroponics::report();  //then print parent class report
  }
 

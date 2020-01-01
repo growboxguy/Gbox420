@@ -15,9 +15,11 @@ extern char ShortMessage[128];
 extern char CurrentTime[20];
 extern ELClientWebServer WebServer;
 
+class GrowBox;
+
 class Common{
   public:
-    bool DebugEnabled;    
+    //bool DebugEnabled;    
     const __FlashStringHelper * Name; 
     virtual void report();
     virtual void refresh_Sec();
@@ -32,7 +34,7 @@ class Common{
     //AlertHandler * HealthStatus; //Tracks the state of a component  
     char * getWebsiteComponentName(const __FlashStringHelper * Name);
   
-  private:
+  private:    
   
   protected:
     Common(const __FlashStringHelper * Name); //Constructor

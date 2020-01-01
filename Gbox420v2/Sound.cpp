@@ -38,7 +38,7 @@ void Sound::websiteEvent_Field(char * Field){ //When the website field is submit
 } 
 
 void Sound::refresh_Sec(){
-  Common::refresh_Sec();
+  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Sec();
   if(*Enabled){  
     if (PlayOnSound) OnSound();
     if (PlayOffSound) OffSound();

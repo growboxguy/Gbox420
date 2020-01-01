@@ -109,8 +109,7 @@ void runSec(){
 
 void runFiveSec(){
   wdt_reset();      
-  GBox -> runFiveSec();
-  getFreeMemory();
+  GBox -> runFiveSec();  
 }
 
 void runMinute(){

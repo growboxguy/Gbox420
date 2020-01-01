@@ -35,7 +35,7 @@ void LightSensor::websiteEvent_Button(char * Button){ //When the website is open
 } 
 
 void LightSensor::refresh_Minute(){  //Called when component should refresh its state
-  Common::refresh_Minute();
+  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   if(CalibrateRequested){ calibrate(); } //If calibration was requested
   IsDark = digitalRead(*DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected. ! inverts this
   LightReading -> updateAverage(1023 - analogRead(*AnalogPin)); 
@@ -47,7 +47,7 @@ void LightSensor::report(){
   strcat_P(LongMessage,(PGM_P)F("Light detected:")); strcat(LongMessage,getIsDarkText(true));
   strcat_P(LongMessage,(PGM_P)F(" ; LightReading:")); strcat(LongMessage, getReadingText(true));
   strcat_P(LongMessage,(PGM_P)F(" (")); strcat(LongMessage, getReadingPercentage());strcat_P(LongMessage,(PGM_P)F(")"));
-  logToSerials( &LongMessage, true,4);
+  logToSerials( &LongMessage, true,1);
 }
 
 //  const char * name_p = reinterpret_cast<const char *>(name);

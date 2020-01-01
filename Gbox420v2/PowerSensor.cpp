@@ -22,7 +22,7 @@ void PowerSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //Wh
 } 
 
 void PowerSensor::refresh_Minute(){
-  Common::refresh_Minute();
+  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   Voltage = Sensor -> voltage();  //AC Voltage (V)
   Current = Sensor -> current(); //Current (A)
   Power = Sensor -> power(); //Actual power usage (W)
@@ -40,7 +40,7 @@ void PowerSensor::report(){
   strcat_P(LongMessage,(PGM_P)F(" ; Current:")); strcat(LongMessage,getCurrentText(true));
   strcat_P(LongMessage,(PGM_P)F(" ; Frequency:")); strcat(LongMessage,getFrequencyText(true));
   strcat_P(LongMessage,(PGM_P)F(" ; PowerFactor:")); strcat(LongMessage,getPowerFactorText());
-  logToSerials( &LongMessage, true,4);
+  logToSerials( &LongMessage, true,1);
 }
  
 char * PowerSensor::getPowerText(bool IncludeUnits){

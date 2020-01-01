@@ -71,7 +71,7 @@ void Lights::websiteEvent_Button(char * Button){ //When the website is opened, l
 } 
 
 void Lights::refresh_Minute(){  //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
-  Common::refresh_Minute();
+  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   checkLightTimer(); 
   checkLightStatus();
 }
@@ -83,7 +83,7 @@ void Lights::report(){
   strcat_P(LongMessage,(PGM_P)F(" ; Brightness:")); strcat(LongMessage,toText(*Brightness));
   strcat_P(LongMessage,(PGM_P)F(" ; LightON:")); strcat(LongMessage,getOnTimeText());
   strcat_P(LongMessage,(PGM_P)F(" ; LightOFF:")); strcat(LongMessage,getOffTimeText());
-  logToSerials( &LongMessage, true,4);
+  logToSerials( &LongMessage, true,1);
 }
 
 void Lights::checkLightStatus(){

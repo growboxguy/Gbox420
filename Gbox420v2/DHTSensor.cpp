@@ -21,7 +21,7 @@ void DHTSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When
 } 
 
 void DHTSensor::refresh_Minute(){  //Called when component should refresh its state 
-  Common::refresh_Minute();
+  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   if(GBox -> BoxSettings -> MetricSystemEnabled){ Temp -> updateAverage(Sensor -> readTemperature());}
   else {Temp -> updateAverage(Sensor -> readTemperature() *1.8f + 32);}
   Humidity -> updateAverage(Sensor -> readHumidity());
@@ -32,7 +32,7 @@ void DHTSensor::report(){
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
   strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage, getTempText(true));
   strcat_P(LongMessage,(PGM_P)F(" ; Humidity:")); strcat(LongMessage, getHumidityText(true));
-  logToSerials(&LongMessage,true,4);
+  logToSerials(&LongMessage,true,1);
 }
 
 float DHTSensor::getTemp(){

@@ -41,7 +41,7 @@ time_t getNtpTime(){
       logToSerials(F("NTP time sync failed"),true,1);
       //sendEmailAlert(F("NTP%20time%20sync%20failed")); 
     }
-    else logToSerials(F(" time synchronized"),true,1);
+    else logToSerials(F("time synchronized"),true,1);
     }
   return NTPResponse;
 }

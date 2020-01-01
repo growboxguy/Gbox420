@@ -23,11 +23,11 @@ void PHSensor::report(){
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
   strcat_P(LongMessage,(PGM_P)F("PH:")); strcat(LongMessage,PH -> getAverageFloatText());  
-  logToSerials( &LongMessage, true,4);
+  logToSerials( &LongMessage, true,1);
 }
 
 void PHSensor::refresh_Minute(){
-  Common::refresh_Minute();
+  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   if(GBox -> BoxSettings -> DebugEnabled){ getPH(true); }
   else { getPH(false); }
 }

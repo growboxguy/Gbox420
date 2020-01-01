@@ -45,7 +45,7 @@ void Fan::websiteEvent_Button(char * Button){ //When the website is opened, load
 } 
 
 void Fan::refresh_Minute(){
-  Common::refresh_Minute();
+  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   checkFanStatus();
 }
 
@@ -56,7 +56,7 @@ void Fan::report(){
   strcat_P(LongMessage,(PGM_P)F(" ; High:")); strcat(LongMessage,toText(*HighSpeed));
   strcat_P(LongMessage,(PGM_P)F(" ; Text:")); strcat(LongMessage,fanSpeedToText());
   strcat_P(LongMessage,(PGM_P)F(" ; Number:")); strcat(LongMessage,fanSpeedToNumber());
-  logToSerials( &LongMessage, true,4);
+  logToSerials( &LongMessage, true,1);
 }
 
 void Fan::checkFanStatus(){
