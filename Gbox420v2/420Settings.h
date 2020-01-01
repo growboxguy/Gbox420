@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 14;
+static const byte Version = 16;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: 
 //Global constants
@@ -142,6 +142,11 @@ struct FanSettings{
   struct FanSettings InternalFan = {.OnOffPin = 25, .SpeedPin = 26 };
   struct FanSettings ExhaustFan = {.OnOffPin = 27, .SpeedPin = 28 };
 
+struct WaterTempSensorSettings{
+    WaterTempSensorSettings(byte Pin = 0) : Pin(Pin){} 
+    byte Pin;
+  };
+  struct WaterTempSensorSettings WaterTempSensor1 = {.Pin = 45}; //Data(yellow) - DS18B20 waterproof temp sensor 
 /*   
   bool AutomaticInternalFan = false;  //Adjust internal fan based on temperature
   bool AutomaticExhaustFan = false;  //Adjust exhaust fan based on temp and humidity
@@ -163,7 +168,6 @@ struct FanSettings{
   byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
   byte ATXPowerONOutPin = 34; //Turns ATX power supply on by connecting ATX PowerON pin to GND through an optocoupler
   byte ATXPowerGoodInPin = 35; //5V signal from ATX powersupply, inverted by optocoupler: LOW if DC power output is OK
-  byte ReservoirTempSensorInPin = 45;  //Data(yellow) - DS18B20 waterproof temp sensor 
   
   byte CompatibilityVersion=Version;  //Should always be the last value stored.
    }Settings;

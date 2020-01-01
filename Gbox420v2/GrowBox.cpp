@@ -10,6 +10,7 @@
 #include "PressureSensor.h" 
 #include "Aeroponics_Tank.h" 
 #include "Aeroponics_NoTank.h" 
+#include "WaterTempSensor.h"
 
 static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
@@ -28,6 +29,7 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, &BoxSettings -> Aeroponics_NoTank1_Common, &BoxSettings -> Aeroponics_NoTank1_Specific);
   PressureSensor1 = new PressureSensor(F("PressureSensor1"),this,&BoxSettings -> PressureSensor1);
   PHSensor1 = new PHSensor(F("PHSensor1"),this, &BoxSettings -> PHSensor1);  
+  WaterTempSensor1 = new WaterTempSensor(F("WaterTempSensor1"),this,&BoxSettings -> WaterTempSensor1);
   AddToRefreshQueue_HalfHour(this);  //Subscribing to the 30 minutes refresh queue: Calls the refresh_HalfHour() method 
   AddToWebsiteQueue_Load(this); //Subscribing to the Website load event
   AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
@@ -294,8 +296,8 @@ void GrowBox::ReportToGoogleSheets(bool AddToLog){
   strcat_P(LongMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(LongMessage,LightSensor1 -> getReadingText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"IsDark\":\""));  strcat(LongMessage,LightSensor1 -> getIsDarkText(false));
   //strcat_P(LongMessage,(PGM_P)F("\",\"Reservoir\":\""));  strcat(LongMessage,toText(ReservoirLevel));
-  //strcat_P(LongMessage,(PGM_P)F("\",\"PH\":\""));  strcat(LongMessage,toText(PH));
-  //strcat_P(LongMessage,(PGM_P)F("\",\"ReservoirTemp\":\""));  strcat(LongMessage,toText(ReservoirTemp));
+  strcat_P(LongMessage,(PGM_P)F("\",\"PH\":\""));  strcat(LongMessage,PHSensor1 -> getPHText());
+  strcat_P(LongMessage,(PGM_P)F("\",\"WaterTemp\":\""));  strcat(LongMessage,WaterTempSensor1 -> getTempText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(LongMessage,PressureSensor1 -> getPressureText(false));
   strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aeroponics_NoTank1 -> getInterval());
   strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aeroponics_NoTank1 -> getDuration());

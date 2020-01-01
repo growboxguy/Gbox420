@@ -14,6 +14,7 @@ PHSensor::PHSensor (const __FlashStringHelper * Name, GrowBox * GBox,  Settings:
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
   GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
+  logToSerials(F("PHSensor object created"),true,1);
 }
 
 void PHSensor::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once

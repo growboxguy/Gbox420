@@ -13,6 +13,7 @@ class LightSensor;
 class PressureSensor;
 class Aeroponics_NoTank;
 class Aeroponics_Tank;
+class WaterTempSensor;
 
 extern ELClientRest PushingBoxRestAPI;
 
@@ -34,6 +35,7 @@ class GrowBox : public Common
     PHSensor * PHSensor1;
     Aeroponics_Tank * Aeroponics_Tank1;
     Aeroponics_NoTank * Aeroponics_NoTank1;
+    WaterTempSensor * WaterTempSensor1;
     void websiteEvent_Load(__attribute__((unused)) char * url);
     void websiteEvent_Refresh(__attribute__((unused)) char * url);
     void websiteEvent_Button(char * Button);

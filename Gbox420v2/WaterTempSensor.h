@@ -1,25 +1,29 @@
-class Reservoir : public Common
-{
-  public:
-    //void websiteEvent_Load(__attribute__((unused)) char * url);
-    //void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    //void websiteEvent_Button(char * Button);
-    //void websiteEvent_Field(char * Field);  
-    void refresh(){};
-    void report(){};
+#pragma once
 
-  private:
-  
-  protected:  
-};
+#include "OneWire.h" //DS18B20 waterproof temperature sensor
+#include "DallasTemperature.h" //DS18B20 waterproof temperature sensor
+#include "420Common.h"
 
+class GrowBox;  //forward declaration
 
 class WaterTempSensor : public Common
 {
-  private:
-  
-  protected:
-   
+  protected: 
+
   public:
-    
+    WaterTempSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::WaterTempSensorSettings * DefaultSettings);  //constructor
+    //void websiteEvent_Load(__attribute__((unused)) char * url);
+    void websiteEvent_Refresh(__attribute__((unused)) char * url);
+    //void websiteEvent_Button(char * Button);
+    //void websiteEvent_Field(char * Field);  
+    void refresh_Minute();
+    void report();
+    float getTemp();
+    char * getTempText(bool IncludeUnits);
+
+  private:
+    GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
+    OneWire * TempSensorWire;
+    DallasTemperature * TempSensor;
+    RollingAverage * Temp;     
 };
