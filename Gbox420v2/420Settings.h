@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 13;
+static const byte Version = 14;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: 
 //Global constants
@@ -72,13 +72,14 @@ typedef struct
   struct DHTSensorSettings ExternalDHTSensor = {.Pin = 44, .Type = 22 };  
 
   struct PHSensorSettings{
-    PHSensorSettings(float PHCalibrationSlope = 0.0, float PHCalibrationIntercept = 0.0 ) : PHCalibrationSlope(PHCalibrationSlope),PHCalibrationIntercept(PHCalibrationIntercept) {}
-    float PHCalibrationSlope;     //Update this to your own PH meter calibration values
-    float PHCalibrationIntercept;  //Update this to your own PH meter calibration values    f
+    PHSensorSettings(byte Pin = 0 ,float Slope = 0.0, float Intercept = 0.0 ) : Pin(Pin),Slope(Slope),Intercept(Intercept) {}
+    byte Pin;
+    float Slope;     //Update this to your own PH meter calibration values
+    float Intercept;  //Update this to your own PH meter calibration values
     float PHAlertLow = 5.5; //Low pressure warning
     float PHAlertHigh = 6.5; //High pressure warning
   };
-  struct PHSensorSettings PHSensor1 = {.PHCalibrationSlope = -0.033256, .PHCalibrationIntercept = 24.08651 };
+  struct PHSensorSettings PHSensor1 = {.Pin = A3, .Slope = -0.033256, .Intercept = 24.08651 };
 
   struct PressureSensorSettings{
     PressureSensorSettings(byte Pin = 0, float Offset = 0.0, float Ratio = 0.0 ) : Pin(Pin),Offset(Offset),Ratio(Ratio) {}
@@ -149,10 +150,6 @@ struct FanSettings{
   byte ExhaustFanLowHumid = 55; //Above set humidity turn exhaust fan Low if automatic fan control is enabled
   byte ExhaustFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
 */
-
-//PHSensor pins
-  byte PHSensorInPin = A3;  //PH meter - Po port
-
 
 //Analog pins
   byte PressureSensorInPin = A1; //Signal(yellow) - Pressure sensor

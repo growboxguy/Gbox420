@@ -15,7 +15,7 @@ static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing 
 
 GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Common(Name) { //Constructor
   this -> BoxSettings = BoxSettings;
-  logToSerials("",true,0); //add a breakrow to console log
+  logToSerials(F(" "),true,0); //add a breakrow to console log
   Sound1 = new Sound(F("Sound1"), this, &BoxSettings -> Sound1);
   InternalFan = new Fan(F("InternalFan"), this, &BoxSettings -> InternalFan);
   ExhaustFan = new Fan(F("ExhaustFan"), this, &BoxSettings -> ExhaustFan);
@@ -27,7 +27,7 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   //Aeroponics_Tank1 = new Aeroponics_Tank(F("Aeroponics_Tank1"), this, &BoxSettings ->Aeroponics_Tank1_Common, &BoxSettings -> Aeroponics_Tank1_Specific);
   Aeroponics_NoTank1 = new Aeroponics_NoTank(F("Aeroponics_NoTank1"), this, &BoxSettings -> Aeroponics_NoTank1_Common, &BoxSettings -> Aeroponics_NoTank1_Specific);
   PressureSensor1 = new PressureSensor(F("PressureSensor1"),this,&BoxSettings -> PressureSensor1);
-  //PHSensor1 = new PHSensor(this, BoxSettings -> PHSensorInPin,);  
+  PHSensor1 = new PHSensor(F("PHSensor1"),this, &BoxSettings -> PHSensor1);  
   AddToRefreshQueue_HalfHour(this);  //Subscribing to the 30 minutes refresh queue: Calls the refresh_HalfHour() method 
   AddToWebsiteQueue_Load(this); //Subscribing to the Website load event
   AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
@@ -44,26 +44,14 @@ void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char * url) //called 
 
 void GrowBox::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/Settings.html.json")==0){  
-  WebServer.setArgInt(F("GBox1_DebugEnabled"), GBox -> BoxSettings -> DebugEnabled);
-  WebServer.setArgInt(F("GBox1_MetricSystemEnabled"), GBox -> BoxSettings -> MetricSystemEnabled);
-  WebServer.setArgBoolean(F("GBox1_MqttEnabled"), GBox -> BoxSettings -> ReportToMqtt);
-  WebServer.setArgBoolean(F("GBox1_GoogleSheetsEnabled"), GBox -> BoxSettings -> ReportToGoogleSheets);
-  WebServer.setArgString(F("GBox1_PushingBoxLogRelayID"), GBox -> BoxSettings -> PushingBoxLogRelayID);
-  WebServer.setArgBoolean(F("GBox1_AlertEmails"), GBox -> BoxSettings -> AlertEmails);
+  WebServer.setArgInt(getWebsiteComponentName(F("DebugEnabled")), GBox -> BoxSettings -> DebugEnabled);
+  WebServer.setArgInt(getWebsiteComponentName(F("MetricSystemEnabled")), GBox -> BoxSettings -> MetricSystemEnabled);
+  WebServer.setArgBoolean(getWebsiteComponentName(F("MqttEnabled")), GBox -> BoxSettings -> ReportToMqtt);
+  WebServer.setArgBoolean(getWebsiteComponentName(F("GoogleSheetsEnabled")), GBox -> BoxSettings -> ReportToGoogleSheets);
+  WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), GBox -> BoxSettings -> PushingBoxLogRelayID);
+  WebServer.setArgBoolean(getWebsiteComponentName(F("AlertEmails")), GBox -> BoxSettings -> AlertEmails);
   //WebServer.setArgString(F("PushingBoxEmailRelayID"), GBox -> BoxSettings -> PushingBoxEmailRelayID);
   //WebServer.setArgInt(F("TriggerCountBeforeAlert"), GBox -> BoxSettings -> TriggerCountBeforeAlert);
-  //WebServer.setArgInt(F("TempAlertLow"), GBox -> BoxSettings -> TempAlertLow);
-  //WebServer.setArgInt(F("TempAlertHigh"), GBox -> BoxSettings -> TempAlertHigh);
-  //WebServer.setArgInt(F("HumidityAlertLow"), GBox -> BoxSettings -> HumidityAlertLow);
-  //WebServer.setArgInt(F("HumidityAlertHigh"), GBox -> BoxSettings -> HumidityAlertHigh);
-  //WebServer.setArgString(F("PressureAlertLow"), toText(GBox -> BoxSettings -> PressureAlertLow));
-  //WebServer.setArgString(F("PressureAlertHigh"), toText(GBox -> BoxSettings -> PressureAlertHigh));
-  //WebServer.setArgString(F("PHAlertLow"), toText(GBox -> Reservoir -> PHAlertLow));
-  //WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> BoxSettings -> PHAlertHigh));
-  //WebServer.setArgString(F("PHCalibrationSlope"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationSlope));
-  //WebServer.setArgString(F("PHCalibrationIntercept"), toPrecisionText(GBox -> BoxSettings -> PHCalibrationIntercept)); 
-  //WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(GBox -> BoxSettings -> PressureSensorOffset));
-  //WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(GBox -> BoxSettings -> PressureSensorRatio));  
   }
 } 
 

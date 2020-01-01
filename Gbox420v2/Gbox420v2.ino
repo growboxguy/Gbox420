@@ -11,10 +11,8 @@
 //sendEmailAlert implementation
 //HempyBucket controls
 //Aeroponics
-//PH sensor
 //Water temp sensor
 //Water level sensor
-//Google Sheets reporting
 //MQTT reporting
 //Support for storing multiple Settings objects in EEPROM (?Support for controlling more grow boxes from a single arduino? )
 //Add DebugEnabled to all classes, sets debug mode on-off per component

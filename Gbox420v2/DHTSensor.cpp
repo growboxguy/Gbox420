@@ -20,6 +20,19 @@ void DHTSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When
   } 
 } 
 
+/*
+void Lights::websiteEvent_Load(__attribute__((unused)) char * url){
+  if (strcmp(url,"/Settings.html.json")==0){
+    WebServer.setArgInt(getWebsiteComponentName(F("OnHour")), *OnHour); 
+  //WebServer.setArgInt(F("TempAlertLow"), GBox -> BoxSettings -> TempAlertLow);
+  //WebServer.setArgInt(F("TempAlertHigh"), GBox -> BoxSettings -> TempAlertHigh);
+  //WebServer.setArgInt(F("HumidityAlertLow"), GBox -> BoxSettings -> HumidityAlertLow);
+  //WebServer.setArgInt(F("HumidityAlertHigh"), GBox -> BoxSettings -> HumidityAlertHigh);
+
+  }
+}
+*/
+  
 void DHTSensor::refresh_Minute(){  //Called when component should refresh its state 
   if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   if(GBox -> BoxSettings -> MetricSystemEnabled){ Temp -> updateAverage(Sensor -> readTemperature());}
