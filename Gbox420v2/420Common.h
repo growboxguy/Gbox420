@@ -15,11 +15,8 @@ extern char ShortMessage[128];
 extern char CurrentTime[20];
 extern ELClientWebServer WebServer;
 
-class GrowBox;
-
 class Common{
-  public:
-    //bool DebugEnabled;    
+  public:  
     const __FlashStringHelper * Name; 
     virtual void report();
     virtual void refresh_Sec();
@@ -30,8 +27,7 @@ class Common{
     virtual void websiteEvent_Refresh(__attribute__((unused)) char * url){};
     virtual void websiteEvent_Button(__attribute__((unused)) char * Button){};
     virtual void websiteEvent_Field(__attribute__((unused)) char * Field){};
-    bool isThisMyComponent(char const * lookupName); //When it return true the component belongs to this object  
-    //AlertHandler * HealthStatus; //Tracks the state of a component  
+    bool isThisMyComponent(char const * lookupName); //When it return true the component belongs to this object
     char * getWebsiteComponentName(const __FlashStringHelper * Name);
   
   private:    

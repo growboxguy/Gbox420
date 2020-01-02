@@ -24,8 +24,7 @@ void WaterTempSensor::refresh_Minute(){
   if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   TempSensor -> requestTemperatures(); 
   if(GBox -> BoxSettings -> MetricSystemEnabled){ Temp -> updateAverage(TempSensor -> getTempCByIndex(0)); }
-  else {Temp -> updateAverage(TempSensor -> getTempFByIndex(0));}
-  
+  else {Temp -> updateAverage(TempSensor -> getTempFByIndex(0));}  
 }
 
 void WaterTempSensor::report(){

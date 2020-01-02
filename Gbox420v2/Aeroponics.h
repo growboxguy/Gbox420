@@ -15,7 +15,6 @@ class Aeroponics : public Common
     virtual void websiteEvent_Field(__attribute__((unused)) char * Field);
     virtual void report();
     int AeroPressure = 6; //TODO: FAKE PRESSURE READING - REMOVE IT
-    // float AeroPressure = 0.0;  //Aeroponics - Current pressure (bar)
     bool PumpOK = true; //Aeroponics - High pressure pump health  
     bool PumpOn = false; //Aeroponics - High pressure pump state
     uint32_t PumpTimer = millis();  //Aeroponics - Pump cycle timer

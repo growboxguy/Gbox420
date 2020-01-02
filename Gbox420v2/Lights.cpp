@@ -106,8 +106,8 @@ void Lights::checkLightTimer() {
         } 
       }
       else  //False: Light should be off
-        if(*Status) {  //If status is ON: Turn OFF the lights (First bool), and do not add it to the log (Second bool)
-          setLightOnOff(false,false);    
+        if(*Status) {  //If status is ON
+          setLightOnOff(false,false);    //Turn OFF the lights (First bool), and do not add it to the log (Second bool) 
           if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Timer:Light OFF"),true,4);
         }        
     }

@@ -88,18 +88,3 @@ class RollingAverage
     char * getAverageIntText();
     char * getAverageFloatText();
 };
-
-//////////////////////////////////////////////////////////////////
-//AlertHandler class: Tracking health of 
-
-class AlertHandler
-{  
-  private:
-    bool HealthOK = false;
-    bool LastCheckResult = true;
-    byte TriggerCount = 0 ; //Counts out of range readings
-   
-  public:  
-    //AlertHandler();  //default constructor: automatically declared
-    bool reportHealth(bool HealthOK); //    
-};

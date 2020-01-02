@@ -14,7 +14,6 @@ class Aeroponics_NoTank : public Aeroponics
     void websiteEvent_Field(char * Field);
     void refresh_Sec();
     void report();
-    void checkAlerts();
     void setBlowOffTime(int _BlowOffTime);
     void sprayOff();
     void sprayNow(bool DueToHighPressure);
@@ -23,6 +22,5 @@ class Aeroponics_NoTank : public Aeroponics
     int * BlowOffTime; //TODO: Make it part of the settings
     bool BlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
      
-
   protected:
 };

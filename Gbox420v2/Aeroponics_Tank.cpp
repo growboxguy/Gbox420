@@ -20,7 +20,13 @@ void Aeroponics_Tank::websiteEvent_Field(char * Field){ //When the website is op
   if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
-  else{ //if the component name matches with the object name    
+  else{ //if the component name matches with the object name
+    //if(strcmp_P(field,(PGM_P)F("QuietEnabled"))==0) {setQuietOnOff(WebServer.getArgBoolean());}
+    //else if(strcmp_P(field,(PGM_P)F("RefillBeforeQuiet"))==0) {setQuietRefillOnOff(WebServer.getArgBoolean());}
+    // else if(strcmp_P(field,(PGM_P)F("QuietFromHour"))==0) {setQuietFromHour(WebServer.getArgInt());}
+    // else if(strcmp_P(field,(PGM_P)F("QuietFromMinute"))==0) {setQuietFromMinute(WebServer.getArgInt());}
+    // else if(strcmp_P(field,(PGM_P)F("QuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}
+    // else if(strcmp_P(field,(PGM_P)F("QuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}     
     Aeroponics::websiteEvent_Field(Field);
   }
 }

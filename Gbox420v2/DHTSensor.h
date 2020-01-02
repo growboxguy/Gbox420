@@ -9,18 +9,15 @@ class DHTSensor : public Common
 {
   public:
     DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::DHTSensorSettings * DefaultSettings);
-    RollingAverage * Temp;
-    RollingAverage * Humidity;
-    //void websiteEvent_Load(__attribute__((unused)) char * url);
-    void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    //void websiteEvent_Button(char * Button);
-    //void websiteEvent_Field(char * Field);
+    void websiteEvent_Refresh(__attribute__((unused)) char * url);    
     void refresh_Minute();  //Called when component should refresh its state
     void report();
     float getTemp();  
     float getHumidity();
     char * getTempText(bool IncludeUnits);  
     char * getHumidityText(bool IncludeUnits);
+    RollingAverage * Temp;
+    RollingAverage * Humidity;
   
   private:
     GrowBox * GBox;

@@ -29,6 +29,7 @@ private:
   void buzz(uint32_t frequency, uint32_t length);
   void OnSound();
   void OffSound();
-  void EE();      
+  void EE(); 
+
 protected:  
 };

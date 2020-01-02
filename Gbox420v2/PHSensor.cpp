@@ -71,8 +71,7 @@ void PHSensor::updatePH(bool ShowRaw){
     strcat(LongMessage,toText(PHRaw));
     GBox -> addToLog(LongMessage);
   } 
-  PH -> updateAverage((*Slope)*PHRaw + (*Intercept)); 
-  //checkPHAlert();
+  PH -> updateAverage((*Slope)*PHRaw + (*Intercept));
 }
 
 float PHSensor::getPH(){

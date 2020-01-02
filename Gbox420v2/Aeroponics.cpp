@@ -64,15 +64,7 @@ void Aeroponics::websiteEvent_Field(__attribute__((unused)) char * Field){ //Whe
     if(strcmp_P(ShortMessage,(PGM_P)F("PumpTimeout"))==0) {setPumpTimeout(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("PrimingTime"))==0) {setPrimingTime(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("Duration"))==0) {setDuration(WebServer.getArgInt());}
-    else if(strcmp_P(ShortMessage,(PGM_P)F("Interval"))==0) {setInterval(WebServer.getArgInt());}    
-    //else if(strcmp_P(field,(PGM_P)F("QuietEnabled"))==0) {setQuietOnOff(WebServer.getArgBoolean());}
-    //else if(strcmp_P(field,(PGM_P)F("RefillBeforeQuiet"))==0) {setQuietRefillOnOff(WebServer.getArgBoolean());}
-    //else if(strcmp_P(field,(PGM_P)F("PressureTankPresent"))==0) {setPressureTankOnOff(WebServer.getArgBoolean());}
-    //else if(strcmp_P(field,(PGM_P)F("BlowOff"))==0) {setBlowOnOff(WebServer.getArgBoolean());}
-    // else if(strcmp_P(field,(PGM_P)F("QuietFromHour"))==0) {setQuietFromHour(WebServer.getArgInt());}
-    // else if(strcmp_P(field,(PGM_P)F("QuietFromMinute"))==0) {setQuietFromMinute(WebServer.getArgInt());}
-    // else if(strcmp_P(field,(PGM_P)F("QuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}
-    // else if(strcmp_P(field,(PGM_P)F("QuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}  
+    else if(strcmp_P(ShortMessage,(PGM_P)F("Interval"))==0) {setInterval(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("SprayEnabled"))==0) {setSprayOnOff(WebServer.getArgBoolean());}
 }  
 

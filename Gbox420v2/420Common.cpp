@@ -55,7 +55,7 @@ bool Common::isThisMyComponent(char const * lookupName){  //this is the name of 
       //Serial.println("Not match");
       return false; //stop the while loop
     }
-}
+  }
   if(FlashCurrentChar == 0 && RAMCurrentChar == '_'){  //if instance name is confirmed: continue reading the HTML component name describing the function
     int SafetyCount = 0;
     //Serial.print("Inside second check: ");

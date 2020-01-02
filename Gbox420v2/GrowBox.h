@@ -2,7 +2,8 @@
 #include "420Common.h"
 #include "ELClientRest.h" //ESP-link - REST API
 
-class DHTSensor;  //forward declaration of classes
+//forward declaration of classes
+class DHTSensor;  
 class LightSensor;
 class Lights;
 class Sound;
@@ -30,7 +31,6 @@ class GrowBox : public Common
     DHTSensor * ExDHT; //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
     LightSensor * LightSensor1; //Pointer to a Light Sensor object measuring light intensity in the grow box
     Lights * Light1;  //Pointer to a Light assembly 
-    Lights * Light2;  //Pointer to a Light assembly 
     PowerSensor * Power1;
     PressureSensor * Pressure1;
     PHSensor * PHSensor1;
@@ -48,8 +48,8 @@ class GrowBox : public Common
     bool refreshRequest = false; 
  
     void runReport(); 
-    void runSec(); //trigger all threads at startup
-    void runFiveSec(); //needs to run first to get sensor readings
+    void runSec();
+    void runFiveSec();
     void runMinute();
     void runHalfHour(); 
 
@@ -61,28 +61,7 @@ class GrowBox : public Common
     void setPushingBoxLogRelayID(char * ID);
     void ReportToGoogleSheets(bool AddToLog);
     void setReportToGoogleSheetsOnOff(bool State);
-
-    Common* ReportQueue[QueueDepth];
-    Common* RefreshQueue_Sec[QueueDepth];
-    Common* RefreshQueue_FiveSec[QueueDepth]; 
-    Common* RefreshQueue_Minute[QueueDepth];
-    Common* RefreshQueue_HalfHour[QueueDepth];
-    Common* WebsiteQueue_Load[QueueDepth];
-    Common* WebsiteQueue_Refresh[QueueDepth]; 
-    Common* WebsiteQueue_Button[QueueDepth];
-    Common* WebsiteQueue_Field[QueueDepth];
-    
-    //Tracking queue item count
-    byte reportQueueItemCount = 0;
-    byte refreshQueueItemCount_Sec = 0;
-    byte refreshQueueItemCount_FiveSec = 0;
-    byte refreshQueueItemCount_Minute = 0;
-    byte refreshQueueItemCount_HalfHour = 0;
-    byte WebsiteQueueLength_Load = 0;
-    byte WebsiteQueueLength_Refresh = 0;
-    byte WebsiteQueueLength_Button = 0;
-    byte WebsiteQueueLength_Field = 0;
-    
+  
     void AddToReportQueue(Common* Component);
     void AddToRefreshQueue_Sec(Common* Component);
     void AddToRefreshQueue_FiveSec(Common* Component);
@@ -92,7 +71,25 @@ class GrowBox : public Common
     void AddToWebsiteQueue_Refresh(Common* Component);
     void AddToWebsiteQueue_Button(Common* Component);
     void AddToWebsiteQueue_Field(Common* Component);
-  
+    Common* ReportQueue[QueueDepth];
+    Common* RefreshQueue_Sec[QueueDepth];
+    Common* RefreshQueue_FiveSec[QueueDepth]; 
+    Common* RefreshQueue_Minute[QueueDepth];
+    Common* RefreshQueue_HalfHour[QueueDepth];
+    Common* WebsiteQueue_Load[QueueDepth];
+    Common* WebsiteQueue_Refresh[QueueDepth]; 
+    Common* WebsiteQueue_Button[QueueDepth];
+    Common* WebsiteQueue_Field[QueueDepth];
+    byte reportQueueItemCount = 0;    //Tracking queue item count
+    byte refreshQueueItemCount_Sec = 0;
+    byte refreshQueueItemCount_FiveSec = 0;
+    byte refreshQueueItemCount_Minute = 0;
+    byte refreshQueueItemCount_HalfHour = 0;
+    byte WebsiteQueueItemCount_Load = 0;
+    byte WebsiteQueueItemCount_Refresh = 0;
+    byte WebsiteQueueItemCount_Button = 0;
+    byte WebsiteQueueItemCount_Field = 0;
+      
   private: 
 
   protected:

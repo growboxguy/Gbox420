@@ -37,14 +37,14 @@ void LightSensor::websiteEvent_Button(char * Button){ //When the website is open
 void LightSensor::refresh_Minute(){  //Called when component should refresh its state
   if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   if(CalibrateRequested){ calibrate(); } //If calibration was requested
-  Dark = digitalRead(*DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected. ! inverts this
+  Dark = digitalRead(*DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected.
   LightReading -> updateAverage(1023 - analogRead(*AnalogPin)); 
 }
 
 void LightSensor::report(){
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("Light detected:")); strcat(LongMessage,getDarkText(true));
+  strcat_P(LongMessage,(PGM_P)F("Dark:")); strcat(LongMessage,getDarkText(true));
   strcat_P(LongMessage,(PGM_P)F(" ; LightReading:")); strcat(LongMessage, getReadingText(true));
   strcat_P(LongMessage,(PGM_P)F(" (")); strcat(LongMessage, getReadingPercentage());strcat_P(LongMessage,(PGM_P)F(")"));
   logToSerials( &LongMessage, true,1);
@@ -114,5 +114,5 @@ char * LightSensor::getReadingText(bool IncludeMinMax){
 
 char * LightSensor::getDarkText(bool UseWords){
   if(UseWords) return yesNoToText(Dark);
-  else return toText((bool)Dark);
+  else return toText(Dark);
 }

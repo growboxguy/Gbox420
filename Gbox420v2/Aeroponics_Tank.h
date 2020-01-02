@@ -25,7 +25,6 @@ class Aeroponics_Tank : public Aeroponics
     byte * QuietToHour; //Quiet time end - hour
     byte * QuietToMinute; //Quiet time end - minute  
     void checkRelays();
-    void checkAeroPumpAlerts_WithPressureTank();
     bool checkQuietTime();
     void setQuietFromHour(int Hour);
     void setQuietFromMinute(int Minute);

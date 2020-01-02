@@ -20,8 +20,6 @@ void PressureSensor::websiteEvent_Load(__attribute__((unused)) char * url){
   if (strcmp(url,"/Settings.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Offset")), toPrecisionText(*Offset));
     WebServer.setArgString(getWebsiteComponentName(F("Ratio")), toPrecisionText(*Ratio));
-    //WebServer.setArgString(F("PressureAlertLow"), toText(GBox -> BoxSettings -> PressureAlertLow));
-    //WebServer.setArgString(F("PressureAlertHigh"), toText(GBox -> BoxSettings -> PressureAlertHigh));
   } 
 } 
 
@@ -62,7 +60,6 @@ void PressureSensor::report(){
   strcat(LongMessage, getPressureText(true));
   logToSerials(&LongMessage,true,1);
 }
-
 
 void PressureSensor::readPressure(){
   float Voltage = ((float)analogRead(*Pin)) * 5 / 1024 ;

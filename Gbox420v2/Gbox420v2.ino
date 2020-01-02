@@ -5,21 +5,13 @@
 //HELLO, You are probably here looking for the following tab:
 // 420Settings.h : Pin assignment, First time setup, Default settings 
 
-
 //TODO:
-//Make alerting a class, every object will have a "bool StatusOK" variable inherited from Common, Alerting will go throught all subscribed classes and check status
 //sendEmailAlert implementation
 //HempyBucket controls
-//Aeroponics
-//Water temp sensor
-//Water level sensor
+//Aeroponics_Tank: Pressure sensor not integrated, remove fake int AeroPressure = 6; 
+//Aeroponics_Tank -> websiteEvent_Field and Aero_T1 -> websiteButtonPress events cause a crash
 //MQTT reporting
 //Support for storing multiple Settings objects in EEPROM (?Support for controlling more grow boxes from a single arduino? )
-//Add DebugEnabled to all classes, sets debug mode on-off per component
-//Add debug message levels: 0-no debug, 1-Extra info, 2-Message, 3-Verbose
-//Find a better name for Aeroponics NoTank: DirectPump?
-//Aero_T1 -> websiteEvent_Field and Aero_T1 -> websiteButtonPress events cause a crash
-//Remove WaterTempSensor and Reservoir classes from PHSensor
 
 #include "Arduino.h" 
 #include "avr/wdt.h" //Watchdog timer
@@ -48,7 +40,7 @@ ELClientCmd ESPCmd(&ESPLink); //ESP-link - Get current time from the internet us
 ELClientRest PushingBoxRestAPI(&ESPLink); //ESP-link REST API
 GrowBox * GBox;  //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
-//Threading to time tasks
+//Thread initialization
 Thread OneSecThread = Thread();
 Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
@@ -68,7 +60,7 @@ void setup() {  // put your setup code here, to run once:
   resetWebServer();  //reset the WebServer 
   setTime(getNtpTime()); 
   
-  //Threading - Setting up threads and setting how often they should be called
+  //Threads - Setting up how often threads should be triggered
   OneSecThread.setInterval(1000);
   OneSecThread.onRun(runSec);
   FiveSecThread.setInterval(5000);
@@ -156,7 +148,7 @@ Settings* loadSettings(){
 void restoreDefaults(Settings* SettingsToOverwrite){
   logToSerials(F("Restoring settings from sketch defaults..."),false,0);
   Settings DefaultSettings; //new "Settings" type objects with sketch defaults
-  memcpy(&SettingsToOverwrite,&DefaultSettings,sizeof(Settings));  
+  memcpy(&SettingsToOverwrite,&DefaultSettings,sizeof(SettingsToOverwrite));  
   saveSettings(false,SettingsToOverwrite );
   GBox -> addToLog(F("Default settings restored"));
 }

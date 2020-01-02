@@ -6,8 +6,6 @@ class GrowBox;  //forward declaration
 
 class WaterLevelSensor : public Common
 {
-  protected: 
-
   public:
     WaterLevelSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::WaterLevelSensorSettings * DefaultSettings);  //constructor
     void websiteEvent_Refresh(__attribute__((unused)) char * url);
@@ -28,6 +26,7 @@ class WaterLevelSensor : public Common
     byte * Pin_3;
     byte * Pin_4;
     char LevelGauge[9]; //Displays water level: E[____]F, E[#___]F, E[##__]F, E[###_]F, E[####]F
-    int8_t Level;  //Stores water level in a number: 0 - Empty ... 4 - Full
-    
+    int8_t Level;  //Stores water level in a number: 0 - Empty ... 4 - Full  
+
+  protected:  
 };

@@ -44,6 +44,7 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
 
 void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char * url) //called when website is refreshed.
 { 
+  WebServer.setArgString(F("Time"), getFormattedTime());
   WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON(false)); //Last events that happened in JSON format  
 }
 
@@ -51,12 +52,10 @@ void GrowBox::websiteEvent_Load(__attribute__((unused)) char * url){ //When the 
   if (strcmp(url,"/Settings.html.json")==0){  
   WebServer.setArgInt(getWebsiteComponentName(F("DebugEnabled")), GBox -> BoxSettings -> DebugEnabled);
   WebServer.setArgInt(getWebsiteComponentName(F("MetricSystemEnabled")), GBox -> BoxSettings -> MetricSystemEnabled);
-  WebServer.setArgBoolean(getWebsiteComponentName(F("MqttEnabled")), GBox -> BoxSettings -> ReportToMqtt);
+  //WebServer.setArgBoolean(getWebsiteComponentName(F("MqttEnabled")), GBox -> BoxSettings -> ReportToMqtt);
   WebServer.setArgBoolean(getWebsiteComponentName(F("GoogleSheetsEnabled")), GBox -> BoxSettings -> ReportToGoogleSheets);
-  WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), GBox -> BoxSettings -> PushingBoxLogRelayID);
-  WebServer.setArgBoolean(getWebsiteComponentName(F("AlertEmails")), GBox -> BoxSettings -> AlertEmails);
+  WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), GBox -> BoxSettings -> PushingBoxLogRelayID);  
   //WebServer.setArgString(F("PushingBoxEmailRelayID"), GBox -> BoxSettings -> PushingBoxEmailRelayID);
-  //WebServer.setArgInt(F("TriggerCountBeforeAlert"), GBox -> BoxSettings -> TriggerCountBeforeAlert);
   }
 } 
 
@@ -116,6 +115,9 @@ void GrowBox::runReport(){
   }
 }
 
+//////////////////////////////////////////////////////////////////
+//Run queues: Refresh components inside the GrowBox
+
 void GrowBox::runSec(){ 
   if(BoxSettings -> DebugEnabled)logToSerials(F("One sec trigger.."),true,1);  
   for(int i=0;i<refreshQueueItemCount_Sec;i++){
@@ -144,7 +146,8 @@ void GrowBox::runHalfHour(){
   } 
 }
 
-//Queues
+//////////////////////////////////////////////////////////////////
+//Thread Queues: Called based on thread scheduler
 
 void GrowBox::AddToReportQueue(Common* Component){
   if(QueueDepth>reportQueueItemCount) ReportQueue[reportQueueItemCount++] = Component;
@@ -153,45 +156,48 @@ void GrowBox::AddToReportQueue(Common* Component){
 
 void GrowBox::AddToRefreshQueue_Sec(Common* Component){
   if(QueueDepth>refreshQueueItemCount_Sec) RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
-  else addToLog(F("RefreshQueue_Sec overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+  else addToLog(F("RefreshQueue_Sec overflow!"));
 }
 
 void GrowBox::AddToRefreshQueue_FiveSec(Common* Component){
   if(QueueDepth>refreshQueueItemCount_FiveSec) RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
-  else addToLog(F("RefreshQueue_FiveSec overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+  else addToLog(F("RefreshQueue_FiveSec overflow!")); 
 }
 
 void GrowBox::AddToRefreshQueue_Minute(Common* Component){
   if(QueueDepth>refreshQueueItemCount_Minute) RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
-  else addToLog(F("RefreshQueue_Minute overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+  else addToLog(F("RefreshQueue_Minute overflow!")); 
 }
 
 void GrowBox::AddToRefreshQueue_HalfHour(Common* Component){
   if(QueueDepth>refreshQueueItemCount_HalfHour) RefreshQueue_HalfHour[refreshQueueItemCount_HalfHour++] = Component;
-  else addToLog(F("RefreshQueue_HalfHour overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+  else addToLog(F("RefreshQueue_HalfHour overflow!"));
 }
 
-//Website queues
+//////////////////////////////////////////////////////////////////
+//Website queues: Called based on Website events on the ESP-link
+
 void GrowBox::AddToWebsiteQueue_Load(Common* Component){
-  if(QueueDepth>WebsiteQueueLength_Load) WebsiteQueue_Load[WebsiteQueueLength_Load++] = Component;
-  else addToLog(F("WebsiteQueueLength_Load overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+  if(QueueDepth>WebsiteQueueItemCount_Load) WebsiteQueue_Load[WebsiteQueueItemCount_Load++] = Component;
+  else addToLog(F("WebsiteQueueItemCount_Load overflow!"));
 }
 
 void GrowBox::AddToWebsiteQueue_Refresh(Common* Component){
-  if(QueueDepth>WebsiteQueueLength_Refresh) WebsiteQueue_Refresh[WebsiteQueueLength_Refresh++] = Component;
-  else addToLog(F("WebsiteQueueLength_Refresh overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+  if(QueueDepth>WebsiteQueueItemCount_Refresh) WebsiteQueue_Refresh[WebsiteQueueItemCount_Refresh++] = Component;
+  else addToLog(F("WebsiteQueueItemCount_Refresh overflow!"));
 }
 
 void GrowBox::AddToWebsiteQueue_Button(Common* Component){
-  if(QueueDepth>WebsiteQueueLength_Button) WebsiteQueue_Button[WebsiteQueueLength_Button++] = Component;
-  else addToLog(F("WebsiteQueueLength_Button overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+  if(QueueDepth>WebsiteQueueItemCount_Button) WebsiteQueue_Button[WebsiteQueueItemCount_Button++] = Component;
+  else addToLog(F("WebsiteQueueItemCount_Button overflow!"));
 }
 
 void GrowBox::AddToWebsiteQueue_Field(Common* Component){
-  if(QueueDepth>WebsiteQueueLength_Field) WebsiteQueue_Field[WebsiteQueueLength_Field++] = Component;
-  else addToLog(F("WebsiteQueueLength_Field overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+  if(QueueDepth>WebsiteQueueItemCount_Field) WebsiteQueue_Field[WebsiteQueueItemCount_Field++] = Component;
+  else addToLog(F("WebsiteQueueItemCount_Field overflow!"));
 }
 
+//////////////////////////////////////////////////////////////////
 //Even logs on the website
 void GrowBox::addToLog(const char *LongMessage,byte Indent){  //adds a log entry that is displayed on the web interface
   logToSerials(LongMessage,true,Indent);
@@ -227,6 +233,7 @@ char * GrowBox::eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Lo
   return LongMessage;
 }
 
+//////////////////////////////////////////////////////////////////
 //Settings
 void GrowBox::setDebugOnOff(bool State){
   BoxSettings -> DebugEnabled = State;
@@ -243,23 +250,18 @@ void GrowBox::setDebugOnOff(bool State){
 void GrowBox::setMetricSystemEnabled(bool MetricEnabled){ 
   if(MetricEnabled != BoxSettings -> MetricSystemEnabled){  //if there was a change
     BoxSettings -> MetricSystemEnabled = MetricEnabled;
-    //BoxSettings -> InFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> InFanSwitchTemp);
-    BoxSettings -> InDHT.TempAlertLow= convertBetweenTempUnits(BoxSettings -> InDHT.TempAlertLow);
-    BoxSettings -> InDHT.TempAlertHigh= convertBetweenTempUnits(BoxSettings -> InDHT.TempAlertHigh);
-    BoxSettings -> ExDHT.TempAlertLow= convertBetweenTempUnits(BoxSettings -> ExDHT.TempAlertLow);
-    BoxSettings -> ExDHT.TempAlertHigh= convertBetweenTempUnits(BoxSettings -> ExDHT.TempAlertHigh);
-    BoxSettings -> Pressure1.AlertLow=convertBetweenPressureUnits(BoxSettings -> Pressure1.AlertLow);
-    BoxSettings -> Pressure1.AlertHigh=convertBetweenPressureUnits(BoxSettings -> Pressure1.AlertHigh);
+    //BoxSettings -> InFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> InFanSwitchTemp);    
     Pressure1 -> Pressure -> resetAverage();
     InDHT -> Temp -> resetAverage(); 
     ExDHT -> Temp -> resetAverage();
     WaterTemp1 -> Temp -> resetAverage();
-    refreshAll(false); 
+    refreshRequest = true; 
   }    
   if(BoxSettings -> MetricSystemEnabled) addToLog(F("Using Metric units"));
   else addToLog(F("Using Imperial units"));  
 }
 
+//////////////////////////////////////////////////////////////////
 //Google Sheets reporting
 
 void GrowBox::setReportToGoogleSheetsOnOff(bool State){

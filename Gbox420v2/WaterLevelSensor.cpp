@@ -10,8 +10,7 @@ WaterLevelSensor::WaterLevelSensor (const __FlashStringHelper * Name, GrowBox * 
   pinMode(*Pin_1, INPUT_PULLUP);
   pinMode(*Pin_2, INPUT_PULLUP);
   pinMode(*Pin_3, INPUT_PULLUP);
-  pinMode(*Pin_4, INPUT_PULLUP);
- 
+  pinMode(*Pin_4, INPUT_PULLUP); 
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
   GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the FiveSec refresh queue: Calls the refresh() method
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event 
@@ -67,4 +66,3 @@ char * WaterLevelSensor::getLevelText(){
 char * WaterLevelSensor::getLevelGauge(){
   return LevelGauge;
 }
-

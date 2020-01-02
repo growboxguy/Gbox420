@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 18;
+static const byte Version = 19;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: 
 //Global constants
@@ -20,13 +20,10 @@ typedef struct
   bool DebugEnabled = true; //Logs debug messages to serial and web outputs
   bool MetricSystemEnabled = true; //Switch between Imperial/Metric units. If changed update the default temp and pressure values.  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
-  bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
+  //bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
   char PushingBoxLogRelayID[MaxTextLength]= "v755877CF53383E1"; //UPDATE THIS DeviceID of the PushingBox logging scenario 
-    
-  bool AlertEmails = true; //disable/enable email sending
   char PushingBoxEmailRelayID[MaxTextLength]  = "vC5244859A2453AA";  //UPDATE THIS DeviceID of the PushingBox email alert scenario
-  int TriggerCountBeforeAlert = 12; //number of consecutive out of range sensor readings before the email alert is triggered (5sec between reads -> 12= Out of range reading through 1 minute)  
-
+  
   struct SoundSettings{
     SoundSettings(byte Pin = 0) : Pin(Pin){} 
     byte Pin; //PC speaker+ (red)   
@@ -47,8 +44,6 @@ typedef struct
     byte RelayPin;  //Power relay Port 8 - LED lights
     byte DimmingPin; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
     byte DimmingLimit; //Sets the LED dimming limit (Usually around 5%)
-
-    //Default settings for all light objects
     bool Status = true;  //Startup status for lights: True-ON / False-OFF
     byte Brightness = 15; //Light intensity: 0 - 100 range for controlling led driver output
     bool TimerEnabled = true;  //Enable timer controlling lights  
@@ -63,10 +58,6 @@ typedef struct
     DHTSensorSettings(byte Pin = 0 , byte Type = 0) : Pin(Pin),Type(Type){}
     byte Pin;
     byte Type; //Defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
-    int TempAlertLow = 15; //Low temp warning email
-    int TempAlertHigh = 35; //High temp warning email
-    int HumidityAlertLow = 35; //Low humidity warning email
-    int HumidityAlertHigh = 70; //High humidity warning email
   };
   struct DHTSensorSettings InDHT = {.Pin = 43, .Type = 22 };
   struct DHTSensorSettings ExDHT = {.Pin = 44, .Type = 22 };  
@@ -76,8 +67,6 @@ typedef struct
     byte Pin;
     float Slope;     //Update this to your own PH meter calibration values
     float Intercept;  //Update this to your own PH meter calibration values
-    float PHAlertLow = 5.5; //Low pressure warning
-    float PHAlertHigh = 6.5; //High pressure warning
   };
   struct PHSensorSettings PHSensor1 = {.Pin = A3, .Slope = -0.033256, .Intercept = 24.08651 };
 
@@ -86,8 +75,6 @@ typedef struct
     byte Pin;
     float Offset;        //Pressure sensor calibration: voltage reading at 0 pressure
     float Ratio;          //Pressure sensor voltage to pressure ratio
-    float AlertLow = 4.0; //Low pressure warning
-    float AlertHigh = 8.0; //High pressure warning 
   };
   struct PressureSensorSettings Pressure1 = {.Pin = A1, .Offset = 0.57, .Ratio = 2.7 }; //Pressure sensor Pin: Signal(yellow)
 
@@ -122,26 +109,6 @@ typedef struct
   };
   struct AeroponicsSettings_TankSpecific Aero_T1_Specific = {.SpraySolenoidPin= 22};
 
-/* THIS DOES NOT WORK
-   struct AeroponicsSettings_Tank {
-    union{
-      AeroponicsSettings_TankSpecific Specific;
-      AeroponicsSettings Common;      
-    };
-  };
-  struct AeroponicsSettings_Tank Aero_T1 = { .Specific{.SpraySolenoidPin= 22}, .Common{.BypassSolenoidPin = 23, .PumpPin = 24 }};
- */
-
-  struct FanSettings{
-    FanSettings(byte OnOffPin = 0 , byte SpeedPin = 0) : OnOffPin(OnOffPin),SpeedPin(SpeedPin){}
-    byte OnOffPin;
-    byte SpeedPin;
-    bool State = true;  //true - ON, false - OFF
-    bool HighSpeed = false; //true - High speed, false - Low speed
-  };
-  struct FanSettings InFan = {.OnOffPin = 25, .SpeedPin = 26 };
-  struct FanSettings ExFan = {.OnOffPin = 27, .SpeedPin = 28 };
-
   struct WaterTempSensorSettings{
     WaterTempSensorSettings(byte Pin = 0) : Pin(Pin){} 
     byte Pin;
@@ -157,20 +124,24 @@ typedef struct
   };
   struct WaterLevelSensorSettings WaterLevel1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7, }; //Data(yellow) - DS18B20 waterproof temp sensor 
 
-/*   
+  struct FanSettings{
+    FanSettings(byte OnOffPin = 0 , byte SpeedPin = 0) : OnOffPin(OnOffPin),SpeedPin(SpeedPin){}
+    byte OnOffPin;
+    byte SpeedPin;
+    bool State = true;  //true - ON, false - OFF
+    bool HighSpeed = false; //true - High speed, false - Low speed
+  };
+  struct FanSettings InFan = {.OnOffPin = 25, .SpeedPin = 26 };
+  struct FanSettings ExFan = {.OnOffPin = 27, .SpeedPin = 28 };
+
+  /*   
   bool AutomaticInFan = false;  //Adjust internal fan based on temperature
   bool AutomaticExFan = false;  //Adjust exhaust fan based on temp and humidity
   int InFanSwitchTemp = 25; // Above limit turn the internal fan to High, turn to Low if limit-3 degrees is reached. Has to match default unit type(Metric C or Imperial K)
   byte ExFanHighHumid = 65; //Above set humidity turn exhaust fan High if automatic fan control is enabled
   byte ExFanLowHumid = 55; //Above set humidity turn exhaust fan Low if automatic fan control is enabled
   byte ExFanOffHumid = 40; //Below set humidity turn exhaust fan Off if automatic fan control is enabled
-*/
-  
-//Digital pins
-
-  byte BuiltInLEDOutPin = 13;  //Built-in LED light for testing
-  byte ATXPowerONOutPin = 34; //Turns ATX power supply on by connecting ATX PowerON pin to GND through an optocoupler
-  byte ATXPowerGoodInPin = 35; //5V signal from ATX powersupply, inverted by optocoupler: LOW if DC power output is OK
-  
+  */
+   
   byte CompatibilityVersion=Version;  //Should always be the last value stored.
 }Settings;
