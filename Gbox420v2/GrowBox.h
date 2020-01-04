@@ -45,7 +45,7 @@ class GrowBox : public Common
     void refresh_FiveSec();
     void refresh_HalfHour();
     void refreshAll(bool AddToLog);
-    bool refreshRequest = false; 
+    bool refreshRequest = true; 
  
     void runReport(); 
     void runSec();
@@ -59,7 +59,7 @@ class GrowBox : public Common
     void setDebugOnOff(bool State);
     void setMetricSystemEnabled(bool MetricEnabled); 
     void setPushingBoxLogRelayID(char * ID);
-    void ReportToGoogleSheets(bool AddToLog);
+    void ReportToGoogleSheets(bool CalledFromWebsite);
     void setReportToGoogleSheetsOnOff(bool State);
   
     void AddToReportQueue(Common* Component);

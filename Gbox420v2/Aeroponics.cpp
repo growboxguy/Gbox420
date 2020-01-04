@@ -130,11 +130,11 @@ void Aeroponics::Mix(){
 void Aeroponics::setSprayOnOff(bool State){
   *SprayEnabled=State;
   if(*SprayEnabled){ 
-    GBox -> addToLog(F("Aeroponics spray enabled"));
+    GBox -> addToLog(F("Aero spray enabled"));
     GBox -> Sound1 -> playOnSound();
     } 
   else {
-    GBox -> addToLog(F("Aeroponics spray disabled"));
+    GBox -> addToLog(F("Aero spray disabled"));
     GBox -> Sound1 -> playOffSound();
     }
 }

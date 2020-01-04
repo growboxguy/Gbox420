@@ -173,7 +173,7 @@ void Lights::setOnHour(byte OnHour){
 
 void Lights::setOnMinute(byte OnMinute){
   *(this -> OnMinute) = OnMinute;
-  GBox -> addToLog(F("Light ON time updated")); 
+  GBox -> addToLog(F("Light ON updated")); 
 }
 
 void Lights::setOffHour(byte OffHour){
@@ -182,7 +182,7 @@ void Lights::setOffHour(byte OffHour){
 
 void Lights::setOffMinute(byte OffMinute){
   *(this -> OffMinute) = OffMinute;
-  GBox -> addToLog(F("Light OFF time updated"));
+  GBox -> addToLog(F("Light OFF updated"));
 }
 
 char *  Lights::getTimerOnOffText(bool UseWords){

@@ -20,7 +20,7 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox,  Sett
 void LightSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Dark")),getDarkText(true));
-    WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingPercentage());
+    WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingPercentage(true));
     WebServer.setArgString(getWebsiteComponentName(F("Raw")),getReadingText(true)); 
   }
 } 
@@ -46,7 +46,7 @@ void LightSensor::report(){
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
   strcat_P(LongMessage,(PGM_P)F("Dark:")); strcat(LongMessage,getDarkText(true));
   strcat_P(LongMessage,(PGM_P)F(" ; LightReading:")); strcat(LongMessage, getReadingText(true));
-  strcat_P(LongMessage,(PGM_P)F(" (")); strcat(LongMessage, getReadingPercentage());strcat_P(LongMessage,(PGM_P)F(")"));
+  strcat_P(LongMessage,(PGM_P)F(" (")); strcat(LongMessage, getReadingPercentage(true));strcat_P(LongMessage,(PGM_P)F(")"));
   logToSerials( &LongMessage, true,1);
 }
 
@@ -93,8 +93,9 @@ int LightSensor::getReading(){
   return LightReading -> getAverageInt();
 }
 
-char * LightSensor::getReadingPercentage(){   
-  return percentageToText(map(LightReading -> getAverageInt(),MinReading,MaxReading,0,100)); //https://www.arduino.cc/reference/en/language/functions/math/map/ 
+char * LightSensor::getReadingPercentage(bool includeUnits){   
+  if(includeUnits) return percentageToText(map(LightReading -> getAverageInt(),MinReading,MaxReading,0,100)); //https://www.arduino.cc/reference/en/language/functions/math/map/ 
+  else return toText(map(LightReading -> getAverageInt(),MinReading,MaxReading,0,100));
 }
 
 char * LightSensor::getReadingText(bool IncludeMinMax){

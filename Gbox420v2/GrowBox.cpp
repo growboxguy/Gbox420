@@ -151,27 +151,27 @@ void GrowBox::runHalfHour(){
 
 void GrowBox::AddToReportQueue(Common* Component){
   if(QueueDepth>reportQueueItemCount) ReportQueue[reportQueueItemCount++] = Component;
-  else addToLog(F("Report queue overflow!"));  //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+  else logToSerials(F("Report queue overflow!"),true,0); //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
 }
 
 void GrowBox::AddToRefreshQueue_Sec(Common* Component){
   if(QueueDepth>refreshQueueItemCount_Sec) RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
-  else addToLog(F("RefreshQueue_Sec overflow!"));
+  else logToSerials(F("RefreshQueue_Sec overflow!"),true,0);
 }
 
 void GrowBox::AddToRefreshQueue_FiveSec(Common* Component){
   if(QueueDepth>refreshQueueItemCount_FiveSec) RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
-  else addToLog(F("RefreshQueue_FiveSec overflow!")); 
+  else logToSerials(F("RefreshQueue_FiveSec overflow!"),true,0);
 }
 
 void GrowBox::AddToRefreshQueue_Minute(Common* Component){
   if(QueueDepth>refreshQueueItemCount_Minute) RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
-  else addToLog(F("RefreshQueue_Minute overflow!")); 
+  else logToSerials(F("RefreshQueue_Minute overflow!"),true,0);
 }
 
 void GrowBox::AddToRefreshQueue_HalfHour(Common* Component){
   if(QueueDepth>refreshQueueItemCount_HalfHour) RefreshQueue_HalfHour[refreshQueueItemCount_HalfHour++] = Component;
-  else addToLog(F("RefreshQueue_HalfHour overflow!"));
+  else logToSerials(F("RefreshQueue_HalfHour overflow!"),true,0);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -179,22 +179,22 @@ void GrowBox::AddToRefreshQueue_HalfHour(Common* Component){
 
 void GrowBox::AddToWebsiteQueue_Load(Common* Component){
   if(QueueDepth>WebsiteQueueItemCount_Load) WebsiteQueue_Load[WebsiteQueueItemCount_Load++] = Component;
-  else addToLog(F("WebsiteQueueItemCount_Load overflow!"));
+  else logToSerials(F("WebsiteQueueItemCount_Load overflow!"),true,0);
 }
 
 void GrowBox::AddToWebsiteQueue_Refresh(Common* Component){
   if(QueueDepth>WebsiteQueueItemCount_Refresh) WebsiteQueue_Refresh[WebsiteQueueItemCount_Refresh++] = Component;
-  else addToLog(F("WebsiteQueueItemCount_Refresh overflow!"));
+  else logToSerials(F("WebsiteQueueItemCount_Refresh overflow!"),true,0);
 }
 
 void GrowBox::AddToWebsiteQueue_Button(Common* Component){
   if(QueueDepth>WebsiteQueueItemCount_Button) WebsiteQueue_Button[WebsiteQueueItemCount_Button++] = Component;
-  else addToLog(F("WebsiteQueueItemCount_Button overflow!"));
+  else logToSerials(F("WebsiteQueueItemCount_Button overflow!"),true,0);
 }
 
 void GrowBox::AddToWebsiteQueue_Field(Common* Component){
   if(QueueDepth>WebsiteQueueItemCount_Field) WebsiteQueue_Field[WebsiteQueueItemCount_Field++] = Component;
-  else addToLog(F("WebsiteQueueItemCount_Field overflow!"));
+  else logToSerials(F("WebsiteQueueItemCount_Field overflow!"),true,0);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -238,11 +238,11 @@ char * GrowBox::eventLogToJSON(bool Append){ //Creates a JSON array: ["Log1","Lo
 void GrowBox::setDebugOnOff(bool State){
   BoxSettings -> DebugEnabled = State;
   if(BoxSettings -> DebugEnabled){ 
-    addToLog(F("Debug messages enabled"));
+    addToLog(F("Debug enabled"));
     Sound1 -> playOnSound();
     }
   else {
-    addToLog(F("Debug messages disabled"));
+    addToLog(F("Debug disabled"));
     Sound1 -> playOffSound();
     }
 }
@@ -257,8 +257,8 @@ void GrowBox::setMetricSystemEnabled(bool MetricEnabled){
     WaterTemp1 -> Temp -> resetAverage();
     refreshRequest = true; 
   }    
-  if(BoxSettings -> MetricSystemEnabled) addToLog(F("Using Metric units"));
-  else addToLog(F("Using Imperial units"));  
+  if(BoxSettings -> MetricSystemEnabled) addToLog(F("Metric units"));
+  else addToLog(F("Imperial units"));  
 }
 
 //////////////////////////////////////////////////////////////////
@@ -276,45 +276,47 @@ void GrowBox::setReportToGoogleSheetsOnOff(bool State){
     }
 }
 
-void GrowBox::ReportToGoogleSheets(bool AddToLog){
-  if(AddToLog)addToLog(F("Reporting to Google Sheets"),false);
-  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("/pushingbox?devid="));  
-  strcat(LongMessage,BoxSettings -> PushingBoxLogRelayID);
-  strcat_P(LongMessage,(PGM_P)F("&Log={"));   
-  strcat_P(LongMessage,(PGM_P)F("\"InternalTemp\":\""));  strcat(LongMessage,InDHT -> getTempText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"ExternalTemp\":\""));  strcat(LongMessage,ExDHT -> getTempText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"InternalHumidity\":\""));  strcat(LongMessage,InDHT -> getHumidityText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"ExternalHumidity\":\""));  strcat(LongMessage,ExDHT -> getHumidityText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"InFan\":\"")); strcat(LongMessage,InFan -> fanSpeedToNumber());
-  strcat_P(LongMessage,(PGM_P)F("\",\"ExFan\":\"")); strcat(LongMessage,ExFan -> fanSpeedToNumber());
-  strcat_P(LongMessage,(PGM_P)F("\",\"Power\":\""));  strcat(LongMessage,Power1 -> getPowerText(false)); 
-  strcat_P(LongMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(LongMessage,Power1 -> getEnergyText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(LongMessage,Power1 -> getVoltageText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"Current\":\""));  strcat(LongMessage,Power1 -> getCurrentText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,Power1 -> getFrequencyText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,Power1 -> getPowerFactorText());
-  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Status\":\""));  strcat(LongMessage,Light1 -> getStatusText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Brightness\":\""));  strcat(LongMessage,Light1 -> getBrightness());
-  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Timer\":\""));  strcat(LongMessage,Light1 -> getTimerOnOffText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OnTime\":\""));  strcat(LongMessage,Light1 -> getOnTimeText());
-  strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OffTime\":\""));  strcat(LongMessage,Light1 -> getOffTimeText());
-  strcat_P(LongMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(LongMessage,LightSensor1 -> getReadingText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"Dark\":\""));  strcat(LongMessage,LightSensor1 -> getDarkText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"WaterLevel\":\""));  strcat(LongMessage,WaterLevel1 -> getLevelText());
-  strcat_P(LongMessage,(PGM_P)F("\",\"WaterTemp\":\""));  strcat(LongMessage,WaterTemp1 -> getTempText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"PH\":\""));  strcat(LongMessage,PHSensor1 -> getPHText());  
-  strcat_P(LongMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(LongMessage,Pressure1 -> getPressureText(false));
-  strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aero_NT1 -> getInterval());
-  strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aero_NT1 -> getDuration());
-  //strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aero_T1 -> getInterval());
-  //strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aero_T1 -> getDuration());  
-  strcat_P(LongMessage,(PGM_P)F("\"}"));
-  if(BoxSettings -> DebugEnabled){ //print the report command to console
-    logToSerials(F("api.pushingbox.com"),false,4);
-    logToSerials(&LongMessage,true,0); 
+void GrowBox::ReportToGoogleSheets(bool CalledFromWebsite){
+  if(BoxSettings -> ReportToGoogleSheets || CalledFromWebsite){
+    if(CalledFromWebsite)addToLog(F("Reporting to Sheets"),false);
+    memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
+    strcat_P(LongMessage,(PGM_P)F("/pushingbox?devid="));  
+    strcat(LongMessage,BoxSettings -> PushingBoxLogRelayID);
+    strcat_P(LongMessage,(PGM_P)F("&Log={"));   
+    strcat_P(LongMessage,(PGM_P)F("\"InternalTemp\":\""));  strcat(LongMessage,InDHT -> getTempText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"ExternalTemp\":\""));  strcat(LongMessage,ExDHT -> getTempText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"InternalHumidity\":\""));  strcat(LongMessage,InDHT -> getHumidityText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"ExternalHumidity\":\""));  strcat(LongMessage,ExDHT -> getHumidityText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat(LongMessage,InFan -> fanSpeedToNumber());
+    strcat_P(LongMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat(LongMessage,ExFan -> fanSpeedToNumber());
+    strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Status\":\""));  strcat(LongMessage,Light1 -> getStatusText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Brightness\":\""));  strcat(LongMessage,Light1 -> getBrightness());
+    strcat_P(LongMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(LongMessage,LightSensor1 -> getReadingPercentage(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"Dark\":\""));  strcat(LongMessage,LightSensor1 -> getDarkText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"WaterLevel\":\""));  strcat(LongMessage,WaterLevel1 -> getLevelText());
+    strcat_P(LongMessage,(PGM_P)F("\",\"WaterTemp\":\""));  strcat(LongMessage,WaterTemp1 -> getTempText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"PH\":\""));  strcat(LongMessage,PHSensor1 -> getPHText());  
+    strcat_P(LongMessage,(PGM_P)F("\",\"Pressure\":\""));  strcat(LongMessage,Pressure1 -> getPressureText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"Power\":\""));  strcat(LongMessage,Power1 -> getPowerText(false)); 
+    strcat_P(LongMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(LongMessage,Power1 -> getEnergyText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(LongMessage,Power1 -> getVoltageText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"Current\":\""));  strcat(LongMessage,Power1 -> getCurrentText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,Power1 -> getFrequencyText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,Power1 -> getPowerFactorText());  
+    strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Timer\":\""));  strcat(LongMessage,Light1 -> getTimerOnOffText(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OnTime\":\""));  strcat(LongMessage,Light1 -> getOnTimeText());
+    strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OffTime\":\""));  strcat(LongMessage,Light1 -> getOffTimeText());
+    strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aero_NT1 -> getInterval());
+    strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aero_NT1 -> getDuration());
+    //strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aero_T1 -> getInterval());
+    //strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aero_T1 -> getDuration());  
+    strcat_P(LongMessage,(PGM_P)F("\"}"));
+    if(BoxSettings -> DebugEnabled){ //print the report command to console
+      logToSerials(F("api.pushingbox.com"),false,4);
+      logToSerials(&LongMessage,true,0); 
+    }
+    PushingBoxRestAPI.get(LongMessage); //PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
   }
-  PushingBoxRestAPI.get(LongMessage); //PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
 }
 
 void GrowBox::setPushingBoxLogRelayID(char * ID){  

@@ -7,7 +7,7 @@ static const byte Version = 19;
 //Global constants
 static const byte MaxTextLength = 32;  //Default char * buffer size: 31 characters + null terminator. Memory intense!
 static const byte RollingAverageQueueDepth = 10;  //How many previous sensor readings should be stored
-static const byte LogDepth = 8;  //Show X number of log entries on website. Max 1024bytes can be passed during a Website refresh
+static const byte LogDepth = 5;  //Show X number of log entries on website. Be careful, Max 1024bytes can be passed during a Website refresh event, incuding all parameters passed
 static const byte QueueDepth = 64;  //Limits the maximum number of active modules. Memory intense!
 //Global variables
 extern char LongMessage[1024];   //temp storage for assembling long messages (REST API, MQTT API)
