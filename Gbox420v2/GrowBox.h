@@ -9,6 +9,7 @@ class Lights;
 class Sound;
 class Fan;
 class PowerSensor;
+//class PowerSensorV3;  //Only for PZEM004T V3.0
 class PHSensor;
 class LightSensor;
 class PressureSensor;
@@ -32,6 +33,7 @@ class GrowBox : public Common
     LightSensor * LightSensor1; //Pointer to a Light Sensor object measuring light intensity in the grow box
     Lights * Light1;  //Pointer to a Light assembly 
     PowerSensor * Power1;
+    //PowerSensorV3 * Power1;  //Only for PZEM004T V3.0
     PressureSensor * Pressure1;
     PHSensor * PHSensor1;
     Aeroponics_Tank * Aero_T1;

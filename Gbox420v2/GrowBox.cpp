@@ -3,7 +3,8 @@
 #include "Lights.h"
 #include "Sound.h"
 #include "Fan.h"
-#include "PowerSensor.h"
+#include "PowerSensor.h" 
+//#include "PowerSensorV3.h"  //Only for PZEM004T V3.0
 #include "LightSensor.h"
 #include "PHSensor.h" 
 #include "LightSensor.h"
@@ -24,6 +25,7 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   Light1 = new Lights(F("Light1"), this, &BoxSettings -> Light1);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
   LightSensor1 = new LightSensor(F("LightSensor1"), this, &BoxSettings -> LightSensor1);
   Power1 = new PowerSensor(F("Power1"), this, &Serial2);
+  //Power1 = new PowerSensorV3(F("Power1"), this, &Serial2); //Only for PZEM004T V3.0
   InDHT = new DHTSensor(F("InDHT"), this, &BoxSettings -> InDHT);  //passing: Component name, GrowBox object the component belongs to, Default settings)
   ExDHT = new DHTSensor(F("ExDHT"), this, &BoxSettings -> ExDHT);  //passing: Component name, GrowBox object the component belongs to, Default settings)
   //Aero_T1 = new Aeroponics_Tank(F("Aero_T1"), this, &BoxSettings ->Aero_T1_Common, &BoxSettings -> Aero_T1_Specific);
@@ -301,8 +303,8 @@ void GrowBox::ReportToGoogleSheets(bool CalledFromWebsite){
     strcat_P(LongMessage,(PGM_P)F("\",\"Energy\":\""));  strcat(LongMessage,Power1 -> getEnergyText(false));
     strcat_P(LongMessage,(PGM_P)F("\",\"Voltage\":\""));  strcat(LongMessage,Power1 -> getVoltageText(false));
     strcat_P(LongMessage,(PGM_P)F("\",\"Current\":\""));  strcat(LongMessage,Power1 -> getCurrentText(false));
-    strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,Power1 -> getFrequencyText(false));
-    strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,Power1 -> getPowerFactorText());  
+    //strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,Power1 -> getFrequencyText(false));   //Only for PZEM004T V3.0
+    //strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,Power1 -> getPowerFactorText());    //Only for PZEM004T V3.0
     strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Timer\":\""));  strcat(LongMessage,Light1 -> getTimerOnOffText(false));
     strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OnTime\":\""));  strcat(LongMessage,Light1 -> getOnTimeText());
     strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OffTime\":\""));  strcat(LongMessage,Light1 -> getOffTimeText());
