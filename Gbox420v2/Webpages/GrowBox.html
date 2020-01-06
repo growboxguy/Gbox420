@@ -22,57 +22,26 @@
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">	
 				<h1><span id="Time"></span></h1>
-				<!--				
-				<table class="tg">				  
-				  <tr>
-				  	<td class="headerRows"><span style="font-weight:bold">AC</td>
-					<td class="headerRows"><span style="font-weight:bold">DC</td>
-				    <td class="headerRows"><span style="font-weight:bold">Lights</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Pressure</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Pump</td>
-					<td class="headerRows"><span style="font-weight:bold">Vent</td>
-					<td class="headerRows"><span style="font-weight:bold">Reserv</td>
-					<td class="headerRows"><span style="font-weight:bold">PH</td>
-				  </tr>	
-				  <tr>
-				  	<td id="td_ACPowerOK" class="dataRows"></td>
-					<td id="td_DCPowerOK" class="dataRows"></td>
-					<td id="td_LightOK" class="dataRows"></td>
-					<td id="td_PressureOK" class="dataRows"></td>
-					<td id="td_PumpOK" class="dataRows"></td>
-					<td id="td_VentOK" class="dataRows"></td>
-					<td id="td_ReservOK" class="dataRows"></td>
-					<td id="td_PhOK" class="dataRows"></td>
-				  </tr>					  
-				</table>-->
 				<ul id="list_SerialLog"></ul>
 				<button id="GBox1_Refresh" type="button" style="margin-top:0px" title="Updates the status of every module">Refresh</button>			
 			</div>
 			<div class="card" style="width:90%">
 				<h1>Power</h1>
-			    <table class="tg">
+				  <table class="tg">
 				  <tr>
 					<th class="headerRows"><span style="font-weight:bold">Power</span></th>
 					<th class="headerRows"><span style="font-weight:bold">Total</span></th>
-					<th class="headerRows"><span style="font-weight:bold">Voltage</span></th>						
+					<th class="headerRows"><span style="font-weight:bold">Voltage</span></th>	
+				    <th class="headerRows"><span style="font-weight:bold">Current</span></th>				
 				  </tr>
 				  <tr>
 					<td id="Power1_Power" class="dataRows"></td>
 					<td id="Power1_Energy" class="dataRows"></td>
 					<td id="Power1_Voltage" class="dataRows"></td>
-				  </tr>
-				  <tr>
-					<th class="headerRows"><span style="font-weight:bold">Current</span></th>
-					<th class="headerRows"><span style="font-weight:bold">Frequency</span></th>
-					<th class="headerRows"><span style="font-weight:bold">Power factor</span></th>						
-				  </tr>
-				  <tr>
 					<td id="Power1_Current" class="dataRows"></td>
-					<td id="Power1_Frequency" class="dataRows"></td>
-					<td id="Power1_PowerFactor" class="dataRows"></td>
-				  </tr>					  
-				 </table>						 
-			</div>
+				  </tr>    
+				  </table>						 
+			  </div>
 			<div class="card" style="width:90%">
 				<h1>DHT sensor</h1>		
 				<table class="tg">				  
@@ -102,7 +71,7 @@
 					<td id="ExFan_Status" class="dataRows"></td>
 				  </tr>
 				</table>
-				<b>Internal fan :</b>
+				<b>Internal fan:</b>
 				<button id="InFan_Off" type="button" title="Turn internal fan OFF">OFF</button>
 				<button id="InFan_Low" type="button" title="Turn internal fan ON and set speed to LOW">Low</button>
 				<button id="InFan_High" type="button" title="Turn internal fan ON and set speed to HIGH">High</button>
@@ -139,15 +108,15 @@
 				  <tr>
 					<td class="headerRows"><span style="font-weight:bold">Is dark</span></td>
 					<td class="headerRows"><span style="font-weight:bold">Reading</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Reading (Raw)</span></td>
+					<td class="headerRows"><span style="font-weight:bold">Dark/Min/Max</span></td>
 				  </tr>
 				  <tr>
 					<td id="LightSensor1_Dark" class="dataRows"></td>
 					<td id="LightSensor1_Reading" class="dataRows"></td>
-					<td id="LightSensor1_Raw" class="dataRows"></td>
+					<td id="LightSensor1_Calibrated" class="dataRows"></td>
 				  </tr>				 
 				</table> 
-				<button id="LightSensor1_Calibrate" type="button" title="Measure light output at 0 and 100% brightness">Calibrate</button><br>
+				<button id="LightSensor1_Calibrate" type="button" title="Measure light reading in dark, 0 and 100% brightness">Calibrate</button><br>
 			</div>		
 			<div class="card" style="width:90%">		
 				<h1>Lights</h1>

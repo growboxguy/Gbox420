@@ -96,3 +96,28 @@ class GrowBox : public Common
 
   protected:
 };
+
+//WEBSITE COMPONENT
+/*
+<div class="card" style="width:90%">
+  <h1>Settings</h1>
+  <button id="GBox1_RestoreDefaults" type="button" style="margin-top:0px" title="Restore settings to sketch defaults">Restore defaults</button>
+  <form><label><input type="checkbox" name="GBox1_DebugEnabled" title="Debug entres on Serial log">Debug enabled </label><input type="submit" value="Set"></form>
+  <form><label><input type="checkbox" name="GBox1_MetricSystemEnabled" title="Use imperial units(F,PSI) or metric (C,bar)">Metric units </label><input type="submit" value="Set"></form>				
+</div>
+
+<div class="card" style="width:90%">
+  <h1>Reporting</h1>
+  <button id="GBox1_ReportTrigger" type="button" style="margin-top:0px">Report to console</button>			
+  <form><label><input type="checkbox" name="GBox1_GoogleSheetsEnabled">Google Sheets </label><input type="submit" value="Set"> <button id="GBox1_GoogleSheetsTrigger" type="button" style="margin-top:0px">Trigger</button></form>
+  <form>RelayID:<input type="text" name="GBox1_PushingBoxLogRelayID"  style="width: 150px;" title="DeviceID of the PushingBox logging scenario"/><input type="submit" value="Set"></form>
+</div>
+
+<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
+  <div class="card" style="width:90%">	
+    <h1><span id="Time"></span></h1>				
+    <ul id="list_SerialLog"></ul>
+    <button id="GBox1_Refresh" type="button" style="margin-top:0px" title="Updates the status of every module">Refresh</button>	
+  </div>					
+</div>
+*/

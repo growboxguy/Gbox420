@@ -34,22 +34,9 @@
 				<form><label><input type="checkbox" name="GBox1_GoogleSheetsEnabled">Google Sheets </label><input type="submit" value="Set"> <button id="GBox1_GoogleSheetsTrigger" type="button" style="margin-top:0px">Trigger</button></form>
 				<form>RelayID:<input type="text" name="GBox1_PushingBoxLogRelayID"  style="width: 150px;" title="DeviceID of the PushingBox logging scenario"/><input type="submit" value="Set"></form>
 			</div>
-			<!--
-			<div class="card" style="width:90%">
-				<h1>Digit Display</h1>				
-				<form>Backlight: Min<input style="width:100px;" type="range" name="DigitDisplayBrightness" min="0" max="100"/>Max <input type="submit" value="Set"></form>
-				<form>
-					Lock to value: <input style="width: 35px;" min=-1 max=17 name="DigitDisplayValue" type="number" step="1"/> <input type="submit" value="Set">
-					<button id="btn_DigitDisplayLoop" type="button" style="margin-top:0px">Loop</button>
-				</form>
-				<button id="btn_DigitDisplayLockTemp" type="button" style="margin-top:0px">Temp</button>
-				<button id="btn_DigitDisplayLockPH" type="button" style="margin-top:0px">PH</button>
-				<button id="btn_DigitDisplayLockPressure" type="button" style="margin-top:0px">Pressure</button>
-				<button id="btn_DigitDisplayLockWattage" type="button" style="margin-top:0px">Wattage</button><br>		
-			</div> -->
 			<div class="card" style="width:90%">
 				<h1>Calibration</h1>				
-				<b>PH meter </b><button id="PHSensor1_ReadRaw" type="button" style="margin-top:0px" title="Displays the analog PH value for a calibration point">Read raw</button>
+				<b>PH sensor </b><button id="PHSensor1_ReadRaw" type="button" style="margin-top:0px" title="Displays the analog PH value for a calibration point">Read raw</button>
 				<form>
 					Slope:<input style="width: 80px;" name="PHSensor1_Slope" type="text"/> 
 					Intercept:<input style="width: 80px;" name="PHSensor1_Intercept" type="text"/>
@@ -65,60 +52,10 @@
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">	
-				<h1><span id="Time"></span></h1>
-				<!--<table class="tg">				  
-				  <tr>
-				  	<td class="headerRows"><span style="font-weight:bold">AC</td>
-					<td class="headerRows"><span style="font-weight:bold">DC</td>
-				    <td class="headerRows"><span style="font-weight:bold">Lights</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Pressure</span></td>
-					<td class="headerRows"><span style="font-weight:bold">Pump</td>
-					<td class="headerRows"><span style="font-weight:bold">Vent</td>
-					<td class="headerRows"><span style="font-weight:bold">Reserv</td>
-					<td class="headerRows"><span style="font-weight:bold">PH</td>
-				  </tr>	
-				  <tr>
-				  	<td id="td_ACPowerOK" class="dataRows"></td>
-					<td id="td_DCPowerOK" class="dataRows"></td>
-					<td id="td_LightOK" class="dataRows"></td>
-					<td id="td_PressureOK" class="dataRows"></td>
-					<td id="td_PumpOK" class="dataRows"></td>
-					<td id="td_VentOK" class="dataRows"></td>
-					<td id="td_ReservOK" class="dataRows"></td>
-					<td id="td_PhOK" class="dataRows"></td>
-				  </tr>					  
-				</table> -->
+				<h1><span id="Time"></span></h1>				
 				<ul id="list_SerialLog"></ul>
 				<button id="GBox1_Refresh" type="button" style="margin-top:0px" title="Updates the status of every module">Refresh</button>	
-			</div>
-			<!--
-			<div class="card" style="width:90%">
-				<h1>Email alerts</h1>
-				<form><label><input type="checkbox" name="GBox1_AlertEmails">Alert emails </label><input type="submit" value="Set"> <button id="btn_AlertTest" type="button" title="Trigger a test alert email">Test Email</button></form>		
-				<form>RelayID:<input type="text" name="PushingBoxEmailRelayID"  style="width: 160px;" title="DeviceID of the PushingBox email relay scenario"/><input type="submit" value="Set"></form>
-				<b>Alerts thresholds</b>
-				<form>Alert after:<input style="width: 45px;" min=1 max=999 name="ReadCountBeforeAlert" type="number" title="Nr of consecutive out of range readings before triggering an alert"/> readings <input type="submit" value="Set"></form>
-				<form>
-					Temp Low:<input style="width: 45px;" min=0 max=255 name="TempAlertLow" type="number"/> 
-					High:<input style="width: 45px;" min=0 max=255 name="TempAlertHigh" type="number"/>					
-					<input type="submit" value="Set">
-				</form>
-				<form>
-					Humidity Low:<input style="width: 35px;" min=0 max=100 name="HumidityAlertLow" type="number"/> 
-					High: <input style="width: 35px;"  min=0 max=100 name="HumidityAlertHigh" type="number"/>					
-					<input type="submit" value="Set">
-				</form>
-				<form>
-					Pressure Low:<input style="width: 60px;" min=0 max=145 step="0.1" name="PressureAlertLow" type="number"/> 
-					High:<input style="width: 60px;" min=0 max=145 step="0.1" name="PressureAlertHigh" type="number"/>					
-					<input type="submit" value="Set">
-				</form>
-				<form>
-					PH Low:<input style="width: 50px;" min=0 max=14 step="0.1" name="PHAlertLow" type="number"/> 
-					High:<input style="width: 50px;" min=0 max=14 step="0.1" name="PHAlertHigh" type="number"/>					
-					<input type="submit" value="Set">
-				</form>
-			</div>-->						
+			</div>					
 		</div>		
 	</div>
   </div> 

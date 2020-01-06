@@ -293,7 +293,7 @@ void GrowBox::ReportToGoogleSheets(bool CalledFromWebsite){
     strcat_P(LongMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat(LongMessage,ExFan -> fanSpeedToNumber());
     strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Status\":\""));  strcat(LongMessage,Light1 -> getStatusText(false));
     strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Brightness\":\""));  strcat(LongMessage,Light1 -> getBrightness());
-    strcat_P(LongMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(LongMessage,LightSensor1 -> getReadingPercentage(false));
+    strcat_P(LongMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(LongMessage,LightSensor1 -> getReadingText(false));
     strcat_P(LongMessage,(PGM_P)F("\",\"Dark\":\""));  strcat(LongMessage,LightSensor1 -> getDarkText(false));
     strcat_P(LongMessage,(PGM_P)F("\",\"WaterLevel\":\""));  strcat(LongMessage,WaterLevel1 -> getLevelText());
     strcat_P(LongMessage,(PGM_P)F("\",\"WaterTemp\":\""));  strcat(LongMessage,WaterTemp1 -> getTempText(false));

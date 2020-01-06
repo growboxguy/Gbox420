@@ -33,3 +33,9 @@ private:
 
 protected:  
 };
+
+//WEBSITE COMPONENT
+/*
+<form><label><input type="checkbox" name="Sound1_Enabled">Sound enabled </label><input type="submit" value="Set"></form>
+<button style="height:32px;width:32px;border-radius:0;"  id="Sound1_Ee" type="button"><img style="padding:0px;height:28px;width:28px;" src="https://sites.google.com/site/growboxguy/home/gbox420.png" /></button>							
+*/

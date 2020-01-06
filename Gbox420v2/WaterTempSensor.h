@@ -27,3 +27,18 @@ class WaterTempSensor : public Common
 
   protected:         
 };
+
+//WEBSITE COMPONENT
+/*
+<div class="card" style="width:90%">
+  <h1>WaterTemp1</h1>
+  <table class="tg">
+    <tr>				 
+      <th class="headerRows"><span style="font-weight:bold">Temp</span></th>	
+    </tr>
+    <tr>
+      <td id="WaterTemp1_Temp" class="dataRows"></td>
+    </tr>
+  </table>	
+</div>
+*/
