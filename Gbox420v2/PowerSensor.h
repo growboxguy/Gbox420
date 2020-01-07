@@ -37,7 +37,7 @@ class PowerSensor : public Common
     <table class="tg">
     <tr>
       <th class="headerRows"><span style="font-weight:bold">Power</span></th>
-      <th class="headerRows"><span style="font-weight:bold">Total</span></th>
+      <th class="headerRows"><span style="font-weight:bold">Energy</span></th>
       <th class="headerRows"><span style="font-weight:bold">Voltage</span></th>	
       <th class="headerRows"><span style="font-weight:bold">Current</span></th>					
     </tr>
