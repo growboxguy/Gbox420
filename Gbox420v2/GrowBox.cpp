@@ -284,7 +284,7 @@ void GrowBox::ReportToGoogleSheets(bool CalledFromWebsite){
     memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
     strcat_P(LongMessage,(PGM_P)F("/pushingbox?devid="));  
     strcat(LongMessage,BoxSettings -> PushingBoxLogRelayID);
-    strcat_P(LongMessage,(PGM_P)F("&Log={"));   
+    strcat_P(LongMessage,(PGM_P)F("&BoxData={\"Log\":{"));   
     strcat_P(LongMessage,(PGM_P)F("\"InternalTemp\":\""));  strcat(LongMessage,InDHT -> getTempText(false));
     strcat_P(LongMessage,(PGM_P)F("\",\"ExternalTemp\":\""));  strcat(LongMessage,ExDHT -> getTempText(false));
     strcat_P(LongMessage,(PGM_P)F("\",\"InternalHumidity\":\""));  strcat(LongMessage,InDHT -> getHumidityText(false));
@@ -312,7 +312,10 @@ void GrowBox::ReportToGoogleSheets(bool CalledFromWebsite){
     strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aero_NT1 -> getDuration());
     //strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aero_T1 -> getInterval());
     //strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aero_T1 -> getDuration());  
-    strcat_P(LongMessage,(PGM_P)F("\"}"));
+    
+    strcat_P(LongMessage,(PGM_P)F("\"},\"Settings\":{"));
+    strcat_P(LongMessage,(PGM_P)F("\"Metric\":\""));  strcat(LongMessage,toText(BoxSettings -> MetricSystemEnabled));
+    strcat_P(LongMessage,(PGM_P)F("\"}}"));
     if(BoxSettings -> DebugEnabled){ //print the report command to console
       logToSerials(F("api.pushingbox.com"),false,4);
       logToSerials(&LongMessage,true,0); 
@@ -320,6 +323,8 @@ void GrowBox::ReportToGoogleSheets(bool CalledFromWebsite){
     PushingBoxRestAPI.get(LongMessage); //PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
   }
 }
+
+//{parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Light1_Status":"0","Light1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Light1_Timer":"1","Light1_OnTime":"04:20","Light1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
 
 void GrowBox::setPushingBoxLogRelayID(char * ID){  
   strncpy(BoxSettings -> PushingBoxLogRelayID,ID,MaxTextLength);

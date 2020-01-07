@@ -23,7 +23,7 @@ typedef struct
   //bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
   char PushingBoxLogRelayID[MaxTextLength]= "v755877CF53383E1"; //UPDATE THIS DeviceID of the PushingBox logging scenario 
   char PushingBoxEmailRelayID[MaxTextLength]  = "vC5244859A2453AA";  //UPDATE THIS DeviceID of the PushingBox email alert scenario
-  
+
   struct SoundSettings{
     SoundSettings(byte Pin = 0) : Pin(Pin){} 
     byte Pin; //PC speaker+ (red)   
