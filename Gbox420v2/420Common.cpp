@@ -21,7 +21,7 @@ void Common::refresh_Minute(){
   logToSerials(Name,false,2);logToSerials(F("refreshing (1min)"),true,1);  //Prints "NAME refreshing" to the console
 }
 
-void Common::refresh_HalfHour(){
+void Common::refresh_QuarterHour(){
   logToSerials(Name,false,2);logToSerials(F("refreshing (30min)"),true,1);  //Prints "NAME refreshing" to the console
 }
 

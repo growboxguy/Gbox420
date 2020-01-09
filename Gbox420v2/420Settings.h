@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 19;
+static const byte Version = 20;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: 
 //Global constants
@@ -20,6 +20,7 @@ typedef struct
   bool DebugEnabled = true; //Logs debug messages to serial and web outputs
   bool MetricSystemEnabled = true; //Switch between Imperial/Metric units. If changed update the default temp and pressure values.  
   bool ReportToGoogleSheets = true;  //Controls reporting sensor readings to Google Sheets
+  int SheetsReportingFrequency = 30; //How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
   //bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
   char PushingBoxLogRelayID[MaxTextLength]= "v755877CF53383E1"; //UPDATE THIS DeviceID of the PushingBox logging scenario 
   char PushingBoxEmailRelayID[MaxTextLength]  = "vC5244859A2453AA";  //UPDATE THIS DeviceID of the PushingBox email alert scenario

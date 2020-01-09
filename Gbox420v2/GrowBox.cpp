@@ -18,6 +18,7 @@ static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing 
 
 GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Common(Name) { //Constructor
   this -> BoxSettings = BoxSettings;
+  SheetsReportingFrequency = &BoxSettings -> SheetsReportingFrequency;
   logToSerials(F(" "),true,0); //add a breakrow to console log
   Sound1 = new Sound(F("Sound1"), this, &BoxSettings -> Sound1);
   InFan = new Fan(F("InFan"), this, &BoxSettings -> InFan);
@@ -35,7 +36,7 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   WaterTemp1 = new WaterTempSensor(F("WaterTemp1"),this,&BoxSettings -> WaterTemp1);
   WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"),this,&BoxSettings -> WaterLevel1);
   AddToRefreshQueue_FiveSec(this);  //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method 
-  AddToRefreshQueue_HalfHour(this);  //Subscribing to the 30 minutes refresh queue: Calls the refresh_HalfHour() method 
+  AddToRefreshQueue_QuarterHour(this);  //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method 
   AddToWebsiteQueue_Load(this); //Subscribing to the Website load event
   AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
@@ -52,12 +53,13 @@ void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char * url) //called 
 
 void GrowBox::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/Settings.html.json")==0){  
-  WebServer.setArgInt(getWebsiteComponentName(F("DebugEnabled")), GBox -> BoxSettings -> DebugEnabled);
-  WebServer.setArgInt(getWebsiteComponentName(F("MetricSystemEnabled")), GBox -> BoxSettings -> MetricSystemEnabled);
-  //WebServer.setArgBoolean(getWebsiteComponentName(F("MqttEnabled")), GBox -> BoxSettings -> ReportToMqtt);
-  WebServer.setArgBoolean(getWebsiteComponentName(F("GoogleSheetsEnabled")), GBox -> BoxSettings -> ReportToGoogleSheets);
-  WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), GBox -> BoxSettings -> PushingBoxLogRelayID);  
-  //WebServer.setArgString(F("PushingBoxEmailRelayID"), GBox -> BoxSettings -> PushingBoxEmailRelayID);
+  WebServer.setArgInt(getWebsiteComponentName(F("DebugEnabled")), BoxSettings -> DebugEnabled);
+  WebServer.setArgInt(getWebsiteComponentName(F("MetricSystemEnabled")), BoxSettings -> MetricSystemEnabled);
+  //WebServer.setArgBoolean(getWebsiteComponentName(F("MqttEnabled")), BoxSettings -> ReportToMqtt);
+  WebServer.setArgBoolean(getWebsiteComponentName(F("SheetsEnabled")), BoxSettings -> ReportToGoogleSheets);
+  WebServer.setArgInt(getWebsiteComponentName(F("SheetsFrequency")), BoxSettings -> SheetsReportingFrequency);
+  WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), BoxSettings -> PushingBoxLogRelayID);  
+  //WebServer.setArgString(F("PushingBoxEmailRelayID"), BoxSettings -> PushingBoxEmailRelayID);
   }
 } 
 
@@ -69,7 +71,8 @@ void GrowBox::websiteEvent_Field(char * Field){ //When the website field is subm
     if(strcmp_P(ShortMessage,(PGM_P)F("DebugEnabled"))==0) {setDebugOnOff(WebServer.getArgBoolean());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("MetricSystemEnabled"))==0) {setMetricSystemEnabled(WebServer.getArgBoolean());}
     //else if(strcmp_P(ShortMessage,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
-    else if(strcmp_P(ShortMessage,(PGM_P)F("GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("SheetsEnabled"))==0) {setSheetsReportingOnOff(WebServer.getArgBoolean());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("SheetsFrequency"))==0) {setSheetsReportingFrequency(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("PushingBoxLogRelayID"))==0) {setPushingBoxLogRelayID(WebServer.getArgString());}    
   }  
 }
@@ -79,23 +82,23 @@ void GrowBox::websiteEvent_Button(char * Button){ //When a button is pressed on 
     return;  //If did not match:return control to caller fuction
   }
   else{ //if the component name matches with the object name   
-    if(strcmp_P(ShortMessage,(PGM_P)F("GoogleSheetsTrigger"))==0) {ReportToGoogleSheets(true);}
+    if(strcmp_P(ShortMessage,(PGM_P)F("SheetsTrigger"))==0) {ReportToGoogleSheets(true);}
     else if(strcmp_P(ShortMessage,(PGM_P)F("ReportTrigger"))==0) {runReport();} 
-    else if(strcmp_P(ShortMessage,(PGM_P)F("Refresh"))==0) {refreshRequest = true;}   //Website signals to refresh all sensor readings
+    else if(strcmp_P(ShortMessage,(PGM_P)F("Refresh"))==0) {RefreshAllRequest = true;}   //Website signals to refresh all sensor readings
   }  
 }  
 
 void GrowBox::refresh_FiveSec(){
   if(BoxSettings -> DebugEnabled) Common::refresh_FiveSec();
-  if(refreshRequest) {
-    refreshRequest = false;
+  if(RefreshAllRequest) {
+    RefreshAllRequest = false;
     refreshAll(true);
   }
 }
 
-void GrowBox::refresh_HalfHour(){
-  if(BoxSettings -> DebugEnabled) Common::refresh_HalfHour();
-  ReportToGoogleSheets(false);
+void GrowBox::refresh_QuarterHour(){
+  if(BoxSettings -> DebugEnabled) Common::refresh_QuarterHour();
+  ReportToGoogleSheetsTrigger();
 }
 
 void GrowBox::refreshAll(bool AddToLog){  //implementing the virtual refresh function from Common
@@ -104,7 +107,7 @@ void GrowBox::refreshAll(bool AddToLog){  //implementing the virtual refresh fun
   runSec();
   runFiveSec(); 
   runMinute();
-  runHalfHour();
+  runQuarterHour();
   runReport();
 }
 
@@ -141,10 +144,10 @@ void GrowBox::runMinute(){
   }
 }
 
-void GrowBox::runHalfHour(){   
+void GrowBox::runQuarterHour(){   
   if(BoxSettings -> DebugEnabled)logToSerials(F("Half hour trigger.."),true,1);
-  for(int i=0;i<refreshQueueItemCount_HalfHour;i++){
-    RefreshQueue_HalfHour[i] -> refresh_HalfHour();
+  for(int i=0;i<refreshQueueItemCount_QuarterHour;i++){
+    RefreshQueue_QuarterHour[i] -> refresh_QuarterHour();
   } 
 }
 
@@ -171,9 +174,9 @@ void GrowBox::AddToRefreshQueue_Minute(Common* Component){
   else logToSerials(F("RefreshQueue_Minute overflow!"),true,0);
 }
 
-void GrowBox::AddToRefreshQueue_HalfHour(Common* Component){
-  if(QueueDepth>refreshQueueItemCount_HalfHour) RefreshQueue_HalfHour[refreshQueueItemCount_HalfHour++] = Component;
-  else logToSerials(F("RefreshQueue_HalfHour overflow!"),true,0);
+void GrowBox::AddToRefreshQueue_QuarterHour(Common* Component){
+  if(QueueDepth>refreshQueueItemCount_QuarterHour) RefreshQueue_QuarterHour[refreshQueueItemCount_QuarterHour++] = Component;
+  else logToSerials(F("RefreshQueue_QuarterHour overflow!"),true,0);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -257,7 +260,7 @@ void GrowBox::setMetricSystemEnabled(bool MetricEnabled){
     InDHT -> Temp -> resetAverage(); 
     ExDHT -> Temp -> resetAverage();
     WaterTemp1 -> Temp -> resetAverage();
-    refreshRequest = true; 
+    RefreshAllRequest = true; 
   }    
   if(BoxSettings -> MetricSystemEnabled) addToLog(F("Metric units"));
   else addToLog(F("Imperial units"));  
@@ -266,7 +269,7 @@ void GrowBox::setMetricSystemEnabled(bool MetricEnabled){
 //////////////////////////////////////////////////////////////////
 //Google Sheets reporting
 
-void GrowBox::setReportToGoogleSheetsOnOff(bool State){
+void GrowBox::setSheetsReportingOnOff(bool State){
   BoxSettings -> ReportToGoogleSheets = State;
   if(State){ 
     addToLog(F("Google Sheets enabled"));
@@ -276,6 +279,19 @@ void GrowBox::setReportToGoogleSheetsOnOff(bool State){
     addToLog(F("Google Sheets disabled"));
     Sound1 -> playOffSound();
     }
+}
+
+void GrowBox::setSheetsReportingFrequency(int Frequency){
+  BoxSettings -> SheetsReportingFrequency = Frequency;
+  addToLog(F("Reporting freqency updated"));
+  Sound1 -> playOnSound();   
+}
+
+void GrowBox::ReportToGoogleSheetsTrigger(){  //Handles custom reporting frequency for Google Sheets, called every 15 minutes
+  if(SheetsRefreshCounter == 96) SheetsRefreshCounter = 0; //Reset the counter after one day (15 x 96 = 1440 = 24 hours)
+  if(SheetsRefreshCounter++ % (*SheetsReportingFrequency/15) == 0){
+    ReportToGoogleSheets(false);
+  }
 }
 
 void GrowBox::ReportToGoogleSheets(bool CalledFromWebsite){

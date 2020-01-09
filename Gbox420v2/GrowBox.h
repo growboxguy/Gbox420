@@ -45,15 +45,17 @@ class GrowBox : public Common
     void websiteEvent_Button(char * Button);
     void websiteEvent_Field(char * Field);
     void refresh_FiveSec();
-    void refresh_HalfHour();
+    void refresh_QuarterHour();
     void refreshAll(bool AddToLog);
-    bool refreshRequest = true; 
+    bool RefreshAllRequest = true; 
+    int * SheetsReportingFrequency;
+    int SheetsRefreshCounter = 0;
  
     void runReport(); 
     void runSec();
     void runFiveSec();
     void runMinute();
-    void runHalfHour(); 
+    void runQuarterHour(); 
 
     char * eventLogToJSON(bool Append); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]  
     void addToLog(const __FlashStringHelper* Text,byte indent=3);
@@ -61,14 +63,16 @@ class GrowBox : public Common
     void setDebugOnOff(bool State);
     void setMetricSystemEnabled(bool MetricEnabled); 
     void setPushingBoxLogRelayID(char * ID);
+    void ReportToGoogleSheetsTrigger();
     void ReportToGoogleSheets(bool CalledFromWebsite);
-    void setReportToGoogleSheetsOnOff(bool State);
+    void setSheetsReportingOnOff(bool State);
+    void setSheetsReportingFrequency(int Frequency);
   
     void AddToReportQueue(Common* Component);
     void AddToRefreshQueue_Sec(Common* Component);
     void AddToRefreshQueue_FiveSec(Common* Component);
     void AddToRefreshQueue_Minute(Common* Component);
-    void AddToRefreshQueue_HalfHour(Common* Component);
+    void AddToRefreshQueue_QuarterHour(Common* Component);
     void AddToWebsiteQueue_Load(Common* Component);
     void AddToWebsiteQueue_Refresh(Common* Component);
     void AddToWebsiteQueue_Button(Common* Component);
@@ -77,7 +81,7 @@ class GrowBox : public Common
     Common* RefreshQueue_Sec[QueueDepth];
     Common* RefreshQueue_FiveSec[QueueDepth]; 
     Common* RefreshQueue_Minute[QueueDepth];
-    Common* RefreshQueue_HalfHour[QueueDepth];
+    Common* RefreshQueue_QuarterHour[QueueDepth];
     Common* WebsiteQueue_Load[QueueDepth];
     Common* WebsiteQueue_Refresh[QueueDepth]; 
     Common* WebsiteQueue_Button[QueueDepth];
@@ -86,7 +90,7 @@ class GrowBox : public Common
     byte refreshQueueItemCount_Sec = 0;
     byte refreshQueueItemCount_FiveSec = 0;
     byte refreshQueueItemCount_Minute = 0;
-    byte refreshQueueItemCount_HalfHour = 0;
+    byte refreshQueueItemCount_QuarterHour = 0;
     byte WebsiteQueueItemCount_Load = 0;
     byte WebsiteQueueItemCount_Refresh = 0;
     byte WebsiteQueueItemCount_Button = 0;
@@ -107,9 +111,8 @@ class GrowBox : public Common
 </div>
 
 <div class="card" style="width:90%">
-  <h1>Reporting</h1>
-  <button id="GBox1_ReportTrigger" type="button" style="margin-top:0px">Report to console</button>			
-  <form><label><input type="checkbox" name="GBox1_GoogleSheetsEnabled">Google Sheets </label><input type="submit" value="Set"> <button id="GBox1_GoogleSheetsTrigger" type="button" style="margin-top:0px">Trigger</button></form>
+  <h1>Reporting</h1>					
+  <form><label><input type="checkbox" name="GBox1_SheetsEnabled">Google Sheets, every <input style="width: 55px;" min=15 max=1440 step=15 name="GBox1_SheetsFrequency" type="number"/> min </label><input type="submit" value="Set"></form>
   <form>RelayID:<input type="text" name="GBox1_PushingBoxLogRelayID"  style="width: 150px;" title="DeviceID of the PushingBox logging scenario"/><input type="submit" value="Set"></form>
 </div>
 

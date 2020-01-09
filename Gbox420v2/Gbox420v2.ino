@@ -44,8 +44,8 @@ GrowBox * GBox;  //Represents a Grow Box with all components (Lights, DHT sensor
 Thread OneSecThread = Thread();
 Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
-Thread HalfHourThread = Thread();
-StaticThreadController<4> ThreadControl (&OneSecThread,&FiveSecThread,&MinuteThread,&HalfHourThread);
+Thread QuarterHourThread = Thread();
+StaticThreadController<4> ThreadControl (&OneSecThread,&FiveSecThread,&MinuteThread,&QuarterHourThread);
 
 void setup() {  // put your setup code here, to run once:
   ArduinoSerial.begin(115200);    //2560mega console output
@@ -67,8 +67,8 @@ void setup() {  // put your setup code here, to run once:
   FiveSecThread.onRun(runFiveSec);
   MinuteThread.setInterval(60000);
   MinuteThread.onRun(runMinute);
-  HalfHourThread.setInterval(1800000);
-  HalfHourThread.onRun(runHalfHour);
+  QuarterHourThread.setInterval(900000);
+  QuarterHourThread.onRun(runQuarterHour);
   
    //Start interrupts to handle request from ESP-Link firmware
   Timer3.initialize(500);  //check every 0.5sec, using a larger interval can cause web requests to time out
@@ -108,9 +108,9 @@ void runMinute(){
   GBox -> runReport();
 }
 
-void runHalfHour(){
+void runQuarterHour(){
   wdt_reset();   
-  GBox -> runHalfHour();
+  GBox -> runQuarterHour();
 }
 
 void HeartBeat(){

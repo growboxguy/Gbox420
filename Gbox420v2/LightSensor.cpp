@@ -44,7 +44,7 @@ void LightSensor::refresh_Minute(){  //Called when component should refresh its 
   if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   if(CalibrateRequested){ calibrate(); } //If calibration was requested
   Dark = digitalRead(*DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected.
-  LightReading -> updateAverage(1023 - analogRead(*AnalogPin)); 
+  LightReading -> updateAverage(1023 - analogRead(*AnalogPin));
 }
 
 void LightSensor::report(){

@@ -23,7 +23,9 @@
 			<div class="card" style="width:90%">	
 				<h1><span id="Time"></span></h1>
 				<ul id="list_SerialLog"></ul>
-				<button id="GBox1_Refresh" type="button" style="margin-top:0px" title="Updates the status of every module">Refresh</button>			
+				<button id="GBox1_Refresh" type="button" style="margin-top:0px" title="Update sensor readings and report to console and Sheets">Refresh</button>	
+				<button id="GBox1_ReportTrigger" type="button" style="margin-top:0px" title="Report current status to Serial (ESP and Arduino)">Report to console</button>
+				<button id="GBox1_GoogleSheetsTrigger" type="button" style="margin-top:0px" title="Report current status to Google Sheets">Report to Sheets</button>			
 			</div>
 			<div class="card" style="width:90%">
 				<h1>Power</h1>
@@ -99,6 +101,21 @@
 					<input type="submit" value="Set" title="Set LOW and HIGH speed humidity levels">
 				</form>
 				-->						
+			</div>						
+			<div class="card" style="width:90%">
+				<h1>Reservoir</h1>
+				<table class="tg">
+					<tr>
+					 <th class="headerRows"><span style="font-weight:bold">Level</span></th>					 
+					 <th class="headerRows"><span style="font-weight:bold">Temp</span></th>	
+					 <th class="headerRows"><span style="font-weight:bold">PH</span></th>			
+					</tr>
+					<tr>
+					 <td id="WaterLevel1_Level" class="dataRows"></td>
+					 <td id="WaterTemp1_Temp" class="dataRows"></td>
+					 <td id="PHSensor1_PH" class="dataRows"></td>
+					</tr>
+				</table>	
 			</div>		
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
@@ -138,7 +155,7 @@
 				<button id="Light1_Off" type="button" title="Turn grow lights OFF">OFF</button><br>
 				<b>Brightness</b><br>				
 				<form>
-				<input style="width:4k2px;" type="number" name="Light1_Brightness" min="0" max="100" oninput="this.form.Light1_BrightnessSlider.value=this.value" />
+				<input style="width:42px;" type="number" name="Light1_Brightness" min="0" max="100" oninput="this.form.Light1_BrightnessSlider.value=this.value" />
 				<input type="range" name="Light1_BrightnessSlider" min="0" max="100" oninput="this.form.Light1_Brightness.value=this.value">
 				<input type="submit" value="Set">				
 				</form>				
@@ -147,21 +164,6 @@
 				<button id="Light1_TimerDisable" type="button" align="right" title="Disable light timer">Disable</button>
 				<form>ON : <input style="width: 35px;" min=0 max=23 name="Light1_OnHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="Light1_OnMinute" type="number"/> <input type="submit" value="Set" title="Set grow light ON time"></form>
 				<form>OFF:<input style="width: 35px;" min=0 max=23 name="Light1_OffHour" type="number"/>:<input style="width: 35px;" min=0 max=59 name="Light1_OffMinute" type="number"/> <input type="submit" value="Set" title="Set grow light OFF time"></form>
-			</div>			
-			<div class="card" style="width:90%">
-				<h1>Reservoir</h1>
-				<table class="tg">
-					<tr>
-					 <th class="headerRows"><span style="font-weight:bold">Level</span></th>					 
-					 <th class="headerRows"><span style="font-weight:bold">Temp</span></th>	
-					 <th class="headerRows"><span style="font-weight:bold">PH</span></th>			
-					</tr>
-					<tr>
-					 <td id="WaterLevel1_Level" class="dataRows"></td>
-					 <td id="WaterTemp1_Temp" class="dataRows"></td>
-					 <td id="PHSensor1_PH" class="dataRows"></td>
-					</tr>
-				</table>	
 			</div>
 			<!--
 			<div class="card" style="width:90%">
