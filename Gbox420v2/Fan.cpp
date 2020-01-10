@@ -14,7 +14,7 @@ Fan::Fan(const __FlashStringHelper * Name, GrowBox * GBox, Settings::FanSettings
   GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh_Minute() method
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
-  logToSerials(F("Fan object created"),true,3);
+  logToSerials(F("Fan object created"),true,1);
 }
 
 void Fan::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is opened, load stuff once

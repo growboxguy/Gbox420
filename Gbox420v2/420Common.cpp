@@ -22,7 +22,7 @@ void Common::refresh_Minute(){
 }
 
 void Common::refresh_QuarterHour(){
-  logToSerials(Name,false,2);logToSerials(F("refreshing (30min)"),true,1);  //Prints "NAME refreshing" to the console
+  logToSerials(Name,false,2);logToSerials(F("refreshing (15min)"),true,1);  //Prints "NAME refreshing" to the console
 }
 
 char * Common::getWebsiteComponentName(const __FlashStringHelper * ComponentName){

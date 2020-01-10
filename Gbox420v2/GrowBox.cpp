@@ -13,6 +13,7 @@
 #include "Aeroponics_NoTank.h" 
 #include "WaterTempSensor.h"
 #include "WaterLevelSensor.h"
+#include "ModuleSkeleton.h"  //Only for demonstration purposes
 
 static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
@@ -20,6 +21,7 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   this -> BoxSettings = BoxSettings;
   SheetsReportingFrequency = &BoxSettings -> SheetsReportingFrequency;
   logToSerials(F(" "),true,0); //add a breakrow to console log
+
   Sound1 = new Sound(F("Sound1"), this, &BoxSettings -> Sound1);
   InFan = new Fan(F("InFan"), this, &BoxSettings -> InFan);
   ExFan = new Fan(F("ExFan"), this, &BoxSettings -> ExFan);
@@ -35,6 +37,9 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   PHSensor1 = new PHSensor(F("PHSensor1"),this, &BoxSettings -> PHSensor1);  
   WaterTemp1 = new WaterTempSensor(F("WaterTemp1"),this,&BoxSettings -> WaterTemp1);
   WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"),this,&BoxSettings -> WaterLevel1);
+  ModuleSkeleton1 = new ModuleSkeleton(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
+  ModuleSkeleton2 = new ModuleSkeleton(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
+
   AddToRefreshQueue_FiveSec(this);  //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method 
   AddToRefreshQueue_QuarterHour(this);  //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method 
   AddToWebsiteQueue_Load(this); //Subscribing to the Website load event
@@ -47,7 +52,7 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
 
 void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char * url) //called when website is refreshed.
 { 
-  WebServer.setArgString(F("Time"), getFormattedTime());
+  WebServer.setArgString(F("Time"), getFormattedTime(false));
   WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON(false)); //Last events that happened in JSON format  
 }
 
@@ -112,8 +117,7 @@ void GrowBox::refreshAll(bool AddToLog){  //implementing the virtual refresh fun
 }
 
 void GrowBox::runReport(){ 
-  getFormattedTime();  //fills the CurrentTime global variable
-  logToSerials(&CurrentTime, true,0);
+  getFormattedTime(true);
   getFreeMemory();  
   for(int i=0;i<reportQueueItemCount;i++){
    ReportQueue[i] -> report();

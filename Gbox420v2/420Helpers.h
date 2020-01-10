@@ -25,7 +25,7 @@ extern char CurrentTime[20];
 //Class specific variables
 time_t getNtpTime();
 void getFreeMemory();
-char * getFormattedTime();  
+char * getFormattedTime(bool PrintToSerials);  
 float convertBetweenTempUnits(float);
 float convertBetweenPressureUnits(float); 
 char * toText(const __FlashStringHelper *);    

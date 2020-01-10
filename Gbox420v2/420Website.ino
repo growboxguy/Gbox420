@@ -12,6 +12,7 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
   WebServer.setup();
   URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json"); //setup handling request from GrowBox.html
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); //setup handling request from Settings.html
+  URLHandler *TestHandler = WebServer.createURLHandler("/Test.html.json"); //setup handling request from Test.html
   GrowBoxHandler->loadCb.attach(&loadCallback);  //Called then the website loads initially
   GrowBoxHandler->refreshCb.attach(&refreshCallback); //Called periodically to refresh website content 
   GrowBoxHandler->buttonCb.attach(&buttonPressCallback); //Called when a button is pressed on the website
@@ -20,6 +21,10 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
   SettingsHandler->refreshCb.attach(&refreshCallback); //Called periodically to refresh website content 
   SettingsHandler->buttonCb.attach(&buttonPressCallback); //Called when a button is pressed on the website
   SettingsHandler->setFieldCb.attach(&setFieldCallback); //Called when a field is changed on the website
+  TestHandler->loadCb.attach(&loadCallback);  //Called then the website loads initially
+  TestHandler->refreshCb.attach(&refreshCallback); //Called periodically to refresh website content 
+  TestHandler->buttonCb.attach(&buttonPressCallback); //Called when a button is pressed on the website
+  TestHandler->setFieldCb.attach(&setFieldCallback); //Called when a field is changed on the website
   logToSerials(F("ESP-link connected"),true,0);
 }
 

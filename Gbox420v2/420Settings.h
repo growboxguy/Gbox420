@@ -135,6 +135,19 @@ typedef struct
   struct FanSettings InFan = {.OnOffPin = 25, .SpeedPin = 26 };
   struct FanSettings ExFan = {.OnOffPin = 27, .SpeedPin = 28 };
 
+
+  struct ModuleSkeletonSettings{
+    ModuleSkeletonSettings(bool PersistentBool = 0 , float PersistentFloat = 0.0) : PersistentBool(PersistentBool),PersistentFloat(PersistentFloat){}
+    bool PersistentBool;
+    int PersistentInt = 420;  //Same value on all instances
+    float PersistentFloat;
+  };
+  struct ModuleSkeletonSettings ModuleSkeleton1 = {.PersistentBool = false, .PersistentFloat = 1.23 };  //Instance 1
+  struct ModuleSkeletonSettings ModuleSkeleton2 = {.PersistentBool = true, .PersistentFloat = 4.56 };  //Instance 2
+
+
+    
+
   /*   
   bool AutomaticInFan = false;  //Adjust internal fan based on temperature
   bool AutomaticExFan = false;  //Adjust exhaust fan based on temp and humidity

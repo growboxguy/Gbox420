@@ -17,6 +17,7 @@ class Aeroponics_NoTank;
 class Aeroponics_Tank;
 class WaterTempSensor;
 class WaterLevelSensor;
+class ModuleSkeleton;   //Only for demonstration purposes
 
 extern ELClientRest PushingBoxRestAPI;
 
@@ -40,6 +41,8 @@ class GrowBox : public Common
     Aeroponics_NoTank * Aero_NT1;
     WaterTempSensor * WaterTemp1;
     WaterLevelSensor * WaterLevel1;
+    ModuleSkeleton * ModuleSkeleton1;  //Only for demonstration purposes
+    ModuleSkeleton * ModuleSkeleton2;  //Only for demonstration purposes
     void websiteEvent_Load(__attribute__((unused)) char * url);
     void websiteEvent_Refresh(__attribute__((unused)) char * url);
     void websiteEvent_Button(char * Button);
