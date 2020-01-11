@@ -6,8 +6,8 @@ ModuleSkeleton::ModuleSkeleton (const __FlashStringHelper * Name, GrowBox * GBox
   PersistentBool = &DefaultSettings -> PersistentBool;
   PersistentInt = &DefaultSettings -> PersistentInt;
   PersistentFloat = &DefaultSettings -> PersistentFloat;
-  SmoothInt = new RollingAverage();
-  SmoothFloat = new RollingAverage();
+  RollingInt = new RollingAverage();
+  RollingFloat = new RollingAverage();
 
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
   GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to refresh queue: Calls the refresh_Sec() method
@@ -32,12 +32,22 @@ void ModuleSkeleton::report(){
   strcat_P(LongMessage,(PGM_P)F(" ; RuntimeInt:")); strcat(LongMessage, toText(RuntimeInt));
   strcat_P(LongMessage,(PGM_P)F(" ; RuntimeFloat:")); strcat(LongMessage, toText(RuntimeFloat));
   strcat_P(LongMessage,(PGM_P)F(" ; RuntimeString:")); strcat(LongMessage, RuntimeString);
-  strcat_P(LongMessage,(PGM_P)F(" ; SmoothInt:")); strcat(LongMessage, SmoothInt -> getAverageIntText());
-  strcat_P(LongMessage,(PGM_P)F(" ; SmoothFloat:")); strcat(LongMessage, SmoothFloat -> getAverageFloatText());
+  strcat_P(LongMessage,(PGM_P)F(" ; RollingInt:")); strcat(LongMessage, RollingInt -> getAverageIntText());
+  strcat_P(LongMessage,(PGM_P)F(" ; RollingFloat:")); strcat(LongMessage, RollingFloat -> getAverageFloatText());
   logToSerials(&LongMessage,true,1);
 }  
 
 void ModuleSkeleton::websiteEvent_Load(__attribute__((unused)) char * url){
+  if (strcmp(url,"/Test.html.json")==0){
+      
+      WebServer.setArgBoolean(getWebsiteComponentName(F("SetPersBool")), *PersistentBool);
+      WebServer.setArgInt(getWebsiteComponentName(F("SetPersInt")), *PersistentInt);
+      WebServer.setArgFloat(getWebsiteComponentName(F("SetPersFloat")), *PersistentFloat);
+      WebServer.setArgBoolean(getWebsiteComponentName(F("SetRunBool")), RuntimeBool);
+  }
+}
+
+void ModuleSkeleton::websiteEvent_Refresh(__attribute__((unused)) char * url){
   if (strcmp(url,"/Test.html.json")==0){
       WebServer.setArgBoolean(getWebsiteComponentName(F("PersistentBool")), *PersistentBool);
       WebServer.setArgInt(getWebsiteComponentName(F("PersistentInt")), *PersistentInt);
@@ -45,20 +55,10 @@ void ModuleSkeleton::websiteEvent_Load(__attribute__((unused)) char * url){
       WebServer.setArgBoolean(getWebsiteComponentName(F("RuntimeBool")), RuntimeBool);
       WebServer.setArgInt(getWebsiteComponentName(F("RuntimeInt")), RuntimeInt);     
       WebServer.setArgFloat(getWebsiteComponentName(F("RuntimeFloat")), RuntimeFloat);
-      WebServer.setArgString(getWebsiteComponentName(F("RuntimeString")), RuntimeString); 
-      WebServer.setArgInt(getWebsiteComponentName(F("SmoothInt")), SmoothInt -> getAverageInt()); 
-      WebServer.setArgFloat(getWebsiteComponentName(F("SmoothFloat")), SmoothFloat -> getAverageFloat()); 
-  }
-}
-
-void ModuleSkeleton::websiteEvent_Refresh(__attribute__((unused)) char * url){
-  if (strcmp(url,"/Test.html.json")==0){
+      WebServer.setArgString(getWebsiteComponentName(F("RuntimeString")), RuntimeString);
       WebServer.setArgBoolean(getWebsiteComponentName(F("RuntimeBool")), RuntimeBool);
-      WebServer.setArgInt(getWebsiteComponentName(F("RuntimeInt")), RuntimeInt);     
-      WebServer.setArgFloat(getWebsiteComponentName(F("RuntimeFloat")), RuntimeFloat);
-      WebServer.setArgString(getWebsiteComponentName(F("RuntimeString")), RuntimeString); 
-      WebServer.setArgInt(getWebsiteComponentName(F("SmoothInt")), SmoothInt -> getAverageInt()); 
-      WebServer.setArgFloat(getWebsiteComponentName(F("SmoothFloat")), SmoothFloat -> getAverageFloat());  
+      WebServer.setArgInt(getWebsiteComponentName(F("RollingInt")), RollingInt -> getAverageInt()); 
+      WebServer.setArgFloat(getWebsiteComponentName(F("RollingFloat")), RollingFloat -> getAverageFloat());  
   }
 }
 
@@ -67,8 +67,10 @@ void ModuleSkeleton::websiteEvent_Button(char * Button){ //When a button is pres
     return;  //If did not match:return control to caller fuction
   }
   else{ //if the component name matches with the object name   
-    if(strcmp_P(ShortMessage,(PGM_P)F("ResetFlash"))==0) {*PersistentBool = false; *PersistentInt = 420; *PersistentFloat = 4.2; }
-    else if(strcmp_P(ShortMessage,(PGM_P)F("ResetRam"))==0) {RuntimeBool = false; RuntimeInt = 420; RuntimeFloat = 4.2; strncpy(RuntimeString, "HailMary",MaxTextLength); }  
+    if(strcmp_P(ShortMessage,(PGM_P)F("ResetPers"))==0) {*PersistentBool = false; *PersistentInt = 420; *PersistentFloat = 4.2; }
+    else if(strcmp_P(ShortMessage,(PGM_P)F("ResetRun"))==0) {RuntimeBool = false; RuntimeInt = 420; RuntimeFloat = 4.2; strncpy(RuntimeString, "HailMary",MaxTextLength); }  
+    else if(strcmp_P(ShortMessage,(PGM_P)F("ResetRollInt"))==0) { RollingInt -> resetAverage(); }  //Signals to reset average counter at next reading 
+    else if(strcmp_P(ShortMessage,(PGM_P)F("ResetRollFloat"))==0) {RollingFloat -> resetAverage(); }    //Signals to reset average counter at next reading 
   }  
 } 
 
@@ -77,17 +79,15 @@ void ModuleSkeleton::websiteEvent_Field(char * Field){ //When the website is ope
     return;  //If did not match:return control to caller fuction
   }
   else{ //if the component name matches with the object name     
-    if(strcmp_P(ShortMessage,(PGM_P)F("SetBool"))==0) { RuntimeBool = WebServer.getArgBoolean(); } //Getting a bool
-    else if(strcmp_P(ShortMessage,(PGM_P)F("SetString"))==0) { strncpy(RuntimeString, WebServer.getArgString(),MaxTextLength); } //Getting a string
-    else if(strcmp_P(ShortMessage,(PGM_P)F("SetInt"))==0) { RuntimeInt = WebServer.getArgInt(); } //Getting an integer
-    else if(strcmp_P(ShortMessage,(PGM_P)F("SetFloat"))==0) { RuntimeFloat = WebServer.getArgFloat(); }  //Getting a float
-    else if(strcmp_P(ShortMessage,(PGM_P)F("PersistentInt"))==0) { *PersistentInt = WebServer.getArgInt(); } //Getting an integer
-    else if(strcmp_P(ShortMessage,(PGM_P)F("PersistentFloat"))==0) { *PersistentFloat = WebServer.getArgFloat(); }  //Getting a float
-    else if(strcmp_P(ShortMessage,(PGM_P)F("PersistentBool"))==0) { *PersistentBool = WebServer.getArgBoolean(); } //Getting a bool
-      
+    if(strcmp_P(ShortMessage,(PGM_P)F("SetRunBool"))==0) { RuntimeBool = WebServer.getArgBoolean(); } //Getting a bool
+    else if(strcmp_P(ShortMessage,(PGM_P)F("SetRunString"))==0) { strncpy(RuntimeString, WebServer.getArgString(),MaxTextLength); } //Getting a string
+    else if(strcmp_P(ShortMessage,(PGM_P)F("SetPersBool"))==0) { PersistentBool = WebServer.getArgBoolean(); } //Getting a bool
+    else if(strcmp_P(ShortMessage,(PGM_P)F("SetPersInt"))==0) { *PersistentInt = WebServer.getArgInt(); }  //Getting a integer
+    else if(strcmp_P(ShortMessage,(PGM_P)F("SetPersFloat"))==0) { *PersistentFloat = WebServer.getArgFloat(); } //Getting an float   
+    else if(strcmp_P(ShortMessage,(PGM_P)F("SetRunInt"))==0) { RollingInt -> updateAverage((int)WebServer.getArgInt()); }  //Getting a integer and updating RollingAverage. Casting int32_t to int
+    else if(strcmp_P(ShortMessage,(PGM_P)F("SetRunFloat"))==0) { RollingFloat -> updateAverage(WebServer.getArgFloat()); } //Getting an float    
   }  
 } 
-
 
 void ModuleSkeleton::refresh_Sec(){
   if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Sec();  
@@ -108,4 +108,3 @@ void ModuleSkeleton::refresh_Minute(){
 void ModuleSkeleton::refresh_QuarterHour(){
   if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_QuarterHour();  
 }
-

@@ -23,10 +23,10 @@ class ModuleSkeleton : public Common
     //Variables stored in memory, values reset at reboot
     bool RuntimeBool = false;
     int RuntimeInt = 420;
-    float RuntimeFloat = 4.2;
+    float RuntimeFloat = 4.2f;
     char RuntimeString[MaxTextLength] = "HailMary";
-    RollingAverage * SmoothInt;
-    RollingAverage * SmoothFloat;
+    RollingAverage * RollingInt;
+    RollingAverage * RollingFloat;
     
     //Variables stored in EEPROM, values kept between reboots
     bool * PersistentBool;

@@ -21,19 +21,34 @@
 	<div class="pure-g">
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">
-				<h1><span id="ModuleSkeleton1_RuntimeString"></h1>
-				<form>Change the title:<input type="text" name="ModuleSkeleton1_SetString"  style="width: 150px;" title="Change the word of the day text"/><input type="submit" value="Set"></form>
-				<strong>Flash (persistent between restarts):</strong>
-				<form><label><input type="checkbox" name="ModuleSkeleton1_PersistentBool" title="This true/false is memory based, resets at restart">Checkbox </label><input type="submit" value="Set"></form>
-				<form>Int : <input style="width: 45px;" min=0 max=1000 name="ModuleSkeleton1_PersistentInt" type="number"/> <input type="submit" value="Set"></form>
-				<form>Float:<input style="width: 80px;" name="ModuleSkeleton1_PersistentFloat" type="text"/><input type="submit" value="Set"></form>
-				<br>
-				<strong>RAM:</strong>
+				<h1>ModulSkeleton1</h1>
+				<h3>EEPROM stored - Presistent</h2>
 				<table class="tg">
 					<tr>
-					  <th class="headerRows"><span style="font-weight:bold">Bool</span></th>
-					  <th class="headerRows"><span style="font-weight:bold">Int</span></th>
-					  <th class="headerRows"><span style="font-weight:bold">Float</span></th>				
+					  <th class="headerRows"><span style="font-weight:bold">PersitentBool</span></th>
+					  <th class="headerRows"><span style="font-weight:bold">PersitentInt</span></th>
+					  <th class="headerRows"><span style="font-weight:bold">PersitentFloat</span></th>				
+					</tr>
+					<tr>
+					  <td id="ModuleSkeleton1_PersistentBool" class="dataRows"></td>
+					  <td id="ModuleSkeleton1_PersistentInt" class="dataRows"></td>
+					  <td id="ModuleSkeleton1_PersistentFloat" class="dataRows"></td>
+					</tr>    
+				</table>
+				<form><input type="checkbox" name="ModuleSkeleton1_SetPersBool">Bool <input type="submit" value="Set"></form>
+				Change 2 values with one button:<br>	
+				<form>
+				  Int: <input style="width: 45px;" min=0 max=1000 name="ModuleSkeleton1_SetPersInt" type="number"/>
+				  Float: <input style="width: 80px;" name="ModuleSkeleton1_SetPersFloat" type="text"/> 
+				  <input type="submit" value="Set">
+				</form>
+				<button id="ModuleSkeleton1_ResetPers" type="button" style="margin-top:3px;float:right" title="Refresh the page(F5) to see changes">Reset EEPROM</button>
+				<h3>RAM stored - Runtime</h3>
+				<table class="tg">
+					<tr>
+					  <th class="headerRows"><span style="font-weight:bold">RuntimeBool</span></th>
+					  <th class="headerRows"><span style="font-weight:bold">RuntimeInt</span></th>
+					  <th class="headerRows"><span style="font-weight:bold">RuntimeFloat</span></th>				
 					</tr>
 					<tr>
 					  <td id="ModuleSkeleton1_RuntimeBool" class="dataRows"></td>
@@ -41,20 +56,90 @@
 					  <td id="ModuleSkeleton1_RuntimeFloat" class="dataRows"></td>
 					</tr>    
 				</table>
-				<form><label><input type="checkbox" name="ModuleSkeleton1_SetBool" title="This true/false is persistent, stored in Flash">Auto Increment Int (5sec) </label><input type="submit" value="Set"></form>
-				Change max 2 values with one button:<br>				
-				<form>
-					Int: <input style="width: 40px;" name="ModuleSkeleton1_SetInt" type="number"/>
-					Float: <input style="width: 50px;" name="ModuleSkeleton1_SetFloat" type="text"/>					
-					<input type="submit" value="Set">					
-				</form>	
-				<button id="ModuleSkeleton1_ResetRam" type="button" style="margin-top:0px" >Reset RAM</button>
-				<button id="ModuleSkeleton1_ResetFlash" type="button" style="margin-top:0px" title="Refresh the page(F5) to see changes">Reset Flash</button>
-			</div>		
-			
+				<form><label><input type="checkbox" name="ModuleSkeleton1_SetRunBool">Auto Increment (5sec) </label><input type="submit" value="Set"></form>
+				<button id="ModuleSkeleton1_ResetRun" type="button" style="margin-top:3px;float:right">Reset RAM</button>
+				<br>
+				<b>Word of the day is: </b><span id="ModuleSkeleton1_RuntimeString"></span><br>
+				<form>Change the word: <input type="text" name="ModuleSkeleton1_SetRunString"  style="width: 150px;" title="Change the word of the day text"/> <input type="submit" value="Set"></form>
+				<br>
+				<b>Rolling average smoothing</b>
+				<table class="tg">
+					<tr>
+					  <th class="headerRows"><span style="font-weight:bold">Rolling average Int</span></th>
+					  <th class="headerRows"><span style="font-weight:bold">Rolling average Float</span></th>					  			
+					</tr>
+					<tr>
+					  <td id="ModuleSkeleton1_RollingInt" class="dataRows"></td>
+					  <td id="ModuleSkeleton1_RollingFloat" class="dataRows"></td>
+					</tr>    
+				</table>				
+				Add a value to Rolling Average:<br>	
+				<form>Int: <input style="width: 40px;" name="ModuleSkeleton1_SetRunInt" type="number"/> <input type="submit" value="Set"></form>
+				<form>Float: <input style="width: 50px;" name="ModuleSkeleton1_SetRunFloat" type="text"/> <input type="submit" value="Set"></form>	
+				<button id="ModuleSkeleton1_ResetRollInt" type="button" style="margin-top:3px">Reset RollingInt</button>
+				<button id="ModuleSkeleton1_ResetRollFloat" type="button" style="margin-top:3px">Reset RollingFloat</button>
+			</div>
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
-							
+			<div class="card" style="width:90%">
+				<h1>ModulSkeleton2</h1>
+				<h3>EEPROM stored - Presistent</h2>
+				<table class="tg">
+					<tr>
+					  <th class="headerRows"><span style="font-weight:bold">PersitentBool</span></th>
+					  <th class="headerRows"><span style="font-weight:bold">PersitentInt</span></th>
+					  <th class="headerRows"><span style="font-weight:bold">PersitentFloat</span></th>				
+					</tr>
+					<tr>
+					  <td id="ModuleSkeleton2_PersistentBool" class="dataRows"></td>
+					  <td id="ModuleSkeleton2_PersistentInt" class="dataRows"></td>
+					  <td id="ModuleSkeleton2_PersistentFloat" class="dataRows"></td>
+					</tr>    
+				</table>
+				<form><input type="checkbox" name="ModuleSkeleton2_SetPersBool">Bool <input type="submit" value="Set"></form>
+				Change 2 values with one button:<br>	
+				<form>
+				  Int: <input style="width: 45px;" min=0 max=1000 name="ModuleSkeleton2_SetPersInt" type="number"/>
+				  Float: <input style="width: 80px;" name="ModuleSkeleton2_SetPersFloat" type="text"/> 
+				  <input type="submit" value="Set">
+				</form>
+				<button id="ModuleSkeleton2_ResetPers" type="button" style="margin-top:3px;float:right" title="Refresh the page(F5) to see changes">Reset EEPROM</button>
+				<h3>RAM stored - Runtime</h3>
+				<table class="tg">
+					<tr>
+					  <th class="headerRows"><span style="font-weight:bold">RuntimeBool</span></th>
+					  <th class="headerRows"><span style="font-weight:bold">RuntimeInt</span></th>
+					  <th class="headerRows"><span style="font-weight:bold">RuntimeFloat</span></th>				
+					</tr>
+					<tr>
+					  <td id="ModuleSkeleton2_RuntimeBool" class="dataRows"></td>
+					  <td id="ModuleSkeleton2_RuntimeInt" class="dataRows"></td>
+					  <td id="ModuleSkeleton2_RuntimeFloat" class="dataRows"></td>
+					</tr>    
+				</table>
+				<form><label><input type="checkbox" name="ModuleSkeleton2_SetRunBool">Auto Increment (5sec) </label><input type="submit" value="Set"></form>
+				<button id="ModuleSkeleton2_ResetRun" type="button" style="margin-top:3px;float:right">Reset RAM</button>
+				<br>
+				<b>Word of the day is: </b><span id="ModuleSkeleton2_RuntimeString"></span><br>
+				<form>Change the word: <input type="text" name="ModuleSkeleton2_SetRunString"  style="width: 150px;" title="Change the word of the day text"/> <input type="submit" value="Set"></form>
+				<br>
+				<b>Rolling average smoothing</b>
+				<table class="tg">
+					<tr>
+					  <th class="headerRows"><span style="font-weight:bold">Rolling average Int</span></th>
+					  <th class="headerRows"><span style="font-weight:bold">Rolling average Float</span></th>					  			
+					</tr>
+					<tr>
+					  <td id="ModuleSkeleton2_RollingInt" class="dataRows"></td>
+					  <td id="ModuleSkeleton2_RollingFloat" class="dataRows"></td>
+					</tr>    
+				</table>				
+				Add a value to Rolling Average:<br>	
+				<form>Int: <input style="width: 40px;" name="ModuleSkeleton2_SetRunInt" type="number"/> <input type="submit" value="Set"></form>
+				<form>Float: <input style="width: 50px;" name="ModuleSkeleton2_SetRunFloat" type="text"/> <input type="submit" value="Set"></form>	
+				<button id="ModuleSkeleton2_ResetRollInt" type="button" style="margin-top:3px">Reset RollingInt</button>
+				<button id="ModuleSkeleton2_ResetRollFloat" type="button" style="margin-top:3px">Reset RollingFloat</button>
+			</div>		
 		</div>		
 	</div>
   </div> 
