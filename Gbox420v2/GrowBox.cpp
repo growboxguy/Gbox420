@@ -1,19 +1,19 @@
 #include "GrowBox.h"
-#include "DHTSensor.h"
-#include "Lights.h"
-#include "Sound.h"
-#include "Fan.h"
-#include "PowerSensor.h" 
+#include "src/Modules/DHTSensor.h"
+#include "src/Modules/Lights.h"
+#include "src/Modules/Sound.h"
+#include "src/Modules/Fan.h"
+#include "src/Modules/PowerSensor.h" 
 //#include "PowerSensorV3.h"  //Only for PZEM004T V3.0
-#include "LightSensor.h"
-#include "PHSensor.h" 
-#include "LightSensor.h"
-#include "PressureSensor.h" 
-#include "Aeroponics_Tank.h" 
-#include "Aeroponics_NoTank.h" 
-#include "WaterTempSensor.h"
-#include "WaterLevelSensor.h"
-#include "ModuleSkeleton.h"  //Only for demonstration purposes
+#include "src/Modules/LightSensor.h"
+#include "src/Modules/PHSensor.h" 
+#include "src/Modules/LightSensor.h"
+#include "src/Modules/PressureSensor.h" 
+#include "src/Modules/Aeroponics_Tank.h" 
+#include "src/Modules/Aeroponics_NoTank.h" 
+#include "src/Modules/WaterTempSensor.h"
+#include "src/Modules/WaterLevelSensor.h"
+#include "src/ModuleSkeleton.h"  //Only for demonstration purposes
 
 static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
