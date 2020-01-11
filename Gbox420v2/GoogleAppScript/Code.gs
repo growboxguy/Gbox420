@@ -25,14 +25,11 @@ function doPost(receivedData) {  //ESP-link sends the Logs here through PushingB
     statusSheet.getRange(2, 4).setValue(receivedData.parameter.BoxData);
     var dateFormat = getSettingsValue("DateFormat");
     statusSheet.getRange(7, 5).setValue(Utilities.formatDate(new Date(), timeZone, dateFormat));
-    statusSheet.getRange(8, 5).setValue("NO");
-      
+    statusSheet.getRange(8, 5).setValue("NO");      
     var BoxData = JSON.parse(receivedData.parameter.BoxData);
-    statusSheet.getRange(8, 5).setValue("YES")
-    
+    statusSheet.getRange(8, 5).setValue("YES")    
     if(BoxData.Settings != null) UpdateSettings(BoxData.Settings);
-    if(BoxData.Log != null) ProcessLog(BoxData.Log);
-    
+    if(BoxData.Log != null) ProcessLog(BoxData.Log);    
   }
 }
 
@@ -186,6 +183,7 @@ function UpdateCharts(){
   .addRange(logSheet.getRange(1,headers.createTextFinder("LogDate").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
   .addRange(logSheet.getRange(1,headers.createTextFinder("PH").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
   .addRange(logSheet.getRange(1,headers.createTextFinder("Light1_Status").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
+  .addRange(logSheet.getRange(1,headers.createTextFinder("WaterLevel").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
   .build();
   chartsSheet.updateChart(phAndLightStatusChart_updated);
   
@@ -194,7 +192,6 @@ function UpdateCharts(){
   .modify()
   .clearRanges()
   .addRange(logSheet.getRange(1,headers.createTextFinder("LogDate").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
-  .addRange(logSheet.getRange(1,headers.createTextFinder("WaterLevel").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
   .addRange(logSheet.getRange(1,headers.createTextFinder("Pressure").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
   .build();
   chartsSheet.updateChart(pressureAndWaterLevelChart_updated);

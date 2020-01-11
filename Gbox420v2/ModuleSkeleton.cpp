@@ -81,7 +81,7 @@ void ModuleSkeleton::websiteEvent_Field(char * Field){ //When the website is ope
   else{ //if the component name matches with the object name     
     if(strcmp_P(ShortMessage,(PGM_P)F("SetRunBool"))==0) { RuntimeBool = WebServer.getArgBoolean(); } //Getting a bool
     else if(strcmp_P(ShortMessage,(PGM_P)F("SetRunString"))==0) { strncpy(RuntimeString, WebServer.getArgString(),MaxTextLength); } //Getting a string
-    else if(strcmp_P(ShortMessage,(PGM_P)F("SetPersBool"))==0) { PersistentBool = WebServer.getArgBoolean(); } //Getting a bool
+    else if(strcmp_P(ShortMessage,(PGM_P)F("SetPersBool"))==0) { *PersistentBool = WebServer.getArgBoolean(); } //Getting a bool
     else if(strcmp_P(ShortMessage,(PGM_P)F("SetPersInt"))==0) { *PersistentInt = WebServer.getArgInt(); }  //Getting a integer
     else if(strcmp_P(ShortMessage,(PGM_P)F("SetPersFloat"))==0) { *PersistentFloat = WebServer.getArgFloat(); } //Getting an float   
     else if(strcmp_P(ShortMessage,(PGM_P)F("SetRunInt"))==0) { RollingInt -> updateAverage((int)WebServer.getArgInt()); }  //Getting a integer and updating RollingAverage. Casting int32_t to int

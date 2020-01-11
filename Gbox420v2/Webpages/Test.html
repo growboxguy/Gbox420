@@ -35,6 +35,7 @@
 					  <td id="ModuleSkeleton1_PersistentFloat" class="dataRows"></td>
 					</tr>    
 				</table>
+				<button id="ModuleSkeleton1_ResetPers" type="button" style="margin-top:3px;float:right" title="Refresh the page(F5) to see changes">Reset EEPROM</button>
 				<form><input type="checkbox" name="ModuleSkeleton1_SetPersBool">Bool <input type="submit" value="Set"></form>
 				Change 2 values with one button:<br>	
 				<form>
@@ -42,7 +43,6 @@
 				  Float: <input style="width: 80px;" name="ModuleSkeleton1_SetPersFloat" type="text"/> 
 				  <input type="submit" value="Set">
 				</form>
-				<button id="ModuleSkeleton1_ResetPers" type="button" style="margin-top:3px;float:right" title="Refresh the page(F5) to see changes">Reset EEPROM</button>
 				<h3>RAM stored - Runtime</h3>
 				<table class="tg">
 					<tr>
@@ -56,8 +56,8 @@
 					  <td id="ModuleSkeleton1_RuntimeFloat" class="dataRows"></td>
 					</tr>    
 				</table>
-				<form><label><input type="checkbox" name="ModuleSkeleton1_SetRunBool">Auto Increment (5sec) </label><input type="submit" value="Set"></form>
 				<button id="ModuleSkeleton1_ResetRun" type="button" style="margin-top:3px;float:right">Reset RAM</button>
+				<form><label><input type="checkbox" name="ModuleSkeleton1_SetRunBool">Auto Increment (5sec) </label><input type="submit" value="Set"></form>
 				<br>
 				<b>Word of the day is: </b><span id="ModuleSkeleton1_RuntimeString"></span><br>
 				<form>Change the word: <input type="text" name="ModuleSkeleton1_SetRunString"  style="width: 150px;" title="Change the word of the day text"/> <input type="submit" value="Set"></form>
@@ -74,8 +74,8 @@
 					</tr>    
 				</table>				
 				Add a value to Rolling Average:<br>	
-				<form>Int: <input style="width: 40px;" name="ModuleSkeleton1_SetRunInt" type="number"/> <input type="submit" value="Set"></form>
-				<form>Float: <input style="width: 50px;" name="ModuleSkeleton1_SetRunFloat" type="text"/> <input type="submit" value="Set"></form>	
+				<form>Int: <input style="width: 40px;" name="ModuleSkeleton1_SetRunInt" type="number"/ value='15'/> <input type="submit" value="Set"></form>
+				<form>Float: <input style="width: 50px;" name="ModuleSkeleton1_SetRunFloat" type="number"/ vstep='0.1' value='4.2'/> <input type="submit" value="Set"></form>	
 				<button id="ModuleSkeleton1_ResetRollInt" type="button" style="margin-top:3px">Reset RollingInt</button>
 				<button id="ModuleSkeleton1_ResetRollFloat" type="button" style="margin-top:3px">Reset RollingFloat</button>
 			</div>
@@ -96,6 +96,7 @@
 					  <td id="ModuleSkeleton2_PersistentFloat" class="dataRows"></td>
 					</tr>    
 				</table>
+				<button id="ModuleSkeleton2_ResetPers" type="button" style="margin-top:3px;float:right" title="Refresh the page(F5) to see changes">Reset EEPROM</button>
 				<form><input type="checkbox" name="ModuleSkeleton2_SetPersBool">Bool <input type="submit" value="Set"></form>
 				Change 2 values with one button:<br>	
 				<form>
@@ -103,7 +104,6 @@
 				  Float: <input style="width: 80px;" name="ModuleSkeleton2_SetPersFloat" type="text"/> 
 				  <input type="submit" value="Set">
 				</form>
-				<button id="ModuleSkeleton2_ResetPers" type="button" style="margin-top:3px;float:right" title="Refresh the page(F5) to see changes">Reset EEPROM</button>
 				<h3>RAM stored - Runtime</h3>
 				<table class="tg">
 					<tr>
@@ -117,8 +117,8 @@
 					  <td id="ModuleSkeleton2_RuntimeFloat" class="dataRows"></td>
 					</tr>    
 				</table>
-				<form><label><input type="checkbox" name="ModuleSkeleton2_SetRunBool">Auto Increment (5sec) </label><input type="submit" value="Set"></form>
 				<button id="ModuleSkeleton2_ResetRun" type="button" style="margin-top:3px;float:right">Reset RAM</button>
+				<form><label><input type="checkbox" name="ModuleSkeleton2_SetRunBool">Auto Increment (5sec) </label><input type="submit" value="Set"></form>
 				<br>
 				<b>Word of the day is: </b><span id="ModuleSkeleton2_RuntimeString"></span><br>
 				<form>Change the word: <input type="text" name="ModuleSkeleton2_SetRunString"  style="width: 150px;" title="Change the word of the day text"/> <input type="submit" value="Set"></form>
@@ -135,8 +135,8 @@
 					</tr>    
 				</table>				
 				Add a value to Rolling Average:<br>	
-				<form>Int: <input style="width: 40px;" name="ModuleSkeleton2_SetRunInt" type="number"/> <input type="submit" value="Set"></form>
-				<form>Float: <input style="width: 50px;" name="ModuleSkeleton2_SetRunFloat" type="text"/> <input type="submit" value="Set"></form>	
+				<form>Int: <input style="width: 40px;" name="ModuleSkeleton2_SetRunInt" type="number"/ value="15"> <input type="submit" value="Set"></form>
+				<form>Float: <input style="width: 50px;" name="ModuleSkeleton2_SetRunFloat" type="number"/ vstep='0.1' value='4.2'> <input type="submit" value="Set"></form>	
 				<button id="ModuleSkeleton2_ResetRollInt" type="button" style="margin-top:3px">Reset RollingInt</button>
 				<button id="ModuleSkeleton2_ResetRollFloat" type="button" style="margin-top:3px">Reset RollingFloat</button>
 			</div>		
