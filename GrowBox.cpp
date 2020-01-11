@@ -4,7 +4,7 @@
 #include "src/Modules/Sound.h"
 #include "src/Modules/Fan.h"
 #include "src/Modules/PowerSensor.h" 
-//#include "PowerSensorV3.h"  //Only for PZEM004T V3.0
+//#include "src/Modules/PowerSensorV3.h"  //Only for PZEM004T V3.0
 #include "src/Modules/LightSensor.h"
 #include "src/Modules/PHSensor.h" 
 #include "src/Modules/LightSensor.h"

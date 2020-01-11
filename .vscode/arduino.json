@@ -2,6 +2,6 @@
     "board": "arduino:avr:mega",
     "configuration": "cpu=atmega2560",
     "programmer": "AVRISP mkII",
-    "sketch": "Gbox420v2.ino",
+    "sketch": "Gbox420.ino",
     "output": "../Gbox420Compile"
 }
