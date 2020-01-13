@@ -15,6 +15,7 @@ Lights::Lights(const __FlashStringHelper * Name, GrowBox * GBox, Settings::Light
   OffHour = &DefaultSettings -> OffHour;
   OffMinute = &DefaultSettings -> OffMinute;
   pinMode(*RelayPin, OUTPUT);
+  digitalWrite(*RelayPin,HIGH); //Turn relay off initially
   pinMode(*DimmingPin, OUTPUT);
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
   GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh_Minute() method  

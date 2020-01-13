@@ -12,7 +12,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
   QuietToHour = &TankSpecificSettings -> QuietToHour; //Quiet time end - hour
   QuietToMinute = &TankSpecificSettings -> QuietToMinute; //Quiet time end - minute
   pinMode(*SpraySolenoidPin,OUTPUT);
-  pinMode(*SpraySolenoidPin,HIGH);  //initialize off 
+  digitalWrite(*SpraySolenoidPin,HIGH);  //initialize off 
   logToSerials(F("Aeroponics_Tank object created"),true,1);
 }   
 

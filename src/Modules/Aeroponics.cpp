@@ -15,9 +15,9 @@ Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Setting
     PumpTimeout = &DefaultSettings -> PumpTimeout;  // Aeroponics - Max pump run time in minutes, measue zero to max pressuretank refill time and adjust accordingly
     PrimingTime = &DefaultSettings -> PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
     pinMode(*BypassSolenoidPin,OUTPUT);
-    pinMode(*BypassSolenoidPin,HIGH);  //initialize in off state
+    digitalWrite(*BypassSolenoidPin,HIGH);  //initialize in off state
     pinMode(*PumpPin,OUTPUT);
-    pinMode(*PumpPin,HIGH);  //initialize in off state
+    digitalWrite(*PumpPin,HIGH);  //initialize in off state
     GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
     GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the Sec refresh queue: Calls the refresh_sec() method
     GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the website load queue: Calls the websiteEvent_Load method

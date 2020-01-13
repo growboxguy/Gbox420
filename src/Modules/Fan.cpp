@@ -9,7 +9,9 @@ Fan::Fan(const __FlashStringHelper * Name, GrowBox * GBox, Settings::FanSettings
   State = &DefaultSettings -> State;
   HighSpeed = &DefaultSettings -> HighSpeed;
   pinMode(*OnOffPin, OUTPUT);
+  digitalWrite(*OnOffPin,HIGH); //Turn relay off initially
   pinMode(*SpeedPin, OUTPUT);
+  digitalWrite(*SpeedPin,HIGH); //Turn relay off initially
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
   GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh_Minute() method
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event

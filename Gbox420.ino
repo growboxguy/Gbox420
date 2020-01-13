@@ -1,6 +1,5 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for grow box monitoring and controlling
-//UNDER DEVELOPMENT - This is the next generation of Gbox420 rewritten to depend fully on the web interface for control and feedback. 
 
 //HELLO, You are probably here looking for the following tab:
 // 420Settings.h : Pin assignment, First time setup, Default settings 
