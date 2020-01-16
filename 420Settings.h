@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 20;
+static const byte Version = 22;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: 
 //Global constants
@@ -37,7 +37,7 @@ typedef struct
     byte DigitalPin;
     byte AnalogPin;     
   };
-  struct LightSensorSettings LightSensor1 = {.DigitalPin = 36 , .AnalogPin = A0};
+  struct LightSensorSettings LightSensor1 = {.DigitalPin = 50 , .AnalogPin = A0};
 
   struct LightsSettings{
    //Light specific settings, unique for each item, initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
@@ -60,8 +60,8 @@ typedef struct
     byte Pin;
     byte Type; //Defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
   };
-  struct DHTSensorSettings InDHT = {.Pin = 43, .Type = 22 };
-  struct DHTSensorSettings ExDHT = {.Pin = 44, .Type = 22 };  
+  struct DHTSensorSettings InDHT = {.Pin = 49, .Type = 22 };
+  struct DHTSensorSettings ExDHT = {.Pin = 48, .Type = 22 };  
 
   struct PHSensorSettings{
     PHSensorSettings(byte Pin = 0 ,float Slope = 0.0, float Intercept = 0.0 ) : Pin(Pin),Slope(Slope),Intercept(Intercept) {}
@@ -90,7 +90,7 @@ typedef struct
     int PrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
   };
   struct AeroponicsSettings Aero_T1_Common = {.BypassSolenoidPin = 30, .PumpPin = 31 };
-  struct AeroponicsSettings Aero_NT1_Common = {.BypassSolenoidPin = 23, .PumpPin = 24 };
+  struct AeroponicsSettings Aero_NT1_Common = {.BypassSolenoidPin = 52, .PumpPin = 53 };
   
   struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific settings    
     int BlowOffTime = 3; //Aeroponics - BlowOff time in seconds: After spraying open the bypass valve for X seconds to release pressure    
@@ -114,7 +114,7 @@ typedef struct
     WaterTempSensorSettings(byte Pin = 0) : Pin(Pin){} 
     byte Pin;
   };
-  struct WaterTempSensorSettings WaterTemp1 = {.Pin = 45}; //Data(yellow) - DS18B20 waterproof temp sensor 
+  struct WaterTempSensorSettings WaterTemp1 = {.Pin = 51}; //Data(yellow) - DS18B20 waterproof temp sensor 
 
   struct WaterLevelSensorSettings{
     WaterLevelSensorSettings(byte Pin_1 = 0,byte Pin_2 = 0,byte Pin_3 = 0,byte Pin_4 = 0) : Pin_1(Pin_1),Pin_2(Pin_2),Pin_3(Pin_3),Pin_4(Pin_4) {} 

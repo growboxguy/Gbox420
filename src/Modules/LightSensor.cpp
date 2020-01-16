@@ -64,12 +64,10 @@ void LightSensor::calibrate(){
   bool LastStatus = GBox -> Light1 -> getStatus();  //TODO: This should be more generic and support different Lights objects passed as a parameter
   byte LastBrightness = *(GBox -> Light1 -> Brightness);
   GBox -> Light1 -> setLightOnOff(false,false);  //turn off light, without adding a log entry
-  GBox -> Light1 -> checkLightStatus();  //apply turning the lights on
   delay(500); //wait for light output change
   DarkReading = 1023 - analogRead(*AnalogPin);
   GBox -> Light1 -> setBrightness(0,false);
   GBox -> Light1 -> setLightOnOff(true,false);  //turn on light, without adding a log entry
-  GBox -> Light1 -> checkLightStatus();  //apply turning the lights on  
   delay(500); //wait for light output change
   MinReading = 1023 - analogRead(*AnalogPin);
   GBox -> Light1 -> setBrightness(100,false);
@@ -77,7 +75,6 @@ void LightSensor::calibrate(){
   MaxReading = 1023 - analogRead(*AnalogPin);
   GBox -> Light1 -> setBrightness(LastBrightness,false); //restore original brightness, without adding a log entry
   GBox -> Light1 -> setLightOnOff(LastStatus,false); //restore original state, without adding a log entry
-  GBox -> Light1 -> checkLightStatus();
   GBox -> addToLog(F("Lights calibrated"),4);
   if(GBox -> BoxSettings -> DebugEnabled){
          logToSerials(F("OFF - "),false,4); logToSerials(&MinReading,false,0);
