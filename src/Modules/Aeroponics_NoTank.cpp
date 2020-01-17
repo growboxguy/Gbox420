@@ -1,8 +1,9 @@
 #include "Aeroponics_NoTank.h"
 #include "../../GrowBox.h"
 
-Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific * NoTankSpecificSettings) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings)) {
+Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific * NoTankSpecificSettings, PressureSensor * FeedbackPressureSensor) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings)) {
   BlowOffTime = &NoTankSpecificSettings -> BlowOffTime; //Aeroponics - Turn on pump below this pressure (bar)
+  this -> FeedbackPressureSensor = FeedbackPressureSensor;
   logToSerials(F("Aeroponics_NoTank object created"),true,1);
 }
 
@@ -47,6 +48,7 @@ void Aeroponics_NoTank::refresh_Sec(){ //pump directly connected to aeroponics t
       logToSerials(F("Stopping blow-off"),true);
  }
  if(PumpOn)    { //if pump is on
+    FeedbackPressureSensor -> readPressure();
     if (millis() - PumpTimer >= ((uint32_t)*PumpTimeout * 60000)){   //checking pump timeout
       setPumpOff(false);
       logToSerials(F("Pump timeout reached"),true);
@@ -58,13 +60,15 @@ void Aeroponics_NoTank::refresh_Sec(){ //pump directly connected to aeroponics t
       checkRelays();
       setPumpOff(false);
       SprayTimer = millis();    
-      logToSerials(F("Stopping spray"),true);      
+      logToSerials(F("Stopping spray, average pressure: "),false);  
+      logToSerials(FeedbackPressureSensor -> getPressureText(true,true),false);     
     }
     else{
       if (!MixInProgress && BypassSolenoidOn && millis() - PumpTimer >= ((uint32_t)*PrimingTime * 1000)){ //self priming timeout reached, time to start spraying
         BypassSolenoidOn = false; //Close bypass valve
         checkRelays();
         SprayTimer = millis();
+        FeedbackPressureSensor -> Pressure -> resetAverage();
         logToSerials(F("Closing bypass, starting spray"),true);        
         }
        }

@@ -2,6 +2,7 @@
 
 #include "../../420Common.h"
 #include "Aeroponics.h"
+#include "PressureSensor.h"
 #include "Sound.h"
 
 class GrowBox;  //forward declaration
@@ -9,7 +10,7 @@ class GrowBox;  //forward declaration
 class Aeroponics_NoTank : public Aeroponics
 {
   public:
-    Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific * NoTankSpecificSettings);  //constructor
+    Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific * NoTankSpecificSettings, PressureSensor * FeedbackPressureSensor);  //constructor
     void websiteEvent_Load(__attribute__((unused)) char * url);
     void websiteEvent_Field(char * Field);
     void refresh_Sec();
@@ -20,6 +21,7 @@ class Aeroponics_NoTank : public Aeroponics
 
   private:
     int * BlowOffTime; //TODO: Make it part of the settings
+    PressureSensor * FeedbackPressureSensor; //Pressure sensor object that will monitor the spray pressure
     bool BlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
      
   protected:

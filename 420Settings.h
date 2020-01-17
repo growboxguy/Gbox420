@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 22;
+static const byte Version = 23;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: 
 //Global constants
@@ -123,7 +123,7 @@ typedef struct
     byte Pin_3;
     byte Pin_4;  //Full
   };
-  struct WaterLevelSensorSettings WaterLevel1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7, }; //Data(yellow) - DS18B20 waterproof temp sensor 
+  struct WaterLevelSensorSettings WaterLevel1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7 }; //Data(yellow) - DS18B20 waterproof temp sensor 
 
   struct FanSettings{
     FanSettings(byte OnOffPin = 0 , byte SpeedPin = 0) : OnOffPin(OnOffPin),SpeedPin(SpeedPin){}

@@ -1,13 +1,14 @@
 #pragma once
 
 #include "../../420Common.h"
+#include "Lights.h"
 
 class GrowBox;  //forward declaration
 
 class LightSensor : public Common
 {
   public:
-    LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::LightSensorSettings * DefaultSettings);
+    LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::LightSensorSettings * DefaultSettings,Lights * LightSource);
     void websiteEvent_Refresh(__attribute__((unused)) char * url);
     void websiteEvent_Load(__attribute__((unused)) char * url); 
     void websiteEvent_Button(char * Button);
@@ -22,6 +23,7 @@ class LightSensor : public Common
 
   private:
     GrowBox * GBox;
+    Lights * LightSource; //The light used during calibration
     byte * DigitalPin; //D0 - LM393 light sensor digital in
     byte * AnalogPin; //A0 - LM393 light sensor analog in
     RollingAverage * LightReading;  //keeps an average of previous readings: Smoothens sensor readings
