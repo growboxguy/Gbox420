@@ -32,8 +32,8 @@ void ModuleSkeleton::report(){
   strcat_P(LongMessage,(PGM_P)F(" ; RuntimeInt:")); strcat(LongMessage, toText(RuntimeInt));
   strcat_P(LongMessage,(PGM_P)F(" ; RuntimeFloat:")); strcat(LongMessage, toText(RuntimeFloat));
   strcat_P(LongMessage,(PGM_P)F(" ; RuntimeString:")); strcat(LongMessage, RuntimeString);
-  strcat_P(LongMessage,(PGM_P)F(" ; RollingInt:")); strcat(LongMessage, RollingInt -> getAverageIntText());
-  strcat_P(LongMessage,(PGM_P)F(" ; RollingFloat:")); strcat(LongMessage, RollingFloat -> getAverageFloatText());
+  strcat_P(LongMessage,(PGM_P)F(" ; RollingInt:")); strcat(LongMessage, RollingInt -> getIntText(true));
+  strcat_P(LongMessage,(PGM_P)F(" ; RollingFloat:")); strcat(LongMessage, RollingFloat -> getFloatText(true));
   logToSerials(&LongMessage,true,1);
 }  
 
@@ -57,8 +57,8 @@ void ModuleSkeleton::websiteEvent_Refresh(__attribute__((unused)) char * url){
       WebServer.setArgFloat(getWebsiteComponentName(F("RuntimeFloat")), RuntimeFloat);
       WebServer.setArgString(getWebsiteComponentName(F("RuntimeString")), RuntimeString);
       WebServer.setArgBoolean(getWebsiteComponentName(F("RuntimeBool")), RuntimeBool);
-      WebServer.setArgInt(getWebsiteComponentName(F("RollingInt")), RollingInt -> getAverageInt()); 
-      WebServer.setArgFloat(getWebsiteComponentName(F("RollingFloat")), RollingFloat -> getAverageFloat());  
+      WebServer.setArgInt(getWebsiteComponentName(F("RollingInt")), RollingInt -> getInt(true)); 
+      WebServer.setArgFloat(getWebsiteComponentName(F("RollingFloat")), RollingFloat -> getFloat(true));  
   }
 }
 

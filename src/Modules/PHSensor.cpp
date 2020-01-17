@@ -28,7 +28,7 @@ void PHSensor::websiteEvent_Load(__attribute__((unused)) char * url){ //When the
 
 void PHSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){
   if (strcmp(url,"/GrowBox.html.json")==0){
-    WebServer.setArgString(getWebsiteComponentName(F("PH")), getPHText());
+    WebServer.setArgString(getWebsiteComponentName(F("PH")), getPHText(false));
   }
 }
 
@@ -54,7 +54,7 @@ void PHSensor::websiteEvent_Field(char * Field){ //When the website is opened, l
 void PHSensor::report(){
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("PH:")); strcat(LongMessage,PH -> getAverageFloatText());  
+  strcat_P(LongMessage,(PGM_P)F("PH:")); strcat(LongMessage,PH -> getFloatText(true));  
   logToSerials( &LongMessage, true,1);
 }
 
@@ -74,12 +74,12 @@ void PHSensor::updatePH(bool ShowRaw){
   PH -> updateAverage((*Slope)*PHRaw + (*Intercept));
 }
 
-float PHSensor::getPH(){
-  return PH -> getAverageFloat();
+float PHSensor::getPH(bool ReturnAverage = true){
+  return PH -> getFloat(ReturnAverage);
 }
 
-char * PHSensor::getPHText(){
-  return PH -> getAverageFloatText();
+char * PHSensor::getPHText(bool ReturnAverage = true){
+  return PH -> getFloatText(ReturnAverage);
 }
 
 void PHSensor::setSlope(float Value){

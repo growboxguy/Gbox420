@@ -16,7 +16,7 @@ WaterTempSensor::WaterTempSensor (const __FlashStringHelper * Name, GrowBox * GB
 
 void WaterTempSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){
   if (strcmp(url,"/GrowBox.html.json")==0){
-      WebServer.setArgString(getWebsiteComponentName(F("Temp")), getTempText(true));  
+      WebServer.setArgString(getWebsiteComponentName(F("Temp")), getTempText(true,false));  
   }
 }
 
@@ -30,15 +30,15 @@ void WaterTempSensor::refresh_Minute(){
 void WaterTempSensor::report(){
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage, getTempText(true));
+  strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage, getTempText(true,true));
   logToSerials(&LongMessage,true,1);
 }  
 
-float WaterTempSensor::getTemp(){
-  return Temp -> getAverageFloat();
+float WaterTempSensor::getTemp(bool ReturnAverage = true){
+  return Temp -> getFloat(ReturnAverage);
 }
 
-char * WaterTempSensor::getTempText(bool IncludeUnits){
-  if(IncludeUnits) return tempToText(Temp -> getAverageFloat());
-  else return Temp -> getAverageFloatText();
+char * WaterTempSensor::getTempText(bool IncludeUnits = true, bool ReturnAverage = true){
+  if(IncludeUnits) return tempToText(Temp -> getFloat(ReturnAverage));
+  else return Temp -> getFloatText(ReturnAverage);
 }

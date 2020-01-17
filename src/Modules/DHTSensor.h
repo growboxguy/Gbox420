@@ -12,10 +12,10 @@ class DHTSensor : public Common
     void websiteEvent_Refresh(__attribute__((unused)) char * url);    
     void refresh_Minute();  //Called when component should refresh its state
     void report();
-    float getTemp();  
-    float getHumidity();
-    char * getTempText(bool IncludeUnits);  
-    char * getHumidityText(bool IncludeUnits);
+    float getTemp(bool ReturnAverage);  
+    float getHumidity(bool ReturnAverage);
+    char * getTempText(bool IncludeUnits, bool ReturnAverage);  
+    char * getHumidityText(bool IncludeUnits, bool ReturnAverage);
     RollingAverage * Temp;
     RollingAverage * Humidity;
   

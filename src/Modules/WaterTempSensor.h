@@ -16,8 +16,8 @@ class WaterTempSensor : public Common
     //void websiteEvent_Field(char * Field);  
     void refresh_Minute();
     void report();
-    float getTemp();
-    char * getTempText(bool IncludeUnits);
+    float getTemp(bool ReturnAverage);
+    char * getTempText(bool IncludeUnits, bool ReturnAverage);
     RollingAverage * Temp;
 
   private:

@@ -196,20 +196,28 @@ void RollingAverage::resetAverage(){
   ResetAverage = true;
 }
 
-int RollingAverage::getAverageInt(){
-  return Sum / RollingAverageQueueDepth;
+int RollingAverage::getInt(bool ReturnAverage = true){
+  if (ReturnAverage) return Sum / RollingAverageQueueDepth;
+  else {
+    if(Oldest == 0) return History[RollingAverageQueueDepth - 1];
+    else return History[Oldest - 1];
+  }
 }
 
-float RollingAverage::getAverageFloat(){
-  return Sum / RollingAverageQueueDepth /100.0f;
+float RollingAverage::getFloat(bool ReturnAverage = true){
+  if (ReturnAverage) return Sum / RollingAverageQueueDepth /100.0f;
+  else{
+    if(Oldest == 0) return History[RollingAverageQueueDepth - 1] /100.0f;
+    else return History[Oldest - 1] /100.0f;
+  }
 }
 
-char * RollingAverage::getAverageIntText(){
-  return toText(Sum / RollingAverageQueueDepth);
+char * RollingAverage::getIntText(bool ReturnAverage = true){
+  return toText(getInt(ReturnAverage));
 }
 
-char * RollingAverage::getAverageFloatText(){
-  return toText(Sum / RollingAverageQueueDepth /100.0f);
+char * RollingAverage::getFloatText(bool ReturnAverage = true){
+  return toText(getFloat(ReturnAverage));
 }
 
 int RollingAverage::updateAverage(int LatestReading){

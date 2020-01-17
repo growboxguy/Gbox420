@@ -2,8 +2,8 @@
 //Sketch for testing: Aeroponics tote with directly connected pressure pump (No pressure tank)
 
 //Pins
-  const byte Relay1OutPin = 22;  //Power relay Port 1 - Aeroponics solenoid
-  const byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump  
+  const byte Relay1OutPin = 52;  //Power relay Port 1 - Aeroponics solenoid
+  const byte Relay2OutPin = 53;  //Power relay Port 2 - Aeroponics high pressure pump  
 
 //Global variables
   byte AeroInterval = 1; //Aeroponics - Spray every minutes

@@ -17,8 +17,8 @@ class PressureSensor : public Common
     void report();
     bool PreviousPressureRead = true;
     void readPressure();
-    float getPressure();
-    char * getPressureText(bool IncludeUnits);   
+    float getPressure(bool ReturnAverage);
+    char * getPressureText(bool IncludeUnits,bool ReturnAverage);   
     void readOffset();
     void setOffset(float Value);
     void setRatio(float Value);

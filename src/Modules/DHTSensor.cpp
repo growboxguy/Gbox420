@@ -13,10 +13,10 @@ DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings:
   logToSerials(F("DHT Sensor object created"),true,1);
 }
 
-void DHTSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
+void DHTSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is refreshing
   if (strcmp(url,"/GrowBox.html.json")==0){
-    WebServer.setArgString(getWebsiteComponentName(F("Temp")), getTempText(true));
-    WebServer.setArgString(getWebsiteComponentName(F("Humidity")), getHumidityText(true));
+    WebServer.setArgString(getWebsiteComponentName(F("Temp")), getTempText(true,false));  //Shows the latest reading
+    WebServer.setArgString(getWebsiteComponentName(F("Humidity")), getHumidityText(true,false));
   } 
 }
   
@@ -30,25 +30,25 @@ void DHTSensor::refresh_Minute(){  //Called when component should refresh its st
 void DHTSensor::report(){
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage, getTempText(true));
-  strcat_P(LongMessage,(PGM_P)F(" ; Humidity:")); strcat(LongMessage, getHumidityText(true));
+  strcat_P(LongMessage,(PGM_P)F("Temp:")); strcat(LongMessage, getTempText(true,true));  //Shows the average reading
+  strcat_P(LongMessage,(PGM_P)F(" ; Humidity:")); strcat(LongMessage, getHumidityText(true,true));
   logToSerials(&LongMessage,true,1);
 }
 
-float DHTSensor::getTemp(){
-  return Temp -> getAverageFloat();
+float DHTSensor::getTemp(bool ReturnAverage = true){
+  return Temp -> getFloat(ReturnAverage);
 }
 
-float DHTSensor::getHumidity(){
-  return Humidity -> getAverageFloat();
+float DHTSensor::getHumidity(bool ReturnAverage = true){
+  return Humidity -> getFloat(ReturnAverage);
 }
 
-char * DHTSensor::getTempText(bool IncludeUnits){
-  if(IncludeUnits) return tempToText(Temp -> getAverageFloat());
-  else return Temp -> getAverageFloatText();
+char * DHTSensor::getTempText(bool IncludeUnits = false, bool ReturnAverage = true){
+    if(IncludeUnits) return tempToText(Temp -> getFloat(ReturnAverage));
+    else return Temp -> getFloatText(ReturnAverage);  
 }
 
-char * DHTSensor::getHumidityText(bool IncludeUnits){  
-  if(IncludeUnits) return percentageToText(Humidity -> getAverageFloat());
-  else return Humidity -> getAverageFloatText();
+char * DHTSensor::getHumidityText(bool IncludeUnits = false, bool ReturnAverage = true){  
+  if(IncludeUnits) return percentageToText(Humidity -> getFloat(ReturnAverage));
+  else return Humidity -> getFloatText(ReturnAverage);
 }

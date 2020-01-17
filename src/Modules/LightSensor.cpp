@@ -21,7 +21,7 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox,  Sett
 void LightSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
    if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Dark")),getDarkText(true));
-    WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingText(true));
+    WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingText(true,false));
   }
 }
 
@@ -51,7 +51,7 @@ void LightSensor::report(){
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
   strcat_P(LongMessage,(PGM_P)F("Dark:")); strcat(LongMessage,getDarkText(true));
-  strcat_P(LongMessage,(PGM_P)F(" ; LightReading:")); strcat(LongMessage, getReadingText(true));  
+  strcat_P(LongMessage,(PGM_P)F(" ; LightReading:")); strcat(LongMessage, getReadingText(true,true));  
   logToSerials( &LongMessage, true,1);
 }
 
@@ -94,22 +94,22 @@ char * LightSensor::getCalibrationText(){
   return ReturnChar;  
 }
 
-int LightSensor::getReading(){ 
-  return LightReading -> getAverageInt();
+int LightSensor::getReading(bool ReturnAverage = true){ 
+  return LightReading -> getInt(ReturnAverage);
 }
 
-char * LightSensor::getReadingText(bool IncludePercentage){
+char * LightSensor::getReadingText(bool IncludePercentage = true, bool ReturnAverage = true){
   if(IncludePercentage){
     static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
     memset(&ReturnChar[0], 0, sizeof(ReturnChar));  //clear variable
-    strcat(ReturnChar,LightReading -> getAverageIntText());   
+    strcat(ReturnChar,LightReading -> getIntText(ReturnAverage));   
     strcat_P(ReturnChar,(PGM_P)F(" [")); 
-    if(Dark) strcat(ReturnChar, percentageToText(map(LightReading -> getAverageInt(),DarkReading,MinReading,0,100))); //https://www.arduino.cc/reference/en/language/functions/math/map/ 
-    else strcat(ReturnChar, percentageToText(map(LightReading -> getAverageInt(),MinReading,MaxReading,0,100)));
+    if(Dark) strcat(ReturnChar, percentageToText(map(LightReading -> getInt(ReturnAverage),DarkReading,MinReading,0,100))); //https://www.arduino.cc/reference/en/language/functions/math/map/ 
+    else strcat(ReturnChar, percentageToText(map(LightReading -> getInt(ReturnAverage),MinReading,MaxReading,0,100)));
     strcat_P(ReturnChar,(PGM_P)F("]"));   
     return ReturnChar;
   }
-  else return LightReading -> getAverageIntText();
+  else return LightReading -> getIntText(ReturnAverage);
 }
 
 bool LightSensor::getDark(){ //Light sensor digital feedback: True(Dark) or False(Bright)  
