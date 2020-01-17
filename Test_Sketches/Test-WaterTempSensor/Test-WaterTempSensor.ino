@@ -6,7 +6,7 @@
 #include "DallasTemperature.h"
 
 //Pins
-const byte TempSensorInPin = 45; //Data(yellow) - DS18B20 waterproof temp sensor
+const byte TempSensorInPin = 51; //Data(yellow) - DS18B20 waterproof temp sensor
   
 //Global Variables
 float TempC; // water temperature (°C)
