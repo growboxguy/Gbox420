@@ -5,7 +5,7 @@ PowerSensorV3::PowerSensorV3(const __FlashStringHelper * Name, GrowBox * GBox,Ha
   this -> GBox = GBox;
   Sensor = new PZEM004Tv30(SerialPort);
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
-  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh_Minute() method
+  GBox -> AddToRefreshQueue_FiveSec(this);  //Subscribing to the Minute refresh queue: Calls the refresh_Minute() method
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   logToSerials(F("PowerSensorV3 object created"),true,1);
 }
@@ -21,7 +21,7 @@ void PowerSensorV3::websiteEvent_Refresh(__attribute__((unused)) char * url){ //
   }
 } 
 
-void PowerSensorV3::refresh_Minute(){
+void PowerSensorV3::refresh_FiveSec(){
   if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   Voltage = Sensor -> voltage();  //AC Voltage (V)
   Current = Sensor -> current(); //Current (A)

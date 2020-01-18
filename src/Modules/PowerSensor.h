@@ -15,7 +15,7 @@ class PowerSensor : public Common
     float Current; //Power sensor - A
     
     void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    void refresh_Minute();  //Called when component should refresh its state
+    void refresh_FiveSec();  //Called when component should refresh its state
     void report();
     char * getPowerText(bool IncludeUnits);
     char * getEnergyText(bool IncludeUnits);   
