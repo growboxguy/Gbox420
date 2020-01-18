@@ -35,16 +35,15 @@ void Aeroponics::websiteEvent_Load(__attribute__((unused)) char * url){ //When t
   }
 } 
 
-void Aeroponics::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
+void Aeroponics::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is refreshed (5sec)
   if (strcmp(url,"/GrowBox.html.json")==0){
-    WebServer.setArgString(getWebsiteComponentName(F("SprayEnabled")), enabledToText(*SprayEnabled));
-    WebServer.setArgString(getWebsiteComponentName(F("Pressure")), pressureToText(AeroPressure));
+    WebServer.setArgString(getWebsiteComponentName(F("SprayEnabled")), enabledToText(*SprayEnabled));  
     WebServer.setArgString(getWebsiteComponentName(F("PumpState")), pumpStateToText());   
     WebServer.setArgString(getWebsiteComponentName(F("BypassState")), onOffToText(BypassSolenoidOn)); 
   }
 }
 
-void Aeroponics::websiteEvent_Button(char * Button){ //When the website is opened, load stuff once
+void Aeroponics::websiteEvent_Button(char * Button){  //When a button is pressed on the website
   if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
@@ -60,7 +59,7 @@ void Aeroponics::websiteEvent_Button(char * Button){ //When the website is opene
   }
 } 
 
-void Aeroponics::websiteEvent_Field(__attribute__((unused)) char * Field){ //When the website is opened, load stuff once 
+void Aeroponics::websiteEvent_Field(__attribute__((unused)) char * Field){ //When a field is submitted using the Set button 
     if(strcmp_P(ShortMessage,(PGM_P)F("PumpTimeout"))==0) {setPumpTimeout(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("PrimingTime"))==0) {setPrimingTime(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("Duration"))==0) {setDuration(WebServer.getArgInt());}

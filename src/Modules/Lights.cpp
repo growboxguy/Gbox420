@@ -59,7 +59,7 @@ void Lights::websiteEvent_Field(char * Field){ //When the website is opened, loa
   }  
 } 
 
-void Lights::websiteEvent_Button(char * Button){ //When the website is opened, load stuff once
+void Lights::websiteEvent_Button(char * Button){  //When a button is pressed on the website
   if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }

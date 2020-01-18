@@ -16,7 +16,7 @@ class LightSensor : public Common
     void report();
     void triggerCalibration();    //Website signals to calibrate the MAX/MIN readings the next time the object gets CPU time
     char * getCalibrationText(); //Light sensor analog feedback relative to calibration values: 0 to 100% 
-    int getReading(bool ReturnAverage); //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
+    int getReading(bool ReturnAverage = true); //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
     char * getReadingText(bool IncludePercentage, bool ReturnAverage); //returns the current light sensor reading. If IncludeMinMax is set to true it also includes the calibated minimum and maximum readings
     bool getDark(); //Light sensor digital feedback: True(Bright) or False(Dark)
     char * getDarkText(bool UseWords);  

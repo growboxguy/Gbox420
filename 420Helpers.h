@@ -83,8 +83,8 @@ class RollingAverage
     void resetAverage();
     int updateAverage(int LatestReading);
     float updateAverage(float LatestReading);
-    int getInt(bool ReturnAveragee);
-    float getFloat(bool ReturnAverage);
-    char * getIntText(bool ReturnAverage);
-    char * getFloatText(bool ReturnAverage);  
+    int getInt(bool ReturnAveragee = true); //by default return the average, if false is passed return the latest reading
+    float getFloat(bool ReturnAverage = true);
+    char * getIntText(bool ReturnAverage = true);
+    char * getFloatText(bool ReturnAverage = true);  
 };

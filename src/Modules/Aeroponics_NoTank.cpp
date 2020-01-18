@@ -14,6 +14,13 @@ void Aeroponics_NoTank::websiteEvent_Load(__attribute__((unused)) char * url){ /
   Aeroponics::websiteEvent_Load(url); 
 }
 
+void Aeroponics_NoTank::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is refreshed (5sec)
+  if (strcmp(url,"/GrowBox.html.json")==0){
+    WebServer.setArgString(getWebsiteComponentName(F("SprayPressure")), pressureToText(LastSprayPressure));     
+  }
+  Aeroponics::websiteEvent_Refresh(url); 
+}
+
 void Aeroponics_NoTank::websiteEvent_Field(char * Field){ //When the website is opened, load stuff once
   if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
@@ -59,9 +66,9 @@ void Aeroponics_NoTank::refresh_Sec(){ //pump directly connected to aeroponics t
       BlowOffInProgress = true; //no extra time is needed, will use SprayTimer
       checkRelays();
       setPumpOff(false);
-      SprayTimer = millis();    
-      logToSerials(F("Stopping spray, average pressure: "),false);  
-      logToSerials(FeedbackPressureSensor -> getPressureText(true,true),false);     
+      SprayTimer = millis();   
+      LastSprayPressure =  FeedbackPressureSensor -> getPressure();
+      logToSerials(F("Stopping spray"),true);    
     }
     else{
       if (!MixInProgress && BypassSolenoidOn && millis() - PumpTimer >= ((uint32_t)*PrimingTime * 1000)){ //self priming timeout reached, time to start spraying
@@ -85,7 +92,8 @@ void Aeroponics_NoTank::refresh_Sec(){ //pump directly connected to aeroponics t
 void Aeroponics_NoTank::report(){
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
-  strcat_P(LongMessage,(PGM_P)F("BlowOffTime:"));strcat(LongMessage,toText(*BlowOffTime));
+  strcat_P(LongMessage,(PGM_P)F("SprayPressure:"));strcat(LongMessage,pressureToText(LastSprayPressure));
+  strcat_P(LongMessage,(PGM_P)F(" ; BlowOffTime:"));strcat(LongMessage,toText(*BlowOffTime));
   logToSerials(&LongMessage, false,1); //first print Aeroponics_Tank specific report, without a line break
   Aeroponics::report();  //then print parent class report
  }

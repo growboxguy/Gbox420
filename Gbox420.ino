@@ -5,6 +5,8 @@
 // 420Settings.h : Pin assignment, First time setup, Default settings 
 
 //TODO:
+//Check why average spray pressure is not returning as float
+//Add pump cutout during aero pray in case pressure limit is reached
 //HempyBucket controls
 //Aeroponics_Tank: Pressure sensor not integrated, remove fake int AeroPressure = 6; 
 //MQTT reporting

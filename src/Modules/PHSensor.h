@@ -18,8 +18,8 @@ class PHSensor : public Common
     void updatePH(bool ShowRaw);
     void setSlope(float Value);
     void setIntercept(float Value);
-    float getPH(bool ReturnAverage);
-    char * getPHText(bool ReturnAverage);
+    float getPH(bool ReturnAverage = true);
+    char * getPHText(bool ReturnAverage = true);
 
   private:
     GrowBox * GBox;

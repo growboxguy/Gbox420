@@ -331,6 +331,7 @@ void GrowBox::ReportToGoogleSheets(bool CalledFromWebsite){
     strcat_P(LongMessage,(PGM_P)F("\",\"Light1_OffTime\":\""));  strcat(LongMessage,Light1 -> getOffTimeText());
     strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aero_NT1 -> getInterval());
     strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aero_NT1 -> getDuration());
+    strcat_P(LongMessage,(PGM_P)F("\",\"AeroSprayPressure\":\"")); strcat(LongMessage,toText(Aero_NT1 -> LastSprayPressure));
     //strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aero_T1 -> getInterval());
     //strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aero_T1 -> getDuration());  
     

@@ -19,7 +19,7 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, Setti
   logToSerials(F("LightSensor object created"),true,1);
 }
 
-void LightSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
+void LightSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is refreshed (5sec)
    if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Dark")),getDarkText(true));
     WebServer.setArgString(getWebsiteComponentName(F("Reading")),getReadingText(true,false));
@@ -32,7 +32,7 @@ void LightSensor::websiteEvent_Load(__attribute__((unused)) char * url){ //When 
   }
 } 
 
-void LightSensor::websiteEvent_Button(char * Button){ //When the website is opened, load stuff once
+void LightSensor::websiteEvent_Button(char * Button){  //When a button is pressed on the website
   if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }

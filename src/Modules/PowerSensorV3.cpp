@@ -10,7 +10,7 @@ PowerSensorV3::PowerSensorV3(const __FlashStringHelper * Name, GrowBox * GBox,Ha
   logToSerials(F("PowerSensorV3 object created"),true,1);
 }
 
-void PowerSensorV3::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
+void PowerSensorV3::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is refreshed (5sec)
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Power")), getPowerText(true));  
     WebServer.setArgString(getWebsiteComponentName(F("Energy")), getEnergyText(true));  

@@ -208,12 +208,14 @@
 				<table class="tg">
 				  <tr>
 					<th class="headerRows"><span style="font-weight:bold">Spray</span></th>
-					<th class="headerRows"><span style="font-weight:bold">Pressure</span></th>
+					<th class="headerRows"><span style="font-weight:bold">Last spray</br>pressure</span></th>
+					<th class="headerRows"><span style="font-weight:bold">Current</br>pressure</span></th>
 					<th class="headerRows"><span style="font-weight:bold">Pump</span></th>
 					<th class="headerRows"><span style="font-weight:bold">Bypass</span></th>							
 				  </tr>
 				  <tr>
-					<td id="Aero_NT1_SprayEnabled" class="dataRows"></td>	
+					<td id="Aero_NT1_SprayEnabled" class="dataRows"></td>
+					<td id="Aero_NT1_SprayPressure" class="dataRows"></td>
 					<td id="Pressure1_Pressure" class="dataRows"></td>
 					<td id="Aero_NT1_PumpState" class="dataRows"></td>
 					<td id="Aero_NT1_BypassState" class="dataRows"></td>				
@@ -224,7 +226,7 @@
 				<button id="Aero_NT1_PumpOff" type="button" align="right" title="Stops the pump and reset its status to OK">OFF</button>
 				<button id="Aero_NT1_PumpDisable" type="button" align="right" title="Stops and disables pump">Disable</button>
 				<button id="Aero_NT1_Mix" type="button" align="right" title="Mix nutrients: Starts pump and opens bypass valve">Mix</button><br>
-				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="Aero_NT1_PumpTimeout" type="number" title="Maximum high pressure tank refill time, if reached pump is considered broken"/> min <input type="submit" value="Set"></form>
+				<form>Pump timeout:<input style="width: 55px;" min=1 max=9999 name="Aero_NT1_PumpTimeout" type="number" title="Maximum time the pump can run continuously"/> min <input type="submit" value="Set"></form>
 				<form>Pump priming time:<input style="width: 55px;" min=1 max=9999 name="Aero_NT1_PrimingTime" type="number" title="At pump startup the bypass valve is open for X seconds"/> sec <input type="submit" value="Set"></form>				
 				<form>Pump blowoff time:<input style="width: 55px;" min=1 max=9999 name="Aero_NT1_BlowOffTime" type="number" title="After spraying open the bypass valve for X seconds to release pressure"/> sec <input type="submit" value="Set"></form>				
 				<b>Spray</b><br>
