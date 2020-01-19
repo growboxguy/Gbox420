@@ -10,7 +10,6 @@ PressureSensor::PressureSensor(const __FlashStringHelper * Name, GrowBox * GBox,
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
   GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh_Minute() method
   GBox -> AddToWebsiteQueue_Load(this); //Subscribing to the Website load event
-  GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
   GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
   logToSerials(F("DHT Sensor object created"),true,1);
@@ -20,12 +19,6 @@ void PressureSensor::websiteEvent_Load(__attribute__((unused)) char * url){
   if (strcmp(url,"/Settings.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Offset")), toPrecisionText(*Offset));
     WebServer.setArgString(getWebsiteComponentName(F("Ratio")), toPrecisionText(*Ratio));
-  } 
-} 
-
-void PressureSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){
-  if (strcmp(url,"/GrowBox.html.json")==0){
-    WebServer.setArgString(getWebsiteComponentName(F("Pressure")), getPressureText(true,false));
   } 
 } 
 

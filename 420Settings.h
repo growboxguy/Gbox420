@@ -85,7 +85,7 @@ typedef struct
     byte PumpPin;  //Power relay Port 2 - Aeroponics high pressure pump
     bool SprayEnabled = true;  //Enable/disable misting
     int Interval = 15; //Aeroponics - Spray every 15 minutes
-    int Duration = 2; //Aeroponics - Spray time in seconds
+    int Duration = 10; //Aeroponics - Spray time in seconds
     int PumpTimeout = 6;  // Aeroponics - Max pump run time in minutes, measue zero to max pressuretank refill time and adjust accordingly
     int PrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
   };

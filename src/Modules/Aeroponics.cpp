@@ -38,7 +38,8 @@ void Aeroponics::websiteEvent_Load(__attribute__((unused)) char * url){ //When t
 
 void Aeroponics::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is refreshed (5sec)
   if (strcmp(url,"/GrowBox.html.json")==0){
-    WebServer.setArgString(getWebsiteComponentName(F("SprayEnabled")), enabledToText(*SprayEnabled));  
+    WebServer.setArgString(getWebsiteComponentName(F("Pressure")), FeedbackPressureSensor -> getPressureText(true,false));
+    WebServer.setArgString(getWebsiteComponentName(F("SprayEnabled")), sprayStateToText());    
     WebServer.setArgString(getWebsiteComponentName(F("PumpState")), pumpStateToText());   
     WebServer.setArgString(getWebsiteComponentName(F("BypassState")), onOffToText(BypassSolenoidOn)); 
   }
@@ -55,7 +56,7 @@ void Aeroponics::websiteEvent_Button(char * Button){  //When a button is pressed
     else if (strcmp_P(ShortMessage,(PGM_P)F("Mix"))==0) { Mix();}
     else if (strcmp_P(ShortMessage,(PGM_P)F("SprayEnable"))==0) { setSprayOnOff(true); } 
     else if (strcmp_P(ShortMessage,(PGM_P)F("SprayDisable"))==0) { setSprayOnOff(false); } 
-    else if (strcmp_P(ShortMessage,(PGM_P)F("SprayNow"))==0) { sprayNow(false); } 
+    else if (strcmp_P(ShortMessage,(PGM_P)F("SprayNow"))==0) { sprayNow(true); } 
     else if (strcmp_P(ShortMessage,(PGM_P)F("SprayOff"))==0) { sprayOff(); } 
   }
 } 
@@ -160,8 +161,10 @@ char * Aeroponics::getDuration(){
 
 char * Aeroponics::pumpStateToText(){
    if(!PumpOK) return (char *)"DISABLED";
-   else if(PumpOn) return (char *)"ON";
-   return (char *)"OFF";
+   else {
+     if(PumpOn) return (char *)"ON";
+     else return (char *)"OFF";
+   }
 }
 
 void Aeroponics::setPumpTimeout(int Timeout)

@@ -11,19 +11,23 @@ class Aeroponics_Tank : public Aeroponics
 {
   public:
     Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings, PressureSensor * FeedbackPressureSensor);
+    void websiteEvent_Load(__attribute__((unused)) char * url);
+    void websiteEvent_Button(__attribute__((unused)) char * Button);
     void websiteEvent_Field(char * Field);
     void refresh_Sec();
-    void report();
+    //void report();
     byte * SpraySolenoidPin;
     bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on.
     bool PreviousPressureRead = true;
     float * PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
     float * PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
-    void checkRelays();    
+    void checkRelays();
+    void refillTank();
     void sprayOff();
-    void sprayNow(bool DueToHighPressure);
+    void sprayNow(bool FromWebsite = false);
     void setPressureLow(float PressureLow);
     void setPressureHigh(float PressureHigh);
+    char * sprayStateToText();
   
   private:
 

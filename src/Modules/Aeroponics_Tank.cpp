@@ -8,14 +8,34 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
   pinMode(*SpraySolenoidPin,OUTPUT);
   digitalWrite(*SpraySolenoidPin,HIGH);  //initialize off 
   logToSerials(F("Aeroponics_Tank object created"),true,1);
-}   
+}
+
+void Aeroponics_Tank::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
+  if (strcmp(url,"/GrowBox.html.json")==0){
+    WebServer.setArgFloat(getWebsiteComponentName(F("PresLow")), *PressureLow);
+    WebServer.setArgFloat(getWebsiteComponentName(F("PresHigh")), *PressureHigh);
+  }
+  Aeroponics::websiteEvent_Load(url); 
+}
+
+void Aeroponics_Tank::websiteEvent_Button(char * Button){  //When a button is pressed on the website
+  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name     
+    if (strcmp_P(ShortMessage,(PGM_P)F("Refill"))==0) { refillTank(); }
+    else Aeroponics::websiteEvent_Button(Button); 
+  }
+} 
 
 void Aeroponics_Tank::websiteEvent_Field(char * Field){ //When the website is opened, load stuff once
   if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
-  else{ //if the component name matches with the object name  
-    Aeroponics::websiteEvent_Field(Field);
+  else{ //if the component name matches with the object name
+    if(strcmp_P(ShortMessage,(PGM_P)F("PresLow"))==0) {setPressureLow(WebServer.getArgFloat());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("PresHigh"))==0) {setPressureHigh(WebServer.getArgFloat());}
+    else Aeroponics::websiteEvent_Field(Field);
   }
 }
 
@@ -41,14 +61,17 @@ void Aeroponics_Tank::refresh_Sec(){
           PumpTimer = millis(); //reset timer to start measuring refill time
         }      
     }
-  }
+  } 
+  else{ //pump is off
+    BypassSolenoidOn = false; //Should not leave the solenoid turned on       
+  } 
   if( PumpOK && Aeroponics::FeedbackPressureSensor -> getPressure() <= *PressureLow){ //if pump is not disabled and Pressure reached low limit: turn on pump 
         if(!PumpOn && !BypassSolenoidOn){ //start the bypass
           if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Starting bypass"),true);
           BypassSolenoidOn = true; 
           PumpOn = true;
-        }  
-       
+          PumpTimer = millis();
+        }         
     }   
   if(SpraySolenoidOn){ //if spray is on
     if(millis() - SprayTimer >= ((uint32_t)*Duration * 1000)){  //if time to stop spraying (Duration in Seconds)
@@ -69,19 +92,13 @@ void Aeroponics_Tank::refresh_Sec(){
   checkRelays();  
 }
 
-void Aeroponics_Tank::report(){
-  Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
-  //strcat_P(LongMessage,(PGM_P)F("Pressure:"));strcat(LongMessage,pressureToText(AeroPressure));
-  //strcat_P(LongMessage,(PGM_P)F(" ["));strcat(LongMessage,toText(*PressureLow,*PressureHigh,"/"));
-  //strcat_P(LongMessage,(PGM_P)F("]"));
-  logToSerials( &LongMessage, false,1); //first print Aeroponics_Tank specific report, without a line break  
-  Aeroponics::report();  //then print parent class report  
-  memset(&LongMessage[0], 0, sizeof(LongMessage));    
-  // strcat_P(LongMessage,(PGM_P)F("QuietEnabled:"));strcat(LongMessage,yesNoToText(*QuietEnabled));
-  // strcat_P(LongMessage,(PGM_P)F(" ; RefillBeforeQuiet:"));strcat(LongMessage,yesNoToText(*RefillBeforeQuiet));
-  logToSerials( &LongMessage, true,1); //Print rarely used settings last  
- }
+// void Aeroponics_Tank::report(){
+//   Common::report();
+//   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
+  
+//   logToSerials( &LongMessage, false,1); //first print Aeroponics_Tank specific report, without a line break  
+//   Aeroponics::report();  //then print parent class report   
+//  }
 
 void Aeroponics_Tank::checkRelays(){
   //logToSerials(F("Aeroponics_Tank checking relays:"),false,0);
@@ -96,7 +113,7 @@ void Aeroponics_Tank::setPressureLow(float PressureLow){
 
 void Aeroponics_Tank::setPressureHigh(float PressureHigh){
   *(this -> PressureHigh) = PressureHigh;
-  GBox -> addToLog(F("Pump settings updated"));
+  GBox -> addToLog(F("Tank limits updated"));
 }
 
 // void Aeroponics_Tank::checkAeroPumpAlerts_WithPressureTank()
@@ -135,21 +152,37 @@ void Aeroponics_Tank::setPressureHigh(float PressureHigh){
 //    }     
 // }
 
-
-void Aeroponics_Tank::sprayNow(bool DueToHighPressure){   
-  if(*SprayEnabled || DueToHighPressure){
+void Aeroponics_Tank::sprayNow(bool FromWebsite){   
+  if(*SprayEnabled || FromWebsite){
     MixInProgress = false;
     SprayTimer = millis();
     SpraySolenoidOn = true;     
     checkRelays();
     GBox -> Sound1 -> playOnSound();
-    if(DueToHighPressure) GBox -> addToLog(F("Above pressure limit,spraying"));
-    else GBox -> addToLog(F("Aeroponics spraying"));
-    }
+    if(FromWebsite) GBox -> addToLog(F("Aeroponics spraying"));
+    else logToSerials(F("Aeroponics spraying"),true,3);
+  }
 }
 
 void Aeroponics_Tank::sprayOff(){    
-    SpraySolenoidOn = false; 
-    checkRelays();
-    GBox -> addToLog(F("Aeroponics spray OFF"));
+  SpraySolenoidOn = false; 
+  checkRelays();
+  GBox -> addToLog(F("Aeroponics spray OFF"));
+}
+
+char * Aeroponics_Tank::sprayStateToText(){
+  if(!*SprayEnabled && !SpraySolenoidOn) return (char *)"DISABLED";
+  else {
+    if(SpraySolenoidOn) return (char *)"ON";
+    else return (char *)"ENABLED";
+  }
+}
+
+void Aeroponics_Tank::refillTank(){
+  GBox -> addToLog(F("Refilling tank"));
+  PumpOK = true;
+  BypassSolenoidOn = true; 
+  PumpOn = true;
+  PumpTimer = millis();
+  checkRelays();
 }

@@ -16,7 +16,8 @@ class Aeroponics_NoTank : public Aeroponics
     void report();
     void setBlowOffTime(int _BlowOffTime);
     void sprayOff();
-    void sprayNow(bool DueToHighPressure);
+    void sprayNow(bool FromWebsite = false);
+    char * sprayStateToText();
     float LastSprayPressure = 0; //tracks the last average pressure during a spray cycle
 
   private:

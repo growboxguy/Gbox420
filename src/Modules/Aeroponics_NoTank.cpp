@@ -98,8 +98,8 @@ void Aeroponics_NoTank::report(){
   Aeroponics::report();  //then print parent class report
  }
 
-void Aeroponics_NoTank::sprayNow(bool DueToHighPressure){   
-  if(*SprayEnabled || DueToHighPressure){
+void Aeroponics_NoTank::sprayNow(bool FromWebsite){
+  if(*SprayEnabled || FromWebsite){
     MixInProgress = false;    
     PumpOK = true;
     PumpOn = true;
@@ -108,7 +108,8 @@ void Aeroponics_NoTank::sprayNow(bool DueToHighPressure){
     PumpTimer = millis();
     SprayTimer = millis();    
     GBox -> Sound1 -> playOnSound();
-    logToSerials(F("Aeroponics spraying"),true,3);
+    if(FromWebsite) GBox -> addToLog(F("Aeroponics spraying"));
+    else logToSerials(F("Aeroponics spraying"),true,3);
     }
 }
 
@@ -122,4 +123,12 @@ void Aeroponics_NoTank::sprayOff(){
     BypassSolenoidOn = false; 
     checkRelays();
     GBox -> addToLog(F("Aeroponics spray OFF"));
+}
+
+char * Aeroponics_NoTank::sprayStateToText(){
+   if(!*SprayEnabled) return (char *)"DISABLED";
+   else {
+     if(PumpOn && !BypassSolenoidOn) return (char *)"ON";
+     else return (char *)"ENABLED";
+    }
 }

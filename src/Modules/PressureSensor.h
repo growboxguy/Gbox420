@@ -10,7 +10,6 @@ class PressureSensor : public Common
     PressureSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::PressureSensorSettings * DefaultSettings);
     RollingAverage * Pressure;
     void websiteEvent_Load(__attribute__((unused)) char * url);
-    void websiteEvent_Refresh(__attribute__((unused)) char * url);
     void websiteEvent_Button(char * Button);
     void websiteEvent_Field(char * Field);
     void refresh_Minute();  //Called when component should refresh its state

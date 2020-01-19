@@ -36,8 +36,9 @@ class Aeroponics : public Common
     void setPumpTimeout(int Timeout);
     void setPrimingTime(int Timing);
     char * pumpStateToText();
+    virtual char * sprayStateToText() = 0; //pure virtual function, has no definition. Defined in child classes only
     void Mix();
-    virtual void sprayNow(bool DueToHighPressure) = 0;
+    virtual void sprayNow(bool FromWebsite = false) = 0;
     virtual void sprayOff() = 0;
     void setSprayOnOff(bool State);
     void setInterval(int interval);
