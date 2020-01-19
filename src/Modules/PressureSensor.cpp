@@ -8,10 +8,10 @@ PressureSensor::PressureSensor(const __FlashStringHelper * Name, GrowBox * GBox,
   Offset = &DefaultSettings -> Offset;
   Pressure = new RollingAverage();
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
-  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh_Minute() method
-  GBox -> AddToWebsiteQueue_Load(this); //Subscribing to the Website load event
-  GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
-  GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
+  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  GBox -> AddToWebsiteQueue_Load(this); //Subscribing to the Website load event: Calls the websiteEvent_Load() method
+  GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
+  GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
   logToSerials(F("DHT Sensor object created"),true,1);
 }
 

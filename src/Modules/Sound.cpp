@@ -6,10 +6,10 @@ Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox, Settings::SoundSe
   Pin = &DefaultSettings -> Pin;
   Enabled = &DefaultSettings -> Enabled;
   pinMode(*Pin, OUTPUT);
-  GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the Website load event 
-  GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press even 
-  GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
-  GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the Sec refresh queue: Calls the refresh_sec() method 
+  GBox -> AddToWebsiteQueue_Load(this); //Subscribing to the Website load event: Calls the websiteEvent_Load() method
+  GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
+  GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
+  GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
   logToSerials(F("Sound object created"),true,1);
 }
 

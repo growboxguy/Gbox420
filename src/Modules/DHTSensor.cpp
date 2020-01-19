@@ -8,8 +8,8 @@ DHTSensor::DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings:
   Temp = new RollingAverage();
   Humidity = new RollingAverage();
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
-  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the Minute refresh queue: Calls the refresh_Minute() method
-  GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
+  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   logToSerials(F("DHT Sensor object created"),true,1);
 }
 

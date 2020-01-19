@@ -41,7 +41,8 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   //ModuleSkeleton1 = new ModuleSkeleton(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
   //ModuleSkeleton2 = new ModuleSkeleton(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
 
-  AddToRefreshQueue_FiveSec(this);  //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method 
+  AddToRefreshQueue_FiveSec(this);  //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   AddToRefreshQueue_QuarterHour(this);  //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method 
   AddToWebsiteQueue_Load(this); //Subscribing to the Website load event
   AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
@@ -101,6 +102,11 @@ void GrowBox::refresh_FiveSec(){
     RefreshAllRequest = false;
     refreshAll();
   }
+}
+
+void GrowBox::refresh_Minute(){
+  if(BoxSettings -> DebugEnabled) Common::refresh_Minute();
+  runReport();
 }
 
 void GrowBox::refresh_QuarterHour(){

@@ -101,8 +101,6 @@ void runFiveSec(){
 void runMinute(){
   wdt_reset(); 
   GBox -> runMinute();
-  wdt_reset(); 
-  GBox -> runReport();
 }
 
 void runQuarterHour(){

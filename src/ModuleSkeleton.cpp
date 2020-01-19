@@ -10,10 +10,10 @@ ModuleSkeleton::ModuleSkeleton (const __FlashStringHelper * Name, GrowBox * GBox
   RollingFloat = new RollingAverage();
 
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
-  GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to refresh queue: Calls the refresh_Sec() method
-  GBox -> AddToRefreshQueue_FiveSec(this);  //Subscribing to refresh queue: Calls the refresh_FiveSec() method
-  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to refresh queue: Calls the refresh_Minute() method
-  GBox -> AddToRefreshQueue_QuarterHour(this);  //Subscribing to refresh queue: Calls the refresh_QuarterHour() method
+  GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
+  GBox -> AddToRefreshQueue_FiveSec(this);  //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  GBox -> AddToRefreshQueue_QuarterHour(this);  //Subscribing to the 15 minute refresh queue: Calls the refresh_QuarterHour() method
 
   GBox -> AddToWebsiteQueue_Load(this); //Subscribing to the Website load event: Calls the websiteEvent_Load() method
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method

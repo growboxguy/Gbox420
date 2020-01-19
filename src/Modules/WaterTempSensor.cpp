@@ -9,8 +9,8 @@ WaterTempSensor::WaterTempSensor (const __FlashStringHelper * Name, GrowBox * GB
   TempSensor = new DallasTemperature(TempSensorWire); //Reservoir waterproof temperature sensor (DS18B20)
   TempSensor -> begin();
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
-  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the FiveSec refresh queue: Calls the refresh() method
-  GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event 
+  GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   logToSerials(F("WaterTempSensor object created"),true,1); 
 }
 

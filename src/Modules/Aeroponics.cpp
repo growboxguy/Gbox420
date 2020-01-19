@@ -6,25 +6,25 @@
 // -Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid (electric water valve)
 
 Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, PressureSensor * FeedbackPressureSensor) : Common(Name){  //constructor
-    this -> GBox = GBox;    
-    BypassSolenoidPin = &DefaultSettings -> BypassSolenoidPin;
-    PumpPin = &DefaultSettings -> PumpPin;
-    SprayEnabled = &DefaultSettings -> SprayEnabled;  //Enable/disable misting
-    Interval = &DefaultSettings -> Interval; //Aeroponics - Spray every 15 minutes
-    Duration = &DefaultSettings -> Duration; //Aeroponics - Spray time in seconds    
-    PumpTimeout = &DefaultSettings -> PumpTimeout;  // Aeroponics - Max pump run time in minutes, measue zero to max pressuretank refill time and adjust accordingly
-    PrimingTime = &DefaultSettings -> PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
-    this -> FeedbackPressureSensor = FeedbackPressureSensor;
-    pinMode(*BypassSolenoidPin,OUTPUT);
-    digitalWrite(*BypassSolenoidPin,HIGH);  //initialize in off state
-    pinMode(*PumpPin,OUTPUT);
-    digitalWrite(*PumpPin,HIGH);  //initialize in off state
-    GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
-    GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the Sec refresh queue: Calls the refresh_sec() method
-    GBox -> AddToWebsiteQueue_Load(this);  //Subscribing to the website load queue: Calls the websiteEvent_Load method
-    GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
-    GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
-    GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
+  this -> GBox = GBox;    
+  BypassSolenoidPin = &DefaultSettings -> BypassSolenoidPin;
+  PumpPin = &DefaultSettings -> PumpPin;
+  SprayEnabled = &DefaultSettings -> SprayEnabled;  //Enable/disable misting
+  Interval = &DefaultSettings -> Interval; //Aeroponics - Spray every 15 minutes
+  Duration = &DefaultSettings -> Duration; //Aeroponics - Spray time in seconds    
+  PumpTimeout = &DefaultSettings -> PumpTimeout;  // Aeroponics - Max pump run time in minutes, measue zero to max pressuretank refill time and adjust accordingly
+  PrimingTime = &DefaultSettings -> PrimingTime;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
+  this -> FeedbackPressureSensor = FeedbackPressureSensor;
+  pinMode(*BypassSolenoidPin,OUTPUT);
+  digitalWrite(*BypassSolenoidPin,HIGH);  //initialize in off state
+  pinMode(*PumpPin,OUTPUT);
+  digitalWrite(*PumpPin,HIGH);  //initialize in off state
+  GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
+  GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
+  GBox -> AddToWebsiteQueue_Load(this); //Subscribing to the Website load event: Calls the websiteEvent_Load() method
+  GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
+  GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
+  GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
 }
 
 void Aeroponics::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once

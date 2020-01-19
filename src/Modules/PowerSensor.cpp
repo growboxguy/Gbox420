@@ -7,8 +7,8 @@ PowerSensor::PowerSensor(const __FlashStringHelper * Name, GrowBox * GBox,Hardwa
   PowerSensorIP = new IPAddress(192,168,1,1);
   Sensor -> setAddress(*PowerSensorIP); //start power meter
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
-  GBox -> AddToRefreshQueue_FiveSec(this);  //Subscribing to the Minute refresh queue: Calls the refresh_FiveSec() method
-  GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
+  GBox -> AddToRefreshQueue_FiveSec(this);  //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   logToSerials(F("PowerSensor object created"),true,1);
 }
 

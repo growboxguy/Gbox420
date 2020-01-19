@@ -48,6 +48,7 @@ class GrowBox : public Common
     void websiteEvent_Button(char * Button);
     void websiteEvent_Field(char * Field);
     void refresh_FiveSec();
+    void refresh_Minute();
     void refresh_QuarterHour();
     void refreshAll(bool AddToLog = false);
     bool RefreshAllRequest = false; 
