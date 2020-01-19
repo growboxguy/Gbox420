@@ -35,20 +35,20 @@ void DHTSensor::report(){
   logToSerials(&LongMessage,true,1);
 }
 
-float DHTSensor::getTemp(bool ReturnAverage = true){
+float DHTSensor::getTemp(bool ReturnAverage){
   return Temp -> getFloat(ReturnAverage);
 }
 
-float DHTSensor::getHumidity(bool ReturnAverage = true){
+float DHTSensor::getHumidity(bool ReturnAverage){
   return Humidity -> getFloat(ReturnAverage);
 }
 
-char * DHTSensor::getTempText(bool IncludeUnits = false, bool ReturnAverage = true){
+char * DHTSensor::getTempText(bool IncludeUnits, bool ReturnAverage){
     if(IncludeUnits) return tempToText(Temp -> getFloat(ReturnAverage));
     else return Temp -> getFloatText(ReturnAverage);  
 }
 
-char * DHTSensor::getHumidityText(bool IncludeUnits = false, bool ReturnAverage = true){  
+char * DHTSensor::getHumidityText(bool IncludeUnits, bool ReturnAverage){  
   if(IncludeUnits) return percentageToText(Humidity -> getFloat(ReturnAverage));
   else return Humidity -> getFloatText(ReturnAverage);
 }

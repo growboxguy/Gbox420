@@ -2,8 +2,6 @@
 
 #include "../../420Common.h"
 #include "Aeroponics.h"
-#include "PressureSensor.h"
-#include "Sound.h"
 
 class GrowBox;  //forward declaration
 
@@ -19,12 +17,12 @@ class Aeroponics_NoTank : public Aeroponics
     void setBlowOffTime(int _BlowOffTime);
     void sprayOff();
     void sprayNow(bool DueToHighPressure);
-    float LastSprayPressure; //tracks the last average pressure during a spray cycle
+    float LastSprayPressure = 0; //tracks the last average pressure during a spray cycle
 
   private:
     int * BlowOffTime; //After spraying open the bypass valve for X seconds to release pressure in the system
     
-    PressureSensor * FeedbackPressureSensor; //Pressure sensor object that will monitor the spray pressure
+    
     bool BlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
      
   protected:

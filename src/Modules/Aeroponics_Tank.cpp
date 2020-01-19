@@ -1,7 +1,7 @@
 #include "Aeroponics_Tank.h"
 #include "../../GrowBox.h"
 
-Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings) : Aeroponics(Name, GBox, DefaultSettings){  //constructor
+Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings, PressureSensor * FeedbackPressureSensor) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings), &(*FeedbackPressureSensor)){  //constructor
   SpraySolenoidPin = &TankSpecificSettings -> SpraySolenoidPin;
   PressureLow = &TankSpecificSettings -> PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
   PressureHigh = &TankSpecificSettings -> PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
@@ -34,14 +34,14 @@ void Aeroponics_Tank::websiteEvent_Field(char * Field){ //When the website is op
 void Aeroponics_Tank::refresh_Sec(){ 
   if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Sec();
   if(PumpOn){ //if pump is on
-    if(AeroPressure >= *PressureHigh){ //refill complete, target pressure reached
+    if(Aeroponics::FeedbackPressureSensor -> getPressure() >= *PressureHigh){ //refill complete, target pressure reached
      setPumpOff(false);
      logToSerials(F("Pressure tank recharged"),true);
     }
     else{
       if( millis() - PumpTimer >= ((uint32_t)*PumpTimeout * 60000)){ //If pump timeout reached
         setPumpOff(false); //turn of pump, 
-        if(!MixInProgress) {  //if bypass was not active and refill did not finish within timeout= pump must be broken
+        if(!MixInProgress) {  //if mixing was not active and refill did not finish within timeout= pump must be broken
           PumpDisable();  //automatically disable pump if it is suspected to be broken
         //   sendEmailAlert(F("Aeroponics%20pump%20failed"));
         }
@@ -50,11 +50,11 @@ void Aeroponics_Tank::refresh_Sec(){
        if (!MixInProgress && BypassSolenoidOn && millis() - PumpTimer >= ((uint32_t)*PrimingTime * 1000)){ //self priming timeout reached, time to start refilling
           if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Starting refill"),true); 
           BypassSolenoidOn = false;      
-          PumpTimer = millis(); //reset timer to start measuring spray time
+          PumpTimer = millis(); //reset timer to start measuring refill time
         }      
     }
   }
-  if( PumpOK && checkQuietTime() && AeroPressure <= *PressureLow){ //if pump is not disabled and quiet time not active and Pressure reached low limit: turn on pump 
+  if( PumpOK && checkQuietTime() && Aeroponics::FeedbackPressureSensor -> getPressure() <= *PressureLow){ //if pump is not disabled and quiet time not active and Pressure reached low limit: turn on pump 
         if(!PumpOn && !BypassSolenoidOn){ //start the bypass
           if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Starting bypass"),true);
           BypassSolenoidOn = true; 
@@ -84,9 +84,9 @@ void Aeroponics_Tank::refresh_Sec(){
 void Aeroponics_Tank::report(){
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
-  strcat_P(LongMessage,(PGM_P)F("Pressure:"));strcat(LongMessage,pressureToText(AeroPressure));
-  strcat_P(LongMessage,(PGM_P)F(" ["));strcat(LongMessage,toText(*PressureLow,*PressureHigh,"/"));
-  strcat_P(LongMessage,(PGM_P)F("]"));
+  //strcat_P(LongMessage,(PGM_P)F("Pressure:"));strcat(LongMessage,pressureToText(AeroPressure));
+  //strcat_P(LongMessage,(PGM_P)F(" ["));strcat(LongMessage,toText(*PressureLow,*PressureHigh,"/"));
+  //strcat_P(LongMessage,(PGM_P)F("]"));
   logToSerials( &LongMessage, false,1); //first print Aeroponics_Tank specific report, without a line break  
   Aeroponics::report();  //then print parent class report  
   memset(&LongMessage[0], 0, sizeof(LongMessage));    
@@ -115,7 +115,7 @@ void Aeroponics_Tank::setPressureHigh(float PressureHigh){
 
 // void Aeroponics_Tank::checkAeroPumpAlerts_WithPressureTank()
 // {
-//   if(GBox -> BoxSettings -> PressureAlertLow <= AeroPressure && AeroPressure <= GBox -> BoxSettings -> PressureAlertHigh){ //If pressure is between OK range
+//   if(GBox -> BoxSettings -> PressureAlertLow <= Aeroponics::FeedbackPressureSensor -> getPressure() && Aeroponics::FeedbackPressureSensor -> getPressure() <= GBox -> BoxSettings -> PressureAlertHigh){ //If pressure is between OK range
 //     if(PreviousPressureRead != true){PressureTriggerCount = 0;}
 //     else{ if(!PressureOK)PressureTriggerCount++; } 
 //     PreviousPressureRead = true;     
@@ -126,7 +126,7 @@ void Aeroponics_Tank::setPressureHigh(float PressureHigh){
 //        } 
 //   }
 //   else{
-//     if(AeroPressure > GBox -> BoxSettings -> PressureAlertHigh){ //Pressure over limit - emergency spraying
+//     if(Aeroponics::FeedbackPressureSensor -> getPressure() > GBox -> BoxSettings -> PressureAlertHigh){ //Pressure over limit - emergency spraying
 //           setPumpOff(false); //force pump off
 //          // sprayNow(true); //try to release pressure  
 //     }
@@ -136,11 +136,11 @@ void Aeroponics_Tank::setPressureHigh(float PressureHigh){
     
 //     if(PressureOK && PressureTriggerCount>=GBox -> BoxSettings -> ReadCountBeforeAlert){ //trigger an alert if the out of range reading counter is above the limit
 //         PressureOK = false;
-//         if(AeroPressure > GBox -> BoxSettings -> PressureAlertHigh){ //If high pressure alert level is reached   
+//         if(Aeroponics::FeedbackPressureSensor -> getPressure() > GBox -> BoxSettings -> PressureAlertHigh){ //If high pressure alert level is reached   
 //         //   sendEmailAlert(F("Aeroponics%20pressure%20too%20high"));
 //           GBox -> addToLog(F("High pressure warning"));
 //         }
-//         if(AeroPressure < GBox -> BoxSettings -> PressureAlertLow){ //If low pressure alert level is reached
+//         if(Aeroponics::FeedbackPressureSensor -> getPressure() < GBox -> BoxSettings -> PressureAlertLow){ //If low pressure alert level is reached
 //           //if(PumpOK) setPumpOn(false); //Uncomment this to turn pump on even under quiet time
 //         //   sendEmailAlert(F("Aeroponics%20pressure%20too%20low"));
 //           GBox -> addToLog(F("Low pressure warning"));

@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 23;
+static const byte Version = 25;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: 
 //Global constants
@@ -89,7 +89,7 @@ typedef struct
     int PumpTimeout = 6;  // Aeroponics - Max pump run time in minutes, measue zero to max pressuretank refill time and adjust accordingly
     int PrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
   };
-  struct AeroponicsSettings Aero_T1_Common = {.BypassSolenoidPin = 30, .PumpPin = 31 };
+  struct AeroponicsSettings Aero_T1_Common = {.BypassSolenoidPin = 23, .PumpPin = 24 };
   struct AeroponicsSettings Aero_NT1_Common = {.BypassSolenoidPin = 52, .PumpPin = 53 };
   
   struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific settings    

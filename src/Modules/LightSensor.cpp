@@ -79,7 +79,7 @@ void LightSensor::calibrate(){
   GBox -> addToLog(F("Lights calibrated"),4);
   if(GBox -> BoxSettings -> DebugEnabled){
          logToSerials(F("OFF - "),false,4); logToSerials(&MinReading,false,0);
-         logToSerials(F(", 0% - "),false,4); logToSerials(&MinReading,false,0);
+         logToSerials(F(", 0% - "),false,0); logToSerials(&MinReading,false,0);
          logToSerials(F(", 100% - "),false,0); logToSerials(&MaxReading,true,0);
   }
 }
@@ -95,11 +95,11 @@ char * LightSensor::getCalibrationText(){
   return ReturnChar;  
 }
 
-int LightSensor::getReading(bool ReturnAverage = true){ 
+int LightSensor::getReading(bool ReturnAverage){ 
   return LightReading -> getInt(ReturnAverage);
 }
 
-char * LightSensor::getReadingText(bool IncludePercentage = true, bool ReturnAverage = true){
+char * LightSensor::getReadingText(bool IncludePercentage, bool ReturnAverage){
   if(IncludePercentage){
     static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
     memset(&ReturnChar[0], 0, sizeof(ReturnChar));  //clear variable

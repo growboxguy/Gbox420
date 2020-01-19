@@ -2,19 +2,20 @@
 
 #include "../../420Common.h"
 #include "Sound.h"
+#include "PressureSensor.h"
 
 class GrowBox;  //forward declaration
 
 class Aeroponics : public Common
 {
   public:
-    Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings);
+    Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, PressureSensor * FeedbackPressureSensor);
     virtual void websiteEvent_Load(__attribute__((unused)) char * url);
     virtual void websiteEvent_Refresh(__attribute__((unused)) char * url);
     virtual void websiteEvent_Button(__attribute__((unused)) char * Button);
     virtual void websiteEvent_Field(__attribute__((unused)) char * Field);
     virtual void report();
-    int AeroPressure = 6; //TODO: FAKE PRESSURE READING - REMOVE IT
+    //int AeroPressure = 6; //TODO: FAKE PRESSURE READING - REMOVE IT
     bool PumpOK = true; //Aeroponics - High pressure pump health  
     bool PumpOn = false; //Aeroponics - High pressure pump state
     uint32_t PumpTimer = millis();  //Aeroponics - Pump cycle timer
@@ -49,5 +50,6 @@ class Aeroponics : public Common
    protected:
     GrowBox * GBox;
     byte * PumpPin;
+    PressureSensor * FeedbackPressureSensor; //Pressure sensor object that will monitor the spray pressure
 };
 

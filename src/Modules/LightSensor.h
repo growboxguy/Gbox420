@@ -3,38 +3,38 @@
 #include "../../420Common.h"
 #include "Lights.h"
 
-class GrowBox;  //forward declaration
+class GrowBox; //forward declaration
 
 class LightSensor : public Common
 {
-  public:
-    LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::LightSensorSettings * DefaultSettings,Lights * LightSource);
-    void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    void websiteEvent_Load(__attribute__((unused)) char * url); 
-    void websiteEvent_Button(char * Button);
-    void refresh_Minute();  //Called when component should refresh its state
-    void report();
-    void triggerCalibration();    //Website signals to calibrate the MAX/MIN readings the next time the object gets CPU time
-    char * getCalibrationText(); //Light sensor analog feedback relative to calibration values: 0 to 100% 
-    int getReading(bool ReturnAverage = true); //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
-    char * getReadingText(bool IncludePercentage, bool ReturnAverage); //returns the current light sensor reading. If IncludeMinMax is set to true it also includes the calibated minimum and maximum readings
-    bool getDark(); //Light sensor digital feedback: True(Bright) or False(Dark)
-    char * getDarkText(bool UseWords);  
+public:
+  LightSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Button(char *Button);
+  void refresh_Minute(); //Called when component should refresh its state
+  void report();
+  void triggerCalibration();                                        //Website signals to calibrate the MAX/MIN readings the next time the object gets CPU time
+  char *getCalibrationText();                                       //Light sensor analog feedback relative to calibration values: 0 to 100%
+  int getReading(bool ReturnAverage = true);                        //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
+  char *getReadingText(bool IncludePercentage, bool ReturnAverage); //returns the current light sensor reading. If IncludeMinMax is set to true it also includes the calibated minimum and maximum readings
+  bool getDark();                                                   //Light sensor digital feedback: True(Bright) or False(Dark)
+  char *getDarkText(bool UseWords);
 
-  private:
-    GrowBox * GBox;
-    Lights * LightSource; //The light used during calibration
-    byte * DigitalPin; //D0 - LM393 light sensor digital in
-    byte * AnalogPin; //A0 - LM393 light sensor analog in
-    RollingAverage * LightReading;  //keeps an average of previous readings: Smoothens sensor readings
-    void calibrate();
-    bool Dark;  
-    bool CalibrateRequested;
-    int MaxReading; //Analog reading with maximum brightnes
-    int MinReading; //Analog reading with minimum brightnes
-    int DarkReading; //Analog reading with lights off
+private:
+  GrowBox *GBox;
+  Lights *LightSource;          //The light used during calibration
+  byte *DigitalPin;             //D0 - LM393 light sensor digital in
+  byte *AnalogPin;              //A0 - LM393 light sensor analog in
+  RollingAverage *LightReading; //keeps an average of previous readings: Smoothens sensor readings
+  void calibrate();
+  bool Dark;
+  bool CalibrateRequested;
+  int MaxReading = 0;  //Analog reading with maximum brightnes
+  int MinReading = 0;  //Analog reading with minimum brightnes
+  int DarkReading = 0; //Analog reading with lights off
 
-  protected:
+protected:
 };
 
 //WEBSITE COMPONENT

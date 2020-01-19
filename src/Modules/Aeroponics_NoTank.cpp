@@ -1,9 +1,8 @@
 #include "Aeroponics_NoTank.h"
 #include "../../GrowBox.h"
 
-Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific * NoTankSpecificSettings, PressureSensor * FeedbackPressureSensor) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings)) {
+Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific * NoTankSpecificSettings, PressureSensor * FeedbackPressureSensor) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings), &(*FeedbackPressureSensor)) {
   BlowOffTime = &NoTankSpecificSettings -> BlowOffTime; //Aeroponics - Turn on pump below this pressure (bar)
-  this -> FeedbackPressureSensor = FeedbackPressureSensor;
   logToSerials(F("Aeroponics_NoTank object created"),true,1);
 }
 
@@ -53,6 +52,7 @@ void Aeroponics_NoTank::refresh_Sec(){ //pump directly connected to aeroponics t
       BypassSolenoidOn = false; //Close bypass valve
       BlowOffInProgress = false;
       logToSerials(F("Stopping blow-off"),true);
+      Aeroponics::FeedbackPressureSensor -> readPressure(); //Update pressure after closing bypass valve
  }
  if(PumpOn)    { //if pump is on
     FeedbackPressureSensor -> readPressure();
@@ -63,11 +63,11 @@ void Aeroponics_NoTank::refresh_Sec(){ //pump directly connected to aeroponics t
     
     if(!MixInProgress && !BypassSolenoidOn && PumpOn && millis() - SprayTimer >= ((uint32_t)*Duration * 1000)){  //bypass valve is closed and time to stop spraying (Duration in Seconds)
       BypassSolenoidOn = true;
-      BlowOffInProgress = true; //no extra time is needed, will use SprayTimer
+      BlowOffInProgress = true; //no extra timer is needed, will use SprayTimer
       checkRelays();
       setPumpOff(false);
       SprayTimer = millis();   
-      LastSprayPressure =  FeedbackPressureSensor -> getPressure();
+      LastSprayPressure =  Aeroponics::FeedbackPressureSensor -> getPressure();
       logToSerials(F("Stopping spray"),true);    
     }
     else{
@@ -75,7 +75,7 @@ void Aeroponics_NoTank::refresh_Sec(){ //pump directly connected to aeroponics t
         BypassSolenoidOn = false; //Close bypass valve
         checkRelays();
         SprayTimer = millis();
-        FeedbackPressureSensor -> Pressure -> resetAverage();
+        Aeroponics::FeedbackPressureSensor -> Pressure -> resetAverage();
         logToSerials(F("Closing bypass, starting spray"),true);        
         }
        }

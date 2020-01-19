@@ -49,8 +49,8 @@ class GrowBox : public Common
     void websiteEvent_Field(char * Field);
     void refresh_FiveSec();
     void refresh_QuarterHour();
-    void refreshAll(bool AddToLog);
-    bool RefreshAllRequest = true; 
+    void refreshAll(bool AddToLog = false);
+    bool RefreshAllRequest = false; 
     int * SheetsReportingFrequency;
     int SheetsRefreshCounter = 0;
  

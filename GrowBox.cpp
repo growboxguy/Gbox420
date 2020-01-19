@@ -32,14 +32,14 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   InDHT = new DHTSensor(F("InDHT"), this, &BoxSettings -> InDHT);  //passing: Component name, GrowBox object the component belongs to, Default settings)
   ExDHT = new DHTSensor(F("ExDHT"), this, &BoxSettings -> ExDHT);  //passing: Component name, GrowBox object the component belongs to, Default settings)
   Pressure1 = new PressureSensor(F("Pressure1"),this,&BoxSettings -> Pressure1);
-  //Aero_T1 = new Aeroponics_Tank(F("Aero_T1"), this, &BoxSettings ->Aero_T1_Common, &BoxSettings -> Aero_T1_Specific);
-  Aero_NT1 = new Aeroponics_NoTank(F("Aero_NT1"), this, &BoxSettings -> Aero_NT1_Common, &BoxSettings -> Aero_NT1_Specific,Pressure1);
-  
+  Aero_T1 = new Aeroponics_Tank(F("Aero_T1"), this, &BoxSettings ->Aero_T1_Common, &BoxSettings -> Aero_T1_Specific, Pressure1);
+  Aero_NT1 = new Aeroponics_NoTank(F("Aero_NT1"), this, &BoxSettings -> Aero_NT1_Common, &BoxSettings -> Aero_NT1_Specific, Pressure1);
   PHSensor1 = new PHSensor(F("PHSensor1"),this, &BoxSettings -> PHSensor1);  
   WaterTemp1 = new WaterTempSensor(F("WaterTemp1"),this,&BoxSettings -> WaterTemp1);
   WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"),this,&BoxSettings -> WaterLevel1);
-  ModuleSkeleton1 = new ModuleSkeleton(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
-  ModuleSkeleton2 = new ModuleSkeleton(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
+  
+  //ModuleSkeleton1 = new ModuleSkeleton(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
+  //ModuleSkeleton2 = new ModuleSkeleton(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
 
   AddToRefreshQueue_FiveSec(this);  //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method 
   AddToRefreshQueue_QuarterHour(this);  //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method 
@@ -48,6 +48,7 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
   AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
   logToSerials(F("GrowBox object created"), true,2);
+  refreshAll(false);
   addToLog(F("GrowBox initialized"),0);
 }
 
@@ -98,7 +99,7 @@ void GrowBox::refresh_FiveSec(){
   if(BoxSettings -> DebugEnabled) Common::refresh_FiveSec();
   if(RefreshAllRequest) {
     RefreshAllRequest = false;
-    refreshAll(true);
+    refreshAll();
   }
 }
 
