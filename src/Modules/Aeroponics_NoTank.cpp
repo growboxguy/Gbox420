@@ -32,21 +32,6 @@ void Aeroponics_NoTank::websiteEvent_Field(char * Field){ //When the website is 
 
 void Aeroponics_NoTank::refresh_Sec(){ //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
   if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Sec();
-  // Serial.print("SprayTimer: "); 
-  // Serial.print(millis() - SprayTimer);  
-  // Serial.print("/"); 
-  // Serial.println((uint32_t)*Interval * 60000); 
-
-  // Serial.print("PumpTimer: "); 
-  // Serial.print(millis() - PumpTimer);  
-  // Serial.print("/"); 
-  // Serial.println((uint32_t)*PumpTimeout * 60000); 
-
-  // Serial.print("DurationTimer: "); 
-  // Serial.print(millis() - SprayTimer);  
-  // Serial.print("/"); 
-  // Serial.println((uint32_t)*Duration * 1000); 
-
 
   if (BlowOffInProgress && millis() - SprayTimer >= ((uint32_t)*BlowOffTime * 1000)){   //checking pressure blow-off timeout
       BypassSolenoidOn = false; //Close bypass valve

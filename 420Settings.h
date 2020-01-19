@@ -93,7 +93,8 @@ typedef struct
   struct AeroponicsSettings Aero_NT1_Common = {.BypassSolenoidPin = 52, .PumpPin = 53 };
   
   struct AeroponicsSettings_NoTankSpecific{  //Without pressure tank specific settings    
-    int BlowOffTime = 3; //Aeroponics - BlowOff time in seconds: After spraying open the bypass valve for X seconds to release pressure    
+    int BlowOffTime = 3; //Aeroponics - BlowOff time in seconds: After spraying open the bypass valve for X seconds to release pressure 
+    float PressureHigh = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)   
   }Aero_NT1_Specific;
 
   struct AeroponicsSettings_TankSpecific{  //Pressure tank specific settings

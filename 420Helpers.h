@@ -11,6 +11,7 @@
 #include "ELClientWebServer.h" //ESP-link - WebServer API
 #include "ELClientCmd.h"  //ESP-link - Get current time from the internet using NTP
 #include "420Settings.h"  //for storing/reading defaults
+#include "420RollingAverage.h"  //for smoothing sensor readings, average of last readings
 
 //Forward declaration
 class GrowBox;
@@ -67,24 +68,3 @@ template <class logLine> void logToSerials (logLine& ToPrint,bool BreakLine=true
   if(BreakLine){ArduinoSerial.println(ToPrint);ESPSerial.println(ToPrint);}
   else{ArduinoSerial.print(ToPrint);ESPSerial.print(ToPrint);}
 }
-
-//////////////////////////////////////////////////////////////////
-//RollingAverage class: For smoothing sensor readings
-
-class RollingAverage
-{  
-  private:
-    long Sum = 0;
-    int History[RollingAverageQueueDepth] = {0}; //array to store historical readings, 10 readings default
-    byte Oldest = 0; //Points to the oldest reading
-    bool ResetAverage = true; //When true the next reading will overwrite the previous readings (Reset the average to the current reading)   
-   
-  public:
-    void resetAverage();
-    int updateAverage(int LatestReading);
-    float updateAverage(float LatestReading);
-    int getInt(bool ReturnAveragee = true); //by default return the average, if false is passed return the latest reading
-    float getFloat(bool ReturnAverage = true);
-    char * getIntText(bool ReturnAverage = true);
-    char * getFloatText(bool ReturnAverage = true);  
-};

@@ -5,9 +5,8 @@
 // 420Settings.h : Pin assignment, First time setup, Default settings 
 
 //TODO:
-//Add pump cutout during aero pray in case pressure limit is reached
-//HempyBucket controls
-//Aeroponics_Tank: Pressure sensor not integrated, remove fake int AeroPressure = 6; 
+//Add pump cutout during aero spray in case pressure limit is reached
+//HempyBucket controls 
 //MQTT reporting
 //Support for storing multiple Settings objects in EEPROM (?Support for controlling more grow boxes from a single arduino? )
 
