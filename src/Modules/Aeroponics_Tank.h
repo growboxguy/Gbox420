@@ -19,20 +19,7 @@ class Aeroponics_Tank : public Aeroponics
     bool PreviousPressureRead = true;
     float * PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
     float * PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
-    bool * QuietEnabled;  //Quiet time when the pump should not run
-    bool * RefillBeforeQuiet; //Refill before quiet time
-    byte * QuietFromHour;  //Quiet time to block pump - hour
-    byte * QuietFromMinute; //Quiet time to block pump - minute
-    byte * QuietToHour; //Quiet time end - hour
-    byte * QuietToMinute; //Quiet time end - minute  
-    void checkRelays();
-    bool checkQuietTime();
-    void setQuietFromHour(int Hour);
-    void setQuietFromMinute(int Minute);
-    void setQuietToHour(int Hour);
-    void setQuietToMinute(int Minute);
-    void setQuietOnOff(bool State);
-    void setQuietRefillOnOff(bool State); //TODO: Remove this
+    void checkRelays();    
     void sprayOff();
     void sprayNow(bool DueToHighPressure);
     void setPressureLow(float PressureLow);

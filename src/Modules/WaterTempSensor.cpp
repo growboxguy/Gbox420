@@ -34,11 +34,11 @@ void WaterTempSensor::report(){
   logToSerials(&LongMessage,true,1);
 }  
 
-float WaterTempSensor::getTemp(bool ReturnAverage = true){
+float WaterTempSensor::getTemp(bool ReturnAverage){
   return Temp -> getFloat(ReturnAverage);
 }
 
-char * WaterTempSensor::getTempText(bool IncludeUnits = true, bool ReturnAverage = true){
+char * WaterTempSensor::getTempText(bool IncludeUnits, bool ReturnAverage){
   if(IncludeUnits) return tempToText(Temp -> getFloat(ReturnAverage));
   else return Temp -> getFloatText(ReturnAverage);
 }

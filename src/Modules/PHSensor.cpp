@@ -74,11 +74,11 @@ void PHSensor::updatePH(bool ShowRaw){
   PH -> updateAverage((*Slope)*PHRaw + (*Intercept));
 }
 
-float PHSensor::getPH(bool ReturnAverage = true){
+float PHSensor::getPH(bool ReturnAverage){
   return PH -> getFloat(ReturnAverage);
 }
 
-char * PHSensor::getPHText(bool ReturnAverage = true){
+char * PHSensor::getPHText(bool ReturnAverage){
   return PH -> getFloatText(ReturnAverage);
 }
 

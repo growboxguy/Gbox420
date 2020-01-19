@@ -4,13 +4,7 @@
 Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings, PressureSensor * FeedbackPressureSensor) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings), &(*FeedbackPressureSensor)){  //constructor
   SpraySolenoidPin = &TankSpecificSettings -> SpraySolenoidPin;
   PressureLow = &TankSpecificSettings -> PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
-  PressureHigh = &TankSpecificSettings -> PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
-  QuietEnabled = &TankSpecificSettings -> QuietEnabled;  //Enable/disable quiet time then pump should not run
-  RefillBeforeQuiet = &TankSpecificSettings -> RefillBeforeQuiet; //Enable/disable refill before quiet time
-  QuietFromHour = &TankSpecificSettings -> QuietFromHour;  //Quiet time to block pump - hour
-  QuietFromMinute = &TankSpecificSettings -> QuietFromMinute; //Quiet time to block pump - minute
-  QuietToHour = &TankSpecificSettings -> QuietToHour; //Quiet time end - hour
-  QuietToMinute = &TankSpecificSettings -> QuietToMinute; //Quiet time end - minute
+  PressureHigh = &TankSpecificSettings -> PressureHigh; //Aeroponics - Turn off pump above this pressure (bar) 
   pinMode(*SpraySolenoidPin,OUTPUT);
   digitalWrite(*SpraySolenoidPin,HIGH);  //initialize off 
   logToSerials(F("Aeroponics_Tank object created"),true,1);
@@ -20,13 +14,7 @@ void Aeroponics_Tank::websiteEvent_Field(char * Field){ //When the website is op
   if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
     return;  //If did not match:return control to caller fuction
   }
-  else{ //if the component name matches with the object name
-    //if(strcmp_P(field,(PGM_P)F("QuietEnabled"))==0) {setQuietOnOff(WebServer.getArgBoolean());}
-    //else if(strcmp_P(field,(PGM_P)F("RefillBeforeQuiet"))==0) {setQuietRefillOnOff(WebServer.getArgBoolean());}
-    // else if(strcmp_P(field,(PGM_P)F("QuietFromHour"))==0) {setQuietFromHour(WebServer.getArgInt());}
-    // else if(strcmp_P(field,(PGM_P)F("QuietFromMinute"))==0) {setQuietFromMinute(WebServer.getArgInt());}
-    // else if(strcmp_P(field,(PGM_P)F("QuietToHour"))==0) {setQuietToHour(WebServer.getArgInt());}
-    // else if(strcmp_P(field,(PGM_P)F("QuietToMinute"))==0) {setQuietToMinute(WebServer.getArgInt());}     
+  else{ //if the component name matches with the object name  
     Aeroponics::websiteEvent_Field(Field);
   }
 }
@@ -54,7 +42,7 @@ void Aeroponics_Tank::refresh_Sec(){
         }      
     }
   }
-  if( PumpOK && checkQuietTime() && Aeroponics::FeedbackPressureSensor -> getPressure() <= *PressureLow){ //if pump is not disabled and quiet time not active and Pressure reached low limit: turn on pump 
+  if( PumpOK && Aeroponics::FeedbackPressureSensor -> getPressure() <= *PressureLow){ //if pump is not disabled and Pressure reached low limit: turn on pump 
         if(!PumpOn && !BypassSolenoidOn){ //start the bypass
           if(GBox -> BoxSettings -> DebugEnabled)logToSerials(F("Starting bypass"),true);
           BypassSolenoidOn = true; 
@@ -90,10 +78,8 @@ void Aeroponics_Tank::report(){
   logToSerials( &LongMessage, false,1); //first print Aeroponics_Tank specific report, without a line break  
   Aeroponics::report();  //then print parent class report  
   memset(&LongMessage[0], 0, sizeof(LongMessage));    
-  strcat_P(LongMessage,(PGM_P)F("QuietEnabled:"));strcat(LongMessage,yesNoToText(*QuietEnabled));
-  strcat_P(LongMessage,(PGM_P)F(" ; RefillBeforeQuiet:"));strcat(LongMessage,yesNoToText(*RefillBeforeQuiet));
-  strcat_P(LongMessage,(PGM_P)F(" ; QuietFrom:"));strcat(LongMessage,timeToText(*QuietFromHour,*QuietFromMinute));
-  strcat_P(LongMessage,(PGM_P)F(" ; QuietTo:"));strcat(LongMessage,timeToText(*QuietToHour,*QuietToMinute));
+  // strcat_P(LongMessage,(PGM_P)F("QuietEnabled:"));strcat(LongMessage,yesNoToText(*QuietEnabled));
+  // strcat_P(LongMessage,(PGM_P)F(" ; RefillBeforeQuiet:"));strcat(LongMessage,yesNoToText(*RefillBeforeQuiet));
   logToSerials( &LongMessage, true,1); //Print rarely used settings last  
  }
 
@@ -149,56 +135,6 @@ void Aeroponics_Tank::setPressureHigh(float PressureHigh){
 //    }     
 // }
 
-//Quiet time section: Blocks running the pump in a pre-defined time range
-
-void Aeroponics_Tank::setQuietOnOff(bool State){
-  *QuietEnabled = State;
-  if(*QuietEnabled){ 
-    GBox -> addToLog(F("Quiet mode enabled"));
-    GBox -> Sound1 -> playOnSound();
-    }
-  else {
-    GBox -> addToLog(F("Quiet mode disabled"));
-    GBox -> Sound1 -> playOffSound();
-    }
-}
-
-bool Aeroponics_Tank::checkQuietTime() {  
-  if(*QuietEnabled){
-    time_t Now = now(); // Get the current time
-    int CombinedFromTime = *QuietFromHour * 100 + *QuietFromMinute;
-    int CombinedToTime = *QuietToHour * 100 + *QuietToMinute;
-    int CombinedCurrentTime = hour(Now) * 100 + minute(Now);
-    if(*RefillBeforeQuiet && PumpOK && CombinedFromTime == CombinedCurrentTime && millis() - LastRefill > 120000 ){
-      setPumpOn(false); 
-      LastRefill = millis();
-    }
-    if(CombinedFromTime <= CombinedToTime)  //no midnight turnover, Example: On 8:10, Off: 20:10
-    {
-      if(CombinedFromTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedToTime){return false;} //do not allow running the pump
-      else  return true;  //allow running   
-    }
-    else   //midnight turnover, Example: On 21:20, Off: 9:20
-    {
-      if(CombinedFromTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedToTime){return false; } //do not allow running the pump
-      else  return true;  //allow running    
-    }
-  }
-  else return true; //always allow if quiet mode is not enabled
-  return false;  //getting rid of  warning: control reaches end of non-void function
-}
-
-void Aeroponics_Tank::setQuietRefillOnOff(bool State){
-  *RefillBeforeQuiet = State;
-  if(*RefillBeforeQuiet){ 
-    GBox -> addToLog(F("Refill before quiet enabled"));
-    GBox -> Sound1 -> playOnSound();
-    }
-  else {
-    GBox -> addToLog(F("Refill before quiet disabled"));
-    GBox -> Sound1 -> playOffSound();
-    }  
-}
 
 void Aeroponics_Tank::sprayNow(bool DueToHighPressure){   
   if(*SprayEnabled || DueToHighPressure){

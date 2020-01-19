@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 25;
+static const byte Version = 26;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: 
 //Global constants
@@ -101,12 +101,6 @@ typedef struct
     byte SpraySolenoidPin;  //Power relay Port 1 - Aeroponics spray solenoid (Only used with Aeroponics_Tank module)
     float PressureLow= 5.0; //Aeroponics - Turn on pump below this pressure (bar)
     float PressureHigh = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)
-    bool QuietEnabled = false;  //Enable/disable quiet time then pump should not run
-    bool RefillBeforeQuiet = true; //Enable/disable refill before quiet time
-    byte QuietFromHour = 23;  //Quiet time to block pump - hour
-    byte QuietFromMinute = 0; //Quiet time to block pump - minute
-    byte QuietToHour = 6; //Quiet time end - hour
-    byte QuietToMinute = 0; //Quiet time end - minute
   };
   struct AeroponicsSettings_TankSpecific Aero_T1_Specific = {.SpraySolenoidPin= 22};
 

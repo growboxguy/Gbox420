@@ -79,11 +79,11 @@ void PressureSensor::readOffset(){  //Should only be called when there is 0 pres
   GBox -> addToLog(LongMessage);
 }
 
-float PressureSensor::getPressure(bool ReturnAverage = true){
+float PressureSensor::getPressure(bool ReturnAverage){
   return Pressure -> getFloat(ReturnAverage);
 }
 
-char * PressureSensor::getPressureText(bool IncludeUnits, bool ReturnAverage = true){
+char * PressureSensor::getPressureText(bool IncludeUnits, bool ReturnAverage){
   if(IncludeUnits) return pressureToText(Pressure -> getFloat(ReturnAverage));
   else return Pressure -> getFloatText(ReturnAverage);
 }
