@@ -27,9 +27,9 @@ private:
   byte *DigitalPin;    //D0 - LM393 light sensor digital in
   byte *AnalogPin;     //A0 - LM393 light sensor analog in
   RollingAverage *LightReading; //keeps an average of previous readings: Smoothens sensor readings
-  void calibrate();
+  void calibrate(bool AddToLog = true);
   bool Dark;
-  bool CalibrateRequested;
+  bool CalibrateRequested = false;
   int MaxReading = 0;  //Analog reading with maximum brightness
   int MinReading = 0;  //Analog reading with minimum brightness
   int DarkReading = 0; //Analog reading with lights off

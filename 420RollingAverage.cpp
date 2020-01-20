@@ -49,7 +49,7 @@ int RollingAverage::updateAverage(int LatestReading){
    }   
   } 
   int Average = Sum / RollingAverageQueueDepth;        
-    if(GBox -> BoxSettings -> DebugEnabled){ 
+    if(GBox != NULL && GBox -> BoxSettings -> DebugEnabled){ 
      memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable       
      strcat(LongMessage,toText(Oldest));
      strcat_P(LongMessage,(PGM_P)F(":Reading:")); strcat(LongMessage,toText(LatestReading)); 

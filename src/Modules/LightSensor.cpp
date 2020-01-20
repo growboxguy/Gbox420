@@ -10,7 +10,7 @@ LightSensor::LightSensor(const __FlashStringHelper * Name, GrowBox * GBox, Setti
   pinMode(*DigitalPin, INPUT);
   pinMode(*AnalogPin, INPUT);
   LightReading = new RollingAverage();
-  triggerCalibration();
+  calibrate(false);
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
   GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
@@ -60,7 +60,7 @@ void LightSensor::triggerCalibration(){ //website signals to calibrate light sen
   CalibrateRequested = true; 
 }
 
-void LightSensor::calibrate(){
+void LightSensor::calibrate(bool AddToLog){
   CalibrateRequested=false;  
   bool LastStatus = LightSource -> getStatus();  //TODO: This should be more generic and support different Lights objects passed as a parameter
   byte LastBrightness = LightSource -> getBrightness();
@@ -76,11 +76,13 @@ void LightSensor::calibrate(){
   MaxReading = 1023 - analogRead(*AnalogPin);
   LightSource -> setBrightness(LastBrightness,false); //restore original brightness, without adding a log entry
   LightSource -> setLightOnOff(LastStatus,false); //restore original state, without adding a log entry
-  GBox -> addToLog(F("Lights calibrated"),4);
-  if(GBox -> BoxSettings -> DebugEnabled){
-         logToSerials(F("OFF - "),false,4); logToSerials(&MinReading,false,0);
-         logToSerials(F(", 0% - "),false,0); logToSerials(&MinReading,false,0);
-         logToSerials(F(", 100% - "),false,0); logToSerials(&MaxReading,true,0);
+  if(AddToLog){
+    GBox -> addToLog(F("Lights calibrated"),4);
+    if(GBox -> BoxSettings -> DebugEnabled){
+          logToSerials(F("OFF - "),false,4); logToSerials(&MinReading,false,0);
+          logToSerials(F(", 0% - "),false,0); logToSerials(&MinReading,false,0);
+          logToSerials(F(", 100% - "),false,0); logToSerials(&MaxReading,true,0);
+    }
   }
 }
 

@@ -92,13 +92,13 @@ void Aeroponics_Tank::refresh_Sec(){
   checkRelays();  
 }
 
-// void Aeroponics_Tank::report(){
-//   Common::report();
-//   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
-  
-//   logToSerials( &LongMessage, false,1); //first print Aeroponics_Tank specific report, without a line break  
-//   Aeroponics::report();  //then print parent class report   
-//  }
+void Aeroponics_Tank::report(){
+  Common::report();
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
+  strcat_P(LongMessage,(PGM_P)F("Pressure:"));strcat(LongMessage,FeedbackPressureSensor -> getPressureText(true,false));
+  logToSerials( &LongMessage, false,1); //first print Aeroponics_Tank specific report, without a line break  
+  Aeroponics::report();  //then print parent class report   
+ }
 
 void Aeroponics_Tank::checkRelays(){
   if(SpraySolenoidOn) digitalWrite(*SpraySolenoidPin, LOW); else digitalWrite(*SpraySolenoidPin, HIGH); 

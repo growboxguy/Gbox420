@@ -47,8 +47,8 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
   AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
-  logToSerials(F("GrowBox object created, refreshing..."), true,2);
-  refreshAll(); //Triggers the refresh of all components
+  logToSerials(F("GrowBox object created, refreshing..."), true,0);
+  refreshAll();
   addToLog(F("GrowBox initialized"),0);
 }
 
@@ -77,7 +77,7 @@ void GrowBox::websiteEvent_Button(char * Button){ //When a button is pressed on 
   else{  
     if(strcmp_P(ShortMessage,(PGM_P)F("SheetsTrigger"))==0) {ReportToGoogleSheets(true);}
     else if(strcmp_P(ShortMessage,(PGM_P)F("ReportTrigger"))==0) {runReport();} 
-    else if(strcmp_P(ShortMessage,(PGM_P)F("Refresh"))==0) {RefreshAllRequested = true;}   //Website signals to refresh all sensor readings    
+    else if(strcmp_P(ShortMessage,(PGM_P)F("Refresh"))==0) {triggerRefresh();}   //Website signals to refresh all sensor readings    
   }  
 }
 
@@ -99,7 +99,7 @@ void GrowBox::refresh_FiveSec(){
   if(BoxSettings -> DebugEnabled) Common::refresh_FiveSec();
   if(RefreshAllRequested) {
     RefreshAllRequested = false;
-    refreshAll(true);
+    refreshAll();
   }
 }
 
@@ -113,13 +113,16 @@ void GrowBox::refresh_QuarterHour(){
   ReportToGoogleSheetsTrigger();
 }
 
-void GrowBox::refreshAll(bool AddToLog){
-  if(AddToLog)addToLog(F("Refresh triggered"),false);  
+void GrowBox::triggerRefresh(){
+  addToLog(F("Refresh triggered"),false);
+  RefreshAllRequested = true;
+}
+
+void GrowBox::refreshAll(){
   runSec();
   runFiveSec(); 
   runMinute();
   runQuarterHour();
-  runReport();
 }
 
 void GrowBox::runReport(){  //Reports component status to Serial output (Arduino and ESP)

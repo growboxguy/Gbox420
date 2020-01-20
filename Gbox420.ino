@@ -178,15 +178,15 @@ Settings* loadSettings(){
   Settings EEPROMSettings; //temporary storage with "Settings" type
   eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));   //Load EEPROM stored settings into EEPROMSettings
   if(DefaultSettings -> CompatibilityVersion != EEPROMSettings.CompatibilityVersion){  //Making sure the EEPROM loaded settings are compatible with the sketch
-    logToSerials(F("Incompatible stored settings detected, updating EEPROM..."),false);
+    logToSerials(F("Incompatible stored settings detected, updating EEPROM..."),false,0);
     saveSettings(DefaultSettings);  //overwrites EEPROM stored settings with defaults from this sketch
   }
   else {
-    logToSerials(F("Same settings version detected, applying EEPROM settings..."),false,1);
+    logToSerials(F("Same settings version detected, applying EEPROM settings..."),false,0);
     //DefaultSettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
     memcpy(DefaultSettings,&EEPROMSettings,sizeof(Settings)); 
   }
-  logToSerials(F("done"),true);
+  logToSerials(F("done"),true,1);
   return DefaultSettings;
 }
 
@@ -195,5 +195,5 @@ void restoreDefaults(Settings* SettingsToOverwrite){
   Settings DefaultSettings; //new "Settings" type objects with sketch defaults
   memcpy(&SettingsToOverwrite,&DefaultSettings,sizeof(SettingsToOverwrite));  
   saveSettings(SettingsToOverwrite );
-  GBox -> addToLog(F("Default settings restored"));
+  GBox -> addToLog(F("Default settings restored"),1);
 }

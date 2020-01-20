@@ -82,7 +82,8 @@ class GrowBox : public Common
     void setMetricSystemEnabled(bool MetricEnabled); 
     void setPushingBoxLogRelayID(char * ID);
     char * eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"] 
-    void refreshAll(bool AddToLog = false);
+    void triggerRefresh();
+    void refreshAll();
     void runReport(); 
     Common* ReportQueue[QueueDepth];
     Common* RefreshQueue_Sec[QueueDepth];

@@ -9,7 +9,10 @@
 			"**/.git": true,
 			"**/libraries": true,
 			"**/Archive": true
-		  }
+		  },
+		  "search.exclude": {
+			"**/Test_Sketches": true
+		   }
 	}
 	
 }

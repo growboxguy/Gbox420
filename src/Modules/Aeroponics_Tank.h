@@ -13,7 +13,7 @@ class Aeroponics_Tank : public Aeroponics
     void websiteEvent_Button(__attribute__((unused)) char * Button);
     void websiteEvent_Field(char * Field);
     void refresh_Sec();
-    //void report();
+    void report();
 
   private:
     void checkRelays();

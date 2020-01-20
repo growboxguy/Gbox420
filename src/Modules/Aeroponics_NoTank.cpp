@@ -77,7 +77,7 @@ void Aeroponics_NoTank::refresh_Sec(){ //pump directly connected to aeroponics t
 void Aeroponics_NoTank::report(){
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable  
-  strcat_P(LongMessage,(PGM_P)F("SprayPressure:"));strcat(LongMessage,pressureToText(LastSprayPressure));
+  strcat_P(LongMessage,(PGM_P)F("LastSprayPressure:"));strcat(LongMessage,pressureToText(LastSprayPressure));
   strcat_P(LongMessage,(PGM_P)F(" ; BlowOffTime:"));strcat(LongMessage,toText(*BlowOffTime));
   logToSerials(&LongMessage, false,1); //first print Aeroponics_Tank specific report, without a line break
   Aeroponics::report();  //then print parent class report
