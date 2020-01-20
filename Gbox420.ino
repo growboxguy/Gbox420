@@ -2,16 +2,15 @@
 //Sketch for grow box monitoring and controlling
 
 //HELLO, You are probably here looking for the following tab:
-// 420Settings.h : Pin assignment, First time setup, Default settings 
+//420Settings.h : Pin assignment, First time setup, Default settings 
 
 //TODO:
 //Add pump cutout during aero spray in case pressure limit is reached
-//HempyBucket controls 
-//MQTT reporting
-//Support for storing multiple Settings objects in EEPROM (?Support for controlling more grow boxes from a single arduino? )
+//HempyBucket controls
+//Move metric/imperial selection to 420Settings.h, remove it from the Settings Webpage
 
 #include "Arduino.h" 
-#include "avr/wdt.h" //Watchdog timer
+#include "avr/wdt.h" //Watchdog timer for detecting a crash and automatically resetting the board
 #include "avr/boot.h" //Watchdog timer related bug fix
 #include "TimerThree.h"  //Interrupt handling for webpage
 #include "ELClient.h" //ESP-link
@@ -20,12 +19,12 @@
 #include "ELClientRest.h" //ESP-link - REST API
 #include "Thread.h" //Splitting functions to threads for timing
 #include "StaticThreadController.h"  //Grouping threads
-#include "420Common.h"  //Base class where plugins inherits from  
-#include "GrowBox.h" //Represents a complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
+#include "420Common.h"  //Base class where all components inherits from  
+#include "GrowBox.h" //Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variable initialization
-char LongMessage[] = "";   //temp storage for assembling long messages (REST API, MQTT API)
-char ShortMessage[] = "";  //temp storage for assembling short messages (Log entries, Error messages)
+char LongMessage[] = "";  //temp storage for assembling long messages (REST API, MQTT API)
+char ShortMessage[] = ""; //temp storage for assembling short messages (Log entries, Error messages)
 char CurrentTime[] = ""; //buffer for storing current time in text
 
 //Component initialization
@@ -33,7 +32,7 @@ HardwareSerial& ArduinoSerial = Serial;  //Reference to the Arduino Serial
 HardwareSerial& ESPSerial = Serial3;    //Reference to the ESP Link Serial
 ELClient ESPLink(&ESPSerial);  //ESP-link. Both SLIP and debug messages are sent to ESP over the ESP Serial link
 ELClientWebServer WebServer(&ESPLink); //ESP-link WebServer API
-ELClientCmd ESPCmd(&ESPLink); //ESP-link - Get current time from the internet using NTP
+ELClientCmd ESPCmd(&ESPLink); //ESP-link - Helps getting the current time from the internet using NTP
 ELClientRest PushingBoxRestAPI(&ESPLink); //ESP-link REST API
 GrowBox * GBox;  //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
@@ -46,18 +45,18 @@ StaticThreadController<4> ThreadControl (&OneSecThread,&FiveSecThread,&MinuteThr
 
 void setup() {  // put your setup code here, to run once:
   ArduinoSerial.begin(115200);    //2560mega console output
-  ESPSerial.begin(115200);  //esp WiFi console output
+  ESPSerial.begin(115200);  //ESP WiFi console output
   pinMode(13, OUTPUT); //onboard LED - Heartbeat every second to confirm code is running
   logToSerials(F("GrowBox initializing..."),true,0); //logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
   
-  GBox = new GrowBox(F("GBox1"), loadSettings());  //This is the main object representing an entire Grow Box with all components in it.  
-  ESPLink.resetCb = &resetWebServer;  //Callback subscription: When WiFi reconnects, restart the WebServer
+  GBox = new GrowBox(F("GBox1"), loadSettings());  //This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters 
+  ESPLink.resetCb = &resetWebServer;  //Callback subscription: What to do when WiFi reconnects
   resetWebServer();  //reset the WebServer 
-  setTime(getNtpTime()); 
+  setTime(getNtpTime()); //Get the current time over the internet using NTP
   
-  //Threads - Setting up how often threads should be triggered
+  //Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.setInterval(1000);
   OneSecThread.onRun(runSec);
   FiveSecThread.setInterval(5000);
@@ -67,7 +66,7 @@ void setup() {  // put your setup code here, to run once:
   QuarterHourThread.setInterval(900000);
   QuarterHourThread.onRun(runQuarterHour);
   
-   //Start interrupts to handle request from ESP-Link firmware
+  //Start interrupts to handle request from ESP-Link firmware
   Timer3.initialize(500);  //check every 0.5sec, using a larger interval can cause web requests to time out
   Timer3.attachInterrupt(processTimeCriticalStuff);
   Timer3.start();
@@ -90,7 +89,7 @@ void processTimeCriticalStuff(){
 void runSec(){
   wdt_reset(); //reset watchdog timeout    
   HeartBeat(); //Blinks built-in led
-  GBox -> runSec();
+  GBox -> runSec();  //Calls the runSec() method in GrowBox.cpp
 }
 
 void runFiveSec(){
@@ -144,7 +143,7 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
   logToSerials(F("ESP-link connected"),true,0);
 }
 
-void loadCallback(__attribute__((unused)) char * url){ //called when website is loaded.
+void loadCallback(__attribute__((unused)) char * url){ //called when website is loaded. Runs through all components that subscribed for this event
   for(int i=0;i<GBox -> WebsiteQueueItemCount_Load;i++){
     GBox -> WebsiteQueue_Load[i] -> websiteEvent_Load(url);
   } 
@@ -162,7 +161,7 @@ void buttonPressCallback(char *button){  //Called when any button on the website
     GBox -> WebsiteQueue_Button[i] -> websiteEvent_Button(button);
   }
   if (strcmp_P(ShortMessage,(PGM_P)F("RestoreDefaults"))==0) { restoreDefaults(GBox -> BoxSettings); }  
-  saveSettings(false,GBox -> BoxSettings); 
+  saveSettings(GBox -> BoxSettings); 
 }
 
 void setFieldCallback(char * field){  //Called when any field on the website is updated.
@@ -170,24 +169,23 @@ void setFieldCallback(char * field){  //Called when any field on the website is 
   for(int i=0;i<GBox -> WebsiteQueueItemCount_Field;i++){
     GBox -> WebsiteQueue_Field[i] -> websiteEvent_Field(field);
   }     
-  saveSettings(false,GBox -> BoxSettings);
+  saveSettings(GBox -> BoxSettings);
 } 
 
 //////////////////////////////////////////
 //EEPROM stored Settings related functions
 
-void saveSettings(bool LogThis, Settings * SettingsToSave){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
+void saveSettings(Settings * SettingsToSave){ //do not put this in the loop, EEPROM has a write limit of 100.000 cycles
   eeprom_update_block((const void*)SettingsToSave, (void*)0, sizeof(Settings)); //update_block only writes the bytes that changed
-  if(LogThis) logToSerials(F("Settings saved to EEPROM"),true);
 }
 
 Settings* loadSettings(){
-  Settings* DefaultSettings = new Settings();  //This is where settings get are stored, first it takes the sketch default settings defined in 420Settings.h
+  Settings* DefaultSettings = new Settings();  //This is where settings are stored, first it takes the sketch default settings defined in 420Settings.h
   Settings EEPROMSettings; //temporary storage with "Settings" type
   eeprom_read_block((void*)&EEPROMSettings, (void*)0, sizeof(EEPROMSettings));   //Load EEPROM stored settings into EEPROMSettings
   if(DefaultSettings -> CompatibilityVersion != EEPROMSettings.CompatibilityVersion){  //Making sure the EEPROM loaded settings are compatible with the sketch
     logToSerials(F("Incompatible stored settings detected, updating EEPROM..."),false);
-    saveSettings(false,DefaultSettings);  //overwrites EEPROM stored settings with defaults from this sketch
+    saveSettings(DefaultSettings);  //overwrites EEPROM stored settings with defaults from this sketch
   }
   else {
     logToSerials(F("Same settings version detected, applying EEPROM settings..."),false,1);
@@ -202,6 +200,6 @@ void restoreDefaults(Settings* SettingsToOverwrite){
   logToSerials(F("Restoring settings from sketch defaults..."),false,0);
   Settings DefaultSettings; //new "Settings" type objects with sketch defaults
   memcpy(&SettingsToOverwrite,&DefaultSettings,sizeof(SettingsToOverwrite));  
-  saveSettings(false,SettingsToOverwrite );
+  saveSettings(SettingsToOverwrite );
   GBox -> addToLog(F("Default settings restored"));
 }

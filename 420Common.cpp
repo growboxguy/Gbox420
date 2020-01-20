@@ -6,23 +6,23 @@ Common::Common(const __FlashStringHelper * Name){
 }
 
 void Common::report(){
-   logToSerials(Name,false,4);logToSerials(F("-"),false,1);  //Prints "NAME: " to the console
+   logToSerials(Name,false,4);logToSerials(F("-"),false,1);  //Prints "    COMPONENTNAME -" to the console
 }
 
 void Common::refresh_Sec(){
-  logToSerials(Name,false,2);logToSerials(F("refreshing (1sec)"),true,1);  //Prints "NAME refreshing" to the console
+  logToSerials(Name,false,2);logToSerials(F("refreshing (1sec)"),true,1);  //Prints "COMPONENTNAME refreshing (1 sec)" to the console
 }
 
 void Common::refresh_FiveSec(){
-  logToSerials(Name,false,2);logToSerials(F("refreshing (5sec)"),true,1);  //Prints "NAME refreshing" to the console
+  logToSerials(Name,false,2);logToSerials(F("refreshing (5sec)"),true,1);  //Prints "COMPONENTNAME refreshing (5 sec)" to the console
 }
 
 void Common::refresh_Minute(){
-  logToSerials(Name,false,2);logToSerials(F("refreshing (1min)"),true,1);  //Prints "NAME refreshing" to the console
+  logToSerials(Name,false,2);logToSerials(F("refreshing (1min)"),true,1);  //Prints "COMPONENTNAME refreshing (1 min)" to the console
 }
 
 void Common::refresh_QuarterHour(){
-  logToSerials(Name,false,2);logToSerials(F("refreshing (15min)"),true,1);  //Prints "NAME refreshing" to the console
+  logToSerials(Name,false,2);logToSerials(F("refreshing (15min)"),true,1);  //Prints "COMPONENTNAME refreshing (15 min)" to the console
 }
 
 char * Common::getWebsiteComponentName(const __FlashStringHelper * ComponentName){
@@ -33,7 +33,9 @@ char * Common::getWebsiteComponentName(const __FlashStringHelper * ComponentName
     return ReturnChar;
 }
 
-bool Common::isThisMyComponent(char const * lookupName){  //this is the name of the web component that triggered the action, in the form of: InstanceName_functionName . Examles: Light1_On , Light1_OnTime, LightSensor1_Raw from GrowBox.html 
+bool Common::isThisMyComponent(char const * lookupName){  //When a web component triggers an action, this function decides if the component belonged to the class
+// lookupName is in the form of: InstanceName_FunctionName . Examles: Light1_On , Light1_OnTime, LightSensor1_Raw 
+  
   // Serial.print("Component :");
   // Serial.println(lookupName);
   // Serial.print("Object :");

@@ -20,24 +20,23 @@ static char Logs[LogDepth][MaxTextLength];  //two dimensional array for storing 
 GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Common(Name) { //Constructor
   this -> BoxSettings = BoxSettings;
   SheetsReportingFrequency = &BoxSettings -> SheetsReportingFrequency;
-  logToSerials(F(" "),true,0); //add a breakrow to console log
+  logToSerials(F(" "),true,0); //adds a line break to the console log
 
-  Sound1 = new Sound(F("Sound1"), this, &BoxSettings -> Sound1);
-  InFan = new Fan(F("InFan"), this, &BoxSettings -> InFan);
+  Sound1 = new Sound(F("Sound1"), this, &BoxSettings -> Sound1); //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, VARIABLENAME))
+  InFan = new Fan(F("InFan"), this, &BoxSettings -> InFan); //passing: Component name, GrowBox object the component belongs to, Default settings)
   ExFan = new Fan(F("ExFan"), this, &BoxSettings -> ExFan);
-  Light1 = new Lights(F("Light1"), this, &BoxSettings -> Light1);   //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, LightOnHour))
-  LightSensor1 = new LightSensor(F("LightSensor1"), this, &BoxSettings -> LightSensor1, Light1);
+  Light1 = new Lights(F("Light1"), this, &BoxSettings -> Light1);
+  LightSensor1 = new LightSensor(F("LightSensor1"), this, &BoxSettings -> LightSensor1, Light1); //Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
   Power1 = new PowerSensor(F("Power1"), this, &Serial2);
   //Power1 = new PowerSensorV3(F("Power1"), this, &Serial2); //Only for PZEM004T V3.0
-  InDHT = new DHTSensor(F("InDHT"), this, &BoxSettings -> InDHT);  //passing: Component name, GrowBox object the component belongs to, Default settings)
-  ExDHT = new DHTSensor(F("ExDHT"), this, &BoxSettings -> ExDHT);  //passing: Component name, GrowBox object the component belongs to, Default settings)
+  InDHT = new DHTSensor(F("InDHT"), this, &BoxSettings -> InDHT); 
+  ExDHT = new DHTSensor(F("ExDHT"), this, &BoxSettings -> ExDHT);
   Pressure1 = new PressureSensor(F("Pressure1"),this,&BoxSettings -> Pressure1);
-  Aero_T1 = new Aeroponics_Tank(F("Aero_T1"), this, &BoxSettings ->Aero_T1_Common, &BoxSettings -> Aero_T1_Specific, Pressure1);
+  Aero_T1 = new Aeroponics_Tank(F("Aero_T1"), this, &BoxSettings ->Aero_T1_Common, &BoxSettings -> Aero_T1_Specific, Pressure1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
   Aero_NT1 = new Aeroponics_NoTank(F("Aero_NT1"), this, &BoxSettings -> Aero_NT1_Common, &BoxSettings -> Aero_NT1_Specific, Pressure1);
   PHSensor1 = new PHSensor(F("PHSensor1"),this, &BoxSettings -> PHSensor1);  
   WaterTemp1 = new WaterTempSensor(F("WaterTemp1"),this,&BoxSettings -> WaterTemp1);
   WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"),this,&BoxSettings -> WaterLevel1);
-  
   //ModuleSkeleton1 = new ModuleSkeleton(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
   //ModuleSkeleton2 = new ModuleSkeleton(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
 
@@ -49,40 +48,26 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
   AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
   logToSerials(F("GrowBox object created"), true,2);
-  refreshAll(false);
+  refreshAll(); //Triggers the refresh of all components
   addToLog(F("GrowBox initialized"),0);
-}
-
-void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char * url) //called when website is refreshed.
-{ 
-  WebServer.setArgString(F("Time"), getFormattedTime(false));
-  WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON(false)); //Last events that happened in JSON format  
 }
 
 void GrowBox::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
   if (strcmp(url,"/Settings.html.json")==0){  
   WebServer.setArgInt(getWebsiteComponentName(F("DebugEnabled")), BoxSettings -> DebugEnabled);
   WebServer.setArgInt(getWebsiteComponentName(F("MetricSystemEnabled")), BoxSettings -> MetricSystemEnabled);
-  //WebServer.setArgBoolean(getWebsiteComponentName(F("MqttEnabled")), BoxSettings -> ReportToMqtt);
   WebServer.setArgBoolean(getWebsiteComponentName(F("SheetsEnabled")), BoxSettings -> ReportToGoogleSheets);
   WebServer.setArgInt(getWebsiteComponentName(F("SheetsFrequency")), BoxSettings -> SheetsReportingFrequency);
   WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), BoxSettings -> PushingBoxLogRelayID);  
   //WebServer.setArgString(F("PushingBoxEmailRelayID"), BoxSettings -> PushingBoxEmailRelayID);
+  //WebServer.setArgBoolean(getWebsiteComponentName(F("MqttEnabled")), BoxSettings -> ReportToMqtt);
   }
 } 
 
-void GrowBox::websiteEvent_Field(char * Field){ //When the website field is submitted
-  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
-  }
-  else{ //if the component name matches with the object name   
-    if(strcmp_P(ShortMessage,(PGM_P)F("DebugEnabled"))==0) {setDebugOnOff(WebServer.getArgBoolean());}
-    else if(strcmp_P(ShortMessage,(PGM_P)F("MetricSystemEnabled"))==0) {setMetricSystemEnabled(WebServer.getArgBoolean());}
-    //else if(strcmp_P(ShortMessage,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
-    else if(strcmp_P(ShortMessage,(PGM_P)F("SheetsEnabled"))==0) {setSheetsReportingOnOff(WebServer.getArgBoolean());}
-    else if(strcmp_P(ShortMessage,(PGM_P)F("SheetsFrequency"))==0) {setSheetsReportingFrequency(WebServer.getArgInt());}
-    else if(strcmp_P(ShortMessage,(PGM_P)F("PushingBoxLogRelayID"))==0) {setPushingBoxLogRelayID(WebServer.getArgString());}    
-  }  
+void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char * url) //called when website is refreshed.
+{ 
+  WebServer.setArgString(F("Time"), getFormattedTime());
+  WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON()); //Last events that happened in JSON format  
 }
 
 void GrowBox::websiteEvent_Button(char * Button){ //When a button is pressed on the website
@@ -92,14 +77,28 @@ void GrowBox::websiteEvent_Button(char * Button){ //When a button is pressed on 
   else{ //if the component name matches with the object name   
     if(strcmp_P(ShortMessage,(PGM_P)F("SheetsTrigger"))==0) {ReportToGoogleSheets(true);}
     else if(strcmp_P(ShortMessage,(PGM_P)F("ReportTrigger"))==0) {runReport();} 
-    else if(strcmp_P(ShortMessage,(PGM_P)F("Refresh"))==0) {RefreshAllRequest = true;}   //Website signals to refresh all sensor readings
+    else if(strcmp_P(ShortMessage,(PGM_P)F("Refresh"))==0) {RefreshAllRequested = true;}   //Website signals to refresh all sensor readings
   }  
-}  
+}
+
+void GrowBox::websiteEvent_Field(char * Field){ //When the website field is submitted
+  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
+    return;  //If did not match:return control to caller fuction
+  }
+  else{ //if the component name matches with the object name   
+    if(strcmp_P(ShortMessage,(PGM_P)F("DebugEnabled"))==0) {setDebugOnOff(WebServer.getArgBoolean());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("MetricSystemEnabled"))==0) {setMetricSystemEnabled(WebServer.getArgBoolean());}    
+    else if(strcmp_P(ShortMessage,(PGM_P)F("SheetsEnabled"))==0) {setSheetsReportingOnOff(WebServer.getArgBoolean());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("SheetsFrequency"))==0) {setSheetsReportingFrequency(WebServer.getArgInt());}
+    else if(strcmp_P(ShortMessage,(PGM_P)F("PushingBoxLogRelayID"))==0) {setPushingBoxLogRelayID(WebServer.getArgString());}  
+    //else if(strcmp_P(ShortMessage,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}  
+  }  
+}
 
 void GrowBox::refresh_FiveSec(){
   if(BoxSettings -> DebugEnabled) Common::refresh_FiveSec();
-  if(RefreshAllRequest) {
-    RefreshAllRequest = false;
+  if(RefreshAllRequested) {
+    RefreshAllRequested = false;
     refreshAll();
   }
 }
@@ -114,9 +113,8 @@ void GrowBox::refresh_QuarterHour(){
   ReportToGoogleSheetsTrigger();
 }
 
-void GrowBox::refreshAll(bool AddToLog){  //implementing the virtual refresh function from Common
+void GrowBox::refreshAll(bool AddToLog){
   if(AddToLog)addToLog(F("Refresh triggered"),false);  
-  //trigger all threads at startup
   runSec();
   runFiveSec(); 
   runMinute();
@@ -124,7 +122,7 @@ void GrowBox::refreshAll(bool AddToLog){  //implementing the virtual refresh fun
   runReport();
 }
 
-void GrowBox::runReport(){ 
+void GrowBox::runReport(){  //Reports component status to Serial output (Arduino and ESP)
   getFormattedTime(true);
   getFreeMemory();  
   for(int i=0;i<reportQueueItemCount;i++){
@@ -164,7 +162,7 @@ void GrowBox::runQuarterHour(){
 }
 
 //////////////////////////////////////////////////////////////////
-//Thread Queues: Called based on thread scheduler
+//Thread Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
 
 void GrowBox::AddToReportQueue(Common* Component){
   if(QueueDepth>reportQueueItemCount) ReportQueue[reportQueueItemCount++] = Component;
@@ -192,7 +190,7 @@ void GrowBox::AddToRefreshQueue_QuarterHour(Common* Component){
 }
 
 //////////////////////////////////////////////////////////////////
-//Website queues: Called based on Website events on the ESP-link
+//Website queues: When a component needs to get notified of a Website events from the ESP-link
 
 void GrowBox::AddToWebsiteQueue_Load(Common* Component){
   if(QueueDepth>WebsiteQueueItemCount_Load) WebsiteQueue_Load[WebsiteQueueItemCount_Load++] = Component;
@@ -272,7 +270,7 @@ void GrowBox::setMetricSystemEnabled(bool MetricEnabled){
     InDHT -> Temp -> resetAverage(); 
     ExDHT -> Temp -> resetAverage();
     WaterTemp1 -> Temp -> resetAverage();
-    RefreshAllRequest = true; 
+    RefreshAllRequested = true; 
   }    
   if(BoxSettings -> MetricSystemEnabled) addToLog(F("Metric units"));
   else addToLog(F("Imperial units"));  
@@ -352,7 +350,7 @@ void GrowBox::ReportToGoogleSheets(bool CalledFromWebsite){
     PushingBoxRestAPI.get(LongMessage); //PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
   }
 }
-
+//This is how a sent out message looks like:
 //{parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Light1_Status":"0","Light1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Light1_Timer":"1","Light1_OnTime":"04:20","Light1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
 
 void GrowBox::setPushingBoxLogRelayID(char * ID){  

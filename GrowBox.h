@@ -2,6 +2,9 @@
 #include "420Common.h"
 #include "ELClientRest.h" //ESP-link - REST API
 
+//This class represents a complete growbox with all of its components
+//Responsible for setting up each module, updating their statuses and reporting it
+
 //forward declaration of classes
 class DHTSensor;  
 class LightSensor;
@@ -51,7 +54,7 @@ class GrowBox : public Common
     void refresh_Minute();
     void refresh_QuarterHour();
     void refreshAll(bool AddToLog = false);
-    bool RefreshAllRequest = false; 
+    bool RefreshAllRequested = false; 
     int * SheetsReportingFrequency;
     int SheetsRefreshCounter = 0;
  
@@ -61,7 +64,7 @@ class GrowBox : public Common
     void runMinute();
     void runQuarterHour(); 
 
-    char * eventLogToJSON(bool Append); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]  
+    char * eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]  
     void addToLog(const __FlashStringHelper* Text,byte indent=3);
     void addToLog(const char * Text,byte indent=3);
     void setDebugOnOff(bool State);

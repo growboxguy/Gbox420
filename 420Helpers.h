@@ -1,7 +1,7 @@
 #pragma once
 
-//This is a collection of common functions that all classes (GrowBox, PH reader, Lights, DHTSensor..) can use
-//Needs to be included in every module's header (.h) file:  #include "420Common.h"
+//This is a collection of common functions that every component can use
+//Needs to be included in the module's header (.h) file:  #include "420Common.h"
 
 #include "Arduino.h"  //every inheriting class have Arduino commands available
 #include "TimeLib.h" //Keeping track of time
@@ -26,7 +26,7 @@ extern char CurrentTime[20];
 //Class specific variables
 time_t getNtpTime();
 void getFreeMemory();
-char * getFormattedTime(bool PrintToSerials);  
+char * getFormattedTime(bool PrintToSerials = false);  
 float convertBetweenTempUnits(float);
 float convertBetweenPressureUnits(float); 
 char * toText(const __FlashStringHelper *);    
@@ -41,12 +41,13 @@ char * tempToText(float Temp);
 char * pressureToText(float Pressure);
 char * percentageToText(float Humidity);    
 char * onOffToText(bool Status);  
-char * yesNoToText(bool Status); 
-char * statusToText(bool Status);
+char * yesNoToText(bool Status);
 char * enabledToText(bool Status);
 
 //////////////////////////////////////////////////////////////////
 //Logging to Arduino Serial and ESP-link's Microcontroller Console (uC Console)
+//Uses templating to handle logging multiple variable types (int,float,char,bool..)
+//Functions implemented in header file due to: https://stackoverflow.com/questions/10632251/undefined-reference-to-template-function
 
 void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine=true,byte Indent=3);  //logs to both Arduino and ESP Link serial console, 2 optional parameters to adding a break line at after printing and the indentation in front
 template <class logLine> void logToSerials (logLine* ToPrint,bool BreakLine=true,byte Indent=3) { 

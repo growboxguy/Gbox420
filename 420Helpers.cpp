@@ -2,6 +2,15 @@
 #include "GrowBox.h"
 
 //////////////////////////////////////////
+//Debug
+
+void getFreeMemory(){
+  static char ReturnChar[MaxTextLength] = "";
+  itoa(freeMemory(), ReturnChar, 10);
+  logToSerials(F("Free memory(bytes): "),false,2); logToSerials(&ReturnChar,true,0);
+}
+
+//////////////////////////////////////////
 //Logging
 
 void logToSerials (const __FlashStringHelper* ToPrint,bool BreakLine,byte Indent) {
@@ -170,21 +179,7 @@ char * yesNoToText(bool Status){
    else return (char *)"NO";
 }
 
-char * statusToText(bool Status){
-   if(Status) return (char *)"OK";
-   else return (char *)"!!!";
-}
-
 char * enabledToText(bool Status){
    if(Status) return (char *)"ENABLED";
    else return (char *)"DISABLED";
-}
-
-//////////////////////////////////////////
-//Debug
-
-void getFreeMemory(){
-  static char ReturnChar[MaxTextLength] = "";
-  itoa(freeMemory(), ReturnChar, 10);
-  logToSerials(F("Free memory(bytes): "),false,2); logToSerials(&ReturnChar,true,0);
 }
