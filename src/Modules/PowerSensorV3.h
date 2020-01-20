@@ -10,14 +10,8 @@ class PowerSensorV3 : public Common
 {  
   public:
     PowerSensorV3(const __FlashStringHelper * Name, GrowBox * Gbox,HardwareSerial * SerialPort);  //constructor  
-    float Power; //Power sensor - W
-    float Energy; //Power sensor - Wh Total consumption 
-    float Voltage; //Power sensor - V
-    float Current; //Power sensor - A
-    float Frequency;
-    float PowerFactor;
     void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    void refresh_FiveSec();  //Called when component should refresh its state
+    void refresh_FiveSec(); 
     void report();
     char * getPowerText(bool IncludeUnits);
     char * getEnergyText(bool IncludeUnits);   
@@ -29,6 +23,12 @@ class PowerSensorV3 : public Common
   private:
     GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
     PZEM004Tv30 * Sensor; //for PZEM004T V3.0 model
+    float Power; //Power sensor - W
+    float Energy; //Power sensor - Wh Total consumption 
+    float Voltage; //Power sensor - V
+    float Current; //Power sensor - A
+    float Frequency;
+    float PowerFactor;
 
   protected:
 };

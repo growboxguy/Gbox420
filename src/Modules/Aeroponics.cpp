@@ -3,7 +3,7 @@
 
 // This is a virtual class (cannot be instanciated), parent of two classes:
 // -Aeroponics_NoTank: High pressure pump is directly connected to the aeroponics tote
-// -Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid (electric water valve)
+// -Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid for spraying
 
 Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, PressureSensor * FeedbackPressureSensor) : Common(Name){  //constructor
   this -> GBox = GBox;    
@@ -27,7 +27,7 @@ Aeroponics::Aeroponics(const __FlashStringHelper * Name, GrowBox * GBox, Setting
   GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
 }
 
-void Aeroponics::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
+void Aeroponics::websiteEvent_Load(__attribute__((unused)) char * url){ 
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *PumpTimeout);
     WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *PrimingTime);
@@ -36,7 +36,7 @@ void Aeroponics::websiteEvent_Load(__attribute__((unused)) char * url){ //When t
   }
 } 
 
-void Aeroponics::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is refreshed (5sec)
+void Aeroponics::websiteEvent_Refresh(__attribute__((unused)) char * url){ 
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Pressure")), FeedbackPressureSensor -> getPressureText(true,false));
     WebServer.setArgString(getWebsiteComponentName(F("SprayEnabled")), sprayStateToText());    
@@ -45,11 +45,11 @@ void Aeroponics::websiteEvent_Refresh(__attribute__((unused)) char * url){ //Whe
   }
 }
 
-void Aeroponics::websiteEvent_Button(char * Button){  //When a button is pressed on the website
-  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+void Aeroponics::websiteEvent_Button(char * Button){
+  if(!isThisMyComponent(Button)) { 
+    return;
   }
-  else{ //if the component name matches with the object name     
+  else{    
     if (strcmp_P(ShortMessage,(PGM_P)F("PumpOn"))==0) { setPumpOn(true); }
     else if (strcmp_P(ShortMessage,(PGM_P)F("PumpOff"))==0) { setPumpOff(true); }
     else if (strcmp_P(ShortMessage,(PGM_P)F("PumpDisable"))==0) { PumpDisable(); }
@@ -84,7 +84,15 @@ void Aeroponics::checkRelays(){
     else digitalWrite(*PumpPin, HIGH);
     if(BypassSolenoidOn) digitalWrite(*BypassSolenoidPin, LOW); 
     else digitalWrite(*BypassSolenoidPin, HIGH);
-} 
+}
+
+char * Aeroponics::pumpStateToText(){
+   if(!PumpOK) return (char *)"DISABLED";
+   else {
+     if(PumpOn) return (char *)"ON";
+     else return (char *)"OFF";
+   }
+}
 
 void Aeroponics::setPumpOn(bool UserRequest){  //turns pump on, UserRequest is true if it was triggered from the website
   if(UserRequest){  //if the pump was turned on from the web interface, not by the automation
@@ -128,21 +136,13 @@ void Aeroponics::Mix(){
   GBox -> addToLog(F("Mixing nutrients"));
 }
 
-void Aeroponics::setSprayOnOff(bool State){
-  *SprayEnabled=State;
-  if(*SprayEnabled){ 
-    GBox -> addToLog(F("Aero spray enabled"));
-    GBox -> Sound1 -> playOnSound();
-    } 
-  else {
-    GBox -> addToLog(F("Aero spray disabled"));
-    GBox -> Sound1 -> playOffSound();
-    }
-}
-
 void Aeroponics::setInterval(int interval){  
   *Interval = interval; 
   SprayTimer = millis();
+}
+
+char * Aeroponics::getInterval(){  
+  return toText(*Interval);
 }
 
 void Aeroponics::setDuration(int duration){  
@@ -151,20 +151,8 @@ void Aeroponics::setDuration(int duration){
   GBox -> addToLog(F("Spray time updated"));  
 }
 
-char * Aeroponics::getInterval(){  
-  return toText(*Interval);
-}
-
 char * Aeroponics::getDuration(){  
   return toText(*Duration);  
-}
-
-char * Aeroponics::pumpStateToText(){
-   if(!PumpOK) return (char *)"DISABLED";
-   else {
-     if(PumpOn) return (char *)"ON";
-     else return (char *)"OFF";
-   }
 }
 
 void Aeroponics::setPumpTimeout(int Timeout)
@@ -177,4 +165,16 @@ void Aeroponics::setPrimingTime(int Timing)
 {
 *PrimingTime = Timing;
 GBox -> addToLog(F("Aero priming time updated"));
+}
+
+void Aeroponics::setSprayOnOff(bool State){
+  *SprayEnabled=State;
+  if(*SprayEnabled){ 
+    GBox -> addToLog(F("Aero spray enabled"));
+    GBox -> Sound1 -> playOnSound();
+    } 
+  else {
+    GBox -> addToLog(F("Aero spray disabled"));
+    GBox -> Sound1 -> playOffSound();
+    }
 }

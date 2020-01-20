@@ -14,18 +14,16 @@ class Aeroponics_NoTank : public Aeroponics
     void websiteEvent_Field(char * Field);
     void refresh_Sec();
     void report();
-    void setBlowOffTime(int _BlowOffTime);
-    void sprayOff();
-    void sprayNow(bool FromWebsite = false);
-    char * sprayStateToText();
     float LastSprayPressure = 0; //tracks the last average pressure during a spray cycle
 
   private:
-    int * BlowOffTime; //After spraying open the bypass valve for X seconds to release pressure in the system
-    
-    
+    void sprayNow(bool FromWebsite = false);
+    void sprayOff();
+    char * sprayStateToText();
+    void setBlowOffTime(int _BlowOffTime); 
+    int * BlowOffTime; //After spraying open the bypass valve for X seconds to release pressure in the system 
     bool BlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
-     
+    
   protected:
 };
 

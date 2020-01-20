@@ -8,14 +8,9 @@ class GrowBox;  //forward declaration
 class PowerSensor : public Common
 {  
   public:
-    PowerSensor(const __FlashStringHelper * Name, GrowBox * Gbox,HardwareSerial * SerialPort);  //constructor  
-    float Power; //Power sensor - W
-    float Energy; //Power sensor - Wh Total consumption 
-    float Voltage; //Power sensor - V
-    float Current; //Power sensor - A
-    
+    PowerSensor(const __FlashStringHelper * Name, GrowBox * Gbox,HardwareSerial * SerialPort);  //constructor     
     void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    void refresh_FiveSec();  //Called when component should refresh its state
+    void refresh_FiveSec(); 
     void report();
     char * getPowerText(bool IncludeUnits);
     char * getEnergyText(bool IncludeUnits);   
@@ -26,6 +21,10 @@ class PowerSensor : public Common
     GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
     PZEM004T * Sensor; //for PZEM004T model
     IPAddress * PowerSensorIP; // Power Sensor address (fake,just needs something set)  
+    float Power; //Power sensor - W
+    float Energy; //Power sensor - Wh Total consumption 
+    float Voltage; //Power sensor - V
+    float Current; //Power sensor - A
 
   protected:
 };

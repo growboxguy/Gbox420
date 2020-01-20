@@ -38,7 +38,7 @@ void WaterLevelSensor::refresh_Minute(){
   if(isAboveSensor4) strcat_P(LevelGauge,(PGM_P)F("#")); else strcat_P(LevelGauge,(PGM_P)F("_")); //Full
   strcat_P(LevelGauge,(PGM_P)F("]F"));
 
-  //Get number representation of reservoir level and send out email alerts: From 0-empty to 4-full
+  //Get number representation of reservoir level 0-empty to 4-full
   if(!isAboveSensor1 && !isAboveSensor2 && !isAboveSensor3 && !isAboveSensor4) Level= 0; //Empty
   else if(isAboveSensor1 && !isAboveSensor2 && !isAboveSensor3 && !isAboveSensor4) Level= 1;
   else if(isAboveSensor1 && isAboveSensor2 && !isAboveSensor3 && !isAboveSensor4) Level= 2;

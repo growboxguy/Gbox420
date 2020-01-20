@@ -22,26 +22,26 @@ void PressureSensor::websiteEvent_Load(__attribute__((unused)) char * url){
   } 
 } 
 
-void PressureSensor::websiteEvent_Button(char * Button){  //When a button is pressed on the website
-  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+void PressureSensor::websiteEvent_Button(char * Button){
+  if(!isThisMyComponent(Button)) { 
+    return;
   }
-  else{ //if the component name matches with the object name     
+  else{    
     if (strcmp_P(ShortMessage,(PGM_P)F("ReadOffset"))==0) { readOffset(); }    
   }
 }
 
-void PressureSensor::websiteEvent_Field(char * Field){ //When the website is opened, load stuff once
-  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+void PressureSensor::websiteEvent_Field(char * Field){ 
+  if(!isThisMyComponent(Field)) { 
+    return;
   }
-  else{ //if the component name matches with the object name    
+  else{   
     if(strcmp_P(ShortMessage,(PGM_P)F("Offset"))==0) {setOffset(WebServer.getArgFloat());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("Ratio"))==0) {setRatio(WebServer.getArgFloat());}
   }
 } 
 
-void PressureSensor::refresh_Minute(){  //Called when component should refresh its state 
+void PressureSensor::refresh_Minute(){  
   if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
   readPressure();
 }
@@ -60,6 +60,15 @@ void PressureSensor::readPressure(){
   else Pressure -> updateAverage(*Ratio * (Voltage-*Offset) * 14.5038f );  //unit: PSI
 }
 
+float PressureSensor::getPressure(bool ReturnAverage){
+  return Pressure -> getFloat(ReturnAverage);
+}
+
+char * PressureSensor::getPressureText(bool IncludeUnits, bool ReturnAverage){
+  if(IncludeUnits) return pressureToText(Pressure -> getFloat(ReturnAverage));
+  else return Pressure -> getFloatText(ReturnAverage);
+}
+
 void PressureSensor::readOffset(){  //Should only be called when there is 0 pressure
   float sum = 0;
   for(byte i = 0; i<50;i++){
@@ -70,15 +79,6 @@ void PressureSensor::readOffset(){  //Should only be called when there is 0 pres
   strncpy_P(LongMessage,(PGM_P)F("0 pressure Offset: "),MaxTextLength);
   strcat(LongMessage,toText(AeroOffsetRecommendation));
   GBox -> addToLog(LongMessage);
-}
-
-float PressureSensor::getPressure(bool ReturnAverage){
-  return Pressure -> getFloat(ReturnAverage);
-}
-
-char * PressureSensor::getPressureText(bool IncludeUnits, bool ReturnAverage){
-  if(IncludeUnits) return pressureToText(Pressure -> getFloat(ReturnAverage));
-  else return Pressure -> getFloatText(ReturnAverage);
 }
 
 void PressureSensor::setOffset(float Value){

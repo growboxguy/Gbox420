@@ -12,7 +12,7 @@ PowerSensor::PowerSensor(const __FlashStringHelper * Name, GrowBox * GBox,Hardwa
   logToSerials(F("PowerSensor object created"),true,1);
 }
 
-void PowerSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is refreshed (5sec)
+void PowerSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){ 
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Power")), getPowerText(true));  
     WebServer.setArgString(getWebsiteComponentName(F("Energy")), getEnergyText(true));  

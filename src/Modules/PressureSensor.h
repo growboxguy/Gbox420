@@ -8,22 +8,21 @@ class PressureSensor : public Common
 {
   public:
     PressureSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::PressureSensorSettings * DefaultSettings);
-    RollingAverage * Pressure;
     void websiteEvent_Load(__attribute__((unused)) char * url);
     void websiteEvent_Button(char * Button);
     void websiteEvent_Field(char * Field);
-    void refresh_Minute();  //Called when component should refresh its state
+    void refresh_Minute(); 
     void report();
-    bool PreviousPressureRead = true;
     void readPressure();
     float getPressure(bool ReturnAverage = true);
-    char * getPressureText(bool IncludeUnits,bool ReturnAverage);   
-    void readOffset();
-    void setOffset(float Value);
-    void setRatio(float Value);
+    char * getPressureText(bool IncludeUnits,bool ReturnAverage);
+    RollingAverage * Pressure;
   
   private:
     GrowBox * GBox;
+    void readOffset();
+    void setOffset(float Value);
+    void setRatio(float Value);
     byte * Pin;    
     float * Offset;
     float * Ratio;

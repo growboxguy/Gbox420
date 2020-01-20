@@ -52,7 +52,7 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   addToLog(F("GrowBox initialized"),0);
 }
 
-void GrowBox::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
+void GrowBox::websiteEvent_Load(__attribute__((unused)) char * url){ 
   if (strcmp(url,"/Settings.html.json")==0){  
   WebServer.setArgInt(getWebsiteComponentName(F("DebugEnabled")), BoxSettings -> DebugEnabled);
   WebServer.setArgInt(getWebsiteComponentName(F("MetricSystemEnabled")), BoxSettings -> MetricSystemEnabled);
@@ -71,21 +71,21 @@ void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char * url) //called 
 }
 
 void GrowBox::websiteEvent_Button(char * Button){ //When a button is pressed on the website
-  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+  if(!isThisMyComponent(Button)) { 
+    return;
   }
-  else{ //if the component name matches with the object name   
+  else{  
     if(strcmp_P(ShortMessage,(PGM_P)F("SheetsTrigger"))==0) {ReportToGoogleSheets(true);}
     else if(strcmp_P(ShortMessage,(PGM_P)F("ReportTrigger"))==0) {runReport();} 
-    else if(strcmp_P(ShortMessage,(PGM_P)F("Refresh"))==0) {RefreshAllRequested = true;}   //Website signals to refresh all sensor readings
+    else if(strcmp_P(ShortMessage,(PGM_P)F("Refresh"))==0) {RefreshAllRequested = true;}   //Website signals to refresh all sensor readings    
   }  
 }
 
 void GrowBox::websiteEvent_Field(char * Field){ //When the website field is submitted
-  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+  if(!isThisMyComponent(Field)) { 
+    return;
   }
-  else{ //if the component name matches with the object name   
+  else{  
     if(strcmp_P(ShortMessage,(PGM_P)F("DebugEnabled"))==0) {setDebugOnOff(WebServer.getArgBoolean());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("MetricSystemEnabled"))==0) {setMetricSystemEnabled(WebServer.getArgBoolean());}    
     else if(strcmp_P(ShortMessage,(PGM_P)F("SheetsEnabled"))==0) {setSheetsReportingOnOff(WebServer.getArgBoolean());}
@@ -131,7 +131,58 @@ void GrowBox::runReport(){  //Reports component status to Serial output (Arduino
 }
 
 //////////////////////////////////////////////////////////////////
-//Run queues: Refresh components inside the GrowBox
+//Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
+
+void GrowBox::AddToReportQueue(Common* Component){
+  if(QueueDepth>reportQueueItemCount) ReportQueue[reportQueueItemCount++] = Component;
+  else logToSerials(F("Report queue overflow!"),true,0); //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+}
+
+void GrowBox::AddToRefreshQueue_Sec(Common* Component){
+  if(QueueDepth>refreshQueueItemCount_Sec) RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
+  else logToSerials(F("RefreshQueue_Sec overflow!"),true,0);
+}
+
+void GrowBox::AddToRefreshQueue_FiveSec(Common* Component){
+  if(QueueDepth>refreshQueueItemCount_FiveSec) RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
+  else logToSerials(F("RefreshQueue_FiveSec overflow!"),true,0);
+}
+
+void GrowBox::AddToRefreshQueue_Minute(Common* Component){
+  if(QueueDepth>refreshQueueItemCount_Minute) RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
+  else logToSerials(F("RefreshQueue_Minute overflow!"),true,0);
+}
+
+void GrowBox::AddToRefreshQueue_QuarterHour(Common* Component){
+  if(QueueDepth>refreshQueueItemCount_QuarterHour) RefreshQueue_QuarterHour[refreshQueueItemCount_QuarterHour++] = Component;
+  else logToSerials(F("RefreshQueue_QuarterHour overflow!"),true,0);
+}
+
+//////////////////////////////////////////////////////////////////
+//Website subscriptions: When a component needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
+
+void GrowBox::AddToWebsiteQueue_Load(Common* Component){
+  if(QueueDepth>WebsiteQueueItemCount_Load) WebsiteQueue_Load[WebsiteQueueItemCount_Load++] = Component;
+  else logToSerials(F("WebsiteQueueItemCount_Load overflow!"),true,0);
+}
+
+void GrowBox::AddToWebsiteQueue_Refresh(Common* Component){
+  if(QueueDepth>WebsiteQueueItemCount_Refresh) WebsiteQueue_Refresh[WebsiteQueueItemCount_Refresh++] = Component;
+  else logToSerials(F("WebsiteQueueItemCount_Refresh overflow!"),true,0);
+}
+
+void GrowBox::AddToWebsiteQueue_Button(Common* Component){
+  if(QueueDepth>WebsiteQueueItemCount_Button) WebsiteQueue_Button[WebsiteQueueItemCount_Button++] = Component;
+  else logToSerials(F("WebsiteQueueItemCount_Button overflow!"),true,0);
+}
+
+void GrowBox::AddToWebsiteQueue_Field(Common* Component){
+  if(QueueDepth>WebsiteQueueItemCount_Field) WebsiteQueue_Field[WebsiteQueueItemCount_Field++] = Component;
+  else logToSerials(F("WebsiteQueueItemCount_Field overflow!"),true,0);
+}
+
+//////////////////////////////////////////////////////////////////
+//Refresh queues: Refresh components inside the GrowBox
 
 void GrowBox::runSec(){ 
   if(BoxSettings -> DebugEnabled)logToSerials(F("One sec trigger.."),true,1);  
@@ -162,55 +213,33 @@ void GrowBox::runQuarterHour(){
 }
 
 //////////////////////////////////////////////////////////////////
-//Thread Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
+//Website queues: Notify components in the growbox of a website event
 
-void GrowBox::AddToReportQueue(Common* Component){
-  if(QueueDepth>reportQueueItemCount) ReportQueue[reportQueueItemCount++] = Component;
-  else logToSerials(F("Report queue overflow!"),true,0); //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue 
+void GrowBox::loadEvent(char * url){ //called when website is loaded. Runs through all components that subscribed for this event
+  for(int i=0;i< WebsiteQueueItemCount_Load;i++){
+     WebsiteQueue_Load[i] -> websiteEvent_Load(url);
+  } 
 }
 
-void GrowBox::AddToRefreshQueue_Sec(Common* Component){
-  if(QueueDepth>refreshQueueItemCount_Sec) RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
-  else logToSerials(F("RefreshQueue_Sec overflow!"),true,0);
+void GrowBox::refreshEvent(char * url){ //called when website is refreshed.
+  for(int i=0;i< WebsiteQueueItemCount_Refresh;i++){
+    WebsiteQueue_Refresh[i] -> websiteEvent_Refresh(url);
+  }
 }
 
-void GrowBox::AddToRefreshQueue_FiveSec(Common* Component){
-  if(QueueDepth>refreshQueueItemCount_FiveSec) RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
-  else logToSerials(F("RefreshQueue_FiveSec overflow!"),true,0);
+void GrowBox::buttonEvent(char * button){  //Called when any button on the website is pressed.
+  if(BoxSettings -> DebugEnabled)logToSerials(&button,true,0);
+  for(int i=0;i< WebsiteQueueItemCount_Button;i++){
+    WebsiteQueue_Button[i] -> websiteEvent_Button(button);
+  } 
 }
 
-void GrowBox::AddToRefreshQueue_Minute(Common* Component){
-  if(QueueDepth>refreshQueueItemCount_Minute) RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
-  else logToSerials(F("RefreshQueue_Minute overflow!"),true,0);
-}
-
-void GrowBox::AddToRefreshQueue_QuarterHour(Common* Component){
-  if(QueueDepth>refreshQueueItemCount_QuarterHour) RefreshQueue_QuarterHour[refreshQueueItemCount_QuarterHour++] = Component;
-  else logToSerials(F("RefreshQueue_QuarterHour overflow!"),true,0);
-}
-
-//////////////////////////////////////////////////////////////////
-//Website queues: When a component needs to get notified of a Website events from the ESP-link
-
-void GrowBox::AddToWebsiteQueue_Load(Common* Component){
-  if(QueueDepth>WebsiteQueueItemCount_Load) WebsiteQueue_Load[WebsiteQueueItemCount_Load++] = Component;
-  else logToSerials(F("WebsiteQueueItemCount_Load overflow!"),true,0);
-}
-
-void GrowBox::AddToWebsiteQueue_Refresh(Common* Component){
-  if(QueueDepth>WebsiteQueueItemCount_Refresh) WebsiteQueue_Refresh[WebsiteQueueItemCount_Refresh++] = Component;
-  else logToSerials(F("WebsiteQueueItemCount_Refresh overflow!"),true,0);
-}
-
-void GrowBox::AddToWebsiteQueue_Button(Common* Component){
-  if(QueueDepth>WebsiteQueueItemCount_Button) WebsiteQueue_Button[WebsiteQueueItemCount_Button++] = Component;
-  else logToSerials(F("WebsiteQueueItemCount_Button overflow!"),true,0);
-}
-
-void GrowBox::AddToWebsiteQueue_Field(Common* Component){
-  if(QueueDepth>WebsiteQueueItemCount_Field) WebsiteQueue_Field[WebsiteQueueItemCount_Field++] = Component;
-  else logToSerials(F("WebsiteQueueItemCount_Field overflow!"),true,0);
-}
+void GrowBox::setFieldEvent(char * field){  //Called when any field on the website is updated.
+  if(BoxSettings -> DebugEnabled)logToSerials(&field,true,0);   
+  for(int i=0;i<WebsiteQueueItemCount_Field;i++){
+    WebsiteQueue_Field[i] -> websiteEvent_Field(field);
+  }
+} 
 
 //////////////////////////////////////////////////////////////////
 //Even logs on the website
@@ -318,7 +347,7 @@ void GrowBox::ReportToGoogleSheets(bool CalledFromWebsite){
     strcat_P(LongMessage,(PGM_P)F("\",\"InternalFan\":\"")); strcat(LongMessage,InFan -> fanSpeedToNumber());
     strcat_P(LongMessage,(PGM_P)F("\",\"ExhaustFan\":\"")); strcat(LongMessage,ExFan -> fanSpeedToNumber());
     strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Status\":\""));  strcat(LongMessage,Light1 -> getStatusText(false));
-    strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Brightness\":\""));  strcat(LongMessage,Light1 -> getBrightness());
+    strcat_P(LongMessage,(PGM_P)F("\",\"Light1_Brightness\":\""));  strcat(LongMessage,Light1 -> getBrightnessText());
     strcat_P(LongMessage,(PGM_P)F("\",\"LightReading\":\""));  strcat(LongMessage,LightSensor1 -> getReadingText(false,true));
     strcat_P(LongMessage,(PGM_P)F("\",\"Dark\":\""));  strcat(LongMessage,LightSensor1 -> getDarkText(false));
     strcat_P(LongMessage,(PGM_P)F("\",\"WaterLevel\":\""));  strcat(LongMessage,WaterLevel1 -> getLevelText());

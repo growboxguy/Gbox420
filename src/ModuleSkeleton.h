@@ -20,6 +20,9 @@ class ModuleSkeleton : public Common
     void refresh_QuarterHour();
     void report();
 
+  private:
+    GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
+    
     //Variables stored in memory, values reset at reboot
     bool RuntimeBool = false;
     int RuntimeInt = 420;
@@ -32,9 +35,6 @@ class ModuleSkeleton : public Common
     bool * PersistentBool;
     int * PersistentInt;
     float * PersistentFloat;
-
-  private:
-    GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
     
   protected:         
 };

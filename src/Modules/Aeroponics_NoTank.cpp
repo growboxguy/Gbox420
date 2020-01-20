@@ -6,25 +6,25 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox *
   logToSerials(F("Aeroponics_NoTank object created"),true,1);
 }
 
-void Aeroponics_NoTank::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
+void Aeroponics_NoTank::websiteEvent_Load(__attribute__((unused)) char * url){ 
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgInt(getWebsiteComponentName(F("BlowOffTime")), *BlowOffTime);
   }
   Aeroponics::websiteEvent_Load(url); 
 }
 
-void Aeroponics_NoTank::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is refreshed (5sec)
+void Aeroponics_NoTank::websiteEvent_Refresh(__attribute__((unused)) char * url){ 
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("SprayPressure")), pressureToText(LastSprayPressure));     
   }
   Aeroponics::websiteEvent_Refresh(url); 
 }
 
-void Aeroponics_NoTank::websiteEvent_Field(char * Field){ //When the website is opened, load stuff once
-  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+void Aeroponics_NoTank::websiteEvent_Field(char * Field){ 
+  if(!isThisMyComponent(Field)) { 
+    return;
   }
-  else{ //if the component name matches with the object name     
+  else{    
     if(strcmp_P(ShortMessage,(PGM_P)F("BlowOffTime"))==0) {setBlowOffTime(WebServer.getArgInt());}
     else Aeroponics::websiteEvent_Field(Field);
   }
@@ -98,11 +98,6 @@ void Aeroponics_NoTank::sprayNow(bool FromWebsite){
     }
 }
 
-void Aeroponics_NoTank::setBlowOffTime(int _BlowOffTime){
-  *BlowOffTime = _BlowOffTime;
-  GBox -> addToLog(F("Blowoff time updated"));
-}
-
 void Aeroponics_NoTank::sprayOff(){    
     PumpOn = false; 
     BypassSolenoidOn = false; 
@@ -116,4 +111,9 @@ char * Aeroponics_NoTank::sprayStateToText(){
      if(PumpOn && !BypassSolenoidOn) return (char *)"ON";
      else return (char *)"ENABLED";
     }
+}
+
+void Aeroponics_NoTank::setBlowOffTime(int _BlowOffTime){
+  *BlowOffTime = _BlowOffTime;
+  GBox -> addToLog(F("Blowoff time updated"));
 }

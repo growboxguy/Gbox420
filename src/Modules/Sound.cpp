@@ -13,26 +13,26 @@ Sound::Sound(const __FlashStringHelper * Name, GrowBox * GBox, Settings::SoundSe
   logToSerials(F("Sound object created"),true,1);
 }
 
-void Sound::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
+void Sound::websiteEvent_Load(__attribute__((unused)) char * url){ 
   if (strcmp(url,"/Settings.html.json")==0){
     WebServer.setArgBoolean(getWebsiteComponentName(F("Enabled")), *Enabled);
   }
 } 
 
 void Sound::websiteEvent_Button(char * Button){ //When a button is pressed on the website
-  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+  if(!isThisMyComponent(Button)) { 
+    return;
   }
-  else{ //if the component name matches with the object name   
+  else{  
     if (strcmp_P(ShortMessage,(PGM_P)F("Ee"))==0) { playEE(); }
   }  
 }
 
 void Sound::websiteEvent_Field(char * Field){ //When the website field is submitted
-  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+  if(!isThisMyComponent(Field)) { 
+    return;
   }
-  else{ //if the component name matches with the object name   
+  else{  
     if(strcmp_P(ShortMessage,(PGM_P)F("Enabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}    
   }  
 } 
@@ -54,7 +54,19 @@ void Sound::playOnSound(){
 
 void Sound::playOffSound(){
   PlayOffSound = true;
-} 
+}
+
+void Sound::setSoundOnOff(bool State){
+  *Enabled = State;
+  if(*Enabled){ 
+    GBox -> addToLog(F("Sound enabled"));
+    playOnSound();
+    }
+  else {
+    GBox -> addToLog(F("Sound disabled"));
+    playOffSound();
+    }
+}
 
 void Sound::OnSound(){
   if(*Enabled){ 
@@ -76,18 +88,6 @@ void Sound::OffSound(){
   delay(100);
   noTone(*Pin);
   }
-}
-
-void Sound::setSoundOnOff(bool State){
-  *Enabled = State;
-  if(*Enabled){ 
-    GBox -> addToLog(F("Sound enabled"));
-    playOnSound();
-    }
-  else {
-    GBox -> addToLog(F("Sound disabled"));
-    playOffSound();
-    }
 }
 
 //EE Section, can delete everything below if you need to save space
@@ -194,16 +194,10 @@ const PROGMEM byte Sound::tempo[] = {
 
 void Sound::EE() { 
   GBox -> addToLog(F("♬Easter egg♬"));
-  //int size = sizeof(melody) / sizeof(int);  //this is equal 134: No sense calculating it every time, if you change the melody could come handy.
   for (int thisNote = 0; thisNote < 134; thisNote++) {
-    // to calculate the note duration, take one second
-    // divided by the note type.
-    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
     int noteDuration = 1000 / (byte)pgm_read_word(&tempo[thisNote]);  //tempo is stored in PROGMEM (Flash), cannot read from it as RAM array (temp[thisNote] would not work) //https://forum.arduino.cc/index.php?topic=106603.0
     buzz((int)pgm_read_word(&melody[thisNote]), noteDuration);
-    // to distinguish the notes, set a minimum time between them.
     delay(noteDuration);      
-    // stop the tone playing:
     buzz(0, noteDuration); 
     wdt_reset(); //Reset Watchdog timeout to avoid Arduino reseting while playing the song   
   }
@@ -211,17 +205,13 @@ void Sound::EE() {
 
 void Sound::buzz( uint32_t frequency, uint32_t length) {
   digitalWrite(13, HIGH);
-  uint32_t delayValue = 1000000 / frequency / 2; // calculate the delay value between transitions
-  //// 1 second's worth of microseconds, divided by the frequency, then split in half since
-  //// there are two phases to each cycle
-  uint32_t numCycles = frequency * length / 1000; // calculate the number of cycles for proper timing
-  //// multiply frequency, which is really cycles per second, by the number of seconds to
-  //// get the total number of cycles to produce
-  for (uint32_t i = 0; i < numCycles; i++) { // for the calculated length of time...
-    digitalWrite(*Pin, HIGH); // write the Sound pin high to push out the diaphragm
-    delayMicroseconds(delayValue); // wait for the calculated delay value
-    digitalWrite(*Pin, LOW); // write the Sound pin low to pull back the diaphragm
-    delayMicroseconds(delayValue); // wait again or the calculated delay value
+  uint32_t delayValue = 1000000 / frequency / 2;
+  uint32_t numCycles = frequency * length / 1000;
+  for (uint32_t i = 0; i < numCycles; i++) {
+    digitalWrite(*Pin, HIGH);
+    delayMicroseconds(delayValue);
+    digitalWrite(*Pin, LOW);
+    delayMicroseconds(delayValue);
   }  
   digitalWrite(13, LOW);
 }

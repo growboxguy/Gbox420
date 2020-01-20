@@ -8,26 +8,25 @@ class Fan : public Common
 {
   public:
     Fan(const __FlashStringHelper * Name, GrowBox * GBox, Settings::FanSettings * DefaultSettings);
-    GrowBox * GBox;
-
-    void refresh_Minute();  //Called when component should refresh its state
-    void report();
-    //void websiteEvent_Load(__attribute__((unused)) char * url);
     void websiteEvent_Refresh(__attribute__((unused)) char * url);
     void websiteEvent_Button(char * Button);
-    //void websiteEvent_Field(char * Field);
-    void checkFanStatus();
-    void TurnOff();
-    void SetLowSpeed();
-    void SetHighSpeed();
+    void refresh_Minute(); 
+    void report();
     char * fanSpeedToText();
     char * fanSpeedToNumber();
   
   private:
+    GrowBox * GBox;
     bool * State;
     bool * HighSpeed;     
     byte * OnOffPin;
     byte * SpeedPin;
+    void checkFanStatus();
+    void TurnOff();
+    void SetLowSpeed();
+    void SetHighSpeed();
+
+  protected:
 };
 
 //WEBSITE COMPONENT

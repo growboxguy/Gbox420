@@ -9,29 +9,29 @@ class LightSensor : public Common
 {
 public:
   LightSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource);
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Button(char *Button);
-  void refresh_Minute(); //Called when component should refresh its state
+  void refresh_Minute();
   void report();
-  void triggerCalibration();                                        //Website signals to calibrate the MAX/MIN readings the next time the object gets CPU time
-  char *getCalibrationText();                                       //Light sensor analog feedback relative to calibration values: 0 to 100%
-  int getReading(bool ReturnAverage = true);                        //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
-  char *getReadingText(bool IncludePercentage, bool ReturnAverage); //returns the current light sensor reading. If IncludeMinMax is set to true it also includes the calibated minimum and maximum readings
-  bool getDark();                                                   //Light sensor digital feedback: True(Bright) or False(Dark)
+  void triggerCalibration();  //Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger
+  char *getCalibrationText();  //Light sensor analog feedback relative to calibration values: 0 to 100%
+  int getReading(bool ReturnAverage = true);  //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
+  char *getReadingText(bool IncludePercentage, bool ReturnAverage);  //returns the current light sensor reading
+  bool getDark(); //Light sensor digital feedback: True(Dark) or False(Bright)  
   char *getDarkText(bool UseWords);
 
 private:
   GrowBox *GBox;
-  Lights *LightSource;          //The light used during calibration
-  byte *DigitalPin;             //D0 - LM393 light sensor digital in
-  byte *AnalogPin;              //A0 - LM393 light sensor analog in
+  Lights *LightSource; //The light used during calibration
+  byte *DigitalPin;    //D0 - LM393 light sensor digital in
+  byte *AnalogPin;     //A0 - LM393 light sensor analog in
   RollingAverage *LightReading; //keeps an average of previous readings: Smoothens sensor readings
   void calibrate();
   bool Dark;
   bool CalibrateRequested;
-  int MaxReading = 0;  //Analog reading with maximum brightnes
-  int MinReading = 0;  //Analog reading with minimum brightnes
+  int MaxReading = 0;  //Analog reading with maximum brightness
+  int MinReading = 0;  //Analog reading with minimum brightness
   int DarkReading = 0; //Analog reading with lights off
 
 protected:

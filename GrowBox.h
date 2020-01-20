@@ -53,28 +53,14 @@ class GrowBox : public Common
     void refresh_FiveSec();
     void refresh_Minute();
     void refresh_QuarterHour();
-    void refreshAll(bool AddToLog = false);
-    bool RefreshAllRequested = false; 
-    int * SheetsReportingFrequency;
-    int SheetsRefreshCounter = 0;
- 
-    void runReport(); 
     void runSec();
     void runFiveSec();
     void runMinute();
-    void runQuarterHour(); 
-
-    char * eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]  
+    void runQuarterHour();  
     void addToLog(const __FlashStringHelper* Text,byte indent=3);
     void addToLog(const char * Text,byte indent=3);
-    void setDebugOnOff(bool State);
-    void setMetricSystemEnabled(bool MetricEnabled); 
-    void setPushingBoxLogRelayID(char * ID);
     void ReportToGoogleSheetsTrigger();
-    void ReportToGoogleSheets(bool CalledFromWebsite);
-    void setSheetsReportingOnOff(bool State);
-    void setSheetsReportingFrequency(int Frequency);
-  
+    void ReportToGoogleSheets(bool CalledFromWebsite);  
     void AddToReportQueue(Common* Component);
     void AddToRefreshQueue_Sec(Common* Component);
     void AddToRefreshQueue_FiveSec(Common* Component);
@@ -84,6 +70,20 @@ class GrowBox : public Common
     void AddToWebsiteQueue_Refresh(Common* Component);
     void AddToWebsiteQueue_Button(Common* Component);
     void AddToWebsiteQueue_Field(Common* Component);
+    void loadEvent(char * Url);
+    void refreshEvent(char * Url);
+    void buttonEvent(char * Button);
+    void setFieldEvent(char * Field);   
+      
+  private:
+    void setSheetsReportingOnOff(bool State);
+    void setSheetsReportingFrequency(int Frequency);
+    void setDebugOnOff(bool State);
+    void setMetricSystemEnabled(bool MetricEnabled); 
+    void setPushingBoxLogRelayID(char * ID);
+    char * eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"] 
+    void refreshAll(bool AddToLog = false);
+    void runReport(); 
     Common* ReportQueue[QueueDepth];
     Common* RefreshQueue_Sec[QueueDepth];
     Common* RefreshQueue_FiveSec[QueueDepth]; 
@@ -102,10 +102,11 @@ class GrowBox : public Common
     byte WebsiteQueueItemCount_Refresh = 0;
     byte WebsiteQueueItemCount_Button = 0;
     byte WebsiteQueueItemCount_Field = 0;
-      
-  private: 
 
   protected:
+    bool RefreshAllRequested = false; 
+    int * SheetsReportingFrequency;
+    int SheetsRefreshCounter = 0;    
 };
 
 //WEBSITE COMPONENT

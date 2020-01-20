@@ -8,13 +8,11 @@ ModuleSkeleton::ModuleSkeleton (const __FlashStringHelper * Name, GrowBox * GBox
   PersistentFloat = &DefaultSettings -> PersistentFloat;
   RollingInt = new RollingAverage();
   RollingFloat = new RollingAverage();
-
   GBox -> AddToReportQueue(this);  //Subscribing to the report queue: Calls the report() method
   GBox -> AddToRefreshQueue_Sec(this);  //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
   GBox -> AddToRefreshQueue_FiveSec(this);  //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   GBox -> AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   GBox -> AddToRefreshQueue_QuarterHour(this);  //Subscribing to the 15 minute refresh queue: Calls the refresh_QuarterHour() method
-
   GBox -> AddToWebsiteQueue_Load(this); //Subscribing to the Website load event: Calls the websiteEvent_Load() method
   GBox -> AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
@@ -22,22 +20,7 @@ ModuleSkeleton::ModuleSkeleton (const __FlashStringHelper * Name, GrowBox * GBox
   logToSerials(F("ModuleSkeleton object created"),true,1); 
 }
 
-void ModuleSkeleton::report(){
-  Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
-  strcat_P(LongMessage,(PGM_P)F("PersistentBool:")); strcat(LongMessage, yesNoToText(*PersistentBool));
-  strcat_P(LongMessage,(PGM_P)F(" ; PersistentInt:")); strcat(LongMessage, toText(*PersistentInt));
-  strcat_P(LongMessage,(PGM_P)F(" ; PersistentFloat:")); strcat(LongMessage, toText(*PersistentFloat));  
-  strcat_P(LongMessage,(PGM_P)F(" ; RuntimeBool:")); strcat(LongMessage, yesNoToText(RuntimeBool));
-  strcat_P(LongMessage,(PGM_P)F(" ; RuntimeInt:")); strcat(LongMessage, toText(RuntimeInt));
-  strcat_P(LongMessage,(PGM_P)F(" ; RuntimeFloat:")); strcat(LongMessage, toText(RuntimeFloat));
-  strcat_P(LongMessage,(PGM_P)F(" ; RuntimeString:")); strcat(LongMessage, RuntimeString);
-  strcat_P(LongMessage,(PGM_P)F(" ; RollingInt:")); strcat(LongMessage, RollingInt -> getIntText(true));
-  strcat_P(LongMessage,(PGM_P)F(" ; RollingFloat:")); strcat(LongMessage, RollingFloat -> getFloatText(true));
-  logToSerials(&LongMessage,true,1);
-}  
-
-void ModuleSkeleton::websiteEvent_Load(__attribute__((unused)) char * url){
+void ModuleSkeleton::websiteEvent_Load(__attribute__((unused)) char * url){  //When opening the website
   if (strcmp(url,"/Test.html.json")==0){
       
       WebServer.setArgBoolean(getWebsiteComponentName(F("SetPersBool")), *PersistentBool);
@@ -47,7 +30,7 @@ void ModuleSkeleton::websiteEvent_Load(__attribute__((unused)) char * url){
   }
 }
 
-void ModuleSkeleton::websiteEvent_Refresh(__attribute__((unused)) char * url){
+void ModuleSkeleton::websiteEvent_Refresh(__attribute__((unused)) char * url){  //When refreshing the website (Automatic, every 5sec)
   if (strcmp(url,"/Test.html.json")==0){
       WebServer.setArgBoolean(getWebsiteComponentName(F("PersistentBool")), *PersistentBool);
       WebServer.setArgInt(getWebsiteComponentName(F("PersistentInt")), *PersistentInt);
@@ -63,10 +46,10 @@ void ModuleSkeleton::websiteEvent_Refresh(__attribute__((unused)) char * url){
 }
 
 void ModuleSkeleton::websiteEvent_Button(char * Button){ //When a button is pressed on the website
-  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+  if(!isThisMyComponent(Button)) { 
+    return;
   }
-  else{ //if the component name matches with the object name   
+  else{  
     if(strcmp_P(ShortMessage,(PGM_P)F("ResetPers"))==0) {*PersistentBool = false; *PersistentInt = 420; *PersistentFloat = 4.2; }
     else if(strcmp_P(ShortMessage,(PGM_P)F("ResetRun"))==0) {RuntimeBool = false; RuntimeInt = 420; RuntimeFloat = 4.2; strncpy(RuntimeString, "HailMary",MaxTextLength); }  
     else if(strcmp_P(ShortMessage,(PGM_P)F("ResetRollInt"))==0) { RollingInt -> resetAverage(); }  //Signals to reset average counter at next reading 
@@ -74,11 +57,11 @@ void ModuleSkeleton::websiteEvent_Button(char * Button){ //When a button is pres
   }  
 } 
 
-void ModuleSkeleton::websiteEvent_Field(char * Field){ //When the website is opened, load stuff once
-  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+void ModuleSkeleton::websiteEvent_Field(char * Field){  //When a field is submitted on the website
+  if(!isThisMyComponent(Field)) { 
+    return;
   }
-  else{ //if the component name matches with the object name     
+  else{    
     if(strcmp_P(ShortMessage,(PGM_P)F("SetRunBool"))==0) { RuntimeBool = WebServer.getArgBoolean(); } //Getting a bool
     else if(strcmp_P(ShortMessage,(PGM_P)F("SetRunString"))==0) { strncpy(RuntimeString, WebServer.getArgString(),MaxTextLength); } //Getting a string
     else if(strcmp_P(ShortMessage,(PGM_P)F("SetPersBool"))==0) { *PersistentBool = WebServer.getArgBoolean(); } //Getting a bool
@@ -108,3 +91,18 @@ void ModuleSkeleton::refresh_Minute(){
 void ModuleSkeleton::refresh_QuarterHour(){
   if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_QuarterHour();  
 }
+
+void ModuleSkeleton::report(){  //Report status to the Arduino Serial and ESP-lin console output
+  Common::report();
+  memset(&LongMessage[0], 0, sizeof(LongMessage));  //clear variable
+  strcat_P(LongMessage,(PGM_P)F("PersistentBool:")); strcat(LongMessage, yesNoToText(*PersistentBool));
+  strcat_P(LongMessage,(PGM_P)F(" ; PersistentInt:")); strcat(LongMessage, toText(*PersistentInt));
+  strcat_P(LongMessage,(PGM_P)F(" ; PersistentFloat:")); strcat(LongMessage, toText(*PersistentFloat));  
+  strcat_P(LongMessage,(PGM_P)F(" ; RuntimeBool:")); strcat(LongMessage, yesNoToText(RuntimeBool));
+  strcat_P(LongMessage,(PGM_P)F(" ; RuntimeInt:")); strcat(LongMessage, toText(RuntimeInt));
+  strcat_P(LongMessage,(PGM_P)F(" ; RuntimeFloat:")); strcat(LongMessage, toText(RuntimeFloat));
+  strcat_P(LongMessage,(PGM_P)F(" ; RuntimeString:")); strcat(LongMessage, RuntimeString);
+  strcat_P(LongMessage,(PGM_P)F(" ; RollingInt:")); strcat(LongMessage, RollingInt -> getIntText(true));
+  strcat_P(LongMessage,(PGM_P)F(" ; RollingFloat:")); strcat(LongMessage, RollingFloat -> getFloatText(true));
+  logToSerials(&LongMessage,true,1);
+}  

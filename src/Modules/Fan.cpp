@@ -19,17 +19,17 @@ Fan::Fan(const __FlashStringHelper * Name, GrowBox * GBox, Settings::FanSettings
   logToSerials(F("Fan object created"),true,1);
 }
 
-void Fan::websiteEvent_Refresh(__attribute__((unused)) char * url){ //When the website is refreshed (5sec)
+void Fan::websiteEvent_Refresh(__attribute__((unused)) char * url){ 
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgString(getWebsiteComponentName(F("Status")), fanSpeedToText());
   } 
 } 
 
-void Fan::websiteEvent_Button(char * Button){  //When a button is pressed on the website
-  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+void Fan::websiteEvent_Button(char * Button){
+  if(!isThisMyComponent(Button)) { 
+    return;
   }
-  else{ //if the component name matches with the object name     
+  else{    
     if (strcmp_P(ShortMessage,(PGM_P)F("Off"))==0) {TurnOff();}
     else if (strcmp_P(ShortMessage,(PGM_P)F("Low"))==0) {SetLowSpeed();}
     else if (strcmp_P(ShortMessage,(PGM_P)F("High"))==0) {SetHighSpeed();}

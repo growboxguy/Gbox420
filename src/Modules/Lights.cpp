@@ -46,28 +46,28 @@ void Lights::websiteEvent_Refresh(__attribute__((unused)) char * url){
   }
 }
 
-void Lights::websiteEvent_Field(char * Field){ //When the website is opened, load stuff once
-  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+void Lights::websiteEvent_Button(char * Button){
+  if(!isThisMyComponent(Button)) { 
+    return;
   }
-  else{ //if the component name matches with the object name     
+  else{    
+    if (strcmp_P(ShortMessage,(PGM_P)F("On"))==0) {setLightOnOff(true,true); }
+      else if (strcmp_P(ShortMessage,(PGM_P)F("Off"))==0) {setLightOnOff(false,true); }
+      else if (strcmp_P(ShortMessage,(PGM_P)F("TimerEnable"))==0) {setTimerOnOff(true);}
+      else if (strcmp_P(ShortMessage,(PGM_P)F("TimerDisable"))==0) {setTimerOnOff(false);}
+  }  
+}
+
+void Lights::websiteEvent_Field(char * Field){ 
+  if(!isThisMyComponent(Field)) { 
+    return;
+  }
+  else{    
     if(strcmp_P(ShortMessage,(PGM_P)F("Brightness"))==0) {setBrightness(WebServer.getArgInt(),true);}
     else if(strcmp_P(ShortMessage,(PGM_P)F("OnHour"))==0) {setOnHour(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("OnMinute"))==0) {setOnMinute(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("OffHour"))==0) {setOffHour(WebServer.getArgInt());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("OffMinute"))==0) {setOffMinute(WebServer.getArgInt());} 
-  }  
-} 
-
-void Lights::websiteEvent_Button(char * Button){  //When a button is pressed on the website
-  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
-  }
-  else{ //if the component name matches with the object name     
-    if (strcmp_P(ShortMessage,(PGM_P)F("On"))==0) {setLightOnOff(true,true); }
-      else if (strcmp_P(ShortMessage,(PGM_P)F("Off"))==0) {setLightOnOff(false,true); }
-      else if (strcmp_P(ShortMessage,(PGM_P)F("TimerEnable"))==0) {setTimerOnOff(true);}
-      else if (strcmp_P(ShortMessage,(PGM_P)F("TimerDisable"))==0) {setTimerOnOff(false);}
   }  
 } 
 
@@ -155,6 +155,35 @@ void Lights::setLightOnOff(bool Status, bool LogThis){
    checkLightStatus();
 }
 
+char *  Lights::getTimerOnOffText(bool UseWords){
+  if(UseWords) return enabledToText(*TimerEnabled); //Returns ENABLED or DISABLED
+  else return toText(*TimerEnabled);  //Returns '1' or '0'
+}
+
+bool Lights::getStatus(){
+   return *Status;
+}
+
+int Lights::getBrightness(){
+  return *Brightness;
+}
+
+char * Lights::getBrightnessText(){
+    return toText(*Brightness);
+}
+
+char *  Lights::getStatusText(bool UseWords){
+   if(UseWords) return onOffToText(*Status);  //Returns ON or OFF
+   else return toText(*Status);  //Returns '1' or '0'
+}
+    
+char * Lights::getOnTimeText(){
+   return timeToText(*OnHour,*OnMinute);
+}
+char * Lights::getOffTimeText(){
+   return timeToText(*OffHour,*OffMinute);
+}
+
 void Lights::setTimerOnOff(bool TimerState){
   *(this -> TimerEnabled) = TimerState;
   if(*TimerEnabled){ 
@@ -184,29 +213,4 @@ void Lights::setOffHour(byte OffHour){
 void Lights::setOffMinute(byte OffMinute){
   *(this -> OffMinute) = OffMinute;
   GBox -> addToLog(F("Light OFF updated"));
-}
-
-char *  Lights::getTimerOnOffText(bool UseWords){
-  if(UseWords) return enabledToText(*TimerEnabled); //Returns ENABLED or DISABLED
-  else return toText(*TimerEnabled);  //Returns '1' or '0'
-}
-
-bool Lights::getStatus(){
-   return *Status;
-}
-
-char * Lights::getBrightness(){
-    return toText(*Brightness);
-}
-
-char *  Lights::getStatusText(bool UseWords){
-   if(UseWords) return onOffToText(*Status);  //Returns ON or OFF
-   else return toText(*Status);  //Returns '1' or '0'
-}
-    
-char * Lights::getOnTimeText(){
-   return timeToText(*OnHour,*OnMinute);
-}
-char * Lights::getOffTimeText(){
-   return timeToText(*OffHour,*OffMinute);
 }

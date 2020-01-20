@@ -1,7 +1,5 @@
 #pragma once
 
-//This module is currenly untested
-
 #include "../../420Common.h"
 #include "Aeroponics.h"
 
@@ -16,22 +14,21 @@ class Aeroponics_Tank : public Aeroponics
     void websiteEvent_Field(char * Field);
     void refresh_Sec();
     //void report();
-    byte * SpraySolenoidPin;
-    bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on.
-    bool PreviousPressureRead = true;
-    float * PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
-    float * PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
+
+  private:
     void checkRelays();
-    void refillTank();
-    void sprayOff();
-    void sprayNow(bool FromWebsite = false);
     void setPressureLow(float PressureLow);
     void setPressureHigh(float PressureHigh);
+    void sprayNow(bool FromWebsite = false);
+    void sprayOff();
     char * sprayStateToText();
-  
-  private:
+    void refillTank(); 
+    byte * SpraySolenoidPin;
+    bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on.
+    float * PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
+    float * PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
 
-  protected:
+  protected:    
 };
 
 //WEBSITE COMPONENT

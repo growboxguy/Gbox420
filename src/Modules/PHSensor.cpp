@@ -17,7 +17,7 @@ PHSensor::PHSensor (const __FlashStringHelper * Name, GrowBox * GBox,  Settings:
   logToSerials(F("PHSensor object created"),true,1);
 }
 
-void PHSensor::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
+void PHSensor::websiteEvent_Load(__attribute__((unused)) char * url){ 
   if (strcmp(url,"/Settings.html.json")==0){
     //WebServer.setArgString(F("PHAlertLow"), toText(GBox -> Reservoir -> PHAlertLow));
     //WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> BoxSettings -> PHAlertHigh));
@@ -33,23 +33,28 @@ void PHSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){
 }
 
 void PHSensor::websiteEvent_Button(char * Button){ //When a button is pressed on the website
-  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+  if(!isThisMyComponent(Button)) { 
+    return;
   }
-  else{ //if the component name matches with the object name   
+  else{  
     if(strcmp_P(ShortMessage,(PGM_P)F("ReadRaw"))==0) {updatePH(true);}
   }  
 } 
 
-void PHSensor::websiteEvent_Field(char * Field){ //When the website is opened, load stuff once
-  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+void PHSensor::websiteEvent_Field(char * Field){ 
+  if(!isThisMyComponent(Field)) { 
+    return;
   }
-  else{ //if the component name matches with the object name     
+  else{    
     if(strcmp_P(ShortMessage,(PGM_P)F("Slope"))==0) {setSlope(WebServer.getArgFloat());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("Intercept"))==0) {setIntercept(WebServer.getArgFloat());}    
   }  
-} 
+}
+
+void PHSensor::refresh_Minute(){
+  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
+  updatePH(false); 
+}
     
 void PHSensor::report(){
   Common::report();
@@ -58,9 +63,12 @@ void PHSensor::report(){
   logToSerials( &LongMessage, true,1);
 }
 
-void PHSensor::refresh_Minute(){
-  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
-  updatePH(false); 
+float PHSensor::getPH(bool ReturnAverage){
+  return PH -> getFloat(ReturnAverage);
+}
+
+char * PHSensor::getPHText(bool ReturnAverage){
+  return PH -> getFloatText(ReturnAverage);
 }
 
 void PHSensor::updatePH(bool ShowRaw){
@@ -72,14 +80,6 @@ void PHSensor::updatePH(bool ShowRaw){
     GBox -> addToLog(LongMessage);
   } 
   PH -> updateAverage((*Slope)*PHRaw + (*Intercept));
-}
-
-float PHSensor::getPH(bool ReturnAverage){
-  return PH -> getFloat(ReturnAverage);
-}
-
-char * PHSensor::getPHText(bool ReturnAverage){
-  return PH -> getFloatText(ReturnAverage);
 }
 
 void PHSensor::setSlope(float Value){

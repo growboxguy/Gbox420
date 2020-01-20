@@ -143,32 +143,24 @@ void resetWebServer(void) {    // Callback made from esp-link to notify that it 
   logToSerials(F("ESP-link connected"),true,0);
 }
 
-void loadCallback(__attribute__((unused)) char * url){ //called when website is loaded. Runs through all components that subscribed for this event
-  for(int i=0;i<GBox -> WebsiteQueueItemCount_Load;i++){
-    GBox -> WebsiteQueue_Load[i] -> websiteEvent_Load(url);
+void loadCallback(__attribute__((unused)) char * Url){ //called when website is loaded. Runs through all components that subscribed for this event
+  GBox -> loadEvent(Url);
+}
+
+void refreshCallback(__attribute__((unused)) char * Url){ //called when website is refreshed.
+  GBox -> refreshEvent(Url);
+}
+
+void buttonPressCallback(char *Button){  //Called when any button on the website is pressed.
+  if (strcmp_P(ShortMessage,(PGM_P)F("RestoreDefaults"))==0) { restoreDefaults(GBox -> BoxSettings); }
+  else {
+    GBox -> buttonEvent(Button);
   } 
-}
-
-void refreshCallback(__attribute__((unused)) char * url){ //called when website is refreshed.
-  for(int i=0;i<GBox -> WebsiteQueueItemCount_Refresh;i++){
-    GBox -> WebsiteQueue_Refresh[i] -> websiteEvent_Refresh(url);
-  }
-}
-
-void buttonPressCallback(char *button){  //Called when any button on the website is pressed.
-  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(&button,true,0);
-  for(int i=0;i<GBox -> WebsiteQueueItemCount_Button;i++){
-    GBox -> WebsiteQueue_Button[i] -> websiteEvent_Button(button);
-  }
-  if (strcmp_P(ShortMessage,(PGM_P)F("RestoreDefaults"))==0) { restoreDefaults(GBox -> BoxSettings); }  
   saveSettings(GBox -> BoxSettings); 
 }
 
-void setFieldCallback(char * field){  //Called when any field on the website is updated.
-  if(GBox -> BoxSettings -> DebugEnabled)logToSerials(&field,true,0);   
-  for(int i=0;i<GBox -> WebsiteQueueItemCount_Field;i++){
-    GBox -> WebsiteQueue_Field[i] -> websiteEvent_Field(field);
-  }     
+void setFieldCallback(char * Field){  //Called when any field on the website is updated.
+  GBox -> setFieldEvent(Field);    
   saveSettings(GBox -> BoxSettings);
 } 
 

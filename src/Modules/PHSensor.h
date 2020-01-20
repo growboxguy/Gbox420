@@ -1,5 +1,4 @@
 #pragma once
-//Defines 3 classes: Reservoir, PHSensor and WaterTempSensor
 
 #include "../../420Common.h"
 
@@ -15,9 +14,6 @@ class PHSensor : public Common
     void websiteEvent_Field(char * Field);
     void refresh_Minute();
     void report();
-    void updatePH(bool ShowRaw);
-    void setSlope(float Value);
-    void setIntercept(float Value);
     float getPH(bool ReturnAverage = true);
     char * getPHText(bool ReturnAverage = true);
 
@@ -27,6 +23,9 @@ class PHSensor : public Common
     RollingAverage * PH;
     float * Intercept;
     float * Slope;
+    void updatePH(bool ShowRaw);
+    void setSlope(float Value);
+    void setIntercept(float Value);
   
   protected:    
 };

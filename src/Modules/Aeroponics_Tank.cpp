@@ -10,7 +10,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBo
   logToSerials(F("Aeroponics_Tank object created"),true,1);
 }
 
-void Aeroponics_Tank::websiteEvent_Load(__attribute__((unused)) char * url){ //When the website is opened, load stuff once
+void Aeroponics_Tank::websiteEvent_Load(__attribute__((unused)) char * url){ 
   if (strcmp(url,"/GrowBox.html.json")==0){
     WebServer.setArgFloat(getWebsiteComponentName(F("PresLow")), *PressureLow);
     WebServer.setArgFloat(getWebsiteComponentName(F("PresHigh")), *PressureHigh);
@@ -18,21 +18,21 @@ void Aeroponics_Tank::websiteEvent_Load(__attribute__((unused)) char * url){ //W
   Aeroponics::websiteEvent_Load(url); 
 }
 
-void Aeroponics_Tank::websiteEvent_Button(char * Button){  //When a button is pressed on the website
-  if(!isThisMyComponent(Button)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+void Aeroponics_Tank::websiteEvent_Button(char * Button){
+  if(!isThisMyComponent(Button)) { 
+    return;
   }
-  else{ //if the component name matches with the object name     
+  else{    
     if (strcmp_P(ShortMessage,(PGM_P)F("Refill"))==0) { refillTank(); }
     else Aeroponics::websiteEvent_Button(Button); 
   }
 } 
 
-void Aeroponics_Tank::websiteEvent_Field(char * Field){ //When the website is opened, load stuff once
-  if(!isThisMyComponent(Field)) {  //check if component name matches class. If it matches: fills ShortMessage global variable with the button function 
-    return;  //If did not match:return control to caller fuction
+void Aeroponics_Tank::websiteEvent_Field(char * Field){ 
+  if(!isThisMyComponent(Field)) { 
+    return;
   }
-  else{ //if the component name matches with the object name
+  else{
     if(strcmp_P(ShortMessage,(PGM_P)F("PresLow"))==0) {setPressureLow(WebServer.getArgFloat());}
     else if(strcmp_P(ShortMessage,(PGM_P)F("PresHigh"))==0) {setPressureHigh(WebServer.getArgFloat());}
     else Aeroponics::websiteEvent_Field(Field);
@@ -101,8 +101,6 @@ void Aeroponics_Tank::refresh_Sec(){
 //  }
 
 void Aeroponics_Tank::checkRelays(){
-  //logToSerials(F("Aeroponics_Tank checking relays:"),false,0);
-  //logToSerials(SpraySolenoidOn,true,0);
   if(SpraySolenoidOn) digitalWrite(*SpraySolenoidPin, LOW); else digitalWrite(*SpraySolenoidPin, HIGH); 
   Aeroponics::checkRelays();
 }
@@ -115,42 +113,6 @@ void Aeroponics_Tank::setPressureHigh(float PressureHigh){
   *(this -> PressureHigh) = PressureHigh;
   GBox -> addToLog(F("Tank limits updated"));
 }
-
-// void Aeroponics_Tank::checkAeroPumpAlerts_WithPressureTank()
-// {
-//   if(GBox -> BoxSettings -> PressureAlertLow <= Aeroponics::FeedbackPressureSensor -> getPressure() && Aeroponics::FeedbackPressureSensor -> getPressure() <= GBox -> BoxSettings -> PressureAlertHigh){ //If pressure is between OK range
-//     if(PreviousPressureRead != true){PressureTriggerCount = 0;}
-//     else{ if(!PressureOK)PressureTriggerCount++; } 
-//     PreviousPressureRead = true;     
-     
-//     if(!PressureOK && PressureTriggerCount>=GBox -> BoxSettings -> ReadCountBeforeAlert){ // pressure was not OK before
-//        PressureOK = true;
-//     //    sendEmailAlert(F("Aeroponics%20pressure%20OK"));
-//        } 
-//   }
-//   else{
-//     if(Aeroponics::FeedbackPressureSensor -> getPressure() > GBox -> BoxSettings -> PressureAlertHigh){ //Pressure over limit - emergency spraying
-//           setPumpOff(false); //force pump off
-//          // sprayNow(true); //try to release pressure  
-//     }
-//     if(PreviousPressureRead != false){PressureTriggerCount = 0;}
-//     else{ if(PressureOK)PressureTriggerCount++; }  //count out of range readings while pressure is considered OK and an alert is not active.
-//     PreviousPressureRead = false;  
-    
-//     if(PressureOK && PressureTriggerCount>=GBox -> BoxSettings -> ReadCountBeforeAlert){ //trigger an alert if the out of range reading counter is above the limit
-//         PressureOK = false;
-//         if(Aeroponics::FeedbackPressureSensor -> getPressure() > GBox -> BoxSettings -> PressureAlertHigh){ //If high pressure alert level is reached   
-//         //   sendEmailAlert(F("Aeroponics%20pressure%20too%20high"));
-//           GBox -> addToLog(F("High pressure warning"));
-//         }
-//         if(Aeroponics::FeedbackPressureSensor -> getPressure() < GBox -> BoxSettings -> PressureAlertLow){ //If low pressure alert level is reached
-//           //if(PumpOK) setPumpOn(false); //Uncomment this to turn pump on even under quiet time
-//         //   sendEmailAlert(F("Aeroponics%20pressure%20too%20low"));
-//           GBox -> addToLog(F("Low pressure warning"));
-//         } 
-//       }
-//    }     
-// }
 
 void Aeroponics_Tank::sprayNow(bool FromWebsite){   
   if(*SprayEnabled || FromWebsite){
