@@ -60,7 +60,7 @@ void LightSensor::triggerCalibration(){ //website signals to calibrate light sen
   CalibrateRequested = true; 
 }
 
-void LightSensor::calibrate(bool AddToLog){
+void LightSensor::calibrate(bool AddToLog){  //Takes ~2sec total, could trigger a watchdog reset!
   CalibrateRequested=false;  
   bool LastStatus = LightSource -> getStatus();  //TODO: This should be more generic and support different Lights objects passed as a parameter
   byte LastBrightness = LightSource -> getBrightness();
@@ -76,6 +76,8 @@ void LightSensor::calibrate(bool AddToLog){
   MaxReading = 1023 - analogRead(*AnalogPin);
   LightSource -> setBrightness(LastBrightness,false); //restore original brightness, without adding a log entry
   LightSource -> setLightOnOff(LastStatus,false); //restore original state, without adding a log entry
+  delay(500); //wait for light output change
+  getReading();
   if(AddToLog){
     GBox -> addToLog(F("Lights calibrated"),4);
     if(GBox -> BoxSettings -> DebugEnabled){

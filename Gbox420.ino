@@ -119,11 +119,12 @@ void HeartBeat(){
 //Website related functions
 
 void resetWebServer(void) {    // Callback made from esp-link to notify that it has just come out of a reset
-  logToSerials(F("(re)Connecting ESP-link.."),true,0);
+  logToSerials(F("(re)Connecting ESP-link.."),false,0);
   while(!ESPLink.Sync())  {
     logToSerials(F("."),false,0);
     delay(500); 
     };
+  logToSerials(F(""),true,0);  //line break
   if(PushingBoxRestAPI.begin("api.pushingbox.com") == 0){logToSerials(F("PushingBox RestAPI ready"),true,2);} //Pre-setup relay to Google Sheets 
   else logToSerials(F("PushingBox RestAPI failed"),true,2); //If begin returns a negative number the initialization failed
   WebServer.setup();
