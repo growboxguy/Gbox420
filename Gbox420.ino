@@ -51,7 +51,6 @@ void setup() {  // put your setup code here, to run once:
   wdt_enable(WDTO_8S); //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable(); //fix watchdog not loading sketch after a reset error on Mega2560  
   
-  GBox = new GrowBox(F("GBox1"), loadSettings());  //This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters 
   ESPLink.resetCb = &resetWebServer;  //Callback subscription: What to do when WiFi reconnects
   resetWebServer();  //reset the WebServer 
   setTime(getNtpTime()); //Get the current time over the internet using NTP
@@ -71,6 +70,9 @@ void setup() {  // put your setup code here, to run once:
   Timer3.attachInterrupt(processTimeCriticalStuff);
   Timer3.start();
 
+  //Create the GrowBox object
+  GBox = new GrowBox(F("GBox1"), loadSettings());  //This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters 
+  
   //  sendEmailAlert(F("Grow%20box%20(re)started"));
   logToSerials(F("Setup ready, starting loops:"),true,0);
 }

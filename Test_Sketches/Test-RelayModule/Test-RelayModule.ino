@@ -2,14 +2,14 @@
 //Sketch for testing: 8 channel relay module
 
 //Pins
-const byte Relay1OutPin = 22;  //Power relay Port 1 - Aeroponics solenoid
-const byte Relay2OutPin = 23;  //Power relay Port 2 - Aeroponics high pressure pump
-const byte Relay3OutPin = 24;  //Power relay Port 3 - PC power supply
-const byte Relay4OutPin = 25;  //Power relay Port 4 - Internal fan Off/On
-const byte Relay5OutPin = 26;  //Power relay Port 5 - Internal fan Low/High
-const byte Relay6OutPin = 27;  //Power relay Port 6 - Exhauset fan Off/On
-const byte Relay7OutPin = 28;  //Power relay Port 7 - Exhauset fan Low/High
-const byte Relay8OutPin = 29;  //Power relay Port 8 - LED lights
+const byte Relay1OutPin = 22;  //Power relay Port 1
+const byte Relay2OutPin = 23;  //Power relay Port 2
+const byte Relay3OutPin = 24;  //Power relay Port 3
+const byte Relay4OutPin = 25;  //Power relay Port 4
+const byte Relay5OutPin = 26;  //Power relay Port 5
+const byte Relay6OutPin = 27;  //Power relay Port 6
+const byte Relay7OutPin = 28;  //Power relay Port 7
+const byte Relay8OutPin = 29;  //Power relay Port 8
 
 void setup() {   // put your setup code here, to run once:
 Serial.begin(115200); 

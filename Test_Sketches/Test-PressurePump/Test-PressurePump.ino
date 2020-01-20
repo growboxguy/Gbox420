@@ -9,14 +9,14 @@
   byte AeroInterval = 1; //Aeroponics - Spray every minutes
   byte AeroDuration = 10; //Aeroponics - Spray time in seconds
   uint32_t AeroPumpTimeout = 5;  // Aeroponics - Self priming time in seconds
-  uint32_t AeroSprayTimer = millis();  //Aeroponics - Spary cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
+  uint32_t AeroSprayTimer = millis();  //Aeroponics - Spray cycle timer - https://www.arduino.cc/reference/en/language/functions/time/millis/
   uint32_t AeroPumpTimer = millis();  //Aeroponics - Pump cycle timer
   bool AeroSolenoidOn = false; //Aeroponics - Spray state, set to true to spay at power on
   bool AeroPumpOn = false; //Aeroponics - High pressure pump state
  
 void setup() {  // put your setup code here, to run once:
   Serial.begin(115200);    //2560mega console output
-  Serial3.begin(115200);  //wifi console output
+  Serial3.begin(115200);  //ESP console output
 
   pinMode(Relay1OutPin, OUTPUT);
   pinMode(Relay2OutPin, OUTPUT);

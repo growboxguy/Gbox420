@@ -1,5 +1,5 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
-//Sketch for testig: PC speaker
+//Sketch for testing: PC speaker / Piezo buzzer
 
 //Pins
 const int BuzzerOutPin = 4;

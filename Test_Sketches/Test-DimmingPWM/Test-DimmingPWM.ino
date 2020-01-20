@@ -2,7 +2,7 @@
 //Sketch for testing: Optocoupler based HLG LED driver dimming
 //HLG LED driver dimmin by applying additive 10V PWM signal (frequency range 100Hz ~ 3KHz)
 //Using: 490Hz PWM signal, Duty cycle is inverted by the optocoupler!
-//PWM dimming duty cycle 0 (No dimming) - 235 (Dimm to 8%, Lowest allowed dimming by Meanweell is 6%)
+//PWM dimming duty cycle 0 (No dimming) - 235 (Dimm to 8%, Lowest allowed dimming by Meanwell is 6%)
 
 //Pins
 const byte DimmingOutPin = 11; //Optocoupler PC817 base over 1K resistor

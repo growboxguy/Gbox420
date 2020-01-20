@@ -47,7 +47,7 @@ GrowBox::GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings): Commo
   AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event
   AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event
   AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event
-  logToSerials(F("GrowBox object created"), true,2);
+  logToSerials(F("GrowBox object created, refreshing..."), true,2);
   refreshAll(); //Triggers the refresh of all components
   addToLog(F("GrowBox initialized"),0);
 }
@@ -99,7 +99,7 @@ void GrowBox::refresh_FiveSec(){
   if(BoxSettings -> DebugEnabled) Common::refresh_FiveSec();
   if(RefreshAllRequested) {
     RefreshAllRequested = false;
-    refreshAll();
+    refreshAll(true);
   }
 }
 

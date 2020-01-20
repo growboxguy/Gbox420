@@ -1,5 +1,5 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
-//Sketch for testing: Humidity and temperature sensor
+//Sketch for testing: DHT sensor (Humidity and temperature sensor)
 
 //Libraries
 #include "DHT.h";
