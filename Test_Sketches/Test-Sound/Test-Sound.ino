@@ -66,7 +66,7 @@ void loop()
   beep(cH, 125);
   beep(a, 650);  
  
-  delay(2000);
+  delay(6000);
 }
  
 void beep(int note, int duration)

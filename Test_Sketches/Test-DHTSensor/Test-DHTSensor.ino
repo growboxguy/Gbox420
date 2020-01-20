@@ -5,7 +5,7 @@
 #include "DHT.h";
 
 //Pins
-const int TempSensorInPin=4;     // DAT digital input - DHT22 sensor
+const int TempSensorInPin=49;     // DAT digital input - DHT22 sensor
   
 //Global Variables
 float hum;  //Stores humidity
