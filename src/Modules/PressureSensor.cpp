@@ -12,7 +12,7 @@ PressureSensor::PressureSensor(const __FlashStringHelper * Name, GrowBox * GBox,
   GBox -> AddToWebsiteQueue_Load(this); //Subscribing to the Website load event: Calls the websiteEvent_Load() method
   GBox -> AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
   GBox -> AddToWebsiteQueue_Field(this); //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
-  logToSerials(F("DHT Sensor object created"),true,1);
+  logToSerials(F("Pressure Sensor object created"),true,1);
 }
 
 void PressureSensor::websiteEvent_Load(__attribute__((unused)) char * url){
