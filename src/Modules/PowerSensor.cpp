@@ -22,7 +22,7 @@ void PowerSensor::websiteEvent_Refresh(__attribute__((unused)) char * url){
 } 
 
 void PowerSensor::refresh_FiveSec(){
-  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_Minute();
+  if(GBox -> BoxSettings -> DebugEnabled) Common::refresh_FiveSec();
   Voltage = Sensor -> voltage(*PowerSensorIP);  //AC Voltage (V)
   Current = Sensor -> current(*PowerSensorIP); //Current (A)
   Power = Sensor -> power(*PowerSensorIP); //Actual power usage (W)
