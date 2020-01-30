@@ -14,18 +14,18 @@ public:
   void websiteEvent_Button(char *Button);
   void refresh_Minute();
   void report();
-  void triggerCalibration();  //Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger
-  char *getCalibrationText();  //Light sensor analog feedback relative to calibration values: 0 to 100%
-  int getReading(bool ReturnAverage = true);  //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
-  char *getReadingText(bool IncludePercentage, bool ReturnAverage);  //returns the current light sensor reading
-  bool getDark(); //Light sensor digital feedback: True(Dark) or False(Bright)  
+  void triggerCalibration();                                        //Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger
+  char *getCalibrationText();                                       //Light sensor analog feedback relative to calibration values: 0 to 100%
+  int getReading(bool ReturnAverage = true);                        //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
+  char *getReadingText(bool IncludePercentage, bool ReturnAverage); //returns the current light sensor reading
+  bool getDark();                                                   //Light sensor digital feedback: True(Dark) or False(Bright)
   char *getDarkText(bool UseWords);
 
 private:
   GrowBox *GBox;
-  Lights *LightSource; //The light used during calibration
-  byte *DigitalPin;    //D0 - LM393 light sensor digital in
-  byte *AnalogPin;     //A0 - LM393 light sensor analog in
+  Lights *LightSource;          //The light used during calibration
+  byte *DigitalPin;             //D0 - LM393 light sensor digital in
+  byte *AnalogPin;              //A0 - LM393 light sensor analog in
   RollingAverage *LightReading; //keeps an average of previous readings: Smoothens sensor readings
   void calibrate(bool AddToLog = true);
   bool Dark;

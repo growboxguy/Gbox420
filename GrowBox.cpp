@@ -527,7 +527,7 @@ void GrowBox::setPushingBoxLogRelayID(char *ID)
   addToLog(F("Sheets log relay ID updated"));
 }
 
-void GrowBox::relayToGoogleSheets(const __FlashStringHelper * Title, char (* JSONData)[MaxLongTextLength])
+void GrowBox::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength])
 {
   char ValueToReport[MaxLongTextLength] = "";
   strcat_P(ValueToReport, (PGM_P)F("/pushingbox?devid="));

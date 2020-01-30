@@ -9,19 +9,25 @@
 //Component initialization
 PZEM004Tv30 PowerSensor(&Serial2);
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
-  PowerSensor.resetEnergy();   //RESETS COUNTER!!!!!!
+  PowerSensor.resetEnergy(); //RESETS COUNTER!!!!!!
 }
 
-void loop() {
+void loop()
+{
   float v = PowerSensor.voltage();
-  Serial.print(v);Serial.print("V; ");
+  Serial.print(v);
+  Serial.print("V; ");
   float i = PowerSensor.current();
-  Serial.print(i);Serial.print("A; ");   
+  Serial.print(i);
+  Serial.print("A; ");
   float p = PowerSensor.power();
-  Serial.print(p);Serial.print("W; ");
+  Serial.print(p);
+  Serial.print("W; ");
   float e = PowerSensor.energy();
-  Serial.print(e);Serial.println("Wh; ");
+  Serial.print(e);
+  Serial.println("Wh; ");
   delay(2000);
 }

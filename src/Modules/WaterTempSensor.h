@@ -1,28 +1,28 @@
 #pragma once
 
-#include "OneWire.h" //DS18B20 waterproof temperature sensor
+#include "OneWire.h"           //DS18B20 waterproof temperature sensor
 #include "DallasTemperature.h" //DS18B20 waterproof temperature sensor
 #include "../../420Common.h"
 
-class GrowBox;  //forward declaration
+class GrowBox; //forward declaration
 
 class WaterTempSensor : public Common
 {
-  public:
-    WaterTempSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::WaterTempSensorSettings * DefaultSettings);  //constructor
-    void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    void refresh_Minute();
-    void report();
-    float getTemp(bool ReturnAverage = true);
-    char * getTempText(bool IncludeUnits, bool ReturnAverage);
-    RollingAverage * Temp;
+public:
+  WaterTempSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::WaterTempSensorSettings *DefaultSettings); //constructor
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void refresh_Minute();
+  void report();
+  float getTemp(bool ReturnAverage = true);
+  char *getTempText(bool IncludeUnits, bool ReturnAverage);
+  RollingAverage *Temp;
 
-  private:
-    GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
-    OneWire * TempSensorWire;
-    DallasTemperature * TempSensor;
+private:
+  GrowBox *GBox; //Pointer to the GrowBox object that contains the Lights object
+  OneWire *TempSensorWire;
+  DallasTemperature *TempSensor;
 
-  protected:         
+protected:
 };
 
 //WEBSITE COMPONENT

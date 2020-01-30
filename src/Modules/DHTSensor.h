@@ -1,29 +1,29 @@
 #pragma once
 
-#include "DHT.h"  //DHT11 or DHT22 Digital Humidity and Temperature sensor
+#include "DHT.h" //DHT11 or DHT22 Digital Humidity and Temperature sensor
 #include "../../420Common.h"
 
-class GrowBox;  //forward declaration
+class GrowBox; //forward declaration
 
 class DHTSensor : public Common
 {
-  public:
-    DHTSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::DHTSensorSettings * DefaultSettings);
-    void websiteEvent_Refresh(__attribute__((unused)) char * url);    
-    void refresh_Minute(); 
-    void report();
-    float getTemp(bool ReturnAverage = true);
-    char * getTempText(bool IncludeUnits, bool ReturnAverage); 
-    float getHumidity(bool ReturnAverage = true); 
-    char * getHumidityText(bool IncludeUnits, bool ReturnAverage);
-    RollingAverage * Temp;
-    RollingAverage * Humidity;
-  
-  private:
-    GrowBox * GBox;
-    DHT* Sensor; //Pointer declaration, points to null initially 
-  
-  protected:
+public:
+  DHTSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::DHTSensorSettings *DefaultSettings);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void refresh_Minute();
+  void report();
+  float getTemp(bool ReturnAverage = true);
+  char *getTempText(bool IncludeUnits, bool ReturnAverage);
+  float getHumidity(bool ReturnAverage = true);
+  char *getHumidityText(bool IncludeUnits, bool ReturnAverage);
+  RollingAverage *Temp;
+  RollingAverage *Humidity;
+
+private:
+  GrowBox *GBox;
+  DHT *Sensor; //Pointer declaration, points to null initially
+
+protected:
 };
 
 //WEBSITE COMPONENT

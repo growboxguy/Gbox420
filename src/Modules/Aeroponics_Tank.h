@@ -3,32 +3,32 @@
 #include "../../420Common.h"
 #include "Aeroponics.h"
 
-class GrowBox;  //forward declaration
+class GrowBox; //forward declaration
 
 class Aeroponics_Tank : public Aeroponics
 {
-  public:
-    Aeroponics_Tank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_TankSpecific * TankSpecificSettings, PressureSensor * FeedbackPressureSensor);
-    void websiteEvent_Load(__attribute__((unused)) char * url);
-    void websiteEvent_Button(__attribute__((unused)) char * Button);
-    void websiteEvent_Field(char * Field);
-    void refresh_Sec();
-    void report();
+public:
+  Aeroponics_Tank(const __FlashStringHelper *Name, GrowBox *GBox, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor);
+  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Button(__attribute__((unused)) char *Button);
+  void websiteEvent_Field(char *Field);
+  void refresh_Sec();
+  void report();
 
-  private:
-    void checkRelays();
-    void setPressureLow(float PressureLow);
-    void setPressureHigh(float PressureHigh);
-    void sprayNow(bool FromWebsite = false);
-    void sprayOff();
-    char * sprayStateToText();
-    void refillTank(); 
-    byte * SpraySolenoidPin;
-    bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on.
-    float * PressureLow; //Aeroponics - Turn on pump below this pressure (bar)
-    float * PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
+private:
+  void checkRelays();
+  void setPressureLow(float PressureLow);
+  void setPressureHigh(float PressureHigh);
+  void sprayNow(bool FromWebsite = false);
+  void sprayOff();
+  char *sprayStateToText();
+  void refillTank();
+  byte *SpraySolenoidPin;
+  bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on.
+  float *PressureLow;           //Aeroponics - Turn on pump below this pressure (bar)
+  float *PressureHigh;          //Aeroponics - Turn off pump above this pressure (bar)
 
-  protected:    
+protected:
 };
 
 //WEBSITE COMPONENT

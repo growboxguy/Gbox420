@@ -2,50 +2,50 @@
 
 #include "../../420Common.h"
 
-class GrowBox;  //forward declaration
+class GrowBox; //forward declaration
 
 class Lights : public Common
 {
-  public:
-    //Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte * DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
-    Lights(const __FlashStringHelper * Name, GrowBox * GBox, Settings::LightsSettings * DefaultSettings);  //constructor
-    void websiteEvent_Load(__attribute__((unused)) char * url);
-    void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    void websiteEvent_Button(char * Button);
-    void websiteEvent_Field(char * Field);
-    void refresh_Minute(); 
-    void report(); 
-    void setBrightness(byte Brightness, bool AddToLog);           
-    void setLightOnOff(bool State,bool AddToLog); 
-    bool getStatus();
-    int getBrightness();  
-    char * getBrightnessText();
-    char * getTimerOnOffText(bool UseText); 
-    char * getStatusText(bool UseText);    
-    char * getOnTimeText();    
-    char * getOffTimeText(); 
-  
-  private:  
-    GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object  
-    void checkLightStatus();
-    void checkLightTimer();    
-    void setTimerOnOff(bool State);    
-    void setOnHour(byte OnHour);    
-    void setOnMinute(byte OnMinute);    
-    void setOffHour(byte OffHour);    
-    void setOffMinute(byte OffMinute);
-    byte * RelayPin; //the Arduino pin controlling the AC relay
-    byte * DimmingPin; //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor 
-    byte * DimmingLimit; //Sets the LED dimming limit (Usually around 5%)
-    bool* Status;   //Lights ON or OFF 
-    bool* TimerEnabled;  //Enable timer controlling lights: true - Timer enabled, false - Timer disabled
-    byte * OnHour;  //Light ON time - hour
-    byte * OnMinute; //Light ON time - minute
-    byte * OffHour;//Light OFF time - hour
-    byte * OffMinute; //Light OFF time - minute
-    byte * Brightness; //Light intensity: 0 - 100 range for controlling led driver output 
+public:
+  //Lights(GrowBox * GBox,byte RelayPin, byte DimmingPin, byte * DimmingLimit, bool *Status, byte *Brightness, bool *TimerEnabled, byte *OnHour, byte *OnMinute, byte *OffHour, byte *OffMinute);  //constructor
+  Lights(const __FlashStringHelper *Name, GrowBox *GBox, Settings::LightsSettings *DefaultSettings); //constructor
+  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Button(char *Button);
+  void websiteEvent_Field(char *Field);
+  void refresh_Minute();
+  void report();
+  void setBrightness(byte Brightness, bool AddToLog);
+  void setLightOnOff(bool State, bool AddToLog);
+  bool getStatus();
+  int getBrightness();
+  char *getBrightnessText();
+  char *getTimerOnOffText(bool UseText);
+  char *getStatusText(bool UseText);
+  char *getOnTimeText();
+  char *getOffTimeText();
 
-  protected:  
+private:
+  GrowBox *GBox; //Pointer to the GrowBox object that contains the Lights object
+  void checkLightStatus();
+  void checkLightTimer();
+  void setTimerOnOff(bool State);
+  void setOnHour(byte OnHour);
+  void setOnMinute(byte OnMinute);
+  void setOffHour(byte OffHour);
+  void setOffMinute(byte OffMinute);
+  byte *RelayPin;     //the Arduino pin controlling the AC relay
+  byte *DimmingPin;   //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
+  byte *DimmingLimit; //Sets the LED dimming limit (Usually around 5%)
+  bool *Status;       //Lights ON or OFF
+  bool *TimerEnabled; //Enable timer controlling lights: true - Timer enabled, false - Timer disabled
+  byte *OnHour;       //Light ON time - hour
+  byte *OnMinute;     //Light ON time - minute
+  byte *OffHour;      //Light OFF time - hour
+  byte *OffMinute;    //Light OFF time - minute
+  byte *Brightness;   //Light intensity: 0 - 100 range for controlling led driver output
+
+protected:
 };
 
 //WEBSITE COMPONENT

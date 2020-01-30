@@ -2,32 +2,32 @@
 
 #include "../../420Common.h"
 
-class GrowBox;  //forward declaration
+class GrowBox; //forward declaration
 
 class PressureSensor : public Common
 {
-  public:
-    PressureSensor(const __FlashStringHelper * Name, GrowBox * GBox, Settings::PressureSensorSettings * DefaultSettings);
-    void websiteEvent_Load(__attribute__((unused)) char * url);
-    void websiteEvent_Button(char * Button);
-    void websiteEvent_Field(char * Field);
-    void refresh_Minute(); 
-    void report();
-    void readPressure();
-    float getPressure(bool ReturnAverage = true);
-    char * getPressureText(bool IncludeUnits,bool ReturnAverage);
-    RollingAverage * Pressure;
-  
-  private:
-    GrowBox * GBox;
-    void readOffset();
-    void setOffset(float Value);
-    void setRatio(float Value);
-    byte * Pin;    
-    float * Offset;
-    float * Ratio;
-  
-  protected:
+public:
+  PressureSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::PressureSensorSettings *DefaultSettings);
+  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Button(char *Button);
+  void websiteEvent_Field(char *Field);
+  void refresh_Minute();
+  void report();
+  void readPressure();
+  float getPressure(bool ReturnAverage = true);
+  char *getPressureText(bool IncludeUnits, bool ReturnAverage);
+  RollingAverage *Pressure;
+
+private:
+  GrowBox *GBox;
+  void readOffset();
+  void setOffset(float Value);
+  void setRatio(float Value);
+  byte *Pin;
+  float *Offset;
+  float *Ratio;
+
+protected:
 };
 
 //WEBSITE COMPONENT

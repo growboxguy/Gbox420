@@ -2,32 +2,32 @@
 
 #include "../../420Common.h"
 
-class GrowBox;  //forward declaration 
+class GrowBox; //forward declaration
 
 class PHSensor : public Common
 {
-  public:
-    PHSensor(const __FlashStringHelper * Name, GrowBox * GBox,  Settings::PHSensorSettings * DefaultSettings);
-    void websiteEvent_Load(__attribute__((unused)) char * url);
-    void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    void websiteEvent_Button(char * Button);
-    void websiteEvent_Field(char * Field);
-    void refresh_Minute();
-    void report();
-    float getPH(bool ReturnAverage = true);
-    char * getPHText(bool ReturnAverage = true);
+public:
+  PHSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::PHSensorSettings *DefaultSettings);
+  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Button(char *Button);
+  void websiteEvent_Field(char *Field);
+  void refresh_Minute();
+  void report();
+  float getPH(bool ReturnAverage = true);
+  char *getPHText(bool ReturnAverage = true);
 
-  private:
-    GrowBox * GBox;
-    byte * Pin;
-    RollingAverage * PH;
-    float * Intercept;
-    float * Slope;
-    void updatePH(bool ShowRaw);
-    void setSlope(float Value);
-    void setIntercept(float Value);
-  
-  protected:    
+private:
+  GrowBox *GBox;
+  byte *Pin;
+  RollingAverage *PH;
+  float *Intercept;
+  float *Slope;
+  void updatePH(bool ShowRaw);
+  void setSlope(float Value);
+  void setIntercept(float Value);
+
+protected:
 };
 
 //WEBSITE COMPONENT

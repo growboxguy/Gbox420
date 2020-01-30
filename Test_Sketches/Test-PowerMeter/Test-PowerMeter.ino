@@ -8,22 +8,27 @@
 
 //Component initialization
 PZEM004T PowerSensor(&Serial2);
-IPAddress PowerSensorIP(192,168,1,1);
+IPAddress PowerSensorIP(192, 168, 1, 1);
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
   PowerSensor.setAddress(PowerSensorIP);
-
 }
 
-void loop() {
+void loop()
+{
   float v = PowerSensor.voltage(PowerSensorIP);
-  Serial.print(v);Serial.print("V; ");
+  Serial.print(v);
+  Serial.print("V; ");
   float i = PowerSensor.current(PowerSensorIP);
-  Serial.print(i);Serial.print("A; ");   
+  Serial.print(i);
+  Serial.print("A; ");
   float p = PowerSensor.power(PowerSensorIP);
-  Serial.print(p);Serial.print("W; ");
+  Serial.print(p);
+  Serial.print("W; ");
   float e = PowerSensor.energy(PowerSensorIP);
-  Serial.print(e);Serial.println("Wh; ");
+  Serial.print(e);
+  Serial.println("Wh; ");
   delay(2000);
 }

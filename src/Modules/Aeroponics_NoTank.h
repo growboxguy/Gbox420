@@ -3,28 +3,28 @@
 #include "../../420Common.h"
 #include "Aeroponics.h"
 
-class GrowBox;  //forward declaration
+class GrowBox; //forward declaration
 
 class Aeroponics_NoTank : public Aeroponics
 {
-  public:
-    Aeroponics_NoTank(const __FlashStringHelper * Name, GrowBox * GBox, Settings::AeroponicsSettings * DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific * NoTankSpecificSettings, PressureSensor * FeedbackPressureSensor);  //constructor
-    void websiteEvent_Load(__attribute__((unused)) char * url);
-    void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    void websiteEvent_Field(char * Field);
-    void refresh_Sec();
-    void report();
-    float LastSprayPressure = 0; //tracks the last average pressure during a spray cycle
+public:
+  Aeroponics_NoTank(const __FlashStringHelper *Name, GrowBox *GBox, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor); //constructor
+  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Field(char *Field);
+  void refresh_Sec();
+  void report();
+  float LastSprayPressure = 0; //tracks the last average pressure during a spray cycle
 
-  private:
-    void sprayNow(bool FromWebsite = false);
-    void sprayOff();
-    char * sprayStateToText();
-    void setBlowOffTime(int _BlowOffTime); 
-    int * BlowOffTime; //After spraying open the bypass valve for X seconds to release pressure in the system 
-    bool BlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
-    
-  protected:
+private:
+  void sprayNow(bool FromWebsite = false);
+  void sprayOff();
+  char *sprayStateToText();
+  void setBlowOffTime(int _BlowOffTime);
+  int *BlowOffTime;               //After spraying open the bypass valve for X seconds to release pressure in the system
+  bool BlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
+
+protected:
 };
 
 //WEBSITE COMPONENT

@@ -1,105 +1,112 @@
-  <!-- EspLink will add header here -->
-  <meta name="refresh-rate" content="5000" /> 
-		<style type="text/css">
-					iframe {
-					margin: 0;
-					padding: 0;
-					border: none;
-					width: 100%;					
-					height: 95vh;
-					overflow:hidden;
-					scrolling: no;
-					}
-					.tablink {
-					  background-color: #555;
-					  color: white;
-					  float: right;
-					  border: none;
-					  outline: none;
-					  cursor: pointer;
-					  padding: 5px 5px;
-					  font-size: 17px;
-					  width: 25%;
-					}
+<!-- EspLink will add header here -->
+<meta name="refresh-rate" content="5000" />
+<style type="text/css">
+	iframe {
+		margin: 0;
+		padding: 0;
+		border: none;
+		width: 100%;
+		height: 95vh;
+		overflow: hidden;
+		scrolling: no;
+	}
 
-					.tablink:hover {
-					  background-color: #777;
-					}
+	.tablink {
+		background-color: #555;
+		color: white;
+		float: right;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		padding: 5px 5px;
+		font-size: 17px;
+		width: 25%;
+	}
 
-					/* Style the tab content (and add height:100% for full page content) */
-					.tabcontent {
-					  color: white;
-					  display: none;
-					  padding: 0px;
-					  height: 100%;
-					}
-					.link {
-					font-family: Tahoma;
-					font-size: 40px;
-					letter-spacing: 0px;
-					word-spacing: 0px;
-					color: #2C8E25;
-					font-weight: 700;
-					text-decoration: none solid rgb(68, 68, 68);
-					font-style: normal;
-					text-transform: capitalize;
-					}
-					.linkDescription {
-					font-family: Tahoma;
-					font-size: 18px;
-					color: black;
-					}
+	.tablink:hover {
+		background-color: #777;
+	}
 
-		</style>
-		
-		<div>		
-		<button class="tablink" onclick="openPage('Sheets', this, 'green')">Google Sheets</button>
-		<button class="tablink" onclick="openPage('Dioty', this, 'green')">Dioty</button>		
-		<button class="tablink" onclick="openPage('HiveMQ', this, 'green')">HiveMQ</button>
-		<button class="tablink" onclick="openPage('DIYGuide', this, 'green')" id="defaultOpen">DIY Guide</button>
-		</div>
-		<div id="DIYGuide" class="tabcontent">
-		  <iframe src="https://sites.google.com/site/growboxguy/arduino"></iframe>
-		</div>
-		<div id="HiveMQ" class="tabcontent">
-		  <iframe src="http://www.hivemq.com/demos/websocket-client/"></iframe>
-		</div>
-		<div id="Sheets" class="tabcontent">
-		   <div style="float:right;overflow: auto">
-		   <br>
-			<a href="https://docs.google.com/spreadsheets" target="_blank" class="link">Google Sheets <img border="0" src="https://image.freepik.com/free-icon/add-new-tab-symbol_318-40646.jpg" width="100" height="100"><br><b class="linkDescription"> Open in new tab</b>	</a>
-		   </div>
-		</div>
-		<div id="Dioty" class="tabcontent">
-		   <div style="float:right;overflow: auto">
-		   <br>
-			<a href="http://www.dioty.co/mydioty" target="_blank" class="link">Dioty <img border="0" src="https://image.freepik.com/free-icon/add-new-tab-symbol_318-40646.jpg" width="100" height="100"><br><b class="linkDescription"> Open in new tab</b>	</a>
-		   </div>
-		</div>
+	/* Style the tab content (and add height:100% for full page content) */
+	.tabcontent {
+		color: white;
+		display: none;
+		padding: 0px;
+		height: 100%;
+	}
+
+	.link {
+		font-family: Tahoma;
+		font-size: 40px;
+		letter-spacing: 0px;
+		word-spacing: 0px;
+		color: #2C8E25;
+		font-weight: 700;
+		text-decoration: none solid rgb(68, 68, 68);
+		font-style: normal;
+		text-transform: capitalize;
+	}
+
+	.linkDescription {
+		font-family: Tahoma;
+		font-size: 18px;
+		color: black;
+	}
+</style>
+
+<div>
+	<button class="tablink" onclick="openPage('Sheets', this, 'green')">Google Sheets</button>
+	<button class="tablink" onclick="openPage('Dioty', this, 'green')">Dioty</button>
+	<button class="tablink" onclick="openPage('HiveMQ', this, 'green')">HiveMQ</button>
+	<button class="tablink" onclick="openPage('DIYGuide', this, 'green')" id="defaultOpen">DIY Guide</button>
+</div>
+<div id="DIYGuide" class="tabcontent">
+	<iframe src="https://sites.google.com/site/growboxguy/arduino"></iframe>
+</div>
+<div id="HiveMQ" class="tabcontent">
+	<iframe src="http://www.hivemq.com/demos/websocket-client/"></iframe>
+</div>
+<div id="Sheets" class="tabcontent">
+	<div style="float:right;overflow: auto">
+		<br>
+		<a href="https://docs.google.com/spreadsheets" target="_blank" class="link">Google Sheets <img border="0"
+				src="https://image.freepik.com/free-icon/add-new-tab-symbol_318-40646.jpg" width="100"
+				height="100"><br><b class="linkDescription"> Open in new tab</b> </a>
+	</div>
+</div>
+<div id="Dioty" class="tabcontent">
+	<div style="float:right;overflow: auto">
+		<br>
+		<a href="http://www.dioty.co/mydioty" target="_blank" class="link">Dioty <img border="0"
+				src="https://image.freepik.com/free-icon/add-new-tab-symbol_318-40646.jpg" width="100"
+				height="100"><br><b class="linkDescription"> Open in new tab</b> </a>
+	</div>
+</div>
 <script>
-function openPage(pageName, elmnt, color) {
-    // Hide all elements with class="tabcontent" by default */
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
+	function openPage(pageName, elmnt, color) {
+		// Hide all elements with class="tabcontent" by default */
+		var i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName("tabcontent");
+		for (i = 0; i < tabcontent.length; i++) {
+			tabcontent[i].style.display = "none";
+		}
 
-    // Remove the background color of all tablinks/buttons
-    tablinks = document.getElementsByClassName("tablink");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.backgroundColor = "";
-    }
+		// Remove the background color of all tablinks/buttons
+		tablinks = document.getElementsByClassName("tablink");
+		for (i = 0; i < tablinks.length; i++) {
+			tablinks[i].style.backgroundColor = "";
+		}
 
-    // Show the specific tab content
-    document.getElementById(pageName).style.display = "block";
+		// Show the specific tab content
+		document.getElementById(pageName).style.display = "block";
 
-    // Add the specific color to the button used to open the tab content
-    elmnt.style.backgroundColor = color;
-}
+		// Add the specific color to the button used to open the tab content
+		elmnt.style.backgroundColor = color;
+	}
 
-// Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();		
-</script>		
+	// Get the element with id="defaultOpen" and click on it
+	document.getElementById("defaultOpen").click();		
+</script>
 </body>
+
 </html>

@@ -6,7 +6,7 @@
 //Responsible for setting up each module, updating their statuses and reporting it
 
 //forward declaration of classes
-class DHTSensor;  
+class DHTSensor;
 class LightSensor;
 class Lights;
 class Sound;
@@ -20,95 +20,95 @@ class Aeroponics_NoTank;
 class Aeroponics_Tank;
 class WaterTempSensor;
 class WaterLevelSensor;
-class ModuleSkeleton;   //Only for demonstration purposes
+class ModuleSkeleton; //Only for demonstration purposes
 
 extern ELClientRest PushingBoxRestAPI;
 
 class GrowBox : public Common
-{ 
-  public:
-    GrowBox(const __FlashStringHelper * Name, Settings *BoxSettings); //constructor
-    Settings * BoxSettings;
-    Sound * Sound1; //Pointer to a Piezo speaker - sound feedback
-    Fan * InFan;  //Internal fan
-    Fan * ExFan; //Exhaust fan
-    DHTSensor * InDHT;  //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
-    DHTSensor * ExDHT; //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
-    LightSensor * LightSensor1; //Pointer to a Light Sensor object measuring light intensity in the grow box
-    Lights * Light1;  //Pointer to a Light assembly 
-    PowerSensor * Power1;
-    //PowerSensorV3 * Power1;  //Only for PZEM004T V3.0
-    PressureSensor * Pressure1;
-    PHSensor * PHSensor1;
-    Aeroponics_Tank * Aero_T1;
-    Aeroponics_NoTank * Aero_NT1;
-    WaterTempSensor * WaterTemp1;
-    WaterLevelSensor * WaterLevel1;
-    ModuleSkeleton * ModuleSkeleton1;  //Only for demonstration purposes
-    ModuleSkeleton * ModuleSkeleton2;  //Only for demonstration purposes
-    void websiteEvent_Load(__attribute__((unused)) char * url);
-    void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    void websiteEvent_Button(char * Button);
-    void websiteEvent_Field(char * Field);
-    void refresh_FiveSec();
-    void refresh_Minute();
-    void refresh_QuarterHour();
-    void runSec();
-    void runFiveSec();
-    void runMinute();
-    void runQuarterHour();  
-    void addToLog(const __FlashStringHelper* Text,byte indent=3);
-    void addToLog(const char * Text,byte indent=3);
-    void ReportToGoogleSheetsTrigger();
-    void ReportToGoogleSheets(bool CalledFromWebsite); 
-    void relayToGoogleSheets(const __FlashStringHelper * Title, char (* JSONData)[MaxLongTextLength]);
-    void AddToReportQueue(Common* Component);
-    void AddToRefreshQueue_Sec(Common* Component);
-    void AddToRefreshQueue_FiveSec(Common* Component);
-    void AddToRefreshQueue_Minute(Common* Component);
-    void AddToRefreshQueue_QuarterHour(Common* Component);
-    void AddToWebsiteQueue_Load(Common* Component);
-    void AddToWebsiteQueue_Refresh(Common* Component);
-    void AddToWebsiteQueue_Button(Common* Component);
-    void AddToWebsiteQueue_Field(Common* Component);
-    void loadEvent(char * Url);
-    void refreshEvent(char * Url);
-    void buttonEvent(char * Button);
-    void setFieldEvent(char * Field);   
-      
-  private:
-    void setSheetsReportingOnOff(bool State);
-    void setSheetsReportingFrequency(int Frequency);
-    void setDebugOnOff(bool State);
-    void setMetricSystemEnabled(bool MetricEnabled); 
-    void setPushingBoxLogRelayID(char * ID);
-    char * eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"] 
-    void triggerRefresh();
-    void refreshAll();
-    void runReport(); 
-    Common* ReportQueue[QueueDepth];
-    Common* RefreshQueue_Sec[QueueDepth];
-    Common* RefreshQueue_FiveSec[QueueDepth]; 
-    Common* RefreshQueue_Minute[QueueDepth];
-    Common* RefreshQueue_QuarterHour[QueueDepth];
-    Common* WebsiteQueue_Load[QueueDepth];
-    Common* WebsiteQueue_Refresh[QueueDepth]; 
-    Common* WebsiteQueue_Button[QueueDepth];
-    Common* WebsiteQueue_Field[QueueDepth];
-    byte reportQueueItemCount = 0;    //Tracking queue item count
-    byte refreshQueueItemCount_Sec = 0;
-    byte refreshQueueItemCount_FiveSec = 0;
-    byte refreshQueueItemCount_Minute = 0;
-    byte refreshQueueItemCount_QuarterHour = 0;
-    byte WebsiteQueueItemCount_Load = 0;
-    byte WebsiteQueueItemCount_Refresh = 0;
-    byte WebsiteQueueItemCount_Button = 0;
-    byte WebsiteQueueItemCount_Field = 0;
+{
+public:
+  GrowBox(const __FlashStringHelper *Name, Settings *BoxSettings); //constructor
+  Settings *BoxSettings;
+  Sound *Sound1;             //Pointer to a Piezo speaker - sound feedback
+  Fan *InFan;                //Internal fan
+  Fan *ExFan;                //Exhaust fan
+  DHTSensor *InDHT;          //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
+  DHTSensor *ExDHT;          //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
+  LightSensor *LightSensor1; //Pointer to a Light Sensor object measuring light intensity in the grow box
+  Lights *Light1;            //Pointer to a Light assembly
+  PowerSensor *Power1;
+  //PowerSensorV3 * Power1;  //Only for PZEM004T V3.0
+  PressureSensor *Pressure1;
+  PHSensor *PHSensor1;
+  Aeroponics_Tank *Aero_T1;
+  Aeroponics_NoTank *Aero_NT1;
+  WaterTempSensor *WaterTemp1;
+  WaterLevelSensor *WaterLevel1;
+  ModuleSkeleton *ModuleSkeleton1; //Only for demonstration purposes
+  ModuleSkeleton *ModuleSkeleton2; //Only for demonstration purposes
+  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Button(char *Button);
+  void websiteEvent_Field(char *Field);
+  void refresh_FiveSec();
+  void refresh_Minute();
+  void refresh_QuarterHour();
+  void runSec();
+  void runFiveSec();
+  void runMinute();
+  void runQuarterHour();
+  void addToLog(const __FlashStringHelper *Text, byte indent = 3);
+  void addToLog(const char *Text, byte indent = 3);
+  void ReportToGoogleSheetsTrigger();
+  void ReportToGoogleSheets(bool CalledFromWebsite);
+  void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
+  void AddToReportQueue(Common *Component);
+  void AddToRefreshQueue_Sec(Common *Component);
+  void AddToRefreshQueue_FiveSec(Common *Component);
+  void AddToRefreshQueue_Minute(Common *Component);
+  void AddToRefreshQueue_QuarterHour(Common *Component);
+  void AddToWebsiteQueue_Load(Common *Component);
+  void AddToWebsiteQueue_Refresh(Common *Component);
+  void AddToWebsiteQueue_Button(Common *Component);
+  void AddToWebsiteQueue_Field(Common *Component);
+  void loadEvent(char *Url);
+  void refreshEvent(char *Url);
+  void buttonEvent(char *Button);
+  void setFieldEvent(char *Field);
 
-  protected:
-    bool RefreshAllRequested = false; 
-    int * SheetsReportingFrequency;
-    int SheetsRefreshCounter = 0;    
+private:
+  void setSheetsReportingOnOff(bool State);
+  void setSheetsReportingFrequency(int Frequency);
+  void setDebugOnOff(bool State);
+  void setMetricSystemEnabled(bool MetricEnabled);
+  void setPushingBoxLogRelayID(char *ID);
+  char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
+  void triggerRefresh();
+  void refreshAll();
+  void runReport();
+  Common *ReportQueue[QueueDepth];
+  Common *RefreshQueue_Sec[QueueDepth];
+  Common *RefreshQueue_FiveSec[QueueDepth];
+  Common *RefreshQueue_Minute[QueueDepth];
+  Common *RefreshQueue_QuarterHour[QueueDepth];
+  Common *WebsiteQueue_Load[QueueDepth];
+  Common *WebsiteQueue_Refresh[QueueDepth];
+  Common *WebsiteQueue_Button[QueueDepth];
+  Common *WebsiteQueue_Field[QueueDepth];
+  byte reportQueueItemCount = 0; //Tracking queue item count
+  byte refreshQueueItemCount_Sec = 0;
+  byte refreshQueueItemCount_FiveSec = 0;
+  byte refreshQueueItemCount_Minute = 0;
+  byte refreshQueueItemCount_QuarterHour = 0;
+  byte WebsiteQueueItemCount_Load = 0;
+  byte WebsiteQueueItemCount_Refresh = 0;
+  byte WebsiteQueueItemCount_Button = 0;
+  byte WebsiteQueueItemCount_Field = 0;
+
+protected:
+  bool RefreshAllRequested = false;
+  int *SheetsReportingFrequency;
+  int SheetsRefreshCounter = 0;
 };
 
 //WEBSITE COMPONENT

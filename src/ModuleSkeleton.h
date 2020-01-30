@@ -4,39 +4,39 @@
 //#include "3rdPartyModlue.h" //Load any required 3rd party modules here
 #include "../420Common.h"
 
-class GrowBox;  //forward declaration
+class GrowBox; //forward declaration
 
 class ModuleSkeleton : public Common
 {
-  public:
-    ModuleSkeleton(const __FlashStringHelper * Name, GrowBox * GBox, Settings::ModuleSkeletonSettings * DefaultSettings);  //constructor
-    void websiteEvent_Load(__attribute__((unused)) char * url);
-    void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    void websiteEvent_Button(char * Button);
-    void websiteEvent_Field(char * Field);  
-    void refresh_Sec();
-    void refresh_FiveSec();
-    void refresh_Minute();
-    void refresh_QuarterHour();
-    void report();
+public:
+  ModuleSkeleton(const __FlashStringHelper *Name, GrowBox *GBox, Settings::ModuleSkeletonSettings *DefaultSettings); //constructor
+  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Button(char *Button);
+  void websiteEvent_Field(char *Field);
+  void refresh_Sec();
+  void refresh_FiveSec();
+  void refresh_Minute();
+  void refresh_QuarterHour();
+  void report();
 
-  private:
-    GrowBox * GBox; //Pointer to the GrowBox object that contains the Lights object
-    
-    //Variables stored in memory, values reset at reboot
-    bool RuntimeBool = false;
-    int RuntimeInt = 420;
-    float RuntimeFloat = 4.2f;
-    char RuntimeString[MaxTextLength] = "HailMary";
-    RollingAverage * RollingInt;
-    RollingAverage * RollingFloat;
-    
-    //Variables stored in EEPROM, values kept between reboots
-    bool * PersistentBool;
-    int * PersistentInt;
-    float * PersistentFloat;
-    
-  protected:         
+private:
+  GrowBox *GBox; //Pointer to the GrowBox object that contains the Lights object
+
+  //Variables stored in memory, values reset at reboot
+  bool RuntimeBool = false;
+  int RuntimeInt = 420;
+  float RuntimeFloat = 4.2f;
+  char RuntimeString[MaxTextLength] = "HailMary";
+  RollingAverage *RollingInt;
+  RollingAverage *RollingFloat;
+
+  //Variables stored in EEPROM, values kept between reboots
+  bool *PersistentBool;
+  int *PersistentInt;
+  float *PersistentFloat;
+
+protected:
 };
 
 //WEBSITE COMPONENT

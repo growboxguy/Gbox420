@@ -2,31 +2,31 @@
 
 #include "../../420Common.h"
 
-class GrowBox;  //forward declaration
+class GrowBox; //forward declaration
 
 class Fan : public Common
 {
-  public:
-    Fan(const __FlashStringHelper * Name, GrowBox * GBox, Settings::FanSettings * DefaultSettings);
-    void websiteEvent_Refresh(__attribute__((unused)) char * url);
-    void websiteEvent_Button(char * Button);
-    void refresh_Minute(); 
-    void report();
-    char * fanSpeedToText();
-    char * fanSpeedToNumber();
-  
-  private:
-    GrowBox * GBox;
-    bool * State;
-    bool * HighSpeed;     
-    byte * OnOffPin;
-    byte * SpeedPin;
-    void checkFanStatus();
-    void TurnOff();
-    void SetLowSpeed();
-    void SetHighSpeed();
+public:
+  Fan(const __FlashStringHelper *Name, GrowBox *GBox, Settings::FanSettings *DefaultSettings);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Button(char *Button);
+  void refresh_Minute();
+  void report();
+  char *fanSpeedToText();
+  char *fanSpeedToNumber();
 
-  protected:
+private:
+  GrowBox *GBox;
+  bool *State;
+  bool *HighSpeed;
+  byte *OnOffPin;
+  byte *SpeedPin;
+  void checkFanStatus();
+  void TurnOff();
+  void SetLowSpeed();
+  void SetHighSpeed();
+
+protected:
 };
 
 //WEBSITE COMPONENT
