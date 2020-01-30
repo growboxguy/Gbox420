@@ -82,3 +82,4 @@ bool Common::isThisMyComponent(char const * lookupName){  //When a web component
     return false;
   }  
 }
+

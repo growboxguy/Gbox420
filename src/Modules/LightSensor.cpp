@@ -81,11 +81,21 @@ void LightSensor::calibrate(bool AddToLog){  //Takes ~2sec total, could trigger 
   if(AddToLog){
     GBox -> addToLog(F("Lights calibrated"),4);
     if(GBox -> BoxSettings -> DebugEnabled){
-          logToSerials(F("OFF - "),false,4); logToSerials(&MinReading,false,0);
+          logToSerials(F("OFF - "),false,4); logToSerials(&DarkReading,false,0);
           logToSerials(F(", 0% - "),false,0); logToSerials(&MinReading,false,0);
           logToSerials(F(", 100% - "),false,0); logToSerials(&MaxReading,true,0);
     }
   }
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
+    strcat_P(LongMessage, (PGM_P)F("{\"Calibration\":{"));
+    strcat_P(LongMessage, (PGM_P)F("\"Off\":\""));
+    strcat(LongMessage, toText(DarkReading));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Min\":\""));
+    strcat(LongMessage,  toText(MinReading));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Max\":\""));
+    strcat(LongMessage,  toText(MaxReading));
+    strcat_P(LongMessage, (PGM_P)F("\"}}"));
+    GBox -> relayToGoogleSheets(Name, &LongMessage);  
 }
 
 char * LightSensor::getCalibrationText(){

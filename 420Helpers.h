@@ -19,9 +19,9 @@ extern ELClientCmd ESPCmd;
 extern HardwareSerial& ArduinoSerial;
 extern HardwareSerial& ESPSerial;
 extern GrowBox * GBox;
-extern char LongMessage[1024];
-extern char ShortMessage[128];
-extern char CurrentTime[20];
+extern char CurrentTime[MaxTextLength];
+extern char ShortMessage[MaxShotTextLength];
+extern char LongMessage[MaxLongTextLength];
 
 //Class specific variables
 time_t getNtpTime();

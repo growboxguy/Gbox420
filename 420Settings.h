@@ -5,14 +5,17 @@ static const byte Version = 27;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM: 
 //Global constants
-static const byte MaxTextLength = 32;  //Default char * buffer size: 31 characters + null terminator. Memory intense!
+static const byte MaxTextLength = 32;  //Default char * buffer for storing a word + null terminator. Memory intense!
+static const byte MaxShotTextLength = 128;  //Default char * buffer for storing mutiple words. Memory intense!
+static const int MaxLongTextLength = 1024;  //Default char * buffer for storing a long text. Memory intense!
+
 static const byte RollingAverageQueueDepth = 10;  //How many previous sensor readings should be stored
 static const byte LogDepth = 5;  //Show X number of log entries on website. Be careful, Max 1024bytes can be passed during a Website refresh event, incuding all parameters passed
 static const byte QueueDepth = 64;  //Limits the maximum number of active modules. Memory intense!
 //Global variables
-extern char LongMessage[1024];   //temp storage for assembling long messages (REST API, MQTT API)
-extern char ShortMessage[128];  //temp storage for assembling short messages (Log entries, Error messages)
-extern char CurrentTime[20]; //buffer for storing current time in text
+extern char LongMessage[MaxLongTextLength];   //temp storage for assembling long messages (REST API, MQTT API)
+extern char ShortMessage[MaxShotTextLength];  //temp storage for assembling short messages (Log entries, Error messages)
+extern char CurrentTime[MaxTextLength]; //buffer for storing current time in text
 
 //SAVED TO EEPROM - Settings struct
 //If you change things here, increase the Version variable in line 4

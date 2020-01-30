@@ -10,9 +10,9 @@
 
 //forward declaration
 extern Settings MySettings;
-extern char LongMessage[1024];
-extern char ShortMessage[128];
-extern char CurrentTime[20];
+extern char LongMessage[MaxLongTextLength];
+extern char ShortMessage[MaxShotTextLength];
+extern char CurrentTime[MaxTextLength];
 extern ELClientWebServer WebServer;
 
 class Common{

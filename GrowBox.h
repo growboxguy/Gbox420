@@ -60,7 +60,8 @@ class GrowBox : public Common
     void addToLog(const __FlashStringHelper* Text,byte indent=3);
     void addToLog(const char * Text,byte indent=3);
     void ReportToGoogleSheetsTrigger();
-    void ReportToGoogleSheets(bool CalledFromWebsite);  
+    void ReportToGoogleSheets(bool CalledFromWebsite); 
+    void relayToGoogleSheets(const __FlashStringHelper * Title, char (* JSONData)[MaxLongTextLength]);
     void AddToReportQueue(Common* Component);
     void AddToRefreshQueue_Sec(Common* Component);
     void AddToRefreshQueue_FiveSec(Common* Component);

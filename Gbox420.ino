@@ -23,9 +23,9 @@
 #include "GrowBox.h" //Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variable initialization
-char LongMessage[] = "";  //temp storage for assembling long messages (REST API, MQTT API)
-char ShortMessage[] = ""; //temp storage for assembling short messages (Log entries, Error messages)
-char CurrentTime[] = ""; //buffer for storing current time in text
+char LongMessage[MaxLongTextLength] = "";  //temp storage for assembling long messages (REST API, MQTT API)
+char ShortMessage[MaxShotTextLength] = ""; //temp storage for assembling short messages (Log entries, Error messages)
+char CurrentTime[MaxTextLength] = ""; //buffer for storing current time in text
 
 //Component initialization
 HardwareSerial& ArduinoSerial = Serial;  //Reference to the Arduino Serial
