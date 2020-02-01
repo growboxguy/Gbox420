@@ -199,6 +199,21 @@ char *pressureToText(float Pressure)
   return ReturnChar;
 }
 
+char *weightToText(float Weight)
+{
+  static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same ReturnChar variable
+  dtostrf(Weight, 4, 2, ReturnChar);
+  if (GBox->BoxSettings->MetricSystemEnabled)
+  {
+    strcat_P(ReturnChar, (PGM_P)F("kg"));
+  }
+  else
+  {
+    strcat_P(ReturnChar, (PGM_P)F("lbs"));
+  }
+  return ReturnChar;
+}
+
 char *percentageToText(float Number)
 {
   //static char * ReturnChar = malloc(MaxTextLength * sizeof(char));  //allocate memory for every run - need to take care of freeing up the memory  after use

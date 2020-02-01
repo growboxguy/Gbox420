@@ -39,6 +39,7 @@ char *toPrecisionText(float Number);
 char *timeToText(byte Hour, byte Minute);
 char *tempToText(float Temp);
 char *pressureToText(float Pressure);
+char *weightToText(float Weight);
 char *percentageToText(float Humidity);
 char *onOffToText(bool Status);
 char *yesNoToText(bool Status);

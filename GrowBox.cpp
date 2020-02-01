@@ -13,6 +13,7 @@
 #include "src/Modules/Aeroponics_NoTank.h"
 #include "src/Modules/WaterTempSensor.h"
 #include "src/Modules/WaterLevelSensor.h"
+#include "src/Modules/WeightSensor.h"
 #include "src/ModuleSkeleton.h" //Only for demonstration purposes
 
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
@@ -38,6 +39,8 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings *BoxSettings) : Commo
   PHSensor1 = new PHSensor(F("PHSensor1"), this, &BoxSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
   WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
+  Weight1 = new WeightSensor(F("Weight1"), this, &BoxSettings->Weight1);
+  Weight2 = new WeightSensor(F("Weight2"), this, &BoxSettings->Weight2);
   //ModuleSkeleton1 = new ModuleSkeleton(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
   //ModuleSkeleton2 = new ModuleSkeleton(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
 

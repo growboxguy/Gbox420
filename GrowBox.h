@@ -20,6 +20,7 @@ class Aeroponics_NoTank;
 class Aeroponics_Tank;
 class WaterTempSensor;
 class WaterLevelSensor;
+class WeightSensor;
 class ModuleSkeleton; //Only for demonstration purposes
 
 extern ELClientRest PushingBoxRestAPI;
@@ -44,6 +45,8 @@ public:
   Aeroponics_NoTank *Aero_NT1;
   WaterTempSensor *WaterTemp1;
   WaterLevelSensor *WaterLevel1;
+  WeightSensor *Weight1; 
+  WeightSensor *Weight2;  
   ModuleSkeleton *ModuleSkeleton1; //Only for demonstration purposes
   ModuleSkeleton *ModuleSkeleton2; //Only for demonstration purposes
   void websiteEvent_Load(__attribute__((unused)) char *url);

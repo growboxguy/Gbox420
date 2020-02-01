@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 27;
+static const byte Version = 31;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM:
 //Global constants
@@ -87,6 +87,17 @@ typedef struct
     float Ratio;  //Pressure sensor voltage to pressure ratio
   };
   struct PressureSensorSettings Pressure1 = {.Pin = A1, .Offset = 0.57, .Ratio = 2.7};
+
+  struct WeightSensorSettings
+  {
+    WeightSensorSettings(byte DTPin = 0, byte SCKPin = 0, float Scale = 0.0, long TareOffset = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Scale(Scale), TareOffset(TareOffset) {}
+    byte DTPin;     //Weight sensor DT pin
+    byte SCKPin; //Weight sensor SCK pin
+    float Scale;  //Calibration scale value
+    long TareOffset; //Reading at 0 weight on the scale
+  };
+  struct WeightSensorSettings Weight1 = {.DTPin = 2, .SCKPin = 3, .Scale = 125000.0, .TareOffset=146000};
+  struct WeightSensorSettings Weight2 = {.DTPin = 5, .SCKPin = 6, .Scale = 126000.0, .TareOffset=267461};
 
   struct AeroponicsSettings
   { //Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank

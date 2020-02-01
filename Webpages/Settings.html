@@ -106,6 +106,38 @@
 						type="text" />
 					<input type="submit" value="Set">
 				</form>
+				<b>Weight sensor 1 </b><br>
+				1.Remove weights, then click:
+				<button id="Weight1_Tare" type="button" style="margin-top:0px"
+					title="Set 0 reading, do not have any weight on the scale!">Tare</button><br>
+				<form>
+					2.Calibration weight:<input
+					style="width: 35px;" min=1 max=50 step=1 value=1 name="Weight1_Calibrate" title="Weight of the known item on the scale" type="number" />				
+					<input type="submit" value="Calibrate">
+				</form>
+				<form>					
+					Calibrated scale: <input style="width: 80px;" title="Tare adjusted raw reading for 1 unit" name="Weight1_Scale"
+						type="text" /><br>
+					Tare offset: <input style="width: 80px;" title="Raw reading at no weight" name="Weight1_TareOffset"
+						type="text" />
+					<input type="submit" value="Override">
+				</form>
+				<b>Weight sensor 2 </b><br>
+				1.Remove weights, then click:
+				<button id="Weight2_Tare" type="button" style="margin-top:0px"
+					title="Set 0 reading, do not have any weight on the scale!">Tare</button><br>
+				<form>
+					2.Calibration weight:<input
+					style="width: 35px;" min=1 max=50 step=1 value=1 name="Weight2_Calibrate" title="Weight of the known item on the scale" type="number" />				
+					<input type="submit" value="Calibrate">
+				</form>
+				<form>					
+					Calibrated scale: <input style="width: 80px;" title="Tare adjusted raw reading for 1 unit" name="Weight2_Scale"
+						type="text" /><br>
+					Tare offset: <input style="width: 80px;" title="Raw reading at no weight" name="Weight2_TareOffset"
+						type="text" />
+					<input type="submit" value="Override">
+				</form>
 			</div>
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
