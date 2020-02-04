@@ -86,16 +86,19 @@ void GrowBox::websiteEvent_Button(char *Button)
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("SheetsTrigger")) == 0)
     {
-      ReportToGoogleSheets(true);
+      ReportToGoogleSheetsRequested = true;  //just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
+      //addToLog(F("Reporting to Sheets"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("ReportTrigger")) == 0)
     {
-      runReport();
+      ConsoleReportRequested = true;
+      //addToLog(F("Reporting to Serial"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0)
-    {
-      triggerRefresh();
-    } //Website signals to refresh all sensor readings
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) //Website signals to refresh all sensor readings
+    {        
+      RefreshAllRequested = true;
+     // addToLog(F("Refresh triggered"), false);
+    } 
   }
 }
 
@@ -140,6 +143,16 @@ void GrowBox::refresh_FiveSec()
     RefreshAllRequested = false;
     refreshAll();
   }
+  if(ReportToGoogleSheetsRequested)
+  {
+    ReportToGoogleSheetsRequested = false;
+    reportToGoogleSheets(true);
+  }
+  if(ConsoleReportRequested)
+  {
+    ConsoleReportRequested = false;
+    runReport();
+  }
 }
 
 void GrowBox::refresh_Minute()
@@ -153,13 +166,7 @@ void GrowBox::refresh_QuarterHour()
 {
   if (BoxSettings->DebugEnabled)
     Common::refresh_QuarterHour();
-  ReportToGoogleSheetsTrigger();
-}
-
-void GrowBox::triggerRefresh()
-{
-  addToLog(F("Refresh triggered"), false);
-  RefreshAllRequested = true;
+  reportToGoogleSheetsTrigger();
 }
 
 void GrowBox::refreshAll()
@@ -448,17 +455,17 @@ void GrowBox::setSheetsReportingFrequency(int Frequency)
   Sound1->playOnSound();
 }
 
-void GrowBox::ReportToGoogleSheetsTrigger()
+void GrowBox::reportToGoogleSheetsTrigger()
 { //Handles custom reporting frequency for Google Sheets, called every 15 minutes
   if (SheetsRefreshCounter == 96)
     SheetsRefreshCounter = 0; //Reset the counter after one day (15 x 96 = 1440 = 24 hours)
   if (SheetsRefreshCounter++ % (*SheetsReportingFrequency / 15) == 0)
   {
-    ReportToGoogleSheets(false);
+    reportToGoogleSheets(false);
   }
 }
 
-void GrowBox::ReportToGoogleSheets(bool CalledFromWebsite)
+void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
 {
   if (BoxSettings->ReportToGoogleSheets || CalledFromWebsite)
   {
@@ -537,7 +544,7 @@ void GrowBox::setPushingBoxLogRelayID(char *ID)
 
 void GrowBox::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength])
 {
-  char ValueToReport[MaxLongTextLength + 100] = "";
+  char ValueToReport[MaxLongTextLength] = "";
   strcat_P(ValueToReport, (PGM_P)F("/pushingbox?devid="));
   strcat(ValueToReport, BoxSettings->PushingBoxLogRelayID);
   strcat_P(ValueToReport, (PGM_P)F("&BoxData={\""));

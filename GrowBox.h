@@ -62,8 +62,8 @@ public:
   void runQuarterHour();
   void addToLog(const __FlashStringHelper *Text, byte indent = 3);
   void addToLog(const char *Text, byte indent = 3);
-  void ReportToGoogleSheetsTrigger();
-  void ReportToGoogleSheets(bool CalledFromWebsite);
+  void reportToGoogleSheetsTrigger();
+  void reportToGoogleSheets(bool CalledFromWebsite);
   void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
   void AddToReportQueue(Common *Component);
   void AddToRefreshQueue_Sec(Common *Component);
@@ -86,7 +86,6 @@ private:
   void setMetricSystemEnabled(bool MetricEnabled);
   void setPushingBoxLogRelayID(char *ID);
   char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
-  void triggerRefresh();
   void refreshAll();
   void runReport();
   Common *ReportQueue[QueueDepth];
@@ -110,6 +109,8 @@ private:
 
 protected:
   bool RefreshAllRequested = false;
+  bool ConsoleReportRequested = false;
+  bool ReportToGoogleSheetsRequested = false;
   int *SheetsReportingFrequency;
   int SheetsRefreshCounter = 0;
 };
