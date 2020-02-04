@@ -15,11 +15,13 @@ public:
   void refresh_Minute();
   void report();
   void triggerCalibration();                                        //Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger
-  char *getCalibrationText();                                       //Light sensor analog feedback relative to calibration values: 0 to 100%
+  void getCalibrationReadings();   //Receives a char array pointer where it needs to copy the result
+  char *getCalibrationText();                                      //Light sensor analog feedback relative to calibration values: 0 to 100%
   int getReading(bool ReturnAverage = true);                        //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
   char *getReadingText(bool IncludePercentage, bool ReturnAverage); //returns the current light sensor reading
   bool getDark();                                                   //Light sensor digital feedback: True(Dark) or False(Bright)
   char *getDarkText(bool UseWords);
+
 
 private:
   GrowBox *GBox;
@@ -33,6 +35,7 @@ private:
   int MaxReading = 0;  //Analog reading with maximum brightness
   int MinReading = 0;  //Analog reading with minimum brightness
   int DarkReading = 0; //Analog reading with lights off
+  int Readings[11];  //Stores the calibration readings for every 10% increment. [0] is darkness
 
 protected:
 };

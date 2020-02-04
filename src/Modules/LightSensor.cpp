@@ -1,5 +1,6 @@
 #include "LightSensor.h"
 #include "Lights.h"
+#include "Sound.h"
 #include "../../GrowBox.h"
 
 LightSensor::LightSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource) : Common(Name)
@@ -60,7 +61,7 @@ void LightSensor::refresh_Minute()
   {
     calibrate();
   }                                //If calibration was requested
-  Dark = digitalRead(*DigitalPin); //digitalRead has negative logic: 0- light detected , 1 - no light detected.
+  Dark = digitalRead(*DigitalPin); //True: No light detected
   LightReading->updateAverage(1023 - analogRead(*AnalogPin));
 }
 
@@ -78,55 +79,51 @@ void LightSensor::report()
 void LightSensor::triggerCalibration()
 { //website signals to calibrate light sensor MAX and MIN readings the next time a refresh runs
   CalibrateRequested = true;
+  GBox->addToLog(F("Calibrating light"));
+  GBox->Sound1->playOnSound();
 }
 
 void LightSensor::calibrate(bool AddToLog)
 { //Takes ~2sec total, could trigger a watchdog reset!
+  int DelaySec = 100; //how many ms to wait after changing brightness for the driver to adjust
   CalibrateRequested = false;
   bool LastStatus = LightSource->getStatus(); //TODO: This should be more generic and support different Lights objects passed as a parameter
   byte LastBrightness = LightSource->getBrightness();
   LightSource->setLightOnOff(false, false); //turn off light, without adding a log entry
-  delay(500);                               //wait for light output change
-  DarkReading = 1023 - analogRead(*AnalogPin);
-  LightSource->setBrightness(0, false);
+  delay(DelaySec);                               //wait for light output change
+  Readings[0] = 1023 - analogRead(*AnalogPin);  //store the reading in darkness to the first element of the Readings[10] array
   LightSource->setLightOnOff(true, false); //turn on light, without adding a log entry
-  delay(500);                              //wait for light output change
-  MinReading = 1023 - analogRead(*AnalogPin);
-  LightSource->setBrightness(100, false);
-  delay(500); //wait for light output change
-  MaxReading = 1023 - analogRead(*AnalogPin);
+  for(byte ReadingCounter=0;ReadingCounter<11;){  //This probably looks dodgy as the 3rd parameter of the for cycle is empty. ReadingCounter is incremented in the code
+    LightSource->setBrightness(ReadingCounter++ * 10, false);  //Increment ReadingCounter AFTER reading its value
+    wdt_reset();  //Reset watchdog timer before waiting
+    delay(DelaySec); //wait for light output change
+    Readings[ReadingCounter] = 1023 - analogRead(*AnalogPin); 
+  }
   LightSource->setBrightness(LastBrightness, false); //restore original brightness, without adding a log entry
   LightSource->setLightOnOff(LastStatus, false);     //restore original state, without adding a log entry
-  delay(500);                                        //wait for light output change
-  getReading();
+  getCalibrationReadings(); 
+  GBox->relayToGoogleSheets(Name,&LongMessage);
   if (AddToLog)
   {
     GBox->addToLog(F("Lights calibrated"), 4);
-    if (GBox->BoxSettings->DebugEnabled)
-    {
-      logToSerials(F("OFF - "), false, 4);
-      logToSerials(&DarkReading, false, 0);
-      logToSerials(F(", 0% - "), false, 0);
-      logToSerials(&MinReading, false, 0);
-      logToSerials(F(", 100% - "), false, 0);
-      logToSerials(&MaxReading, true, 0);
-    }
   }
+}
+
+
+void LightSensor::getCalibrationReadings(){//Returns a pointer to a char array
   memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
-  strcat_P(LongMessage, (PGM_P)F("{\"Calibration\":{"));
-  strcat_P(LongMessage, (PGM_P)F("\"Off\":\""));
-  strcat(LongMessage, toText(DarkReading));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Min\":\""));
-  strcat(LongMessage, toText(MinReading));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Max\":\""));
-  strcat(LongMessage, toText(MaxReading));
-  strcat_P(LongMessage, (PGM_P)F("\"}}"));
-  GBox->relayToGoogleSheets(Name, &LongMessage);
+  strcat_P(LongMessage, (PGM_P)F("{\"Readings\":["));
+   for(byte ReadingCounter=0;ReadingCounter<11;ReadingCounter++){
+     strcat(LongMessage, toText(Readings[ReadingCounter]));
+     strcat_P(LongMessage, (PGM_P)F(","));
+   }
+  LongMessage[strlen(LongMessage)-1] = ']'; //replace the last , to the closing of the array
+  strcat_P(LongMessage, (PGM_P)F("}")); //close JSON object
 }
 
 char *LightSensor::getCalibrationText()
 {
-  static char ReturnChar[MaxTextLength] = "";    //each call will overwrite the same variable
+  static char ReturnChar[MaxLongTextLength] = "";    //each call will overwrite the same variable
   memset(&ReturnChar[0], 0, sizeof(ReturnChar)); //clear variable
   strcat(ReturnChar, toText(DarkReading));
   strcat_P(ReturnChar, (PGM_P)F(" / "));
@@ -136,7 +133,7 @@ char *LightSensor::getCalibrationText()
   return ReturnChar;
 }
 
-int LightSensor::getReading(bool ReturnAverage)
+int LightSensor::getReading(bool ReturnAverage)  //Gets the average light sensor reading, if passed false as a parameter it returns the latest reading, not the average
 {
   return LightReading->getInt(ReturnAverage);
 }

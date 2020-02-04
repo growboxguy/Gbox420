@@ -8,6 +8,7 @@
 #include "420Settings.h" //for loading defaults and storing/reading user settings
 #include "420Helpers.h"  //global functions
 
+
 //forward declaration
 extern Settings MySettings;
 extern char LongMessage[MaxLongTextLength];

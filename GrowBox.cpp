@@ -39,8 +39,8 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings *BoxSettings) : Commo
   PHSensor1 = new PHSensor(F("PHSensor1"), this, &BoxSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
   WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
-  Weight1 = new WeightSensor(F("Weight1"), this, &BoxSettings->Weight1);
-  Weight2 = new WeightSensor(F("Weight2"), this, &BoxSettings->Weight2);
+  //Weight1 = new WeightSensor(F("Weight1"), this, &BoxSettings->Weight1);
+  //Weight2 = new WeightSensor(F("Weight2"), this, &BoxSettings->Weight2);
   //ModuleSkeleton1 = new ModuleSkeleton(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
   //ModuleSkeleton2 = new ModuleSkeleton(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
 
@@ -164,10 +164,15 @@ void GrowBox::triggerRefresh()
 
 void GrowBox::refreshAll()
 {
+  wdt_reset();
   runSec();
+  wdt_reset();
   runFiveSec();
+  wdt_reset();
   runMinute();
+  wdt_reset();
   runQuarterHour();
+  wdt_reset();
 }
 
 void GrowBox::runReport()
@@ -532,7 +537,7 @@ void GrowBox::setPushingBoxLogRelayID(char *ID)
 
 void GrowBox::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength])
 {
-  char ValueToReport[MaxLongTextLength] = "";
+  char ValueToReport[MaxLongTextLength + 100] = "";
   strcat_P(ValueToReport, (PGM_P)F("/pushingbox?devid="));
   strcat(ValueToReport, BoxSettings->PushingBoxLogRelayID);
   strcat_P(ValueToReport, (PGM_P)F("&BoxData={\""));

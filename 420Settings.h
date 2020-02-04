@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 31;
+static const byte Version = 32;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM:
 //Global constants
@@ -44,7 +44,7 @@ typedef struct
     byte Pin;            //PC buzzer+ (red)
     bool Enabled = true; //Enable PC speaker / Piezo buzzer
   };
-  struct SoundSettings Sound1 = {.Pin = 4};
+  struct SoundSettings Sound1 = {.Pin = 2};
 
   struct LightSensorSettings
   {
@@ -96,7 +96,7 @@ typedef struct
     float Scale;  //Calibration scale value
     long TareOffset; //Reading at 0 weight on the scale
   };
-  struct WeightSensorSettings Weight1 = {.DTPin = 2, .SCKPin = 3, .Scale = 125000.0, .TareOffset=146000};
+  struct WeightSensorSettings Weight1 = {.DTPin = 3, .SCKPin = 4, .Scale = 125000.0, .TareOffset=146000};
   struct WeightSensorSettings Weight2 = {.DTPin = 5, .SCKPin = 6, .Scale = 126000.0, .TareOffset=267461};
 
   struct AeroponicsSettings

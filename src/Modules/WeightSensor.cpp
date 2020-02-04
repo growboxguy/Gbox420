@@ -118,7 +118,6 @@ char *WeightSensor::getWeightText(bool IncludeUnits, bool ReturnAverage)
     return Weight->getFloatText(ReturnAverage);
 }
 
-
 void WeightSensor::triggerTare(){
   TareRequested = true;
   GBox->addToLog(F("Updating tare...")); //This can take up to 1 minute, when the component is next refreshed
