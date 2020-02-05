@@ -34,7 +34,7 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings *BoxSettings) : Commo
   InDHT = new DHTSensor(F("InDHT"), this, &BoxSettings->InDHT);
   ExDHT = new DHTSensor(F("ExDHT"), this, &BoxSettings->ExDHT);
   Pressure1 = new PressureSensor(F("Pressure1"), this, &BoxSettings->Pressure1);
-  Aero_T1 = new Aeroponics_Tank(F("Aero_T1"), this, &BoxSettings->Aero_T1_Common, &BoxSettings->Aero_T1_Specific, Pressure1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  //Aero_T1 = new Aeroponics_Tank(F("Aero_T1"), this, &BoxSettings->Aero_T1_Common, &BoxSettings->Aero_T1_Specific, Pressure1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
   Aero_NT1 = new Aeroponics_NoTank(F("Aero_NT1"), this, &BoxSettings->Aero_NT1_Common, &BoxSettings->Aero_NT1_Specific, Pressure1);
   PHSensor1 = new PHSensor(F("PHSensor1"), this, &BoxSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
@@ -87,17 +87,17 @@ void GrowBox::websiteEvent_Button(char *Button)
     if (strcmp_P(ShortMessage, (PGM_P)F("SheetsTrigger")) == 0)
     {
       ReportToGoogleSheetsRequested = true;  //just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
-      //addToLog(F("Reporting to Sheets"), false);
+      addToLog(F("Reporting to Sheets"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("ReportTrigger")) == 0)
     {
       ConsoleReportRequested = true;
-      //addToLog(F("Reporting to Serial"), false);
+      addToLog(F("Reporting to Serial"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) //Website signals to refresh all sensor readings
     {        
       RefreshAllRequested = true;
-     // addToLog(F("Refresh triggered"), false);
+      addToLog(F("Refresh triggered"), false);
     } 
   }
 }
@@ -469,8 +469,6 @@ void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
 {
   if (BoxSettings->ReportToGoogleSheets || CalledFromWebsite)
   {
-    if (CalledFromWebsite)
-      addToLog(F("Reporting to Sheets"), false);     //Print some feedback when its triggered by the user
     memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
     strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));
     strcat_P(LongMessage, (PGM_P)F("\"InternalTemp\":\""));
@@ -490,7 +488,7 @@ void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
     strcat_P(LongMessage, (PGM_P)F("\",\"Light1_Brightness\":\""));
     strcat(LongMessage, Light1->getBrightnessText());
     strcat_P(LongMessage, (PGM_P)F("\",\"LightReading\":\""));
-    strcat(LongMessage, LightSensor1->getReadingText(false, true));
+    strcat(LongMessage, LightSensor1->getReadingText(true));
     strcat_P(LongMessage, (PGM_P)F("\",\"Dark\":\""));
     strcat(LongMessage, LightSensor1->getDarkText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"WaterLevel\":\""));

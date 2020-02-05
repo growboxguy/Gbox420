@@ -9,16 +9,14 @@ class LightSensor : public Common
 {
 public:
   LightSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource);
-  void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Button(char *Button);
   void refresh_Minute();
   void report();
   void triggerCalibration();                                        //Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger
-  void getCalibrationReadings();   //Receives a char array pointer where it needs to copy the result
-  char *getCalibrationText();                                      //Light sensor analog feedback relative to calibration values: 0 to 100%
+  void getCalibrationReadings();    //Light reading at dark,0,10,20...100%
   int getReading(bool ReturnAverage = true);                        //Light sensor analog feedback: 0(darkest) to 1023 (brightest)
-  char *getReadingText(bool IncludePercentage, bool ReturnAverage); //returns the current light sensor reading
+  char *getReadingText(bool ReturnAverage); //returns the current light sensor reading
   bool getDark();                                                   //Light sensor digital feedback: True(Dark) or False(Bright)
   char *getDarkText(bool UseWords);
 

@@ -179,33 +179,20 @@
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">
-				<h1>Light sensor</h1>
-				<table class="tg">
-					<tr>
-						<td class="headerRows"><span style="font-weight:bold">Is dark</span></td>
-						<td class="headerRows"><span style="font-weight:bold">Reading</span></td>
-						<td class="headerRows"><span style="font-weight:bold">Dark/Min/Max</span></td>
-					</tr>
-					<tr>
-						<td id="LightSensor1_Dark" class="dataRows"></td>
-						<td id="LightSensor1_Reading" class="dataRows"></td>
-						<td id="LightSensor1_Calibrated" class="dataRows"></td>
-					</tr>
-				</table>
-				<button id="LightSensor1_Calibrate" type="button"
-					title="Measure light reading in dark, 0 and 100% brightness">Calibrate</button><br>
-			</div>
-			<div class="card" style="width:90%">
 				<h1>Lights</h1>
 				<table class="tg">
 					<tr>
 						<td class="headerRows"><span style="font-weight:bold">Lights</span><br></td>
+						<td class="headerRows"><span style="font-weight:bold">Dark</span></td>
+						<td class="headerRows"><span style="font-weight:bold">Reading</span></td>
 						<td class="headerRows"><span style="font-weight:bold">Timer</span></td>
-						<td class="headerRows"><span style="font-weight:bold">Light ON</span></td>
-						<td class="headerRows"><span style="font-weight:bold">Light OFF</span></td>
+						<td class="headerRows"><span style="font-weight:bold">ON</span></td>
+						<td class="headerRows"><span style="font-weight:bold">OFF</span></td>
 					</tr>
 					<tr>
-						<td id="Light1_Status" class="dataRows"></td>
+						<td id="Light1_Status" class="dataRows"></td>						
+						<td id="LightSensor1_Dark" class="dataRows"></td>
+						<td id="LightSensor1_Reading" class="dataRows"></td>
 						<td id="Light1_TimerEnabled" class="dataRows"></td>
 						<td id="Light1_OnTime" class="dataRows"></td>
 						<td id="Light1_OffTime" class="dataRows"></td>
@@ -232,6 +219,7 @@
 						style="width: 35px;" min=0 max=59 name="Light1_OffMinute" type="number" /> <input type="submit"
 						value="Set" title="Set grow light OFF time"></form>
 			</div>
+			<!--
 			<div class="card" style="width:90%">
 				<h1 style="margin:0px">Aeroponics</h1>
 				<font size="-1">With pressure tank</font>
@@ -279,7 +267,8 @@
 				<button id="Aero_T1_PumpDisable" type="button" align="right"
 					title="Stops and disables pump">Disable</button>
 				<button id="Aero_T1_Mix" type="button" align="right"
-					title="Mix nutrients: Starts pump and opens bypass valve">Mix</button><br>
+					title="Mix nutrients: Starts pump and opens bypass valve">Mix</button>
+				<br>
 				<form>Timeout: <input style="width: 45px;" min=1 max=9999 name="Aero_T1_PumpTimeout" type="number"
 						title="Maximum high pressure tank refill time, if reached pump is considered broken" />min
 					<input type="submit" value="Set"></form>
@@ -287,6 +276,7 @@
 						title="At pump startup the bypass valve is open for X seconds" /> sec <input type="submit"
 						value="Set"></form>
 			</div>
+		-->
 			<div class="card" style="width:90%">
 				<h1 style="margin:0px">Aeroponics</h1>
 				<font size="-1">Without pressure tank</font>

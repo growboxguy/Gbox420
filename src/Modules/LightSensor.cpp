@@ -16,7 +16,6 @@ LightSensor::LightSensor(const __FlashStringHelper *Name, GrowBox *GBox, Setting
   GBox->AddToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
   GBox->AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   GBox->AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  GBox->AddToWebsiteQueue_Load(this);    //Subscribing to the Website load event: Calls the websiteEvent_Load() method
   GBox->AddToWebsiteQueue_Button(this);  //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
   logToSerials(F("LightSensor object created"), true, 1);
 }
@@ -26,15 +25,7 @@ void LightSensor::websiteEvent_Refresh(__attribute__((unused)) char *url)
   if (strcmp(url, "/GrowBox.html.json") == 0)
   {
     WebServer.setArgString(getWebsiteComponentName(F("Dark")), getDarkText(true));
-    WebServer.setArgString(getWebsiteComponentName(F("Reading")), getReadingText(true, false));
-  }
-}
-
-void LightSensor::websiteEvent_Load(__attribute__((unused)) char *url)
-{
-  if (strcmp(url, "/GrowBox.html.json") == 0)
-  {
-    WebServer.setArgString(getWebsiteComponentName(F("Calibrated")), getCalibrationText());
+    WebServer.setArgString(getWebsiteComponentName(F("Reading")), getReadingText(false));
   }
 }
 
@@ -72,7 +63,7 @@ void LightSensor::report()
   strcat_P(LongMessage, (PGM_P)F("Dark:"));
   strcat(LongMessage, getDarkText(true));
   strcat_P(LongMessage, (PGM_P)F(" ; LightReading:"));
-  strcat(LongMessage, getReadingText(true, true));
+  strcat(LongMessage, getReadingText(true));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -85,7 +76,7 @@ void LightSensor::triggerCalibration()
 
 void LightSensor::calibrate(bool AddToLog)
 { //Takes ~2sec total, could trigger a watchdog reset!
-  int DelaySec = 100; //how many ms to wait after changing brightness for the driver to adjust
+  int DelaySec = 250; //how many ms to wait after changing brightness for the driver to adjust
   CalibrateRequested = false;
   bool LastStatus = LightSource->getStatus(); //TODO: This should be more generic and support different Lights objects passed as a parameter
   byte LastBrightness = LightSource->getBrightness();
@@ -121,39 +112,13 @@ void LightSensor::getCalibrationReadings(){//Returns a pointer to a char array
   strcat_P(LongMessage, (PGM_P)F("}")); //close JSON object
 }
 
-char *LightSensor::getCalibrationText()
-{
-  static char ReturnChar[MaxLongTextLength] = "";    //each call will overwrite the same variable
-  memset(&ReturnChar[0], 0, sizeof(ReturnChar)); //clear variable
-  strcat(ReturnChar, toText(DarkReading));
-  strcat_P(ReturnChar, (PGM_P)F(" / "));
-  strcat(ReturnChar, toText(MinReading));
-  strcat_P(ReturnChar, (PGM_P)F(" / "));
-  strcat(ReturnChar, toText(MaxReading));
-  return ReturnChar;
-}
-
 int LightSensor::getReading(bool ReturnAverage)  //Gets the average light sensor reading, if passed false as a parameter it returns the latest reading, not the average
 {
   return LightReading->getInt(ReturnAverage);
 }
 
-char *LightSensor::getReadingText(bool IncludePercentage, bool ReturnAverage)
-{
-  if (IncludePercentage)
-  {
-    static char ReturnChar[MaxTextLength] = "";    //each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); //clear variable
-    strcat(ReturnChar, LightReading->getIntText(ReturnAverage));
-    strcat_P(ReturnChar, (PGM_P)F(" ["));
-    if (Dark)
-      strcat(ReturnChar, percentageToText(map(LightReading->getInt(ReturnAverage), DarkReading, MinReading, 0, 100))); //https://www.arduino.cc/reference/en/language/functions/math/map/
-    else
-      strcat(ReturnChar, percentageToText(map(LightReading->getInt(ReturnAverage), MinReading, MaxReading, 0, 100)));
-    strcat_P(ReturnChar, (PGM_P)F("]"));
-    return ReturnChar;
-  }
-  else
+char *LightSensor::getReadingText(bool ReturnAverage)
+{ 
     return LightReading->getIntText(ReturnAverage);
 }
 
