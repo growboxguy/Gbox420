@@ -26,6 +26,8 @@ Aeroponics::Aeroponics(const __FlashStringHelper *Name, GrowBox *GBox, Settings:
   GBox->AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   GBox->AddToWebsiteQueue_Button(this);  //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
   GBox->AddToWebsiteQueue_Field(this);   //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
+
+  setSprayOnOff(true); //This is a safety feature,start with a spray after a reset
 }
 
 void Aeroponics::websiteEvent_Load(__attribute__((unused)) char *url)
