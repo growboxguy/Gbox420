@@ -9,6 +9,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, GrowBox *GBox,
   pinMode(*SpraySolenoidPin, OUTPUT);
   digitalWrite(*SpraySolenoidPin, HIGH); //initialize off
   logToSerials(F("Aeroponics_Tank object created"), true, 1);
+  sprayNow(false); //This is a safety feature,start with a spray after a reset
 }
 
 void Aeroponics_Tank::websiteEvent_Load(__attribute__((unused)) char *url)

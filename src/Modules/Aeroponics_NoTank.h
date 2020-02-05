@@ -11,16 +11,17 @@ public:
   Aeroponics_NoTank(const __FlashStringHelper *Name, GrowBox *GBox, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor); //constructor
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void websiteEvent_Field(char *Field);
+  void websiteEvent_Button(__attribute__((unused)) char *Button);
   void refresh_Sec();
   void report();
   float LastSprayPressure = 0; //tracks the last average pressure during a spray cycle
 
 private:
+  void bypassOn();
+  void bypassOff();
   void sprayNow(bool FromWebsite = false);
   void sprayOff();
   char *sprayStateToText();
-  void setBlowOffTime(int _BlowOffTime);
   int *BlowOffTime;               //After spraying open the bypass valve for X seconds to release pressure in the system
   bool BlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
 
@@ -65,6 +66,5 @@ protected:
   <button id="Aero_NT1_Mix" type="button" align="right" title="Mix nutrients: Starts pump and opens bypass valve">Mix</button><br>
   <form>Timeout: <input style="width: 55px;" min=1 max=9999 name="Aero_NT1_PumpTimeout" type="number" title="Maximum time the pump can run continuously"/>min <input type="submit" value="Set"></form>
   <form>Priming time: <input style="width: 55px;" min=1 max=9999 name="Aero_NT1_PrimingTime" type="number" title="At pump startup the bypass valve is open for X seconds"/>sec <input type="submit" value="Set"></form>				
-  <form>Blowoff time: <input style="width: 55px;" min=1 max=9999 name="Aero_NT1_BlowOffTime" type="number" title="After spraying open the bypass valve for X seconds to release pressure"/>sec <input type="submit" value="Set"></form>												
-</div>			
+  </div>			
 */

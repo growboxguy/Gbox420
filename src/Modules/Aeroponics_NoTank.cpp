@@ -5,6 +5,7 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, GrowBox *G
 {
   BlowOffTime = &NoTankSpecificSettings->BlowOffTime; //Aeroponics - Turn on pump below this pressure (bar)
   logToSerials(F("Aeroponics_NoTank object created"), true, 1);
+  sprayNow(false); //This is a safety feature,start with a spray after a reset
 }
 
 void Aeroponics_NoTank::websiteEvent_Load(__attribute__((unused)) char *url)
@@ -25,20 +26,24 @@ void Aeroponics_NoTank::websiteEvent_Refresh(__attribute__((unused)) char *url)
   Aeroponics::websiteEvent_Refresh(url);
 }
 
-void Aeroponics_NoTank::websiteEvent_Field(char *Field)
+void Aeroponics_NoTank::websiteEvent_Button(char *Button)
 {
-  if (!isThisMyComponent(Field))
+  if (!isThisMyComponent(Button))
   {
     return;
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("BlowOffTime")) == 0)
+    if (strcmp_P(ShortMessage, (PGM_P)F("BypassOn")) == 0)
     {
-      setBlowOffTime(WebServer.getArgInt());
+      bypassOn();
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("BypassOff")) == 0)
+    {
+      bypassOff();
+    }    
     else
-      Aeroponics::websiteEvent_Field(Field);
+      Aeroponics::websiteEvent_Button(Button);
   }
 }
 
@@ -109,6 +114,23 @@ void Aeroponics_NoTank::report()
   Aeroponics::report();                 //then print parent class report
 }
 
+void Aeroponics_NoTank::bypassOn(){
+  BypassSolenoidOn = true;
+  BlowOffInProgress = true; //no extra timer is needed, will use SprayTimer
+  checkRelays();
+  SprayTimer = millis();  //measures blowoff time
+  GBox->addToLog(F("Bypass ON"));
+  GBox->Sound1->playOnSound();
+}
+
+void Aeroponics_NoTank::bypassOff(){
+ BypassSolenoidOn = false;
+ BlowOffInProgress = false;
+ checkRelays();
+ GBox->addToLog(F("Bypass OFF"));
+ GBox->Sound1->playOffSound();
+}
+
 void Aeroponics_NoTank::sprayNow(bool FromWebsite)
 {
   if (*SprayEnabled || FromWebsite)
@@ -147,10 +169,4 @@ char *Aeroponics_NoTank::sprayStateToText()
     else
       return (char *)"ENABLED";
   }
-}
-
-void Aeroponics_NoTank::setBlowOffTime(int _BlowOffTime)
-{
-  *BlowOffTime = _BlowOffTime;
-  GBox->addToLog(F("Blowoff time updated"));
 }
