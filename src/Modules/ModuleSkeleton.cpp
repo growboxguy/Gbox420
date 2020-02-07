@@ -1,5 +1,5 @@
 #include "ModuleSkeleton.h"
-#include "../GrowBox.h"
+#include "../../GrowBox.h"
 
 ModuleSkeleton::ModuleSkeleton(const __FlashStringHelper *Name, GrowBox *GBox, Settings::ModuleSkeletonSettings *DefaultSettings) : Common(Name)
 { //constructor

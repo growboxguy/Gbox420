@@ -9,7 +9,6 @@ static const byte MaxTextLength = 32;      //Default char * buffer for storing a
 static const byte MaxShotTextLength = 128; //Default char * buffer for storing mutiple words. Memory intense!
 static const int MaxLongTextLength = 1024; //Default char * buffer for storing a long text. Memory intense!
 
-static const byte RollingAverageQueueDepth = 10; //How many previous sensor readings should be stored
 static const byte LogDepth = 5;                  //Show X number of log entries on website. Be careful, Max 1024bytes can be passed during a Website refresh event, incuding all parameters passed
 static const byte QueueDepth = 64;               //Limits the maximum number of active modules. Memory intense!
 //Global variables

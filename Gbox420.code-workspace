@@ -11,7 +11,8 @@
 			"**/Archive": true
 		},
 		"search.exclude": {
-			"**/Test_Sketches": true
+			"**/Test_Sketches": true,
+			"**/HempyModule": true
 		}
 	}
 }

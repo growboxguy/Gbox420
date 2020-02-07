@@ -21,7 +21,7 @@
 #include "ELClientRest.h"           //ESP-link - REST API
 #include "Thread.h"                 //Splitting functions to threads for timing
 #include "StaticThreadController.h" //Grouping threads
-#include "420Common.h"              //Base class where all components inherits from
+#include "src/Modules/420Common.h"              //Base class where all components inherits from
 #include "Gbox420Settings.h"
 #include "GrowBox.h"                //Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 

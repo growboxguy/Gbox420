@@ -8,7 +8,7 @@
 #include "MemoryFree.h"        //checking remaining memory - only for debugging
 #include "avr/wdt.h"           //Watchdog timer
 #include "Gbox420Settings.h"       //for storing/reading defaults
-#include "420RollingAverage.h" //for smoothing sensor readings, average of last readings
+#include "RollingAverage.h" //for smoothing sensor readings, average of last readings
 
 //Forward declaration
 extern HardwareSerial &ArduinoSerial;

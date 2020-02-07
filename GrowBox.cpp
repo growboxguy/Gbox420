@@ -14,7 +14,7 @@
 #include "src/Modules/WaterTempSensor.h"
 #include "src/Modules/WaterLevelSensor.h"
 #include "src/Modules/WeightSensor.h"
-#include "src/ModuleSkeleton.h" //Only for demonstration purposes
+#include "src/Modules/ModuleSkeleton.h" //Only for demonstration purposes
 
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 

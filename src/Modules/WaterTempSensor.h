@@ -2,7 +2,7 @@
 
 #include "OneWire.h"           //DS18B20 waterproof temperature sensor
 #include "DallasTemperature.h" //DS18B20 waterproof temperature sensor
-#include "../../420Common.h"
+#include "420Common.h"
 
 class GrowBox; //forward declaration
 

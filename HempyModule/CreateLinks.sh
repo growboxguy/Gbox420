@@ -4,6 +4,8 @@ ln ../420Helpers.h .
 ln ../420Helpers.cpp .
 ln ../420Helpers.h .
 ln ../420Helpers.cpp .
-ln ../420RollingAverage.h .
-ln ../420RollingAverage.cpp .
+ln ../RollingAverage.h .
+ln ../RollingAverage.cpp .
 ln ../Gbox420Settings.h .
+ln -s ../src .
+

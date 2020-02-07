@@ -8,7 +8,7 @@ PHSensor::PHSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::PHS
   this->Intercept = &DefaultSettings->Intercept;
   this->Slope = &DefaultSettings->Slope;
   pinMode(*Pin, INPUT);
-  PH = new RollingAverage();
+  PH = new RollingAverage(20);
   GBox->AddToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
   GBox->AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   GBox->AddToWebsiteQueue_Load(this);    //Subscribing to the Website load event: Calls the websiteEvent_Load() method
