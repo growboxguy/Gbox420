@@ -200,7 +200,7 @@ void GrowBox::AddToReportQueue(Common *Component)
   if (QueueDepth > reportQueueItemCount)
     ReportQueue[reportQueueItemCount++] = Component;
   else
-    logToSerials(F("Report queue overflow!"), true, 0); //Too many components are added to the queue, increase "QueueDepth" variable in 420Settings.h , or shift components to a different queue
+    logToSerials(F("Report queue overflow!"), true, 0); //Too many components are added to the queue, increase "QueueDepth" variable in Gbox420Settings.h , or shift components to a different queue
 }
 
 void GrowBox::AddToRefreshQueue_Sec(Common *Component)

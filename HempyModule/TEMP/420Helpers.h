@@ -7,18 +7,11 @@
 #include "TimeLib.h"           //Keeping track of time
 #include "MemoryFree.h"        //checking remaining memory - only for debugging
 #include "avr/wdt.h"           //Watchdog timer
-#include "ELClient.h"          //ESP-link
-#include "ELClientWebServer.h" //ESP-link - WebServer API
-#include "ELClientCmd.h"       //ESP-link - Get current time from the internet using NTP
 #include "Gbox420Settings.h"       //for storing/reading defaults
 #include "420RollingAverage.h" //for smoothing sensor readings, average of last readings
 
 //Forward declaration
-class GrowBox;
-extern ELClientCmd ESPCmd;
 extern HardwareSerial &ArduinoSerial;
-extern HardwareSerial &ESPSerial;
-extern GrowBox *GBox;
 extern char CurrentTime[MaxTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
@@ -57,18 +50,18 @@ void logToSerials(logLine *ToPrint, bool BreakLine = true, byte Indent = 3)
   while (Indent > 0)
   {
     ArduinoSerial.print(F(" "));
-    ESPSerial.print(F(" "));
+   // ESPSerial.print(F(" "));
     Indent--;
   }
   if (BreakLine)
   {
     ArduinoSerial.println((*ToPrint));
-    ESPSerial.println((*ToPrint));
+   // ESPSerial.println((*ToPrint));
   }
   else
   {
     ArduinoSerial.print((*ToPrint));
-    ESPSerial.print((*ToPrint));
+   // ESPSerial.print((*ToPrint));
   }
 }
 
@@ -78,17 +71,17 @@ void logToSerials(logLine &ToPrint, bool BreakLine = true, byte Indent = 3)
   while (Indent > 0)
   {
     ArduinoSerial.print(F(" "));
-    ESPSerial.print(F(" "));
+   // ESPSerial.print(F(" "));
     Indent--;
   }
   if (BreakLine)
   {
     ArduinoSerial.println(ToPrint);
-    ESPSerial.println(ToPrint);
+    //ESPSerial.println(ToPrint);
   }
   else
   {
     ArduinoSerial.print(ToPrint);
-    ESPSerial.print(ToPrint);
+    //ESPSerial.print(ToPrint);
   }
 }

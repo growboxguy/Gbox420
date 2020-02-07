@@ -14,7 +14,6 @@ extern Settings MySettings;
 extern char LongMessage[MaxLongTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char CurrentTime[MaxTextLength];
-extern ELClientWebServer WebServer;
 
 class Common
 {
