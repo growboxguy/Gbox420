@@ -5,7 +5,7 @@
 #include "Arduino.h"
 #include "Thread.h"                 //Splitting functions to threads for timing
 #include "StaticThreadController.h" //Grouping threads
-#include "src/420Common.h"              //Base class where all components inherits from
+#include "420Common.h"              //Base class where all components inherits from
 
 //Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  //temp storage for assembling long messages (REST API, MQTT API)
@@ -94,7 +94,7 @@ void saveSettings(Settings *SettingsToSave)
 
 Settings *loadSettings()
 {
-  Settings *DefaultSettings = new Settings();                                    //This is where settings are stored, first it takes the sketch default settings defined in Gbox420Settings.h
+  Settings *DefaultSettings = new Settings();                                    //This is where settings are stored, first it takes the sketch default settings defined in Settings.h
   Settings EEPROMSettings;                                                       //temporary storage with "Settings" type
   eeprom_read_block((void *)&EEPROMSettings, (void *)0, sizeof(EEPROMSettings)); //Load EEPROM stored settings into EEPROMSettings
   if (DefaultSettings->CompatibilityVersion != EEPROMSettings.CompatibilityVersion)

@@ -1,5 +1,5 @@
 #include "DHTSensor.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 DHTSensor::DHTSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::DHTSensorSettings *DefaultSettings) : Common(Name)
 {
@@ -25,9 +25,9 @@ void DHTSensor::websiteEvent_Refresh(__attribute__((unused)) char *url)
 
 void DHTSensor::refresh_Minute()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Minute();
-  if (GBox->BoxSettings->MetricSystemEnabled)
+  if (*MetricSystemEnabled)
   {
     Temp->updateAverage(Sensor->readTemperature());
   }

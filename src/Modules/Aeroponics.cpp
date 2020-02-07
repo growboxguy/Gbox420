@@ -1,5 +1,5 @@
 #include "Aeroponics.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 // This is a virtual class (cannot be instanciated), parent of two classes:
 // -Aeroponics_NoTank: High pressure pump is directly connected to the aeroponics tote

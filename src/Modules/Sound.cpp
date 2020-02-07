@@ -1,5 +1,5 @@
 #include "Sound.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 Sound::Sound(const __FlashStringHelper *Name, GrowBox *GBox, Settings::SoundSettings *DefaultSettings) : Common(Name)
 {
@@ -54,7 +54,7 @@ void Sound::websiteEvent_Field(char *Field)
 
 void Sound::refresh_Sec()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Sec();
   if (*Enabled)
   {

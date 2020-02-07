@@ -22,11 +22,16 @@ typedef struct
 {
   bool DebugEnabled = true;          //Logs debug messages to serial and web outputs
   bool MetricSystemEnabled = true;   //Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
-  bool ReportToGoogleSheets = true;  //Enable/disable reporting sensor readings to Google Sheets
-  int SheetsReportingFrequency = 30; //How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
+
+  struct GrowBoxSettings{
+    GrowBoxSettings(bool ReportToGoogleSheets, int SheetsReportingFrequency,char const * PushingBoxLogRelayID, char const * PushingBoxEmailRelayID) : ReportToGoogleSheets(ReportToGoogleSheets) , SheetsReportingFrequency(SheetsReportingFrequency), PushingBoxLogRelayID(PushingBoxLogRelayID), PushingBoxEmailRelayID(PushingBoxEmailRelayID) {} 
+  bool ReportToGoogleSheets;  //Enable/disable reporting sensor readings to Google Sheets
+  int SheetsReportingFrequency; //How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
   //bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
-  char PushingBoxLogRelayID[MaxTextLength] = "v755877CF53383E1";   //UPDATE THIS DeviceID of the PushingBox logging scenario
-  char PushingBoxEmailRelayID[MaxTextLength] = "vC5244859A2453AA"; //UPDATE THIS DeviceID of the PushingBox email alert scenario
+  char const * PushingBoxLogRelayID;   //UPDATE THIS DeviceID of the PushingBox logging scenario
+  char const * PushingBoxEmailRelayID; //UPDATE THIS DeviceID of the PushingBox email alert scenario
+  };
+  struct GrowBoxSettings Gbox1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .PushingBoxLogRelayID = "v755877CF53383E1",  .PushingBoxEmailRelayID = "vC5244859A2453AA"};
 
   struct DHTSensorSettings
   { //initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers

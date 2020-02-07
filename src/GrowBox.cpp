@@ -1,27 +1,28 @@
 #include "GrowBox.h"
-#include "src/Modules/DHTSensor.h"
-#include "src/Modules/Lights.h"
-#include "src/Modules/Sound.h"
-#include "src/Modules/Fan.h"
-#include "src/Modules/PowerSensor.h"
-//#include "src/Modules/PowerSensorV3.h"  //Only for PZEM004T V3.0
-#include "src/Modules/LightSensor.h"
-#include "src/Modules/PHSensor.h"
-#include "src/Modules/LightSensor.h"
-#include "src/Modules/PressureSensor.h"
-#include "src/Modules/Aeroponics_Tank.h"
-#include "src/Modules/Aeroponics_NoTank.h"
-#include "src/Modules/WaterTempSensor.h"
-#include "src/Modules/WaterLevelSensor.h"
-#include "src/Modules/WeightSensor.h"
-#include "src/Modules/ModuleSkeleton.h" //Only for demonstration purposes
+#include "Modules/DHTSensor.h"
+#include "Modules/Lights.h"
+#include "Modules/Sound.h"
+#include "Modules/Fan.h"
+#include "Modules/PowerSensor.h"
+//#include "Modules/PowerSensorV3.h"  //Only for PZEM004T V3.0
+#include "Modules/LightSensor.h"
+#include "Modules/PHSensor.h"
+#include "Modules/LightSensor.h"
+#include "Modules/PressureSensor.h"
+#include "Modules/Aeroponics_Tank.h"
+#include "Modules/Aeroponics_NoTank.h"
+#include "Modules/WaterTempSensor.h"
+#include "Modules/WaterLevelSensor.h"
+#include "Modules/WeightSensor.h"
+#include "Modules/ModuleSkeleton.h" //Only for demonstration purposes
 
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
-GrowBox::GrowBox(const __FlashStringHelper *Name, Settings *BoxSettings) : Common(Name)
+GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings) : Common(Name)
 { //Constructor
-  this->BoxSettings = BoxSettings;
-  SheetsReportingFrequency = &BoxSettings->SheetsReportingFrequency;
+  SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
+  ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets;
+  PushingBoxLogRelayID = DefaultSettings-> PushingBoxLogRelayID;   
   logToSerials(F(" "), true, 0); //adds a line break to the console log
 
   Sound1 = new Sound(F("Sound1"), this, &BoxSettings->Sound1); //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, VARIABLENAME))
@@ -60,11 +61,11 @@ void GrowBox::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strcmp(url, "/Settings.html.json") == 0)
   {
-    WebServer.setArgInt(getWebsiteComponentName(F("DebugEnabled")), BoxSettings->DebugEnabled);
-    WebServer.setArgInt(getWebsiteComponentName(F("MetricSystemEnabled")), BoxSettings->MetricSystemEnabled);
-    WebServer.setArgBoolean(getWebsiteComponentName(F("SheetsEnabled")), BoxSettings->ReportToGoogleSheets);
-    WebServer.setArgInt(getWebsiteComponentName(F("SheetsFrequency")), BoxSettings->SheetsReportingFrequency);
-    WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), BoxSettings->PushingBoxLogRelayID);
+    WebServer.setArgInt(getWebsiteComponentName(F("DebugEnabled")), *DebugEnabled);
+    WebServer.setArgInt(getWebsiteComponentName(F("MetricSystemEnabled")), *MetricSystemEnabled);
+    WebServer.setArgBoolean(getWebsiteComponentName(F("SheetsEnabled")), *ReportToGoogleSheets);
+    WebServer.setArgInt(getWebsiteComponentName(F("SheetsFrequency")), *SheetsReportingFrequency);
+    WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), PushingBoxLogRelayID);
     //WebServer.setArgString(F("PushingBoxEmailRelayID"), BoxSettings -> PushingBoxEmailRelayID);
     //WebServer.setArgBoolean(getWebsiteComponentName(F("MqttEnabled")), BoxSettings -> ReportToMqtt);
   }
@@ -136,7 +137,7 @@ void GrowBox::websiteEvent_Field(char *Field)
 
 void GrowBox::refresh_FiveSec()
 {
-  if (BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_FiveSec();
   if (RefreshAllRequested)
   {
@@ -157,14 +158,14 @@ void GrowBox::refresh_FiveSec()
 
 void GrowBox::refresh_Minute()
 {
-  if (BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Minute();
   runReport();
 }
 
 void GrowBox::refresh_QuarterHour()
 {
-  if (BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_QuarterHour();
   reportToGoogleSheetsTrigger();
 }
@@ -200,7 +201,7 @@ void GrowBox::AddToReportQueue(Common *Component)
   if (QueueDepth > reportQueueItemCount)
     ReportQueue[reportQueueItemCount++] = Component;
   else
-    logToSerials(F("Report queue overflow!"), true, 0); //Too many components are added to the queue, increase "QueueDepth" variable in Gbox420Settings.h , or shift components to a different queue
+    logToSerials(F("Report queue overflow!"), true, 0); //Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
 void GrowBox::AddToRefreshQueue_Sec(Common *Component)
@@ -275,7 +276,7 @@ void GrowBox::AddToWebsiteQueue_Field(Common *Component)
 
 void GrowBox::runSec()
 {
-  if (BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     logToSerials(F("One sec trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_Sec; i++)
   {
@@ -285,7 +286,7 @@ void GrowBox::runSec()
 
 void GrowBox::runFiveSec()
 {
-  if (BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     logToSerials(F("Five sec trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
   {
@@ -295,7 +296,7 @@ void GrowBox::runFiveSec()
 
 void GrowBox::runMinute()
 {
-  if (BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     logToSerials(F("Minute trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_Minute; i++)
   {
@@ -305,7 +306,7 @@ void GrowBox::runMinute()
 
 void GrowBox::runQuarterHour()
 {
-  if (BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     logToSerials(F("Half hour trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_QuarterHour; i++)
   {
@@ -334,7 +335,7 @@ void GrowBox::refreshEvent(char *url)
 
 void GrowBox::buttonEvent(char *button)
 { //Called when any button on the website is pressed.
-  if (BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     logToSerials(&button, true, 0);
   for (int i = 0; i < WebsiteQueueItemCount_Button; i++)
   {
@@ -344,7 +345,7 @@ void GrowBox::buttonEvent(char *button)
 
 void GrowBox::setFieldEvent(char *field)
 { //Called when any field on the website is updated.
-  if (BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     logToSerials(&field, true, 0);
   for (int i = 0; i < WebsiteQueueItemCount_Field; i++)
   {
@@ -399,8 +400,8 @@ char *GrowBox::eventLogToJSON(bool Append)
 //Settings
 void GrowBox::setDebugOnOff(bool State)
 {
-  BoxSettings->DebugEnabled = State;
-  if (BoxSettings->DebugEnabled)
+  *DebugEnabled = State;
+  if (*DebugEnabled)
   {
     addToLog(F("Debug enabled"));
     Sound1->playOnSound();
@@ -414,9 +415,9 @@ void GrowBox::setDebugOnOff(bool State)
 
 void GrowBox::setMetricSystemEnabled(bool MetricEnabled)
 {
-  if (MetricEnabled != BoxSettings->MetricSystemEnabled)
+  if (MetricEnabled != *MetricSystemEnabled)
   { //if there was a change
-    BoxSettings->MetricSystemEnabled = MetricEnabled;
+    *MetricSystemEnabled = MetricEnabled;
     //BoxSettings -> InFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> InFanSwitchTemp);
     Pressure1->Pressure->resetAverage();
     InDHT->Temp->resetAverage();
@@ -424,7 +425,7 @@ void GrowBox::setMetricSystemEnabled(bool MetricEnabled)
     WaterTemp1->Temp->resetAverage();
     RefreshAllRequested = true;
   }
-  if (BoxSettings->MetricSystemEnabled)
+  if (*MetricSystemEnabled)
     addToLog(F("Metric units"));
   else
     addToLog(F("Imperial units"));
@@ -435,7 +436,7 @@ void GrowBox::setMetricSystemEnabled(bool MetricEnabled)
 
 void GrowBox::setSheetsReportingOnOff(bool State)
 {
-  BoxSettings->ReportToGoogleSheets = State;
+  *ReportToGoogleSheets = State;
   if (State)
   {
     addToLog(F("Google Sheets enabled"));
@@ -450,7 +451,7 @@ void GrowBox::setSheetsReportingOnOff(bool State)
 
 void GrowBox::setSheetsReportingFrequency(int Frequency)
 {
-  BoxSettings->SheetsReportingFrequency = Frequency;
+  *SheetsReportingFrequency = Frequency;
   addToLog(F("Reporting freqency updated"));
   Sound1->playOnSound();
 }
@@ -467,7 +468,7 @@ void GrowBox::reportToGoogleSheetsTrigger()
 
 void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
 {
-  if (BoxSettings->ReportToGoogleSheets || CalledFromWebsite)
+  if (*ReportToGoogleSheets || CalledFromWebsite)
   {
     memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
     strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));
@@ -526,7 +527,7 @@ void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
 
     strcat_P(LongMessage, (PGM_P)F("\"},\"Settings\":{"));
     strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
-    strcat(LongMessage, toText(BoxSettings->MetricSystemEnabled));
+    strcat(LongMessage, toText(*MetricSystemEnabled));
     strcat_P(LongMessage, (PGM_P)F("\"}}"));
     relayToGoogleSheets(Name, &LongMessage);
   }
@@ -536,7 +537,7 @@ void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
 
 void GrowBox::setPushingBoxLogRelayID(char *ID)
 {
-  strncpy(BoxSettings->PushingBoxLogRelayID, ID, MaxTextLength);
+  strncpy(*PushingBoxLogRelayID, ID, MaxTextLength);
   addToLog(F("Sheets log relay ID updated"));
 }
 
@@ -544,13 +545,13 @@ void GrowBox::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSOND
 {
   char ValueToReport[MaxLongTextLength] = "";
   strcat_P(ValueToReport, (PGM_P)F("/pushingbox?devid="));
-  strcat(ValueToReport, BoxSettings->PushingBoxLogRelayID);
+  strcat(ValueToReport, *PushingBoxLogRelayID);
   strcat_P(ValueToReport, (PGM_P)F("&BoxData={\""));
   strcat_P(ValueToReport, (PGM_P)Title);
   strcat_P(ValueToReport, (PGM_P)F("\":"));
   strcat(ValueToReport, *JSONData);
   strcat_P(ValueToReport, (PGM_P)F("}"));
-  if (BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
   { //print the report command to console
     logToSerials(F("api.pushingbox.com"), false, 4);
     logToSerials(&ValueToReport, true, 0);

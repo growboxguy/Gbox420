@@ -1,5 +1,5 @@
 #include "WaterTempSensor.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::WaterTempSensorSettings *DefaultSettings) : Common(Name)
 { //constructor
@@ -25,10 +25,10 @@ void WaterTempSensor::websiteEvent_Refresh(__attribute__((unused)) char *url)
 
 void WaterTempSensor::refresh_Minute()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Minute();
   TempSensor->requestTemperatures();
-  if (GBox->BoxSettings->MetricSystemEnabled)
+  if (*MetricSystemEnabled)
   {
     Temp->updateAverage(TempSensor->getTempCByIndex(0));
   }

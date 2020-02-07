@@ -1,5 +1,5 @@
 #include "WeightSensor.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 WeightSensor::WeightSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::WeightSensorSettings *DefaultSettings) : Common(Name)
 {
@@ -74,7 +74,7 @@ void WeightSensor::websiteEvent_Field(char *Field)
 
 void WeightSensor::refresh_Minute()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Minute();
   if(TareRequested){
     TareRequested = false;

@@ -1,5 +1,5 @@
 #include "Aeroponics_Tank.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, GrowBox *GBox, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings), &(*FeedbackPressureSensor))
 { //constructor
@@ -62,7 +62,7 @@ void Aeroponics_Tank::websiteEvent_Field(char *Field)
 
 void Aeroponics_Tank::refresh_Sec()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Sec();
   if (PumpOn)
   { //if pump is on
@@ -85,7 +85,7 @@ void Aeroponics_Tank::refresh_Sec()
       }
       if (!MixInProgress && BypassSolenoidOn && millis() - PumpTimer >= ((uint32_t)*PrimingTime * 1000))
       { //self priming timeout reached, time to start refilling
-        if (GBox->BoxSettings->DebugEnabled)
+        if (*DebugEnabled)
           logToSerials(F("Starting refill"), true);
         BypassSolenoidOn = false;
         PumpTimer = millis(); //reset timer to start measuring refill time
@@ -100,7 +100,7 @@ void Aeroponics_Tank::refresh_Sec()
   { //if pump is not disabled and Pressure reached low limit: turn on pump
     if (!PumpOn && !BypassSolenoidOn)
     { //start the bypass
-      if (GBox->BoxSettings->DebugEnabled)
+      if (*DebugEnabled)
         logToSerials(F("Starting bypass"), true);
       BypassSolenoidOn = true;
       PumpOn = true;
@@ -123,7 +123,7 @@ void Aeroponics_Tank::refresh_Sec()
     { //if time to start spraying (AeroInterval in Minutes)
       SpraySolenoidOn = true;
       GBox->Sound1->playOnSound();
-      if (GBox->BoxSettings->DebugEnabled)
+      if (*DebugEnabled)
         logToSerials(F("Starting spray"), true);
       SprayTimer = millis();
     }

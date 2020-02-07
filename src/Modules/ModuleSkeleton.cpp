@@ -1,5 +1,5 @@
 #include "ModuleSkeleton.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 ModuleSkeleton::ModuleSkeleton(const __FlashStringHelper *Name, GrowBox *GBox, Settings::ModuleSkeletonSettings *DefaultSettings) : Common(Name)
 { //constructor
@@ -123,13 +123,13 @@ void ModuleSkeleton::websiteEvent_Field(char *Field)
 
 void ModuleSkeleton::refresh_Sec()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Sec();
 }
 
 void ModuleSkeleton::refresh_FiveSec()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_FiveSec();
   if (RuntimeBool)
   {
@@ -140,13 +140,13 @@ void ModuleSkeleton::refresh_FiveSec()
 
 void ModuleSkeleton::refresh_Minute()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Minute();
 }
 
 void ModuleSkeleton::refresh_QuarterHour()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_QuarterHour();
 }
 

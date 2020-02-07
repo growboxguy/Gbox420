@@ -1,5 +1,5 @@
 #include "PressureSensor.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 PressureSensor::PressureSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::PressureSensorSettings *DefaultSettings) : Common(Name)
 {
@@ -61,7 +61,7 @@ void PressureSensor::websiteEvent_Field(char *Field)
 
 void PressureSensor::refresh_Minute()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Minute();
   readPressure();
 }
@@ -78,7 +78,7 @@ void PressureSensor::report()
 void PressureSensor::readPressure()
 {
   float Voltage = ((float)analogRead(*Pin)) * 5 / 1024;
-  if (GBox->BoxSettings->MetricSystemEnabled)
+  if (*MetricSystemEnabled)
     Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 1.0f); // unit: bar / 100kPa
   else
     Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 14.5038f); //unit: PSI
