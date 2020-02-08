@@ -112,7 +112,6 @@ protected:
   bool ReportToGoogleSheetsRequested = false;
   int *SheetsReportingFrequency;
   bool *ReportToGoogleSheets;
-  bool *MetricSystemEnabled;
   int SheetsRefreshCounter = 0;
 };
 
