@@ -1,5 +1,5 @@
 #include "WaterLevelSensor.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 
 WaterLevelSensor::WaterLevelSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::WaterLevelSensorSettings *DefaultSettings) : Common(Name)
 { //constructor

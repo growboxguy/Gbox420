@@ -1,7 +1,7 @@
 #include "LightSensor.h"
 #include "Lights.h"
 #include "Sound.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 
 LightSensor::LightSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource) : Common(Name)
 { //constructor

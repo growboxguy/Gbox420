@@ -1,5 +1,5 @@
 #include "PowerSensorV3.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 
 PowerSensorV3::PowerSensorV3(const __FlashStringHelper *Name, GrowBox *GBox, HardwareSerial *SerialPort) : Common(Name)
 {

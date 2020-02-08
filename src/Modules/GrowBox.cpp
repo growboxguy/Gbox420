@@ -1,20 +1,20 @@
 #include "GrowBox.h"
-#include "Modules/DHTSensor.h"
-#include "Modules/Lights.h"
-#include "Modules/Sound.h"
-#include "Modules/Fan.h"
-#include "Modules/PowerSensor.h"
-//#include "Modules/PowerSensorV3.h"  //Only for PZEM004T V3.0
-#include "Modules/LightSensor.h"
-#include "Modules/PHSensor.h"
-#include "Modules/LightSensor.h"
-#include "Modules/PressureSensor.h"
-#include "Modules/Aeroponics_Tank.h"
-#include "Modules/Aeroponics_NoTank.h"
-#include "Modules/WaterTempSensor.h"
-#include "Modules/WaterLevelSensor.h"
-#include "Modules/WeightSensor.h"
-#include "Modules/ModuleSkeleton.h" //Only for demonstration purposes
+#include "DHTSensor.h"
+#include "Lights.h"
+#include "Sound.h"
+#include "Fan.h"
+#include "PowerSensor.h"
+//#include "PowerSensorV3.h"  //Only for PZEM004T V3.0
+#include "LightSensor.h"
+#include "PHSensor.h"
+#include "LightSensor.h"
+#include "PressureSensor.h"
+#include "Aeroponics_Tank.h"
+#include "Aeroponics_NoTank.h"
+#include "WaterTempSensor.h"
+#include "WaterLevelSensor.h"
+#include "WeightSensor.h"
+#include "ModuleSkeleton.h" //Only for demonstration purposes
 
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
@@ -41,8 +41,8 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
   WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
   //Weight1 = new WeightSensor(F("Weight1"), this, &BoxSettings->Weight1);
   //Weight2 = new WeightSensor(F("Weight2"), this, &BoxSettings->Weight2);
-  //ModuleSkeleton1 = new ModuleSkeleton(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
-  //ModuleSkeleton2 = new ModuleSkeleton(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
+  //src/Moduleskeleton1 = new src/Moduleskeleton(F("src/Moduleskeleton1"),this,&BoxSettings -> src/Moduleskeleton1);  //Only for demonstration purposes
+  //src/Moduleskeleton2 = new src/Moduleskeleton(F("src/Moduleskeleton2"),this,&BoxSettings -> src/Moduleskeleton2);  //Only for demonstration purposes
 
   AddToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   AddToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
@@ -128,7 +128,6 @@ void GrowBox::websiteEvent_Field(char *Field)
     {
       setPushingBoxLogRelayID(WebServer.getArgString());
     }
-    //else if(strcmp_P(ShortMessage,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
   }
 }
 

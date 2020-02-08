@@ -1,5 +1,5 @@
 #include "Aeroponics_NoTank.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 
 Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, GrowBox *GBox, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings), &(*FeedbackPressureSensor))
 {

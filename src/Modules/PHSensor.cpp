@@ -1,5 +1,5 @@
 #include "PHSensor.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 
 PHSensor::PHSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::PHSensorSettings *DefaultSettings) : Common(Name)
 { //constructor

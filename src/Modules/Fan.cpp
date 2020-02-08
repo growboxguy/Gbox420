@@ -1,5 +1,5 @@
 #include "Fan.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 #include "Sound.h"
 
 Fan::Fan(const __FlashStringHelper *Name, GrowBox *GBox, Settings::FanSettings *DefaultSettings) : Common(Name)

@@ -1,5 +1,5 @@
 #include "Lights.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 #include "Sound.h"
 
 Lights::Lights(const __FlashStringHelper *Name, GrowBox *GBox, Settings::LightsSettings *DefaultSettings) : Common(Name)

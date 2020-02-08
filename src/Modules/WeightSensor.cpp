@@ -1,5 +1,5 @@
 #include "WeightSensor.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 
 WeightSensor::WeightSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::WeightSensorSettings *DefaultSettings) : Common(Name)
 {

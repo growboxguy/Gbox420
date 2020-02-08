@@ -1,5 +1,5 @@
 #include "Aeroponics_Tank.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 
 Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, GrowBox *GBox, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings), &(*FeedbackPressureSensor))
 { //constructor

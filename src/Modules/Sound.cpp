@@ -1,5 +1,5 @@
 #include "Sound.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 
 Sound::Sound(const __FlashStringHelper *Name, GrowBox *GBox, Settings::SoundSettings *DefaultSettings) : Common(Name)
 {

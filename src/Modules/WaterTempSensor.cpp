@@ -1,5 +1,5 @@
 #include "WaterTempSensor.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 
 WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::WaterTempSensorSettings *DefaultSettings) : Common(Name)
 { //constructor

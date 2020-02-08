@@ -1,5 +1,5 @@
 #include "PressureSensor.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 
 PressureSensor::PressureSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::PressureSensorSettings *DefaultSettings) : Common(Name)
 {

@@ -1,5 +1,5 @@
 #include "DHTSensor.h"
-#include "../GrowBox.h"
+#include "GrowBox.h"
 
 DHTSensor::DHTSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::DHTSensorSettings *DefaultSettings) : Common(Name)
 {
