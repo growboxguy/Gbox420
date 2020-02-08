@@ -13,5 +13,6 @@ ln ../src/RollingAverage.h ./src
 ln ../src/RollingAverage.cpp ./src
 ln ../src/Settings.h ./src
 
-read -p "Done, press enter to exit"
+echo "Done, press enter to exit"
+read fakeinput 
 

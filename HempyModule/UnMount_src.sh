@@ -13,4 +13,5 @@ unlink ./src/Settings.h
 echo "Cleaning up empty folders"
 find . -type d -empty -delete
 
-read -p "Done, press enter to exit"
+echo "Done, press enter to exit"
+read fakeinput 
