@@ -1,7 +1,7 @@
 #pragma once
 
 #include "DHT.h" //DHT11 or DHT22 Digital Humidity and Temperature sensor
-#include "../../420Common.h"
+#include "420Common.h"
 
 class GrowBox; //forward declaration
 

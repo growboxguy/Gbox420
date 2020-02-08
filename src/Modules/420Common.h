@@ -5,8 +5,8 @@
 
 #include "Arduino.h"     //every inheriting class have Arduino commands available
 #include "TimeLib.h"     //keeping track of time
-#include "420Settings.h" //for loading defaults and storing/reading user settings
-#include "420Helpers.h"  //global functions
+#include "../Settings.h" //for loading defaults and storing/reading user settings
+#include "../Helpers.h"  //global functions
 
 
 //forward declaration
@@ -15,6 +15,9 @@ extern char LongMessage[MaxLongTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char CurrentTime[MaxTextLength];
 extern ELClientWebServer WebServer;
+extern Settings * BoxSettings;
+extern bool *DebugEnabled;
+extern bool *MetricSystemEnabled;
 
 class Common
 {

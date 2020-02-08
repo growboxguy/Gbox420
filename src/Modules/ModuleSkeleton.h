@@ -2,7 +2,7 @@
 //This is a template for creating new modules
 
 //#include "3rdPartyModlue.h" //Load any required 3rd party modules here
-#include "../420Common.h"
+#include "420Common.h"
 
 class GrowBox; //forward declaration
 

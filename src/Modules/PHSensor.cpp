@@ -1,5 +1,5 @@
 #include "PHSensor.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 PHSensor::PHSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::PHSensorSettings *DefaultSettings) : Common(Name)
 { //constructor
@@ -73,7 +73,7 @@ void PHSensor::websiteEvent_Field(char *Field)
 
 void PHSensor::refresh_Minute()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Minute();
   updatePH(false);
 }

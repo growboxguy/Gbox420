@@ -1,5 +1,5 @@
 #include "Lights.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 #include "Sound.h"
 
 Lights::Lights(const __FlashStringHelper *Name, GrowBox *GBox, Settings::LightsSettings *DefaultSettings) : Common(Name)
@@ -111,7 +111,7 @@ void Lights::websiteEvent_Field(char *Field)
 
 void Lights::refresh_Minute()
 { //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Minute();
   checkLightTimer();
   checkLightStatus();
@@ -155,7 +155,7 @@ void Lights::checkLightTimer()
         if (!*Status)
         {
           setLightOnOff(true, false); //If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
-          if (GBox->BoxSettings->DebugEnabled)
+          if (*DebugEnabled)
             logToSerials(F("Timer:Light ON"), true, 4);
         }
       }
@@ -163,7 +163,7 @@ void Lights::checkLightTimer()
           if (*Status)
       {                              //If status is ON
         setLightOnOff(false, false); //Turn OFF the lights (First bool), and do not add it to the log (Second bool)
-        if (GBox->BoxSettings->DebugEnabled)
+        if (*DebugEnabled)
           logToSerials(F("Timer:Light OFF"), true, 4);
       }
     }
@@ -174,14 +174,14 @@ void Lights::checkLightTimer()
         if (!*Status)
         {
           setLightOnOff(true, false);
-          if (GBox->BoxSettings->DebugEnabled)
+          if (*DebugEnabled)
             logToSerials(F("Timer:Light ON"), true, 4);
         }
       }
       else if (*Status)
       {
         setLightOnOff(false, false);
-        if (GBox->BoxSettings->DebugEnabled)
+        if (*DebugEnabled)
           logToSerials(F("Timer:Light OFF"), true, 4);
       }
     }

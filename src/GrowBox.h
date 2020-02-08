@@ -1,5 +1,5 @@
 #pragma once
-#include "420Common.h"
+#include "Modules/420Common.h"
 #include "ELClientRest.h" //ESP-link - REST API
 
 //This class represents a complete growbox with all of its components
@@ -28,8 +28,7 @@ extern ELClientRest PushingBoxRestAPI;
 class GrowBox : public Common
 {
 public:
-  GrowBox(const __FlashStringHelper *Name, Settings *BoxSettings); //constructor
-  Settings *BoxSettings;
+  GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings); //constructor
   Sound *Sound1;             //Pointer to a Piezo speaker - sound feedback
   Fan *InFan;                //Internal fan
   Fan *ExFan;                //Exhaust fan
@@ -84,7 +83,7 @@ private:
   void setSheetsReportingFrequency(int Frequency);
   void setDebugOnOff(bool State);
   void setMetricSystemEnabled(bool MetricEnabled);
-  void setPushingBoxLogRelayID(char *ID);
+  void setPushingBoxLogRelayID(const char *ID);
   char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   void refreshAll();
   void runReport();
@@ -112,6 +111,8 @@ protected:
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;
   int *SheetsReportingFrequency;
+  bool *ReportToGoogleSheets;
+  bool *MetricSystemEnabled;
   int SheetsRefreshCounter = 0;
 };
 

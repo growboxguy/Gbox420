@@ -2,12 +2,12 @@
 //Sketch for grow box monitoring and controlling
 
 //HELLO, You are probably here looking for the following tab:
-//420Settings.h : Pin assignment, First time setup, Default settings
+//Settings.h : Pin assignment, First time setup, Default settings
 
 //TODO:
 //Add pump cutout during aero spray in case pressure limit is reached
 //HempyBucket controls
-//Move metric/imperial selection to 420Settings.h, remove it from the Settings Webpage
+//Move metric/imperial selection to Settings.h, remove it from the Settings Webpage
 //Wireless module, mini Gbox420 on Ardino Nano V3, with  for sensor boxes
 //Light sensor is not linear, need a better way to estimate brightness percentage. Readings[10] and calibrate to every 10% , lookup closest 2 calibration rating (TopRange,BottomRange) and do a mapping between them?
 
@@ -21,8 +21,9 @@
 #include "ELClientRest.h"           //ESP-link - REST API
 #include "Thread.h"                 //Splitting functions to threads for timing
 #include "StaticThreadController.h" //Grouping threads
-#include "420Common.h"              //Base class where all components inherits from
-#include "GrowBox.h"                //Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
+#include "src/Modules/420Common.h"              //Base class where all components inherits from
+#include "src/Settings.h"
+#include "src/GrowBox.h"                //Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  //temp storage for assembling long messages (REST API, MQTT API)
@@ -36,6 +37,9 @@ ELClient ESPLink(&ESPSerial);             //ESP-link. Both SLIP and debug messag
 ELClientWebServer WebServer(&ESPLink);    //ESP-link WebServer API
 ELClientCmd ESPCmd(&ESPLink);             //ESP-link - Helps getting the current time from the internet using NTP
 ELClientRest PushingBoxRestAPI(&ESPLink); //ESP-link REST API
+Settings * BoxSettings;                //This object will store the settings loaded from the EEPROM. Persistent between reboots.
+bool *DebugEnabled;
+bool *MetricSystemEnabled;
 GrowBox *GBox;                            //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 //Thread initialization
@@ -54,6 +58,10 @@ void setup()
   logToSerials(F("GrowBox initializing..."), true, 0); //logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                 //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                   //fix watchdog not loading sketch after a reset error on Mega2560
+
+  BoxSettings = loadSettings();
+  DebugEnabled = &BoxSettings ->  DebugEnabled;
+  MetricSystemEnabled = &BoxSettings ->  MetricSystemEnabled;
 
   ESPLink.resetCb = &resetWebServer; //Callback subscription: What to do when WiFi reconnects
   resetWebServer();                  //reset the WebServer
@@ -75,7 +83,7 @@ void setup()
   Timer3.start();
 
   //Create the GrowBox object
-  GBox = new GrowBox(F("GBox1"), loadSettings()); //This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  GBox = new GrowBox(F("GBox1"), &BoxSettings->Gbox1); //This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   //  sendEmailAlert(F("Grow%20box%20(re)started"));
   logToSerials(F("Setup ready, starting loops:"), true, 0);
@@ -177,19 +185,19 @@ void buttonPressCallback(char *Button)
 { //Called when any button on the website is pressed.
   if (strcmp_P(ShortMessage, (PGM_P)F("RestoreDefaults")) == 0)
   {
-    restoreDefaults(GBox->BoxSettings);
+    restoreDefaults(BoxSettings);
   }
   else
   {
     GBox->buttonEvent(Button);
   }
-  saveSettings(GBox->BoxSettings);
+  saveSettings(BoxSettings);
 }
 
 void setFieldCallback(char *Field)
 { //Called when any field on the website is updated.
   GBox->setFieldEvent(Field);
-  saveSettings(GBox->BoxSettings);
+  saveSettings(BoxSettings);
 }
 
 //////////////////////////////////////////
@@ -202,10 +210,10 @@ void saveSettings(Settings *SettingsToSave)
 
 Settings *loadSettings()
 {
-  Settings *DefaultSettings = new Settings();                                    //This is where settings are stored, first it takes the sketch default settings defined in 420Settings.h
-  Settings EEPROMSettings;                                                       //temporary storage with "Settings" type
-  eeprom_read_block((void *)&EEPROMSettings, (void *)0, sizeof(EEPROMSettings)); //Load EEPROM stored settings into EEPROMSettings
-  if (DefaultSettings->CompatibilityVersion != EEPROMSettings.CompatibilityVersion)
+  Settings *DefaultSettings = new Settings();                                    //This is where settings are stored, first it takes the sketch default settings defined in Settings.h
+  Settings BoxSettings;                                                       //temporary storage with "Settings" type
+  eeprom_read_block((void *)&BoxSettings, (void *)0, sizeof(BoxSettings)); //Load EEPROM stored settings into BoxSettings
+  if (DefaultSettings->CompatibilityVersion != BoxSettings.CompatibilityVersion)
   { //Making sure the EEPROM loaded settings are compatible with the sketch
     logToSerials(F("Incompatible stored settings detected, updating EEPROM..."), false, 0);
     saveSettings(DefaultSettings); //overwrites EEPROM stored settings with defaults from this sketch
@@ -213,8 +221,8 @@ Settings *loadSettings()
   else
   {
     logToSerials(F("Same settings version detected, applying EEPROM settings..."), false, 0);
-    //DefaultSettings = EEPROMSettings; //overwrite sketch defaults with loaded settings
-    memcpy(DefaultSettings, &EEPROMSettings, sizeof(Settings));
+    //DefaultSettings = BoxSettings; //overwrite sketch defaults with loaded settings
+    memcpy(DefaultSettings, &BoxSettings, sizeof(Settings));
   }
   logToSerials(F("done"), true, 1);
   return DefaultSettings;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../420Common.h"
+#include "420Common.h"
 #include "Aeroponics.h"
 
 class GrowBox; //forward declaration

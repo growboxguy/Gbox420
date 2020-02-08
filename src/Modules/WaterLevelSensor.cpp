@@ -1,5 +1,5 @@
 #include "WaterLevelSensor.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 WaterLevelSensor::WaterLevelSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::WaterLevelSensorSettings *DefaultSettings) : Common(Name)
 { //constructor
@@ -28,7 +28,7 @@ void WaterLevelSensor::websiteEvent_Refresh(__attribute__((unused)) char *url)
 
 void WaterLevelSensor::refresh_Minute()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Minute();
   bool isAboveSensor1 = !digitalRead(*Pin_1); //Empty: Lowest Water sensor, true if level reached
   bool isAboveSensor2 = !digitalRead(*Pin_2);

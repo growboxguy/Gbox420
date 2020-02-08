@@ -1,5 +1,5 @@
 #include "Fan.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 #include "Sound.h"
 
 Fan::Fan(const __FlashStringHelper *Name, GrowBox *GBox, Settings::FanSettings *DefaultSettings) : Common(Name)
@@ -53,7 +53,7 @@ void Fan::websiteEvent_Button(char *Button)
 
 void Fan::refresh_Minute()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Minute();
   checkFanStatus();
 }

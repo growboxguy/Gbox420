@@ -10,8 +10,8 @@
 #include "ELClient.h"          //ESP-link
 #include "ELClientWebServer.h" //ESP-link - WebServer API
 #include "ELClientCmd.h"       //ESP-link - Get current time from the internet using NTP
-#include "420Settings.h"       //for storing/reading defaults
-#include "420RollingAverage.h" //for smoothing sensor readings, average of last readings
+#include "Settings.h"       //for storing/reading defaults
+#include "RollingAverage.h" //for smoothing sensor readings, average of last readings
 
 //Forward declaration
 class GrowBox;
@@ -22,6 +22,9 @@ extern GrowBox *GBox;
 extern char CurrentTime[MaxTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
+extern Settings * BoxSettings;
+extern bool *DebugEnabled;
+extern bool *MetricSystemEnabled;
 
 //Class specific variables
 time_t getNtpTime();

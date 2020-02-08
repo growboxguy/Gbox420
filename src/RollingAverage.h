@@ -2,20 +2,20 @@
 
 //RollingAverage class: For smoothing sensor readings
 //Keeps the last few readings and calculates an average
-//In 420Settings.h the RollingAverageQueueDepth defines how many previous readings to keep. (!Memory intense!)
+//The RollingAverageDepth defines how many previous readings to keep. (!Memory intense!)
 
 #include "Arduino.h"
-#include "420Settings.h"
 
 class RollingAverage
 {
 private:
   long Sum = 0;
-  int History[RollingAverageQueueDepth] = {0}; //array to store historical readings, 10 readings default
+  int *History; //array to store historical readings, 10 readings default
   byte Oldest = 0;                             //Points to the oldest reading
   bool ResetAverage = true;                    //Next reading will overwrite the previous readings (Resets the average to the current reading)
 
 public:
+  RollingAverage(); //Constructor , default queue size is 10
   void resetAverage();
   int updateAverage(int LatestReading);
   float updateAverage(float LatestReading);

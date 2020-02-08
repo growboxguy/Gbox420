@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 32;
+static const byte Version = 12;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM:
 //Global constants
@@ -9,9 +9,9 @@ static const byte MaxTextLength = 32;      //Default char * buffer for storing a
 static const byte MaxShotTextLength = 128; //Default char * buffer for storing mutiple words. Memory intense!
 static const int MaxLongTextLength = 1024; //Default char * buffer for storing a long text. Memory intense!
 
-static const byte RollingAverageQueueDepth = 10; //How many previous sensor readings should be stored
 static const byte LogDepth = 5;                  //Show X number of log entries on website. Be careful, Max 1024bytes can be passed during a Website refresh event, incuding all parameters passed
 static const byte QueueDepth = 64;               //Limits the maximum number of active modules. Memory intense!
+static const byte RollingAverageDepth = 10;               //Limits the maximum number of active modules. Memory intense!
 //Global variables
 extern char LongMessage[MaxLongTextLength];  //temp storage for assembling long messages (REST API, MQTT API)
 extern char ShortMessage[MaxShotTextLength]; //temp storage for assembling short messages (Log entries, Error messages)
@@ -23,11 +23,15 @@ typedef struct
 {
   bool DebugEnabled = true;          //Logs debug messages to serial and web outputs
   bool MetricSystemEnabled = true;   //Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
-  bool ReportToGoogleSheets = true;  //Enable/disable reporting sensor readings to Google Sheets
-  int SheetsReportingFrequency = 30; //How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
-  //bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
-  char PushingBoxLogRelayID[MaxTextLength] = "v755877CF53383E1";   //UPDATE THIS DeviceID of the PushingBox logging scenario
-  char PushingBoxEmailRelayID[MaxTextLength] = "vC5244859A2453AA"; //UPDATE THIS DeviceID of the PushingBox email alert scenario
+  char PushingBoxLogRelayID[MaxTextLength] = {"v755877CF53383E1"};   //UPDATE THIS DeviceID of the PushingBox logging scenario 
+
+  struct GrowBoxSettings{
+    GrowBoxSettings(bool ReportToGoogleSheets, int SheetsReportingFrequency) : ReportToGoogleSheets(ReportToGoogleSheets) , SheetsReportingFrequency(SheetsReportingFrequency) {} 
+    bool ReportToGoogleSheets;  //Enable/disable reporting sensor readings to Google Sheets
+    int SheetsReportingFrequency; //How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
+    //bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
+  };
+  struct GrowBoxSettings Gbox1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30};
 
   struct DHTSensorSettings
   { //initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers

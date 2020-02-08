@@ -1,5 +1,5 @@
 #include "Aeroponics_NoTank.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, GrowBox *GBox, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings), &(*FeedbackPressureSensor))
 {
@@ -49,7 +49,7 @@ void Aeroponics_NoTank::websiteEvent_Button(char *Button)
 
 void Aeroponics_NoTank::refresh_Sec()
 { //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Sec();
 
   if (BlowOffInProgress && millis() - SprayTimer >= ((uint32_t)*BlowOffTime * 1000))

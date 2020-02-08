@@ -1,5 +1,5 @@
 #include "PowerSensorV3.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 PowerSensorV3::PowerSensorV3(const __FlashStringHelper *Name, GrowBox *GBox, HardwareSerial *SerialPort) : Common(Name)
 {
@@ -26,7 +26,7 @@ void PowerSensorV3::websiteEvent_Refresh(__attribute__((unused)) char *url)
 
 void PowerSensorV3::refresh_FiveSec()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Minute();
   Voltage = Sensor->voltage();      //AC Voltage (V)
   Current = Sensor->current();      //Current (A)

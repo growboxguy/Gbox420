@@ -1,7 +1,7 @@
 #include "LightSensor.h"
 #include "Lights.h"
 #include "Sound.h"
-#include "../../GrowBox.h"
+#include "../GrowBox.h"
 
 LightSensor::LightSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource) : Common(Name)
 { //constructor
@@ -46,7 +46,7 @@ void LightSensor::websiteEvent_Button(char *Button)
 
 void LightSensor::refresh_Minute()
 {
-  if (GBox->BoxSettings->DebugEnabled)
+  if (*DebugEnabled)
     Common::refresh_Minute();
   if (CalibrateRequested)
   {
