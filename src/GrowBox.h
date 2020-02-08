@@ -111,7 +111,6 @@ protected:
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;
   int *SheetsReportingFrequency;
-  char *PushingBoxLogRelayID;
   bool *ReportToGoogleSheets;
   bool *MetricSystemEnabled;
   int SheetsRefreshCounter = 0;

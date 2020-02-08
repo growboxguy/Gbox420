@@ -21,8 +21,7 @@ static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing l
 GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings) : Common(Name)
 { //Constructor
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
-  ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets;
-  PushingBoxLogRelayID = DefaultSettings-> PushingBoxLogRelayID;  
+  ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets; 
   logToSerials(F(" "), true, 0); //adds a line break to the console log
 
   Sound1 = new Sound(F("Sound1"), this, &BoxSettings->Sound1); //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, VARIABLENAME))
@@ -65,7 +64,7 @@ void GrowBox::websiteEvent_Load(__attribute__((unused)) char *url)
     WebServer.setArgInt(getWebsiteComponentName(F("MetricSystemEnabled")), *MetricSystemEnabled);
     WebServer.setArgBoolean(getWebsiteComponentName(F("SheetsEnabled")), *ReportToGoogleSheets);
     WebServer.setArgInt(getWebsiteComponentName(F("SheetsFrequency")), *SheetsReportingFrequency);
-    WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), *PushingBoxLogRelayID);
+    WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), BoxSettings -> PushingBoxLogRelayID);
   }
 }
 
@@ -535,7 +534,7 @@ void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
 
 void GrowBox::setPushingBoxLogRelayID(const char *ID)
 {
-  strncpy(*PushingBoxLogRelayID, ID, MaxTextLength);
+  strncpy(BoxSettings -> PushingBoxLogRelayID, ID, MaxTextLength);
   addToLog(F("Sheets log relay ID updated"));
 }
 
@@ -543,7 +542,7 @@ void GrowBox::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSOND
 {
   char ValueToReport[MaxLongTextLength] = "";
   strcat_P(ValueToReport, (PGM_P)F("/pushingbox?devid="));
-  strcat(ValueToReport, *PushingBoxLogRelayID);
+  strcat(ValueToReport, BoxSettings -> PushingBoxLogRelayID);
   strcat_P(ValueToReport, (PGM_P)F("&BoxData={\""));
   strcat_P(ValueToReport, (PGM_P)Title);
   strcat_P(ValueToReport, (PGM_P)F("\":"));
