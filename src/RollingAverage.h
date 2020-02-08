@@ -2,7 +2,7 @@
 
 //RollingAverage class: For smoothing sensor readings
 //Keeps the last few readings and calculates an average
-//The QueueDepth defines how many previous readings to keep. (!Memory intense!)
+//The RollingAverageDepth defines how many previous readings to keep. (!Memory intense!)
 
 #include "Arduino.h"
 
@@ -15,7 +15,7 @@ private:
   bool ResetAverage = true;                    //Next reading will overwrite the previous readings (Resets the average to the current reading)
 
 public:
-  RollingAverage(int QueueDepth = 10); //Constructor , default queue size is 10
+  RollingAverage(); //Constructor , default queue size is 10
   void resetAverage();
   int updateAverage(int LatestReading);
   float updateAverage(float LatestReading);

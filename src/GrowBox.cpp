@@ -22,7 +22,7 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
 { //Constructor
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
   ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets;
-  PushingBoxLogRelayID = DefaultSettings-> PushingBoxLogRelayID;   
+  PushingBoxLogRelayID = DefaultSettings-> PushingBoxLogRelayID;  
   logToSerials(F(" "), true, 0); //adds a line break to the console log
 
   Sound1 = new Sound(F("Sound1"), this, &BoxSettings->Sound1); //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, VARIABLENAME))
@@ -65,9 +65,7 @@ void GrowBox::websiteEvent_Load(__attribute__((unused)) char *url)
     WebServer.setArgInt(getWebsiteComponentName(F("MetricSystemEnabled")), *MetricSystemEnabled);
     WebServer.setArgBoolean(getWebsiteComponentName(F("SheetsEnabled")), *ReportToGoogleSheets);
     WebServer.setArgInt(getWebsiteComponentName(F("SheetsFrequency")), *SheetsReportingFrequency);
-    WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), PushingBoxLogRelayID);
-    //WebServer.setArgString(F("PushingBoxEmailRelayID"), BoxSettings -> PushingBoxEmailRelayID);
-    //WebServer.setArgBoolean(getWebsiteComponentName(F("MqttEnabled")), BoxSettings -> ReportToMqtt);
+    WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), *PushingBoxLogRelayID);
   }
 }
 
@@ -535,7 +533,7 @@ void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
 //This is how a sent out message looks like:
 //{parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Light1_Status":"0","Light1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Light1_Timer":"1","Light1_OnTime":"04:20","Light1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
 
-void GrowBox::setPushingBoxLogRelayID(char *ID)
+void GrowBox::setPushingBoxLogRelayID(const char *ID)
 {
   strncpy(*PushingBoxLogRelayID, ID, MaxTextLength);
   addToLog(F("Sheets log relay ID updated"));

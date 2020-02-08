@@ -24,9 +24,6 @@ class WeightSensor;
 class ModuleSkeleton; //Only for demonstration purposes
 
 extern ELClientRest PushingBoxRestAPI;
-extern Settings * BoxSettings;
-extern bool *DebugEnabled;
-extern bool *MetricSystemEnabled;
 
 class GrowBox : public Common
 {
@@ -86,7 +83,7 @@ private:
   void setSheetsReportingFrequency(int Frequency);
   void setDebugOnOff(bool State);
   void setMetricSystemEnabled(bool MetricEnabled);
-  void setPushingBoxLogRelayID(char *ID);
+  void setPushingBoxLogRelayID(const char *ID);
   char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   void refreshAll();
   void runReport();
@@ -114,7 +111,7 @@ protected:
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;
   int *SheetsReportingFrequency;
-  const char *PushingBoxLogRelayID;
+  char *PushingBoxLogRelayID;
   bool *ReportToGoogleSheets;
   bool *MetricSystemEnabled;
   int SheetsRefreshCounter = 0;

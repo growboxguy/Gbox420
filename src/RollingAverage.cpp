@@ -1,9 +1,8 @@
 #include "RollingAverage.h"
 #include "Helpers.h"
 
-RollingAverage::RollingAverage(int QueueDepth){
-  QueueDepth = QueueDepth;
-
+RollingAverage::RollingAverage(){
+  History = new int[RollingAverageDepth];
 }
 
 void RollingAverage::resetAverage()
@@ -14,11 +13,11 @@ void RollingAverage::resetAverage()
 int RollingAverage::getInt(bool ReturnAverage)
 {
   if (ReturnAverage)
-    return Sum / QueueDepth;
+    return Sum / RollingAverageDepth;
   else
   {
     if (Oldest == 0)
-      return History[QueueDepth - 1];
+      return History[RollingAverageDepth - 1];
     else
       return History[Oldest - 1];
   }
@@ -27,11 +26,11 @@ int RollingAverage::getInt(bool ReturnAverage)
 float RollingAverage::getFloat(bool ReturnAverage)
 {
   if (ReturnAverage)
-    return Sum / QueueDepth / 100.0f;
+    return Sum / RollingAverageDepth / 100.0f;
   else
   {
     if (Oldest == 0)
-      return History[QueueDepth - 1] / 100.0f;
+      return History[RollingAverageDepth - 1] / 100.0f;
     else
       return History[Oldest - 1] / 100.0f;
   }
@@ -52,11 +51,11 @@ int RollingAverage::updateAverage(int LatestReading)
   if (ResetAverage)
   {
     Oldest = 0;
-    for (int i = 0; i < QueueDepth; i++)
+    for (int i = 0; i < RollingAverageDepth; i++)
     {
       History[i] = LatestReading;
     }
-    Sum = (long)LatestReading * QueueDepth;
+    Sum = (long)LatestReading * RollingAverageDepth;
     ResetAverage = false;
   }
   else
@@ -64,12 +63,12 @@ int RollingAverage::updateAverage(int LatestReading)
     Sum -= History[Oldest];            //remove the oldest reading from the total
     Sum += LatestReading;              //Add the newest reading
     History[Oldest++] = LatestReading; //replace the oldest reading, then move the pointer to the next oldest entry
-    if (Oldest >= QueueDepth)
+    if (Oldest >= RollingAverageDepth)
     { //reached the end of the queue
       Oldest = 0;
     }
   }
-  int Average = Sum / QueueDepth;
+  int Average = Sum / RollingAverageDepth;
   return Average;
 }
 
