@@ -1,44 +1,6 @@
 #include "420Common_Web.h"
 
-Common_Web::Common_Web(const __FlashStringHelper *Name)
-{
-  this->Name = Name;
-  logToSerials(F("Initializing "), false, 2);
-  logToSerials(this->Name, false, 0);
-  logToSerials(F("..."), false, 0); //Prints "Initializing NAME..." to the console
-}
-
-void Common_Web::report()
-{
-  logToSerials(Name, false, 4);
-  logToSerials(F("-"), false, 1); //Prints "    COMPONENTNAME -" to the console
-}
-
-void Common_Web::refresh_Sec()
-{
-  logToSerials(Name, false, 2);
-  logToSerials(F("refreshing (1sec)"), true, 1); //Prints "COMPONENTNAME refreshing (1 sec)" to the console
-}
-
-void Common_Web::refresh_FiveSec()
-{
-  logToSerials(Name, false, 2);
-  logToSerials(F("refreshing (5sec)"), true, 1); //Prints "COMPONENTNAME refreshing (5 sec)" to the console
-}
-
-void Common_Web::refresh_Minute()
-{
-  logToSerials(Name, false, 2);
-  logToSerials(F("refreshing (1min)"), true, 1); //Prints "COMPONENTNAME refreshing (1 min)" to the console
-}
-
-void Common_Web::refresh_QuarterHour()
-{
-  logToSerials(Name, false, 2);
-  logToSerials(F("refreshing (15min)"), true, 1); //Prints "COMPONENTNAME refreshing (15 min)" to the console
-}
-
-char *Common_Web::getWebsiteComponentName(const __FlashStringHelper *ComponentName)
+char *getWebsiteComponentName(const __FlashStringHelper *ComponentName)
 {
   static char ReturnChar[MaxTextLength] = "";
   strcpy_P(ReturnChar, (PGM_P)Name);
@@ -47,7 +9,7 @@ char *Common_Web::getWebsiteComponentName(const __FlashStringHelper *ComponentNa
   return ReturnChar;
 }
 
-bool Common_Web::isThisMyComponent(char const *lookupName)
+bool isThisMyComponent(char const *lookupName)
 { //When a web component triggers an action, this function decides if the component belonged to the class
   // lookupName is in the form of: InstanceName_FunctionName . Examles: Light1_On , Light1_OnTime, LightSensor1_Raw
 

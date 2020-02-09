@@ -1,5 +1,4 @@
 #include "DHTSensor.h"
-#include "GrowBox.h"
 
 DHTSensor::DHTSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::DHTSensorSettings *DefaultSettings) : Common_Web(Name)
 {
@@ -8,19 +7,7 @@ DHTSensor::DHTSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::D
   Sensor->begin(); //dereference the pointer to the object and then call begin() on it. Same as (*Sensor).begin();
   Temp = new RollingAverage();
   Humidity = new RollingAverage();
-  GBox->AddToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
-  GBox->AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  GBox->AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   logToSerials(F("DHT Sensor object created"), true, 1);
-}
-
-void DHTSensor::websiteEvent_Refresh(__attribute__((unused)) char *url)
-{ //When the website is refreshing
-  if (strcmp(url, "/GrowBox.html.json") == 0)
-  {
-    WebServer.setArgString(getWebsiteComponentName(F("Temp")), getTempText(true, false)); //Shows the latest reading
-    WebServer.setArgString(getWebsiteComponentName(F("Humidity")), getHumidityText(true, false));
-  }
 }
 
 void DHTSensor::refresh_Minute()

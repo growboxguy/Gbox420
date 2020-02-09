@@ -1,28 +1,19 @@
 #pragma once
 
 #include "DHT.h" //DHT11 or DHT22 Digital Humidity and Temperature sensor
-#include "420Common_Web.h"
+#include "../Modules/DHTSensor.h"
 
 class GrowBox; //forward declaration
 
-class DHTSensor : public Common_Web
+class DHTSensor_Web : public DHTSensor
 {
 public:
   DHTSensor(const __FlashStringHelper *Name, GrowBox *GBox, Settings::DHTSensorSettings *DefaultSettings);
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void refresh_Minute();
-  void report();
-  float getTemp(bool ReturnAverage = true);
-  char *getTempText(bool IncludeUnits, bool ReturnAverage);
-  float getHumidity(bool ReturnAverage = true);
-  char *getHumidityText(bool IncludeUnits, bool ReturnAverage);
-  RollingAverage *Temp;
-  RollingAverage *Humidity;
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);  
 
 private:
   GrowBox *GBox;
-  DHT *Sensor; //Pointer declaration, points to null initially
-
+  
 protected:
 };
 

@@ -1,5 +1,5 @@
 #include "GrowBox.h"
-#include "DHTSensor.h"
+#include "DHTSensor_Web.h"
 #include "Lights.h"
 #include "Sound.h"
 #include "Fan.h"
@@ -34,7 +34,7 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
   InDHT = new DHTSensor(F("InDHT"), this, &BoxSettings->InDHT);
   ExDHT = new DHTSensor(F("ExDHT"), this, &BoxSettings->ExDHT);
   Pressure1 = new PressureSensor(F("Pressure1"), this, &BoxSettings->Pressure1);
-  //Aero_T1 = new Aeroponics_Tank(F("Aero_T1"), this, &BoxSettings->Aero_T1_Common_Web, &BoxSettings->Aero_T1_Specific, Pressure1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  //Aero_T1 = new Aeroponics_Tank(F("Aero_T1"), this, &BoxSettings->Aero_T1_Common, &BoxSettings->Aero_T1_Specific, Pressure1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
   Aero_NT1 = new Aeroponics_NoTank(F("Aero_NT1"), this, &BoxSettings->Aero_NT1_Common, &BoxSettings->Aero_NT1_Specific, Pressure1);
   PHSensor1 = new PHSensor(F("PHSensor1"), this, &BoxSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
@@ -134,7 +134,7 @@ void GrowBox::websiteEvent_Field(char *Field)
 void GrowBox::refresh_FiveSec()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_FiveSec();
+    Common::refresh_FiveSec();
   if (RefreshAllRequested)
   {
     RefreshAllRequested = false;
@@ -155,21 +155,21 @@ void GrowBox::refresh_FiveSec()
 void GrowBox::refresh_Minute()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_Minute();
+    Common::refresh_Minute();
   runReport();
 }
 
 void GrowBox::refresh_QuarterHour()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_QuarterHour();
+    Common::refresh_QuarterHour();
   reportToGoogleSheetsTrigger();
 }
 
 //////////////////////////////////////////////////////////////////
 //Website subscriptions: When a component needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
 
-void GrowBox::AddToWebsiteQueue_Load(Common_Web *Component)
+void GrowBox::AddToWebsiteQueue_Load(Common *Component)
 {
   if (QueueDepth > WebsiteQueueItemCount_Load)
     WebsiteQueue_Load[WebsiteQueueItemCount_Load++] = Component;
@@ -177,7 +177,7 @@ void GrowBox::AddToWebsiteQueue_Load(Common_Web *Component)
     logToSerials(F("WebsiteQueueItemCount_Load overflow!"), true, 0);
 }
 
-void GrowBox::AddToWebsiteQueue_Refresh(Common_Web *Component)
+void GrowBox::AddToWebsiteQueue_Refresh(Common *Component)
 {
   if (QueueDepth > WebsiteQueueItemCount_Refresh)
     WebsiteQueue_Refresh[WebsiteQueueItemCount_Refresh++] = Component;
@@ -185,7 +185,7 @@ void GrowBox::AddToWebsiteQueue_Refresh(Common_Web *Component)
     logToSerials(F("WebsiteQueueItemCount_Refresh overflow!"), true, 0);
 }
 
-void GrowBox::AddToWebsiteQueue_Button(Common_Web *Component)
+void GrowBox::AddToWebsiteQueue_Button(Common *Component)
 {
   if (QueueDepth > WebsiteQueueItemCount_Button)
     WebsiteQueue_Button[WebsiteQueueItemCount_Button++] = Component;
@@ -193,7 +193,7 @@ void GrowBox::AddToWebsiteQueue_Button(Common_Web *Component)
     logToSerials(F("WebsiteQueueItemCount_Button overflow!"), true, 0);
 }
 
-void GrowBox::AddToWebsiteQueue_Field(Common_Web *Component)
+void GrowBox::AddToWebsiteQueue_Field(Common *Component)
 {
   if (QueueDepth > WebsiteQueueItemCount_Field)
     WebsiteQueue_Field[WebsiteQueueItemCount_Field++] = Component;

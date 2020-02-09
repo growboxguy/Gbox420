@@ -1,5 +1,5 @@
 #pragma once
-#include "420Module.h"
+#include "../Modules/420Module.h"
 #include "ELClientRest.h" //ESP-link - REST API
 
 //This class represents a complete growbox with all of its components
@@ -60,10 +60,10 @@ public:
   void reportToGoogleSheetsTrigger();
   void reportToGoogleSheets(bool CalledFromWebsite);
   void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
-  void AddToWebsiteQueue_Load(Common_Web *Component);
-  void AddToWebsiteQueue_Refresh(Common_Web *Component);
-  void AddToWebsiteQueue_Button(Common_Web *Component);
-  void AddToWebsiteQueue_Field(Common_Web *Component);
+  void AddToWebsiteQueue_Load(Common *Component);
+  void AddToWebsiteQueue_Refresh(Common *Component);
+  void AddToWebsiteQueue_Button(Common *Component);
+  void AddToWebsiteQueue_Field(Common *Component);
   void loadEvent(char *Url);
   void refreshEvent(char *Url);
   void buttonEvent(char *Button);
@@ -76,10 +76,10 @@ private:
   void setMetricSystemEnabled(bool MetricEnabled);
   void setPushingBoxLogRelayID(const char *ID);
   char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
-  Common_Web *WebsiteQueue_Load[QueueDepth];
-  Common_Web *WebsiteQueue_Refresh[QueueDepth];
-  Common_Web *WebsiteQueue_Button[QueueDepth];
-  Common_Web *WebsiteQueue_Field[QueueDepth]; 
+  Common *WebsiteQueue_Load[QueueDepth];
+  Common *WebsiteQueue_Refresh[QueueDepth];
+  Common *WebsiteQueue_Button[QueueDepth];
+  Common *WebsiteQueue_Field[QueueDepth]; 
   byte WebsiteQueueItemCount_Load = 0;
   byte WebsiteQueueItemCount_Refresh = 0;
   byte WebsiteQueueItemCount_Button = 0;
