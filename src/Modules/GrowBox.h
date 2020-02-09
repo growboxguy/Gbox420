@@ -12,7 +12,7 @@ class Lights;
 class Sound;
 class Fan;
 class PowerSensor;
-//class PowerSensorV3;  //Only for PZEM004T V3.0
+class PowerSensorV3;  //Only for PZEM004T V3.0
 class PHSensor;
 class LightSensor;
 class PressureSensor;

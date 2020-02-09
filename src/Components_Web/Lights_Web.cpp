@@ -1,5 +1,4 @@
 #include "Lights_Web.h"
-#include "GrowBox.h"
 
 Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings) : Lights(Name,Parent,DefaultSettings)
 {

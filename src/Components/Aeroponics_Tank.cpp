@@ -64,7 +64,7 @@ void Aeroponics_Tank::refresh_Sec()
     { //if time to stop spraying (Duration in Seconds)
       SpraySolenoidOn = false;
       logToSerials(F("Stopping spray"), true);
-      Parent->Sound1->playOffSound();
+      Parent->getSoundObject()->playOffSound();
       SprayTimer = millis();
     }
   }
@@ -73,7 +73,7 @@ void Aeroponics_Tank::refresh_Sec()
     if (*SprayEnabled && millis() - SprayTimer >= ((uint32_t)*Interval * 60000))
     { //if time to start spraying (AeroInterval in Minutes)
       SpraySolenoidOn = true;
-      Parent->Sound1->playOnSound();
+      Parent->getSoundObject()->playOnSound();
       if (*DebugEnabled)
         logToSerials(F("Starting spray"), true);
       SprayTimer = millis();
@@ -120,7 +120,7 @@ void Aeroponics_Tank::sprayNow(bool FromWebsite)
     SprayTimer = millis();
     SpraySolenoidOn = true;
     checkRelays();
-    Parent->Sound1->playOnSound();
+    Parent->getSoundObject()->playOnSound();
     if (FromWebsite)
       Parent->addToLog(F("Aeroponics spraying"));
     else

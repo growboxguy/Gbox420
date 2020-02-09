@@ -1,5 +1,4 @@
 #include "DHTSensor_Web.h"
-#include "GrowBox.h"
 
 DHTSensor_Web::DHTSensor_Web(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings) : DHTSensor(Name,Parent,DefaultSettings)
 {

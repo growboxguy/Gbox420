@@ -1,5 +1,4 @@
 #include "Fan_Web.h"
-#include "GrowBox.h"
 
 Fan_Web::Fan_Web(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings *DefaultSettings) : Fan(Name,DefaultSettings)
 {

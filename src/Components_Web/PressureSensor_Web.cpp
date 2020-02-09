@@ -1,11 +1,10 @@
 #include "PressureSensor_Web.h"
-#include "GrowBox.h"
 
 PressureSensor_Web::PressureSensor_Web(const __FlashStringHelper *Name, Module *Parent, Settings::PressureSensor_WebSettings *DefaultSettings) : PressureSensor(Name,Parent,DefaultSettings)
 {
   this->Parent = Parent;  
-  Parent->AddToReportQueue(this);         //Subscribing to the report queue: Calls the report() method
-  Parent->AddToRefreshQueue_Minute(this); //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  Parent->addToReportQueue(this);         //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Minute(this); //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   Parent->AddToWebsiteQueue_Load(this);   //Subscribing to the Website load event: Calls the websiteEvent_Load() method
   Parent->AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
   Parent->AddToWebsiteQueue_Field(this);  //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method  

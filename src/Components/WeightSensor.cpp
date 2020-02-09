@@ -10,9 +10,9 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
   Sensor -> begin(*(&DefaultSettings->DTPin), *(&DefaultSettings->SCKPin));
   Sensor -> set_scale(*Scale);
   Sensor -> set_offset(*TareOffset);  
-  Parent->AddToReportQueue(this);         //Subscribing to the report queue: Calls the report() method
-  Parent->AddToRefreshQueue_Minute(this); //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  Parent->AddToRefreshQueue_Sec(this);  
+  Parent->addToReportQueue(this);         //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Minute(this); //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  Parent->addToRefreshQueue_Sec(this);  
   logToSerials(F("Weight Sensor object created"), true, 1);
 }
 

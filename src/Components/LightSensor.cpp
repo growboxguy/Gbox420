@@ -12,8 +12,8 @@ LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settin
   pinMode(*AnalogPin, INPUT);
   LightReading = new RollingAverage();
   calibrate(false);
-  Parent->AddToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
-  Parent->AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   logToSerials(F("LightSensor object created"), true, 1);
 }
 
@@ -44,7 +44,7 @@ void LightSensor::triggerCalibration()
 { //website signals to calibrate light sensor MAX and MIN readings the next time a refresh runs
   CalibrateRequested = true;
   Parent->addToLog(F("Calibrating light"));
-  Parent->Sound1->playOnSound();
+  Parent->getSoundObject()->playOnSound();
 }
 
 void LightSensor::calibrate(bool AddToLog)

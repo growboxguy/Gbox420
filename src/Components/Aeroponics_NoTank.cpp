@@ -80,7 +80,7 @@ void Aeroponics_NoTank::bypassOn(){
   checkRelays();
   SprayTimer = millis();  //measures blowoff time
   Parent->addToLog(F("Bypass ON"));
-  Parent->Sound1->playOnSound();
+  Parent->getSoundObject()->playOnSound();
 }
 
 void Aeroponics_NoTank::bypassOff(){
@@ -88,7 +88,7 @@ void Aeroponics_NoTank::bypassOff(){
  BlowOffInProgress = false;
  checkRelays();
  Parent->addToLog(F("Bypass OFF"));
- Parent->Sound1->playOffSound();
+ Parent->getSoundObject()->playOffSound();
 }
 
 void Aeroponics_NoTank::sprayNow(bool FromWebsite)
@@ -102,7 +102,7 @@ void Aeroponics_NoTank::sprayNow(bool FromWebsite)
     checkRelays();
     PumpTimer = millis();
     SprayTimer = millis();
-    Parent->Sound1->playOnSound();
+    Parent->getSoundObject()->playOnSound();
     if (FromWebsite)
       Parent->addToLog(F("Aeroponics spraying"));
     else

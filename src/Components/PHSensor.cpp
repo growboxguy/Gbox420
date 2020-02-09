@@ -8,8 +8,8 @@ PHSensor::PHSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PH
   this->Slope = &DefaultSettings->Slope;
   pinMode(*Pin, INPUT);
   PH = new RollingAverage();
-  Parent->AddToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
-  Parent->AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method 
+  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method 
   logToSerials(F("PHSensor object created"), true, 1);
 }
 

@@ -25,7 +25,7 @@
 #include "StaticThreadController.h" //Grouping threads
 #include "src/Components_Web/420Common_Web.h"              //Base class where all components inherits from
 #include "src/Settings.h"
-#include "src/Components_Web/GrowBox.h"                //Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
+#include "src/Modules/GrowBox.h"                //Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  //temp storage for assembling long messages (REST API, MQTT API)

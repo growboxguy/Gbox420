@@ -1,9 +1,16 @@
 #include "420Module.h"
+#include "Sound.h"
 
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
 Module::Module(const __FlashStringHelper *Name) : Common(Name)
 { //Constructor
+  logToSerials(F("Module object created"), true, 0);
+}
+
+Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
+{ //Constructor
+  this.SoundFeedback = SoundFeedback;
   logToSerials(F("Module object created"), true, 0);
 }
 
@@ -33,7 +40,7 @@ void Module::runReport()
 //////////////////////////////////////////////////////////////////
 //Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
 
-void Module::AddToReportQueue(Common *Component)
+void Module::addToReportQueue(Common *Component)
 {
   if (QueueDepth > reportQueueItemCount)
     ReportQueue[reportQueueItemCount++] = Component;
@@ -41,7 +48,7 @@ void Module::AddToReportQueue(Common *Component)
     logToSerials(F("Report queue overflow!"), true, 0); //Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
-void Module::AddToRefreshQueue_Sec(Common *Component)
+void Module::addToRefreshQueue_Sec(Common *Component)
 {
   if (QueueDepth > refreshQueueItemCount_Sec)
     RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
@@ -49,7 +56,7 @@ void Module::AddToRefreshQueue_Sec(Common *Component)
     logToSerials(F("RefreshQueue_Sec overflow!"), true, 0);
 }
 
-void Module::AddToRefreshQueue_FiveSec(Common *Component)
+void Module::addToRefreshQueue_FiveSec(Common *Component)
 {
   if (QueueDepth > refreshQueueItemCount_FiveSec)
     RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
@@ -57,7 +64,7 @@ void Module::AddToRefreshQueue_FiveSec(Common *Component)
     logToSerials(F("RefreshQueue_FiveSec overflow!"), true, 0);
 }
 
-void Module::AddToRefreshQueue_Minute(Common *Component)
+void Module::addToRefreshQueue_Minute(Common *Component)
 {
   if (QueueDepth > refreshQueueItemCount_Minute)
     RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
@@ -65,7 +72,7 @@ void Module::AddToRefreshQueue_Minute(Common *Component)
     logToSerials(F("RefreshQueue_Minute overflow!"), true, 0);
 }
 
-void Module::AddToRefreshQueue_QuarterHour(Common *Component)
+void Module::addToRefreshQueue_QuarterHour(Common *Component)
 {
   if (QueueDepth > refreshQueueItemCount_QuarterHour)
     RefreshQueue_QuarterHour[refreshQueueItemCount_QuarterHour++] = Component;
@@ -114,6 +121,10 @@ void Module::runQuarterHour()
   {
     RefreshQueue_QuarterHour[i]->refresh_QuarterHour();
   }
+}
+
+Sound* Module::getSoundObject(){
+  return SoundFeedback;
 }
 
 //////////////////////////////////////////////////////////////////

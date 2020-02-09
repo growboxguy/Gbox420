@@ -1,5 +1,4 @@
 #include "ModuleSkeleton_Web.h"
-#include "GrowBox.h"
 
 ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module *Parent, Settings::ModuleSkeletonSettings *DefaultSettings) : Common(Name)
 { //constructor
@@ -9,11 +8,11 @@ ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module *
   PersistentFloat = &DefaultSettings->PersistentFloat;
   RollingInt = new RollingAverage();
   RollingFloat = new RollingAverage();
-  Parent->AddToReportQueue(this);              //Subscribing to the report queue: Calls the report() method
-  Parent->AddToRefreshQueue_Sec(this);         //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
-  Parent->AddToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  Parent->AddToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  Parent->AddToRefreshQueue_QuarterHour(this); //Subscribing to the 15 minute refresh queue: Calls the refresh_QuarterHour() method
+  Parent->addToReportQueue(this);              //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Sec(this);         //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
+  Parent->addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  Parent->addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  Parent->addToRefreshQueue_QuarterHour(this); //Subscribing to the 15 minute refresh queue: Calls the refresh_QuarterHour() method
   Parent->AddToWebsiteQueue_Load(this);        //Subscribing to the Website load event: Calls the websiteEvent_Load() method
   Parent->AddToWebsiteQueue_Refresh(this);     //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   Parent->AddToWebsiteQueue_Button(this);      //Subscribing to the Website button press event: Calls the websiteEvent_Button() method

@@ -17,8 +17,8 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
   pinMode(*RelayPin, OUTPUT);
   digitalWrite(*RelayPin, HIGH); //Turn relay off initially
   pinMode(*DimmingPin, OUTPUT);
-  Parent->AddToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
-  Parent->AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   logToSerials(F("Lights object created"), true, 1);
 }
 
@@ -122,12 +122,12 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
     if (Status)
     {
       Parent->addToLog(F("Light ON"));
-      Parent->Sound1->playOnSound();
+      Parent->getSoundObject()->playOnSound();
     }
     else
     {
       Parent->addToLog(F("Light OFF"));
-      Parent->Sound1->playOffSound();
+      Parent->getSoundObject()->playOffSound();
     }
   }
   checkLightStatus();
@@ -180,12 +180,12 @@ void Lights::setTimerOnOff(bool TimerState)
   {
     checkLightTimer();
     Parent->addToLog(F("Timer enabled"));
-    Parent->Sound1->playOnSound();
+    Parent->getSoundObject()->playOnSound();
   }
   else
   {
     Parent->addToLog(F("Timer disabled"));
-    Parent->Sound1->playOffSound();
+    Parent->getSoundObject()->playOffSound();
   }
 }
 

@@ -2,11 +2,15 @@
 #include "420Common.h"
 
 //This class is the parent of all physical modules, like the Main / Hempy Bucket / Aeroponics / Environment module
+//Responsible for creating and
+//Adds 
+class Sound;
 
 class Module : public Common
 {
 public:
   Module(const __FlashStringHelper *Name); //constructor
+  Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
   void runReport();
   void runAll();
   void runSec();
@@ -15,11 +19,13 @@ public:
   void runQuarterHour();
   void addToLog(const __FlashStringHelper *Text, byte indent = 3);
   void addToLog(const char *Text, byte indent = 3);  
-  void AddToReportQueue(Common *Component);
-  void AddToRefreshQueue_Sec(Common *Component);
-  void AddToRefreshQueue_FiveSec(Common *Component);
-  void AddToRefreshQueue_Minute(Common *Component);
-  void AddToRefreshQueue_QuarterHour(Common *Component);
+  void addToReportQueue(Common *Component);
+  void addToRefreshQueue_Sec(Common *Component);
+  void addToRefreshQueue_FiveSec(Common *Component);
+  void addToRefreshQueue_Minute(Common *Component);
+  void addToRefreshQueue_QuarterHour(Common *Component);
+  Sound * getSoundObject();
+  relayToGoogleSheets
  
 private:
   char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
@@ -35,6 +41,7 @@ private:
   byte refreshQueueItemCount_QuarterHour = 0;
 
 protected:
+  Sound* SoundFeedback;
   bool RunAllRequested = false;
   bool ConsoleReportRequested = false; 
 };

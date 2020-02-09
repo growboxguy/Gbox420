@@ -1,5 +1,4 @@
 #include "PHSensor_Web.h"
-#include "GrowBox.h"
 
 PHSensor_Web::PHSensor_Web(const __FlashStringHelper *Name, Module *Parent, Settings::PHSensorSettings *DefaultSettings) : PHSensor(Name,Parent,DefaultSettings)
 { //constructor

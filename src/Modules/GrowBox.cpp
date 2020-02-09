@@ -1,20 +1,20 @@
 #include "GrowBox.h"
-#include "DHTSensor_Web.h"
-#include "Lights_Web.h"
-#include "Sound_Web.h"
-#include "Fan_Web.h"
-#include "PowerSensor_Web.h"
-//#include "PowerSensorV3_Web.h"  //Only for PZEM004T V3.0
-#include "LightSensor_Web.h"
-#include "PHSensor_Web.h"
-#include "LightSensor_Web.h"
-#include "PressureSensor_Web.h"
-#include "Aeroponics_Tank_Web.h"
-#include "Aeroponics_NoTank_Web.h"
-#include "WaterTempSensor_Web.h"
-#include "WaterLevelSensor_Web.h"
-#include "WeightSensor_Web.h"
-#include "ModuleSkeleton_Web.h" //Only for demonstration purposes
+#include "../Components_Web/DHTSensor_Web.h"
+#include "../Components_Web/Lights_Web.h"
+#include "../Components_Web/Sound_Web.h"
+#include "../Components_Web/Fan_Web.h"
+#include "../Components_Web/PowerSensor_Web.h"
+#include "../Components_Web/PowerSensorV3_Web.h"  //Only for PZEM004T V3.0
+#include "../Components_Web/LightSensor_Web.h"
+#include "../Components_Web/PHSensor_Web.h"
+#include "../Components_Web/LightSensor_Web.h"
+#include "../Components_Web/PressureSensor_Web.h"
+#include "../Components_Web/Aeroponics_Tank_Web.h"
+#include "../Components_Web/Aeroponics_NoTank_Web.h"
+#include "../Components_Web/WaterTempSensor_Web.h"
+#include "../Components_Web/WaterLevelSensor_Web.h"
+#include "../Components_Web/WeightSensor_Web.h"
+#include "../Components_Web/ModuleSkeleton_Web.h" //Only for demonstration purposes
 
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
@@ -44,9 +44,9 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
   //src/Componentskeleton1 = new src/Componentskeleton(F("src/Componentskeleton1"),this,&BoxSettings -> src/Componentskeleton1);  //Only for demonstration purposes
   //src/Componentskeleton2 = new src/Componentskeleton(F("src/Componentskeleton2"),this,&BoxSettings -> src/Componentskeleton2);  //Only for demonstration purposes
 
-  AddToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  AddToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  AddToRefreshQueue_QuarterHour(this); //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
+  addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  addToRefreshQueue_QuarterHour(this); //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
   AddToWebsiteQueue_Load(this);        //Subscribing to the Website load event
   AddToWebsiteQueue_Refresh(this);     //Subscribing to the Website refresh event
   AddToWebsiteQueue_Field(this);       //Subscribing to the Website field submit event

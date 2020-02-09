@@ -4,8 +4,8 @@ PowerSensorV3::PowerSensorV3(const __FlashStringHelper *Name, Module *Parent, Ha
 {
   this->Parent = Parent;
   Sensor = new PZEM004Tv30(SerialPort);
-  Parent->AddToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
-  Parent->AddToRefreshQueue_FiveSec(this); //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_FiveSec(this); //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   logToSerials(F("PowerSensorV3 object created"), true, 1);
 }
 

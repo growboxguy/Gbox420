@@ -19,8 +19,8 @@ Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings
   digitalWrite(*BypassSolenoidPin, HIGH); //initialize in off state
   pinMode(*PumpPin, OUTPUT);
   digitalWrite(*PumpPin, HIGH);          //initialize in off state
-  Parent->AddToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
-  Parent->AddToRefreshQueue_Sec(this);     //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
+  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Sec(this);     //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
 }
 
 void Aeroponics::report()
@@ -69,7 +69,7 @@ void Aeroponics::setPumpOn(bool UserRequest)
   if (UserRequest)
   { //if the pump was turned on from the web interface, not by the automation
     Parent->addToLog(F("Pump ON"));
-    Parent->Sound1->playOnSound();
+    Parent->getSoundObject()->playOnSound();
     PumpOK = true; //re-enable pump
   }
   MixInProgress = UserRequest; //If pump was turned on from the web interface first run an air bleeding cycle
@@ -83,7 +83,7 @@ void Aeroponics::setPumpOff(bool UserRequest)
   if (UserRequest)
   { //if the pump was turned off from the web interface, not by the automation
     Parent->addToLog(F("Pump OFF"));
-    Parent->Sound1->playOffSound();
+    Parent->getSoundObject()->playOffSound();
     PumpOK = true; //re-enable pump
   }
   MixInProgress = false;
@@ -108,7 +108,7 @@ void Aeroponics::Mix()
   BypassSolenoidOn = true;
   PumpTimer = millis();
   checkRelays();
-  Parent->Sound1->playOnSound();
+  Parent->getSoundObject()->playOnSound();
   Parent->addToLog(F("Mixing nutrients"));
 }
 
@@ -153,11 +153,11 @@ void Aeroponics::setSprayOnOff(bool State)
   if (*SprayEnabled)
   {
     Parent->addToLog(F("Aero spray enabled"));
-    Parent->Sound1->playOnSound();
+    Parent->getSoundObject()->playOnSound();
   }
   else
   {
     Parent->addToLog(F("Aero spray disabled"));
-    Parent->Sound1->playOffSound();
+    Parent->getSoundObject()->playOffSound();
   }
 }
