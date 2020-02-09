@@ -1,7 +1,6 @@
 #include "Aeroponics_Tank.h"
-#include "GrowBox.h"
 
-Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics(&(*Name), &(*GBox), &(*DefaultSettings), &(*FeedbackPressureSensor))
+Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics(&(*Name),&(*Parent), &(*DefaultSettings), &(*FeedbackPressureSensor))
 { //constructor
   SpraySolenoidPin = &TankSpecificSettings->SpraySolenoidPin;
   PressureLow = &TankSpecificSettings->PressureLow;   //Aeroponics - Turn on pump below this pressure (bar)
@@ -12,58 +11,10 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   sprayNow(false); //This is a safety feature,start with a spray after a reset
 }
 
-void Aeroponics_Tank::websiteEvent_Load(__attribute__((unused)) char *url)
-{
-  if (strcmp(url, "/GrowBox.html.json") == 0)
-  {
-    WebServer.setArgFloat(getWebsiteComponentName(F("PresLow")), *PressureLow);
-    WebServer.setArgFloat(getWebsiteComponentName(F("PresHigh")), *PressureHigh);
-  }
-  Aeroponics::websiteEvent_Load(url);
-}
-
-void Aeroponics_Tank::websiteEvent_Button(char *Button)
-{
-  if (!isThisMyComponent(Button))
-  {
-    return;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Refill")) == 0)
-    {
-      refillTank();
-    }
-    else
-      Aeroponics::websiteEvent_Button(Button);
-  }
-}
-
-void Aeroponics_Tank::websiteEvent_Field(char *Field)
-{
-  if (!isThisMyComponent(Field))
-  {
-    return;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("PresLow")) == 0)
-    {
-      setPressureLow(WebServer.getArgFloat());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PresHigh")) == 0)
-    {
-      setPressureHigh(WebServer.getArgFloat());
-    }
-    else
-      Aeroponics::websiteEvent_Field(Field);
-  }
-}
-
 void Aeroponics_Tank::refresh_Sec()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_Sec();
+    Common::refresh_Sec();
   if (PumpOn)
   { //if pump is on
     if (Aeroponics::FeedbackPressureSensor->getPressure() >= *PressureHigh)
@@ -133,7 +84,7 @@ void Aeroponics_Tank::refresh_Sec()
 
 void Aeroponics_Tank::report()
 {
-  Common_Web::report();
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("Pressure:"));
   strcat(LongMessage, FeedbackPressureSensor->getPressureText(true, false));

@@ -2,7 +2,7 @@
 #include "Lights.h"
 #include "Sound.h"
 
-LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource) : Common_Web(Name)
+LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource) : Common(Name)
 { //constructor
   this->Parent = Parent;
   this->LightSource = LightSource;
@@ -20,7 +20,7 @@ LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settin
 void LightSensor::refresh_Minute()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_Minute();
+    Common::refresh_Minute();
   if (CalibrateRequested)
   {
     calibrate();
@@ -31,7 +31,7 @@ void LightSensor::refresh_Minute()
 
 void LightSensor::report()
 {
-  Common_Web::report();
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("Dark:"));
   strcat(LongMessage, getDarkText(true));

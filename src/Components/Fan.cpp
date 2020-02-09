@@ -50,7 +50,6 @@ void Fan::TurnOff()
   *State = false;
   *HighSpeed = false;
   checkFanStatus();
-  WebServer.setArgString(getWebsiteComponentName(F("Status")), fanSpeedToText());
   Parent->addToLog(F("Fan OFF"));
   Parent->Sound1->playOffSound();
 }
@@ -60,7 +59,6 @@ void Fan::SetLowSpeed()
   *State = true;
   *HighSpeed = false;
   checkFanStatus();
-  WebServer.setArgString(getWebsiteComponentName(F("Status")), fanSpeedToText());
   Parent->addToLog(F("Fan speed LOW"));
   Parent->Sound1->playOnSound();
 }
@@ -70,7 +68,6 @@ void Fan::SetHighSpeed()
   *State = true;
   *HighSpeed = true;
   checkFanStatus();
-  WebServer.setArgString(getWebsiteComponentName(F("Status")), fanSpeedToText());
   Parent->addToLog(F("Fan speed HIGH"));
   Parent->Sound1->playOnSound();
 }

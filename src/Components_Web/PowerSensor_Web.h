@@ -2,30 +2,16 @@
 
 #include "PZEM004T.h" //3rd party module for the PZEM004T power sensor
 #include "420Common_Web.h"
+#include "../Components/PowerSensor.h"
 
-class GrowBox; //forward declaration
-
-class PowerSensor : public Common_Web
+class PowerSensor_Web : public PowerSensor
 {
 public:
-  PowerSensor(const __FlashStringHelper *Name, GrowBox *Gbox, HardwareSerial *SerialPort); //constructor
+  PowerSensor_Web(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort); //constructor
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void refresh_FiveSec();
-  void report();
-  char *getPowerText(bool IncludeUnits);
-  char *getEnergyText(bool IncludeUnits);
-  char *getVoltageText(bool IncludeUnits);
-  char *getCurrentText(bool IncludeUnits);
-
+  
 private:
-  GrowBox *GBox;            //Pointer to the GrowBox object that contains the Lights object
-  PZEM004T *Sensor;         //for PZEM004T model
-  IPAddress *PowerSensorIP; // Power Sensor address (fake,just needs something set)
-  float Power;              //Power sensor - W
-  float Energy;             //Power sensor - Wh Total consumption
-  float Voltage;            //Power sensor - V
-  float Current;            //Power sensor - A
-
+ 
 protected:
 };
 

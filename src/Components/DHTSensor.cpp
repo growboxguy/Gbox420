@@ -1,6 +1,6 @@
 #include "DHTSensor.h"
 
-DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings) : Common_Web(Name)
+DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
   Sensor = new DHT(*(&DefaultSettings->Pin), *(&DefaultSettings->Type));
@@ -15,7 +15,7 @@ DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
 void DHTSensor::refresh_Minute()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_Minute();
+    Common::refresh_Minute();
   if (*MetricSystemEnabled)
   {
     Temp->updateAverage(Sensor->readTemperature());
@@ -29,7 +29,7 @@ void DHTSensor::refresh_Minute()
 
 void DHTSensor::report()
 {
-  Common_Web::report();
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("Temp:"));
   strcat(LongMessage, getTempText(true, true)); //Shows the average reading

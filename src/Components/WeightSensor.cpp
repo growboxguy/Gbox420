@@ -1,7 +1,6 @@
 #include "WeightSensor.h"
-#include "GrowBox.h"
 
-WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings) : Common_Web(Name)
+WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
   Scale = &DefaultSettings->Scale;
@@ -13,69 +12,14 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
   Sensor -> set_offset(*TareOffset);  
   Parent->AddToReportQueue(this);         //Subscribing to the report queue: Calls the report() method
   Parent->AddToRefreshQueue_Minute(this); //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  Parent->AddToRefreshQueue_Sec(this);
-  Parent->AddToWebsiteQueue_Load(this);   //Subscribing to the Website load event: Calls the websiteEvent_Load() method
-  Parent->AddToWebsiteQueue_Refresh(this);   //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  Parent->AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
-  Parent->AddToWebsiteQueue_Field(this);  //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
+  Parent->AddToRefreshQueue_Sec(this);  
   logToSerials(F("Weight Sensor object created"), true, 1);
-}
-
-void WeightSensor::websiteEvent_Load(__attribute__((unused)) char *url)
-{
-  if (strcmp(url, "/Settings.html.json") == 0)
-  {
-    //
-  }
-}
-
-void WeightSensor::websiteEvent_Refresh(__attribute__((unused)) char *url)
-{
-  if (strcmp(url, "/Settings.html.json") == 0)
-  {
-    WebServer.setArgString(getWebsiteComponentName(F("TareOffset")), toText(*TareOffset));
-    WebServer.setArgString(getWebsiteComponentName(F("Scale")), toText(*Scale));
-  }
-}
-
-void WeightSensor::websiteEvent_Button(char *Button)
-{
-  if (!isThisMyComponent(Button))
-  {
-    return;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Tare")) == 0)
-    {
-      triggerTare();
-    }
-  }
-}
-
-void WeightSensor::websiteEvent_Field(char *Field)
-{
-  if (!isThisMyComponent(Field))
-  {
-    return;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Calibrate")) == 0)
-    {
-      triggerCalibration(WebServer.getArgInt());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Scale")) == 0)
-    {
-      setScale(WebServer.getArgFloat());
-    }
-  }
 }
 
 void WeightSensor::refresh_Minute()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_Minute();
+    Common::refresh_Minute();
   if(TareRequested){
     TareRequested = false;
     tare();
@@ -94,7 +38,7 @@ void WeightSensor::refresh_Sec()
 
 void WeightSensor::report()
 {
-  Common_Web::report();
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
   strcat(LongMessage, getWeightText(true, true));

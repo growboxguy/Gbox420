@@ -19,13 +19,13 @@ ModuleSkeleton::ModuleSkeleton(const __FlashStringHelper *Name, Module *Parent, 
 void ModuleSkeleton::refresh_Sec()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_Sec();
+    Common::refresh_Sec();
 }
 
 void ModuleSkeleton::refresh_FiveSec()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_FiveSec();
+    Common::refresh_FiveSec();
   if (RuntimeBool)
   {
     RuntimeInt++;
@@ -36,18 +36,18 @@ void ModuleSkeleton::refresh_FiveSec()
 void ModuleSkeleton::refresh_Minute()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_Minute();
+    Common::refresh_Minute();
 }
 
 void ModuleSkeleton::refresh_QuarterHour()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_QuarterHour();
+    Common::refresh_QuarterHour();
 }
 
 void ModuleSkeleton::report()
 { //Report status to the Arduino Serial and ESP-lin console output
-  Common_Web::report();
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("PersistentBool:"));
   strcat(LongMessage, yesNoToText(*PersistentBool));

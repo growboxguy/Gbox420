@@ -2,6 +2,8 @@
 
 //These are functions extending the functions of *_Web components, each component must include this file
 
+#include "ELClientWebServer.h"      //ESP-link - WebServer API
+
 //forward declaration
 extern ELClientWebServer WebServer;
 

@@ -3,7 +3,7 @@
 #include "420Common.h"
 #include "420Module.h"
 
-class WaterLevelSensor : public Common_Web
+class WaterLevelSensor : public Common
 {
 public:
   WaterLevelSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterLevelSensorSettings *DefaultSettings); //constructor
@@ -26,5 +26,5 @@ private:
   int8_t Level;        //Stores water level in a number: 0 - Empty ... 4 - Full
 
 protected:
-  Module *Parent
+  Module *Parent;
 };

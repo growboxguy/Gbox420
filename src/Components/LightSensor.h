@@ -4,7 +4,7 @@
 #include "420Module.h"
 #include "Lights.h"
 
-class LightSensor : public Common_Web
+class LightSensor : public Common
 {
 public:
   LightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource);
@@ -33,7 +33,7 @@ private:
   int Readings[ReadingArrayDepth];  //Stores the calibration readings for every 10% increment. [0] is darkness 
 
 protected:
-  Module *Parent
+  Module *Parent;
 };
 
 //WEBSITE COMPONENT

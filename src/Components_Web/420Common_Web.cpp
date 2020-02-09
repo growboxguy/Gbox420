@@ -1,4 +1,5 @@
 #include "420Common_Web.h"
+#include "../Settings.h" //for loading defaults and storing/reading user settings
 
 char *getWebsiteComponentName(const __FlashStringHelper *ComponentName)
 {

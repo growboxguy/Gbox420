@@ -1,42 +1,21 @@
 #pragma once
-#include "HX711.h"
+
 #include "420Common_Web.h"
+#include "../Components/WeightSensor.h"
 
-class GrowBox; //forward declaration
-
-class WeightSensor : public Common_Web
+class WeightSensor_Web : public WeightSensor
 {
 public:
-  WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings);
+  WeightSensor_Web(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings);
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Button(char *Button);
   void websiteEvent_Field(char *Field);
-  void refresh_Minute();
-  void refresh_Sec();
-  void report();
-  void readWeight();
-  float getWeight(bool ReturnAverage = true);
-  char *getWeightText(bool IncludeUnits, bool ReturnAverage);
-  void triggerTare();
-  void triggerCalibration(int CalibrationWeight);  
-  RollingAverage *Weight;
-
+  
 private:
-  GrowBox *GBox;
-  HX711 *Sensor;
-  void tare();
-  void calibrate();
-  void setScale(float Scale);
-  float *Scale;  //Calibration value: Raw reading of one unit
-  long *TareOffset; //Read value at no weight on the scale
-  int CalibrationWeight;
-  bool TareRequested = false;
-  bool CalibrateRequested = false;
-
+  
 protected:
 };
-
 //WEBSITE COMPONENT
 /*
 <div class="card" style="width:90%">

@@ -1,26 +1,21 @@
 #pragma once
 
-#include "420Common_Web.h"
-#include "../Components/Sound.h"
-#include "../Components/PressureSensor.h"
+#include "420Common.h"
+#include "Sound.h"
+#include "PressureSensor.h"
 
-class GrowBox; //forward declaration
-
-class Aeroponics : public Common_Web
+class Aeroponics : public Common
 {
 public:
   Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor);
-  virtual void websiteEvent_Load(__attribute__((unused)) char *url);
-  virtual void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  virtual void websiteEvent_Button(__attribute__((unused)) char *Button);
-  virtual void websiteEvent_Field(__attribute__((unused)) char *Field);
   virtual void report();
   char *getInterval();
   char *getDuration();
 
 private:
+
 protected:
-  GrowBox *GBox;
+  Module *Parent;
   PressureSensor *FeedbackPressureSensor; //Pressure sensor object that will monitor the spray pressure
   byte *PumpPin;
   byte *BypassSolenoidPin;

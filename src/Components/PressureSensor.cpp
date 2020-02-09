@@ -1,6 +1,6 @@
 #include "PressureSensor.h"
 
-PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PressureSensorSettings *DefaultSettings) : Common_Web(Name)
+PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PressureSensorSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
   Pin = &DefaultSettings->Pin;
@@ -13,13 +13,13 @@ PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, 
 void PressureSensor::refresh_Minute()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_Minute();
+    Common::refresh_Minute();
   readPressure();
 }
 
 void PressureSensor::report()
 {
-  Common_Web::report();
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("Pressure:"));
   strcat(LongMessage, getPressureText(true, true));

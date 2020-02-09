@@ -1,7 +1,7 @@
 #include "Lights.h"
 #include "Sound.h"
 
-Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings) : Common_Web(Name)
+Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
   RelayPin = &DefaultSettings->RelayPin;
@@ -23,16 +23,16 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
 }
 
 void Lights::refresh_Minute()
-{ //makes the class non-virtual, by implementing the refresh function from Common_Web (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
+{ //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
   if (*DebugEnabled)
-    Common_Web::refresh_Minute();
+    Common::refresh_Minute();
   checkLightTimer();
   checkLightStatus();
 }
 
 void Lights::report()
 {
-  Common_Web::report();
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("Status:"));
   strcat(LongMessage, getStatusText(true));

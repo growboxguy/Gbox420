@@ -3,7 +3,7 @@
 #include "420Common.h"
 #include "420Module.h"
 
-class PressureSensor : public Common_Web
+class PressureSensor : public Common
 {
 public:
   PressureSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PressureSensorSettings *DefaultSettings);
@@ -23,5 +23,5 @@ private:
   float *Ratio;
 
 protected:
-  Module *Parent
+  Module *Parent;
 };

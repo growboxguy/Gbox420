@@ -1,33 +1,19 @@
 #pragma once
 
 #include "420Common_Web.h"
-#include "Aeroponics.h"
+#include "../Components/Aeroponics_Tank.h"
 
-class GrowBox; //forward declaration
-
-class Aeroponics_Tank : public Aeroponics
+class Aeroponics_Tank_Web : public Aeroponics_Tank
 {
 public:
-  Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor);
+  Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor);
   void websiteEvent_Load(__attribute__((unused)) char *url);
-  void websiteEvent_Button(__attribute__((unused)) char *Button);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Button(char *Button);
   void websiteEvent_Field(char *Field);
-  void refresh_Sec();
-  void report();
-
+ 
 private:
-  void checkRelays();
-  void setPressureLow(float PressureLow);
-  void setPressureHigh(float PressureHigh);
-  void sprayNow(bool FromWebsite = false);
-  void sprayOff();
-  char *sprayStateToText();
-  void refillTank();
-  byte *SpraySolenoidPin;
-  bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on.
-  float *PressureLow;           //Aeroponics - Turn on pump below this pressure (bar)
-  float *PressureHigh;          //Aeroponics - Turn off pump above this pressure (bar)
-
+  
 protected:
 };
 

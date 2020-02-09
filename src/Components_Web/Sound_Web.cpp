@@ -1,5 +1,4 @@
-#include "Sound.h"
-#include "GrowBox.h"
+#include "Sound_Web.h"
 
 Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSettings *DefaultSettings) : Fan(Name,Parent,DefaultSettings)
 {

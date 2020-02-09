@@ -27,7 +27,7 @@ private:
   const PROGMEM static byte tempo[];
 
 protected:
-  Module *Parent
+  Module *Parent;
 };
 
 //WEBSITE COMPONENT

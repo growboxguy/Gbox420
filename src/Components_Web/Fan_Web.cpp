@@ -27,14 +27,17 @@ void Fan_Web::websiteEvent_Button(char *Button)
     if (strcmp_P(ShortMessage, (PGM_P)F("Off")) == 0)
     {
       TurnOff();
+      WebServer.setArgString(getWebsiteComponentName(F("Status")), fanSpeedToText());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Low")) == 0)
     {
       SetLowSpeed();
+      WebServer.setArgString(getWebsiteComponentName(F("Status")), fanSpeedToText());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("High")) == 0)
     {
       SetHighSpeed();
+      WebServer.setArgString(getWebsiteComponentName(F("Status")), fanSpeedToText());
     }
   }
 }

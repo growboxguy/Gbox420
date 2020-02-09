@@ -1,30 +1,19 @@
 #pragma once
 
 #include "420Common_Web.h"
-#include "Aeroponics.h"
+#include "../Components/Aeroponics.h"
 
-class GrowBox; //forward declaration
-
-class Aeroponics_NoTank : public Aeroponics
+class Aeroponics_NoTank_Web : public Aeroponics_NoTank
 {
 public:
-  Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor); //constructor
+  Aeroponics_NoTank_Web(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor); //constructor
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void websiteEvent_Button(__attribute__((unused)) char *Button);
-  void refresh_Sec();
-  void report();
-  float LastSprayPressure = 0; //tracks the last average pressure during a spray cycle
-
+  void websiteEvent_Button(char *Button);
+  void websiteEvent_Field(char *Field);
+ 
 private:
-  void bypassOn();
-  void bypassOff();
-  void sprayNow(bool FromWebsite = false);
-  void sprayOff();
-  char *sprayStateToText();
-  int *BlowOffTime;               //After spraying open the bypass valve for X seconds to release pressure in the system
-  bool BlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
-
+  
 protected:
 };
 

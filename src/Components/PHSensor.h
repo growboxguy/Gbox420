@@ -1,24 +1,18 @@
 #pragma once
 
-#include "420Common_Web.h"
+#include "420Common.h"
+#include "420Module.h"
 
-class GrowBox; //forward declaration
-
-class PHSensor : public Common_Web
+class PHSensor : public Common
 {
 public:
   PHSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PHSensorSettings *DefaultSettings);
-  void websiteEvent_Load(__attribute__((unused)) char *url);
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void websiteEvent_Button(char *Button);
-  void websiteEvent_Field(char *Field);
   void refresh_Minute();
   void report();
   float getPH(bool ReturnAverage = true);
   char *getPHText(bool ReturnAverage = true);
 
 private:
-  GrowBox *GBox;
   byte *Pin;
   RollingAverage *PH;
   float *Intercept;
@@ -28,6 +22,7 @@ private:
   void setIntercept(float Value);
 
 protected:
+  Module *Parent;
 };
 
 //WEBSITE COMPONENT

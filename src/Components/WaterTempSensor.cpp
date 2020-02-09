@@ -1,7 +1,6 @@
 #include "WaterTempSensor.h"
-#include "GrowBox.h"
 
-WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterTempSensorSettings *DefaultSettings) : Common_Web(Name)
+WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterTempSensorSettings *DefaultSettings) : Common(Name)
 { //constructor
   this->Parent = Parent;
   //pinMode(*Pin, INPUT);
@@ -10,23 +9,13 @@ WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent
   TempSensor = new DallasTemperature(TempSensorWire);     //Reservoir waterproof temperature sensor (DS18B20)
   TempSensor->begin();
   Parent->AddToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
-  Parent->AddToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  Parent->AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   logToSerials(F("WaterTempSensor object created"), true, 1);
-}
-
-void WaterTempSensor::websiteEvent_Refresh(__attribute__((unused)) char *url)
-{
-  if (strcmp(url, "/GrowBox.html.json") == 0)
-  {
-    WebServer.setArgString(getWebsiteComponentName(F("Temp")), getTempText(true, false));
-  }
 }
 
 void WaterTempSensor::refresh_Minute()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_Minute();
+    Common::refresh_Minute();
   TempSensor->requestTemperatures();
   if (*MetricSystemEnabled)
   {
@@ -40,7 +29,7 @@ void WaterTempSensor::refresh_Minute()
 
 void WaterTempSensor::report()
 {
-  Common_Web::report();
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("Temp:"));
   strcat(LongMessage, getTempText(true, true));

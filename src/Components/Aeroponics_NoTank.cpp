@@ -1,56 +1,16 @@
 #include "Aeroponics_NoTank.h"
-#include "GrowBox.h"
 
-Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics(Name, Parent, DefaultSettings, FeedbackPressureSensor)
+Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics(&(*Name), &(*Parent), &(*DefaultSettings), &(*FeedbackPressureSensor))
 {
   BlowOffTime = &NoTankSpecificSettings->BlowOffTime; //Aeroponics - Turn on pump below this pressure (bar)
   logToSerials(F("Aeroponics_NoTank object created"), true, 1);
   sprayNow(false); //This is a safety feature,start with a spray after a reset
 }
 
-void Aeroponics_NoTank::websiteEvent_Load(__attribute__((unused)) char *url)
-{
-  if (strcmp(url, "/GrowBox.html.json") == 0)
-  {
-    WebServer.setArgInt(getWebsiteComponentName(F("BlowOffTime")), *BlowOffTime);
-  }
-  Aeroponics::websiteEvent_Load(url);
-}
-
-void Aeroponics_NoTank::websiteEvent_Refresh(__attribute__((unused)) char *url)
-{
-  if (strcmp(url, "/GrowBox.html.json") == 0)
-  {
-    WebServer.setArgString(getWebsiteComponentName(F("SprayPressure")), pressureToText(LastSprayPressure));
-  }
-  Aeroponics::websiteEvent_Refresh(url);
-}
-
-void Aeroponics_NoTank::websiteEvent_Button(char *Button)
-{
-  if (!isThisMyComponent(Button))
-  {
-    return;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("BypassOn")) == 0)
-    {
-      bypassOn();
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("BypassOff")) == 0)
-    {
-      bypassOff();
-    }    
-    else
-      Aeroponics::websiteEvent_Button(Button);
-  }
-}
-
 void Aeroponics_NoTank::refresh_Sec()
 { //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
   if (*DebugEnabled)
-    Common_Web::refresh_Sec();
+    Common::refresh_Sec();
 
   if (BlowOffInProgress && millis() - SprayTimer >= ((uint32_t)*BlowOffTime * 1000))
   {                           //checking pressure blow-off timeout
@@ -104,7 +64,7 @@ void Aeroponics_NoTank::refresh_Sec()
 
 void Aeroponics_NoTank::report()
 {
-  Common_Web::report();
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("LastSprayPressure:"));
   strcat(LongMessage, pressureToText(LastSprayPressure));

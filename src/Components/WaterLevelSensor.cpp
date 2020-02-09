@@ -1,6 +1,6 @@
 #include "WaterLevelSensor.h"
 
-WaterLevelSensor::WaterLevelSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterLevelSensorSettings *DefaultSettings) : Common_Web(Name)
+WaterLevelSensor::WaterLevelSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterLevelSensorSettings *DefaultSettings) : Common(Name)
 { //constructor
   this->Parent = Parent;
   Pin_1 = &DefaultSettings->Pin_1;
@@ -17,7 +17,7 @@ WaterLevelSensor::WaterLevelSensor(const __FlashStringHelper *Name, Module *Pare
 void WaterLevelSensor::refresh_Minute()
 {
   if (*DebugEnabled)
-    Common_Web::refresh_Minute();
+    Common::refresh_Minute();
   bool isAboveSensor1 = !digitalRead(*Pin_1); //Empty: Lowest Water sensor, true if level reached
   bool isAboveSensor2 = !digitalRead(*Pin_2);
   bool isAboveSensor3 = !digitalRead(*Pin_3);
@@ -60,7 +60,7 @@ void WaterLevelSensor::refresh_Minute()
 
 void WaterLevelSensor::report()
 {
-  Common_Web::report();
+  Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("Level:"));
   strcat(LongMessage, getLevelGauge());

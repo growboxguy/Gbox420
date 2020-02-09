@@ -30,5 +30,5 @@ private:
   float *PersistentFloat;
 
 protected:
-  Module *Parent
+  Module *Parent;
 };
