@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 12;
+static const byte Version = 3;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM:
 //Global constants

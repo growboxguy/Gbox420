@@ -39,7 +39,6 @@ void Module_Web::AddToWebsiteQueue_Field(Common *Component)
     logToSerials(F("WebsiteQueueItemCount_Field overflow!"), true, 0);
 }
 
-
 //////////////////////////////////////////////////////////////////
 //Website queues: Notify components in the Module_Web of a website event
 

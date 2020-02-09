@@ -7,7 +7,6 @@ Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module *Parent, Settings
   this->Parent->AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   this->Parent->AddToWebsiteQueue_Field(this);   //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
   this->Parent->AddToWebsiteQueue_Button(this);  //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
-  logToSerials(F("Lights object created"), true, 1);
 }
 
 void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)

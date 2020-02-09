@@ -23,6 +23,8 @@ public:
   void setFieldEvent(char *Field);
 
 private:
+
+protected:  
   Common *WebsiteQueue_Load[QueueDepth];
   Common *WebsiteQueue_Refresh[QueueDepth];
   Common *WebsiteQueue_Button[QueueDepth];
@@ -31,8 +33,6 @@ private:
   byte WebsiteQueueItemCount_Refresh = 0;
   byte WebsiteQueueItemCount_Button = 0;
   byte WebsiteQueueItemCount_Field = 0;
-
-protected:  
 };
 
 //WEBSITE COMPONENT

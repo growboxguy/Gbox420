@@ -6,22 +6,22 @@
 //Responsible for setting up each module, updating their statuses and reporting it
 
 //forward declaration of classes
-class DHTSensor;
-class LightSensor;
-class Lights;
-class Sound;
-class Fan;
-class PowerSensor;
-class PowerSensorV3;  //Only for PZEM004T V3.0
-class PHSensor;
-class LightSensor;
-class PressureSensor;
-class Aeroponics_NoTank;
-class Aeroponics_Tank;
-class WaterTempSensor;
-class WaterLevelSensor;
-class WeightSensor;
-class ModuleSkeleton; //Only for demonstration purposes
+class DHTSensor_Web;
+class LightSensor_Web;
+class Lights_Web;
+class Sound_Web;
+class Fan_Web;
+class PowerSensor_Web;
+class PowerSensorV3_Web;  //Only for PZEM004T V3.0
+class PHSensor_Web;
+class LightSensor_Web;
+class PressureSensor_Web;
+class Aeroponics_NoTank_Web;
+class Aeroponics_Tank_Web;
+class WaterTempSensor_Web;
+class WaterLevelSensor_Web;
+class WeightSensor_Web;
+class ModuleSkeleton_Web; //Only for demonstration purposes
 
 extern ELClientRest PushingBoxRestAPI;
 
@@ -29,27 +29,27 @@ class GrowBox : public Module_Web
 {
 public:
   GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings); //constructor
-  Sound *Sound1;             //Pointer to a Piezo speaker - sound feedback
-  Fan *InFan;                //Internal fan
-  Fan *ExFan;                //Exhaust fan
-  DHTSensor *InDHT;          //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
-  DHTSensor *ExDHT;          //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
-  LightSensor *LightSensor1; //Pointer to a Light Sensor object measuring light intensity in the grow box
-  Lights *Light1;            //Pointer to a Light assembly
-  PowerSensor *Power1;
-  //PowerSensorV3 * Power1;  //Only for PZEM004T V3.0
-  PressureSensor *Pressure1;
-  PHSensor *PHSensor1;
-  Aeroponics_Tank *Aero_T1;
-  Aeroponics_NoTank *Aero_NT1;
-  WaterTempSensor *WaterTemp1;
-  WaterLevelSensor *WaterLevel1;
-  WeightSensor *Weight1; 
-  WeightSensor *Weight2;  
-  ModuleSkeleton *ModuleSkeleton1; //Only for demonstration purposes
-  ModuleSkeleton *ModuleSkeleton2; //Only for demonstration purposes
-  void websiteEvent_Load(__attribute__((unused)) char *url);
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  Sound_Web *Sound1;             //Pointer to a Piezo speaker - sound feedback
+  Fan_Web *InFan;                //Internal fan
+  Fan_Web *ExFan;                //Exhaust fan
+  DHTSensor_Web *InDHT;          //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
+  DHTSensor_Web *ExDHT;          //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
+  LightSensor_Web *LightSensor1; //Pointer to a Light Sensor object measuring light intensity in the grow box
+  Lights_Web *Light1;            //Pointer to a Light assembly
+  PowerSensor_Web *Power1;
+  //PowerSensorV3_Web * Power1;  //Only for PZEM004T V3.0
+  PressureSensor_Web *Pressure1;
+  PHSensor_Web *PHSensor1;
+  Aeroponics_Tank_Web *Aero_T1;
+  Aeroponics_NoTank_Web *Aero_NT1;
+  WaterTempSensor_Web *WaterTemp1;
+  WaterLevelSensor_Web *WaterLevel1;
+  WeightSensor_Web *Weight1; 
+  WeightSensor_Web *Weight2;  
+  ModuleSkeleton_Web *ModuleSkeleton1; //Only for demonstration purposes
+  ModuleSkeleton_Web *ModuleSkeleton2; //Only for demonstration purposes
+  void websiteEvent_Load(char *url);
+  void websiteEvent_Refresh( char *url);
   void websiteEvent_Button(char *Button);
   void websiteEvent_Field(char *Field);
   void refresh_FiveSec();
@@ -60,14 +60,6 @@ public:
   void reportToGoogleSheetsTrigger();
   void reportToGoogleSheets(bool CalledFromWebsite);
   void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
-  void AddToWebsiteQueue_Load(Common *Component);
-  void AddToWebsiteQueue_Refresh(Common *Component);
-  void AddToWebsiteQueue_Button(Common *Component);
-  void AddToWebsiteQueue_Field(Common *Component);
-  void loadEvent(char *Url);
-  void refreshEvent(char *Url);
-  void buttonEvent(char *Button);
-  void setFieldEvent(char *Field);
 
 private:
   void setSheetsReportingOnOff(bool State);
@@ -76,14 +68,6 @@ private:
   void setMetricSystemEnabled(bool MetricEnabled);
   void setPushingBoxLogRelayID(const char *ID);
   char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
-  Common *WebsiteQueue_Load[QueueDepth];
-  Common *WebsiteQueue_Refresh[QueueDepth];
-  Common *WebsiteQueue_Button[QueueDepth];
-  Common *WebsiteQueue_Field[QueueDepth]; 
-  byte WebsiteQueueItemCount_Load = 0;
-  byte WebsiteQueueItemCount_Refresh = 0;
-  byte WebsiteQueueItemCount_Button = 0;
-  byte WebsiteQueueItemCount_Field = 0;
 
 protected:
   bool RefreshAllRequested = false;

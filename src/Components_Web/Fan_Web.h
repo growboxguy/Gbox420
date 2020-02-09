@@ -1,6 +1,7 @@
 #pragma once
 
 #include "420Common_Web.h"
+#include "../Modules/420Module_Web.h"
 #include "../Components/Fan.h"
 
 class Fan_Web : public Fan

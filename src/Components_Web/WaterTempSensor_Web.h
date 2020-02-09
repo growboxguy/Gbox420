@@ -1,6 +1,7 @@
 #pragma once
 
 #include "420Common_Web.h"
+#include "../Modules/420Module_Web.h"
 #include "../Components/WaterTempSensor.h"
 
 class WaterTempSensor_Web : public WaterTempSensor

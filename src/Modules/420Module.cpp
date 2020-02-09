@@ -74,8 +74,15 @@ void Module::addToRefreshQueue_Minute(Common *Component)
 
 void Module::addToRefreshQueue_QuarterHour(Common *Component)
 {
+  logToSerials(F("Quarter:"), false, 0);
+  logToSerials(QueueDepth, true, 0);
+  logToSerials(refreshQueueItemCount_QuarterHour, true, 0);
   if (QueueDepth > refreshQueueItemCount_QuarterHour)
+  {
     RefreshQueue_QuarterHour[refreshQueueItemCount_QuarterHour++] = Component;
+    logToSerials(F("added"), false, 0);
+    logToSerials(refreshQueueItemCount_QuarterHour, false, 0);
+  }
   else
     logToSerials(F("RefreshQueue_QuarterHour overflow!"), true, 0);
 }
@@ -116,9 +123,10 @@ void Module::runMinute()
 void Module::runQuarterHour()
 {
   if (*DebugEnabled)
-    logToSerials(F("Half hour trigger.."), true, 1);
+    logToSerials(F("Quarter hour trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_QuarterHour; i++)
   {
+    logToSerials(i, true, 0);
     RefreshQueue_QuarterHour[i]->refresh_QuarterHour();
   }
 }

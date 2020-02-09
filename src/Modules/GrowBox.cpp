@@ -22,27 +22,25 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
 { //Constructor
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
   ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets; 
-  logToSerials(F(" "), true, 0); //adds a line break to the console log
-
-  Sound1 = new Sound(F("Sound1"), this, &BoxSettings->Sound1); //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, VARIABLENAME))
-  InFan = new Fan(F("InFan"), this, &BoxSettings->InFan);      //passing: Component name, GrowBox object the component belongs to, Default settings)
-  ExFan = new Fan(F("ExFan"), this, &BoxSettings->ExFan);
-  Light1 = new Lights(F("Light1"), this, &BoxSettings->Light1);
-  LightSensor1 = new LightSensor(F("LightSensor1"), this, &BoxSettings->LightSensor1, Light1); //Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
-  Power1 = new PowerSensor(F("Power1"), this, &Serial2);
-  //Power1 = new PowerSensorV3(F("Power1"), this, &Serial2); //Only for PZEM004T V3.0
-  InDHT = new DHTSensor(F("InDHT"), this, &BoxSettings->InDHT);
-  ExDHT = new DHTSensor(F("ExDHT"), this, &BoxSettings->ExDHT);
-  Pressure1 = new PressureSensor(F("Pressure1"), this, &BoxSettings->Pressure1);
-  //Aero_T1 = new Aeroponics_Tank(F("Aero_T1"), this, &BoxSettings->Aero_T1_Common, &BoxSettings->Aero_T1_Specific, Pressure1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
-  Aero_NT1 = new Aeroponics_NoTank(F("Aero_NT1"), this, &BoxSettings->Aero_NT1_Common, &BoxSettings->Aero_NT1_Specific, Pressure1);
-  PHSensor1 = new PHSensor(F("PHSensor1"), this, &BoxSettings->PHSensor1);
-  WaterTemp1 = new WaterTempSensor(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
-  WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
-  //Weight1 = new WeightSensor(F("Weight1"), this, &BoxSettings->Weight1);
-  //Weight2 = new WeightSensor(F("Weight2"), this, &BoxSettings->Weight2);
-  //ModuleSkeleton1 = new ModuleSkeleton(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
-  //ModuleSkeleton2 = new ModuleSkeleton(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
+  Sound1 = new Sound_Web(F("Sound1"), this, &BoxSettings->Sound1); //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, VARIABLENAME))
+  InFan = new Fan_Web(F("InFan"), this, &BoxSettings->InFan);      //passing: Component name, GrowBox object the component belongs to, Default settings)
+  ExFan = new Fan_Web(F("ExFan"), this, &BoxSettings->ExFan);
+  Light1 = new Lights_Web(F("Light1"), this, &BoxSettings->Light1);
+  LightSensor1 = new LightSensor_Web(F("LightSensor1"), this, &BoxSettings->LightSensor1, Light1); //Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
+  Power1 = new PowerSensor_Web(F("Power1"), this, &Serial2);
+  //Power1 = new PowerSensorV3_Web(F("Power1"), this, &Serial2); //Only for PZEM004T V3.0
+  InDHT = new DHTSensor_Web(F("InDHT"), this, &BoxSettings->InDHT);
+  ExDHT = new DHTSensor_Web(F("ExDHT"), this, &BoxSettings->ExDHT);
+  Pressure1 = new PressureSensor_Web(F("Pressure1"), this, &BoxSettings->Pressure1);
+  //Aero_T1 = new Aeroponics_Tank_Web(F("Aero_T1"), this, &BoxSettings->Aero_T1_Common, &BoxSettings->Aero_T1_Specific, Pressure1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  Aero_NT1 = new Aeroponics_NoTank_Web(F("Aero_NT1"), this, &BoxSettings->Aero_NT1_Common, &BoxSettings->Aero_NT1_Specific, Pressure1);
+  PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &BoxSettings->PHSensor1);
+  WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
+  WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
+  //Weight1 = new WeightSensor_Web(F("Weight1"), this, &BoxSettings->Weight1);
+  //Weight2 = new WeightSensor_Web(F("Weight2"), this, &BoxSettings->Weight2);
+  //ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
+  //ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
 
   addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
@@ -56,7 +54,7 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
   addToLog(F("GrowBox initialized"), 0);
 }
 
-void GrowBox::websiteEvent_Load(__attribute__((unused)) char *url)
+void GrowBox::websiteEvent_Load(char *url)
 {
   if (strcmp(url, "/Settings.html.json") == 0)
   {
@@ -166,80 +164,7 @@ void GrowBox::refresh_QuarterHour()
   reportToGoogleSheetsTrigger();
 }
 
-//////////////////////////////////////////////////////////////////
-//Website subscriptions: When a component needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
 
-void GrowBox::AddToWebsiteQueue_Load(Common *Component)
-{
-  if (QueueDepth > WebsiteQueueItemCount_Load)
-    WebsiteQueue_Load[WebsiteQueueItemCount_Load++] = Component;
-  else
-    logToSerials(F("WebsiteQueueItemCount_Load overflow!"), true, 0);
-}
-
-void GrowBox::AddToWebsiteQueue_Refresh(Common *Component)
-{
-  if (QueueDepth > WebsiteQueueItemCount_Refresh)
-    WebsiteQueue_Refresh[WebsiteQueueItemCount_Refresh++] = Component;
-  else
-    logToSerials(F("WebsiteQueueItemCount_Refresh overflow!"), true, 0);
-}
-
-void GrowBox::AddToWebsiteQueue_Button(Common *Component)
-{
-  if (QueueDepth > WebsiteQueueItemCount_Button)
-    WebsiteQueue_Button[WebsiteQueueItemCount_Button++] = Component;
-  else
-    logToSerials(F("WebsiteQueueItemCount_Button overflow!"), true, 0);
-}
-
-void GrowBox::AddToWebsiteQueue_Field(Common *Component)
-{
-  if (QueueDepth > WebsiteQueueItemCount_Field)
-    WebsiteQueue_Field[WebsiteQueueItemCount_Field++] = Component;
-  else
-    logToSerials(F("WebsiteQueueItemCount_Field overflow!"), true, 0);
-}
-
-
-//////////////////////////////////////////////////////////////////
-//Website queues: Notify components in the growbox of a website event
-
-void GrowBox::loadEvent(char *url)
-{ //called when website is loaded. Runs through all components that subscribed for this event
-  for (int i = 0; i < WebsiteQueueItemCount_Load; i++)
-  {
-    WebsiteQueue_Load[i]->websiteEvent_Load(url);
-  }
-}
-
-void GrowBox::refreshEvent(char *url)
-{ //called when website is refreshed.
-  for (int i = 0; i < WebsiteQueueItemCount_Refresh; i++)
-  {
-    WebsiteQueue_Refresh[i]->websiteEvent_Refresh(url);
-  }
-}
-
-void GrowBox::buttonEvent(char *button)
-{ //Called when any button on the website is pressed.
-  if (*DebugEnabled)
-    logToSerials(&button, true, 0);
-  for (int i = 0; i < WebsiteQueueItemCount_Button; i++)
-  {
-    WebsiteQueue_Button[i]->websiteEvent_Button(button);
-  }
-}
-
-void GrowBox::setFieldEvent(char *field)
-{ //Called when any field on the website is updated.
-  if (*DebugEnabled)
-    logToSerials(&field, true, 0);
-  for (int i = 0; i < WebsiteQueueItemCount_Field; i++)
-  {
-    WebsiteQueue_Field[i]->websiteEvent_Field(field);
-  }
-}
 
 //////////////////////////////////////////////////////////////////
 //Even logs on the website

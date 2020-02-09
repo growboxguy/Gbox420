@@ -26,8 +26,13 @@ public:
   void addToRefreshQueue_QuarterHour(Common *Component);
   Sound * getSoundObject();
   void relayToGoogleSheets(__attribute__((unused)) const __FlashStringHelper *Title, __attribute__((unused)) char (*JSONData)[MaxLongTextLength]){};
-   
+    
 private:
+
+protected:
+  Sound* SoundFeedback = NULL;
+  bool RunAllRequested = false;
+  bool ConsoleReportRequested = false; 
   char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   Common *ReportQueue[QueueDepth];
   Common *RefreshQueue_Sec[QueueDepth];
@@ -38,10 +43,5 @@ private:
   byte refreshQueueItemCount_Sec = 0;
   byte refreshQueueItemCount_FiveSec = 0;
   byte refreshQueueItemCount_Minute = 0;
-  byte refreshQueueItemCount_QuarterHour = 0;
-
-protected:
-  Sound* SoundFeedback = NULL;
-  bool RunAllRequested = false;
-  bool ConsoleReportRequested = false; 
+  byte refreshQueueItemCount_QuarterHour = 0; 
 };

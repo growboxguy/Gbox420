@@ -3,8 +3,21 @@
 //These are functions extending the functions of *_Web components, each component must include this file
 
 #include "ELClientWebServer.h"      //ESP-link - WebServer API
-#include "../Modules/420Module_Web.h"
-
+#include "../Components/420Common.h"
 
 //forward declaration
 extern ELClientWebServer WebServer;
+
+class Common_Web : public Common
+{
+public:
+  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Button(__attribute__((unused)) char *Button);
+  void websiteEvent_Field(__attribute__((unused)) char *Field);
+   
+private:
+protected:
+  Common_Web(const __FlashStringHelper *Name); //Constructor
+  Common_Web() {}                              //Constructor
+};

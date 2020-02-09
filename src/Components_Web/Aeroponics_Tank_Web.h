@@ -1,6 +1,7 @@
 #pragma once
 
 #include "420Common_Web.h"
+#include "../Modules/420Module_Web.h"
 #include "../Components/Aeroponics_Tank.h"
 
 class Aeroponics_Tank_Web : public Aeroponics_Tank
