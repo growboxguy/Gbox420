@@ -15,6 +15,7 @@ public:
 private:
   
 protected:
+  Module_Web *Parent;
 };
 
 //WEBSITE COMPONENT

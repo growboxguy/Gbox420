@@ -3,8 +3,6 @@
 #include "420Common_Web.h"
 #include "../Components/WaterLevelSensor.h"
 
-class GrowBox; //forward declaration
-
 class WaterLevelSensor_Web : public WaterLevelSensor
 {
 public:
@@ -12,9 +10,9 @@ public:
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   
 private:
-  GrowBox *GBox; //Pointer to the GrowBox object that contains the Lights object
   
 protected:
+  Module_Web *Parent;
 };
 
 //WEBSITE COMPONENT

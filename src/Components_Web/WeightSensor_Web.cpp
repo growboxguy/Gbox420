@@ -2,10 +2,11 @@
 
 WeightSensor_Web::WeightSensor_Web(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings) : WeightSensor(Name,Parent,DefaultSettings)
 {
-  Parent->AddToWebsiteQueue_Load(this);   //Subscribing to the Website load event: Calls the websiteEvent_Load() method
-  Parent->AddToWebsiteQueue_Refresh(this);   //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  Parent->AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
-  Parent->AddToWebsiteQueue_Field(this);  //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
+  this->Parent = Parent;
+  this->Parent->AddToWebsiteQueue_Load(this);   //Subscribing to the Website load event: Calls the websiteEvent_Load() method
+  this->Parent->AddToWebsiteQueue_Refresh(this);   //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
+  this->Parent->AddToWebsiteQueue_Button(this); //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
+  this->Parent->AddToWebsiteQueue_Field(this);  //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
 }
 
 void WeightSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
@@ -20,8 +21,8 @@ void WeightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strcmp(url, "/Settings.html.json") == 0)
   {
-    WebServer.setArgString(getWebsiteComponentName(F("TareOffset")), toText(*TareOffset));
-    WebServer.setArgString(getWebsiteComponentName(F("Scale")), toText(*Scale));
+    WebServer.setArgString(getComponentName(F("TareOffset")), toText(*TareOffset));
+    WebServer.setArgString(getComponentName(F("Scale")), toText(*Scale));
   }
 }
 

@@ -2,9 +2,7 @@
 
 #include "PZEM004T.h" //3rd party module for the PZEM004T power sensor
 #include "420Common.h"
-#include "420Module.h"
-
-class GrowBox; //forward declaration
+#include "../Modules/420Module.h"
 
 class PowerSensor : public Common
 {

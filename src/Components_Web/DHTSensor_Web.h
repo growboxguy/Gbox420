@@ -4,8 +4,6 @@
 #include "420Common_Web.h"
 #include "../Components/DHTSensor.h"
 
-class GrowBox; //forward declaration
-
 class DHTSensor_Web : public DHTSensor
 {
 public:
@@ -15,6 +13,7 @@ public:
 private:
   
 protected:
+  Module_Web *Parent;
 };
 
 //WEBSITE COMPONENT

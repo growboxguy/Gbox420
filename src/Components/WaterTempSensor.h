@@ -3,7 +3,7 @@
 #include "OneWire.h"           //DS18B20 waterproof temperature sensor
 #include "DallasTemperature.h" //DS18B20 waterproof temperature sensor
 #include "420Common.h"
-#include "420Module.h"
+#include "../Modules/420Module.h"
 
 class WaterTempSensor : public Common
 {

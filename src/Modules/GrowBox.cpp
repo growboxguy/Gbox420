@@ -18,7 +18,7 @@
 
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
-GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings) : Module(Name)
+GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings) : Module_Web(Name)
 { //Constructor
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
   ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets; 
@@ -41,8 +41,8 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
   WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
   //Weight1 = new WeightSensor(F("Weight1"), this, &BoxSettings->Weight1);
   //Weight2 = new WeightSensor(F("Weight2"), this, &BoxSettings->Weight2);
-  //src/Componentskeleton1 = new src/Componentskeleton(F("src/Componentskeleton1"),this,&BoxSettings -> src/Componentskeleton1);  //Only for demonstration purposes
-  //src/Componentskeleton2 = new src/Componentskeleton(F("src/Componentskeleton2"),this,&BoxSettings -> src/Componentskeleton2);  //Only for demonstration purposes
+  //ModuleSkeleton1 = new ModuleSkeleton(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
+  //ModuleSkeleton2 = new ModuleSkeleton(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
 
   addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
@@ -60,11 +60,11 @@ void GrowBox::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strcmp(url, "/Settings.html.json") == 0)
   {
-    WebServer.setArgInt(getWebsiteComponentName(F("DebugEnabled")), *DebugEnabled);
-    WebServer.setArgInt(getWebsiteComponentName(F("MetricSystemEnabled")), *MetricSystemEnabled);
-    WebServer.setArgBoolean(getWebsiteComponentName(F("SheetsEnabled")), *ReportToGoogleSheets);
-    WebServer.setArgInt(getWebsiteComponentName(F("SheetsFrequency")), *SheetsReportingFrequency);
-    WebServer.setArgString(getWebsiteComponentName(F("PushingBoxLogRelayID")), BoxSettings -> PushingBoxLogRelayID);
+    WebServer.setArgInt(getComponentName(F("DebugEnabled")), *DebugEnabled);
+    WebServer.setArgInt(getComponentName(F("MetricSystemEnabled")), *MetricSystemEnabled);
+    WebServer.setArgBoolean(getComponentName(F("SheetsEnabled")), *ReportToGoogleSheets);
+    WebServer.setArgInt(getComponentName(F("SheetsFrequency")), *SheetsReportingFrequency);
+    WebServer.setArgString(getComponentName(F("PushingBoxLogRelayID")), BoxSettings -> PushingBoxLogRelayID);
   }
 }
 

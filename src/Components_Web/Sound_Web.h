@@ -1,22 +1,21 @@
 #pragma once
 
-#include "ELClientRest.h" //ESP-link - REST API
+#include "420Common_Web.h"
 #include "../Components/Sound.h"
 
-class GrowBox; //forward declaration
 
 class Sound_Web : public Sound
 {
 public:
-  Sound_Web(const __FlashStringHelper *Name, Module *Parent, Settings::Sound_WebSettings *DefaultSettings);
+  Sound_Web(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSettings *DefaultSettings);
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Field(char *Field);
   void websiteEvent_Button(char *Button); 
 
-private:
-  GrowBox *GBox; 
+private: 
 
 protected:
+  Module_Web *Parent;
 };
 
 //WEBSITE COMPONENT

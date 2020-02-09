@@ -1,22 +1,23 @@
 #include "Aeroponics_NoTank_Web.h"
 
-Aeroponics_NoTank_Web::Aeroponics_NoTank_Web(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics_NoTank(Name, Parent, DefaultSettings, FeedbackPressureSensor)
+Aeroponics_NoTank_Web::Aeroponics_NoTank_Web(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics_NoTank(Name, Parent, DefaultSettings,NoTankSpecificSettings, FeedbackPressureSensor)
 {
-  Parent->AddToWebsiteQueue_Load(this);    //Subscribing to the Website load event: Calls the websiteEvent_Load() method
-  Parent->AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  Parent->AddToWebsiteQueue_Button(this);  //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
-  Parent->AddToWebsiteQueue_Field(this);   //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
+  this->Parent = Parent;
+  this->Parent->AddToWebsiteQueue_Load(this);    //Subscribing to the Website load event: Calls the websiteEvent_Load() method
+  this->Parent->AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
+  this->Parent->AddToWebsiteQueue_Button(this);  //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
+  this->Parent->AddToWebsiteQueue_Field(this);   //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
 }
 
 void Aeroponics_NoTank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strcmp(url, "/GrowBox.html.json") == 0)
   {
-    WebServer.setArgInt(getWebsiteComponentName(F("BlowOffTime")), *BlowOffTime);
-    WebServer.setArgInt(getWebsiteComponentName(F("PumpTimeout")), *PumpTimeout);
-    WebServer.setArgInt(getWebsiteComponentName(F("PrimingTime")), *PrimingTime);
-    WebServer.setArgInt(getWebsiteComponentName(F("Interval")), *Interval);
-    WebServer.setArgInt(getWebsiteComponentName(F("Duration")), *Duration);
+    WebServer.setArgInt(getComponentName(F("BlowOffTime")), *BlowOffTime);
+    WebServer.setArgInt(getComponentName(F("PumpTimeout")), *PumpTimeout);
+    WebServer.setArgInt(getComponentName(F("PrimingTime")), *PrimingTime);
+    WebServer.setArgInt(getComponentName(F("Interval")), *Interval);
+    WebServer.setArgInt(getComponentName(F("Duration")), *Duration);
   }
 }
 
@@ -24,11 +25,11 @@ void Aeroponics_NoTank_Web::websiteEvent_Refresh(__attribute__((unused)) char *u
 {
   if (strcmp(url, "/GrowBox.html.json") == 0)
   {
-    WebServer.setArgString(getWebsiteComponentName(F("SprayPressure")), pressureToText(LastSprayPressure));
-    WebServer.setArgString(getWebsiteComponentName(F("Pressure")), FeedbackPressureSensor->getPressureText(true, false));
-    WebServer.setArgString(getWebsiteComponentName(F("SprayEnabled")), sprayStateToText());
-    WebServer.setArgString(getWebsiteComponentName(F("PumpState")), pumpStateToText());
-    WebServer.setArgString(getWebsiteComponentName(F("BypassState")), onOffToText(BypassSolenoidOn));
+    WebServer.setArgString(getComponentName(F("SprayPressure")), pressureToText(LastSprayPressure));
+    WebServer.setArgString(getComponentName(F("Pressure")), FeedbackPressureSensor->getPressureText(true, false));
+    WebServer.setArgString(getComponentName(F("SprayEnabled")), sprayStateToText());
+    WebServer.setArgString(getComponentName(F("PumpState")), pumpStateToText());
+    WebServer.setArgString(getComponentName(F("BypassState")), onOffToText(BypassSolenoidOn));
   }
 }
 
@@ -83,7 +84,7 @@ void Aeroponics_NoTank_Web::websiteEvent_Button(char *Button)
   }
 }
 
-void Aeroponics_NoTank_Web::websiteEvent_Field(char *Field)
+void Aeroponics_NoTank_Web::websiteEvent_Field(__attribute__((unused)) char *Field)
 { //When a field is submitted using the Set button
   if (strcmp_P(ShortMessage, (PGM_P)F("PumpTimeout")) == 0)
   {

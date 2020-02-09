@@ -1,7 +1,7 @@
 #pragma once
 
 #include "420Common.h"
-#include "420Module.h"
+#include "../Modules/420Module.h"
 
 class Sound : public Common
 {
@@ -13,6 +13,9 @@ public:
   void playEE();
 
 private:
+ 
+protected:
+  Module *Parent;
   void setSoundOnOff(bool State);
   void OnSound();
   void OffSound();
@@ -25,9 +28,6 @@ private:
   bool PlayEE = false;       //Surprise :) - website controls it
   const PROGMEM static int melody[];
   const PROGMEM static byte tempo[];
-
-protected:
-  Module *Parent;
 };
 
 //WEBSITE COMPONENT

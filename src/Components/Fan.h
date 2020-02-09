@@ -1,7 +1,7 @@
 #pragma once
 
 #include "420Common.h"
-#include "420Module.h"
+#include "../Modules/420Module.h"
 
 class Fan : public Common
 {
@@ -13,6 +13,9 @@ public:
   char *fanSpeedToNumber();
 
 private:  
+
+protected:
+  Module *Parent;
   bool *State;
   bool *HighSpeed;
   byte *OnOffPin;
@@ -21,7 +24,4 @@ private:
   void TurnOff();
   void SetLowSpeed();
   void SetHighSpeed();
-
-protected:
-  Module *Parent;
 };

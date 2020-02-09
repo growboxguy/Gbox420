@@ -12,6 +12,8 @@ public:
   float LastSprayPressure = 0; //tracks the last average pressure during a spray cycle
 
 private:
+ 
+protected:
   void bypassOn();
   void bypassOff();
   void sprayNow(bool FromWebsite = false);
@@ -19,8 +21,6 @@ private:
   char *sprayStateToText();
   int *BlowOffTime;               //After spraying open the bypass valve for X seconds to release pressure in the system
   bool BlowOffInProgress = false; //Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
-
-protected:
 };
 
 //WEBSITE COMPONENT

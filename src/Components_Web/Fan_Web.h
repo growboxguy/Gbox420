@@ -3,19 +3,17 @@
 #include "420Common_Web.h"
 #include "../Components/Fan.h"
 
-class GrowBox; //forward declaration
-
 class Fan_Web : public Fan
 {
 public:
-  Fan(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings *DefaultSettings);
+  Fan_Web(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings *DefaultSettings);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Button(char *Button);
  
 private:
-  GrowBox *GBox;
  
 protected:
+  Module_Web *Parent;
 };
 
 //WEBSITE COMPONENT

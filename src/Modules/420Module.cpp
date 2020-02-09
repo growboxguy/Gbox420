@@ -1,5 +1,5 @@
 #include "420Module.h"
-#include "Sound.h"
+#include "../Components/Sound.h"
 
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
@@ -10,7 +10,7 @@ Module::Module(const __FlashStringHelper *Name) : Common(Name)
 
 Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
 { //Constructor
-  this.SoundFeedback = SoundFeedback;
+  this -> SoundFeedback = SoundFeedback;
   logToSerials(F("Module object created"), true, 0);
 }
 

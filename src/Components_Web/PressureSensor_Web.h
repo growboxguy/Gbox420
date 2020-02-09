@@ -3,8 +3,6 @@
 #include "420Common_Web.h"
 #include "../Components/PressureSensor.h"
 
-class GrowBox; //forward declaration
-
 class PressureSensor_Web : public PressureSensor
 {
 public:
@@ -16,6 +14,7 @@ public:
 private:
 
 protected:
+  Module_Web *Parent;
 };
 
 //WEBSITE COMPONENT

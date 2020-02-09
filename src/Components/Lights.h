@@ -1,7 +1,7 @@
 #pragma once
 
 #include "420Common.h"
-#include "420Module.h"
+#include "../Modules/420Module.h"
 
 class Lights : public Common
 {
@@ -19,7 +19,10 @@ public:
   char *getOnTimeText();
   char *getOffTimeText();
 
-private:
+private:  
+
+protected:
+  Module *Parent;
   void checkLightStatus();
   void checkLightTimer();
   void setTimerOnOff(bool State);
@@ -37,7 +40,4 @@ private:
   byte *OffHour;      //Light OFF time - hour
   byte *OffMinute;    //Light OFF time - minute
   byte *Brightness;   //Light intensity: 0 - 100 range for controlling led driver output
-
-protected:
-  Module *Parent;
 };

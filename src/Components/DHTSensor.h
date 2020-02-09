@@ -2,7 +2,7 @@
 
 #include "DHT.h" //DHT11 or DHT22 Digital Humidity and Temperature sensor
 #include "420Common.h"
-#include "420Module.h"
+#include "../Modules/420Module.h"
 
 class DHTSensor : public Common
 {
@@ -18,8 +18,8 @@ public:
   RollingAverage *Humidity;
 
 private:
-  DHT *Sensor; //Pointer declaration, points to null initially
-  Module *Parent;
-
+  
 protected:
+  Module *Parent;
+  DHT *Sensor; //Pointer declaration, points to null initially
 };

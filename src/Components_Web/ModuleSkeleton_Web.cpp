@@ -1,6 +1,6 @@
 #include "ModuleSkeleton_Web.h"
 
-ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module *Parent, Settings::ModuleSkeletonSettings *DefaultSettings) : Common(Name)
+ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module *Parent, Settings::ModuleSkeletonSettings *DefaultSettings) : ModuleSkeleton(Name,Parent,DefaultSettings)
 { //constructor
   this->Parent = Parent;
   PersistentBool = &DefaultSettings->PersistentBool;
@@ -8,15 +8,15 @@ ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module *
   PersistentFloat = &DefaultSettings->PersistentFloat;
   RollingInt = new RollingAverage();
   RollingFloat = new RollingAverage();
-  Parent->addToReportQueue(this);              //Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Sec(this);         //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
-  Parent->addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  Parent->addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  Parent->addToRefreshQueue_QuarterHour(this); //Subscribing to the 15 minute refresh queue: Calls the refresh_QuarterHour() method
-  Parent->AddToWebsiteQueue_Load(this);        //Subscribing to the Website load event: Calls the websiteEvent_Load() method
-  Parent->AddToWebsiteQueue_Refresh(this);     //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  Parent->AddToWebsiteQueue_Button(this);      //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
-  Parent->AddToWebsiteQueue_Field(this);       //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
+  this->Parent->addToReportQueue(this);              //Subscribing to the report queue: Calls the report() method
+  this->Parent->addToRefreshQueue_Sec(this);         //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
+  this->Parent->addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  this->Parent->addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  this->Parent->addToRefreshQueue_QuarterHour(this); //Subscribing to the 15 minute refresh queue: Calls the refresh_QuarterHour() method
+  this->Parent->AddToWebsiteQueue_Load(this);        //Subscribing to the Website load event: Calls the websiteEvent_Load() method
+  this->Parent->AddToWebsiteQueue_Refresh(this);     //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
+  this->Parent->AddToWebsiteQueue_Button(this);      //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
+  this->Parent->AddToWebsiteQueue_Field(this);       //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
   logToSerials(F("ModuleSkeleton_Web object created"), true, 1);
 }
 
@@ -25,10 +25,10 @@ void ModuleSkeleton_Web::websiteEvent_Load(__attribute__((unused)) char *url)
   if (strcmp(url, "/Test.html.json") == 0)
   {
 
-    WebServer.setArgBoolean(getWebsiteComponentName(F("SetPersBool")), *PersistentBool);
-    WebServer.setArgInt(getWebsiteComponentName(F("SetPersInt")), *PersistentInt);
-    WebServer.setArgFloat(getWebsiteComponentName(F("SetPersFloat")), *PersistentFloat);
-    WebServer.setArgBoolean(getWebsiteComponentName(F("SetRunBool")), RuntimeBool);
+    WebServer.setArgBoolean(getComponentName(F("SetPersBool")), *PersistentBool);
+    WebServer.setArgInt(getComponentName(F("SetPersInt")), *PersistentInt);
+    WebServer.setArgFloat(getComponentName(F("SetPersFloat")), *PersistentFloat);
+    WebServer.setArgBoolean(getComponentName(F("SetRunBool")), RuntimeBool);
   }
 }
 
@@ -36,16 +36,16 @@ void ModuleSkeleton_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 { //When refreshing the website (Automatic, every 5sec)
   if (strcmp(url, "/Test.html.json") == 0)
   {
-    WebServer.setArgBoolean(getWebsiteComponentName(F("PersistentBool")), *PersistentBool);
-    WebServer.setArgInt(getWebsiteComponentName(F("PersistentInt")), *PersistentInt);
-    WebServer.setArgFloat(getWebsiteComponentName(F("PersistentFloat")), *PersistentFloat);
-    WebServer.setArgBoolean(getWebsiteComponentName(F("RuntimeBool")), RuntimeBool);
-    WebServer.setArgInt(getWebsiteComponentName(F("RuntimeInt")), RuntimeInt);
-    WebServer.setArgFloat(getWebsiteComponentName(F("RuntimeFloat")), RuntimeFloat);
-    WebServer.setArgString(getWebsiteComponentName(F("RuntimeString")), RuntimeString);
-    WebServer.setArgBoolean(getWebsiteComponentName(F("RuntimeBool")), RuntimeBool);
-    WebServer.setArgInt(getWebsiteComponentName(F("RollingInt")), RollingInt->getInt(true));
-    WebServer.setArgFloat(getWebsiteComponentName(F("RollingFloat")), RollingFloat->getFloat(true));
+    WebServer.setArgBoolean(getComponentName(F("PersistentBool")), *PersistentBool);
+    WebServer.setArgInt(getComponentName(F("PersistentInt")), *PersistentInt);
+    WebServer.setArgFloat(getComponentName(F("PersistentFloat")), *PersistentFloat);
+    WebServer.setArgBoolean(getComponentName(F("RuntimeBool")), RuntimeBool);
+    WebServer.setArgInt(getComponentName(F("RuntimeInt")), RuntimeInt);
+    WebServer.setArgFloat(getComponentName(F("RuntimeFloat")), RuntimeFloat);
+    WebServer.setArgString(getComponentName(F("RuntimeString")), RuntimeString);
+    WebServer.setArgBoolean(getComponentName(F("RuntimeBool")), RuntimeBool);
+    WebServer.setArgInt(getComponentName(F("RollingInt")), RollingInt->getInt(true));
+    WebServer.setArgFloat(getComponentName(F("RollingFloat")), RollingFloat->getFloat(true));
   }
 }
 

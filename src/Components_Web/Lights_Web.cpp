@@ -3,10 +3,10 @@
 Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings) : Lights(Name,Parent,DefaultSettings)
 {
   this->Parent = Parent;  
-  Parent->AddToWebsiteQueue_Load(this);    //Subscribing to the Website load event: Calls the websiteEvent_Load() method
-  Parent->AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  Parent->AddToWebsiteQueue_Field(this);   //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
-  Parent->AddToWebsiteQueue_Button(this);  //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
+  this->Parent->AddToWebsiteQueue_Load(this);    //Subscribing to the Website load event: Calls the websiteEvent_Load() method
+  this->Parent->AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
+  this->Parent->AddToWebsiteQueue_Field(this);   //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
+  this->Parent->AddToWebsiteQueue_Button(this);  //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
   logToSerials(F("Lights object created"), true, 1);
 }
 
@@ -14,12 +14,12 @@ void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strcmp(url, "/GrowBox.html.json") == 0)
   {
-    WebServer.setArgInt(getWebsiteComponentName(F("OnHour")), *OnHour);
-    WebServer.setArgInt(getWebsiteComponentName(F("OnMinute")), *OnMinute);
-    WebServer.setArgInt(getWebsiteComponentName(F("OffHour")), *OffHour);
-    WebServer.setArgInt(getWebsiteComponentName(F("OffMinute")), *OffMinute);
-    WebServer.setArgInt(getWebsiteComponentName(F("Brightness")), *Brightness);
-    WebServer.setArgInt(getWebsiteComponentName(F("BrightnessSlider")), *Brightness);
+    WebServer.setArgInt(getComponentName(F("OnHour")), *OnHour);
+    WebServer.setArgInt(getComponentName(F("OnMinute")), *OnMinute);
+    WebServer.setArgInt(getComponentName(F("OffHour")), *OffHour);
+    WebServer.setArgInt(getComponentName(F("OffMinute")), *OffMinute);
+    WebServer.setArgInt(getComponentName(F("Brightness")), *Brightness);
+    WebServer.setArgInt(getComponentName(F("BrightnessSlider")), *Brightness);
   }
 }
 
@@ -27,10 +27,10 @@ void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strcmp(url, "/GrowBox.html.json") == 0)
   {
-    WebServer.setArgString(getWebsiteComponentName(F("Status")), getStatusText(true));
-    WebServer.setArgString(getWebsiteComponentName(F("TimerEnabled")), getTimerOnOffText(true));
-    WebServer.setArgString(getWebsiteComponentName(F("OnTime")), getOnTimeText());
-    WebServer.setArgString(getWebsiteComponentName(F("OffTime")), getOffTimeText());
+    WebServer.setArgString(getComponentName(F("Status")), getStatusText(true));
+    WebServer.setArgString(getComponentName(F("TimerEnabled")), getTimerOnOffText(true));
+    WebServer.setArgString(getComponentName(F("OnTime")), getOnTimeText());
+    WebServer.setArgString(getComponentName(F("OffTime")), getOffTimeText());
   }
 }
 

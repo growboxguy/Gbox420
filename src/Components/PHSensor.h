@@ -1,7 +1,7 @@
 #pragma once
 
 #include "420Common.h"
-#include "420Module.h"
+#include "../Modules/420Module.h"
 
 class PHSensor : public Common
 {
@@ -13,6 +13,9 @@ public:
   char *getPHText(bool ReturnAverage = true);
 
 private:
+
+protected:
+  Module *Parent;
   byte *Pin;
   RollingAverage *PH;
   float *Intercept;
@@ -20,9 +23,6 @@ private:
   void updatePH(bool ShowRaw);
   void setSlope(float Value);
   void setIntercept(float Value);
-
-protected:
-  Module *Parent;
 };
 
 //WEBSITE COMPONENT

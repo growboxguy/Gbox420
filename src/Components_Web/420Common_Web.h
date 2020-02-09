@@ -3,10 +3,8 @@
 //These are functions extending the functions of *_Web components, each component must include this file
 
 #include "ELClientWebServer.h"      //ESP-link - WebServer API
+#include "../Modules/420Module_Web.h"
+
 
 //forward declaration
 extern ELClientWebServer WebServer;
-
-bool isThisMyComponent(char const *lookupName); //When it return true the component belongs to this object
-char *getWebsiteComponentName(const __FlashStringHelper *Name);
-

@@ -11,6 +11,8 @@ public:
   void report();
 
 private:
+
+protected:
   void checkRelays();
   void setPressureLow(float PressureLow);
   void setPressureHigh(float PressureHigh);
@@ -22,6 +24,4 @@ private:
   bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on.
   float *PressureLow;           //Aeroponics - Turn on pump below this pressure (bar)
   float *PressureHigh;          //Aeroponics - Turn off pump above this pressure (bar)
-
-protected:
 };

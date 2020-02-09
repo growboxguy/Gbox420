@@ -21,6 +21,8 @@ class Common
 {
 public:
   const __FlashStringHelper *Name;
+  bool isThisMyComponent(char const *lookupName); //When it return true the component belongs to this object
+  char *getComponentName(const __FlashStringHelper *Name);
   virtual void report();
   virtual void refresh_Sec();
   virtual void refresh_FiveSec();
@@ -30,7 +32,7 @@ public:
   void websiteEvent_Refresh(__attribute__((unused)) char *url){};
   void websiteEvent_Button(__attribute__((unused)) char *Button){};
   void websiteEvent_Field(__attribute__((unused)) char *Field){};
- 
+   
 private:
 protected:
   Common(const __FlashStringHelper *Name); //Constructor

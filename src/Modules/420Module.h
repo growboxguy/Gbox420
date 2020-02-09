@@ -1,5 +1,5 @@
 #pragma once
-#include "420Common.h"
+#include "../Components/420Common.h"
 
 //This class is the parent of all physical modules, like the Main / Hempy Bucket / Aeroponics / Environment module
 //Responsible for creating and
@@ -25,8 +25,8 @@ public:
   void addToRefreshQueue_Minute(Common *Component);
   void addToRefreshQueue_QuarterHour(Common *Component);
   Sound * getSoundObject();
-  relayToGoogleSheets
- 
+  void relayToGoogleSheets(__attribute__((unused)) const __FlashStringHelper *Title, __attribute__((unused)) char (*JSONData)[MaxLongTextLength]){};
+   
 private:
   char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   Common *ReportQueue[QueueDepth];
@@ -41,7 +41,7 @@ private:
   byte refreshQueueItemCount_QuarterHour = 0;
 
 protected:
-  Sound* SoundFeedback;
+  Sound* SoundFeedback = NULL;
   bool RunAllRequested = false;
   bool ConsoleReportRequested = false; 
 };

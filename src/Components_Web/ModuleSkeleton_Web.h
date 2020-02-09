@@ -3,7 +3,7 @@
 
 //#include "3rdPartyModlue.h" //Load any required 3rd party modules here
 #include "420Common_Web.h"
-#include "../Components/ModuleSkeleton.h
+#include "../Components/ModuleSkeleton.h"
 
 class ModuleSkeleton_Web : public ModuleSkeleton
 {
@@ -17,6 +17,7 @@ public:
 private:
   
 protected:
+  Module_Web *Parent;
 };
 
 //WEBSITE COMPONENT

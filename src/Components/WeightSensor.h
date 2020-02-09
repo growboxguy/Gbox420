@@ -1,7 +1,7 @@
 #pragma once
 #include "HX711.h"
 #include "420Common.h"
-#include "420Module.h"
+#include "../Modules/420Module.h"
 
 class WeightSensor : public Common
 {
@@ -17,7 +17,10 @@ public:
   void triggerCalibration(int CalibrationWeight);  
   RollingAverage *Weight;
 
-private:
+private:  
+
+protected:
+  Module* Parent;
   HX711 *Sensor;
   void tare();
   void calibrate();
@@ -27,7 +30,4 @@ private:
   int CalibrationWeight;
   bool TareRequested = false;
   bool CalibrateRequested = false;
-
-protected:
-  Module* Parent;
 };

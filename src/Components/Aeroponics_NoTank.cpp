@@ -1,6 +1,6 @@
 #include "Aeroponics_NoTank.h"
 
-Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics(&(*Name), &(*Parent), &(*DefaultSettings), &(*FeedbackPressureSensor))
+Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics(Name, Parent, DefaultSettings, FeedbackPressureSensor)
 {
   BlowOffTime = &NoTankSpecificSettings->BlowOffTime; //Aeroponics - Turn on pump below this pressure (bar)
   logToSerials(F("Aeroponics_NoTank object created"), true, 1);

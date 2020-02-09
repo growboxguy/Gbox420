@@ -15,9 +15,9 @@ public:
   void websiteEvent_Field(char *Field);  
 
 private:
-  GrowBox *GBox; //Pointer to the GrowBox object that contains the Lights object
   
 protected:
+  Module_Web *Parent;
 };
 
 //WEBSITE COMPONENT

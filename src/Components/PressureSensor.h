@@ -1,7 +1,7 @@
 #pragma once
 
 #include "420Common.h"
-#include "420Module.h"
+#include "../Modules/420Module.h"
 
 class PressureSensor : public Common
 {
@@ -15,13 +15,13 @@ public:
   RollingAverage *Pressure;
 
 private:  
+  
+protected:
+  Module *Parent;
   void readOffset();
   void setOffset(float Value);
   void setRatio(float Value);
   byte *Pin;
   float *Offset;
   float *Ratio;
-
-protected:
-  Module *Parent;
 };

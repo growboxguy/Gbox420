@@ -72,7 +72,6 @@ void LightSensor::calibrate(bool AddToLog)
   }
 }
 
-
 void LightSensor::getCalibrationReadings(){//Returns a pointer to a char array
   memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("{\"Readings\":["));
