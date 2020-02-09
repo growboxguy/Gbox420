@@ -10,6 +10,8 @@
 //Move metric/imperial selection to Settings.h, remove it from the Settings Webpage
 //Wireless module, mini Gbox420 on Ardino Nano V3, with  for sensor boxes
 //Light sensor is not linear, need a better way to estimate brightness percentage. Readings[10] and calibrate to every 10% , lookup closest 2 calibration rating (TopRange,BottomRange) and do a mapping between them?
+//Replace Growbox constructor parameter to a more generic Module_Web
+//Split WaterLevelSensor class to a single sensor and a row of sensors (WaterLevelRow)
 
 #include "Arduino.h"
 #include "avr/wdt.h"                //Watchdog timer for detecting a crash and automatically resetting the board
@@ -21,9 +23,9 @@
 #include "ELClientRest.h"           //ESP-link - REST API
 #include "Thread.h"                 //Splitting functions to threads for timing
 #include "StaticThreadController.h" //Grouping threads
-#include "src/Modules_Web/420Common_Web.h"              //Base class where all components inherits from
+#include "src/Components_Web/420Common_Web.h"              //Base class where all components inherits from
 #include "src/Settings.h"
-#include "src/Modules_Web/GrowBox.h"                //Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
+#include "src/Components_Web/GrowBox.h"                //Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  //temp storage for assembling long messages (REST API, MQTT API)
