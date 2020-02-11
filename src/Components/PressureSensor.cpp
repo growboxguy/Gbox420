@@ -7,6 +7,8 @@ PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, 
   Ratio = &DefaultSettings->Ratio;
   Offset = &DefaultSettings->Offset;
   Pressure = new RollingAverage();
+  Parent->addToReportQueue(this);         //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Minute(this); //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   logToSerials(F("Pressure Sensor object created"), true, 1);
 }
 

@@ -12,7 +12,7 @@ extern ELClientRest PushingBoxRestAPI;
 class Module_Web : virtual public Module
 {
 public:
-  Module_Web(const __FlashStringHelper *Name); //constructor
+  Module_Web(); //constructor
   void addToWebsiteQueue_Load(Common_Web *Component);
   void addToWebsiteQueue_Refresh(Common_Web *Component);
   void addToWebsiteQueue_Button(Common_Web *Component);

@@ -18,8 +18,9 @@
 
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
-GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings) : Module_Web(Name)
+GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings) : Common_Web(Name)
 { //Constructor
+  this->Name = Name;
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
   ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets; 
   Sound1 = new Sound_Web(F("Sound1"), this, &BoxSettings->Sound1); //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, VARIABLENAME))

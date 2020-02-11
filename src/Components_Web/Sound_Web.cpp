@@ -1,12 +1,12 @@
 #include "Sound_Web.h"
 
-Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Sound(Name,Parent,DefaultSettings)
+Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Sound(Name,Parent,DefaultSettings), Common_Web(Name)
 {
   this->Parent = Parent;
+  this->Name = Name;
   Parent->addToWebsiteQueue_Load(this);   //Subscribing to the Website load event: Calls the websiteEvent_Load() method
   Parent->addToWebsiteQueue_Button(this); //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
-  Parent->addToWebsiteQueue_Field(this);  //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
-  Parent->addToRefreshQueue_Sec(this);    //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
+  Parent->addToWebsiteQueue_Field(this);  //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method 
 }
 
 void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *url)

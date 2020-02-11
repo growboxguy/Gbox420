@@ -1,5 +1,10 @@
 #pragma once
+
+#include "Arduino.h"     //every inheriting class have Arduino commands available
+#include "../Settings.h"
+#include "../Helpers.h"
 #include "../Components/420Common.h"
+
 
 //This class is the parent of all physical modules, like the Main / Hempy Bucket / Aeroponics / Environment module
 //Responsible for creating and
@@ -9,8 +14,7 @@ class Sound;
 class Module : virtual public Common
 {
 public:
-  Module(const __FlashStringHelper *Name); //constructor
-  Module(){}; //constructor
+  Module(); //constructor
   //Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
   void runReport();
   void runAll();

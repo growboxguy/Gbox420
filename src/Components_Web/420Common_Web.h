@@ -17,6 +17,6 @@ public:
   virtual void websiteEvent_Field(__attribute__((unused)) char *Field){};
    
 private:
-protected:  
-  Common_Web() {}                              //Constructor
+protected: 
+  Common_Web(const __FlashStringHelper *Name); //Constructor
 };

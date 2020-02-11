@@ -3,7 +3,7 @@
 
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
-Module::Module(const __FlashStringHelper *Name) : Common(Name)
+Module::Module()
 { //Constructor
   logToSerials(F("Module object created"), true, 0);
 }
@@ -23,7 +23,7 @@ void Module::runAll()
   wdt_reset();
   runFiveSec();
   wdt_reset();
-  runMinute();
+  refresh_Minute();
   wdt_reset();
   runQuarterHour();
   wdt_reset();

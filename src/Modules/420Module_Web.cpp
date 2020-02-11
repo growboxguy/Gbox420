@@ -1,6 +1,6 @@
 #include "420Module_Web.h"
 
-Module_Web::Module_Web(const __FlashStringHelper *Name) : Module(Name)
+Module_Web::Module_Web() : Module()
 { //Constructor
 }
 

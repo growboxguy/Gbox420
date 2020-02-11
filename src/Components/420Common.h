@@ -38,5 +38,5 @@ public:
 private:
 protected:
   Common(const __FlashStringHelper *Name); //Constructor
-  Common() {}                              //Constructor
+  Common(){};
 };
