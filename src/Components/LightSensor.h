@@ -4,7 +4,7 @@
 #include "../Modules/420Module.h"
 #include "Lights.h"
 
-class LightSensor : public Common
+class LightSensor : virtual public Common
 {
 public:
   LightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource);

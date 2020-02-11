@@ -6,10 +6,10 @@
 #include "../Modules/420Module_Web.h"
 #include "../Components/PowerSensorV3.h"
 
-class PowerSensorV3_Web : public PowerSensorV3
+class PowerSensorV3_Web : public PowerSensorV3, public Common_Web
 {
 public:
-  PowerSensorV3_Web(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort); //constructor
+  PowerSensorV3_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort); //constructor
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   
 private:

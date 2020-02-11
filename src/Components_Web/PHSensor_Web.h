@@ -4,10 +4,10 @@
 #include "../Modules/420Module_Web.h"
 #include "../Components/PHSensor.h"
 
-class PHSensor_Web : public PHSensor
+class PHSensor_Web : public PHSensor, public Common_Web
 {
 public:
- PHSensor_Web(const __FlashStringHelper *Name, Module *Parent, Settings::PHSensorSettings *DefaultSettings);
+ PHSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PHSensorSettings *DefaultSettings);
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Button(char *Button);

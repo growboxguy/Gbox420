@@ -3,7 +3,7 @@
 #include "420Common.h"
 #include "../Modules/420Module.h"
 
-class Fan : public Common
+class Fan : virtual public Common
 {
 public:
   Fan(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings *DefaultSettings);

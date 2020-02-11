@@ -4,7 +4,7 @@
 #include "420Common.h"
 #include "../Modules/420Module.h"
 
-class DHTSensor : public Common
+class DHTSensor : virtual public Common
 {
 public:
   DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings);

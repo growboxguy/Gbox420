@@ -4,10 +4,10 @@
 #include "../Modules/420Module_Web.h"
 #include "../Components/Aeroponics_Tank.h"
 
-class Aeroponics_Tank_Web : public Aeroponics_Tank
+class Aeroponics_Tank_Web : public Aeroponics_Tank, public Common_Web
 {
 public:
-  Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor);
+  Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor);
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Button(char *Button);

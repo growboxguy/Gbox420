@@ -6,10 +6,10 @@
 
 class GrowBox; //forward declaration
 
-class LightSensor_Web : public LightSensor
+class LightSensor_Web : public LightSensor, public Common_Web
 {
 public:
-  LightSensor_Web(const __FlashStringHelper *Name, Module *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource);
+  LightSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Button(char *Button);
   

@@ -8,16 +8,15 @@
 //forward declaration
 extern ELClientWebServer WebServer;
 
-class Common_Web : public Common
+class Common_Web : virtual public Common
 {
 public:
-  void websiteEvent_Load(__attribute__((unused)) char *url);
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void websiteEvent_Button(__attribute__((unused)) char *Button);
-  void websiteEvent_Field(__attribute__((unused)) char *Field);
+  virtual void websiteEvent_Load(__attribute__((unused)) char *url){};
+  virtual void websiteEvent_Refresh(__attribute__((unused)) char *url){};
+  virtual void websiteEvent_Button(__attribute__((unused)) char *Button){};
+  virtual void websiteEvent_Field(__attribute__((unused)) char *Field){};
    
 private:
-protected:
-  Common_Web(const __FlashStringHelper *Name); //Constructor
+protected:  
   Common_Web() {}                              //Constructor
 };

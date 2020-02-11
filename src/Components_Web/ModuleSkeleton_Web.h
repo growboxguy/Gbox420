@@ -6,10 +6,10 @@
 #include "../Modules/420Module_Web.h"
 #include "../Components/ModuleSkeleton.h"
 
-class ModuleSkeleton_Web : public ModuleSkeleton
+class ModuleSkeleton_Web : public ModuleSkeleton, public Common_Web
 {
 public:
-  ModuleSkeleton_Web(const __FlashStringHelper *Name, Module *Parent, Settings::ModuleSkeletonSettings *DefaultSettings); //constructor
+  ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ModuleSkeletonSettings *DefaultSettings); //constructor
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Button(char *Button);

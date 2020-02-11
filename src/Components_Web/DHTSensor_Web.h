@@ -5,10 +5,10 @@
 #include "../Modules/420Module_Web.h"
 #include "../Components/DHTSensor.h"
 
-class DHTSensor_Web : public DHTSensor
+class DHTSensor_Web : public DHTSensor, public Common_Web
 {
 public:
-  DHTSensor_Web(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings);
+  DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::DHTSensorSettings *DefaultSettings);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);  
 
 private:

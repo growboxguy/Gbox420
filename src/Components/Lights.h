@@ -3,7 +3,7 @@
 #include "420Common.h"
 #include "../Modules/420Module.h"
 
-class Lights : public Common
+class Lights : virtual public Common
 {
 public:
   Lights(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings); //constructor

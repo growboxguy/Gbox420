@@ -7,7 +7,7 @@ Module_Web::Module_Web(const __FlashStringHelper *Name) : Module(Name)
 //////////////////////////////////////////////////////////////////
 //Website subscriptions: When a component needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
 
-void Module_Web::AddToWebsiteQueue_Load(Common *Component)
+void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
 {
   if (QueueDepth > WebsiteQueueItemCount_Load)
     WebsiteQueue_Load[WebsiteQueueItemCount_Load++] = Component;
@@ -15,7 +15,7 @@ void Module_Web::AddToWebsiteQueue_Load(Common *Component)
     logToSerials(F("WebsiteQueueItemCount_Load overflow!"), true, 0);
 }
 
-void Module_Web::AddToWebsiteQueue_Refresh(Common *Component)
+void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Component)
 {
   if (QueueDepth > WebsiteQueueItemCount_Refresh)
     WebsiteQueue_Refresh[WebsiteQueueItemCount_Refresh++] = Component;
@@ -23,7 +23,7 @@ void Module_Web::AddToWebsiteQueue_Refresh(Common *Component)
     logToSerials(F("WebsiteQueueItemCount_Refresh overflow!"), true, 0);
 }
 
-void Module_Web::AddToWebsiteQueue_Button(Common *Component)
+void Module_Web::addToWebsiteQueue_Button(Common_Web *Component)
 {
   if (QueueDepth > WebsiteQueueItemCount_Button)
     WebsiteQueue_Button[WebsiteQueueItemCount_Button++] = Component;
@@ -31,7 +31,7 @@ void Module_Web::AddToWebsiteQueue_Button(Common *Component)
     logToSerials(F("WebsiteQueueItemCount_Button overflow!"), true, 0);
 }
 
-void Module_Web::AddToWebsiteQueue_Field(Common *Component)
+void Module_Web::addToWebsiteQueue_Field(Common_Web *Component)
 {
   if (QueueDepth > WebsiteQueueItemCount_Field)
     WebsiteQueue_Field[WebsiteQueueItemCount_Field++] = Component;

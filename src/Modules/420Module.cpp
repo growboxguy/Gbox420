@@ -8,11 +8,13 @@ Module::Module(const __FlashStringHelper *Name) : Common(Name)
   logToSerials(F("Module object created"), true, 0);
 }
 
+/*
 Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
 { //Constructor
   this -> SoundFeedback = SoundFeedback;
   logToSerials(F("Module object created"), true, 0);
 }
+*/
 
 void Module::runAll()
 {
@@ -75,13 +77,9 @@ void Module::addToRefreshQueue_Minute(Common *Component)
 void Module::addToRefreshQueue_QuarterHour(Common *Component)
 {
   logToSerials(F("Quarter:"), false, 0);
-  logToSerials(QueueDepth, true, 0);
-  logToSerials(refreshQueueItemCount_QuarterHour, true, 0);
   if (QueueDepth > refreshQueueItemCount_QuarterHour)
   {
     RefreshQueue_QuarterHour[refreshQueueItemCount_QuarterHour++] = Component;
-    logToSerials(F("added"), false, 0);
-    logToSerials(refreshQueueItemCount_QuarterHour, false, 0);
   }
   else
     logToSerials(F("RefreshQueue_QuarterHour overflow!"), true, 0);

@@ -6,10 +6,10 @@
 
 class GrowBox; //forward declaration
 
-class Lights_Web : public Lights
+class Lights_Web : public Lights, public Common_Web
 {
 public:
-  Lights_Web(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings); //constructor
+  Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightsSettings *DefaultSettings); //constructor
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Button(char *Button);

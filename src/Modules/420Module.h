@@ -6,11 +6,12 @@
 //Adds 
 class Sound;
 
-class Module : public Common
+class Module : virtual public Common
 {
 public:
   Module(const __FlashStringHelper *Name); //constructor
-  Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
+  Module(){}; //constructor
+  //Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
   void runReport();
   void runAll();
   void runSec();

@@ -45,10 +45,10 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
   addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   addToRefreshQueue_QuarterHour(this); //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
-  AddToWebsiteQueue_Load(this);        //Subscribing to the Website load event
-  AddToWebsiteQueue_Refresh(this);     //Subscribing to the Website refresh event
-  AddToWebsiteQueue_Field(this);       //Subscribing to the Website field submit event
-  AddToWebsiteQueue_Button(this);      //Subscribing to the Website button press event
+  addToWebsiteQueue_Load(this);        //Subscribing to the Website load event
+  addToWebsiteQueue_Refresh(this);     //Subscribing to the Website refresh event
+  addToWebsiteQueue_Field(this);       //Subscribing to the Website field submit event
+  addToWebsiteQueue_Button(this);      //Subscribing to the Website button press event
   logToSerials(F("GrowBox object created, refreshing..."), true, 0);
   runAll();
   addToLog(F("GrowBox initialized"), 0);

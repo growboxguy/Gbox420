@@ -3,7 +3,7 @@
 #include "420Common.h"
 #include "../Modules/420Module.h"
 
-class PressureSensor : public Common
+class PressureSensor : virtual public Common
 {
 public:
   PressureSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PressureSensorSettings *DefaultSettings);

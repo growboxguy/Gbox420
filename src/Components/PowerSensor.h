@@ -4,7 +4,7 @@
 #include "420Common.h"
 #include "../Modules/420Module.h"
 
-class PowerSensor : public Common
+class PowerSensor : virtual public Common
 {
 public:
   PowerSensor(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort); //constructor

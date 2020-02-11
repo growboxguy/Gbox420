@@ -5,7 +5,7 @@
 #include "420Common.h"
 #include "../Modules/420Module.h"
 
-class ModuleSkeleton : public Common
+class ModuleSkeleton : virtual public Common
 {
 public:
   ModuleSkeleton(const __FlashStringHelper *Name, Module *Parent, Settings::ModuleSkeletonSettings *DefaultSettings); //constructor

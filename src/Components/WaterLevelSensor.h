@@ -3,7 +3,7 @@
 #include "420Common.h"
 #include "../Modules/420Module.h"
 
-class WaterLevelSensor : public Common
+class WaterLevelSensor : virtual public Common
 {
 public:
   WaterLevelSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterLevelSensorSettings *DefaultSettings); //constructor

@@ -3,7 +3,7 @@
 #include "420Common.h"
 #include "../Modules/420Module.h"
 
-class Sound : public Common
+class Sound : virtual public Common
 {
 public:
   Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSettings *DefaultSettings);  

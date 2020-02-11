@@ -1,9 +1,9 @@
 #include "PowerSensor_Web.h"
 
-PowerSensor_Web::PowerSensor_Web(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort) : PowerSensor(Name,Parent,SerialPort)
+PowerSensor_Web::PowerSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort) : PowerSensor(Name,Parent,SerialPort)
 {
   this->Parent = Parent;
-  this->Parent->AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
+  Parent->addToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
 }
 
 void PowerSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)

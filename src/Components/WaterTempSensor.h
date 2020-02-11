@@ -5,7 +5,7 @@
 #include "420Common.h"
 #include "../Modules/420Module.h"
 
-class WaterTempSensor : public Common
+class WaterTempSensor : virtual public Common
 {
 public:
   WaterTempSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterTempSensorSettings *DefaultSettings); //constructor

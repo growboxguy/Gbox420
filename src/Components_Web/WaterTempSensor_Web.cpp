@@ -1,9 +1,9 @@
 #include "WaterTempSensor_Web.h"
 
-WaterTempSensor_Web::WaterTempSensor_Web(const __FlashStringHelper *Name, Module *Parent, Settings::WaterTempSensorSettings *DefaultSettings) : WaterTempSensor(Name,Parent,DefaultSettings)
+WaterTempSensor_Web::WaterTempSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WaterTempSensorSettings *DefaultSettings) : WaterTempSensor(Name,Parent,DefaultSettings)
 { //constructor
   this->Parent = Parent;
-  this->Parent->AddToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
+  Parent->addToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
 }
 
 void WaterTempSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)

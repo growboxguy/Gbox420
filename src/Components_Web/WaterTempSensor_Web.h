@@ -4,10 +4,10 @@
 #include "../Modules/420Module_Web.h"
 #include "../Components/WaterTempSensor.h"
 
-class WaterTempSensor_Web : public WaterTempSensor
+class WaterTempSensor_Web : public WaterTempSensor, public Common_Web
 {
 public:
-  WaterTempSensor_Web(const __FlashStringHelper *Name, Module *Parent, Settings::WaterTempSensorSettings *DefaultSettings); //constructor
+  WaterTempSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WaterTempSensorSettings *DefaultSettings); //constructor
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   
 private:

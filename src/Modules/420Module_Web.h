@@ -9,14 +9,14 @@
 
 extern ELClientRest PushingBoxRestAPI;
 
-class Module_Web : public Module
+class Module_Web : virtual public Module
 {
 public:
   Module_Web(const __FlashStringHelper *Name); //constructor
-  void AddToWebsiteQueue_Load(Common *Component);
-  void AddToWebsiteQueue_Refresh(Common *Component);
-  void AddToWebsiteQueue_Button(Common *Component);
-  void AddToWebsiteQueue_Field(Common *Component);
+  void addToWebsiteQueue_Load(Common_Web *Component);
+  void addToWebsiteQueue_Refresh(Common_Web *Component);
+  void addToWebsiteQueue_Button(Common_Web *Component);
+  void addToWebsiteQueue_Field(Common_Web *Component);
   void loadEvent(char *Url);
   void refreshEvent(char *Url);
   void buttonEvent(char *Button);
@@ -25,10 +25,10 @@ public:
 private:
 
 protected:  
-  Common *WebsiteQueue_Load[QueueDepth];
-  Common *WebsiteQueue_Refresh[QueueDepth];
-  Common *WebsiteQueue_Button[QueueDepth];
-  Common *WebsiteQueue_Field[QueueDepth]; 
+  Common_Web *WebsiteQueue_Load[QueueDepth];
+  Common_Web *WebsiteQueue_Refresh[QueueDepth];
+  Common_Web *WebsiteQueue_Button[QueueDepth];
+  Common_Web *WebsiteQueue_Field[QueueDepth]; 
   byte WebsiteQueueItemCount_Load = 0;
   byte WebsiteQueueItemCount_Refresh = 0;
   byte WebsiteQueueItemCount_Button = 0;

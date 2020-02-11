@@ -4,7 +4,7 @@
 #include "Sound.h"
 #include "PressureSensor.h"
 
-class Aeroponics : public Common
+class Aeroponics : virtual public Common
 {
 public:
   Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor);
