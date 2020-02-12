@@ -27,29 +27,29 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
   InFan = new Fan_Web(F("InFan"), this, &BoxSettings->InFan);      //passing: Component name, GrowBox object the component belongs to, Default settings)
   ExFan = new Fan_Web(F("ExFan"), this, &BoxSettings->ExFan);
   Light1 = new Lights_Web(F("Light1"), this, &BoxSettings->Light1);
-  LightSensor1 = new LightSensor_Web(F("LightSensor1"), this, &BoxSettings->LightSensor1, Light1); //Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
-  Power1 = new PowerSensor_Web(F("Power1"), this, &Serial2);
+  //LightSensor1 = new LightSensor_Web(F("LightSensor1"), this, &BoxSettings->LightSensor1, Light1); //Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
+  //Power1 = new PowerSensor_Web(F("Power1"), this, &Serial2);
   //Power1 = new PowerSensorV3_Web(F("Power1"), this, &Serial2); //Only for PZEM004T V3.0
   InDHT = new DHTSensor_Web(F("InDHT"), this, &BoxSettings->InDHT);
   ExDHT = new DHTSensor_Web(F("ExDHT"), this, &BoxSettings->ExDHT);
-  Pressure1 = new PressureSensor_Web(F("Pressure1"), this, &BoxSettings->Pressure1);
-  //Aero_T1 = new Aeroponics_Tank_Web(F("Aero_T1"), this, &BoxSettings->Aero_T1_Common, &BoxSettings->Aero_T1_Specific, Pressure1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  //Pressure1 = new PressureSensor_Web(F("Pressure1"), this, &BoxSettings->Pressure1);
+  Aero_T1 = new Aeroponics_Tank_Web(F("Aero_T1"), this, &BoxSettings->Aero_T1_Common, &BoxSettings->Aero_T1_Specific, Pressure1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
   Aero_NT1 = new Aeroponics_NoTank_Web(F("Aero_NT1"), this, &BoxSettings->Aero_NT1_Common, &BoxSettings->Aero_NT1_Specific, Pressure1);
-  PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &BoxSettings->PHSensor1);
-  WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
-  WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
+  //PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &BoxSettings->PHSensor1);
+  //WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
+  //WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
   //Weight1 = new WeightSensor_Web(F("Weight1"), this, &BoxSettings->Weight1);
   //Weight2 = new WeightSensor_Web(F("Weight2"), this, &BoxSettings->Weight2);
   //ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
   //ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
 
-  addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  addToRefreshQueue_QuarterHour(this); //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
-  addToWebsiteQueue_Load(this);        //Subscribing to the Website load event
-  addToWebsiteQueue_Refresh(this);     //Subscribing to the Website refresh event
-  addToWebsiteQueue_Field(this);       //Subscribing to the Website field submit event
-  addToWebsiteQueue_Button(this);      //Subscribing to the Website button press event
+  //addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  //addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  //addToRefreshQueue_QuarterHour(this); //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
+  //addToWebsiteQueue_Load(this);        //Subscribing to the Website load event
+  ///addToWebsiteQueue_Refresh(this);     //Subscribing to the Website refresh event
+  //addToWebsiteQueue_Field(this);       //Subscribing to the Website field submit event
+  //addToWebsiteQueue_Button(this);      //Subscribing to the Website button press event
   logToSerials(F("GrowBox object created, refreshing..."), true, 0);
   runAll();
   addToLog(F("GrowBox initialized"), 0);
@@ -281,7 +281,7 @@ void GrowBox::reportToGoogleSheetsTrigger()
 }
 
 void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
-{
+{/*
   if (*ReportToGoogleSheets || CalledFromWebsite)
   {
     memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
@@ -345,6 +345,7 @@ void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
     strcat_P(LongMessage, (PGM_P)F("\"}}"));
     relayToGoogleSheets(Name, &LongMessage);
   }
+  */
 }
 //This is how a sent out message looks like:
 //{parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Light1_Status":"0","Light1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Light1_Timer":"1","Light1_OnTime":"04:20","Light1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}

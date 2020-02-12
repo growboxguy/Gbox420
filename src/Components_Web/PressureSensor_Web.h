@@ -10,8 +10,9 @@ public:
   PressureSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PressureSensorSettings *DefaultSettings);
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Button(char *Button);
-  void websiteEvent_Field(char *Field);  
-
+  void websiteEvent_Field(char *Field); 
+  void websiteEvent_Refresh(__attribute__((unused)) char *url){};  //Not used
+  
 private:
 
 protected:

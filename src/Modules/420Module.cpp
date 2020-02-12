@@ -23,7 +23,7 @@ void Module::runAll()
   wdt_reset();
   runFiveSec();
   wdt_reset();
-  refresh_Minute();
+  runMinute();
   wdt_reset();
   runQuarterHour();
   wdt_reset();

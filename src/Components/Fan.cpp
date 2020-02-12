@@ -35,11 +35,11 @@ void Fan::report()
 
 void Fan::checkFanStatus()
 {
-  if (*State)
+  if (*State) //True turns relay ON (LOW signal activates the Relay)
     digitalWrite(*OnOffPin, LOW);
   else
-    digitalWrite(*OnOffPin, HIGH); //True turns relay ON (LOW signal activates Relay)
-  if (*HighSpeed)
+    digitalWrite(*OnOffPin, HIGH); 
+  if (*HighSpeed) //True turns relay ON (LOW signal activates the Relay)
     digitalWrite(*SpeedPin, LOW);
   else
     digitalWrite(*SpeedPin, HIGH);
