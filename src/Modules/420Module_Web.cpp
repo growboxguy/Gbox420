@@ -9,6 +9,8 @@ Module_Web::Module_Web() : Module()
 
 void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
 {
+   logToSerials(F("Load queue:"),false, 0);
+   logToSerials(WebsiteQueueItemCount_Load, true, 1);
   if (QueueDepth > WebsiteQueueItemCount_Load)
     WebsiteQueue_Load[WebsiteQueueItemCount_Load++] = Component;
   else
@@ -17,6 +19,8 @@ void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
 
 void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Component)
 {
+   logToSerials(F("Refresh queue:"),false, 0);
+   logToSerials(WebsiteQueueItemCount_Refresh, true, 1);
   if (QueueDepth > WebsiteQueueItemCount_Refresh)
     WebsiteQueue_Refresh[WebsiteQueueItemCount_Refresh++] = Component;
   else

@@ -24,11 +24,11 @@ public:
 
 private:
 
-protected:  
-  Common_Web *WebsiteQueue_Load[QueueDepth];
-  Common_Web *WebsiteQueue_Refresh[QueueDepth];
-  Common_Web *WebsiteQueue_Button[QueueDepth];
-  Common_Web *WebsiteQueue_Field[QueueDepth]; 
+protected: 
+  Common_Web *WebsiteQueue_Load[QueueDepth] = {};
+  Common_Web *WebsiteQueue_Refresh[QueueDepth]= {};
+  Common_Web *WebsiteQueue_Button[QueueDepth]= {};
+  Common_Web *WebsiteQueue_Field[QueueDepth]= {}; 
   byte WebsiteQueueItemCount_Load = 0;
   byte WebsiteQueueItemCount_Refresh = 0;
   byte WebsiteQueueItemCount_Button = 0;

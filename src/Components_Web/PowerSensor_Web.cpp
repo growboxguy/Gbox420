@@ -11,9 +11,9 @@ void PowerSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strcmp(url, "/GrowBox.html.json") == 0)
   {
-    WebServer.setArgString(getComponentName(F("Power")), getPowerText(true));
-    WebServer.setArgString(getComponentName(F("Energy")), getEnergyText(true));
-    WebServer.setArgString(getComponentName(F("Voltage")), getVoltageText(true));
-    WebServer.setArgString(getComponentName(F("Current")), getCurrentText(true));
+    WebServer.setArgString(getComponentName(F("P")), getPowerText(true));
+    WebServer.setArgString(getComponentName(F("E")), getEnergyText(true));
+    WebServer.setArgString(getComponentName(F("V")), getVoltageText(true));
+    WebServer.setArgString(getComponentName(F("C")), getCurrentText(true));
   }
 }

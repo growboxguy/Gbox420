@@ -12,7 +12,7 @@ void Fan_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strcmp(url, "/GrowBox.html.json") == 0)
   {
-    WebServer.setArgString(getComponentName(F("Status")), fanSpeedToText());
+    WebServer.setArgString(getComponentName(F("S")), fanSpeedToText());
   }
 }
 
@@ -24,20 +24,9 @@ void Fan_Web::websiteEvent_Button(char *Button)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Off")) == 0)
-    {
-      TurnOff();
-      WebServer.setArgString(getComponentName(F("Status")), fanSpeedToText());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Low")) == 0)
-    {
-      SetLowSpeed();
-      WebServer.setArgString(getComponentName(F("Status")), fanSpeedToText());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("High")) == 0)
-    {
-      SetHighSpeed();
-      WebServer.setArgString(getComponentName(F("Status")), fanSpeedToText());
+    if (strcmp_P(ShortMessage, (PGM_P)F("O")) == 0){TurnOff();WebServer.setArgString(getComponentName(F("S")), fanSpeedToText());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L")) == 0){SetLowSpeed();WebServer.setArgString(getComponentName(F("S")), fanSpeedToText());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("H")) == 0){SetHighSpeed(); WebServer.setArgString(getComponentName(F("S")), fanSpeedToText());
     }
   }
 }

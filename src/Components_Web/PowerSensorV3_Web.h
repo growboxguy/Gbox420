@@ -20,32 +20,3 @@ private:
 protected:
   Module_Web *Parent;
 };
-
-//WEBSITE COMPONENT
-/*
-<div class="card" style="width:90%">
-  <h1>Power</h1>
-    <table class="tg">
-    <tr>
-      <th class="headerRows"><span style="font-weight:bold">Power</span></th>
-      <th class="headerRows"><span style="font-weight:bold">Energy</span></th>
-      <th class="headerRows"><span style="font-weight:bold">Voltage</span></th>						
-    </tr>
-    <tr>
-      <td id="Power1_Power" class="dataRows"></td>
-      <td id="Power1_Energy" class="dataRows"></td>
-      <td id="Power1_Voltage" class="dataRows"></td>
-    </tr>
-    <tr>
-      <th class="headerRows"><span style="font-weight:bold">Current</span></th>
-      <th class="headerRows"><span style="font-weight:bold">Frequency</span></th>
-      <th class="headerRows"><span style="font-weight:bold">Power factor</span></th>						
-    </tr>
-    <tr>
-      <td id="Power1_Current" class="dataRows"></td>
-      <td id="Power1_Frequency" class="dataRows"></td>
-      <td id="Power1_PowerFactor" class="dataRows"></td>
-    </tr>					  
-    </table>						 
-</div>
-*/

@@ -47,11 +47,11 @@ protected:
     <td class="headerRows"><span style="font-weight:bold">Dark/Min/Max</span></td>
     </tr>
     <tr>
-    <td id="LightSensor1_Dark" class="dataRows"></td>
-    <td id="LightSensor1_Reading" class="dataRows"></td>
-    <td id="LightSensor1_Calibrated" class="dataRows"></td>
+    <td id="LtSen1_Dark" class="dataRows"></td>
+    <td id="LtSen1_Reading" class="dataRows"></td>
+    <td id="LtSen1_Calibrated" class="dataRows"></td>
     </tr>				 
   </table> 
-  <button id="LightSensor1_Calibrate" type="button" title="Measure light reading in dark, 0 and 100% brightness">Calibrate</button><br>
+  <button id="LtSen1_Calibrate" type="button" title="Measure light reading in dark, 0 and 100% brightness">Calibrate</button><br>
 </div>	
 */

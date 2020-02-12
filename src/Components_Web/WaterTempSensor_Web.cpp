@@ -11,6 +11,6 @@ void WaterTempSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
 {
   if (strcmp(url, "/GrowBox.html.json") == 0)
   {
-    WebServer.setArgString(getComponentName(F("Temp")), getTempText(true, false));
+    WebServer.setArgString(getComponentName(F("T")), getTempText(true, false));
   }
 }

@@ -14,12 +14,12 @@ void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strcmp(url, "/GrowBox.html.json") == 0)
   {
-    WebServer.setArgInt(getComponentName(F("OnHour")), *OnHour);
-    WebServer.setArgInt(getComponentName(F("OnMinute")), *OnMinute);
-    WebServer.setArgInt(getComponentName(F("OffHour")), *OffHour);
-    WebServer.setArgInt(getComponentName(F("OffMinute")), *OffMinute);
-    WebServer.setArgInt(getComponentName(F("Brightness")), *Brightness);
-    WebServer.setArgInt(getComponentName(F("BrightnessSlider")), *Brightness);
+    WebServer.setArgInt(getComponentName(F("OnH")), *OnHour);   //On hour
+    WebServer.setArgInt(getComponentName(F("OnM")), *OnMinute);   //On minute
+    WebServer.setArgInt(getComponentName(F("OfH")), *OffHour);    //Off hour
+    WebServer.setArgInt(getComponentName(F("OfM")), *OffMinute);  //Off minute
+    WebServer.setArgInt(getComponentName(F("B")), *Brightness);  //Brightness percentage 
+    WebServer.setArgInt(getComponentName(F("BS")), *Brightness); //Brightness slider 
   }
 }
 
@@ -27,10 +27,10 @@ void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strcmp(url, "/GrowBox.html.json") == 0)
   {
-    WebServer.setArgString(getComponentName(F("Status")), getStatusText(true));
-    WebServer.setArgString(getComponentName(F("TimerEnabled")), getTimerOnOffText(true));
-    WebServer.setArgString(getComponentName(F("OnTime")), getOnTimeText());
-    WebServer.setArgString(getComponentName(F("OffTime")), getOffTimeText());
+    WebServer.setArgString(getComponentName(F("S")), getStatusText(true));
+    WebServer.setArgString(getComponentName(F("T")), getTimerOnOffText(true));
+    WebServer.setArgString(getComponentName(F("OnT")), getOnTimeText());
+    WebServer.setArgString(getComponentName(F("OfT")), getOffTimeText());
   }
 }
 
@@ -42,22 +42,10 @@ void Lights_Web::websiteEvent_Button(char *Button)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("On")) == 0)
-    {
-      setLightOnOff(true, true);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Off")) == 0)
-    {
-      setLightOnOff(false, true);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("TimerEnable")) == 0)
-    {
-      setTimerOnOff(true);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("TimerDisable")) == 0)
-    {
-      setTimerOnOff(false);
-    }
+    if (strcmp_P(ShortMessage, (PGM_P)F("On")) == 0){setLightOnOff(true, true);}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Of")) == 0){setLightOnOff(false, true);}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("TOn")) == 0){setTimerOnOff(true);}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("TOff")) == 0){setTimerOnOff(false);}
   }
 }
 
@@ -69,25 +57,10 @@ void Lights_Web::websiteEvent_Field(char *Field)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Brightness")) == 0)
-    {
-      setBrightness(WebServer.getArgInt(), true);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("OnHour")) == 0)
-    {
-      setOnHour(WebServer.getArgInt());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("OnMinute")) == 0)
-    {
-      setOnMinute(WebServer.getArgInt());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("OffHour")) == 0)
-    {
-      setOffHour(WebServer.getArgInt());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("OffMinute")) == 0)
-    {
-      setOffMinute(WebServer.getArgInt());
-    }
+    if (strcmp_P(ShortMessage, (PGM_P)F("B")) == 0){setBrightness(WebServer.getArgInt(), true);}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("OnH")) == 0){setOnHour(WebServer.getArgInt());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("OnM")) == 0){setOnMinute(WebServer.getArgInt());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("OfH")) == 0){setOffHour(WebServer.getArgInt());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("OfM")) == 0){setOffMinute(WebServer.getArgInt());}
   }
 }

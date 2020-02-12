@@ -39,11 +39,11 @@ protected:
   bool RunAllRequested = false;
   bool ConsoleReportRequested = false; 
   char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
-  Common *ReportQueue[QueueDepth];
-  Common *RefreshQueue_Sec[QueueDepth];
-  Common *RefreshQueue_FiveSec[QueueDepth];
-  Common *RefreshQueue_Minute[QueueDepth];
-  Common *RefreshQueue_QuarterHour[QueueDepth];
+  Common *ReportQueue[QueueDepth] = {};  //aggregate initializer: Same as initializing to null pointers
+  Common *RefreshQueue_Sec[QueueDepth]= {};
+  Common *RefreshQueue_FiveSec[QueueDepth]= {};
+  Common *RefreshQueue_Minute[QueueDepth]= {};
+  Common *RefreshQueue_QuarterHour[QueueDepth]= {};
   byte reportQueueItemCount = 0; //Tracking queue item count
   byte refreshQueueItemCount_Sec = 0;
   byte refreshQueueItemCount_FiveSec = 0;

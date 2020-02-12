@@ -12,8 +12,8 @@ void LightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strcmp(url, "/GrowBox.html.json") == 0)
   {
-    WebServer.setArgString(getComponentName(F("Dark")), getDarkText(true));
-    WebServer.setArgString(getComponentName(F("Reading")), getReadingText(false));
+    WebServer.setArgString(getComponentName(F("D")), getDarkText(true));
+    WebServer.setArgString(getComponentName(F("R")), getReadingText(false));
   }
 }
 
@@ -25,7 +25,7 @@ void LightSensor_Web::websiteEvent_Button(char *Button)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Calibrate")) == 0)
+    if (strcmp_P(ShortMessage, (PGM_P)F("C")) == 0)
     {
       triggerCalibration();
     }

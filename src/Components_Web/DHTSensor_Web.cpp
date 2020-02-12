@@ -12,7 +12,7 @@ void DHTSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 { //When the website is refreshing
   if (strcmp(url, "/GrowBox.html.json") == 0)
   {
-    WebServer.setArgString(getComponentName(F("Temp")), getTempText(true, false)); //Shows the latest reading
-    WebServer.setArgString(getComponentName(F("Humidity")), getHumidityText(true, false));
+    WebServer.setArgString(getComponentName(F("T")), getTempText(true, false)); //Shows the latest reading
+    WebServer.setArgString(getComponentName(F("H")), getHumidityText(true, false));
   }
 }

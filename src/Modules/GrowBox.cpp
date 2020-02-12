@@ -16,25 +16,23 @@
 #include "../Components_Web/WeightSensor_Web.h"
 #include "../Components_Web/ModuleSkeleton_Web.h" //Only for demonstration purposes
 
-static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
-
 GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings) : Common_Web(Name)
 { //Constructor
   this->Name = Name;
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
   ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets; 
   Sound1 = new Sound_Web(F("Sound1"), this, &BoxSettings->Sound1); //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, VARIABLENAME))
-  InFan = new Fan_Web(F("InFan"), this, &BoxSettings->InFan);      //passing: Component name, GrowBox object the component belongs to, Default settings)
-  ExFan = new Fan_Web(F("ExFan"), this, &BoxSettings->ExFan);
-  Light1 = new Lights_Web(F("Light1"), this, &BoxSettings->Light1);
-  //LightSensor1 = new LightSensor_Web(F("LightSensor1"), this, &BoxSettings->LightSensor1, Light1); //Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
-  //Power1 = new PowerSensor_Web(F("Power1"), this, &Serial2);
-  //Power1 = new PowerSensorV3_Web(F("Power1"), this, &Serial2); //Only for PZEM004T V3.0
-  InDHT = new DHTSensor_Web(F("InDHT"), this, &BoxSettings->InDHT);
-  ExDHT = new DHTSensor_Web(F("ExDHT"), this, &BoxSettings->ExDHT);
+  IFan = new Fan_Web(F("IFan"), this, &BoxSettings->IFan);      //passing: Component name, GrowBox object the component belongs to, Default settings)
+  EFan = new Fan_Web(F("EFan"), this, &BoxSettings->EFan);
+  Lt1 = new Lights_Web(F("Lt1"), this, &BoxSettings->Lt1);
+  //LtSen1 = new LightSensor_Web(F("LtSen1"), this, &BoxSettings->LtSen1, Lt1); //Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
+  //Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2);
+  //Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); //Only for PZEM004T V3.0
+  IDHT = new DHTSensor_Web(F("IDHT"), this, &BoxSettings->IDHT);
+  EDHT = new DHTSensor_Web(F("EDHT"), this, &BoxSettings->EDHT);
   //Pressure1 = new PressureSensor_Web(F("Pressure1"), this, &BoxSettings->Pressure1);
-  Aero_T1 = new Aeroponics_Tank_Web(F("Aero_T1"), this, &BoxSettings->Aero_T1_Common, &BoxSettings->Aero_T1_Specific, Pressure1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
-  Aero_NT1 = new Aeroponics_NoTank_Web(F("Aero_NT1"), this, &BoxSettings->Aero_NT1_Common, &BoxSettings->Aero_NT1_Specific, Pressure1);
+  //AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &BoxSettings->AeroT1_Common, &BoxSettings->AeroT1_Specific, Pressure1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  //Aero1 = new Aeroponics_NoTank_Web(F("Aero1"), this, &BoxSettings->Aero1_Common, &BoxSettings->Aero1_Specific, Pressure1);
   //PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &BoxSettings->PHSensor1);
   //WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
   //WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
@@ -43,13 +41,13 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
   //ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
   //ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
 
-  //addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  //addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  //addToRefreshQueue_QuarterHour(this); //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
-  //addToWebsiteQueue_Load(this);        //Subscribing to the Website load event
-  ///addToWebsiteQueue_Refresh(this);     //Subscribing to the Website refresh event
-  //addToWebsiteQueue_Field(this);       //Subscribing to the Website field submit event
-  //addToWebsiteQueue_Button(this);      //Subscribing to the Website button press event
+  addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  addToRefreshQueue_QuarterHour(this); //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
+  addToWebsiteQueue_Load(this);        //Subscribing to the Website load event
+  addToWebsiteQueue_Refresh(this);     //Subscribing to the Website refresh event
+  addToWebsiteQueue_Field(this);       //Subscribing to the Website field submit event
+  addToWebsiteQueue_Button(this);      //Subscribing to the Website button press event
   logToSerials(F("GrowBox object created, refreshing..."), true, 0);
   runAll();
   addToLog(F("GrowBox initialized"), 0);
@@ -165,51 +163,6 @@ void GrowBox::refresh_QuarterHour()
   reportToGoogleSheetsTrigger();
 }
 
-
-
-//////////////////////////////////////////////////////////////////
-//Even logs on the website
-void GrowBox::addToLog(const char *LongMessage, byte Indent)
-{ //adds a log entry that is displayed on the web interface
-  logToSerials(LongMessage, true, Indent);
-  for (byte i = LogDepth - 1; i > 0; i--)
-  {                                       //Shift every log entry one up, dropping the oldest
-    memset(&Logs[i], 0, sizeof(Logs[i])); //clear variable
-    strncpy(Logs[i], Logs[i - 1], MaxTextLength);
-  }
-  memset(&Logs[0], 0, sizeof(Logs[0]));         //clear variable
-  strncpy(Logs[0], LongMessage, MaxTextLength); //instert new log to [0]
-}
-
-void GrowBox::addToLog(const __FlashStringHelper *LongMessage, byte Indent)
-{ //function overloading: same function name, different parameter type
-  logToSerials(LongMessage, true, Indent);
-  for (byte i = LogDepth - 1; i > 0; i--)
-  {                                       //Shift every log entry one up, dropping the oldest
-    memset(&Logs[i], 0, sizeof(Logs[i])); //clear variable
-    strncpy(Logs[i], Logs[i - 1], MaxTextLength);
-  }
-  memset(&Logs[0], 0, sizeof(Logs[0]));                  //clear variable
-  strncpy_P(Logs[0], (PGM_P)LongMessage, MaxTextLength); //instert new log to [0]
-}
-
-char *GrowBox::eventLogToJSON(bool Append)
-{ //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
-  if (!Append)
-    memset(&LongMessage[0], 0, sizeof(LongMessage));
-  strcat_P(LongMessage, (PGM_P)F("["));
-  for (int i = LogDepth - 1; i >= 0; i--)
-  {
-    strcat_P(LongMessage, (PGM_P)F("\""));
-    strcat(LongMessage, Logs[i]);
-    strcat_P(LongMessage, (PGM_P)F("\""));
-    if (i > 0)
-      strcat_P(LongMessage, (PGM_P)F(","));
-  }
-  LongMessage[strlen(LongMessage)] = ']';
-  return LongMessage;
-}
-
 //////////////////////////////////////////////////////////////////
 //Settings
 void GrowBox::setDebugOnOff(bool State)
@@ -232,10 +185,10 @@ void GrowBox::setMetricSystemEnabled(bool MetricEnabled)
   if (MetricEnabled != *MetricSystemEnabled)
   { //if there was a change
     *MetricSystemEnabled = MetricEnabled;
-    //BoxSettings -> InFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> InFanSwitchTemp);
+    //BoxSettings -> IFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> IFanSwitchTemp);
     Pressure1->Pressure->resetAverage();
-    InDHT->Temp->resetAverage();
-    ExDHT->Temp->resetAverage();
+    IDHT->Temp->resetAverage();
+    EDHT->Temp->resetAverage();
     WaterTemp1->Temp->resetAverage();
     RefreshAllRequested = true;
   }
@@ -287,25 +240,25 @@ void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
     memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
     strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));
     strcat_P(LongMessage, (PGM_P)F("\"InternalTemp\":\""));
-    strcat(LongMessage, InDHT->getTempText(false, true));
+    strcat(LongMessage, IDHT->getTempText(false, true));
     strcat_P(LongMessage, (PGM_P)F("\",\"ExternalTemp\":\""));
-    strcat(LongMessage, ExDHT->getTempText(false, true));
+    strcat(LongMessage, EDHT->getTempText(false, true));
     strcat_P(LongMessage, (PGM_P)F("\",\"InternalHumidity\":\""));
-    strcat(LongMessage, InDHT->getHumidityText(false, true));
+    strcat(LongMessage, IDHT->getHumidityText(false, true));
     strcat_P(LongMessage, (PGM_P)F("\",\"ExternalHumidity\":\""));
-    strcat(LongMessage, ExDHT->getHumidityText(false, true));
+    strcat(LongMessage, EDHT->getHumidityText(false, true));
     strcat_P(LongMessage, (PGM_P)F("\",\"InternalFan\":\""));
-    strcat(LongMessage, InFan->fanSpeedToNumber());
+    strcat(LongMessage, IFan->fanSpeedToNumber());
     strcat_P(LongMessage, (PGM_P)F("\",\"ExhaustFan\":\""));
-    strcat(LongMessage, ExFan->fanSpeedToNumber());
-    strcat_P(LongMessage, (PGM_P)F("\",\"Light1_Status\":\""));
-    strcat(LongMessage, Light1->getStatusText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Light1_Brightness\":\""));
-    strcat(LongMessage, Light1->getBrightnessText());
+    strcat(LongMessage, EFan->fanSpeedToNumber());
+    strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_Status\":\""));
+    strcat(LongMessage, Lt1->getStatusText(false));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_Brightness\":\""));
+    strcat(LongMessage, Lt1->getBrightnessText());
     strcat_P(LongMessage, (PGM_P)F("\",\"LightReading\":\""));
-    strcat(LongMessage, LightSensor1->getReadingText(true));
+    strcat(LongMessage, LtSen1->getReadingText(true));
     strcat_P(LongMessage, (PGM_P)F("\",\"Dark\":\""));
-    strcat(LongMessage, LightSensor1->getDarkText(false));
+    strcat(LongMessage, LtSen1->getDarkText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"WaterLevel\":\""));
     strcat(LongMessage, WaterLevel1->getLevelText());
     strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
@@ -315,29 +268,29 @@ void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
     strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));
     strcat(LongMessage, Pressure1->getPressureText(false, true));
     strcat_P(LongMessage, (PGM_P)F("\",\"Power\":\""));
-    strcat(LongMessage, Power1->getPowerText(false));
+    strcat(LongMessage, Pow1->getPowerText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"Energy\":\""));
-    strcat(LongMessage, Power1->getEnergyText(false));
+    strcat(LongMessage, Pow1->getEnergyText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"Voltage\":\""));
-    strcat(LongMessage, Power1->getVoltageText(false));
+    strcat(LongMessage, Pow1->getVoltageText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"Current\":\""));
-    strcat(LongMessage, Power1->getCurrentText(false));
-    //strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,Power1 -> getFrequencyText(false));   //Only for PZEM004T V3.0
-    //strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,Power1 -> getPowerFactorText());    //Only for PZEM004T V3.0
-    strcat_P(LongMessage, (PGM_P)F("\",\"Light1_Timer\":\""));
-    strcat(LongMessage, Light1->getTimerOnOffText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Light1_OnTime\":\""));
-    strcat(LongMessage, Light1->getOnTimeText());
-    strcat_P(LongMessage, (PGM_P)F("\",\"Light1_OffTime\":\""));
-    strcat(LongMessage, Light1->getOffTimeText());
+    strcat(LongMessage, Pow1->getCurrentText(false));
+    //strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,Pow1 -> getFrequencyText(false));   //Only for PZEM004T V3.0
+    //strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,Pow1 -> getPowerFactorText());    //Only for PZEM004T V3.0
+    strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_Timer\":\""));
+    strcat(LongMessage, Lt1->getTimerOnOffText(false));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_OnTime\":\""));
+    strcat(LongMessage, Lt1->getOnTimeText());
+    strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_OffTime\":\""));
+    strcat(LongMessage, Lt1->getOffTimeText());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroInterval\":\""));
-    strcat(LongMessage, Aero_NT1->getInterval());
+    strcat(LongMessage, Aero1->getInterval());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroDuration\":\""));
-    strcat(LongMessage, Aero_NT1->getDuration());
+    strcat(LongMessage, Aero1->getDuration());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroSprayPressure\":\""));
-    strcat(LongMessage, toText(Aero_NT1->LastSprayPressure));
-    //strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,Aero_T1 -> getInterval());
-    //strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,Aero_T1 -> getDuration());
+    strcat(LongMessage, toText(Aero1->LastSprayPressure));
+    //strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,AeroT1 -> getInterval());
+    //strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,AeroT1 -> getDuration());
 
     strcat_P(LongMessage, (PGM_P)F("\"},\"Settings\":{"));
     strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
@@ -348,7 +301,7 @@ void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
   */
 }
 //This is how a sent out message looks like:
-//{parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Light1_Status":"0","Light1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Light1_Timer":"1","Light1_OnTime":"04:20","Light1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
+//{parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
 
 void GrowBox::setPushingBoxLogRelayID(const char *ID)
 {

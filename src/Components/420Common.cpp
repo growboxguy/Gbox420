@@ -49,7 +49,7 @@ char *Common::getComponentName(const __FlashStringHelper *ComponentName)
 
 bool Common::isThisMyComponent(char const *lookupName)
 { //When a web component triggers an action, this function decides if the component belonged to the class
-  // lookupName is in the form of: InstanceName_FunctionName . Examles: Light1_On , Light1_OnTime, LightSensor1_Raw
+  // lookupName is in the form of: InstanceName_FunctionName . Examles: Lt1_On , Lt1_OnTime, LtSen1_Raw
 
   // Serial.print("Component :");
   // Serial.println(lookupName);
