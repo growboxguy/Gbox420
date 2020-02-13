@@ -19,7 +19,7 @@ Fan::Fan(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings 
 
 void Fan::refresh_Minute()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Minute();
   checkFanStatus();
 }

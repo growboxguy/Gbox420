@@ -12,7 +12,7 @@ Aeroponics_Tank_Web::Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module
 
 void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/GrowBox.html.json") == 0)
+  if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgFloat(getComponentName(F("PresLow")), *PressureLow);
     WebServer.setArgFloat(getComponentName(F("PresHigh")), *PressureHigh);
@@ -25,7 +25,7 @@ void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 
 void Aeroponics_Tank_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/GrowBox.html.json") == 0)
+  if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgString(getComponentName(F("Pressure")), FeedbackPressureSensor->getPressureText(true, false));
     WebServer.setArgString(getComponentName(F("SprayEnabled")), sprayStateToText());

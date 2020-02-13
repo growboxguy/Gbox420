@@ -40,7 +40,7 @@ ELClientWebServer WebServer(&ESPLink);    //ESP-link WebServer API
 ELClientCmd ESPCmd(&ESPLink);             //ESP-link - Helps getting the current time from the internet using NTP
 ELClientRest PushingBoxRestAPI(&ESPLink); //ESP-link REST API
 Settings * BoxSettings;                //This object will store the settings loaded from the EEPROM. Persistent between reboots.
-bool *DebugEnabled;
+bool *Debug;
 bool *MetricSystemEnabled;
 GrowBox *GBox;                            //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
@@ -62,7 +62,7 @@ void setup()
   boot_rww_enable();                                   //fix watchdog not loading sketch after a reset error on Mega2560
 
   BoxSettings = loadSettings();
-  DebugEnabled = &BoxSettings ->  DebugEnabled;
+  Debug = &BoxSettings ->  Debug;
   MetricSystemEnabled = &BoxSettings ->  MetricSystemEnabled;
 
   ESPLink.resetCb = &resetWebServer; //Callback subscription: What to do when WiFi reconnects

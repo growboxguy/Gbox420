@@ -24,7 +24,7 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
 
 void Lights::refresh_Minute()
 { //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Minute();
   checkLightTimer();
   checkLightStatus();
@@ -68,7 +68,7 @@ void Lights::checkLightTimer()
         if (!*Status)
         {
           setLightOnOff(true, false); //If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
-          if (*DebugEnabled)
+          if (*Debug)
             logToSerials(F("Timer:Light ON"), true, 4);
         }
       }
@@ -76,7 +76,7 @@ void Lights::checkLightTimer()
           if (*Status)
       {                              //If status is ON
         setLightOnOff(false, false); //Turn OFF the lights (First bool), and do not add it to the log (Second bool)
-        if (*DebugEnabled)
+        if (*Debug)
           logToSerials(F("Timer:Light OFF"), true, 4);
       }
     }
@@ -87,14 +87,14 @@ void Lights::checkLightTimer()
         if (!*Status)
         {
           setLightOnOff(true, false);
-          if (*DebugEnabled)
+          if (*Debug)
             logToSerials(F("Timer:Light ON"), true, 4);
         }
       }
       else if (*Status)
       {
         setLightOnOff(false, false);
-        if (*DebugEnabled)
+        if (*Debug)
           logToSerials(F("Timer:Light OFF"), true, 4);
       }
     }

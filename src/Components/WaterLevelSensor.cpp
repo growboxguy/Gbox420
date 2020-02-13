@@ -16,7 +16,7 @@ WaterLevelSensor::WaterLevelSensor(const __FlashStringHelper *Name, Module *Pare
 
 void WaterLevelSensor::refresh_Minute()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Minute();
   bool isAboveSensor1 = !digitalRead(*Pin_1); //Empty: Lowest Water sensor, true if level reached
   bool isAboveSensor2 = !digitalRead(*Pin_2);

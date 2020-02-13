@@ -14,7 +14,7 @@ PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, 
 
 void PressureSensor::refresh_Minute()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Minute();
   readPressure();
 }

@@ -18,13 +18,13 @@ ModuleSkeleton::ModuleSkeleton(const __FlashStringHelper *Name, Module *Parent, 
 
 void ModuleSkeleton::refresh_Sec()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Sec();
 }
 
 void ModuleSkeleton::refresh_FiveSec()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_FiveSec();
   if (RuntimeBool)
   {
@@ -35,13 +35,13 @@ void ModuleSkeleton::refresh_FiveSec()
 
 void ModuleSkeleton::refresh_Minute()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Minute();
 }
 
 void ModuleSkeleton::refresh_QuarterHour()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_QuarterHour();
 }
 

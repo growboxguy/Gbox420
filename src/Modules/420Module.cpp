@@ -89,7 +89,7 @@ void Module::addToRefreshQueue_QuarterHour(Common *Component)
 
 void Module::runSec()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     logToSerials(F("One sec trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_Sec; i++)
   {
@@ -99,7 +99,7 @@ void Module::runSec()
 
 void Module::runFiveSec()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     logToSerials(F("Five sec trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
   {
@@ -109,7 +109,7 @@ void Module::runFiveSec()
 
 void Module::runMinute()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     logToSerials(F("Minute trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_Minute; i++)
   {
@@ -119,7 +119,7 @@ void Module::runMinute()
 
 void Module::runQuarterHour()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     logToSerials(F("Quarter hour trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_QuarterHour; i++)
   {

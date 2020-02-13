@@ -9,7 +9,7 @@ WaterLevelSensor_Web::WaterLevelSensor_Web(const __FlashStringHelper *Name, Modu
 
 void WaterLevelSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/GrowBox.html.json") == 0)
+  if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgString(getComponentName(F("Level")), getLevelGauge());
   }

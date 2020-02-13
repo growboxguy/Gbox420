@@ -12,7 +12,7 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
 
 void Sound::refresh_Sec()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Sec();
   if (*Enabled)
   {

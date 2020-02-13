@@ -11,7 +11,7 @@ Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settin
 
 void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/Settings.html.json") == 0)
+  if (strncmp(url, "/S",2) == 0)
   {
     WebServer.setArgBoolean(getComponentName(F("Enabled")), *Enabled);
   }

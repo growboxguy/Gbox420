@@ -12,7 +12,7 @@ PHSensor_Web::PHSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, 
 
 void PHSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/Settings.html.json") == 0)
+  if (strncmp(url, "/S",2) == 0)
   {
     //WebServer.setArgString(F("PHAlertLow"), toText(GBox -> Reservoir -> PHAlertLow));
     //WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> BoxSettings -> PHAlertHigh));
@@ -23,7 +23,7 @@ void PHSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 
 void PHSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/GrowBox.html.json") == 0)
+  if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgString(getComponentName(F("PH")), getPHText(false));
   }

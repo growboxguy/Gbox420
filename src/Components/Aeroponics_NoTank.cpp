@@ -9,7 +9,7 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Pa
 
 void Aeroponics_NoTank::refresh_Sec()
 { //pump directly connected to aeroponics tote, with an electronically controlled bypass valve
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Sec();
 
   if (BlowOffInProgress && millis() - SprayTimer >= ((uint32_t)*BlowOffTime * 1000))

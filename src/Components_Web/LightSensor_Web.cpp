@@ -10,7 +10,7 @@ LightSensor_Web::LightSensor_Web(const __FlashStringHelper *Name, Module_Web *Pa
 
 void LightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/GrowBox.html.json") == 0)
+  if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgString(getComponentName(F("D")), getDarkText(true));
     WebServer.setArgString(getComponentName(F("R")), getReadingText(false));

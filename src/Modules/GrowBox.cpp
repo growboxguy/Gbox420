@@ -55,9 +55,9 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
 
 void GrowBox::websiteEvent_Load(char *url)
 {
-  if (strcmp(url, "/Settings.html.json") == 0)
+  if (strncmp(url, "/S",2) == 0)
   {
-    WebServer.setArgInt(getComponentName(F("DebugEnabled")), *DebugEnabled);
+    WebServer.setArgInt(getComponentName(F("Debug")), *Debug);
     WebServer.setArgInt(getComponentName(F("MetricSystemEnabled")), *MetricSystemEnabled);
     WebServer.setArgBoolean(getComponentName(F("SheetsEnabled")), *ReportToGoogleSheets);
     WebServer.setArgInt(getComponentName(F("SheetsFrequency")), *SheetsReportingFrequency);
@@ -105,7 +105,7 @@ void GrowBox::websiteEvent_Field(char *Field)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("DebugEnabled")) == 0)
+    if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0)
     {
       setDebugOnOff(WebServer.getArgBoolean());
     }
@@ -130,7 +130,7 @@ void GrowBox::websiteEvent_Field(char *Field)
 
 void GrowBox::refresh_FiveSec()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_FiveSec();
   if (RefreshAllRequested)
   {
@@ -151,14 +151,14 @@ void GrowBox::refresh_FiveSec()
 
 void GrowBox::refresh_Minute()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Minute();
   runReport();
 }
 
 void GrowBox::refresh_QuarterHour()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_QuarterHour();
   reportToGoogleSheetsTrigger();
 }
@@ -167,8 +167,8 @@ void GrowBox::refresh_QuarterHour()
 //Settings
 void GrowBox::setDebugOnOff(bool State)
 {
-  *DebugEnabled = State;
-  if (*DebugEnabled)
+  *Debug = State;
+  if (*Debug)
   {
     addToLog(F("Debug enabled"));
     Sound1->playOnSound();
@@ -319,7 +319,7 @@ void GrowBox::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSOND
   strcat_P(ValueToReport, (PGM_P)F("\":"));
   strcat(ValueToReport, *JSONData);
   strcat_P(ValueToReport, (PGM_P)F("}"));
-  if (*DebugEnabled)
+  if (*Debug)
   { //print the report command to console
     logToSerials(F("api.pushingbox.com"), false, 4);
     logToSerials(&ValueToReport, true, 0);

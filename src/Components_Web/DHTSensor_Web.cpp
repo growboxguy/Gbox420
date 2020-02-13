@@ -10,7 +10,7 @@ DHTSensor_Web::DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent
 
 void DHTSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 { //When the website is refreshing
-  if (strcmp(url, "/GrowBox.html.json") == 0)
+  if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgString(getComponentName(F("T")), getTempText(true, false)); //Shows the latest reading
     WebServer.setArgString(getComponentName(F("H")), getHumidityText(true, false));

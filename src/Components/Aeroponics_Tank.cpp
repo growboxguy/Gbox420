@@ -13,7 +13,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
 
 void Aeroponics_Tank::refresh_Sec()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Sec();
   if (PumpOn)
   { //if pump is on
@@ -36,7 +36,7 @@ void Aeroponics_Tank::refresh_Sec()
       }
       if (!MixInProgress && BypassSolenoidOn && millis() - PumpTimer >= ((uint32_t)*PrimingTime * 1000))
       { //self priming timeout reached, time to start refilling
-        if (*DebugEnabled)
+        if (*Debug)
           logToSerials(F("Starting refill"), true);
         BypassSolenoidOn = false;
         PumpTimer = millis(); //reset timer to start measuring refill time
@@ -51,7 +51,7 @@ void Aeroponics_Tank::refresh_Sec()
   { //if pump is not disabled and Pressure reached low limit: turn on pump
     if (!PumpOn && !BypassSolenoidOn)
     { //start the bypass
-      if (*DebugEnabled)
+      if (*Debug)
         logToSerials(F("Starting bypass"), true);
       BypassSolenoidOn = true;
       PumpOn = true;
@@ -74,7 +74,7 @@ void Aeroponics_Tank::refresh_Sec()
     { //if time to start spraying (AeroInterval in Minutes)
       SpraySolenoidOn = true;
       Parent->getSoundObject()->playOnSound();
-      if (*DebugEnabled)
+      if (*Debug)
         logToSerials(F("Starting spray"), true);
       SprayTimer = millis();
     }

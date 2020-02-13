@@ -18,7 +18,7 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
 
 void WeightSensor::refresh_Minute()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Minute();
   if(TareRequested){
     TareRequested = false;

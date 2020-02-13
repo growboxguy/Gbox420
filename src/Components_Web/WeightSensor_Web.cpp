@@ -12,7 +12,7 @@ WeightSensor_Web::WeightSensor_Web(const __FlashStringHelper *Name, Module_Web *
 
 void WeightSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/Settings.html.json") == 0)
+  if (strncmp(url, "/S",2) == 0)
   {
     //
   }
@@ -20,7 +20,7 @@ void WeightSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 
 void WeightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/Settings.html.json") == 0)
+  if (strncmp(url, "/S",2) == 0)
   {
     WebServer.setArgString(getComponentName(F("TareOffset")), toText(*TareOffset));
     WebServer.setArgString(getComponentName(F("Scale")), toText(*Scale));

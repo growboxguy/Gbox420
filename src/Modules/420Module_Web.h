@@ -40,7 +40,7 @@ protected:
 <div class="card" style="width:90%">
   <h1>Settings</h1>
   <button id="GBox1_RestoreDefaults" type="button" style="margin-top:0px" title="Restore settings to sketch defaults">Restore defaults</button>
-  <form><label><input type="checkbox" name="GBox1_DebugEnabled" title="Debug entres on Serial log">Debug enabled </label><input type="submit" value="Set"></form>
+  <form><label><input type="checkbox" name="GBox1_Debug" title="Debug entres on Serial log">Debug enabled </label><input type="submit" value="Set"></form>
   <form><label><input type="checkbox" name="GBox1_MetricSystemEnabled" title="Use imperial units(F,PSI) or metric (C,bar)">Metric units </label><input type="submit" value="Set"></form>				
 </div>
 

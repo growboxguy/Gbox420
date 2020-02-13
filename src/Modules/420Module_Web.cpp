@@ -64,7 +64,7 @@ void Module_Web::refreshEvent(char *url)
 
 void Module_Web::buttonEvent(char *button)
 { //Called when any button on the website is pressed.
-  if (*DebugEnabled)
+  if (*Debug)
     logToSerials(&button, true, 0);
   for (int i = 0; i < WebsiteQueueItemCount_Button; i++)
   {
@@ -74,7 +74,7 @@ void Module_Web::buttonEvent(char *button)
 
 void Module_Web::setFieldEvent(char *field)
 { //Called when any field on the website is updated.
-  if (*DebugEnabled)
+  if (*Debug)
     logToSerials(&field, true, 0);
   for (int i = 0; i < WebsiteQueueItemCount_Field; i++)
   {

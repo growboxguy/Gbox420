@@ -14,7 +14,7 @@ WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent
 
 void WaterTempSensor::refresh_Minute()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Minute();
   TempSensor->requestTemperatures();
   if (*MetricSystemEnabled)

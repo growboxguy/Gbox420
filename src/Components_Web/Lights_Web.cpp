@@ -12,7 +12,7 @@ Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Sett
 
 void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/GrowBox.html.json") == 0)
+  if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgInt(getComponentName(F("OnH")), *OnHour);   //On hour
     WebServer.setArgInt(getComponentName(F("OnM")), *OnMinute);   //On minute
@@ -25,7 +25,7 @@ void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 
 void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/GrowBox.html.json") == 0)
+  if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgString(getComponentName(F("S")), getStatusText(true));
     WebServer.setArgString(getComponentName(F("T")), getTimerOnOffText(true));

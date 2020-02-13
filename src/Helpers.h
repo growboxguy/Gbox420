@@ -23,7 +23,7 @@ extern char CurrentTime[MaxTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
 extern Settings * BoxSettings;
-extern bool *DebugEnabled;
+extern bool *Debug;
 extern bool *MetricSystemEnabled;
 
 //Class specific variables

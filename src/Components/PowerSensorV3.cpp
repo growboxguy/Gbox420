@@ -11,7 +11,7 @@ PowerSensorV3::PowerSensorV3(const __FlashStringHelper *Name, Module *Parent, Ha
 
 void PowerSensorV3::refresh_FiveSec()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Minute();
   Voltage = Sensor->voltage();      //AC Voltage (V)
   Current = Sensor->current();      //Current (A)

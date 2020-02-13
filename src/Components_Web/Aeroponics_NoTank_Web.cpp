@@ -12,7 +12,7 @@ Aeroponics_NoTank_Web::Aeroponics_NoTank_Web(const __FlashStringHelper *Name, Mo
 
 void Aeroponics_NoTank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/GrowBox.html.json") == 0)
+  if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgInt(getComponentName(F("BlowOffTime")), *BlowOffTime);
     WebServer.setArgInt(getComponentName(F("PumpTimeout")), *PumpTimeout);
@@ -24,7 +24,7 @@ void Aeroponics_NoTank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 
 void Aeroponics_NoTank_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strcmp(url, "/GrowBox.html.json") == 0)
+  if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgString(getComponentName(F("SprayPressure")), pressureToText(LastSprayPressure));
     WebServer.setArgString(getComponentName(F("Pressure")), FeedbackPressureSensor->getPressureText(true, false));
