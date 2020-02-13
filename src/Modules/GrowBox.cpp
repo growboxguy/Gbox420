@@ -16,7 +16,7 @@
 #include "../Components_Web/WeightSensor_Web.h"
 #include "../Components_Web/ModuleSkeleton_Web.h" //Only for demonstration purposes
 
-GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings) : Common_Web(Name), Module_Web(Name)
+GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings) : Common_Web(Name), Module_Web()
 { //Constructor
   this->Name = Name;
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
@@ -25,17 +25,17 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
   IFan = new Fan_Web(F("IFan"), this, &BoxSettings->IFan);      //passing: Component name, GrowBox object the component belongs to, Default settings)
   EFan = new Fan_Web(F("EFan"), this, &BoxSettings->EFan);
   Lt1 = new Lights_Web(F("Lt1"), this, &BoxSettings->Lt1);
-  //LtSen1 = new LightSensor_Web(F("LtSen1"), this, &BoxSettings->LtSen1, Lt1); //Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
-  //Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2);
+  LtSen1 = new LightSensor_Web(F("LtSen1"), this, &BoxSettings->LtSen1, Lt1); //Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
+  Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2);
   //Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); //Only for PZEM004T V3.0
   IDHT = new DHTSensor_Web(F("IDHT"), this, &BoxSettings->IDHT);
   EDHT = new DHTSensor_Web(F("EDHT"), this, &BoxSettings->EDHT);
-  //Pres1 = new PressureSensor_Web(F("Pres1"), this, &BoxSettings->Pres1);
-  //AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &BoxSettings->AeroT1_Common, &BoxSettings->AeroT1_Specific, Pres1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  Pres1 = new PressureSensor_Web(F("Pres1"), this, &BoxSettings->Pres1);
+  AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &BoxSettings->AeroT1_Common, &BoxSettings->AeroT1_Specific, Pres1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
   Aero1 = new Aeroponics_NoTank_Web(F("Aero1"), this, &BoxSettings->Aero1_Common, &BoxSettings->Aero1_Specific, Pres1);
-  //PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &BoxSettings->PHSensor1);
+  PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &BoxSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
-  //WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
+  WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
   //Weight1 = new WeightSensor_Web(F("Weight1"), this, &BoxSettings->Weight1);
   //Weight2 = new WeightSensor_Web(F("Weight2"), this, &BoxSettings->Weight2);
   //ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes

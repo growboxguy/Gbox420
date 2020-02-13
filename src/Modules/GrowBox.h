@@ -26,7 +26,7 @@ class ModuleSkeleton_Web; //Only for demonstration purposes
 
 extern ELClientRest PushingBoxRestAPI;
 
-class GrowBox : public Module_Web
+class GrowBox : public Common_Web, public Module_Web
 {
 public:
   GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings); //constructor

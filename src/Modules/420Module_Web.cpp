@@ -1,9 +1,8 @@
 #include "420Module_Web.h"
 #include "../Components_Web/Sound_Web.h"
 
-Module_Web::Module_Web(const __FlashStringHelper *Name) : Common_Web(Name), Module(Name)
+Module_Web::Module_Web() : Module()
 {
-  this->Name = Name;
   logToSerials(F("Module_Web object created"), true, 0);
 }
 

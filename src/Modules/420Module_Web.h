@@ -13,10 +13,10 @@
 extern ELClientRest PushingBoxRestAPI;
 class Sound_Web;
 
-class Module_Web : public Module, virtual public Common_Web
+class Module_Web : public Module
 {
 public:
-  Module_Web(const __FlashStringHelper *Name); //constructor
+  Module_Web(); //constructor
   void runReport();
   void runAll();
   void runSec();
