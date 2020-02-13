@@ -14,9 +14,9 @@ DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
 
 void DHTSensor::refresh_Minute()
 {
-  if (*DebugEnabled)
+  if (*Debug)
     Common::refresh_Minute();
-  if (*MetricSystemEnabled)
+  if (*Metric)
   {
     Temp->updateAverage(Sensor->readTemperature());
   }

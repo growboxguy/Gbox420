@@ -34,27 +34,3 @@ protected:
   byte WebsiteQueueItemCount_Button = 0;
   byte WebsiteQueueItemCount_Field = 0;
 };
-
-//WEBSITE COMPONENT
-/*
-<div class="card" style="width:90%">
-  <h1>Settings</h1>
-  <button id="GBox1_RestoreDefaults" type="button" style="margin-top:0px" title="Restore settings to sketch defaults">Restore defaults</button>
-  <form><label><input type="checkbox" name="GBox1_Debug" title="Debug entres on Serial log">Debug enabled </label><input type="submit" value="Set"></form>
-  <form><label><input type="checkbox" name="GBox1_MetricSystemEnabled" title="Use imperial units(F,PSI) or metric (C,bar)">Metric units </label><input type="submit" value="Set"></form>				
-</div>
-
-<div class="card" style="width:90%">
-  <h1>Reporting</h1>					
-  <form><label><input type="checkbox" name="GBox1_SheetsEnabled">Google Sheets, every <input style="width: 55px;" min=15 max=1440 step=15 name="GBox1_SheetsFrequency" type="number"/> min </label><input type="submit" value="Set"></form>
-  <form>RelayID:<input type="text" name="GBox1_PushingBoxLogRelayID"  style="width: 150px;" title="DeviceID of the PushingBox logging scenario"/><input type="submit" value="Set"></form>
-</div>
-
-<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
-  <div class="card" style="width:90%">	
-    <h1><span id="Time"></span></h1>				
-    <ul id="list_SerialLog"></ul>
-    <button id="GBox1_Refresh" type="button" style="margin-top:0px" title="Updates the status of every module">Refresh</button>	
-  </div>					
-</div>
-*/

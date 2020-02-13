@@ -31,7 +31,7 @@ void PressureSensor::report()
 void PressureSensor::readPressure()
 {
   float Voltage = ((float)analogRead(*Pin)) * 5 / 1024;
-  if (*MetricSystemEnabled)
+  if (*Metric)
     Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 1.0f); // unit: bar / 100kPa
   else
     Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 14.5038f); //unit: PSI

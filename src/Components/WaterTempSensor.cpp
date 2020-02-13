@@ -17,7 +17,7 @@ void WaterTempSensor::refresh_Minute()
   if (*Debug)
     Common::refresh_Minute();
   TempSensor->requestTemperatures();
-  if (*MetricSystemEnabled)
+  if (*Metric)
   {
     Temp->updateAverage(TempSensor->getTempCByIndex(0));
   }

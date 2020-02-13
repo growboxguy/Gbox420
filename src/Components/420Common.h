@@ -15,7 +15,7 @@ extern char ShortMessage[MaxShotTextLength];
 extern char CurrentTime[MaxTextLength];
 extern Settings * BoxSettings;
 extern bool *Debug;
-extern bool *MetricSystemEnabled;
+extern bool *Metric;
 
 class Common
 {

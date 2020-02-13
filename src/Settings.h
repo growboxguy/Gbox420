@@ -1,7 +1,7 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 7;
+static const byte Version = 8;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM:
 //Global constants
@@ -22,7 +22,7 @@ extern char CurrentTime[MaxTextLength];      //buffer for storing current time i
 typedef struct
 {
   bool Debug = false;          //Logs debug messages to serial and web outputs
-  bool MetricSystemEnabled = true;   //Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
+  bool Metric = true;   //Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
   char PushingBoxLogRelayID[MaxTextLength] = {"v755877CF53383E1"};   //UPDATE THIS DeviceID of the PushingBox logging scenario 
 
   struct GrowBoxSettings{
@@ -90,7 +90,7 @@ typedef struct
     float Offset; //Pressure sensor calibration: voltage reading at 0 pressure
     float Ratio;  //Pressure sensor voltage to pressure ratio
   };
-  struct PressureSensorSettings Pressure1 = {.Pin = A1, .Offset = 0.57, .Ratio = 2.7};
+  struct PressureSensorSettings Pres1 = {.Pin = A1, .Offset = 0.57, .Ratio = 2.7};
 
   struct WeightSensorSettings
   {

@@ -24,7 +24,7 @@ extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
 extern Settings * BoxSettings;
 extern bool *Debug;
-extern bool *MetricSystemEnabled;
+extern bool *Metric;
 
 //Class specific variables
 time_t getNtpTime();

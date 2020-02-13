@@ -26,7 +26,7 @@ void PressureSensor_Web::websiteEvent_Button(char *Button)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("ReadOffset")) == 0)
+    if (strcmp_P(ShortMessage, (PGM_P)F("Offset")) == 0)
     {
       readOffset();
     }

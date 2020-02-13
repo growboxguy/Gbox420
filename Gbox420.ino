@@ -41,7 +41,7 @@ ELClientCmd ESPCmd(&ESPLink);             //ESP-link - Helps getting the current
 ELClientRest PushingBoxRestAPI(&ESPLink); //ESP-link REST API
 Settings * BoxSettings;                //This object will store the settings loaded from the EEPROM. Persistent between reboots.
 bool *Debug;
-bool *MetricSystemEnabled;
+bool *Metric;
 GrowBox *GBox;                            //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 //Thread initialization
@@ -63,7 +63,7 @@ void setup()
 
   BoxSettings = loadSettings();
   Debug = &BoxSettings ->  Debug;
-  MetricSystemEnabled = &BoxSettings ->  MetricSystemEnabled;
+  Metric = &BoxSettings ->  Metric;
 
   ESPLink.resetCb = &resetWebServer; //Callback subscription: What to do when WiFi reconnects
   resetWebServer();                  //reset the WebServer

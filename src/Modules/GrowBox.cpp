@@ -30,11 +30,11 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
   //Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); //Only for PZEM004T V3.0
   IDHT = new DHTSensor_Web(F("IDHT"), this, &BoxSettings->IDHT);
   EDHT = new DHTSensor_Web(F("EDHT"), this, &BoxSettings->EDHT);
-  //Pressure1 = new PressureSensor_Web(F("Pressure1"), this, &BoxSettings->Pressure1);
-  //AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &BoxSettings->AeroT1_Common, &BoxSettings->AeroT1_Specific, Pressure1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
-  //Aero1 = new Aeroponics_NoTank_Web(F("Aero1"), this, &BoxSettings->Aero1_Common, &BoxSettings->Aero1_Specific, Pressure1);
+  //Pres1 = new PressureSensor_Web(F("Pres1"), this, &BoxSettings->Pres1);
+  //AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &BoxSettings->AeroT1_Common, &BoxSettings->AeroT1_Specific, Pres1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  Aero1 = new Aeroponics_NoTank_Web(F("Aero1"), this, &BoxSettings->Aero1_Common, &BoxSettings->Aero1_Specific, Pres1);
   //PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &BoxSettings->PHSensor1);
-  //WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
+  WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
   //WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
   //Weight1 = new WeightSensor_Web(F("Weight1"), this, &BoxSettings->Weight1);
   //Weight2 = new WeightSensor_Web(F("Weight2"), this, &BoxSettings->Weight2);
@@ -58,17 +58,17 @@ void GrowBox::websiteEvent_Load(char *url)
   if (strncmp(url, "/S",2) == 0)
   {
     WebServer.setArgInt(getComponentName(F("Debug")), *Debug);
-    WebServer.setArgInt(getComponentName(F("MetricSystemEnabled")), *MetricSystemEnabled);
-    WebServer.setArgBoolean(getComponentName(F("SheetsEnabled")), *ReportToGoogleSheets);
-    WebServer.setArgInt(getComponentName(F("SheetsFrequency")), *SheetsReportingFrequency);
-    WebServer.setArgString(getComponentName(F("PushingBoxLogRelayID")), BoxSettings -> PushingBoxLogRelayID);
+    WebServer.setArgInt(getComponentName(F("Metric")), *Metric);
+    WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
+    WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
+    WebServer.setArgString(getComponentName(F("Relay")), BoxSettings -> PushingBoxLogRelayID);
   }
 }
 
 void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char *url) //called when website is refreshed.
 {
   WebServer.setArgString(F("Time"), getFormattedTime());
-  WebServer.setArgJson(F("list_SerialLog"), eventLogToJSON()); //Last events that happened in JSON format
+  WebServer.setArgJson(F("Log"), eventLogToJSON()); //Last events that happened in JSON format
 }
 
 void GrowBox::websiteEvent_Button(char *Button)
@@ -79,12 +79,12 @@ void GrowBox::websiteEvent_Button(char *Button)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("SheetsTrigger")) == 0)
+    if (strcmp_P(ShortMessage, (PGM_P)F("SheetsRep")) == 0)
     {
       ReportToGoogleSheetsRequested = true;  //just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
       addToLog(F("Reporting to Sheets"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("ReportTrigger")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SerialRep")) == 0)
     {
       ConsoleReportRequested = true;
       addToLog(F("Reporting to Serial"), false);
@@ -105,26 +105,11 @@ void GrowBox::websiteEvent_Field(char *Field)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0)
-    {
-      setDebugOnOff(WebServer.getArgBoolean());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MetricSystemEnabled")) == 0)
-    {
-      setMetricSystemEnabled(WebServer.getArgBoolean());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsEnabled")) == 0)
-    {
-      setSheetsReportingOnOff(WebServer.getArgBoolean());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsFrequency")) == 0)
-    {
-      setSheetsReportingFrequency(WebServer.getArgInt());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PushingBoxLogRelayID")) == 0)
-    {
-      setPushingBoxLogRelayID(WebServer.getArgString());
-    }
+    if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0){setDebugOnOff(WebServer.getArgBoolean());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Metric")) == 0){setMetric(WebServer.getArgBoolean());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0){setSheetsReportingOnOff(WebServer.getArgBoolean());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsF")) == 0){setSheetsReportingFrequency(WebServer.getArgInt());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PushingBoxLogRelayID")) == 0){setPushingBoxLogRelayID(WebServer.getArgString());}
   }
 }
 
@@ -180,19 +165,19 @@ void GrowBox::setDebugOnOff(bool State)
   }
 }
 
-void GrowBox::setMetricSystemEnabled(bool MetricEnabled)
+void GrowBox::setMetric(bool MetricEnabled)
 {
-  if (MetricEnabled != *MetricSystemEnabled)
+  if (MetricEnabled != *Metric)
   { //if there was a change
-    *MetricSystemEnabled = MetricEnabled;
+    *Metric = MetricEnabled;
     //BoxSettings -> IFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> IFanSwitchTemp);
-    Pressure1->Pressure->resetAverage();
+    Pres1->Pressure->resetAverage();
     IDHT->Temp->resetAverage();
     EDHT->Temp->resetAverage();
     WaterTemp1->Temp->resetAverage();
     RefreshAllRequested = true;
   }
-  if (*MetricSystemEnabled)
+  if (*Metric)
     addToLog(F("Metric units"));
   else
     addToLog(F("Imperial units"));
@@ -233,7 +218,7 @@ void GrowBox::reportToGoogleSheetsTrigger()
   }
 }
 
-void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
+void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsite)
 {/*
   if (*ReportToGoogleSheets || CalledFromWebsite)
   {
@@ -266,7 +251,7 @@ void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
     strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
     strcat(LongMessage, PHSensor1->getPHText(true));
     strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));
-    strcat(LongMessage, Pressure1->getPressureText(false, true));
+    strcat(LongMessage, Pres1->getPressureText(false, true));
     strcat_P(LongMessage, (PGM_P)F("\",\"Power\":\""));
     strcat(LongMessage, Pow1->getPowerText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"Energy\":\""));
@@ -294,7 +279,7 @@ void GrowBox::reportToGoogleSheets(bool CalledFromWebsite)
 
     strcat_P(LongMessage, (PGM_P)F("\"},\"Settings\":{"));
     strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
-    strcat(LongMessage, toText(*MetricSystemEnabled));
+    strcat(LongMessage, toText(*Metric));
     strcat_P(LongMessage, (PGM_P)F("\"}}"));
     relayToGoogleSheets(Name, &LongMessage);
   }

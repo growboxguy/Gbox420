@@ -16,10 +16,10 @@ void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
   {
     WebServer.setArgFloat(getComponentName(F("PresLow")), *PressureLow);
     WebServer.setArgFloat(getComponentName(F("PresHigh")), *PressureHigh);
-    WebServer.setArgInt(getComponentName(F("PumpTimeout")), *PumpTimeout);
-    WebServer.setArgInt(getComponentName(F("PrimingTime")), *PrimingTime);
-    WebServer.setArgInt(getComponentName(F("Interval")), *Interval);
-    WebServer.setArgInt(getComponentName(F("Duration")), *Duration);
+    WebServer.setArgInt(getComponentName(F("Timeout")), *PumpTimeout);
+    WebServer.setArgInt(getComponentName(F("Priming")), *PrimingTime);
+    WebServer.setArgInt(getComponentName(F("Int")), *Interval);
+    WebServer.setArgInt(getComponentName(F("Dur")), *Duration);
   }
 }
 
@@ -27,10 +27,10 @@ void Aeroponics_Tank_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
 {
   if (strncmp(url, "/G",2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("Pressure")), FeedbackPressureSensor->getPressureText(true, false));
-    WebServer.setArgString(getComponentName(F("SprayEnabled")), sprayStateToText());
-    WebServer.setArgString(getComponentName(F("PumpState")), pumpStateToText());
-    WebServer.setArgString(getComponentName(F("BypassState")), onOffToText(BypassSolenoidOn));
+    WebServer.setArgString(getComponentName(F("Pres")), FeedbackPressureSensor->getPressureText(true, false));
+    WebServer.setArgString(getComponentName(F("Spray")), sprayStateToText());
+    WebServer.setArgString(getComponentName(F("Pump")), pumpStateToText());
+    WebServer.setArgString(getComponentName(F("Bypass")), onOffToText(BypassSolenoidOn));
   }
 }
 
@@ -54,7 +54,7 @@ void Aeroponics_Tank_Web::websiteEvent_Button(char *Button)
     {
       setPumpOff(true);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDisable")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0)
     {
       PumpDisable();
     }
@@ -62,11 +62,11 @@ void Aeroponics_Tank_Web::websiteEvent_Button(char *Button)
     {
       Mix();
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SprayEnable")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SprayEn")) == 0)
     {
       setSprayOnOff(true);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SprayDisable")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SprayDis")) == 0)
     {
       setSprayOnOff(false);
     }
@@ -97,23 +97,23 @@ void Aeroponics_Tank_Web::websiteEvent_Field(char *Field)
     {
       setPressureHigh(WebServer.getArgFloat());
     } 
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpTimeout")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0)
     {
       setPumpTimeout(WebServer.getArgInt());
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PrimingTime")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Priming")) == 0)
     {
       setPrimingTime(WebServer.getArgInt());
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Duration")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
     {
       setDuration(WebServer.getArgInt());
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Interval")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Int")) == 0)
     {
       setInterval(WebServer.getArgInt());
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SprayEnabled")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Spray")) == 0)
     {
       setSprayOnOff(WebServer.getArgBoolean());
     }

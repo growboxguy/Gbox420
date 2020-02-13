@@ -38,7 +38,7 @@ public:
   Lights_Web *Lt1;            //Pointer to a Light assembly
   PowerSensor_Web *Pow1;
   //PowerSensorV3_Web * Pow1;  //Only for PZEM004T V3.0
-  PressureSensor_Web *Pressure1;
+  PressureSensor_Web *Pres1;
   PHSensor_Web *PHSensor1;
   Aeroponics_Tank_Web *AeroT1;
   Aeroponics_NoTank_Web *Aero1;   
@@ -63,7 +63,7 @@ private:
   void setSheetsReportingOnOff(bool State);
   void setSheetsReportingFrequency(int Frequency);
   void setDebugOnOff(bool State);
-  void setMetricSystemEnabled(bool MetricEnabled);
+  void setMetric(bool MetricEnabled);
   void setPushingBoxLogRelayID(const char *ID);
 
 protected:
