@@ -1,7 +1,122 @@
 #include "420Module_Web.h"
+#include "../Components_Web/Sound_Web.h"
 
-Module_Web::Module_Web() : Module()
-{ //Constructor
+Module_Web::Module_Web(const __FlashStringHelper *Name) : Common_Web(Name), Module(Name)
+{
+  this->Name = Name;
+  logToSerials(F("Module_Web object created"), true, 0);
+}
+
+void Module_Web::runAll()
+{
+  wdt_reset();
+  runSec();
+  wdt_reset();
+  runFiveSec();
+  wdt_reset();
+  runMinute();
+  wdt_reset();
+  runQuarterHour();
+  wdt_reset();
+}
+
+void Module_Web::runReport()
+{ //Reports component status to Serial output (Arduino and ESP)
+  getFormattedTime(true);
+  getFreeMemory();
+  for (int i = 0; i < reportQueueItemCount; i++)
+  {
+    ReportQueue[i]->report();
+  }
+}
+
+//////////////////////////////////////////////////////////////////
+//Refresh queues: Refresh components inside the Module
+
+void Module_Web::runSec()
+{
+  if (*Debug)
+    logToSerials(F("One sec trigger.."), true, 1);
+  for (int i = 0; i < refreshQueueItemCount_Sec; i++)
+  {
+    RefreshQueue_Sec[i]->refresh_Sec();
+  }
+}
+
+void Module_Web::runFiveSec()
+{
+  if (*Debug)
+    logToSerials(F("Five sec trigger.."), true, 1);
+  for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
+  {
+    RefreshQueue_FiveSec[i]->refresh_FiveSec();
+  }
+}
+
+void Module_Web::runMinute()
+{
+  if (*Debug)
+    logToSerials(F("Minute trigger.."), true, 1);
+  for (int i = 0; i < refreshQueueItemCount_Minute; i++)
+  {
+    RefreshQueue_Minute[i]->refresh_Minute();
+  }
+}
+
+void Module_Web::runQuarterHour()
+{
+  if (*Debug)
+    logToSerials(F("Quarter hour trigger.."), true, 1);
+  for (int i = 0; i < refreshQueueItemCount_QuarterHour; i++)
+  {
+    logToSerials(i, true, 0);
+    RefreshQueue_QuarterHour[i]->refresh_QuarterHour();
+  }
+}
+
+//////////////////////////////////////////////////////////////////
+//Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
+
+void Module_Web::addToReportQueue(Common_Web *Component)
+{
+  if (QueueDepth > reportQueueItemCount)
+    ReportQueue[reportQueueItemCount++] = Component;
+  else
+    logToSerials(F("Report queue overflow!"), true, 0); //Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
+}
+
+void Module_Web::addToRefreshQueue_Sec(Common_Web *Component)
+{
+  if (QueueDepth > refreshQueueItemCount_Sec)
+    RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
+  else
+    logToSerials(F("RefreshQueue_Sec overflow!"), true, 0);
+}
+
+void Module_Web::addToRefreshQueue_FiveSec(Common_Web *Component)
+{
+  if (QueueDepth > refreshQueueItemCount_FiveSec)
+    RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
+  else
+    logToSerials(F("RefreshQueue_FiveSec overflow!"), true, 0);
+}
+
+void Module_Web::addToRefreshQueue_Minute(Common_Web *Component)
+{
+  if (QueueDepth > refreshQueueItemCount_Minute)
+    RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
+  else
+    logToSerials(F("RefreshQueue_Minute overflow!"), true, 0);
+}
+
+void Module_Web::addToRefreshQueue_QuarterHour(Common_Web *Component)
+{
+  if (QueueDepth > refreshQueueItemCount_QuarterHour)
+  {
+    RefreshQueue_QuarterHour[refreshQueueItemCount_QuarterHour++] = Component;
+  }
+  else
+    logToSerials(F("RefreshQueue_QuarterHour overflow!"), true, 0);
 }
 
 //////////////////////////////////////////////////////////////////

@@ -2,9 +2,9 @@
 #include "../Components/Sound.h"
 
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
-
-Module::Module()
-{ //Constructor
+Module::Module(const __FlashStringHelper *Name) : Common(Name)
+{
+  this->Name = Name;
   logToSerials(F("Module object created"), true, 0);
 }
 
@@ -136,7 +136,7 @@ Sound* Module::getSoundObject(){
 //Even logs on the website
 void Module::addToLog(const char *LongMessage, byte Indent)
 { //adds a log entry that is displayed on the web interface
-  //logToSerials(LongMessage, true, Indent);
+  //logToSerials(&LongMessage, true, Indent);
   for (byte i = LogDepth - 1; i > 0; i--)
   {                                       //Shift every log entry one up, dropping the oldest
     memset(&Logs[i], 0, sizeof(Logs[i])); //clear variable
@@ -148,7 +148,7 @@ void Module::addToLog(const char *LongMessage, byte Indent)
 
 void Module::addToLog(const __FlashStringHelper *LongMessage, byte Indent)
 { //function overloading: same function name, different parameter type
-  //logToSerials(LongMessage, true, Indent);
+  //logToSerials(&LongMessage, true, Indent);
   for (byte i = LogDepth - 1; i > 0; i--)
   {                                       //Shift every log entry one up, dropping the oldest
     memset(&Logs[i], 0, sizeof(Logs[i])); //clear variable

@@ -1,9 +1,10 @@
 #pragma once
-#include "420Module_Web.h"
-#include "ELClientRest.h" //ESP-link - REST API
 
 //This class represents a complete growbox with all of its components
 //Responsible for setting up each module, updating their statuses and reporting it
+
+#include "420Module_Web.h"
+#include "ELClientRest.h" //ESP-link - REST API
 
 //forward declaration of classes
 class DHTSensor_Web;
@@ -25,7 +26,7 @@ class ModuleSkeleton_Web; //Only for demonstration purposes
 
 extern ELClientRest PushingBoxRestAPI;
 
-class GrowBox : public Module_Web, public Common_Web
+class GrowBox : public Module_Web
 {
 public:
   GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings); //constructor

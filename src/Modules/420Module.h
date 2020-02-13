@@ -14,7 +14,8 @@ class Sound;
 class Module : virtual public Common
 {
 public:
-  Module(); //constructor
+  Module(const __FlashStringHelper *Name); //constructor
+
   //Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
   void runReport();
   void runAll();
@@ -30,7 +31,6 @@ public:
   void addToRefreshQueue_Minute(Common *Component);
   void addToRefreshQueue_QuarterHour(Common *Component);
   Sound * getSoundObject();
-  void relayToGoogleSheets(__attribute__((unused)) const __FlashStringHelper *Title, __attribute__((unused)) char (*JSONData)[MaxLongTextLength]){};
     
 private:
 

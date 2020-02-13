@@ -16,7 +16,7 @@
 #include "../Components_Web/WeightSensor_Web.h"
 #include "../Components_Web/ModuleSkeleton_Web.h" //Only for demonstration purposes
 
-GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings) : Common_Web(Name)
+GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings) : Common_Web(Name), Module_Web(Name)
 { //Constructor
   this->Name = Name;
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;

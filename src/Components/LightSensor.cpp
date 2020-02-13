@@ -65,10 +65,10 @@ void LightSensor::calibrate(bool AddToLog)
   LightSource->setBrightness(LastBrightness, false); //restore original brightness, without adding a log entry
   LightSource->setLightOnOff(LastStatus, false);     //restore original state, without adding a log entry
   getCalibrationReadings(); 
-  Parent->relayToGoogleSheets(Name,&LongMessage);
   if (AddToLog)
   {
     Parent->addToLog(F("Lights calibrated"), 4);
+    logToSerials(&LongMessage,true,4);
   }
 }
 

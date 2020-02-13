@@ -10,9 +10,9 @@ class PowerSensor_Web : public PowerSensor, public Common_Web
 public:
   PowerSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort); //constructor
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void websiteEvent_Load(char *url){};  //Not used
-  void websiteEvent_Button( char *Button){};  //Not used
-  void websiteEvent_Field( char *Field){};  //Not used
+  void websiteEvent_Load(__attribute__((unused))  char *url){};  //Not used
+  void websiteEvent_Button(__attribute__((unused))  char *Button){};  //Not used
+  void websiteEvent_Field(__attribute__((unused))  char *Field){};  //Not used
   
 private:
  
