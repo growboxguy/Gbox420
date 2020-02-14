@@ -1,0 +1,4 @@
+<map id="Sound_Web::websiteEvent_Button" name="Sound_Web::websiteEvent_Button">
+<area shape="rect" id="node2" href="$class_common.html#a0192d295366bf1e966d8b58a3ce57554" title="Common::isThisMyComponent" alt="" coords="233,5,436,32"/>
+<area shape="rect" id="node3" href="$class_sound.html#a887e5a54b6e00d4a33d63feb53017cfc" title="Sound::playEE" alt="" coords="280,56,389,83"/>
+</map>

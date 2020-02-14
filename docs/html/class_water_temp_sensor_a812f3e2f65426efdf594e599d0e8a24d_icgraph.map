@@ -1,0 +1,4 @@
+<map id="WaterTempSensor::getTempText" name="WaterTempSensor::getTempText">
+<area shape="rect" id="node2" href="$class_water_temp_sensor.html#a116d049ce3a6d7150494eb938a6fb6cc" title="WaterTempSensor::report" alt="" coords="269,5,441,32"/>
+<area shape="rect" id="node3" href="$class_water_temp_sensor___web.html#a930d46ab1e337e085a06058d8c07f76b" title="WaterTempSensor_Web\l::websiteEvent_Refresh" alt="" coords="273,57,438,98"/>
+</map>

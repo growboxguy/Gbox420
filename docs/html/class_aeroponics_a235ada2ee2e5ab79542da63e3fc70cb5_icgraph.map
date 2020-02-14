@@ -1,0 +1,5 @@
+<map id="Aeroponics::PumpDisable" name="Aeroponics::PumpDisable">
+<area shape="rect" id="node2" href="$class_aeroponics___tank.html#a9b1c9377aec2a453e4562bca5ae7afa2" title="Aeroponics_Tank::refresh_Sec" alt="" coords="227,5,428,32"/>
+<area shape="rect" id="node3" href="$class_aeroponics___no_tank___web.html#a33b388e724f870482f90106fdacaa3b4" title="Aeroponics_NoTank_Web\l::websiteEvent_Button" alt="" coords="240,57,415,98"/>
+<area shape="rect" id="node4" href="$class_aeroponics___tank___web.html#a2dea9353cb1709b51f496d8d0caa928e" title="Aeroponics_Tank_Web\l::websiteEvent_Button" alt="" coords="249,122,406,163"/>
+</map>

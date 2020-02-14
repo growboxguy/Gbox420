@@ -1,0 +1,9 @@
+<map id="PHSensor_Web::PHSensor_Web" name="PHSensor_Web::PHSensor_Web">
+<area shape="rect" id="node2" href="$class_module___web.html#a9b1a806569076aa701e961d54f888447" title="Module_Web::addToReportQueue" alt="" coords="272,5,491,32"/>
+<area shape="rect" id="node3" href="$class_module___web.html#ac449bdaf2aae62ba30ee63a58b1bdd5d" title="Module_Web::addToRefresh\lQueue_Minute" alt="" coords="287,57,475,98"/>
+<area shape="rect" id="node4" href="$class_module___web.html#a11f84c9609ed88d1bfcd869d64775e93" title="Module_Web::addToWebsite\lQueue_Load" alt="" coords="286,122,477,163"/>
+<area shape="rect" id="node6" href="$class_module___web.html#aee7880f65926af22ba1b83a73607e3b6" title="Module_Web::addToWebsite\lQueue_Refresh" alt="" coords="286,187,477,229"/>
+<area shape="rect" id="node7" href="$class_module___web.html#a9f9ef9212523d06a130c5e9046b81adf" title="Module_Web::addToWebsite\lQueue_Field" alt="" coords="286,253,477,294"/>
+<area shape="rect" id="node8" href="$class_module___web.html#adadb1643a6b460c0d53a7341bb356ee1" title="Module_Web::addToWebsite\lQueue_Button" alt="" coords="286,318,477,359"/>
+<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="539,163,633,189"/>
+</map>

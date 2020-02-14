@@ -1,0 +1,4 @@
+<map id="WaterLevelSensor_Web::websiteEvent_Refresh" name="WaterLevelSensor_Web::websiteEvent_Refresh">
+<area shape="rect" id="node2" href="$class_common.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="216,5,419,32"/>
+<area shape="rect" id="node3" href="$class_water_level_sensor.html#ac0fe047b12952693055ed7222d7a4aaa" title="WaterLevelSensor::getLevel\lGauge" alt="" coords="224,57,411,98"/>
+</map>

@@ -1,0 +1,461 @@
+\hypertarget{class_sound}{}\section{Sound Class Reference}
+\label{class_sound}\index{Sound@{Sound}}
+
+
+{\ttfamily \#include $<$Sound.\+h$>$}
+
+
+
+Inheritance diagram for Sound\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=150pt]{class_sound__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Sound\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=322pt]{class_sound__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_sound_a9432356bb1ba946460c33f286d2b325b}{Sound} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{class_module}{Module} $\ast$\hyperlink{class_sound_a34e48159f12d4431e962d80fad71eb02}{Parent}, \hyperlink{struct_settings_1_1_sound_settings}{Settings\+::\+Sound\+Settings} $\ast$Default\+Settings)
+\item 
+void \hyperlink{class_sound_a747a131af54af0747775b918aa3f7925}{refresh\+\_\+\+Sec} ()
+\item 
+void \hyperlink{class_sound_a038f9173934d27db8004ded6db667df6}{play\+On\+Sound} ()
+\item 
+void \hyperlink{class_sound_a53aa4bec2fd464c5149ca30b29b35ac1}{play\+Off\+Sound} ()
+\item 
+void \hyperlink{class_sound_a887e5a54b6e00d4a33d63feb53017cfc}{play\+EE} ()
+\item 
+\hyperlink{class_sound_a9432356bb1ba946460c33f286d2b325b}{Sound} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{class_module}{Module} $\ast$\hyperlink{class_sound_a34e48159f12d4431e962d80fad71eb02}{Parent}, \hyperlink{struct_settings_1_1_sound_settings}{Settings\+::\+Sound\+Settings} $\ast$Default\+Settings)
+\item 
+void \hyperlink{class_sound_a747a131af54af0747775b918aa3f7925}{refresh\+\_\+\+Sec} ()
+\item 
+void \hyperlink{class_sound_a038f9173934d27db8004ded6db667df6}{play\+On\+Sound} ()
+\item 
+void \hyperlink{class_sound_a53aa4bec2fd464c5149ca30b29b35ac1}{play\+Off\+Sound} ()
+\item 
+void \hyperlink{class_sound_a887e5a54b6e00d4a33d63feb53017cfc}{play\+EE} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_sound_a6917e650a721b0e7fc6d998edf6a3cf7}{set\+Sound\+On\+Off} (bool State)
+\item 
+void \hyperlink{class_sound_ac26eda99f623e5a839d1c408d8a591d9}{On\+Sound} ()
+\item 
+void \hyperlink{class_sound_ab1fb7a2e72d848ca335b4721cd8540b7}{Off\+Sound} ()
+\item 
+void \hyperlink{class_sound_a3d0f7b044cff8851a335bb9c4fb78542}{buzz} (uint32\+\_\+t frequency, uint32\+\_\+t length)
+\item 
+void \hyperlink{class_sound_a8b4af7ef38cf7e66c6dea94d10a9b229}{EE} ()
+\item 
+void \hyperlink{class_sound_a6917e650a721b0e7fc6d998edf6a3cf7}{set\+Sound\+On\+Off} (bool State)
+\item 
+void \hyperlink{class_sound_ac26eda99f623e5a839d1c408d8a591d9}{On\+Sound} ()
+\item 
+void \hyperlink{class_sound_ab1fb7a2e72d848ca335b4721cd8540b7}{Off\+Sound} ()
+\item 
+void \hyperlink{class_sound_a3d0f7b044cff8851a335bb9c4fb78542}{buzz} (uint32\+\_\+t frequency, uint32\+\_\+t length)
+\item 
+void \hyperlink{class_sound_a8b4af7ef38cf7e66c6dea94d10a9b229}{EE} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_module}{Module} $\ast$ \hyperlink{class_sound_a34e48159f12d4431e962d80fad71eb02}{Parent}
+\item 
+byte $\ast$ \hyperlink{class_sound_a2a57d6464d4edef8b652d3b9602de07e}{Pin}
+\item 
+bool $\ast$ \hyperlink{class_sound_afd4cd9f0db67980b0af5c8c6ed1c3b76}{Enabled}
+\item 
+bool \hyperlink{class_sound_a2e4c00d9fc63a08a193a741fffe896ca}{Play\+On\+Sound} = false
+\item 
+bool \hyperlink{class_sound_a02a8c493337336014ba0395bdae5c4a8}{Play\+Off\+Sound} = false
+\item 
+bool \hyperlink{class_sound_ac7a3280d002f67188a199829e089f5f4}{Play\+EE} = false
+\end{DoxyCompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const static P\+R\+O\+G\+M\+EM int \hyperlink{class_sound_a7553aed616a29ed18c2e9f5b4a5f2260}{melody} \mbox{[}$\,$\mbox{]}
+\item 
+const static P\+R\+O\+G\+M\+EM byte \hyperlink{class_sound_ac0d9d464296a35fbe9624eb69c83f868}{tempo} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 6 of file Sound.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_sound_a9432356bb1ba946460c33f286d2b325b}\label{class_sound_a9432356bb1ba946460c33f286d2b325b}} 
+\index{Sound@{Sound}!Sound@{Sound}}
+\index{Sound@{Sound}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{Sound()}{Sound()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Sound\+::\+Sound (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{class_module}{Module} $\ast$}]{Parent,  }\item[{\hyperlink{struct_settings_1_1_sound_settings}{Settings\+::\+Sound\+Settings} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+Definition at line 3 of file Sound.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sound_a9432356bb1ba946460c33f286d2b325b_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sound_a9432356bb1ba946460c33f286d2b325b}\label{class_sound_a9432356bb1ba946460c33f286d2b325b}} 
+\index{Sound@{Sound}!Sound@{Sound}}
+\index{Sound@{Sound}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{Sound()}{Sound()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Sound\+::\+Sound (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{class_module}{Module} $\ast$}]{Parent,  }\item[{\hyperlink{struct_settings_1_1_sound_settings}{Settings\+::\+Sound\+Settings} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_sound_a3d0f7b044cff8851a335bb9c4fb78542}\label{class_sound_a3d0f7b044cff8851a335bb9c4fb78542}} 
+\index{Sound@{Sound}!buzz@{buzz}}
+\index{buzz@{buzz}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{buzz()}{buzz()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Sound\+::buzz (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{frequency,  }\item[{uint32\+\_\+t}]{length }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 198 of file Sound.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sound_a3d0f7b044cff8851a335bb9c4fb78542_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sound_a3d0f7b044cff8851a335bb9c4fb78542}\label{class_sound_a3d0f7b044cff8851a335bb9c4fb78542}} 
+\index{Sound@{Sound}!buzz@{buzz}}
+\index{buzz@{buzz}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{buzz()}{buzz()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Sound\+::buzz (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{frequency,  }\item[{uint32\+\_\+t}]{length }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sound_a8b4af7ef38cf7e66c6dea94d10a9b229}\label{class_sound_a8b4af7ef38cf7e66c6dea94d10a9b229}} 
+\index{Sound@{Sound}!EE@{EE}}
+\index{EE@{EE}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{E\+E()}{EE()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Sound\+::\+EE (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 185 of file Sound.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=277pt]{class_sound_a8b4af7ef38cf7e66c6dea94d10a9b229_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=283pt]{class_sound_a8b4af7ef38cf7e66c6dea94d10a9b229_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sound_a8b4af7ef38cf7e66c6dea94d10a9b229}\label{class_sound_a8b4af7ef38cf7e66c6dea94d10a9b229}} 
+\index{Sound@{Sound}!EE@{EE}}
+\index{EE@{EE}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{E\+E()}{EE()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Sound\+::\+EE (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sound_ab1fb7a2e72d848ca335b4721cd8540b7}\label{class_sound_ab1fb7a2e72d848ca335b4721cd8540b7}} 
+\index{Sound@{Sound}!Off\+Sound@{Off\+Sound}}
+\index{Off\+Sound@{Off\+Sound}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{Off\+Sound()}{OffSound()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Sound\+::\+Off\+Sound (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sound_ab1fb7a2e72d848ca335b4721cd8540b7}\label{class_sound_ab1fb7a2e72d848ca335b4721cd8540b7}} 
+\index{Sound@{Sound}!Off\+Sound@{Off\+Sound}}
+\index{Off\+Sound@{Off\+Sound}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{Off\+Sound()}{OffSound()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Sound\+::\+Off\+Sound (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 71 of file Sound.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=311pt]{class_sound_ab1fb7a2e72d848ca335b4721cd8540b7_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sound_ac26eda99f623e5a839d1c408d8a591d9}\label{class_sound_ac26eda99f623e5a839d1c408d8a591d9}} 
+\index{Sound@{Sound}!On\+Sound@{On\+Sound}}
+\index{On\+Sound@{On\+Sound}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{On\+Sound()}{OnSound()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Sound\+::\+On\+Sound (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 58 of file Sound.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=310pt]{class_sound_ac26eda99f623e5a839d1c408d8a591d9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sound_ac26eda99f623e5a839d1c408d8a591d9}\label{class_sound_ac26eda99f623e5a839d1c408d8a591d9}} 
+\index{Sound@{Sound}!On\+Sound@{On\+Sound}}
+\index{On\+Sound@{On\+Sound}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{On\+Sound()}{OnSound()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Sound\+::\+On\+Sound (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_sound_a887e5a54b6e00d4a33d63feb53017cfc}\label{class_sound_a887e5a54b6e00d4a33d63feb53017cfc}} 
+\index{Sound@{Sound}!play\+EE@{play\+EE}}
+\index{play\+EE@{play\+EE}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{play\+E\+E()}{playEE()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Sound\+::play\+EE (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 86 of file Sound.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=333pt]{class_sound_a887e5a54b6e00d4a33d63feb53017cfc_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sound_a887e5a54b6e00d4a33d63feb53017cfc}\label{class_sound_a887e5a54b6e00d4a33d63feb53017cfc}} 
+\index{Sound@{Sound}!play\+EE@{play\+EE}}
+\index{play\+EE@{play\+EE}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{play\+E\+E()}{playEE()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Sound\+::play\+EE (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_sound_a53aa4bec2fd464c5149ca30b29b35ac1}\label{class_sound_a53aa4bec2fd464c5149ca30b29b35ac1}} 
+\index{Sound@{Sound}!play\+Off\+Sound@{play\+Off\+Sound}}
+\index{play\+Off\+Sound@{play\+Off\+Sound}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{play\+Off\+Sound()}{playOffSound()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Sound\+::play\+Off\+Sound (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 38 of file Sound.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sound_a53aa4bec2fd464c5149ca30b29b35ac1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sound_a53aa4bec2fd464c5149ca30b29b35ac1}\label{class_sound_a53aa4bec2fd464c5149ca30b29b35ac1}} 
+\index{Sound@{Sound}!play\+Off\+Sound@{play\+Off\+Sound}}
+\index{play\+Off\+Sound@{play\+Off\+Sound}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{play\+Off\+Sound()}{playOffSound()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Sound\+::play\+Off\+Sound (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_sound_a038f9173934d27db8004ded6db667df6}\label{class_sound_a038f9173934d27db8004ded6db667df6}} 
+\index{Sound@{Sound}!play\+On\+Sound@{play\+On\+Sound}}
+\index{play\+On\+Sound@{play\+On\+Sound}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{play\+On\+Sound()}{playOnSound()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Sound\+::play\+On\+Sound (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_sound_a038f9173934d27db8004ded6db667df6}\label{class_sound_a038f9173934d27db8004ded6db667df6}} 
+\index{Sound@{Sound}!play\+On\+Sound@{play\+On\+Sound}}
+\index{play\+On\+Sound@{play\+On\+Sound}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{play\+On\+Sound()}{playOnSound()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Sound\+::play\+On\+Sound (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 33 of file Sound.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sound_a038f9173934d27db8004ded6db667df6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sound_a747a131af54af0747775b918aa3f7925}\label{class_sound_a747a131af54af0747775b918aa3f7925}} 
+\index{Sound@{Sound}!refresh\+\_\+\+Sec@{refresh\+\_\+\+Sec}}
+\index{refresh\+\_\+\+Sec@{refresh\+\_\+\+Sec}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Sec()}{refresh\_Sec()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Sound\+::refresh\+\_\+\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_acd1fdd47fbf8bb490f5c6d3ab6cd8d05}{Common}.
+
+\mbox{\Hypertarget{class_sound_a747a131af54af0747775b918aa3f7925}\label{class_sound_a747a131af54af0747775b918aa3f7925}} 
+\index{Sound@{Sound}!refresh\+\_\+\+Sec@{refresh\+\_\+\+Sec}}
+\index{refresh\+\_\+\+Sec@{refresh\+\_\+\+Sec}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Sec()}{refresh\_Sec()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Sound\+::refresh\+\_\+\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_acd1fdd47fbf8bb490f5c6d3ab6cd8d05}{Common}.
+
+
+
+Definition at line 13 of file Sound.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sound_a747a131af54af0747775b918aa3f7925_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sound_a6917e650a721b0e7fc6d998edf6a3cf7}\label{class_sound_a6917e650a721b0e7fc6d998edf6a3cf7}} 
+\index{Sound@{Sound}!set\+Sound\+On\+Off@{set\+Sound\+On\+Off}}
+\index{set\+Sound\+On\+Off@{set\+Sound\+On\+Off}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{set\+Sound\+On\+Off()}{setSoundOnOff()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Sound\+::set\+Sound\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 43 of file Sound.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{class_sound_a6917e650a721b0e7fc6d998edf6a3cf7_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_sound_a6917e650a721b0e7fc6d998edf6a3cf7_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_sound_a6917e650a721b0e7fc6d998edf6a3cf7}\label{class_sound_a6917e650a721b0e7fc6d998edf6a3cf7}} 
+\index{Sound@{Sound}!set\+Sound\+On\+Off@{set\+Sound\+On\+Off}}
+\index{set\+Sound\+On\+Off@{set\+Sound\+On\+Off}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{set\+Sound\+On\+Off()}{setSoundOnOff()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Sound\+::set\+Sound\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_sound_afd4cd9f0db67980b0af5c8c6ed1c3b76}\label{class_sound_afd4cd9f0db67980b0af5c8c6ed1c3b76}} 
+\index{Sound@{Sound}!Enabled@{Enabled}}
+\index{Enabled@{Enabled}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{Enabled}{Enabled}}
+{\footnotesize\ttfamily bool $\ast$ Sound\+::\+Enabled\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 25 of file Sound.\+h.
+
+\mbox{\Hypertarget{class_sound_a7553aed616a29ed18c2e9f5b4a5f2260}\label{class_sound_a7553aed616a29ed18c2e9f5b4a5f2260}} 
+\index{Sound@{Sound}!melody@{melody}}
+\index{melody@{melody}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{melody}{melody}}
+{\footnotesize\ttfamily const static P\+R\+O\+G\+M\+EM int Sound\+::melody\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+
+
+Definition at line 29 of file Sound.\+h.
+
+\mbox{\Hypertarget{class_sound_a34e48159f12d4431e962d80fad71eb02}\label{class_sound_a34e48159f12d4431e962d80fad71eb02}} 
+\index{Sound@{Sound}!Parent@{Parent}}
+\index{Parent@{Parent}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \hyperlink{class_module}{Module} $\ast$ Sound\+::\+Parent\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 18 of file Sound.\+h.
+
+\mbox{\Hypertarget{class_sound_a2a57d6464d4edef8b652d3b9602de07e}\label{class_sound_a2a57d6464d4edef8b652d3b9602de07e}} 
+\index{Sound@{Sound}!Pin@{Pin}}
+\index{Pin@{Pin}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{Pin}{Pin}}
+{\footnotesize\ttfamily byte $\ast$ Sound\+::\+Pin\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 24 of file Sound.\+h.
+
+\mbox{\Hypertarget{class_sound_ac7a3280d002f67188a199829e089f5f4}\label{class_sound_ac7a3280d002f67188a199829e089f5f4}} 
+\index{Sound@{Sound}!Play\+EE@{Play\+EE}}
+\index{Play\+EE@{Play\+EE}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{Play\+EE}{PlayEE}}
+{\footnotesize\ttfamily bool Sound\+::\+Play\+EE = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 28 of file Sound.\+h.
+
+\mbox{\Hypertarget{class_sound_a02a8c493337336014ba0395bdae5c4a8}\label{class_sound_a02a8c493337336014ba0395bdae5c4a8}} 
+\index{Sound@{Sound}!Play\+Off\+Sound@{Play\+Off\+Sound}}
+\index{Play\+Off\+Sound@{Play\+Off\+Sound}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{Play\+Off\+Sound}{PlayOffSound}}
+{\footnotesize\ttfamily bool Sound\+::\+Play\+Off\+Sound = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 27 of file Sound.\+h.
+
+\mbox{\Hypertarget{class_sound_a2e4c00d9fc63a08a193a741fffe896ca}\label{class_sound_a2e4c00d9fc63a08a193a741fffe896ca}} 
+\index{Sound@{Sound}!Play\+On\+Sound@{Play\+On\+Sound}}
+\index{Play\+On\+Sound@{Play\+On\+Sound}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{Play\+On\+Sound}{PlayOnSound}}
+{\footnotesize\ttfamily bool Sound\+::\+Play\+On\+Sound = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 26 of file Sound.\+h.
+
+\mbox{\Hypertarget{class_sound_ac0d9d464296a35fbe9624eb69c83f868}\label{class_sound_ac0d9d464296a35fbe9624eb69c83f868}} 
+\index{Sound@{Sound}!tempo@{tempo}}
+\index{tempo@{tempo}!Sound@{Sound}}
+\subsubsection{\texorpdfstring{tempo}{tempo}}
+{\footnotesize\ttfamily const static P\+R\+O\+G\+M\+EM byte Sound\+::tempo\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+
+
+Definition at line 30 of file Sound.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Components/\hyperlink{_hempy_module_2src_2_components_2_sound_8h}{Sound.\+h}\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Components/\hyperlink{_hempy_module_2src_2_components_2_sound_8cpp}{Sound.\+cpp}\end{DoxyCompactItemize}

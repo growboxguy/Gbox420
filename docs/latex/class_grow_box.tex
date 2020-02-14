@@ -1,0 +1,670 @@
+\hypertarget{class_grow_box}{}\section{Grow\+Box Class Reference}
+\label{class_grow_box}\index{Grow\+Box@{Grow\+Box}}
+
+
+{\ttfamily \#include $<$Grow\+Box.\+h$>$}
+
+
+
+Inheritance diagram for Grow\+Box\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=254pt]{class_grow_box__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Grow\+Box\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_grow_box__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_grow_box_a56729a0c282ec48e356c99d1c66b2266}{Grow\+Box} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{struct_settings_1_1_grow_box_settings}{Settings\+::\+Grow\+Box\+Settings} $\ast$Default\+Settings)
+\item 
+void \hyperlink{class_grow_box_a486cdc90cf59c3059c96b3f021eec5d5}{website\+Event\+\_\+\+Load} (char $\ast$url)
+\item 
+void \hyperlink{class_grow_box_aa75f2898bbac66ab08cb257e4285f51e}{website\+Event\+\_\+\+Refresh} (char $\ast$url)
+\item 
+void \hyperlink{class_grow_box_ad246a22690da3301345b0337aab8258f}{website\+Event\+\_\+\+Button} (char $\ast$Button)
+\item 
+void \hyperlink{class_grow_box_a5c5ba0de9289075db990a15a5c0b7634}{website\+Event\+\_\+\+Field} (char $\ast$Field)
+\item 
+void \hyperlink{class_grow_box_ad3c74a1bbf508489f113215d1f4ae43f}{refresh\+\_\+\+Five\+Sec} ()
+\item 
+void \hyperlink{class_grow_box_a8763d725baee8237bc63865d464375d8}{refresh\+\_\+\+Minute} ()
+\item 
+void \hyperlink{class_grow_box_ac542032f42c8d6eac941ba4d98b73447}{refresh\+\_\+\+Quarter\+Hour} ()
+\item 
+void \hyperlink{class_grow_box_a45f0e8f17bae077486e5839d621cdf5b}{report\+To\+Google\+Sheets\+Trigger} ()
+\item 
+void \hyperlink{class_grow_box_a8070acc30dff79b90ff5d813fab1921f}{report\+To\+Google\+Sheets} (bool Called\+From\+Website)
+\item 
+void \hyperlink{class_grow_box_aac4b1240925ce9791d1a1c804839d345}{relay\+To\+Google\+Sheets} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$Title, char($\ast$J\+S\+O\+N\+Data)\mbox{[}Max\+Long\+Text\+Length\mbox{]})
+\item 
+\hyperlink{class_grow_box_a56729a0c282ec48e356c99d1c66b2266}{Grow\+Box} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{struct_settings_1_1_grow_box_settings}{Settings\+::\+Grow\+Box\+Settings} $\ast$Default\+Settings)
+\item 
+void \hyperlink{class_grow_box_a486cdc90cf59c3059c96b3f021eec5d5}{website\+Event\+\_\+\+Load} (char $\ast$url)
+\item 
+void \hyperlink{class_grow_box_aa75f2898bbac66ab08cb257e4285f51e}{website\+Event\+\_\+\+Refresh} (char $\ast$url)
+\item 
+void \hyperlink{class_grow_box_ad246a22690da3301345b0337aab8258f}{website\+Event\+\_\+\+Button} (char $\ast$Button)
+\item 
+void \hyperlink{class_grow_box_a5c5ba0de9289075db990a15a5c0b7634}{website\+Event\+\_\+\+Field} (char $\ast$Field)
+\item 
+void \hyperlink{class_grow_box_ad3c74a1bbf508489f113215d1f4ae43f}{refresh\+\_\+\+Five\+Sec} ()
+\item 
+void \hyperlink{class_grow_box_a8763d725baee8237bc63865d464375d8}{refresh\+\_\+\+Minute} ()
+\item 
+void \hyperlink{class_grow_box_ac542032f42c8d6eac941ba4d98b73447}{refresh\+\_\+\+Quarter\+Hour} ()
+\item 
+void \hyperlink{class_grow_box_a45f0e8f17bae077486e5839d621cdf5b}{report\+To\+Google\+Sheets\+Trigger} ()
+\item 
+void \hyperlink{class_grow_box_a8070acc30dff79b90ff5d813fab1921f}{report\+To\+Google\+Sheets} (bool Called\+From\+Website)
+\item 
+void \hyperlink{class_grow_box_aac4b1240925ce9791d1a1c804839d345}{relay\+To\+Google\+Sheets} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$Title, char($\ast$J\+S\+O\+N\+Data)\mbox{[}Max\+Long\+Text\+Length\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_sound___web}{Sound\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_aca5ba68e2366069df908907d02e2420b}{Sound1}
+\item 
+\hyperlink{class_fan___web}{Fan\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_aff731b9674e2160eaaba3f047db04dd2}{I\+Fan}
+\item 
+\hyperlink{class_fan___web}{Fan\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a87780b88d908225de993eecd8a54950c}{E\+Fan}
+\item 
+\hyperlink{class_d_h_t_sensor___web}{D\+H\+T\+Sensor\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a43f0777043fe13fd07f832d0436d5cdb}{I\+D\+HT}
+\item 
+\hyperlink{class_d_h_t_sensor___web}{D\+H\+T\+Sensor\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a64d390b3296d48bdc7a14c1165dd745b}{E\+D\+HT}
+\item 
+\hyperlink{class_light_sensor___web}{Light\+Sensor\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a28d76d5cbf31d6b2599462beb3c5a73b}{Lt\+Sen1}
+\item 
+\hyperlink{class_lights___web}{Lights\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a0e999ef8584ed7f2d385ad8755a55af0}{Lt1}
+\item 
+\hyperlink{class_power_sensor___web}{Power\+Sensor\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a3b1da631cb857ddfcbe6ecbbd6bb643a}{Pow1}
+\item 
+\hyperlink{class_pressure_sensor___web}{Pressure\+Sensor\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_aa1868c61de725635c872ebae62f9d3a6}{Pres1}
+\item 
+\hyperlink{class_p_h_sensor___web}{P\+H\+Sensor\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a5a05648cf4487f017f282b1e66a19828}{P\+H\+Sensor1}
+\item 
+\hyperlink{class_aeroponics___tank___web}{Aeroponics\+\_\+\+Tank\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a64282db7278b656dc7fdc0e0324f1f39}{Aero\+T1}
+\item 
+\hyperlink{class_aeroponics___no_tank___web}{Aeroponics\+\_\+\+No\+Tank\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a7d1dc60bd64a668b7716696cdc67b560}{Aero1}
+\item 
+\hyperlink{class_water_temp_sensor___web}{Water\+Temp\+Sensor\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a88f7a7dfabb1fbd40f70bcf0c1bba367}{Water\+Temp1}
+\item 
+\hyperlink{class_water_level_sensor___web}{Water\+Level\+Sensor\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a59c79308af69a11ab4e3875679af73cd}{Water\+Level1}
+\item 
+\hyperlink{class_weight_sensor___web}{Weight\+Sensor\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_aceb1416333b51cdde29c05cd9bc4564a}{Weight1}
+\item 
+\hyperlink{class_weight_sensor___web}{Weight\+Sensor\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a521e1b41c7a71bc44746c8dd1ab63476}{Weight2}
+\item 
+\hyperlink{class_module_skeleton___web}{Module\+Skeleton\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_a86e43adbb636d95597cea22666ca87e2}{Module\+Skeleton1}
+\item 
+\hyperlink{class_module_skeleton___web}{Module\+Skeleton\+\_\+\+Web} $\ast$ \hyperlink{class_grow_box_af2699e6867ce4f138e7ae2139b079b20}{Module\+Skeleton2}
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_grow_box_a7f3cd6990537a64901739ea4677693f8}{Refresh\+All\+Requested} = false
+\item 
+bool \hyperlink{class_grow_box_aef5b0e1a50bdc88a89b84c8106e65df2}{Console\+Report\+Requested} = false
+\item 
+bool \hyperlink{class_grow_box_a493810d3abe51e6e534d5966aaf6cf64}{Report\+To\+Google\+Sheets\+Requested} = false
+\item 
+int $\ast$ \hyperlink{class_grow_box_a6e55aab15df9681e8bf5e0e3e22d7ffa}{Sheets\+Reporting\+Frequency}
+\item 
+bool $\ast$ \hyperlink{class_grow_box_a6c689134f2556a744038a1c8075dcec8}{Report\+To\+Google\+Sheets}
+\item 
+int \hyperlink{class_grow_box_a21439bf3f72010ffa8c419cd931abd1d}{Sheets\+Refresh\+Counter} = 0
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 29 of file Grow\+Box.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_grow_box_a56729a0c282ec48e356c99d1c66b2266}\label{class_grow_box_a56729a0c282ec48e356c99d1c66b2266}} 
+\index{Grow\+Box@{Grow\+Box}!Grow\+Box@{Grow\+Box}}
+\index{Grow\+Box@{Grow\+Box}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Grow\+Box()}{GrowBox()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Grow\+Box\+::\+Grow\+Box (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{struct_settings_1_1_grow_box_settings}{Settings\+::\+Grow\+Box\+Settings} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+Definition at line 19 of file Grow\+Box.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_grow_box_a56729a0c282ec48e356c99d1c66b2266_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_grow_box_a56729a0c282ec48e356c99d1c66b2266}\label{class_grow_box_a56729a0c282ec48e356c99d1c66b2266}} 
+\index{Grow\+Box@{Grow\+Box}!Grow\+Box@{Grow\+Box}}
+\index{Grow\+Box@{Grow\+Box}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Grow\+Box()}{GrowBox()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Grow\+Box\+::\+Grow\+Box (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{struct_settings_1_1_grow_box_settings}{Settings\+::\+Grow\+Box\+Settings} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_grow_box_ad3c74a1bbf508489f113215d1f4ae43f}\label{class_grow_box_ad3c74a1bbf508489f113215d1f4ae43f}} 
+\index{Grow\+Box@{Grow\+Box}!refresh\+\_\+\+Five\+Sec@{refresh\+\_\+\+Five\+Sec}}
+\index{refresh\+\_\+\+Five\+Sec@{refresh\+\_\+\+Five\+Sec}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Five\+Sec()}{refresh\_FiveSec()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}.
+
+
+
+Definition at line 116 of file Grow\+Box.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_grow_box_ad3c74a1bbf508489f113215d1f4ae43f_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_grow_box_ad3c74a1bbf508489f113215d1f4ae43f}\label{class_grow_box_ad3c74a1bbf508489f113215d1f4ae43f}} 
+\index{Grow\+Box@{Grow\+Box}!refresh\+\_\+\+Five\+Sec@{refresh\+\_\+\+Five\+Sec}}
+\index{refresh\+\_\+\+Five\+Sec@{refresh\+\_\+\+Five\+Sec}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Five\+Sec()}{refresh\_FiveSec()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}.
+
+\mbox{\Hypertarget{class_grow_box_a8763d725baee8237bc63865d464375d8}\label{class_grow_box_a8763d725baee8237bc63865d464375d8}} 
+\index{Grow\+Box@{Grow\+Box}!refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}}
+\index{refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Minute()}{refresh\_Minute()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a14e4462a94bd118028ce1d487ca0292c}{Common}.
+
+\mbox{\Hypertarget{class_grow_box_a8763d725baee8237bc63865d464375d8}\label{class_grow_box_a8763d725baee8237bc63865d464375d8}} 
+\index{Grow\+Box@{Grow\+Box}!refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}}
+\index{refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Minute()}{refresh\_Minute()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a14e4462a94bd118028ce1d487ca0292c}{Common}.
+
+
+
+Definition at line 137 of file Grow\+Box.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_grow_box_a8763d725baee8237bc63865d464375d8_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_grow_box_ac542032f42c8d6eac941ba4d98b73447}\label{class_grow_box_ac542032f42c8d6eac941ba4d98b73447}} 
+\index{Grow\+Box@{Grow\+Box}!refresh\+\_\+\+Quarter\+Hour@{refresh\+\_\+\+Quarter\+Hour}}
+\index{refresh\+\_\+\+Quarter\+Hour@{refresh\+\_\+\+Quarter\+Hour}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Quarter\+Hour()}{refresh\_QuarterHour()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::refresh\+\_\+\+Quarter\+Hour (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_aa7222229739c89d441fadd6a40deff89}{Common}.
+
+\mbox{\Hypertarget{class_grow_box_ac542032f42c8d6eac941ba4d98b73447}\label{class_grow_box_ac542032f42c8d6eac941ba4d98b73447}} 
+\index{Grow\+Box@{Grow\+Box}!refresh\+\_\+\+Quarter\+Hour@{refresh\+\_\+\+Quarter\+Hour}}
+\index{refresh\+\_\+\+Quarter\+Hour@{refresh\+\_\+\+Quarter\+Hour}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Quarter\+Hour()}{refresh\_QuarterHour()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::refresh\+\_\+\+Quarter\+Hour (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_aa7222229739c89d441fadd6a40deff89}{Common}.
+
+
+
+Definition at line 144 of file Grow\+Box.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_grow_box_ac542032f42c8d6eac941ba4d98b73447_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_grow_box_aac4b1240925ce9791d1a1c804839d345}\label{class_grow_box_aac4b1240925ce9791d1a1c804839d345}} 
+\index{Grow\+Box@{Grow\+Box}!relay\+To\+Google\+Sheets@{relay\+To\+Google\+Sheets}}
+\index{relay\+To\+Google\+Sheets@{relay\+To\+Google\+Sheets}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{relay\+To\+Google\+Sheets()}{relayToGoogleSheets()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::relay\+To\+Google\+Sheets (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Title,  }\item[{char($\ast$)}]{J\+S\+O\+N\+Data\mbox{[}\+Max\+Long\+Text\+Length\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 297 of file Grow\+Box.\+cpp.
+
+\mbox{\Hypertarget{class_grow_box_aac4b1240925ce9791d1a1c804839d345}\label{class_grow_box_aac4b1240925ce9791d1a1c804839d345}} 
+\index{Grow\+Box@{Grow\+Box}!relay\+To\+Google\+Sheets@{relay\+To\+Google\+Sheets}}
+\index{relay\+To\+Google\+Sheets@{relay\+To\+Google\+Sheets}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{relay\+To\+Google\+Sheets()}{relayToGoogleSheets()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::relay\+To\+Google\+Sheets (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Title,  }\item[{char($\ast$)}]{J\+S\+O\+N\+Data\mbox{[}\+Max\+Long\+Text\+Length\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_grow_box_a8070acc30dff79b90ff5d813fab1921f}\label{class_grow_box_a8070acc30dff79b90ff5d813fab1921f}} 
+\index{Grow\+Box@{Grow\+Box}!report\+To\+Google\+Sheets@{report\+To\+Google\+Sheets}}
+\index{report\+To\+Google\+Sheets@{report\+To\+Google\+Sheets}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{report\+To\+Google\+Sheets()}{reportToGoogleSheets()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::report\+To\+Google\+Sheets (\begin{DoxyParamCaption}\item[{bool}]{Called\+From\+Website }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_grow_box_a8070acc30dff79b90ff5d813fab1921f}\label{class_grow_box_a8070acc30dff79b90ff5d813fab1921f}} 
+\index{Grow\+Box@{Grow\+Box}!report\+To\+Google\+Sheets@{report\+To\+Google\+Sheets}}
+\index{report\+To\+Google\+Sheets@{report\+To\+Google\+Sheets}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{report\+To\+Google\+Sheets()}{reportToGoogleSheets()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::report\+To\+Google\+Sheets (\begin{DoxyParamCaption}\item[{bool}]{Called\+From\+Website }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_grow_box_a8070acc30dff79b90ff5d813fab1921f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_grow_box_a45f0e8f17bae077486e5839d621cdf5b}\label{class_grow_box_a45f0e8f17bae077486e5839d621cdf5b}} 
+\index{Grow\+Box@{Grow\+Box}!report\+To\+Google\+Sheets\+Trigger@{report\+To\+Google\+Sheets\+Trigger}}
+\index{report\+To\+Google\+Sheets\+Trigger@{report\+To\+Google\+Sheets\+Trigger}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{report\+To\+Google\+Sheets\+Trigger()}{reportToGoogleSheetsTrigger()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::report\+To\+Google\+Sheets\+Trigger (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_grow_box_a45f0e8f17bae077486e5839d621cdf5b}\label{class_grow_box_a45f0e8f17bae077486e5839d621cdf5b}} 
+\index{Grow\+Box@{Grow\+Box}!report\+To\+Google\+Sheets\+Trigger@{report\+To\+Google\+Sheets\+Trigger}}
+\index{report\+To\+Google\+Sheets\+Trigger@{report\+To\+Google\+Sheets\+Trigger}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{report\+To\+Google\+Sheets\+Trigger()}{reportToGoogleSheetsTrigger()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::report\+To\+Google\+Sheets\+Trigger (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 211 of file Grow\+Box.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_grow_box_a45f0e8f17bae077486e5839d621cdf5b_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_grow_box_a45f0e8f17bae077486e5839d621cdf5b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_grow_box_ad246a22690da3301345b0337aab8258f}\label{class_grow_box_ad246a22690da3301345b0337aab8258f}} 
+\index{Grow\+Box@{Grow\+Box}!website\+Event\+\_\+\+Button@{website\+Event\+\_\+\+Button}}
+\index{website\+Event\+\_\+\+Button@{website\+Event\+\_\+\+Button}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{website\+Event\+\_\+\+Button()}{websiteEvent\_Button()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::website\+Event\+\_\+\+Button (\begin{DoxyParamCaption}\item[{char $\ast$}]{Button }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_grow_box_ad246a22690da3301345b0337aab8258f}\label{class_grow_box_ad246a22690da3301345b0337aab8258f}} 
+\index{Grow\+Box@{Grow\+Box}!website\+Event\+\_\+\+Button@{website\+Event\+\_\+\+Button}}
+\index{website\+Event\+\_\+\+Button@{website\+Event\+\_\+\+Button}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{website\+Event\+\_\+\+Button()}{websiteEvent\_Button()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::website\+Event\+\_\+\+Button (\begin{DoxyParamCaption}\item[{char $\ast$}]{Button }\end{DoxyParamCaption})}
+
+
+
+Definition at line 74 of file Grow\+Box.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_grow_box_ad246a22690da3301345b0337aab8258f_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_grow_box_a5c5ba0de9289075db990a15a5c0b7634}\label{class_grow_box_a5c5ba0de9289075db990a15a5c0b7634}} 
+\index{Grow\+Box@{Grow\+Box}!website\+Event\+\_\+\+Field@{website\+Event\+\_\+\+Field}}
+\index{website\+Event\+\_\+\+Field@{website\+Event\+\_\+\+Field}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{website\+Event\+\_\+\+Field()}{websiteEvent\_Field()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::website\+Event\+\_\+\+Field (\begin{DoxyParamCaption}\item[{char $\ast$}]{Field }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_grow_box_a5c5ba0de9289075db990a15a5c0b7634}\label{class_grow_box_a5c5ba0de9289075db990a15a5c0b7634}} 
+\index{Grow\+Box@{Grow\+Box}!website\+Event\+\_\+\+Field@{website\+Event\+\_\+\+Field}}
+\index{website\+Event\+\_\+\+Field@{website\+Event\+\_\+\+Field}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{website\+Event\+\_\+\+Field()}{websiteEvent\_Field()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::website\+Event\+\_\+\+Field (\begin{DoxyParamCaption}\item[{char $\ast$}]{Field }\end{DoxyParamCaption})}
+
+
+
+Definition at line 100 of file Grow\+Box.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_grow_box_a5c5ba0de9289075db990a15a5c0b7634_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_grow_box_a486cdc90cf59c3059c96b3f021eec5d5}\label{class_grow_box_a486cdc90cf59c3059c96b3f021eec5d5}} 
+\index{Grow\+Box@{Grow\+Box}!website\+Event\+\_\+\+Load@{website\+Event\+\_\+\+Load}}
+\index{website\+Event\+\_\+\+Load@{website\+Event\+\_\+\+Load}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{website\+Event\+\_\+\+Load()}{websiteEvent\_Load()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::website\+Event\+\_\+\+Load (\begin{DoxyParamCaption}\item[{char $\ast$}]{url }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_grow_box_a486cdc90cf59c3059c96b3f021eec5d5}\label{class_grow_box_a486cdc90cf59c3059c96b3f021eec5d5}} 
+\index{Grow\+Box@{Grow\+Box}!website\+Event\+\_\+\+Load@{website\+Event\+\_\+\+Load}}
+\index{website\+Event\+\_\+\+Load@{website\+Event\+\_\+\+Load}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{website\+Event\+\_\+\+Load()}{websiteEvent\_Load()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::website\+Event\+\_\+\+Load (\begin{DoxyParamCaption}\item[{char $\ast$}]{url }\end{DoxyParamCaption})}
+
+
+
+Definition at line 56 of file Grow\+Box.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_grow_box_a486cdc90cf59c3059c96b3f021eec5d5_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_grow_box_aa75f2898bbac66ab08cb257e4285f51e}\label{class_grow_box_aa75f2898bbac66ab08cb257e4285f51e}} 
+\index{Grow\+Box@{Grow\+Box}!website\+Event\+\_\+\+Refresh@{website\+Event\+\_\+\+Refresh}}
+\index{website\+Event\+\_\+\+Refresh@{website\+Event\+\_\+\+Refresh}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{website\+Event\+\_\+\+Refresh()}{websiteEvent\_Refresh()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::website\+Event\+\_\+\+Refresh (\begin{DoxyParamCaption}\item[{char $\ast$}]{url }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_grow_box_aa75f2898bbac66ab08cb257e4285f51e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_grow_box_aa75f2898bbac66ab08cb257e4285f51e}\label{class_grow_box_aa75f2898bbac66ab08cb257e4285f51e}} 
+\index{Grow\+Box@{Grow\+Box}!website\+Event\+\_\+\+Refresh@{website\+Event\+\_\+\+Refresh}}
+\index{website\+Event\+\_\+\+Refresh@{website\+Event\+\_\+\+Refresh}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{website\+Event\+\_\+\+Refresh()}{websiteEvent\_Refresh()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Grow\+Box\+::website\+Event\+\_\+\+Refresh (\begin{DoxyParamCaption}\item[{char $\ast$}]{url }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_grow_box_a7d1dc60bd64a668b7716696cdc67b560}\label{class_grow_box_a7d1dc60bd64a668b7716696cdc67b560}} 
+\index{Grow\+Box@{Grow\+Box}!Aero1@{Aero1}}
+\index{Aero1@{Aero1}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Aero1}{Aero1}}
+{\footnotesize\ttfamily \hyperlink{class_aeroponics___no_tank___web}{Aeroponics\+\_\+\+No\+Tank\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Aero1}
+
+
+
+Definition at line 45 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a64282db7278b656dc7fdc0e0324f1f39}\label{class_grow_box_a64282db7278b656dc7fdc0e0324f1f39}} 
+\index{Grow\+Box@{Grow\+Box}!Aero\+T1@{Aero\+T1}}
+\index{Aero\+T1@{Aero\+T1}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Aero\+T1}{AeroT1}}
+{\footnotesize\ttfamily \hyperlink{class_aeroponics___tank___web}{Aeroponics\+\_\+\+Tank\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Aero\+T1}
+
+
+
+Definition at line 44 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_aef5b0e1a50bdc88a89b84c8106e65df2}\label{class_grow_box_aef5b0e1a50bdc88a89b84c8106e65df2}} 
+\index{Grow\+Box@{Grow\+Box}!Console\+Report\+Requested@{Console\+Report\+Requested}}
+\index{Console\+Report\+Requested@{Console\+Report\+Requested}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Console\+Report\+Requested}{ConsoleReportRequested}}
+{\footnotesize\ttfamily bool Grow\+Box\+::\+Console\+Report\+Requested = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 72 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a64d390b3296d48bdc7a14c1165dd745b}\label{class_grow_box_a64d390b3296d48bdc7a14c1165dd745b}} 
+\index{Grow\+Box@{Grow\+Box}!E\+D\+HT@{E\+D\+HT}}
+\index{E\+D\+HT@{E\+D\+HT}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{E\+D\+HT}{EDHT}}
+{\footnotesize\ttfamily \hyperlink{class_d_h_t_sensor___web}{D\+H\+T\+Sensor\+\_\+\+Web} $\ast$ Grow\+Box\+::\+E\+D\+HT}
+
+
+
+Definition at line 37 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a87780b88d908225de993eecd8a54950c}\label{class_grow_box_a87780b88d908225de993eecd8a54950c}} 
+\index{Grow\+Box@{Grow\+Box}!E\+Fan@{E\+Fan}}
+\index{E\+Fan@{E\+Fan}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{E\+Fan}{EFan}}
+{\footnotesize\ttfamily \hyperlink{class_fan___web}{Fan\+\_\+\+Web} $\ast$ Grow\+Box\+::\+E\+Fan}
+
+
+
+Definition at line 35 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a43f0777043fe13fd07f832d0436d5cdb}\label{class_grow_box_a43f0777043fe13fd07f832d0436d5cdb}} 
+\index{Grow\+Box@{Grow\+Box}!I\+D\+HT@{I\+D\+HT}}
+\index{I\+D\+HT@{I\+D\+HT}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{I\+D\+HT}{IDHT}}
+{\footnotesize\ttfamily \hyperlink{class_d_h_t_sensor___web}{D\+H\+T\+Sensor\+\_\+\+Web} $\ast$ Grow\+Box\+::\+I\+D\+HT}
+
+
+
+Definition at line 36 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_aff731b9674e2160eaaba3f047db04dd2}\label{class_grow_box_aff731b9674e2160eaaba3f047db04dd2}} 
+\index{Grow\+Box@{Grow\+Box}!I\+Fan@{I\+Fan}}
+\index{I\+Fan@{I\+Fan}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{I\+Fan}{IFan}}
+{\footnotesize\ttfamily \hyperlink{class_fan___web}{Fan\+\_\+\+Web} $\ast$ Grow\+Box\+::\+I\+Fan}
+
+
+
+Definition at line 34 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a0e999ef8584ed7f2d385ad8755a55af0}\label{class_grow_box_a0e999ef8584ed7f2d385ad8755a55af0}} 
+\index{Grow\+Box@{Grow\+Box}!Lt1@{Lt1}}
+\index{Lt1@{Lt1}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Lt1}{Lt1}}
+{\footnotesize\ttfamily \hyperlink{class_lights___web}{Lights\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Lt1}
+
+
+
+Definition at line 39 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a28d76d5cbf31d6b2599462beb3c5a73b}\label{class_grow_box_a28d76d5cbf31d6b2599462beb3c5a73b}} 
+\index{Grow\+Box@{Grow\+Box}!Lt\+Sen1@{Lt\+Sen1}}
+\index{Lt\+Sen1@{Lt\+Sen1}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Lt\+Sen1}{LtSen1}}
+{\footnotesize\ttfamily \hyperlink{class_light_sensor___web}{Light\+Sensor\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Lt\+Sen1}
+
+
+
+Definition at line 38 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a86e43adbb636d95597cea22666ca87e2}\label{class_grow_box_a86e43adbb636d95597cea22666ca87e2}} 
+\index{Grow\+Box@{Grow\+Box}!Module\+Skeleton1@{Module\+Skeleton1}}
+\index{Module\+Skeleton1@{Module\+Skeleton1}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Module\+Skeleton1}{ModuleSkeleton1}}
+{\footnotesize\ttfamily \hyperlink{class_module_skeleton___web}{Module\+Skeleton\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Module\+Skeleton1}
+
+
+
+Definition at line 50 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_af2699e6867ce4f138e7ae2139b079b20}\label{class_grow_box_af2699e6867ce4f138e7ae2139b079b20}} 
+\index{Grow\+Box@{Grow\+Box}!Module\+Skeleton2@{Module\+Skeleton2}}
+\index{Module\+Skeleton2@{Module\+Skeleton2}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Module\+Skeleton2}{ModuleSkeleton2}}
+{\footnotesize\ttfamily \hyperlink{class_module_skeleton___web}{Module\+Skeleton\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Module\+Skeleton2}
+
+
+
+Definition at line 51 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a5a05648cf4487f017f282b1e66a19828}\label{class_grow_box_a5a05648cf4487f017f282b1e66a19828}} 
+\index{Grow\+Box@{Grow\+Box}!P\+H\+Sensor1@{P\+H\+Sensor1}}
+\index{P\+H\+Sensor1@{P\+H\+Sensor1}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{P\+H\+Sensor1}{PHSensor1}}
+{\footnotesize\ttfamily \hyperlink{class_p_h_sensor___web}{P\+H\+Sensor\+\_\+\+Web} $\ast$ Grow\+Box\+::\+P\+H\+Sensor1}
+
+
+
+Definition at line 43 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a3b1da631cb857ddfcbe6ecbbd6bb643a}\label{class_grow_box_a3b1da631cb857ddfcbe6ecbbd6bb643a}} 
+\index{Grow\+Box@{Grow\+Box}!Pow1@{Pow1}}
+\index{Pow1@{Pow1}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Pow1}{Pow1}}
+{\footnotesize\ttfamily \hyperlink{class_power_sensor___web}{Power\+Sensor\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Pow1}
+
+
+
+Definition at line 40 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_aa1868c61de725635c872ebae62f9d3a6}\label{class_grow_box_aa1868c61de725635c872ebae62f9d3a6}} 
+\index{Grow\+Box@{Grow\+Box}!Pres1@{Pres1}}
+\index{Pres1@{Pres1}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Pres1}{Pres1}}
+{\footnotesize\ttfamily \hyperlink{class_pressure_sensor___web}{Pressure\+Sensor\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Pres1}
+
+
+
+Definition at line 42 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a7f3cd6990537a64901739ea4677693f8}\label{class_grow_box_a7f3cd6990537a64901739ea4677693f8}} 
+\index{Grow\+Box@{Grow\+Box}!Refresh\+All\+Requested@{Refresh\+All\+Requested}}
+\index{Refresh\+All\+Requested@{Refresh\+All\+Requested}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Refresh\+All\+Requested}{RefreshAllRequested}}
+{\footnotesize\ttfamily bool Grow\+Box\+::\+Refresh\+All\+Requested = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 71 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a6c689134f2556a744038a1c8075dcec8}\label{class_grow_box_a6c689134f2556a744038a1c8075dcec8}} 
+\index{Grow\+Box@{Grow\+Box}!Report\+To\+Google\+Sheets@{Report\+To\+Google\+Sheets}}
+\index{Report\+To\+Google\+Sheets@{Report\+To\+Google\+Sheets}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Report\+To\+Google\+Sheets}{ReportToGoogleSheets}}
+{\footnotesize\ttfamily bool $\ast$ Grow\+Box\+::\+Report\+To\+Google\+Sheets\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 75 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a493810d3abe51e6e534d5966aaf6cf64}\label{class_grow_box_a493810d3abe51e6e534d5966aaf6cf64}} 
+\index{Grow\+Box@{Grow\+Box}!Report\+To\+Google\+Sheets\+Requested@{Report\+To\+Google\+Sheets\+Requested}}
+\index{Report\+To\+Google\+Sheets\+Requested@{Report\+To\+Google\+Sheets\+Requested}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Report\+To\+Google\+Sheets\+Requested}{ReportToGoogleSheetsRequested}}
+{\footnotesize\ttfamily bool Grow\+Box\+::\+Report\+To\+Google\+Sheets\+Requested = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 73 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a21439bf3f72010ffa8c419cd931abd1d}\label{class_grow_box_a21439bf3f72010ffa8c419cd931abd1d}} 
+\index{Grow\+Box@{Grow\+Box}!Sheets\+Refresh\+Counter@{Sheets\+Refresh\+Counter}}
+\index{Sheets\+Refresh\+Counter@{Sheets\+Refresh\+Counter}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Sheets\+Refresh\+Counter}{SheetsRefreshCounter}}
+{\footnotesize\ttfamily int Grow\+Box\+::\+Sheets\+Refresh\+Counter = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 76 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a6e55aab15df9681e8bf5e0e3e22d7ffa}\label{class_grow_box_a6e55aab15df9681e8bf5e0e3e22d7ffa}} 
+\index{Grow\+Box@{Grow\+Box}!Sheets\+Reporting\+Frequency@{Sheets\+Reporting\+Frequency}}
+\index{Sheets\+Reporting\+Frequency@{Sheets\+Reporting\+Frequency}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Sheets\+Reporting\+Frequency}{SheetsReportingFrequency}}
+{\footnotesize\ttfamily int $\ast$ Grow\+Box\+::\+Sheets\+Reporting\+Frequency\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 74 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_aca5ba68e2366069df908907d02e2420b}\label{class_grow_box_aca5ba68e2366069df908907d02e2420b}} 
+\index{Grow\+Box@{Grow\+Box}!Sound1@{Sound1}}
+\index{Sound1@{Sound1}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Sound1}{Sound1}}
+{\footnotesize\ttfamily \hyperlink{class_sound___web}{Sound\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Sound1}
+
+
+
+Definition at line 33 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a59c79308af69a11ab4e3875679af73cd}\label{class_grow_box_a59c79308af69a11ab4e3875679af73cd}} 
+\index{Grow\+Box@{Grow\+Box}!Water\+Level1@{Water\+Level1}}
+\index{Water\+Level1@{Water\+Level1}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Water\+Level1}{WaterLevel1}}
+{\footnotesize\ttfamily \hyperlink{class_water_level_sensor___web}{Water\+Level\+Sensor\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Water\+Level1}
+
+
+
+Definition at line 47 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a88f7a7dfabb1fbd40f70bcf0c1bba367}\label{class_grow_box_a88f7a7dfabb1fbd40f70bcf0c1bba367}} 
+\index{Grow\+Box@{Grow\+Box}!Water\+Temp1@{Water\+Temp1}}
+\index{Water\+Temp1@{Water\+Temp1}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Water\+Temp1}{WaterTemp1}}
+{\footnotesize\ttfamily \hyperlink{class_water_temp_sensor___web}{Water\+Temp\+Sensor\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Water\+Temp1}
+
+
+
+Definition at line 46 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_aceb1416333b51cdde29c05cd9bc4564a}\label{class_grow_box_aceb1416333b51cdde29c05cd9bc4564a}} 
+\index{Grow\+Box@{Grow\+Box}!Weight1@{Weight1}}
+\index{Weight1@{Weight1}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Weight1}{Weight1}}
+{\footnotesize\ttfamily \hyperlink{class_weight_sensor___web}{Weight\+Sensor\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Weight1}
+
+
+
+Definition at line 48 of file Grow\+Box.\+h.
+
+\mbox{\Hypertarget{class_grow_box_a521e1b41c7a71bc44746c8dd1ab63476}\label{class_grow_box_a521e1b41c7a71bc44746c8dd1ab63476}} 
+\index{Grow\+Box@{Grow\+Box}!Weight2@{Weight2}}
+\index{Weight2@{Weight2}!Grow\+Box@{Grow\+Box}}
+\subsubsection{\texorpdfstring{Weight2}{Weight2}}
+{\footnotesize\ttfamily \hyperlink{class_weight_sensor___web}{Weight\+Sensor\+\_\+\+Web} $\ast$ Grow\+Box\+::\+Weight2}
+
+
+
+Definition at line 49 of file Grow\+Box.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Modules/\hyperlink{_hempy_module_2src_2_modules_2_grow_box_8h}{Grow\+Box.\+h}\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Modules/\hyperlink{_hempy_module_2src_2_modules_2_grow_box_8cpp}{Grow\+Box.\+cpp}\end{DoxyCompactItemize}

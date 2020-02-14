@@ -1,0 +1,428 @@
+\hypertarget{class_pressure_sensor}{}\section{Pressure\+Sensor Class Reference}
+\label{class_pressure_sensor}\index{Pressure\+Sensor@{Pressure\+Sensor}}
+
+
+{\ttfamily \#include $<$Pressure\+Sensor.\+h$>$}
+
+
+
+Inheritance diagram for Pressure\+Sensor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=192pt]{class_pressure_sensor__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Pressure\+Sensor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_pressure_sensor_a4eb0a9c44b5ebf1a1d932b8975e43b4b}{Pressure\+Sensor} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{class_module}{Module} $\ast$\hyperlink{class_pressure_sensor_a5f3f58f1dd495b1acf664f18d7566d22}{Parent}, \hyperlink{struct_settings_1_1_pressure_sensor_settings}{Settings\+::\+Pressure\+Sensor\+Settings} $\ast$Default\+Settings)
+\item 
+void \hyperlink{class_pressure_sensor_a1081c5a1073a4c5d0c790f92e53febf0}{refresh\+\_\+\+Minute} ()
+\item 
+void \hyperlink{class_pressure_sensor_ae9f360e068bc30f611ba50c7c9cf7e4a}{report} ()
+\item 
+void \hyperlink{class_pressure_sensor_a7a16702239fcf55a72e91c45fe4002ac}{read\+Pressure} ()
+\item 
+float \hyperlink{class_pressure_sensor_a39f2f08252640aeb9cf9c094ac796ed6}{get\+Pressure} (bool Return\+Average=true)
+\item 
+char $\ast$ \hyperlink{class_pressure_sensor_aa3eccb7d69ba28ff2f5c4688bf13f7e8}{get\+Pressure\+Text} (bool Include\+Units, bool Return\+Average)
+\item 
+\hyperlink{class_pressure_sensor_a4eb0a9c44b5ebf1a1d932b8975e43b4b}{Pressure\+Sensor} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{class_module}{Module} $\ast$\hyperlink{class_pressure_sensor_a5f3f58f1dd495b1acf664f18d7566d22}{Parent}, \hyperlink{struct_settings_1_1_pressure_sensor_settings}{Settings\+::\+Pressure\+Sensor\+Settings} $\ast$Default\+Settings)
+\item 
+void \hyperlink{class_pressure_sensor_a1081c5a1073a4c5d0c790f92e53febf0}{refresh\+\_\+\+Minute} ()
+\item 
+void \hyperlink{class_pressure_sensor_ae9f360e068bc30f611ba50c7c9cf7e4a}{report} ()
+\item 
+void \hyperlink{class_pressure_sensor_a7a16702239fcf55a72e91c45fe4002ac}{read\+Pressure} ()
+\item 
+float \hyperlink{class_pressure_sensor_a39f2f08252640aeb9cf9c094ac796ed6}{get\+Pressure} (bool Return\+Average=true)
+\item 
+char $\ast$ \hyperlink{class_pressure_sensor_a3cb6b01b624b7dc64a083a8cdac58451}{get\+Pressure\+Text} (bool Include\+Units, bool Return\+Average)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_rolling_average}{Rolling\+Average} $\ast$ \hyperlink{class_pressure_sensor_a7da13aa07030a312642b44d6934f3210}{Pressure}
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_pressure_sensor_a9a97fa923ea86256eadff802549f0081}{read\+Offset} ()
+\item 
+void \hyperlink{class_pressure_sensor_af4ea57467bb0d6ae89b0f1a65c7863da}{set\+Offset} (float Value)
+\item 
+void \hyperlink{class_pressure_sensor_a5c46cbf770e053a41dad7ee63549ae7e}{set\+Ratio} (float Value)
+\item 
+void \hyperlink{class_pressure_sensor_a9a97fa923ea86256eadff802549f0081}{read\+Offset} ()
+\item 
+void \hyperlink{class_pressure_sensor_af4ea57467bb0d6ae89b0f1a65c7863da}{set\+Offset} (float Value)
+\item 
+void \hyperlink{class_pressure_sensor_a5c46cbf770e053a41dad7ee63549ae7e}{set\+Ratio} (float Value)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_module}{Module} $\ast$ \hyperlink{class_pressure_sensor_a5f3f58f1dd495b1acf664f18d7566d22}{Parent}
+\item 
+byte $\ast$ \hyperlink{class_pressure_sensor_a101279a910166f7795303d9ff7279ece}{Pin}
+\item 
+float $\ast$ \hyperlink{class_pressure_sensor_a011d68d29e88331d18de6dd83c2e8866}{Offset}
+\item 
+float $\ast$ \hyperlink{class_pressure_sensor_a10d297dbbef3bf72ec49c99ca6acaeaa}{Ratio}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 6 of file Pressure\+Sensor.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_pressure_sensor_a4eb0a9c44b5ebf1a1d932b8975e43b4b}\label{class_pressure_sensor_a4eb0a9c44b5ebf1a1d932b8975e43b4b}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!Pressure\+Sensor@{Pressure\+Sensor}}
+\index{Pressure\+Sensor@{Pressure\+Sensor}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{Pressure\+Sensor()}{PressureSensor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Pressure\+Sensor\+::\+Pressure\+Sensor (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{class_module}{Module} $\ast$}]{Parent,  }\item[{\hyperlink{struct_settings_1_1_pressure_sensor_settings}{Settings\+::\+Pressure\+Sensor\+Settings} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+Definition at line 3 of file Pressure\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_a4eb0a9c44b5ebf1a1d932b8975e43b4b_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_pressure_sensor_a4eb0a9c44b5ebf1a1d932b8975e43b4b}\label{class_pressure_sensor_a4eb0a9c44b5ebf1a1d932b8975e43b4b}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!Pressure\+Sensor@{Pressure\+Sensor}}
+\index{Pressure\+Sensor@{Pressure\+Sensor}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{Pressure\+Sensor()}{PressureSensor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Pressure\+Sensor\+::\+Pressure\+Sensor (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{class_module}{Module} $\ast$}]{Parent,  }\item[{\hyperlink{struct_settings_1_1_pressure_sensor_settings}{Settings\+::\+Pressure\+Sensor\+Settings} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_pressure_sensor_a39f2f08252640aeb9cf9c094ac796ed6}\label{class_pressure_sensor_a39f2f08252640aeb9cf9c094ac796ed6}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!get\+Pressure@{get\+Pressure}}
+\index{get\+Pressure@{get\+Pressure}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Pressure()}{getPressure()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float Pressure\+Sensor\+::get\+Pressure (\begin{DoxyParamCaption}\item[{bool}]{Return\+Average = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 40 of file Pressure\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_a39f2f08252640aeb9cf9c094ac796ed6_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_a39f2f08252640aeb9cf9c094ac796ed6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_pressure_sensor_a39f2f08252640aeb9cf9c094ac796ed6}\label{class_pressure_sensor_a39f2f08252640aeb9cf9c094ac796ed6}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!get\+Pressure@{get\+Pressure}}
+\index{get\+Pressure@{get\+Pressure}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Pressure()}{getPressure()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float Pressure\+Sensor\+::get\+Pressure (\begin{DoxyParamCaption}\item[{bool}]{Return\+Average = {\ttfamily true} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pressure_sensor_aa3eccb7d69ba28ff2f5c4688bf13f7e8}\label{class_pressure_sensor_aa3eccb7d69ba28ff2f5c4688bf13f7e8}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!get\+Pressure\+Text@{get\+Pressure\+Text}}
+\index{get\+Pressure\+Text@{get\+Pressure\+Text}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Pressure\+Text()}{getPressureText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char $\ast$ Pressure\+Sensor\+::get\+Pressure\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units,  }\item[{bool}]{Return\+Average }\end{DoxyParamCaption})}
+
+
+
+Definition at line 45 of file Pressure\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_aa3eccb7d69ba28ff2f5c4688bf13f7e8_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_aa3eccb7d69ba28ff2f5c4688bf13f7e8_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_pressure_sensor_a3cb6b01b624b7dc64a083a8cdac58451}\label{class_pressure_sensor_a3cb6b01b624b7dc64a083a8cdac58451}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!get\+Pressure\+Text@{get\+Pressure\+Text}}
+\index{get\+Pressure\+Text@{get\+Pressure\+Text}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Pressure\+Text()}{getPressureText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char$\ast$ Pressure\+Sensor\+::get\+Pressure\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units,  }\item[{bool}]{Return\+Average }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pressure_sensor_a9a97fa923ea86256eadff802549f0081}\label{class_pressure_sensor_a9a97fa923ea86256eadff802549f0081}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!read\+Offset@{read\+Offset}}
+\index{read\+Offset@{read\+Offset}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{read\+Offset()}{readOffset()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Pressure\+Sensor\+::read\+Offset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 53 of file Pressure\+Sensor.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_a9a97fa923ea86256eadff802549f0081_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_pressure_sensor_a9a97fa923ea86256eadff802549f0081}\label{class_pressure_sensor_a9a97fa923ea86256eadff802549f0081}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!read\+Offset@{read\+Offset}}
+\index{read\+Offset@{read\+Offset}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{read\+Offset()}{readOffset()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Pressure\+Sensor\+::read\+Offset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_pressure_sensor_a7a16702239fcf55a72e91c45fe4002ac}\label{class_pressure_sensor_a7a16702239fcf55a72e91c45fe4002ac}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!read\+Pressure@{read\+Pressure}}
+\index{read\+Pressure@{read\+Pressure}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{read\+Pressure()}{readPressure()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Pressure\+Sensor\+::read\+Pressure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 31 of file Pressure\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_a7a16702239fcf55a72e91c45fe4002ac_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_a7a16702239fcf55a72e91c45fe4002ac_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_pressure_sensor_a7a16702239fcf55a72e91c45fe4002ac}\label{class_pressure_sensor_a7a16702239fcf55a72e91c45fe4002ac}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!read\+Pressure@{read\+Pressure}}
+\index{read\+Pressure@{read\+Pressure}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{read\+Pressure()}{readPressure()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Pressure\+Sensor\+::read\+Pressure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_pressure_sensor_a1081c5a1073a4c5d0c790f92e53febf0}\label{class_pressure_sensor_a1081c5a1073a4c5d0c790f92e53febf0}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}}
+\index{refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Minute()}{refresh\_Minute()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Pressure\+Sensor\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a14e4462a94bd118028ce1d487ca0292c}{Common}.
+
+\mbox{\Hypertarget{class_pressure_sensor_a1081c5a1073a4c5d0c790f92e53febf0}\label{class_pressure_sensor_a1081c5a1073a4c5d0c790f92e53febf0}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}}
+\index{refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Minute()}{refresh\_Minute()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Pressure\+Sensor\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a14e4462a94bd118028ce1d487ca0292c}{Common}.
+
+
+
+Definition at line 15 of file Pressure\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_a1081c5a1073a4c5d0c790f92e53febf0_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_pressure_sensor_ae9f360e068bc30f611ba50c7c9cf7e4a}\label{class_pressure_sensor_ae9f360e068bc30f611ba50c7c9cf7e4a}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!report@{report}}
+\index{report@{report}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Pressure\+Sensor\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a9e60e2c26a5f4d72342a59a969954636}{Common}.
+
+
+
+Definition at line 22 of file Pressure\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_ae9f360e068bc30f611ba50c7c9cf7e4a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_pressure_sensor_ae9f360e068bc30f611ba50c7c9cf7e4a}\label{class_pressure_sensor_ae9f360e068bc30f611ba50c7c9cf7e4a}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!report@{report}}
+\index{report@{report}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Pressure\+Sensor\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a9e60e2c26a5f4d72342a59a969954636}{Common}.
+
+\mbox{\Hypertarget{class_pressure_sensor_af4ea57467bb0d6ae89b0f1a65c7863da}\label{class_pressure_sensor_af4ea57467bb0d6ae89b0f1a65c7863da}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!set\+Offset@{set\+Offset}}
+\index{set\+Offset@{set\+Offset}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{set\+Offset()}{setOffset()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Pressure\+Sensor\+::set\+Offset (\begin{DoxyParamCaption}\item[{float}]{Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_pressure_sensor_af4ea57467bb0d6ae89b0f1a65c7863da}\label{class_pressure_sensor_af4ea57467bb0d6ae89b0f1a65c7863da}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!set\+Offset@{set\+Offset}}
+\index{set\+Offset@{set\+Offset}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{set\+Offset()}{setOffset()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Pressure\+Sensor\+::set\+Offset (\begin{DoxyParamCaption}\item[{float}]{Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 67 of file Pressure\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_af4ea57467bb0d6ae89b0f1a65c7863da_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_af4ea57467bb0d6ae89b0f1a65c7863da_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_pressure_sensor_a5c46cbf770e053a41dad7ee63549ae7e}\label{class_pressure_sensor_a5c46cbf770e053a41dad7ee63549ae7e}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!set\+Ratio@{set\+Ratio}}
+\index{set\+Ratio@{set\+Ratio}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{set\+Ratio()}{setRatio()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Pressure\+Sensor\+::set\+Ratio (\begin{DoxyParamCaption}\item[{float}]{Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 74 of file Pressure\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_a5c46cbf770e053a41dad7ee63549ae7e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_pressure_sensor_a5c46cbf770e053a41dad7ee63549ae7e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_pressure_sensor_a5c46cbf770e053a41dad7ee63549ae7e}\label{class_pressure_sensor_a5c46cbf770e053a41dad7ee63549ae7e}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!set\+Ratio@{set\+Ratio}}
+\index{set\+Ratio@{set\+Ratio}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{set\+Ratio()}{setRatio()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Pressure\+Sensor\+::set\+Ratio (\begin{DoxyParamCaption}\item[{float}]{Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_pressure_sensor_a011d68d29e88331d18de6dd83c2e8866}\label{class_pressure_sensor_a011d68d29e88331d18de6dd83c2e8866}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!Offset@{Offset}}
+\index{Offset@{Offset}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{Offset}{Offset}}
+{\footnotesize\ttfamily float $\ast$ Pressure\+Sensor\+::\+Offset\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 25 of file Pressure\+Sensor.\+h.
+
+\mbox{\Hypertarget{class_pressure_sensor_a5f3f58f1dd495b1acf664f18d7566d22}\label{class_pressure_sensor_a5f3f58f1dd495b1acf664f18d7566d22}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!Parent@{Parent}}
+\index{Parent@{Parent}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \hyperlink{class_module}{Module} $\ast$ Pressure\+Sensor\+::\+Parent\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 20 of file Pressure\+Sensor.\+h.
+
+\mbox{\Hypertarget{class_pressure_sensor_a101279a910166f7795303d9ff7279ece}\label{class_pressure_sensor_a101279a910166f7795303d9ff7279ece}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!Pin@{Pin}}
+\index{Pin@{Pin}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{Pin}{Pin}}
+{\footnotesize\ttfamily byte $\ast$ Pressure\+Sensor\+::\+Pin\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 24 of file Pressure\+Sensor.\+h.
+
+\mbox{\Hypertarget{class_pressure_sensor_a7da13aa07030a312642b44d6934f3210}\label{class_pressure_sensor_a7da13aa07030a312642b44d6934f3210}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!Pressure@{Pressure}}
+\index{Pressure@{Pressure}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{Pressure}{Pressure}}
+{\footnotesize\ttfamily \hyperlink{class_rolling_average}{Rolling\+Average} $\ast$ Pressure\+Sensor\+::\+Pressure}
+
+
+
+Definition at line 15 of file Pressure\+Sensor.\+h.
+
+\mbox{\Hypertarget{class_pressure_sensor_a10d297dbbef3bf72ec49c99ca6acaeaa}\label{class_pressure_sensor_a10d297dbbef3bf72ec49c99ca6acaeaa}} 
+\index{Pressure\+Sensor@{Pressure\+Sensor}!Ratio@{Ratio}}
+\index{Ratio@{Ratio}!Pressure\+Sensor@{Pressure\+Sensor}}
+\subsubsection{\texorpdfstring{Ratio}{Ratio}}
+{\footnotesize\ttfamily float $\ast$ Pressure\+Sensor\+::\+Ratio\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 26 of file Pressure\+Sensor.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Components/\hyperlink{_hempy_module_2src_2_components_2_pressure_sensor_8h}{Pressure\+Sensor.\+h}\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Components/\hyperlink{_hempy_module_2src_2_components_2_pressure_sensor_8cpp}{Pressure\+Sensor.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,24 @@
+<map id="Common::getComponentName" name="Common::getComponentName">
+<area shape="rect" id="node2" href="$class_grow_box.html#a486cdc90cf59c3059c96b3f021eec5d5" title="GrowBox::websiteEvent_Load" alt="" coords="276,5,475,32"/>
+<area shape="rect" id="node3" href="$class_aeroponics___no_tank___web.html#a59a1c123bc843197e74c16e8aac7daa2" title="Aeroponics_NoTank_Web\l::websiteEvent_Load" alt="" coords="288,57,463,98"/>
+<area shape="rect" id="node4" href="$class_aeroponics___no_tank___web.html#a1248fe0a06097426645344b35aec0431" title="Aeroponics_NoTank_Web\l::websiteEvent_Refresh" alt="" coords="288,122,463,163"/>
+<area shape="rect" id="node5" href="$class_aeroponics___tank___web.html#a49ab14d7f9bffac4f4d9adf151589f15" title="Aeroponics_Tank_Web\l::websiteEvent_Load" alt="" coords="297,187,454,229"/>
+<area shape="rect" id="node6" href="$class_aeroponics___tank___web.html#acf883f3ff9b052706ea0548bdf8c04aa" title="Aeroponics_Tank_Web\l::websiteEvent_Refresh" alt="" coords="294,253,457,294"/>
+<area shape="rect" id="node7" href="$class_d_h_t_sensor___web.html#ad02a0f5edd3f948ae81f9ebe6032d443" title="DHTSensor_Web::websiteEvent\l_Refresh" alt="" coords="269,318,481,359"/>
+<area shape="rect" id="node8" href="$class_fan___web.html#a328af0b2469de198e88f0dd51758a5cb" title="Fan_Web::websiteEvent\l_Refresh" alt="" coords="293,383,458,425"/>
+<area shape="rect" id="node9" href="$class_fan___web.html#a2741ea624a781febbd4f3e2bf82c89ed" title="Fan_Web::websiteEvent\l_Button" alt="" coords="293,449,458,490"/>
+<area shape="rect" id="node10" href="$class_lights___web.html#afab1fbd6391d25ab5f382b89d4a02b5e" title="Lights_Web::websiteEvent_Load" alt="" coords="269,515,482,541"/>
+<area shape="rect" id="node11" href="$class_lights___web.html#af46bb9ec74ecb0f45b465c2722b9b18a" title="Lights_Web::websiteEvent\l_Refresh" alt="" coords="286,566,465,607"/>
+<area shape="rect" id="node12" href="$class_light_sensor___web.html#a6afe75f4f6cec3dc5f44454e23da1f8a" title="LightSensor_Web::website\lEvent_Refresh" alt="" coords="286,631,465,673"/>
+<area shape="rect" id="node13" href="$class_module_skeleton___web.html#a391e4cad5fa897f0b57e3992c68eac14" title="ModuleSkeleton_Web\l::websiteEvent_Load" alt="" coords="301,697,450,738"/>
+<area shape="rect" id="node14" href="$class_module_skeleton___web.html#a4fbb767613efc275f91eac8e550f1a86" title="ModuleSkeleton_Web\l::websiteEvent_Refresh" alt="" coords="294,762,457,803"/>
+<area shape="rect" id="node15" href="$class_p_h_sensor___web.html#ad986c8800153e737e43fab3bd155b8af" title="PHSensor_Web::websiteEvent_Load" alt="" coords="256,828,495,855"/>
+<area shape="rect" id="node16" href="$class_p_h_sensor___web.html#a73ad3c5be0e9dd8deaea4cf2eee654be" title="PHSensor_Web::websiteEvent\l_Refresh" alt="" coords="274,879,477,921"/>
+<area shape="rect" id="node17" href="$class_power_sensor___web.html#a430e9c91f3fa760d7930cee367b92125" title="PowerSensor_Web::website\lEvent_Refresh" alt="" coords="282,945,469,986"/>
+<area shape="rect" id="node18" href="$class_power_sensor_v3___web.html#aa5516c0a4c5daa0f27a89e86abb0db26" title="PowerSensorV3_Web::\lwebsiteEvent_Refresh" alt="" coords="296,1010,455,1051"/>
+<area shape="rect" id="node19" href="$class_pressure_sensor___web.html#a235a466d2a93e7f53609c3113871c145" title="PressureSensor_Web\l::websiteEvent_Load" alt="" coords="301,1075,450,1117"/>
+<area shape="rect" id="node20" href="$class_sound___web.html#ae3a500bbde7e1264aeeb1bf43b5ba09f" title="Sound_Web::websiteEvent_Load" alt="" coords="268,1141,483,1168"/>
+<area shape="rect" id="node21" href="$class_water_level_sensor___web.html#a8caf8178b0128bad72e78c1c662af5c0" title="WaterLevelSensor_Web\l::websiteEvent_Refresh" alt="" coords="294,1193,457,1234"/>
+<area shape="rect" id="node22" href="$class_water_temp_sensor___web.html#a930d46ab1e337e085a06058d8c07f76b" title="WaterTempSensor_Web\l::websiteEvent_Refresh" alt="" coords="293,1258,458,1299"/>
+<area shape="rect" id="node23" href="$class_weight_sensor___web.html#aa47b67e39e6cbd1b543e482c94160a66" title="WeightSensor_Web::website\lEvent_Refresh" alt="" coords="280,1323,471,1365"/>
+</map>

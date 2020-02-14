@@ -1,0 +1,7 @@
+<map id="PHSensor_Web::websiteEvent_Refresh" name="PHSensor_Web::websiteEvent_Refresh">
+<area shape="rect" id="node2" href="$class_common.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="256,5,459,32"/>
+<area shape="rect" id="node3" href="$class_p_h_sensor.html#afa1a5158732cd57ffb41ae089bf8850f" title="PHSensor::getPHText" alt="" coords="281,56,434,83"/>
+<area shape="rect" id="node4" href="$class_rolling_average.html#aab001a981060af0948bd8b46c05c8e97" title="RollingAverage::getFloatText" alt="" coords="507,56,697,83"/>
+<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="799,31,857,57"/>
+<area shape="rect" id="node6" href="$class_rolling_average.html#ada0ea15c7152230f9433329fba92d3f8" title="RollingAverage::getFloat" alt="" coords="745,81,911,108"/>
+</map>

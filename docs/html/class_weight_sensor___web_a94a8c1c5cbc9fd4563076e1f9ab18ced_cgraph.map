@@ -1,0 +1,5 @@
+<map id="WeightSensor_Web::websiteEvent_Button" name="WeightSensor_Web::websiteEvent_Button">
+<area shape="rect" id="node2" href="$class_common.html#a0192d295366bf1e966d8b58a3ce57554" title="Common::isThisMyComponent" alt="" coords="244,5,447,32"/>
+<area shape="rect" id="node3" href="$class_weight_sensor.html#a54b241f48e63ef6b17eade0d55a78008" title="WeightSensor::triggerTare" alt="" coords="258,56,433,83"/>
+<area shape="rect" id="node4" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="495,56,624,83"/>
+</map>

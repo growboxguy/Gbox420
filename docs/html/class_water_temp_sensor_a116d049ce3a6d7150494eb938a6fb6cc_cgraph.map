@@ -1,0 +1,9 @@
+<map id="WaterTempSensor::report" name="WaterTempSensor::report">
+<area shape="rect" id="node2" href="$class_common.html#a9e60e2c26a5f4d72342a59a969954636" title="Common::report" alt="" coords="275,5,391,32"/>
+<area shape="rect" id="node3" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="537,5,632,32"/>
+<area shape="rect" id="node4" href="$class_water_temp_sensor.html#a812f3e2f65426efdf594e599d0e8a24d" title="WaterTempSensor::getTempText" alt="" coords="225,107,441,133"/>
+<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#aa2683828a0a7f43a26f85171e7c2dc73" title="tempToText" alt="" coords="539,56,631,83"/>
+<area shape="rect" id="node6" href="$class_rolling_average.html#ada0ea15c7152230f9433329fba92d3f8" title="RollingAverage::getFloat" alt="" coords="728,107,893,133"/>
+<area shape="rect" id="node7" href="$class_rolling_average.html#aab001a981060af0948bd8b46c05c8e97" title="RollingAverage::getFloatText" alt="" coords="489,157,680,184"/>
+<area shape="rect" id="node8" href="$_hempy_module_2src_2_helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="781,157,840,184"/>
+</map>

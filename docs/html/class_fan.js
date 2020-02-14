@@ -1,0 +1,26 @@
+var class_fan =
+[
+    [ "Fan", "class_fan.html#a2bf10abddbcad94045ad7e3d567f17b8", null ],
+    [ "Fan", "class_fan.html#a2bf10abddbcad94045ad7e3d567f17b8", null ],
+    [ "checkFanStatus", "class_fan.html#a32c99a0575098a2600ea3c9f27013a98", null ],
+    [ "checkFanStatus", "class_fan.html#a32c99a0575098a2600ea3c9f27013a98", null ],
+    [ "fanSpeedToNumber", "class_fan.html#acd41482f79dd009bcecd7740f8dbf002", null ],
+    [ "fanSpeedToNumber", "class_fan.html#a02c3e5b711ec48e5790985c38998e841", null ],
+    [ "fanSpeedToText", "class_fan.html#a492f2551cf8f05d4ce64911807269764", null ],
+    [ "fanSpeedToText", "class_fan.html#ad1733d51556ca00cce7e9f2ed129de5f", null ],
+    [ "refresh_Minute", "class_fan.html#ad4605196f9611585e9416bcce3d84723", null ],
+    [ "refresh_Minute", "class_fan.html#ad4605196f9611585e9416bcce3d84723", null ],
+    [ "report", "class_fan.html#a7f1ba729d418cc2109199b2392c37902", null ],
+    [ "report", "class_fan.html#a7f1ba729d418cc2109199b2392c37902", null ],
+    [ "SetHighSpeed", "class_fan.html#ad462f4c80b5024a1266e0a070527425e", null ],
+    [ "SetHighSpeed", "class_fan.html#ad462f4c80b5024a1266e0a070527425e", null ],
+    [ "SetLowSpeed", "class_fan.html#a817f97adfe3990ef302f49359b3237f7", null ],
+    [ "SetLowSpeed", "class_fan.html#a817f97adfe3990ef302f49359b3237f7", null ],
+    [ "TurnOff", "class_fan.html#af5a22c8800d5a4f3295f44a313af71d2", null ],
+    [ "TurnOff", "class_fan.html#af5a22c8800d5a4f3295f44a313af71d2", null ],
+    [ "HighSpeed", "class_fan.html#ac2c512f092cf8f435c1bdbb4278ccebe", null ],
+    [ "OnOffPin", "class_fan.html#afceba9bad8155187a7f2aea415f46a79", null ],
+    [ "Parent", "class_fan.html#ab57a7efd60bf06472195dd1d63f0017f", null ],
+    [ "SpeedPin", "class_fan.html#ade9d2ab9b86bc3866a65f30e1964b746", null ],
+    [ "State", "class_fan.html#afa0b370b3ffa913fdc1d5f06db1e06e3", null ]
+];

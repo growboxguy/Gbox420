@@ -1,0 +1,8 @@
+<map id="GrowBox::refresh_Minute" name="GrowBox::refresh_Minute">
+<area shape="rect" id="node2" href="$class_common.html#a14e4462a94bd118028ce1d487ca0292c" title="Common::refresh_Minute" alt="" coords="224,5,393,32"/>
+<area shape="rect" id="node4" href="$class_module___web.html#a32622fc4e87a9885319c73c5b4802cc5" title="Module_Web::runReport" alt="" coords="227,81,390,108"/>
+<area shape="rect" id="node3" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="617,31,712,57"/>
+<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#a3f55b54c0f3774dad453d8418b8e075d" title="getFormattedTime" alt="" coords="441,81,569,108"/>
+<area shape="rect" id="node6" href="$_hempy_module_2src_2_helpers_8cpp.html#a1c32dc98349863213572e4a117046fc1" title="getFreeMemory" alt="" coords="449,132,562,159"/>
+<area shape="rect" id="node7" href="$class_common.html#a9e60e2c26a5f4d72342a59a969954636" title="Common::report" alt="" coords="447,183,563,209"/>
+</map>

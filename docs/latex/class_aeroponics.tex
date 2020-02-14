@@ -1,0 +1,818 @@
+\hypertarget{class_aeroponics}{}\section{Aeroponics Class Reference}
+\label{class_aeroponics}\index{Aeroponics@{Aeroponics}}
+
+
+{\ttfamily \#include $<$Aeroponics.\+h$>$}
+
+
+
+Inheritance diagram for Aeroponics\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{class_aeroponics__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Aeroponics\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_aeroponics_aa0ded2d62059e82009548ccfa9c1f790}{Aeroponics} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{class_module}{Module} $\ast$\hyperlink{class_aeroponics_aa6bca341181caaa3ef15d10512d24c7b}{Parent}, \hyperlink{struct_settings_1_1_aeroponics_settings}{Settings\+::\+Aeroponics\+Settings} $\ast$Default\+Settings, \hyperlink{class_pressure_sensor}{Pressure\+Sensor} $\ast$\hyperlink{class_aeroponics_ab5e9a2fe86a36e1e84876eb1366a2bfb}{Feedback\+Pressure\+Sensor})
+\item 
+virtual void \hyperlink{class_aeroponics_a3dbfce027ab5fa736a6007a6ae75ee4e}{report} ()
+\item 
+char $\ast$ \hyperlink{class_aeroponics_af5c051ee5e24b10644d70d5e5a2b82b7}{get\+Interval} ()
+\item 
+char $\ast$ \hyperlink{class_aeroponics_acd7c1402fad8a71c4f0ee4b15f27497d}{get\+Duration} ()
+\item 
+\hyperlink{class_aeroponics_aa0ded2d62059e82009548ccfa9c1f790}{Aeroponics} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{class_module}{Module} $\ast$\hyperlink{class_aeroponics_aa6bca341181caaa3ef15d10512d24c7b}{Parent}, \hyperlink{struct_settings_1_1_aeroponics_settings}{Settings\+::\+Aeroponics\+Settings} $\ast$Default\+Settings, \hyperlink{class_pressure_sensor}{Pressure\+Sensor} $\ast$\hyperlink{class_aeroponics_ab5e9a2fe86a36e1e84876eb1366a2bfb}{Feedback\+Pressure\+Sensor})
+\item 
+virtual void \hyperlink{class_aeroponics_a1da64fbd59c3452422fdaaf794dfa8be}{report} ()
+\item 
+char $\ast$ \hyperlink{class_aeroponics_a8b412b9988ce3ceae617dc53502e6d12}{get\+Interval} ()
+\item 
+char $\ast$ \hyperlink{class_aeroponics_ae884337e59b46b5ff0fdb3b5da5dc5a0}{get\+Duration} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_aeroponics_a0f70505e6b8722985f6ab52f17595cdd}{check\+Relays} ()
+\item 
+char $\ast$ \hyperlink{class_aeroponics_acdb382c7077f71d198ceaf6c4b8ed664}{pump\+State\+To\+Text} ()
+\item 
+void \hyperlink{class_aeroponics_ae4d0324ae9193294ed4a1ca5ab247537}{set\+Pump\+On} (bool User\+Request)
+\item 
+void \hyperlink{class_aeroponics_a24561429d2ee5cf75f86edbe6e0a1d80}{set\+Pump\+Off} (bool User\+Request)
+\item 
+void \hyperlink{class_aeroponics_a235ada2ee2e5ab79542da63e3fc70cb5}{Pump\+Disable} ()
+\item 
+void \hyperlink{class_aeroponics_a509f52009146d740a519154b5beca6ff}{Mix} ()
+\item 
+void \hyperlink{class_aeroponics_a769b673b25fad588fd2dc013f5a62132}{set\+Interval} (int interval)
+\item 
+void \hyperlink{class_aeroponics_a0414c6a5be2ff2da7d88e83cc2364110}{set\+Duration} (int duration)
+\item 
+void \hyperlink{class_aeroponics_ac0363ff5470e85f5acda1842a616dd41}{set\+Pump\+Timeout} (int Timeout)
+\item 
+void \hyperlink{class_aeroponics_ad9568506941f5de8d849eae4daca1bd7}{set\+Priming\+Time} (int Timing)
+\item 
+virtual void \hyperlink{class_aeroponics_aecda76aae20ce45fd9a080770cf07e56}{spray\+Now} (bool From\+Website=false)=0
+\item 
+virtual void \hyperlink{class_aeroponics_a961b5818322eb6d0268d2f2f4763768e}{spray\+Off} ()=0
+\item 
+virtual char $\ast$ \hyperlink{class_aeroponics_aa79435aaa49a563d41ae092ec3e87e06}{spray\+State\+To\+Text} ()=0
+\item 
+void \hyperlink{class_aeroponics_a459d83fc32d3369938be2953138c9b96}{set\+Spray\+On\+Off} (bool State)
+\item 
+void \hyperlink{class_aeroponics_a0f70505e6b8722985f6ab52f17595cdd}{check\+Relays} ()
+\item 
+char $\ast$ \hyperlink{class_aeroponics_ae20bf74b4eaa0651f1253dafab201b3b}{pump\+State\+To\+Text} ()
+\item 
+void \hyperlink{class_aeroponics_ae4d0324ae9193294ed4a1ca5ab247537}{set\+Pump\+On} (bool User\+Request)
+\item 
+void \hyperlink{class_aeroponics_a24561429d2ee5cf75f86edbe6e0a1d80}{set\+Pump\+Off} (bool User\+Request)
+\item 
+void \hyperlink{class_aeroponics_a235ada2ee2e5ab79542da63e3fc70cb5}{Pump\+Disable} ()
+\item 
+void \hyperlink{class_aeroponics_a509f52009146d740a519154b5beca6ff}{Mix} ()
+\item 
+void \hyperlink{class_aeroponics_a769b673b25fad588fd2dc013f5a62132}{set\+Interval} (int interval)
+\item 
+void \hyperlink{class_aeroponics_a0414c6a5be2ff2da7d88e83cc2364110}{set\+Duration} (int duration)
+\item 
+void \hyperlink{class_aeroponics_ac0363ff5470e85f5acda1842a616dd41}{set\+Pump\+Timeout} (int Timeout)
+\item 
+void \hyperlink{class_aeroponics_ad9568506941f5de8d849eae4daca1bd7}{set\+Priming\+Time} (int Timing)
+\item 
+virtual void \hyperlink{class_aeroponics_aecda76aae20ce45fd9a080770cf07e56}{spray\+Now} (bool From\+Website=false)=0
+\item 
+virtual void \hyperlink{class_aeroponics_a961b5818322eb6d0268d2f2f4763768e}{spray\+Off} ()=0
+\item 
+virtual char $\ast$ \hyperlink{class_aeroponics_aa79435aaa49a563d41ae092ec3e87e06}{spray\+State\+To\+Text} ()=0
+\item 
+void \hyperlink{class_aeroponics_a459d83fc32d3369938be2953138c9b96}{set\+Spray\+On\+Off} (bool State)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_module}{Module} $\ast$ \hyperlink{class_aeroponics_aa6bca341181caaa3ef15d10512d24c7b}{Parent}
+\item 
+\hyperlink{class_pressure_sensor}{Pressure\+Sensor} $\ast$ \hyperlink{class_aeroponics_ab5e9a2fe86a36e1e84876eb1366a2bfb}{Feedback\+Pressure\+Sensor}
+\item 
+byte $\ast$ \hyperlink{class_aeroponics_ad79cd6aa7f3320a84123501e3a7b8bc2}{Pump\+Pin}
+\item 
+byte $\ast$ \hyperlink{class_aeroponics_a1766a5f98fad0aa6fe5d3cff2be6b26a}{Bypass\+Solenoid\+Pin}
+\item 
+bool $\ast$ \hyperlink{class_aeroponics_ab54b25994276061212bd3e0e47871704}{Spray\+Enabled}
+\item 
+int $\ast$ \hyperlink{class_aeroponics_afc31194d13c3e875be4522f99df54189}{Interval}
+\item 
+int $\ast$ \hyperlink{class_aeroponics_a477be5d422410bb62a70a279a9f7d9f9}{Duration}
+\item 
+int $\ast$ \hyperlink{class_aeroponics_a17f2256a8ad90c6cac94f6129f5ba78f}{Pump\+Timeout}
+\item 
+int $\ast$ \hyperlink{class_aeroponics_ac7890e927a7239b8a2e013205868232a}{Priming\+Time}
+\item 
+uint32\+\_\+t \hyperlink{class_aeroponics_a366eb8d09ed862b4f69c6e4fbc13553f}{Pump\+Timer} = millis()
+\item 
+uint32\+\_\+t \hyperlink{class_aeroponics_af90abc43bd0a70431a1be41e87889813}{Spray\+Timer} = millis()
+\item 
+bool \hyperlink{class_aeroponics_a89ee0dc4055cd8b38e9f474e10cdfd2c}{Pump\+OK} = true
+\item 
+bool \hyperlink{class_aeroponics_a87054193c71ad340c0b6929037f53a8a}{Pump\+On} = false
+\item 
+bool \hyperlink{class_aeroponics_a8acb5d5f9ffbdf8bbdb5c888464eaf24}{Bypass\+Solenoid\+On} = false
+\item 
+bool \hyperlink{class_aeroponics_a938c0fe40ccb2427676a3e95ff3ba054}{Mix\+In\+Progress} = false
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 7 of file Aeroponics.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_aeroponics_aa0ded2d62059e82009548ccfa9c1f790}\label{class_aeroponics_aa0ded2d62059e82009548ccfa9c1f790}} 
+\index{Aeroponics@{Aeroponics}!Aeroponics@{Aeroponics}}
+\index{Aeroponics@{Aeroponics}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Aeroponics()}{Aeroponics()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Aeroponics\+::\+Aeroponics (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{class_module}{Module} $\ast$}]{Parent,  }\item[{\hyperlink{struct_settings_1_1_aeroponics_settings}{Settings\+::\+Aeroponics\+Settings} $\ast$}]{Default\+Settings,  }\item[{\hyperlink{class_pressure_sensor}{Pressure\+Sensor} $\ast$}]{Feedback\+Pressure\+Sensor }\end{DoxyParamCaption})}
+
+
+
+Definition at line 7 of file Aeroponics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_aa0ded2d62059e82009548ccfa9c1f790_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_aa0ded2d62059e82009548ccfa9c1f790}\label{class_aeroponics_aa0ded2d62059e82009548ccfa9c1f790}} 
+\index{Aeroponics@{Aeroponics}!Aeroponics@{Aeroponics}}
+\index{Aeroponics@{Aeroponics}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Aeroponics()}{Aeroponics()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Aeroponics\+::\+Aeroponics (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{class_module}{Module} $\ast$}]{Parent,  }\item[{\hyperlink{struct_settings_1_1_aeroponics_settings}{Settings\+::\+Aeroponics\+Settings} $\ast$}]{Default\+Settings,  }\item[{\hyperlink{class_pressure_sensor}{Pressure\+Sensor} $\ast$}]{Feedback\+Pressure\+Sensor }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_aeroponics_a0f70505e6b8722985f6ab52f17595cdd}\label{class_aeroponics_a0f70505e6b8722985f6ab52f17595cdd}} 
+\index{Aeroponics@{Aeroponics}!check\+Relays@{check\+Relays}}
+\index{check\+Relays@{check\+Relays}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{check\+Relays()}{checkRelays()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::check\+Relays (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 42 of file Aeroponics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_a0f70505e6b8722985f6ab52f17595cdd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_a0f70505e6b8722985f6ab52f17595cdd}\label{class_aeroponics_a0f70505e6b8722985f6ab52f17595cdd}} 
+\index{Aeroponics@{Aeroponics}!check\+Relays@{check\+Relays}}
+\index{check\+Relays@{check\+Relays}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{check\+Relays()}{checkRelays()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::check\+Relays (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_aeroponics_acd7c1402fad8a71c4f0ee4b15f27497d}\label{class_aeroponics_acd7c1402fad8a71c4f0ee4b15f27497d}} 
+\index{Aeroponics@{Aeroponics}!get\+Duration@{get\+Duration}}
+\index{get\+Duration@{get\+Duration}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{get\+Duration()}{getDuration()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char $\ast$ Aeroponics\+::get\+Duration (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 133 of file Aeroponics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{class_aeroponics_acd7c1402fad8a71c4f0ee4b15f27497d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_ae884337e59b46b5ff0fdb3b5da5dc5a0}\label{class_aeroponics_ae884337e59b46b5ff0fdb3b5da5dc5a0}} 
+\index{Aeroponics@{Aeroponics}!get\+Duration@{get\+Duration}}
+\index{get\+Duration@{get\+Duration}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{get\+Duration()}{getDuration()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char$\ast$ Aeroponics\+::get\+Duration (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_aeroponics_a8b412b9988ce3ceae617dc53502e6d12}\label{class_aeroponics_a8b412b9988ce3ceae617dc53502e6d12}} 
+\index{Aeroponics@{Aeroponics}!get\+Interval@{get\+Interval}}
+\index{get\+Interval@{get\+Interval}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{get\+Interval()}{getInterval()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char$\ast$ Aeroponics\+::get\+Interval (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_aeroponics_af5c051ee5e24b10644d70d5e5a2b82b7}\label{class_aeroponics_af5c051ee5e24b10644d70d5e5a2b82b7}} 
+\index{Aeroponics@{Aeroponics}!get\+Interval@{get\+Interval}}
+\index{get\+Interval@{get\+Interval}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{get\+Interval()}{getInterval()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char $\ast$ Aeroponics\+::get\+Interval (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 121 of file Aeroponics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=277pt]{class_aeroponics_af5c051ee5e24b10644d70d5e5a2b82b7_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_a509f52009146d740a519154b5beca6ff}\label{class_aeroponics_a509f52009146d740a519154b5beca6ff}} 
+\index{Aeroponics@{Aeroponics}!Mix@{Mix}}
+\index{Mix@{Mix}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Mix()}{Mix()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::\+Mix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 103 of file Aeroponics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=331pt]{class_aeroponics_a509f52009146d740a519154b5beca6ff_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{class_aeroponics_a509f52009146d740a519154b5beca6ff_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_a509f52009146d740a519154b5beca6ff}\label{class_aeroponics_a509f52009146d740a519154b5beca6ff}} 
+\index{Aeroponics@{Aeroponics}!Mix@{Mix}}
+\index{Mix@{Mix}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Mix()}{Mix()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::\+Mix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_aeroponics_a235ada2ee2e5ab79542da63e3fc70cb5}\label{class_aeroponics_a235ada2ee2e5ab79542da63e3fc70cb5}} 
+\index{Aeroponics@{Aeroponics}!Pump\+Disable@{Pump\+Disable}}
+\index{Pump\+Disable@{Pump\+Disable}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Pump\+Disable()}{PumpDisable()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::\+Pump\+Disable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 96 of file Aeroponics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_a235ada2ee2e5ab79542da63e3fc70cb5_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_a235ada2ee2e5ab79542da63e3fc70cb5_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_a235ada2ee2e5ab79542da63e3fc70cb5}\label{class_aeroponics_a235ada2ee2e5ab79542da63e3fc70cb5}} 
+\index{Aeroponics@{Aeroponics}!Pump\+Disable@{Pump\+Disable}}
+\index{Pump\+Disable@{Pump\+Disable}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Pump\+Disable()}{PumpDisable()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::\+Pump\+Disable (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_aeroponics_acdb382c7077f71d198ceaf6c4b8ed664}\label{class_aeroponics_acdb382c7077f71d198ceaf6c4b8ed664}} 
+\index{Aeroponics@{Aeroponics}!pump\+State\+To\+Text@{pump\+State\+To\+Text}}
+\index{pump\+State\+To\+Text@{pump\+State\+To\+Text}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{pump\+State\+To\+Text()}{pumpStateToText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char $\ast$ Aeroponics\+::pump\+State\+To\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 54 of file Aeroponics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_acdb382c7077f71d198ceaf6c4b8ed664_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_ae20bf74b4eaa0651f1253dafab201b3b}\label{class_aeroponics_ae20bf74b4eaa0651f1253dafab201b3b}} 
+\index{Aeroponics@{Aeroponics}!pump\+State\+To\+Text@{pump\+State\+To\+Text}}
+\index{pump\+State\+To\+Text@{pump\+State\+To\+Text}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{pump\+State\+To\+Text()}{pumpStateToText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char$\ast$ Aeroponics\+::pump\+State\+To\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_aeroponics_a3dbfce027ab5fa736a6007a6ae75ee4e}\label{class_aeroponics_a3dbfce027ab5fa736a6007a6ae75ee4e}} 
+\index{Aeroponics@{Aeroponics}!report@{report}}
+\index{report@{report}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a9e60e2c26a5f4d72342a59a969954636}{Common}.
+
+
+
+Reimplemented in \hyperlink{class_aeroponics___no_tank_af2f6dfdcfd4365ed35aa83176113ff86}{Aeroponics\+\_\+\+No\+Tank}, \hyperlink{class_aeroponics___tank_a45e50ca4e5d5a605d355d65c8cd3e5cd}{Aeroponics\+\_\+\+Tank}, \hyperlink{class_aeroponics___no_tank_af2f6dfdcfd4365ed35aa83176113ff86}{Aeroponics\+\_\+\+No\+Tank}, and \hyperlink{class_aeroponics___tank_a45e50ca4e5d5a605d355d65c8cd3e5cd}{Aeroponics\+\_\+\+Tank}.
+
+
+
+Definition at line 26 of file Aeroponics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{class_aeroponics_a3dbfce027ab5fa736a6007a6ae75ee4e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=335pt]{class_aeroponics_a3dbfce027ab5fa736a6007a6ae75ee4e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_a1da64fbd59c3452422fdaaf794dfa8be}\label{class_aeroponics_a1da64fbd59c3452422fdaaf794dfa8be}} 
+\index{Aeroponics@{Aeroponics}!report@{report}}
+\index{report@{report}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual void Aeroponics\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a9e60e2c26a5f4d72342a59a969954636}{Common}.
+
+
+
+Reimplemented in \hyperlink{class_aeroponics___no_tank_af2f6dfdcfd4365ed35aa83176113ff86}{Aeroponics\+\_\+\+No\+Tank}, \hyperlink{class_aeroponics___tank_a45e50ca4e5d5a605d355d65c8cd3e5cd}{Aeroponics\+\_\+\+Tank}, \hyperlink{class_aeroponics___no_tank_af2f6dfdcfd4365ed35aa83176113ff86}{Aeroponics\+\_\+\+No\+Tank}, and \hyperlink{class_aeroponics___tank_a45e50ca4e5d5a605d355d65c8cd3e5cd}{Aeroponics\+\_\+\+Tank}.
+
+\mbox{\Hypertarget{class_aeroponics_a0414c6a5be2ff2da7d88e83cc2364110}\label{class_aeroponics_a0414c6a5be2ff2da7d88e83cc2364110}} 
+\index{Aeroponics@{Aeroponics}!set\+Duration@{set\+Duration}}
+\index{set\+Duration@{set\+Duration}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Duration()}{setDuration()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Duration (\begin{DoxyParamCaption}\item[{int}]{duration }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 126 of file Aeroponics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=335pt]{class_aeroponics_a0414c6a5be2ff2da7d88e83cc2364110_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_a0414c6a5be2ff2da7d88e83cc2364110_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_a0414c6a5be2ff2da7d88e83cc2364110}\label{class_aeroponics_a0414c6a5be2ff2da7d88e83cc2364110}} 
+\index{Aeroponics@{Aeroponics}!set\+Duration@{set\+Duration}}
+\index{set\+Duration@{set\+Duration}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Duration()}{setDuration()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Duration (\begin{DoxyParamCaption}\item[{int}]{duration }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_aeroponics_a769b673b25fad588fd2dc013f5a62132}\label{class_aeroponics_a769b673b25fad588fd2dc013f5a62132}} 
+\index{Aeroponics@{Aeroponics}!set\+Interval@{set\+Interval}}
+\index{set\+Interval@{set\+Interval}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Interval()}{setInterval()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Interval (\begin{DoxyParamCaption}\item[{int}]{interval }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 115 of file Aeroponics.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_a769b673b25fad588fd2dc013f5a62132_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_a769b673b25fad588fd2dc013f5a62132}\label{class_aeroponics_a769b673b25fad588fd2dc013f5a62132}} 
+\index{Aeroponics@{Aeroponics}!set\+Interval@{set\+Interval}}
+\index{set\+Interval@{set\+Interval}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Interval()}{setInterval()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Interval (\begin{DoxyParamCaption}\item[{int}]{interval }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_aeroponics_ad9568506941f5de8d849eae4daca1bd7}\label{class_aeroponics_ad9568506941f5de8d849eae4daca1bd7}} 
+\index{Aeroponics@{Aeroponics}!set\+Priming\+Time@{set\+Priming\+Time}}
+\index{set\+Priming\+Time@{set\+Priming\+Time}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Priming\+Time()}{setPrimingTime()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Priming\+Time (\begin{DoxyParamCaption}\item[{int}]{Timing }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 144 of file Aeroponics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_ad9568506941f5de8d849eae4daca1bd7_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_ad9568506941f5de8d849eae4daca1bd7_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_ad9568506941f5de8d849eae4daca1bd7}\label{class_aeroponics_ad9568506941f5de8d849eae4daca1bd7}} 
+\index{Aeroponics@{Aeroponics}!set\+Priming\+Time@{set\+Priming\+Time}}
+\index{set\+Priming\+Time@{set\+Priming\+Time}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Priming\+Time()}{setPrimingTime()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Priming\+Time (\begin{DoxyParamCaption}\item[{int}]{Timing }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_aeroponics_a24561429d2ee5cf75f86edbe6e0a1d80}\label{class_aeroponics_a24561429d2ee5cf75f86edbe6e0a1d80}} 
+\index{Aeroponics@{Aeroponics}!set\+Pump\+Off@{set\+Pump\+Off}}
+\index{set\+Pump\+Off@{set\+Pump\+Off}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Pump\+Off()}{setPumpOff()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Pump\+Off (\begin{DoxyParamCaption}\item[{bool}]{User\+Request }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_aeroponics_a24561429d2ee5cf75f86edbe6e0a1d80}\label{class_aeroponics_a24561429d2ee5cf75f86edbe6e0a1d80}} 
+\index{Aeroponics@{Aeroponics}!set\+Pump\+Off@{set\+Pump\+Off}}
+\index{set\+Pump\+Off@{set\+Pump\+Off}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Pump\+Off()}{setPumpOff()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Pump\+Off (\begin{DoxyParamCaption}\item[{bool}]{User\+Request }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 81 of file Aeroponics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_a24561429d2ee5cf75f86edbe6e0a1d80_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_a24561429d2ee5cf75f86edbe6e0a1d80_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_ae4d0324ae9193294ed4a1ca5ab247537}\label{class_aeroponics_ae4d0324ae9193294ed4a1ca5ab247537}} 
+\index{Aeroponics@{Aeroponics}!set\+Pump\+On@{set\+Pump\+On}}
+\index{set\+Pump\+On@{set\+Pump\+On}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Pump\+On()}{setPumpOn()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Pump\+On (\begin{DoxyParamCaption}\item[{bool}]{User\+Request }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_aeroponics_ae4d0324ae9193294ed4a1ca5ab247537}\label{class_aeroponics_ae4d0324ae9193294ed4a1ca5ab247537}} 
+\index{Aeroponics@{Aeroponics}!set\+Pump\+On@{set\+Pump\+On}}
+\index{set\+Pump\+On@{set\+Pump\+On}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Pump\+On()}{setPumpOn()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Pump\+On (\begin{DoxyParamCaption}\item[{bool}]{User\+Request }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 67 of file Aeroponics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_ae4d0324ae9193294ed4a1ca5ab247537_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_ae4d0324ae9193294ed4a1ca5ab247537_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_ac0363ff5470e85f5acda1842a616dd41}\label{class_aeroponics_ac0363ff5470e85f5acda1842a616dd41}} 
+\index{Aeroponics@{Aeroponics}!set\+Pump\+Timeout@{set\+Pump\+Timeout}}
+\index{set\+Pump\+Timeout@{set\+Pump\+Timeout}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Pump\+Timeout()}{setPumpTimeout()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Pump\+Timeout (\begin{DoxyParamCaption}\item[{int}]{Timeout }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_aeroponics_ac0363ff5470e85f5acda1842a616dd41}\label{class_aeroponics_ac0363ff5470e85f5acda1842a616dd41}} 
+\index{Aeroponics@{Aeroponics}!set\+Pump\+Timeout@{set\+Pump\+Timeout}}
+\index{set\+Pump\+Timeout@{set\+Pump\+Timeout}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Pump\+Timeout()}{setPumpTimeout()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Pump\+Timeout (\begin{DoxyParamCaption}\item[{int}]{Timeout }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 138 of file Aeroponics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_ac0363ff5470e85f5acda1842a616dd41_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_ac0363ff5470e85f5acda1842a616dd41_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_a459d83fc32d3369938be2953138c9b96}\label{class_aeroponics_a459d83fc32d3369938be2953138c9b96}} 
+\index{Aeroponics@{Aeroponics}!set\+Spray\+On\+Off@{set\+Spray\+On\+Off}}
+\index{set\+Spray\+On\+Off@{set\+Spray\+On\+Off}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Spray\+On\+Off()}{setSprayOnOff()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Spray\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_aeroponics_a459d83fc32d3369938be2953138c9b96}\label{class_aeroponics_a459d83fc32d3369938be2953138c9b96}} 
+\index{Aeroponics@{Aeroponics}!set\+Spray\+On\+Off@{set\+Spray\+On\+Off}}
+\index{set\+Spray\+On\+Off@{set\+Spray\+On\+Off}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{set\+Spray\+On\+Off()}{setSprayOnOff()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Aeroponics\+::set\+Spray\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 150 of file Aeroponics.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_a459d83fc32d3369938be2953138c9b96_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_aeroponics_a459d83fc32d3369938be2953138c9b96_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_aeroponics_aecda76aae20ce45fd9a080770cf07e56}\label{class_aeroponics_aecda76aae20ce45fd9a080770cf07e56}} 
+\index{Aeroponics@{Aeroponics}!spray\+Now@{spray\+Now}}
+\index{spray\+Now@{spray\+Now}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{spray\+Now()}{sprayNow()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual void Aeroponics\+::spray\+Now (\begin{DoxyParamCaption}\item[{bool}]{From\+Website = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_aeroponics___no_tank_a91a9ce3552f1f726d26aa79fad04116e}{Aeroponics\+\_\+\+No\+Tank}, \hyperlink{class_aeroponics___tank_ab4158b1a54f6a1ac4f3eb35fc8854e35}{Aeroponics\+\_\+\+Tank}, \hyperlink{class_aeroponics___no_tank_a91a9ce3552f1f726d26aa79fad04116e}{Aeroponics\+\_\+\+No\+Tank}, and \hyperlink{class_aeroponics___tank_ab4158b1a54f6a1ac4f3eb35fc8854e35}{Aeroponics\+\_\+\+Tank}.
+
+\mbox{\Hypertarget{class_aeroponics_aecda76aae20ce45fd9a080770cf07e56}\label{class_aeroponics_aecda76aae20ce45fd9a080770cf07e56}} 
+\index{Aeroponics@{Aeroponics}!spray\+Now@{spray\+Now}}
+\index{spray\+Now@{spray\+Now}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{spray\+Now()}{sprayNow()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual void Aeroponics\+::spray\+Now (\begin{DoxyParamCaption}\item[{bool}]{From\+Website = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_aeroponics___no_tank_a91a9ce3552f1f726d26aa79fad04116e}{Aeroponics\+\_\+\+No\+Tank}, \hyperlink{class_aeroponics___tank_ab4158b1a54f6a1ac4f3eb35fc8854e35}{Aeroponics\+\_\+\+Tank}, \hyperlink{class_aeroponics___no_tank_a91a9ce3552f1f726d26aa79fad04116e}{Aeroponics\+\_\+\+No\+Tank}, and \hyperlink{class_aeroponics___tank_ab4158b1a54f6a1ac4f3eb35fc8854e35}{Aeroponics\+\_\+\+Tank}.
+
+\mbox{\Hypertarget{class_aeroponics_a961b5818322eb6d0268d2f2f4763768e}\label{class_aeroponics_a961b5818322eb6d0268d2f2f4763768e}} 
+\index{Aeroponics@{Aeroponics}!spray\+Off@{spray\+Off}}
+\index{spray\+Off@{spray\+Off}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{spray\+Off()}{sprayOff()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual void Aeroponics\+::spray\+Off (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_aeroponics___no_tank_a37537625cd3d80d6c49adeae298d4a76}{Aeroponics\+\_\+\+No\+Tank}, \hyperlink{class_aeroponics___tank_aa97abbd76332098f8662b78c451deee5}{Aeroponics\+\_\+\+Tank}, \hyperlink{class_aeroponics___no_tank_a37537625cd3d80d6c49adeae298d4a76}{Aeroponics\+\_\+\+No\+Tank}, and \hyperlink{class_aeroponics___tank_aa97abbd76332098f8662b78c451deee5}{Aeroponics\+\_\+\+Tank}.
+
+\mbox{\Hypertarget{class_aeroponics_a961b5818322eb6d0268d2f2f4763768e}\label{class_aeroponics_a961b5818322eb6d0268d2f2f4763768e}} 
+\index{Aeroponics@{Aeroponics}!spray\+Off@{spray\+Off}}
+\index{spray\+Off@{spray\+Off}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{spray\+Off()}{sprayOff()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual void Aeroponics\+::spray\+Off (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_aeroponics___no_tank_a37537625cd3d80d6c49adeae298d4a76}{Aeroponics\+\_\+\+No\+Tank}, \hyperlink{class_aeroponics___tank_aa97abbd76332098f8662b78c451deee5}{Aeroponics\+\_\+\+Tank}, \hyperlink{class_aeroponics___no_tank_a37537625cd3d80d6c49adeae298d4a76}{Aeroponics\+\_\+\+No\+Tank}, and \hyperlink{class_aeroponics___tank_aa97abbd76332098f8662b78c451deee5}{Aeroponics\+\_\+\+Tank}.
+
+\mbox{\Hypertarget{class_aeroponics_aa79435aaa49a563d41ae092ec3e87e06}\label{class_aeroponics_aa79435aaa49a563d41ae092ec3e87e06}} 
+\index{Aeroponics@{Aeroponics}!spray\+State\+To\+Text@{spray\+State\+To\+Text}}
+\index{spray\+State\+To\+Text@{spray\+State\+To\+Text}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{spray\+State\+To\+Text()}{sprayStateToText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual char$\ast$ Aeroponics\+::spray\+State\+To\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_aeroponics___no_tank_aa5c6ddd4017a8666d0205da53f04c36d}{Aeroponics\+\_\+\+No\+Tank}, \hyperlink{class_aeroponics___tank_a0c9c9616ee380d0e4dd0ccc41d7e7a0f}{Aeroponics\+\_\+\+Tank}, \hyperlink{class_aeroponics___no_tank_a9776da3e3fdf7d687609ba72ea59af5f}{Aeroponics\+\_\+\+No\+Tank}, and \hyperlink{class_aeroponics___tank_a822daf2443f3326cc4ba1ab1ba0c02f2}{Aeroponics\+\_\+\+Tank}.
+
+\mbox{\Hypertarget{class_aeroponics_aa79435aaa49a563d41ae092ec3e87e06}\label{class_aeroponics_aa79435aaa49a563d41ae092ec3e87e06}} 
+\index{Aeroponics@{Aeroponics}!spray\+State\+To\+Text@{spray\+State\+To\+Text}}
+\index{spray\+State\+To\+Text@{spray\+State\+To\+Text}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{spray\+State\+To\+Text()}{sprayStateToText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily virtual char$\ast$ Aeroponics\+::spray\+State\+To\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+
+
+Implemented in \hyperlink{class_aeroponics___no_tank_aa5c6ddd4017a8666d0205da53f04c36d}{Aeroponics\+\_\+\+No\+Tank}, \hyperlink{class_aeroponics___tank_a0c9c9616ee380d0e4dd0ccc41d7e7a0f}{Aeroponics\+\_\+\+Tank}, \hyperlink{class_aeroponics___no_tank_a9776da3e3fdf7d687609ba72ea59af5f}{Aeroponics\+\_\+\+No\+Tank}, and \hyperlink{class_aeroponics___tank_a822daf2443f3326cc4ba1ab1ba0c02f2}{Aeroponics\+\_\+\+Tank}.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_aeroponics_a8acb5d5f9ffbdf8bbdb5c888464eaf24}\label{class_aeroponics_a8acb5d5f9ffbdf8bbdb5c888464eaf24}} 
+\index{Aeroponics@{Aeroponics}!Bypass\+Solenoid\+On@{Bypass\+Solenoid\+On}}
+\index{Bypass\+Solenoid\+On@{Bypass\+Solenoid\+On}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Bypass\+Solenoid\+On}{BypassSolenoidOn}}
+{\footnotesize\ttfamily bool Aeroponics\+::\+Bypass\+Solenoid\+On = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 31 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_a1766a5f98fad0aa6fe5d3cff2be6b26a}\label{class_aeroponics_a1766a5f98fad0aa6fe5d3cff2be6b26a}} 
+\index{Aeroponics@{Aeroponics}!Bypass\+Solenoid\+Pin@{Bypass\+Solenoid\+Pin}}
+\index{Bypass\+Solenoid\+Pin@{Bypass\+Solenoid\+Pin}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Bypass\+Solenoid\+Pin}{BypassSolenoidPin}}
+{\footnotesize\ttfamily byte $\ast$ Aeroponics\+::\+Bypass\+Solenoid\+Pin\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 21 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_a477be5d422410bb62a70a279a9f7d9f9}\label{class_aeroponics_a477be5d422410bb62a70a279a9f7d9f9}} 
+\index{Aeroponics@{Aeroponics}!Duration@{Duration}}
+\index{Duration@{Duration}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Duration}{Duration}}
+{\footnotesize\ttfamily int $\ast$ Aeroponics\+::\+Duration\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 24 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_ab5e9a2fe86a36e1e84876eb1366a2bfb}\label{class_aeroponics_ab5e9a2fe86a36e1e84876eb1366a2bfb}} 
+\index{Aeroponics@{Aeroponics}!Feedback\+Pressure\+Sensor@{Feedback\+Pressure\+Sensor}}
+\index{Feedback\+Pressure\+Sensor@{Feedback\+Pressure\+Sensor}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Feedback\+Pressure\+Sensor}{FeedbackPressureSensor}}
+{\footnotesize\ttfamily \hyperlink{class_pressure_sensor}{Pressure\+Sensor} $\ast$ Aeroponics\+::\+Feedback\+Pressure\+Sensor\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 19 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_afc31194d13c3e875be4522f99df54189}\label{class_aeroponics_afc31194d13c3e875be4522f99df54189}} 
+\index{Aeroponics@{Aeroponics}!Interval@{Interval}}
+\index{Interval@{Interval}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Interval}{Interval}}
+{\footnotesize\ttfamily int $\ast$ Aeroponics\+::\+Interval\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 23 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_a938c0fe40ccb2427676a3e95ff3ba054}\label{class_aeroponics_a938c0fe40ccb2427676a3e95ff3ba054}} 
+\index{Aeroponics@{Aeroponics}!Mix\+In\+Progress@{Mix\+In\+Progress}}
+\index{Mix\+In\+Progress@{Mix\+In\+Progress}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Mix\+In\+Progress}{MixInProgress}}
+{\footnotesize\ttfamily bool Aeroponics\+::\+Mix\+In\+Progress = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 32 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_aa6bca341181caaa3ef15d10512d24c7b}\label{class_aeroponics_aa6bca341181caaa3ef15d10512d24c7b}} 
+\index{Aeroponics@{Aeroponics}!Parent@{Parent}}
+\index{Parent@{Parent}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \hyperlink{class_module}{Module} $\ast$ Aeroponics\+::\+Parent\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 18 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_ac7890e927a7239b8a2e013205868232a}\label{class_aeroponics_ac7890e927a7239b8a2e013205868232a}} 
+\index{Aeroponics@{Aeroponics}!Priming\+Time@{Priming\+Time}}
+\index{Priming\+Time@{Priming\+Time}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Priming\+Time}{PrimingTime}}
+{\footnotesize\ttfamily int $\ast$ Aeroponics\+::\+Priming\+Time\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 26 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_a89ee0dc4055cd8b38e9f474e10cdfd2c}\label{class_aeroponics_a89ee0dc4055cd8b38e9f474e10cdfd2c}} 
+\index{Aeroponics@{Aeroponics}!Pump\+OK@{Pump\+OK}}
+\index{Pump\+OK@{Pump\+OK}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Pump\+OK}{PumpOK}}
+{\footnotesize\ttfamily bool Aeroponics\+::\+Pump\+OK = true\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 29 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_a87054193c71ad340c0b6929037f53a8a}\label{class_aeroponics_a87054193c71ad340c0b6929037f53a8a}} 
+\index{Aeroponics@{Aeroponics}!Pump\+On@{Pump\+On}}
+\index{Pump\+On@{Pump\+On}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Pump\+On}{PumpOn}}
+{\footnotesize\ttfamily bool Aeroponics\+::\+Pump\+On = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 30 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_ad79cd6aa7f3320a84123501e3a7b8bc2}\label{class_aeroponics_ad79cd6aa7f3320a84123501e3a7b8bc2}} 
+\index{Aeroponics@{Aeroponics}!Pump\+Pin@{Pump\+Pin}}
+\index{Pump\+Pin@{Pump\+Pin}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Pump\+Pin}{PumpPin}}
+{\footnotesize\ttfamily byte $\ast$ Aeroponics\+::\+Pump\+Pin\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 20 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_a17f2256a8ad90c6cac94f6129f5ba78f}\label{class_aeroponics_a17f2256a8ad90c6cac94f6129f5ba78f}} 
+\index{Aeroponics@{Aeroponics}!Pump\+Timeout@{Pump\+Timeout}}
+\index{Pump\+Timeout@{Pump\+Timeout}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Pump\+Timeout}{PumpTimeout}}
+{\footnotesize\ttfamily int $\ast$ Aeroponics\+::\+Pump\+Timeout\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 25 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_a366eb8d09ed862b4f69c6e4fbc13553f}\label{class_aeroponics_a366eb8d09ed862b4f69c6e4fbc13553f}} 
+\index{Aeroponics@{Aeroponics}!Pump\+Timer@{Pump\+Timer}}
+\index{Pump\+Timer@{Pump\+Timer}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Pump\+Timer}{PumpTimer}}
+{\footnotesize\ttfamily uint32\+\_\+t Aeroponics\+::\+Pump\+Timer = millis()\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 27 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_ab54b25994276061212bd3e0e47871704}\label{class_aeroponics_ab54b25994276061212bd3e0e47871704}} 
+\index{Aeroponics@{Aeroponics}!Spray\+Enabled@{Spray\+Enabled}}
+\index{Spray\+Enabled@{Spray\+Enabled}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Spray\+Enabled}{SprayEnabled}}
+{\footnotesize\ttfamily bool $\ast$ Aeroponics\+::\+Spray\+Enabled\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 22 of file Aeroponics.\+h.
+
+\mbox{\Hypertarget{class_aeroponics_af90abc43bd0a70431a1be41e87889813}\label{class_aeroponics_af90abc43bd0a70431a1be41e87889813}} 
+\index{Aeroponics@{Aeroponics}!Spray\+Timer@{Spray\+Timer}}
+\index{Spray\+Timer@{Spray\+Timer}!Aeroponics@{Aeroponics}}
+\subsubsection{\texorpdfstring{Spray\+Timer}{SprayTimer}}
+{\footnotesize\ttfamily uint32\+\_\+t Aeroponics\+::\+Spray\+Timer = millis()\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 28 of file Aeroponics.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Components/\hyperlink{_hempy_module_2src_2_components_2_aeroponics_8h}{Aeroponics.\+h}\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Components/\hyperlink{_hempy_module_2src_2_components_2_aeroponics_8cpp}{Aeroponics.\+cpp}\end{DoxyCompactItemize}

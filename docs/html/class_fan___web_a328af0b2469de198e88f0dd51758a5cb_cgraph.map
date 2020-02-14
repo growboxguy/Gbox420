@@ -1,0 +1,4 @@
+<map id="Fan_Web::websiteEvent_Refresh" name="Fan_Web::websiteEvent_Refresh">
+<area shape="rect" id="node2" href="$class_common.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="219,5,421,32"/>
+<area shape="rect" id="node3" href="$class_fan.html#a492f2551cf8f05d4ce64911807269764" title="Fan::fanSpeedToText" alt="" coords="246,56,394,83"/>
+</map>

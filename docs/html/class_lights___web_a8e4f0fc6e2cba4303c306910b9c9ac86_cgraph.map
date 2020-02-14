@@ -1,0 +1,9 @@
+<map id="Lights_Web::websiteEvent_Field" name="Lights_Web::websiteEvent_Field">
+<area shape="rect" id="node2" href="$class_common.html#a0192d295366bf1e966d8b58a3ce57554" title="Common::isThisMyComponent" alt="" coords="232,5,435,32"/>
+<area shape="rect" id="node3" href="$class_lights.html#a94b8cac76cd536d361b9b634511ac371" title="Lights::setBrightness" alt="" coords="261,56,406,83"/>
+<area shape="rect" id="node4" href="$class_lights.html#ad95bf16e17afbf909d480e995a3c214f" title="Lights::setOnHour" alt="" coords="269,107,397,133"/>
+<area shape="rect" id="node5" href="$class_lights.html#a809f813dc9401c658869b44b44beac75" title="Lights::setOnMinute" alt="" coords="264,157,403,184"/>
+<area shape="rect" id="node7" href="$class_lights.html#a744c6694c60c9f003bf1f88273437d89" title="Lights::setOffHour" alt="" coords="269,208,398,235"/>
+<area shape="rect" id="node8" href="$class_lights.html#a922d225ef5a95478c3a8396f49685c77" title="Lights::setOffMinute" alt="" coords="263,259,403,285"/>
+<area shape="rect" id="node6" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="483,208,612,235"/>
+</map>

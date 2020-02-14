@@ -1,0 +1,4 @@
+<map id="PHSensor_Web::websiteEvent_Button" name="PHSensor_Web::websiteEvent_Button">
+<area shape="rect" id="node2" href="$class_common.html#a0192d295366bf1e966d8b58a3ce57554" title="Common::isThisMyComponent" alt="" coords="256,5,459,32"/>
+<area shape="rect" id="node3" href="$class_p_h_sensor.html#aefd9f4f73636b8827a22b8246cbc4dee" title="PHSensor::updatePH" alt="" coords="283,56,431,83"/>
+</map>

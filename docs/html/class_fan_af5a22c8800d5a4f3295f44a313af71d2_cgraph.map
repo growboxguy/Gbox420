@@ -1,0 +1,6 @@
+<map id="Fan::TurnOff" name="Fan::TurnOff">
+<area shape="rect" id="node2" href="$class_fan.html#a32c99a0575098a2600ea3c9f27013a98" title="Fan::checkFanStatus" alt="" coords="159,5,305,32"/>
+<area shape="rect" id="node3" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="167,56,297,83"/>
+<area shape="rect" id="node4" href="$class_module.html#a1c18e93583f527d470be447a9fcd1a0b" title="Module::getSoundObject" alt="" coords="149,107,315,133"/>
+<area shape="rect" id="node5" href="$class_sound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="159,157,305,184"/>
+</map>

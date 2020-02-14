@@ -1,0 +1,17 @@
+<map id="Settings" name="Settings">
+<area shape="rect" id="node2" href="$struct_settings_1_1_fan_settings.html" title="Settings::FanSettings" alt="" coords="35,32,183,59"/>
+<area shape="rect" id="node3" href="$struct_settings_1_1_aeroponics_settings___no_tank_specific.html" title="Settings::AeroponicsSettings\l_NoTankSpecific" alt="" coords="14,83,205,125"/>
+<area shape="rect" id="node4" href="$struct_settings_1_1_lights_settings.html" title="Settings::LightsSettings" alt="" coords="29,149,190,176"/>
+<area shape="rect" id="node5" href="$struct_settings_1_1_water_level_sensor_settings.html" title="Settings::WaterLevelSensor\lSettings" alt="" coords="17,201,202,242"/>
+<area shape="rect" id="node6" href="$struct_settings_1_1_p_h_sensor_settings.html" title="Settings::PHSensorSettings" alt="" coords="16,267,203,293"/>
+<area shape="rect" id="node7" href="$struct_settings_1_1_d_h_t_sensor_settings.html" title="Settings::DHTSensorSettings" alt="" coords="12,317,207,344"/>
+<area shape="rect" id="node8" href="$struct_settings_1_1_aeroponics_settings.html" title="Settings::AeroponicsSettings" alt="" coords="14,373,205,400"/>
+<area shape="rect" id="node9" href="$struct_settings_1_1_module_skeleton_settings.html" title="Settings::ModuleSkeleton\lSettings" alt="" coords="24,425,195,466"/>
+<area shape="rect" id="node10" href="$struct_settings_1_1_weight_sensor_settings.html" title="Settings::WeightSensorSettings" alt="" coords="5,491,213,517"/>
+<area shape="rect" id="node11" href="$struct_settings_1_1_grow_box_settings.html" title="Settings::GrowBoxSettings" alt="" coords="19,541,199,568"/>
+<area shape="rect" id="node12" href="$struct_settings_1_1_sound_settings.html" title="Settings::SoundSettings" alt="" coords="28,592,191,619"/>
+<area shape="rect" id="node13" href="$struct_settings_1_1_aeroponics_settings___tank_specific.html" title="Settings::AeroponicsSettings\l_TankSpecific" alt="" coords="14,643,205,685"/>
+<area shape="rect" id="node14" href="$struct_settings_1_1_water_temp_sensor_settings.html" title="Settings::WaterTempSensor\lSettings" alt="" coords="16,709,203,750"/>
+<area shape="rect" id="node15" href="$struct_settings_1_1_pressure_sensor_settings.html" title="Settings::PressureSensor\lSettings" alt="" coords="24,774,195,815"/>
+<area shape="rect" id="node16" href="$struct_settings_1_1_light_sensor_settings.html" title="Settings::LightSensorSettings" alt="" coords="12,840,207,867"/>
+</map>

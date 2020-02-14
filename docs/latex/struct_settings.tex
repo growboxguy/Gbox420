@@ -1,0 +1,351 @@
+\hypertarget{struct_settings}{}\section{Settings Struct Reference}
+\label{struct_settings}\index{Settings@{Settings}}
+
+
+{\ttfamily \#include $<$Settings.\+h$>$}
+
+
+
+Collaboration diagram for Settings\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{struct_settings__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_settings_1_1_aeroponics_settings}{Aeroponics\+Settings}
+\item 
+struct \hyperlink{struct_settings_1_1_aeroponics_settings___no_tank_specific}{Aeroponics\+Settings\+\_\+\+No\+Tank\+Specific}
+\item 
+struct \hyperlink{struct_settings_1_1_aeroponics_settings___tank_specific}{Aeroponics\+Settings\+\_\+\+Tank\+Specific}
+\item 
+struct \hyperlink{struct_settings_1_1_d_h_t_sensor_settings}{D\+H\+T\+Sensor\+Settings}
+\item 
+struct \hyperlink{struct_settings_1_1_fan_settings}{Fan\+Settings}
+\item 
+struct \hyperlink{struct_settings_1_1_grow_box_settings}{Grow\+Box\+Settings}
+\item 
+struct \hyperlink{struct_settings_1_1_light_sensor_settings}{Light\+Sensor\+Settings}
+\item 
+struct \hyperlink{struct_settings_1_1_lights_settings}{Lights\+Settings}
+\item 
+struct \hyperlink{struct_settings_1_1_module_skeleton_settings}{Module\+Skeleton\+Settings}
+\item 
+struct \hyperlink{struct_settings_1_1_p_h_sensor_settings}{P\+H\+Sensor\+Settings}
+\item 
+struct \hyperlink{struct_settings_1_1_pressure_sensor_settings}{Pressure\+Sensor\+Settings}
+\item 
+struct \hyperlink{struct_settings_1_1_sound_settings}{Sound\+Settings}
+\item 
+struct \hyperlink{struct_settings_1_1_water_level_sensor_settings}{Water\+Level\+Sensor\+Settings}
+\item 
+struct \hyperlink{struct_settings_1_1_water_temp_sensor_settings}{Water\+Temp\+Sensor\+Settings}
+\item 
+struct \hyperlink{struct_settings_1_1_weight_sensor_settings}{Weight\+Sensor\+Settings}
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{struct_settings_ae85fc15d5c9994d5249d43ff3009fbd5}{Debug} = false
+\item 
+bool \hyperlink{struct_settings_aaa7eb601917b369479553ede68e16581}{Metric} = true
+\item 
+char \hyperlink{struct_settings_af2e86b73866c5031676f9ee1db9101b0}{Pushing\+Box\+Log\+Relay\+ID} \mbox{[}Max\+Text\+Length\mbox{]} = \{\char`\"{}v755877\+C\+F53383\+E1\char`\"{}\}
+\item 
+struct \hyperlink{struct_settings_1_1_grow_box_settings}{Grow\+Box\+Settings} \hyperlink{struct_settings_a9553a9096683f0b10edbd92dea77fd97}{Gbox1} = \{.Report\+To\+Google\+Sheets = true, .Sheets\+Reporting\+Frequency = 30\}
+\item 
+struct \hyperlink{struct_settings_1_1_d_h_t_sensor_settings}{D\+H\+T\+Sensor\+Settings} \hyperlink{struct_settings_aa1cc318b5572edd7941321e8d941496c}{I\+D\+HT} = \{.Pin = 49, .Type = 22\}
+\item 
+struct \hyperlink{struct_settings_1_1_d_h_t_sensor_settings}{D\+H\+T\+Sensor\+Settings} \hyperlink{struct_settings_a53f7b575223ea3080634948b0497161c}{E\+D\+HT} = \{.Pin = 48, .Type = 22\}
+\item 
+struct \hyperlink{struct_settings_1_1_sound_settings}{Sound\+Settings} \hyperlink{struct_settings_a8a8e8440de1c81b9a0db84cc701c47e8}{Sound1} = \{.Pin = 2\}
+\item 
+struct \hyperlink{struct_settings_1_1_light_sensor_settings}{Light\+Sensor\+Settings} \hyperlink{struct_settings_a499fd8a31b36a6dc07df6719197b5d5e}{Lt\+Sen1} = \{.Digital\+Pin = 50, .Analog\+Pin = A0\}
+\item 
+struct \hyperlink{struct_settings_1_1_lights_settings}{Lights\+Settings} \hyperlink{struct_settings_a09771e5b5bdc58f62c2f38db6648b9ff}{Lt1} = \{.Relay\+Pin = 29, .Dimming\+Pin = 11, .Dimming\+Limit = 8\}
+\item 
+struct \hyperlink{struct_settings_1_1_p_h_sensor_settings}{P\+H\+Sensor\+Settings} \hyperlink{struct_settings_aef8cfb16058705f136a43edae7657165}{P\+H\+Sensor1} = \{.Pin = A3, .Slope = -\/0.\+033256, .Intercept = 24.\+08651\}
+\item 
+struct \hyperlink{struct_settings_1_1_pressure_sensor_settings}{Pressure\+Sensor\+Settings} \hyperlink{struct_settings_a633ec2a87581e7bbd5e124b5cfb3fb80}{Pres1} = \{.Pin = A1, .Offset = 0.\+57, .Ratio = 2.\+7\}
+\item 
+struct \hyperlink{struct_settings_1_1_weight_sensor_settings}{Weight\+Sensor\+Settings} \hyperlink{struct_settings_a04ff80018a76e8e43ec93b400fdd5175}{Weight1} = \{.D\+T\+Pin = 3, .S\+C\+K\+Pin = 4, .Scale = 125000.\+0, .Tare\+Offset=146000\}
+\item 
+struct \hyperlink{struct_settings_1_1_weight_sensor_settings}{Weight\+Sensor\+Settings} \hyperlink{struct_settings_a2b696b80c3d9680c83b351ecd962299c}{Weight2} = \{.D\+T\+Pin = 5, .S\+C\+K\+Pin = 6, .Scale = 126000.\+0, .Tare\+Offset=267461\}
+\item 
+struct \hyperlink{struct_settings_1_1_aeroponics_settings}{Aeroponics\+Settings} \hyperlink{struct_settings_a6ec59b1aee19add68b8724ce686a8a77}{Aero\+T1\+\_\+\+Common} = \{.Bypass\+Solenoid\+Pin = 23, .Pump\+Pin = 24\}
+\item 
+struct \hyperlink{struct_settings_1_1_aeroponics_settings}{Aeroponics\+Settings} \hyperlink{struct_settings_ad27589745cefc2482110c14d378e6581}{Aero1\+\_\+\+Common} = \{.Bypass\+Solenoid\+Pin = 52, .Pump\+Pin = 53\}
+\item 
+struct \hyperlink{struct_settings_1_1_aeroponics_settings___no_tank_specific}{Settings\+::\+Aeroponics\+Settings\+\_\+\+No\+Tank\+Specific} \hyperlink{struct_settings_a28c68e733956792c889a66905f09480c}{Aero1\+\_\+\+Specific}
+\item 
+struct \hyperlink{struct_settings_1_1_aeroponics_settings___tank_specific}{Aeroponics\+Settings\+\_\+\+Tank\+Specific} \hyperlink{struct_settings_ab6250c7f010ce991a18f7fc4b23bf078}{Aero\+T1\+\_\+\+Specific} = \{.Spray\+Solenoid\+Pin = 22\}
+\item 
+struct \hyperlink{struct_settings_1_1_water_temp_sensor_settings}{Water\+Temp\+Sensor\+Settings} \hyperlink{struct_settings_a28b69b8736968faf69454ce61081abf0}{Water\+Temp1} = \{.Pin = 51\}
+\item 
+struct \hyperlink{struct_settings_1_1_water_level_sensor_settings}{Water\+Level\+Sensor\+Settings} \hyperlink{struct_settings_afe30a825758d27e4c22a3ebcdb662d2f}{Water\+Level1} = \{.Pin\+\_\+1 = A4, .Pin\+\_\+2 = A5, .Pin\+\_\+3 = A6, .Pin\+\_\+4 = A7\}
+\item 
+struct \hyperlink{struct_settings_1_1_fan_settings}{Fan\+Settings} \hyperlink{struct_settings_ab4e978c3bd46bc349e83231c51609ae3}{I\+Fan} = \{.On\+Off\+Pin = 25, .Speed\+Pin = 26\}
+\item 
+struct \hyperlink{struct_settings_1_1_fan_settings}{Fan\+Settings} \hyperlink{struct_settings_a418062c7b97898da50aa00f1c435580b}{E\+Fan} = \{.On\+Off\+Pin = 27, .Speed\+Pin = 28\}
+\item 
+struct \hyperlink{struct_settings_1_1_module_skeleton_settings}{Module\+Skeleton\+Settings} \hyperlink{struct_settings_a74935720d208940141e63f288208c648}{Module\+Skeleton1} = \{.Persistent\+Bool = false, .Persistent\+Float = 1.\+23\}
+\item 
+struct \hyperlink{struct_settings_1_1_module_skeleton_settings}{Module\+Skeleton\+Settings} \hyperlink{struct_settings_a36f14dc8de6e5472163be758a77121e3}{Module\+Skeleton2} = \{.Persistent\+Bool = true, .Persistent\+Float = 4.\+56\}
+\item 
+byte \hyperlink{struct_settings_ae5627689dde65d3312155975a4b2fcb4}{Compatibility\+Version} = Version
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 22 of file Settings.\+h.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{struct_settings_ad27589745cefc2482110c14d378e6581}\label{struct_settings_ad27589745cefc2482110c14d378e6581}} 
+\index{Settings@{Settings}!Aero1\+\_\+\+Common@{Aero1\+\_\+\+Common}}
+\index{Aero1\+\_\+\+Common@{Aero1\+\_\+\+Common}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Aero1\+\_\+\+Common}{Aero1\_Common}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_aeroponics_settings}{Aeroponics\+Settings} Settings\+::\+Aero1\+\_\+\+Common = \{.Bypass\+Solenoid\+Pin = 52, .Pump\+Pin = 53\}}
+
+
+
+Definition at line 118 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a28c68e733956792c889a66905f09480c}\label{struct_settings_a28c68e733956792c889a66905f09480c}} 
+\index{Settings@{Settings}!Aero1\+\_\+\+Specific@{Aero1\+\_\+\+Specific}}
+\index{Aero1\+\_\+\+Specific@{Aero1\+\_\+\+Specific}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Aero1\+\_\+\+Specific}{Aero1\_Specific}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_aeroponics_settings___no_tank_specific}{Settings\+::\+Aeroponics\+Settings\+\_\+\+No\+Tank\+Specific} Settings\+::\+Aero1\+\_\+\+Specific}
+
+\mbox{\Hypertarget{struct_settings_a6ec59b1aee19add68b8724ce686a8a77}\label{struct_settings_a6ec59b1aee19add68b8724ce686a8a77}} 
+\index{Settings@{Settings}!Aero\+T1\+\_\+\+Common@{Aero\+T1\+\_\+\+Common}}
+\index{Aero\+T1\+\_\+\+Common@{Aero\+T1\+\_\+\+Common}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Aero\+T1\+\_\+\+Common}{AeroT1\_Common}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_aeroponics_settings}{Aeroponics\+Settings} Settings\+::\+Aero\+T1\+\_\+\+Common = \{.Bypass\+Solenoid\+Pin = 23, .Pump\+Pin = 24\}}
+
+
+
+Definition at line 117 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_ab6250c7f010ce991a18f7fc4b23bf078}\label{struct_settings_ab6250c7f010ce991a18f7fc4b23bf078}} 
+\index{Settings@{Settings}!Aero\+T1\+\_\+\+Specific@{Aero\+T1\+\_\+\+Specific}}
+\index{Aero\+T1\+\_\+\+Specific@{Aero\+T1\+\_\+\+Specific}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Aero\+T1\+\_\+\+Specific}{AeroT1\_Specific}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_aeroponics_settings___tank_specific}{Aeroponics\+Settings\+\_\+\+Tank\+Specific} Settings\+::\+Aero\+T1\+\_\+\+Specific = \{.Spray\+Solenoid\+Pin = 22\}}
+
+
+
+Definition at line 133 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_ae5627689dde65d3312155975a4b2fcb4}\label{struct_settings_ae5627689dde65d3312155975a4b2fcb4}} 
+\index{Settings@{Settings}!Compatibility\+Version@{Compatibility\+Version}}
+\index{Compatibility\+Version@{Compatibility\+Version}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Compatibility\+Version}{CompatibilityVersion}}
+{\footnotesize\ttfamily byte Settings\+::\+Compatibility\+Version = Version}
+
+
+
+Definition at line 182 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_ae85fc15d5c9994d5249d43ff3009fbd5}\label{struct_settings_ae85fc15d5c9994d5249d43ff3009fbd5}} 
+\index{Settings@{Settings}!Debug@{Debug}}
+\index{Debug@{Debug}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Debug}{Debug}}
+{\footnotesize\ttfamily bool Settings\+::\+Debug = false}
+
+
+
+Definition at line 24 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a53f7b575223ea3080634948b0497161c}\label{struct_settings_a53f7b575223ea3080634948b0497161c}} 
+\index{Settings@{Settings}!E\+D\+HT@{E\+D\+HT}}
+\index{E\+D\+HT@{E\+D\+HT}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{E\+D\+HT}{EDHT}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_d_h_t_sensor_settings}{D\+H\+T\+Sensor\+Settings} Settings\+::\+E\+D\+HT = \{.Pin = 48, .Type = 22\}}
+
+
+
+Definition at line 43 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a418062c7b97898da50aa00f1c435580b}\label{struct_settings_a418062c7b97898da50aa00f1c435580b}} 
+\index{Settings@{Settings}!E\+Fan@{E\+Fan}}
+\index{E\+Fan@{E\+Fan}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{E\+Fan}{EFan}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_fan_settings}{Fan\+Settings} Settings\+::\+E\+Fan = \{.On\+Off\+Pin = 27, .Speed\+Pin = 28\}}
+
+
+
+Definition at line 161 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a9553a9096683f0b10edbd92dea77fd97}\label{struct_settings_a9553a9096683f0b10edbd92dea77fd97}} 
+\index{Settings@{Settings}!Gbox1@{Gbox1}}
+\index{Gbox1@{Gbox1}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Gbox1}{Gbox1}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_grow_box_settings}{Grow\+Box\+Settings} Settings\+::\+Gbox1 = \{.Report\+To\+Google\+Sheets = true, .Sheets\+Reporting\+Frequency = 30\}}
+
+
+
+Definition at line 34 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_aa1cc318b5572edd7941321e8d941496c}\label{struct_settings_aa1cc318b5572edd7941321e8d941496c}} 
+\index{Settings@{Settings}!I\+D\+HT@{I\+D\+HT}}
+\index{I\+D\+HT@{I\+D\+HT}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{I\+D\+HT}{IDHT}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_d_h_t_sensor_settings}{D\+H\+T\+Sensor\+Settings} Settings\+::\+I\+D\+HT = \{.Pin = 49, .Type = 22\}}
+
+
+
+Definition at line 42 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_ab4e978c3bd46bc349e83231c51609ae3}\label{struct_settings_ab4e978c3bd46bc349e83231c51609ae3}} 
+\index{Settings@{Settings}!I\+Fan@{I\+Fan}}
+\index{I\+Fan@{I\+Fan}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{I\+Fan}{IFan}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_fan_settings}{Fan\+Settings} Settings\+::\+I\+Fan = \{.On\+Off\+Pin = 25, .Speed\+Pin = 26\}}
+
+
+
+Definition at line 160 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a09771e5b5bdc58f62c2f38db6648b9ff}\label{struct_settings_a09771e5b5bdc58f62c2f38db6648b9ff}} 
+\index{Settings@{Settings}!Lt1@{Lt1}}
+\index{Lt1@{Lt1}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Lt1}{Lt1}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_lights_settings}{Lights\+Settings} Settings\+::\+Lt1 = \{.Relay\+Pin = 29, .Dimming\+Pin = 11, .Dimming\+Limit = 8\}}
+
+
+
+Definition at line 75 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a499fd8a31b36a6dc07df6719197b5d5e}\label{struct_settings_a499fd8a31b36a6dc07df6719197b5d5e}} 
+\index{Settings@{Settings}!Lt\+Sen1@{Lt\+Sen1}}
+\index{Lt\+Sen1@{Lt\+Sen1}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Lt\+Sen1}{LtSen1}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_light_sensor_settings}{Light\+Sensor\+Settings} Settings\+::\+Lt\+Sen1 = \{.Digital\+Pin = 50, .Analog\+Pin = A0\}}
+
+
+
+Definition at line 59 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_aaa7eb601917b369479553ede68e16581}\label{struct_settings_aaa7eb601917b369479553ede68e16581}} 
+\index{Settings@{Settings}!Metric@{Metric}}
+\index{Metric@{Metric}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Metric}{Metric}}
+{\footnotesize\ttfamily bool Settings\+::\+Metric = true}
+
+
+
+Definition at line 25 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a74935720d208940141e63f288208c648}\label{struct_settings_a74935720d208940141e63f288208c648}} 
+\index{Settings@{Settings}!Module\+Skeleton1@{Module\+Skeleton1}}
+\index{Module\+Skeleton1@{Module\+Skeleton1}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Module\+Skeleton1}{ModuleSkeleton1}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_module_skeleton_settings}{Module\+Skeleton\+Settings} Settings\+::\+Module\+Skeleton1 = \{.Persistent\+Bool = false, .Persistent\+Float = 1.\+23\}}
+
+
+
+Definition at line 170 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a36f14dc8de6e5472163be758a77121e3}\label{struct_settings_a36f14dc8de6e5472163be758a77121e3}} 
+\index{Settings@{Settings}!Module\+Skeleton2@{Module\+Skeleton2}}
+\index{Module\+Skeleton2@{Module\+Skeleton2}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Module\+Skeleton2}{ModuleSkeleton2}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_module_skeleton_settings}{Module\+Skeleton\+Settings} Settings\+::\+Module\+Skeleton2 = \{.Persistent\+Bool = true, .Persistent\+Float = 4.\+56\}}
+
+
+
+Definition at line 171 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_aef8cfb16058705f136a43edae7657165}\label{struct_settings_aef8cfb16058705f136a43edae7657165}} 
+\index{Settings@{Settings}!P\+H\+Sensor1@{P\+H\+Sensor1}}
+\index{P\+H\+Sensor1@{P\+H\+Sensor1}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{P\+H\+Sensor1}{PHSensor1}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_p_h_sensor_settings}{P\+H\+Sensor\+Settings} Settings\+::\+P\+H\+Sensor1 = \{.Pin = A3, .Slope = -\/0.\+033256, .Intercept = 24.\+08651\}}
+
+
+
+Definition at line 84 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a633ec2a87581e7bbd5e124b5cfb3fb80}\label{struct_settings_a633ec2a87581e7bbd5e124b5cfb3fb80}} 
+\index{Settings@{Settings}!Pres1@{Pres1}}
+\index{Pres1@{Pres1}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Pres1}{Pres1}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_pressure_sensor_settings}{Pressure\+Sensor\+Settings} Settings\+::\+Pres1 = \{.Pin = A1, .Offset = 0.\+57, .Ratio = 2.\+7\}}
+
+
+
+Definition at line 93 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_af2e86b73866c5031676f9ee1db9101b0}\label{struct_settings_af2e86b73866c5031676f9ee1db9101b0}} 
+\index{Settings@{Settings}!Pushing\+Box\+Log\+Relay\+ID@{Pushing\+Box\+Log\+Relay\+ID}}
+\index{Pushing\+Box\+Log\+Relay\+ID@{Pushing\+Box\+Log\+Relay\+ID}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Pushing\+Box\+Log\+Relay\+ID}{PushingBoxLogRelayID}}
+{\footnotesize\ttfamily char Settings\+::\+Pushing\+Box\+Log\+Relay\+ID = \{\char`\"{}v755877\+C\+F53383\+E1\char`\"{}\}}
+
+
+
+Definition at line 26 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a8a8e8440de1c81b9a0db84cc701c47e8}\label{struct_settings_a8a8e8440de1c81b9a0db84cc701c47e8}} 
+\index{Settings@{Settings}!Sound1@{Sound1}}
+\index{Sound1@{Sound1}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Sound1}{Sound1}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_sound_settings}{Sound\+Settings} Settings\+::\+Sound1 = \{.Pin = 2\}}
+
+
+
+Definition at line 51 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_afe30a825758d27e4c22a3ebcdb662d2f}\label{struct_settings_afe30a825758d27e4c22a3ebcdb662d2f}} 
+\index{Settings@{Settings}!Water\+Level1@{Water\+Level1}}
+\index{Water\+Level1@{Water\+Level1}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Water\+Level1}{WaterLevel1}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_water_level_sensor_settings}{Water\+Level\+Sensor\+Settings} Settings\+::\+Water\+Level1 = \{.Pin\+\_\+1 = A4, .Pin\+\_\+2 = A5, .Pin\+\_\+3 = A6, .Pin\+\_\+4 = A7\}}
+
+
+
+Definition at line 150 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a28b69b8736968faf69454ce61081abf0}\label{struct_settings_a28b69b8736968faf69454ce61081abf0}} 
+\index{Settings@{Settings}!Water\+Temp1@{Water\+Temp1}}
+\index{Water\+Temp1@{Water\+Temp1}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Water\+Temp1}{WaterTemp1}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_water_temp_sensor_settings}{Water\+Temp\+Sensor\+Settings} Settings\+::\+Water\+Temp1 = \{.Pin = 51\}}
+
+
+
+Definition at line 140 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a04ff80018a76e8e43ec93b400fdd5175}\label{struct_settings_a04ff80018a76e8e43ec93b400fdd5175}} 
+\index{Settings@{Settings}!Weight1@{Weight1}}
+\index{Weight1@{Weight1}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Weight1}{Weight1}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_weight_sensor_settings}{Weight\+Sensor\+Settings} Settings\+::\+Weight1 = \{.D\+T\+Pin = 3, .S\+C\+K\+Pin = 4, .Scale = 125000.\+0, .Tare\+Offset=146000\}}
+
+
+
+Definition at line 103 of file Settings.\+h.
+
+\mbox{\Hypertarget{struct_settings_a2b696b80c3d9680c83b351ecd962299c}\label{struct_settings_a2b696b80c3d9680c83b351ecd962299c}} 
+\index{Settings@{Settings}!Weight2@{Weight2}}
+\index{Weight2@{Weight2}!Settings@{Settings}}
+\subsubsection{\texorpdfstring{Weight2}{Weight2}}
+{\footnotesize\ttfamily struct \hyperlink{struct_settings_1_1_weight_sensor_settings}{Weight\+Sensor\+Settings} Settings\+::\+Weight2 = \{.D\+T\+Pin = 5, .S\+C\+K\+Pin = 6, .Scale = 126000.\+0, .Tare\+Offset=267461\}}
+
+
+
+Definition at line 104 of file Settings.\+h.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\hyperlink{_hempy_module_2src_2_settings_8h}{Settings.\+h}\end{DoxyCompactItemize}

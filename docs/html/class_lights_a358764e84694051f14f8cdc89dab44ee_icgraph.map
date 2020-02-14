@@ -1,0 +1,9 @@
+<map id="Lights::checkLightStatus" name="Lights::checkLightStatus">
+<area shape="rect" id="node2" href="$class_lights.html#a38c74606e1c2b4ff7db184920b225961" title="Lights::refresh_Minute" alt="" coords="674,5,825,32"/>
+<area shape="rect" id="node3" href="$class_lights.html#ab18f05b043b61b6eb74bd7b564e1a1ec" title="Lights::setLightOnOff" alt="" coords="220,81,367,108"/>
+<area shape="rect" id="node4" href="$class_lights.html#a291179d021dad8a22d3f27203fcaa819" title="Lights::checkLightTimer" alt="" coords="433,56,594,83"/>
+<area shape="rect" id="node6" href="$class_lights___web.html#a2437d22a7e8b027c4d08d209675f5db9" title="Lights_Web::websiteEvent\l_Button" alt="" coords="887,74,1065,115"/>
+<area shape="rect" id="node7" href="$class_light_sensor.html#a50559883ebb2c80a5d2144a6453bd1c3" title="LightSensor::triggerCalibration" alt="" coords="415,161,612,188"/>
+<area shape="rect" id="node5" href="$class_lights.html#a3c5051babf4dacdeecced14217f6f886" title="Lights::setTimerOnOff" alt="" coords="674,56,825,83"/>
+<area shape="rect" id="node8" href="$class_light_sensor___web.html#abedb4cd4454f322ebbd7c3753bcd2a73" title="LightSensor_Web::website\lEvent_Button" alt="" coords="660,158,839,199"/>
+</map>

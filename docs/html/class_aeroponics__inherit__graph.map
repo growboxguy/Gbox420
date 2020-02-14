@@ -1,0 +1,7 @@
+<map id="Aeroponics" name="Aeroponics">
+<area shape="rect" id="node3" href="$class_aeroponics___no_tank.html" title="Aeroponics_NoTank" alt="" coords="40,155,180,181"/>
+<area shape="rect" id="node5" href="$class_aeroponics___tank.html" title="Aeroponics_Tank" alt="" coords="205,155,327,181"/>
+<area shape="rect" id="node2" href="$class_common.html" title="Common" alt="" coords="150,5,225,32"/>
+<area shape="rect" id="node4" href="$class_aeroponics___no_tank___web.html" title="Aeroponics_NoTank_Web" alt="" coords="5,229,180,256"/>
+<area shape="rect" id="node6" href="$class_aeroponics___tank___web.html" title="Aeroponics_Tank_Web" alt="" coords="205,229,362,256"/>
+</map>

@@ -1,0 +1,10 @@
+<map id="LightSensor::report" name="LightSensor::report">
+<area shape="rect" id="node2" href="$class_common.html#a9e60e2c26a5f4d72342a59a969954636" title="Common::report" alt="" coords="223,5,339,32"/>
+<area shape="rect" id="node3" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="465,5,560,32"/>
+<area shape="rect" id="node4" href="$class_light_sensor.html#a70fd8f7252cbc9abb2ea501ccfaf08fe" title="LightSensor::getDarkText" alt="" coords="195,107,366,133"/>
+<area shape="rect" id="node7" href="$class_light_sensor.html#af38ae75a6739383e1590548fdb07e353" title="LightSensor::getReadingText" alt="" coords="185,157,376,184"/>
+<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#a8abf19822a7d099be562b7a2bdd8258b" title="yesNoToText" alt="" coords="462,56,563,83"/>
+<area shape="rect" id="node6" href="$_hempy_module_2src_2_helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="695,107,754,133"/>
+<area shape="rect" id="node8" href="$class_rolling_average.html#a7b7015bd5a39e953983f73330b3d8c87" title="RollingAverage::getIntText" alt="" coords="424,157,601,184"/>
+<area shape="rect" id="node9" href="$class_rolling_average.html#a4fc812fc5b678f41c4a01d79c7fc5923" title="RollingAverage::getInt" alt="" coords="649,157,800,184"/>
+</map>

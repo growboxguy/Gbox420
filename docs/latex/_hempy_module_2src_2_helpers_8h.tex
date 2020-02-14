@@ -1,0 +1,397 @@
+\hypertarget{_hempy_module_2src_2_helpers_8h}{}\section{/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Helpers.h File Reference}
+\label{_hempy_module_2src_2_helpers_8h}\index{/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Helpers.\+h@{/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Helpers.\+h}}
+{\ttfamily \#include \char`\"{}Arduino.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Time\+Lib.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Memory\+Free.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}avr/wdt.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}E\+L\+Client.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}E\+L\+Client\+Web\+Server.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}E\+L\+Client\+Cmd.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Settings.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Rolling\+Average.\+h\char`\"{}}\newline
+Include dependency graph for Helpers.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_hempy_module_2src_2_helpers_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_hempy_module_2src_2_helpers_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+time\+\_\+t \hyperlink{_hempy_module_2src_2_helpers_8h_a42ab384e77148282f4730ec6c68ac2a3}{get\+Ntp\+Time} ()
+\item 
+void \hyperlink{_hempy_module_2src_2_helpers_8h_a1c32dc98349863213572e4a117046fc1}{get\+Free\+Memory} ()
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_a331d44d25f73da9bd33399ca947636ea}{get\+Formatted\+Time} (bool Print\+To\+Serials=false)
+\item 
+float \hyperlink{_hempy_module_2src_2_helpers_8h_afee835980664c071d3889aa2863eac53}{convert\+Between\+Temp\+Units} (float)
+\item 
+float \hyperlink{_hempy_module_2src_2_helpers_8h_ad0cbf049472af505a475643e0de7c438}{convert\+Between\+Pressure\+Units} (float)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_a57bf4080c9ba029c592a00dfd6ab488e}{to\+Text} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_a268e19fb8de169dcec9e956274d36a0d}{to\+Text} (int)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_af962a560b4f576eddf6e61ffbd802a10}{to\+Text} (long)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_a768b712c81824ccceecaafccf1e8944e}{to\+Text} (float)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_a8f2a6e8caac4689efede55386745032c}{to\+Text} (int Number1, int Number2, const char $\ast$Separator)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_a83d30b216f8ed6672a7b08515c9ad5d8}{to\+Text} (float Number1, float Number2, const char $\ast$Separator)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_a4e83915d00c402e1c191e4d344f23e30}{to\+Precision\+Text} (float Number)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_aa9a1cb7cdb5f62ba17a5179045533100}{time\+To\+Text} (byte Hour, byte Minute)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_aa2683828a0a7f43a26f85171e7c2dc73}{temp\+To\+Text} (float Temp)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_ac0c4720f7d0aa5489bba21f0c45b23bc}{pressure\+To\+Text} (float Pressure)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_aec4ac85dc6f4a044572d1889e7f4ecd3}{weight\+To\+Text} (float Weight)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_a8aade094dbb7d5f90066e0aa17b5dbb4}{percentage\+To\+Text} (float Humidity)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_ab4873716405bd442cdca23c7c29a9131}{on\+Off\+To\+Text} (bool Status)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_a8abf19822a7d099be562b7a2bdd8258b}{yes\+No\+To\+Text} (bool Status)
+\item 
+char $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_a50877b3ad85652d07b562b9f0821596b}{enabled\+To\+Text} (bool Status)
+\item 
+void \hyperlink{_hempy_module_2src_2_helpers_8h_afc1779c42e031f830a60d0785b32bd18}{log\+To\+Serials} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$To\+Print, bool Break\+Line=true, byte Indent=3)
+\item 
+{\footnotesize template$<$class log\+Line $>$ }\\void \hyperlink{_hempy_module_2src_2_helpers_8h_a4591524a1a29ed7059bfe450e71bdfa0}{log\+To\+Serials} (log\+Line $\ast$To\+Print, bool Break\+Line=true, byte Indent=3)
+\item 
+{\footnotesize template$<$class log\+Line $>$ }\\void \hyperlink{_hempy_module_2src_2_helpers_8h_a812ded80783cfd1227277fed7a6f6a3b}{log\+To\+Serials} (log\+Line \&To\+Print, bool Break\+Line=true, byte Indent=3)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+E\+L\+Client\+Cmd \hyperlink{_hempy_module_2src_2_helpers_8h_abfb699ffd3b92c00cea356225e82ddb4}{E\+S\+P\+Cmd}
+\item 
+Hardware\+Serial \& \hyperlink{_hempy_module_2src_2_helpers_8h_aaa89c80a04f1a6b0b5f2e425a9d045db}{Arduino\+Serial}
+\item 
+Hardware\+Serial \& \hyperlink{_hempy_module_2src_2_helpers_8h_aea644f78656fead3c543a01abe9951f4}{E\+S\+P\+Serial}
+\item 
+\hyperlink{class_grow_box}{Grow\+Box} $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_a785937c2cdd04d49f70983a4f57bcf22}{G\+Box}
+\item 
+char \hyperlink{_hempy_module_2src_2_helpers_8h_a197fc7fece7964f371e3331919d596bb}{Current\+Time} \mbox{[}Max\+Text\+Length\mbox{]}
+\item 
+char \hyperlink{_hempy_module_2src_2_helpers_8h_a6084d34751a3c3b5585d06dc1c0dd9f6}{Short\+Message} \mbox{[}Max\+Shot\+Text\+Length\mbox{]}
+\item 
+char \hyperlink{_hempy_module_2src_2_helpers_8h_a29e392d833e97bf88f780e9fdf22373f}{Long\+Message} \mbox{[}Max\+Long\+Text\+Length\mbox{]}
+\item 
+\hyperlink{struct_settings}{Settings} $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_abfef982a70a4822eb5c889ebfa5f390a}{Box\+Settings}
+\item 
+bool $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_aa3f2962c251cead6e535226e4da29861}{Debug}
+\item 
+bool $\ast$ \hyperlink{_hempy_module_2src_2_helpers_8h_ae700c60c46e98092b96bb54c369fe891}{Metric}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_ad0cbf049472af505a475643e0de7c438}\label{_hempy_module_2src_2_helpers_8h_ad0cbf049472af505a475643e0de7c438}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!convert\+Between\+Pressure\+Units@{convert\+Between\+Pressure\+Units}}
+\index{convert\+Between\+Pressure\+Units@{convert\+Between\+Pressure\+Units}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{convert\+Between\+Pressure\+Units()}{convertBetweenPressureUnits()}}
+{\footnotesize\ttfamily float convert\+Between\+Pressure\+Units (\begin{DoxyParamCaption}\item[{float}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 92 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_afee835980664c071d3889aa2863eac53}\label{_hempy_module_2src_2_helpers_8h_afee835980664c071d3889aa2863eac53}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!convert\+Between\+Temp\+Units@{convert\+Between\+Temp\+Units}}
+\index{convert\+Between\+Temp\+Units@{convert\+Between\+Temp\+Units}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{convert\+Between\+Temp\+Units()}{convertBetweenTempUnits()}}
+{\footnotesize\ttfamily float convert\+Between\+Temp\+Units (\begin{DoxyParamCaption}\item[{float}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 80 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a50877b3ad85652d07b562b9f0821596b}\label{_hempy_module_2src_2_helpers_8h_a50877b3ad85652d07b562b9f0821596b}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!enabled\+To\+Text@{enabled\+To\+Text}}
+\index{enabled\+To\+Text@{enabled\+To\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{enabled\+To\+Text()}{enabledToText()}}
+{\footnotesize\ttfamily char$\ast$ enabled\+To\+Text (\begin{DoxyParamCaption}\item[{bool}]{Status }\end{DoxyParamCaption})}
+
+
+
+Definition at line 249 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a331d44d25f73da9bd33399ca947636ea}\label{_hempy_module_2src_2_helpers_8h_a331d44d25f73da9bd33399ca947636ea}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!get\+Formatted\+Time@{get\+Formatted\+Time}}
+\index{get\+Formatted\+Time@{get\+Formatted\+Time}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{get\+Formatted\+Time()}{getFormattedTime()}}
+{\footnotesize\ttfamily char$\ast$ get\+Formatted\+Time (\begin{DoxyParamCaption}\item[{bool}]{Print\+To\+Serials = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 40 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a1c32dc98349863213572e4a117046fc1}\label{_hempy_module_2src_2_helpers_8h_a1c32dc98349863213572e4a117046fc1}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!get\+Free\+Memory@{get\+Free\+Memory}}
+\index{get\+Free\+Memory@{get\+Free\+Memory}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{get\+Free\+Memory()}{getFreeMemory()}}
+{\footnotesize\ttfamily void get\+Free\+Memory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 6 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a42ab384e77148282f4730ec6c68ac2a3}\label{_hempy_module_2src_2_helpers_8h_a42ab384e77148282f4730ec6c68ac2a3}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!get\+Ntp\+Time@{get\+Ntp\+Time}}
+\index{get\+Ntp\+Time@{get\+Ntp\+Time}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{get\+Ntp\+Time()}{getNtpTime()}}
+{\footnotesize\ttfamily time\+\_\+t get\+Ntp\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 50 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_afc1779c42e031f830a60d0785b32bd18}\label{_hempy_module_2src_2_helpers_8h_afc1779c42e031f830a60d0785b32bd18}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!log\+To\+Serials@{log\+To\+Serials}}
+\index{log\+To\+Serials@{log\+To\+Serials}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{log\+To\+Serials()}{logToSerials()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void log\+To\+Serials (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{To\+Print,  }\item[{bool}]{Break\+Line = {\ttfamily true},  }\item[{byte}]{Indent = {\ttfamily 3} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 17 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a4591524a1a29ed7059bfe450e71bdfa0}\label{_hempy_module_2src_2_helpers_8h_a4591524a1a29ed7059bfe450e71bdfa0}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!log\+To\+Serials@{log\+To\+Serials}}
+\index{log\+To\+Serials@{log\+To\+Serials}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{log\+To\+Serials()}{logToSerials()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$class log\+Line $>$ \\
+void log\+To\+Serials (\begin{DoxyParamCaption}\item[{log\+Line $\ast$}]{To\+Print,  }\item[{bool}]{Break\+Line = {\ttfamily true},  }\item[{byte}]{Indent = {\ttfamily 3} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 58 of file Helpers.\+h.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a812ded80783cfd1227277fed7a6f6a3b}\label{_hempy_module_2src_2_helpers_8h_a812ded80783cfd1227277fed7a6f6a3b}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!log\+To\+Serials@{log\+To\+Serials}}
+\index{log\+To\+Serials@{log\+To\+Serials}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{log\+To\+Serials()}{logToSerials()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$class log\+Line $>$ \\
+void log\+To\+Serials (\begin{DoxyParamCaption}\item[{log\+Line \&}]{To\+Print,  }\item[{bool}]{Break\+Line = {\ttfamily true},  }\item[{byte}]{Indent = {\ttfamily 3} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 79 of file Helpers.\+h.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_ab4873716405bd442cdca23c7c29a9131}\label{_hempy_module_2src_2_helpers_8h_ab4873716405bd442cdca23c7c29a9131}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!on\+Off\+To\+Text@{on\+Off\+To\+Text}}
+\index{on\+Off\+To\+Text@{on\+Off\+To\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{on\+Off\+To\+Text()}{onOffToText()}}
+{\footnotesize\ttfamily char$\ast$ on\+Off\+To\+Text (\begin{DoxyParamCaption}\item[{bool}]{Status }\end{DoxyParamCaption})}
+
+
+
+Definition at line 233 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a8aade094dbb7d5f90066e0aa17b5dbb4}\label{_hempy_module_2src_2_helpers_8h_a8aade094dbb7d5f90066e0aa17b5dbb4}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!percentage\+To\+Text@{percentage\+To\+Text}}
+\index{percentage\+To\+Text@{percentage\+To\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{percentage\+To\+Text()}{percentageToText()}}
+{\footnotesize\ttfamily char$\ast$ percentage\+To\+Text (\begin{DoxyParamCaption}\item[{float}]{Humidity }\end{DoxyParamCaption})}
+
+
+
+Definition at line 216 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_ac0c4720f7d0aa5489bba21f0c45b23bc}\label{_hempy_module_2src_2_helpers_8h_ac0c4720f7d0aa5489bba21f0c45b23bc}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!pressure\+To\+Text@{pressure\+To\+Text}}
+\index{pressure\+To\+Text@{pressure\+To\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{pressure\+To\+Text()}{pressureToText()}}
+{\footnotesize\ttfamily char$\ast$ pressure\+To\+Text (\begin{DoxyParamCaption}\item[{float}]{Pressure }\end{DoxyParamCaption})}
+
+
+
+Definition at line 186 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_aa2683828a0a7f43a26f85171e7c2dc73}\label{_hempy_module_2src_2_helpers_8h_aa2683828a0a7f43a26f85171e7c2dc73}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!temp\+To\+Text@{temp\+To\+Text}}
+\index{temp\+To\+Text@{temp\+To\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{temp\+To\+Text()}{tempToText()}}
+{\footnotesize\ttfamily char$\ast$ temp\+To\+Text (\begin{DoxyParamCaption}\item[{float}]{Temp }\end{DoxyParamCaption})}
+
+
+
+Definition at line 171 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_aa9a1cb7cdb5f62ba17a5179045533100}\label{_hempy_module_2src_2_helpers_8h_aa9a1cb7cdb5f62ba17a5179045533100}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!time\+To\+Text@{time\+To\+Text}}
+\index{time\+To\+Text@{time\+To\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{time\+To\+Text()}{timeToText()}}
+{\footnotesize\ttfamily char$\ast$ time\+To\+Text (\begin{DoxyParamCaption}\item[{byte}]{Hour,  }\item[{byte}]{Minute }\end{DoxyParamCaption})}
+
+
+
+Definition at line 164 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a4e83915d00c402e1c191e4d344f23e30}\label{_hempy_module_2src_2_helpers_8h_a4e83915d00c402e1c191e4d344f23e30}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!to\+Precision\+Text@{to\+Precision\+Text}}
+\index{to\+Precision\+Text@{to\+Precision\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{to\+Precision\+Text()}{toPrecisionText()}}
+{\footnotesize\ttfamily char$\ast$ to\+Precision\+Text (\begin{DoxyParamCaption}\item[{float}]{Number }\end{DoxyParamCaption})}
+
+
+
+Definition at line 133 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a57bf4080c9ba029c592a00dfd6ab488e}\label{_hempy_module_2src_2_helpers_8h_a57bf4080c9ba029c592a00dfd6ab488e}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!to\+Text@{to\+Text}}
+\index{to\+Text@{to\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{to\+Text()}{toText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily char$\ast$ to\+Text (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 103 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a268e19fb8de169dcec9e956274d36a0d}\label{_hempy_module_2src_2_helpers_8h_a268e19fb8de169dcec9e956274d36a0d}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!to\+Text@{to\+Text}}
+\index{to\+Text@{to\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{to\+Text()}{toText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily char$\ast$ to\+Text (\begin{DoxyParamCaption}\item[{int}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 110 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_af962a560b4f576eddf6e61ffbd802a10}\label{_hempy_module_2src_2_helpers_8h_af962a560b4f576eddf6e61ffbd802a10}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!to\+Text@{to\+Text}}
+\index{to\+Text@{to\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{to\+Text()}{toText()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily char$\ast$ to\+Text (\begin{DoxyParamCaption}\item[{long}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 117 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a768b712c81824ccceecaafccf1e8944e}\label{_hempy_module_2src_2_helpers_8h_a768b712c81824ccceecaafccf1e8944e}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!to\+Text@{to\+Text}}
+\index{to\+Text@{to\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{to\+Text()}{toText()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily char$\ast$ to\+Text (\begin{DoxyParamCaption}\item[{float}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 124 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a8f2a6e8caac4689efede55386745032c}\label{_hempy_module_2src_2_helpers_8h_a8f2a6e8caac4689efede55386745032c}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!to\+Text@{to\+Text}}
+\index{to\+Text@{to\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{to\+Text()}{toText()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily char$\ast$ to\+Text (\begin{DoxyParamCaption}\item[{int}]{Number1,  }\item[{int}]{Number2,  }\item[{const char $\ast$}]{Separator }\end{DoxyParamCaption})}
+
+
+
+Definition at line 142 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a83d30b216f8ed6672a7b08515c9ad5d8}\label{_hempy_module_2src_2_helpers_8h_a83d30b216f8ed6672a7b08515c9ad5d8}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!to\+Text@{to\+Text}}
+\index{to\+Text@{to\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{to\+Text()}{toText()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily char$\ast$ to\+Text (\begin{DoxyParamCaption}\item[{float}]{Number1,  }\item[{float}]{Number2,  }\item[{const char $\ast$}]{Separator }\end{DoxyParamCaption})}
+
+
+
+Definition at line 149 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_aec4ac85dc6f4a044572d1889e7f4ecd3}\label{_hempy_module_2src_2_helpers_8h_aec4ac85dc6f4a044572d1889e7f4ecd3}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!weight\+To\+Text@{weight\+To\+Text}}
+\index{weight\+To\+Text@{weight\+To\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{weight\+To\+Text()}{weightToText()}}
+{\footnotesize\ttfamily char$\ast$ weight\+To\+Text (\begin{DoxyParamCaption}\item[{float}]{Weight }\end{DoxyParamCaption})}
+
+
+
+Definition at line 201 of file Helpers.\+cpp.
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a8abf19822a7d099be562b7a2bdd8258b}\label{_hempy_module_2src_2_helpers_8h_a8abf19822a7d099be562b7a2bdd8258b}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!yes\+No\+To\+Text@{yes\+No\+To\+Text}}
+\index{yes\+No\+To\+Text@{yes\+No\+To\+Text}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{yes\+No\+To\+Text()}{yesNoToText()}}
+{\footnotesize\ttfamily char$\ast$ yes\+No\+To\+Text (\begin{DoxyParamCaption}\item[{bool}]{Status }\end{DoxyParamCaption})}
+
+
+
+Definition at line 241 of file Helpers.\+cpp.
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_aaa89c80a04f1a6b0b5f2e425a9d045db}\label{_hempy_module_2src_2_helpers_8h_aaa89c80a04f1a6b0b5f2e425a9d045db}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!Arduino\+Serial@{Arduino\+Serial}}
+\index{Arduino\+Serial@{Arduino\+Serial}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{Arduino\+Serial}{ArduinoSerial}}
+{\footnotesize\ttfamily Hardware\+Serial\& Arduino\+Serial}
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_abfef982a70a4822eb5c889ebfa5f390a}\label{_hempy_module_2src_2_helpers_8h_abfef982a70a4822eb5c889ebfa5f390a}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!Box\+Settings@{Box\+Settings}}
+\index{Box\+Settings@{Box\+Settings}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{Box\+Settings}{BoxSettings}}
+{\footnotesize\ttfamily \hyperlink{struct_settings}{Settings}$\ast$ Box\+Settings}
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a197fc7fece7964f371e3331919d596bb}\label{_hempy_module_2src_2_helpers_8h_a197fc7fece7964f371e3331919d596bb}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!Current\+Time@{Current\+Time}}
+\index{Current\+Time@{Current\+Time}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{Current\+Time}{CurrentTime}}
+{\footnotesize\ttfamily char Current\+Time\mbox{[}Max\+Text\+Length\mbox{]}}
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_aa3f2962c251cead6e535226e4da29861}\label{_hempy_module_2src_2_helpers_8h_aa3f2962c251cead6e535226e4da29861}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!Debug@{Debug}}
+\index{Debug@{Debug}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{Debug}{Debug}}
+{\footnotesize\ttfamily bool$\ast$ Debug}
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_abfb699ffd3b92c00cea356225e82ddb4}\label{_hempy_module_2src_2_helpers_8h_abfb699ffd3b92c00cea356225e82ddb4}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!E\+S\+P\+Cmd@{E\+S\+P\+Cmd}}
+\index{E\+S\+P\+Cmd@{E\+S\+P\+Cmd}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{E\+S\+P\+Cmd}{ESPCmd}}
+{\footnotesize\ttfamily E\+L\+Client\+Cmd E\+S\+P\+Cmd}
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_aea644f78656fead3c543a01abe9951f4}\label{_hempy_module_2src_2_helpers_8h_aea644f78656fead3c543a01abe9951f4}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!E\+S\+P\+Serial@{E\+S\+P\+Serial}}
+\index{E\+S\+P\+Serial@{E\+S\+P\+Serial}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{E\+S\+P\+Serial}{ESPSerial}}
+{\footnotesize\ttfamily Hardware\+Serial\& E\+S\+P\+Serial}
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a785937c2cdd04d49f70983a4f57bcf22}\label{_hempy_module_2src_2_helpers_8h_a785937c2cdd04d49f70983a4f57bcf22}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!G\+Box@{G\+Box}}
+\index{G\+Box@{G\+Box}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{G\+Box}{GBox}}
+{\footnotesize\ttfamily \hyperlink{class_grow_box}{Grow\+Box}$\ast$ G\+Box}
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a29e392d833e97bf88f780e9fdf22373f}\label{_hempy_module_2src_2_helpers_8h_a29e392d833e97bf88f780e9fdf22373f}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!Long\+Message@{Long\+Message}}
+\index{Long\+Message@{Long\+Message}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{Long\+Message}{LongMessage}}
+{\footnotesize\ttfamily char Long\+Message\mbox{[}Max\+Long\+Text\+Length\mbox{]}}
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_ae700c60c46e98092b96bb54c369fe891}\label{_hempy_module_2src_2_helpers_8h_ae700c60c46e98092b96bb54c369fe891}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!Metric@{Metric}}
+\index{Metric@{Metric}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{Metric}{Metric}}
+{\footnotesize\ttfamily bool$\ast$ Metric}
+
+\mbox{\Hypertarget{_hempy_module_2src_2_helpers_8h_a6084d34751a3c3b5585d06dc1c0dd9f6}\label{_hempy_module_2src_2_helpers_8h_a6084d34751a3c3b5585d06dc1c0dd9f6}} 
+\index{Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}!Short\+Message@{Short\+Message}}
+\index{Short\+Message@{Short\+Message}!Hempy\+Module/src/\+Helpers.\+h@{Hempy\+Module/src/\+Helpers.\+h}}
+\subsubsection{\texorpdfstring{Short\+Message}{ShortMessage}}
+{\footnotesize\ttfamily char Short\+Message\mbox{[}Max\+Shot\+Text\+Length\mbox{]}}
+

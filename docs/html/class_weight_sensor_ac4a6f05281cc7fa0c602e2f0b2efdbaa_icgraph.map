@@ -1,0 +1,4 @@
+<map id="WeightSensor::readWeight" name="WeightSensor::readWeight">
+<area shape="rect" id="node2" href="$class_weight_sensor.html#a3d0d70823fc37a32d8320189d15d448d" title="WeightSensor::refresh\l_Minute" alt="" coords="232,5,384,47"/>
+<area shape="rect" id="node3" href="$class_weight_sensor.html#a6f7c6cab318b6677e43b7deb9e0b5fee" title="WeightSensor::refresh_Sec" alt="" coords="432,13,615,39"/>
+</map>

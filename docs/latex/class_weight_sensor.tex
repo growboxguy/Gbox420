@@ -1,0 +1,564 @@
+\hypertarget{class_weight_sensor}{}\section{Weight\+Sensor Class Reference}
+\label{class_weight_sensor}\index{Weight\+Sensor@{Weight\+Sensor}}
+
+
+{\ttfamily \#include $<$Weight\+Sensor.\+h$>$}
+
+
+
+Inheritance diagram for Weight\+Sensor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{class_weight_sensor__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Weight\+Sensor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_weight_sensor_a7ea36c43abb037e5d88f6d181bd07b0d}{Weight\+Sensor} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{class_module}{Module} $\ast$\hyperlink{class_weight_sensor_abcba58bc00c355cc626499e019ac0d52}{Parent}, \hyperlink{struct_settings_1_1_weight_sensor_settings}{Settings\+::\+Weight\+Sensor\+Settings} $\ast$Default\+Settings)
+\item 
+void \hyperlink{class_weight_sensor_a3d0d70823fc37a32d8320189d15d448d}{refresh\+\_\+\+Minute} ()
+\item 
+void \hyperlink{class_weight_sensor_a6f7c6cab318b6677e43b7deb9e0b5fee}{refresh\+\_\+\+Sec} ()
+\item 
+void \hyperlink{class_weight_sensor_a1db622f4f2fb6971d0a4933d825c5c44}{report} ()
+\item 
+void \hyperlink{class_weight_sensor_ac4a6f05281cc7fa0c602e2f0b2efdbaa}{read\+Weight} ()
+\item 
+float \hyperlink{class_weight_sensor_a0a42742e1516e6723b1246e789ba9253}{get\+Weight} (bool Return\+Average=true)
+\item 
+char $\ast$ \hyperlink{class_weight_sensor_a4435433225f8b58950161e5a580d763e}{get\+Weight\+Text} (bool Include\+Units, bool Return\+Average)
+\item 
+void \hyperlink{class_weight_sensor_a54b241f48e63ef6b17eade0d55a78008}{trigger\+Tare} ()
+\item 
+void \hyperlink{class_weight_sensor_a37b50db6dc60c3bc6a22807af5e17283}{trigger\+Calibration} (int \hyperlink{class_weight_sensor_aed701fda701e06caf8ffdbbe6be8ad10}{Calibration\+Weight})
+\item 
+\hyperlink{class_weight_sensor_a7ea36c43abb037e5d88f6d181bd07b0d}{Weight\+Sensor} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{class_module}{Module} $\ast$\hyperlink{class_weight_sensor_abcba58bc00c355cc626499e019ac0d52}{Parent}, \hyperlink{struct_settings_1_1_weight_sensor_settings}{Settings\+::\+Weight\+Sensor\+Settings} $\ast$Default\+Settings)
+\item 
+void \hyperlink{class_weight_sensor_a3d0d70823fc37a32d8320189d15d448d}{refresh\+\_\+\+Minute} ()
+\item 
+void \hyperlink{class_weight_sensor_a6f7c6cab318b6677e43b7deb9e0b5fee}{refresh\+\_\+\+Sec} ()
+\item 
+void \hyperlink{class_weight_sensor_a1db622f4f2fb6971d0a4933d825c5c44}{report} ()
+\item 
+void \hyperlink{class_weight_sensor_ac4a6f05281cc7fa0c602e2f0b2efdbaa}{read\+Weight} ()
+\item 
+float \hyperlink{class_weight_sensor_a0a42742e1516e6723b1246e789ba9253}{get\+Weight} (bool Return\+Average=true)
+\item 
+char $\ast$ \hyperlink{class_weight_sensor_a859e380f3bac2453e8659e281b39ce31}{get\+Weight\+Text} (bool Include\+Units, bool Return\+Average)
+\item 
+void \hyperlink{class_weight_sensor_a54b241f48e63ef6b17eade0d55a78008}{trigger\+Tare} ()
+\item 
+void \hyperlink{class_weight_sensor_a37b50db6dc60c3bc6a22807af5e17283}{trigger\+Calibration} (int \hyperlink{class_weight_sensor_aed701fda701e06caf8ffdbbe6be8ad10}{Calibration\+Weight})
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_rolling_average}{Rolling\+Average} $\ast$ \hyperlink{class_weight_sensor_af53b96a6841dea7a0d04f7206834d09a}{Weight}
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_weight_sensor_a02fe54254ed51deefc115fad34053061}{tare} ()
+\item 
+void \hyperlink{class_weight_sensor_a7718da9f72a6f354ea19550567d42fbf}{calibrate} ()
+\item 
+void \hyperlink{class_weight_sensor_aa190a87fa5e384d2ead40c99116dc8a7}{set\+Scale} (float \hyperlink{class_weight_sensor_aa009a11ad14eb1d7b9e181e213e737eb}{Scale})
+\item 
+void \hyperlink{class_weight_sensor_a02fe54254ed51deefc115fad34053061}{tare} ()
+\item 
+void \hyperlink{class_weight_sensor_a7718da9f72a6f354ea19550567d42fbf}{calibrate} ()
+\item 
+void \hyperlink{class_weight_sensor_aa190a87fa5e384d2ead40c99116dc8a7}{set\+Scale} (float \hyperlink{class_weight_sensor_aa009a11ad14eb1d7b9e181e213e737eb}{Scale})
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_module}{Module} $\ast$ \hyperlink{class_weight_sensor_abcba58bc00c355cc626499e019ac0d52}{Parent}
+\item 
+H\+X711 $\ast$ \hyperlink{class_weight_sensor_af93fa9745d30c03264f2ca8d5f652974}{Sensor}
+\item 
+float $\ast$ \hyperlink{class_weight_sensor_aa009a11ad14eb1d7b9e181e213e737eb}{Scale}
+\item 
+long $\ast$ \hyperlink{class_weight_sensor_a5b73b99f35b487b9c8d0c29d1f88a8a3}{Tare\+Offset}
+\item 
+int \hyperlink{class_weight_sensor_aed701fda701e06caf8ffdbbe6be8ad10}{Calibration\+Weight}
+\item 
+bool \hyperlink{class_weight_sensor_a49737914329de6cc5cb56f4089513d23}{Tare\+Requested} = false
+\item 
+bool \hyperlink{class_weight_sensor_a986fa9909ed3aa3aed2d54c2df768dbb}{Calibrate\+Requested} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 6 of file Weight\+Sensor.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_weight_sensor_a7ea36c43abb037e5d88f6d181bd07b0d}\label{class_weight_sensor_a7ea36c43abb037e5d88f6d181bd07b0d}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!Weight\+Sensor@{Weight\+Sensor}}
+\index{Weight\+Sensor@{Weight\+Sensor}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{Weight\+Sensor()}{WeightSensor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Weight\+Sensor\+::\+Weight\+Sensor (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{class_module}{Module} $\ast$}]{Parent,  }\item[{\hyperlink{struct_settings_1_1_weight_sensor_settings}{Settings\+::\+Weight\+Sensor\+Settings} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+Definition at line 3 of file Weight\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a7ea36c43abb037e5d88f6d181bd07b0d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_weight_sensor_a7ea36c43abb037e5d88f6d181bd07b0d}\label{class_weight_sensor_a7ea36c43abb037e5d88f6d181bd07b0d}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!Weight\+Sensor@{Weight\+Sensor}}
+\index{Weight\+Sensor@{Weight\+Sensor}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{Weight\+Sensor()}{WeightSensor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Weight\+Sensor\+::\+Weight\+Sensor (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{class_module}{Module} $\ast$}]{Parent,  }\item[{\hyperlink{struct_settings_1_1_weight_sensor_settings}{Settings\+::\+Weight\+Sensor\+Settings} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_weight_sensor_a7718da9f72a6f354ea19550567d42fbf}\label{class_weight_sensor_a7718da9f72a6f354ea19550567d42fbf}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!calibrate@{calibrate}}
+\index{calibrate@{calibrate}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{calibrate()}{calibrate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::calibrate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 84 of file Weight\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a7718da9f72a6f354ea19550567d42fbf_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a7718da9f72a6f354ea19550567d42fbf_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_weight_sensor_a7718da9f72a6f354ea19550567d42fbf}\label{class_weight_sensor_a7718da9f72a6f354ea19550567d42fbf}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!calibrate@{calibrate}}
+\index{calibrate@{calibrate}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{calibrate()}{calibrate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::calibrate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_weight_sensor_a0a42742e1516e6723b1246e789ba9253}\label{class_weight_sensor_a0a42742e1516e6723b1246e789ba9253}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!get\+Weight@{get\+Weight}}
+\index{get\+Weight@{get\+Weight}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Weight()}{getWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float Weight\+Sensor\+::get\+Weight (\begin{DoxyParamCaption}\item[{bool}]{Return\+Average = {\ttfamily true} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_weight_sensor_a0a42742e1516e6723b1246e789ba9253}\label{class_weight_sensor_a0a42742e1516e6723b1246e789ba9253}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!get\+Weight@{get\+Weight}}
+\index{get\+Weight@{get\+Weight}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Weight()}{getWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float Weight\+Sensor\+::get\+Weight (\begin{DoxyParamCaption}\item[{bool}]{Return\+Average = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 52 of file Weight\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a0a42742e1516e6723b1246e789ba9253_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_weight_sensor_a859e380f3bac2453e8659e281b39ce31}\label{class_weight_sensor_a859e380f3bac2453e8659e281b39ce31}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!get\+Weight\+Text@{get\+Weight\+Text}}
+\index{get\+Weight\+Text@{get\+Weight\+Text}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Weight\+Text()}{getWeightText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char$\ast$ Weight\+Sensor\+::get\+Weight\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units,  }\item[{bool}]{Return\+Average }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_weight_sensor_a4435433225f8b58950161e5a580d763e}\label{class_weight_sensor_a4435433225f8b58950161e5a580d763e}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!get\+Weight\+Text@{get\+Weight\+Text}}
+\index{get\+Weight\+Text@{get\+Weight\+Text}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Weight\+Text()}{getWeightText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char $\ast$ Weight\+Sensor\+::get\+Weight\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units,  }\item[{bool}]{Return\+Average }\end{DoxyParamCaption})}
+
+
+
+Definition at line 57 of file Weight\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a4435433225f8b58950161e5a580d763e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a4435433225f8b58950161e5a580d763e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_weight_sensor_ac4a6f05281cc7fa0c602e2f0b2efdbaa}\label{class_weight_sensor_ac4a6f05281cc7fa0c602e2f0b2efdbaa}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!read\+Weight@{read\+Weight}}
+\index{read\+Weight@{read\+Weight}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{read\+Weight()}{readWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::read\+Weight (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 48 of file Weight\+Sensor.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_ac4a6f05281cc7fa0c602e2f0b2efdbaa_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_weight_sensor_ac4a6f05281cc7fa0c602e2f0b2efdbaa}\label{class_weight_sensor_ac4a6f05281cc7fa0c602e2f0b2efdbaa}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!read\+Weight@{read\+Weight}}
+\index{read\+Weight@{read\+Weight}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{read\+Weight()}{readWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::read\+Weight (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_weight_sensor_a3d0d70823fc37a32d8320189d15d448d}\label{class_weight_sensor_a3d0d70823fc37a32d8320189d15d448d}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}}
+\index{refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Minute()}{refresh\_Minute()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a14e4462a94bd118028ce1d487ca0292c}{Common}.
+
+
+
+Definition at line 19 of file Weight\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a3d0d70823fc37a32d8320189d15d448d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a3d0d70823fc37a32d8320189d15d448d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_weight_sensor_a3d0d70823fc37a32d8320189d15d448d}\label{class_weight_sensor_a3d0d70823fc37a32d8320189d15d448d}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}}
+\index{refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Minute()}{refresh\_Minute()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a14e4462a94bd118028ce1d487ca0292c}{Common}.
+
+\mbox{\Hypertarget{class_weight_sensor_a6f7c6cab318b6677e43b7deb9e0b5fee}\label{class_weight_sensor_a6f7c6cab318b6677e43b7deb9e0b5fee}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!refresh\+\_\+\+Sec@{refresh\+\_\+\+Sec}}
+\index{refresh\+\_\+\+Sec@{refresh\+\_\+\+Sec}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Sec()}{refresh\_Sec()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::refresh\+\_\+\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_acd1fdd47fbf8bb490f5c6d3ab6cd8d05}{Common}.
+
+
+
+Definition at line 34 of file Weight\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a6f7c6cab318b6677e43b7deb9e0b5fee_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_weight_sensor_a6f7c6cab318b6677e43b7deb9e0b5fee}\label{class_weight_sensor_a6f7c6cab318b6677e43b7deb9e0b5fee}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!refresh\+\_\+\+Sec@{refresh\+\_\+\+Sec}}
+\index{refresh\+\_\+\+Sec@{refresh\+\_\+\+Sec}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Sec()}{refresh\_Sec()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::refresh\+\_\+\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_acd1fdd47fbf8bb490f5c6d3ab6cd8d05}{Common}.
+
+\mbox{\Hypertarget{class_weight_sensor_a1db622f4f2fb6971d0a4933d825c5c44}\label{class_weight_sensor_a1db622f4f2fb6971d0a4933d825c5c44}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!report@{report}}
+\index{report@{report}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a9e60e2c26a5f4d72342a59a969954636}{Common}.
+
+
+
+Definition at line 39 of file Weight\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a1db622f4f2fb6971d0a4933d825c5c44_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_weight_sensor_a1db622f4f2fb6971d0a4933d825c5c44}\label{class_weight_sensor_a1db622f4f2fb6971d0a4933d825c5c44}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!report@{report}}
+\index{report@{report}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a9e60e2c26a5f4d72342a59a969954636}{Common}.
+
+\mbox{\Hypertarget{class_weight_sensor_aa190a87fa5e384d2ead40c99116dc8a7}\label{class_weight_sensor_aa190a87fa5e384d2ead40c99116dc8a7}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!set\+Scale@{set\+Scale}}
+\index{set\+Scale@{set\+Scale}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{set\+Scale()}{setScale()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::set\+Scale (\begin{DoxyParamCaption}\item[{float}]{Scale }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_weight_sensor_aa190a87fa5e384d2ead40c99116dc8a7}\label{class_weight_sensor_aa190a87fa5e384d2ead40c99116dc8a7}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!set\+Scale@{set\+Scale}}
+\index{set\+Scale@{set\+Scale}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{set\+Scale()}{setScale()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::set\+Scale (\begin{DoxyParamCaption}\item[{float}]{Scale }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 92 of file Weight\+Sensor.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_aa190a87fa5e384d2ead40c99116dc8a7_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_weight_sensor_a02fe54254ed51deefc115fad34053061}\label{class_weight_sensor_a02fe54254ed51deefc115fad34053061}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!tare@{tare}}
+\index{tare@{tare}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{tare()}{tare()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::tare (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 70 of file Weight\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a02fe54254ed51deefc115fad34053061_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a02fe54254ed51deefc115fad34053061_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_weight_sensor_a02fe54254ed51deefc115fad34053061}\label{class_weight_sensor_a02fe54254ed51deefc115fad34053061}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!tare@{tare}}
+\index{tare@{tare}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{tare()}{tare()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::tare (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_weight_sensor_a37b50db6dc60c3bc6a22807af5e17283}\label{class_weight_sensor_a37b50db6dc60c3bc6a22807af5e17283}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!trigger\+Calibration@{trigger\+Calibration}}
+\index{trigger\+Calibration@{trigger\+Calibration}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{trigger\+Calibration()}{triggerCalibration()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::trigger\+Calibration (\begin{DoxyParamCaption}\item[{int}]{Calibration\+Weight }\end{DoxyParamCaption})}
+
+
+
+Definition at line 78 of file Weight\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a37b50db6dc60c3bc6a22807af5e17283_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a37b50db6dc60c3bc6a22807af5e17283_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_weight_sensor_a37b50db6dc60c3bc6a22807af5e17283}\label{class_weight_sensor_a37b50db6dc60c3bc6a22807af5e17283}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!trigger\+Calibration@{trigger\+Calibration}}
+\index{trigger\+Calibration@{trigger\+Calibration}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{trigger\+Calibration()}{triggerCalibration()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::trigger\+Calibration (\begin{DoxyParamCaption}\item[{int}]{Calibration\+Weight }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_weight_sensor_a54b241f48e63ef6b17eade0d55a78008}\label{class_weight_sensor_a54b241f48e63ef6b17eade0d55a78008}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!trigger\+Tare@{trigger\+Tare}}
+\index{trigger\+Tare@{trigger\+Tare}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{trigger\+Tare()}{triggerTare()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::trigger\+Tare (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 65 of file Weight\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{class_weight_sensor_a54b241f48e63ef6b17eade0d55a78008_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_weight_sensor_a54b241f48e63ef6b17eade0d55a78008_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_weight_sensor_a54b241f48e63ef6b17eade0d55a78008}\label{class_weight_sensor_a54b241f48e63ef6b17eade0d55a78008}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!trigger\+Tare@{trigger\+Tare}}
+\index{trigger\+Tare@{trigger\+Tare}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{trigger\+Tare()}{triggerTare()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Weight\+Sensor\+::trigger\+Tare (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_weight_sensor_a986fa9909ed3aa3aed2d54c2df768dbb}\label{class_weight_sensor_a986fa9909ed3aa3aed2d54c2df768dbb}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!Calibrate\+Requested@{Calibrate\+Requested}}
+\index{Calibrate\+Requested@{Calibrate\+Requested}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{Calibrate\+Requested}{CalibrateRequested}}
+{\footnotesize\ttfamily bool Weight\+Sensor\+::\+Calibrate\+Requested = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 32 of file Weight\+Sensor.\+h.
+
+\mbox{\Hypertarget{class_weight_sensor_aed701fda701e06caf8ffdbbe6be8ad10}\label{class_weight_sensor_aed701fda701e06caf8ffdbbe6be8ad10}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!Calibration\+Weight@{Calibration\+Weight}}
+\index{Calibration\+Weight@{Calibration\+Weight}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{Calibration\+Weight}{CalibrationWeight}}
+{\footnotesize\ttfamily int Weight\+Sensor\+::\+Calibration\+Weight\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 30 of file Weight\+Sensor.\+h.
+
+\mbox{\Hypertarget{class_weight_sensor_abcba58bc00c355cc626499e019ac0d52}\label{class_weight_sensor_abcba58bc00c355cc626499e019ac0d52}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!Parent@{Parent}}
+\index{Parent@{Parent}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \hyperlink{class_module}{Module} $\ast$ Weight\+Sensor\+::\+Parent\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 23 of file Weight\+Sensor.\+h.
+
+\mbox{\Hypertarget{class_weight_sensor_aa009a11ad14eb1d7b9e181e213e737eb}\label{class_weight_sensor_aa009a11ad14eb1d7b9e181e213e737eb}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!Scale@{Scale}}
+\index{Scale@{Scale}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{Scale}{Scale}}
+{\footnotesize\ttfamily float $\ast$ Weight\+Sensor\+::\+Scale\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 28 of file Weight\+Sensor.\+h.
+
+\mbox{\Hypertarget{class_weight_sensor_af93fa9745d30c03264f2ca8d5f652974}\label{class_weight_sensor_af93fa9745d30c03264f2ca8d5f652974}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!Sensor@{Sensor}}
+\index{Sensor@{Sensor}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{Sensor}{Sensor}}
+{\footnotesize\ttfamily H\+X711 $\ast$ Weight\+Sensor\+::\+Sensor\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 24 of file Weight\+Sensor.\+h.
+
+\mbox{\Hypertarget{class_weight_sensor_a5b73b99f35b487b9c8d0c29d1f88a8a3}\label{class_weight_sensor_a5b73b99f35b487b9c8d0c29d1f88a8a3}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!Tare\+Offset@{Tare\+Offset}}
+\index{Tare\+Offset@{Tare\+Offset}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{Tare\+Offset}{TareOffset}}
+{\footnotesize\ttfamily long $\ast$ Weight\+Sensor\+::\+Tare\+Offset\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 29 of file Weight\+Sensor.\+h.
+
+\mbox{\Hypertarget{class_weight_sensor_a49737914329de6cc5cb56f4089513d23}\label{class_weight_sensor_a49737914329de6cc5cb56f4089513d23}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!Tare\+Requested@{Tare\+Requested}}
+\index{Tare\+Requested@{Tare\+Requested}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{Tare\+Requested}{TareRequested}}
+{\footnotesize\ttfamily bool Weight\+Sensor\+::\+Tare\+Requested = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 31 of file Weight\+Sensor.\+h.
+
+\mbox{\Hypertarget{class_weight_sensor_af53b96a6841dea7a0d04f7206834d09a}\label{class_weight_sensor_af53b96a6841dea7a0d04f7206834d09a}} 
+\index{Weight\+Sensor@{Weight\+Sensor}!Weight@{Weight}}
+\index{Weight@{Weight}!Weight\+Sensor@{Weight\+Sensor}}
+\subsubsection{\texorpdfstring{Weight}{Weight}}
+{\footnotesize\ttfamily \hyperlink{class_rolling_average}{Rolling\+Average} $\ast$ Weight\+Sensor\+::\+Weight}
+
+
+
+Definition at line 18 of file Weight\+Sensor.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Components/\hyperlink{_hempy_module_2src_2_components_2_weight_sensor_8h}{Weight\+Sensor.\+h}\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Components/\hyperlink{_hempy_module_2src_2_components_2_weight_sensor_8cpp}{Weight\+Sensor.\+cpp}\end{DoxyCompactItemize}

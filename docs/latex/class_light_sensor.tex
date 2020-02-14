@@ -1,0 +1,359 @@
+\hypertarget{class_light_sensor}{}\section{Light\+Sensor Class Reference}
+\label{class_light_sensor}\index{Light\+Sensor@{Light\+Sensor}}
+
+
+{\ttfamily \#include $<$Light\+Sensor.\+h$>$}
+
+
+
+Inheritance diagram for Light\+Sensor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=174pt]{class_light_sensor__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Light\+Sensor\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_light_sensor__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_light_sensor_aa2b15bb718f72a125dcc068300abfba7}{Light\+Sensor} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{class_module}{Module} $\ast$\hyperlink{class_light_sensor_afc358d440691edea541b12acf84e53c9}{Parent}, \hyperlink{struct_settings_1_1_light_sensor_settings}{Settings\+::\+Light\+Sensor\+Settings} $\ast$Default\+Settings, \hyperlink{class_lights}{Lights} $\ast$Light\+Source)
+\item 
+void \hyperlink{class_light_sensor_aa6c29591860ab05672a183bc32fce6f4}{refresh\+\_\+\+Minute} ()
+\item 
+void \hyperlink{class_light_sensor_a08ffec2f2bbb09966a8e37bf1f9887f9}{report} ()
+\item 
+void \hyperlink{class_light_sensor_a50559883ebb2c80a5d2144a6453bd1c3}{trigger\+Calibration} ()
+\item 
+void \hyperlink{class_light_sensor_a73dea4504d64c13c43a5c68bee9aef27}{get\+Calibration\+Readings} ()
+\item 
+int \hyperlink{class_light_sensor_a90177d0d28db7e651f63da45bafcc61b}{get\+Reading} (bool Return\+Average=true)
+\item 
+char $\ast$ \hyperlink{class_light_sensor_af38ae75a6739383e1590548fdb07e353}{get\+Reading\+Text} (bool Return\+Average)
+\item 
+bool \hyperlink{class_light_sensor_a06881cb787b1968daf4d1a49923617fe}{get\+Dark} ()
+\item 
+char $\ast$ \hyperlink{class_light_sensor_a70fd8f7252cbc9abb2ea501ccfaf08fe}{get\+Dark\+Text} (bool Use\+Words)
+\item 
+\hyperlink{class_light_sensor_aa2b15bb718f72a125dcc068300abfba7}{Light\+Sensor} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{class_module}{Module} $\ast$\hyperlink{class_light_sensor_afc358d440691edea541b12acf84e53c9}{Parent}, \hyperlink{struct_settings_1_1_light_sensor_settings}{Settings\+::\+Light\+Sensor\+Settings} $\ast$Default\+Settings, \hyperlink{class_lights}{Lights} $\ast$Light\+Source)
+\item 
+void \hyperlink{class_light_sensor_aa6c29591860ab05672a183bc32fce6f4}{refresh\+\_\+\+Minute} ()
+\item 
+void \hyperlink{class_light_sensor_a08ffec2f2bbb09966a8e37bf1f9887f9}{report} ()
+\item 
+void \hyperlink{class_light_sensor_a50559883ebb2c80a5d2144a6453bd1c3}{trigger\+Calibration} ()
+\item 
+void \hyperlink{class_light_sensor_a73dea4504d64c13c43a5c68bee9aef27}{get\+Calibration\+Readings} ()
+\item 
+int \hyperlink{class_light_sensor_a90177d0d28db7e651f63da45bafcc61b}{get\+Reading} (bool Return\+Average=true)
+\item 
+char $\ast$ \hyperlink{class_light_sensor_a4430f299e7c8aafa47bc47ab291c78a3}{get\+Reading\+Text} (bool Return\+Average)
+\item 
+bool \hyperlink{class_light_sensor_a06881cb787b1968daf4d1a49923617fe}{get\+Dark} ()
+\item 
+char $\ast$ \hyperlink{class_light_sensor_a701ea113624ff3188aa728930c7869de}{get\+Dark\+Text} (bool Use\+Words)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_module}{Module} $\ast$ \hyperlink{class_light_sensor_afc358d440691edea541b12acf84e53c9}{Parent}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 7 of file Light\+Sensor.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_light_sensor_aa2b15bb718f72a125dcc068300abfba7}\label{class_light_sensor_aa2b15bb718f72a125dcc068300abfba7}} 
+\index{Light\+Sensor@{Light\+Sensor}!Light\+Sensor@{Light\+Sensor}}
+\index{Light\+Sensor@{Light\+Sensor}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{Light\+Sensor()}{LightSensor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Light\+Sensor\+::\+Light\+Sensor (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{class_module}{Module} $\ast$}]{Parent,  }\item[{\hyperlink{struct_settings_1_1_light_sensor_settings}{Settings\+::\+Light\+Sensor\+Settings} $\ast$}]{Default\+Settings,  }\item[{\hyperlink{class_lights}{Lights} $\ast$}]{Light\+Source }\end{DoxyParamCaption})}
+
+
+
+Definition at line 5 of file Light\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_light_sensor_aa2b15bb718f72a125dcc068300abfba7_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_light_sensor_aa2b15bb718f72a125dcc068300abfba7}\label{class_light_sensor_aa2b15bb718f72a125dcc068300abfba7}} 
+\index{Light\+Sensor@{Light\+Sensor}!Light\+Sensor@{Light\+Sensor}}
+\index{Light\+Sensor@{Light\+Sensor}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{Light\+Sensor()}{LightSensor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Light\+Sensor\+::\+Light\+Sensor (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{class_module}{Module} $\ast$}]{Parent,  }\item[{\hyperlink{struct_settings_1_1_light_sensor_settings}{Settings\+::\+Light\+Sensor\+Settings} $\ast$}]{Default\+Settings,  }\item[{\hyperlink{class_lights}{Lights} $\ast$}]{Light\+Source }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_light_sensor_a73dea4504d64c13c43a5c68bee9aef27}\label{class_light_sensor_a73dea4504d64c13c43a5c68bee9aef27}} 
+\index{Light\+Sensor@{Light\+Sensor}!get\+Calibration\+Readings@{get\+Calibration\+Readings}}
+\index{get\+Calibration\+Readings@{get\+Calibration\+Readings}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Calibration\+Readings()}{getCalibrationReadings()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Light\+Sensor\+::get\+Calibration\+Readings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 75 of file Light\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=294pt]{class_light_sensor_a73dea4504d64c13c43a5c68bee9aef27_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_light_sensor_a73dea4504d64c13c43a5c68bee9aef27_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_light_sensor_a73dea4504d64c13c43a5c68bee9aef27}\label{class_light_sensor_a73dea4504d64c13c43a5c68bee9aef27}} 
+\index{Light\+Sensor@{Light\+Sensor}!get\+Calibration\+Readings@{get\+Calibration\+Readings}}
+\index{get\+Calibration\+Readings@{get\+Calibration\+Readings}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Calibration\+Readings()}{getCalibrationReadings()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Light\+Sensor\+::get\+Calibration\+Readings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_light_sensor_a06881cb787b1968daf4d1a49923617fe}\label{class_light_sensor_a06881cb787b1968daf4d1a49923617fe}} 
+\index{Light\+Sensor@{Light\+Sensor}!get\+Dark@{get\+Dark}}
+\index{get\+Dark@{get\+Dark}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Dark()}{getDark()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Light\+Sensor\+::get\+Dark (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 96 of file Light\+Sensor.\+cpp.
+
+\mbox{\Hypertarget{class_light_sensor_a06881cb787b1968daf4d1a49923617fe}\label{class_light_sensor_a06881cb787b1968daf4d1a49923617fe}} 
+\index{Light\+Sensor@{Light\+Sensor}!get\+Dark@{get\+Dark}}
+\index{get\+Dark@{get\+Dark}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Dark()}{getDark()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Light\+Sensor\+::get\+Dark (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_light_sensor_a70fd8f7252cbc9abb2ea501ccfaf08fe}\label{class_light_sensor_a70fd8f7252cbc9abb2ea501ccfaf08fe}} 
+\index{Light\+Sensor@{Light\+Sensor}!get\+Dark\+Text@{get\+Dark\+Text}}
+\index{get\+Dark\+Text@{get\+Dark\+Text}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Dark\+Text()}{getDarkText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char $\ast$ Light\+Sensor\+::get\+Dark\+Text (\begin{DoxyParamCaption}\item[{bool}]{Use\+Words }\end{DoxyParamCaption})}
+
+
+
+Definition at line 101 of file Light\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=320pt]{class_light_sensor_a70fd8f7252cbc9abb2ea501ccfaf08fe_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_light_sensor_a70fd8f7252cbc9abb2ea501ccfaf08fe_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_light_sensor_a701ea113624ff3188aa728930c7869de}\label{class_light_sensor_a701ea113624ff3188aa728930c7869de}} 
+\index{Light\+Sensor@{Light\+Sensor}!get\+Dark\+Text@{get\+Dark\+Text}}
+\index{get\+Dark\+Text@{get\+Dark\+Text}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Dark\+Text()}{getDarkText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char$\ast$ Light\+Sensor\+::get\+Dark\+Text (\begin{DoxyParamCaption}\item[{bool}]{Use\+Words }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_light_sensor_a90177d0d28db7e651f63da45bafcc61b}\label{class_light_sensor_a90177d0d28db7e651f63da45bafcc61b}} 
+\index{Light\+Sensor@{Light\+Sensor}!get\+Reading@{get\+Reading}}
+\index{get\+Reading@{get\+Reading}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Reading()}{getReading()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily int Light\+Sensor\+::get\+Reading (\begin{DoxyParamCaption}\item[{bool}]{Return\+Average = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 86 of file Light\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_light_sensor_a90177d0d28db7e651f63da45bafcc61b_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_light_sensor_a90177d0d28db7e651f63da45bafcc61b}\label{class_light_sensor_a90177d0d28db7e651f63da45bafcc61b}} 
+\index{Light\+Sensor@{Light\+Sensor}!get\+Reading@{get\+Reading}}
+\index{get\+Reading@{get\+Reading}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Reading()}{getReading()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily int Light\+Sensor\+::get\+Reading (\begin{DoxyParamCaption}\item[{bool}]{Return\+Average = {\ttfamily true} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_light_sensor_a4430f299e7c8aafa47bc47ab291c78a3}\label{class_light_sensor_a4430f299e7c8aafa47bc47ab291c78a3}} 
+\index{Light\+Sensor@{Light\+Sensor}!get\+Reading\+Text@{get\+Reading\+Text}}
+\index{get\+Reading\+Text@{get\+Reading\+Text}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Reading\+Text()}{getReadingText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char$\ast$ Light\+Sensor\+::get\+Reading\+Text (\begin{DoxyParamCaption}\item[{bool}]{Return\+Average }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_light_sensor_af38ae75a6739383e1590548fdb07e353}\label{class_light_sensor_af38ae75a6739383e1590548fdb07e353}} 
+\index{Light\+Sensor@{Light\+Sensor}!get\+Reading\+Text@{get\+Reading\+Text}}
+\index{get\+Reading\+Text@{get\+Reading\+Text}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{get\+Reading\+Text()}{getReadingText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char $\ast$ Light\+Sensor\+::get\+Reading\+Text (\begin{DoxyParamCaption}\item[{bool}]{Return\+Average }\end{DoxyParamCaption})}
+
+
+
+Definition at line 91 of file Light\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_light_sensor_af38ae75a6739383e1590548fdb07e353_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_light_sensor_af38ae75a6739383e1590548fdb07e353_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_light_sensor_aa6c29591860ab05672a183bc32fce6f4}\label{class_light_sensor_aa6c29591860ab05672a183bc32fce6f4}} 
+\index{Light\+Sensor@{Light\+Sensor}!refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}}
+\index{refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Minute()}{refresh\_Minute()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Light\+Sensor\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a14e4462a94bd118028ce1d487ca0292c}{Common}.
+
+\mbox{\Hypertarget{class_light_sensor_aa6c29591860ab05672a183bc32fce6f4}\label{class_light_sensor_aa6c29591860ab05672a183bc32fce6f4}} 
+\index{Light\+Sensor@{Light\+Sensor}!refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}}
+\index{refresh\+\_\+\+Minute@{refresh\+\_\+\+Minute}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Minute()}{refresh\_Minute()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Light\+Sensor\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a14e4462a94bd118028ce1d487ca0292c}{Common}.
+
+
+
+Definition at line 20 of file Light\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_light_sensor_aa6c29591860ab05672a183bc32fce6f4_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_light_sensor_a08ffec2f2bbb09966a8e37bf1f9887f9}\label{class_light_sensor_a08ffec2f2bbb09966a8e37bf1f9887f9}} 
+\index{Light\+Sensor@{Light\+Sensor}!report@{report}}
+\index{report@{report}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Light\+Sensor\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a9e60e2c26a5f4d72342a59a969954636}{Common}.
+
+
+
+Definition at line 32 of file Light\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_light_sensor_a08ffec2f2bbb09966a8e37bf1f9887f9_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_light_sensor_a08ffec2f2bbb09966a8e37bf1f9887f9}\label{class_light_sensor_a08ffec2f2bbb09966a8e37bf1f9887f9}} 
+\index{Light\+Sensor@{Light\+Sensor}!report@{report}}
+\index{report@{report}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Light\+Sensor\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a9e60e2c26a5f4d72342a59a969954636}{Common}.
+
+\mbox{\Hypertarget{class_light_sensor_a50559883ebb2c80a5d2144a6453bd1c3}\label{class_light_sensor_a50559883ebb2c80a5d2144a6453bd1c3}} 
+\index{Light\+Sensor@{Light\+Sensor}!trigger\+Calibration@{trigger\+Calibration}}
+\index{trigger\+Calibration@{trigger\+Calibration}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{trigger\+Calibration()}{triggerCalibration()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Light\+Sensor\+::trigger\+Calibration (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_light_sensor_a50559883ebb2c80a5d2144a6453bd1c3}\label{class_light_sensor_a50559883ebb2c80a5d2144a6453bd1c3}} 
+\index{Light\+Sensor@{Light\+Sensor}!trigger\+Calibration@{trigger\+Calibration}}
+\index{trigger\+Calibration@{trigger\+Calibration}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{trigger\+Calibration()}{triggerCalibration()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Light\+Sensor\+::trigger\+Calibration (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 43 of file Light\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_light_sensor_a50559883ebb2c80a5d2144a6453bd1c3_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_light_sensor_a50559883ebb2c80a5d2144a6453bd1c3_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_light_sensor_afc358d440691edea541b12acf84e53c9}\label{class_light_sensor_afc358d440691edea541b12acf84e53c9}} 
+\index{Light\+Sensor@{Light\+Sensor}!Parent@{Parent}}
+\index{Parent@{Parent}!Light\+Sensor@{Light\+Sensor}}
+\subsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \hyperlink{class_module}{Module} $\ast$ Light\+Sensor\+::\+Parent\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 36 of file Light\+Sensor.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Components/\hyperlink{_hempy_module_2src_2_components_2_light_sensor_8h}{Light\+Sensor.\+h}\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Components/\hyperlink{_hempy_module_2src_2_components_2_light_sensor_8cpp}{Light\+Sensor.\+cpp}\end{DoxyCompactItemize}

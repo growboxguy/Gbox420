@@ -1,0 +1,9 @@
+<map id="RollingAverage::getInt" name="RollingAverage::getInt">
+<area shape="rect" id="node2" href="$class_light_sensor.html#a90177d0d28db7e651f63da45bafcc61b" title="LightSensor::getReading" alt="" coords="210,9,375,36"/>
+<area shape="rect" id="node3" href="$class_rolling_average.html#a7b7015bd5a39e953983f73330b3d8c87" title="RollingAverage::getIntText" alt="" coords="204,60,381,87"/>
+<area shape="rect" id="node8" href="$class_module_skeleton___web.html#a4fbb767613efc275f91eac8e550f1a86" title="ModuleSkeleton_Web\l::websiteEvent_Refresh" alt="" coords="211,111,374,153"/>
+<area shape="rect" id="node4" href="$class_light_sensor.html#af38ae75a6739383e1590548fdb07e353" title="LightSensor::getReadingText" alt="" coords="429,35,620,61"/>
+<area shape="rect" id="node7" href="$class_module_skeleton.html#a4b13bbc3ce0282781e36f450bd4f189a" title="ModuleSkeleton::report" alt="" coords="447,85,603,112"/>
+<area shape="rect" id="node5" href="$class_light_sensor.html#a08ffec2f2bbb09966a8e37bf1f9887f9" title="LightSensor::report" alt="" coords="691,5,823,32"/>
+<area shape="rect" id="node6" href="$class_light_sensor___web.html#a6afe75f4f6cec3dc5f44454e23da1f8a" title="LightSensor_Web::website\lEvent_Refresh" alt="" coords="668,57,847,98"/>
+</map>

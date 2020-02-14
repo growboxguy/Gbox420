@@ -1,0 +1,11 @@
+<map id="PowerSensorV3::report" name="PowerSensorV3::report">
+<area shape="rect" id="node2" href="$class_common.html#a9e60e2c26a5f4d72342a59a969954636" title="Common::report" alt="" coords="274,5,390,32"/>
+<area shape="rect" id="node3" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="501,31,596,57"/>
+<area shape="rect" id="node4" href="$class_power_sensor_v3.html#a17c2031435f3ada2c531c41cdf58c629" title="PowerSensorV3::getPowerText" alt="" coords="229,107,435,133"/>
+<area shape="rect" id="node5" href="$class_power_sensor_v3.html#a63517e9f76afef5ee7da103cc46abc84" title="PowerSensorV3::getEnergyText" alt="" coords="227,157,437,184"/>
+<area shape="rect" id="node6" href="$class_power_sensor_v3.html#a506c7292897607d7dd31d3ff3696806a" title="PowerSensorV3::getVoltageText" alt="" coords="226,208,438,235"/>
+<area shape="rect" id="node7" href="$class_power_sensor_v3.html#afae9ea1a12d8b7fc3eb012b1c38d0639" title="PowerSensorV3::getCurrentText" alt="" coords="227,259,437,285"/>
+<area shape="rect" id="node8" href="$class_power_sensor_v3.html#adc5ce409d7bf0b6dac4d65fa64619bdb" title="PowerSensorV3::getFrequencyText" alt="" coords="217,309,447,336"/>
+<area shape="rect" id="node9" href="$class_power_sensor_v3.html#a0799057ba96ffc74b372b88d94874d33" title="PowerSensorV3::getPowerFactorText" alt="" coords="211,360,453,387"/>
+<area shape="rect" id="node10" href="$_hempy_module_2src_2_helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="519,360,578,387"/>
+</map>

@@ -1,0 +1,10 @@
+<map id="WeightSensor::refresh_Sec" name="WeightSensor::refresh_Sec">
+<area shape="rect" id="node2" href="$class_weight_sensor.html#a3d0d70823fc37a32d8320189d15d448d" title="WeightSensor::refresh\l_Minute" alt="" coords="236,74,388,115"/>
+<area shape="rect" id="node3" href="$class_common.html#a14e4462a94bd118028ce1d487ca0292c" title="Common::refresh_Minute" alt="" coords="441,5,610,32"/>
+<area shape="rect" id="node5" href="$class_weight_sensor.html#a02fe54254ed51deefc115fad34053061" title="WeightSensor::tare" alt="" coords="458,56,593,83"/>
+<area shape="rect" id="node8" href="$class_weight_sensor.html#a7718da9f72a6f354ea19550567d42fbf" title="WeightSensor::calibrate" alt="" coords="445,107,606,133"/>
+<area shape="rect" id="node9" href="$class_weight_sensor.html#ac4a6f05281cc7fa0c602e2f0b2efdbaa" title="WeightSensor::readWeight" alt="" coords="436,157,615,184"/>
+<area shape="rect" id="node4" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="713,5,807,32"/>
+<area shape="rect" id="node6" href="$class_rolling_average.html#a5413499ba156dd5acec73196edfda3d4" title="RollingAverage::resetAverage" alt="" coords="663,107,857,133"/>
+<area shape="rect" id="node7" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="695,56,825,83"/>
+</map>

@@ -1,0 +1,3 @@
+<map id="PressureSensor::readPressure" name="PressureSensor::readPressure">
+<area shape="rect" id="node2" href="$class_rolling_average.html#aa1fd09fa8d80046179ed7ed91bfed6d0" title="RollingAverage::updateAverage" alt="" coords="253,5,459,32"/>
+</map>

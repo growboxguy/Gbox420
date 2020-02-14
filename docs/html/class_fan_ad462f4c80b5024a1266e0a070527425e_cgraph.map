@@ -1,0 +1,6 @@
+<map id="Fan::SetHighSpeed" name="Fan::SetHighSpeed">
+<area shape="rect" id="node2" href="$class_fan.html#a32c99a0575098a2600ea3c9f27013a98" title="Fan::checkFanStatus" alt="" coords="199,5,345,32"/>
+<area shape="rect" id="node3" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="207,56,337,83"/>
+<area shape="rect" id="node4" href="$class_module.html#a1c18e93583f527d470be447a9fcd1a0b" title="Module::getSoundObject" alt="" coords="189,107,355,133"/>
+<area shape="rect" id="node5" href="$class_sound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="199,157,345,184"/>
+</map>

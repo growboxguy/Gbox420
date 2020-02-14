@@ -1,0 +1,6 @@
+<map id="PressureSensor" name="PressureSensor">
+<area shape="rect" id="node2" href="$class_common.html" title="Common" alt="" coords="215,5,289,32"/>
+<area shape="rect" id="node4" href="$class_module.html" title="Module" alt="" coords="220,153,284,180"/>
+<area shape="rect" id="node5" href="$class_sound.html" title="Sound" alt="" coords="361,243,420,269"/>
+<area shape="rect" id="node3" href="$class_rolling_average.html" title="RollingAverage" alt="" coords="85,153,195,180"/>
+</map>

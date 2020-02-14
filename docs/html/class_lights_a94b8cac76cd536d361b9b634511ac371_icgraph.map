@@ -1,0 +1,5 @@
+<map id="Lights::setBrightness" name="Lights::setBrightness">
+<area shape="rect" id="node2" href="$class_light_sensor.html#a50559883ebb2c80a5d2144a6453bd1c3" title="LightSensor::triggerCalibration" alt="" coords="199,13,396,39"/>
+<area shape="rect" id="node4" href="$class_lights___web.html#a8e4f0fc6e2cba4303c306910b9c9ac86" title="Lights_Web::websiteEvent\l_Field" alt="" coords="208,64,387,105"/>
+<area shape="rect" id="node3" href="$class_light_sensor___web.html#abedb4cd4454f322ebbd7c3753bcd2a73" title="LightSensor_Web::website\lEvent_Button" alt="" coords="444,5,623,47"/>
+</map>

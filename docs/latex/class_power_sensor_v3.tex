@@ -1,0 +1,343 @@
+\hypertarget{class_power_sensor_v3}{}\section{Power\+Sensor\+V3 Class Reference}
+\label{class_power_sensor_v3}\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+
+
+{\ttfamily \#include $<$Power\+Sensor\+V3.\+h$>$}
+
+
+
+Inheritance diagram for Power\+Sensor\+V3\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=193pt]{class_power_sensor_v3__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Power\+Sensor\+V3\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_power_sensor_v3__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_power_sensor_v3_a254a0502c2a42a5ccff07147a8a6ccfc}{Power\+Sensor\+V3} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{class_module}{Module} $\ast$\hyperlink{class_power_sensor_v3_aa7a23932f754042ad07e654a408e8a52}{Parent}, Hardware\+Serial $\ast$Serial\+Port)
+\item 
+void \hyperlink{class_power_sensor_v3_a1bf23a2cfa924933a5e265dc3a337ec4}{refresh\+\_\+\+Five\+Sec} ()
+\item 
+void \hyperlink{class_power_sensor_v3_ab86f05622f809b34c4af5587024377d1}{report} ()
+\item 
+char $\ast$ \hyperlink{class_power_sensor_v3_a17c2031435f3ada2c531c41cdf58c629}{get\+Power\+Text} (bool Include\+Units)
+\item 
+char $\ast$ \hyperlink{class_power_sensor_v3_a63517e9f76afef5ee7da103cc46abc84}{get\+Energy\+Text} (bool Include\+Units)
+\item 
+char $\ast$ \hyperlink{class_power_sensor_v3_a506c7292897607d7dd31d3ff3696806a}{get\+Voltage\+Text} (bool Include\+Units)
+\item 
+char $\ast$ \hyperlink{class_power_sensor_v3_afae9ea1a12d8b7fc3eb012b1c38d0639}{get\+Current\+Text} (bool Include\+Units)
+\item 
+char $\ast$ \hyperlink{class_power_sensor_v3_adc5ce409d7bf0b6dac4d65fa64619bdb}{get\+Frequency\+Text} (bool Include\+Units)
+\item 
+char $\ast$ \hyperlink{class_power_sensor_v3_a0799057ba96ffc74b372b88d94874d33}{get\+Power\+Factor\+Text} ()
+\item 
+\hyperlink{class_power_sensor_v3_a254a0502c2a42a5ccff07147a8a6ccfc}{Power\+Sensor\+V3} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\hyperlink{class_common_aeea91a726dbe988e515057b32ba0726f}{Name}, \hyperlink{class_module}{Module} $\ast$\hyperlink{class_power_sensor_v3_aa7a23932f754042ad07e654a408e8a52}{Parent}, Hardware\+Serial $\ast$Serial\+Port)
+\item 
+void \hyperlink{class_power_sensor_v3_a1bf23a2cfa924933a5e265dc3a337ec4}{refresh\+\_\+\+Five\+Sec} ()
+\item 
+void \hyperlink{class_power_sensor_v3_ab86f05622f809b34c4af5587024377d1}{report} ()
+\item 
+char $\ast$ \hyperlink{class_power_sensor_v3_a3516af361f006c1bc23541c8b837d26c}{get\+Power\+Text} (bool Include\+Units)
+\item 
+char $\ast$ \hyperlink{class_power_sensor_v3_aa2d8c1dc0dd771e56eea4644b1a1b204}{get\+Energy\+Text} (bool Include\+Units)
+\item 
+char $\ast$ \hyperlink{class_power_sensor_v3_acd023ce18fb9a3f1530c722eb0f34eb1}{get\+Voltage\+Text} (bool Include\+Units)
+\item 
+char $\ast$ \hyperlink{class_power_sensor_v3_ab80cfb01e2669aeb2a57eb27d814ad21}{get\+Current\+Text} (bool Include\+Units)
+\item 
+char $\ast$ \hyperlink{class_power_sensor_v3_aa3b90af786459745e6ec6d87d1ad80ad}{get\+Frequency\+Text} (bool Include\+Units)
+\item 
+char $\ast$ \hyperlink{class_power_sensor_v3_a30dbbeda8f4694994b31dd423fee414e}{get\+Power\+Factor\+Text} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_module}{Module} $\ast$ \hyperlink{class_power_sensor_v3_aa7a23932f754042ad07e654a408e8a52}{Parent}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 8 of file Power\+Sensor\+V3.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_power_sensor_v3_a254a0502c2a42a5ccff07147a8a6ccfc}\label{class_power_sensor_v3_a254a0502c2a42a5ccff07147a8a6ccfc}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{Power\+Sensor\+V3()}{PowerSensorV3()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Power\+Sensor\+V3\+::\+Power\+Sensor\+V3 (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{class_module}{Module} $\ast$}]{Parent,  }\item[{Hardware\+Serial $\ast$}]{Serial\+Port }\end{DoxyParamCaption})}
+
+
+
+Definition at line 3 of file Power\+Sensor\+V3.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_power_sensor_v3_a254a0502c2a42a5ccff07147a8a6ccfc_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_power_sensor_v3_a254a0502c2a42a5ccff07147a8a6ccfc}\label{class_power_sensor_v3_a254a0502c2a42a5ccff07147a8a6ccfc}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{Power\+Sensor\+V3()}{PowerSensorV3()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Power\+Sensor\+V3\+::\+Power\+Sensor\+V3 (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\hyperlink{class_module}{Module} $\ast$}]{Parent,  }\item[{Hardware\+Serial $\ast$}]{Serial\+Port }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_power_sensor_v3_afae9ea1a12d8b7fc3eb012b1c38d0639}\label{class_power_sensor_v3_afae9ea1a12d8b7fc3eb012b1c38d0639}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!get\+Current\+Text@{get\+Current\+Text}}
+\index{get\+Current\+Text@{get\+Current\+Text}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{get\+Current\+Text()}{getCurrentText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char $\ast$ Power\+Sensor\+V3\+::get\+Current\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+
+
+Definition at line 88 of file Power\+Sensor\+V3.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_power_sensor_v3_afae9ea1a12d8b7fc3eb012b1c38d0639_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_power_sensor_v3_ab80cfb01e2669aeb2a57eb27d814ad21}\label{class_power_sensor_v3_ab80cfb01e2669aeb2a57eb27d814ad21}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!get\+Current\+Text@{get\+Current\+Text}}
+\index{get\+Current\+Text@{get\+Current\+Text}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{get\+Current\+Text()}{getCurrentText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char$\ast$ Power\+Sensor\+V3\+::get\+Current\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_power_sensor_v3_aa2d8c1dc0dd771e56eea4644b1a1b204}\label{class_power_sensor_v3_aa2d8c1dc0dd771e56eea4644b1a1b204}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!get\+Energy\+Text@{get\+Energy\+Text}}
+\index{get\+Energy\+Text@{get\+Energy\+Text}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{get\+Energy\+Text()}{getEnergyText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char$\ast$ Power\+Sensor\+V3\+::get\+Energy\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_power_sensor_v3_a63517e9f76afef5ee7da103cc46abc84}\label{class_power_sensor_v3_a63517e9f76afef5ee7da103cc46abc84}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!get\+Energy\+Text@{get\+Energy\+Text}}
+\index{get\+Energy\+Text@{get\+Energy\+Text}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{get\+Energy\+Text()}{getEnergyText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char $\ast$ Power\+Sensor\+V3\+::get\+Energy\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+
+
+Definition at line 58 of file Power\+Sensor\+V3.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_power_sensor_v3_a63517e9f76afef5ee7da103cc46abc84_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_power_sensor_v3_adc5ce409d7bf0b6dac4d65fa64619bdb}\label{class_power_sensor_v3_adc5ce409d7bf0b6dac4d65fa64619bdb}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!get\+Frequency\+Text@{get\+Frequency\+Text}}
+\index{get\+Frequency\+Text@{get\+Frequency\+Text}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{get\+Frequency\+Text()}{getFrequencyText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char $\ast$ Power\+Sensor\+V3\+::get\+Frequency\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+
+
+Definition at line 103 of file Power\+Sensor\+V3.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_power_sensor_v3_adc5ce409d7bf0b6dac4d65fa64619bdb_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_power_sensor_v3_aa3b90af786459745e6ec6d87d1ad80ad}\label{class_power_sensor_v3_aa3b90af786459745e6ec6d87d1ad80ad}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!get\+Frequency\+Text@{get\+Frequency\+Text}}
+\index{get\+Frequency\+Text@{get\+Frequency\+Text}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{get\+Frequency\+Text()}{getFrequencyText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char$\ast$ Power\+Sensor\+V3\+::get\+Frequency\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_power_sensor_v3_a0799057ba96ffc74b372b88d94874d33}\label{class_power_sensor_v3_a0799057ba96ffc74b372b88d94874d33}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!get\+Power\+Factor\+Text@{get\+Power\+Factor\+Text}}
+\index{get\+Power\+Factor\+Text@{get\+Power\+Factor\+Text}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{get\+Power\+Factor\+Text()}{getPowerFactorText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char $\ast$ Power\+Sensor\+V3\+::get\+Power\+Factor\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 117 of file Power\+Sensor\+V3.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{class_power_sensor_v3_a0799057ba96ffc74b372b88d94874d33_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_power_sensor_v3_a0799057ba96ffc74b372b88d94874d33_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_power_sensor_v3_a30dbbeda8f4694994b31dd423fee414e}\label{class_power_sensor_v3_a30dbbeda8f4694994b31dd423fee414e}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!get\+Power\+Factor\+Text@{get\+Power\+Factor\+Text}}
+\index{get\+Power\+Factor\+Text@{get\+Power\+Factor\+Text}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{get\+Power\+Factor\+Text()}{getPowerFactorText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char$\ast$ Power\+Sensor\+V3\+::get\+Power\+Factor\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_power_sensor_v3_a17c2031435f3ada2c531c41cdf58c629}\label{class_power_sensor_v3_a17c2031435f3ada2c531c41cdf58c629}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!get\+Power\+Text@{get\+Power\+Text}}
+\index{get\+Power\+Text@{get\+Power\+Text}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{get\+Power\+Text()}{getPowerText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char $\ast$ Power\+Sensor\+V3\+::get\+Power\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+
+
+Definition at line 43 of file Power\+Sensor\+V3.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_power_sensor_v3_a17c2031435f3ada2c531c41cdf58c629_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_power_sensor_v3_a3516af361f006c1bc23541c8b837d26c}\label{class_power_sensor_v3_a3516af361f006c1bc23541c8b837d26c}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!get\+Power\+Text@{get\+Power\+Text}}
+\index{get\+Power\+Text@{get\+Power\+Text}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{get\+Power\+Text()}{getPowerText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char$\ast$ Power\+Sensor\+V3\+::get\+Power\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_power_sensor_v3_a506c7292897607d7dd31d3ff3696806a}\label{class_power_sensor_v3_a506c7292897607d7dd31d3ff3696806a}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!get\+Voltage\+Text@{get\+Voltage\+Text}}
+\index{get\+Voltage\+Text@{get\+Voltage\+Text}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{get\+Voltage\+Text()}{getVoltageText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char $\ast$ Power\+Sensor\+V3\+::get\+Voltage\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+
+
+Definition at line 73 of file Power\+Sensor\+V3.\+cpp.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_power_sensor_v3_a506c7292897607d7dd31d3ff3696806a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_power_sensor_v3_acd023ce18fb9a3f1530c722eb0f34eb1}\label{class_power_sensor_v3_acd023ce18fb9a3f1530c722eb0f34eb1}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!get\+Voltage\+Text@{get\+Voltage\+Text}}
+\index{get\+Voltage\+Text@{get\+Voltage\+Text}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{get\+Voltage\+Text()}{getVoltageText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char$\ast$ Power\+Sensor\+V3\+::get\+Voltage\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_power_sensor_v3_a1bf23a2cfa924933a5e265dc3a337ec4}\label{class_power_sensor_v3_a1bf23a2cfa924933a5e265dc3a337ec4}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!refresh\+\_\+\+Five\+Sec@{refresh\+\_\+\+Five\+Sec}}
+\index{refresh\+\_\+\+Five\+Sec@{refresh\+\_\+\+Five\+Sec}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Five\+Sec()}{refresh\_FiveSec()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Power\+Sensor\+V3\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}.
+
+\mbox{\Hypertarget{class_power_sensor_v3_a1bf23a2cfa924933a5e265dc3a337ec4}\label{class_power_sensor_v3_a1bf23a2cfa924933a5e265dc3a337ec4}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!refresh\+\_\+\+Five\+Sec@{refresh\+\_\+\+Five\+Sec}}
+\index{refresh\+\_\+\+Five\+Sec@{refresh\+\_\+\+Five\+Sec}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{refresh\+\_\+\+Five\+Sec()}{refresh\_FiveSec()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Power\+Sensor\+V3\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}.
+
+
+
+Definition at line 12 of file Power\+Sensor\+V3.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_power_sensor_v3_a1bf23a2cfa924933a5e265dc3a337ec4_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_power_sensor_v3_ab86f05622f809b34c4af5587024377d1}\label{class_power_sensor_v3_ab86f05622f809b34c4af5587024377d1}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!report@{report}}
+\index{report@{report}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Power\+Sensor\+V3\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a9e60e2c26a5f4d72342a59a969954636}{Common}.
+
+\mbox{\Hypertarget{class_power_sensor_v3_ab86f05622f809b34c4af5587024377d1}\label{class_power_sensor_v3_ab86f05622f809b34c4af5587024377d1}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!report@{report}}
+\index{report@{report}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Power\+Sensor\+V3\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \hyperlink{class_common_a9e60e2c26a5f4d72342a59a969954636}{Common}.
+
+
+
+Definition at line 24 of file Power\+Sensor\+V3.\+cpp.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_power_sensor_v3_ab86f05622f809b34c4af5587024377d1_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_power_sensor_v3_aa7a23932f754042ad07e654a408e8a52}\label{class_power_sensor_v3_aa7a23932f754042ad07e654a408e8a52}} 
+\index{Power\+Sensor\+V3@{Power\+Sensor\+V3}!Parent@{Parent}}
+\index{Parent@{Parent}!Power\+Sensor\+V3@{Power\+Sensor\+V3}}
+\subsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \hyperlink{class_module}{Module} $\ast$ Power\+Sensor\+V3\+::\+Parent\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 31 of file Power\+Sensor\+V3.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Components/\hyperlink{_hempy_module_2src_2_components_2_power_sensor_v3_8h}{Power\+Sensor\+V3.\+h}\item 
+/home/bit/\+Apps/\+Gbox420/\+Hempy\+Module/src/\+Components/\hyperlink{_hempy_module_2src_2_components_2_power_sensor_v3_8cpp}{Power\+Sensor\+V3.\+cpp}\end{DoxyCompactItemize}
