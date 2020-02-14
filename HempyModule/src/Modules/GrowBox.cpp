@@ -36,10 +36,10 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *Def
   PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &BoxSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
   WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
-  //Weight1 = new WeightSensor_Web(F("Weight1"), this, &BoxSettings->Weight1);
-  //Weight2 = new WeightSensor_Web(F("Weight2"), this, &BoxSettings->Weight2);
-  //ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
-  //ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
+  Weight1 = new WeightSensor_Web(F("Weight1"), this, &BoxSettings->Weight1);
+  Weight2 = new WeightSensor_Web(F("Weight2"), this, &BoxSettings->Weight2);
+  ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
+  ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
 
   addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
