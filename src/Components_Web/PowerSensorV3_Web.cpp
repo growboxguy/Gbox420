@@ -1,9 +1,13 @@
 #include "PowerSensorV3_Web.h"
 
-PowerSensorV3_Web::PowerSensorV3_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort) : PowerSensorV3(Name,Parent,SerialPort), Common_Web(Name)
+PowerSensorV3_Web::PowerSensorV3_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort) : PowerSensorV3(Name,Parent,SerialPort), Common(Name), Common_Web(Name)
 {
   this->Parent = Parent;
   this->Name = Name;
+  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_FiveSec(this); //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_FiveSec(this); //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   Parent->addToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
 }
 

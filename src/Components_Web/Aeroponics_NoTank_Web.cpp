@@ -1,9 +1,11 @@
 #include "Aeroponics_NoTank_Web.h"
 
-Aeroponics_NoTank_Web::Aeroponics_NoTank_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics_NoTank(Name, Parent, DefaultSettings,NoTankSpecificSettings, FeedbackPressureSensor), Common_Web(Name)
+Aeroponics_NoTank_Web::Aeroponics_NoTank_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics_NoTank(Name, Parent, DefaultSettings,NoTankSpecificSettings, FeedbackPressureSensor), Common(Name), Common_Web(Name)
 {
   this->Parent = Parent;
   this->Name = Name;
+  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Sec(this);     //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
   Parent->addToWebsiteQueue_Load(this);    //Subscribing to the Website load event: Calls the websiteEvent_Load() method
   Parent->addToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   Parent->addToWebsiteQueue_Button(this);  //Subscribing to the Website button press event: Calls the websiteEvent_Button() method

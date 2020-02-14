@@ -1,9 +1,11 @@
 #include "Lights_Web.h"
 
-Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightsSettings *DefaultSettings) : Lights(Name,Parent,DefaultSettings), Common_Web(Name)
+Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightsSettings *DefaultSettings) : Lights(Name,Parent,DefaultSettings), Common(Name), Common_Web(Name)
 {
   this->Parent = Parent;
   this->Name = Name;
+  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   Parent->addToWebsiteQueue_Load(this);    //Subscribing to the Website load event: Calls the websiteEvent_Load() method
   Parent->addToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   Parent->addToWebsiteQueue_Field(this);   //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method

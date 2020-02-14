@@ -1,9 +1,11 @@
 #include "PressureSensor_Web.h"
 
-PressureSensor_Web::PressureSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PressureSensorSettings *DefaultSettings) : PressureSensor(Name,Parent,DefaultSettings), Common_Web(Name)
+PressureSensor_Web::PressureSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PressureSensorSettings *DefaultSettings) : PressureSensor(Name,Parent,DefaultSettings), Common(Name), Common_Web(Name)
 {
   this->Parent = Parent;
   this->Name = Name; 
+  Parent->addToReportQueue(this);         //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Minute(this); //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   Parent->addToWebsiteQueue_Load(this);   //Subscribing to the Website load event: Calls the websiteEvent_Load() method
   Parent->addToWebsiteQueue_Button(this); //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
   Parent->addToWebsiteQueue_Field(this);  //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method  
