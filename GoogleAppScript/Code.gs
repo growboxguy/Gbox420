@@ -73,18 +73,18 @@ function UpdateSettings(Settings){
 //Test functions with fake data for running specific steps of the data processing
 
 function ProcessLog_Fake(){  //For testing only: Pass a properly formated JSON to processing
-  var FakeData = {"InternalTemp":"22.10","ExternalTemp":"22.62","InternalHumidity":"43.41","ExternalHumidity":"41.52","InternalFan":"0","ExhaustFan":"0","Light1_Status":"0","Light1_Brightness":"25","LightReading":"-296","Dark":"1","WaterLevel":"0","WaterTemp":"18.35","PH":"5.37","Pressure":"0.12","Power":"0.00","Energy":"391.58","Voltage":"222.40","Current":"0.00","Light1_Timer":"1","Light1_OnTime":"19:26","Light1_OffTime":"19:28","AeroInterval":"15","AeroDuration":"2"};
+  var FakeData = {"InternalTemp":"22.10","ExternalTemp":"22.62","InternalHumidity":"43.41","ExternalHumidity":"41.52","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"25","LightReading":"-296","Dark":"1","WaterLevel":"0","WaterTemp":"18.35","PH":"5.37","Pressure":"0.12","Power":"0.00","Energy":"391.58","Voltage":"222.40","Current":"0.00","Lt1_Timer":"1","Lt1_OnTime":"19:26","Lt1_OffTime":"19:28","AeroInterval":"15","AeroDuration":"2"};
   FakeData.replace
   ProcessLog(FakeData);
 }
 
 function UpdateAlerts_Fake(){  //For testing only: Pass a properly formated JSON to processing
-  var FakeData = {"InternalTemp":"19.80","ExternalTemp":"22.50","InternalHumidity":"46.50","ExternalHumidity":"47.20","InternalFan":"1","ExhaustFan":"0","Light1_Status":"1","Light1_Brightness":"95","LightReading":"95.00","Dark":"0","WaterLevel":"3","WaterTemp":"20.06","PH":"5.96","Pressure":"6.73","Power":"445.00","Energy":"10.00","Voltage":"230","Current":"1.80","Frequency":"-1.00","PowerFactor":"1.00","Light1_Timer":"1","Light1_OnTime":"04:20","Light1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"};
+  var FakeData = {"InternalTemp":"19.80","ExternalTemp":"22.50","InternalHumidity":"46.50","ExternalHumidity":"47.20","InternalFan":"1","ExhaustFan":"0","Lt1_Status":"1","Lt1_Brightness":"95","LightReading":"95.00","Dark":"0","WaterLevel":"3","WaterTemp":"20.06","PH":"5.96","Pressure":"6.73","Power":"445.00","Energy":"10.00","Voltage":"230","Current":"1.80","Frequency":"-1.00","PowerFactor":"1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"};
   UpdateAlerts(FakeData);
 }
 
 function CheckAlerts_Fake(){  //For testing only: Pass a properly formated JSON to processing
-  var FakeData = {"InternalTemp":"19.80","ExternalTemp":"22.50","InternalHumidity":"46.50","ExternalHumidity":"47.20","InternalFan":"1","ExhaustFan":"0","Light1_Status":"1","Light1_Brightness":"95","LightReading":"95.00","Dark":"0","WaterLevel":"3","WaterTemp":"20.06","PH":"5.96","Pressure":"6.73","Power":"445.00","Energy":"10.00","Voltage":"230","Current":"1.80","Frequency":"-1.00","PowerFactor":"1.00","Light1_Timer":"1","Light1_OnTime":"04:20","Light1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"};
+  var FakeData = {"InternalTemp":"19.80","ExternalTemp":"22.50","InternalHumidity":"46.50","ExternalHumidity":"47.20","InternalFan":"1","ExhaustFan":"0","Lt1_Status":"1","Lt1_Brightness":"95","LightReading":"95.00","Dark":"0","WaterLevel":"3","WaterTemp":"20.06","PH":"5.96","Pressure":"6.73","Power":"445.00","Energy":"10.00","Voltage":"230","Current":"1.80","Frequency":"-1.00","PowerFactor":"1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"};
   CheckAlerts(FakeData);
 }
 
@@ -172,7 +172,7 @@ function UpdateCharts(){
   .addRange(logSheet.getRange(1,headers.createTextFinder("LogDate").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
   .addRange(logSheet.getRange(1,headers.createTextFinder("Power").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
   .addRange(logSheet.getRange(1,headers.createTextFinder("Energy").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
-  .addRange(logSheet.getRange(1,headers.createTextFinder("Light1_Brightness").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
+  .addRange(logSheet.getRange(1,headers.createTextFinder("Lt1_Brightness").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
   .build();
   chartsSheet.updateChart(powerUsageChart_updated);
   
@@ -182,7 +182,7 @@ function UpdateCharts(){
   .clearRanges()
   .addRange(logSheet.getRange(1,headers.createTextFinder("LogDate").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
   .addRange(logSheet.getRange(1,headers.createTextFinder("PH").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
-  .addRange(logSheet.getRange(1,headers.createTextFinder("Light1_Status").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
+  .addRange(logSheet.getRange(1,headers.createTextFinder("Lt1_Status").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
   .addRange(logSheet.getRange(1,headers.createTextFinder("WaterLevel").matchEntireCell(true).findNext().getColumn(),logSheet.getLastRow(),1))
   .build();
   chartsSheet.updateChart(phAndLightStatusChart_updated);
