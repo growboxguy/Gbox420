@@ -23,8 +23,8 @@ extern char CurrentTime[MaxTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
 extern Settings * BoxSettings;
-extern bool *DebugEnabled;
-extern bool *MetricSystemEnabled;
+extern bool *Debug;
+extern bool *Metric;
 
 //Class specific variables
 time_t getNtpTime();

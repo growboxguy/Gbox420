@@ -2,6 +2,7 @@ echo "This script is for developement only"
 echo "------------------------------------"
 echo "Removing mounting point for Modules"
 sudo umount ./src/Modules
+sudo umount ./src/Components
 
 echo "Removing hard links"
 unlink ./src/Helpers.cpp

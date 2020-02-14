@@ -82,8 +82,8 @@ float convertBetweenTempUnits(float Value)
   logToSerials(F("DEBUG: "), false, 0);
   logToSerials(Value, true, 0);
   logToSerials(F("DEBUG: "), false, 0);
-  logToSerials(*MetricSystemEnabled, true, 0);
-  if (*MetricSystemEnabled)
+  logToSerials(*Metric, true, 0);
+  if (*Metric)
     return round((Value - 32) * 55.555555) / 100.0;
   else
     return round(Value * 180 + 3200.0) / 100.0f;
@@ -91,7 +91,7 @@ float convertBetweenTempUnits(float Value)
 
 float convertBetweenPressureUnits(float Value)
 {
-  if (*MetricSystemEnabled)
+  if (*Metric)
     return round(Value / 0.145038) / 100.0;
   else
     return round(Value * 1450.38) / 100.0f;
@@ -172,7 +172,7 @@ char *tempToText(float Temp)
 {
   static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same variable
   dtostrf(Temp, 4, 2, ReturnChar);
-  if (*MetricSystemEnabled)
+  if (*Metric)
   {
     strcat_P(ReturnChar, (PGM_P)F("°C"));
   }
@@ -187,7 +187,7 @@ char *pressureToText(float Pressure)
 {
   static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same ReturnChar variable
   dtostrf(Pressure, 4, 2, ReturnChar);
-  if (*MetricSystemEnabled)
+  if (*Metric)
   {
     strcat_P(ReturnChar, (PGM_P)F("bar"));
   }
@@ -202,7 +202,7 @@ char *weightToText(float Weight)
 {
   static char ReturnChar[MaxTextLength] = ""; //each call will overwrite the same ReturnChar variable
   dtostrf(Weight, 4, 2, ReturnChar);
-  if (*MetricSystemEnabled)
+  if (*Metric)
   {
     strcat_P(ReturnChar, (PGM_P)F("kg"));
   }
