@@ -83,9 +83,9 @@
 					title="Restore settings to sketch defaults">Restore defaults</button>
 				<form><label><input type="checkbox" name="Sound1_Enabled">Sound enabled </label><input type="submit"
 						value="Set"></form>
-				<form><label><input type="checkbox" name="GBox1_DebugEnabled" title="Debug entres on Serial log">Debug
+				<form><label><input type="checkbox" name="GBox1_Debug" title="Debug entres on Serial log">Debug
 						enabled </label><input type="submit" value="Set"></form>
-				<form><label><input type="checkbox" name="GBox1_MetricSystemEnabled"
+				<form><label><input type="checkbox" name="GBox1_Metric"
 							title="Use imperial units(F,PSI) or metric (C,bar)">Metric units </label><input
 						type="submit" value="Set"></form>
 			</div>
@@ -98,11 +98,11 @@
 					Intercept:<input style="width: 80px;" name="PHSensor1_Intercept" type="text" />
 					<input type="submit" value="Set">
 				</form>
-				<b>Pressure sensor </b><button id="Pressure1_ReadOffset" type="button" style="margin-top:0px"
+				<b>Pressure sensor </b><button id="Pres1_Offset" type="button" style="margin-top:0px"
 					title="Use only when the tank is not pressurized!">Read offset</button>
 				<form>
-					Offset:<input style="width: 80px;" name="Pressure1_Offset" type="text" />
-					Ratio: <input style="width: 80px;" title="Voltage to pressure ratio" name="Pressure1_Ratio"
+					Offset:<input style="width: 80px;" name="Pres1_Offset" type="text" />
+					Ratio: <input style="width: 80px;" title="Voltage to pressure ratio" name="Pres1_Ratio"
 						type="text" />
 					<input type="submit" value="Set">
 				</form>
@@ -144,20 +144,20 @@
 			<div class="card" style="width:90%">
 				<h1>Reporting</h1>
 				<!--<form><label><input type="checkbox" name="GBox1_MqttEnabled">MQTT </label><input type="submit" value="Set"> <button id="btn_Mqtt" type="button" style="margin-top:0px">Trigger</button></form>-->
-				<form><label><input type="checkbox" name="GBox1_SheetsEnabled">Google Sheets, every <input
-							style="width: 55px;" min=15 max=1440 step=15 name="GBox1_SheetsFrequency" type="number" />
+				<form><label><input type="checkbox" name="GBox1_Sheets">Google Sheets, every <input
+							style="width: 55px;" min=15 max=1440 step=15 name="GBox1_SheetsF" type="number" />
 						min </label><input type="submit" value="Set"></form>
 				<form>RelayID:<input type="text" name="GBox1_PushingBoxLogRelayID" style="width: 150px;"
 						title="DeviceID of the PushingBox logging scenario" /><input type="submit" value="Set"></form>
 			</div>
 			<div class="card" style="width:90%">
 				<h1><span id="Time"></span></h1>
-				<ul id="list_SerialLog"></ul>
+				<ul id="Log"></ul>
 				<button id="GBox1_Refresh" type="button" style="margin-top:0px"
 					title="Update sensor readings and report to console and Sheets">Refresh</button>
-				<button id="GBox1_ReportTrigger" type="button" style="margin-top:0px"
+				<button id="GBox1_SerialRep" type="button" style="margin-top:0px"
 					title="Report current status to Serial (ESP and Arduino)">Report to console</button>
-				<button id="GBox1_SheetsTrigger" type="button" style="margin-top:0px"
+				<button id="GBox1_SheetsRep" type="button" style="margin-top:0px"
 					title="Report current status to Google Sheets">Report to Sheets</button>
 			</div>
 		</div>
@@ -165,10 +165,10 @@
 </div>
 <!-- Footer -->
 <div>
-	<div><a target="_blank" href="https://sites.google.com/site/growboxguy/" width="96" height="96"
+		<div><a target="_blank" href="https://sites.google.com/site/growboxguy/" width="48" height="48"
 			style="display:inline"><img
 				src="https://lh3.googleusercontent.com/GAoRKaB09BobBln1BQgRHL0qmbfyTmnMn6_6JBmCVZ3gvUuCOzhRep7HkBYL4_bWqa5Vk70W7dgq_t5vgwisNYon5yXiM0hbBoUauYdnv9ujxtkVrn5hB4SXhT2X-nWb7BS4Bo_-fL-Pj2TLdzMcbJN4597KkEvYGrqv6CtPy_wf06wc9t1WN2jL5lbhWHdvkleKIU6Hpp1AXPjOI_3c9lY0jpIdEtcjbOZ3fYIgrEvm1HO7JrAbyllYIgpSpZlMr6uUQh2h6PuA9tDSb8-V3NmMuvRtOQi5qfH6rJKrOBv5oNN4_t-C-V3BLKjXqx82oAmP65RAnH1Y3EXG8FbuEsQvqYcWiEp9iaNeuYbjokQoVM8h61Gh1cPr717j0D1GjEYhYzba32UvVZ3iXiVr1zmonOw810HP5oTWhc-o0mNdW211dhs80tvOyaggxKGX_I7r5kcak9nK7PSP3ppAi-wjrsqhW0UBiRvsyHwpHRfIu-A0lbnQ4ukwWiw28dnBPQMZUu8rLAXVNRnBjoAPU5udjLwyCUyCeU6YjUlC9TTe7QpbTZCrVueTaytD3GOqtP2dKg2wZse3CCGPrnNq2vg5DpRV4Qb0sOBv8oyJzKfdWLCMgYJYTw9rpYg6Y3zgUjJWqmLdX3upj8an069FddUa33Sgb6YhQe6NSz1sdW7cq_-8zYosD0RmeavL4t3sfpNDXw95OOmQJ0LEFKRZSa3PBApRvl2GIOpNmLI2Li_QSw-y=s671-no"
-				width="96" height="96" style="display:inline"></a>
+				width="48" height="48" style="display:inline"></a>
 		<a target="_blank" href="https://www.patreon.com/growboxguy"><img width="48" height="48"
 				src="https://lh3.googleusercontent.com/GHPlhe8VfY4Bwtg0xPO2Z0vdj1QjcInJd8pSQlZHVNmcEry7a44A8c9n4vJENgvMfwfqiuSF5-r8Jt324yv1LbDqJ70KtNvuH1LoRdnB03zqYryHgyazXlNNcXEric6bc6L2oDBFgkgaf5dDMw-yN1bpwUH2LBxXsRCNcRxFIv3X0RPMYpVVGpNxss1nHn4kXa1q_pHEY2DuX0cZa5UWsUTAJ0Sywxg4UOgeBF-W1ZZULQcJz-mLp3WHEQY7uKLyYW31IElYZgV0jVBFeOdBG_w6gb1WPegvAbF-GiNVdd1Bxr9pqU6B2B34mKVFVamCzhs49XfDpKFr80euXu31na0A5opoYt5pyiChodO-5RCTP6b6FLv1tikkEf2eV22nXxo0JAz3zZcfq4FnF8VLcnh5mKUJ5cHvluSjSYYztooej6YrHeTTSXIxTtJqLp-2shRKQCEAFYzxIvmkTPB4_tWFQStGqzyG4IbH8mPU68BoMtlkfXCLv3o-_vAp86OZXyM4x1VxFHaaGXBtuHVuSbKMJMXoCVulSgnLzfI_t0o1KUTnL4NppO7IcP1fddVruJCdZkALn6Hzs8kN7DzwtfgXmBJmOkGCRsUZmoTHBO7pKHsYEA4XX9GrWFUOqjRIPyxH_z6dPWhFuSowl97T5kQHSwiHQ6x8cOgiMEtS2zEcRVVjdI0eLPYvJrhRiFj72L5KxXAYpuDWV2k7o5fwmHZTv9eYXbva3h5UlbKqeqYSvI9-=s64-no"
 				style="border:none;margin:0;padding:0px"></a>

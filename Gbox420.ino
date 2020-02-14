@@ -10,6 +10,8 @@
 //Move metric/imperial selection to Settings.h, remove it from the Settings Webpage
 //Wireless module, mini Gbox420 on Ardino Nano V3, with  for sensor boxes
 //Light sensor is not linear, need a better way to estimate brightness percentage. Readings[10] and calibrate to every 10% , lookup closest 2 calibration rating (TopRange,BottomRange) and do a mapping between them?
+//Replace Growbox constructor parameter to a more generic Module_Web
+//Split WaterLevelSensor class to a single sensor and a row of sensors (WaterLevelRow)
 
 #include "Arduino.h"
 #include "avr/wdt.h"                //Watchdog timer for detecting a crash and automatically resetting the board
@@ -21,9 +23,9 @@
 #include "ELClientRest.h"           //ESP-link - REST API
 #include "Thread.h"                 //Splitting functions to threads for timing
 #include "StaticThreadController.h" //Grouping threads
-#include "src/Modules/420Common.h"              //Base class where all components inherits from
+#include "src/Components_Web/420Common_Web.h"              //Base class where all components inherits from
 #include "src/Settings.h"
-#include "src/GrowBox.h"                //Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
+#include "src/Modules/GrowBox.h"                //Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  //temp storage for assembling long messages (REST API, MQTT API)
@@ -38,8 +40,8 @@ ELClientWebServer WebServer(&ESPLink);    //ESP-link WebServer API
 ELClientCmd ESPCmd(&ESPLink);             //ESP-link - Helps getting the current time from the internet using NTP
 ELClientRest PushingBoxRestAPI(&ESPLink); //ESP-link REST API
 Settings * BoxSettings;                //This object will store the settings loaded from the EEPROM. Persistent between reboots.
-bool *DebugEnabled;
-bool *MetricSystemEnabled;
+bool *Debug;
+bool *Metric;
 GrowBox *GBox;                            //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 //Thread initialization
@@ -60,8 +62,8 @@ void setup()
   boot_rww_enable();                                   //fix watchdog not loading sketch after a reset error on Mega2560
 
   BoxSettings = loadSettings();
-  DebugEnabled = &BoxSettings ->  DebugEnabled;
-  MetricSystemEnabled = &BoxSettings ->  MetricSystemEnabled;
+  Debug = &BoxSettings ->  Debug;
+  Metric = &BoxSettings ->  Metric;
 
   ESPLink.resetCb = &resetWebServer; //Callback subscription: What to do when WiFi reconnects
   resetWebServer();                  //reset the WebServer
