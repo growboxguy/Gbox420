@@ -25,13 +25,13 @@ typedef struct
   bool Metric = true;   //Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
   char PushingBoxLogRelayID[MaxTextLength] = {"v755877CF53383E1"};   //UPDATE THIS DeviceID of the PushingBox logging scenario 
 
-  struct GrowBoxSettings{
-    GrowBoxSettings(bool ReportToGoogleSheets, int SheetsReportingFrequency) : ReportToGoogleSheets(ReportToGoogleSheets) , SheetsReportingFrequency(SheetsReportingFrequency) {} 
+  struct GrowModuleSettings{
+    GrowModuleSettings(bool ReportToGoogleSheets, int SheetsReportingFrequency) : ReportToGoogleSheets(ReportToGoogleSheets) , SheetsReportingFrequency(SheetsReportingFrequency) {} 
     bool ReportToGoogleSheets;  //Enable/disable reporting sensor readings to Google Sheets
     int SheetsReportingFrequency; //How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
     //bool ReportToMqtt = true;    //Controls reporting sensor readings to an MQTT broker
   };
-  struct GrowBoxSettings Gbox1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30};
+  struct GrowModuleSettings Gbox1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30};
 
   struct DHTSensorSettings
   { //initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers

@@ -29,7 +29,7 @@ extern ELClientRest PushingBoxRestAPI;
 class GrowBox : public Common_Web, public Module_Web
 {
 public:
-  GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings); //constructor
+  GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings); //constructor
   Sound_Web *Sound1;             //Pointer to a Piezo speaker - sound feedback
   Fan_Web *IFan;                //Internal fan
   Fan_Web *EFan;                //Exhaust fan

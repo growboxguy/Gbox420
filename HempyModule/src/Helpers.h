@@ -23,7 +23,7 @@ extern GrowBox *GBox;
 extern char CurrentTime[MaxTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
-extern Settings * BoxSettings;
+extern Settings * ModuleSettings;
 extern bool *Debug;
 extern bool *Metric;
 

@@ -92,9 +92,9 @@ char *Fan::fanSpeedToNumber()
     return (char *)"1";
 }
 
-// WebServer.setArgBoolean(F("AutoIFan"),GBox -> BoxSettings -> AutomaticIFan);
-// WebServer.setArgString(F("IFanSwitchTemp"), toText(GBox -> BoxSettings -> IFanSwitchTemp));
-// WebServer.setArgBoolean(F("AutoEFan"), GBox -> BoxSettings -> AutomaticEFan);
-// WebServer.setArgString(F("EFanHighHumid"), toText(GBox -> BoxSettings -> EFanHighHumid));
-// WebServer.setArgString(F("EFanLowHumid"), toText(GBox -> BoxSettings -> EFanLowHumid));
-// WebServer.setArgString(F("EFanOffHumid"), toText(GBox -> BoxSettings -> EFanOffHumid));
+// WebServer.setArgBoolean(F("AutoIFan"),GBox -> ModuleSettings -> AutomaticIFan);
+// WebServer.setArgString(F("IFanSwitchTemp"), toText(GBox -> ModuleSettings -> IFanSwitchTemp));
+// WebServer.setArgBoolean(F("AutoEFan"), GBox -> ModuleSettings -> AutomaticEFan);
+// WebServer.setArgString(F("EFanHighHumid"), toText(GBox -> ModuleSettings -> EFanHighHumid));
+// WebServer.setArgString(F("EFanLowHumid"), toText(GBox -> ModuleSettings -> EFanLowHumid));
+// WebServer.setArgString(F("EFanOffHumid"), toText(GBox -> ModuleSettings -> EFanOffHumid));

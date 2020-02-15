@@ -17,7 +17,7 @@ void PHSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
   if (strncmp(url, "/S",2) == 0)
   {
     //WebServer.setArgString(F("PHAlertLow"), toText(GBox -> Reservoir -> PHAlertLow));
-    //WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> BoxSettings -> PHAlertHigh));
+    //WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> ModuleSettings -> PHAlertHigh));
     WebServer.setArgString(getComponentName(F("Slope")), toPrecisionText(*Slope));
     WebServer.setArgString(getComponentName(F("Intercept")), toPrecisionText(*Intercept));
   }

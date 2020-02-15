@@ -18,21 +18,32 @@ char CurrentTime[MaxTextLength] = "";      //buffer for storing current time in 
 
 //Component initialization
 HardwareSerial &ArduinoSerial = Serial;   //Reference to the Arduino Serial
+Settings * ModuleSettings;                //This object will store the settings loaded from the EEPROM. Persistent between reboots.
+bool *Debug;
+bool *Metric;
+//GrowBox *GBox;                            //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 //Thread initialization
 Thread OneSecThread = Thread();
 Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
-StaticThreadController<3> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread);
+Thread QuarterHourThread = Thread();
+StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread, &QuarterHourThread);
+
 
 void setup()
 {                                                      // put your setup code here, to run once:
-  Serial.begin(115200);                         //2560mega console output
+  Serial.begin(115200);                         //Nano console output
   pinMode(13, OUTPUT);                                 //onboard LED - Heartbeat every second to confirm code is running
   logToSerials(F(""), true, 0);                         //New line
-  Serial.println("Gbox420 Nano initializing..."); //logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
+  logToSerials(F("Arduino Mega initializing..."), true, 0); //logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                 //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                   //fix watchdog not loading sketch after a reset error on Mega2560
+
+  //Loading settings from EEPROM
+  ModuleSettings = loadSettings();
+  Debug = &ModuleSettings ->  Debug;
+  Metric = &ModuleSettings ->  Metric;
 
  // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.setInterval(1000);
@@ -41,12 +52,14 @@ void setup()
   FiveSecThread.onRun(runFiveSec);
   MinuteThread.setInterval(60000);
   MinuteThread.onRun(runMinute);
+  QuarterHourThread.setInterval(900000);
+  QuarterHourThread.onRun(runQuarterHour);
  
-  //Create the GrowBox object
+  //Create the Hempy bucket object
   //GBox = new GrowBox(F("GBox1"), loadSettings()); //This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   //  sendEmailAlert(F("Grow%20box%20(re)started"));
-  Serial.println("Setup ready, starting loops:");
+  logToSerials(F("Setup ready, starting loops:"), true, 0);
 }
 
 void loop()
@@ -54,17 +67,12 @@ void loop()
   ThreadControl.run(); //loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
 }
 
-void processTimeCriticalStuff()
-{
-
-}
-
 //////////////////////////////////////////
 //Threads
 
 void runSec()
 {
-  // HeartBeat();    //Blinks built-in led
+  HeartBeat();    //Blinks built-in led
   //GBox->runSec(); //Calls the runSec() method in GrowBox.cpp
   Serial.println("sec");
 }
@@ -79,6 +87,12 @@ void runMinute()
 {
   //GBox->runMinute();
     Serial.println("min");
+}
+
+void runQuarterHour()
+{
+  wdt_reset();
+  //GBox->runQuarterHour();
 }
 
 void HeartBeat()
