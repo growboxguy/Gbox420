@@ -21,6 +21,7 @@ We build an Arduino based grow box monitoring and controlling system out of an o
 </div>
 
 <h2>Assembly guide: https://sites.google.com/site/growboxguy/arduino</h2>
+<h2>Doxygen automatic documentation: https://growboxguy.github.io/Gbox420/inherits.html</h2>
 </div>
 
 ![alt text](https://docs.google.com/drawings/d/saJcW0ASTVO8vFDMZu1nxyQ/image?w=896&h=417&rev=986&ac=1&parent=13WdrW3qaUhXpjld2XEMji3r6EkQRwYiImda7D3szmkA)
