@@ -13,7 +13,7 @@ char ShortMessage[MaxShotTextLength] = ""; //temp storage for assembling short m
 char CurrentTime[MaxTextLength] = "";      //buffer for storing current time in text
 
 //Component initialization
-HardwareSerial &ArduinoSerial = Serial;   //Reference to the Arduino Serial
+//HardwareSerial &ArduinoSerial = Serial;   //Reference to the Arduino Serial
 
 //Thread initialization
 Thread OneSecThread = Thread();

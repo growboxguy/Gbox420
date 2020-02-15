@@ -9,9 +9,7 @@
 <a href="mailto:GrowBoxGuy@gmail.com"><img width="48" height="48" src="https://lh3.googleusercontent.com/5ZNZaVhanhR6XGvxz_7A9Fr5JU8QtaAgMLWZJX41U7UxSgR4u2pR0TNjR0K2Ntv-Bad_jndUaDW65695nIy4lpMDAa4ssEJ6EX24Qp4BQXv1dYKRp84udEAt7G-UC8yZr054mNNyvCKq0hpnm0KDIJ-bDRBRxfK6DtqnI2YxG7N1PYniKXhsJYUlQSvGPwhRphoS_St9yrLDqIg8sYPGoIoLqXBfgHW5f4oYBa3OMIhKKwzB4bMYH1JgD_HfLiGwXSuR1qvqSRj9b-qjdmgVa_uNRH-wlIJcQ4QsSF2CAknddJtwURm64mNwlodvnSFkpnvimWbHUoQMM77GP48xdGygIr0jBJgbyYsQOvUcJDUF_Un_tWNkF-x2W9Gw-KXxHFAPP7fuczenGsQL2gmNCAR15R2JLJwt1CTpwfgBhbzTYoyW00PpLfkTWrfowSkFXnVuvhMa9ADsYZzq1uvp_Wz6KWrEa1iOi7CbRtFNY3Sg01maUeArYDd_DM0xFG3q43V9vKb0Bld3U7nyDoZ_R9hGfiQ8ZdD8BhXNoberDuuTl-SPRFrUeKjmFmtPuP7WdidQb6Gw5nFElBvBMCZX1kjplIluK8Y5VffxHBZRCrYTRyVyolvcNlpQtVWdOW-jxSjVP0qRrpARJIGjjU1KUUeVIxBEFUxefbP3UhOr2FvUGNh5BeIJVi5rCuaImxp1lL2zy2Mf4z9fZoVMp-ukaJMsiRQ1ACzJn89b-QybW67whYw2=s64-no" style="border:none;margin:0;padding:0px"></a>
 </div><br>
 <div style="display:inline!important">
-<b style="font-size:16px">
-<font color="#444444">&nbsp;Project made by </font>
-<font color="#00ab44">GrowBoxGuy</font><br>		
+<b style="font-size:16px">Project made by GrowBoxGuy</font><br>		
 &nbsp;<a href="http://sites.google.com/site/growboxguy/">sites.google.com/site/growboxguy/</a>
 </b>
 </div><br>
@@ -21,7 +19,7 @@ We build an Arduino based grow box monitoring and controlling system out of an o
 </div>
 
 <h2>Assembly guide: https://sites.google.com/site/growboxguy/arduino</h2>
-<h2>Doxygen automatic documentation: https://growboxguy.github.io/Gbox420/inherits.html</h2>
+<h2>Doxygen documentation: https://growboxguy.github.io/Gbox420/classCommon.html</h2>
 </div>
 
 ![alt text](https://docs.google.com/drawings/d/saJcW0ASTVO8vFDMZu1nxyQ/image?w=896&h=417&rev=986&ac=1&parent=13WdrW3qaUhXpjld2XEMji3r6EkQRwYiImda7D3szmkA)
