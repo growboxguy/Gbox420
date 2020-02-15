@@ -15,12 +15,12 @@ class WaterTempSensor;
 class WaterLevelSensor;
 class WeightSensor;
 
-class HempyModule : public Common, public Module
+class HempyModule : virtual public Common, virtual public Module
 {
 public:
   HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings); //constructor
   Sound *Sound1;             //Pointer to a Piezo speaker - sound feedback
-  DHTSensor *IDHT;          //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
+  DHTSensor *DHT1;          //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   //DHTSensor *EDHT;          //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
   //PHSensor *PHSensor1;
   //WaterTempSensor *WaterTemp1;

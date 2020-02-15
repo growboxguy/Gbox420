@@ -7,8 +7,7 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
 { //Constructor
   this->Name = Name;
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); //Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (byte *)(((byte *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
-  IDHT = new DHTSensor(F("IDHT"), this, &ModuleSettings->IDHT);
-  //EDHT = new DHTSensor(F("EDHT"), this, &ModuleSettings->EDHT);
+  DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
   //PHSensor1 = new PHSensor(F("PHSensor1"), this, &ModuleSettings->PHSensor1);
   //WaterTemp1 = new WaterTempSensor(F("WaterTemp1"), this, &ModuleSettings->WaterTemp1);
   //WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
@@ -76,8 +75,7 @@ void HempyModule::setMetric(bool MetricEnabled)
     *Metric = MetricEnabled;
     //ModuleSettings -> IFanSwitchTemp = convertBetweenTempUnits(ModuleSettings -> IFanSwitchTemp);
     //Pres1->Pressure->resetAverage();
-    IDHT->Temp->resetAverage();
-    //EDHT->Temp->resetAverage();
+    DHT1->Temp->resetAverage();
    // WaterTemp1->Temp->resetAverage();
     RefreshAllRequested = true;
   }

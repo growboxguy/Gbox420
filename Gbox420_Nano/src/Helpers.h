@@ -7,16 +7,12 @@
 #include "TimeLib.h"           //Keeping track of time
 #include "MemoryFree.h"        //checking remaining memory - only for debugging
 #include "avr/wdt.h"           //Watchdog timer
-#include "ELClient.h"          //ESP-link
-#include "ELClientWebServer.h" //ESP-link - WebServer API
-#include "ELClientCmd.h"       //ESP-link - Get current time from the internet using NTP
 #include "../SerialLog.h"
 #include "../Settings.h"       //for storing/reading defaults
 #include "RollingAverage.h" //for smoothing sensor readings, average of last readings
 
 //Forward declaration
 class GrowBox;
-extern ELClientCmd ESPCmd;
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;
 extern GrowBox *GBox;
@@ -28,7 +24,6 @@ extern bool *Debug;
 extern bool *Metric;
 
 //Class specific variables
-time_t getNtpTime();
 void getFreeMemory();
 float convertBetweenTempUnits(float);
 float convertBetweenPressureUnits(float);

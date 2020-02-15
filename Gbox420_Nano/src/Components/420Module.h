@@ -1,10 +1,8 @@
 #pragma once
 
-#include "Arduino.h"     //every inheriting class have Arduino commands available
+#include "420Common.h"
 #include "../../Settings.h"
 #include "../Helpers.h"
-#include "420Common.h"
-
 
 //This class is the parent of all physical modules, like the Main / Hempy Bucket / Aeroponics / Environment module
 //Responsible for creating and
