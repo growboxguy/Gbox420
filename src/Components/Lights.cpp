@@ -6,7 +6,7 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
   this->Parent = Parent;
   RelayPin = &DefaultSettings->RelayPin;
   DimmingPin = &DefaultSettings->DimmingPin;
-  DimmingLimit = &DefaultSettings->DimmingLimit; //Blocks dimming below a certain percentage (default 8%), Most LED drivers cannot fully dim, check the specification and adjust accordingly, only set 0 if it supports dimming fully! (Usually not the case..)
+  DimmingLimit = &DefaultSettings->DimmingLimit; ///Blocks dimming below a certain percentage (default 8%), Most LED drivers cannot fully dim, check the specification and adjust accordingly, only set 0 if it supports dimming fully! (Usually not the case..)
   Status = &DefaultSettings->Status;
   Brightness = &DefaultSettings->Brightness;
   TimerEnabled = &DefaultSettings->TimerEnabled;
@@ -15,15 +15,15 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
   OffHour = &DefaultSettings->OffHour;
   OffMinute = &DefaultSettings->OffMinute;
   pinMode(*RelayPin, OUTPUT);
-  digitalWrite(*RelayPin, HIGH); //Turn relay off initially
+  digitalWrite(*RelayPin, HIGH); ///Turn relay off initially
   pinMode(*DimmingPin, OUTPUT);
-  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Minute(this);  ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   logToSerials(F("Lights object created"), true, 1);
 }
 
 void Lights::refresh_Minute()
-{ //makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
+{ ///makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
   if (*Debug)
     Common::refresh_Minute();
   checkLightTimer();
@@ -33,7 +33,7 @@ void Lights::refresh_Minute()
 void Lights::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Status:"));
   strcat(LongMessage, getStatusText(true));
   strcat_P(LongMessage, (PGM_P)F(" ; Brightness:"));
@@ -48,39 +48,39 @@ void Lights::report()
 void Lights::checkLightStatus()
 {
   if (*Status)
-    digitalWrite(*RelayPin, LOW); //True turns relay ON (LOW signal activates Relay)
+    digitalWrite(*RelayPin, LOW); ///True turns relay ON (LOW signal activates Relay)
   else
-    digitalWrite(*RelayPin, HIGH); //HIGH turns relay OFF
+    digitalWrite(*RelayPin, HIGH); ///HIGH turns relay OFF
 }
 
 void Lights::checkLightTimer()
 {
   if (*TimerEnabled)
   {
-    time_t Now = now();                             // Get the current time from TimeLib
-    int CombinedOnTime = *OnHour * 100 + *OnMinute; //convert time to number, Example: 8:10=810, 20:10=2010
+    time_t Now = now();                             /// Get the current time from TimeLib
+    int CombinedOnTime = *OnHour * 100 + *OnMinute; ///convert time to number, Example: 8:10=810, 20:10=2010
     int CombinedOffTime = *OffHour * 100 + *OffMinute;
     int CombinedCurrentTime = hour(Now) * 100 + minute(Now);
-    if (CombinedOnTime <= CombinedOffTime) //no midnight turnover, Example: On 8:10, Off: 20:10
+    if (CombinedOnTime <= CombinedOffTime) ///no midnight turnover, Example: On 8:10, Off: 20:10
     {
       if (CombinedOnTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedOffTime)
-      { //True: Light should be on
+      { ///True: Light should be on
         if (!*Status)
         {
-          setLightOnOff(true, false); //If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
+          setLightOnOff(true, false); ///If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
           if (*Debug)
             logToSerials(F("Timer:Light ON"), true, 4);
         }
       }
-      else //False: Light should be off
+      else ///False: Light should be off
           if (*Status)
-      {                              //If status is ON
-        setLightOnOff(false, false); //Turn OFF the lights (First bool), and do not add it to the log (Second bool)
+      {                              ///If status is ON
+        setLightOnOff(false, false); ///Turn OFF the lights (First bool), and do not add it to the log (Second bool)
         if (*Debug)
           logToSerials(F("Timer:Light OFF"), true, 4);
       }
     }
-    else //midnight turnover, Example: On 21:20, Off: 9:20
+    else ///midnight turnover, Example: On 21:20, Off: 9:20
     {
       if (CombinedOnTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedOffTime)
       {
@@ -104,7 +104,7 @@ void Lights::checkLightTimer()
 void Lights::setBrightness(byte Brightness, bool LogThis)
 {
   *(this->Brightness) = Brightness;
-  analogWrite(*DimmingPin, map(Brightness, 0, 100, int(255 * (100 - *DimmingLimit) / 100.0f), 0)); //mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
+  analogWrite(*DimmingPin, map(Brightness, 0, 100, int(255 * (100 - *DimmingLimit) / 100.0f), 0)); ///mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https:///www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
   if (LogThis)
   {
     strncpy_P(LongMessage, (PGM_P)F("Brightness: "), MaxTextLength);
@@ -136,9 +136,9 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
 char *Lights::getTimerOnOffText(bool UseWords)
 {
   if (UseWords)
-    return enabledToText(*TimerEnabled); //Returns ENABLED or DISABLED
+    return enabledToText(*TimerEnabled); ///Returns ENABLED or DISABLED
   else
-    return toText(*TimerEnabled); //Returns '1' or '0'
+    return toText(*TimerEnabled); ///Returns '1' or '0'
 }
 
 bool Lights::getStatus()
@@ -159,9 +159,9 @@ char *Lights::getBrightnessText()
 char *Lights::getStatusText(bool UseWords)
 {
   if (UseWords)
-    return onOffToText(*Status); //Returns ON or OFF
+    return onOffToText(*Status); ///Returns ON or OFF
   else
-    return toText(*Status); //Returns '1' or '0'
+    return toText(*Status); ///Returns '1' or '0'
 }
 
 char *Lights::getOnTimeText()

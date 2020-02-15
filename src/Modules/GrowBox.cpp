@@ -4,7 +4,7 @@
 #include "../Components_Web/Sound_Web.h"
 #include "../Components_Web/Fan_Web.h"
 #include "../Components_Web/PowerSensor_Web.h"
-#include "../Components_Web/PowerSensorV3_Web.h"  //Only for PZEM004T V3.0
+#include "../Components_Web/PowerSensorV3_Web.h"  ///Only for PZEM004T V3.0
 #include "../Components_Web/LightSensor_Web.h"
 #include "../Components_Web/PHSensor_Web.h"
 #include "../Components_Web/LightSensor_Web.h"
@@ -14,40 +14,40 @@
 #include "../Components_Web/WaterTempSensor_Web.h"
 #include "../Components_Web/WaterLevelSensor_Web.h"
 #include "../Components_Web/WeightSensor_Web.h"
-#include "../Components_Web/ModuleSkeleton_Web.h" //Only for demonstration purposes
+#include "../Components_Web/ModuleSkeleton_Web.h" ///Only for demonstration purposes
 
 GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name), Module_Web()
-{ //Constructor
+{ ///Constructor
   this->Name = Name;
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
   ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets; 
-  Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); //Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (byte *)(((byte *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
-  IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan);      //passing: Component name, GrowBox object the component belongs to, Default settings)
+  Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (byte *)(((byte *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan);      ///passing: Component name, GrowBox object the component belongs to, Default settings)
   EFan = new Fan_Web(F("EFan"), this, &ModuleSettings->EFan);
   Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
-  LtSen1 = new LightSensor_Web(F("LtSen1"), this, &ModuleSettings->LtSen1, Lt1); //Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
+  LtSen1 = new LightSensor_Web(F("LtSen1"), this, &ModuleSettings->LtSen1, Lt1); ///Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
   Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2);
-  //Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); //Only for PZEM004T V3.0
+  ///Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); ///Only for PZEM004T V3.0
   IDHT = new DHTSensor_Web(F("IDHT"), this, &ModuleSettings->IDHT);
   EDHT = new DHTSensor_Web(F("EDHT"), this, &ModuleSettings->EDHT);
   Pres1 = new PressureSensor_Web(F("Pres1"), this, &ModuleSettings->Pres1);
-  AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1); ///Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
   Aero1 = new Aeroponics_NoTank_Web(F("Aero1"), this, &ModuleSettings->Aero1_Common, &ModuleSettings->Aero1_Specific, Pres1);
   PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &ModuleSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &ModuleSettings->WaterTemp1);
   WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
   Weight1 = new WeightSensor_Web(F("Weight1"), this, &ModuleSettings->Weight1);
   Weight2 = new WeightSensor_Web(F("Weight2"), this, &ModuleSettings->Weight2);
-  //ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&ModuleSettings -> ModuleSkeleton1);  //Only for demonstration purposes
-  //ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&ModuleSettings -> ModuleSkeleton2);  //Only for demonstration purposes
+  ///ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&ModuleSettings -> ModuleSkeleton1);  ///Only for demonstration purposes
+  ///ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&ModuleSettings -> ModuleSkeleton2);  ///Only for demonstration purposes
 
-  addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  addToRefreshQueue_QuarterHour(this); //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
-  addToWebsiteQueue_Load(this);        //Subscribing to the Website load event
-  addToWebsiteQueue_Refresh(this);     //Subscribing to the Website refresh event
-  addToWebsiteQueue_Field(this);       //Subscribing to the Website field submit event
-  addToWebsiteQueue_Button(this);      //Subscribing to the Website button press event
+  addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  addToRefreshQueue_QuarterHour(this); ///Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
+  addToWebsiteQueue_Load(this);        ///Subscribing to the Website load event
+  addToWebsiteQueue_Refresh(this);     ///Subscribing to the Website refresh event
+  addToWebsiteQueue_Field(this);       ///Subscribing to the Website field submit event
+  addToWebsiteQueue_Button(this);      ///Subscribing to the Website button press event
   logToSerials(F("GrowBox object created, refreshing..."), true, 0);
   runAll();
   addToLog(F("GrowBox initialized"), 0);
@@ -65,14 +65,14 @@ void GrowBox::websiteEvent_Load(char *url)
   }
 }
 
-void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char *url) //called when website is refreshed.
+void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char *url) ///called when website is refreshed.
 {
   WebServer.setArgString(F("Time"), getFormattedTime(false));
-  WebServer.setArgJson(F("Log"), eventLogToJSON()); //Last events that happened in JSON format
+  WebServer.setArgJson(F("Log"), eventLogToJSON()); ///Last events that happened in JSON format
 }
 
 void GrowBox::websiteEvent_Button(char *Button)
-{ //When a button is pressed on the website
+{ ///When a button is pressed on the website
   if (!isThisMyComponent(Button))
   {
     return;
@@ -81,7 +81,7 @@ void GrowBox::websiteEvent_Button(char *Button)
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("SheetsRep")) == 0)
     {
-      ReportToGoogleSheetsRequested = true;  //just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
+      ReportToGoogleSheetsRequested = true;  ///just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
       addToLog(F("Reporting to Sheets"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("SerialRep")) == 0)
@@ -89,7 +89,7 @@ void GrowBox::websiteEvent_Button(char *Button)
       ConsoleReportRequested = true;
       addToLog(F("Reporting to Serial"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) //Website signals to refresh all sensor readings
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) ///Website signals to refresh all sensor readings
     {        
       RefreshAllRequested = true;
       addToLog(F("Refresh triggered"), false);
@@ -98,7 +98,7 @@ void GrowBox::websiteEvent_Button(char *Button)
 }
 
 void GrowBox::websiteEvent_Field(char *Field)
-{ //When the website field is submitted
+{ ///When the website field is submitted
   if (!isThisMyComponent(Field))
   {
     return;
@@ -148,8 +148,8 @@ void GrowBox::refresh_QuarterHour()
   reportToGoogleSheetsTrigger();
 }
 
-//////////////////////////////////////////////////////////////////
-//Settings
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///Settings
 void GrowBox::setDebugOnOff(bool State)
 {
   *Debug = State;
@@ -168,9 +168,9 @@ void GrowBox::setDebugOnOff(bool State)
 void GrowBox::setMetric(bool MetricEnabled)
 {
   if (MetricEnabled != *Metric)
-  { //if there was a change
+  { ///if there was a change
     *Metric = MetricEnabled;
-    //ModuleSettings -> IFanSwitchTemp = convertBetweenTempUnits(ModuleSettings -> IFanSwitchTemp);
+    ///ModuleSettings -> IFanSwitchTemp = convertBetweenTempUnits(ModuleSettings -> IFanSwitchTemp);
     Pres1->Pressure->resetAverage();
     IDHT->Temp->resetAverage();
     EDHT->Temp->resetAverage();
@@ -183,8 +183,8 @@ void GrowBox::setMetric(bool MetricEnabled)
     addToLog(F("Imperial units"));
 }
 
-//////////////////////////////////////////////////////////////////
-//Google Sheets reporting
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///Google Sheets reporting
 
 void GrowBox::setSheetsReportingOnOff(bool State)
 {
@@ -209,9 +209,9 @@ void GrowBox::setSheetsReportingFrequency(int Frequency)
 }
 
 void GrowBox::reportToGoogleSheetsTrigger()
-{ //Handles custom reporting frequency for Google Sheets, called every 15 minutes
+{ ///Handles custom reporting frequency for Google Sheets, called every 15 minutes
   if (SheetsRefreshCounter == 96)
-    SheetsRefreshCounter = 0; //Reset the counter after one day (15 x 96 = 1440 = 24 hours)
+    SheetsRefreshCounter = 0; ///Reset the counter after one day (15 x 96 = 1440 = 24 hours)
   if (SheetsRefreshCounter++ % (*SheetsReportingFrequency / 15) == 0)
   {
     reportToGoogleSheets(false);
@@ -222,7 +222,7 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
 {
   if (*ReportToGoogleSheets || CalledFromWebsite)
   {
-    memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
     strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));
     strcat_P(LongMessage, (PGM_P)F("\"InternalTemp\":\""));
     strcat(LongMessage, IDHT->getTempText(false, true));
@@ -260,8 +260,8 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
     strcat(LongMessage, Pow1->getVoltageText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"Current\":\""));
     strcat(LongMessage, Pow1->getCurrentText(false));
-    //strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,Pow1 -> getFrequencyText(false));   //Only for PZEM004T V3.0
-    //strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,Pow1 -> getPowerFactorText());    //Only for PZEM004T V3.0
+    ///strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,Pow1 -> getFrequencyText(false));   ///Only for PZEM004T V3.0
+    ///strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,Pow1 -> getPowerFactorText());    ///Only for PZEM004T V3.0
     strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_Timer\":\""));
     strcat(LongMessage, Lt1->getTimerOnOffText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_OnTime\":\""));
@@ -274,8 +274,8 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
     strcat(LongMessage, Aero1->getDuration());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroSprayPressure\":\""));
     strcat(LongMessage, toText(Aero1->LastSprayPressure));
-    //strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,AeroT1 -> getInterval());
-    //strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,AeroT1 -> getDuration());
+    ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,AeroT1 -> getInterval());
+    ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,AeroT1 -> getDuration());
 
     strcat_P(LongMessage, (PGM_P)F("\"},\"Settings\":{"));
     strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
@@ -284,8 +284,8 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
     relayToGoogleSheets(Name, &LongMessage);
   }  
 }
-//This is how a sent out message looks like:
-//{parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
+///This is how a sent out message looks like:
+///{parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
 
 void GrowBox::setPushingBoxLogRelayID(const char *ID)
 {
@@ -304,9 +304,9 @@ void GrowBox::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSOND
   strcat(ValueToReport, *JSONData);
   strcat_P(ValueToReport, (PGM_P)F("}"));
   if (*Debug)
-  { //print the report command to console
+  { ///print the report command to console
     logToSerials(F("api.pushingbox.com"), false, 4);
     logToSerials(&ValueToReport, true, 0);
   }
-  PushingBoxRestAPI.get(ValueToReport); //PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
+  PushingBoxRestAPI.get(ValueToReport); ///PushingBoxRestAPI will append http:///api.pushingbox.com/ in front of the command
 }

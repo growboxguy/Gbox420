@@ -9,11 +9,11 @@ Fan::Fan(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings 
   State = &DefaultSettings->State;
   HighSpeed = &DefaultSettings->HighSpeed;
   pinMode(*OnOffPin, OUTPUT);
-  digitalWrite(*OnOffPin, HIGH); //Turn relay off initially
+  digitalWrite(*OnOffPin, HIGH); ///Turn relay off initially
   pinMode(*SpeedPin, OUTPUT);
-  digitalWrite(*SpeedPin, HIGH);         //Turn relay off initially 
-  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method 
+  digitalWrite(*SpeedPin, HIGH);         ///Turn relay off initially 
+  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Minute(this);  ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method 
   logToSerials(F("Fan object created"), true, 1);
 }
 
@@ -27,7 +27,7 @@ void Fan::refresh_Minute()
 void Fan::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Status:"));
   strcat(LongMessage, fanSpeedToText());
   logToSerials(&LongMessage, true, 1);
@@ -35,11 +35,11 @@ void Fan::report()
 
 void Fan::checkFanStatus()
 {
-  if (*State) //True turns relay ON (LOW signal activates the Relay)
+  if (*State) ///True turns relay ON (LOW signal activates the Relay)
     digitalWrite(*OnOffPin, LOW);
   else
     digitalWrite(*OnOffPin, HIGH); 
-  if (*HighSpeed) //True turns relay ON (LOW signal activates the Relay)
+  if (*HighSpeed)
     digitalWrite(*SpeedPin, LOW);
   else
     digitalWrite(*SpeedPin, HIGH);

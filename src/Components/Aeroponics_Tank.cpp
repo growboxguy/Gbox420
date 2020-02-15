@@ -1,14 +1,14 @@
 #include "Aeroponics_Tank.h"
 
 Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Aeroponics(&(*Name),&(*Parent), &(*DefaultSettings), &(*FeedbackPressureSensor))
-{ //constructor
+{ ///constructor
   SpraySolenoidPin = &TankSpecificSettings->SpraySolenoidPin;
-  PressureLow = &TankSpecificSettings->PressureLow;   //Aeroponics - Turn on pump below this pressure (bar)
-  PressureHigh = &TankSpecificSettings->PressureHigh; //Aeroponics - Turn off pump above this pressure (bar)
+  PressureLow = &TankSpecificSettings->PressureLow;   ///Aeroponics - Turn on pump below this pressure (bar)
+  PressureHigh = &TankSpecificSettings->PressureHigh; ///Aeroponics - Turn off pump above this pressure (bar)
   pinMode(*SpraySolenoidPin, OUTPUT);
-  digitalWrite(*SpraySolenoidPin, HIGH); //initialize off
+  digitalWrite(*SpraySolenoidPin, HIGH); ///initialize off
   logToSerials(F("Aeroponics_Tank object created"), true, 1);
-  sprayNow(false); //This is a safety feature,start with a spray after a reset
+  sprayNow(false); ///This is a safety feature,start with a spray after a reset
 }
 
 void Aeroponics_Tank::refresh_Sec()
@@ -16,41 +16,41 @@ void Aeroponics_Tank::refresh_Sec()
   if (*Debug)
     Common::refresh_Sec();
   if (PumpOn)
-  { //if pump is on
+  { ///if pump is on
     if (Aeroponics::FeedbackPressureSensor->getPressure() >= *PressureHigh)
-    { //refill complete, target pressure reached
+    { ///refill complete, target pressure reached
       setPumpOff(false);
       logToSerials(F("Pressure tank recharged"), true);
     }
     else
     {
       if (millis() - PumpTimer >= ((uint32_t)*PumpTimeout * 60000))
-      {                    //If pump timeout reached
-        setPumpOff(false); //turn of pump,
+      {                    ///If pump timeout reached
+        setPumpOff(false); ///turn of pump,
         if (!MixInProgress)
-        {                //if mixing was not active and refill did not finish within timeout= pump must be broken
-          PumpDisable(); //automatically disable pump if it is suspected to be broken
-          //   sendEmailAlert(F("Aeroponics%20pump%20failed"));
+        {                ///if mixing was not active and refill did not finish within timeout= pump must be broken
+          PumpDisable(); ///automatically disable pump if it is suspected to be broken
+          ///   sendEmailAlert(F("Aeroponics%20pump%20failed"));
         }
         logToSerials(F("Pump timeout reached"), true);
       }
       if (!MixInProgress && BypassSolenoidOn && millis() - PumpTimer >= ((uint32_t)*PrimingTime * 1000))
-      { //self priming timeout reached, time to start refilling
+      { ///self priming timeout reached, time to start refilling
         if (*Debug)
           logToSerials(F("Starting refill"), true);
         BypassSolenoidOn = false;
-        PumpTimer = millis(); //reset timer to start measuring refill time
+        PumpTimer = millis(); ///reset timer to start measuring refill time
       }
     }
   }
   else
-  {                           //pump is off
-    BypassSolenoidOn = false; //Should not leave the solenoid turned on
+  {                           ///pump is off
+    BypassSolenoidOn = false; ///Should not leave the solenoid turned on
   }
   if (PumpOK && Aeroponics::FeedbackPressureSensor->getPressure() <= *PressureLow)
-  { //if pump is not disabled and Pressure reached low limit: turn on pump
+  { ///if pump is not disabled and Pressure reached low limit: turn on pump
     if (!PumpOn && !BypassSolenoidOn)
-    { //start the bypass
+    { ///start the bypass
       if (*Debug)
         logToSerials(F("Starting bypass"), true);
       BypassSolenoidOn = true;
@@ -59,9 +59,9 @@ void Aeroponics_Tank::refresh_Sec()
     }
   }
   if (SpraySolenoidOn)
-  { //if spray is on
+  { ///if spray is on
     if (millis() - SprayTimer >= ((uint32_t)*Duration * 1000))
-    { //if time to stop spraying (Duration in Seconds)
+    { ///if time to stop spraying (Duration in Seconds)
       SpraySolenoidOn = false;
       logToSerials(F("Stopping spray"), true);
       Parent->getSoundObject()->playOffSound();
@@ -69,9 +69,9 @@ void Aeroponics_Tank::refresh_Sec()
     }
   }
   else
-  { //if spray is off
+  { ///if spray is off
     if (*SprayEnabled && millis() - SprayTimer >= ((uint32_t)*Interval * 60000))
-    { //if time to start spraying (AeroInterval in Minutes)
+    { ///if time to start spraying (AeroInterval in Minutes)
       SpraySolenoidOn = true;
       Parent->getSoundObject()->playOnSound();
       if (*Debug)
@@ -85,11 +85,11 @@ void Aeroponics_Tank::refresh_Sec()
 void Aeroponics_Tank::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Pressure:"));
   strcat(LongMessage, FeedbackPressureSensor->getPressureText(true, false));
-  logToSerials(&LongMessage, false, 1); //first print Aeroponics_Tank specific report, without a line break
-  Aeroponics::report();                 //then print parent class report
+  logToSerials(&LongMessage, false, 1); ///first print Aeroponics_Tank specific report, without a line break
+  Aeroponics::report();                 ///then print parent class report
 }
 
 void Aeroponics_Tank::checkRelays()

@@ -4,10 +4,10 @@ Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settin
 {
   this->Parent = Parent;
   this->Name = Name;
-  Parent->addToRefreshQueue_Sec(this);    //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
-  Parent->addToWebsiteQueue_Load(this);   //Subscribing to the Website load event: Calls the websiteEvent_Load() method
-  Parent->addToWebsiteQueue_Button(this); //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
-  Parent->addToWebsiteQueue_Field(this);  //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method 
+  Parent->addToRefreshQueue_Sec(this);    ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
+  Parent->addToWebsiteQueue_Load(this);   ///Subscribing to the Website load event: Calls the websiteEvent_Load() method
+  Parent->addToWebsiteQueue_Button(this); ///Subscribing to the Website button press event: Calls the websiteEvent_Button() method
+  Parent->addToWebsiteQueue_Field(this);  ///Subscribing to the Website field submit event: Calls the websiteEvent_Field() method 
 }
 
 void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *url)
@@ -19,7 +19,7 @@ void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 }
 
 void Sound_Web::websiteEvent_Button(char *Button)
-{ //When a button is pressed on the website
+{ ///When a button is pressed on the website
   if (!isThisMyComponent(Button))
   {
     return;
@@ -34,7 +34,7 @@ void Sound_Web::websiteEvent_Button(char *Button)
 }
 
 void Sound_Web::websiteEvent_Field(char *Field)
-{ //When the website field is submitted
+{ ///When the website field is submitted
   if (!isThisMyComponent(Field))
   {
     return;

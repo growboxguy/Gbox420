@@ -1,7 +1,7 @@
 #include "Helpers.h"
 
-//////////////////////////////////////////
-//Debug
+///////////////////////////////////////////////////////////////
+///Debug
 
 void getFreeMemory()
 {
@@ -11,8 +11,8 @@ void getFreeMemory()
 }
 
 
-//////////////////////////////////////////
-//Conversions
+///////////////////////////////////////////////////////////////
+///Conversions
 
 float convertBetweenTempUnits(float Value)
 {
@@ -34,11 +34,11 @@ float convertBetweenPressureUnits(float Value)
     return round(Value * 1450.38) / 100.0f;
 }
 
-//////////////////////////////////////////
-//Text formating
+///////////////////////////////////////////////////////////////
+///Text formating
 
 char *toText(const __FlashStringHelper *FlashText)
-{ //Not every external library supports __FlashStringHelper class. This converts flash stored text to ram stored char *
+{ ///Not every external library supports __FlashStringHelper class. This converts flash stored text to ram stored char *
   strcpy_P(ShortMessage, (PGM_P)FlashText);
   return ShortMessage;
 }
@@ -59,7 +59,7 @@ char *toText(float Number)
 {
   if (isnan(Number))
     Number = -1.0;
-  dtostrf(Number, 4, 2, ShortMessage); //minimum 4 char total length (Including decimal and possible - sign), with 2 digits after the decimal point
+  dtostrf(Number, 4, 2, ShortMessage); ///minimum 4 char total length (Including decimal and possible - sign), with 2 digits after the decimal point
   return ShortMessage;
 }
 
@@ -67,7 +67,7 @@ char *toPrecisionText(float Number)
 {
   if (isnan(Number))
     Number = -1.0;
-  dtostrf(Number, 8, 6, ShortMessage); //minimum 8 char total length, with 6 decimals
+  dtostrf(Number, 8, 6, ShortMessage); ///minimum 8 char total length, with 6 decimals
   return ShortMessage;
 }
 
@@ -78,7 +78,7 @@ char *toText(int Number1, int Number2, const char *Separator)
 }
 
 char *toText(float Number1, float Number2, const char *Separator)
-{ //function overloading: Same named function, different parameter type
+{ ///function overloading: Same named function, different parameter type
   char Number2Char[MaxTextLength] = "";
   if (isnan(Number1))
     Number1 = -1.0;
@@ -141,7 +141,7 @@ char *weightToText(float Weight)
 
 char *percentageToText(float Number)
 {
-  //static char * ReturnChar = malloc(MaxTextLength * sizeof(char));  //allocate memory for every run - need to take care of freeing up the memory  after use
+  ///static char * ReturnChar = malloc(MaxTextLength * sizeof(char));  ///allocate memory for every run - need to take care of freeing up the memory  after use
    dtostrf(Number, 4, 2, ShortMessage);
   strcat_P(ShortMessage, (PGM_P)F("%"));
   return ShortMessage;
