@@ -1,7 +1,11 @@
 #pragma once
 
 #include "Arduino.h"     //every inheriting class have Arduino commands available
+#include "ELClient.h"          //ESP-link
+#include "ELClientWebServer.h" //ESP-link - WebServer API
 #include "ELClientRest.h" //ESP-link - REST API
+#include "ELClientCmd.h"       //ESP-link - Get current time from the internet using NTP
+#include "TimeLib.h"           //Keeping track of time
 #include "../../Settings.h"
 #include "../Helpers.h"
 #include "../Components/420Module.h"

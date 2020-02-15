@@ -1,6 +1,0 @@
-<map id="RollingAverage::getIntText" name="RollingAverage::getIntText">
-<area shape="rect" id="node2" href="$class_light_sensor.html#af38ae75a6739383e1590548fdb07e353" title="LightSensor::getReadingText" alt="" coords="231,35,421,61"/>
-<area shape="rect" id="node5" href="$class_module_skeleton.html#a4b13bbc3ce0282781e36f450bd4f189a" title="ModuleSkeleton::report" alt="" coords="248,85,404,112"/>
-<area shape="rect" id="node3" href="$class_light_sensor.html#a08ffec2f2bbb09966a8e37bf1f9887f9" title="LightSensor::report" alt="" coords="493,5,625,32"/>
-<area shape="rect" id="node4" href="$class_light_sensor___web.html#a6afe75f4f6cec3dc5f44454e23da1f8a" title="LightSensor_Web::website\lEvent_Refresh" alt="" coords="469,57,648,98"/>
-</map>

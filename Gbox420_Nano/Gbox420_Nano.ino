@@ -45,8 +45,8 @@ void setup()
   Debug = &ModuleSettings ->  Debug;
   Metric = &ModuleSettings ->  Metric;
 
- // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
-  OneSecThread.setInterval(1000);
+ // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
+  OneSecThread.setInterval(1000);  //1000ms
   OneSecThread.onRun(runSec);
   FiveSecThread.setInterval(5000);
   FiveSecThread.onRun(runFiveSec);
@@ -58,7 +58,6 @@ void setup()
   //Create the Hempy bucket object
   HempyMod1 = new HempyModule(F("Hempy1"), &ModuleSettings->HempyMod1); //This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
-  //  sendEmailAlert(F("Grow%20box%20(re)started"));
   logToSerials(F("Setup ready, starting loops:"), true, 0);
 }
 

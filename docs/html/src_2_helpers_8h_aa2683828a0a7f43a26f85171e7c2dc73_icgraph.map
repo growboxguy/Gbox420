@@ -1,8 +1,0 @@
-<map id="tempToText" name="tempToText">
-<area shape="rect" id="node2" href="$class_d_h_t_sensor.html#ae2091b0774bf7504477c469efd053631" title="DHTSensor::getTempText" alt="" coords="165,64,341,91"/>
-<area shape="rect" id="node5" href="$class_water_temp_sensor.html#a812f3e2f65426efdf594e599d0e8a24d" title="WaterTempSensor::getTempText" alt="" coords="145,123,361,149"/>
-<area shape="rect" id="node3" href="$class_d_h_t_sensor.html#a2ef11882c3401c097b7a08e4b35eb103" title="DHTSensor::report" alt="" coords="449,5,581,32"/>
-<area shape="rect" id="node4" href="$class_d_h_t_sensor___web.html#ad02a0f5edd3f948ae81f9ebe6032d443" title="DHTSensor_Web::websiteEvent\l_Refresh" alt="" coords="409,57,621,98"/>
-<area shape="rect" id="node6" href="$class_water_temp_sensor.html#a116d049ce3a6d7150494eb938a6fb6cc" title="WaterTempSensor::report" alt="" coords="429,123,601,149"/>
-<area shape="rect" id="node7" href="$class_water_temp_sensor___web.html#a930d46ab1e337e085a06058d8c07f76b" title="WaterTempSensor_Web\l::websiteEvent_Refresh" alt="" coords="433,174,598,215"/>
-</map>

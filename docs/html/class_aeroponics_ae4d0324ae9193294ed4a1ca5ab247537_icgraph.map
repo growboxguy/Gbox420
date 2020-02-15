@@ -1,4 +1,0 @@
-<map id="Aeroponics::setPumpOn" name="Aeroponics::setPumpOn">
-<area shape="rect" id="node2" href="$class_aeroponics___no_tank___web.html#a33b388e724f870482f90106fdacaa3b4" title="Aeroponics_NoTank_Web\l::websiteEvent_Button" alt="" coords="217,5,392,47"/>
-<area shape="rect" id="node3" href="$class_aeroponics___tank___web.html#a2dea9353cb1709b51f496d8d0caa928e" title="Aeroponics_Tank_Web\l::websiteEvent_Button" alt="" coords="226,71,383,112"/>
-</map>

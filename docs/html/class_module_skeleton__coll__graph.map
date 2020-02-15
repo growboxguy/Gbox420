@@ -1,6 +1,0 @@
-<map id="ModuleSkeleton" name="ModuleSkeleton">
-<area shape="rect" id="node2" href="$class_common.html" title="Common" alt="" coords="231,5,305,32"/>
-<area shape="rect" id="node4" href="$class_module.html" title="Module" alt="" coords="236,153,300,180"/>
-<area shape="rect" id="node5" href="$class_sound.html" title="Sound" alt="" coords="377,257,436,284"/>
-<area shape="rect" id="node3" href="$class_rolling_average.html" title="RollingAverage" alt="" coords="85,153,195,180"/>
-</map>

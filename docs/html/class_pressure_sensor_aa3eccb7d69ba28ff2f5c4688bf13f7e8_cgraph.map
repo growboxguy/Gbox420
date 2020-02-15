@@ -1,6 +1,0 @@
-<map id="PressureSensor::getPressureText" name="PressureSensor::getPressureText">
-<area shape="rect" id="node2" href="$_hempy_module_2src_2_helpers_8cpp.html#ac0c4720f7d0aa5489bba21f0c45b23bc" title="pressureToText" alt="" coords="311,5,424,32"/>
-<area shape="rect" id="node3" href="$class_rolling_average.html#ada0ea15c7152230f9433329fba92d3f8" title="RollingAverage::getFloat" alt="" coords="511,56,676,83"/>
-<area shape="rect" id="node4" href="$class_rolling_average.html#aab001a981060af0948bd8b46c05c8e97" title="RollingAverage::getFloatText" alt="" coords="272,107,463,133"/>
-<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="564,107,623,133"/>
-</map>

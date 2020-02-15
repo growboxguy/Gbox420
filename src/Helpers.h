@@ -30,7 +30,6 @@ extern bool *Metric;
 //Class specific variables
 time_t getNtpTime();
 void getFreeMemory();
-char *getFormattedTime(bool PrintToSerials = false);
 float convertBetweenTempUnits(float);
 float convertBetweenPressureUnits(float);
 char *toText(const __FlashStringHelper *);

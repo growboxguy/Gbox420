@@ -1,7 +1,0 @@
-<map id="onOffToText" name="onOffToText">
-<area shape="rect" id="node2" href="$class_lights.html#a713a28eba8f6fd8fb259bac4175ece26" title="Lights::getStatusText" alt="" coords="162,35,309,61"/>
-<area shape="rect" id="node5" href="$class_aeroponics___no_tank___web.html#a1248fe0a06097426645344b35aec0431" title="Aeroponics_NoTank_Web\l::websiteEvent_Refresh" alt="" coords="148,86,323,127"/>
-<area shape="rect" id="node6" href="$class_aeroponics___tank___web.html#acf883f3ff9b052706ea0548bdf8c04aa" title="Aeroponics_Tank_Web\l::websiteEvent_Refresh" alt="" coords="154,151,317,193"/>
-<area shape="rect" id="node3" href="$class_lights.html#a68fc62af07d71db2fb5a436e11ecad3c" title="Lights::report" alt="" coords="411,5,509,32"/>
-<area shape="rect" id="node4" href="$class_lights___web.html#af46bb9ec74ecb0f45b465c2722b9b18a" title="Lights_Web::websiteEvent\l_Refresh" alt="" coords="371,57,549,98"/>
-</map>

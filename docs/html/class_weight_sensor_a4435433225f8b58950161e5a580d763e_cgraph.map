@@ -1,6 +1,0 @@
-<map id="WeightSensor::getWeightText" name="WeightSensor::getWeightText">
-<area shape="rect" id="node2" href="$_hempy_module_2src_2_helpers_8cpp.html#aec4ac85dc6f4a044572d1889e7f4ecd3" title="weightToText" alt="" coords="295,5,397,32"/>
-<area shape="rect" id="node3" href="$class_rolling_average.html#ada0ea15c7152230f9433329fba92d3f8" title="RollingAverage::getFloat" alt="" coords="489,56,655,83"/>
-<area shape="rect" id="node4" href="$class_rolling_average.html#aab001a981060af0948bd8b46c05c8e97" title="RollingAverage::getFloatText" alt="" coords="251,107,441,133"/>
-<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="543,107,601,133"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="ModuleSkeleton_Web::websiteEvent_Refresh" name="ModuleSkeleton_Web::websiteEvent_Refresh">
-<area shape="rect" id="node2" href="$class_common.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="216,5,419,32"/>
-<area shape="rect" id="node3" href="$class_rolling_average.html#a4fc812fc5b678f41c4a01d79c7fc5923" title="RollingAverage::getInt" alt="" coords="242,56,393,83"/>
-<area shape="rect" id="node4" href="$class_rolling_average.html#ada0ea15c7152230f9433329fba92d3f8" title="RollingAverage::getFloat" alt="" coords="235,107,400,133"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="Lights::checkLightTimer" name="Lights::checkLightTimer">
-<area shape="rect" id="node2" href="$class_lights.html#a38c74606e1c2b4ff7db184920b225961" title="Lights::refresh_Minute" alt="" coords="215,5,365,32"/>
-<area shape="rect" id="node3" href="$class_lights.html#a3c5051babf4dacdeecced14217f6f886" title="Lights::setTimerOnOff" alt="" coords="215,56,365,83"/>
-<area shape="rect" id="node4" href="$class_lights___web.html#a2437d22a7e8b027c4d08d209675f5db9" title="Lights_Web::websiteEvent\l_Button" alt="" coords="413,49,592,90"/>
-</map>

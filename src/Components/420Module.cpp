@@ -4,7 +4,7 @@
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 Module::Module()
 {
-  logToSerials(F("Module object created"), true, 0);
+  
 }
 
 /*
@@ -180,7 +180,7 @@ char *Module::eventLogToJSON(bool Append)
 //////////////////////////////////////////
 //Time
 
-char *getFormattedTime(bool PrintToSerials)
+char *Module::getFormattedTime(bool PrintToSerials)
 {
   time_t Now = now();                                                                                                                                // Get the current time and date from the TimeLib library
   snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d", year(Now), month(Now), day(Now), hour(Now), minute(Now), second(Now)); // YYYY/MM/DD-HH:mm:SS formatted time will be stored in CurrentTime global variable

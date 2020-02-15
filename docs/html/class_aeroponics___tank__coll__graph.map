@@ -1,8 +1,0 @@
-<map id="Aeroponics_Tank" name="Aeroponics_Tank">
-<area shape="rect" id="node2" href="$class_aeroponics.html" title="Aeroponics" alt="" coords="23,332,110,359"/>
-<area shape="rect" id="node3" href="$class_common.html" title="Common" alt="" coords="387,5,461,32"/>
-<area shape="rect" id="node4" href="$class_module.html" title="Module" alt="" coords="189,153,253,180"/>
-<area shape="rect" id="node5" href="$class_sound.html" title="Sound" alt="" coords="293,243,352,269"/>
-<area shape="rect" id="node6" href="$class_pressure_sensor.html" title="PressureSensor" alt="" coords="472,243,587,269"/>
-<area shape="rect" id="node7" href="$class_rolling_average.html" title="RollingAverage" alt="" coords="474,153,585,180"/>
-</map>

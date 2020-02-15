@@ -67,7 +67,7 @@ void GrowBox::websiteEvent_Load(char *url)
 
 void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char *url) //called when website is refreshed.
 {
-  WebServer.setArgString(F("Time"), getFormattedTime());
+  WebServer.setArgString(F("Time"), getFormattedTime(false));
   WebServer.setArgJson(F("Log"), eventLogToJSON()); //Last events that happened in JSON format
 }
 

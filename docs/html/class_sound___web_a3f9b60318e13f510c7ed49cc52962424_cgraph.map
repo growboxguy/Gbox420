@@ -1,7 +1,0 @@
-<map id="Sound_Web::websiteEvent_Field" name="Sound_Web::websiteEvent_Field">
-<area shape="rect" id="node2" href="$class_common.html#a0192d295366bf1e966d8b58a3ce57554" title="Common::isThisMyComponent" alt="" coords="233,5,436,32"/>
-<area shape="rect" id="node3" href="$class_sound.html#a6917e650a721b0e7fc6d998edf6a3cf7" title="Sound::setSoundOnOff" alt="" coords="256,56,413,83"/>
-<area shape="rect" id="node4" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="493,5,622,32"/>
-<area shape="rect" id="node5" href="$class_sound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="485,56,630,83"/>
-<area shape="rect" id="node6" href="$class_sound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="484,107,631,133"/>
-</map>

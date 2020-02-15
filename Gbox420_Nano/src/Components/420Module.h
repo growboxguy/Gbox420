@@ -30,6 +30,7 @@ public:
   void addToRefreshQueue_FiveSec(Common *Component);
   void addToRefreshQueue_Minute(Common *Component);
   void addToRefreshQueue_QuarterHour(Common *Component);
+  char * getFormattedTime(bool PrintToSerials);
   Sound * getSoundObject();
     
 private:

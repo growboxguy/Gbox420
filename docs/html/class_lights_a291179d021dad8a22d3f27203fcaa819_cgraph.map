@@ -1,9 +1,0 @@
-<map id="Lights::checkLightTimer" name="Lights::checkLightTimer">
-<area shape="rect" id="node2" href="$class_lights.html#ab18f05b043b61b6eb74bd7b564e1a1ec" title="Lights::setLightOnOff" alt="" coords="215,107,361,133"/>
-<area shape="rect" id="node8" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="241,157,335,184"/>
-<area shape="rect" id="node3" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="428,5,557,32"/>
-<area shape="rect" id="node4" href="$class_module.html#a1c18e93583f527d470be447a9fcd1a0b" title="Module::getSoundObject" alt="" coords="410,56,575,83"/>
-<area shape="rect" id="node5" href="$class_sound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="420,107,565,133"/>
-<area shape="rect" id="node6" href="$class_sound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="419,157,566,184"/>
-<area shape="rect" id="node7" href="$class_lights.html#a358764e84694051f14f8cdc89dab44ee" title="Lights::checkLightStatus" alt="" coords="409,208,576,235"/>
-</map>

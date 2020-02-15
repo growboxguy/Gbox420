@@ -11,6 +11,7 @@ void getFreeMemory()
   logToSerials(&ReturnChar, true, 0);
 }
 
+
 //////////////////////////////////////////
 //Conversions
 

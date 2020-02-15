@@ -1,8 +1,0 @@
-<map id="WaterTempSensor_Web::websiteEvent_Refresh" name="WaterTempSensor_Web::websiteEvent_Refresh">
-<area shape="rect" id="node2" href="$class_common.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="225,5,428,32"/>
-<area shape="rect" id="node3" href="$class_water_temp_sensor.html#a812f3e2f65426efdf594e599d0e8a24d" title="WaterTempSensor::getTempText" alt="" coords="219,56,435,83"/>
-<area shape="rect" id="node4" href="$_hempy_module_2src_2_helpers_8cpp.html#aa2683828a0a7f43a26f85171e7c2dc73" title="tempToText" alt="" coords="532,5,624,32"/>
-<area shape="rect" id="node5" href="$class_rolling_average.html#ada0ea15c7152230f9433329fba92d3f8" title="RollingAverage::getFloat" alt="" coords="721,56,887,83"/>
-<area shape="rect" id="node6" href="$class_rolling_average.html#aab001a981060af0948bd8b46c05c8e97" title="RollingAverage::getFloatText" alt="" coords="483,107,673,133"/>
-<area shape="rect" id="node7" href="$_hempy_module_2src_2_helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="775,107,833,133"/>
-</map>

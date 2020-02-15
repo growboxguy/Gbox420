@@ -1,7 +1,0 @@
-<map id="Fan::checkFanStatus" name="Fan::checkFanStatus">
-<area shape="rect" id="node2" href="$class_fan.html#ad4605196f9611585e9416bcce3d84723" title="Fan::refresh_Minute" alt="" coords="200,5,339,32"/>
-<area shape="rect" id="node3" href="$class_fan.html#af5a22c8800d5a4f3295f44a313af71d2" title="Fan::TurnOff" alt="" coords="221,56,317,83"/>
-<area shape="rect" id="node5" href="$class_fan.html#a817f97adfe3990ef302f49359b3237f7" title="Fan::SetLowSpeed" alt="" coords="203,107,336,133"/>
-<area shape="rect" id="node6" href="$class_fan.html#ad462f4c80b5024a1266e0a070527425e" title="Fan::SetHighSpeed" alt="" coords="201,157,337,184"/>
-<area shape="rect" id="node4" href="$class_fan___web.html#a2741ea624a781febbd4f3e2bf82c89ed" title="Fan_Web::websiteEvent\l_Button" alt="" coords="387,99,552,141"/>
-</map>

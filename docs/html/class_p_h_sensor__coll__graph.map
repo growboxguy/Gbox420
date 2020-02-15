@@ -1,6 +1,0 @@
-<map id="PHSensor" name="PHSensor">
-<area shape="rect" id="node2" href="$class_common.html" title="Common" alt="" coords="171,5,245,32"/>
-<area shape="rect" id="node4" href="$class_module.html" title="Module" alt="" coords="191,153,255,180"/>
-<area shape="rect" id="node5" href="$class_sound.html" title="Sound" alt="" coords="312,243,371,269"/>
-<area shape="rect" id="node3" href="$class_rolling_average.html" title="RollingAverage" alt="" coords="55,153,166,180"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="yesNoToText" name="yesNoToText">
-<area shape="rect" id="node2" href="$class_aeroponics.html#a3dbfce027ab5fa736a6007a6ae75ee4e" title="Aeroponics::report" alt="" coords="176,71,304,98"/>
-<area shape="rect" id="node5" href="$class_light_sensor.html#a70fd8f7252cbc9abb2ea501ccfaf08fe" title="LightSensor::getDarkText" alt="" coords="155,122,325,149"/>
-<area shape="rect" id="node8" href="$class_module_skeleton.html#a4b13bbc3ce0282781e36f450bd4f189a" title="ModuleSkeleton::report" alt="" coords="162,173,318,199"/>
-<area shape="rect" id="node3" href="$class_aeroponics___no_tank.html#af2f6dfdcfd4365ed35aa83176113ff86" title="Aeroponics_NoTank::\lreport" alt="" coords="389,5,537,47"/>
-<area shape="rect" id="node4" href="$class_aeroponics___tank.html#a45e50ca4e5d5a605d355d65c8cd3e5cd" title="Aeroponics_Tank::report" alt="" coords="381,71,545,98"/>
-<area shape="rect" id="node6" href="$class_light_sensor.html#a08ffec2f2bbb09966a8e37bf1f9887f9" title="LightSensor::report" alt="" coords="397,122,529,149"/>
-<area shape="rect" id="node7" href="$class_light_sensor___web.html#a6afe75f4f6cec3dc5f44454e23da1f8a" title="LightSensor_Web::website\lEvent_Refresh" alt="" coords="373,173,552,215"/>
-</map>
