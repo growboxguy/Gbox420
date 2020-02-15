@@ -6,7 +6,7 @@
 #include "420Module_Web.h"
 #include "../Components/ModuleSkeleton.h"
 
-class ModuleSkeleton_Web : public ModuleSkeleton, public Common_Web
+class ModuleSkeleton_Web : virtual public ModuleSkeleton, virtual public Common_Web
 {
 public:
   ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ModuleSkeletonSettings *DefaultSettings); //constructor
