@@ -11,7 +11,7 @@
 //Adds 
 class Sound;
 
-class Module
+class Module : virtual public Common
 {
 public:
   Module(); //constructor
