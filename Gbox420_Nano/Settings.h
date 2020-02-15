@@ -1,5 +1,7 @@
 #pragma once
 
+/// @attention Define the preferred default settings here.
+
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
 static const byte Version = 5;
 

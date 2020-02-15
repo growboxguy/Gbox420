@@ -1,6 +1,5 @@
+/**@file*/
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
-//Hempy bucket module for Arduino Nano
-
 
 #include "Arduino.h"
 #include "avr/wdt.h"                //Watchdog timer for detecting a crash and automatically resetting the board
