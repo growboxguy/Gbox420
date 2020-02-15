@@ -1,8 +1,12 @@
 #pragma once
 
 #include "Arduino.h"     //every inheriting class have Arduino commands available
+#include "ELClient.h"          //ESP-link
+#include "ELClientWebServer.h" //ESP-link - WebServer API
 #include "ELClientRest.h" //ESP-link - REST API
-#include "../Settings.h"
+#include "ELClientCmd.h"       //ESP-link - Get current time from the internet using NTP
+#include "TimeLib.h"           //Keeping track of time
+#include "../../Settings.h"
 #include "../Helpers.h"
 #include "../Components/420Module.h"
 #include "420Common_Web.h"
@@ -36,6 +40,9 @@ public:
   void addToRefreshQueue_FiveSec(Common_Web *Component);
   void addToRefreshQueue_Minute(Common_Web *Component);
   void addToRefreshQueue_QuarterHour(Common_Web *Component);
+  void addToLog(const __FlashStringHelper *Text, byte indent = 3);
+  void addToLog(const char *Text, byte indent = 3); 
+  char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   Sound_Web * getSoundObject();
   //void relayToGoogleSheets(__attribute__((unused)) const __FlashStringHelper *Title, __attribute__((unused)) char (*JSONData)[MaxLongTextLength]){};
 

@@ -1,9 +1,0 @@
-<map id="Sound::refresh_Sec" name="Sound::refresh_Sec">
-<area shape="rect" id="node2" href="$class_common.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Common::refresh_Sec" alt="" coords="191,5,344,32"/>
-<area shape="rect" id="node4" href="$class_sound.html#ac26eda99f623e5a839d1c408d8a591d9" title="Sound::OnSound" alt="" coords="207,56,328,83"/>
-<area shape="rect" id="node5" href="$class_sound.html#ab1fb7a2e72d848ca335b4721cd8540b7" title="Sound::OffSound" alt="" coords="206,107,329,133"/>
-<area shape="rect" id="node6" href="$class_sound.html#a8b4af7ef38cf7e66c6dea94d10a9b229" title="Sound::EE" alt="" coords="225,157,310,184"/>
-<area shape="rect" id="node3" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="409,5,504,32"/>
-<area shape="rect" id="node7" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="392,132,521,159"/>
-<area shape="rect" id="node8" href="$class_sound.html#a3d0f7b044cff8851a335bb9c4fb78542" title="Sound::buzz" alt="" coords="409,183,504,209"/>
-</map>

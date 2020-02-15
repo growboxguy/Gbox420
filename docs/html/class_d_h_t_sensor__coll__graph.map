@@ -1,6 +1,0 @@
-<map id="DHTSensor" name="DHTSensor">
-<area shape="rect" id="node2" href="$class_common.html" title="Common" alt="" coords="203,5,277,32"/>
-<area shape="rect" id="node4" href="$class_module.html" title="Module" alt="" coords="208,153,272,180"/>
-<area shape="rect" id="node5" href="$class_sound.html" title="Sound" alt="" coords="345,257,404,284"/>
-<area shape="rect" id="node3" href="$class_rolling_average.html" title="RollingAverage" alt="" coords="73,153,183,180"/>
-</map>

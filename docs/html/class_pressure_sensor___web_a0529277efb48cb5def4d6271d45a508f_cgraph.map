@@ -1,7 +1,0 @@
-<map id="PressureSensor_Web::websiteEvent_Field" name="PressureSensor_Web::websiteEvent_Field">
-<area shape="rect" id="node2" href="$class_common.html#a0192d295366bf1e966d8b58a3ce57554" title="Common::isThisMyComponent" alt="" coords="203,5,405,32"/>
-<area shape="rect" id="node3" href="$class_pressure_sensor.html#af4ea57467bb0d6ae89b0f1a65c7863da" title="PressureSensor::setOffset" alt="" coords="215,107,393,133"/>
-<area shape="rect" id="node6" href="$class_pressure_sensor.html#a5c46cbf770e053a41dad7ee63549ae7e" title="PressureSensor::setRatio" alt="" coords="218,56,390,83"/>
-<area shape="rect" id="node4" href="$class_rolling_average.html#a5413499ba156dd5acec73196edfda3d4" title="RollingAverage::resetAverage" alt="" coords="453,56,648,83"/>
-<area shape="rect" id="node5" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="486,107,615,133"/>
-</map>

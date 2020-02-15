@@ -1,6 +1,0 @@
-<map id="Module::addToRefreshQueue_Sec" name="Module::addToRefreshQueue_Sec">
-<area shape="rect" id="node2" href="$class_aeroponics.html#aa0ded2d62059e82009548ccfa9c1f790" title="Aeroponics::Aeroponics" alt="" coords="304,5,464,32"/>
-<area shape="rect" id="node3" href="$class_module_skeleton.html#a28db770cfd6d6a02110d0adb62666676" title="ModuleSkeleton::ModuleSkeleton" alt="" coords="276,56,492,83"/>
-<area shape="rect" id="node4" href="$class_sound.html#a9432356bb1ba946460c33f286d2b325b" title="Sound::Sound" alt="" coords="332,107,436,133"/>
-<area shape="rect" id="node5" href="$class_weight_sensor.html#a7ea36c43abb037e5d88f6d181bd07b0d" title="WeightSensor::WeightSensor" alt="" coords="287,157,481,184"/>
-</map>

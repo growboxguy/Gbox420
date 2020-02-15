@@ -1,6 +1,0 @@
-<map id="DHTSensor::getTempText" name="DHTSensor::getTempText">
-<area shape="rect" id="node2" href="$_hempy_module_2src_2_helpers_8cpp.html#aa2683828a0a7f43a26f85171e7c2dc73" title="tempToText" alt="" coords="279,5,371,32"/>
-<area shape="rect" id="node3" href="$class_rolling_average.html#ada0ea15c7152230f9433329fba92d3f8" title="RollingAverage::getFloat" alt="" coords="468,56,633,83"/>
-<area shape="rect" id="node4" href="$class_rolling_average.html#aab001a981060af0948bd8b46c05c8e97" title="RollingAverage::getFloatText" alt="" coords="229,107,420,133"/>
-<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="521,107,580,133"/>
-</map>

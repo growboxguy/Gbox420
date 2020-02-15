@@ -1,8 +1,0 @@
-<map id="pressureToText" name="pressureToText">
-<area shape="rect" id="node2" href="$class_aeroponics___no_tank.html#af2f6dfdcfd4365ed35aa83176113ff86" title="Aeroponics_NoTank::\lreport" alt="" coords="202,49,350,90"/>
-<area shape="rect" id="node3" href="$class_pressure_sensor.html#aa3eccb7d69ba28ff2f5c4688bf13f7e8" title="PressureSensor::getPressureText" alt="" coords="167,115,385,141"/>
-<area shape="rect" id="node6" href="$class_aeroponics___no_tank___web.html#a1248fe0a06097426645344b35aec0431" title="Aeroponics_NoTank_Web\l::websiteEvent_Refresh" alt="" coords="433,173,608,214"/>
-<area shape="rect" id="node4" href="$class_aeroponics___tank.html#a45e50ca4e5d5a605d355d65c8cd3e5cd" title="Aeroponics_Tank::report" alt="" coords="439,5,603,32"/>
-<area shape="rect" id="node5" href="$class_pressure_sensor.html#ae9f360e068bc30f611ba50c7c9cf7e4a" title="PressureSensor::report" alt="" coords="443,56,599,83"/>
-<area shape="rect" id="node7" href="$class_aeroponics___tank___web.html#acf883f3ff9b052706ea0548bdf8c04aa" title="Aeroponics_Tank_Web\l::websiteEvent_Refresh" alt="" coords="439,107,602,149"/>
-</map>

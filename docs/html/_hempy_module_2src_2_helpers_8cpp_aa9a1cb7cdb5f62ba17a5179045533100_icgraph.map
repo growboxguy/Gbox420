@@ -1,6 +1,0 @@
-<map id="timeToText" name="timeToText">
-<area shape="rect" id="node2" href="$class_lights.html#a5e2894e6935173e46c8d70f4bc7d36ed" title="Lights::getOnTimeText" alt="" coords="142,9,297,36"/>
-<area shape="rect" id="node5" href="$class_lights.html#afa7da12d1c3c6646a547220f34c90bd3" title="Lights::getOffTimeText" alt="" coords="141,60,297,87"/>
-<area shape="rect" id="node3" href="$class_lights.html#a68fc62af07d71db2fb5a436e11ecad3c" title="Lights::report" alt="" coords="385,5,484,32"/>
-<area shape="rect" id="node4" href="$class_lights___web.html#af46bb9ec74ecb0f45b465c2722b9b18a" title="Lights_Web::websiteEvent\l_Refresh" alt="" coords="345,57,524,98"/>
-</map>

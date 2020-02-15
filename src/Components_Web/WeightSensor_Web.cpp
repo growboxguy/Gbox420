@@ -1,6 +1,6 @@
 #include "WeightSensor_Web.h"
 
-WeightSensor_Web::WeightSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WeightSensorSettings *DefaultSettings) : WeightSensor(Name,Parent,DefaultSettings), Common(Name), Common_Web(Name)
+WeightSensor_Web::WeightSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WeightSensorSettings *DefaultSettings) : WeightSensor(Name,Parent,DefaultSettings), Common_Web(Name), Common(Name)
 {
   this->Parent = Parent;
   this->Name = Name;

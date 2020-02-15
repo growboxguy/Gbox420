@@ -1,6 +1,0 @@
-<map id="PressureSensor::refresh_Minute" name="PressureSensor::refresh_Minute">
-<area shape="rect" id="node2" href="$class_common.html#a14e4462a94bd118028ce1d487ca0292c" title="Common::refresh_Minute" alt="" coords="231,5,401,32"/>
-<area shape="rect" id="node4" href="$class_pressure_sensor.html#a7a16702239fcf55a72e91c45fe4002ac" title="PressureSensor::readPressure" alt="" coords="216,56,416,83"/>
-<area shape="rect" id="node3" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="519,5,614,32"/>
-<area shape="rect" id="node5" href="$class_rolling_average.html#aa1fd09fa8d80046179ed7ed91bfed6d0" title="RollingAverage::updateAverage" alt="" coords="464,56,669,83"/>
-</map>

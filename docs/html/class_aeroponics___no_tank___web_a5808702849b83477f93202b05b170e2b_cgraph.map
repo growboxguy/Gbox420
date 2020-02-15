@@ -1,9 +1,0 @@
-<map id="Aeroponics_NoTank_Web::Aeroponics_NoTank_Web" name="Aeroponics_NoTank_Web::Aeroponics_NoTank_Web">
-<area shape="rect" id="node2" href="$class_module___web.html#a9b1a806569076aa701e961d54f888447" title="Module_Web::addToReportQueue" alt="" coords="236,5,455,32"/>
-<area shape="rect" id="node3" href="$class_module___web.html#a125e0abaefa5c6ab2379162a3ea9cf55" title="Module_Web::addToRefresh\lQueue_Sec" alt="" coords="251,57,439,98"/>
-<area shape="rect" id="node4" href="$class_module___web.html#a11f84c9609ed88d1bfcd869d64775e93" title="Module_Web::addToWebsite\lQueue_Load" alt="" coords="250,122,441,163"/>
-<area shape="rect" id="node6" href="$class_module___web.html#aee7880f65926af22ba1b83a73607e3b6" title="Module_Web::addToWebsite\lQueue_Refresh" alt="" coords="250,187,441,229"/>
-<area shape="rect" id="node7" href="$class_module___web.html#adadb1643a6b460c0d53a7341bb356ee1" title="Module_Web::addToWebsite\lQueue_Button" alt="" coords="250,253,441,294"/>
-<area shape="rect" id="node8" href="$class_module___web.html#a9f9ef9212523d06a130c5e9046b81adf" title="Module_Web::addToWebsite\lQueue_Field" alt="" coords="250,318,441,359"/>
-<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="503,163,597,189"/>
-</map>

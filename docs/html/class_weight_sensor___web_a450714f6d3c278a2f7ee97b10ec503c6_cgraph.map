@@ -1,6 +1,0 @@
-<map id="WeightSensor_Web::websiteEvent_Field" name="WeightSensor_Web::websiteEvent_Field">
-<area shape="rect" id="node2" href="$class_common.html#a0192d295366bf1e966d8b58a3ce57554" title="Common::isThisMyComponent" alt="" coords="248,5,451,32"/>
-<area shape="rect" id="node3" href="$class_weight_sensor.html#a37b50db6dc60c3bc6a22807af5e17283" title="WeightSensor::triggerCalibration" alt="" coords="244,56,455,83"/>
-<area shape="rect" id="node5" href="$class_weight_sensor.html#aa190a87fa5e384d2ead40c99116dc8a7" title="WeightSensor::setScale" alt="" coords="268,107,431,133"/>
-<area shape="rect" id="node4" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="503,56,632,83"/>
-</map>

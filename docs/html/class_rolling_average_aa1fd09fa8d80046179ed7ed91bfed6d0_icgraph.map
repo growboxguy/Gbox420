@@ -1,9 +1,0 @@
-<map id="RollingAverage::updateAverage" name="RollingAverage::updateAverage">
-<area shape="rect" id="node2" href="$class_d_h_t_sensor.html#a7e939e9b6e2e2910a67b98d820e9e552" title="DHTSensor::refresh\l_Minute" alt="" coords="292,5,431,47"/>
-<area shape="rect" id="node3" href="$class_light_sensor.html#aa6c29591860ab05672a183bc32fce6f4" title="LightSensor::refresh\l_Minute" alt="" coords="292,71,431,112"/>
-<area shape="rect" id="node4" href="$class_pressure_sensor.html#a7a16702239fcf55a72e91c45fe4002ac" title="PressureSensor::readPressure" alt="" coords="261,137,461,163"/>
-<area shape="rect" id="node7" href="$class_water_temp_sensor.html#ad3b641c41aea8f28b5b1640e16e2ccde" title="WaterTempSensor::refresh\l_Minute" alt="" coords="272,188,451,229"/>
-<area shape="rect" id="node8" href="$class_rolling_average.html#a8b3550acbd16b942b565150334205d52" title="RollingAverage::updateAverage" alt="" coords="259,254,464,281"/>
-<area shape="rect" id="node5" href="$class_aeroponics___no_tank.html#a8e0130107832f0a60d37ea581f6f67fb" title="Aeroponics_NoTank::\lrefresh_Sec" alt="" coords="519,97,667,139"/>
-<area shape="rect" id="node6" href="$class_pressure_sensor.html#a1081c5a1073a4c5d0c790f92e53febf0" title="PressureSensor::refresh\l_Minute" alt="" coords="512,163,675,204"/>
-</map>

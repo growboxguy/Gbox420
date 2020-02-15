@@ -1,6 +1,0 @@
-<map id="PowerSensorV3_Web::PowerSensorV3_Web" name="PowerSensorV3_Web::PowerSensorV3_Web">
-<area shape="rect" id="node2" href="$class_module___web.html#a9b1a806569076aa701e961d54f888447" title="Module_Web::addToReportQueue" alt="" coords="212,5,431,32"/>
-<area shape="rect" id="node3" href="$class_module___web.html#a38624eecf0efaefb9210a60868327020" title="Module_Web::addToRefresh\lQueue_FiveSec" alt="" coords="227,57,415,98"/>
-<area shape="rect" id="node4" href="$class_module___web.html#aee7880f65926af22ba1b83a73607e3b6" title="Module_Web::addToWebsite\lQueue_Refresh" alt="" coords="226,122,417,163"/>
-<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="479,129,573,156"/>
-</map>

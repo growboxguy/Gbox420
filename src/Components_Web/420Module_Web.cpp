@@ -1,6 +1,8 @@
 #include "420Module_Web.h"
 #include "Sound_Web.h"
 
+static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
+
 Module_Web::Module_Web() : Module()
 {
   logToSerials(F("Module_Web object created"), true, 0);
@@ -24,7 +26,7 @@ void Module_Web::runReport()
   getFormattedTime(true);
   getFreeMemory();
   logToSerials(reportQueueItemCount,false,0);
-  logToSerials(F(" web items refreshing:"),true,1);
+  logToSerials(F("web components refreshing:"),true,1);
   for (int i = 0; i < reportQueueItemCount; i++)
   {
     ReportQueue[i]->report();
@@ -124,9 +126,7 @@ void Module_Web::addToRefreshQueue_QuarterHour(Common_Web *Component)
 //Website subscriptions: When a component needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
 
 void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
-{
-   logToSerials(F("Load queue:"),false, 0);
-   logToSerials(WebsiteQueueItemCount_Load, true, 1);
+{   
   if (QueueDepth > WebsiteQueueItemCount_Load)
     WebsiteQueue_Load[WebsiteQueueItemCount_Load++] = Component;
   else
@@ -134,9 +134,7 @@ void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
 }
 
 void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Component)
-{
-   logToSerials(F("Refresh queue:"),false, 0);
-   logToSerials(WebsiteQueueItemCount_Refresh, true, 1);
+{   
   if (QueueDepth > WebsiteQueueItemCount_Refresh)
     WebsiteQueue_Refresh[WebsiteQueueItemCount_Refresh++] = Component;
   else
@@ -196,4 +194,47 @@ void Module_Web::setFieldEvent(char *field)
   {
     WebsiteQueue_Field[i]->websiteEvent_Field(field);
   }
+}
+
+//////////////////////////////////////////////////////////////////
+//Even logs on the website
+void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) byte Indent)
+{ //adds a log entry that is displayed on the web interface
+  //logToSerials(&LongMessage, true, Indent);
+  for (byte i = LogDepth - 1; i > 0; i--)
+  {                                       //Shift every log entry one up, dropping the oldest
+    memset(&Logs[i], 0, sizeof(Logs[i])); //clear variable
+    strncpy(Logs[i], Logs[i - 1], MaxTextLength);
+  }
+  memset(&Logs[0], 0, sizeof(Logs[0]));         //clear variable
+  strncpy(Logs[0], LongMessage, MaxTextLength); //instert new log to [0]
+}
+
+void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__((unused)) byte Indent)
+{ //function overloading: same function name, different parameter type
+  //logToSerials(&LongMessage, true, Indent);
+  for (byte i = LogDepth - 1; i > 0; i--)
+  {                                       //Shift every log entry one up, dropping the oldest
+    memset(&Logs[i], 0, sizeof(Logs[i])); //clear variable
+    strncpy(Logs[i], Logs[i - 1], MaxTextLength);
+  }
+  memset(&Logs[0], 0, sizeof(Logs[0]));                  //clear variable
+  strncpy_P(Logs[0], (PGM_P)LongMessage, MaxTextLength); //instert new log to [0]
+}
+
+char *Module_Web::eventLogToJSON(bool Append)
+{ //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
+  if (!Append)
+    memset(&LongMessage[0], 0, sizeof(LongMessage));
+  strcat_P(LongMessage, (PGM_P)F("["));
+  for (int i = LogDepth - 1; i >= 0; i--)
+  {
+    strcat_P(LongMessage, (PGM_P)F("\""));
+    strcat(LongMessage, Logs[i]);
+    strcat_P(LongMessage, (PGM_P)F("\""));
+    if (i > 0)
+      strcat_P(LongMessage, (PGM_P)F(","));
+  }
+  LongMessage[strlen(LongMessage)] = ']';
+  return LongMessage;
 }

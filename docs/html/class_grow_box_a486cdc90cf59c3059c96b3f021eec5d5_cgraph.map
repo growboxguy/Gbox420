@@ -1,6 +1,0 @@
-<map id="GrowBox::websiteEvent_Load" name="GrowBox::websiteEvent_Load">
-<area shape="rect" id="node2" href="$class_common.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="252,5,455,32"/>
-<area shape="rect" id="node3" href="$class_grow_box.html#aa75f2898bbac66ab08cb257e4285f51e" title="GrowBox::websiteEvent\l_Refresh" alt="" coords="272,57,435,98"/>
-<area shape="rect" id="node4" href="$_hempy_module_2src_2_helpers_8cpp.html#a3f55b54c0f3774dad453d8418b8e075d" title="getFormattedTime" alt="" coords="289,123,417,149"/>
-<area shape="rect" id="node5" href="$class_module.html#a3cb3b80bca51541305843ba3e6e7c5c1" title="Module::eventLogToJSON" alt="" coords="265,173,441,200"/>
-</map>

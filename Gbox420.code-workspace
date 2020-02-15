@@ -12,7 +12,8 @@
 		},
 		"search.exclude": {
 			"**/Test_Sketches": true,
-			"**/HempyModule": true
+			"**/Gbox420_Nano": true,
+			"**/docs": true
 		}
 	}
 }

@@ -1,8 +1,0 @@
-<map id="Aeroponics_Tank::sprayNow" name="Aeroponics_Tank::sprayNow">
-<area shape="rect" id="node2" href="$class_aeroponics___tank.html#a4ee215af07d5ee08e2b12efc9a7e1db9" title="Aeroponics_Tank::checkRelays" alt="" coords="244,5,451,32"/>
-<area shape="rect" id="node4" href="$class_module.html#a1c18e93583f527d470be447a9fcd1a0b" title="Module::getSoundObject" alt="" coords="265,56,430,83"/>
-<area shape="rect" id="node5" href="$class_sound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="275,107,420,133"/>
-<area shape="rect" id="node6" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="283,157,412,184"/>
-<area shape="rect" id="node7" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="300,208,395,235"/>
-<area shape="rect" id="node3" href="$class_aeroponics.html#a0f70505e6b8722985f6ab52f17595cdd" title="Aeroponics::checkRelays" alt="" coords="499,5,669,32"/>
-</map>
