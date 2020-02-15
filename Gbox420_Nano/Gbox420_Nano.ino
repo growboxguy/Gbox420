@@ -7,9 +7,9 @@
 #include "avr/boot.h"               //Watchdog timer related bug fix
 #include "Thread.h"                 //Splitting functions to threads for timing
 #include "StaticThreadController.h" //Grouping threads
-#include "SerialLog.h"              //Base class where all components inherits fro
-#include "Settings.h"              //Base class where all components inherits fro
-//#include "src/Components/420Common.h"              //Base class where all components inherits from
+#include "SerialLog.h"              
+#include "Settings.h"              
+#include "HempyModule.h"              
 
 //Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  //temp storage for assembling long messages (REST API, MQTT API)
@@ -21,7 +21,7 @@ HardwareSerial &ArduinoSerial = Serial;   //Reference to the Arduino Serial
 Settings * ModuleSettings;                //This object will store the settings loaded from the EEPROM. Persistent between reboots.
 bool *Debug;
 bool *Metric;
-//GrowBox *GBox;                            //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
+HempyModule *HempyMod1;                            //Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 //Thread initialization
 Thread OneSecThread = Thread();
@@ -36,7 +36,7 @@ void setup()
   ArduinoSerial.begin(115200);                         //Nano console output
   pinMode(13, OUTPUT);                                 //onboard LED - Heartbeat every second to confirm code is running
   logToSerials(F(""), true, 0);                         //New line
-  logToSerials(F("Arduino Mega initializing..."), true, 0); //logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
+  logToSerials(F("Arduino Nano initializing..."), true, 0); //logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                 //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                   //fix watchdog not loading sketch after a reset error on Mega2560
 
@@ -56,7 +56,7 @@ void setup()
   QuarterHourThread.onRun(runQuarterHour);
  
   //Create the Hempy bucket object
-  //GBox = new GrowBox(F("GBox1"), loadSettings()); //This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  HempyMod1 = new HempyModule(F("Hempy1"), &ModuleSettings->HempyMod1); //This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   //  sendEmailAlert(F("Grow%20box%20(re)started"));
   logToSerials(F("Setup ready, starting loops:"), true, 0);
@@ -74,28 +74,28 @@ void runSec()
 {
   wdt_reset();
   HeartBeat();    //Blinks built-in led
-  if(Debug) logToSerials(F("1 sec:"), true, 0);
+  if(Debug) logToSerials(F("1 sec thread:"), true, 0);
   //GBox->runSec(); //Calls the runSec() method in GrowBox.cpp
 }
 
 void runFiveSec()
 {
   wdt_reset();
-  if(Debug) logToSerials(F("5 sec:"), true, 0);
+  if(Debug) logToSerials(F("5 sec thread:"), true, 0);
   //GBox->runFiveSec();
 }
 
 void runMinute()
 {
   wdt_reset();
-  if(Debug) logToSerials(F("1 min:"), true, 0);
+  if(Debug) logToSerials(F("1 min thread:"), true, 0);
   //GBox->runMinute();  
 }
 
 void runQuarterHour()
 {
   wdt_reset();
-  if(Debug) (F("15 min:"), true, 0);
+  if(Debug) logToSerials(F("15 min thread:"), true, 0);
   //GBox->runQuarterHour();
 }
 
