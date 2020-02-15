@@ -33,7 +33,7 @@ StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteTh
 
 void setup()
 {                                                      // put your setup code here, to run once:
-  Serial.begin(115200);                         //Nano console output
+  ArduinoSerial.begin(115200);                         //Nano console output
   pinMode(13, OUTPUT);                                 //onboard LED - Heartbeat every second to confirm code is running
   logToSerials(F(""), true, 0);                         //New line
   logToSerials(F("Arduino Mega initializing..."), true, 0); //logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
@@ -72,26 +72,30 @@ void loop()
 
 void runSec()
 {
+  wdt_reset();
   HeartBeat();    //Blinks built-in led
+  if(Debug) logToSerials(F("1 sec:"), true, 0);
   //GBox->runSec(); //Calls the runSec() method in GrowBox.cpp
-  Serial.println("sec");
 }
 
 void runFiveSec()
 {
+  wdt_reset();
+  if(Debug) logToSerials(F("5 sec:"), true, 0);
   //GBox->runFiveSec();
-    Serial.println("5sec");
 }
 
 void runMinute()
 {
-  //GBox->runMinute();
-    Serial.println("min");
+  wdt_reset();
+  if(Debug) logToSerials(F("1 min:"), true, 0);
+  //GBox->runMinute();  
 }
 
 void runQuarterHour()
 {
   wdt_reset();
+  if(Debug) (F("15 min:"), true, 0);
   //GBox->runQuarterHour();
 }
 

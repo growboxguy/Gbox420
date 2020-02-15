@@ -21,7 +21,7 @@ extern char CurrentTime[MaxTextLength];      //buffer for storing current time i
 //If you change things here, increase the Version variable in line 4
 typedef struct
 {
-  bool Debug = false;          //Logs debug messages to serial and web outputs
+  bool Debug = true;          //Logs debug messages to serial and web outputs
   bool Metric = true;   //Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
   char PushingBoxLogRelayID[MaxTextLength] = {"v755877CF53383E1"};   //UPDATE THIS DeviceID of the PushingBox logging scenario 
 
