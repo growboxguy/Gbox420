@@ -26,7 +26,7 @@ void Module_Web::runReport()
   getFormattedTime(true);
   getFreeMemory();
   logToSerials(reportQueueItemCount,false,0);
-  logToSerials(F(" web items refreshing:"),true,1);
+  logToSerials(F("web components refreshing:"),true,1);
   for (int i = 0; i < reportQueueItemCount; i++)
   {
     ReportQueue[i]->report();
@@ -126,9 +126,7 @@ void Module_Web::addToRefreshQueue_QuarterHour(Common_Web *Component)
 //Website subscriptions: When a component needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
 
 void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
-{
-   logToSerials(F("Load queue:"),false, 0);
-   logToSerials(WebsiteQueueItemCount_Load, true, 1);
+{   
   if (QueueDepth > WebsiteQueueItemCount_Load)
     WebsiteQueue_Load[WebsiteQueueItemCount_Load++] = Component;
   else
@@ -136,9 +134,7 @@ void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
 }
 
 void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Component)
-{
-   logToSerials(F("Refresh queue:"),false, 0);
-   logToSerials(WebsiteQueueItemCount_Refresh, true, 1);
+{   
   if (QueueDepth > WebsiteQueueItemCount_Refresh)
     WebsiteQueue_Refresh[WebsiteQueueItemCount_Refresh++] = Component;
   else
@@ -202,7 +198,7 @@ void Module_Web::setFieldEvent(char *field)
 
 //////////////////////////////////////////////////////////////////
 //Even logs on the website
-void Module_Web::addToLog(const char *LongMessage, byte Indent)
+void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) byte Indent)
 { //adds a log entry that is displayed on the web interface
   //logToSerials(&LongMessage, true, Indent);
   for (byte i = LogDepth - 1; i > 0; i--)
@@ -214,7 +210,7 @@ void Module_Web::addToLog(const char *LongMessage, byte Indent)
   strncpy(Logs[0], LongMessage, MaxTextLength); //instert new log to [0]
 }
 
-void Module_Web::addToLog(const __FlashStringHelper *LongMessage, byte Indent)
+void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__((unused)) byte Indent)
 { //function overloading: same function name, different parameter type
   //logToSerials(&LongMessage, true, Indent);
   for (byte i = LogDepth - 1; i > 0; i--)

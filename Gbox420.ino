@@ -110,28 +110,24 @@ void runSec()
 {
   wdt_reset();    //reset watchdog timeout
   HeartBeat();    //Blinks built-in led
-  logToSerials(F("1 sec:"), true, 0);
   GBox->runSec(); //Calls the runSec() method in GrowBox.cpp
 }
 
 void runFiveSec()
 {
   wdt_reset();
-  logToSerials(F("5 sec:"), true, 0);
   GBox->runFiveSec();
 }
 
 void runMinute()
 {
   wdt_reset();
-  logToSerials(F("1 min:"), true, 0);
   GBox->runMinute();
 }
 
 void runQuarterHour()
 {
   wdt_reset();
-  logToSerials(F("15 min:"), true, 0);
   GBox->runQuarterHour();
 }
 

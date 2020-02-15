@@ -73,28 +73,24 @@ void runSec()
 {
   wdt_reset();
   HeartBeat();    //Blinks built-in led
-  if(Debug) logToSerials(F("1 sec thread:"), true, 0);
   HempyMod1->runSec(); //Calls the runSec() method in GrowBox.cpp
 }
 
 void runFiveSec()
 {
   wdt_reset();
-  if(Debug) logToSerials(F("5 sec thread:"), true, 0);
   HempyMod1->runFiveSec();
 }
 
 void runMinute()
 {
   wdt_reset();
-  if(Debug) logToSerials(F("1 min thread:"), true, 0);
   HempyMod1->runMinute();  
 }
 
 void runQuarterHour()
 {
   wdt_reset();
-  if(Debug) logToSerials(F("15 min thread:"), true, 0);
   HempyMod1->runQuarterHour();
 }
 

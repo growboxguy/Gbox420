@@ -3,7 +3,7 @@
 
 Module::Module()
 {
-  
+   logToSerials(F("Module object created"), true, 0);
 }
 
 /*
@@ -31,12 +31,59 @@ void Module::runReport()
 { //Reports component status to Serial output (Arduino and ESP)
   getFormattedTime(true);
   getFreeMemory();
-  logToSerials(reportQueueItemCount,false,0);
-  logToSerials(F(" web items refreshing:"),true,1);
+  logToSerials(reportQueueItemCount,false,1);
+  logToSerials(F("web components refreshing:"),true,1);
   for (int i = 0; i < reportQueueItemCount; i++)
   {
     ReportQueue[i]->report();
   }
+}
+
+//////////////////////////////////////////////////////////////////
+//Refresh queues: Refresh components inside the Module
+
+void Module::runSec()
+{
+  if (*Debug)
+    logToSerials(F("One sec trigger.."), true, 1);
+  for (int i = 0; i < refreshQueueItemCount_Sec; i++)
+  {
+    RefreshQueue_Sec[i]->refresh_Sec();
+  }
+}
+
+void Module::runFiveSec()
+{
+  if (*Debug)
+    logToSerials(F("Five sec trigger.."), true, 1);
+  for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
+  {
+    RefreshQueue_FiveSec[i]->refresh_FiveSec();
+  }
+}
+
+void Module::runMinute()
+{
+  if (*Debug)
+    logToSerials(F("Minute trigger.."), true, 1);
+  for (int i = 0; i < refreshQueueItemCount_Minute; i++)
+  {
+    RefreshQueue_Minute[i]->refresh_Minute();
+  }
+}
+
+void Module::runQuarterHour()
+{
+  if (*Debug)
+    logToSerials(F("Quarter hour trigger.."), true, 1);
+  for (int i = 0; i < refreshQueueItemCount_QuarterHour; i++)
+  {
+    RefreshQueue_QuarterHour[i]->refresh_QuarterHour();
+  }
+}
+
+Sound* Module::getSoundObject(){
+  return SoundFeedback;
 }
 
 //////////////////////////////////////////////////////////////////
@@ -82,54 +129,6 @@ void Module::addToRefreshQueue_QuarterHour(Common *Component)
   }
   else
     logToSerials(F("RefreshQueue_QuarterHour overflow!"), true, 0);
-}
-
-//////////////////////////////////////////////////////////////////
-//Refresh queues: Refresh components inside the Module
-
-void Module::runSec()
-{
-  if (*Debug)
-    logToSerials(F("One sec trigger.."), true, 1);
-  for (int i = 0; i < refreshQueueItemCount_Sec; i++)
-  {
-    RefreshQueue_Sec[i]->refresh_Sec();
-  }
-}
-
-void Module::runFiveSec()
-{
-  if (*Debug)
-    logToSerials(F("Five sec trigger.."), true, 1);
-  for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
-  {
-    RefreshQueue_FiveSec[i]->refresh_FiveSec();
-  }
-}
-
-void Module::runMinute()
-{
-  if (*Debug)
-    logToSerials(F("Minute trigger.."), true, 1);
-  for (int i = 0; i < refreshQueueItemCount_Minute; i++)
-  {
-    RefreshQueue_Minute[i]->refresh_Minute();
-  }
-}
-
-void Module::runQuarterHour()
-{
-  if (*Debug)
-    logToSerials(F("Quarter hour trigger.."), true, 1);
-  for (int i = 0; i < refreshQueueItemCount_QuarterHour; i++)
-  {
-    logToSerials(i, true, 0);
-    RefreshQueue_QuarterHour[i]->refresh_QuarterHour();
-  }
-}
-
-Sound* Module::getSoundObject(){
-  return SoundFeedback;
 }
 
 //////////////////////////////////////////////////////////////////
