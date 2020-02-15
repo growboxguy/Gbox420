@@ -179,6 +179,37 @@ void resetWebServer(void)
   logToSerials(F("ESP-link connected"), true, 0);
 }
 
+//////////////////////////////////////////
+//Time
+
+static bool SyncInProgress = false;
+time_t getNtpTime()
+{
+  time_t NTPResponse = 0;
+  if (!SyncInProgress)
+  { //blocking calling the sync again in an interrupt
+    SyncInProgress = true;
+    uint32_t LastRefresh = millis();
+    logToSerials(F("Waiting for NTP time (15sec timeout)..."), false, 0);
+    while (NTPResponse == 0 && millis() - LastRefresh < 15000)
+    {
+      NTPResponse = ESPCmd.GetTime();
+      delay(500);
+      logToSerials(F("."), false, 0);
+      wdt_reset(); //reset watchdog timeout
+    }
+    SyncInProgress = false;
+    if (NTPResponse == 0)
+    {
+      logToSerials(F("NTP time sync failed"), true, 1);
+      //sendEmailAlert(F("NTP%20time%20sync%20failed"));
+    }
+    else
+      logToSerials(F("time synchronized"), true, 1);
+  }
+  return NTPResponse;
+}
+
 void loadCallback(__attribute__((unused)) char *Url)
 { //called when website is loaded. Runs through all components that subscribed for this event
   GBox->loadEvent(Url);

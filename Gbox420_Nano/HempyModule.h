@@ -5,6 +5,7 @@
 //updating their statuses and reporting it to the Main module wirelessly
 //Listens and reacts to wireless commands from the main module
 
+#include "src/Components/420Common.h"
 #include "src/Components/420Module.h"
 
 //forward declaration of classes
@@ -21,12 +22,11 @@ public:
   HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings); //constructor
   Sound *Sound1;             //Pointer to a Piezo speaker - sound feedback
   DHTSensor *DHT1;          //Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
-  //DHTSensor *EDHT;          //Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
-  //PHSensor *PHSensor1;
-  //WaterTempSensor *WaterTemp1;
-  //WaterLevelSensor *WaterLevel1;
-  //WeightSensor *Weight1; 
-  //WeightSensor *Weight2;  
+  PHSensor *PHSensor1;
+  WaterTempSensor *WaterTemp1;
+  WaterLevelSensor *WaterLevel1;
+  WeightSensor *Weight1; 
+  WeightSensor *Weight2;  
   void refresh_FiveSec();
   void refresh_Minute();
   void refresh_QuarterHour(); 
@@ -37,5 +37,4 @@ private:
 
 protected:
   bool RefreshAllRequested = false;
-  bool ConsoleReportRequested = false; 
 };

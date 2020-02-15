@@ -37,7 +37,6 @@ protected:
   Sound* SoundFeedback = NULL;
   bool RunAllRequested = false;
   bool ConsoleReportRequested = false; 
-  char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   Common *ReportQueue[QueueDepth] = {};  //aggregate initializer: Same as initializing to null pointers
   Common *RefreshQueue_Sec[QueueDepth]= {};
   Common *RefreshQueue_FiveSec[QueueDepth]= {};

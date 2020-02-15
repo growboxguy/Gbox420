@@ -1,7 +1,6 @@
 #include "420Module.h"
 #include "Sound.h"
 
-static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 Module::Module()
 {
   
@@ -137,45 +136,13 @@ Sound* Module::getSoundObject(){
 //Even logs on the website
 void Module::addToLog(const char *LongMessage, byte Indent)
 { //adds a log entry that is displayed on the web interface
-  //logToSerials(&LongMessage, true, Indent);
-  for (byte i = LogDepth - 1; i > 0; i--)
-  {                                       //Shift every log entry one up, dropping the oldest
-    memset(&Logs[i], 0, sizeof(Logs[i])); //clear variable
-    strncpy(Logs[i], Logs[i - 1], MaxTextLength);
-  }
-  memset(&Logs[0], 0, sizeof(Logs[0]));         //clear variable
-  strncpy(Logs[0], LongMessage, MaxTextLength); //instert new log to [0]
+  logToSerials(&LongMessage, true, Indent);  
 }
 
 void Module::addToLog(const __FlashStringHelper *LongMessage, byte Indent)
 { //function overloading: same function name, different parameter type
-  //logToSerials(&LongMessage, true, Indent);
-  for (byte i = LogDepth - 1; i > 0; i--)
-  {                                       //Shift every log entry one up, dropping the oldest
-    memset(&Logs[i], 0, sizeof(Logs[i])); //clear variable
-    strncpy(Logs[i], Logs[i - 1], MaxTextLength);
-  }
-  memset(&Logs[0], 0, sizeof(Logs[0]));                  //clear variable
-  strncpy_P(Logs[0], (PGM_P)LongMessage, MaxTextLength); //instert new log to [0]
+  logToSerials(&LongMessage, true, Indent);  
 }
-
-char *Module::eventLogToJSON(bool Append)
-{ //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
-  if (!Append)
-    memset(&LongMessage[0], 0, sizeof(LongMessage));
-  strcat_P(LongMessage, (PGM_P)F("["));
-  for (int i = LogDepth - 1; i >= 0; i--)
-  {
-    strcat_P(LongMessage, (PGM_P)F("\""));
-    strcat(LongMessage, Logs[i]);
-    strcat_P(LongMessage, (PGM_P)F("\""));
-    if (i > 0)
-      strcat_P(LongMessage, (PGM_P)F(","));
-  }
-  LongMessage[strlen(LongMessage)] = ']';
-  return LongMessage;
-}
-
 
 //////////////////////////////////////////
 //Time

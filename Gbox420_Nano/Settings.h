@@ -1,15 +1,14 @@
 #pragma once
 
 //Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 3;
+static const byte Version = 5;
 
 //THIS SECTION DOES NOT GET STORED IN EEPROM:
 //Global constants
 static const byte MaxTextLength = 32;      //Default char * buffer for storing a word + null terminator. Memory intense!
-static const byte MaxShotTextLength = 128; //Default char * buffer for storing mutiple words. Memory intense!
-static const int MaxLongTextLength = 512; //Default char * buffer for storing a long text. Memory intense!
+static const byte MaxShotTextLength = 64; //Default char * buffer for storing mutiple words. Memory intense!
+static const int MaxLongTextLength = 256; //Default char * buffer for storing a long text. Memory intense!
 
-static const byte LogDepth = 5;                  //Show X number of log entries on website. Be careful, Max 1024bytes can be passed during a Website refresh event, incuding all parameters passed
 static const byte QueueDepth = 8;               //Limits the maximum number of active modules. Memory intense!
 static const byte RollingAverageDepth = 10;               //Limits the maximum number of active modules. Memory intense!
 //Global variables

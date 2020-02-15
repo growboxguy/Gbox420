@@ -59,7 +59,7 @@ public:
   void reportToGoogleSheetsTrigger();
   void reportToGoogleSheets(bool CalledFromWebsite);
   void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
-
+ 
 private:
   void setSheetsReportingOnOff(bool State);
   void setSheetsReportingFrequency(int Frequency);

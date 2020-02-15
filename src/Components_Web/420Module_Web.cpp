@@ -1,6 +1,8 @@
 #include "420Module_Web.h"
 #include "Sound_Web.h"
 
+static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
+
 Module_Web::Module_Web() : Module()
 {
   logToSerials(F("Module_Web object created"), true, 0);
@@ -198,33 +200,45 @@ void Module_Web::setFieldEvent(char *field)
   }
 }
 
-//////////////////////////////////////////
-//Time
-
-static bool SyncInProgress = false;
-time_t getNtpTime()
-{
-  time_t NTPResponse = 0;
-  if (!SyncInProgress)
-  { //blocking calling the sync again in an interrupt
-    SyncInProgress = true;
-    uint32_t LastRefresh = millis();
-    logToSerials(F("Waiting for NTP time (15sec timeout)..."), false, 0);
-    while (NTPResponse == 0 && millis() - LastRefresh < 15000)
-    {
-      NTPResponse = ESPCmd.GetTime();
-      delay(500);
-      logToSerials(F("."), false, 0);
-      wdt_reset(); //reset watchdog timeout
-    }
-    SyncInProgress = false;
-    if (NTPResponse == 0)
-    {
-      logToSerials(F("NTP time sync failed"), true, 1);
-      //sendEmailAlert(F("NTP%20time%20sync%20failed"));
-    }
-    else
-      logToSerials(F("time synchronized"), true, 1);
+//////////////////////////////////////////////////////////////////
+//Even logs on the website
+void Module_Web::addToLog(const char *LongMessage, byte Indent)
+{ //adds a log entry that is displayed on the web interface
+  //logToSerials(&LongMessage, true, Indent);
+  for (byte i = LogDepth - 1; i > 0; i--)
+  {                                       //Shift every log entry one up, dropping the oldest
+    memset(&Logs[i], 0, sizeof(Logs[i])); //clear variable
+    strncpy(Logs[i], Logs[i - 1], MaxTextLength);
   }
-  return NTPResponse;
+  memset(&Logs[0], 0, sizeof(Logs[0]));         //clear variable
+  strncpy(Logs[0], LongMessage, MaxTextLength); //instert new log to [0]
+}
+
+void Module_Web::addToLog(const __FlashStringHelper *LongMessage, byte Indent)
+{ //function overloading: same function name, different parameter type
+  //logToSerials(&LongMessage, true, Indent);
+  for (byte i = LogDepth - 1; i > 0; i--)
+  {                                       //Shift every log entry one up, dropping the oldest
+    memset(&Logs[i], 0, sizeof(Logs[i])); //clear variable
+    strncpy(Logs[i], Logs[i - 1], MaxTextLength);
+  }
+  memset(&Logs[0], 0, sizeof(Logs[0]));                  //clear variable
+  strncpy_P(Logs[0], (PGM_P)LongMessage, MaxTextLength); //instert new log to [0]
+}
+
+char *Module_Web::eventLogToJSON(bool Append)
+{ //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
+  if (!Append)
+    memset(&LongMessage[0], 0, sizeof(LongMessage));
+  strcat_P(LongMessage, (PGM_P)F("["));
+  for (int i = LogDepth - 1; i >= 0; i--)
+  {
+    strcat_P(LongMessage, (PGM_P)F("\""));
+    strcat(LongMessage, Logs[i]);
+    strcat_P(LongMessage, (PGM_P)F("\""));
+    if (i > 0)
+      strcat_P(LongMessage, (PGM_P)F(","));
+  }
+  LongMessage[strlen(LongMessage)] = ']';
+  return LongMessage;
 }

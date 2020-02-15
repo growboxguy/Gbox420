@@ -27,7 +27,6 @@ public:
   void runFiveSec();
   void runMinute();
   void runQuarterHour();
-  time_t getNtpTime();
   void addToWebsiteQueue_Load(Common_Web *Component);
   void addToWebsiteQueue_Refresh(Common_Web *Component);
   void addToWebsiteQueue_Button(Common_Web *Component);
@@ -41,6 +40,9 @@ public:
   void addToRefreshQueue_FiveSec(Common_Web *Component);
   void addToRefreshQueue_Minute(Common_Web *Component);
   void addToRefreshQueue_QuarterHour(Common_Web *Component);
+  void addToLog(const __FlashStringHelper *Text, byte indent = 3);
+  void addToLog(const char *Text, byte indent = 3); 
+  char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   Sound_Web * getSoundObject();
   //void relayToGoogleSheets(__attribute__((unused)) const __FlashStringHelper *Title, __attribute__((unused)) char (*JSONData)[MaxLongTextLength]){};
 
