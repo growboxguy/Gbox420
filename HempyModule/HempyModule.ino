@@ -3,9 +3,13 @@
 
 
 #include "Arduino.h"
+#include "avr/wdt.h"                //Watchdog timer for detecting a crash and automatically resetting the board
+#include "avr/boot.h"               //Watchdog timer related bug fix
 #include "Thread.h"                 //Splitting functions to threads for timing
 #include "StaticThreadController.h" //Grouping threads
-#include "src/Components/420Common.h"              //Base class where all components inherits from
+#include "SerialLog.h"              //Base class where all components inherits fro
+#include "Settings.h"              //Base class where all components inherits fro
+//#include "src/Components/420Common.h"              //Base class where all components inherits from
 
 //Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  //temp storage for assembling long messages (REST API, MQTT API)
@@ -13,7 +17,7 @@ char ShortMessage[MaxShotTextLength] = ""; //temp storage for assembling short m
 char CurrentTime[MaxTextLength] = "";      //buffer for storing current time in text
 
 //Component initialization
-//HardwareSerial &ArduinoSerial = Serial;   //Reference to the Arduino Serial
+HardwareSerial &ArduinoSerial = Serial;   //Reference to the Arduino Serial
 
 //Thread initialization
 Thread OneSecThread = Thread();
@@ -24,11 +28,11 @@ StaticThreadController<3> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteTh
 void setup()
 {                                                      // put your setup code here, to run once:
   Serial.begin(115200);                         //2560mega console output
-  //pinMode(13, OUTPUT);                                 //onboard LED - Heartbeat every second to confirm code is running
- // logToSerials(F(""), true, 0);                         //New line
-  Serial.println("Hempy bucket module initializing..."); //logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
-  //wdt_enable(WDTO_8S);                                 //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
-  //boot_rww_enable();                                   //fix watchdog not loading sketch after a reset error on Mega2560
+  pinMode(13, OUTPUT);                                 //onboard LED - Heartbeat every second to confirm code is running
+  logToSerials(F(""), true, 0);                         //New line
+  Serial.println("Gbox420 Nano initializing..."); //logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
+  wdt_enable(WDTO_8S);                                 //Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
+  boot_rww_enable();                                   //fix watchdog not loading sketch after a reset error on Mega2560
 
  // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.setInterval(1000);

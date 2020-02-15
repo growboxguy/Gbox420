@@ -2,7 +2,7 @@
 
 #include "Arduino.h"     //every inheriting class have Arduino commands available
 #include "ELClientRest.h" //ESP-link - REST API
-#include "../Settings.h"
+#include "../../Settings.h"
 #include "../Helpers.h"
 #include "../Components/420Module.h"
 #include "420Common_Web.h"
@@ -23,6 +23,7 @@ public:
   void runFiveSec();
   void runMinute();
   void runQuarterHour();
+  time_t getNtpTime();
   void addToWebsiteQueue_Load(Common_Web *Component);
   void addToWebsiteQueue_Refresh(Common_Web *Component);
   void addToWebsiteQueue_Button(Common_Web *Component);

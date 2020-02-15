@@ -175,3 +175,16 @@ char *Module::eventLogToJSON(bool Append)
   LongMessage[strlen(LongMessage)] = ']';
   return LongMessage;
 }
+
+
+//////////////////////////////////////////
+//Time
+
+char *getFormattedTime(bool PrintToSerials)
+{
+  time_t Now = now();                                                                                                                                // Get the current time and date from the TimeLib library
+  snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d", year(Now), month(Now), day(Now), hour(Now), minute(Now), second(Now)); // YYYY/MM/DD-HH:mm:SS formatted time will be stored in CurrentTime global variable
+  if (PrintToSerials)
+    logToSerials(&CurrentTime, true, 0);
+  return CurrentTime;
+}

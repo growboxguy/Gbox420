@@ -5,8 +5,9 @@
 
 #include "Arduino.h"     //every inheriting class have Arduino commands available
 #include "TimeLib.h"     //keeping track of time
-#include "../Settings.h" //for loading defaults and storing/reading user settings
+#include "../../Settings.h" //for loading defaults and storing/reading user settings
 #include "../Helpers.h"  //global functions
+#include "../../SerialLog.h"  //global functions
 
 
 //forward declaration

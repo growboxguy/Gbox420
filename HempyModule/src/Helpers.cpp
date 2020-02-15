@@ -12,69 +12,6 @@ void getFreeMemory()
 }
 
 //////////////////////////////////////////
-//Logging
-
-void logToSerials(const __FlashStringHelper *ToPrint, bool BreakLine, byte Indent)
-{
-  while (Indent > 0)
-  {
-    ArduinoSerial.print(F(" "));
-    ESPSerial.print(F(" "));
-    Indent--;
-  }
-  if (BreakLine)
-  {
-    ArduinoSerial.println(ToPrint);
-    ESPSerial.println(ToPrint);
-  }
-  else
-  {
-    ArduinoSerial.print(ToPrint);
-    ESPSerial.print(ToPrint);
-  }
-}
-
-//////////////////////////////////////////
-//Time
-
-char *getFormattedTime(bool PrintToSerials)
-{
-  time_t Now = now();                                                                                                                                // Get the current time and date from the TimeLib library
-  snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d", year(Now), month(Now), day(Now), hour(Now), minute(Now), second(Now)); // YYYY/MM/DD-HH:mm:SS formatted time will be stored in CurrentTime global variable
-  if (PrintToSerials)
-    logToSerials(&CurrentTime, true, 0);
-  return CurrentTime;
-}
-
-static bool SyncInProgress = false;
-time_t getNtpTime()
-{
-  time_t NTPResponse = 0;
-  if (!SyncInProgress)
-  { //blocking calling the sync again in an interrupt
-    SyncInProgress = true;
-    uint32_t LastRefresh = millis();
-    logToSerials(F("Waiting for NTP time (15sec timeout)..."), false, 0);
-    while (NTPResponse == 0 && millis() - LastRefresh < 15000)
-    {
-      NTPResponse = ESPCmd.GetTime();
-      delay(500);
-      logToSerials(F("."), false, 0);
-      wdt_reset(); //reset watchdog timeout
-    }
-    SyncInProgress = false;
-    if (NTPResponse == 0)
-    {
-      logToSerials(F("NTP time sync failed"), true, 1);
-      //sendEmailAlert(F("NTP%20time%20sync%20failed"));
-    }
-    else
-      logToSerials(F("time synchronized"), true, 1);
-  }
-  return NTPResponse;
-}
-
-//////////////////////////////////////////
 //Conversions
 
 float convertBetweenTempUnits(float Value)

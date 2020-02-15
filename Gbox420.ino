@@ -23,8 +23,9 @@
 #include "ELClientRest.h"           //ESP-link - REST API
 #include "Thread.h"                 //Splitting functions to threads for timing
 #include "StaticThreadController.h" //Grouping threads
+#include "SerialLog.h"              //Logging to the Serial console output
 #include "src/Components_Web/420Common_Web.h"              //Base class where all components inherits from
-#include "src/Settings.h"
+#include "Settings.h"
 #include "src/Modules/GrowBox.h"                //Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 //Global variable initialization

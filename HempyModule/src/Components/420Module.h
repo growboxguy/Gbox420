@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Arduino.h"     //every inheriting class have Arduino commands available
-#include "../Settings.h"
+#include "../../Settings.h"
 #include "../Helpers.h"
 #include "420Common.h"
 

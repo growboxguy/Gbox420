@@ -2,5 +2,5 @@
     "port": "/dev/ttyUSB0",
     "board": "arduino:avr:nano",
     "configuration": "cpu=atmega328old",
-    "sketch": "Gbox420_Nano.ino"
+    "sketch": "HempyModule.ino"
 }
