@@ -3,7 +3,7 @@
 
 //#include "3rdPartyModlue.h" //Load any required 3rd party modules here
 #include "420Common.h"
-#include "../Modules/420Module.h"
+#include "420Module.h"
 
 class ModuleSkeleton : virtual public Common
 {

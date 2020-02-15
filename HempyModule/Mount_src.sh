@@ -3,9 +3,7 @@ echo "Mounts shared components from the Gbox420 sketch"
 echo "------------------------------------------"
 echo "Creating mounting point for Modules"
 mkdir ./src
-mkdir ./src/Modules
 mkdir ./src/Components
-sudo mount -o bind ../src/Modules ./src/Modules
 sudo mount -o bind ../src/Components ./src/Components
 
 echo "Creating hard links"

@@ -1,7 +1,7 @@
 #pragma once
 #include "HX711.h"
 #include "420Common.h"
-#include "../Modules/420Module.h"
+#include "420Module.h"
 
 class WeightSensor : virtual public Common
 {

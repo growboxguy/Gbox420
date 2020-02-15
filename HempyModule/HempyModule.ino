@@ -5,7 +5,7 @@
 #include "Arduino.h"
 #include "Thread.h"                 //Splitting functions to threads for timing
 #include "StaticThreadController.h" //Grouping threads
-#include "src/Modules/420Common.h"              //Base class where all components inherits from
+#include "src/Components/420Common.h"              //Base class where all components inherits from
 
 //Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  //temp storage for assembling long messages (REST API, MQTT API)

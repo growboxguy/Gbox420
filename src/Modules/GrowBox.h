@@ -3,7 +3,7 @@
 //This class represents a complete growbox with all of its components
 //Responsible for setting up each module, updating their statuses and reporting it
 
-#include "420Module_Web.h"
+#include "../Components_Web/420Module_Web.h"
 #include "ELClientRest.h" //ESP-link - REST API
 
 //forward declaration of classes

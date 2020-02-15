@@ -1,5 +1,5 @@
 #include "420Module.h"
-#include "../Components/Sound.h"
+#include "Sound.h"
 
 static char Logs[LogDepth][MaxTextLength]; //two dimensional array for storing log histroy displayed on the website (array of char arrays)
 Module::Module()

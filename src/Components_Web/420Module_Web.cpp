@@ -1,5 +1,5 @@
 #include "420Module_Web.h"
-#include "../Components_Web/Sound_Web.h"
+#include "Sound_Web.h"
 
 Module_Web::Module_Web() : Module()
 {

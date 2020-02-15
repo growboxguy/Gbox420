@@ -1,7 +1,7 @@
 #pragma once
 
 #include "420Common.h"
-#include "../Modules/420Module.h"
+#include "420Module.h"
 #include "Lights.h"
 
 class LightSensor : virtual public Common

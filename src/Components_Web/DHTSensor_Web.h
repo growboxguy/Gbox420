@@ -2,7 +2,7 @@
 
 #include "DHT.h" //DHT11 or DHT22 Digital Humidity and Temperature sensor
 #include "420Common_Web.h"
-#include "../Modules/420Module_Web.h"
+#include "420Module_Web.h"
 #include "../Components/DHTSensor.h"
 
 class DHTSensor_Web : public DHTSensor, public Common_Web

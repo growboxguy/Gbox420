@@ -2,7 +2,7 @@
 
 #include "PZEM004T.h" //3rd party module for the PZEM004T power sensor
 #include "420Common_Web.h"
-#include "../Modules/420Module_Web.h"
+#include "420Module_Web.h"
 #include "../Components/PowerSensor.h"
 
 class PowerSensor_Web : public PowerSensor, public Common_Web

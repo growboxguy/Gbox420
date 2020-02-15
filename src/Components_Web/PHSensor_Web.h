@@ -1,7 +1,7 @@
 #pragma once
 
 #include "420Common_Web.h"
-#include "../Modules/420Module_Web.h"
+#include "420Module_Web.h"
 #include "../Components/PHSensor.h"
 
 class PHSensor_Web : public PHSensor, public Common_Web
