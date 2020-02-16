@@ -3,7 +3,7 @@
 ///This is a virtual class from which all other classes inherit from (GrowBox, PH reader, Lights, DHTSensor..)
 ///Enforces a set of Common functions shared by the components
 
-#include "Arduino.h"     ///every inheriting class have Arduino commands available
+#include "Arduino.h"     
 #include "TimeLib.h"     ///keeping track of time
 #include "../../Settings.h" ///for loading defaults and storing/reading user settings
 #include "../Helpers.h"  ///global functions

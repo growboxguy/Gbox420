@@ -1,8 +1,10 @@
 #pragma once
 
-#include "PZEM004T.h" ///3rd party module for the PZEM004T power sensor
+#include "PZEM004T.h" 
 #include "420Common.h"
 #include "420Module.h"
+
+///PZEM004T power sensor
 
 class PowerSensor : virtual public Common
 {

@@ -3,9 +3,8 @@
 ///This is a collection of common functions that every component can use
 ///Needs to be included in the module's header (.h) file:  #include "420Common.h"
 
-#include "Arduino.h"           ///every inheriting class have Arduino commands available
+#include "Arduino.h"           
 
-///Forward declaration
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;
 

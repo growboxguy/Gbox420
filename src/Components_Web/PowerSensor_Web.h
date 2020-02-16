@@ -1,9 +1,11 @@
 #pragma once
 
-#include "PZEM004T.h" ///3rd party module for the PZEM004T power sensor
+#include "PZEM004T.h"
 #include "420Common_Web.h"
 #include "420Module_Web.h"
 #include "../Components/PowerSensor.h"
+
+///PZEM004T power sensor website component
 
 class PowerSensor_Web : public PowerSensor, public Common_Web
 {

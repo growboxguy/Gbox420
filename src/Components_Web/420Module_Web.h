@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Arduino.h"     ///every inheriting class have Arduino commands available
+#include "Arduino.h"     
 #include "ELClient.h"          ///ESP-link
 #include "ELClientWebServer.h" ///ESP-link - WebServer API
 #include "ELClientRest.h" ///ESP-link - REST API

@@ -42,6 +42,6 @@ protected:
   void setPrimingTime(int Timing);
   virtual void sprayNow(bool FromWebsite = false) = 0;
   virtual void sprayOff() = 0;
-  virtual char *sprayStateToText() = 0; ///pure virtual function, has no definition. Defined in child classes only
+  virtual char *sprayStateToText() = 0; ///pure virtual function
   void setSprayOnOff(bool State);
 };

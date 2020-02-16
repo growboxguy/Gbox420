@@ -30,7 +30,7 @@ typedef struct
     bool Debug;  ///Enable/disable debug output to Serial
     bool Metric; ///Metric or Imperial
   };  
-  struct HempyModuleSettings HempyMod1 = {.Debug = true, .Metric = true};
+  struct HempyModuleSettings HempyMod1 = {.Debug = true, .Metric = true};  ///Default settings for the Hempy Module
   
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
@@ -38,7 +38,7 @@ typedef struct
     byte Pin;
     byte Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
   };
-  struct DHTSensorSettings DHT1 = {.Pin = 9, .Type = 22};
+  struct DHTSensorSettings DHT1 = {.Pin = 9, .Type = 22};  ///Default settings for the DHT sensor
  
   struct SoundSettings
   {
@@ -46,7 +46,7 @@ typedef struct
     byte Pin;            ///PC buzzer+ (red)
     bool Enabled = true; ///Enable PC speaker / Piezo buzzer
   };
-  struct SoundSettings Sound1 = {.Pin = 2};
+  struct SoundSettings Sound1 = {.Pin = 2};  ///Default settings for the  Sound output
 
   struct PHSensorSettings
   {
@@ -55,7 +55,7 @@ typedef struct
     float Slope;
     float Intercept;
   };
-  struct PHSensorSettings PHSensor1 = {.Pin = A3, .Slope = -0.033256, .Intercept = 24.08651}; ///Update this to your own PH meter calibration values
+  struct PHSensorSettings PHSensor1 = {.Pin = A3, .Slope = -0.033256, .Intercept = 24.08651}; //////Default settings for the PH sensor, update the calibration values
 
   struct WeightSensorSettings
   {
@@ -65,8 +65,8 @@ typedef struct
     float Scale;  ///Calibration scale value
     long TareOffset; ///Reading at 0 weight on the scale
   };
-  struct WeightSensorSettings Weight1 = {.DTPin = 3, .SCKPin = 4, .Scale = 125000.0, .TareOffset=146000};
-  struct WeightSensorSettings Weight2 = {.DTPin = 5, .SCKPin = 6, .Scale = 126000.0, .TareOffset=267461};
+  struct WeightSensorSettings Weight1 = {.DTPin = 3, .SCKPin = 4, .Scale = 125000.0, .TareOffset=146000}; ///Default settings for the 
+  struct WeightSensorSettings Weight2 = {.DTPin = 5, .SCKPin = 6, .Scale = 126000.0, .TareOffset=267461}; ///Default settings for the 
 
   struct WaterTempSensorSettings
   {

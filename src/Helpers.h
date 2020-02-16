@@ -4,7 +4,7 @@
 ///Needs to be included in the module's header (.h) file:  #include "420Common.h"
 ///During conversion the result is always copied into the ShortMessage global char array.
 
-#include "Arduino.h"           ///every inheriting class have Arduino commands available
+#include "Arduino.h"           
 #include "TimeLib.h"           ///Keeping track of time
 #include "MemoryFree.h"        ///checking remaining memory - only for debugging
 #include "avr/wdt.h"           ///Watchdog timer
@@ -12,7 +12,7 @@
 #include "../Settings.h"       ///for storing/reading defaults
 #include "RollingAverage.h" ///for smoothing sensor readings, average of last readings
 
-///Forward declaration
+
 class GrowBox;
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;
