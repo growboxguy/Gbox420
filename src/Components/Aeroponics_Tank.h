@@ -21,7 +21,7 @@ protected:
   char *sprayStateToText();
   void refillTank();
   byte *SpraySolenoidPin;
-  bool SpraySolenoidOn = false; //Aeroponics - Controls the spray valve, set to true to spay at power on.
-  float *PressureLow;           //Aeroponics - Turn on pump below this pressure (bar)
-  float *PressureHigh;          //Aeroponics - Turn off pump above this pressure (bar)
+  bool SpraySolenoidOn = false; ///Aeroponics - Controls the spray valve, set to true to spay at power on.
+  float *PressureLow;           ///Aeroponics - Turn on pump below this pressure (bar)
+  float *PressureHigh;          ///Aeroponics - Turn off pump above this pressure (bar)
 };

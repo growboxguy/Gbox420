@@ -6,7 +6,7 @@
 class Lights : virtual public Common
 {
 public:
-  Lights(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings); //constructor
+  Lights(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings); ///constructor
   void refresh_Minute();
   void report();
   void setBrightness(byte Brightness, bool AddToLog);
@@ -30,14 +30,14 @@ protected:
   void setOnMinute(byte OnMinute);
   void setOffHour(byte OffHour);
   void setOffMinute(byte OffMinute);
-  byte *RelayPin;     //the Arduino pin controlling the AC relay
-  byte *DimmingPin;   //PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
-  byte *DimmingLimit; //Sets the LED dimming limit (Usually around 5%)
-  bool *Status;       //Lights ON or OFF
-  bool *TimerEnabled; //Enable timer controlling lights: true - Timer enabled, false - Timer disabled
-  byte *OnHour;       //Light ON time - hour
-  byte *OnMinute;     //Light ON time - minute
-  byte *OffHour;      //Light OFF time - hour
-  byte *OffMinute;    //Light OFF time - minute
-  byte *Brightness;   //Light intensity: 0 - 100 range for controlling led driver output
+  byte *RelayPin;     ///the Arduino pin controlling the AC relay
+  byte *DimmingPin;   ///PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
+  byte *DimmingLimit; ///Sets the LED dimming limit (Usually around 5%)
+  bool *Status;       ///Lights ON or OFF
+  bool *TimerEnabled; ///Enable timer controlling lights: true - Timer enabled, false - Timer disabled
+  byte *OnHour;       ///Light ON time - hour
+  byte *OnMinute;     ///Light ON time - minute
+  byte *OffHour;      ///Light OFF time - hour
+  byte *OffMinute;    ///Light OFF time - minute
+  byte *Brightness;   ///Light intensity: 0 - 100 range for controlling led driver output
 };

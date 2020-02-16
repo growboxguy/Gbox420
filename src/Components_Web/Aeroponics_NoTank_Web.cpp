@@ -4,12 +4,12 @@ Aeroponics_NoTank_Web::Aeroponics_NoTank_Web(const __FlashStringHelper *Name, Mo
 {
   this->Parent = Parent;
   this->Name = Name;
-  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Sec(this);     //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
-  Parent->addToWebsiteQueue_Load(this);    //Subscribing to the Website load event: Calls the websiteEvent_Load() method
-  Parent->addToWebsiteQueue_Refresh(this); //Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  Parent->addToWebsiteQueue_Button(this);  //Subscribing to the Website button press event: Calls the websiteEvent_Button() method
-  Parent->addToWebsiteQueue_Field(this);   //Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
+  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Sec(this);     ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
+  Parent->addToWebsiteQueue_Load(this);    ///Subscribing to the Website load event: Calls the websiteEvent_Load() method
+  Parent->addToWebsiteQueue_Refresh(this); ///Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
+  Parent->addToWebsiteQueue_Button(this);  ///Subscribing to the Website button press event: Calls the websiteEvent_Button() method
+  Parent->addToWebsiteQueue_Field(this);   ///Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
 }
 
 void Aeroponics_NoTank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
@@ -57,7 +57,7 @@ void Aeroponics_NoTank_Web::websiteEvent_Button(char *Button)
 }
 
 void Aeroponics_NoTank_Web::websiteEvent_Field(__attribute__((unused)) char *Field)
-{ //When a field is submitted using the Set button
+{ ///When a field is submitted using the Set button
   if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0){setPumpTimeout(WebServer.getArgInt());}
   else if (strcmp_P(ShortMessage, (PGM_P)F("Priming")) == 0){setPrimingTime(WebServer.getArgInt());}
   else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0){setDuration(WebServer.getArgInt());}
