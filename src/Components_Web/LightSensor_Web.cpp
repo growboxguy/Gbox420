@@ -1,6 +1,6 @@
 #include "LightSensor_Web.h"
 
-LightSensor_Web::LightSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource) : LightSensor(Name,Parent,DefaultSettings,LightSource), Common(Name), Common_Web(Name)
+LightSensor_Web::LightSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource) : LightSensor(Name,Parent,DefaultSettings,LightSource), Common_Web(Name), Common(Name)
 { //constructor
   this->Parent = Parent;
   this->Name = Name; 

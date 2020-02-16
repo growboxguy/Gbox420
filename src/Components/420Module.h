@@ -1,17 +1,15 @@
 #pragma once
 
-#include "Arduino.h"     //every inheriting class have Arduino commands available
-#include "../Settings.h"
-#include "../Helpers.h"
 #include "420Common.h"
-
+#include "../../Settings.h"
+#include "../Helpers.h"
 
 //This class is the parent of all physical modules, like the Main / Hempy Bucket / Aeroponics / Environment module
 //Responsible for creating and
 //Adds 
 class Sound;
 
-class Module
+class Module : virtual public Common
 {
 public:
   Module(); //constructor
@@ -30,6 +28,7 @@ public:
   void addToRefreshQueue_FiveSec(Common *Component);
   void addToRefreshQueue_Minute(Common *Component);
   void addToRefreshQueue_QuarterHour(Common *Component);
+  char * getFormattedTime(bool PrintToSerials);
   Sound * getSoundObject();
     
 private:
@@ -37,8 +36,6 @@ private:
 protected:
   Sound* SoundFeedback = NULL;
   bool RunAllRequested = false;
-  bool ConsoleReportRequested = false; 
-  char *eventLogToJSON(bool Append = false); //Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   Common *ReportQueue[QueueDepth] = {};  //aggregate initializer: Same as initializing to null pointers
   Common *RefreshQueue_Sec[QueueDepth]= {};
   Common *RefreshQueue_FiveSec[QueueDepth]= {};

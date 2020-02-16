@@ -1,6 +1,6 @@
 #include "PHSensor_Web.h"
 
-PHSensor_Web::PHSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PHSensorSettings *DefaultSettings) : PHSensor(Name,Parent,DefaultSettings), Common(Name), Common_Web(Name)
+PHSensor_Web::PHSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PHSensorSettings *DefaultSettings) : PHSensor(Name,Parent,DefaultSettings), Common_Web(Name), Common(Name)
 { //constructor
   this->Parent = Parent;
   this->Name = Name;
@@ -17,7 +17,7 @@ void PHSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
   if (strncmp(url, "/S",2) == 0)
   {
     //WebServer.setArgString(F("PHAlertLow"), toText(GBox -> Reservoir -> PHAlertLow));
-    //WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> BoxSettings -> PHAlertHigh));
+    //WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> ModuleSettings -> PHAlertHigh));
     WebServer.setArgString(getComponentName(F("Slope")), toPrecisionText(*Slope));
     WebServer.setArgString(getComponentName(F("Intercept")), toPrecisionText(*Intercept));
   }

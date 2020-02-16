@@ -16,30 +16,30 @@
 #include "../Components_Web/WeightSensor_Web.h"
 #include "../Components_Web/ModuleSkeleton_Web.h" //Only for demonstration purposes
 
-GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowBoxSettings *DefaultSettings) : Common(Name), Common_Web(Name), Module_Web()
+GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name), Module_Web()
 { //Constructor
   this->Name = Name;
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
   ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets; 
-  Sound1 = new Sound_Web(F("Sound1"), this, &BoxSettings->Sound1); //Passing BoxSettings members as references: Changes get written back to BoxSettings and saved to EEPROM. (byte *)(((byte *)&BoxSettings) + offsetof(Settings, VARIABLENAME))
-  IFan = new Fan_Web(F("IFan"), this, &BoxSettings->IFan);      //passing: Component name, GrowBox object the component belongs to, Default settings)
-  EFan = new Fan_Web(F("EFan"), this, &BoxSettings->EFan);
-  Lt1 = new Lights_Web(F("Lt1"), this, &BoxSettings->Lt1);
-  LtSen1 = new LightSensor_Web(F("LtSen1"), this, &BoxSettings->LtSen1, Lt1); //Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
+  Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); //Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (byte *)(((byte *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan);      //passing: Component name, GrowBox object the component belongs to, Default settings)
+  EFan = new Fan_Web(F("EFan"), this, &ModuleSettings->EFan);
+  Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
+  LtSen1 = new LightSensor_Web(F("LtSen1"), this, &ModuleSettings->LtSen1, Lt1); //Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
   Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2);
   //Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); //Only for PZEM004T V3.0
-  IDHT = new DHTSensor_Web(F("IDHT"), this, &BoxSettings->IDHT);
-  EDHT = new DHTSensor_Web(F("EDHT"), this, &BoxSettings->EDHT);
-  Pres1 = new PressureSensor_Web(F("Pres1"), this, &BoxSettings->Pres1);
-  AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &BoxSettings->AeroT1_Common, &BoxSettings->AeroT1_Specific, Pres1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
-  Aero1 = new Aeroponics_NoTank_Web(F("Aero1"), this, &BoxSettings->Aero1_Common, &BoxSettings->Aero1_Specific, Pres1);
-  PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &BoxSettings->PHSensor1);
-  WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &BoxSettings->WaterTemp1);
-  WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &BoxSettings->WaterLevel1);
-  Weight1 = new WeightSensor_Web(F("Weight1"), this, &BoxSettings->Weight1);
-  Weight2 = new WeightSensor_Web(F("Weight2"), this, &BoxSettings->Weight2);
-  //ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&BoxSettings -> ModuleSkeleton1);  //Only for demonstration purposes
-  //ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&BoxSettings -> ModuleSkeleton2);  //Only for demonstration purposes
+  IDHT = new DHTSensor_Web(F("IDHT"), this, &ModuleSettings->IDHT);
+  EDHT = new DHTSensor_Web(F("EDHT"), this, &ModuleSettings->EDHT);
+  Pres1 = new PressureSensor_Web(F("Pres1"), this, &ModuleSettings->Pres1);
+  AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1); //Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  Aero1 = new Aeroponics_NoTank_Web(F("Aero1"), this, &ModuleSettings->Aero1_Common, &ModuleSettings->Aero1_Specific, Pres1);
+  PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &ModuleSettings->PHSensor1);
+  WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &ModuleSettings->WaterTemp1);
+  WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
+  Weight1 = new WeightSensor_Web(F("Weight1"), this, &ModuleSettings->Weight1);
+  Weight2 = new WeightSensor_Web(F("Weight2"), this, &ModuleSettings->Weight2);
+  //ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&ModuleSettings -> ModuleSkeleton1);  //Only for demonstration purposes
+  //ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&ModuleSettings -> ModuleSkeleton2);  //Only for demonstration purposes
 
   addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
@@ -61,13 +61,13 @@ void GrowBox::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("Metric")), *Metric);
     WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
     WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
-    WebServer.setArgString(getComponentName(F("Relay")), BoxSettings -> PushingBoxLogRelayID);
+    WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings -> PushingBoxLogRelayID);
   }
 }
 
 void GrowBox::websiteEvent_Refresh(__attribute__((unused)) char *url) //called when website is refreshed.
 {
-  WebServer.setArgString(F("Time"), getFormattedTime());
+  WebServer.setArgString(F("Time"), getFormattedTime(false));
   WebServer.setArgJson(F("Log"), eventLogToJSON()); //Last events that happened in JSON format
 }
 
@@ -170,7 +170,7 @@ void GrowBox::setMetric(bool MetricEnabled)
   if (MetricEnabled != *Metric)
   { //if there was a change
     *Metric = MetricEnabled;
-    //BoxSettings -> IFanSwitchTemp = convertBetweenTempUnits(BoxSettings -> IFanSwitchTemp);
+    //ModuleSettings -> IFanSwitchTemp = convertBetweenTempUnits(ModuleSettings -> IFanSwitchTemp);
     Pres1->Pressure->resetAverage();
     IDHT->Temp->resetAverage();
     EDHT->Temp->resetAverage();
@@ -289,7 +289,7 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
 
 void GrowBox::setPushingBoxLogRelayID(const char *ID)
 {
-  strncpy(BoxSettings -> PushingBoxLogRelayID, ID, MaxTextLength);
+  strncpy(ModuleSettings -> PushingBoxLogRelayID, ID, MaxTextLength);
   addToLog(F("Sheets log relay ID updated"));
 }
 
@@ -297,7 +297,7 @@ void GrowBox::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSOND
 {
   char ValueToReport[MaxLongTextLength] = "";
   strcat_P(ValueToReport, (PGM_P)F("/pushingbox?devid="));
-  strcat(ValueToReport, BoxSettings -> PushingBoxLogRelayID);
+  strcat(ValueToReport, ModuleSettings -> PushingBoxLogRelayID);
   strcat_P(ValueToReport, (PGM_P)F("&BoxData={\""));
   strcat_P(ValueToReport, (PGM_P)Title);
   strcat_P(ValueToReport, (PGM_P)F("\":"));

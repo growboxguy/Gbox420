@@ -1,6 +1,6 @@
 #include "DHTSensor_Web.h"
 
-DHTSensor_Web::DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::DHTSensorSettings *DefaultSettings) : DHTSensor(Name,Parent,DefaultSettings), Common(Name), Common_Web(Name)
+DHTSensor_Web::DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::DHTSensorSettings *DefaultSettings) : DHTSensor(Name,Parent,DefaultSettings), Common_Web(Name), Common(Name)
 {
   this->Parent = Parent;
   this->Name = Name;
