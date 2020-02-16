@@ -1,16 +1,16 @@
-#pragma once ///header guard, same as the ifndef/define guard  https:///en.wikipedia.org/wiki/Pragma_once
+#pragma once //header guard, same as the ifndef/define guard  https://en.wikipedia.org/wiki/Pragma_once
 
-///This is a virtual class from which all other classes inherit from (GrowBox, PH reader, Lights, DHTSensor..)
-///Enforces a set of Common functions shared by the components
+//This is a virtual class from which all other classes inherit from (GrowBox, PH reader, Lights, DHTSensor..)
+//Enforces a set of Common functions shared by the components
 
-#include "Arduino.h"     
-#include "TimeLib.h"     ///keeping track of time
-#include "../../Settings.h" ///for loading defaults and storing/reading user settings
-#include "../Helpers.h"  ///global functions
-#include "../../SerialLog.h"  ///global functions
+#include "Arduino.h"     //every inheriting class have Arduino commands available
+#include "TimeLib.h"     //keeping track of time
+#include "../../Settings.h" //for loading defaults and storing/reading user settings
+#include "../Helpers.h"  //global functions
+#include "../../SerialLog.h"  //global functions
 
 
-///forward declaration
+//forward declaration
 extern char LongMessage[MaxLongTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char CurrentTime[MaxTextLength];
@@ -22,7 +22,7 @@ class Common
 {
 public:
   const __FlashStringHelper *Name;
-  bool isThisMyComponent(char const *lookupName); ///When it return true the component belongs to this object
+  bool isThisMyComponent(char const *lookupName); //When it return true the component belongs to this object
   char *getComponentName(const __FlashStringHelper *Name);
   virtual void report();
   virtual void refresh_Sec();
@@ -38,6 +38,6 @@ public:
    
 private:
 protected:
-  Common(const __FlashStringHelper *Name); ///Constructor
+  Common(const __FlashStringHelper *Name); //Constructor
   Common(){};
 };

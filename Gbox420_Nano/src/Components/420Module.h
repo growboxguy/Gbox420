@@ -36,7 +36,6 @@ private:
 protected:
   Sound* SoundFeedback = NULL;
   bool RunAllRequested = false;
-  bool ConsoleReportRequested = false; 
   Common *ReportQueue[QueueDepth] = {};  //aggregate initializer: Same as initializing to null pointers
   Common *RefreshQueue_Sec[QueueDepth]= {};
   Common *RefreshQueue_FiveSec[QueueDepth]= {};

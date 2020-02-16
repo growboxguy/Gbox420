@@ -25,7 +25,7 @@ protected:
   void setIntercept(float Value);
 };
 
-///WEBSITE COMPONENT
+//WEBSITE COMPONENT
 /*
 <div class="card" style="width:90%">
   <h1>PHSensor1</h1>

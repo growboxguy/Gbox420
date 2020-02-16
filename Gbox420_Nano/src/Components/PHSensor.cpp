@@ -1,15 +1,15 @@
 #include "PHSensor.h"
 
 PHSensor::PHSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PHSensorSettings *DefaultSettings) : Common(Name)
-{ ///constructor
+{ //constructor
   this->Parent = Parent;
   this->Pin = &DefaultSettings->Pin;
   this->Intercept = &DefaultSettings->Intercept;
   this->Slope = &DefaultSettings->Slope;
   pinMode(*Pin, INPUT);
   PH = new RollingAverage();
-  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Minute(this);  ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method 
+  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
+  Parent->addToRefreshQueue_Minute(this);  //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method 
   logToSerials(F("PHSensor object created"), true, 1);
 }
 
@@ -23,7 +23,7 @@ void PHSensor::refresh_Minute()
 void PHSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("PH:"));
   strcat(LongMessage, PH->getFloatText(true));
   logToSerials(&LongMessage, true, 1);

@@ -25,8 +25,8 @@ protected:
   void tare();
   void calibrate();
   void setScale(float Scale);
-  float *Scale;  ///Calibration value: Raw reading of one unit
-  long *TareOffset; ///Read value at no weight on the scale
+  float *Scale;  //Calibration value: Raw reading of one unit
+  long *TareOffset; //Read value at no weight on the scale
   int CalibrationWeight;
   bool TareRequested = false;
   bool CalibrateRequested = false;

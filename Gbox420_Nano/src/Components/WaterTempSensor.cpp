@@ -1,14 +1,14 @@
 #include "WaterTempSensor.h"
 
 WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterTempSensorSettings *DefaultSettings) : Common(Name)
-{ ///constructor
+{ //constructor
   this->Parent = Parent;
-  ///pinMode(*Pin, INPUT);
+  //pinMode(*Pin, INPUT);
   Temp = new RollingAverage();
-  TempSensorWire = new OneWire(*(&DefaultSettings->Pin)); ///Reservoir waterproof temperature sensor (DS18B20)
-  TempSensor = new DallasTemperature(TempSensorWire);     ///Reservoir waterproof temperature sensor (DS18B20)
+  TempSensorWire = new OneWire(*(&DefaultSettings->Pin)); //Reservoir waterproof temperature sensor (DS18B20)
+  TempSensor = new DallasTemperature(TempSensorWire);     //Reservoir waterproof temperature sensor (DS18B20)
   TempSensor->begin();
-  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
+  Parent->addToReportQueue(this);          //Subscribing to the report queue: Calls the report() method
   Parent->addToRefreshQueue_Minute(this); 
   logToSerials(F("WaterTempSensor object created"), true, 1);
 }
@@ -31,7 +31,7 @@ void WaterTempSensor::refresh_Minute()
 void WaterTempSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); //clear variable
   strcat_P(LongMessage, (PGM_P)F("Temp:"));
   strcat(LongMessage, getTempText(true, true));
   logToSerials(&LongMessage, true, 1);

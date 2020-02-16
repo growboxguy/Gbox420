@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DHT.h" ///DHT11 or DHT22 Digital Humidity and Temperature sensor
+#include "DHT.h" //DHT11 or DHT22 Digital Humidity and Temperature sensor
 #include "420Common.h"
 #include "420Module.h"
 
@@ -21,5 +21,5 @@ private:
   
 protected:
   Module *Parent;
-  DHT *Sensor; ///Pointer declaration, points to null initially
+  DHT *Sensor; //Pointer declaration, points to null initially
 };

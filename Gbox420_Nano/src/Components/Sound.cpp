@@ -6,7 +6,7 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
   pinMode(*Pin, OUTPUT); 
-  Parent->addToRefreshQueue_Sec(this);    ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
+  Parent->addToRefreshQueue_Sec(this);    //Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
   logToSerials(F("Sound object created"), true, 1);
 }
 
@@ -81,14 +81,14 @@ void Sound::OffSound()
   }
 }
 
-///EE Section, can delete everything below if you need to save space
+//EE Section, can delete everything below if you need to save space
 
 void Sound::playEE()
 {
   PlayEE = true;
 }
 
-const PROGMEM int Sound::melody[] = { ///https:///www.arduino.cc/reference/en/language/variables/utilities/progmem/
+const PROGMEM int Sound::melody[] = { //https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
     2637, 2637, 0, 2637,
     0, 2093, 2637, 0,
     3136, 0, 0, 0,
@@ -187,11 +187,11 @@ void Sound::EE()
   Parent->addToLog(F("♬Easter egg♬"));
   for (int thisNote = 0; thisNote < 134; thisNote++)
   {
-    int noteDuration = 1000 / (byte)pgm_read_word(&tempo[thisNote]); ///tempo is stored in PROGMEM (Flash), cannot read from it as RAM array (temp[thisNote] would not work) ///https:///forum.arduino.cc/index.php?topic=106603.0
+    int noteDuration = 1000 / (byte)pgm_read_word(&tempo[thisNote]); //tempo is stored in PROGMEM (Flash), cannot read from it as RAM array (temp[thisNote] would not work) //https://forum.arduino.cc/index.php?topic=106603.0
     buzz((int)pgm_read_word(&melody[thisNote]), noteDuration);
     delay(noteDuration);
     buzz(0, noteDuration);
-    wdt_reset(); ///Reset Watchdog timeout to avoid Arduino reseting while playing the song
+    wdt_reset(); //Reset Watchdog timeout to avoid Arduino reseting while playing the song
   }
 }
 

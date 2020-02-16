@@ -60,11 +60,11 @@ int RollingAverage::updateAverage(int LatestReading)
   }
   else
   {
-    Sum -= History[Oldest];            ///remove the oldest reading from the total
-    Sum += LatestReading;              ///Add the newest reading
-    History[Oldest++] = LatestReading; ///replace the oldest reading, then move the pointer to the next oldest entry
+    Sum -= History[Oldest];            //remove the oldest reading from the total
+    Sum += LatestReading;              //Add the newest reading
+    History[Oldest++] = LatestReading; //replace the oldest reading, then move the pointer to the next oldest entry
     if (Oldest >= RollingAverageDepth)
-    { ///reached the end of the queue
+    { //reached the end of the queue
       Oldest = 0;
     }
   }
