@@ -1,6 +1,0 @@
-<map id="WaterTempSensor_Web::WaterTempSensor_Web" name="WaterTempSensor_Web::WaterTempSensor_Web">
-<area shape="rect" id="node2" href="$class_module___web.html#a9b1a806569076aa701e961d54f888447" title="Module_Web::addToReportQueue" alt="" coords="227,5,445,32"/>
-<area shape="rect" id="node3" href="$class_module___web.html#ac449bdaf2aae62ba30ee63a58b1bdd5d" title="Module_Web::addToRefresh\lQueue_Minute" alt="" coords="242,57,430,98"/>
-<area shape="rect" id="node4" href="$class_module___web.html#aee7880f65926af22ba1b83a73607e3b6" title="Module_Web::addToWebsite\lQueue_Refresh" alt="" coords="241,122,431,163"/>
-<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="493,129,588,156"/>
-</map>

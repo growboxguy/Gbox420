@@ -1,8 +1,0 @@
-<map id="Fan_Web" name="Fan_Web">
-<area shape="rect" id="node2" href="$class_fan.html" title="Fan" alt="" coords="7,360,51,387"/>
-<area shape="rect" id="node3" href="$class_common.html" title="Common" alt="" coords="248,5,322,32"/>
-<area shape="rect" id="node4" href="$class_module.html" title="Module" alt="" coords="326,153,390,180"/>
-<area shape="rect" id="node5" href="$class_sound.html" title="Sound" alt="" coords="524,360,582,387"/>
-<area shape="rect" id="node6" href="$class_common___web.html" title="Common_Web" alt="" coords="109,153,218,180"/>
-<area shape="rect" id="node7" href="$class_module___web.html" title="Module_Web" alt="" coords="261,360,360,387"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="percentageToText" name="percentageToText">
-<area shape="rect" id="node2" href="$class_d_h_t_sensor.html#a795e7b88ea1b141213f7781d40cca458" title="DHTSensor::getHumidityText" alt="" coords="180,35,375,61"/>
-<area shape="rect" id="node3" href="$class_d_h_t_sensor.html#a2ef11882c3401c097b7a08e4b35eb103" title="DHTSensor::report" alt="" coords="463,5,595,32"/>
-<area shape="rect" id="node4" href="$class_d_h_t_sensor___web.html#ad02a0f5edd3f948ae81f9ebe6032d443" title="DHTSensor_Web::websiteEvent\l_Refresh" alt="" coords="423,57,635,98"/>
-</map>

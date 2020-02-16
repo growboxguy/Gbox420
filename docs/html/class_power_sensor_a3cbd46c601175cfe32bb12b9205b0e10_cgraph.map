@@ -1,8 +1,0 @@
-<map id="PowerSensor::report" name="PowerSensor::report">
-<area shape="rect" id="node2" href="$class_common.html#a9e60e2c26a5f4d72342a59a969954636" title="Common::report" alt="" coords="235,5,351,32"/>
-<area shape="rect" id="node3" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="439,31,533,57"/>
-<area shape="rect" id="node4" href="$class_power_sensor.html#ad1544079a0a3b7eafbb02411a2553cff" title="PowerSensor::getPowerText" alt="" coords="198,107,387,133"/>
-<area shape="rect" id="node5" href="$class_power_sensor.html#a20b1412111d88dbf9ec19b1716dadb11" title="PowerSensor::getEnergyText" alt="" coords="196,157,389,184"/>
-<area shape="rect" id="node6" href="$class_power_sensor.html#a168a4f9e8ea56397b1d67889ce3575b6" title="PowerSensor::getVoltageText" alt="" coords="195,208,391,235"/>
-<area shape="rect" id="node7" href="$class_power_sensor.html#ac3795cfd4910157ca6046272d53cab1f" title="PowerSensor::getCurrentText" alt="" coords="195,259,390,285"/>
-</map>

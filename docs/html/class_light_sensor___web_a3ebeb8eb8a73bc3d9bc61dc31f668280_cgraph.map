@@ -1,7 +1,0 @@
-<map id="LightSensor_Web::LightSensor_Web" name="LightSensor_Web::LightSensor_Web">
-<area shape="rect" id="node2" href="$class_module___web.html#a9b1a806569076aa701e961d54f888447" title="Module_Web::addToReportQueue" alt="" coords="289,5,508,32"/>
-<area shape="rect" id="node3" href="$class_module___web.html#ac449bdaf2aae62ba30ee63a58b1bdd5d" title="Module_Web::addToRefresh\lQueue_Minute" alt="" coords="305,57,493,98"/>
-<area shape="rect" id="node4" href="$class_module___web.html#aee7880f65926af22ba1b83a73607e3b6" title="Module_Web::addToWebsite\lQueue_Refresh" alt="" coords="303,122,494,163"/>
-<area shape="rect" id="node6" href="$class_module___web.html#adadb1643a6b460c0d53a7341bb356ee1" title="Module_Web::addToWebsite\lQueue_Button" alt="" coords="303,187,494,229"/>
-<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="556,129,651,156"/>
-</map>

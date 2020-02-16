@@ -1,5 +1,0 @@
-<map id="Sound::setSoundOnOff" name="Sound::setSoundOnOff">
-<area shape="rect" id="node2" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="219,5,349,32"/>
-<area shape="rect" id="node3" href="$class_sound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="211,56,357,83"/>
-<area shape="rect" id="node4" href="$class_sound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="211,107,357,133"/>
-</map>

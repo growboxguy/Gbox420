@@ -1,6 +1,0 @@
-<map id="PHSensor_Web::websiteEvent_Field" name="PHSensor_Web::websiteEvent_Field">
-<area shape="rect" id="node2" href="$class_common.html#a0192d295366bf1e966d8b58a3ce57554" title="Common::isThisMyComponent" alt="" coords="256,5,459,32"/>
-<area shape="rect" id="node3" href="$class_p_h_sensor.html#ae9b41f458fafd9ae475d9bfbbb27f8d5" title="PHSensor::setSlope" alt="" coords="287,56,428,83"/>
-<area shape="rect" id="node5" href="$class_p_h_sensor.html#a41bd303fbad556aaf714da2f0bf4a69c" title="PHSensor::setIntercept" alt="" coords="278,107,437,133"/>
-<area shape="rect" id="node4" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="507,81,636,108"/>
-</map>

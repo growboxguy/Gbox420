@@ -1,9 +1,0 @@
-<map id="WeightSensor::report" name="WeightSensor::report">
-<area shape="rect" id="node2" href="$class_common.html#a9e60e2c26a5f4d72342a59a969954636" title="Common::report" alt="" coords="239,5,355,32"/>
-<area shape="rect" id="node3" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="492,5,587,32"/>
-<area shape="rect" id="node4" href="$class_weight_sensor.html#a4435433225f8b58950161e5a580d763e" title="WeightSensor::getWeightText" alt="" coords="199,107,396,133"/>
-<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#aec4ac85dc6f4a044572d1889e7f4ecd3" title="weightToText" alt="" coords="489,56,590,83"/>
-<area shape="rect" id="node6" href="$class_rolling_average.html#ada0ea15c7152230f9433329fba92d3f8" title="RollingAverage::getFloat" alt="" coords="683,107,848,133"/>
-<area shape="rect" id="node7" href="$class_rolling_average.html#aab001a981060af0948bd8b46c05c8e97" title="RollingAverage::getFloatText" alt="" coords="444,157,635,184"/>
-<area shape="rect" id="node8" href="$_hempy_module_2src_2_helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="736,157,795,184"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="WaterTempSensor_Web" name="WaterTempSensor_Web">
-<area shape="rect" id="node2" href="$class_water_temp_sensor.html" title="WaterTempSensor" alt="" coords="5,80,136,107"/>
-<area shape="rect" id="node3" href="$class_common.html" title="Common" alt="" coords="33,5,108,32"/>
-<area shape="rect" id="node4" href="$class_common___web.html" title="Common_Web" alt="" coords="160,80,269,107"/>
-</map>

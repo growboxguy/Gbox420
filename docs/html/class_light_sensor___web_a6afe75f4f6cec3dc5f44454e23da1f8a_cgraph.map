@@ -1,9 +1,0 @@
-<map id="LightSensor_Web::websiteEvent_Refresh" name="LightSensor_Web::websiteEvent_Refresh">
-<area shape="rect" id="node2" href="$class_common.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="232,5,435,32"/>
-<area shape="rect" id="node3" href="$class_light_sensor.html#a70fd8f7252cbc9abb2ea501ccfaf08fe" title="LightSensor::getDarkText" alt="" coords="248,56,419,83"/>
-<area shape="rect" id="node6" href="$class_light_sensor.html#af38ae75a6739383e1590548fdb07e353" title="LightSensor::getReadingText" alt="" coords="238,107,429,133"/>
-<area shape="rect" id="node4" href="$_hempy_module_2src_2_helpers_8cpp.html#a8abf19822a7d099be562b7a2bdd8258b" title="yesNoToText" alt="" coords="521,5,622,32"/>
-<area shape="rect" id="node5" href="$_hempy_module_2src_2_helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="754,56,813,83"/>
-<area shape="rect" id="node7" href="$class_rolling_average.html#a7b7015bd5a39e953983f73330b3d8c87" title="RollingAverage::getIntText" alt="" coords="483,107,660,133"/>
-<area shape="rect" id="node8" href="$class_rolling_average.html#a4fc812fc5b678f41c4a01d79c7fc5923" title="RollingAverage::getInt" alt="" coords="708,107,859,133"/>
-</map>

@@ -1,8 +1,0 @@
-<map id="ModuleSkeleton::ModuleSkeleton" name="ModuleSkeleton::ModuleSkeleton">
-<area shape="rect" id="node2" href="$class_module.html#aee2cbab440d38d29948205820ad50be8" title="Module::addToReportQueue" alt="" coords="288,5,473,32"/>
-<area shape="rect" id="node3" href="$class_module.html#a08595d2a2bd347eec39c47a3b9e770fb" title="Module::addToRefreshQueue_Sec" alt="" coords="269,56,492,83"/>
-<area shape="rect" id="node4" href="$class_module.html#a2dffaa526893d852b722cf890a6821c6" title="Module::addToRefreshQueue\l_FiveSec" alt="" coords="285,107,477,149"/>
-<area shape="rect" id="node5" href="$class_module.html#a20d1125116f9a8c71339fde4626c5adb" title="Module::addToRefreshQueue\l_Minute" alt="" coords="285,173,477,214"/>
-<area shape="rect" id="node6" href="$class_module.html#a25f5e60e0db8e157fee631928f745e82" title="Module::addToRefreshQueue\l_QuarterHour" alt="" coords="285,238,477,279"/>
-<area shape="rect" id="node7" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="333,304,428,331"/>
-</map>

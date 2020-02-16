@@ -1,7 +1,0 @@
-<map id="WaterLevelSensor::report" name="WaterLevelSensor::report">
-<area shape="rect" id="node2" href="$class_common.html#a9e60e2c26a5f4d72342a59a969954636" title="Common::report" alt="" coords="272,5,388,32"/>
-<area shape="rect" id="node3" href="$_hempy_module_2src_2_helpers_8cpp.html#a2ed3a5955995e7961dc9ea3dc3dd530d" title="logToSerials" alt="" coords="484,31,579,57"/>
-<area shape="rect" id="node4" href="$class_water_level_sensor.html#ac0fe047b12952693055ed7222d7a4aaa" title="WaterLevelSensor::getLevel\lGauge" alt="" coords="237,107,423,149"/>
-<area shape="rect" id="node5" href="$class_water_level_sensor.html#a8093a4963a9ac42e5f7c923db6758c1f" title="WaterLevelSensor::getLevelText" alt="" coords="224,173,436,200"/>
-<area shape="rect" id="node6" href="$_hempy_module_2src_2_helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="502,173,561,200"/>
-</map>

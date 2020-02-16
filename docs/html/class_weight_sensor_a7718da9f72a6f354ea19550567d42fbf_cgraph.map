@@ -1,4 +1,0 @@
-<map id="WeightSensor::calibrate" name="WeightSensor::calibrate">
-<area shape="rect" id="node2" href="$class_rolling_average.html#a5413499ba156dd5acec73196edfda3d4" title="RollingAverage::resetAverage" alt="" coords="215,5,409,32"/>
-<area shape="rect" id="node3" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="247,56,377,83"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="PowerSensor_Web::websiteEvent_Refresh" name="PowerSensor_Web::websiteEvent_Refresh">
-<area shape="rect" id="node2" href="$class_common.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="240,5,443,32"/>
-<area shape="rect" id="node3" href="$class_power_sensor.html#ad1544079a0a3b7eafbb02411a2553cff" title="PowerSensor::getPowerText" alt="" coords="247,56,436,83"/>
-<area shape="rect" id="node4" href="$class_power_sensor.html#a20b1412111d88dbf9ec19b1716dadb11" title="PowerSensor::getEnergyText" alt="" coords="245,107,438,133"/>
-<area shape="rect" id="node5" href="$class_power_sensor.html#a168a4f9e8ea56397b1d67889ce3575b6" title="PowerSensor::getVoltageText" alt="" coords="243,157,439,184"/>
-<area shape="rect" id="node6" href="$class_power_sensor.html#ac3795cfd4910157ca6046272d53cab1f" title="PowerSensor::getCurrentText" alt="" coords="244,208,439,235"/>
-</map>

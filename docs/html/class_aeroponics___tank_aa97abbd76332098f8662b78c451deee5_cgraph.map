@@ -1,5 +1,0 @@
-<map id="Aeroponics_Tank::sprayOff" name="Aeroponics_Tank::sprayOff">
-<area shape="rect" id="node2" href="$class_aeroponics___tank.html#a4ee215af07d5ee08e2b12efc9a7e1db9" title="Aeroponics_Tank::checkRelays" alt="" coords="235,5,441,32"/>
-<area shape="rect" id="node4" href="$class_module.html#a5dfb18333a2943155a7fd6a4602e00a7" title="Module::addToLog" alt="" coords="273,56,403,83"/>
-<area shape="rect" id="node3" href="$class_aeroponics.html#a0f70505e6b8722985f6ab52f17595cdd" title="Aeroponics::checkRelays" alt="" coords="489,5,660,32"/>
-</map>
