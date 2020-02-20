@@ -32,7 +32,7 @@ void Module::runReport()
   getFormattedTime(true);
   getFreeMemory();
   logToSerials(reportQueueItemCount,false,1);
-  logToSerials(F("web components refreshing:"),true,1);
+  logToSerials(F("components refreshing:"),true,1);
   for (int i = 0; i < reportQueueItemCount; i++)
   {
     ReportQueue[i]->report();
@@ -132,7 +132,7 @@ void Module::addToRefreshQueue_QuarterHour(Common *Component)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-///Even logs on the website
+///Even logs to the Serial output
 void Module::addToLog(const char *LongMessage, byte Indent)
 { ///adds a log entry that is displayed on the web interface
   logToSerials(&LongMessage, true, Indent);  

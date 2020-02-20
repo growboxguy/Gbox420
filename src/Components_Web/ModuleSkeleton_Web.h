@@ -6,6 +6,8 @@
 #include "420Module_Web.h"
 #include "../Components/ModuleSkeleton.h"
 
+///Example module with test data - website component
+
 class ModuleSkeleton_Web : virtual public ModuleSkeleton, virtual public Common_Web
 {
 public:

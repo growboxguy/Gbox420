@@ -4,6 +4,8 @@
 #include "420Module_Web.h"
 #include "../Components/LightSensor.h"
 
+///LM393 Light sensor - website component
+
 class GrowBox; ///forward declaration
 
 class LightSensor_Web : public LightSensor, public Common_Web

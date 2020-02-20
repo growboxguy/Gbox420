@@ -4,6 +4,8 @@
 #include "420Module_Web.h"
 #include "../Components/WaterLevelSensor.h"
 
+///Contactless water sensor array (4 levels) - website component
+
 class WaterLevelSensor_Web : public WaterLevelSensor, public Common_Web
 {
 public:

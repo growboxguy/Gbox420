@@ -1,6 +1,8 @@
 #include "Fan.h"
 #include "Sound.h"
 
+///Fan controller (2 speed)
+
 Fan::Fan(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;

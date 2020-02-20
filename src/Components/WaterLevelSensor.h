@@ -3,6 +3,8 @@
 #include "420Common.h"
 #include "420Module.h"
 
+///Contactless water sensor array (4 levels)
+
 class WaterLevelSensor : virtual public Common
 {
 public:

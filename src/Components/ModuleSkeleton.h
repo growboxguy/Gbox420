@@ -5,6 +5,8 @@
 #include "420Common.h"
 #include "420Module.h"
 
+///Example module with test data
+
 class ModuleSkeleton : virtual public Common
 {
 public:

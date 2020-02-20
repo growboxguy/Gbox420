@@ -4,6 +4,8 @@
 #include "420Module_Web.h"
 #include "../Components/Fan.h"
 
+///Fan controller (2 speed) - website component
+
 class Fan_Web : public Fan, public Common_Web
 {
 public:

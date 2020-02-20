@@ -891,7 +891,8 @@ RECURSIVE              = YES
 
 EXCLUDE                = libraries \
                          Archive \
-                         Test_Sketches
+                         Test_Sketches \
+                         Gbox420_Nano
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded

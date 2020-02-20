@@ -3,7 +3,7 @@
 //// @attention Define the preferred default settings here.
 
 ///Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 9;
+static const byte Version = 10;
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 ///Global constants
@@ -34,6 +34,12 @@ typedef struct
     ///bool ReportToMqtt = true;    ///Controls reporting sensor readings to an MQTT broker
   };
   struct GrowModuleSettings Gbox1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30};
+
+  struct HempyModuleSettings{  ///TODO: Remove the parameters
+    HempyModuleSettings(bool Debug, bool Metric) : Debug(Debug) , Metric(Metric) {} 
+    bool Debug;  ///Enable/disable debug output to Serial
+    bool Metric; ///Metric or Imperial
+  }; 
 
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers

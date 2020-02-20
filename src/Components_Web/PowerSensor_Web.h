@@ -5,7 +5,7 @@
 #include "420Module_Web.h"
 #include "../Components/PowerSensor.h"
 
-///PZEM004T power sensor website component
+///PZEM004T power sensor - website component
 
 class PowerSensor_Web : public PowerSensor, public Common_Web
 {

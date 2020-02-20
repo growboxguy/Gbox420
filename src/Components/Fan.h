@@ -3,6 +3,8 @@
 #include "420Common.h"
 #include "420Module.h"
 
+///Fan controller (2 speed)
+
 class Fan : virtual public Common
 {
 public:

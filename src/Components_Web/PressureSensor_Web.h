@@ -4,6 +4,8 @@
 #include "420Module_Web.h"
 #include "../Components/PressureSensor.h"
 
+///Pressure sensor - website component
+
 class PressureSensor_Web : public PressureSensor, public Common_Web
 {
 public:

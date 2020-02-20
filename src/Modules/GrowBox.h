@@ -22,9 +22,11 @@ class Aeroponics_Tank_Web;
 class WaterTempSensor_Web;
 class WaterLevelSensor_Web;
 class WeightSensor_Web;
-class ModuleSkeleton_Web; ///Only for demonstration purposes
+class ModuleSkeleton_Web;
 
 extern ELClientRest PushingBoxRestAPI;
+
+/// Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 class GrowBox : public Common_Web, public Module_Web
 {
@@ -38,7 +40,7 @@ public:
   LightSensor_Web *LtSen1; ///Pointer to a Light Sensor object measuring light intensity in the grow box
   Lights_Web *Lt1;            ///Pointer to a Light assembly
   PowerSensor_Web *Pow1;
-  ///PowerSensorV3_Web * Pow1;  ///Only for PZEM004T V3.0
+  //PowerSensorV3_Web * Pow1;  ///Only for PZEM004T V3.0
   PressureSensor_Web *Pres1;
   PHSensor_Web *PHSensor1;
   Aeroponics_Tank_Web *AeroT1;

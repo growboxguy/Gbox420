@@ -1,8 +1,10 @@
 #pragma once
 
-#include "DHT.h" ///DHT11 or DHT22 Digital Humidity and Temperature sensor
+#include "DHT.h" 
 #include "420Common.h"
 #include "420Module.h"
+
+///Digital Humidity and Temperature sensor (DHT11 or DHT22)
 
 class DHTSensor : virtual public Common
 {

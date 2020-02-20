@@ -3,6 +3,8 @@
 #include "420Common.h"
 #include "420Module.h"
 
+///UNDER DEVELOPMENT - Weight sensor load cell
+
 class WeightSensor : virtual public Common
 {
 public:

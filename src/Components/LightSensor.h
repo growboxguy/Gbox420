@@ -4,6 +4,8 @@
 #include "420Module.h"
 #include "Lights.h"
 
+///LM393 Light sensor
+
 class LightSensor : virtual public Common
 {
 public:

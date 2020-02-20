@@ -3,6 +3,8 @@
 #include "420Common.h"
 #include "420Module.h"
 
+///Light controller with PWM dimming
+
 class Lights : virtual public Common
 {
 public:

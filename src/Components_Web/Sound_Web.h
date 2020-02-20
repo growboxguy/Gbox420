@@ -4,6 +4,7 @@
 #include "420Module_Web.h"
 #include "../Components/Sound.h"
 
+///Sound feedback buzzer - website component
 
 class Sound_Web : public Sound, public Common_Web
 {

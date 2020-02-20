@@ -1,17 +1,17 @@
 #include "HempyModule.h"
-#include "src/Components/DHTSensor.h"
-#include "src/Components/Sound.h"
-#include "src/Components/WeightSensor.h"
-#include "src/Components/PHSensor.h"
-#include "src/Components/WaterTempSensor.h"
-#include "src/Components/WaterLevelSensor.h"
+#include "../Components/DHTSensor.h"
+#include "../Components/Sound.h"
+#include "../Components/WeightSensor.h"
+#include "../Components/PHSensor.h"
+#include "../Components/WaterTempSensor.h"
+#include "../Components/WaterLevelSensor.h"
 
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
 { //Constructor
   this->Name = Name;
- // Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); //Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (byte *)(((byte *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
-  DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
+  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); //Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (byte *)(((byte *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  IDHT = new DHTSensor(F("IDHT"), this, &ModuleSettings->IDHT);
   PHSensor1 = new PHSensor(F("PHSensor1"), this, &ModuleSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor(F("WaterTemp1"), this, &ModuleSettings->WaterTemp1);
   WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
@@ -47,7 +47,8 @@ void HempyModule::refresh_Minute()
 void HempyModule::refresh_QuarterHour()
 {
   if (*Debug)
-    Common::refresh_QuarterHour();
+    Common::refresh_QuarterHour(); 
+  Sound1 -> playEE();
 }
 
 //////////////////////////////////////////////////////////////////
@@ -74,7 +75,7 @@ void HempyModule::setMetric(bool MetricEnabled)
     *Metric = MetricEnabled;
     //ModuleSettings -> IFanSwitchTemp = convertBetweenTempUnits(ModuleSettings -> IFanSwitchTemp);
     //Pres1->Pressure->resetAverage();
-    DHT1->Temp->resetAverage();
+    IDHT->Temp->resetAverage();
    // WaterTemp1->Temp->resetAverage();
     RefreshAllRequested = true;
   }

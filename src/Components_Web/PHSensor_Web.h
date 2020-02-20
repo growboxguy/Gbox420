@@ -4,6 +4,8 @@
 #include "420Module_Web.h"
 #include "../Components/PHSensor.h"
 
+///PH sensor - website component
+
 class PHSensor_Web : public PHSensor, public Common_Web
 {
 public:

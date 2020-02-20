@@ -4,6 +4,8 @@
 #include "420Module_Web.h"
 #include "../Components/WaterTempSensor.h"
 
+///DS18B20 water temperature sensor - website component
+
 class WaterTempSensor_Web : public WaterTempSensor, public Common_Web
 {
 public:

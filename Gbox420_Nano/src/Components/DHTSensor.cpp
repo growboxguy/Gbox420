@@ -1,5 +1,8 @@
 #include "DHTSensor.h"
 
+/*! 
+ *  @brief  Class for the Digital Humidity and Temperature sensor
+ */
 DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;

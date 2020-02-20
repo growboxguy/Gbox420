@@ -1,5 +1,8 @@
 /**@file*/
 ///GrowBoxGuy - http:///sites.google.com/site/growboxguy/
+//This is currently under development
+//Gbox420 Nano is a stripped down version of Gbox420 without a web interface support
+//Runs autonomously and [WILL] support wireless connection towards the main module
 
 #include "Arduino.h"
 #include "avr/wdt.h"                ///Watchdog timer for detecting a crash and automatically resetting the board

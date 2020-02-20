@@ -6,6 +6,8 @@
 #include "420Module_Web.h"
 #include "../Components/PowerSensorV3.h"
 
+///PZEM004T v3.0 power sensor - website component
+
 class PowerSensorV3_Web : public PowerSensorV3, public Common_Web
 {
 public:
