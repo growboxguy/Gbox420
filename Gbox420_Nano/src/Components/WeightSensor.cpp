@@ -11,15 +11,15 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
   Sensor -> set_scale(*Scale);
   Sensor -> set_offset(*TareOffset);  
   Parent->addToReportQueue(this);         ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Minute(this); ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  Parent->addToRefreshQueue_FiveSec(this); ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   Parent->addToRefreshQueue_Sec(this);  
   logToSerials(F("Weight Sensor object created"), true, 1);
 }
 
-void WeightSensor::refresh_Minute()
+void WeightSensor::refresh_FiveSec()
 {
   if (*Debug)
-    Common::refresh_Minute();
+    Common::refresh_FiveSec();
   if(TareRequested){
     TareRequested = false;
     tare();
@@ -33,7 +33,7 @@ void WeightSensor::refresh_Minute()
 
 void WeightSensor::refresh_Sec()
 {
-  refresh_Minute(); ///temporary for faster testing
+   
 }
 
 void WeightSensor::report()
@@ -41,7 +41,7 @@ void WeightSensor::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
-  strcat(LongMessage, getWeightText(true, true));
+  strcat(LongMessage, getWeightText(true, false));
   logToSerials(&LongMessage, true, 1);
 }
 

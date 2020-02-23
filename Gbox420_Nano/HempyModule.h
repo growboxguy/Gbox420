@@ -30,6 +30,7 @@ public:
   WaterLevelSensor *WaterLevel1;
   WeightSensor *Weight1; 
   WeightSensor *Weight2;  
+  void refresh_Sec();
   void refresh_FiveSec();
   void refresh_Minute();
   void refresh_QuarterHour(); 

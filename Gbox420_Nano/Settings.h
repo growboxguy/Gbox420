@@ -3,7 +3,7 @@
 //// @attention Define the preferred default settings here.
 
 ///Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 5;
+static const byte Version = 6;
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 ///Global constants
@@ -65,8 +65,8 @@ typedef struct
     float Scale;  ///Calibration scale value
     long TareOffset; ///Reading at 0 weight on the scale
   };
-  struct WeightSensorSettings Weight1 = {.DTPin = 3, .SCKPin = 4, .Scale = 125000.0, .TareOffset=146000}; ///Default settings for the 
-  struct WeightSensorSettings Weight2 = {.DTPin = 5, .SCKPin = 6, .Scale = 126000.0, .TareOffset=267461}; ///Default settings for the 
+  struct WeightSensorSettings Weight1 = {.DTPin = 2, .SCKPin = 3, .Scale = 125000.0, .TareOffset=146000}; ///Default settings for the 
+  struct WeightSensorSettings Weight2 = {.DTPin = 4, .SCKPin = 5, .Scale = 126000.0, .TareOffset=267461}; ///Default settings for the 
 
   struct WaterTempSensorSettings
   {
