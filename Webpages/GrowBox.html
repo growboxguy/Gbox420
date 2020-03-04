@@ -78,16 +78,6 @@
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">
 				<h1><span id="Time"></span></h1>
-				<ul id="Log"></ul>
-				<button id="GBox1_Refresh" type="button" style="margin-top:0px"
-					title="Update sensor readings and report to console and Sheets">Refresh</button>
-				<button id="GBox1_SerialRep" type="button" style="margin-top:0px"
-					title="Report current status to Serial (ESP and Arduino)">Report to console</button>
-				<button id="GBox1_SheetsRep" type="button" style="margin-top:0px"
-					title="Report current status to Google Sheets">Report to Sheets</button>
-			</div>
-			<div class="card" style="width:90%">
-				<h1>Power</h1>
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span style="font-weight:bold">Power</span></th>
@@ -102,9 +92,16 @@
 						<td id="Pow1_C" class="dataRows"></td>
 					</tr>
 				</table>
-			</div>
+				<ul id="Log"></ul>
+				<button id="GBox1_Refresh" type="button" style="margin-top:0px"
+					title="Update sensor readings and report to console and Sheets">Refresh</button>
+				<button id="GBox1_SerialRep" type="button" style="margin-top:0px"
+					title="Report current status to Serial (ESP and Arduino)">Report to console</button>
+				<button id="GBox1_SheetsRep" type="button" style="margin-top:0px"
+					title="Report current status to Google Sheets">Report to Sheets</button>
+			</div>		
 			<div class="card" style="width:90%">
-				<h1>DHT sensor</h1>
+				<h1>Ventilation</h1>
 				<table class="tg">
 					<tr>
 						<td class="headerRows"><span style="font-weight:bold">Internal<br>temp</span></td>
@@ -117,19 +114,6 @@
 						<td id="IDHT_H" class="dataRows"></td>
 						<td id="EDHT_T" class="dataRows"></td>
 						<td id="EDHT_H" class="dataRows"></td>
-					</tr>
-				</table>
-			</div>
-			<div class="card" style="width:90%">
-				<h1>Ventilation</h1>
-				<table class="tg">
-					<tr>
-						<td class="headerRows"><span style="font-weight:bold">Internal fan</span></td>
-						<td class="headerRows"><span style="font-weight:bold">Exhaust fan</span></td>
-					</tr>
-					<tr>
-						<td id="IFan_S" class="dataRows"></td>
-						<td id="EFan_S" class="dataRows"></td>
 					</tr>
 				</table>
 				<b>Internal fan: </b>
@@ -160,7 +144,39 @@
 					<input type="submit" value="Set" title="Set LOW and HIGH speed humidity levels">
 				</form>
 				-->
-			</div>			
+				<table class="tg">
+					<tr>
+						<td class="headerRows"><span style="font-weight:bold">Internal fan</span></td>
+						<td class="headerRows"><span style="font-weight:bold">Exhaust fan</span></td>
+					</tr>
+					<tr>
+						<td id="IFan_S" class="dataRows"></td>
+						<td id="EFan_S" class="dataRows"></td>
+					</tr>
+				</table>				
+			</div>
+			<div class="card" style="width:90%">
+				<h1>Hempy bucket</h1>
+				<table class="tg">
+					<tr>
+						<th class="headerRows"><span style="font-weight:bold">Weight</span></th>
+						<th class="headerRows"><span style="font-weight:bold">Start/Stop weight</span></th>
+						<th class="headerRows"><span style="font-weight:bold">Reservoir</span></th>
+					</tr>
+					<tr>
+						<td id="Hempy1_W" class="dataRows"></td>
+						<td id="Hempy1_SSW" class="dataRows"></td>
+						<td id="Hempy1_Res" class="dataRows"></td>
+					</tr>					
+				</table>
+			<button id="Hempy1_Wat" type="button" title="Water plants until stop weight is reached">Water now</button><br>
+			<b>Watering weight</b><br>
+			<form>
+			Start: <input style="width: 50px;" name="Hempy1_Strt" type="number" value='4.2' step='0.1' title="Start watering plant below this weight"/>
+			Stop: <input style="width: 50px;" name="Hempy1_Stp" type="number" value='6.9' step='0.1' title="Stop watering plant above this weight" />
+			<input type="submit" value="Set">
+			</form>
+		</div>			
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">
@@ -323,7 +339,7 @@
 						<td id="PHSensor1_PH" class="dataRows"></td>
 					</tr>
 				</table>
-			</div>
+			</div>			
 		</div>
 	</div>
 </div>
