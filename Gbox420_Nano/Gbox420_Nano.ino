@@ -11,7 +11,11 @@
 #include "StaticThreadController.h" ///Grouping threads
 #include "SerialLog.h"              
 #include "Settings.h"              
-#include "HempyModule.h"              
+#include "HempyModule.h"
+#include "SPI.h"
+#include "nRF24L01.h"
+#include "RF24.h"
+           
 
 ///Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
@@ -24,6 +28,9 @@ Settings * ModuleSettings;                ///This object will store the settings
 bool *Debug;
 bool *Metric;
 HempyModule *HempyMod1;                            ///Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
+RF24 radio(7, 8); // CE, CSN
+const byte addresses[][6] = {"00001", "00002"};
+
 
 ///Thread initialization
 Thread OneSecThread = Thread();
@@ -46,6 +53,12 @@ void setup()
   ModuleSettings = loadSettings();
   Debug = &ModuleSettings ->  Debug;
   Metric = &ModuleSettings ->  Metric;
+
+  //Setting up wireless module
+  radio.begin();
+  radio.openWritingPipe(addresses[1]); // 00002
+  radio.openReadingPipe(1, addresses[0]); // 00001
+  radio.setPALevel(RF24_PA_MIN);
 
  /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
   OneSecThread.setInterval(1000);  ///1000ms
@@ -115,7 +128,7 @@ Settings *loadSettings()
 {
   Settings *DefaultSettings = new Settings();                                    ///This is where settings are stored, first it takes the sketch default settings defined in Settings.h
   Settings EEPROMSettings;                                                       ///temporary storage with "Settings" type
-  eeprom_read_block((void *)&EEPROMSettings, (void *)0, sizeof(EEPROMSettings)); ///Load EEPROM stored settings into EEPROMSettings
+  eeprom_read_block((void *)&EEPROMSettings, (void *)0, sizeof(Settings)); ///Load EEPROM stored settings into EEPROMSettings
   if (DefaultSettings->CompatibilityVersion != EEPROMSettings.CompatibilityVersion)
   { ///Making sure the EEPROM loaded settings are compatible with the sketch
     logToSerials(F("Incompatible stored settings detected, updating EEPROM..."), false, 0);
@@ -127,7 +140,7 @@ Settings *loadSettings()
     ///DefaultSettings = EEPROMSettings; ///overwrite sketch defaults with loaded settings
     memcpy(DefaultSettings, &EEPROMSettings, sizeof(Settings));
   }
-  logToSerials(F("done"), true, 1);
+  logToSerials(F("done"), false, 1);
   return DefaultSettings;
 }
 
