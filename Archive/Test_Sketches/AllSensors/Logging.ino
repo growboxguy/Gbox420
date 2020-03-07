@@ -23,7 +23,7 @@ void reportToGoogleSheets(){
 
 void addToLog(const char *message){
 Serial.println(message);
-for(int i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldes
+for(int i=LogDepth-1;i>0;i--){   //Shift every log entry one up, dropping the oldest
    memset(&Logs[i], 0, sizeof(Logs[i]));  //clear variable
    strncpy(Logs[i],Logs[i-1],LogLength ) ; 
   }  

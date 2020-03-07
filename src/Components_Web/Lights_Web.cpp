@@ -29,10 +29,10 @@ void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G",2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("S")), getStatusText(true));
-    WebServer.setArgString(getComponentName(F("T")), getTimerOnOffText(true));
-    WebServer.setArgString(getComponentName(F("OnT")), getOnTimeText());
-    WebServer.setArgString(getComponentName(F("OfT")), getOffTimeText());
+    WebServer.setArgString(getComponentName(F("S")), getStatusText(true));  ///Status
+    WebServer.setArgString(getComponentName(F("T")), getTimerOnOffText(true));  ///Timer on or off
+    WebServer.setArgString(getComponentName(F("OnT")), getOnTimeText());   ///Turn on time
+    WebServer.setArgString(getComponentName(F("OfT")), getOffTimeText());  ///Turn off time
   }
 }
 

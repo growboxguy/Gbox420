@@ -23,10 +23,15 @@ void WeightSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 
 void WeightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/S",2) == 0)
+  if (strncmp(url, "/S",2) == 0) ////When the settings page is refreshed
   {
     WebServer.setArgString(getComponentName(F("TareOffset")), toText(*TareOffset));
     WebServer.setArgString(getComponentName(F("Scale")), toText(*Scale));
+
+  }
+  else if(strncmp(url, "/G",2) == 0)
+  {
+    WebServer.setArgFloat(getComponentName(F("W")), getWeight(false));
   }
 }
 
