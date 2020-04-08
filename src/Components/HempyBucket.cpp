@@ -5,6 +5,8 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   this->Parent = Parent;
   this->FeedbackWeightSensor = FeedbackWeightSensor;
   PumpPin = &DefaultSettings->PumpPin;
+  PumpEnabled = &DefaultSettings->PumpEnabled;
+  PumpTimeout= &DefaultSettings->PumpTimeout;
   StartWeight = &DefaultSettings->StartWeight;
   StopWeight = &DefaultSettings->StopWeight;
   Parent->addToReportQueue(this);         ///Subscribing to the report queue: Calls the report() method
@@ -23,6 +25,34 @@ void HempyBucket::refresh_Minute()
 void HempyBucket::refresh_Sec()
 {
   refresh_Minute(); ///temporary for faster testing
+  if(PumpOn) checkBucketWeight(); ///When watering check if its time to stop
+}
+
+void HempyBucket::checkBucketWeight()
+{  
+  if(PumpOn)
+  {    
+    if (millis() - PumpTimer > ((uint32_t)*PumpTimeout * 1000))
+    {
+      pumpOff(false);
+    }
+    else
+    {  
+      FeedbackWeightSensor -> readWeight();  //Force a weight refresh   
+      if(FeedbackWeightSensor -> getWeight(false) > *StopWeight)
+      {
+        pumpOff(false);
+      }
+    }
+  }
+  else  ///If pump is off
+  {
+     if(FeedbackWeightSensor -> getWeight(false) < *StartWeight)
+      {
+        waterNow(false);
+      }
+  }
+  
 }
 
 void HempyBucket::report()
@@ -30,34 +60,30 @@ void HempyBucket::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Pump:"));
-  strcat(LongMessage, onOffToText(*PumpOn));
+  strcat(LongMessage, onOffToText(PumpOn));
   strcat_P(LongMessage, (PGM_P)F(" ; Reservoir:"));
-  strcat(LongMessage, F("100%")); ///Fake value \todo Integrate ultrasonic depth sensor 
+  strcat_P(LongMessage, (PGM_P)F("100%")); ///Fake value \todo Integrate ultrasonic depth sensor 
   logToSerials(&LongMessage, true, 1);
 }
 
-void HempyBucket::readWeight(){
-  Weight -> updateAverage(Sensor -> get_units());
-}
-
-float HempyBucket::waterNow(bool UserRequested)
+void HempyBucket::waterNow(bool UserRequest)
 {
   if (UserRequest)
-  { ///if the pump was turned on from the web interface, not by the automation
+  { ///Provide feedback if the pump was turned on by the user, not by the automation
     Parent->addToLog(F("Watering..."));
     Parent->getSoundObject()->playOnSound();
   }
   if(FeedbackWeightSensor -> getWeight() < *StopWeight) {
     PumpTimer = millis();
     PumpOn = true;
-    checkRelays();
+    checkRelay();
   }
 }
 
-void HempyBucket::pumpOff(bool UserRequested)
+void HempyBucket::pumpOff(bool UserRequest)
 {
   if (UserRequest)
-  { ///if the pump was turned on from the web interface, not by the automation
+  { ///Provide feedback if the pump was turned off by the user, not by the automation
     Parent->addToLog(F("Pump off"));
     Parent->getSoundObject()->playOffSound();
   }

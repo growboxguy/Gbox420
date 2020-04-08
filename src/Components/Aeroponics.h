@@ -33,7 +33,6 @@ protected:
   bool BypassSolenoidOn = false;  ///Aeroponics - Controls the bypass valve, true opens the solenoid
   bool MixInProgress = false;     ///Aeroponics - Used to temporary suspend pump timer and keep the high pressure pump on. Do not change.
   void checkRelays();
-  char *pumpStateToText();
   void setPumpOn(bool UserRequest);
   void setPumpOff(bool UserRequest);
   void PumpDisable();

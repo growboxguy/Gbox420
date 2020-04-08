@@ -18,17 +18,17 @@ public:
   void triggerTare();
   void triggerCalibration(int CalibrationWeight);  
   RollingAverage *Weight;
+  void tare();
+  void calibrate();
+  void setScale(float Scale);
+  float *Scale;  ///Calibration value: Raw reading of one unit
+  long *TareOffset; ///Read value at no weight on the scale
 
 private:  
 
 protected:
   Module* Parent;
   HX711 *Sensor;
-  void tare();
-  void calibrate();
-  void setScale(float Scale);
-  float *Scale;  ///Calibration value: Raw reading of one unit
-  long *TareOffset; ///Read value at no weight on the scale
   int CalibrationWeight;
   bool TareRequested = false;
   bool CalibrateRequested = false;

@@ -30,7 +30,7 @@ void Aeroponics_NoTank_Web::websiteEvent_Refresh(__attribute__((unused)) char *u
     WebServer.setArgString(getComponentName(F("PresSp")), pressureToText(LastSprayPressure));
     WebServer.setArgString(getComponentName(F("Pres")), FeedbackPressureSensor->getPressureText(true, false));
     WebServer.setArgString(getComponentName(F("Spray")), sprayStateToText());
-    WebServer.setArgString(getComponentName(F("Pump")), pumpStateToText());
+    WebServer.setArgString(getComponentName(F("Pump")), pumpStateToText(PumpOK,PumpOn));
     WebServer.setArgString(getComponentName(F("Bypass")), onOffToText(BypassSolenoidOn));
   }
 }

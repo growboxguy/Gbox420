@@ -111,6 +111,18 @@ typedef struct
   struct WeightSensorSettings Weight1 = {.DTPin = 3, .SCKPin = 4, .Scale = 125000.0, .TareOffset=146000};
   struct WeightSensorSettings Weight2 = {.DTPin = 5, .SCKPin = 6, .Scale = 126000.0, .TareOffset=267461};
 
+  struct HempyBucketSettings
+  {
+    HempyBucketSettings(byte PumpPin = 0, float StartWeight = 0.0, float StopWeight = 0.0) : PumpPin(PumpPin), StartWeight(StartWeight), StopWeight(StopWeight)  {}
+    byte PumpPin;            ///Hempy bucket watering pump relay pin
+    int PumpTimeout = 120;   ///Max pump run time in seconds
+    bool PumpEnabled = true; ///Enable/disable automatic watering based on weight
+    float StartWeight; ///Start watering below this weight
+    float StopWeight;  ///Stop watering above this weight
+  };
+  struct HempyBucketSettings HempyB1 = {.PumpPin = 7, .StartWeight = 4.2, .StopWeight = 6.9};
+  struct HempyBucketSettings HempyB2 = {.PumpPin = 8, .StartWeight = 4.2, .StopWeight = 6.9};
+
   struct AeroponicsSettings
   { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
     AeroponicsSettings(byte BypassSolenoidPin = 0, byte PumpPin = 0) : BypassSolenoidPin(BypassSolenoidPin), PumpPin(PumpPin) {}

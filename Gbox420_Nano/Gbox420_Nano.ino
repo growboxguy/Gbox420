@@ -13,9 +13,8 @@
 #include "Settings.h"              
 #include "HempyModule.h"
 #include "SPI.h"
-#include "nRF24L01.h"
+#include "nRF24L01.h"   //https://forum.arduino.cc/index.php?topic=421081
 #include "RF24.h"
-           
 
 ///Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
@@ -27,7 +26,7 @@ HardwareSerial &ArduinoSerial = Serial;   ///Reference to the Arduino Serial
 Settings * ModuleSettings;                ///This object will store the settings loaded from the EEPROM. Persistent between reboots.
 bool *Debug;
 bool *Metric;
-HempyModule *HempyMod1;                            ///Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
+HempyModule *HempyMod1;                            ///Represents a Hempy bucket with weight sensors and pumps
 RF24 radio(7, 8); // CE, CSN
 const byte addresses[][6] = {"00001", "00002"};
 
@@ -56,8 +55,13 @@ void setup()
 
   //Setting up wireless module
   radio.begin();
+  radio.setDataRate( RF24_250KBPS );
+  //For hempy module
   radio.openWritingPipe(addresses[1]); // 00002
   radio.openReadingPipe(1, addresses[0]); // 00001
+  //Main module
+  //radio.openWritingPipe(addresses[0]); // 00002
+  //radio.openReadingPipe(1, addresses[1]); // 00001
   radio.setPALevel(RF24_PA_MIN);
 
  /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
@@ -79,6 +83,19 @@ void setup()
 void loop()
 {                      /// put your main code here, to run repeatedly:
   ThreadControl.run(); ///loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
+}
+
+//Wireless communication
+
+void listenForIncoming()
+{
+  radio.startListening();
+  if ( radio.available()) {
+    while (radio.available()) {
+      char dataReceived[32]; // this must match dataToSend in the TX
+      radio.read(&dataReceived, sizeof(dataReceived));
+      logToSerials(F("Received:"), false, 0);
+      logToSerials(dataReceived, true, 1);
 }
 
 ///////////////////////////////////////////////////////////////

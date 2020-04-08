@@ -177,3 +177,16 @@ char *enabledToText(bool Status)
   else
     return (char *)"DISABLED";
 }
+
+char *pumpStateToText(bool Enabled, bool Status)
+{
+  if (!Enabled)
+    return (char *)"DISABLED";
+  else
+  {
+    if (Status)
+      return (char *)"ON";
+    else
+      return (char *)"OFF";
+  }
+}

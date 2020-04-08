@@ -51,19 +51,6 @@ void Aeroponics::checkRelays()
     digitalWrite(*BypassSolenoidPin, HIGH);
 }
 
-char *Aeroponics::pumpStateToText()
-{
-  if (!PumpOK)
-    return (char *)"DISABLED";
-  else
-  {
-    if (PumpOn)
-      return (char *)"ON";
-    else
-      return (char *)"OFF";
-  }
-}
-
 void Aeroponics::setPumpOn(bool UserRequest)
 { ///turns pump on, UserRequest is true if it was triggered from the website
   if (UserRequest)
