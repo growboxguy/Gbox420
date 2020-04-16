@@ -1,8 +1,8 @@
 /**@file*/
 ///GrowBoxGuy - http:///sites.google.com/site/growboxguy/
-//This is currently under development
-//Gbox420 Nano is a stripped down version of Gbox420 without a web interface support
-//Runs autonomously and [WILL] support wireless connection towards the main module
+///This is currently under development
+///Gbox420 Nano is a stripped down version of Gbox420 without a web interface support
+///Runs autonomously on an Arduino Nano RF and [WILL] support wireless connection towards the main module
 
 #include "Arduino.h"
 #include "avr/wdt.h"                ///Watchdog timer for detecting a crash and automatically resetting the board
@@ -15,6 +15,7 @@
 #include "SPI.h"
 #include "nRF24L01.h"   //https://forum.arduino.cc/index.php?topic=421081
 #include "RF24.h"
+#include "Wireless.h"  ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
 
 ///Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
@@ -27,9 +28,8 @@ Settings * ModuleSettings;                ///This object will store the settings
 bool *Debug;
 bool *Metric;
 HempyModule *HempyMod1;                            ///Represents a Hempy bucket with weight sensors and pumps
-RF24 radio(7, 8); // CE, CSN
-const byte addresses[][6] = {"00001", "00002"};
-
+RF24 radio(10, 9); /// Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
+const byte ChannelAddress[5] = {"Hemp1"};  ///Identifies the channel used to receive commands from the main module
 
 ///Thread initialization
 Thread OneSecThread = Thread();
@@ -38,13 +38,12 @@ Thread MinuteThread = Thread();
 Thread QuarterHourThread = Thread();
 StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread, &QuarterHourThread);
 
-
 void setup()
 {                                                      /// put your setup code here, to run once:
   ArduinoSerial.begin(115200);                         ///Nano console output
   pinMode(13, OUTPUT);                                 ///onboard LED - Heartbeat every second to confirm code is running
   logToSerials(F(""), true, 0);                         ///New line
-  logToSerials(F("Arduino Nano initializing..."), true, 0); ///logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https:///gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
+  logToSerials(F("Arduino Nano RF initializing..."), true, 0); ///logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https:///gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                 ///Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                   ///fix watchdog not loading sketch after a reset error on Mega2560
 
@@ -53,18 +52,17 @@ void setup()
   Debug = &ModuleSettings ->  Debug;
   Metric = &ModuleSettings ->  Metric;
 
-  //Setting up wireless module
+  ///Setting up wireless module
   radio.begin();
   radio.setDataRate( RF24_250KBPS );
-  //For hempy module
-  radio.openWritingPipe(addresses[1]); // 00002
-  radio.openReadingPipe(1, addresses[0]); // 00001
-  //Main module
-  //radio.openWritingPipe(addresses[0]); // 00002
-  //radio.openReadingPipe(1, addresses[1]); // 00001
   radio.setPALevel(RF24_PA_MIN);
+  //For hempy module
+  radio.openReadingPipe(1, ChannelAddress);
+  radio.enableAckPayload();
+  updateReplyData();
+  radio.startListening();
 
- /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
+  /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
   OneSecThread.setInterval(1000);  ///1000ms
   OneSecThread.onRun(runSec);
   FiveSecThread.setInterval(5000);
@@ -83,19 +81,9 @@ void setup()
 void loop()
 {                      /// put your main code here, to run repeatedly:
   ThreadControl.run(); ///loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
-}
-
-//Wireless communication
-
-void listenForIncoming()
-{
-  radio.startListening();
-  if ( radio.available()) {
-    while (radio.available()) {
-      char dataReceived[32]; // this must match dataToSend in the TX
-      radio.read(&dataReceived, sizeof(dataReceived));
-      logToSerials(F("Received:"), false, 0);
-      logToSerials(dataReceived, true, 1);
+  if ( radio.available() ) { ///If a control package is received from the main module
+    getWirelessData();
+  }
 }
 
 ///////////////////////////////////////////////////////////////
@@ -105,7 +93,7 @@ void runSec()
 {
   wdt_reset();
   HeartBeat();    ///Blinks built-in led
-  HempyMod1->runSec(); ///Calls the runSec() method in GrowBox.cpp
+  HempyMod1->runSec(); ///Calls the runSec() method in GrowBox.cpp  
 }
 
 void runFiveSec()
@@ -131,6 +119,45 @@ void HeartBeat()
   static bool ledStatus;
   ledStatus = !ledStatus;
   digitalWrite(13, ledStatus);
+}
+
+///////////////////////////////////////////////////////////////
+///Wireless communication
+
+void updateReplyData() { // so you can see that new data is being sent
+    FakeResponse.bucket1Weight = random(400, 500) / 100.0;
+    FakeResponse.bucket2Weight = random(400, 500) / 100.0;
+    radio.writeAckPayload(1, &FakeResponse, sizeof(FakeResponse)); // load the payload for the next time
+}
+
+void getWirelessData() {
+    
+        radio.read( &ReceivedCommand, sizeof(ReceivedCommand) );        
+        Serial.print(F("Command received ["));
+        Serial.print(sizeof(ReceivedCommand));
+        Serial.println(F(" bytes], AckPayload sent")); 
+        Serial.print(ReceivedCommand.pump1Enabled);
+        Serial.print(", ");
+        Serial.print(ReceivedCommand.pump2Enabled);
+        Serial.print(", ");
+        Serial.print(ReceivedCommand.pump1Stop);
+        Serial.print(", ");
+        Serial.print(ReceivedCommand.pump2Stop);
+        Serial.print(", ");
+        Serial.print(ReceivedCommand.bucket1StartWatering);
+        Serial.print(", ");
+        Serial.print(ReceivedCommand.bucket2StartWatering);
+        Serial.print(", ");
+        Serial.print(ReceivedCommand.bucket1StartWeight);
+        Serial.print(", ");
+        Serial.print(ReceivedCommand.bucket1StopWeight);
+        Serial.print(", ");
+        Serial.print(ReceivedCommand.bucket2StartWeight);
+        Serial.print(", ");
+        Serial.println(ReceivedCommand.bucket2StopWeight);
+        Serial.println();
+        
+        updateReplyData();
 }
 
 ///////////////////////////////////////////////////////////////
