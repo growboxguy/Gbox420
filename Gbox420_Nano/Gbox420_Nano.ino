@@ -19,7 +19,7 @@
 
 ///Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
-char ShortMessage[MaxShotTextLength] = ""; ///temp storage for assembling short messages (Log entries, Error messages)
+char ShortMessage[MaxShotTextLength] = ""; ///temp storage for assembling short messages (Log entries, Error messages)char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
 char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
 
 ///Component initialization
@@ -27,7 +27,7 @@ HardwareSerial &ArduinoSerial = Serial;   ///Reference to the Arduino Serial
 Settings * ModuleSettings;                ///This object will store the settings loaded from the EEPROM. Persistent between reboots.
 bool *Debug;
 bool *Metric;
-HempyModule *HempyMod1;                            ///Represents a Hempy bucket with weight sensors and pumps
+HempyModule *HempyMod1;                   ///Represents a Hempy bucket with weight sensors and pumps
 RF24 radio(10, 9); /// Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 const byte ChannelAddress[5] = {"Hemp1"};  ///Identifies the channel used to receive commands from the main module
 
@@ -41,7 +41,6 @@ StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteTh
 void setup()
 {                                                      /// put your setup code here, to run once:
   ArduinoSerial.begin(115200);                         ///Nano console output
-  pinMode(13, OUTPUT);                                 ///onboard LED - Heartbeat every second to confirm code is running
   logToSerials(F(""), true, 0);                         ///New line
   logToSerials(F("Arduino Nano RF initializing..."), true, 0); ///logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https:///gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                 ///Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
@@ -56,7 +55,6 @@ void setup()
   radio.begin();
   radio.setDataRate( RF24_250KBPS );
   radio.setPALevel(RF24_PA_MIN);
-  //For hempy module
   radio.openReadingPipe(1, ChannelAddress);
   radio.enableAckPayload();
   updateReplyData();
@@ -92,7 +90,6 @@ void loop()
 void runSec()
 {
   wdt_reset();
-  HeartBeat();    ///Blinks built-in led
   HempyMod1->runSec(); ///Calls the runSec() method in GrowBox.cpp  
 }
 
@@ -112,13 +109,6 @@ void runQuarterHour()
 {
   wdt_reset();
   HempyMod1->runQuarterHour();
-}
-
-void HeartBeat()
-{
-  static bool ledStatus;
-  ledStatus = !ledStatus;
-  digitalWrite(13, ledStatus);
 }
 
 ///////////////////////////////////////////////////////////////
@@ -156,8 +146,8 @@ void getWirelessData() {
         Serial.print(", ");
         Serial.println(ReceivedCommand.bucket2StopWeight);
         Serial.println();
-        
         updateReplyData();
+
 }
 
 ///////////////////////////////////////////////////////////////

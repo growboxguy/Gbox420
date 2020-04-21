@@ -24,12 +24,6 @@ typedef struct
 {
   bool Debug = true;          ///Logs debug messages to serial and web outputs
   bool Metric = true;   ///Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
-
-  struct WirelessSettings{
-    byte CEPin = 10;
-    byte CSNPin = 9;
-    byte ChannelAddress[5] = "Hempy1";
-  };
   
   struct HempyModuleSettings{  ///TODO: Remove the parameters
     HempyModuleSettings(bool Debug, bool Metric) : Debug(Debug) , Metric(Metric) {} 

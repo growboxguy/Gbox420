@@ -15,7 +15,7 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   //PHSensor1 = new PHSensor(F("PHSensor1"), this, &ModuleSettings->PHSensor1);
   //WaterTemp1 = new WaterTempSensor(F("WaterTemp1"), this, &ModuleSettings->WaterTemp1);
   //WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
-  //Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
+  Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
   //Weight2 = new WeightSensor(F("Weight2"), this, &ModuleSettings->Weight2);
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
