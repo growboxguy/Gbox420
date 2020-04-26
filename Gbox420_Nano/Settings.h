@@ -3,7 +3,7 @@
 //// @attention Define the preferred default settings here.
 
 ///Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 6;
+static const byte Version = 12;
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 ///Global constants
@@ -38,7 +38,7 @@ typedef struct
     byte Pin;
     byte Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
   };
-  struct DHTSensorSettings DHT1 = {.Pin = 9, .Type = 22};  ///Default settings for the DHT sensor
+  struct DHTSensorSettings DHT1 = {.Pin = 8, .Type = 22};  ///Default settings for the DHT sensor
  
   struct SoundSettings
   {
@@ -55,7 +55,7 @@ typedef struct
     float Slope;
     float Intercept;
   };
-  struct PHSensorSettings PHSensor1 = {.Pin = A3, .Slope = -0.033256, .Intercept = 24.08651}; //////Default settings for the PH sensor, update the calibration values
+  struct PHSensorSettings PHSensor1 = {.Pin = A6, .Slope = -0.033256, .Intercept = 24.08651}; //////Default settings for the PH sensor, update the calibration values
 
   struct WeightSensorSettings
   {
@@ -65,15 +65,15 @@ typedef struct
     float Scale;  ///Calibration scale value
     long TareOffset; ///Reading at 0 weight on the scale
   };
-  struct WeightSensorSettings Weight1 = {.DTPin = 2, .SCKPin = 3, .Scale = 125000.0, .TareOffset=146000}; ///Default settings for the 
-  struct WeightSensorSettings Weight2 = {.DTPin = 4, .SCKPin = 5, .Scale = 126000.0, .TareOffset=267461}; ///Default settings for the 
+  struct WeightSensorSettings Weight1 = {.DTPin = 3, .SCKPin = 4, .Scale = 125000.0, .TareOffset=146000}; ///Default settings for the hempy bucket 1 weight sensor
+  struct WeightSensorSettings Weight2 = {.DTPin = 5, .SCKPin = 6, .Scale = 126000.0, .TareOffset=267461}; ///Default settings for the hempy bucket 2 weight sensor
 
   struct WaterTempSensorSettings
   {
     WaterTempSensorSettings(byte Pin = 0) : Pin(Pin) {}
     byte Pin;
   };
-  struct WaterTempSensorSettings WaterTemp1 = {.Pin = 51}; ///Data(yellow) - DS18B20 waterproof temp sensor
+  struct WaterTempSensorSettings WaterTemp1 = {.Pin = 7}; ///Data(yellow) - DS18B20 waterproof temp sensor
 
   struct WaterLevelSensorSettings
   {
@@ -83,7 +83,7 @@ typedef struct
     byte Pin_3;
     byte Pin_4; ///Full
   };
-  struct WaterLevelSensorSettings WaterLevel1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7};
+  struct WaterLevelSensorSettings WaterLevel1 = {.Pin_1 = A0, .Pin_2 = A1, .Pin_3 = A2, .Pin_4 = A3};
 
   byte CompatibilityVersion = Version; ///Should always be the last value stored.
 } Settings;

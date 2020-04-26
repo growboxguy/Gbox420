@@ -1,4 +1,4 @@
-u{
+{
     "port": "/dev/ttyUSB0",
     "board": "arduino:avr:nano",
     "configuration": "cpu=atmega328",

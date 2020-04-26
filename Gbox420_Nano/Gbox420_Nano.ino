@@ -54,7 +54,7 @@ Settings *loadSettings(bool ResetEEPROM = false )   ///if the function contains 
     ///DefaultSettings = EEPROMSettings; ///overwrite sketch defaults with loaded settings
     memcpy(DefaultSettings, &EEPROMSettings, sizeof(Settings));
   }
-  logToSerials(F("done"), false, 1);
+  logToSerials(F("done"), true, 1);
   return DefaultSettings;
 }
 
@@ -74,7 +74,7 @@ void setup()
   ///Setting up wireless module
   radio.begin();
   radio.setDataRate( RF24_250KBPS );
-  radio.setPALevel(RF24_PA_MIN);
+  //radio.setPALevel(RF24_PA_MIN);
   radio.openReadingPipe(1, ChannelAddress);
   radio.enableAckPayload();
   updateReplyData();

@@ -16,6 +16,7 @@ Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(
 
 void Module::runAll()
 {
+  logToSerials(F("Refresing all sensor readings..."), true, 0);
   wdt_reset();
   runSec();
   wdt_reset();
@@ -32,7 +33,7 @@ void Module::runReport()
   getFormattedTime(true);
   getFreeMemory();
   logToSerials(reportQueueItemCount,false,1);
-  logToSerials(F("components refreshing:"),true,1);
+  logToSerials(F("components reporting:"),true,1);
   for (int i = 0; i < reportQueueItemCount; i++)
   {
     ReportQueue[i]->report();
