@@ -11,6 +11,7 @@ ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
 ln ../src/RollingAverage.h ./src
 ln ../src/RollingAverage.cpp ./src
+ln ../src/Wireless.h ./src
 
 ln ../src/Components/420Common.h ./src/Components
 ln ../src/Components/420Common.cpp ./src/Components

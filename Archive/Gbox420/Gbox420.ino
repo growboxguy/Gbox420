@@ -167,8 +167,8 @@ void setup() {     // put your setup code here, to run once:
   resetWebServer();  //reset the WebServer
   ESPLink.Process();  //Process any command from ESP-Link
   setTime(getNtpTime());
-  //setSyncProvider((time_t)getNtpTime); //points to method for updating time from NTP server
-  //setSyncInterval(3600); //Sync time every hour
+  setSyncProvider(getNtpTime); //points to method for updating time from NTP server
+  setSyncInterval(86400); //Sync time every day
   setupMqtt();  //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
  
   //Threading - Linking functions to threads and setting how often they should be called

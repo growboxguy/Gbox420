@@ -31,7 +31,7 @@ void HempyBucket_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
   }
   else if(strncmp(url, "/G",2) == 0)
   {
-    WebServer.setArgFloat(getComponentName(F("W")), FeedbackWeightSensor -> getWeight(false));
+    WebServer.setArgFloat(getComponentName(F("W")), FeedbackWeightSensor -> getWeight());
   }
 }
 

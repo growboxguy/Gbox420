@@ -39,7 +39,7 @@ void HempyBucket::checkBucketWeight()
     else
     {  
       FeedbackWeightSensor -> readWeight();  //Force a weight refresh   
-      if(FeedbackWeightSensor -> getWeight(false) > *StopWeight)
+      if(FeedbackWeightSensor -> getWeight() > *StopWeight)
       {
         pumpOff(false);
       }
@@ -47,7 +47,7 @@ void HempyBucket::checkBucketWeight()
   }
   else  ///If pump is off
   {
-     if(FeedbackWeightSensor -> getWeight(false) < *StartWeight)
+     if(FeedbackWeightSensor -> getWeight() < *StartWeight)
       {
         waterNow(false);
       }

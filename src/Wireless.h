@@ -3,6 +3,7 @@
 ///Structs for wireless communication
 struct commandTemplate  ///Max 32bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
+   time_t time;
    bool pump1Enabled; 
    bool pump2Enabled;
    bool pump1Stop; 

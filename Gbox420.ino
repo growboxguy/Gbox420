@@ -70,7 +70,8 @@ void setup()
 
   ESPLink.resetCb = &resetWebServer; ///< Callback subscription: What to do when WiFi reconnects
   resetWebServer();                  ///< reset the WebServer
-  setTime(getNtpTime());             ///< Get the current time over the internet using NTP
+  setSyncProvider(getNtpTime); //points to method for updating time from NTP server
+  setSyncInterval(86400); //Sync time every day
 
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.setInterval(1000);

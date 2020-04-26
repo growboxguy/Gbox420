@@ -5,6 +5,7 @@
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
+#include "TimeLib.h"     ///keeping track of time
 
 #define CE_PIN  10
 #define CSN_PIN 9
@@ -14,6 +15,7 @@ RF24 radio(CE_PIN, CSN_PIN);
 
 struct commandTemplate  //Max 32bytes. Template of the command sent to the Receiver. Both Transmitter and Receiver needs to know this structure
 {
+   time_t time;
    bool pump1Enabled; 
    bool pump2Enabled;
    bool pump1Stop; 
@@ -25,7 +27,7 @@ struct commandTemplate  //Max 32bytes. Template of the command sent to the Recei
    float bucket2StartWeight;
    float bucket2StopWeight;
 };
-struct commandTemplate FakeCommand = {1,1,0,0,1,0,3.9,5.0,3.8,4.9};  //Fake commands sent to the Receiver
+struct commandTemplate FakeCommand = {1587936134,1,1,0,0,1,0,3.9,5.0,3.8,4.9};  //Fake commands sent to the Receiver
 
 
 struct responseTemplate  //Max 32bytes. Template of the response back from the Receiver. Both Transmitter and Receiver needs to know this structure
