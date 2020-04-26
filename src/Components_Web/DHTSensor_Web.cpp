@@ -15,7 +15,7 @@ void DHTSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 { ///When the website is refreshing
   if (strncmp(url, "/G",2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("T")), getTempText(true, false)); ///Shows the latest reading
-    WebServer.setArgString(getComponentName(F("H")), getHumidityText(true, false));
+    WebServer.setArgString(getComponentName(F("T")), getTempText(true)); ///Shows the latest reading
+    WebServer.setArgString(getComponentName(F("H")), getHumidityText(true));
   }
 }

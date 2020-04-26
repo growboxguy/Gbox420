@@ -75,7 +75,7 @@ void HempyModule::setMetric(bool MetricEnabled)
     *Metric = MetricEnabled;
     //ModuleSettings -> IFanSwitchTemp = convertBetweenTempUnits(ModuleSettings -> IFanSwitchTemp);
     //Pres1->Pressure->resetAverage();
-    IDHT->Temp->resetAverage();
+    //IDHT->Temp->resetAverage();
    // WaterTemp1->Temp->resetAverage();
     RefreshAllRequested = true;
   }

@@ -172,8 +172,6 @@ void GrowBox::setMetric(bool MetricEnabled)
     *Metric = MetricEnabled;
     ///ModuleSettings -> IFanSwitchTemp = convertBetweenTempUnits(ModuleSettings -> IFanSwitchTemp);
     Pres1->Pressure->resetAverage();
-    IDHT->Temp->resetAverage();
-    EDHT->Temp->resetAverage();
     WaterTemp1->Temp->resetAverage();
     RefreshAllRequested = true;
   }
@@ -225,13 +223,13 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
     memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
     strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));
     strcat_P(LongMessage, (PGM_P)F("\"InternalTemp\":\""));
-    strcat(LongMessage, IDHT->getTempText(false, true));
+    strcat(LongMessage, IDHT->getTempText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"ExternalTemp\":\""));
-    strcat(LongMessage, EDHT->getTempText(false, true));
+    strcat(LongMessage, EDHT->getTempText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"InternalHumidity\":\""));
-    strcat(LongMessage, IDHT->getHumidityText(false, true));
+    strcat(LongMessage, IDHT->getHumidityText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"ExternalHumidity\":\""));
-    strcat(LongMessage, EDHT->getHumidityText(false, true));
+    strcat(LongMessage, EDHT->getHumidityText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"InternalFan\":\""));
     strcat(LongMessage, IFan->fanSpeedToNumber());
     strcat_P(LongMessage, (PGM_P)F("\",\"ExhaustFan\":\""));

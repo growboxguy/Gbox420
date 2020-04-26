@@ -11,10 +11,10 @@ public:
   void refresh_Minute();
   void report();
   void readSensor(); ///Refresh Temp and Humidity readings
-  float getTemp(bool ReturnAverage = true);
-  char *getTempText(bool IncludeUnits, bool ReturnAverage);
-  float getHumidity(bool ReturnAverage = true);
-  char *getHumidityText(bool IncludeUnits, bool ReturnAverage);
+  float getTemp();
+  char *getTempText(bool IncludeUnits);
+  float getHumidity();
+  char *getHumidityText(bool IncludeUnits);
   float Temp;
   float Humidity;
 

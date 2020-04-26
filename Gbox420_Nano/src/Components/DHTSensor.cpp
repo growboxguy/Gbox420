@@ -40,18 +40,18 @@ void DHTSensor::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Temp:"));
-  strcat(LongMessage, getTempText(true, true)); ///Shows the average reading
+  strcat(LongMessage, getTempText(true)); ///Shows the average reading
   strcat_P(LongMessage, (PGM_P)F(" ; Humidity:"));
-  strcat(LongMessage, getHumidityText(true, true));
+  strcat(LongMessage, getHumidityText(true));
   logToSerials(&LongMessage, true, 1);
 }
 
-float DHTSensor::getTemp(bool ReturnAverage)
+float DHTSensor::getTemp()
 {
   return Temp;
 }
 
-char *DHTSensor::getTempText(bool IncludeUnits, bool ReturnAverage)
+char *DHTSensor::getTempText(bool IncludeUnits)
 {
   if (IncludeUnits)
     return tempToText(Temp);
@@ -59,12 +59,12 @@ char *DHTSensor::getTempText(bool IncludeUnits, bool ReturnAverage)
     return toText(Temp);
 }
 
-float DHTSensor::getHumidity(bool ReturnAverage)
+float DHTSensor::getHumidity()
 {
   return Humidity;
 }
 
-char *DHTSensor::getHumidityText(bool IncludeUnits, bool ReturnAverage)
+char *DHTSensor::getHumidityText(bool IncludeUnits)
 {
   if (IncludeUnits)
     return percentageToText(Humidity);
