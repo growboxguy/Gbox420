@@ -60,6 +60,36 @@ void HempyModule::refresh_Sec()
   } */
 }
 
+void HempyModule::processCommand(commandTemplate *Command){
+        Serial.print(Command -> pump1Enabled);
+        Serial.print(", ");
+        Serial.print(Command -> pump2Enabled);
+        Serial.print(", ");
+        Serial.print(Command -> pump1Stop);
+        Serial.print(", ");
+        Serial.print(Command -> pump2Stop);
+        Serial.print(", ");
+        Serial.print(Command -> bucket1StartWatering);
+        Serial.print(", ");
+        Serial.print(Command -> bucket2StartWatering);
+        Serial.print(", ");
+        Serial.print(Command -> bucket1StartWeight);
+        Serial.print(", ");
+        Serial.print(Command -> bucket1StopWeight);
+        Serial.print(", ");
+        Serial.print(Command -> bucket2StartWeight);
+        Serial.print(", ");
+        Serial.println(Command -> bucket2StopWeight);
+        Serial.println(); 
+
+        updateResponse();       
+}
+
+void HempyModule::updateResponse(){
+  Response.bucket1Weight = Weight1 -> getWeight();
+  Response.bucket2Weight = Weight2 -> getWeight();
+}
+
 void HempyModule::refresh_FiveSec()
 {
   if (*Debug)

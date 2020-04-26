@@ -1,3 +1,5 @@
+#pragma once
+
 ///Structs for wireless communication
 struct commandTemplate  ///Max 32bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
@@ -12,7 +14,7 @@ struct commandTemplate  ///Max 32bytes. Template of the command sent by the Tran
    float bucket2StartWeight;
    float bucket2StopWeight;
 };
-struct commandTemplate ReceivedCommand;  //Variable where the actual command values will get stored
+extern struct commandTemplate Command;  //Variable where the actual command values will get stored
 
 struct responseTemplate  ///Max 32bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
@@ -23,4 +25,5 @@ struct responseTemplate  ///Max 32bytes. Template of the response sent back to t
    float bucket1Weight;
    float bucket2Weight;
 };
-struct responseTemplate FakeResponse = {1,1,0,1,4.20,1.23};  ///Fake response sent back in the Acknowledgement after receiving a command from the Transmitter
+extern struct responseTemplate Response;  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter
+//extern struct responseTemplate Response = {1,1,0,1,4.20,1.23};  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter

@@ -18,8 +18,13 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
 
 void WeightSensor::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+ 
+}
+
+void WeightSensor::refresh_Sec()
+{
+    if (*Debug)
+    Common::refresh_Sec();
   if(TareRequested){
     TareRequested = false;
     tare();
@@ -31,17 +36,12 @@ void WeightSensor::refresh_FiveSec()
   readWeight();
 }
 
-void WeightSensor::refresh_Sec()
-{
-   
-}
-
 void WeightSensor::report()
 {
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
-  strcat(LongMessage, getWeightText(true, false));
+  strcat(LongMessage, getWeightText(true));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -51,12 +51,12 @@ void WeightSensor::readWeight(){
   }
 }
 
-float WeightSensor::getWeight(bool ReturnAverage)
+float WeightSensor::getWeight()
 {
   return Weight;
 }
 
-char *WeightSensor::getWeightText(bool IncludeUnits, bool ReturnAverage)
+char *WeightSensor::getWeightText(bool IncludeUnits)
 {
   if (IncludeUnits)
     return weightToText(Weight);

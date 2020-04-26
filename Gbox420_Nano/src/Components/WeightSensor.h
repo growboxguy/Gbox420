@@ -11,8 +11,8 @@ public:
   void refresh_Sec();
   void report();
   void readWeight();
-  float getWeight(bool ReturnAverage = true);
-  char *getWeightText(bool IncludeUnits, bool ReturnAverage);
+  float getWeight();
+  char *getWeightText(bool IncludeUnits);
   void triggerTare();
   void triggerCalibration(int CalibrationWeight); 
   void setScale(float Scale); 

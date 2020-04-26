@@ -15,12 +15,14 @@
 #include "SPI.h"
 #include "nRF24L01.h"   //https://forum.arduino.cc/index.php?topic=421081
 #include "RF24.h"
-#include "Wireless.h"  ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
+//#include "Wireless.h"  ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
 
 ///Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
 char ShortMessage[MaxShotTextLength] = ""; ///temp storage for assembling short messages (Log entries, Error messages)char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
 char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
+struct commandTemplate Command;  //Variable where the wireless command values will get stored
+struct responseTemplate Response;  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter
 
 ///Component initialization
 HardwareSerial &ArduinoSerial = Serial;   ///Reference to the Arduino Serial
@@ -77,7 +79,6 @@ void setup()
   //radio.setPALevel(RF24_PA_MIN);
   radio.openReadingPipe(1, ChannelAddress);
   radio.enableAckPayload();
-  updateReplyData();
   radio.startListening();
 
   /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
@@ -134,39 +135,15 @@ void runQuarterHour()
 ///////////////////////////////////////////////////////////////
 ///Wireless communication
 
-void updateReplyData() { // so you can see that new data is being sent
-    FakeResponse.bucket1Weight = random(400, 500) / 100.0;
-    FakeResponse.bucket2Weight = random(400, 500) / 100.0;
-    radio.writeAckPayload(1, &FakeResponse, sizeof(FakeResponse)); // load the payload for the next time
-}
-
 void getWirelessData() {
     
-        radio.read( &ReceivedCommand, sizeof(ReceivedCommand) );        
+        radio.read( &Command, sizeof(Command) );
         Serial.print(F("Command received ["));
-        Serial.print(sizeof(ReceivedCommand));
+        Serial.print(sizeof(Command));
         Serial.println(F(" bytes], AckPayload sent")); 
-        Serial.print(ReceivedCommand.pump1Enabled);
-        Serial.print(", ");
-        Serial.print(ReceivedCommand.pump2Enabled);
-        Serial.print(", ");
-        Serial.print(ReceivedCommand.pump1Stop);
-        Serial.print(", ");
-        Serial.print(ReceivedCommand.pump2Stop);
-        Serial.print(", ");
-        Serial.print(ReceivedCommand.bucket1StartWatering);
-        Serial.print(", ");
-        Serial.print(ReceivedCommand.bucket2StartWatering);
-        Serial.print(", ");
-        Serial.print(ReceivedCommand.bucket1StartWeight);
-        Serial.print(", ");
-        Serial.print(ReceivedCommand.bucket1StopWeight);
-        Serial.print(", ");
-        Serial.print(ReceivedCommand.bucket2StartWeight);
-        Serial.print(", ");
-        Serial.println(ReceivedCommand.bucket2StopWeight);
-        Serial.println();
-        updateReplyData();
+
+        HempyMod1 -> processCommand(&Command);       /// \todo: Support Aeroponics Module  
+        radio.writeAckPayload(1, &Response, sizeof(Response)); // load the payload for the next time
 
 }
 

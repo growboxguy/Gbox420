@@ -2,6 +2,7 @@
 
 #include "420Common.h"
 #include "../../Settings.h"
+#include "../../Wireless.h"
 #include "../Helpers.h"
 
 //This class is the parent of all physical modules, like the Main / Hempy Bucket / Aeroponics / Environment module
@@ -29,7 +30,7 @@ public:
   void addToRefreshQueue_Minute(Common *Component);
   void addToRefreshQueue_QuarterHour(Common *Component);
   char * getFormattedTime(bool PrintToSerials);
-  Sound * getSoundObject();
+  Sound * getSoundObject();  
     
 private:
 

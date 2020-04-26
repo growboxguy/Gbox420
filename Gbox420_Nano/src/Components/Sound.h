@@ -23,7 +23,7 @@ protected:
   void OffSound();
   byte *Pin;                 ///Pin connecting the piezo Sound positive(+) side over a 330Ω resistor)
   bool *Enabled;             ///Sound ON or OFF
-  bool PlayOnSound = false;  ///Play on beep flag - website controls it
-  bool PlayOffSound = false; ///Play off beep flag - website controls it
+  bool PlayOnSound = true;  ///Play on beep flag - website controls it
+  bool PlayOffSound = true; ///Play off beep flag - website controls it
 
 };

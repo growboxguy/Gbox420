@@ -34,6 +34,8 @@ public:
   void refresh_FiveSec();
   void refresh_Minute();
   void refresh_QuarterHour(); 
+  void processCommand(commandTemplate *Command);
+  void updateResponse();
 
 private:
   void setDebugOnOff(bool State);

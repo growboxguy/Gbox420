@@ -20,10 +20,10 @@ void Sound::refresh_Sec()
 void Sound::checkEvents(){
   if (*Enabled)
   {
-    if (PlayOnSound)
-      OnSound();
     if (PlayOffSound)
       OffSound();
+    if (PlayOnSound)
+      OnSound();    
   }
   PlayOnSound = false;
   PlayOffSound = false;  
