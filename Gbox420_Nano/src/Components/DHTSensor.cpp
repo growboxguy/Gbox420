@@ -8,8 +8,8 @@ DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
   this->Parent = Parent;
   Sensor = new DHT(*(&DefaultSettings->Pin), *(&DefaultSettings->Type));
   Sensor->begin(); ///dereference the pointer to the object and then call begin() on it. Same as (*Sensor).begin();
-  Temp = new RollingAverage();
-  Humidity = new RollingAverage();
+  Temp = 0.0;
+  Humidity = 0.0;
   Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
   Parent->addToRefreshQueue_Minute(this);  ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   logToSerials(F("DHT Sensor object created"), true, 1);
@@ -19,15 +19,20 @@ void DHTSensor::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();
+  readSensor();
+}
+
+void DHTSensor::readSensor()
+{
   if (*Metric)
   {
-    Temp->updateAverage(Sensor->readTemperature());
+    Temp = Sensor->readTemperature();
   }
   else
   {
-    Temp->updateAverage(Sensor->readTemperature() * 1.8f + 32);
+    Temp = Sensor->readTemperature() * 1.8f + 32;
   }
-  Humidity->updateAverage(Sensor->readHumidity());
+  Humidity = Sensor->readHumidity();
 }
 
 void DHTSensor::report()
@@ -43,26 +48,26 @@ void DHTSensor::report()
 
 float DHTSensor::getTemp(bool ReturnAverage)
 {
-  return Temp->getFloat(ReturnAverage);
+  return Temp;
 }
 
 char *DHTSensor::getTempText(bool IncludeUnits, bool ReturnAverage)
 {
   if (IncludeUnits)
-    return tempToText(Temp->getFloat(ReturnAverage));
+    return tempToText(Temp);
   else
-    return Temp->getFloatText(ReturnAverage);
+    return toText(Temp);
 }
 
 float DHTSensor::getHumidity(bool ReturnAverage)
 {
-  return Humidity->getFloat(ReturnAverage);
+  return Humidity;
 }
 
 char *DHTSensor::getHumidityText(bool IncludeUnits, bool ReturnAverage)
 {
   if (IncludeUnits)
-    return percentageToText(Humidity->getFloat(ReturnAverage));
+    return percentageToText(Humidity);
   else
-    return Humidity->getFloatText(ReturnAverage);
+    return toText(Humidity);
 }

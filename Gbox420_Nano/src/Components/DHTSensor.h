@@ -10,12 +10,13 @@ public:
   DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings);
   void refresh_Minute();
   void report();
+  void readSensor(); ///Refresh Temp and Humidity readings
   float getTemp(bool ReturnAverage = true);
   char *getTempText(bool IncludeUnits, bool ReturnAverage);
   float getHumidity(bool ReturnAverage = true);
   char *getHumidityText(bool IncludeUnits, bool ReturnAverage);
-  RollingAverage *Temp;
-  RollingAverage *Humidity;
+  float Temp;
+  float Humidity;
 
 private:
   

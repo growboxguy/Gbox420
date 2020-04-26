@@ -15,11 +15,11 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
 { //Constructor
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); //Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (byte *)(((byte *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
-  PHSensor1 = new PHSensor(F("PHS1"), this, &ModuleSettings->PHSensor1);
+  //PHSensor1 = new PHSensor(F("PHS1"), this, &ModuleSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor(F("WaterT1"), this, &ModuleSettings->WaterTemp1);
   WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
-  //Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
-  //Weight2 = new WeightSensor(F("Weight2"), this, &ModuleSettings->Weight2);
+  Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
+  Weight2 = new WeightSensor(F("Weight2"), this, &ModuleSettings->Weight2);
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
@@ -108,7 +108,6 @@ void HempyModule::setMetric(bool MetricEnabled)
     *Metric = MetricEnabled;
     //ModuleSettings -> IFanSwitchTemp = convertBetweenTempUnits(ModuleSettings -> IFanSwitchTemp);
     //Pres1->Pressure->resetAverage();
-    DHT1->Temp->resetAverage();
    // WaterTemp1->Temp->resetAverage();
     RefreshAllRequested = true;
   }

@@ -4,7 +4,7 @@ WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent
 { ///constructor
   this->Parent = Parent;
   ///pinMode(*Pin, INPUT);
-  Temp = new RollingAverage();
+  Temp = 0.0;
   TempSensorWire = new OneWire(*(&DefaultSettings->Pin)); ///Reservoir waterproof temperature sensor (DS18B20)
   TempSensor = new DallasTemperature(TempSensorWire);     ///Reservoir waterproof temperature sensor (DS18B20)
   TempSensor->begin();
@@ -16,16 +16,8 @@ WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent
 void WaterTempSensor::refresh_Minute()
 {
   if (*Debug)
-    Common::refresh_Minute();
-  TempSensor->requestTemperatures();
-  if (*Metric)
-  {
-    Temp->updateAverage(TempSensor->getTempCByIndex(0));
-  }
-  else
-  {
-    Temp->updateAverage(TempSensor->getTempFByIndex(0));
-  }
+    Common::refresh_Minute();  
+  readSensor();
 }
 
 void WaterTempSensor::report()
@@ -33,19 +25,31 @@ void WaterTempSensor::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Temp:"));
-  strcat(LongMessage, getTempText(true, true));
+  strcat(LongMessage, getTempText(true));
   logToSerials(&LongMessage, true, 1);
 }
 
-float WaterTempSensor::getTemp(bool ReturnAverage)
-{
-  return Temp->getFloat(ReturnAverage);
+void WaterTempSensor::readSensor(){
+  TempSensor->requestTemperatures();
+  if (*Metric)
+  {
+    Temp = TempSensor->getTempCByIndex(0);
+  }
+  else
+  {
+    Temp = TempSensor->getTempFByIndex(0);
+  }
 }
 
-char *WaterTempSensor::getTempText(bool IncludeUnits, bool ReturnAverage)
+float WaterTempSensor::getTemp()
+{
+  return Temp;
+}
+
+char *WaterTempSensor::getTempText(bool IncludeUnits)
 {
   if (IncludeUnits)
-    return tempToText(Temp->getFloat(ReturnAverage));
+    return tempToText(Temp);
   else
-    return Temp->getFloatText(ReturnAverage);
+    return toText(Temp);
 }

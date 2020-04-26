@@ -15,7 +15,7 @@ public:
   char *getWeightText(bool IncludeUnits, bool ReturnAverage);
   void triggerTare();
   void triggerCalibration(int CalibrationWeight);  
-  RollingAverage *Weight;
+  float Weight;
 
 private:  
 
