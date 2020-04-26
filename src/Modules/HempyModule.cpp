@@ -48,7 +48,6 @@ void HempyModule::refresh_QuarterHour()
 {
   if (*Debug)
     Common::refresh_QuarterHour(); 
-  Sound1 -> playEE();
 }
 
 //////////////////////////////////////////////////////////////////
