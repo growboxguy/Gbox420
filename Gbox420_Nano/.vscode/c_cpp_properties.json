@@ -3,13 +3,15 @@
         {
             "name": "Linux",
             "defines": [
-                "ARDUINO=10800"
+                "ARDUINO=10800",
+                "USBCON"
             ],
             "includePath": [
-                "/home/bit/Apps/arduino-1.8.10/tools/**",
-                "/home/bit/Apps/arduino-1.8.10/hardware/arduino/avr/**",
-                "/home/bit/Apps/arduino-1.8.10/hardware/tools/**",
-                "/home/bit/Apps/arduino-1.8.10/libraries/**",
+                "/home/bit/Apps/arduino-1.8.12/tools/**",
+                "/home/bit/Apps/arduino-1.8.12/hardware/arduino/avr/**",
+                "/home/bit/Apps/arduino-1.8.12/hardware/tools/**",
+                "/home/bit/Apps/arduino-1.8.12/libraries/**",
+                "/home/bit/Apps/Gbox420/**",
                 "${workspaceRoot}",
                 "/home/bit/.arduino15/packages/arduino/hardware/avr/1.8.2/**",
                 "/home/bit/.arduino15/packages/arduino/tools/**"

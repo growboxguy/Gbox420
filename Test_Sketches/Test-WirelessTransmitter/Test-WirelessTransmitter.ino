@@ -36,6 +36,8 @@ struct responseTemplate  //Max 32bytes. Template of the response back from the R
    bool pump2State;
    float bucket1Weight;
    float bucket2Weight;
+   float temp;
+   float humidity;
 };
 struct responseTemplate AckResponse; //The response from the Receiver will be stored here, represents the current status of the Receiver
 
@@ -83,8 +85,13 @@ void send() {
             Serial.print(", ");
             Serial.print(AckResponse.bucket1Weight);
             Serial.print(", ");
-            Serial.println(AckResponse.bucket2Weight);
+            Serial.print(AckResponse.bucket2Weight);
+            Serial.print(", ");
+            Serial.print(AckResponse.temp);
+            Serial.print(", ");
+            Serial.print(AckResponse.humidity);
             Serial.println();
+            
             updateMessage();
         }
         else {

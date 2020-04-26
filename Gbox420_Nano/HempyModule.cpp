@@ -88,6 +88,8 @@ void HempyModule::processCommand(commandTemplate *Command){
 void HempyModule::updateResponse(){
   Response.bucket1Weight = Weight1 -> getWeight();
   Response.bucket2Weight = Weight2 -> getWeight();
+  Response.temp = DHT1 -> getTemp();
+  Response.humidity = DHT1 -> getHumidity();
 }
 
 void HempyModule::refresh_FiveSec()

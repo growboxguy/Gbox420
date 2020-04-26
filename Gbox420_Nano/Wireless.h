@@ -24,6 +24,8 @@ struct responseTemplate  ///Max 32bytes. Template of the response sent back to t
    bool pump2State;
    float bucket1Weight;
    float bucket2Weight;
+   float temp;
+   float humidity;
 };
 extern struct responseTemplate Response;  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter
 //extern struct responseTemplate Response = {1,1,0,1,4.20,1.23};  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter
