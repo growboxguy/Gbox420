@@ -12,8 +12,8 @@ class Sound;
 class Module : virtual public Common
 {
 public:
-  Module(); //constructor
-
+  Module(); ///constructor
+  
   //Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
   void runReport();
   void runAll();
@@ -37,12 +37,12 @@ protected:
   Sound* SoundFeedback = NULL;
   bool RunAllRequested = false;
   bool ConsoleReportRequested = false; 
-  Common *ReportQueue[QueueDepth] = {};  //aggregate initializer: Same as initializing to null pointers
+  Common *ReportQueue[QueueDepth] = {};  ///aggregate initializer: Same as initializing to null pointers
   Common *RefreshQueue_Sec[QueueDepth]= {};
   Common *RefreshQueue_FiveSec[QueueDepth]= {};
   Common *RefreshQueue_Minute[QueueDepth]= {};
   Common *RefreshQueue_QuarterHour[QueueDepth]= {};
-  byte reportQueueItemCount = 0; //Tracking queue item count
+  byte reportQueueItemCount = 0; ///Tracking queue item count
   byte refreshQueueItemCount_Sec = 0;
   byte refreshQueueItemCount_FiveSec = 0;
   byte refreshQueueItemCount_Minute = 0;
