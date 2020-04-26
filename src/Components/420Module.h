@@ -4,16 +4,17 @@
 #include "../../Settings.h"
 #include "../Helpers.h"
 
-///This class is the parent of all physical modules, like the Main / Hempy Bucket / Aeroponics
-
+//This class is the parent of all physical modules, like the Main / Hempy Bucket / Aeroponics / Environment module
+//Responsible for creating and
+//Adds 
 class Sound;
 
 class Module : virtual public Common
 {
 public:
   Module(); ///constructor
-
-  ///Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
+  
+  //Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
   void runReport();
   void runAll();
   void runSec();
@@ -35,6 +36,7 @@ private:
 protected:
   Sound* SoundFeedback = NULL;
   bool RunAllRequested = false;
+  bool ConsoleReportRequested = false; 
   Common *ReportQueue[QueueDepth] = {};  ///aggregate initializer: Same as initializing to null pointers
   Common *RefreshQueue_Sec[QueueDepth]= {};
   Common *RefreshQueue_FiveSec[QueueDepth]= {};

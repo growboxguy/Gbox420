@@ -43,3 +43,4 @@ char *percentageToText(float Humidity);
 char *onOffToText(bool Status);
 char *yesNoToText(bool Status);
 char *enabledToText(bool Status);
+char *pumpStateToText(bool Enabled, bool Status);

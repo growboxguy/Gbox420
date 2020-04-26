@@ -1,6 +1,7 @@
 #pragma once ///header guard, same as the ifndef/define guard  https:///en.wikipedia.org/wiki/Pragma_once
 
-///Parent of all components
+///This is a virtual class from which all other classes inherit from (GrowBox, PH reader, Lights, DHTSensor..)
+///Enforces a set of Common functions shared by the components
 
 #include "Arduino.h"     
 #include "TimeLib.h"     ///keeping track of time
@@ -17,8 +18,6 @@ extern Settings * ModuleSettings;
 extern bool *Debug;
 extern bool *Metric;
 
-///This is a virtual class from which all other classes inherit from
-///Enforces a set of Common functions shared by the components
 class Common
 {
 public:

@@ -13,6 +13,6 @@ void WaterTempSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
 {
   if (strncmp(url, "/G",2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("T")), getTempText(true, false));
+    WebServer.setArgString(getComponentName(F("T")), getTempText(true));
   }
 }

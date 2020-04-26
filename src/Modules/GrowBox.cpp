@@ -172,7 +172,6 @@ void GrowBox::setMetric(bool MetricEnabled)
     *Metric = MetricEnabled;
     ///ModuleSettings -> IFanSwitchTemp = convertBetweenTempUnits(ModuleSettings -> IFanSwitchTemp);
     Pres1->Pressure->resetAverage();
-    WaterTemp1->Temp->resetAverage();
     RefreshAllRequested = true;
   }
   if (*Metric)
@@ -245,7 +244,7 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
     strcat_P(LongMessage, (PGM_P)F("\",\"WaterLevel\":\""));
     strcat(LongMessage, WaterLevel1->getLevelText());
     strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
-    strcat(LongMessage, WaterTemp1->getTempText(false, true));
+    strcat(LongMessage, WaterTemp1->getTempText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
     strcat(LongMessage, PHSensor1->getPHText(true));
     strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));

@@ -3,8 +3,6 @@
 #include "420Common.h"
 #include "420Module.h"
 
-///PH sensor
-
 class PHSensor : virtual public Common
 {
 public:
