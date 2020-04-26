@@ -11,6 +11,7 @@ class Sound_Web : public Sound, public Common_Web
 public:
   Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings);
   void checkEvents(); 
+  void refresh_Sec();
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Field(char *Field);
   void websiteEvent_Button(char *Button); 
