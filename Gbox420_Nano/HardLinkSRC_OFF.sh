@@ -14,12 +14,16 @@ unlink ./src/Components/420Module.h
 unlink ./src/Components/420Module.cpp
 unlink ./src/Components/DHTSensor.h
 unlink ./src/Components/DHTSensor.cpp
+unlink ./src/Components/HempyBucket.h
+unlink ./src/Components/HempyBucket.cpp
 unlink ./src/Components/PHSensor.h
 unlink ./src/Components/PHSensor.cpp
 unlink ./src/Components/Sound.h
 unlink ./src/Components/Sound.cpp
 unlink ./src/Components/WaterLevelSensor.h
 unlink ./src/Components/WaterLevelSensor.cpp
+unlink ./src/Components/WaterPump.h
+unlink ./src/Components/WaterPump.cpp
 unlink ./src/Components/WaterTempSensor.h
 unlink ./src/Components/WaterTempSensor.cpp
 unlink ./src/Components/WeightSensor.h
