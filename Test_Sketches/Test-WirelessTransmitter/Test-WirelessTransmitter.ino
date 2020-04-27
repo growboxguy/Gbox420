@@ -45,7 +45,7 @@ struct responseTemplate AckResponse; //The response from the Receiver will be st
 
 unsigned long currentMillis;
 unsigned long prevMillis;
-unsigned long txIntervalMillis = 1000; // send once per second
+unsigned long txIntervalMillis = 15000; // send once per 15 seconds
 
 void setup() {
     Serial.begin(115200);

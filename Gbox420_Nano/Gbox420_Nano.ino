@@ -26,7 +26,7 @@ struct responseTemplate Response;  ///Response sent back in the Acknowledgement 
 
 ///Component initialization
 HardwareSerial &ArduinoSerial = Serial;   ///Reference to the Arduino Serial
-Settings * ModuleSettings;                ///This object will store the settings loaded from the EEPROM. Persistent between reboots.
+Settings * ModuleSettings;                ///settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
 bool *Debug;
 bool *Metric;
 HempyModule *HempyMod1;                   ///Represents a Hempy bucket with weight sensors and pumps

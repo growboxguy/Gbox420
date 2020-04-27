@@ -9,21 +9,24 @@
 #include "src/Components/PHSensor.h"
 #include "src/Components/WaterTempSensor.h"
 #include "src/Components/WaterLevelSensor.h"
+#include "src/Components/HempyBucket.h"
 
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
-{ //Constructor
-  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); //Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (byte *)(((byte *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
-  DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
-  PHSensor1 = new PHSensor(F("PHS1"), this, &ModuleSettings->PHSensor1);
-  WaterTemp1 = new WaterTempSensor(F("WaterT1"), this, &ModuleSettings->WaterTemp1);
-  WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
+{ 
+  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (byte *)(((byte *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  //DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
+  //PHSensor1 = new PHSensor(F("PHS1"), this, &ModuleSettings->PHSensor1);
+  //WaterTemp1 = new WaterTempSensor(F("WaterT1"), this, &ModuleSettings->WaterTemp1);
+  //WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
   Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
   Weight2 = new WeightSensor(F("Weight2"), this, &ModuleSettings->Weight2);
-  addToRefreshQueue_Sec(this);
-  addToRefreshQueue_FiveSec(this);     //Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  addToRefreshQueue_Minute(this);      //Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  addToRefreshQueue_QuarterHour(this); //Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
+  Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1,Weight1);
+  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2,Weight2);
+  addToRefreshQueue_Sec(this);         ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
+  addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  addToRefreshQueue_QuarterHour(this); ///Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
   logToSerials(Name, false, 0);
   logToSerials(F("- HempyModule object created, refreshing..."), true, 1);
   runAll();

@@ -3,7 +3,7 @@
 //// @attention Define the preferred default settings here.
 
 ///Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 12;
+static const byte Version = 13;  //// @attention Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 ///Global constants
@@ -19,7 +19,7 @@ extern char ShortMessage[MaxShotTextLength]; ///temp storage for assembling shor
 extern char CurrentTime[MaxTextLength];      ///buffer for storing current time in text
 
 ///SAVED TO EEPROM - Settings struct
-///If you change things here, increase the Version variable in line 4
+///If you change things here, increase the Version variable to override whatever is stored in the EEPROM
 typedef struct
 {
   bool Debug = true;          ///Logs debug messages to serial and web outputs
@@ -31,6 +31,16 @@ typedef struct
     bool Metric; ///Metric or Imperial
   };  
   struct HempyModuleSettings HempyMod1 = {.Debug = true, .Metric = true};  ///Default settings for the Hempy Module
+
+  struct HempyBucketSettings{  ///TODO: Remove the parameters
+    HempyBucketSettings(float StartWateringWeight = 0.0, float StopWateringWeight = 0.0, bool PumpEnabled = false, int PumpTimeout = 0) : StartWateringWeight(StartWateringWeight) , StopWateringWeight(StopWateringWeight), PumpEnabled(PumpEnabled) , PumpTimeout(PumpTimeout) {} 
+    float StartWateringWeight;
+    float StopWateringWeight;
+    bool PumpEnabled;
+    int PumpTimeout;
+  };  
+  struct HempyBucketSettings Bucket1 = {.StartWateringWeight = 4.9,.StopWateringWeight = 6.5, .PumpEnabled = true, .PumpTimeout = 120,};  ///Default settings for the Hempy Module
+  struct HempyBucketSettings Bucket2 = {.StartWateringWeight = 4.9,.StopWateringWeight = 6.5, .PumpEnabled = true, .PumpTimeout = 120,};  ///Default settings for the Hempy Module
   
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
