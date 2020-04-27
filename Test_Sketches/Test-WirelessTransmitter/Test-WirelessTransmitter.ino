@@ -36,12 +36,14 @@ struct commandTemplate FakeCommand = {1587936134,0,0,0,120,3.8,4.8,0,0,0,120,3.9
 
 struct responseTemplate  //Max 32bytes. Template of the response back from the Receiver. Both Transmitter and Receiver needs to know this structure
 {
-   bool Pump1Enabled; 
-   bool Pump2Enabled;
-   bool Pump1State; 
-   bool Pump2State;
-   float Bucket1Weight;
-   float Bucket2Weight;
+   bool OnStatePump1; 
+   bool EnabledStatePump1;
+   float WeightBucket1;
+
+   bool OnStatePump2;
+   bool EnabledStatePump2; 
+   float WeightBucket2;
+   
    float Temp;
    float Humidity;
 };
@@ -82,20 +84,21 @@ void send() {
             Serial.print(F(" Acknowledgement received[ "));            
             Serial.print(sizeof(AckResponse));
             Serial.println(F(" bytes]"));
-            Serial.print(AckResponse.Pump1Enabled);
-            Serial.print(", ");
-            Serial.print(AckResponse.Pump2Enabled);
-            Serial.print(", ");
-            Serial.print(AckResponse.Pump1State);
-            Serial.print(", ");
-            Serial.print(AckResponse.Pump2State);
-            Serial.print(", ");
-            Serial.print(AckResponse.Bucket1Weight);
-            Serial.print(", ");
-            Serial.print(AckResponse.Bucket2Weight);
-            Serial.print(", ");
+            Serial.print(F("Bucket1: "));
+            Serial.print(AckResponse.OnStatePump1);
+            Serial.print(F(", "));
+            Serial.print(AckResponse.EnabledStatePump1);
+            Serial.print(F(", "));
+            Serial.print(AckResponse.WeightBucket1);
+            Serial.print(F(" ; Bucket2: "));
+            Serial.print(AckResponse.OnStatePump2);
+            Serial.print(F(", "));
+            Serial.print(AckResponse.EnabledStatePump2);
+            Serial.print(F(", "));
+            Serial.print(AckResponse.WeightBucket2);
+            Serial.print(F(" ; DHT: "));
             Serial.print(AckResponse.Temp);
-            Serial.print(", ");
+            Serial.print(F(", "));
             Serial.print(AckResponse.Humidity);
             Serial.println();
             
@@ -112,6 +115,8 @@ void send() {
  }
 
 void updateMessage() {        // so you can see that new data is being sent
-    FakeCommand.TurnOnPump1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exlusive!
-    FakeCommand.TurnOnPump2 = random(0,2);
+    //FakeCommand.TurnOnPump1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exlusive!
+    //FakeCommand.TurnOnPump2 = random(0,2);
+    FakeCommand.StopWeightBucket1 = random(400, 500) / 100.0;
+    FakeCommand.StopWeightBucket2 = random(400, 500) / 100.0;
 }

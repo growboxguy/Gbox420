@@ -16,8 +16,9 @@ public:
   void turnOff(bool ResetStatus = false);  ///Turn the pump off
   void disable();  ///Disable the pump
   void checkRelay(); ///Flit the relay into the correct status ON/OFF based on PumpOn variable
-  char * getState();
-  bool getPumpOnStatus();
+  char * getState();  ///Text representation of the current state: ON/OFF/DISABLED
+  bool getOnState();  ///Pump ON(1)/OFF(0)
+  bool getEnabledState();  ///Pump ENABLED(1)/DISABLED(0) 
   int *Timeout;  ///Max pump run time in seconds, if the target weight is not reached within this time consider the pump broken
 
 private:

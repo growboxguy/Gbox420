@@ -83,6 +83,10 @@ char * WaterPump::getState(){
   return pumpStateToText(*PumpEnabled,PumpOn);
 }
 
-bool WaterPump::getPumpOnStatus(){
+bool WaterPump::getOnState(){
   return PumpOn;
+}
+
+bool WaterPump::getEnabledState(){
+  return *PumpEnabled;
 }

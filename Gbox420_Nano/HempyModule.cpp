@@ -17,7 +17,7 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
 { 
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (byte *)(((byte *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this -> SoundFeedback = Sound1;
-  //DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
+  DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
   //PHSensor1 = new PHSensor(F("PHS1"), this, &ModuleSettings->PHSensor1);
   //WaterTemp1 = new WaterTempSensor(F("WaterT1"), this, &ModuleSettings->WaterTemp1);
   //WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
@@ -111,11 +111,16 @@ void HempyModule::processCommand(commandTemplate *Command){
 }
 
 void HempyModule::updateResponse(){
-  Response.Bucket1Weight = Weight1 -> getWeight();
-  Response.Bucket2Weight = Weight2 -> getWeight();
+  Response.OnStatePump1 = Pump1 -> getOnState();
+  Response.EnabledStatePump1 = Pump1 -> getEnabledState();
+  Response.WeightBucket1 = Weight1 -> getWeight();
+
+  Response.OnStatePump2 = Pump2 -> getOnState();
+  Response.EnabledStatePump2 = Pump2 -> getEnabledState();
+  Response.WeightBucket2 = Weight2 -> getWeight();
+
   Response.Temp = DHT1 -> getTemp();
   Response.Humidity = DHT1 -> getHumidity();
-
 }
 
 void HempyModule::refresh_FiveSec()

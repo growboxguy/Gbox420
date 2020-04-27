@@ -23,12 +23,14 @@ extern struct commandTemplate Command;  //Variable where the actual command valu
 
 struct responseTemplate  ///Max 32bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
-   bool Pump1Enabled; 
-   bool Pump2Enabled;
-   bool Pump1State; 
-   bool Pump2State;
-   float Bucket1Weight;
-   float Bucket2Weight;
+   bool OnStatePump1; 
+   bool EnabledStatePump1;
+   float WeightBucket1;
+
+   bool OnStatePump2;
+   bool EnabledStatePump2; 
+   float WeightBucket2;
+   
    float Temp;
    float Humidity;
 };

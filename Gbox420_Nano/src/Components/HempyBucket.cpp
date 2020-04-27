@@ -22,17 +22,17 @@ void HempyBucket::refresh_Minute()
 
 void HempyBucket::refresh_Sec()
 {
- if(BucketPump -> getPumpOnStatus()) checkBucketWeight(); ///When watering check if its time to stop
+ if(BucketPump -> getOnState()) checkBucketWeight(); ///When watering check if its time to stop
 }
 
 void HempyBucket::checkBucketWeight()
 {  
   BucketWeightSensor -> readWeight();  //Force a weight refresh   
-  if(BucketWeightSensor -> getWeight() > *StopWeight && BucketPump -> getPumpOnStatus()) ///If the weight is over the limit and the pump is on
+  if(BucketWeightSensor -> getWeight() > *StopWeight && BucketPump -> getOnState()) ///If the weight is over the limit and the pump is on
   {
     BucketPump -> turnOff();     
   }
-  else if(BucketWeightSensor -> getWeight() < *StartWeight && !BucketPump -> getPumpOnStatus())  ///If the weight is below the limit and the pump is off
+  else if(BucketWeightSensor -> getWeight() < *StartWeight && !BucketPump -> getOnState())  ///If the weight is below the limit and the pump is off
   {
     BucketPump -> turnOn(); 
   }   
