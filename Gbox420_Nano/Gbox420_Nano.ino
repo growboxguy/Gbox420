@@ -158,11 +158,12 @@ void getWirelessData() {
 
 time_t updateTime()
 {
-  if(Command.time > 0)
+  if(Command.Time > 0)
   {
-  setTime(Command.time);
+  setTime(Command.Time);
   Serial.println(F("Clock synced with main module")); 
   }
+  return Command.Time;
 }
 
 ///////////////////////////////////////////////////////////////

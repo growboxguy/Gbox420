@@ -13,7 +13,7 @@ public:
   void report();
   void readSensor();
   float getTemp();
-  char *getTempText(bool IncludeUnits);
+  char *getTempText(bool IncludeUnits = false);
   float Temp;
 
 private:  

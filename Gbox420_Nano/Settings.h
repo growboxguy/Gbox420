@@ -3,7 +3,7 @@
 //// @attention Define the preferred default settings here.
 
 ///Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 13;  //// @attention Increment this when you make a change in the SAVED TO EEPROM secton
+static const byte Version = 15;  //// @attention Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 ///Global constants
@@ -32,16 +32,26 @@ typedef struct
   };  
   struct HempyModuleSettings HempyMod1 = {.Debug = true, .Metric = true};  ///Default settings for the Hempy Module
 
-  struct HempyBucketSettings{  ///TODO: Remove the parameters
-    HempyBucketSettings(float StartWateringWeight = 0.0, float StopWateringWeight = 0.0, bool PumpEnabled = false, int PumpTimeout = 0) : StartWateringWeight(StartWateringWeight) , StopWateringWeight(StopWateringWeight), PumpEnabled(PumpEnabled) , PumpTimeout(PumpTimeout) {} 
-    float StartWateringWeight;
-    float StopWateringWeight;
-    bool PumpEnabled;
-    int PumpTimeout;
-  };  
-  struct HempyBucketSettings Bucket1 = {.StartWateringWeight = 4.9,.StopWateringWeight = 6.5, .PumpEnabled = true, .PumpTimeout = 120,};  ///Default settings for the Hempy Module
-  struct HempyBucketSettings Bucket2 = {.StartWateringWeight = 4.9,.StopWateringWeight = 6.5, .PumpEnabled = true, .PumpTimeout = 120,};  ///Default settings for the Hempy Module
-  
+  struct HempyBucketSettings
+  {
+    HempyBucketSettings( float StartWeight = 0.0, float StopWeight = 0.0) : StartWeight(StartWeight), StopWeight(StopWeight)  {}
+    float StartWeight; ///Start watering below this weight
+    float StopWeight;  ///Stop watering above this weight
+  };
+  struct HempyBucketSettings Bucket1 = { .StartWeight = 4.2, .StopWeight = 6.9};
+  struct HempyBucketSettings Bucket2 = { .StartWeight = 4.2, .StopWeight = 6.9};
+
+  struct WaterPumpSettings
+  {
+    WaterPumpSettings(byte Pin = 0) : Pin(Pin)  {}
+    byte Pin;            ///Hempy bucket watering pump relay pin
+    int Timeout = 120;   ///Max pump run time in seconds
+    bool PumpEnabled = true; ///Enable/disable automatic watering based on weight    
+  };
+  struct WaterPumpSettings Pump1 = {.Pin = 7};
+  struct WaterPumpSettings Pump2 = {.Pin = 8};
+
+
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
     DHTSensorSettings(byte Pin = 0, byte Type = 0) : Pin(Pin), Type(Type) {}

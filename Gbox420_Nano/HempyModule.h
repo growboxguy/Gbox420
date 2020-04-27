@@ -16,6 +16,7 @@ class WaterTempSensor;
 class WaterLevelSensor;
 class WeightSensor;
 class HempyBucket;
+class WaterPump;
 
 class HempyModule : virtual public Common, virtual public Module
 {
@@ -33,6 +34,8 @@ public:
   WeightSensor *Weight2;
   HempyBucket *Bucket1;
   HempyBucket *Bucket2;
+  WaterPump *Pump1;
+  WaterPump *Pump2;
   void refresh_Sec();
   void refresh_FiveSec();
   void refresh_Minute();

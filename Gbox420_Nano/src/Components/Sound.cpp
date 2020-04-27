@@ -8,6 +8,7 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   pinMode(*Pin, OUTPUT); 
   Parent->addToRefreshQueue_Sec(this);    ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
   logToSerials(F("Sound object created"), true, 1);
+  checkEvents();
 }
 
 void Sound::refresh_Sec()

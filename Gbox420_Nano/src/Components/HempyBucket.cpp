@@ -1,34 +1,41 @@
 #include "HempyBucket.h"
 
-HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeight) : Common(Name)
+HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings *DefaultSettings,WeightSensor *BucketWeightSensor, WaterPump *BucketPump) : Common(Name)
 {
   this->Parent = Parent;
   this->BucketWeightSensor = BucketWeightSensor;
-  
-  StartWateringWeight = &DefaultSettings->StartWateringWeight;
-  StopWateringWeight = &DefaultSettings->StopWateringWeight;
-  PumpEnabled = &DefaultSettings->PumpEnabled;
-  PumpTimeout = &DefaultSettings->PumpTimeout;
-
+  this->BucketPump = BucketPump;
+  StartWeight = &DefaultSettings->StartWeight;
+  StopWeight = &DefaultSettings->StopWeight;
   Parent->addToReportQueue(this);         ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_FiveSec(this); ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  Parent->addToRefreshQueue_Sec(this);
-  logToSerials(F("Hempy Bucket object created"), true, 1);
+  Parent->addToRefreshQueue_Sec(this);  
+  Parent->addToRefreshQueue_Minute(this); ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  logToSerials(F("Hempy bucket object created"), true, 1);
 }
 
-//struct HempyBucketSettings HempyB1 = {.StartWateringWeight = 4.9,.StopWateringWeight = 6.5, .PumpEnabled = true, .PumpTimeout = 120,};  ///Default settings for the Hempy Module
-//struct HempyBucketSettings HempyB2 = {.StartWateringWeight = 4.9,.StopWateringWeight = 6.5, .PumpEnabled = true, .PumpTimeout = 120,};  ///Default settings for the Hempy Module
-  
-
-void HempyBucket::refresh_FiveSec()
+void HempyBucket::refresh_Minute()
 {
- 
+  if (*Debug)
+    Common::refresh_Minute();
+  checkBucketWeight();
 }
 
 void HempyBucket::refresh_Sec()
 {
-    if (*Debug)
-    Common::refresh_Sec(); 
+ if(BucketPump -> getPumpOnStatus()) checkBucketWeight(); ///When watering check if its time to stop
+}
+
+void HempyBucket::checkBucketWeight()
+{  
+  BucketWeightSensor -> readWeight();  //Force a weight refresh   
+  if(BucketWeightSensor -> getWeight() > *StopWeight && BucketPump -> getPumpOnStatus()) ///If the weight is over the limit and the pump is on
+  {
+    BucketPump -> turnOff();     
+  }
+  else if(BucketWeightSensor -> getWeight() < *StartWeight && !BucketPump -> getPumpOnStatus())  ///If the weight is below the limit and the pump is off
+  {
+    BucketPump -> turnOn(); 
+  }   
 }
 
 void HempyBucket::report()
@@ -36,56 +43,37 @@ void HempyBucket::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
-  strcat(LongMessage, "test 0.0");
+  strcat(LongMessage, BucketWeightSensor -> getWeightText(true));
+  strcat_P(LongMessage, (PGM_P)F(" ["));
+  strcat(LongMessage, toText(*StartWeight));
+  strcat_P(LongMessage, (PGM_P)F("/"));
+  strcat(LongMessage, toText(*StopWeight));
+  strcat_P(LongMessage, (PGM_P)F("]"));
   logToSerials(&LongMessage, true, 1);
 }
 
-/* void HempyBucket::readWeight(){
-  if (Sensor -> wait_ready_timeout(200)) {
-    Weight = Sensor -> get_units();
-  }
-}
-
-float HempyBucket::getWeight()
-{
-  return Weight;
-}
-
-char *HempyBucket::getWeightText(bool IncludeUnits)
+char *HempyBucket::getStartWeightText(bool IncludeUnits)
 {
   if (IncludeUnits)
-    return weightToText(Weight);
+    return weightToText(*StartWeight);
   else
-    return toText(Weight);
+    return toText(*StartWeight);
 }
 
-void HempyBucket::triggerTare(){
-  TareRequested = true;
-  Parent->addToLog(F("Updating tare...")); ///This can take up to 1 minute, when the component is next refreshed
-}
-
-void HempyBucket::tare() ///Time intense, cannot be called straight from the website. Response would time out.
+char *HempyBucket::getStopWeightText(bool IncludeUnits)
 {
-  Sensor -> tare();
-  *TareOffset = Sensor -> get_offset();
-  Parent->addToLog(F("Tare updated"));
+  if (IncludeUnits)
+    return weightToText(*StopWeight);
+  else
+    return toText(*StopWeight);
 }
 
-void HempyBucket::triggerCalibration(int CalibrationWeight){
-  this -> CalibrationWeight = CalibrationWeight;
-  CalibrateRequested = true;
-  Parent->addToLog(F("Calibrating weight..")); ///This can take up to 1 minute, when the component is next refreshed
-}
-
-void HempyBucket::calibrate() ///Time intense, cannot be called straight from the website. Response would time out.
+void HempyBucket::setStartWeight(float Weight)
 {
-  *Scale = (float) Sensor -> get_value() / CalibrationWeight;
-  Sensor -> set_scale(*Scale);
-  Parent->addToLog(F("Weight calibrated"));
+  *StartWeight = Weight;
 }
 
-void HempyBucket::setScale(float NewScale)
+void HempyBucket::setStopWeight(float Weight)
 {
-  *Scale = NewScale;
-  Sensor -> set_scale(*Scale);
-} */
+  *StopWeight = Weight;
+}

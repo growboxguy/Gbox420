@@ -6,13 +6,13 @@ Module::Module()
    logToSerials(F("Module object created"), true, 0);
 }
 
-/*
-Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
+
+/* Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
 { ///Constructor
   this -> SoundFeedback = SoundFeedback;
   logToSerials(F("Module object created"), true, 0);
-}
-*/
+} */
+
 
 void Module::runAll()
 {

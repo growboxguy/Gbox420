@@ -15,31 +15,35 @@ RF24 radio(CE_PIN, CSN_PIN);
 
 struct commandTemplate  //Max 32bytes. Template of the command sent to the Receiver. Both Transmitter and Receiver needs to know this structure
 {
-   time_t time;
-   bool pump1Enabled; 
-   bool pump2Enabled;
-   bool pump1Stop; 
-   bool pump2Stop;
-   bool bucket1StartWatering; 
-   bool bucket2StartWatering;
-   float bucket1StartWeight;
-   float bucket1StopWeight;
-   float bucket2StartWeight;
-   float bucket2StopWeight;
+   time_t Time;
+   
+   bool DisablePump1;   
+   bool TurnOnPump1;   
+   bool TurnOffPump1;   
+   int TimeOutPump1;   
+   float StartWeightBucket1;
+   float StopWeightBucket1;
+   
+   bool DisablePump2;
+   bool TurnOnPump2;
+   bool TurnOffPump2;
+   int TimeOutPump2;
+   float StartWeightBucket2;
+   float StopWeightBucket2;
 };
-struct commandTemplate FakeCommand = {1587936134,1,1,0,0,1,0,3.9,5.0,3.8,4.9};  //Fake commands sent to the Receiver
+struct commandTemplate FakeCommand = {1587936134,0,0,0,120,3.8,4.8,0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
 
 
 struct responseTemplate  //Max 32bytes. Template of the response back from the Receiver. Both Transmitter and Receiver needs to know this structure
 {
-   bool pump1Enabled; 
-   bool pump2Enabled;
-   bool pump1State; 
-   bool pump2State;
-   float bucket1Weight;
-   float bucket2Weight;
-   float temp;
-   float humidity;
+   bool Pump1Enabled; 
+   bool Pump2Enabled;
+   bool Pump1State; 
+   bool Pump2State;
+   float Bucket1Weight;
+   float Bucket2Weight;
+   float Temp;
+   float Humidity;
 };
 struct responseTemplate AckResponse; //The response from the Receiver will be stored here, represents the current status of the Receiver
 
@@ -55,6 +59,7 @@ void setup() {
     radio.enableAckPayload();
     radio.setRetries(5,5); // delay, count. 5 gives a 1500 µsec delay which is needed for a 32 byte ackPayload
     radio.openWritingPipe(ChannelAddress);
+    send();
 }
 
 void loop() {
@@ -77,21 +82,21 @@ void send() {
             Serial.print(F(" Acknowledgement received[ "));            
             Serial.print(sizeof(AckResponse));
             Serial.println(F(" bytes]"));
-            Serial.print(AckResponse.pump1Enabled);
+            Serial.print(AckResponse.Pump1Enabled);
             Serial.print(", ");
-            Serial.print(AckResponse.pump2Enabled);
+            Serial.print(AckResponse.Pump2Enabled);
             Serial.print(", ");
-            Serial.print(AckResponse.pump1State);
+            Serial.print(AckResponse.Pump1State);
             Serial.print(", ");
-            Serial.print(AckResponse.pump2State);
+            Serial.print(AckResponse.Pump2State);
             Serial.print(", ");
-            Serial.print(AckResponse.bucket1Weight);
+            Serial.print(AckResponse.Bucket1Weight);
             Serial.print(", ");
-            Serial.print(AckResponse.bucket2Weight);
+            Serial.print(AckResponse.Bucket2Weight);
             Serial.print(", ");
-            Serial.print(AckResponse.temp);
+            Serial.print(AckResponse.Temp);
             Serial.print(", ");
-            Serial.print(AckResponse.humidity);
+            Serial.print(AckResponse.Humidity);
             Serial.println();
             
             updateMessage();
@@ -107,10 +112,6 @@ void send() {
  }
 
 void updateMessage() {        // so you can see that new data is being sent
-    FakeCommand.pump1Enabled = random(0,2);  //Generate random bool: 0 or 1. The max limit is exlusive!
-    FakeCommand.pump2Enabled = random(0,2);
-    FakeCommand.pump1Stop = random(0,2); 
-    FakeCommand.pump2Stop = random(0,2);
-    FakeCommand.bucket1StartWatering = random(0,2); 
-    FakeCommand.bucket2StartWatering = random(0,2);
+    FakeCommand.TurnOnPump1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exlusive!
+    FakeCommand.TurnOnPump2 = random(0,2);
 }

@@ -12,9 +12,9 @@ public:
   void report();
   void readSensor(); ///Refresh Temp and Humidity readings
   float getTemp();
-  char *getTempText(bool IncludeUnits);
+  char *getTempText(bool IncludeUnits = false);
   float getHumidity();
-  char *getHumidityText(bool IncludeUnits);
+  char *getHumidityText(bool IncludeUnits = false);
   float Temp;
   float Humidity;
 

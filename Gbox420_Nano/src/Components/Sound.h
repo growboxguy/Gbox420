@@ -25,5 +25,4 @@ protected:
   bool *Enabled;             ///Sound ON or OFF
   bool PlayOnSound = true;  ///Play on beep flag - website controls it
   bool PlayOffSound = true; ///Play off beep flag - website controls it
-
 };

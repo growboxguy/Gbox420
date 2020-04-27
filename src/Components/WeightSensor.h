@@ -12,7 +12,7 @@ public:
   void report();
   void readWeight();
   float getWeight();
-  char *getWeightText(bool IncludeUnits);
+  char *getWeightText(bool IncludeUnits = false);
   void triggerTare();
   void triggerCalibration(int CalibrationWeight); 
   void setScale(float Scale); 
