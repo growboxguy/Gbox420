@@ -1,6 +1,6 @@
 
-// 18 Mar 2018 - simple program to verify connection between Arduino Mega and nRF24L01+
-//  This program does NOT attempt any communication with another nRF24
+// Simple program to verify connection between Arduino Mega and nRF24L01+
+// This program does NOT attempt any communication with another nRF24
 
 #include <SPI.h>
 #include <nRF24L01.h>
@@ -13,9 +13,7 @@
 #define SCK_PIN  52
 #define CE_PIN  53
 
-
 const byte ChannelAddress[6] = {"Hemp1"};
-
 RF24 radio(CE_PIN, CSN_PIN);
 
 void setup() {
@@ -39,7 +37,6 @@ void setup() {
     radio.openReadingPipe(1, ChannelAddress);
     radio.setDataRate( RF24_250KBPS );
     radio.printDetails();
-
 }
 
 
