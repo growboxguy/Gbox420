@@ -47,8 +47,8 @@ typedef struct
     byte Pin;
     byte Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
   };
-  struct DHTSensorSettings IDHT = {.Pin = 49, .Type = 22};
-  struct DHTSensorSettings EDHT = {.Pin = 48, .Type = 22};
+  struct DHTSensorSettings IDHT = {.Pin = 43, .Type = 22};
+  struct DHTSensorSettings EDHT = {.Pin = 44, .Type = 22};
 
   struct SoundSettings
   {
@@ -64,7 +64,7 @@ typedef struct
     byte DigitalPin;
     byte AnalogPin;
   };
-  struct LightSensorSettings LtSen1 = {.DigitalPin = 50, .AnalogPin = A0};
+  struct LightSensorSettings LtSen1 = {.DigitalPin = 42, .AnalogPin = A0};
 
   struct LightsSettings
   {
@@ -135,7 +135,7 @@ typedef struct
     int PrimingTime = 10;     ///At pump startup the bypass valve will be open for X seconds to let the pump remove air from the tubes
   };
   struct AeroponicsSettings AeroT1_Common = {.BypassSolenoidPin = 23, .PumpPin = 24};
-  struct AeroponicsSettings Aero1_Common = {.BypassSolenoidPin = 52, .PumpPin = 53};
+  struct AeroponicsSettings Aero1_Common = {.BypassSolenoidPin = 46, .PumpPin = 47};
 
   struct AeroponicsSettings_NoTankSpecific
   {                           ///Settings for an Aeroponics setup WITHOUT a pressure tank
@@ -157,7 +157,7 @@ typedef struct
     WaterTempSensorSettings(byte Pin = 0) : Pin(Pin) {}
     byte Pin;
   };
-  struct WaterTempSensorSettings WaterTemp1 = {.Pin = 51}; ///Data(yellow) - DS18B20 waterproof temp sensor
+  struct WaterTempSensorSettings WaterTemp1 = {.Pin = 45}; ///Data(yellow) - DS18B20 waterproof temp sensor
 
   struct WaterLevelSensorSettings
   {
