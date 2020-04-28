@@ -12,10 +12,10 @@
 #include "SerialLog.h"              
 #include "Settings.h"              
 #include "HempyModule.h"
-#include "SPI.h"
-#include "nRF24L01.h"   //https://forum.arduino.cc/index.php?topic=421081
-#include "RF24.h"
-//#include "Wireless.h"  ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
+#include "SPI.h" ///allows you to communicate with SPI devices, with the Arduino as the master device
+#include "nRF24L01.h"   ///https://forum.arduino.cc/index.php?topic=421081
+#include "RF24.h"       ///https://github.com/maniacbug/RF24
+#include "Wireless.h"  ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
 
 ///Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)

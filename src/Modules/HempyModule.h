@@ -15,8 +15,8 @@ class PHSensor;
 class WaterTempSensor;
 class WaterLevelSensor;
 class WeightSensor;
-
-/// Represents the Hempy bucket module with 2 buckets complete with weight sensor, pump controller, water level, temp and PH sensor
+class HempyBucket;
+class WaterPump;
 
 class HempyModule : virtual public Common, virtual public Module
 {
@@ -26,15 +26,22 @@ public:
 
   HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings); ///constructor
   Sound *Sound1;             ///Pointer to a Piezo speaker - sound feedback
-  DHTSensor *IDHT;          ///Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
+  DHTSensor *DHT1;          ///Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   PHSensor *PHSensor1;
   WaterTempSensor *WaterTemp1;
   WaterLevelSensor *WaterLevel1;
   WeightSensor *Weight1; 
-  WeightSensor *Weight2;  
+  WeightSensor *Weight2;
+  HempyBucket *Bucket1;
+  HempyBucket *Bucket2;
+  WaterPump *Pump1;
+  WaterPump *Pump2;
+  void refresh_Sec();
   void refresh_FiveSec();
   void refresh_Minute();
   void refresh_QuarterHour(); 
+  void processCommand(commandTemplate *Command);
+  void updateResponse();
 
 private:
   void setDebugOnOff(bool State);

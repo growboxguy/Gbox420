@@ -28,6 +28,9 @@
 #include "src/Components_Web/420Common_Web.h"              // Base class where all web components inherits from
 #include "Settings.h"       //EEPROM stored settings for every component
 #include "src/Modules/GrowBox.h"    //Represents a complete box with all feautres
+#include "SPI.h"      ///allows you to communicate with SPI devices, with the Arduino as the master device
+#include "nRF24L01.h"   ///https://forum.arduino.cc/index.php?topic=421081
+#include "RF24.h"       ///https://github.com/maniacbug/RF24
 
 //Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< temp storage for assembling long messages (REST API, MQTT API)
