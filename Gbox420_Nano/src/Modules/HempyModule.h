@@ -5,8 +5,8 @@
 ////updating their statuses and reporting it to the Main module wirelessly
 ////Listens and reacts to wireless commands from the main module
 
-#include "src/Components/420Common.h"
-#include "src/Components/420Module.h"
+#include "../Components/420Common.h"
+#include "../Components/420Module.h"
 
 ///forward declaration of classes
 class DHTSensor;

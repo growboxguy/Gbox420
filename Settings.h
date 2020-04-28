@@ -49,6 +49,7 @@ typedef struct
   };
   struct DHTSensorSettings IDHT = {.Pin = 43, .Type = 22};
   struct DHTSensorSettings EDHT = {.Pin = 44, .Type = 22};
+  struct DHTSensorSettings DHT1 = {.Pin = 44, .Type = 22};
 
   struct SoundSettings
   {

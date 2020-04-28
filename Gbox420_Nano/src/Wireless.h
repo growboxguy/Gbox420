@@ -1,5 +1,8 @@
 #pragma once
 
+#include "TimeLib.h"     ///keeping track of time
+
+
 ///Structs for wireless communication
 struct commandTemplate  ///Max 32bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
 {

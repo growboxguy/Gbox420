@@ -4,5 +4,5 @@
     "programmer": "AVRISP mkII",
     "sketch": "Gbox420.ino",
     "output": "../Gbox420Compile",
-    "port": "/dev/ttyUSB2"
+    "port": "/dev/ttyUSB1"
 }

@@ -5,12 +5,16 @@ echo "------------------------------------------"
 echo "Creating folders"
 mkdir ./src
 mkdir ./src/Components
+mkdir ./src/Modules
 
 echo "Creating hard links"
+ln ../src/Modules/HempyModule.cpp ./src/Modules
+ln ../src/Modules/HempyModule.h ./src/Modules
+
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
-ln ../src/RollingAverage.h ./src
 ln ../src/RollingAverage.cpp ./src
+ln ../src/RollingAverage.h ./src
 ln ../src/Wireless.h ./src
 
 ln ../src/Components/420Common.h ./src/Components

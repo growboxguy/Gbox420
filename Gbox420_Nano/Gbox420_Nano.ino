@@ -8,14 +8,14 @@
 #include "avr/wdt.h"                ///Watchdog timer for detecting a crash and automatically resetting the board
 #include "avr/boot.h"               ///Watchdog timer related bug fix
 #include "Thread.h"                 ///Splitting functions to threads for timing
-#include "StaticThreadController.h" ///Grouping threads
-#include "SerialLog.h"              
-#include "Settings.h"              
-#include "HempyModule.h"
+#include "StaticThreadController.h" ///Grouping threads           
 #include "SPI.h" ///allows you to communicate with SPI devices, with the Arduino as the master device
 #include "nRF24L01.h"   ///https://forum.arduino.cc/index.php?topic=421081
 #include "RF24.h"       ///https://github.com/maniacbug/RF24
-#include "Wireless.h"  ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
+#include "SerialLog.h"  ///Logging debug messages to Serial            
+#include "Settings.h"  
+#include "src/Wireless.h"  ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
+#include "src/Modules/HempyModule.h"
 
 ///Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)

@@ -1,8 +1,11 @@
 echo "This script is for developement only"
 echo "Removes the hard links to source files of components shared by Gbox420 and Gbox420 Nano"
 echo "------------------------------------"
-
 echo "Removing hard links to Gbox420 src folder"
+
+unlink ./src/Components/HempyModule.h 
+unlink ./src/Components/HempyModule.cpp
+
 unlink ./src/Helpers.cpp
 unlink ./src/Helpers.h
 unlink ./src/RollingAverage.h

@@ -1,6 +1,6 @@
 #include "HempyBucket_Web.h"
 
-HempyBucket_Web::HempyBucket_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *FeedbackWeightSensor) : HempyBucket(Name,Parent,DefaultSettings,FeedbackWeightSensor), Common_Web(Name), Common(Name)
+HempyBucket_Web::HempyBucket_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WaterPump *BucketPump) : HempyBucket(Name,Parent,DefaultSettings,BucketWeightSensor,BucketPump), Common_Web(Name), Common(Name)
 {
   this->Parent = Parent;
   this->Name = Name;
@@ -25,13 +25,13 @@ void HempyBucket_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/S",2) == 0) ////When the settings page is refreshed
   {
-    WebServer.setArgString(getComponentName(F("TareOffset")), toText(* FeedbackWeightSensor ->  TareOffset));
-    WebServer.setArgString(getComponentName(F("Scale")), toText(* FeedbackWeightSensor -> Scale));
-    WebServer.setArgString(getComponentName(F("Pump")), pumpStateToText(PumpOn,*PumpEnabled));
+    WebServer.setArgString(getComponentName(F("TareOffset")), toText(* BucketWeightSensor ->  TareOffset));
+    WebServer.setArgString(getComponentName(F("Scale")), toText(* BucketWeightSensor -> Scale));
+    WebServer.setArgString(getComponentName(F("Pump")), BucketPump-> getState());
   }
   else if(strncmp(url, "/G",2) == 0)
   {
-    WebServer.setArgFloat(getComponentName(F("W")), FeedbackWeightSensor -> getWeight());
+    WebServer.setArgFloat(getComponentName(F("W")), BucketWeightSensor -> getWeight());
   }
 }
 
@@ -45,7 +45,7 @@ void HempyBucket_Web::websiteEvent_Button(char *Button)
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("Tare")) == 0)
     {
-      FeedbackWeightSensor -> triggerTare();
+      BucketWeightSensor -> triggerTare();
     }
   }
 }
@@ -60,11 +60,11 @@ void HempyBucket_Web::websiteEvent_Field(char *Field)
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("Calibrate")) == 0)
     {
-      FeedbackWeightSensor ->triggerCalibration(WebServer.getArgInt());
+      BucketWeightSensor ->triggerCalibration(WebServer.getArgInt());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Scale")) == 0)
     {
-      FeedbackWeightSensor -> setScale(WebServer.getArgFloat());
+      BucketWeightSensor -> setScale(WebServer.getArgFloat());
     }
   }
 }

@@ -3,14 +3,14 @@
 ///Runs autonomously on an Arduino Nano RF and [WILL] support wireless connection towards the main module
 
 #include "HempyModule.h"
-#include "src/Components/DHTSensor.h"
-#include "src/Components/Sound.h"
-#include "src/Components/WeightSensor.h"
-#include "src/Components/PHSensor.h"
-#include "src/Components/WaterTempSensor.h"
-#include "src/Components/WaterLevelSensor.h"
-#include "src/Components/HempyBucket.h"
-#include "src/Components/WaterPump.h"
+#include "../Components/DHTSensor.h"
+#include "../Components/Sound.h"
+#include "../Components/WeightSensor.h"
+#include "../Components/PHSensor.h"
+#include "../Components/WaterTempSensor.h"
+#include "../Components/WaterLevelSensor.h"
+#include "../Components/HempyBucket.h"
+#include "../Components/WaterPump.h"
 
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
@@ -47,22 +47,22 @@ void HempyModule::refresh_Sec()
     if(temp == 'q')
      {
         Weight1 -> triggerTare(); //Reset the scale to 0
-        ArduinoSerial.println("Scale1 Tare");
+        ArduinologToSerials(ln("Scale1 Tare");
      }
      else if(temp == 'a')
      {
         Weight2 -> triggerTare(); //Reset the scale to 0
-        ArduinoSerial.println("Scale2 Tare");
+        ArduinologToSerials(ln("Scale2 Tare");
      }
     else if(temp == 'w')
        {
         Weight1 -> triggerCalibration(1); //Reset the scale to 0
-        ArduinoSerial.println("Scale1 calibrating");
+        ArduinologToSerials(ln("Scale1 calibrating");
        }
      else if(temp == 's')
        {
         Weight1 -> triggerCalibration(1); //Reset the scale to 0
-        ArduinoSerial.println("Scale2 calibrating");
+        ArduinologToSerials(ln("Scale2 calibrating");
        }
   } */
 }
@@ -82,30 +82,31 @@ void HempyModule::processCommand(commandTemplate *Command){
   Bucket2 -> setStartWeight(Command -> StartWeightBucket2);
   Bucket2 -> setStopWeight(Command -> StopWeightBucket2);
 
-  Serial.print(Command -> DisablePump1);
-        Serial.print(", ");
-        Serial.print(Command -> TurnOnPump1);
-        Serial.print(", ");
-        Serial.print(Command -> TurnOffPump1);
-        Serial.print(", ");
-        Serial.print(Command -> TimeOutPump1);
-        Serial.print(", ");
-        Serial.print(Command -> StartWeightBucket1);
-        Serial.print(", ");
-        Serial.print(Command -> StopWeightBucket1);
-        Serial.print(" ; ");
-  Serial.print(Command -> DisablePump2);
-        Serial.print(", ");
-        Serial.print(Command -> TurnOnPump2);
-        Serial.print(", ");
-        Serial.print(Command -> TurnOffPump2);
-        Serial.print(", ");
-        Serial.print(Command -> TimeOutPump2);
-        Serial.print(", ");
-        Serial.print(Command -> StartWeightBucket2);
-        Serial.print(", ");
-        Serial.println(Command -> StopWeightBucket2);
-        
+  if(Debug){
+  logToSerials(Command -> DisablePump1,false,3);
+        logToSerials(F(","),false,1);
+        logToSerials(Command -> TurnOnPump1,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(Command -> TurnOffPump1,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(Command -> TimeOutPump1,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(Command -> StartWeightBucket1,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(Command -> StopWeightBucket1,false,1);
+        logToSerials(F(";"),false,1);
+  logToSerials(Command -> DisablePump2,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(Command -> TurnOnPump2,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(Command -> TurnOffPump2,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(Command -> TimeOutPump2,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(Command -> StartWeightBucket2,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(Command -> StopWeightBucket2,false,1);
+  }
 
   updateResponse();       
 }
