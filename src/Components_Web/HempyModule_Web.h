@@ -13,7 +13,8 @@
 
 
 ///forward declaration of classes
-extern RF24 * Wireless;
+extern RF24 Wireless;
+
 
 class HempyModule_Web : public Common_Web
 {
@@ -29,8 +30,7 @@ public:
   void syncModule();
   void updateMessage();
      
-private:
-  const byte ChannelAddress[6] = {"Hemp1"};  ///Identifies the channel used to receive commands from the main module
+private:  
   struct commandTemplate FakeCommand = {1587936134,0,0,0,120,3.8,4.8,0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
   struct responseTemplate AckResponse; //The response from the Receiver will be stored here, represents the current status of the Receiver
 

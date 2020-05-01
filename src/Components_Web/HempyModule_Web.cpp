@@ -12,7 +12,6 @@ HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Pa
   Parent->addToWebsiteQueue_Refresh(this);     ///Subscribing to the Website refresh event
   Parent->addToWebsiteQueue_Field(this);       ///Subscribing to the Website field submit event
   Parent->addToWebsiteQueue_Button(this);      ///Subscribing to the Website button press event
-
   logToSerials(F("HempyModule_Web object created"), true, 1);
 }
 
@@ -99,7 +98,7 @@ void HempyModule_Web::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
-  syncModule();
+  //syncModule();
 }
 
 void HempyModule_Web::refresh_Minute()
@@ -110,44 +109,9 @@ void HempyModule_Web::refresh_Minute()
 }
 
 
-void HempyModule_Web::syncModule(){
-  Wireless -> openWritingPipe(ChannelAddress);
-  bool rslt;
-  rslt = Wireless -> write( &FakeCommand, sizeof(FakeCommand) );
-  Serial.print(F("Data Sent."));
-  if (rslt) {
-      if ( Wireless -> isAckPayloadAvailable() ) {
-          Wireless -> read(&AckResponse, sizeof(AckResponse));
-           Serial.print(F(" Acknowledgement received[ "));            
-          Serial.print(sizeof(AckResponse));
-          Serial.println(F(" bytes]"));
-         /* Serial.print(F("Bucket1: "));
-          Serial.print(AckResponse.OnStatePump1);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.EnabledStatePump1);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.WeightBucket1);
-          Serial.print(F(" ; Bucket2: "));
-          Serial.print(AckResponse.OnStatePump2);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.EnabledStatePump2);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.WeightBucket2);
-          Serial.print(F(" ; DHT: "));
-          Serial.print(AckResponse.Temp);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.Humidity);
-          Serial.println(); */
-          
-          updateMessage();
-      }
-      else {
-          Serial.println(F(" Acknowledgement received without any data."));
-      }        
-  }
-  else {
-      Serial.println(F(" No response."));
-  }
+void HempyModule_Web::syncModule(){  
+  
+  
 }
 
 void HempyModule_Web::updateMessage() {        // so you can see that new data is being sent
