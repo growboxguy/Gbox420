@@ -26,5 +26,5 @@ protected:
   void buzz(uint32_t frequency, uint32_t length);
   bool PlayEE = false;       ///Surprise :) - website controls it    
   const PROGMEM static int melody[];
-  const PROGMEM static byte tempo[];
+  const PROGMEM static uint8_t tempo[];
 };

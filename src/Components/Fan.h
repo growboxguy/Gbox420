@@ -20,8 +20,8 @@ protected:
   Module *Parent;
   bool *State;
   bool *HighSpeed;
-  byte *OnOffPin;
-  byte *SpeedPin;
+  uint8_t *OnOffPin;
+  uint8_t *SpeedPin;
   void checkFanStatus();
   void TurnOff();
   void SetLowSpeed();

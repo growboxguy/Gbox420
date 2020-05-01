@@ -21,8 +21,8 @@ public:
 
 private: 
   Lights *LightSource;          ///The light used during calibration
-  byte *DigitalPin;             ///D0 - LM393 light sensor digital in
-  byte *AnalogPin;              ///A0 - LM393 light sensor analog in
+  uint8_t *DigitalPin;             ///D0 - LM393 light sensor digital in
+  uint8_t *AnalogPin;              ///A0 - LM393 light sensor analog in
   RollingAverage *LightReading; ///keeps an average of previous readings: Smoothens sensor readings
   static const int DelaySec = 250; ///how many miliseconds to wait after changing brightness for the driver to adjust
   static const int ReadingArrayDepth = 12;  ///How many readings to take during a calibration (Do not change)

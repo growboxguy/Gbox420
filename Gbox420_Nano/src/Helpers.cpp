@@ -6,7 +6,7 @@
 void getFreeMemory()
 {
   itoa(freeMemory(), ShortMessage, 10);
-  logToSerials(F("Free memory(bytes): "), false, 2);
+  logToSerials(F("Free memory(uint8_ts): "), false, 2);
   logToSerials(&ShortMessage, true, 0);
 }
 
@@ -91,7 +91,7 @@ char *toText(float Number1, float Number2, const char *Separator)
   return ShortMessage;
 }
 
-char *timeToText(byte Hour, byte Minute)
+char *timeToText(uint8_t Hour, uint8_t Minute)
 {
   sprintf(ShortMessage, "%02u:%02u", Hour, Minute);
   return ShortMessage;

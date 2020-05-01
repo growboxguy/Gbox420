@@ -134,12 +134,12 @@ void Module::addToRefreshQueue_QuarterHour(Common *Component)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///Even logs to the Serial output
-void Module::addToLog(const char *LongMessage, byte Indent)
+void Module::addToLog(const char *LongMessage, uint8_t Indent)
 { ///adds a log entry that is displayed on the web interface
   logToSerials(&LongMessage, true, Indent);  
 }
 
-void Module::addToLog(const __FlashStringHelper *LongMessage, byte Indent)
+void Module::addToLog(const __FlashStringHelper *LongMessage, uint8_t Indent)
 { ///function overloading: same function name, different parameter type
   logToSerials(&LongMessage, true, Indent);  
 }

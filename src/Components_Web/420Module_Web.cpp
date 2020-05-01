@@ -199,10 +199,10 @@ void Module_Web::setFieldEvent(char *field)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///Even logs on the website
-void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) byte Indent)
+void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) uint8_t Indent)
 { ///adds a log entry that is displayed on the web interface
   ///logToSerials(&LongMessage, true, Indent);
-  for (byte i = LogDepth - 1; i > 0; i--)
+  for (uint8_t i = LogDepth - 1; i > 0; i--)
   {                                       ///Shift every log entry one up, dropping the oldest
     memset(&Logs[i], 0, sizeof(Logs[i])); ///clear variable
     strncpy(Logs[i], Logs[i - 1], MaxTextLength);
@@ -211,10 +211,10 @@ void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) byte 
   strncpy(Logs[0], LongMessage, MaxTextLength); ///instert new log to [0]
 }
 
-void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__((unused)) byte Indent)
+void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__((unused)) uint8_t Indent)
 { ///function overloading: same function name, different parameter type
   ///logToSerials(&LongMessage, true, Indent);
-  for (byte i = LogDepth - 1; i > 0; i--)
+  for (uint8_t i = LogDepth - 1; i > 0; i--)
   {                                       ///Shift every log entry one up, dropping the oldest
     memset(&Logs[i], 0, sizeof(Logs[i])); ///clear variable
     strncpy(Logs[i], Logs[i - 1], MaxTextLength);

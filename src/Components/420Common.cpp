@@ -57,7 +57,7 @@ bool Common::isThisMyComponent(char const *lookupName)
   /// Serial.println(Name);
 
   char *ReturnChar = ShortMessage; ///return text will be loaded into a global temp buffer
-  byte CharacterCount = 0;
+  uint8_t CharacterCount = 0;
   char FlashCurrentChar;
   char RAMCurrentChar;
 

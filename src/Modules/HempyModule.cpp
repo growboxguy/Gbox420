@@ -15,7 +15,7 @@
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
 { 
-  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (byte *)(((byte *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this -> SoundFeedback = Sound1;
   DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
   //PHSensor1 = new PHSensor(F("PHS1"), this, &ModuleSettings->PHSensor1);

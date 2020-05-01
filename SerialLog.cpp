@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////////////////////
 ///Logging
 
-void logToSerials(const __FlashStringHelper *ToPrint, bool BreakLine, byte Indent)
+void logToSerials(const __FlashStringHelper *ToPrint, bool BreakLine, uint8_t Indent)
 {
   while (Indent > 0)
   {

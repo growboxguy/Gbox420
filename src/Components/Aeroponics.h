@@ -19,8 +19,8 @@ private:
 protected:
   Module *Parent;
   PressureSensor *FeedbackPressureSensor; ///Pressure sensor object that will monitor the spray pressure
-  byte *PumpPin;
-  byte *BypassSolenoidPin;
+  uint8_t *PumpPin;
+  uint8_t *BypassSolenoidPin;
   bool *SprayEnabled;             ///Enable/disable misting
   int *Interval;                  ///Aeroponics - Spray every 15 minutes
   int *Duration;                  ///Aeroponics - Spray time in seconds

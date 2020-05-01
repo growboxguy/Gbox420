@@ -23,7 +23,7 @@ protected:
   void readOffset();
   void setOffset(float Value);
   void setRatio(float Value);
-  byte *Pin;
+  uint8_t *Pin;
   float *Offset;
   float *Ratio;
 };

@@ -101,7 +101,7 @@ void Lights::checkLightTimer()
   }
 }
 
-void Lights::setBrightness(byte Brightness, bool LogThis)
+void Lights::setBrightness(uint8_t Brightness, bool LogThis)
 {
   *(this->Brightness) = Brightness;
   analogWrite(*DimmingPin, map(Brightness, 0, 100, int(255 * (100 - *DimmingLimit) / 100.0f), 0)); ///mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https:///www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
@@ -189,23 +189,23 @@ void Lights::setTimerOnOff(bool TimerState)
   }
 }
 
-void Lights::setOnHour(byte OnHour)
+void Lights::setOnHour(uint8_t OnHour)
 {
   *(this->OnHour) = OnHour;
 }
 
-void Lights::setOnMinute(byte OnMinute)
+void Lights::setOnMinute(uint8_t OnMinute)
 {
   *(this->OnMinute) = OnMinute;
   Parent->addToLog(F("Light ON updated"));
 }
 
-void Lights::setOffHour(byte OffHour)
+void Lights::setOffHour(uint8_t OffHour)
 {
   *(this->OffHour) = OffHour;
 }
 
-void Lights::setOffMinute(byte OffMinute)
+void Lights::setOffMinute(uint8_t OffMinute)
 {
   *(this->OffMinute) = OffMinute;
   Parent->addToLog(F("Light OFF updated"));

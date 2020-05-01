@@ -53,7 +53,7 @@ char *PressureSensor::getPressureText(bool IncludeUnits, bool ReturnAverage)
 void PressureSensor::readOffset()
 { ///Should only be called when there is 0 pressure
   float sum = 0;
-  for (byte i = 0; i < 50; i++)
+  for (uint8_t i = 0; i < 50; i++)
   {
     sum += analogRead(*Pin);
     delay(10);

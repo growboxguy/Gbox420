@@ -4,7 +4,7 @@
 
 
 ///Structs for wireless communication
-struct commandTemplate  ///Max 32bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
+struct commandTemplate  ///Max 32uint8_ts. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
    time_t Time;
    
@@ -24,7 +24,7 @@ struct commandTemplate  ///Max 32bytes. Template of the command sent by the Tran
 };
 extern struct commandTemplate Command;  //Variable where the actual command values will get stored
 
-struct responseTemplate  ///Max 32bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
+struct responseTemplate  ///Max 32uint8_ts. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
    bool OnStatePump1; 
    bool EnabledStatePump1;

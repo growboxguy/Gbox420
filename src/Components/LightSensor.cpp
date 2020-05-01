@@ -51,12 +51,12 @@ void LightSensor::calibrate(bool AddToLog)
 { ///Takes ~2sec total, could trigger a watchdog reset!  
   CalibrateRequested = false;
   bool LastStatus = LightSource->getStatus(); ///TODO: This should be more generic and support different Lights objects passed as a parameter
-  byte LastBrightness = LightSource->getBrightness();
+  uint8_t LastBrightness = LightSource->getBrightness();
   LightSource->setLightOnOff(false, false); ///turn off light, without adding a log entry
   delay(DelaySec);                               ///wait for light output change
   Readings[0] = 1023 - analogRead(*AnalogPin);  ///store the reading in darkness to the first element of the Readings[10] array
   LightSource->setLightOnOff(true, false); ///turn on light, without adding a log entry
-  for(byte ReadingCounter=0;ReadingCounter<(ReadingArrayDepth-1);){  ///This probably looks dodgy as the 3rd parameter of the for cycle is empty. ReadingCounter is incremented in the code
+  for(uint8_t ReadingCounter=0;ReadingCounter<(ReadingArrayDepth-1);){  ///This probably looks dodgy as the 3rd parameter of the for cycle is empty. ReadingCounter is incremented in the code
     LightSource->setBrightness(ReadingCounter++ * 10, false);  ///Increment ReadingCounter AFTER reading its value
     wdt_reset();  ///Reset watchdog timer before waiting
     delay(DelaySec); ///wait for light output change
@@ -75,7 +75,7 @@ void LightSensor::calibrate(bool AddToLog)
 void LightSensor::getCalibrationReadings(){///Returns a pointer to a char array
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("{\"Readings\":["));
-   for(byte ReadingCounter=0;ReadingCounter<ReadingArrayDepth;ReadingCounter++){
+   for(uint8_t ReadingCounter=0;ReadingCounter<ReadingArrayDepth;ReadingCounter++){
      strcat(LongMessage, toText(Readings[ReadingCounter]));
      strcat_P(LongMessage, (PGM_P)F(","));
    }

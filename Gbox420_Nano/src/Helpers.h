@@ -35,7 +35,7 @@ char *toText(float); ///function overloading: Same named function, different par
 char *toText(int Number1, int Number2, const char *Separator);
 char *toText(float Number1, float Number2, const char *Separator);
 char *toPrecisionText(float Number);
-char *timeToText(byte Hour, byte Minute);
+char *timeToText(uint8_t Hour, uint8_t Minute);
 char *tempToText(float Temp);
 char *pressureToText(float Pressure);
 char *weightToText(float Weight);

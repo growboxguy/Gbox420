@@ -21,8 +21,8 @@ public:
   void runFiveSec();
   void runMinute();
   void runQuarterHour();
-  void addToLog(const __FlashStringHelper *Text, byte indent = 3);
-  void addToLog(const char *Text, byte indent = 3);  
+  void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
+  void addToLog(const char *Text, uint8_t indent = 3);  
   void addToReportQueue(Common *Component);
   void addToRefreshQueue_Sec(Common *Component);
   void addToRefreshQueue_FiveSec(Common *Component);
@@ -42,9 +42,9 @@ protected:
   Common *RefreshQueue_FiveSec[QueueDepth]= {};
   Common *RefreshQueue_Minute[QueueDepth]= {};
   Common *RefreshQueue_QuarterHour[QueueDepth]= {};
-  byte reportQueueItemCount = 0; ///Tracking queue item count
-  byte refreshQueueItemCount_Sec = 0;
-  byte refreshQueueItemCount_FiveSec = 0;
-  byte refreshQueueItemCount_Minute = 0;
-  byte refreshQueueItemCount_QuarterHour = 0; 
+  uint8_t reportQueueItemCount = 0; ///Tracking queue item count
+  uint8_t refreshQueueItemCount_Sec = 0;
+  uint8_t refreshQueueItemCount_FiveSec = 0;
+  uint8_t refreshQueueItemCount_Minute = 0;
+  uint8_t refreshQueueItemCount_QuarterHour = 0; 
 };

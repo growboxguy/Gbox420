@@ -43,8 +43,8 @@ public:
   void addToRefreshQueue_FiveSec(Common_Web *Component);
   void addToRefreshQueue_Minute(Common_Web *Component);
   void addToRefreshQueue_QuarterHour(Common_Web *Component);
-  void addToLog(const __FlashStringHelper *Text, byte indent = 3);
-  void addToLog(const char *Text, byte indent = 3); 
+  void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
+  void addToLog(const char *Text, uint8_t indent = 3); 
   char *eventLogToJSON(bool Append = false); ///Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   Sound_Web * getSoundObject();
   
@@ -63,13 +63,13 @@ protected:
   Common_Web *WebsiteQueue_Refresh[QueueDepth]= {};
   Common_Web *WebsiteQueue_Button[QueueDepth]= {};
   Common_Web *WebsiteQueue_Field[QueueDepth]= {}; 
-  byte reportQueueItemCount = 0; ///Tracking queue item count
-  byte refreshQueueItemCount_Sec = 0;
-  byte refreshQueueItemCount_FiveSec = 0;
-  byte refreshQueueItemCount_Minute = 0;
-  byte refreshQueueItemCount_QuarterHour = 0; 
-  byte WebsiteQueueItemCount_Load = 0;
-  byte WebsiteQueueItemCount_Refresh = 0;
-  byte WebsiteQueueItemCount_Button = 0;
-  byte WebsiteQueueItemCount_Field = 0;
+  uint8_t reportQueueItemCount = 0; ///Tracking queue item count
+  uint8_t refreshQueueItemCount_Sec = 0;
+  uint8_t refreshQueueItemCount_FiveSec = 0;
+  uint8_t refreshQueueItemCount_Minute = 0;
+  uint8_t refreshQueueItemCount_QuarterHour = 0; 
+  uint8_t WebsiteQueueItemCount_Load = 0;
+  uint8_t WebsiteQueueItemCount_Refresh = 0;
+  uint8_t WebsiteQueueItemCount_Button = 0;
+  uint8_t WebsiteQueueItemCount_Field = 0;
 };

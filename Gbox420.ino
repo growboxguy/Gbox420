@@ -250,7 +250,7 @@ void setFieldCallback(char *Field)
 
 void saveSettings(Settings *SettingsToSave)
 {                                                                                 ///< do not put this in the loop, EEPROM has a write limit of 100.000 cycles
-  eeprom_update_block((const void *)SettingsToSave, (void *)0, sizeof(Settings)); ///< update_block only writes the bytes that changed
+  eeprom_update_block((const void *)SettingsToSave, (void *)0, sizeof(Settings)); ///< update_block only writes the uint8_ts that changed
 }
 
 Settings *loadSettings()

@@ -11,7 +11,7 @@ public:
   Lights(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings); ///constructor
   void refresh_Minute();
   void report();
-  void setBrightness(byte Brightness, bool AddToLog);
+  void setBrightness(uint8_t Brightness, bool AddToLog);
   void setLightOnOff(bool State, bool AddToLog);
   bool getStatus();
   int getBrightness();
@@ -28,18 +28,18 @@ protected:
   void checkLightStatus();
   void checkLightTimer();
   void setTimerOnOff(bool State);
-  void setOnHour(byte OnHour);
-  void setOnMinute(byte OnMinute);
-  void setOffHour(byte OffHour);
-  void setOffMinute(byte OffMinute);
-  byte *RelayPin;     ///the Arduino pin controlling the AC relay
-  byte *DimmingPin;   ///PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
-  byte *DimmingLimit; ///Sets the LED dimming limit (Usually around 5%)
+  void setOnHour(uint8_t OnHour);
+  void setOnMinute(uint8_t OnMinute);
+  void setOffHour(uint8_t OffHour);
+  void setOffMinute(uint8_t OffMinute);
+  uint8_t *RelayPin;     ///the Arduino pin controlling the AC relay
+  uint8_t *DimmingPin;   ///PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
+  uint8_t *DimmingLimit; ///Sets the LED dimming limit (Usually around 5%)
   bool *Status;       ///Lights ON or OFF
   bool *TimerEnabled; ///Enable timer controlling lights: true - Timer enabled, false - Timer disabled
-  byte *OnHour;       ///Light ON time - hour
-  byte *OnMinute;     ///Light ON time - minute
-  byte *OffHour;      ///Light OFF time - hour
-  byte *OffMinute;    ///Light OFF time - minute
-  byte *Brightness;   ///Light intensity: 0 - 100 range for controlling led driver output
+  uint8_t *OnHour;       ///Light ON time - hour
+  uint8_t *OnMinute;     ///Light ON time - minute
+  uint8_t *OffHour;      ///Light OFF time - hour
+  uint8_t *OffMinute;    ///Light OFF time - minute
+  uint8_t *Brightness;   ///Light intensity: 0 - 100 range for controlling led driver output
 };

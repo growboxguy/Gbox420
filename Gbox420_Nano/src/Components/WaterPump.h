@@ -26,7 +26,7 @@ private:
  
 protected:
   Module *Parent;
-  byte *Pin;
+  uint8_t *Pin;
   bool *PumpEnabled;  ///false= Block running the pump
   bool PumpOn = false;  ///true turns the pump on
   

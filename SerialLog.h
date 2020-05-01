@@ -13,9 +13,9 @@ extern HardwareSerial &ESPSerial;
 ///Uses templating to handle logging multiple variable types (int,float,char,bool..)
 ///Functions implemented in header file due to: https:///stackoverflow.com/questions/10632251/undefined-reference-to-template-function
 
-void logToSerials(const __FlashStringHelper *ToPrint, bool BreakLine = true, byte Indent = 3); ///logs to both Arduino and ESP Link serial console, 2 optional parameters to adding a break line at after printing and the indentation in front
+void logToSerials(const __FlashStringHelper *ToPrint, bool BreakLine = true, uint8_t Indent = 3); ///logs to both Arduino and ESP Link serial console, 2 optional parameters to adding a break line at after printing and the indentation in front
 template <class logLine>
-void logToSerials(logLine *ToPrint, bool BreakLine = true, byte Indent = 3)
+void logToSerials(logLine *ToPrint, bool BreakLine = true, uint8_t Indent = 3)
 {
   while (Indent > 0)
   {
@@ -36,7 +36,7 @@ void logToSerials(logLine *ToPrint, bool BreakLine = true, byte Indent = 3)
 }
 
 template <class logLine>
-void logToSerials(logLine &ToPrint, bool BreakLine = true, byte Indent = 3)
+void logToSerials(logLine &ToPrint, bool BreakLine = true, uint8_t Indent = 3)
 {
   while (Indent > 0)
   {

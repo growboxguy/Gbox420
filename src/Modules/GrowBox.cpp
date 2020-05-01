@@ -22,7 +22,7 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *
   this->Name = Name;
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
   ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets; 
-  Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (byte *)(((byte *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan);      ///passing: Component name, GrowBox object the component belongs to, Default settings)
   EFan = new Fan_Web(F("EFan"), this, &ModuleSettings->EFan);
   Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
@@ -187,7 +187,7 @@ void GrowBox::setMetric(bool MetricEnabled)
 //Wireless data collection via nRF24L01+
 
 void GrowBox::Send(){
-  const byte ChannelAddress[6] = {"Hemp1"};
+  const uint8_t ChannelAddress[6] = {"Hemp1"};
   Wireless -> openWritingPipe(ChannelAddress);
   bool rslt;
   rslt = Wireless -> write( &FakeCommand, sizeof(FakeCommand) );
@@ -197,7 +197,7 @@ void GrowBox::Send(){
           Wireless -> read(&AckResponse, sizeof(AckResponse));
            Serial.print(F(" Acknowledgement received[ "));            
           Serial.print(sizeof(AckResponse));
-          Serial.println(F(" bytes]"));
+          Serial.println(F(" uint8_ts]"));
           Serial.print(F("Bucket1: "));
           Serial.print(AckResponse.OnStatePump1);
           Serial.print(F(", "));
@@ -245,7 +245,7 @@ void GrowBox::setSheetsReportingOnOff(bool State)
   }
 }
 
-void GrowBox::setSheetsReportingFrequency(byte Frequency)
+void GrowBox::setSheetsReportingFrequency(uint8_t Frequency)
 {
   *SheetsReportingFrequency = Frequency;
   addToLog(F("Reporting freqency updated"));

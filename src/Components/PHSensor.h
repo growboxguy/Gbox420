@@ -16,7 +16,7 @@ private:
 
 protected:
   Module *Parent;
-  byte *Pin;
+  uint8_t *Pin;
   RollingAverage *PH;
   float *Intercept;
   float *Slope;

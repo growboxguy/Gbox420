@@ -3,30 +3,30 @@
 //// @attention Define the preferred default settings here.
 
 ///Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 12;
+static const uint8_t Version = 12;
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 ///Global constants
-static const byte MaxTextLength = 32;      ///Default char * buffer for storing a word + null terminator. Memory intense!
-static const byte MaxShotTextLength = 128; ///Default char * buffer for storing mutiple words. Memory intense!
+static const uint8_t MaxTextLength = 32;      ///Default char * buffer for storing a word + null terminator. Memory intense!
+static const uint8_t MaxShotTextLength = 128; ///Default char * buffer for storing mutiple words. Memory intense!
 static const int MaxLongTextLength = 1024; ///Default char * buffer for storing a long text. Memory intense!
 
-static const byte LogDepth = 5;                  ///Show X number of log entries on website. Be careful, Max 1024bytes can be passed during a Website refresh event, incuding all parameters passed
-static const byte QueueDepth = 32;               ///Limits the maximum number of active modules. Memory intense!
-static const byte RollingAverageDepth = 10;               ///Limits the maximum number of active modules. Memory intense!
+static const uint8_t LogDepth = 5;                  ///Show X number of log entries on website. Be careful, Max 1024uint8_ts can be passed during a Website refresh event, incuding all parameters passed
+static const uint8_t QueueDepth = 32;               ///Limits the maximum number of active modules. Memory intense!
+static const uint8_t RollingAverageDepth = 10;               ///Limits the maximum number of active modules. Memory intense!
 ///Global variables
 extern char LongMessage[MaxLongTextLength];  ///temp storage for assembling long messages (REST API, MQTT API)
 extern char ShortMessage[MaxShotTextLength]; ///temp storage for assembling short messages (Log entries, Error messages)
 extern char CurrentTime[MaxTextLength];      ///buffer for storing current time in text
 
 ///nRF24L01+ wireless receiver pins
-static const byte Wireless_CSNPin = 49;
-static const byte Wireless_MISOPin = 50;
-static const byte Wireless_MOSIPin = 51;
-static const byte Wireless_SCKPin = 52;
-static const byte Wireless_CEPin = 53;
-static const byte Wireless_Delay = 5;  ///< How long to wait between each retry, in multiples of 250us. Max is 15. 0 means 250us, 15 means 4000us
-static const byte Wireless_Retry = 5;  ///< How many retries before giving up, max 15
+static const uint8_t Wireless_CSNPin = 49;
+static const uint8_t Wireless_MISOPin = 50;
+static const uint8_t Wireless_MOSIPin = 51;
+static const uint8_t Wireless_SCKPin = 52;
+static const uint8_t Wireless_CEPin = 53;
+static const uint8_t Wireless_Delay = 5;  ///< How long to wait between each retry, in multiples of 250us. Max is 15. 0 means 250us, 15 means 4000us
+static const uint8_t Wireless_Retry = 5;  ///< How many retries before giving up, max 15
 
 ///SAVED TO EEPROM - Settings struct
 ///If you change things here, increase the Version variable in line 4
@@ -37,9 +37,9 @@ typedef struct
   char PushingBoxLogRelayID[MaxTextLength] = {"v755877CF53383E1"};   ///UPDATE THIS DeviceID of the PushingBox logging scenario 
 
   struct GrowModuleSettings{
-    GrowModuleSettings(bool ReportToGoogleSheets, byte SheetsReportingFrequency) : ReportToGoogleSheets(ReportToGoogleSheets) , SheetsReportingFrequency(SheetsReportingFrequency) {} 
+    GrowModuleSettings(bool ReportToGoogleSheets, uint8_t SheetsReportingFrequency) : ReportToGoogleSheets(ReportToGoogleSheets) , SheetsReportingFrequency(SheetsReportingFrequency) {} 
     bool ReportToGoogleSheets;  ///Enable/disable reporting sensor readings to Google Sheets
-    byte SheetsReportingFrequency; ///How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
+    uint8_t SheetsReportingFrequency; ///How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
     ///bool ReportToMqtt = true;    ///Controls reporting sensor readings to an MQTT broker
   };
   struct GrowModuleSettings Gbox1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30};
@@ -52,9 +52,9 @@ typedef struct
 
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
-    DHTSensorSettings(byte Pin = 0, byte Type = 0) : Pin(Pin), Type(Type) {}
-    byte Pin;
-    byte Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
+    DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}
+    uint8_t Pin;
+    uint8_t Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
   };
   struct DHTSensorSettings IDHT = {.Pin = 43, .Type = 22};
   struct DHTSensorSettings EDHT = {.Pin = 44, .Type = 22};
@@ -62,40 +62,40 @@ typedef struct
 
   struct SoundSettings
   {
-    SoundSettings(byte Pin = 0) : Pin(Pin) {}
-    byte Pin;            ///PC buzzer+ (red)
+    SoundSettings(uint8_t Pin = 0) : Pin(Pin) {}
+    uint8_t Pin;            ///PC buzzer+ (red)
     bool Enabled = true; ///Enable PC speaker / Piezo buzzer
   };
   struct SoundSettings Sound1 = {.Pin = 2};
 
   struct LightSensorSettings
   {
-    LightSensorSettings(byte DigitalPin = 0, byte AnalogPin = 0) : DigitalPin(DigitalPin), AnalogPin(AnalogPin) {}
-    byte DigitalPin;
-    byte AnalogPin;
+    LightSensorSettings(uint8_t DigitalPin = 0, uint8_t AnalogPin = 0) : DigitalPin(DigitalPin), AnalogPin(AnalogPin) {}
+    uint8_t DigitalPin;
+    uint8_t AnalogPin;
   };
   struct LightSensorSettings LtSen1 = {.DigitalPin = 42, .AnalogPin = A0};
 
   struct LightsSettings
   {
-    LightsSettings(byte RelayPin = 0, byte DimmingPin = 0, byte DimmingLimit = 0) : RelayPin(RelayPin), DimmingPin(DimmingPin), DimmingLimit(DimmingLimit) {} ///Designated initializer
-    byte RelayPin;                                                                                                                                            ///Power relay Port 8 - LED lights
-    byte DimmingPin;                                                                                                                                          ///PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
-    byte DimmingLimit;                                                                                                                                        ///Sets the LED dimming limit (Usually around 5%)
+    LightsSettings(uint8_t RelayPin = 0, uint8_t DimmingPin = 0, uint8_t DimmingLimit = 0) : RelayPin(RelayPin), DimmingPin(DimmingPin), DimmingLimit(DimmingLimit) {} ///Designated initializer
+    uint8_t RelayPin;                                                                                                                                            ///Power relay Port 8 - LED lights
+    uint8_t DimmingPin;                                                                                                                                          ///PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
+    uint8_t DimmingLimit;                                                                                                                                        ///Sets the LED dimming limit (Usually around 5%)
     bool Status = true;                                                                                                                                       ///Startup status for lights: True-ON / False-OFF
-    byte Brightness = 15;                                                                                                                                     ///Light intensity: 0 - 100 range for controlling led driver output
+    uint8_t Brightness = 15;                                                                                                                                     ///Light intensity: 0 - 100 range for controlling led driver output
     bool TimerEnabled = true;                                                                                                                                 ///Enable timer controlling lights
-    byte OnHour = 4;                                                                                                                                          ///Light ON time - hour
-    byte OnMinute = 20;                                                                                                                                       ///Light ON time - minute
-    byte OffHour = 16;                                                                                                                                        ///Light OFF time - hour
-    byte OffMinute = 20;                                                                                                                                      ///Light OFF time - minute
+    uint8_t OnHour = 4;                                                                                                                                          ///Light ON time - hour
+    uint8_t OnMinute = 20;                                                                                                                                       ///Light ON time - minute
+    uint8_t OffHour = 16;                                                                                                                                        ///Light OFF time - hour
+    uint8_t OffMinute = 20;                                                                                                                                      ///Light OFF time - minute
   };
   struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 8}; ///Creating a LightSettings instance, passing in the unique parameters
 
   struct PHSensorSettings
   {
-    PHSensorSettings(byte Pin = 0, float Slope = 0.0, float Intercept = 0.0) : Pin(Pin), Slope(Slope), Intercept(Intercept) {}
-    byte Pin;
+    PHSensorSettings(uint8_t Pin = 0, float Slope = 0.0, float Intercept = 0.0) : Pin(Pin), Slope(Slope), Intercept(Intercept) {}
+    uint8_t Pin;
     float Slope;
     float Intercept;
   };
@@ -103,8 +103,8 @@ typedef struct
 
   struct PressureSensorSettings
   {
-    PressureSensorSettings(byte Pin = 0, float Offset = 0.0, float Ratio = 0.0) : Pin(Pin), Offset(Offset), Ratio(Ratio) {}
-    byte Pin;     ///Pressure sensor Pin: Signal(yellow)
+    PressureSensorSettings(uint8_t Pin = 0, float Offset = 0.0, float Ratio = 0.0) : Pin(Pin), Offset(Offset), Ratio(Ratio) {}
+    uint8_t Pin;     ///Pressure sensor Pin: Signal(yellow)
     float Offset; ///Pressure sensor calibration: voltage reading at 0 pressure
     float Ratio;  ///Pressure sensor voltage to pressure ratio
   };
@@ -112,9 +112,9 @@ typedef struct
 
   struct WeightSensorSettings
   {
-    WeightSensorSettings(byte DTPin = 0, byte SCKPin = 0, float Scale = 0.0, long TareOffset = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Scale(Scale), TareOffset(TareOffset) {}
-    byte DTPin;     ///Weight sensor DT pin
-    byte SCKPin; ///Weight sensor SCK pin
+    WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, float Scale = 0.0, long TareOffset = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Scale(Scale), TareOffset(TareOffset) {}
+    uint8_t DTPin;     ///Weight sensor DT pin
+    uint8_t SCKPin; ///Weight sensor SCK pin
     float Scale;  ///Calibration scale value
     long TareOffset; ///Reading at 0 weight on the scale
   };
@@ -132,9 +132,9 @@ typedef struct
 
   struct AeroponicsSettings
   { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
-    AeroponicsSettings(byte BypassSolenoidPin = 0, byte PumpPin = 0) : BypassSolenoidPin(BypassSolenoidPin), PumpPin(PumpPin) {}
-    byte BypassSolenoidPin;   ///Aeroponics bypass solenoid relay pin
-    byte PumpPin;             ///Aeroponics high pressure pump relay pin
+    AeroponicsSettings(uint8_t BypassSolenoidPin = 0, uint8_t PumpPin = 0) : BypassSolenoidPin(BypassSolenoidPin), PumpPin(PumpPin) {}
+    uint8_t BypassSolenoidPin;   ///Aeroponics bypass solenoid relay pin
+    uint8_t PumpPin;             ///Aeroponics high pressure pump relay pin
     bool SprayEnabled = true; ///Enable/disable spraying cycle
     int Interval = 15;        ///Spray every X minutes
     int Duration = 10;        ///Spray time in seconds
@@ -152,8 +152,8 @@ typedef struct
 
   struct AeroponicsSettings_TankSpecific
   { ///Settings for an Aeroponics setup WITH a pressure tank
-    AeroponicsSettings_TankSpecific(byte SpraySolenoidPin = 0) : SpraySolenoidPin(SpraySolenoidPin) {}
-    byte SpraySolenoidPin;    ///Spray solenoid relay pin
+    AeroponicsSettings_TankSpecific(uint8_t SpraySolenoidPin = 0) : SpraySolenoidPin(SpraySolenoidPin) {}
+    uint8_t SpraySolenoidPin;    ///Spray solenoid relay pin
     float PressureLow = 5.0;  ///Turn on pump below this pressure
     float PressureHigh = 7.0; ///Turn off pump above this pressure
   };
@@ -161,8 +161,8 @@ typedef struct
 
   struct WaterPumpSettings
   {
-    WaterPumpSettings(byte Pin = 0) : Pin(Pin)  {}
-    byte Pin;            ///Hempy bucket watering pump relay pin
+    WaterPumpSettings(uint8_t Pin = 0) : Pin(Pin)  {}
+    uint8_t Pin;            ///Hempy bucket watering pump relay pin
     int Timeout = 120;   ///Max pump run time in seconds
     bool PumpEnabled = true; ///Enable/disable automatic watering based on weight    
   };
@@ -171,26 +171,26 @@ typedef struct
 
   struct WaterTempSensorSettings
   {
-    WaterTempSensorSettings(byte Pin = 0) : Pin(Pin) {}
-    byte Pin;
+    WaterTempSensorSettings(uint8_t Pin = 0) : Pin(Pin) {}
+    uint8_t Pin;
   };
   struct WaterTempSensorSettings WaterTemp1 = {.Pin = 45}; ///Data(yellow) - DS18B20 waterproof temp sensor
 
   struct WaterLevelSensorSettings
   {
-    WaterLevelSensorSettings(byte Pin_1 = 0, byte Pin_2 = 0, byte Pin_3 = 0, byte Pin_4 = 0) : Pin_1(Pin_1), Pin_2(Pin_2), Pin_3(Pin_3), Pin_4(Pin_4) {}
-    byte Pin_1; ///Lowest water level
-    byte Pin_2;
-    byte Pin_3;
-    byte Pin_4; ///Full
+    WaterLevelSensorSettings(uint8_t Pin_1 = 0, uint8_t Pin_2 = 0, uint8_t Pin_3 = 0, uint8_t Pin_4 = 0) : Pin_1(Pin_1), Pin_2(Pin_2), Pin_3(Pin_3), Pin_4(Pin_4) {}
+    uint8_t Pin_1; ///Lowest water level
+    uint8_t Pin_2;
+    uint8_t Pin_3;
+    uint8_t Pin_4; ///Full
   };
   struct WaterLevelSensorSettings WaterLevel1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7};
 
   struct FanSettings
   {
-    FanSettings(byte OnOffPin = 0, byte SpeedPin = 0) : OnOffPin(OnOffPin), SpeedPin(SpeedPin) {}
-    byte OnOffPin;          ///Relay pin for power
-    byte SpeedPin;          ///Relay pin for speed selection
+    FanSettings(uint8_t OnOffPin = 0, uint8_t SpeedPin = 0) : OnOffPin(OnOffPin), SpeedPin(SpeedPin) {}
+    uint8_t OnOffPin;          ///Relay pin for power
+    uint8_t SpeedPin;          ///Relay pin for speed selection
     bool State = true;      ///true - ON, false - OFF
     bool HighSpeed = false; ///true - High speed, false - Low speed
   };
@@ -211,10 +211,10 @@ typedef struct
   bool AutomaticIFan = false;  ///Adjust internal fan based on temperature
   bool AutomaticEFan = false;  ///Adjust exhaust fan based on temp and humidity
   int IFanSwitchTemp = 25; /// Above limit turn the internal fan to High, turn to Low if limit-3 degrees is reached. Has to match default unit type(Metric C or Imperial K)
-  byte EFanHighHumid = 65; ///Above set humidity turn exhaust fan High if automatic fan control is enabled
-  byte EFanLowHumid = 55; ///Above set humidity turn exhaust fan Low if automatic fan control is enabled
-  byte EFanOffHumid = 40; ///Below set humidity turn exhaust fan Off if automatic fan control is enabled
+  uint8_t EFanHighHumid = 65; ///Above set humidity turn exhaust fan High if automatic fan control is enabled
+  uint8_t EFanLowHumid = 55; ///Above set humidity turn exhaust fan Low if automatic fan control is enabled
+  uint8_t EFanOffHumid = 40; ///Below set humidity turn exhaust fan Off if automatic fan control is enabled
   */
 
-  byte CompatibilityVersion = Version; ///Should always be the last value stored.
+  uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
 } Settings;
