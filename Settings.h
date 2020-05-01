@@ -3,7 +3,7 @@
 //// @attention Define the preferred default settings here.
 
 ///Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 10;
+static const byte Version = 12;
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 ///Global constants
@@ -19,6 +19,15 @@ extern char LongMessage[MaxLongTextLength];  ///temp storage for assembling long
 extern char ShortMessage[MaxShotTextLength]; ///temp storage for assembling short messages (Log entries, Error messages)
 extern char CurrentTime[MaxTextLength];      ///buffer for storing current time in text
 
+///nRF24L01+ wireless receiver pins
+static const byte Wireless_CSNPin = 49;
+static const byte Wireless_MISOPin = 50;
+static const byte Wireless_MOSIPin = 51;
+static const byte Wireless_SCKPin = 52;
+static const byte Wireless_CEPin = 53;
+static const byte Wireless_Delay = 5;  ///< How long to wait between each retry, in multiples of 250us. Max is 15. 0 means 250us, 15 means 4000us
+static const byte Wireless_Retry = 5;  ///< How many retries before giving up, max 15
+
 ///SAVED TO EEPROM - Settings struct
 ///If you change things here, increase the Version variable in line 4
 typedef struct
@@ -28,18 +37,18 @@ typedef struct
   char PushingBoxLogRelayID[MaxTextLength] = {"v755877CF53383E1"};   ///UPDATE THIS DeviceID of the PushingBox logging scenario 
 
   struct GrowModuleSettings{
-    GrowModuleSettings(bool ReportToGoogleSheets, int SheetsReportingFrequency) : ReportToGoogleSheets(ReportToGoogleSheets) , SheetsReportingFrequency(SheetsReportingFrequency) {} 
+    GrowModuleSettings(bool ReportToGoogleSheets, byte SheetsReportingFrequency) : ReportToGoogleSheets(ReportToGoogleSheets) , SheetsReportingFrequency(SheetsReportingFrequency) {} 
     bool ReportToGoogleSheets;  ///Enable/disable reporting sensor readings to Google Sheets
-    int SheetsReportingFrequency; ///How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
+    byte SheetsReportingFrequency; ///How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
     ///bool ReportToMqtt = true;    ///Controls reporting sensor readings to an MQTT broker
   };
   struct GrowModuleSettings Gbox1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30};
+  
 
-  struct HempyModuleSettings{  ///TODO: Remove the parameters
-    HempyModuleSettings(bool Debug, bool Metric) : Debug(Debug) , Metric(Metric) {} 
-    bool Debug;  ///Enable/disable debug output to Serial
-    bool Metric; ///Metric or Imperial
-  }; 
+  struct HempyModuleSettings{  /// \TODO Probably remove this
+    HempyModuleSettings() {}
+   }; 
+  struct HempyModuleSettings HempyModule1 = {};
 
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers

@@ -1,6 +1,6 @@
 #include "Fan_Web.h"
 
-Fan_Web::Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::FanSettings *DefaultSettings) : Fan(Name,Parent,DefaultSettings), Common_Web(Name), Common(Name)
+Fan_Web::Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::FanSettings *DefaultSettings) : Common(Name), Fan(Name,Parent,DefaultSettings), Common_Web(Name)
 {
   this->Parent = Parent;
   this->Name = Name;

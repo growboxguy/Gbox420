@@ -6,11 +6,11 @@
 #include "../Components/DHTSensor.h"
 #include "../Components/Sound.h"
 #include "../Components/WeightSensor.h"
-#include "../Components/PHSensor.h"
-#include "../Components/WaterTempSensor.h"
-#include "../Components/WaterLevelSensor.h"
-#include "../Components/HempyBucket.h"
 #include "../Components/WaterPump.h"
+#include "../Components/HempyBucket.h"
+//#include "../Components/PHSensor.h"
+//#include "../Components/WaterTempSensor.h"
+//#include "../Components/WaterLevelSensor.h"
 
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()

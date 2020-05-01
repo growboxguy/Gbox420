@@ -15,19 +15,19 @@
 /// \todo Split WaterLevelSensor class to a single sensor and a row of sensors (WaterLevelRow)
 
 #include "Arduino.h"
-#include "avr/wdt.h"                // Watchdog timer for detecting a crash and automatically resetting the board
-#include "avr/boot.h"               // Watchdog timer related bug fix
-#include "TimerThree.h"             // Interrupt handling for webpage
-#include "ELClient.h"               // ESP-link
-#include "ELClientWebServer.h"      // ESP-link - WebServer API
-#include "ELClientCmd.h"            // ESP-link - Get current time from the internet using NTP
-#include "ELClientRest.h"           // ESP-link - REST API
-#include "Thread.h"                 // Splitting functions to threads for timing
-#include "StaticThreadController.h" // Grouping threads
-#include "SerialLog.h"              // Logging to the Serial console output
-#include "src/Components_Web/420Common_Web.h"              // Base class where all web components inherits from
-#include "Settings.h"       //EEPROM stored settings for every component
-#include "src/Modules/GrowBox.h"    //Represents a complete box with all feautres
+#include "avr/wdt.h"                /// Watchdog timer for detecting a crash and automatically resetting the board
+#include "avr/boot.h"               /// Watchdog timer related bug fix
+#include "TimerThree.h"             /// Interrupt handling for webpage
+#include "ELClient.h"               /// ESP-link
+#include "ELClientWebServer.h"      /// ESP-link - WebServer API
+#include "ELClientCmd.h"            /// ESP-link - Get current time from the internet using NTP
+#include "ELClientRest.h"           /// ESP-link - REST API
+#include "Thread.h"                 /// Splitting functions to threads for timing
+#include "StaticThreadController.h" /// Grouping threads
+#include "SerialLog.h"              /// Logging to the Serial console output
+#include "src/Components_Web/420Common_Web.h"              /// Base class where all web components inherits from
+#include "Settings.h"       ///EEPROM stored settings for every component
+#include "src/Modules/GrowBox.h"    ///Represents a complete box with all feautres
 #include "SPI.h"      ///allows you to communicate with SPI devices, with the Arduino as the master device
 #include "nRF24L01.h"   ///https://forum.arduino.cc/index.php?topic=421081
 #include "RF24.h"       ///https://github.com/maniacbug/RF24
@@ -47,6 +47,7 @@ ELClientRest PushingBoxRestAPI(&ESPLink); ///< ESP-link REST API
 Settings * ModuleSettings;                ///< This object will store the settings loaded from the EEPROM. Persistent between reboots.
 bool *Debug;
 bool *Metric;
+RF24 *Wireless;              ///< Wireless communication with Modules over nRF24L01+
 GrowBox *GBox;                            ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 // Thread initialization
@@ -73,8 +74,8 @@ void setup()
 
   ESPLink.resetCb = &resetWebServer; ///< Callback subscription: What to do when WiFi reconnects
   resetWebServer();                  ///< reset the WebServer
-  setSyncProvider(getNtpTime); //points to method for updating time from NTP server
-  setSyncInterval(86400); //Sync time every day
+  setSyncProvider(getNtpTime); ///< Points to method for updating time from NTP server
+  setSyncInterval(86400); ///< Sync time every day   
 
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.setInterval(1000);
@@ -91,8 +92,15 @@ void setup()
   Timer3.attachInterrupt(processTimeCriticalStuff);
   Timer3.start();
 
-  // Create the GrowBox object
+  // Create the Module objects
   GBox = new GrowBox(F("GBox1"), &ModuleSettings->Gbox1); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  
+  //Initialize wireless communication with Modules
+  Wireless = new RF24(Wireless_CEPin, Wireless_CSNPin);
+  Wireless -> begin();    ///< Initialize the nRF24L01+ wireless chip for talking to Modules
+  Wireless -> setDataRate( RF24_250KBPS );   ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
+  Wireless -> enableAckPayload();    ///< 
+  Wireless -> setRetries(Wireless_Delay,Wireless_Retry); // Defined in Settings.h
 
   //   sendEmailAlert(F("Grow%20box%20(re)started"));
   logToSerials(F("Setup ready, starting loops:"), true, 0);

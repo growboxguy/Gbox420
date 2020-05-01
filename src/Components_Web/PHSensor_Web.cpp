@@ -1,6 +1,6 @@
 #include "PHSensor_Web.h"
 
-PHSensor_Web::PHSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PHSensorSettings *DefaultSettings) : PHSensor(Name,Parent,DefaultSettings), Common_Web(Name), Common(Name)
+PHSensor_Web::PHSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PHSensorSettings *DefaultSettings) : Common(Name), PHSensor(Name,Parent,DefaultSettings), Common_Web(Name)
 { ///constructor
   this->Parent = Parent;
   this->Name = Name;

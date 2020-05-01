@@ -7,11 +7,15 @@
 #include <RF24.h>
 #include "TimeLib.h"     ///keeping track of time
 
+/*
 #define CE_PIN  10
 #define CSN_PIN 9
+*/
+#define CE_PIN  53
+#define CSN_PIN 49
 
 const byte ChannelAddress[6] = {"Hemp1"};
-RF24 radio(CE_PIN, CSN_PIN);
+RF24 Wireless(CE_PIN, CSN_PIN);
 
 struct commandTemplate  //Max 32bytes. Template of the command sent to the Receiver. Both Transmitter and Receiver needs to know this structure
 {
@@ -56,11 +60,11 @@ unsigned long txIntervalMillis = 15000; // send once per 15 seconds
 void setup() {
     Serial.begin(115200);
     Serial.println(F("Sending and waiting for ACK"));
-    radio.begin();
-    radio.setDataRate( RF24_250KBPS );
-    radio.enableAckPayload();
-    radio.setRetries(5,5); // delay, count. 5 gives a 1500 µsec delay which is needed for a 32 byte ackPayload
-    radio.openWritingPipe(ChannelAddress);
+    Wireless.begin();
+    Wireless.setDataRate( RF24_250KBPS );
+    Wireless.enableAckPayload();  ///< Enable custom payloads on the acknowledge packets. Ack payloads are a handy way to return data back to senders without manually changing the radio modes on both units.
+    Wireless.setRetries(5,5); // Parameters: delay [R], count [How many retries before giving up, max 15] 
+    Wireless.openWritingPipe(ChannelAddress);
     send();
 }
 
@@ -73,14 +77,14 @@ void loop() {
 
 void send() {
     bool rslt;
-    rslt = radio.write( &FakeCommand, sizeof(FakeCommand) );
+    rslt = Wireless.write( &FakeCommand, sizeof(FakeCommand) );
         // Always use sizeof() as it gives the size as the number of bytes.
         // For example if dataToSend was an int sizeof() would correctly return 2
 
     Serial.print(F("Data Sent."));
     if (rslt) {
-        if ( radio.isAckPayloadAvailable() ) {
-            radio.read(&AckResponse, sizeof(AckResponse));
+        if ( Wireless.isAckPayloadAvailable() ) {
+            Wireless.read(&AckResponse, sizeof(AckResponse));
             Serial.print(F(" Acknowledgement received[ "));            
             Serial.print(sizeof(AckResponse));
             Serial.println(F(" bytes]"));

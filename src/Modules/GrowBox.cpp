@@ -13,7 +13,8 @@
 #include "../Components_Web/Aeroponics_NoTank_Web.h"
 #include "../Components_Web/WaterTempSensor_Web.h"
 #include "../Components_Web/WaterLevelSensor_Web.h"
-#include "../Components_Web/WeightSensor_Web.h"
+//#include "../Components_Web/WeightSensor_Web.h"
+#include "../Components_Web/HempyModule_Web.h"
 #include "../Components_Web/ModuleSkeleton_Web.h" ///Only for demonstration purposes
 
 GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name), Module_Web()
@@ -36,8 +37,9 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *
   PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &ModuleSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &ModuleSettings->WaterTemp1);
   WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
-  Weight1 = new WeightSensor_Web(F("Weight1"), this, &ModuleSettings->Weight1);
-  Weight2 = new WeightSensor_Web(F("Weight2"), this, &ModuleSettings->Weight2);
+  HempyModule1 = new HempyModule_Web(F("Hemp1"), this);
+  //Weight1 = new WeightSensor_Web(F("Weight1"), this, &ModuleSettings->Weight1);
+  //Weight2 = new WeightSensor_Web(F("Weight2"), this, &ModuleSettings->Weight2);
   ///ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&ModuleSettings -> ModuleSkeleton1);  ///Only for demonstration purposes
   ///ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&ModuleSettings -> ModuleSkeleton2);  ///Only for demonstration purposes
 
@@ -198,7 +200,7 @@ void GrowBox::setSheetsReportingOnOff(bool State)
   }
 }
 
-void GrowBox::setSheetsReportingFrequency(int Frequency)
+void GrowBox::setSheetsReportingFrequency(byte Frequency)
 {
   *SheetsReportingFrequency = Frequency;
   addToLog(F("Reporting freqency updated"));
@@ -290,6 +292,7 @@ void GrowBox::setPushingBoxLogRelayID(const char *ID)
   addToLog(F("Sheets log relay ID updated"));
 }
 
+/*
 void GrowBox::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength])
 {
   char ValueToReport[MaxLongTextLength] = "";
@@ -307,3 +310,4 @@ void GrowBox::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSOND
   }
   PushingBoxRestAPI.get(ValueToReport); ///PushingBoxRestAPI will append http:///api.pushingbox.com/ in front of the command
 }
+*/

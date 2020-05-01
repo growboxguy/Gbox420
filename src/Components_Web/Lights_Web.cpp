@@ -1,6 +1,6 @@
 #include "Lights_Web.h"
 
-Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightsSettings *DefaultSettings) : Lights(Name,Parent,DefaultSettings), Common_Web(Name), Common(Name)
+Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightsSettings *DefaultSettings) : Common(Name), Lights(Name,Parent,DefaultSettings), Common_Web(Name)
 {
   this->Parent = Parent;
   this->Name = Name;

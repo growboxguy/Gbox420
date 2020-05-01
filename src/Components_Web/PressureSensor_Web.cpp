@@ -1,6 +1,6 @@
 #include "PressureSensor_Web.h"
 
-PressureSensor_Web::PressureSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PressureSensorSettings *DefaultSettings) : PressureSensor(Name,Parent,DefaultSettings), Common_Web(Name), Common(Name)
+PressureSensor_Web::PressureSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PressureSensorSettings *DefaultSettings) : Common(Name), PressureSensor(Name,Parent,DefaultSettings), Common_Web(Name)
 {
   this->Parent = Parent;
   this->Name = Name; 

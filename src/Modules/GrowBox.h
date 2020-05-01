@@ -22,6 +22,7 @@ class Aeroponics_Tank_Web;
 class WaterTempSensor_Web;
 class WaterLevelSensor_Web;
 class WeightSensor_Web;
+class HempyModule_Web;
 class ModuleSkeleton_Web;
 
 extern ELClientRest PushingBoxRestAPI;
@@ -47,10 +48,12 @@ public:
   Aeroponics_NoTank_Web *Aero1;   
   WaterTempSensor_Web *WaterTemp1;
   WaterLevelSensor_Web *WaterLevel1;
-  WeightSensor_Web *Weight1; 
-  WeightSensor_Web *Weight2;  
-  ModuleSkeleton_Web *ModuleSkeleton1; ///Only for demonstration purposes
-  ModuleSkeleton_Web *ModuleSkeleton2; ///Only for demonstration purposes
+  HempyModule_Web *HempyModule1;    /// <Represents the website controls and feedback for a HempyModule
+
+  //WeightSensor_Web *Weight1; 
+  //WeightSensor_Web *Weight2;  
+  //ModuleSkeleton_Web *ModuleSkeleton1; ///Only for demonstration purposes
+  //ModuleSkeleton_Web *ModuleSkeleton2; ///Only for demonstration purposes
   void websiteEvent_Load(char *url);
   void websiteEvent_Refresh( char *url);
   void websiteEvent_Button(char *Button);
@@ -60,11 +63,11 @@ public:
   void refresh_QuarterHour();  
   void reportToGoogleSheetsTrigger();
   void reportToGoogleSheets(bool CalledFromWebsite);
-  void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
+ // void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
  
 private:
   void setSheetsReportingOnOff(bool State);
-  void setSheetsReportingFrequency(int Frequency);
+  void setSheetsReportingFrequency(byte Frequency);
   void setDebugOnOff(bool State);
   void setMetric(bool MetricEnabled);
   void setPushingBoxLogRelayID(const char *ID);
@@ -73,7 +76,7 @@ protected:
   bool RefreshAllRequested = false;
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;
-  int *SheetsReportingFrequency;
+  byte *SheetsReportingFrequency;
   bool *ReportToGoogleSheets;
-  int SheetsRefreshCounter = 0;
+  byte SheetsRefreshCounter = 0;
 };

@@ -7,16 +7,18 @@
 
 #include "../Components/420Common.h"
 #include "../Components/420Module.h"
+#include "../Wireless_HempyModule.h"
 
 ///forward declaration of classes
 class DHTSensor;
 class Sound;
-class PHSensor;
-class WaterTempSensor;
-class WaterLevelSensor;
 class WeightSensor;
-class HempyBucket;
 class WaterPump;
+class HempyBucket;
+//class PHSensor;
+//class WaterTempSensor;
+//class WaterLevelSensor;
+
 
 class HempyModule : virtual public Common, virtual public Module
 {
@@ -27,15 +29,15 @@ public:
   HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings); ///constructor
   Sound *Sound1;             ///Pointer to a Piezo speaker - sound feedback
   DHTSensor *DHT1;          ///Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
-  PHSensor *PHSensor1;
-  WaterTempSensor *WaterTemp1;
-  WaterLevelSensor *WaterLevel1;
   WeightSensor *Weight1; 
   WeightSensor *Weight2;
   HempyBucket *Bucket1;
   HempyBucket *Bucket2;
   WaterPump *Pump1;
   WaterPump *Pump2;
+  //PHSensor *PHSensor1;
+  //WaterTempSensor *WaterTemp1;
+  //WaterLevelSensor *WaterLevel1;
   void refresh_Sec();
   void refresh_FiveSec();
   void refresh_Minute();

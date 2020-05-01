@@ -1,6 +1,6 @@
 #include "ModuleSkeleton_Web.h"
 
-ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ModuleSkeletonSettings *DefaultSettings) : ModuleSkeleton(Name,Parent,DefaultSettings), Common_Web(Name), Common(Name)
+ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ModuleSkeletonSettings *DefaultSettings) : Common(Name), ModuleSkeleton(Name,Parent,DefaultSettings), Common_Web(Name)
 { ///constructor
   this->Parent = Parent;
   this->Name = Name; 

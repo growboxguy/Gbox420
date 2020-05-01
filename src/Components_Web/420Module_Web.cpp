@@ -238,3 +238,23 @@ char *Module_Web::eventLogToJSON(bool Append)
   LongMessage[strlen(LongMessage)] = ']';
   return LongMessage;
 }
+
+///Google Sheets functions
+
+void Module_Web::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength])
+{
+  char ValueToReport[MaxLongTextLength] = "";
+  strcat_P(ValueToReport, (PGM_P)F("/pushingbox?devid="));
+  strcat(ValueToReport, ModuleSettings -> PushingBoxLogRelayID);
+  strcat_P(ValueToReport, (PGM_P)F("&BoxData={\""));
+  strcat_P(ValueToReport, (PGM_P)Title);
+  strcat_P(ValueToReport, (PGM_P)F("\":"));
+  strcat(ValueToReport, *JSONData);
+  strcat_P(ValueToReport, (PGM_P)F("}"));
+  if (*Debug)
+  { ///print the report command to console
+    logToSerials(F("api.pushingbox.com"), false, 4);
+    logToSerials(&ValueToReport, true, 0);
+  }
+  PushingBoxRestAPI.get(ValueToReport); ///PushingBoxRestAPI will append http:///api.pushingbox.com/ in front of the command
+}
