@@ -13,7 +13,7 @@
 #define SCK_PIN  52
 #define CE_PIN  53
 
-const byte WirelessChannel[6] ={'H','e','m','p','1'};;
+const byte WirelessChannel[6] ={"Hemp1"};;
 RF24 radio(CE_PIN, CSN_PIN);
 
 void setup() {

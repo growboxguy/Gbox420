@@ -23,8 +23,8 @@
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
 char ShortMessage[MaxShotTextLength] = ""; ///temp storage for assembling short messages (Log entries, Error messages)char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
 char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
-struct commandTemplate Command;  //Variable where the wireless command values will get stored
-struct responseTemplate Response;  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter
+struct hempyCommand Command;  //Variable where the wireless command values will get stored
+struct hempyResponse Response;  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter
 
 ///Component initialization
 HardwareSerial &ArduinoSerial = Serial;   ///Reference to the Arduino Serial

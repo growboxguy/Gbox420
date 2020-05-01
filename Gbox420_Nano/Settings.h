@@ -3,11 +3,12 @@
 //// @attention Define the preferred default settings here.
 
 ///Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 15;  //// @attention Increment this when you make a change in the SAVED TO EEPROM secton
+static const byte Version = 18;
+//// @attention Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 ///Global constants
-const byte WirelessChannel[6] = {'H','e','m','p','1'};
+const byte WirelessChannel[6] = {"Hemp1"};
 
 static const byte MaxTextLength = 32;      ///Default char * buffer for storing a word + null terminator. Memory intense!
 static const byte MaxShotTextLength = 64; ///Default char * buffer for storing mutiple words. Memory intense!
@@ -28,20 +29,19 @@ typedef struct
   bool Metric = true;   ///Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
   
   struct HempyModuleSettings{  ///TODO: Remove the parameters
-    HempyModuleSettings(bool Debug, bool Metric) : Debug(Debug) , Metric(Metric) {} 
-    bool Debug;  ///Enable/disable debug output to Serial
-    bool Metric; ///Metric or Imperial
+    //HempyModuleSettings() :  {}     
   };  
-  struct HempyModuleSettings HempyMod1 = {.Debug = true, .Metric = true};  ///Default settings for the Hempy Module
+  struct HempyModuleSettings HempyMod1 = {};  ///Default settings for the Hempy Module
 
   struct HempyBucketSettings
   {
-    HempyBucketSettings( float StartWeight = 0.0, float StopWeight = 0.0) : StartWeight(StartWeight), StopWeight(StopWeight)  {}
+    HempyBucketSettings( float StartWeight = 0.0, float StopWeight = 0.0, int TimeOut = 0) : StartWeight(StartWeight), StopWeight(StopWeight)  {}
     float StartWeight; ///Start watering below this weight
     float StopWeight;  ///Stop watering above this weight
+    int TimeOut;  ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails
   };
-  struct HempyBucketSettings Bucket1 = { .StartWeight = 4.2, .StopWeight = 6.9};
-  struct HempyBucketSettings Bucket2 = { .StartWeight = 4.2, .StopWeight = 6.9};
+  struct HempyBucketSettings Bucket1 = { .StartWeight = 4.2, .StopWeight = 6.9, .TimeOut = 120};
+  struct HempyBucketSettings Bucket2 = { .StartWeight = 4.2, .StopWeight = 6.9, .TimeOut = 120};
 
   struct WaterPumpSettings
   {

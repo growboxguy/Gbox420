@@ -3,7 +3,7 @@
 //// @attention Define the preferred default settings here.
 
 ///Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const uint8_t Version = 12;
+static const uint8_t Version = 15;
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 ///Global constants
@@ -32,7 +32,7 @@ static const uint8_t Wireless_Retry = 5;  ///< How many retries before giving up
 ///If you change things here, increase the Version variable in line 4
 typedef struct
 {
-  bool Debug = false;          ///Logs debug messages to serial and web outputs
+  bool Debug = true;          ///Logs debug messages to serial and web outputs
   bool Metric = true;   ///Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
   char PushingBoxLogRelayID[MaxTextLength] = {"v755877CF53383E1"};   ///UPDATE THIS DeviceID of the PushingBox logging scenario 
 
@@ -44,12 +44,14 @@ typedef struct
   };
   struct GrowModuleSettings Gbox1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30};
   
-
-  struct HempyModuleSettings{  /// \TODO Probably remove this
-    //HempyModuleSettings(byte[6] WirelessChannel = {""}) : WirelessChannel(WirelessChannel) {}
-    const byte WirelessChannel[6] =  {'H','e','m','p','1'};
+  struct HempyModuleSettings{
+   float StartWeightBucket1 = 4.2; ///Start watering below this weight
+   float StopWeightBucket1 = 6.9;  ///Stop watering above this weight
+   int TimeOutPump1 = 120;  ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails
+   float StartWeightBucket2 = 4.2; ///Start watering below this weight
+   float StopWeightBucket2 = 6.9;  ///Stop watering above this weight   
+   int TimeOutPump2 = 120;  
    } HempyModule1; 
-   //struct HempyModuleSettings HempyModule1 = {.WirelessChannel = 1 } ;
 
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers

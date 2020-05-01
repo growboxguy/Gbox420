@@ -38,8 +38,7 @@ public:
   void loadEvent(char *Url);
   void refreshEvent(char *Url);
   void buttonEvent(char *Button);
-  void setFieldEvent(char *Field);
-  void SyncModule(const byte WirelessChannel[], commandTemplate *Command, responseTemplate *Response); 
+  void setFieldEvent(char *Field); 
   void addToReportQueue(Common_Web *Component);
   void addToRefreshQueue_Sec(Common_Web *Component);
   void addToRefreshQueue_FiveSec(Common_Web *Component);
@@ -49,14 +48,13 @@ public:
   void addToLog(const char *Text, uint8_t indent = 3); 
   char *eventLogToJSON(bool Append = false); ///Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   Sound_Web * getSoundObject();
-
+  RF24 *Wireless;
   
   void relayToGoogleSheets(__attribute__((unused)) const __FlashStringHelper *Title, __attribute__((unused)) char (*JSONData)[MaxLongTextLength]);
 
 private:
 
-protected: 
-  RF24 *Wireless; 
+protected:   
   Common_Web *ReportQueue[QueueDepth] = {};  ///aggregate initializer: Same as initializing to null pointers
   Common_Web *RefreshQueue_Sec[QueueDepth]= {};
   Common_Web *RefreshQueue_FiveSec[QueueDepth]= {};

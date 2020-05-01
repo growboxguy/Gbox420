@@ -1,10 +1,17 @@
 #include "HempyModule_Web.h"
 
-HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent) : Common(Name), Common_Web(Name)
+HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent,Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///Constructor
   this->Parent = Parent;
   this->Name = Name;
   memcpy_P(this->WirelessChannel,(PGM_P)Name,sizeof(this->WirelessChannel));
+  Command.StartWeightBucket1= DefaultSettings->StartWeightBucket1;
+  Command.StopWeightBucket1= DefaultSettings->StopWeightBucket1;
+  Command.TimeOutPump1= DefaultSettings->TimeOutPump1;
+  Command.StartWeightBucket2= DefaultSettings->StartWeightBucket2;
+  Command.StopWeightBucket2= DefaultSettings->StopWeightBucket2;
+  Command.TimeOutPump2= DefaultSettings->TimeOutPump2;
+
   Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
   Parent->addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   Parent->addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
@@ -43,10 +50,19 @@ void HempyModule_Web::websiteEvent_Load(char *url)
 
 void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///called when website is refreshed.
 {
-  /*
-  WebServer.setArgString(F("Time"), getFormattedTime(false));
-  WebServer.setArgJson(F("Log"), eventLogToJSON()); ///Last events that happened in JSON format
-  */
+  
+  WebServer.setArgString(getComponentName(F("B1Weight")), toText(Response.WeightBucket1));
+  WebServer.setArgString(getComponentName(F("B2Weight")), toText(Response.WeightBucket2));
+  WebServer.setArgString(getComponentName(F("B1Pump")),  pumpStateToText(Response.EnabledPump1,Response.OnPump1));
+  WebServer.setArgString(getComponentName(F("B2Pump")), pumpStateToText(Response.EnabledPump2,Response.OnPump2));
+  
+          /*
+          Serial.print(F(" ; DHT: "));
+          Serial.print(Response -> Temp);
+          Serial.print(F(", "));
+          Serial.print(Response -> Humidity);
+          Serial.println(); 
+          */
 }
 
 void HempyModule_Web::websiteEvent_Button(char *Button)
@@ -56,25 +72,28 @@ void HempyModule_Web::websiteEvent_Button(char *Button)
     return;
   }
   else
-  {
-    /*
-    if (strcmp_P(ShortMessage, (PGM_P)F("SheetsRep")) == 0)
+  {    
+    if (strcmp_P(ShortMessage, (PGM_P)F("B1Wat")) == 0)
     {
-      ReportToGoogleSheetsRequested = true;  ///just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
-      addToLog(F("Reporting to Sheets"), false);
+      TriggerWateringBucket1();
+      Parent -> addToLog(F("Watering HempyBucket 1"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SerialRep")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Wat")) == 0)
     {
-      ConsoleReportRequested = true;
-      addToLog(F("Reporting to Serial"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) ///Website signals to refresh all sensor readings
-    {        
-      RefreshAllRequested = true;
-      addToLog(F("Refresh triggered"), false);
-    } 
-    */
+      TriggerWateringBucket2();
+      Parent -> addToLog(F("Watering HempyBucket 2"), false);
+    }     
   }
+}
+
+void HempyModule_Web::TriggerWateringBucket1()
+{
+  Command.TurnOnPump1 = true;
+}
+
+void HempyModule_Web::TriggerWateringBucket2()
+{
+  Command.TurnOnPump2 = true;
 }
 
 void HempyModule_Web::websiteEvent_Field(char *Field)
@@ -100,7 +119,7 @@ void HempyModule_Web::refresh_FiveSec()
   if (*Debug)
     Common::refresh_FiveSec();
   
-  Parent -> SyncModule(WirelessChannel,&FakeCommand,&FakeResponse);
+  syncModule(WirelessChannel,&Command,&Response);
 }
 
 void HempyModule_Web::refresh_Minute()
@@ -110,10 +129,37 @@ void HempyModule_Web::refresh_Minute()
   
 }
 
+void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Command, hempyResponse *Response){
+  updateCommand();
+  logToSerials(F("Sending sync command..."),false,3);
+  Parent -> Wireless -> openWritingPipe(WirelessChannel);
+  if (Parent -> Wireless -> write(Command, sizeof(*Command) )) {
+      if ( Parent -> Wireless -> isAckPayloadAvailable() ) {
+          Parent -> Wireless -> read(Response, sizeof(*Response));
+           logToSerials(F("Acknowledgement received ["),false,2);            
+          Serial.print(sizeof(*Response)); /// \todo Use LogToSerial
+          logToSerials(F("bytes]"),true,1);
 
-void HempyModule_Web::updateMessage() {        // so you can see that new data is being sent
-    //FakeCommand.TurnOnPump1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exlusive!
-    //FakeCommand.TurnOnPump2 = random(0,2);
-    FakeCommand.StopWeightBucket1 = random(400, 500) / 100.0;
-    FakeCommand.StopWeightBucket2 = random(400, 500) / 100.0;
+          ///Turn of command flags after receiving it was confirmed
+          Command -> DisablePump1 = false;
+          Command -> TurnOnPump1 = false;
+          Command -> TurnOffPump1 = false;
+          Command -> DisablePump2 = false;
+          Command -> TurnOnPump2 = false;
+          Command -> TurnOffPump2 = false;
+      }
+      else {
+          Serial.println(F(" Acknowledgement received without any data."));
+      }        
+  }
+  else {
+      Serial.println(F(" No response."));
+  }
+  }
+
+
+void HempyModule_Web::updateCommand() {        // so you can see that new data is being sent
+    //Command.TurnOnPump1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exclusive!
+    //Command.TurnOnPump2 = random(0,2);
+    Command.Time = now();
 }

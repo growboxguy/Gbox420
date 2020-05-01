@@ -42,13 +42,13 @@ public:
   void refresh_FiveSec();
   void refresh_Minute();
   void refresh_QuarterHour(); 
-  void processCommand(commandTemplate *Command);
+  void processCommand(hempyCommand *Command);
   void updateResponse();
 
 private:
   void setDebugOnOff(bool State);
   void setMetric(bool MetricEnabled);
-
+  
 protected:
   bool RefreshAllRequested = false;
 };

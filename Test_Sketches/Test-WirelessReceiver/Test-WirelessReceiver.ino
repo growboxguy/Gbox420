@@ -10,7 +10,7 @@
 #define CE_PIN  10
 #define CSN_PIN 9
 
-const byte WirelessChannel[6] ={'H','e','m','p','1'};;
+const byte WirelessChannel[6] ={"Hemp1"};;
 RF24 radio(CE_PIN, CSN_PIN);
 
 struct commandTemplate  //Max 32bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
@@ -35,18 +35,18 @@ struct commandTemplate ReceivedCommand;  //Variable where the actual command val
 
 struct responseTemplate  //Max 32bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
-   bool OnStatePump1; 
-   bool EnabledStatePump1;
+   bool OnPump1; 
+   bool EnabledPump1;
    float WeightBucket1;
 
-   bool OnStatePump2;
-   bool EnabledStatePump2; 
+   bool OnPump2;
+   bool EnabledPump2; 
    float WeightBucket2;
    
    float Temp;
    float Humidity;
 };
-struct responseTemplate FakeResponse = {1,1,4.20,0,0,1.23,23.4,50.1};  //Fake response sent back in the Acknowledgement after receiving a command from the Transmitter
+struct responseTemplate Response = {1,1,4.20,0,0,1.23,23.4,50.1};  //Fake response sent back in the Acknowledgement after receiving a command from the Transmitter
 
 void setup() {
     Serial.begin(115200);
@@ -100,7 +100,7 @@ void getData() {
 }
 
 void updateReplyData() { // so you can see that new data is being sent
-    FakeResponse.WeightBucket1 = random(400, 500) / 100.0;
-    FakeResponse.WeightBucket2 = random(400, 500) / 100.0;
-    radio.writeAckPayload(1, &FakeResponse, sizeof(FakeResponse)); // load the payload for the next time
+    Response.WeightBucket1 = random(400, 500) / 100.0;
+    Response.WeightBucket2 = random(400, 500) / 100.0;
+    radio.writeAckPayload(1, &Response, sizeof(Response)); // load the payload for the next time
 }

@@ -14,7 +14,7 @@
 #define CE_PIN  53
 #define CSN_PIN 49
 
-const byte WirelessChannel[6] ={'H','e','m','p','1'};;
+const byte WirelessChannel[6] ={"Hemp1"};;
 RF24 Wireless(CE_PIN, CSN_PIN);
 
 struct commandTemplate  //Max 32bytes. Template of the command sent to the Receiver. Both Transmitter and Receiver needs to know this structure
@@ -35,17 +35,17 @@ struct commandTemplate  //Max 32bytes. Template of the command sent to the Recei
    float StartWeightBucket2;
    float StopWeightBucket2;
 };
-struct commandTemplate FakeCommand = {1587936134,0,0,0,120,3.8,4.8,0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
+struct commandTemplate Command = {1587936134,0,0,0,120,3.8,4.8,0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
 
 
 struct responseTemplate  //Max 32bytes. Template of the response back from the Receiver. Both Transmitter and Receiver needs to know this structure
 {
-   bool OnStatePump1; 
-   bool EnabledStatePump1;
+   bool OnPump1; 
+   bool EnabledPump1;
    float WeightBucket1;
 
-   bool OnStatePump2;
-   bool EnabledStatePump2; 
+   bool OnPump2;
+   bool EnabledPump2; 
    float WeightBucket2;
    
    float Temp;
@@ -77,7 +77,7 @@ void loop() {
 
 void send() {
     bool rslt;
-    rslt = Wireless.write( &FakeCommand, sizeof(FakeCommand) );
+    rslt = Wireless.write( &Command, sizeof(Command) );
         // Always use sizeof() as it gives the size as the number of bytes.
         // For example if dataToSend was an int sizeof() would correctly return 2
 
@@ -89,15 +89,15 @@ void send() {
             Serial.print(sizeof(AckResponse));
             Serial.println(F(" bytes]"));
             Serial.print(F("Bucket1: "));
-            Serial.print(AckResponse.OnStatePump1);
+            Serial.print(AckResponse.OnPump1);
             Serial.print(F(", "));
-            Serial.print(AckResponse.EnabledStatePump1);
+            Serial.print(AckResponse.EnabledPump1);
             Serial.print(F(", "));
             Serial.print(AckResponse.WeightBucket1);
             Serial.print(F(" ; Bucket2: "));
-            Serial.print(AckResponse.OnStatePump2);
+            Serial.print(AckResponse.OnPump2);
             Serial.print(F(", "));
-            Serial.print(AckResponse.EnabledStatePump2);
+            Serial.print(AckResponse.EnabledPump2);
             Serial.print(F(", "));
             Serial.print(AckResponse.WeightBucket2);
             Serial.print(F(" ; DHT: "));
@@ -106,7 +106,7 @@ void send() {
             Serial.print(AckResponse.Humidity);
             Serial.println();
             
-            updateMessage();
+            updateCommand();
         }
         else {
             Serial.println(F(" Acknowledgement received without any data."));
@@ -118,9 +118,9 @@ void send() {
     prevMillis = millis();
  }
 
-void updateMessage() {        // so you can see that new data is being sent
-    //FakeCommand.TurnOnPump1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exlusive!
-    //FakeCommand.TurnOnPump2 = random(0,2);
-    FakeCommand.StopWeightBucket1 = random(400, 500) / 100.0;
-    FakeCommand.StopWeightBucket2 = random(400, 500) / 100.0;
+void updateCommand() {        // so you can see that new data is being sent
+    //Command.TurnOnPump1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exlusive!
+    //Command.TurnOnPump2 = random(0,2);
+    Command.StopWeightBucket1 = random(400, 500) / 100.0;
+    Command.StopWeightBucket2 = random(400, 500) / 100.0;
 }

@@ -67,7 +67,7 @@ void HempyModule::refresh_Sec()
   } */
 }
 
-void HempyModule::processCommand(commandTemplate *Command){
+void HempyModule::processCommand(hempyCommand *Command){
   if(Command -> DisablePump1) Pump1 -> disable();
   if(Command -> TurnOnPump1) Pump1 -> turnOn(true);
   if(Command -> TurnOffPump1) Pump1 -> turnOff(true);
@@ -105,19 +105,19 @@ void HempyModule::processCommand(commandTemplate *Command){
         logToSerials(F(","),false,1);
         logToSerials(Command -> StartWeightBucket2,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> StopWeightBucket2,false,1);
+        logToSerials(Command -> StopWeightBucket2,true,1);
   }
 
   updateResponse();       
 }
 
 void HempyModule::updateResponse(){
-  Response.OnStatePump1 = Pump1 -> getOnState();
-  Response.EnabledStatePump1 = Pump1 -> getEnabledState();
+  Response.OnPump1 = Pump1 -> getOnState();
+  Response.EnabledPump1 = Pump1 -> getEnabledState();
   Response.WeightBucket1 = Weight1 -> getWeight();
 
-  Response.OnStatePump2 = Pump2 -> getOnState();
-  Response.EnabledStatePump2 = Pump2 -> getEnabledState();
+  Response.OnPump2 = Pump2 -> getOnState();
+  Response.EnabledPump2 = Pump2 -> getEnabledState();
   Response.WeightBucket2 = Weight2 -> getWeight();
 
   Response.Temp = DHT1 -> getTemp();
