@@ -7,6 +7,7 @@
 #include "Arduino.h"
 #include "avr/wdt.h"                ///Watchdog timer for detecting a crash and automatically resetting the board
 #include "avr/boot.h"               ///Watchdog timer related bug fix
+#include "printf.h"
 #include "Thread.h"                 ///Splitting functions to threads for timing
 #include "StaticThreadController.h" ///Grouping threads           
 #include "SPI.h" ///allows you to communicate with SPI devices, with the Arduino as the master device
@@ -14,8 +15,9 @@
 #include "RF24.h"       ///https://github.com/maniacbug/RF24
 #include "SerialLog.h"  ///Logging debug messages to Serial            
 #include "Settings.h"  
-#include "src/Wireless.h"  ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
 #include "src/Modules/HempyModule.h"
+#include "src/Wireless_HempyModule.h"   ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
+
 
 ///Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
@@ -30,8 +32,9 @@ Settings * ModuleSettings;                ///settings loaded from the EEPROM. Pe
 bool *Debug;
 bool *Metric;
 HempyModule *HempyMod1;                   ///Represents a Hempy bucket with weight sensors and pumps
-RF24 radio(10, 9); /// Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
-const byte ChannelAddress[6] = {"Hemp1"};  ///Identifies the channel used to receive commands from the main module
+RF24 Wireless(10, 9); /// Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
+const uint8_t WirelessChannel = 1;   ///Identifies the channel used to receive commands from the main module
+const byte ChannelAddress[6] = {"Hemp1"};
 
 ///Thread initialization
 Thread OneSecThread = Thread();
@@ -63,6 +66,7 @@ Settings *loadSettings(bool ResetEEPROM = false )   ///if the function contains 
 void setup()
 {                                                      /// put your setup code here, to run once:
   ArduinoSerial.begin(115200);                         ///Nano console output
+  printf_begin();
   logToSerials(F(""), true, 0);                         ///New line
   logToSerials(F("Arduino Nano RF initializing..."), true, 0); ///logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https:///gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                 ///Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
@@ -77,12 +81,12 @@ void setup()
   Metric = &ModuleSettings ->  Metric;
 
   ///Setting up wireless module
-  radio.begin();
-  radio.setDataRate( RF24_250KBPS );
-  //radio.setPALevel(RF24_PA_MIN);
-  radio.openReadingPipe(1, ChannelAddress);
-  radio.enableAckPayload();
-  radio.startListening();
+  Wireless.begin();
+  Wireless.setDataRate( RF24_250KBPS );
+  //Wireless.setPALevel(RF24_PA_MIN);
+  Wireless.enableAckPayload();
+  Wireless.openReadingPipe(1, ChannelAddress);
+  Wireless.startListening();
 
   /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
   OneSecThread.setInterval(1000);  ///1000ms
@@ -103,9 +107,9 @@ void setup()
 void loop()
 {                      /// put your main code here, to run repeatedly:
   ThreadControl.run(); ///loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
-  if ( radio.available() ) { ///If a control package is received from the main module
-    getWirelessData();
-  }
+  ///If a control package is received from the main module
+  getWirelessData();
+  
 }
 
 ///////////////////////////////////////////////////////////////
@@ -126,7 +130,8 @@ void runFiveSec()
 void runMinute()
 {
   wdt_reset();
-  HempyMod1->runMinute();  
+  HempyMod1->runMinute(); 
+  getWirelessStatus(); 
 }
 
 void runQuarterHour()
@@ -139,21 +144,27 @@ void runQuarterHour()
 ///Wireless communication
 
 void getWirelessData() {
-    
-        radio.read( &Command, sizeof(Command) );
-        Serial.print(F("Command received ["));
-        Serial.print(sizeof(Command));
-        Serial.println(F(" bytes], AckPayload sent")); 
-
-        ///Updating internal timer
-        if(timeStatus() != timeSet) 
+    if ( Wireless.available() ) { 
+        Wireless.read( &Command, sizeof(Command) );
+        logToSerials(F("Command received ["),false,0);
+        Serial.print(sizeof(Command));  /// \todo print this with logToSerials: Need support for unsigned long
+        logToSerials(F("bytes], AckPayload sent"),true,1); 
+        
+        if(timeStatus() != timeSet)  
         {
-          updateTime();
+          updateTime(); ///Updating internal timer
         }
-
         HempyMod1 -> processCommand(&Command);       /// \todo: Support Aeroponics Module  
-        radio.writeAckPayload(1, &Response, sizeof(Response)); // load the payload for the next time
+        Wireless.writeAckPayload(1, &Response, sizeof(Response)); // load the payload for the next time
+    }
+}
 
+void getWirelessStatus(){
+  if(Debug){
+    logToSerials(F("Wireless status report:"),true,0);
+    Wireless.printDetails();
+    logToSerials(F(""),true,0);
+  }
 }
 
 time_t updateTime()
@@ -161,7 +172,7 @@ time_t updateTime()
   if(Command.Time > 0)
   {
   setTime(Command.Time);
-  Serial.println(F("Clock synced with main module")); 
+  logToSerials(F("Clock synced with main module"),true,0); 
   }
   return Command.Time;
 }

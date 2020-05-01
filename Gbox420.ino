@@ -17,6 +17,7 @@
 #include "Arduino.h"
 #include "avr/wdt.h"                /// Watchdog timer for detecting a crash and automatically resetting the board
 #include "avr/boot.h"               /// Watchdog timer related bug fix
+#include "printf.h"
 #include "TimerThree.h"             /// Interrupt handling for webpage
 #include "ELClient.h"               /// ESP-link
 #include "ELClientWebServer.h"      /// ESP-link - WebServer API
@@ -62,6 +63,7 @@ void setup()
   ArduinoSerial.begin(115200);                         ///< 2560mega console output
   ESPSerial.begin(115200);                             ///< ESP WiFi console output
   pinMode(13, OUTPUT);                                 ///< onboard LED - Heartbeat every second to confirm code is running
+  printf_begin();
   logToSerials(F(""), true, 0);                         ///< New line
   logToSerials(F("Arduino Mega initializing..."), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https:///< gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                 ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
@@ -136,6 +138,7 @@ void runMinute()
 {
   wdt_reset();
   GBox->runMinute();
+  getWirelessStatus();
 }
 
 void runQuarterHour()
@@ -250,7 +253,7 @@ void setFieldCallback(char *Field)
 
 void saveSettings(Settings *SettingsToSave)
 {                                                                                 ///< do not put this in the loop, EEPROM has a write limit of 100.000 cycles
-  eeprom_update_block((const void *)SettingsToSave, (void *)0, sizeof(Settings)); ///< update_block only writes the uint8_ts that changed
+  eeprom_update_block((const void *)SettingsToSave, (void *)0, sizeof(Settings)); ///< update_block only writes the bytes that changed
 }
 
 Settings *loadSettings()
@@ -280,4 +283,12 @@ void restoreDefaults(Settings *SettingsToOverwrite)
   memcpy(&SettingsToOverwrite, &DefaultSettings, sizeof(SettingsToOverwrite));
   saveSettings(SettingsToOverwrite);
   GBox->addToLog(F("Default settings restored"), 1);
+}
+
+void getWirelessStatus(){
+if(Debug){
+    logToSerials(F("Wireless status report:"),true,0);
+    Wireless.printDetails();
+    logToSerials(F(""),true,0);
+  }
 }

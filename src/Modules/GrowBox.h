@@ -74,14 +74,10 @@ private:
   void setPushingBoxLogRelayID(const char *ID);
 
 protected:
-  void Send();
   bool RefreshAllRequested = false;
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;
   uint8_t *SheetsReportingFrequency;
   bool *ReportToGoogleSheets;
   uint8_t SheetsRefreshCounter = 0;
-  struct commandTemplate FakeCommand = {1587936134,0,0,0,120,3.8,4.8,0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
-struct responseTemplate AckResponse; //The response from the Receiver will be stored here, represents the current status of the Receiver
-
 };

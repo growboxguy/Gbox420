@@ -259,3 +259,47 @@ void Module_Web::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JS
   }
   PushingBoxRestAPI.get(ValueToReport); ///PushingBoxRestAPI will append http:///api.pushingbox.com/ in front of the command
 }
+
+///Wireless
+
+void Module_Web::SyncModule(const uint8_t *WirelessChannel, commandTemplate *Command, responseTemplate *Response){
+  const byte ChannelAddress[6] = {"Hemp1"};
+  Wireless -> openWritingPipe(ChannelAddress);
+  logToSerials(Name,false,0);
+  logToSerials(F("- Sending sync command..."),false,1);
+  if (Wireless -> write(Command, sizeof(*Command) )) {
+      if ( Wireless -> isAckPayloadAvailable() ) {
+          Wireless -> read(Response, sizeof(*Response));
+           logToSerials(F("Acknowledgement received ["),false,2);            
+          Serial.print(sizeof(Response)); /// \todo Use LogToSerial
+          logToSerials(F("bytes]"),true,1);
+
+          Serial.print(F("Bucket1: "));
+          Serial.print(Response -> OnStatePump1);
+          Serial.print(F(", "));
+          Serial.print(Response -> EnabledStatePump1);
+          Serial.print(F(", "));
+          Serial.print(Response -> WeightBucket1);
+          Serial.print(F(" ; Bucket2: "));
+          Serial.print(Response -> OnStatePump2);
+          Serial.print(F(", "));
+          Serial.print(Response -> EnabledStatePump2);
+          Serial.print(F(", "));
+          Serial.print(Response -> WeightBucket2);
+          Serial.print(F(" ; DHT: "));
+          Serial.print(Response -> Temp);
+          Serial.print(F(", "));
+          Serial.print(Response -> Humidity);
+          Serial.println(); 
+          
+          
+          //updateMessage();
+      }
+      else {
+          Serial.println(F(" Acknowledgement received without any data."));
+      }        
+  }
+  else {
+      Serial.println(F(" No response."));
+  }
+  }

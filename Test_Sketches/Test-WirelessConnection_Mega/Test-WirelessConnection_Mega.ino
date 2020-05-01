@@ -13,7 +13,7 @@
 #define SCK_PIN  52
 #define CE_PIN  53
 
-const byte ChannelAddress[6] = {"Hemp1"};
+const byte WirelessChannel[6] = {"Hemp1"};
 RF24 radio(CE_PIN, CSN_PIN);
 
 void setup() {
@@ -34,7 +34,7 @@ void setup() {
     Serial.println("AND NOW WITH NEW CHANNEL ADDRESS");
     Serial.println(" and 250KBPS data rate");
     Serial.println();
-    radio.openReadingPipe(1, ChannelAddress);
+    radio.openReadingPipe(1, WirelessChannel);
     radio.setDataRate( RF24_250KBPS );
     radio.printDetails();
 }

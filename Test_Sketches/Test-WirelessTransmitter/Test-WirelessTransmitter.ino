@@ -14,7 +14,7 @@
 #define CE_PIN  53
 #define CSN_PIN 49
 
-const byte ChannelAddress[6] = {"Hemp1"};
+const byte WirelessChannel[6] = {"Hemp1"};
 RF24 Wireless(CE_PIN, CSN_PIN);
 
 struct commandTemplate  //Max 32bytes. Template of the command sent to the Receiver. Both Transmitter and Receiver needs to know this structure
@@ -64,7 +64,7 @@ void setup() {
     Wireless.setDataRate( RF24_250KBPS );
     Wireless.enableAckPayload();  ///< Enable custom payloads on the acknowledge packets. Ack payloads are a handy way to return data back to senders without manually changing the radio modes on both units.
     Wireless.setRetries(5,5); // Parameters: delay [R], count [How many retries before giving up, max 15] 
-    Wireless.openWritingPipe(ChannelAddress);
+    Wireless.openWritingPipe(WirelessChannel);
     send();
 }
 

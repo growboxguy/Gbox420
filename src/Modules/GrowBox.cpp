@@ -37,7 +37,7 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *
   PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &ModuleSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &ModuleSettings->WaterTemp1);
   WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
-  HempyModule1 = new HempyModule_Web(F("Hemp1"), this);
+  HempyModule1 = new HempyModule_Web(F("Hemp1"), this, &ModuleSettings->HempyModule1);
   //Weight1 = new WeightSensor_Web(F("Weight1"), this, &ModuleSettings->Weight1);
   //Weight2 = new WeightSensor_Web(F("Weight2"), this, &ModuleSettings->Weight2);
   ///ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&ModuleSettings -> ModuleSkeleton1);  ///Only for demonstration purposes
@@ -134,7 +134,7 @@ void GrowBox::refresh_FiveSec()
     ConsoleReportRequested = false;
     runReport();
   }
-  Send();
+  
 }
 
 void GrowBox::refresh_Minute()
@@ -183,49 +183,6 @@ void GrowBox::setMetric(bool MetricEnabled)
     addToLog(F("Imperial units"));
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//Wireless data collection via nRF24L01+
-
-void GrowBox::Send(){
-  const uint8_t ChannelAddress[6] = {"Hemp1"};
-  Wireless -> openWritingPipe(ChannelAddress);
-  bool rslt;
-  rslt = Wireless -> write( &FakeCommand, sizeof(FakeCommand) );
-  Serial.print(F("Data Sent."));
-  if (rslt) {
-      if ( Wireless -> isAckPayloadAvailable() ) {
-          Wireless -> read(&AckResponse, sizeof(AckResponse));
-           Serial.print(F(" Acknowledgement received[ "));            
-          Serial.print(sizeof(AckResponse));
-          Serial.println(F(" uint8_ts]"));
-          Serial.print(F("Bucket1: "));
-          Serial.print(AckResponse.OnStatePump1);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.EnabledStatePump1);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.WeightBucket1);
-          Serial.print(F(" ; Bucket2: "));
-          Serial.print(AckResponse.OnStatePump2);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.EnabledStatePump2);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.WeightBucket2);
-          Serial.print(F(" ; DHT: "));
-          Serial.print(AckResponse.Temp);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.Humidity);
-          Serial.println(); 
-          
-          //updateMessage();
-      }
-      else {
-          Serial.println(F(" Acknowledgement received without any data."));
-      }        
-  }
-  else {
-      Serial.println(F(" No response."));
-  }
-  }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///Google Sheets reporting

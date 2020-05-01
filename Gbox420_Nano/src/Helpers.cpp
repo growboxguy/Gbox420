@@ -6,7 +6,7 @@
 void getFreeMemory()
 {
   itoa(freeMemory(), ShortMessage, 10);
-  logToSerials(F("Free memory(uint8_ts): "), false, 2);
+  logToSerials(F("Free memory(bytes): "), false, 2);
   logToSerials(&ShortMessage, true, 0);
 }
 

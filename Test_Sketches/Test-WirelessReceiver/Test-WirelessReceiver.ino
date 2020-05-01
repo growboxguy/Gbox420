@@ -10,7 +10,7 @@
 #define CE_PIN  10
 #define CSN_PIN 9
 
-const byte ChannelAddress[6] = {"Hemp1"};
+const byte WirelessChannel[6] = {"Hemp1"};
 RF24 radio(CE_PIN, CSN_PIN);
 
 struct commandTemplate  //Max 32bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
@@ -53,7 +53,7 @@ void setup() {
     Serial.println(F("Listening..."));
     radio.begin();
     radio.setDataRate( RF24_250KBPS );
-    radio.openReadingPipe(1, ChannelAddress);
+    radio.openReadingPipe(1, WirelessChannel);
     radio.enableAckPayload();
     updateReplyData();
     radio.startListening();

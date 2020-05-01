@@ -46,9 +46,10 @@ typedef struct
   
 
   struct HempyModuleSettings{  /// \TODO Probably remove this
-    HempyModuleSettings() {}
+    HempyModuleSettings(uint8_t WirelessChannel = 0) : WirelessChannel(WirelessChannel) {}
+     const uint8_t WirelessChannel;
    }; 
-  struct HempyModuleSettings HempyModule1 = {};
+   struct HempyModuleSettings HempyModule1 = {.WirelessChannel = 1 } ;
 
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
