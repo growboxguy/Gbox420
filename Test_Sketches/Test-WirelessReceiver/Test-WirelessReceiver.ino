@@ -10,7 +10,7 @@
 #define CE_PIN  10
 #define CSN_PIN 9
 
-const byte WirelessChannel[6] = {"Hemp1"};
+const byte WirelessChannel[6] ={'H','e','m','p','1'};;
 RF24 radio(CE_PIN, CSN_PIN);
 
 struct commandTemplate  //Max 32bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure

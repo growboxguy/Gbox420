@@ -14,7 +14,7 @@
 class HempyModule_Web : public Common_Web
 {
 public:
-  HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings); ///constructor
+  HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent); ///constructor
   void websiteEvent_Refresh(__attribute__((unused)) char *url); 
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Button(__attribute__((unused)) char *Button);
@@ -30,6 +30,7 @@ private:
 
 protected:
   Module_Web *Parent;
-  const uint8_t *WirelessChannel;
+  const byte WirelessChannel[6];
+
 };
 

@@ -33,8 +33,6 @@ bool *Debug;
 bool *Metric;
 HempyModule *HempyMod1;                   ///Represents a Hempy bucket with weight sensors and pumps
 RF24 Wireless(10, 9); /// Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
-const uint8_t WirelessChannel = 1;   ///Identifies the channel used to receive commands from the main module
-const byte ChannelAddress[6] = {"Hemp1"};
 
 ///Thread initialization
 Thread OneSecThread = Thread();
@@ -85,7 +83,8 @@ void setup()
   Wireless.setDataRate( RF24_250KBPS );
   //Wireless.setPALevel(RF24_PA_MIN);
   Wireless.enableAckPayload();
-  Wireless.openReadingPipe(1, ChannelAddress);
+  Wireless.openReadingPipe(1, WirelessChannel);  
+  Wireless.writeAckPayload(1, &Response, sizeof(Response));
   Wireless.startListening();
 
   /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
@@ -148,7 +147,7 @@ void getWirelessData() {
         Wireless.read( &Command, sizeof(Command) );
         logToSerials(F("Command received ["),false,0);
         Serial.print(sizeof(Command));  /// \todo print this with logToSerials: Need support for unsigned long
-        logToSerials(F("bytes], AckPayload sent"),true,1); 
+        logToSerials(F("bytes], Response sent"),true,1); 
         
         if(timeStatus() != timeSet)  
         {

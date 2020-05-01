@@ -7,6 +7,8 @@ static const byte Version = 15;  //// @attention Increment this when you make a 
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 ///Global constants
+const byte WirelessChannel[6] = {'H','e','m','p','1'};
+
 static const byte MaxTextLength = 32;      ///Default char * buffer for storing a word + null terminator. Memory intense!
 static const byte MaxShotTextLength = 64; ///Default char * buffer for storing mutiple words. Memory intense!
 static const int MaxLongTextLength = 256; ///Default char * buffer for storing a long text. Memory intense!

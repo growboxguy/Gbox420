@@ -1,10 +1,10 @@
 #include "HempyModule_Web.h"
 
-HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
+HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent) : Common(Name), Common_Web(Name)
 { ///Constructor
   this->Parent = Parent;
   this->Name = Name;
-  this->WirelessChannel = &DefaultSettings->WirelessChannel;
+  memcpy_P(this->WirelessChannel,(PGM_P)Name,sizeof(this->WirelessChannel));
   Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
   Parent->addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   Parent->addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
@@ -99,7 +99,8 @@ void HempyModule_Web::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
-  Parent -> SyncModule(1,&FakeCommand,&FakeResponse);
+  
+  Parent -> SyncModule(WirelessChannel,&FakeCommand,&FakeResponse);
 }
 
 void HempyModule_Web::refresh_Minute()

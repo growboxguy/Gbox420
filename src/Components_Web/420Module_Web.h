@@ -39,7 +39,7 @@ public:
   void refreshEvent(char *Url);
   void buttonEvent(char *Button);
   void setFieldEvent(char *Field);
-  void SyncModule(const uint8_t *WirelessChannel, commandTemplate *Command, responseTemplate *Response); 
+  void SyncModule(const byte WirelessChannel[], commandTemplate *Command, responseTemplate *Response); 
   void addToReportQueue(Common_Web *Component);
   void addToRefreshQueue_Sec(Common_Web *Component);
   void addToRefreshQueue_FiveSec(Common_Web *Component);

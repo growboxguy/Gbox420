@@ -262,16 +262,14 @@ void Module_Web::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JS
 
 ///Wireless
 
-void Module_Web::SyncModule(const uint8_t *WirelessChannel, commandTemplate *Command, responseTemplate *Response){
-  const byte ChannelAddress[6] = {"Hemp1"};
-  Wireless -> openWritingPipe(ChannelAddress);
-  logToSerials(Name,false,0);
-  logToSerials(F("- Sending sync command..."),false,1);
+void Module_Web::SyncModule( const byte WirelessChannel[], commandTemplate *Command, responseTemplate *Response){
+  logToSerials(F("Sending sync command..."),false,3);
+  Wireless -> openWritingPipe(WirelessChannel);
   if (Wireless -> write(Command, sizeof(*Command) )) {
       if ( Wireless -> isAckPayloadAvailable() ) {
           Wireless -> read(Response, sizeof(*Response));
            logToSerials(F("Acknowledgement received ["),false,2);            
-          Serial.print(sizeof(Response)); /// \todo Use LogToSerial
+          Serial.print(sizeof(*Response)); /// \todo Use LogToSerial
           logToSerials(F("bytes]"),true,1);
 
           Serial.print(F("Bucket1: "));
