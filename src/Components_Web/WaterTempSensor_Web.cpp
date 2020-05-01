@@ -1,6 +1,6 @@
 #include "WaterTempSensor_Web.h"
 
-WaterTempSensor_Web::WaterTempSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WaterTempSensorSettings *DefaultSettings) : WaterTempSensor(Name,Parent,DefaultSettings), Common_Web(Name), Common(Name)
+WaterTempSensor_Web::WaterTempSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WaterTempSensorSettings *DefaultSettings) : Common(Name), WaterTempSensor(Name,Parent,DefaultSettings), Common_Web(Name)
 { ///constructor
   this->Parent = Parent;
   this->Name = Name;

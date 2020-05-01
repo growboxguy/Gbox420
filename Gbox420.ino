@@ -32,11 +32,6 @@
 #include "nRF24L01.h"   ///https://forum.arduino.cc/index.php?topic=421081
 #include "RF24.h"       ///https://github.com/maniacbug/RF24
 
-#include "src/Wireless_HempyModule.h"
-struct commandTemplate FakeCommand = {1587936134,0,0,0,120,3.8,4.8,0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
-struct responseTemplate AckResponse; //The response from the Receiver will be stored here, represents the current status of the Receiver
-
-
 //Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< temp storage for assembling long messages (REST API, MQTT API)
 char ShortMessage[MaxShotTextLength] = ""; ///< temp storage for assembling short messages (Log entries, Error messages)
@@ -97,15 +92,16 @@ void setup()
   Timer3.attachInterrupt(processTimeCriticalStuff);
   Timer3.start();
 
-  // Create the Module objects
-  GBox = new GrowBox(F("GBox1"), &ModuleSettings->Gbox1); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
-  
   //Initialize wireless communication with Modules
   
   Wireless.begin();    ///< Initialize the nRF24L01+ wireless chip for talking to Modules
   Wireless.setDataRate( RF24_250KBPS );   ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
   Wireless.enableAckPayload();    ///< 
   Wireless.setRetries(Wireless_Delay,Wireless_Retry); // Defined in Settings.h
+
+  // Create the Module objects
+  GBox = new GrowBox(F("GBox1"), &ModuleSettings->Gbox1, &Wireless); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  
 
   //   sendEmailAlert(F("Grow%20box%20(re)started"));
   logToSerials(F("Setup ready, starting loops:"), true, 0);
@@ -134,7 +130,6 @@ void runFiveSec()
 {
   wdt_reset();
   GBox->runFiveSec();
-  Send();
 }
 
 void runMinute()
@@ -286,44 +281,3 @@ void restoreDefaults(Settings *SettingsToOverwrite)
   saveSettings(SettingsToOverwrite);
   GBox->addToLog(F("Default settings restored"), 1);
 }
-
-void Send(){
-  const byte ChannelAddress[6] = {"Hemp1"};
-  Wireless.openWritingPipe(ChannelAddress);
-  bool rslt;
-  rslt = Wireless.write( &FakeCommand, sizeof(FakeCommand) );
-  Serial.print(F("Data Sent."));
-  if (rslt) {
-      if ( Wireless.isAckPayloadAvailable() ) {
-          Wireless.read(&AckResponse, sizeof(AckResponse));
-           Serial.print(F(" Acknowledgement received[ "));            
-          Serial.print(sizeof(AckResponse));
-          Serial.println(F(" bytes]"));
-          Serial.print(F("Bucket1: "));
-          Serial.print(AckResponse.OnStatePump1);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.EnabledStatePump1);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.WeightBucket1);
-          Serial.print(F(" ; Bucket2: "));
-          Serial.print(AckResponse.OnStatePump2);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.EnabledStatePump2);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.WeightBucket2);
-          Serial.print(F(" ; DHT: "));
-          Serial.print(AckResponse.Temp);
-          Serial.print(F(", "));
-          Serial.print(AckResponse.Humidity);
-          Serial.println(); 
-          
-          //updateMessage();
-      }
-      else {
-          Serial.println(F(" Acknowledgement received without any data."));
-      }        
-  }
-  else {
-      Serial.println(F(" No response."));
-  }
-  }

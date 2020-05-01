@@ -1,6 +1,6 @@
 #include "Sound_Web.h"
 
-Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Sound(Name,Parent,DefaultSettings), Common_Web(Name), Common(Name)
+Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name), Sound(Name,Parent,DefaultSettings), Common_Web(Name) 
 {
   this->Parent = Parent;
   this->Name = Name;

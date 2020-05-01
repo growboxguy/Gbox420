@@ -6,6 +6,9 @@
 #include "ELClientRest.h" ///ESP-link - REST API
 #include "ELClientCmd.h"       ///ESP-link - Get current time from the internet using NTP
 #include "TimeLib.h"           ///Keeping track of time
+#include "RF24.h"
+#include "SPI.h"
+#include "nRF24L01.h"
 #include "../../Settings.h"
 #include "../Helpers.h"
 #include "../Components/420Module.h"
@@ -20,7 +23,7 @@ class Sound_Web;
 class Module_Web : public Module
 {
 public:
-  Module_Web(); ///constructor
+  Module_Web(RF24 *Wireless); ///constructor
   void runReport();
   void runAll();
   void runSec();
@@ -44,11 +47,13 @@ public:
   void addToLog(const char *Text, byte indent = 3); 
   char *eventLogToJSON(bool Append = false); ///Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   Sound_Web * getSoundObject();
+  
   void relayToGoogleSheets(__attribute__((unused)) const __FlashStringHelper *Title, __attribute__((unused)) char (*JSONData)[MaxLongTextLength]);
 
 private:
 
 protected: 
+  RF24 *Wireless;
   Common_Web *ReportQueue[QueueDepth] = {};  ///aggregate initializer: Same as initializing to null pointers
   Common_Web *RefreshQueue_Sec[QueueDepth]= {};
   Common_Web *RefreshQueue_FiveSec[QueueDepth]= {};

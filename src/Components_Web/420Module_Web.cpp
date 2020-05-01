@@ -3,8 +3,9 @@
 
 static char Logs[LogDepth][MaxTextLength]; ///two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
-Module_Web::Module_Web() : Module()
+Module_Web::Module_Web(RF24 *Wireless) : Module()
 {
+  this->Wireless = Wireless;
   logToSerials(F("Module_Web object created"), true, 0);
 }
 

@@ -5,6 +5,7 @@
 
 #include "../Components_Web/420Module_Web.h"
 #include "ELClientRest.h" ///ESP-link - REST API
+#include "../Wireless_HempyModule.h"
 
 ///forward declaration of classes
 class DHTSensor_Web;
@@ -32,7 +33,7 @@ extern ELClientRest PushingBoxRestAPI;
 class GrowBox : public Common_Web, public Module_Web
 {
 public:
-  GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings); ///constructor
+  GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings,RF24 *Wireless); ///constructor
   Sound_Web *Sound1;             ///Pointer to a Piezo speaker - sound feedback
   Fan_Web *IFan;                ///Internal fan
   Fan_Web *EFan;                ///Exhaust fan
@@ -73,10 +74,14 @@ private:
   void setPushingBoxLogRelayID(const char *ID);
 
 protected:
+  void Send();
   bool RefreshAllRequested = false;
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;
   byte *SheetsReportingFrequency;
   bool *ReportToGoogleSheets;
   byte SheetsRefreshCounter = 0;
+  struct commandTemplate FakeCommand = {1587936134,0,0,0,120,3.8,4.8,0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
+struct responseTemplate AckResponse; //The response from the Receiver will be stored here, represents the current status of the Receiver
+
 };

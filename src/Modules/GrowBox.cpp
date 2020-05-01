@@ -17,7 +17,7 @@
 #include "../Components_Web/HempyModule_Web.h"
 #include "../Components_Web/ModuleSkeleton_Web.h" ///Only for demonstration purposes
 
-GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name), Module_Web()
+GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Common_Web(Name), Module_Web(Wireless)
 { ///Constructor
   this->Name = Name;
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
@@ -134,6 +134,7 @@ void GrowBox::refresh_FiveSec()
     ConsoleReportRequested = false;
     runReport();
   }
+  Send();
 }
 
 void GrowBox::refresh_Minute()
@@ -181,6 +182,50 @@ void GrowBox::setMetric(bool MetricEnabled)
   else
     addToLog(F("Imperial units"));
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//Wireless data collection via nRF24L01+
+
+void GrowBox::Send(){
+  const byte ChannelAddress[6] = {"Hemp1"};
+  Wireless -> openWritingPipe(ChannelAddress);
+  bool rslt;
+  rslt = Wireless -> write( &FakeCommand, sizeof(FakeCommand) );
+  Serial.print(F("Data Sent."));
+  if (rslt) {
+      if ( Wireless -> isAckPayloadAvailable() ) {
+          Wireless -> read(&AckResponse, sizeof(AckResponse));
+           Serial.print(F(" Acknowledgement received[ "));            
+          Serial.print(sizeof(AckResponse));
+          Serial.println(F(" bytes]"));
+          Serial.print(F("Bucket1: "));
+          Serial.print(AckResponse.OnStatePump1);
+          Serial.print(F(", "));
+          Serial.print(AckResponse.EnabledStatePump1);
+          Serial.print(F(", "));
+          Serial.print(AckResponse.WeightBucket1);
+          Serial.print(F(" ; Bucket2: "));
+          Serial.print(AckResponse.OnStatePump2);
+          Serial.print(F(", "));
+          Serial.print(AckResponse.EnabledStatePump2);
+          Serial.print(F(", "));
+          Serial.print(AckResponse.WeightBucket2);
+          Serial.print(F(" ; DHT: "));
+          Serial.print(AckResponse.Temp);
+          Serial.print(F(", "));
+          Serial.print(AckResponse.Humidity);
+          Serial.println(); 
+          
+          //updateMessage();
+      }
+      else {
+          Serial.println(F(" Acknowledgement received without any data."));
+      }        
+  }
+  else {
+      Serial.println(F(" No response."));
+  }
+  }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///Google Sheets reporting

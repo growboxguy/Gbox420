@@ -1,6 +1,6 @@
 #include "WaterLevelSensor_Web.h"
 
-WaterLevelSensor_Web::WaterLevelSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WaterLevelSensorSettings *DefaultSettings) : WaterLevelSensor(Name,Parent,DefaultSettings), Common_Web(Name), Common(Name)
+WaterLevelSensor_Web::WaterLevelSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WaterLevelSensorSettings *DefaultSettings) :  Common(Name), WaterLevelSensor(Name,Parent,DefaultSettings), Common_Web(Name)
 { ///constructor
   this->Parent = Parent;
   this->Name = Name;
