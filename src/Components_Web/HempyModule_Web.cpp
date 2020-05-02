@@ -3,15 +3,9 @@
 HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent,Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///Constructor
   this->Parent = Parent;
-  this->Name = Name;
+  this->DefaultSettings = DefaultSettings;
+  updateCommand();
   memcpy_P(this->WirelessChannel,(PGM_P)Name,sizeof(this->WirelessChannel));
-  Command.StartWeightBucket1= DefaultSettings->StartWeightBucket1;
-  Command.StopWeightBucket1= DefaultSettings->StopWeightBucket1;
-  Command.TimeOutPump1= DefaultSettings->TimeOutPump1;
-  Command.StartWeightBucket2= DefaultSettings->StartWeightBucket2;
-  Command.StopWeightBucket2= DefaultSettings->StopWeightBucket2;
-  Command.TimeOutPump2= DefaultSettings->TimeOutPump2;
-
   Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
   Parent->addToRefreshQueue_Sec(this);     ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
   Parent->addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
@@ -58,8 +52,8 @@ void HempyModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgFloat(getComponentName(F("B1Stp")), Command.StopWeightBucket1);
     WebServer.setArgInt(getComponentName(F("B1Time")), Command.TimeOutPump1);
     WebServer.setArgFloat(getComponentName(F("B2Strt")), Command.StartWeightBucket2);
-    WebServer.setArgFloat(getComponentName(F("B2Stp")), Command.StopWeightBucket1);
-    WebServer.setArgInt(getComponentName(F("B2Time")), Command.TimeOutPump1);
+    WebServer.setArgFloat(getComponentName(F("B2Stp")), Command.StopWeightBucket2);
+    WebServer.setArgInt(getComponentName(F("B2Time")), Command.TimeOutPump2);
   }
 }
 
@@ -125,12 +119,12 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
   }
   else
   {    
-    if (strcmp_P(ShortMessage, (PGM_P)F("B1Strt")) == 0){Command.StartWeightBucket1 = WebServer.getArgFloat();}  /// \todo Write back to EEPROM
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Stp")) == 0){Command.StopWeightBucket1 = WebServer.getArgFloat();}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Time")) == 0){Command.TimeOutPump1 = WebServer.getArgInt();}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Strt")) == 0){Command.StartWeightBucket2 = WebServer.getArgFloat();}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Stp")) == 0){Command.StopWeightBucket2 = WebServer.getArgFloat();}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Time")) == 0){Command.TimeOutPump2 = WebServer.getArgInt();}
+    if (strcmp_P(ShortMessage, (PGM_P)F("B1Strt")) == 0){DefaultSettings->StartWeightBucket1 = WebServer.getArgFloat();}  /// \todo Write back to EEPROM
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Stp")) == 0){DefaultSettings->StopWeightBucket1 = WebServer.getArgFloat();}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Time")) == 0){DefaultSettings->TimeOutPump1 = WebServer.getArgInt();}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Strt")) == 0){DefaultSettings->StartWeightBucket2 = WebServer.getArgFloat();}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Stp")) == 0){DefaultSettings->StopWeightBucket2 = WebServer.getArgFloat();}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Time")) == 0){DefaultSettings->TimeOutPump2 = WebServer.getArgInt();}
     SyncRequested = true;
   }
 }
@@ -155,8 +149,7 @@ void HempyModule_Web::refresh_FiveSec()
 void HempyModule_Web::refresh_Minute()
 {
   if (*Debug)
-    Common::refresh_Minute();
-  
+    Common::refresh_Minute();  
 }
 
 void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Command, hempyResponse *Response){
@@ -210,4 +203,10 @@ void HempyModule_Web::updateCommand() {        // so you can see that new data i
     //Command.TurnOnPump1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exclusive!
     //Command.TurnOnPump2 = random(0,2);
     Command.Time = now();
+    Command.StartWeightBucket1= DefaultSettings->StartWeightBucket1;
+    Command.StopWeightBucket1= DefaultSettings->StopWeightBucket1;
+    Command.TimeOutPump1= DefaultSettings->TimeOutPump1;
+    Command.StartWeightBucket2= DefaultSettings->StartWeightBucket2;
+    Command.StopWeightBucket2= DefaultSettings->StopWeightBucket2;
+    Command.TimeOutPump2= DefaultSettings->TimeOutPump2;
 }

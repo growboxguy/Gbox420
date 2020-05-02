@@ -21,6 +21,8 @@ public:
   void checkBucketWeight();
   void setStartWeight(float Weight);
   void setStopWeight(float Weight);
+  float getStopWeight();
+  float getStartWeight(); 
   char *getStopWeightText(bool IncludeUnits);
   char *getStartWeightText(bool IncludeUnits); 
 

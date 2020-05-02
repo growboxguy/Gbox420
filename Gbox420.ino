@@ -249,42 +249,6 @@ void setFieldCallback(char *Field)
   saveSettings(ModuleSettings);
 }
 
-// EEPROM stored Settings related functions
-
-void saveSettings(Settings *SettingsToSave)
-{                                                                                 ///< do not put this in the loop, EEPROM has a write limit of 100.000 cycles
-  eeprom_update_block((const void *)SettingsToSave, (void *)0, sizeof(Settings)); ///< update_block only writes the bytes that changed
-}
-
-Settings *loadSettings()
-{
-  Settings *DefaultSettings = new Settings();                                    ///< This is where settings are stored, first it takes the sketch default settings defined in Settings.h
-  Settings ModuleSettings;                                                       ///< temporary storage with "Settings" type
-  eeprom_read_block((void *)&ModuleSettings, (void *)0, sizeof(ModuleSettings)); ///< Load EEPROM stored settings into ModuleSettings
-  if (DefaultSettings->CompatibilityVersion != ModuleSettings.CompatibilityVersion)
-  { ///< Making sure the EEPROM loaded settings are compatible with the sketch
-    logToSerials(F("Incompatible stored settings detected, updating EEPROM..."), false, 0);
-    saveSettings(DefaultSettings); ///< overwrites EEPROM stored settings with defaults from this sketch
-  }
-  else
-  {
-    logToSerials(F("Same settings version detected, applying EEPROM settings..."), false, 0);
-    ///< DefaultSettings = ModuleSettings; ///< overwrite sketch defaults with loaded settings
-    memcpy(DefaultSettings, &ModuleSettings, sizeof(Settings));
-  }
-  logToSerials(F("done"), true, 1);
-  return DefaultSettings;
-}
-
-void restoreDefaults(Settings *SettingsToOverwrite)
-{
-  logToSerials(F("Restoring settings from sketch defaults..."), false, 0);
-  Settings DefaultSettings; ///< new "Settings" type objects with sketch defaults
-  memcpy(&SettingsToOverwrite, &DefaultSettings, sizeof(SettingsToOverwrite));
-  saveSettings(SettingsToOverwrite);
-  GBox->addToLog(F("Default settings restored"), 1);
-}
-
 void getWirelessStatus(){
 if(Debug){
     logToSerials(F("Wireless status report:"),true,0);

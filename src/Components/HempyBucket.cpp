@@ -52,6 +52,17 @@ void HempyBucket::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+float HempyBucket::getStartWeight()
+{  
+    return *StartWeight;
+}
+
+float HempyBucket::getStopWeight()
+{
+    return *StopWeight;
+}
+
+
 char *HempyBucket::getStartWeightText(bool IncludeUnits)
 {
   if (IncludeUnits)

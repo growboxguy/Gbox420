@@ -34,6 +34,7 @@ private:
 protected:
   Module_Web *Parent;
   const byte WirelessChannel[6];
+  Settings::HempyModuleSettings *DefaultSettings;
 
 };
 
