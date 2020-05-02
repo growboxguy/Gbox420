@@ -1,11 +1,18 @@
 #pragma once
 
 ///RollingAverage class: For smoothing sensor readings
-///Keeps the last few readings and calculates an average
+///
 ///The RollingAverageDepth defines how many previous readings to keep. (!Memory intense!)
 
 #include "Arduino.h"
 
+/*! 
+ *  \brief     Rolling average tracker for smoothing sensor readings. Supports float and int values only.
+ *  \details   Keeps the last few readings and calculates an average. 
+ *  \author    GrowBoxGuy
+ *  \version   4.20
+ *  \warning   Memory intense! Use it only where really necessary (Instable/noisy sensor readings)
+ */
 class RollingAverage
 {
 private:
