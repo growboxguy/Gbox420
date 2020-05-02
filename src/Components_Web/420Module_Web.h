@@ -11,7 +11,7 @@
 #include "nRF24L01.h"
 #include "../../Settings.h"
 #include "../Helpers.h"
-#include "../Wireless_HempyModule.h"
+#include "../WirelessCommands_Hempy.h"
 #include "../Components/420Module.h"
 #include "420Common_Web.h"
 

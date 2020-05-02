@@ -5,7 +5,7 @@
 
 #include "../Components_Web/420Module_Web.h"
 #include "ELClientRest.h" ///ESP-link - REST API
-#include "../Wireless_HempyModule.h"
+#include "../WirelessCommands_Hempy.h"
 
 ///forward declaration of classes
 class DHTSensor_Web;

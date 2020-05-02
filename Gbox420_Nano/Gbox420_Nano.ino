@@ -16,7 +16,7 @@
 #include "SerialLog.h"  ///Logging debug messages to Serial            
 #include "Settings.h"  
 #include "src/Modules/HempyModule.h"
-#include "src/Wireless_HempyModule.h"   ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
+#include "src/WirelessCommands_Hempy.h"   ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
 
 
 ///Global variable initialization

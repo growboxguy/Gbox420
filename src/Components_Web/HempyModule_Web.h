@@ -6,7 +6,7 @@
 #include "TimeLib.h"     ///keeping track of time
 #include "420Common_Web.h"
 #include "420Module_Web.h"
-#include "../Wireless_HempyModule.h"
+#include "../WirelessCommands_Hempy.h"
 
 ///forward declaration of classes
 

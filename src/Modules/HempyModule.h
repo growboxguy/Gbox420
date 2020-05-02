@@ -8,7 +8,7 @@
 #include "RF24.h"       ///https://github.com/maniacbug/RF24
 #include "../Components/420Common.h"
 #include "../Components/420Module.h"
-#include "../Wireless_HempyModule.h"
+#include "../WirelessCommands_Hempy.h"
 
 ///forward declaration
 class Sound;
