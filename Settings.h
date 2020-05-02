@@ -3,23 +3,23 @@
 //// @attention Define the preferred default settings here.
 
 ///Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const uint8_t Version = 15;
+static const uint8_t Version = 16;
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 ///Global constants
 static const uint8_t MaxTextLength = 32;      ///Default char * buffer for storing a word + null terminator. Memory intense!
 static const uint8_t MaxShotTextLength = 128; ///Default char * buffer for storing mutiple words. Memory intense!
 static const int MaxLongTextLength = 1024; ///Default char * buffer for storing a long text. Memory intense!
-
 static const uint8_t LogDepth = 5;                  ///Show X number of log entries on website. Be careful, Max 1024uint8_ts can be passed during a Website refresh event, incuding all parameters passed
 static const uint8_t QueueDepth = 32;               ///Limits the maximum number of active modules. Memory intense!
 static const uint8_t RollingAverageDepth = 10;               ///Limits the maximum number of active modules. Memory intense!
+
 ///Global variables
 extern char LongMessage[MaxLongTextLength];  ///temp storage for assembling long messages (REST API, MQTT API)
 extern char ShortMessage[MaxShotTextLength]; ///temp storage for assembling short messages (Log entries, Error messages)
 extern char CurrentTime[MaxTextLength];      ///buffer for storing current time in text
 
-///nRF24L01+ wireless receiver pins
+///nRF24L01+ wireless receiver
 static const uint8_t Wireless_CSNPin = 49;
 static const uint8_t Wireless_MISOPin = 50;
 static const uint8_t Wireless_MOSIPin = 51;
@@ -36,22 +36,34 @@ typedef struct
   bool Metric = true;   ///Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
   char PushingBoxLogRelayID[MaxTextLength] = {"v755877CF53383E1"};   ///UPDATE THIS DeviceID of the PushingBox logging scenario 
 
-  struct GrowModuleSettings{
-    GrowModuleSettings(bool ReportToGoogleSheets, uint8_t SheetsReportingFrequency) : ReportToGoogleSheets(ReportToGoogleSheets) , SheetsReportingFrequency(SheetsReportingFrequency) {} 
-    bool ReportToGoogleSheets;  ///Enable/disable reporting sensor readings to Google Sheets
-    uint8_t SheetsReportingFrequency; ///How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
-    ///bool ReportToMqtt = true;    ///Controls reporting sensor readings to an MQTT broker
+  struct AeroponicsSettings
+  { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
+    AeroponicsSettings(uint8_t BypassSolenoidPin = 0, uint8_t PumpPin = 0) : BypassSolenoidPin(BypassSolenoidPin), PumpPin(PumpPin) {}
+    uint8_t BypassSolenoidPin;   ///Aeroponics bypass solenoid relay pin
+    uint8_t PumpPin;             ///Aeroponics high pressure pump relay pin
+    bool SprayEnabled = true; ///Enable/disable spraying cycle
+    int Interval = 15;        ///Spray every X minutes
+    int Duration = 10;        ///Spray time in seconds
+    int PumpTimeout = 6;      ///Max pump run time in minutes
+    int PrimingTime = 10;     ///At pump startup the bypass valve will be open for X seconds to let the pump remove air from the tubes
   };
-  struct GrowModuleSettings Gbox1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30};
-  
-  struct HempyModuleSettings{
-   float StartWeightBucket1 = 4.2; ///Start watering below this weight
-   float StopWeightBucket1 = 6.9;  ///Stop watering above this weight
-   int TimeOutPump1 = 120;  ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails
-   float StartWeightBucket2 = 4.2; ///Start watering below this weight
-   float StopWeightBucket2 = 6.9;  ///Stop watering above this weight   
-   int TimeOutPump2 = 120;  
-   } HempyModule1; 
+  struct AeroponicsSettings AeroT1_Common = {.BypassSolenoidPin = 23, .PumpPin = 24};
+  struct AeroponicsSettings Aero1_Common = {.BypassSolenoidPin = 46, .PumpPin = 47};
+
+  struct AeroponicsSettings_NoTankSpecific
+  {                           ///Settings for an Aeroponics setup WITHOUT a pressure tank
+    int BlowOffTime = 3;      ///After spraying open the bypass valve for X seconds to release pressure. Helps to stop spraying immediately
+    float PressureHigh = 7.0; ///Safety feature - Turn off pump above this pressure
+  } Aero1_Specific;
+
+  struct AeroponicsSettings_TankSpecific
+  { ///Settings for an Aeroponics setup WITH a pressure tank
+    AeroponicsSettings_TankSpecific(uint8_t SpraySolenoidPin = 0) : SpraySolenoidPin(SpraySolenoidPin) {}
+    uint8_t SpraySolenoidPin;    ///Spray solenoid relay pin
+    float PressureLow = 5.0;  ///Turn on pump below this pressure
+    float PressureHigh = 7.0; ///Turn off pump above this pressure
+  };
+  struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.SpraySolenoidPin = 22};
 
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
@@ -63,14 +75,46 @@ typedef struct
   struct DHTSensorSettings EDHT = {.Pin = 44, .Type = 22};
   struct DHTSensorSettings DHT1 = {.Pin = 44, .Type = 22};
 
-  struct SoundSettings
+  struct FanSettings
   {
-    SoundSettings(uint8_t Pin = 0) : Pin(Pin) {}
-    uint8_t Pin;            ///PC buzzer+ (red)
-    bool Enabled = true; ///Enable PC speaker / Piezo buzzer
+    FanSettings(uint8_t OnOffPin = 0, uint8_t SpeedPin = 0) : OnOffPin(OnOffPin), SpeedPin(SpeedPin) {}
+    uint8_t OnOffPin;          ///Relay pin for power
+    uint8_t SpeedPin;          ///Relay pin for speed selection
+    bool State = true;      ///true - ON, false - OFF
+    bool HighSpeed = false; ///true - High speed, false - Low speed
   };
-  struct SoundSettings Sound1 = {.Pin = 2};
+  struct FanSettings IFan = {.OnOffPin = 25, .SpeedPin = 26};
+  struct FanSettings EFan = {.OnOffPin = 27, .SpeedPin = 28};
+    
+  struct GrowModuleSettings{
+    GrowModuleSettings(bool ReportToGoogleSheets, uint8_t SheetsReportingFrequency) : ReportToGoogleSheets(ReportToGoogleSheets) , SheetsReportingFrequency(SheetsReportingFrequency) {} 
+    bool ReportToGoogleSheets;  ///Enable/disable reporting sensor readings to Google Sheets
+    uint8_t SheetsReportingFrequency; ///How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
+    ///bool ReportToMqtt = true;    ///Controls reporting sensor readings to an MQTT broker
+  };
+  struct GrowModuleSettings Gbox1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30};
+  
+  struct HempyBucketSettings  /// \todo This should be only needed in the Gbox420 Nano - Hempy Module
+  {
+    HempyBucketSettings( float StartWeight = 0.0, float StopWeight = 0.0) : StartWeight(StartWeight), StopWeight(StopWeight)  {}
+    float StartWeight; ///Start watering below this weight
+    float StopWeight;  ///Stop watering above this weight
+  };
+  struct HempyBucketSettings Bucket1 = { .StartWeight = 4.2, .StopWeight = 6.9};
+  struct HempyBucketSettings Bucket2 = { .StartWeight = 4.2, .StopWeight = 6.9};
 
+  struct HempyModuleSettings
+  {
+    HempyModuleSettings( float StartWeightBucket1 = 0.0, float StopWeightBucket1 = 0.0, int TimeOutPump1 = 0, float StartWeightBucket2 = 0.0, float StopWeightBucket2 = 0.0, int TimeOutPump2 = 0 ) : StartWeightBucket1(StartWeightBucket1), StopWeightBucket1(StopWeightBucket1), TimeOutPump1(TimeOutPump1), StartWeightBucket2(StartWeightBucket2), StopWeightBucket2(StopWeightBucket2), TimeOutPump2(TimeOutPump2) {}
+    float StartWeightBucket1; ///Start watering below this weight
+    float StopWeightBucket1;  ///Stop watering above this weight
+    int TimeOutPump1;  ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails
+    float StartWeightBucket2; ///Start watering below this weight
+    float StopWeightBucket2;  ///Stop watering above this weight   
+    int TimeOutPump2;  
+  };
+  struct HempyModuleSettings HempyModule1 = {.StartWeightBucket1 = 4.2, .StopWeightBucket1 = 6.9, .TimeOutPump1 = 120, .StartWeightBucket2 = 4.2, .StopWeightBucket2 = 6.9, .TimeOutPump2 = 120};
+  
   struct LightSensorSettings
   {
     LightSensorSettings(uint8_t DigitalPin = 0, uint8_t AnalogPin = 0) : DigitalPin(DigitalPin), AnalogPin(AnalogPin) {}
@@ -113,54 +157,33 @@ typedef struct
   };
   struct PressureSensorSettings Pres1 = {.Pin = A1, .Offset = 0.57, .Ratio = 2.7};
 
-  struct WeightSensorSettings
+  struct SoundSettings
   {
-    WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, float Scale = 0.0, long TareOffset = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Scale(Scale), TareOffset(TareOffset) {}
-    uint8_t DTPin;     ///Weight sensor DT pin
-    uint8_t SCKPin; ///Weight sensor SCK pin
-    float Scale;  ///Calibration scale value
-    long TareOffset; ///Reading at 0 weight on the scale
+    SoundSettings(uint8_t Pin = 0) : Pin(Pin) {}
+    uint8_t Pin;            ///PC buzzer+ (red)
+    bool Enabled = true; ///Enable PC speaker / Piezo buzzer
   };
-  struct WeightSensorSettings Weight1 = {.DTPin = 3, .SCKPin = 4, .Scale = 125000.0, .TareOffset=146000};
-  struct WeightSensorSettings Weight2 = {.DTPin = 5, .SCKPin = 6, .Scale = 126000.0, .TareOffset=267461};
+  struct SoundSettings Sound1 = {.Pin = 2};
 
-  struct HempyBucketSettings
+  struct ModuleSkeletonSettings
+  { ///Test module
+    ModuleSkeletonSettings(bool PersistentBool = 0, float PersistentFloat = 0.0) : PersistentBool(PersistentBool), PersistentFloat(PersistentFloat) {}
+    bool PersistentBool;
+    int PersistentInt = 420; ///Same value on all instances
+    float PersistentFloat;
+  };
+  struct ModuleSkeletonSettings ModuleSkeleton1 = {.PersistentBool = false, .PersistentFloat = 1.23}; ///Instance 1
+  struct ModuleSkeletonSettings ModuleSkeleton2 = {.PersistentBool = true, .PersistentFloat = 4.56};  ///Instance 2
+
+  struct WaterLevelSensorSettings
   {
-    HempyBucketSettings( float StartWeight = 0.0, float StopWeight = 0.0) : StartWeight(StartWeight), StopWeight(StopWeight)  {}
-    float StartWeight; ///Start watering below this weight
-    float StopWeight;  ///Stop watering above this weight
+    WaterLevelSensorSettings(uint8_t Pin_1 = 0, uint8_t Pin_2 = 0, uint8_t Pin_3 = 0, uint8_t Pin_4 = 0) : Pin_1(Pin_1), Pin_2(Pin_2), Pin_3(Pin_3), Pin_4(Pin_4) {}
+    uint8_t Pin_1; ///Lowest water level
+    uint8_t Pin_2;
+    uint8_t Pin_3;
+    uint8_t Pin_4; ///Full
   };
-  struct HempyBucketSettings Bucket1 = { .StartWeight = 4.2, .StopWeight = 6.9};
-  struct HempyBucketSettings Bucket2 = { .StartWeight = 4.2, .StopWeight = 6.9};
-
-  struct AeroponicsSettings
-  { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
-    AeroponicsSettings(uint8_t BypassSolenoidPin = 0, uint8_t PumpPin = 0) : BypassSolenoidPin(BypassSolenoidPin), PumpPin(PumpPin) {}
-    uint8_t BypassSolenoidPin;   ///Aeroponics bypass solenoid relay pin
-    uint8_t PumpPin;             ///Aeroponics high pressure pump relay pin
-    bool SprayEnabled = true; ///Enable/disable spraying cycle
-    int Interval = 15;        ///Spray every X minutes
-    int Duration = 10;        ///Spray time in seconds
-    int PumpTimeout = 6;      ///Max pump run time in minutes
-    int PrimingTime = 10;     ///At pump startup the bypass valve will be open for X seconds to let the pump remove air from the tubes
-  };
-  struct AeroponicsSettings AeroT1_Common = {.BypassSolenoidPin = 23, .PumpPin = 24};
-  struct AeroponicsSettings Aero1_Common = {.BypassSolenoidPin = 46, .PumpPin = 47};
-
-  struct AeroponicsSettings_NoTankSpecific
-  {                           ///Settings for an Aeroponics setup WITHOUT a pressure tank
-    int BlowOffTime = 3;      ///After spraying open the bypass valve for X seconds to release pressure. Helps to stop spraying immediately
-    float PressureHigh = 7.0; ///Safety feature - Turn off pump above this pressure
-  } Aero1_Specific;
-
-  struct AeroponicsSettings_TankSpecific
-  { ///Settings for an Aeroponics setup WITH a pressure tank
-    AeroponicsSettings_TankSpecific(uint8_t SpraySolenoidPin = 0) : SpraySolenoidPin(SpraySolenoidPin) {}
-    uint8_t SpraySolenoidPin;    ///Spray solenoid relay pin
-    float PressureLow = 5.0;  ///Turn on pump below this pressure
-    float PressureHigh = 7.0; ///Turn off pump above this pressure
-  };
-  struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.SpraySolenoidPin = 22};
+  struct WaterLevelSensorSettings WaterLevel1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7};
 
   struct WaterPumpSettings
   {
@@ -179,36 +202,16 @@ typedef struct
   };
   struct WaterTempSensorSettings WaterTemp1 = {.Pin = 45}; ///Data(yellow) - DS18B20 waterproof temp sensor
 
-  struct WaterLevelSensorSettings
+  struct WeightSensorSettings
   {
-    WaterLevelSensorSettings(uint8_t Pin_1 = 0, uint8_t Pin_2 = 0, uint8_t Pin_3 = 0, uint8_t Pin_4 = 0) : Pin_1(Pin_1), Pin_2(Pin_2), Pin_3(Pin_3), Pin_4(Pin_4) {}
-    uint8_t Pin_1; ///Lowest water level
-    uint8_t Pin_2;
-    uint8_t Pin_3;
-    uint8_t Pin_4; ///Full
+    WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, float Scale = 0.0, long TareOffset = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Scale(Scale), TareOffset(TareOffset) {}
+    uint8_t DTPin;     ///Weight sensor DT pin
+    uint8_t SCKPin; ///Weight sensor SCK pin
+    float Scale;  ///Calibration scale value
+    long TareOffset; ///Reading at 0 weight on the scale
   };
-  struct WaterLevelSensorSettings WaterLevel1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7};
-
-  struct FanSettings
-  {
-    FanSettings(uint8_t OnOffPin = 0, uint8_t SpeedPin = 0) : OnOffPin(OnOffPin), SpeedPin(SpeedPin) {}
-    uint8_t OnOffPin;          ///Relay pin for power
-    uint8_t SpeedPin;          ///Relay pin for speed selection
-    bool State = true;      ///true - ON, false - OFF
-    bool HighSpeed = false; ///true - High speed, false - Low speed
-  };
-  struct FanSettings IFan = {.OnOffPin = 25, .SpeedPin = 26};
-  struct FanSettings EFan = {.OnOffPin = 27, .SpeedPin = 28};
-
-  struct ModuleSkeletonSettings
-  { ///Test module
-    ModuleSkeletonSettings(bool PersistentBool = 0, float PersistentFloat = 0.0) : PersistentBool(PersistentBool), PersistentFloat(PersistentFloat) {}
-    bool PersistentBool;
-    int PersistentInt = 420; ///Same value on all instances
-    float PersistentFloat;
-  };
-  struct ModuleSkeletonSettings ModuleSkeleton1 = {.PersistentBool = false, .PersistentFloat = 1.23}; ///Instance 1
-  struct ModuleSkeletonSettings ModuleSkeleton2 = {.PersistentBool = true, .PersistentFloat = 4.56};  ///Instance 2
+  struct WeightSensorSettings Weight1 = {.DTPin = 3, .SCKPin = 4, .Scale = 125000.0, .TareOffset=146000};
+  struct WeightSensorSettings Weight2 = {.DTPin = 5, .SCKPin = 6, .Scale = 126000.0, .TareOffset=267461};
 
   /*   
   bool AutomaticIFan = false;  ///Adjust internal fan based on temperature
