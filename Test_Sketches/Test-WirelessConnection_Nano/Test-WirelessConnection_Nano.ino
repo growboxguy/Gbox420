@@ -21,7 +21,7 @@ bool newData = false;
 
 
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(115200);
     printf_begin();
 
     Serial.println("CheckConnection Starting");

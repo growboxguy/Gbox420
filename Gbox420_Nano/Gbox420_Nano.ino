@@ -126,7 +126,7 @@ void runQuarterHour()
 void getWirelessData() {
     if ( Wireless.available() ) { 
         Wireless.read( &Command, sizeof(Command) );
-        logToSerials(F("Command received ["),false,0);
+        logToSerials(F("Wireless Command received ["),false,0);
         Serial.print(sizeof(Command));  /// \todo print this with logToSerials: Need support for unsigned long
         logToSerials(F("bytes], Response sent"),true,1); 
         
@@ -139,7 +139,7 @@ void getWirelessData() {
 }
 
 void getWirelessStatus(){
-  if(Debug){
+  if(*Debug){
     logToSerials(F("Wireless status report:"),true,0);
     Wireless.printDetails();
     logToSerials(F(""),true,0);

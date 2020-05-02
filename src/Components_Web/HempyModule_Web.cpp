@@ -163,7 +163,7 @@ void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Co
           Serial.print(sizeof(*Response)); /// \todo Use LogToSerial
           logToSerials(F("bytes]"),true,1);
 
-           if(Debug){
+          if(*Debug){
           logToSerials(Response -> OnPump1,false,3);
           logToSerials(F(","),false,1);
           logToSerials(Response -> EnabledPump1,false,1);

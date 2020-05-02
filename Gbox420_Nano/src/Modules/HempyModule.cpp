@@ -50,7 +50,7 @@ void HempyModule::processCommand(hempyCommand *Command){
   updateResponse();
   saveSettings(ModuleSettings);
 
-  if(Debug){
+  if(*Debug){
     logToSerials(Command -> Debug,false,3);
       logToSerials(F(","),false,1);
       logToSerials(Command -> Metric,false,1);

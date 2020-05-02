@@ -250,7 +250,7 @@ void setFieldCallback(char *Field)
 }
 
 void getWirelessStatus(){
-if(Debug){
+if(*Debug){
     logToSerials(F("Wireless status report:"),true,0);
     Wireless.printDetails();
     logToSerials(F(""),true,0);
