@@ -8,21 +8,20 @@ struct hempyCommand  ///Max 32uint8_ts. Template of the command sent by the Tran
 {
    time_t Time;
    
-   bool DisablePump1;   
-   bool TurnOnPump1;   
-   bool TurnOffPump1;   
-   int TimeOutPump1;   
-   float StartWeightBucket1;
-   float StopWeightBucket1;
+   bool DisablePump1 = false;   
+   bool TurnOnPump1 = false;   
+   bool TurnOffPump1 = false;   
+   int TimeOutPump1 = 0;   
+   float StartWeightBucket1 = 0.0;
+   float StopWeightBucket1 = 0.0;
    
-   bool DisablePump2;
-   bool TurnOnPump2;
-   bool TurnOffPump2;
-   int TimeOutPump2;
-   float StartWeightBucket2;
-   float StopWeightBucket2;
+   bool DisablePump2 = false;
+   bool TurnOnPump2 = false;
+   bool TurnOffPump2 = false;
+   int TimeOutPump2 = 0;
+   float StartWeightBucket2 = 0.0;
+   float StopWeightBucket2 = 0.0; 
 };
-extern struct hempyCommand Command;  //Variable where the actual command values will get stored
 
 struct hempyResponse  ///Max 32uint8_ts. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
@@ -33,9 +32,4 @@ struct hempyResponse  ///Max 32uint8_ts. Template of the response sent back to t
    bool OnPump2;
    bool EnabledPump2; 
    float WeightBucket2;
-   
-   float Temp;
-   float Humidity;
 };
-extern struct hempyResponse Response;  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter
-//extern struct hempyResponse Response = {1,1,0,1,4.20,1.23};  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter

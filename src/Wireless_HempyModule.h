@@ -4,7 +4,7 @@
 
 
 ///Structs for wireless communication
-struct hempyCommand  ///Max 32uint8_ts. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
+struct hempyCommand  ///Max 32bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
    time_t Time;
    
@@ -23,7 +23,7 @@ struct hempyCommand  ///Max 32uint8_ts. Template of the command sent by the Tran
    float StopWeightBucket2 = 0.0; 
 };
 
-struct hempyResponse  ///Max 32uint8_ts. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
+struct hempyResponse  ///Max 32bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
    bool OnPump1; 
    bool EnabledPump1;
@@ -32,7 +32,4 @@ struct hempyResponse  ///Max 32uint8_ts. Template of the response sent back to t
    bool OnPump2;
    bool EnabledPump2; 
    float WeightBucket2;
-   
-   float Temp;
-   float Humidity;
 };

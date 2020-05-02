@@ -3,21 +3,17 @@
 ///Runs autonomously on an Arduino Nano RF and [WILL] support wireless connection towards the main module
 
 #include "HempyModule.h"
-#include "../Components/DHTSensor.h"
+//#include "../Components/DHTSensor.h"
 #include "../Components/Sound.h"
 #include "../Components/WeightSensor.h"
 #include "../Components/WaterPump.h"
 #include "../Components/HempyBucket.h"
-//#include "../Components/PHSensor.h"
-//#include "../Components/WaterTempSensor.h"
-//#include "../Components/WaterLevelSensor.h"
-
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
 { 
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this -> SoundFeedback = Sound1;
-  DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
+  //DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
   //PHSensor1 = new PHSensor(F("PHS1"), this, &ModuleSettings->PHSensor1);
   //WaterTemp1 = new WaterTempSensor(F("WaterT1"), this, &ModuleSettings->WaterTemp1);
   //WaterLevel1 = new WaterLevelSensor(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
@@ -29,42 +25,12 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2,Weight2,Pump2);
   addToRefreshQueue_Sec(this);         ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
   addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  addToRefreshQueue_QuarterHour(this); ///Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
+  //addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  //addToRefreshQueue_QuarterHour(this); ///Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
   logToSerials(Name, false, 0);
   logToSerials(F("- HempyModule object created, refreshing..."), true, 1);
   runAll();
   addToLog(F("HempyModule initialized"), 0);
-}
-
-void HempyModule::refresh_Sec()
-{
-    if (*Debug)
-    Common::refresh_Sec();
- /*  if(ArduinoSerial.available())
-  {
-    char temp = ArduinoSerial.read();
-    if(temp == 'q')
-     {
-        Weight1 -> triggerTare(); //Reset the scale to 0
-        ArduinologToSerials(ln("Scale1 Tare");
-     }
-     else if(temp == 'a')
-     {
-        Weight2 -> triggerTare(); //Reset the scale to 0
-        ArduinologToSerials(ln("Scale2 Tare");
-     }
-    else if(temp == 'w')
-       {
-        Weight1 -> triggerCalibration(1); //Reset the scale to 0
-        ArduinologToSerials(ln("Scale1 calibrating");
-       }
-     else if(temp == 's')
-       {
-        Weight1 -> triggerCalibration(1); //Reset the scale to 0
-        ArduinologToSerials(ln("Scale2 calibrating");
-       }
-  } */
 }
 
 void HempyModule::processCommand(hempyCommand *Command){
@@ -118,10 +84,16 @@ void HempyModule::updateResponse(){
 
   Response.OnPump2 = Pump2 -> getOnState();
   Response.EnabledPump2 = Pump2 -> getEnabledState();
-  Response.WeightBucket2 = Weight2 -> getWeight();
+  Response.WeightBucket2 = Weight2 -> getWeight(); 
+  Wireless.flush_tx();  ///Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3) 
+  Wireless.writeAckPayload(1, &Response, sizeof(Response)); // load the payload to send the next time
+}
 
-  Response.Temp = DHT1 -> getTemp();
-  Response.Humidity = DHT1 -> getHumidity();
+void HempyModule::refresh_Sec()
+{
+  if (*Debug)
+    Common::refresh_Sec();
+  updateResponse();  
 }
 
 void HempyModule::refresh_FiveSec()
@@ -133,7 +105,7 @@ void HempyModule::refresh_FiveSec()
     RefreshAllRequested = false;
     runAll();
   }  
-  runReport();
+  runReport();  
 }
 
 void HempyModule::refresh_Minute()

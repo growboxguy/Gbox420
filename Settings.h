@@ -25,7 +25,7 @@ static const uint8_t Wireless_MISOPin = 50;
 static const uint8_t Wireless_MOSIPin = 51;
 static const uint8_t Wireless_SCKPin = 52;
 static const uint8_t Wireless_CEPin = 53;
-static const uint8_t Wireless_Delay = 5;  ///< How long to wait between each retry, in multiples of 250us. Max is 15. 0 means 250us, 15 means 4000us
+static const uint8_t Wireless_Delay = 6;  ///< How long to wait between each retry, in multiples of 250us. Max is 15. 0 means 250us, 15 means 4000us
 static const uint8_t Wireless_Retry = 5;  ///< How many retries before giving up, max 15
 
 ///SAVED TO EEPROM - Settings struct

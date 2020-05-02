@@ -21,14 +21,13 @@ public:
   void websiteEvent_Button(__attribute__((unused)) char *Button);
   void websiteEvent_Field(__attribute__((unused)) char *Field);
   void report();
+  void refresh_Sec();
   void refresh_FiveSec();
   void refresh_Minute();
   void updateCommand();
-
-  void TriggerWateringBucket1();
-  void TriggerWateringBucket2();
      
 private:  
+  bool SyncRequested = true;    //Trigger a sync with the external Module within 1 second
   struct hempyCommand Command;  //Commands sent to the external Module
   struct hempyResponse Response; //The response from the external Module will be stored here, represents the current status of the external Module
 

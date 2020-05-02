@@ -107,8 +107,7 @@ void loop()
 {                      /// put your main code here, to run repeatedly:
   ThreadControl.run(); ///loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
   ///If a control package is received from the main module
-  getWirelessData();
-  
+  getWirelessData();  
 }
 
 ///////////////////////////////////////////////////////////////
@@ -154,7 +153,6 @@ void getWirelessData() {
           updateTime(); ///Updating internal timer
         }
         HempyMod1 -> processCommand(&Command);       /// \todo: Support Aeroponics Module  
-        Wireless.writeAckPayload(1, &Response, sizeof(Response)); // load the payload for the next time
     }
 }
 
@@ -172,6 +170,9 @@ time_t updateTime()
   {
   setTime(Command.Time);
   logToSerials(F("Clock synced with main module"),true,0); 
+  }
+  else {
+  logToSerials(F("Clock out of sync"),true,0); 
   }
   return Command.Time;
 }

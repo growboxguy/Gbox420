@@ -5,19 +5,17 @@
 ////updating their statuses and reporting it to the Main module wirelessly
 ////Listens and reacts to wireless commands from the main module
 
+#include "RF24.h"       ///https://github.com/maniacbug/RF24
 #include "../Components/420Common.h"
 #include "../Components/420Module.h"
 #include "../Wireless_HempyModule.h"
 
-///forward declaration of classes
-class DHTSensor;
+///forward declaration
 class Sound;
 class WeightSensor;
 class WaterPump;
 class HempyBucket;
-//class PHSensor;
-//class WaterTempSensor;
-//class WaterLevelSensor;
+extern RF24 Wireless;
 
 
 class HempyModule : virtual public Common, virtual public Module
@@ -28,7 +26,7 @@ public:
 
   HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings); ///constructor
   Sound *Sound1;             ///Pointer to a Piezo speaker - sound feedback
-  DHTSensor *DHT1;          ///Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
+  //DHTSensor *DHT1;          ///Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   WeightSensor *Weight1; 
   WeightSensor *Weight2;
   HempyBucket *Bucket1;
@@ -48,6 +46,9 @@ public:
 private:
   void setDebugOnOff(bool State);
   void setMetric(bool MetricEnabled);
+  struct hempyCommand Command;  //Commands sent to the external Module
+  struct hempyResponse Response; //The response from the external Module will be stored here, represents the current status of the external Module
+
   
 protected:
   bool RefreshAllRequested = false;
