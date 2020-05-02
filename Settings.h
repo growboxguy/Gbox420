@@ -43,6 +43,13 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
     bool Metric = true;   ///Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
     char PushingBoxLogRelayID[MaxTextLength] = {"v755877CF53383E1"};   ///UPDATE THIS DeviceID of the PushingBox logging scenario 
 
+    struct AeroModuleSettings
+    {
+      //AeroModuleSettings( ) :  {}      
+    };
+    struct AeroModuleSettings AeroModule1 = {};
+    
+
     struct AeroponicsSettings
     { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
       AeroponicsSettings(uint8_t BypassSolenoidPin = 0, uint8_t PumpPin = 0) : BypassSolenoidPin(BypassSolenoidPin), PumpPin(PumpPin) {}

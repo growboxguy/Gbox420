@@ -29,6 +29,7 @@
 #include "src/Components_Web/420Common_Web.h"              /// Base class where all web components inherits from
 #include "Settings.h"       ///EEPROM stored settings for every component
 #include "src/Modules/GrowBox.h"    ///Represents a complete box with all feautres
+#include "src/Modules/MainModule.h"    ///Represents a complete box with all feautres
 #include "SPI.h"      ///allows you to communicate with SPI devices, with the Arduino as the master device
 #include "nRF24L01.h"   ///https://forum.arduino.cc/index.php?topic=421081
 #include "RF24.h"       ///https://github.com/maniacbug/RF24
@@ -49,6 +50,8 @@ Settings * ModuleSettings;                ///< This object will store the settin
 bool *Debug;
 bool *Metric;
 GrowBox *GBox;                            ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
+MainModule *Main;                            ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
+
 RF24 Wireless(Wireless_CEPin, Wireless_CSNPin);              ///< Wireless communication with Modules over nRF24L01+
 
 // Thread initialization
@@ -103,6 +106,7 @@ void setup()
 
   // Create the Module objects
   GBox = new GrowBox(F("GBox1"), &ModuleSettings->Gbox1, &Wireless); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  //Main = new MainModule(F("Main"), &ModuleSettings->Gbox1, &Wireless); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
   
 
   //   sendEmailAlert(F("Grow%20box%20(re)started"));
@@ -126,18 +130,21 @@ void runSec()
   wdt_reset();    ///< reset watchdog timeout
   HeartBeat();    ///< Blinks built-in led
   GBox->runSec(); ///< Calls the runSec() method in GrowBox.cpp
+  //Main->runSec(); ///< Calls the runSec() method in GrowBox.cpp
 }
 
 void runFiveSec()
 {
   wdt_reset();
   GBox->runFiveSec();
+  //Main->runFiveSec();
 }
 
 void runMinute()
 {
   wdt_reset();
   GBox->runMinute();
+  //Main->runFiveSec();
   getWirelessStatus();
 }
 
@@ -145,6 +152,7 @@ void runQuarterHour()
 {
   wdt_reset();
   GBox->runQuarterHour();
+  //Main->runQuarterHour();
 }
 
 void HeartBeat()
@@ -223,11 +231,13 @@ time_t getNtpTime()
 void loadCallback(__attribute__((unused)) char *Url)
 { ///< called when website is loaded. Runs through all components that subscribed for this event
   GBox->loadEvent(Url);
+  //Main->loadEvent(Url);
 }
 
 void refreshCallback(__attribute__((unused)) char *Url)
 { ///< called when website is refreshed.
   GBox->refreshEvent(Url);
+  //Main->refreshEvent(Url);
 }
 
 void buttonPressCallback(char *Button)
@@ -239,6 +249,7 @@ void buttonPressCallback(char *Button)
   else
   {
     GBox->buttonEvent(Button);
+    //Main->buttonEvent(Button);
   }
   saveSettings(ModuleSettings);
 }
@@ -246,6 +257,7 @@ void buttonPressCallback(char *Button)
 void setFieldCallback(char *Field)
 { ///< Called when any field on the website is updated.
   GBox->setFieldEvent(Field);
+  //Main->setFieldEvent(Field);
   saveSettings(ModuleSettings);
 }
 

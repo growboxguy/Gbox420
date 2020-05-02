@@ -1,38 +1,36 @@
 /**@file*/
-///Supports monitoring two Hempy buckets
+///Supports monitoring an Aeroponics tote
 ///Runs autonomously on an Arduino Nano RF and communicates wirelessly with the main module
 
-#include "HempyModule.h"
+#include "AeroModule.h"
 //#include "../Components/DHTSensor.h"
 #include "../Components/Sound.h"
-#include "../Components/WeightSensor.h"
-#include "../Components/WaterPump.h"
-#include "../Components/HempyBucket.h"
+#include "../Components/PressureSensor.h"
+#include "../Components/Aeroponics_NoTank.h"
+#include "../Components/Aeroponics_Tank.h"
 
-HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
+
+AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Module()
 { 
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this -> SoundFeedback = Sound1;
-  Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
-  Weight2 = new WeightSensor(F("Weight2"), this, &ModuleSettings->Weight2);
-  Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->Pump1);
-  Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->Pump2);
-  Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1,Weight1,Pump1);
-  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2,Weight2,Pump2);
-  //addToRefreshQueue_Sec(this);         ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
+  Pres1 = new PressureSensor(F("Pres1"), this, &ModuleSettings->Pres1);
+  AeroT1 = new Aeroponics_Tank(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1); ///Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  Aero1 = new Aeroponics_NoTank(F("Aero1"), this, &ModuleSettings->Aero1_Common, &ModuleSettings->Aero1_Specific, Pres1);
+  addToRefreshQueue_Sec(this);         ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
   addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   //addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   //addToRefreshQueue_QuarterHour(this); ///Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
   logToSerials(Name, false, 0);
-  logToSerials(F("- HempyModule object created, refreshing..."), true, 1);
+  logToSerials(F("- AeroModule object created, refreshing..."), true, 1);
   runAll();
-  addToLog(F("HempyModule initialized"), 0);
+  addToLog(F("AeroModule initialized"), 0);
 }
 
-void HempyModule::processCommand(hempyCommand *Command){
+void AeroModule::processCommand(aeroCommand *Command){
   setDebug(Command -> Debug);
   setMetric(Command -> Metric);
-  if(Command -> DisablePump1)
+  /*if(Command -> DisablePump1)
   if(Command -> DisablePump1) Pump1 -> disable();
   if(Command -> TurnOnPump1) Pump1 -> turnOn(true);
   if(Command -> TurnOffPump1) Pump1 -> turnOff(true);
@@ -46,6 +44,7 @@ void HempyModule::processCommand(hempyCommand *Command){
   Pump2 -> setTimeOut(Command -> TimeOutPump2);
   Bucket2 -> setStartWeight(Command -> StartWeightBucket2);
   Bucket2 -> setStopWeight(Command -> StopWeightBucket2);
+  */
 
   updateResponse();
   saveSettings(ModuleSettings);
@@ -55,7 +54,7 @@ void HempyModule::processCommand(hempyCommand *Command){
       logToSerials(F(","),false,1);
       logToSerials(Command -> Metric,false,1);
       logToSerials(F(","),false,1);
-    logToSerials(Command -> DisablePump1,false,1);
+    /*logToSerials(Command -> DisablePump1,false,1);
         logToSerials(F(","),false,1);
         logToSerials(Command -> TurnOnPump1,false,1);
         logToSerials(F(","),false,1);
@@ -77,22 +76,28 @@ void HempyModule::processCommand(hempyCommand *Command){
         logToSerials(F(","),false,1);
         logToSerials(Command -> StartWeightBucket2,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> StopWeightBucket2,true,1);
+        logToSerials(Command -> StopWeightBucket2,true,1);*/
   }       
 }
 
-void HempyModule::updateResponse(){
-  Response.OnPump1 = Pump1 -> getOnState();
+void AeroModule::updateResponse(){
+  /*Response.OnPump1 = Pump1 -> getOnState();
   Response.EnabledPump1 = Pump1 -> getEnabledState();
   Response.WeightBucket1 = Weight1 -> getWeight();
   Response.OnPump2 = Pump2 -> getOnState();
   Response.EnabledPump2 = Pump2 -> getEnabledState();
-  Response.WeightBucket2 = Weight2 -> getWeight(); 
+  Response.WeightBucket2 = Weight2 -> getWeight(); */
   Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
   Wireless.writeAckPayload(1, &Response, sizeof(Response)); ///< load the payload to send the next time
 }
 
-void HempyModule::refresh_FiveSec()
+void AeroModule::refresh_Sec()
+{
+  if (*Debug)
+    Common::refresh_Sec();  
+}
+
+void AeroModule::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
@@ -109,7 +114,7 @@ void HempyModule::refresh_FiveSec()
 
 //////////////////////////////////////////////////////////////////
 //Settings
-void HempyModule::setDebug(bool DebugEnabled)
+void AeroModule::setDebug(bool DebugEnabled)
 {
    if (DebugEnabled != *Debug)
    {
@@ -127,7 +132,7 @@ void HempyModule::setDebug(bool DebugEnabled)
    }  
 }
 
-void HempyModule::setMetric(bool MetricEnabled)
+void AeroModule::setMetric(bool MetricEnabled)
 {
   if (MetricEnabled != *Metric)
   { //if there was a change

@@ -34,6 +34,12 @@ static const uint8_t Version = 20; ///< Increment this when you make a change in
     bool Debug = true;          ///Logs debug messages to serial and web outputs
     bool Metric = true;   ///Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
     
+    struct AeroModuleSettings
+    {
+      //AeroModuleSettings( ) :  {}      
+    };
+    struct AeroModuleSettings AeroModule1 = {};
+
     struct HempyBucketSettings
     {
       HempyBucketSettings( float StartWeight = 0.0, float StopWeight = 0.0) : StartWeight(StartWeight), StopWeight(StopWeight)  {}

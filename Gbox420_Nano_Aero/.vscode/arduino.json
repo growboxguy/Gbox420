@@ -1,0 +1,8 @@
+{
+    "port": "/dev/ttyUSB0",
+    "board": "arduino:avr:nano",
+    "configuration": "cpu=atmega328",
+    "sketch": "Gbox420_Nano_Aero.ino",
+    "output": "../../Gbox420Compile",
+    "programmer": "AVRISP mkII"
+}
