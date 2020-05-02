@@ -3,23 +3,23 @@
 //// @attention Define the preferred default settings here.
 
 ///Update the Version when you make change to the structure of the EEPROM stored Settings struct. This will overwrite the EEPROM settings with the sketch defaults.
-static const byte Version = 18;
+static const byte Version = 19;
 //// @attention Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
-///Global constants
-const byte WirelessChannel[6] = {"Hemp1"};
+  ///Global constants
+  static const byte WirelessChannel[6] = {"Hemp1"};    ///This needs to be unique and match with the Name of the HempyModule_Web object in the Main module
 
-static const byte MaxTextLength = 32;      ///Default char * buffer for storing a word + null terminator. Memory intense!
-static const byte MaxShotTextLength = 64; ///Default char * buffer for storing mutiple words. Memory intense!
-static const int MaxLongTextLength = 256; ///Default char * buffer for storing a long text. Memory intense!
+  static const byte MaxTextLength = 32;      ///Default char * buffer for storing a word + null terminator. Memory intense!
+  static const byte MaxShotTextLength = 64; ///Default char * buffer for storing mutiple words. Memory intense!
+  static const int MaxLongTextLength = 256; ///Default char * buffer for storing a long text. Memory intense!
+  static const byte QueueDepth = 8;               ///Limits the maximum number of active modules. Memory intense!
+  static const byte RollingAverageDepth = 10;     ///Limits the maximum number of active modules. Memory intense!
 
-static const byte QueueDepth = 8;               ///Limits the maximum number of active modules. Memory intense!
-static const byte RollingAverageDepth = 10;               ///Limits the maximum number of active modules. Memory intense!
-///Global variables
-extern char LongMessage[MaxLongTextLength];  ///temp storage for assembling long messages (REST API, MQTT API)
-extern char ShortMessage[MaxShotTextLength]; ///temp storage for assembling short messages (Log entries, Error messages)
-extern char CurrentTime[MaxTextLength];      ///buffer for storing current time in text
+  ///Global variables
+  extern char LongMessage[MaxLongTextLength];  ///temp storage for assembling long messages (REST API, MQTT API)
+  extern char ShortMessage[MaxShotTextLength]; ///temp storage for assembling short messages (Log entries, Error messages)
+  extern char CurrentTime[MaxTextLength];      ///buffer for storing current time in text
 
 ///SAVED TO EEPROM - Settings struct
 ///If you change things here, increase the Version variable to override whatever is stored in the EEPROM
@@ -28,40 +28,20 @@ typedef struct
   bool Debug = true;          ///Logs debug messages to serial and web outputs
   bool Metric = true;   ///Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
   
+  struct HempyBucketSettings
+  {
+    HempyBucketSettings( float StartWeight = 0.0, float StopWeight = 0.0) : StartWeight(StartWeight), StopWeight(StopWeight)  {}
+    float StartWeight; ///Start watering below this weight
+    float StopWeight;  ///Stop watering above this weight
+  };
+  struct HempyBucketSettings Bucket1 = { .StartWeight = 4.2, .StopWeight = 6.9};
+  struct HempyBucketSettings Bucket2 = { .StartWeight = 4.2, .StopWeight = 6.9};
+
   struct HempyModuleSettings{  ///TODO: Remove the parameters
     //HempyModuleSettings() :  {}     
   };  
   struct HempyModuleSettings HempyMod1 = {};  ///Default settings for the Hempy Module
 
-  struct HempyBucketSettings
-  {
-    HempyBucketSettings( float StartWeight = 0.0, float StopWeight = 0.0, int TimeOut = 0) : StartWeight(StartWeight), StopWeight(StopWeight)  {}
-    float StartWeight; ///Start watering below this weight
-    float StopWeight;  ///Stop watering above this weight
-    int TimeOut;  ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails
-  };
-  struct HempyBucketSettings Bucket1 = { .StartWeight = 4.2, .StopWeight = 6.9, .TimeOut = 120};
-  struct HempyBucketSettings Bucket2 = { .StartWeight = 4.2, .StopWeight = 6.9, .TimeOut = 120};
-
-  struct WaterPumpSettings
-  {
-    WaterPumpSettings(byte Pin = 0) : Pin(Pin)  {}
-    byte Pin;            ///Hempy bucket watering pump relay pin
-    int Timeout = 120;   ///Max pump run time in seconds
-    bool PumpEnabled = true; ///Enable/disable automatic watering based on weight    
-  };
-  struct WaterPumpSettings Pump1 = {.Pin = 7};
-  struct WaterPumpSettings Pump2 = {.Pin = 8};
-
-
-  struct DHTSensorSettings
-  { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
-    DHTSensorSettings(byte Pin = 0, byte Type = 0) : Pin(Pin), Type(Type) {}
-    byte Pin;
-    byte Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
-  };
-  struct DHTSensorSettings DHT1 = {.Pin = 8, .Type = 22};  ///Default settings for the DHT sensor
- 
   struct SoundSettings
   {
     SoundSettings(byte Pin = 0) : Pin(Pin) {}
@@ -70,14 +50,15 @@ typedef struct
   };
   struct SoundSettings Sound1 = {.Pin = 2};  ///Default settings for the  Sound output
 
-  struct PHSensorSettings
+  struct WaterPumpSettings
   {
-    PHSensorSettings(byte Pin = 0, float Slope = 0.0, float Intercept = 0.0) : Pin(Pin), Slope(Slope), Intercept(Intercept) {}
-    byte Pin;
-    float Slope;
-    float Intercept;
+    WaterPumpSettings(byte Pin = 0, int Timeout = 0, bool PumpEnabled = false) : Pin(Pin), Timeout(Timeout), PumpEnabled(PumpEnabled)  {}
+    byte Pin;            ///Hempy bucket watering pump relay pin
+    int Timeout;   ///Max pump run time in seconds
+    bool PumpEnabled; ///Enable/disable automatic watering based on weight    
   };
-  struct PHSensorSettings PHSensor1 = {.Pin = A6, .Slope = -0.033256, .Intercept = 24.08651}; //////Default settings for the PH sensor, update the calibration values
+  struct WaterPumpSettings Pump1 = {.Pin = 7, .Timeout = 120, .PumpEnabled = true};
+  struct WaterPumpSettings Pump2 = {.Pin = 8, .Timeout = 120, .PumpEnabled = true};
 
   struct WeightSensorSettings
   {
@@ -89,23 +70,6 @@ typedef struct
   };
   struct WeightSensorSettings Weight1 = {.DTPin = 3, .SCKPin = 4, .Scale = 125000.0, .TareOffset=146000}; ///Default settings for the hempy bucket 1 weight sensor
   struct WeightSensorSettings Weight2 = {.DTPin = 5, .SCKPin = 6, .Scale = 126000.0, .TareOffset=267461}; ///Default settings for the hempy bucket 2 weight sensor
-
-  struct WaterTempSensorSettings
-  {
-    WaterTempSensorSettings(byte Pin = 0) : Pin(Pin) {}
-    byte Pin;
-  };
-  struct WaterTempSensorSettings WaterTemp1 = {.Pin = 7}; ///Data(yellow) - DS18B20 waterproof temp sensor
-
-  struct WaterLevelSensorSettings
-  {
-    WaterLevelSensorSettings(byte Pin_1 = 0, byte Pin_2 = 0, byte Pin_3 = 0, byte Pin_4 = 0) : Pin_1(Pin_1), Pin_2(Pin_2), Pin_3(Pin_3), Pin_4(Pin_4) {}
-    byte Pin_1; ///Lowest water level
-    byte Pin_2;
-    byte Pin_3;
-    byte Pin_4; ///Full
-  };
-  struct WaterLevelSensorSettings WaterLevel1 = {.Pin_1 = A0, .Pin_2 = A1, .Pin_3 = A2, .Pin_4 = A3};
 
   byte CompatibilityVersion = Version; ///Should always be the last value stored.
 } Settings;

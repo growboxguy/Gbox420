@@ -36,10 +36,10 @@ public:
   //PHSensor *PHSensor1;
   //WaterTempSensor *WaterTemp1;
   //WaterLevelSensor *WaterLevel1;
-  void refresh_Sec();
+  //void refresh_Sec();
   void refresh_FiveSec();
-  void refresh_Minute();
-  void refresh_QuarterHour(); 
+  //void refresh_Minute();
+  //void refresh_QuarterHour(); 
   void processCommand(hempyCommand *Command);
   void updateResponse();
 

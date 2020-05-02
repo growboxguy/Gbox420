@@ -139,6 +139,16 @@ typedef struct
   };
   struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 8}; ///Creating a LightSettings instance, passing in the unique parameters
 
+  struct ModuleSkeletonSettings
+  { ///Test module
+    ModuleSkeletonSettings(bool PersistentBool = 0, float PersistentFloat = 0.0) : PersistentBool(PersistentBool), PersistentFloat(PersistentFloat) {}
+    bool PersistentBool;
+    int PersistentInt = 420; ///Same value on all instances
+    float PersistentFloat;
+  };
+  struct ModuleSkeletonSettings ModuleSkeleton1 = {.PersistentBool = false, .PersistentFloat = 1.23}; ///Instance 1
+  struct ModuleSkeletonSettings ModuleSkeleton2 = {.PersistentBool = true, .PersistentFloat = 4.56};  ///Instance 2
+
   struct PHSensorSettings
   {
     PHSensorSettings(uint8_t Pin = 0, float Slope = 0.0, float Intercept = 0.0) : Pin(Pin), Slope(Slope), Intercept(Intercept) {}
@@ -164,16 +174,6 @@ typedef struct
     bool Enabled = true; ///Enable PC speaker / Piezo buzzer
   };
   struct SoundSettings Sound1 = {.Pin = 2};
-
-  struct ModuleSkeletonSettings
-  { ///Test module
-    ModuleSkeletonSettings(bool PersistentBool = 0, float PersistentFloat = 0.0) : PersistentBool(PersistentBool), PersistentFloat(PersistentFloat) {}
-    bool PersistentBool;
-    int PersistentInt = 420; ///Same value on all instances
-    float PersistentFloat;
-  };
-  struct ModuleSkeletonSettings ModuleSkeleton1 = {.PersistentBool = false, .PersistentFloat = 1.23}; ///Instance 1
-  struct ModuleSkeletonSettings ModuleSkeleton2 = {.PersistentBool = true, .PersistentFloat = 4.56};  ///Instance 2
 
   struct WaterLevelSensorSettings
   {

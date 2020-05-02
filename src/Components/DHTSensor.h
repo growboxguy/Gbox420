@@ -15,8 +15,8 @@ public:
   char *getTempText(bool IncludeUnits = false);
   float getHumidity();
   char *getHumidityText(bool IncludeUnits = false);
-  float Temp;
-  float Humidity;
+  float Temp = 0.0;
+  float Humidity = 0.0;
 
 private:
   
