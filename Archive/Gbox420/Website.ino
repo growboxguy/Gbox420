@@ -182,7 +182,7 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("AeroPressureHigh"))==0) {setAeroPressureHigh(WebServer.getArgFloat());} 
 
   else if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}
-  else if(strcmp_P(field,(PGM_P)F("DebugEnabled"))==0) {setDebugOnOff(WebServer.getArgBoolean());}
+  else if(strcmp_P(field,(PGM_P)F("DebugEnabled"))==0) {setDebug(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("MetricSystemEnabled"))==0) {setMetricSystemEnabled(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("MqttEnabled"))==0) {setReportToMqttOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("GoogleSheetsEnabled"))==0) {setReportToGoogleSheetsOnOff(WebServer.getArgBoolean());}

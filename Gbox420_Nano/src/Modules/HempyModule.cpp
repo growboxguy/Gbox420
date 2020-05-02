@@ -30,6 +30,9 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
 }
 
 void HempyModule::processCommand(hempyCommand *Command){
+  setDebug(Command -> Debug);
+  setMetric(Command -> Metric);
+  if(Command -> DisablePump1)
   if(Command -> DisablePump1) Pump1 -> disable();
   if(Command -> TurnOnPump1) Pump1 -> turnOn(true);
   if(Command -> TurnOffPump1) Pump1 -> turnOff(true);
@@ -48,7 +51,11 @@ void HempyModule::processCommand(hempyCommand *Command){
   saveSettings(ModuleSettings);
 
   if(Debug){
-   logToSerials(Command -> DisablePump1,false,3);
+    logToSerials(Command -> Debug,false,3);
+      logToSerials(F(","),false,1);
+      logToSerials(Command -> Metric,false,1);
+      logToSerials(F(","),false,1);
+    logToSerials(Command -> DisablePump1,false,1);
         logToSerials(F(","),false,1);
         logToSerials(Command -> TurnOnPump1,false,1);
         logToSerials(F(","),false,1);
@@ -103,19 +110,22 @@ void HempyModule::refresh_FiveSec()
 
 //////////////////////////////////////////////////////////////////
 //Settings
-void HempyModule::setDebugOnOff(bool State)
+void HempyModule::setDebug(bool DebugEnabled)
 {
-  *Debug = State;
-  if (*Debug)
-  {
-    addToLog(F("Debug enabled"));
-    Sound1->playOnSound();
-  }
-  else
-  {
-    addToLog(F("Debug disabled"));
-    Sound1->playOffSound();
-  }
+   if (DebugEnabled != *Debug)
+   {
+    *Debug = DebugEnabled;
+    if (*Debug)
+    {
+      addToLog(F("Debug enabled"));
+      getSoundObject() -> playOnSound();
+    }
+    else
+    {
+      addToLog(F("Debug disabled"));
+      getSoundObject() -> playOffSound();
+    }
+   }  
 }
 
 void HempyModule::setMetric(bool MetricEnabled)
@@ -123,13 +133,11 @@ void HempyModule::setMetric(bool MetricEnabled)
   if (MetricEnabled != *Metric)
   { //if there was a change
     *Metric = MetricEnabled;
-    //ModuleSettings -> IFanSwitchTemp = convertBetweenTempUnits(ModuleSettings -> IFanSwitchTemp);
-    //Pres1->Pressure->resetAverage();
-   // WaterTemp1->Temp->resetAverage();
     RefreshAllRequested = true;
+    if (*Metric)
+      addToLog(F("Using Metric units"));
+    else
+      addToLog(F("Using Imperial units"));
+    getSoundObject() -> playOnSound();
   }
-  if (*Metric)
-    addToLog(F("Metric units"));
-  else
-    addToLog(F("Imperial units"));
 }

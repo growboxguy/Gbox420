@@ -201,8 +201,10 @@ void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Co
 
 void HempyModule_Web::updateCommand() {        // so you can see that new data is being sent
     //Command.TurnOnPump1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exclusive!
-    //Command.TurnOnPump2 = random(0,2);
+    //Command.TurnOnPump2 = random(0,2);    
     Command.Time = now();
+    Command.Debug = *Debug;
+    Command.Metric = *Metric;
     Command.StartWeightBucket1= DefaultSettings->StartWeightBucket1;
     Command.StopWeightBucket1= DefaultSettings->StopWeightBucket1;
     Command.TimeOutPump1= DefaultSettings->TimeOutPump1;

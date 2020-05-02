@@ -69,7 +69,7 @@ public:
 private:
   void setSheetsReportingOnOff(bool State);
   void setSheetsReportingFrequency(uint8_t Frequency);
-  void setDebugOnOff(bool State);
+  void setDebug(bool DebudEnabled);
   void setMetric(bool MetricEnabled);
   void setPushingBoxLogRelayID(const char *ID);
 

@@ -7,6 +7,8 @@
 struct hempyCommand  ///Max 32 bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
    time_t Time;
+   bool Debug = false;
+   bool Metric = true;
    
    bool DisablePump1 = false;   
    bool TurnOnPump1 = false;   

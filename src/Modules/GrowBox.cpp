@@ -107,7 +107,7 @@ void GrowBox::websiteEvent_Field(char *Field)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0){setDebugOnOff(WebServer.getArgBoolean());}
+    if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0){setDebug(WebServer.getArgBoolean());}
     else if (strcmp_P(ShortMessage, (PGM_P)F("Metric")) == 0){setMetric(WebServer.getArgBoolean());}
     else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0){setSheetsReportingOnOff(WebServer.getArgBoolean());}
     else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsF")) == 0){setSheetsReportingFrequency(WebServer.getArgInt());}
@@ -153,18 +153,18 @@ void GrowBox::refresh_QuarterHour()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///Settings
-void GrowBox::setDebugOnOff(bool State)
+void GrowBox::setDebug(bool DebugEnabled)
 {
-  *Debug = State;
+  *Debug = DebugEnabled;
   if (*Debug)
   {
     addToLog(F("Debug enabled"));
-    Sound1->playOnSound();
+    getSoundObject()->playOnSound();
   }
   else
   {
     addToLog(F("Debug disabled"));
-    Sound1->playOffSound();
+    getSoundObject()->playOffSound();
   }
 }
 
@@ -178,9 +178,10 @@ void GrowBox::setMetric(bool MetricEnabled)
     RefreshAllRequested = true;
   }
   if (*Metric)
-    addToLog(F("Metric units"));
+    addToLog(F("Using Metric units"));
   else
-    addToLog(F("Imperial units"));
+    addToLog(F("Using Imperial units"));
+  getSoundObject()->playOnSound();
 }
 
 
@@ -193,12 +194,12 @@ void GrowBox::setSheetsReportingOnOff(bool State)
   if (State)
   {
     addToLog(F("Google Sheets enabled"));
-    Sound1->playOnSound();
+    getSoundObject()->playOnSound();
   }
   else
   {
     addToLog(F("Google Sheets disabled"));
-    Sound1->playOffSound();
+    getSoundObject()->playOffSound();
   }
 }
 
@@ -206,7 +207,7 @@ void GrowBox::setSheetsReportingFrequency(uint8_t Frequency)
 {
   *SheetsReportingFrequency = Frequency;
   addToLog(F("Reporting freqency updated"));
-  Sound1->playOnSound();
+  getSoundObject()->playOnSound();
 }
 
 void GrowBox::reportToGoogleSheetsTrigger()

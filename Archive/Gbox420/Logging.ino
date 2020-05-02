@@ -177,7 +177,7 @@ const __FlashStringHelper * statusToText(bool Status){
    else return F("!!!");
 } 
 
-void setDebugOnOff(bool State){
+void setDebug(bool State){
   MySettings.DebugEnabled = State;
   if(MySettings.DebugEnabled){ 
     addToLog(F("Debug enabled"));
