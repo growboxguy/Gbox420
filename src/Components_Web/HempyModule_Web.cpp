@@ -119,12 +119,34 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
   }
   else
   {    
-    if (strcmp_P(ShortMessage, (PGM_P)F("B1Strt")) == 0){DefaultSettings->StartWeightBucket1 = WebServer.getArgFloat();}  /// \todo Write back to EEPROM
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Stp")) == 0){DefaultSettings->StopWeightBucket1 = WebServer.getArgFloat();}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Time")) == 0){DefaultSettings->TimeOutPump1 = WebServer.getArgInt();}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Strt")) == 0){DefaultSettings->StartWeightBucket2 = WebServer.getArgFloat();}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Stp")) == 0){DefaultSettings->StopWeightBucket2 = WebServer.getArgFloat();}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Time")) == 0){DefaultSettings->TimeOutPump2 = WebServer.getArgInt();}
+    if (strcmp_P(ShortMessage, (PGM_P)F("B1Strt")) == 0)
+    {
+      DefaultSettings->StartWeightBucket1 = WebServer.getArgFloat();      
+    }  /// \todo Write back to EEPROM
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Stp")) == 0)
+    {
+      DefaultSettings->StopWeightBucket1 = WebServer.getArgFloat();
+      Parent -> addToLog(F("Bucket 1 limits updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Time")) == 0)
+    {
+      DefaultSettings->TimeOutPump1 = WebServer.getArgInt();
+      Parent -> addToLog(F("Pump 1 timeout updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Strt")) == 0)
+    {
+      DefaultSettings->StartWeightBucket2 = WebServer.getArgFloat();
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Stp")) == 0)
+    {
+      DefaultSettings->StopWeightBucket2 = WebServer.getArgFloat();
+      Parent -> addToLog(F("Bucket 2 limits updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Time")) == 0)
+    {
+      DefaultSettings->TimeOutPump2 = WebServer.getArgInt();
+      Parent -> addToLog(F("Pump 2 timeout updated"), false);
+    }
     SyncRequested = true;
   }
 }

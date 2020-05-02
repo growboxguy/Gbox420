@@ -73,7 +73,6 @@ void Module_Web::runQuarterHour()
     logToSerials(F("Quarter hour trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_QuarterHour; i++)
   {
-    logToSerials(i, true, 0);
     RefreshQueue_QuarterHour[i]->refresh_QuarterHour();
   }
 }

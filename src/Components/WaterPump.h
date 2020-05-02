@@ -19,8 +19,9 @@ public:
   char * getState();  ///Text representation of the current state: ON/OFF/DISABLED
   bool getOnState();  ///Pump ON(1)/OFF(0)
   bool getEnabledState();  ///Pump ENABLED(1)/DISABLED(0) 
-  int *Timeout;  ///Max pump run time in seconds, if the target weight is not reached within this time consider the pump broken
-
+  int getTimeOut();
+  void setTimeOut(int NewTimeOut);
+  
 private:
   
  
@@ -29,6 +30,6 @@ protected:
   uint8_t *Pin;
   bool *PumpEnabled;  ///false= Block running the pump
   bool PumpOn = false;  ///true turns the pump on
-  
+  int *TimeOut;  ///Max pump run time in seconds, if the target weight is not reached within this time consider the pump broken
   uint32_t PumpTimer = millis();  ///Used for Pump runtime tracking
 };

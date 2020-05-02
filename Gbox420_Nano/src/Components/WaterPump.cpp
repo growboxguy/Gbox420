@@ -5,7 +5,7 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
   this->Parent = Parent;
   Pin = &DefaultSettings->Pin;
   PumpEnabled = &DefaultSettings->PumpEnabled;
-  Timeout= &DefaultSettings->Timeout;
+  TimeOut= &DefaultSettings->TimeOut;
   pinMode(*Pin, OUTPUT);
   Parent->addToReportQueue(this);         ///Subscribing to the report queue: Calls the report() method
   Parent->addToRefreshQueue_Sec(this);    ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
@@ -15,7 +15,7 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
 
 void WaterPump::refresh_Sec()  
 {
-  if(PumpOn && millis() - PumpTimer > ((uint32_t)* Timeout * 1000)) ///Check for pump timeout, during normal operation this should never be true
+  if(PumpOn && millis() - PumpTimer > ((uint32_t)* TimeOut * 1000)) ///Check for pump timeout, during normal operation this should never be true
   {  
     disable();
   }
@@ -28,7 +28,7 @@ void WaterPump::report()
   strcat_P(LongMessage, (PGM_P)F("State:"));
   strcat(LongMessage, getState());
   strcat_P(LongMessage, (PGM_P)F(" , TimeOut:"));
-  strcat(LongMessage, toText(*Timeout));
+  strcat(LongMessage, toText(*TimeOut));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -89,4 +89,17 @@ bool WaterPump::getOnState(){
 
 bool WaterPump::getEnabledState(){
   return *PumpEnabled;
+}
+
+int WaterPump::getTimeOut(){
+  return *TimeOut;
+}
+
+void WaterPump::setTimeOut(int TimeOut){
+  if(*this->TimeOut != TimeOut){
+    *this->TimeOut = TimeOut;
+    logToSerials(Name, false, 1);
+    logToSerials(F("timeout updated"), true, 1);
+    Parent -> getSoundObject()->playOnSound();
+  }  
 }

@@ -81,10 +81,20 @@ char *HempyBucket::getStopWeightText(bool IncludeUnits)
 
 void HempyBucket::setStartWeight(float Weight)
 {
-  *StartWeight = Weight;
+  if(*StartWeight != Weight)
+  {
+    *StartWeight = Weight;
+    Parent -> getSoundObject() -> playOnSound();
+  }
 }
 
 void HempyBucket::setStopWeight(float Weight)
 {
-  *StopWeight = Weight;
+  if(*StopWeight != Weight)
+  {
+    *StopWeight = Weight;
+    logToSerials(Name, false, 1);
+    logToSerials(F("Watering limits updated"), true, 1);
+    Parent -> getSoundObject() -> playOnSound();
+  }
 }

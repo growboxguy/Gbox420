@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 19; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 20; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 
@@ -58,13 +58,13 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
 
     struct WaterPumpSettings
     {
-      WaterPumpSettings(uint8_t Pin = 0, int Timeout = 0, bool PumpEnabled = false) : Pin(Pin), Timeout(Timeout), PumpEnabled(PumpEnabled)  {}
+      WaterPumpSettings(uint8_t Pin = 0, int TimeOut = 0, bool PumpEnabled = false) : Pin(Pin), TimeOut(TimeOut), PumpEnabled(PumpEnabled)  {}
       uint8_t Pin;            ///Hempy bucket watering pump relay pin
-      int Timeout;   ///Max pump run time in seconds
+      int TimeOut;   ///Max pump run time in seconds
       bool PumpEnabled; ///Enable/disable automatic watering based on weight    
     };
-    struct WaterPumpSettings Pump1 = {.Pin = 7, .Timeout = 120, .PumpEnabled = true};
-    struct WaterPumpSettings Pump2 = {.Pin = 8, .Timeout = 120, .PumpEnabled = true};
+    struct WaterPumpSettings Pump1 = {.Pin = 7, .TimeOut = 120, .PumpEnabled = true};
+    struct WaterPumpSettings Pump2 = {.Pin = 8, .TimeOut = 120, .PumpEnabled = true};
 
     struct WeightSensorSettings
     {

@@ -36,14 +36,14 @@ void HempyModule::processCommand(hempyCommand *Command){
   if(Command -> DisablePump1) Pump1 -> disable();
   if(Command -> TurnOnPump1) Pump1 -> turnOn(true);
   if(Command -> TurnOffPump1) Pump1 -> turnOff(true);
-  *(Pump1 -> Timeout) = Command -> TimeOutPump1;
+  Pump1 -> setTimeOut(Command -> TimeOutPump1);
   Bucket1 -> setStartWeight(Command -> StartWeightBucket1);
   Bucket1 -> setStopWeight(Command -> StopWeightBucket1);
 
   if(Command -> DisablePump2) Pump2 -> disable();
   if(Command -> TurnOnPump2) Pump2 -> turnOn(true);
   if(Command -> TurnOffPump2) Pump2 -> turnOff(true);
-  *(Pump2 -> Timeout) = Command -> TimeOutPump2;
+  Pump2 -> setTimeOut(Command -> TimeOutPump2);
   Bucket2 -> setStartWeight(Command -> StartWeightBucket2);
   Bucket2 -> setStopWeight(Command -> StopWeightBucket2);
 
@@ -85,12 +85,11 @@ void HempyModule::updateResponse(){
   Response.OnPump1 = Pump1 -> getOnState();
   Response.EnabledPump1 = Pump1 -> getEnabledState();
   Response.WeightBucket1 = Weight1 -> getWeight();
-
   Response.OnPump2 = Pump2 -> getOnState();
   Response.EnabledPump2 = Pump2 -> getEnabledState();
   Response.WeightBucket2 = Weight2 -> getWeight(); 
-  Wireless.flush_tx();  ///Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
-  Wireless.writeAckPayload(1, &Response, sizeof(Response)); // load the payload to send the next time
+  Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
+  Wireless.writeAckPayload(1, &Response, sizeof(Response)); ///< load the payload to send the next time
 }
 
 void HempyModule::refresh_FiveSec()

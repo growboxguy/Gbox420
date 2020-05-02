@@ -194,13 +194,13 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
 
     struct WaterPumpSettings
     {
-      WaterPumpSettings(uint8_t Pin = 0) : Pin(Pin)  {}
+      WaterPumpSettings(uint8_t Pin = 0, int TimeOut = 0, bool PumpEnabled = false) : Pin(Pin), TimeOut(TimeOut), PumpEnabled(PumpEnabled)  {}
       uint8_t Pin;            ///Hempy bucket watering pump relay pin
-      int Timeout = 120;   ///Max pump run time in seconds
-      bool PumpEnabled = true; ///Enable/disable automatic watering based on weight    
+      int TimeOut;   ///Max pump run time in seconds
+      bool PumpEnabled; ///Enable/disable automatic watering based on weight    
     };
-    struct WaterPumpSettings Pump1 = {.Pin = 7};  /// \TODO Find optimal port
-    struct WaterPumpSettings Pump2 = {.Pin = 8};  /// \TODO Find optimal port
+    struct WaterPumpSettings Pump1 = {.Pin = 7, .TimeOut = 120, .PumpEnabled = true};
+    struct WaterPumpSettings Pump2 = {.Pin = 8, .TimeOut = 120, .PumpEnabled = true};
 
     struct WaterTempSensorSettings
     {
