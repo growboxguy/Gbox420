@@ -45,6 +45,7 @@ void HempyModule::processCommand(hempyCommand *Command){
   Bucket2 -> setStopWeight(Command -> StopWeightBucket2);
 
   updateResponse();
+  saveSettings(ModuleSettings);
 
   if(Debug){
    logToSerials(Command -> DisablePump1,false,3);
