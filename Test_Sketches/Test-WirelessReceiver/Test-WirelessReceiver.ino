@@ -35,13 +35,13 @@ struct commandTemplate ReceivedCommand;  //Variable where the actual command val
 
 struct responseTemplate  //Max 32bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
-   bool OnPump1; 
-   bool EnabledPump1;
-   float WeightBucket1;
+   bool PumpOn_B1; 
+   bool PumpEnabled_B1;
+   float Weight_B1;
 
-   bool OnPump2;
-   bool EnabledPump2; 
-   float WeightBucket2;
+   bool PumpOn_B2;
+   bool PumpEnabled_B2; 
+   float Weight_B2;
    
    float Temp;
    float Humidity;
@@ -100,7 +100,7 @@ void getData() {
 }
 
 void updateReplyData() { // so you can see that new data is being sent
-    Response.WeightBucket1 = random(400, 500) / 100.0;
-    Response.WeightBucket2 = random(400, 500) / 100.0;
+    Response.Weight_B1 = random(400, 500) / 100.0;
+    Response.Weight_B2 = random(400, 500) / 100.0;
     radio.writeAckPayload(1, &Response, sizeof(Response)); // load the payload for the next time
 }

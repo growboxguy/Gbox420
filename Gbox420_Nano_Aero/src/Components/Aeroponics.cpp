@@ -46,7 +46,7 @@ void Aeroponics::checkRelays()
     digitalWrite(*PumpPin, LOW);
   else
     digitalWrite(*PumpPin, HIGH);
-  if (BypassSolenoidOn)
+  if (BypassOn)
     digitalWrite(*BypassSolenoidPin, LOW);
   else
     digitalWrite(*BypassSolenoidPin, HIGH);
@@ -76,7 +76,7 @@ void Aeroponics::setPumpOff(bool UserRequest)
   }
   MixInProgress = false;
   PumpOn = false;
-  ///if(!BlowOffInProgress)BypassSolenoidOn = false; ///Close bypass valve
+  ///if(!BlowOffInProgress)BypassOn = false; ///Close bypass valve
   PumpTimer = millis();
   checkRelays();
 }
@@ -93,7 +93,7 @@ void Aeroponics::mixReservoir()
   PumpOn = true;
   MixInProgress = true;
   PumpOK = true;
-  BypassSolenoidOn = true;
+  BypassOn = true;
   PumpTimer = millis();
   checkRelays();
   Parent->getSoundObject()->playOnSound();
@@ -102,9 +102,9 @@ void Aeroponics::mixReservoir()
 
 void Aeroponics::setSprayInterval(int interval)
 {
-  if(*Interval != interval)
+  if(*Interval != interval && interval > 0)
   {
-   *Interval = interval;
+    *Interval = interval;
    Parent -> getSoundObject() -> playOnSound();
   }
 }
@@ -122,7 +122,7 @@ char *Aeroponics::getSprayIntervalText()
 
 void Aeroponics::setSprayDuration(int duration)
 {
-  if(*Duration !=duration)
+  if(*Duration !=duration && duration > 0)
   {
     *Duration = duration;
     Parent->addToLog(F("Spray time updated"));
@@ -142,14 +142,22 @@ char *Aeroponics::getSprayDurationText()
 
 void Aeroponics::setPumpTimeout(int Timeout)
 {
-  *PumpTimeout = Timeout;
-  Parent->addToLog(F("Aero pump timeout updated"));
+  if(*PumpTimeout != Timeout && Timeout >= 0)
+  {
+    *PumpTimeout = Timeout;
+    Parent->addToLog(F("Aero pump timeout updated"));
+    Parent->getSoundObject()->playOnSound();
+  }
 }
 
 void Aeroponics::setPrimingTime(int Timing)
 {
-  *PrimingTime = Timing;
-  Parent->addToLog(F("Aero priming time updated"));
+  if(*PrimingTime != Timing && Timing > 0)
+  {
+    *PrimingTime = Timing;
+    Parent->addToLog(F("Aero priming time updated"));
+    Parent->getSoundObject()->playOnSound();
+  }
 }
 
 void Aeroponics::setSprayOnOff(bool State)
@@ -165,4 +173,14 @@ void Aeroponics::setSprayOnOff(bool State)
     Parent->addToLog(F("Aero spray disabled"));
     Parent->getSoundObject()->playOffSound();
   }
+}
+
+bool Aeroponics::getSprayEnabled()
+{
+  return *SprayEnabled;
+}
+
+float Aeroponics::getPressure()
+{
+  return FeedbackPressureSensor -> getPressure();
 }

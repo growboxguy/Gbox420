@@ -27,8 +27,10 @@ public:
   int getSprayInterval();
   int getSprayDuration();
   char *getSprayIntervalText();
-  char *getSprayDurationText();    
-
+  char *getSprayDurationText();
+  bool getSprayEnabled();
+  float getPressure(); 
+  
 private:
 
 protected:
@@ -43,9 +45,10 @@ protected:
   int *PrimingTime;               /// Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
   uint32_t PumpTimer = millis();  ///Aeroponics - Pump cycle timer
   uint32_t SprayTimer = millis(); ///Aeroponics - Spray cycle timer - https:///www.arduino.cc/reference/en/language/functions/time/millis/
-  bool PumpOK = true;             ///Aeroponics - High pressure pump health
-  bool PumpOn = false;            ///Aeroponics - High pressure pump state
-  bool BypassSolenoidOn = false;  ///Aeroponics - Controls the bypass valve, true opens the solenoid
+  bool BypassOn = false;  ///Aeroponics - Controls the bypass valve, true opens the solenoid
   bool MixInProgress = false;     ///Aeroponics - Used to temporary suspend pump timer and keep the high pressure pump on. Do not change.
   void checkRelays();  
+  bool PumpOK = true;             ///Aeroponics - High pressure pump health
+  bool PumpOn = false;            ///Aeroponics - High pressure pump state
+
 };

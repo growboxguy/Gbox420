@@ -24,22 +24,22 @@ void AeroModule_Web::report()
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   /*strcat_P(LongMessage, (PGM_P)F("Bucket1 {"));
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
-  strcat(LongMessage, weightToText(Response.WeightBucket1));
+  strcat(LongMessage, weightToText(Response.Weight_B1));
   strcat_P(LongMessage, (PGM_P)F(" ["));
   strcat(LongMessage, toText(Command.StartWeightBucket_B1));
   strcat_P(LongMessage, (PGM_P)F("/"));
   strcat(LongMessage, toText(Command.StopWeightBucket_B1));
   strcat_P(LongMessage, (PGM_P)F("] ; Pump:"));
-  strcat(LongMessage, pumpStateToText(Response.EnabledPump1,Response.OnPump1));
+  strcat(LongMessage, pumpStateToText(Response.PumpEnabled_B1,Response.PumpOn_B1));
   strcat_P(LongMessage, (PGM_P)F("}, Bucket2 {"));
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
-  strcat(LongMessage, weightToText(Response.WeightBucket2));
+  strcat(LongMessage, weightToText(Response.Weight_B2));
   strcat_P(LongMessage, (PGM_P)F(" ["));
   strcat(LongMessage, toText(Command.StartWeightBucket_B2));
   strcat_P(LongMessage, (PGM_P)F("/"));
   strcat(LongMessage, toText(Command.StopWeightBucket_B2));
   strcat_P(LongMessage, (PGM_P)F("] ; Pump:"));
-  strcat(LongMessage, pumpStateToText(Response.EnabledPump2,Response.OnPump2));
+  strcat(LongMessage, pumpStateToText(Response.PumpEnabled_B2,Response.PumpOn_B2));
   strcat_P(LongMessage, (PGM_P)F("}"));*/
   logToSerials(&LongMessage, true, 1);
 }
@@ -63,10 +63,10 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
   if (strncmp(url, "/G",2) == 0)
   {
     /*
-    WebServer.setArgString(getComponentName(F("B1Weight")), weightToText(Response.WeightBucket1));
-    WebServer.setArgString(getComponentName(F("B2Weight")), weightToText(Response.WeightBucket2));
-    WebServer.setArgString(getComponentName(F("B1Pump")),  pumpStateToText(Response.EnabledPump1,Response.OnPump1));
-    WebServer.setArgString(getComponentName(F("B2Pump")), pumpStateToText(Response.EnabledPump2,Response.OnPump2));
+    WebServer.setArgString(getComponentName(F("B1Weight")), weightToText(Response.Weight_B1));
+    WebServer.setArgString(getComponentName(F("B2Weight")), weightToText(Response.Weight_B2));
+    WebServer.setArgString(getComponentName(F("B1Pump")),  pumpStateToText(Response.PumpEnabled_B1,Response.PumpOn_B1));
+    WebServer.setArgString(getComponentName(F("B2Pump")), pumpStateToText(Response.PumpEnabled_B2,Response.PumpOn_B2));
     */
   }
 }
@@ -190,17 +190,17 @@ void AeroModule_Web::syncModule( const byte WirelessChannel[], aeroCommand *Comm
           logToSerials(F("bytes]"),true,1);
 
           if(*Debug){
-          /*logToSerials(Response -> OnPump1,false,3);
+          /*logToSerials(Response -> PumpOn_B1,false,3);
           logToSerials(F(","),false,1);
-          logToSerials(Response -> EnabledPump1,false,1);
+          logToSerials(Response -> PumpEnabled_B1,false,1);
           logToSerials(F(","),false,1);
-          logToSerials(Response -> WeightBucket1,false,1);
+          logToSerials(Response -> Weight_B1,false,1);
           logToSerials(F(","),false,1);
-          logToSerials(Response -> OnPump2,false,1);
+          logToSerials(Response -> PumpOn_B2,false,1);
           logToSerials(F(","),false,1);
-          logToSerials(Response -> EnabledPump2,false,1);
+          logToSerials(Response -> PumpEnabled_B2,false,1);
           logToSerials(F(";"),false,1);
-          logToSerials(Response -> WeightBucket2,true,1);  */             
+          logToSerials(Response -> Weight_B2,true,1);  */             
           }            
 
           ///Turn off command flags 

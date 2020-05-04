@@ -15,7 +15,7 @@ void Aeroponics_NoTank::refresh_Sec()
 
   if (BlowOffInProgress && millis() - SprayTimer >= ((uint32_t)*BlowOffTime * 1000))
   {                           ///checking pressure blow-off timeout
-    BypassSolenoidOn = false; ///Close bypass valve
+    BypassOn = false; ///Close bypass valve
     BlowOffInProgress = false;
     logToSerials(F("Stopping blow-off"), true);
     Aeroponics::FeedbackPressureSensor->readPressure(); ///Update pressure after closing bypass valve
@@ -29,9 +29,9 @@ void Aeroponics_NoTank::refresh_Sec()
       logToSerials(F("Pump timeout reached"), true);
     }
 
-    if (!MixInProgress && !BypassSolenoidOn && PumpOn && millis() - SprayTimer >= ((uint32_t)*Duration * 1000))
+    if (!MixInProgress && !BypassOn && PumpOn && millis() - SprayTimer >= ((uint32_t)*Duration * 1000))
     { ///bypass valve is closed and time to stop spraying (Duration in Seconds)
-      BypassSolenoidOn = true;
+      BypassOn = true;
       BlowOffInProgress = true; ///no extra timer is needed, will use SprayTimer
       checkRelays();
       setPumpOff(false);
@@ -41,9 +41,9 @@ void Aeroponics_NoTank::refresh_Sec()
     }
     else
     {
-      if (!MixInProgress && BypassSolenoidOn && millis() - PumpTimer >= ((uint32_t)*PrimingTime * 1000))
+      if (!MixInProgress && BypassOn && millis() - PumpTimer >= ((uint32_t)*PrimingTime * 1000))
       {                           ///self priming timeout reached, time to start spraying
-        BypassSolenoidOn = false; ///Close bypass valve
+        BypassOn = false; ///Close bypass valve
         checkRelays();
         SprayTimer = millis();
         Aeroponics::FeedbackPressureSensor->Pressure->resetAverage();
@@ -54,7 +54,7 @@ void Aeroponics_NoTank::refresh_Sec()
   else
   { ///pump is off
     if (!BlowOffInProgress)
-      BypassSolenoidOn = false; ///Should not leave the solenoid turned on
+      BypassOn = false; ///Should not leave the solenoid turned on
     if (PumpOK && *SprayEnabled && ((millis() - SprayTimer) >= ((uint32_t)*Interval * 60000)))
     { ///if time to start spraying (AeroInterval in Minutes)
       sprayNow(false);
@@ -76,7 +76,7 @@ void Aeroponics_NoTank::report()
 }
 
 void Aeroponics_NoTank::bypassOn(){
-  BypassSolenoidOn = true;
+  BypassOn = true;
   BlowOffInProgress = true; ///no extra timer is needed, will use SprayTimer
   checkRelays();
   SprayTimer = millis();  ///measures blowoff time
@@ -85,7 +85,7 @@ void Aeroponics_NoTank::bypassOn(){
 }
 
 void Aeroponics_NoTank::bypassOff(){
- BypassSolenoidOn = false;
+ BypassOn = false;
  BlowOffInProgress = false;
  checkRelays();
  Parent->addToLog(F("Bypass OFF"));
@@ -99,7 +99,7 @@ void Aeroponics_NoTank::sprayNow(bool UserRequest)
     MixInProgress = false;
     PumpOK = true;
     PumpOn = true;
-    BypassSolenoidOn = true;
+    BypassOn = true;
     checkRelays();
     PumpTimer = millis();
     SprayTimer = millis();
@@ -114,7 +114,7 @@ void Aeroponics_NoTank::sprayNow(bool UserRequest)
 void Aeroponics_NoTank::sprayOff()
 {
   PumpOn = false;
-  BypassSolenoidOn = false;
+  BypassOn = false;
   checkRelays();
   Parent->addToLog(F("Aeroponics spray OFF"));
 }
@@ -125,7 +125,7 @@ char *Aeroponics_NoTank::sprayStateToText()
     return (char *)"DISABLED";
   else
   {
-    if (PumpOn && !BypassSolenoidOn)
+    if (PumpOn && !BypassOn)
       return (char *)"ON";
     else
       return (char *)"ENABLED";

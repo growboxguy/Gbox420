@@ -31,5 +31,11 @@ struct aeroCommand  ///Max 32 bytes. Template of the command sent by the Transmi
 
 struct aeroResponse  ///Max 32 bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
-   
+   bool SprayEnabled = false;
+   float Pressure = 0.0;
+   bool PumpOn = false;
+   bool PumpEnabled = false;
+   bool BypassOn = false;
+   float LastSP = 0.0; ///< Used only without pressure tank. last spray pressure
+
 };

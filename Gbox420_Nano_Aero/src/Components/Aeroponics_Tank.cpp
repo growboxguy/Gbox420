@@ -35,26 +35,26 @@ void Aeroponics_Tank::refresh_Sec()
         }
         logToSerials(F("Pump timeout reached"), true);
       }
-      if (!MixInProgress && BypassSolenoidOn && millis() - PumpTimer >= ((uint32_t)*PrimingTime * 1000))
+      if (!MixInProgress && BypassOn && millis() - PumpTimer >= ((uint32_t)*PrimingTime * 1000))
       { ///self priming timeout reached, time to start refilling
         if (*Debug)
           logToSerials(F("Starting refill"), true);
-        BypassSolenoidOn = false;
+        BypassOn = false;
         PumpTimer = millis(); ///reset timer to start measuring refill time
       }
     }
   }
   else
   {                           ///pump is off
-    BypassSolenoidOn = false; ///Should not leave the solenoid turned on
+    BypassOn = false; ///Should not leave the solenoid turned on
   }
   if (PumpOK && Aeroponics::FeedbackPressureSensor->getPressure() <= *PressureLow)
   { ///if pump is not disabled and Pressure reached low limit: turn on pump
-    if (!PumpOn && !BypassSolenoidOn)
+    if (!PumpOn && !BypassOn)
     { ///start the bypass
       if (*Debug)
         logToSerials(F("Starting bypass"), true);
-      BypassSolenoidOn = true;
+      BypassOn = true;
       PumpOn = true;
       PumpTimer = millis();
     }
@@ -153,7 +153,7 @@ void Aeroponics_Tank::refillTank()
 {
   Parent->addToLog(F("Refilling tank"));
   PumpOK = true;
-  BypassSolenoidOn = true;
+  BypassOn = true;
   PumpOn = true;
   PumpTimer = millis();
   checkRelays();

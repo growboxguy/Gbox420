@@ -29,11 +29,11 @@ struct hempyCommand  ///Max 32 bytes. Template of the command sent by the Transm
 
 struct hempyResponse  ///Max 32 bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
-   bool OnPump1 = false; 
-   bool EnabledPump1  = false;
-   float WeightBucket1 = 0.0;
+   bool PumpOn_B1 = false; 
+   bool PumpEnabled_B1  = false;
+   float Weight_B1 = 0.0;
 
-   bool OnPump2  = false;
-   bool EnabledPump2  = false; 
-   float WeightBucket2 = 0.0;
+   bool PumpOn_B2  = false;
+   bool PumpEnabled_B2  = false; 
+   float Weight_B2 = 0.0;
 };

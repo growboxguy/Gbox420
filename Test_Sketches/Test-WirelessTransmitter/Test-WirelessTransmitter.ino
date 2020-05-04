@@ -40,13 +40,13 @@ struct commandTemplate Command = {1587936134,0,0,0,120,3.8,4.8,0,0,0,120,3.9,4.9
 
 struct responseTemplate  //Max 32bytes. Template of the response back from the Receiver. Both Transmitter and Receiver needs to know this structure
 {
-   bool OnPump1; 
-   bool EnabledPump1;
-   float WeightBucket1;
+   bool PumpOn_B1; 
+   bool PumpEnabled_B1;
+   float Weight_B1;
 
-   bool OnPump2;
-   bool EnabledPump2; 
-   float WeightBucket2;
+   bool PumpOn_B2;
+   bool PumpEnabled_B2; 
+   float Weight_B2;
    
    float Temp;
    float Humidity;
@@ -89,17 +89,17 @@ void send() {
             Serial.print(sizeof(AckResponse));
             Serial.println(F(" bytes]"));
             Serial.print(F("Bucket1: "));
-            Serial.print(AckResponse.OnPump1);
+            Serial.print(AckResponse.PumpOn_B1);
             Serial.print(F(", "));
-            Serial.print(AckResponse.EnabledPump1);
+            Serial.print(AckResponse.PumpEnabled_B1);
             Serial.print(F(", "));
-            Serial.print(AckResponse.WeightBucket1);
+            Serial.print(AckResponse.Weight_B1);
             Serial.print(F(" ; Bucket2: "));
-            Serial.print(AckResponse.OnPump2);
+            Serial.print(AckResponse.PumpOn_B2);
             Serial.print(F(", "));
-            Serial.print(AckResponse.EnabledPump2);
+            Serial.print(AckResponse.PumpEnabled_B2);
             Serial.print(F(", "));
-            Serial.print(AckResponse.WeightBucket2);
+            Serial.print(AckResponse.Weight_B2);
             Serial.print(F(" ; DHT: "));
             Serial.print(AckResponse.Temp);
             Serial.print(F(", "));
