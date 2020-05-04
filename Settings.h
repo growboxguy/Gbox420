@@ -49,7 +49,6 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
     };
     struct AeroModuleSettings AeroModule1 = {};
     
-
     struct AeroponicsSettings
     { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
       AeroponicsSettings(uint8_t BypassSolenoidPin = 0, uint8_t PumpPin = 0) : BypassSolenoidPin(BypassSolenoidPin), PumpPin(PumpPin) {}
@@ -62,13 +61,15 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
       int PrimingTime = 10;     ///At pump startup the bypass valve will be open for X seconds to let the pump remove air from the tubes
     };
     struct AeroponicsSettings AeroT1_Common = {.BypassSolenoidPin = 23, .PumpPin = 24};
-    struct AeroponicsSettings Aero1_Common = {.BypassSolenoidPin = 46, .PumpPin = 47};
+    struct AeroponicsSettings AeroNT1_Common = {.BypassSolenoidPin = 46, .PumpPin = 47};
 
-    struct AeroponicsSettings_NoTankSpecific
-    {                           ///Settings for an Aeroponics setup WITHOUT a pressure tank
+    struct AeroponicsSettings_NoTankSpecific  ///<Settings for an Aeroponics setup WITHOUT a pressure tank
+    {                           
+      AeroponicsSettings_NoTankSpecific(int BlowOffTime, float PressureHigh) : BlowOffTime(BlowOffTime), PressureHigh(PressureHigh) {}
       int BlowOffTime = 3;      ///After spraying open the bypass valve for X seconds to release pressure. Helps to stop spraying immediately
       float PressureHigh = 7.0; ///Safety feature - Turn off pump above this pressure
-    } Aero1_Specific;
+    };
+    struct AeroponicsSettings_NoTankSpecific AeroNT1_Specific = {.BlowOffTime = 3, .PressureHigh = 7.0};
 
     struct AeroponicsSettings_TankSpecific
     { ///Settings for an Aeroponics setup WITH a pressure tank
@@ -78,7 +79,7 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
       float PressureHigh = 7.0; ///Turn off pump above this pressure
     };
     struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.SpraySolenoidPin = 22};
-
+    
     struct DHTSensorSettings
     { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
       DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}

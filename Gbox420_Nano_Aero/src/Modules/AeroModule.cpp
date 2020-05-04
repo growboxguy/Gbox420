@@ -16,7 +16,7 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
   this -> SoundFeedback = Sound1;
   Pres1 = new PressureSensor(F("Pres1"), this, &ModuleSettings->Pres1);
   AeroT1 = new Aeroponics_Tank(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1); ///Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
-  Aero1 = new Aeroponics_NoTank(F("Aero1"), this, &ModuleSettings->Aero1_Common, &ModuleSettings->Aero1_Specific, Pres1);
+  AeroNT1 = new Aeroponics_NoTank(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, &ModuleSettings->AeroNT1_Specific, Pres1);
   addToRefreshQueue_Sec(this);         ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
   addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   //addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method

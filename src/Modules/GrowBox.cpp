@@ -33,7 +33,7 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *
   EDHT = new DHTSensor_Web(F("EDHT"), this, &ModuleSettings->EDHT);
   Pres1 = new PressureSensor_Web(F("Pres1"), this, &ModuleSettings->Pres1);
   AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1); ///Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
-  Aero1 = new Aeroponics_NoTank_Web(F("Aero1"), this, &ModuleSettings->Aero1_Common, &ModuleSettings->Aero1_Specific, Pres1);
+  AeroNT1 = new Aeroponics_NoTank_Web(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, &ModuleSettings->AeroNT1_Specific, Pres1);
   PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &ModuleSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &ModuleSettings->WaterTemp1);
   WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
@@ -271,11 +271,11 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
     strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_OffTime\":\""));
     strcat(LongMessage, Lt1->getOffTimeText());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroInterval\":\""));
-    strcat(LongMessage, Aero1->getInterval());
+    strcat(LongMessage, AeroNT1->getInterval());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroDuration\":\""));
-    strcat(LongMessage, Aero1->getDuration());
+    strcat(LongMessage, AeroNT1->getDuration());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroSprayPressure\":\""));
-    strcat(LongMessage, toText(Aero1->LastSprayPressure));
+    strcat(LongMessage, toText(AeroNT1->LastSprayPressure));
     ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,AeroT1 -> getInterval());
     ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,AeroT1 -> getDuration());
 

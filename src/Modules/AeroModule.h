@@ -27,9 +27,9 @@ public:
   AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSettings *DefaultSettings); ///constructor
   Sound *Sound1;             ///Pointer to a Piezo speaker - sound feedback
   PressureSensor *Pres1;
-  Aeroponics_NoTank *Aero1; 
+  Aeroponics_NoTank *AeroNT1; 
   Aeroponics_Tank *AeroT1;
-  
+
   void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();

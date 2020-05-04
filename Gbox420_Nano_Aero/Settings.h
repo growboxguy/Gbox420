@@ -52,13 +52,15 @@ static const uint8_t Version = 21; ///< Increment this when you make a change in
       int PrimingTime = 10;     ///At pump startup the bypass valve will be open for X seconds to let the pump remove air from the tubes
     };
     struct AeroponicsSettings AeroT1_Common = {.BypassSolenoidPin = 23, .PumpPin = 24};
-    struct AeroponicsSettings Aero1_Common = {.BypassSolenoidPin = 46, .PumpPin = 47};
+    struct AeroponicsSettings AeroNT1_Common = {.BypassSolenoidPin = 46, .PumpPin = 47};
 
-    struct AeroponicsSettings_NoTankSpecific
-    {                           ///Settings for an Aeroponics setup WITHOUT a pressure tank
+    struct AeroponicsSettings_NoTankSpecific  ///<Settings for an Aeroponics setup WITHOUT a pressure tank
+    {                           
+      AeroponicsSettings_NoTankSpecific(int BlowOffTime, float PressureHigh) : BlowOffTime(BlowOffTime), PressureHigh(PressureHigh) {}
       int BlowOffTime = 3;      ///After spraying open the bypass valve for X seconds to release pressure. Helps to stop spraying immediately
       float PressureHigh = 7.0; ///Safety feature - Turn off pump above this pressure
-    } Aero1_Specific;
+    };
+    struct AeroponicsSettings_NoTankSpecific AeroNT1_Specific = {.BlowOffTime = 3, .PressureHigh = 7.0};
 
     struct AeroponicsSettings_TankSpecific
     { ///Settings for an Aeroponics setup WITH a pressure tank

@@ -46,7 +46,7 @@ public:
   PressureSensor_Web *Pres1;
   PHSensor_Web *PHSensor1;
   Aeroponics_Tank_Web *AeroT1;
-  Aeroponics_NoTank_Web *Aero1;   
+  Aeroponics_NoTank_Web *AeroNT1;   
   WaterTempSensor_Web *WaterTemp1;
   WaterLevelSensor_Web *WaterLevel1;
   HempyModule_Web *HempyModule1;    /// <Represents the website controls and feedback for a HempyModule
