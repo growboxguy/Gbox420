@@ -15,6 +15,7 @@ class Sound;
 class Aeroponics_NoTank;
 class Aeroponics_Tank;
 class PressureSensor;
+class WaterPump;
 extern RF24 Wireless;
 
 
@@ -27,8 +28,10 @@ public:
   AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSettings *DefaultSettings); ///constructor
   Sound *Sound1;             ///Pointer to a Piezo speaker - sound feedback
   PressureSensor *Pres1;
+  WaterPump *Pump1;
   Aeroponics_NoTank *AeroNT1; 
   Aeroponics_Tank *AeroT1;
+
 
   void refresh_Sec();
   void refresh_FiveSec();

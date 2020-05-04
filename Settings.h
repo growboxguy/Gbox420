@@ -74,12 +74,12 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
 
     struct AeroponicsSettings_TankSpecific
     { ///Settings for an Aeroponics setup WITH a pressure tank
-      AeroponicsSettings_TankSpecific(uint8_t SpraySolenoidPin = 0) : SpraySolenoidPin(SpraySolenoidPin) {}
+      AeroponicsSettings_TankSpecific(uint8_t SpraySolenoidPin = 0, float PressureLow = 0.0, float PressureHigh = 0.0) : SpraySolenoidPin(SpraySolenoidPin), PressureLow(PressureLow), PressureHigh(PressureHigh) {}
       uint8_t SpraySolenoidPin;    ///Spray solenoid relay pin
-      float PressureLow = 5.0;  ///Turn on pump below this pressure
-      float PressureHigh = 7.0; ///Turn off pump above this pressure
+      float PressureLow;  ///Turn on pump below this pressure
+      float PressureHigh; ///Turn off pump above this pressure
     };
-    struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.SpraySolenoidPin = 22};
+    struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.SpraySolenoidPin = 22, .PressureLow = 5.0, .PressureHigh = 7.0};
 
     struct DHTSensorSettings
     { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
@@ -204,9 +204,9 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
     struct WaterPumpSettings
     {
       WaterPumpSettings(uint8_t Pin = 0, int TimeOut = 0, bool PumpEnabled = false) : Pin(Pin), TimeOut(TimeOut), PumpEnabled(PumpEnabled)  {}
-      uint8_t Pin;            ///Hempy bucket watering pump relay pin
+      uint8_t Pin;            ///Pump relay pin
       int TimeOut;   ///Max pump run time in seconds
-      bool PumpEnabled; ///Enable/disable automatic watering based on weight    
+      bool PumpEnabled; ///Enable/disable pump   
     };
     struct WaterPumpSettings Pump1 = {.Pin = 7, .TimeOut = 120, .PumpEnabled = true};
     struct WaterPumpSettings Pump2 = {.Pin = 8, .TimeOut = 120, .PumpEnabled = true};
