@@ -38,12 +38,10 @@ public:
   void updateResponse();
 
 private:
-  void setDebug(bool State);
-  void setMetric(bool MetricEnabled);
   struct aeroCommand Command;  //Commands sent to the external Module
   struct aeroResponse Response; //The response from the external Module will be stored here, represents the current status of the external Module
 
   
 protected:
-  bool RefreshAllRequested = false;
+
 };

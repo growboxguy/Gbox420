@@ -44,12 +44,8 @@ public:
   void updateResponse();
 
 private:
-  void setDebug(bool State);
-  void setMetric(bool MetricEnabled);
   struct hempyCommand Command;  //Commands sent to the external Module
   struct hempyResponse Response; //The response from the external Module will be stored here, represents the current status of the external Module
-
   
 protected:
-  bool RefreshAllRequested = false;
 };

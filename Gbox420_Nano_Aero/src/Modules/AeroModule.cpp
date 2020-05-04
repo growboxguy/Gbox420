@@ -101,47 +101,6 @@ void AeroModule::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
-  if (RefreshAllRequested)
-  {
-    RefreshAllRequested = false;
-    runAll();
-  }  
   runReport(); 
   updateResponse(); 
-}
-
-
-
-//////////////////////////////////////////////////////////////////
-//Settings
-void AeroModule::setDebug(bool DebugEnabled)
-{
-   if (DebugEnabled != *Debug)
-   {
-    *Debug = DebugEnabled;
-    if (*Debug)
-    {
-      addToLog(F("Debug enabled"));
-      getSoundObject() -> playOnSound();
-    }
-    else
-    {
-      addToLog(F("Debug disabled"));
-      getSoundObject() -> playOffSound();
-    }
-   }  
-}
-
-void AeroModule::setMetric(bool MetricEnabled)
-{
-  if (MetricEnabled != *Metric)
-  { //if there was a change
-    *Metric = MetricEnabled;
-    RefreshAllRequested = true;
-    if (*Metric)
-      addToLog(F("Using Metric units"));
-    else
-      addToLog(F("Using Imperial units"));
-    getSoundObject() -> playOnSound();
-  }
 }

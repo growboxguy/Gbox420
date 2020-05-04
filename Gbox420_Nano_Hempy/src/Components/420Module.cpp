@@ -45,11 +45,20 @@ void Module::runReport()
 
 void Module::runSec()
 {
-  if (*Debug)
-    logToSerials(F("One sec trigger.."), true, 1);
-  for (int i = 0; i < refreshQueueItemCount_Sec; i++)
+  if(RunAllRequested)
   {
-    RefreshQueue_Sec[i]->refresh_Sec();
+    RunAllRequested = false;
+    logToSerials(F("Running full refresh.."), true, 1);
+    runAll();
+  }
+  else
+  {
+    if (*Debug)
+    logToSerials(F("One sec trigger.."), true, 1);
+    for (int i = 0; i < refreshQueueItemCount_Sec; i++)
+    {
+      RefreshQueue_Sec[i]->refresh_Sec();
+    }
   }
 }
 
@@ -154,4 +163,38 @@ char *Module::getFormattedTime(bool PrintToSerials)
   if (PrintToSerials)
     logToSerials(&CurrentTime, true, 0);
   return CurrentTime;
+}
+
+//////////////////////////////////////////////////////////////////
+//Settings
+void Module::setDebug(bool DebugEnabled)
+{
+   if (DebugEnabled != *Debug)
+   {
+    *Debug = DebugEnabled;
+    if (*Debug)
+    {
+      addToLog(F("Debug enabled"));
+      getSoundObject() -> playOnSound();
+    }
+    else
+    {
+      addToLog(F("Debug disabled"));
+      getSoundObject() -> playOffSound();
+    }
+   }  
+}
+
+void Module::setMetric(bool MetricEnabled)
+{
+  if (MetricEnabled != *Metric)
+  { //if there was a change
+    *Metric = MetricEnabled;
+    RunAllRequested = true;  ///< Force a full sensor reading refresh
+    if (*Metric)
+      addToLog(F("Using Metric units"));
+    else
+      addToLog(F("Using Imperial units"));
+    getSoundObject() -> playOnSound();
+  }
 }

@@ -95,48 +95,7 @@ void HempyModule::updateResponse(){
 void HempyModule::refresh_FiveSec()
 {
   if (*Debug)
-    Common::refresh_FiveSec();
-  if (RefreshAllRequested)
-  {
-    RefreshAllRequested = false;
-    runAll();
-  }  
+    Common::refresh_FiveSec(); 
   runReport(); 
   updateResponse(); 
-}
-
-
-
-//////////////////////////////////////////////////////////////////
-//Settings
-void HempyModule::setDebug(bool DebugEnabled)
-{
-   if (DebugEnabled != *Debug)
-   {
-    *Debug = DebugEnabled;
-    if (*Debug)
-    {
-      addToLog(F("Debug enabled"));
-      getSoundObject() -> playOnSound();
-    }
-    else
-    {
-      addToLog(F("Debug disabled"));
-      getSoundObject() -> playOffSound();
-    }
-   }  
-}
-
-void HempyModule::setMetric(bool MetricEnabled)
-{
-  if (MetricEnabled != *Metric)
-  { //if there was a change
-    *Metric = MetricEnabled;
-    RefreshAllRequested = true;
-    if (*Metric)
-      addToLog(F("Using Metric units"));
-    else
-      addToLog(F("Using Imperial units"));
-    getSoundObject() -> playOnSound();
-  }
 }

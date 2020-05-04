@@ -34,6 +34,8 @@ public:
 private:
 
 protected:
+  void setDebug(bool State);
+  void setMetric(bool MetricEnabled);
   Sound* SoundFeedback = NULL;
   bool RunAllRequested = false;
   bool ConsoleReportRequested = false; 
