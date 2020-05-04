@@ -92,9 +92,9 @@ void Aeroponics_NoTank::bypassOff(){
  Parent->getSoundObject()->playOffSound();
 }
 
-void Aeroponics_NoTank::sprayNow(bool FromWebsite)
+void Aeroponics_NoTank::sprayNow(bool UserRequest)
 {
-  if (*SprayEnabled || FromWebsite)
+  if (*SprayEnabled || UserRequest)
   {
     MixInProgress = false;
     PumpOK = true;
@@ -104,7 +104,7 @@ void Aeroponics_NoTank::sprayNow(bool FromWebsite)
     PumpTimer = millis();
     SprayTimer = millis();
     Parent->getSoundObject()->playOnSound();
-    if (FromWebsite)
+    if (UserRequest)
       Parent->addToLog(F("Aeroponics spraying"));
     else
       logToSerials(F("Aeroponics spraying"), true, 3);

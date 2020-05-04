@@ -1,10 +1,11 @@
 #include "MainModule.h"
+#include "HempyModule_Web.h"
+#include "AeroModule_Web.h"
 #include "../Components_Web/Lights_Web.h"
 #include "../Components_Web/Sound_Web.h"
 #include "../Components_Web/Fan_Web.h"
 #include "../Components_Web/PowerSensor_Web.h"
 #include "../Components_Web/PowerSensorV3_Web.h"  ///Only for PZEM004T V3.0
-#include "../Components_Web/HempyModule_Web.h"
 #include "../Components_Web/ModuleSkeleton_Web.h" ///Only for demonstration purposes
 
 MainModule::MainModule(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Common_Web(Name), Module_Web(Wireless)

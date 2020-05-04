@@ -1,6 +1,6 @@
-#include "HempyModule_Web.h"
+#include "AeroModule_Web.h"
 
-HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent,Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
+AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent,Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -15,143 +15,147 @@ HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Pa
   Parent->addToWebsiteQueue_Refresh(this);     ///Subscribing to the Website refresh event
   Parent->addToWebsiteQueue_Field(this);       ///Subscribing to the Website field submit event
   Parent->addToWebsiteQueue_Button(this);      ///Subscribing to the Website button press event
-  logToSerials(F("HempyModule_Web object created"), true, 1);
+  logToSerials(F("AeroModule_Web object created"), true, 1);
 }
 
-void HempyModule_Web::report()
+void AeroModule_Web::report()
 {
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
-  strcat_P(LongMessage, (PGM_P)F("Bucket1 {"));
+  /*strcat_P(LongMessage, (PGM_P)F("Bucket1 {"));
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
   strcat(LongMessage, weightToText(Response.WeightBucket1));
   strcat_P(LongMessage, (PGM_P)F(" ["));
-  strcat(LongMessage, toText(Command.StartWeightBucket1));
+  strcat(LongMessage, toText(Command.StartWeightBucket_B1));
   strcat_P(LongMessage, (PGM_P)F("/"));
-  strcat(LongMessage, toText(Command.StopWeightBucket1));
+  strcat(LongMessage, toText(Command.StopWeightBucket_B1));
   strcat_P(LongMessage, (PGM_P)F("] ; Pump:"));
   strcat(LongMessage, pumpStateToText(Response.EnabledPump1,Response.OnPump1));
   strcat_P(LongMessage, (PGM_P)F("}, Bucket2 {"));
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
   strcat(LongMessage, weightToText(Response.WeightBucket2));
   strcat_P(LongMessage, (PGM_P)F(" ["));
-  strcat(LongMessage, toText(Command.StartWeightBucket2));
+  strcat(LongMessage, toText(Command.StartWeightBucket_B2));
   strcat_P(LongMessage, (PGM_P)F("/"));
-  strcat(LongMessage, toText(Command.StopWeightBucket2));
+  strcat(LongMessage, toText(Command.StopWeightBucket_B2));
   strcat_P(LongMessage, (PGM_P)F("] ; Pump:"));
   strcat(LongMessage, pumpStateToText(Response.EnabledPump2,Response.OnPump2));
-  strcat_P(LongMessage, (PGM_P)F("}"));
+  strcat_P(LongMessage, (PGM_P)F("}"));*/
   logToSerials(&LongMessage, true, 1);
 }
 
-void HempyModule_Web::websiteEvent_Load(char *url)
+void AeroModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G",2) == 0)
-  {
-    WebServer.setArgFloat(getComponentName(F("B1Strt")), Command.StartWeightBucket1);
-    WebServer.setArgFloat(getComponentName(F("B1Stp")), Command.StopWeightBucket1);
-    WebServer.setArgInt(getComponentName(F("B1Time")), Command.TimeOutPump1);
-    WebServer.setArgFloat(getComponentName(F("B2Strt")), Command.StartWeightBucket2);
-    WebServer.setArgFloat(getComponentName(F("B2Stp")), Command.StopWeightBucket2);
-    WebServer.setArgInt(getComponentName(F("B2Time")), Command.TimeOutPump2);
+  {/*
+    WebServer.setArgFloat(getComponentName(F("B1Strt")), Command.StartWeightBucket_B1);
+    WebServer.setArgFloat(getComponentName(F("B1Stp")), Command.StopWeightBucket_B1);
+    WebServer.setArgInt(getComponentName(F("B1Time")), Command.TimeOutPump_B1);
+    WebServer.setArgFloat(getComponentName(F("B2Strt")), Command.StartWeightBucket_B2);
+    WebServer.setArgFloat(getComponentName(F("B2Stp")), Command.StopWeightBucket_B2);
+    WebServer.setArgInt(getComponentName(F("B2Time")), Command.TimeOutPump_B2);
+    */
   }
 }
 
-void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///called when website is refreshed.
+void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///called when website is refreshed.
 {
   if (strncmp(url, "/G",2) == 0)
   {
+    /*
     WebServer.setArgString(getComponentName(F("B1Weight")), weightToText(Response.WeightBucket1));
     WebServer.setArgString(getComponentName(F("B2Weight")), weightToText(Response.WeightBucket2));
     WebServer.setArgString(getComponentName(F("B1Pump")),  pumpStateToText(Response.EnabledPump1,Response.OnPump1));
     WebServer.setArgString(getComponentName(F("B2Pump")), pumpStateToText(Response.EnabledPump2,Response.OnPump2));
+    */
   }
 }
 
-void HempyModule_Web::websiteEvent_Button(char *Button)
+void AeroModule_Web::websiteEvent_Button(char *Button)
 { ///When a button is pressed on the website
   if (!isThisMyComponent(Button))
   {
     return;
   }
   else
-  {    
+  {    /*
     if (strcmp_P(ShortMessage, (PGM_P)F("B1PumpOn")) == 0)
     {
-      Command.TurnOnPump1 = true;
-      Parent -> addToLog(F("Watering HempyBucket 1"), false);
+      Command.TurnOnPump_B1 = true;
+      Parent -> addToLog(F("Watering AeroBucket 1"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2PumpOn")) == 0)
     {
-      Command.TurnOnPump2 = true;
-      Parent -> addToLog(F("Watering HempyBucket 2"), false);
+      Command.TurnOnPump_B2 = true;
+      Parent -> addToLog(F("Watering AeroBucket 2"), false);
     } 
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1PumpOff")) == 0)
     {
-      Command.TurnOffPump1 = true;
-      Parent -> addToLog(F("Stop watering HempyBucket 1"), false);
+      Command.TurnOffPump_B1 = true;
+      Parent -> addToLog(F("Stop watering AeroBucket 1"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2PumpOff")) == 0)
     {
-      Command.TurnOffPump2 = true;
-      Parent -> addToLog(F("Stop watering HempyBucket 2"), false);
+      Command.TurnOffPump_B2 = true;
+      Parent -> addToLog(F("Stop watering AeroBucket 2"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1PumpDis")) == 0)
     {
-      Command.DisablePump1 = true;
-      Parent -> addToLog(F("Disabled HempyBucket 1 pump"), false);
+      Command.DisablePump_B1 = true;
+      Parent -> addToLog(F("Disabled AeroBucket 1 pump"), false);
     } 
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2PumpDis")) == 0)
     {
-      Command.DisablePump2 = true;
-      Parent -> addToLog(F("Disabled HempyBucket 2 pump"), false);
+      Command.DisablePump_B2 = true;
+      Parent -> addToLog(F("Disabled AeroBucket 2 pump"), false);
     }  
+    */
     SyncRequested = true;  
   }
 }
 
 
-void HempyModule_Web::websiteEvent_Field(char *Field)
+void AeroModule_Web::websiteEvent_Field(char *Field)
 { ///When the website field is submitted
   if (!isThisMyComponent(Field))
   {
     return;
   }
   else
-  {    
+  {    /*
     if (strcmp_P(ShortMessage, (PGM_P)F("B1Strt")) == 0)
     {
-      DefaultSettings->StartWeightBucket1 = WebServer.getArgFloat();      
+      DefaultSettings->StartWeightBucket_B1 = WebServer.getArgFloat();      
     }  /// \todo Write back to EEPROM
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1Stp")) == 0)
     {
-      DefaultSettings->StopWeightBucket1 = WebServer.getArgFloat();
+      DefaultSettings->StopWeightBucket_B1 = WebServer.getArgFloat();
       Parent -> addToLog(F("Bucket 1 limits updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1Time")) == 0)
     {
-      DefaultSettings->TimeOutPump1 = WebServer.getArgInt();
+      DefaultSettings->TimeOutPump_B1 = WebServer.getArgInt();
       Parent -> addToLog(F("Pump 1 timeout updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2Strt")) == 0)
     {
-      DefaultSettings->StartWeightBucket2 = WebServer.getArgFloat();
+      DefaultSettings->StartWeightBucket_B2 = WebServer.getArgFloat();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2Stp")) == 0)
     {
-      DefaultSettings->StopWeightBucket2 = WebServer.getArgFloat();
+      DefaultSettings->StopWeightBucket_B2 = WebServer.getArgFloat();
       Parent -> addToLog(F("Bucket 2 limits updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2Time")) == 0)
     {
-      DefaultSettings->TimeOutPump2 = WebServer.getArgInt();
+      DefaultSettings->TimeOutPump_B2 = WebServer.getArgInt();
       Parent -> addToLog(F("Pump 2 timeout updated"), false);
-    }
+    }*/
     SyncRequested = true;
   }
 }
 
-void HempyModule_Web::refresh_Sec()
+void AeroModule_Web::refresh_Sec()
 {
   if (*Debug)
     Common::refresh_Sec();  
@@ -161,20 +165,20 @@ void HempyModule_Web::refresh_Sec()
   }
 }
 
-void HempyModule_Web::refresh_FiveSec()
+void AeroModule_Web::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();  
   syncModule(WirelessChannel,&Command,&Response);
 }
 
-void HempyModule_Web::refresh_Minute()
+void AeroModule_Web::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();  
 }
 
-void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Command, hempyResponse *Response){
+void AeroModule_Web::syncModule( const byte WirelessChannel[], aeroCommand *Command, aeroResponse *Response){
   updateCommand();
   logToSerials(F("Sending sync command..."),false,3);
   Parent -> Wireless -> openWritingPipe(WirelessChannel);
@@ -186,7 +190,7 @@ void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Co
           logToSerials(F("bytes]"),true,1);
 
           if(*Debug){
-          logToSerials(Response -> OnPump1,false,3);
+          /*logToSerials(Response -> OnPump1,false,3);
           logToSerials(F(","),false,1);
           logToSerials(Response -> EnabledPump1,false,1);
           logToSerials(F(","),false,1);
@@ -196,20 +200,21 @@ void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Co
           logToSerials(F(","),false,1);
           logToSerials(Response -> EnabledPump2,false,1);
           logToSerials(F(";"),false,1);
-          logToSerials(Response -> WeightBucket2,true,1);               
+          logToSerials(Response -> WeightBucket2,true,1);  */             
           }            
 
           ///Turn off command flags 
-          if(Command -> DisablePump1 || Command -> TurnOnPump1 || Command -> TurnOffPump1 || Command -> DisablePump2 || Command -> TurnOnPump2 || Command -> TurnOffPump2 )
+          /*
+          if(Command -> DisablePump_B1 || Command -> TurnOnPump_B1 || Command -> TurnOffPump_B1 || Command -> DisablePump_B2 || Command -> TurnOnPump_B2 || Command -> TurnOffPump_B2 )
           {
             SyncRequested = true;  ///Force a second packet to actualize the response
-            Command -> DisablePump1 = false;
-            Command -> TurnOnPump1 = false;
-            Command -> TurnOffPump1 = false;
-            Command -> DisablePump2 = false;
-            Command -> TurnOnPump2 = false;
-            Command -> TurnOffPump2 = false;
-          }
+            Command -> DisablePump_B1 = false;
+            Command -> TurnOnPump_B1 = false;
+            Command -> TurnOffPump_B1 = false;
+            Command -> DisablePump_B2 = false;
+            Command -> TurnOnPump_B2 = false;
+            Command -> TurnOffPump_B2 = false;
+          }*/
       }
       else {
           Serial.println(F(" Acknowledgement received without any data."));
@@ -221,16 +226,18 @@ void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Co
   }
 
 
-void HempyModule_Web::updateCommand() {        // so you can see that new data is being sent
-    //Command.TurnOnPump1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exclusive!
-    //Command.TurnOnPump2 = random(0,2);    
+void AeroModule_Web::updateCommand() {        // so you can see that new data is being sent
+    //Command.TurnOnPump_B1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exclusive!
+    //Command.TurnOnPump_B2 = random(0,2);    
     Command.Time = now();
     Command.Debug = *Debug;
     Command.Metric = *Metric;
-    Command.StartWeightBucket1= DefaultSettings->StartWeightBucket1;
-    Command.StopWeightBucket1= DefaultSettings->StopWeightBucket1;
-    Command.TimeOutPump1= DefaultSettings->TimeOutPump1;
-    Command.StartWeightBucket2= DefaultSettings->StartWeightBucket2;
-    Command.StopWeightBucket2= DefaultSettings->StopWeightBucket2;
-    Command.TimeOutPump2= DefaultSettings->TimeOutPump2;
+    /*
+    Command.StartWeightBucket_B1= DefaultSettings->StartWeightBucket_B1;
+    Command.StopWeightBucket_B1= DefaultSettings->StopWeightBucket_B1;
+    Command.TimeOutPump_B1= DefaultSettings->TimeOutPump_B1;
+    Command.StartWeightBucket_B2= DefaultSettings->StartWeightBucket_B2;
+    Command.StopWeightBucket_B2= DefaultSettings->StopWeightBucket_B2;
+    Command.TimeOutPump_B2= DefaultSettings->TimeOutPump_B2;
+    */
 }

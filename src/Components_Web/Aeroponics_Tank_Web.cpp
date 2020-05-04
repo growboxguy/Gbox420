@@ -58,11 +58,11 @@ void Aeroponics_Tank_Web::websiteEvent_Button(char *Button)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0)
     {
-      PumpDisable();
+      setPumpDisable();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Mix")) == 0)
     {
-      Mix();
+      mixReservoir();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayEn")) == 0)
     {
@@ -109,11 +109,11 @@ void Aeroponics_Tank_Web::websiteEvent_Field(char *Field)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
     {
-      setDuration(WebServer.getArgInt());
+      setSprayDuration(WebServer.getArgInt());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Int")) == 0)
     {
-      setInterval(WebServer.getArgInt());
+      setSprayInterval(WebServer.getArgInt());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Spray")) == 0)
     {

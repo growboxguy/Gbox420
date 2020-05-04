@@ -32,20 +32,19 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
 void HempyModule::processCommand(hempyCommand *Command){
   setDebug(Command -> Debug);
   setMetric(Command -> Metric);
-  if(Command -> DisablePump1)
-  if(Command -> DisablePump1) Pump1 -> disable();
-  if(Command -> TurnOnPump1) Pump1 -> turnOn(true);
-  if(Command -> TurnOffPump1) Pump1 -> turnOff(true);
-  Pump1 -> setTimeOut(Command -> TimeOutPump1);
-  Bucket1 -> setStartWeight(Command -> StartWeightBucket1);
-  Bucket1 -> setStopWeight(Command -> StopWeightBucket1);
+  if(Command -> DisablePump_B1) Pump1 -> disable();
+  if(Command -> TurnOnPump_B1) Pump1 -> turnOn(true);
+  if(Command -> TurnOffPump_B1) Pump1 -> turnOff(true);
+  Pump1 -> setTimeOut(Command -> TimeOutPump_B1);
+  Bucket1 -> setStartWeight(Command -> StartWeightBucket_B1);
+  Bucket1 -> setStopWeight(Command -> StopWeightBucket_B1);
 
-  if(Command -> DisablePump2) Pump2 -> disable();
-  if(Command -> TurnOnPump2) Pump2 -> turnOn(true);
-  if(Command -> TurnOffPump2) Pump2 -> turnOff(true);
-  Pump2 -> setTimeOut(Command -> TimeOutPump2);
-  Bucket2 -> setStartWeight(Command -> StartWeightBucket2);
-  Bucket2 -> setStopWeight(Command -> StopWeightBucket2);
+  if(Command -> DisablePump_B2) Pump2 -> disable();
+  if(Command -> TurnOnPump_B2) Pump2 -> turnOn(true);
+  if(Command -> TurnOffPump_B2) Pump2 -> turnOff(true);
+  Pump2 -> setTimeOut(Command -> TimeOutPump_B2);
+  Bucket2 -> setStartWeight(Command -> StartWeightBucket_B2);
+  Bucket2 -> setStopWeight(Command -> StopWeightBucket_B2);
 
   updateResponse();
   saveSettings(ModuleSettings);
@@ -54,30 +53,30 @@ void HempyModule::processCommand(hempyCommand *Command){
     logToSerials(Command -> Debug,false,3);
       logToSerials(F(","),false,1);
       logToSerials(Command -> Metric,false,1);
-      logToSerials(F(","),false,1);
-    logToSerials(Command -> DisablePump1,false,1);
+      logToSerials(F(";"),false,1);
+    logToSerials(Command -> DisablePump_B1,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> TurnOnPump1,false,1);
+        logToSerials(Command -> TurnOnPump_B1,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> TurnOffPump1,false,1);
+        logToSerials(Command -> TurnOffPump_B1,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> TimeOutPump1,false,1);
+        logToSerials(Command -> TimeOutPump_B1,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> StartWeightBucket1,false,1);
+        logToSerials(Command -> StartWeightBucket_B1,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> StopWeightBucket1,false,1);
+        logToSerials(Command -> StopWeightBucket_B1,false,1);
         logToSerials(F(";"),false,1);
-  logToSerials(Command -> DisablePump2,false,1);
+  logToSerials(Command -> DisablePump_B2,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> TurnOnPump2,false,1);
+        logToSerials(Command -> TurnOnPump_B2,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> TurnOffPump2,false,1);
+        logToSerials(Command -> TurnOffPump_B2,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> TimeOutPump2,false,1);
+        logToSerials(Command -> TimeOutPump_B2,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> StartWeightBucket2,false,1);
+        logToSerials(Command -> StartWeightBucket_B2,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> StopWeightBucket2,true,1);
+        logToSerials(Command -> StopWeightBucket_B2,true,1);
   }       
 }
 

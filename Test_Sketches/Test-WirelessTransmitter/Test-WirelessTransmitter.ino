@@ -22,18 +22,18 @@ struct commandTemplate  //Max 32bytes. Template of the command sent to the Recei
    time_t Time;
    
    bool DisablePump1;   
-   bool TurnOnPump1;   
-   bool TurnOffPump1;   
-   int TimeOutPump1;   
-   float StartWeightBucket1;
-   float StopWeightBucket1;
+   bool TurnOnPump;   
+   bool TurnOffPump;   
+   int TimeOutPump;   
+   float StartWeightBucket;
+   float StopWeightBucket;
    
-   bool DisablePump2;
-   bool TurnOnPump2;
-   bool TurnOffPump2;
-   int TimeOutPump2;
-   float StartWeightBucket2;
-   float StopWeightBucket2;
+   bool DisablePump_B2;
+   bool TurnOnPump_B2;
+   bool TurnOffPump_B2;
+   int TimeOutPump_B2;
+   float StartWeightBucket_B2;
+   float StopWeightBucket_B2;
 };
 struct commandTemplate Command = {1587936134,0,0,0,120,3.8,4.8,0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
 
@@ -119,8 +119,8 @@ void send() {
  }
 
 void updateCommand() {        // so you can see that new data is being sent
-    //Command.TurnOnPump1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exlusive!
-    //Command.TurnOnPump2 = random(0,2);
-    Command.StopWeightBucket1 = random(400, 500) / 100.0;
-    Command.StopWeightBucket2 = random(400, 500) / 100.0;
+    //Command.TurnOnPump = random(0,2);  //Generate random bool: 0 or 1. The max limit is exlusive!
+    //Command.TurnOnPump_B2 = random(0,2);
+    Command.StopWeightBucket = random(400, 500) / 100.0;
+    Command.StopWeightBucket_B2 = random(400, 500) / 100.0;
 }

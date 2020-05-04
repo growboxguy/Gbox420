@@ -27,7 +27,7 @@ void Aeroponics_NoTank_Web::websiteEvent_Refresh(__attribute__((unused)) char *u
 {
   if (strncmp(url, "/G",2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("PresSp")), pressureToText(LastSprayPressure));
+    WebServer.setArgString(getComponentName(F("LastSP")), pressureToText(LastSprayPressure));
     WebServer.setArgString(getComponentName(F("Pres")), FeedbackPressureSensor->getPressureText(true, false));
     WebServer.setArgString(getComponentName(F("Spray")), sprayStateToText());
     WebServer.setArgString(getComponentName(F("Pump")), pumpStateToText(PumpOK,PumpOn));
@@ -47,8 +47,8 @@ void Aeroponics_NoTank_Web::websiteEvent_Button(char *Button)
     else if (strcmp_P(ShortMessage, (PGM_P)F("BypassOff")) == 0){bypassOff();}    
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOn")) == 0){setPumpOn(true);}
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0){setPumpOff(true);}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0){PumpDisable();}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Mix")) == 0){Mix();}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0){setPumpDisable();}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Mix")) == 0){mixReservoir();}
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayEn")) == 0){setSprayOnOff(true);}
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayDis")) == 0){setSprayOnOff(false);}
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayNow")) == 0){sprayNow(true);}
@@ -60,7 +60,7 @@ void Aeroponics_NoTank_Web::websiteEvent_Field(__attribute__((unused)) char *Fie
 { ///When a field is submitted using the Set button
   if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0){setPumpTimeout(WebServer.getArgInt());}
   else if (strcmp_P(ShortMessage, (PGM_P)F("Priming")) == 0){setPrimingTime(WebServer.getArgInt());}
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0){setDuration(WebServer.getArgInt());}
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Int")) == 0){setInterval(WebServer.getArgInt());}
+  else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0){setSprayDuration(WebServer.getArgInt());}
+  else if (strcmp_P(ShortMessage, (PGM_P)F("Int")) == 0){setSprayInterval(WebServer.getArgInt());}
   else if (strcmp_P(ShortMessage, (PGM_P)F("Spray")) == 0){setSprayOnOff(WebServer.getArgBoolean());}
 }

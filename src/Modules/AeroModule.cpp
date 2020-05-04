@@ -23,6 +23,10 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
   //addToRefreshQueue_QuarterHour(this); ///Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
   logToSerials(Name, false, 0);
   logToSerials(F("- AeroModule object created, refreshing..."), true, 1);
+  if(AeroT1 != NULL && AeroNT1 != NULL)
+  {
+    logToSerials(F("DEV MODE, please comment out AeroT1 or AeroNT1..."), false, 0);
+  }
   runAll();
   addToLog(F("AeroModule initialized"), 0);
 }
@@ -30,21 +34,40 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
 void AeroModule::processCommand(aeroCommand *Command){
   setDebug(Command -> Debug);
   setMetric(Command -> Metric);
-  /*if(Command -> DisablePump1)
-  if(Command -> DisablePump1) Pump1 -> disable();
-  if(Command -> TurnOnPump1) Pump1 -> turnOn(true);
-  if(Command -> TurnOffPump1) Pump1 -> turnOff(true);
-  Pump1 -> setTimeOut(Command -> TimeOutPump1);
-  Bucket1 -> setStartWeight(Command -> StartWeightBucket1);
-  Bucket1 -> setStopWeight(Command -> StopWeightBucket1);
 
-  if(Command -> DisablePump2) Pump2 -> disable();
-  if(Command -> TurnOnPump2) Pump2 -> turnOn(true);
-  if(Command -> TurnOffPump2) Pump2 -> turnOff(true);
-  Pump2 -> setTimeOut(Command -> TimeOutPump2);
-  Bucket2 -> setStartWeight(Command -> StartWeightBucket2);
-  Bucket2 -> setStopWeight(Command -> StopWeightBucket2);
-  */
+  if(AeroT1 != NULL)
+  {
+    if(Command -> SprayEnable) AeroT1 ->  setSprayOnOff(true);
+    if(Command -> SprayDisable) AeroT1 -> setSprayOnOff(false);
+    if(Command -> SprayNow) AeroT1 -> sprayNow(true);
+    if(Command -> SprayOff) AeroT1 -> sprayOff();
+    AeroT1 -> setSprayInterval(Command -> SprayInterval);
+    AeroT1 -> setSprayDuration(Command -> SprayDuration);
+    if(Command -> PumpOn) AeroT1 -> setPumpOn(true);
+    if(Command -> PumpOff) AeroT1 -> setPumpOff(true);
+    if(Command -> PumpDisable) AeroT1 -> setPumpDisable();
+    AeroT1 -> setPumpTimeout(Command -> PumpTimeOut);
+    AeroT1 -> setPrimingTime(Command -> PumpPriming);
+    if(Command -> MixReservoir) AeroT1 -> mixReservoir();
+  }
+
+  if(AeroNT1 != NULL)
+  {
+    if(Command -> SprayEnable) AeroNT1 ->  setSprayOnOff(true);
+    if(Command -> SprayDisable) AeroNT1 -> setSprayOnOff(false);
+    if(Command -> SprayNow) AeroNT1 -> sprayNow(true);
+    if(Command -> SprayOff) AeroNT1 -> sprayOff();
+    AeroNT1 -> setSprayInterval(Command -> SprayInterval);
+    AeroNT1 -> setSprayDuration(Command -> SprayDuration);
+    if(Command -> PumpOn) AeroNT1 -> setPumpOn(true);
+    if(Command -> PumpOff) AeroNT1 -> setPumpOff(true);
+    if(Command -> PumpDisable) AeroNT1 -> setPumpDisable();
+    AeroNT1 -> setPumpTimeout(Command -> PumpTimeOut);
+    AeroNT1 -> setPrimingTime(Command -> PumpPriming);
+    if(Command -> MixReservoir) AeroNT1 -> mixReservoir();
+    if(Command -> BypassOn) AeroNT1 -> bypassOn();
+    if(Command -> BypassOff) AeroNT1 -> bypassOff();
+  }  
 
   updateResponse();
   saveSettings(ModuleSettings);
@@ -53,30 +76,33 @@ void AeroModule::processCommand(aeroCommand *Command){
     logToSerials(Command -> Debug,false,3);
       logToSerials(F(","),false,1);
       logToSerials(Command -> Metric,false,1);
-      logToSerials(F(","),false,1);
-    /*logToSerials(Command -> DisablePump1,false,1);
+      logToSerials(F(";"),false,1);
+    logToSerials(Command -> SprayEnable,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> TurnOnPump1,false,1);
+        logToSerials(Command -> SprayDisable,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> TurnOffPump1,false,1);
+        logToSerials(Command -> SprayNow,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> TimeOutPump1,false,1);
+        logToSerials(Command -> SprayOff,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> StartWeightBucket1,false,1);
+        logToSerials(Command -> SprayInterval,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> StopWeightBucket1,false,1);
+        logToSerials(Command -> SprayDuration,false,1);
         logToSerials(F(";"),false,1);
-  logToSerials(Command -> DisablePump2,false,1);
+      logToSerials(Command -> PumpOn,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> TurnOnPump2,false,1);
+        logToSerials(Command -> PumpOff,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> TurnOffPump2,false,1);
+        logToSerials(Command -> PumpDisable,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> TimeOutPump2,false,1);
+        logToSerials(Command -> PumpTimeOut,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> StartWeightBucket2,false,1);
+        logToSerials(Command -> PumpPriming,false,1);
+        logToSerials(Command -> MixReservoir,false,1);
+        logToSerials(F(";"),false,1);
+      logToSerials(Command -> BypassOn,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> StopWeightBucket2,true,1);*/
+        logToSerials(Command -> BypassOff,true,1);
   }       
 }
 

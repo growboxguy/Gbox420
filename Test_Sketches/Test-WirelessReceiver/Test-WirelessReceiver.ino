@@ -18,18 +18,18 @@ struct commandTemplate  //Max 32bytes. Template of the command sent by the Trans
    time_t Time;
    
    bool DisablePump1;   
-   bool TurnOnPump1;   
-   bool TurnOffPump1;   
-   int TimeOutPump1;   
-   float StartWeightBucket1;
-   float StopWeightBucket1;
+   bool TurnOnPump;   
+   bool TurnOffPump;   
+   int TimeOutPump;   
+   float StartWeightBucket;
+   float StopWeightBucket;
    
-   bool DisablePump2;
-   bool TurnOnPump2;
-   bool TurnOffPump2;
-   int TimeOutPump2;
-   float StartWeightBucket2;
-   float StopWeightBucket2;
+   bool DisablePump_B2;
+   bool TurnOnPump_B2;
+   bool TurnOffPump_B2;
+   int TimeOutPump_B2;
+   float StartWeightBucket_B2;
+   float StopWeightBucket_B2;
 };
 struct commandTemplate ReceivedCommand;  //Variable where the actual command values will get stored
 
@@ -72,27 +72,27 @@ void getData() {
         Serial.print(F("  Bucket1: "));
         Serial.print(ReceivedCommand.DisablePump1);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.TurnOnPump1);
+        Serial.print(ReceivedCommand.TurnOnPump);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.TurnOffPump1);
+        Serial.print(ReceivedCommand.TurnOffPump);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.TimeOutPump1);
+        Serial.print(ReceivedCommand.TimeOutPump);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.StartWeightBucket1);
+        Serial.print(ReceivedCommand.StartWeightBucket);
         Serial.print(F(", "));
-        Serial.println(ReceivedCommand.StopWeightBucket1);
+        Serial.println(ReceivedCommand.StopWeightBucket);
         Serial.print(F("  Bucket2: "));
-        Serial.print(ReceivedCommand.DisablePump2);
+        Serial.print(ReceivedCommand.DisablePump_B2);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.TurnOnPump2);
+        Serial.print(ReceivedCommand.TurnOnPump_B2);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.TurnOffPump2);
+        Serial.print(ReceivedCommand.TurnOffPump_B2);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.TimeOutPump2);
+        Serial.print(ReceivedCommand.TimeOutPump_B2);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.StartWeightBucket2);
+        Serial.print(ReceivedCommand.StartWeightBucket_B2);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.StopWeightBucket2);       
+        Serial.print(ReceivedCommand.StopWeightBucket_B2);       
         Serial.println();
         
         updateReplyData();

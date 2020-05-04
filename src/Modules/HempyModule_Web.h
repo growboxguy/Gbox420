@@ -4,8 +4,8 @@
 ///Allows controlling the HempyModule wirelessly and receiving a status report from it
 
 #include "TimeLib.h"     ///keeping track of time
-#include "420Common_Web.h"
-#include "420Module_Web.h"
+#include "../Components_Web/420Common_Web.h"
+#include "../Components_Web/420Module_Web.h"
 #include "../WirelessCommands_Hempy.h"
 
 ///forward declaration of classes

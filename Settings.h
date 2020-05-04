@@ -79,7 +79,7 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
       float PressureHigh = 7.0; ///Turn off pump above this pressure
     };
     struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.SpraySolenoidPin = 22};
-    
+
     struct DHTSensorSettings
     { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
       DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}
@@ -120,15 +120,15 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
 
     struct HempyModuleSettings
     {
-      HempyModuleSettings( float StartWeightBucket1 = 0.0, float StopWeightBucket1 = 0.0, int TimeOutPump1 = 0, float StartWeightBucket2 = 0.0, float StopWeightBucket2 = 0.0, int TimeOutPump2 = 0 ) : StartWeightBucket1(StartWeightBucket1), StopWeightBucket1(StopWeightBucket1), TimeOutPump1(TimeOutPump1), StartWeightBucket2(StartWeightBucket2), StopWeightBucket2(StopWeightBucket2), TimeOutPump2(TimeOutPump2) {}
-      float StartWeightBucket1; ///Start watering below this weight
-      float StopWeightBucket1;  ///Stop watering above this weight
-      int TimeOutPump1;  ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails
-      float StartWeightBucket2; ///Start watering below this weight
-      float StopWeightBucket2;  ///Stop watering above this weight   
-      int TimeOutPump2;  
+      HempyModuleSettings( float StartWeightBucket_B1 = 0.0, float StopWeightBucket_B1 = 0.0, int TimeOutPump_B1 = 0, float StartWeightBucket_B2 = 0.0, float StopWeightBucket_B2 = 0.0, int TimeOutPump_B2 = 0 ) : StartWeightBucket_B1(StartWeightBucket_B1), StopWeightBucket_B1(StopWeightBucket_B1), TimeOutPump_B1(TimeOutPump_B1), StartWeightBucket_B2(StartWeightBucket_B2), StopWeightBucket_B2(StopWeightBucket_B2), TimeOutPump_B2(TimeOutPump_B2) {}
+      float StartWeightBucket_B1; ///Start watering below this weight
+      float StopWeightBucket_B1;  ///Stop watering above this weight
+      int TimeOutPump_B1;  ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails
+      float StartWeightBucket_B2; ///Start watering below this weight
+      float StopWeightBucket_B2;  ///Stop watering above this weight   
+      int TimeOutPump_B2;  
     };
-    struct HempyModuleSettings HempyModule1 = {.StartWeightBucket1 = 4.2, .StopWeightBucket1 = 6.9, .TimeOutPump1 = 120, .StartWeightBucket2 = 4.2, .StopWeightBucket2 = 6.9, .TimeOutPump2 = 120};
+    struct HempyModuleSettings HempyModule1 = {.StartWeightBucket_B1 = 4.2, .StopWeightBucket_B1 = 6.9, .TimeOutPump_B1 = 120, .StartWeightBucket_B2 = 4.2, .StopWeightBucket_B2 = 6.9, .TimeOutPump_B2 = 120};
     
     struct LightSensorSettings
     {

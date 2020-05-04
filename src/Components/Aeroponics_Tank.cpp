@@ -30,7 +30,7 @@ void Aeroponics_Tank::refresh_Sec()
         setPumpOff(false); ///turn of pump,
         if (!MixInProgress)
         {                ///if mixing was not active and refill did not finish within timeout= pump must be broken
-          PumpDisable(); ///automatically disable pump if it is suspected to be broken
+          setPumpDisable(); ///automatically disable pump if it is suspected to be broken
           ///   sendEmailAlert(F("Aeroponics%20pump%20failed"));
         }
         logToSerials(F("Pump timeout reached"), true);
@@ -113,16 +113,16 @@ void Aeroponics_Tank::setPressureHigh(float PressureHigh)
   Parent->addToLog(F("Tank limits updated"));
 }
 
-void Aeroponics_Tank::sprayNow(bool FromWebsite)
+void Aeroponics_Tank::sprayNow(bool UserRequest)
 {
-  if (*SprayEnabled || FromWebsite)
+  if (*SprayEnabled || UserRequest)
   {
     MixInProgress = false;
     SprayTimer = millis();
     SpraySolenoidOn = true;
     checkRelays();
     Parent->getSoundObject()->playOnSound();
-    if (FromWebsite)
+    if (UserRequest)
       Parent->addToLog(F("Aeroponics spraying"));
     else
       logToSerials(F("Aeroponics spraying"), true, 3);

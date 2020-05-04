@@ -1,4 +1,6 @@
 #include "GrowBox.h"
+#include "HempyModule_Web.h"
+#include "AeroModule_Web.h"
 #include "../Components_Web/DHTSensor_Web.h"
 #include "../Components_Web/Lights_Web.h"
 #include "../Components_Web/Sound_Web.h"
@@ -13,7 +15,6 @@
 #include "../Components_Web/WaterTempSensor_Web.h"
 #include "../Components_Web/WaterLevelSensor_Web.h"
 //#include "../Components_Web/WeightSensor_Web.h"
-#include "../Components_Web/HempyModule_Web.h"
 #include "../Components_Web/ModuleSkeleton_Web.h" ///Only for demonstration purposes
 
 GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Common_Web(Name), Module_Web(Wireless)
@@ -38,6 +39,7 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *
   WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &ModuleSettings->WaterTemp1);
   WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
   HempyModule1 = new HempyModule_Web(F("Hemp1"), this,&ModuleSettings->HempyModule1);
+  AeroModule1 = new AeroModule_Web(F("Aero1"), this,&ModuleSettings->AeroModule1);
   //Weight1 = new WeightSensor_Web(F("Weight1"), this, &ModuleSettings->Weight1);
   //Weight2 = new WeightSensor_Web(F("Weight2"), this, &ModuleSettings->Weight2);
   ///ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&ModuleSettings -> ModuleSkeleton1);  ///Only for demonstration purposes
@@ -271,13 +273,13 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
     strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_OffTime\":\""));
     strcat(LongMessage, Lt1->getOffTimeText());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroInterval\":\""));
-    strcat(LongMessage, AeroNT1->getInterval());
+    strcat(LongMessage, AeroNT1->getSprayInterval());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroDuration\":\""));
-    strcat(LongMessage, AeroNT1->getDuration());
+    strcat(LongMessage, AeroNT1->getSprayDuration());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroSprayPressure\":\""));
     strcat(LongMessage, toText(AeroNT1->LastSprayPressure));
-    ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,AeroT1 -> getInterval());
-    ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,AeroT1 -> getDuration());
+    ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,AeroT1 -> getSprayInterval());
+    ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,AeroT1 -> getSprayDuration());
 
     strcat_P(LongMessage, (PGM_P)F("\"},\"Settings\":{"));
     strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));

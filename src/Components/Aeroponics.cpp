@@ -81,14 +81,14 @@ void Aeroponics::setPumpOff(bool UserRequest)
   checkRelays();
 }
 
-void Aeroponics::PumpDisable()
+void Aeroponics::setPumpDisable()
 {
   setPumpOff(false);
   PumpOK = false;
   Parent->addToLog(F("Pump disabled"));
 }
 
-void Aeroponics::Mix()
+void Aeroponics::mixReservoir()
 {
   PumpOn = true;
   MixInProgress = true;
@@ -100,25 +100,42 @@ void Aeroponics::Mix()
   Parent->addToLog(F("Mixing nutrients"));
 }
 
-void Aeroponics::setInterval(int interval)
+void Aeroponics::setSprayInterval(int interval)
 {
-  *Interval = interval;
-  SprayTimer = millis();
+  if(*Interval != interval)
+  {
+   *Interval = interval;
+   Parent -> getSoundObject() -> playOnSound();
+  }
 }
 
-char *Aeroponics::getInterval()
+int Aeroponics::getSprayInterval()
+{
+  return *Interval;
+}
+
+
+char *Aeroponics::getSprayIntervalText()
 {
   return toText(*Interval);
 }
 
-void Aeroponics::setDuration(int duration)
+void Aeroponics::setSprayDuration(int duration)
 {
-  *Duration = duration;
-  SprayTimer = millis();
-  Parent->addToLog(F("Spray time updated"));
+  if(*Duration !=duration)
+  {
+    *Duration = duration;
+    Parent->addToLog(F("Spray time updated"));
+    Parent -> getSoundObject() -> playOnSound();
+  }
 }
 
-char *Aeroponics::getDuration()
+int Aeroponics::getSprayDuration()
+{
+  return *Duration;
+}
+
+char *Aeroponics::getSprayDurationText()
 {
   return toText(*Duration);
 }

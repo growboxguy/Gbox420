@@ -11,8 +11,23 @@ class Aeroponics : virtual public Common
 public:
   Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor);
   virtual void report();
-  char *getInterval();
-  char *getDuration();
+  
+  void setPumpOn(bool UserRequest);
+  void setPumpOff(bool UserRequest);
+  void setPumpDisable();
+  void setPumpTimeout(int Timeout);
+  void setPrimingTime(int Timing); 
+  void mixReservoir();
+  void setSprayOnOff(bool State); 
+  virtual void sprayOff() = 0;
+  virtual char *sprayStateToText() = 0; ///pure virtual function
+  virtual void sprayNow(bool UserRequest = false) = 0;
+  void setSprayInterval(int interval);
+  void setSprayDuration(int duration);
+  int getSprayInterval();
+  int getSprayDuration();
+  char *getSprayIntervalText();
+  char *getSprayDurationText();    
 
 private:
 
@@ -32,17 +47,5 @@ protected:
   bool PumpOn = false;            ///Aeroponics - High pressure pump state
   bool BypassSolenoidOn = false;  ///Aeroponics - Controls the bypass valve, true opens the solenoid
   bool MixInProgress = false;     ///Aeroponics - Used to temporary suspend pump timer and keep the high pressure pump on. Do not change.
-  void checkRelays();
-  void setPumpOn(bool UserRequest);
-  void setPumpOff(bool UserRequest);
-  void PumpDisable();
-  void Mix();
-  void setInterval(int interval);
-  void setDuration(int duration);
-  void setPumpTimeout(int Timeout);
-  void setPrimingTime(int Timing);
-  virtual void sprayNow(bool FromWebsite = false) = 0;
-  virtual void sprayOff() = 0;
-  virtual char *sprayStateToText() = 0; ///pure virtual function
-  void setSprayOnOff(bool State);
+  void checkRelays();  
 };

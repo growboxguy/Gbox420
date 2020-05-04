@@ -11,15 +11,15 @@ public:
   Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor);
   void refresh_Sec();
   void report();
+  void setPressureLow(float PressureLow);
+  void setPressureHigh(float PressureHigh);
+  void sprayNow(bool UserRequest = false);
+  void sprayOff();
 
 private:
 
 protected:
   void checkRelays();
-  void setPressureLow(float PressureLow);
-  void setPressureHigh(float PressureHigh);
-  void sprayNow(bool FromWebsite = false);
-  void sprayOff();
   char *sprayStateToText();
   void refillTank();
   uint8_t *SpraySolenoidPin;

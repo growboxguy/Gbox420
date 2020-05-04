@@ -24,6 +24,7 @@ class WaterTempSensor_Web;
 class WaterLevelSensor_Web;
 class WeightSensor_Web;
 class HempyModule_Web;
+class AeroModule_Web;
 class ModuleSkeleton_Web;
 
 extern ELClientRest PushingBoxRestAPI;
@@ -50,6 +51,7 @@ public:
   WaterTempSensor_Web *WaterTemp1;
   WaterLevelSensor_Web *WaterLevel1;
   HempyModule_Web *HempyModule1;    /// <Represents the website controls and feedback for a HempyModule
+  AeroModule_Web *AeroModule1;    /// <Represents the website controls and feedback for a AeroModule
 
   //WeightSensor_Web *Weight1; 
   //WeightSensor_Web *Weight2;  
