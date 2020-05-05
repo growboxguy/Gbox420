@@ -16,14 +16,14 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this -> SoundFeedback = Sound1;
   Pres1 = new PressureSensor(F("Pres1"), this, &ModuleSettings->Pres1);
-  Pump1 = new WaterPump(F("Pump1"),this,&ModuleSettings->Pump1);
+  Pump1 = new WaterPump(F("Pump1"),this,&ModuleSettings->AeroPump1);
   if(DefaultSettings->PressureTankPresent)
   {
-    AeroT1 = new Aeroponics_Tank(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1);  ///< Use this with a pressure tank
+    AeroT1 = new Aeroponics_Tank(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, Pump1);  ///< Use this with a pressure tank
   }
   else
   {
-    AeroNT1 = new Aeroponics_NoTank(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, &ModuleSettings->AeroNT1_Specific, Pres1);  ///< Use this without a pressure tank
+    AeroNT1 = new Aeroponics_NoTank(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, Pres1, Pump1);  ///< Use this without a pressure tank
   }  
   addToRefreshQueue_Sec(this);         ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
   addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
@@ -51,8 +51,8 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> SprayOff) AeroT1 -> sprayOff();
     AeroT1 -> setSprayInterval(Command -> SprayInterval);
     AeroT1 -> setSprayDuration(Command -> SprayDuration);
-    if(Command -> PumpOn) AeroT1 -> setPumpOn(true);
-    if(Command -> PumpOff) AeroT1 -> setPumpOff(true);
+    if(Command -> PumpOn) AeroT1 -> startPump(true);
+    if(Command -> PumpOff) AeroT1 -> stopPump(true);
     if(Command -> PumpDisable) AeroT1 -> setPumpDisable();
     AeroT1 -> setPumpTimeout(Command -> PumpTimeOut);
     AeroT1 -> setPrimingTime(Command -> PumpPriming);
@@ -67,14 +67,14 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> SprayOff) AeroNT1 -> sprayOff();
     AeroNT1 -> setSprayInterval(Command -> SprayInterval);
     AeroNT1 -> setSprayDuration(Command -> SprayDuration);
-    if(Command -> PumpOn) AeroNT1 -> setPumpOn(true);
-    if(Command -> PumpOff) AeroNT1 -> setPumpOff(true);
+    if(Command -> PumpOn) AeroNT1 -> startPump(true);
+    if(Command -> PumpOff) AeroNT1 -> stopPump(true);
     if(Command -> PumpDisable) AeroNT1 -> setPumpDisable();
     AeroNT1 -> setPumpTimeout(Command -> PumpTimeOut);
     AeroNT1 -> setPrimingTime(Command -> PumpPriming);
     if(Command -> MixReservoir) AeroNT1 -> mixReservoir();
-    if(Command -> BypassOn) AeroNT1 -> bypassOn();
-    if(Command -> BypassOff) AeroNT1 -> bypassOff();
+    if(Command -> BypassOn) AeroNT1 -> setBypassOn(true);
+    if(Command -> BypassOff) AeroNT1 -> setBypassOff(true);
   }  
 
   updateResponse();
@@ -106,6 +106,7 @@ void AeroModule::processCommand(aeroCommand *Command){
         logToSerials(Command -> PumpTimeOut,false,1);
         logToSerials(F(","),false,1);
         logToSerials(Command -> PumpPriming,false,1);
+        logToSerials(F(","),false,1);
         logToSerials(Command -> MixReservoir,false,1);
         logToSerials(F(";"),false,1);
       logToSerials(Command -> BypassOn,false,1);

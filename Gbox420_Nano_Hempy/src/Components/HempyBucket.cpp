@@ -30,11 +30,11 @@ void HempyBucket::checkBucketWeight()
   BucketWeightSensor -> readWeight();  //Force a weight refresh   
   if(BucketWeightSensor -> getWeight() > *StopWeight && BucketPump -> getOnState()) ///If the weight is over the limit and the pump is on
   {
-    BucketPump -> turnOff();     
+    BucketPump -> stopPump();     
   }
   else if(BucketWeightSensor -> getWeight() < *StartWeight && !BucketPump -> getOnState())  ///If the weight is below the limit and the pump is off
   {
-    BucketPump -> turnOn(); 
+    BucketPump -> startPump(); 
   }   
 }
 

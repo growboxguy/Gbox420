@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 22; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 24; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 
@@ -39,38 +39,34 @@ static const uint8_t Version = 22; ///< Increment this when you make a change in
       AeroModuleSettings(bool PressureTankPresent = false) : PressureTankPresent(PressureTankPresent) {}
       bool PressureTankPresent; 
     };
-    struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false};
+    struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = true};
 
     struct AeroponicsSettings
     { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
-      AeroponicsSettings(uint8_t BypassSolenoidPin = 0, uint8_t PumpPin = 0, bool SprayEnabled = true, int Interval = 0, int Duration = 0, int PumpTimeout = 0, int PrimingTime = 0) : BypassSolenoidPin(BypassSolenoidPin), PumpPin(PumpPin), SprayEnabled(SprayEnabled), Interval(Interval), Duration(Duration), PumpTimeout(PumpTimeout), PrimingTime(PrimingTime)  {}
-      uint8_t BypassSolenoidPin;   ///Aeroponics bypass solenoid relay pin
-      uint8_t PumpPin;             ///Aeroponics high pressure pump relay pin
+      AeroponicsSettings(bool SprayEnabled = true, int Interval = 0, int Duration = 0, float HighPressure = 0.0) : SprayEnabled(SprayEnabled), Interval(Interval), Duration(Duration), HighPressure(HighPressure)   {}
       bool SprayEnabled; ///Enable/disable spraying cycle
       int Interval;        ///Spray every X minutes
       int Duration;        ///Spray time in seconds
-      int PumpTimeout;      ///Max pump run time in minutes
-      int PrimingTime;     ///At pump startup the bypass valve will be open for X seconds to let the pump remove air from the tubes
+      float HighPressure; ///Turn off pump above this pressure
     };
-    struct AeroponicsSettings AeroT1_Common = {.BypassSolenoidPin = 23, .PumpPin = 24, .SprayEnabled= true, .Interval=15, .Duration = 10, .PumpTimeout = 6, .PrimingTime = 10};
-    struct AeroponicsSettings AeroNT1_Common = {.BypassSolenoidPin = 46, .PumpPin = 47, .SprayEnabled= true, .Interval=15, .Duration = 10, .PumpTimeout = 6, .PrimingTime = 10};
+    struct AeroponicsSettings AeroT1_Common = {.SprayEnabled= true, .Interval=15, .Duration = 10, .HighPressure = 7.0};
+    struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled= true, .Interval=15, .Duration = 10, .HighPressure = 7.0};
 
+    /*
     struct AeroponicsSettings_NoTankSpecific  ///<Settings for an Aeroponics setup WITHOUT a pressure tank
     {                           
-      AeroponicsSettings_NoTankSpecific(int BlowOffTime, float PressureHigh) : BlowOffTime(BlowOffTime), PressureHigh(PressureHigh) {}
-      int BlowOffTime;      ///After spraying open the bypass valve for X seconds to release pressure. Helps to stop spraying immediately
-      float PressureHigh; ///Safety feature - Turn off pump above this pressure
+      AeroponicsSettings_NoTankSpecific() : {}
     };
-    struct AeroponicsSettings_NoTankSpecific AeroNT1_Specific = {.BlowOffTime = 3, .PressureHigh = 7.0};
+    struct AeroponicsSettings_NoTankSpecific AeroNT1_Specific = {};
+    */
 
     struct AeroponicsSettings_TankSpecific
     { ///Settings for an Aeroponics setup WITH a pressure tank
-      AeroponicsSettings_TankSpecific(uint8_t SpraySolenoidPin = 0) : SpraySolenoidPin(SpraySolenoidPin) {}
+      AeroponicsSettings_TankSpecific(uint8_t SpraySolenoidPin = 0, float LowPressure = 0.0) : SpraySolenoidPin(SpraySolenoidPin), LowPressure(LowPressure) {}
       uint8_t SpraySolenoidPin;    ///Spray solenoid relay pin
-      float PressureLow = 5.0;  ///Turn on pump below this pressure
-      float PressureHigh = 7.0; ///Turn off pump above this pressure
+      float LowPressure;  ///Turn on pump below this pressure      
     };
-    struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.SpraySolenoidPin = 22};
+    struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.SpraySolenoidPin = 22, .LowPressure = 5.0};
 
     struct PressureSensorSettings
     {
@@ -89,14 +85,18 @@ static const uint8_t Version = 22; ///< Increment this when you make a change in
     };
     struct SoundSettings Sound1 = {.Pin = 2};  ///Default settings for the  Sound output
 
-    struct WaterPumpSettings
+struct WaterPumpSettings
     {
-      WaterPumpSettings(uint8_t Pin = 0, int TimeOut = 0, bool PumpEnabled = false) : Pin(Pin), TimeOut(TimeOut), PumpEnabled(PumpEnabled)  {}
-      uint8_t Pin;            ///Hempy bucket watering pump relay pin
-      int TimeOut;   ///Max pump run time in seconds
-      bool PumpEnabled; ///Enable/disable automatic watering based on weight    
+      WaterPumpSettings(uint8_t PumpPin = 0, uint8_t BypassSolenoidPin = 0, bool PumpEnabled = false, int TimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), BypassSolenoidPin(BypassSolenoidPin), PumpEnabled(PumpEnabled), TimeOut(TimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime)  {}
+      uint8_t PumpPin;         ///< Pump relay pin
+      uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin
+      bool PumpEnabled; ///< Enable/disable pump. false= Block running the pump
+      int TimeOut;   ///< (Sec) Max pump run time        
+      int PrimingTime;    ///< (Sec) For wow long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+      int BlowOffTime;     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
-    struct WaterPumpSettings Pump1 = {.Pin = 7, .TimeOut = 120, .PumpEnabled = true};
+    struct WaterPumpSettings AeroPump1 = {.PumpPin = 8, .BypassSolenoidPin = 23, .PumpEnabled = true, .TimeOut = 120, .PrimeTime = 10, .BlowOffTime = 3};
+
     
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
   } Settings;

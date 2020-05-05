@@ -20,8 +20,8 @@ struct aeroCommand  ///Max 32 bytes. Template of the command sent by the Transmi
    bool PumpOn = false;
    bool PumpOff = false;
    bool PumpDisable = false;
-   int PumpTimeOut = 0;
    int PumpPriming = 0;
+   int PumpTimeOut = 0;   
    bool MixReservoir = false;    
 
    //Aero no tank - Aeroponics without a pressure tank

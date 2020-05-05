@@ -20,7 +20,7 @@ void logToScreen(){
   Screen.setTextColor(ILI9341_WHITE);
   Screen.print(F("Internal:"));Screen.print(fanSpeedToText(true));Screen.print(F(",Exhaust:"));Screen.println(fanSpeedToText(false));
   Screen.setTextColor(ILI9341_GREEN);
-  Screen.print(F("Pressure:"));Screen.print(AeroPressure);Screen.print(F(" ("));Screen.print(MySettings.AeroPressureLow);Screen.print(F("/"));Screen.print(MySettings.AeroPressureHigh);Screen.println(F(")"));
+  Screen.print(F("Pressure:"));Screen.print(AeroPressure);Screen.print(F(" ("));Screen.print(MySettings.AeroLowPressure);Screen.print(F("/"));Screen.print(MySettings.AeroHighPressure);Screen.println(F(")"));
   Screen.print(F("Interval:"));Screen.print(MySettings.AeroInterval);Screen.print(F(",Duration:"));Screen.println(MySettings.AeroDuration);
   Screen.print(F("Pump:"));Screen.print(pumpStateToText());
   //Screen.setTextColor(ILI9341_CYAN);

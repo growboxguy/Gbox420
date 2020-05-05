@@ -8,13 +8,11 @@
 class Aeroponics_NoTank : public Aeroponics
 {
 public:
-  Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_NoTankSpecific *NoTankSpecificSettings, PressureSensor *FeedbackPressureSensor); ///constructor
+  Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump); ///constructor
   void refresh_Sec();
   void report();
-  void bypassOn();
-  void bypassOff();
   void sprayNow(bool UserRequest = false);
-  void sprayOff();
+  void sprayOff(bool UserRequest = false);
   float LastSprayPressure = 0; ///tracks the last average pressure during a spray cycle
 
 private:

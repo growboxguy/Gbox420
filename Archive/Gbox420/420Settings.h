@@ -15,8 +15,8 @@
   bool AeroSprayEnabled = true;  //Enable/disable misting
   uint32_t AeroInterval = 15; //Aeroponics - Spray every 15 minutes
   uint32_t AeroDuration = 2; //Aeroponics - Spray time in seconds
-  float AeroPressureLow= 5.0; //Aeroponics - Turn on pump below this pressure (bar)
-  float AeroPressureHigh = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)
+  float AeroLowPressure= 5.0; //Aeroponics - Turn on pump below this pressure (bar)
+  float AeroHighPressure = 7.0 ; //Aeroponics - Turn off pump above this pressure (bar)
   uint32_t AeroPumpTimeout = 360;  // Aeroponics - Max pump run time in seconds (6 minutes), measue zero to max pressuretank refill time and adjust accordingly
   uint32_t AeroPrimingTime = 10;  // Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
   bool AeroQuietEnabled = false;  //Enable/disable quiet time then pump should not run

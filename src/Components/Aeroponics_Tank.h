@@ -8,22 +8,22 @@
 class Aeroponics_Tank : public Aeroponics
 {
 public:
-  Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor);
+  Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump);
   void refresh_Sec();
   void report();
-  void setPressureLow(float PressureLow);
-  void setPressureHigh(float PressureHigh);
+  void setLowPressure(float LowPressure);
+  void setHighPressure(float HighPressure);
   void sprayNow(bool UserRequest = false);
-  void sprayOff();
+  void sprayOff(bool UserRequest = false);
 
 private:
 
 protected:
-  void checkRelays();
+  void setSpraySolenoidOn();
+  void setSpraySolenoidOff();
   char *sprayStateToText();
   void refillTank();
   uint8_t *SpraySolenoidPin;
   bool SpraySolenoidOn = false; ///Aeroponics - Controls the spray valve, set to true to spay at power on.
-  float *PressureLow;           ///Aeroponics - Turn on pump below this pressure (bar)
-  float *PressureHigh;          ///Aeroponics - Turn off pump above this pressure (bar)
+  float *LowPressure;           ///Aeroponics - Turn on pump below this pressure (bar)
 };

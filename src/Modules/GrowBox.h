@@ -8,6 +8,7 @@
 #include "../WirelessCommands_Hempy.h"
 
 ///forward declaration of classes
+class WaterPump;
 class DHTSensor_Web;
 class LightSensor_Web;
 class Lights_Web;
@@ -46,6 +47,7 @@ public:
   //PowerSensorV3_Web * Pow1;  ///Only for PZEM004T V3.0
   PressureSensor_Web *Pres1;
   PHSensor_Web *PHSensor1;
+  WaterPump *AeroPump1;
   Aeroponics_Tank_Web *AeroT1;
   Aeroponics_NoTank_Web *AeroNT1;   
   WaterTempSensor_Web *WaterTemp1;

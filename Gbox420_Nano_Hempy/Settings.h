@@ -62,16 +62,19 @@ static const uint8_t Version = 20; ///< Increment this when you make a change in
     };
     struct SoundSettings Sound1 = {.Pin = 2};  ///Default settings for the  Sound output
 
-    struct WaterPumpSettings
+   struct WaterPumpSettings
     {
-      WaterPumpSettings(uint8_t Pin = 0, int TimeOut = 0, bool PumpEnabled = false) : Pin(Pin), TimeOut(TimeOut), PumpEnabled(PumpEnabled)  {}
-      uint8_t Pin;            ///Hempy bucket watering pump relay pin
-      int TimeOut;   ///Max pump run time in seconds
-      bool PumpEnabled; ///Enable/disable automatic watering based on weight    
+      WaterPumpSettings(uint8_t PumpPin = 0, uint8_t BypassSolenoidPin = 255, bool PumpEnabled = false, int PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), BypassSolenoidPin(BypassSolenoidPin), PumpEnabled(PumpEnabled), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime)  {}
+      uint8_t PumpPin;         ///< Pump relay pin
+      uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin [optional]
+      bool PumpEnabled; ///< Enable/disable pump. false= Block running the pump
+      int PumpTimeOut;   ///< (Sec) Max pump run time        
+      int PrimingTime;    ///< (Sec) Only if BypassSolenoid is present. For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+      int BlowOffTime;     ///< (Sec) Only if BypassSolenoid is present. For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
-    struct WaterPumpSettings Pump1 = {.Pin = 7, .TimeOut = 120, .PumpEnabled = true};
-    struct WaterPumpSettings Pump2 = {.Pin = 8, .TimeOut = 120, .PumpEnabled = true};
-
+    struct WaterPumpSettings HempyPump1 = {.PumpPin = 7, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Submerged pumps do not need to prime at start or discharge pressure when stopping
+    struct WaterPumpSettings HempyPump2 = {.PumpPin = 8, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Submerged pumps do not need to prime at start or discharge pressure when stopping
+   
     struct WeightSensorSettings
     {
       WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, float Scale = 0.0, long TareOffset = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Scale(Scale), TareOffset(TareOffset) {}

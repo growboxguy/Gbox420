@@ -27,7 +27,7 @@ void HempyBucket_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
   {
     WebServer.setArgString(getComponentName(F("TareOffset")), toText(* BucketWeightSensor ->  TareOffset));
     WebServer.setArgString(getComponentName(F("Scale")), toText(* BucketWeightSensor -> Scale));
-    WebServer.setArgString(getComponentName(F("Pump")), BucketPump-> getState());
+    WebServer.setArgString(getComponentName(F("Pump")), BucketPump-> getStateText());
   }
   else if(strncmp(url, "/G",2) == 0)
   {

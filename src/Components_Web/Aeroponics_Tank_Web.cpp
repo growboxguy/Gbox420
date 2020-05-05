@@ -1,6 +1,6 @@
 #include "Aeroponics_Tank_Web.h"
 
-Aeroponics_Tank_Web::Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor) : Common(Name), Aeroponics_Tank(Name, Parent, DefaultSettings, TankSpecificSettings, FeedbackPressureSensor), Common_Web(Name)
+Aeroponics_Tank_Web::Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Common(Name), Aeroponics_Tank(Name, Parent, DefaultSettings, TankSpecificSettings, FeedbackPressureSensor, Pump), Common_Web(Name)
 { ///constructor
   this->Parent = Parent;
   this->Name = Name;
@@ -16,9 +16,9 @@ void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G",2) == 0)
   {
-    WebServer.setArgFloat(getComponentName(F("PresLow")), *PressureLow);
-    WebServer.setArgFloat(getComponentName(F("PresHigh")), *PressureHigh);
-    WebServer.setArgInt(getComponentName(F("Timeout")), *PumpTimeout);
+    WebServer.setArgFloat(getComponentName(F("PresLow")), *LowPressure);
+    WebServer.setArgFloat(getComponentName(F("PresHigh")), *HighPressure);
+    WebServer.setArgInt(getComponentName(F("Timeout")), Pump->getTimeOut());
     WebServer.setArgInt(getComponentName(F("Priming")), *PrimingTime);
     WebServer.setArgInt(getComponentName(F("Int")), *Interval);
     WebServer.setArgInt(getComponentName(F("Dur")), *Duration);
@@ -31,7 +31,7 @@ void Aeroponics_Tank_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
   {
     WebServer.setArgString(getComponentName(F("Pres")), FeedbackPressureSensor->getPressureText(true, false));
     WebServer.setArgString(getComponentName(F("Spray")), sprayStateToText());
-    WebServer.setArgString(getComponentName(F("Pump")), pumpStateToText(PumpOK,PumpOn));
+    WebServer.setArgString(getComponentName(F("Pump")), Pump->getStateText());
     WebServer.setArgString(getComponentName(F("Bypass")), onOffToText(BypassOn));
   }
 }
@@ -50,11 +50,11 @@ void Aeroponics_Tank_Web::websiteEvent_Button(char *Button)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOn")) == 0)
     {
-      setPumpOn(true);
+      startPump(true);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0)
     {
-      setPumpOff(true);
+      stopPump(true);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0)
     {
@@ -93,11 +93,11 @@ void Aeroponics_Tank_Web::websiteEvent_Field(char *Field)
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("PresLow")) == 0)
     {
-      setPressureLow(WebServer.getArgFloat());
+      setLowPressure(WebServer.getArgFloat());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PresHigh")) == 0)
     {
-      setPressureHigh(WebServer.getArgFloat());
+      setHighPressure(WebServer.getArgFloat());
     } 
     else if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0)
     {

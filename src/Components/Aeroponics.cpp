@@ -4,22 +4,16 @@
 /// -Aeroponics_NoTank: High pressure pump is directly connected to the aeroponics tote
 /// -Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid for spraying
 
-Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor) : Common(Name)
+Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Common(Name)
 { ///constructor
   this->Parent = Parent;
   this->Name = Name;
-  BypassSolenoidPin = &DefaultSettings->BypassSolenoidPin;
-  PumpPin = &DefaultSettings->PumpPin;
   SprayEnabled = &DefaultSettings->SprayEnabled; ///Enable/disable misting
   Interval = &DefaultSettings->Interval;         ///Aeroponics - Spray every 15 minutes
   Duration = &DefaultSettings->Duration;         ///Aeroponics - Spray time in seconds
-  PumpTimeout = &DefaultSettings->PumpTimeout;   /// Aeroponics - Max pump run time in minutes, measue zero to max pressuretank refill time and adjust accordingly
-  PrimingTime = &DefaultSettings->PrimingTime;   /// Aeroponics - At pump startup the bypass valve will be open for X seconds to let the pump cycle water freely without any backpressure. Helps to remove air.
+  HighPressure = &DefaultSettings->HighPressure; ///Aeroponics - Turn off pump above this pressure (bar)
   this->FeedbackPressureSensor = FeedbackPressureSensor;
-  pinMode(*BypassSolenoidPin, OUTPUT);
-  digitalWrite(*BypassSolenoidPin, HIGH); ///initialize in off state
-  pinMode(*PumpPin, OUTPUT);
-  digitalWrite(*PumpPin, HIGH);          ///initialize in off state
+  this->Pump = Pump;  
   Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
   Parent->addToRefreshQueue_Sec(this);     ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
 }
@@ -33,8 +27,6 @@ void Aeroponics::report()
   strcat(LongMessage, toText(*Interval));
   strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
   strcat(LongMessage, toText(*Duration));
-  strcat_P(LongMessage, (PGM_P)F(" ; PumpTimeout:"));
-  strcat(LongMessage, toText(*PumpTimeout));
   strcat_P(LongMessage, (PGM_P)F(" ; PrimingTime:"));
   strcat(LongMessage, toText(*PrimingTime));
   logToSerials(&LongMessage, true, 0); ///Break line, No indentation needed: child class already printed it
@@ -42,62 +34,33 @@ void Aeroponics::report()
 
 void Aeroponics::checkRelays()
 {
-  if (PumpOn)
-    digitalWrite(*PumpPin, LOW);
-  else
-    digitalWrite(*PumpPin, HIGH);
   if (BypassOn)
     digitalWrite(*BypassSolenoidPin, LOW);
   else
     digitalWrite(*BypassSolenoidPin, HIGH);
 }
 
-void Aeroponics::setPumpOn(bool UserRequest)
-{ ///turns pump on, UserRequest is true if it was triggered from the website
-  if (UserRequest)
-  { ///if the pump was turned on from the web interface, not by the automation
-    Parent->addToLog(F("Pump ON"));
-    Parent->getSoundObject()->playOnSound();
-    PumpOK = true; ///re-enable pump
-  }
-  MixInProgress = UserRequest; ///If pump was turned on from the web interface first run an air bleeding cycle
-  PumpOn = true;
-  PumpTimer = millis();
-  checkRelays();
+void Aeroponics::startPump(bool UserRequest)
+{  
+  Pump -> startPump(UserRequest);
 }
 
-void Aeroponics::setPumpOff(bool UserRequest)
+void Aeroponics::stopPump(bool UserRequest)
 {
-  if (UserRequest)
-  { ///if the pump was turned off from the web interface, not by the automation
-    Parent->addToLog(F("Pump OFF"));
-    Parent->getSoundObject()->playOffSound();
-    PumpOK = true; ///re-enable pump
-  }
-  MixInProgress = false;
-  PumpOn = false;
-  ///if(!BlowOffInProgress)BypassOn = false; ///Close bypass valve
-  PumpTimer = millis();
-  checkRelays();
+  Pump -> stopPump(UserRequest);
 }
 
 void Aeroponics::setPumpDisable()
 {
-  setPumpOff(false);
-  PumpOK = false;
-  Parent->addToLog(F("Pump disabled"));
+  Pump -> disablePump();
 }
 
 void Aeroponics::mixReservoir()
 {
-  PumpOn = true;
-  MixInProgress = true;
-  PumpOK = true;
-  BypassOn = true;
-  PumpTimer = millis();
-  checkRelays();
-  Parent->getSoundObject()->playOnSound();
   Parent->addToLog(F("Mixing nutrients"));
+  MixInProgress = true;
+  setBypassOn(false);
+  Pump -> startMixing();
 }
 
 void Aeroponics::setSprayInterval(int interval)
@@ -130,24 +93,11 @@ void Aeroponics::setSprayDuration(int duration)
   }
 }
 
-int Aeroponics::getSprayDuration()
-{
-  return *Duration;
-}
 
-char *Aeroponics::getSprayDurationText()
-{
-  return toText(*Duration);
-}
 
-void Aeroponics::setPumpTimeout(int Timeout)
+void Aeroponics::setPumpTimeout(int TimeOut)
 {
-  if(*PumpTimeout != Timeout && Timeout >= 0)
-  {
-    *PumpTimeout = Timeout;
-    Parent->addToLog(F("Aero pump timeout updated"));
-    Parent->getSoundObject()->playOnSound();
-  }
+  Pump ->setTimeOut(TimeOut);   
 }
 
 void Aeroponics::setPrimingTime(int Timing)
@@ -178,6 +128,16 @@ void Aeroponics::setSprayOnOff(bool State)
 bool Aeroponics::getSprayEnabled()
 {
   return *SprayEnabled;
+}
+
+int Aeroponics::getSprayDuration()
+{
+  return *Duration;
+}
+
+char *Aeroponics::getSprayDurationText()
+{
+  return toText(*Duration);
 }
 
 float Aeroponics::getPressure()

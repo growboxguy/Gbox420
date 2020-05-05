@@ -13,7 +13,7 @@ const char* MqttLwtMessage = "Gbox420 Offline"; //this is the message subscriber
 const char* MqttInternalFan = "InternalFan"; //MQTT command the code responds to 
 const char* MqttBrightness = "Brightness";  //MQTT command the code responds to
 const char* MqttLightOn = "LightOn"; //MQTT command the code responds to
-const char* MqttAeroPressureHigh = "AeroPressureHigh"; //MQTT command the code responds to
+const char* MqttAeroHighPressure = "AeroHighPressure"; //MQTT command the code responds to
 const char* MqttString = "MqttString"; //MQTT command the code responds to
     
 //Global variables
@@ -24,7 +24,7 @@ int PublishedCounter = 0;
 int InternalFan = 0;
 int LightBrightness = 50;
 bool LightOn=false;
-float AeroPressureHigh = 7.1;
+float AeroHighPressure = 7.1;
 char TestString[30] = "Gbox420";
 
 //Component initialization
@@ -71,7 +71,7 @@ void mqttPublish(){
     strcat(WebMessage,"\",\"InternalFan\":\""); strcat(WebMessage,intToChar(InternalFan));
     strcat(WebMessage,"\",\"Brightness\":\"");  strcat(WebMessage,intToChar(LightBrightness));
     strcat(WebMessage,"\",\"LightOn\":\"");  strcat(WebMessage,intToChar(LightOn)); //bool is int (0 or 1)
-    strcat(WebMessage,"\",\"AeroPressureHigh\":\"");  strcat(WebMessage,floatToChar(AeroPressureHigh));
+    strcat(WebMessage,"\",\"AeroHighPressure\":\"");  strcat(WebMessage,floatToChar(AeroHighPressure));
     strcat(WebMessage,"\",\"MqttString\":\"");  strcat(WebMessage,TestString);  
     strcat(WebMessage,"\"}");  //closing the JSON formatted 
       
@@ -105,7 +105,7 @@ void mqttReceived(void* response) {
   if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data)); } //expects int parameter
   else if(strstr(topic,MqttLightOn)!=NULL) {setLightOnOff(atoi(data));} //expects bool parameter
   else if(strstr(topic,MqttInternalFan)!=NULL) {setFanSpeed(atoi(data));} //expects int parameter, 3 options: 0-Off,1-Low,2-High
-  else if(strstr(topic,MqttAeroPressureHigh)!=NULL) {setAeroPressureHigh(atof(data));}  //expects float parameter
+  else if(strstr(topic,MqttAeroHighPressure)!=NULL) {setAeroHighPressure(atof(data));}  //expects float parameter
   else if(strstr(topic,MqttString)!=NULL) {setMqttSting(data);}  //expects char array parameter
 }
 
@@ -132,9 +132,9 @@ char * floatToChar(float Number){
 
 //Fake methods getting triggered by MQTT messages
 
-void setAeroPressureHigh(float PressureHigh){
-  AeroPressureHigh = PressureHigh;
-  Serial.print(F("Max pressure: "));Serial.println(PressureHigh);
+void setAeroHighPressure(float HighPressure){
+  AeroHighPressure = HighPressure;
+  Serial.print(F("Max pressure: "));Serial.println(HighPressure);
 }
 
 void setBrightness(int brigtness){

@@ -33,7 +33,7 @@ void checkAero(bool Interrupt){
 
 void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
   if(AeroPumpOn){ //if pump is on
-    if(AeroPressure >= MySettings.AeroPressureHigh){ //refill complete, target pressure reached
+    if(AeroPressure >= MySettings.AeroHighPressure){ //refill complete, target pressure reached
      aeroPumpOff(false);
      logToSerials(F("Pressure tank recharged"),true);
     }
@@ -53,7 +53,7 @@ void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
         }      
     }
   }
-  if( PumpOK && checkQuietTime() && AeroPressure <= MySettings.AeroPressureLow){ //if pump is not disabled and quiet time not active and Pressure reached low limit: turn on pump 
+  if( PumpOK && checkQuietTime() && AeroPressure <= MySettings.AeroLowPressure){ //if pump is not disabled and quiet time not active and Pressure reached low limit: turn on pump 
         if(!AeroPumpOn && !AeroBypassSolenoidOn){ //start the bypass
           if(MySettings.DebugEnabled)logToSerials(F("Starting bypass"),true);
           AeroBypassSolenoidOn = true; 
@@ -348,12 +348,12 @@ void setAeroDuration(int duration){
 }
 
 
-void setAeroPressureLow(float PressureLow){
-  MySettings.AeroPressureLow =  PressureLow;
+void setAeroLowPressure(float LowPressure){
+  MySettings.AeroLowPressure =  LowPressure;
 }
 
-void setAeroPressureHigh(float PressureHigh){
-  MySettings.AeroPressureHigh = PressureHigh;
+void setAeroHighPressure(float HighPressure){
+  MySettings.AeroHighPressure = HighPressure;
   addToLog(F("Pump settings updated"));
 }
 

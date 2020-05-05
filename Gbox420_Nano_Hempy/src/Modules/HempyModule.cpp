@@ -15,8 +15,8 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   this -> SoundFeedback = Sound1;
   Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
   Weight2 = new WeightSensor(F("Weight2"), this, &ModuleSettings->Weight2);
-  Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->Pump1);
-  Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->Pump2);
+  Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->HempyPump1);
+  Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->HempyPump2);
   Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1,Weight1,Pump1);
   Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2,Weight2,Pump2);
   //addToRefreshQueue_Sec(this);         ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
@@ -32,16 +32,16 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
 void HempyModule::processCommand(hempyCommand *Command){
   setDebug(Command -> Debug);
   setMetric(Command -> Metric);
-  if(Command -> DisablePump_B1) Pump1 -> disable();
-  if(Command -> TurnOnPump_B1) Pump1 -> turnOn(true);
-  if(Command -> TurnOffPump_B1) Pump1 -> turnOff(true);
+  if(Command -> DisablePump_B1) Pump1 -> disablePump();
+  if(Command -> TurnOnPump_B1) Pump1 -> startPump(true);
+  if(Command -> TurnOffPump_B1) Pump1 -> stopPump(true);
   Pump1 -> setTimeOut(Command -> TimeOutPump_B1);
   Bucket1 -> setStartWeight(Command -> StartWeightBucket_B1);
   Bucket1 -> setStopWeight(Command -> StopWeightBucket_B1);
 
-  if(Command -> DisablePump_B2) Pump2 -> disable();
-  if(Command -> TurnOnPump_B2) Pump2 -> turnOn(true);
-  if(Command -> TurnOffPump_B2) Pump2 -> turnOff(true);
+  if(Command -> DisablePump_B2) Pump2 -> disablePump();
+  if(Command -> TurnOnPump_B2) Pump2 -> startPump(true);
+  if(Command -> TurnOffPump_B2) Pump2 -> stopPump(true);
   Pump2 -> setTimeOut(Command -> TimeOutPump_B2);
   Bucket2 -> setStartWeight(Command -> StartWeightBucket_B2);
   Bucket2 -> setStopWeight(Command -> StopWeightBucket_B2);

@@ -40,8 +40,8 @@ void LoadCallback(char * url) //called when website is loaded
 
   WebServer.setArgInt(F("AeroInterval"), MySettings.AeroInterval);
   WebServer.setArgInt(F("AeroDuration"), MySettings.AeroDuration);
-  WebServer.setArgString(F("AeroPressureLow"), toText(MySettings.AeroPressureLow));
-  WebServer.setArgString(F("AeroPressureHigh"), toText(MySettings.AeroPressureHigh));
+  WebServer.setArgString(F("AeroLowPressure"), toText(MySettings.AeroLowPressure));
+  WebServer.setArgString(F("AeroHighPressure"), toText(MySettings.AeroHighPressure));
   WebServer.setArgBoolean(F("AeroSprayEnabled"), MySettings.AeroSprayEnabled);
   }
   
@@ -178,8 +178,8 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("LightsOffMinute"))==0) {setLightsOffMinute(WebServer.getArgInt());}       
   else if(strcmp_P(field,(PGM_P)F("AeroInterval"))==0) { setAeroInterval(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("AeroDuration"))==0) {setAeroDuration(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("AeroPressureLow"))==0) {setAeroPressureLow(WebServer.getArgFloat());}
-  else if(strcmp_P(field,(PGM_P)F("AeroPressureHigh"))==0) {setAeroPressureHigh(WebServer.getArgFloat());} 
+  else if(strcmp_P(field,(PGM_P)F("AeroLowPressure"))==0) {setAeroLowPressure(WebServer.getArgFloat());}
+  else if(strcmp_P(field,(PGM_P)F("AeroHighPressure"))==0) {setAeroHighPressure(WebServer.getArgFloat());} 
 
   else if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("DebugEnabled"))==0) {setDebug(WebServer.getArgBoolean());}

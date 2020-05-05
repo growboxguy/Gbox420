@@ -1,6 +1,7 @@
 #include "GrowBox.h"
 #include "HempyModule_Web.h"
 #include "AeroModule_Web.h"
+#include "../Components/WaterPump.h"
 #include "../Components_Web/DHTSensor_Web.h"
 #include "../Components_Web/Lights_Web.h"
 #include "../Components_Web/Sound_Web.h"
@@ -12,8 +13,8 @@
 #include "../Components_Web/PressureSensor_Web.h"
 #include "../Components_Web/Aeroponics_Tank_Web.h"
 #include "../Components_Web/Aeroponics_NoTank_Web.h"
-#include "../Components_Web/WaterTempSensor_Web.h"
 #include "../Components_Web/WaterLevelSensor_Web.h"
+#include "../Components_Web/WaterTempSensor_Web.h"
 //#include "../Components_Web/WeightSensor_Web.h"
 #include "../Components_Web/ModuleSkeleton_Web.h" ///Only for demonstration purposes
 
@@ -33,12 +34,14 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *
   IDHT = new DHTSensor_Web(F("IDHT"), this, &ModuleSettings->IDHT);
   EDHT = new DHTSensor_Web(F("EDHT"), this, &ModuleSettings->EDHT);
   Pres1 = new PressureSensor_Web(F("Pres1"), this, &ModuleSettings->Pres1);
-  AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1); ///Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
-  AeroNT1 = new Aeroponics_NoTank_Web(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, &ModuleSettings->AeroNT1_Specific, Pres1);
+  AeroPump1 = new WaterPump(F("AeroPump1"),this,&ModuleSettings->AeroPump1);
+  //AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, AeroPump1); ///Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  AeroNT1 = new Aeroponics_NoTank_Web(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, Pres1, AeroPump1);
   PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &ModuleSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &ModuleSettings->WaterTemp1);
   WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
   HempyModule1 = new HempyModule_Web(F("Hemp1"), this,&ModuleSettings->HempyModule1);
+
   AeroModule1 = new AeroModule_Web(F("Aero1"), this,&ModuleSettings->AeroModule1);
   //Weight1 = new WeightSensor_Web(F("Weight1"), this, &ModuleSettings->Weight1);
   //Weight2 = new WeightSensor_Web(F("Weight2"), this, &ModuleSettings->Weight2);
@@ -273,9 +276,9 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
     strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_OffTime\":\""));
     strcat(LongMessage, Lt1->getOffTimeText());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroInterval\":\""));
-    strcat(LongMessage, AeroNT1->getSprayInterval());
+    strcat(LongMessage, AeroNT1->getSprayIntervalText());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroDuration\":\""));
-    strcat(LongMessage, AeroNT1->getSprayDuration());
+    strcat(LongMessage, AeroNT1->getSprayDurationText());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroSprayPressure\":\""));
     strcat(LongMessage, toText(AeroNT1->LastSprayPressure));
     ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,AeroT1 -> getSprayInterval());
