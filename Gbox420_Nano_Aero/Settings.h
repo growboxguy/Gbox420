@@ -87,15 +87,15 @@ static const uint8_t Version = 24; ///< Increment this when you make a change in
 
 struct WaterPumpSettings
     {
-      WaterPumpSettings(uint8_t PumpPin = 0, uint8_t BypassSolenoidPin = 0, bool PumpEnabled = false, int TimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), BypassSolenoidPin(BypassSolenoidPin), PumpEnabled(PumpEnabled), TimeOut(TimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime)  {}
+      WaterPumpSettings(uint8_t PumpPin = 0, uint8_t BypassSolenoidPin = 0, bool PumpEnabled = false, int PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), BypassSolenoidPin(BypassSolenoidPin), PumpEnabled(PumpEnabled), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime)  {}
       uint8_t PumpPin;         ///< Pump relay pin
       uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin
       bool PumpEnabled; ///< Enable/disable pump. false= Block running the pump
-      int TimeOut;   ///< (Sec) Max pump run time        
+      int PumpTimeOut;   ///< (Sec) Max pump run time        
       int PrimingTime;    ///< (Sec) For wow long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
       int BlowOffTime;     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
-    struct WaterPumpSettings AeroPump1 = {.PumpPin = 8, .BypassSolenoidPin = 23, .PumpEnabled = true, .TimeOut = 120, .PrimeTime = 10, .BlowOffTime = 3};
+    struct WaterPumpSettings AeroPump1 = {.PumpPin = 8, .BypassSolenoidPin = 23, .PumpEnabled = true, .PumpTimeOut = 120, .PrimingTime = 10, .BlowOffTime = 3};
 
     
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.

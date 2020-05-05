@@ -54,8 +54,8 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> PumpOn) AeroT1 -> startPump(true);
     if(Command -> PumpOff) AeroT1 -> stopPump(true);
     if(Command -> PumpDisable) AeroT1 -> setPumpDisable();
-    AeroT1 -> setPumpTimeout(Command -> PumpTimeOut);
-    AeroT1 -> setPrimingTime(Command -> PumpPriming);
+    AeroT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
+    AeroT1 -> Pump -> setPrimingTime(Command -> PumpPriming);
     if(Command -> MixReservoir) AeroT1 -> mixReservoir();
   }
 
@@ -70,11 +70,11 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> PumpOn) AeroNT1 -> startPump(true);
     if(Command -> PumpOff) AeroNT1 -> stopPump(true);
     if(Command -> PumpDisable) AeroNT1 -> setPumpDisable();
-    AeroNT1 -> setPumpTimeout(Command -> PumpTimeOut);
-    AeroNT1 -> setPrimingTime(Command -> PumpPriming);
+    AeroNT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
+    AeroNT1 -> Pump -> setPrimingTime(Command -> PumpPriming);
     if(Command -> MixReservoir) AeroNT1 -> mixReservoir();
-    if(Command -> BypassOn) AeroNT1 -> setBypassOn(true);
-    if(Command -> BypassOff) AeroNT1 -> setBypassOff(true);
+    if(Command -> BypassOn) AeroNT1 -> Pump-> turnBypassOn();
+    if(Command -> BypassOff) AeroNT1 -> Pump-> turnBypassOff();
   }  
 
   updateResponse();
@@ -121,7 +121,7 @@ void AeroModule::updateResponse(){
     Response.SprayEnabled = AeroT1 -> getSprayEnabled();
     Response.Pressure = AeroT1 -> getPressure();
     //Response.PumpOn = AeroT1 -> PumpOK;
-    //Response.PumpEnabled = AeroT1 -> getOnState();
+    //Response.PumpEnabled = AeroT1 -> getPumpOnState();
     //Response.BypassOn = AeroT1 -> getEnabledState();
     //Response.LastSP = AeroT1 -> getWeight();
     Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 

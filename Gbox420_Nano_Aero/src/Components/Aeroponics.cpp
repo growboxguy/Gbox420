@@ -26,41 +26,8 @@ void Aeroponics::report()
   strcat_P(LongMessage, (PGM_P)F(" ; Interval:"));
   strcat(LongMessage, toText(*Interval));
   strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
-  strcat(LongMessage, toText(*Duration));
-  strcat_P(LongMessage, (PGM_P)F(" ; PrimingTime:"));
-  strcat(LongMessage, toText(*PrimingTime));
+  strcat(LongMessage, toText(*Duration));  
   logToSerials(&LongMessage, true, 0); ///Break line, No indentation needed: child class already printed it
-}
-
-void Aeroponics::checkRelays()
-{
-  if (BypassOn)
-    digitalWrite(*BypassSolenoidPin, LOW);
-  else
-    digitalWrite(*BypassSolenoidPin, HIGH);
-}
-
-void Aeroponics::startPump(bool UserRequest)
-{  
-  Pump -> startPump(UserRequest);
-}
-
-void Aeroponics::stopPump(bool UserRequest)
-{
-  Pump -> stopPump(UserRequest);
-}
-
-void Aeroponics::setPumpDisable()
-{
-  Pump -> disablePump();
-}
-
-void Aeroponics::mixReservoir()
-{
-  Parent->addToLog(F("Mixing nutrients"));
-  MixInProgress = true;
-  setBypassOn(false);
-  Pump -> startMixing();
 }
 
 void Aeroponics::setSprayInterval(int interval)
@@ -77,7 +44,6 @@ int Aeroponics::getSprayInterval()
   return *Interval;
 }
 
-
 char *Aeroponics::getSprayIntervalText()
 {
   return toText(*Interval);
@@ -90,23 +56,6 @@ void Aeroponics::setSprayDuration(int duration)
     *Duration = duration;
     Parent->addToLog(F("Spray time updated"));
     Parent -> getSoundObject() -> playOnSound();
-  }
-}
-
-
-
-void Aeroponics::setPumpTimeout(int TimeOut)
-{
-  Pump ->setTimeOut(TimeOut);   
-}
-
-void Aeroponics::setPrimingTime(int Timing)
-{
-  if(*PrimingTime != Timing && Timing > 0)
-  {
-    *PrimingTime = Timing;
-    Parent->addToLog(F("Aero priming time updated"));
-    Parent->getSoundObject()->playOnSound();
   }
 }
 
@@ -140,7 +89,43 @@ char *Aeroponics::getSprayDurationText()
   return toText(*Duration);
 }
 
+char *Aeroponics::sprayStateToText()
+{
+  return onOffToText(*SprayEnabled);
+}
+
+
+////////////////////////////////////////
+///Pump controls
+
+void Aeroponics::mixReservoir()
+{
+  Parent->addToLog(F("Mixing nutrients"));
+  Pump -> startMixing();
+}
+
 float Aeroponics::getPressure()
 {
   return FeedbackPressureSensor -> getPressure();
+}
+  
+void Aeroponics::setHighPressure(float HighPressure)
+{
+  *(this->HighPressure) = HighPressure;
+  Parent->addToLog(F("Tank limits updated"));
+}
+
+void Aeroponics::startPump(bool UserRequest)
+{  
+  Pump -> startPump(UserRequest);
+}
+
+void Aeroponics::stopPump(bool UserRequest)
+{
+  Pump -> stopPump(UserRequest);
+}
+
+void Aeroponics::setPumpDisable()
+{
+  Pump -> disablePump();
 }

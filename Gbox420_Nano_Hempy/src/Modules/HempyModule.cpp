@@ -35,14 +35,14 @@ void HempyModule::processCommand(hempyCommand *Command){
   if(Command -> DisablePump_B1) Pump1 -> disablePump();
   if(Command -> TurnOnPump_B1) Pump1 -> startPump(true);
   if(Command -> TurnOffPump_B1) Pump1 -> stopPump(true);
-  Pump1 -> setTimeOut(Command -> TimeOutPump_B1);
+  Pump1 -> setPumpTimeOut(Command -> TimeOutPump_B1);
   Bucket1 -> setStartWeight(Command -> StartWeightBucket_B1);
   Bucket1 -> setStopWeight(Command -> StopWeightBucket_B1);
 
   if(Command -> DisablePump_B2) Pump2 -> disablePump();
   if(Command -> TurnOnPump_B2) Pump2 -> startPump(true);
   if(Command -> TurnOffPump_B2) Pump2 -> stopPump(true);
-  Pump2 -> setTimeOut(Command -> TimeOutPump_B2);
+  Pump2 -> setPumpTimeOut(Command -> TimeOutPump_B2);
   Bucket2 -> setStartWeight(Command -> StartWeightBucket_B2);
   Bucket2 -> setStopWeight(Command -> StopWeightBucket_B2);
 
@@ -81,10 +81,10 @@ void HempyModule::processCommand(hempyCommand *Command){
 }
 
 void HempyModule::updateResponse(){
-  Response.PumpOn_B1 = Pump1 -> getOnState();
+  Response.PumpOn_B1 = Pump1 -> getPumpOnState();
   Response.PumpEnabled_B1 = Pump1 -> getEnabledState();
   Response.Weight_B1 = Weight1 -> getWeight();
-  Response.PumpOn_B2 = Pump2 -> getOnState();
+  Response.PumpOn_B2 = Pump2 -> getPumpOnState();
   Response.PumpEnabled_B2 = Pump2 -> getEnabledState();
   Response.Weight_B2 = Weight2 -> getWeight(); 
   Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 

@@ -12,7 +12,6 @@ public:
   void refresh_Sec();
   void report();
   void setLowPressure(float LowPressure);
-  void setHighPressure(float HighPressure);
   void sprayNow(bool UserRequest = false);
   void sprayOff(bool UserRequest = false);
 
@@ -21,7 +20,6 @@ private:
 protected:
   void setSpraySolenoidOn();
   void setSpraySolenoidOff();
-  char *sprayStateToText();
   void refillTank();
   uint8_t *SpraySolenoidPin;
   bool SpraySolenoidOn = false; ///Aeroponics - Controls the spray valve, set to true to spay at power on.

@@ -199,17 +199,17 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
 
     struct WaterPumpSettings
     {
-      WaterPumpSettings(uint8_t PumpPin = 0, bool PumpEnabled = false, int PumpTimeOut = 0, uint8_t BypassSolenoidPin = 255, int PrimeTime = -1, int BlowOffTime = -1) : PumpPin(PumpPin), BypassSolenoidPin(BypassSolenoidPin), PumpEnabled(PumpEnabled), PumpTimeOut(PumpTimeOut), PrimeTime(PrimeTime), BlowOffTime(BlowOffTime)  {}
+      WaterPumpSettings(uint8_t PumpPin = 0, bool PumpEnabled = false, int PumpTimeOut = 0, uint8_t BypassSolenoidPin = 255, int PrimingTime = -1, int BlowOffTime = -1) : PumpPin(PumpPin), BypassSolenoidPin(BypassSolenoidPin), PumpEnabled(PumpEnabled), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime)  {}
       uint8_t PumpPin;         ///< Pump relay pin
       uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin
       bool PumpEnabled; ///< Enable/disable pump. false= Block running the pump
       int PumpTimeOut;   ///< (Sec) Max pump run time        
-      int PrimeTime;    ///< (Sec) For wow long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+      int PrimingTime;    ///< (Sec) For wow long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
       int BlowOffTime;     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
     struct WaterPumpSettings HempyPump1 = {.PumpPin = 7, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Submerged pumps do not need to prime at start or discharge pressure when stopping
     struct WaterPumpSettings HempyPump2 = {.PumpPin = 8, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Submerged pumps do not need to prime at start or discharge pressure when stopping
-    struct WaterPumpSettings AeroPump1 = {.PumpPin = 8, .BypassSolenoidPin = 23, .PumpEnabled = true, .PumpTimeOut = 120, .PrimeTime = 10, .BlowOffTime = 3};
+    struct WaterPumpSettings AeroPump1 = {.PumpPin = 8, .BypassSolenoidPin = 23, .PumpEnabled = true, .PumpTimeOut = 120, .PrimingTime = 10, .BlowOffTime = 3};
 
     struct WaterTempSensorSettings
     {

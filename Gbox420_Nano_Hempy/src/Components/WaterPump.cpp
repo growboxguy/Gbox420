@@ -18,7 +18,7 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
     pinMode(*BypassSolenoidPin, OUTPUT);
     digitalWrite(*BypassSolenoidPin, HIGH); ///initialize bypass solenoid in OFF state
   }
-  if(DefaultSettings->PrimeTime != -1) {PrimeTime= &DefaultSettings->PrimeTime;} 
+  if(DefaultSettings->PrimingTime != -1) {PrimingTime= &DefaultSettings->PrimingTime;} 
   if(DefaultSettings->BlowOffTime != -1) {BlowOffTime= &DefaultSettings->BlowOffTime;}
     
   Parent->addToReportQueue(this);         ///Subscribing to the report queue: Calls the report() method
@@ -70,10 +70,10 @@ void WaterPump::UpdateState(PumpState NewState)  ///< Without a parameter actual
 
   switch (State)
   {
-    case PRIME:
+    case PRIMING:
       PumpOn=true;
       BypassOn=true;
-      if(millis() - PumpTimer > ((uint32_t)*PrimeTime * 1000)) ///< Is it time to disable the Bypass solenoid
+      if(millis() - PumpTimer > ((uint32_t)*PrimingTime * 1000)) ///< Is it time to disable the Bypass solenoid
       { 
         logToSerials(F("Priming complete, running..."), true, 3);
         UpdateState(RUNNING);
@@ -102,8 +102,8 @@ void WaterPump::UpdateState(PumpState NewState)  ///< Without a parameter actual
       BypassOn=true;  
       if(millis() - PumpTimer > ((uint32_t)*BlowOffTime * 1000)) ///Is it time to disable the Bypass solenoid
       {  
-        turnBypassOff();
         logToSerials(F("Pressure released"), true, 3);
+        UpdateState(IDLE);
       }
       break;
     case IDLE:
@@ -136,9 +136,9 @@ void WaterPump::startPump(bool ResetStatus)
   if(*PumpEnabled){
     logToSerials(F("ON"), true, 1);
     Parent->getSoundObject()->playOnSound();
-    if(PrimeTime != NULL && *PrimeTime >0)
+    if(PrimingTime != NULL && *PrimingTime >0)
     {
-      UpdateState(PRIME);       
+      UpdateState(PRIMING);       
     }
     else
     {
@@ -186,29 +186,29 @@ void WaterPump::startMixing(int TimeOutSec)  ///< Mix the nutrient reservoir by 
 }
 
 void WaterPump::turnBypassOn(){
-  //BlowOffInProgress = true; ///no extra timer is needed, will use SprayTimer  \todo Move this under NoTank
-  // SprayTimer = millis();  ///measures blowoff time  \todo Move this under NoTank
-  
   Parent->addToLog(F("Bypass ON"));
   Parent->getSoundObject()->playOnSound();
-  UpdateState(B)
-  }
+  UpdateState(BLOWOFF);  
 }
 
-void WaterPump::turnBypassOff(bool addToLog){
-  BypassOn = false;
-  checkRelays();
-  if(addToLog)
-  {
-    Parent->addToLog(F("Bypass OFF"));
-    Parent->getSoundObject()->playOffSound();
-  }
+void WaterPump::turnBypassOff(){  
+  Parent->addToLog(F("Bypass OFF"));
+  Parent->getSoundObject()->playOffSound();
+  UpdateState(IDLE); 
 }
 
 //////////////////////////////////////////////////////////////////////////////////
 
-bool WaterPump::getOnState(){
+bool WaterPump::getPumpOnState(){
   return PumpOn;
+}
+
+bool WaterPump::getBypassOnState(){
+  return BypassOn;
+}
+
+char *WaterPump::getBypassOnStateText(){
+  return onOffToText(BypassOn);
 }
 
 bool WaterPump::getEnabledState(){
@@ -216,18 +216,53 @@ bool WaterPump::getEnabledState(){
 }
 
 char * WaterPump::getStateText(){
-  return pumpStateToText(*PumpEnabled,PumpOn);
+  switch (State)
+  {
+    case DISABLED:
+      return (char *)"DISABLED";
+      break;
+    case IDLE:
+      return (char *)"IDLE";
+      break;
+    case PRIMING:
+      return (char *)"PRIMING";
+      break;
+    case RUNNING:
+      return (char *)"RUNNING";
+      break;
+    case BLOWOFF:
+      return (char *)"BLOWOFF";
+      break;
+    case MIXING:
+      return (char *)"MIXING";
+      break;  
+  }
 }
 
-int WaterPump::getTimeOut(){
+int WaterPump::getPumpTimeOut(){
   return *PumpTimeOut;
 }
 
-void WaterPump::setTimeOut(int TimeOut){
+void WaterPump::setPumpTimeOut(int TimeOut){
   if(*this->PumpTimeOut != TimeOut && TimeOut > 0){
     *this->PumpTimeOut = TimeOut;
     logToSerials(Name, false, 1);
     logToSerials(F("timeout updated"), true, 1);
     Parent -> getSoundObject()->playOnSound();
   }  
+}
+
+int WaterPump::getPrimingTime()
+{
+  return *PrimingTime;   
+}
+
+void WaterPump::setPrimingTime(int Timing)
+{
+  if(*PrimingTime != Timing && Timing > 0)
+  {
+    *PrimingTime = Timing;
+    Parent->addToLog(F("Aero priming time updated"));
+    Parent->getSoundObject()->playOnSound();
+  }
 }

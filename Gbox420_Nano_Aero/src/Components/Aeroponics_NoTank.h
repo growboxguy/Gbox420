@@ -18,7 +18,5 @@ public:
 private:
  
 protected:
-  char *sprayStateToText();
-  int *BlowOffTime;               ///After spraying open the bypass valve for X seconds to release pressure in the system
-  bool BlowOffInProgress = false; ///Aeroponics - True while bypass valve is open during a pressure blow-off. Only used without the Pressure Tank option.
+
 };
