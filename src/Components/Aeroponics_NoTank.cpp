@@ -19,7 +19,7 @@ void Aeroponics_NoTank::refresh_Sec()
     if (millis() - SprayTimer >= (uint32_t)*Duration * 1000 + (uint32_t)Pump->getPrimingTime() * 1000)
     { ///bypass valve is closed and time to stop spraying (Duration in Seconds)
       LastSprayPressure = Aeroponics::FeedbackPressureSensor->getPressure();
-      Pump -> stopPump(false);      
+      Pump -> stopPump();      
       logToSerials(F("Spray stopped"), true);
     }    
   }
@@ -57,8 +57,8 @@ void Aeroponics_NoTank::sprayNow(bool UserRequest)
   }
 }
 
-void Aeroponics_NoTank::sprayOff(bool UserRequest)
+void Aeroponics_NoTank::sprayOff()
 {
-  Pump -> stopPump(UserRequest);
+  Pump -> stopPump();  
   Parent -> addToLog(F("Aeroponics spray OFF"));
 }

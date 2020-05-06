@@ -16,7 +16,7 @@ public:
   void setMaxPressure(float MaxPressure);
 
   void startPump(bool ResetStatus = false);  ///< Turn the pump ON
-  void stopPump(bool ResetStatus = false);  ///< Turn the pump OFF
+  void stopPump();  ///< Turn the pump OFF
   void disablePump();  ///< Disable the pump
   void startMixing(int TimeOutSec = 0);
   

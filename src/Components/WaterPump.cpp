@@ -82,6 +82,7 @@ void WaterPump::UpdateState(PumpState NewState)  ///< Without a parameter actual
     case RUNNING:
       PumpOn=true;
       BypassOn=false;
+      *PumpEnabled = true;
       if(RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000)){
         RunTime = 0;
         if(BlowOffTime != NULL && *BlowOffTime >0)        { 
@@ -100,6 +101,7 @@ void WaterPump::UpdateState(PumpState NewState)  ///< Without a parameter actual
     case BLOWOFF:
       PumpOn=false;
       BypassOn=true;  
+      *PumpEnabled = true;
       if(millis() - PumpTimer > ((uint32_t)*BlowOffTime * 1000)) ///Is it time to disable the Bypass solenoid
       {  
         logToSerials(F("Pressure released"), true, 3);
@@ -108,11 +110,13 @@ void WaterPump::UpdateState(PumpState NewState)  ///< Without a parameter actual
       break;
     case IDLE:
       PumpOn=false;
-      BypassOn=false;      
+      BypassOn=false; 
+      *PumpEnabled = true;    
       break;
     case MIXING:
       PumpOn=true;
       BypassOn=true;
+      *PumpEnabled = true;
       if((RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000)) || millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)){
         RunTime = 0;
         logToSerials(F("Mixing finished"), true, 3);  
@@ -149,26 +153,20 @@ void WaterPump::startPump(bool ResetStatus)
     logToSerials(F("disabled, cannot turn ON"), true, 1); 
 }
 
-void WaterPump::stopPump(bool ResetStatus)
+void WaterPump::stopPump()
 {
-  if(ResetStatus) {
-    *PumpEnabled = true; 
-  }
   logToSerials(Name, false, 3);
-  if(*PumpEnabled){
-    logToSerials(F("OFF"), true, 1);
-    Parent->getSoundObject()->playOffSound();  
-    if(BlowOffTime != NULL && *BlowOffTime >0)
-    {
-      UpdateState(BLOWOFF);       
-    }
-    else
-    {
-      UpdateState(IDLE);
-    }    
+  logToSerials(F("OFF"), true, 1);
+  Parent->getSoundObject()->playOffSound();  
+  if(BlowOffTime != NULL && *BlowOffTime >0)
+  {
+    UpdateState(BLOWOFF);       
   }
   else
-    logToSerials(F("disabled, cannot turn OFF"), true, 1);
+  {
+    UpdateState(IDLE);
+  }
+  
 }
 
 void WaterPump::disablePump()

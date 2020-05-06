@@ -20,7 +20,6 @@ public:
   void mixReservoir();
 
   void setSprayOnOff(bool State); 
-  virtual void sprayOff(bool UserRequest) = 0;
   char *sprayStateToText();
   virtual void sprayNow(bool UserRequest = false) = 0;
   void setSprayInterval(int interval);

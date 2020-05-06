@@ -74,7 +74,7 @@
 			margin-bottom: 6px;
 		}
 	</style>
-	<div class="pure-g">
+	<div class="pure-g" onload="showRefillButton()">
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">
 				<h1><span id="Time"></span></h1>
@@ -304,7 +304,7 @@
 						title="Stop refilling when this pressure is reached" />
 					<input type="submit" value="Set">
 				</form>			
-				<b id="Aero1_TankTitle">Tank: </b><input type="checkbox" id="Aero1_Tank" title="READONLY - Enabled if Pressure tank is available" onclick="showRefillButton()" style="display: none;" >
+				<b id="Aero1_TankTitle">Tank: </b><input type="checkbox" id="Aero1_Tank" name="Aero1_Tank" title="READONLY - Enabled if Pressure tank is available" onchange="showRefillButton()" onload="showRefillButton()" style="display: none;">
 					<button id="Aero1_Refill" type="button" align="right" title="Refill the tank">Refill</button>									
 			</div>			
 			<div class="card" style="width:90%">
@@ -361,8 +361,6 @@
 </div>
 <!-- /Footer -->
 <script>
-	document.onload = showRefillButton();
-
 	function showRefillButton() {
 		//Hidden checkbox to signal if Pressure tank is present or not
 		var PressureTankAvailable = document.getElementById("Aero1_Tank");
@@ -380,7 +378,9 @@
 			TankTitle.style.display = "none";
 			RefillButton.style.display = "none";
 		}
-  		return false;
+
+		document.onload = showRefillButton();
+		window.onload = showRefillButton();
 	}
 	
 </script>

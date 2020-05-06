@@ -13,13 +13,13 @@ public:
   void report();
   void sprayNow(bool UserRequest = false);
   void sprayOff(bool UserRequest = false);
+  void refillTank();
 
 private:
 
 protected:
   void setSpraySolenoidOn();
-  void setSpraySolenoidOff();
-  void refillTank();
+  void setSpraySolenoidOff();  
   uint8_t *SpraySolenoidPin;
   bool SpraySolenoidOn = false; ///Aeroponics - Controls the spray valve, set to true to spay at power on.
 };

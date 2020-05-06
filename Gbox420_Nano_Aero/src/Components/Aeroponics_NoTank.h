@@ -12,7 +12,7 @@ public:
   void refresh_Sec();
   void report();
   void sprayNow(bool UserRequest = false);
-  void sprayOff(bool UserRequest = false);
+  void sprayOff();
   
 
 
