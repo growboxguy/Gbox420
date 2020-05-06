@@ -18,8 +18,8 @@ void PHSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
   {
     ///WebServer.setArgString(F("PHAlertLow"), toText(GBox -> Reservoir -> PHAlertLow));
     ///WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> ModuleSettings -> PHAlertHigh));
-    WebServer.setArgString(getComponentName(F("Slope")), toPrecisionText(*Slope));
-    WebServer.setArgString(getComponentName(F("Intercept")), toPrecisionText(*Intercept));
+    WebServer.setArgString(getComponentName(F("Slope")), toText_floatDecimals(*Slope));
+    WebServer.setArgString(getComponentName(F("Intercept")), toText_floatDecimals(*Intercept));
   }
 }
 

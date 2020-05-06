@@ -25,6 +25,8 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *
   ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets; 
   Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this -> SoundFeedback = Sound1;
+  ///ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&ModuleSettings -> ModuleSkeleton1);  ///Only for demonstration purposes
+  ///ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&ModuleSettings -> ModuleSkeleton2);  ///Only for demonstration purposes
   IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan);      ///passing: Component name, GrowBox object the component belongs to, Default settings)
   EFan = new Fan_Web(F("EFan"), this, &ModuleSettings->EFan);
   Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
@@ -33,20 +35,19 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *
   ///Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); ///Only for PZEM004T V3.0
   IDHT = new DHTSensor_Web(F("IDHT"), this, &ModuleSettings->IDHT);
   EDHT = new DHTSensor_Web(F("EDHT"), this, &ModuleSettings->EDHT);
-  Pres1 = new PressureSensor_Web(F("Pres1"), this, &ModuleSettings->Pres1);
-  AeroPump1 = new WaterPump(F("AeroPump1"),this,&ModuleSettings->AeroPump1);
-  //AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, AeroPump1); ///Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
-  AeroNT1 = new Aeroponics_NoTank_Web(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, Pres1, AeroPump1);
   PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &ModuleSettings->PHSensor1);
   WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &ModuleSettings->WaterTemp1);
   WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
   HempyModule1 = new HempyModule_Web(F("Hemp1"), this,&ModuleSettings->HempyModule1);
-
-  AeroModule1 = new AeroModule_Web(F("Aero1"), this,&ModuleSettings->AeroModule1);
   //Weight1 = new WeightSensor_Web(F("Weight1"), this, &ModuleSettings->Weight1);
   //Weight2 = new WeightSensor_Web(F("Weight2"), this, &ModuleSettings->Weight2);
-  ///ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&ModuleSettings -> ModuleSkeleton1);  ///Only for demonstration purposes
-  ///ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&ModuleSettings -> ModuleSkeleton2);  ///Only for demonstration purposes
+  AeroModule1 = new AeroModule_Web(F("Aero1"), this,&ModuleSettings->AeroModule1);
+  //Pres1 = new PressureSensor_Web(F("Pres1"), this, &ModuleSettings->Pres1);
+  //AeroPump1 = new WaterPump(F("AeroPump1"),this,&ModuleSettings->AeroPump1);
+  //AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, AeroPump1); ///Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  //AeroNT1 = new Aeroponics_NoTank_Web(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, Pres1, AeroPump1);
+  
+ 
 
   addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method

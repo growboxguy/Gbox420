@@ -52,7 +52,7 @@ float DHTSensor::getTemp()
 char *DHTSensor::getTempText(bool IncludeUnits)
 {
   if (IncludeUnits)
-    return tempToText(Temp);
+    return toText_temp(Temp);
   else
     return toText(Temp);
 }
@@ -65,7 +65,7 @@ float DHTSensor::getHumidity()
 char *DHTSensor::getHumidityText(bool IncludeUnits)
 {
   if (IncludeUnits)
-    return percentageToText(Humidity);
+    return toText_percentage(Humidity);
   else
     return toText(Humidity);
 }

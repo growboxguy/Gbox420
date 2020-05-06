@@ -315,8 +315,8 @@ void setMetricSystemEnabled(bool MetricEnabled){
     MySettings.InternalFanSwitchTemp = convertBetweenTempUnits(MySettings.InternalFanSwitchTemp);
     MySettings.TempAlertLow= convertBetweenTempUnits(MySettings.TempAlertLow);
     MySettings.TempAlertHigh= convertBetweenTempUnits(MySettings.TempAlertHigh);
-    MySettings.AeroLowPressure=convertBetweenPressureUnits(MySettings.AeroLowPressure);
-    MySettings.AeroHighPressure=convertBetweenPressureUnits(MySettings.AeroHighPressure);
+    MySettings.AeroMinPressure=convertBetweenPressureUnits(MySettings.AeroMinPressure);
+    MySettings.AeroMaxPressure=convertBetweenPressureUnits(MySettings.AeroMaxPressure);
     MySettings.PressureAlertLow=convertBetweenPressureUnits(MySettings.PressureAlertLow);
     MySettings.PressureAlertHigh=convertBetweenPressureUnits(MySettings.PressureAlertHigh);
   }    

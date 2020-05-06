@@ -33,9 +33,6 @@ public:
   HempyBucket *Bucket2;
   WaterPump *Pump1;
   WaterPump *Pump2;
-  //PHSensor *PHSensor1;
-  //WaterTempSensor *WaterTemp1;
-  //WaterLevelSensor *WaterLevel1;
   //void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();

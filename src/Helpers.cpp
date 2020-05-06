@@ -63,7 +63,7 @@ char *toText(float Number)
   return ShortMessage;
 }
 
-char *toPrecisionText(float Number)
+char *toText_floatDecimals(float Number)
 {
   if (isnan(Number))
     Number = -1.0;
@@ -91,13 +91,13 @@ char *toText(float Number1, float Number2, const char *Separator)
   return ShortMessage;
 }
 
-char *timeToText(uint8_t Hour, uint8_t Minute)
+char *toText_time(uint8_t Hour, uint8_t Minute)
 {
   sprintf(ShortMessage, "%02u:%02u", Hour, Minute);
   return ShortMessage;
 }
 
-char *tempToText(float Temp)
+char *toText_temp(float Temp)
 {
  dtostrf(Temp, 4, 2, ShortMessage);
   if (*Metric)
@@ -111,7 +111,7 @@ char *tempToText(float Temp)
   return ShortMessage;
 }
 
-char *pressureToText(float Pressure)
+char *toText_pressure(float Pressure)
 {
   dtostrf(Pressure, 4, 2, ShortMessage);
   if (*Metric)
@@ -125,7 +125,7 @@ char *pressureToText(float Pressure)
   return ShortMessage;
 }
 
-char *weightToText(float Weight)
+char *toText_weight(float Weight)
 {
   dtostrf(Weight, 4, 2, ShortMessage);
   if (*Metric)
@@ -139,7 +139,7 @@ char *weightToText(float Weight)
   return ShortMessage;
 }
 
-char *percentageToText(float Number)
+char *toText_percentage(float Number)
 {
   ///static char * ReturnChar = malloc(MaxTextLength * sizeof(char));  ///allocate memory for every run - need to take care of freeing up the memory  after use
    dtostrf(Number, 4, 2, ShortMessage);
@@ -147,22 +147,14 @@ char *percentageToText(float Number)
   return ShortMessage;
 }
 
-char *percentageToText(int Number)
+char *toText_percentage(int Number)
 {
   itoa(Number, ShortMessage, 10);
   strcat_P(ShortMessage, (PGM_P)F("%"));
   return ShortMessage;
 }
 
-char *onOffToText(bool Status)
-{
-  if (Status)
-    return (char *)"ON";
-  else
-    return (char *)"OFF";
-}
-
-char *yesNoToText(bool Status)
+char *toText_yesNo(bool Status)
 {
   if (Status)
     return (char *)"YES";
@@ -170,7 +162,7 @@ char *yesNoToText(bool Status)
     return (char *)"NO";
 }
 
-char *enabledToText(bool Status)
+char *toText_enabledDisabled(bool Status)
 {
   if (Status)
     return (char *)"ENABLED";
@@ -178,7 +170,15 @@ char *enabledToText(bool Status)
     return (char *)"DISABLED";
 }
 
-char *pumpStateToText(bool Enabled, bool OnStatus)
+char *toText_onOff(bool Status)
+{
+  if (Status)
+    return (char *)"ON";
+  else
+    return (char *)"OFF";
+}
+
+char *toText_onOffDisabled(bool Enabled, bool OnStatus)
 {
   if (!Enabled)
     return (char *)"DISABLED";
@@ -188,5 +188,29 @@ char *pumpStateToText(bool Enabled, bool OnStatus)
       return (char *)"ON";
     else
       return (char *)"OFF";
+  }
+}
+
+char *toText_pumpState(PumpState State){
+  switch (State)
+  {
+    case DISABLED:
+      return (char *)"DISABLED";
+      break;
+    case IDLE:
+      return (char *)"IDLE";
+      break;
+    case PRIMING:
+      return (char *)"PRIMING";
+      break;
+    case RUNNING:
+      return (char *)"RUNNING";
+      break;
+    case BLOWOFF:
+      return (char *)"BLOWOFF";
+      break;
+    case MIXING:
+      return (char *)"MIXING";
+      break;  
   }
 }

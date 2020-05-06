@@ -10,7 +10,12 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 24; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 25; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+
+///State machine - Defining possible states
+enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
+enum HempyState { DRY, WATERING};
+enum AeroState { SPRAYING };
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 
@@ -43,14 +48,14 @@ static const uint8_t Version = 24; ///< Increment this when you make a change in
 
     struct AeroponicsSettings
     { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
-      AeroponicsSettings(bool SprayEnabled = true, int Interval = 0, int Duration = 0, float HighPressure = 0.0) : SprayEnabled(SprayEnabled), Interval(Interval), Duration(Duration), HighPressure(HighPressure)   {}
+      AeroponicsSettings(bool SprayEnabled = true, int Interval = 0, int Duration = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), Interval(Interval), Duration(Duration), MaxPressure(MaxPressure)   {}
       bool SprayEnabled; ///Enable/disable spraying cycle
       int Interval;        ///Spray every X minutes
       int Duration;        ///Spray time in seconds
-      float HighPressure; ///Turn off pump above this pressure
+      float MaxPressure; ///Turn off pump above this pressure
     };
-    struct AeroponicsSettings AeroT1_Common = {.SprayEnabled= true, .Interval=15, .Duration = 10, .HighPressure = 7.0};
-    struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled= true, .Interval=15, .Duration = 10, .HighPressure = 7.0};
+    struct AeroponicsSettings AeroT1_Common = {.SprayEnabled= true, .Interval=15, .Duration = 10, .MaxPressure = 7.0};
+    struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled= true, .Interval=15, .Duration = 10, .MaxPressure = 7.0};
 
     /*
     struct AeroponicsSettings_NoTankSpecific  ///<Settings for an Aeroponics setup WITHOUT a pressure tank
@@ -62,11 +67,11 @@ static const uint8_t Version = 24; ///< Increment this when you make a change in
 
     struct AeroponicsSettings_TankSpecific
     { ///Settings for an Aeroponics setup WITH a pressure tank
-      AeroponicsSettings_TankSpecific(uint8_t SpraySolenoidPin = 0, float LowPressure = 0.0) : SpraySolenoidPin(SpraySolenoidPin), LowPressure(LowPressure) {}
+      AeroponicsSettings_TankSpecific(uint8_t SpraySolenoidPin = 0, float MinPressure = 0.0) : SpraySolenoidPin(SpraySolenoidPin), MinPressure(MinPressure) {}
       uint8_t SpraySolenoidPin;    ///Spray solenoid relay pin
-      float LowPressure;  ///Turn on pump below this pressure      
+      float MinPressure;  ///Turn on pump below this pressure      
     };
-    struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.SpraySolenoidPin = 22, .LowPressure = 5.0};
+    struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.SpraySolenoidPin = 22, .MinPressure = 5.0};
 
     struct PressureSensorSettings
     {

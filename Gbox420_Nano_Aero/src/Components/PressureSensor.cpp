@@ -45,7 +45,7 @@ float PressureSensor::getPressure(bool ReturnAverage)
 char *PressureSensor::getPressureText(bool IncludeUnits, bool ReturnAverage)
 {
   if (IncludeUnits)
-    return pressureToText(Pressure->getFloat(ReturnAverage));
+    return toText_pressure(Pressure->getFloat(ReturnAverage));
   else
     return Pressure->getFloatText(ReturnAverage);
 }

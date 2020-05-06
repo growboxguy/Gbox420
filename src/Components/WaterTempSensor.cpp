@@ -49,7 +49,7 @@ float WaterTempSensor::getTemp()
 char *WaterTempSensor::getTempText(bool IncludeUnits)
 {
   if (IncludeUnits)
-    return tempToText(Temp);
+    return toText_temp(Temp);
   else
     return toText(Temp);
 }

@@ -199,6 +199,15 @@ void WaterPump::turnBypassOff(){
 
 //////////////////////////////////////////////////////////////////////////////////
 
+PumpState WaterPump::getState(){
+  return State;
+}
+
+
+char * WaterPump::getStateText(){
+  return toText_pumpState(State);
+}
+
 bool WaterPump::getOnState(){
   return PumpOn;
 }
@@ -208,35 +217,11 @@ bool WaterPump::getBypassOnState(){
 }
 
 char *WaterPump::getBypassOnStateText(){
-  return onOffToText(BypassOn);
+  return toText_onOff(BypassOn);
 }
 
 bool WaterPump::getEnabledState(){
   return *PumpEnabled;
-}
-
-char * WaterPump::getStateText(){
-  switch (State)
-  {
-    case DISABLED:
-      return (char *)"DISABLED";
-      break;
-    case IDLE:
-      return (char *)"IDLE";
-      break;
-    case PRIMING:
-      return (char *)"PRIMING";
-      break;
-    case RUNNING:
-      return (char *)"RUNNING";
-      break;
-    case BLOWOFF:
-      return (char *)"BLOWOFF";
-      break;
-    case MIXING:
-      return (char *)"MIXING";
-      break;  
-  }
 }
 
 int WaterPump::getPumpTimeOut(){

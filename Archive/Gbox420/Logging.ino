@@ -101,12 +101,12 @@ char * logToText(){
   strcat_P(WebMessage,(PGM_P)F(" ; Brightness:")); strcat(WebMessage,toText(MySettings.LightBrightness));
   strcat_P(WebMessage,(PGM_P)F(" ; LightReading:")); strcat(WebMessage,toText(LightReading));
   strcat_P(WebMessage,(PGM_P)F(" ; Light detected:")); strcat_P(WebMessage,(PGM_P)BrightToText()); 
-  strcat_P(WebMessage,(PGM_P)F(" ; LightON:")); strcat(WebMessage,timetoText(MySettings.LightOnHour, MySettings.LightOnMinute));
-  strcat_P(WebMessage,(PGM_P)F(" ; LightOFF:")); strcat(WebMessage,timetoText(MySettings.LightOffHour, MySettings.LightOffMinute));
+  strcat_P(WebMessage,(PGM_P)F(" ; LightON:")); strcat(WebMessage,toText_time(MySettings.LightOnHour, MySettings.LightOnMinute));
+  strcat_P(WebMessage,(PGM_P)F(" ; LightOFF:")); strcat(WebMessage,toText_time(MySettings.LightOffHour, MySettings.LightOffMinute));
   strcat_P(WebMessage,(PGM_P)F("\n\r Aeroponics - "));
   strcat_P(WebMessage,(PGM_P)F("Pressure:"));strcat(WebMessage,toText(AeroPressure));if(MySettings.MetricSystemEnabled)strcat_P(WebMessage,(PGM_P)F("bar"));else strcat_P(WebMessage,(PGM_P)F("psi"));
-  strcat_P(WebMessage,(PGM_P)F(" ; Low:"));strcat(WebMessage,toText(MySettings.AeroLowPressure));
-  strcat_P(WebMessage,(PGM_P)F(" ; High:"));strcat(WebMessage,toText(MySettings.AeroHighPressure));
+  strcat_P(WebMessage,(PGM_P)F(" ; Low:"));strcat(WebMessage,toText(MySettings.AeroMinPressure));
+  strcat_P(WebMessage,(PGM_P)F(" ; High:"));strcat(WebMessage,toText(MySettings.AeroMaxPressure));
   strcat_P(WebMessage,(PGM_P)F(" ; Interval:"));strcat(WebMessage,toText(MySettings.AeroInterval));
   strcat_P(WebMessage,(PGM_P)F(" ; Duration:"));strcat(WebMessage,toText(MySettings.AeroDuration));
   strcat_P(WebMessage,(PGM_P)F("\n\r Reservoir - "));
@@ -142,10 +142,10 @@ char * toText(float Number){
   return ReturnFloatChar;
 }
 
-char * toPrecisionText(float Number){ 
+char * toText_floatDecimals(float Number){ 
   static char ReturnFloatChar[MaxTextLength] = "";
   if(isnan(Number)) Number= -1.0;
-  dtostrf(Number, 8, 6, ReturnFloatChar); //minimum 8 char total lengt, with 6 decimals
+  dtostrf(Number, 8, 6, ReturnFloatChar); //minimum 8 char total length, with 6 decimals
   return ReturnFloatChar;
 }
 
@@ -161,7 +161,7 @@ char * toText(float Number1, float Number2,const char * Separator){
   return ReturnChar;
 }
 
-char * timetoText(int Hour, int Minute){
+char * toText_time(int Hour, int Minute){
   static char ReturnChar[MaxTextLength] = ""; //2 digit + separator + 2 digit + null
   sprintf (ReturnChar, "%02u:%02u", Hour, Minute);
   return ReturnChar;

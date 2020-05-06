@@ -4,8 +4,6 @@
 #include "420Module.h"
 #include "Sound.h"
 
-enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
-
 class WaterPump : virtual public Common
 {
 public:
@@ -13,9 +11,9 @@ public:
   WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::WaterPumpSettings *DefaultSettings); 
   void report();
   void refresh_Sec();
-  PumpState State = IDLE;  
+   
   void UpdateState(PumpState NewState = (PumpState)-1);
-  void setHighPressure(float HighPressure);
+  void setMaxPressure(float MaxPressure);
 
   void startPump(bool ResetStatus = false);  ///< Turn the pump ON
   void stopPump(bool ResetStatus = false);  ///< Turn the pump OFF
@@ -28,14 +26,14 @@ public:
   void startPrime();
   void startRunning();
   void startBlowOff();
-
-
-  PumpState getState();
+  
+  PumpState getState();  
+  char * getStateText();  ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
   bool getOnState();  ///< Pump ON(1)/OFF(0)
   bool getBypassOnState(); ///< Bypass solenoid ON(1)/OFF(0)
   char * getBypassOnStateText();
   bool getEnabledState();  ///< Pump ENABLED(1)/DISABLED(0) 
-  char * getStateText();  ///< Text representation of the current state: ON/OFF/DISABLED
+  
   //void checkRelay(); ///< Flit the relay into the correct status ON/OFF based on PumpOn variable
   
   void setPumpTimeOut(int NewTime);
@@ -47,6 +45,7 @@ public:
   uint32_t PumpTimer = millis();  ///< Spray cycle timer, used for State runtime tracking, - https:///www.arduino.cc/reference/en/language/functions/time/millis/ 
   
 private:
+  PumpState State = IDLE; 
  
 protected:
   Module *Parent;

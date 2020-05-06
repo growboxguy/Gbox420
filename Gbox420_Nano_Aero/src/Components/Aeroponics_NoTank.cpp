@@ -12,7 +12,7 @@ void Aeroponics_NoTank::refresh_Sec()
   if (*Debug)
     Common::refresh_Sec();
 
-  if (Pump->State == RUNNING)
+  if (Pump->getState() == RUNNING)
   { ///if pump is on
     FeedbackPressureSensor->readPressure();
     
@@ -25,7 +25,7 @@ void Aeroponics_NoTank::refresh_Sec()
   }
   else
   {
-    if (Pump -> State == IDLE && millis() - SprayTimer >= (uint32_t)*Interval * 60000)
+    if (Pump->getState() == IDLE && millis() - SprayTimer >= (uint32_t)*Interval * 60000)
     { ///if time to start spraying (AeroInterval in Minutes)
       sprayNow(false);
       SprayTimer = millis();
@@ -38,7 +38,7 @@ void Aeroponics_NoTank::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("LastSprayPressure:"));
-  strcat(LongMessage, pressureToText(LastSprayPressure));
+  strcat(LongMessage, toText_pressure(LastSprayPressure));
   logToSerials(&LongMessage, false, 1); ///first print Aeroponics_Tank specific report, without a line break
   Aeroponics::report();                 ///then print parent class report
 }
@@ -46,7 +46,7 @@ void Aeroponics_NoTank::report()
 char *Aeroponics_NoTank::getLastSprayPressureText(bool IncludeCurrentPressure ){
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///clear variable
 
-  pressureToText(LastSprayPressure);  ///< loads the Last pressure measured during spraying
+  toText_pressure(LastSprayPressure);  ///< loads the Last pressure measured during spraying
   if(IncludeCurrentPressure)
   {
      strcat_P(ShortMessage, (PGM_P)F(" ["));

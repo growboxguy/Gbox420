@@ -136,7 +136,7 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
 char *Lights::getTimerOnOffText(bool UseWords)
 {
   if (UseWords)
-    return enabledToText(*TimerEnabled); ///Returns ENABLED or DISABLED
+    return toText_enabledDisabled(*TimerEnabled); ///Returns ENABLED or DISABLED
   else
     return toText(*TimerEnabled); ///Returns '1' or '0'
 }
@@ -159,18 +159,18 @@ char *Lights::getBrightnessText()
 char *Lights::getStatusText(bool UseWords)
 {
   if (UseWords)
-    return onOffToText(*Status); ///Returns ON or OFF
+    return toText_onOff(*Status); ///Returns ON or OFF
   else
     return toText(*Status); ///Returns '1' or '0'
 }
 
 char *Lights::getOnTimeText()
 {
-  return timeToText(*OnHour, *OnMinute);
+  return toText_time(*OnHour, *OnMinute);
 }
 char *Lights::getOffTimeText()
 {
-  return timeToText(*OffHour, *OffMinute);
+  return toText_time(*OffHour, *OffMinute);
 }
 
 void Lights::setTimerOnOff(bool TimerState)

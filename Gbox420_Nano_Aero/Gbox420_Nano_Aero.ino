@@ -151,7 +151,7 @@ time_t updateTime()
   if(Command.Time > 0)
   {
   setTime(Command.Time);
-  logToSerials(F("Clock synced with main module"),true,0); 
+  logToSerials(F("Clock synced with main module"),true,2); 
   }
   else {
   logToSerials(F("Clock out of sync"),true,0); 

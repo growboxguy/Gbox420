@@ -4,7 +4,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
 { ///constructor
   this->Name = Name;
   SpraySolenoidPin = &TankSpecificSettings->SpraySolenoidPin;
-  LowPressure = &TankSpecificSettings->LowPressure;   ///Aeroponics - Turn on pump below this pressure (bar)  
+  MinPressure = &TankSpecificSettings->MinPressure;   ///Aeroponics - Turn on pump below this pressure (bar)  
   pinMode(*SpraySolenoidPin, OUTPUT);
   digitalWrite(*SpraySolenoidPin, HIGH); ///initialize off
   logToSerials(F("Aeroponics_Tank object created"), true, 1);
@@ -16,7 +16,7 @@ void Aeroponics_Tank::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Low Pressure:"));
-  strcat(LongMessage, pressureToText(*LowPressure));
+  strcat(LongMessage, toText_pressure(*MinPressure));
   logToSerials(&LongMessage, false, 1); ///first print Aeroponics_Tank specific report, without a line break
   Aeroponics::report();                 ///then print parent class report
 }
@@ -26,16 +26,16 @@ void Aeroponics_Tank::refresh_Sec()
   if (*Debug)
     Common::refresh_Sec();  
 
-  if (Pump->State == RUNNING) ///< if pump is on
+  if (Pump->getState() == RUNNING) ///< if pump is on
   { 
-    if (Aeroponics::FeedbackPressureSensor->getPressure() >= *HighPressure)
+    if (Aeroponics::FeedbackPressureSensor->getPressure() >= *MaxPressure)
     { ///refill complete, target pressure reached
       Pump-> stopPump();
       logToSerials(F("Pressure tank recharged"), true);
     }   
   }
   else{
-    if (Pump->State == IDLE && Aeroponics::FeedbackPressureSensor->getPressure() <= *LowPressure)
+    if (Pump->getState() == IDLE && Aeroponics::FeedbackPressureSensor->getPressure() <= *MinPressure)
     {                    
       logToSerials(F("Pressure tank recharging..."), true);
       Pump->startPump(false);
@@ -72,10 +72,7 @@ void Aeroponics_Tank::refresh_Sec()
   }
 }
 
-void Aeroponics_Tank::setLowPressure(float LowPressure)
-{
-  *(this->LowPressure) = LowPressure;
-}
+
 
 void Aeroponics_Tank::sprayNow(bool UserRequest)
 {

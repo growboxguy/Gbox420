@@ -16,8 +16,8 @@ void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G",2) == 0)
   {
-    WebServer.setArgFloat(getComponentName(F("PresLow")), *LowPressure);
-    WebServer.setArgFloat(getComponentName(F("PresHigh")), *HighPressure);
+    WebServer.setArgFloat(getComponentName(F("PresMin")), *MinPressure);
+    WebServer.setArgFloat(getComponentName(F("PresMax")), *MaxPressure);
     WebServer.setArgInt(getComponentName(F("Timeout")), Pump->getPumpTimeOut());
     WebServer.setArgInt(getComponentName(F("Priming")), Pump->getPrimingTime());
     WebServer.setArgInt(getComponentName(F("Int")), *Interval);
@@ -91,13 +91,13 @@ void Aeroponics_Tank_Web::websiteEvent_Field(char *Field)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("PresLow")) == 0)
+    if (strcmp_P(ShortMessage, (PGM_P)F("PresMin")) == 0)
     {
-      setLowPressure(WebServer.getArgFloat());
+      setMinPressure(WebServer.getArgFloat());
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PresHigh")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PresMax")) == 0)
     {
-      setHighPressure(WebServer.getArgFloat());
+      setMaxPressure(WebServer.getArgFloat());
     } 
     else if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0)
     {

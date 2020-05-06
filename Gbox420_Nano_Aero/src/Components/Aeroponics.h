@@ -32,17 +32,18 @@ public:
   char *getSprayDurationText();
   bool getSprayEnabled();
   float getPressure(); 
-  void setHighPressure(float HighPressure);
+  void setMinPressure(float Pressure);
+  void setMaxPressure(float Pressure);
   
 private:
 
 protected:
   Module *Parent;
   PressureSensor *FeedbackPressureSensor; ///Pressure sensor object that will monitor the spray pressure
-  float *HighPressure;          ///Aeroponics - Turn off pump above this pressure (bar)
+  uint32_t SprayTimer = millis(); 
   bool *SprayEnabled;             ///Enable/disable misting
   int *Interval;                  ///Aeroponics - Spray every 15 minutes
   int *Duration;                  ///Aeroponics - Spray time in seconds
-  uint32_t SprayTimer = millis(); 
-
+  float *MinPressure;           ///Aeroponics - Minimum acceptable spray pressure
+  float *MaxPressure;          ///Aeroponics - Maximum allowed pressure 
 };

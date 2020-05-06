@@ -13,16 +13,16 @@ void logToScreen(){
   Screen.setTextColor(ILI9341_RED);
   Screen.print(F("Light:")); Screen.print(stateToText(MySettings.LightStatus)); Screen.print(F(",Bright:")); Screen.println(BrightToText());
   Screen.print(F("Intensity:")); Screen.print(MySettings.LightBrightness);Screen.print(F("% - "));Screen.println(LightReading);
-  Screen.print(F("On:")); Screen.print(timetoText(MySettings.LightOnHour, MySettings.LightOnMinute));Screen.print(F(",Off:")); Screen.println(timetoText(MySettings.LightOffHour,MySettings.LightOffMinute));
+  Screen.print(F("On:")); Screen.print(toText_time(MySettings.LightOnHour, MySettings.LightOnMinute));Screen.print(F(",Off:")); Screen.println(toText_time(MySettings.LightOffHour,MySettings.LightOffMinute));
   Screen.setTextColor(ILI9341_MAGENTA);
   Screen.print(F("Reservoir:"));Screen.print(ReservoirText);Screen.print(F(",PH:"));Screen.println(PH);
   Screen.print(F("Temp:"));Screen.print(ReservoirTemp);if(MySettings.MetricSystemEnabled)Screen.println(F("C"));else Screen.println(F("F"));  
   Screen.setTextColor(ILI9341_WHITE);
   Screen.print(F("Internal:"));Screen.print(fanSpeedToText(true));Screen.print(F(",Exhaust:"));Screen.println(fanSpeedToText(false));
   Screen.setTextColor(ILI9341_GREEN);
-  Screen.print(F("Pressure:"));Screen.print(AeroPressure);Screen.print(F(" ("));Screen.print(MySettings.AeroLowPressure);Screen.print(F("/"));Screen.print(MySettings.AeroHighPressure);Screen.println(F(")"));
+  Screen.print(F("Pressure:"));Screen.print(AeroPressure);Screen.print(F(" ("));Screen.print(MySettings.AeroMinPressure);Screen.print(F("/"));Screen.print(MySettings.AeroMaxPressure);Screen.println(F(")"));
   Screen.print(F("Interval:"));Screen.print(MySettings.AeroInterval);Screen.print(F(",Duration:"));Screen.println(MySettings.AeroDuration);
-  Screen.print(F("Pump:"));Screen.print(pumpStateToText());
+  Screen.print(F("Pump:"));Screen.print(toText_pumpState());
   //Screen.setTextColor(ILI9341_CYAN);
   //Screen.setTextColor(ILI9341_YELLOW);
 }

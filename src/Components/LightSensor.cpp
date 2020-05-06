@@ -101,7 +101,7 @@ bool LightSensor::getDark()
 char *LightSensor::getDarkText(bool UseWords)
 {
   if (UseWords)
-    return yesNoToText(Dark);
+    return toText_yesNo(Dark);
   else
     return toText(Dark);
 }

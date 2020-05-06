@@ -10,7 +10,12 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 20; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 21; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+
+///State machine - Defining possible states
+enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
+//enum HempyState { DRY, WATERING};
+//enum AeroState { SPRAYING };
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 

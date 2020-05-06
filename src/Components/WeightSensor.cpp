@@ -59,7 +59,7 @@ float WeightSensor::getWeight()
 char *WeightSensor::getWeightText(bool IncludeUnits)
 {
   if (IncludeUnits)
-    return weightToText(Weight);
+    return toText_weight(Weight);
   else
     return toText(Weight);
 }

@@ -50,13 +50,13 @@ void ModuleSkeleton::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("PersistentBool:"));
-  strcat(LongMessage, yesNoToText(*PersistentBool));
+  strcat(LongMessage, toText_yesNo(*PersistentBool));
   strcat_P(LongMessage, (PGM_P)F(" ; PersistentInt:"));
   strcat(LongMessage, toText(*PersistentInt));
   strcat_P(LongMessage, (PGM_P)F(" ; PersistentFloat:"));
   strcat(LongMessage, toText(*PersistentFloat));
   strcat_P(LongMessage, (PGM_P)F(" ; RuntimeBool:"));
-  strcat(LongMessage, yesNoToText(RuntimeBool));
+  strcat(LongMessage, toText_yesNo(RuntimeBool));
   strcat_P(LongMessage, (PGM_P)F(" ; RuntimeInt:"));
   strcat(LongMessage, toText(RuntimeInt));
   strcat_P(LongMessage, (PGM_P)F(" ; RuntimeFloat:"));

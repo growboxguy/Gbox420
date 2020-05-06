@@ -33,7 +33,7 @@ void checkAero(bool Interrupt){
 
 void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
   if(AeroPumpOn){ //if pump is on
-    if(AeroPressure >= MySettings.AeroHighPressure){ //refill complete, target pressure reached
+    if(AeroPressure >= MySettings.AeroMaxPressure){ //refill complete, target pressure reached
      aeroPumpOff(false);
      logToSerials(F("Pressure tank recharged"),true);
     }
@@ -53,7 +53,7 @@ void checkAeroSprayTimer_WithPressureTank(){ //when pressure tank is connected
         }      
     }
   }
-  if( PumpOK && checkQuietTime() && AeroPressure <= MySettings.AeroLowPressure){ //if pump is not disabled and quiet time not active and Pressure reached low limit: turn on pump 
+  if( PumpOK && checkQuietTime() && AeroPressure <= MySettings.AeroMinPressure){ //if pump is not disabled and quiet time not active and Pressure reached low limit: turn on pump 
         if(!AeroPumpOn && !AeroBypassSolenoidOn){ //start the bypass
           if(MySettings.DebugEnabled)logToSerials(F("Starting bypass"),true);
           AeroBypassSolenoidOn = true; 
@@ -117,8 +117,8 @@ void checkAeroSprayTimer_WithoutPressureTank(){ //pump directly connected to aer
   } 
 }
 
-void aeroSprayNow(bool DueToHighPressure){   
-  if(MySettings.AeroSprayEnabled || DueToHighPressure){
+void aeroSprayNow(bool DueToMaxPressure){   
+  if(MySettings.AeroSprayEnabled || DueToMaxPressure){
     AeroBypassActive = false;
     AeroSprayTimer = millis();
     if(MySettings.AeroPressureTankPresent){
@@ -133,7 +133,7 @@ void aeroSprayNow(bool DueToHighPressure){
     }    
     checkRelays();
     PlayOnSound = true;
-    if(DueToHighPressure) addToLog(F("Above pressure limit,spraying"));
+    if(DueToMaxPressure) addToLog(F("Above pressure limit,spraying"));
     else addToLog(F("Aeroponics spraying"));
     }
 }
@@ -348,16 +348,16 @@ void setAeroDuration(int duration){
 }
 
 
-void setAeroLowPressure(float LowPressure){
-  MySettings.AeroLowPressure =  LowPressure;
+void setAeroMinPressure(float MinPressure){
+  MySettings.AeroMinPressure =  MinPressure;
 }
 
-void setAeroHighPressure(float HighPressure){
-  MySettings.AeroHighPressure = HighPressure;
+void setAeroMaxPressure(float MaxPressure){
+  MySettings.AeroMaxPressure = MaxPressure;
   addToLog(F("Pump settings updated"));
 }
 
-const __FlashStringHelper * pumpStateToText(){
+const __FlashStringHelper * toText_pumpState(){
    if(!PumpOK) return F("DISABLED");
    else if(AeroPumpOn) return F("ON");
    else return F("OFF");

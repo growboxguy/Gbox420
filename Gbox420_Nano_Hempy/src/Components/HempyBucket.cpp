@@ -63,7 +63,7 @@ float HempyBucket::getStopWeight()
 char *HempyBucket::getStartWeightText(bool IncludeUnits)
 {
   if (IncludeUnits)
-    return weightToText(*StartWeight);
+    return toText_weight(*StartWeight);
   else
     return toText(*StartWeight);
 }
@@ -71,7 +71,7 @@ char *HempyBucket::getStartWeightText(bool IncludeUnits)
 char *HempyBucket::getStopWeightText(bool IncludeUnits)
 {
   if (IncludeUnits)
-    return weightToText(*StopWeight);
+    return toText_weight(*StopWeight);
   else
     return toText(*StopWeight);
 }

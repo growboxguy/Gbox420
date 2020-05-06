@@ -11,7 +11,7 @@ Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings
   SprayEnabled = &DefaultSettings->SprayEnabled; ///Enable/disable misting
   Interval = &DefaultSettings->Interval;         ///Aeroponics - Spray every 15 minutes
   Duration = &DefaultSettings->Duration;         ///Aeroponics - Spray time in seconds
-  HighPressure = &DefaultSettings->HighPressure; ///Aeroponics - Turn off pump above this pressure (bar)
+  MaxPressure = &DefaultSettings->MaxPressure; ///Aeroponics - Turn off pump above this pressure (bar)
   this->FeedbackPressureSensor = FeedbackPressureSensor;
   this->Pump = Pump;  
   Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
@@ -22,9 +22,9 @@ void Aeroponics::report()
 {                                                  ///report status to Serial output, runs after the child class`s report function
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F(" ; High Pressure:"));
-  strcat(LongMessage, pressureToText(*HighPressure));
+  strcat(LongMessage, toText_pressure(*MaxPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
-  strcat(LongMessage, yesNoToText(SprayEnabled));
+  strcat(LongMessage, toText_yesNo(SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F(" ; Interval:"));
   strcat(LongMessage, toText(*Interval));
   strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
@@ -93,7 +93,7 @@ char *Aeroponics::getSprayDurationText()
 
 char *Aeroponics::sprayStateToText()
 {
-  return onOffToText(*SprayEnabled);
+  return toText_onOff(*SprayEnabled);
 }
 
 
@@ -110,11 +110,20 @@ float Aeroponics::getPressure()
 {
   return FeedbackPressureSensor -> getPressure();
 }
-  
-void Aeroponics::setHighPressure(float HighPressure)
+
+void Aeroponics::setMinPressure(float Pressure)
 {
-  *(this->HighPressure) = HighPressure;
-  Parent->addToLog(F("Tank limits updated"));
+  if(*this->MaxPressure != Pressure && Pressure > 0){
+    *(this->MaxPressure) = Pressure;
+  } 
+}
+  
+void Aeroponics::setMaxPressure(float Pressure)
+{
+  if(*this->MaxPressure != Pressure && Pressure > 0){
+    *this->MaxPressure = Pressure;
+    Parent->addToLog(F("Tank limits updated"));
+  }  
 }
 
 void Aeroponics::startPump(bool UserRequest)

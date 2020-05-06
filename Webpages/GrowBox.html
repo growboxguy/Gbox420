@@ -256,17 +256,15 @@
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span style="font-weight:bold">Spray</span></span></th>
-						<th class="headerRows"><span style="font-weight:bold">Pressure</span></span></th>
-						<th class="headerRows"><span style="font-weight:bold">Last spray</br>pressure</span></th>
 						<th class="headerRows"><span style="font-weight:bold">Pump state</span></th>
-						<th class="headerRows"><span style="font-weight:bold">Bypass</span></span></th>
+						<th class="headerRows"><span style="font-weight:bold">Pressure</span></span></th>
+						<th class="headerRows"><span style="font-weight:bold">Last spray</span></th>						
 					</tr>
 					<tr>
 						<td id="Aero1_Spray" class="dataRows"></td>
+						<td id="Aero1_Pump" class="dataRows"></td>
 						<td id="Aero1_Pres" class="dataRows"></td>
 						<td id="Aero1_LastSP" class="dataRows"></td>
-						<td id="Aero1_Pump" class="dataRows"></td>
-						<td id="Aero1_Bypass" class="dataRows"></td>
 					</tr>
 				</table>
 				<b>Spray: </b>
@@ -296,18 +294,18 @@
 						title="Maximum continuous pump runtime" />min
 					<input type="submit" value="Set"></form>
 				<form>Priming time: <input style="width: 45px;" min=1 max=9999 name="Aero1_Priming" type="number"
-						title="At pump startup the bypass valve is open for X seconds" /> sec <input type="submit"
-						value="Set"></form>
-				<font size="-1">Only with pressure tank</font><br>
-				<b>Tank: </b>
-				<button id="Aero1_Refill" type="button" align="right" title="Refill the tank">Refill</button>
+						title="At pump startup the bypass valve is open for X seconds" /> sec 
+					<input type="submit" value="Set"></form>	
 				<form>
-					Pressure Low: <input style="width: 45px;" min=0 max=8 step='0.1' name="Aero1_PresLow"
+					Pressure Min: <input style="width: 45px;" min=0 max=8 step='0.1' name="Aero1_PresMin"
 						type="number" title="Below this pressure refill the tank" />
-					High: <input style="width: 45px;" min=0 max=8 step='0.1' name="Aero1_PresHigh" type="number"
+					Max: <input style="width: 45px;" min=0 max=8 step='0.1' name="Aero1_PresMax" type="number"
 						title="Stop refilling when this pressure is reached" />
 					<input type="submit" value="Set">
-				</form>
+				</form>			
+				<b>Tank: </b>
+					<button id="Aero1_Refill" type="button" align="right" title="Refill the tank">Refill</button>
+					<font size="-1">Only with pressure tank</font>				
 			</div>			
 			<div class="card" style="width:90%">
 				<h1>Reservoir</h1>

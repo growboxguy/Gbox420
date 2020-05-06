@@ -40,8 +40,8 @@ void LoadCallback(char * url) //called when website is loaded
 
   WebServer.setArgInt(F("AeroInterval"), MySettings.AeroInterval);
   WebServer.setArgInt(F("AeroDuration"), MySettings.AeroDuration);
-  WebServer.setArgString(F("AeroLowPressure"), toText(MySettings.AeroLowPressure));
-  WebServer.setArgString(F("AeroHighPressure"), toText(MySettings.AeroHighPressure));
+  WebServer.setArgString(F("AeroMinPressure"), toText(MySettings.AeroMinPressure));
+  WebServer.setArgString(F("AeroMaxPressure"), toText(MySettings.AeroMaxPressure));
   WebServer.setArgBoolean(F("AeroSprayEnabled"), MySettings.AeroSprayEnabled);
   }
   
@@ -67,10 +67,10 @@ void LoadCallback(char * url) //called when website is loaded
   WebServer.setArgString(F("PHAlertLow"), toText(MySettings.PHAlertLow));
   WebServer.setArgString(F("PHAlertHigh"), toText(MySettings.PHAlertHigh));  
 
-  WebServer.setArgString(F("PHCalibrationSlope"), toPrecisionText(MySettings.PHCalibrationSlope));
-  WebServer.setArgString(F("PHCalibrationIntercept"), toPrecisionText(MySettings.PHCalibrationIntercept)); 
-  WebServer.setArgString(F("PressureSensorOffset"), toPrecisionText(MySettings.PressureSensorOffset));
-  WebServer.setArgString(F("PressureSensorRatio"), toPrecisionText(MySettings.PressureSensorRatio));
+  WebServer.setArgString(F("PHCalibrationSlope"), toText_floatDecimals(MySettings.PHCalibrationSlope));
+  WebServer.setArgString(F("PHCalibrationIntercept"), toText_floatDecimals(MySettings.PHCalibrationIntercept)); 
+  WebServer.setArgString(F("PressureSensorOffset"), toText_floatDecimals(MySettings.PressureSensorOffset));
+  WebServer.setArgString(F("PressureSensorRatio"), toText_floatDecimals(MySettings.PressureSensorRatio));
 
   WebServer.setArgInt(F("AeroPumpTimeout"), MySettings.AeroPumpTimeout);
   WebServer.setArgInt(F("AeroPrimingTime"), MySettings.AeroPrimingTime);
@@ -115,11 +115,11 @@ void RefreshCallback(char * url) //called when website is refreshed
   WebServer.setArgString(F("tdLightMinMax"),toText(MinLightReading, MaxLightReading,"/"));
 
   WebServer.setArgString(F("tdBright"),BrightToText());
-  WebServer.setArgString(F("tdLightOn"), timetoText(MySettings.LightOnHour,MySettings.LightOnMinute)); 
-  WebServer.setArgString(F("tdLightOff"), timetoText(MySettings.LightOffHour,MySettings.LightOffMinute)); 
+  WebServer.setArgString(F("tdLightOn"), toText_time(MySettings.LightOnHour,MySettings.LightOnMinute)); 
+  WebServer.setArgString(F("tdLightOff"), toText_time(MySettings.LightOffHour,MySettings.LightOffMinute)); 
   
   WebServer.setArgString("tdAeroPressure",toText(AeroPressure));
-  WebServer.setArgString(F("tdAeroPumpOn"),pumpStateToText());
+  WebServer.setArgString(F("tdAeroPumpOn"),toText_pumpState());
       
   WebServer.setArgString(F("tdReservoir"),ReservoirText);
   WebServer.setArgString(F("tdPH"),toText(PH));
@@ -178,8 +178,8 @@ void SetFieldCallback(char * field){
   else if(strcmp_P(field,(PGM_P)F("LightsOffMinute"))==0) {setLightsOffMinute(WebServer.getArgInt());}       
   else if(strcmp_P(field,(PGM_P)F("AeroInterval"))==0) { setAeroInterval(WebServer.getArgInt());}
   else if(strcmp_P(field,(PGM_P)F("AeroDuration"))==0) {setAeroDuration(WebServer.getArgInt());}
-  else if(strcmp_P(field,(PGM_P)F("AeroLowPressure"))==0) {setAeroLowPressure(WebServer.getArgFloat());}
-  else if(strcmp_P(field,(PGM_P)F("AeroHighPressure"))==0) {setAeroHighPressure(WebServer.getArgFloat());} 
+  else if(strcmp_P(field,(PGM_P)F("AeroMinPressure"))==0) {setAeroMinPressure(WebServer.getArgFloat());}
+  else if(strcmp_P(field,(PGM_P)F("AeroMaxPressure"))==0) {setAeroMaxPressure(WebServer.getArgFloat());} 
 
   else if(strcmp_P(field,(PGM_P)F("SoundEnabled"))==0) {setSoundOnOff(WebServer.getArgBoolean());}
   else if(strcmp_P(field,(PGM_P)F("DebugEnabled"))==0) {setDebug(WebServer.getArgBoolean());}

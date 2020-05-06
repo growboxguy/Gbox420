@@ -15,8 +15,8 @@ void PressureSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/S",2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("Offset")), toPrecisionText(*Offset));
-    WebServer.setArgString(getComponentName(F("Ratio")), toPrecisionText(*Ratio));
+    WebServer.setArgString(getComponentName(F("Offset")), toText_floatDecimals(*Offset));
+    WebServer.setArgString(getComponentName(F("Ratio")), toText_floatDecimals(*Ratio));
   }
 }
 

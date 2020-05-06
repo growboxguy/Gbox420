@@ -81,11 +81,9 @@ void HempyModule::processCommand(hempyCommand *Command){
 }
 
 void HempyModule::updateResponse(){
-  Response.PumpOn_B1 = Pump1 -> getOnState();
-  Response.PumpEnabled_B1 = Pump1 -> getEnabledState();
+  Response.PumpState_B1 = Pump1 -> getState();;
   Response.Weight_B1 = Weight1 -> getWeight();
-  Response.PumpOn_B2 = Pump2 -> getOnState();
-  Response.PumpEnabled_B2 = Pump2 -> getEnabledState();
+  Response.PumpState_B2 = Pump2 -> getState();
   Response.Weight_B2 = Weight2 -> getWeight(); 
   Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
   Wireless.writeAckPayload(1, &Response, sizeof(Response)); ///< load the payload to send the next time

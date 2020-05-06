@@ -44,7 +44,7 @@ void HempyBucket::report()
   strcat_P(LongMessage, (PGM_P)F("/"));
   strcat(LongMessage, toText(*StopWateringWeight));
   strcat_P(LongMessage, (PGM_P)F("], Pump:"));
-  strcat_P(LongMessage, pumpStateToText(*PumpEnabled,PumpOn));
+  strcat_P(LongMessage, toText_pumpState(*PumpEnabled,PumpOn));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -64,7 +64,7 @@ float HempyBucket::getWeight()
 char *HempyBucket::getWeightText(bool IncludeUnits)
 {
   if (IncludeUnits)
-    return weightToText(Weight);
+    return toText_weight(Weight);
   else
     return toText(Weight);
 }

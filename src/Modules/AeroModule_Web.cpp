@@ -27,9 +27,9 @@ void AeroModule_Web::report()
   if(Response.PressureTankPresent)
   {
     strcat_P(LongMessage, (PGM_P)F(" ["));
-    strcat(LongMessage, toText(Command.LowPressure));
+    strcat(LongMessage, toText(Command.MinPressure));
     strcat_P(LongMessage, (PGM_P)F("/"));
-    strcat(LongMessage, toText(Command.HighPressure));
+    strcat(LongMessage, toText(Command.MaxPressure));
     strcat_P(LongMessage, (PGM_P)F("]"));
   }
   else
@@ -38,7 +38,7 @@ void AeroModule_Web::report()
     strcat(LongMessage, toText(Response.LastSprayPressure));
   }
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
-  strcat(LongMessage, yesNoToText(Response.SprayEnabled));
+  strcat(LongMessage, toText_yesNo(Response.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F(" ; Interval:"));
   strcat(LongMessage, toText(Command.SprayInterval));
   strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
@@ -54,8 +54,8 @@ void AeroModule_Web::websiteEvent_Load(char *url)
       WebServer.setArgInt(getComponentName(F("Priming")), Command.PumpPrimingTime);
       WebServer.setArgInt(getComponentName(F("Int")), Command.SprayInterval);
       WebServer.setArgInt(getComponentName(F("Dur")), Command.SprayDuration);
-      WebServer.setArgFloat(getComponentName(F("PresHigh")), Command.HighPressure);
-      WebServer.setArgFloat(getComponentName(F("PresLow")), Command.LowPressure);      
+      WebServer.setArgFloat(getComponentName(F("PresMax")), Command.MaxPressure);
+      WebServer.setArgFloat(getComponentName(F("PresMin")), Command.MinPressure);      
   }
 }
 
@@ -63,11 +63,10 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
 {
   if (strncmp(url, "/G",2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("Spray")), enabledToText(Command.SprayEnable));
-    WebServer.setArgString(getComponentName(F("Pump")), onOffToText(Response.PumpOn));
-    WebServer.setArgString(getComponentName(F("Bypass")), onOffToText(Response.BypassOn));
-    WebServer.setArgString(getComponentName(F("Pres")), toText(Response.Pressure));
-    WebServer.setArgString(getComponentName(F("LastSP")), toText(Response.LastSprayPressure));    
+    WebServer.setArgString(getComponentName(F("Spray")), toText_enabledDisabled(Response.SprayEnabled));
+    WebServer.setArgString(getComponentName(F("Pump")), toText_pumpState(Response.State));
+    WebServer.setArgString(getComponentName(F("Pres")), toText_pressure(Response.Pressure));
+    WebServer.setArgString(getComponentName(F("LastSP")), toText_pressure(Response.LastSprayPressure));    
   }
 }
 
@@ -81,12 +80,12 @@ void AeroModule_Web::websiteEvent_Button(char *Button)
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("SprayEn")) == 0)
     {
-      Command.SprayEnable = true;
+      Command.SprayEnabled = true;
       Parent -> addToLog(F("Spray enabled"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayDis")) == 0)
     {
-      Command.SprayDisable = true;
+      Command.SprayDisabled = true;
       Parent -> addToLog(F("Spray disabled"), false);
     } 
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayNow")) == 0)
@@ -121,8 +120,14 @@ void AeroModule_Web::websiteEvent_Button(char *Button)
     } 
     else if (strcmp_P(ShortMessage, (PGM_P)F("Refill")) == 0)
     {
-      Command.RefillPressureTank = true;
-      Parent -> addToLog(F("Refilling pressure tank"), false);
+      if(Response.PressureTankPresent)
+      {
+        Command.RefillPressureTank = true;
+        Parent -> addToLog(F("Refilling pressure tank"), false);
+      }
+      else{
+        Parent -> addToLog(F("Pressure tank not available"), false);
+      }
     }     
     SyncRequested = true;  
   }
@@ -156,13 +161,13 @@ void AeroModule_Web::websiteEvent_Field(char *Field)
       DefaultSettings->PrimingTime = WebServer.getArgInt();
       Parent -> addToLog(F("Priming time updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PresLow")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PresMin")) == 0)
     {
-      DefaultSettings->LowPressure = WebServer.getArgFloat();
+      DefaultSettings->MinPressure = WebServer.getArgFloat();
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PresHigh")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PresMax")) == 0)
     {
-      DefaultSettings->HighPressure = WebServer.getArgFloat();
+      DefaultSettings->MaxPressure = WebServer.getArgFloat();
       Parent -> addToLog(F("Pressure limits updated"), false);
     }
     SyncRequested = true;
@@ -208,11 +213,7 @@ void AeroModule_Web::syncModule( const byte WirelessChannel[], aeroCommand *Comm
           logToSerials(F(","),false,1);
           logToSerials(Response -> SprayEnabled,false,1);;
           logToSerials(F(","),false,1);
-          logToSerials(Response -> PumpOn,false,1);
-          logToSerials(F(","),false,1);
-          logToSerials(Response -> PumpEnabled,false,1);
-          logToSerials(F(";"),false,1);
-          logToSerials(Response -> BypassOn,false,1);
+          logToSerials(Response -> State,false,1);;
           logToSerials(F(","),false,1);
           logToSerials(Response -> Pressure,false,1);
           logToSerials(F(";"),false,1);
@@ -220,11 +221,11 @@ void AeroModule_Web::syncModule( const byte WirelessChannel[], aeroCommand *Comm
           }            
 
           ///Turn off command flags          
-          if(Command -> SprayEnable || Command -> SprayDisable || Command -> SprayNow || Command -> SprayOff || Command -> PumpOn || Command -> PumpOff || Command -> PumpDisable || Command -> MixReservoir || Command -> RefillPressureTank )
+          if(Command -> SprayEnabled || Command -> SprayDisabled || Command -> SprayNow || Command -> SprayOff || Command -> PumpOn || Command -> PumpOff || Command -> PumpDisable || Command -> MixReservoir || Command -> RefillPressureTank )
           {
             SyncRequested = true;  ///Force a second packet to actualize the response
-            Command -> SprayEnable = false;
-            Command -> SprayDisable = false;
+            Command -> SprayEnabled = false;
+            Command -> SprayDisabled = false;
             Command -> SprayNow = false;
             Command -> SprayOff = false;
             Command -> PumpOn = false;
@@ -255,6 +256,6 @@ void AeroModule_Web::updateCommand() {        // so you can see that new data is
     Command.SprayDuration= DefaultSettings->Duration;
     Command.PumpTimeOut= DefaultSettings->PumpTimeOut;
     Command.PumpPrimingTime= DefaultSettings->PrimingTime;
-    Command.LowPressure= DefaultSettings->LowPressure;
-    Command.HighPressure= DefaultSettings->HighPressure;
+    Command.MinPressure= DefaultSettings->MinPressure;
+    Command.MaxPressure= DefaultSettings->MaxPressure;
 }

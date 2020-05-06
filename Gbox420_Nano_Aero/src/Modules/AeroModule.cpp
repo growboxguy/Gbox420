@@ -47,8 +47,8 @@ void AeroModule::processCommand(aeroCommand *Command){
 
   if(AeroT1 != NULL)
   {
-    if(Command -> SprayEnable) AeroT1 ->  setSprayOnOff(true);
-    if(Command -> SprayDisable) AeroT1 -> setSprayOnOff(false);
+    if(Command -> SprayEnabled) AeroT1 ->  setSprayOnOff(true);
+    if(Command -> SprayDisabled) AeroT1 -> setSprayOnOff(false);
     if(Command -> SprayNow) AeroT1 -> sprayNow(true);
     if(Command -> SprayOff) AeroT1 -> sprayOff();
     AeroT1 -> setSprayInterval(Command -> SprayInterval);
@@ -58,15 +58,15 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> PumpDisable) AeroT1 -> setPumpDisable();
     AeroT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
     AeroT1 -> Pump -> setPrimingTime(Command -> PumpPrimingTime);
-    AeroT1 -> setLowPressure(Command -> LowPressure);
-    AeroT1 -> setHighPressure(Command -> HighPressure);
+    AeroT1 -> setMinPressure(Command -> MinPressure);
+    AeroT1 -> setMaxPressure(Command -> MaxPressure);
     if(Command -> MixReservoir) AeroT1 -> mixReservoir();
   }
 
   if(AeroNT1 != NULL)
   {
-    if(Command -> SprayEnable) AeroNT1 ->  setSprayOnOff(true);
-    if(Command -> SprayDisable) AeroNT1 -> setSprayOnOff(false);
+    if(Command -> SprayEnabled) AeroNT1 ->  setSprayOnOff(true);
+    if(Command -> SprayDisabled) AeroNT1 -> setSprayOnOff(false);
     if(Command -> SprayNow) AeroNT1 -> sprayNow(true);
     if(Command -> SprayOff) AeroNT1 -> sprayOff();
     AeroNT1 -> setSprayInterval(Command -> SprayInterval);
@@ -76,7 +76,7 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> PumpDisable) AeroNT1 -> setPumpDisable();
     AeroNT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
     AeroNT1 -> Pump -> setPrimingTime(Command -> PumpPrimingTime);
-    AeroNT1 -> setHighPressure(Command -> HighPressure);
+    AeroNT1 -> setMaxPressure(Command -> MaxPressure);
     if(Command -> MixReservoir) AeroNT1 -> mixReservoir();
     //if(Command -> BypassOn) AeroNT1 -> Pump-> turnBypassOn();
     //if(Command -> BypassOff) AeroNT1 -> Pump-> turnBypassOff();
@@ -90,9 +90,9 @@ void AeroModule::processCommand(aeroCommand *Command){
       logToSerials(F(","),false,1);
       logToSerials(Command -> Metric,false,1);
       logToSerials(F(";"),false,1);
-    logToSerials(Command -> SprayEnable,false,1);
+    logToSerials(Command -> SprayEnabled,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> SprayDisable,false,1);
+        logToSerials(Command -> SprayDisabled,false,1);
         logToSerials(F(","),false,1);
         logToSerials(Command -> SprayNow,false,1);
         logToSerials(F(","),false,1);
@@ -112,9 +112,9 @@ void AeroModule::processCommand(aeroCommand *Command){
         logToSerials(F(","),false,1);
         logToSerials(Command -> PumpPrimingTime,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> HighPressure,false,1);
+        logToSerials(Command -> MaxPressure,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> LowPressure,false,1);
+        logToSerials(Command -> MinPressure,false,1);
         logToSerials(F(","),false,1);
         logToSerials(Command -> MixReservoir,true,1);
       //logToSerials(F(";"),false,1);
@@ -129,17 +129,19 @@ void AeroModule::updateResponse(){
   {    
     Response.SprayEnabled = AeroT1 -> getSprayEnabled();
     Response.Pressure = AeroT1 -> getPressure();
-    Response.PumpOn = AeroT1 -> Pump -> getOnState();
-    Response.PumpEnabled = AeroT1 -> Pump -> getEnabledState();
-    Response.BypassOn = AeroT1 -> Pump -> getBypassOnState();
+    //Response.PumpOn = AeroT1 -> Pump -> getOnState();
+    //Response.PumpEnabled = AeroT1 -> Pump -> getEnabledState();
+    //Response.BypassOn = AeroT1 -> Pump -> getBypassOnState();
+    Response.State = AeroT1 -> Pump -> getState();
   }
   if(AeroNT1 != NULL)
   {
     Response.SprayEnabled = AeroNT1 -> getSprayEnabled();
     Response.Pressure = AeroNT1 -> getPressure();
-    Response.PumpOn = AeroNT1 -> Pump -> getOnState();
-    Response.PumpEnabled = AeroNT1 -> Pump -> getEnabledState();
-    Response.BypassOn = AeroNT1 -> Pump -> getBypassOnState();
+    //Response.PumpOn = AeroNT1 -> Pump -> getOnState();
+    //Response.PumpEnabled = AeroNT1 -> Pump -> getEnabledState();
+    //Response.BypassOn = AeroNT1 -> Pump -> getBypassOnState();
+    Response.State = AeroNT1 -> Pump -> getState();
     Response.LastSprayPressure = AeroNT1 -> LastSprayPressure;
   }
   Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
