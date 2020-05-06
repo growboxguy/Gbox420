@@ -15,7 +15,6 @@ public:
   virtual void report();
   void startPump(bool UserRequest);
   void stopPump(bool UserRequest);
-
   void setPumpDisable();
   void setPumpTimeout(int TimeOut);
   void mixReservoir();
@@ -31,7 +30,9 @@ public:
   char *getSprayIntervalText();
   char *getSprayDurationText();
   bool getSprayEnabled();
-  float getPressure(); 
+  float getPressure();
+  float getLastSprayPressure();
+  char *getLastSprayPressureText(bool IncludeCurrentPressure);
   void setMinPressure(float Pressure);
   void setMaxPressure(float Pressure);
   
@@ -46,4 +47,5 @@ protected:
   int *Duration;                  ///Aeroponics - Spray time in seconds
   float *MinPressure;           ///Aeroponics - Minimum acceptable spray pressure
   float *MaxPressure;          ///Aeroponics - Maximum allowed pressure 
+  float LastSprayPressure = 0; ///tracks the last pressure reading during a spray cycle
 };

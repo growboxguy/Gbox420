@@ -281,7 +281,7 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroDuration\":\""));
     strcat(LongMessage, AeroNT1->getSprayDurationText());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroSprayPressure\":\""));
-    strcat(LongMessage, toText(AeroNT1->LastSprayPressure));
+    strcat(LongMessage, toText(AeroNT1->getLastSprayPressure()));
     ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,AeroT1 -> getSprayInterval());
     ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,AeroT1 -> getSprayDuration());
 

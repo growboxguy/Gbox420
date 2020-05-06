@@ -288,24 +288,24 @@
 				<button id="Aero1_PumpDis" type="button" align="right"
 					title="Stops and disables pump">Disable</button>
 				<button id="Aero1_Mix" type="button" align="right"
-					title="Mix nutrients: Starts pump and opens bypass valve">Mix</button>
+					title="Mix reservoir: Starts pump and opens bypass valve">Mix</button>
 				<br>
 				<form>Timeout: <input style="width: 45px;" min=1 max=9999 name="Aero1_Timeout" type="number"
-						title="Maximum continuous pump runtime" />min
+						title="Maximum continuous pump runtime in seconds" />sec
 					<input type="submit" value="Set"></form>
 				<form>Priming time: <input style="width: 45px;" min=1 max=9999 name="Aero1_Priming" type="number"
-						title="At pump startup the bypass valve is open for X seconds" /> sec 
+						title="At pump startup the bypass valve is open for X seconds" />sec 
 					<input type="submit" value="Set"></form>	
-				<form>
-					Pressure Min: <input style="width: 45px;" min=0 max=8 step='0.1' name="Aero1_PresMin"
+				<b>Pressure: </b>
+					<form>
+					Min: <input style="width: 45px;" min=0 max=8 step='0.1' name="Aero1_PresMin"
 						type="number" title="Below this pressure refill the tank" />
 					Max: <input style="width: 45px;" min=0 max=8 step='0.1' name="Aero1_PresMax" type="number"
 						title="Stop refilling when this pressure is reached" />
 					<input type="submit" value="Set">
 				</form>			
-				<b>Tank: </b>
-					<button id="Aero1_Refill" type="button" align="right" title="Refill the tank">Refill</button>
-					<font size="-1">Only with pressure tank</font>				
+				<b id="Aero1_TankTitle">Tank: </b><input type="checkbox" id="Aero1_Tank" title="READONLY - Enabled if Pressure tank is available" onclick="showRefillButton()" style="display: none;" >
+					<button id="Aero1_Refill" type="button" align="right" title="Refill the tank">Refill</button>									
 			</div>			
 			<div class="card" style="width:90%">
 				<h1>Reservoir</h1>
@@ -360,6 +360,30 @@
 	</div><br>
 </div>
 <!-- /Footer -->
+<script>
+	document.onload = showRefillButton();
+
+	function showRefillButton() {
+		//Hidden checkbox to signal if Pressure tank is present or not
+		var PressureTankAvailable = document.getElementById("Aero1_Tank");
+		// Get the output text
+		var TankTitle = document.getElementById("Aero1_TankTitle");
+		var RefillButton = document.getElementById("Aero1_Refill");
+		
+
+		// If the checkbox is checked, display the output text
+		if (PressureTankAvailable.checked == true){
+			TankTitle.style.display = "inline";
+			RefillButton.style.display = "inline";
+		} 
+		else {
+			TankTitle.style.display = "none";
+			RefillButton.style.display = "none";
+		}
+  		return false;
+	}
+	
+</script>
 </body>
 
 </html>

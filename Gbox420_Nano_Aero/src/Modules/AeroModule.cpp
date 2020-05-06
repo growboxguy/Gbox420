@@ -129,20 +129,15 @@ void AeroModule::updateResponse(){
   {    
     Response.SprayEnabled = AeroT1 -> getSprayEnabled();
     Response.Pressure = AeroT1 -> getPressure();
-    //Response.PumpOn = AeroT1 -> Pump -> getOnState();
-    //Response.PumpEnabled = AeroT1 -> Pump -> getEnabledState();
-    //Response.BypassOn = AeroT1 -> Pump -> getBypassOnState();
     Response.State = AeroT1 -> Pump -> getState();
+    Response.LastSprayPressure = AeroT1 -> getLastSprayPressure();
   }
   if(AeroNT1 != NULL)
   {
     Response.SprayEnabled = AeroNT1 -> getSprayEnabled();
     Response.Pressure = AeroNT1 -> getPressure();
-    //Response.PumpOn = AeroNT1 -> Pump -> getOnState();
-    //Response.PumpEnabled = AeroNT1 -> Pump -> getEnabledState();
-    //Response.BypassOn = AeroNT1 -> Pump -> getBypassOnState();
     Response.State = AeroNT1 -> Pump -> getState();
-    Response.LastSprayPressure = AeroNT1 -> LastSprayPressure;
+    Response.LastSprayPressure = AeroNT1 -> getLastSprayPressure();
   }
   Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
   Wireless.writeAckPayload(1, &Response, sizeof(Response)); ///< load the payload to send the next time

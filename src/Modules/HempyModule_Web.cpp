@@ -22,25 +22,19 @@ void HempyModule_Web::report()
 {
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
-  strcat_P(LongMessage, (PGM_P)F("Bucket1 {Weight:"));
+  strcat_P(LongMessage, (PGM_P)F("Bucket1 Weight:"));
   strcat(LongMessage, toText_weight(Response.Weight_B1));
   strcat_P(LongMessage, (PGM_P)F(" ["));
   strcat(LongMessage, toText(Command.StartWeightBucket_B1));
   strcat_P(LongMessage, (PGM_P)F("/"));
   strcat(LongMessage, toText(Command.StopWeightBucket_B1));
-  strcat_P(LongMessage, (PGM_P)F("] ; Pump:"));
-  //strcat(LongMessage, toText_pumpState(Response.StateB1);
-  //strcat(LongMessage, toText_onOffDisabled(Response.PumpEnabled_B1,Response.PumpOn_B1));
-  strcat_P(LongMessage, (PGM_P)F("}, Bucket2 {Weight:"));
+  strcat_P(LongMessage, (PGM_P)F("], Bucket2 Weight:"));
   strcat(LongMessage, toText_weight(Response.Weight_B2));
   strcat_P(LongMessage, (PGM_P)F(" ["));
   strcat(LongMessage, toText(Command.StartWeightBucket_B2));
   strcat_P(LongMessage, (PGM_P)F("/"));
   strcat(LongMessage, toText(Command.StopWeightBucket_B2));
-  strcat_P(LongMessage, (PGM_P)F("] ; Pump:"));
-  //strcat(LongMessage, toText_pumpState(Response.StateB2);
-  //strcat(LongMessage, toText_onOffDisabled(Response.PumpEnabled_B2,Response.PumpOn_B2));
-  strcat_P(LongMessage, (PGM_P)F("}"));
+  strcat_P(LongMessage, (PGM_P)F("]}"));
   logToSerials(&LongMessage, true, 1);
 }
 

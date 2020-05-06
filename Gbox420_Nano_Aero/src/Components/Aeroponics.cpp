@@ -26,9 +26,9 @@ void Aeroponics::report()
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F(" ; Interval:"));
-  strcat(LongMessage, toText(*Interval));
+  strcat(LongMessage, toText_minute(*Interval));
   strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
-  strcat(LongMessage, toText(*Duration));  
+  strcat(LongMessage, toText_second(*Duration));  
   logToSerials(&LongMessage, true, 0); ///Break line, No indentation needed: child class already printed it
 }
 
@@ -94,6 +94,23 @@ char *Aeroponics::getSprayDurationText()
 char *Aeroponics::sprayStateToText()
 {
   return toText_onOff(*SprayEnabled);
+}
+
+float Aeroponics::getLastSprayPressure(){
+  return LastSprayPressure;
+}
+
+char *Aeroponics::getLastSprayPressureText(bool IncludeCurrentPressure ){
+  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///clear variable
+
+  toText_pressure(LastSprayPressure);  ///< loads the Last pressure measured during spraying
+  if(IncludeCurrentPressure)
+  {
+    strcat_P(ShortMessage, (PGM_P)F(" ["));
+    dtostrf(FeedbackPressureSensor->getPressure(), 4, 2, ShortMessage);
+    strcat_P(ShortMessage, (PGM_P)F("]"));
+  } 
+  return ShortMessage;
 }
 
 ////////////////////////////////////////

@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 21; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 22; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
 enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -39,12 +39,6 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
     bool Debug = true;          ///Logs debug messages to serial and web outputs
     bool Metric = true;   ///Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
     
-    struct AeroModuleSettings
-    {
-      //AeroModuleSettings( ) :  {}      
-    };
-    struct AeroModuleSettings AeroModule1 = {};
-
     struct HempyBucketSettings
     {
       HempyBucketSettings( float StartWeight = 0.0, float StopWeight = 0.0) : StartWeight(StartWeight), StopWeight(StopWeight)  {}

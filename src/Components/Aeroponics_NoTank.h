@@ -13,8 +13,8 @@ public:
   void report();
   void sprayNow(bool UserRequest = false);
   void sprayOff(bool UserRequest = false);
-  float LastSprayPressure = 0; ///tracks the last average pressure during a spray cycle
-  char *getLastSprayPressureText(bool IncludeCurrentPressure);
+  
+
 
 private:
  

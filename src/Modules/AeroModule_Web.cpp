@@ -50,12 +50,13 @@ void AeroModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G",2) == 0)
   { 
-      WebServer.setArgInt(getComponentName(F("Timeout")), Command.PumpTimeOut);
-      WebServer.setArgInt(getComponentName(F("Priming")), Command.PumpPrimingTime);
-      WebServer.setArgInt(getComponentName(F("Int")), Command.SprayInterval);
-      WebServer.setArgInt(getComponentName(F("Dur")), Command.SprayDuration);
-      WebServer.setArgFloat(getComponentName(F("PresMax")), Command.MaxPressure);
-      WebServer.setArgFloat(getComponentName(F("PresMin")), Command.MinPressure);      
+    WebServer.setArgBoolean(getComponentName(F("Tank")), Response.PressureTankPresent);
+    WebServer.setArgInt(getComponentName(F("Timeout")), Command.PumpTimeOut);
+    WebServer.setArgInt(getComponentName(F("Priming")), Command.PumpPrimingTime);
+    WebServer.setArgInt(getComponentName(F("Int")), Command.SprayInterval);
+    WebServer.setArgInt(getComponentName(F("Dur")), Command.SprayDuration);
+    WebServer.setArgFloat(getComponentName(F("PresMax")), Command.MaxPressure);
+    WebServer.setArgFloat(getComponentName(F("PresMin")), Command.MinPressure);      
   }
 }
 

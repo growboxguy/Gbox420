@@ -154,6 +154,20 @@ char *toText_percentage(int Number)
   return ShortMessage;
 }
 
+char *toText_minute(int Minute)
+{
+  itoa(Minute, ShortMessage, 10);
+  strcat_P(ShortMessage, (PGM_P)F("min"));
+  return ShortMessage;
+}
+
+char *toText_second(int Second)
+{
+  itoa(Second, ShortMessage, 10);
+  strcat_P(ShortMessage, (PGM_P)F("sec"));
+  return ShortMessage;
+}
+
 char *toText_yesNo(bool Status)
 {
   if (Status)

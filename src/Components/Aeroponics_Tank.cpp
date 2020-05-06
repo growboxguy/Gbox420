@@ -46,6 +46,7 @@ void Aeroponics_Tank::refresh_Sec()
   { ///if spray is on
     if (millis() - SprayTimer >= ((uint32_t)*Duration * 1000))
     { ///if time to stop spraying (Duration in Seconds)
+      LastSprayPressure = Aeroponics::FeedbackPressureSensor->getPressure();
       SpraySolenoidOn = false;
       logToSerials(F("Stopping spray"), true);
       Parent->getSoundObject()->playOffSound();

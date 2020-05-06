@@ -12,8 +12,8 @@ class HempyBucket : virtual public Common
 {
 public:
   HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WaterPump *BucketPump);
-  void refresh_Minute();
   void refresh_Sec();
+  void refresh_FiveSec();
   void report();
   void waterNow(bool UserRequest = false);  ///Turn on water pump, run until StopWeight is reached
   

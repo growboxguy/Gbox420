@@ -37,7 +37,7 @@ void Lights::report()
   strcat_P(LongMessage, (PGM_P)F("Status:"));
   strcat(LongMessage, getStatusText(true));
   strcat_P(LongMessage, (PGM_P)F(" ; Brightness:"));
-  strcat(LongMessage, toText(*Brightness));
+  strcat(LongMessage, toText_percentage(*Brightness));
   strcat_P(LongMessage, (PGM_P)F(" ; LightON:"));
   strcat(LongMessage, getOnTimeText());
   strcat_P(LongMessage, (PGM_P)F(" ; LightOFF:"));

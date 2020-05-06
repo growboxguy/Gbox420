@@ -29,6 +29,23 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   addToLog(F("HempyModule initialized"), 0);
 }
 
+void HempyModule::refresh_FiveSec()
+{
+  if (*Debug)
+    Common::refresh_FiveSec(); 
+  runReport(); 
+  updateResponse(); 
+}
+
+void HempyModule::updateResponse(){
+  Response.PumpState_B1 = Pump1 -> getState();;
+  Response.Weight_B1 = Weight1 -> getWeight();
+  Response.PumpState_B2 = Pump2 -> getState();
+  Response.Weight_B2 = Weight2 -> getWeight(); 
+  Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
+  Wireless.writeAckPayload(1, &Response, sizeof(Response)); ///< load the payload to send the next time
+}
+
 void HempyModule::processCommand(hempyCommand *Command){
   setDebug(Command -> Debug);
   setMetric(Command -> Metric);
@@ -78,21 +95,4 @@ void HempyModule::processCommand(hempyCommand *Command){
         logToSerials(F(","),false,1);
         logToSerials(Command -> StopWeightBucket_B2,true,1);
   }       
-}
-
-void HempyModule::updateResponse(){
-  Response.PumpState_B1 = Pump1 -> getState();;
-  Response.Weight_B1 = Weight1 -> getWeight();
-  Response.PumpState_B2 = Pump2 -> getState();
-  Response.Weight_B2 = Weight2 -> getWeight(); 
-  Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
-  Wireless.writeAckPayload(1, &Response, sizeof(Response)); ///< load the payload to send the next time
-}
-
-void HempyModule::refresh_FiveSec()
-{
-  if (*Debug)
-    Common::refresh_FiveSec(); 
-  runReport(); 
-  updateResponse(); 
 }
