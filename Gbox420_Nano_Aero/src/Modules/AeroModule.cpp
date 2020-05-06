@@ -55,7 +55,7 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> PumpOff) AeroT1 -> stopPump(true);
     if(Command -> PumpDisable) AeroT1 -> setPumpDisable();
     AeroT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
-    AeroT1 -> Pump -> setPrimingTime(Command -> PumpPriming);
+    AeroT1 -> Pump -> setPrimingTime(Command -> PumpPrimingTime);
     if(Command -> MixReservoir) AeroT1 -> mixReservoir();
   }
 
@@ -71,7 +71,7 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> PumpOff) AeroNT1 -> stopPump(true);
     if(Command -> PumpDisable) AeroNT1 -> setPumpDisable();
     AeroNT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
-    AeroNT1 -> Pump -> setPrimingTime(Command -> PumpPriming);
+    AeroNT1 -> Pump -> setPrimingTime(Command -> PumpPrimingTime);
     if(Command -> MixReservoir) AeroNT1 -> mixReservoir();
     if(Command -> BypassOn) AeroNT1 -> Pump-> turnBypassOn();
     if(Command -> BypassOff) AeroNT1 -> Pump-> turnBypassOff();
@@ -105,7 +105,7 @@ void AeroModule::processCommand(aeroCommand *Command){
         logToSerials(F(","),false,1);
         logToSerials(Command -> PumpTimeOut,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> PumpPriming,false,1);
+        logToSerials(Command -> PumpPrimingTime,false,1);
         logToSerials(F(","),false,1);
         logToSerials(Command -> MixReservoir,false,1);
         logToSerials(F(";"),false,1);

@@ -47,14 +47,13 @@ void AeroModule_Web::report()
 void AeroModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G",2) == 0)
-  {/*
-    WebServer.setArgFloat(getComponentName(F("B1Strt")), Command.StartWeightBucket_B1);
-    WebServer.setArgFloat(getComponentName(F("B1Stp")), Command.StopWeightBucket_B1);
-    WebServer.setArgInt(getComponentName(F("B1Time")), Command.TimeOutPump_B1);
-    WebServer.setArgFloat(getComponentName(F("B2Strt")), Command.StartWeightBucket_B2);
-    WebServer.setArgFloat(getComponentName(F("B2Stp")), Command.StopWeightBucket_B2);
-    WebServer.setArgInt(getComponentName(F("B2Time")), Command.TimeOutPump_B2);
-    */
+  { 
+      WebServer.setArgInt(getComponentName(F("Timeout")), Command.PumpTimeOut);
+      WebServer.setArgInt(getComponentName(F("Priming")), Command.PumpPrimingTime);
+      WebServer.setArgInt(getComponentName(F("Int")), Command.SprayInterval);
+      WebServer.setArgInt(getComponentName(F("Dur")), Command.SprayDuration);
+      WebServer.setArgFloat(getComponentName(F("PresLow")), Command.LowPressure);
+      WebServer.setArgFloat(getComponentName(F("PresHigh")), Command.HighPressure);
   }
 }
 
@@ -62,12 +61,12 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
 {
   if (strncmp(url, "/G",2) == 0)
   {
-    /*
-    WebServer.setArgString(getComponentName(F("B1Weight")), weightToText(Response.Weight_B1));
-    WebServer.setArgString(getComponentName(F("B2Weight")), weightToText(Response.Weight_B2));
-    WebServer.setArgString(getComponentName(F("B1Pump")),  pumpStateToText(Response.PumpEnabled_B1,Response.PumpOn_B1));
-    WebServer.setArgString(getComponentName(F("B2Pump")), pumpStateToText(Response.PumpEnabled_B2,Response.PumpOn_B2));
-    */
+    WebServer.setArgString(getComponentName(F("Spray")), enabledToText(Command.SprayEnable));
+    WebServer.setArgString(getComponentName(F("Pump")), onOffToText(Response.PumpOn));
+    WebServer.setArgString(getComponentName(F("Bypass")), onOffToText(Response.BypassOn));
+    WebServer.setArgString(getComponentName(F("Pres")), toText(Response.Pressure));
+    WebServer.setArgString(getComponentName(F("LastSP")), toText(Response.LastSP));
+    
   }
 }
 

@@ -42,13 +42,10 @@ void HempyBucket::report()
 {
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
-  strcat_P(LongMessage, (PGM_P)F("Weight:"));
-  strcat(LongMessage, BucketWeightSensor -> getWeightText(true));
-  strcat_P(LongMessage, (PGM_P)F(" ["));
+  strcat_P(LongMessage, (PGM_P)F("Start weight:"));
   strcat(LongMessage, toText(*StartWeight));
-  strcat_P(LongMessage, (PGM_P)F("/"));
-  strcat(LongMessage, toText(*StopWeight));
-  strcat_P(LongMessage, (PGM_P)F("]"));
+  strcat_P(LongMessage, (PGM_P)F(" ; Stop weight:"));
+  strcat(LongMessage, toText(*StopWeight));  
   logToSerials(&LongMessage, true, 1);
 }
 

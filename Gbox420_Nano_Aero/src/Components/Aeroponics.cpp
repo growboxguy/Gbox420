@@ -21,6 +21,8 @@ Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings
 void Aeroponics::report()
 {                                                  ///report status to Serial output, runs after the child class`s report function
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  strcat_P(LongMessage, (PGM_P)F(" ; High Pressure:"));
+  strcat(LongMessage, pressureToText(*HighPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, yesNoToText(SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F(" ; Interval:"));

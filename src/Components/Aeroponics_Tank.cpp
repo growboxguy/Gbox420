@@ -11,6 +11,16 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   sprayNow(false); ///This is a safety feature,start with a spray after a reset
 }
 
+void Aeroponics_Tank::report()
+{
+  Common::report();
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  strcat_P(LongMessage, (PGM_P)F("Low Pressure:"));
+  strcat(LongMessage, pressureToText(*LowPressure));
+  logToSerials(&LongMessage, false, 1); ///first print Aeroponics_Tank specific report, without a line break
+  Aeroponics::report();                 ///then print parent class report
+}
+
 void Aeroponics_Tank::refresh_Sec()
 {
   if (*Debug)
@@ -60,16 +70,6 @@ void Aeroponics_Tank::refresh_Sec()
   else{  
     digitalWrite(*SpraySolenoidPin, HIGH);  
   }
-}
-
-void Aeroponics_Tank::report()
-{
-  Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
-  strcat_P(LongMessage, (PGM_P)F("Pressure:"));
-  strcat(LongMessage, FeedbackPressureSensor->getPressureText(true, false));
-  logToSerials(&LongMessage, false, 1); ///first print Aeroponics_Tank specific report, without a line break
-  Aeroponics::report();                 ///then print parent class report
 }
 
 void Aeroponics_Tank::setLowPressure(float LowPressure)

@@ -43,6 +43,19 @@ void Aeroponics_NoTank::report()
   Aeroponics::report();                 ///then print parent class report
 }
 
+char *Aeroponics_NoTank::getLastSprayPressureText(bool IncludeCurrentPressure ){
+  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///clear variable
+
+  pressureToText(LastSprayPressure);  ///< loads the Last pressure measured during spraying
+  if(IncludeCurrentPressure)
+  {
+     strcat_P(ShortMessage, (PGM_P)F(" ["));
+    dtostrf(FeedbackPressureSensor->getPressure(), 4, 2, ShortMessage);
+    strcat_P(ShortMessage, (PGM_P)F("]"));
+  } 
+  return ShortMessage;
+}
+
 void Aeroponics_NoTank::sprayNow(bool UserRequest)
 {
   if (*SprayEnabled || UserRequest)

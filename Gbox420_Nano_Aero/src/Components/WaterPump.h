@@ -4,7 +4,7 @@
 #include "420Module.h"
 #include "Sound.h"
 
-enum PumpState {DISABLED,IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
+enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
 
 class WaterPump : virtual public Common
 {
