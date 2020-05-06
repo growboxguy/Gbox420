@@ -157,37 +157,37 @@ char *toText_percentage(int Number)
 char *toText_yesNo(bool Status)
 {
   if (Status)
-    return (char *)"YES";
+    return toText(F("YES"));
   else
-    return (char *)"NO";
+    return toText(F("NO"));
 }
 
 char *toText_enabledDisabled(bool Status)
 {
   if (Status)
-    return (char *)"ENABLED";
+    return toText(F("ENABLED"));
   else
-    return (char *)"DISABLED";
+    return toText(F("DISABLED"));
 }
 
 char *toText_onOff(bool Status)
 {
   if (Status)
-    return (char *)"ON";
+    return toText(F("ON"));
   else
-    return (char *)"OFF";
+    return toText(F("OFF"));
 }
 
 char *toText_onOffDisabled(bool Enabled, bool OnStatus)
 {
   if (!Enabled)
-    return (char *)"DISABLED";
+    return toText(F("DISABLED"));
   else
   {
     if (OnStatus)
-      return (char *)"ON";
+      return toText(F("ON"));
     else
-      return (char *)"OFF";
+      return toText(F("OFF"));
   }
 }
 
@@ -195,22 +195,22 @@ char *toText_pumpState(PumpState State){
   switch (State)
   {
     case DISABLED:
-      return (char *)"DISABLED";
+      return toText(F("DISABLED"));
       break;
     case IDLE:
-      return (char *)"IDLE";
+      return toText(F("IDLE"));
       break;
     case PRIMING:
-      return (char *)"PRIMING";
+      return toText(F("PRIMING"));
       break;
     case RUNNING:
-      return (char *)"RUNNING";
+      return toText(F("RUNNING"));
       break;
     case BLOWOFF:
-      return (char *)"BLOWOFF";
+      return toText(F("BLOWOFF"));
       break;
     case MIXING:
-      return (char *)"MIXING";
+      return toText(F("MIXING"));
       break;  
   }
 }

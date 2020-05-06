@@ -182,6 +182,8 @@ void WaterPump::disablePump()
 void WaterPump::startMixing(int TimeOutSec)  ///< Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout
 {
   if(TimeOutSec>0) RunTime = TimeOutSec;
+  Parent->addToLog(F("Mixing nutrients"));
+  Parent->getSoundObject()->playOnSound();
   UpdateState(MIXING);
 }
 

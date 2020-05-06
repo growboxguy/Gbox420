@@ -96,13 +96,11 @@ char *Aeroponics::sprayStateToText()
   return toText_onOff(*SprayEnabled);
 }
 
-
 ////////////////////////////////////////
 ///Pump controls
 
 void Aeroponics::mixReservoir()
-{
-  Parent->addToLog(F("Mixing nutrients"));
+{  
   Pump -> startMixing();
 }
 
@@ -113,16 +111,17 @@ float Aeroponics::getPressure()
 
 void Aeroponics::setMinPressure(float Pressure)
 {
-  if(*this->MaxPressure != Pressure && Pressure > 0){
-    *(this->MaxPressure) = Pressure;
+  if(*MinPressure != Pressure && Pressure > 0){
+    *MinPressure = Pressure;
   } 
 }
   
 void Aeroponics::setMaxPressure(float Pressure)
-{
-  if(*this->MaxPressure != Pressure && Pressure > 0){
-    *this->MaxPressure = Pressure;
+{ 
+  if(*MaxPressure != Pressure && Pressure > 0){
+    *MaxPressure = Pressure;
     Parent->addToLog(F("Tank limits updated"));
+    Parent -> getSoundObject() -> playOnSound();
   }  
 }
 
