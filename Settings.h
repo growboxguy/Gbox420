@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 19; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 21; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
   ///Global constants
@@ -45,10 +45,16 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
 
     struct AeroModuleSettings
     {
-      AeroModuleSettings(bool PressureTankPresent = false) : PressureTankPresent(PressureTankPresent) {}
+      AeroModuleSettings(bool PressureTankPresent = false, int Interval = 0, int Duration = 0, int PumpTimeOut = 0, int PrimingTime =0, float HighPressure = 0.0, float LowPressure = 0.0) : PressureTankPresent(PressureTankPresent), Interval(Interval), Duration(Duration), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), HighPressure(HighPressure), LowPressure(LowPressure) {}
       bool PressureTankPresent; 
+      int Interval;        ///Spray every X minutes
+      int Duration;        ///Spray time in seconds
+      int PumpTimeOut;   ///< (Sec) Max pump run time        
+      int PrimingTime;    ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+      float HighPressure; ///Turn off pump above this pressure
+      float LowPressure;  ///Turn on pump below this pressure     
     };
-    struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false};
+    struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .Interval=15, .Duration = 10, .PumpTimeOut = 120, .PrimingTime = 10, .HighPressure = 7.0, .LowPressure = 5.0};
     
     struct AeroponicsSettings
     { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
@@ -204,7 +210,7 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
       uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin
       bool PumpEnabled; ///< Enable/disable pump. false= Block running the pump
       int PumpTimeOut;   ///< (Sec) Max pump run time        
-      int PrimingTime;    ///< (Sec) For wow long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+      int PrimingTime;    ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
       int BlowOffTime;     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
     struct WaterPumpSettings HempyPump1 = {.PumpPin = 7, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Submerged pumps do not need to prime at start or discharge pressure when stopping

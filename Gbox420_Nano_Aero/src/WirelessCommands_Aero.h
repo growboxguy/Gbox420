@@ -23,21 +23,19 @@ struct aeroCommand  ///Max 32 bytes. Template of the command sent by the Transmi
    int PumpPrimingTime = 0;
    int PumpTimeOut = 0;   
    bool MixReservoir = false;
+   bool RefillPressureTank = false;
    float LowPressure = 0.0;
    float HighPressure = 0.0;    
-
-   //Aero no tank - Aeroponics without a pressure tank
-   bool BypassOn = false;
-   bool BypassOff = false; 
 };
 
 struct aeroResponse  ///Max 32 bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
+   bool PressureTankPresent = false;
    bool SprayEnabled = false;
    float Pressure = 0.0;
    bool PumpOn = false;
    bool PumpEnabled = false;
    bool BypassOn = false;
-   float LastSP = 0.0; ///< Used only without pressure tank. last spray pressure
+   float LastSprayPressure = 0.0; ///< Used only without pressure tank. last spray pressure
 
 };

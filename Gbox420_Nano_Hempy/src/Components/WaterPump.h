@@ -31,7 +31,7 @@ public:
 
 
   PumpState getState();
-  bool getPumpOnState();  ///< Pump ON(1)/OFF(0)
+  bool getOnState();  ///< Pump ON(1)/OFF(0)
   bool getBypassOnState(); ///< Bypass solenoid ON(1)/OFF(0)
   char * getBypassOnStateText();
   bool getEnabledState();  ///< Pump ENABLED(1)/DISABLED(0) 
@@ -57,7 +57,7 @@ protected:
   bool *PumpEnabled;  ///< Enable/disable pump. false= Block running the pump
   int RunTime = 0;  ///< Max pump run time in seconds  
   int *PumpTimeOut = NULL;  ///< Max pump run time in seconds
-  int *PrimingTime = NULL;    ///< (Sec) For wow long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+  int *PrimingTime = NULL;    ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
   int *BlowOffTime = NULL;     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
       
 };

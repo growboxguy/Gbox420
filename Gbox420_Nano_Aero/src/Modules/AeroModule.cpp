@@ -20,10 +20,12 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
   if(DefaultSettings->PressureTankPresent)
   {
     AeroT1 = new Aeroponics_Tank(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, Pump1);  ///< Use this with a pressure tank
+    Response.PressureTankPresent = true;
   }
   else
   {
     AeroNT1 = new Aeroponics_NoTank(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, Pres1, Pump1);  ///< Use this without a pressure tank
+    Response.PressureTankPresent = false;
   }  
   addToRefreshQueue_Sec(this);         ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
   addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
@@ -56,6 +58,8 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> PumpDisable) AeroT1 -> setPumpDisable();
     AeroT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
     AeroT1 -> Pump -> setPrimingTime(Command -> PumpPrimingTime);
+    AeroT1 -> setLowPressure(Command -> LowPressure);
+    AeroT1 -> setHighPressure(Command -> HighPressure);
     if(Command -> MixReservoir) AeroT1 -> mixReservoir();
   }
 
@@ -72,9 +76,10 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> PumpDisable) AeroNT1 -> setPumpDisable();
     AeroNT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
     AeroNT1 -> Pump -> setPrimingTime(Command -> PumpPrimingTime);
+    AeroNT1 -> setHighPressure(Command -> HighPressure);
     if(Command -> MixReservoir) AeroNT1 -> mixReservoir();
-    if(Command -> BypassOn) AeroNT1 -> Pump-> turnBypassOn();
-    if(Command -> BypassOff) AeroNT1 -> Pump-> turnBypassOff();
+    //if(Command -> BypassOn) AeroNT1 -> Pump-> turnBypassOn();
+    //if(Command -> BypassOff) AeroNT1 -> Pump-> turnBypassOff();
   }  
 
   updateResponse();
@@ -107,30 +112,38 @@ void AeroModule::processCommand(aeroCommand *Command){
         logToSerials(F(","),false,1);
         logToSerials(Command -> PumpPrimingTime,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> MixReservoir,false,1);
-        logToSerials(F(";"),false,1);
-      logToSerials(Command -> BypassOn,false,1);
+        logToSerials(Command -> HighPressure,false,1);
         logToSerials(F(","),false,1);
-        logToSerials(Command -> BypassOff,true,1);
+        logToSerials(Command -> LowPressure,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(Command -> MixReservoir,true,1);
+      //logToSerials(F(";"),false,1);
+      //logToSerials(Command -> BypassOn,false,1);
+      //logToSerials(F(","),false,1);
+      //logToSerials(Command -> BypassOff,true,1);
   }       
 }
 
 void AeroModule::updateResponse(){
   if(AeroT1 != NULL)
-  {
+  {    
     Response.SprayEnabled = AeroT1 -> getSprayEnabled();
     Response.Pressure = AeroT1 -> getPressure();
-    //Response.PumpOn = AeroT1 -> PumpOK;
-    //Response.PumpEnabled = AeroT1 -> getPumpOnState();
-    //Response.BypassOn = AeroT1 -> getEnabledState();
-    //Response.LastSP = AeroT1 -> getWeight();
-    Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
-    Wireless.writeAckPayload(1, &Response, sizeof(Response)); ///< load the payload to send the next time
+    Response.PumpOn = AeroT1 -> Pump -> getOnState();
+    Response.PumpEnabled = AeroT1 -> Pump -> getEnabledState();
+    Response.BypassOn = AeroT1 -> Pump -> getBypassOnState();
   }
   if(AeroNT1 != NULL)
   {
-
+    Response.SprayEnabled = AeroNT1 -> getSprayEnabled();
+    Response.Pressure = AeroNT1 -> getPressure();
+    Response.PumpOn = AeroNT1 -> Pump -> getOnState();
+    Response.PumpEnabled = AeroNT1 -> Pump -> getEnabledState();
+    Response.BypassOn = AeroNT1 -> Pump -> getBypassOnState();
+    Response.LastSprayPressure = AeroNT1 -> LastSprayPressure;
   }
+  Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
+  Wireless.writeAckPayload(1, &Response, sizeof(Response)); ///< load the payload to send the next time
 }
 
 void AeroModule::refresh_Sec()

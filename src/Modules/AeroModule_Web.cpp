@@ -22,25 +22,27 @@ void AeroModule_Web::report()
 {
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
-  /*strcat_P(LongMessage, (PGM_P)F("Bucket1 {"));
-  strcat_P(LongMessage, (PGM_P)F("Weight:"));
-  strcat(LongMessage, weightToText(Response.Weight_B1));
-  strcat_P(LongMessage, (PGM_P)F(" ["));
-  strcat(LongMessage, toText(Command.StartWeightBucket_B1));
-  strcat_P(LongMessage, (PGM_P)F("/"));
-  strcat(LongMessage, toText(Command.StopWeightBucket_B1));
-  strcat_P(LongMessage, (PGM_P)F("] ; Pump:"));
-  strcat(LongMessage, pumpStateToText(Response.PumpEnabled_B1,Response.PumpOn_B1));
-  strcat_P(LongMessage, (PGM_P)F("}, Bucket2 {"));
-  strcat_P(LongMessage, (PGM_P)F("Weight:"));
-  strcat(LongMessage, weightToText(Response.Weight_B2));
-  strcat_P(LongMessage, (PGM_P)F(" ["));
-  strcat(LongMessage, toText(Command.StartWeightBucket_B2));
-  strcat_P(LongMessage, (PGM_P)F("/"));
-  strcat(LongMessage, toText(Command.StopWeightBucket_B2));
-  strcat_P(LongMessage, (PGM_P)F("] ; Pump:"));
-  strcat(LongMessage, pumpStateToText(Response.PumpEnabled_B2,Response.PumpOn_B2));
-  strcat_P(LongMessage, (PGM_P)F("}"));*/
+  strcat_P(LongMessage, (PGM_P)F("Pressure:"));
+  strcat(LongMessage, toText(Response.Pressure));
+  if(Response.PressureTankPresent)
+  {
+    strcat_P(LongMessage, (PGM_P)F(" ["));
+    strcat(LongMessage, toText(Command.LowPressure));
+    strcat_P(LongMessage, (PGM_P)F("/"));
+    strcat(LongMessage, toText(Command.HighPressure));
+    strcat_P(LongMessage, (PGM_P)F("]"));
+  }
+  else
+  {
+    strcat_P(LongMessage, (PGM_P)F(" ; LastSprayPressure:"));
+    strcat(LongMessage, toText(Response.LastSprayPressure));
+  }
+  strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
+  strcat(LongMessage, yesNoToText(Response.SprayEnabled));
+  strcat_P(LongMessage, (PGM_P)F(" ; Interval:"));
+  strcat(LongMessage, toText(Command.SprayInterval));
+  strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
+  strcat(LongMessage, toText(Command.SprayDuration));  
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -52,8 +54,8 @@ void AeroModule_Web::websiteEvent_Load(char *url)
       WebServer.setArgInt(getComponentName(F("Priming")), Command.PumpPrimingTime);
       WebServer.setArgInt(getComponentName(F("Int")), Command.SprayInterval);
       WebServer.setArgInt(getComponentName(F("Dur")), Command.SprayDuration);
-      WebServer.setArgFloat(getComponentName(F("PresLow")), Command.LowPressure);
       WebServer.setArgFloat(getComponentName(F("PresHigh")), Command.HighPressure);
+      WebServer.setArgFloat(getComponentName(F("PresLow")), Command.LowPressure);      
   }
 }
 
@@ -65,8 +67,7 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
     WebServer.setArgString(getComponentName(F("Pump")), onOffToText(Response.PumpOn));
     WebServer.setArgString(getComponentName(F("Bypass")), onOffToText(Response.BypassOn));
     WebServer.setArgString(getComponentName(F("Pres")), toText(Response.Pressure));
-    WebServer.setArgString(getComponentName(F("LastSP")), toText(Response.LastSP));
-    
+    WebServer.setArgString(getComponentName(F("LastSP")), toText(Response.LastSprayPressure));    
   }
 }
 
@@ -77,38 +78,52 @@ void AeroModule_Web::websiteEvent_Button(char *Button)
     return;
   }
   else
-  {    /*
-    if (strcmp_P(ShortMessage, (PGM_P)F("B1PumpOn")) == 0)
+  {
+    if (strcmp_P(ShortMessage, (PGM_P)F("SprayEn")) == 0)
     {
-      Command.TurnOnPump_B1 = true;
-      Parent -> addToLog(F("Watering AeroBucket 1"), false);
+      Command.SprayEnable = true;
+      Parent -> addToLog(F("Spray enabled"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2PumpOn")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SprayDis")) == 0)
     {
-      Command.TurnOnPump_B2 = true;
-      Parent -> addToLog(F("Watering AeroBucket 2"), false);
+      Command.SprayDisable = true;
+      Parent -> addToLog(F("Spray disabled"), false);
     } 
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1PumpOff")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SprayNow")) == 0)
     {
-      Command.TurnOffPump_B1 = true;
-      Parent -> addToLog(F("Stop watering AeroBucket 1"), false);
+      Command.SprayNow = true;
+      Parent -> addToLog(F("Starting spray"));
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2PumpOff")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SprayOff")) == 0)
     {
-      Command.TurnOffPump_B2 = true;
-      Parent -> addToLog(F("Stop watering AeroBucket 2"), false);
+      Command.SprayOff = true;
+      Parent -> addToLog(F("Stop spray"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1PumpDis")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOn")) == 0)
     {
-      Command.DisablePump_B1 = true;
-      Parent -> addToLog(F("Disabled AeroBucket 1 pump"), false);
+      Command.PumpOn = true;
+      Parent -> addToLog(F("Aero pump ON"), false);
     } 
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2PumpDis")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0)
     {
-      Command.DisablePump_B2 = true;
-      Parent -> addToLog(F("Disabled AeroBucket 2 pump"), false);
-    }  
-    */
+      Command.PumpOff = true;
+      Parent -> addToLog(F("Aero pump OFF"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0)
+    {
+      Command.PumpDisable = true;
+      Parent -> addToLog(F("Aero pump disabled"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Mix")) == 0)
+    {
+      Command.MixReservoir = true;
+      Parent -> addToLog(F("Mixing reservoir"), false);
+    } 
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Refill")) == 0)
+    {
+      Command.RefillPressureTank = true;
+      Parent -> addToLog(F("Refilling pressure tank"), false);
+    }     
     SyncRequested = true;  
   }
 }
@@ -121,35 +136,35 @@ void AeroModule_Web::websiteEvent_Field(char *Field)
     return;
   }
   else
-  {    /*
-    if (strcmp_P(ShortMessage, (PGM_P)F("B1Strt")) == 0)
+  {
+    if (strcmp_P(ShortMessage, (PGM_P)F("Int")) == 0)
     {
-      DefaultSettings->StartWeightBucket_B1 = WebServer.getArgFloat();      
-    }  /// \todo Write back to EEPROM
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Stp")) == 0)
-    {
-      DefaultSettings->StopWeightBucket_B1 = WebServer.getArgFloat();
-      Parent -> addToLog(F("Bucket 1 limits updated"), false);
+      DefaultSettings->Interval = WebServer.getArgInt();  
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Time")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
     {
-      DefaultSettings->TimeOutPump_B1 = WebServer.getArgInt();
-      Parent -> addToLog(F("Pump 1 timeout updated"), false);
+      DefaultSettings->Duration = WebServer.getArgInt();
+      Parent -> addToLog(F("Spray timer updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Strt")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0)
     {
-      DefaultSettings->StartWeightBucket_B2 = WebServer.getArgFloat();
+      DefaultSettings->PumpTimeOut = WebServer.getArgInt();
+      Parent -> addToLog(F("Pump timeout updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Stp")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Priming")) == 0)
     {
-      DefaultSettings->StopWeightBucket_B2 = WebServer.getArgFloat();
-      Parent -> addToLog(F("Bucket 2 limits updated"), false);
+      DefaultSettings->PrimingTime = WebServer.getArgInt();
+      Parent -> addToLog(F("Priming time updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Time")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PresLow")) == 0)
     {
-      DefaultSettings->TimeOutPump_B2 = WebServer.getArgInt();
-      Parent -> addToLog(F("Pump 2 timeout updated"), false);
-    }*/
+      DefaultSettings->LowPressure = WebServer.getArgFloat();
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PresHigh")) == 0)
+    {
+      DefaultSettings->HighPressure = WebServer.getArgFloat();
+      Parent -> addToLog(F("Pressure limits updated"), false);
+    }
     SyncRequested = true;
   }
 }
@@ -189,31 +204,35 @@ void AeroModule_Web::syncModule( const byte WirelessChannel[], aeroCommand *Comm
           logToSerials(F("bytes]"),true,1);
 
           if(*Debug){
-          /*logToSerials(Response -> PumpOn_B1,false,3);
+          logToSerials(Response -> PressureTankPresent,false,3);
           logToSerials(F(","),false,1);
-          logToSerials(Response -> PumpEnabled_B1,false,1);
+          logToSerials(Response -> SprayEnabled,false,1);;
           logToSerials(F(","),false,1);
-          logToSerials(Response -> Weight_B1,false,1);
+          logToSerials(Response -> PumpOn,false,1);
           logToSerials(F(","),false,1);
-          logToSerials(Response -> PumpOn_B2,false,1);
-          logToSerials(F(","),false,1);
-          logToSerials(Response -> PumpEnabled_B2,false,1);
+          logToSerials(Response -> PumpEnabled,false,1);
           logToSerials(F(";"),false,1);
-          logToSerials(Response -> Weight_B2,true,1);  */             
+          logToSerials(Response -> BypassOn,false,1);
+          logToSerials(F(","),false,1);
+          logToSerials(Response -> Pressure,false,1);
+          logToSerials(F(";"),false,1);
+          logToSerials(Response -> LastSprayPressure,true,1); 
           }            
 
-          ///Turn off command flags 
-          /*
-          if(Command -> DisablePump_B1 || Command -> TurnOnPump_B1 || Command -> TurnOffPump_B1 || Command -> DisablePump_B2 || Command -> TurnOnPump_B2 || Command -> TurnOffPump_B2 )
+          ///Turn off command flags          
+          if(Command -> SprayEnable || Command -> SprayDisable || Command -> SprayNow || Command -> SprayOff || Command -> PumpOn || Command -> PumpOff || Command -> PumpDisable || Command -> MixReservoir || Command -> RefillPressureTank )
           {
             SyncRequested = true;  ///Force a second packet to actualize the response
-            Command -> DisablePump_B1 = false;
-            Command -> TurnOnPump_B1 = false;
-            Command -> TurnOffPump_B1 = false;
-            Command -> DisablePump_B2 = false;
-            Command -> TurnOnPump_B2 = false;
-            Command -> TurnOffPump_B2 = false;
-          }*/
+            Command -> SprayEnable = false;
+            Command -> SprayDisable = false;
+            Command -> SprayNow = false;
+            Command -> SprayOff = false;
+            Command -> PumpOn = false;
+            Command -> PumpOff = false;
+            Command -> PumpDisable = false;
+            Command -> MixReservoir = false;
+            Command -> RefillPressureTank = false;
+          }
       }
       else {
           Serial.println(F(" Acknowledgement received without any data."));
@@ -231,12 +250,11 @@ void AeroModule_Web::updateCommand() {        // so you can see that new data is
     Command.Time = now();
     Command.Debug = *Debug;
     Command.Metric = *Metric;
-    /*
-    Command.StartWeightBucket_B1= DefaultSettings->StartWeightBucket_B1;
-    Command.StopWeightBucket_B1= DefaultSettings->StopWeightBucket_B1;
-    Command.TimeOutPump_B1= DefaultSettings->TimeOutPump_B1;
-    Command.StartWeightBucket_B2= DefaultSettings->StartWeightBucket_B2;
-    Command.StopWeightBucket_B2= DefaultSettings->StopWeightBucket_B2;
-    Command.TimeOutPump_B2= DefaultSettings->TimeOutPump_B2;
-    */
+    
+    Command.SprayInterval= DefaultSettings->Interval;
+    Command.SprayDuration= DefaultSettings->Duration;
+    Command.PumpTimeOut= DefaultSettings->PumpTimeOut;
+    Command.PumpPrimingTime= DefaultSettings->PrimingTime;
+    Command.LowPressure= DefaultSettings->LowPressure;
+    Command.HighPressure= DefaultSettings->HighPressure;
 }

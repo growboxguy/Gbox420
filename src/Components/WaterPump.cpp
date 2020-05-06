@@ -199,7 +199,7 @@ void WaterPump::turnBypassOff(){
 
 //////////////////////////////////////////////////////////////////////////////////
 
-bool WaterPump::getPumpOnState(){
+bool WaterPump::getOnState(){
   return PumpOn;
 }
 

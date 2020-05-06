@@ -92,7 +92,7 @@ struct WaterPumpSettings
       uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin
       bool PumpEnabled; ///< Enable/disable pump. false= Block running the pump
       int PumpTimeOut;   ///< (Sec) Max pump run time        
-      int PrimingTime;    ///< (Sec) For wow long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+      int PrimingTime;    ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
       int BlowOffTime;     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
     struct WaterPumpSettings AeroPump1 = {.PumpPin = 8, .BypassSolenoidPin = 23, .PumpEnabled = true, .PumpTimeOut = 120, .PrimingTime = 10, .BlowOffTime = 3};
