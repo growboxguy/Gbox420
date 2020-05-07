@@ -13,8 +13,6 @@ public:
   void report();
   void sprayNow(bool UserRequest = false);
   void sprayOff();
-  
-
 
 private:
  

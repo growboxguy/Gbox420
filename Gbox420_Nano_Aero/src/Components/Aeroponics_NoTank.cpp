@@ -15,8 +15,11 @@ void Aeroponics_NoTank::refresh_Sec()
   if (Pump->getState() == RUNNING)
   { ///if pump is on
     FeedbackPressureSensor->readPressure();
+    if(FeedbackPressureSensor->getPressure() > *MaxPressure){
+      Pump -> stopPump();
+    }
     
-    if (millis() - SprayTimer >= (uint32_t)*Duration * 1000 + (uint32_t)Pump->getPrimingTime() * 1000)
+    if ((millis() - SprayTimer) >= ((uint32_t)*Duration * 1000 + (uint32_t)Pump->getPrimingTime() * 1000))
     { ///bypass valve is closed and time to stop spraying (Duration in Seconds)
       LastSprayPressure = Aeroponics::FeedbackPressureSensor->getPressure();
       Pump -> stopPump();      

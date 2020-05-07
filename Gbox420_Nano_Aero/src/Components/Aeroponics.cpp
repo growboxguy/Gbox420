@@ -145,7 +145,8 @@ void Aeroponics::setMaxPressure(float Pressure)
 }
 
 void Aeroponics::startPump(bool UserRequest)
-{  
+{ 
+  SprayTimer = millis();
   Pump -> startPump(UserRequest);
 }
 
