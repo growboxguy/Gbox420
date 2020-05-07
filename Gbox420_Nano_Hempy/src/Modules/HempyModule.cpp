@@ -51,14 +51,14 @@ void HempyModule::processCommand(hempyCommand *Command){
   setMetric(Command -> Metric);
   if(Command -> DisablePump_B1) Pump1 -> disablePump();
   if(Command -> TurnOnPump_B1) Pump1 -> startPump(true);
-  if(Command -> TurnOffPump_B1) Pump1 -> stopPump(true);
+  if(Command -> TurnOffPump_B1) Pump1 -> stopPump();
   Pump1 -> setPumpTimeOut(Command -> TimeOutPump_B1);
   Bucket1 -> setStartWeight(Command -> StartWeightBucket_B1);
   Bucket1 -> setStopWeight(Command -> StopWeightBucket_B1);
 
   if(Command -> DisablePump_B2) Pump2 -> disablePump();
   if(Command -> TurnOnPump_B2) Pump2 -> startPump(true);
-  if(Command -> TurnOffPump_B2) Pump2 -> stopPump(true);
+  if(Command -> TurnOffPump_B2) Pump2 -> stopPump();
   Pump2 -> setPumpTimeOut(Command -> TimeOutPump_B2);
   Bucket2 -> setStartWeight(Command -> StartWeightBucket_B2);
   Bucket2 -> setStopWeight(Command -> StopWeightBucket_B2);

@@ -14,7 +14,7 @@ public:
   WaterPump *Pump;
   virtual void report();
   void startPump(bool UserRequest);
-  void stopPump(bool UserRequest);
+  void stopPump();
   void setPumpDisable();
   void setPumpTimeout(int TimeOut);
   void mixReservoir();

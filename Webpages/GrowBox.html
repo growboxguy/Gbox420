@@ -304,7 +304,7 @@
 						title="Stop refilling when this pressure is reached" />
 					<input type="submit" value="Set">
 				</form>			
-				<b id="Aero1_TankTitle">Tank: </b><input type="checkbox" id="Aero1_Tank" name="Aero1_Tank" title="READONLY - Enabled if Pressure tank is available" onchange="showRefillButton()" onload="showRefillButton()" style="display: inline;">
+				<b id="Aero1_TankTitle">Tank: </b><input type="checkbox" id="Aero1_Tank" name="Aero1_Tank" title="READONLY - Enabled if Pressure tank is available" onchange="showRefillButton()" onload="showRefillButton()" style="display: none;">
 					<button id="Aero1_Refill" type="button" align="right" title="Refill the tank">Refill</button>									
 			</div>			
 			<div class="card" style="width:90%">
@@ -377,12 +377,9 @@
 		else {
 			TankTitle.style.display = "none";
 			RefillButton.style.display = "none";
-		}
-
-		document.onload = showRefillButton();
-		window.onload = showRefillButton();
+		}		
 	}
-	
+	document.onload = showRefillButton();
 </script>
 </body>
 

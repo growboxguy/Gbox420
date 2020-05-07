@@ -54,7 +54,7 @@ void Aeroponics_Tank_Web::websiteEvent_Button(char *Button)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0)
     {
-      stopPump(true);
+      stopPump();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0)
     {

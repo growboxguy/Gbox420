@@ -118,11 +118,6 @@ char *Aeroponics::getLastSprayPressureText(bool IncludeCurrentPressure ){
 ////////////////////////////////////////
 ///Pump controls
 
-void Aeroponics::mixReservoir()
-{  
-  Pump -> startMixing();
-}
-
 float Aeroponics::getPressure()
 {
   return FeedbackPressureSensor -> getPressure();
@@ -150,7 +145,7 @@ void Aeroponics::startPump(bool UserRequest)
   Pump -> startPump(UserRequest);
 }
 
-void Aeroponics::stopPump(bool UserRequest)
+void Aeroponics::stopPump()
 {
   Pump -> stopPump();
 }

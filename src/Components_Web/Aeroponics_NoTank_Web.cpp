@@ -44,14 +44,14 @@ void Aeroponics_NoTank_Web::websiteEvent_Button(char *Button)
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("BypassOn")) == 0){Pump-> turnBypassOn();}
     else if (strcmp_P(ShortMessage, (PGM_P)F("BypassOff")) == 0){Pump-> turnBypassOff();}    
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOn")) == 0){Pump->startPump(true);}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0){Pump->stopPump(true);}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOn")) == 0){startPump(true);}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0){stopPump();}
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0){Pump->disablePump();}
     else if (strcmp_P(ShortMessage, (PGM_P)F("Mix")) == 0){mixReservoir();}
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayEn")) == 0){setSprayOnOff(true);}
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayDis")) == 0){setSprayOnOff(false);}
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayNow")) == 0){sprayNow(true);}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SprayOff")) == 0){sprayOff(true);}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SprayOff")) == 0){sprayOff();}
   }
 }
 

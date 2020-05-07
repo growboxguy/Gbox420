@@ -55,7 +55,7 @@ void AeroModule::processCommand(aeroCommand *Command){
     AeroT1 -> setSprayInterval(Command -> SprayInterval);
     AeroT1 -> setSprayDuration(Command -> SprayDuration);
     if(Command -> PumpOn) AeroT1 -> startPump(true);
-    if(Command -> PumpOff) AeroT1 -> stopPump(true);
+    if(Command -> PumpOff) AeroT1 -> stopPump();
     if(Command -> PumpDisable) AeroT1 -> setPumpDisable();
     AeroT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
     AeroT1 -> Pump -> setPrimingTime(Command -> PumpPrimingTime);
@@ -73,7 +73,7 @@ void AeroModule::processCommand(aeroCommand *Command){
     AeroNT1 -> setSprayInterval(Command -> SprayInterval);
     AeroNT1 -> setSprayDuration(Command -> SprayDuration);
     if(Command -> PumpOn) AeroNT1 -> startPump(true);
-    if(Command -> PumpOff) AeroNT1 -> stopPump(true);
+    if(Command -> PumpOff) AeroNT1 -> stopPump();
     if(Command -> PumpDisable) AeroNT1 -> setPumpDisable();
     AeroNT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
     AeroNT1 -> Pump -> setPrimingTime(Command -> PumpPrimingTime);
