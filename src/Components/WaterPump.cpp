@@ -85,6 +85,7 @@ void WaterPump::UpdateState(PumpState NewState)  ///< Without a parameter actual
       *PumpEnabled = true;
       if(RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000)){
         RunTime = 0;
+        logToSerials(F("Running complete, stopping..."), true, 3);
         if(BlowOffTime != NULL && *BlowOffTime >0)        { 
           UpdateState(BLOWOFF);
         }
@@ -165,8 +166,7 @@ void WaterPump::stopPump()
   else
   {
     UpdateState(IDLE);
-  }
-  
+  }  
 }
 
 void WaterPump::disablePump()
@@ -179,7 +179,12 @@ void WaterPump::disablePump()
 
 void WaterPump::startMixing(int TimeOutSec)  ///< Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout
 {
-  if(TimeOutSec>0) RunTime = TimeOutSec;
+  if(TimeOutSec>0) {
+    RunTime = TimeOutSec;
+  }
+  else {
+    RunTime = 0;  ///< if no mix timeout defined -> Run until pump timeout is reached
+  }
   Parent->addToLog(F("Mixing nutrients"));
   Parent->getSoundObject()->playOnSound();
   UpdateState(MIXING);

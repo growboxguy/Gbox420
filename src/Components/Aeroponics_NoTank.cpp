@@ -16,22 +16,27 @@ void Aeroponics_NoTank::refresh_Sec()
   { ///if pump is on
     FeedbackPressureSensor->readPressure();
     if(FeedbackPressureSensor->getPressure() > *MaxPressure){
+      logToSerials(F("Max pressure reached"), false, 3);
       Pump -> stopPump();
     }
     
-    if ((millis() - SprayTimer) >= ((uint32_t)*Duration * 1000 + (uint32_t)Pump->getPrimingTime() * 1000))
+    if (!LockedPumpOn && (millis() - SprayTimer) >= ((uint32_t)*Duration * 1000 + (uint32_t)Pump->getPrimingTime() * 1000))
     { ///bypass valve is closed and time to stop spraying (Duration in Seconds)
       LastSprayPressure = Aeroponics::FeedbackPressureSensor->getPressure();
-      Pump -> stopPump();      
-      logToSerials(F("Spray stopped"), true);
+      logToSerials(F("Spray finished"), false, 3);
+      Pump -> stopPump(); 
     }    
   }
   else
-  {
-    if (Pump->getState() == IDLE && millis() - SprayTimer >= (uint32_t)*Interval * 60000)
-    { ///if time to start spraying (AeroInterval in Minutes)
-      sprayNow(false);
-      SprayTimer = millis();
+  {    
+    if (Pump->getState() == IDLE)  
+    { 
+      LockedPumpOn = false;  ///Release the pump ON lock after pump returns to idle state after reaching PumpTimeOut
+
+      if(millis() - SprayTimer >= (uint32_t)*Interval * 60000){  ///if time to start spraying (AeroInterval in Minutes)
+        sprayNow(false);
+        SprayTimer = millis();
+      }
     }
   }
 }
@@ -50,18 +55,23 @@ void Aeroponics_NoTank::sprayNow(bool UserRequest)
 {
   if (*SprayEnabled || UserRequest)
   {
-    Pump->startPump(UserRequest);
-    SprayTimer = millis();
     Parent->getSoundObject()->playOnSound();
     if (UserRequest)
       Parent->addToLog(F("Aeroponics spraying"));
     else
-      logToSerials(F("Aeroponics spraying"), true, 3);
+      logToSerials(F("Aeroponics spraying"), false, 3);
+     Pump->startPump(UserRequest);
+     SprayTimer = millis();
   }
 }
 
 void Aeroponics_NoTank::sprayOff()
-{
-  Pump -> stopPump();  
+{  
   Parent -> addToLog(F("Aeroponics spray OFF"));
+  Pump -> stopPump();  
+}
+
+void Aeroponics_NoTank::lockPumpOn(){
+  Pump -> startPump(true);
+  LockedPumpOn = true;
 }

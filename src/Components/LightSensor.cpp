@@ -13,14 +13,14 @@ LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settin
   LightReading = new RollingAverage();
   calibrate(false);
   Parent->addToReportQueue(this);          
-  Parent->addToRefreshQueue_Minute(this);
+  Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("LightSensor object created"), true, 1);
 }
 
-void LightSensor::refresh_Minute()
+void LightSensor::refresh_FiveSec()
 {
   if (*Debug)
-    Common::refresh_Minute();
+    Common::refresh_FiveSec();
   if (CalibrateRequested)
   {
     calibrate();

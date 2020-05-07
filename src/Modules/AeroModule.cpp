@@ -54,14 +54,14 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> RefillPressureTank) AeroT1 -> refillTank();    
     AeroT1 -> setSprayInterval(Command -> SprayInterval);
     AeroT1 -> setSprayDuration(Command -> SprayDuration);
-    if(Command -> PumpOn) AeroT1 -> startPump(true);
-    if(Command -> PumpOff) AeroT1 -> stopPump();
-    if(Command -> PumpDisable) AeroT1 -> setPumpDisable();
+    if(Command -> PumpOn) AeroT1 -> Pump -> startPump();
+    if(Command -> PumpOff) AeroT1 -> Pump -> stopPump();
+    if(Command -> PumpDisable) AeroT1 -> Pump -> disablePump();
     AeroT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
     AeroT1 -> Pump -> setPrimingTime(Command -> PumpPrimingTime);
     AeroT1 -> setMinPressure(Command -> MinPressure);
     AeroT1 -> setMaxPressure(Command -> MaxPressure);
-    if(Command -> MixReservoir) AeroT1 -> mixReservoir();
+    if(Command -> MixReservoir) AeroT1 -> Pump -> startMixing();
   }
 
   if(AeroNT1 != NULL)
@@ -72,13 +72,13 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> SprayOff) AeroNT1 -> sprayOff();
     AeroNT1 -> setSprayInterval(Command -> SprayInterval);
     AeroNT1 -> setSprayDuration(Command -> SprayDuration);
-    if(Command -> PumpOn) AeroNT1 -> startPump(true);
-    if(Command -> PumpOff) AeroNT1 -> stopPump();
-    if(Command -> PumpDisable) AeroNT1 -> setPumpDisable();
+    if(Command -> PumpOn) AeroNT1 -> lockPumpOn();
+    if(Command -> PumpOff) AeroNT1 -> Pump -> stopPump();
+    if(Command -> PumpDisable) AeroNT1 -> Pump -> disablePump();
     AeroNT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
     AeroNT1 -> Pump -> setPrimingTime(Command -> PumpPrimingTime);
     AeroNT1 -> setMaxPressure(Command -> MaxPressure);
-    if(Command -> MixReservoir) AeroNT1 -> mixReservoir();
+    if(Command -> MixReservoir) AeroNT1 -> Pump -> startMixing();
     //if(Command -> BypassOn) AeroNT1 -> Pump-> turnBypassOn();
     //if(Command -> BypassOff) AeroNT1 -> Pump-> turnBypassOff();
   }  

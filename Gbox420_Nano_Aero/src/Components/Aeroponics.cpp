@@ -21,9 +21,9 @@ Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings
 void Aeroponics::report()
 {                                                  ///report status to Serial output, runs after the child class`s report function
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
-  strcat_P(LongMessage, (PGM_P)F("Min Pressure:"));
+  strcat_P(LongMessage, (PGM_P)F(" ; MinPressure:"));
   strcat(LongMessage, toText_pressure(*MinPressure));
-  strcat_P(LongMessage, (PGM_P)F(" ; Max Pressure:"));
+  strcat_P(LongMessage, (PGM_P)F(" ; MaxPressure:"));
   strcat(LongMessage, toText_pressure(*MaxPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(SprayEnabled));
@@ -137,20 +137,4 @@ void Aeroponics::setMaxPressure(float Pressure)
     Parent->addToLog(F("Tank limits updated"));
     Parent -> getSoundObject() -> playOnSound();
   }  
-}
-
-void Aeroponics::startPump(bool UserRequest)
-{ 
-  SprayTimer = millis();
-  Pump -> startPump(UserRequest);
-}
-
-void Aeroponics::stopPump()
-{
-  Pump -> stopPump();
-}
-
-void Aeroponics::setPumpDisable()
-{
-  Pump -> disablePump();
 }

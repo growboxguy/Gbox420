@@ -11,14 +11,8 @@ class Aeroponics : virtual public Common
 {
 public:
   Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump);
-  WaterPump *Pump;
+  WaterPump * Pump;
   virtual void report();
-  void startPump(bool UserRequest);
-  void stopPump();
-  void setPumpDisable();
-  void setPumpTimeout(int TimeOut);
-  void mixReservoir();
-
   void setSprayOnOff(bool State); 
   char *sprayStateToText();
   virtual void sprayNow(bool UserRequest = false) = 0;
@@ -40,7 +34,7 @@ private:
 protected:
   Module *Parent;
   PressureSensor *FeedbackPressureSensor; ///Pressure sensor object that will monitor the spray pressure
-  uint32_t SprayTimer = millis(); 
+  uint32_t SprayTimer = millis();
   bool *SprayEnabled;             ///Enable/disable misting
   int *Interval;                  ///Aeroponics - Spray every 15 minutes
   int *Duration;                  ///Aeroponics - Spray time in seconds

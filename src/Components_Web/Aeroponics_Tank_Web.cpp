@@ -50,19 +50,19 @@ void Aeroponics_Tank_Web::websiteEvent_Button(char *Button)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOn")) == 0)
     {
-      startPump(true);
+      Pump -> startPump(true);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0)
     {
-      stopPump();
+      Pump -> stopPump();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0)
     {
-      setPumpDisable();
+      Pump -> disablePump();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Mix")) == 0)
     {
-      mixReservoir();
+      Pump -> startMixing();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayEn")) == 0)
     {
@@ -101,7 +101,7 @@ void Aeroponics_Tank_Web::websiteEvent_Field(char *Field)
     } 
     else if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0)
     {
-      setPumpTimeout(WebServer.getArgInt());
+      Pump -> setPumpTimeOut(WebServer.getArgInt());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Priming")) == 0)
     {

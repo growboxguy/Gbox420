@@ -29,15 +29,15 @@ void Aeroponics_Tank::refresh_Sec()
   if (Pump->getState() == RUNNING) ///< if pump is on
   { 
     if (Aeroponics::FeedbackPressureSensor->getPressure() >= *MaxPressure)
-    { ///refill complete, target pressure reached
+    { ///refill complete, target pressure reached      
+      logToSerials(F("Pressure tank recharged"), false, 3);
       Pump-> stopPump();
-      logToSerials(F("Pressure tank recharged"), true);
     }   
   }
   else{
     if (Pump->getState() == IDLE && Aeroponics::FeedbackPressureSensor->getPressure() <= *MinPressure)
     {                    
-      logToSerials(F("Pressure tank recharging..."), true);
+      logToSerials(F("Pressure tank recharging..."), false, 3);
       Pump->startPump();
     }
   }
@@ -89,7 +89,7 @@ void Aeroponics_Tank::sprayOff(bool UserRequest)
   }
   else
   {
-    logToSerials(F("Stopping spray"), true);
+    logToSerials(F("Stopping spray"), true, 3);
   }
   
 }
