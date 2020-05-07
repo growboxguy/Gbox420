@@ -4,11 +4,11 @@ PowerSensorV3_Web::PowerSensorV3_Web(const __FlashStringHelper *Name, Module_Web
 {
   this->Parent = Parent;
   this->Name = Name;
-  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_FiveSec(this); ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_FiveSec(this); ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  Parent->addToWebsiteQueue_Refresh(this); ///Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
+  Parent->addToReportQueue(this);          
+  Parent->addToRefreshQueue_FiveSec(this); 
+  Parent->addToReportQueue(this);          
+  Parent->addToRefreshQueue_FiveSec(this); 
+  Parent->addToWebsiteQueue_Refresh(this); 
 }
 
 void PowerSensorV3_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)

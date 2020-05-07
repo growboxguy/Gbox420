@@ -23,10 +23,10 @@ public:
   void runQuarterHour();
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);  
-  void addToReportQueue(Common *Component);
-  void addToRefreshQueue_Sec(Common *Component);
-  void addToRefreshQueue_FiveSec(Common *Component);
-  void addToRefreshQueue_Minute(Common *Component);
+  void addToReportQueue(Common *Component);   ///< Subscribing to the report queue: Calls the report() method
+  void addToRefreshQueue_Sec(Common *Component);  ///< Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
+  void addToRefreshQueue_FiveSec(Common *Component);  ///< Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
+  void addToRefreshQueue_Minute(Common *Component);   ///< Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   void addToRefreshQueue_QuarterHour(Common *Component);
   char * getFormattedTime(bool PrintToSerials);
   Sound * getSoundObject();  

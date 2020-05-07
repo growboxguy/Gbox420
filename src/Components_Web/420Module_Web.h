@@ -30,11 +30,12 @@ public:
   void runSec();
   void runFiveSec();
   void runMinute();
-  void runQuarterHour();
-  void addToWebsiteQueue_Load(Common_Web *Component);
-  void addToWebsiteQueue_Refresh(Common_Web *Component);
-  void addToWebsiteQueue_Button(Common_Web *Component);
-  void addToWebsiteQueue_Field(Common_Web *Component);
+  void runQuarterHour();   
+
+  void addToWebsiteQueue_Load(Common_Web *Component);   ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
+  void addToWebsiteQueue_Refresh(Common_Web *Component);  ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
+  void addToWebsiteQueue_Button(Common_Web *Component);   ///< Subscribing to the Website button press event: Calls the websiteEvent_Button() method
+  void addToWebsiteQueue_Field(Common_Web *Component);    ///< Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
   void loadEvent(char *Url);
   void refreshEvent(char *Url);
   void buttonEvent(char *Button);

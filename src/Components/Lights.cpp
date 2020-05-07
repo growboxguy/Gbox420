@@ -17,8 +17,8 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
   pinMode(*RelayPin, OUTPUT);
   digitalWrite(*RelayPin, HIGH); ///Turn relay off initially
   pinMode(*DimmingPin, OUTPUT);
-  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Minute(this);  ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  Parent->addToReportQueue(this);          
+  Parent->addToRefreshQueue_Minute(this);
   logToSerials(F("Lights object created"), true, 1);
 }
 

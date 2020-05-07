@@ -6,7 +6,7 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
   pinMode(*Pin, OUTPUT); 
-  Parent->addToRefreshQueue_Sec(this);    ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
+  Parent->addToRefreshQueue_Sec(this);      
   logToSerials(F("Sound object created"), true, 1);
   checkEvents();
 }

@@ -12,8 +12,8 @@ LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settin
   pinMode(*AnalogPin, INPUT);
   LightReading = new RollingAverage();
   calibrate(false);
-  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Minute(this);  ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  Parent->addToReportQueue(this);          
+  Parent->addToRefreshQueue_Minute(this);
   logToSerials(F("LightSensor object created"), true, 1);
 }
 

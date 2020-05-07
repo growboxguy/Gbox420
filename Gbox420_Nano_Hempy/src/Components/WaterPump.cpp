@@ -21,8 +21,8 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
   if(DefaultSettings->PrimingTime != -1) {PrimingTime= &DefaultSettings->PrimingTime;} 
   if(DefaultSettings->BlowOffTime != -1) {BlowOffTime= &DefaultSettings->BlowOffTime;}
     
-  Parent->addToReportQueue(this);         ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Sec(this);    ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
+  Parent->addToReportQueue(this);         
+  Parent->addToRefreshQueue_Sec(this);      
   logToSerials(F("WaterPump object created"), true, 1);
 }
 

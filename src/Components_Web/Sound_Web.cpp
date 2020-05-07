@@ -4,10 +4,10 @@ Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settin
 {
   this->Parent = Parent;
   this->Name = Name;
-  Parent->addToRefreshQueue_Sec(this);    ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
-  Parent->addToWebsiteQueue_Load(this);   ///Subscribing to the Website load event: Calls the websiteEvent_Load() method
-  Parent->addToWebsiteQueue_Button(this); ///Subscribing to the Website button press event: Calls the websiteEvent_Button() method
-  Parent->addToWebsiteQueue_Field(this);  ///Subscribing to the Website field submit event: Calls the websiteEvent_Field() method 
+  Parent->addToRefreshQueue_Sec(this);      
+  Parent->addToWebsiteQueue_Load(this);   
+  Parent->addToWebsiteQueue_Button(this); 
+  Parent->addToWebsiteQueue_Field(this);   
 }
 
 void Sound_Web::refresh_Sec()

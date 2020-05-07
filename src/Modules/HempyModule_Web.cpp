@@ -6,15 +6,15 @@ HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Pa
   this->DefaultSettings = DefaultSettings;
   updateCommand();
   memcpy_P(this->WirelessChannel,(PGM_P)Name,sizeof(this->WirelessChannel));
-  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Sec(this);     ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
-  Parent->addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  Parent->addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  //addToRefreshQueue_QuarterHour(this); ///Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
-  Parent->addToWebsiteQueue_Load(this);        ///Subscribing to the Website load event
-  Parent->addToWebsiteQueue_Refresh(this);     ///Subscribing to the Website refresh event
-  Parent->addToWebsiteQueue_Field(this);       ///Subscribing to the Website field submit event
-  Parent->addToWebsiteQueue_Button(this);      ///Subscribing to the Website button press event
+  Parent->addToReportQueue(this);          
+  Parent->addToRefreshQueue_Sec(this);     
+  Parent->addToRefreshQueue_FiveSec(this);     
+  Parent->addToRefreshQueue_Minute(this);    
+  //addToRefreshQueue_QuarterHour(this); 
+  Parent->addToWebsiteQueue_Load(this);        
+  Parent->addToWebsiteQueue_Refresh(this);     
+  Parent->addToWebsiteQueue_Field(this);       
+  Parent->addToWebsiteQueue_Button(this);      
   logToSerials(F("HempyModule_Web object created"), true, 1);
 }
 

@@ -63,7 +63,7 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       uint8_t SpraySolenoidPin;    ///Spray solenoid relay pin
       float MinPressure;  ///Turn on pump below this pressure      
     };
-    struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.SpraySolenoidPin = 6, .MinPressure = 5.0};
+    struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.SpraySolenoidPin = 5, .MinPressure = 5.0};
 
     struct PressureSensorSettings
     {
@@ -72,7 +72,7 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       float Offset; ///Pressure sensor calibration: voltage reading at 0 pressure
       float Ratio;  ///Pressure sensor voltage to pressure ratio
     };
-    struct PressureSensorSettings Pres1 = {.Pin = A0, .Offset = 0.57, .Ratio = 2.7};
+    struct PressureSensorSettings Pres1 = {.Pin = A7, .Offset = 0.57, .Ratio = 2.7};
 
     struct SoundSettings
     {
@@ -92,7 +92,7 @@ struct WaterPumpSettings
       int PrimingTime;    ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
       int BlowOffTime;     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
-    struct WaterPumpSettings AeroPump1 = {.PumpPin = 4, .BypassSolenoidPin = 5, .PumpEnabled = true, .PumpTimeOut = 120, .PrimingTime = 10, .BlowOffTime = 3};
+    struct WaterPumpSettings AeroPump1 = {.PumpPin = 3, .BypassSolenoidPin = 4, .PumpEnabled = true, .PumpTimeOut = 120, .PrimingTime = 10, .BlowOffTime = 3};
 
     
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.

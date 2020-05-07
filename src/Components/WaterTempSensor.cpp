@@ -8,7 +8,7 @@ WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent
   TempSensorWire = new OneWire(*(&DefaultSettings->Pin)); ///Reservoir waterproof temperature sensor (DS18B20)
   TempSensor = new DallasTemperature(TempSensorWire);     ///Reservoir waterproof temperature sensor (DS18B20)
   TempSensor->begin();
-  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
+  Parent->addToReportQueue(this);          
   Parent->addToRefreshQueue_Minute(this); 
   logToSerials(F("WaterTempSensor object created"), true, 1);
 }

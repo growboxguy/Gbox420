@@ -14,8 +14,8 @@ Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings
   MaxPressure = &DefaultSettings->MaxPressure; ///Aeroponics - Turn off pump above this pressure (bar)
   this->FeedbackPressureSensor = FeedbackPressureSensor;
   this->Pump = Pump;  
-  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Sec(this);     ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method  
+  Parent->addToReportQueue(this);          
+  Parent->addToRefreshQueue_Sec(this);       
 }
 
 void Aeroponics::report()

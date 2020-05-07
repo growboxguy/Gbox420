@@ -19,10 +19,10 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->HempyPump2);
   Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1,Weight1,Pump1);
   Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2,Weight2,Pump2);
-  //addToRefreshQueue_Sec(this);         ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
-  addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  //addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  //addToRefreshQueue_QuarterHour(this); ///Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
+  //addToRefreshQueue_Sec(this);         
+  addToRefreshQueue_FiveSec(this);     
+  //addToRefreshQueue_Minute(this);    
+  //addToRefreshQueue_QuarterHour(this); 
   logToSerials(Name, false, 0);
   logToSerials(F("- HempyModule object created, refreshing..."), true, 1);
   runAll();

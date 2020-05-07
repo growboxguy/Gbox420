@@ -8,11 +8,11 @@ ModuleSkeleton::ModuleSkeleton(const __FlashStringHelper *Name, Module *Parent, 
   PersistentFloat = &DefaultSettings->PersistentFloat;
   RollingInt = new RollingAverage();
   RollingFloat = new RollingAverage();
-  Parent->addToReportQueue(this);              ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Sec(this);         ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
-  Parent->addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  Parent->addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  Parent->addToRefreshQueue_QuarterHour(this); ///Subscribing to the 15 minute refresh queue: Calls the refresh_QuarterHour() method 
+  Parent->addToReportQueue(this);              
+  Parent->addToRefreshQueue_Sec(this);         
+  Parent->addToRefreshQueue_FiveSec(this);     
+  Parent->addToRefreshQueue_Minute(this);    
+  Parent->addToRefreshQueue_QuarterHour(this);  
   logToSerials(F("ModuleSkeleton object created"), true, 1);
 }
 

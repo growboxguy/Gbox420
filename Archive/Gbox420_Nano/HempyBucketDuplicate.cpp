@@ -11,8 +11,8 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   PumpEnabled = &DefaultSettings->PumpEnabled;
   PumpTimeout = &DefaultSettings->PumpTimeout;
 
-  Parent->addToReportQueue(this);         ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_FiveSec(this); ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  Parent->addToReportQueue(this);         
+  Parent->addToRefreshQueue_FiveSec(this); 
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("Hempy Bucket object created"), true, 1);
 }

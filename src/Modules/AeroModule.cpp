@@ -27,10 +27,10 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
     AeroNT1 = new Aeroponics_NoTank(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, Pres1, Pump1);  ///< Use this without a pressure tank
     Response.PressureTankPresent = false;
   }  
-  addToRefreshQueue_Sec(this);         ///Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
-  addToRefreshQueue_FiveSec(this);     ///Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  //addToRefreshQueue_Minute(this);      ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  //addToRefreshQueue_QuarterHour(this); ///Subscribing to the 30 minutes refresh queue: Calls the refresh_QuarterHour() method
+  addToRefreshQueue_Sec(this);         
+  addToRefreshQueue_FiveSec(this);     
+  //addToRefreshQueue_Minute(this);    
+  //addToRefreshQueue_QuarterHour(this); 
   logToSerials(Name, false, 0);
   logToSerials(F("- AeroModule object created, refreshing..."), true, 1);
   if(AeroT1 != NULL && AeroNT1 != NULL)  /// \todo Remove this

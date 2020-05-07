@@ -4,12 +4,12 @@ Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Sett
 {
   this->Parent = Parent;
   this->Name = Name;
-  Parent->addToReportQueue(this);          ///Subscribing to the report queue: Calls the report() method
-  Parent->addToRefreshQueue_Minute(this);  ///Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
-  Parent->addToWebsiteQueue_Load(this);    ///Subscribing to the Website load event: Calls the websiteEvent_Load() method
-  Parent->addToWebsiteQueue_Refresh(this); ///Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  Parent->addToWebsiteQueue_Field(this);   ///Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
-  Parent->addToWebsiteQueue_Button(this);  ///Subscribing to the Website button press event: Calls the websiteEvent_Button() method
+  Parent->addToReportQueue(this);          
+  Parent->addToRefreshQueue_Minute(this);
+  Parent->addToWebsiteQueue_Load(this);    
+  Parent->addToWebsiteQueue_Refresh(this); 
+  Parent->addToWebsiteQueue_Field(this);   
+  Parent->addToWebsiteQueue_Button(this);  
 }
 
 void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
