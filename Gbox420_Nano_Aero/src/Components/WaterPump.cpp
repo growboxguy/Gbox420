@@ -95,8 +95,13 @@ void WaterPump::UpdateState(PumpState NewState)  ///< Without a parameter actual
       }
       if(millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
       { 
-        Parent -> addToLog(F("ALERT: Pump timeout reached"), 3); ///< \todo send email alert 
-        UpdateState(DISABLED);
+        Parent -> addToLog(F("Pump timeout reached"), 3); ///< \todo send email alert 
+        if(BlowOffTime != NULL && *BlowOffTime >0)        { 
+          UpdateState(BLOWOFF);
+        }
+        else {   
+          UpdateState(IDLE);
+        }
       }
       break;
     case BLOWOFF:
