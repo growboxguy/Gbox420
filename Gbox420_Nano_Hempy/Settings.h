@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 22; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 23; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
 enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -71,8 +71,8 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       int PrimingTime;    ///< (Sec) Only if BypassSolenoid is present. For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
       int BlowOffTime;     ///< (Sec) Only if BypassSolenoid is present. For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
-    struct WaterPumpSettings HempyPump1 = {.PumpPin = 7, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Submerged pumps do not need to prime at start or discharge pressure when stopping
-    struct WaterPumpSettings HempyPump2 = {.PumpPin = 8, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Submerged pumps do not need to prime at start or discharge pressure when stopping
+    struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Submerged pumps do not need to prime at start or discharge pressure when stopping
+    struct WaterPumpSettings HempyPump2 = {.PumpPin = 4, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Submerged pumps do not need to prime at start or discharge pressure when stopping
    
     struct WeightSensorSettings
     {
@@ -82,8 +82,8 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       float Scale;  ///Calibration scale value
       long TareOffset; ///Reading at 0 weight on the scale
     };
-    struct WeightSensorSettings Weight1 = {.DTPin = 3, .SCKPin = 4, .Scale = 125000.0, .TareOffset=146000}; ///Default settings for the hempy bucket 1 weight sensor
-    struct WeightSensorSettings Weight2 = {.DTPin = 5, .SCKPin = 6, .Scale = 126000.0, .TareOffset=267461}; ///Default settings for the hempy bucket 2 weight sensor
+    struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Scale = 125000.0, .TareOffset=146000}; ///Default settings for the hempy bucket 1 weight sensor
+    struct WeightSensorSettings Weight2 = {.DTPin = 7, .SCKPin = 8, .Scale = 126000.0, .TareOffset=267461}; ///Default settings for the hempy bucket 2 weight sensor
 
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
   } Settings;
