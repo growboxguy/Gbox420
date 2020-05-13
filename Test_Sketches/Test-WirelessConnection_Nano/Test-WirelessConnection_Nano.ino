@@ -35,7 +35,7 @@ void setup() {
     radio.printDetails();
     Serial.println();
     Serial.println();
-    Serial.println("AND NOW WITH ADDRESS AAAxR  0x41 41 41 78 52   ON P1");
+    Serial.println("AND NOW WITH ADDRESS AAAxR  0x4141417852 on RX_ADDR_P0-1");
     Serial.println(" and 250KBPS data rate");
     Serial.println();
     radio.openReadingPipe(1, thisSlaveAddress);

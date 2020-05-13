@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 23; ///< Increment this when you make a change in the SAVED TO EEPROM section
+static const uint8_t Version = 2; ///< Increment this when you make a change in the SAVED TO EEPROM section
 
 ///State machine - Defining possible states
   enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -45,7 +45,7 @@ static const uint8_t Version = 23; ///< Increment this when you make a change in
       uint8_t Pin;
       uint8_t Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
     };
-    struct DHTSensorSettings DHT1 = {.Pin = 43, .Type = 22};
+    struct DHTSensorSettings DHT1 = {.Pin = 3, .Type = 22};
     
     struct PHSensorSettings
     {
@@ -54,7 +54,7 @@ static const uint8_t Version = 23; ///< Increment this when you make a change in
       float Slope;
       float Intercept;
     };
-    struct PHSensorSettings PHSen1 = {.Pin = A3, .Slope = -0.033256, .Intercept = 24.08651}; ///Update this to your own PH meter calibration values
+    struct PHSensorSettings PHSen1 = {.Pin = A0, .Slope = -0.033256, .Intercept = 24.08651}; ///Update this to your own PH meter calibration values
    
     struct ReservoirModuleSettings{  ///TODO: Remove the parameters
       //ReservoirModuleSettings() :  {}     
@@ -84,7 +84,7 @@ static const uint8_t Version = 23; ///< Increment this when you make a change in
       WaterTempSensorSettings(uint8_t Pin = 0) : Pin(Pin) {}
       uint8_t Pin;
     };
-    struct WaterTempSensorSettings WTmp1 = {.Pin = 45}; ///Data(yellow) - DS18B20 waterproof temp sensor
+    struct WaterTempSensorSettings WTmp1 = {.Pin = 6}; ///Data(yellow) - DS18B20 waterproof temp sensor
 
   
     uint8_t CompatibilityVersion = Version; ///Version should always be the last value stored in the struct
