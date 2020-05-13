@@ -14,9 +14,11 @@ Module::Module()
 } */
 
 
-void Module::runAll()
+void Module::runAll(bool AddToLog)
 {
-  logToSerials(F("Refresing all sensor readings..."), true, 0);
+  if(AddToLog){
+    logToSerials(F("Refresing all sensor readings..."), true, 0);
+  }    
   wdt_reset();
   runSec();
   wdt_reset();
@@ -28,12 +30,14 @@ void Module::runAll()
   wdt_reset();
 }
 
-void Module::runReport()
+void Module::runReport(bool AddToLog)
 { ///Reports component status to Serial output (Arduino and ESP)
   getFormattedTime(true);
-  getFreeMemory();
-  logToSerials(reportQueueItemCount,false,2);
-  logToSerials(F("components reporting:"),true,1);
+  getFreeMemory();  
+  if(AddToLog){
+    logToSerials(reportQueueItemCount,false,2);
+    logToSerials(F("components reporting:"),true,1);
+  }
   for (int i = 0; i < reportQueueItemCount; i++)
   {
     ReportQueue[i]->report();
@@ -43,18 +47,21 @@ void Module::runReport()
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///Refresh queues: Refresh components inside the Module
 
-void Module::runSec()
+void Module::runSec(bool AddToLog)
 {
   if(RunAllRequested)
   {
     RunAllRequested = false;
-    logToSerials(F("Running full refresh.."), true, 1);
-    runAll();
+    if(AddToLog){
+      logToSerials(F("Running full refresh.."), true, 1);
+    }
+    runAll(AddToLog);
   }
   else
   {
-    if (*Debug)
-    logToSerials(F("One sec trigger.."), true, 1);
+    if (*Debug && AddToLog){
+      logToSerials(F("One sec trigger.."), true, 1);
+    }
     for (int i = 0; i < refreshQueueItemCount_Sec; i++)
     {
       RefreshQueue_Sec[i]->refresh_Sec();
@@ -62,9 +69,9 @@ void Module::runSec()
   }
 }
 
-void Module::runFiveSec()
+void Module::runFiveSec(bool AddToLog)
 {
-  if (*Debug)
+  if (*Debug && AddToLog)
     logToSerials(F("Five sec trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
   {
@@ -72,9 +79,9 @@ void Module::runFiveSec()
   }
 }
 
-void Module::runMinute()
+void Module::runMinute(bool AddToLog)
 {
-  if (*Debug)
+  if (*Debug && AddToLog)
     logToSerials(F("Minute trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_Minute; i++)
   {
@@ -82,9 +89,9 @@ void Module::runMinute()
   }
 }
 
-void Module::runQuarterHour()
+void Module::runQuarterHour(bool AddToLog)
 {
-  if (*Debug)
+  if (*Debug && AddToLog)
     logToSerials(F("Quarter hour trigger.."), true, 1);
   for (int i = 0; i < refreshQueueItemCount_QuarterHour; i++)
   {

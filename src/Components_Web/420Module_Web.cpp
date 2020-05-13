@@ -27,11 +27,11 @@ void Module_Web::runReport()
   getFormattedTime(true);
   getFreeMemory();
   logToSerials(reportQueueItemCount,false,0);
-  logToSerials(F("web components refreshing:"),true,1);
+  logToSerials(F("web components reporting:"),true,1);
   for (int i = 0; i < reportQueueItemCount; i++)
   {
     ReportQueue[i]->report();
-  }
+  }  
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -4,8 +4,8 @@ LightSensor_Web::LightSensor_Web(const __FlashStringHelper *Name, Module_Web *Pa
 { ///constructor
   this->Parent = Parent;
   this->Name = Name; 
-  Parent->addToReportQueue(this);          
-  Parent->addToRefreshQueue_Minute(this);
+  Parent->addToReportQueue(this);         
+  Parent->addToRefreshQueue_FiveSec(this);       
   Parent->addToWebsiteQueue_Refresh(this); 
   Parent->addToWebsiteQueue_Button(this);  
 }
@@ -15,7 +15,7 @@ void LightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
   if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgString(getComponentName(F("D")), getDarkText(true));
-    WebServer.setArgString(getComponentName(F("R")), getReadingText(false));
+    WebServer.setArgString(getComponentName(F("R")), getReadingText());
   }
 }
 

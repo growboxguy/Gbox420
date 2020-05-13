@@ -15,12 +15,12 @@ public:
   Module(); ///constructor
   
   //Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
-  void runReport();
-  void runAll();
-  void runSec();
-  void runFiveSec();
-  void runMinute();
-  void runQuarterHour();
+  void runReport(bool AddToLog = true);
+  void runAll(bool AddToLog = true);
+  void runSec(bool AddToLog = true);
+  void runFiveSec(bool AddToLog = true);
+  void runMinute(bool AddToLog = true);
+  void runQuarterHour(bool AddToLog = true);
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);  
   void addToReportQueue(Common *Component);   ///< Subscribing to the report queue: Calls the report() method

@@ -252,7 +252,7 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
     strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_Brightness\":\""));
     strcat(LongMessage, Lt1->getBrightnessText());
     strcat_P(LongMessage, (PGM_P)F("\",\"LightReading\":\""));
-    strcat(LongMessage, LtSen1->getReadingText(true));
+    strcat(LongMessage, LtSen1->getReadingText());
     strcat_P(LongMessage, (PGM_P)F("\",\"Dark\":\""));
     strcat(LongMessage, LtSen1->getDarkText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"WaterLevel\":\""));

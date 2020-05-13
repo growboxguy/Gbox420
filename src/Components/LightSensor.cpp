@@ -10,7 +10,6 @@ LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settin
   this->AnalogPin = &DefaultSettings->AnalogPin;
   pinMode(*DigitalPin, INPUT);
   pinMode(*AnalogPin, INPUT);
-  LightReading = new RollingAverage();
   calibrate(false);
   Parent->addToReportQueue(this);          
   Parent->addToRefreshQueue_FiveSec(this);
@@ -26,7 +25,7 @@ void LightSensor::refresh_FiveSec()
     calibrate();
   }                                ///If calibration was requested
   Dark = digitalRead(*DigitalPin); ///True: No light detected
-  LightReading->updateAverage(1023 - analogRead(*AnalogPin));
+  LightReading = (1023 - analogRead(*AnalogPin));
 }
 
 void LightSensor::report()
@@ -36,7 +35,7 @@ void LightSensor::report()
   strcat_P(LongMessage, (PGM_P)F("Dark:"));
   strcat(LongMessage, getDarkText(true));
   strcat_P(LongMessage, (PGM_P)F(" ; LightReading:"));
-  strcat(LongMessage, getReadingText(true));
+  strcat(LongMessage, getReadingText());
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -83,14 +82,14 @@ void LightSensor::getCalibrationReadings(){///Returns a pointer to a char array
   strcat_P(LongMessage, (PGM_P)F("}")); ///close JSON object
 }
 
-int LightSensor::getReading(bool ReturnAverage)  ///Gets the average light sensor reading, if passed false as a parameter it returns the latest reading, not the average
+int LightSensor::getReading()  ///Gets the average light sensor reading, if passed false as a parameter it returns the latest reading, not the average
 {
-  return LightReading->getInt(ReturnAverage);
+  return LightReading;
 }
 
-char *LightSensor::getReadingText(bool ReturnAverage)
+char *LightSensor::getReadingText()
 { 
-    return LightReading->getIntText(ReturnAverage);
+    return toText(LightReading);
 }
 
 bool LightSensor::getDark()
