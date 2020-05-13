@@ -179,7 +179,7 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       float Slope;
       float Intercept;
     };
-    struct PHSensorSettings PHSensor1 = {.Pin = A3, .Slope = -0.033256, .Intercept = 24.08651}; ///Update this to your own PH meter calibration values
+    struct PHSensorSettings PHSen1 = {.Pin = A3, .Slope = -0.033256, .Intercept = 24.08651}; ///Update this to your own PH meter calibration values
 
     struct PressureSensorSettings
     {
@@ -189,6 +189,11 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       float Ratio;  ///Pressure sensor voltage to pressure ratio
     };
     struct PressureSensorSettings Pres1 = {.Pin = A1, .Offset = 0.57, .Ratio = 2.7};
+
+    struct ReservoirModuleSettings{  ///TODO: Remove the parameters
+      //ReservoirModuleSettings() :  {}     
+    };  
+    struct ReservoirModuleSettings ReservoirMod1 = {};  ///Default settings for the Hempy Module
 
     struct SoundSettings
     {
@@ -206,7 +211,7 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       uint8_t Pin_3;
       uint8_t Pin_4; ///Full
     };
-    struct WaterLevelSensorSettings WaterLevel1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7};
+    struct WaterLevelSensorSettings WLev1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7};
 
     struct WaterPumpSettings
     {
@@ -227,7 +232,7 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       WaterTempSensorSettings(uint8_t Pin = 0) : Pin(Pin) {}
       uint8_t Pin;
     };
-    struct WaterTempSensorSettings WaterTemp1 = {.Pin = 45}; ///Data(yellow) - DS18B20 waterproof temp sensor
+    struct WaterTempSensorSettings WTmp1 = {.Pin = 45}; ///Data(yellow) - DS18B20 waterproof temp sensor
 
     struct WeightSensorSettings
     {

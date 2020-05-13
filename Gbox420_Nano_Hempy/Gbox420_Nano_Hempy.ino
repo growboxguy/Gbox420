@@ -46,6 +46,7 @@ StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteTh
 void setup()
 {                                                      /// put your setup code here, to run once:
   ArduinoSerial.begin(115200);                         ///Nano console output
+  pinMode(LED_BUILTIN, OUTPUT);
   printf_begin();
   logToSerials(F(""), true, 0);                         ///New line
   logToSerials(F("Arduino Nano RF initializing..."), true, 0); ///logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https:///gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
@@ -98,6 +99,7 @@ void loop()
 void runSec()
 {
   wdt_reset();
+  HeartBeat();    ///< Blinks built-in led
   HempyMod1->runSec(); ///Calls the runSec() method in GrowBox.cpp  
 }
 
@@ -118,6 +120,13 @@ void runQuarterHour()
 {
   wdt_reset();
   HempyMod1->runQuarterHour();
+}
+
+void HeartBeat()
+{
+  static bool ledStatus;
+  ledStatus = !ledStatus;
+  digitalWrite(LED_BUILTIN, ledStatus);
 }
 
 ///////////////////////////////////////////////////////////////

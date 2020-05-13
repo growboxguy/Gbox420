@@ -2,6 +2,9 @@ echo "This script is for developement only"
 echo "Protects shared Gbox420 and Gbox420 Nano Components from going out of sync by hard linking the source files"
 echo "------------------------------------------"
 
+echo "Creating unlink command"
+ln ../HardLinkSRC_OFF.sh ./
+
 echo "Creating folders"
 mkdir ./src
 mkdir ./src/Components

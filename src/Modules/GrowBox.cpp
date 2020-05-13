@@ -35,9 +35,9 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *
   ///Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); ///Only for PZEM004T V3.0
   IDHT = new DHTSensor_Web(F("IDHT"), this, &ModuleSettings->IDHT);
   EDHT = new DHTSensor_Web(F("EDHT"), this, &ModuleSettings->EDHT);
-  PHSensor1 = new PHSensor_Web(F("PHSensor1"), this, &ModuleSettings->PHSensor1);
-  WaterTemp1 = new WaterTempSensor_Web(F("WaterTemp1"), this, &ModuleSettings->WaterTemp1);
-  WaterLevel1 = new WaterLevelSensor_Web(F("WaterLevel1"), this, &ModuleSettings->WaterLevel1);
+  PHSen1 = new PHSensor_Web(F("PHSen1"), this, &ModuleSettings->PHSen1);
+  WTmp1 = new WaterTempSensor_Web(F("WTmp1"), this, &ModuleSettings->WTmp1);
+  WLev1 = new WaterLevelSensor_Web(F("WLev1"), this, &ModuleSettings->WLev1);
   HempyModule1 = new HempyModule_Web(F("Hemp1"), this,&ModuleSettings->HempyModule1);
   //Weight1 = new WeightSensor_Web(F("Weight1"), this, &ModuleSettings->Weight1);
   //Weight2 = new WeightSensor_Web(F("Weight2"), this, &ModuleSettings->Weight2);
@@ -124,7 +124,10 @@ void GrowBox::websiteEvent_Field(char *Field)
 void GrowBox::refresh_FiveSec()
 {
   if (*Debug)
+  {
     Common::refresh_FiveSec();
+    runReport();
+  }
   if (RefreshAllRequested)
   {
     RefreshAllRequested = false;
@@ -253,11 +256,11 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
     strcat_P(LongMessage, (PGM_P)F("\",\"Dark\":\""));
     strcat(LongMessage, LtSen1->getDarkText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"WaterLevel\":\""));
-    strcat(LongMessage, WaterLevel1->getLevelText());
+    strcat(LongMessage, WLev1->getLevelText());
     strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
-    strcat(LongMessage, WaterTemp1->getTempText(false));
+    strcat(LongMessage, WTmp1->getTempText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
-    strcat(LongMessage, PHSensor1->getPHText(true));
+    strcat(LongMessage, PHSen1->getPHText(true));
     strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));
     strcat(LongMessage, Pres1->getPressureText(false, true));
     strcat_P(LongMessage, (PGM_P)F("\",\"Power\":\""));

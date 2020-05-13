@@ -15,23 +15,23 @@
 #include "RF24.h"       ///https://github.com/maniacbug/RF24
 #include "SerialLog.h"  ///Logging debug messages to Serial            
 #include "Settings.h"  
-#include "src/Modules/AeroModule.h"
-#include "src/WirelessCommands_Aero.h"   ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
+#include "src/Modules/ReservoirModule.h"
+#include "src/WirelessCommands_Reservoir.h"   ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
 
 
 ///Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
 char ShortMessage[MaxShotTextLength] = ""; ///temp storage for assembling short messages (Log entries, Error messages)char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
 char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
-struct aeroCommand Command;  //Variable where the wireless command values will get stored
-struct aeroResponse Response;  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter
+struct reservoirCommand Command;  //Variable where the wireless command values will get stored
+struct reservoirResponse Response;  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter
 
 ///Component initialization
 HardwareSerial &ArduinoSerial = Serial;   ///Reference to the Arduino Serial
 Settings * ModuleSettings;                ///settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
 bool *Debug;
 bool *Metric;
-AeroModule *AeroMod1;                   ///Represents a Hempy bucket with weight sensors and pumps
+ReservoirModule *ReservoirMod1;                   ///Represents a Reservoir tote with temp,PH,water level sensors
 RF24 Wireless(10, 9); /// Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 
 ///Thread initialization
@@ -46,7 +46,6 @@ StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteTh
 void setup()
 {                                                      /// put your setup code here, to run once:
   ArduinoSerial.begin(115200);                         ///Nano console output
-  pinMode(13, OUTPUT);                        ///< onboard LED - Heartbeat every second to confirm code is running
   printf_begin();
   logToSerials(F(""), true, 0);                         ///New line
   logToSerials(F("Arduino Nano RF initializing..."), true, 0); ///logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https:///gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
@@ -80,8 +79,8 @@ void setup()
   QuarterHourThread.setInterval(900000);
   QuarterHourThread.onRun(runQuarterHour);
  
-  ///Create the Hempy bucket object
-  AeroMod1 = new AeroModule(F("Aero1"), &ModuleSettings->AeroModule1); ///This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  ///Create the Reservoir Module object
+  ReservoirMod1 = new ReservoirModule(F("Res1"), &ModuleSettings->ReservoirMod1); ///This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   logToSerials(F("Setup ready, starting loops:"), true, 0);
 }
@@ -99,35 +98,26 @@ void loop()
 void runSec()
 {
   wdt_reset();
-  HeartBeat();    ///< Blinks built-in led
-  AeroMod1->runSec(); ///Calls the runSec() method in GrowBox.cpp  
+  ReservoirMod1->runSec(); ///Calls the runSec() method in GrowBox.cpp  
 }
 
 void runFiveSec()
 {
-  wdt_reset();  
-  AeroMod1->runFiveSec();
+  wdt_reset();
+  ReservoirMod1->runFiveSec();
 }
 
 void runMinute()
 {
   wdt_reset();
-  AeroMod1->runMinute(); 
+  ReservoirMod1->runMinute(); 
   getWirelessStatus(); 
 }
 
 void runQuarterHour()
 {
   wdt_reset();
-  AeroMod1->runQuarterHour();
-}
-
-
-void HeartBeat()
-{  
-  static bool ledStatus;
-  ledStatus = !ledStatus;
-  digitalWrite(LED_BUILTIN, ledStatus);
+  ReservoirMod1->runQuarterHour();
 }
 
 ///////////////////////////////////////////////////////////////
@@ -144,7 +134,7 @@ void getWirelessData() {
         {
           updateTime(); ///Updating internal timer
         }
-        AeroMod1 -> processCommand(&Command);       /// \todo: Support Aeroponics Module  
+        ReservoirMod1 -> processCommand(&Command);       /// \todo: Support Aeroponics Module  
     }
 }
 
@@ -161,7 +151,7 @@ time_t updateTime()
   if(Command.Time > 0)
   {
   setTime(Command.Time);
-  logToSerials(F("Clock synced with main module"),true,2); 
+  logToSerials(F("Clock synced with main module"),true,0); 
   }
   else {
   logToSerials(F("Clock out of sync"),true,0); 

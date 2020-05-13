@@ -25,7 +25,7 @@
 #include "ELClientRest.h"           /// ESP-link - REST API
 #include "Thread.h"                 /// Splitting functions to threads for timing
 #include "StaticThreadController.h" /// Grouping threads
-#include "SerialLog.h"              /// Logging to the Serial console output
+#include "SerialLog.h"     /// Logging to the Serial console and to ESP-link's console
 #include "src/Components_Web/420Common_Web.h"              /// Base class where all web components inherits from
 #include "Settings.h"       ///EEPROM stored settings for every component
 #include "src/Modules/GrowBox.h"    ///Represents a complete box with all feautres
@@ -65,7 +65,7 @@ void setup()
 {                                                      ///<  put your setup code here, to run once:
   ArduinoSerial.begin(115200);                         ///< 2560mega console output
   ESPSerial.begin(115200);                             ///< ESP WiFi console output
-  pinMode(13, OUTPUT);                                 ///< onboard LED - Heartbeat every second to confirm code is running
+  pinMode(LED_BUILTIN, OUTPUT);                        ///< onboard LED - Heartbeat every second to confirm code is running
   printf_begin();
   logToSerials(F(""), true, 0);                         ///< New line
   logToSerials(F("Arduino Mega initializing..."), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https:///< gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
@@ -159,7 +159,7 @@ void HeartBeat()
 {
   static bool ledStatus;
   ledStatus = !ledStatus;
-  digitalWrite(13, ledStatus);
+  digitalWrite(LED_BUILTIN, ledStatus);
 }
 
 // Website related functions

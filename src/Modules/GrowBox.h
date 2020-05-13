@@ -46,12 +46,12 @@ public:
   PowerSensor_Web *Pow1;
   //PowerSensorV3_Web * Pow1;  ///Only for PZEM004T V3.0
   PressureSensor_Web *Pres1;
-  PHSensor_Web *PHSensor1;
+  PHSensor_Web *PHSen1;
   WaterPump *AeroPump1;
   Aeroponics_Tank_Web *AeroT1;
   Aeroponics_NoTank_Web *AeroNT1;   
-  WaterTempSensor_Web *WaterTemp1;
-  WaterLevelSensor_Web *WaterLevel1;
+  WaterTempSensor_Web *WTmp1;
+  WaterLevelSensor_Web *WLev1;
   HempyModule_Web *HempyModule1;    /// <Represents the website controls and feedback for a HempyModule
   AeroModule_Web *AeroModule1;    /// <Represents the website controls and feedback for a AeroModule
 

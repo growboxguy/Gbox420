@@ -54,7 +54,7 @@ void AeroModule::processCommand(aeroCommand *Command){
     if(Command -> RefillPressureTank) AeroT1 -> refillTank();    
     AeroT1 -> setSprayInterval(Command -> SprayInterval);
     AeroT1 -> setSprayDuration(Command -> SprayDuration);
-    if(Command -> PumpOn) AeroT1 -> Pump -> startPump(true);
+    if(Command -> PumpOn) AeroT1 -> Pump -> startPump();
     if(Command -> PumpOff) AeroT1 -> Pump -> stopPump();
     if(Command -> PumpDisable) AeroT1 -> Pump -> disablePump();
     AeroT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
