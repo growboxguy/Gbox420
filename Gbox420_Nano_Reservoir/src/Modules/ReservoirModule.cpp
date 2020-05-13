@@ -8,6 +8,7 @@
 #include "../Components/PHSensor.h"
 #include "../Components/WaterLevelSensor.h"
 #include "../Components/WaterTempSensor.h"
+#include "../Components/DistanceSensor.h"
 
 ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Module()
 { 
@@ -16,7 +17,8 @@ ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::Rese
   DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
   WTmp1 = new WaterTempSensor(F("WTmp1"), this, &ModuleSettings->WTmp1);
   WLev1 = new WaterLevelSensor(F("WLev1"), this, &ModuleSettings->WLev1);
-  PHSen1 = new PHSensor(F("PHSen1"), this, &ModuleSettings->PHSen1);  
+  PHSen1 = new PHSensor(F("PHSen1"), this, &ModuleSettings->PHSen1); 
+  Dist1 = new DistanceSensor(F("Dist1"), this, &ModuleSettings->Dist1);
   //addToRefreshQueue_Sec(this);         
   addToRefreshQueue_FiveSec(this);     
   //addToRefreshQueue_Minute(this);    

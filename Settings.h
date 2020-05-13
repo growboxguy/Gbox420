@@ -98,6 +98,14 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
     struct DHTSensorSettings EDHT = {.Pin = 44, .Type = 22};
     struct DHTSensorSettings DHT1 = {.Pin = 44, .Type = 22};
 
+    struct DistanceSensorSettings
+    {
+      DistanceSensorSettings(uint8_t TriggerPin = 0, uint8_t EchoPin = 0) : TriggerPin(TriggerPin), EchoPin(EchoPin) {}
+      uint8_t TriggerPin;
+      uint8_t EchoPin;
+    };
+    struct DistanceSensorSettings Dist1 = {.TriggerPin = 4, .EchoPin = 5};
+
     struct FanSettings
     {
       FanSettings(uint8_t OnOffPin = 0, uint8_t SpeedPin = 0) : OnOffPin(OnOffPin), SpeedPin(SpeedPin) {}

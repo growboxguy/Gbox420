@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 2; ///< Increment this when you make a change in the SAVED TO EEPROM section
+static const uint8_t Version = 4; ///< Increment this when you make a change in the SAVED TO EEPROM section
 
 ///State machine - Defining possible states
   enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -46,6 +46,14 @@ static const uint8_t Version = 2; ///< Increment this when you make a change in 
       uint8_t Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
     };
     struct DHTSensorSettings DHT1 = {.Pin = 3, .Type = 22};
+
+    struct DistanceSensorSettings
+    {
+      DistanceSensorSettings(uint8_t TriggerPin = 0, uint8_t EchoPin = 0) : TriggerPin(TriggerPin), EchoPin(EchoPin) {}
+      uint8_t TriggerPin;
+      uint8_t EchoPin;
+    };
+    struct DistanceSensorSettings Dist1 = {.TriggerPin = 4, .EchoPin = 5};
     
     struct PHSensorSettings
     {

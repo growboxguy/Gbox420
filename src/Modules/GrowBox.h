@@ -10,6 +10,7 @@
 ///forward declaration of classes
 class WaterPump;
 class DHTSensor_Web;
+class DistanceSensor_Web;
 class LightSensor_Web;
 class Lights_Web;
 class Sound_Web;
@@ -52,6 +53,7 @@ public:
   Aeroponics_NoTank_Web *AeroNT1;   
   WaterTempSensor_Web *WTmp1;
   WaterLevelSensor_Web *WLev1;
+  DistanceSensor_Web *Dist1;
   HempyModule_Web *HempyModule1;    /// <Represents the website controls and feedback for a HempyModule
   AeroModule_Web *AeroModule1;    /// <Represents the website controls and feedback for a AeroModule
 

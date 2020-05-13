@@ -30,6 +30,8 @@ unlink ./src/Components/Aeroponics_Tank.h
 unlink ./src/Components/Aeroponics_Tank.cpp
 unlink ./src/Components/DHTSensor.h
 unlink ./src/Components/DHTSensor.cpp
+unlink ./src/Components/DistanceSensor.h
+unlink ./src/Components/DistanceSensor.cpp
 unlink ./src/Components/Fan.h
 unlink ./src/Components/Fan.cpp
 unlink ./src/Components/HempyBucket.h

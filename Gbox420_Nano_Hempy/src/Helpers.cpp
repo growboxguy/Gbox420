@@ -142,7 +142,7 @@ char *toText_weight(float Weight)
 char *toText_percentage(float Number)
 {
   ///static char * ReturnChar = malloc(MaxTextLength * sizeof(char));  ///allocate memory for every run - need to take care of freeing up the memory  after use
-   dtostrf(Number, 4, 2, ShortMessage);
+  dtostrf(Number, 4, 2, ShortMessage);
   strcat_P(ShortMessage, (PGM_P)F("%"));
   return ShortMessage;
 }
@@ -165,6 +165,20 @@ char *toText_second(int Second)
 {
   itoa(Second, ShortMessage, 10);
   strcat_P(ShortMessage, (PGM_P)F("sec"));
+  return ShortMessage;
+}
+
+char *toText_distance(float Distance)
+{
+  dtostrf(Distance, 4, 2, ShortMessage);
+    if (*Metric)
+  {
+    strcat_P(ShortMessage, (PGM_P)F("cm"));
+  }
+  else
+  {
+    strcat_P(ShortMessage, (PGM_P)F("inch"));
+  }
   return ShortMessage;
 }
 

@@ -16,6 +16,7 @@ class DHTSensor;
 class PHSensor;
 class WaterLevelSensor;
 class WaterTempSensor;
+class DistanceSensor;
 extern RF24 Wireless;
 
 
@@ -31,6 +32,7 @@ public:
   PHSensor *PHSen1;
   WaterLevelSensor *WLev1;
   WaterTempSensor *WTmp1;  
+  DistanceSensor *Dist1;
   //void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();

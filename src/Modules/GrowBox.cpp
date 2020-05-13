@@ -3,6 +3,7 @@
 #include "AeroModule_Web.h"
 #include "../Components/WaterPump.h"
 #include "../Components_Web/DHTSensor_Web.h"
+#include "../Components_Web/DistanceSensor_Web.h"
 #include "../Components_Web/Lights_Web.h"
 #include "../Components_Web/Sound_Web.h"
 #include "../Components_Web/Fan_Web.h"
@@ -38,6 +39,7 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *
   PHSen1 = new PHSensor_Web(F("PHSen1"), this, &ModuleSettings->PHSen1);
   WTmp1 = new WaterTempSensor_Web(F("WTmp1"), this, &ModuleSettings->WTmp1);
   WLev1 = new WaterLevelSensor_Web(F("WLev1"), this, &ModuleSettings->WLev1);
+  Dist1 = new DistanceSensor_Web(F("Dist1"), this, &ModuleSettings->Dist1);
   HempyModule1 = new HempyModule_Web(F("Hemp1"), this,&ModuleSettings->HempyModule1);
   //Weight1 = new WeightSensor_Web(F("Weight1"), this, &ModuleSettings->Weight1);
   //Weight2 = new WeightSensor_Web(F("Weight2"), this, &ModuleSettings->Weight2);

@@ -23,7 +23,7 @@ void AeroModule_Web::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Pressure:"));
-  strcat(LongMessage, toText(Response.Pressure));
+  strcat(LongMessage, toText_pressure(Response.Pressure));
   if(Response.PressureTankPresent)
   {
     strcat_P(LongMessage, (PGM_P)F(" ["));
@@ -35,14 +35,14 @@ void AeroModule_Web::report()
   else
   {
     strcat_P(LongMessage, (PGM_P)F(" ; LastSprayPressure:"));
-    strcat(LongMessage, toText(Response.LastSprayPressure));
+    strcat(LongMessage, toText_pressure(Response.LastSprayPressure));
   }
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(Response.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F(" ; Interval:"));
-  strcat(LongMessage, toText(Command.SprayInterval));
+  strcat(LongMessage, toText_minute(Command.SprayInterval));
   strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
-  strcat(LongMessage, toText(Command.SprayDuration));  
+  strcat(LongMessage, toText_second(Command.SprayDuration));  
   logToSerials(&LongMessage, true, 1);
 }
 

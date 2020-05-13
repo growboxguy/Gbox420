@@ -28,6 +28,8 @@ ln ../src/Components/Sound.h ./src/Components
 ln ../src/Components/Sound.cpp ./src/Components
 ln ../src/Components/DHTSensor.h ./src/Components
 ln ../src/Components/DHTSensor.cpp ./src/Components
+ln ../src/Components/DistanceSensor.h ./src/Components
+ln ../src/Components/DistanceSensor.cpp ./src/Components
 ln ../src/Components/PHSensor.h ./src/Components
 ln ../src/Components/PHSensor.cpp ./src/Components
 ln ../src/Components/WaterLevelSensor.h ./src/Components
