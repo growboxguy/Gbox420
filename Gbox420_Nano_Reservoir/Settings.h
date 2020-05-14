@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 4; ///< Increment this when you make a change in the SAVED TO EEPROM section
+static const uint8_t Version = 5; ///< Increment this when you make a change in the SAVED TO EEPROM section
 
 ///State machine - Defining possible states
   enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -86,7 +86,7 @@ static const uint8_t Version = 4; ///< Increment this when you make a change in 
       uint8_t Pin_3;
       uint8_t Pin_4; ///Full
     };
-    struct WaterLevelSensorSettings WLev1 = {.Pin_1 = A4, .Pin_2 = A5, .Pin_3 = A6, .Pin_4 = A7};
+    struct WaterLevelSensorSettings WLev1 = {.Pin_1 = A1, .Pin_2 = A2, .Pin_3 = A3, .Pin_4 = A4};
 
     struct WaterTempSensorSettings
     {
