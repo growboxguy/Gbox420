@@ -1,15 +1,20 @@
 #pragma once
 
-///This class represents the website component of a ReservoirModule
-///Allows controlling the ReservoirModule wirelessly and receiving a status report from it
+/**
+ * @file ReservoirModule.h
+ * @author GrowBoxGuy (growboxguy@gmail.com)
+ * @brief Website component for the Reservoir Module
+ * @version 4.20
+
+ * 
+ * @copyright https://sites.google.com/site/growboxguy
+ * 
+ */
 
 #include "TimeLib.h"     ///keeping track of time
 #include "../Components_Web/420Common_Web.h"
 #include "../Components_Web/420Module_Web.h"
 #include "../WirelessCommands_Reservoir.h"
-
-///forward declaration of classes
-
 
 class ReservoirModule_Web : public Common_Web
 {
@@ -17,13 +22,11 @@ public:
   ReservoirModule_Web(const __FlashStringHelper *Name, Module_Web *Parent,Settings::ReservoirModuleSettings *DefaultSettings); ///constructor
   void syncModule(const byte WirelessChannel[], reservoirCommand *Command, reservoirResponse *Response);
   void websiteEvent_Refresh(__attribute__((unused)) char *url); 
-  void websiteEvent_Load(__attribute__((unused)) char *url);
-  void websiteEvent_Button(__attribute__((unused)) char *Button);
-  void websiteEvent_Field(__attribute__((unused)) char *Field);
+  void websiteEvent_Load(__attribute__((unused)) char *url){};  ///not used \todo Remove the need to declare these when not needed (Should not be virtual in Common_Web)
+  void websiteEvent_Button(__attribute__((unused)) char *Button){}; ///not used
+  void websiteEvent_Field(__attribute__((unused)) char *Field){} ///not used
   void report();
-  void refresh_Sec();
   void refresh_FiveSec();
-  void refresh_Minute();
   void updateCommand();
      
 private:  

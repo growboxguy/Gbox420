@@ -28,13 +28,13 @@ void HempyModule_Web::report()
   strcat(LongMessage, toText(Command.StartWeightBucket_B1));
   strcat_P(LongMessage, (PGM_P)F("/"));
   strcat(LongMessage, toText(Command.StopWeightBucket_B1));
-  strcat_P(LongMessage, (PGM_P)F("], Bucket2 Weight:"));
+  strcat_P(LongMessage, (PGM_P)F("] ; Bucket2 Weight:"));
   strcat(LongMessage, toText_weight(Response.Weight_B2));
   strcat_P(LongMessage, (PGM_P)F(" ["));
   strcat(LongMessage, toText(Command.StartWeightBucket_B2));
   strcat_P(LongMessage, (PGM_P)F("/"));
   strcat(LongMessage, toText(Command.StopWeightBucket_B2));
-  strcat_P(LongMessage, (PGM_P)F("]}"));
+  strcat_P(LongMessage, (PGM_P)F("]"));
   logToSerials(&LongMessage, true, 1);
 }
 

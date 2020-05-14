@@ -9,7 +9,7 @@ class WaterTempSensor : virtual public Common
 {
 public:
   WaterTempSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterTempSensorSettings *DefaultSettings); ///constructor
-  void refresh_Minute();
+  void refresh_FiveSec();
   void report();
   void readSensor();
   float getTemp();

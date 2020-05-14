@@ -14,6 +14,7 @@ static const uint8_t Version = 4; ///< Increment this when you make a change in 
 
 ///State machine - Defining possible states
   enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
+  enum ReservoirState {EMPTY, LEVEL_LOW, OK};
   //enum HempyState { DRY, WATERING};
   //enum AeroState { SPRAYING };
 
@@ -92,7 +93,7 @@ static const uint8_t Version = 4; ///< Increment this when you make a change in 
       WaterTempSensorSettings(uint8_t Pin = 0) : Pin(Pin) {}
       uint8_t Pin;
     };
-    struct WaterTempSensorSettings WTmp1 = {.Pin = 6}; ///Data(yellow) - DS18B20 waterproof temp sensor
+    struct WaterTempSensorSettings WTemp1 = {.Pin = 6}; ///Data(yellow) - DS18B20 waterproof temp sensor
 
   
     uint8_t CompatibilityVersion = Version; ///Version should always be the last value stored in the struct

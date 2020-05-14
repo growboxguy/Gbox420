@@ -1,6 +1,7 @@
 #include "GrowBox.h"
 #include "HempyModule_Web.h"
 #include "AeroModule_Web.h"
+#include "ReservoirModule_Web.h"
 #include "../Components/WaterPump.h"
 #include "../Components_Web/DHTSensor_Web.h"
 #include "../Components_Web/DistanceSensor_Web.h"
@@ -34,16 +35,16 @@ GrowBox::GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *
   LtSen1 = new LightSensor_Web(F("LtSen1"), this, &ModuleSettings->LtSen1, Lt1); ///Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
   Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2);
   ///Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); ///Only for PZEM004T V3.0
-  IDHT = new DHTSensor_Web(F("IDHT"), this, &ModuleSettings->IDHT);
-  EDHT = new DHTSensor_Web(F("EDHT"), this, &ModuleSettings->EDHT);
-  PHSen1 = new PHSensor_Web(F("PHSen1"), this, &ModuleSettings->PHSen1);
-  WTmp1 = new WaterTempSensor_Web(F("WTmp1"), this, &ModuleSettings->WTmp1);
-  WLev1 = new WaterLevelSensor_Web(F("WLev1"), this, &ModuleSettings->WLev1);
-  Dist1 = new DistanceSensor_Web(F("Dist1"), this, &ModuleSettings->Dist1);
+  DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);
+  //PHSen1 = new PHSensor_Web(F("PHSen1"), this, &ModuleSettings->PHSen1);
+  //WTemp1 = new WaterTempSensor_Web(F("WTemp1"), this, &ModuleSettings->WTemp1);
+  //WLev1 = new WaterLevelSensor_Web(F("WLev1"), this, &ModuleSettings->WLev1);
+  //Dist1 = new DistanceSensor_Web(F("Dist1"), this, &ModuleSettings->Dist1);
   HempyModule1 = new HempyModule_Web(F("Hemp1"), this,&ModuleSettings->HempyModule1);
   //Weight1 = new WeightSensor_Web(F("Weight1"), this, &ModuleSettings->Weight1);
   //Weight2 = new WeightSensor_Web(F("Weight2"), this, &ModuleSettings->Weight2);
   AeroModule1 = new AeroModule_Web(F("Aero1"), this,&ModuleSettings->AeroModule1);
+  ReservoirModule1 = new ReservoirModule_Web(F("Res1"), this,&ModuleSettings->ReservoirMod1);
   //Pres1 = new PressureSensor_Web(F("Pres1"), this, &ModuleSettings->Pres1);
   //AeroPump1 = new WaterPump(F("AeroPump1"),this,&ModuleSettings->AeroPump1);
   //AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, AeroPump1); ///Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
@@ -237,14 +238,10 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
   {
     memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
     strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));
-    strcat_P(LongMessage, (PGM_P)F("\"InternalTemp\":\""));
-    strcat(LongMessage, IDHT->getTempText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"ExternalTemp\":\""));
-    strcat(LongMessage, EDHT->getTempText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"InternalHumidity\":\""));
-    strcat(LongMessage, IDHT->getHumidityText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"ExternalHumidity\":\""));
-    strcat(LongMessage, EDHT->getHumidityText(false));
+    strcat_P(LongMessage, (PGM_P)F("\"Temp\":\""));
+    strcat(LongMessage, DHT1->getTempText(false));    
+    strcat_P(LongMessage, (PGM_P)F("\",\"Humidity\":\""));
+    strcat(LongMessage, DHT1->getHumidityText(false));    
     strcat_P(LongMessage, (PGM_P)F("\",\"InternalFan\":\""));
     strcat(LongMessage, IFan->fanSpeedToNumber());
     strcat_P(LongMessage, (PGM_P)F("\",\"ExhaustFan\":\""));
@@ -260,7 +257,7 @@ void GrowBox::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsit
     strcat_P(LongMessage, (PGM_P)F("\",\"WaterLevel\":\""));
     strcat(LongMessage, WLev1->getLevelText());
     strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
-    strcat(LongMessage, WTmp1->getTempText(false));
+    strcat(LongMessage, WTemp1->getTempText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
     strcat(LongMessage, PHSen1->getPHText(true));
     strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));

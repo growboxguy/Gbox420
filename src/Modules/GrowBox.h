@@ -27,6 +27,7 @@ class WaterLevelSensor_Web;
 class WeightSensor_Web;
 class HempyModule_Web;
 class AeroModule_Web;
+class ReservoirModule_Web;
 class ModuleSkeleton_Web;
 
 extern ELClientRest PushingBoxRestAPI;
@@ -40,8 +41,7 @@ public:
   Sound_Web *Sound1;             ///Pointer to a Piezo speaker - sound feedback
   Fan_Web *IFan;                ///Internal fan
   Fan_Web *EFan;                ///Exhaust fan
-  DHTSensor_Web *IDHT;          ///Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
-  DHTSensor_Web *EDHT;          ///Pointer to a Digital Humidity Sensor object measuring the external temperature of the grow box
+  DHTSensor_Web *DHT1;          ///Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   LightSensor_Web *LtSen1; ///Pointer to a Light Sensor object measuring light intensity in the grow box
   Lights_Web *Lt1;            ///Pointer to a Light assembly
   PowerSensor_Web *Pow1;
@@ -51,12 +51,12 @@ public:
   WaterPump *AeroPump1;
   Aeroponics_Tank_Web *AeroT1;
   Aeroponics_NoTank_Web *AeroNT1;   
-  WaterTempSensor_Web *WTmp1;
+  WaterTempSensor_Web *WTemp1;
   WaterLevelSensor_Web *WLev1;
   DistanceSensor_Web *Dist1;
   HempyModule_Web *HempyModule1;    /// <Represents the website controls and feedback for a HempyModule
   AeroModule_Web *AeroModule1;    /// <Represents the website controls and feedback for a AeroModule
-
+  ReservoirModule_Web *ReservoirModule1;
   //WeightSensor_Web *Weight1; 
   //WeightSensor_Web *Weight2;  
   //ModuleSkeleton_Web *ModuleSkeleton1; ///Only for demonstration purposes

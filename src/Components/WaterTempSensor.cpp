@@ -9,14 +9,14 @@ WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent
   TempSensor = new DallasTemperature(TempSensorWire);     ///Reservoir waterproof temperature sensor (DS18B20)
   TempSensor->begin();
   Parent->addToReportQueue(this);          
-  Parent->addToRefreshQueue_Minute(this); 
+  Parent->addToRefreshQueue_FiveSec(this); 
   logToSerials(F("WaterTempSensor object created"), true, 1);
 }
 
-void WaterTempSensor::refresh_Minute()
+void WaterTempSensor::refresh_FiveSec()
 {
   if (*Debug)
-    Common::refresh_Minute();  
+    Common::refresh_FiveSec();  
   readSensor();
 }
 

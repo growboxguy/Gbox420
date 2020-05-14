@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 1; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 3; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
 enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -94,8 +94,6 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       uint8_t Pin;
       uint8_t Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
     };
-    struct DHTSensorSettings IDHT = {.Pin = 43, .Type = 22};
-    struct DHTSensorSettings EDHT = {.Pin = 44, .Type = 22};
     struct DHTSensorSettings DHT1 = {.Pin = 44, .Type = 22};
 
     struct DistanceSensorSettings
@@ -240,7 +238,7 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       WaterTempSensorSettings(uint8_t Pin = 0) : Pin(Pin) {}
       uint8_t Pin;
     };
-    struct WaterTempSensorSettings WTmp1 = {.Pin = 45}; ///Data(yellow) - DS18B20 waterproof temp sensor
+    struct WaterTempSensorSettings WTemp1 = {.Pin = 45}; ///Data(yellow) - DS18B20 waterproof temp sensor
 
     struct WeightSensorSettings
     {

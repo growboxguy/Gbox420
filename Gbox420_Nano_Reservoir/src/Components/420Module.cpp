@@ -3,7 +3,7 @@
 
 Module::Module()
 {
-   logToSerials(F("Module object created"), true, 0);
+   logToSerials(F("Module object created"), true, 1);
 }
 
 

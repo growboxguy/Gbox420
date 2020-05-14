@@ -9,14 +9,14 @@ PHSensor::PHSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PH
   pinMode(*Pin, INPUT);
   PH = new RollingAverage();
   Parent->addToReportQueue(this);          
-  Parent->addToRefreshQueue_Minute(this); 
+  Parent->addToRefreshQueue_FiveSec(this); 
   logToSerials(F("PHSensor object created"), true, 1);
 }
 
-void PHSensor::refresh_Minute()
+void PHSensor::refresh_FiveSec()
 {
   if (*Debug)
-    Common::refresh_Minute();
+    Common::refresh_FiveSec();
   updatePH(false);
 }
 
@@ -29,16 +29,6 @@ void PHSensor::report()
   logToSerials(&LongMessage, true, 1);
 }
 
-float PHSensor::getPH(bool ReturnAverage)
-{
-  return PH->getFloat(ReturnAverage);
-}
-
-char *PHSensor::getPHText(bool ReturnAverage)
-{
-  return PH->getFloatText(ReturnAverage);
-}
-
 void PHSensor::updatePH(bool ShowRaw)
 {
   int PHRaw = analogRead(*Pin);
@@ -49,6 +39,16 @@ void PHSensor::updatePH(bool ShowRaw)
     Parent->addToLog(LongMessage);
   }
   PH->updateAverage((*Slope) * PHRaw + (*Intercept));
+}
+
+float PHSensor::getPH(bool ReturnAverage)
+{
+  return PH->getFloat(ReturnAverage);
+}
+
+char *PHSensor::getPHText(bool ReturnAverage)
+{
+  return PH->getFloatText(ReturnAverage);
 }
 
 void PHSensor::setSlope(float Value)

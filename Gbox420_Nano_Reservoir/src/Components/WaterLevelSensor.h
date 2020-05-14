@@ -9,7 +9,7 @@ class WaterLevelSensor : virtual public Common
 {
 public:
   WaterLevelSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterLevelSensorSettings *DefaultSettings); ///constructor
-  void refresh_Minute();
+  void refresh_FiveSec();
   void report();
   int8_t getLevel();
   char *getLevelText();

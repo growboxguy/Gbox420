@@ -1,5 +1,16 @@
 #pragma once
 
+/**
+ * @file ReservoirModule.h
+ * @author GrowBoxGuy (growboxguy@gmail.com)
+ * @brief Module for monitoring a nutrient reservoir. Measures PH, Water/Air temperature, humidity and the water level 
+ * @version 4.20
+
+ * 
+ * @copyright https://sites.google.com/site/growboxguy
+ * 
+ */
+
 ////This class represents an autonomous module with an Arduino Nano
 ////Responsible for setting the components attached to the module (Temp, weight, ph...sensors), 
 ////updating their statuses and reporting it to the Main module wirelessly
@@ -31,7 +42,7 @@ public:
   DHTSensor *DHT1;      ///Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   PHSensor *PHSen1;
   WaterLevelSensor *WLev1;
-  WaterTempSensor *WTmp1;  
+  WaterTempSensor *WTemp1;  
   DistanceSensor *Dist1;
   //void refresh_Sec();
   void refresh_FiveSec();
