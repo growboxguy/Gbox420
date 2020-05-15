@@ -4,11 +4,9 @@ Use cautiously, EEPROM has a write limit of 100.000 cycles
 Only use these in the setup() function, or when a user initiated change is stored 
  \attention Do not put these functions in the loop, EEPROM has a write limit of 100.000 cycles
 */
-
-
 #include "Arduino.h"
 #include "Settings.h"
-#include "SerialLog_Mega.h"
+#include "SerialLog.h"
 
 void saveSettings(Settings *ToSave)
 {                                                                                 

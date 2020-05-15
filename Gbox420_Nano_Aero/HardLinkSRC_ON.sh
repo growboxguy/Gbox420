@@ -11,6 +11,9 @@ mkdir ./src/Components
 mkdir ./src/Modules
 
 echo "Creating hard links"
+ln ../Gbox420_Nano/SerialLog.cpp ./
+ln ../Gbox420_Nano/SerialLog.h ./
+ln ../Gbox420_Nano/Settings.cpp ./
 ln ../src/Modules/AeroModule.cpp ./src/Modules
 ln ../src/Modules/AeroModule.h ./src/Modules
 

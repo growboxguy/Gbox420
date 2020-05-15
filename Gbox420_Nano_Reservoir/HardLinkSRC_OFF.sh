@@ -3,12 +3,25 @@ echo "Removes the hard links to source files of components shared by Gbox420 and
 echo "------------------------------------"
 echo "Removing hard links to Gbox420 src folder"
 
+unlink ./SerialLog.cpp
+unlink ./SerialLog.h
+unlink ./Settings.cpp
+
 unlink ./src/Modules/HempyModule.h 
 unlink ./src/Modules/HempyModule.cpp
 unlink ./src/Modules/AeroModule.h 
 unlink ./src/Modules/AeroModule.cpp
 unlink ./src/Modules/ReservoirModule.h 
 unlink ./src/Modules/ReservoirModule.cpp
+
+unlink ./src/Modules_Web/HempyModule_Web.h 
+unlink ./src/Modules_Web/HempyModule_Web.cpp
+unlink ./src/Modules_Web/AeroModule_Web.h 
+unlink ./src/Modules_Web/AeroModule_Web.cpp
+unlink ./src/Modules_Web/ReservoirModule_Web.h 
+unlink ./src/Modules_Web/ReservoirModule_Web.cpp
+unlink ./src/Modules_Web/MainModule_Web.h 
+unlink ./src/Modules_Web/MainModule_Web.cpp
 
 unlink ./src/Helpers.cpp
 unlink ./src/Helpers.h
@@ -60,6 +73,50 @@ unlink ./src/Components/WaterTempSensor.h
 unlink ./src/Components/WaterTempSensor.cpp
 unlink ./src/Components/WeightSensor.h
 unlink ./src/Components/WeightSensor.cpp
+
+unlink ./src/Components_Web/420Common_Web.h
+unlink ./src/Components_Web/420Common_Web.cpp
+unlink ./src/Components_Web/420Module_Web.h
+unlink ./src/Components_Web/420Module_Web.cpp
+unlink ./src/Components_Web/Aeroponics_Web.h
+unlink ./src/Components_Web/Aeroponics_Web.cpp
+unlink ./src/Components_Web/Aeroponics_NoTank_Web.h
+unlink ./src/Components_Web/Aeroponics_NoTank_Web.cpp
+unlink ./src/Components_Web/Aeroponics_Tank_Web.h
+unlink ./src/Components_Web/Aeroponics_Tank_Web.cpp
+unlink ./src/Components_Web/DHTSensor_Web.h
+unlink ./src/Components_Web/DHTSensor_Web.cpp
+unlink ./src/Components_Web/DistanceSensor_Web.h
+unlink ./src/Components_Web/DistanceSensor_Web.cpp
+unlink ./src/Components_Web/Fan_Web.h
+unlink ./src/Components_Web/Fan_Web.cpp
+unlink ./src/Components_Web/HempyBucket_Web.h
+unlink ./src/Components_Web/HempyBucket_Web.cpp
+unlink ./src/Components_Web/Lights_Web.h
+unlink ./src/Components_Web/Lights_Web.cpp
+unlink ./src/Components_Web/LightSensor_Web.h
+unlink ./src/Components_Web/LightSensor_Web.cpp
+unlink ./src/Components_Web/PressureSensor_Web.h
+unlink ./src/Components_Web/PressureSensor_Web.cpp
+unlink ./src/Components_Web/PHSensor_Web.h
+unlink ./src/Components_Web/PHSensor_Web.cpp
+unlink ./src/Components_Web/PowerSensor_Web.h
+unlink ./src/Components_Web/PowerSensor_Web.cpp
+unlink ./src/Components_Web/PowerSensorV3_Web.h
+unlink ./src/Components_Web/PowerSensorV3_Web.cpp
+unlink ./src/Components_Web/PressureSensor_Web.h
+unlink ./src/Components_Web/PressureSensor_Web.cpp
+unlink ./src/Components_Web/Sound_Web.h
+unlink ./src/Components_Web/Sound_Web.cpp
+unlink ./src/Components_Web/WaterLevelSensor_Web.h
+unlink ./src/Components_Web/WaterLevelSensor_Web.cpp
+unlink ./src/Components_Web/WaterPump_Web.h
+unlink ./src/Components_Web/WaterPump_Web.cpp
+unlink ./src/Components_Web/WaterTempSensor_Web.h
+unlink ./src/Components_Web/WaterTempSensor_Web.cpp
+unlink ./src/Components_Web/WeightSensor_Web.h
+unlink ./src/Components_Web/WeightSensor_Web.cpp
+
 
 echo "Cleaning up empty folders"
 find . -type d -empty -delete

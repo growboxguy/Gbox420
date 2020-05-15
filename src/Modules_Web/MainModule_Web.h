@@ -12,10 +12,9 @@ class Lights_Web;
 class Sound_Web;
 class Fan_Web;
 class PowerSensor_Web;
-class PowerSensorV3_Web;  ///Only for PZEM004T V3.0
+//class PowerSensorV3_Web;  ///Only for PZEM004T V3.0
 class LightSensor_Web;
 class HempyModule_Web;
-class ModuleSkeleton_Web;
 
 extern ELClientRest PushingBoxRestAPI;
 
@@ -24,7 +23,7 @@ extern ELClientRest PushingBoxRestAPI;
 class MainModule : public Common_Web, public Module_Web
 {
 public:
-  MainModule(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings,RF24 *Wireless); ///constructor
+  MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings,RF24 *Wireless); ///constructor
   Sound_Web *Sound1;             ///Pointer to a Piezo speaker - sound feedback
   Fan_Web *IFan;                ///Internal fan
   Fan_Web *EFan;                ///Exhaust fan  
@@ -32,8 +31,6 @@ public:
   PowerSensor_Web *Pow1;
   //PowerSensorV3_Web * Pow1;  ///Only for PZEM004T V3.0
   HempyModule_Web *HempyModule1;    /// <Represents the website controls and feedback for a HempyModule  
-  //ModuleSkeleton_Web *ModuleSkeleton1; ///Only for demonstration purposes
-  //ModuleSkeleton_Web *ModuleSkeleton2; ///Only for demonstration purposes
   void websiteEvent_Load(char *url);
   void websiteEvent_Refresh( char *url);
   void websiteEvent_Button(char *Button);

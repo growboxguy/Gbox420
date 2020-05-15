@@ -13,7 +13,7 @@
 #include "SPI.h" ///allows you to communicate with SPI devices, with the Arduino as the master device
 #include "nRF24L01.h"   ///https://forum.arduino.cc/index.php?topic=421081
 #include "RF24.h"       ///https://github.com/maniacbug/RF24
-#include "SerialLog_Nano"  ///Logging debug messages to Serial            
+#include "SerialLog.h"  ///Logging debug messages to Serial            
 #include "Settings.h"  
 #include "src/Modules/HempyModule.h"
 #include "src/WirelessCommands_Hempy.h"   ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 

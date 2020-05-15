@@ -8,7 +8,7 @@ Only use these in the setup() function, or when a user initiated change is store
 
 #include "Arduino.h"
 #include "Settings.h"
-#include "SerialLog_Nano"
+#include "SerialLog.h"
 
 void saveSettings(Settings *ToSave)
 {                                                                                 

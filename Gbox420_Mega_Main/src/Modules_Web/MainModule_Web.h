@@ -1,6 +1,6 @@
 #pragma once
 
-///This class represents a complete growbox with all of its components
+///This class represents a complete MainModule with all of its components
 ///Responsible for setting up each module, updating their statuses and reporting it
 
 #include "../Components_Web/420Module_Web.h"
@@ -8,59 +8,29 @@
 #include "../WirelessCommands_Hempy.h"
 
 ///forward declaration of classes
-class WaterPump;
-class DHTSensor_Web;
-class DistanceSensor_Web;
-class LightSensor_Web;
 class Lights_Web;
 class Sound_Web;
 class Fan_Web;
 class PowerSensor_Web;
-class PowerSensorV3_Web;  ///Only for PZEM004T V3.0
-class PHSensor_Web;
+//class PowerSensorV3_Web;  ///Only for PZEM004T V3.0
 class LightSensor_Web;
-class PressureSensor_Web;
-class Aeroponics_NoTank_Web;
-class Aeroponics_Tank_Web;
-class WaterTempSensor_Web;
-class WaterLevelSensor_Web;
-class WeightSensor_Web;
 class HempyModule_Web;
-class AeroModule_Web;
-class ReservoirModule_Web;
-class ModuleSkeleton_Web;
 
 extern ELClientRest PushingBoxRestAPI;
 
 /// Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
-class GrowBox : public Common_Web, public Module_Web
+class MainModule : public Common_Web, public Module_Web
 {
 public:
-  GrowBox(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings,RF24 *Wireless); ///constructor
+  MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings,RF24 *Wireless); ///constructor
   Sound_Web *Sound1;             ///Pointer to a Piezo speaker - sound feedback
   Fan_Web *IFan;                ///Internal fan
-  Fan_Web *EFan;                ///Exhaust fan
-  DHTSensor_Web *DHT1;          ///Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
-  LightSensor_Web *LtSen1; ///Pointer to a Light Sensor object measuring light intensity in the grow box
+  Fan_Web *EFan;                ///Exhaust fan  
   Lights_Web *Lt1;            ///Pointer to a Light assembly
   PowerSensor_Web *Pow1;
   //PowerSensorV3_Web * Pow1;  ///Only for PZEM004T V3.0
-  PressureSensor_Web *Pres1;
-  PHSensor_Web *PHSen1;
-  WaterPump *AeroPump1;
-  Aeroponics_Tank_Web *AeroT1;
-  Aeroponics_NoTank_Web *AeroNT1;   
-  WaterTempSensor_Web *WTemp1;
-  WaterLevelSensor_Web *WLev1;
-  DistanceSensor_Web *Dist1;
-  HempyModule_Web *HempyModule1;    /// <Represents the website controls and feedback for a HempyModule
-  AeroModule_Web *AeroModule1;    /// <Represents the website controls and feedback for a AeroModule
-  ReservoirModule_Web *ReservoirModule1;
-  //WeightSensor_Web *Weight1; 
-  //WeightSensor_Web *Weight2;  
-  //ModuleSkeleton_Web *ModuleSkeleton1; ///Only for demonstration purposes
-  //ModuleSkeleton_Web *ModuleSkeleton2; ///Only for demonstration purposes
+  HempyModule_Web *HempyModule1;    /// <Represents the website controls and feedback for a HempyModule  
   void websiteEvent_Load(char *url);
   void websiteEvent_Refresh( char *url);
   void websiteEvent_Button(char *Button);

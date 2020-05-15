@@ -7,17 +7,13 @@
 
 /// \todo Proper doxygen documentation
 /// \todo Add pump cutout during aero spray in case pressure limit is reached
-/// \todo HempyBucket controls
-/// \todo Move metric/imperial selection to Settings.h, remove it from the Settings Webpage
-/// \todo Wireless module, mini Gbox420 on Ardino Nano V3, with  for sensor boxes
 /// \todo Light sensor is not linear, need a better way to estimate brightness percentage. Readings[10] and calibrate to every 10% , lookup closest 2 calibration rating (TopRange,BottomRange) and do a mapping between them?
-/// \todo Replace Growbox constructor parameter to a more generic Module_Web
 /// \todo Split WaterLevelSensor class to a single sensor and a row of sensors (WaterLevelRow)
 
 #include "Arduino.h"
 #include "avr/wdt.h"                /// Watchdog timer for detecting a crash and automatically resetting the board
 #include "avr/boot.h"               /// Watchdog timer related bug fix
-#include "printf.h"
+#include "printf.h"                 /// Printing the wireless status message from nRF24L01
 #include "TimerThree.h"             /// Interrupt handling for webpage
 #include "ELClient.h"               /// ESP-link
 #include "ELClientWebServer.h"      /// ESP-link - WebServer API
@@ -25,11 +21,10 @@
 #include "ELClientRest.h"           /// ESP-link - REST API
 #include "Thread.h"                 /// Splitting functions to threads for timing
 #include "StaticThreadController.h" /// Grouping threads
-#include "SerialLog_Mega.h"     /// Logging to the Serial console and to ESP-link's console
+#include "SerialLog.h"              /// Logging to the Serial console and to ESP-link's console
 #include "src/Components_Web/420Common_Web.h"              /// Base class where all web components inherits from
 #include "Settings.h"       ///EEPROM stored settings for every component
-#include "src/Modules/GrowBox.h"    ///Represents a complete box with all feautres
-#include "src/Modules/MainModule.h"    ///Represents a complete box with all feautres
+#include "src/Modules_Web/MainModule_Web.h"    ///Represents a complete box with all feautres
 #include "SPI.h"      ///allows you to communicate with SPI devices, with the Arduino as the master device
 #include "nRF24L01.h"   ///https://forum.arduino.cc/index.php?topic=421081
 #include "RF24.h"       ///https://github.com/maniacbug/RF24
@@ -49,8 +44,7 @@ ELClientRest PushingBoxRestAPI(&ESPLink); ///< ESP-link REST API
 Settings * ModuleSettings;                ///< This object will store the settings loaded from the EEPROM. Persistent between reboots.
 bool *Debug;
 bool *Metric;
-GrowBox *GBox;                            ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
-MainModule *Main;                            ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
+MainModule *Main1;                            ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 RF24 Wireless(Wireless_CEPin, Wireless_CSNPin);              ///< Wireless communication with Modules over nRF24L01+
 
@@ -105,8 +99,7 @@ void setup()
   Wireless.setRetries(Wireless_Delay,Wireless_Retry); // Defined in Settings.h
 
   // Create the Module objects
-  GBox = new GrowBox(F("GBox1"), &ModuleSettings->Gbox1, &Wireless); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
-  //Main = new MainModule(F("Main"), &ModuleSettings->Gbox1, &Wireless); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+   Main1 = new MainModule(F("Main1"), &ModuleSettings->Main1, &Wireless); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
   
 
   //   sendEmailAlert(F("Grow%20box%20(re)started"));
@@ -129,30 +122,26 @@ void runSec()
 {
   wdt_reset();    ///< reset watchdog timeout
   HeartBeat();    ///< Blinks built-in led
-  GBox->runSec(); ///< Calls the runSec() method in GrowBox.cpp
-  //Main->runSec(); ///< Calls the runSec() method in GrowBox.cpp
+  Main1->runSec(); ///< Calls the runSec() method in GrowBox.cpp
 }
 
 void runFiveSec()
 {
   wdt_reset();
-  GBox->runFiveSec();
-  //Main->runFiveSec();
+  Main1->runFiveSec();
 }
 
 void runMinute()
 {
   wdt_reset();
-  GBox->runMinute();
-  //Main->runFiveSec();
+  Main1->runFiveSec();
   getWirelessStatus();
 }
 
 void runQuarterHour()
 {
   wdt_reset();
-  GBox->runQuarterHour();
-  //Main->runQuarterHour();
+  Main1->runQuarterHour();
 }
 
 void HeartBeat()
@@ -183,18 +172,18 @@ void resetWebServer(void)
   URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json");   ///< setup handling request from GrowBox.html
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); ///< setup handling request from Settings.html
   URLHandler *TestHandler = WebServer.createURLHandler("/Test.html.json");         ///< setup handling request from Test.html
-  GrowBoxHandler->loadCb.attach(&loadCallback);                                    ///< Called then the website loads initially
-  GrowBoxHandler->refreshCb.attach(&refreshCallback);                              ///< Called periodically to refresh website content
-  GrowBoxHandler->buttonCb.attach(&buttonPressCallback);                           ///< Called when a button is pressed on the website
-  GrowBoxHandler->setFieldCb.attach(&setFieldCallback);                            ///< Called when a field is changed on the website
-  SettingsHandler->loadCb.attach(&loadCallback);                                   ///< Called then the website loads initially
-  SettingsHandler->refreshCb.attach(&refreshCallback);                             ///< Called periodically to refresh website content
-  SettingsHandler->buttonCb.attach(&buttonPressCallback);                          ///< Called when a button is pressed on the website
-  SettingsHandler->setFieldCb.attach(&setFieldCallback);                           ///< Called when a field is changed on the website
-  TestHandler->loadCb.attach(&loadCallback);                                       ///< Called then the website loads initially
-  TestHandler->refreshCb.attach(&refreshCallback);                                 ///< Called periodically to refresh website content
-  TestHandler->buttonCb.attach(&buttonPressCallback);                              ///< Called when a button is pressed on the website
-  TestHandler->setFieldCb.attach(&setFieldCallback);                               ///< Called when a field is changed on the website
+  GrowBoxHandler->loadCb.attach(&loadCallback);                                    ///< GrowBox tab - Called then the website loads initially
+  GrowBoxHandler->refreshCb.attach(&refreshCallback);                              ///< GrowBox tab - Called periodically to refresh website content
+  GrowBoxHandler->buttonCb.attach(&buttonPressCallback);                           ///< GrowBox tab - Called when a button is pressed on the website
+  GrowBoxHandler->setFieldCb.attach(&setFieldCallback);                            ///< GrowBox tab - Called when a field is changed on the website
+  SettingsHandler->loadCb.attach(&loadCallback);                                   ///< Settings tab - Called then the website loads initially
+  SettingsHandler->refreshCb.attach(&refreshCallback);                             ///< Settings tab - Called periodically to refresh website content
+  SettingsHandler->buttonCb.attach(&buttonPressCallback);                          ///< Settings tab - Called when a button is pressed on the website
+  SettingsHandler->setFieldCb.attach(&setFieldCallback);                           ///< Settings tab - Called when a field is changed on the website
+  TestHandler->loadCb.attach(&loadCallback);                                       ///< Test tab - Called then the website loads initially
+  TestHandler->refreshCb.attach(&refreshCallback);                                 ///< Test tab - Called periodically to refresh website content
+  TestHandler->buttonCb.attach(&buttonPressCallback);                              ///< Test tab - Called when a button is pressed on the website
+  TestHandler->setFieldCb.attach(&setFieldCallback);                               ///< Test tab - Called when a field is changed on the website
   logToSerials(F("ESP-link connected"), true, 0);
 }
 
@@ -230,14 +219,12 @@ time_t getNtpTime()
 
 void loadCallback(__attribute__((unused)) char *Url)
 { ///< called when website is loaded. Runs through all components that subscribed for this event
-  GBox->loadEvent(Url);
-  //Main->loadEvent(Url);
+  Main1->loadEvent(Url);
 }
 
 void refreshCallback(__attribute__((unused)) char *Url)
 { ///< called when website is refreshed.
-  GBox->refreshEvent(Url);
-  //Main->refreshEvent(Url);
+  Main1->refreshEvent(Url);
 }
 
 void buttonPressCallback(char *Button)
@@ -248,16 +235,14 @@ void buttonPressCallback(char *Button)
   }
   else
   {
-    GBox->buttonEvent(Button);
-    //Main->buttonEvent(Button);
+    Main1->buttonEvent(Button);
   }
   saveSettings(ModuleSettings);
 }
 
 void setFieldCallback(char *Field)
 { ///< Called when any field on the website is updated.
-  GBox->setFieldEvent(Field);
-  //Main->setFieldEvent(Field);
+  Main1->setFieldEvent(Field);
   saveSettings(ModuleSettings);
 }
 

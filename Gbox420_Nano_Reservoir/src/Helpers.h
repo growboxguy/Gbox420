@@ -8,15 +8,13 @@
 #include "TimeLib.h"           ///Keeping track of time
 #include "MemoryFree.h"        ///checking remaining memory - only for debugging
 #include "avr/wdt.h"           ///Watchdog timer
-#include "../SerialLog_Nano.h.h"
+#include "../SerialLog.h"
 #include "../Settings.h"       ///for storing/reading defaults
 #include "RollingAverage.h" ///for smoothing sensor readings, average of last readings
 
 
-class GrowBox;
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;
-extern GrowBox *GBox;
 extern char CurrentTime[MaxTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
