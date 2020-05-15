@@ -23,7 +23,6 @@ class Fan_Web;
 class PowerSensor_Web;
 class PowerSensorV3_Web;  ///Only for PZEM004T V3.0
 class PHSensor_Web;
-class LightSensor_Web;
 class PressureSensor_Web;
 class Aeroponics_NoTank_Web;
 class Aeroponics_Tank_Web;

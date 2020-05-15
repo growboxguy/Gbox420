@@ -6,11 +6,11 @@
 #include "../Components_Web/DHTSensor_Web.h"
 #include "../Components_Web/DistanceSensor_Web.h"
 #include "../Components_Web/Lights_Web.h"
+#include "../Components_Web/LightSensor_Web.h"
 #include "../Components_Web/Sound_Web.h"
 #include "../Components_Web/Fan_Web.h"
 #include "../Components_Web/PowerSensor_Web.h"
 #include "../Components_Web/PowerSensorV3_Web.h"  ///Only for PZEM004T V3.0
-#include "../Components_Web/LightSensor_Web.h"
 #include "../Components_Web/PHSensor_Web.h"
 #include "../Components_Web/PressureSensor_Web.h"
 #include "../Components_Web/Aeroponics_Tank_Web.h"

@@ -1,7 +1,10 @@
 #include "MainModule_Web.h"
 #include "HempyModule_Web.h"
 #include "AeroModule_Web.h"
+#include "ReservoirModule_Web.h"
+#include "../Components_Web/DHTSensor_Web.h"
 #include "../Components_Web/Lights_Web.h"
+#include "../Components_Web/LightSensor_Web.h"
 #include "../Components_Web/Sound_Web.h"
 #include "../Components_Web/Fan_Web.h"
 #include "../Components_Web/PowerSensor_Web.h"
@@ -16,9 +19,14 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan);      ///passing: Component name, MainModule object the component belongs to, Default settings)
   EFan = new Fan_Web(F("EFan"), this, &ModuleSettings->EFan);
   Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
+  LtSen1 = new LightSensor_Web(F("LtSen1"), this, &ModuleSettings->LtSen1, Lt1); ///Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
   Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2);
+  DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);
+  
   ///Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); ///Only for PZEM004T V3.0
   HempyModule1 = new HempyModule_Web(F("Hemp1"), this,&ModuleSettings->HempyModule1);
+  AeroModule1 = new AeroModule_Web(F("Aero1"), this,&ModuleSettings->AeroModule1);
+  ReservoirModule1 = new ReservoirModule_Web(F("Res1"), this,&ModuleSettings->ReservoirMod1);
   
   addToRefreshQueue_FiveSec(this);     
   addToRefreshQueue_Minute(this);    
@@ -95,7 +103,10 @@ void MainModule::websiteEvent_Field(char *Field)
 void MainModule::refresh_FiveSec()
 {
   if (*Debug)
+  {
     Common::refresh_FiveSec();
+    runReport();
+  }
   if (RefreshAllRequested)
   {
     RefreshAllRequested = false;
