@@ -32,11 +32,8 @@ void AeroModule_Web::report()
     strcat(LongMessage, toText(Command.MaxPressure));
     strcat_P(LongMessage, (PGM_P)F("]"));
   }
-  else
-  {
-    strcat_P(LongMessage, (PGM_P)F(" ; LastSprayPressure:"));
-    strcat(LongMessage, toText_pressure(Response.LastSprayPressure));
-  }
+  strcat_P(LongMessage, (PGM_P)F(" ; LastSprayPressure:"));
+  strcat(LongMessage, toText_pressure(Response.LastSprayPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(Response.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F(" ; Interval:"));
@@ -44,6 +41,29 @@ void AeroModule_Web::report()
   strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
   strcat(LongMessage, toText_second(Command.SprayDuration));  
   logToSerials(&LongMessage, true, 1);
+}
+
+void AeroModule_Web::reportToJSON()
+{
+    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"Pressure\":\""));
+    strcat(LongMessage, toText(Response.Pressure));
+    if(Response.PressureTankPresent)
+    {
+      strcat_P(LongMessage, (PGM_P)F("\",\"Min\":\""));
+      strcat(LongMessage, toText(Command.MinPressure));
+      strcat_P(LongMessage, (PGM_P)F("\",\"Max\":\""));
+      strcat(LongMessage, toText(Command.MaxPressure));
+    }
+    strcat_P(LongMessage, (PGM_P)F("\",\"LastSpray\":\""));
+    strcat(LongMessage, toText(Response.LastSprayPressure));     
+    strcat_P(LongMessage, (PGM_P)F("\",\"SprayEnabled\":\""));
+    strcat(LongMessage, toText(Command.SprayEnabled));  
+    strcat_P(LongMessage, (PGM_P)F("\",\"Interval\":\""));
+    strcat(LongMessage, toText(Command.SprayInterval));  
+    strcat_P(LongMessage, (PGM_P)F("\",\"Duration\":\""));
+    strcat(LongMessage, toText(Command.SprayDuration)); 
+    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
 }
 
 void AeroModule_Web::websiteEvent_Load(char *url)

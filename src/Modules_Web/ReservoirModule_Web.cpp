@@ -29,6 +29,22 @@ void ReservoirModule_Web::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+void ReservoirModule_Web::reportToJSON()
+{
+    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"PH\":\""));
+    strcat(LongMessage, toText(Response.PH));   
+    strcat_P(LongMessage, (PGM_P)F("\",\"Distance\":\""));
+    strcat(LongMessage, toText(Response.Distance));     
+    strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
+    strcat(LongMessage, toText(Response.WaterTemperature));  
+    strcat_P(LongMessage, (PGM_P)F("\",\"AirTemp\":\""));
+    strcat(LongMessage, toText(Response.AirTemperature));   
+    strcat_P(LongMessage, (PGM_P)F("\",\"Humidity\":\""));
+    strcat(LongMessage, toText(Response.Humidity));
+    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
+}
+
 void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///called when website is refreshed.
 {
   if (strncmp(url, "/G",2) == 0)

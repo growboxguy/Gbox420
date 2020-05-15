@@ -12,6 +12,22 @@ Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Sett
   Parent->addToWebsiteQueue_Button(this);  
 }
 
+void Lights_Web::reportToJSON()
+{
+    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
+    strcat(LongMessage, getStatusText(false));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Brightness\":\""));
+    strcat(LongMessage, getBrightnessText());   
+    strcat_P(LongMessage, (PGM_P)F("\",\"Timer\":\""));
+    strcat(LongMessage, getTimerOnOffText(false));
+    strcat_P(LongMessage, (PGM_P)F("\",\"On\":\""));
+    strcat(LongMessage, getOnTimeText());
+    strcat_P(LongMessage, (PGM_P)F("\",\"Off\":\""));
+    strcat(LongMessage, getOffTimeText());
+    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
+}
+
 void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G",2) == 0)

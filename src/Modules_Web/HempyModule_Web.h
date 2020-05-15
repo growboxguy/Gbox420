@@ -21,6 +21,7 @@ public:
   void websiteEvent_Button(__attribute__((unused)) char *Button);
   void websiteEvent_Field(__attribute__((unused)) char *Field);
   void report();
+  void reportToJSON();
   void refresh_Sec();
   void refresh_FiveSec();
   void refresh_Minute();

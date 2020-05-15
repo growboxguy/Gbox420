@@ -42,11 +42,12 @@ public:
   void websiteEvent_Refresh( char *url);
   void websiteEvent_Button(char *Button);
   void websiteEvent_Field(char *Field);
+  void report();
   void refresh_FiveSec();
   void refresh_Minute();
   void refresh_QuarterHour();  
-  void reportToGoogleSheetsTrigger();
-  void reportToGoogleSheets(bool CalledFromWebsite);
+  void reportToGoogleSheetsTrigger(bool ForceRun = false);
+  void reportToJSON();
  // void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
  
 private:

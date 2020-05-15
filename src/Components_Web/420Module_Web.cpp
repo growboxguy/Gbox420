@@ -241,22 +241,22 @@ char *Module_Web::eventLogToJSON(bool Append)
 
 ///Google Sheets functions
 
-void Module_Web::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength])
+void Module_Web::addPushingBoxLogRelayID()
 {
-  char ValueToReport[MaxLongTextLength] = "";
-  strcat_P(ValueToReport, (PGM_P)F("/pushingbox?devid="));
-  strcat(ValueToReport, ModuleSettings -> PushingBoxLogRelayID);
-  strcat_P(ValueToReport, (PGM_P)F("&BoxData={\""));
-  strcat_P(ValueToReport, (PGM_P)Title);
-  strcat_P(ValueToReport, (PGM_P)F("\":"));
-  strcat(ValueToReport, *JSONData);
-  strcat_P(ValueToReport, (PGM_P)F("}"));
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  strcat_P(LongMessage, (PGM_P)F("/pushingbox?devid="));
+  strcat(LongMessage, ModuleSettings -> PushingBoxLogRelayID);
+  strcat_P(LongMessage, (PGM_P)F("&BoxData={"));
+}
+
+void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
+{
   if (*Debug)
   { ///print the report command to console
     logToSerials(F("api.pushingbox.com"), false, 4);
-    logToSerials(&ValueToReport, true, 0);
+    logToSerials(JSONData, true, 0);
   }
-  PushingBoxRestAPI.get(ValueToReport); ///PushingBoxRestAPI will append http:///api.pushingbox.com/ in front of the command
+  PushingBoxRestAPI.get(*JSONData); ///PushingBoxRestAPI will append http:///api.pushingbox.com/ in front of the command
 }
 
 ///Wireless

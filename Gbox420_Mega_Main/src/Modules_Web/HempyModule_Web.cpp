@@ -38,6 +38,24 @@ void HempyModule_Web::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+void HempyModule_Web::reportToJSON()
+{
+    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"WeightB1\":\""));
+    strcat(LongMessage, toText(Response.Weight_B1));   
+    strcat_P(LongMessage, (PGM_P)F("\",\"StartB1\":\""));
+    strcat(LongMessage, toText(Command.StartWeightBucket_B1));     
+    strcat_P(LongMessage, (PGM_P)F("\",\"StopB1\":\""));
+    strcat(LongMessage, toText(Command.StopWeightBucket_B1));  
+    strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
+    strcat(LongMessage, toText(Response.Weight_B2));   
+    strcat_P(LongMessage, (PGM_P)F("\",\"StartB2\":\""));
+    strcat(LongMessage, toText(Command.StartWeightBucket_B2));    
+    strcat_P(LongMessage, (PGM_P)F("\",\"StopB2\":\""));
+    strcat(LongMessage, toText(Command.StopWeightBucket_B2));  
+    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
+}
+
 void HempyModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G",2) == 0)

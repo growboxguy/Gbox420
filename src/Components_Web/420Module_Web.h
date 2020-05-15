@@ -50,7 +50,8 @@ public:
   char *eventLogToJSON(bool Append = false); ///Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   RF24 *Wireless;
   
-  void relayToGoogleSheets(__attribute__((unused)) const __FlashStringHelper *Title, __attribute__((unused)) char (*JSONData)[MaxLongTextLength]);
+  void addPushingBoxLogRelayID();
+  void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);
 
 private:
 
