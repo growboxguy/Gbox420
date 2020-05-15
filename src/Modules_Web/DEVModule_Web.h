@@ -72,8 +72,8 @@ public:
   void refresh_FiveSec();
   void refresh_Minute();
   void refresh_QuarterHour();  
-  void reportToGoogleSheetsTrigger();
-  void reportToGoogleSheets(bool CalledFromWebsite);
+  void reportToGoogleSheetsTrigger(bool ForceRun = false);
+  void reportToJSON();
  // void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
  
 private:

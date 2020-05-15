@@ -16,6 +16,7 @@ public:
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Button(char *Button);
   void websiteEvent_Field(char *Field);
+  void reportToJSON();
   
 private:
   

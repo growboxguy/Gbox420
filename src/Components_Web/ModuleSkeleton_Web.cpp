@@ -15,6 +15,13 @@ ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_W
   Parent->addToWebsiteQueue_Field(this);       
 }
 
+void ModuleSkeleton_Web::reportToJSON()
+{
+    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end 
+
+    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
+}
+
 void ModuleSkeleton_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 { ///When opening the website
   if (strcmp(url, "/Test.html.json") == 0)

@@ -14,6 +14,7 @@ public:
   void websiteEvent_Refresh(char *url);
   void websiteEvent_Button(char *Button);
   void websiteEvent_Field( char *Field);
+  void reportToJSON();
  
 private:
   

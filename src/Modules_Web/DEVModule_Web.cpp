@@ -64,6 +64,41 @@ DEVModule_Web::DEVModule_Web(const __FlashStringHelper *Name, Settings::GrowModu
   addToLog(F("DEVModule_Web initialized"), 0);
 }
 
+void DEVModule_Web::reportToJSON()
+{
+    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end 
+
+    strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
+    strcat(LongMessage, toText(*Metric));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Debug\":\""));
+    strcat(LongMessage, toText(*Debug));
+
+/*  strcat_P(LongMessage, (PGM_P)F("\",\"WaterLevel\":\""));
+    strcat(LongMessage, WLev1->getLevelText());
+    strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
+    strcat(LongMessage, WTemp1->getTempText(false));
+    strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
+    strcat(LongMessage, PHSen1->getPHText(true));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));
+    strcat(LongMessage, Pres1->getPressureText(false, true));    
+    strcat_P(LongMessage, (PGM_P)F("\",\"AeroInterval\":\""));
+    strcat(LongMessage, AeroNT1->getSprayIntervalText());
+    strcat_P(LongMessage, (PGM_P)F("\",\"AeroDuration\":\""));
+    strcat(LongMessage, AeroNT1->getSprayDurationText());
+    strcat_P(LongMessage, (PGM_P)F("\",\"AeroSprayPressure\":\""));
+    strcat(LongMessage, toText(AeroNT1->getLastSprayPressure()));
+    ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); 
+    strcat(LongMessage,AeroT1 -> getSprayInterval());
+    ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); 
+    strcat(LongMessage,AeroT1 -> getSprayDuration());
+    strcat_P(LongMessage, (PGM_P)F("\"},\"Settings\":{"));
+    strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
+    strcat(LongMessage, toText(*Metric));
+    strcat_P(LongMessage, (PGM_P)F("\"}}")); */
+
+    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
+}
+
 void DEVModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/S",2) == 0)
@@ -139,7 +174,7 @@ void DEVModule_Web::refresh_FiveSec()
   if(ReportToGoogleSheetsRequested)
   {
     ReportToGoogleSheetsRequested = false;
-    reportToGoogleSheets(true);
+    reportToGoogleSheetsTrigger(true);
   }
   if(ConsoleReportRequested)
   {
@@ -222,80 +257,24 @@ void DEVModule_Web::setSheetsReportingFrequency(uint8_t Frequency)
   getSoundObject()->playOnSound();
 }
 
-void DEVModule_Web::reportToGoogleSheetsTrigger()
+void DEVModule_Web::reportToGoogleSheetsTrigger(bool ForceRun)
 { ///Handles custom reporting frequency for Google Sheets, called every 15 minutes
   if (SheetsRefreshCounter == 96)
     SheetsRefreshCounter = 0; ///Reset the counter after one day (15 x 96 = 1440 = 24 hours)
-  if (SheetsRefreshCounter++ % (*SheetsReportingFrequency / 15) == 0)
+  if (SheetsRefreshCounter++ % (*SheetsReportingFrequency / 15) == 0 || ForceRun)
   {
-    reportToGoogleSheets(false);
+    addPushingBoxLogRelayID(); ///< Adds a curly bracket {  that needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));  ///< Adds a curly bracket {  that needs to be closed at the end
+    for (int i = 0; i < reportQueueItemCount;)
+      {
+        ReportQueue[i++]->reportToJSON();
+        if(i != reportQueueItemCount) strcat_P(LongMessage, (PGM_P)F(",")); /// < Unless it was the last element add a , separator
+      }
+    strcat_P(LongMessage, (PGM_P)F("}}"));  ///< closing both curly bracket
+    relayToGoogleSheets(&LongMessage);
   }
 }
 
-void DEVModule_Web::reportToGoogleSheets(__attribute__((unused)) bool CalledFromWebsite)
-{
-  if (*ReportToGoogleSheets || CalledFromWebsite)
-  {
-    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
-    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));
-    strcat_P(LongMessage, (PGM_P)F("\"Temp\":\""));
-    strcat(LongMessage, DHT1->getTempText(false));    
-    strcat_P(LongMessage, (PGM_P)F("\",\"Humidity\":\""));
-    strcat(LongMessage, DHT1->getHumidityText(false));    
-    strcat_P(LongMessage, (PGM_P)F("\",\"InternalFan\":\""));
-    strcat(LongMessage, IFan->fanSpeedToNumber());
-    strcat_P(LongMessage, (PGM_P)F("\",\"ExhaustFan\":\""));
-    strcat(LongMessage, EFan->fanSpeedToNumber());
-    strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_Status\":\""));
-    strcat(LongMessage, Lt1->getStatusText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_Brightness\":\""));
-    strcat(LongMessage, Lt1->getBrightnessText());
-    strcat_P(LongMessage, (PGM_P)F("\",\"LightReading\":\""));
-    strcat(LongMessage, LtSen1->getReadingText());
-    strcat_P(LongMessage, (PGM_P)F("\",\"Dark\":\""));
-    strcat(LongMessage, LtSen1->getDarkText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"WaterLevel\":\""));
-    strcat(LongMessage, WLev1->getLevelText());
-    strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
-    strcat(LongMessage, WTemp1->getTempText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
-    strcat(LongMessage, PHSen1->getPHText(true));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));
-    strcat(LongMessage, Pres1->getPressureText(false, true));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Power\":\""));
-    strcat(LongMessage, Pow1->getPowerText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Energy\":\""));
-    strcat(LongMessage, Pow1->getEnergyText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Voltage\":\""));
-    strcat(LongMessage, Pow1->getVoltageText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Current\":\""));
-    strcat(LongMessage, Pow1->getCurrentText(false));
-    ///strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  strcat(LongMessage,Pow1 -> getFrequencyText(false));   ///Only for PZEM004T V3.0
-    ///strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  strcat(LongMessage,Pow1 -> getPowerFactorText());    ///Only for PZEM004T V3.0
-    strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_Timer\":\""));
-    strcat(LongMessage, Lt1->getTimerOnOffText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_OnTime\":\""));
-    strcat(LongMessage, Lt1->getOnTimeText());
-    strcat_P(LongMessage, (PGM_P)F("\",\"Lt1_OffTime\":\""));
-    strcat(LongMessage, Lt1->getOffTimeText());
-    strcat_P(LongMessage, (PGM_P)F("\",\"AeroInterval\":\""));
-    strcat(LongMessage, AeroNT1->getSprayIntervalText());
-    strcat_P(LongMessage, (PGM_P)F("\",\"AeroDuration\":\""));
-    strcat(LongMessage, AeroNT1->getSprayDurationText());
-    strcat_P(LongMessage, (PGM_P)F("\",\"AeroSprayPressure\":\""));
-    strcat(LongMessage, toText(AeroNT1->getLastSprayPressure()));
-    ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); strcat(LongMessage,AeroT1 -> getSprayInterval());
-    ///strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); strcat(LongMessage,AeroT1 -> getSprayDuration());
-
-    strcat_P(LongMessage, (PGM_P)F("\"},\"Settings\":{"));
-    strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
-    strcat(LongMessage, toText(*Metric));
-    strcat_P(LongMessage, (PGM_P)F("\"}}"));
-    relayToGoogleSheets(Name, &LongMessage);
-  }  
-}
-///This is how a sent out message looks like:
-///{parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
 
 void DEVModule_Web::setPushingBoxLogRelayID(const char *ID)
 {

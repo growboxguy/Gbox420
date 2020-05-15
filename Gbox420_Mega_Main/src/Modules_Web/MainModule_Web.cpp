@@ -224,13 +224,14 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
     SheetsRefreshCounter = 0; ///Reset the counter after one day (15 x 96 = 1440 = 24 hours)
   if (SheetsRefreshCounter++ % (*SheetsReportingFrequency / 15) == 0 || ForceRun)
   {
-    addPushingBoxLogRelayID(); ///< Adds a curly bracket {  that needs to be closed at the end 
+    addPushingBoxLogRelayID(); ///< Adds a curly bracket {  that needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));  ///< Adds a curly bracket {  that needs to be closed at the end
     for (int i = 0; i < reportQueueItemCount;)
       {
         ReportQueue[i++]->reportToJSON();
         if(i != reportQueueItemCount) strcat_P(LongMessage, (PGM_P)F(",")); /// < Unless it was the last element add a , separator
       }
-    strcat_P(LongMessage, (PGM_P)F("}"));  ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("}}"));  ///< closing both curly bracket
     relayToGoogleSheets(&LongMessage);
   }
 }

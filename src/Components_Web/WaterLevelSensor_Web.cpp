@@ -9,6 +9,13 @@ WaterLevelSensor_Web::WaterLevelSensor_Web(const __FlashStringHelper *Name, Modu
   Parent->addToWebsiteQueue_Refresh(this); 
 }
 
+void WaterLevelSensor_Web::reportToJSON()
+{
+    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end 
+
+    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
+}
+
 void WaterLevelSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G",2) == 0)
