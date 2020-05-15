@@ -1,4 +1,4 @@
-#include "SerialLog.h"
+#include "SerialLog_Nano.h"
 
 //////////////////////////////////////////
 //Logging

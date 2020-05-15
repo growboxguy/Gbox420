@@ -8,7 +8,7 @@
 #include "TimeLib.h"           ///Keeping track of time
 #include "MemoryFree.h"        ///checking remaining memory - only for debugging
 #include "avr/wdt.h"           ///Watchdog timer
-#include "../SerialLog.h"
+#include "../SerialLog_Nano.h.h"
 #include "../Settings.h"       ///for storing/reading defaults
 #include "RollingAverage.h" ///for smoothing sensor readings, average of last readings
 

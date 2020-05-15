@@ -1,2 +1,4 @@
-Gbox420_ALL.zip
 desktop.ini
+./HardLinkSRC_ON.sh
+./**/HardLinkSRC_O*.sh
+./Archive/*
