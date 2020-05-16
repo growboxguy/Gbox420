@@ -225,7 +225,7 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
   if (SheetsRefreshCounter++ % (*SheetsReportingFrequency / 15) == 0 || ForceRun)
   {
     addPushingBoxLogRelayID(); ///< Adds a curly bracket {  that needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));  ///< Adds a curly bracket {  that needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"Log\":{"));  ///< Adds a curly bracket {  that needs to be closed at the end
     for (int i = 0; i < reportQueueItemCount;)
       {
         ReportQueue[i++]->reportToJSON();

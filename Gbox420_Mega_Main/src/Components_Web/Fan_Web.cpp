@@ -13,7 +13,7 @@ Fan_Web::Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::
 void Fan_Web::reportToJSON()
 {
     Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"ExhaustFan\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\"Speed\":\""));
     strcat(LongMessage, fanSpeedToNumber());
     strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
 }

@@ -41,12 +41,16 @@ void HempyModule_Web::report()
 void HempyModule_Web::reportToJSON()
 {
     Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"WeightB1\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\"PumpB1\":\""));
+    strcat(LongMessage, toText(Response.PumpState_B1));
+    strcat_P(LongMessage, (PGM_P)F("\",\"WeightB1\":\""));
     strcat(LongMessage, toText(Response.Weight_B1));   
     strcat_P(LongMessage, (PGM_P)F("\",\"StartB1\":\""));
     strcat(LongMessage, toText(Command.StartWeightBucket_B1));     
     strcat_P(LongMessage, (PGM_P)F("\",\"StopB1\":\""));
-    strcat(LongMessage, toText(Command.StopWeightBucket_B1));  
+    strcat(LongMessage, toText(Command.StopWeightBucket_B1));
+    strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2\":\""));
+    strcat(LongMessage, toText(Response.PumpState_B2));  
     strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
     strcat(LongMessage, toText(Response.Weight_B2));   
     strcat_P(LongMessage, (PGM_P)F("\",\"StartB2\":\""));
