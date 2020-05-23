@@ -197,8 +197,8 @@ void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Co
   if (Parent -> Wireless -> write(Command, sizeof(*Command) )) {
       if ( Parent -> Wireless -> isAckPayloadAvailable() ) {
           Parent -> Wireless -> read(Response, sizeof(*Response));
-           logToSerials(F("Acknowledgement received ["),false,2);            
-          Serial.print(sizeof(*Response)); /// \todo Use LogToSerial
+          logToSerials(F("Acknowledgement received ["),false,2);            
+          logToSerials(sizeof(*Response),true,1); /// \todo Use LogToSerial
           logToSerials(F("bytes]"),true,1);
 
           if(*Debug){
@@ -224,11 +224,11 @@ void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Co
           }
       }
       else {
-          Serial.println(F(" Acknowledgement received without any data."));
+          logToSerials(F("Acknowledgement received without any data."),true,1);
       }        
   }
   else {
-      Serial.println(F(" No response."));
+      logToSerials(F("No response."),true,1);
   }
   }
 
