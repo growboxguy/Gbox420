@@ -22,23 +22,33 @@ function RunFakeReport(){
 }
 
 function Test_MainModule_ProcessBoxData(){  
+  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
   ProcessBoxData(FakeJSONData);			 
 }
 
 function Test_MainModule_CheckAlerts(){
+  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
   CheckAlerts(FakeJSONData.Log);			 
 }
 
 function Test_MainModule_SaveToLog(){
+  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
   SaveToLog(FakeJSONData.Log);			 
 }
 
+function Test_UpdateColumns(){
+  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
+  UpdateColumns(FakeJSONData.Log);			 
+}
+
 function Test_MainModule_UpdateStatus(){
+  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
   UpdateStatus(FakeJSONData.Log);			 
 }
 
-function Test_MainModule_UpdateSettings(){
-  UpdateSettings(FakeJSONData.Log);			 
+function Test_MainModule_UpdateColumns(){
+  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
+  UpdateColumns(FakeJSONData.Log);			 
 }
 
 function Test_LightSensor1_ProcessBoxData(){
@@ -75,7 +85,7 @@ function UpdateCalibrationValues(Name,Readings){ //NOT READY
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updates the Settings sheets, adds newly discovered keys 
 /*
-function UpdateSettings(Settings){
+function UpdateColumns(Settings){
 Logger.log(Settings);  //Log the received data on the console output  
 var settings = settingsSheet.getRange(3,9,settingsSheet.getLastRow(),1);
 var nextRow = settingsSheet.getLastRow() + 1; //Get next row after the last row

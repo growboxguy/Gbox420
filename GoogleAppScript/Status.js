@@ -4,11 +4,11 @@
 function UpdateStatus(Log)
 { 
   console.log("Updating Status sheet...");
-  var Status = GetNamedRange("Status");
+  var status = GetNamedRange("Status");
   
   var newStatus = []; 
-  for (var i = 0; i < Status.length; i++) {   
-    newStatus.push([Status[i][0],null]);  //pre-fill with null values
+  for (var i = 0; i < status.length; i++) {   
+    newStatus.push([status[i][0],null]);  //pre-fill with null values
   } 
 
   LogToConsole("Blank status: " + newStatus, true, 1);    
@@ -53,7 +53,7 @@ function UpdateStatus(Log)
   }
   LogToConsole("Writing latest log row...",false,2);
   LogToConsole(newStatus,true,1);
-  SpreadsheetApp.getActive().get.getRange(2,1,newStatus.length,2).setValues(newStatus);
+  SpreadsheetApp.getActive().getSheetByName("Status").getRange(1,1,newStatus.length,2).setValues(newStatus);
   //SpreadsheetApp.getActive().setNamedRange("statusKeys", 'Status!A2:B');
 
 }

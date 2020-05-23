@@ -13,9 +13,9 @@ var Debug = true;  //Activates extra Stackdriver logs
 
 //Column numbers - Only change these after rearranging columns
 var status_RawLog_Column = 5;
-var settings_AlertEnabled_Column = 1;
-var settings_Triggered_Column = 4;
-var settings_DataType_Column = 5;
+var settings_AlertEnabled_Column = 2;
+var settings_Triggered_Column = 5;
+var settings_DataType_Column = 6;
 
 
 
@@ -56,23 +56,24 @@ function doPost(receivedData) {
 
 
 function ProcessBoxData(JSONBoxData){
-  LogToConsole("Processing BoxDataJSON:",true,2);   
+  LogToConsole("Processing BoxDataJSON:",false,2);   
   try{
     if(JSONBoxData.Log != null)
     {
-      console.log(JSON.stringify(JSONBoxData.Log));
+      LogToConsole(JSON.stringify(JSONBoxData.Log), true, 1);
       SaveToLog(JSONBoxData.Log);  //Save the log to the Logs sheet on the spreadsheet specified by spreadSheetID 
+      UpdateColumns(JSONBoxData.Log); //Add missing columns to the Settings sheet 
       UpdateStatus(JSONBoxData.Log); //Add formatted status of each component to the Status page   
-     // UpdateSettings(JSONBoxData.Log); //Add missing columns to the Settings sheet     
+    
     //  CheckAlerts(JSONBoxData.Log);  //Checks for alerts and send an email alert
     //  UpdateCharts();  //Updates the chart datasources in case the columns were reordered
     }
     else{
-      console.log("Received BoxData does not contain a Log section. Skipping log processing.");
+      LogToConsole("Received BoxData does not contain a Log section. Skipping log processing.",true,1);
     }
     
     // if(JSONBoxData.Settings != null) {
-    //   UpdateSettings(JSONBoxData.Settings);
+    //   UpdateColumns(JSONBoxData.Settings);
     // }
     // else{
     //    console.log("Received BoxData does not contain a Settings section. Skipping settings processing."
@@ -85,7 +86,7 @@ function ProcessBoxData(JSONBoxData){
     SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("BoxData processed successfully");
   }
   catch(e){
-    console.log("Error: " + e);
+    LogToConsole("Error: " + e, true, 1);
     SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Error processing BoxDataJSON. Error:" + e);
   }
 }
@@ -94,39 +95,43 @@ function ProcessBoxData(JSONBoxData){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updates the Settings sheet: add newly discovered keys to Settings - Column section
 
-function UpdateSettings(Log){
-  console.log("Updating Settings sheet...");
-  var nextRow = settingsSheet.getLastRow() + 1; //Get next row after the last row
-  
+function UpdateColumns(Log){
+  LogToConsole("Updating Columns in Settings sheet...",true,1);
+  var columns = GetNamedRange("Columns");
+  var nextRow = getLastRowInRange(columns) + 1; //Get next row after the last row
   //Add all other Header + Data pairs from the received Log JSON
-  for (var Component in Object.keys(Log)){ 
-    var Report = Log[Component];
-    for (var ReportEntry in Object.keys(Report)){
-      var key = Component + '_' + ReportEntry;
-      var match = columnHeader.createTextFinder(key).matchEntireCell(true).findNext(); //lookup the settings for each key
-      if(match == null){ //If settings row does not exists
-        settingsSheet.getRange(nextRow, 1).setValue(key);   //Insert key in first Key column  
+  var Components = Object.getOwnPropertyNames(Log);  
+  for (var i = 0; i < Components.length; i++) {
+    var Properties = Object.getOwnPropertyNames(Log[Components[i]]);    
+    for (var j = 0; j < Properties.length; j++) {
+      var key = Components[i] + '_' + Properties[j]; 
+      var match = columns.filter(function(row){
+        return row[0] == key;
+      });
+      LogToConsole(key + " column match:" + match,true,1);
+      if(match == null || match.length == 0){ //If settings row does not exists
+        SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, 1).setValue(key);   //Insert key in first Key column  
         
         //Adding enable/disable alert checkbox
-        settingsSheet.getRange(nextRow, settings_AlertEnabled_Column).insertCheckboxes();
+        SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_AlertEnabled_Column).insertCheckboxes();
         
         //Adding YES/NO options for Triggered column
         var YesNo = SpreadsheetApp.newDataValidation().requireValueInList(['YES', 'NO']).build();
-        settingsSheet.getRange(nextRow, settings_Triggered_Column).setDataValidation(YesNo); 
-        settingsSheet.getRange(nextRow, settings_Triggered_Column).setHorizontalAlignment("right");
-        settingsSheet.getRange(nextRow, settings_Triggered_Column).setValue('NO');  //By default do not enable the new alert
+        SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_Triggered_Column).setDataValidation(YesNo); 
+        SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_Triggered_Column).setHorizontalAlignment("right");
+        SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_Triggered_Column).setValue('NO');  //By default do not enable the new alert
         
         //Adding Type column
         var DataType = SpreadsheetApp.newDataValidation().requireValueInList(SupportedDataTypes).build();
-        settingsSheet.getRange(nextRow, settings_DataType_Column).setDataValidation(DataType); //Add YES/NO options for Triggered column
-        settingsSheet.getRange(nextRow, settings_DataType_Column).setHorizontalAlignment("right");
-        settingsSheet.getRange(nextRow, settings_DataType_Column).setValue('Number');  //By default do not enable the new alert        
+        SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_DataType_Column).setDataValidation(DataType); //Add YES/NO options for Triggered column
+        SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_DataType_Column).setHorizontalAlignment("right");
+        SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_DataType_Column).setValue('Text');  //By default do not enable the new alert        
         
         nextRow++;
       }      
     }
   }
-  settingsSheet.autoResizeColumns(1, settingsSheet.getLastColumn()); //resize columns to fit the data 
+  SpreadsheetApp.getActive().getSheetByName("Settings").autoResizeColumns(1, SpreadsheetApp.getActive().getSheetByName("Settings").getLastColumn()); //resize columns to fit the data 
 }
 
 

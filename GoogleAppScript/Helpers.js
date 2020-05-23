@@ -56,7 +56,7 @@ function GetNamedRange(rangeName,dropCache)  /// Returns a 2D array of the value
   }
   //console.log("Refreshed cached version of: " +  rangeName);
   var rangeData = SpreadsheetApp.getActive().getRangeByName(rangeName).getValues();
-  cache.put(rangeName, JSON.stringify(rangeData), 30); // cache for 30 seconds to ensure it is not queried multiple times during script execution
+  cache.put(rangeName, JSON.stringify(rangeData), 120); // cache for 120 seconds to ensure it is not queried multiple times during script execution
   return rangeData;
 }
 
@@ -96,7 +96,7 @@ function GetFriendlyValue(key,rawValue)
     return rawValue;
   }
   else {
-    var dataType = settingsMatch[0][settings_DataType_Column];
+    var dataType = settingsMatch[0][5];
     console.log(key + " : " + rawValue + ", type: " + dataType);
   }
   
