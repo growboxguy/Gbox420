@@ -28,9 +28,9 @@ function SaveToLog(Log) {
       rowToInsert[headings.indexOf(key)] = Log[Components[i]][Properties[j]];       
     }
   }
-  console.log("Row to insert: ");
-  console.log(headings); 
-  console.log(rowToInsert); 
+  LogToConsole("Row to insert: ",true,1);
+  LogToConsole(headings,true,2); 
+  LogToConsole(rowToInsert,true,2); 
   logSheet.getRange(1, 1, 1, headings.length).setValues([headings]);
   logSheet.appendRow(rowToInsert);
   

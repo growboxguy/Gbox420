@@ -15,12 +15,12 @@ function GetSettingsValue(key){
     return row[0] == key;
   });
   if(match != null){
-    console.log(key + " settings key matched: " +  match[0][1]); //Normally this should be a single row
+    //console.log(key + " settings key matched: " +  match[0][1]); //Normally this should be a single row
     return match[0][1];  //return the first matching row's second colum
   }
   else
   {
-    console.log("No match for settings key: " +  key);
+    LogToConsole.log("No match for settings key: " +  key,true,1);
     return null;
   }
 }
@@ -42,7 +42,7 @@ function UpdateColumns(Log){
       var match = columns.filter(function(row){
         return row[0] == key;
       });
-      LogToConsole(key + " column match:" + match,true,1);
+      if(Debug)LogToConsole(key + " column match:" + match,true,2);
       if(match == null || match.length == 0){ //If settings row does not exists
         SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, 1).setValue(key);   //Insert key in first Key column  
         
