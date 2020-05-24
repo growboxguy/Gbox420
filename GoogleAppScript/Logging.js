@@ -1,3 +1,8 @@
+function Test_SaveToLog(){
+  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
+  SaveToLog(FakeJSONData.Log);			 
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Stores the received data on the Log sheet
 

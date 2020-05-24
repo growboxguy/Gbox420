@@ -1,3 +1,8 @@
+function Test_UpdateStatus(){
+  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
+  UpdateStatus(FakeJSONData.Log);			 
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updates the Status sheet
 

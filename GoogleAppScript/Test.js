@@ -21,35 +21,13 @@ function RunFakeReport(){
   ProcessBoxData(FakeBoxDataJSON); 
 }
 
-function Test_MainModule_ProcessBoxData(){  
-  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
-  ProcessBoxData(FakeJSONData);			 
-}
+
 
 function Test_MainModule_CheckAlerts(){
   FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
   CheckAlerts(FakeJSONData.Log);			 
 }
 
-function Test_MainModule_SaveToLog(){
-  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
-  SaveToLog(FakeJSONData.Log);			 
-}
-
-function Test_UpdateColumns(){
-  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
-  UpdateColumns(FakeJSONData.Log);			 
-}
-
-function Test_MainModule_UpdateStatus(){
-  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
-  UpdateStatus(FakeJSONData.Log);			 
-}
-
-function Test_MainModule_UpdateColumns(){
-  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
-  UpdateColumns(FakeJSONData.Log);			 
-}
 
 function Test_LightSensor1_ProcessBoxData(){
   ProcessBoxData(FakeJSONData_LightCalibration);			 
@@ -144,11 +122,7 @@ function writeToMultipleRanges(spreadsheetId) {
 }
 
 
-function scrollToBottom(){
- var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
- var range = sheet.getRange(sheet.getLastRow(),1);
- sheet.setActiveRange(range);
-}
+
 
 //function onOpen(){  //When spreadsheet is opened go to Log sheet's latest entry
 // var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Log");
