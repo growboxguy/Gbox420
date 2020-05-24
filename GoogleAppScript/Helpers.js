@@ -61,30 +61,6 @@ function GetNamedRange(rangeName,dropCache)  /// Returns a 2D array of the value
 }
 
 
-function Test_GetSettingsValue(){
-console.log(GetSettingsValue("Units"));
-}
-
-function GetSettingsValue(key){   
-  //var SettingsLog = SpreadsheetApp.getActive().getRangeByName("Settings").getValues();
-  var match = GetNamedRange("Settings").filter(function(row){
-    return row[0] == key;
-  });
-  if(match != null){
-    console.log(key + " settings key matched: " +  match[0][1]); //Normally this should be a single row
-    return match[0][1];  //return the first matching row's second colum
-  }
-  else
-  {
-    console.log("No match for settings key: " +  key);
-    return null;
-  }
-}
-
-function Test_GetFriendlyValue(){
-  console.log(GetFriendlyValue("EFan_Speed",1));
-}
-
 function GetFriendlyValue(key,rawValue)
 {
   var settingsMatch = GetNamedRange("Columns").filter(function(row){
@@ -263,4 +239,10 @@ function GetLatestLogEntry(key,useFriendlyFormat){
       return GetFriendlyName(key,rawValue);
     }
   }
+}
+
+function scrollToLast(){  //Select the latest cell in the log
+ var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+ var range = sheet.getRange(sheet.getLastRow(),1);
+ sheet.setActiveSelection(range);
 }
