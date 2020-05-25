@@ -1,5 +1,7 @@
+var Debug = GetSettingsValue("Stackdriver logging") == "Debug";  //Activates extra Stackdriver logs
+
 function Test_GetSettingsValue(){
-console.log(GetSettingsValue("Units"));
+console.log(GetSettingsValue("Stackdriver logging"));
 }
 
 
@@ -14,13 +16,13 @@ function GetSettingsValue(key){
   var match = GetNamedRange("Settings").filter(function(row){
     return row[0] == key;
   });
-  if(match != null){
-    //console.log(key + " settings key matched: " +  match[0][1]); //Normally this should be a single row
+  if(match != null && match.length > 0){
+    if(Debug)LogToConsole(key + " settings key matched: " +  match[0][1],true,1); //Normally this should be a single row
     return match[0][1];  //return the first matching row's second colum
   }
   else
   {
-    LogToConsole.log("No match for settings key: " +  key,true,1);
+    LogToConsole("No match for settings key: " +  key,true,1);
     return null;
   }
 }

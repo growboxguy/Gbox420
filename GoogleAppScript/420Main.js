@@ -11,6 +11,7 @@ JSON data receiver and Google Sheets logging
 
 var Debug = true;  //Activates extra Stackdriver logs
 
+
 //Column numbers - Only change these after rearranging columns
 var status_RawLog_Column = 5;
 var settings_AlertEnabled_Column = 2;
@@ -29,9 +30,6 @@ function Test_MainModule_ProcessBoxData(){
   FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
   ProcessBoxData(FakeJSONData);			 
 }
-
-
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This is where data arrives for the Arduino for processing
@@ -68,7 +66,8 @@ function doPost(receivedData) {
 }   
 
 
-function ProcessBoxData(JSONBoxData){
+function ProcessBoxData(JSONBoxData)
+{
   LogToConsole("Processing BoxDataJSON:",false,2);   
   try{
     if(JSONBoxData.Log != null)
@@ -76,9 +75,8 @@ function ProcessBoxData(JSONBoxData){
       LogToConsole(JSON.stringify(JSONBoxData.Log), true, 1);
       SaveToLog(JSONBoxData.Log);  //Save the log to the Logs sheet on the spreadsheet specified by spreadSheetID 
       UpdateColumns(JSONBoxData.Log); //Add missing columns to the Settings sheet 
-      UpdateStatus(JSONBoxData.Log); //Add formatted status of each component to the Status page   
-    
-    //  CheckAlerts(JSONBoxData.Log);  //Checks for alerts and send an email alert
+      UpdateStatus(JSONBoxData.Log); //Add formatted status of each component to the Status page     
+      CheckAlerts(JSONBoxData.Log);  //Checks for alerts and send an email alert
     //  UpdateCharts();  //Updates the chart datasources in case the columns were reordered
     }
     else{

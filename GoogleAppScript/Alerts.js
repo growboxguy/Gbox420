@@ -9,51 +9,65 @@ function CheckAlerts(Log)
   var recoveredMessages = [];  //For storing recovery messages  
   var sendEmailAlert = false;  //Initially assume everything is OK
   
-  for (var Component in Object.keys(Log)){     
-    var Report = JSON.parse(JSON.stringify(Log[Component]));
-    for (var ReportEntry in Object.keys(Report))
-    {   
-      var match = alertLimits.createTextFinder(Component + '_' + ReportEntry).matchEntireCell(true).findNext(); //lookup the alert limit row for each Log key
-      if(match != null)
-      { //If found in Settings
-        if(settingsSheet.getRange(match.getRow(),2).isChecked() == true)
+  var columns = GetNamedRange("Columns");
+
+  var Components = Object.getOwnPropertyNames(Log);  
+  for (var i = 0; i < Components.length; i++) {
+    var Properties = Object.getOwnPropertyNames(Log[Components[i]]);    
+    for (var j = 0; j < Properties.length; j++) {
+      var key = Components[i] + '_' + Properties[j];
+      var value = Log[Components[i]][Properties[j]];
+
+      var match = columns.filter(function(row){
+        return row[0] == key;
+      });
+      LogToConsole(key + " alert lookup: " + match,true,3);
+
+     if(match != null && match.length >0)
+      { //If match found in Settings
+        if(match[0][1])  //2nd column: Alert Enabled column: True or False
         {        
-          var minLimit = settingsSheet.getRange(match.getRow(),3).getDisplayValue(); //get the 2nd column value from the matched row: Minimum limit
-          var maxLimit = settingsSheet.getRange(match.getRow(),4).getDisplayValue(); //get the 3rd column value from the matched row: Maximum limit
+          var minLimit = match[0][2]; //3rd column: Minimum limit
+          var maxLimit = match[0][3]; //4th column: Maximum limit
+          LogToConsole(key + ": Alert active: ["+minLimit + "/"+maxLimit+"]", true, 3); 
           
-          if((minLimit != "" && maxLimit != "" && (Log[Component][ReportEntry] < minLimit || maxLimit < Log[Component][ReportEntry]))  || (minLimit == "" && maxLimit != "" && maxLimit < Log[Component][ReportEntry]) || (maxLimit == "" && minLimit != ""&&  Log[Component][ReportEntry] < minLimit))
+          if((minLimit != "" && maxLimit != "" && (value < minLimit || maxLimit < value))  || (minLimit == "" && maxLimit != "" && maxLimit < value) || (maxLimit == "" && minLimit != ""&&  value < minLimit))
           { //if reading was out of limits: activate alert
-            alerts.push(Component + '_' + ReportEntry);
+            alerts.push(key);
             
-            if(settingsSheet.getRange(match.getRow(),5).getValue() != 'YES')
+            if(match[0][4] != 'YES') //Triggered column
             { //if alert is new
-              alertMessages.push("<strong>" +"[NEW] " + "</strong><font color='red'>" + Component + '_' + ReportEntry + "</font> out of limits: <strong>" + Log[Component][ReportEntry] + "</strong> [" + minLimit + " / " + maxLimit + "]"); //save new alerts for the email
+              alertMessages.push("<strong>" +"[NEW] " + "</strong><font color='red'>" + key + "</font> out of limits: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); //save new alerts for the email
               sendEmailAlert = true; //Send notification that a parameter is out of range 
+              SpreadsheetApp.getActive().getRangeByName("Columns").createTextFinder("key").matchEntireCell(true).findNext().getRow(),logSheet.getLastRow(),1))
             }
             else 
             {
-              alertMessages.push("<font color='red'>" + Component + '_' + ReportEntry + "</font> out of limits: <strong>" + Log[Component][ReportEntry] + "</strong> [" + minLimit + " / " + maxLimit + "]");    //save active alerts for the email       
+              alertMessages.push("<font color='red'>" + key + "</font> out of limits: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]");    //save active alerts for the email       
             }
             
             //Mark alert active
             settingsSheet.getRange(match.getRow(),5).setValue('YES');  //Triggered column       
-            statusMatch = statusHeader.createTextFinder(Component + '_' + ReportEntry).matchEntireCell(true).findNext()
+            statusMatch = statusHeader.createTextFinder(key).matchEntireCell(true).findNext()
             if(statusMatch != null) statusSheet.getRange(statusMatch.getRow(),statusMatch.getColumn() + 1).setFontColor('red');
           }
           else 
           {    
             if(settingsSheet.getRange(match.getRow(),5).getValue() != 'NO')
             { //if alert was active before
-              recoveredMessages.push("<font color='green'>" + Component + '_' + ReportEntry + "</font> recovered: <strong>" + Log[Component][ReportEntry] + "</strong> [" + settingsSheet.getRange(match.getRow(),3).getDisplayValue() + " / " + settingsSheet.getRange(match.getRow(),4).getDisplayValue() + "]"); // //save recovered alerts for the email
+              recoveredMessages.push("<font color='green'>" + key + "</font> recovered: <strong>" + value + "</strong> [" + settingsSheet.getRange(match.getRow(),3).getDisplayValue() + " / " + settingsSheet.getRange(match.getRow(),4).getDisplayValue() + "]"); // //save recovered alerts for the email
               sendEmailAlert = true; //Send notification that a parameter recovered
             }
             
             //Mark alert inactive
             settingsSheet.getRange(match.getRow(),5).setValue('NO'); //Triggered column                  
-            statusMatch = statusReport.createTextFinder(Component + '_' + ReportEntry).matchEntireCell(true).findNext()
+            statusMatch = statusReport.createTextFinder(key).matchEntireCell(true).findNext()
             if(statusMatch != null) statusSheet.getRange(statusMatch.getRow(),statusMatch.getColumn() + 1).setFontColor('black');
           }
-        }  
+        } 
+        else {
+          LogToConsole(key + ": Alert not active", true, 3); 
+        }
       }
     }
   }
