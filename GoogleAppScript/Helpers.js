@@ -48,7 +48,7 @@ function GetNamedRange(rangeName, dropCache) {
         return JSON.parse(cached);
     }
     //console.log("Refreshed cached version of: " +  rangeName);
-    var rangeData = SpreadsheetApp.getActive().getRangeByName(rangeName).getDisplayValues();
+    var rangeData = SpreadsheetApp.getActive().getRangeByName(rangeName).getValues();
     cache.put(rangeName, JSON.stringify(rangeData), 120); // cache for 120 seconds to ensure it is not queried multiple times during script execution
     return rangeData;
 }

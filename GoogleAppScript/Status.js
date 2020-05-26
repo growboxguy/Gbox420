@@ -1,4 +1,3 @@
-// Compiled using ts2gas 3.6.2 (TypeScript 3.9.3)
 function Test_UpdateStatus() {
     FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
     UpdateStatus(FakeJSONData.Log);

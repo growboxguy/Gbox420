@@ -1,4 +1,3 @@
-// Compiled using ts2gas 3.6.2 (TypeScript 3.9.3)
 function Test_SaveToLog() {
     FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
     SaveToLog(FakeJSONData.Log);
@@ -23,7 +22,7 @@ function SaveToLog(Log) {
                 headings.push(key); //add key to the header's end
                 rowToInsert.push(); //add empty value to the end
             }
-            rowToInsert[headings.indexOf(key)] = Log[Components[i]][Properties[j]];
+            rowToInsert[headings.indexOf(key)] = Log[Components[i]][Properties[j]];  //insert the value under the matching heading
         }
     }
     LogToConsole("Row to insert: ", true, 1);
@@ -35,4 +34,25 @@ function SaveToLog(Log) {
     logSheet.getRange(1, 1, 1, logSheet.getLastColumn()).setFontWeight("bold"); //Set header bold (Frendly name)
     logSheet.setFrozenRows(2); //sets headers row frozen to the top
     logSheet.autoResizeColumns(1, logSheet.getLastColumn()); //resize columns to fit the data  
+}
+
+function GetLogColumnRange(name){  //returns the entire column with the matching header name
+  var logSheet = SpreadsheetApp.getActive().getSheetByName("Log");
+  var logHeader = logSheet.getDataRange().offset(0, 0, 1).getValues()[0]; //Get first row of the Log sheet
+  
+  match = null;
+  for (var column in logHeader) {
+    if (logHeader[column] == name) {
+      match = parseInt(column);
+    }
+  }
+  if(match != null)
+  {
+    console.log(name + " matched column: "+ match);
+    return logSheet.getRange(1, match+1, logSheet.getLastRow(), 1);
+  }
+  else
+  {
+    return null;
+  }  
 }
