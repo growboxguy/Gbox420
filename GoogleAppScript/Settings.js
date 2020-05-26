@@ -1,5 +1,5 @@
-// Compiled using ts2gas 3.6.2 (TypeScript 3.9.3)
 var Debug = GetSettingsValue("Stackdriver logging") == "Debug"; //Activates extra Stackdriver logs
+
 function Test_GetSettingsValue() {
     console.log(GetSettingsValue("Stackdriver logging"));
 }
@@ -9,12 +9,12 @@ function Test_UpdateColumns() {
 }
 function GetSettingsValue(key) {
     //var SettingsLog = SpreadsheetApp.getActive().getRangeByName("Settings").getValues();
-    var match = GetNamedRange("Settings").filter(function (row) {
+    var match = GetNamedRangeValues("Settings").filter(function (row) {
         return row[0] == key;
     });
     if (match != null && match.length > 0) {
         if (Debug)
-            LogToConsole(key + " settings key matched: " + match[0][1], true, 1); //Normally this should be a single row
+            LogToConsole(key + " settings key matched: " + match[0][1], true, 3); //Normally this should be a single row
         return match[0][1]; //return the first matching row's second colum
     }
     else {
@@ -25,8 +25,8 @@ function GetSettingsValue(key) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updates the Settings sheet: add newly discovered keys to Settings - Column section
 function UpdateColumns(Log) {
-    LogToConsole("Updating Columns in Settings sheet...", true, 1);
-    var columns = GetNamedRange("Columns");
+    LogToConsole("Updating Columns in Settings sheet...", true, 0);
+    var columns = GetNamedRangeValues("Columns");
     var nextRow = getLastRowInRange(columns) + 1; //Get next row after the last row
     //Add all other Header + Data pairs from the received Log JSON
     var Components = Object.getOwnPropertyNames(Log);
@@ -37,8 +37,7 @@ function UpdateColumns(Log) {
             var match = columns.filter(function (row) {
                 return row[0] == key;
             });
-            if (Debug)
-                LogToConsole(key + " column match:" + match, true, 2);
+            if (Debug) LogToConsole(key + " column matched settings row: [" + match + "]", true, 3) ;
             if (match == null || match.length == 0) { //If settings row does not exists
                 SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, 1).setValue(key); //Insert key in first Key column  
                 //Adding enable/disable alert checkbox

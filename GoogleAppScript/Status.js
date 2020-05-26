@@ -5,13 +5,12 @@ function Test_UpdateStatus() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updates the Status sheet
 function UpdateStatus(Log) {
-    console.log("Updating Status sheet...");
-    var status = GetNamedRange("Status");
+    LogToConsole("Updating Status sheet...",true,0);
+    var status = GetNamedRangeValues("Status");
     var newStatus = [];
     for (var i = 0; i < status.length; i++) {
         newStatus.push([status[i][0], null]); //pre-fill with null values
     }
-    LogToConsole("Blank status: " + newStatus, true, 1);
     //Add all Key + Data pairs to the Status sheet from the received Log JSON  
     var Components = Object.getOwnPropertyNames(Log);
     for (var i = 0; i < Components.length; i++) {
@@ -27,29 +26,27 @@ function UpdateStatus(Log) {
                     break;
                 }
             }
-            if (match != -1) {
+            if (match != -1) { //if a match was found
                 try {
-                    newStatus[match][1] = valueToWriteBack; //Update matched row's second column
-                    if (Debug)
-                        LogToConsole(key + " log column matched: " + match + ". Updating to: " + valueToWriteBack, true, 3);
+                    newStatus[match][1] = valueToWriteBack; //Update matched row's second column                    
                 }
                 catch (e) {
-                    LogToConsole(e, true, 1);
+                  LogToConsole("Error updating status row " + key +" : "+ e, true, 1);
                 }
             }
-            else {
+            else {  //no match found
                 try {
                     newStatus.push([key, valueToWriteBack]); //Create a new row  
                     if (Debug)
                         LogToConsole(key + " log column not found, adding it with value: " + valueToWriteBack, true, 3);
                 }
                 catch (e) {
-                    LogToConsole(e, true, 1);
+                    LogToConsole("Error adding status row " + key +" : " + e, true, 1);
                 }
             }
         }
     }
-    LogToConsole("Writing latest log row: " + newStatus, true, 2);
+    LogToConsole("Writing " + newStatus, true, 1);
     SpreadsheetApp.getActive().getSheetByName("Status").getRange(1, 1, newStatus.length, 2).setValues(newStatus);
     //SpreadsheetApp.getActive().setNamedRange("statusKeys", 'Status!A2:B');
 }

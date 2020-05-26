@@ -56,7 +56,9 @@ void AeroModule_Web::reportToJSON()
       strcat(LongMessage, toText(Command.MaxPressure));
     }
     strcat_P(LongMessage, (PGM_P)F("\",\"LastSpray\":\""));
-    strcat(LongMessage, toText(Response.LastSprayPressure));     
+    strcat(LongMessage, toText(Response.LastSprayPressure));    
+    strcat_P(LongMessage, (PGM_P)F("\",\"PumpState\":\""));
+    strcat(LongMessage, toText(Response.State));   
     strcat_P(LongMessage, (PGM_P)F("\",\"SprayEnabled\":\""));
     strcat(LongMessage, toText(Command.SprayEnabled));  
     strcat_P(LongMessage, (PGM_P)F("\",\"Interval\":\""));

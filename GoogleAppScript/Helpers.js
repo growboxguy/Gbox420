@@ -14,7 +14,7 @@ function getLastRowInRange(range) {
         }
     }
     if (Debug)
-        LogToConsole("First blank row in range: " + rowNum, true, 4);
+        LogToConsole("First blank row in range: " + rowNum, true, 3);
     return rowNum;
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,7 +24,7 @@ function LogToConsole(message, breakRow, indent) {
     var messageToLog = cache.get("previousMessage");
     if (indent > 0) {
         for (i = 0; i < indent; i++) {
-            messageToLog += "_";
+            messageToLog += ">";
         }
     }
     messageToLog += message;
@@ -36,11 +36,11 @@ function LogToConsole(message, breakRow, indent) {
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Helper functions: For getting settings
-function Test_GetNamedRange() {
-    console.log(GetNamedRange("Settings", false));
+function Test_GetNamedRangeValues() {
+    console.log(GetNamedRangeValues("Settings", false));
 }
 
-function GetNamedRange(rangeName, dropCache) {
+function GetNamedRangeValues(rangeName, dropCache) {
     var cache = CacheService.getScriptCache();
     var cached = cache.get(rangeName);
     if (cached != null && dropCache != true) {
@@ -54,7 +54,7 @@ function GetNamedRange(rangeName, dropCache) {
 }
 
 function Test_SaveNamedRange() {
-    var data = GetNamedRange("Columns", false);
+    var data = GetNamedRangeValues("Columns", false);
     data[0][0] = "TEST";  //Updates the first cell in the range
     SaveNamedRange("Columns",data);
 }
@@ -63,152 +63,159 @@ function SaveNamedRange(rangeName, data) {  //updates a Named Range in Google Sh
     var rangeData = SpreadsheetApp.getActive().getRangeByName(rangeName).setValues(data);    
 }
 
-function GetFriendlyValue(key, value) {
-    var returnValue = value; //This will get overwritten if a friendly value is found
-    var settingsMatch = GetNamedRange("Columns").filter(function (row) {
-        return row[0] == key;
-    });
-    if (settingsMatch == null) { //If key is not found
-        LogToConsole(key + " : " + value + ", type: UNKNOWN", true, 1);
-    }
-    else {
-        var dataType = settingsMatch[0][5];
-        switch (dataType) {
-            case "Date":
-                returnValue = Utilities.formatDate(value, GetSettingsValue("Time zone"), GetSettingsValue("Date format")); //https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateformat.html
-                break;
-            case "Distance":
-                if (GetSettingsValue("Units") == "Metric") {
-                    returnValue = value + ' cm';
-                }
-                else {
-                    returnValue = value + ' inch';
-                }
-                break;
-            case "Current":
-                returnValue = value + ' A';
-                break;
-            case "EnabledDisabled":
-                switch (value) {
-                    case "0":
-                        returnValue = "Disabled";
-                        break;
-                    case "1":
-                        returnValue = "Enabled";
-                        break;
-                }
-                break;
-            case "Energy":
-                returnValue = value + ' kWh';
-                break;
-            case "FanSpeed":
-                switch (value) {
-                    case "0":
-                        returnValue = "OFF";
-                        break;
-                    case "1":
-                        returnValue = "LOW";
-                        break;
-                    case "2":
-                        returnValue = "HIGH";
-                        break;
-                }
-                break;
-            case "Minute":
-                returnValue = value + ' min';
-                break;
-            case "OnOff":
-                switch (value) {
-                    case "0":
-                        returnValue = "OFF";
-                        break;
-                    case "1":
-                        returnValue = "ON";
-                        break;
-                }
-                break;
-            case "Percentage":
-                returnValue = value + ' %';
-                break;
-            case "Power":
-                returnValue = value + ' W';
-                break;
-            case "PumpState":
-                switch (value) {
-                    case "0":
-                        returnValue = "DISABLED";
-                        break;
-                    case "1":
-                        returnValue = "IDLE";
-                        break;
-                    case "2":
-                        returnValue = "PRIMING";
-                        break;
-                    case "3":
-                        returnValue = "RUNNING";
-                        break;
-                    case "4":
-                        returnValue = "BLOWOFF";
-                        break;
-                    case "5":
-                        returnValue = "MIXING";
-                        break;
-                }
-                break;
-            case "Pressure":
-                if (GetSettingsValue("Units") == "Metric") {
-                    returnValue = value + ' bar';
-                }
-                else {
-                    returnValue = value + ' psi';
-                }
-                break;
-            case "Second":
-                returnValue = value + ' sec';
-                break;
-            case "Temperature":
-                if (GetSettingsValue("Units") == "Metric") {
-                    returnValue = value + ' °C';
-                }
-                else {
-                    returnValue = value + ' °F';
-                }
-                break;
-            case "Time":
-                console.log(value + ' , ' + GetSettingsValue("Time zone") + ' , ' + GetSettingsValue("Time format"));
-                var Time = new Date(value);
-                returnValue = Utilities.formatDate(Time, GetSettingsValue("Time zone"), GetSettingsValue("Time format"));
-                break;
-            case "YesNo":
-                switch (value) {
-                    case "0":
-                        returnValue = "NO";
-                        break;
-                    case "1":
-                        returnValue = "YES";
-                        break;
-                }
-                break;
-            case "Voltage":
-                returnValue = value + ' V';
-                break;
-            case "Weight":
-                if (GetSettingsValue("Units") == "Metric") {
-                    returnValue = value + ' kg';
-                }
-                else {
-                    returnValue = value + ' lbs';
-                }
-                break;
-            default: //Number and Text returnValue = as they are
-                returnValue = value;
-                break;
-        }
-        if (Debug)
-            LogToConsole(key + " : " + value + " , type: " + dataType + " , FriendlyValue: " + returnValue, true, 1);
-    }
-    return returnValue;
+function Test_GetFriendlyValue(){
+  GetFriendlyValue("Lt1_On","16:20");
 }
+
+function GetFriendlyValue(key, value) {
+  var returnValue = value; //This will get overwritten if a friendly value is found
+  var settingsMatch = GetNamedRangeValues("Columns").filter(function (row) {
+    return row[0] == key;
+  });
+  if (settingsMatch == null) { //If key is not found
+    LogToConsole(key + " : " + value + ", type: UNKNOWN", true, 1);
+  }
+  else {
+    var dataType = settingsMatch[0][5];
+    switch (dataType) {
+      case "Date":
+        returnValue = Utilities.formatDate(value, GetSettingsValue("Time zone"), GetSettingsValue("Date format")); //https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateformat.html
+        break;
+      case "Distance":
+        if (GetSettingsValue("Units") == "Metric") {
+          returnValue = value + ' cm';
+        }
+        else {
+          returnValue = value + ' inch';
+        }
+        break;
+      case "Current":
+        returnValue = value + ' A';
+        break;
+      case "EnabledDisabled":
+        switch (value) {
+          case "0":
+            returnValue = "Disabled";
+            break;
+          case "1":
+            returnValue = "Enabled";
+            break;
+        }
+        break;
+      case "Energy":
+        returnValue = value + ' kWh';
+        break;
+      case "FanSpeed":
+        switch (value) {
+          case "0":
+            returnValue = "OFF";
+            break;
+          case "1":
+            returnValue = "LOW";
+            break;
+          case "2":
+            returnValue = "HIGH";
+            break;
+        }
+        break;
+      case "Minute":
+        returnValue = value + ' min';
+        break;
+      case "OnOff":
+        switch (value) {
+          case "0":
+            returnValue = "OFF";
+            break;
+          case "1":
+            returnValue = "ON";
+            break;
+        }
+        break;
+      case "Percentage":
+        returnValue = value + ' %';
+        break;
+      case "Power":
+        returnValue = value + ' W';
+        break;
+      case "PumpState":
+        switch (value) {
+          case "0":
+            returnValue = "DISABLED";
+            break;
+          case "1":
+            returnValue = "IDLE";
+            break;
+          case "2":
+            returnValue = "PRIMING";
+            break;
+          case "3":
+            returnValue = "RUNNING";
+            break;
+          case "4":
+            returnValue = "BLOWOFF";
+            break;
+          case "5":
+            returnValue = "MIXING";
+            break;
+        }
+        break;
+      case "Pressure":
+        if (GetSettingsValue("Units") == "Metric") {
+          returnValue = value + ' bar';
+        }
+        else {
+          returnValue = value + ' psi';
+        }
+        break;
+      case "Second":
+        returnValue = value + ' sec';
+        break;
+      case "Temperature":
+        if (GetSettingsValue("Units") == "Metric") {
+          returnValue = value + ' °C';
+        }
+        else {
+          returnValue = value + ' °F';
+        }
+        break;
+      case "Time":
+        var Time = new Date();
+        Time.setHours(value.split(":")[0]);
+        Time.setMinutes(value.split(":")[1]);
+        returnValue = Utilities.formatDate(Time, "GMT", GetSettingsValue("Time format"));  //Arriving date is already in the correct time zone, using GMT to avoid changing the time zone
+        break;
+      case "YesNo":
+        switch (value) {
+          case "0":
+            returnValue = "NO";
+            break;
+          case "1":
+            returnValue = "YES";
+            break;
+        }
+        break;
+      case "Voltage":
+        returnValue = value + ' V';
+        break;
+      case "Weight":
+        if (GetSettingsValue("Units") == "Metric") {
+          returnValue = value + ' kg';
+        }
+        else {
+          returnValue = value + ' lbs';
+        }
+        break;
+      default: //Number and Text returnValue = as they are
+        returnValue = value;
+        break;
+    }
+    if (Debug)
+      LogToConsole(key + " : " + value + " , type: " + dataType + " , FriendlyValue: " + returnValue, true, 3);
+  }
+  return returnValue;
+}
+
+/*
 function GetLatestLogEntry(key, useFriendlyFormat) {
     var match = logHeader.createTextFinder(key).matchEntireCell(true).findNext();
     if (match == null) { //If key is not found
@@ -225,6 +232,8 @@ function GetLatestLogEntry(key, useFriendlyFormat) {
         }
     }
 }
+*/
+
 function scrollToLast() {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
     var range = sheet.getRange(sheet.getLastRow(), 1);

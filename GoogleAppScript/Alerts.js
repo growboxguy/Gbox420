@@ -3,7 +3,6 @@
  Sends an email alert if a value gets out of range or recoveres
 */
 
-
 function Test_CheckAlerts() {
   FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
   CheckAlerts(FakeJSONData.Log);
@@ -12,12 +11,13 @@ function Test_CheckAlerts() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Triggers/Resolves email alerts based on the Alerts sheet settings
 function CheckAlerts(Log) {
+  LogToConsole("Processing alerts...",true,0);
   var alerts = []; //For storing alert keys
   var alertMessages = []; //For storing alert messages
   var recoveredMessages = []; //For storing recovery messages  
   var sendEmailAlert = false; //Initially assume everything is OK
   
-  var columns = GetNamedRange("Columns",true);
+  var columns = GetNamedRangeValues("Columns",true);
   var Components = Object.getOwnPropertyNames(Log);
   for (var i = 0; i < Components.length; i++) {
     var Properties = Object.getOwnPropertyNames(Log[Components[i]]);
@@ -30,15 +30,12 @@ function CheckAlerts(Log) {
      
       if (match != null && match.length > 0) { //If match found in Settings
         var originalRow = match.map(row => columns.indexOf(row));     //Points to the original row number in the Columns range    
-        
-        if (match[0][1] == "TRUE") //2nd column: Alert Enabled column: True or False
-        {
-          LogToConsole(key + " (" +  match[0][1] + ") alert lookup: " + match, true, 3);
-         
+        if (match[0][1]) //2nd column: Alert Enabled column: True or False
+        {       
           var minLimit = match[0][2]; //3rd column: Minimum limit
           var maxLimit = match[0][3]; //4th column: Maximum limit
           var test = Number("Test");
-          LogToConsole(key + " : " + value + ", Alert active: [" + minLimit + "/" + maxLimit + "]", false, 3);
+          LogToConsole(key + " : " + value + ", Alert active: [" + minLimit + "/" + maxLimit + "]", false, 1);
                    
           if ((minLimit != "" && maxLimit != "" && (value < minLimit || maxLimit < value)) || (minLimit == "" && maxLimit != "" && maxLimit < value) || (maxLimit == "" && minLimit != "" && value < minLimit)) { //if reading was out of limits: activate alert
             alerts.push(key);
@@ -73,7 +70,7 @@ function CheckAlerts(Log) {
           }
         }
         else {
-          LogToConsole(key + ": Alert not active", true, 3);
+         if(Debug) LogToConsole(key + ": Alert not active", true, 3);
         }
       }
     }
@@ -82,12 +79,12 @@ function CheckAlerts(Log) {
   
   if (sendEmailAlert || GetSettingsValue("Send an email") == "When a report is received") //When there was a new event
   {
-    LogToConsole("Sending email alert", true, 2);
+    LogToConsole("Sending email alert", true, 1);
     var emailTemplate = HtmlService.createTemplateFromFile('AlertTemplate'); //Prepare the AlertEmailTemplate.html as a template
     emailTemplate.Alerts = alerts; //Fill Alert messages into the template
     emailTemplate.AlertMessages = alertMessages; //Fill Alert messages into the template
     emailTemplate.RecoveredMessages = recoveredMessages; //Fill Recovered messages into the template
-    emailTemplate.Data = GetNamedRange("Status");
+    emailTemplate.Data = GetNamedRangeValues("Status");
     sendEmail(emailTemplate);
   }
 }
@@ -101,7 +98,7 @@ function sendEmail(emailTemplate) {
         //This section converts the charts to images and attaches them to the email message
         var emailImages = {};
         if (GetSettingsValue("Attach charts") == "Yes") {
-            var charts = chartsSheet.getCharts();
+            var charts = SpreadsheetApp.getActive().getSheetByName("Charts").getCharts();
             var chartBlobs = new Array(charts.length);
             for (var i = 0; i < charts.length; i++) {
                 var builder = charts[i].modify();
