@@ -24,14 +24,15 @@ function UpdateCharts() {
     });
     
     chartBuilder.addRange(GetLogColumnRange("LogDate"));
-   // var seriesType = [];
+    var seriesType = {};
     for(var j = 0; j < columnsToInclude.length; j++)
     {   
       chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][0])); 
-      //seriesType.push({ j : { type: 'line', color: 'orange', targetAxisIndex: j }});
-    }
-    //console.log(seriesType);
-    //chartBuilder.setOption('series', {seriesType});
+      seriesType[j] = { type: columnsToInclude[j][7], targetAxisIndex: j };
+    }   
+    
+    console.log(seriesType);
+    chartBuilder.setOption('series', seriesType);
         
     chartBuilder
     .setPosition(1 + i*29, 1, 0, 0)
@@ -40,6 +41,8 @@ function UpdateCharts() {
     .setOption('title', charts[i][1])
     .setOption('width', 800)
     .setOption('height', 600)
+   // .setOption("useFirstColumnAsDomain", true) //ColAasLabels
+    //.setOption("applyAggregateData",0) //AggregateColA
    // .setOption('series', {
    //   0: { type: 'line', color: 'orange', targetAxisIndex: 0 },
   //    1: { type: 'line', color: 'green', targetAxisIndex: 1 }
