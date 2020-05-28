@@ -39,7 +39,7 @@ function CheckAlerts(Log) {
                    
           if ((minLimit != "" && maxLimit != "" && (value < minLimit || maxLimit < value)) || (minLimit == "" && maxLimit != "" && maxLimit < value) || (maxLimit == "" && minLimit != "" && value < minLimit)) { //if reading was out of limits: activate alert
             alerts.push(key);
-            LogToConsole(" -> out of range", true, 0);
+            LogToConsole(" -> Out of range", true, 0);
             if (match[0][4] != 'YES') //Triggered column
             { //if alert is new
               alertMessages.push("<strong>" + "[NEW] " + "</strong><font color='red'>" + key + "</font> out of limits: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); //save new alerts for the email

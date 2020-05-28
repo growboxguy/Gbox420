@@ -53,6 +53,13 @@ function GetNamedRangeValues(rangeName, dropCache) {
     return rangeData;
 }
 
+function WipeCache(){  ///Force to drop all cached named ranges
+  LogToConsole("Wiping cached Named ranges", true, 1);
+  var storedCache = CacheService.getUserCache();
+  CacheService.getUserCache().remove(storedCache);
+
+}
+
 function Test_SaveNamedRange() {
     var data = GetNamedRangeValues("Columns", false);
     data[0][0] = "TEST";  //Updates the first cell in the range

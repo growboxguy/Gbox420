@@ -1,3 +1,9 @@
+function ReBuildCharts()
+{
+  GetNamedRangeValues("Columns",true);  ///Force a refresh of the Columns named range
+  UpdateCharts();
+}
+
 function ClearCharts(){
   var chartsSheet = SpreadsheetApp.getActive().getSheetByName("Charts");
   var charts = chartsSheet.getCharts();
@@ -10,7 +16,7 @@ function UpdateCharts() {
   ClearCharts();  
   var columns = GetNamedRangeValues("Columns");
   var charts = GetNamedRangeValues("Charts").filter(function (row) {
-    return typeof row[0] == "number";  //filtering out blank rows based on the second column: Name of the chart)
+    return typeof row[0] == "number" && row[0] > 0;  //filtering out rows with an order number of 1 or above
   });
   LogToConsole("Generating charts...",true,0);
   
@@ -28,11 +34,12 @@ function UpdateCharts() {
     for(var j = 0; j < columnsToInclude.length; j++)
     {   
       chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][0])); 
-      seriesType[j] = { type: columnsToInclude[j][7], targetAxisIndex: j };
-    }   
-    
-    console.log(seriesType);
+      seriesType[j] = { type: columnsToInclude[j][7], labelInLegend: columnsToInclude[j][8],targetAxisIndex: columnsToInclude[j][9]};
+    }
+    if(Debug)LogToConsole(seriesType,true,3);
     chartBuilder.setOption('series', seriesType);
+    
+   
         
     chartBuilder
     .setPosition(1 + i*29, 1, 0, 0)
@@ -40,14 +47,16 @@ function UpdateCharts() {
     .setNumHeaders(1)
     .setOption('title', charts[i][1])
     .setOption('width', 800)
-    .setOption('height', 600)
+    .setOption('height', 600)  
+    .setOption('vAxis.ticks', [0,1])
+    //.setOption('hAxis', {title: "DateTime"})
+    //.setOption('vAxes', {0: {title: "Left side - vertical axis 0"},1: {title: "Right side - vetical axis 1"}})    
    // .setOption("useFirstColumnAsDomain", true) //ColAasLabels
     //.setOption("applyAggregateData",0) //AggregateColA
    // .setOption('series', {
-   //   0: { type: 'line', color: 'orange', targetAxisIndex: 0 },
-  //    1: { type: 'line', color: 'green', targetAxisIndex: 1 }
+   //   0: { type: 'line', color: 'orange', targetAxisIndex: 0,hasAnnotations: true,dataLabel: 'value',dataLabelPlacement: 'outsideEnd',dataLabel: "value" },
+  //    1: { type: 'line', color: 'green', targetAxisIndex: 1,hasAnnotations: true,dataLabel: 'value',dataLabelPlacement: 'outsideEnd',dataLabel: "value" }
    // })
-    //.setOption('vAxes', { 0: { title: 'Light reading' }, 1: { title: 'Brightness %' } })
     .setOption('hAxis', { slantedText: true, 'slantedTextAngle': 30 });
     
     chartsSheet.insertChart(chartBuilder.build());    

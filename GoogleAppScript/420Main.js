@@ -56,6 +56,7 @@ function doPost(receivedData) {
 function ProcessBoxData(JSONBoxData) {
   LogToConsole("Processing BoxDataJSON: ", false, 1);
   try {
+    WipeCache();  ///Remove cached Named Ranges and get a fresh copy
     if (JSONBoxData.Log != null) {
       LogToConsole(JSON.stringify(JSONBoxData.Log), true, 0);  //Print the JSON on the Stackdriver logging (View / Stackdriver logging)
       SaveToLog(JSONBoxData.Log); //Save the log to the Logs sheet 
