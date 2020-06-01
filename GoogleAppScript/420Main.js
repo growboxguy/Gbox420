@@ -9,6 +9,10 @@ Connect Google App Scripts to Visual Studio Code: https://yagisanatode.com/2019/
 You will also need the latest version of NPM,https://phoenixnap.com/kb/update-node-js-version
 */
 
+var status_RawLog_Column = 5;
+var settings_AlertEnabled_Column = 2;
+var settings_Triggered_Column = 5;
+var settings_DataType_Column = 6;
 var SupportedDataTypes = ['Date', 'Distance', 'Current', 'EnabledDisabled', 'Energy', 'FanSpeed', 'Minute', 'Number', 'OnOff', 'Percentage', 'Power', 'PumpState', 'Pressure', 'Second', 'Temperature', 'Text', 'Time', 'YesNo', 'Voltage', 'Weight'];
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////

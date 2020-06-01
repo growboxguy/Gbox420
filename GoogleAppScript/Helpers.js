@@ -67,7 +67,7 @@ function Test_SaveNamedRange() {
 }
 
 function SaveNamedRange(rangeName, data) {  //updates a Named Range in Google Sheets with data (type: Object[][] )
-    var rangeData = SpreadsheetApp.getActive().getRangeByName(rangeName).setValues(data);    
+    SpreadsheetApp.getActive().getRangeByName(rangeName).setValues(data);    
 }
 
 function Test_GetFriendlyValue(){

@@ -25,36 +25,57 @@ function GetSettingsValue(key) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Updates the Settings sheet: add newly discovered keys to Settings - Column section
 function UpdateColumns(Log) {
-    LogToConsole("Updating Columns in Settings sheet...", true, 0);
-    var columns = GetNamedRangeValues("Columns");
-    var nextRow = getLastRowInRange(columns) + 1; //Get next row after the last row
-    //Add all other Header + Data pairs from the received Log JSON
-    var Components = Object.getOwnPropertyNames(Log);
-    for (var i = 0; i < Components.length; i++) {
-        var Properties = Object.getOwnPropertyNames(Log[Components[i]]);
-        for (var j = 0; j < Properties.length; j++) {
-            var key = Components[i] + '_' + Properties[j];
-            var match = columns.filter(function (row) {
-                return row[0] == key;
-            });
-            if (Debug) LogToConsole(key + " column matched settings row: [" + match + "]", true, 3) ;
-            if (match == null || match.length == 0) { //If settings row does not exists
-                SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, 1).setValue(key); //Insert key in first Key column  
-                //Adding enable/disable alert checkbox
-                SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_AlertEnabled_Column).insertCheckboxes();
-                //Adding YES/NO options for Triggered column
-                var YesNo = SpreadsheetApp.newDataValidation().requireValueInList(['YES', 'NO']).build();
-                SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_Triggered_Column).setDataValidation(YesNo);
-                SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_Triggered_Column).setHorizontalAlignment("right");
-                SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_Triggered_Column).setValue('NO'); //By default do not enable the new alert
-                //Adding Type column
-                var DataType = SpreadsheetApp.newDataValidation().requireValueInList(SupportedDataTypes).build();
-                SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_DataType_Column).setDataValidation(DataType); //Add YES/NO options for Triggered column
-                SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_DataType_Column).setHorizontalAlignment("right");
-                SpreadsheetApp.getActive().getSheetByName("Settings").getRange(nextRow, settings_DataType_Column).setValue('Text'); //By default do not enable the new alert        
-                nextRow++;
-            }
-        }
+  LogToConsole("Updating Columns in Settings sheet...", true, 0);
+  var newColumnDiscovered = false;
+  var columns = GetNamedRangeValues("Columns");
+  var nextRow = getLastRowInRange(columns) + 1; //Get next row after the last row
+  //Add all other Header + Data pairs from the received Log JSON
+  var Components = Object.getOwnPropertyNames(Log);
+  for (var i = 0; i < Components.length; i++) {
+    var Properties = Object.getOwnPropertyNames(Log[Components[i]]);
+    for (var j = 0; j < Properties.length; j++) {
+      var key = Components[i] + '_' + Properties[j];
+      var match = columns.filter(function (row) {
+        return row[0] == key;
+      });
+      if (Debug) LogToConsole(key + " column matched settings row: [" + match + "]", true, 3) ;
+      if (match == null || match.length == 0) { //If settings row does not exists
+        newColumnDiscovered = true;  
+        addColumnsRow(key);
+        nextRow++;
+      }
     }
-    SpreadsheetApp.getActive().getSheetByName("Settings").autoResizeColumns(1, SpreadsheetApp.getActive().getSheetByName("Settings").getLastColumn()); //resize columns to fit the data 
+  }
+  if(newColumnDiscovered) GetNamedRangeValues("Columns",true); //Force a cache refresh if a new column was added
+  //SpreadsheetApp.getActive().getSheetByName("Settings").autoResizeColumns(1, SpreadsheetApp.getActive().getSheetByName("Settings").getLastColumn()); //resize columns to fit the data 
+}
+
+function test_addColumnsRow(){
+ addColumnsRow("TestKey"); 
+}
+
+function addColumnsRow(newKey) {
+  LogToConsole("Adding new key to Columns: " + newKey,false,3);
+  var settingsSheet = SpreadsheetApp.getActive().getSheetByName("Settings");
+  var columnsRange = SpreadsheetApp.getActive().getRangeByName("Columns");  
+  var lastRow = getLastRowInRange(columnsRange.getValues()); 
+  var lastColumn = columnsRange.getLastColumn();   
+  LogToConsole(" (lastRow: "+ lastRow + " , lastColumn: " + lastColumn + ")",true,0);
+  
+  var range = settingsSheet.getRange(lastRow,1,1,lastColumn);  
+  range.copyTo(settingsSheet.getRange(lastRow+1, 1, 1, lastColumn), {contentsOnly:false}); //copy last row, including the validation rules for each cell
+  
+  defaultValues = range.getValues();
+  defaultValues[0][0] = newKey;
+  defaultValues[0][1] = false;
+  defaultValues[0][2] = "";
+  defaultValues[0][3] = "";
+  defaultValues[0][4] = "NO";
+  defaultValues[0][5] = "Text";
+  defaultValues[0][6] = "-";
+  defaultValues[0][7] = "line";
+  defaultValues[0][8] = newKey;
+  defaultValues[0][9] = 0;
+  settingsSheet.getRange(lastRow+1, 1, 1, lastColumn).setValues(defaultValues);  //Setting default values for the new column
+  
 }
