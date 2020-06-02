@@ -5,6 +5,7 @@ function ReBuildCharts()
 }
 
 function ClearCharts(){
+  LogToConsole("Clearing old charts...",true,0);
   var chartsSheet = SpreadsheetApp.getActive().getSheetByName("Charts");
   var charts = chartsSheet.getCharts();
   for (var i in charts) {
@@ -14,32 +15,29 @@ function ClearCharts(){
 
 function UpdateCharts() {
   ClearCharts();  
+  LogToConsole("Generating charts...",true,0);
+  chartsSheet = SpreadsheetApp.getActive().getSheetByName("Charts");
   var columns = GetNamedRangeValues("Columns");
   var charts = GetNamedRangeValues("Charts").filter(function (row) {
-    return typeof row[0] == "number" && row[0] > 0;  //filtering out rows with an order number of 1 or above
-  });
-  LogToConsole("Generating charts...",true,0);
+    return typeof row[charts_orderColumn] == "number" && row[charts_orderColumn] > 0;  ///< Get rows with an order number of 1 or above
+  });  
   
   for(var i = 0; i < charts.length;i++){
-    if(Debug) LogToConsole("Generating chart " + charts[i][1] + " [" + charts[i][2] + "]",true,3);
-            
-    chartsSheet = SpreadsheetApp.getActive().getSheetByName("Charts");
+    if(Debug) LogToConsole("Generating chart " + charts[i][charts_titleColumn] + " [" + charts[i][charts_typeColumn] + "]",true,3);   
     var chartBuilder = chartsSheet.newChart();    
     var columnsToInclude = columns.filter(function (row) {
-      return row[6] == charts[i][1];  //filtering out blank rows based on first column (Contains the order number of the chart)
+      return row[columns_chartColumn] == charts[i][charts_titleColumn];  ///< Selecting the columns to include in the chart based on Settings tab - Columns section- Show on Chart column
     });
     
     chartBuilder.addRange(GetLogColumnRange("LogDate"));
     var seriesType = {};
     for(var j = 0; j < columnsToInclude.length; j++)
     {   
-      chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][0])); 
-      seriesType[j] = { type: columnsToInclude[j][7], labelInLegend: columnsToInclude[j][8],targetAxisIndex: columnsToInclude[j][9]};
+      chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn])); 
+      seriesType[j] = { type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_nameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
     }
     if(Debug)LogToConsole(seriesType,true,3);
     chartBuilder.setOption('series', seriesType);
-    
-   
         
     chartBuilder
     .setPosition(1 + i*29, 1, 0, 0)
@@ -63,7 +61,7 @@ function UpdateCharts() {
   }  
 }
 
-function GetChartType(name)
+function GetChartType(name)  ///< Translates the chart type text to an actual chart type
 {
   switch(name)
   {

@@ -9,17 +9,32 @@ Connect Google App Scripts to Visual Studio Code: https://yagisanatode.com/2019/
 You will also need the latest version of NPM,https://phoenixnap.com/kb/update-node-js-version
 */
 
-var status_RawLog_Column = 5;
-var settings_AlertEnabled_Column = 2;
-var settings_Triggered_Column = 5;
-var settings_DataType_Column = 6;
-var SupportedDataTypes = ['Date', 'Distance', 'Current', 'EnabledDisabled', 'Energy', 'FanSpeed', 'Minute', 'Number', 'OnOff', 'Percentage', 'Power', 'PumpState', 'Pressure', 'Second', 'Temperature', 'Text', 'Time', 'YesNo', 'Voltage', 'Weight'];
+//Relative position of Columns within named ranges - Change these only when rearranging the columns
+var status_keyColumn = 0;  //Relative position within the Status named range
+var status_valueColumn = 1;
+
+var charts_orderColumn = 0;  //Relative position within the Charts named range
+var charts_titleColumn = 1;
+var charts_typeColumn = 2;
+
+var columns_keyColumn = 0;  //Relative position within the Columns named range
+var columns_alertEnabledColumn = 1;
+var columns_alertMinColumn = 2;
+var columns_alertMaxColumn = 3;
+var columns_triggeredColumn = 4;
+var columns_dataTypeColumn = 5;
+var columns_chartColumn = 6;
+var columns_seriesColumn = 7;
+var columns_nameColumn = 8;
+var columns_targetAxisColumn = 9;
+
+var settings_keyColumn = 0;  //Relative position within the Settings named range
+var settings_valueColumn = 1;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Test functions
 function Test_ProcessBoxData() {
-  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
-  ProcessBoxData(FakeJSONData);
+  ProcessBoxData(getTestJSONData());
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +82,7 @@ function ProcessBoxData(JSONBoxData) {
       UpdateColumns(JSONBoxData.Log); //Add missing columns to the Settings sheet 
       UpdateStatus(JSONBoxData.Log); //Add the latest status to the Status page     
       CheckAlerts(JSONBoxData.Log); //Checks for alerts and send an email alert
-      UpdateCharts();  //Updates the chart datasources in case the columns were reordered
+      UpdateCharts();  //Updates the Charts
     }
     else {
       LogToConsole("Received BoxData does not contain a Log section. Skipping log processing.", true, 1);

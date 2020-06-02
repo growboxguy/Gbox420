@@ -1,4 +1,3 @@
-// Compiled using ts2gas 3.6.2 (TypeScript 3.9.3)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Helper functions: Retrieves a value for other functions
 function getLastRowInRange(range) {
@@ -17,6 +16,7 @@ function getLastRowInRange(range) {
         LogToConsole("First blank row in range: " + rowNum, true, 3);
     return rowNum;
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Stackdriver logging - Add a log entry ( View it from Sheets: View \  Stackdriver logging
 function LogToConsole(message, breakRow, indent) {
@@ -34,6 +34,7 @@ function LogToConsole(message, breakRow, indent) {
     }
     cache.put("previousMessage", messageToLog);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Helper functions: For getting settings
 function Test_GetNamedRangeValues() {
@@ -57,7 +58,6 @@ function WipeCache(){  ///Force to drop all cached named ranges
   LogToConsole("Wiping cached Named ranges", true, 1);
   var storedCache = CacheService.getUserCache();
   CacheService.getUserCache().remove(storedCache);
-
 }
 
 function Test_SaveNamedRange() {
@@ -76,14 +76,14 @@ function Test_GetFriendlyValue(){
 
 function GetFriendlyValue(key, value) {
   var returnValue = value; //This will get overwritten if a friendly value is found
-  var settingsMatch = GetNamedRangeValues("Columns").filter(function (row) {
-    return row[0] == key;
+  var match = GetNamedRangeValues("Columns").filter(function (row) {
+    return row[columns_keyColumn] == key;
   });
-  if (settingsMatch == null) { //If key is not found
+  if (match == null) { //If key is not found
     LogToConsole(key + " : " + value + ", type: UNKNOWN", true, 1);
   }
   else {
-    var dataType = settingsMatch[0][5];
+    var dataType = match[0][columns_dataTypeColumn];
     switch (dataType) {
       case "Date":
         returnValue = Utilities.formatDate(value, GetSettingsValue("Time zone"), GetSettingsValue("Date format")); //https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateformat.html

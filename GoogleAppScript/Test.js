@@ -4,6 +4,11 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Trigger a fake JSON report for testing
 
+function getTestJSONData()
+{
+  return JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
+}
+
 
 function RunFakeReport() {
   LogToConsole(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", true,0);

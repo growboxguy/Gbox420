@@ -3,16 +3,8 @@
  Sends an email alert if a value gets out of range or recoveres
 */
 
-//Column locations
-var alerts_keyColumn = 0;  //1st column: Key
-var alets_alertEnabledColumn = 1;  //2nd column: Alert Enabled column: True or False
-var alets_minColumn = 2;  //3rd column: Minimum limit
-var alets_maxColumn = 3;  //4th column: Maximum limit
-var alets_triggeredColumn = 4; //5th column: Is alert active 
-
 function Test_CheckAlerts() {
-  FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
-  CheckAlerts(FakeJSONData.Log);
+  CheckAlerts(getTestJSONData().Log);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,25 +24,25 @@ function CheckAlerts(Log) {
       var key = Components[i] + '_' + Properties[j];
       var value = Log[Components[i]][Properties[j]];
       var match = columns.filter(function (row) {
-        return row[alerts_keyColumn] == key;
+        return row[columns_keyColumn] == key;
       });      
      
       if (match != null && match.length > 0) { //If match found in Settings
         var originalRow = match.map(row => columns.indexOf(row));     //Points to the original row number in the Columns range    
-        if (match[0][alets_alertEnabledColumn]) 
+        if (match[0][columns_alertEnabledColumn]) 
         {       
-          var minLimit = match[0][alets_minColumn];
-          var maxLimit = match[0][alets_maxColumn];
+          var minLimit = match[0][columns_alertMinColumn];
+          var maxLimit = match[0][columns_alertMaxColumn];
           LogToConsole(key + " : " + value + ", Alert active: [" + minLimit + "/" + maxLimit + "]", false, 1);
                    
           if ((minLimit != "" && maxLimit != "" && (value < minLimit || maxLimit < value)) || (minLimit == "" && maxLimit != "" && maxLimit < value) || (maxLimit == "" && minLimit != "" && value < minLimit)) { //if reading was out of limits: activate alert
             alerts.push(key);
             LogToConsole(" -> Out of range", true, 0);
-            if (match[0][alets_triggeredColumn] != 'YES')
+            if (match[0][columns_triggeredColumn] != 'YES')
             { //if alert is new
               alertMessages.push("<strong>" + "[NEW] " + "</strong><font color='red'>" + key + "</font> out of limits: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); //save new alerts for the email
               sendEmailAlert = true; //Send notification that a new value is out of range 
-              columns[originalRow][alets_triggeredColumn] = 'YES'; //Flag the alert active
+              columns[originalRow][columns_triggeredColumn] = 'YES'; //Flag the alert active
             }
             else {
               alertMessages.push("<font color='red'>" + key + "</font> out of limits: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); //save active alerts for the email       
@@ -63,10 +55,10 @@ function CheckAlerts(Log) {
           }
           else {
             LogToConsole(" -> OK", true, 0);
-            if (match[0][alets_triggeredColumn] != 'NO') { //if alert was active before
+            if (match[0][columns_triggeredColumn] != 'NO') { //if alert was active before
               recoveredMessages.push("<font color='green'>" + key + "</font> recovered: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); // //save recovered alerts for the email
               sendEmailAlert = true; //Send notification that a parameter recovered
-              columns[originalRow][alets_triggeredColumn] = 'NO'; //Flag the alert active
+              columns[originalRow][columns_triggeredColumn] = 'NO'; //Flag the alert active
             }
             //Mark alert inactive on Status page
             //settingsSheet.getRange(match.getRow(), 5).setValue('NO'); //Triggered column                  
@@ -91,7 +83,7 @@ function CheckAlerts(Log) {
     emailTemplate.AlertMessages = alertMessages; //Fill Alert messages into the template
     emailTemplate.RecoveredMessages = recoveredMessages; //Fill Recovered messages into the template
     emailTemplate.Data = GetNamedRangeValues("Status").filter(function (row) {
-    return row[alerts_keyColumn] != "";  //Filter out rows with a blank key colum
+      return row[columns_keyColumn] != "";  //Filter out rows with a blank key colum
     });
     sendEmail(emailTemplate);
   }
@@ -125,7 +117,7 @@ function sendEmail(emailTemplate) {
         //Send out the email message      
         MailApp.sendEmail({
             to: GetSettingsValue("Email address"),
-            subject: "GrowBox report",
+            subject: GetSettingsValue("Email title"),
             htmlBody: emailMessage,
             inlineImages: emailImages
         });
