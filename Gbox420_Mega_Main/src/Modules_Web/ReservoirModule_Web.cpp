@@ -75,7 +75,7 @@ void ReservoirModule_Web::syncModule( const byte WirelessChannel[], reservoirCom
       if ( Parent -> Wireless -> isAckPayloadAvailable() ) {
           Parent -> Wireless -> read(Response, sizeof(*Response));
            logToSerials(F("Acknowledgement received ["),false,2);            
-          logToSerials(sizeof(*Response),true,1); /// \todo Use LogToSerial
+          logToSerials(toText(sizeof(*Response)),true,1); /// \todo Use LogToSerial
           logToSerials(F("bytes]"),true,1);
 
            if(*Debug){

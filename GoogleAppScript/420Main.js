@@ -40,13 +40,14 @@ function Test_ProcessBoxData() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This is where data arrives for the Arduino for processing
 function doPost(receivedData) {
-  LogToConsole(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", true,0);  
-  LogToConsole("Data received from Arduino, Raw:", false, 0);
-  LogToConsole(receivedData, true, 1);
-  SpreadsheetApp.getActive().getRangeByName("LastReportTime").setValue(Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format"))); //Log when the JSON was received
-  SpreadsheetApp.getActive().getRangeByName("LastReportRaw").setValue(receivedData); //Log the received data
-  SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Processing...");
-  try {
+  try{
+    LogToConsole(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", true,0);  
+    LogToConsole("Data received from Arduino, Raw:", false, 0);
+    LogToConsole(JSON.stringify(receivedData), true, 1);
+    SpreadsheetApp.getActive().getRangeByName("LastReportTime").setValue(Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format"))); //Log when the JSON was received
+    SpreadsheetApp.getActive().getRangeByName("LastReportRaw").setValue(receivedData); //Log the received data
+    SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Processing...");
+       
     if (receivedData.parameter.BoxData != null) //Only Start processing if the report contains a BoxData parameter
     {
       LogToConsole("Parsing BoxData: ", false, 1);
@@ -61,10 +62,15 @@ function doPost(receivedData) {
         SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Error parsing BoxData to JSON");
       }
     }
+    else{
+      LogToConsole("Received parameters does not contain a BoxData object.", false, 1);
+      SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Received parameters does not contain a BoxData object. Input should be in the form of: {parameter={BoxData=JSON_OBJECT} where JSON_OBJECT is a valid JSON. Error: " + e); //the received parameter is not in {parameter={BoxData={"
+  
+    }
   }
   catch (e) {
-    LogToConsole("Received parameters does not contain a BoxData object. Error: " + e, true, 1);
-    SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("BoxData is empty. Input should be in the form of: {parameter={BoxData=JSON_OBJECT} where JSON_OBJECT is a valid JSON. Error: " + e); //the received parameter is not in {parameter={BoxData={"
+    LogToConsole("Processing the received data caused a crash. Error: " + e, true, 1);
+    SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Processing the received data caused a crash. Error: " + e); //the received parameter is not in {parameter={BoxData={"
   }
   LogToConsole(">>>>>>>End of script>>>>>>>", true, 0);
 }

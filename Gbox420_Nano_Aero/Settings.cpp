@@ -15,7 +15,7 @@ void saveSettings(Settings *ToSave)
   eeprom_update_block((const void *)ToSave, (void *)0, sizeof(Settings)); ///update_block only writes the bytes that changed
 }
 
-Settings *loadSettings(bool ResetEEPROM = false )   ///if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
+Settings *loadSettings(bool ResetEEPROM)   ///if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
 {
   Settings *DefaultSettings = new Settings();                                    ///This is where settings are stored, first it takes the sketch default settings defined in Settings.h
   Settings EEPROMSettings;                                                       ///temporary storage with "Settings" type

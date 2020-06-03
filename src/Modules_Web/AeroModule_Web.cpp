@@ -228,7 +228,7 @@ void AeroModule_Web::syncModule( const byte WirelessChannel[], aeroCommand *Comm
       if ( Parent -> Wireless -> isAckPayloadAvailable() ) {
           Parent -> Wireless -> read(Response, sizeof(*Response));
            logToSerials(F("Acknowledgement received ["),false,2);            
-          logToSerials(sizeof(*Response)); /// \todo Use LogToSerial
+          logToSerials(toText(sizeof(*Response))); /// \todo Use LogToSerial
           logToSerials(F("bytes]"),true,1);
 
           if(*Debug){

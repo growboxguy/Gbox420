@@ -127,7 +127,7 @@ void getWirelessData() {
     if ( Wireless.available() ) { 
         Wireless.read( &Command, sizeof(Command) );
         logToSerials(F("Wireless Command received ["),false,0);
-        logToSerials(sizeof(Command),false,0);  /// \todo print this with logToSerials: Need support for unsigned long
+        logToSerials(toText(sizeof(Command)),false,0);  /// \todo print this with logToSerials: Need support for unsigned long
         logToSerials(F("bytes], Response sent"),true,1); 
         
         if(timeStatus() != timeSet)  

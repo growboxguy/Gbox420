@@ -55,6 +55,12 @@ char *toText(long Number)
   return ShortMessage;
 }
 
+char *toText(unsigned int Number)
+{
+  itoa(Number, ShortMessage, 10);
+  return ShortMessage;
+}
+
 char *toText(float Number)
 {
   if (isnan(Number))
