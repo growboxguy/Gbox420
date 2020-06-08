@@ -77,13 +77,13 @@ function CheckAlerts(Log) {
   
   if (sendEmailAlert || GetSettingsValue("Send an email") == "When a report is received") //When there was a new event
   {
-    LogToConsole("Sending email alert", true, 1);
+    LogToConsole("Generating email template...", true, 1);
     var emailTemplate = HtmlService.createTemplateFromFile('AlertTemplate'); //Prepare the AlertEmailTemplate.html as a template
     emailTemplate.Alerts = alerts; //Fill Alert messages into the template
     emailTemplate.AlertMessages = alertMessages; //Fill Alert messages into the template
     emailTemplate.RecoveredMessages = recoveredMessages; //Fill Recovered messages into the template
     emailTemplate.Data = GetNamedRangeValues("Status").filter(function (row) {
-      return row[columns_keyColumn] != "";  //Filter out rows with a blank key colum
+      return row[columns_keyColumn] != null && row[columns_keyColumn] != "";  //Filter out rows with a blank key colum
     });
     sendEmail(emailTemplate);
   }
@@ -93,11 +93,13 @@ function CheckAlerts(Log) {
 // Relay an email based on a HTML email template - Used to send out Alerts
 function sendEmail(emailTemplate) {
     if (GetSettingsValue("Send an email") != "Disabled") {
+      LogToConsole("Sending email...", true, 1);
         var emailMessage = emailTemplate.evaluate().getContent();
         //Browser.msgBox(emailMessage)
         //This section converts the charts to images and attaches them to the email message
         var emailImages = {};
         if (GetSettingsValue("Attach charts") == "Yes") {
+            if(Debug) LogToConsole("Attaching charts...", true, 2);
             var charts = SpreadsheetApp.getActive().getSheetByName("Charts").getCharts();
             var chartBlobs = new Array(charts.length);
             for (var i = 0; i < charts.length; i++) {
@@ -122,4 +124,7 @@ function sendEmail(emailTemplate) {
             inlineImages: emailImages
         });
     }
+  else{
+    LogToConsole("Send an email - Disabled", true, 1);
+  }
 }

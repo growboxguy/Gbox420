@@ -38,20 +38,23 @@ function LogToConsole(message, breakRow, indent) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Helper functions: For getting settings
 function Test_GetNamedRangeValues() {
-    console.log(GetNamedRangeValues("Settings", false));
+    LogToConsole(GetNamedRangeValues("Status", false),true,1);
 }
 
 function GetNamedRangeValues(rangeName, dropCache) {
-    var cache = CacheService.getScriptCache();
-    var cached = cache.get(rangeName);
-    if (cached != null && dropCache != true) {
-        //console.log("Returning cached version of: " +  rangeName);
-        return JSON.parse(cached);
-    }
-    //console.log("Refreshed cached version of: " +  rangeName);
+  var cache = CacheService.getScriptCache();
+  var cached = cache.get(rangeName);
+  if (cached != null && dropCache != true) {
+    if(Debug) LogToConsole("Returning cached version of: " +  rangeName,true,2);
+    return JSON.parse(cached);
+  }
+  else
+  {
+    if(Debug) LogToConsole("Updating cache for: " +  rangeName,true,2);
     var rangeData = SpreadsheetApp.getActive().getRangeByName(rangeName).getValues();
     cache.put(rangeName, JSON.stringify(rangeData), 120); // cache for 120 seconds to ensure it is not queried multiple times during script execution
     return rangeData;
+  }
 }
 
 function WipeCache(){  ///Force to drop all cached named ranges

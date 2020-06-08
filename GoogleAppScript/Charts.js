@@ -9,6 +9,7 @@ function ClearCharts(){
   var chartsSheet = SpreadsheetApp.getActive().getSheetByName("Charts");
   var charts = chartsSheet.getCharts();
   for (var i in charts) {
+    if(Debug) LogToConsole("Removing chart " + i,true,1);
     chartsSheet.removeChart(charts[i]);
   }
 }
