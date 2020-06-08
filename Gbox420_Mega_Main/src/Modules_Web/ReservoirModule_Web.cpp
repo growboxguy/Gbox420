@@ -18,8 +18,8 @@ void ReservoirModule_Web::report()
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("PH:"));
   strcat(LongMessage, toText(Response.PH));
-  strcat_P(LongMessage, (PGM_P)F(" ; Water level distance:"));
-  strcat(LongMessage, toText_distance(Response.Distance));
+  strcat_P(LongMessage, (PGM_P)F(" ; Weight:"));
+  strcat(LongMessage, toText_weight(Response.Weight));
   strcat_P(LongMessage, (PGM_P)F(" ; Water temp:"));
   strcat(LongMessage, toText_temp(Response.WaterTemperature));
   strcat_P(LongMessage, (PGM_P)F(" ; Air temp:"));
@@ -34,8 +34,8 @@ void ReservoirModule_Web::reportToJSON()
     Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"PH\":\""));
     strcat(LongMessage, toText(Response.PH));   
-    strcat_P(LongMessage, (PGM_P)F("\",\"Distance\":\""));
-    strcat(LongMessage, toText(Response.Distance));     
+    strcat_P(LongMessage, (PGM_P)F("\",\"Weight\":\""));
+    strcat(LongMessage, toText(Response.Weight));     
     strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
     strcat(LongMessage, toText(Response.WaterTemperature));  
     strcat_P(LongMessage, (PGM_P)F("\",\"AirTemp\":\""));
@@ -50,7 +50,7 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
   if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgString(getComponentName(F("PH")), toText(Response.PH));
-    WebServer.setArgString(getComponentName(F("Dist")), toText_distance(Response.Distance));
+    WebServer.setArgString(getComponentName(F("Weight")), toText_weight(Response.Weight));
     WebServer.setArgString(getComponentName(F("WTemp")),  toText_temp(Response.WaterTemperature));
     WebServer.setArgString(getComponentName(F("ATemp")), toText_temp(Response.AirTemperature));
     WebServer.setArgString(getComponentName(F("Humi")), toText_percentage(Response.Humidity));
@@ -81,7 +81,7 @@ void ReservoirModule_Web::syncModule( const byte WirelessChannel[], reservoirCom
            if(*Debug){
           logToSerials(Response -> PH,false,3);
           logToSerials(F(","),false,1);
-          logToSerials(Response -> Distance,false,1);
+          logToSerials(Response -> Weight,false,1);
           logToSerials(F(","),false,1);
           logToSerials(Response -> WaterTemperature,false,1);
           logToSerials(F(","),false,1);

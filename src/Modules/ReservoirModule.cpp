@@ -2,9 +2,8 @@
 #include "../Components/DHTSensor.h"
 #include "../Components/Sound.h"
 #include "../Components/PHSensor.h"
-#include "../Components/WaterLevelSensor.h"
 #include "../Components/WaterTempSensor.h"
-#include "../Components/DistanceSensor.h"
+#include "../Components/WeightSensor.h"
 
 ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Module()
 { 
@@ -12,9 +11,8 @@ ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::Rese
   this -> SoundFeedback = Sound1;
   DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
   WTemp1 = new WaterTempSensor(F("WTemp1"), this, &ModuleSettings->WTemp1);
-  WLev1 = new WaterLevelSensor(F("WLev1"), this, &ModuleSettings->WLev1);
   PHSen1 = new PHSensor(F("PHSen1"), this, &ModuleSettings->PHSen1); 
-  Dist1 = new DistanceSensor(F("Dist1"), this, &ModuleSettings->Dist1);
+  Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);  
   //addToRefreshQueue_Sec(this);         
   addToRefreshQueue_FiveSec(this);     
   //addToRefreshQueue_Minute(this);    
@@ -35,7 +33,7 @@ void ReservoirModule::refresh_FiveSec()
 
 void ReservoirModule::updateResponse(){  ///<Updates the response sent to the Main module
   Response.PH = PHSen1 -> getPH();
-  Response.Distance = Dist1 -> getDistance();
+  Response.Weight = Weight1 -> getWeight();
   Response.WaterTemperature = WTemp1 -> getTemp();
   Response.AirTemperature = DHT1 -> getTemp();
   Response.Humidity = DHT1 -> getHumidity();

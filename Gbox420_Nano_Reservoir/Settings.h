@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 1; ///< Increment this when you make a change in the SAVED TO EEPROM section
+static const uint8_t Version = 3; ///< Increment this when you make a change in the SAVED TO EEPROM section
 
 ///State machine - Defining possible states
   enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -48,14 +48,6 @@ static const uint8_t Version = 1; ///< Increment this when you make a change in 
     };
     struct DHTSensorSettings DHT1 = {.Pin = 3, .Type = 22};
 
-    struct DistanceSensorSettings
-    {
-      DistanceSensorSettings(uint8_t TriggerPin = 0, uint8_t EchoPin = 0) : TriggerPin(TriggerPin), EchoPin(EchoPin) {}
-      uint8_t TriggerPin;
-      uint8_t EchoPin;
-    };
-    struct DistanceSensorSettings Dist1 = {.TriggerPin = 4, .EchoPin = 5};
-    
     struct PHSensorSettings
     {
       PHSensorSettings(uint8_t Pin = 0, float Slope = 0.0, float Intercept = 0.0) : Pin(Pin), Slope(Slope), Intercept(Intercept) {}
@@ -65,7 +57,7 @@ static const uint8_t Version = 1; ///< Increment this when you make a change in 
     };
     struct PHSensorSettings PHSen1 = {.Pin = A0, .Slope = -0.033256, .Intercept = 24.08651}; ///Update this to your own PH meter calibration values
    
-    struct ReservoirModuleSettings{  ///TODO: Remove the parameters
+    struct ReservoirModuleSettings{
       //ReservoirModuleSettings() :  {}     
     };  
     struct ReservoirModuleSettings ReservoirMod1 = {};  ///Default settings for the Hempy Module
@@ -78,16 +70,6 @@ static const uint8_t Version = 1; ///< Increment this when you make a change in 
     };
     struct SoundSettings Sound1 = {.Pin = 2};  ///Default settings for the  Sound output
   
-    struct WaterLevelSensorSettings
-    {
-      WaterLevelSensorSettings(uint8_t Pin_1 = 0, uint8_t Pin_2 = 0, uint8_t Pin_3 = 0, uint8_t Pin_4 = 0) : Pin_1(Pin_1), Pin_2(Pin_2), Pin_3(Pin_3), Pin_4(Pin_4) {}
-      uint8_t Pin_1; ///Lowest water level
-      uint8_t Pin_2;
-      uint8_t Pin_3;
-      uint8_t Pin_4; ///Full
-    };
-    struct WaterLevelSensorSettings WLev1 = {.Pin_1 = A1, .Pin_2 = A2, .Pin_3 = A3, .Pin_4 = A4};
-
     struct WaterTempSensorSettings
     {
       WaterTempSensorSettings(uint8_t Pin = 0) : Pin(Pin) {}
@@ -95,7 +77,16 @@ static const uint8_t Version = 1; ///< Increment this when you make a change in 
     };
     struct WaterTempSensorSettings WTemp1 = {.Pin = 6}; ///Data(yellow) - DS18B20 waterproof temp sensor
 
-  
+    struct WeightSensorSettings
+    {
+      WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, float Scale = 0.0, long TareOffset = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Scale(Scale), TareOffset(TareOffset) {}
+      uint8_t DTPin;     ///Weight sensor DT pin
+      uint8_t SCKPin; ///Weight sensor SCK pin
+      float Scale;  ///Calibration scale value
+      long TareOffset; ///Reading at 0 weight on the scale
+    };
+    struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Scale = 125000.0, .TareOffset=146000}; ///Default settings for the hempy bucket 1 weight sensor
+      
     uint8_t CompatibilityVersion = Version; ///Version should always be the last value stored in the struct
   } Settings;
 

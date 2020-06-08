@@ -25,11 +25,9 @@
 class Sound;
 class DHTSensor;
 class PHSensor;
-class WaterLevelSensor;
 class WaterTempSensor;
-class DistanceSensor;
+class WeightSensor;
 extern RF24 Wireless;
-
 
 class ReservoirModule : virtual public Common, virtual public Module
 {
@@ -41,9 +39,8 @@ public:
   Sound *Sound1;        ///Pointer to a Piezo speaker - sound feedback          
   DHTSensor *DHT1;      ///Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   PHSensor *PHSen1;
-  WaterLevelSensor *WLev1;
   WaterTempSensor *WTemp1;  
-  DistanceSensor *Dist1;
+  WeightSensor *Weight1;
   //void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();
