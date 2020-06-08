@@ -75,7 +75,7 @@ static const uint8_t Version = 3; ///< Increment this when you make a change in 
       WaterTempSensorSettings(uint8_t Pin = 0) : Pin(Pin) {}
       uint8_t Pin;
     };
-    struct WaterTempSensorSettings WTemp1 = {.Pin = 6}; ///Data(yellow) - DS18B20 waterproof temp sensor
+    struct WaterTempSensorSettings WTemp1 = {.Pin = 4}; ///Data(yellow) - DS18B20 waterproof temp sensor
 
     struct WeightSensorSettings
     {
