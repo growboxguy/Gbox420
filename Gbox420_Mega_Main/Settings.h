@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 3; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 4; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
 enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -67,7 +67,7 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       uint8_t Pin;
       uint8_t Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
     };
-    struct DHTSensorSettings DHT1 = {.Pin = 44, .Type = 22};
+    struct DHTSensorSettings DHT1 = {.Pin = 3, .Type = 22};
 
     struct FanSettings
     {
@@ -106,7 +106,7 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       uint8_t DigitalPin;
       uint8_t AnalogPin;
     };
-    struct LightSensorSettings LtSen1 = {.DigitalPin = 42, .AnalogPin = A0};
+    struct LightSensorSettings LtSen1 = {.DigitalPin = 4, .AnalogPin = A0};
 
     struct LightsSettings
     {
@@ -122,7 +122,7 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       uint8_t OffHour = 16;                                                                                                                                        ///Light OFF time - hour
       uint8_t OffMinute = 20;                                                                                                                                      ///Light OFF time - minute
     };
-    struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 8}; ///Creating a LightSettings instance, passing in the unique parameters
+    struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 5, .DimmingLimit = 8}; ///Creating a LightSettings instance, passing in the unique parameters
 
     struct ReservoirModuleSettings{  ///TODO: Remove the parameters
       //ReservoirModuleSettings() :  {}     
