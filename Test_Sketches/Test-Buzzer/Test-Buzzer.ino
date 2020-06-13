@@ -1,9 +1,9 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
-//Sketch for testing: PC speaker / Piezo buzzer
+//Sketch for testing: Piezo buzzer
 
 //Pins
-const int BuzzerOutPin = 4;
-const int BuiltInLEDOutPin = 13;
+const int BuzzerOutPin = 2;  ///Port connecting the + side of the buzzer, over a minimum 200ohm resistor
+const int BuiltInLEDOutPin = 13;  ///LED feedback when a sound note is played
 
 //Global constants
 const int c = 261;
@@ -27,14 +27,17 @@ const int gSH = 830;
 const int aH = 880;
 
 void setup()
-{
-  //Setup pin modes
+{ 
+  Serial.begin(115200);
+  Serial.println(F("Sketch for testing: Piezo buzzer"));
+  Serial.println(F("Setting up pins..."));
   pinMode(BuzzerOutPin, OUTPUT);
   pinMode(BuiltInLEDOutPin, OUTPUT);
 }
 
 void loop()
 {
+  Serial.println(F("Playing song..."));
   //Play first section
   firstSection();
 
@@ -66,7 +69,8 @@ void loop()
   beep(cH, 125);
   beep(a, 650);
 
-  delay(6000);
+  Serial.println(F("Wait a minute before replaying the song..."));
+  delay(60000);
 }
 
 void beep(int note, int duration)
