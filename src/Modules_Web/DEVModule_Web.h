@@ -41,7 +41,7 @@ extern ELClientRest PushingBoxRestAPI;
 class DEVModule_Web : public Common_Web, public Module_Web
 {
 public:
-  DEVModule_Web(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings,RF24 *Wireless); ///constructor
+  DEVModule_Web(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings,RF24 *Wireless); ///constructor
   Sound_Web *Sound1;             ///Pointer to a Piezo speaker - sound feedback
   Fan_Web *IFan;                ///Internal fan
   Fan_Web *EFan;                ///Exhaust fan

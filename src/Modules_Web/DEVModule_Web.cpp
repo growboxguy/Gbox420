@@ -20,7 +20,7 @@
 //#include "../Components_Web/WeightSensor_Web.h"
 #include "../Components_Web/ModuleSkeleton_Web.h" ///Only for demonstration purposes
 
-DEVModule_Web::DEVModule_Web(const __FlashStringHelper *Name, Settings::GrowModuleSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Common_Web(Name), Module_Web(Wireless)
+DEVModule_Web::DEVModule_Web(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Common_Web(Name), Module_Web(Wireless)
 { ///Constructor
   this->Name = Name;
   SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;

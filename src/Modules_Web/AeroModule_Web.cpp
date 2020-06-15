@@ -222,16 +222,16 @@ void AeroModule_Web::refresh_Minute()
 
 void AeroModule_Web::syncModule( const byte WirelessChannel[], aeroCommand *Command, aeroResponse *Response){
   updateCommand();
-  logToSerials(F("Sending sync command..."),false,3);
+  if(*Debug)logToSerials(F("Sending sync command..."),false,3);
   Parent -> Wireless -> openWritingPipe(WirelessChannel);
   if (Parent -> Wireless -> write(Command, sizeof(*Command) )) {
       if ( Parent -> Wireless -> isAckPayloadAvailable() ) {
           Parent -> Wireless -> read(Response, sizeof(*Response));
+
+          if(*Debug){
           logToSerials(F("Acknowledgement received ["),false,2);            
           logToSerials(toText(sizeof(*Response)),false,1); /// \todo Use LogToSerial
           logToSerials(F("bytes]"),true,1);
-
-          if(*Debug){
           logToSerials(Response -> PressureTankPresent,false,3);
           logToSerials(F(","),false,1);
           logToSerials(Response -> SprayEnabled,false,1);;
