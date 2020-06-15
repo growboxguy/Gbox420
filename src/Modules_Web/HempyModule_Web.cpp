@@ -192,16 +192,16 @@ void HempyModule_Web::refresh_Minute()
 
 void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Command, hempyResponse *Response){
   updateCommand();
-  logToSerials(F("Sending sync command..."),false,3);
+  if(*Debug)logToSerials(F("Sending sync command..."),false,3);
   Parent -> Wireless -> openWritingPipe(WirelessChannel);
   if (Parent -> Wireless -> write(Command, sizeof(*Command) )) {
       if ( Parent -> Wireless -> isAckPayloadAvailable() ) {
           Parent -> Wireless -> read(Response, sizeof(*Response));
+
+          if(*Debug){
           logToSerials(F("Acknowledgement received ["),false,2);            
           logToSerials(toText(sizeof(*Response)),true,1); /// \todo Use LogToSerial
           logToSerials(F("bytes]"),true,1);
-
-          if(*Debug){
           logToSerials(Response -> PumpState_B1,false,3);
           logToSerials(F(","),false,1);
           logToSerials(Response -> Weight_B1,false,1);
@@ -224,11 +224,11 @@ void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Co
           }
       }
       else {
-          logToSerials(F("Acknowledgement received without any data."),true,1);
+          if(*Debug)logToSerials(F("Acknowledgement received without any data."),true,1);
       }        
   }
   else {
-      logToSerials(F("No response."),true,1);
+      if(*Debug)logToSerials(F("No response."),true,1);
   }
   }
 

@@ -69,16 +69,16 @@ void ReservoirModule_Web::syncModule( const byte WirelessChannel[], reservoirCom
    * @brief Send a command to the remote Reservoir Module and receive a response containing the module's current status
    */
   updateCommand();
-  logToSerials(F("Sending sync command..."),false,3);
+  if(*Debug)logToSerials(F("Sending sync command..."),false,3);
   Parent -> Wireless -> openWritingPipe(WirelessChannel);
   if (Parent -> Wireless -> write(Command, sizeof(*Command) )) {
       if ( Parent -> Wireless -> isAckPayloadAvailable() ) {
           Parent -> Wireless -> read(Response, sizeof(*Response));
-           logToSerials(F("Acknowledgement received ["),false,2);            
+
+          if(*Debug){
+          logToSerials(F("Acknowledgement received ["),false,2);            
           logToSerials(toText(sizeof(*Response)),true,1); /// \todo Use LogToSerial
           logToSerials(F("bytes]"),true,1);
-
-           if(*Debug){
           logToSerials(Response -> PH,false,3);
           logToSerials(F(","),false,1);
           logToSerials(Response -> Weight,false,1);
@@ -91,11 +91,11 @@ void ReservoirModule_Web::syncModule( const byte WirelessChannel[], reservoirCom
           } 
       }
       else {
-          logToSerials(F(" Acknowledgement received without any data."),true, 1);
+          if(*Debug)logToSerials(F(" Acknowledgement received without any data."),true, 1);
       }        
   }
   else{
-      logToSerials(F(" No response."),true,1);
+      if(*Debug)logToSerials(F(" No response."),true,1);
       }
   }
 

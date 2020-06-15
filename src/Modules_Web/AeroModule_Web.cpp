@@ -259,11 +259,11 @@ void AeroModule_Web::syncModule( const byte WirelessChannel[], aeroCommand *Comm
           }
       }
       else {
-          logToSerials(F(" Acknowledgement received without any data."));
+          if(*Debug)logToSerials(F("Acknowledgement received without any data."),true,1);
       }        
   }
   else {
-      logToSerials(F(" No response."));
+      if(*Debug)logToSerials(F("No response."),true,1);
   }
   }
 

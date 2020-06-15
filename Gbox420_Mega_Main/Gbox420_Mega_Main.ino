@@ -98,7 +98,7 @@ void setup()
   logToSerials(F("done"), true, 1);
 
   //Initialize wireless communication with Modules
-  logToSerials(F("Setting up wireless transmitter..."), false, 0);
+  logToSerials(F("Setting up wireless transceiver..."), false, 0);
   Wireless.begin();    ///< Initialize the nRF24L01+ wireless chip for talking to Modules
   Wireless.setDataRate( RF24_250KBPS );   ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
   Wireless.enableAckPayload();    ///< When sending out a wireless package, expect a response confirming the package was received + the current status of the responder
@@ -204,7 +204,7 @@ time_t getNtpTime()
   { ///< blocking calling the sync again in an interrupt
     SyncInProgress = true;
     uint32_t LastRefresh = millis();
-    logToSerials(F("Waiting for NTP time (15sec timeout)..."), false, 0);
+    logToSerials(F("Waiting for NTP time..."), false, 0);
     while (NTPResponse == 0 && millis() - LastRefresh < 15000)
     {
       NTPResponse = ESPCmd.GetTime();
