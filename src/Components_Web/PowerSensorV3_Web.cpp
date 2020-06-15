@@ -6,8 +6,6 @@ PowerSensorV3_Web::PowerSensorV3_Web(const __FlashStringHelper *Name, Module_Web
   this->Name = Name;
   Parent->addToReportQueue(this);          
   Parent->addToRefreshQueue_FiveSec(this); 
-  Parent->addToReportQueue(this);          
-  Parent->addToRefreshQueue_FiveSec(this); 
   Parent->addToWebsiteQueue_Refresh(this); 
 }
 

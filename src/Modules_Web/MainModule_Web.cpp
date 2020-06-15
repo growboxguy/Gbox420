@@ -7,8 +7,8 @@
 #include "../Components_Web/LightSensor_Web.h"
 #include "../Components_Web/Sound_Web.h"
 #include "../Components_Web/Fan_Web.h"
-#include "../Components_Web/PowerSensor_Web.h"
-//#include "../Components_Web/PowerSensorV3_Web.h"  ///Only for PZEM004T V3.0
+//#include "../Components_Web/PowerSensor_Web.h"  ///For PZEM004T V1.0 or PZEM004T V2.0
+#include "../Components_Web/PowerSensorV3_Web.h"  ///Only for PZEM004T V3.0
 
 MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Common_Web(Name), Module_Web(Wireless)
 { ///Constructor
@@ -20,10 +20,9 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   EFan = new Fan_Web(F("EFan"), this, &ModuleSettings->EFan);
   Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
   LtSen1 = new LightSensor_Web(F("LtSen1"), this, &ModuleSettings->LtSen1, Lt1); ///Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
-  Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2);
   DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);
-  
-  ///Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); ///Only for PZEM004T V3.0
+  //Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2); ///For PZEM004T V1.0 or PZEM004T V2.0
+  Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); ///Only for PZEM004T V3.0
   HempyModule1 = new HempyModule_Web(F("Hemp1"), this,&ModuleSettings->HempyModule1);
   AeroModule1 = new AeroModule_Web(F("Aero1"), this,&ModuleSettings->AeroModule1);
   ReservoirModule1 = new ReservoirModule_Web(F("Res1"), this,&ModuleSettings->ReservoirMod1);

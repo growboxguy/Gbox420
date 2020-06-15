@@ -17,12 +17,12 @@ struct commandTemplate  //Max 32bytes. Template of the command sent by the Trans
 {
    time_t Time;
    
-   bool DisablePump1;   
-   bool TurnOnPump;   
-   bool TurnOffPump;   
-   int TimeOutPump;   
-   float StartWeightBucket;
-   float StopWeightBucket;
+   bool DisablePump1_B1;   
+   bool TurnOnPump_B1;   
+   bool TurnOffPump_B1;   
+   int TimeOutPump_B1;   
+   float StartWeightBucket_B1;
+   float StopWeightBucket_B1;
    
    bool DisablePump_B2;
    bool TurnOnPump_B2;
@@ -60,27 +60,23 @@ void setup() {
 }
 
 void loop() {
-    getData();
-}
-
-void getData() {
     if ( radio.available() ) {
         radio.read( &ReceivedCommand, sizeof(ReceivedCommand) );        
         Serial.print(F("Command received ["));
         Serial.print(sizeof(ReceivedCommand));       
         Serial.println(F(" bytes]"));
         Serial.print(F("  Bucket1: "));
-        Serial.print(ReceivedCommand.DisablePump1);
+        Serial.print(ReceivedCommand.DisablePump1_B1);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.TurnOnPump);
+        Serial.print(ReceivedCommand.TurnOnPump_B1);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.TurnOffPump);
+        Serial.print(ReceivedCommand.TurnOffPump_B1);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.TimeOutPump);
+        Serial.print(ReceivedCommand.TimeOutPump_B1);
         Serial.print(F(", "));
-        Serial.print(ReceivedCommand.StartWeightBucket);
+        Serial.print(ReceivedCommand.StartWeightBucket_B1);
         Serial.print(F(", "));
-        Serial.println(ReceivedCommand.StopWeightBucket);
+        Serial.println(ReceivedCommand.StopWeightBucket_B1);
         Serial.print(F("  Bucket2: "));
         Serial.print(ReceivedCommand.DisablePump_B2);
         Serial.print(F(", "));

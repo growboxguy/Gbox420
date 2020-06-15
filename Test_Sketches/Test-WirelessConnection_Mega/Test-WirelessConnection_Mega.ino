@@ -1,6 +1,6 @@
-
-// Simple program to verify connection between Arduino Mega and nRF24L01+
-// This program does NOT attempt any communication with another nRF24
+//GrowBoxGuy - http://sites.google.com/site/growboxguy/
+//Sketch for testing: connection between Arduino Mega and nRF24L01+
+//This program does NOT attempt to communicate with another wireless module
 
 #include <SPI.h>
 #include <nRF24L01.h>
@@ -13,32 +13,34 @@
 #define SCK_PIN  52
 #define CE_PIN  53
 
-const byte WirelessChannel[6] ={"Hemp1"};;
+const byte WirelessChannel[6] ={"Main1"};
 RF24 radio(CE_PIN, CSN_PIN);
 
 void setup() {
     Serial.begin(115200);
     printf_begin();
 
-    Serial.println("CheckConnection Starting");
+    Serial.println(F("Sketch for testing: connection between Arduino Mega and nRF24L01+"));
     Serial.println();
-    Serial.println("FIRST WITH THE DEFAULT ADDRESSES after power on");
-    Serial.println("  Note that RF24 does NOT reset when Arduino resets - only when power is removed");
-    Serial.println("  If the numbers are mostly 0x00 or 0xff it means that the Arduino is not");
-    Serial.println("     communicating with the nRF24");
+    Serial.println(F("FIRST WITH THE DEFAULT SETTINGS after power on"));
+    Serial.println(F("  Note that RF24 does NOT reset when Arduino resets - only when power is removed"));
+    Serial.println(F("  If the numbers are mostly 0x00 or 0xff it means that the Arduino is not"));
+    Serial.println(F("  communicating with the nRF24"));
     Serial.println();
     radio.begin();
     radio.printDetails();
     Serial.println();
     Serial.println();
-    Serial.println("AND NOW WITH NEW CHANNEL ADDRESS");
-    Serial.println(" and 250KBPS data rate");
+    Serial.println(F("Setting data rate to 250KBPS..."));
     Serial.println();
     radio.openReadingPipe(1, WirelessChannel);
     radio.setDataRate( RF24_250KBPS );
     radio.printDetails();
+    Serial.println();
+    Serial.println();
+    Serial.println(F("If the connection is OK The 'Data Rate' row should be have changed from 1MBPS to 250KBPS"));
+    Serial.println(F("If there is no change check the wiring and disconnect/reconnect the power source"));
 }
-
 
 void loop() {
 

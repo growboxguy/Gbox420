@@ -8,7 +8,7 @@
 /// \todo Proper doxygen documentation
 /// \todo Add pump cutout during aero spray in case pressure limit is reached
 /// \todo Light sensor is not linear, need a better way to estimate brightness percentage. Readings[10] and calibrate to every 10% , lookup closest 2 calibration rating (TopRange,BottomRange) and do a mapping between them?
-/// \todo Split WaterLevelSensor class to a single sensor and a row of sensors (WaterLevelRow)
+/// \todo Display module online/offline status, timeout to offline if no response is received in X minutes
 
 #include "Arduino.h"
 #include "avr/wdt.h"                /// Watchdog timer for detecting a crash and automatically resetting the board
@@ -67,16 +67,19 @@ void setup()
   boot_rww_enable();                                   ///< fix watchdog not loading sketch after a reset error on Mega2560
 
   // Loading settings from EEPROM
+  if(Debug)logToSerials(F("Loading settings..."), true, 1);
   ModuleSettings = loadSettings();
   Debug = &ModuleSettings ->  Debug;
   Metric = &ModuleSettings ->  Metric;
 
+  if(Debug)logToSerials(F("Setting up ESP-link connection..."), true, 1);
   ESPLink.resetCb = &resetWebServer; ///< Callback subscription: What to do when WiFi reconnects
   resetWebServer();                  ///< reset the WebServer
   setSyncProvider(getNtpTime); ///< Points to method for updating time from NTP server
   setSyncInterval(86400); ///< Sync time every day   
 
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
+  if(Debug)logToSerials(F("Setting up refresh threads..."), true, 1);
   OneSecThread.setInterval(1000);
   OneSecThread.onRun(runSec);
   FiveSecThread.setInterval(5000);
@@ -87,21 +90,22 @@ void setup()
   QuarterHourThread.onRun(runQuarterHour);
 
   // Start interrupts to handle request from ESP-Link firmware
+  if(Debug)logToSerials(F("Setting up interrupt handler..."), true, 1);
   Timer3.initialize(500); ///< check every 0.5sec, using a larger interval can cause web requests to time out
   Timer3.attachInterrupt(processTimeCriticalStuff);
   Timer3.start();
 
   //Initialize wireless communication with Modules
-  
+  if(Debug)logToSerials(F("Setting up ESP-link connection..."), true, 1);
   Wireless.begin();    ///< Initialize the nRF24L01+ wireless chip for talking to Modules
   Wireless.setDataRate( RF24_250KBPS );   ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
-  Wireless.enableAckPayload();    ///< 
+  Wireless.enableAckPayload();    ///< When sending out a wireless package, expect a response confirming the package was received + the current status of the responder
   Wireless.setRetries(Wireless_Delay,Wireless_Retry); // Defined in Settings.h
 
   // Create the Module objects
+  if(Debug)logToSerials(F("Creating main module..."), true, 1);
    Main1 = new MainModule(F("Main1"), &ModuleSettings->Main1, &Wireless); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
   
-
   //   sendEmailAlert(F("Grow%20box%20(re)started"));
   logToSerials(F("Setup ready, starting loops:"), true, 0);
 }

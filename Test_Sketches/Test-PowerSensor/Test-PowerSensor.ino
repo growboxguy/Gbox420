@@ -10,26 +10,38 @@
 PZEM004T PowerSensor(&Serial2);
 IPAddress PowerSensorIP(192, 168, 1, 1);
 
+//For testing: Turn on the lights
+const byte LightRelayPin = 29;  //Pin that controls the relay turning the lights ON/OFF
+
 void setup()
 {
   Serial.begin(115200);
   Serial.println(F("Sketch for testing: Power sensor"));
   PowerSensor.setAddress(PowerSensorIP);
+
+  Serial.println(F("Turning on the lights..."));
+  pinMode(LightRelayPin, OUTPUT);
+  digitalWrite(LightRelayPin, LOW); ///True turns relay ON (LOW signal activates Relay)  
 }
 
 void loop()
 {
-  float v = PowerSensor.voltage(PowerSensorIP);
-  Serial.print(v);
-  Serial.print(F("V; "));
-  float i = PowerSensor.current(PowerSensorIP);
-  Serial.print(i);
-  Serial.print(F("A; "));
-  float p = PowerSensor.power(PowerSensorIP);
-  Serial.print(p);
-  Serial.print(F("W; "));
-  float e = PowerSensor.energy(PowerSensorIP);
-  Serial.print(e);
-  Serial.println(F("Wh; "));
+  Serial.print(F("Voltage: "));
+  Serial.print(PowerSensor.voltage(PowerSensorIP));
+  Serial.println(F("V"));
+  
+  Serial.print(F("Current: "));
+  Serial.print(PowerSensor.current(PowerSensorIP));
+  Serial.println(F("A"));
+   
+  Serial.print(F("Current power usage: "));
+  Serial.print(PowerSensor.power(PowerSensorIP));
+  Serial.println(F("W"));
+  
+  Serial.print(F("Total energy usage: "));
+  Serial.print(PowerSensor.energy(PowerSensorIP));
+  Serial.println(F("Wh"));
+    
+  Serial.println(F(""));
   delay(2000);
 }
