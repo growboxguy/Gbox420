@@ -16,16 +16,16 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets; 
   Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this -> SoundFeedback = Sound1;
-  IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan);      ///passing: Component name, MainModule object the component belongs to, Default settings)
-  EFan = new Fan_Web(F("EFan"), this, &ModuleSettings->EFan);
-  Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
-  LtSen1 = new LightSensor_Web(F("LtSen1"), this, &ModuleSettings->LtSen1, Lt1); ///Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
+  //IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan);      ///passing: Component name, MainModule object the component belongs to, Default settings)
+  //EFan = new Fan_Web(F("EFan"), this, &ModuleSettings->EFan);
+  //Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
+  //LtSen1 = new LightSensor_Web(F("LtSen1"), this, &ModuleSettings->LtSen1, Lt1); ///Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
   DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);
   //Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2); ///For PZEM004T V1.0 or PZEM004T V2.0
-  Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); ///Only for PZEM004T V3.0
-  HempyModule1 = new HempyModule_Web(F("Hemp1"), this,&ModuleSettings->HempyModule1);
-  AeroModule1 = new AeroModule_Web(F("Aero1"), this,&ModuleSettings->AeroModule1);
-  ReservoirModule1 = new ReservoirModule_Web(F("Res1"), this,&ModuleSettings->ReservoirMod1);
+  //Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2); ///Only for PZEM004T V3.0
+  //HempyModule1 = new HempyModule_Web(F("Hemp1"), this,&ModuleSettings->HempyModule1);
+  //AeroModule1 = new AeroModule_Web(F("Aero1"), this,&ModuleSettings->AeroModule1);
+  //ReservoirModule1 = new ReservoirModule_Web(F("Res1"), this,&ModuleSettings->ReservoirMod1);
   addToReportQueue(this); 
   addToRefreshQueue_FiveSec(this);     
   addToRefreshQueue_Minute(this);    

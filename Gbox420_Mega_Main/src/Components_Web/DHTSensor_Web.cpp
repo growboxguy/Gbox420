@@ -4,7 +4,6 @@ DHTSensor_Web::DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent
 {
   this->Parent = Parent;
   this->Name = Name;
-  Sensor = new DHT(*(&DefaultSettings->Pin), *(&DefaultSettings->Type)); 
   Parent->addToWebsiteQueue_Refresh(this); 
   Parent->addToReportQueue(this);          
   Parent->addToRefreshQueue_FiveSec(this);  
