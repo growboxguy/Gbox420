@@ -5,11 +5,11 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
   this->Parent = Parent;
   Weight = 0.0;
   Scale = &DefaultSettings->Scale;
-  TareOffset = &DefaultSettings->TareOffset;
+  Offset = &DefaultSettings->Offset;
   Sensor = new HX711();
   Sensor -> begin(*(&DefaultSettings->DTPin), *(&DefaultSettings->SCKPin));
   Sensor -> set_scale(*Scale);
-  Sensor -> set_offset(*TareOffset);  
+  Sensor -> set_offset(*Offset);  
   Parent->addToReportQueue(this);         
   Parent->addToRefreshQueue_FiveSec(this); 
   Parent->addToRefreshQueue_Sec(this);
@@ -72,7 +72,7 @@ void WeightSensor::triggerTare(){
 void WeightSensor::tare() ///Time intense, cannot be called straight from the website. Response would time out.
 {
   Sensor -> tare();
-  *TareOffset = Sensor -> get_offset();
+  *Offset = Sensor -> get_offset();
   Parent->addToLog(F("Tare updated"));
 }
 

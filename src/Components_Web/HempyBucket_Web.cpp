@@ -32,7 +32,7 @@ void HempyBucket_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/S",2) == 0) ////When the settings page is refreshed
   {
-    WebServer.setArgString(getComponentName(F("TareOffset")), toText(* BucketWeightSensor ->  TareOffset));
+    WebServer.setArgString(getComponentName(F("Offset")), toText(* BucketWeightSensor ->  Offset));
     WebServer.setArgString(getComponentName(F("Scale")), toText(* BucketWeightSensor -> Scale));
     WebServer.setArgString(getComponentName(F("Pump")), BucketPump-> getStateText());
   }

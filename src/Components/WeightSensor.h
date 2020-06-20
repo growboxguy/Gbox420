@@ -18,7 +18,7 @@ public:
   void setScale(float Scale); 
   float Weight;
   float *Scale;  ///Calibration value: Raw reading of one unit
-  long *TareOffset; ///Read value at no weight on the scale
+  long *Offset; ///Read value at no weight on the scale
 
 private:  
 
