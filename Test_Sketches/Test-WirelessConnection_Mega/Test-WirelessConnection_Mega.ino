@@ -7,13 +7,13 @@
 #include <RF24.h>
 #include <printf.h>
 
-#define CSN_PIN 49
-#define MISO_PIN  50
-#define MOSI_PIN  51
-#define SCK_PIN  52
-#define CE_PIN  53
+const byte CSN_PIN = 49;
+const byte MISO_PIN = 50;
+const byte MOSI_PIN = 51;
+const byte SCK_PIN = 52;
+const byte CE_PIN = 53;
+const byte WirelessChannel[6] ={"Test1"};
 
-const byte WirelessChannel[6] ={"Main1"};
 RF24 radio(CE_PIN, CSN_PIN);
 
 void setup() {
@@ -22,7 +22,7 @@ void setup() {
 
     Serial.println(F("Sketch for testing: connection between Arduino Mega and nRF24L01+"));
     Serial.println();
-    Serial.println(F("FIRST WITH THE DEFAULT SETTINGS after power on"));
+    Serial.println(F("DEFAULT SETTINGS after power on"));
     Serial.println(F("  Note that RF24 does NOT reset when Arduino resets - only when power is removed"));
     Serial.println(F("  If the numbers are mostly 0x00 or 0xff it means that the Arduino is not"));
     Serial.println(F("  communicating with the nRF24"));
@@ -38,7 +38,7 @@ void setup() {
     radio.printDetails();
     Serial.println();
     Serial.println();
-    Serial.println(F("If the connection is OK The 'Data Rate' row should be have changed from 1MBPS to 250KBPS"));
+    Serial.println(F("If the connection is OK the 'Data Rate' row should have changed from 1MBPS to 250KBPS"));
     Serial.println(F("If there is no change check the wiring and disconnect/reconnect the power source"));
 }
 

@@ -1,5 +1,5 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
-//Sketch for testing: Receiving a control command using Arduino RF-Nano and Acknowledging it with a custom message
+//Sketch for testing: Receiving a control message using Arduino Nano and nRF24L01+ (or RF-Nano) and Acknowledging it with a response message
 //Based on: https://forum.arduino.cc/index.php?topic=421081.0
 
 #include <SPI.h>
@@ -7,10 +7,11 @@
 #include <RF24.h>
 #include "TimeLib.h"     ///keeping track of time
 
-#define CE_PIN  10
-#define CSN_PIN 9
+//Ports for Arduino Nano or RF-Nano
+const byte CE_PIN = 10;
+const byte CSN_PIN = 9;
 
-const byte WirelessChannel[6] ={"Hemp1"};;
+const byte WirelessChannel[6] ={"Test1"};  //Identifies the communication channel, needs to match on the Transmitter
 RF24 radio(CE_PIN, CSN_PIN);
 
 struct commandTemplate  //Max 32bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
@@ -31,9 +32,9 @@ struct commandTemplate  //Max 32bytes. Template of the command sent by the Trans
    float StartWeightBucket_B2;
    float StopWeightBucket_B2;
 };
-struct commandTemplate ReceivedCommand;  //Variable where the actual command values will get stored
+struct commandTemplate ReceivedCommand;  //Variable where the command values received from the Transmitter will get stored
 
-struct responseTemplate  //Max 32bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
+struct responseTemplate  //Max 32bytes. Template of the response sent back by the Receiver. Both Transmitter and Receiver needs to know this structure
 {
    bool PumpOn_B1; 
    bool PumpEnabled_B1;
@@ -46,22 +47,23 @@ struct responseTemplate  //Max 32bytes. Template of the response sent back to th
    float Temp;
    float Humidity;
 };
-struct responseTemplate Response = {1,1,4.20,0,0,1.23,23.4,50.1};  //Fake response sent back in the Acknowledgement after receiving a command from the Transmitter
+struct responseTemplate Response = {1,1,4.20,0,0,1.23,23.4,50.1};  //Fake response sent back in the Acknowledgement after receiving a command
 
 void setup() {
     Serial.begin(115200);
-    Serial.println(F("Listening..."));
+    Serial.println(F("Setting up the wireless receiver..."));
     radio.begin();
     radio.setDataRate( RF24_250KBPS );
     radio.openReadingPipe(1, WirelessChannel);
     radio.enableAckPayload();
     updateReplyData();
     radio.startListening();
+    Serial.println(F("Listening..."));
 }
 
 void loop() {
-    if ( radio.available() ) {
-        radio.read( &ReceivedCommand, sizeof(ReceivedCommand) );        
+    if ( radio.available() ) {  //When a command is received
+        radio.read( &ReceivedCommand, sizeof(ReceivedCommand) );    //Load the command to the ReceivedCommand variable
         Serial.print(F("Command received ["));
         Serial.print(sizeof(ReceivedCommand));       
         Serial.println(F(" bytes]"));
@@ -98,5 +100,6 @@ void loop() {
 void updateReplyData() { // so you can see that new data is being sent
     Response.Weight_B1 = random(400, 500) / 100.0;
     Response.Weight_B2 = random(400, 500) / 100.0;
-    radio.writeAckPayload(1, &Response, sizeof(Response)); // load the payload for the next time
+    Response.Humidity = random(0, 10000) /100;
+    radio.writeAckPayload(1, &Response, sizeof(Response)); // load the payload to get sent out when the next control message is received
 }
