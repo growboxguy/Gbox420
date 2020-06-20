@@ -1,5 +1,6 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for testing: 8 channel relay module
+//Note: Multi channel relays tend to use negative logic, where: HIGH = relay OFF, LOW = relay ON
 
 //Pins
 const byte Relay1OutPin = 22; //Power relay Port 1
@@ -25,74 +26,83 @@ void setup()
     pinMode(Relay7OutPin, OUTPUT);
     pinMode(Relay8OutPin, OUTPUT);
 
-    //Setting all relays off
-    digitalWrite(Relay1OutPin, HIGH);
-    digitalWrite(Relay2OutPin, HIGH);
-    digitalWrite(Relay3OutPin, HIGH);
-    digitalWrite(Relay4OutPin, HIGH);
-    digitalWrite(Relay5OutPin, HIGH);
-    digitalWrite(Relay6OutPin, HIGH);
-    digitalWrite(Relay7OutPin, HIGH);
-    digitalWrite(Relay8OutPin, HIGH);
+    turnAllRelaysOff(); //Relays start in an undefined state, need to specify startup state
 
-    delay(2000);
-    Serial.println(F("Turning Relay1 ON"));
+    Serial.println(F("Turning all relays on..."));
+    Serial.println(F("  Turning Relay1 ON"));
     digitalWrite(Relay1OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay2 ON"));
+    Serial.println(F("  Turning Relay2 ON"));
     digitalWrite(Relay2OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay3 ON"));
+    Serial.println(F("  Turning Relay3 ON"));
     digitalWrite(Relay3OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay4 ON")); //NOTE: The relay module will not get enough power after turning on the 4th relay if it is powered from the Arduino
+    Serial.println(F("  Turning Relay4 ON")); //NOTE: The relay module will not get enough power after turning on the 4th relay if it is powered from the Arduino
     digitalWrite(Relay4OutPin, LOW);        //To operate a relay on 5V you need 60mA per relay. Arduino Mega can only supply 200mA max on VCC, limiting the number of simultaneously active relays to 3.
-    delay(2000);
-    Serial.println(F("Turning Relay5 ON"));
+    delay(2000);                            //Use an external 5V power supply connected to GND and JD-VCC pins on the relay module
+    Serial.println(F("  Turning Relay5 ON"));
     digitalWrite(Relay5OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay6 ON"));
+    Serial.println(F("  Turning Relay6 ON"));
     digitalWrite(Relay6OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay7 ON"));
+    Serial.println(F("  Turning Relay7 ON"));
     digitalWrite(Relay7OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay8 ON"));
+    Serial.println(F("  Turning Relay8 ON"));
     digitalWrite(Relay8OutPin, LOW);
+    Serial.println(F("All relays are active, starting cycle test in 10 sec..."));
+    delay(10000);
+    turnAllRelaysOff();
 }
 
 void loop()
 { // put your main code here, to run repeatedly:
-    delay(2000);
-    Serial.println(F("Turning Relay1 ON"));
-    digitalWrite(Relay8OutPin, HIGH);
+    Serial.println(F("  Turning Relay1 ON"));
     digitalWrite(Relay1OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay2 ON"));
+    Serial.println(F("  Turning Relay2 ON"));
     digitalWrite(Relay1OutPin, HIGH);
     digitalWrite(Relay2OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay3 ON"));
+    Serial.println(F("  Turning Relay3 ON"));
     digitalWrite(Relay2OutPin, HIGH);
     digitalWrite(Relay3OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay4 ON"));
+    Serial.println(F("  Turning Relay4 ON"));
     digitalWrite(Relay3OutPin, HIGH);
     digitalWrite(Relay4OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay5 ON"));
+    Serial.println(F("  Turning Relay5 ON"));
     digitalWrite(Relay4OutPin, HIGH);
     digitalWrite(Relay5OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay6 ON"));
+    Serial.println(F("  Turning Relay6 ON"));
     digitalWrite(Relay5OutPin, HIGH);
     digitalWrite(Relay6OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay7 ON"));
+    Serial.println(F("  Turning Relay7 ON"));
     digitalWrite(Relay6OutPin, HIGH);
     digitalWrite(Relay7OutPin, LOW);
     delay(2000);
-    Serial.println(F("Turning Relay8 ON"));
+    Serial.println(F("  Turning Relay8 ON"));
     digitalWrite(Relay7OutPin, HIGH);
     digitalWrite(Relay8OutPin, LOW);
+    delay(2000);
+    digitalWrite(Relay8OutPin, HIGH);
+    Serial.println(F("The Cycle is complete, restarting in 10 sec..."));
+    delay(10000);
+}
+
+void turnAllRelaysOff(){
+    Serial.println(F("Turning all relays off..."));
+    digitalWrite(Relay1OutPin, HIGH);
+    digitalWrite(Relay2OutPin, HIGH);
+    digitalWrite(Relay3OutPin, HIGH);
+    digitalWrite(Relay4OutPin, HIGH);
+    digitalWrite(Relay5OutPin, HIGH);
+    digitalWrite(Relay6OutPin, HIGH);
+    digitalWrite(Relay7OutPin, HIGH);
+    digitalWrite(Relay8OutPin, HIGH);  
 }
