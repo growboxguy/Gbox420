@@ -6,7 +6,7 @@
 #include "DallasTemperature.h"
 
 //Pins
-const byte TempSensorInPin = 51; //Data(yellow) - DS18B20 waterproof temp sensor
+const byte TempSensorInPin = 4; //Data(yellow) - DS18B20 waterproof temp sensor
 
 //Global Variables
 float TempC; // water temperature (°C)
@@ -19,6 +19,8 @@ DallasTemperature TempSensor(&TempSensorWire);
 void setup()
 {
   Serial.begin(115200);
+  Serial.println(F("Sketch for testing: DS18B20 waterproof temperature sensor"));
+  Serial.println();
   TempSensor.begin();
 }
 
