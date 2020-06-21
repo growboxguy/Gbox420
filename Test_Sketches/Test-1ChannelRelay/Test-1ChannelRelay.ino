@@ -18,7 +18,7 @@ void loop()
 { // put your main code here, to run repeatedly:    
     Serial.println(F("  Turning Relay1 ON"));
     digitalWrite(Relay1OutPin, HIGH);
-    delay(2000);
+    delay(10000);
     Serial.println(F("  Turning Relay2 OFF"));
     digitalWrite(Relay1OutPin, LOW);
     Serial.println(F("The Cycle is complete, restarting in 10 sec..."));

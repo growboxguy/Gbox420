@@ -76,14 +76,14 @@ static const uint8_t Version = 1; ///< Increment this when you make a change in 
    
     struct WeightSensorSettings
     {
-      WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, float Scale = 0.0, long Offset = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Scale(Scale), Offset(Offset) {}
+      WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, long Offset = 0, float Scale = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Offset(Offset), Scale(Scale) {}
       uint8_t DTPin;     ///Weight sensor DT pin
       uint8_t SCKPin; ///Weight sensor SCK pin
-      float Scale;  ///Calibration scale value
       long Offset; ///Reading at 0 weight on the scale
+      float Scale;  ///Scale factor      
     };
-    struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Scale = 125000.0, .Offset=146000}; ///Default settings for the hempy bucket 1 weight sensor
-    struct WeightSensorSettings Weight2 = {.DTPin = 7, .SCKPin = 8, .Scale = 126000.0, .Offset=267461}; ///Default settings for the hempy bucket 2 weight sensor
+    struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset=137719, .Scale = 126715.0}; ///Update the calibration values here for Weight Sensor 1
+    struct WeightSensorSettings Weight2 = {.DTPin = 7, .SCKPin = 8, .Offset=268363, .Scale = 121915.0}; ///Update the calibration values here for Weight Sensor 2
 
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
   } Settings;
