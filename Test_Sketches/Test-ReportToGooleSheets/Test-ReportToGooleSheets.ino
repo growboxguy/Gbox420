@@ -6,14 +6,10 @@
 #include "ELClientRest.h" // ESP-link - REST API
 
 //Global constants
-const char PushingBoxLogRelayID[] = "v420"; //UPDATE THIS to your PushingBox logging scenario`s DeviceID
+const char PushingBoxLogRelayID[] = "v755877CF53383E1"; //UPDATE THIS to your PushingBox logging scenario`s DeviceID
 
 //Global variables - fake data to report
 char WebMessage[512]; //buffer for GoogleSheets report
-float Humidity = 4.20;
-bool isLightOn = true;
-int Brightness = 80;
-char Message[] = "GrowBoxGuy";
 
 //Component initialization
 ELClient ESPLink(&Serial3);     //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
@@ -36,36 +32,33 @@ void loop()
 
 void ResetWebServer(void)
 {
-  Serial.println("WebServer (re)starting");
+  Serial.println(F("Sketch for testing: Reporting to Google Sheets using ESP-Link REST API"));
+  Serial.println();
+  Serial.println(F("WebServer (re)starting"));
   while (!ESPLink.Sync())
   {
-    Serial.print(".");
-    Serial3.print(".");
+    Serial.print(F("."));
+    Serial3.print(F("."));
     delay(500);
   };
   RestAPI.begin("api.pushingbox.com"); //Pre-setup relay to Google Sheets
-  Serial.println("WebServer started");
+  Serial.println(F("WebServer started"));
 }
 
 void reportToGoogleSheets()
 {
-  Serial.println("Reporting to Google Sheets");
+  Serial.println(F("Reporting to Google Sheets"));
   memset(&WebMessage[0], 0, sizeof(WebMessage)); //clear variable
   strcat(WebMessage, "/pushingbox?devid=");
   strcat(WebMessage, PushingBoxLogRelayID);
-  strcat_P(WebMessage, (PGM_P)F("&Log="));
-  strcat_P(WebMessage, (PGM_P)F("{\"Humidity\":\""));
-  strcat(WebMessage, floatToChar(Humidity));
-  strcat_P(WebMessage, (PGM_P)F("\",\"isLightOn\":\""));
-  strcat(WebMessage, intToChar(isLightOn));
-  strcat_P(WebMessage, (PGM_P)F("\",\"Brightness\":\""));
-  strcat(WebMessage, intToChar(Brightness));
-  strcat_P(WebMessage, (PGM_P)F("\",\"Message\":\""));
-  strcat(WebMessage, Message);
-  strcat_P(WebMessage, (PGM_P)F("\"}"));
+  strcat_P(WebMessage, (PGM_P)F("&BoxData="));
+  strcat_P(WebMessage, (PGM_P)F("{\"Log\":{\"IFan\":{\"Speed\":\"1\"},\"EFan\":{\"Speed\":\"1\"},\"Lt1\":{\"Status\":\"0\",\"Brightness\":\"15\",\"Timer\":\"1\",\"On\":\"04:20\",\"Off\":\"16:20\"}}}"));
   Serial.println(WebMessage);
   RestAPI.get(WebMessage);
-} //api.pushingbox.com/pushingbox?devid=v420&Log={"Humidity":"4.20","isLightOn":"1","Brightness":"80","Message":"GrowBoxGuy"}
+} 
+
+//URL called by the script: api.pushingbox.com/pushingbox?devid=v420&BoxData={"Log":{"IFan":{"Speed":"1"},"EFan":{"Speed":"1"},"Lt1":{"Status":"0","Brightness":"15","Timer":"1","On":"04:20","Off":"16:20"}}}
+
 
 char *intToChar(int Number)
 {

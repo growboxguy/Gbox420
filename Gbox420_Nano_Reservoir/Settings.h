@@ -55,7 +55,7 @@ static const uint8_t Version = 4; ///< Increment this when you make a change in 
       float Slope;
       float Intercept;
     };
-    struct PHSensorSettings PHSen1 = {.Pin = A0, .Slope = -0.033256, .Intercept = 24.08651}; ///Update this to your own PH meter calibration values
+    struct PHSensorSettings PHSen1 = {.Pin = A0, .Slope = -0.031199, .Intercept = 22.557617}; ///Update this to your own PH meter calibration values
    
     struct ReservoirModuleSettings{
       //ReservoirModuleSettings() :  {}     
