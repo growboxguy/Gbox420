@@ -2,6 +2,11 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_ADXL343.h>
 
+#define ADXL343_SCK 13
+#define ADXL343_MISO 12
+#define ADXL343_MOSI 11
+#define ADXL343_CS 10
+
 /* Assign a unique ID to this sensor at the same time */
 /* Uncomment following line for default Wire bus      */
 Adafruit_ADXL343 accel = Adafruit_ADXL343(12345);
@@ -9,6 +14,9 @@ Adafruit_ADXL343 accel = Adafruit_ADXL343(12345);
 /* NeoTrellis M4, etc.                    */
 /* Uncomment following line for Wire1 bus */
 //Adafruit_ADXL343 accel = Adafruit_ADXL343(12345, &Wire1);
+
+/* Uncomment for SPI */
+//Adafruit_ADXL343 accel = Adafruit_ADXL343(ADXL343_SCK, ADXL343_MISO, ADXL343_MOSI, ADXL343_CS, 12345);
 
 void displayDataRate(void)
 {
@@ -98,7 +106,7 @@ void displayRange(void)
 
 void setup(void)
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   while (!Serial);
   Serial.println("Accelerometer Test"); Serial.println("");
 

@@ -1,7 +1,7 @@
 /**************************************************************************/
 /*!
     @file     Adafruit_ADXL343.h
-    @author   K. Townsend (Adafruit Industries)
+    @author   Bryan Siepert and K. Townsend (Adafruit Industries)
 
     BSD license (see license.txt)
 
@@ -24,6 +24,8 @@
 #include "WProgram.h"
 #endif
 
+#include <Adafruit_BusIO_Register.h>
+#include <Adafruit_I2CDevice.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
 
@@ -153,9 +155,8 @@ public:
   int16_t getZ(void);
 
 private:
-  inline uint8_t i2cread(void);
-  inline void i2cwrite(uint8_t x);
-  uint8_t _i2caddr;
+  Adafruit_SPIDevice *spi_dev = NULL;
+  Adafruit_I2CDevice *i2c_dev = NULL;
 
   TwoWire *_wire;
   int32_t _sensorID;
