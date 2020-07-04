@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 8; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 9; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
 enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -122,8 +122,8 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
       uint8_t OffHour = 16;                                                                                                                                        ///Light OFF time - hour
       uint8_t OffMinute = 20;                                                                                                                                      ///Light OFF time - minute
     };
-    struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 6}; ///Creating a LightSettings instance, passing in the unique parameters
-    //struct LightsSettings Lt2 = {.RelayPin = 28, .DimmingPin = 12, .DimmingLimit = 6}; ///Creating a LightSettings instance, passing in the unique parameters
+    struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 14}; ///Creating a LightSettings instance, passing in the unique parameters
+    struct LightsSettings Lt2 = {.RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6}; ///Creating a LightSettings instance, passing in the unique parameters
 
 
     struct ReservoirModuleSettings{  ///TODO: Remove the parameters

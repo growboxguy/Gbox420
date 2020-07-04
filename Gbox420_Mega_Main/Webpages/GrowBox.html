@@ -120,7 +120,7 @@
 				</table>
 			</div>
 			<div class="card" style="width:90%">
-				<h1>Lights</h1>
+				<h1>Light 1</h1>
 				<table class="tg">
 					<tr>
 						<td class="headerRows"><span style="font-weight:bold">Lights</span><br></td>
@@ -160,7 +160,44 @@
 						<input style="width: 35px;" min=0 max=23 name="Lt1_OfH" type="number" />:
 						<input style="width: 35px;" min=0 max=59 name="Lt1_OfM" type="number" />
 						<input type="submit" value="Set" title="Set grow light OFF time"></form>
-			</div>						
+			</div>
+			<div class="card" style="width:90%">
+				<h1>Light 2</h1>
+				<table class="tg">
+					<tr>
+						<td class="headerRows"><span style="font-weight:bold">Lights</span><br></td>
+						<td class="headerRows"><span style="font-weight:bold">Timer</span></td>
+						<td class="headerRows"><span style="font-weight:bold">ON</span></td>
+						<td class="headerRows"><span style="font-weight:bold">OFF</span></td>  
+					</tr>
+					<tr>
+						<td id="Lt2_S" class="dataRows"></td><!-- Status ON/OFF -->						
+						<td id="Lt2_T" class="dataRows"></td><!-- Timer Enabled/Disabled -->
+						<td id="Lt2_OnT" class="dataRows"></td><!--Light On Time 24h-->
+						<td id="Lt2_OfT" class="dataRows"></td><!--Light Off Time 24h -->
+					</tr>
+				</table>
+				<button id="Lt2_On" type="button" title="Turn grow lights ON">ON</button>
+				<button id="Lt2_Of" type="button" title="Turn grow lights OFF">OFF</button>				
+				<br>
+				<b>Brightness</b><br>
+				<form>
+					<input style="width:42px;" type="number" name="Lt2_B" min="0" max="100"	oninput="this.form.Lt2_BS.value=this.value" />
+					<input type="range" name="Lt2_BS" min="0" max="100"	oninput="this.form.Lt2_B.value=this.value">
+					<input type="submit" value="Set">
+				</form>
+				<b>Timer: </b>
+					<button id="Lt2_TOn" type="button" align="right" title="Enable light timer">Enable</button>
+					<button id="Lt2_TOff" type="button" align="right" title="Disable light timer">Disable</button>
+					<form>ON : 
+						<input style="width: 35px;" min=0 max=23 name="Lt2_OnH" type="number" />:
+						<input style="width: 35px;" min=0 max=59 name="Lt2_OnM" type="number" />
+						<input type="submit" value="Set" title="Set grow light ON time"></form>
+					<form>OFF:
+						<input style="width: 35px;" min=0 max=23 name="Lt2_OfH" type="number" />:
+						<input style="width: 35px;" min=0 max=59 name="Lt2_OfM" type="number" />
+						<input type="submit" value="Set" title="Set grow light OFF time"></form>
+			</div>				
 			<div class="card" style="width:90%">
 				<h1>Ventilation</h1>
 				<table class="tg">

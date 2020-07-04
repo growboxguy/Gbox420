@@ -19,6 +19,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan);      ///passing: Component name, MainModule object the component belongs to, Default settings)
   EFan = new Fan_Web(F("EFan"), this, &ModuleSettings->EFan);
   Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
+  Lt2 = new Lights_Web(F("Lt2"), this, &ModuleSettings->Lt2);
   LtSen1 = new LightSensor_Web(F("LtSen1"), this, &ModuleSettings->LtSen1, Lt1); ///Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
   DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);
   //Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2); ///For PZEM004T V1.0 or PZEM004T V2.0

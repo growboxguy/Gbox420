@@ -30,7 +30,8 @@ public:
   Sound_Web *Sound1;             ///Pointer to a Piezo speaker - sound feedback
   Fan_Web *IFan;                ///Internal fan
   Fan_Web *EFan;                ///Exhaust fan  
-  Lights_Web *Lt1;            ///Pointer to a Light assembly
+  Lights_Web *Lt1;            ///Pointer to a Light assembly No1
+  Lights_Web *Lt2;            ///Pointer to a Light assembly No2
   LightSensor_Web *LtSen1; ///Pointer to a Light Sensor object measuring light intensity in the grow box  
   //PowerSensor_Web *Pow1;   ///For PZEM004T V1.0 or PZEM004T V2.0
   PowerSensorV3_Web * Pow1;  ///Only for PZEM004T V3.0

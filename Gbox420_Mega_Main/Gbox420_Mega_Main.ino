@@ -141,7 +141,7 @@ void runFiveSec()
 void runMinute()
 {
   wdt_reset();
-  Main1->runFiveSec();
+  Main1->runMinute();
   getWirelessStatus();
 }
 
