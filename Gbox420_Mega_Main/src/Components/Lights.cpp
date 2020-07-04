@@ -198,6 +198,7 @@ void Lights::setOnMinute(uint8_t OnMinute)
 {
   *(this->OnMinute) = OnMinute;
   Parent->addToLog(F("Light ON updated"));
+  Parent->getSoundObject()->playOnSound();
 }
 
 void Lights::setOffHour(uint8_t OffHour)
@@ -209,4 +210,5 @@ void Lights::setOffMinute(uint8_t OffMinute)
 {
   *(this->OffMinute) = OffMinute;
   Parent->addToLog(F("Light OFF updated"));
+  Parent->getSoundObject()->playOnSound();
 }

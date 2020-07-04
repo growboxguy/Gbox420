@@ -21,8 +21,8 @@ public:
   void runFiveSec(bool AddToLog = true);
   void runMinute(bool AddToLog = true);
   void runQuarterHour(bool AddToLog = true);
-  void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
-  void addToLog(const char *Text, uint8_t indent = 3);  
+  virtual void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
+  virtual void addToLog(const char *Text, uint8_t indent = 3);  
   void addToReportQueue(Common *Component);   ///< Subscribing to the report queue: Calls the report() method
   void addToRefreshQueue_Sec(Common *Component);  ///< Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
   void addToRefreshQueue_FiveSec(Common *Component);  ///< Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
