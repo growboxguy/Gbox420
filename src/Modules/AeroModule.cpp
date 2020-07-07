@@ -112,10 +112,10 @@ void AeroModule::processCommand(aeroCommand *Command){
         logToSerials(Command -> PumpTimeOut,false,1);
         logToSerials(F(","),false,1);
         logToSerials(Command -> PumpPrimingTime,false,1);
+        logToSerials(F(","),false,1); 
+        logToSerials(Command -> MinPressure,false,1);
         logToSerials(F(","),false,1);
         logToSerials(Command -> MaxPressure,false,1);
-        logToSerials(F(","),false,1);
-        logToSerials(Command -> MinPressure,false,1);
         logToSerials(F(","),false,1);
         logToSerials(Command -> MixReservoir,true,1);
       //logToSerials(F(";"),false,1);

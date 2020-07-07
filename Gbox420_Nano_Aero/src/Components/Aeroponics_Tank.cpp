@@ -17,6 +17,8 @@ void Aeroponics_Tank::report()
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Spray Solenoid:"));
   strcat(LongMessage, toText_onOff(SpraySolenoidOn));
+  strcat_P(LongMessage, (PGM_P)F(" ; MinPressure:"));
+  strcat(LongMessage, toText_pressure(*MinPressure));
   logToSerials(&LongMessage, false, 1); ///first print Aeroponics_Tank specific report, without a line break
   Aeroponics::report();                 ///then print parent class report
 }

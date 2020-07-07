@@ -52,6 +52,6 @@ void ReservoirModule::processCommand(reservoirCommand *Command){
     logToSerials(Command -> Debug,false,3);
     logToSerials(F(","),false,1);
     logToSerials(Command -> Metric,false,1);
-    logToSerials(F(";"),false,1); 
+    logToSerials(F(";"),true,1); 
   }       
 }
