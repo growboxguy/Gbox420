@@ -101,23 +101,49 @@
 					title="Report current status to Google Sheets">Report to Sheets</button>
 			</div>
 			<div class="card" style="width:90%">
-				<h1>Reservoir</h1>
+				<h1>Ventilation</h1>
 				<table class="tg">
 					<tr>
-						<th class="headerRows"><span style="font-weight:bold">PH</span></th>
-						<th class="headerRows"><span style="font-weight:bold">Weight</span></th>
-						<th class="headerRows"><span style="font-weight:bold">Water Temp</span></th>
-						<th class="headerRows"><span style="font-weight:bold">Air Temp</span></th>
-						<th class="headerRows"><span style="font-weight:bold">Humidity</span></th>
+						<td class="headerRows"><span style="font-weight:bold">Temp</span></td>
+						<td class="headerRows"><span style="font-weight:bold">Humidity</span></td>
+						<td class="headerRows"><span style="font-weight:bold">Internal fan</span></td>
+						<td class="headerRows"><span style="font-weight:bold">Exhaust fan</span></td>
 					</tr>
 					<tr>
-						<td id="Res1_PH" class="dataRows"></td>
-						<td id="Res1_Weight" class="dataRows"></td>
-						<td id="Res1_WTemp" class="dataRows"></td>
-						<td id="Res1_ATemp" class="dataRows"></td>
-						<td id="Res1_Humi" class="dataRows"></td>
+						<td id="DHT1_T" class="dataRows"></td>
+						<td id="DHT1_H" class="dataRows"></td>
+						<td id="IFan_S" class="dataRows"></td>
+						<td id="EFan_S" class="dataRows"></td>
 					</tr>
 				</table>
+				<b>Internal fan: </b>
+				<button id="IFan_O" type="button" title="Turn internal fan OFF">OFF</button>
+				<button id="IFan_L" type="button" title="Turn internal fan ON and set speed to LOW">Low</button>
+				<button id="IFan_H" type="button" title="Turn internal fan ON and set speed to HIGH">High</button>
+				<br>
+				<!--
+				<form>
+					<label><input type="checkbox" name="IFan_Auto">Automatic low/high at: </label>
+					<input style="width: 45px;" min=0 max=255 name="IFan_SwithTemp" type="number"/><span>° </span>
+					<input type="submit" value="Set" title="Enable/Disable automatic LOW/HIGH switch of internal fan based on internal temperature">
+				</form>
+				-->
+				<b>Exhaust fan:</b>
+				<button id="EFan_O" type="button" title="Turn exhaust fan OFF">OFF</button>
+				<button id="EFan_L" type="button" title="Turn exhaust fan ON and set speed to LOW">Low</button>
+				<button id="EFan_H" type="button" title="Turn exhaust fan ON and set speed to HIGH">High</button>
+				<!--
+				<form>
+					<label><input type="checkbox" name="EFan_Auto">Automatic. Off humidity:</label>
+					<input style="width: 35px;" min=0 max=99 name="EFan_OffHumid" type="number"/>
+					<input type="submit" value="Set" title="Enable/Disable automatic OFF/LOW/HIGH exhaust fan based on humidity and set OFF humidity">
+				</form>
+				<form>	
+					Low:<input style="width: 35px;" min=0 max=99 name="EFanLowHumid" type="number"/>
+					High:<input style="width: 35px;" min=0 max=99 name="EFanHighHumid" type="number"/>
+					<input type="submit" value="Set" title="Set LOW and HIGH speed humidity levels">
+				</form>
+				-->				
 			</div>
 			<div class="card" style="width:90%">
 				<h1>Light 1</h1>
@@ -197,54 +223,28 @@
 						<input style="width: 35px;" min=0 max=23 name="Lt2_OfH" type="number" />:
 						<input style="width: 35px;" min=0 max=59 name="Lt2_OfM" type="number" />
 						<input type="submit" value="Set" title="Set grow light OFF time"></form>
-			</div>				
-			<div class="card" style="width:90%">
-				<h1>Ventilation</h1>
-				<table class="tg">
-					<tr>
-						<td class="headerRows"><span style="font-weight:bold">Temp</span></td>
-						<td class="headerRows"><span style="font-weight:bold">Humidity</span></td>
-						<td class="headerRows"><span style="font-weight:bold">Internal fan</span></td>
-						<td class="headerRows"><span style="font-weight:bold">Exhaust fan</span></td>
-					</tr>
-					<tr>
-						<td id="DHT1_T" class="dataRows"></td>
-						<td id="DHT1_H" class="dataRows"></td>
-						<td id="IFan_S" class="dataRows"></td>
-						<td id="EFan_S" class="dataRows"></td>
-					</tr>
-				</table>
-				<b>Internal fan: </b>
-				<button id="IFan_O" type="button" title="Turn internal fan OFF">OFF</button>
-				<button id="IFan_L" type="button" title="Turn internal fan ON and set speed to LOW">Low</button>
-				<button id="IFan_H" type="button" title="Turn internal fan ON and set speed to HIGH">High</button>
-				<br>
-				<!--
-				<form>
-					<label><input type="checkbox" name="IFan_Auto">Automatic low/high at: </label>
-					<input style="width: 45px;" min=0 max=255 name="IFan_SwithTemp" type="number"/><span>° </span>
-					<input type="submit" value="Set" title="Enable/Disable automatic LOW/HIGH switch of internal fan based on internal temperature">
-				</form>
-				-->
-				<b>Exhaust fan:</b>
-				<button id="EFan_O" type="button" title="Turn exhaust fan OFF">OFF</button>
-				<button id="EFan_L" type="button" title="Turn exhaust fan ON and set speed to LOW">Low</button>
-				<button id="EFan_H" type="button" title="Turn exhaust fan ON and set speed to HIGH">High</button>
-				<!--
-				<form>
-					<label><input type="checkbox" name="EFan_Auto">Automatic. Off humidity:</label>
-					<input style="width: 35px;" min=0 max=99 name="EFan_OffHumid" type="number"/>
-					<input type="submit" value="Set" title="Enable/Disable automatic OFF/LOW/HIGH exhaust fan based on humidity and set OFF humidity">
-				</form>
-				<form>	
-					Low:<input style="width: 35px;" min=0 max=99 name="EFanLowHumid" type="number"/>
-					High:<input style="width: 35px;" min=0 max=99 name="EFanHighHumid" type="number"/>
-					<input type="submit" value="Set" title="Set LOW and HIGH speed humidity levels">
-				</form>
-				-->				
-			</div>		
+			</div>	
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
+			<div class="card" style="width:90%">
+				<h1>Reservoir</h1>
+				<table class="tg">
+					<tr>
+						<th class="headerRows"><span style="font-weight:bold">PH</span></th>
+						<th class="headerRows"><span style="font-weight:bold">Weight</span></th>
+						<th class="headerRows"><span style="font-weight:bold">Water Temp</span></th>
+						<th class="headerRows"><span style="font-weight:bold">Air Temp</span></th>
+						<th class="headerRows"><span style="font-weight:bold">Humidity</span></th>
+					</tr>
+					<tr>
+						<td id="Res1_PH" class="dataRows"></td>
+						<td id="Res1_Weight" class="dataRows"></td>
+						<td id="Res1_WTemp" class="dataRows"></td>
+						<td id="Res1_ATemp" class="dataRows"></td>
+						<td id="Res1_Humi" class="dataRows"></td>
+					</tr>
+				</table>
+			</div>
 			<div class="card" style="width:90%">
 				<h1>Hempy bucket 1</h1>
 				<table class="tg">
@@ -352,7 +352,7 @@
 				</form>			
 				<b id="Aero1_TankTitle">Tank: </b><input type="checkbox" id="Aero1_Tank" name="Aero1_Tank" title="READONLY - Enabled if Pressure tank is available" onchange="showRefillButton()" onload="showRefillButton()" style="display: none;">
 					<button id="Aero1_Refill" type="button" align="right" title="Refill the tank">Refill</button>									
-			</div>
+			</div>			
 		</div>
 	</div>
 </div>

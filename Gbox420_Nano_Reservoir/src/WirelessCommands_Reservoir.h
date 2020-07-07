@@ -9,8 +9,6 @@ struct reservoirCommand  ///Max 32 bytes. Template of the command sent by the Tr
    time_t Time;
    bool Debug = false;
    bool Metric = true;
-   //int TimeOutPump_B1 = 0;   
- 
 };
 
 struct reservoirResponse  ///Max 32 bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure

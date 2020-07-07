@@ -77,7 +77,7 @@ void ReservoirModule_Web::syncModule( const byte WirelessChannel[], reservoirCom
 
           if(*Debug){
           logToSerials(F("Acknowledgement received ["),false,2);            
-          logToSerials(toText(sizeof(*Response)),true,1); /// \todo Use LogToSerial
+          logToSerials(toText(sizeof(*Response)),false,1); /// \todo Use LogToSerial
           logToSerials(F("bytes]"),true,1);
           logToSerials(Response -> PH,false,3);
           logToSerials(F(","),false,1);
