@@ -15,31 +15,44 @@
 </div><br>
 
 <div>
-We build an Arduino based grow box monitoring and controlling system out of an old PC case with a power supply. The ATmega2560 microcontroller running the Gbox420 sketch is connected to an ESP8266 wifi chip with a custom ESP-Link firmware and reports sensor readings through PushingBox message API to Google Sheets. The ESP8266 wifi chip will act as an internet gateway and a web server at the same time, hosting a mobile friendly control and monitoring interface for the grow box.
+This guide was made for indoor gardeners would like to build an Arduino based automated grow box complete with LED lights, ventilation with a carbon filter, logging to Google Sheets and email alerting. As the growing medium there are two options: A coco soil based Hempy buckets or a soilless Aeroponics tote. The information presented here was gathered from forums, articles and videos, combined with personal experience and feedback from the growing community. Hope to hear from you too!
 </div>
 
-<h2>Assembly guide: https://sites.google.com/site/growboxguy/arduino</h2>
+<h2>Assembly guide: https://sites.google.com/site/growboxguy/</h2>
 <h2>Doxygen documentation: https://growboxguy.github.io/Gbox420/classCommon.html</h2>
 </div>
 
-![alt text](https://docs.google.com/drawings/d/saJcW0ASTVO8vFDMZu1nxyQ/image?w=896&h=417&rev=986&ac=1&parent=13WdrW3qaUhXpjld2XEMji3r6EkQRwYiImda7D3szmkA)
+![alt text](https://lh4.googleusercontent.com/in1ZOOO8nup_dnrUK7k-ApEWDUp4p14GjSslzjh_Ym3-5-F-MpF0Bgq6cJNe2VkN0xU5Xh0kiGrPWCLPlFQb3ZGGHoh6m__CP5VniqYn59YxhR8Hlpg=w1280)
 
 Website hosted by the ESP link, displaying sensor readings from Arduino and controlling the grow box
-![alt text](https://lh6.googleusercontent.com/Q7CviRdc5dGbD8tyHI5lj1Z9tSE1Hl1tNV6eScdNlth4r2hYlj1uI-Kdv85KZcW4rLrM1pkxoVkLM3QKZe0QCQsP8f5jktpEer3btAU9ZXpUj2vGMS8KfEoqHiDXt28InjmjQrK3)
+![alt text](https://lh4.googleusercontent.com/GUeSoWXhET3qbJIh7a4jQxuwEUF8VtNn0-sMlEZgrKCXnfbMnxZ0YoOzidmWjky2wUk7IJoo-2pi9ZubuqwqxD_7rV_3l__5srT4Z60-Et-ipu4MBkw=w1280)
 
-Inside the PC case: Arduino, power meter, led driver and dimming circuit, 8 relays for controlling lights/fans and pumps
-![alt text](https://lh3.googleusercontent.com/BEJLnPGh5m7ayeMAGi42AZ67JkaiOU0_59zkJpUlvnXy1n1U1YEZpEUPduRhplLtXshTBAq42mLORqmNPgFvO-C8O9eElPmEN8FRaZPhtGOkoEtiiq6UptZxyeFbR2k3dKeF35cc)
+The complete automation kit, including the Main, Aeroponics, Hempy bucket and Reservoir modules, two LED drivers and AC outlets for dual speed Internal and Exhaust fans
+![alt text](hhttps://lh5.googleusercontent.com/f7ziRsatgjBa2gOQQIIQUHHS-huRkNJ3u2E-ZcJMB7mI2hkMkviToDtbSndU1pxlxu423UUCNyQqeu_0be4WBGDF1e04hHUtUMZyeSFGBtvxx-Fgqvs=w1280)
 
-External light, humidity and temperature sensors connected over UTP cable
-![alt text](https://lh3.googleusercontent.com/RLd_GoQMXbY5050mcR9KNx0QPErBM82_zoO1bI0QXvM9aEZs-W4VhJLuANACFuNkh4AJ44UfSpaVPoQbqDHBF1N5JQQuiBkkZO3jxBrlkcyDmmMHLocpfxEQKFOYy52wV3c6QkXO)
+<b>Main module</b>: Based on the Arduino Mega2560 and ESP8266 chips. Measures and controls AC power to the two PWM dimmed LED drivers, the dual speed Internal and Exhaust fans and to the 12V DC power brick powering all modules.Collects sensor readings from the other modules wirelessly and reports them to Google Sheets.
+Placed outside the grow box.
+![alt text](https://lh4.googleusercontent.com/yt5VtSSCuCRWgnawv3fzfRMfqbqauwoomn6M2GttQvBJT55LjxY5k4ByywGbAnALc1l_H-k=w1280)
 
-Arduino controlling the LED COB lights
-![alt text](https://lh3.googleusercontent.com/uFSBH5TT2EaEKr6cV1UqM_5PfG4ATpqilXDMEZxTxx3Qy18JCmlVoFfRVkALXTYOna-tuDUivfka7HD7I4TUDxPXBqD4W7aEM1B-DotJYhE2WEu-JrcyWCliqsgyKGTBHEB5h933)
+Main module extension: Temperature, humidity and light sensors connected to the main module via UTP cable. Placed inside the grow box.
+![alt text](https://lh5.googleusercontent.com/m1JbFcNd416qqKFX1T_KwHma0_UC_MMHbCRB-tlJkkDEl1hbrkNOSekf7qZM2SoYKEVqlYRJFxMQsGKU6hDNTpHGL_uuSHy2hz60hysOVCO0FEUH4yw=w1280)
 
-The grow box that is going to receive the automation upgrade
-![alt text](https://lh5.googleusercontent.com/NMUwOTTDus_pxTKW_P74ohs6fLb_kKiaCOYnFVQAbFU0yMe8a1c71M8uRPwVBlCtEN-VOqpKgRcSn0lmjAaRg_3V7xcarfl1BFd8sNAXtWeg036mOkCjjzP_8DmAswhYdLrRjDHi)
+<b>Reservoir module</b>: ased on an Arduino Nano RF. Measures the reservoir weight, temperature, pH and the air temperature and humidity around the reservoir.
+![alt text](https://lh6.googleusercontent.com/b5PSoYAwkMlYJ_xeZbH9lrBi-murGQ7koOsDfzUi7Vm99tFZlwE--GoLUTVv7i0goU4HWNRH=w1280)
 
-Google Sheets integrated into the grow box interface:
-![alt text](https://lh3.googleusercontent.com/41GrczKaTNOsarf77zMgRfFIXO0N6_M5OUkGF6ExIX2rAOiUb2TsIqysGyW5Wgh4zuC2HWapsesOLbXWYjlrfgbsEbyCvl771q10y_Fa7Fm9chMcJQheiQtlYBmARe-N49YC4Ujh)
+<b>Hempy module</b>: Based on an Arduino Nano RF. Measures the weight of the Hempy buckets and controls watering.
+![alt text](https://lh3.googleusercontent.com/kI6rheGOpgEbF-fRP7C1ONS-sqz0m3ZoMkdeGb9y9XJDHkMPVbIepfJl5f9SoESjh523yQ9h=w1280)
 
-![alt text](https://lh3.googleusercontent.com/GYfuFEZYxv5bDz5c3xNUVWoYVUGvm7BrU0dTOZW3aT5HbDEg0XzhBQun3GnablQhYy24-9FeZQNwcu0NIn7_NnKEgtnC1NQ315UYyHmVLf3CL267afzK913bABHSn6Ym1bKlC4TW)
+<b>Aeroponics module</b>: Based on an Arduino Nano RF. Measures the pressure and controls the high pressure pump, bypass solenoid and spray solenoids. 
+![alt text](https://lh3.googleusercontent.com/kI6rheGOpgEbF-fRP7C1ONS-sqz0m3ZoMkdeGb9y9XJDHkMPVbIepfJl5f9SoESjh523yQ9h=w1280)
+
+<b>Gbox420 user interface</b>: The ESP-link firmware's built in webserver hosts the control interface for the grow box. This is available on the local WiFi from a mobile, tablet or desktop PC.
+![alt text](https://lh3.googleusercontent.com/xXL62PYu3oXBkhz6iJLy_w6iVpcPYzPIU6HjRliOOroYjlOWDLTIprSOSJM-3ak0SiFoPqWvPs2ZILRKEqHPXuJzWwdKGkOpvnqoILLEpDJ-jwIhqeE=w1280)
+
+<b>Serial output relayed to the web interface</b>: There is no need to connect a USB cable to monitor the Arduino's serial output,
+it is relayed to the grow box control website
+![alt text](https://lh5.googleusercontent.com/jKOYmPhHFVaZsIciMbji7AY-hsBg94zDQOKBgT6LDakJ1n91XCHPZkO9E4O-uJ-LOjGS0mu26MCBkzc-g-RdGkw4Y-5YBScvR99_Ocg3XNyvSt80lm8=w1280)
+
+<b>Email alert example</b>: TWhen a new alert triggers, or an existing alert is resolved a summary email is triggered. Several charts are attached to the email for a quick overview.
+![alt text](https://lh3.googleusercontent.com/-E4MQI7O97Q5TfXfJzD8vMt-pyTHWN8DTU2NsLYPxXmqK8XdbR86TNk1bT-KmTIkNQ6f3n4bEdgBcQx1OpT53GQvA4L78eJqr2HEYgiuiTk_8MXVFlo=w1280)
+
