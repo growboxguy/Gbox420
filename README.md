@@ -18,38 +18,37 @@
 This guide was made for indoor gardeners would like to build an Arduino based automated grow box complete with LED lights, ventilation with a carbon filter, logging to Google Sheets and email alerting. As the growing medium there are two options: A coco soil based Hempy buckets or a soilless Aeroponics tote. The information presented here was gathered from forums, articles and videos, combined with personal experience and feedback from the growing community. Hope to hear from you too!
 </div>
 
-<h2>Assembly guide: https://sites.google.com/site/growboxguy/</h2>
-<h2>Doxygen documentation: https://growboxguy.github.io/Gbox420/classCommon.html</h2>
+<div>
+<h2>Assembly guide:<br> https://sites.google.com/site/growboxguy/ </h2>
+<h2>Doxygen documentation: https://growboxguy.github.io/Gbox420/classCommon.html </h2>
 </div>
 
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3etlEchfH2eX-HyE6f6iSRXFcdqbYqmVetXMMQ7SHdvaeFPfClqIH5bMfoUcP6uTBgLVmqOyBWSr0OFvARRFSO7SrlJvzgpWvjOOVEmpAWiKJ8eIfrv9OHwlxJssRaydEnYBqMfxdCjZALiKUEwTFoJ=w1055-h652-no?authuser=0)
 
-<b>Gbox420 user interface</b>: The ESP-link firmware's built in webserver hosts the control interface for the grow box. This is available on the local WiFi from a mobile, tablet or desktop PC.
+<b>Gbox420 user interface</b>: The ESP-link firmware's built in webserver hosts the control interface for the grow box. This is available on the local WiFi from a mobile, tablet or desktop PC.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3c-2j05-O9FE06BzfPP4TTC43UszOYteR3BX9x--eIgj4tKfLv5644zgGQKqnPrwW5-We4JG8LeEcxlS0f5Qtcsk1gxCsro-M2Rjb2eQisdS9UC6X39Kk1rIY10MSCHQdlWemWFNJNV7nkhgG0ROlZD=w898-h1092-no?authuser=0)
 
 <b>Serial output relayed to the web interface</b>: There is no need to connect a USB cable to monitor the Arduino's serial output, it is relayed to the grow box control website.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3dYHgQPSjFgytEfSkKt7SaMcD6PDtLsX1UcmKIsaYqmRTEyt_ZOahGe9ConQdW6uZ8q9GsIHTxhk76tvRcf5KmEgwWlppEihKlWP8yPwhm2WBIhajls76n8Gb3FLSu_x1BF6vPWWBwSeE_V--VujShi=w657-h1140-no?authuser=0)
 
-<b>Email alert example</b>: TWhen a new alert triggers, or an existing alert is resolved a summary email is triggered. Several charts are attached to the email for a quick overview.
+<b>Email alert example</b>: TWhen a new alert triggers, or an existing alert is resolved a summary email is triggered. Several charts are attached to the email for a quick overview.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3euTh98iZcKUGZrIvDGN68GyGxAaRiwtes9e8expmese2jSrZ2UlPHhyBx_I8x5lAi4E6bpkLIdRolshcr8tI9a_B-3VDKSQUHNiFwWzL1VibNYVCNSS-1827h37dabDf49rOdkTgyjTwAYJFi7S8Go=w741-h1289-no?authuser=0)
 
-The complete automation kit, including the Main, Aeroponics, Hempy bucket and Reservoir modules, two LED drivers and AC outlets for dual speed Internal and Exhaust fans
+The complete automation kit, including the Main, Aeroponics, Hempy bucket and Reservoir modules, two LED drivers and AC outlets for dual speed Internal and Exhaust fans.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3eaGQD-ZrbG_jQPcvH0MqhBifQFIfGyrfq49SbDHr_pT9wdi1mHTIPFNX3RU0QFcKM0DrfoZFnSleH4EOVYjvL7UsD7UDHblcxxBvI66pMtYg7XcAaEw7cnCFCLLJ_hl-cDsuFJ-PE8V-_AuW5IAfA-=w1200-h855-no?authuser=0)
 
 <b>Main module</b>: Based on the Arduino Mega2560 and ESP8266 chips. Measures and controls AC power to the two PWM dimmed LED drivers, the dual speed Internal and Exhaust fans and to the 12V DC power brick powering all modules.Collects sensor readings from the other modules wirelessly and reports them to Google Sheets.
-Placed outside the grow box.
+Placed outside the grow box.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3f9mNWcEYjtU5f1tdHX-KMrAYjO2jOn3d1OxBzmNKc2Ks3GEG6k4sIKgxc0RuagOZo2bk1hZBxS4kohtNuJ7_UDDagushsACgsxv-13qPD7kYhtlzTT3KzXf8dS6np45RzBocGLAsESsg74DEi4yTlV=w1200-h801-no?authuser=0)
 
-<b>Main module extension</b>: Temperature, humidity and light sensors connected to the main module via UTP cable. Placed inside the grow box.
+<b>Main module extension</b>: Temperature, humidity and light sensors connected to the main module via UTP cable. Placed inside the grow box.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3d0RY9H_sS4tyf9QsXPbRu4Dmo3j0MkfTi_iXFxKPSlXgyHFsKGfHFe1g0NQ0Vhz4qsiYNV4oVIYgt9rUr-bMQV9dXvcj3nk_4XGrgWVfTf-nATa9yZM1hk4IYu6m5Ze6bTE3ZDnEiA_IBzIqji3BDl=w1200-h801-no?authuser=0)
 
-<b>Reservoir module</b>: ased on an Arduino Nano RF. Measures the reservoir weight, temperature, pH and the air temperature and humidity around the reservoir.
+<b>Reservoir module</b>: ased on an Arduino Nano RF. Measures the reservoir weight, temperature, pH and the air temperature and humidity around the reservoir.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3f2VaMcisIGxvBNdvfefVLztVS8ZZoiRN75YegEpFTWzUvLPIjvvQJEbDnwNDv7SrEL5GUPgjhy8asU0VALJWJWtYywP_0PrXSf4Sbr8mNe1UWMq12Ejylk7H2nVonGVy5qJL29gRUssHa5AtaVk5Xe=w1200-h801-no?authuser=0)
 
-<b>Hempy module</b>: Based on an Arduino Nano RF. Measures the weight of the Hempy buckets and controls watering.
+<b>Hempy module</b>: Based on an Arduino Nano RF. Measures the weight of the Hempy buckets and controls watering.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3dudHmGC8n4Kcgwcb-83gjC90rDndVKHWDJVZBVMnE6PNbyAThh4SHS5ZNTrKT6reoeZtoBUqaVVOZ6g1n4gIZ5182V9bFkOo8Whkh0aAA8t2sMvJTbO-WKcAyJIwn-IEUC7KWZ5bfSq27Xfs6glVSD=w1200-h801-no?authuser=0)
 
-<b>Aeroponics module</b>: Based on an Arduino Nano RF. Measures the pressure and controls the high pressure pump, bypass solenoid and spray solenoids. 
+<b>Aeroponics module</b>: Based on an Arduino Nano RF. Measures the pressure and controls the high pressure pump, bypass solenoid and spray solenoids. <br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3eiagyhv_J80jMzoPd-cynOjpfpJTxiGapRe3wNWmgyJnsxzGZbGnULGq9hxq6lds4vKPzBIYIhXW7J4ivQXb3hWxPlNT90PDObBekW19Pd2uMQFC2vSQevob1vP_xZd7tKOi5Ae9vfTJLv8udcrCRk=w1200-h801-no?authuser=0)
-
-
