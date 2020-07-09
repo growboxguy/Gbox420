@@ -39,16 +39,20 @@ The complete automation kit, including the Main, Aeroponics, Hempy bucket and Re
 
 <b>Main module</b>: Based on the Arduino Mega2560 and ESP8266 chips. Measures and controls AC power to the two PWM dimmed LED drivers, the dual speed Internal and Exhaust fans and to the 12V DC power brick powering all modules.Collects sensor readings from the other modules wirelessly and reports them to Google Sheets.
 Placed outside the grow box.<br>
-![alt text](https://lh3.googleusercontent.com/pw/ACtC-3f9mNWcEYjtU5f1tdHX-KMrAYjO2jOn3d1OxBzmNKc2Ks3GEG6k4sIKgxc0RuagOZo2bk1hZBxS4kohtNuJ7_UDDagushsACgsxv-13qPD7kYhtlzTT3KzXf8dS6np45RzBocGLAsESsg74DEi4yTlV=w1200-h801-no?authuser=0)
+![Main module](https://lh3.googleusercontent.com/pw/ACtC-3f9mNWcEYjtU5f1tdHX-KMrAYjO2jOn3d1OxBzmNKc2Ks3GEG6k4sIKgxc0RuagOZo2bk1hZBxS4kohtNuJ7_UDDagushsACgsxv-13qPD7kYhtlzTT3KzXf8dS6np45RzBocGLAsESsg74DEi4yTlV=w1200-h801-no?authuser=0)
+![Main module circuit](https://lh3.googleusercontent.com/pw/ACtC-3d_kFnsAjAEZR40xnVtmgArwwm-flMP83BC13oYXVeMe00Ivf0dg3_pGFAeo3EDN7nTPoXuEo8ubIy81NVVo7LzsJJgbXgjzMSaUnjJyZWrP3fBQXbDGJh2B0QX936-0VAFGQokV-BQqd5cpz4--x7-=w1200-h892-no?authuser=0)
 
 <b>Main module extension</b>: Temperature, humidity and light sensors connected to the main module via UTP cable. Placed inside the grow box.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3d0RY9H_sS4tyf9QsXPbRu4Dmo3j0MkfTi_iXFxKPSlXgyHFsKGfHFe1g0NQ0Vhz4qsiYNV4oVIYgt9rUr-bMQV9dXvcj3nk_4XGrgWVfTf-nATa9yZM1hk4IYu6m5Ze6bTE3ZDnEiA_IBzIqji3BDl=w1200-h801-no?authuser=0)
 
 <b>Reservoir module</b>: ased on an Arduino Nano RF. Measures the reservoir weight, temperature, pH and the air temperature and humidity around the reservoir.<br>
-![alt text](https://lh3.googleusercontent.com/pw/ACtC-3f2VaMcisIGxvBNdvfefVLztVS8ZZoiRN75YegEpFTWzUvLPIjvvQJEbDnwNDv7SrEL5GUPgjhy8asU0VALJWJWtYywP_0PrXSf4Sbr8mNe1UWMq12Ejylk7H2nVonGVy5qJL29gRUssHa5AtaVk5Xe=w1200-h801-no?authuser=0)
+![Reservoir module](https://lh3.googleusercontent.com/pw/ACtC-3f2VaMcisIGxvBNdvfefVLztVS8ZZoiRN75YegEpFTWzUvLPIjvvQJEbDnwNDv7SrEL5GUPgjhy8asU0VALJWJWtYywP_0PrXSf4Sbr8mNe1UWMq12Ejylk7H2nVonGVy5qJL29gRUssHa5AtaVk5Xe=w1200-h801-no?authuser=0)
+![Reservoir module circuit](https://lh3.googleusercontent.com/pw/ACtC-3dWYUwdfsKYgwnBM7kQUHYzT-3laoEZHpQ5fpOGTYeBcr5vJYigMnVFhMS5GwZl8xdHm3P6NV3mBD9qb7mmVUrHp-UFFFIZ-S8YH_oi8YhnA47nv9fItrEEAnB6eXYLba00iSc-4ozk10Pg_zqFgwE0=w1200-h892-no?authuser=0)
 
 <b>Hempy module</b>: Based on an Arduino Nano RF. Measures the weight of the Hempy buckets and controls watering.<br>
-![alt text](https://lh3.googleusercontent.com/pw/ACtC-3dudHmGC8n4Kcgwcb-83gjC90rDndVKHWDJVZBVMnE6PNbyAThh4SHS5ZNTrKT6reoeZtoBUqaVVOZ6g1n4gIZ5182V9bFkOo8Whkh0aAA8t2sMvJTbO-WKcAyJIwn-IEUC7KWZ5bfSq27Xfs6glVSD=w1200-h801-no?authuser=0)
+![Hempy module](https://lh3.googleusercontent.com/pw/ACtC-3dudHmGC8n4Kcgwcb-83gjC90rDndVKHWDJVZBVMnE6PNbyAThh4SHS5ZNTrKT6reoeZtoBUqaVVOZ6g1n4gIZ5182V9bFkOo8Whkh0aAA8t2sMvJTbO-WKcAyJIwn-IEUC7KWZ5bfSq27Xfs6glVSD=w1200-h801-no?authuser=0)
+![Hempy module circuit](https://lh3.googleusercontent.com/pw/ACtC-3ew7qpG5li8TltIYYdZK7ngf9Wka3IMk1g_Kiy5i7uJJOQLPP9CABn6rLc26dwO8D0-84yrN5VdhvqVBOXRxNPkZDPFpnsmWy4EOf5kJMB8Z29yU3j4428LaY6aWNTinxwh8THUKx96hHekYNOiHuzH=w1200-h889-no?authuser=0)
 
 <b>Aeroponics module</b>: Based on an Arduino Nano RF. Measures the pressure and controls the high pressure pump, bypass solenoid and spray solenoids. <br>
-![alt text](https://lh3.googleusercontent.com/pw/ACtC-3eiagyhv_J80jMzoPd-cynOjpfpJTxiGapRe3wNWmgyJnsxzGZbGnULGq9hxq6lds4vKPzBIYIhXW7J4ivQXb3hWxPlNT90PDObBekW19Pd2uMQFC2vSQevob1vP_xZd7tKOi5Ae9vfTJLv8udcrCRk=w1200-h801-no?authuser=0)
+![Aeroponics module](https://lh3.googleusercontent.com/pw/ACtC-3eiagyhv_J80jMzoPd-cynOjpfpJTxiGapRe3wNWmgyJnsxzGZbGnULGq9hxq6lds4vKPzBIYIhXW7J4ivQXb3hWxPlNT90PDObBekW19Pd2uMQFC2vSQevob1vP_xZd7tKOi5Ae9vfTJLv8udcrCRk=w1200-h801-no?authuser=0)
+![Aeroponics module circuit](https://lh3.googleusercontent.com/pw/ACtC-3d_UKB0YuGhA01cQmY-nE4TOiLgd-ZC9kwortxAMLq0DnnHwD3mTz2wV9ouuDTVdqyE6cHyXABO0oh0C5pR-GM_dBfifriH9xdH9fN-LDaZsH7qzqgVMIG5Jp-GrNvinA-zayh2k9w-Edj3tUTZm1_A=w1200-h845-no?authuser=0)
