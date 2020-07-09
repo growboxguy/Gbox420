@@ -49,7 +49,7 @@ Placed outside the grow box.<br>
 ![Reservoir module](https://lh3.googleusercontent.com/pw/ACtC-3f2VaMcisIGxvBNdvfefVLztVS8ZZoiRN75YegEpFTWzUvLPIjvvQJEbDnwNDv7SrEL5GUPgjhy8asU0VALJWJWtYywP_0PrXSf4Sbr8mNe1UWMq12Ejylk7H2nVonGVy5qJL29gRUssHa5AtaVk5Xe=w1200-h801-no?authuser=0)
 ![Reservoir module circuit](https://lh3.googleusercontent.com/pw/ACtC-3dWYUwdfsKYgwnBM7kQUHYzT-3laoEZHpQ5fpOGTYeBcr5vJYigMnVFhMS5GwZl8xdHm3P6NV3mBD9qb7mmVUrHp-UFFFIZ-S8YH_oi8YhnA47nv9fItrEEAnB6eXYLba00iSc-4ozk10Pg_zqFgwE0=w1200-h892-no?authuser=0)
 
-<b>([Hempy module]https://sites.google.com/site/growboxguy/modules/hempy-module)</b>: Based on an Arduino Nano RF. Measures the weight of the Hempy buckets and controls watering.<br>
+<b>[Hempy module](https://sites.google.com/site/growboxguy/modules/hempy-module)</b>: Based on an Arduino Nano RF. Measures the weight of the Hempy buckets and controls watering.<br>
 ![Hempy module](https://lh3.googleusercontent.com/pw/ACtC-3dudHmGC8n4Kcgwcb-83gjC90rDndVKHWDJVZBVMnE6PNbyAThh4SHS5ZNTrKT6reoeZtoBUqaVVOZ6g1n4gIZ5182V9bFkOo8Whkh0aAA8t2sMvJTbO-WKcAyJIwn-IEUC7KWZ5bfSq27Xfs6glVSD=w1200-h801-no?authuser=0)
 ![Hempy module circuit](https://lh3.googleusercontent.com/pw/ACtC-3ew7qpG5li8TltIYYdZK7ngf9Wka3IMk1g_Kiy5i7uJJOQLPP9CABn6rLc26dwO8D0-84yrN5VdhvqVBOXRxNPkZDPFpnsmWy4EOf5kJMB8Z29yU3j4428LaY6aWNTinxwh8THUKx96hHekYNOiHuzH=w1200-h889-no?authuser=0)
 
