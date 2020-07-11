@@ -105,10 +105,10 @@ function GetFriendlyValue(key, value) {
       case "EnabledDisabled":
         switch (value) {
           case "0":
-            returnValue = "Disabled";
+            returnValue = "DISABLED";
             break;
           case "1":
-            returnValue = "Enabled";
+            returnValue = "ENABLED";
             break;
         }
         break;
