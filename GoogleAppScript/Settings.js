@@ -61,14 +61,15 @@ function test_addColumnsRow(){
 
 function addColumnsRow(newKey) {
   LogToConsole("Adding new key to Columns: " + newKey,false,3);
-  var settingsSheet = SpreadsheetApp.getActive().getSheetByName("Settings");
+  var columnsSheet = SpreadsheetApp.getActive().getSheetByName("Columns");
   var columnsRange = SpreadsheetApp.getActive().getRangeByName("Columns");  
   var lastRow = getLastRowInRange(columnsRange.getValues()); 
   var lastColumn = columnsRange.getLastColumn();   
   LogToConsole(" (lastRow: "+ lastRow + " , lastColumn: " + lastColumn + ")",true,0);
   
-  var range = settingsSheet.getRange(lastRow,1,1,lastColumn);  
-  range.copyTo(settingsSheet.getRange(lastRow+1, 1, 1, lastColumn), {contentsOnly:false}); //copy last row, including the validation rules for each cell
+  var range = columnsSheet.getRange(lastRow,1,1,lastColumn); 
+  LogToConsole(range.getValues(),true,0);
+  range.copyTo(columnsSheet.getRange(lastRow+1, 1, 1, lastColumn), {contentsOnly:false}); //copy last row, including the validation rules for each cell
   
   defaultValues = range.getValues();
   defaultValues[0][columns_keyColumn] = newKey;
@@ -81,6 +82,6 @@ function addColumnsRow(newKey) {
   defaultValues[0][columns_seriesColumn] = "line";
   defaultValues[0][columns_nameColumn] = newKey;
   defaultValues[0][columns_targetAxisColumn] = 0;
-  settingsSheet.getRange(lastRow+1, 1, 1, lastColumn).setValues(defaultValues);  //Setting default values for the new column
+  columnsSheet.getRange(lastRow+1, 1, 1, lastColumn).setValues(defaultValues);  //Setting default values for the new column
   
 }
