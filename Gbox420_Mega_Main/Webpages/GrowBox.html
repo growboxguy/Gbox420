@@ -349,9 +349,12 @@
 					Max: <input style="width: 45px;" min=0 max=10 step='0.1' name="Aero1_PresMax" type="number"
 						title="Stop refilling when this pressure is reached" />
 					<input type="submit" value="Set">
-				</form>			
-				<b id="Aero1_TankTitle">Tank: </b><input type="checkbox" id="Aero1_Tank" name="Aero1_Tank" title="READONLY - Enabled if Pressure tank is available" onchange="showRefillButton()" onload="showRefillButton()" style="display: none;">
-					<button id="Aero1_Refill" type="button" align="right" title="Refill the tank">Refill</button>									
+				</form>		
+				<!-- Remove this section if you do not use a pressure tank -->	
+				 <b id="Aero1_TankTitle">Tank: </b>
+				     <!--<input type="checkbox" id="Aero1_Tank" name="Aero1_Tank" checked title="READONLY - Enabled if Pressure tank is available" onchange="showRefillButton()" onload="showRefillButton()" onrefresh="showRefillButton()" style="display: none;">-->
+					<button id="Aero1_Refill" type="button" align="right" title="Refill the tank (Only with pressure tank)">Refill</button>
+			    <!-- End of pressure tank section -->								
 			</div>			
 		</div>
 	</div>
@@ -392,7 +395,7 @@
 </div>
 <!-- /Footer -->
 <script>
-	function showRefillButton() {
+	/* function showRefillButton() {
 		//Hidden checkbox to signal if Pressure tank is present or not
 		var PressureTankAvailable = document.getElementById("Aero1_Tank");
 		// Get the output text
@@ -410,7 +413,7 @@
 			RefillButton.style.display = "none";
 		}		
 	}
-	document.onload = showRefillButton();
+	document.onload = showRefillButton(); */
 </script>
 </body>
 
