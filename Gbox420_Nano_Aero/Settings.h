@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 1; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 2; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
   enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -44,7 +44,7 @@ static const uint8_t Version = 1; ///< Increment this when you make a change in 
       AeroModuleSettings(bool PressureTankPresent = false) : PressureTankPresent(PressureTankPresent) {}
       bool PressureTankPresent; 
     };
-    struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false};
+    struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = true};
 
     struct AeroponicsSettings
     { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank

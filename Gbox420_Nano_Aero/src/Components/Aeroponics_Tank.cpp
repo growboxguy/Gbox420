@@ -30,6 +30,7 @@ void Aeroponics_Tank::refresh_Sec()
 
   if (Pump->getState() == RUNNING) ///< if pump is on
   { 
+    FeedbackPressureSensor->readPressure();
     if (Aeroponics::FeedbackPressureSensor->getPressure() >= *MaxPressure)
     { ///refill complete, target pressure reached      
       logToSerials(F("Pressure tank recharged"), false, 3);
