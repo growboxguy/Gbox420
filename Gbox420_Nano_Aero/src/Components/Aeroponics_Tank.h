@@ -2,6 +2,7 @@
 
 #include "420Common.h"
 #include "Aeroponics.h"
+#include "Switch.h"
 
 ///Aeroponics tote with pressure tank
 
@@ -18,8 +19,5 @@ public:
 private:
 
 protected:
-  void setSpraySolenoidOn();
-  void setSpraySolenoidOff();  
-  uint8_t *SpraySolenoidPin;
-  bool SpraySolenoidOn = false; ///Aeroponics - Controls the spray valve, set to true to spay at power on.
+  Switch *SpraySwitch; //Relay or MOSFET controlling the spray solenoid
 };

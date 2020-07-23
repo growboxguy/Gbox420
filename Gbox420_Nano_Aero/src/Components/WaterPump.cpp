@@ -3,21 +3,14 @@
 WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::WaterPumpSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
-  PumpPin = &DefaultSettings->PumpPin;
-  pinMode(*PumpPin, OUTPUT);
-  digitalWrite(*PumpPin, HIGH);          ///initialize pump in OFF state
-  PumpTimeOut= &DefaultSettings->PumpTimeOut;
+  PumpSwitch = new Switch(F("SpraySolenoid"),DefaultSettings->PumpPin,DefaultSettings->PumpPinNegativeLogic);
+  BypassSwitch = new Switch(F("SpraySolenoid"),DefaultSettings->BypassSolenoidPin,DefaultSettings->BypassSolenoidNegativeLogic);
   
+  PumpTimeOut= &DefaultSettings->PumpTimeOut;  
   PumpEnabled = &DefaultSettings->PumpEnabled;
   if(*PumpEnabled) {State = IDLE; }
-  else {State = DISABLED;}
-    
-  if(DefaultSettings->BypassSolenoidPin != 255)
-  {
-    BypassSolenoidPin = &DefaultSettings->BypassSolenoidPin;
-    pinMode(*BypassSolenoidPin, OUTPUT);
-    digitalWrite(*BypassSolenoidPin, HIGH); ///initialize bypass solenoid in OFF state
-  }
+  else {State = DISABLED;}    
+  
   if(DefaultSettings->PrimingTime != -1) {PrimingTime= &DefaultSettings->PrimingTime;} 
   if(DefaultSettings->BlowOffTime != -1) {BlowOffTime= &DefaultSettings->BlowOffTime;}
     
@@ -43,24 +36,24 @@ void WaterPump::refresh_Sec()
     Common::refresh_Sec();
   }
 
-  UpdateState();
+  updateState();
 
   if(PumpOn){
-    digitalWrite(*PumpPin, LOW);   /// < Relay turns ON when output pin is pulled LOW (Inverted logic)
+    PumpSwitch -> turnOn();
   }
   else{
-    digitalWrite(*PumpPin, HIGH);  /// < Relay turns OFF when output pin is pulled HIGH (Inverted logic)
+    PumpSwitch -> turnOff();
   }
 
   if(BypassOn){
-  digitalWrite(*BypassSolenoidPin, LOW);   
+    BypassSwitch -> turnOn();   
   }
   else{
-    digitalWrite(*BypassSolenoidPin, HIGH); 
+    BypassSwitch -> turnOff(); 
   } 
 }
 
-void WaterPump::UpdateState(PumpState NewState)  ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State 
+void WaterPump::updateState(PumpState NewState)  ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State 
 {
   if(NewState >=0)  ///< if not the default value was passed
   {    
@@ -76,7 +69,7 @@ void WaterPump::UpdateState(PumpState NewState)  ///< Without a parameter actual
       if(millis() - PumpTimer > ((uint32_t)*PrimingTime * 1000)) ///< Is it time to disable the Bypass solenoid
       { 
         logToSerials(F("Priming complete, running..."), true, 3);
-        UpdateState(RUNNING);
+        updateState(RUNNING);
       }
       break;
     case RUNNING:
@@ -87,16 +80,16 @@ void WaterPump::UpdateState(PumpState NewState)  ///< Without a parameter actual
         RunTime = 0;
         logToSerials(F("Running complete, stopping..."), true, 3);
         if(BlowOffTime != NULL && *BlowOffTime >0)        { 
-          UpdateState(BLOWOFF);
+          updateState(BLOWOFF);
         }
         else {   
-          UpdateState(IDLE);
+          updateState(IDLE);
         }
       }
       if(millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
       { 
         Parent -> addToLog(F("ALERT: Pump timeout reached"), 3); ///< \todo send email alert 
-        UpdateState(DISABLED);
+        updateState(DISABLED);
       }
       break;
     case BLOWOFF:
@@ -106,7 +99,7 @@ void WaterPump::UpdateState(PumpState NewState)  ///< Without a parameter actual
       if(millis() - PumpTimer > ((uint32_t)*BlowOffTime * 1000)) ///Is it time to disable the Bypass solenoid
       {  
         logToSerials(F("Pressure released"), true, 3);
-        UpdateState(IDLE);
+        updateState(IDLE);
       }
       break;
     case IDLE:
@@ -121,7 +114,7 @@ void WaterPump::UpdateState(PumpState NewState)  ///< Without a parameter actual
       if((RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000)) || millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)){
         RunTime = 0;
         logToSerials(F("Mixing finished"), true, 3);  
-        UpdateState(IDLE);
+        updateState(IDLE);
       }      
       break;
     case DISABLED:
@@ -143,11 +136,11 @@ void WaterPump::startPump(bool ResetStatus)
     Parent->getSoundObject()->playOnSound();
     if(PrimingTime != NULL && *PrimingTime >0)
     {
-      UpdateState(PRIMING);       
+      updateState(PRIMING);       
     }
     else
     {
-      UpdateState(RUNNING); 
+      updateState(RUNNING); 
     }
   }
   else
@@ -161,11 +154,11 @@ void WaterPump::stopPump()
   Parent->getSoundObject()->playOffSound();  
   if(BlowOffTime != NULL && *BlowOffTime >0)
   {
-    UpdateState(BLOWOFF);       
+    updateState(BLOWOFF);       
   }
   else
   {
-    UpdateState(IDLE);
+    updateState(IDLE);
   }  
 }
 
@@ -174,7 +167,7 @@ void WaterPump::disablePump()
   logToSerials(Name, false, 3);
   logToSerials(F("disabled"), true, 1);
   Parent->getSoundObject()->playOffSound();  
-  UpdateState(DISABLED); 
+  updateState(DISABLED); 
 }
 
 void WaterPump::startMixing(int TimeOutSec)  ///< Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout
@@ -187,19 +180,19 @@ void WaterPump::startMixing(int TimeOutSec)  ///< Mix the nutrient reservoir by 
   }
   Parent->addToLog(F("Mixing nutrients"));
   Parent->getSoundObject()->playOnSound();
-  UpdateState(MIXING);
+  updateState(MIXING);
 }
 
 void WaterPump::turnBypassOn(){
   Parent->addToLog(F("Bypass ON"));
   Parent->getSoundObject()->playOnSound();
-  UpdateState(BLOWOFF);  
+  updateState(BLOWOFF);  
 }
 
 void WaterPump::turnBypassOff(){  
   Parent->addToLog(F("Bypass OFF"));
   Parent->getSoundObject()->playOffSound();
-  UpdateState(IDLE); 
+  updateState(IDLE); 
 }
 
 //////////////////////////////////////////////////////////////////////////////////

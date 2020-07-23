@@ -3,6 +3,7 @@
 #include "420Common.h"
 #include "420Module.h"
 #include "Sound.h"
+#include "Switch.h"
 
 class WaterPump : virtual public Common
 {
@@ -12,7 +13,7 @@ public:
   void report();
   void refresh_Sec();
    
-  void UpdateState(PumpState NewState = (PumpState)-1);
+  void updateState(PumpState NewState = (PumpState)-1);
   void setMaxPressure(float MaxPressure);
 
   void startPump(bool ResetStatus = false);  ///< Turn the pump ON
@@ -49,8 +50,8 @@ private:
  
 protected:
   Module *Parent;
-  uint8_t *PumpPin = NULL;  ///< Pump relay pin
-  uint8_t *BypassSolenoidPin  = NULL; ///< Bypass solenoid relay pin
+  Switch *PumpSwitch;
+  Switch *BypassSwitch;
   bool PumpOn = false;  ///< true turns the pump on
   bool BypassOn = false;  ///< true turns the bypass solenoid on
   bool *PumpEnabled;  ///< Enable/disable pump. false= Block running the pump
