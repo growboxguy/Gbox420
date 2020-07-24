@@ -61,8 +61,6 @@ void Aeroponics_Tank::refresh_Sec()
   }  
 }
 
-
-
 void Aeroponics_Tank::sprayNow(bool UserRequest)
 { 
   SpraySwitch -> turnOn();

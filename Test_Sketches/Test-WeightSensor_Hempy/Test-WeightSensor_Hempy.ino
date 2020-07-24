@@ -10,15 +10,15 @@ const byte  WeightSensor2_DT =  7;
 const byte WeightSensor2_SCK = 8;
 
 //Weights used during the calibration
-const float WeightSensor1_CalibrationWeight = 2.0;  //SET THIS TO the number of weight units (kg or lbs) that will be used during the calibration
-const float WeightSensor2_CalibrationWeight = 2.0;  //SET THIS TO the number of weight units (kg or lbs) that will be used during the calibration
+const float WeightSensor1_CalibrationWeight = 6.0;  //SET THIS TO the number of weight units (kg or lbs) that will be used during the calibration
+const float WeightSensor2_CalibrationWeight = 6.0;  //SET THIS TO the number of weight units (kg or lbs) that will be used during the calibration
 
 //Initial calibration values, once the calibration you can update these values and change CalibrationComplete to true 
 bool CalibrationComplete = false;  //Set this to true to skip the calibration and use the Offset and Scale values defined in the sketch
-long WeightSensor1_Offset = 268363;
-float WeightSensor1_Scale = 126715.00;
-long WeightSensor2_Offset = 137719;
-float WeightSensor2_Scale = 121915.00;
+long WeightSensor1_Offset = 186204;
+float WeightSensor1_Scale = 121602.34;
+long WeightSensor2_Offset = -61148;
+float WeightSensor2_Scale = -119528.50;
 
 HX711 WeightSensor1;
 HX711 WeightSensor2;
@@ -43,7 +43,7 @@ void setup() {
   }
   else
   {
-    Serial.println(F("!!Start the sketch with all weight removed from scale!!"));
+    Serial.println(F("!!Start the sketch with all weight removed from the scale!!"));
     Serial.println(F("!!Use the reset button to restart the sketch if any weight was left on the scale!!"));
     Serial.println();
     
@@ -65,7 +65,7 @@ void setup() {
     Serial.print(WeightSensor1_CalibrationWeight);
     Serial.println(F(" unit(s)"));
     Serial.print(F("   WeightSensor2: "));
-    Serial.print(WeightSensor1_CalibrationWeight);
+    Serial.print(WeightSensor2_CalibrationWeight);
     Serial.println(F(" unit(s)"));
     delay(10000);
     Serial.println();

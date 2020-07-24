@@ -63,16 +63,18 @@ static const uint8_t Version = 2; ///< Increment this when you make a change in 
 
    struct WaterPumpSettings
     {
-      WaterPumpSettings(uint8_t PumpPin = 0, uint8_t BypassSolenoidPin = 255, bool PumpEnabled = false, int PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), BypassSolenoidPin(BypassSolenoidPin), PumpEnabled(PumpEnabled), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime)  {}
+      WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 255, bool BypassSolenoidNegativeLogic = false, bool PumpEnabled = false, int PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidPin(BypassSolenoidPin), PumpEnabled(PumpEnabled), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime)  {}
       uint8_t PumpPin;         ///< Pump relay pin
+      bool PumpPinNegativeLogic;  ///Set to true if Relay/MOSFET controlling the power to the pump requires LOW signal to Turn ON
       uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin [optional]
+      bool BypassSolenoidNegativeLogic;  ///Set to true if Relay/MOSFET controlling the power to the solenoid requires LOW signal to Turn ON [optional]
       bool PumpEnabled; ///< Enable/disable pump. false= Block running the pump
       int PumpTimeOut;   ///< (Sec) Max pump run time        
       int PrimingTime;    ///< (Sec) Only if BypassSolenoid is present. For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
       int BlowOffTime;     ///< (Sec) Only if BypassSolenoid is present. For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
-    struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Submerged pumps do not need to prime at start or discharge pressure when stopping
-    struct WaterPumpSettings HempyPump2 = {.PumpPin = 4, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Submerged pumps do not need to prime at start or discharge pressure when stopping
+    struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = true, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Pumps do not need a bypass solenoid
+    struct WaterPumpSettings HempyPump2 = {.PumpPin = 4, .PumpPinNegativeLogic = true, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Pumps do not need a bypass solenoid
    
     struct WeightSensorSettings
     {
@@ -82,8 +84,8 @@ static const uint8_t Version = 2; ///< Increment this when you make a change in 
       long Offset; ///Reading at 0 weight on the scale
       float Scale;  ///Scale factor      
     };
-    struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset=137719, .Scale = 126715.0}; ///Update the calibration values here for Weight Sensor 1
-    struct WeightSensorSettings Weight2 = {.DTPin = 7, .SCKPin = 8, .Offset=268363, .Scale = 121915.0}; ///Update the calibration values here for Weight Sensor 2
+    struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset=186204, .Scale = 121602.0}; ///Update the calibration values here for Weight Sensor 1
+    struct WeightSensorSettings Weight2 = {.DTPin = 7, .SCKPin = 8, .Offset=-61148, .Scale = -119528.5}; ///Update the calibration values here for Weight Sensor 2
 
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
   } Settings;

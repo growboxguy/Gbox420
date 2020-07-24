@@ -4,12 +4,15 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
 {
   this->Parent = Parent;
   PumpSwitch = new Switch(F("SpraySolenoid"),DefaultSettings->PumpPin,DefaultSettings->PumpPinNegativeLogic);
-  BypassSwitch = new Switch(F("SpraySolenoid"),DefaultSettings->BypassSolenoidPin,DefaultSettings->BypassSolenoidNegativeLogic);
+  if(DefaultSettings->BypassSolenoidPin != 255)
+  {
+   BypassSwitch = new Switch(F("SpraySolenoid"),DefaultSettings->BypassSolenoidPin,DefaultSettings->BypassSolenoidNegativeLogic);
+  }
   
   PumpTimeOut= &DefaultSettings->PumpTimeOut;  
   PumpEnabled = &DefaultSettings->PumpEnabled;
   if(*PumpEnabled) {State = IDLE; }
-  else {State = DISABLED;}    
+  else {State = DISABLED;}  
   
   if(DefaultSettings->PrimingTime != -1) {PrimingTime= &DefaultSettings->PrimingTime;} 
   if(DefaultSettings->BlowOffTime != -1) {BlowOffTime= &DefaultSettings->BlowOffTime;}
