@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 11; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 12; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
 enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -37,8 +37,8 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
   static const uint8_t Wireless_MOSIPin = 51;
   static const uint8_t Wireless_SCKPin = 52;
   static const uint8_t Wireless_CEPin = 53;
-  static const uint8_t Wireless_Delay = 6;  ///< How long to wait between each retry, in multiples of 250us. Max is 15. 0 means 250us, 15 means 4000us
-  static const uint8_t Wireless_Retry = 5;  ///< How many retries before giving up, max 15
+  static const uint8_t Wireless_Delay = 8;  ///< How long to wait between each retry, in multiples of 250us. Max is 15. 0 means 250us, 15 means 4000us
+  static const uint8_t Wireless_Retry = 10;  ///< How many retries before giving up, max 15
 
 ///SAVED TO EEPROM - Settings struct
   ///If you change things here, increase the Version variable in line 4
