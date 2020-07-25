@@ -230,7 +230,8 @@ void AeroModule_Web::syncModule( const byte WirelessChannel[], aeroCommand *Comm
 
           if(*Debug){
           logToSerials(F("Acknowledgement received ["),false,2);            
-          logToSerials(toText(sizeof(*Response)),false,1); /// \todo Use LogToSerial
+          ArduinoSerial.print(sizeof(*Response)); /// \todo Use LogToSerial
+          ESPSerial.print(sizeof(*Response)); /// \todo Use LogToSerial
           logToSerials(F("bytes]"),true,1);
           logToSerials(Response -> PressureTankPresent,false,3);
           logToSerials(F(","),false,1);

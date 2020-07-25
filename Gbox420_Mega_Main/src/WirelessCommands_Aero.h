@@ -13,7 +13,7 @@ struct aeroCommand  ///Max 32 bytes. Template of the command sent by the Transmi
    bool SprayDisabled = false;
    bool SprayNow = false;
    bool SprayOff = false;
-   int SprayInterval = 0 ;
+   int SprayInterval = 0;
    int SprayDuration = 0;
    bool PumpOn = false;
    bool PumpOff = false;

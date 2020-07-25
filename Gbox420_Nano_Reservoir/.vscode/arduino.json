@@ -1,5 +1,5 @@
 {
-    "port": "/dev/ttyUSB1",
+    "port": "/dev/ttyUSB2",
     "board": "arduino:avr:nano",
     "configuration": "cpu=atmega328old",
     "sketch": "Gbox420_Nano_Reservoir.ino",

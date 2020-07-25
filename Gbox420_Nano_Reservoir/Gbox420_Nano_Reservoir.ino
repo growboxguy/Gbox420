@@ -65,6 +65,7 @@ void setup()
   Wireless.setDataRate( RF24_250KBPS );  ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
   Wireless.setCRCLength(RF24_CRC_8);  /// RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
   Wireless.setPALevel(RF24_PA_HIGH);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_MED=-6dBM, and RF24_PA_HIGH=0dBm.
+  Wireless.setPayloadSize(32);  ///The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
   Wireless.enableAckPayload();
   Wireless.openReadingPipe(1, WirelessChannel);  
   Wireless.writeAckPayload(1, &Response, sizeof(Response));
@@ -128,7 +129,7 @@ void getWirelessData() {
     if ( Wireless.available() ) { 
         Wireless.read( &Command, sizeof(Command) );
         logToSerials(F("Wireless Command received ["),false,0);
-        logToSerials(toText(sizeof(Command)),false,0);  /// \todo print this with logToSerials: Need support for unsigned long
+        ArduinoSerial.print(sizeof(Command));  /// \todo print this with logToSerials: Need support for unsigned long
         logToSerials(F("bytes], Response sent"),true,1); 
         
         if(timeStatus() != timeSet)  
