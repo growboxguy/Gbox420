@@ -227,7 +227,8 @@
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">
-				<h1>Reservoir</h1>
+				<h1 style="margin:0px;display: inline;">Reservoir</h1>
+				<span style="float:right" id="Res1_Status">CONNECTING...</span>
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span style="font-weight:bold">PH</span></th>
@@ -246,7 +247,8 @@
 				</table>
 			</div>
 			<div class="card" style="width:90%">
-				<h1>Hempy bucket 1</h1>
+				<h1 style="margin:0px;display: inline;">Hempy 1</h1>
+				<span style="float:right" id="Hemp1_Status">CONNECTING...</span>
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span style="font-weight:bold">Weight</span></th>
@@ -272,7 +274,7 @@
 				</form>
 			</div>
 			<div class="card" style="width:90%">
-				<h1>Hempy bucket 2</h1>
+				<h1 style="margin:0px;display: inline;">Hempy 2</h1>				
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span style="font-weight:bold">Weight</span></th>
@@ -298,7 +300,8 @@
 				</form>
 			</div>				
 			<div class="card" style="width:90%">
-				<h1 style="margin:0px">Aeroponics</h1>				
+				<h1 style="margin:0px;display: inline;">Aeroponics</h1>
+				<span style="float:right" id="Aero1_Status">CONNECTING...</span>		
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span style="font-weight:bold">Spray</span></span></th>
@@ -413,7 +416,22 @@
 			RefillButton.style.display = "none";
 		}		
 	}
-	document.onload = showRefillButton(); */
+	document.onload = showRefillButton(); 
+
+
+	function f_color(){
+	if (document.getElementById('Aero1_Status').value = 'OK') {
+		document.getElementById('Aero1_Status').style.color = "green";
+	}
+	else	{
+		document.getElementById('Aero1_Status').style.color = "red";
+	}
+	}
+	document.getElementById('Aero1_Status').onchange= f_color;
+	document.onload= f_color;
+
+	*/	
+
 </script>
 </body>
 

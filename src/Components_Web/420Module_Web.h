@@ -55,7 +55,7 @@ public:
 
 private:
 
-protected:   
+protected:  
   Common_Web *ReportQueue[QueueDepth] = {};  ///aggregate initializer: Same as initializing to null pointers
   Common_Web *RefreshQueue_Sec[QueueDepth]= {};
   Common_Web *RefreshQueue_FiveSec[QueueDepth]= {};

@@ -225,6 +225,14 @@ char *toText_onOffDisabled(bool Enabled, bool OnStatus)
   }
 }
 
+char* toText_onlineStatus(bool Status)
+{
+  if (Status)
+    return toText(F("ONLINE"));
+  else
+    return toText(F("OFFLINE"));
+}
+
 char *toText_pumpState(PumpState State){
   switch (State)
   {

@@ -49,6 +49,7 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
 {
   if (strncmp(url, "/G",2) == 0)
   {
+    WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
     WebServer.setArgString(getComponentName(F("PH")), toText(Response.PH));
     WebServer.setArgString(getComponentName(F("Weight")), toText_weight(Response.Weight));
     WebServer.setArgString(getComponentName(F("WTemp")),  toText_temp(Response.WaterTemperature));
@@ -75,6 +76,7 @@ void ReservoirModule_Web::syncModule( const byte WirelessChannel[], reservoirCom
       if ( Parent -> Wireless -> isAckPayloadAvailable() ) {
           Parent -> Wireless -> read(Response, sizeof(*Response));
 
+          OnlineStatus = true;
           if(*Debug){
           logToSerials(F("Acknowledgement received ["),false,2);            
           ArduinoSerial.print(sizeof(*Response)); /// \todo Use LogToSerial
@@ -93,10 +95,12 @@ void ReservoirModule_Web::syncModule( const byte WirelessChannel[], reservoirCom
       }
       else {
           if(*Debug)logToSerials(F(" Acknowledgement received without any data."),true, 1);
+          OnlineStatus = false;
       }        
   }
   else{
       if(*Debug)logToSerials(F(" No response."),true,1);
+      OnlineStatus = false;
       }
   }
 

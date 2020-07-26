@@ -42,6 +42,7 @@ char *toText_percentage(float Humidity);
 char *toText_onOff(bool Status);
 char *toText_yesNo(bool Status);
 char *toText_enabledDisabled(bool Status);
+char *toText_onlineStatus(bool Status);
 char *toText_pumpState(PumpState State);
 char *toText_minute(int Minute);
 char *toText_second(int Second);

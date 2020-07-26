@@ -26,9 +26,10 @@ public:
   void refresh_FiveSec();
   void refresh_Minute();
   void updateCommand();
-     
+  
 private:  
   bool SyncRequested = true;    //Trigger a sync with the external Module within 1 second
+  bool OnlineStatus = false;  /// Start in Offline state, a successful sync will set this to true
   struct hempyCommand Command;  //Commands sent to the external Module
   struct hempyResponse Response; //The response from the external Module will be stored here, represents the current status of the external Module
 

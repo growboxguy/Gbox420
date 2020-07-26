@@ -86,6 +86,7 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
 {
   if (strncmp(url, "/G",2) == 0)
   {
+    WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
     WebServer.setArgString(getComponentName(F("Spray")), toText_enabledDisabled(Response.SprayEnabled));
     WebServer.setArgString(getComponentName(F("Pump")), toText_pumpState(Response.State));
     WebServer.setArgString(getComponentName(F("Pres")), toText_pressure(Response.Pressure));
@@ -228,6 +229,7 @@ void AeroModule_Web::syncModule( const byte WirelessChannel[], aeroCommand *Comm
       if ( Parent -> Wireless -> isAckPayloadAvailable() ) {
           Parent -> Wireless -> read(Response, sizeof(*Response));
 
+          OnlineStatus = true;
           if(*Debug){
           logToSerials(F("Acknowledgement received ["),false,2);            
           ArduinoSerial.print(sizeof(*Response)); /// \todo Use LogToSerial
@@ -261,10 +263,12 @@ void AeroModule_Web::syncModule( const byte WirelessChannel[], aeroCommand *Comm
       }
       else {
           if(*Debug)logToSerials(F("Acknowledgement received without any data."),true,1);
+          OnlineStatus = false; /// Comment this out if you have modules that do not return any data
       }        
   }
   else {
       if(*Debug)logToSerials(F("No response."),true,1);
+      OnlineStatus = false;
   }
   }
 

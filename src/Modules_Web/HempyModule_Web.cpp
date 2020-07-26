@@ -77,6 +77,7 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
 {
   if (strncmp(url, "/G",2) == 0)
   {
+    WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
     WebServer.setArgString(getComponentName(F("B1Weight")), toText_weight(Response.Weight_B1));
     WebServer.setArgString(getComponentName(F("B2Weight")), toText_weight(Response.Weight_B2));
     WebServer.setArgString(getComponentName(F("B1Pump")),  toText_pumpState(Response.PumpState_B1));
@@ -198,6 +199,7 @@ void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Co
       if ( Parent -> Wireless -> isAckPayloadAvailable() ) {
           Parent -> Wireless -> read(Response, sizeof(*Response));
 
+          OnlineStatus = true;
           if(*Debug){
           logToSerials(F("Acknowledgement received ["),false,2);
           ArduinoSerial.print(sizeof(*Response)); /// \todo Use LogToSerial
@@ -226,10 +228,12 @@ void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Co
       }
       else {
           if(*Debug)logToSerials(F("Acknowledgement received without any data."),true,1);
+          OnlineStatus = false;
       }        
   }
   else {
       if(*Debug)logToSerials(F("No response."),true,1);
+      OnlineStatus = false;
   }
   }
 

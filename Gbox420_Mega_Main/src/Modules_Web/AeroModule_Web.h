@@ -29,6 +29,7 @@ public:
      
 private:  
   bool SyncRequested = true;    //Trigger a sync with the external Module within 1 second
+  bool OnlineStatus = false;  /// Start in Offline state, a successful sync will set this to true
   struct aeroCommand Command;  //Commands sent to the external Module
   struct aeroResponse Response; //The response from the external Module will be stored here, represents the current status of the external Module
 
