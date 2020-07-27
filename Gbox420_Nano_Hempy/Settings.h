@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 2; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 3; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
   enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -73,8 +73,8 @@ static const uint8_t Version = 2; ///< Increment this when you make a change in 
       int PrimingTime;    ///< (Sec) Only if BypassSolenoid is present. For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
       int BlowOffTime;     ///< (Sec) Only if BypassSolenoid is present. For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
-    struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = true, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Pumps do not need a bypass solenoid
-    struct WaterPumpSettings HempyPump2 = {.PumpPin = 4, .PumpPinNegativeLogic = true, .PumpEnabled = true, .PumpTimeOut = 120}; ///< Pumps do not need a bypass solenoid
+    struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = true, .PumpEnabled = true, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
+    struct WaterPumpSettings HempyPump2 = {.PumpPin = 4, .PumpPinNegativeLogic = true, .PumpEnabled = true, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
    
     struct WeightSensorSettings
     {
@@ -84,8 +84,8 @@ static const uint8_t Version = 2; ///< Increment this when you make a change in 
       long Offset; ///Reading at 0 weight on the scale
       float Scale;  ///Scale factor      
     };
-    struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset=186204, .Scale = 121602.0}; ///Update the calibration values here for Weight Sensor 1
-    struct WeightSensorSettings Weight2 = {.DTPin = 7, .SCKPin = 8, .Offset=-61148, .Scale = -119528.5}; ///Update the calibration values here for Weight Sensor 2
+    struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset=47748, .Scale = -125707.00}; ///Update the calibration values here for Weight Sensor 1
+    struct WeightSensorSettings Weight2 = {.DTPin = 7, .SCKPin = 8, .Offset=-116697, .Scale = -124397.67}; ///Update the calibration values here for Weight Sensor 2
 
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
   } Settings;

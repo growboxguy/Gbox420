@@ -46,7 +46,9 @@ void AeroModule_Web::report()
 void AeroModule_Web::reportToJSON()
 {
     Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"Pressure\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
+    strcat(LongMessage, toText(OnlineStatus));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));
     strcat(LongMessage, toText(Response.Pressure));
     if(Response.PressureTankPresent)
     {
