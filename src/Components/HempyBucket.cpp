@@ -7,6 +7,8 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   this->BucketPump = BucketPump;
   StartWeight = &DefaultSettings->StartWeight;
   StopWeight = &DefaultSettings->StopWeight;
+  SeedlingMode = &DefaultSettings->SeedlingMode;
+  SeedlingWaterFreqency = &DefaultSettings->SeedlingWaterFreqency;
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
@@ -18,11 +20,25 @@ void HempyBucket::refresh_FiveSec()
   if (*Debug)
     Common::refresh_FiveSec();
   checkBucketWeight();
+  checkWateringFrequency();
 }
 
 void HempyBucket::refresh_Sec()
 {
  if(BucketPump -> getOnState()) checkBucketWeight(); ///When pump is on check if it is time to stop
+}
+
+void HempyBucket::report()
+{
+  Common::report();
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  strcat_P(LongMessage, (PGM_P)F("Start weight:"));
+  strcat(LongMessage, toText_weight(*StartWeight));
+  strcat_P(LongMessage, (PGM_P)F(" ; Stop weight:"));
+  strcat(LongMessage, toText_weight(*StopWeight));
+  strcat_P(LongMessage, (PGM_P)F(" ; Seedling mode:"));
+  strcat(LongMessage, toText_enabledDisabled(*SeedlingMode));
+  logToSerials(&LongMessage, true, 1);
 }
 
 void HempyBucket::checkBucketWeight()
@@ -35,18 +51,18 @@ void HempyBucket::checkBucketWeight()
   else if(BucketWeightSensor -> getWeight() < *StartWeight && !BucketPump -> getOnState() && BucketPump -> getEnabledState())  ///If the weight is below the limit AND the pump is off AND pump is enabled
   {
     BucketPump -> startPump(); 
+    WaterTimer = millis();
   }   
 }
 
-void HempyBucket::report()
-{
-  Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
-  strcat_P(LongMessage, (PGM_P)F("Start weight:"));
-  strcat(LongMessage, toText_weight(*StartWeight));
-  strcat_P(LongMessage, (PGM_P)F(" ; Stop weight:"));
-  strcat(LongMessage, toText_weight(*StopWeight));  
-  logToSerials(&LongMessage, true, 1);
+void HempyBucket::checkWateringFrequency(){
+    if(*SeedlingMode){
+       if (millis() - WaterTimer >= ((uint32_t)*SeedlingWaterFreqency * 60000)){
+         logToSerials(F("Watering seedling..."), true, 1);
+         BucketPump -> startPump();
+         WaterTimer = millis();
+       }            
+    }
 }
 
 float HempyBucket::getStartWeight()
