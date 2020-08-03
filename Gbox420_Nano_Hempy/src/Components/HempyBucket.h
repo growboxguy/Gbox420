@@ -30,6 +30,7 @@ private:
 
 protected:
   Module *Parent;
+ // uint32_t WaterTimer = millis();   ///last time the plants were watered
   WeightSensor *BucketWeightSensor;  ///Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
   WaterPump *BucketPump;  ///Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
   float *StartWeight;  ///Start watering below this weight
