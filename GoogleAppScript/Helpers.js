@@ -141,6 +141,16 @@ function GetFriendlyValue(key, value) {
             break;
         }
         break;
+      case "OnlineOffline":
+        switch (value) {
+          case "0":
+            returnValue = "OFFLINE";
+            break;
+          case "1":
+            returnValue = "ONLINE";
+            break;
+        }
+        break;
       case "Percentage":
         returnValue = value + ' %';
         break;

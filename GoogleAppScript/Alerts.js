@@ -107,9 +107,11 @@ function sendEmail(emailTemplate) {
                 builder.setOption('chartArea', { width: '90%', height: '75%', bottom: '17%', left: '8%' }); //{left:10,left:10,width:'90%',height:'75%'}
                 builder.setOption('width', 1024);
                 builder.setOption('height', 768);
-                builder.setOption('maxLines', 3);
+                //builder.setOption('maxLines', 3);
                 builder.setOption('legend', { position: 'top', textStyle: { fontSize: 18 } });
-                builder.setOption('titleTextStyle', { fontSize: 22, bold: true }); // { color: <string>, fontName: <string>, fontSize: <number>, bold: <boolean>, italic: <boolean> }        
+                builder.setOption('titleTextStyle', { fontSize: 22, bold: true }); // { color: <string>, fontName: <string>, fontSize: <number>, bold: <boolean>, italic: <boolean> }  
+              builder.setOption('hAxis', { viewWindowMode: 'pretty' });
+              builder.setOption('vAxis', { viewWindowMode: 'pretty' });
                 var newchart = builder.build();
                 chartBlobs[i] = newchart.getAs('image/png');
                 emailMessage = emailMessage + "<img style='width:100%' src='cid:chart" + i + "'>";
