@@ -112,6 +112,8 @@ function sendEmail(emailTemplate) {
                 builder.setOption('titleTextStyle', { fontSize: 22, bold: true }); // { color: <string>, fontName: <string>, fontSize: <number>, bold: <boolean>, italic: <boolean> }  
               builder.setOption('hAxis', { viewWindowMode: 'pretty' });
               builder.setOption('vAxis', { viewWindowMode: 'pretty' });
+              //builder.setOption('interpolateNulls', true);
+              
                 var newchart = builder.build();
                 chartBlobs[i] = newchart.getAs('image/png');
                 emailMessage = emailMessage + "<img style='width:100%' src='cid:chart" + i + "'>";
