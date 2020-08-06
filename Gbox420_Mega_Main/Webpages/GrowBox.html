@@ -431,12 +431,15 @@
 	document.getElementById('Aero1_Status').onchange= f_color;
 	document.onload= f_color;
 
-	///Reacting to mouse click/tap event
-	document.addEventListener("click", function(){
-		Hempy1Status2.innerHTML = Hempy1Status.innerHTML;
-	});
+	
 
 	*/	
+
+	///Refresh on mouse click/tap event
+	document.addEventListener("click", function(){
+		loadCounter=1;
+		refreshFormData();
+	});
 
 	///Duplicating the status of the Hempy Module to both Buckets
     var Hempy1Status = document.getElementById("Hemp1_Status");

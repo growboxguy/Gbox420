@@ -208,6 +208,12 @@
 		window.attachEvent('onload', refreshFormDataNow)
 	}
 
+	///Refresh on mouse click/tap event
+	document.addEventListener("click", function(){
+		loadCounter=1;
+		refreshFormData();
+	});
+
 
 	function refreshFormDataNow()
 	{	
