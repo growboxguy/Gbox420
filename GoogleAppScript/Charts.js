@@ -1,23 +1,24 @@
-function ReBuildCharts()
+function UpdateCharts()
 {
   GetNamedRangeValues("Columns",true);  ///Force a refresh of the Columns named range
-  UpdateCharts();
+  UpdateOverviewChart();
+  UpdateChartsTab();
 }
 
-function ClearCharts(){
-  LogToConsole("Clearing old charts...",true,0);
-  var chartsSheet = SpreadsheetApp.getActive().getSheetByName("Charts");
-  var charts = chartsSheet.getCharts();
+function ClearCharts(sheet){
+  LogToConsole("Clearing old charts in " + sheet.getName() + "...",true,0); 
+  var charts = sheet.getCharts();
   for (var i in charts) {
     if(Debug) LogToConsole("Removing chart " + i,true,1);
-    chartsSheet.removeChart(charts[i]);
+    sheet.removeChart(charts[i]);
   }
 }
 
-function UpdateCharts() {
-  ClearCharts();  
+function UpdateChartsTab() {  
   LogToConsole("Generating charts...",true,0);
   chartsSheet = SpreadsheetApp.getActive().getSheetByName("Charts");
+  ClearCharts(chartsSheet);  
+  
   var columns = GetNamedRangeValues("Columns");
   var charts = GetNamedRangeValues("Charts").filter(function (row) {
     return typeof row[charts_orderColumn] == "number" && row[charts_orderColumn] > 0;  ///< Get rows with an order number of 1 or above
@@ -38,13 +39,53 @@ function UpdateCharts() {
       seriesType[j] = { type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_nameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
     }
     if(Debug)LogToConsole(seriesType,true,3);
-    chartBuilder.setOption('series', seriesType);
         
+      chartBuilder
+      .setOption('title', charts[i][1])
+      .setOption('series', seriesType)
+      .setPosition(1 + i*29, 1, 0, 0)
+      .setChartType(GetChartType(charts[i][2]))
+      
+    ApplyStandardFormatting(chartBuilder);
+    chartsSheet.insertChart(chartBuilder.build());    
+  }  
+}
+
+function UpdateOverviewChart() {
+  LogToConsole("Generating overview chart...",true,0);
+  statusSheet = SpreadsheetApp.getActive().getSheetByName("Status");
+  ClearCharts(statusSheet);
+  
+  var columns = GetNamedRangeValues("Columns");
+  
+    if(Debug) LogToConsole("Generating overview chart",true,3);   
+    var chartBuilder = statusSheet.newChart();    
+    var columnsToInclude = columns.filter(function (row) {
+      return row[columns_overviewColumn] == true;  ///< Selecting the columns to include in the chart based on Settings tab - Columns section- Show on Overview column
+    });
+    
+    chartBuilder.addRange(GetLogColumnRange("LogDate"));
+    var seriesType = {};
+    for(var j = 0; j < columnsToInclude.length; j++)
+    {   
+      chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn])); 
+      seriesType[j] = { type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_nameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
+    }
+    if(Debug)LogToConsole(seriesType,true,3);
+  
     chartBuilder
-    .setPosition(1 + i*29, 1, 0, 0)
-    .setChartType(GetChartType(charts[i][2]))
+      .setOption('title', "Overview - " + Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format")))
+      .setOption('series', seriesType)
+      .setPosition(10, 4, 0, 0)
+      .setChartType(Charts.ChartType.COMBO)
+        
+    ApplyStandardFormatting(chartBuilder,seriesType);    
+    statusSheet.insertChart(chartBuilder.build());  
+}
+
+function ApplyStandardFormatting(chartBuilder,seriesType){
+  chartBuilder
     .setNumHeaders(1)
-    .setOption('title', charts[i][1])
     .setOption('width', 800)
     .setOption('height', 600)  
     //.setOption('vAxis.ticks', [0,1])
@@ -54,6 +95,7 @@ function UpdateCharts() {
     .setOption('focusTarget','category')
     .setOption('hAxis', { viewWindowMode: 'pretty' })
     .setOption('vAxis', { viewWindowMode: 'pretty' })
+    .setOption('legend', {position: 'top', textStyle: {fontSize: 14}})
     //.setOption('explorer', { keepInBounds: true,maxZoomOut: 20.0,maxZoomIn: 8.0})    
     //.setOption('hAxis', {title: "DateTime"})
     //.setOption('vAxes', {0: {title: "Left side - vertical axis 0"},1: {title: "Right side - vetical axis 1"}})    
@@ -63,10 +105,7 @@ function UpdateCharts() {
    //   0: { type: 'line', color: 'orange', targetAxisIndex: 0,hasAnnotations: true,dataLabel: 'value',dataLabelPlacement: 'outsideEnd',dataLabel: "value" },
   //    1: { type: 'line', color: 'green', targetAxisIndex: 1,hasAnnotations: true,dataLabel: 'value',dataLabelPlacement: 'outsideEnd',dataLabel: "value" }
    // })
-    .setOption('hAxis', { slantedText: true, 'slantedTextAngle': 30 });
-    
-    chartsSheet.insertChart(chartBuilder.build());    
-  }  
+    .setOption('hAxis', { slantedText: true, 'slantedTextAngle': 30 });  
 }
 
 function GetChartType(name)  ///< Translates the chart type text to an actual chart type

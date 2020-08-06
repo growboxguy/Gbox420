@@ -24,9 +24,10 @@ var columns_alertMaxColumn = 3;
 var columns_triggeredColumn = 4;
 var columns_dataTypeColumn = 5;
 var columns_chartColumn = 6;
-var columns_seriesColumn = 7;
-var columns_nameColumn = 8;
-var columns_targetAxisColumn = 9;
+var columns_overviewColumn = 7;
+var columns_seriesColumn = 8;
+var columns_nameColumn = 9;
+var columns_targetAxisColumn = 10;
 
 var settings_keyColumn = 0;  //Relative position within the Settings named range
 var settings_valueColumn = 1;
@@ -88,7 +89,7 @@ function ProcessBoxData(JSONBoxData) {
       UpdateColumns(JSONBoxData.Log); //Add missing columns to the Settings sheet 
       UpdateStatus(JSONBoxData.Log); //Add the latest status to the Status page     
       CheckAlerts(JSONBoxData.Log); //Checks for alerts and send an email alert
-      UpdateCharts();  //Updates the Charts
+      UpdateCharts();  //Updates all Charts (Overview + Charts tab)    
     }
     else {
       LogToConsole("Received BoxData does not contain a Log section. Skipping log processing.", true, 1);
