@@ -74,7 +74,7 @@ function UpdateOverviewChart() {
     if(Debug)LogToConsole(seriesType,true,3);
   
     chartBuilder
-      .setOption('title', "Overview - " + Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format")))
+      .setOption('title', "Overview - " + Utilities.formatDate(SpreadsheetApp.getActive().getRangeByName("LastReportTime").getValue(), GetSettingsValue("Time zone"), GetSettingsValue("Date format")))
       .setOption('series', seriesType)
       .setPosition(10, 4, 0, 0)
       .setChartType(Charts.ChartType.COMBO)
