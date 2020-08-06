@@ -274,7 +274,8 @@
 				</form>
 			</div>
 			<div class="card" style="width:90%">
-				<h1 style="margin:0px;display: inline;">Hempy 2</h1>				
+				<h1 style="margin:0px;display: inline;">Hempy 2</h1>
+				<span style="float:right" id="Hemp1_Status2">CONNECTING...</span>				
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span style="font-weight:bold">Weight</span></th>
@@ -430,19 +431,29 @@
 	document.getElementById('Aero1_Status').onchange= f_color;
 	document.onload= f_color;
 
+	///Reacting to mouse click/tap event
+	document.addEventListener("click", function(){
+		Hempy1Status2.innerHTML = Hempy1Status.innerHTML;
+	});
+
 	*/	
+
+	///Duplicating the status of the Hempy Module to both Buckets
+    var Hempy1Status = document.getElementById("Hemp1_Status");
+    var Hempy1Status2 = document.getElementById("Hemp1_Status2");
+	setInterval(function(){Hempy1Status2.innerHTML = Hempy1Status.innerHTML;}, 5)  ///Refresh every 5 seconds
 
 	function refreshFormDataNow()
 	{	
 		loadCounter=1;
-		refreshFormData();	
+		refreshFormData();
 	}
 
 	if(window.addEventListener){
-		window.addEventListener('load', refreshFormDataNow)
+		window.addEventListener('load', refreshFormDataNow);
 	}
 	else{
-		window.attachEvent('onload', refreshFormDataNow)
+		window.attachEvent('onload', refreshFormDataNow);
 	}
 
 </script>

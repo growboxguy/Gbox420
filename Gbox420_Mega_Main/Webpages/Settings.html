@@ -199,18 +199,24 @@
 </div>
 <!-- Footer -->
 <script>
-	function refreshFormDataNow()
-	{	
-		loadCounter=1;
-		refreshFormData();	
-	}
 
+	///Subscribe to the webpage load event and trigger an instant refresh
 	if(window.addEventListener){
 		window.addEventListener('load', refreshFormDataNow)
 	}
 	else{
 		window.attachEvent('onload', refreshFormDataNow)
 	}
+
+
+	function refreshFormDataNow()
+	{	
+		loadCounter=1;
+		refreshFormData();	
+	}
+
+	 
+	
 
 </script>
 </body>
