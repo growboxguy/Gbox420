@@ -432,6 +432,19 @@
 
 	*/	
 
+	function refreshFormDataNow()
+	{	
+		loadCounter=1;
+		refreshFormData();	
+	}
+
+	if(window.addEventListener){
+		window.addEventListener('load', refreshFormDataNow)
+	}
+	else{
+		window.attachEvent('onload', refreshFormDataNow)
+	}
+
 </script>
 </body>
 

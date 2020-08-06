@@ -198,10 +198,21 @@
 	</div><br>
 </div>
 <!-- Footer -->
-<!-- 
-<script language="JavaScript" type="text/javascript" src="/js/jquery-1.2.6.min.js>
+<script>
+	function refreshFormDataNow()
+	{	
+		loadCounter=1;
+		refreshFormData();	
+	}
+
+	if(window.addEventListener){
+		window.addEventListener('load', refreshFormDataNow)
+	}
+	else{
+		window.attachEvent('onload', refreshFormDataNow)
+	}
+
 </script>
--->
 </body>
 
 </html>
