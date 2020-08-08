@@ -74,9 +74,9 @@
 			margin-bottom: 6px;
 		}
 
-		form  { display: table; padding: 0px;	margin: 0.2em; }
+		form  { display: table; padding: 0px;	margin: 0em; vertical-align: middle; }
 		p     { display: table-row; }
-		label { display: table-cell; text-align: right; vertical-align: middle; padding-right: 0.1em; white-space: nowrap;  }
+		label { display: table-cell; vertical-align: middle; padding-right: 0.1em; white-space: nowrap;  }
 		input { display: table-cell; width: 3em; vertical-align: middle;}
 		button { display: table-cell; padding: 0.2em; margin:0.05em;margin-top:0px !important;line-height: 1em;}
 
@@ -131,7 +131,7 @@
 				</table>
 				<form>
 					<p>
-					<label><b>Internal fan</b></label>
+					<label style="width: 6em !important"><b>Internal fan</b></label>
 					<button id="IFan_O" type="button" title="Turn internal fan OFF">OFF</button>
 					<button id="IFan_L" type="button" title="Turn internal fan ON and set speed to LOW">Low</button>
 					<button id="IFan_H" type="button" title="Turn internal fan ON and set speed to HIGH">High</button>
@@ -146,7 +146,7 @@
 				-->
 				<form>
 					<p>
-					<label><b>Exhaust fan</b></label>
+					<label style="width: 6em !important"><b>Exhaust fan</b></label>
 					<button id="EFan_O" type="button" title="Turn exhaust fan OFF">OFF</button>
 					<button id="EFan_L" type="button" title="Turn exhaust fan ON and set speed to LOW">Low</button>
 					<button id="EFan_H" type="button" title="Turn exhaust fan ON and set speed to HIGH">High</button>
@@ -209,7 +209,7 @@
 				</form>
 				<form>						
 					<p>
-					<label style="width: 3em;">ON </label> 
+					<label style="width: 3em;text-align: right;">ON </label> 
 					<input min=0 max=23 name="Lt1_OnH" type="number" /> :
 					<input min=0 max=59 name="Lt1_OnM" type="number" />
 					<input type="submit" value="Set" title="Set grow light ON time"/>
@@ -217,7 +217,7 @@
 				</form>
 				<form>
 						<p>
-						<label style="width: 3em;">OFF </label>
+						<label style="width: 3em;text-align: right;">OFF </label>
 						<input min=0 max=23 name="Lt1_OfH" type="number" /> :
 						<input min=0 max=59 name="Lt1_OfM" type="number" />
 						<input type="submit" value="Set" title="Set grow light OFF time"/>
@@ -262,7 +262,7 @@
 				</form>
 					<form>												
 						<p>
-						<label style="width: 3em;">ON</label> 
+						<label style="width: 3em;text-align: right;">ON</label> 
 						<input min=0 max=23 name="Lt2_OnH" type="number" /> :
 						<input min=0 max=59 name="Lt2_OnM" type="number" />
 						<input type="submit" value="Set" title="Set grow light ON time"/>
@@ -270,7 +270,7 @@
 					</form>						
 					<form>
 						<p>
-						<label style="width: 3em;">OFF</label>
+						<label style="width: 3em;text-align: right;">OFF</label>
 						<input min=0 max=23 name="Lt2_OfH" type="number" /> :
 						<input min=0 max=59 name="Lt2_OfM" type="number" />
 						<input type="submit" value="Set" title="Set grow light OFF time"/>
@@ -332,8 +332,8 @@
 				<form>
 					<p>
 					<label>Start</label>
-					<input style="width: 50px;" name="Hemp1_B1Strt" type="number" value='0' step='0.1' title="Start watering plant below this weight"/>
-					<label style="width: 3em;">Stop</label> 
+					<input name="Hemp1_B1Strt" type="number" value='0' step='0.1' title="Start watering plant below this weight"/>
+					<label style="width: 3em;text-align: right;">Stop</label> 
 					<input style="width: 50px;" name="Hemp1_B1Stp" type="number" value='0' step='0.1' title="Stop watering plant above this weight" />
 					<input type="submit" value="Set">
 					</p>
@@ -371,9 +371,9 @@
 				<form>
 						<p>
 						<label>Start</label>
-						<input style="width: 50px;" name="Hemp1_B2Strt" type="number" value='0' step='0.1' title="Start watering plant below this weight"/>
-						<label style="width: 3em;">Stop</label>
-						<input style="width: 50px;" name="Hemp1_B2Stp" type="number" value='0' step='0.1' title="Stop watering plant above this weight" />
+						<input name="Hemp1_B2Strt" type="number" value='0' step='0.1' title="Start watering plant below this weight"/>
+						<label style="width: 3em;text-align: right;">Stop</label>
+						<input name="Hemp1_B2Stp" type="number" value='0' step='0.1' title="Stop watering plant above this weight" />
 						<input type="submit" value="Set">
 						</p>
 				</form>
@@ -408,7 +408,7 @@
 					<p>
 					<label>Interval</label>
 					<input style="width: 35px;" min=1 name="Aero1_Int" type="number" />min
-					<label style="width: 5em;">Duration</label> 
+					<label style="width: 5em;text-align: right;">Duration</label> 
 					<input style="width: 35px;" min=1 name="Aero1_Dur" type="number" />sec
 					<input type="submit" value="Set" title="Set how often a spray should start (Interval), and how long one spray should last (Duration)">
 					</p>
@@ -440,7 +440,7 @@
 					<p>
 					<label><b>Pressure</b> Min</label>
 					<input style="width: 45px;" min=0 max=10 step='0.1' name="Aero1_PresMin" type="number" title="Below this pressure refill the tank" />
-					<label style="width: 3em;">Max</label>
+					<label style="width: 3em;text-align: right">Max</label>
 					<input style="width: 45px;" min=0 max=10 step='0.1' name="Aero1_PresMax" type="number" title="Stop refilling when this pressure is reached" />
 					<input type="submit" value="Set">
 					</p>
