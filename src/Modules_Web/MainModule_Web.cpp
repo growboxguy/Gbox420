@@ -118,7 +118,7 @@ void MainModule::websiteEvent_Field(char *Field)
     else if (strcmp_P(ShortMessage, (PGM_P)F("Metric")) == 0){setMetric(WebServer.getArgBoolean());}
     else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0){setSheetsReportingOnOff(WebServer.getArgBoolean());}
     else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsF")) == 0){setSheetsReportingFrequency(WebServer.getArgInt());}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PushingBoxLogRelayID")) == 0){setPushingBoxLogRelayID(WebServer.getArgString());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Relay")) == 0){setPushingBoxLogRelayID(WebServer.getArgString());}
   }
 }
 
