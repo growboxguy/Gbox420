@@ -35,10 +35,12 @@ Settings *loadSettings(bool ResetEEPROM = false )   ///if the function contains 
 
 void restoreDefaults(Settings *ToOverwrite)
 {
-  logToSerials(F("Restoring settings from sketch defaults..."), false, 0);
-  Settings *DefaultSettings = new Settings; ///new "Settings" type objects with sketch defaults
-  memcpy(&ToOverwrite, &DefaultSettings, sizeof(ToOverwrite));
+  logToSerials(F("Forcing settings update at next restart..."), false, 0);
+  ToOverwrite -> CompatibilityVersion = ToOverwrite -> CompatibilityVersion - 1;  
   saveSettings(ToOverwrite);
-///  GBox->addToLog(F("Default settings restored"), 1);
+  logToSerials(F("done. Reseting Arduino..."), true, 1);
+  resetFunc();  
 }
+
+void(* resetFunc) (void) = 0;  //Resets the Arduino https://forum.arduino.cc/index.php?topic=385427.0
 

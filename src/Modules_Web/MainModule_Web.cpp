@@ -241,6 +241,7 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
 void MainModule::setPushingBoxLogRelayID(const char *ID)
 {
   strncpy(ModuleSettings -> PushingBoxLogRelayID, ID, MaxTextLength);
+  getSoundObject() -> playOnSound();
   addToLog(F("Sheets log relay ID updated"));
 }
 
