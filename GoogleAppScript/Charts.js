@@ -31,11 +31,11 @@ function UpdateChartsTab() {
       return row[columns_chartColumn] == charts[i][charts_titleColumn];  ///< Selecting the columns to include in the chart based on Settings tab - Columns section- Show on Chart column
     });
     
-    chartBuilder.addRange(GetLogColumnRange("LogDate"));
+    chartBuilder.addRange(GetLogColumnRange("LogDate",GetSettingsValue("Chart point limit")));
     var seriesType = {};
     for(var j = 0; j < columnsToInclude.length; j++)
     {   
-      chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn])); 
+      chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn],GetSettingsValue("Chart point limit"))); 
       seriesType[j] = { type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_nameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
     }
     if(Debug)LogToConsole(seriesType,true,3);
@@ -64,11 +64,11 @@ function UpdateOverviewChart() {
       return row[columns_overviewColumn] == true;  ///< Selecting the columns to include in the chart based on Settings tab - Columns section- Show on Overview column
     });
     
-    chartBuilder.addRange(GetLogColumnRange("LogDate"));
+    chartBuilder.addRange(GetLogColumnRange("LogDate",GetSettingsValue("Chart point limit")));
     var seriesType = {};
     for(var j = 0; j < columnsToInclude.length; j++)
     {   
-      chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn])); 
+      chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn],GetSettingsValue("Chart point limit"))); 
       seriesType[j] = { type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_nameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
     }
     if(Debug)LogToConsole(seriesType,true,3);

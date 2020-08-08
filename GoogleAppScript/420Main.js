@@ -45,7 +45,7 @@ function doPost(receivedData) {
     LogToConsole(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", true,0);  
     LogToConsole("Data received from Arduino, Raw:", false, 0);
     LogToConsole(JSON.stringify(receivedData), true, 1);
-
+    
     SpreadsheetApp.getActive().getRangeByName("LastReportTime").setValue(Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format"))); //Log when the JSON was received
     SpreadsheetApp.getActive().getRangeByName("LastReportRaw").setValue(receivedData); //Log the received data
     SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Processing...");
@@ -85,48 +85,12 @@ function ProcessBoxData(JSONBoxData) {
     WipeCache();  ///Remove cached Named Ranges and get a fresh copy
     LogToConsole("Processing BoxDataJSON:", false, 0);
     if (JSONBoxData.Log != null) {
-      try {
-        LogToConsole(JSON.stringify(JSONBoxData.Log), true, 0);  //Print the JSON on the Stackdriver logging (View / Stackdriver logging)
-      }
-      catch (e) {
-        LogToConsole("Error: " + e, true, 1);
-        SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Skipping Logging to console. Error:" + e);
-      }
-      try {
-        SaveToLog(JSONBoxData.Log); //Save the log to the Logs sheet 
-      }
-      catch (e) {
-        LogToConsole("Error: " + e, true, 1);
-        SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Skipping Logging to console. Error:" + e);
-      }
-      try {
-        UpdateColumns(JSONBoxData.Log); //Add missing columns to the Settings sheet
-      }
-      catch (e) {
-        LogToConsole("Error: " + e, true, 1);
-        SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Skipping Logging to console. Error:" + e);
-      }
-      try {
-        UpdateStatus(JSONBoxData.Log); //Add the latest status to the Status page
-      }
-      catch (e) {
-        LogToConsole("Error: " + e, true, 1);
-        SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Skipping Logging to console. Error:" + e);
-      }
-      try {
-        CheckAlerts(JSONBoxData.Log); //Checks for alerts and send an email alert
-      }
-      catch (e) {
-        LogToConsole("Error: " + e, true, 1);
-        SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Skipping Logging to console. Error:" + e);
-      }
-      try {
-        UpdateCharts();  //Updates all Charts (Overview + Charts tab) 
-      }
-      catch (e) {
-        LogToConsole("Error: " + e, true, 1);
-        SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Skipping Logging to console. Error:" + e);
-      }
+      LogToConsole(JSON.stringify(JSONBoxData.Log), true, 0);  //Print the JSON on the Stackdriver logging (View / Stackdriver logging)
+      SaveToLog(JSONBoxData.Log); //Save the log to the Logs sheet 
+      UpdateColumns(JSONBoxData.Log); //Add missing columns to the Settings sheet 
+      UpdateStatus(JSONBoxData.Log); //Add the latest status to the Status page     
+      CheckAlerts(JSONBoxData.Log); //Checks for alerts and send an email alert
+      UpdateCharts();  //Updates all Charts (Overview + Charts tab)    
     }
     else {
       LogToConsole("Received BoxData does not contain a Log section. Skipping log processing.", true, 1);

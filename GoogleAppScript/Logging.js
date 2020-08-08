@@ -34,7 +34,7 @@ function SaveToLog(Log) {
   logSheet.autoResizeColumns(1, logSheet.getLastColumn()); //resize columns to fit the data  
 }
 
-function GetLogColumnRange(name){  //returns the entire column with the matching header name
+function GetLogColumnRange(name,rowLimit){  //returns the entire column with the matching header name
   var logSheet = SpreadsheetApp.getActive().getSheetByName("Log");
   var logHeader = logSheet.getDataRange().offset(0, 0, 1).getValues()[0]; //Get first row of the Log sheet
   
@@ -47,11 +47,16 @@ function GetLogColumnRange(name){  //returns the entire column with the matching
   if(match != null)
   {
     if(Debug)LogToConsole(name + " header matched log column: "+ match,true,3);
-    return logSheet.getRange(1, match+1, logSheet.getLastRow(), 1);
+    if(!isNaN(parseInt(rowLimit)) && isFinite(rowLimit) && rowLimit>0 && logSheet.getLastRow()>rowLimit){
+      return logSheet.getRange(logSheet.getLastRow()-rowLimit, match+1, logSheet.getLastRow(), 1);
+    }
+    else{
+      return logSheet.getRange(1, match+1, logSheet.getLastRow(), 1);
+    }
   }
   else
   {
-    if(Debug)LogToConsole(name + " header did not match any log columns",true,3);
+    LogToConsole(name + " header did not match any log columns",true,3);
     return null;
   }  
 }
