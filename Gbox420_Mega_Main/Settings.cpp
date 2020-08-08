@@ -38,9 +38,6 @@ void restoreDefaults(Settings *ToOverwrite)
   logToSerials(F("Forcing settings update at next restart..."), false, 0);
   ToOverwrite -> CompatibilityVersion = ToOverwrite -> CompatibilityVersion - 1;  
   saveSettings(ToOverwrite);
-  logToSerials(F("done. Reseting Arduino..."), true, 1);
-  resetFunc();  
+  logToSerials(F("done. Reseting the sketch..."), true, 1);
+  __asm__ __volatile__ ("jmp 0x0000");
 }
-
-void(* resetFunc) (void) = 0;  //Resets the Arduino https://forum.arduino.cc/index.php?topic=385427.0
-
