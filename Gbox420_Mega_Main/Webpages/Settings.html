@@ -8,6 +8,16 @@
 			padding: 0px;
 		}
 
+		.container {
+		width: 100%;
+		clear: both;
+		}
+
+		.container input {
+		width: 100%;
+		clear: both;
+		}
+
 		.pure-g {
 			margin: 0px;
 			padding: 0px;
@@ -71,97 +81,84 @@
 			margin: 0px;
 			margin-bottom: 6px;
 		}
+
+		form  { display: table; padding: 0px;	margin: 0em; vertical-align: middle;}
+		p     { display: table-row; }
+		label { display: table-cell; vertical-align: middle; padding-right: 0.1em; white-space: nowrap; }
+		input { display: table-cell; width: 3em; vertical-align: middle;line-height: 1em;position: relative;}
+		button { display: table-cell; padding: 0.2em; margin:0.05em;margin-top:0px !important;line-height: 1em; vertical-align: middle;}
+
 	</style>
 
    <h1 style="color:#333;background-color: #fc0;text-align: center;padding-top: 5px;padding-bottom: 2px;margin: 0px;line-height: 37px;">Settings</h1>
 	<div class="pure-g">
 		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
 			<div class="card" style="width:90%">
-				<h1>Settings<button style="height:32px;width:32px;border-radius:0;" id="Sound1_Ee" type="button"><img
-							style="padding:0px;height:28px;width:28px;"
+				<h1><span id="Time"></span></h1>
+				<ul id="Log"></ul>
+				<form>
+					<p>
+					<button id="Main1_Refresh" type="button" style="margin-top:0px"
+						title="Update sensor readings and report to console and Sheets">Refresh</button>
+					<button id="Main1_SerialRep" type="button" style="margin-top:0px"
+						title="Report current status to Serial (ESP and Arduino)">Console report</button>
+					<button id="Main1_SheetsRep" type="button" style="margin-top:0px"
+						title="Report current status to Google Sheets">Sheets report</button>
+					</p>
+				</form>
+			</div>
+			<div class="card" style="width:90%">
+				<h1>Settings<button style="height:32px;width:32px;border-radius:0;padding:0px !important; margin:0em !important;" id="Sound1_Ee" type="button"><img
+							style="padding:0px !important;height:28px;width:28px;"
 							src="https://lh3.googleusercontent.com/GAoRKaB09BobBln1BQgRHL0qmbfyTmnMn6_6JBmCVZ3gvUuCOzhRep7HkBYL4_bWqa5Vk70W7dgq_t5vgwisNYon5yXiM0hbBoUauYdnv9ujxtkVrn5hB4SXhT2X-nWb7BS4Bo_-fL-Pj2TLdzMcbJN4597KkEvYGrqv6CtPy_wf06wc9t1WN2jL5lbhWHdvkleKIU6Hpp1AXPjOI_3c9lY0jpIdEtcjbOZ3fYIgrEvm1HO7JrAbyllYIgpSpZlMr6uUQh2h6PuA9tDSb8-V3NmMuvRtOQi5qfH6rJKrOBv5oNN4_t-C-V3BLKjXqx82oAmP65RAnH1Y3EXG8FbuEsQvqYcWiEp9iaNeuYbjokQoVM8h61Gh1cPr717j0D1GjEYhYzba32UvVZ3iXiVr1zmonOw810HP5oTWhc-o0mNdW211dhs80tvOyaggxKGX_I7r5kcak9nK7PSP3ppAi-wjrsqhW0UBiRvsyHwpHRfIu-A0lbnQ4ukwWiw28dnBPQMZUu8rLAXVNRnBjoAPU5udjLwyCUyCeU6YjUlC9TTe7QpbTZCrVueTaytD3GOqtP2dKg2wZse3CCGPrnNq2vg5DpRV4Qb0sOBv8oyJzKfdWLCMgYJYTw9rpYg6Y3zgUjJWqmLdX3upj8an069FddUa33Sgb6YhQe6NSz1sdW7cq_-8zYosD0RmeavL4t3sfpNDXw95OOmQJ0LEFKRZSa3PBApRvl2GIOpNmLI2Li_QSw-y=s671-no" /></button>
 				</h1>
 				<button id="Main1_RestoreDefaults" type="button" style="margin-top:0px"
 					title="Restore settings to sketch defaults">Restore defaults</button>
-				<form><label><input type="checkbox" name="Sound1_Enabled">Sound enabled </label><input type="submit"
-						value="Set"></form>
-				<form><label><input type="checkbox" name="Main1_Debug" title="Debug entres on Serial log">Debug
-						enabled </label><input type="submit" value="Set"></form>
-				<form><label><input type="checkbox" name="Main1_Metric"
-							title="Use imperial units(F,PSI) or metric (C,bar)">Metric units </label><input
-						type="submit" value="Set"></form>
-			</div>
-			<div class="card" style="width:90%">
-				<h1>Calibration</h1>
-				<b>PH sensor </b><button id="PHSensor1_ReadRaw" type="button" style="margin-top:0px"
-					title="Displays the analog PH value for a calibration point">Read raw</button>
-				<form>
-					Slope:<input style="width: 80px;" name="PHSensor1_Slope" type="text" />
-					Intercept:<input style="width: 80px;" name="PHSensor1_Intercept" type="text" />
-					<input type="submit" value="Set">
+				<div class="checkboxes">
+					<form>
+						<p>
+						<label>
+						<input style="width: 1em;" type="checkbox" name="Sound1_Enabled">
+						Sound enabled </label>
+						<input type="submit" value="Set">
+						</p>
+					</form>
+					<form> 
+						<p>
+						<label>	
+						<input style="width: 1em;" type="checkbox" name="Main1_Debug" title="Debug messages on Serial log">
+						Debug enabled</label>
+						<input type="submit" value="Set">	
+						</p>
+					</form>	
+					<form >
+						<p>
+						<label>
+						<input style="width: 1em;" type="checkbox" name="Main1_Metric" title="Use imperial units(F,PSI) or metric (C,bar)">
+						Metric units </label>
+						<input type="submit" value="Set">					
+						</p>
+					</form>
 				</form>
-				<b>Pressure sensor </b><button id="Pres1_Offset" type="button" style="margin-top:0px"
-					title="Use only when the tank is not pressurized!">Read offset</button>
-				<form>
-					Offset:<input style="width: 80px;" name="Pres1_Offset" type="text" />
-					Ratio: <input style="width: 80px;" title="Voltage to pressure ratio" name="Pres1_Ratio"
-						type="text" />
-					<input type="submit" value="Set">
-				</form>
-				<b>Weight sensor 1 </b><br>
-				1.Remove weights, then click:
-				<button id="Weight1_Tare" type="button" style="margin-top:0px"
-					title="Set 0 reading, do not have any weight on the scale!">Tare</button><br>
-				<form>
-					2.Calibration weight:<input
-					style="width: 35px;" min=1 max=50 step=1 value=1 name="Weight1_Calibrate" title="Weight of the known item on the scale" type="number" />				
-					<input type="submit" value="Calibrate">
-				</form>
-				<form>					
-					Calibrated scale: <input style="width: 80px;" title="Tare adjusted raw reading for 1 unit" name="Weight1_Scale"
-						type="text" /><br>
-					Tare offset: <input style="width: 80px;" title="Raw reading at no weight" name="Weight1_Offset"
-						type="text" />
-					<input type="submit" value="Override">
-				</form>
-				<b>Weight sensor 2 </b><br>
-				1.Remove weights, then click:
-				<button id="Weight2_Tare" type="button" style="margin-top:0px"
-					title="Set 0 reading, do not have any weight on the scale!">Tare</button><br>
-				<form>
-					2.Calibration weight:<input
-					style="width: 35px;" min=1 max=50 step=1 value=1 name="Weight2_Calibrate" title="Weight of the known item on the scale" type="number" />				
-					<input type="submit" value="Calibrate">
-				</form>
-				<form>					
-					Calibrated scale: <input style="width: 80px;" title="Tare adjusted raw reading for 1 unit" name="Weight2_Scale"
-						type="text" /><br>
-					Tare offset: <input style="width: 80px;" title="Raw reading at no weight" name="Weight2_Offset"
-						type="text" />
-					<input type="submit" value="Override">
-				</form>
-			</div>
-		</div>
-		<div class="pure-u-1 pure-u-md-1-2" style="max-width:370px">
-			<div class="card" style="width:90%">
-				<h1>Reporting</h1>
+				<b>Google Sheets reporting</b>
 				<!--<form><label><input type="checkbox" name="Main1_MqttEnabled">MQTT </label><input type="submit" value="Set"> <button id="btn_Mqtt" type="button" style="margin-top:0px">Trigger</button></form>-->
-				<form><label><input type="checkbox" name="Main1_Sheets">Google Sheets, every <input
-							style="width: 55px;" min=15 max=1440 step=15 name="Main1_SheetsF" type="number" />
-						min </label><input type="submit" value="Set"></form>
-				<form>RelayID:<input type="text" name="Main1_PushingBoxLogRelayID" style="width: 150px;"
-						title="DeviceID of the PushingBox logging scenario" /><input type="submit" value="Set"></form>
-			</div>
-			<div class="card" style="width:90%">
-				<h1><span id="Time"></span></h1>
-				<ul id="Log"></ul>
-				<button id="Main1_Refresh" type="button" style="margin-top:0px"
-					title="Update sensor readings and report to console and Sheets">Refresh</button>
-				<button id="Main1_SerialRep" type="button" style="margin-top:0px"
-					title="Report current status to Serial (ESP and Arduino)">Report to console</button>
-				<button id="Main1_SheetsRep" type="button" style="margin-top:0px"
-					title="Report current status to Google Sheets">Report to Sheets</button>
-			</div>
+				<form>
+					<p>	
+					<label>				
+					<input style="width: 1em;" type="checkbox" name="Main1_Sheets"/>
+					Report every </label>
+					<input min=15 max=1440 step=15 name="Main1_SheetsF" type="number" />min 
+					<input type="submit" value="Set">
+					</p>
+				</form>
+				<form>
+					<p>
+					<label>RelayID</label>
+					<input type="text" name="Main1_Relay" style="width: 150px;"	title="DeviceID of the PushingBox logging scenario"/>
+					<input type="submit" value="Set"/>
+					</p>
+				</form>
+			</div>				
 		</div>
 	</div>
 </div>
