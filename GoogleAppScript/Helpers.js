@@ -128,6 +128,9 @@ function GetFriendlyValue(key, value) {
             break;
         }
         break;
+      case "Frequency":
+        returnValue = value + ' hz';
+        break;
       case "Minute":
         returnValue = value + ' min';
         break;

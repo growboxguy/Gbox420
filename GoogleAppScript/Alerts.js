@@ -45,7 +45,7 @@ function CheckAlerts(Log) {
               columns[originalRow][columns_triggeredColumn] = 'YES'; //Flag the alert active
             }
             else {
-              alertMessages.push("<font color='red'>" + key + "</font> out of limits: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); //save active alerts for the email       
+              alertMessages.push("<strong><font color='red'>" + key + "</font></strong> out of limits: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); //save active alerts for the email       
             }
             //Mark alert active on Status page
             //settingsSheet.getRange(match.getRow(), 5).setValue('YES'); //Triggered column       
@@ -56,7 +56,7 @@ function CheckAlerts(Log) {
           else {
             LogToConsole(" -> OK", true, 0);
             if (match[0][columns_triggeredColumn] != 'NO') { //if alert was active before
-              recoveredMessages.push("<font color='green'>" + key + "</font> recovered: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); // //save recovered alerts for the email
+              recoveredMessages.push("<strong><font color='green'>" + key + "</font></strong> recovered: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); // //save recovered alerts for the email
               sendEmailAlert = true; //Send notification that a parameter recovered
               columns[originalRow][columns_triggeredColumn] = 'NO'; //Flag the alert active
             }
@@ -82,9 +82,10 @@ function CheckAlerts(Log) {
     emailTemplate.Alerts = alerts; //Fill Alert messages into the template
     emailTemplate.AlertMessages = alertMessages; //Fill Alert messages into the template
     emailTemplate.RecoveredMessages = recoveredMessages; //Fill Recovered messages into the template
-    emailTemplate.Data = GetNamedRangeValues("Status",true).filter(function (row) {
-      return row[columns_keyColumn] != null && row[columns_keyColumn] != "";  //Filter out rows with a blank key colum
-    });
+    emailTemplate.LatestStatus = convertRange2html(SpreadsheetApp.getActive().getRangeByName("Status").getDataRegion());
+    //emailTemplate.LatestStatus = GetNamedRangeValues("Status",true).filter(function (row) {
+    //  return row[columns_keyColumn] != null && row[columns_keyColumn] != "";  //Filter out rows with a blank key colum
+    //});
     sendEmail(emailTemplate);
   }
 }
@@ -95,6 +96,12 @@ function sendEmail(emailTemplate) {
     if (GetSettingsValue("Send an email") != "Disabled") {
       LogToConsole("Sending email...", true, 1);
         var emailMessage = emailTemplate.evaluate().getContent();
+        var emailMessage = emailMessage.replace(/(&lt;)/ig, "<");
+        var emailMessage = emailMessage.replace(/(&gt;)/ig, ">");
+        var emailMessage = emailMessage.replace(/(&#34;)/ig, '"');
+        var emailMessage = emailMessage.replace(/(&#43;)/ig, "+");
+        var emailMessage = emailMessage.replace(/(&amp;nbsp;)/ig," ") ;
+       
         //Browser.msgBox(emailMessage)
         //This section converts the charts to images and attaches them to the email message
         var emailImages = {};

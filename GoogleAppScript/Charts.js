@@ -74,8 +74,9 @@ function UpdateOverviewChart() {
     if(Debug)LogToConsole(seriesType,true,3);
   
     chartBuilder
-      .setOption('title', "Overview - " + Utilities.formatDate(SpreadsheetApp.getActive().getRangeByName("LastReportTime").getValue(), GetSettingsValue("Time zone"), GetSettingsValue("Date format")))
+      .setOption('title', "Overview - " + SpreadsheetApp.getActive().getRangeByName("LastReportTime").getDisplayValue())
       .setOption('series', seriesType)
+      .setOption('vAxes.0.logScale',true)
       .setPosition(10, 4, 0, 0)
       .setChartType(Charts.ChartType.COMBO)
         
@@ -95,7 +96,7 @@ function ApplyStandardFormatting(chartBuilder,seriesType){
     .setOption('focusTarget','category')
     .setOption('hAxis', { viewWindowMode: 'pretty' })
     .setOption('vAxis', { viewWindowMode: 'pretty' })
-    .setOption('legend', {position: 'top', textStyle: {fontSize: 14}})
+    .setOption('legend', {position: 'top', textStyle: {fontSize: 14}})    
     //.setOption('explorer', { keepInBounds: true,maxZoomOut: 20.0,maxZoomIn: 8.0})    
     //.setOption('hAxis', {title: "DateTime"})
     //.setOption('vAxes', {0: {title: "Left side - vertical axis 0"},1: {title: "Right side - vetical axis 1"}})    

@@ -10,7 +10,7 @@ LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settin
   this->AnalogPin = &DefaultSettings->AnalogPin;
   pinMode(*DigitalPin, INPUT);
   pinMode(*AnalogPin, INPUT);
-  calibrate(false);
+  //calibrate(false);
   Parent->addToReportQueue(this);          
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("LightSensor object created"), true, 1);
