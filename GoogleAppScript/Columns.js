@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///Columns section
 
-function UpdateColumns(Log) { ///< Add newly discovered keys to Settings tab - Columns section
+function UpdateColumns(Log) { ///< Add newly discovered keys to Columns tab and update FriendlyName column
   LogToConsole("Updating Columns in Settings sheet...", true, 0);
   var newColumnDiscovered = false;
   var columns = GetNamedRangeValues("Columns");

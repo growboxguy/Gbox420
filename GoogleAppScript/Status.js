@@ -24,8 +24,8 @@ function UpdateStatus(Log) {
       var valueToWriteBack = GetFriendlyValue(key, value);
       var match = -1;
       for (var k = 0; k < newStatus.length; k++) {
-        if (newStatus[k][status_keyColumn] == key) {
-          match = k; //Trying to find Status entry with the relayed component name
+        if (newStatus[k][status_keyColumn] == key) {  //Trying to find Status entry with the relayed component name
+          match = k; 
           break;
         }
       }
