@@ -39,7 +39,7 @@ void loop()
   
   Serial.print(F("Total energy usage: "));
   Serial.print(PowerSensor.energy());
-  Serial.println(F("Wh"));
+  Serial.println(F("kWh"));
   
   Serial.print(F("Frequency: "));
   Serial.print(PowerSensor.frequency());
