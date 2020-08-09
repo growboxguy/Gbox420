@@ -82,6 +82,12 @@
 			margin-bottom: 6px;
 		}
 
+		.setButton {
+		    padding: 0px !important;
+			width: 2em;
+			height: 1.6em;	
+		}
+
 		form  { display: table; padding: 0px;	margin: 0em; vertical-align: middle;}
 		p     { display: table-row; }
 		label { display: table-cell; vertical-align: middle; padding-right: 0.1em; white-space: nowrap; }
@@ -122,7 +128,7 @@
 						<label>
 						<input style="width: 1em;" type="checkbox" name="Sound1_Enabled">
 						Sound enabled </label>
-						<input type="submit" value="Set">
+						<input class="setButton" type="submit" value="Set">
 						</p>
 					</form>
 					<form> 
@@ -130,7 +136,7 @@
 						<label>	
 						<input style="width: 1em;" type="checkbox" name="Main1_Debug" title="Debug messages on Serial log">
 						Debug enabled</label>
-						<input type="submit" value="Set">	
+						<input class="setButton" type="submit" value="Set">	
 						</p>
 					</form>	
 					<form >
@@ -138,26 +144,26 @@
 						<label>
 						<input style="width: 1em;" type="checkbox" name="Main1_Metric" title="Use imperial units(F,PSI) or metric (C,bar)">
 						Metric units </label>
-						<input type="submit" value="Set">					
+						<input class="setButton" type="submit" value="Set">					
 						</p>
 					</form>
 				</form>
 				<b>Google Sheets reporting</b>
-				<!--<form><label><input type="checkbox" name="Main1_MqttEnabled">MQTT </label><input type="submit" value="Set"> <button id="btn_Mqtt" type="button" style="margin-top:0px">Trigger</button></form>-->
+				<!--<form><label><input type="checkbox" name="Main1_MqttEnabled">MQTT </label><input class="setButton" type="submit" value="Set"> <button id="btn_Mqtt" type="button" style="margin-top:0px">Trigger</button></form>-->
 				<form>
 					<p>	
 					<label>				
 					<input style="width: 1em;" type="checkbox" name="Main1_Sheets"/>
 					Report every </label>
 					<input min=15 max=1440 step=15 name="Main1_SheetsF" type="number" />min 
-					<input type="submit" value="Set">
+					<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
 					<label>RelayID</label>
 					<input type="text" name="Main1_Relay" style="width: 150px;"	title="DeviceID of the PushingBox logging scenario"/>
-					<input type="submit" value="Set"/>
+					<input class="setButton" type="submit" value="Set"/>
 					</p>
 				</form>				
 				</div>			

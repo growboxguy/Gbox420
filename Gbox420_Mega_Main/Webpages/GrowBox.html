@@ -74,6 +74,12 @@
 			margin-bottom: 6px;
 		}
 
+		.setButton {
+		    padding: 0px !important;
+			width: 2em;
+			height: 1.6em;	
+		}
+
 		form  { display: table; padding: 0px;	margin: 0em; vertical-align: middle; }
 		p     { display: table-row; }
 		label { display: table-cell; vertical-align: middle; padding-right: 0.1em; white-space: nowrap;  }
@@ -141,7 +147,7 @@
 				<form>
 					<label><input type="checkbox" name="IFan_Auto">Automatic low/high at: </label>
 					<input style="width: 45px;" min=0 max=255 name="IFan_SwithTemp" type="number"/><span>° </span>
-					<input type="submit" value="Set" title="Enable/Disable automatic LOW/HIGH switch of internal fan based on internal temperature">
+					<input class="setButton" type="submit" value="Set" title="Enable/Disable automatic LOW/HIGH switch of internal fan based on internal temperature">
 				</form>
 				-->
 				<form>
@@ -156,12 +162,12 @@
 				<form>
 					<label><input type="checkbox" name="EFan_Auto">Automatic. Off humidity:</label>
 					<input style="width: 35px;" min=0 max=99 name="EFan_OffHumid" type="number"/>
-					<input type="submit" value="Set" title="Enable/Disable automatic OFF/LOW/HIGH exhaust fan based on humidity and set OFF humidity">
+					<input class="setButton" type="submit" value="Set" title="Enable/Disable automatic OFF/LOW/HIGH exhaust fan based on humidity and set OFF humidity">
 				</form>
 				<form>	
 					Low:<input style="width: 35px;" min=0 max=99 name="EFanLowHumid" type="number"/>
 					High:<input style="width: 35px;" min=0 max=99 name="EFanHighHumid" type="number"/>
-					<input type="submit" value="Set" title="Set LOW and HIGH speed humidity levels">
+					<input class="setButton" type="submit" value="Set" title="Set LOW and HIGH speed humidity levels">
 				</form>
 				-->				
 			</div>
@@ -197,7 +203,7 @@
 						<label><b>Brightness</b></label>						
 						<input style="width:6em;margin-left:0.5em;margin-right:0.5em" type="range" name="Lt1_BS" min="0" max="100"	oninput="this.form.Lt1_B.value=this.value">
 						<input type="number" name="Lt1_B" min="0" max="100"	oninput="this.form.Lt1_BS.value=this.value" />
-						<input type="submit" value="Set"/>
+						<input class="setButton" type="submit" value="Set"/>
 				    </p>
 				</form>
 				<form>						
@@ -212,7 +218,7 @@
 					<label style="width: 3em;text-align: right;">ON </label> 
 					<input min=0 max=23 name="Lt1_OnH" type="number" /> :
 					<input min=0 max=59 name="Lt1_OnM" type="number" />
-					<input type="submit" value="Set" title="Set grow light ON time"/>
+					<input class="setButton" type="submit" value="Set" title="Set grow light ON time"/>
 					</p>
 				</form>
 				<form>
@@ -220,7 +226,7 @@
 						<label style="width: 3em;text-align: right;">OFF </label>
 						<input min=0 max=23 name="Lt1_OfH" type="number" /> :
 						<input min=0 max=59 name="Lt1_OfM" type="number" />
-						<input type="submit" value="Set" title="Set grow light OFF time"/>
+						<input class="setButton" type="submit" value="Set" title="Set grow light OFF time"/>
 						</p>
 				</form>
 			</div>
@@ -251,7 +257,7 @@
 					<label><b>Brightness</b></label>	
 					<input style="width:6em;margin-left:0.5em;margin-right:0.5em" type="range" name="Lt2_BS" min="0" max="100"	oninput="this.form.Lt2_B.value=this.value"/>	
 					<input type="number" name="Lt2_B" min="0" max="100"	oninput="this.form.Lt2_BS.value=this.value" />
-					<input type="submit" value="Set"/>
+					<input class="setButton" type="submit" value="Set"/>
 				</form>
 				<form>
 					<p>
@@ -265,7 +271,7 @@
 						<label style="width: 3em;text-align: right;">ON</label> 
 						<input min=0 max=23 name="Lt2_OnH" type="number" /> :
 						<input min=0 max=59 name="Lt2_OnM" type="number" />
-						<input type="submit" value="Set" title="Set grow light ON time"/>
+						<input class="setButton" type="submit" value="Set" title="Set grow light ON time"/>
 						</p>
 					</form>						
 					<form>
@@ -273,7 +279,7 @@
 						<label style="width: 3em;text-align: right;">OFF</label>
 						<input min=0 max=23 name="Lt2_OfH" type="number" /> :
 						<input min=0 max=59 name="Lt2_OfM" type="number" />
-						<input type="submit" value="Set" title="Set grow light OFF time"/>
+						<input class="setButton" type="submit" value="Set" title="Set grow light OFF time"/>
 						</p>
 				</form>
 			</div>	
@@ -325,7 +331,7 @@
 					<p>
 					<label>Timeout</label>
 					<input style="width: 55px;" min=1 max=9999 name="Hemp1_B1Time" type="number" title="Maximum time the pump can run continuously" />sec 
-					<input type="submit" value="Set">
+					<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<b>Watering weight</b><br>
@@ -335,7 +341,7 @@
 					<input name="Hemp1_B1Strt" type="number" value='0' step='0.1' title="Start watering plant below this weight"/>
 					<label style="width: 3em;text-align: right;">Stop</label> 
 					<input style="width: 50px;" name="Hemp1_B1Stp" type="number" value='0' step='0.1' title="Stop watering plant above this weight" />
-					<input type="submit" value="Set">
+					<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 			</div>
@@ -364,7 +370,7 @@
 					<p>
 					<label>Timeout</label>
 					<input style="width: 55px;" min=1 max=9999 name="Hemp1_B2Time" type="number" title="Maximum time the pump can run continuously" />sec
-					<input type="submit" value="Set"/>
+					<input class="setButton" type="submit" value="Set"/>
 					</p>
 				</form>
 				<b>Watering weight</b><br>
@@ -374,7 +380,7 @@
 						<input name="Hemp1_B2Strt" type="number" value='0' step='0.1' title="Start watering plant below this weight"/>
 						<label style="width: 3em;text-align: right;">Stop</label>
 						<input name="Hemp1_B2Stp" type="number" value='0' step='0.1' title="Stop watering plant above this weight" />
-						<input type="submit" value="Set">
+						<input class="setButton" type="submit" value="Set">
 						</p>
 				</form>
 			</div>				
@@ -406,11 +412,18 @@
 				</form>
 				<form>
 					<p>
-					<label>Interval</label>
-					<input style="width: 35px;" min=1 name="Aero1_Int" type="number" />min
-					<label style="width: 5em;text-align: right;">Duration</label> 
-					<input style="width: 35px;" min=1 name="Aero1_Dur" type="number" />sec
-					<input type="submit" value="Set" title="Set how often a spray should start (Interval), and how long one spray should last (Duration)">
+					<label style="width: 4em;text-align: right;">Interval</label>
+					<input style="width: 35px;" min=1 name="Aero1_Int" type="number" />
+					<label style="width: 2em">min</label> 					
+					<input class="setButton" type="submit" value="Set" title="Set how often a spray should start (Interval), and how long one spray should last (Duration)">
+					</p>
+				</form>
+				<form>
+					<p>					
+					<label style="width: 4em;text-align: right;">Duration</label> 
+					<input style="width: 35px;" min=1 name="Aero1_Dur" type="number" />
+					<label style="width: 2em">sec</label> 
+					<input class="setButton" type="submit" value="Set" title="Set how often a spray should start (Interval), and how long one spray should last (Duration)">
 					</p>
 				</form>
 				<form>
@@ -424,16 +437,16 @@
 				</form>
 				<form>
 					<p>
-					<label>Timeout</label>
+					<label style="width: 4em;text-align: right;">Timeout</label>
 					<input style="width: 45px;" min=1 max=9999 name="Aero1_Timeout" type="number" title="Maximum continuous pump runtime in seconds" />sec
-					<input type="submit" value="Set">
+					<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
-					<label>Priming time</label>
+					<label style="width: 4em;text-align: right;">Priming</label>
 					<input style="width: 45px;" min=1 max=9999 name="Aero1_Priming" type="number" title="At pump startup the bypass valve is open for X seconds" />sec 
-					<input type="submit" value="Set"></form>
+					<input class="setButton" type="submit" value="Set"></form>
 					</p>
 				</form>
 				<form>
@@ -442,7 +455,7 @@
 					<input style="width: 45px;" min=0 max=10 step='0.1' name="Aero1_PresMin" type="number" title="Below this pressure refill the tank" />
 					<label style="width: 3em;text-align: right">Max</label>
 					<input style="width: 45px;" min=0 max=10 step='0.1' name="Aero1_PresMax" type="number" title="Stop refilling when this pressure is reached" />
-					<input type="submit" value="Set">
+					<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>		
 				<!-- Remove this section if you do not use a pressure tank -->	
