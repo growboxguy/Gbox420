@@ -16,9 +16,9 @@ void PowerSensorV3::refresh_FiveSec()
   Voltage = Sensor->voltage();      ///AC Voltage (V)
   Current = Sensor->current();      ///Current (A)
   Power = Sensor->power();          ///Actual power usage (W)
-  Energy = Sensor->energy() / 1000; ///total power consumption (kWh)
-  Frequency = Sensor->frequency();  ///total power consumption (kWh)
-  PowerFactor = Sensor->pf();       ///total power consumption (kWh)
+  Energy = Sensor->energy(); ///Total power consumption (kWh)
+  Frequency = Sensor->frequency();  ///Frequency (hz)
+  PowerFactor = Sensor->pf();       ///Power factor
 }
 
 void PowerSensorV3::report()
