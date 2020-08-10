@@ -1,28 +1,56 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///Columns section
 
-function UpdateColumns(Log) { ///< Add newly discovered keys to Columns tab and update FriendlyName column
-  LogToConsole("Updating Columns in Settings sheet...", true, 0);
+function Test_UpdateColumns() {
+  UpdateColumns(getTestJSONData().Log);
+}
+
+function UpdateColumns(Log){
+  FindNewColumns(Log);
+  UpdateFriendlyName();
+}
+
+function UpdateFriendlyName(){
+  var columns = GetNamedRangeValues("Columns",true);
+  for (var i = 0; i < columns.length; i++) {
+    key = columns[i][columns_keyColumn];
+    friendlyName = GetFriendlyValue(key,null);
+    if(friendlyName != null && friendlyName != ""){
+      columns[i][columns_friendlyNameColumn] = columns[i][columns_nameColumn] + " (" + friendlyName + ")";
+    }
+    else{
+      columns[i][columns_friendlyNameColumn] = columns[i][columns_nameColumn];
+    }
+    if (Debug) LogToConsole(key + " column matched friendly name: " + columns[i][columns_friendlyNameColumn], true, 3) ;
+  }
+  SaveNamedRange("Columns",columns);
+}
+
+function FindNewColumns(Log) { ///< Add newly discovered keys to Columns tab and update FriendlyName column
+  LogToConsole("Updating Columns sheet...", true, 0);
   var newColumnDiscovered = false;
-  var columns = GetNamedRangeValues("Columns");
+  var columns = GetNamedRangeValues("Columns",true);
   //Adding all columns from the received Log JSON
   var Components = Object.getOwnPropertyNames(Log);
-  for (var i = 0; i < Components.length; i++) {
-    var Properties = Object.getOwnPropertyNames(Log[Components[i]]);
-    for (var j = 0; j < Properties.length; j++) {
-      var key = Components[i] + '_' + Properties[j];
-      var match = columns.filter(function (row) {
-        return row[columns_keyColumn] == key;
-      });
-      if (Debug) LogToConsole(key + " column matched settings row: [" + match + "]", true, 3) ;
-      if (match == null || match.length == 0) { //If settings row does not exists
-        newColumnDiscovered = true;  
-        addColumnsRow(key);
-      }
+    for (var i = 0; i < Components.length; i++) {
+      if (Debug) LogToConsole("Updating " + Components[i], true, 3);
+      var Properties = Object.getOwnPropertyNames(Log[Components[i]]);
+      for (var j = 0; j < Properties.length; j++) {
+        var key = Components[i] + '_' + Properties[j];
+        var match = columns.filter(function (row) {
+          return row[columns_keyColumn] == key;
+        });
+        
+        if (Debug) LogToConsole(key + " column matched settings row: [" + match + "]", true, 4) ;
+        if (match == null || match.length == 0) { //If settings row does not exists
+          newColumnDiscovered = true;  
+          addColumnsRow(key);
+        }
     }
   }
   if(newColumnDiscovered) GetNamedRangeValues("Columns",true); //Force a cache refresh if a new column was added
   //SpreadsheetApp.getActive().getSheetByName("Settings").autoResizeColumns(1, SpreadsheetApp.getActive().getSheetByName("Settings").getLastColumn()); //resize columns to fit the data 
+
 }
 
 function test_addColumnsRow(){

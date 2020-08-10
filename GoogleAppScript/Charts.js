@@ -36,7 +36,7 @@ function UpdateChartsTab() {
     for(var j = 0; j < columnsToInclude.length; j++)
     {   
       chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn],GetSettingsValue("Chart point limit"))); 
-      seriesType[j] = { type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_nameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
+      seriesType[j] = { type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_friendlyNameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
     }
     if(Debug)LogToConsole(seriesType,true,3);
         
@@ -69,7 +69,7 @@ function UpdateOverviewChart() {
     for(var j = 0; j < columnsToInclude.length; j++)
     {   
       chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn],GetSettingsValue("Chart point limit"))); 
-      seriesType[j] = { type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_nameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
+      seriesType[j] = { type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_friendlyNameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
     }
     if(Debug)LogToConsole(seriesType,true,3);
   
@@ -86,27 +86,28 @@ function UpdateOverviewChart() {
 
 function ApplyStandardFormatting(chartBuilder,seriesType){
   chartBuilder
-    .setNumHeaders(1)
-    .setOption('width', 800)
-    .setOption('height', 600)  
-    //.setOption('vAxis.ticks', [0,1])
-    .setOption('selectionMode', 'multiple')
-    .setOption('tooltip', { trigger: 'selection' })
-    .setOption('aggregationTarget', 'series')
-    .setOption('focusTarget','category')
-    .setOption('hAxis', { viewWindowMode: 'pretty' })
-    .setOption('vAxis', { viewWindowMode: 'pretty' })
-    .setOption('legend', {position: 'top', textStyle: {fontSize: 14}})    
-    //.setOption('explorer', { keepInBounds: true,maxZoomOut: 20.0,maxZoomIn: 8.0})    
-    //.setOption('hAxis', {title: "DateTime"})
-    //.setOption('vAxes', {0: {title: "Left side - vertical axis 0"},1: {title: "Right side - vetical axis 1"}})    
-   // .setOption("useFirstColumnAsDomain", true) //ColAasLabels
-    //.setOption("applyAggregateData",0) //AggregateColA
-   // .setOption('series', {
-   //   0: { type: 'line', color: 'orange', targetAxisIndex: 0,hasAnnotations: true,dataLabel: 'value',dataLabelPlacement: 'outsideEnd',dataLabel: "value" },
+  .setNumHeaders(1)
+  .setOption('width', 800)
+  .setOption('height', 600)  
+  //.setOption('vAxis.ticks', [0,1])
+  .setOption('selectionMode', 'multiple')
+  .setOption('tooltip', { trigger: 'selection' })
+  .setOption('aggregationTarget', 'series')
+  .setOption('focusTarget','category')
+  .setOption('hAxis', { viewWindowMode: 'pretty' })
+  .setOption('vAxis', { viewWindowMode: 'pretty' })
+  //.setOption('vAxis', {maxValue:2000, viewWindow: {max: 2000}} )
+  .setOption('legend', {position: 'top', textStyle: {fontSize: 14}})    
+  //.setOption('explorer', { keepInBounds: true,maxZoomOut: 20.0,maxZoomIn: 8.0})    
+  //.setOption('hAxis', {title: "DateTime"})
+  //.setOption('vAxes', {0: {title: "Left side - vertical axis 0"},1: {title: "Right side - vetical axis 1"}})    
+  // .setOption("useFirstColumnAsDomain", true) //ColAasLabels
+  //.setOption("applyAggregateData",0) //AggregateColA
+  // .setOption('series', {
+  //   0: { type: 'line', color: 'orange', targetAxisIndex: 0,hasAnnotations: true,dataLabel: 'value',dataLabelPlacement: 'outsideEnd',dataLabel: "value" },
   //    1: { type: 'line', color: 'green', targetAxisIndex: 1,hasAnnotations: true,dataLabel: 'value',dataLabelPlacement: 'outsideEnd',dataLabel: "value" }
-   // })
-    .setOption('hAxis', { slantedText: true, 'slantedTextAngle': 30 });  
+  // })
+  .setOption('hAxis', { slantedText: true, 'slantedTextAngle': 30 });  
 }
 
 function GetChartType(name)  ///< Translates the chart type text to an actual chart type

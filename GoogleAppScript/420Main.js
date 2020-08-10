@@ -10,6 +10,7 @@ You will also need the latest version of NPM,https://phoenixnap.com/kb/update-no
 */
 
 //Relative position of Columns within named ranges - Change these only when rearranging the columns
+//TODO: This should be fully automatic
 var status_keyColumn = 0;  //Relative position within the Status named range
 var status_valueColumn = 1;
 
@@ -27,7 +28,8 @@ var columns_chartColumn = 6;
 var columns_overviewColumn = 7;
 var columns_seriesColumn = 8;
 var columns_nameColumn = 9;
-var columns_targetAxisColumn = 10;
+var columns_friendlyNameColumn = 10;
+var columns_targetAxisColumn = 11;
 
 var settings_keyColumn = 0;  //Relative position within the Settings named range
 var settings_valueColumn = 1;
