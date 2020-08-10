@@ -18,6 +18,8 @@
 #include "src/Modules/HempyModule.h"
 #include "src/WirelessCommands_Hempy.h"   ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
 
+///Global constants
+const uint8_t PayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
 
 ///Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
@@ -25,6 +27,8 @@ char ShortMessage[MaxShotTextLength] = ""; ///temp storage for assembling short 
 char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
 struct hempyCommand Command;  //Variable where the wireless command values will get stored
 struct hempyResponse Response;  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter
+void* ReceivedMessage = NULL; ///< Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type 
+
 
 ///Component initialization
 HardwareSerial &ArduinoSerial = Serial;   ///Reference to the Arduino Serial
@@ -66,7 +70,7 @@ void setup()
   Wireless.setDataRate( RF24_250KBPS );  ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
   Wireless.setCRCLength(RF24_CRC_8);  /// RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
   Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_MAX=-6dBM, and RF24_PA_MAX=0dBm.
-  Wireless.setPayloadSize(32);  ///The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
+  Wireless.setPayloadSize(PayloadSize);  ///Set the number of bytes in the payload
   Wireless.enableAckPayload();
   Wireless.openReadingPipe(1, WirelessChannel);  
   Wireless.writeAckPayload(1, &Response, sizeof(Response));
@@ -136,16 +140,17 @@ void HeartBeat()
 
 void getWirelessData() {
     if ( Wireless.available() ) { 
-        Wireless.read( &Command, sizeof(Command) );
+        
+        Wireless.read( &ReceivedMessage, PayloadSize );
         logToSerials(F("Wireless Command received ["),false,0);
-        ArduinoSerial.print(sizeof(Command)); /// \todo print this with logToSerials: Need support for unsigned long        
+        logToSerials(PayloadSize,false, 0); /// \todo print this with logToSerials: Need support for unsigned long        
         logToSerials(F("bytes], Response sent"),true,1); 
         
         if(timeStatus() != timeSet)  
         {
           updateTime(); ///Updating internal timer
         }
-        HempyMod1 -> processCommand(&Command); 
+        HempyMod1 -> processCommand(ReceivedMessage); 
     }
 }
 
@@ -169,5 +174,3 @@ time_t updateTime()
   }
   return Command.Time;
 }
-
-

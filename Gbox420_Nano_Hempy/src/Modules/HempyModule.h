@@ -37,7 +37,7 @@ public:
   void refresh_FiveSec();
   //void refresh_Minute();
   //void refresh_QuarterHour(); 
-  void processCommand(hempyCommand *Command);
+  void processCommand(void *Command);
   void updateResponse();
 
 private:

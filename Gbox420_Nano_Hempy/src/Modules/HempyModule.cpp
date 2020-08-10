@@ -46,7 +46,12 @@ void HempyModule::updateResponse(){
   Wireless.writeAckPayload(1, &Response, sizeof(Response)); ///< load the payload to send the next time
 }
 
-void HempyModule::processCommand(hempyCommand *Command){
+void HempyModule::processCommand(void *CommandVoid){
+
+hempyCommand2* CommonCommand = (struct hempyCommand2*) CommandVoid;
+logToSerials(CommonCommand -> CommandID,true,0);
+
+ hempyCommand* Command = (struct hempyCommand*) CommandVoid;
   setDebug(Command -> Debug);
   setMetric(Command -> Metric);
   if(Command -> DisablePump_B1) Pump1 -> disablePump();
