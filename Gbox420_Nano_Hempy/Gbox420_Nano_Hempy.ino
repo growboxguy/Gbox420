@@ -143,14 +143,14 @@ void getWirelessData() {
         
         Wireless.read( &ReceivedMessage, PayloadSize );
         logToSerials(F("Wireless Command received ["),false,0);
-        logToSerials(PayloadSize,false, 0); /// \todo print this with logToSerials: Need support for unsigned long        
+        logToSerials(PayloadSize,false, 0);     
         logToSerials(F("bytes], Response sent"),true,1); 
         
         if(timeStatus() != timeSet)  
         {
           updateTime(); ///Updating internal timer
         }
-        HempyMod1 -> processCommand(ReceivedMessage); 
+        HempyMod1 -> processCommand(&ReceivedMessage); 
     }
 }
 

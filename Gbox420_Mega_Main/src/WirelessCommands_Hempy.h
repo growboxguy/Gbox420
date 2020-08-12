@@ -6,15 +6,19 @@
 const uint8_t NumberOfCommands = 1;  //How many 32byte Command packages are there to exchange
 const uint8_t NumberOfResponses = 2; //How many 32byte Responses packages are there to exchange
 
-///Structs for wireless communication
 
 struct commonAttributes  ///< Shared between Command and Respone packages
 {
-   uint8_t CommandID = 0;  ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 CommandID represent the initial attempt to exchange data, followup packages with increasing CommandID are exchanged if numberOfCommands or numberOfRespone is more than one.
+   uint8_t SequenceID;  ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data, followup packages with increasing SequenceID are exchanged up to the defined numberOfCommands or numberOfRespone global variables.
 };
 
 struct hempyCommand : commonAttributes  ///Max 32 bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
 {   
+
+///Structs for wireless communication
+hempyCommand() : commonAttributes(){}
+
+   SequenceID = 0;   //This is the initial package that triggers a data exchange process between modules
    time_t Time;
    bool Debug = false;
    bool Metric = true;
@@ -36,8 +40,9 @@ struct hempyCommand : commonAttributes  ///Max 32 bytes. Template of the command
    float StopWeightBucket_B2 = 0.0; 
 };
 
-struct hempyCommand2 : commonAttributes  ///Max 32 bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
+struct hempyCommand_Part2 : commonAttributes  ///Max 32 bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
 {   
+   SequenceID = 1;
    time_t Time;
    bool Debug = false;
    bool Metric = true; 
