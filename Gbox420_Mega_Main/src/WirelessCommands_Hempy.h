@@ -60,4 +60,3 @@ struct hempyCommand_Part2 : commonAttributes  ///Max 32 bytes. Template of the c
    bool Metric = true; 
    int Test = 420;
 };
-

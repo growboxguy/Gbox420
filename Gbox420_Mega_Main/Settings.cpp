@@ -38,6 +38,6 @@ void restoreDefaults(Settings *ToOverwrite)
   logToSerials(F("Forcing settings update at next restart..."), false, 0);
   ToOverwrite -> CompatibilityVersion = ToOverwrite -> CompatibilityVersion - 1;  
   saveSettings(ToOverwrite);
-  logToSerials(F("done. Reseting sketch..."), true, 1);
-  __asm__ __volatile__ ("jmp 0x0000");  
+  logToSerials(F("done. Reseting the sketch..."), true, 1);
+  __asm__ __volatile__ ("jmp 0x0000");
 }
