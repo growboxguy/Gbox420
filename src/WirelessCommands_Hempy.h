@@ -16,21 +16,11 @@ struct commonAttributes  ///< Shared between Command and Respone packages
    }
 };
 
-struct hempyResponse : commonAttributes  ///Max 32 bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
-{
-   hempyResponse() : commonAttributes(1){} 
-   PumpState PumpState_B1 = DISABLED;
-   float Weight_B1 = 0.0;
-
-   PumpState PumpState_B2 = DISABLED;
-   float Weight_B2 = 0.0;
-};
-
 struct hempyCommand : commonAttributes  ///Max 32 bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
 {   
 
 ///Structs for wireless communication
-   hempyCommand() : commonAttributes(2){}
+   hempyCommand() : commonAttributes(0){}
    time_t Time;
    bool Debug = false;
    bool Metric = true;
@@ -52,9 +42,19 @@ struct hempyCommand : commonAttributes  ///Max 32 bytes. Template of the command
    float StopWeightBucket_B2 = 0.0; 
 };
 
+struct hempyResponse : commonAttributes  ///Max 32 bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
+{
+   hempyResponse() : commonAttributes(1){} 
+   PumpState PumpState_B1 = DISABLED;
+   float Weight_B1 = 0.0;
+
+   PumpState PumpState_B2 = DISABLED;
+   float Weight_B2 = 0.0;
+};
+
 struct hempyCommand_Part2 : commonAttributes  ///Max 32 bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
 {  
-   hempyCommand_Part2() : commonAttributes(1){} 
+   hempyCommand_Part2() : commonAttributes(2){} 
    time_t Time;
    bool Debug = false;
    bool Metric = true; 
