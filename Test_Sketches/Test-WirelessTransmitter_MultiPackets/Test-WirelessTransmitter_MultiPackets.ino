@@ -6,6 +6,9 @@
 #include <nRF24L01.h>
 #include <RF24.h>
 #include "TimeLib.h"     ///keeping track of time
+#include "WirelessCommands_Test.h"
+
+const uint8_t PayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
 
 ///< Ports for Arduino Nano or RF-Nano
 const byte CE_PIN = 10;
@@ -17,6 +20,15 @@ const byte CSN_PIN = 49;
 const byte CE_PIN = 53;
 */
 
+///Global constants
+const uint8_t NumberOfCommands = 2;  //How many 32byte Command packages are there to exchange
+const uint8_t NumberOfResponses = 1; //How many 32byte Responses packages are there to exchange
+
+void * ReceivedResponse = malloc(PayloadSize);
+
+struct Command1 CommandToSend1 = {1587936134,0,0,0,120,3.8,4.8};  //Fake commands sent to the Receiver
+struct Command2 CommandToSend2 = {0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
+
 const uint8_t WirelessChannel[6] ={"Test1"}; //Identifies the communication channel, needs to match on the Receiver
 RF24 Wireless(CE_PIN, CSN_PIN);
 
@@ -26,41 +38,6 @@ const unsigned long MessageInterval = 15000; // send a control message once per 
 const uint8_t RetryDelay = 5; //How long to wait between each retry, in multiples of 250us, max is 15. 0 means 250us, 15 means 4000us.
 const uint8_t RetryCount = 5; //How many retries before giving up, max 15
 
-struct commandTemplate  //Max 32bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
-{
-   time_t Time;
-   
-   bool DisablePump1_B1;   
-   bool TurnOnPump_B1;   
-   bool TurnOffPump_B1;   
-   int TimeOutPump_B1;   
-   float StartWeightBucket_B1;
-   float StopWeightBucket_B1;
-   
-   bool DisablePump_B2;
-   bool TurnOnPump_B2;
-   bool TurnOffPump_B2;
-   int TimeOutPump_B2;
-   float StartWeightBucket_B2;
-   float StopWeightBucket_B2;
-};
-struct commandTemplate Command = {1587936134,0,0,0,120,3.8,4.8,0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
-
-struct responseTemplate  //Max 32bytes. Template of the response sent back by the Receiver. Both Transmitter and Receiver needs to know this structure
-{
-   bool PumpOn_B1; 
-   bool PumpEnabled_B1;
-   float Weight_B1;
-
-   bool PumpOn_B2;
-   bool PumpEnabled_B2; 
-   float Weight_B2;
-   
-   float Temp;
-   float Humidity;
-};
-struct responseTemplate ReceivedResponse; //The response from the Receiver will be stored here, represents the current status of the Receiver
-
 void setup() {
     Serial.begin(115200);
     Serial.println(F("Setting up the wireless transmitter..."));
@@ -69,35 +46,41 @@ void setup() {
     Wireless.enableAckPayload();  ///< Enable custom payloads on the acknowledge packets. Ack payloads are a handy way to return data back to senders without manually changing the radio modes on both units.
     Wireless.setRetries(RetryDelay,RetryCount); 
     Wireless.openWritingPipe(WirelessChannel); 
-    sendCommand();   
+    updateCommand();
+    sendCommand(&CommandToSend1);
+    sendCommand(&CommandToSend2); 
 }
 
 void loop() {
     if (millis() - LastMessageSent >= MessageInterval) //Check if it is time to send a command
     {
-      sendCommand();
+      sendCommand(&CommandToSend1);
+      sendCommand(&CommandToSend2);
     }
 }
 
 void updateCommand() {        // so you can see that new data is being sent
-    //Command.TurnOnPump_B1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exlusive!
+    //Command.TurnOnPump_B1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exclusive!
     //Command.TurnOnPump_B2 = random(0,2);
-    Command.StopWeightBucket_B1 = random(400, 500) / 100.0;
-    Command.StopWeightBucket_B2 = random(400, 500) / 100.0;
+    CommandToSend1.StopWeightBucket_B1 = random(400, 500) / 100.0;
+    CommandToSend2.StopWeightBucket_B2 = random(400, 500) / 100.0;
 }
 
-void sendCommand(){
+void sendCommand(void* CommandToSend){
   Serial.println(F("Sending command and waiting for Acknowledgment..."));
-  bool Result = Wireless.write( &Command, sizeof(Command) );
+  bool Result = Wireless.write( CommandToSend, PayloadSize );
 
   Serial.print(F("  Data Sent, "));
   if (Result) {
       if ( Wireless.isAckPayloadAvailable() ) {
-          Wireless.read(&ReceivedResponse, sizeof(ReceivedResponse));
+          Wireless.read(ReceivedResponse, PayloadSize);
           Serial.print(F("acknowledgement received ["));            
           Serial.print(sizeof(ReceivedResponse));
           Serial.println(F(" bytes]"));
-          Serial.print(F("   Bucket1: "));
+          Serial.print(F("   SequenceID: "));
+          Serial.print(((commonTemplate*)ReceivedResponse) -> SequenceID);
+          /*
+
           Serial.print(ReceivedResponse.PumpOn_B1);
           Serial.print(F(", "));
           Serial.print(ReceivedResponse.PumpEnabled_B1);
@@ -113,8 +96,8 @@ void sendCommand(){
           Serial.print(ReceivedResponse.Temp);
           Serial.print(F(", "));
           Serial.print(ReceivedResponse.Humidity);
-          Serial.println();
-          
+          */
+          Serial.println();          
           updateCommand();
       }
       else {

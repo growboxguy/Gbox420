@@ -49,10 +49,10 @@ void HempyModule::updateResponse(){
 void HempyModule::processCommand(void *Command){
 
 hempyCommand_Part2* CommonCommand = (struct hempyCommand_Part2*) Command;
-logToSerials(CommonCommand -> CommandID,true,0);
+logToSerials(CommonCommand -> SequenceID,true,0);
 
  hempyCommand* Command = (struct hempyCommand*) Command;
-  setDebug(Command -> Debug);
+  setDebug((*Command) -> Debug);
   setMetric(Command -> Metric);
   if(Command -> DisablePump_B1) Pump1 -> disablePump();
   if(Command -> TurnOnPump_B1) Pump1 -> startPump(true);
