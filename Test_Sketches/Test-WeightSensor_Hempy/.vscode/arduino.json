@@ -1,7 +1,0 @@
-{
-    "port": "/dev/ttyUSB1",
-    "board": "arduino:avr:nano",
-    "configuration": "cpu=atmega328",
-    "programmer": "AVRISP mkII",
-    "sketch": "Test-WeightSensor_Hempy.ino"
-}

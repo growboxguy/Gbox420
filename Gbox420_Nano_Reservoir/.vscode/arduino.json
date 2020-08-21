@@ -1,8 +1,0 @@
-{
-    "port": "/dev/ttyUSB1",
-    "board": "arduino:avr:nano",
-    "configuration": "cpu=atmega328",
-    "sketch": "Gbox420_Nano_Reservoir.ino",
-    "output": "../../Gbox420Compile",
-    "programmer": "AVRISP mkII"
-}

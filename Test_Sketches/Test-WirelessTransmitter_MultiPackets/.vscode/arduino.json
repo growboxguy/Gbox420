@@ -1,7 +1,0 @@
-{
-    "port": "/dev/ttyUSB0",
-    "board": "arduino:avr:nano",
-    "configuration": "cpu=atmega328",
-    "programmer": "AVRISP mkII",
-    "sketch": "Test-WirelessTransmitter_MultiPackets.ino"
-}
