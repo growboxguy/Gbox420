@@ -9,6 +9,7 @@
 #include "WirelessCommands_Test.h"
 
 const uint8_t PayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+const bool Debug = true;
 
 ///< Ports for Arduino Nano or RF-Nano
 const byte CE_PIN = 10;
@@ -23,9 +24,9 @@ const byte CE_PIN = 53;
 ///< Variables used during wireless communication
 void * ReceivedResponse = malloc(PayloadSize);  ///< Pointer to the data sent back in the acknowledgement.
 
-struct DefaultCommand DefaultCommandToSend = {HempyMessage::DefaultCommand,1587399600,1,1};  //Fake commands sent to the Receiver
-struct BucketCommand Bucket1CommandToSend = {HempyMessage::Bucket1Command,0,0,0,120,3.8,4.8};  //Fake commands sent to the Receiver
-struct BucketCommand Bucket2CommandToSend = {HempyMessage::Bucket2Command,0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
+struct ModuleCommand Module1CommandToSend = {HempyMessage::Module1Command,1587399600,1,1};  //Fake commands sent to the Receiver
+struct BucketCommand Bucket1CommandToSend = {HempyMessage::Bucket1Command,1,0,0,420,3.8,4.8};  //Fake commands sent to the Receiver
+struct BucketCommand Bucket2CommandToSend = {HempyMessage::Bucket2Command,0,0,0,420,3.9,4.9};  //Fake commands sent to the Receiver
 
 const uint8_t WirelessChannel[6] ={"Test1"}; //Identifies the communication channel, needs to match on the Receiver
 RF24 Wireless(CE_PIN, CSN_PIN);
@@ -38,6 +39,7 @@ const uint8_t RetryCount = 5; //How many retries before giving up, max 15
 
 void setup() {
     Serial.begin(115200);
+    Serial.println();
     Serial.println(F("Setting up the wireless transmitter..."));
     Wireless.begin();
     Wireless.setDataRate( RF24_250KBPS );
@@ -45,7 +47,7 @@ void setup() {
     Wireless.setRetries(RetryDelay,RetryCount); 
     Wireless.openWritingPipe(WirelessChannel); 
     updateCommand();
-    sendCommand(&DefaultCommandToSend);
+    sendCommand(&Module1CommandToSend);
     sendCommand(&Bucket1CommandToSend);
     sendCommand(&Bucket2CommandToSend);
 }
@@ -53,10 +55,11 @@ void setup() {
 void loop() {
     if (millis() - LastMessageSent >= MessageInterval) //Check if it is time to send a command
     {
-      sendCommand(&DefaultCommandToSend);
+      sendCommand(&Module1CommandToSend);
       sendCommand(&Bucket1CommandToSend);
       sendCommand(&Bucket2CommandToSend);
     }
+    //TODO: NumberOfResponses
 }
 
 void updateCommand() {        // so you can see that new data is being sent
@@ -72,33 +75,50 @@ void sendCommand(void* CommandToSend){
 
   Serial.print(F("  Data Sent, "));
   if (Result) {
-      if ( Wireless.isAckPayloadAvailable() ) {
-          Wireless.read(ReceivedResponse, PayloadSize);
-          Serial.print(F("acknowledgement received ["));            
-          Serial.print(sizeof(ReceivedResponse));
-          Serial.println(F(" bytes]"));
-          Serial.print(F("   SequenceID: "));
-          Serial.print(((commonTemplate*)ReceivedResponse) -> SequenceID);
-          /*
+    if ( Wireless.isAckPayloadAvailable() ) {
+        Wireless.read(ReceivedResponse, PayloadSize);
+        if(Debug)
+        {
+            Serial.print(F("Response received, SequenceID: "));
+            Serial.print(((commonTemplate*)ReceivedResponse) -> SequenceID);
+            Serial.println();
+        }         
 
-          Serial.print(ReceivedResponse.PumpOn_B1);
-          Serial.print(F(", "));
-          Serial.print(ReceivedResponse.PumpEnabled_B1);
-          Serial.print(F(", "));
-          Serial.println(ReceivedResponse.Weight_B1);
-          Serial.print(F("   Bucket2: "));
-          Serial.print(ReceivedResponse.PumpOn_B2);
-          Serial.print(F(", "));
-          Serial.print(ReceivedResponse.PumpEnabled_B2);
-          Serial.print(F(", "));
-          Serial.println(ReceivedResponse.Weight_B2);
-          Serial.print(F("   DHT: "));
-          Serial.print(ReceivedResponse.Temp);
-          Serial.print(F(", "));
-          Serial.print(ReceivedResponse.Humidity);
-          */
-          Serial.println();          
-          updateCommand();
+    switch (((commonTemplate*)ReceivedResponse) -> SequenceID)
+        {
+        case HempyMessage::Module1Response :
+            Serial.print(F("  ModuleOK: "));
+            Serial.print(((ModuleResponse*)ReceivedResponse) -> Status);
+           break;
+        case HempyMessage::Bucket1Response :
+            Serial.print(F("  Bucket1: "));
+            Serial.print(((BucketResponse*)ReceivedResponse) -> PumpOn);
+            Serial.print(F(", "));
+            Serial.print(((BucketResponse*)ReceivedResponse) -> PumpEnabled);
+            Serial.print(F(", "));
+            Serial.print(((BucketResponse*)ReceivedResponse) -> Weight);
+            break;
+        case HempyMessage::Bucket2Response :
+            Serial.print(F("  Bucket2: "));
+            Serial.print(((BucketResponse*)ReceivedResponse) -> PumpOn);
+            Serial.print(F(", "));
+            Serial.print(((BucketResponse*)ReceivedResponse) -> PumpEnabled);
+            Serial.print(F(", "));
+            Serial.print(((BucketResponse*)ReceivedResponse) -> Weight);
+            break;
+        case HempyMessage::DHT1Response :
+            Serial.print(F("  DHT: "));
+            Serial.print(((DHTResponse*)ReceivedResponse) -> Temp);
+            Serial.print(F(", "));
+            Serial.println(((DHTResponse*)ReceivedResponse) -> Humidity);
+            break;
+        Module:
+            Serial.println(F("  SequenceID not known, ignoring package"));
+            break;
+        }
+        updateCommand();
+        Serial.println();          
+          
       }
       else {
           Serial.println(F("acknowledgement received without any data."));

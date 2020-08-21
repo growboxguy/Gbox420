@@ -4,10 +4,9 @@
 ///Structs for wireless communication
 
 ///Global constants
-const uint8_t NumberOfHempyMessage = 2;  //How many packages are there to exchange (max 32byte / package) 
-const uint8_t NumberOfResponses = 1; //How many 32byte Responses packages are there to exchange
+const uint8_t NumberOfResponses = 3; //How many 32byte Responses packages are there to exchange
 
-enum HempyMessage { DefaultCommand,DefaultResponse,Bucket1Command,Bucket2Command,Bucket1Response,Bucket2Response,DHTResponse};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+enum HempyMessage { Module1Command,Module1Response,Bucket1Command,Bucket2Command,Bucket1Response,Bucket2Response,DHT1Response};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 struct commonTemplate  ///< Shared between Command and Respone packages
 {
@@ -21,10 +20,10 @@ struct commonTemplate  ///< Shared between Command and Respone packages
 ///< Both the Transmitter and the Receiver needs to know these structures
 
 ///< Commands are sent by the Main module
-struct DefaultCommand : commonTemplate  //Max 32bytes. Default command sent by the Main module
+struct ModuleCommand : commonTemplate  //Max 32bytes. Module command sent by the Main module
 {
-    DefaultCommand(HempyMessage SequenceID) : commonTemplate(SequenceID){}
-    DefaultCommand(HempyMessage SequenceID,time_t Time, bool Debug, bool Metric) : commonTemplate(SequenceID){}
+    ModuleCommand(HempyMessage SequenceID) : commonTemplate(SequenceID){}
+    ModuleCommand(HempyMessage SequenceID,time_t Time, bool Debug, bool Metric) : commonTemplate(SequenceID){}
     time_t Time = 0; 
     bool Debug = true;
     bool Metric = true;
@@ -44,10 +43,10 @@ struct BucketCommand : commonTemplate  //Max 32bytes. Command to control one hem
 
 ///< Responses are sent by all other modules, except Main  
 
-struct DefaultResponse  : commonTemplate  //Max 32bytes. Default response sent back to the Main module
+struct ModuleResponse  : commonTemplate  //Max 32bytes. Module response sent back to the Main module
 {
-   DefaultResponse(HempyMessage SequenceID) : commonTemplate(SequenceID){}
-   DefaultResponse(HempyMessage SequenceID, bool Status) : commonTemplate(SequenceID){}
+   ModuleResponse(HempyMessage SequenceID) : commonTemplate(SequenceID){}
+   ModuleResponse(HempyMessage SequenceID, bool Status) : commonTemplate(SequenceID){}
    bool Status = true;   
 };
 
