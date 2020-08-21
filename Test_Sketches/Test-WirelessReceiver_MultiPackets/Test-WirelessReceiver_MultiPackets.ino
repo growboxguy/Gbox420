@@ -39,6 +39,7 @@ const unsigned long Timeout = 1000; //Default 1sec -  One package should be exch
 void setup() {
     Serial.begin(115200);
     Serial.println();
+    Serial.println();
     Serial.println(F("Setting up the wireless receiver..."));
     Wireless.begin();
     Wireless.setDataRate( RF24_250KBPS );
@@ -52,15 +53,17 @@ void setup() {
 void loop() {
     if ( Wireless.available() ) {  //When a command is received
         Wireless.read( ReceivedCommand, PayloadSize );    //Load the command to the ReceivedCommand variable
+        uint8_t ReceivedSequenceID = ((commonTemplate*)ReceivedCommand) -> SequenceID;
         LastMessageSent = millis();  ///< Store current time
         if(Debug)
         {
-            Serial.print(F("Command received, SequenceID: "));
-            Serial.print(((commonTemplate*)ReceivedCommand) -> SequenceID);
-            Serial.println();
+            Serial.print(F("Command received with SequenceID: "));
+            Serial.print(ReceivedSequenceID);
+            Serial.print(F(", Acknowledgement sent with SequenceID: "));
+            Serial.println(NextSequenceID);
         }
 
-        switch (((commonTemplate*)ReceivedCommand) -> SequenceID)
+        switch (ReceivedSequenceID)
         {
         case HempyMessage::Module1Command :
             Serial.print(F("  Module: "));
@@ -103,19 +106,25 @@ void loop() {
             break;
         case HempyMessage::GetNext :     //< Used to get all Responses that do not have a corresponding Command    
             NextSequenceID += 1; // get the next Response Message that will be copied to the buffer  
-            if(NextSequenceID >= HempyMessage::GetNext){
-                NextSequenceID = HempyMessage::Module1Response;
+            if(NextSequenceID >= HempyMessage::GetNext){  //< If the end of HempyMessage enum is reached
+                NextSequenceID = HempyMessage::Module1Response; //< Load the first response for the next message exchange
+                if(Debug){
+                    Serial.println(F("  Last message exchanged"));
+                }
             }            
             break;
         default:
-            Serial.println(F("  SequenceID not known, returning to first response"));
+            Serial.println(F("  SequenceID not known, ignoring message"));
             //NextSequenceID = HempyMessage::Module1Response; // update the next Message that will be copied to the buffer           
             break;
         }
         updateReplyData();
-        Serial.println(); 
     }
-    //if(NextSequenceID != HempyMessage)
+    if(NextSequenceID != HempyMessage::Module1Response && millis()- LastMessageSent >= Timeout){  //< If there is a package exchange in progress
+        NextSequenceID = HempyMessage::Module1Response;  //< Reset back to the first response
+        Serial.println(F("Timeout during message exchange, reseting to first response"));   
+        updateReplyData();  
+    }
 }
 
 void updateReplyData() { // so you can see that new data is being sent
@@ -124,9 +133,10 @@ void updateReplyData() { // so you can see that new data is being sent
     Bucket2ResponseToSend.Weight = random(400, 500) / 100.0;
     DHT1ResponseToSend.Humidity = random(0, 10000) / 100.0;  
 
-    Serial.print(F("Buffering responeID: "));
+    Serial.print(F("  Updating Acknowledgement message to responseID: "));
     Serial.println(NextSequenceID);
-
+    Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
+    
     switch (NextSequenceID)
     {        
     case HempyMessage::Module1Response :

@@ -41,6 +41,7 @@ const uint8_t RetryCount = 15; //How many retries before giving up, max 15
 void setup() {
     Serial.begin(115200);
     Serial.println();
+    Serial.println();
     Serial.println(F("Setting up the wireless transmitter..."));
     Wireless.begin();
     Wireless.setDataRate( RF24_250KBPS );
@@ -96,7 +97,7 @@ void sendCommand(void* CommandToSend){
             {
                 case HempyMessage::Module1Response :
                     Serial.print(F("  ModuleOK: "));
-                    Serial.print(((ModuleResponse*)ReceivedResponse) -> Status);
+                    Serial.println(((ModuleResponse*)ReceivedResponse) -> Status);
                 break;
                 case HempyMessage::Bucket1Response :
                     Serial.print(F("  Bucket1: "));
@@ -104,7 +105,7 @@ void sendCommand(void* CommandToSend){
                     Serial.print(F(", "));
                     Serial.print(((BucketResponse*)ReceivedResponse) -> PumpEnabled);
                     Serial.print(F(", "));
-                    Serial.print(((BucketResponse*)ReceivedResponse) -> Weight);
+                    Serial.println(((BucketResponse*)ReceivedResponse) -> Weight);
                     break;
                 case HempyMessage::Bucket2Response :
                     Serial.print(F("  Bucket2: "));
@@ -112,7 +113,7 @@ void sendCommand(void* CommandToSend){
                     Serial.print(F(", "));
                     Serial.print(((BucketResponse*)ReceivedResponse) -> PumpEnabled);
                     Serial.print(F(", "));
-                    Serial.print(((BucketResponse*)ReceivedResponse) -> Weight);
+                    Serial.println(((BucketResponse*)ReceivedResponse) -> Weight);
                     break;
                 case HempyMessage::DHT1Response :
                     Serial.print(F("  DHT: "));
@@ -125,7 +126,6 @@ void sendCommand(void* CommandToSend){
                     break;
             }
             updateCommand();
-            Serial.println();
         }
         else {
             Serial.println(F("acknowledgement received without any data."));
