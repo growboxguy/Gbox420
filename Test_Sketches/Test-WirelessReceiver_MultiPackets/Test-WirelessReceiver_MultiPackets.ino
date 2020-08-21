@@ -31,8 +31,6 @@ const byte WirelessChannel[6] ={"Test1"};  //Identifies the communication channe
 RF24 radio(CE_PIN, CSN_PIN);
 
 ///< Stucts of data to exchange
-
-
 struct Command1 ReceivedCommand1;  //Variable where the command values received from the Transmitter will get stored
 struct Command2 ReceivedCommand2;  //Variable where the command values received from the Transmitter will get stored
 struct Response1 ResponseToSend = {1,1,4.20,0,0,1.23,23.4,50.1};  //Fake response sent back in the Acknowledgement after receiving a command

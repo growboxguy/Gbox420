@@ -20,14 +20,12 @@ const byte CSN_PIN = 49;
 const byte CE_PIN = 53;
 */
 
-///Global constants
-const uint8_t NumberOfCommands = 2;  //How many 32byte Command packages are there to exchange
-const uint8_t NumberOfResponses = 1; //How many 32byte Responses packages are there to exchange
+///< Variables used during wireless communication
+void * ReceivedResponse = malloc(PayloadSize);  ///< Pointer to the data sent back in the acknowledgement.
 
-void * ReceivedResponse = malloc(PayloadSize);
-
-struct Command1 CommandToSend1 = {1587936134,0,0,0,120,3.8,4.8};  //Fake commands sent to the Receiver
-struct Command2 CommandToSend2 = {0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
+struct DefaultCommand DefaultCommandToSend = {HempyMessage::DefaultCommand,1587399600,1,1};  //Fake commands sent to the Receiver
+struct BucketCommand Bucket1CommandToSend = {HempyMessage::Bucket1Command,0,0,0,120,3.8,4.8};  //Fake commands sent to the Receiver
+struct BucketCommand Bucket2CommandToSend = {HempyMessage::Bucket2Command,0,0,0,120,3.9,4.9};  //Fake commands sent to the Receiver
 
 const uint8_t WirelessChannel[6] ={"Test1"}; //Identifies the communication channel, needs to match on the Receiver
 RF24 Wireless(CE_PIN, CSN_PIN);
@@ -47,23 +45,25 @@ void setup() {
     Wireless.setRetries(RetryDelay,RetryCount); 
     Wireless.openWritingPipe(WirelessChannel); 
     updateCommand();
-    sendCommand(&CommandToSend1);
-    sendCommand(&CommandToSend2); 
+    sendCommand(&DefaultCommandToSend);
+    sendCommand(&Bucket1CommandToSend);
+    sendCommand(&Bucket2CommandToSend);
 }
 
 void loop() {
     if (millis() - LastMessageSent >= MessageInterval) //Check if it is time to send a command
     {
-      sendCommand(&CommandToSend1);
-      sendCommand(&CommandToSend2);
+      sendCommand(&DefaultCommandToSend);
+      sendCommand(&Bucket1CommandToSend);
+      sendCommand(&Bucket2CommandToSend);
     }
 }
 
 void updateCommand() {        // so you can see that new data is being sent
     //Command.TurnOnPump_B1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exclusive!
     //Command.TurnOnPump_B2 = random(0,2);
-    CommandToSend1.StopWeightBucket_B1 = random(400, 500) / 100.0;
-    CommandToSend2.StopWeightBucket_B2 = random(400, 500) / 100.0;
+    Bucket1CommandToSend.StartWeight = random(400, 500) / 100.0;
+    Bucket2CommandToSend.StopWeight = random(400, 500) / 100.0;
 }
 
 void sendCommand(void* CommandToSend){

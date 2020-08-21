@@ -10,7 +10,7 @@
 #include "printf.h"
 #include "Thread.h"                 ///Splitting functions to threads for timing
 #include "StaticThreadController.h" ///Grouping threads           
-#include "SPI.h" ///allows you to communicate with SPI devices, with the Arduino as the master device
+#include "SPI.h" ///communicate with SPI devices, with the Arduino as the master device
 #include "nRF24L01.h"   ///https://forum.arduino.cc/index.php?topic=421081
 #include "RF24.h"       ///https://github.com/maniacbug/RF24
 #include "SerialLog.h"  ///Logging debug messages to Serial            
