@@ -62,7 +62,7 @@ void loop() {
 void updateCommand() {        // so you can see that new data is being sent
     //Command.TurnOnPump_B1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exclusive!
     //Command.TurnOnPump_B2 = random(0,2);
-    Bucket1CommandToSend.StartWeight = random(400, 500) / 100.0;
+    Bucket1CommandToSend.StopWeight = random(400, 500) / 100.0;
     Bucket2CommandToSend.StopWeight = random(400, 500) / 100.0;
 }
 
