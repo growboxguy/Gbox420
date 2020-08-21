@@ -27,6 +27,7 @@ void * ReceivedResponse = malloc(PayloadSize);  ///< Pointer to the data sent ba
 struct ModuleCommand Module1CommandToSend = {HempyMessage::Module1Command,1587399600,1,1};  //Fake commands sent to the Receiver
 struct BucketCommand Bucket1CommandToSend = {HempyMessage::Bucket1Command,1,0,0,420,3.8,4.8};  //Fake commands sent to the Receiver
 struct BucketCommand Bucket2CommandToSend = {HempyMessage::Bucket2Command,0,0,0,420,3.9,4.9};  //Fake commands sent to the Receiver
+struct commonTemplate GetNextToSend = {HempyMessage::GetNext};  //< Special command to fetch the next Response from the Receiver
 
 const uint8_t WirelessChannel[6] ={"Test1"}; //Identifies the communication channel, needs to match on the Receiver
 RF24 Wireless(CE_PIN, CSN_PIN);
@@ -34,8 +35,8 @@ RF24 Wireless(CE_PIN, CSN_PIN);
 //Variables and constants for timing Control messages 
 unsigned long LastMessageSent = 0;  //When was the last message sent
 const unsigned long MessageInterval = 15000; // send a control message once per 15 seconds
-const uint8_t RetryDelay = 5; //How long to wait between each retry, in multiples of 250us, max is 15. 0 means 250us, 15 means 4000us.
-const uint8_t RetryCount = 5; //How many retries before giving up, max 15
+const uint8_t RetryDelay = 15; //How long to wait between each retry, in multiples of 250us, max is 15. 0 means 250us, 15 means 4000us.
+const uint8_t RetryCount = 15; //How many retries before giving up, max 15
 
 void setup() {
     Serial.begin(115200);
@@ -50,6 +51,7 @@ void setup() {
     sendCommand(&Module1CommandToSend);
     sendCommand(&Bucket1CommandToSend);
     sendCommand(&Bucket2CommandToSend);
+    sendCommand(&GetNextToSend);    
 }
 
 void loop() {
@@ -58,6 +60,7 @@ void loop() {
       sendCommand(&Module1CommandToSend);
       sendCommand(&Bucket1CommandToSend);
       sendCommand(&Bucket2CommandToSend);
+      sendCommand(&GetNextToSend);
     }
     //TODO: NumberOfResponses
 }
@@ -70,62 +73,66 @@ void updateCommand() {        // so you can see that new data is being sent
 }
 
 void sendCommand(void* CommandToSend){
-  Serial.println(F("Sending command and waiting for Acknowledgment..."));
-  bool Result = Wireless.write( CommandToSend, PayloadSize );
+    if(Debug)
+    {
+    Serial.print(F("Sending command SequenceID: '"));
+    Serial.print(((commonTemplate*)CommandToSend) -> SequenceID);
+    Serial.println(F("' and waiting for Acknowledgment..."));
+    }
+    bool Result = Wireless.write( CommandToSend, PayloadSize );
 
-  Serial.print(F("  Data Sent, "));
-  if (Result) {
-    if ( Wireless.isAckPayloadAvailable() ) {
-        Wireless.read(ReceivedResponse, PayloadSize);
-        if(Debug)
-        {
-            Serial.print(F("Response received, SequenceID: "));
-            Serial.print(((commonTemplate*)ReceivedResponse) -> SequenceID);
+    Serial.print(F("  Data Sent, "));
+    if (Result) {
+        if ( Wireless.isAckPayloadAvailable() ) {
+            Wireless.read(ReceivedResponse, PayloadSize);
+            if(Debug)
+            {
+                Serial.print(F("Response received, SequenceID: "));
+                Serial.print(((commonTemplate*)ReceivedResponse) -> SequenceID);
+                Serial.println();
+            }         
+
+            switch (((commonTemplate*)ReceivedResponse) -> SequenceID)
+            {
+                case HempyMessage::Module1Response :
+                    Serial.print(F("  ModuleOK: "));
+                    Serial.print(((ModuleResponse*)ReceivedResponse) -> Status);
+                break;
+                case HempyMessage::Bucket1Response :
+                    Serial.print(F("  Bucket1: "));
+                    Serial.print(((BucketResponse*)ReceivedResponse) -> PumpOn);
+                    Serial.print(F(", "));
+                    Serial.print(((BucketResponse*)ReceivedResponse) -> PumpEnabled);
+                    Serial.print(F(", "));
+                    Serial.print(((BucketResponse*)ReceivedResponse) -> Weight);
+                    break;
+                case HempyMessage::Bucket2Response :
+                    Serial.print(F("  Bucket2: "));
+                    Serial.print(((BucketResponse*)ReceivedResponse) -> PumpOn);
+                    Serial.print(F(", "));
+                    Serial.print(((BucketResponse*)ReceivedResponse) -> PumpEnabled);
+                    Serial.print(F(", "));
+                    Serial.print(((BucketResponse*)ReceivedResponse) -> Weight);
+                    break;
+                case HempyMessage::DHT1Response :
+                    Serial.print(F("  DHT: "));
+                    Serial.print(((DHTResponse*)ReceivedResponse) -> Temp);
+                    Serial.print(F(", "));
+                    Serial.println(((DHTResponse*)ReceivedResponse) -> Humidity);
+                    break;
+                default:
+                    Serial.println(F("  SequenceID not known, ignoring package"));
+                    break;
+            }
+            updateCommand();
             Serial.println();
-        }         
-
-    switch (((commonTemplate*)ReceivedResponse) -> SequenceID)
-        {
-        case HempyMessage::Module1Response :
-            Serial.print(F("  ModuleOK: "));
-            Serial.print(((ModuleResponse*)ReceivedResponse) -> Status);
-           break;
-        case HempyMessage::Bucket1Response :
-            Serial.print(F("  Bucket1: "));
-            Serial.print(((BucketResponse*)ReceivedResponse) -> PumpOn);
-            Serial.print(F(", "));
-            Serial.print(((BucketResponse*)ReceivedResponse) -> PumpEnabled);
-            Serial.print(F(", "));
-            Serial.print(((BucketResponse*)ReceivedResponse) -> Weight);
-            break;
-        case HempyMessage::Bucket2Response :
-            Serial.print(F("  Bucket2: "));
-            Serial.print(((BucketResponse*)ReceivedResponse) -> PumpOn);
-            Serial.print(F(", "));
-            Serial.print(((BucketResponse*)ReceivedResponse) -> PumpEnabled);
-            Serial.print(F(", "));
-            Serial.print(((BucketResponse*)ReceivedResponse) -> Weight);
-            break;
-        case HempyMessage::DHT1Response :
-            Serial.print(F("  DHT: "));
-            Serial.print(((DHTResponse*)ReceivedResponse) -> Temp);
-            Serial.print(F(", "));
-            Serial.println(((DHTResponse*)ReceivedResponse) -> Humidity);
-            break;
-        Module:
-            Serial.println(F("  SequenceID not known, ignoring package"));
-            break;
         }
-        updateCommand();
-        Serial.println();          
-          
-      }
-      else {
-          Serial.println(F("acknowledgement received without any data."));
-      }        
+        else {
+            Serial.println(F("acknowledgement received without any data."));
+        }        
   }
   else {
-      Serial.println(F("no response."));
+    Serial.println(F("no response."));
   }
   LastMessageSent = millis();
 }

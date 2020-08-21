@@ -22,7 +22,7 @@ const byte CE_PIN = 53;
 */
 
 void * ReceivedCommand = malloc(PayloadSize);
-HempyMessage NextSequenceID = HempyMessage::Module1Response;
+uint8_t NextSequenceID = HempyMessage::Module1Response;
 
 ///< Variables used during wireless communication
 struct ModuleResponse Module1ResponseToSend = {HempyMessage::Module1Response,1};  //Fake response sent to the Transmitter
@@ -31,24 +31,28 @@ struct BucketResponse Bucket2ResponseToSend = {HempyMessage::Bucket2Response,1,1
 struct DHTResponse DHT1ResponseToSend = {HempyMessage::DHT1Response,23.4,42.0};
 
 const uint8_t WirelessChannel[6] ={"Test1"};  //Identifies the communication channel, needs to match on the Transmitter
-RF24 radio(CE_PIN, CSN_PIN);
+RF24 Wireless(CE_PIN, CSN_PIN);
+
+unsigned long LastMessageSent = 0;  //When was the last message sent
+const unsigned long Timeout = 1000; //Default 1sec -  One package should be exchanged within this timeout
 
 void setup() {
     Serial.begin(115200);
     Serial.println();
     Serial.println(F("Setting up the wireless receiver..."));
-    radio.begin();
-    radio.setDataRate( RF24_250KBPS );
-    radio.openReadingPipe(1, WirelessChannel);
-    radio.enableAckPayload();
+    Wireless.begin();
+    Wireless.setDataRate( RF24_250KBPS );
+    Wireless.openReadingPipe(1, WirelessChannel);
+    Wireless.enableAckPayload();
     updateReplyData();
-    radio.startListening();    
+    Wireless.startListening();    
     Serial.println(F("Listening..."));
 }
 
 void loop() {
-    if ( radio.available() ) {  //When a command is received
-        radio.read( ReceivedCommand, PayloadSize );    //Load the command to the ReceivedCommand variable
+    if ( Wireless.available() ) {  //When a command is received
+        Wireless.read( ReceivedCommand, PayloadSize );    //Load the command to the ReceivedCommand variable
+        LastMessageSent = millis();  ///< Store current time
         if(Debug)
         {
             Serial.print(F("Command received, SequenceID: "));
@@ -64,7 +68,7 @@ void loop() {
             Serial.print(F(", "));
             Serial.print(((ModuleCommand*)ReceivedCommand) -> Debug);
             Serial.print(F(", "));
-            Serial.print(((ModuleCommand*)ReceivedCommand) -> Metric);
+            Serial.println(((ModuleCommand*)ReceivedCommand) -> Metric);
             NextSequenceID = HempyMessage::Bucket1Response;  // update the next Message that will be copied to the buffer     
             break;
         case HempyMessage::Bucket1Command :
@@ -79,7 +83,7 @@ void loop() {
             Serial.print(F(", "));
             Serial.print(((BucketCommand*)ReceivedCommand) -> StartWeight);
             Serial.print(F(", "));
-            Serial.print(((BucketCommand*)ReceivedCommand) -> StopWeight);
+            Serial.println(((BucketCommand*)ReceivedCommand) -> StopWeight);
             NextSequenceID = HempyMessage::Bucket2Response;  // update the next Message that will be copied to the buffer
             break;
         case HempyMessage::Bucket2Command :
@@ -97,14 +101,21 @@ void loop() {
             Serial.println(((BucketCommand*)ReceivedCommand) -> StopWeight);
             NextSequenceID = HempyMessage::DHT1Response; // update the next Message that will be copied to the buffer           
             break;
+        case HempyMessage::GetNext :     //< Used to get all Responses that do not have a corresponding Command    
+            NextSequenceID += 1; // get the next Response Message that will be copied to the buffer  
+            if(NextSequenceID >= HempyMessage::GetNext){
+                NextSequenceID = HempyMessage::Module1Response;
+            }            
+            break;
         default:
             Serial.println(F("  SequenceID not known, returning to first response"));
-            NextSequenceID = HempyMessage::Module1Response; // update the next Message that will be copied to the buffer           
+            //NextSequenceID = HempyMessage::Module1Response; // update the next Message that will be copied to the buffer           
             break;
         }
         updateReplyData();
         Serial.println(); 
     }
+    //if(NextSequenceID != HempyMessage)
 }
 
 void updateReplyData() { // so you can see that new data is being sent
@@ -119,19 +130,19 @@ void updateReplyData() { // so you can see that new data is being sent
     switch (NextSequenceID)
     {        
     case HempyMessage::Module1Response :
-        radio.writeAckPayload(1, &Module1ResponseToSend, PayloadSize); // load the next response into the buffer 
+        Wireless.writeAckPayload(1, &Module1ResponseToSend, PayloadSize); // load the next response into the buffer 
         break;
     case HempyMessage::Bucket1Response :
-        radio.writeAckPayload(1, &Bucket1ResponseToSend, PayloadSize); // load the next response into the buffer
+        Wireless.writeAckPayload(1, &Bucket1ResponseToSend, PayloadSize); // load the next response into the buffer
         break;   
     case HempyMessage::Bucket2Response :
-        radio.writeAckPayload(1, &Bucket2ResponseToSend, PayloadSize); // load the next response into the buffer
+        Wireless.writeAckPayload(1, &Bucket2ResponseToSend, PayloadSize); // load the next response into the buffer
         break;
     case HempyMessage::DHT1Response :
-        radio.writeAckPayload(1, &DHT1ResponseToSend, PayloadSize); // load the next response into the buffer 
+        Wireless.writeAckPayload(1, &DHT1ResponseToSend, PayloadSize); // load the next response into the buffer 
         break;  
     default:
-        radio.writeAckPayload(1, &Module1ResponseToSend, PayloadSize); // load the next response into the buffer 
+        Wireless.writeAckPayload(1, &Module1ResponseToSend, PayloadSize); // load the next response into the buffer 
         break;
     }
 }

@@ -4,10 +4,8 @@
 ///Structs for wireless communication
 
 ///Global constants
-const uint8_t NumberOfResponses = 3; //How many 32byte Responses packages are there to exchange
-
-enum HempyMessage { Module1Command,Module1Response,Bucket1Command,Bucket2Command,Bucket1Response,Bucket2Response,DHT1Response};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
-
+enum HempyMessage { Module1Command,Module1Response,Bucket1Command,Bucket1Response,Bucket2Command,Bucket2Response,DHT1Response,GetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+                                                                                                                                         ///< GetNext should always be the last element
 struct commonTemplate  ///< Shared between Command and Respone packages
 {
    uint8_t SequenceID;  ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
