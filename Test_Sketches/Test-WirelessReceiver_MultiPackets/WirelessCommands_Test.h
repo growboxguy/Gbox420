@@ -25,21 +25,21 @@ struct DefaultCommand : commonTemplate  //Max 32bytes. Default command sent by t
 {
     DefaultCommand(HempyMessage SequenceID) : commonTemplate(SequenceID){}
     DefaultCommand(HempyMessage SequenceID,time_t Time, bool Debug, bool Metric) : commonTemplate(SequenceID){}
-    time_t Time; 
-    bool Debug;
-    bool Metric;
+    time_t Time = 0; 
+    bool Debug = true;
+    bool Metric = true;
 };
 
 struct BucketCommand : commonTemplate  //Max 32bytes. Command to control one hempy bucket
 {
     BucketCommand(HempyMessage SequenceID) : commonTemplate(SequenceID){}
     BucketCommand(HempyMessage SequenceID, bool DisablePump, bool TurnOnPump, bool TurnOffPump, int TimeOutPump, float StartWeight, float StopWeight) : commonTemplate(SequenceID){}   
-    bool DisablePump;
-    bool TurnOnPump;
-    bool TurnOffPump;
-    int TimeOutPump;
-    float StartWeight;
-    float StopWeight;
+    bool DisablePump = false;
+    bool TurnOnPump = false;
+    bool TurnOffPump = false;
+    int TimeOutPump = 0;
+    float StartWeight = 0.0;
+    float StopWeight = 0.0;
 };
 
 ///< Responses are sent by all other modules, except Main  
@@ -48,22 +48,22 @@ struct DefaultResponse  : commonTemplate  //Max 32bytes. Default response sent b
 {
    DefaultResponse(HempyMessage SequenceID) : commonTemplate(SequenceID){}
    DefaultResponse(HempyMessage SequenceID, bool Status) : commonTemplate(SequenceID){}
-   bool Status;   
+   bool Status = true;   
 };
 
 struct BucketResponse  : commonTemplate  //Max 32bytes. Response from one hempy bucket
 {
    BucketResponse(HempyMessage SequenceID) : commonTemplate(SequenceID){}
    BucketResponse(HempyMessage SequenceID, bool PumpOn, bool PumpEnabled, float Weight) : commonTemplate(SequenceID){}
-   bool PumpOn; 
-   bool PumpEnabled;
-   float Weight;
+   bool PumpOn = false; 
+   bool PumpEnabled = false;
+   float Weight = 0.0;
 };
 
 struct DHTResponse  : commonTemplate  //Max 32bytes. Response from a DHT sensor
 {
    DHTResponse(HempyMessage SequenceID) : commonTemplate(SequenceID){}
    DHTResponse(HempyMessage SequenceID, float Temp, float Humidity) : commonTemplate(SequenceID){}
-   float Temp;
-   float Humidity;
+   float Temp = 0.0;
+   float Humidity = 0.0;
 };

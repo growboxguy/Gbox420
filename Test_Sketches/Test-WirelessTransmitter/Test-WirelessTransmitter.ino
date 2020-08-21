@@ -7,9 +7,15 @@
 #include <RF24.h>
 #include "TimeLib.h"     ///keeping track of time
 
+//Ports for Arduino Nano or RF-Nano
+const byte CE_PIN = 10;
+const byte CSN_PIN = 9;
+
+/*
 //Ports for Arduino Mega
 const byte CSN_PIN = 49;
 const byte CE_PIN = 53;
+*/
 
 const uint8_t WirelessChannel[6] ={"Test1"}; //Identifies the communication channel, needs to match on the Receiver
 RF24 Wireless(CE_PIN, CSN_PIN);

@@ -29,7 +29,7 @@ struct BucketResponse Bucket1ResponseToSend = {HempyMessage::Bucket1Response,0,0
 struct BucketResponse Bucket2ResponseToSend = {HempyMessage::Bucket2Response,1,1,4.20};  //Fake response sent to the Transmitter
 struct DHTResponse DHTResponseToSend = {HempyMessage::DHTResponse,23.4,42.0};
 
-const byte WirelessChannel[6] ={"Test1"};  //Identifies the communication channel, needs to match on the Transmitter
+const uint8_t WirelessChannel[6] ={"Test1"};  //Identifies the communication channel, needs to match on the Transmitter
 RF24 radio(CE_PIN, CSN_PIN);
 
 void setup() {
@@ -97,8 +97,8 @@ void loop() {
 }
 
 void updateReplyData() { // so you can see that new data is being sent
+    radio.writeAckPayload(1, &DefaultResponseToSend, PayloadSize); // load the payload to get sent out when the next control message is received
     Bucket1ResponseToSend.Weight = random(400, 500) / 100.0;
     Bucket2ResponseToSend.Weight = random(400, 500) / 100.0;
     DHTResponseToSend.Humidity = random(0, 10000) / 100.0;    
-    radio.writeAckPayload(1, &DefaultResponseToSend, PayloadSize); // load the payload to get sent out when the next control message is received
 }
