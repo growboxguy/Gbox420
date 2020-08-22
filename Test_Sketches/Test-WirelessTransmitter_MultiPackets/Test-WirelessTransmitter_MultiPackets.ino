@@ -131,6 +131,9 @@ HempyMessage sendCommand(void* CommandToSend){
                     Serial.print(F(", "));
                     Serial.println(((DHTResponse*)ReceivedResponse) -> Humidity);
                     break;
+                case HempyMessage::GetNext :
+                    Serial.println(F("  Last message received"));
+                    break;
                 default:
                     Serial.println(F("  SequenceID not known, ignoring package"));
                     break;

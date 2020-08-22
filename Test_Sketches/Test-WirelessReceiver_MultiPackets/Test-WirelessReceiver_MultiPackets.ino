@@ -28,12 +28,13 @@ uint8_t NextSequenceID = HempyMessage::Module1Response;
 struct ModuleResponse Module1ResponseToSend = {HempyMessage::Module1Response,1};  //Fake response sent to the Transmitter
 struct BucketResponse Bucket1ResponseToSend = {HempyMessage::Bucket1Response,0,0,4.20};  //Fake response sent to the Transmitter
 struct BucketResponse Bucket2ResponseToSend = {HempyMessage::Bucket2Response,1,1,4.20};  //Fake response sent to the Transmitter
-struct DHTResponse DHT1ResponseToSend = {HempyMessage::DHT1Response,23.4,42.0};
-struct commonTemplate LastMessage = {HempyMessage::GetNext};
+struct DHTResponse DHT1ResponseToSend = {HempyMessage::DHT1Response,23.4,42.0}; //Fake response sent to the Transmitter
+struct commonTemplate LastMessage = {HempyMessage::GetNext};  //< Special response signaling the end of a message exchange to the Transmitter
 
 const uint8_t WirelessChannel[6] ={"Test1"};  //Identifies the communication channel, needs to match on the Transmitter
 RF24 Wireless(CE_PIN, CSN_PIN);
 
+unsigned long LastFakeMessageUpdate = 0;  //When was the last time the example data was refreshed
 unsigned long LastMessageSent = 0;  //When was the last message sent
 const unsigned long Timeout = 1000; //Default 1sec -  One package should be exchanged within this timeout
 
@@ -52,7 +53,11 @@ void setup() {
 }
 
 void loop() {
-    //< Periodically refresh the content
+    //< Periodically refresh the content (5sec default)
+    if(millis() -  LastFakeMessageUpdate > 5000){
+        updateFakeData();
+        LastFakeMessageUpdate = millis();
+    }
 
     //< Checking arrived wireless Commands
     if ( Wireless.available() ) {  //When a command is received
@@ -132,7 +137,7 @@ void loop() {
     }
 }
 
-void updateFakeData() { // so you can see that new data is being sent
+void updateFakeData() { // - Simulates sensor readings changin 
     Bucket1ResponseToSend.Weight = random(400, 500) / 100.0;
     Bucket2ResponseToSend.Weight = random(400, 500) / 100.0;
     DHT1ResponseToSend.Humidity = random(0, 10000) / 100.0;  
@@ -158,19 +163,12 @@ void updateAckData() { // so you can see that new data is being sent
     case HempyMessage::DHT1Response :
         Wireless.writeAckPayload(1, &DHT1ResponseToSend, PayloadSize); // load the next response into the buffer 
         break;
-    case HempyMessage::Fake1Response :
-        Wireless.writeAckPayload(1, &DHT1ResponseToSend, PayloadSize); // load the next response into the buffer 
-        break;  
-    case HempyMessage::Fake2Response :
-        Wireless.writeAckPayload(1, &DHT1ResponseToSend, PayloadSize); // load the next response into the buffer 
-        break;  
     case HempyMessage::GetNext :  //< Signals the end of messages to send back
         Wireless.writeAckPayload(1, &LastMessage, PayloadSize); // load the next response into the buffer 
         break;
     default:
         Serial.print(F("Unknown next Sequence number, Ack defaults loaded"));
         Wireless.writeAckPayload(1, &Module1ResponseToSend, PayloadSize); // load the next response into the buffer 
-        break;
-    
+        break;    
     }
 }

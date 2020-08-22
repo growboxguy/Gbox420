@@ -4,7 +4,7 @@
 ///Structs for wireless communication
 
 ///Global constants
-enum HempyMessage { Module1Command,Module1Response,Bucket1Command,Bucket1Response,Bucket2Command,Bucket2Response,DHT1Response,Fake1Response,Fake2Response,GetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+enum HempyMessage { Module1Command,Module1Response,Bucket1Command,Bucket1Response,Bucket2Command,Bucket2Response,DHT1Response,GetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 //enum MessageType { Command, Response };
 
 const __FlashStringHelper* sequenceIDToText(enum HempyMessage SequenceID) 
