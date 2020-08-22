@@ -44,9 +44,9 @@ void setup() {
     Wireless.begin();
     Wireless.setDataRate( RF24_250KBPS );
     Wireless.openReadingPipe(1, WirelessChannel);
-    Wireless.enableAckPayload();
-    updateReplyData();
-    Wireless.startListening();    
+    Wireless.enableAckPayload();    
+    Wireless.startListening(); 
+    updateReplyData();   
     Serial.println(F("Listening..."));
 }
 
@@ -136,7 +136,7 @@ void updateReplyData() { // so you can see that new data is being sent
     Serial.print(F("  Updating Acknowledgement message to responseID: "));
     Serial.println(NextSequenceID);
     Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
-    
+
     switch (NextSequenceID)
     {        
     case HempyMessage::Module1Response :

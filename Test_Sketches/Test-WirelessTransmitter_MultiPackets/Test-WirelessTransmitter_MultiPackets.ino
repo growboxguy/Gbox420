@@ -35,7 +35,7 @@ RF24 Wireless(CE_PIN, CSN_PIN);
 //Variables and constants for timing Control messages 
 unsigned long LastMessageSent = 0;  //When was the last message sent
 const unsigned long MessageInterval = 15000; // send a control message once per 15 seconds
-const uint8_t RetryDelay = 15; //How long to wait between each retry, in multiples of 250us, max is 15. 0 means 250us, 15 means 4000us.
+const uint8_t RetryDelay = 10; //How long to wait between each retry, in multiples of 250us, max is 15. 0 means 250us, 15 means 4000us.
 const uint8_t RetryCount = 15; //How many retries before giving up, max 15
 
 void setup() {
@@ -52,7 +52,7 @@ void setup() {
     sendCommand(&Module1CommandToSend);
     sendCommand(&Bucket1CommandToSend);
     sendCommand(&Bucket2CommandToSend);
-    sendCommand(&GetNextToSend);    
+    sendCommand(&GetNextToSend);  
 }
 
 void loop() {
@@ -76,15 +76,16 @@ void updateCommand() {        // so you can see that new data is being sent
 void sendCommand(void* CommandToSend){
     if(Debug)
     {
-    Serial.print(F("Sending command SequenceID: '"));
-    Serial.print(((commonTemplate*)CommandToSend) -> SequenceID);
-    Serial.println(F("' and waiting for Acknowledgment..."));
+        Serial.print(F("Sending command SequenceID: '"));
+        Serial.print(((commonTemplate*)CommandToSend) -> SequenceID);
+        Serial.println(F("' and waiting for Acknowledgment..."));
     }
+    Wireless.flush_rx();  ///< Dump all previously received but unprocessed messages
     bool Result = Wireless.write( CommandToSend, PayloadSize );
-
+    delay(10); //< give a little time to the nRF024L01+ chip to update the isAckPayloadAvailable flag
     Serial.print(F("  Data Sent, "));
     if (Result) {
-        if ( Wireless.isAckPayloadAvailable() ) {
+        if ( Wireless.isAckPayloadAvailable()) {
             Wireless.read(ReceivedResponse, PayloadSize);
             if(Debug)
             {

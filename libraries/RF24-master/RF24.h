@@ -79,16 +79,17 @@ private:
 
     uint16_t ce_pin; /**< "Chip Enable" pin, activates the RX or TX role */
     uint16_t csn_pin; /**< SPI Chip select */
-    uint16_t spi_speed; /**< SPI Bus Speed */
+    uint32_t spi_speed; /**< SPI Bus Speed */
     #if defined (RF24_LINUX) || defined (XMEGA_D3)
     uint8_t spi_rxbuff[32+1] ; //SPI receive buffer (payload max 32 bytes)
     uint8_t spi_txbuff[32+1] ; //SPI transmit buffer (payload max 32 bytes + 1 byte for the command)
     #endif
-    bool p_variant; /* False for RF24L01 and true for RF24L01P */
     uint8_t payload_size; /**< Fixed size of payloads */
     bool dynamic_payloads_enabled; /**< Whether dynamic payloads are enabled. */
+    bool ack_payloads_enabled; /**< Whether ack payloads are enabled. */
     uint8_t pipe0_reading_address[5]; /**< Last address set on pipe 0 for reading. */
     uint8_t addr_width; /**< The address width to use - 3,4 or 5 bytes. */
+    uint8_t config_reg; /**< For storing the value of the NRF_CONFIG register */
 
 
 protected:
@@ -112,30 +113,23 @@ public:
     /**@{*/
 
     /**
-     * Arduino Constructor
+     * RF24 Constructor
      *
      * Creates a new instance of this driver.  Before using, you create an instance
      * and send in the unique pins that this chip is connected to.
      *
+     * See http://tmrh20.github.io/RF24/pages.html for device specific information <br>
+     *
+     * @note Users can specify default SPI speed by modifying #define RF24_SPI_SPEED in RF24_config.h <br>
+     * For Arduino, SPI speed will only be properly configured this way on devices supporting SPI TRANSACTIONS <br>
+     * Older/Unsupported Arduino devices will use a default clock divider & settings configuration <br>
+     * Linux: The old way of setting SPI speeds using BCM2835 driver enums has been removed <br>
+     *
      * @param _cepin The pin attached to Chip Enable on the RF module
      * @param _cspin The pin attached to Chip Select
+     * @param spispeed The SPI speed in Hz ie: 1000000 == 1Mhz
      */
-    RF24(uint16_t _cepin, uint16_t _cspin);
-    //#if defined (RF24_LINUX)
-
-    /**
-  * Optional Linux Constructor
-  *
-  * Creates a new instance of this driver.  Before using, you create an instance
-  * and send in the unique pins that this chip is connected to.
-  *
-  * @param _cepin The pin attached to Chip Enable on the RF module
-  * @param _cspin The pin attached to Chip Select
-  * @param spispeed For RPi, the SPI speed in MHZ ie: BCM2835_SPI_SPEED_8MHZ
-  */
-
-    RF24(uint16_t _cepin, uint16_t _cspin, uint32_t spispeed);
-    //#endif
+    RF24(uint16_t _cepin, uint16_t _cspin, uint32_t _spispeed = RF24_SPI_SPEED);
 
     #if defined (RF24_LINUX)
     virtual ~RF24() {};
@@ -289,9 +283,9 @@ public:
      *   openReadingPipe(2,addresses[1]);
      * @endcode
      *
-     * @warning Pipe 0 is also used by the writing pipe.  So if you open
-     * pipe 0 for reading, and then startListening(), it will overwrite the
-     * writing pipe.  Ergo, do an openWritingPipe() again before write().
+     * @warning Pipe 0 is also used by the writing pipe so should typically be avoided as a reading pipe.<br>
+     * If used, the reading pipe 0 address needs to be restored at avery call to startListening(), and the address<br>
+     * is ONLY restored if the LSB is a non-zero value.<br> See http://maniacalbits.blogspot.com/2013/04/rf24-addressing-nrf24l01-radios-require.html
      *
      * @param number Which pipe# to open, 0-5.
      * @param address The 24, 32 or 40 bit address of the pipe to open.
@@ -870,13 +864,15 @@ public:
      * RF24_PA_MIN, RF24_PA_LOW, RF24_PA_HIGH and RF24_PA_MAX
      *
      * The power levels correspond to the following output levels respectively:
-     * NRF24L01: -18dBm, -12dBm,-6dBM, and 0dBm
+     * NRF24L01: -18dBm, -12dBm,-6dBM, and 0dBm, lnaEnable affects modules with LNA
      *
-     * SI24R1: -6dBm, 0dBm, 3dBM, and 7dBm.
+     * SI24R1: -6dBm, 0dBm, 3dBm and 7dBm with lnaEnable = 1 
+     *        -12dBm,-4dBm, 1dBm and 4dBm with lnaEnable = 0
      *
      * @param level Desired PA level.
+     * @param lnaEnable En/Disable LNA Gain
      */
-    void setPALevel(uint8_t level);
+    void setPALevel(uint8_t level, bool lnaEnable = 1);
 
     /**
      * Fetches the current PA level.
@@ -980,6 +976,19 @@ public:
 
     uint32_t csDelay;
 
+    /**
+     * Transmission of constant carrier wave with defined frequency and output power
+     * 
+     * @param level Output power to use
+     * @param channel The channel to use
+     */    
+    void startConstCarrier(rf24_pa_dbm_e level, uint8_t channel);
+
+    /**
+     * Stop transmission of constant wave and reset PLL and CONT registers  
+     */
+    void stopConstCarrier(void);
+
     /**@}*/
     /**
      * @name Deprecated
@@ -1000,9 +1009,9 @@ public:
      *   openReadingPipe(2,0xF0F0F0F066);
      * @endcode
      *
-     * @warning Pipe 0 is also used by the writing pipe.  So if you open
-     * pipe 0 for reading, and then startListening(), it will overwrite the
-     * writing pipe.  Ergo, do an openWritingPipe() again before write().
+     * @warning Pipe 0 is also used by the writing pipe so should typically be avoided as a reading pipe.<br>
+     * If used, the reading pipe 0 address needs to be restored at avery call to startListening(), and the address<br>
+     * is ONLY restored if the LSB is a non-zero value.<br> See http://maniacalbits.blogspot.com/2013/04/rf24-addressing-nrf24l01-radios-require.html
      *
      * @param number Which pipe# to open, 0-5.
      * @param address The 40-bit address of the pipe to open.
@@ -1404,23 +1413,39 @@ private:
  *
  * @section News News
  *
- * **Feb 2020**<br>
- * - MegaAVR fixes
- * - Raspberry Pi 4 & 1 fixes
- * - Added function to get ARC
- * - Made RF24 return an exception when not ran as privileged user
- * - Other small improvements
+ * **Aug 2020** <br>
+ * v1.3.8
+ * - Introduces change that mainly reduces the time required to call startListening(), powerUp(), and powerDown()
+ * - Affects speed of switching from TX->RX. Users might consider starting updates of slower devices with this<br>
+ *   release to prevent missed packets when similar changes are introduced, affecting switching from RX->TX
+ * - Clean up begin() function (reduce program size)
+ *
+ * v1.3.7
+ * - Bug fix for startWrite() function affecting RF24 stack (all RF24 libraries)
+ * - Unify Arduino & Linux constructor. Accept SPI speed in Hz as optional parameter
+ * - Removal of BCM2835 SPI speed constants due to removal from BCM library
+ * - Update to latest BCM2835 driver
+ * - Bug fix for RPi millis() code
+ * - Added Constant Carrier Wave functionality & added to scanner example
+ * - Modify setPALevel() to allow setting LNA gain via optional parameter
+ * - Cleanup of warnings, errors and old files
+ *
+ * **March-July 2020**
+ * - Fixes for SPI_HAS_TRANSACTION detection (Affecting many devices)
+ * - Add ability to configure SPI speed properly in Linux constructor
+ * - Support multiple instances of SPIDEV on Linux
+ * - Minor fixes & changes
+ *
  *
  * 
  * @section Useful Useful References
  *
  *
- * @li <a href="http://tmrh20.github.io/RF24/classRF24.html"><b>RF24</b> Class Documentation</a>
- * @li <a href="https://github.com/TMRh20/RF24/archive/master.zip"><b>Download</b></a>
+ * @li <a href="http://tmrh20.github.io/RF24/classRF24.html"><b>RF24 Class Documentation</b></a>
+ * @li <a href="http://tmrh20.github.io/RF24/pages.html"><b>Support & Configuration</b></a>
  * @li <a href="https://github.com/tmrh20/RF24/"><b>Source Code</b></a>
- * @li <a href="http://tmrh20.blogspot.com/2014/03/high-speed-data-transfers-and-wireless.html"><b>My Blog:</b> RF24 Optimization Overview</a> 
- * @li <a href="http://tmrh20.blogspot.com/2016/08/raspberry-pilinux-with-nrf24l01.html"><b>My Blog:</b> RPi/Linux w/RF24Gateway</a> 
- * @li <a href="http://www.nordicsemi.com/files/Product/data_sheet/nRF24L01_Product_Specification_v2_0.pdf">Chip Datasheet</a>
+ * @li <a href="tmrh20/nRF24L01_datasheet_v2.pdf">nrf24L01 v2.0 Datasheet</a>
+ * @li <a href="tmrh20/nRF24L01P_datasheet_v1.pdf">nrf24L01+ v1.0 Datasheet</a>
  *
  * **Additional Information and Add-ons**
  *
@@ -1428,19 +1453,17 @@ private:
  * @li <a href="http://tmrh20.github.io/RF24Mesh"> <b>RF24Mesh:</b> Dynamic Mesh Layer for RF24Network</a>
  * @li <a href="http://tmrh20.github.io/RF24Ethernet"> <b>RF24Ethernet:</b> TCP/IP Radio Mesh Networking (shares Arduino Ethernet API)</a>
  * @li <a href="http://tmrh20.github.io/RF24Audio"> <b>RF24Audio:</b> Realtime Wireless Audio streaming</a>
+ * @li <a href="http://tmrh20.blogspot.com/2014/03/high-speed-data-transfers-and-wireless.html"><b>My Blog:</b> RF24 Optimization Overview</a> 
+ * @li <a href="http://tmrh20.blogspot.com/2016/08/raspberry-pilinux-with-nrf24l01.html"><b>My Blog:</b> RPi/Linux w/RF24Gateway</a> 
  * @li <a href="http://tmrh20.github.io/">All TMRh20 Documentation Main Page</a>
  *
- * **More Information and RF24 Based Projects**
+ * **More Information**
  *
  * @li <a href="http://TMRh20.blogspot.com"> Project Blog: TMRh20.blogspot.com </a>
  * @li <a href="http://maniacalbits.blogspot.ca/"> Maniacal Bits Blog</a>
- * @li <a href="http://www.mysensors.org/">MySensors.org (User friendly sensor networks/IoT)</a>
- * @li <a href="https://github.com/mannkind/RF24Node_MsgProto"> RF24Node_MsgProto (MQTT)</a>
- * @li <a href="https://bitbucket.org/pjhardy/rf24sensornet/"> RF24SensorNet </a>
- * @li <a href="http://www.homeautomationforgeeks.com/rf24software.shtml">Home Automation for Geeks</a>
  * @li <a href="https://maniacbug.wordpress.com/2012/03/30/rf24network/"> Original Maniacbug RF24Network Blog Post</a>
  * @li <a href="https://github.com/maniacbug/RF24"> ManiacBug on GitHub (Original Library Author)</a>
- * 
+ * @li <a href="http://www.mysensors.org/">MySensors.org (User friendly sensor networks/IoT)</a>
  *
  * <br>
  *
@@ -1448,7 +1471,7 @@ private:
  *
  * @li <a href="Arduino.html"><b>Arduino</b></a> (Uno, Nano, Mega, Due, Galileo, etc)
  * @li <a href="ATTiny.html"><b>ATTiny</b></a>
- * @li <a href="Linux.html"><b>Linux devices</b></a>( <a href="RPi.html"><b>RPi</b></a> , <a href="Linux.html"><b>Linux SPI userspace device</b></a>, <a href="MRAA.html"><b>MRAA</b></a> supported boards ( Galileo, Edison, etc), <a href="LittleWire.html"><b>LittleWire</b></a>)
+ * @li <a href="Linux.html"><b>Linux Installation</b></a>( <a href="RPi.html"><b>Linux/RPi General</b></a> , <a href="MRAA.html"><b>MRAA</b></a> supported boards ( Galileo, Edison, etc), <a href="LittleWire.html"><b>LittleWire</b></a>)
  * @li <a href="CrossCompile.html"><b>Cross-compilation</b></a> for linux devices
  * @li <a href="Python.html"><b>Python</b></a> wrapper available for Linux devices
  *
@@ -1487,15 +1510,6 @@ private:
  * These pins must be chosen and designated by the user, in RF24 radio(ce_pin,cs_pin); and can use any 
  * available pins.
  * 
- * <br>
- * @section ARD_DUE Arduino Due
- * 
- * RF24 makes use of the extended SPI functionality available on the Arduino Due, and requires one of the
- * defined hardware SS/CS pins to be designated in RF24 radio(ce_pin,cs_pin);<br>
- * See http://arduino.cc/en/Reference/DueExtendedSPI for more information
- *
- * Initial Due support taken from https://github.com/mcrosson/RF24/tree/due
- *
  * <br>
  * @section Alternate_SPI Alternate SPI Support
  *
@@ -1638,7 +1652,7 @@ private:
  * 
  *
  *
- * @page Linux Linux devices
+ * @page Linux Linux Installation
  *
  * Generic Linux devices are supported via SPIDEV, MRAA, RPi native via BCM2835, or using LittleWire.
  *
@@ -1691,6 +1705,15 @@ private:
  * sudo ./gettingstarted
  * @endcode
  *
+ * Build using **SPIDEV**
+ *
+ * 1. Make sure that spi device support is enabled and /dev/spidev\<a\>.\<b\> is present
+ * 2. Manual Install using SPIDEV:
+ * @code
+ * ./configure --driver=SPIDEV
+ * make; sudo make install
+ * @endcode
+ * 3. See the gettingstarted example for an example of pin configuration
  * <br><br>
  *   
  * @page MRAA MRAA
@@ -1702,39 +1725,9 @@ private:
  * <a href="https://github.com/TMRh20/RF24/issues">Report an RF24 bug or issue </a>
  *
  * @section Setup Setup and installation
- * 1. Install the MRAA lib
- * 2. As per your device, SPI may need to be enabled
- * 3. Follow <a href="Linux.html">Linux installation steps</a> to install RF24 libraries
- * 
- *
- * <br><br><br>
- *
- * 
- *
- *
- * @page RPi Raspberry Pi
- *
- * RF24 supports a variety of Linux based devices via various drivers. Some boards like RPi can utilize multiple methods
- * to drive the GPIO and SPI functionality.
- *
- * <br>
- * @section PreConfig Potential PreConfiguration
- *
- * If SPI is not already enabled, load it on boot:
- * @code sudo raspi-config  @endcode
- * A. Update the tool via the menu as required<br>
- * B. Select **Advanced** and **enable the SPI kernel module** <br>
- * C. Update other software and libraries
- * @code sudo apt-get update @endcode
- * @code sudo apt-get upgrade @endcode 
- * <br><br>
- *
- * @section Build Build Options
- * The default build on Raspberry Pi utilizes the included **BCM2835** driver from http://www.airspayce.com/mikem/bcm2835
- * 1. @code make; sudo make install @endcode
  *
  * Build using the **MRAA** library from http://iotdk.intel.com/docs/master/mraa/index.html <br>
- * MRAA is not included. See the <a href="MRAA.html">MRAA</a> platform page for more information.
+ * MRAA is not included.
  *
  * 1. Install, and build MRAA
  * @code
@@ -1752,21 +1745,37 @@ private:
  * Run @code sudo ldconfig @endcode
  *
  * 3. Install RF24, using MRAA
- * @code
- * ./configure --driver=MRAA
- * make; sudo make install
- * @endcode
- * See the gettingstarted example for an example of pin configuration
+ * See http://tmrh20.github.io/RF24/Linux.html
  *
- * Build using **SPIDEV**
  *
- * 1. Make sure that spi device support is enabled and /dev/spidev\<a\>.\<b\> is present
- * 2. Install RF24, using SPIDEV
- * @code
- * ./configure --driver=SPIDEV
- * make; sudo make install
- * @endcode
- * 3. See the gettingstarted example for an example of pin configuration
+ * <br><br><br>
+ *
+ * 
+ *
+ *
+ * @page RPi Linux General/Raspberry Pi 
+ *
+ * RF24 supports a variety of Linux based devices via various drivers. Some boards like RPi can utilize multiple methods
+ * to drive the GPIO and SPI functionality.
+ *
+ * 
+ * @section PreConfig Potential PreConfiguration
+ *
+ * If SPI is not already enabled, load it on boot:
+ * @code sudo raspi-config  @endcode
+ * A. Update the tool via the menu as required<br>
+ * B. Select **Advanced** and **enable the SPI kernel module** <br>
+ * C. Update other software and libraries
+ * @code sudo apt-get update @endcode
+ * @code sudo apt-get upgrade @endcode 
+ * <br>
+ *
+ * @section Build Build Options
+ * The default build on Raspberry Pi utilizes the included **BCM2835** driver from http://www.airspayce.com/mikem/bcm2835
+ * 1. See <a href="Linux.html"> the Linux section for automated installation </a>
+ * 2. Manual install: <br>
+ * @code make; sudo make install @endcode
+ *
  *
  * <br>
  * @section Pins Connections and Pin Configuration
@@ -1774,30 +1783,15 @@ private:
  *
  * Using pin 15/GPIO 22 for CE, pin 24/GPIO8 (CE0) for CSN
  *
- * Can use either RPi CE0 or CE1 pins for radio CSN.<br>
- * Choose any RPi output pin for radio CE pin.
+ * Can use any available SPI BUS for CSN.<br>
+ * In general, use @code RF24 radio(<ce_pin>, <a>*10+<b>); @endcode for proper constructor to 
+ * address correct spi device at /dev/spidev\<a\>.\<b\> 
+ * <br>
+ * Choose any GPIO output pin for radio CE pin.
+ * 
+ * **General:**
+ * @code RF24 radio(22,0); @endcode
  *
- * **BCM2835 Constructor:**
- * @code
- *  RF24 radio(RPI_V2_GPIO_P1_15,BCM2835_SPI_CS0, BCM2835_SPI_SPEED_8MHZ);
- *   or
- *  RF24 radio(RPI_V2_GPIO_P1_15,BCM2835_SPI_CS1, BCM2835_SPI_SPEED_8MHZ);
- *	
- *  RPi B+:
- *  RF24 radio(RPI_BPLUS_GPIO_J8_15,RPI_BPLUS_GPIO_J8_24, BCM2835_SPI_SPEED_8MHZ);
- *  or
- *  RF24 radio(RPI_BPLUS_GPIO_J8_15,RPI_BPLUS_GPIO_J8_26, BCM2835_SPI_SPEED_8MHZ);
- *
- *  General:
- *  RF24 radio(22,0);
- *  or
- *  RF24 radio(22,1);
- *
- * @endcode
- * See the gettingstarted example for an example of pin configuration
- *
- * See http://www.airspayce.com/mikem/bcm2835/index.html for BCM2835 class documentation.
- * <br><br>
  * **MRAA Constructor:**
  *
  * @code RF24 radio(15,0); @endcode
@@ -1807,9 +1801,9 @@ private:
  * **SPI_DEV Constructor**
  *
  * @code RF24 radio(22,0); @endcode
- * In general, use @code RF24 radio(<ce_pin>, <a>*10+<b>); @endcode for proper SPIDEV constructor to address correct spi device at /dev/spidev\<a\>.\<b\>
+ * 
  *
- * See http://pi.gadgetoid.com/pinout
+ * https://www.raspberrypi.org/documentation/usage/gpio/
  *
  * **Pins:**  
  *
@@ -1844,28 +1838,35 @@ private:
  *  
  * @page Python Python Wrapper (by https://github.com/mz-fuzzy)
  *
- * @note Both python2 and python3 are supported.
+ * @section Prerequisites Prerequisites
+ * 
+ * <b>Python2:</b>
  *
- * @section Install Installation:  
+ * @code sudo apt-get install python-dev libboost-python-dev python-setuptools python-rpi.gpio @endcode
  *
- * 1. Install the python-dev (or python3-dev) and boost libraries
- * @code sudo apt-get install python-dev libboost-python-dev @endcode
- * @note For python3 in Raspbian, it's needed to manually link python boost library, like this:
- * @code sudo ln -s $(ls /usr/lib/arm-linux-gnueabihf/libboost_python-py3*.so | tail -1) /usr/lib/arm-linux-gnueabihf/libboost_python3.so @endcode
+ * <b>Python3:</b>
  *
- * 2. Install python-setuptools (or python3-setuptools)
- * @code sudo apt-get install python-setuptools @endcode
+ * @code sudo apt-get install python3-dev libboost-python-dev python3-setuptools python3-rpi.gpio @endcode
  *
- * 3. Build the library
+ * RF24:
+ *
+ * The RF24 lib needs to be built in C++ & installed for the python wrapper to wrap it <br>
+ * See <a href="Linux.html">Linux Installation</a> and <a href="RPi.html">Linux/RPi General</a>
+ * <br><br>
+ * @section Install Installation:
+ * 1. For python3 in Raspbian, it's needed to manually link python boost library, like this:
+ * @code sudo ln -s $(ls /usr/lib/arm-linux-gnueabihf/libboost_python3-py3*.so | tail -1) /usr/lib/arm-linux-gnueabihf/libboost_python3.so @endcode
+ *
+ * 2. Build the library. From the rf24libs/RF24/pyRF24 directory:
  * @code ./setup.py build   @endcode or @code python3 setup.py build @endcode
  * @note Build takes several minutes on arm-based machines. Machines with RAM <1GB may need to increase amount of swap for build.
  *
- * 4. Install the library
+ * 3. Install the library
  * @code sudo ./setup.py install  @endcode or @code sudo python3 setup.py install @endcode
  * See the additional <a href="pages.html">Platform Support</a> pages for information on connecting your hardware  <br>
  * See the included <a href="pingpair_dyn_8py-example.html">example </a> for usage information.   
  * 
- * 5. Running the Example
+ * 5. Running the Example: <br>
  * Edit the pingpair_dyn.py example to configure the appropriate pins per the above documentation:  
  * @code nano pingpair_dyn.py   @endcode
  * Configure another device, Arduino or RPi with the <a href="pingpair_dyn_8py-example.html">pingpair_dyn</a> example <br>
