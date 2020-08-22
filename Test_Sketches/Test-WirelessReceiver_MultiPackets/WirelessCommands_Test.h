@@ -4,7 +4,24 @@
 ///Structs for wireless communication
 
 ///Global constants
-enum HempyMessage { Module1Command,Module1Response,Bucket1Command,Bucket1Response,Bucket2Command,Bucket2Response,DHT1Response,GetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+enum HempyMessage { Module1Command,Module1Response,Bucket1Command,Bucket1Response,Bucket2Command,Bucket2Response,DHT1Response,Fake1Response,Fake2Response,GetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+//enum MessageType { Command, Response };
+
+const __FlashStringHelper* sequenceIDToText(enum HempyMessage SequenceID) 
+{
+   switch (SequenceID) 
+   {
+      case HempyMessage::Module1Command: return F("Module1Command"); break;
+      case HempyMessage::Module1Response: return F("Module1Response"); break;
+      case HempyMessage::Bucket1Command: return F("Bucket1Command"); break;
+      case HempyMessage::Bucket1Response: return F("Bucket1Response"); break;
+      case HempyMessage::Bucket2Command: return F("Bucket2Command"); break;
+      case HempyMessage::Bucket2Response: return F("Bucket2Response"); break;
+      case HempyMessage::DHT1Response: return F("DHT1Response"); break;
+      case HempyMessage::GetNext: return F("GetNext"); break;
+      default : return F("UNKNOWN"); break;
+   }
+}
                                                                                                                                          ///< GetNext should always be the last element
 struct commonTemplate  ///< Shared between Command and Respone packages
 {

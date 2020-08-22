@@ -27,13 +27,14 @@ void * ReceivedResponse = malloc(PayloadSize);  ///< Pointer to the data sent ba
 struct ModuleCommand Module1CommandToSend = {HempyMessage::Module1Command,1587399600,1,1};  //Fake commands sent to the Receiver
 struct BucketCommand Bucket1CommandToSend = {HempyMessage::Bucket1Command,1,0,0,420,3.8,4.8};  //Fake commands sent to the Receiver
 struct BucketCommand Bucket2CommandToSend = {HempyMessage::Bucket2Command,0,0,0,420,3.9,4.9};  //Fake commands sent to the Receiver
-struct commonTemplate GetNextToSend = {HempyMessage::GetNext};  //< Special command to fetch the next Response from the Receiver
+struct commonTemplate GetNextResponse = {HempyMessage::GetNext};  //< Special command to fetch the next Response from the Receiver
 
 const uint8_t WirelessChannel[6] ={"Test1"}; //Identifies the communication channel, needs to match on the Receiver
 RF24 Wireless(CE_PIN, CSN_PIN);
 
-//Variables and constants for timing Control messages 
+//Variables and constants for timing Command messages 
 unsigned long LastMessageSent = 0;  //When was the last message sent
+uint8_t MessageCounter = 0;  //< how many successful messages were exchanged, gets zeroed automatically when a new message exchange starts
 const unsigned long MessageInterval = 15000; // send a control message once per 15 seconds
 const uint8_t RetryDelay = 10; //How long to wait between each retry, in multiples of 250us, max is 15. 0 means 250us, 15 means 4000us.
 const uint8_t RetryCount = 15; //How many retries before giving up, max 15
@@ -48,37 +49,42 @@ void setup() {
     Wireless.enableAckPayload();  ///< Enable custom payloads on the acknowledge packets. Ack payloads are a handy way to return data back to senders without manually changing the radio modes on both units.
     Wireless.setRetries(RetryDelay,RetryCount); 
     Wireless.openWritingPipe(WirelessChannel); 
-    updateCommand();
-    sendCommand(&Module1CommandToSend);
-    sendCommand(&Bucket1CommandToSend);
-    sendCommand(&Bucket2CommandToSend);
-    sendCommand(&GetNextToSend);  
+    sendMessages(); 
 }
 
 void loop() {
-    if (millis() - LastMessageSent >= MessageInterval) //Check if it is time to send a command
+    if (millis() - LastMessageSent >= MessageInterval) //Check if it is time to exchange messages
     {
-      sendCommand(&Module1CommandToSend);
-      sendCommand(&Bucket1CommandToSend);
-      sendCommand(&Bucket2CommandToSend);
-      sendCommand(&GetNextToSend);
+      sendMessages();      
     }
-    //TODO: NumberOfResponses
 }
 
-void updateCommand() {        // so you can see that new data is being sent
+void sendMessages(){
+    updateFakeData();
+    sendCommand(&Module1CommandToSend);  //< Command - Response exchange
+    sendCommand(&Bucket1CommandToSend);  //< Command - Response exchange
+    sendCommand(&Bucket2CommandToSend);  //< Command - Response exchange
+    while(sendCommand(&GetNextResponse) < HempyMessage::GetNext);   //< special Command, only exchange Response.
+    if(Debug)Serial.println(F("Message exchange finished"));
+}
+
+void updateFakeData() {        // so you can see that new data is being sent
     //Command.TurnOnPump_B1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exclusive!
     //Command.TurnOnPump_B2 = random(0,2);
     Bucket1CommandToSend.StopWeight = random(400, 500) / 100.0;
     Bucket2CommandToSend.StopWeight = random(400, 500) / 100.0;
 }
 
-void sendCommand(void* CommandToSend){
+HempyMessage sendCommand(void* CommandToSend){
+    HempyMessage SequenceIDToSend = ((commonTemplate*)CommandToSend) -> SequenceID; 
+    HempyMessage ReceivedSequenceID = NULL;       
     if(Debug)
     {
-        Serial.print(F("Sending command SequenceID: '"));
-        Serial.print(((commonTemplate*)CommandToSend) -> SequenceID);
-        Serial.println(F("' and waiting for Acknowledgment..."));
+        Serial.print(F("Sending command SequenceID: "));
+        Serial.print(SequenceIDToSend);
+        Serial.print(F(" - "));
+        Serial.print(sequenceIDToText(SequenceIDToSend));
+        Serial.println(F(" and waiting for Acknowledgment..."));
     }
     Wireless.flush_rx();  ///< Dump all previously received but unprocessed messages
     bool Result = Wireless.write( CommandToSend, PayloadSize );
@@ -87,14 +93,17 @@ void sendCommand(void* CommandToSend){
     if (Result) {
         if ( Wireless.isAckPayloadAvailable()) {
             Wireless.read(ReceivedResponse, PayloadSize);
+            ReceivedSequenceID = ((commonTemplate*)ReceivedResponse) -> SequenceID;
+            
             if(Debug)
             {
-                Serial.print(F("Response received, SequenceID: "));
-                Serial.print(((commonTemplate*)ReceivedResponse) -> SequenceID);
-                Serial.println();
+                Serial.print(F("Response SequenceID: "));
+                Serial.print(ReceivedSequenceID);
+                Serial.print(F(" - "));
+                Serial.println(sequenceIDToText(ReceivedSequenceID));
             }         
 
-            switch (((commonTemplate*)ReceivedResponse) -> SequenceID)
+            switch (ReceivedSequenceID)
             {
                 case HempyMessage::Module1Response :
                     Serial.print(F("  ModuleOK: "));
@@ -126,14 +135,14 @@ void sendCommand(void* CommandToSend){
                     Serial.println(F("  SequenceID not known, ignoring package"));
                     break;
             }
-            updateCommand();
         }
         else {
             Serial.println(F("acknowledgement received without any data."));
         }        
-  }
-  else {
-    Serial.println(F("no response."));
-  }
-  LastMessageSent = millis();
+    }
+    else {
+        Serial.println(F("no response."));
+    }
+    LastMessageSent = millis();
+    return ReceivedSequenceID;
 }
