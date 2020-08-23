@@ -18,16 +18,11 @@
 #include "src/Modules/HempyModule.h"
 #include "src/WirelessCommands_Hempy.h"   ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
 
-///Global constants
-const uint8_t PayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
-
 ///Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
 char ShortMessage[MaxShotTextLength] = ""; ///temp storage for assembling short messages (Log entries, Error messages)char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
 char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
-struct hempyCommand Command;  //Variable where the wireless command values will get stored
-struct hempyResponse Response;  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter
-void* ReceivedMessage = NULL; ///< Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type 
+void* ReceivedMessage = malloc(PayloadSize); ///< Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
 
 
 ///Component initialization
@@ -69,11 +64,11 @@ void setup()
   Wireless.begin();
   Wireless.setDataRate( RF24_250KBPS );  ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
   Wireless.setCRCLength(RF24_CRC_8);  /// RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
-  Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_MAX=-6dBM, and RF24_PA_MAX=0dBm.
+  Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBM, and RF24_PA_MAX=0dBm.
   Wireless.setPayloadSize(PayloadSize);  ///Set the number of bytes in the payload
   Wireless.enableAckPayload();
   Wireless.openReadingPipe(1, WirelessChannel);  
-  Wireless.writeAckPayload(1, &Response, sizeof(Response));
+  //Wireless.writeAckPayload(1, &Response, sizeof(Response));
   Wireless.startListening();
 
   /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
@@ -140,17 +135,14 @@ void HeartBeat()
 
 void getWirelessData() {
     if ( Wireless.available() ) { 
+        if(*Debug)logToSerials(F("Wireless Command received"),true,0);
+        Wireless.read( ReceivedMessage, PayloadSize );
         
-        Wireless.read( &ReceivedMessage, PayloadSize );
-        logToSerials(F("Wireless Command received ["),false,0);
-        logToSerials(PayloadSize,false, 0);     
-        logToSerials(F("bytes], Response sent"),true,1); 
-        
-        if(timeStatus() != timeSet)  
+        if(timeStatus() != timeSet && ((CommonTemplate*)ReceivedMessage) -> SequenceID == HempyMessage::Module1Command)  
         {
           updateTime(); ///Updating internal timer
         }
-        HempyMod1 -> processCommand(&ReceivedMessage); 
+        HempyMod1 -> processCommand(ReceivedMessage); 
     }
 }
 
@@ -164,13 +156,14 @@ void getWirelessStatus(){
 
 time_t updateTime()
 {
-  if(Command.Time > 0)
+  time_t ReceivedTime = ((ModuleCommand*)ReceivedMessage) -> Time;
+  if(ReceivedTime > 0)
   {
-  setTime(Command.Time);
+  setTime(ReceivedTime);
   logToSerials(F("Clock synced with main module"),true,0); 
   }
   else {
   logToSerials(F("Clock out of sync"),true,0); 
   }
-  return Command.Time;
+  return ReceivedTime;
 }

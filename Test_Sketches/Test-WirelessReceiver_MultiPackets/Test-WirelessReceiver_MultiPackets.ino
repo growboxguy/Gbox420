@@ -21,22 +21,21 @@ const byte CSN_PIN = 49;
 const byte CE_PIN = 53;
 */
 
-void * ReceivedCommand = malloc(PayloadSize);
-uint8_t NextSequenceID = HempyMessage::Module1Response;
-
 ///< Variables used during wireless communication
+uint8_t NextSequenceID = HempyMessage::Module1Response;
+void * ReceivedCommand = malloc(PayloadSize);
 struct ModuleResponse Module1ResponseToSend = {HempyMessage::Module1Response,1};  //Fake response sent to the Transmitter
 struct BucketResponse Bucket1ResponseToSend = {HempyMessage::Bucket1Response,0,0,4.20};  //Fake response sent to the Transmitter
 struct BucketResponse Bucket2ResponseToSend = {HempyMessage::Bucket2Response,1,1,4.20};  //Fake response sent to the Transmitter
 struct DHTResponse DHT1ResponseToSend = {HempyMessage::DHT1Response,23.4,42.0}; //Fake response sent to the Transmitter
-struct commonTemplate LastMessage = {HempyMessage::GetNext};  //< Special response signaling the end of a message exchange to the Transmitter
+struct CommonTemplate LastResponseToSend = {HempyMessage::GetNext};  //< Special response signaling the end of a message exchange to the Transmitter
 
-const uint8_t WirelessChannel[6] ={"Test1"};  //Identifies the communication channel, needs to match on the Transmitter
+const uint8_t WirelessChannel[6] ={"Hemp1"};  //Identifies the communication channel, needs to match on the Transmitter
 RF24 Wireless(CE_PIN, CSN_PIN);
 
 unsigned long LastFakeMessageUpdate = 0;  //When was the last time the example data was refreshed
 unsigned long LastMessageSent = 0;  //When was the last message sent
-const unsigned long Timeout = 1000; //Default 1sec -  One package should be exchanged within this timeout
+const unsigned long WirelessMessageTimeout = 500; //Default 0.5sec -  One package should be exchanged within this timeout
 
 void setup() {
     Serial.begin(115200);
@@ -62,7 +61,7 @@ void loop() {
     //< Checking arrived wireless Commands
     if ( Wireless.available() ) {  //When a command is received
         Wireless.read( ReceivedCommand, PayloadSize );    //Load the command to the ReceivedCommand variable
-        HempyMessage ReceivedSequenceID = ((commonTemplate*)ReceivedCommand) -> SequenceID;
+        HempyMessage ReceivedSequenceID = ((CommonTemplate*)ReceivedCommand) -> SequenceID;
         LastMessageSent = millis();  ///< Store current time
         if(Debug)
         {
@@ -130,7 +129,7 @@ void loop() {
         }
         updateAckData();   //< Loads the next ACK that will be sent out
     }
-    if(NextSequenceID != HempyMessage::Module1Response && millis()- LastMessageSent >= Timeout){  //< If there is a package exchange in progress
+    if(NextSequenceID != HempyMessage::Module1Response && millis()- LastMessageSent >= WirelessMessageTimeout){  //< If there is a package exchange in progress
         NextSequenceID = HempyMessage::Module1Response;  //< Reset back to the first response
         Serial.println(F("Timeout during message exchange, reseting to first response"));   
         updateAckData();  
@@ -149,26 +148,26 @@ void updateAckData() { // so you can see that new data is being sent
     Serial.println(NextSequenceID);
     Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
 
-    switch (NextSequenceID)
+    switch (NextSequenceID)  // based on the NextSeqenceID load the next response into the Acknowledgement buffer
     {        
     case HempyMessage::Module1Response :
-        Wireless.writeAckPayload(1, &Module1ResponseToSend, PayloadSize); // load the next response into the buffer 
+        Wireless.writeAckPayload(1, &Module1ResponseToSend, PayloadSize);  
         break;
     case HempyMessage::Bucket1Response :
-        Wireless.writeAckPayload(1, &Bucket1ResponseToSend, PayloadSize); // load the next response into the buffer
+        Wireless.writeAckPayload(1, &Bucket1ResponseToSend, PayloadSize);
         break;   
     case HempyMessage::Bucket2Response :
-        Wireless.writeAckPayload(1, &Bucket2ResponseToSend, PayloadSize); // load the next response into the buffer
+        Wireless.writeAckPayload(1, &Bucket2ResponseToSend, PayloadSize);
         break;
     case HempyMessage::DHT1Response :
-        Wireless.writeAckPayload(1, &DHT1ResponseToSend, PayloadSize); // load the next response into the buffer 
+        Wireless.writeAckPayload(1, &DHT1ResponseToSend, PayloadSize);
         break;
-    case HempyMessage::GetNext :  //< Signals the end of messages to send back
-        Wireless.writeAckPayload(1, &LastMessage, PayloadSize); // load the next response into the buffer 
+    case HempyMessage::GetNext :  //< GetNext should always be the last element in the HempyMessage enum: Signals to stop the message exchange
+        Wireless.writeAckPayload(1, &LastResponseToSend, PayloadSize);
         break;
     default:
-        Serial.print(F("Unknown next Sequence number, Ack defaults loaded"));
-        Wireless.writeAckPayload(1, &Module1ResponseToSend, PayloadSize); // load the next response into the buffer 
+        Serial.println(F("   Unknown next Sequence number, Ack defaults loaded"));
+        Wireless.writeAckPayload(1, &Module1ResponseToSend, PayloadSize); // load the first Response into the buffer 
         break;    
     }
 }

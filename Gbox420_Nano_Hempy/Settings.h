@@ -13,7 +13,7 @@
 static const uint8_t Version = 5; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
-  enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
+  enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
   //enum HempyState { DRY, WATERING};
   //enum AeroState { SPRAYING };
 
@@ -21,7 +21,8 @@ static const uint8_t Version = 5; ///< Increment this when you make a change in 
 
   ///Global constants
   static const uint8_t WirelessChannel[6] = {"Hemp1"};    ///This needs to be unique and match with the Name of the HempyModule_Web object in the Main module
-
+  static const uint16_t WirelessMessageTimeout = 500; //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
+  static const uint8_t PayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
   static const uint8_t MaxTextLength = 32;      ///Default char * buffer for storing a word + null terminator. Memory intense!
   static const uint8_t MaxShotTextLength = 64; ///Default char * buffer for storing mutiple words. Memory intense!
   static const int MaxLongTextLength = 256; ///Default char * buffer for storing a long text. Memory intense!

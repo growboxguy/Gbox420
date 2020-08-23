@@ -23,21 +23,21 @@ const byte CE_PIN = 53;
 
 ///< Variables used during wireless communication
 void * ReceivedResponse = malloc(PayloadSize);  ///< Pointer to the data sent back in the acknowledgement.
-
 struct ModuleCommand Module1CommandToSend = {HempyMessage::Module1Command,1587399600,1,1};  //Fake commands sent to the Receiver
 struct BucketCommand Bucket1CommandToSend = {HempyMessage::Bucket1Command,1,0,0,420,3.8,4.8};  //Fake commands sent to the Receiver
 struct BucketCommand Bucket2CommandToSend = {HempyMessage::Bucket2Command,0,0,0,420,3.9,4.9};  //Fake commands sent to the Receiver
-struct commonTemplate GetNextResponse = {HempyMessage::GetNext};  //< Special command to fetch the next Response from the Receiver
+struct CommonTemplate GetNextResponse = {HempyMessage::GetNext};  //< Special command to fetch the next Response from the Receiver
 
-const uint8_t WirelessChannel[6] ={"Test1"}; //Identifies the communication channel, needs to match on the Receiver
+static const uint8_t WirelessChannel[6] ={"Hemp1"}; //Identifies the communication channel, needs to match on the Receiver
 RF24 Wireless(CE_PIN, CSN_PIN);
 
 //Variables and constants for timing Command messages 
-unsigned long LastMessageSent = 0;  //When was the last message sent
-uint8_t MessageCounter = 0;  //< how many successful messages were exchanged, gets zeroed automatically when a new message exchange starts
-const unsigned long MessageInterval = 15000; // send a control message once per 15 seconds
-const uint8_t RetryDelay = 10; //How long to wait between each retry, in multiples of 250us, max is 15. 0 means 250us, 15 means 4000us.
-const uint8_t RetryCount = 15; //How many retries before giving up, max 15
+static unsigned long LastCommandSent = 0;  //When was the last message sent
+static unsigned long LastResponseReceived = 0;  //When was the last response received
+static const unsigned long MessageInterval = 15000; // send a control message once per 15 seconds
+static const uint16_t WirelessMessageTimeout = 500; //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
+static const uint8_t RetryDelay = 10; //How long to wait between each retry, in multiples of 250us, max is 15. 0 means 250us, 15 means 4000us.
+static const uint8_t RetryCount = 15; //How many retries before giving up, max 15
 
 void setup() {
     Serial.begin(115200);
@@ -46,14 +46,17 @@ void setup() {
     Serial.println(F("Setting up the wireless transmitter..."));
     Wireless.begin();
     Wireless.setDataRate( RF24_250KBPS );
-    Wireless.enableAckPayload();  ///< Enable custom payloads on the acknowledge packets. Ack payloads are a handy way to return data back to senders without manually changing the radio modes on both units.
+    Wireless.setCRCLength(RF24_CRC_8);  /// RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
+    Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_MAX=-6dBM, and RF24_PA_MAX=0dBm.
+    Wireless.setPayloadSize(PayloadSize);  ///Set the number of bytes in the payload
+    Wireless.enableAckPayload();  ///< Enable custom payloads on the acknowledge packets. Ack payloads are a handy way to return data back to senders without changing the radio modes on both units.
     Wireless.setRetries(RetryDelay,RetryCount); 
     Wireless.openWritingPipe(WirelessChannel); 
     sendMessages(); 
 }
 
 void loop() {
-    if (millis() - LastMessageSent >= MessageInterval) //Check if it is time to exchange messages
+    if (millis() - LastCommandSent >= MessageInterval) //Check if it is time to exchange messages
     {
       sendMessages();      
     }
@@ -64,7 +67,7 @@ void sendMessages(){
     sendCommand(&Module1CommandToSend);  //< Command - Response exchange
     sendCommand(&Bucket1CommandToSend);  //< Command - Response exchange
     sendCommand(&Bucket2CommandToSend);  //< Command - Response exchange
-    while(sendCommand(&GetNextResponse) < HempyMessage::GetNext);   //< special Command, only exchange Response.
+    while(sendCommand(&GetNextResponse) < HempyMessage::GetNext && millis()- LastResponseReceived < WirelessMessageTimeout);   //< special Command, only exchange Response.
     if(Debug)Serial.println(F("Message exchange finished"));
 }
 
@@ -76,7 +79,7 @@ void updateFakeData() {        // so you can see that new data is being sent
 }
 
 HempyMessage sendCommand(void* CommandToSend){
-    HempyMessage SequenceIDToSend = ((commonTemplate*)CommandToSend) -> SequenceID; 
+    HempyMessage SequenceIDToSend = ((CommonTemplate*)CommandToSend) -> SequenceID; 
     HempyMessage ReceivedSequenceID = NULL;       
     if(Debug)
     {
@@ -88,12 +91,12 @@ HempyMessage sendCommand(void* CommandToSend){
     }
     Wireless.flush_rx();  ///< Dump all previously received but unprocessed messages
     bool Result = Wireless.write( CommandToSend, PayloadSize );
-    delay(10); //< give a little time to the nRF024L01+ chip to update the isAckPayloadAvailable flag
+    delay(50); //< give a little time to the nRF024L01+ chip to update the isAckPayloadAvailable flag
     Serial.print(F("  Data Sent, "));
     if (Result) {
         if ( Wireless.isAckPayloadAvailable()) {
             Wireless.read(ReceivedResponse, PayloadSize);
-            ReceivedSequenceID = ((commonTemplate*)ReceivedResponse) -> SequenceID;
+            ReceivedSequenceID = ((CommonTemplate*)ReceivedResponse) -> SequenceID;
             
             if(Debug)
             {
@@ -141,11 +144,12 @@ HempyMessage sendCommand(void* CommandToSend){
         }
         else {
             Serial.println(F("acknowledgement received without any data."));
-        }        
+        }  
+        LastResponseReceived = millis();      
     }
     else {
         Serial.println(F("no response."));
     }
-    LastMessageSent = millis();
+    LastCommandSent = millis();
     return ReceivedSequenceID;
 }

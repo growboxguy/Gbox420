@@ -13,7 +13,7 @@ public:
   void report();
   void refresh_Sec();
    
-  void updateState(PumpState NewState = (PumpState)-1);
+  void updateState(PumpStates NewState = (PumpStates)-1);
   void setMaxPressure(float MaxPressure);
 
   void startPump(bool ResetStatus = false);  ///< Turn the pump ON
@@ -28,7 +28,7 @@ public:
   void startRunning();
   void startBlowOff();
   
-  PumpState getState();  
+  PumpStates getState();  
   char * getStateText();  ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
   bool getOnState();  ///< Pump ON(1)/OFF(0)
   bool getBypassOnState(); ///< Bypass solenoid ON(1)/OFF(0)
@@ -46,7 +46,7 @@ public:
   uint32_t PumpTimer = millis();  ///< Spray cycle timer, used for State runtime tracking, - https:///www.arduino.cc/reference/en/language/functions/time/millis/ 
   
 private:
-  PumpState State = IDLE; 
+  PumpStates State = IDLE; 
  
 protected:
   Module *Parent;

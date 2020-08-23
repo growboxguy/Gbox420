@@ -233,7 +233,7 @@ char* toText_onlineStatus(bool Status)
     return toText(F("OFFLINE"));
 }
 
-char *toText_pumpState(PumpState State){
+char *toText_pumpState(PumpStates State){
   switch (State)
   {
     case DISABLED:

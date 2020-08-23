@@ -56,7 +56,7 @@ void WaterPump::refresh_Sec()
   } 
 }
 
-void WaterPump::updateState(PumpState NewState)  ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State 
+void WaterPump::updateState(PumpStates NewState)  ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State 
 {
   if(NewState >=0)  ///< if not the default value was passed
   {    
@@ -200,7 +200,7 @@ void WaterPump::turnBypassOff(){
 
 //////////////////////////////////////////////////////////////////////////////////
 
-PumpState WaterPump::getState(){
+PumpStates WaterPump::getState(){
   return State;
 }
 

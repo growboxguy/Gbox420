@@ -33,16 +33,17 @@ public:
   HempyBucket *Bucket2;
   WaterPump *Pump1;
   WaterPump *Pump2;
-  //void refresh_Sec();
+  void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();
   //void refresh_QuarterHour(); 
   void processCommand(void *Command);
   void updateResponse();
+  void updateAckData();
 
 private:
-  struct hempyCommand Command;  //Commands sent to the external Module
-  struct hempyResponse Response; //The response from the external Module will be stored here, represents the current status of the external Module
+  //struct hempyCommand Command;  //Commands sent to the external Module
+  //struct hempyResponse Response; //The response from the external Module will be stored here, represents the current status of the external Module
   
 protected:
 };
