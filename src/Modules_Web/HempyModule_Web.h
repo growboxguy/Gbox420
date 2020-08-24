@@ -36,9 +36,9 @@ private:
   struct BucketCommand Bucket1CommandToSend = {HempyMessage::Bucket1Command}; ///Command to send will be stored here
   struct BucketCommand Bucket2CommandToSend = {HempyMessage::Bucket2Command}; ///Command to send will be stored here
   struct CommonTemplate GetNextResponse = {HempyMessage::GetNext};            //< Special command to fetch the next Response from the Receiver
-  struct ModuleResponse Module1ReceivedResponse = {HempyMessage::Module1Response};  /// Response will be stored here
-  struct BucketResponse Bucket1ReceivedResponse = {HempyMessage::Bucket1Response};  /// Response will be stored here
-  struct BucketResponse Bucket2ReceivedResponse = {HempyMessage::Bucket2Response};  /// Response will be stored here
+  struct ModuleResponse * Module1ReceivedResponse = malloc(sizeof(struct ModuleResponse));  /// Response will be stored here
+  struct BucketResponse * Bucket1ReceivedResponse = malloc(sizeof(struct BucketResponse));  /// Response will be stored here
+  struct BucketResponse * Bucket2ReceivedResponse = malloc(sizeof(struct BucketResponse));  /// Response will be stored here
   unsigned long LastResponseReceived = 0;   //Timestamp of the last response received
 
 protected:

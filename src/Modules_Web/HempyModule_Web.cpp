@@ -23,13 +23,13 @@ void HempyModule_Web::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Bucket1 Weight:"));
-  strcat(LongMessage, toText_weight(Bucket1ReceivedResponse.Weight));
+  strcat(LongMessage, toText_weight(Bucket1ReceivedResponse -> Weight));
   strcat_P(LongMessage, (PGM_P)F(" ["));
   strcat(LongMessage, toText(Bucket1CommandToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("/"));
   strcat(LongMessage, toText(Bucket1CommandToSend.StopWeight));
   strcat_P(LongMessage, (PGM_P)F("] ; Bucket2 Weight:"));
-  strcat(LongMessage, toText_weight(Bucket2ReceivedResponse.Weight));
+  strcat(LongMessage, toText_weight(Bucket2ReceivedResponse -> Weight));
   strcat_P(LongMessage, (PGM_P)F(" ["));
   strcat(LongMessage, toText(Bucket2CommandToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("/"));
@@ -44,17 +44,17 @@ void HempyModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1\":\""));
-  strcat(LongMessage, toText(Bucket1ReceivedResponse.PumpState));
+  strcat(LongMessage, toText(Bucket1ReceivedResponse -> PumpState));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB1\":\""));
-  strcat(LongMessage, toText(Bucket1ReceivedResponse.Weight));
+  strcat(LongMessage, toText(Bucket1ReceivedResponse -> Weight));
   strcat_P(LongMessage, (PGM_P)F("\",\"StartB1\":\""));
   strcat(LongMessage, toText(Bucket1CommandToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"StopB1\":\""));
   strcat(LongMessage, toText(Bucket1CommandToSend.StopWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2\":\""));
-  strcat(LongMessage, toText(Bucket2ReceivedResponse.PumpState));
+  strcat(LongMessage, toText(Bucket2ReceivedResponse -> PumpState));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
-  strcat(LongMessage, toText(Bucket2ReceivedResponse.Weight));
+  strcat(LongMessage, toText(Bucket2ReceivedResponse -> Weight));
   strcat_P(LongMessage, (PGM_P)F("\",\"StartB2\":\""));
   strcat(LongMessage, toText(Bucket2CommandToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"StopB2\":\""));
@@ -80,10 +80,10 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
   if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getComponentName(F("B1Weight")), toText_weight(Bucket1ReceivedResponse.Weight));
-    WebServer.setArgString(getComponentName(F("B2Weight")), toText_weight(Bucket2ReceivedResponse.Weight));
-    WebServer.setArgString(getComponentName(F("B1Pump")), toText_pumpState(Bucket1ReceivedResponse.PumpState));
-    WebServer.setArgString(getComponentName(F("B2Pump")), toText_pumpState(Bucket2ReceivedResponse.PumpState));
+    WebServer.setArgString(getComponentName(F("B1Weight")), toText_weight(Bucket1ReceivedResponse -> Weight));
+    WebServer.setArgString(getComponentName(F("B2Weight")), toText_weight(Bucket2ReceivedResponse -> Weight));
+    WebServer.setArgString(getComponentName(F("B1Pump")), toText_pumpState(Bucket1ReceivedResponse -> PumpState));
+    WebServer.setArgString(getComponentName(F("B2Pump")), toText_pumpState(Bucket2ReceivedResponse -> PumpState));
   }
 }
 
@@ -229,7 +229,6 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
       OnlineStatus = true; ///< Mark that the module responded
       Parent->Wireless->read(ReceivedResponse, WirelessPayloadSize);
       ReceivedSequenceID = ((CommonTemplate *)ReceivedResponse)->SequenceID;
-
       if (*Debug)
       {
         Serial.print(F("Response SequenceID: "));
@@ -241,15 +240,15 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
       switch (ReceivedSequenceID)
       {
       case HempyMessage::Module1Response:
-        memcpy(&Module1ReceivedResponse, ReceivedResponse, WirelessPayloadSize);
+        memcpy(Module1ReceivedResponse, ReceivedResponse, sizeof(struct ModuleResponse));
         if (*Debug)
         {
           Serial.print(F("  ModuleOK: "));
-          Serial.println(Module1ReceivedResponse.Status);
+          Serial.println(Module1ReceivedResponse -> Status);
         }
         break;
       case HempyMessage::Bucket1Response:
-        memcpy(&Bucket1ReceivedResponse, ReceivedResponse, WirelessPayloadSize);
+        memcpy(Bucket1ReceivedResponse, ReceivedResponse, sizeof(struct BucketResponse));
         if (Bucket1CommandToSend.DisablePump || Bucket1CommandToSend.TurnOnPump || Bucket1CommandToSend.TurnOffPump) ///Turn off command flags
         {
           SyncRequested = true; ///Force a second packet to actualize the response
@@ -260,13 +259,13 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
         if (*Debug)
         {
           Serial.print(F("  Bucket1: "));
-          Serial.print(Bucket1ReceivedResponse.PumpState);          
+          Serial.print(Bucket1ReceivedResponse -> PumpState);          
           Serial.print(F(", "));
-          Serial.println(Bucket1ReceivedResponse.Weight);
+          Serial.println(Bucket1ReceivedResponse -> Weight);
         }
         break;
       case HempyMessage::Bucket2Response:
-        memcpy(&Bucket2ReceivedResponse, ReceivedResponse, WirelessPayloadSize);
+        memcpy(Bucket2ReceivedResponse, ReceivedResponse, sizeof(struct BucketResponse));
         if (Bucket2CommandToSend.DisablePump || Bucket2CommandToSend.TurnOnPump || Bucket2CommandToSend.TurnOffPump) ///Turn off command flags
         {
           SyncRequested = true; ///Force a second packet to actualize the response
@@ -277,9 +276,9 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
         if (*Debug)
         {
           Serial.print(F("  Bucket2: "));
-          Serial.print(Bucket2ReceivedResponse.PumpState);
+          Serial.print(Bucket2ReceivedResponse -> PumpState);
           Serial.print(F(", "));
-          Serial.println(Bucket2ReceivedResponse.Weight);
+          Serial.println(Bucket2ReceivedResponse -> Weight);
         }
         break;
       case HempyMessage::GetNext:
@@ -292,14 +291,13 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
         Serial.println(F("  SequenceID not known, ignoring package"));
         break;
       }
+      LastResponseReceived = millis();
     }
     else
     {
       if (*Debug)
-        logToSerials(F("Acknowledgement received without any data."), true, 1);
-      OnlineStatus = false;
-    }
-    LastResponseReceived = millis();
+        logToSerials(F("Acknowledgement received without any data"), true, 1);  //< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+        
+    }    
   }
   else
   {
