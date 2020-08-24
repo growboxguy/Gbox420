@@ -13,7 +13,7 @@
 static const uint8_t Version = 12; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
-enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
+enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
 //enum HempyState { DRY, WATERING};
 //enum AeroState { SPRAYING };
 
@@ -32,14 +32,13 @@ enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
   extern char CurrentTime[MaxTextLength];      ///buffer for storing current time in text
 
   ///nRF24L01+ wireless receiver
-  static const uint8_t Wireless_CSNPin = 49;
-  static const uint8_t Wireless_MISOPin = 50;
-  static const uint8_t Wireless_MOSIPin = 51;
-  static const uint8_t Wireless_SCKPin = 52;
-  static const uint8_t Wireless_CEPin = 53;
-  static const uint8_t Wireless_Delay = 8;  ///< How long to wait between each retry, in multiples of 250us. Max is 15. 0 means 250us, 15 means 4000us
-  static const uint8_t Wireless_Retry = 10;  ///< How many retries before giving up, max 15
-
+  static const uint8_t WirelessCSNPin = 49;
+  static const uint8_t WirelessCEPin = 53;
+  static const uint8_t WirelessDelay = 8;  ///< How long to wait between each retry (250ms increments), Max 15. 0 means 250us, 15 means 4000us, 
+  static const uint8_t WirelessRetry = 10;  ///< How many retries before giving up, max 15
+  static const uint8_t WirelessPayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+  static const uint16_t WirelessMessageTimeout = 500; //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
+  
 ///SAVED TO EEPROM - Settings struct
   ///If you change things here, increase the Version variable in line 4
   typedef struct

@@ -13,7 +13,7 @@
 static const uint8_t Version = 6; ///< Increment this when you make a change in the SAVED TO EEPROM section
 
 ///State machine - Defining possible states
-  enum PumpState {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
+  enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
   enum ReservoirState {EMPTY, LEVEL_LOW, OK};
   //enum HempyState { DRY, WATERING};
   //enum AeroState { SPRAYING };

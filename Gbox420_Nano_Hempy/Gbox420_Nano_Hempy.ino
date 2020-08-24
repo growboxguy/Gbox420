@@ -22,7 +22,7 @@
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
 char ShortMessage[MaxShotTextLength] = ""; ///temp storage for assembling short messages (Log entries, Error messages)char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
 char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
-void* ReceivedMessage = malloc(PayloadSize); ///< Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
+void* ReceivedMessage = malloc(WirelessPayloadSize); ///< Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
 
 
 ///Component initialization
@@ -64,8 +64,8 @@ void setup()
   Wireless.begin();
   Wireless.setDataRate( RF24_250KBPS );  ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
   Wireless.setCRCLength(RF24_CRC_8);  /// RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
-  Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBM, and RF24_PA_MAX=0dBm.
-  Wireless.setPayloadSize(PayloadSize);  ///Set the number of bytes in the payload
+  Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
+  Wireless.setPayloadSize(WirelessPayloadSize);  ///Set the number of bytes in the payload
   Wireless.enableAckPayload();
   Wireless.openReadingPipe(1, WirelessChannel);  
   //Wireless.writeAckPayload(1, &Response, sizeof(Response));
@@ -136,7 +136,7 @@ void HeartBeat()
 void getWirelessData() {
     if ( Wireless.available() ) { 
         if(*Debug)logToSerials(F("Wireless Command received"),true,0);
-        Wireless.read( ReceivedMessage, PayloadSize );
+        Wireless.read( ReceivedMessage, WirelessPayloadSize );
         
         if(timeStatus() != timeSet && ((CommonTemplate*)ReceivedMessage) -> SequenceID == HempyMessage::Module1Command)  
         {

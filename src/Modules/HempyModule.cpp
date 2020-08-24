@@ -160,20 +160,20 @@ void HempyModule::updateAckData() { // so you can see that new data is being sen
     switch (NextSequenceID)  // based on the NextSeqenceID load the next response into the Acknowledgement buffer
     {        
     case HempyMessage::Module1Response :
-        Wireless.writeAckPayload(1, &Module1ResponseToSend, PayloadSize);  
+        Wireless.writeAckPayload(1, &Module1ResponseToSend, WirelessPayloadSize);  
         break;
     case HempyMessage::Bucket1Response :
-        Wireless.writeAckPayload(1, &Bucket1ResponseToSend, PayloadSize);
+        Wireless.writeAckPayload(1, &Bucket1ResponseToSend, WirelessPayloadSize);
         break;   
     case HempyMessage::Bucket2Response :
-        Wireless.writeAckPayload(1, &Bucket2ResponseToSend, PayloadSize);
+        Wireless.writeAckPayload(1, &Bucket2ResponseToSend, WirelessPayloadSize);
         break;   
     case HempyMessage::GetNext :  //< GetNext should always be the last element in the HempyMessage enum: Signals to stop the message exchange
-        Wireless.writeAckPayload(1, &LastResponseToSend, PayloadSize);
+        Wireless.writeAckPayload(1, &LastResponseToSend, WirelessPayloadSize);
         break;
     default:
         logToSerials(F("Unknown next Sequence number, Ack defaults loaded"),true,3); 
-        Wireless.writeAckPayload(1, &Module1ResponseToSend, PayloadSize); // load the first Response into the buffer 
+        Wireless.writeAckPayload(1, &Module1ResponseToSend, WirelessPayloadSize); // load the first Response into the buffer 
         break;    
     }
 }

@@ -8,7 +8,7 @@
 #include "TimeLib.h"     ///keeping track of time
 #include "WirelessCommands_Test.h"
 
-const uint8_t PayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+const uint8_t WirelessPayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
 const bool Debug = true;
 
 ///< Ports for Arduino Nano or RF-Nano
@@ -22,7 +22,7 @@ const byte CE_PIN = 53;
 */
 
 ///< Variables used during wireless communication
-void * ReceivedResponse = malloc(PayloadSize);  ///< Pointer to the data sent back in the acknowledgement.
+void * ReceivedResponse = malloc(WirelessPayloadSize);  ///< Pointer to the data sent back in the acknowledgement.
 struct ModuleCommand Module1CommandToSend = {HempyMessage::Module1Command,1587399600,1,1};  //Fake commands sent to the Receiver
 struct BucketCommand Bucket1CommandToSend = {HempyMessage::Bucket1Command,1,0,0,420,3.8,4.8};  //Fake commands sent to the Receiver
 struct BucketCommand Bucket2CommandToSend = {HempyMessage::Bucket2Command,0,0,0,420,3.9,4.9};  //Fake commands sent to the Receiver
@@ -47,8 +47,8 @@ void setup() {
     Wireless.begin();
     Wireless.setDataRate( RF24_250KBPS );
     Wireless.setCRCLength(RF24_CRC_8);  /// RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
-    Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_MAX=-6dBM, and RF24_PA_MAX=0dBm.
-    Wireless.setPayloadSize(PayloadSize);  ///Set the number of bytes in the payload
+    Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
+    Wireless.setPayloadSize(WirelessPayloadSize);  ///Set the number of bytes in the payload
     Wireless.enableAckPayload();  ///< Enable custom payloads on the acknowledge packets. Ack payloads are a handy way to return data back to senders without changing the radio modes on both units.
     Wireless.setRetries(RetryDelay,RetryCount); 
     Wireless.openWritingPipe(WirelessChannel); 
@@ -90,12 +90,12 @@ HempyMessage sendCommand(void* CommandToSend){
         Serial.println(F(" and waiting for Acknowledgment..."));
     }
     Wireless.flush_rx();  ///< Dump all previously received but unprocessed messages
-    bool Result = Wireless.write( CommandToSend, PayloadSize );
+    bool Result = Wireless.write( CommandToSend, WirelessPayloadSize );
     delay(50); //< give a little time to the nRF024L01+ chip to update the isAckPayloadAvailable flag
     Serial.print(F("  Data Sent, "));
     if (Result) {
         if ( Wireless.isAckPayloadAvailable()) {
-            Wireless.read(ReceivedResponse, PayloadSize);
+            Wireless.read(ReceivedResponse, WirelessPayloadSize);
             ReceivedSequenceID = ((CommonTemplate*)ReceivedResponse) -> SequenceID;
             
             if(Debug)
