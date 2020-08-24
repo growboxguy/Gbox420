@@ -284,11 +284,11 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
       case HempyMessage::GetNext:
         if (*Debug)
         {
-          logToSerials(F("Last message received"), true, 3);
+          logToSerials(F("Last message received"), true, 4);
         }
         break;
       default:
-        logToSerials(F("SequenceID not known, ignoring package"), true, 3);
+        logToSerials(F("SequenceID not known, ignoring package"), true, 4);
         break;
       }
       LastResponseReceived = millis();
