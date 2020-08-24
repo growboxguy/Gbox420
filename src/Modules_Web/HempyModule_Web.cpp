@@ -1,20 +1,20 @@
 #include "HempyModule_Web.h"
 
-HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent,Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
+HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
-  updateCommand();
-  memcpy_P(this->WirelessChannel,(PGM_P)Name,sizeof(this->WirelessChannel));
-  Parent->addToReportQueue(this);          
-  Parent->addToRefreshQueue_Sec(this);     
-  Parent->addToRefreshQueue_FiveSec(this);     
-  Parent->addToRefreshQueue_Minute(this);    
-  //addToRefreshQueue_QuarterHour(this); 
-  Parent->addToWebsiteQueue_Load(this);        
-  Parent->addToWebsiteQueue_Refresh(this);     
-  Parent->addToWebsiteQueue_Field(this);       
-  Parent->addToWebsiteQueue_Button(this);      
+  updateCommands();
+  memcpy_P(this->WirelessChannel, (PGM_P)Name, sizeof(this->WirelessChannel));
+  Parent->addToReportQueue(this);
+  Parent->addToRefreshQueue_Sec(this);
+  Parent->addToRefreshQueue_FiveSec(this);
+  Parent->addToRefreshQueue_Minute(this);
+  //addToRefreshQueue_QuarterHour(this);
+  Parent->addToWebsiteQueue_Load(this);
+  Parent->addToWebsiteQueue_Refresh(this);
+  Parent->addToWebsiteQueue_Field(this);
+  Parent->addToWebsiteQueue_Button(this);
   logToSerials(F("HempyModule_Web object created"), true, 1);
 }
 
@@ -23,67 +23,67 @@ void HempyModule_Web::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Bucket1 Weight:"));
-  strcat(LongMessage, toText_weight(Response.Weight_B1));
+  strcat(LongMessage, toText_weight(Bucket1ReceivedResponse.Weight));
   strcat_P(LongMessage, (PGM_P)F(" ["));
-  strcat(LongMessage, toText(Command.StartWeightBucket_B1));
+  strcat(LongMessage, toText(Bucket1CommandToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("/"));
-  strcat(LongMessage, toText(Command.StopWeightBucket_B1));
+  strcat(LongMessage, toText(Bucket1CommandToSend.StopWeight));
   strcat_P(LongMessage, (PGM_P)F("] ; Bucket2 Weight:"));
-  strcat(LongMessage, toText_weight(Response.Weight_B2));
+  strcat(LongMessage, toText_weight(Bucket2ReceivedResponse.Weight));
   strcat_P(LongMessage, (PGM_P)F(" ["));
-  strcat(LongMessage, toText(Command.StartWeightBucket_B2));
+  strcat(LongMessage, toText(Bucket2CommandToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("/"));
-  strcat(LongMessage, toText(Command.StopWeightBucket_B2));
+  strcat(LongMessage, toText(Bucket2CommandToSend.StopWeight));
   strcat_P(LongMessage, (PGM_P)F("]"));
   logToSerials(&LongMessage, true, 1);
 }
 
 void HempyModule_Web::reportToJSON()
 {
-    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
-    strcat(LongMessage, toText(OnlineStatus));
-    strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1\":\""));
-    strcat(LongMessage, toText(Response.PumpState_B1));
-    strcat_P(LongMessage, (PGM_P)F("\",\"WeightB1\":\""));
-    strcat(LongMessage, toText(Response.Weight_B1));   
-    strcat_P(LongMessage, (PGM_P)F("\",\"StartB1\":\""));
-    strcat(LongMessage, toText(Command.StartWeightBucket_B1));     
-    strcat_P(LongMessage, (PGM_P)F("\",\"StopB1\":\""));
-    strcat(LongMessage, toText(Command.StopWeightBucket_B1));
-    strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2\":\""));
-    strcat(LongMessage, toText(Response.PumpState_B2));  
-    strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
-    strcat(LongMessage, toText(Response.Weight_B2));   
-    strcat_P(LongMessage, (PGM_P)F("\",\"StartB2\":\""));
-    strcat(LongMessage, toText(Command.StartWeightBucket_B2));    
-    strcat_P(LongMessage, (PGM_P)F("\",\"StopB2\":\""));
-    strcat(LongMessage, toText(Command.StopWeightBucket_B2));  
-    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
+  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
+  strcat(LongMessage, toText(OnlineStatus));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1\":\""));
+  strcat(LongMessage, toText(Bucket1ReceivedResponse.PumpState));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WeightB1\":\""));
+  strcat(LongMessage, toText(Bucket1ReceivedResponse.Weight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"StartB1\":\""));
+  strcat(LongMessage, toText(Bucket1CommandToSend.StartWeight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"StopB1\":\""));
+  strcat(LongMessage, toText(Bucket1CommandToSend.StopWeight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2\":\""));
+  strcat(LongMessage, toText(Bucket2ReceivedResponse.PumpState));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
+  strcat(LongMessage, toText(Bucket2ReceivedResponse.Weight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"StartB2\":\""));
+  strcat(LongMessage, toText(Bucket2CommandToSend.StartWeight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"StopB2\":\""));
+  strcat(LongMessage, toText(Bucket2CommandToSend.StopWeight));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
 void HempyModule_Web::websiteEvent_Load(char *url)
 {
-  if (strncmp(url, "/G",2) == 0)
+  if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgFloat(getComponentName(F("B1Strt")), Command.StartWeightBucket_B1);
-    WebServer.setArgFloat(getComponentName(F("B1Stp")), Command.StopWeightBucket_B1);
-    WebServer.setArgInt(getComponentName(F("B1Time")), Command.TimeOutPump_B1);
-    WebServer.setArgFloat(getComponentName(F("B2Strt")), Command.StartWeightBucket_B2);
-    WebServer.setArgFloat(getComponentName(F("B2Stp")), Command.StopWeightBucket_B2);
-    WebServer.setArgInt(getComponentName(F("B2Time")), Command.TimeOutPump_B2);
+    WebServer.setArgFloat(getComponentName(F("B1Strt")), Bucket1CommandToSend.StartWeight);
+    WebServer.setArgFloat(getComponentName(F("B1Stp")), Bucket1CommandToSend.StopWeight);
+    WebServer.setArgInt(getComponentName(F("B1Time")), Bucket1CommandToSend.TimeOutPump);
+    WebServer.setArgFloat(getComponentName(F("B2Strt")), Bucket2CommandToSend.StartWeight);
+    WebServer.setArgFloat(getComponentName(F("B2Stp")), Bucket2CommandToSend.StopWeight);
+    WebServer.setArgInt(getComponentName(F("B2Time")), Bucket2CommandToSend.TimeOutPump);
   }
 }
 
 void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///called when website is refreshed.
 {
-  if (strncmp(url, "/G",2) == 0)
+  if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getComponentName(F("B1Weight")), toText_weight(Response.Weight_B1));
-    WebServer.setArgString(getComponentName(F("B2Weight")), toText_weight(Response.Weight_B2));
-    WebServer.setArgString(getComponentName(F("B1Pump")),  toText_pumpState(Response.PumpState_B1));
-    WebServer.setArgString(getComponentName(F("B2Pump")), toText_pumpState(Response.PumpState_B2));
+    WebServer.setArgString(getComponentName(F("B1Weight")), toText_weight(Bucket1ReceivedResponse.Weight));
+    WebServer.setArgString(getComponentName(F("B2Weight")), toText_weight(Bucket2ReceivedResponse.Weight));
+    WebServer.setArgString(getComponentName(F("B1Pump")), toText_pumpState(Bucket1ReceivedResponse.PumpState));
+    WebServer.setArgString(getComponentName(F("B2Pump")), toText_pumpState(Bucket2ReceivedResponse.PumpState));
   }
 }
 
@@ -94,41 +94,40 @@ void HempyModule_Web::websiteEvent_Button(char *Button)
     return;
   }
   else
-  {    
+  {
     if (strcmp_P(ShortMessage, (PGM_P)F("B1PumpOn")) == 0)
     {
-      Command.TurnOnPump_B1 = true;
-      Parent -> addToLog(F("Watering HempyBucket 1"), false);
+      Bucket1CommandToSend.TurnOnPump = true;
+      Parent->addToLog(F("Watering HempyBucket 1"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2PumpOn")) == 0)
     {
-      Command.TurnOnPump_B2 = true;
-      Parent -> addToLog(F("Watering HempyBucket 2"), false);
-    } 
+      Bucket2CommandToSend.TurnOnPump = true;
+      Parent->addToLog(F("Watering HempyBucket 2"), false);
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1PumpOff")) == 0)
     {
-      Command.TurnOffPump_B1 = true;
-      Parent -> addToLog(F("Stop watering HempyBucket 1"), false);
+      Bucket1CommandToSend.TurnOffPump = true;
+      Parent->addToLog(F("Stop watering HempyBucket 1"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2PumpOff")) == 0)
     {
-      Command.TurnOffPump_B2 = true;
-      Parent -> addToLog(F("Stop watering HempyBucket 2"), false);
+      Bucket2CommandToSend.TurnOffPump = true;
+      Parent->addToLog(F("Stop watering HempyBucket 2"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1PumpDis")) == 0)
     {
-      Command.DisablePump_B1 = true;
-      Parent -> addToLog(F("Disabled HempyBucket 1 pump"), false);
-    } 
+      Bucket1CommandToSend.DisablePump = true;
+      Parent->addToLog(F("Disabled HempyBucket 1 pump"), false);
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2PumpDis")) == 0)
     {
-      Command.DisablePump_B2 = true;
-      Parent -> addToLog(F("Disabled HempyBucket 2 pump"), false);
-    }  
-    SyncRequested = true;  
+      Bucket2CommandToSend.DisablePump = true;
+      Parent->addToLog(F("Disabled HempyBucket 2 pump"), false);
+    }
+    SyncRequested = true;
   }
 }
-
 
 void HempyModule_Web::websiteEvent_Field(char *Field)
 { ///When the website field is submitted
@@ -137,34 +136,34 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
     return;
   }
   else
-  {    
+  {
     if (strcmp_P(ShortMessage, (PGM_P)F("B1Strt")) == 0)
     {
-      DefaultSettings->StartWeightBucket_B1 = WebServer.getArgFloat();      
-    }  /// \todo Write back to EEPROM
+      DefaultSettings->StartWeight_B1 = WebServer.getArgFloat();
+    } /// \todo Write back to EEPROM
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1Stp")) == 0)
     {
-      DefaultSettings->StopWeightBucket_B1 = WebServer.getArgFloat();
-      Parent -> addToLog(F("Bucket 1 limits updated"), false);
+      DefaultSettings->StopWeight_B1 = WebServer.getArgFloat();
+      Parent->addToLog(F("Bucket 1 limits updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1Time")) == 0)
     {
       DefaultSettings->TimeOutPump_B1 = WebServer.getArgInt();
-      Parent -> addToLog(F("Pump 1 timeout updated"), false);
+      Parent->addToLog(F("Pump 1 timeout updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2Strt")) == 0)
     {
-      DefaultSettings->StartWeightBucket_B2 = WebServer.getArgFloat();
+      DefaultSettings->StartWeight_B2 = WebServer.getArgFloat();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2Stp")) == 0)
     {
-      DefaultSettings->StopWeightBucket_B2 = WebServer.getArgFloat();
-      Parent -> addToLog(F("Bucket 2 limits updated"), false);
+      DefaultSettings->StopWeight_B2 = WebServer.getArgFloat();
+      Parent->addToLog(F("Bucket 2 limits updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2Time")) == 0)
     {
       DefaultSettings->TimeOutPump_B2 = WebServer.getArgInt();
-      Parent -> addToLog(F("Pump 2 timeout updated"), false);
+      Parent->addToLog(F("Pump 2 timeout updated"), false);
     }
     SyncRequested = true;
   }
@@ -173,83 +172,153 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
 void HempyModule_Web::refresh_Sec()
 {
   if (*Debug)
-    Common::refresh_Sec();  
-  if(SyncRequested) {
+    Common::refresh_Sec();
+  if (SyncRequested)
+  {
     SyncRequested = false;
-    syncModule(WirelessChannel,&Command,&Response);    
+    //syncModule(WirelessChannel,&Command,&Response);
+    sendMessages();
   }
 }
 
 void HempyModule_Web::refresh_FiveSec()
 {
   if (*Debug)
-    Common::refresh_FiveSec();  
-  syncModule(WirelessChannel,&Command,&Response);
+    Common::refresh_FiveSec();
+  //syncModule(WirelessChannel,&Command,&Response);
+  sendMessages();
 }
 
 void HempyModule_Web::refresh_Minute()
 {
   if (*Debug)
-    Common::refresh_Minute();  
+    Common::refresh_Minute();
 }
 
-void HempyModule_Web::syncModule( const byte WirelessChannel[], hempyCommand *Command, hempyResponse *Response){
-  updateCommand();
-  if(*Debug)logToSerials(F("Sending sync command..."),false,3);
-  Parent -> Wireless -> openWritingPipe(WirelessChannel);
-  if (Parent -> Wireless -> write(Command, sizeof(*Command) )) {
-      if ( Parent -> Wireless -> isAckPayloadAvailable() ) {
-          Parent -> Wireless -> read(Response, sizeof(*Response));
+void HempyModule_Web::sendMessages()
+{
+  updateCommands();
+  sendCommand(&Module1CommandToSend);                                                                                       //< Command - Response exchange
+  sendCommand(&Bucket1CommandToSend);                                                                                       //< Command - Response exchange
+  sendCommand(&Bucket2CommandToSend);                                                                                       //< Command - Response exchange
+  while (sendCommand(&GetNextResponse) < HempyMessage::GetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
+    ;
+  if (Debug)
+    Serial.println(F("Message exchange finished"));
+}
 
-          OnlineStatus = true;
-          if(*Debug){
-          logToSerials(F("Acknowledgement received ["),false,2);
-          ArduinoSerial.print(sizeof(*Response)); /// \todo Use LogToSerial
-          ESPSerial.print(sizeof(*Response)); /// \todo Use LogToSerial
-          logToSerials(F("bytes]"),true,1);
-          logToSerials(Response -> PumpState_B1,false,3);
-          logToSerials(F(","),false,1);
-          logToSerials(Response -> Weight_B1,false,1);
-          logToSerials(F(","),false,1);
-          logToSerials(Response -> PumpState_B2,false,1);
-          logToSerials(F(","),false,1);
-          logToSerials(Response -> Weight_B2,true,1);               
-          }            
+HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
+{
+  HempyMessage SequenceIDToSend = ((CommonTemplate *)CommandToSend)->SequenceID;
+  HempyMessage ReceivedSequenceID = NULL;
+  if (Debug)
+  {
+    logToSerials(F("Sending command SequenceID: "), false, 3);
+    Serial.print(SequenceIDToSend);
+    Serial.print(F(" - "));
+    Serial.print(sequenceIDToText(SequenceIDToSend));
+    Serial.println(F(" and waiting for Acknowledgment..."));
+  }
+  Parent->Wireless->openWritingPipe(WirelessChannel);
+  Parent->Wireless->flush_rx(); ///< Dump all previously received but unprocessed messages
+  if (Parent->Wireless->write(CommandToSend, WirelessPayloadSize))
+  {
+    delay(50); //< give a little time to the nRF024L01+ chip to update the isAckPayloadAvailable flag
+    if (Parent->Wireless->isAckPayloadAvailable())
+    {
+      OnlineStatus = true; ///< Mark that the module responded
+      Parent->Wireless->read(ReceivedResponse, WirelessPayloadSize);
+      ReceivedSequenceID = ((CommonTemplate *)ReceivedResponse)->SequenceID;
 
-          ///Turn off command flags 
-          if(Command -> DisablePump_B1 || Command -> TurnOnPump_B1 || Command -> TurnOffPump_B1 || Command -> DisablePump_B2 || Command -> TurnOnPump_B2 || Command -> TurnOffPump_B2 )
-          {
-            SyncRequested = true;  ///Force a second packet to actualize the response
-            Command -> DisablePump_B1 = false;
-            Command -> TurnOnPump_B1 = false;
-            Command -> TurnOffPump_B1 = false;
-            Command -> DisablePump_B2 = false;
-            Command -> TurnOnPump_B2 = false;
-            Command -> TurnOffPump_B2 = false;
-          }
+      if (*Debug)
+      {
+        Serial.print(F("Response SequenceID: "));
+        Serial.print(ReceivedSequenceID);
+        Serial.print(F(" - "));
+        Serial.println(sequenceIDToText(ReceivedSequenceID));
       }
-      else {
-          if(*Debug)logToSerials(F("Acknowledgement received without any data."),true,1);
-          OnlineStatus = false;
-      }        
-  }
-  else {
-      if(*Debug)logToSerials(F("No response."),true,1);
+
+      switch (ReceivedSequenceID)
+      {
+      case HempyMessage::Module1Response:
+        memcpy(&Module1ReceivedResponse, ReceivedResponse, WirelessPayloadSize);
+        if (*Debug)
+        {
+          Serial.print(F("  ModuleOK: "));
+          Serial.println(Module1ReceivedResponse.Status);
+        }
+        break;
+      case HempyMessage::Bucket1Response:
+        memcpy(&Bucket1ReceivedResponse, ReceivedResponse, WirelessPayloadSize);
+        if (Bucket1CommandToSend.DisablePump || Bucket1CommandToSend.TurnOnPump || Bucket1CommandToSend.TurnOffPump) ///Turn off command flags
+        {
+          SyncRequested = true; ///Force a second packet to actualize the response
+          Bucket1CommandToSend.DisablePump = false;
+          Bucket1CommandToSend.TurnOnPump = false;
+          Bucket1CommandToSend.TurnOffPump = false;
+        }
+        if (*Debug)
+        {
+          Serial.print(F("  Bucket1: "));
+          Serial.print(Bucket1ReceivedResponse.PumpState);          
+          Serial.print(F(", "));
+          Serial.println(Bucket1ReceivedResponse.Weight);
+        }
+        break;
+      case HempyMessage::Bucket2Response:
+        memcpy(&Bucket2ReceivedResponse, ReceivedResponse, WirelessPayloadSize);
+        if (Bucket2CommandToSend.DisablePump || Bucket2CommandToSend.TurnOnPump || Bucket2CommandToSend.TurnOffPump) ///Turn off command flags
+        {
+          SyncRequested = true; ///Force a second packet to actualize the response
+          Bucket2CommandToSend.DisablePump = false;
+          Bucket2CommandToSend.TurnOnPump = false;
+          Bucket2CommandToSend.TurnOffPump = false;
+        }
+        if (*Debug)
+        {
+          Serial.print(F("  Bucket2: "));
+          Serial.print(Bucket2ReceivedResponse.PumpState);
+          Serial.print(F(", "));
+          Serial.println(Bucket2ReceivedResponse.Weight);
+        }
+        break;
+      case HempyMessage::GetNext:
+        if (*Debug)
+        {
+          Serial.println(F("  Last message received"));
+        }
+        break;
+      default:
+        Serial.println(F("  SequenceID not known, ignoring package"));
+        break;
+      }
+    }
+    else
+    {
+      if (*Debug)
+        logToSerials(F("Acknowledgement received without any data."), true, 1);
       OnlineStatus = false;
+    }
+    LastResponseReceived = millis();
   }
+  else
+  {
+    if (*Debug)
+      logToSerials(F("No response."), true, 1);
+    OnlineStatus = false;
   }
+  return ReceivedSequenceID;
+}
 
-
-void HempyModule_Web::updateCommand() {        // so you can see that new data is being sent
-    //Command.TurnOnPump_B1 = random(0,2);  //Generate random bool: 0 or 1. The max limit is exclusive!
-    //Command.TurnOnPump_B2 = random(0,2);    
-    Command.Time = now();
-    Command.Debug = *Debug;
-    Command.Metric = *Metric;
-    Command.StartWeightBucket_B1= DefaultSettings->StartWeightBucket_B1;
-    Command.StopWeightBucket_B1= DefaultSettings->StopWeightBucket_B1;
-    Command.TimeOutPump_B1= DefaultSettings->TimeOutPump_B1;
-    Command.StartWeightBucket_B2= DefaultSettings->StartWeightBucket_B2;
-    Command.StopWeightBucket_B2= DefaultSettings->StopWeightBucket_B2;
-    Command.TimeOutPump_B2= DefaultSettings->TimeOutPump_B2;
+void HempyModule_Web::updateCommands()
+{
+  Module1CommandToSend.Time = now();
+  Module1CommandToSend.Debug = *Debug;
+  Module1CommandToSend.Metric = *Metric;
+  Bucket1CommandToSend.StartWeight = DefaultSettings->StartWeight_B1;
+  Bucket1CommandToSend.StopWeight = DefaultSettings->StopWeight_B1;
+  Bucket1CommandToSend.TimeOutPump = DefaultSettings->TimeOutPump_B1;
+  Bucket2CommandToSend.StartWeight = DefaultSettings->StartWeight_B2;
+  Bucket2CommandToSend.StopWeight = DefaultSettings->StopWeight_B2;
+  Bucket2CommandToSend.TimeOutPump = DefaultSettings->TimeOutPump_B2;
 }

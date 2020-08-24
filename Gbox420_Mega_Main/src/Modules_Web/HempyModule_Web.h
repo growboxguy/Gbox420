@@ -15,7 +15,8 @@ class HempyModule_Web : public Common_Web
 {
 public:
   HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent,Settings::HempyModuleSettings *DefaultSettings); ///constructor
-  void syncModule(const byte WirelessChannel[], hempyCommand *Command, hempyResponse *Response);
+  void sendMessages();
+  HempyMessage sendCommand(void* CommandToSend);
   void websiteEvent_Refresh(__attribute__((unused)) char *url); 
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Button(__attribute__((unused)) char *Button);
@@ -25,13 +26,20 @@ public:
   void refresh_Sec();
   void refresh_FiveSec();
   void refresh_Minute();
-  void updateCommand();
+  void updateCommands();
   
 private:  
   bool SyncRequested = true;    //Trigger a sync with the external Module within 1 second
   bool OnlineStatus = false;  /// Start in Offline state, a successful sync will set this to true
-  struct hempyCommand Command;  //Commands sent to the external Module
-  struct hempyResponse Response; //The response from the external Module will be stored here, represents the current status of the external Module
+  void *ReceivedResponse = malloc(WirelessPayloadSize);                       ///< Pointer to the data sent back in the acknowledgement.
+  struct ModuleCommand Module1CommandToSend = {HempyMessage::Module1Command};  ///Command to send will be stored here
+  struct BucketCommand Bucket1CommandToSend = {HempyMessage::Bucket1Command}; ///Command to send will be stored here
+  struct BucketCommand Bucket2CommandToSend = {HempyMessage::Bucket2Command}; ///Command to send will be stored here
+  struct CommonTemplate GetNextResponse = {HempyMessage::GetNext};            //< Special command to fetch the next Response from the Receiver
+  struct ModuleResponse Module1ReceivedResponse = {HempyMessage::Module1Response};  /// Response will be stored here
+  struct BucketResponse Bucket1ReceivedResponse = {HempyMessage::Bucket1Response};  /// Response will be stored here
+  struct BucketResponse Bucket2ReceivedResponse = {HempyMessage::Bucket2Response};  /// Response will be stored here
+  unsigned long LastResponseReceived = 0;   //Timestamp of the last response received
 
 protected:
   Module_Web *Parent;

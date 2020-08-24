@@ -31,7 +31,7 @@ struct aeroResponse  ///Max 32 bytes. Template of the response sent back to the 
    bool PressureTankPresent = false;
    bool SprayEnabled = false;
    float Pressure = 0.0;
-   PumpState State = DISABLED;
+   PumpStates State = DISABLED;
    float LastSprayPressure = 0.0; ///< Used only without pressure tank. last spray pressure
 
 };

@@ -89,15 +89,15 @@ enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
           
     struct HempyModuleSettings
     {
-      HempyModuleSettings( float StartWeightBucket_B1 = 0.0, float StopWeightBucket_B1 = 0.0, int TimeOutPump_B1 = 0, float StartWeightBucket_B2 = 0.0, float StopWeightBucket_B2 = 0.0, int TimeOutPump_B2 = 0 ) : StartWeightBucket_B1(StartWeightBucket_B1), StopWeightBucket_B1(StopWeightBucket_B1), TimeOutPump_B1(TimeOutPump_B1), StartWeightBucket_B2(StartWeightBucket_B2), StopWeightBucket_B2(StopWeightBucket_B2), TimeOutPump_B2(TimeOutPump_B2) {}
-      float StartWeightBucket_B1; ///Start watering below this weight
-      float StopWeightBucket_B1;  ///Stop watering above this weight
+      HempyModuleSettings( float StartWeight_B1 = 0.0, float StopWeight_B1 = 0.0, int TimeOutPump_B1 = 0, float StartWeight_B2 = 0.0, float StopWeight_B2 = 0.0, int TimeOutPump_B2 = 0 ) : StartWeight_B1(StartWeight_B1), StopWeight_B1(StopWeight_B1), TimeOutPump_B1(TimeOutPump_B1), StartWeight_B2(StartWeight_B2), StopWeight_B2(StopWeight_B2), TimeOutPump_B2(TimeOutPump_B2) {}
+      float StartWeight_B1; ///Start watering below this weight
+      float StopWeight_B1;  ///Stop watering above this weight
       int TimeOutPump_B1;  ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails
-      float StartWeightBucket_B2; ///Start watering below this weight
-      float StopWeightBucket_B2;  ///Stop watering above this weight   
+      float StartWeight_B2; ///Start watering below this weight
+      float StopWeight_B2;  ///Stop watering above this weight   
       int TimeOutPump_B2;  
     };
-    struct HempyModuleSettings HempyModule1 = {.StartWeightBucket_B1 = 4.2, .StopWeightBucket_B1 = 6.9, .TimeOutPump_B1 = 120, .StartWeightBucket_B2 = 4.2, .StopWeightBucket_B2 = 6.9, .TimeOutPump_B2 = 120};
+    struct HempyModuleSettings HempyModule1 = {.StartWeight_B1 = 4.2, .StopWeight_B1 = 6.9, .TimeOutPump_B1 = 120, .StartWeight_B2 = 4.2, .StopWeight_B2 = 6.9, .TimeOutPump_B2 = 120};
     
     struct LightSensorSettings
     {

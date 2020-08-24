@@ -32,12 +32,12 @@ static const uint8_t WirelessChannel[6] ={"Hemp1"}; //Identifies the communicati
 RF24 Wireless(CE_PIN, CSN_PIN);
 
 //Variables and constants for timing Command messages 
-static unsigned long LastCommandSent = 0;  //When was the last message sent
-static unsigned long LastResponseReceived = 0;  //When was the last response received
+unsigned long LastCommandSent = 0;  //When was the last message sent
+unsigned long LastResponseReceived = 0;  //When was the last response received
 static const unsigned long MessageInterval = 15000; // send a control message once per 15 seconds
 static const uint16_t WirelessMessageTimeout = 500; //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
-static const uint8_t RetryDelay = 10; //How long to wait between each retry, in multiples of 250us, max is 15. 0 means 250us, 15 means 4000us.
-static const uint8_t RetryCount = 15; //How many retries before giving up, max 15
+static const uint8_t WirelessRetry = 15; //How many retries before giving up, max 15
+static const uint8_t WirelessDelay = 10; //How long to wait between each retry, in multiples of 250us, max is 15. 0 means 250us, 15 means 4000us.
 
 void setup() {
     Serial.begin(115200);
@@ -50,7 +50,7 @@ void setup() {
     Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
     Wireless.setPayloadSize(WirelessPayloadSize);  ///Set the number of bytes in the payload
     Wireless.enableAckPayload();  ///< Enable custom payloads on the acknowledge packets. Ack payloads are a handy way to return data back to senders without changing the radio modes on both units.
-    Wireless.setRetries(RetryDelay,RetryCount); 
+    Wireless.setRetries(WirelessDelay,WirelessRetry); 
     Wireless.openWritingPipe(WirelessChannel); 
     sendMessages(); 
 }

@@ -104,8 +104,8 @@ void setup()
   Wireless.setCRCLength(RF24_CRC_8);  /// RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
   Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
   Wireless.setPayloadSize(WirelessPayloadSize);  ///The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
-  Wireless.enableAckPayload();    ///< When sending out a wireless package, expect a response confirming the package was received + the current status of the responder
-  Wireless.setRetries(WirelessDelay,WirelessRetry); // Defined in Settings.h
+  Wireless.enableAckPayload();    ///< When sending a wireless package, expect a response confirming the package was received in a custom Acknowledgement package
+  Wireless.setRetries(WirelessDelay,WirelessRetry); ///< Defined in Settings.h. How many retries before giving up sending a single package and How long to wait between each retry
   logToSerials(F("done"), true, 1);
 
   // Create the Module objects
