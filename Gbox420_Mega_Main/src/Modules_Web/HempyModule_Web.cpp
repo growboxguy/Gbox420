@@ -204,7 +204,7 @@ void HempyModule_Web::sendMessages()
   while (sendCommand(&GetNextResponse) < HempyMessage::GetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
     ;
   if (Debug)
-    Serial.println(F("Message exchange finished"));
+    logToSerials(F("Message exchange finished"), true, 3);
 }
 
 HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
@@ -214,10 +214,10 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
   if (Debug)
   {
     logToSerials(F("Sending command SequenceID: "), false, 3);
-    Serial.print(SequenceIDToSend);
-    Serial.print(F(" - "));
-    Serial.print(sequenceIDToText(SequenceIDToSend));
-    Serial.println(F(" and waiting for Acknowledgment..."));
+    logToSerials(SequenceIDToSend, false, 0);
+    logToSerials(F("- "), false, 1);
+    logToSerials(sequenceIDToText(SequenceIDToSend), false, 0);
+    logToSerials(F("and waiting for Acknowledgment..."), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
   Parent->Wireless->flush_rx(); ///< Dump all previously received but unprocessed messages
@@ -231,10 +231,10 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
       ReceivedSequenceID = ((CommonTemplate *)ReceivedResponse)->SequenceID;
       if (*Debug)
       {
-        Serial.print(F("Response SequenceID: "));
-        Serial.print(ReceivedSequenceID);
-        Serial.print(F(" - "));
-        Serial.println(sequenceIDToText(ReceivedSequenceID));
+        logToSerials(F("Response SequenceID: "), false, 4);
+        logToSerials(ReceivedSequenceID, false, 0);
+        logToSerials(F("- "), false, 1);
+        logToSerials(sequenceIDToText(ReceivedSequenceID), true, 0);
       }
 
       switch (ReceivedSequenceID)
@@ -243,8 +243,8 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
         memcpy(Module1ReceivedResponse, ReceivedResponse, sizeof(struct ModuleResponse));
         if (*Debug)
         {
-          Serial.print(F("  ModuleOK: "));
-          Serial.println(Module1ReceivedResponse -> Status);
+          logToSerials(F("ModuleOK: "), false, 4);
+          logToSerials(Module1ReceivedResponse -> Status, true, 0);
         }
         break;
       case HempyMessage::Bucket1Response:
@@ -258,10 +258,10 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
         }
         if (*Debug)
         {
-          Serial.print(F("  Bucket1: "));
-          Serial.print(Bucket1ReceivedResponse -> PumpState);          
-          Serial.print(F(", "));
-          Serial.println(Bucket1ReceivedResponse -> Weight);
+          logToSerials(F("Bucket1: "), false, 4);
+          logToSerials(Bucket1ReceivedResponse -> PumpState, false, 0);         
+          logToSerials(F(", "), false, 1);
+          logToSerials(Bucket1ReceivedResponse -> Weight, true, 0);
         }
         break;
       case HempyMessage::Bucket2Response:
@@ -275,20 +275,20 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
         }
         if (*Debug)
         {
-          Serial.print(F("  Bucket2: "));
-          Serial.print(Bucket2ReceivedResponse -> PumpState);
-          Serial.print(F(", "));
-          Serial.println(Bucket2ReceivedResponse -> Weight);
+          logToSerials(F("Bucket2: "), false, 4);
+          logToSerials(Bucket2ReceivedResponse -> PumpState, false, 0);
+          logToSerials(F(", "), false, 1);
+          logToSerials(Bucket2ReceivedResponse -> Weight, true, 0);
         }
         break;
       case HempyMessage::GetNext:
         if (*Debug)
         {
-          Serial.println(F("  Last message received"));
+          logToSerials(F("Last message received"), true, 3);
         }
         break;
       default:
-        Serial.println(F("  SequenceID not known, ignoring package"));
+        logToSerials(F("SequenceID not known, ignoring package"), true, 3);
         break;
       }
       LastResponseReceived = millis();
@@ -296,13 +296,13 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
     else
     {
       if (*Debug)
-        logToSerials(F("Acknowledgement received without any data"), true, 1);  //< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+        
+        logToSerials(F("Acknowledgement received without any data"), true, 3);  //< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+        
     }    
   }
   else
   {
     if (*Debug)
-      logToSerials(F("No response."), true, 1);
+      logToSerials(F("No response."), true, 3);
     OnlineStatus = false;
   }
   return ReceivedSequenceID;
