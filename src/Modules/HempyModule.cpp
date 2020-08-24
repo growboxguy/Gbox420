@@ -41,7 +41,7 @@ void HempyModule::refresh_Sec()
 {
   if(NextSequenceID != HempyMessage::Module1Response && millis()- LastMessageSent >= WirelessMessageTimeout){  //< If there is a package exchange in progress
       NextSequenceID = HempyMessage::Module1Response;  //< Reset back to the first response
-      Serial.println(F("Timeout during message exchange, reseting to first response"));   
+      logToSerials(F("Timeout during message exchange, reseting to first response"),true,0);   
       updateAckData();  
   } 
 }
@@ -66,14 +66,14 @@ void HempyModule::processCommand(void *ReceivedCommand){
   HempyMessage ReceivedSequenceID = ((CommonTemplate*)ReceivedCommand) -> SequenceID;
   LastMessageSent = millis();  ///< Store current time
   if(*Debug){
-      Serial.print(F("Command received with SequenceID: "));
-      Serial.print(ReceivedSequenceID);
-      Serial.print(F(" - "));
-      Serial.print(sequenceIDToText(ReceivedSequenceID));
-      Serial.print(F(", Acknowledgement sent with SequenceID: "));
-      Serial.print(NextSequenceID);
-      Serial.print(F(" - "));
-      Serial.println(sequenceIDToText(NextSequenceID));
+      logToSerials(F("Command received with SequenceID: "),false,0);
+      logToSerials(ReceivedSequenceID,false,0);
+      logToSerials(F("- "),false,1);
+      logToSerials(sequenceIDToText(ReceivedSequenceID),false,0);
+      logToSerials(F(", Acknowledgement sent with SequenceID: "),false,0);
+      logToSerials(NextSequenceID,false,0);
+      logToSerials(F("- "),false,1);
+      logToSerials(sequenceIDToText(NextSequenceID),true,0);
   } 
 
   switch (ReceivedSequenceID){
@@ -82,12 +82,12 @@ void HempyModule::processCommand(void *ReceivedCommand){
       setMetric(((ModuleCommand*)ReceivedCommand) -> Metric);
       NextSequenceID = HempyMessage::Bucket1Response;  // update the next Message that will be copied to the buffer 
       if(*Debug){
-        Serial.print(F("  Module: "));
-        Serial.print(((ModuleCommand*)ReceivedCommand) -> Time);
-        Serial.print(F(", "));
-        Serial.print(((ModuleCommand*)ReceivedCommand) -> Debug);
-        Serial.print(F(", "));
-        Serial.println(((ModuleCommand*)ReceivedCommand) -> Metric);
+        logToSerials(F("Module: "),false,2);
+        logToSerials(((ModuleCommand*)ReceivedCommand) -> Time,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((ModuleCommand*)ReceivedCommand) -> Debug,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((ModuleCommand*)ReceivedCommand) -> Metric,true,0);
       }            
       break;
     case HempyMessage::Bucket1Command :
@@ -99,18 +99,18 @@ void HempyModule::processCommand(void *ReceivedCommand){
       Bucket1 -> setStopWeight(((BucketCommand*)ReceivedCommand) -> StopWeight);
       NextSequenceID = HempyMessage::Bucket2Response;  // update the next Message that will be copied to the buffer
       if(*Debug){  
-        Serial.print(F("  Bucket1: "));
-        Serial.print(((BucketCommand*)ReceivedCommand) -> DisablePump);
-        Serial.print(F(", "));
-        Serial.print(((BucketCommand*)ReceivedCommand) -> TurnOnPump);
-        Serial.print(F(", "));
-        Serial.print(((BucketCommand*)ReceivedCommand) -> TurnOffPump);
-        Serial.print(F(", "));
-        Serial.print(((BucketCommand*)ReceivedCommand) -> TimeOutPump);
-        Serial.print(F(", "));
-        Serial.print(((BucketCommand*)ReceivedCommand) -> StartWeight);
-        Serial.print(F(", "));
-        Serial.println(((BucketCommand*)ReceivedCommand) -> StopWeight);
+        logToSerials(F("Bucket1: "),false,2);
+        logToSerials(((BucketCommand*)ReceivedCommand) -> DisablePump,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((BucketCommand*)ReceivedCommand) -> TurnOnPump,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((BucketCommand*)ReceivedCommand) -> TurnOffPump,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((BucketCommand*)ReceivedCommand) -> TimeOutPump,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((BucketCommand*)ReceivedCommand) -> StartWeight,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((BucketCommand*)ReceivedCommand) -> StopWeight,true,0);
       }      
       break;
     case HempyMessage::Bucket2Command :
@@ -122,28 +122,28 @@ void HempyModule::processCommand(void *ReceivedCommand){
       Bucket2 -> setStopWeight(((BucketCommand*)ReceivedCommand) -> StopWeight);
       NextSequenceID = HempyMessage::GetNext; // update the next Message that will be copied to the buffer 
       if(*Debug){
-        Serial.print(F("  Bucket2: "));
-        Serial.print(((BucketCommand*)ReceivedCommand) -> DisablePump);
-        Serial.print(F(", "));
-        Serial.print(((BucketCommand*)ReceivedCommand) -> TurnOnPump);
-        Serial.print(F(", "));
-        Serial.print(((BucketCommand*)ReceivedCommand) -> TurnOffPump);
-        Serial.print(F(", "));
-        Serial.print(((BucketCommand*)ReceivedCommand) -> TimeOutPump);
-        Serial.print(F(", "));
-        Serial.print(((BucketCommand*)ReceivedCommand) -> StartWeight);
-        Serial.print(F(", "));
-        Serial.println(((BucketCommand*)ReceivedCommand) -> StopWeight);
+        logToSerials(F("Bucket2: "),false,2);
+        logToSerials(((BucketCommand*)ReceivedCommand) -> DisablePump,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((BucketCommand*)ReceivedCommand) -> TurnOnPump,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((BucketCommand*)ReceivedCommand) -> TurnOffPump,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((BucketCommand*)ReceivedCommand) -> TimeOutPump,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((BucketCommand*)ReceivedCommand) -> StartWeight,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((BucketCommand*)ReceivedCommand) -> StopWeight,true,0);
       }                
       break;
     case HempyMessage::GetNext :     //< Used to get all Responses that do not have a corresponding Command 
       if(++NextSequenceID > HempyMessage::GetNext){  //< If the end of HempyMessage enum is reached
           NextSequenceID = HempyMessage::Module1Response; //< Load the first response for the next message exchange
-          if(Debug){ Serial.println(F("Message exchange finished")); }
+          if(Debug){ logToSerials(F("Message exchange finished"),true,0);  }
       }            
       break;
     default:
-      Serial.println(F("  SequenceID unknown, ignoring message"));
+      logToSerials(F("  SequenceID unknown, ignoring message"),true,0); 
       //NextSequenceID = HempyMessage::Module1Response; // update the next Message that will be copied to the buffer           
       break;        
   } 
@@ -153,8 +153,8 @@ void HempyModule::processCommand(void *ReceivedCommand){
 
 void HempyModule::updateAckData() { // so you can see that new data is being sent
 
-    Serial.print(F("  Updating Acknowledgement message to responseID: "));
-    Serial.println(NextSequenceID);
+    logToSerials(F("Updating Acknowledgement message to responseID: "),false,2);
+    logToSerials(NextSequenceID,true,0);
     Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
 
     switch (NextSequenceID)  // based on the NextSeqenceID load the next response into the Acknowledgement buffer
@@ -172,7 +172,7 @@ void HempyModule::updateAckData() { // so you can see that new data is being sen
         Wireless.writeAckPayload(1, &LastResponseToSend, PayloadSize);
         break;
     default:
-        Serial.println(F("   Unknown next Sequence number, Ack defaults loaded"));
+        logToSerials(F("Unknown next Sequence number, Ack defaults loaded"),true,3); 
         Wireless.writeAckPayload(1, &Module1ResponseToSend, PayloadSize); // load the first Response into the buffer 
         break;    
     }

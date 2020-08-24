@@ -3,10 +3,11 @@
 WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::WaterPumpSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
+  logToSerials(F(""),true,0);
   PumpSwitch = new Switch(F("SpraySolenoid"),DefaultSettings->PumpPin,DefaultSettings->PumpPinNegativeLogic);
   if(DefaultSettings->BypassSolenoidPin != 255)
   {
-   BypassSwitch = new Switch(F("SpraySolenoid"),DefaultSettings->BypassSolenoidPin,DefaultSettings->BypassSolenoidNegativeLogic);
+   BypassSwitch = new Switch(F("BypassSolenoid"),DefaultSettings->BypassSolenoidPin,DefaultSettings->BypassSolenoidNegativeLogic);
   }
   
   PumpTimeOut= &DefaultSettings->PumpTimeOut;  
@@ -19,7 +20,7 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
     
   Parent->addToReportQueue(this);         
   Parent->addToRefreshQueue_Sec(this);      
-  logToSerials(F("WaterPump object created"), true, 1);
+  logToSerials(F("WaterPump object created"), true, 2);
 }
 
 void WaterPump::report()

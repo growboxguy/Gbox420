@@ -44,6 +44,9 @@ void setup() {
     Serial.println(F("Setting up the wireless receiver..."));
     Wireless.begin();
     Wireless.setDataRate( RF24_250KBPS );
+    Wireless.setCRCLength(RF24_CRC_8);  /// RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
+    Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_MAX=-6dBM, and RF24_PA_MAX=0dBm.
+    Wireless.setPayloadSize(PayloadSize);  ///Set the number of bytes in the payload    
     Wireless.openReadingPipe(1, WirelessChannel);
     Wireless.enableAckPayload();    
     Wireless.startListening(); 
