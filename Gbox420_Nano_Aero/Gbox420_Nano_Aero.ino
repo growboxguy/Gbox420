@@ -48,6 +48,8 @@ void setup()
   logToSerials(F("Arduino Nano RF initializing..."), true, 0); ///logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https:///gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                 ///Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                   ///fix watchdog not loading sketch after a reset error on Mega2560
+  struct AeroModuleCommand BlankCommand = {AeroMessages::AeroModule1Command};
+  memcpy(ReceivedMessage, &BlankCommand, sizeof(struct AeroModuleCommand)); //< Copy a black command to the memory block pointed ReceivedMessage. Without this ReceivedMessage would contain random data 
   setSyncProvider(updateTime);
   setSyncInterval(3600);                               //Sync time every hour with the main module
   
@@ -65,6 +67,8 @@ void setup()
   Wireless.enableAckPayload();
   Wireless.openReadingPipe(1, WirelessChannel);    
   Wireless.startListening();
+  //Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  //Wireless.flush_rx();  ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
 
   /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
   OneSecThread.setInterval(1000);  ///1000ms
@@ -153,8 +157,9 @@ time_t updateTime()
   time_t ReceivedTime = ((AeroModuleCommand*)ReceivedMessage) -> Time;
   if(ReceivedTime > 0)
   {
+    logToSerials(ReceivedTime,true,0); 
     setTime(ReceivedTime);
-    logToSerials(F("Clock synced with main module"),true,0); 
+    logToSerials(F("- Clock synced with Main module"),true,0); 
   }
   else {
     logToSerials(F("Clock out of sync"),true,0); 
