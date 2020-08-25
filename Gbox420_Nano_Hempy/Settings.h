@@ -32,10 +32,11 @@ static const uint8_t Version = 5; ///< Increment this when you make a change in 
   extern char CurrentTime[MaxTextLength];      ///buffer for storing current time in text
 
   ///nRF24L01+ wireless receiver
+  static const uint8_t WirelessCSNPin = 9;   //< Pre-connected on RF-Nano
+  static const uint8_t WirelessCEPin = 10;   //< Pre-connected on RF-Nano
   static const uint8_t WirelessChannel[6] = {"Hemp1"};    ///This needs to be unique and match with the Name of the HempyModule_Web object in the Main module
   static const uint8_t WirelessPayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
   static const uint16_t WirelessMessageTimeout = 500; //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
-  
 
 ///SAVED TO EEPROM - Before uploading the schetch increase the Version variable to override whatever is stored in the Arduino's EEPROM 
   typedef struct

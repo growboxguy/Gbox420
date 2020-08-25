@@ -20,8 +20,6 @@ static const uint8_t Version = 3; ///< Increment this when you make a change in 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 
   ///Global constants
-  static const uint8_t WirelessChannel[6] = {"Aero1"};    ///This needs to be unique and match with the Name of the HempyModule_Web object in the Main module
-
   static const uint8_t MaxTextLength = 32;      ///Default char * buffer for storing a word + null terminator. Memory intense!
   static const uint8_t MaxShotTextLength = 64; ///Default char * buffer for storing mutiple words. Memory intense!
   static const int MaxLongTextLength = 256; ///Default char * buffer for storing a long text. Memory intense!
@@ -32,6 +30,14 @@ static const uint8_t Version = 3; ///< Increment this when you make a change in 
   extern char LongMessage[MaxLongTextLength];  ///temp storage for assembling long messages (REST API, MQTT API)
   extern char ShortMessage[MaxShotTextLength]; ///temp storage for assembling short messages (Log entries, Error messages)
   extern char CurrentTime[MaxTextLength];      ///buffer for storing current time in text
+
+  ///nRF24L01+ wireless receiver
+  static const uint8_t WirelessCSNPin = 9;   //< Pre-connected on RF-Nano
+  static const uint8_t WirelessCEPin = 10;   //< Pre-connected on RF-Nano
+  static const uint8_t WirelessChannel[6] = {"Aero1"};    ///This needs to be unique and match with the Name of the HempyModule_Web object in the Main module
+  static const uint8_t WirelessPayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+  static const uint16_t WirelessMessageTimeout = 500; //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
+
 
 ///SAVED TO EEPROM - Before uploading the schetch increase the Version variable to override whatever is stored in the Arduino's EEPROM 
   typedef struct

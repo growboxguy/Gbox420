@@ -18,7 +18,6 @@ class PressureSensor;
 class WaterPump;
 extern RF24 Wireless;
 
-
 class AeroModule : virtual public Common, virtual public Module
 {
 public:
@@ -31,20 +30,17 @@ public:
   WaterPump *Pump1 = NULL;
   Aeroponics_NoTank *AeroNT1 = NULL; 
   Aeroponics_Tank *AeroT1 = NULL;
-
-
   void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();
   //void refresh_QuarterHour(); 
-  void processCommand(aeroCommand *Command);
+  void processCommand(void *Command);
   void updateResponse();
+  void updateAckData();
 
 private:
-  struct aeroCommand Command;  //Commands sent to the external Module
-  struct aeroResponse Response; //The response from the external Module will be stored here, represents the current status of the external Module
-
-  
+    unsigned long LastMessageReceived = 0;  //When was the last wireless message received
+    
 protected:
 
 };

@@ -24,14 +24,13 @@ char ShortMessage[MaxShotTextLength] = ""; ///temp storage for assembling short 
 char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
 void* ReceivedMessage = malloc(WirelessPayloadSize); ///< Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
 
-
 ///Component initialization
 HardwareSerial &ArduinoSerial = Serial;   ///Reference to the Arduino Serial
 Settings * ModuleSettings;                ///settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
 bool *Debug;
 bool *Metric;
 HempyModule *HempyMod1;                   ///Represents a Hempy bucket with weight sensors and pumps
-RF24 Wireless(10, 9); /// Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
+RF24 Wireless(WirelessCEPin, WirelessCSNPin); /// Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 
 ///Thread initialization
 Thread OneSecThread = Thread();
@@ -39,8 +38,6 @@ Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
 Thread QuarterHourThread = Thread();
 StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread, &QuarterHourThread);
-
-
 
 void setup()
 {                                                      /// put your setup code here, to run once:
@@ -54,7 +51,6 @@ void setup()
   setSyncProvider(updateTime);
   setSyncInterval(3600);                               //Sync time every hour with the main module
   
-
   ///Loading settings from EEPROM
   ModuleSettings = loadSettings();
   Debug = &ModuleSettings ->  Debug;
@@ -67,8 +63,7 @@ void setup()
   Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
   Wireless.setPayloadSize(WirelessPayloadSize);  ///Set the number of bytes in the payload
   Wireless.enableAckPayload();
-  Wireless.openReadingPipe(1, WirelessChannel);  
-  //Wireless.writeAckPayload(1, &Response, sizeof(Response));
+  Wireless.openReadingPipe(1, WirelessChannel);
   Wireless.startListening();
 
   /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
@@ -136,9 +131,8 @@ void HeartBeat()
 void getWirelessData() {
     if ( Wireless.available() ) { 
         if(*Debug)logToSerials(F("Wireless Command received"),true,0);
-        Wireless.read( ReceivedMessage, WirelessPayloadSize );
-        
-        if(timeStatus() != timeSet && ((CommonTemplate*)ReceivedMessage) -> SequenceID == HempyMessage::Module1Command)  
+        Wireless.read( ReceivedMessage, WirelessPayloadSize );        
+        if(timeStatus() != timeSet && ((CommonTemplate*)ReceivedMessage) -> SequenceID == HempyMessages::Module1Command)  
         {
           updateTime(); ///Updating internal timer
         }
@@ -159,11 +153,11 @@ time_t updateTime()
   time_t ReceivedTime = ((ModuleCommand*)ReceivedMessage) -> Time;
   if(ReceivedTime > 0)
   {
-  setTime(ReceivedTime);
-  logToSerials(F("Clock synced with main module"),true,0); 
+    setTime(ReceivedTime);
+    logToSerials(F("Clock synced with main module"),true,0); 
   }
   else {
-  logToSerials(F("Clock out of sync"),true,0); 
+    logToSerials(F("Clock out of sync"),true,0); 
   }
   return ReceivedTime;
 }

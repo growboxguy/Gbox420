@@ -10,6 +10,12 @@
 #include "../Components/Aeroponics_NoTank.h"
 #include "../Components/Aeroponics_Tank.h"
 
+///< Variables used during wireless communication
+uint8_t NextSequenceID = AeroMessages::Module1Response;
+struct ModuleResponse Module1ResponseToSend = {AeroMessages::Module1Response};
+struct AeroResponse Aero1ResponseToSend = {AeroMessages::Aero1Response};
+struct CommonTemplate LastResponseToSend = {AeroMessages::GetNext};  //< Special response signaling the end of a message exchange to the Transmitter
+unsigned long LastMessageSent = 0;  //When was the last message sent
 
 AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Module()
 { 
@@ -20,12 +26,12 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
   if(DefaultSettings->PressureTankPresent)
   {
     AeroT1 = new Aeroponics_Tank(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, Pump1);  ///< Use this with a pressure tank
-    Response.PressureTankPresent = true;
+    Aero1ResponseToSend.PressureTankPresent = true;
   }
   else
   {
     AeroNT1 = new Aeroponics_NoTank(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, Pres1, Pump1);  ///< Use this without a pressure tank
-    Response.PressureTankPresent = false;
+    Aero1ResponseToSend.PressureTankPresent = false;
   }  
   addToRefreshQueue_Sec(this);         
   addToRefreshQueue_FiveSec(this);     
@@ -41,109 +47,6 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
   addToLog(F("AeroModule initialized"), 0);
 }
 
-void AeroModule::processCommand(aeroCommand *Command){
-  setDebug(Command -> Debug);
-  setMetric(Command -> Metric);
-
-  if(AeroT1 != NULL)
-  {
-    if(Command -> SprayEnabled) AeroT1 ->  setSprayOnOff(true);
-    if(Command -> SprayDisabled) AeroT1 -> setSprayOnOff(false);
-    if(Command -> SprayNow) AeroT1 -> sprayNow(true);
-    if(Command -> SprayOff) AeroT1 -> sprayOff();
-    if(Command -> RefillPressureTank) AeroT1 -> refillTank();    
-    AeroT1 -> setSprayInterval(Command -> SprayInterval);
-    AeroT1 -> setSprayDuration(Command -> SprayDuration);
-    if(Command -> PumpOn) AeroT1 -> Pump -> startPump(true);
-    if(Command -> PumpOff) AeroT1 -> Pump -> stopPump();
-    if(Command -> PumpDisable) AeroT1 -> Pump -> disablePump();
-    AeroT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
-    AeroT1 -> Pump -> setPrimingTime(Command -> PumpPrimingTime);
-    AeroT1 -> setMinPressure(Command -> MinPressure);
-    AeroT1 -> setMaxPressure(Command -> MaxPressure);
-    if(Command -> MixReservoir) AeroT1 -> Pump -> startMixing();
-  }
-
-  if(AeroNT1 != NULL)
-  {
-    if(Command -> SprayEnabled) AeroNT1 ->  setSprayOnOff(true);
-    if(Command -> SprayDisabled) AeroNT1 -> setSprayOnOff(false);
-    if(Command -> SprayNow) AeroNT1 -> sprayNow(true);
-    if(Command -> SprayOff) AeroNT1 -> sprayOff();
-    AeroNT1 -> setSprayInterval(Command -> SprayInterval);
-    AeroNT1 -> setSprayDuration(Command -> SprayDuration);
-    if(Command -> PumpOn) AeroNT1 -> lockPumpOn();
-    if(Command -> PumpOff) AeroNT1 -> Pump -> stopPump();
-    if(Command -> PumpDisable) AeroNT1 -> Pump -> disablePump();
-    AeroNT1 -> Pump -> setPumpTimeOut(Command -> PumpTimeOut);
-    AeroNT1 -> Pump -> setPrimingTime(Command -> PumpPrimingTime);
-    AeroNT1 -> setMaxPressure(Command -> MaxPressure);
-    if(Command -> MixReservoir) AeroNT1 -> Pump -> startMixing();
-    //if(Command -> BypassOn) AeroNT1 -> Pump-> turnBypassOn();
-    //if(Command -> BypassOff) AeroNT1 -> Pump-> turnBypassOff();
-  }  
-
-  updateResponse();
-  saveSettings(ModuleSettings);
-
-  if(*Debug){
-    logToSerials(Command -> Debug,false,3);
-      logToSerials(F(","),false,1);
-      logToSerials(Command -> Metric,false,1);
-      logToSerials(F(";"),false,1);
-    logToSerials(Command -> SprayEnabled,false,1);
-        logToSerials(F(","),false,1);
-        logToSerials(Command -> SprayDisabled,false,1);
-        logToSerials(F(","),false,1);
-        logToSerials(Command -> SprayNow,false,1);
-        logToSerials(F(","),false,1);
-        logToSerials(Command -> SprayOff,false,1);
-        logToSerials(F(","),false,1);
-        logToSerials(Command -> SprayInterval,false,1);
-        logToSerials(F(","),false,1);
-        logToSerials(Command -> SprayDuration,false,1);
-        logToSerials(F(";"),false,1);
-      logToSerials(Command -> PumpOn,false,1);
-        logToSerials(F(","),false,1);
-        logToSerials(Command -> PumpOff,false,1);
-        logToSerials(F(","),false,1);
-        logToSerials(Command -> PumpDisable,false,1);
-        logToSerials(F(","),false,1);
-        logToSerials(Command -> PumpTimeOut,false,1);
-        logToSerials(F(","),false,1);
-        logToSerials(Command -> PumpPrimingTime,false,1);
-        logToSerials(F(","),false,1); 
-        logToSerials(Command -> MinPressure,false,1);
-        logToSerials(F(","),false,1);
-        logToSerials(Command -> MaxPressure,false,1);
-        logToSerials(F(","),false,1);
-        logToSerials(Command -> MixReservoir,true,1);
-      //logToSerials(F(";"),false,1);
-      //logToSerials(Command -> BypassOn,false,1);
-      //logToSerials(F(","),false,1);
-      //logToSerials(Command -> BypassOff,true,1);
-  }       
-}
-
-void AeroModule::updateResponse(){
-  if(AeroT1 != NULL)
-  {    
-    Response.SprayEnabled = AeroT1 -> getSprayEnabled();
-    Response.Pressure = AeroT1 -> getPressure();
-    Response.State = AeroT1 -> Pump -> getState();
-    Response.LastSprayPressure = AeroT1 -> getLastSprayPressure();
-  }
-  if(AeroNT1 != NULL)
-  {
-    Response.SprayEnabled = AeroNT1 -> getSprayEnabled();
-    Response.Pressure = AeroNT1 -> getPressure();
-    Response.State = AeroNT1 -> Pump -> getState();
-    Response.LastSprayPressure = AeroNT1 -> getLastSprayPressure();
-  }
-  Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
-  Wireless.writeAckPayload(1, &Response, sizeof(Response)); ///< load the payload to send the next time
-}
-
 void AeroModule::refresh_Sec()
 {
   if (*Debug)
@@ -156,4 +59,155 @@ void AeroModule::refresh_FiveSec()
     Common::refresh_FiveSec();
   runReport(); 
   updateResponse(); 
+}
+
+void AeroModule::updateResponse(){
+  if(AeroT1 != NULL)
+  {    
+    Aero1ResponseToSend.SprayEnabled = AeroT1 -> getSprayEnabled();
+    Aero1ResponseToSend.Pressure = AeroT1 -> getPressure();
+    Aero1ResponseToSend.State = AeroT1 -> Pump -> getState();
+    Aero1ResponseToSend.LastSprayPressure = AeroT1 -> getLastSprayPressure();
+  }
+  if(AeroNT1 != NULL)
+  {
+    Aero1ResponseToSend.SprayEnabled = AeroNT1 -> getSprayEnabled();
+    Aero1ResponseToSend.Pressure = AeroNT1 -> getPressure();
+    Aero1ResponseToSend.State = AeroNT1 -> Pump -> getState();
+    Aero1ResponseToSend.LastSprayPressure = AeroNT1 -> getLastSprayPressure();
+  }
+  updateAckData();
+}
+
+void AeroModule::processCommand(void *ReceivedCommand){
+  AeroMessages ReceivedSequenceID = ((CommonTemplate*)ReceivedCommand) -> SequenceID;
+  LastMessageReceived = millis();  ///< Store current time
+  if(*Debug){
+      logToSerials(F("Command received with SequenceID: "),false,0);
+      logToSerials(ReceivedSequenceID,false,0);
+      logToSerials(F("- "),false,1);
+      logToSerials(toText_aeroSequenceID(ReceivedSequenceID),false,0);
+      logToSerials(F(", Acknowledgement sent with SequenceID: "),false,0);
+      logToSerials(NextSequenceID,false,0);
+      logToSerials(F("- "),false,1);
+      logToSerials(toText_aeroSequenceID(NextSequenceID),true,0);
+  }
+
+  switch (ReceivedSequenceID){
+    case AeroMessages::Module1Command :
+      setDebug(((ModuleCommand*)ReceivedCommand) -> Debug);
+      setMetric(((ModuleCommand*)ReceivedCommand) -> Metric);
+      NextSequenceID = AeroMessages::Aero1Response;  // update the next Message that will be copied to the buffer 
+      if(*Debug){
+        logToSerials(F("Module: "),false,2);
+        logToSerials(((ModuleCommand*)ReceivedCommand) -> Time,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((ModuleCommand*)ReceivedCommand) -> Debug,false,0);
+        logToSerials(F(", "),false,0);
+        logToSerials(((ModuleCommand*)ReceivedCommand) -> Metric,true,0);
+      }            
+      break;
+    case AeroMessages::Aero1Command :
+      if(AeroT1 != NULL)
+      {
+        if(((AeroCommand*)ReceivedCommand)  -> SprayEnabled) AeroT1 ->  setSprayOnOff(true);
+        if(((AeroCommand*)ReceivedCommand) -> SprayDisabled) AeroT1 -> setSprayOnOff(false);
+        if(((AeroCommand*)ReceivedCommand) -> SprayNow) AeroT1 -> sprayNow(true);
+        if(((AeroCommand*)ReceivedCommand) -> SprayOff) AeroT1 -> sprayOff();
+        if(((AeroCommand*)ReceivedCommand) -> RefillPressureTank) AeroT1 -> refillTank();    
+        AeroT1 -> setSprayInterval(((AeroCommand*)ReceivedCommand) -> SprayInterval);
+        AeroT1 -> setSprayDuration(((AeroCommand*)ReceivedCommand) -> SprayDuration);
+        if(((AeroCommand*)ReceivedCommand) -> PumpOn) AeroT1 -> Pump -> startPump(true);
+        if(((AeroCommand*)ReceivedCommand) -> PumpOff) AeroT1 -> Pump -> stopPump();
+        if(((AeroCommand*)ReceivedCommand) -> PumpDisable) AeroT1 -> Pump -> disablePump();
+        AeroT1 -> Pump -> setPumpTimeOut(((AeroCommand*)ReceivedCommand) -> PumpTimeOut);
+        AeroT1 -> Pump -> setPrimingTime(((AeroCommand*)ReceivedCommand) -> PumpPrimingTime);
+        AeroT1 -> setMinPressure(((AeroCommand*)ReceivedCommand) -> MinPressure);
+        AeroT1 -> setMaxPressure(((AeroCommand*)ReceivedCommand) -> MaxPressure);
+        if(((AeroCommand*)ReceivedCommand) -> MixReservoir) AeroT1 -> Pump -> startMixing();
+      }
+      if(AeroNT1 != NULL)
+      {
+        if(((AeroCommand*)ReceivedCommand) -> SprayEnabled) AeroNT1 ->  setSprayOnOff(true);
+        if(((AeroCommand*)ReceivedCommand) -> SprayDisabled) AeroNT1 -> setSprayOnOff(false);
+        if(((AeroCommand*)ReceivedCommand) -> SprayNow) AeroNT1 -> sprayNow(true);
+        if(((AeroCommand*)ReceivedCommand) -> SprayOff) AeroNT1 -> sprayOff();
+        AeroNT1 -> setSprayInterval(((AeroCommand*)ReceivedCommand) -> SprayInterval);
+        AeroNT1 -> setSprayDuration(((AeroCommand*)ReceivedCommand) -> SprayDuration);
+        if(((AeroCommand*)ReceivedCommand) -> PumpOn) AeroNT1 -> lockPumpOn();
+        if(((AeroCommand*)ReceivedCommand) -> PumpOff) AeroNT1 -> Pump -> stopPump();
+        if(((AeroCommand*)ReceivedCommand) -> PumpDisable) AeroNT1 -> Pump -> disablePump();
+        AeroNT1 -> Pump -> setPumpTimeOut(((AeroCommand*)ReceivedCommand) -> PumpTimeOut);
+        AeroNT1 -> Pump -> setPrimingTime(((AeroCommand*)ReceivedCommand) -> PumpPrimingTime);
+        AeroNT1 -> setMaxPressure(((AeroCommand*)ReceivedCommand) -> MaxPressure);
+        if(((AeroCommand*)ReceivedCommand) -> MixReservoir) AeroNT1 -> Pump -> startMixing();
+      }
+      NextSequenceID = AeroMessages::GetNext;  // update the next Message that will be copied to the buffer
+      if(*Debug){  
+        logToSerials(F("Aero1: "),false,2);
+        logToSerials(((AeroCommand*)ReceivedCommand) -> SprayEnabled,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((AeroCommand*)ReceivedCommand) -> SprayDisabled,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((AeroCommand*)ReceivedCommand) -> SprayNow,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((AeroCommand*)ReceivedCommand) -> SprayOff,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((AeroCommand*)ReceivedCommand) -> SprayInterval,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((AeroCommand*)ReceivedCommand) -> SprayDuration,false,1);
+        logToSerials(F(";"),false,1);
+      logToSerials(((AeroCommand*)ReceivedCommand) -> PumpOn,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((AeroCommand*)ReceivedCommand) -> PumpOff,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((AeroCommand*)ReceivedCommand) -> PumpDisable,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((AeroCommand*)ReceivedCommand) -> PumpTimeOut,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((AeroCommand*)ReceivedCommand) -> PumpPrimingTime,false,1);
+        logToSerials(F(","),false,1); 
+        logToSerials(((AeroCommand*)ReceivedCommand) -> MinPressure,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((AeroCommand*)ReceivedCommand) -> MaxPressure,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((AeroCommand*)ReceivedCommand) -> MixReservoir,true,1);
+      }      
+      break;    
+    case AeroMessages::GetNext :     //< Used to get all Responses that do not have a corresponding Command 
+      if(++NextSequenceID > AeroMessages::GetNext){  //< If the end of AeroMessages enum is reached
+          NextSequenceID = AeroMessages::Module1Response; //< Load the first response for the next message exchange
+          if(Debug){ logToSerials(F("Message exchange finished"),true,0);  }
+      }            
+      break;
+    default:
+      logToSerials(F("  SequenceID unknown, ignoring message"),true,0); 
+      break;        
+  }
+  updateAckData();
+  saveSettings(ModuleSettings);  
+}
+
+void AeroModule::updateAckData() { // so you can see that new data is being sent
+
+    logToSerials(F("Updating Acknowledgement message to responseID: "),false,2);
+    logToSerials(NextSequenceID,true,0);
+    Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
+
+    switch (NextSequenceID)  // based on the NextSeqenceID load the next response into the Acknowledgement buffer
+    {        
+    case AeroMessages::Module1Response :
+        Wireless.writeAckPayload(1, &Module1ResponseToSend, WirelessPayloadSize);  
+        break;
+    case AeroMessages::Aero1Response :
+        Wireless.writeAckPayload(1, &Aero1ResponseToSend, WirelessPayloadSize);
+        break;    
+    case AeroMessages::GetNext :  //< GetNext should always be the last element in the enum: Signals to stop the message exchange
+        Wireless.writeAckPayload(1, &LastResponseToSend, WirelessPayloadSize);
+        break;
+    default:
+        logToSerials(F("Unknown next Sequence number, Ack defaults loaded"),true,3); 
+        Wireless.writeAckPayload(1, &Module1ResponseToSend, WirelessPayloadSize); // load the first Response into the buffer 
+        break;    
+    }
 }

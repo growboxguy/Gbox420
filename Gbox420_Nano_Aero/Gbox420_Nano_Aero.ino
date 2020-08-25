@@ -18,13 +18,11 @@
 #include "src/Modules/AeroModule.h"
 #include "src/WirelessCommands_Aero.h"   ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
 
-
 ///Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
 char ShortMessage[MaxShotTextLength] = ""; ///temp storage for assembling short messages (Log entries, Error messages)char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
 char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
-struct aeroCommand Command;  //Variable where the wireless command values will get stored
-struct aeroResponse Response;  ///Response sent back in the Acknowledgement after receiving a command from the Transmitter
+void* ReceivedMessage = malloc(WirelessPayloadSize); ///< Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
 
 ///Component initialization
 HardwareSerial &ArduinoSerial = Serial;   ///Reference to the Arduino Serial
@@ -32,7 +30,7 @@ Settings * ModuleSettings;                ///settings loaded from the EEPROM. Pe
 bool *Debug;
 bool *Metric;
 AeroModule *AeroMod1;                   ///Represents a Hempy bucket with weight sensors and pumps
-RF24 Wireless(10, 9); /// Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
+RF24 Wireless(WirelessCEPin, WirelessCSNPin); /// Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 
 ///Thread initialization
 Thread OneSecThread = Thread();
@@ -40,8 +38,6 @@ Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
 Thread QuarterHourThread = Thread();
 StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread, &QuarterHourThread);
-
-
 
 void setup()
 {                                                      /// put your setup code here, to run once:
@@ -55,7 +51,6 @@ void setup()
   setSyncProvider(updateTime);
   setSyncInterval(3600);                               //Sync time every hour with the main module
   
-
   ///Loading settings from EEPROM
   ModuleSettings = loadSettings();
   Debug = &ModuleSettings ->  Debug;
@@ -66,10 +61,9 @@ void setup()
   Wireless.setDataRate( RF24_250KBPS );  ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
   Wireless.setCRCLength(RF24_CRC_8);  /// RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
   Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
-  Wireless.setPayloadSize(32);  ///The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
+  Wireless.setPayloadSize(WirelessPayloadSize);  ///The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
   Wireless.enableAckPayload();
-  Wireless.openReadingPipe(1, WirelessChannel);  
-  Wireless.writeAckPayload(1, &Response, sizeof(Response));
+  Wireless.openReadingPipe(1, WirelessChannel);    
   Wireless.startListening();
 
   /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
@@ -137,16 +131,12 @@ void HeartBeat()
 
 void getWirelessData() {
     if ( Wireless.available() ) { 
-        Wireless.read( &Command, sizeof(Command) );
-        logToSerials(F("Wireless Command received ["),false,0);
-        ArduinoSerial.print(sizeof(Command));  /// \todo print this with logToSerials: Need support for unsigned long
-        logToSerials(F("bytes], Response sent"),true,1); 
-        
-        if(timeStatus() != timeSet)  
+        Wireless.read( ReceivedMessage, WirelessPayloadSize );        
+        if(timeStatus() != timeSet && ((CommonTemplate*)ReceivedMessage) -> SequenceID == AeroMessages::Module1Command)  
         {
           updateTime(); ///Updating internal timer
         }
-        AeroMod1 -> processCommand(&Command);       /// \todo: Support Aeroponics Module  
+        AeroMod1 -> processCommand(ReceivedMessage); 
     }
 }
 
@@ -160,15 +150,16 @@ void getWirelessStatus(){
 
 time_t updateTime()
 {
-  if(Command.Time > 0)
+  time_t ReceivedTime = ((ModuleCommand*)ReceivedMessage) -> Time;
+  if(ReceivedTime > 0)
   {
-  setTime(Command.Time);
-  logToSerials(F("Clock synced with main module"),true,2); 
+    setTime(ReceivedTime);
+    logToSerials(F("Clock synced with main module"),true,0); 
   }
   else {
-  logToSerials(F("Clock out of sync"),true,0); 
+    logToSerials(F("Clock out of sync"),true,0); 
   }
-  return Command.Time;
+  return ReceivedTime;
 }
 
 

@@ -17,7 +17,6 @@ class WaterPump;
 class HempyBucket;
 extern RF24 Wireless;
 
-
 class HempyModule : virtual public Common, virtual public Module
 {
 public:
@@ -42,6 +41,8 @@ public:
   void updateAckData();
 
 private:
+  unsigned long LastMessageReceived = 0;  //When was the last wireless message received
   
 protected:
+
 };
