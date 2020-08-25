@@ -158,7 +158,6 @@ time_t updateTime()
   time_t ReceivedTime = ((AeroModuleCommand*)ReceivedMessage) -> Time;
   if(ReceivedTime > 0)
   {
-    logToSerials(ReceivedTime,true,0); 
     setTime(ReceivedTime);
     logToSerials(F("Clock synced with Main module"),true,0); 
   }
