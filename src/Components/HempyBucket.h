@@ -32,7 +32,7 @@ private:
 protected:
   Module *Parent;  
   bool *SeedlingMode; ///Enables timed waterings to prevent the soil from drying out with seedlings
-  uint8_t *SeedlingWaterFreqency;  ///Watering frequency in MINUTES
+  uint16_t *SeedlingWaterFreqency;  ///Watering frequency in MINUTES
   uint32_t WaterTimer = millis();   ///last time the plants were watered
   WeightSensor *BucketWeightSensor;  ///Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
   WaterPump *BucketPump;  ///Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering

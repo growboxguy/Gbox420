@@ -37,8 +37,8 @@ struct CommonTemplate  ///< Shared between Command and Respone packages
 ///< Commands are sent by the Main module
 struct ModuleCommand : CommonTemplate  //Max 32bytes. Module command sent by the Main module
 {
-    ModuleCommand(HempyMessage SequenceID) : CommonTemplate(SequenceID){}
-    ModuleCommand(HempyMessage SequenceID,time_t Time, bool Debug, bool Metric) : CommonTemplate(SequenceID){}
+    ModuleCommand(__attribute__((unused)) HempyMessage SequenceID) : CommonTemplate(SequenceID){}
+    ModuleCommand(__attribute__((unused)) HempyMessage SequenceID,__attribute__((unused)) time_t Time,__attribute__((unused)) bool Debug,__attribute__((unused)) bool Metric) : CommonTemplate(SequenceID){}
     time_t Time = 0; 
     bool Debug = true;
     bool Metric = true;
@@ -46,8 +46,8 @@ struct ModuleCommand : CommonTemplate  //Max 32bytes. Module command sent by the
 
 struct BucketCommand : CommonTemplate  //Max 32bytes. Command to control one hempy bucket
 {
-    BucketCommand(HempyMessage SequenceID) : CommonTemplate(SequenceID){}
-    BucketCommand(HempyMessage SequenceID, bool DisablePump, bool TurnOnPump, bool TurnOffPump, int TimeOutPump, float StartWeight, float StopWeight) : CommonTemplate(SequenceID){}   
+    BucketCommand(__attribute__((unused)) HempyMessage SequenceID) : CommonTemplate(SequenceID){}
+    BucketCommand(__attribute__((unused)) HempyMessage SequenceID, __attribute__((unused)) bool DisablePump, __attribute__((unused)) bool TurnOnPump, __attribute__((unused)) bool TurnOffPump, __attribute__((unused)) int TimeOutPump, __attribute__((unused)) float StartWeight, __attribute__((unused)) float StopWeight) : CommonTemplate(SequenceID){}   
     bool DisablePump = false;
     bool TurnOnPump = false;
     bool TurnOffPump = false;
@@ -60,15 +60,15 @@ struct BucketCommand : CommonTemplate  //Max 32bytes. Command to control one hem
 
 struct ModuleResponse  : CommonTemplate  //Max 32bytes. Module response sent back to the Main module
 {
-   ModuleResponse(HempyMessage SequenceID) : CommonTemplate(SequenceID){}
-   ModuleResponse(HempyMessage SequenceID, bool Status) : CommonTemplate(SequenceID){}
+   ModuleResponse(__attribute__((unused)) HempyMessage SequenceID) : CommonTemplate(SequenceID){}
+   ModuleResponse(__attribute__((unused)) HempyMessage SequenceID, __attribute__((unused)) bool Status) : CommonTemplate(SequenceID){}
    bool Status = true;   
 };
 
 struct BucketResponse  : CommonTemplate  //Max 32bytes. Response from one hempy bucket
 {
-   BucketResponse(HempyMessage SequenceID) : CommonTemplate(SequenceID){}
-   BucketResponse(HempyMessage SequenceID, bool PumpOn, bool PumpEnabled, float Weight) : CommonTemplate(SequenceID){}
+   BucketResponse(__attribute__((unused)) HempyMessage SequenceID) : CommonTemplate(SequenceID){}
+   BucketResponse(__attribute__((unused)) HempyMessage SequenceID, __attribute__((unused)) bool PumpOn,__attribute__((unused))  bool PumpEnabled,__attribute__((unused))  float Weight) : CommonTemplate(SequenceID){}
    PumpStates PumpState = DISABLED;
    float Weight = 0.0;
 };
