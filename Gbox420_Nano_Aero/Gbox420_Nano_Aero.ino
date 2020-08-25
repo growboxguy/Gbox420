@@ -67,6 +67,8 @@ void setup()
   Wireless.enableAckPayload();
   Wireless.openReadingPipe(1, WirelessChannel);    
   Wireless.startListening();
+  //Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  //Wireless.flush_rx();  ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
 
   /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
   OneSecThread.setInterval(1000);  ///1000ms
@@ -156,6 +158,7 @@ time_t updateTime()
   time_t ReceivedTime = ((AeroModuleCommand*)ReceivedMessage) -> Time;
   if(ReceivedTime > 0)
   {
+    logToSerials(ReceivedTime,true,0); 
     setTime(ReceivedTime);
     logToSerials(F("Clock synced with Main module"),true,0); 
   }
