@@ -253,6 +253,9 @@ char *toText_pumpState(PumpStates State){
       break;
     case MIXING:
       return toText(F("MIXING"));
-      break;  
-  }
+      break; 
+    default:
+      return toText(F("UNKNOWN"));
+      break;
+  }  
 }
