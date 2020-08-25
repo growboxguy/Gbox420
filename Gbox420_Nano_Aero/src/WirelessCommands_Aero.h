@@ -2,51 +2,51 @@
 
 #include "TimeLib.h"     ///< keeping track of time
 ///Structs for wireless communication
-enum AeroMessages { Module1Command,Module1Response,Aero1Command,Aero1Response,GetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
-//enum MessageType { Command, Response };
+enum AeroMessages { AeroModule1Command,AeroModule1Response,Aero1Command,Aero1Response,AeroGetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 static const __FlashStringHelper* toText_aeroSequenceID(uint8_t SequenceID)
 {
    switch (SequenceID) 
    {
-      case AeroMessages::Module1Command: return F("Module1Command"); break;
-      case AeroMessages::Module1Response: return F("Module1Response"); break;
+      case AeroMessages::AeroModule1Command: return F("AeroModule1Command"); break;
+      case AeroMessages::AeroModule1Response: return F("AeroModule1Response"); break;
       case AeroMessages::Aero1Command: return F("Aero1Command"); break;
       case AeroMessages::Aero1Response: return F("Aero1Response"); break;
-      case AeroMessages::GetNext: return F("GetNext"); break;
+      case AeroMessages::AeroGetNext: return F("AeroGetNext"); break;
       default : return F("UNKNOWN"); break;
    }
 }
 
-struct CommonTemplate  ///< Shared between Command and Respone packages
+///< Both the Transmitter and the Receiver needs to know these structures
+
+struct AeroCommonTemplate  ///< Shared between Command and Respone packages
 {
-   AeroMessages SequenceID;  ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
-   
-   CommonTemplate(AeroMessages SequenceID){
+   AeroCommonTemplate(AeroMessages SequenceID){
       this -> SequenceID = SequenceID;
    }
+   AeroMessages SequenceID;  ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
 };
 
-struct ModuleCommand : CommonTemplate  //Max 32bytes. Module command sent by the Main module
+struct AeroModuleCommand : AeroCommonTemplate  //Max 32bytes. Module command sent by the Main module
 {
-    ModuleCommand(__attribute__((unused)) AeroMessages SequenceID) : CommonTemplate(SequenceID){}
-    ModuleCommand(__attribute__((unused)) AeroMessages SequenceID,__attribute__((unused)) time_t Time,__attribute__((unused)) bool Debug,__attribute__((unused)) bool Metric) : CommonTemplate(SequenceID){}
+    AeroModuleCommand(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID){}
+    AeroModuleCommand(__attribute__((unused)) AeroMessages SequenceID,__attribute__((unused)) time_t Time,__attribute__((unused)) bool Debug,__attribute__((unused)) bool Metric) : AeroCommonTemplate(SequenceID){}
     time_t Time = 0; 
     bool Debug = true;
     bool Metric = true;
 };
 
-struct ModuleResponse  : CommonTemplate  //Max 32bytes. Module response sent back to the Main module
+struct AeroModuleResponse  : AeroCommonTemplate  //Max 32bytes. Module response sent back to the Main module
 {
-   ModuleResponse(__attribute__((unused)) AeroMessages SequenceID) : CommonTemplate(SequenceID){}
-   ModuleResponse(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool Status) : CommonTemplate(SequenceID){}
+   AeroModuleResponse(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID){}
+   AeroModuleResponse(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool Status) : AeroCommonTemplate(SequenceID){}
    bool Status = true;   
 };
 
-struct AeroCommand : CommonTemplate  ///Max 32 bytes. Commands for both Aeroponics versions (With or without a pressure tank)
+struct AeroCommand : AeroCommonTemplate  ///Max 32 bytes. Commands for both Aeroponics versions (With or without a pressure tank)
 {
-   AeroCommand(__attribute__((unused)) AeroMessages SequenceID) : CommonTemplate(SequenceID){}
-   AeroCommand(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) bool SprayDisabled, __attribute__((unused)) bool SprayNow, __attribute__((unused)) bool SprayOff, __attribute__((unused)) int SprayInterval, __attribute__((unused)) int SprayDuration, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) int PumpTimeOut, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) float MinPressure, __attribute__((unused)) float MaxPressure) : CommonTemplate(SequenceID){}   
+   AeroCommand(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID){}
+   AeroCommand(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) bool SprayDisabled, __attribute__((unused)) bool SprayNow, __attribute__((unused)) bool SprayOff, __attribute__((unused)) int SprayInterval, __attribute__((unused)) int SprayDuration, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) int PumpTimeOut, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) float MinPressure, __attribute__((unused)) float MaxPressure) : AeroCommonTemplate(SequenceID){}   
    bool SprayEnabled = false;
    bool SprayDisabled = false;
    bool SprayNow = false;
@@ -64,10 +64,10 @@ struct AeroCommand : CommonTemplate  ///Max 32 bytes. Commands for both Aeroponi
    float MaxPressure = 0.0;    
 };
 
-struct AeroResponse : CommonTemplate  ///Max 32 bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
+struct AeroResponse : AeroCommonTemplate  ///Max 32 bytes. Template of the response sent back to the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
-   AeroResponse(__attribute__((unused)) AeroMessages SequenceID) : CommonTemplate(SequenceID){}
-   AeroResponse(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool PressureTankPresent, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) float Pressure, __attribute__((unused)) PumpStates State, __attribute__((unused)) float LastSprayPressure) : CommonTemplate(SequenceID){}   
+   AeroResponse(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID){}
+   AeroResponse(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool PressureTankPresent, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) float Pressure, __attribute__((unused)) PumpStates State, __attribute__((unused)) float LastSprayPressure) : AeroCommonTemplate(SequenceID){}   
    bool PressureTankPresent = false;
    bool SprayEnabled = false;
    float Pressure = 0.0;

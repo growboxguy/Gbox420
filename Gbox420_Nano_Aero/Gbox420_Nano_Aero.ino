@@ -29,7 +29,7 @@ HardwareSerial &ArduinoSerial = Serial;   ///Reference to the Arduino Serial
 Settings * ModuleSettings;                ///settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
 bool *Debug;
 bool *Metric;
-AeroModule *AeroMod1;                   ///Represents a Hempy bucket with weight sensors and pumps
+AeroModule *AeroMod1;                   ///Represents a Aeroponics tote with solenoid,pressure pump..etc
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); /// Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 
 ///Thread initialization
@@ -76,7 +76,7 @@ void setup()
   QuarterHourThread.setInterval(900000);
   QuarterHourThread.onRun(runQuarterHour);
  
-  ///Create the Hempy bucket object
+  ///Create the Aeroponics object
   AeroMod1 = new AeroModule(F("Aero1"), &ModuleSettings->AeroModule1); ///This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   logToSerials(F("Setup ready, starting loops:"), true, 0);
@@ -132,7 +132,7 @@ void HeartBeat()
 void getWirelessData() {
     if ( Wireless.available() ) { 
         Wireless.read( ReceivedMessage, WirelessPayloadSize );        
-        if(timeStatus() != timeSet && ((CommonTemplate*)ReceivedMessage) -> SequenceID == AeroMessages::Module1Command)  
+        if(timeStatus() != timeSet && ((AeroCommonTemplate*)ReceivedMessage) -> SequenceID == AeroMessages::AeroModule1Command)  
         {
           updateTime(); ///Updating internal timer
         }
@@ -150,7 +150,7 @@ void getWirelessStatus(){
 
 time_t updateTime()
 {
-  time_t ReceivedTime = ((ModuleCommand*)ReceivedMessage) -> Time;
+  time_t ReceivedTime = ((AeroModuleCommand*)ReceivedMessage) -> Time;
   if(ReceivedTime > 0)
   {
     setTime(ReceivedTime);

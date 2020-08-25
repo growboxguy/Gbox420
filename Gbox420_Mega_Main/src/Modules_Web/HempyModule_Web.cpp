@@ -201,22 +201,22 @@ void HempyModule_Web::sendMessages()
   sendCommand(&Module1CommandToSend);                                                                                       //< Command - Response exchange
   sendCommand(&Bucket1CommandToSend);                                                                                       //< Command - Response exchange
   sendCommand(&Bucket2CommandToSend);                                                                                       //< Command - Response exchange
-  while (sendCommand(&GetNextResponse) < HempyMessage::GetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
+  while (sendCommand(&GetNextResponse) < HempyMessages::HempyGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
     ;
   if (Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
-HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
+HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
 {
-  HempyMessage SequenceIDToSend = ((CommonTemplate *)CommandToSend)->SequenceID;
-  HempyMessage ReceivedSequenceID = NULL;
+  HempyMessages SequenceIDToSend = ((HempyCommonTemplate *)CommandToSend)->SequenceID;
+  HempyMessages ReceivedSequenceID = NULL;
   if (Debug)
   {
     logToSerials(F("Sending command SequenceID: "), false, 3);
     logToSerials(SequenceIDToSend, false, 0);
     logToSerials(F("- "), false, 1);
-    logToSerials(sequenceIDToText(SequenceIDToSend), false, 0);
+    logToSerials(toText_hempySequenceID(SequenceIDToSend), false, 0);
     logToSerials(F("and waiting for Acknowledgment..."), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
@@ -228,27 +228,27 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
     {
       OnlineStatus = true; ///< Mark that the module responded
       Parent->Wireless->read(ReceivedResponse, WirelessPayloadSize);
-      ReceivedSequenceID = ((CommonTemplate *)ReceivedResponse)->SequenceID;
+      ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedResponse)->SequenceID;
       if (*Debug)
       {
         logToSerials(F("Response SequenceID: "), false, 4);
         logToSerials(ReceivedSequenceID, false, 0);
         logToSerials(F("- "), false, 1);
-        logToSerials(sequenceIDToText(ReceivedSequenceID), true, 0);
+        logToSerials(toText_hempySequenceID(ReceivedSequenceID), true, 0);
       }
 
       switch (ReceivedSequenceID)
       {
-      case HempyMessage::Module1Response:
-        memcpy(Module1ReceivedResponse, ReceivedResponse, sizeof(struct ModuleResponse));
+      case HempyMessages::HempyModule1Response:
+        memcpy(Module1ReceivedResponse, ReceivedResponse, sizeof(struct HempyModuleResponse));
         if (*Debug)
         {
-          logToSerials(F("ModuleOK: "), false, 4);
+          logToSerials(F("Module1: "), false, 4);
           logToSerials(Module1ReceivedResponse -> Status, true, 0);
         }
         break;
-      case HempyMessage::Bucket1Response:
-        memcpy(Bucket1ReceivedResponse, ReceivedResponse, sizeof(struct BucketResponse));
+      case HempyMessages::HempyBucket1Response:
+        memcpy(Bucket1ReceivedResponse, ReceivedResponse, sizeof(struct HempyBucketResponse));
         if (Bucket1CommandToSend.DisablePump || Bucket1CommandToSend.TurnOnPump || Bucket1CommandToSend.TurnOffPump) ///Turn off command flags
         {
           SyncRequested = true; ///Force a second packet to actualize the response
@@ -264,11 +264,11 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
           logToSerials(Bucket1ReceivedResponse -> Weight, true, 0);
         }
         break;
-      case HempyMessage::Bucket2Response:
-        memcpy(Bucket2ReceivedResponse, ReceivedResponse, sizeof(struct BucketResponse));
+      case HempyMessages::HempyBucket2Response:
+        memcpy(Bucket2ReceivedResponse, ReceivedResponse, sizeof(struct HempyBucketResponse));
         if (Bucket2CommandToSend.DisablePump || Bucket2CommandToSend.TurnOnPump || Bucket2CommandToSend.TurnOffPump) ///Turn off command flags
         {
-          SyncRequested = true; ///Force a second packet to actualize the response
+          SyncRequested = true; ///Force a second message exchange to actualize the response
           Bucket2CommandToSend.DisablePump = false;
           Bucket2CommandToSend.TurnOnPump = false;
           Bucket2CommandToSend.TurnOffPump = false;
@@ -281,7 +281,7 @@ HempyMessage HempyModule_Web::sendCommand(void *CommandToSend)
           logToSerials(Bucket2ReceivedResponse -> Weight, true, 0);
         }
         break;
-      case HempyMessage::GetNext:
+      case HempyMessages::HempyGetNext:
         if (*Debug)
         {
           logToSerials(F("Last message received"), true, 4);

@@ -11,10 +11,10 @@
 #include "../Components/Aeroponics_Tank.h"
 
 ///< Variables used during wireless communication
-uint8_t NextSequenceID = AeroMessages::Module1Response;
-struct ModuleResponse Module1ResponseToSend = {AeroMessages::Module1Response};
+uint8_t NextSequenceID = AeroMessages::AeroModule1Response;
+struct AeroModuleResponse AeroModule1ResponseToSend = {AeroMessages::AeroModule1Response};
 struct AeroResponse Aero1ResponseToSend = {AeroMessages::Aero1Response};
-struct CommonTemplate LastResponseToSend = {AeroMessages::GetNext};  //< Special response signaling the end of a message exchange to the Transmitter
+struct AeroCommonTemplate AeroLastResponseToSend = {AeroMessages::AeroGetNext};  //< Special response signaling the end of a message exchange to the Transmitter
 unsigned long LastMessageSent = 0;  //When was the last message sent
 
 AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Module()
@@ -80,7 +80,7 @@ void AeroModule::updateResponse(){
 }
 
 void AeroModule::processCommand(void *ReceivedCommand){
-  AeroMessages ReceivedSequenceID = ((CommonTemplate*)ReceivedCommand) -> SequenceID;
+  AeroMessages ReceivedSequenceID = ((AeroCommonTemplate*)ReceivedCommand) -> SequenceID;
   LastMessageReceived = millis();  ///< Store current time
   if(*Debug){
       logToSerials(F("Command received with SequenceID: "),false,0);
@@ -94,17 +94,17 @@ void AeroModule::processCommand(void *ReceivedCommand){
   }
 
   switch (ReceivedSequenceID){
-    case AeroMessages::Module1Command :
-      setDebug(((ModuleCommand*)ReceivedCommand) -> Debug);
-      setMetric(((ModuleCommand*)ReceivedCommand) -> Metric);
+    case AeroMessages::AeroModule1Command :
+      setDebug(((AeroModuleCommand*)ReceivedCommand) -> Debug);
+      setMetric(((AeroModuleCommand*)ReceivedCommand) -> Metric);
       NextSequenceID = AeroMessages::Aero1Response;  // update the next Message that will be copied to the buffer 
       if(*Debug){
         logToSerials(F("Module: "),false,2);
-        logToSerials(((ModuleCommand*)ReceivedCommand) -> Time,false,0);
+        logToSerials(((AeroModuleCommand*)ReceivedCommand) -> Time,false,0);
         logToSerials(F(", "),false,0);
-        logToSerials(((ModuleCommand*)ReceivedCommand) -> Debug,false,0);
+        logToSerials(((AeroModuleCommand*)ReceivedCommand) -> Debug,false,0);
         logToSerials(F(", "),false,0);
-        logToSerials(((ModuleCommand*)ReceivedCommand) -> Metric,true,0);
+        logToSerials(((AeroModuleCommand*)ReceivedCommand) -> Metric,true,0);
       }            
       break;
     case AeroMessages::Aero1Command :
@@ -142,7 +142,7 @@ void AeroModule::processCommand(void *ReceivedCommand){
         AeroNT1 -> setMaxPressure(((AeroCommand*)ReceivedCommand) -> MaxPressure);
         if(((AeroCommand*)ReceivedCommand) -> MixReservoir) AeroNT1 -> Pump -> startMixing();
       }
-      NextSequenceID = AeroMessages::GetNext;  // update the next Message that will be copied to the buffer
+      NextSequenceID = AeroMessages::AeroGetNext;  // update the next Message that will be copied to the buffer
       if(*Debug){  
         logToSerials(F("Aero1: "),false,2);
         logToSerials(((AeroCommand*)ReceivedCommand) -> SprayEnabled,false,1);
@@ -174,9 +174,9 @@ void AeroModule::processCommand(void *ReceivedCommand){
         logToSerials(((AeroCommand*)ReceivedCommand) -> MixReservoir,true,1);
       }      
       break;    
-    case AeroMessages::GetNext :     //< Used to get all Responses that do not have a corresponding Command 
-      if(++NextSequenceID > AeroMessages::GetNext){  //< If the end of AeroMessages enum is reached
-          NextSequenceID = AeroMessages::Module1Response; //< Load the first response for the next message exchange
+    case AeroMessages::AeroGetNext :     //< Used to get all Responses that do not have a corresponding Command 
+      if(++NextSequenceID > AeroMessages::AeroGetNext){  //< If the end of AeroMessages enum is reached
+          NextSequenceID = AeroMessages::AeroModule1Response; //< Load the first response for the next message exchange
           if(Debug){ logToSerials(F("Message exchange finished"),true,0);  }
       }            
       break;
@@ -196,18 +196,18 @@ void AeroModule::updateAckData() { // so you can see that new data is being sent
 
     switch (NextSequenceID)  // based on the NextSeqenceID load the next response into the Acknowledgement buffer
     {        
-    case AeroMessages::Module1Response :
-        Wireless.writeAckPayload(1, &Module1ResponseToSend, WirelessPayloadSize);  
+    case AeroMessages::AeroModule1Response :
+        Wireless.writeAckPayload(1, &AeroModule1ResponseToSend, WirelessPayloadSize);  
         break;
     case AeroMessages::Aero1Response :
         Wireless.writeAckPayload(1, &Aero1ResponseToSend, WirelessPayloadSize);
         break;    
-    case AeroMessages::GetNext :  //< GetNext should always be the last element in the enum: Signals to stop the message exchange
-        Wireless.writeAckPayload(1, &LastResponseToSend, WirelessPayloadSize);
+    case AeroMessages::AeroGetNext :  //< AeroGetNext should always be the last element in the enum: Signals to stop the message exchange
+        Wireless.writeAckPayload(1, &AeroLastResponseToSend, WirelessPayloadSize);
         break;
     default:
         logToSerials(F("Unknown next Sequence number, Ack defaults loaded"),true,3); 
-        Wireless.writeAckPayload(1, &Module1ResponseToSend, WirelessPayloadSize); // load the first Response into the buffer 
+        Wireless.writeAckPayload(1, &AeroModule1ResponseToSend, WirelessPayloadSize); // load the first Response into the buffer 
         break;    
     }
 }

@@ -132,7 +132,7 @@ void getWirelessData() {
     if ( Wireless.available() ) { 
         if(*Debug)logToSerials(F("Wireless Command received"),true,0);
         Wireless.read( ReceivedMessage, WirelessPayloadSize );        
-        if(timeStatus() != timeSet && ((CommonTemplate*)ReceivedMessage) -> SequenceID == HempyMessages::Module1Command)  
+        if(timeStatus() != timeSet && ((HempyCommonTemplate*)ReceivedMessage) -> SequenceID == HempyMessages::HempyModule1Command)  
         {
           updateTime(); ///Updating internal timer
         }
@@ -150,7 +150,7 @@ void getWirelessStatus(){
 
 time_t updateTime()
 {
-  time_t ReceivedTime = ((ModuleCommand*)ReceivedMessage) -> Time;
+  time_t ReceivedTime = ((HempyModuleCommand*)ReceivedMessage) -> Time;
   if(ReceivedTime > 0)
   {
     setTime(ReceivedTime);
