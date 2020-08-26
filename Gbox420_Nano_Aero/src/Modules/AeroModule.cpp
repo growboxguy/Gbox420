@@ -83,14 +83,14 @@ void AeroModule::processCommand(void *ReceivedCommand){
   AeroMessages ReceivedSequenceID = ((AeroCommonTemplate*)ReceivedCommand) -> SequenceID;
   LastMessageReceived = millis();  ///< Store current time
   if(*Debug){
-      logToSerials(F("Command received with SequenceID: "),false,0);
-      logToSerials(ReceivedSequenceID,false,0);
-      logToSerials(F("- "),false,1);
-      logToSerials(toText_aeroSequenceID(ReceivedSequenceID),false,0);
-      logToSerials(F(", Acknowledgement sent with SequenceID: "),false,0);
-      logToSerials(NextSequenceID,false,0);
-      logToSerials(F("- "),false,1);
-      logToSerials(toText_aeroSequenceID(NextSequenceID),true,0);
+      logToSerials(F("Command received with SequenceID:"),false,0);
+      logToSerials(ReceivedSequenceID,false,1);
+      logToSerials(F("-"),false,1);
+      logToSerials(toText_aeroSequenceID(ReceivedSequenceID),false,1);
+      logToSerials(F(", Acknowledgement sent with SequenceID:"),false,0);
+      logToSerials(NextSequenceID,false,1);
+      logToSerials(F("-"),false,1);
+      logToSerials(toText_aeroSequenceID(NextSequenceID),true,1);
   }
 
   switch (ReceivedSequenceID){
@@ -99,12 +99,12 @@ void AeroModule::processCommand(void *ReceivedCommand){
       setMetric(((AeroModuleCommand*)ReceivedCommand) -> Metric);
       NextSequenceID = AeroMessages::Aero1Response;  // update the next Message that will be copied to the buffer 
       if(*Debug){
-        logToSerials(F("Module: "),false,2);
-        logToSerials(((AeroModuleCommand*)ReceivedCommand) -> Time,false,0);
-        logToSerials(F(", "),false,0);
-        logToSerials(((AeroModuleCommand*)ReceivedCommand) -> Debug,false,0);
-        logToSerials(F(", "),false,0);
-        logToSerials(((AeroModuleCommand*)ReceivedCommand) -> Metric,true,0);
+        logToSerials(F("Module:"),false,2);
+        logToSerials(((AeroModuleCommand*)ReceivedCommand) -> Time,false,1);
+        logToSerials(F(","),false,0);
+        logToSerials(((AeroModuleCommand*)ReceivedCommand) -> Debug,false,1);
+        logToSerials(F(","),false,0);
+        logToSerials(((AeroModuleCommand*)ReceivedCommand) -> Metric,true,1);
       }            
       break;
     case AeroMessages::Aero1Command :
@@ -144,7 +144,7 @@ void AeroModule::processCommand(void *ReceivedCommand){
       }
       NextSequenceID = AeroMessages::AeroGetNext;  // update the next Message that will be copied to the buffer
       if(*Debug){  
-        logToSerials(F("Aero1: "),false,2);
+        logToSerials(F("Aero1:"),false,2);
         logToSerials(((AeroCommand*)ReceivedCommand) -> SprayEnabled,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((AeroCommand*)ReceivedCommand) -> SprayDisabled,false,1);
@@ -181,7 +181,7 @@ void AeroModule::processCommand(void *ReceivedCommand){
       }            
       break;
     default:
-      logToSerials(F("  SequenceID unknown, ignoring message"),true,0); 
+      logToSerials(F("SequenceID unknown, ignoring message"),true,2); 
       break;        
   }
   updateAckData();
@@ -190,8 +190,8 @@ void AeroModule::processCommand(void *ReceivedCommand){
 
 void AeroModule::updateAckData() { // so you can see that new data is being sent
 
-    logToSerials(F("Updating Acknowledgement message to responseID: "),false,2);
-    logToSerials(NextSequenceID,true,0);
+    logToSerials(F("Updating Acknowledgement message to responseID:"),false,2);
+    logToSerials(NextSequenceID,true,1);
     Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
 
     switch (NextSequenceID)  // based on the NextSeqenceID load the next response into the Acknowledgement buffer

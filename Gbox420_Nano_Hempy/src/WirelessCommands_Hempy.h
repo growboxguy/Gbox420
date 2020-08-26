@@ -1,9 +1,13 @@
+/**@file*/
+///GrowBoxGuy - http:///sites.google.com/site/growboxguy/
+///Structs for wireless communication - Both the Transmitter and the Receiver needs to know these
+///Defines the package stucture of each message exchanged between the Main and the Hempy module
+///Max 32 bytes can be sent in a single package 
+
 #pragma once
 
 #include "TimeLib.h"     ///< keeping track of time
-///Structs for wireless communication
 
-///Global constants
 enum HempyMessages { HempyModule1Command,HempyModule1Response,HempyBucket1Command,HempyBucket1Response,HempyBucket2Command,HempyBucket2Response,HempyGetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 static const __FlashStringHelper* toText_hempySequenceID(uint8_t SequenceID) 
@@ -20,8 +24,6 @@ static const __FlashStringHelper* toText_hempySequenceID(uint8_t SequenceID)
       default : return F("UNKNOWN"); break;
    }
 }
-
-///< Both the Transmitter and the Receiver needs to know these structures
                                                                                                                                          ///< HempyGetNext should always be the last element
 struct HempyCommonTemplate  ///< Shared between Command and Respone packages
 {
@@ -31,7 +33,6 @@ struct HempyCommonTemplate  ///< Shared between Command and Respone packages
    }
 };
 
-///< Commands are sent by the Main module
 struct HempyModuleCommand : HempyCommonTemplate  //Max 32bytes. Module command sent by the Main module
 {
     HempyModuleCommand(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID){}

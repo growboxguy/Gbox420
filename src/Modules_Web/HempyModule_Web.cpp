@@ -302,7 +302,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
   else
   {
     if (*Debug)
-      logToSerials(F("No response."), true, 3);
+      logToSerials(F("No response"), true, 3);
     OnlineStatus = false;
   }
   return ReceivedSequenceID;

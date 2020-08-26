@@ -142,7 +142,7 @@ void HempyModule::processCommand(void *ReceivedCommand){
       }            
       break;
     default:
-      logToSerials(F("  SequenceID unknown, ignoring message"),true,0);
+      logToSerials(F("SequenceID unknown, ignoring message"),true,2);
       break;        
   } 
   updateAckData();   //< Loads the next ACK that will be sent out

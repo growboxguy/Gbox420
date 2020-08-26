@@ -1,5 +1,13 @@
 #include "HempyModule_Web.h"
 
+struct HempyModuleCommand Module1CommandToSend = {HempyMessages::HempyModule1Command};  ///Command to send will be stored here
+struct HempyBucketCommand Bucket1CommandToSend = {HempyMessages::HempyBucket1Command}; ///Command to send will be stored here
+struct HempyBucketCommand Bucket2CommandToSend = {HempyMessages::HempyBucket2Command}; ///Command to send will be stored here
+struct HempyCommonTemplate GetNextResponse = {HempyMessages::HempyGetNext};            //< Special command to fetch the next Response from the Receiver
+struct HempyModuleResponse * Module1ReceivedResponse = malloc(sizeof(struct HempyModuleResponse));  /// Response will be stored here
+struct HempyBucketResponse * Bucket1ReceivedResponse = malloc(sizeof(struct HempyBucketResponse));  /// Response will be stored here
+struct HempyBucketResponse * Bucket2ReceivedResponse = malloc(sizeof(struct HempyBucketResponse));  /// Response will be stored here
+
 HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///Constructor
   this->Parent = Parent;
@@ -213,10 +221,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
   HempyMessages ReceivedSequenceID = NULL;
   if (Debug)
   {
-    logToSerials(F("Sending command SequenceID: "), false, 3);
-    logToSerials(SequenceIDToSend, false, 0);
-    logToSerials(F("- "), false, 1);
-    logToSerials(toText_hempySequenceID(SequenceIDToSend), false, 0);
+    logToSerials(F("Sending command SequenceID:"), false, 3);
+    logToSerials(SequenceIDToSend, false, 1);
+    logToSerials(F("-"), false, 1);
+    logToSerials(toText_hempySequenceID(SequenceIDToSend), false, 1);
     logToSerials(F("and waiting for Acknowledgment..."), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
@@ -231,8 +239,8 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
       ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedResponse)->SequenceID;
       if (*Debug)
       {
-        logToSerials(F("Response SequenceID: "), false, 4);
-        logToSerials(ReceivedSequenceID, false, 0);
+        logToSerials(F("Response SequenceID:"), false, 4);
+        logToSerials(ReceivedSequenceID, false, 1);
         logToSerials(F("- "), false, 1);
         logToSerials(toText_hempySequenceID(ReceivedSequenceID), true, 0);
       }
@@ -243,8 +251,8 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         memcpy(Module1ReceivedResponse, ReceivedResponse, sizeof(struct HempyModuleResponse));
         if (*Debug)
         {
-          logToSerials(F("Module1: "), false, 4);
-          logToSerials(Module1ReceivedResponse -> Status, true, 0);
+          logToSerials(F("Module1:"), false, 4);
+          logToSerials(Module1ReceivedResponse -> Status, true, 1);
         }
         break;
       case HempyMessages::HempyBucket1Response:
@@ -258,10 +266,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         }
         if (*Debug)
         {
-          logToSerials(F("Bucket1: "), false, 4);
-          logToSerials(Bucket1ReceivedResponse -> PumpState, false, 0);         
-          logToSerials(F(", "), false, 1);
-          logToSerials(Bucket1ReceivedResponse -> Weight, true, 0);
+          logToSerials(F("Bucket1:"), false, 4);
+          logToSerials(Bucket1ReceivedResponse -> PumpState, false, 1);         
+          logToSerials(F(","), false, 1);
+          logToSerials(Bucket1ReceivedResponse -> Weight, true, 1);
         }
         break;
       case HempyMessages::HempyBucket2Response:
@@ -275,10 +283,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         }
         if (*Debug)
         {
-          logToSerials(F("Bucket2: "), false, 4);
-          logToSerials(Bucket2ReceivedResponse -> PumpState, false, 0);
-          logToSerials(F(", "), false, 1);
-          logToSerials(Bucket2ReceivedResponse -> Weight, true, 0);
+          logToSerials(F("Bucket2:"), false, 4);
+          logToSerials(Bucket2ReceivedResponse -> PumpState, false, 1);
+          logToSerials(F(","), false, 1);
+          logToSerials(Bucket2ReceivedResponse -> Weight, true, 1);
         }
         break;
       case HempyMessages::HempyGetNext:
@@ -302,7 +310,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
   else
   {
     if (*Debug)
-      logToSerials(F("No response."), true, 3);
+      logToSerials(F("No response"), true, 3);
     OnlineStatus = false;
   }
   return ReceivedSequenceID;

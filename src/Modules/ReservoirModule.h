@@ -5,16 +5,13 @@
  * @author GrowBoxGuy (growboxguy@gmail.com)
  * @brief Module for monitoring a nutrient reservoir. Measures PH, Water/Air temperature, humidity and the water level 
  * @version 4.20
-
+ * 
+ * Responsible for setting up the components attached to the Reservoir module (Temperature/Weight/pH sensors..), 
+ * and reporting the sensor readings to the Main module wirelessly.
  * 
  * @copyright https://sites.google.com/site/growboxguy
  * 
  */
-
-////This class represents an autonomous module with an Arduino Nano
-////Responsible for setting the components attached to the module (Temp, weight, ph...sensors), 
-////updating their statuses and reporting it to the Main module wirelessly
-////Listens and reacts to wireless commands from the main module
 
 #include "RF24.h"       ///https://github.com/maniacbug/RF24
 #include "../Components/420Common.h"
@@ -41,16 +38,16 @@ public:
   PHSensor *PHSen1;
   WaterTempSensor *WTemp1;  
   WeightSensor *Weight1;
-  //void refresh_Sec();
+  void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();
   //void refresh_QuarterHour(); 
-  void processCommand(reservoirCommand *Command);
+  void processCommand(void *Command);
   void updateResponse();
+  void updateAckData();
 
 private:
-  struct reservoirCommand Command;  //Commands sent to the external Module
-  struct reservoirResponse Response; //The response from the external Module will be stored here, represents the current status of the external Module
-  
+  unsigned long LastMessageReceived = 0;  //When was the last wireless message received
+
 protected:
 };

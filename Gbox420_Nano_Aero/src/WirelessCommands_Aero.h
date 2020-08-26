@@ -1,3 +1,9 @@
+/**@file*/
+///GrowBoxGuy - http:///sites.google.com/site/growboxguy/
+///Structs for wireless communication - Both the Transmitter and the Receiver needs to know these
+///Defines the package stucture of each message exchanged between the Main and the Aero module
+///Max 32 bytes can be sent in a single package
+
 #pragma once
 
 #include "TimeLib.h"     ///< keeping track of time
