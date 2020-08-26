@@ -241,10 +241,10 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
   AeroMessages ReceivedSequenceID = NULL;
   if (Debug)
   {
-    logToSerials(F("Sending command SequenceID: "), false, 3);
-    logToSerials(SequenceIDToSend, false, 0);
-    logToSerials(F("- "), false, 1);
-    logToSerials(toText_aeroSequenceID(SequenceIDToSend), false, 0);
+    logToSerials(F("Sending SequenceID:"), false, 3);
+    logToSerials(SequenceIDToSend, false, 1);
+    logToSerials(F("-"), false, 1);
+    logToSerials(toText_aeroSequenceID(SequenceIDToSend), false, 1);
     logToSerials(F("and waiting for Acknowledgment..."), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
@@ -259,10 +259,10 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
       ReceivedSequenceID = ((AeroCommonTemplate *)ReceivedResponse)->SequenceID;
       if (*Debug)
       {
-        logToSerials(F("Response SequenceID: "), false, 4);
-        logToSerials(ReceivedSequenceID, false, 0);
-        logToSerials(F("- "), false, 1);
-        logToSerials(toText_aeroSequenceID(ReceivedSequenceID), true, 0);
+        logToSerials(F("Response SequenceID:"), false, 4);
+        logToSerials(ReceivedSequenceID, false, 1);
+        logToSerials(F("-"), false, 1);
+        logToSerials(toText_aeroSequenceID(ReceivedSequenceID), true, 1);
       }
 
       switch (ReceivedSequenceID)
@@ -271,8 +271,8 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         memcpy(AeroModule1ReceivedResponse, ReceivedResponse, sizeof(struct HempyModuleResponse));
         if (*Debug)
         {
-          logToSerials(F("Module1: "), false, 4);
-          logToSerials(AeroModule1ReceivedResponse -> Status, true, 0);
+          logToSerials(F("Module1:"), false, 4);
+          logToSerials(AeroModule1ReceivedResponse -> Status, true, 1);
         }
         break;
       case AeroMessages::Aero1Response:
@@ -292,8 +292,8 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         }
         if (*Debug)
         {
-          logToSerials(F("Aero1: "), false, 4);          
-          logToSerials(Aero1ReceivedResponse -> PressureTankPresent, false, 3);
+          logToSerials(F("Aero1:"), false, 4);          
+          logToSerials(Aero1ReceivedResponse -> PressureTankPresent, false, 1);
           logToSerials(F(","), false, 1);
           logToSerials(Aero1ReceivedResponse -> SprayEnabled, false, 1);
           logToSerials(F(","), false, 1);
@@ -319,14 +319,14 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
     else
     {
       if (*Debug)
-        logToSerials(F("Acknowledgement received without any data."), true, 1);
+        logToSerials(F("Acknowledgement received without any data"), true, 4);
       OnlineStatus = false; /// Comment this out if you have modules that do not return any data
     }
   }
   else
   {
     if (*Debug)
-      logToSerials(F("No response."), true, 1);
+      logToSerials(F("No response"), true, 3);
     OnlineStatus = false;
   }
   return ReceivedSequenceID;

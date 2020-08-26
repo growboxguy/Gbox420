@@ -176,7 +176,6 @@ void HempyModule_Web::refresh_Sec()
   if (SyncRequested)
   {
     SyncRequested = false;
-    //syncModule(WirelessChannel,&Command,&Response);
     sendMessages();
   }
 }
@@ -185,7 +184,6 @@ void HempyModule_Web::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
-  //syncModule(WirelessChannel,&Command,&Response);
   sendMessages();
 }
 
@@ -213,10 +211,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
   HempyMessages ReceivedSequenceID = NULL;
   if (Debug)
   {
-    logToSerials(F("Sending command SequenceID: "), false, 3);
-    logToSerials(SequenceIDToSend, false, 0);
-    logToSerials(F("- "), false, 1);
-    logToSerials(toText_hempySequenceID(SequenceIDToSend), false, 0);
+    logToSerials(F("Sending SequenceID:"), false, 3);
+    logToSerials(SequenceIDToSend, false, 1);
+    logToSerials(F("-"), false, 1);
+    logToSerials(toText_hempySequenceID(SequenceIDToSend), false, 1);
     logToSerials(F("and waiting for Acknowledgment..."), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
@@ -231,10 +229,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
       ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedResponse)->SequenceID;
       if (*Debug)
       {
-        logToSerials(F("Response SequenceID: "), false, 4);
-        logToSerials(ReceivedSequenceID, false, 0);
-        logToSerials(F("- "), false, 1);
-        logToSerials(toText_hempySequenceID(ReceivedSequenceID), true, 0);
+        logToSerials(F("Response SequenceID:"), false, 4);
+        logToSerials(ReceivedSequenceID, false, 1);
+        logToSerials(F("-"), false, 1);
+        logToSerials(toText_hempySequenceID(ReceivedSequenceID), true, 1);
       }
 
       switch (ReceivedSequenceID)
@@ -243,8 +241,8 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         memcpy(Module1ReceivedResponse, ReceivedResponse, sizeof(struct HempyModuleResponse));
         if (*Debug)
         {
-          logToSerials(F("Module1: "), false, 4);
-          logToSerials(Module1ReceivedResponse -> Status, true, 0);
+          logToSerials(F("Module1:"), false, 4);
+          logToSerials(Module1ReceivedResponse -> Status, true, 1);
         }
         break;
       case HempyMessages::HempyBucket1Response:
@@ -258,10 +256,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         }
         if (*Debug)
         {
-          logToSerials(F("Bucket1: "), false, 4);
-          logToSerials(Bucket1ReceivedResponse -> PumpState, false, 0);         
-          logToSerials(F(", "), false, 1);
-          logToSerials(Bucket1ReceivedResponse -> Weight, true, 0);
+          logToSerials(F("Bucket1:"), false, 4);
+          logToSerials(Bucket1ReceivedResponse -> PumpState, false, 1);         
+          logToSerials(F(","), false, 1);
+          logToSerials(Bucket1ReceivedResponse -> Weight, true, 1);
         }
         break;
       case HempyMessages::HempyBucket2Response:
@@ -275,10 +273,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         }
         if (*Debug)
         {
-          logToSerials(F("Bucket2: "), false, 4);
-          logToSerials(Bucket2ReceivedResponse -> PumpState, false, 0);
-          logToSerials(F(", "), false, 1);
-          logToSerials(Bucket2ReceivedResponse -> Weight, true, 0);
+          logToSerials(F("Bucket2:"), false, 4);
+          logToSerials(Bucket2ReceivedResponse -> PumpState, false, 1);
+          logToSerials(F(","), false, 1);
+          logToSerials(Bucket2ReceivedResponse -> Weight, true, 1);
         }
         break;
       case HempyMessages::HempyGetNext:
@@ -296,7 +294,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
     else
     {
       if (*Debug)
-        logToSerials(F("Acknowledgement received without any data"), true, 3);  //< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+        
+        logToSerials(F("Acknowledgement received without any data"), true, 4);  //< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+        
     }    
   }
   else

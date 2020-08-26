@@ -39,10 +39,6 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
   //addToRefreshQueue_QuarterHour(this); 
   logToSerials(Name, false, 0);
   logToSerials(F("- AeroModule object created, refreshing..."), true, 1);
-  if(AeroT1 != NULL && AeroNT1 != NULL)  /// \todo Remove this
-  {
-    logToSerials(F("DEV MODE, please comment out AeroT1 or AeroNT1 depending if you use a pressure tank or not"), true, 0);
-  }
   runAll();
   addToLog(F("AeroModule initialized"), 0);
 }
@@ -83,7 +79,7 @@ void AeroModule::processCommand(void *ReceivedCommand){
   AeroMessages ReceivedSequenceID = ((AeroCommonTemplate*)ReceivedCommand) -> SequenceID;
   LastMessageReceived = millis();  ///< Store current time
   if(*Debug){
-      logToSerials(F("Command received with SequenceID:"),false,0);
+      logToSerials(F("Command received with SequenceID:"),false,1);
       logToSerials(ReceivedSequenceID,false,1);
       logToSerials(F("-"),false,1);
       logToSerials(toText_aeroSequenceID(ReceivedSequenceID),false,1);

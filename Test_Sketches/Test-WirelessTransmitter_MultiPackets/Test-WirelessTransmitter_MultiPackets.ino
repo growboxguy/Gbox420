@@ -83,7 +83,7 @@ HempyMessage sendCommand(void* CommandToSend){
     HempyMessage ReceivedSequenceID = NULL;       
     if(Debug)
     {
-        Serial.print(F("Sending command SequenceID: "));
+        Serial.print(F("Sending SequenceID: "));
         Serial.print(SequenceIDToSend);
         Serial.print(F(" - "));
         Serial.print(sequenceIDToText(SequenceIDToSend));

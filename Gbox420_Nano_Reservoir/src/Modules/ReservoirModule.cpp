@@ -58,7 +58,7 @@ void ReservoirModule::processCommand(void *ReceivedCommand){
   ReservoirMessages ReceivedSequenceID = ((ReservoirCommonTemplate*)ReceivedCommand) -> SequenceID;
   LastMessageReceived = millis();  ///< Store current time
   if(*Debug){
-      logToSerials(F("Command received with SequenceID:"),false,0);
+      logToSerials(F("Command received with SequenceID:"),false,1);
       logToSerials(ReceivedSequenceID,false,1);
       logToSerials(F("-"),false,1);
       logToSerials(toText_reservoirSequenceID(ReceivedSequenceID),false,1);

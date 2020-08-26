@@ -247,10 +247,10 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
   AeroMessages ReceivedSequenceID = NULL;
   if (Debug)
   {
-    logToSerials(F("Sending command SequenceID:"), false, 3);
+    logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);
-    logToSerials(F("- "), false, 1);
-    logToSerials(toText_aeroSequenceID(SequenceIDToSend), false, 0);
+    logToSerials(F("-"), false, 1);
+    logToSerials(toText_aeroSequenceID(SequenceIDToSend), false, 1);
     logToSerials(F("and waiting for Acknowledgment..."), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
@@ -267,8 +267,8 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
       {
         logToSerials(F("Response SequenceID:"), false, 4);
         logToSerials(ReceivedSequenceID, false, 1);
-        logToSerials(F("- "), false, 1);
-        logToSerials(toText_aeroSequenceID(ReceivedSequenceID), true, 0);
+        logToSerials(F("-"), false, 1);
+        logToSerials(toText_aeroSequenceID(ReceivedSequenceID), true, 1);
       }
 
       switch (ReceivedSequenceID)

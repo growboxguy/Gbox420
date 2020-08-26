@@ -93,10 +93,10 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
   ReservoirMessages ReceivedSequenceID = NULL;
   if (Debug)
   {
-    logToSerials(F("Sending command SequenceID:"), false, 3);
+    logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);
-    logToSerials(F("- "), false, 1);
-    logToSerials(toText_reservoirSequenceID(SequenceIDToSend), false, 0);
+    logToSerials(F("-"), false, 1);
+    logToSerials(toText_reservoirSequenceID(SequenceIDToSend), false, 1);
     logToSerials(F("and waiting for Acknowledgment..."), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
@@ -152,7 +152,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
     else
     {
       if (*Debug)
-        logToSerials(F("Acknowledgement received without any data"), true, 3);
+        logToSerials(F("Acknowledgement received without any data"), true, 4);
     }
   }
   else

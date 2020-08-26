@@ -65,14 +65,14 @@ void HempyModule::processCommand(void *ReceivedCommand){
   HempyMessages ReceivedSequenceID = ((HempyCommonTemplate*)ReceivedCommand) -> SequenceID;
   LastMessageReceived = millis();  ///< Store current time
   if(*Debug){
-      logToSerials(F("Command received with SequenceID:"),false,0);
+      logToSerials(F("Command received with SequenceID:"),false,1);
       logToSerials(ReceivedSequenceID,false,1);
-      logToSerials(F("- "),false,1);
-      logToSerials(toText_hempySequenceID(ReceivedSequenceID),false,0);
+      logToSerials(F("-"),false,1);
+      logToSerials(toText_hempySequenceID(ReceivedSequenceID),false,1);
       logToSerials(F(", Acknowledgement sent with SequenceID:"),false,0);
       logToSerials(NextSequenceID,false,1);
-      logToSerials(F("- "),false,1);
-      logToSerials(toText_hempySequenceID(NextSequenceID),true,0);
+      logToSerials(F("-"),false,1);
+      logToSerials(toText_hempySequenceID(NextSequenceID),true,1);
   } 
 
   switch (ReceivedSequenceID){

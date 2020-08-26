@@ -221,7 +221,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
   HempyMessages ReceivedSequenceID = NULL;
   if (Debug)
   {
-    logToSerials(F("Sending command SequenceID:"), false, 3);
+    logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);
     logToSerials(F("-"), false, 1);
     logToSerials(toText_hempySequenceID(SequenceIDToSend), false, 1);
@@ -241,8 +241,8 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
       {
         logToSerials(F("Response SequenceID:"), false, 4);
         logToSerials(ReceivedSequenceID, false, 1);
-        logToSerials(F("- "), false, 1);
-        logToSerials(toText_hempySequenceID(ReceivedSequenceID), true, 0);
+        logToSerials(F("-"), false, 1);
+        logToSerials(toText_hempySequenceID(ReceivedSequenceID), true, 1);
       }
 
       switch (ReceivedSequenceID)
@@ -304,7 +304,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
     else
     {
       if (*Debug)
-        logToSerials(F("Acknowledgement received without any data"), true, 3);  //< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+        
+        logToSerials(F("Acknowledgement received without any data"), true, 4);  //< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+        
     }    
   }
   else
