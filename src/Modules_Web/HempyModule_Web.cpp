@@ -237,7 +237,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
 
       switch (ReceivedSequenceID)
       {
-      case HempyMessages::HempyModule1Response:
+      case HempyMessages::HempyResponse1:
         memcpy(Module1ReceivedResponse, ReceivedResponse, sizeof(struct HempyModuleResponse));
         if (*Debug)
         {

@@ -4,14 +4,14 @@
 ///Structs for wireless communication
 
 ///Global constants
-enum HempyMessages { HempyModule1Command,HempyModule1Response,HempyBucket1Command,HempyBucket1Response,HempyBucket2Command,HempyBucket2Response,HempyGetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+enum HempyMessages { HempyCommand1,HempyResponse1,HempyBucket1Command,HempyBucket1Response,HempyBucket2Command,HempyBucket2Response,HempyGetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 static const __FlashStringHelper* toText_hempySequenceID(uint8_t SequenceID) 
 {
    switch (SequenceID) 
    {
-      case HempyMessages::HempyModule1Command: return F("HempyModule1Command"); break;
-      case HempyMessages::HempyModule1Response: return F("HempyModule1Response"); break;
+      case HempyMessages::HempyCommand1: return F("HempyCommand1"); break;
+      case HempyMessages::HempyResponse1: return F("HempyResponse1"); break;
       case HempyMessages::HempyBucket1Command: return F("HempyBucket1Command"); break;
       case HempyMessages::HempyBucket1Response: return F("HempyBucket1Response"); break;
       case HempyMessages::HempyBucket2Command: return F("HempyBucket2Command"); break;

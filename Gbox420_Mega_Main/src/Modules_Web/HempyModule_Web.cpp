@@ -1,6 +1,6 @@
 #include "HempyModule_Web.h"
 
-struct HempyModuleCommand Module1CommandToSend = {HempyMessages::HempyModule1Command};  ///Command to send will be stored here
+struct HempyModuleCommand Module1CommandToSend = {HempyMessages::HempyCommand1};  ///Command to send will be stored here
 struct HempyBucketCommand Bucket1CommandToSend = {HempyMessages::HempyBucket1Command}; ///Command to send will be stored here
 struct HempyBucketCommand Bucket2CommandToSend = {HempyMessages::HempyBucket2Command}; ///Command to send will be stored here
 struct HempyCommonTemplate GetNextResponse = {HempyMessages::HempyGetNext};            //< Special command to fetch the next Response from the Receiver
@@ -247,7 +247,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
 
       switch (ReceivedSequenceID)
       {
-      case HempyMessages::HempyModule1Response:
+      case HempyMessages::HempyResponse1:
         memcpy(Module1ReceivedResponse, ReceivedResponse, sizeof(struct HempyModuleResponse));
         if (*Debug)
         {

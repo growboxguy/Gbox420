@@ -32,7 +32,7 @@ private:
   bool SyncRequested = true;    //Trigger a sync with the external Module within 1 second
   bool OnlineStatus = false;  /// Start in Offline state, a successful sync will set this to true
   void *ReceivedResponse = malloc(WirelessPayloadSize);                       ///< Pointer to the data sent back in the acknowledgement.
-  struct HempyModuleCommand Module1CommandToSend = {HempyMessages::HempyModule1Command};  ///Command to send will be stored here
+  struct HempyModuleCommand Module1CommandToSend = {HempyMessages::HempyCommand1};  ///Command to send will be stored here
   struct HempyBucketCommand Bucket1CommandToSend = {HempyMessages::HempyBucket1Command}; ///Command to send will be stored here
   struct HempyBucketCommand Bucket2CommandToSend = {HempyMessages::HempyBucket2Command}; ///Command to send will be stored here
   struct HempyCommonTemplate GetNextResponse = {HempyMessages::HempyGetNext};            //< Special command to fetch the next Response from the Receiver

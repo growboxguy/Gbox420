@@ -267,7 +267,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 
       switch (ReceivedSequenceID)
       {
-      case AeroMessages::AeroModule1Response:
+      case AeroMessages::AeroResponse1:
         memcpy(AeroModule1ReceivedResponse, ReceivedResponse, sizeof(struct HempyModuleResponse));
         if (*Debug)
         {
@@ -275,7 +275,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           logToSerials(AeroModule1ReceivedResponse -> Status, true, 1);
         }
         break;
-      case AeroMessages::Aero1Response:
+      case AeroMessages::AeroResponse2:
         memcpy(Aero1ReceivedResponse, ReceivedResponse, sizeof(struct AeroResponse));
         if (Aero1CommandToSend.SprayEnabled || Aero1CommandToSend.SprayDisabled || Aero1CommandToSend.SprayNow || Aero1CommandToSend.SprayOff || Aero1CommandToSend.PumpOn || Aero1CommandToSend.PumpOff || Aero1CommandToSend.PumpDisable || Aero1CommandToSend.MixReservoir || Aero1CommandToSend.RefillPressureTank)
         {

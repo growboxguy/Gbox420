@@ -30,6 +30,8 @@ ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::Rese
 
 void ReservoirModule::refresh_Sec()
 {
+  if (*Debug)
+    Common::refresh_Sec();
   if(NextSequenceID != ReservoirMessages::ReservoirResponse1 && millis()- LastMessageReceived >= WirelessMessageTimeout){  //< If there is a package exchange in progress
       NextSequenceID = ReservoirMessages::ReservoirResponse1;  //< Reset back to the first response
       logToSerials(F("Timeout during message exchange, reseting to first response"),true,0);   
@@ -58,7 +60,7 @@ void ReservoirModule::processCommand(void *ReceivedCommand){
   ReservoirMessages ReceivedSequenceID = ((ReservoirCommonTemplate*)ReceivedCommand) -> SequenceID;
   LastMessageReceived = millis();  ///< Store current time
   if(*Debug){
-      logToSerials(F("Command received with SequenceID:"),false,1);
+      logToSerials(F("Received SequenceID:"),false,1);
       logToSerials(ReceivedSequenceID,false,1);
       logToSerials(F("-"),false,1);
       logToSerials(toText_reservoirSequenceID(ReceivedSequenceID),false,1);

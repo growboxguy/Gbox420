@@ -10,8 +10,8 @@
 #include "../Components/HempyBucket.h"
 
 ///< Variables used during wireless communication
-uint8_t NextSequenceID = HempyMessages::HempyModule1Response;
-struct HempyModuleResponse HempyModule1ResponseToSend = {HempyMessages::HempyModule1Response};
+uint8_t NextSequenceID = HempyMessages::HempyResponse1;
+struct HempyModuleResponse HempyModule1ResponseToSend = {HempyMessages::HempyResponse1};
 struct HempyBucketResponse HempyBucket1ResponseToSend = {HempyMessages::HempyBucket1Response};
 struct HempyBucketResponse HempyBucket2ResponseToSend = {HempyMessages::HempyBucket2Response};
 struct HempyCommonTemplate HempyLastResponseToSend = {HempyMessages::HempyGetNext};  //< Special response signaling the end of a message exchange to the Transmitter
@@ -38,8 +38,8 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
 
 void HempyModule::refresh_Sec()
 {
-  if(NextSequenceID != HempyMessages::HempyModule1Response && millis()- LastMessageReceived >= WirelessMessageTimeout){  //< If there is a package exchange in progress
-      NextSequenceID = HempyMessages::HempyModule1Response;  //< Reset back to the first response
+  if(NextSequenceID != HempyMessages::HempyResponse1 && millis()- LastMessageReceived >= WirelessMessageTimeout){  //< If there is a package exchange in progress
+      NextSequenceID = HempyMessages::HempyResponse1;  //< Reset back to the first response
       logToSerials(F("Timeout during message exchange, reseting to first response"),true,0);   
       updateAckData();  
   } 
@@ -76,7 +76,7 @@ void HempyModule::processCommand(void *ReceivedCommand){
   } 
 
   switch (ReceivedSequenceID){
-    case HempyMessages::HempyModule1Command :
+    case HempyMessages::HempyCommand1 :
       setDebug(((HempyModuleCommand*)ReceivedCommand) -> Debug);
       setMetric(((HempyModuleCommand*)ReceivedCommand) -> Metric);
       NextSequenceID = HempyMessages::HempyBucket1Response;  // update the next Message that will be copied to the buffer 
@@ -137,7 +137,7 @@ void HempyModule::processCommand(void *ReceivedCommand){
       break;
     case HempyMessages::HempyGetNext :     //< Used to get all Responses that do not have a corresponding Command 
       if(++NextSequenceID > HempyMessages::HempyGetNext){  //< If the end of HempyMessages enum is reached
-          NextSequenceID = HempyMessages::HempyModule1Response; //< Load the first response for the next message exchange
+          NextSequenceID = HempyMessages::HempyResponse1; //< Load the first response for the next message exchange
           if(Debug){ logToSerials(F("Message exchange finished"),true,0);  }
       }            
       break;
@@ -157,7 +157,7 @@ void HempyModule::updateAckData() { // so you can see that new data is being sen
 
     switch (NextSequenceID)  // based on the NextSeqenceID load the next response into the Acknowledgement buffer
     {        
-    case HempyMessages::HempyModule1Response :
+    case HempyMessages::HempyResponse1 :
         Wireless.writeAckPayload(1, &HempyModule1ResponseToSend, WirelessPayloadSize);  
         break;
     case HempyMessages::HempyBucket1Response :

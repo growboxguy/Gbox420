@@ -1,7 +1,7 @@
 #include "AeroModule_Web.h"
 
-struct AeroModuleCommand AeroModule1CommandToSend = {AeroMessages::AeroModule1Command};  ///Command to send will be stored here
-struct AeroCommand Aero1CommandToSend = {AeroMessages::Aero1Command}; ///Command to send will be stored here
+struct AeroModuleCommand AeroModule1CommandToSend = {AeroMessages::AeroCommand1};  ///Command to send will be stored here
+struct AeroCommand Aero1CommandToSend = {AeroMessages::AeroCommand2}; ///Command to send will be stored here
 struct AeroCommonTemplate AeroGetNextToSend = {AeroMessages::AeroGetNext};            //< Special command to fetch the next Response from the Receiver
 struct AeroModuleResponse * AeroModule1ReceivedResponse = malloc(sizeof(struct HempyModuleResponse));  /// Response will be stored here
 struct AeroResponse * Aero1ReceivedResponse = malloc(sizeof(struct AeroResponse));  /// Response will be stored here
@@ -273,7 +273,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 
       switch (ReceivedSequenceID)
       {
-      case AeroMessages::AeroModule1Response:
+      case AeroMessages::AeroResponse1:
         memcpy(AeroModule1ReceivedResponse, ReceivedResponse, sizeof(struct HempyModuleResponse));
         if (*Debug)
         {
@@ -281,7 +281,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           logToSerials(AeroModule1ReceivedResponse -> Status, true, 1);
         }
         break;
-      case AeroMessages::Aero1Response:
+      case AeroMessages::AeroResponse2:
         memcpy(Aero1ReceivedResponse, ReceivedResponse, sizeof(struct AeroResponse));
         if (Aero1CommandToSend.SprayEnabled || Aero1CommandToSend.SprayDisabled || Aero1CommandToSend.SprayNow || Aero1CommandToSend.SprayOff || Aero1CommandToSend.PumpOn || Aero1CommandToSend.PumpOff || Aero1CommandToSend.PumpDisable || Aero1CommandToSend.MixReservoir || Aero1CommandToSend.RefillPressureTank)
         {
