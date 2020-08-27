@@ -237,7 +237,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
 
       switch (ReceivedSequenceID)
       {
-      case HempyMessages::HempyResponse1:
+      case HempyMessages::HempyModuleResponse1:
         memcpy(Module1ReceivedResponse, ReceivedResponse, sizeof(struct HempyModuleResponse));
         if (*Debug)
         {
@@ -245,7 +245,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           logToSerials(Module1ReceivedResponse -> Status, true, 1);
         }
         break;
-      case HempyMessages::HempyBucket1Response:
+      case HempyMessages::HempyBucketResponse1:
         memcpy(Bucket1ReceivedResponse, ReceivedResponse, sizeof(struct HempyBucketResponse));
         if (Bucket1CommandToSend.DisablePump || Bucket1CommandToSend.TurnOnPump || Bucket1CommandToSend.TurnOffPump) ///Turn off command flags
         {
@@ -262,7 +262,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           logToSerials(Bucket1ReceivedResponse -> Weight, true, 1);
         }
         break;
-      case HempyMessages::HempyBucket2Response:
+      case HempyMessages::HempyBucketResponse2:
         memcpy(Bucket2ReceivedResponse, ReceivedResponse, sizeof(struct HempyBucketResponse));
         if (Bucket2CommandToSend.DisablePump || Bucket2CommandToSend.TurnOnPump || Bucket2CommandToSend.TurnOffPump) ///Turn off command flags
         {

@@ -4,18 +4,18 @@
 ///Structs for wireless communication
 
 ///Global constants
-enum HempyMessages { HempyCommand1,HempyResponse1,HempyBucket1Command,HempyBucket1Response,HempyBucket2Command,HempyBucket2Response,HempyGetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+enum HempyMessages { HempyModuleCommand1,HempyModuleResponse1,HempyBucketCommand1,HempyBucketResponse1,HempyBucketCommand2,HempyBucketResponse2,HempyGetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 static const __FlashStringHelper* toText_hempySequenceID(uint8_t SequenceID) 
 {
    switch (SequenceID) 
    {
-      case HempyMessages::HempyCommand1: return F("HempyCommand1"); break;
-      case HempyMessages::HempyResponse1: return F("HempyResponse1"); break;
-      case HempyMessages::HempyBucket1Command: return F("HempyBucket1Command"); break;
-      case HempyMessages::HempyBucket1Response: return F("HempyBucket1Response"); break;
-      case HempyMessages::HempyBucket2Command: return F("HempyBucket2Command"); break;
-      case HempyMessages::HempyBucket2Response: return F("HempyBucket2Response"); break;
+      case HempyMessages::HempyModuleCommand1: return F("HempyModuleCommand1"); break;
+      case HempyMessages::HempyModuleResponse1: return F("HempyModuleResponse1"); break;
+      case HempyMessages::HempyBucketCommand1: return F("HempyBucketCommand1"); break;
+      case HempyMessages::HempyBucketResponse1: return F("HempyBucketResponse1"); break;
+      case HempyMessages::HempyBucketCommand2: return F("HempyBucketCommand2"); break;
+      case HempyMessages::HempyBucketResponse2: return F("HempyBucketResponse2"); break;
       case HempyMessages::HempyGetNext: return F("HempyGetNext"); break;
       default : return F("UNKNOWN"); break;
    }

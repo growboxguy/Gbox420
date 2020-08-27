@@ -32,8 +32,8 @@ private:
   bool SyncRequested = true;    //Trigger a sync with the external Module within 1 second
   bool OnlineStatus = false;  /// Start in Offline state, a successful sync will set this to true
   void *ReceivedResponse = malloc(WirelessPayloadSize);                       ///< Pointer to the data sent back in the acknowledgement.
-  struct AeroModuleCommand AeroModule1CommandToSend = {AeroMessages::AeroCommand1};  ///Command to send will be stored here
-  struct AeroCommand Aero1CommandToSend = {AeroMessages::AeroCommand2}; ///Command to send will be stored here
+  struct AeroModuleCommand AeroModule1CommandToSend = {AeroMessages::AeroModuleCommand1};  ///Command to send will be stored here
+  struct AeroCommand Aero1CommandToSend = {AeroMessages::AeroCommand1}; ///Command to send will be stored here
   struct AeroCommonTemplate AeroGetNext = {AeroMessages::AeroGetNext};            //< Special command to fetch the next Response from the Receiver
   struct AeroModuleResponse * AeroModule1ReceivedResponse = malloc(sizeof(struct HempyModuleResponse));  /// Response will be stored here
   struct AeroResponse * Aero1ReceivedResponse = malloc(sizeof(struct AeroResponse));  /// Response will be stored here
