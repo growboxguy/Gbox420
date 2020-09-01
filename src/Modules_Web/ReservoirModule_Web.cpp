@@ -1,8 +1,8 @@
 #include "ReservoirModule_Web.h"
 
-struct ReservoirCommand ReservoirCommandToSend = {ReservoirMessages::ReservoirCommand1};         //< Command to send will be stored here
-struct ReservoirCommonTemplate ReservoirGetNextResponse = {ReservoirMessages::ReservoirGetNext}; //< Special command to fetch the next Response from the Receiver
-struct ReservoirResponse *ReservoirReceivedResponse = malloc(sizeof(struct ReservoirResponse));  //< Response will be stored here
+struct ReservoirCommand ReservoirCommand1ToSend = {ReservoirMessages::ReservoirCommand1};         //< Command to send will be stored here
+struct ReservoirResponse ReservoirResponse1Received = {ReservoirMessages::ReservoirResponse1};  //< Response will be stored here
+struct ReservoirCommonTemplate ReservoirGetNextToSend = {ReservoirMessages::ReservoirGetNext}; //< Special command to fetch the next Response from the Receiver
 
 ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 {
@@ -21,15 +21,15 @@ void ReservoirModule_Web::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("PH:"));
-  strcat(LongMessage, toText(ReservoirReceivedResponse->PH));
+  strcat(LongMessage, toText(ReservoirResponse1Received.PH));
   strcat_P(LongMessage, (PGM_P)F(" ; Weight:"));
-  strcat(LongMessage, toText_weight(ReservoirReceivedResponse->Weight));
+  strcat(LongMessage, toText_weight(ReservoirResponse1Received.Weight));
   strcat_P(LongMessage, (PGM_P)F(" ; Water temp:"));
-  strcat(LongMessage, toText_temp(ReservoirReceivedResponse->WaterTemperature));
+  strcat(LongMessage, toText_temp(ReservoirResponse1Received.WaterTemperature));
   strcat_P(LongMessage, (PGM_P)F(" ; Air temp:"));
-  strcat(LongMessage, toText_temp(ReservoirReceivedResponse->AirTemperature));
+  strcat(LongMessage, toText_temp(ReservoirResponse1Received.AirTemperature));
   strcat_P(LongMessage, (PGM_P)F(" ; Humidity:"));
-  strcat(LongMessage, toText_percentage(ReservoirReceivedResponse->Humidity));
+  strcat(LongMessage, toText_percentage(ReservoirResponse1Received.Humidity));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -39,15 +39,15 @@ void ReservoirModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
-  strcat(LongMessage, toText(ReservoirReceivedResponse->PH));
+  strcat(LongMessage, toText(ReservoirResponse1Received.PH));
   strcat_P(LongMessage, (PGM_P)F("\",\"Weight\":\""));
-  strcat(LongMessage, toText(ReservoirReceivedResponse->Weight));
+  strcat(LongMessage, toText(ReservoirResponse1Received.Weight));
   strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
-  strcat(LongMessage, toText(ReservoirReceivedResponse->WaterTemperature));
+  strcat(LongMessage, toText(ReservoirResponse1Received.WaterTemperature));
   strcat_P(LongMessage, (PGM_P)F("\",\"AirTemp\":\""));
-  strcat(LongMessage, toText(ReservoirReceivedResponse->AirTemperature));
+  strcat(LongMessage, toText(ReservoirResponse1Received.AirTemperature));
   strcat_P(LongMessage, (PGM_P)F("\",\"Humidity\":\""));
-  strcat(LongMessage, toText(ReservoirReceivedResponse->Humidity));
+  strcat(LongMessage, toText(ReservoirResponse1Received.Humidity));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
@@ -56,11 +56,11 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
   if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getComponentName(F("PH")), toText(ReservoirReceivedResponse->PH));
-    WebServer.setArgString(getComponentName(F("Weight")), toText_weight(ReservoirReceivedResponse->Weight));
-    WebServer.setArgString(getComponentName(F("WTemp")), toText_temp(ReservoirReceivedResponse->WaterTemperature));
-    WebServer.setArgString(getComponentName(F("ATemp")), toText_temp(ReservoirReceivedResponse->AirTemperature));
-    WebServer.setArgString(getComponentName(F("Humi")), toText_percentage(ReservoirReceivedResponse->Humidity));
+    WebServer.setArgString(getComponentName(F("PH")), toText(ReservoirResponse1Received.PH));
+    WebServer.setArgString(getComponentName(F("Weight")), toText_weight(ReservoirResponse1Received.Weight));
+    WebServer.setArgString(getComponentName(F("WTemp")), toText_temp(ReservoirResponse1Received.WaterTemperature));
+    WebServer.setArgString(getComponentName(F("ATemp")), toText_temp(ReservoirResponse1Received.AirTemperature));
+    WebServer.setArgString(getComponentName(F("Humi")), toText_percentage(ReservoirResponse1Received.Humidity));
   }
 }
 
@@ -77,8 +77,8 @@ void ReservoirModule_Web::sendMessages()
   * @brief Exchange messages with the Reservoir module
   */
   updateCommands();
-  sendCommand(&ReservoirCommandToSend);                                                                                           //< Command - Response exchange
-  while (sendCommand(&ReservoirGetNextResponse) < ReservoirMessages::ReservoirGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
+  sendCommand(&ReservoirCommand1ToSend);                                                                                           //< Command - Response exchange
+  while (sendCommand(&ReservoirGetNextToSend) < ReservoirMessages::ReservoirGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
     ;
   if (Debug)
     logToSerials(F("Message exchange finished"), true, 3);
@@ -120,21 +120,21 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
       switch (ReceivedSequenceID)
       {
       case ReservoirMessages::ReservoirResponse1:
-        memcpy(ReservoirReceivedResponse, ReceivedResponse, sizeof(struct ReservoirResponse));
+        memcpy(&ReservoirResponse1Received, ReceivedResponse, sizeof(struct ReservoirResponse));
         if (*Debug)
         {
           logToSerials(F("Module1:"), false, 4);
-          logToSerials(ReservoirReceivedResponse -> Status, false, 1);
+          logToSerials(ReservoirResponse1Received.Status, false, 1);
           logToSerials(F(","), false, 1);
-          logToSerials(ReservoirReceivedResponse -> PH, false, 1);
+          logToSerials(ReservoirResponse1Received.PH, false, 1);
           logToSerials(F(","), false, 1);
-          logToSerials(ReservoirReceivedResponse -> Weight, false, 1);
+          logToSerials(ReservoirResponse1Received.Weight, false, 1);
           logToSerials(F(","), false, 1);
-          logToSerials(ReservoirReceivedResponse -> WaterTemperature, false, 1);
+          logToSerials(ReservoirResponse1Received.WaterTemperature, false, 1);
           logToSerials(F(","), false, 1);
-          logToSerials(ReservoirReceivedResponse -> AirTemperature, false, 1);
+          logToSerials(ReservoirResponse1Received.AirTemperature, false, 1);
           logToSerials(F(","), false, 1);
-          logToSerials(ReservoirReceivedResponse -> Humidity, true, 1);
+          logToSerials(ReservoirResponse1Received.Humidity, true, 1);
         }
         break;      
       case ReservoirMessages::ReservoirGetNext:
@@ -169,7 +169,7 @@ void ReservoirModule_Web::updateCommands()
   /**
    * @brief Updates the command sent to the remote Reservoir Module wirelessly
   */
-  ReservoirCommandToSend.Time = now();
-  ReservoirCommandToSend.Debug = *Debug;
-  ReservoirCommandToSend.Metric = *Metric;
+  ReservoirCommand1ToSend.Time = now();
+  ReservoirCommand1ToSend.Debug = *Debug;
+  ReservoirCommand1ToSend.Metric = *Metric;
 }

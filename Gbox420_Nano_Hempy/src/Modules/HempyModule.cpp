@@ -40,7 +40,7 @@ void HempyModule::refresh_Sec()
 {
   if (*Debug)
     Common::refresh_Sec();
-  if(NextSequenceID != HempyMessages::HempyModuleResponse1 && millis()- LastMessageReceived >= WirelessMessageTimeout){  //< If there is a package exchange in progress
+  if(NextSequenceID != HempyMessages::HempyModuleResponse1 && millis()- LastMessageReceived >= WirelessMessageTimeout){  //< If there is a package exchange in progress, but a followup command was not received within the timeout
       NextSequenceID = HempyMessages::HempyModuleResponse1;  //< Reset back to the first response
       logToSerials(F("Timeout during message exchange, reseting to first response"),true,0);   
       updateAckData();  
