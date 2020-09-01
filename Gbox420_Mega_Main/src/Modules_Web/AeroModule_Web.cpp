@@ -1,10 +1,11 @@
 #include "AeroModule_Web.h"
 
-struct AeroModuleCommand AeroModule1CommandToSend = {AeroMessages::AeroModuleCommand1};  ///Command to send will be stored here
-struct AeroCommand Aero1CommandToSend = {AeroMessages::AeroCommand1}; ///Command to send will be stored here
-struct AeroCommonTemplate AeroGetNextToSend = {AeroMessages::AeroGetNext};            //< Special command to fetch the next Response from the Receiver
-struct AeroModuleResponse * AeroModule1ReceivedResponse = malloc(sizeof(struct HempyModuleResponse));  /// Response will be stored here
-struct AeroResponse * Aero1ReceivedResponse = malloc(sizeof(struct AeroResponse));  /// Response will be stored here
+struct AeroModuleCommand AeroModuleCommand1ToSend = {AeroMessages::AeroModuleCommand1};  ///Command to send will be stored here
+struct AeroModuleResponse AeroModuleResponse1Received = {AeroMessages::AeroModuleResponse1};   /// Default startup values
+struct AeroCommand AeroCommand1ToSend = {AeroMessages::AeroCommand1}; ///Command to send will be stored here
+struct AeroResponse AeroResponse1Received = {AeroMessages::AeroResponse1};  /// Default startup values
+struct AeroCommonTemplate AeroGetNextToSend = {AeroMessages::AeroGetNext};    //< Special command to fetch the next Response from the Receiver
+
 
 AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///Constructor
@@ -29,23 +30,23 @@ void AeroModule_Web::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Pressure:"));
-  strcat(LongMessage, toText_pressure(Aero1ReceivedResponse->Pressure));
-  if (Aero1ReceivedResponse->PressureTankPresent)
+  strcat(LongMessage, toText_pressure(AeroResponse1Received.Pressure));
+  if (AeroResponse1Received.PressureTankPresent)
   {
     strcat_P(LongMessage, (PGM_P)F(" ["));
-    strcat(LongMessage, toText(Aero1CommandToSend.MinPressure));
+    strcat(LongMessage, toText(AeroCommand1ToSend.MinPressure));
     strcat_P(LongMessage, (PGM_P)F("/"));
-    strcat(LongMessage, toText(Aero1CommandToSend.MaxPressure));
+    strcat(LongMessage, toText(AeroCommand1ToSend.MaxPressure));
     strcat_P(LongMessage, (PGM_P)F("]"));
   }
   strcat_P(LongMessage, (PGM_P)F(" ; LastSprayPressure:"));
-  strcat(LongMessage, toText_pressure(Aero1ReceivedResponse->LastSprayPressure));
+  strcat(LongMessage, toText_pressure(AeroResponse1Received.LastSprayPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
-  strcat(LongMessage, toText_yesNo(Aero1ReceivedResponse->SprayEnabled));
+  strcat(LongMessage, toText_yesNo(AeroResponse1Received.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F(" ; Interval:"));
-  strcat(LongMessage, toText_minute(Aero1CommandToSend.SprayInterval));
+  strcat(LongMessage, toText_minute(AeroCommand1ToSend.SprayInterval));
   strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
-  strcat(LongMessage, toText_second(Aero1CommandToSend.SprayDuration));
+  strcat(LongMessage, toText_second(AeroCommand1ToSend.SprayDuration));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -55,24 +56,24 @@ void AeroModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));
-  strcat(LongMessage, toText(Aero1ReceivedResponse->Pressure));
-  if (Aero1ReceivedResponse->PressureTankPresent)
+  strcat(LongMessage, toText(AeroResponse1Received.Pressure));
+  if (AeroResponse1Received.PressureTankPresent)
   {
     strcat_P(LongMessage, (PGM_P)F("\",\"Min\":\""));
-    strcat(LongMessage, toText(Aero1CommandToSend.MinPressure));
+    strcat(LongMessage, toText(AeroCommand1ToSend.MinPressure));
     strcat_P(LongMessage, (PGM_P)F("\",\"Max\":\""));
-    strcat(LongMessage, toText(Aero1CommandToSend.MaxPressure));
+    strcat(LongMessage, toText(AeroCommand1ToSend.MaxPressure));
   }
   strcat_P(LongMessage, (PGM_P)F("\",\"LastSpray\":\""));
-  strcat(LongMessage, toText(Aero1ReceivedResponse->LastSprayPressure));
+  strcat(LongMessage, toText(AeroResponse1Received.LastSprayPressure));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpState\":\""));
-  strcat(LongMessage, toText(Aero1ReceivedResponse->State));
+  strcat(LongMessage, toText(AeroResponse1Received.State));
   strcat_P(LongMessage, (PGM_P)F("\",\"SprayEnabled\":\""));
-  strcat(LongMessage, toText(Aero1CommandToSend.SprayEnabled));
+  strcat(LongMessage, toText(AeroCommand1ToSend.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F("\",\"Interval\":\""));
-  strcat(LongMessage, toText(Aero1CommandToSend.SprayInterval));
+  strcat(LongMessage, toText(AeroCommand1ToSend.SprayInterval));
   strcat_P(LongMessage, (PGM_P)F("\",\"Duration\":\""));
-  strcat(LongMessage, toText(Aero1CommandToSend.SprayDuration));
+  strcat(LongMessage, toText(AeroCommand1ToSend.SprayDuration));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
@@ -80,13 +81,13 @@ void AeroModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgBoolean(getComponentName(F("Tank")), Aero1ReceivedResponse->PressureTankPresent);
-    WebServer.setArgInt(getComponentName(F("Timeout")), Aero1CommandToSend.PumpTimeOut);
-    WebServer.setArgInt(getComponentName(F("Priming")), Aero1CommandToSend.PumpPrimingTime);
-    WebServer.setArgInt(getComponentName(F("Int")), Aero1CommandToSend.SprayInterval);
-    WebServer.setArgInt(getComponentName(F("Dur")), Aero1CommandToSend.SprayDuration);
-    WebServer.setArgFloat(getComponentName(F("PresMax")), Aero1CommandToSend.MaxPressure);
-    WebServer.setArgFloat(getComponentName(F("PresMin")), Aero1CommandToSend.MinPressure);
+    WebServer.setArgBoolean(getComponentName(F("Tank")), AeroResponse1Received.PressureTankPresent);
+    WebServer.setArgInt(getComponentName(F("Timeout")), AeroCommand1ToSend.PumpTimeOut);
+    WebServer.setArgInt(getComponentName(F("Priming")), AeroCommand1ToSend.PumpPrimingTime);
+    WebServer.setArgInt(getComponentName(F("Int")), AeroCommand1ToSend.SprayInterval);
+    WebServer.setArgInt(getComponentName(F("Dur")), AeroCommand1ToSend.SprayDuration);
+    WebServer.setArgFloat(getComponentName(F("PresMax")), AeroCommand1ToSend.MaxPressure);
+    WebServer.setArgFloat(getComponentName(F("PresMin")), AeroCommand1ToSend.MinPressure);
   }
 }
 
@@ -95,10 +96,10 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
   if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getComponentName(F("Spray")), toText_enabledDisabled(Aero1ReceivedResponse->SprayEnabled));
-    WebServer.setArgString(getComponentName(F("Pump")), toText_pumpState(Aero1ReceivedResponse->State));
-    WebServer.setArgString(getComponentName(F("Pres")), toText_pressure(Aero1ReceivedResponse->Pressure));
-    WebServer.setArgString(getComponentName(F("LastSP")), toText_pressure(Aero1ReceivedResponse->LastSprayPressure));
+    WebServer.setArgString(getComponentName(F("Spray")), toText_enabledDisabled(AeroResponse1Received.SprayEnabled));
+    WebServer.setArgString(getComponentName(F("Pump")), toText_pumpState(AeroResponse1Received.State));
+    WebServer.setArgString(getComponentName(F("Pres")), toText_pressure(AeroResponse1Received.Pressure));
+    WebServer.setArgString(getComponentName(F("LastSP")), toText_pressure(AeroResponse1Received.LastSprayPressure));
   }
 }
 
@@ -112,49 +113,49 @@ void AeroModule_Web::websiteEvent_Button(char *Button)
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("SprayEn")) == 0)
     {
-      Aero1CommandToSend.SprayEnabled = true;
+      AeroCommand1ToSend.SprayEnabled = true;
       Parent->addToLog(F("Spray enabled"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayDis")) == 0)
     {
-      Aero1CommandToSend.SprayDisabled = true;
+      AeroCommand1ToSend.SprayDisabled = true;
       Parent->addToLog(F("Spray disabled"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayNow")) == 0)
     {
-      Aero1CommandToSend.SprayNow = true;
+      AeroCommand1ToSend.SprayNow = true;
       Parent->addToLog(F("Starting spray"));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayOff")) == 0)
     {
-      Aero1CommandToSend.SprayOff = true;
+      AeroCommand1ToSend.SprayOff = true;
       Parent->addToLog(F("Stop spray"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOn")) == 0)
     {
-      Aero1CommandToSend.PumpOn = true;
+      AeroCommand1ToSend.PumpOn = true;
       Parent->addToLog(F("Aero pump ON"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0)
     {
-      Aero1CommandToSend.PumpOff = true;
+      AeroCommand1ToSend.PumpOff = true;
       Parent->addToLog(F("Aero pump OFF"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0)
     {
-      Aero1CommandToSend.PumpDisable = true;
+      AeroCommand1ToSend.PumpDisable = true;
       Parent->addToLog(F("Aero pump disabled"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Mix")) == 0)
     {
-      Aero1CommandToSend.MixReservoir = true;
+      AeroCommand1ToSend.MixReservoir = true;
       Parent->addToLog(F("Mixing reservoir"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Refill")) == 0)
     {
-      if (Aero1ReceivedResponse->PressureTankPresent)
+      if (AeroResponse1Received.PressureTankPresent)
       {
-        Aero1CommandToSend.RefillPressureTank = true;
+        AeroCommand1ToSend.RefillPressureTank = true;
         Parent->addToLog(F("Refilling pressure tank"), false);
       }
       else
@@ -233,8 +234,8 @@ void AeroModule_Web::refresh_Minute()
 void AeroModule_Web::sendMessages()
 {
   updateCommands();
-  sendCommand(&AeroModule1CommandToSend);                                                                                       //< Command - Response exchange
-  sendCommand(&Aero1CommandToSend);                                                                                         //< Command - Response exchange
+  sendCommand(&AeroModuleCommand1ToSend);                                                                                       //< Command - Response exchange
+  sendCommand(&AeroCommand1ToSend);                                                                                         //< Command - Response exchange
   while (sendCommand(&AeroGetNextToSend) < AeroMessages::AeroGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
     ;
   if (Debug)
@@ -274,40 +275,40 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
       switch (ReceivedSequenceID)
       {
       case AeroMessages::AeroModuleResponse1:
-        memcpy(AeroModule1ReceivedResponse, ReceivedResponse, sizeof(struct HempyModuleResponse));
+        memcpy(&AeroModuleResponse1Received, ReceivedResponse, sizeof(struct AeroModuleResponse));
         if (*Debug)
         {
           logToSerials(F("Module1:"), false, 4);
-          logToSerials(AeroModule1ReceivedResponse -> Status, true, 1);
+          logToSerials(AeroModuleResponse1Received.Status, true, 1);
         }
         break;
       case AeroMessages::AeroResponse1:
-        memcpy(Aero1ReceivedResponse, ReceivedResponse, sizeof(struct AeroResponse));
-        if (Aero1CommandToSend.SprayEnabled || Aero1CommandToSend.SprayDisabled || Aero1CommandToSend.SprayNow || Aero1CommandToSend.SprayOff || Aero1CommandToSend.PumpOn || Aero1CommandToSend.PumpOff || Aero1CommandToSend.PumpDisable || Aero1CommandToSend.MixReservoir || Aero1CommandToSend.RefillPressureTank)
+        memcpy(&AeroResponse1Received, ReceivedResponse, sizeof(struct AeroResponse));
+        if (AeroCommand1ToSend.SprayEnabled || AeroCommand1ToSend.SprayDisabled || AeroCommand1ToSend.SprayNow || AeroCommand1ToSend.SprayOff || AeroCommand1ToSend.PumpOn || AeroCommand1ToSend.PumpOff || AeroCommand1ToSend.PumpDisable || AeroCommand1ToSend.MixReservoir || AeroCommand1ToSend.RefillPressureTank)
         {
           SyncRequested = true; ///Force a second message exchange to actualize the response
-          Aero1CommandToSend.SprayEnabled = false;
-          Aero1CommandToSend.SprayDisabled = false;
-          Aero1CommandToSend.SprayNow = false;
-          Aero1CommandToSend.SprayOff = false;
-          Aero1CommandToSend.PumpOn = false;
-          Aero1CommandToSend.PumpOff = false;
-          Aero1CommandToSend.PumpDisable = false;
-          Aero1CommandToSend.MixReservoir = false;
-          Aero1CommandToSend.RefillPressureTank = false;
+          AeroCommand1ToSend.SprayEnabled = false;
+          AeroCommand1ToSend.SprayDisabled = false;
+          AeroCommand1ToSend.SprayNow = false;
+          AeroCommand1ToSend.SprayOff = false;
+          AeroCommand1ToSend.PumpOn = false;
+          AeroCommand1ToSend.PumpOff = false;
+          AeroCommand1ToSend.PumpDisable = false;
+          AeroCommand1ToSend.MixReservoir = false;
+          AeroCommand1ToSend.RefillPressureTank = false;
         }
         if (*Debug)
         {
           logToSerials(F("Aero1:"), false, 4);          
-          logToSerials(Aero1ReceivedResponse -> PressureTankPresent, false, 1);
+          logToSerials(AeroResponse1Received.PressureTankPresent, false, 1);
           logToSerials(F(","), false, 1);
-          logToSerials(Aero1ReceivedResponse -> SprayEnabled, false, 1);
+          logToSerials(AeroResponse1Received.SprayEnabled, false, 1);
           logToSerials(F(","), false, 1);
-          logToSerials(Aero1ReceivedResponse -> State, false, 1);
+          logToSerials(AeroResponse1Received.State, false, 1);
           logToSerials(F(","), false, 1);
-          logToSerials(Aero1ReceivedResponse -> Pressure, false, 1);
+          logToSerials(AeroResponse1Received.Pressure, false, 1);
           logToSerials(F(","), false, 1);
-          logToSerials(Aero1ReceivedResponse -> LastSprayPressure, true, 1);
+          logToSerials(AeroResponse1Received.LastSprayPressure, true, 1);
         }
         break;      
       case AeroMessages::AeroGetNext:
@@ -340,13 +341,13 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 
 void AeroModule_Web::updateCommands()
 { // so you can see that new data is being sent
-  AeroModule1CommandToSend.Time = now();
-  AeroModule1CommandToSend.Debug = *Debug;
-  AeroModule1CommandToSend.Metric = *Metric;
-  Aero1CommandToSend.SprayInterval = DefaultSettings->Interval;
-  Aero1CommandToSend.SprayDuration = DefaultSettings->Duration;
-  Aero1CommandToSend.PumpTimeOut = DefaultSettings->PumpTimeOut;
-  Aero1CommandToSend.PumpPrimingTime = DefaultSettings->PrimingTime;
-  Aero1CommandToSend.MinPressure = DefaultSettings->MinPressure;
-  Aero1CommandToSend.MaxPressure = DefaultSettings->MaxPressure;
+  AeroModuleCommand1ToSend.Time = now();
+  AeroModuleCommand1ToSend.Debug = *Debug;
+  AeroModuleCommand1ToSend.Metric = *Metric;
+  AeroCommand1ToSend.SprayInterval = DefaultSettings->Interval;
+  AeroCommand1ToSend.SprayDuration = DefaultSettings->Duration;
+  AeroCommand1ToSend.PumpTimeOut = DefaultSettings->PumpTimeOut;
+  AeroCommand1ToSend.PumpPrimingTime = DefaultSettings->PrimingTime;
+  AeroCommand1ToSend.MinPressure = DefaultSettings->MinPressure;
+  AeroCommand1ToSend.MaxPressure = DefaultSettings->MaxPressure;
 }
