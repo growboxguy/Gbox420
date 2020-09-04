@@ -345,8 +345,7 @@
 						<td id="Hemp1_B1Weight" class="dataRows"></td>
 						<td id="Hemp1_B1Pump" class="dataRows"></td>
 					</tr>					
-				</table>
-				
+				</table>				
 				<form>
 					<p>
 					<label><b>Pump</b></label>
@@ -362,14 +361,41 @@
 					<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
-				<b>Watering weight</b><br>
 				<form>
 					<p>
-					<label>Start</label>
+					<input style="width: 1em" type="checkbox" name="Hemp1_B1WBW" title="Turn weight based watering ON/OFF"/>
+					<b>Weight based watering</b>
+					<input class="setButton" type="submit" value="Set" title="Turn weight based watering ON/OFF"">
+					</p>
+				</form>				
+				<form>
+					<p>			
+					<label style="width: 3em;text-align: right;">Start</label>
 					<input name="Hemp1_B1Strt" type="number" value='0' step='0.1' title="Start watering plant below this weight"/>
 					<label style="width: 2.2em;text-align: right;">Stop</label> 
 					<input style="width: 50px;" name="Hemp1_B1Stp" type="number" value='0' step='0.1' title="Stop watering plant above this weight" />
 					<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>				
+				<form>
+					<p>
+					<input style="width: 1em" type="checkbox" name="Hemp1_B1TBW" title="Turn timer based watering ON/OFF"/>
+					<b>Timer based watering</b>
+					<input class="setButton" type="submit" value="Set" title="Turn timer based watering ON/OFF"">
+					</p>
+				</form>
+				<form>	
+					<p>
+					<label style="width: 4em;text-align: right;">Interval</label>
+					<input style="width: 55px;" min=1 name="Hemp1_B1Int" type="number" />min
+					<input class="setButton" type="submit" value="Set" title="Set how often a spray should start (Minutes)">
+					</p>
+				</form>
+				<form>				
+					<p>					
+					<label style="width: 4em;text-align: right;">Duration</label> 
+					<input style="width: 35px;" min=1 name="Hemp1_B1Dur" type="number" />sec
+					<input class="setButton" type="submit" value="Set" title="Set how long one spray should last (Seconds)">
 					</p>
 				</form>
 			</div>
@@ -401,15 +427,42 @@
 					<input class="setButton" type="submit" value="Set"/>
 					</p>
 				</form>
-				<b>Watering weight</b><br>
 				<form>
-						<p>
-						<label>Start</label>
-						<input name="Hemp1_B2Strt" type="number" value='0' step='0.1' title="Start watering plant below this weight"/>
-						<label style="width: 2.2em;text-align: right;">Stop</label>
-						<input name="Hemp1_B2Stp" type="number" value='0' step='0.1' title="Stop watering plant above this weight" />
-						<input class="setButton" type="submit" value="Set">
-						</p>
+					<p>
+					<input style="width: 1em" type="checkbox" name="Hemp1_B2WBW" title="Turn weight based watering ON/OFF"/>
+					<b>Weight based watering</b>
+					<input class="setButton" type="submit" value="Set" title="Turn weight based watering ON/OFF"">
+					</p>
+				</form>				
+				<form>
+					<p>			
+					<label style="width: 3em;text-align: right;">Start</label>
+					<input name="Hemp1_B2Strt" type="number" value='0' step='0.1' title="Start watering plant below this weight"/>
+					<label style="width: 2.2em;text-align: right;">Stop</label> 
+					<input style="width: 50px;" name="Hemp1_B2Stp" type="number" value='0' step='0.1' title="Stop watering plant above this weight" />
+					<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>				
+				<form>
+					<p>
+					<input style="width: 1em" type="checkbox" name="Hemp1_B2TBW" title="Turn timer based watering ON/OFF"/>
+					<b>Timer based watering</b>
+					<input class="setButton" type="submit" value="Set" title="Turn timer based watering ON/OFF"">
+					</p>
+				</form>
+				<form>	
+					<p>
+					<label style="width: 4em;text-align: right;">Interval</label>
+					<input style="width: 55px;" min=1 name="Hemp1_B2Int" type="number" />min				
+					<input class="setButton" type="submit" value="Set" title="Set how often a spray should start (Minutes)">
+					</p>
+				</form>
+				<form>				
+					<p>					
+					<label style="width: 4em;text-align: right;">Duration</label> 
+					<input style="width: 35px;" min=1 name="Hemp1_B2Dur" type="number" />sec
+					<input class="setButton" type="submit" value="Set" title="Set how long one spray should last (Seconds)">
+					</p>
 				</form>
 			</div>				
 			<div class="card">
@@ -443,7 +496,7 @@
 					<label style="width: 4em;text-align: right;">Interval</label>
 					<input style="width: 35px;" min=1 name="Aero1_Int" type="number" />
 					<label style="width: 2em">min</label> 					
-					<input class="setButton" type="submit" value="Set" title="Set how often a spray should start (Interval), and how long one spray should last (Duration)">
+					<input class="setButton" type="submit" value="Set" title="How often should the spraying start (Minutes)">
 					</p>
 				</form>
 				<form>
@@ -451,7 +504,7 @@
 					<label style="width: 4em;text-align: right;">Duration</label> 
 					<input style="width: 35px;" min=1 name="Aero1_Dur" type="number" />
 					<label style="width: 2em">sec</label> 
-					<input class="setButton" type="submit" value="Set" title="Set how often a spray should start (Interval), and how long one spray should last (Duration)">
+					<input class="setButton" type="submit" value="Set" title="How long should a spray last (Seconds)">
 					</p>
 				</form>
 				<form>

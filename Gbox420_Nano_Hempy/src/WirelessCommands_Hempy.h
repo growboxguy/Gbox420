@@ -52,13 +52,17 @@ struct HempyModuleResponse  : HempyCommonTemplate  //Max 32bytes. Module respons
 struct HempyBucketCommand : HempyCommonTemplate  //Max 32bytes. Command to control one hempy bucket
 {
     HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID){}
-    HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool DisablePump, __attribute__((unused)) bool TurnOnPump, __attribute__((unused)) bool TurnOffPump, __attribute__((unused)) int TimeOutPump, __attribute__((unused)) float StartWeight, __attribute__((unused)) float StopWeight) : HempyCommonTemplate(SequenceID){}   
+    HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool DisablePump, __attribute__((unused)) bool TurnOnPump, __attribute__((unused)) bool TurnOffPump, __attribute__((unused)) int TimeOutPump, __attribute__((unused)) bool WeightBasedWatering, __attribute__((unused)) float StartWeight, __attribute__((unused)) float StopWeight, __attribute__((unused)) bool TimerBasedWatering, __attribute__((unused)) uint16_t WateringInterval, __attribute__((unused)) uint16_t WateringDuration) : HempyCommonTemplate(SequenceID){}   
     bool DisablePump = false;
     bool TurnOnPump = false;
     bool TurnOffPump = false;
-    int TimeOutPump = 0;
+    uint16_t TimeOutPump = 0;
+    bool WeightBasedWatering = false;
     float StartWeight = 0.0;
     float StopWeight = 0.0;
+    bool TimerBasedWatering = false;
+    uint16_t WateringInterval = 0;
+    uint16_t WateringDuration = 0;
 };
 
 struct HempyBucketResponse  : HempyCommonTemplate  //Max 32bytes. Response from one hempy bucket

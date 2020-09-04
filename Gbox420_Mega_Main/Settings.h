@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 12; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 14; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
 enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -89,15 +89,23 @@ enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
           
     struct HempyModuleSettings
     {
-      HempyModuleSettings( float StartWeight_B1 = 0.0, float StopWeight_B1 = 0.0, int TimeOutPump_B1 = 0, float StartWeight_B2 = 0.0, float StopWeight_B2 = 0.0, int TimeOutPump_B2 = 0 ) : StartWeight_B1(StartWeight_B1), StopWeight_B1(StopWeight_B1), TimeOutPump_B1(TimeOutPump_B1), StartWeight_B2(StartWeight_B2), StopWeight_B2(StopWeight_B2), TimeOutPump_B2(TimeOutPump_B2) {}
+      HempyModuleSettings( bool WeightBasedWatering_B1 = false, float StartWeight_B1 = 0.0, float StopWeight_B1 = 0.0, bool TimerBasedWatering_B1 = false, uint16_t WateringInterval_B1 = 0, uint16_t WateringDuration_B1 = 0,  uint16_t TimeOutPump_B1 = 0, bool WeightBasedWatering_B2 = false, float StartWeight_B2 = 0.0, float StopWeight_B2 = 0.0, bool TimerBasedWatering_B2 = false, uint16_t WateringInterval_B2 = 0, uint16_t WateringDuration_B2 = 0, uint16_t TimeOutPump_B2 = 0 ) : WeightBasedWatering_B1(WeightBasedWatering_B1), StartWeight_B1(StartWeight_B1), StopWeight_B1(StopWeight_B1), TimerBasedWatering_B1(TimerBasedWatering_B1), WateringInterval_B1(WateringInterval_B1), WateringDuration_B1(WateringDuration_B1), TimeOutPump_B1(TimeOutPump_B1), WeightBasedWatering_B2(WeightBasedWatering_B2), StartWeight_B2(StartWeight_B2), StopWeight_B2(StopWeight_B2), TimerBasedWatering_B2(TimerBasedWatering_B2), WateringInterval_B2(WateringInterval_B2), WateringDuration_B2(WateringDuration_B2), TimeOutPump_B2(TimeOutPump_B2) {}
+      bool WeightBasedWatering_B1;  //Enable/Disable weight based watering
       float StartWeight_B1; ///Start watering below this weight
       float StopWeight_B1;  ///Stop watering above this weight
-      int TimeOutPump_B1;  ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails
+      bool TimerBasedWatering_B1; //Enable/Disable timer based watering
+      uint16_t WateringInterval_B1;   //Water every X minutes
+      uint16_t WateringDuration_B1;  //Water for X seconds
+      uint16_t TimeOutPump_B1;  ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails
+      bool WeightBasedWatering_B2;
       float StartWeight_B2; ///Start watering below this weight
-      float StopWeight_B2;  ///Stop watering above this weight   
-      int TimeOutPump_B2;  
+      float StopWeight_B2;  ///Stop watering above this weight 
+      bool TimerBasedWatering_B2; //Enable/Disable timer based watering
+      uint16_t WateringInterval_B2;   //Water every X minutes
+      uint16_t WateringDuration_B2;  //Water for X seconds  
+      uint16_t TimeOutPump_B2;  ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails
     };
-    struct HempyModuleSettings HempyModule1 = {.StartWeight_B1 = 4.2, .StopWeight_B1 = 6.9, .TimeOutPump_B1 = 120, .StartWeight_B2 = 4.2, .StopWeight_B2 = 6.9, .TimeOutPump_B2 = 120};
+    struct HempyModuleSettings HempyModule1 = {.WeightBasedWatering_B1 = true, .StartWeight_B1 = 4.2, .StopWeight_B1 = 6.9, .TimerBasedWatering_B1=true, .WateringInterval_B1 = 1440, .WateringDuration_B1 = 30, .TimeOutPump_B1 = 120, .WeightBasedWatering_B2 = true, .StartWeight_B2 = 4.2, .StopWeight_B2 = 6.9, .TimerBasedWatering_B2=true, .WateringInterval_B2 = 1440, .WateringDuration_B2 = 30, .TimeOutPump_B2 = 120};
     
     struct LightSensorSettings
     {

@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 5; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 6; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
   enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -46,16 +46,18 @@ static const uint8_t Version = 5; ///< Increment this when you make a change in 
     
     struct HempyBucketSettings
     {
-      HempyBucketSettings( float StartWeight = 0.0, float StopWeight = 0.0, bool SeedlingMode = false, uint16_t SeedlingWaterFreqency = 0) : StartWeight(StartWeight), StopWeight(StopWeight), SeedlingMode(SeedlingMode), SeedlingWaterFreqency(SeedlingWaterFreqency)   {}
+      HempyBucketSettings( bool WeightBasedWatering = false, float StartWeight = 0.0, float StopWeight = 0.0,  bool TimerBasedWatering = false, uint16_t WateringInterval = 0, uint16_t WateringDuration = 0) : WeightBasedWatering(WeightBasedWatering), StartWeight(StartWeight), StopWeight(StopWeight), TimerBasedWatering(TimerBasedWatering), WateringInterval(WateringInterval), WateringDuration(WateringDuration)   {}
+      bool WeightBasedWatering;  //Enable/Disable weight based watering
       float StartWeight; ///Start watering below this weight
       float StopWeight;  ///Stop watering above this weight
-      bool SeedlingMode; ///Enables timed waterings to prevent the soil from drying out with seedlings
-      uint16_t SeedlingWaterFreqency; ///Watering frequency in MINUTES when SeedlinMode is enabled
+      bool TimerBasedWatering; //Enable/Disable timer based watering
+      uint16_t WateringInterval;   //Water every X minutes
+      uint16_t WateringDuration;  //Water for X seconds
     };
-    struct HempyBucketSettings Bucket1 = { .StartWeight = 4.2, .StopWeight = 6.9, .SeedlingMode = false, .SeedlingWaterFreqency= 720};
-    struct HempyBucketSettings Bucket2 = { .StartWeight = 4.2, .StopWeight = 6.9, .SeedlingMode = false, .SeedlingWaterFreqency= 720};
+    struct HempyBucketSettings Bucket1 = { .WeightBasedWatering = true, .StartWeight = 4.2, .StopWeight = 6.9, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
+    struct HempyBucketSettings Bucket2 = { .WeightBasedWatering = true, .StartWeight = 4.2, .StopWeight = 6.9, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
 
-    struct HempyModuleSettings{  ///TODO: Remove the parameters
+    struct HempyModuleSettings{
       //HempyModuleSettings() :  {}     
     };  
     struct HempyModuleSettings HempyMod1 = {};  ///Default settings for the Hempy Module
