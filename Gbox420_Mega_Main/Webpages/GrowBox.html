@@ -113,8 +113,9 @@
 
 		form  { display: table; padding: 0px;	margin: 0em; vertical-align: middle; }
 		p     { display: table-row; }
-		label { display: table-cell; vertical-align: middle; padding-left: 0.1em; padding-right: 0.1em; white-space: nowrap;  }
+		label { display: table-cell; vertical-align: middle; padding-left: 0.1em; padding-right: 0.1em; white-space: nowrap; }
 		input { display: table-cell; width: 3em; vertical-align: middle;}
+		input[type=checkbox] { display: table-cell; width: 1em; height: 1.5em; vertical-align: sub;}
 		button { display: table-cell; padding: 0.2em; margin:0.05em;margin-top:0px !important;line-height: 1em;}
 
 	</style>
@@ -225,7 +226,24 @@
 					<button id="Lt1_Of" type="button" title="Turn grow lights OFF">OFF</button>
 					<button id="LtSen1_C" type="button" title="Measure light reading in dark, 0 and 100% brightness">Calibrate</button>
 					</p>
-				</form> 			
+				</form>				
+				
+				<form>
+					<p>
+					<input type="checkbox" name="Lt1_Fade" title="Turn fading in and out the lights when changing ON/OFF state, adds smoother photosynthetic state transition"/>
+					<b>Fade in/out</b>
+					<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
+					</p>
+				</form>		
+				<form>
+					<p>			
+					<label style="width: 3em;text-align: right;">Change</label>
+					<input name="Lt1_FadeC" type="number" value='1' step='1' min='1' max='100' title="How much to Change the brightness at each step (1% increments)"/>
+					<label style="width: 2.2em;text-align: right;">% every</label> 
+					<input style="width: 50px;" name="Lt1_FadeS" type="number" value='0' step='1' min='1' title="How often Step to the next brightness level" />sec
+					<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>	
 				<form>
 					<p>
 						<label><b>Brightness</b></label>						
@@ -280,6 +298,22 @@
 					<button id="Lt2_Of" type="button" title="Turn grow lights OFF">OFF</button>
 					</p>						
 				</form>
+				<form>
+					<p>
+					<input type="checkbox" name="Lt2_Fade" title="Turn fading in and out the lights when changing ON/OFF state, adds smoother photosynthetic state transition"/>
+					<b>Fade in/out</b>
+					<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
+					</p>
+				</form>		
+				<form>
+					<p>			
+					<label style="width: 3em;text-align: right;">Change</label>
+					<input name="Lt2_FadeC" type="number" value='1' step='1' min='1' max='100' title="How much to Change the brightness at each step (1% increments)"/>
+					<label style="width: 2.2em;text-align: right;">% every</label> 
+					<input style="width: 50px;" name="Lt2_FadeS" type="number" value='0' step='1' min='1' title="How often Step to the next brightness level" />sec
+					<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>	
 				<form>
 					<p>
 					<label><b>Brightness</b></label>	
@@ -363,7 +397,7 @@
 				</form>
 				<form>
 					<p>
-					<input style="width: 1em" type="checkbox" name="Hemp1_B1WBW" title="Turn weight based watering ON/OFF"/>
+					<input type="checkbox" name="Hemp1_B1WBW" title="Turn weight based watering ON/OFF"/>
 					<b>Weight based watering</b>
 					<input class="setButton" type="submit" value="Set" title="Turn weight based watering ON/OFF"">
 					</p>
@@ -379,7 +413,7 @@
 				</form>				
 				<form>
 					<p>
-					<input style="width: 1em" type="checkbox" name="Hemp1_B1TBW" title="Turn timer based watering ON/OFF"/>
+					<input type="checkbox" name="Hemp1_B1TBW" title="Turn timer based watering ON/OFF"/>
 					<b>Timer based watering</b>
 					<input class="setButton" type="submit" value="Set" title="Turn timer based watering ON/OFF"">
 					</p>
@@ -429,7 +463,7 @@
 				</form>
 				<form>
 					<p>
-					<input style="width: 1em" type="checkbox" name="Hemp1_B2WBW" title="Turn weight based watering ON/OFF"/>
+					<input type="checkbox" name="Hemp1_B2WBW" title="Turn weight based watering ON/OFF"/>
 					<b>Weight based watering</b>
 					<input class="setButton" type="submit" value="Set" title="Turn weight based watering ON/OFF"">
 					</p>
@@ -445,7 +479,7 @@
 				</form>				
 				<form>
 					<p>
-					<input style="width: 1em" type="checkbox" name="Hemp1_B2TBW" title="Turn timer based watering ON/OFF"/>
+					<input type="checkbox" name="Hemp1_B2TBW" title="Turn timer based watering ON/OFF"/>
 					<b>Timer based watering</b>
 					<input class="setButton" type="submit" value="Set" title="Turn timer based watering ON/OFF"">
 					</p>
