@@ -7,7 +7,7 @@
 
 ///Weight sensor measures the bucket weight and watering is based on the measured weight
 
-enum WateringReason {WEIGHT,TIMER,MANUAL}; ///< Tracks what triggered the currently running watering
+enum WateringMode {WEIGHT,TIMER,MANUAL}; ///< Tracks what triggered the currently running watering
 
 class HempyBucket : virtual public Common
 {
@@ -34,7 +34,7 @@ public:
   char *getStartWeightText(bool IncludeUnits); 
 
 private:
-  WateringReason WateringTrigger;
+  WateringMode WateringTrigger;
 
 protected:
   Module *Parent;  

@@ -58,7 +58,7 @@ void HempyBucket::checkWateringWeight()
     logToSerials(F("Weight based watering..."), true, 1);
     BucketPump->startPump();
     WateringTimer = millis();
-    WateringTrigger = WateringReason::WEIGHT;
+    WateringTrigger = WateringMode::WEIGHT;
   }
 }
 
@@ -69,41 +69,65 @@ void HempyBucket::checkWateringTimer()
     logToSerials(F("Timer based watering..."), true, 1);
     BucketPump->startPump();
     WateringTimer = millis();
-    WateringTrigger = WateringReason::TIMER;
+    WateringTrigger = WateringMode::TIMER;
   }
 }
 
 void HempyBucket::checkWateringFinished()
 {
-  if(WateringTrigger == WateringReason::MANUAL)  //If watering triggered by user: Run until target weight AND Watering Duration is reached
+  bool WeightReached = false; // Signals when the weight target is reached
+  bool TimerReached = false; // Signals when the watering timer is finished
+  if(WateringTrigger == WateringMode::MANUAL)  //If watering was triggered by user
   {
-    BucketWeightSensor->readWeight();                  //Force a weight refresh
-    if (BucketWeightSensor->getWeight() > *StopWeight && millis() - WateringTimer >= ((uint32_t)*WateringDuration * 1000)) ///If the weight is over the limit and the pump is on
+    if(*WeightBasedWatering) //Weight based watering enabled
     {
-      BucketPump->stopPump();
+      BucketWeightSensor->readWeight(); 
+      if (BucketWeightSensor->getWeight() > *StopWeight) ///If the weight is over the limit and the pump is on
+      {
+        WeightReached = true;        
+      }
     }
+    else{  //Weight based watering not enabled 
+      WeightReached = true;  //Fake ready signal when weight based watering is turned off 
+    } 
+
+    if(*TimerBasedWatering){ //Timer based watering enabled 
+      if ( millis() - WateringTimer >= ((uint32_t)*WateringDuration * 1000)) ///If the pump runtime reached the watering duration
+      {
+        TimerReached = true;
+      }
+    }
+    else{  //Timer based watering not enabled 
+      TimerReached = true;  //Fake ready signal when timer based watering is turned off 
+    } 
   }
-  else if (WateringTrigger == WateringReason::WEIGHT) //< If watering triggered by weight: Run until weight tareget is reached
+  else if (WateringTrigger == WateringMode::WEIGHT) //< If watering triggered by weight: Run until weight tareget is reached
   {
+    TimerReached = true; //Fake ready signal, only weight is considered in this watering mode
     BucketWeightSensor->readWeight();                  //Force a weight refresh
     if (BucketWeightSensor->getWeight() > *StopWeight) ///If the weight is over the limit and the pump is on
     {
       BucketPump->stopPump();
     }
   }
-  else  //< If watering triggered by timer: Run until duration is reached
+  else //if (WateringTrigger == WateringMode::TIMER)  //< If watering triggered by timer: Run until duration is reached
   {
+    WeightReached = true;  //Fake ready signal, only timer is considered in this watering mode
     if (millis() - WateringTimer >= ((uint32_t)*WateringDuration * 1000))
     {
-      BucketPump->stopPump();
+      TimerReached = true; 
     }
+  }
+
+  if(WeightReached && TimerReached){
+    BucketPump->stopPump();  //< Turn the pump off when all criteria are met
   }
 }
 
 void HempyBucket::startWatering()
 {
   logToSerials(F("Manual watering..."), true, 1);
-  WateringTrigger = WateringReason::MANUAL;
+  WateringTrigger = WateringMode::MANUAL;
   WateringTimer = millis();
   BucketPump -> startPump(true);
 }
