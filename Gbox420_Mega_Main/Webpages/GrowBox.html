@@ -133,6 +133,9 @@
 			display: table-cell;
 			width: 3em;
 			vertical-align: middle;
+			-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    		-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    		box-sizing: border-box;         /* Opera/IE 8+ */
 		}
 
 		input[type=checkbox] {
@@ -277,14 +280,13 @@
 						<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
 					</p>
 				</form>		
-				<form>
-					<p>			
-					<label style=" width: 3em;text-align: right;">Change</label>
-						<input name="Lt1_FInc" type="number" value='1' step='1' min='1' max='100'
+				<form style="padding-left: 0.5em;">
+					<p>	
+						<input style="padding-left: 0.5em; width: 3.5em;" name="Lt1_FInc" type="number" value='1' step='1' min='1' max='100'
 							title="How much to Change the brightness at each step (1% increments)" />
-						<label style="width: 2.2em;text-align: right;">% every</label>
-						<input style="width: 50px;" name="Lt1_FInt" type="number" value='0' step='1' min='1'
-							title="How often Step to the next brightness level" />sec
+						<label>% every</label>
+						<input style="width: 3.5em;" name="Lt1_FInt" type="number" value='0' step='1' min='1'
+							title="How often Step to the next brightness level"/>sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
@@ -307,7 +309,7 @@
 				</form>
 				<form>
 					<p>
-						<label style="width: 3em;text-align: right;">ON </label>
+						<label style="padding-left: 0.5em; width: 2em;">ON </label>
 						<input style="width: 2.5em;" min=0 max=23 name="Lt1_OnH" type="number" /> :
 						<input style="width: 2.5em;" min=0 max=59 name="Lt1_OnM" type="number" />
 						<input class="setButton" type="submit" value="Set" title="Set grow light ON time" />
@@ -315,7 +317,7 @@
 				</form>
 				<form>
 					<p>
-						<label style="width: 3em;text-align: right;">OFF </label>
+						<label style="padding-left: 0.5em; width: 2em;">OFF </label>
 						<input style="width: 2.5em;" min=0 max=23 name="Lt1_OfH" type="number" /> :
 						<input style="width: 2.5em;" min=0 max=59 name="Lt1_OfM" type="number" />
 						<input class="setButton" type="submit" value="Set" title="Set grow light OFF time" />
@@ -356,13 +358,12 @@
 						<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
 					</p>
 				</form>		
-				<form>
-					<p>			
-					<label style=" width: 3em;text-align: right;">Change</label>
-						<input name="Lt2_FInc" type="number" value='1' step='1' min='1' max='100'
+				<form style="padding-left: 0.5em;">
+					<p>	
+						<input style="width: 3.5em;" name="Lt2_FInc" type="number" value='1' step='1' min='1' max='100'
 							title="How much to Change the brightness at each step (1% increments)" />
-						<label style="width: 2.2em;text-align: right;">% every</label>
-						<input style="width: 50px;" name="Lt2_FInt" type="number" value='0' step='1' min='1'
+						<label>% every</label>
+						<input style="width: 3.5em;" name="Lt2_FInt" type="number" value='0' step='1' min='1'
 							title="How often Step to the next brightness level" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -385,7 +386,7 @@
 				</form>
 				<form>
 					<p>
-						<label style="width: 3em;text-align: right;">ON</label>
+						<label style="padding-left: 0.5em; width: 2em;">ON</label>
 						<input style="width: 2.5em;" min=0 max=23 name="Lt2_OnH" type="number" /> :
 						<input style="width: 2.5em;" min=0 max=59 name="Lt2_OnM" type="number" />
 						<input class="setButton" type="submit" value="Set" title="Set grow light ON time" />
@@ -393,7 +394,7 @@
 				</form>
 				<form>
 					<p>
-						<label style="width: 3em;text-align: right;">OFF</label>
+						<label style="padding-left: 0.5em; width: 2em;">OFF</label>
 						<input style="width: 2.5em;" min=0 max=23 name="Lt2_OfH" type="number" /> :
 						<input style="width: 2.5em;" min=0 max=59 name="Lt2_OfM" type="number" />
 						<input class="setButton" type="submit" value="Set" title="Set grow light OFF time" />
@@ -448,7 +449,7 @@
 				</form>
 				<form>
 					<p>
-						<label>Timeout</label>
+						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
 						<input style="width: 55px;" min=1 max=9999 name="Hemp1_B1Time" type="number"
 							title="Maximum time the pump can run continuously" />sec
 						<input class="setButton" type="submit" value="Set">
@@ -463,7 +464,7 @@
 				</form>				
 				<form>
 					<p>			
-					<label style=" width: 3em;text-align: right;">Start</label>
+					<label style=" padding-left: 0.5em;text-align: right;">Start</label>
 						<input name="Hemp1_B1Strt" type="number" value='0' step='0.1'
 							title="Start watering plant below this weight" />
 						<label style="width: 2.2em;text-align: right;">Stop</label>
@@ -481,7 +482,7 @@
 				</form>
 				<form>	
 					<p>
-					<label style=" width: 4em;text-align: right;">Interval</label>
+					<label style=" padding-left: 0.5em; width: 3.7em;">Interval</label>
 						<input style="width: 55px;" min=1 name="Hemp1_B1Int" type="number" />min
 						<input class="setButton" type="submit" value="Set"
 							title="Set how often a spray should start (Minutes)">
@@ -490,7 +491,7 @@
 				</form>
 				<form>
 					<p>
-						<label style="width: 4em;text-align: right;">Duration</label>
+						<label style="padding-left: 0.5em; width: 3.7em;">Duration</label>
 						<input style="width: 35px;" min=1 name="Hemp1_B1Dur" type="number" />sec
 						<input class="setButton" type="submit" value="Set"
 							title="Set how long one spray should last (Seconds)">
@@ -523,7 +524,7 @@
 				</form>
 				<form>
 					<p>
-						<label>Timeout</label>
+						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
 						<input style="width: 55px;" min=1 max=9999 name="Hemp1_B2Time" type="number"
 							title="Maximum time the pump can run continuously" />sec
 						<input class="setButton" type="submit" value="Set" />
@@ -538,7 +539,7 @@
 				</form>				
 				<form>
 					<p>			
-					<label style=" width: 3em;text-align: right;">Start</label>
+					<label style=" padding-left: 0.5em;text-align: right;">Start</label>
 						<input name="Hemp1_B2Strt" type="number" value='0' step='0.1'
 							title="Start watering plant below this weight" />
 						<label style="width: 2.2em;text-align: right;">Stop</label>
@@ -556,7 +557,7 @@
 				</form>
 				<form>	
 					<p>
-					<label style=" width: 4em;text-align: right;">Interval</label>
+					<label style=" padding-left: 0.5em; width: 3.7em;">Interval</label>
 						<input style="width: 55px;" min=1 name="Hemp1_B2Int" type="number" />min
 						<input class="setButton" type="submit" value="Set"
 							title="Set how often a spray should start (Minutes)">
@@ -565,7 +566,7 @@
 				</form>
 				<form>
 					<p>
-						<label style="width: 4em;text-align: right;">Duration</label>
+						<label style="padding-left: 0.5em; width: 3.7em;">Duration</label>
 						<input style="width: 35px;" min=1 name="Hemp1_B2Dur" type="number" />sec
 						<input class="setButton" type="submit" value="Set"
 							title="Set how long one spray should last (Seconds)">
@@ -600,20 +601,24 @@
 						<button id="Aero1_SprayOff" type="button" title="Stop spraying">OFF</button>
 					</p>
 				</form>
+				<label><b>Spray Interval</b> (min)</label>
 				<form>
 					<p>
-						<label style="width: 4em;text-align: right;">Interval</label>
-						<input style="width: 35px;" min=1 name="Aero1_Int" type="number" />
-						<label style="width: 2em">min</label>
+						<label style="padding-left: 0.5em; text-align: right;">Day</label>
+						<input style="width: 35px;" min=1 name="Aero1_DInt" type="number" />
+						<label style="width: 2em"> Night</label>
+						<input style="width: 35px;" min=1 name="Aero1_NInt" type="number" />
 						<input class="setButton" type="submit" value="Set"
 							title="How often should the spraying start (Minutes)">
 					</p>
 				</form>
+				<label><b>Spray Duration</b> (sec)</label>
 				<form>
 					<p>
-						<label style="width: 4em;text-align: right;">Duration</label>
-						<input style="width: 35px;" min=1 name="Aero1_Dur" type="number" />
-						<label style="width: 2em">sec</label>
+						<label style="padding-left: 0.5em; text-align: right;">Day</label>
+						<input style="width: 35px;" min=1 name="Aero1_DDur" type="number" />
+						<label style="width: 2em"> Night</label>
+						<input style="width: 35px;" min=1 name="Aero1_NDur" type="number" />
 						<input class="setButton" type="submit" value="Set"
 							title="How long should a spray last (Seconds)">
 					</p>
@@ -633,7 +638,7 @@
 				</form>
 				<form>
 					<p>
-						<label style="width: 4em;text-align: right;">Timeout</label>
+						<label style="padding-left: 0.5em; width: 3.5em;">Timeout</label>
 						<input style="width: 45px;" min=1 max=9999 name="Aero1_Timeout" type="number"
 							title="Maximum continuous pump runtime in seconds" />sec
 						<input class="setButton" type="submit" value="Set">
@@ -641,7 +646,7 @@
 				</form>
 				<form>
 					<p>
-						<label style="width: 4em;text-align: right;">Priming</label>
+						<label style="padding-left: 0.5em; width: 3.5em;">Priming</label>
 						<input style="width: 45px;" min=1 max=9999 name="Aero1_Priming" type="number"
 							title="At pump startup the bypass valve is open for X seconds" />sec
 						<input class="setButton" type="submit" value="Set">
