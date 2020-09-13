@@ -75,15 +75,15 @@ void HempyModule_Web::websiteEvent_Load(char *url)
   if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgBoolean(getComponentName(F("B1WBW")), HempyBucketCommand1ToSend.WeightBasedWatering);
-    WebServer.setArgFloat(getComponentName(F("B1Strt")), HempyBucketCommand1ToSend.StartWeight);
-    WebServer.setArgFloat(getComponentName(F("B1Stp")), HempyBucketCommand1ToSend.StopWeight);
+    WebServer.setArgString(getComponentName(F("B1Strt")), toText(HempyBucketCommand1ToSend.StartWeight));
+    WebServer.setArgString(getComponentName(F("B1Stp")), toText(HempyBucketCommand1ToSend.StopWeight));
     WebServer.setArgBoolean(getComponentName(F("B1TBW")), HempyBucketCommand1ToSend.TimerBasedWatering);
     WebServer.setArgInt(getComponentName(F("B1Int")), HempyBucketCommand1ToSend.WateringInterval);
     WebServer.setArgInt(getComponentName(F("B1Dur")), HempyBucketCommand1ToSend.WateringDuration);  
     WebServer.setArgInt(getComponentName(F("B1Time")), HempyBucketCommand1ToSend.TimeOutPump);
     WebServer.setArgBoolean(getComponentName(F("B2WBW")), HempyBucketCommand2ToSend.WeightBasedWatering);
-    WebServer.setArgFloat(getComponentName(F("B2Strt")), HempyBucketCommand2ToSend.StartWeight);
-    WebServer.setArgFloat(getComponentName(F("B2Stp")), HempyBucketCommand2ToSend.StopWeight);
+    WebServer.setArgString(getComponentName(F("B2Strt")), toText(HempyBucketCommand2ToSend.StartWeight));
+    WebServer.setArgString(getComponentName(F("B2Stp")), toText(HempyBucketCommand2ToSend.StopWeight));
     WebServer.setArgBoolean(getComponentName(F("B2TBW")), HempyBucketCommand2ToSend.TimerBasedWatering);
     WebServer.setArgInt(getComponentName(F("B2Int")), HempyBucketCommand2ToSend.WateringInterval);
     WebServer.setArgInt(getComponentName(F("B2Dur")), HempyBucketCommand2ToSend.WateringDuration); 

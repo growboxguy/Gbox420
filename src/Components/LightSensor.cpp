@@ -92,11 +92,11 @@ char *LightSensor::getReadingText()
     itoa(LightReading, ShortMessage, 10);
     if(Dark)
     {
-     strcat_P(ShortMessage, (PGM_P)F("- NIGHT"));
+     strcat_P(ShortMessage, (PGM_P)F("-NIGHT"));
     }
     else
     {
-      strcat_P(ShortMessage, (PGM_P)F("- DAY"));
+      strcat_P(ShortMessage, (PGM_P)F("-DAY"));
     } 
     return ShortMessage;
 }

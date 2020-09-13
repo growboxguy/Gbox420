@@ -243,18 +243,15 @@ int Lights::getBrightness()
 
 char *Lights::getBrightnessText()
 {
+  itoa(*Brightness, ShortMessage, 10);
+  strcat_P(ShortMessage, (PGM_P)F("%"));
   if (*Debug || CurrentState == LightStates::FADEIN || CurrentState == LightStates::FADEOUT)
   {
-    itoa(*Brightness, ShortMessage, 10);
     strcat_P(ShortMessage, (PGM_P)F(" ("));
     itoa(CurrentBrightness, ShortMessage+strlen(ShortMessage), 10);
     strcat_P(ShortMessage, (PGM_P)F(")"));
-    return ShortMessage;
-  }
-  else
-  {
-    return toText(*Brightness);
-  }
+  } 
+  return ShortMessage;
 }
 
 char *Lights::getStatusText(bool UseWords)
