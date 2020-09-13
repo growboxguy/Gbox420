@@ -243,7 +243,7 @@
 				<table class="tg">
 					<tr>
 						<td class="headerRows"><span>Lights</span><br></td>
-						<td class="headerRows"><span>Dark</span></td>
+						<td class="headerRows"><span>Brightness</span><br></td>
 						<td class="headerRows"><span>Reading</span></td>
 						<td class="headerRows"><span>Timer</span></td>
 						<td class="headerRows"><span>ON</span></td>
@@ -251,13 +251,11 @@
 					</tr>
 					<tr>
 						<td id="Lt1_S" class="dataRows"></td><!-- Status ON/OFF -->
-						<td id="LtSen1_D" class="dataRows"></td><!-- Dark Yes/No-->
-						<td id="LtSen1_R" class="dataRows"></td><!-- Light Reading -->
+						<td id="Lt1_Br" class="dataRows"></td><!-- Brightness  -->
+						<td id="LtSen1_R" class="dataRows"></td><!-- Light sensor Reading -->
 						<td id="Lt1_T" class="dataRows"></td><!-- Timer Enabled/Disabled -->
-						<td id="Lt1_OnT" class="dataRows"></td>
-						<!--Light On Time 24h-->
-						<td id="Lt1_OfT" class="dataRows"></td>
-						<!--Light Off Time 24h -->
+						<td id="Lt1_OnT" class="dataRows"></td><!--Light On Time 24h-->						
+						<td id="Lt1_OfT" class="dataRows"></td><!--Light Off Time 24h -->						
 					</tr>
 				</table>
 				<form>
@@ -271,7 +269,7 @@
 
 				<form>
 					<p>
-						<input type="checkbox" name="Lt1_Fade"
+						<input type="checkbox" name="Lt1_F"
 							title="Turn fading in and out the lights when changing ON/OFF state, adds smoother photosynthetic state transition" />
 						<b>Fade in/out</b>
 						<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
@@ -280,10 +278,10 @@
 				<form>
 					<p>			
 					<label style=" width: 3em;text-align: right;">Change</label>
-						<input name="Lt1_FadeC" type="number" value='1' step='1' min='1' max='100'
+						<input name="Lt1_FInc" type="number" value='1' step='1' min='1' max='100'
 							title="How much to Change the brightness at each step (1% increments)" />
 						<label style="width: 2.2em;text-align: right;">% every</label>
-						<input style="width: 50px;" name="Lt1_FadeS" type="number" value='0' step='1' min='1'
+						<input style="width: 50px;" name="Lt1_FInt" type="number" value='0' step='1' min='1'
 							title="How often Step to the next brightness level" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -327,12 +325,14 @@
 				<table class="tg">
 					<tr>
 						<td class="headerRows"><span>Lights</span><br></td>
+						<td class="headerRows"><span>Brightness</span><br></td>
 						<td class="headerRows"><span>Timer</span></td>
 						<td class="headerRows"><span>ON</span></td>
 						<td class="headerRows"><span>OFF</span></td>
 					</tr>
 					<tr>
 						<td id="Lt2_S" class="dataRows"></td><!-- Status ON/OFF -->
+						<td id="Lt2_Br" class="dataRows"></td><!-- Brightness  -->
 						<td id="Lt2_T" class="dataRows"></td><!-- Timer Enabled/Disabled -->
 						<td id="Lt2_OnT" class="dataRows"></td>
 						<!--Light On Time 24h-->
@@ -348,7 +348,7 @@
 				</form>
 				<form>
 					<p>
-						<input type="checkbox" name="Lt2_Fade"
+						<input type="checkbox" name="Lt2_F"
 							title="Turn fading in and out the lights when changing ON/OFF state, adds smoother photosynthetic state transition" />
 						<b>Fade in/out</b>
 						<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
@@ -357,10 +357,10 @@
 				<form>
 					<p>			
 					<label style=" width: 3em;text-align: right;">Change</label>
-						<input name="Lt2_FadeC" type="number" value='1' step='1' min='1' max='100'
+						<input name="Lt2_FInc" type="number" value='1' step='1' min='1' max='100'
 							title="How much to Change the brightness at each step (1% increments)" />
 						<label style="width: 2.2em;text-align: right;">% every</label>
-						<input style="width: 50px;" name="Lt2_FadeS" type="number" value='0' step='1' min='1'
+						<input style="width: 50px;" name="Lt2_FInt" type="number" value='0' step='1' min='1'
 							title="How often Step to the next brightness level" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>

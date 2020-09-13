@@ -4,7 +4,8 @@ Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Sett
 {
   this->Parent = Parent;
   this->Name = Name;
-  Parent->addToReportQueue(this);          
+  Parent->addToReportQueue(this);     
+  Parent->addToRefreshQueue_Sec(this);     
   Parent->addToRefreshQueue_Minute(this);
   Parent->addToWebsiteQueue_Load(this);    
   Parent->addToWebsiteQueue_Refresh(this); 
@@ -37,7 +38,10 @@ void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
     WebServer.setArgInt(getComponentName(F("OfH")), *OffHour);    ///Off hour
     WebServer.setArgInt(getComponentName(F("OfM")), *OffMinute);  ///Off minute
     WebServer.setArgInt(getComponentName(F("B")), *Brightness);  ///Brightness percentage 
-    WebServer.setArgInt(getComponentName(F("BS")), *Brightness); ///Brightness slider 
+    WebServer.setArgInt(getComponentName(F("BS")), *Brightness); ///Brightness slider
+    WebServer.setArgBoolean(getComponentName(F("F")), *FadingEnabled); ///Enable or disable Fade in/out 
+    WebServer.setArgInt(getComponentName(F("FInc")), *FadingIncrements);  ///Fade change (%)
+    WebServer.setArgInt(getComponentName(F("FInt")), *FadingInterval); ///Fade step interval (sec)
   }
 }
 
@@ -45,7 +49,8 @@ void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G",2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("S")), getStatusText(true));  ///Status
+    WebServer.setArgString(getComponentName(F("S")), getStateText());  ///State
+    WebServer.setArgString(getComponentName(F("Br")), getBrightnessText());  ///Timer on or off
     WebServer.setArgString(getComponentName(F("T")), getTimerOnOffText(true));  ///Timer on or off
     WebServer.setArgString(getComponentName(F("OnT")), getOnTimeText());   ///Turn on time
     WebServer.setArgString(getComponentName(F("OfT")), getOffTimeText());  ///Turn off time
@@ -75,10 +80,13 @@ void Lights_Web::websiteEvent_Field(char *Field)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("B")) == 0){setBrightness(WebServer.getArgInt(), true);}
+    if (strcmp_P(ShortMessage, (PGM_P)F("B")) == 0){setBrightness(WebServer.getArgInt(), true, true);}
     else if (strcmp_P(ShortMessage, (PGM_P)F("OnH")) == 0){setOnHour(WebServer.getArgInt());}
     else if (strcmp_P(ShortMessage, (PGM_P)F("OnM")) == 0){setOnMinute(WebServer.getArgInt());}
     else if (strcmp_P(ShortMessage, (PGM_P)F("OfH")) == 0){setOffHour(WebServer.getArgInt());}
     else if (strcmp_P(ShortMessage, (PGM_P)F("OfM")) == 0){setOffMinute(WebServer.getArgInt());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("F")) == 0){setFadeOnOff(WebServer.getArgBoolean());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("FInc")) == 0){setFadeIncrements(WebServer.getArgInt());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("FInt")) == 0){setFadeInterval(WebServer.getArgInt());}
   }
 }

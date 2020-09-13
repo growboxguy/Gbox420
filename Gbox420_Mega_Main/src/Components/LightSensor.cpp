@@ -32,9 +32,9 @@ void LightSensor::report()
 {
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
-  strcat_P(LongMessage, (PGM_P)F("Dark:"));
-  strcat(LongMessage, getDarkText(true));
-  strcat_P(LongMessage, (PGM_P)F(" ; LightReading:"));
+  //strcat_P(LongMessage, (PGM_P)F("Dark:"));
+ // strcat(LongMessage, getDarkText(true));
+  strcat_P(LongMessage, (PGM_P)F("LightReading:"));
   strcat(LongMessage, getReadingText());
   logToSerials(&LongMessage, true, 1);
 }
@@ -56,12 +56,12 @@ void LightSensor::calibrate(bool AddToLog)
   Readings[0] = 1023 - analogRead(*AnalogPin);  ///store the reading in darkness to the first element of the Readings[10] array
   LightSource->setLightOnOff(true, false); ///turn on light, without adding a log entry
   for(uint8_t ReadingCounter=0;ReadingCounter<(ReadingArrayDepth-1);){  ///This probably looks dodgy as the 3rd parameter of the for cycle is empty. ReadingCounter is incremented in the code
-    LightSource->setBrightness(ReadingCounter++ * 10, false);  ///Increment ReadingCounter AFTER reading its value
+    LightSource->setBrightness(ReadingCounter++ * 10, false, false);  ///Increment ReadingCounter AFTER reading its value
     wdt_reset();  ///Reset watchdog timer before waiting
     delay(DelaySec); ///wait for light output change
     Readings[ReadingCounter] = 1023 - analogRead(*AnalogPin); 
   }
-  LightSource->setBrightness(LastBrightness, false); ///restore original brightness, without adding a log entry
+  LightSource->setBrightness(LastBrightness, false, false); ///restore original brightness, without adding a log entry
   LightSource->setLightOnOff(LastStatus, false);     ///restore original state, without adding a log entry
   getCalibrationReadings(); 
   if (AddToLog)
@@ -89,7 +89,16 @@ int LightSensor::getReading()  ///Gets the average light sensor reading, if pass
 
 char *LightSensor::getReadingText()
 { 
-    return toText(LightReading);
+    itoa(LightReading, ShortMessage, 10);
+    if(Dark)
+    {
+     strcat_P(ShortMessage, (PGM_P)F("- NIGHT"));
+    }
+    else
+    {
+      strcat_P(ShortMessage, (PGM_P)F("- DAY"));
+    } 
+    return ShortMessage;
 }
 
 bool LightSensor::getDark()

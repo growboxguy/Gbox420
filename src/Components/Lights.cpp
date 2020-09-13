@@ -9,6 +9,9 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
   DimmingLimit = &DefaultSettings->DimmingLimit; ///Blocks dimming below a certain percentage (default 8%), Most LED drivers cannot fully dim, check the specification and adjust accordingly, only set 0 if it supports dimming fully! (Usually not the case..)
   Status = &DefaultSettings->Status;
   Brightness = &DefaultSettings->Brightness;
+  FadingEnabled = &DefaultSettings->FadingEnabled;
+  FadingInterval = &DefaultSettings->FadingInterval;
+  FadingIncrements = &DefaultSettings->FadingIncrements;
   TimerEnabled = &DefaultSettings->TimerEnabled;
   OnHour = &DefaultSettings->OnHour;
   OnMinute = &DefaultSettings->OnMinute;
@@ -17,28 +20,52 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
   pinMode(*RelayPin, OUTPUT);
   digitalWrite(*RelayPin, HIGH); ///Turn relay off initially
   pinMode(*DimmingPin, OUTPUT);
-  setBrightness(*Brightness,false);  ///Set initial brightness
-  Parent->addToReportQueue(this);          
+  if (*FadingEnabled)
+  {
+    CurrentBrightness = 0; /// start with low light intensity and slowly fade in to target Brightness
+  }
+  else
+  {
+    CurrentBrightness = *Brightness; /// instantly jump to target Brightness
+  }
+  setBrightness(CurrentBrightness, false, false); ///Set initial brightness
+  setLightOnOff(*Status, false);
+  checkRelay();
+  Parent->addToReportQueue(this);
+  Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_Minute(this);
   logToSerials(F("Lights object created"), true, 1);
+}
+
+void Lights::refresh_Sec()
+{
+  if (*Debug)
+    Common::refresh_Sec();
+  checkDimming();
 }
 
 void Lights::refresh_Minute()
 { ///makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
   if (*Debug)
     Common::refresh_Minute();
-  checkLightTimer();
-  checkLightStatus();
+  checkTimer();
+  checkRelay();
 }
 
 void Lights::report()
 {
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
-  strcat_P(LongMessage, (PGM_P)F("Status:"));
-  strcat(LongMessage, getStatusText(true));
+  strcat_P(LongMessage, (PGM_P)F("State:"));
+  strcat(LongMessage, getStateText());
   strcat_P(LongMessage, (PGM_P)F(" ; Brightness:"));
   strcat(LongMessage, toText_percentage(*Brightness));
+  if (*Debug || CurrentState == LightStates::FADEIN || CurrentState == LightStates::FADEOUT)
+  {
+    strcat_P(LongMessage, (PGM_P)F(" ("));
+    strcat(LongMessage, toText_percentage(CurrentBrightness));
+    strcat_P(LongMessage, (PGM_P)F(")"));
+  }
   strcat_P(LongMessage, (PGM_P)F(" ; LightON:"));
   strcat(LongMessage, getOnTimeText());
   strcat_P(LongMessage, (PGM_P)F(" ; LightOFF:"));
@@ -46,15 +73,49 @@ void Lights::report()
   logToSerials(&LongMessage, true, 1);
 }
 
-void Lights::checkLightStatus()
+void Lights::checkRelay()
 {
-  if (*Status)
-    digitalWrite(*RelayPin, LOW); ///True turns relay ON (LOW signal activates Relay)
+  if (CurrentState == LightStates::OFF)
+    digitalWrite(*RelayPin, HIGH); ///True turns relay OFF (HIGH signal de-activates Relay)
   else
-    digitalWrite(*RelayPin, HIGH); ///HIGH turns relay OFF
+    digitalWrite(*RelayPin, LOW); ///LOW turns relay ON
 }
 
-void Lights::checkLightTimer()
+void Lights::checkDimming()
+{
+  if (CurrentState == LightStates::FADEIN)
+  {
+    if (millis() - FadingTimer >= *FadingInterval * 1000)
+    {
+      CurrentBrightness = CurrentBrightness + *FadingIncrements; //Increase current brightness
+      if (CurrentBrightness >= *Brightness)                      ///Check if the target brightness is reached
+      {
+        CurrentBrightness = *Brightness;
+        CurrentState = LightStates::ON;
+      }
+      setBrightness(CurrentBrightness, false, false); ///Set new brightness
+      FadingTimer = millis();                         ///Store the timestamp of the last change
+      checkRelay();
+    }
+  }
+  else if (CurrentState == LightStates::FADEOUT)
+  {
+    if (millis() - FadingTimer >= *FadingInterval * 1000)
+    {
+      CurrentBrightness = CurrentBrightness - *FadingIncrements; //Decrease current brightness
+      if (CurrentBrightness <= 0)                                ///Check if zero brightness is reached
+      {
+        CurrentBrightness = 0;
+        CurrentState = LightStates::OFF;
+      }
+      setBrightness(CurrentBrightness, false, false); ///Set new brightness
+      FadingTimer = millis();                         ///Store the timestamp of the last change
+      checkRelay();
+    }
+  }
+}
+
+void Lights::checkTimer()
 {
   if (*TimerEnabled)
   {
@@ -74,11 +135,13 @@ void Lights::checkLightTimer()
         }
       }
       else ///False: Light should be off
-          if (*Status)
-      {                              ///If status is ON
-        setLightOnOff(false, false); ///Turn OFF the lights (First bool), and do not add it to the log (Second bool)
-        if (*Debug)
-          logToSerials(F("Timer:Light OFF"), true, 4);
+      {
+        if (*Status)
+        {                              ///If status is ON
+          setLightOnOff(false, false); ///Turn OFF the lights (First bool), and do not add it to the log (Second bool)
+          if (*Debug)
+            logToSerials(F("Timer:Light OFF"), true, 4);
+        }
       }
     }
     else ///midnight turnover, Example: On 21:20, Off: 9:20
@@ -102,10 +165,14 @@ void Lights::checkLightTimer()
   }
 }
 
-void Lights::setBrightness(uint8_t Brightness, bool LogThis)
+void Lights::setBrightness(uint8_t Brightness, bool LogThis, bool StoreSetting)
 {
-  *(this->Brightness) = Brightness;
-  analogWrite(*DimmingPin, map(Brightness, 0, 100, int(255 * (100 - *DimmingLimit) / 100.0f), 0)); ///mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https:///www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
+  CurrentBrightness = Brightness;  ///< Sets the dimming duty cycle (0-100%)
+  if (StoreSetting)
+  {
+    *(this->Brightness) = Brightness;  ///< Store to EEPROM as a startup value
+  }  
+  analogWrite(*DimmingPin, map(CurrentBrightness, 0, 100, int(255 * (100 - *DimmingLimit) / 100.0f), 0)); ///mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https:///www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
   if (LogThis)
   {
     strncpy_P(LongMessage, (PGM_P)F("Brightness: "), MaxTextLength);
@@ -117,21 +184,43 @@ void Lights::setBrightness(uint8_t Brightness, bool LogThis)
 
 void Lights::setLightOnOff(bool Status, bool LogThis)
 {
-  *(this->Status) = Status;
   if (LogThis)
   {
     if (Status)
     {
       Parent->addToLog(F("Light ON"));
       Parent->getSoundObject()->playOnSound();
+      if (*FadingEnabled && CurrentState != LightStates::FADEIN && CurrentState != LightStates::ON)
+      {
+        CurrentState = LightStates::FADEIN;
+        CurrentBrightness = 0; ///Start fading in from 0%
+        setBrightness(CurrentBrightness, false, false);
+      }
+      else
+      {
+        CurrentState = LightStates::ON;
+        CurrentBrightness = *Brightness; ///Instantly set the target Brightness
+        setBrightness(CurrentBrightness, false, false);
+      }
     }
     else
     {
       Parent->addToLog(F("Light OFF"));
       Parent->getSoundObject()->playOffSound();
+      if (*FadingEnabled && CurrentState != LightStates::OFF && CurrentState != LightStates::FADEOUT)
+      {
+        CurrentState = LightStates::FADEOUT;
+        //CurrentBrightness = *Brightness; ///Start fading out from the target brightness
+        //setBrightness(CurrentBrightness, false, false);
+      }
+      else
+      {
+        CurrentState = LightStates::OFF;
+      }
     }
   }
-  checkLightStatus();
+  *(this->Status) = Status;
+  checkRelay();
 }
 
 char *Lights::getTimerOnOffText(bool UseWords)
@@ -154,7 +243,18 @@ int Lights::getBrightness()
 
 char *Lights::getBrightnessText()
 {
-  return toText(*Brightness);
+  if (*Debug || CurrentState == LightStates::FADEIN || CurrentState == LightStates::FADEOUT)
+  {
+    itoa(*Brightness, ShortMessage, 10);
+    strcat_P(ShortMessage, (PGM_P)F(" ("));
+    itoa(CurrentBrightness, ShortMessage+strlen(ShortMessage), 10);
+    strcat_P(ShortMessage, (PGM_P)F(")"));
+    return ShortMessage;
+  }
+  else
+  {
+    return toText(*Brightness);
+  }
 }
 
 char *Lights::getStatusText(bool UseWords)
@@ -163,6 +263,28 @@ char *Lights::getStatusText(bool UseWords)
     return toText_onOff(*Status); ///Returns ON or OFF
   else
     return toText(*Status); ///Returns '1' or '0'
+}
+
+char *Lights::getStateText()
+{
+  switch (CurrentState)
+  {
+  case LightStates::OFF:
+    return toText(F("OFF"));
+    break;
+  case LightStates::ON:
+    return toText(F("ON"));
+    break;
+  case LightStates::FADEIN:
+    return toText(F("FADEIN"));
+    break;
+  case LightStates::FADEOUT:
+    return toText(F("FADEOUT"));
+    break;
+  default:
+    return toText(F("UNKNOWN"));
+    break;
+  }
 }
 
 char *Lights::getOnTimeText()
@@ -179,7 +301,7 @@ void Lights::setTimerOnOff(bool TimerState)
   *(this->TimerEnabled) = TimerState;
   if (*TimerEnabled)
   {
-    checkLightTimer();
+    checkTimer();
     Parent->addToLog(F("Timer enabled"));
     Parent->getSoundObject()->playOnSound();
   }
@@ -211,5 +333,32 @@ void Lights::setOffMinute(uint8_t OffMinute)
 {
   *(this->OffMinute) = OffMinute;
   Parent->addToLog(F("Light OFF updated"));
+  Parent->getSoundObject()->playOnSound();
+}
+
+void Lights::setFadeOnOff(bool State)
+{
+  *FadingEnabled = State;
+  if (*FadingEnabled)
+  {
+    Parent->addToLog(F("Fading enabled"));
+    Parent->getSoundObject()->playOnSound();
+  }
+  else
+  {
+    Parent->addToLog(F("Fading disabled"));
+    Parent->getSoundObject()->playOffSound();
+  }
+}
+
+void Lights::setFadeInterval(uint16_t Interval)
+{
+  *FadingInterval = Interval;
+}
+
+void Lights::setFadeIncrements(uint8_t Increment)
+{
+  *FadingIncrements = Increment;
+  Parent->addToLog(F("Fade timing updated"));
   Parent->getSoundObject()->playOnSound();
 }

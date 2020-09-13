@@ -10,18 +10,10 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 14; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 1; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
-enum PumpStates
-{
-  DISABLED,
-  IDLE,
-  PRIMING,
-  RUNNING,
-  BLOWOFF,
-  MIXING
-};
+enum PumpStates {DISABLED,IDLE,PRIMING,RUNNING,BLOWOFF,MIXING};
 //enum HempyState { DRY, WATERING};
 //enum AeroState { SPRAYING };
 
@@ -126,7 +118,7 @@ typedef struct
 
   struct LightsSettings
   {
-    LightsSettings(uint8_t RelayPin = 0, uint8_t DimmingPin = 0, uint8_t DimmingLimit = 0, uint8_t Brightness = 0, bool TimerEnabled = false, uint8_t OnHour = 0, uint8_t OnMinute = 0,  uint8_t OffHour = 0, uint8_t OffMinute = 0, bool FadingEnabled = false, uint16_t FadingStepInterval = 0, uint8_t FadingIncrements = 0) : RelayPin(RelayPin), DimmingPin(DimmingPin), DimmingLimit(DimmingLimit), Brightness(Brightness), TimerEnabled(TimerEnabled), OnHour(OnHour), OnMinute(OnMinute), OffHour(OnHour), OffMinute(OnMinute), FadingEnabled(FadingEnabled), FadingStepInterval(FadingStepInterval), FadingIncrements(FadingIncrements) {}
+    LightsSettings(uint8_t RelayPin = 0, uint8_t DimmingPin = 0, uint8_t DimmingLimit = 0, uint8_t Brightness = 0, bool TimerEnabled = false, uint8_t OnHour = 0, uint8_t OnMinute = 0,  uint8_t OffHour = 0, uint8_t OffMinute = 0, bool FadingEnabled = false, uint16_t FadingInterval = 0, uint8_t FadingIncrements = 0) : RelayPin(RelayPin), DimmingPin(DimmingPin), DimmingLimit(DimmingLimit), Brightness(Brightness), TimerEnabled(TimerEnabled), OnHour(OnHour), OnMinute(OnMinute), OffHour(OnHour), OffMinute(OnMinute), FadingEnabled(FadingEnabled), FadingInterval(FadingInterval), FadingIncrements(FadingIncrements) {}
     uint8_t RelayPin;               ///Power relay Port 8 - LED lights
     uint8_t DimmingPin;             ///PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
     uint8_t DimmingLimit;           ///Sets the LED dimming limit (Usually around 5%)
@@ -138,11 +130,11 @@ typedef struct
     uint8_t OffHour;           ///Light OFF time - hour
     uint8_t OffMinute;         ///Light OFF time - minute
     bool FadingEnabled;     ///<Enables/disables fading lights in when turning on, and fading lights out when turning off
-    uint16_t FadingStepInterval; ///<How often should the brightness change during a fade in/out in Seconds
+    uint16_t FadingInterval; ///<How often should the brightness change during a fade in/out in Seconds
     uint8_t FadingIncrements;       ///<How much to change the brightness during a fade in/out in Percentage
   };
-  struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 16, .Brightness = 75, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled= true, .FadingStepInterval=30, .FadingIncrements = 1  }; ///Creating a LightSettings instance, passing in the unique parameters
-  struct LightsSettings Lt2 = {.RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6, .Brightness = 55, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled= true, .FadingStepInterval=30, .FadingIncrements = 1 };  ///Creating a LightSettings instance, passing in the unique parameters
+  struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 16, .Brightness = 75, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled= true, .FadingInterval=30, .FadingIncrements = 1  }; ///Creating a LightSettings instance, passing in the unique parameters
+  struct LightsSettings Lt2 = {.RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6, .Brightness = 55, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled= true, .FadingInterval=30, .FadingIncrements = 1 };  ///Creating a LightSettings instance, passing in the unique parameters
 
   struct ReservoirModuleSettings
   { ///TODO: Remove the parameters
