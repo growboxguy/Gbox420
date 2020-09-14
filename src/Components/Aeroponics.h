@@ -16,6 +16,7 @@ public:
   void setSprayOnOff(bool State); 
   char *sprayStateToText();
   virtual void sprayNow(bool UserRequest = false) = 0;
+  void setDayMode(bool State);
   void setDayInterval(int Interval);
   void setDayDuration(int Duration);
   void setNightInterval(int Interval);
@@ -48,4 +49,5 @@ protected:
   float *MinPressure;           ///Minimum acceptable spray pressure
   float *MaxPressure;          ///Maximum allowed pressure 
   float LastSprayPressure = 0; ///tracks the last pressure reading during a spray cycle
+  bool DayMode = true; ///Switch between Day and Night spray interval and duration.
 };

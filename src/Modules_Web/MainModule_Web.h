@@ -49,6 +49,7 @@ public:
   void refresh_QuarterHour();  
   void reportToGoogleSheetsTrigger(bool ForceRun = false);
   void reportToJSON();
+  bool getDayMode(); ///< Returns true if the lights are on or daylight is detected
  // void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
  
 private:
@@ -58,7 +59,7 @@ private:
   void setMetric(bool MetricEnabled);
   void setPushingBoxLogRelayID(const char *ID);
 
-protected:
+protected:  
   bool RefreshAllRequested = false;
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;

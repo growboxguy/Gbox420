@@ -43,6 +43,8 @@ void AeroModule_Web::report()
   strcat(LongMessage, toText_pressure(AeroResponse1Received.LastSprayPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(AeroResponse1Received.SprayEnabled));
+  strcat_P(LongMessage, (PGM_P)F(" ; DayMode:"));
+  strcat(LongMessage, toText(AeroCommand1ToSend.DayMode));
   strcat_P(LongMessage, (PGM_P)F(" ; DayInterval:"));
   strcat(LongMessage, toText_minute(AeroCommand1ToSend.DayInterval));
   strcat_P(LongMessage, (PGM_P)F(" ; DayDuration:"));
@@ -363,6 +365,7 @@ void AeroModule_Web::updateCommands()
   AeroModuleCommand1ToSend.Time = now();
   AeroModuleCommand1ToSend.Debug = *Debug;
   AeroModuleCommand1ToSend.Metric = *Metric;
+  AeroCommand1ToSend.DayMode = ((MainModule*)Parent) -> getDayMode();
   AeroCommand1ToSend.DayInterval = DefaultSettings->DayInterval;
   AeroCommand1ToSend.DayDuration = DefaultSettings->DayDuration;
   AeroCommand1ToSend.NightInterval = DefaultSettings->NightInterval;
