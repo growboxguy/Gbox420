@@ -20,8 +20,8 @@ void Aeroponics_NoTank::refresh_Sec()
       Pump -> stopPump();
     }
     
-    if (!LockedPumpOn && (millis() - SprayTimer) >= ((uint32_t)*Duration * 1000 + (uint32_t)Pump->getPrimingTime() * 1000))
-    { ///bypass valve is closed and time to stop spraying (Duration in Seconds)
+    if (!LockedPumpOn && (millis() - SprayTimer) >= ((uint32_t)*DayDuration * 1000 + (uint32_t)Pump->getPrimingTime() * 1000))
+    { ///bypass valve is closed and time to stop spraying (DayDuration in Seconds)
       LastSprayPressure = Aeroponics::FeedbackPressureSensor->getPressure();
       logToSerials(F("Spray finished"), false, 3);
       Pump -> stopPump(); 
@@ -33,7 +33,7 @@ void Aeroponics_NoTank::refresh_Sec()
     { 
       LockedPumpOn = false;  ///Release the pump ON lock after pump returns to idle state after reaching PumpTimeOut
 
-      if(millis() - SprayTimer >= (uint32_t)*Interval * 60000){  ///if time to start spraying (AeroInterval in Minutes)
+      if(millis() - SprayTimer >= (uint32_t)*DayInterval * 60000){  ///if time to start spraying (AeroInterval in Minutes)
         sprayNow(false);
         SprayTimer = millis();
       }

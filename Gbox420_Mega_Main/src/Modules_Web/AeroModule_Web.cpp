@@ -43,10 +43,14 @@ void AeroModule_Web::report()
   strcat(LongMessage, toText_pressure(AeroResponse1Received.LastSprayPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(AeroResponse1Received.SprayEnabled));
-  strcat_P(LongMessage, (PGM_P)F(" ; Interval:"));
-  strcat(LongMessage, toText_minute(AeroCommand1ToSend.SprayInterval));
-  strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
-  strcat(LongMessage, toText_second(AeroCommand1ToSend.SprayDuration));
+  strcat_P(LongMessage, (PGM_P)F(" ; DayInterval:"));
+  strcat(LongMessage, toText_minute(AeroCommand1ToSend.DayInterval));
+  strcat_P(LongMessage, (PGM_P)F(" ; DayDuration:"));
+  strcat(LongMessage, toText_second(AeroCommand1ToSend.DayDuration));
+  strcat_P(LongMessage, (PGM_P)F(" ; NightInterval:"));
+  strcat(LongMessage, toText_minute(AeroCommand1ToSend.NightInterval));
+  strcat_P(LongMessage, (PGM_P)F(" ; NightDuration:"));
+  strcat(LongMessage, toText_second(AeroCommand1ToSend.NightDuration));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -70,10 +74,14 @@ void AeroModule_Web::reportToJSON()
   strcat(LongMessage, toText(AeroResponse1Received.State));
   strcat_P(LongMessage, (PGM_P)F("\",\"SprayEnabled\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.SprayEnabled));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Interval\":\""));
-  strcat(LongMessage, toText(AeroCommand1ToSend.SprayInterval));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Duration\":\""));
-  strcat(LongMessage, toText(AeroCommand1ToSend.SprayDuration));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DayInterval\":\""));
+  strcat(LongMessage, toText(AeroCommand1ToSend.DayInterval));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DayDuration\":\""));
+  strcat(LongMessage, toText(AeroCommand1ToSend.DayDuration));
+  strcat_P(LongMessage, (PGM_P)F("\",\"NightInterval\":\""));
+  strcat(LongMessage, toText(AeroCommand1ToSend.NightInterval));
+  strcat_P(LongMessage, (PGM_P)F("\",\"NightDuration\":\""));
+  strcat(LongMessage, toText(AeroCommand1ToSend.NightDuration));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
@@ -84,8 +92,10 @@ void AeroModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgBoolean(getComponentName(F("Tank")), AeroResponse1Received.PressureTankPresent);
     WebServer.setArgInt(getComponentName(F("Timeout")), AeroCommand1ToSend.PumpTimeOut);
     WebServer.setArgInt(getComponentName(F("Priming")), AeroCommand1ToSend.PumpPrimingTime);
-    WebServer.setArgInt(getComponentName(F("DInt")), AeroCommand1ToSend.SprayInterval);
-    WebServer.setArgInt(getComponentName(F("DDur")), AeroCommand1ToSend.SprayDuration);
+    WebServer.setArgInt(getComponentName(F("DInt")), AeroCommand1ToSend.DayInterval);
+    WebServer.setArgInt(getComponentName(F("DDur")), AeroCommand1ToSend.DayDuration);
+    WebServer.setArgInt(getComponentName(F("NInt")), AeroCommand1ToSend.NightInterval);
+    WebServer.setArgInt(getComponentName(F("NDur")), AeroCommand1ToSend.NightDuration);
     WebServer.setArgFloat(getComponentName(F("PresMax")), AeroCommand1ToSend.MaxPressure);
     WebServer.setArgFloat(getComponentName(F("PresMin")), AeroCommand1ToSend.MinPressure);
   }
@@ -175,14 +185,23 @@ void AeroModule_Web::websiteEvent_Field(char *Field)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Int")) == 0)
+    if (strcmp_P(ShortMessage, (PGM_P)F("DInt")) == 0)
     {
-      DefaultSettings->Interval = WebServer.getArgInt();
+      DefaultSettings->DayInterval = WebServer.getArgInt();
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("DDur")) == 0)
     {
-      DefaultSettings->Duration = WebServer.getArgInt();
-      Parent->addToLog(F("Spray timer updated"), false);
+      DefaultSettings->DayDuration = WebServer.getArgInt();
+      Parent->addToLog(F("Day spray updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("NInt")) == 0)
+    {
+      DefaultSettings->NightInterval = WebServer.getArgInt();
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("NDur")) == 0)
+    {
+      DefaultSettings->NightDuration = WebServer.getArgInt();
+      Parent->addToLog(F("Night spray updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0)
     {
@@ -344,8 +363,10 @@ void AeroModule_Web::updateCommands()
   AeroModuleCommand1ToSend.Time = now();
   AeroModuleCommand1ToSend.Debug = *Debug;
   AeroModuleCommand1ToSend.Metric = *Metric;
-  AeroCommand1ToSend.SprayInterval = DefaultSettings->Interval;
-  AeroCommand1ToSend.SprayDuration = DefaultSettings->Duration;
+  AeroCommand1ToSend.DayInterval = DefaultSettings->DayInterval;
+  AeroCommand1ToSend.DayDuration = DefaultSettings->DayDuration;
+  AeroCommand1ToSend.NightInterval = DefaultSettings->NightInterval;
+  AeroCommand1ToSend.NightDuration = DefaultSettings->NightDuration;
   AeroCommand1ToSend.PumpTimeOut = DefaultSettings->PumpTimeOut;
   AeroCommand1ToSend.PumpPrimingTime = DefaultSettings->PrimingTime;
   AeroCommand1ToSend.MinPressure = DefaultSettings->MinPressure;

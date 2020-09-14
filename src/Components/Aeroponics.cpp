@@ -9,8 +9,10 @@ Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings
   this->Parent = Parent;
   this->Name = Name;
   SprayEnabled = &DefaultSettings->SprayEnabled; ///Enable/disable misting
-  Interval = &DefaultSettings->Interval;         ///Aeroponics - Spray every 15 minutes
-  Duration = &DefaultSettings->Duration;         ///Aeroponics - Spray time in seconds
+  DayInterval = &DefaultSettings->DayInterval;         ///Spray every X minutes - With lights ON
+  DayDuration = &DefaultSettings->DayDuration;         ///Spray time in seconds - With lights ON
+  NightInterval = &DefaultSettings->NightInterval;         ///Spray every X minutes - With lights OFF
+  NightDuration = &DefaultSettings->NightDuration;         ///Spray time in seconds - With lights OFF
   MaxPressure = &DefaultSettings->MaxPressure; ///Aeroponics - Turn off pump above this pressure (bar)
   this->FeedbackPressureSensor = FeedbackPressureSensor;
   this->Pump = Pump;  
@@ -25,38 +27,71 @@ void Aeroponics::report()
   strcat(LongMessage, toText_pressure(*MaxPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(SprayEnabled));
-  strcat_P(LongMessage, (PGM_P)F(" ; Interval:"));
-  strcat(LongMessage, toText_minute(*Interval));
-  strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
-  strcat(LongMessage, toText_second(*Duration));  
+  strcat_P(LongMessage, (PGM_P)F(" ; DayInterval:"));
+  strcat(LongMessage, toText_minute(*DayInterval));
+  strcat_P(LongMessage, (PGM_P)F(" ; DayDuration:"));
+  strcat(LongMessage, toText_second(*DayDuration));  
+  strcat_P(LongMessage, (PGM_P)F(" ; NightInterval:"));
+  strcat(LongMessage, toText_minute(*NightInterval));
+  strcat_P(LongMessage, (PGM_P)F(" ; NightDuration:"));
+  strcat(LongMessage, toText_second(*NightDuration));  
   logToSerials(&LongMessage, true, 0); ///Break line, No indentation needed: child class already printed it
 }
 
-void Aeroponics::setSprayInterval(int interval)
+void Aeroponics::setDayInterval(int Interval)
 {
-  if(*Interval != interval && interval > 0)
+  if(*DayInterval != Interval && Interval > 0)
   {
-    *Interval = interval;
+    *DayInterval = Interval;
    Parent -> getSoundObject() -> playOnSound();
   }
 }
 
-int Aeroponics::getSprayInterval()
+int Aeroponics::getDayInterval()
 {
-  return *Interval;
+  return *DayInterval;
 }
 
-char *Aeroponics::getSprayIntervalText()
+char *Aeroponics::getDayIntervalText()
 {
-  return toText(*Interval);
+  return toText(*DayInterval);
 }
 
-void Aeroponics::setSprayDuration(int duration)
+void Aeroponics::setNightInterval(int Interval)
 {
-  if(*Duration !=duration && duration > 0)
+  if(*NightInterval != Interval && Interval > 0)
   {
-    *Duration = duration;
-    Parent->addToLog(F("Spray time updated"));
+    *NightInterval = Interval;
+   Parent -> getSoundObject() -> playOnSound();
+  }
+}
+
+int Aeroponics::getNightInterval()
+{
+  return *NightInterval;
+}
+
+char *Aeroponics::getNightIntervalText()
+{
+  return toText(*NightInterval);
+}
+
+void Aeroponics::setDayDuration(int Duration)
+{
+  if(*DayDuration !=Duration && Duration > 0)
+  {
+    *DayDuration = Duration;
+    Parent->addToLog(F("Day duration updated"));
+    Parent -> getSoundObject() -> playOnSound();
+  }
+}
+
+void Aeroponics::setNightDuration(int Duration)
+{
+  if(*NightDuration !=Duration && Duration > 0)
+  {
+    *NightDuration = Duration;
+    Parent->addToLog(F("Night duration updated"));
     Parent -> getSoundObject() -> playOnSound();
   }
 }
@@ -81,14 +116,19 @@ bool Aeroponics::getSprayEnabled()
   return *SprayEnabled;
 }
 
-int Aeroponics::getSprayDuration()
+int Aeroponics::getDayDuration()
 {
-  return *Duration;
+  return *DayDuration;
+}
+
+int Aeroponics::getNightDuration()
+{
+  return *NightDuration;
 }
 
 char *Aeroponics::getSprayDurationText()
 {
-  return toText(*Duration);
+  return toText(*DayDuration);
 }
 
 char *Aeroponics::sprayStateToText()

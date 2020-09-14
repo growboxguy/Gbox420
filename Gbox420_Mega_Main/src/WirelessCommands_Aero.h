@@ -1,3 +1,9 @@
+/**@file*/
+///GrowBoxGuy - http:///sites.google.com/site/growboxguy/
+///Structs for wireless communication - Both the Transmitter and the Receiver needs to know these
+///Defines the package stucture of each message exchanged between the Main and the Aero module
+///Max 32 bytes can be sent in a single package
+
 #pragma once
 
 #include "TimeLib.h"     ///< keeping track of time
@@ -46,13 +52,15 @@ struct AeroModuleResponse  : AeroCommonTemplate  //Max 32bytes. Module response 
 struct AeroCommand : AeroCommonTemplate  ///Max 32 bytes. Commands for both Aeroponics versions (With or without a pressure tank)
 {
    AeroCommand(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID){}
-   AeroCommand(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) bool SprayDisabled, __attribute__((unused)) bool SprayNow, __attribute__((unused)) bool SprayOff, __attribute__((unused)) int SprayInterval, __attribute__((unused)) int SprayDuration, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) int PumpTimeOut, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) float MinPressure, __attribute__((unused)) float MaxPressure) : AeroCommonTemplate(SequenceID){}   
+   AeroCommand(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) bool SprayDisabled, __attribute__((unused)) bool SprayNow, __attribute__((unused)) bool SprayOff, __attribute__((unused)) int DayInterval, __attribute__((unused)) int DayDuration,  __attribute__((unused)) int NightInterval, __attribute__((unused)) int NightDuration, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) int PumpTimeOut, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) float MinPressure, __attribute__((unused)) float MaxPressure) : AeroCommonTemplate(SequenceID){}   
    bool SprayEnabled = false;
    bool SprayDisabled = false;
    bool SprayNow = false;
    bool SprayOff = false;
-   int SprayInterval = 0;
-   int SprayDuration = 0;
+   int DayInterval = 0;
+   int DayDuration = 0;
+   int NightInterval = 0;
+   int NightDuration = 0;
    bool PumpOn = false;
    bool PumpOff = false;
    bool PumpDisable = false;

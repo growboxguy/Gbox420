@@ -46,15 +46,15 @@ void Aeroponics_Tank::refresh_Sec()
     
   if (SpraySwitch -> getState())
   { ///if spray is on
-    if (millis() - SprayTimer >= ((uint32_t)*Duration * 1000))
-    { ///if time to stop spraying (Duration in Seconds)
+    if (millis() - SprayTimer >= ((uint32_t)*DayDuration * 1000))
+    { ///if time to stop spraying (DayDuration in Seconds)
       LastSprayPressure = Aeroponics::FeedbackPressureSensor->getPressure();
       sprayOff(false);
     }
   }
   else
   { ///if spray is off
-    if (*SprayEnabled && millis() - SprayTimer >= ((uint32_t)*Interval * 60000))
+    if (*SprayEnabled && millis() - SprayTimer >= ((uint32_t)*DayInterval * 60000))
     { ///if time to start spraying (AeroInterval in Minutes)
       sprayNow(false);
     }

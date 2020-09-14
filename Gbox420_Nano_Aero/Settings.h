@@ -38,7 +38,6 @@ static const uint8_t Version = 3; ///< Increment this when you make a change in 
   static const uint8_t WirelessPayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
   static const uint16_t WirelessMessageTimeout = 500; //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
 
-
 ///SAVED TO EEPROM - Before uploading the schetch increase the Version variable to override whatever is stored in the Arduino's EEPROM 
   typedef struct
   {
@@ -54,15 +53,16 @@ static const uint8_t Version = 3; ///< Increment this when you make a change in 
  
     struct AeroponicsSettings
     { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
-      AeroponicsSettings(bool SprayEnabled = true, int Interval = 0, int Duration = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), Interval(Interval), Duration(Duration), MaxPressure(MaxPressure)   {}
+      AeroponicsSettings(bool SprayEnabled = true, int DayInterval = 0, int DayDuration = 0, int NightInterval = 0, int NightDuration = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), DayInterval(DayInterval), DayDuration(DayDuration), NightInterval(NightInterval), NightDuration(NightDuration), MaxPressure(MaxPressure)   {}
       bool SprayEnabled; ///Enable/disable spraying cycle
-      int Interval;        ///Spray every X minutes
-      int Duration;        ///Spray time in seconds
-      float MaxPressure; ///Turn off pump above this pressure
-      
+      int DayInterval;        ///Spray every X minutes - When the lights are ON
+      int DayDuration;        ///Spray time in seconds - When the lights are ON
+      int NightInterval;        ///Spray every X minutes - When the lights are OFF
+      int NightDuration;        ///Spray time in seconds - When the lights are OFF
+      float MaxPressure; ///Turn off pump above this pressure      
     };
-    struct AeroponicsSettings AeroT1_Common = {.SprayEnabled= true, .Interval=15, .Duration = 10, .MaxPressure = 7.0};
-    struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled= true, .Interval=15, .Duration = 10, .MaxPressure = 7.0};
+    struct AeroponicsSettings AeroT1_Common = {.SprayEnabled= true, .DayInterval=15, .DayDuration = 10, .NightInterval=30, .NightDuration = 8, .MaxPressure = 7.0};
+    struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled= true, .DayInterval=15, .DayDuration = 10, .NightInterval=30, .NightDuration = 8, .MaxPressure = 7.0};
     
     struct AeroponicsSettings_TankSpecific
     { ///Settings for an Aeroponics setup WITH a pressure tank
@@ -88,9 +88,7 @@ static const uint8_t Version = 3; ///< Increment this when you make a change in 
       uint8_t Pin;            ///PC buzzer+ (red)
       bool Enabled = true; ///Enable PC speaker / Piezo buzzer
     };
-    struct SoundSettings Sound1 = {.Pin = 2};  ///Default settings for the  Sound output
-
-    
+    struct SoundSettings Sound1 = {.Pin = 2};  ///Default settings for the  Sound output  
 
     struct WaterPumpSettings
     {
@@ -105,7 +103,6 @@ static const uint8_t Version = 3; ///< Increment this when you make a change in 
       int BlowOffTime;     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
     struct WaterPumpSettings AeroPump1 = {.PumpPin = 3, .PumpPinNegativeLogic= false, .BypassSolenoidPin = 4, .BypassSolenoidNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .PrimingTime = 10, .BlowOffTime = 3};
-
     
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
   } Settings;
