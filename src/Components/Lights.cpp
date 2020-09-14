@@ -167,11 +167,11 @@ void Lights::checkTimer()
 
 void Lights::setBrightness(uint8_t Brightness, bool LogThis, bool StoreSetting)
 {
-  CurrentBrightness = Brightness;  ///< Sets the dimming duty cycle (0-100%)
+  CurrentBrightness = Brightness; ///< Sets the dimming duty cycle (0-100%)
   if (StoreSetting)
   {
-    *(this->Brightness) = Brightness;  ///< Store to EEPROM as a startup value
-  }  
+    *(this->Brightness) = Brightness; ///< Store to EEPROM as a startup value
+  }
   analogWrite(*DimmingPin, map(CurrentBrightness, 0, 100, int(255 * (100 - *DimmingLimit) / 100.0f), 0)); ///mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https:///www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
   if (LogThis)
   {
@@ -184,39 +184,43 @@ void Lights::setBrightness(uint8_t Brightness, bool LogThis, bool StoreSetting)
 
 void Lights::setLightOnOff(bool Status, bool LogThis)
 {
-  if (LogThis)
+  if (Status)
   {
-    if (Status)
+    if (LogThis)
     {
       Parent->addToLog(F("Light ON"));
-      Parent->getSoundObject()->playOnSound();
-      if (*FadingEnabled && CurrentState != LightStates::FADEIN && CurrentState != LightStates::ON)
-      {
-        CurrentState = LightStates::FADEIN;
-        CurrentBrightness = 0; ///Start fading in from 0%
-        setBrightness(CurrentBrightness, false, false);
-      }
-      else
-      {
-        CurrentState = LightStates::ON;
-        CurrentBrightness = *Brightness; ///Instantly set the target Brightness
-        setBrightness(CurrentBrightness, false, false);
-      }
+    }
+    Parent->getSoundObject()->playOnSound();
+    if (*FadingEnabled && CurrentState != LightStates::FADEIN && CurrentState != LightStates::ON)
+    {
+      CurrentState = LightStates::FADEIN;
+      CurrentBrightness = 0; ///Start fading in from 0%
+      setBrightness(CurrentBrightness, false, false);
     }
     else
     {
+      CurrentState = LightStates::ON;
+      CurrentBrightness = *Brightness; ///Instantly set the target Brightness
+      setBrightness(CurrentBrightness, false, false);
+    }
+  }
+  else
+  {
+    if (LogThis)
+    {
       Parent->addToLog(F("Light OFF"));
-      Parent->getSoundObject()->playOffSound();
-      if (*FadingEnabled && CurrentState != LightStates::OFF && CurrentState != LightStates::FADEOUT)
-      {
-        CurrentState = LightStates::FADEOUT;
-        //CurrentBrightness = *Brightness; ///Start fading out from the target brightness
-        //setBrightness(CurrentBrightness, false, false);
-      }
-      else
-      {
-        CurrentState = LightStates::OFF;
-      }
+    }
+    Parent->getSoundObject()->playOffSound();
+
+    if (*FadingEnabled && CurrentState != LightStates::OFF && CurrentState != LightStates::FADEOUT)
+    {
+      CurrentState = LightStates::FADEOUT;
+      //CurrentBrightness = *Brightness; ///Start fading out from the target brightness
+      //setBrightness(CurrentBrightness, false, false);
+    }
+    else
+    {
+      CurrentState = LightStates::OFF;
     }
   }
   *(this->Status) = Status;
@@ -248,9 +252,9 @@ char *Lights::getBrightnessText()
   if (*Debug || CurrentState == LightStates::FADEIN || CurrentState == LightStates::FADEOUT)
   {
     strcat_P(ShortMessage, (PGM_P)F(" ("));
-    itoa(CurrentBrightness, ShortMessage+strlen(ShortMessage), 10);
+    itoa(CurrentBrightness, ShortMessage + strlen(ShortMessage), 10);
     strcat_P(ShortMessage, (PGM_P)F(")"));
-  } 
+  }
   return ShortMessage;
 }
 
