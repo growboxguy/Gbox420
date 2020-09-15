@@ -239,16 +239,16 @@ char *toText_pumpState(PumpStates State){
     case PumpStates::DISABLED:
       return toText(F("DISABLED"));
       break;
-    case PumpStates:IDLE:
+    case PumpStates::IDLE:
       return toText(F("IDLE"));
       break;
-    case PumpStates:PRIMING:
+    case PumpStates::PRIMING:
       return toText(F("PRIMING"));
       break;
-    case PumpStates:RUNNING:
+    case PumpStates::RUNNING:
       return toText(F("RUNNING"));
       break;
-    case PumpStates:BLOWOFF:
+    case PumpStates::BLOWOFF:
       return toText(F("BLOWOFF"));
       break;
     case PumpStates::MIXING:

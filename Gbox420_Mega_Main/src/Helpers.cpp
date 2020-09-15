@@ -236,22 +236,22 @@ char* toText_onlineStatus(bool Status)
 char *toText_pumpState(PumpStates State){
   switch (State)
   {
-    case DISABLED:
+    case PumpStates::DISABLED:
       return toText(F("DISABLED"));
       break;
-    case IDLE:
+    case PumpStates::IDLE:
       return toText(F("IDLE"));
       break;
-    case PRIMING:
+    case PumpStates::PRIMING:
       return toText(F("PRIMING"));
       break;
-    case RUNNING:
+    case PumpStates::RUNNING:
       return toText(F("RUNNING"));
       break;
-    case BLOWOFF:
+    case PumpStates::BLOWOFF:
       return toText(F("BLOWOFF"));
       break;
-    case MIXING:
+    case PumpStates::MIXING:
       return toText(F("MIXING"));
       break; 
     default:
