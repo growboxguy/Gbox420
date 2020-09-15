@@ -23,7 +23,7 @@ public:
   void setLightOnOff(bool State, bool AddToLog);
   bool getStatus();
   int getBrightness();
-  char *getBrightnessText();
+  char *getBrightnessText(bool UseText);
   char *getTimerOnOffText(bool UseText);
   char *getStatusText(bool UseText);
   char *getStateText();

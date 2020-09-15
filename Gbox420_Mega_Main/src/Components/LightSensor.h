@@ -15,7 +15,7 @@ public:
   void triggerCalibration();                                        ///Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger
   void getCalibrationReadings();    ///Light reading at dark,0,10,20...100%
   int getReading();                        ///Light sensor analog feedback: 0(darkest) to 1023 (brightest)
-  char * getReadingText(); ///returns the current light sensor reading
+  char * getReadingText(bool UseText); ///returns the current light sensor reading
   bool getDark();                                                   ///Light sensor digital feedback: True(Dark) or False(Bright)
   char *getDarkText(bool UseWords);
 

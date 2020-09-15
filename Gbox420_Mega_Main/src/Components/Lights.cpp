@@ -245,15 +245,18 @@ int Lights::getBrightness()
   return *Brightness;
 }
 
-char *Lights::getBrightnessText()
+char *Lights::getBrightnessText(bool UseText)
 {
   itoa(*Brightness, ShortMessage, 10);
-  strcat_P(ShortMessage, (PGM_P)F("%"));
-  if (*Debug || CurrentState == LightStates::FADEIN || CurrentState == LightStates::FADEOUT)
+  if (UseText)
   {
-    strcat_P(ShortMessage, (PGM_P)F(" ("));
-    itoa(CurrentBrightness, ShortMessage + strlen(ShortMessage), 10);
-    strcat_P(ShortMessage, (PGM_P)F(")"));
+    strcat_P(ShortMessage, (PGM_P)F("%"));
+    if (*Debug || CurrentState == LightStates::FADEIN || CurrentState == LightStates::FADEOUT)
+    {
+      strcat_P(ShortMessage, (PGM_P)F(" ("));
+      itoa(CurrentBrightness, ShortMessage + strlen(ShortMessage), 10);
+      strcat_P(ShortMessage, (PGM_P)F(")"));
+    }
   }
   return ShortMessage;
 }
