@@ -18,5 +18,5 @@ public:
 private:
 
 protected:
-  bool LockedPumpOn = false; ///< While true only the Pump Timeout will stop the pump.
+  bool RunTillTimeout = false; ///< While true only the Pump Timeout will stop the pump.
 };

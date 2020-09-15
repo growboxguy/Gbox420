@@ -27,6 +27,8 @@ void Aeroponics::report()
   strcat(LongMessage, toText_pressure(*MaxPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(SprayEnabled));
+  strcat_P(LongMessage, (PGM_P)F(" ; DayMode:"));
+  strcat(LongMessage, toText_enabledDisabled(DayMode));
   strcat_P(LongMessage, (PGM_P)F(" ; DayInterval:"));
   strcat(LongMessage, toText_minute(*DayInterval));
   strcat_P(LongMessage, (PGM_P)F(" ; DayDuration:"));

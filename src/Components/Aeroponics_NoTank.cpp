@@ -13,27 +13,47 @@ void Aeroponics_NoTank::refresh_Sec()
     Common::refresh_Sec();
 
   if (Pump->getState() == RUNNING)
-  { ///if pump is on    
+  { ///if pump is on
     FeedbackPressureSensor->readPressure();
-    if(FeedbackPressureSensor->getPressure() > *MaxPressure){
+    if (FeedbackPressureSensor->getPressure() > *MaxPressure)
+    {
       logToSerials(F("Max pressure reached"), false, 3);
-      Pump -> stopPump();
+      Pump->stopPump();
     }
-    
-    if (!LockedPumpOn && (millis() - SprayTimer) >= ((uint32_t)*DayDuration * 1000 + (uint32_t)Pump->getPrimingTime() * 1000))
-    { ///bypass valve is closed and time to stop spraying (DayDuration in Seconds)
+
+    uint32_t Duration;
+    if(DayMode)
+    {
+      Duration = *DayDuration * 1000; ///Duration is miliseconds, DayDuration in seconds
+    }
+    else
+    {
+     Duration = *NightDuration * 1000; ///Duration is miliseconds
+    }
+
+    if (!RunTillTimeout && (millis() - SprayTimer) >= Duration + (uint32_t)Pump->getPrimingTime() * 1000)
+    { ///bypass valve is closed and time to stop spraying
       LastSprayPressure = Aeroponics::FeedbackPressureSensor->getPressure();
       logToSerials(F("Spray finished"), false, 3);
-      Pump -> stopPump(); 
-    }    
+      Pump->stopPump();
+    }
   }
   else
-  {    
-    if (Pump->getState() == IDLE)  
-    { 
-      LockedPumpOn = false;  ///Release the pump ON lock after pump returns to idle state after reaching PumpTimeOut
-
-      if(millis() - SprayTimer >= (uint32_t)*DayInterval * 60000){  ///if time to start spraying (AeroInterval in Minutes)
+  {
+    if (Pump->getState() == IDLE)
+    {
+      RunTillTimeout = false; ///Making sure the special flag is disabled as soon the Pump becomes IDLE. (RunTillTimeout forces the pump to run until the timeout is reached, used during mixing)
+      uint32_t Interval;
+      if (DayMode)
+      {
+        Interval = *DayInterval * 60000; ///Duration is miliseconds, DayInterval is Minutes
+      }
+      else
+      {
+        Interval = *NightInterval * 60000; ///Duration is miliseconds
+      }
+      if (millis() - SprayTimer >= Interval)
+      { ///if time to start spraying
         sprayNow(false);
         SprayTimer = millis();
       }
@@ -60,18 +80,19 @@ void Aeroponics_NoTank::sprayNow(bool UserRequest)
       Parent->addToLog(F("Aeroponics spraying"));
     else
       logToSerials(F("Aeroponics spraying"), false, 3);
-     Pump->startPump(UserRequest);
-     SprayTimer = millis();
+    Pump->startPump(UserRequest);
+    SprayTimer = millis();
   }
 }
 
 void Aeroponics_NoTank::sprayOff()
-{  
-  Parent -> addToLog(F("Aeroponics spray OFF"));
-  Pump -> stopPump();  
+{
+  Parent->addToLog(F("Aeroponics spray OFF"));
+  Pump->stopPump();
 }
 
-void Aeroponics_NoTank::lockPumpOn(){
-  Pump -> startPump(true);
-  LockedPumpOn = true;
+void Aeroponics_NoTank::lockPumpOn()
+{
+  Pump->startPump(true);
+  RunTillTimeout = true;
 }
