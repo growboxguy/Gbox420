@@ -7,6 +7,7 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
   RelayPin = &DefaultSettings->RelayPin;
   DimmingPin = &DefaultSettings->DimmingPin;
   DimmingLimit = &DefaultSettings->DimmingLimit; ///Blocks dimming below a certain percentage (default 8%), Most LED drivers cannot fully dim, check the specification and adjust accordingly, only set 0 if it supports dimming fully! (Usually not the case..)
+  DimmingDuration = &DefaultSettings->DimmingDuration;
   Status = &DefaultSettings->Status;
   Brightness = &DefaultSettings->Brightness;
   FadingEnabled = &DefaultSettings->FadingEnabled;
@@ -60,7 +61,7 @@ void Lights::report()
   strcat(LongMessage, getStateText());
   strcat_P(LongMessage, (PGM_P)F(" ; Brightness:"));
   strcat(LongMessage, toText_percentage(*Brightness));
-  if (*Debug || CurrentState == LightStates::FADEIN || CurrentState == LightStates::FADEOUT)
+  if (*Debug || CurrentStatus == LightStates::FADEIN || CurrentStatus == LightStates::FADEOUT)
   {
     strcat_P(LongMessage, (PGM_P)F(" ("));
     strcat(LongMessage, toText_percentage(CurrentBrightness));
@@ -75,15 +76,37 @@ void Lights::report()
 
 void Lights::checkRelay()
 {
-  if (CurrentState == LightStates::OFF)
+  if (CurrentStatus == LightStates::OFF)
     digitalWrite(*RelayPin, HIGH); ///True turns relay OFF (HIGH signal de-activates Relay)
   else
     digitalWrite(*RelayPin, LOW); ///LOW turns relay ON
 }
 
+void Lights::dimLightsOnOff()
+{
+  if (CurrentStatus == LightStates::DIMMED)
+  { ///< If temporary dimming is already ON -> Turn it OFF
+    CurrentStatus = BeforeDimmingState;
+    setBrightness(BeforeDimmingBrightness,false,false);
+    Parent->getSoundObject()->playOffSound();
+    Parent->addToLog(F("Dimming disabled"));    
+  }
+  else ///< If temporary dimming is OFF -> Turn it ON
+  {
+    BeforeDimmingState = CurrentStatus;
+    BeforeDimmingBrightness = CurrentBrightness; 
+    CurrentStatus = LightStates::DIMMED;
+    setBrightness(1,false,false);
+    DimmingTimer = millis();
+    Parent->getSoundObject()->playOnSound();
+    Parent->addToLog(F("Dimming enabled"));
+  }
+  checkDimming();
+}
+
 void Lights::checkDimming()
 {
-  if (CurrentState == LightStates::FADEIN)
+  if (CurrentStatus == LightStates::FADEIN)
   {
     if (millis() - FadingTimer >= *FadingInterval * 1000)
     {
@@ -91,14 +114,13 @@ void Lights::checkDimming()
       if (CurrentBrightness >= *Brightness)                      ///Check if the target brightness is reached
       {
         CurrentBrightness = *Brightness;
-        CurrentState = LightStates::ON;
+        CurrentStatus = LightStates::ON;
       }
       setBrightness(CurrentBrightness, false, false); ///Set new brightness
       FadingTimer = millis();                         ///Store the timestamp of the last change
-      checkRelay();
     }
   }
-  else if (CurrentState == LightStates::FADEOUT)
+  else if (CurrentStatus == LightStates::FADEOUT)
   {
     if (millis() - FadingTimer >= *FadingInterval * 1000)
     {
@@ -106,13 +128,20 @@ void Lights::checkDimming()
       if (CurrentBrightness <= 0)                                ///Check if zero brightness is reached
       {
         CurrentBrightness = 0;
-        CurrentState = LightStates::OFF;
+        CurrentStatus = LightStates::OFF;
       }
       setBrightness(CurrentBrightness, false, false); ///Set new brightness
       FadingTimer = millis();                         ///Store the timestamp of the last change
-      checkRelay();
     }
   }
+  else if (CurrentStatus == LightStates::DIMMED)
+  {
+    if (millis() - DimmingTimer >= *DimmingDuration * 60000)
+    {
+     dimLightsOnOff();      
+    }
+  }
+  checkRelay();
 }
 
 void Lights::checkTimer()
@@ -182,6 +211,12 @@ void Lights::setBrightness(uint8_t Brightness, bool LogThis, bool StoreSetting)
   }
 }
 
+void Lights::setDimDuration (int DimmingDuration)
+{
+  *(this -> DimmingDuration) = DimmingDuration;
+  Parent->addToLog(F("Dimming duration updated"));
+}
+
 void Lights::setLightOnOff(bool Status, bool LogThis)
 {
   if (Status)
@@ -191,15 +226,15 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
       Parent->addToLog(F("Light ON"));
     }
     Parent->getSoundObject()->playOnSound();
-    if (*FadingEnabled && CurrentState != LightStates::FADEIN && CurrentState != LightStates::ON)
+    if (*FadingEnabled && CurrentStatus != LightStates::FADEIN && CurrentStatus != LightStates::ON)
     {
-      CurrentState = LightStates::FADEIN;
+      CurrentStatus = LightStates::FADEIN;
       CurrentBrightness = 0; ///Start fading in from 0%
       setBrightness(CurrentBrightness, false, false);
     }
     else
     {
-      CurrentState = LightStates::ON;
+      CurrentStatus = LightStates::ON;
       CurrentBrightness = *Brightness; ///Instantly set the target Brightness
       setBrightness(CurrentBrightness, false, false);
     }
@@ -212,15 +247,15 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
     }
     Parent->getSoundObject()->playOffSound();
 
-    if (*FadingEnabled && CurrentState != LightStates::OFF && CurrentState != LightStates::FADEOUT)
+    if (*FadingEnabled && CurrentStatus != LightStates::OFF && CurrentStatus != LightStates::FADEOUT)
     {
-      CurrentState = LightStates::FADEOUT;
+      CurrentStatus = LightStates::FADEOUT;
       //CurrentBrightness = *Brightness; ///Start fading out from the target brightness
       //setBrightness(CurrentBrightness, false, false);
     }
     else
     {
-      CurrentState = LightStates::OFF;
+      CurrentStatus = LightStates::OFF;
     }
   }
   *(this->Status) = Status;
@@ -251,7 +286,7 @@ char *Lights::getBrightnessText(bool UseText)
   if (UseText)
   {
     strcat_P(ShortMessage, (PGM_P)F("%"));
-    if (*Debug || CurrentState == LightStates::FADEIN || CurrentState == LightStates::FADEOUT)
+    if (*Debug || CurrentStatus == LightStates::FADEIN || CurrentStatus == LightStates::FADEOUT)
     {
       strcat_P(ShortMessage, (PGM_P)F(" ("));
       itoa(CurrentBrightness, ShortMessage + strlen(ShortMessage), 10);
@@ -271,7 +306,7 @@ char *Lights::getStatusText(bool UseWords)
 
 char *Lights::getStateText()
 {
-  switch (CurrentState)
+  switch (CurrentStatus)
   {
   case LightStates::OFF:
     return toText(F("OFF"));
@@ -284,6 +319,9 @@ char *Lights::getStateText()
     break;
   case LightStates::FADEOUT:
     return toText(F("FADEOUT"));
+    break;
+  case LightStates::DIMMED:
+    return toText(F("DIMMED"));
     break;
   default:
     return toText(F("UNKNOWN"));

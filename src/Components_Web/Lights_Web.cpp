@@ -42,6 +42,7 @@ void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
     WebServer.setArgBoolean(getComponentName(F("F")), *FadingEnabled); ///Enable or disable Fade in/out 
     WebServer.setArgInt(getComponentName(F("FInc")), *FadingIncrements);  ///Fade change (%)
     WebServer.setArgInt(getComponentName(F("FInt")), *FadingInterval); ///Fade step interval (sec)
+    WebServer.setArgInt(getComponentName(F("DD")), *DimmingDuration); ///Fade step interval (sec)
   }
 }
 
@@ -69,6 +70,7 @@ void Lights_Web::websiteEvent_Button(char *Button)
     else if (strcmp_P(ShortMessage, (PGM_P)F("Of")) == 0){setLightOnOff(false, true);}
     else if (strcmp_P(ShortMessage, (PGM_P)F("TOn")) == 0){setTimerOnOff(true);}
     else if (strcmp_P(ShortMessage, (PGM_P)F("TOff")) == 0){setTimerOnOff(false);}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("D")) == 0){dimLightsOnOff();}
   }
 }
 
@@ -88,5 +90,6 @@ void Lights_Web::websiteEvent_Field(char *Field)
     else if (strcmp_P(ShortMessage, (PGM_P)F("F")) == 0){setFadeOnOff(WebServer.getArgBoolean());}
     else if (strcmp_P(ShortMessage, (PGM_P)F("FInc")) == 0){setFadeIncrements(WebServer.getArgInt());}
     else if (strcmp_P(ShortMessage, (PGM_P)F("FInt")) == 0){setFadeInterval(WebServer.getArgInt());}
+    else if (strcmp_P(ShortMessage, (PGM_P)F("DD")) == 0){setDimDuration(WebServer.getArgInt());}
   }
 }
