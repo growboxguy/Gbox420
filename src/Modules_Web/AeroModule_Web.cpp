@@ -43,6 +43,10 @@ void AeroModule_Web::report()
   strcat(LongMessage, toText_pressure(AeroResponse1Received.LastSprayPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(AeroResponse1Received.SprayEnabled));
+  strcat_P(LongMessage, (PGM_P)F(" ; PumpState:"));
+  strcat(LongMessage, toText_pumpState(AeroResponse1Received.State));
+  strcat_P(LongMessage, (PGM_P)F(" ; PumpSpeed:"));
+  strcat(LongMessage, toText_percentage(AeroCommand1ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F(" ; DayMode:"));
   strcat(LongMessage, toText(AeroCommand1ToSend.DayMode));
   strcat_P(LongMessage, (PGM_P)F(" ; DayInterval:"));
@@ -74,6 +78,8 @@ void AeroModule_Web::reportToJSON()
   strcat(LongMessage, toText(AeroResponse1Received.LastSprayPressure));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpState\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.State));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PumpSpeed\":\""));
+  strcat(LongMessage, toText(AeroCommand1ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"SprayEnabled\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F("\",\"DayInterval\":\""));
@@ -92,6 +98,7 @@ void AeroModule_Web::websiteEvent_Load(char *url)
   if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgBoolean(getComponentName(F("Tank")), AeroResponse1Received.PressureTankPresent);
+    WebServer.setArgInt(getComponentName(F("PumpSp")), AeroCommand1ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("Timeout")), AeroCommand1ToSend.PumpTimeOut);
     WebServer.setArgInt(getComponentName(F("Priming")), AeroCommand1ToSend.PumpPrimingTime);
     WebServer.setArgInt(getComponentName(F("DInt")), AeroCommand1ToSend.DayInterval);
@@ -204,6 +211,11 @@ void AeroModule_Web::websiteEvent_Field(char *Field)
     {
       DefaultSettings->NightDuration = WebServer.getArgInt();
       Parent->addToLog(F("Night spray updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpSp")) == 0)
+    {
+      DefaultSettings->PumpSpeed = WebServer.getArgInt();
+      Parent->addToLog(F("Pump speed updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0)
     {
@@ -370,6 +382,7 @@ void AeroModule_Web::updateCommands()
   AeroCommand1ToSend.DayDuration = DefaultSettings->DayDuration;
   AeroCommand1ToSend.NightInterval = DefaultSettings->NightInterval;
   AeroCommand1ToSend.NightDuration = DefaultSettings->NightDuration;
+  AeroCommand1ToSend.PumpSpeed = DefaultSettings->PumpSpeed;
   AeroCommand1ToSend.PumpTimeOut = DefaultSettings->PumpTimeOut;
   AeroCommand1ToSend.PumpPrimingTime = DefaultSettings->PrimingTime;
   AeroCommand1ToSend.MinPressure = DefaultSettings->MinPressure;

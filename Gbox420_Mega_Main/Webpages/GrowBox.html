@@ -650,6 +650,15 @@
 				</form>
 				<form>
 					<p>
+						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Aero1_PumpSpS" min="0"
+							max="100" oninput="this.form.Aero1_PumpSp.value=this.value" />
+						<input type="number" name="Aero1_PumpSp" min="0" max="100"
+							oninput="this.form.Aero1_PumpSpS.value=this.value" />
+						<input class="setButton" type="submit" value="Set" />
+				</form>
+				<form>
+					<p>
 						<label style="padding-left: 0.5em; width: 3.5em;">Timeout</label>
 						<input style="width: 45px;" min=1 max=9999 name="Aero1_Timeout" type="number"
 							title="Maximum continuous pump runtime in seconds" />sec

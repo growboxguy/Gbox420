@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 3; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 4; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
 enum PumpStates
@@ -63,6 +63,7 @@ typedef struct
     int DayDuration;   ///Spray time in seconds - When the lights are ON
     int NightInterval; ///Spray every X minutes - When the lights are OFF
     int NightDuration; ///Spray time in seconds - When the lights are OFF
+    uint8_t PumpSpeed; ///Pump duty cycle to adjust motor speed
     int PumpTimeOut;   ///< (Sec) Max pump run time
     int PrimingTime;   ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
     float MaxPressure; ///Turn off pump above this pressure
