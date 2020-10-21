@@ -5,13 +5,13 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
   this->Parent = Parent;
   logToSerials(F(""),true,0);  //New line
   logToSerials(F(""),false,1); //Extra indentation
-  PumpSwitch = new Switch(F("SpraySolenoid"),DefaultSettings->PumpPin,DefaultSettings->PumpPinNegativeLogic);
+  PumpSwitch = new Switch_PWM(F("SpraySolenoid"),DefaultSettings->PumpPin,&DefaultSettings->Speed,DefaultSettings->PumpPinNegativeLogic);
   if(DefaultSettings->BypassSolenoidPin != 255)  //TODO: Split WaterPump into: WaterPump and PressurePump (inherits from WaterPump)
   {
    logToSerials(F(""),false,1); //Extra indentation
    BypassSwitch = new Switch(F("BypassSolenoid"),DefaultSettings->BypassSolenoidPin,DefaultSettings->BypassSolenoidNegativeLogic);
   }
-  
+    
   PumpTimeOut= &DefaultSettings->PumpTimeOut;  
   PumpEnabled = &DefaultSettings->PumpEnabled;
   if(*PumpEnabled) {State = IDLE; }
@@ -174,6 +174,11 @@ void WaterPump::disablePump()
   logToSerials(F("disabled"), true, 1);
   Parent->getSoundObject()->playOffSound();  
   updateState(DISABLED); 
+}
+
+void WaterPump::setSpeed(uint8_t DutyCycle) //Set PWM duty cycle
+{
+  PumpSwitch -> setDutyCycle(DutyCycle);
 }
 
 void WaterPump::startMixing(int TimeOutSec)  ///< Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout

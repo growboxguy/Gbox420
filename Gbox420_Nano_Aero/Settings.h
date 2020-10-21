@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 4; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 10; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
   enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -71,7 +71,7 @@ static const uint8_t Version = 4; ///< Increment this when you make a change in 
       uint8_t SpraySolenoidPin;
       bool SpraySolenoidNegativeLogic;
     };
-    struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.MinPressure = 5.0, .SpraySolenoidPin = 5, .SpraySolenoidNegativeLogic=false};
+    struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.MinPressure = 5.0, .SpraySolenoidPin = 5, .SpraySolenoidNegativeLogic=true};
 
     struct PressureSensorSettings
     {
@@ -92,17 +92,18 @@ static const uint8_t Version = 4; ///< Increment this when you make a change in 
 
     struct WaterPumpSettings
     {
-      WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, bool PumpEnabled = false, int PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), PumpEnabled(PumpEnabled), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime)  {}
+      WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, int PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime)  {}
       uint8_t PumpPin;         ///< Pump relay pin
       bool PumpPinNegativeLogic;
       uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin
       bool BypassSolenoidNegativeLogic;
       bool PumpEnabled; ///< Enable/disable pump. false= Block running the pump
+      uint8_t Speed;  ///< Duty cycle of the PWM Motor speed 
       int PumpTimeOut;   ///< (Sec) Max pump run time        
       int PrimingTime;    ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
       int BlowOffTime;     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
-    struct WaterPumpSettings AeroPump1 = {.PumpPin = 3, .PumpPinNegativeLogic= false, .BypassSolenoidPin = 4, .BypassSolenoidNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .PrimingTime = 10, .BlowOffTime = 3};
+    struct WaterPumpSettings AeroPump1 = {.PumpPin = 3, .PumpPinNegativeLogic= false, .BypassSolenoidPin = 4, .BypassSolenoidNegativeLogic = true, .PumpEnabled = true, .Speed = 50, .PumpTimeOut = 120, .PrimingTime = 10, .BlowOffTime = 3};
     
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
   } Settings;

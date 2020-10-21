@@ -52,7 +52,7 @@ struct AeroModuleResponse  : AeroCommonTemplate  //Max 32bytes. Module response 
 struct AeroCommand : AeroCommonTemplate  ///Max 32 bytes. Commands for both Aeroponics versions (With or without a pressure tank)
 {
    AeroCommand(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID){}
-   AeroCommand(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool DayMode, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) bool SprayDisabled, __attribute__((unused)) bool SprayNow, __attribute__((unused)) bool SprayOff, __attribute__((unused)) int DayInterval, __attribute__((unused)) int DayDuration,  __attribute__((unused)) int NightInterval, __attribute__((unused)) int NightDuration, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) int PumpTimeOut, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) float MinPressure, __attribute__((unused)) float MaxPressure) : AeroCommonTemplate(SequenceID){}   
+   AeroCommand(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool DayMode, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) bool SprayDisabled, __attribute__((unused)) bool SprayNow, __attribute__((unused)) bool SprayOff, __attribute__((unused)) int DayInterval, __attribute__((unused)) int DayDuration,  __attribute__((unused)) int NightInterval, __attribute__((unused)) int NightDuration, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) int PumpTimeOut, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) float MinPressure, __attribute__((unused)) float MaxPressure) : AeroCommonTemplate(SequenceID){}   
    bool DayMode = true;
    bool SprayEnabled = false;
    bool SprayDisabled = false;
@@ -63,6 +63,7 @@ struct AeroCommand : AeroCommonTemplate  ///Max 32 bytes. Commands for both Aero
    bool PumpDisable = false;
    bool MixReservoir = false;
    bool RefillPressureTank = false;
+   uint8_t PumpSpeed = 0;
    int PumpPrimingTime = 0;
    int PumpTimeOut = 0;  
    int DayInterval = 0;
