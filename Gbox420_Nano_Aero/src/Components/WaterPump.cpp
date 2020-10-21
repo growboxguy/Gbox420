@@ -5,7 +5,7 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
   this->Parent = Parent;
   logToSerials(F(""),true,0);  //New line
   logToSerials(F(""),false,1); //Extra indentation
-  PumpSwitch = new Switch_PWM(F("SpraySolenoid"),DefaultSettings->PumpPin,&DefaultSettings->Speed,DefaultSettings->PumpPinNegativeLogic);
+  PumpSwitch = new Switch_PWM(F("SpraySolenoid"),DefaultSettings->PumpPin,&DefaultSettings->Speed,&DefaultSettings->SpeedLowLimit,DefaultSettings->PumpPinNegativeLogic);
   if(DefaultSettings->BypassSolenoidPin != 255)  //TODO: Split WaterPump into: WaterPump and PressurePump (inherits from WaterPump)
   {
    logToSerials(F(""),false,1); //Extra indentation
