@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 4; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 5; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
 enum PumpStates
@@ -105,14 +105,16 @@ typedef struct
     bool WeightBasedWatering_B1;  //Enable/Disable weight based watering
     float StartWeight_B1;         ///Start watering below this weight
     float StopWeight_B1;          ///Stop watering above this weight
-    bool TimerBasedWatering_B1;   //Enable/Disable timer based watering
-    uint16_t WateringInterval_B1; //Water every X minutes
-    uint16_t WateringDuration_B1; //Water for X seconds
+    bool TimerBasedWatering_B1;   ///Enable/Disable timer based watering
+    uint16_t WateringInterval_B1; ///Water every X minutes
+    uint16_t WateringDuration_B1; ///Water for X seconds
+    uint8_t PumpSpeed_B1;         ///Bucket 1 - Pump duty cycle to adjust motor speed
     uint16_t TimeOutPump_B1;      ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails
-    bool WeightBasedWatering_B2;
+    bool WeightBasedWatering_B2;  //Enable/Disable weight based watering
     float StartWeight_B2;         ///Start watering below this weight
     float StopWeight_B2;          ///Stop watering above this weight
     bool TimerBasedWatering_B2;   //Enable/Disable timer based watering
+    uint8_t PumpSpeed_B2;         ///Bucket 2 - Pump duty cycle to adjust motor speed
     uint16_t WateringInterval_B2; //Water every X minutes
     uint16_t WateringDuration_B2; //Water for X seconds
     uint16_t TimeOutPump_B2;      ///Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached /// \todo Add email alert when pump fails

@@ -98,6 +98,7 @@ void HempyModule::processCommand(void *ReceivedCommand){
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump) Bucket1 -> startWatering();
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump) Pump1 -> stopPump();
       Pump1 -> setPumpTimeOut(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump);
+      Pump1 -> setSpeed(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed);
       Bucket1 -> setWeightBasedWatering(((HempyBucketCommand*)ReceivedCommand) -> WeightBasedWatering);
       Bucket1 -> setStartWeight(((HempyBucketCommand*)ReceivedCommand) -> StartWeight);
       Bucket1 -> setStopWeight(((HempyBucketCommand*)ReceivedCommand) -> StopWeight);
@@ -112,6 +113,8 @@ void HempyModule::processCommand(void *ReceivedCommand){
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump,false,1);
         logToSerials(F(","),false,1);
@@ -133,6 +136,7 @@ void HempyModule::processCommand(void *ReceivedCommand){
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump) Bucket2 -> startWatering();
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump) Pump2 -> stopPump();
       Pump2 -> setPumpTimeOut(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump);
+      Pump2 -> setSpeed(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed);
       Bucket2 -> setWeightBasedWatering(((HempyBucketCommand*)ReceivedCommand) -> WeightBasedWatering);
       Bucket2 -> setStartWeight(((HempyBucketCommand*)ReceivedCommand) -> StartWeight);
       Bucket2 -> setStopWeight(((HempyBucketCommand*)ReceivedCommand) -> StopWeight);
@@ -147,6 +151,8 @@ void HempyModule::processCommand(void *ReceivedCommand){
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed,false,1);        
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump,false,1);
         logToSerials(F(","),false,1);

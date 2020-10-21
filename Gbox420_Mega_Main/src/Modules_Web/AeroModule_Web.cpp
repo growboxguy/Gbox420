@@ -99,6 +99,7 @@ void AeroModule_Web::websiteEvent_Load(char *url)
   {
     WebServer.setArgBoolean(getComponentName(F("Tank")), AeroResponse1Received.PressureTankPresent);
     WebServer.setArgInt(getComponentName(F("PumpSp")), AeroCommand1ToSend.PumpSpeed);
+    WebServer.setArgInt(getComponentName(F("PumpSpS")), AeroCommand1ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("Timeout")), AeroCommand1ToSend.PumpTimeOut);
     WebServer.setArgInt(getComponentName(F("Priming")), AeroCommand1ToSend.PumpPrimingTime);
     WebServer.setArgInt(getComponentName(F("DInt")), AeroCommand1ToSend.DayInterval);

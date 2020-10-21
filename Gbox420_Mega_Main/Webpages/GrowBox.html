@@ -461,6 +461,16 @@
 				</form>
 				<form>
 					<p>
+						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Hemp1_B1PumpSpS" min="0"
+							max="100" oninput="this.form.Hemp1_B1PumpSp.value=this.value" />
+						<input type="number" name="Hemp1_B1PumpSp" min="0" max="100"
+							oninput="this.form.Hemp1_B1PumpSpS.value=this.value" />
+						<input class="setButton" type="submit" value="Set" />
+					</p>
+				</form>
+				<form>
+					<p>
 						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
 						<input style="width: 55px;" min=1 max=9999 name="Hemp1_B1Time" type="number"
 							title="Maximum time the pump can run continuously" />sec
@@ -532,6 +542,16 @@
 							title="Stops the pump and reset its status to OK">OFF</button>
 						<button id="Hemp1_B2PumpDis" type="button" align="right"
 							title="Stops and disables pump">Disable</button>
+					</p>
+				</form>
+				<form>
+					<p>
+						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Hemp1_B2PumpSpS" min="0"
+							max="100" oninput="this.form.Hemp1_B2PumpSp.value=this.value" />
+						<input type="number" name="Hemp1_B2PumpSp" min="0" max="100"
+							oninput="this.form.Hemp1_B2PumpSpS.value=this.value" />
+						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<form>
@@ -656,6 +676,7 @@
 						<input type="number" name="Aero1_PumpSp" min="0" max="100"
 							oninput="this.form.Aero1_PumpSpS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
+					</p>
 				</form>
 				<form>
 					<p>
