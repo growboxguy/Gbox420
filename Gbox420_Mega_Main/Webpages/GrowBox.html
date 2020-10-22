@@ -269,32 +269,6 @@
 					</p>
 				</form>
 				<form>
-					<p>						
-						<button id="Lt1_D" type="button"
-							title="Dimm the lights for X minutes to 1%">Dimm</button>  <!-- Temporary reduce the brightness to 1% while working on the plants -->
-						for <input style="width: 2em;" name="Lt1_DD" type="number" value='1' step='1' min='1' max='100' title="Dimm Duration - For how long to keep the temporary brightness"/>min
-						<input class="setButton" type="submit" value="Set">
-					</p>
-				</form>
-				<form>
-					<p>
-						<input type="checkbox" name="Lt1_F"
-							title="Turn fading in and out the lights when changing ON/OFF state, adds smoother photosynthetic state transition" />
-						<b>Fade in/out</b>
-						<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
-					</p>
-				</form>		
-				<form style="padding-left: 0.5em;">
-					<p>	
-						<input style="padding-left: 0.5em; width: 3.5em;" name="Lt1_FInc" type="number" value='1' step='1' min='1' max='100'
-							title="Amount of Brightness increase/decrease at each step" />
-						<label>% every</label>
-						<input style="width: 3.5em;" name="Lt1_FInt" type="number" value='0' step='1' min='1'
-							title="Increase/decrease frequency - Interval between the changes"/>sec
-						<input class="setButton" type="submit" value="Set">
-					</p>
-				</form>
-				<form>
 					<p>
 						<label><b>Brightness</b></label>
 						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Lt1_BS" min="0"
@@ -303,7 +277,7 @@
 							oninput="this.form.Lt1_BS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
-				</form>
+				</form>	
 				<form>
 					<p>
 						<label style="width: 3em;"><b>Timer </b></label>
@@ -326,7 +300,33 @@
 						<input style="width: 2.5em;" min=0 max=59 name="Lt1_OfM" type="number" />
 						<input class="setButton" type="submit" value="Set" title="Set grow light OFF time" />
 					</p>
-				</form>
+				</form>				
+				<form>
+					<p>						
+						<button id="Lt1_D" type="button"
+							title="Dim the lights for X minutes to 1%">Dim</button>  <!-- Temporary reduce the brightness to 1% while working on the plants -->
+						for <input style="width: 3em;" name="Lt1_DD" type="number" value='1' step='1' min='1' max='100' title="Dim Duration - How long should the temporary dimming last"/>min
+						<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>	
+				<form>
+					<p>
+						<input type="checkbox" name="Lt1_F"
+							title="Turn fading in and out the lights when changing ON/OFF state, adds smoother photosynthetic state transition" />
+						<b>Fade in/out</b>
+						<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
+					</p>
+				</form>		
+				<form style="padding-left: 0.5em;">
+					<p>	
+						<input style="padding-left: 0.5em; width: 2em;" name="Lt1_FInc" type="number" value='1' step='1' min='1' max='100'
+							title="Amount of Brightness increase/decrease at each step" />
+						<label>% every</label>
+						<input style="width: 3em;" name="Lt1_FInt" type="number" value='0' step='1' min='1'
+							title="Increase/decrease frequency - Interval between the changes"/>sec
+						<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>						
 			</div>
 			<div class="card">
 				<h1>Light 2</h1>
@@ -355,32 +355,6 @@
 					</p>
 				</form>
 				<form>
-					<p>						
-						<button id="Lt2_D" type="button"
-							title="Dimm the lights for X minutes to 1%">Dimm</button>  <!-- Temporary reduce the brightness to 1% while working on the plants -->
-						for <input style="width: 2em;" name="Lt2_DD" type="number" value='1' step='1' min='1' max='100' title="Dimm Duration - How long should the temporary dimming should last"/>min
-						<input class="setButton" type="submit" value="Set" title="Set how long should the temporary dimming should last">
-					</p>
-				</form>
-				<form>
-					<p>
-						<input type="checkbox" name="Lt2_F"
-							title="Turn fading in and out the lights when changing ON/OFF state, adds smoother photosynthetic state transition" />
-						<b>Fade in/out</b>
-						<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
-					</p>
-				</form>		
-				<form style="padding-left: 0.5em;">
-					<p>	
-						<input style="width: 3.5em;" name="Lt2_FInc" type="number" value='1' step='1' min='1' max='100'
-							title="How much to Change the brightness at each step (1% increments)" />
-						<label>% every</label>
-						<input style="width: 3.5em;" name="Lt2_FInt" type="number" value='0' step='1' min='1'
-							title="How often Step to the next brightness level" />sec
-						<input class="setButton" type="submit" value="Set">
-					</p>
-				</form>
-				<form>
 					<p>
 						<label><b>Brightness</b></label>
 						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Lt2_BS" min="0"
@@ -388,7 +362,8 @@
 						<input type="number" name="Lt2_B" min="0" max="100"
 							oninput="this.form.Lt2_BS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
-				</form>
+					</p>
+				</form>		
 				<form>
 					<p>
 						<label style="width: 3em;"><b>Timer</b></label>
@@ -412,6 +387,32 @@
 						<input class="setButton" type="submit" value="Set" title="Set grow light OFF time" />
 					</p>
 				</form>
+				<form>
+					<p>						
+						<button id="Lt2_D" type="button"
+							title="Dim the lights for X minutes to 1%">Dim</button>  <!-- Temporary reduce the brightness to 1% while working on the plants -->
+						for <input style="width: 3em;" name="Lt2_DD" type="number" value='1' step='1' min='1' max='100' title="Dim Duration - How long should the temporary dimming last"/>min
+						<input class="setButton" type="submit" value="Set" title="Set how long should the temporary dimming should last">
+					</p>
+				</form>
+				<form>
+					<p>
+						<input type="checkbox" name="Lt2_F"
+							title="Turn fading in and out the lights when changing ON/OFF state, adds smoother photosynthetic state transition" />
+						<b>Fade in/out</b>
+						<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
+					</p>
+				</form>		
+				<form style="padding-left: 0.5em;">
+					<p>	
+						<input style="width: 2em;" name="Lt2_FInc" type="number" value='1' step='1' min='1' max='100'
+							title="How much to Change the brightness at each step (1% increments)" />
+						<label>% every</label>
+						<input style="width: 3em;" name="Lt2_FInt" type="number" value='0' step='1' min='1'
+							title="How often Step to the next brightness level" />sec
+						<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>						
 			</div>
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2">
