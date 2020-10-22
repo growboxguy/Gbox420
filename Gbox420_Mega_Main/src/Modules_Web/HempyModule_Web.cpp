@@ -54,7 +54,7 @@ void HempyModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.PumpState));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1Speed\":\""));
-  strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed_B1));
+  strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.Weight));
   strcat_P(LongMessage, (PGM_P)F("\",\"StartB1\":\""));
@@ -64,7 +64,7 @@ void HempyModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.PumpState));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2Speed\":\""));
-  strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed_B2));
+  strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.Weight));
   strcat_P(LongMessage, (PGM_P)F("\",\"StartB2\":\""));
