@@ -64,11 +64,11 @@ static const uint8_t Version = 12; ///< Increment this when you make a change in
 
     struct SoundSettings
     {
-      SoundSettings(uint8_t Pin = 0) : Pin(Pin) {}
+      SoundSettings(uint8_t Pin = 0, bool Enabled = false) : Pin(Pin), Enabled(Enabled) {}
       uint8_t Pin;            ///PC buzzer+ (red)
-      bool Enabled = true; ///Enable PC speaker / Piezo buzzer
+      bool Enabled; ///Enable PC speaker / Piezo buzzer
     };
-    struct SoundSettings Sound1 = {.Pin = 2};  ///Default settings for the  Sound output
+    struct SoundSettings Sound1 = {.Pin = 2, .Enabled = true};  ///Default settings for the  Sound output
 
    struct WaterPumpSettings
     {
@@ -84,8 +84,8 @@ static const uint8_t Version = 12; ///< Increment this when you make a change in
       int PrimingTime;    ///< (Sec) Only if BypassSolenoid is present. For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
       int BlowOffTime;     ///< (Sec) Only if BypassSolenoid is present. For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
-    struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 0, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
-    struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 0, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
+    struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 20, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
+    struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 20, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
    
     struct WeightSensorSettings
     {
