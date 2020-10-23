@@ -10,7 +10,7 @@ bool isGettingHigh = true;  //Direction to increase or decrease speed during the
 void setup()
 { // put your setup code here, to run once:
     Serial.begin(115200);
-    Serial.println(F("Sketch for testing: Transistor DC relay"));
+    Serial.println(F("Sketch for testing: Transistor DC relay - PWM motor speed control "));
 
     pinMode(Pin, OUTPUT);
     digitalWrite(Pin, LOW);  //Start in off state     
