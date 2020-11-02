@@ -22,6 +22,8 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   this -> SoundFeedback = Sound1;
   Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
   Weight2 = new WeightSensor(F("Weight2"), this, &ModuleSettings->Weight2);
+  ResWeight1 = new WeightSensor(F("RWeight1"), this, &ModuleSettings->Weight1);
+  ResWeight2 = new WeightSensor(F("RWeight2"), this, &ModuleSettings->Weight2);
   Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->HempyPump1);
   Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->HempyPump2);
   Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1,Weight1,Pump1);
@@ -96,6 +98,7 @@ void HempyModule::processCommand(void *ReceivedCommand){
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump) Bucket1 -> startWatering();
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump) Pump1 -> stopPump();
       Pump1 -> setPumpTimeOut(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump);
+      Pump1 -> setSpeed(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed);
       Bucket1 -> setWeightBasedWatering(((HempyBucketCommand*)ReceivedCommand) -> WeightBasedWatering);
       Bucket1 -> setStartWeight(((HempyBucketCommand*)ReceivedCommand) -> StartWeight);
       Bucket1 -> setStopWeight(((HempyBucketCommand*)ReceivedCommand) -> StopWeight);
@@ -110,6 +113,8 @@ void HempyModule::processCommand(void *ReceivedCommand){
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump,false,1);
         logToSerials(F(","),false,1);
@@ -131,6 +136,7 @@ void HempyModule::processCommand(void *ReceivedCommand){
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump) Bucket2 -> startWatering();
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump) Pump2 -> stopPump();
       Pump2 -> setPumpTimeOut(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump);
+      Pump2 -> setSpeed(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed);
       Bucket2 -> setWeightBasedWatering(((HempyBucketCommand*)ReceivedCommand) -> WeightBasedWatering);
       Bucket2 -> setStartWeight(((HempyBucketCommand*)ReceivedCommand) -> StartWeight);
       Bucket2 -> setStopWeight(((HempyBucketCommand*)ReceivedCommand) -> StopWeight);
@@ -145,6 +151,8 @@ void HempyModule::processCommand(void *ReceivedCommand){
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed,false,1);        
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump,false,1);
         logToSerials(F(","),false,1);

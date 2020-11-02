@@ -138,6 +138,7 @@ void AeroModule::processCommand(void *ReceivedCommand)
         AeroT1->Pump->stopPump();
       if (((AeroCommand *)ReceivedCommand)->PumpDisable)
         AeroT1->Pump->disablePump();
+      AeroT1->Pump->setSpeed(((AeroCommand *)ReceivedCommand)->PumpSpeed);
       AeroT1->Pump->setPumpTimeOut(((AeroCommand *)ReceivedCommand)->PumpTimeOut);
       AeroT1->Pump->setPrimingTime(((AeroCommand *)ReceivedCommand)->PumpPrimingTime);
       AeroT1->setMinPressure(((AeroCommand *)ReceivedCommand)->MinPressure);
@@ -166,6 +167,7 @@ void AeroModule::processCommand(void *ReceivedCommand)
         AeroNT1->Pump->stopPump();
       if (((AeroCommand *)ReceivedCommand)->PumpDisable)
         AeroNT1->Pump->disablePump();
+      AeroNT1->Pump->setSpeed(((AeroCommand *)ReceivedCommand)->PumpSpeed);
       AeroNT1->Pump->setPumpTimeOut(((AeroCommand *)ReceivedCommand)->PumpTimeOut);
       AeroNT1->Pump->setPrimingTime(((AeroCommand *)ReceivedCommand)->PumpPrimingTime);
       AeroNT1->setMaxPressure(((AeroCommand *)ReceivedCommand)->MaxPressure);
@@ -194,6 +196,8 @@ void AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->NightDuration, false, 1);
       logToSerials(F(";"), false, 1);
+      logToSerials(((AeroCommand *)ReceivedCommand)->PumpSpeed, false, 1);
+      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->PumpOn, false, 1);
       logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->PumpOff, false, 1);

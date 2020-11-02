@@ -3,7 +3,7 @@
 #include "420Common.h"
 #include "420Module.h"
 #include "Sound.h"
-#include "Switch.h"
+#include "Switch_PWM.h"
 
 class WaterPump : virtual public Common
 {
@@ -15,6 +15,7 @@ public:
    
   void updateState(PumpStates NewState = (PumpStates)-1);
   void setMaxPressure(float MaxPressure);
+  void setSpeed(uint8_t DutyCycle);  //Set PWM duty cycle
 
   void startPump(bool ResetStatus = false);  ///< Turn the pump ON
   void stopPump();  ///< Turn the pump OFF
@@ -50,11 +51,12 @@ private:
  
 protected:
   Module *Parent;
-  Switch *PumpSwitch;
+  Switch_PWM *PumpSwitch;
   Switch *BypassSwitch;
   bool PumpOn = false;  ///< true turns the pump on
   bool BypassOn = false;  ///< true turns the bypass solenoid on
   bool *PumpEnabled;  ///< Enable/disable pump. false= Block running the pump
+  uint8_t *Speed = NULL; ///< Set PWM speed of the motor (!!!Needs a MOSFET based relay!!!)
   int RunTime = 0;  ///< Max pump run time in seconds  
   int *PumpTimeOut = NULL;  ///< Max pump run time in seconds
   int *PrimingTime = NULL;    ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
