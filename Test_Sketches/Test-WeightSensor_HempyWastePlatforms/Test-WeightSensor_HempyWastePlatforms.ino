@@ -1,24 +1,24 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
-//Sketch for calibrating the hempy bucket weight sensors
+//Sketch for calibrating the waste reservoir weight sensors on the 2 platform table
 
 #include "HX711.h"
 
 //Pins
-const byte  WeightSensor1_DT =  5;
-const byte WeightSensor1_SCK = 6;
-const byte  WeightSensor2_DT =  7;
-const byte WeightSensor2_SCK = 8;
+const byte  WeightSensor1_DT =  A0;
+const byte WeightSensor1_SCK = A1;
+const byte  WeightSensor2_DT =  A2;
+const byte WeightSensor2_SCK = A3;
 
 //Weights used during the calibration
-const float WeightSensor1_CalibrationWeight = 2.0;  //SET THIS TO the number of weight units (kg or lbs) that will be used during the calibration
-const float WeightSensor2_CalibrationWeight = 2.0;  //SET THIS TO the number of weight units (kg or lbs) that will be used during the calibration
+const float WeightSensor1_CalibrationWeight = 2.0;  //SET THIS TO the reference weight units (kg or lbs) that will be used during the calibration
+const float WeightSensor2_CalibrationWeight = 2.0;  //SET THIS TO the reference weight units (kg or lbs) that will be used during the calibration
 
 //Initial calibration values, once the calibration you can update these values and change CalibrationComplete to true 
 bool CalibrationComplete = false;  //Set this to true to skip the calibration and use the Offset and Scale values defined in the sketch
-long WeightSensor1_Offset = -121275;
-float WeightSensor1_Scale = -126032.00;
-long WeightSensor2_Offset = 41361;
-float WeightSensor2_Scale = -122194.00;
+long WeightSensor1_Offset = -68595;
+float WeightSensor1_Scale = -22331.50;
+long WeightSensor2_Offset = 266805;
+float WeightSensor2_Scale = -21413.50;
 
 HX711 WeightSensor1;
 HX711 WeightSensor2;
