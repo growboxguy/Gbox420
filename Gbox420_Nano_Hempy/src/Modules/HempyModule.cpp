@@ -59,9 +59,11 @@ void HempyModule::refresh_FiveSec()
 
 void HempyModule::updateResponse(){
   HempyBucket1ResponseToSend.PumpState = Pump1 -> getState();;
-  HempyBucket1ResponseToSend.Weight = WeightB1 -> getWeight();
+  HempyBucket1ResponseToSend.WeightB = WeightB1 -> getWeight();
+  HempyBucket1ResponseToSend.WeightWR = WeightWR1 -> getWeight();
   HempyBucket2ResponseToSend.PumpState = Pump2 -> getState();
-  HempyBucket2ResponseToSend.Weight = WeightB2 -> getWeight(); 
+  HempyBucket2ResponseToSend.WeightB = WeightB2 -> getWeight(); 
+  HempyBucket2ResponseToSend.WeightWR = WeightWR2 -> getWeight();  
   updateAckData();
 }
 
@@ -97,6 +99,8 @@ void HempyModule::processCommand(void *ReceivedCommand){
       if(((HempyBucketCommand*)ReceivedCommand) -> DisablePump) Pump1 -> disablePump();
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump) Bucket1 -> startWatering();
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump) Pump1 -> stopPump();
+      if(((HempyBucketCommand*)ReceivedCommand) -> TareWeightB) WeightB1 -> triggerTare();
+      if(((HempyBucketCommand*)ReceivedCommand) -> TareWeightWR) WeightWR1 -> triggerTare();
       Pump1 -> setPumpTimeOut(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump);
       Pump1 -> setSpeed(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed);
       Bucket1 -> setWeightBasedWatering(((HempyBucketCommand*)ReceivedCommand) -> WeightBasedWatering);
@@ -135,6 +139,8 @@ void HempyModule::processCommand(void *ReceivedCommand){
       if(((HempyBucketCommand*)ReceivedCommand) -> DisablePump) Pump2 -> disablePump();
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump) Bucket2 -> startWatering();
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump) Pump2 -> stopPump();
+      if(((HempyBucketCommand*)ReceivedCommand) -> TareWeightB) WeightB2 -> triggerTare();
+      if(((HempyBucketCommand*)ReceivedCommand) -> TareWeightWR) WeightWR2 -> triggerTare();
       Pump2 -> setPumpTimeOut(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump);
       Pump2 -> setSpeed(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed);
       Bucket2 -> setWeightBasedWatering(((HempyBucketCommand*)ReceivedCommand) -> WeightBasedWatering);

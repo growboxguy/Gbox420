@@ -31,18 +31,21 @@ void HempyModule_Web::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Bucket1 Weight:"));
-  strcat(LongMessage, toText_weight(HempyBucketResponse1Received.Weight));
+  strcat(LongMessage, toText_weight(HempyBucketResponse1Received.WeightB));
   strcat_P(LongMessage, (PGM_P)F(" ["));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("/"));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StopWeight));
-  strcat_P(LongMessage, (PGM_P)F("] ; Bucket2 Weight:"));
-  strcat(LongMessage, toText_weight(HempyBucketResponse2Received.Weight));
+  strcat_P(LongMessage, (PGM_P)F("] ; Waste1 Weight:"));
+  strcat(LongMessage, toText_weight(HempyBucketResponse1Received.WeightWR));
+  strcat_P(LongMessage, (PGM_P)F(" ; Bucket2 Weight:"));
+  strcat(LongMessage, toText_weight(HempyBucketResponse2Received.WeightB));
   strcat_P(LongMessage, (PGM_P)F(" ["));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("/"));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StopWeight));
-  strcat_P(LongMessage, (PGM_P)F("]"));
+  strcat_P(LongMessage, (PGM_P)F("] ; Waste2 Weight:"));
+  strcat(LongMessage, toText_weight(HempyBucketResponse2Received.WeightWR));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -56,7 +59,9 @@ void HempyModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1Speed\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB1\":\""));
-  strcat(LongMessage, toText(HempyBucketResponse1Received.Weight));
+  strcat(LongMessage, toText(HempyBucketResponse1Received.WeightB));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WeightWR1\":\""));
+  strcat(LongMessage, toText(HempyBucketResponse1Received.WeightWR));
   strcat_P(LongMessage, (PGM_P)F("\",\"StartB1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"StopB1\":\""));
@@ -66,7 +71,9 @@ void HempyModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2Speed\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
-  strcat(LongMessage, toText(HempyBucketResponse2Received.Weight));
+  strcat(LongMessage, toText(HempyBucketResponse2Received.WeightB));
+    strcat_P(LongMessage, (PGM_P)F("\",\"WeightWR2\":\""));
+  strcat(LongMessage, toText(HempyBucketResponse2Received.WeightWR));
   strcat_P(LongMessage, (PGM_P)F("\",\"StartB2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"StopB2\":\""));
@@ -104,8 +111,10 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
   if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getComponentName(F("B1Weight")), toText_weight(HempyBucketResponse1Received.Weight));
-    WebServer.setArgString(getComponentName(F("B2Weight")), toText_weight(HempyBucketResponse2Received.Weight));
+    WebServer.setArgString(getComponentName(F("B1Weight")), toText_weight(HempyBucketResponse1Received.WeightB));
+    WebServer.setArgString(getComponentName(F("B2Weight")), toText_weight(HempyBucketResponse2Received.WeightB));
+    WebServer.setArgString(getComponentName(F("B1Waste")), toText_weight(HempyBucketResponse1Received.WeightWR));
+    WebServer.setArgString(getComponentName(F("B2Waste")), toText_weight(HempyBucketResponse2Received.WeightWR));
     WebServer.setArgString(getComponentName(F("B1Pump")), toText_pumpState(HempyBucketResponse1Received.PumpState));
     WebServer.setArgString(getComponentName(F("B2Pump")), toText_pumpState(HempyBucketResponse2Received.PumpState));
   }
@@ -363,7 +372,9 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           logToSerials(F("Bucket1:"), false, 4);
           logToSerials(HempyBucketResponse1Received.PumpState, false, 1);         
           logToSerials(F(","), false, 1);
-          logToSerials(HempyBucketResponse1Received.Weight, true, 1);
+          logToSerials(HempyBucketResponse1Received.WeightB, false, 1);
+          logToSerials(F(","), false, 1);
+          logToSerials(HempyBucketResponse1Received.WeightWR, true, 1);
         }
         break;
       case HempyMessages::HempyBucketResponse2:
@@ -380,7 +391,9 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           logToSerials(F("Bucket2:"), false, 4);
           logToSerials(HempyBucketResponse2Received.PumpState, false, 1);
           logToSerials(F(","), false, 1);
-          logToSerials(HempyBucketResponse2Received.Weight, true, 1);
+          logToSerials(HempyBucketResponse2Received.WeightB, false, 1);
+          logToSerials(F(","), false, 1);
+          logToSerials(HempyBucketResponse1Received.WeightWR, true, 1);
         }
         break;
       case HempyMessages::HempyGetNext:

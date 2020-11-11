@@ -56,6 +56,8 @@ struct HempyBucketCommand : HempyCommonTemplate  //Max 32bytes. Command to contr
     bool DisablePump = false;
     bool TurnOnPump = false;
     bool TurnOffPump = false;
+    bool TareWeightB = false;  //Tare bucket weight scale
+    bool TareWeightWR = false; //Tare waste reservoir weight scale
     uint8_t PumpSpeed = 0;
     uint16_t TimeOutPump = 0;
     bool WeightBasedWatering = false;
@@ -71,5 +73,6 @@ struct HempyBucketResponse  : HempyCommonTemplate  //Max 32bytes. Response from 
    HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID){}
    HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool PumpOn,__attribute__((unused))  bool PumpEnabled,__attribute__((unused))  float Weight) : HempyCommonTemplate(SequenceID){}
    PumpStates PumpState = DISABLED;
-   float Weight = 0.0;
+   float WeightB = 0.0;
+   float WeightWR = 0.0;
 };
