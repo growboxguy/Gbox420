@@ -5,7 +5,7 @@ Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t *Du
   this->Name = Name;
   this->DutyCycle = DutyCycle;
   this->DutyCycleLowLimit = DutyCycleLowLimit;
-  logToSerials(F("Switch_PWM object created"), true, 1);
+  logToSerials(F("Switch_PWM object created"), true, 2);
 }
 
 void Switch_PWM::setDutyCycle(uint8_t DutyCycle)
