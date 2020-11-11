@@ -118,6 +118,10 @@ void HempyModule::processCommand(void *ReceivedCommand){
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump,false,1);
         logToSerials(F(","),false,1);
+        logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TareWeightB,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TareWeightWR,false,1);
+        logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump,false,1);
@@ -157,6 +161,10 @@ void HempyModule::processCommand(void *ReceivedCommand){
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TareWeightB,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TareWeightWR,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed,false,1);        
         logToSerials(F(","),false,1);

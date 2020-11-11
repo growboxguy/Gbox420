@@ -158,6 +158,26 @@ void HempyModule_Web::websiteEvent_Button(char *Button)
       HempyBucketCommand2ToSend.DisablePump = true;
       Parent->addToLog(F("Disabled HempyBucket 2 pump"), false);
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareB")) == 0)
+    {
+      HempyBucketCommand1ToSend.TareWeightB = true;
+      Parent->addToLog(F("Taring Bucket 1 scale"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareWR")) == 0)
+    {
+      HempyBucketCommand2ToSend.TareWeightWR = true;
+      Parent->addToLog(F("Taring Bucket 1 waste scale"), false);
+    }    
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareB")) == 0)
+    {
+      HempyBucketCommand1ToSend.TareWeightB = true;
+      Parent->addToLog(F("Taring Bucket 2 scale"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareWR")) == 0)
+    {
+      HempyBucketCommand2ToSend.TareWeightWR = true;
+      Parent->addToLog(F("Taring Bucket 2 waste scale"), false);
+    }    
     SyncRequested = true;
   }
 }
@@ -366,6 +386,8 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           HempyBucketCommand1ToSend.DisablePump = false;
           HempyBucketCommand1ToSend.TurnOnPump = false;
           HempyBucketCommand1ToSend.TurnOffPump = false;
+          HempyBucketCommand1ToSend.TareWeightB = false;
+          HempyBucketCommand1ToSend.TareWeightB = false;
         }
         if (*Debug)
         {
@@ -385,6 +407,8 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           HempyBucketCommand2ToSend.DisablePump = false;
           HempyBucketCommand2ToSend.TurnOnPump = false;
           HempyBucketCommand2ToSend.TurnOffPump = false;
+          HempyBucketCommand2ToSend.TareWeightB = false;
+          HempyBucketCommand2ToSend.TareWeightB = false;
         }
         if (*Debug)
         {
