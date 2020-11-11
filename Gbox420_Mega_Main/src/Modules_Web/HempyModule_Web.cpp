@@ -165,12 +165,12 @@ void HempyModule_Web::websiteEvent_Button(char *Button)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareWR")) == 0)
     {
-      HempyBucketCommand2ToSend.TareWeightWR = true;
+      HempyBucketCommand1ToSend.TareWeightWR = true;
       Parent->addToLog(F("Taring Bucket 1 waste scale"), false);
     }    
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareB")) == 0)
     {
-      HempyBucketCommand1ToSend.TareWeightB = true;
+      HempyBucketCommand2ToSend.TareWeightB = true;
       Parent->addToLog(F("Taring Bucket 2 scale"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareWR")) == 0)
@@ -387,7 +387,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           HempyBucketCommand1ToSend.TurnOnPump = false;
           HempyBucketCommand1ToSend.TurnOffPump = false;
           HempyBucketCommand1ToSend.TareWeightB = false;
-          HempyBucketCommand1ToSend.TareWeightB = false;
+          HempyBucketCommand1ToSend.TareWeightWR = false;
         }
         if (*Debug)
         {
@@ -408,7 +408,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           HempyBucketCommand2ToSend.TurnOnPump = false;
           HempyBucketCommand2ToSend.TurnOffPump = false;
           HempyBucketCommand2ToSend.TareWeightB = false;
-          HempyBucketCommand2ToSend.TareWeightB = false;
+          HempyBucketCommand2ToSend.TareWeightWR = false;
         }
         if (*Debug)
         {
