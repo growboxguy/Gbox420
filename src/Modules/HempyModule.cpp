@@ -20,14 +20,14 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
 { 
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this -> SoundFeedback = Sound1;
-  Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
-  Weight2 = new WeightSensor(F("Weight2"), this, &ModuleSettings->Weight2);
-  ResWeight1 = new WeightSensor(F("WeightWR1"), this, &ModuleSettings->Weight1);
-  ResWeight2 = new WeightSensor(F("WeightWR2"), this, &ModuleSettings->Weight2);
+  WeightB1 = new WeightSensor(F("WeightB1"), this, &ModuleSettings->WeightB1);
+  WeightB2 = new WeightSensor(F("WeightB2"), this, &ModuleSettings->WeightB2);
+  WeightWR1 = new WeightSensor(F("WeightWR1"), this, &ModuleSettings->WeightWR1);
+  WeightWR2 = new WeightSensor(F("WeightWR2"), this, &ModuleSettings->WeightWR2);
   Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->HempyPump1);
   Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->HempyPump2);
-  Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1,Weight1,Pump1);
-  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2,Weight2,Pump2);
+  Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1,WeightB1,Pump1);
+  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2,WeightB2,Pump2);
   addToRefreshQueue_Sec(this);         
   addToRefreshQueue_FiveSec(this);     
   //addToRefreshQueue_Minute(this);    
@@ -59,9 +59,11 @@ void HempyModule::refresh_FiveSec()
 
 void HempyModule::updateResponse(){
   HempyBucket1ResponseToSend.PumpState = Pump1 -> getState();;
-  HempyBucket1ResponseToSend.Weight = Weight1 -> getWeight();
+  HempyBucket1ResponseToSend.WeightB = WeightB1 -> getWeight();
+  HempyBucket1ResponseToSend.WeightWR = WeightWR1 -> getWeight();
   HempyBucket2ResponseToSend.PumpState = Pump2 -> getState();
-  HempyBucket2ResponseToSend.Weight = Weight2 -> getWeight(); 
+  HempyBucket2ResponseToSend.WeightB = WeightB2 -> getWeight(); 
+  HempyBucket2ResponseToSend.WeightWR = WeightWR2 -> getWeight();  
   updateAckData();
 }
 
@@ -97,6 +99,8 @@ void HempyModule::processCommand(void *ReceivedCommand){
       if(((HempyBucketCommand*)ReceivedCommand) -> DisablePump) Pump1 -> disablePump();
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump) Bucket1 -> startWatering();
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump) Pump1 -> stopPump();
+      if(((HempyBucketCommand*)ReceivedCommand) -> TareWeightB) WeightB1 -> triggerTare();
+      if(((HempyBucketCommand*)ReceivedCommand) -> TareWeightWR) WeightWR1 -> triggerTare();
       Pump1 -> setPumpTimeOut(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump);
       Pump1 -> setSpeed(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed);
       Bucket1 -> setWeightBasedWatering(((HempyBucketCommand*)ReceivedCommand) -> WeightBasedWatering);
@@ -113,6 +117,10 @@ void HempyModule::processCommand(void *ReceivedCommand){
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TareWeightB,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TareWeightWR,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed,false,1);
         logToSerials(F(","),false,1);
@@ -135,6 +143,8 @@ void HempyModule::processCommand(void *ReceivedCommand){
       if(((HempyBucketCommand*)ReceivedCommand) -> DisablePump) Pump2 -> disablePump();
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump) Bucket2 -> startWatering();
       if(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump) Pump2 -> stopPump();
+      if(((HempyBucketCommand*)ReceivedCommand) -> TareWeightB) WeightB2 -> triggerTare();
+      if(((HempyBucketCommand*)ReceivedCommand) -> TareWeightWR) WeightWR2 -> triggerTare();
       Pump2 -> setPumpTimeOut(((HempyBucketCommand*)ReceivedCommand) -> TimeOutPump);
       Pump2 -> setSpeed(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed);
       Bucket2 -> setWeightBasedWatering(((HempyBucketCommand*)ReceivedCommand) -> WeightBasedWatering);
@@ -151,6 +161,10 @@ void HempyModule::processCommand(void *ReceivedCommand){
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOnPump,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TurnOffPump,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TareWeightB,false,1);
+        logToSerials(F(","),false,1);
+        logToSerials(((HempyBucketCommand*)ReceivedCommand) -> TareWeightWR,false,1);
         logToSerials(F(","),false,1);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> PumpSpeed,false,1);        
         logToSerials(F(","),false,1);
