@@ -380,7 +380,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         break;
       case HempyMessages::HempyBucketResponse1:
         memcpy(&HempyBucketResponse1Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
-        if (HempyBucketCommand1ToSend.DisablePump || HempyBucketCommand1ToSend.TurnOnPump || HempyBucketCommand1ToSend.TurnOffPump) ///Turn off command flags
+        if (HempyBucketCommand1ToSend.DisablePump || HempyBucketCommand1ToSend.TurnOnPump || HempyBucketCommand1ToSend.TurnOffPump || HempyBucketCommand1ToSend.TareWeightB || HempyBucketCommand1ToSend.TareWeightWR) ///Turn off command flags
         {
           SyncRequested = true; ///Force a second packet to actualize the response
           HempyBucketCommand1ToSend.DisablePump = false;
@@ -401,7 +401,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         break;
       case HempyMessages::HempyBucketResponse2:
         memcpy(&HempyBucketResponse2Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
-        if (HempyBucketCommand2ToSend.DisablePump || HempyBucketCommand2ToSend.TurnOnPump || HempyBucketCommand2ToSend.TurnOffPump) ///Turn off command flags
+        if (HempyBucketCommand2ToSend.DisablePump || HempyBucketCommand2ToSend.TurnOnPump || HempyBucketCommand2ToSend.TurnOffPump || HempyBucketCommand2ToSend.TareWeightB || HempyBucketCommand2ToSend.TareWeightWR) ///Turn off command flags
         {
           SyncRequested = true; ///Force a second message exchange to actualize the response
           HempyBucketCommand2ToSend.DisablePump = false;
