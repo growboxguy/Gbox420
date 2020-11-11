@@ -22,8 +22,8 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   this -> SoundFeedback = Sound1;
   Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
   Weight2 = new WeightSensor(F("Weight2"), this, &ModuleSettings->Weight2);
-  ResWeight1 = new WeightSensor(F("RWeight1"), this, &ModuleSettings->Weight1);
-  ResWeight2 = new WeightSensor(F("RWeight2"), this, &ModuleSettings->Weight2);
+  ResWeight1 = new WeightSensor(F("WeightWR1"), this, &ModuleSettings->Weight1);
+  ResWeight2 = new WeightSensor(F("WeightWR2"), this, &ModuleSettings->Weight2);
   Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->HempyPump1);
   Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->HempyPump2);
   Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1,Weight1,Pump1);
