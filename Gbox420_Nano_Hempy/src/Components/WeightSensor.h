@@ -8,7 +8,6 @@ class WeightSensor : virtual public Common
 public:
   WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings);
   void refresh_FiveSec();
-  void refresh_Sec();
   void report();
   void readWeight();
   float getWeight();
