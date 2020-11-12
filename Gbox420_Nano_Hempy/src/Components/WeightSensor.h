@@ -2,6 +2,7 @@
 #include "HX711.h"
 #include "420Common.h"
 #include "420Module.h"
+#include "Sound.h"
 
 class WeightSensor : virtual public Common
 {

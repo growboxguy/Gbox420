@@ -26,8 +26,8 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   WeightWR2 = new WeightSensor(F("WeightWR2"), this, &ModuleSettings->WeightWR2);
   Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->HempyPump1);
   Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->HempyPump2);
-  Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1,WeightB1,Pump1);
-  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2,WeightB2,Pump2);
+  Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1,WeightB1,WeightWR1,Pump1);
+  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2,WeightB2,WeightWR2,Pump2);
   addToRefreshQueue_Sec(this);         
   addToRefreshQueue_FiveSec(this);     
   //addToRefreshQueue_Minute(this);    

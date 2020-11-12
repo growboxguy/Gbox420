@@ -53,9 +53,9 @@ float WeightSensor::getWeight()
 char *WeightSensor::getWeightText(bool IncludeUnits)
 {
   if (IncludeUnits)
-    return toText_weight(Weight);
+    return toText_weight(getWeight());
   else
-    return toText(Weight);
+    return toText(getWeight());
 }
 
 void WeightSensor::triggerTare(){
@@ -68,6 +68,7 @@ void WeightSensor::tare() ///Time intense, cannot be called straight from the we
   Sensor -> tare();
   *Offset = Sensor -> get_offset();
   Parent->addToLog(F("Tare updated"));
+  Parent->getSoundObject()->playOnSound();
 }
 
 void WeightSensor::triggerCalibration(int CalibrationWeight){
@@ -81,6 +82,7 @@ void WeightSensor::calibrate() ///Time intense, cannot be called straight from t
   *Scale = (float) Sensor -> get_value() / CalibrationWeight;
   Sensor -> set_scale(*Scale);
   Parent->addToLog(F("Weight calibrated"));
+  Parent->getSoundObject()->playOnSound();
 }
 
 void WeightSensor::setScale(float NewScale)
