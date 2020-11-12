@@ -16,9 +16,9 @@ Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Sett
 void Lights_Web::reportToJSON()
 {
     Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
     strcat(LongMessage, getStatusText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Brightness\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Brt\":\""));
     strcat(LongMessage, getBrightnessText(false));   
     strcat_P(LongMessage, (PGM_P)F("\",\"Timer\":\""));
     strcat(LongMessage, getTimerOnOffText(false));

@@ -14,7 +14,7 @@ void Sound_Web::reportToJSON()
 {
     Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end 
 
-    strcat_P(LongMessage, (PGM_P)F("\"Enabled\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
     strcat(LongMessage, toText(*Enabled));    
     strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
 }

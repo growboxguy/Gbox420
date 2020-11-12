@@ -52,11 +52,11 @@ void HempyModule_Web::report()
 void HempyModule_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.PumpState));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1Speed\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1Spd\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.WeightB));
@@ -68,7 +68,7 @@ void HempyModule_Web::reportToJSON()
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StopWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.PumpState));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2Speed\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2Spd\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightB));

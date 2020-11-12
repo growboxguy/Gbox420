@@ -63,9 +63,9 @@ void AeroModule_Web::report()
 void AeroModule_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
   strcat(LongMessage, toText(OnlineStatus));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Pres\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.Pressure));
   if (AeroResponse1Received.PressureTankPresent)
   {
@@ -76,19 +76,19 @@ void AeroModule_Web::reportToJSON()
   }
   strcat_P(LongMessage, (PGM_P)F("\",\"LastSpray\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.LastSprayPressure));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpState\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PState\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.State));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpSpeed\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PSpeed\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"SprayEnabled\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.SprayEnabled));
-  strcat_P(LongMessage, (PGM_P)F("\",\"DayInterval\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DayInt\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.DayInterval));
-  strcat_P(LongMessage, (PGM_P)F("\",\"DayDuration\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DayDur\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.DayDuration));
-  strcat_P(LongMessage, (PGM_P)F("\",\"NightInterval\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"NightInt\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.NightInterval));
-  strcat_P(LongMessage, (PGM_P)F("\",\"NightDuration\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"NightDur\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.NightDuration));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }

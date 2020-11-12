@@ -36,7 +36,7 @@ void ReservoirModule_Web::report()
 void ReservoirModule_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.PH));
