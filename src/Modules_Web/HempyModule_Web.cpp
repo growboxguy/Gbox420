@@ -6,7 +6,7 @@ struct HempyBucketCommand HempyBucketCommand1ToSend = {HempyMessages::HempyBucke
 struct HempyBucketResponse HempyBucketResponse1Received = {HempyMessages::HempyBucketResponse1};  /// Response will be stored here
 struct HempyBucketCommand HempyBucketCommand2ToSend = {HempyMessages::HempyBucketCommand2}; ///Command to send will be stored here
 struct HempyBucketResponse HempyBucketResponse2Received = {HempyMessages::HempyBucketResponse2};  /// Response will be stored here
-struct HempyCommonTemplate HempyGetNextToSend = {HempyMessages::HempyGetNext};            //< Special command to fetch the next Response from the Receiver
+struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};            //< Special command to fetch the next Response from the Receiver
 
 HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///Constructor
@@ -305,9 +305,9 @@ void HempyModule_Web::sendMessages()
   sendCommand(&HempyModuleCommand1ToSend);                                                                                       //< Command - Response exchange
   sendCommand(&HempyBucketCommand1ToSend);                                                                                       //< Command - Response exchange
   sendCommand(&HempyBucketCommand2ToSend);                                                                                       //< Command - Response exchange
-  while (sendCommand(&HempyGetNextToSend) < HempyMessages::HempyGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
+  while (sendCommand(&HempyResetToSend) < HempyMessages::HempyReset && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
     ;
-  if (Debug)
+  if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
@@ -315,7 +315,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
 {
   HempyMessages SequenceIDToSend = ((HempyCommonTemplate *)CommandToSend)->SequenceID;
   HempyMessages ReceivedSequenceID = NULL;
-  if (Debug)
+  if(*Debug)
   {
     logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);
@@ -385,7 +385,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           logToSerials(HempyBucketResponse2Received.Weight, true, 1);
         }
         break;
-      case HempyMessages::HempyGetNext:
+      case HempyMessages::HempyReset:
         if (*Debug)
         {
           logToSerials(F("Last message received"), true, 4);

@@ -2,7 +2,7 @@
 
 struct ReservoirCommand ReservoirCommand1ToSend = {ReservoirMessages::ReservoirCommand1};         //< Command to send will be stored here
 struct ReservoirResponse ReservoirResponse1Received = {ReservoirMessages::ReservoirResponse1};  //< Response will be stored here
-struct ReservoirCommonTemplate ReservoirGetNextToSend = {ReservoirMessages::ReservoirGetNext}; //< Special command to fetch the next Response from the Receiver
+struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset}; //< Special command to fetch the next Response from the Receiver
 
 ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 {
@@ -77,9 +77,9 @@ void ReservoirModule_Web::sendMessages()
   * @brief Exchange messages with the Reservoir module
   */
   updateCommands();
+  sendCommand(&ReservoirResetToSend);   //< special Command, resets communication to first message
   sendCommand(&ReservoirCommand1ToSend);                                                                                           //< Command - Response exchange
-  while (sendCommand(&ReservoirGetNextToSend) < ReservoirMessages::ReservoirGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
-    ;
+  sendCommand(&ReservoirResetToSend);   //< special Command, resets communication to first message
   if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
@@ -137,7 +137,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
           logToSerials(ReservoirResponse1Received.Humidity, true, 1);
         }
         break;      
-      case ReservoirMessages::ReservoirGetNext:
+      case ReservoirMessages::ReservoirReset:
         if (*Debug)
         {
           logToSerials(F("Last message received"), true, 4);

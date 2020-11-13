@@ -14,7 +14,7 @@
 uint8_t NextSequenceID = AeroMessages::AeroModuleResponse1;
 struct AeroModuleResponse AeroModule1ResponseToSend = {AeroMessages::AeroModuleResponse1};
 struct AeroResponse Aero1ResponseToSend = {AeroMessages::AeroResponse1};
-struct AeroCommonTemplate AeroLastResponseToSend = {AeroMessages::AeroGetNext}; //< Special response signaling the end of a message exchange to the Transmitter
+struct AeroCommonTemplate AeroLastResponseToSend = {AeroMessages::AeroReset}; //< Special response signaling the end of a message exchange to the Transmitter
 unsigned long LastMessageSent = 0;                                              //When was the last message sent
 
 AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Module()
@@ -174,7 +174,7 @@ void AeroModule::processCommand(void *ReceivedCommand)
       if (((AeroCommand *)ReceivedCommand)->MixReservoir)
         AeroNT1->Pump->startMixing();
     }
-    NextSequenceID = AeroMessages::AeroGetNext; // update the next Message that will be copied to the buffer
+    NextSequenceID = AeroMessages::AeroReset; // update the next Message that will be copied to the buffer
     if (*Debug)
     {
       logToSerials(F("Aero1:"), false, 2);
@@ -215,14 +215,11 @@ void AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroCommand *)ReceivedCommand)->MixReservoir, true, 1);
     }
     break;
-  case AeroMessages::AeroGetNext: //< Used to get all Responses that do not have a corresponding Command
-    if (++NextSequenceID > AeroMessages::AeroGetNext)
-    {                                               //< If the end of AeroMessages enum is reached
-      NextSequenceID = AeroMessages::AeroModuleResponse1; //< Load the first response for the next message exchange
-      if (Debug)
-      {
-        logToSerials(F("Message exchange finished"), true, 0);
-      }
+  case AeroMessages::AeroReset: //< Used to get all Responses that do not have a corresponding Command
+    NextSequenceID = AeroMessages::AeroModuleResponse1; //< Load the first response for the next message exchange
+    if (*Debug)
+    {
+      logToSerials(F("Reset Message received"), true, 0);
     }
     break;
   default:
@@ -248,7 +245,7 @@ void AeroModule::updateAckData()
   case AeroMessages::AeroResponse1:
     Wireless.writeAckPayload(1, &Aero1ResponseToSend, WirelessPayloadSize);
     break;
-  case AeroMessages::AeroGetNext: //< AeroGetNext should always be the last element in the enum: Signals to stop the message exchange
+  case AeroMessages::AeroReset: //< AeroReset should always be the last element in the enum: Signals to stop the message exchange
     Wireless.writeAckPayload(1, &AeroLastResponseToSend, WirelessPayloadSize);
     break;
   default:

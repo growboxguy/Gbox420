@@ -14,7 +14,7 @@ uint8_t NextSequenceID = HempyMessages::HempyModuleResponse1;
 struct HempyModuleResponse HempyResponse1ToSend = {HempyMessages::HempyModuleResponse1};
 struct HempyBucketResponse HempyBucket1ResponseToSend = {HempyMessages::HempyBucketResponse1};
 struct HempyBucketResponse HempyBucket2ResponseToSend = {HempyMessages::HempyBucketResponse2};
-struct HempyCommonTemplate HempyLastResponseToSend = {HempyMessages::HempyGetNext};  //< Special response signaling the end of a message exchange to the Transmitter
+struct HempyCommonTemplate HempyLastResponseToSend = {HempyMessages::HempyReset};  //< Special response signaling the end of a message exchange to the Transmitter
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
 { 
@@ -153,7 +153,7 @@ void HempyModule::processCommand(void *ReceivedCommand){
       Bucket2 -> setTimerBasedWatering(((HempyBucketCommand*)ReceivedCommand) -> TimerBasedWatering);
       Bucket2 -> setWateringInterval(((HempyBucketCommand*)ReceivedCommand) -> WateringInterval);
       Bucket2 -> setWateringDuration(((HempyBucketCommand*)ReceivedCommand) -> WateringDuration);
-      NextSequenceID = HempyMessages::HempyGetNext; // update the next Message that will be copied to the buffer 
+      NextSequenceID = HempyMessages::HempyReset; // update the next Message that will be copied to the buffer 
       if(*Debug){
         logToSerials(F("Bucket2:"),false,2);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> DisablePump,false,1);
@@ -183,10 +183,10 @@ void HempyModule::processCommand(void *ReceivedCommand){
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> WateringDuration,true,1);
       }                
       break;
-    case HempyMessages::HempyGetNext :     //< Used to get all Responses that do not have a corresponding Command 
-      if(++NextSequenceID > HempyMessages::HempyGetNext){  //< If the end of HempyMessages enum is reached
+    case HempyMessages::HempyReset :     //< Used to get all Responses that do not have a corresponding Command 
+      if(++NextSequenceID > HempyMessages::HempyReset){  //< If the end of HempyMessages enum is reached
           NextSequenceID = HempyMessages::HempyModuleResponse1; //< Load the first response for the next message exchange
-          if(Debug){ logToSerials(F("Message exchange finished"),true,0);  }
+          if(*Debug){ logToSerials(F("Message exchange finished"),true,0);  }
       }            
       break;
     default:
@@ -214,7 +214,7 @@ void HempyModule::updateAckData() { // so you can see that new data is being sen
     case HempyMessages::HempyBucketResponse2 :
         Wireless.writeAckPayload(1, &HempyBucket2ResponseToSend, WirelessPayloadSize);
         break;   
-    case HempyMessages::HempyGetNext :  //< HempyGetNext should always be the last element in the enum: Signals to stop the message exchange
+    case HempyMessages::HempyReset :  //< HempyReset should always be the last element in the enum: Signals to stop the message exchange
         Wireless.writeAckPayload(1, &HempyLastResponseToSend, WirelessPayloadSize);
         break;
     default:

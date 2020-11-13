@@ -4,7 +4,7 @@ struct AeroModuleCommand AeroModuleCommand1ToSend = {AeroMessages::AeroModuleCom
 struct AeroModuleResponse AeroModuleResponse1Received = {AeroMessages::AeroModuleResponse1};   /// Default startup values
 struct AeroCommand AeroCommand1ToSend = {AeroMessages::AeroCommand1}; ///Command to send will be stored here
 struct AeroResponse AeroResponse1Received = {AeroMessages::AeroResponse1};  /// Default startup values
-struct AeroCommonTemplate AeroGetNextToSend = {AeroMessages::AeroGetNext};    //< Special command to fetch the next Response from the Receiver
+struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};    //< Special command to fetch the next Response from the Receiver
 
 
 AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
@@ -270,9 +270,9 @@ void AeroModule_Web::sendMessages()
   updateCommands();
   sendCommand(&AeroModuleCommand1ToSend);                                                                                       //< Command - Response exchange
   sendCommand(&AeroCommand1ToSend);                                                                                         //< Command - Response exchange
-  while (sendCommand(&AeroGetNextToSend) < AeroMessages::AeroGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
+  while (sendCommand(&AeroResetToSend) < AeroMessages::AeroReset && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
     ;
-  if (Debug)
+  if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
@@ -280,7 +280,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 {
   AeroMessages SequenceIDToSend = ((AeroCommonTemplate *)CommandToSend)->SequenceID;
   AeroMessages ReceivedSequenceID = NULL;
-  if (Debug)
+  if(*Debug)
   {
     logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);
@@ -345,7 +345,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           logToSerials(AeroResponse1Received.LastSprayPressure, true, 1);
         }
         break;      
-      case AeroMessages::AeroGetNext:
+      case AeroMessages::AeroReset:
         if (*Debug)
         {
           logToSerials(F("Last message received"), true, 4);

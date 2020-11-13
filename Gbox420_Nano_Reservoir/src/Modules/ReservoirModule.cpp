@@ -8,7 +8,7 @@
 ///< Variables used during wireless communication
 uint8_t NextSequenceID = ReservoirMessages::ReservoirResponse1;
 struct ReservoirResponse ReservoirResponse1ToSend = {ReservoirMessages::ReservoirResponse1};
-struct ReservoirCommonTemplate ReservoirLastResponseToSend = {ReservoirMessages::ReservoirGetNext};  //< Special response signaling the end of a message exchange to the Transmitter
+struct ReservoirCommonTemplate ReservoirLastResponseToSend = {ReservoirMessages::ReservoirReset};  //< Special response signaling the end of a message exchange to the Transmitter
 
 ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Module()
 { 
@@ -74,7 +74,7 @@ void ReservoirModule::processCommand(void *ReceivedCommand){
     case ReservoirMessages::ReservoirCommand1 :
       setDebug(((ReservoirCommand*)ReceivedCommand) -> Debug);
       setMetric(((ReservoirCommand*)ReceivedCommand) -> Metric);
-      NextSequenceID = ReservoirMessages::ReservoirGetNext;  // update the next Message that will be copied to the buffer 
+      NextSequenceID = ReservoirMessages::ReservoirReset;  // update the next Message that will be copied to the buffer 
       if(*Debug){
         logToSerials(F("Module:"),false,2);
         logToSerials(((ReservoirCommand*)ReceivedCommand) -> Time,false,1);
@@ -84,11 +84,12 @@ void ReservoirModule::processCommand(void *ReceivedCommand){
         logToSerials(((ReservoirCommand*)ReceivedCommand) -> Metric,true,1);
       }            
       break;    
-    case ReservoirMessages::ReservoirGetNext :     //< Used to get all Responses that do not have a corresponding Command 
-      if(++NextSequenceID > ReservoirMessages::ReservoirGetNext){  //< If the end of ReservoirMessages enum is reached
-          NextSequenceID = ReservoirMessages::ReservoirResponse1; //< Load the first response for the next message exchange
-          if(Debug){ logToSerials(F("Message exchange finished"),true,0);  }
-      }            
+    case ReservoirMessages::ReservoirReset :     //< Used to get all Responses that do not have a corresponding Command 
+      NextSequenceID = ReservoirMessages::ReservoirResponse1; //< Load the first response for the next message exchange
+      if(*Debug)
+      {
+          logToSerials(F("Reset Message received"),true,0);  
+      }           
       break;
     default:
       logToSerials(F("SequenceID unknown, ignoring message"),true,2);
@@ -109,7 +110,7 @@ void ReservoirModule::updateAckData() { // so you can see that new data is being
     case ReservoirMessages::ReservoirResponse1 :
         Wireless.writeAckPayload(1, &ReservoirResponse1ToSend, WirelessPayloadSize);  
         break;
-    case ReservoirMessages::ReservoirGetNext :  //< ReservoirGetNext should always be the last element in the enum: Signals to stop the message exchange
+    case ReservoirMessages::ReservoirReset :  //< ReservoirReset should always be the last element in the enum: Signals to stop the message exchange
         Wireless.writeAckPayload(1, &ReservoirLastResponseToSend, WirelessPayloadSize);
         break;
     default:

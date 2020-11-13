@@ -26,7 +26,7 @@ void * ReceivedResponse = malloc(WirelessPayloadSize);  ///< Pointer to the data
 struct ModuleCommand Module1CommandToSend = {HempyMessage::Module1Command,1587399600,1,1};  //Fake commands sent to the Receiver
 struct BucketCommand Bucket1CommandToSend = {HempyMessage::Bucket1Command,1,0,0,420,3.8,4.8};  //Fake commands sent to the Receiver
 struct BucketCommand Bucket2CommandToSend = {HempyMessage::Bucket2Command,0,0,0,420,3.9,4.9};  //Fake commands sent to the Receiver
-struct CommonTemplate GetNextResponse = {HempyMessage::GetNext};  //< Special command to fetch the next Response from the Receiver
+struct CommonTemplate ResetResponse = {HempyMessage::Reset};  //< Special command to fetch the next Response from the Receiver
 
 static const uint8_t WirelessChannel[6] ={"Hemp1"}; //Identifies the communication channel, needs to match on the Receiver
 RF24 Wireless(CE_PIN, CSN_PIN);
@@ -67,7 +67,7 @@ void sendMessages(){
     sendCommand(&Module1CommandToSend);  //< Command - Response exchange
     sendCommand(&Bucket1CommandToSend);  //< Command - Response exchange
     sendCommand(&Bucket2CommandToSend);  //< Command - Response exchange
-    while(sendCommand(&GetNextResponse) < HempyMessage::GetNext && millis()- LastResponseReceived < WirelessMessageTimeout);   //< special Command, only exchange Response.
+    while(sendCommand(&ResetResponse) < HempyMessage::Reset && millis()- LastResponseReceived < WirelessMessageTimeout);   //< special Command, only exchange Response.
     if(Debug)Serial.println(F("Message exchange finished"));
 }
 
@@ -134,7 +134,7 @@ HempyMessage sendCommand(void* CommandToSend){
                     Serial.print(F(", "));
                     Serial.println(((DHTResponse*)ReceivedResponse) -> Humidity);
                     break;
-                case HempyMessage::GetNext :
+                case HempyMessage::Reset :
                     Serial.println(F("  Last message received"));
                     break;
                 default:

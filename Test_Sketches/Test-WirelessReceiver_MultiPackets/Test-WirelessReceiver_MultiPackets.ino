@@ -28,7 +28,7 @@ struct ModuleResponse Module1ResponseToSend = {HempyMessage::Module1Response,1};
 struct BucketResponse Bucket1ResponseToSend = {HempyMessage::Bucket1Response,0,0,4.20};  //Fake response sent to the Transmitter
 struct BucketResponse Bucket2ResponseToSend = {HempyMessage::Bucket2Response,1,1,4.20};  //Fake response sent to the Transmitter
 struct DHTResponse DHT1ResponseToSend = {HempyMessage::DHT1Response,23.4,42.0}; //Fake response sent to the Transmitter
-struct CommonTemplate LastResponseToSend = {HempyMessage::GetNext};  //< Special response signaling the end of a message exchange to the Transmitter
+struct CommonTemplate LastResponseToSend = {HempyMessage::Reset};  //< Special response signaling the end of a message exchange to the Transmitter
 
 const uint8_t WirelessChannel[6] ={"Hemp1"};  //Identifies the communication channel, needs to match on the Transmitter
 RF24 Wireless(CE_PIN, CSN_PIN);
@@ -119,8 +119,8 @@ void loop() {
             Serial.println(((BucketCommand*)ReceivedCommand) -> StopWeight);
             NextSequenceID = HempyMessage::DHT1Response; // update the next Message that will be copied to the buffer           
             break;
-        case HempyMessage::GetNext :     //< Used to get all Responses that do not have a corresponding Command 
-            if(++NextSequenceID > HempyMessage::GetNext){  //< If the end of HempyMessage enum is reached
+        case HempyMessage::Reset :     //< Used to get all Responses that do not have a corresponding Command 
+            if(++NextSequenceID > HempyMessage::Reset){  //< If the end of HempyMessage enum is reached
                 NextSequenceID = HempyMessage::Module1Response; //< Load the first response for the next message exchange
                 if(Debug){ Serial.println(F("Message exchange finished")); }
             }            
@@ -165,7 +165,7 @@ void updateAckData() { // so you can see that new data is being sent
     case HempyMessage::DHT1Response :
         Wireless.writeAckPayload(1, &DHT1ResponseToSend, PayloadSize);
         break;
-    case HempyMessage::GetNext :  //< GetNext should always be the last element in the HempyMessage enum: Signals to stop the message exchange
+    case HempyMessage::Reset :  //< Reset should always be the last element in the HempyMessage enum: Signals to stop the message exchange
         Wireless.writeAckPayload(1, &LastResponseToSend, PayloadSize);
         break;
     default:

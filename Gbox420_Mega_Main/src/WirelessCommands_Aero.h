@@ -8,7 +8,7 @@
 
 #include "TimeLib.h"     ///< keeping track of time
 ///Structs for wireless communication
-enum AeroMessages { AeroModuleCommand1,AeroModuleResponse1,AeroCommand1,AeroResponse1,AeroGetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+enum AeroMessages { AeroModuleCommand1,AeroModuleResponse1,AeroCommand1,AeroResponse1,AeroReset};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 static const __FlashStringHelper* toText_aeroSequenceID(uint8_t SequenceID)
 {
@@ -18,7 +18,7 @@ static const __FlashStringHelper* toText_aeroSequenceID(uint8_t SequenceID)
       case AeroMessages::AeroModuleResponse1: return F("AeroModuleResponse1"); break;
       case AeroMessages::AeroCommand1: return F("AeroCommand1"); break;
       case AeroMessages::AeroResponse1: return F("AeroResponse1"); break;
-      case AeroMessages::AeroGetNext: return F("AeroGetNext"); break;
+      case AeroMessages::AeroReset: return F("AeroReset"); break;
       default : return F("UNKNOWN"); break;
    }
 }
