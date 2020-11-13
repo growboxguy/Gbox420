@@ -178,7 +178,7 @@ void Module_Web::refreshEvent(char *url)
 
 void Module_Web::buttonEvent(char *button)
 { ///Called when any button on the website is pressed.
-  logToSerials(F("Button pressed: "), true, 0);
+  logToSerials(F("Button pressed: "), false, 0);
   logToSerials(&button, true, 0);
   for (int i = 0; i < WebsiteQueue_Button_Count; i++)
   {
