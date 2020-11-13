@@ -146,9 +146,10 @@ void updateFakeData() { // - Simulates sensor readings changin
 }
 
 void updateAckData() { // so you can see that new data is being sent
-
-    Serial.print(F("  Updating Acknowledgement message to responseID: "));
-    Serial.println(NextSequenceID);
+    if(*Debug){
+        logToSerials(F("Updating Acknowledgement to:"),false,2);
+        logToSerials(NextSequenceID,true,1);
+    }
     Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
 
     switch (NextSequenceID)  // based on the NextSeqenceID load the next response into the Acknowledgement buffer

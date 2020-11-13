@@ -79,24 +79,16 @@ void AeroModule::updateResponse()
     Aero1ResponseToSend.State = AeroNT1->Pump->getState();
     Aero1ResponseToSend.LastSprayPressure = AeroNT1->getLastSprayPressure();
   }
-  updateAckData();
 }
 
 void AeroModule::processCommand(void *ReceivedCommand)
 {
   AeroMessages ReceivedSequenceID = ((AeroCommonTemplate *)ReceivedCommand)->SequenceID;
   LastMessageReceived = millis(); ///< Store current time
-  if (*Debug)
-  {
-    logToSerials(F("Received SequenceID:"), false, 1);
-    logToSerials(ReceivedSequenceID, false, 1);
-    logToSerials(F("-"), false, 1);
-    logToSerials(toText_aeroSequenceID(ReceivedSequenceID), false, 1);
-    logToSerials(F(", Acknowledgement sent with SequenceID:"), false, 0);
-    logToSerials(NextSequenceID, false, 1);
-    logToSerials(F("-"), false, 1);
-    logToSerials(toText_aeroSequenceID(NextSequenceID), true, 1);
-  }
+  logToSerials(F("Received:"),false,1);
+  logToSerials(toText_aeroSequenceID(ReceivedSequenceID),false,1);
+  logToSerials(F("- Sent:"),false,1);
+  logToSerials(toText_aeroSequenceID(NextSequenceID),true,1);
 
   switch (ReceivedSequenceID)
   {
@@ -217,10 +209,6 @@ void AeroModule::processCommand(void *ReceivedCommand)
     break;
   case AeroMessages::AeroReset: //< Used to get all Responses that do not have a corresponding Command
     NextSequenceID = AeroMessages::AeroModuleResponse1; //< Load the first response for the next message exchange
-    if (*Debug)
-    {
-      logToSerials(F("Reset Message received"), true, 0);
-    }
     break;
   default:
     logToSerials(F("SequenceID unknown, ignoring message"), true, 2);
@@ -232,9 +220,10 @@ void AeroModule::processCommand(void *ReceivedCommand)
 
 void AeroModule::updateAckData()
 { // so you can see that new data is being sent
-
-  logToSerials(F("Updating Acknowledgement message to responseID:"), false, 2);
-  logToSerials(NextSequenceID, true, 1);
+  if(*Debug){
+      logToSerials(F("Updating Acknowledgement to:"),false,2);
+      logToSerials(toText_aeroSequenceID(NextSequenceID),true,1);
+  }
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
 
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer

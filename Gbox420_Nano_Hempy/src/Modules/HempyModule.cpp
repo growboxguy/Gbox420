@@ -73,24 +73,11 @@ void HempyModule::updateResponse(){
 
 void HempyModule::processCommand(void *ReceivedCommand){
   HempyMessages ReceivedSequenceID = ((HempyCommonTemplate*)ReceivedCommand) -> SequenceID;
-  LastMessageReceived = millis();  ///< Store current time
-  if(*Debug){
-      logToSerials(F("Received SequenceID:"),false,1);
-      logToSerials(ReceivedSequenceID,false,1);
-      logToSerials(F("-"),false,1);
-      logToSerials(toText_hempySequenceID(ReceivedSequenceID),false,1);
-      logToSerials(F(", Acknowledgement sent with SequenceID:"),false,0);
-      logToSerials(NextSequenceID,false,1);
-      logToSerials(F("-"),false,1);
-      logToSerials(toText_hempySequenceID(NextSequenceID),true,1);
-  }
-  else
-  {
-      logToSerials(F("Received:"),false,1);
-      logToSerials(toText_hempySequenceID(ReceivedSequenceID),false,1);
-      logToSerials(F("- Sent:"),false,1);
-      logToSerials(toText_hempySequenceID(NextSequenceID),true,1);
-  }  
+  LastMessageReceived = millis();  ///< Store current time  
+  logToSerials(F("Received:"),false,1);
+  logToSerials(toText_hempySequenceID(ReceivedSequenceID),false,1);
+  logToSerials(F("- Sent:"),false,1);
+  logToSerials(toText_hempySequenceID(NextSequenceID),true,1);
 
   switch (ReceivedSequenceID){
     case HempyMessages::HempyModuleCommand1 :
@@ -197,12 +184,7 @@ void HempyModule::processCommand(void *ReceivedCommand){
       }                
       break;
     case HempyMessages::HempyReset:     //< Used to get all Responses that do not have a corresponding Command       
-        NextSequenceID = HempyMessages::HempyModuleResponse1; //< Load the first response for the next message exchange
-        if(*Debug)
-        {
-            logToSerials(F("Reset Message received"),true,0);  
-        }          
-      }        
+      NextSequenceID = HempyMessages::HempyModuleResponse1; //< Load the first response for the next message exchange
       break;
     default:
       if(*Debug){logToSerials(F("SequenceID unknown, ignoring message"),true,2);}
@@ -214,8 +196,8 @@ void HempyModule::processCommand(void *ReceivedCommand){
 
 void HempyModule::updateAckData() { // so you can see that new data is being sent
     if(*Debug){
-      logToSerials(F("Updating Acknowledgement message to responseID:"),false,2);
-      logToSerials(NextSequenceID,true,1);
+      logToSerials(F("Updating Acknowledgement to:"),false,2);
+      logToSerials(toText_hempySequenceID(NextSequenceID),true,1);
     }
     Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
 

@@ -135,7 +135,6 @@ void HeartBeat()
 
 void getWirelessData() {
     if ( Wireless.available() ) { 
-        if(*Debug)logToSerials(F("Wireless Command received"),true,0);
         Wireless.read( ReceivedMessage, WirelessPayloadSize );        
         if(timeStatus() != timeSet && ((AeroCommonTemplate*)ReceivedMessage) -> SequenceID == AeroMessages::AeroModuleCommand1)  
         {
