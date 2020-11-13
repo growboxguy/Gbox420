@@ -172,10 +172,10 @@ void resetWebServer(void)
     delay(500);
   };
   logToSerials(F(""), true, 0); ///< line break
-  if (PushingBoxRestAPI.begin("api.pushingbox.com") == 0)
+  if (PushingBoxRestAPI.begin("api.pushingbox.com") == 0) ///< Pre-setup relay to Google Sheets
   {
     logToSerials(F("PushingBox RestAPI ready"), true, 2);
-  } ///< Pre-setup relay to Google Sheets
+  } 
   else
     logToSerials(F("PushingBox RestAPI failed"), true, 2); ///< If begin returns a negative number the initialization failed
   WebServer.setup();

@@ -127,34 +127,34 @@ void Module_Web::addToRefreshQueue_QuarterHour(Common_Web *Component)
 
 void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
 {   
-  if (QueueDepth > WebsiteQueueItemCount_Load)
-    WebsiteQueue_Load[WebsiteQueueItemCount_Load++] = Component;
+  if (QueueDepth > WebsiteQueue_Load_Count)
+    WebsiteQueue_Load[WebsiteQueue_Load_Count++] = Component;
   else
-    logToSerials(F("WebsiteQueueItemCount_Load overflow!"), true, 0);
+    logToSerials(F("WebsiteQueue_Load_Count overflow!"), true, 0);
 }
 
 void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Component)
 {   
-  if (QueueDepth > WebsiteQueueItemCount_Refresh)
-    WebsiteQueue_Refresh[WebsiteQueueItemCount_Refresh++] = Component;
+  if (QueueDepth > WebsiteQueue_Refresh_Count)
+    WebsiteQueue_Refresh[WebsiteQueue_Refresh_Count++] = Component;
   else
-    logToSerials(F("WebsiteQueueItemCount_Refresh overflow!"), true, 0);
+    logToSerials(F("WebsiteQueue_Refresh_Count overflow!"), true, 0);
 }
 
 void Module_Web::addToWebsiteQueue_Button(Common_Web *Component)
 {
-  if (QueueDepth > WebsiteQueueItemCount_Button)
-    WebsiteQueue_Button[WebsiteQueueItemCount_Button++] = Component;
+  if (QueueDepth > WebsiteQueue_Button_Count)
+    WebsiteQueue_Button[WebsiteQueue_Button_Count++] = Component;
   else
-    logToSerials(F("WebsiteQueueItemCount_Button overflow!"), true, 0);
+    logToSerials(F("WebsiteQueue_Button_Count overflow!"), true, 0);
 }
 
 void Module_Web::addToWebsiteQueue_Field(Common_Web *Component)
 {
-  if (QueueDepth > WebsiteQueueItemCount_Field)
-    WebsiteQueue_Field[WebsiteQueueItemCount_Field++] = Component;
+  if (QueueDepth > WebsiteQueue_Field_Count)
+    WebsiteQueue_Field[WebsiteQueue_Field_Count++] = Component;
   else
-    logToSerials(F("WebsiteQueueItemCount_Field overflow!"), true, 0);
+    logToSerials(F("WebsiteQueue_Field_Count overflow!"), true, 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,7 +162,7 @@ void Module_Web::addToWebsiteQueue_Field(Common_Web *Component)
 
 void Module_Web::loadEvent(char *url)
 { ///called when website is loaded. Runs through all components that subscribed for this event
-  for (int i = 0; i < WebsiteQueueItemCount_Load; i++)
+  for (int i = 0; i < WebsiteQueue_Load_Count; i++)
   {
     WebsiteQueue_Load[i]->websiteEvent_Load(url);
   }
@@ -170,7 +170,7 @@ void Module_Web::loadEvent(char *url)
 
 void Module_Web::refreshEvent(char *url)
 { ///called when website is refreshed.
-  for (int i = 0; i < WebsiteQueueItemCount_Refresh; i++)
+  for (int i = 0; i < WebsiteQueue_Refresh_Count; i++)
   {
     WebsiteQueue_Refresh[i]->websiteEvent_Refresh(url);
   }
@@ -178,9 +178,9 @@ void Module_Web::refreshEvent(char *url)
 
 void Module_Web::buttonEvent(char *button)
 { ///Called when any button on the website is pressed.
-  if (*Debug)
-    logToSerials(&button, true, 0);
-  for (int i = 0; i < WebsiteQueueItemCount_Button; i++)
+  logToSerials(F("Button pressed: "), true, 0);
+  logToSerials(&button, true, 0);
+  for (int i = 0; i < WebsiteQueue_Button_Count; i++)
   {
     WebsiteQueue_Button[i]->websiteEvent_Button(button);
   }
@@ -188,9 +188,9 @@ void Module_Web::buttonEvent(char *button)
 
 void Module_Web::setFieldEvent(char *field)
 { ///Called when any field on the website is updated.
-  if (*Debug)
-    logToSerials(&field, true, 0);
-  for (int i = 0; i < WebsiteQueueItemCount_Field; i++)
+  logToSerials(F("Field submitted: "), true, 0);
+  logToSerials(&field, true, 0);
+  for (int i = 0; i < WebsiteQueue_Field_Count; i++)
   {
     WebsiteQueue_Field[i]->websiteEvent_Field(field);
   }

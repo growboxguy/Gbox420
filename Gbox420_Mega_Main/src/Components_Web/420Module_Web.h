@@ -70,8 +70,8 @@ protected:
   uint8_t refreshQueueItemCount_FiveSec = 0;
   uint8_t refreshQueueItemCount_Minute = 0;
   uint8_t refreshQueueItemCount_QuarterHour = 0; 
-  uint8_t WebsiteQueueItemCount_Load = 0;
-  uint8_t WebsiteQueueItemCount_Refresh = 0;
-  uint8_t WebsiteQueueItemCount_Button = 0;
-  uint8_t WebsiteQueueItemCount_Field = 0;
+  uint8_t WebsiteQueue_Load_Count = 0;
+  uint8_t WebsiteQueue_Refresh_Count = 0;
+  uint8_t WebsiteQueue_Button_Count = 0;
+  uint8_t WebsiteQueue_Field_Count = 0;
 };
