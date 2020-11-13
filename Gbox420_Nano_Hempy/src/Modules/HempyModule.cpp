@@ -83,7 +83,14 @@ void HempyModule::processCommand(void *ReceivedCommand){
       logToSerials(NextSequenceID,false,1);
       logToSerials(F("-"),false,1);
       logToSerials(toText_hempySequenceID(NextSequenceID),true,1);
-  } 
+  }
+  else
+  {
+      logToSerials(F("Received:"),false,1);
+      logToSerials(toText_hempySequenceID(ReceivedSequenceID),false,1);
+      logToSerials(F("- Sent:"),false,1);
+      logToSerials(toText_hempySequenceID(NextSequenceID),true,1);
+  }  
 
   switch (ReceivedSequenceID){
     case HempyMessages::HempyModuleCommand1 :
@@ -114,7 +121,8 @@ void HempyModule::processCommand(void *ReceivedCommand){
       Bucket1 -> setWateringInterval(((HempyBucketCommand*)ReceivedCommand) -> WateringInterval);
       Bucket1 -> setWateringDuration(((HempyBucketCommand*)ReceivedCommand) -> WateringDuration);
       NextSequenceID = HempyMessages::HempyBucketResponse2;  // update the next Message that will be copied to the buffer
-      if(*Debug){  
+     // if(*Debug)
+     {  
         logToSerials(F("Bucket1:"),false,2);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> DisablePump,false,1);
         logToSerials(F(","),false,1);
@@ -158,7 +166,8 @@ void HempyModule::processCommand(void *ReceivedCommand){
       Bucket2 -> setWateringInterval(((HempyBucketCommand*)ReceivedCommand) -> WateringInterval);
       Bucket2 -> setWateringDuration(((HempyBucketCommand*)ReceivedCommand) -> WateringDuration);
       NextSequenceID = HempyMessages::HempyGetNext; // update the next Message that will be copied to the buffer 
-      if(*Debug){
+      //if(*Debug)
+      {
         logToSerials(F("Bucket2:"),false,2);
         logToSerials(((HempyBucketCommand*)ReceivedCommand) -> DisablePump,false,1);
         logToSerials(F(","),false,1);
@@ -190,7 +199,10 @@ void HempyModule::processCommand(void *ReceivedCommand){
     case HempyMessages::HempyGetNext :     //< Used to get all Responses that do not have a corresponding Command 
       if(++NextSequenceID > HempyMessages::HempyGetNext){  //< If the end of HempyMessages enum is reached
           NextSequenceID = HempyMessages::HempyModuleResponse1; //< Load the first response for the next message exchange
-          if(*Debug){ logToSerials(F("Message exchange finished"),true,0);  }
+          if(*Debug)
+          {
+             logToSerials(F("Message exchange finished"),true,0);  
+          }          
       }            
       break;
     default:
