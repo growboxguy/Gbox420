@@ -40,19 +40,23 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
 
 void HempyModule::refresh_Sec()
 {
-  if (*Debug)
+  if (*Debug){
     Common::refresh_Sec();
+  }
   if(NextSequenceID != HempyMessages::HempyModuleResponse1 && millis()- LastMessageReceived >= WirelessMessageTimeout){  //< If there is a package exchange in progress, but a followup command was not received within the timeout
       NextSequenceID = HempyMessages::HempyModuleResponse1;  //< Reset back to the first response
-      logToSerials(F("Timeout during message exchange, reseting to first response"),true,0);   
+      if(*Debug){
+        logToSerials(F("Timeout during message exchange, reseting to first response"),true,0); 
+      }  
       updateAckData();  
   } 
 }
 
 void HempyModule::refresh_FiveSec()
 {
-  if (*Debug)
+  if (*Debug){
     Common::refresh_FiveSec(); 
+  }
   runReport(); 
   updateResponse(); 
 }
@@ -186,11 +190,11 @@ void HempyModule::processCommand(void *ReceivedCommand){
     case HempyMessages::HempyGetNext :     //< Used to get all Responses that do not have a corresponding Command 
       if(++NextSequenceID > HempyMessages::HempyGetNext){  //< If the end of HempyMessages enum is reached
           NextSequenceID = HempyMessages::HempyModuleResponse1; //< Load the first response for the next message exchange
-          if(Debug){ logToSerials(F("Message exchange finished"),true,0);  }
+          if(*Debug){ logToSerials(F("Message exchange finished"),true,0);  }
       }            
       break;
     default:
-      logToSerials(F("SequenceID unknown, ignoring message"),true,2);
+      if(*Debug){logToSerials(F("SequenceID unknown, ignoring message"),true,2);}
       break;        
   } 
   updateAckData();   //< Loads the next ACK that will be sent out
@@ -198,9 +202,10 @@ void HempyModule::processCommand(void *ReceivedCommand){
 }
 
 void HempyModule::updateAckData() { // so you can see that new data is being sent
-
-    logToSerials(F("Updating Acknowledgement message to responseID:"),false,2);
-    logToSerials(NextSequenceID,true,1);
+    if(*Debug){
+      logToSerials(F("Updating Acknowledgement message to responseID:"),false,2);
+      logToSerials(NextSequenceID,true,1);
+    }
     Wireless.flush_tx();  ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved) 
 
     switch (NextSequenceID)  // based on the NextSeqenceID load the next response into the Acknowledgement buffer
@@ -218,7 +223,7 @@ void HempyModule::updateAckData() { // so you can see that new data is being sen
         Wireless.writeAckPayload(1, &HempyLastResponseToSend, WirelessPayloadSize);
         break;
     default:
-        logToSerials(F("Unknown next Sequence number, Ack defaults loaded"),true,3); 
+        if(*Debug){logToSerials(F("Unknown next Sequence number, Ack defaults loaded"),true,3); }
         Wireless.writeAckPayload(1, &HempyResponse1ToSend, WirelessPayloadSize); // load the first Response into the buffer 
         break;    
     }

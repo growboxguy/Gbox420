@@ -272,7 +272,7 @@ void AeroModule_Web::sendMessages()
   sendCommand(&AeroCommand1ToSend);                                                                                         //< Command - Response exchange
   while (sendCommand(&AeroGetNextToSend) < AeroMessages::AeroGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
     ;
-  if (Debug)
+  if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
@@ -280,7 +280,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 {
   AeroMessages SequenceIDToSend = ((AeroCommonTemplate *)CommandToSend)->SequenceID;
   AeroMessages ReceivedSequenceID = NULL;
-  if (Debug)
+  if(*Debug)
   {
     logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);

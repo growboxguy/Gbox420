@@ -38,7 +38,7 @@ void WaterPump::report()
 
 void WaterPump::refresh_Sec()  
 {
-  if(Debug){
+  if(*Debug){
     Common::refresh_Sec();
   }
 

@@ -80,7 +80,7 @@ void ReservoirModule_Web::sendMessages()
   sendCommand(&ReservoirCommand1ToSend);                                                                                           //< Command - Response exchange
   while (sendCommand(&ReservoirGetNextToSend) < ReservoirMessages::ReservoirGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
     ;
-  if (Debug)
+  if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
@@ -91,7 +91,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
   */
   ReservoirMessages SequenceIDToSend = ((ReservoirCommonTemplate *)CommandToSend)->SequenceID;
   ReservoirMessages ReceivedSequenceID = NULL;
-  if (Debug)
+  if(*Debug)
   {
     logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);

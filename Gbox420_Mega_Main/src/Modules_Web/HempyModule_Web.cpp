@@ -334,7 +334,7 @@ void HempyModule_Web::sendMessages()
   sendCommand(&HempyBucketCommand2ToSend);                                                                                       //< Command - Response exchange
   while (sendCommand(&HempyGetNextToSend) < HempyMessages::HempyGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
     ;
-  if (Debug)
+  if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
@@ -342,7 +342,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
 {
   HempyMessages SequenceIDToSend = ((HempyCommonTemplate *)CommandToSend)->SequenceID;
   HempyMessages ReceivedSequenceID = NULL;
-  if (Debug)
+  if(*Debug)
   {
     logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);
@@ -427,7 +427,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         }
         break;
       default:
-        logToSerials(F("SequenceID not known, ignoring package"), true, 4);
+        if (*Debug)
+        {
+          logToSerials(F("SequenceID not known, ignoring package"), true, 4);
+        }
         break;
       }
       LastResponseReceived = millis();
