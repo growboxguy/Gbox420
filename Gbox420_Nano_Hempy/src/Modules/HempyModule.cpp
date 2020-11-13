@@ -197,12 +197,11 @@ void HempyModule::processCommand(void *ReceivedCommand){
       }                
       break;
     case HempyMessages::HempyReset:     //< Used to get all Responses that do not have a corresponding Command       
-        NextSequenceID = HempyMessages::HempyModuleResponse1; //< Load the first response for the next message exchange
-        if(*Debug)
-        {
-            logToSerials(F("Reset Message received"),true,0);  
-        }          
-      }        
+      NextSequenceID = HempyMessages::HempyModuleResponse1; //< Load the first response for the next message exchange
+      if(*Debug)
+      {
+          logToSerials(F("Reset Message received"),true,0);  
+      }          
       break;
     default:
       if(*Debug){logToSerials(F("SequenceID unknown, ignoring message"),true,2);}
