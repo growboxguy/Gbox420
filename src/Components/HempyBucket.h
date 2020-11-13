@@ -35,7 +35,7 @@ public:
 
 private:
   WateringMode WateringTrigger;
-  float StartTotalWeight = 0; ///Bucket + Waste reservoir combined weight, filled when starting the watering
+  float StartTotalWeight; ///Bucket + Waste reservoir combined weight, filled when starting the watering
 
 protected:
   Module *Parent;  

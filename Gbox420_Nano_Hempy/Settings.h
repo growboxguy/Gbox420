@@ -22,7 +22,7 @@ static const uint8_t Version = 19; ///< Increment this when you make a change in
   ///Global constants
   static const uint8_t MaxTextLength = 32;      ///Default char * buffer for storing a word + null terminator. Memory intense!
   static const uint8_t MaxShotTextLength = 64; ///Default char * buffer for storing mutiple words. Memory intense!
-  static const int MaxLongTextLength = 256; ///Default char * buffer for storing a long text. Memory intense!
+  static const int MaxLongTextLength = 192; ///Default char * buffer for storing a long text. Memory intense!
   static const uint8_t QueueDepth = 8;               ///Limits the maximum number of active modules. Memory intense!
   static const uint8_t RollingAverageDepth = 10;     ///Limits the maximum number of active modules. Memory intense!
 

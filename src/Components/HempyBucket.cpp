@@ -77,7 +77,7 @@ void HempyBucket::checkWateringTimer()
 
 void HempyBucket::checkWateringFinished()
 {
-  bool WeightWReached = false; // Signals when the weight target is reached
+  bool WeightReached = false; // Signals when the weight target is reached
   bool TimerReached = false; // Signals when the watering timer is finished
   if(WateringTrigger == WateringMode::MANUAL)  //If watering was triggered by user
   {
@@ -86,11 +86,11 @@ void HempyBucket::checkWateringFinished()
       BucketWeightSensor->readWeight(); 
       if (BucketWeightSensor->getWeight() > *StopWeight || (BucketWeightSensor->getWeight()+WasteReservoirWeightSensor->getWeight()) - StartTotalWeight  > *StopWeight - *StartWeight) ///If the weight is over the stop limit 
       {
-        WeightWReached = true;        
+        WeightReached = true;        
       }
     }
     else{  //Weight based watering not enabled 
-      WeightWReached = true;  //Fake ready signal when weight based watering is turned off 
+      WeightReached = true;  //Fake ready signal when weight based watering is turned off 
     } 
 
     if(*TimerBasedWatering){ //Timer based watering enabled 
@@ -114,14 +114,14 @@ void HempyBucket::checkWateringFinished()
   }
   else //if (WateringTrigger == WateringMode::TIMER)  //< If watering triggered by timer: Run until duration is reached
   {
-    WeightWReached = true;  //Fake ready signal, only timer is considered in this watering mode
+    WeightReached = true;  //Fake ready signal, only timer is considered in this watering mode
     if (millis() - WateringTimer >= ((uint32_t)*WateringDuration * 1000))
     {
       TimerReached = true; 
     }
   }
 
-  if(WeightWReached && TimerReached){
+  if(WeightReached && TimerReached){
     BucketPump->stopPump();  //< Turn the pump off when all criteria are met
   }
 }
@@ -134,8 +134,6 @@ void HempyBucket::startWatering()
   WateringTimer = millis();
   logToSerials(F("Manual watering..."), true, 1);
 }
-
-void HempyBucket::startPump
 
 float HempyBucket::getStartWeight()
 {
