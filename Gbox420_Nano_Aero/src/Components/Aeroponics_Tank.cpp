@@ -4,6 +4,8 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
 { ///constructor
   this->Name = Name;
   MinPressure = &TankSpecificSettings->MinPressure; ///Aeroponics - Turn on pump below this pressure (bar)
+  logToSerials(F(""),true,0);  //New line
+  logToSerials(F(""),false,1); //Extra indentation
   SpraySwitch = new Switch(F("SpraySolenoid"), TankSpecificSettings->SpraySolenoidPin, TankSpecificSettings->SpraySolenoidNegativeLogic);
 
   logToSerials(F("Aeroponics_Tank object created"), true, 1);

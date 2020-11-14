@@ -7,7 +7,7 @@
 
 ///Aeroponics tote virtual parent class
 
-class Aeroponics : virtual public Common
+class Aeroponics : public Common
 {
 public:
   Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump);

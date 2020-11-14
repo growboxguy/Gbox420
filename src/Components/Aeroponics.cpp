@@ -7,7 +7,6 @@
 Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Common(Name)
 { ///constructor
   this->Parent = Parent;
-  this->Name = Name;
   SprayEnabled = &DefaultSettings->SprayEnabled;   ///Enable/disable misting
   DayInterval = &DefaultSettings->DayInterval;     ///Spray every X minutes - With lights ON
   DayDuration = &DefaultSettings->DayDuration;     ///Spray time in seconds - With lights ON
