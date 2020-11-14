@@ -19,15 +19,15 @@ var charts_titleColumn = 1;
 var charts_typeColumn = 2;
 
 var columns_keyColumn = 0;  //Relative position within the Columns named range
-var columns_alertEnabledColumn = 1;
-var columns_alertMinColumn = 2;
-var columns_alertMaxColumn = 3;
-var columns_triggeredColumn = 4;
-var columns_dataTypeColumn = 5;
-var columns_chartColumn = 6;
-var columns_overviewColumn = 7;
-var columns_seriesColumn = 8;
-var columns_nameColumn = 9;
+var columns_nameColumn = 1;
+var columns_dataTypeColumn = 2;
+var columns_alertEnabledColumn = 3;
+var columns_alertMinColumn = 4;
+var columns_alertMaxColumn = 5;
+var columns_triggeredColumn = 6;
+var columns_chartColumn = 7;
+var columns_overviewColumn = 8;
+var columns_seriesColumn = 9;
 var columns_friendlyNameColumn = 10;
 var columns_targetAxisColumn = 11;
 
