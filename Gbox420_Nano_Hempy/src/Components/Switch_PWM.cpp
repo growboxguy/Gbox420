@@ -1,10 +1,13 @@
 #include "Switch_PWM.h"
 
-Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t *DutyCycle, uint8_t *DutyCycleLowLimit,bool NegativeLogic) : Switch(Name, Pin,NegativeLogic)
+Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t *DutyCycle, uint8_t *DutyCycleLowLimit,bool NegativeLogic) : Switch(Name)
 {
-  this->Name = Name;
+  this->Pin = Pin;
+  this->NegativeLogic = NegativeLogic;
   this->DutyCycle = DutyCycle;
   this->DutyCycleLowLimit = DutyCycleLowLimit;
+  pinMode(Pin, OUTPUT);
+  turnOff();  ///initialize in OFF state  
   logToSerials(F("Switch_PWM object created"), true, 2);
 }
 

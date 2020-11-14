@@ -9,6 +9,10 @@ Switch::Switch(const __FlashStringHelper *Name, uint8_t Pin, bool NegativeLogic)
   logToSerials(F("Switch object created"), true, 2);
 }
 
+Switch::Switch(const __FlashStringHelper *Name) : Common(Name)
+{  
+}
+
 void Switch::flip(){
   if(State) turnOff();
   else turnOn();
