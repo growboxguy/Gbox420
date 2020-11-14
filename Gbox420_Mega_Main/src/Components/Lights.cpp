@@ -286,27 +286,21 @@ char *Lights::getBrightnessText(bool UseText)
   if (UseText)
   {
     strcat_P(ShortMessage, (PGM_P)F("%"));
-    if (*Debug || CurrentStatus == LightStates::FADEIN || CurrentStatus == LightStates::FADEOUT)
-    {
-      strcat_P(ShortMessage, (PGM_P)F(" ("));
-      itoa(CurrentBrightness, ShortMessage + strlen(ShortMessage), 10);
-      strcat_P(ShortMessage, (PGM_P)F(")"));
-    }
   }
   return ShortMessage;
 }
 
 char *Lights::getCurrentBrightnessText(bool UseText)
 {
-  if (!*Status) //When the light is off
-  {
-    itoa(0, ShortMessage, 10);
-  }
-  else if (CurrentStatus == LightStates::FADEIN || CurrentStatus == LightStates::FADEOUT)
+  if (CurrentStatus == LightStates::FADEIN || CurrentStatus == LightStates::FADEOUT)
   {
     itoa(CurrentBrightness, ShortMessage, 10);
   }
-  else
+  else if (!*Status) //When the light is off
+  {
+    itoa(0, ShortMessage, 10);
+  }
+  else 
   {
     itoa(*Brightness, ShortMessage, 10);
   }
