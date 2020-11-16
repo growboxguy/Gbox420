@@ -16,10 +16,10 @@ Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Sett
 void Lights_Web::reportToJSON()
 {
     Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
     strcat(LongMessage, getStatusText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Brightness\":\""));
-    strcat(LongMessage, getBrightnessText(false));   
+    strcat_P(LongMessage, (PGM_P)F("\",\"Brt\":\""));
+    strcat(LongMessage, getCurrentBrightnessText(false));   
     strcat_P(LongMessage, (PGM_P)F("\",\"Timer\":\""));
     strcat(LongMessage, getTimerOnOffText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"On\":\""));
@@ -51,7 +51,7 @@ void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
   if (strncmp(url, "/G",2) == 0)
   {
     WebServer.setArgString(getComponentName(F("S")), getStateText());  ///State
-    WebServer.setArgString(getComponentName(F("Br")), getBrightnessText(true));  ///Timer on or off
+    WebServer.setArgString(getComponentName(F("Br")), getCurrentBrightnessText(true));  ///Timer on or off
     WebServer.setArgString(getComponentName(F("T")), getTimerOnOffText(true));  ///Timer on or off
     WebServer.setArgString(getComponentName(F("OnT")), getOnTimeText());   ///Turn on time
     WebServer.setArgString(getComponentName(F("OfT")), getOffTimeText());  ///Turn off time

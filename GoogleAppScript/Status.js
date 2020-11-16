@@ -20,11 +20,12 @@ function UpdateStatus(Log) {
     if (Debug) LogToConsole(Log[Components[i]] + " : " + Properties, true, 3);
     for (var j = 0; j < Properties.length; j++) {
       var key = Components[i] + '_' + Properties[j];
+      var keyColumnName = GetFriendlyColumnName(key);
       var value = Log[Components[i]][Properties[j]];
       var valueToWriteBack = GetFriendlyValue(key, value);
       var match = -1;
       for (var k = 0; k < newStatus.length; k++) {
-        if (newStatus[k][status_keyColumn] == key) {  //Trying to find Status entry with the relayed component name
+        if (newStatus[k][status_keyColumn] == keyColumnName) {  //Trying to find Status entry with the relayed component name
           match = k; 
           break;
         }
@@ -39,9 +40,9 @@ function UpdateStatus(Log) {
       }
       else {  //no match found
         try {
-          newStatus.push([key, valueToWriteBack]); //Create a new row  
+          newStatus.push([keyColumnName, valueToWriteBack]); //Create a new row  
           if (Debug)
-            LogToConsole(key + " log column not found, adding it with value: " + valueToWriteBack, true, 3);
+            LogToConsole(key + " ( " + keyColumnName + ") log column not found, adding it with value: " + valueToWriteBack, true, 3);
         }
         catch (e) {
           LogToConsole("Error adding status row " + key + " : " + e, true, 1);

@@ -4,7 +4,7 @@
 ///Structs for wireless communication
 
 ///Global constants
-enum HempyMessage { Module1Command,Module1Response,Bucket1Command,Bucket1Response,Bucket2Command,Bucket2Response,DHT1Response,GetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+enum HempyMessage { Module1Command,Module1Response,Bucket1Command,Bucket1Response,Bucket2Command,Bucket2Response,DHT1Response,Reset};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 //enum MessageType { Command, Response };
 
 const __FlashStringHelper* sequenceIDToText(uint8_t SequenceID) 
@@ -18,11 +18,11 @@ const __FlashStringHelper* sequenceIDToText(uint8_t SequenceID)
       case HempyMessage::Bucket2Command: return F("Bucket2Command"); break;
       case HempyMessage::Bucket2Response: return F("Bucket2Response"); break;
       case HempyMessage::DHT1Response: return F("DHT1Response"); break;
-      case HempyMessage::GetNext: return F("GetNext"); break;
+      case HempyMessage::Reset: return F("Reset"); break;
       default : return F("UNKNOWN"); break;
    }
 }
-                                                                                                                                         ///< GetNext should always be the last element
+                                                                                                                                         ///< Reset should always be the last element
 struct CommonTemplate  ///< Shared between Command and Respone packages
 {
    HempyMessage SequenceID;  ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data

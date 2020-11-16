@@ -16,7 +16,7 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println(F("Sketch for testing: Power sensor v3.0"));
-  //PowerSensor.resetEnergy(); //RESETS COUNTER!!!!!!
+  //PowerSensor.resetEnergy(); //ResetS COUNTER!!!!!!
 
   Serial.println(F("Turning on the lights..."));
   pinMode(LightRelayPin, OUTPUT);

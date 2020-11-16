@@ -36,7 +36,7 @@ function UpdateChartsTab() {
     for(var j = 0; j < columnsToInclude.length; j++)
     {   
       chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn],GetSettingsValue("Chart point limit"))); 
-      seriesType[j] = { type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_friendlyNameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
+      seriesType[j] = { areaOpacity:0.1, type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_friendlyNameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
     }
     if(Debug)LogToConsole(seriesType,true,3);
         
@@ -69,7 +69,7 @@ function UpdateOverviewChart() {
     for(var j = 0; j < columnsToInclude.length; j++)
     {   
       chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn],GetSettingsValue("Chart point limit"))); 
-      seriesType[j] = { type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_friendlyNameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
+      seriesType[j] = { areaOpacity:0.1, type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_friendlyNameColumn],targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn]};
     }
     if(Debug)LogToConsole(seriesType,true,3);
   

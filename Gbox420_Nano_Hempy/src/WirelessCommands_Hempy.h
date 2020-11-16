@@ -8,23 +8,23 @@
 
 #include "TimeLib.h"     ///< keeping track of time
 
-enum HempyMessages { HempyModuleCommand1,HempyModuleResponse1,HempyBucketCommand1,HempyBucketResponse1,HempyBucketCommand2,HempyBucketResponse2,HempyGetNext};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+enum HempyMessages { HempyModuleCommand1,HempyModuleResponse1,HempyBucketCommand1,HempyBucketResponse1,HempyBucketCommand2,HempyBucketResponse2,HempyReset};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 static const __FlashStringHelper* toText_hempySequenceID(uint8_t SequenceID) 
 {
    switch (SequenceID) 
    {
-      case HempyMessages::HempyModuleCommand1: return F("HempyCommand1"); break;
+      case HempyMessages::HempyModuleCommand1: return F("HempyModuleCommand1"); break;
       case HempyMessages::HempyModuleResponse1: return F("HempyModuleResponse1"); break;
       case HempyMessages::HempyBucketCommand1: return F("HempyBucketCommand1"); break;
       case HempyMessages::HempyBucketResponse1: return F("HempyBucketResponse1"); break;
       case HempyMessages::HempyBucketCommand2: return F("HempyBucketCommand2"); break;
       case HempyMessages::HempyBucketResponse2: return F("HempyBucketResponse2"); break;
-      case HempyMessages::HempyGetNext: return F("HempyGetNext"); break;
+      case HempyMessages::HempyReset: return F("HempyReset"); break;
       default : return F("UNKNOWN"); break;
    }
 }
-                                                                                                                                         ///< HempyGetNext should always be the last element
+                                                                                                                                         ///< HempyReset should always be the last element
 struct HempyCommonTemplate  ///< Shared between Command and Respone packages
 {
    HempyMessages SequenceID;  ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
@@ -56,6 +56,8 @@ struct HempyBucketCommand : HempyCommonTemplate  //Max 32bytes. Command to contr
     bool DisablePump = false;
     bool TurnOnPump = false;
     bool TurnOffPump = false;
+    bool TareWeightB = false;  //Tare bucket weight scale
+    bool TareWeightWR = false; //Tare waste reservoir weight scale
     uint8_t PumpSpeed = 0;
     uint16_t TimeOutPump = 0;
     bool WeightBasedWatering = false;
@@ -71,5 +73,6 @@ struct HempyBucketResponse  : HempyCommonTemplate  //Max 32bytes. Response from 
    HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID){}
    HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool PumpOn,__attribute__((unused))  bool PumpEnabled,__attribute__((unused))  float Weight) : HempyCommonTemplate(SequenceID){}
    PumpStates PumpState = DISABLED;
-   float Weight = 0.0;
+   float WeightB = 0.0;
+   float WeightWR = 0.0;
 };

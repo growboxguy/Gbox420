@@ -73,6 +73,22 @@ function SaveNamedRange(rangeName, data) {  //updates a Named Range in Google Sh
     SpreadsheetApp.getActive().getRangeByName(rangeName).setValues(data);    
 }
 
+function Test_GetFriendlyColumnName(){
+   LogToConsole(GetFriendlyColumnName("Lt1_On"), true, 0);
+}
+
+function GetFriendlyColumnName(key) {
+  var match = GetNamedRangeValues("Columns").filter(function (row) {
+      return row[columns_keyColumn] == key;
+    });
+    if (match == null) { //If key is not found
+      return key; 
+    }
+    else{     
+      return match[0][columns_friendlyNameColumn];
+    }
+}
+
 function Test_GetFriendlyValue(){
   GetFriendlyValue("Lt1_On","16:20");
 }

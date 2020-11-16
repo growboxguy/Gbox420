@@ -87,16 +87,16 @@ void Lights::dimLightsOnOff()
   if (CurrentStatus == LightStates::DIMMED)
   { ///< If temporary dimming is already ON -> Turn it OFF
     CurrentStatus = BeforeDimmingState;
-    setBrightness(BeforeDimmingBrightness,false,false);
+    setBrightness(BeforeDimmingBrightness, false, false);
     Parent->getSoundObject()->playOffSound();
-    Parent->addToLog(F("Dimming disabled"));    
+    Parent->addToLog(F("Dimming disabled"));
   }
   else ///< If temporary dimming is OFF -> Turn it ON
   {
     BeforeDimmingState = CurrentStatus;
-    BeforeDimmingBrightness = CurrentBrightness; 
+    BeforeDimmingBrightness = CurrentBrightness;
     CurrentStatus = LightStates::DIMMED;
-    setBrightness(1,false,false);
+    setBrightness(1, false, false);
     DimmingTimer = millis();
     Parent->getSoundObject()->playOnSound();
     Parent->addToLog(F("Dimming enabled"));
@@ -138,7 +138,7 @@ void Lights::checkDimming()
   {
     if (millis() - DimmingTimer >= *DimmingDuration * 60000)
     {
-     dimLightsOnOff();      
+      dimLightsOnOff();
     }
   }
   checkRelay();
@@ -211,9 +211,9 @@ void Lights::setBrightness(uint8_t Brightness, bool LogThis, bool StoreSetting)
   }
 }
 
-void Lights::setDimDuration (int DimmingDuration)
+void Lights::setDimDuration(int DimmingDuration)
 {
-  *(this -> DimmingDuration) = DimmingDuration;
+  *(this->DimmingDuration) = DimmingDuration;
   Parent->addToLog(F("Dimming duration updated"));
 }
 
@@ -286,12 +286,28 @@ char *Lights::getBrightnessText(bool UseText)
   if (UseText)
   {
     strcat_P(ShortMessage, (PGM_P)F("%"));
-    if (*Debug || CurrentStatus == LightStates::FADEIN || CurrentStatus == LightStates::FADEOUT)
-    {
-      strcat_P(ShortMessage, (PGM_P)F(" ("));
-      itoa(CurrentBrightness, ShortMessage + strlen(ShortMessage), 10);
-      strcat_P(ShortMessage, (PGM_P)F(")"));
-    }
+  }
+  return ShortMessage;
+}
+
+char *Lights::getCurrentBrightnessText(bool UseText)
+{
+  if (CurrentStatus == LightStates::FADEIN || CurrentStatus == LightStates::FADEOUT)
+  {
+    itoa(CurrentBrightness, ShortMessage, 10);
+  }
+  else if (!*Status) //When the light is off
+  {
+    itoa(0, ShortMessage, 10);
+  }
+  else 
+  {
+    itoa(*Brightness, ShortMessage, 10);
+  }
+
+  if (UseText)
+  {
+    strcat_P(ShortMessage, (PGM_P)F("%"));
   }
   return ShortMessage;
 }

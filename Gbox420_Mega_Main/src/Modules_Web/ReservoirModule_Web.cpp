@@ -2,7 +2,7 @@
 
 struct ReservoirCommand ReservoirCommand1ToSend = {ReservoirMessages::ReservoirCommand1};         //< Command to send will be stored here
 struct ReservoirResponse ReservoirResponse1Received = {ReservoirMessages::ReservoirResponse1};  //< Response will be stored here
-struct ReservoirCommonTemplate ReservoirGetNextToSend = {ReservoirMessages::ReservoirGetNext}; //< Special command to fetch the next Response from the Receiver
+struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset}; //< Special command to fetch the next Response from the Receiver
 
 ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 {
@@ -36,17 +36,17 @@ void ReservoirModule_Web::report()
 void ReservoirModule_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.PH));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Weight\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Wght\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.Weight));
   strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.WaterTemperature));
   strcat_P(LongMessage, (PGM_P)F("\",\"AirTemp\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.AirTemperature));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Humidity\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Hum\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.Humidity));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
@@ -77,10 +77,10 @@ void ReservoirModule_Web::sendMessages()
   * @brief Exchange messages with the Reservoir module
   */
   updateCommands();
+  sendCommand(&ReservoirResetToSend);   //< special Command, resets communication to first message
   sendCommand(&ReservoirCommand1ToSend);                                                                                           //< Command - Response exchange
-  while (sendCommand(&ReservoirGetNextToSend) < ReservoirMessages::ReservoirGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
-    ;
-  if (Debug)
+  sendCommand(&ReservoirResetToSend);   //< special Command, resets communication to first message
+  if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
@@ -91,7 +91,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
   */
   ReservoirMessages SequenceIDToSend = ((ReservoirCommonTemplate *)CommandToSend)->SequenceID;
   ReservoirMessages ReceivedSequenceID = NULL;
-  if (Debug)
+  if(*Debug)
   {
     logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);
@@ -137,7 +137,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
           logToSerials(ReservoirResponse1Received.Humidity, true, 1);
         }
         break;      
-      case ReservoirMessages::ReservoirGetNext:
+      case ReservoirMessages::ReservoirReset:
         if (*Debug)
         {
           logToSerials(F("Last message received"), true, 4);

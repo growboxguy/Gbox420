@@ -5,7 +5,7 @@
 
 ///Aeroponics tote without pressure tank
 
-class Aeroponics_NoTank : public Aeroponics
+class Aeroponics_NoTank : virtual public Aeroponics
 {
 public:
   Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump); ///constructor

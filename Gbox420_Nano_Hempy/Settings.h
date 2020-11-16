@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 12; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 20; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
   enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -22,7 +22,7 @@ static const uint8_t Version = 12; ///< Increment this when you make a change in
   ///Global constants
   static const uint8_t MaxTextLength = 32;      ///Default char * buffer for storing a word + null terminator. Memory intense!
   static const uint8_t MaxShotTextLength = 64; ///Default char * buffer for storing mutiple words. Memory intense!
-  static const int MaxLongTextLength = 256; ///Default char * buffer for storing a long text. Memory intense!
+  static const int MaxLongTextLength = 192; ///Default char * buffer for storing a long text. Memory intense!
   static const uint8_t QueueDepth = 8;               ///Limits the maximum number of active modules. Memory intense!
   static const uint8_t RollingAverageDepth = 10;     ///Limits the maximum number of active modules. Memory intense!
 
@@ -95,9 +95,10 @@ static const uint8_t Version = 12; ///< Increment this when you make a change in
       long Offset; ///Reading at 0 weight on the scale
       float Scale;  ///Scale factor      
     };
-    struct WeightSensorSettings Weight1 = {.DTPin = 4, .SCKPin = 6, .Offset = -121275, .Scale = -126032.00}; ///Update the calibration values here for Weight Sensor 1
-    struct WeightSensorSettings Weight2 = {.DTPin = 7, .SCKPin = 8, .Offset = 41361, .Scale = -122194.00}; ///Update the calibration values here for Weight Sensor 2
-
+    struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = -164486, .Scale = -21623.50}; ///Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+    struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = 402790, .Scale = -21269.00}; ///Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+    struct WeightSensorSettings WeightWR1 = {.DTPin = A0, .SCKPin = A1, .Offset = -68600, .Scale = -21560.50}; ///Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
+    struct WeightSensorSettings WeightWR2 = {.DTPin = A2, .SCKPin = A3, .Offset = 266880, .Scale = -21431.50}; ///Waste Reservoir 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
   } Settings;
 

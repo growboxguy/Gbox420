@@ -3,9 +3,16 @@ echo "Removes the hard links to source files of components shared by Gbox420 and
 echo "------------------------------------"
 echo "Removing hard links to Gbox420 src folder"
 
+unlink ./src
+
 unlink ./SerialLog.cpp
 unlink ./SerialLog.h
 unlink ./Settings.cpp
+
+unlink ./Webpages/Links.html
+unlink ./Webpages/Logs.html 
+unlink ./Webpages/Settings.html
+unlink ./Webpages/Test.html
 
 unlink ./src/Modules/HempyModule.h 
 unlink ./src/Modules/HempyModule.cpp
@@ -22,6 +29,8 @@ unlink ./src/Modules_Web/ReservoirModule_Web.h
 unlink ./src/Modules_Web/ReservoirModule_Web.cpp
 unlink ./src/Modules_Web/MainModule_Web.h 
 unlink ./src/Modules_Web/MainModule_Web.cpp
+unlink ./src/Modules_Web/DEVModule_Web.h 
+unlink ./src/Modules_Web/DEVModule_Web.cpp
 
 unlink ./src/Helpers.cpp
 unlink ./src/Helpers.h
@@ -63,10 +72,12 @@ unlink ./src/Components/PowerSensorV3.h
 unlink ./src/Components/PowerSensorV3.cpp
 unlink ./src/Components/PressureSensor.h
 unlink ./src/Components/PressureSensor.cpp
-unlink ./src/Components/Switch.h
-unlink ./src/Components/Switch.cpp
 unlink ./src/Components/Sound.h
 unlink ./src/Components/Sound.cpp
+unlink ./src/Components/Switch.h
+unlink ./src/Components/Switch.cpp
+unlink ./src/Components/Switch_PWM.h
+unlink ./src/Components/Switch_PWM.cpp
 unlink ./src/Components/WaterLevelSensor.h
 unlink ./src/Components/WaterLevelSensor.cpp
 unlink ./src/Components/WaterPump.h
@@ -118,6 +129,8 @@ unlink ./src/Components_Web/WaterTempSensor_Web.h
 unlink ./src/Components_Web/WaterTempSensor_Web.cpp
 unlink ./src/Components_Web/WeightSensor_Web.h
 unlink ./src/Components_Web/WeightSensor_Web.cpp
+
+unlink ./HardLinkSRC_OFF.sh
 
 
 echo "Cleaning up empty folders"

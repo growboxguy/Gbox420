@@ -8,7 +8,7 @@
 
 #include "TimeLib.h"     ///keeping track of time
 
-enum ReservoirMessages { ReservoirCommand1,ReservoirResponse1,ReservoirGetNext};  ///< ReservoirGetNext should always be the last element. An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+enum ReservoirMessages { ReservoirCommand1,ReservoirResponse1,ReservoirReset};  ///< ReservoirReset should always be the last element. An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 static const __FlashStringHelper* toText_reservoirSequenceID(uint8_t SequenceID) 
 {
@@ -16,7 +16,7 @@ static const __FlashStringHelper* toText_reservoirSequenceID(uint8_t SequenceID)
    {
       case ReservoirMessages::ReservoirCommand1: return F("ReservoirCommand1"); break;
       case ReservoirMessages::ReservoirResponse1: return F("ReservoirResponse1"); break;      
-      case ReservoirMessages::ReservoirGetNext: return F("ReservoirGetNext"); break;
+      case ReservoirMessages::ReservoirReset: return F("ReservoirReset"); break;
       default : return F("UNKNOWN"); break;
    }
 }

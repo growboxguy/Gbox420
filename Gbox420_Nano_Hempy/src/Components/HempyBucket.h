@@ -12,7 +12,7 @@ enum WateringMode {WEIGHT,TIMER,MANUAL}; ///< Tracks what triggered the currentl
 class HempyBucket : virtual public Common
 {
 public:
-  HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WaterPump *BucketPump);
+  HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor,WeightSensor *WasteReservoirWeightSensor, WaterPump *BucketPump);
   void refresh_Sec();
   void refresh_FiveSec();
   void report();
@@ -35,6 +35,7 @@ public:
 
 private:
   WateringMode WateringTrigger;
+  float StartTotalWeight; ///Bucket + Waste reservoir combined weight, filled when starting the watering
 
 protected:
   Module *Parent;  
@@ -43,6 +44,7 @@ protected:
   uint16_t *WateringDuration;  ///How long to water in SECONDS
   uint32_t WateringTimer = millis();   ///last time the plants were watered
   WeightSensor *BucketWeightSensor;  ///Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
+  WeightSensor *WasteReservoirWeightSensor;  ///Weight sensor to monitor the Hempy Bucket's waste reservoir, used to figure out when to stop watering
   WaterPump *BucketPump;  ///Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
   bool *WeightBasedWatering; ///Enables weight based waterings
   float *StartWeight;  ///Start watering below this weight

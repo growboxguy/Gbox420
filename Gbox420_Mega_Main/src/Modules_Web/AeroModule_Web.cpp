@@ -4,7 +4,7 @@ struct AeroModuleCommand AeroModuleCommand1ToSend = {AeroMessages::AeroModuleCom
 struct AeroModuleResponse AeroModuleResponse1Received = {AeroMessages::AeroModuleResponse1};   /// Default startup values
 struct AeroCommand AeroCommand1ToSend = {AeroMessages::AeroCommand1}; ///Command to send will be stored here
 struct AeroResponse AeroResponse1Received = {AeroMessages::AeroResponse1};  /// Default startup values
-struct AeroCommonTemplate AeroGetNextToSend = {AeroMessages::AeroGetNext};    //< Special command to fetch the next Response from the Receiver
+struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};    //< Special command to fetch the next Response from the Receiver
 
 
 AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
@@ -63,9 +63,9 @@ void AeroModule_Web::report()
 void AeroModule_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
   strcat(LongMessage, toText(OnlineStatus));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Pres\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.Pressure));
   if (AeroResponse1Received.PressureTankPresent)
   {
@@ -76,19 +76,19 @@ void AeroModule_Web::reportToJSON()
   }
   strcat_P(LongMessage, (PGM_P)F("\",\"LastSpray\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.LastSprayPressure));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpState\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PState\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.State));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpSpeed\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PSpeed\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.PumpSpeed));
-  strcat_P(LongMessage, (PGM_P)F("\",\"SprayEnabled\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SprayEn\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.SprayEnabled));
-  strcat_P(LongMessage, (PGM_P)F("\",\"DayInterval\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DayInt\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.DayInterval));
-  strcat_P(LongMessage, (PGM_P)F("\",\"DayDuration\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DayDur\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.DayDuration));
-  strcat_P(LongMessage, (PGM_P)F("\",\"NightInterval\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"NightInt\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.NightInterval));
-  strcat_P(LongMessage, (PGM_P)F("\",\"NightDuration\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"NightDur\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.NightDuration));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
@@ -268,11 +268,11 @@ void AeroModule_Web::refresh_Minute()
 void AeroModule_Web::sendMessages()
 {
   updateCommands();
+  sendCommand(&AeroResetToSend);   //< special Command, resets communication to first message
   sendCommand(&AeroModuleCommand1ToSend);                                                                                       //< Command - Response exchange
   sendCommand(&AeroCommand1ToSend);                                                                                         //< Command - Response exchange
-  while (sendCommand(&AeroGetNextToSend) < AeroMessages::AeroGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
-    ;
-  if (Debug)
+  sendCommand(&AeroResetToSend);   //< special Command, resets communication to first message
+  if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
@@ -280,7 +280,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 {
   AeroMessages SequenceIDToSend = ((AeroCommonTemplate *)CommandToSend)->SequenceID;
   AeroMessages ReceivedSequenceID = NULL;
-  if (Debug)
+  if(*Debug)
   {
     logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);
@@ -345,7 +345,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           logToSerials(AeroResponse1Received.LastSprayPressure, true, 1);
         }
         break;      
-      case AeroMessages::AeroGetNext:
+      case AeroMessages::AeroReset:
         if (*Debug)
         {
           logToSerials(F("Last message received"), true, 4);

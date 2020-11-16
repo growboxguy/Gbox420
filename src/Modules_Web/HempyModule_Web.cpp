@@ -6,7 +6,7 @@ struct HempyBucketCommand HempyBucketCommand1ToSend = {HempyMessages::HempyBucke
 struct HempyBucketResponse HempyBucketResponse1Received = {HempyMessages::HempyBucketResponse1};  /// Response will be stored here
 struct HempyBucketCommand HempyBucketCommand2ToSend = {HempyMessages::HempyBucketCommand2}; ///Command to send will be stored here
 struct HempyBucketResponse HempyBucketResponse2Received = {HempyMessages::HempyBucketResponse2};  /// Response will be stored here
-struct HempyCommonTemplate HempyGetNextToSend = {HempyMessages::HempyGetNext};            //< Special command to fetch the next Response from the Receiver
+struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};            //< Special command to fetch the next Response from the Receiver
 
 HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///Constructor
@@ -49,11 +49,11 @@ void HempyModule_Web::report()
 void HempyModule_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Status\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.PumpState));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1Speed\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1Spd\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed_B1));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.Weight));
@@ -63,7 +63,7 @@ void HempyModule_Web::reportToJSON()
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StopWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.PumpState));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2Speed\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2Spd\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed_B2));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.Weight));
@@ -104,8 +104,10 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
   if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getComponentName(F("B1Weight")), toText_weight(HempyBucketResponse1Received.Weight));
-    WebServer.setArgString(getComponentName(F("B2Weight")), toText_weight(HempyBucketResponse2Received.Weight));
+    WebServer.setArgString(getComponentName(F("B1Weight")), toText_weight(HempyBucketResponse1Received.WeightB));
+    WebServer.setArgString(getComponentName(F("B2Weight")), toText_weight(HempyBucketResponse2Received.WeightB));
+    WebServer.setArgString(getComponentName(F("B1Waste")), toText_weight(HempyBucketResponse1Received.WeightWR));
+    WebServer.setArgString(getComponentName(F("B2Waste")), toText_weight(HempyBucketResponse2Received.WeightWR));
     WebServer.setArgString(getComponentName(F("B1Pump")), toText_pumpState(HempyBucketResponse1Received.PumpState));
     WebServer.setArgString(getComponentName(F("B2Pump")), toText_pumpState(HempyBucketResponse2Received.PumpState));
   }
@@ -303,9 +305,9 @@ void HempyModule_Web::sendMessages()
   sendCommand(&HempyModuleCommand1ToSend);                                                                                       //< Command - Response exchange
   sendCommand(&HempyBucketCommand1ToSend);                                                                                       //< Command - Response exchange
   sendCommand(&HempyBucketCommand2ToSend);                                                                                       //< Command - Response exchange
-  while (sendCommand(&HempyGetNextToSend) < HempyMessages::HempyGetNext && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
+  while (sendCommand(&HempyResetToSend) < HempyMessages::HempyReset && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
     ;
-  if (Debug)
+  if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
@@ -313,7 +315,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
 {
   HempyMessages SequenceIDToSend = ((HempyCommonTemplate *)CommandToSend)->SequenceID;
   HempyMessages ReceivedSequenceID = NULL;
-  if (Debug)
+  if(*Debug)
   {
     logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);
@@ -383,7 +385,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           logToSerials(HempyBucketResponse2Received.Weight, true, 1);
         }
         break;
-      case HempyMessages::HempyGetNext:
+      case HempyMessages::HempyReset:
         if (*Debug)
         {
           logToSerials(F("Last message received"), true, 4);

@@ -83,16 +83,16 @@ void loop() {
     Serial.println();
     
     Serial.println(F("Channel A calibration complete:"));
-    Serial.print(F("  Offset: "));
-    Serial.println(WeightSensor_A_Offset);
-    Serial.print(F("  Scale: "));
+    Serial.print(F("  .Offset = "));
+    Serial.print(WeightSensor_A_Offset);
+    Serial.print(F(", .Scale = "));
     Serial.println(WeightSensor_A_Scale);
     Serial.println();
 
     Serial.println(F("Channel B calibration complete:"));
-    Serial.print(F("  Offset: "));
+    Serial.print(F("  .Offset = "));
     Serial.println(WeightSensor_B_Offset);
-    Serial.print(F("  Scale: "));
+    Serial.print(F(", .Scale = "));
     Serial.println(WeightSensor_B_Scale);
     Serial.println();
 

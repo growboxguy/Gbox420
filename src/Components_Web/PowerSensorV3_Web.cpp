@@ -13,17 +13,17 @@ void PowerSensorV3_Web::reportToJSON()
 {
     Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end 
 
-    strcat_P(LongMessage, (PGM_P)F("\"Power\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\"Pwr\":\""));
     strcat(LongMessage, getPowerText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Energy\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Enrg\":\""));
     strcat(LongMessage, getEnergyText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Voltage\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Volt\":\""));
     strcat(LongMessage, getVoltageText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Current\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Curr\":\""));
     strcat(LongMessage, getCurrentText(false));
-    strcat_P(LongMessage,(PGM_P)F("\",\"Frequency\":\""));  
+    strcat_P(LongMessage,(PGM_P)F("\",\"Freq\":\""));  
     strcat(LongMessage, getFrequencyText(false));
-    strcat_P(LongMessage,(PGM_P)F("\",\"PowerFactor\":\""));  
+    strcat_P(LongMessage,(PGM_P)F("\",\"PF\":\""));  
     strcat(LongMessage, getPowerFactorText());  
     strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
 }

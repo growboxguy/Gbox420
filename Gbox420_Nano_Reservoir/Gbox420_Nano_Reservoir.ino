@@ -125,7 +125,6 @@ void getWirelessData()
 {
   if (Wireless.available())
   {
-    if (*Debug) logToSerials(F("Wireless Command received"), true, 0);
     Wireless.read(ReceivedMessage, WirelessPayloadSize);
     if (timeStatus() != timeSet && ((ReservoirCommonTemplate *)ReceivedMessage)->SequenceID == ReservoirMessages::ReservoirCommand1)
     {
