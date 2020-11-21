@@ -72,6 +72,8 @@ void ReservoirModule::processCommand(void *ReceivedCommand)
   case ReservoirMessages::ReservoirCommand1:
     setDebug(((ReservoirCommand *)ReceivedCommand)->Debug);
     setMetric(((ReservoirCommand *)ReceivedCommand)->Metric);
+    if (((ReservoirCommand *)ReceivedCommand)->TareWeight)
+      Weight1->triggerTare();
     NextSequenceID = ReservoirMessages::ReservoirReset; // update the next Message that will be copied to the buffer
     if (*Debug)
     {

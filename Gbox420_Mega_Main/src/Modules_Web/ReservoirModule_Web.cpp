@@ -11,8 +11,10 @@ ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module
   updateCommands();
   memcpy_P(this->WirelessChannel, (PGM_P)Name, sizeof(this->WirelessChannel));
   Parent->addToReportQueue(this);
+  Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
   Parent->addToWebsiteQueue_Refresh(this);
+  Parent->addToWebsiteQueue_Button(this);
   logToSerials(F("ReservoirModule_Web object created"), true, 1);
 }
 
@@ -61,6 +63,34 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
     WebServer.setArgString(getComponentName(F("WTemp")), toText_temp(ReservoirResponse1Received.WaterTemperature));
     WebServer.setArgString(getComponentName(F("ATemp")), toText_temp(ReservoirResponse1Received.AirTemperature));
     WebServer.setArgString(getComponentName(F("Humi")), toText_percentage(ReservoirResponse1Received.Humidity));
+  }
+}
+
+void ReservoirModule_Web::websiteEvent_Button(char *Button)
+{ ///When a button is pressed on the website
+  if (!isThisMyComponent(Button))
+  {
+    return;
+  }
+  else
+  {
+    if (strcmp_P(ShortMessage, (PGM_P)F("Tare")) == 0)
+    {
+      ReservoirCommand1ToSend.TareWeight = true;
+      Parent->addToLog(F("Taring reservoir scale"), false);
+    }
+    SyncRequested = true;
+  }
+}
+
+void ReservoirModule_Web::refresh_Sec()
+{
+  if (*Debug)
+    Common::refresh_Sec();
+  if (SyncRequested)
+  {
+    SyncRequested = false;
+    sendMessages();
   }
 }
 
@@ -121,6 +151,11 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
       {
       case ReservoirMessages::ReservoirResponse1:
         memcpy(&ReservoirResponse1Received, ReceivedResponse, sizeof(struct ReservoirResponse));
+        if (ReservoirCommand1ToSend.TareWeight )
+        {
+          SyncRequested = true; ///Force a second message exchange to actualize the response
+          ReservoirCommand1ToSend.TareWeight = false;
+        }
         if (*Debug)
         {
           logToSerials(F("Module1:"), false, 4);

@@ -36,6 +36,7 @@ struct ReservoirCommand : ReservoirCommonTemplate  ///Max 32 bytes. Command sent
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
+   bool TareWeight = false;
 };
 
 struct ReservoirResponse : ReservoirCommonTemplate  ///Max 32 bytes. Response sent back to the Main module
