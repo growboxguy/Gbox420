@@ -11,10 +11,10 @@
 
 ///< Variables used during wireless communication
 uint8_t NextSequenceID = HempyMessages::HempyModuleResponse1;
-struct HempyModuleResponse HempyResponse1ToSend = {HempyMessages::HempyModuleResponse1};
+struct HempyModuleResponse HempyModuleResponse1ToSend = {HempyMessages::HempyModuleResponse1};
 struct HempyBucketResponse HempyBucket1ResponseToSend = {HempyMessages::HempyBucketResponse1};
 struct HempyBucketResponse HempyBucket2ResponseToSend = {HempyMessages::HempyBucketResponse2};
-struct HempyCommonTemplate HempyLastResponseToSend = {HempyMessages::HempyReset};  //< Special response signaling the end of a message exchange to the Transmitter
+struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};  //< Special response signaling the end of a message exchange to the Transmitter
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
 { 
@@ -204,7 +204,7 @@ void HempyModule::updateAckData() { // so you can see that new data is being sen
     switch (NextSequenceID)  // based on the NextSeqenceID load the next response into the Acknowledgement buffer
     {        
     case HempyMessages::HempyModuleResponse1 :
-        Wireless.writeAckPayload(1, &HempyResponse1ToSend, WirelessPayloadSize);  
+        Wireless.writeAckPayload(1, &HempyModuleResponse1ToSend, WirelessPayloadSize);  
         break;
     case HempyMessages::HempyBucketResponse1 :
         Wireless.writeAckPayload(1, &HempyBucket1ResponseToSend, WirelessPayloadSize);
@@ -213,11 +213,11 @@ void HempyModule::updateAckData() { // so you can see that new data is being sen
         Wireless.writeAckPayload(1, &HempyBucket2ResponseToSend, WirelessPayloadSize);
         break;   
     case HempyMessages::HempyReset :  //< HempyReset should always be the last element in the enum: Signals to stop the message exchange
-        Wireless.writeAckPayload(1, &HempyLastResponseToSend, WirelessPayloadSize);
+        Wireless.writeAckPayload(1, &HempyResetToSend, WirelessPayloadSize);
         break;
     default:
         if(*Debug){logToSerials(F("Unknown next Sequence number, Ack defaults loaded"),true,3); }
-        Wireless.writeAckPayload(1, &HempyResponse1ToSend, WirelessPayloadSize); // load the first Response into the buffer 
+        Wireless.writeAckPayload(1, &HempyModuleResponse1ToSend, WirelessPayloadSize); // load the first Response into the buffer 
         break;    
     }
 }

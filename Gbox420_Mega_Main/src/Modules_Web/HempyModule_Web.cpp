@@ -374,7 +374,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         memcpy(&HempyModuleResponse1Received, ReceivedResponse, sizeof(struct HempyModuleResponse));
         if (*Debug)
         {
-          logToSerials(F("Module1:"), false, 4);
+          logToSerials(F("Module:"), false, 4);
           logToSerials(HempyModuleResponse1Received.Status, true, 1);
         }
         break;

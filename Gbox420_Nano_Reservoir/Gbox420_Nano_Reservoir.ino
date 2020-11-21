@@ -47,8 +47,8 @@ void setup()
   logToSerials(F("Reservoir module initializing..."), true, 0); ///logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https:///gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                          ///Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                            ///fix watchdog not loading sketch after a reset error on Mega2560
-  struct ReservoirCommand BlankCommand = {ReservoirMessages::ReservoirCommand1};
-  memcpy(ReceivedMessage, &BlankCommand, sizeof(struct ReservoirCommand)); //< Copy a blank command to the memory block pointed ReceivedMessage. Without this ReceivedMessage would contain random data
+  struct ReservoirModuleCommand BlankCommand = {ReservoirMessages::ReservoirModuleCommand1};
+  memcpy(ReceivedMessage, &BlankCommand, sizeof(struct ReservoirModuleCommand)); //< Copy a blank command to the memory block pointed ReceivedMessage. Without this ReceivedMessage would contain random data
   setSyncProvider(updateTime);
   setSyncInterval(3600); ///Sync time every hour with the main module
 
@@ -126,7 +126,7 @@ void getWirelessData()
   if (Wireless.available())
   {
     Wireless.read(ReceivedMessage, WirelessPayloadSize);
-    if (timeStatus() != timeSet && ((ReservoirCommonTemplate *)ReceivedMessage)->SequenceID == ReservoirMessages::ReservoirCommand1)
+    if (timeStatus() != timeSet && ((ReservoirCommonTemplate *)ReceivedMessage)->SequenceID == ReservoirMessages::ReservoirModuleCommand1)
     {
       updateTime(); ///Updating internal timer
     }
@@ -146,7 +146,7 @@ void getWirelessStatus()
 
 time_t updateTime()
 {
-  time_t ReceivedTime = ((ReservoirCommand*)ReceivedMessage) -> Time;
+  time_t ReceivedTime = ((ReservoirModuleCommand*)ReceivedMessage) -> Time;
   if(ReceivedTime > 0)
   {
     setTime(ReceivedTime);

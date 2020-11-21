@@ -14,7 +14,7 @@
 uint8_t NextSequenceID = AeroMessages::AeroModuleResponse1;
 struct AeroModuleResponse AeroModule1ResponseToSend = {AeroMessages::AeroModuleResponse1};
 struct AeroResponse Aero1ResponseToSend = {AeroMessages::AeroResponse1};
-struct AeroCommonTemplate AeroLastResponseToSend = {AeroMessages::AeroReset}; //< Special response signaling the end of a message exchange to the Transmitter
+struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset}; //< Special response signaling the end of a message exchange to the Transmitter
 unsigned long LastMessageSent = 0;                                            //When was the last message sent
 
 AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Module()
@@ -196,7 +196,7 @@ void AeroModule::updateAckData()
     Wireless.writeAckPayload(1, &Aero1ResponseToSend, WirelessPayloadSize);
     break;
   case AeroMessages::AeroReset: //< AeroReset should always be the last element in the enum: Signals to stop the message exchange
-    Wireless.writeAckPayload(1, &AeroLastResponseToSend, WirelessPayloadSize);
+    Wireless.writeAckPayload(1, &AeroResetToSend, WirelessPayloadSize);
     break;
   default:
     logToSerials(F("Unknown next Sequence number, Ack defaults loaded"), true, 3);
