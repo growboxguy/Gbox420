@@ -13,7 +13,6 @@
 ///forward declaration
 class Sound;
 class Aeroponics_NoTank;
-class Aeroponics_Tank;
 class PressureSensor;
 class WaterPump;
 class WeightSensor;
@@ -29,8 +28,7 @@ public:
   Sound *Sound1 = NULL;             ///Pointer to a Piezo speaker - sound feedback
   PressureSensor *Pres1 = NULL;
   WaterPump *Pump1 = NULL;
-  Aeroponics_NoTank *AeroNT1 = NULL; 
-  Aeroponics_Tank *AeroT1 = NULL;
+  Aeroponics_NoTank *AeroNT1 = NULL;   
   WeightSensor *Weight1; 
   void refresh_Sec();
   void refresh_FiveSec();

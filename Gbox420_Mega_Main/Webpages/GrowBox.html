@@ -422,7 +422,9 @@
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span>PH</span></th>
-						<th class="headerRows"><span>Weight</span></th>
+						<th class="headerRows"><span>Weight</span>
+							<button id="Res1_Tare" onclick="confirmTare(this)" style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button" title="Tare the reservoir weight scale. Do not have any weight on the scale!">Tare</button>
+						</th>
 						<th class="headerRows"><span>Water Temp</span></th>
 						<th class="headerRows"><span>Air Temp</span></th>
 						<th class="headerRows"><span>Humidity</span></th>
@@ -624,15 +626,19 @@
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span>Spray</span></span></th>
-						<th class="headerRows"><span>Pump state</span></th>
+						<th class="headerRows"><span>Pump</span></th>
 						<th class="headerRows"><span>Pressure</span></span></th>
 						<th class="headerRows"><span>Last spray</span></th>
+						<th class="headerRows"><span>Weight</span>
+							<button id="Aero1_Tare" onclick="confirmTare(this)" style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button" title="Tare the aeroponics weight scale. Do not have any weight on the scale!">Tare</button>
+						</th>
 					</tr>
 					<tr>
 						<td id="Aero1_Spray" class="dataRows"></td>
 						<td id="Aero1_Pump" class="dataRows"></td>
 						<td id="Aero1_Pres" class="dataRows"></td>
 						<td id="Aero1_LastSP" class="dataRows"></td>
+						<td id="Aero1_Weight" class="dataRows"></td>
 					</tr>
 				</table>
 				<form>

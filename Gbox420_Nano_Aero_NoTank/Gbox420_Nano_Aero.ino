@@ -1,8 +1,8 @@
 /**@file*/
+////Aeroponics module - Without a pressure tank
 ///GrowBoxGuy - http:///sites.google.com/site/growboxguy/
-///This is currently under development
 ///Gbox420 Nano is a stripped down version of Gbox420 without a web interface support
-///Runs autonomously on an Arduino Nano RF and [WILL] support wireless connection towards the main module
+///Runs autonomously on an Arduino Nano RF and supports wireless connection towards the main module
 
 #include "Arduino.h"
 #include "avr/wdt.h"                ///Watchdog timer for detecting a crash and automatically resetting the board
@@ -15,7 +15,7 @@
 #include "RF24.h"       ///https://github.com/maniacbug/RF24
 #include "SerialLog.h"  ///Logging debug messages to Serial            
 #include "Settings.h"  
-#include "src/Modules/AeroModule.h"
+#include "src/Modules/AeroModule_NoTank.h"
 #include "src/WirelessCommands_Aero.h"   ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
 
 ///Global variable initialization

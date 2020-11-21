@@ -99,6 +99,7 @@ static const uint8_t Version = 20; ///< Increment this when you make a change in
     struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = 402790, .Scale = -21269.00}; ///Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
     struct WeightSensorSettings WeightWR1 = {.DTPin = A0, .SCKPin = A1, .Offset = -68600, .Scale = -21560.50}; ///Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
     struct WeightSensorSettings WeightWR2 = {.DTPin = A2, .SCKPin = A3, .Offset = 266880, .Scale = -21431.50}; ///Waste Reservoir 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
+    
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
   } Settings;
 

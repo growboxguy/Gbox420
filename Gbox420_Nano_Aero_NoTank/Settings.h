@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 13; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 14; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
   enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -105,6 +105,16 @@ static const uint8_t Version = 13; ///< Increment this when you make a change in
       int BlowOffTime;     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
     struct WaterPumpSettings AeroPump1 = {.PumpPin = 3, .PumpPinNegativeLogic= false, .BypassSolenoidPin = 4, .BypassSolenoidNegativeLogic = true, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 120, .PrimingTime = 10, .BlowOffTime = 3};
+    
+    struct WeightSensorSettings
+    {
+      WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, long Offset = 0, float Scale = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Offset(Offset), Scale(Scale) {}
+      uint8_t DTPin;     ///Weight sensor DT pin
+      uint8_t SCKPin; ///Weight sensor SCK pin
+      long Offset; ///Reading at 0 weight on the scale
+      float Scale;  ///Scale factor      
+    };
+    struct WeightSensorSettings Weight1 = {.DTPin = A0, .SCKPin = A1, .Offset = 22716, .Scale = -22278.50}; ///Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
     
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
   } Settings;
