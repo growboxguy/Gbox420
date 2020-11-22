@@ -71,6 +71,14 @@ typedef struct
   };
   struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .DayInterval = 15, .DayDuration = 10, .NightInterval = 30, .NightDuration = 8, .PumpTimeOut = 120, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
 
+  struct AirPumpSettings
+  {
+    AirPumpSettings(uint8_t Pin = 0, bool State = false) : Pin(Pin), State(State) {}
+    uint8_t Pin;
+    bool State;
+  };
+  struct AirPumpSettings APump1 = {.Pin = 33, .State = true};
+
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
     DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}

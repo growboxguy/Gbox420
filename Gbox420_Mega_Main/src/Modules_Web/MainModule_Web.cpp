@@ -7,6 +7,7 @@
 #include "../Components_Web/LightSensor_Web.h"
 #include "../Components_Web/Sound_Web.h"
 #include "../Components_Web/Fan_Web.h"
+#include "../Components_Web/AirPump_Web.h"
 //#include "../Components_Web/PowerSensor_Web.h"  ///For PZEM004T V1.0 or PZEM004T V2.0
 #include "../Components_Web/PowerSensorV3_Web.h" ///Only for PZEM004T V3.0
 
@@ -18,6 +19,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   this->SoundFeedback = Sound1;
   IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan); ///passing: Component name, MainModule object the component belongs to, Default settings)
   EFan = new Fan_Web(F("EFan"), this, &ModuleSettings->EFan);
+  APump1 = new AirPump_Web(F("APump1"), this, &ModuleSettings->APump1);
   Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
   Lt2 = new Lights_Web(F("Lt2"), this, &ModuleSettings->Lt2);
   LtSen1 = new LightSensor_Web(F("LtSen1"), this, &ModuleSettings->LtSen1, Lt1); ///Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
