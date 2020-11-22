@@ -40,7 +40,7 @@ void AirPump_Web::websiteEvent_Button(char *Button)
       checkStatus();
       Parent->addToLog(F("Air pump ON"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F(" Off")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Off")) == 0)
     {
       *State = false;
       checkStatus();
