@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 6; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 7; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
 enum PumpStates
@@ -77,7 +77,7 @@ typedef struct
     uint8_t Pin;
     bool State;
   };
-  struct AirPumpSettings APump1 = {.Pin = 33, .State = true};
+  struct AirPumpSettings APump1 = {.Pin = 23, .State = true};
 
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
