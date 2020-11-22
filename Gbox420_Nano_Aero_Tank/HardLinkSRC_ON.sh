@@ -14,8 +14,8 @@ echo "Creating hard links"
 ln ../Gbox420_Nano/SerialLog.cpp ./
 ln ../Gbox420_Nano/SerialLog.h ./
 ln ../Gbox420_Nano/Settings.cpp ./
-ln ../src/Modules/AeroModule.cpp ./src/Modules
-ln ../src/Modules/AeroModule.h ./src/Modules
+ln ../src/Modules/AeroModule_Tank.cpp ./src/Modules
+ln ../src/Modules/AeroModule_Tank.h ./src/Modules
 
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src

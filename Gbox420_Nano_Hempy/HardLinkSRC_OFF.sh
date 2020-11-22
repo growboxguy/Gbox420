@@ -16,8 +16,10 @@ unlink ./Webpages/Test.html
 
 unlink ./src/Modules/HempyModule.h 
 unlink ./src/Modules/HempyModule.cpp
-unlink ./src/Modules/AeroModule.h 
-unlink ./src/Modules/AeroModule.cpp
+unlink ./src/Modules/AeroModule_NoTank.h 
+unlink ./src/Modules/AeroModule_NoTank.cpp
+unlink ./src/Modules/AeroModule_Tank.h 
+unlink ./src/Modules/AeroModule_Tank.cpp
 unlink ./src/Modules/ReservoirModule.h 
 unlink ./src/Modules/ReservoirModule.cpp
 
