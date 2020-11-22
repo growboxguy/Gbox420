@@ -14,7 +14,7 @@ static const __FlashStringHelper* toText_hempySequenceID(uint8_t SequenceID)
 {
    switch (SequenceID) 
    {
-      case HempyMessages::HempyModuleCommand1: return F("HempyCommand1"); break;
+      case HempyMessages::HempyModuleCommand1: return F("HempyModuleCommand1"); break;
       case HempyMessages::HempyModuleResponse1: return F("HempyModuleResponse1"); break;
       case HempyMessages::HempyBucketCommand1: return F("HempyBucketCommand1"); break;
       case HempyMessages::HempyBucketResponse1: return F("HempyBucketResponse1"); break;

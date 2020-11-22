@@ -188,16 +188,20 @@
 				<h1>Ventilation</h1>
 				<table class="tg">
 					<tr>
-						<td class="headerRows"><span>Temp</span></td>
-						<td class="headerRows"><span>Humidity</span></td>
-						<td class="headerRows"><span>Internal fan</span></td>
-						<td class="headerRows"><span>Exhaust fan</span></td>
+						<td class="headerRows"><span>Int<br/>temp</span></td>
+						<th class="headerRows"><span>Ext<br/>temp</span></th>
+						<th class="headerRows"><span>Int<br/>humidity</span></th>
+						<td class="headerRows"><span>Ext<br/>humidity</span></td>
+						<td class="headerRows"><span>Int<br/>fan</span></td>
+						<td class="headerRows"><span>Exh<br/>fan</span></td>
 					</tr>
 					<tr>
 						<td id="DHT1_T" class="dataRows"></td>
+						<td id="Res1_ATemp" class="dataRows"></td>
 						<td id="DHT1_H" class="dataRows"></td>
+						<td id="Res1_Humi" class="dataRows"></td>
 						<td id="IFan_S" class="dataRows"></td>
-						<td id="EFan_S" class="dataRows"></td>
+						<td id="EFan_S" class="dataRows"></td>						
 					</tr>
 				</table>
 				<form>
@@ -421,22 +425,29 @@
 				<span style="float:right" id="Res1_Status">CONNECTING...</span>
 				<table class="tg">
 					<tr>
+						<th class="headerRows"><span>Air pump</span></th>
 						<th class="headerRows"><span>PH</span></th>
 						<th class="headerRows"><span>Weight</span>
 							<button id="Res1_Tare" onclick="confirmTare(this)" style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button" title="Tare the reservoir weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
-						<th class="headerRows"><span>Water Temp</span></th>
-						<th class="headerRows"><span>Air Temp</span></th>
-						<th class="headerRows"><span>Humidity</span></th>
+						<th class="headerRows"><span>Temp</span></th>
 					</tr>
 					<tr>
+						<td id="Res1_APump" class="dataRows"></td>
 						<td id="Res1_PH" class="dataRows"></td>
 						<td id="Res1_Weight" class="dataRows"></td>
 						<td id="Res1_WTemp" class="dataRows"></td>
-						<td id="Res1_ATemp" class="dataRows"></td>
-						<td id="Res1_Humi" class="dataRows"></td>
 					</tr>
 				</table>
+				<form>
+					<p>
+						<label><b>Air pump</b></label>
+						<button id="Res1_APumpOn" type="button" align="right"
+							title="Starts the air pump">ON</button>
+						<button id="Res1_APumpOff" type="button" align="right"
+							title="Stops the air pump">OFF</button>
+					<p>
+				</form>
 			</div>
 			<div class="card">
 				<h1 style="display: inline;">Hempy 1</h1>
@@ -652,7 +663,7 @@
 						<button id="Aero1_SprayOff" type="button" title="Stop spraying">OFF</button>
 					</p>
 				</form>
-				<label><b>Spray Interval</b> (min)</label>
+				<label><b>Spray interval</b> (min)</label>
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; text-align: right;">Day</label>
@@ -663,7 +674,7 @@
 							title="How often should the spraying start (Minutes)">
 					</p>
 				</form>
-				<label><b>Spray Duration</b> (sec)</label>
+				<label><b>Spray duration</b> (sec)</label>
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; text-align: right;">Day</label>

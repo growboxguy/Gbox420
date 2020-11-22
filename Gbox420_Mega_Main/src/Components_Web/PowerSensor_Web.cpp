@@ -13,7 +13,7 @@ void PowerSensor_Web::reportToJSON()
 {
     Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end 
 
-    strcat_P(LongMessage, (PGM_P)F("\"Pow\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\"Pwr\":\""));
     strcat(LongMessage, getPowerText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"Enrg\":\""));
     strcat(LongMessage, getEnergyText(false));

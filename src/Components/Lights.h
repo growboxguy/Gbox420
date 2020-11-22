@@ -26,6 +26,7 @@ public:
   bool getStatus();
   int getBrightness();
   char *getBrightnessText(bool UseText);
+  char *getCurrentBrightnessText(bool UseText); //Takes into account the ON/OFF state of the light too
   char *getTimerOnOffText(bool UseText);
   char *getStatusText(bool UseText);
   char *getStateText();

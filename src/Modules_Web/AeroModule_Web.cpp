@@ -41,6 +41,8 @@ void AeroModule_Web::report()
   }
   strcat_P(LongMessage, (PGM_P)F(" ; LastSprayPressure:"));
   strcat(LongMessage, toText_pressure(AeroResponse1Received.LastSprayPressure));
+  strcat_P(LongMessage, (PGM_P)F(" ; Weight:"));
+  strcat(LongMessage, toText_pressure(AeroResponse1Received.Weight));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(AeroResponse1Received.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F(" ; PumpState:"));
@@ -67,6 +69,8 @@ void AeroModule_Web::reportToJSON()
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"Pres\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.Pressure));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Wght\":\""));
+  strcat(LongMessage, toText(AeroResponse1Received.Weight));
   if (AeroResponse1Received.PressureTankPresent)
   {
     strcat_P(LongMessage, (PGM_P)F("\",\"Min\":\""));
@@ -80,7 +84,7 @@ void AeroModule_Web::reportToJSON()
   strcat(LongMessage, toText(AeroResponse1Received.State));
   strcat_P(LongMessage, (PGM_P)F("\",\"PSpeed\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.PumpSpeed));
-  strcat_P(LongMessage, (PGM_P)F("\",\"SprayEnabled\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SprayEn\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F("\",\"DayInt\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.DayInterval));
@@ -120,6 +124,7 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
     WebServer.setArgString(getComponentName(F("Pump")), toText_pumpState(AeroResponse1Received.State));
     WebServer.setArgString(getComponentName(F("Pres")), toText_pressure(AeroResponse1Received.Pressure));
     WebServer.setArgString(getComponentName(F("LastSP")), toText_pressure(AeroResponse1Received.LastSprayPressure));
+    WebServer.setArgString(getComponentName(F("Weight")), toText_weight(AeroResponse1Received.Weight));
   }
 }
 
@@ -170,6 +175,11 @@ void AeroModule_Web::websiteEvent_Button(char *Button)
     {
       AeroCommand1ToSend.MixReservoir = true;
       Parent->addToLog(F("Mixing reservoir"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Tare")) == 0)
+    {
+      AeroCommand1ToSend.TareWeight = true;
+      Parent->addToLog(F("Taring aero scale"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Refill")) == 0)
     {
@@ -268,10 +278,10 @@ void AeroModule_Web::refresh_Minute()
 void AeroModule_Web::sendMessages()
 {
   updateCommands();
+  sendCommand(&AeroResetToSend);   //< special Command, resets communication to first message
   sendCommand(&AeroModuleCommand1ToSend);                                                                                       //< Command - Response exchange
   sendCommand(&AeroCommand1ToSend);                                                                                         //< Command - Response exchange
-  while (sendCommand(&AeroResetToSend) < AeroMessages::AeroReset && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
-    ;
+  sendCommand(&AeroResetToSend);   //< special Command, resets communication to first message
   if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
@@ -318,7 +328,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         break;
       case AeroMessages::AeroResponse1:
         memcpy(&AeroResponse1Received, ReceivedResponse, sizeof(struct AeroResponse));
-        if (AeroCommand1ToSend.SprayEnabled || AeroCommand1ToSend.SprayDisabled || AeroCommand1ToSend.SprayNow || AeroCommand1ToSend.SprayOff || AeroCommand1ToSend.PumpOn || AeroCommand1ToSend.PumpOff || AeroCommand1ToSend.PumpDisable || AeroCommand1ToSend.MixReservoir || AeroCommand1ToSend.RefillPressureTank)
+        if (AeroCommand1ToSend.SprayEnabled || AeroCommand1ToSend.SprayDisabled || AeroCommand1ToSend.SprayNow || AeroCommand1ToSend.SprayOff || AeroCommand1ToSend.PumpOn || AeroCommand1ToSend.PumpOff || AeroCommand1ToSend.PumpDisable || AeroCommand1ToSend.MixReservoir || AeroCommand1ToSend.RefillPressureTank || AeroCommand1ToSend.TareWeight )
         {
           SyncRequested = true; ///Force a second message exchange to actualize the response
           AeroCommand1ToSend.SprayEnabled = false;
@@ -330,6 +340,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           AeroCommand1ToSend.PumpDisable = false;
           AeroCommand1ToSend.MixReservoir = false;
           AeroCommand1ToSend.RefillPressureTank = false;
+          AeroCommand1ToSend.TareWeight = false;
         }
         if (*Debug)
         {
@@ -342,7 +353,9 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           logToSerials(F(","), false, 1);
           logToSerials(AeroResponse1Received.Pressure, false, 1);
           logToSerials(F(","), false, 1);
-          logToSerials(AeroResponse1Received.LastSprayPressure, true, 1);
+          logToSerials(AeroResponse1Received.LastSprayPressure, false, 1);
+          logToSerials(F(","), false, 1);
+          logToSerials(AeroResponse1Received.Weight, true, 1);
         }
         break;      
       case AeroMessages::AeroReset:

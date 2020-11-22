@@ -31,18 +31,21 @@ void HempyModule_Web::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("Bucket1 Weight:"));
-  strcat(LongMessage, toText_weight(HempyBucketResponse1Received.Weight));
+  strcat(LongMessage, toText_weight(HempyBucketResponse1Received.WeightB));
   strcat_P(LongMessage, (PGM_P)F(" ["));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("/"));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StopWeight));
-  strcat_P(LongMessage, (PGM_P)F("] ; Bucket2 Weight:"));
-  strcat(LongMessage, toText_weight(HempyBucketResponse2Received.Weight));
+  strcat_P(LongMessage, (PGM_P)F("] ; Waste1 Weight:"));
+  strcat(LongMessage, toText_weight(HempyBucketResponse1Received.WeightWR));
+  strcat_P(LongMessage, (PGM_P)F(" ; Bucket2 Weight:"));
+  strcat(LongMessage, toText_weight(HempyBucketResponse2Received.WeightB));
   strcat_P(LongMessage, (PGM_P)F(" ["));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("/"));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StopWeight));
-  strcat_P(LongMessage, (PGM_P)F("]"));
+  strcat_P(LongMessage, (PGM_P)F("] ; Waste2 Weight:"));
+  strcat(LongMessage, toText_weight(HempyBucketResponse2Received.WeightWR));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -54,9 +57,11 @@ void HempyModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.PumpState));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1Spd\":\""));
-  strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed_B1));
+  strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB1\":\""));
-  strcat(LongMessage, toText(HempyBucketResponse1Received.Weight));
+  strcat(LongMessage, toText(HempyBucketResponse1Received.WeightB));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WeightWR1\":\""));
+  strcat(LongMessage, toText(HempyBucketResponse1Received.WeightWR));
   strcat_P(LongMessage, (PGM_P)F("\",\"StartB1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"StopB1\":\""));
@@ -64,9 +69,11 @@ void HempyModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.PumpState));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2Spd\":\""));
-  strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed_B2));
+  strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
-  strcat(LongMessage, toText(HempyBucketResponse2Received.Weight));
+  strcat(LongMessage, toText(HempyBucketResponse2Received.WeightB));
+    strcat_P(LongMessage, (PGM_P)F("\",\"WeightWR2\":\""));
+  strcat(LongMessage, toText(HempyBucketResponse2Received.WeightWR));
   strcat_P(LongMessage, (PGM_P)F("\",\"StartB2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"StopB2\":\""));
@@ -151,6 +158,26 @@ void HempyModule_Web::websiteEvent_Button(char *Button)
       HempyBucketCommand2ToSend.DisablePump = true;
       Parent->addToLog(F("Disabled HempyBucket 2 pump"), false);
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareB")) == 0)
+    {
+      HempyBucketCommand1ToSend.TareWeightB = true;
+      Parent->addToLog(F("Taring Bucket 1 scale"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareWR")) == 0)
+    {
+      HempyBucketCommand1ToSend.TareWeightWR = true;
+      Parent->addToLog(F("Taring Bucket 1 waste scale"), false);
+    }    
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareB")) == 0)
+    {
+      HempyBucketCommand2ToSend.TareWeightB = true;
+      Parent->addToLog(F("Taring Bucket 2 scale"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareWR")) == 0)
+    {
+      HempyBucketCommand2ToSend.TareWeightWR = true;
+      Parent->addToLog(F("Taring Bucket 2 waste scale"), false);
+    }    
     SyncRequested = true;
   }
 }
@@ -302,11 +329,11 @@ void HempyModule_Web::refresh_Minute()
 void HempyModule_Web::sendMessages()
 {
   updateCommands();
-  sendCommand(&HempyModuleCommand1ToSend);                                                                                       //< Command - Response exchange
-  sendCommand(&HempyBucketCommand1ToSend);                                                                                       //< Command - Response exchange
-  sendCommand(&HempyBucketCommand2ToSend);                                                                                       //< Command - Response exchange
-  while (sendCommand(&HempyResetToSend) < HempyMessages::HempyReset && millis() - LastResponseReceived < WirelessMessageTimeout) //< special Command, only exchange Response.
-    ;
+  sendCommand(&HempyResetToSend);   //< special Command, resets communication to first message
+  sendCommand(&HempyModuleCommand1ToSend);   //< Command - Response exchange
+  sendCommand(&HempyBucketCommand1ToSend);   //< Command - Response exchange
+  sendCommand(&HempyBucketCommand2ToSend);   //< Command - Response exchange
+  sendCommand(&HempyResetToSend);   //< special Command, resets communication to first message
   if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
@@ -347,42 +374,50 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         memcpy(&HempyModuleResponse1Received, ReceivedResponse, sizeof(struct HempyModuleResponse));
         if (*Debug)
         {
-          logToSerials(F("Module1:"), false, 4);
+          logToSerials(F("Module:"), false, 4);
           logToSerials(HempyModuleResponse1Received.Status, true, 1);
         }
         break;
       case HempyMessages::HempyBucketResponse1:
         memcpy(&HempyBucketResponse1Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
-        if (HempyBucketCommand1ToSend.DisablePump || HempyBucketCommand1ToSend.TurnOnPump || HempyBucketCommand1ToSend.TurnOffPump) ///Turn off command flags
+        if (HempyBucketCommand1ToSend.DisablePump || HempyBucketCommand1ToSend.TurnOnPump || HempyBucketCommand1ToSend.TurnOffPump || HempyBucketCommand1ToSend.TareWeightB || HempyBucketCommand1ToSend.TareWeightWR) ///Turn off command flags
         {
           SyncRequested = true; ///Force a second packet to actualize the response
           HempyBucketCommand1ToSend.DisablePump = false;
           HempyBucketCommand1ToSend.TurnOnPump = false;
           HempyBucketCommand1ToSend.TurnOffPump = false;
+          HempyBucketCommand1ToSend.TareWeightB = false;
+          HempyBucketCommand1ToSend.TareWeightWR = false;
         }
         if (*Debug)
         {
           logToSerials(F("Bucket1:"), false, 4);
           logToSerials(HempyBucketResponse1Received.PumpState, false, 1);         
           logToSerials(F(","), false, 1);
-          logToSerials(HempyBucketResponse1Received.Weight, true, 1);
+          logToSerials(HempyBucketResponse1Received.WeightB, false, 1);
+          logToSerials(F(","), false, 1);
+          logToSerials(HempyBucketResponse1Received.WeightWR, true, 1);
         }
         break;
       case HempyMessages::HempyBucketResponse2:
         memcpy(&HempyBucketResponse2Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
-        if (HempyBucketCommand2ToSend.DisablePump || HempyBucketCommand2ToSend.TurnOnPump || HempyBucketCommand2ToSend.TurnOffPump) ///Turn off command flags
+        if (HempyBucketCommand2ToSend.DisablePump || HempyBucketCommand2ToSend.TurnOnPump || HempyBucketCommand2ToSend.TurnOffPump || HempyBucketCommand2ToSend.TareWeightB || HempyBucketCommand2ToSend.TareWeightWR) ///Turn off command flags
         {
           SyncRequested = true; ///Force a second message exchange to actualize the response
           HempyBucketCommand2ToSend.DisablePump = false;
           HempyBucketCommand2ToSend.TurnOnPump = false;
           HempyBucketCommand2ToSend.TurnOffPump = false;
+          HempyBucketCommand2ToSend.TareWeightB = false;
+          HempyBucketCommand2ToSend.TareWeightWR = false;
         }
         if (*Debug)
         {
           logToSerials(F("Bucket2:"), false, 4);
           logToSerials(HempyBucketResponse2Received.PumpState, false, 1);
           logToSerials(F(","), false, 1);
-          logToSerials(HempyBucketResponse2Received.Weight, true, 1);
+          logToSerials(HempyBucketResponse2Received.WeightB, false, 1);
+          logToSerials(F(","), false, 1);
+          logToSerials(HempyBucketResponse1Received.WeightWR, true, 1);
         }
         break;
       case HempyMessages::HempyReset:
@@ -392,7 +427,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         }
         break;
       default:
-        logToSerials(F("SequenceID not known, ignoring package"), true, 4);
+        if (*Debug)
+        {
+          logToSerials(F("SequenceID not known, ignoring package"), true, 4);
+        }
         break;
       }
       LastResponseReceived = millis();

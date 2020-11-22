@@ -74,6 +74,8 @@ unlink ./src/Components/PressureSensor.h
 unlink ./src/Components/PressureSensor.cpp
 unlink ./src/Components/Sound.h
 unlink ./src/Components/Sound.cpp
+unlink ./src/Components/Switch.h
+unlink ./src/Components/Switch.cpp
 unlink ./src/Components/Switch_PWM.h
 unlink ./src/Components/Switch_PWM.cpp
 unlink ./src/Components/WaterLevelSensor.h

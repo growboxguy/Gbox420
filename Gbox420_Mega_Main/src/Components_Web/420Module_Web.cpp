@@ -178,8 +178,8 @@ void Module_Web::refreshEvent(char *url)
 
 void Module_Web::buttonEvent(char *button)
 { ///Called when any button on the website is pressed.
-  logToSerials(F("Button pressed: "), false, 0);
-  logToSerials(&button, true, 0);
+  if (*Debug)
+    logToSerials(&button, true, 0);
   for (int i = 0; i < WebsiteQueue_Button_Count; i++)
   {
     WebsiteQueue_Button[i]->websiteEvent_Button(button);
@@ -188,8 +188,8 @@ void Module_Web::buttonEvent(char *button)
 
 void Module_Web::setFieldEvent(char *field)
 { ///Called when any field on the website is updated.
-  logToSerials(F("Field submitted: "), true, 0);
-  logToSerials(&field, true, 0);
+  if (*Debug)
+    logToSerials(&field, true, 0);
   for (int i = 0; i < WebsiteQueue_Field_Count; i++)
   {
     WebsiteQueue_Field[i]->websiteEvent_Field(field);
