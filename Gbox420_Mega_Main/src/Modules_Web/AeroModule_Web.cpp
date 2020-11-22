@@ -124,7 +124,7 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
     WebServer.setArgString(getComponentName(F("Pump")), toText_pumpState(AeroResponse1Received.State));
     WebServer.setArgString(getComponentName(F("Pres")), toText_pressure(AeroResponse1Received.Pressure));
     WebServer.setArgString(getComponentName(F("LastSP")), toText_pressure(AeroResponse1Received.LastSprayPressure));
-    WebServer.setArgString(getComponentName(F("Weight")), toText_pressure(AeroResponse1Received.Weight));
+    WebServer.setArgString(getComponentName(F("Weight")), toText_weight(AeroResponse1Received.Weight));
   }
 }
 
