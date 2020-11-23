@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 7; ///< Increment this when you make a change in the SAVED TO EEPROM section
+static const uint8_t Version = 8; ///< Increment this when you make a change in the SAVED TO EEPROM section
 
 ///State machine - Defining possible states
   enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -90,7 +90,7 @@ static const uint8_t Version = 7; ///< Increment this when you make a change in 
       long Offset; ///Reading at 0 weight on the scale
       float Scale;  ///Scale factor      
     };
-    struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset = 255765, .Scale = -20136.50}; ///Update the calibration values here for the Weight Sensor
+    struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset = 255457, .Scale = -19615.00}; ///Update the calibration values here for the Weight Sensor
       
     uint8_t CompatibilityVersion = Version; ///Version should always be the last value stored in the struct
   } Settings;

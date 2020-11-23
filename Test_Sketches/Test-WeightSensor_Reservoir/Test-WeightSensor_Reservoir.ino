@@ -8,12 +8,12 @@ const byte  WeightSensor_DT =  5;
 const byte WeightSensor_SCK = 6;
 
 //Weights used during the calibration
-const float WeightSensor_CalibrationWeight = 2.0;  //SET THIS TO the number of weight units (kg or lbs) that will be used during the calibration
+const float WeightSensor_CalibrationWeight = 10.0;  //SET THIS TO the number of weight units (kg or lbs) that will be used during the calibration
 
 //Initial calibration values, once the calibration you can update these values and change CalibrationComplete to true 
 bool CalibrationComplete = false;  //Set this to true to skip the calibration and use the Offset and Scale values defined in the sketch
-long WeightSensor_Offset = 255765;
-float WeightSensor_Scale = -20136.5;
+long WeightSensor_Offset = 255457;
+float WeightSensor_Scale = -19615.0;
 
 HX711 WeightSensor;
 float WeightSensor_Weight = 0;

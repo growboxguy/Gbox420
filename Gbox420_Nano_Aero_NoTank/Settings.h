@@ -92,7 +92,7 @@ static const uint8_t Version = 14; ///< Increment this when you make a change in
 
     struct WaterPumpSettings
     {
-      WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, int PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime)  {}
+      WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime)  {}
       uint8_t PumpPin;         ///< Pump relay pin
       bool PumpPinNegativeLogic;
       uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin
@@ -100,7 +100,7 @@ static const uint8_t Version = 14; ///< Increment this when you make a change in
       bool PumpEnabled; ///< Enable/disable pump. false= Block running the pump
       uint8_t Speed;  ///< Duty cycle of the PWM Motor speed 
       uint8_t SpeedLowLimit;  ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
-      int PumpTimeOut;   ///< (Sec) Max pump run time        
+      uint16_t PumpTimeOut;   ///< (Sec) Max pump run time        
       int PrimingTime;    ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
       int BlowOffTime;     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
     };
@@ -114,7 +114,7 @@ static const uint8_t Version = 14; ///< Increment this when you make a change in
       long Offset; ///Reading at 0 weight on the scale
       float Scale;  ///Scale factor      
     };
-    struct WeightSensorSettings Weight1 = {.DTPin = A0, .SCKPin = A1, .Offset = 22716, .Scale = -22278.50}; ///Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
+    struct WeightSensorSettings Weight1 = {.DTPin = A0, .SCKPin = A1, .Offset = 19793, .Scale = -22280.70}; ///Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
     
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
   } Settings;
