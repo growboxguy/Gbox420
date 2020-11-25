@@ -15,6 +15,8 @@ static const __FlashStringHelper* toText_reservoirSequenceID(uint8_t SequenceID)
    switch (SequenceID) 
    {
       case ReservoirMessages::ReservoirModuleCommand1: return F("ReservoirModuleCommand1"); break;
+      case ReservoirMessages::ReservoirModuleResponse1: return F("ReservoirModuleResponse1"); break;
+      case ReservoirMessages::ReservoirCommand1: return F("ReservoirCommand1"); break;
       case ReservoirMessages::ReservoirResponse1: return F("ReservoirResponse1"); break;      
       case ReservoirMessages::ReservoirReset: return F("ReservoirReset"); break;
       default : return F("UNKNOWN"); break;

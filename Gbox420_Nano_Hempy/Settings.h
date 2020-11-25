@@ -72,7 +72,7 @@ static const uint8_t Version = 23; ///< Increment this when you make a change in
 
    struct WaterPumpSettings
     {
-      WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 255, bool BypassSolenoidNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 1, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidPin(BypassSolenoidPin), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime)  {}
+      WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic)  {}
       uint8_t PumpPin;         ///< Pump relay pin
       bool PumpPinNegativeLogic;  ///Set to true if Relay/MOSFET controlling the power to the pump requires LOW signal to Turn ON
       uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin [optional]

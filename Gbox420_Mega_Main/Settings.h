@@ -30,7 +30,7 @@ enum PumpStates
 static const uint8_t MaxTextLength = 32;       ///Default char * buffer for storing a word + null terminator. Memory intense!
 static const uint8_t MaxShotTextLength = 128;  ///Default char * buffer for storing mutiple words. Memory intense!
 static const int MaxLongTextLength = 1024;     ///Default char * buffer for storing a long text. Memory intense!
-static const uint8_t LogDepth = 5;             ///Show X number of log entries on website. Be careful, Max 1024uint8_ts can be passed during a Website refresh event, incuding all parameters passed
+static const uint8_t LogDepth = 4;             ///Show X number of log entries on website. Be careful, Max 1024uint8_ts can be passed during a Website refresh event, incuding all parameters passed
 static const uint8_t QueueDepth = 32;          ///Limits the maximum number of active modules. Memory intense!
 static const uint8_t RollingAverageDepth = 10; ///Limits the maximum number of active modules. Memory intense!
 
@@ -139,7 +139,7 @@ typedef struct
 
   struct LightsSettings
   {
-    LightsSettings(uint8_t RelayPin = 0, uint8_t DimmingPin = 0, uint8_t DimmingLimit = 0, uint8_t DimmingDuration = 0, uint8_t Brightness = 0, bool TimerEnabled = false, uint8_t OnHour = 0, uint8_t OnMinute = 0, uint8_t OffHour = 0, uint8_t OffMinute = 0, bool FadingEnabled = false, uint16_t FadingInterval = 0, uint8_t FadingIncrements = 0) : RelayPin(RelayPin), DimmingPin(DimmingPin), DimmingLimit(DimmingLimit), DimmingDuration(DimmingDuration), Brightness(Brightness), TimerEnabled(TimerEnabled), OnHour(OnHour), OnMinute(OnMinute), OffHour(OnHour), OffMinute(OnMinute), FadingEnabled(FadingEnabled), FadingInterval(FadingInterval), FadingIncrements(FadingIncrements) {}
+    LightsSettings(uint8_t RelayPin = 0, uint8_t DimmingPin = 0, uint8_t DimmingLimit = 0, uint8_t DimmingDuration = 0, uint8_t Brightness = 0, bool TimerEnabled = false, uint8_t OnHour = 0, uint8_t OnMinute = 0, uint8_t OffHour = 0, uint8_t OffMinute = 0, bool FadingEnabled = false, uint16_t FadingInterval = 0, uint8_t FadingIncrements = 0) : RelayPin(RelayPin), DimmingPin(DimmingPin), DimmingLimit(DimmingLimit), DimmingDuration(DimmingDuration), Brightness(Brightness), TimerEnabled(TimerEnabled), OnHour(OnHour), OnMinute(OnMinute), OffHour(OffHour), OffMinute(OffMinute), FadingEnabled(FadingEnabled), FadingInterval(FadingInterval), FadingIncrements(FadingIncrements) {}
     uint8_t RelayPin;         ///Power relay Port 8 - LED lights
     uint8_t DimmingPin;       ///PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
     uint8_t DimmingLimit;     ///Sets the LED dimming limit (Usually around 5%)
