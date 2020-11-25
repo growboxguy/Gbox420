@@ -10,7 +10,7 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 14; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 1; ///< Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
   enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
@@ -115,7 +115,7 @@ static const uint8_t Version = 14; ///< Increment this when you make a change in
       float Scale;  ///Scale factor      
     };
     struct WeightSensorSettings Weight1 = {.DTPin = A0, .SCKPin = A1, .Offset = 19793, .Scale = -22280.70}; ///Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
-    
+
     uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
   } Settings;
 
