@@ -13,7 +13,8 @@
 ///< Variables used during wireless communication
 uint8_t NextSequenceID = AeroMessages::AeroModuleResponse1;
 struct AeroModuleResponse AeroModule1ResponseToSend = {AeroMessages::AeroModuleResponse1};
-struct AeroResponse Aero1ResponseToSend = {AeroMessages::AeroResponse1};
+struct AeroResponse_P1 Aero1Response1ToSend = {AeroMessages::AeroResponse1};
+struct AeroResponse_P2 Aero1Response2ToSend = {AeroMessages::AeroResponse2};
 struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset}; //< Special response signaling the end of a message exchange to the Transmitter
 unsigned long LastMessageSent = 0;                                            //When was the last message sent
 
@@ -25,7 +26,7 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
   Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->AeroPump1);
   Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
   AeroT1 = new Aeroponics_Tank(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, Pump1); ///< Use this with a pressure tank
-  Aero1ResponseToSend.PressureTankPresent = true;
+  Aero1Response1ToSend.PressureTankPresent = true;
 
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
@@ -59,11 +60,11 @@ void AeroModule::refresh_FiveSec()
 
 void AeroModule::updateResponse()
 {
-  Aero1ResponseToSend.SprayEnabled = AeroT1->getSprayEnabled();
-  Aero1ResponseToSend.Pressure = AeroT1->getPressure();
-  Aero1ResponseToSend.State = AeroT1->Pump->getState();
-  Aero1ResponseToSend.LastSprayPressure = AeroT1->getLastSprayPressure();
-  Aero1ResponseToSend.Weight = Weight1->getWeight();
+  Aero1Response1ToSend.SprayEnabled = AeroT1->getSprayEnabled();
+  Aero1Response1ToSend.Pressure = AeroT1->getPressure();
+  Aero1Response1ToSend.State = AeroT1->Pump->getState();
+  Aero1Response1ToSend.LastSprayPressure = AeroT1->getLastSprayPressure();
+  Aero1Response1ToSend.Weight = Weight1->getWeight();
 }
 
 void AeroModule::processCommand(void *ReceivedCommand)
@@ -92,80 +93,81 @@ void AeroModule::processCommand(void *ReceivedCommand)
     }
     break;
   case AeroMessages::AeroCommand1:
-      if (((AeroCommand *)ReceivedCommand)->SprayEnabled)
-        AeroT1->setSprayOnOff(true);
-      if (((AeroCommand *)ReceivedCommand)->SprayDisabled)
+    NextSequenceID = AeroMessages::AeroResponse2; // update the next Message that will be copied to the buffer
+      if (((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled)
+       AeroT1->setSprayOnOff(true);
+      if (((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled)
         AeroT1->setSprayOnOff(false);
-      if (((AeroCommand *)ReceivedCommand)->SprayNow)
+      if (((AeroCommand_P1 *)ReceivedCommand)->SprayNow)
         AeroT1->sprayNow(true);
-      if (((AeroCommand *)ReceivedCommand)->SprayOff)
+      if (((AeroCommand_P1 *)ReceivedCommand)->SprayOff)
         AeroT1->sprayOff();
-      if (((AeroCommand *)ReceivedCommand)->RefillPressureTank)
-        AeroT1->refillTank();
-      if (((AeroCommand *)ReceivedCommand)->TareWeight)
-        Weight1->triggerTare();
-      AeroT1->setDayMode(((AeroCommand *)ReceivedCommand)->DayMode);
-      AeroT1->setDayInterval(((AeroCommand *)ReceivedCommand)->DayInterval);
-      AeroT1->setDayDuration(((AeroCommand *)ReceivedCommand)->DayDuration);
-      AeroT1->setNightInterval(((AeroCommand *)ReceivedCommand)->NightInterval);
-      AeroT1->setNightDuration(((AeroCommand *)ReceivedCommand)->NightDuration);
-      if (((AeroCommand *)ReceivedCommand)->PumpOn)
-        AeroT1->Pump->startPump(true);
-      if (((AeroCommand *)ReceivedCommand)->PumpOff)
-        AeroT1->Pump->stopPump();
-      if (((AeroCommand *)ReceivedCommand)->PumpDisable)
-        AeroT1->Pump->disablePump();
-      AeroT1->Pump->setSpeed(((AeroCommand *)ReceivedCommand)->PumpSpeed);
-      AeroT1->Pump->setPumpTimeOut(((AeroCommand *)ReceivedCommand)->PumpTimeOut);
-      AeroT1->Pump->setPrimingTime(((AeroCommand *)ReceivedCommand)->PumpPrimingTime);
-      AeroT1->setMinPressure(((AeroCommand *)ReceivedCommand)->MinPressure);
-      AeroT1->setMaxPressure(((AeroCommand *)ReceivedCommand)->MaxPressure);
-      if (((AeroCommand *)ReceivedCommand)->MixReservoir)
-        AeroT1->Pump->startMixing();
-   
-    NextSequenceID = AeroMessages::AeroReset; // update the next Message that will be copied to the buffer
+      AeroT1->setDayMode(((AeroCommand_P1 *)ReceivedCommand)->DayMode);
+      AeroT1->setDayInterval(((AeroCommand_P1 *)ReceivedCommand)->DayInterval);
+      AeroT1->setDayDuration(((AeroCommand_P1 *)ReceivedCommand)->DayDuration);
+      AeroT1->setNightInterval(((AeroCommand_P1 *)ReceivedCommand)->NightInterval);
+      AeroT1->setNightDuration(((AeroCommand_P1 *)ReceivedCommand)->NightDuration);     
+      AeroT1->setMinPressure(((AeroCommand_P1 *)ReceivedCommand)->MinPressure);
+      AeroT1->setMaxPressure(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure);     
+
+
     if (*Debug)
     {
       logToSerials(F("Aero1:"), false, 2);
-      logToSerials(((AeroCommand *)ReceivedCommand)->SprayEnabled, false, 1);
+      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->SprayDisabled, false, 1);
+      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->SprayNow, false, 1);
+      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayNow, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->SprayOff, false, 1);
+      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayOff, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->DayMode, false, 1);
+      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->DayMode, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->DayInterval, false, 1);
+      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->DayInterval, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->DayDuration, false, 1);
+      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->DayDuration, false, 1);
       logToSerials(F(";"), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->NightInterval, false, 1);
+      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->NightInterval, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->NightDuration, false, 1);
-      logToSerials(F(";"), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->PumpSpeed, false, 1);
+      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->NightDuration, false, 1);
+      logToSerials(F(";"), false, 1);      
+      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MinPressure, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->PumpOn, false, 1);
-      logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->PumpOff, false, 1);
-      logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->PumpDisable, false, 1);
-      logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
-      logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->PumpPrimingTime, false, 1);
-      logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->MinPressure, false, 1);
-      logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->MaxPressure, false, 1);
-      logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->MixReservoir, false, 1);
-      logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->TareWeight, true, 1);
-      
+      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure, false, 1);
+      logToSerials(F(","), false, 1);      
     }
+    break;
+  case AeroMessages::AeroCommand2:
+      NextSequenceID = AeroMessages::AeroReset; // update the next Message that will be copied to the buffer
+      if (((AeroCommand_P2 *)ReceivedCommand)->RefillPressureTank)
+        AeroT1->refillTank();
+      if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight)
+        Weight1->triggerTare();
+      if (((AeroCommand_P2 *)ReceivedCommand)->PumpOn)
+        AeroT1->Pump->startPump(true);
+      if (((AeroCommand_P2 *)ReceivedCommand)->PumpOff)
+        AeroT1->Pump->stopPump();
+      if (((AeroCommand_P2 *)ReceivedCommand)->PumpDisable)
+        AeroT1->Pump->disablePump();
+      if (((AeroCommand_P2 *)ReceivedCommand)->MixReservoir)
+        AeroT1->Pump->startMixing();  
+      AeroT1->Pump->setSpeed(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed);
+      AeroT1->Pump->setPumpTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);
+      AeroT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime); 
+
+    if (*Debug)
+    {
+      logToSerials(F("Aero1:"), false, 2);     
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOn, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOff, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpDisable, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->MixReservoir, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, true, 1);  
+     }
     break;
   case AeroMessages::AeroReset:                         //< Used to get all Responses that do not have a corresponding Command
     NextSequenceID = AeroMessages::AeroModuleResponse1; //< Load the first response for the next message exchange
@@ -193,7 +195,10 @@ void AeroModule::updateAckData()
     Wireless.writeAckPayload(1, &AeroModule1ResponseToSend, WirelessPayloadSize);
     break;
   case AeroMessages::AeroResponse1:
-    Wireless.writeAckPayload(1, &Aero1ResponseToSend, WirelessPayloadSize);
+    Wireless.writeAckPayload(1, &Aero1Response1ToSend, WirelessPayloadSize);
+    break;
+  case AeroMessages::AeroResponse2:
+    Wireless.writeAckPayload(1, &Aero1Response2ToSend, WirelessPayloadSize);
     break;
   case AeroMessages::AeroReset: //< AeroReset should always be the last element in the enum: Signals to stop the message exchange
     Wireless.writeAckPayload(1, &AeroResetToSend, WirelessPayloadSize);
