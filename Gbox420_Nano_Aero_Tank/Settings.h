@@ -1,12 +1,13 @@
 #pragma once
 
 /*! 
- *  \brief     Default Settings for each component. Loaded when the Arduino starts, updated by user interaction on the website.
+ *  \brief     Use this to change the Default Settings for each component. Loaded when the Arduino starts, updated by user interaction on the website.
  *  \details   The Settings object is stored in EEPROM and kept between reboots. 
  *  \author    GrowBoxGuy
  *  \version   4.20
- *  \warning   EEPROM has a write limit of 100.000 cycles, constantly updating the variables inside a loop would wear out the EEPROM memory! 
- *  \attention Update the Version number when you change the structure of the settings. This will overwrite the EEPROM stored settings with the sketch defaults from this file.
+ *  \warning   Only use these in the setup() function, or when a user initiated change is stored. EEPROM has a write limit of 100.000 cycles
+ *  \attention Never use the funtions defined here in loop() or a repeating cycle! EEPROM would wear out very fast
+ *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
 static const uint8_t Version = 2; ///Increment this when you make a change in the SAVED TO EEPROM secton
@@ -21,8 +22,6 @@ enum PumpStates
   BLOWOFF,
   MIXING
 };
-//enum HempyState { DRY, WATERING};
-//enum AeroState { SPRAYING };
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 
@@ -42,8 +41,8 @@ extern char CurrentTime[MaxWordLength];      ///Buffer for storing current time 
 static const uint8_t WirelessCSNPin = 9;             ///nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
 static const uint8_t WirelessCEPin = 10;             ///nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
 static const uint8_t WirelessChannel[6] = {"Aero1"}; ///This needs to be unique and match with the Name of the AeroModule_Web object in the MainModule_Web.cpp
-static const uint8_t WirelessPayloadSize = 32;       //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
-static const uint16_t WirelessMessageTimeout = 500;  //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
+static const uint8_t WirelessPayloadSize = 32;       ///Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+static const uint16_t WirelessMessageTimeout = 500;  ///(ms) One package should be exchanged within this timeout (Including retries and delays)
 
 ///SAVED TO EEPROM - Settings struct
 ///If you change things here, increase the Version variable in line 12
@@ -52,14 +51,7 @@ typedef struct
   bool Debug = true;  ///Logs debug messages to serial and web outputs
   bool Metric = true; ///Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
-  struct AeroModuleSettings
-  {
-    AeroModuleSettings(bool PressureTankPresent = false) : PressureTankPresent(PressureTankPresent) {}
-    bool PressureTankPresent;
-  };
-  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = true};
-
-  struct AeroponicsSettings
+  struct AeroponicsSettings ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
   { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
     AeroponicsSettings(bool SprayEnabled = true, int DayInterval = 0, int DayDuration = 0, int NightInterval = 0, int NightDuration = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), DayInterval(DayInterval), DayDuration(DayDuration), NightInterval(NightInterval), NightDuration(NightDuration), MaxPressure(MaxPressure) {}
     bool SprayEnabled; ///Enable/disable spraying cycle
@@ -69,9 +61,8 @@ typedef struct
     int NightDuration; ///Spray time in seconds - When the lights are OFF
     float MaxPressure; ///Turn off pump above this pressure
   };
-  struct AeroponicsSettings AeroT1_Common = {.SprayEnabled = true, .DayInterval = 15, .DayDuration = 10, .NightInterval = 30, .NightDuration = 8, .MaxPressure = 7.0};
-  struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled = true, .DayInterval = 15, .DayDuration = 10, .NightInterval = 30, .NightDuration = 8, .MaxPressure = 7.0};
-
+  struct AeroponicsSettings AeroT1_Common = {.SprayEnabled = true, .DayInterval = 15, .DayDuration = 10, .NightInterval = 30, .NightDuration = 10, .MaxPressure = 7.0};
+ 
   struct AeroponicsSettings_TankSpecific
   { ///Settings for an Aeroponics setup WITH a pressure tank
     AeroponicsSettings_TankSpecific(float MinPressure = 0.0, uint8_t SpraySolenoidPin = 0, bool SpraySolenoidNegativeLogic = false) : MinPressure(MinPressure), SpraySolenoidPin(SpraySolenoidPin), SpraySolenoidNegativeLogic(SpraySolenoidNegativeLogic) {}
@@ -102,7 +93,7 @@ typedef struct
   {
     WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic) {}
     uint8_t PumpPin; ///Pump relay pin
-    bool PumpPinNegativeLogic;
+    bool PumpPinNegativeLogic; ///true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     uint8_t BypassSolenoidPin; ///Bypass solenoid relay pin
     bool BypassSolenoidNegativeLogic;
     bool PumpEnabled;      ///Enable/disable pump. false= Block running the pump

@@ -40,8 +40,8 @@ extern char CurrentTime[MaxWordLength];      ///Buffer for storing current time 
 static const uint8_t WirelessCSNPin = 9;             ///nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
 static const uint8_t WirelessCEPin = 10;             ///nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
 static const uint8_t WirelessChannel[6] = {"Aero1"}; ///This needs to be unique and match with the Name of the AeroModule_Web object in the MainModule_Web.cpp
-static const uint8_t WirelessPayloadSize = 32;       //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
-static const uint16_t WirelessMessageTimeout = 500;  //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
+static const uint8_t WirelessPayloadSize = 32;       ///Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+static const uint16_t WirelessMessageTimeout = 500;  ///(ms) One package should be exchanged within this timeout (Including retries and delays)
 
 ///SAVED TO EEPROM - Settings struct
 ///If you change things here, increase the Version variable in line 12

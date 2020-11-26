@@ -41,7 +41,7 @@ static const uint8_t WirelessCSNPin = 49;           ///nRF24l01+ wireless transm
 static const uint8_t WirelessCEPin = 53;            ///nRF24l01+ wireless transmitter CE pin
 static const uint8_t WirelessDelay = 8;             ///How long to wait between each retry (250ms increments), Max 15. 0 means 250us, 15 means 4000us,
 static const uint8_t WirelessRetry = 10;            ///How many retries before giving up, max 15
-static const uint8_t WirelessPayloadSize = 32;      ///Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+static const uint8_t WirelessPayloadSize = 32;      ////Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
 static const uint16_t WirelessMessageTimeout = 500; ///(ms) One package should be exchanged within this timeout (Including retries and delays)
 
 ///SAVED TO EEPROM - Settings struct

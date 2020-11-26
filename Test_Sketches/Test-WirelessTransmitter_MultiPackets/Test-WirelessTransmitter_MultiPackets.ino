@@ -8,7 +8,7 @@
 #include "TimeLib.h"     ///keeping track of time
 #include "WirelessCommands_Test.h"
 
-const uint8_t WirelessPayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+const uint8_t WirelessPayloadSize = 32; ///Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
 const bool Debug = true;
 
 ///Ports for Arduino Nano or RF-Nano
@@ -35,7 +35,7 @@ RF24 Wireless(CE_PIN, CSN_PIN);
 unsigned long LastCommandSent = 0;  //When was the last message sent
 unsigned long LastResponseReceived = 0;  //When was the last response received
 static const unsigned long MessageInterval = 15000; // send a control message once per 15 seconds
-static const uint16_t WirelessMessageTimeout = 500; //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
+static const uint16_t WirelessMessageTimeout = 500; ///(ms) One package should be exchanged within this timeout (Including retries and delays)
 static const uint8_t WirelessRetry = 15; //How many retries before giving up, max 15
 static const uint8_t WirelessDelay = 10; //How long to wait between each retry, in multiples of 250us, max is 15. 0 means 250us, 15 means 4000us.
 

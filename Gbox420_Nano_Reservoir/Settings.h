@@ -1,13 +1,12 @@
 #pragma once
 
 /*! 
- *  \brief     Use this to change the Default Settings for each component. Loaded when the Arduino starts, updated by user interaction on the website.
+ *  \brief     Default Settings for each component. Loaded when the Arduino starts, updated by user interaction on the website.
  *  \details   The Settings object is stored in EEPROM and kept between reboots. 
+ *  \warning   EEPROM has a write limit of 100.000 cycles, constantly updating the variables inside a loop would wear out the EEPROM memory! 
+ *  \attention Update the Version number when you change the structure of the settings. This will overwrite the EEPROM stored settings with the sketch defaults from this file.
  *  \author    GrowBoxGuy
  *  \version   4.20
- *  \warning   Only use these in the setup() function, or when a user initiated change is stored. EEPROM has a write limit of 100.000 cycles
- *  \attention Never use the funtions defined here in loop() or a repeating cycle! EEPROM would wear out very fast
- *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
 static const uint8_t Version = 8; ///Increment this when you make a change in the SAVED TO EEPROM section
@@ -22,14 +21,6 @@ enum PumpStates
   BLOWOFF,
   MIXING
 };
-enum ReservoirState
-{
-  EMPTY,
-  LEVEL_LOW,
-  OK
-};
-//enum HempyState { DRY, WATERING};
-//enum AeroState { SPRAYING };
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 
@@ -49,8 +40,8 @@ extern char CurrentTime[MaxWordLength];      ///Buffer for storing current time 
 static const uint8_t WirelessCSNPin = 9;            ///nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
 static const uint8_t WirelessCEPin = 10;            ///nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
 static const uint8_t WirelessChannel[6] = {"Res1"}; ///This needs to be unique and match with the Name of the ReservoirModule_Web object in the MainModule_Web.cpp
-static const uint8_t WirelessPayloadSize = 32;      //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
-static const uint16_t WirelessMessageTimeout = 500; //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
+static const uint8_t WirelessPayloadSize = 32;      ///Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+static const uint16_t WirelessMessageTimeout = 500; ///(ms) One package should be exchanged within this timeout (Including retries and delays)
 
 ///SAVED TO EEPROM - Settings struct
 ///If you change things here, increase the Version variable in line 12
@@ -62,7 +53,7 @@ typedef struct
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
     DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}
-    uint8_t Pin;
+    uint8_t Pin; ///DAT pin of the DHT sensor
     uint8_t Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
   };
   struct DHTSensorSettings DHT1 = {.Pin = 3, .Type = 22};
@@ -70,11 +61,11 @@ typedef struct
   struct PHSensorSettings
   {
     PHSensorSettings(uint8_t Pin = 0, float Slope = 0.0, float Intercept = 0.0) : Pin(Pin), Slope(Slope), Intercept(Intercept) {}
-    uint8_t Pin;
+    uint8_t Pin;  ///pH sensor Po pin
     float Slope;
     float Intercept;
   };
-  struct PHSensorSettings PHSen1 = {.Pin = A0, .Slope = -0.031199, .Intercept = 22.557617}; ///Update this to your own PH meter calibration values
+  struct PHSensorSettings PHSen1 = {.Pin = A0, .Slope = -0.031199, .Intercept = 22.557617}; ///Update this to your own PH meter calibration values: https://sites.google.com/site/growboxguy/arduino/reservoir-module?authuser=0#h.p_PGMrIJ9iRr0c
 
   struct ReservoirModuleSettings
   {
@@ -93,7 +84,7 @@ typedef struct
   struct WaterTempSensorSettings
   {
     WaterTempSensorSettings(uint8_t Pin = 0) : Pin(Pin) {}
-    uint8_t Pin;
+    uint8_t Pin;  ///DS18B20 sensor yellow signal wire
   };
   struct WaterTempSensorSettings WTemp1 = {.Pin = 4}; ///Data(yellow) - DS18B20 waterproof temp sensor
 
