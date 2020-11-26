@@ -59,12 +59,12 @@ void WaterPump::refresh_Sec()
   } 
 }
 
-void WaterPump::updateState(PumpStates NewState)  ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State 
+void WaterPump::updateState(PumpStates NewState)  ///Without a parameter actualize the current State. When NewState parameter is passed it overwrites State 
 {
-  if(NewState >=0)  ///< if not the default value was passed
+  if(NewState >=0)  ///if not the default value was passed
   {    
     State = NewState;
-    PumpTimer = millis(); ///< Start measuring the time spent in the new State
+    PumpTimer = millis(); ///Start measuring the time spent in the new State
   }
 
   switch (State)
@@ -72,7 +72,7 @@ void WaterPump::updateState(PumpStates NewState)  ///< Without a parameter actua
     case PRIMING:
       PumpOn=true;
       BypassOn=true;
-      if(millis() - PumpTimer > ((uint32_t)*PrimingTime * 1000)) ///< Is it time to disable the Bypass solenoid
+      if(millis() - PumpTimer > ((uint32_t)*PrimingTime * 1000)) ///Is it time to disable the Bypass solenoid
       { 
         logToSerials(F("Priming complete, running..."), true, 3);
         updateState(RUNNING);
@@ -92,9 +92,9 @@ void WaterPump::updateState(PumpStates NewState)  ///< Without a parameter actua
           updateState(IDLE);
         }
       }
-      if(millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
+      if(millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
       { 
-        Parent -> addToLog(F("ALERT: Pump timeout reached"), 3); ///< \todo send email alert 
+        Parent -> addToLog(F("ALERT: Pump timeout reached"), 3); ///\todo send email alert 
         updateState(DISABLED);
       }
       break;
@@ -181,13 +181,13 @@ void WaterPump::setSpeed(uint8_t DutyCycle) //Set PWM duty cycle
   PumpSwitch -> setDutyCycle(DutyCycle);
 }
 
-void WaterPump::startMixing(int TimeOutSec)  ///< Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout
+void WaterPump::startMixing(int TimeOutSec)  ///Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout
 {
   if(TimeOutSec>0) {
     RunTime = TimeOutSec;
   }
   else {
-    RunTime = 0;  ///< if no mix timeout defined -> Run until pump timeout is reached
+    RunTime = 0;  ///if no mix timeout defined -> Run until pump timeout is reached
   }
   Parent->addToLog(F("Mixing nutrients"));
   Parent->getSoundObject()->playOnSound();

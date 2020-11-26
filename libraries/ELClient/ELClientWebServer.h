@@ -17,7 +17,7 @@
 typedef struct URL_HANDLER
 {
 
-  String                URL;         ///< the URL to handle
+  String                URL;         ////the URL to handle
 
   /*! loadCb()
    @brief Callback for HTML page loading
@@ -111,7 +111,7 @@ typedef struct URL_HANDLER
    @endcode
    */
   FP<void, char*>       buttonCb;
-  struct URL_HANDLER *  next;        ///< next handler
+  struct URL_HANDLER *  next;        ////next handler
 } URLHandler;
 
 // This class implements functions for the web-server

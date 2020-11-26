@@ -11,9 +11,9 @@ DistanceSensor_Web::DistanceSensor_Web(const __FlashStringHelper *Name, Module_W
 
 void DistanceSensor_Web::reportToJSON()
 {
-    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end 
+    Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end 
 
-    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///closing the curly bracket
 }
 
 void DistanceSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)

@@ -36,7 +36,7 @@ class ModuleSkeleton_Web;
 
 extern ELClientRest PushingBoxRestAPI;
 
-/// Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
+///Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 class DEVModule_Web : public Common_Web, public Module_Web
 {
@@ -58,8 +58,8 @@ public:
   WaterTempSensor_Web *WTemp1;
   WaterLevelSensor_Web *WLev1;
   DistanceSensor_Web *Dist1;
-  HempyModule_Web *HempyModule1;    /// <Represents the website controls and feedback for a HempyModule
-  AeroModule_Web *AeroModule1;    /// <Represents the website controls and feedback for a AeroModule
+  HempyModule_Web *HempyModule1;    ///<Represents the website controls and feedback for a HempyModule
+  AeroModule_Web *AeroModule1;    ///<Represents the website controls and feedback for a AeroModule
   ReservoirModule_Web *ReservoirModule1;
   //WeightSensor_Web *Weight1; 
   //WeightSensor_Web *Weight2;  
@@ -78,7 +78,7 @@ public:
  
 private:
   void setSheetsReportingOnOff(bool State);
-  void setSheetsReportingFrequency(uint8_t Frequency);
+  void setSheetsReportingFrequency(uint16_t Frequency);
   void setDebug(bool DebudEnabled);
   void setMetric(bool MetricEnabled);
   void setPushingBoxLogRelayID(const char *ID);
@@ -87,7 +87,7 @@ protected:
   bool RefreshAllRequested = false;
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;
-  uint8_t *SheetsReportingFrequency;
+  uint16_t *SheetsReportingFrequency;
   bool *ReportToGoogleSheets;
   uint8_t SheetsRefreshCounter = 0;
 };

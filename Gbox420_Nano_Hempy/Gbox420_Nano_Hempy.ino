@@ -19,10 +19,10 @@
 #include "src/WirelessCommands_Hempy.h"   ///Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul 
 
 ///Global variable initialization
-char LongMessage[MaxLongTextLength] = "";  ///temp storage for assembling long messages (REST API, MQTT API)
-char ShortMessage[MaxShotTextLength] = ""; ///temp storage for assembling short messages (Log entries, Error messages)char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
-char CurrentTime[MaxTextLength] = "";      ///buffer for storing current time in text
-void* ReceivedMessage = malloc(WirelessPayloadSize); ///< Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
+char LongMessage[MaxLongTextLength] = "";  ///Temp storage for assembling long messages (REST API - Google Sheets reporting)
+char ShortMessage[MaxShotTextLength] = ""; ///Temp storage for assembling short messages (Log entries, Error messages)char CurrentTime[MaxWordLength] = "";      ///Buffer for storing current time in text format
+char CurrentTime[MaxWordLength] = "";      ///Buffer for storing current time in text format
+void* ReceivedMessage = malloc(WirelessPayloadSize); ///Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
 
 ///Component initialization
 HardwareSerial &ArduinoSerial = Serial;   ///Reference to the Arduino Serial
@@ -30,7 +30,7 @@ Settings * ModuleSettings;                ///settings loaded from the EEPROM. Pe
 bool *Debug;
 bool *Metric;
 HempyModule *HempyMod1;                   ///Represents a Hempy bucket with weight sensors and pumps
-RF24 Wireless(WirelessCEPin, WirelessCSNPin); /// Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
+RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 
 ///Thread initialization
 Thread OneSecThread = Thread();
@@ -40,7 +40,7 @@ Thread QuarterHourThread = Thread();
 StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread, &QuarterHourThread);
 
 void setup()
-{                                                      /// put your setup code here, to run once:
+{                                                      ///put your setup code here, to run once:
   ArduinoSerial.begin(115200);                         ///Nano console output
   pinMode(LED_BUILTIN, OUTPUT);
   printf_begin();
@@ -49,7 +49,7 @@ void setup()
   wdt_enable(WDTO_8S);                                 ///Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                   ///fix watchdog not loading sketch after a reset error on Mega2560
   struct HempyModuleCommand BlankCommand = {HempyMessages::HempyModuleCommand1};
-  memcpy(ReceivedMessage, &BlankCommand, sizeof(struct HempyModuleCommand)); //< Copy a blank command to the memory block pointed ReceivedMessage. Without this ReceivedMessage would contain random data 
+  memcpy(ReceivedMessage, &BlankCommand, sizeof(struct HempyModuleCommand)); ///Copy a blank command to the memory block pointed ReceivedMessage. Without this ReceivedMessage would contain random data 
   setSyncProvider(updateTime);
   setSyncInterval(3600);                               //Sync time every hour with the main module
   
@@ -60,15 +60,15 @@ void setup()
 
   ///Setting up wireless module
   Wireless.begin();
-  Wireless.setDataRate( RF24_250KBPS );  ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
-  Wireless.setCRCLength(RF24_CRC_8);  /// RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
+  Wireless.setDataRate( RF24_250KBPS );  ///Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
+  Wireless.setCRCLength(RF24_CRC_8);  ///RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
   Wireless.setPALevel(RF24_PA_MAX);  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
   Wireless.setPayloadSize(WirelessPayloadSize);  ///Set the number of bytes in the payload
   Wireless.enableAckPayload();
   Wireless.openReadingPipe(1, WirelessChannel);
   Wireless.startListening();
 
-  /// Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
+  ///Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires 
   OneSecThread.setInterval(1000);  ///1000ms
   OneSecThread.onRun(runSec);
   FiveSecThread.setInterval(5000);
@@ -85,7 +85,7 @@ void setup()
 }
 
 void loop()
-{                      /// put your main code here, to run repeatedly:
+{                      ///put your main code here, to run repeatedly:
   ThreadControl.run(); ///loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
   ///If a control package is received from the main module
   getWirelessData();  
@@ -97,7 +97,7 @@ void loop()
 void runSec()
 {
   wdt_reset();
-  HeartBeat();    ///< Blinks built-in led
+  HeartBeat();    ///Blinks built-in led
   HempyMod1->runSec(); ///Calls the runSec() method in GrowBox.cpp  
 }
 

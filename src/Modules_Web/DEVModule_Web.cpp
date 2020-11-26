@@ -66,7 +66,7 @@ DEVModule_Web::DEVModule_Web(const __FlashStringHelper *Name, Settings::MainModu
 
 void DEVModule_Web::reportToJSON()
 {
-    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end 
+    Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end 
 
     strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
     strcat(LongMessage, toText(*Metric));
@@ -96,7 +96,7 @@ void DEVModule_Web::reportToJSON()
     strcat(LongMessage, toText(*Metric));
     strcat_P(LongMessage, (PGM_P)F("\"}}")); */
 
-    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///closing the curly bracket
 }
 
 void DEVModule_Web::websiteEvent_Load(char *url)
@@ -250,7 +250,7 @@ void DEVModule_Web::setSheetsReportingOnOff(bool State)
   }
 }
 
-void DEVModule_Web::setSheetsReportingFrequency(uint8_t Frequency)
+void DEVModule_Web::setSheetsReportingFrequency(uint16_t Frequency)
 {
   *SheetsReportingFrequency = Frequency;
   addToLog(F("Reporting freqency updated"));
@@ -263,14 +263,14 @@ void DEVModule_Web::reportToGoogleSheetsTrigger(bool ForceRun)
     SheetsRefreshCounter = 0; ///Reset the counter after one day (15 x 96 = 1440 = 24 hours)
   if (SheetsRefreshCounter++ % (*SheetsReportingFrequency / 15) == 0 || ForceRun)
   {
-    addPushingBoxLogRelayID(); ///< Adds a curly bracket {  that needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));  ///< Adds a curly bracket {  that needs to be closed at the end
+    addPushingBoxLogRelayID(); ///Adds a curly bracket {  that needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));  ///Adds a curly bracket {  that needs to be closed at the end
     for (int i = 0; i < reportQueueItemCount;)
       {
         ReportQueue[i++]->reportToJSON();
-        if(i != reportQueueItemCount) strcat_P(LongMessage, (PGM_P)F(",")); /// < Unless it was the last element add a , separator
+        if(i != reportQueueItemCount) strcat_P(LongMessage, (PGM_P)F(",")); ///< Unless it was the last element add a , separator
       }
-    strcat_P(LongMessage, (PGM_P)F("}}"));  ///< closing both curly bracket
+    strcat_P(LongMessage, (PGM_P)F("}}"));  ///closing both curly bracket
     relayToGoogleSheets(&LongMessage);
   }
 }
@@ -278,7 +278,7 @@ void DEVModule_Web::reportToGoogleSheetsTrigger(bool ForceRun)
 
 void DEVModule_Web::setPushingBoxLogRelayID(const char *ID)
 {
-  strncpy(ModuleSettings -> PushingBoxLogRelayID, ID, MaxTextLength);
+  strncpy(ModuleSettings -> PushingBoxLogRelayID, ID, MaxWordLength);
   addToLog(F("Sheets log relay ID updated"));
 }
 

@@ -25,7 +25,7 @@ protected:
   bool RuntimeBool = false;
   int RuntimeInt = 420;
   float RuntimeFloat = 4.2f;
-  char RuntimeString[MaxTextLength] = "HailMary";
+  char RuntimeString[MaxWordLength] = "HailMary";
   RollingAverage *RollingInt;
   RollingAverage *RollingFloat;
 

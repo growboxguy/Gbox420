@@ -55,13 +55,13 @@ void MainModule::report()
 
 void MainModule::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end
 
   strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
   strcat(LongMessage, toText(*Metric));
   strcat_P(LongMessage, (PGM_P)F("\",\"Debug\":\""));
   strcat(LongMessage, toText(*Debug));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///closing the curly bracket
 }
 
 void MainModule::websiteEvent_Load(char *url)
@@ -181,7 +181,7 @@ bool MainModule::getDayMode()
 {
   if (Lt1->getStatus() || Lt2->getStatus() || !(LtSen1->getDark()))
   {
-    return true;  ///< Return true if any of the lights are on OR the light sensor is detecting daylight
+    return true;  ///Return true if any of the lights are on OR the light sensor is detecting daylight
   }
   else
   {
@@ -238,7 +238,7 @@ void MainModule::setSheetsReportingOnOff(bool State)
   }
 }
 
-void MainModule::setSheetsReportingFrequency(uint8_t Frequency)
+void MainModule::setSheetsReportingFrequency(uint16_t Frequency)
 {
   *SheetsReportingFrequency = Frequency;
   addToLog(F("Reporting freqency updated"));
@@ -251,15 +251,15 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
     SheetsRefreshCounter = 0; ///Reset the counter after one day (15 x 96 = 1440 = 24 hours)
   if (SheetsRefreshCounter++ % (*SheetsReportingFrequency / 15) == 0 || ForceRun)
   {
-    addPushingBoxLogRelayID();                    ///< Adds a curly bracket {  that needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"Log\":{")); ///< Adds a curly bracket {  that needs to be closed at the end
+    addPushingBoxLogRelayID();                    ///Adds a curly bracket {  that needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"Log\":{")); ///Adds a curly bracket {  that needs to be closed at the end
     for (int i = 0; i < reportQueueItemCount;)
     {
       ReportQueue[i++]->reportToJSON();
       if (i != reportQueueItemCount)
-        strcat_P(LongMessage, (PGM_P)F(",")); /// < Unless it was the last element add a , separator
+        strcat_P(LongMessage, (PGM_P)F(",")); ///< Unless it was the last element add a , separator
     }
-    strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
+    strcat_P(LongMessage, (PGM_P)F("}}")); ///closing both curly bracket
     relayToGoogleSheets(&LongMessage);
   }
 }
@@ -268,7 +268,7 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
 
 void MainModule::setPushingBoxLogRelayID(const char *ID)
 {
-  strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxTextLength);
+  strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
   getSoundObject()->playOnSound();
   addToLog(F("Sheets log relay ID updated"));
 }

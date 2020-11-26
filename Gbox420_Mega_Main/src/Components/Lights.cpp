@@ -23,11 +23,11 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
   pinMode(*DimmingPin, OUTPUT);
   if (*FadingEnabled)
   {
-    CurrentBrightness = 0; /// start with low light intensity and slowly fade in to target Brightness
+    CurrentBrightness = 0; ///start with low light intensity and slowly fade in to target Brightness
   }
   else
   {
-    CurrentBrightness = *Brightness; /// instantly jump to target Brightness
+    CurrentBrightness = *Brightness; ///instantly jump to target Brightness
   }
   setBrightness(CurrentBrightness, false, false); ///Set initial brightness
   setLightOnOff(*Status, false);
@@ -85,13 +85,13 @@ void Lights::checkRelay()
 void Lights::dimLightsOnOff()
 {
   if (CurrentStatus == LightStates::DIMMED)
-  { ///< If temporary dimming is already ON -> Turn it OFF
+  { ///If temporary dimming is already ON -> Turn it OFF
     CurrentStatus = BeforeDimmingState;
     setBrightness(BeforeDimmingBrightness, false, false);
     Parent->getSoundObject()->playOffSound();
     Parent->addToLog(F("Dimming disabled"));
   }
-  else ///< If temporary dimming is OFF -> Turn it ON
+  else ///If temporary dimming is OFF -> Turn it ON
   {
     BeforeDimmingState = CurrentStatus;
     BeforeDimmingBrightness = CurrentBrightness;
@@ -148,7 +148,7 @@ void Lights::checkTimer()
 {
   if (*TimerEnabled)
   {
-    time_t Now = now();                             /// Get the current time from TimeLib
+    time_t Now = now();                             ///Get the current time from TimeLib
     int CombinedOnTime = *OnHour * 100 + *OnMinute; ///convert time to number, Example: 8:10=810, 20:10=2010
     int CombinedOffTime = *OffHour * 100 + *OffMinute;
     int CombinedCurrentTime = hour(Now) * 100 + minute(Now);
@@ -196,15 +196,15 @@ void Lights::checkTimer()
 
 void Lights::setBrightness(uint8_t Brightness, bool LogThis, bool StoreSetting)
 {
-  CurrentBrightness = Brightness; ///< Sets the dimming duty cycle (0-100%)
+  CurrentBrightness = Brightness; ///Sets the dimming duty cycle (0-100%)
   if (StoreSetting)
   {
-    *(this->Brightness) = Brightness; ///< Store to EEPROM as a startup value
+    *(this->Brightness) = Brightness; ///Store to EEPROM as a startup value
   }
   analogWrite(*DimmingPin, map(CurrentBrightness, 0, 100, int(255 * (100 - *DimmingLimit) / 100.0f), 0)); ///mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https:///www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
   if (LogThis)
   {
-    strncpy_P(LongMessage, (PGM_P)F("Brightness: "), MaxTextLength);
+    strncpy_P(LongMessage, (PGM_P)F("Brightness: "), MaxWordLength);
     strcat(LongMessage, toText(Brightness));
     strcat_P(LongMessage, (PGM_P)F("%"));
     Parent->addToLog(LongMessage);

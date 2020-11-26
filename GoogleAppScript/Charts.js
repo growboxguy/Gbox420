@@ -21,14 +21,14 @@ function UpdateChartsTab() {
   
   var columns = GetNamedRangeValues("Columns");
   var charts = GetNamedRangeValues("Charts").filter(function (row) {
-    return typeof row[charts_orderColumn] == "number" && row[charts_orderColumn] > 0;  ///< Get rows with an order number of 1 or above
+    return typeof row[charts_orderColumn] == "number" && row[charts_orderColumn] > 0;  ///Get rows with an order number of 1 or above
   });  
   
   for(var i = 0; i < charts.length;i++){
     if(Debug) LogToConsole("Generating chart " + charts[i][charts_titleColumn] + " [" + charts[i][charts_typeColumn] + "]",true,3);   
     var chartBuilder = chartsSheet.newChart();    
     var columnsToInclude = columns.filter(function (row) {
-      return row[columns_chartColumn] == charts[i][charts_titleColumn];  ///< Selecting the columns to include in the chart based on Settings tab - Columns section- Show on Chart column
+      return row[columns_chartColumn] == charts[i][charts_titleColumn];  ///Selecting the columns to include in the chart based on Settings tab - Columns section- Show on Chart column
     });
     
     chartBuilder.addRange(GetLogColumnRange("LogDate",GetSettingsValue("Chart point limit")));
@@ -61,7 +61,7 @@ function UpdateOverviewChart() {
     if(Debug) LogToConsole("Generating overview chart",true,3);   
     var chartBuilder = statusSheet.newChart();    
     var columnsToInclude = columns.filter(function (row) {
-      return row[columns_overviewColumn] == true;  ///< Selecting the columns to include in the chart based on Settings tab - Columns section- Show on Overview column
+      return row[columns_overviewColumn] == true;  ///Selecting the columns to include in the chart based on Settings tab - Columns section- Show on Overview column
     });
     
     chartBuilder.addRange(GetLogColumnRange("LogDate",GetSettingsValue("Chart point limit")));
@@ -110,7 +110,7 @@ function ApplyStandardFormatting(chartBuilder,seriesType){
   .setOption('hAxis', { slantedText: true, 'slantedTextAngle': 30 });  
 }
 
-function GetChartType(name)  ///< Translates the chart type text to an actual chart type
+function GetChartType(name)  ///Translates the chart type text to an actual chart type
 {
   switch(name)
   {

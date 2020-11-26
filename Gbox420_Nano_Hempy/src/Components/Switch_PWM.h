@@ -18,6 +18,6 @@ public:
 private:
  
 protected:
-  uint8_t *DutyCycle = 0;  ///< PWM duty cycle when the switch is on. 100 = always on.
-  uint8_t *DutyCycleLowLimit = 0;  ///< Limits the lowers PWM duty cycle when the switch is on.
+  uint8_t *DutyCycle = 0;  ///PWM duty cycle when the switch is on. 100 = always on.
+  uint8_t *DutyCycleLowLimit = 0;  ///Limits the lowers PWM duty cycle when the switch is on.
 };

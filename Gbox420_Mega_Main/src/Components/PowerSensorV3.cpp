@@ -44,7 +44,7 @@ char *PowerSensorV3::getPowerText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxTextLength] = "";    ///each call will overwrite the same variable
+    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
     memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
     strcat(ReturnChar, toText(Power));
     if (IncludeUnits)
@@ -59,7 +59,7 @@ char *PowerSensorV3::getEnergyText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxTextLength] = "";    ///each call will overwrite the same variable
+    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
     memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
     strcat(ReturnChar, toText(Energy));
     if (IncludeUnits)
@@ -74,7 +74,7 @@ char *PowerSensorV3::getVoltageText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxTextLength] = "";    ///each call will overwrite the same variable
+    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
     memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
     strcat(ReturnChar, toText(Voltage));
     if (IncludeUnits)
@@ -89,7 +89,7 @@ char *PowerSensorV3::getCurrentText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxTextLength] = "";    ///each call will overwrite the same variable
+    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
     memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
     strcat(ReturnChar, toText(Current));
     if (IncludeUnits)
@@ -104,7 +104,7 @@ char *PowerSensorV3::getFrequencyText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxTextLength] = "";    ///each call will overwrite the same variable
+    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
     memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
     strcat(ReturnChar, toText(Frequency));
     strcat_P(ReturnChar, (PGM_P)F("Hz"));

@@ -15,9 +15,9 @@ WeightSensor_Web::WeightSensor_Web(const __FlashStringHelper *Name, Module_Web *
 
 void WeightSensor_Web::reportToJSON()
 {
-    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end 
+    Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end 
 
-    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///closing the curly bracket
 }
 
 void WeightSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)

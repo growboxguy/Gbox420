@@ -8,7 +8,7 @@
 
 #include "TimeLib.h"     ///keeping track of time
 
-enum ReservoirMessages { ReservoirModuleCommand1,ReservoirModuleResponse1,ReservoirCommand1,ReservoirResponse1,ReservoirReset};  ///< ReservoirReset should always be the last element. An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+enum ReservoirMessages { ReservoirModuleCommand1,ReservoirModuleResponse1,ReservoirCommand1,ReservoirResponse1,ReservoirReset};  ///ReservoirReset should always be the last element. An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 static const __FlashStringHelper* toText_reservoirSequenceID(uint8_t SequenceID) 
 {
@@ -23,9 +23,9 @@ static const __FlashStringHelper* toText_reservoirSequenceID(uint8_t SequenceID)
    }
 }
 
-struct ReservoirCommonTemplate  ///< Shared between Command and Respone packages
+struct ReservoirCommonTemplate  ///Shared between Command and Respone packages
 {
-   ReservoirMessages SequenceID;  ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
+   ReservoirMessages SequenceID;  ///Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
    ReservoirCommonTemplate(ReservoirMessages SequenceID){
       this -> SequenceID = SequenceID;
    }

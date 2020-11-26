@@ -85,7 +85,7 @@ char *toText(int Number1, int Number2, const char *Separator)
 
 char *toText(float Number1, float Number2, const char *Separator)
 { ///function overloading: Same named function, different parameter type
-  char Number2Char[MaxTextLength] = "";
+  char Number2Char[MaxWordLength] = "";
   if (isnan(Number1))
     Number1 = -1.0;
   if (isnan(Number2))
@@ -147,7 +147,7 @@ char *toText_weight(float Weight)
 
 char *toText_percentage(float Number)
 {
-  ///static char * ReturnChar = malloc(MaxTextLength * sizeof(char));  ///allocate memory for every run - need to take care of freeing up the memory  after use
+  ///static char * ReturnChar = malloc(MaxWordLength * sizeof(char));  ///allocate memory for every run - need to take care of freeing up the memory  after use
   dtostrf(Number, 4, 2, ShortMessage);
   strcat_P(ShortMessage, (PGM_P)F("%"));
   return ShortMessage;

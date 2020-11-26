@@ -22,7 +22,7 @@ class ReservoirModule_Web;
 
 extern ELClientRest PushingBoxRestAPI;
 
-/// Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
+///Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
 class MainModule : public Common_Web, public Module_Web
 {
@@ -38,9 +38,9 @@ public:
   //PowerSensor_Web *Pow1;   ///For PZEM004T V1.0 or PZEM004T V2.0
   PowerSensorV3_Web * Pow1;  ///Only for PZEM004T V3.0
   DHTSensor_Web *DHT1;          ///Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
-  AeroModule_Web *AeroModule1;    /// <Represents the website controls and feedback for a AeroModule
-  ReservoirModule_Web *ReservoirModule1;  /// <Represents the website controls and feedback for a ReservoirModule
-  HempyModule_Web *HempyModule1;    /// <Represents the website controls and feedback for a HempyModule  
+  AeroModule_Web *AeroModule1;    ///<Represents the website controls and feedback for a AeroModule
+  ReservoirModule_Web *ReservoirModule1;  ///<Represents the website controls and feedback for a ReservoirModule
+  HempyModule_Web *HempyModule1;    ///<Represents the website controls and feedback for a HempyModule  
   void websiteEvent_Load(char *url);
   void websiteEvent_Refresh( char *url);
   void websiteEvent_Button(char *Button);
@@ -51,12 +51,12 @@ public:
   void refresh_QuarterHour();  
   void reportToGoogleSheetsTrigger(bool ForceRun = false);
   void reportToJSON();
-  bool getDayMode(); ///< Returns true if the lights are on or daylight is detected
+  bool getDayMode(); ///Returns true if the lights are on or daylight is detected
  // void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
  
 private:
   void setSheetsReportingOnOff(bool State);
-  void setSheetsReportingFrequency(uint8_t Frequency);
+  void setSheetsReportingFrequency(uint16_t Frequency);
   void setDebug(bool DebugEnabled);
   void setMetric(bool MetricEnabled);
   void setPushingBoxLogRelayID(const char *ID);
@@ -65,7 +65,7 @@ protected:
   bool RefreshAllRequested = false;
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;
-  uint8_t *SheetsReportingFrequency;
+  uint16_t *SheetsReportingFrequency;
   bool *ReportToGoogleSheets;
   uint8_t SheetsRefreshCounter = 0;
 };

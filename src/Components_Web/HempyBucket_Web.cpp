@@ -15,9 +15,9 @@ HempyBucket_Web::HempyBucket_Web(const __FlashStringHelper *Name, Module_Web *Pa
 
 void HempyBucket_Web::reportToJSON()
 {
-    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end 
+    Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end 
 
-    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///closing the curly bracket
 }
 
 void HempyBucket_Web::websiteEvent_Load(__attribute__((unused)) char *url)

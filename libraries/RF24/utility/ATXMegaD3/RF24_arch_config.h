@@ -47,7 +47,7 @@
 #endif
 
 // Use the avr pgmspace commands
-//// Avoid spurious warnings
+////Avoid spurious warnings
 //#if 1
 //#if ! defined( NATIVE ) && defined( ARDUINO )
 //#undef PROGMEM

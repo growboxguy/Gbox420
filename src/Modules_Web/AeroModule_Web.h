@@ -31,8 +31,8 @@ public:
      
 private:  
   bool SyncRequested = true;    //Trigger a sync with the external Module within 1 second
-  bool OnlineStatus = false;  /// Start in Offline state, a successful sync will set this to true
-  void *ReceivedResponse = malloc(WirelessPayloadSize);                       ///< Pointer to the data sent back in the acknowledgement.
+  bool OnlineStatus = false;  ///Start in Offline state, a successful sync will set this to true
+  void *ReceivedResponse = malloc(WirelessPayloadSize);                       ///Pointer to the data sent back in the acknowledgement.
   unsigned long LastResponseReceived = 0;   //Timestamp of the last response received
 
 protected:

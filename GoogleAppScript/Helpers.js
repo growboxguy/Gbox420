@@ -18,7 +18,7 @@ function getLastRowInRange(range) {
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Stackdriver logging - Add a log entry ( View it from Sheets: View \  Stackdriver logging
+///Stackdriver logging - Add a log entry ( View it from Sheets: View \  Stackdriver logging
 function LogToConsole(message, breakRow, indent) {
     var cache = CacheService.getScriptCache();
     var messageToLog = cache.get("previousMessage");

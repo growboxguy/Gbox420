@@ -33,7 +33,7 @@ void PressureSensor::readPressure()
   float Voltage = ((float)analogRead(*Pin)) * 5 / 1024;
   
   if (*Metric)
-    Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 1.0f); /// unit: bar / 100kPa
+    Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 1.0f); ///unit: bar / 100kPa
   else
     Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 14.5038f); ///unit: PSI
 }
@@ -60,7 +60,7 @@ void PressureSensor::readOffset()
     delay(10);
   }
   float AeroOffsetRecommendation = (sum / 50) * 5 / 1024; ///Reads voltage at 0 pressure
-  strncpy_P(LongMessage, (PGM_P)F("0 pressure Offset: "), MaxTextLength);
+  strncpy_P(LongMessage, (PGM_P)F("0 pressure Offset: "), MaxWordLength);
   strcat(LongMessage, toText(AeroOffsetRecommendation));
   Parent->addToLog(LongMessage);
 }

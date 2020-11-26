@@ -34,7 +34,7 @@ void PHSensor::updatePH(bool ShowRaw)
   int PHRaw = analogRead(*Pin);
   if (ShowRaw)
   {
-    strncpy_P(LongMessage, (PGM_P)F("PH analog read: "), MaxTextLength);
+    strncpy_P(LongMessage, (PGM_P)F("PH analog read: "), MaxWordLength);
     strcat(LongMessage, toText(PHRaw));
     Parent->addToLog(LongMessage);
   }

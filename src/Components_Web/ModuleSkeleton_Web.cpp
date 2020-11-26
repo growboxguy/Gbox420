@@ -17,9 +17,9 @@ ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_W
 
 void ModuleSkeleton_Web::reportToJSON()
 {
-    Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end 
+    Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end 
 
-    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///closing the curly bracket
 }
 
 void ModuleSkeleton_Web::websiteEvent_Load(__attribute__((unused)) char *url)
@@ -70,7 +70,7 @@ void ModuleSkeleton_Web::websiteEvent_Button(char *Button)
       RuntimeBool = false;
       RuntimeInt = 420;
       RuntimeFloat = 4.2;
-      strncpy(RuntimeString, "HailMary", MaxTextLength);
+      strncpy(RuntimeString, "HailMary", MaxWordLength);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("ResetRollInt")) == 0)
     {
@@ -97,7 +97,7 @@ void ModuleSkeleton_Web::websiteEvent_Field(char *Field)
     } ///Getting a bool
     else if (strcmp_P(ShortMessage, (PGM_P)F("SetRunString")) == 0)
     {
-      strncpy(RuntimeString, WebServer.getArgString(), MaxTextLength);
+      strncpy(RuntimeString, WebServer.getArgString(), MaxWordLength);
     } ///Getting a string
     else if (strcmp_P(ShortMessage, (PGM_P)F("SetPersBool")) == 0)
     {

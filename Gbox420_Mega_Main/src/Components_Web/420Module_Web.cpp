@@ -1,7 +1,7 @@
 #include "420Module_Web.h"
 #include "Sound_Web.h"
 
-static char Logs[LogDepth][MaxTextLength]; ///two dimensional array for storing log histroy displayed on the website (array of char arrays)
+static char Logs[LogDepth][MaxWordLength]; ///two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
 Module_Web::Module_Web(RF24 *Wireless) : Module()
 {
@@ -204,10 +204,10 @@ void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) uint8
   for (uint8_t i = LogDepth - 1; i > 0; i--)
   {                                       ///Shift every log entry one up, dropping the oldest
     memset(&Logs[i], 0, sizeof(Logs[i])); ///clear variable
-    strncpy(Logs[i], Logs[i - 1], MaxTextLength);
+    strncpy(Logs[i], Logs[i - 1], MaxWordLength);
   }
   memset(&Logs[0], 0, sizeof(Logs[0]));         ///clear variable
-  strncpy(Logs[0], LongMessage, MaxTextLength); ///instert new log to [0]
+  strncpy(Logs[0], LongMessage, MaxWordLength); ///instert new log to [0]
 }
 
 void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__((unused)) uint8_t Indent)
@@ -216,10 +216,10 @@ void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__(
   for (uint8_t i = LogDepth - 1; i > 0; i--)
   {                                       ///Shift every log entry one up, dropping the oldest
     memset(&Logs[i], 0, sizeof(Logs[i])); ///clear variable
-    strncpy(Logs[i], Logs[i - 1], MaxTextLength);
+    strncpy(Logs[i], Logs[i - 1], MaxWordLength);
   }
   memset(&Logs[0], 0, sizeof(Logs[0]));                  ///clear variable
-  strncpy_P(Logs[0], (PGM_P)LongMessage, MaxTextLength); ///instert new log to [0]
+  strncpy_P(Logs[0], (PGM_P)LongMessage, MaxWordLength); ///instert new log to [0]
 }
 
 char *Module_Web::eventLogToJSON(bool Append)

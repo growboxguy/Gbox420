@@ -20,8 +20,8 @@ extern RF24 Wireless;
 class HempyModule : virtual public Common, virtual public Module
 {
 public:
-  //// @param Name Pointer to the Name of the object, stored in Flash
-  //// @param DefaultSettings A pointer to the default settings stuct loaded from EEPROM. Defined in Settings.h
+  ////@param Name Pointer to the Name of the object, stored in Flash
+  ////@param DefaultSettings A pointer to the default settings stuct loaded from EEPROM. Defined in Settings.h
 
   HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings); ///constructor
   Sound *Sound1;             ///Pointer to a Piezo speaker - sound feedback

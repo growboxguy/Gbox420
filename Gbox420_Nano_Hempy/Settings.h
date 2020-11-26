@@ -10,103 +10,113 @@
  *  \attention Update the Version number when you make change to the structure in the SAVED TO EEPROM secton. This will overwrite the EEPROM settings with the sketch defaults.
  */
 
-static const uint8_t Version = 1; ///< Increment this when you make a change in the SAVED TO EEPROM secton
+static const uint8_t Version = 1; ///Increment this when you make a change in the SAVED TO EEPROM secton
 
 ///State machine - Defining possible states
-  enum PumpStates {DISABLED, IDLE, PRIMING, RUNNING, BLOWOFF, MIXING};
-  //enum HempyState { DRY, WATERING};
-  //enum AeroState { SPRAYING };
+enum PumpStates
+{
+  DISABLED,
+  IDLE,
+  PRIMING,
+  RUNNING,
+  BLOWOFF,
+  MIXING
+};
+//enum HempyState { DRY, WATERING};
+//enum AeroState { SPRAYING };
 
 ///THIS SECTION DOES NOT GET STORED IN EEPROM:
 
-  ///Global constants
-  static const uint8_t MaxTextLength = 32;      ///Default char * buffer for storing a word + null terminator. Memory intense!
-  static const uint8_t MaxShotTextLength = 64; ///Default char * buffer for storing mutiple words. Memory intense!
-  static const int MaxLongTextLength = 192; ///Default char * buffer for storing a long text. Memory intense!
-  static const uint8_t QueueDepth = 8;               ///Limits the maximum number of active modules. Memory intense!
-  static const uint8_t RollingAverageDepth = 10;     ///Limits the maximum number of active modules. Memory intense!
+///Global constants
+static const uint8_t MaxWordLength = 32;       ///Default char * buffer length for storing a word + null terminator. Memory intense!
+static const uint8_t MaxShotTextLength = 64;   ///Default char * buffer length for storing mutiple words. Memory intense!
+static const uint16_t MaxLongTextLength = 192; ///Default char * buffer length for storing a long text. Memory intense!
+static const uint8_t QueueDepth = 8;           ///Limits the maximum number of active modules. Memory intense!
+static const uint8_t RollingAverageDepth = 10; ///Limits the maximum number of active modules. Memory intense!
 
-  ///Global variables
-  extern char LongMessage[MaxLongTextLength];  ///temp storage for assembling long messages (REST API, MQTT API)
-  extern char ShortMessage[MaxShotTextLength]; ///temp storage for assembling short messages (Log entries, Error messages)
-  extern char CurrentTime[MaxTextLength];      ///buffer for storing current time in text
+///Global variables
+extern char LongMessage[MaxLongTextLength];  ///Temp storage for assembling long messages (REST API - Google Sheets reporting)
+extern char ShortMessage[MaxShotTextLength]; ///Temp storage for assembling short messages (Log entries, Error messages)
+extern char CurrentTime[MaxWordLength];      ///Buffer for storing current time in text format
 
-  ///nRF24L01+ wireless receiver
-  static const uint8_t WirelessCSNPin = 9;   //< Pre-connected on RF-Nano
-  static const uint8_t WirelessCEPin = 10;   //< Pre-connected on RF-Nano
-  static const uint8_t WirelessChannel[6] = {"Hemp1"};    ///This needs to be unique and match with the Name of the HempyModule_Web object in the Main module
-  static const uint8_t WirelessPayloadSize = 32; //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
-  static const uint16_t WirelessMessageTimeout = 500; //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
+///nRF24L01+ wireless receiver
+static const uint8_t WirelessCSNPin = 9;             ///nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
+static const uint8_t WirelessCEPin = 10;             ///nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
+static const uint8_t WirelessChannel[6] = {"Hemp1"}; ///This needs to be unique and match with the Name of the HempyModule_Web object in the MainModule_Web.cpp
+static const uint8_t WirelessPayloadSize = 32;       //Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+static const uint16_t WirelessMessageTimeout = 500;  //Default 0.5sec -  One package should be exchanged within this timeout (Including retries and delays)
 
-///SAVED TO EEPROM - Before uploading the schetch increase the Version variable to override whatever is stored in the Arduino's EEPROM 
-  typedef struct
+///SAVED TO EEPROM - Settings struct
+///If you change things here, increase the Version variable in line 12
+typedef struct
+{
+  bool Debug = true;  ///Logs debug messages to serial and web outputs
+  bool Metric = true; ///Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
+
+  struct HempyBucketSettings
   {
-    bool Debug = true;          ///Logs debug messages to serial and web outputs
-    bool Metric = true;   ///Switch between Imperial/Metric units. If changed update the default temp and pressure values too.
-    
-    struct HempyBucketSettings
-    {
-      HempyBucketSettings( bool WeightBasedWatering = false, float StartWeight = 0.0, float StopWeight = 0.0,  bool TimerBasedWatering = false, uint16_t WateringInterval = 0, uint16_t WateringDuration = 0) : WeightBasedWatering(WeightBasedWatering), StartWeight(StartWeight), StopWeight(StopWeight), TimerBasedWatering(TimerBasedWatering), WateringInterval(WateringInterval), WateringDuration(WateringDuration)   {}
-      bool WeightBasedWatering;  //Enable/Disable weight based watering
-      float StartWeight; ///Start watering below this weight
-      float StopWeight;  ///Stop watering above this weight
-      bool TimerBasedWatering; //Enable/Disable timer based watering
-      uint16_t WateringInterval;   //Water every X minutes
-      uint16_t WateringDuration;  //Water for X seconds
-    };
-    struct HempyBucketSettings Bucket1 = { .WeightBasedWatering = true, .StartWeight = 4.2, .StopWeight = 6.9, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
-    struct HempyBucketSettings Bucket2 = { .WeightBasedWatering = true, .StartWeight = 4.2, .StopWeight = 6.9, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
+    HempyBucketSettings(bool WeightBasedWatering = false, float StartWeight = 0.0, float StopWeight = 0.0, bool TimerBasedWatering = false, uint16_t WateringInterval = 0, uint16_t WateringDuration = 0) : WeightBasedWatering(WeightBasedWatering), StartWeight(StartWeight), StopWeight(StopWeight), TimerBasedWatering(TimerBasedWatering), WateringInterval(WateringInterval), WateringDuration(WateringDuration) {}
+    bool WeightBasedWatering;  //Enable/Disable weight based watering
+    float StartWeight;         ///Start watering below this weight
+    float StopWeight;          ///Stop watering above this weight
+    bool TimerBasedWatering;   //Enable/Disable timer based watering
+    uint16_t WateringInterval; //Water every X minutes
+    uint16_t WateringDuration; //Water for X seconds
+  };
+  struct HempyBucketSettings Bucket1 = {.WeightBasedWatering = true, .StartWeight = 4.2, .StopWeight = 6.9, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
+  struct HempyBucketSettings Bucket2 = {.WeightBasedWatering = true, .StartWeight = 4.2, .StopWeight = 6.9, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
 
-    struct HempyModuleSettings{
-      //HempyModuleSettings() :  {}     
-    };  
-    struct HempyModuleSettings HempyMod1 = {};  ///Default settings for the Hempy Module
+  struct HempyModuleSettings
+  {
+    //HempyModuleSettings() :  {}
+  };
+  struct HempyModuleSettings HempyMod1 = {}; ///Default settings for the Hempy Module
 
-    struct SoundSettings
-    {
-      SoundSettings(uint8_t Pin = 0, bool Enabled = false) : Pin(Pin), Enabled(Enabled) {}
-      uint8_t Pin;            ///PC buzzer+ (red)
-      bool Enabled; ///Enable PC speaker / Piezo buzzer
-    };
-    struct SoundSettings Sound1 = {.Pin = 2, .Enabled = true};  ///Default settings for the  Sound output
+  struct SoundSettings
+  {
+    SoundSettings(uint8_t Pin = 0, bool Enabled = false) : Pin(Pin), Enabled(Enabled) {}
+    uint8_t Pin;  ///Piezo Buzzer red(+) cable
+    bool Enabled; ///Enable/Disable sound
+  };
+  struct SoundSettings Sound1 = {.Pin = 2, .Enabled = true};
 
-   struct WaterPumpSettings
-    {
-      WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic)  {}
-      uint8_t PumpPin;         ///< Pump relay pin
-      bool PumpPinNegativeLogic;  ///Set to true if Relay/MOSFET controlling the power to the pump requires LOW signal to Turn ON
-      uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin [optional]
-      bool BypassSolenoidNegativeLogic;  ///Set to true if Relay/MOSFET controlling the power to the solenoid requires LOW signal to Turn ON [optional]
-      bool PumpEnabled; ///< Enable/disable pump. false= Block running the pump
-      uint8_t Speed;  ///< Duty cycle of the PWM Motor speed 
-      uint8_t SpeedLowLimit;  ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
-      uint16_t PumpTimeOut;   ///< (Sec) Max pump run time        
-      int PrimingTime;    ///< (Sec) Only if BypassSolenoid is present. For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
-      int BlowOffTime;     ///< (Sec) Only if BypassSolenoid is present. For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
-    };
-    struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
-    struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
-   
-    struct WeightSensorSettings
-    {
-      WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, long Offset = 0, float Scale = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Offset(Offset), Scale(Scale) {}
-      uint8_t DTPin;     ///Weight sensor DT pin
-      uint8_t SCKPin; ///Weight sensor SCK pin
-      long Offset; ///Reading at 0 weight on the scale
-      float Scale;  ///Scale factor      
-    };
-    struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = -163641, .Scale = -21362.00}; ///Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
-    struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = 402140, .Scale = -21218.50}; ///Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
-    struct WeightSensorSettings WeightWR1 = {.DTPin = A0, .SCKPin = A1, .Offset = -67842, .Scale = -22499.50}; ///Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
-    struct WeightSensorSettings WeightWR2 = {.DTPin = A2, .SCKPin = A3, .Offset = 266229, .Scale = -20892.00}; ///Waste Reservoir 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
+  struct WaterPumpSettings
+  {
+    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic) {}
+    uint8_t PumpPin;                  ///Pump relay pin
+    bool PumpPinNegativeLogic;        ///Set to true if Relay/MOSFET controlling the power to the pump requires LOW signal to Turn ON
+    uint8_t BypassSolenoidPin;        ///Bypass solenoid relay pin [optional]
+    bool BypassSolenoidNegativeLogic; ///Set to true if Relay/MOSFET controlling the power to the solenoid requires LOW signal to Turn ON [optional]
+    bool PumpEnabled;                 ///Enable/disable pump. false= Block running the pump
+    uint8_t Speed;                    ///Duty cycle of the PWM Motor speed
+    uint8_t SpeedLowLimit;            ///Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
+    uint16_t PumpTimeOut;             ///(Sec) Max pump run time
+    int PrimingTime;                  ///(Sec) Only if BypassSolenoid is present. For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+    int BlowOffTime;                  ///(Sec) Only if BypassSolenoid is present. For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
+  };
+  struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///Pumps do not need a bypass solenoid
+  struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///Pumps do not need a bypass solenoid
 
-    uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
-  } Settings;
+  struct WeightSensorSettings
+  {
+    WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, long Offset = 0, float Scale = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Offset(Offset), Scale(Scale) {}
+    uint8_t DTPin;  ///Weight sensor DT pin
+    uint8_t SCKPin; ///Weight sensor SCK pin
+    long Offset;    ///Reading at 0 weight on the scale
+    float Scale;    ///Scale factor
+  };
+  struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = -163641, .Scale = -21362.00};   ///Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = 402140, .Scale = -21218.50};    ///Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightWR1 = {.DTPin = A0, .SCKPin = A1, .Offset = -67842, .Scale = -22499.50}; ///Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
+  struct WeightSensorSettings WeightWR2 = {.DTPin = A2, .SCKPin = A3, .Offset = 266229, .Scale = -20892.00}; ///Waste Reservoir 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
+
+  uint8_t CompatibilityVersion = Version; ///Should always be the last value stored.
+} Settings;
 
 ///////////////////////////////////////////////////////////////
 ///EEPROM related functions - Persistent storage between reboots
-///Use cautiously, EEPROM has a write limit of 100.000 cycles - Only use these in the setup() function, or when a user initiated change is stored 
+///Use cautiously, EEPROM has a write limit of 100.000 cycles - Only use these in the setup() function, or when a user initiated change is stored
 
 void saveSettings(Settings *ToSave);
-Settings *loadSettings(bool ResetEEPROM = false );
+Settings *loadSettings(bool ResetEEPROM = false);
 void restoreDefaults(Settings *ToOverwrite);

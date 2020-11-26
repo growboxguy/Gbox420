@@ -15,7 +15,7 @@
 
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;
-extern char CurrentTime[MaxTextLength];
+extern char CurrentTime[MaxWordLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
 extern Settings * ModuleSettings;

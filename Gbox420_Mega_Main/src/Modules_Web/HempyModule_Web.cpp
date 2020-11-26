@@ -1,12 +1,12 @@
 #include "HempyModule_Web.h"
 
 struct HempyModuleCommand HempyModuleCommand1ToSend = {HempyMessages::HempyModuleCommand1};  ///Command to send will be stored here
-struct HempyModuleResponse HempyModuleResponse1Received = {HempyMessages::HempyModuleResponse1};  /// Response will be stored here
+struct HempyModuleResponse HempyModuleResponse1Received = {HempyMessages::HempyModuleResponse1};  ///Response will be stored here
 struct HempyBucketCommand HempyBucketCommand1ToSend = {HempyMessages::HempyBucketCommand1}; ///Command to send will be stored here
-struct HempyBucketResponse HempyBucketResponse1Received = {HempyMessages::HempyBucketResponse1};  /// Response will be stored here
+struct HempyBucketResponse HempyBucketResponse1Received = {HempyMessages::HempyBucketResponse1};  ///Response will be stored here
 struct HempyBucketCommand HempyBucketCommand2ToSend = {HempyMessages::HempyBucketCommand2}; ///Command to send will be stored here
-struct HempyBucketResponse HempyBucketResponse2Received = {HempyMessages::HempyBucketResponse2};  /// Response will be stored here
-struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};            //< Special command to fetch the next Response from the Receiver
+struct HempyBucketResponse HempyBucketResponse2Received = {HempyMessages::HempyBucketResponse2};  ///Response will be stored here
+struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};            ///Special command to fetch the next Response from the Receiver
 
 HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///Constructor
@@ -51,7 +51,7 @@ void HempyModule_Web::report()
 
 void HempyModule_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1\":\""));
@@ -78,7 +78,7 @@ void HempyModule_Web::reportToJSON()
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StartWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"StopB2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StopWeight));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///closing the curly bracket
 }
 
 void HempyModule_Web::websiteEvent_Load(char *url)
@@ -329,11 +329,11 @@ void HempyModule_Web::refresh_Minute()
 void HempyModule_Web::sendMessages()
 {
   updateCommands();
-  sendCommand(&HempyResetToSend);   //< special Command, resets communication to first message
-  sendCommand(&HempyModuleCommand1ToSend);   //< Command - Response exchange
-  sendCommand(&HempyBucketCommand1ToSend);   //< Command - Response exchange
-  sendCommand(&HempyBucketCommand2ToSend);   //< Command - Response exchange
-  sendCommand(&HempyResetToSend);   //< special Command, resets communication to first message
+  sendCommand(&HempyResetToSend);   ///special Command, resets communication to first message
+  sendCommand(&HempyModuleCommand1ToSend);   ///Command - Response exchange
+  sendCommand(&HempyBucketCommand1ToSend);   ///Command - Response exchange
+  sendCommand(&HempyBucketCommand2ToSend);   ///Command - Response exchange
+  sendCommand(&HempyResetToSend);   ///special Command, resets communication to first message
   if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
@@ -351,13 +351,13 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
     logToSerials(F("and waiting for Acknowledgment..."), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
-  Parent->Wireless->flush_rx(); ///< Dump all previously received but unprocessed messages
+  Parent->Wireless->flush_rx(); ///Dump all previously received but unprocessed messages
   if (Parent->Wireless->write(CommandToSend, WirelessPayloadSize))
   {
-    delay(50); //< give a little time to the nRF024L01+ chip to update the isAckPayloadAvailable flag
+    delay(50); ///give a little time to the nRF024L01+ chip to update the isAckPayloadAvailable flag
     if (Parent->Wireless->isAckPayloadAvailable())
     {
-      OnlineStatus = true; ///< Mark that the module responded
+      OnlineStatus = true; ///Mark that the module responded
       Parent->Wireless->read(ReceivedResponse, WirelessPayloadSize);
       ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedResponse)->SequenceID;
       if (*Debug)
@@ -438,7 +438,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
     else
     {
       if (*Debug)
-        logToSerials(F("Acknowledgement received without any data"), true, 4);  //< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+        
+        logToSerials(F("Acknowledgement received without any data"), true, 4);  ///Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+        
     }    
   }
   else

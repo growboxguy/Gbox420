@@ -12,7 +12,7 @@
 ///forward declaration
 extern char LongMessage[MaxLongTextLength];
 extern char ShortMessage[MaxShotTextLength];
-extern char CurrentTime[MaxTextLength];
+extern char CurrentTime[MaxWordLength];
 extern Settings * ModuleSettings;
 extern bool *Debug;
 extern bool *Metric;

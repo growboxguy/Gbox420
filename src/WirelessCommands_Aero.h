@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include "TimeLib.h"     ///< keeping track of time
+#include "TimeLib.h"     ///keeping track of time
 ///Structs for wireless communication
-enum AeroMessages { AeroModuleCommand1,AeroModuleResponse1,AeroCommand1,AeroResponse1,AeroCommand2,AeroResponse2,AeroReset};  ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+enum AeroMessages { AeroModuleCommand1,AeroModuleResponse1,AeroCommand1,AeroResponse1,AeroCommand2,AeroResponse2,AeroReset};  ///An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 static const __FlashStringHelper* toText_aeroSequenceID(uint8_t SequenceID)
 {
@@ -25,14 +25,14 @@ static const __FlashStringHelper* toText_aeroSequenceID(uint8_t SequenceID)
    }
 }
 
-///< Both the Transmitter and the Receiver needs to know these structures
+///Both the Transmitter and the Receiver needs to know these structures
 
-struct AeroCommonTemplate  ///< Shared between Command and Respone packages
+struct AeroCommonTemplate  ///Shared between Command and Respone packages
 {
    AeroCommonTemplate(AeroMessages SequenceID){
       this -> SequenceID = SequenceID;
    }
-   AeroMessages SequenceID;  ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
+   AeroMessages SequenceID;  ///Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
 };
 
 struct AeroModuleCommand : AeroCommonTemplate  //Max 32bytes. Module command sent by the Main module
@@ -92,7 +92,7 @@ struct AeroResponse_P1 : AeroCommonTemplate  ///Max 32 bytes. Template of the re
    bool SprayEnabled = false;
    float Pressure = 0.0;
    PumpStates State = DISABLED;
-   float LastSprayPressure = 0.0; ///< Used only without pressure tank. last spray pressure
+   float LastSprayPressure = 0.0; ///Used only without pressure tank. last spray pressure
    float Weight = 0.0;
 };
 

@@ -31,8 +31,6 @@ ln ../src/Components/Aeroponics.h ./src/Components
 ln ../src/Components/Aeroponics.cpp ./src/Components
 ln ../src/Components/Aeroponics_NoTank.h ./src/Components
 ln ../src/Components/Aeroponics_NoTank.cpp ./src/Components
-ln ../src/Components/Aeroponics_Tank.h ./src/Components
-ln ../src/Components/Aeroponics_Tank.cpp ./src/Components
 ln ../src/Components/PressureSensor.h ./src/Components
 ln ../src/Components/PressureSensor.cpp ./src/Components
 ln ../src/Components/Sound.h ./src/Components

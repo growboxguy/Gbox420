@@ -1,8 +1,8 @@
 #include "Aeroponics.h"
 
-/// This is a virtual class (cannot be instanciated), parent of two classes:
-/// -Aeroponics_NoTank: High pressure pump is directly connected to the aeroponics tote
-/// -Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid for spraying
+///This is a virtual class (cannot be instanciated), parent of two classes:
+///-Aeroponics_NoTank: High pressure pump is directly connected to the aeroponics tote
+///-Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid for spraying
 
 Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Common(Name)
 { ///constructor
@@ -162,7 +162,7 @@ char *Aeroponics::getLastSprayPressureText(bool IncludeCurrentPressure)
 {
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///clear variable
 
-  toText_pressure(LastSprayPressure); ///< loads the Last pressure measured during spraying
+  toText_pressure(LastSprayPressure); ///loads the Last pressure measured during spraying
   if (IncludeCurrentPressure)
   {
     strcat_P(ShortMessage, (PGM_P)F(" ["));

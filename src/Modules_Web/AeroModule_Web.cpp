@@ -1,12 +1,12 @@
 #include "AeroModule_Web.h"
 
 struct AeroModuleCommand AeroModuleCommand1ToSend = {AeroMessages::AeroModuleCommand1};  ///Command to send will be stored here
-struct AeroModuleResponse AeroModuleResponse1Received = {AeroMessages::AeroModuleResponse1};   /// Default startup values
+struct AeroModuleResponse AeroModuleResponse1Received = {AeroMessages::AeroModuleResponse1};   ///Default startup values
 struct AeroCommand_P1 AeroCommand1ToSend = {AeroMessages::AeroCommand1}; ///Command to send will be stored here
-struct AeroResponse_P1 AeroResponse1Received = {AeroMessages::AeroResponse1};  /// Default startup values
+struct AeroResponse_P1 AeroResponse1Received = {AeroMessages::AeroResponse1};  ///Default startup values
 struct AeroCommand_P2 AeroCommand2ToSend = {AeroMessages::AeroCommand2}; ///Command to send will be stored here
-struct AeroResponse_P2 AeroResponse2Received = {AeroMessages::AeroResponse2};  /// Default startup values
-struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};    //< Special command to fetch the next Response from the Receiver
+struct AeroResponse_P2 AeroResponse2Received = {AeroMessages::AeroResponse2};  ///Default startup values
+struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};    ///Special command to fetch the next Response from the Receiver
 
 
 AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
@@ -66,7 +66,7 @@ void AeroModule_Web::report()
 
 void AeroModule_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"Pres\":\""));
@@ -96,7 +96,7 @@ void AeroModule_Web::reportToJSON()
   strcat(LongMessage, toText(AeroCommand1ToSend.NightInterval));
   strcat_P(LongMessage, (PGM_P)F("\",\"NightDur\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.NightDuration));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///closing the curly bracket
 }
 
 void AeroModule_Web::websiteEvent_Load(char *url)
@@ -280,11 +280,11 @@ void AeroModule_Web::refresh_Minute()
 void AeroModule_Web::sendMessages()
 {
   updateCommands();
-  sendCommand(&AeroResetToSend);   //< special Command, resets communication to first message
-  sendCommand(&AeroModuleCommand1ToSend);                                                                                       //< Command - Response exchange
+  sendCommand(&AeroResetToSend);   ///special Command, resets communication to first message
+  sendCommand(&AeroModuleCommand1ToSend);                                                                                       ///Command - Response exchange
   sendCommand(&AeroCommand1ToSend);
-  sendCommand(&AeroCommand2ToSend);                                                                                         //< Command - Response exchange
-  sendCommand(&AeroResetToSend);   //< special Command, resets communication to first message
+  sendCommand(&AeroCommand2ToSend);                                                                                         ///Command - Response exchange
+  sendCommand(&AeroResetToSend);   ///special Command, resets communication to first message
   if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
@@ -302,10 +302,10 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
     logToSerials(F("and waiting for Acknowledgment..."), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
-  Parent->Wireless->flush_rx(); ///< Dump all previously received but unprocessed messages
+  Parent->Wireless->flush_rx(); ///Dump all previously received but unprocessed messages
   if (Parent->Wireless->write(CommandToSend, WirelessPayloadSize))
   {
-    delay(50); //< give a little time to the nRF024L01+ chip to update the isAckPayloadAvailable flag
+    delay(50); ///give a little time to the nRF024L01+ chip to update the isAckPayloadAvailable flag
     if (Parent->Wireless->isAckPayloadAvailable())
     {
       OnlineStatus = true;
@@ -384,7 +384,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
     {
       if (*Debug)
         logToSerials(F("Acknowledgement received without any data"), true, 4);
-      OnlineStatus = false; /// Comment this out if you have modules that do not return any data
+      OnlineStatus = false; ///Comment this out if you have modules that do not return any data
     }
   }
   else

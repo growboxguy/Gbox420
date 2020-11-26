@@ -7,7 +7,7 @@
 
 ///Weight sensor measures the bucket weight and watering is based on the measured weight
 
-enum WateringMode {WEIGHT,TIMER,MANUAL}; ///< Tracks what triggered the currently running watering
+enum WateringMode {WEIGHT,TIMER,MANUAL}; ///Tracks what triggered the currently running watering
 
 class HempyBucket : virtual public Common
 {
@@ -18,9 +18,9 @@ public:
   void report();
   void waterNow(bool UserRequest = false);  ///Turn on water pump, run until StopWeight is reached  
   void checkRelay(); ///Sets the relay controlling the pump
-  void checkWateringWeight();  //< Watering based on weight
-  void checkWateringTimer();  //< Watering based on timer
-  void checkWateringFinished();  //< Stops the pump when target weight or watering duration is reached
+  void checkWateringWeight();  ///Watering based on weight
+  void checkWateringTimer();  ///Watering based on timer
+  void checkWateringFinished();  ///Stops the pump when target weight or watering duration is reached
   void setWeightBasedWatering(bool State);
   void setStartWeight(float Weight);
   void setStopWeight(float Weight);

@@ -19,7 +19,7 @@ public:
 
 private:
   PZEM004T *Sensor;         ///for PZEM004T model
-  IPAddress *PowerSensorIP; /// Power Sensor address (fake,just needs something set)
+  IPAddress *PowerSensorIP; ///Power Sensor address (fake,just needs something set)
   float Power;              ///Power sensor - W
   float Energy;             ///Power sensor - Wh Total consumption
   float Voltage;            ///Power sensor - V

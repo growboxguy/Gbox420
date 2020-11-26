@@ -1,10 +1,10 @@
 #include "ReservoirModule_Web.h"
 
-struct ReservoirModuleCommand ReservoirModuleCommand1ToSend = {ReservoirMessages::ReservoirModuleCommand1};         //< Command to send will be stored here
-struct ReservoirModuleResponse ReservoirModuleResponse1Received = {ReservoirMessages::ReservoirModuleResponse1};  //< Response will be stored here
-struct ReservoirCommand ReservoirCommand1ToSend = {ReservoirMessages::ReservoirCommand1};         //< Command to send will be stored here
-struct ReservoirResponse ReservoirResponse1Received = {ReservoirMessages::ReservoirResponse1};  //< Response will be stored here
-struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset}; //< Special command to fetch the next Response from the Receiver
+struct ReservoirModuleCommand ReservoirModuleCommand1ToSend = {ReservoirMessages::ReservoirModuleCommand1};         ///Command to send will be stored here
+struct ReservoirModuleResponse ReservoirModuleResponse1Received = {ReservoirMessages::ReservoirModuleResponse1};  ///Response will be stored here
+struct ReservoirCommand ReservoirCommand1ToSend = {ReservoirMessages::ReservoirCommand1};         ///Command to send will be stored here
+struct ReservoirResponse ReservoirResponse1Received = {ReservoirMessages::ReservoirResponse1};  ///Response will be stored here
+struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset}; ///Special command to fetch the next Response from the Receiver
 
 ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 {
@@ -39,7 +39,7 @@ void ReservoirModule_Web::report()
 
 void ReservoirModule_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
@@ -52,7 +52,7 @@ void ReservoirModule_Web::reportToJSON()
   strcat(LongMessage, toText(ReservoirResponse1Received.AirTemperature));
   strcat_P(LongMessage, (PGM_P)F("\",\"Hum\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.Humidity));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///closing the curly bracket
 }
 
 void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///called when website is refreshed.
@@ -109,10 +109,10 @@ void ReservoirModule_Web::sendMessages()
   * @brief Exchange messages with the Reservoir module
   */
   updateCommands();
-  sendCommand(&ReservoirResetToSend);   //< special Command, resets communication to first message
-  sendCommand(&ReservoirModuleCommand1ToSend);  //< Module specific Command - Response exchange 
-  sendCommand(&ReservoirCommand1ToSend); //< Command - Response exchange
-  sendCommand(&ReservoirResetToSend);   //< special Command, resets communication to first message
+  sendCommand(&ReservoirResetToSend);   ///special Command, resets communication to first message
+  sendCommand(&ReservoirModuleCommand1ToSend);  ///Module specific Command - Response exchange 
+  sendCommand(&ReservoirCommand1ToSend); ///Command - Response exchange
+  sendCommand(&ReservoirResetToSend);   ///special Command, resets communication to first message
   if(*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
@@ -133,10 +133,10 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
     logToSerials(F("and waiting for Acknowledgment..."), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
-  Parent->Wireless->flush_rx(); ///< Dump all previously received but unprocessed messages
+  Parent->Wireless->flush_rx(); ///Dump all previously received but unprocessed messages
   if (Parent->Wireless->write(CommandToSend, WirelessPayloadSize))
   {
-    delay(50); //< give a little time to the nRF024L01+ chip to update the isAckPayloadAvailable flag
+    delay(50); ///give a little time to the nRF024L01+ chip to update the isAckPayloadAvailable flag
     if (Parent->Wireless->isAckPayloadAvailable())
     {
       OnlineStatus = true;

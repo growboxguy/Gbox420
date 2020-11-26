@@ -40,7 +40,7 @@ char *PowerSensor::getPowerText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxTextLength] = "";    ///each call will overwrite the same variable
+    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
     memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
     strcat(ReturnChar, toText(Power));
     if (IncludeUnits)
@@ -55,7 +55,7 @@ char *PowerSensor::getEnergyText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxTextLength] = "";    ///each call will overwrite the same variable
+    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
     memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
     strcat(ReturnChar, toText(Energy));
     if (IncludeUnits)
@@ -70,7 +70,7 @@ char *PowerSensor::getVoltageText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxTextLength] = "";    ///each call will overwrite the same variable
+    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
     memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
     strcat(ReturnChar, toText(Voltage));
     if (IncludeUnits)
@@ -85,7 +85,7 @@ char *PowerSensor::getCurrentText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxTextLength] = "";    ///each call will overwrite the same variable
+    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
     memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
     strcat(ReturnChar, toText(Current));
     if (IncludeUnits)

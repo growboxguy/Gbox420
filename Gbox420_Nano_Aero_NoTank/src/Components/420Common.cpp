@@ -45,7 +45,7 @@ void Common::refresh_QuarterHour()
 
 char *Common::getComponentName(const __FlashStringHelper *ComponentName)
 {
-  static char ReturnChar[MaxTextLength] = "";
+  static char ReturnChar[MaxWordLength] = "";
   strcpy_P(ReturnChar, (PGM_P)Name);
   strcat_P(ReturnChar, (PGM_P)F("_"));
   strcat_P(ReturnChar, (PGM_P)ComponentName);
@@ -54,12 +54,12 @@ char *Common::getComponentName(const __FlashStringHelper *ComponentName)
 
 bool Common::isThisMyComponent(char const *lookupName)
 { ///When a web component triggers an action, this function decides if the component belonged to the class
-  /// lookupName is in the form of: InstanceName_FunctionName . Examles: Lt1_On , Lt1_OnTime, LtSen1_Raw
+  ///lookupName is in the form of: InstanceName_FunctionName . Examles: Lt1_On , Lt1_OnTime, LtSen1_Raw
 
-  /// Serial.print("Component :");
-  /// Serial.println(lookupName);
-  /// Serial.print("Object :");
-  /// Serial.println(Name);
+  ///Serial.print("Component :");
+  ///Serial.println(lookupName);
+  ///Serial.print("Object :");
+  ///Serial.println(Name);
 
   char *ReturnChar = ShortMessage; ///return text will be loaded into a global temp buffer
   uint8_t CharacterCount = 0;
@@ -92,7 +92,7 @@ bool Common::isThisMyComponent(char const *lookupName)
       *ReturnChar++ = RAMCurrentChar;
       if (RAMCurrentChar == 0)
         break; ///if we have reached the string termination sign. ( null terminator is the numerical value 0, sometimes also marked as '\0')
-      if (SafetyCount++ > MaxTextLength)
+      if (SafetyCount++ > MaxWordLength)
       {
         logToSerials(F("Component name too long: "), false, 3);
         logToSerials(lookupName, true, 0);

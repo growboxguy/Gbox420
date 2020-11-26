@@ -5,11 +5,11 @@
 #include "../Components/WaterTempSensor.h"
 #include "../Components/WeightSensor.h"
 
-///< Variables used during wireless communication
+///Variables used during wireless communication
 uint8_t NextSequenceID = ReservoirMessages::ReservoirModuleResponse1;
 struct ReservoirModuleResponse ReservoirModuleResponse1ToSend = {ReservoirMessages::ReservoirModuleResponse1};
 struct ReservoirResponse ReservoirResponse1ToSend = {ReservoirMessages::ReservoirResponse1};
-struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset}; //< Special response signaling the end of a message exchange to the Transmitter
+struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset}; ///Special response signaling the end of a message exchange to the Transmitter
 
 ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Module()
 {
@@ -34,8 +34,8 @@ void ReservoirModule::refresh_Sec()
   if (*Debug)
     Common::refresh_Sec();
   if (NextSequenceID != ReservoirMessages::ReservoirModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
-  {                                                         //< If there is a package exchange in progress
-    NextSequenceID = ReservoirMessages::ReservoirModuleResponse1; //< Reset back to the first response
+  {                                                         ///If there is a package exchange in progress
+    NextSequenceID = ReservoirMessages::ReservoirModuleResponse1; ///Reset back to the first response
     logToSerials(F("Timeout during message exchange, reseting to first response"), true, 0);
     updateAckData();
   }
@@ -50,7 +50,7 @@ void ReservoirModule::refresh_FiveSec()
 }
 
 void ReservoirModule::updateResponse()
-{ ///<Updates the response sent to the Main module
+{ ///Updates the response sent to the Main module
   ReservoirResponse1ToSend.PH = PHSen1->getPH();
   ReservoirResponse1ToSend.Weight = Weight1->getWeight();
   ReservoirResponse1ToSend.WaterTemperature = WTemp1->getTemp();
@@ -62,7 +62,7 @@ void ReservoirModule::updateResponse()
 void ReservoirModule::processCommand(void *ReceivedCommand)
 {
   ReservoirMessages ReceivedSequenceID = ((ReservoirCommonTemplate *)ReceivedCommand)->SequenceID;
-  LastMessageReceived = millis(); ///< Store current time
+  LastMessageReceived = millis(); ///Store current time
   logToSerials(F("Received:"), false, 1);
   logToSerials(toText_reservoirSequenceID(ReceivedSequenceID), false, 1);
   logToSerials(F("- Sent:"), false, 1);
@@ -94,15 +94,15 @@ void ReservoirModule::processCommand(void *ReceivedCommand)
       logToSerials(((ReservoirCommand *)ReceivedCommand)->TareWeight, true, 1);
      }
     break;
-  case ReservoirMessages::ReservoirReset:                   //< Used to get all Responses that do not have a corresponding Command
-    NextSequenceID = ReservoirMessages::ReservoirModuleResponse1; //< Load the first response for the next message exchange
+  case ReservoirMessages::ReservoirReset:                   ///Used to get all Responses that do not have a corresponding Command
+    NextSequenceID = ReservoirMessages::ReservoirModuleResponse1; ///Load the first response for the next message exchange
     break;
   default:
     logToSerials(F("SequenceID unknown, ignoring message"), true, 2);
     break;
   }
-  updateAckData();              //< Loads the next ACK that will be sent out
-  saveSettings(ModuleSettings); //< Store changes in EEPROM
+  updateAckData();              ///Loads the next ACK that will be sent out
+  saveSettings(ModuleSettings); ///Store changes in EEPROM
 }
 
 void ReservoirModule::updateAckData()
@@ -112,7 +112,7 @@ void ReservoirModule::updateAckData()
     logToSerials(F("Updating Acknowledgement to:"), false, 2);
     logToSerials(toText_reservoirSequenceID(NextSequenceID), true, 1);
   }
-  Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  Wireless.flush_tx(); ///Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
 
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer
   {
@@ -122,7 +122,7 @@ void ReservoirModule::updateAckData()
   case ReservoirMessages::ReservoirResponse1:
     Wireless.writeAckPayload(1, &ReservoirResponse1ToSend, WirelessPayloadSize);
     break;
-  case ReservoirMessages::ReservoirReset: //< ReservoirReset should always be the last element in the enum: Signals to stop the message exchange
+  case ReservoirMessages::ReservoirReset: ///ReservoirReset should always be the last element in the enum: Signals to stop the message exchange
     Wireless.writeAckPayload(1, &ReservoirResetToSend, WirelessPayloadSize);
     break;
   default:

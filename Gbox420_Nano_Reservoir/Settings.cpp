@@ -41,6 +41,6 @@ void restoreDefaults(Settings *ToOverwrite)
   Settings *DefaultSettings = new Settings; ///new "Settings" type objects with sketch defaults
   memcpy(&ToOverwrite, &DefaultSettings, sizeof(ToOverwrite));
   saveSettings(ToOverwrite);
-///  GBox->addToLog(F("Default settings restored"), 1);
+/// GBox->addToLog(F("Default settings restored"), 1);
 }
 

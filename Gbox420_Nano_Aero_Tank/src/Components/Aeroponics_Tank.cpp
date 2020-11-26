@@ -29,7 +29,7 @@ void Aeroponics_Tank::refresh_Sec()
   if (*Debug)
     Common::refresh_Sec();
 
-  if (Pump->getState() == RUNNING) ///< if pump is on
+  if (Pump->getState() == RUNNING) ///if pump is on
   {
     FeedbackPressureSensor->readPressure();
     if (Aeroponics::FeedbackPressureSensor->getPressure() >= *MaxPressure)
