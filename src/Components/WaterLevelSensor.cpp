@@ -10,9 +10,9 @@ WaterLevelSensor::WaterLevelSensor(const __FlashStringHelper *Name, Module *Pare
   pinMode(*Pin_1, INPUT_PULLUP);
   pinMode(*Pin_2, INPUT_PULLUP);
   pinMode(*Pin_3, INPUT_PULLUP);
-  pinMode(*Pin_4, INPUT_PULLUP);  
-  Parent->addToReportQueue(this);          
-  Parent->addToRefreshQueue_FiveSec(this); 
+  pinMode(*Pin_4, INPUT_PULLUP);
+  Parent->addToReportQueue(this);
+  Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("WaterLevelSensor object created"), true, 1);
 }
 

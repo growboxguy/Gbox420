@@ -19,7 +19,6 @@ public:
   float Humidity = 0.0;
 
 private:
-  
 protected:
   Module *Parent;
   DHT *Sensor; ///Pointer declaration, points to null initially

@@ -17,7 +17,6 @@ public:
   void refillTank();
 
 private:
-
 protected:
   Switch *SpraySwitch; //Relay or MOSFET controlling the spray solenoid
 };

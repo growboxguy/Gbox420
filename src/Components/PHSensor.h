@@ -13,7 +13,6 @@ public:
   char *getPHText(bool ReturnAverage = true);
 
 private:
-
 protected:
   Module *Parent;
   uint8_t *Pin;

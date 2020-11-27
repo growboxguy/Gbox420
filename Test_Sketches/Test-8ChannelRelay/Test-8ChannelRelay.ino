@@ -39,8 +39,8 @@ void setup()
     digitalWrite(Relay3OutPin, LOW);
     delay(2000);
     Serial.println(F("  Turning Relay4 ON")); //NOTE: The relay module will not get enough power after turning on the 4th relay if it is powered from the Arduino
-    digitalWrite(Relay4OutPin, LOW);        //To operate a relay on 5V you need 60mA per relay. Arduino Mega can only supply 200mA max on VCC, limiting the number of simultaneously active relays to 3.
-    delay(2000);                            //Use an external 5V power supply connected to GND and JD-VCC pins on the relay module
+    digitalWrite(Relay4OutPin, LOW);          //To operate a relay on 5V you need 60mA per relay. Arduino Mega can only supply 200mA max on VCC, limiting the number of simultaneously active relays to 3.
+    delay(2000);                              //Use an external 5V power supply connected to GND and JD-VCC pins on the relay module
     Serial.println(F("  Turning Relay5 ON"));
     digitalWrite(Relay5OutPin, LOW);
     delay(2000);
@@ -95,7 +95,8 @@ void loop()
     delay(10000);
 }
 
-void turnAllRelaysOff(){
+void turnAllRelaysOff()
+{
     Serial.println(F("Turning all relays off..."));
     digitalWrite(Relay1OutPin, HIGH);
     digitalWrite(Relay2OutPin, HIGH);
@@ -104,5 +105,5 @@ void turnAllRelaysOff(){
     digitalWrite(Relay5OutPin, HIGH);
     digitalWrite(Relay6OutPin, HIGH);
     digitalWrite(Relay7OutPin, HIGH);
-    digitalWrite(Relay8OutPin, HIGH);  
+    digitalWrite(Relay8OutPin, HIGH);
 }

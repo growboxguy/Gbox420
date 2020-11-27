@@ -21,14 +21,14 @@ void setup()
     digitalWrite(Relay1OutPin, LOW);
     delay(10000);
     Serial.println(F("  Turning Relay2 ON"));
-    digitalWrite(Relay2OutPin, LOW);  
+    digitalWrite(Relay2OutPin, LOW);
     Serial.println(F("All relays are active, starting cycle test in 10 sec..."));
     delay(10000);
     turnAllRelaysOff();
 }
 
 void loop()
-{ // put your main code here, to run repeatedly:    
+{ // put your main code here, to run repeatedly:
     Serial.println(F("  Turning Relay1 ON"));
     digitalWrite(Relay1OutPin, LOW);
     delay(10000);
@@ -38,11 +38,12 @@ void loop()
     delay(10000);
     digitalWrite(Relay2OutPin, HIGH);
     Serial.println(F("The Cycle is complete, restarting in 10 sec..."));
-    delay(10000); 
+    delay(10000);
 }
 
-void turnAllRelaysOff(){
+void turnAllRelaysOff()
+{
     Serial.println(F("Turning all relays off..."));
     digitalWrite(Relay1OutPin, HIGH);
-    digitalWrite(Relay2OutPin, HIGH);    
+    digitalWrite(Relay2OutPin, HIGH);
 }

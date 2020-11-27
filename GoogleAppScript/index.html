@@ -1,30 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-  </head>
-  <body>
+
+<head>
+  <base target="_top">
+</head>
+
+<body>
   <div id="color" style="margin:0 auto; width:auto">
-    <?!= include('picker') ?>    
+    <?!= include('picker') ?>
   </div>
   <div style="padding: 10px;">
-  <input type="submit" onclick="getData()"/>
+    <input type="submit" onclick="getData()" />
   </div>
-  </body>
-  <script>
-    function getData(){
-      var hex_col = document.getElementById("color-result-hex").innerText;
-      var name_col = document.getElementById("color-result-name").innerText;
-      var txt_col = document.getElementById("color-result").style.color;
-      
-      var color = [hex_col, name_col, txt_col];
-      
-      google.script.run.withSuccessHandler().receiveData(color);
-    };
-    
-  </script>
-  
+</body>
+<script>
+  function getData() {
+    var hex_col = document.getElementById("color-result-hex").innerText;
+    var name_col = document.getElementById("color-result-name").innerText;
+    var txt_col = document.getElementById("color-result").style.color;
+
+    var color = [hex_col, name_col, txt_col];
+
+    google.script.run.withSuccessHandler().receiveData(color);
+  };
+
+</script>
+
 </html>
-
-
-

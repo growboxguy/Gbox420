@@ -26,12 +26,12 @@ void Module_Web::runReport()
 { ///Reports component status to Serial output (Arduino and ESP)
   getFormattedTime(true);
   getFreeMemory();
-  logToSerials(reportQueueItemCount,false,0);
-  logToSerials(F("web components reporting:"),true,1);
+  logToSerials(reportQueueItemCount, false, 0);
+  logToSerials(F("web components reporting:"), true, 1);
   for (int i = 0; i < reportQueueItemCount; i++)
   {
     ReportQueue[i]->report();
-  }  
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ void Module_Web::addToRefreshQueue_QuarterHour(Common_Web *Component)
 ///Website subscriptions: When a component needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
 
 void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
-{   
+{
   if (QueueDepth > WebsiteQueue_Load_Count)
     WebsiteQueue_Load[WebsiteQueue_Load_Count++] = Component;
   else
@@ -134,7 +134,7 @@ void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
 }
 
 void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Component)
-{   
+{
   if (QueueDepth > WebsiteQueue_Refresh_Count)
     WebsiteQueue_Refresh[WebsiteQueue_Refresh_Count++] = Component;
   else
@@ -245,7 +245,7 @@ void Module_Web::addPushingBoxLogRelayID()
 {
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
   strcat_P(LongMessage, (PGM_P)F("/pushingbox?devid="));
-  strcat(LongMessage, ModuleSettings -> PushingBoxLogRelayID);
+  strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
   strcat_P(LongMessage, (PGM_P)F("&BoxData={"));
 }
 
@@ -260,4 +260,3 @@ void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 }
 
 ///Wireless
-

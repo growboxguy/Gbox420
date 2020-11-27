@@ -5,9 +5,9 @@ PowerSensor::PowerSensor(const __FlashStringHelper *Name, Module *Parent, Hardwa
   this->Parent = Parent;
   Sensor = new PZEM004T(SerialPort);
   PowerSensorIP = new IPAddress(192, 168, 1, 1);
-  Sensor->setAddress(*PowerSensorIP);    ///start power meter
-  Parent->addToReportQueue(this);          
-  Parent->addToRefreshQueue_FiveSec(this); 
+  Sensor->setAddress(*PowerSensorIP); ///start power meter
+  Parent->addToReportQueue(this);
+  Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("PowerSensor object created"), true, 1);
 }
 

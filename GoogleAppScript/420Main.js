@@ -43,15 +43,15 @@ function Test_ProcessBoxData() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This is where data arrives for the Arduino for processing
 function doPost(receivedData) {
-  try{
-    LogToConsole(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", true,0);  
+  try {
+    LogToConsole(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", true, 0);
     LogToConsole("Data received from Arduino, Raw:", false, 0);
     LogToConsole(JSON.stringify(receivedData), true, 1);
-    
+
     SpreadsheetApp.getActive().getRangeByName("LastReportTime").setValue(Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format"))); //Log when the JSON was received
     SpreadsheetApp.getActive().getRangeByName("LastReportRaw").setValue(receivedData); //Log the received data
     SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Processing...");
-       
+
     if (receivedData.parameter.BoxData != null) //Only Start processing if the report contains a BoxData parameter
     {
       LogToConsole("Parsing BoxData: ", false, 1);
@@ -66,10 +66,10 @@ function doPost(receivedData) {
         SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Error parsing BoxData to JSON");
       }
     }
-    else{
+    else {
       LogToConsole("Received parameters does not contain a BoxData object.", false, 1);
       SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Received parameters does not contain a BoxData object. Input should be in the form of: {parameter={BoxData=JSON_OBJECT} where JSON_OBJECT is a valid JSON. Error: " + e); //the received parameter is not in {parameter={BoxData={"
-  
+
     }
   }
   catch (e) {
@@ -82,7 +82,7 @@ function doPost(receivedData) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //This is where the extracted JSON report is processed
-function ProcessBoxData(JSONBoxData) {  
+function ProcessBoxData(JSONBoxData) {
   try {
     WipeCache();  ///Remove cached Named Ranges and get a fresh copy
     LogToConsole("Processing BoxDataJSON:", false, 0);

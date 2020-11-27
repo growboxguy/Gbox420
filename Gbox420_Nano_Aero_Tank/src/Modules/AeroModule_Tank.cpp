@@ -16,7 +16,7 @@ struct AeroModuleResponse AeroModule1ResponseToSend = {AeroMessages::AeroModuleR
 struct AeroResponse_P1 Aero1Response1ToSend = {AeroMessages::AeroResponse1};
 struct AeroResponse_P2 Aero1Response2ToSend = {AeroMessages::AeroResponse2};
 struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset}; ///Special response signaling the end of a message exchange to the Transmitter
-unsigned long LastMessageSent = 0;                                            //When was the last message sent
+unsigned long LastMessageSent = 0;                                     //When was the last message sent
 
 AeroModule::AeroModule(const __FlashStringHelper *Name) : Common(Name), Module()
 {
@@ -94,22 +94,21 @@ void AeroModule::processCommand(void *ReceivedCommand)
     break;
   case AeroMessages::AeroCommand1:
     NextSequenceID = AeroMessages::AeroResponse2; // update the next Message that will be copied to the buffer
-      if (((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled)
-       AeroT1->setSprayOnOff(true);
-      if (((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled)
-        AeroT1->setSprayOnOff(false);
-      if (((AeroCommand_P1 *)ReceivedCommand)->SprayNow)
-        AeroT1->sprayNow(true);
-      if (((AeroCommand_P1 *)ReceivedCommand)->SprayOff)
-        AeroT1->sprayOff();
-      AeroT1->setDayMode(((AeroCommand_P1 *)ReceivedCommand)->DayMode);
-      AeroT1->setDayInterval(((AeroCommand_P1 *)ReceivedCommand)->DayInterval);
-      AeroT1->setDayDuration(((AeroCommand_P1 *)ReceivedCommand)->DayDuration);
-      AeroT1->setNightInterval(((AeroCommand_P1 *)ReceivedCommand)->NightInterval);
-      AeroT1->setNightDuration(((AeroCommand_P1 *)ReceivedCommand)->NightDuration);     
-      AeroT1->setMinPressure(((AeroCommand_P1 *)ReceivedCommand)->MinPressure);
-      AeroT1->setMaxPressure(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure);     
-
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled)
+      AeroT1->setSprayOnOff(true);
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled)
+      AeroT1->setSprayOnOff(false);
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayNow)
+      AeroT1->sprayNow(true);
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayOff)
+      AeroT1->sprayOff();
+    AeroT1->setDayMode(((AeroCommand_P1 *)ReceivedCommand)->DayMode);
+    AeroT1->setDayInterval(((AeroCommand_P1 *)ReceivedCommand)->DayInterval);
+    AeroT1->setDayDuration(((AeroCommand_P1 *)ReceivedCommand)->DayDuration);
+    AeroT1->setNightInterval(((AeroCommand_P1 *)ReceivedCommand)->NightInterval);
+    AeroT1->setNightDuration(((AeroCommand_P1 *)ReceivedCommand)->NightDuration);
+    AeroT1->setMinPressure(((AeroCommand_P1 *)ReceivedCommand)->MinPressure);
+    AeroT1->setMaxPressure(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure);
 
     if (*Debug)
     {
@@ -131,34 +130,34 @@ void AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->NightInterval, false, 1);
       logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->NightDuration, false, 1);
-      logToSerials(F(";"), false, 1);      
+      logToSerials(F(";"), false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MinPressure, false, 1);
       logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure, false, 1);
-      logToSerials(F(","), false, 1);      
+      logToSerials(F(","), false, 1);
     }
     break;
   case AeroMessages::AeroCommand2:
-      NextSequenceID = AeroMessages::AeroReset; // update the next Message that will be copied to the buffer
-      if (((AeroCommand_P2 *)ReceivedCommand)->RefillPressureTank)
-        AeroT1->refillTank();
-      if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight)
-        Weight1->triggerTare();
-      if (((AeroCommand_P2 *)ReceivedCommand)->PumpOn)
-        AeroT1->Pump->startPump(true);
-      if (((AeroCommand_P2 *)ReceivedCommand)->PumpOff)
-        AeroT1->Pump->stopPump();
-      if (((AeroCommand_P2 *)ReceivedCommand)->PumpDisable)
-        AeroT1->Pump->disablePump();
-      if (((AeroCommand_P2 *)ReceivedCommand)->MixReservoir)
-        AeroT1->Pump->startMixing();  
-      AeroT1->Pump->setSpeed(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed);
-      AeroT1->Pump->setPumpTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);
-      AeroT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime); 
+    NextSequenceID = AeroMessages::AeroReset; // update the next Message that will be copied to the buffer
+    if (((AeroCommand_P2 *)ReceivedCommand)->RefillPressureTank)
+      AeroT1->refillTank();
+    if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight)
+      Weight1->triggerTare();
+    if (((AeroCommand_P2 *)ReceivedCommand)->PumpOn)
+      AeroT1->Pump->startPump(true);
+    if (((AeroCommand_P2 *)ReceivedCommand)->PumpOff)
+      AeroT1->Pump->stopPump();
+    if (((AeroCommand_P2 *)ReceivedCommand)->PumpDisable)
+      AeroT1->Pump->disablePump();
+    if (((AeroCommand_P2 *)ReceivedCommand)->MixReservoir)
+      AeroT1->Pump->startMixing();
+    AeroT1->Pump->setSpeed(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed);
+    AeroT1->Pump->setPumpTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);
+    AeroT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime);
 
     if (*Debug)
     {
-      logToSerials(F("Aero1:"), false, 2);     
+      logToSerials(F("Aero1:"), false, 2);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOn, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOff, false, 1);
@@ -166,8 +165,8 @@ void AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->MixReservoir, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, true, 1);  
-     }
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, true, 1);
+    }
     break;
   case AeroMessages::AeroReset:                         ///Used to get all Responses that do not have a corresponding Command
     NextSequenceID = AeroMessages::AeroModuleResponse1; ///Load the first response for the next message exchange

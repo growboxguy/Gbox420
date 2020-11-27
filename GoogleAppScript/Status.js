@@ -26,7 +26,7 @@ function UpdateStatus(Log) {
       var match = -1;
       for (var k = 0; k < newStatus.length; k++) {
         if (newStatus[k][status_keyColumn] == keyColumnName) {  //Trying to find Status entry with the relayed component name
-          match = k; 
+          match = k;
           break;
         }
       }

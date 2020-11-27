@@ -18,10 +18,9 @@ public:
   void report();
 
 private:
-
 protected:
   Module *Parent;
-    ///Variables stored in memory, values reset at reboot
+  ///Variables stored in memory, values reset at reboot
   bool RuntimeBool = false;
   int RuntimeInt = 420;
   float RuntimeFloat = 4.2f;

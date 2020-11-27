@@ -3,8 +3,8 @@
 Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Aeroponics(Name, Parent, DefaultSettings, FeedbackPressureSensor, Pump)
 {
   this->Name = Name;
-  logToSerials(F(""),true,0);  //New line
-  logToSerials(F(""),false,1); //Extra indentation
+  logToSerials(F(""), true, 0);  //New line
+  logToSerials(F(""), false, 1); //Extra indentation
   logToSerials(F("Aeroponics_NoTank object created"), true, 1);
   sprayNow(false); ///This is a safety feature,start with a spray after a reset
 }
@@ -24,13 +24,13 @@ void Aeroponics_NoTank::refresh_Sec()
     }
 
     uint32_t Duration;
-    if(DayMode)
+    if (DayMode)
     {
       Duration = *DayDuration * 1000; ///Duration is miliseconds, DayDuration in seconds
     }
     else
     {
-     Duration = *NightDuration * 1000; ///Duration is miliseconds
+      Duration = *NightDuration * 1000; ///Duration is miliseconds
     }
 
     if (!RunTillTimeout && (millis() - SprayTimer) >= Duration + (uint32_t)Pump->getPrimingTime() * 1000)

@@ -15,7 +15,7 @@ uint8_t NextSequenceID = AeroMessages::AeroModuleResponse1;
 struct AeroModuleResponse AeroModule1ResponseToSend = {AeroMessages::AeroModuleResponse1};
 struct AeroResponse Aero1ResponseToSend = {AeroMessages::AeroResponse1};
 struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset}; ///Special response signaling the end of a message exchange to the Transmitter
-unsigned long LastMessageSent = 0;                                            //When was the last message sent
+unsigned long LastMessageSent = 0;                                     //When was the last message sent
 
 AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Module()
 {
@@ -91,33 +91,33 @@ void AeroModule::processCommand(void *ReceivedCommand)
     }
     break;
   case AeroMessages::AeroCommand1:
-      if (((AeroCommand *)ReceivedCommand)->SprayEnabled)
-        AeroNT1->setSprayOnOff(true);
-      if (((AeroCommand *)ReceivedCommand)->SprayDisabled)
-        AeroNT1->setSprayOnOff(false);
-      if (((AeroCommand *)ReceivedCommand)->SprayNow)
-        AeroNT1->sprayNow(true);
-      if (((AeroCommand *)ReceivedCommand)->SprayOff)
-        AeroNT1->sprayOff();
-      if (((AeroCommand *)ReceivedCommand)->TareWeight)
-        Weight1->triggerTare();
-      AeroNT1->setDayMode(((AeroCommand *)ReceivedCommand)->DayMode);
-      AeroNT1->setDayInterval(((AeroCommand *)ReceivedCommand)->DayInterval);
-      AeroNT1->setDayDuration(((AeroCommand *)ReceivedCommand)->DayDuration);
-      AeroNT1->setNightInterval(((AeroCommand *)ReceivedCommand)->NightInterval);
-      AeroNT1->setNightDuration(((AeroCommand *)ReceivedCommand)->NightDuration);
-      if (((AeroCommand *)ReceivedCommand)->PumpOn)
-        AeroNT1->lockPumpOn();
-      if (((AeroCommand *)ReceivedCommand)->PumpOff)
-        AeroNT1->Pump->stopPump();
-      if (((AeroCommand *)ReceivedCommand)->PumpDisable)
-        AeroNT1->Pump->disablePump();
-      AeroNT1->Pump->setSpeed(((AeroCommand *)ReceivedCommand)->PumpSpeed);
-      AeroNT1->Pump->setPumpTimeOut(((AeroCommand *)ReceivedCommand)->PumpTimeOut);
-      AeroNT1->Pump->setPrimingTime(((AeroCommand *)ReceivedCommand)->PumpPrimingTime);
-      AeroNT1->setMaxPressure(((AeroCommand *)ReceivedCommand)->MaxPressure);
-      if (((AeroCommand *)ReceivedCommand)->MixReservoir)
-        AeroNT1->Pump->startMixing();
+    if (((AeroCommand *)ReceivedCommand)->SprayEnabled)
+      AeroNT1->setSprayOnOff(true);
+    if (((AeroCommand *)ReceivedCommand)->SprayDisabled)
+      AeroNT1->setSprayOnOff(false);
+    if (((AeroCommand *)ReceivedCommand)->SprayNow)
+      AeroNT1->sprayNow(true);
+    if (((AeroCommand *)ReceivedCommand)->SprayOff)
+      AeroNT1->sprayOff();
+    if (((AeroCommand *)ReceivedCommand)->TareWeight)
+      Weight1->triggerTare();
+    AeroNT1->setDayMode(((AeroCommand *)ReceivedCommand)->DayMode);
+    AeroNT1->setDayInterval(((AeroCommand *)ReceivedCommand)->DayInterval);
+    AeroNT1->setDayDuration(((AeroCommand *)ReceivedCommand)->DayDuration);
+    AeroNT1->setNightInterval(((AeroCommand *)ReceivedCommand)->NightInterval);
+    AeroNT1->setNightDuration(((AeroCommand *)ReceivedCommand)->NightDuration);
+    if (((AeroCommand *)ReceivedCommand)->PumpOn)
+      AeroNT1->lockPumpOn();
+    if (((AeroCommand *)ReceivedCommand)->PumpOff)
+      AeroNT1->Pump->stopPump();
+    if (((AeroCommand *)ReceivedCommand)->PumpDisable)
+      AeroNT1->Pump->disablePump();
+    AeroNT1->Pump->setSpeed(((AeroCommand *)ReceivedCommand)->PumpSpeed);
+    AeroNT1->Pump->setPumpTimeOut(((AeroCommand *)ReceivedCommand)->PumpTimeOut);
+    AeroNT1->Pump->setPrimingTime(((AeroCommand *)ReceivedCommand)->PumpPrimingTime);
+    AeroNT1->setMaxPressure(((AeroCommand *)ReceivedCommand)->MaxPressure);
+    if (((AeroCommand *)ReceivedCommand)->MixReservoir)
+      AeroNT1->Pump->startMixing();
     NextSequenceID = AeroMessages::AeroReset; // update the next Message that will be copied to the buffer
     if (*Debug)
     {

@@ -10,7 +10,7 @@ DistanceSensor::DistanceSensor(const __FlashStringHelper *Name, Module *Parent, 
   TriggerPin = &DefaultSettings->TriggerPin;
   pinMode(*TriggerPin, OUTPUT);
   pinMode(*EchoPin, INPUT);
-  Parent->addToReportQueue(this);          
+  Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("Distance Sensor object created"), true, 1);
 }
@@ -25,20 +25,20 @@ void DistanceSensor::refresh_FiveSec()
 void DistanceSensor::readSensor()
 {
   digitalWrite(*TriggerPin, LOW);
-  delayMicroseconds(2);  
+  delayMicroseconds(2);
   // Sets the trigPin on HIGH state for 10 micro seconds
   digitalWrite(*TriggerPin, HIGH);
   delayMicroseconds(20);
-  digitalWrite(*TriggerPin, LOW);  
+  digitalWrite(*TriggerPin, LOW);
   // Reads the echoPin, returns the sound wave travel time in microseconds
   long Duration = pulseIn(*EchoPin, HIGH);
   if (*Metric)
   {
-    Distance = Duration*0.017;
+    Distance = Duration * 0.017;
   }
   else
   {
-     Distance = Duration*0.00665;
+    Distance = Duration * 0.00665;
   }
 }
 

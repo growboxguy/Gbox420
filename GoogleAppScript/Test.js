@@ -4,27 +4,26 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Trigger a fake JSON report for testing
 
-function getTestJSONData()
-{
+function getTestJSONData() {
   return JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
 }
 
 
 function RunFakeReport() {
-  LogToConsole(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", true,0);
+  LogToConsole(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", true, 0);
   WipeCache(); ///Remove cached Named Ranges and get a fresh copy  
   SpreadsheetApp.getActive().getRangeByName("LastReportTime").setValue(Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format")));
   SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Processing...");
-  LogToConsole("Loading fake report data...", true,0);
+  LogToConsole("Loading fake report data...", true, 0);
   var FakeBoxData = SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue();
   //Browser.msgBox(FakeReportData);
-  LogToConsole("Parsing fake BoxData: ",false,1);
+  LogToConsole("Parsing fake BoxData: ", false, 1);
   try {
     var FakeBoxDataJSON = JSON.parse(FakeBoxData);
-    LogToConsole(JSON.stringify(FakeBoxDataJSON),true,0);
+    LogToConsole(JSON.stringify(FakeBoxDataJSON), true, 0);
   }
   catch (e) {
-    LogToConsole("Error parsing BoxData to JSON. Error: " + e,true,0);
+    LogToConsole("Error parsing BoxData to JSON. Error: " + e, true, 0);
     SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Error parsing BoxData to JSON. Error: " + e);
   }
   ProcessBoxData(FakeBoxDataJSON);
@@ -123,9 +122,8 @@ function writeToMultipleRanges(spreadsheetId) {
 
 
 //https://myengineeringworld.net/2018/10/column-charts-goolge-sheets.html
-function createColumnChart() 
-{
-  
+function createColumnChart() {
+
   /*
   ------------------------------------------------------------------------------
   The function creates a custom column chart in the active sheet using the data
@@ -138,10 +136,10 @@ function createColumnChart()
   Site:      https://www.myengineeringworld.net
   ------------------------------------------------------------------------------
   */
-  
+
   // Range to get the data.
   var dataRange = 'A1:C4';
-  
+
   // Variables for customizing colors.
   // Use this tool to generate "good" colors:
   // http://paletton.com
@@ -149,154 +147,154 @@ function createColumnChart()
   var color2 = '#FFD42C';   // Fill and data label color for the second series.
   var color3 = '#8D7CEE';   // Trendline and axis titles color.
   var color4 = '#A6F870';   // Gridlines, axis labels and chart title color.
-  
+
   // Text for titles (chart and both axes).
   var chartTitle = 'Vehicles Comparisons';
   var xAxisTitle = 'Vehicle Category';
   var yAxisTitle = 'Speed & Power';
-  
+
   // Get the active sheet.
-  var spreadsheet = SpreadsheetApp.getActive();  
+  var spreadsheet = SpreadsheetApp.getActive();
   var sheet = spreadsheet.getActiveSheet();
-  
+
   // Create a chart.
   var chart = sheet.newChart()
-  .asColumnChart()
-  .addRange(spreadsheet.getRange(dataRange))
-  
-  // Set the generic options.
-  .setNumHeaders(1)
-  .setBackgroundColor('#333333')  
-  //  .setOption('is3D', true)   // For a 3D chart.
-  //  .setOption('height', 400)  // Custom height. 
-  //  .setOption('width', 600)   // Custom width.
-  
-  // Set the chart title options.
-  .setOption('title', chartTitle)
-  .setOption('titleTextStyle', {
-    color: color4,  
-    alignment: 'center',
-    fontName: 'Verdana',
-    fontSize: 24,  
-    bold: true  
-  })
-  
-  // Set the legend options.
-  .setOption('legend', {
-    position: 'top',
-    alignment: 'center',
-    textStyle: {
-    color: color3,
-    fontName: 'Verdana',
-    fontSize: 12,
-    bold: true
-    }
-  })
-  
-  // Set the X-axis options.
-  .setOption('hAxis', {
-    title: xAxisTitle,
-    titleTextStyle: {
-    color: color3,
-    alignment: 'center',
-    fontName: 'Verdana',
-    fontSize: 16,
-    bold: true
-    },
-    textStyle: {
-    color: color4,
-    fontName: 'Verdana',
-    fontSize: 14,
-    bold: true
-    }
-  })
-  
-  // Set the Y-axis options.
-  .setOption('vAxes', {
-    0: {
-    title: yAxisTitle,
-    format: 'none',
-    titleTextStyle: {
-      color: color3,
+    .asColumnChart()
+    .addRange(spreadsheet.getRange(dataRange))
+
+    // Set the generic options.
+    .setNumHeaders(1)
+    .setBackgroundColor('#333333')
+    //  .setOption('is3D', true)   // For a 3D chart.
+    //  .setOption('height', 400)  // Custom height. 
+    //  .setOption('width', 600)   // Custom width.
+
+    // Set the chart title options.
+    .setOption('title', chartTitle)
+    .setOption('titleTextStyle', {
+      color: color4,
       alignment: 'center',
       fontName: 'Verdana',
-      fontSize: 16,
+      fontSize: 24,
       bold: true
-    },
-    textStyle: {
-      color: color4,
-      fontName: 'Verdana',
-      fontSize: 14,
-      bold: true
-    },
-    gridlines: {
-      count: -1,
-      color: color4,
-      width: 5
-    }
-    }
-  })
-  
-  // Set the series options.
-  .setOption("series", {
-    0: {
-    labelInLegend: 'Speed [km/h]',
-    color: color1,    
-    hasAnnotations: true,
-    dataLabel: 'value',
-    dataLabelPlacement: 'outsideEnd',
-    errorBars: {
-      magnitude: 20,
-      errorType: "percent"
-    },
-    dataLabel: "value",
-    textStyle: {
-      color: color1,
-      fontSize: 12,
-      fontName: 'Verdana',
-      bold: true
-    }
-    },
-    1: {
-    labelInLegend: 'Power [kW]',
-    color: color2,
-    hasAnnotations: true,
-    dataLabel: 'value',
-    dataLabelPlacement: 'outsideEnd',
-    errorBars: {
-      magnitude: 20,
-      errorType: "percent"
-    },
-    dataLabel: "value",
-    textStyle: {
-      color: color2,
-      fontSize: 12,
-      fontName: 'Verdana',
-      bold: true
-    }
-    }
-  })
-  
-  // Set the trendline options (here only for the first series).
-  .setOption('trendlines', {
-    0: {
-    color: color3,
-    type: 'linear',
-    lineWidth: 4,
-    opacity: 0.8,
-    labelInLegend: 'Trendline',
-    visibleInLegend: true
-    }
-  })
-  
-  // Position: row and column of top left corner (cell E2 here).
-  // Optional: offset X and Y in pixels.
-  .setPosition(2, 5, 0, 0)
-  
-  // Finally, build the chart.
-  .build();
+    })
+
+    // Set the legend options.
+    .setOption('legend', {
+      position: 'top',
+      alignment: 'center',
+      textStyle: {
+        color: color3,
+        fontName: 'Verdana',
+        fontSize: 12,
+        bold: true
+      }
+    })
+
+    // Set the X-axis options.
+    .setOption('hAxis', {
+      title: xAxisTitle,
+      titleTextStyle: {
+        color: color3,
+        alignment: 'center',
+        fontName: 'Verdana',
+        fontSize: 16,
+        bold: true
+      },
+      textStyle: {
+        color: color4,
+        fontName: 'Verdana',
+        fontSize: 14,
+        bold: true
+      }
+    })
+
+    // Set the Y-axis options.
+    .setOption('vAxes', {
+      0: {
+        title: yAxisTitle,
+        format: 'none',
+        titleTextStyle: {
+          color: color3,
+          alignment: 'center',
+          fontName: 'Verdana',
+          fontSize: 16,
+          bold: true
+        },
+        textStyle: {
+          color: color4,
+          fontName: 'Verdana',
+          fontSize: 14,
+          bold: true
+        },
+        gridlines: {
+          count: -1,
+          color: color4,
+          width: 5
+        }
+      }
+    })
+
+    // Set the series options.
+    .setOption("series", {
+      0: {
+        labelInLegend: 'Speed [km/h]',
+        color: color1,
+        hasAnnotations: true,
+        dataLabel: 'value',
+        dataLabelPlacement: 'outsideEnd',
+        errorBars: {
+          magnitude: 20,
+          errorType: "percent"
+        },
+        dataLabel: "value",
+        textStyle: {
+          color: color1,
+          fontSize: 12,
+          fontName: 'Verdana',
+          bold: true
+        }
+      },
+      1: {
+        labelInLegend: 'Power [kW]',
+        color: color2,
+        hasAnnotations: true,
+        dataLabel: 'value',
+        dataLabelPlacement: 'outsideEnd',
+        errorBars: {
+          magnitude: 20,
+          errorType: "percent"
+        },
+        dataLabel: "value",
+        textStyle: {
+          color: color2,
+          fontSize: 12,
+          fontName: 'Verdana',
+          bold: true
+        }
+      }
+    })
+
+    // Set the trendline options (here only for the first series).
+    .setOption('trendlines', {
+      0: {
+        color: color3,
+        type: 'linear',
+        lineWidth: 4,
+        opacity: 0.8,
+        labelInLegend: 'Trendline',
+        visibleInLegend: true
+      }
+    })
+
+    // Position: row and column of top left corner (cell E2 here).
+    // Optional: offset X and Y in pixels.
+    .setPosition(2, 5, 0, 0)
+
+    // Finally, build the chart.
+    .build();
   sheet.insertChart(chart);
-  
+
 }
- 
+
 // End of the GAS code.

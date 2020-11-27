@@ -1,17 +1,15 @@
 #pragma once
 
-///This is a collection of common functions that every component can use
-///Needs to be included in the module's header (.h) file:  #include "420Common.h"
+/*! 
+ *  \brief     Printing serial messages to the Arduino Serial output and the esp-link Microcontroller Console (uC Console)
+ *  \details   Uses templating to handle logging multiple variable types (int,float,char,bool..)
+ *  \details   Functions implemented in header file due to: https:///stackoverflow.com/questions/10632251/undefined-reference-to-template-function
+ */
 
-#include "Arduino.h"           
+#include "Arduino.h"
 
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///Logging to Arduino Serial and ESP-link's Microcontroller Console (uC Console)
-///Uses templating to handle logging multiple variable types (int,float,char,bool..)
-///Functions implemented in header file due to: https:///stackoverflow.com/questions/10632251/undefined-reference-to-template-function
 
 void logToSerials(const __FlashStringHelper *ToPrint, bool BreakLine = true, uint8_t Indent = 3); ///logs to both Arduino and ESP Link serial console, 2 optional parameters to adding a break line at after printing and the indentation in front
 template <class logLine>

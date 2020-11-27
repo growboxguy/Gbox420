@@ -7,8 +7,8 @@ PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, 
   Ratio = &DefaultSettings->Ratio;
   Offset = &DefaultSettings->Offset;
   Pressure = new RollingAverage();
-  Parent->addToReportQueue(this);         
-  Parent->addToRefreshQueue_FiveSec(this); 
+  Parent->addToReportQueue(this);
+  Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("Pressure Sensor object created"), true, 1);
 }
 
@@ -31,7 +31,7 @@ void PressureSensor::report()
 void PressureSensor::readPressure()
 {
   float Voltage = ((float)analogRead(*Pin)) * 5 / 1024;
-  
+
   if (*Metric)
     Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 1.0f); ///unit: bar / 100kPa
   else

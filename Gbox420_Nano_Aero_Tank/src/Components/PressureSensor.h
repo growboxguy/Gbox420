@@ -16,8 +16,7 @@ public:
   char *getPressureText(bool IncludeUnits, bool ReturnAverage);
   RollingAverage *Pressure;
 
-private:  
-  
+private:
 protected:
   Module *Parent;
   void readOffset();

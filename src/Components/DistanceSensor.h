@@ -11,13 +11,13 @@ public:
   void report();
   void readSensor(); ///Refresh Temp and Humidity readings
   float getDistance();
-  char *getDistanceText(bool IncludeUnits = false);  
+  char *getDistanceText(bool IncludeUnits = false);
   float Distance = 0.0;
 
 private:
   uint8_t *EchoPin;
   uint8_t *TriggerPin;
-  
+
 protected:
   Module *Parent;
 };

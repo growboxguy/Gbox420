@@ -4,24 +4,24 @@ Aeroponics_Tank_Web::Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module
 { ///constructor
   this->Parent = Parent;
   this->Name = Name;
-  Parent->addToReportQueue(this);          
-  Parent->addToRefreshQueue_Sec(this);       
-  Parent->addToWebsiteQueue_Load(this);    
-  Parent->addToWebsiteQueue_Refresh(this); 
-  Parent->addToWebsiteQueue_Button(this);  
-  Parent->addToWebsiteQueue_Field(this);   
+  Parent->addToReportQueue(this);
+  Parent->addToRefreshQueue_Sec(this);
+  Parent->addToWebsiteQueue_Load(this);
+  Parent->addToWebsiteQueue_Refresh(this);
+  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToWebsiteQueue_Field(this);
 }
 
 void Aeroponics_Tank_Web::reportToJSON()
 {
-    Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end 
+  Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end
 
-    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///closing the curly bracket
 }
 
 void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/G",2) == 0)
+  if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgFloat(getComponentName(F("PresMin")), *MinPressure);
     WebServer.setArgFloat(getComponentName(F("PresMax")), *MaxPressure);
@@ -34,7 +34,7 @@ void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 
 void Aeroponics_Tank_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/G",2) == 0)
+  if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgString(getComponentName(F("Pres")), FeedbackPressureSensor->getPressureText(true, false));
     WebServer.setArgString(getComponentName(F("Spray")), sprayStateToText());
@@ -57,19 +57,19 @@ void Aeroponics_Tank_Web::websiteEvent_Button(char *Button)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOn")) == 0)
     {
-      Pump -> startPump(true);
+      Pump->startPump(true);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0)
     {
-      Pump -> stopPump();
+      Pump->stopPump();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0)
     {
-      Pump -> disablePump();
+      Pump->disablePump();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Mix")) == 0)
     {
-      Pump -> startMixing();
+      Pump->startMixing();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("SprayEn")) == 0)
     {
@@ -105,14 +105,14 @@ void Aeroponics_Tank_Web::websiteEvent_Field(char *Field)
     else if (strcmp_P(ShortMessage, (PGM_P)F("PresMax")) == 0)
     {
       setMaxPressure(WebServer.getArgFloat());
-    } 
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0)
     {
-      Pump -> setPumpTimeOut(WebServer.getArgInt());
+      Pump->setPumpTimeOut(WebServer.getArgInt());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Priming")) == 0)
     {
-      Pump -> setPrimingTime(WebServer.getArgInt());
+      Pump->setPrimingTime(WebServer.getArgInt());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
     {

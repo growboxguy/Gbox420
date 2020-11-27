@@ -12,11 +12,12 @@ const byte CE_PIN = 10;
 const byte MOSI_PIN = 11;
 const byte MISO_PIN = 12;
 const byte SCK_PIN = 13;
-const byte WirelessChannel[6] ={"Test1"};
+const byte WirelessChannel[6] = {"Test1"};
 
 RF24 radio(CE_PIN, CSN_PIN);
 
-void setup() {
+void setup()
+{
     Serial.begin(115200);
     printf_begin();
 
@@ -34,7 +35,7 @@ void setup() {
     Serial.println(F("Setting data rate to 250KBPS..."));
     Serial.println();
     radio.openReadingPipe(1, WirelessChannel);
-    radio.setDataRate( RF24_250KBPS );
+    radio.setDataRate(RF24_250KBPS);
     radio.printDetails();
     Serial.println();
     Serial.println();
@@ -42,6 +43,6 @@ void setup() {
     Serial.println(F("If there is no change check the wiring and disconnect/reconnect the power source"));
 }
 
-void loop() {
-
+void loop()
+{
 }

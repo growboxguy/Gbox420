@@ -1,13 +1,12 @@
 #include "AeroModule_Web.h"
 
-struct AeroModuleCommand AeroModuleCommand1ToSend = {AeroMessages::AeroModuleCommand1};  ///Command to send will be stored here
-struct AeroModuleResponse AeroModuleResponse1Received = {AeroMessages::AeroModuleResponse1};   ///Default startup values
-struct AeroCommand_P1 AeroCommand1ToSend = {AeroMessages::AeroCommand1}; ///Command to send will be stored here
-struct AeroResponse_P1 AeroResponse1Received = {AeroMessages::AeroResponse1};  ///Default startup values
-struct AeroCommand_P2 AeroCommand2ToSend = {AeroMessages::AeroCommand2}; ///Command to send will be stored here
-struct AeroResponse_P2 AeroResponse2Received = {AeroMessages::AeroResponse2};  ///Default startup values
-struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};    ///Special command to fetch the next Response from the Receiver
-
+struct AeroModuleCommand AeroModuleCommand1ToSend = {AeroMessages::AeroModuleCommand1};      ///Command to send will be stored here
+struct AeroModuleResponse AeroModuleResponse1Received = {AeroMessages::AeroModuleResponse1}; ///Default startup values
+struct AeroCommand_P1 AeroCommand1ToSend = {AeroMessages::AeroCommand1};                     ///Command to send will be stored here
+struct AeroResponse_P1 AeroResponse1Received = {AeroMessages::AeroResponse1};                ///Default startup values
+struct AeroCommand_P2 AeroCommand2ToSend = {AeroMessages::AeroCommand2};                     ///Command to send will be stored here
+struct AeroResponse_P2 AeroResponse2Received = {AeroMessages::AeroResponse2};                ///Default startup values
+struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};                       ///Special command to fetch the next Response from the Receiver
 
 AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///Constructor
@@ -280,12 +279,12 @@ void AeroModule_Web::refresh_Minute()
 void AeroModule_Web::sendMessages()
 {
   updateCommands();
-  sendCommand(&AeroResetToSend);   ///special Command, resets communication to first message
-  sendCommand(&AeroModuleCommand1ToSend);                                                                                       ///Command - Response exchange
+  sendCommand(&AeroResetToSend);          ///special Command, resets communication to first message
+  sendCommand(&AeroModuleCommand1ToSend); ///Command - Response exchange
   sendCommand(&AeroCommand1ToSend);
-  sendCommand(&AeroCommand2ToSend);                                                                                         ///Command - Response exchange
-  sendCommand(&AeroResetToSend);   ///special Command, resets communication to first message
-  if(*Debug)
+  sendCommand(&AeroCommand2ToSend); ///Command - Response exchange
+  sendCommand(&AeroResetToSend);    ///special Command, resets communication to first message
+  if (*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
@@ -293,7 +292,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 {
   AeroMessages SequenceIDToSend = ((AeroCommonTemplate *)CommandToSend)->SequenceID;
   AeroMessages ReceivedSequenceID = NULL;
-  if(*Debug)
+  if (*Debug)
   {
     logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);
@@ -337,11 +336,11 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           AeroCommand1ToSend.SprayEnabled = false;
           AeroCommand1ToSend.SprayDisabled = false;
           AeroCommand1ToSend.SprayNow = false;
-          AeroCommand1ToSend.SprayOff = false;          
+          AeroCommand1ToSend.SprayOff = false;
         }
         if (*Debug)
         {
-          logToSerials(F("Aero1:"), false, 4);          
+          logToSerials(F("Aero1:"), false, 4);
           logToSerials(AeroResponse1Received.PressureTankPresent, false, 1);
           logToSerials(F(","), false, 1);
           logToSerials(AeroResponse1Received.SprayEnabled, false, 1);
@@ -354,10 +353,10 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           logToSerials(F(","), false, 1);
           logToSerials(AeroResponse1Received.Weight, true, 1);
         }
-        break; 
+        break;
       case AeroMessages::AeroResponse2:
         memcpy(&AeroResponse2Received, ReceivedResponse, sizeof(struct AeroResponse_P2));
-        if (AeroCommand2ToSend.PumpOn || AeroCommand2ToSend.PumpOff || AeroCommand2ToSend.PumpDisable || AeroCommand2ToSend.MixReservoir || AeroCommand2ToSend.RefillPressureTank || AeroCommand2ToSend.TareWeight )
+        if (AeroCommand2ToSend.PumpOn || AeroCommand2ToSend.PumpOff || AeroCommand2ToSend.PumpDisable || AeroCommand2ToSend.MixReservoir || AeroCommand2ToSend.RefillPressureTank || AeroCommand2ToSend.TareWeight)
         {
           SyncRequested = true; ///Force a second message exchange to actualize the response
           AeroCommand2ToSend.PumpOn = false;
@@ -366,8 +365,8 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           AeroCommand2ToSend.MixReservoir = false;
           AeroCommand2ToSend.RefillPressureTank = false;
           AeroCommand2ToSend.TareWeight = false;
-        }        
-        break;       
+        }
+        break;
       case AeroMessages::AeroReset:
         if (*Debug)
         {
@@ -401,11 +400,11 @@ void AeroModule_Web::updateCommands()
   AeroModuleCommand1ToSend.Time = now();
   AeroModuleCommand1ToSend.Debug = *Debug;
   AeroModuleCommand1ToSend.Metric = *Metric;
-  AeroCommand1ToSend.DayMode = ((MainModule*)Parent) -> getDayMode();
+  AeroCommand1ToSend.DayMode = ((MainModule *)Parent)->getDayMode();
   AeroCommand1ToSend.DayInterval = DefaultSettings->DayInterval;
   AeroCommand1ToSend.DayDuration = DefaultSettings->DayDuration;
   AeroCommand1ToSend.NightInterval = DefaultSettings->NightInterval;
-  AeroCommand1ToSend.NightDuration = DefaultSettings->NightDuration;  
+  AeroCommand1ToSend.NightDuration = DefaultSettings->NightDuration;
   AeroCommand1ToSend.MinPressure = DefaultSettings->MinPressure;
   AeroCommand1ToSend.MaxPressure = DefaultSettings->MaxPressure;
   AeroCommand2ToSend.PumpSpeed = DefaultSettings->PumpSpeed;

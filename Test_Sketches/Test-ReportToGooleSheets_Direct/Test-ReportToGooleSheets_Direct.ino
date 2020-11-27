@@ -42,7 +42,7 @@ void ResetWebServer(void)
     Serial3.print(".");
     delay(500);
   };
-  int response = RestAPI.begin("script.google.com",443,true); //Pre-setup relay to Google Sheets
+  int response = RestAPI.begin("script.google.com", 443, true); //Pre-setup relay to Google Sheets
   Serial.println("WebServer started");
 }
 
@@ -62,16 +62,15 @@ void reportToGoogleSheets()
   strcat(WebMessage, Message);
   strcat_P(WebMessage, (PGM_P)F("\"}"));
   Serial.println(WebMessage);
-  RestAPI.post(WebMessage,"");
+  RestAPI.post(WebMessage, "");
 }
 //The message that gets sent out on port 443:
 //script.google.com/macros/s/AKfycbygH61NfcLMt0mGBlDK9XoDQyHQ1kn0jSGotmp-Pht0cKTMX9Q/exec?BoxData={"Humidity":"4.20","isLightOn":"1","Brightness":"80","Message":"GrowBoxGuy"}
 //Using Postman you can test the above POST request and it will NOT work
 
-//The message that should be sent out: 
+//The message that should be sent out:
 //https://script.google.com/macros/s/AKfycbygH61NfcLMt0mGBlDK9XoDQyHQ1kn0jSGotmp-Pht0cKTMX9Q/exec?BoxData={"Humidity":"4.20","isLightOn":"1","Brightness":"80","Message":"GrowBoxGuy"}
 //Using Postman you can test the above POST request and it will work
-
 
 char *intToChar(int Number)
 {

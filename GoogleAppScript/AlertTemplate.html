@@ -1,26 +1,39 @@
 <html>
-  <head>
-    <base target="_top">
-  </head>
-  <body>
-    <? if(AlertMessages.length > 0) { ?>
-    <strong style="font-size:18px;"><?!=AlertMessages.length?> Active alert<? if(AlertMessages.length > 1) { ?>s<?}?>:</strong>
-    <ul>
-          <? for (var i = 0; i < AlertMessages.length; i++) { ?>
-            <li style="font-size:14px;"><?!= AlertMessages[i] ?></li>
-          <? } ?>
-    </ul>
+
+<head>
+  <base target="_top">
+</head>
+
+<body>
+  <? if(AlertMessages.length > 0) { ?>
+  <strong style="font-size:18px;">
+    <?!=AlertMessages.length?> Active alert
+    <? if(AlertMessages.length > 1) { ?>s
+    <?}?>:</strong>
+  <ul>
+    <? for (var i = 0; i < AlertMessages.length; i++) { ?>
+    <li style="font-size:14px;">
+      <?!= AlertMessages[i] ?>
+    </li>
     <? } ?>
-    <? if(RecoveredMessages.length > 0) { ?>
-    <strong style="font-size:18px;"><?!=RecoveredMessages.length?> Recovered alert<? if(RecoveredMessages.length > 1) { ?>s<?}?>:</strong>
-    <ul>
-          <? for (var i = 0; i < RecoveredMessages.length; i++) { ?>
-            <li style="font-size:14px;"><?!= RecoveredMessages[i] ?></li>
-          <? } ?>
-    </ul>
+  </ul>
+  <? } ?>
+  <? if(RecoveredMessages.length > 0) { ?>
+  <strong style="font-size:18px;">
+    <?!=RecoveredMessages.length?> Recovered alert
+    <? if(RecoveredMessages.length > 1) { ?>s
+    <?}?>:</strong>
+  <ul>
+    <? for (var i = 0; i < RecoveredMessages.length; i++) { ?>
+    <li style="font-size:14px;">
+      <?!= RecoveredMessages[i] ?>
+    </li>
     <? } ?>
-    <br>
-    <?=LatestStatus ?>
-    <br>
-  </body>
+  </ul>
+  <? } ?>
+  <br>
+  <?=LatestStatus ?>
+  <br>
+</body>
+
 </html>

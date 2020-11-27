@@ -1,106 +1,105 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Helper functions: Retrieves a value for other functions
 function getLastRowInRange(range) {
-    var rowNum = range.length;
-    var blank = false;
-    for (var i = 0; i < range.length; i++) {
-        if (range[i][0] === "" && !blank) {
-            rowNum = i;
-            blank = true;
-        }
-        else if (range[i][0] !== "") {
-            blank = false;
-        }
+  var rowNum = range.length;
+  var blank = false;
+  for (var i = 0; i < range.length; i++) {
+    if (range[i][0] === "" && !blank) {
+      rowNum = i;
+      blank = true;
     }
-    if (Debug)
-        LogToConsole("First blank row in range: " + rowNum, true, 3);
-    return rowNum;
+    else if (range[i][0] !== "") {
+      blank = false;
+    }
+  }
+  if (Debug)
+    LogToConsole("First blank row in range: " + rowNum, true, 3);
+  return rowNum;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///Stackdriver logging - Add a log entry ( View it from Sheets: View \  Stackdriver logging
+/// Stackdriver logging - Add a log entry ( View it from Sheets: View \  Stackdriver logging
 function LogToConsole(message, breakRow, indent) {
-    var cache = CacheService.getScriptCache();
-    var messageToLog = cache.get("previousMessage");
-    if (indent > 0) {
-        for (i = 0; i < indent; i++) {
-            messageToLog += ">";
-        }
+  var cache = CacheService.getScriptCache();
+  var messageToLog = cache.get("previousMessage");
+  if (indent > 0) {
+    for (i = 0; i < indent; i++) {
+      messageToLog += ">";
     }
-    messageToLog += message;
-    if (breakRow == true) {
-        console.log(messageToLog);
-        messageToLog = "";
-    }
-    cache.put("previousMessage", messageToLog);
+  }
+  messageToLog += message;
+  if (breakRow == true) {
+    console.log(messageToLog);
+    messageToLog = "";
+  }
+  cache.put("previousMessage", messageToLog);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Helper functions: For getting settings
 function Test_GetNamedRangeValues() {
-    LogToConsole(GetNamedRangeValues("Status", false),true,1);
+  LogToConsole(GetNamedRangeValues("Status", false), true, 1);
 }
 
 function GetNamedRangeValues(rangeName, dropCache) {
   var cache = CacheService.getScriptCache();
   var cached = cache.get(rangeName);
   if (cached != null && dropCache != true) {
-    if(Debug) LogToConsole("Returning cached version of: " +  rangeName,true,2);
+    if (Debug) LogToConsole("Returning cached version of: " + rangeName, true, 2);
     return JSON.parse(cached);
   }
-  else
-  {
-    if(Debug) LogToConsole("Updating cache for: " +  rangeName,true,2);
+  else {
+    if (Debug) LogToConsole("Updating cache for: " + rangeName, true, 2);
     var rangeData = SpreadsheetApp.getActive().getRangeByName(rangeName).getValues();
     cache.put(rangeName, JSON.stringify(rangeData), 120); // cache for 120 seconds to ensure it is not queried multiple times during script execution
     return rangeData;
   }
 }
 
-function WipeCache(){  ///Force to drop all cached named ranges
+function WipeCache() {  ///Force to drop all cached named ranges
   LogToConsole("Wiping cached Named ranges", true, 1);
   var storedCache = CacheService.getUserCache();
   CacheService.getUserCache().remove(storedCache);
 }
 
 function Test_SaveNamedRange() {
-    var data = GetNamedRangeValues("Columns", false);
-    data[0][0] = "TEST";  //Updates the first cell in the range
-    SaveNamedRange("Columns",data);
+  var data = GetNamedRangeValues("Columns", false);
+  data[0][0] = "TEST";  //Updates the first cell in the range
+  SaveNamedRange("Columns", data);
 }
 
 function SaveNamedRange(rangeName, data) {  //updates a Named Range in Google Sheets with data (type: Object[][] )
-    SpreadsheetApp.getActive().getRangeByName(rangeName).setValues(data);    
+  SpreadsheetApp.getActive().getRangeByName(rangeName).setValues(data);
 }
 
-function Test_GetFriendlyColumnName(){
-   LogToConsole(GetFriendlyColumnName("Lt1_On"), true, 0);
+function Test_GetFriendlyColumnName() {
+  LogToConsole(GetFriendlyColumnName("Lt1_On"), true, 0);
 }
 
 function GetFriendlyColumnName(key) {
   var match = GetNamedRangeValues("Columns").filter(function (row) {
-      return row[columns_keyColumn] == key;
-    });
-    if (match == null) { //If key is not found
-      return key; 
-    }
-    else{     
-      return match[0][columns_friendlyNameColumn];
-    }
+    return row[columns_keyColumn] == key;
+  });
+  if (match == null) { //If key is not found
+    return key;
+  }
+  else {
+    return match[0][columns_friendlyNameColumn];
+  }
 }
 
-function Test_GetFriendlyValue(){
-  GetFriendlyValue("Lt1_On","16:20");
+function Test_GetFriendlyValue() {
+  GetFriendlyValue("Lt1_On", "16:20");
 }
 
 function GetFriendlyValue(key, value) {
-  try{
+  try {
     var match = GetNamedRangeValues("Columns").filter(function (row) {
       return row[columns_keyColumn] == key;
     });
     if (match == null) { //If key is not found
       LogToConsole(key + " : " + value + ", type: UNKNOWN", true, 1);
-      return value; 
+      return value;
     }
     else {
       var dataType = match[0][columns_dataTypeColumn];
@@ -109,13 +108,13 @@ function GetFriendlyValue(key, value) {
         case "Date":
           if (value != null) {
             returnValue = Utilities.formatDate(value, GetSettingsValue("Time zone"), GetSettingsValue("Date format")); //https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateformat.html
-          } 
+          }
           break;
         case "Distance":
           if (value != null) {
             returnValue = value + " ";
           }
-          if (GetSettingsValue("Units") == "Metric") {            
+          if (GetSettingsValue("Units") == "Metric") {
             returnValue += 'cm';
           }
           else {
@@ -125,7 +124,7 @@ function GetFriendlyValue(key, value) {
         case "Current":
           if (value != null) {
             returnValue = value + " ";
-          }          
+          }
           returnValue += 'A';
           break;
         case "EnabledDisabled":
@@ -307,8 +306,8 @@ function GetFriendlyValue(key, value) {
     }
     return returnValue;
   }
-  catch(e){
-    LogToConsole("Error processing friendly name: " + e, true,0);
+  catch (e) {
+    LogToConsole("Error processing friendly name: " + e, true, 0);
     return returnValue;
   }
 }
@@ -333,7 +332,7 @@ function GetLatestLogEntry(key, useFriendlyFormat) {
 */
 
 function scrollToLast() {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var range = sheet.getRange(sheet.getLastRow(), 1);
-    sheet.setActiveSelection(range);
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var range = sheet.getRange(sheet.getLastRow(), 1);
+  sheet.setActiveSelection(range);
 }

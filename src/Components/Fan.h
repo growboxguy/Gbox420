@@ -14,8 +14,7 @@ public:
   char *fanSpeedToText();
   char *fanSpeedToNumber();
 
-private:  
-
+private:
 protected:
   Module *Parent;
   bool *State;

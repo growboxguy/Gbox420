@@ -13,9 +13,9 @@ Fan::Fan(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings 
   pinMode(*OnOffPin, OUTPUT);
   digitalWrite(*OnOffPin, HIGH); ///Turn relay off initially
   pinMode(*SpeedPin, OUTPUT);
-  digitalWrite(*SpeedPin, HIGH);         ///Turn relay off initially 
-  Parent->addToReportQueue(this);          
-  Parent->addToRefreshQueue_Minute(this); 
+  digitalWrite(*SpeedPin, HIGH); ///Turn relay off initially
+  Parent->addToReportQueue(this);
+  Parent->addToRefreshQueue_Minute(this);
   logToSerials(F("Fan object created"), true, 1);
 }
 
@@ -40,7 +40,7 @@ void Fan::checkFanStatus()
   if (*State) ///True turns relay ON (LOW signal activates the Relay)
     digitalWrite(*OnOffPin, LOW);
   else
-    digitalWrite(*OnOffPin, HIGH); 
+    digitalWrite(*OnOffPin, HIGH);
   if (*HighSpeed)
     digitalWrite(*SpeedPin, LOW);
   else

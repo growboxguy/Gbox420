@@ -15,9 +15,8 @@ public:
   void websiteEvent_Button(char *Button);
   void websiteEvent_Field(char *Field);
   void reportToJSON();
-  
+
 private:
-  
 protected:
   Module_Web *Parent;
 };

@@ -54,7 +54,7 @@ var thisInstance_ = this;
  * from http://javascript.info/tutorial/type-detection
  */
 var toClass_ = {}.toString;
-function objIsClass_(object,className) {
+function objIsClass_(object, className) {
   return (toClass_.call(object).indexOf(className) !== -1);
 }
 
@@ -78,7 +78,7 @@ Usage:
  *
  * @return {Converter}      this object, for chaining
  */
-function init( tzone, locale ) { // Constructor
+function init(tzone, locale) { // Constructor
   thisInstance_.tzone = tzone || thisInstance_.tzone || Session.getScriptTimeZone();
   thisInstance_.locale = locale || thisInstance_.locale || Session.getActiveUserLocale();  // For future localization of numbers, times, dates.
   return thisInstance_;
@@ -104,26 +104,26 @@ Usage:
 &nbsp;  ["Totals", "", "", "$124571.28", "100.00%", "100.00%", ""]]
 </pre>
  */
-function convertRange(range){
+function convertRange(range) {
   // Must have 1 parameter that is a range object
   if (arguments.length !== 1 || Object.keys(range).indexOf("getValues") === -1)
-    throw new Error( 'Invalid parameter(s)' );
-  
+    throw new Error('Invalid parameter(s)');
+
   // Read range contents
   var data = range.getValues();
-  
+
   // Get formats from range
   var numberFormats = range.getNumberFormats();
 
   // Build output array
   var result = [];
-  
+
   // Populate rows
-  for (row=0;row<data.length;row++) {
+  for (row = 0; row < data.length; row++) {
     result[row] = [];
-    for (col=0;col<data[row].length;col++) {
+    for (col = 0; col < data[row].length; col++) {
       // Get formatted data
-      result[row][col] = convertCell(data[row][col],numberFormats[row][col]);
+      result[row][col] = convertCell(data[row][col], numberFormats[row][col]);
     }
   }
 
@@ -138,7 +138,7 @@ function test_convertRange_() {
 
   // Get ready to convert data
   var converter = init(ss.getSpreadsheetTimeZone(),
-                       ss.getSpreadsheetLocale());
+    ss.getSpreadsheetLocale());
   var vals = converter.convertRange(range);
   debugger;
 }
@@ -174,14 +174,14 @@ Usage:
 &nbsp; &lt;/table>
 </pre>
  */
-function convertRange2html(range){
+function convertRange2html(range) {
   var ss = range.getSheet().getParent();
   var sheet = range.getSheet();
   startRow = range.getRow();
   startCol = range.getColumn();
   lastRow = range.getLastRow();
   lastCol = range.getLastColumn();
-  
+
   // Get ready to convert data
   var converter = thisInstance_.init();
 
@@ -201,7 +201,7 @@ function convertRange2html(range){
   var horizontalAlignments = range.getHorizontalAlignments();
   var verticalAlignments = range.getVerticalAlignments();
   var mergedRanges = range.getMergedRanges();
-  
+
   // https://code.google.com/p/google-apps-script-issues/issues/detail?id=4187
   // Reported widths and heights can be incorrect, with "default" values.
   // If we read GAS defaults (120 wide, 17 high) replace with sheets defaults
@@ -209,14 +209,14 @@ function convertRange2html(range){
   // Get column widths in pixels
   var colWidths = [];
   var tableWidth = 0;
-  for (var col=startCol; col<=lastCol; col++) { 
-    colWidths.push(120==sheet.getColumnWidth(col)?100:sheet.getColumnWidth(col));
-    tableWidth += colWidths[colWidths.length-1];
+  for (var col = startCol; col <= lastCol; col++) {
+    colWidths.push(120 == sheet.getColumnWidth(col) ? 100 : sheet.getColumnWidth(col));
+    tableWidth += colWidths[colWidths.length - 1];
   }
   // Get Row heights in pixels
   var rowHeights = [];
-  for (var row=startRow; row<=lastRow; row++) { 
-    rowHeights.push(17==sheet.getRowHeight(row)?21:sheet.getRowHeight(row));
+  for (var row = startRow; row <= lastRow; row++) {
+    rowHeights.push(17 == sheet.getRowHeight(row) ? 21 : sheet.getRowHeight(row));
   }
 
   // Get formats from range
@@ -224,66 +224,66 @@ function convertRange2html(range){
 
   // Future consideration...
   //var wraps = range.getWraps();
-  
+
   // Build HTML Table, with inline styling for each cell
   // Default cell styling appears in table or row, so only minimal overrides need to be given for each cell
   var tableFormat = 'cellspacing="0" cellpadding="0" dir="ltr" border="1" style="width:TABLEWIDTHpx;table-layout:fixed;font-size:9pt;font-family:arial,sans,sans-serif;border-collapse:collapse;border:1px solid #ccc;font-weight:normal;color:black;background-color:white;text-align:right;text-decoration:none;font-style:normal;"';
-   
-  var html = ['<table '+tableFormat+'>'];
+
+  var html = ['<table ' + tableFormat + '>'];
   // Column widths appear outside of table rows
   html.push('<colgroup>');
-  for (col=0;col<colWidths.length;col++) {
-    html.push('<col width=XXX>'.replace('XXX',colWidths[col]))
+  for (col = 0; col < colWidths.length; col++) {
+    html.push('<col width=XXX>'.replace('XXX', colWidths[col]))
   }
   html.push('</colgroup>');
   html.push('<tbody>');
-  
-  // Populate rows
-  for (row=0;row<data.length;row++) {
-    html.push('<tr style="height:XXXpx;vertical-align:bottom;">'.replace('XXX',rowHeights[row]));
-    for (col=0;col<data[row].length;col++) {
-      // Get formatted data
-      var cellText = converter.convertCell(data[row][col],numberFormats[row][col],true);
 
-      var style = 'style="' 
-                + 'padding:1px 2px; '
-                + 'color:XXX;'.replace('XXX',fontColors[row][col].replace('general-','')).replace('color:black;','')
-                + 'font-family:XXX;'.replace('XXX',fontFamilies[row][col]).replace('font-family:arial,sans,sans-serif;','')
-                + 'font-size:XXXpt;'.replace('XXX',fontSizes[row][col]).replace('font-size:10pt;','')
-                + 'font-weight:XXX;'.replace('XXX',fontWeights[row][col]).replace('font-weight:normal;','')
-                + 'background-color:XXX;'.replace('XXX',backgrounds[row][col]).replace('background-color:white;','')
-                + 'text-align:XXX;'.replace('XXX', horizontalAlignments[row][col]
-                                             .replace('general-','')
-                                             .replace('general','center')).replace('text-align:right;','')
-                + 'vertical-align:XXX;'.replace('XXX',verticalAlignments[row][col]).replace('vertical-align:bottom;','')
-                + 'text-decoration:XXX;'.replace('XXX',fontLines[row][col]).replace('text-decoration:none;','')
-                + 'font-style:XXX;'.replace('XXX',fontStyles[row][col]).replace('font-style:normal;','')
-                + 'border:1px solid black;'  // Need this, to override caja-guest td border-bottom
-                + 'overflow:hidden;'
-                +'"';
+  // Populate rows
+  for (row = 0; row < data.length; row++) {
+    html.push('<tr style="height:XXXpx;vertical-align:bottom;">'.replace('XXX', rowHeights[row]));
+    for (col = 0; col < data[row].length; col++) {
+      // Get formatted data
+      var cellText = converter.convertCell(data[row][col], numberFormats[row][col], true);
+
+      var style = 'style="'
+        + 'padding:1px 2px; '
+        + 'color:XXX;'.replace('XXX', fontColors[row][col].replace('general-', '')).replace('color:black;', '')
+        + 'font-family:XXX;'.replace('XXX', fontFamilies[row][col]).replace('font-family:arial,sans,sans-serif;', '')
+        + 'font-size:XXXpt;'.replace('XXX', fontSizes[row][col]).replace('font-size:10pt;', '')
+        + 'font-weight:XXX;'.replace('XXX', fontWeights[row][col]).replace('font-weight:normal;', '')
+        + 'background-color:XXX;'.replace('XXX', backgrounds[row][col]).replace('background-color:white;', '')
+        + 'text-align:XXX;'.replace('XXX', horizontalAlignments[row][col]
+          .replace('general-', '')
+          .replace('general', 'center')).replace('text-align:right;', '')
+        + 'vertical-align:XXX;'.replace('XXX', verticalAlignments[row][col]).replace('vertical-align:bottom;', '')
+        + 'text-decoration:XXX;'.replace('XXX', fontLines[row][col]).replace('text-decoration:none;', '')
+        + 'font-style:XXX;'.replace('XXX', fontStyles[row][col]).replace('font-style:normal;', '')
+        + 'border:1px solid black;'  // Need this, to override caja-guest td border-bottom
+        + 'overflow:hidden;'
+        + '"';
 
       var thisRow = range.getRow() + row;
       var thisCol = range.getColumn() + col;
       var rcSpan = "";
       var isTdPartOfRange = false;
-      
+
       for (var i = 0; i < mergedRanges.length; i++) {
         var currentMergedRange = mergedRanges[i];
-        
+
         var currentMergedRangeBoundaries = {
-          top : currentMergedRange.getRow(),
-          bottom : currentMergedRange.getRow() + currentMergedRange.getNumRows() - 1,
-          left : currentMergedRange.getColumn(),
-          right : currentMergedRange.getColumn() + currentMergedRange.getNumColumns() - 1
+          top: currentMergedRange.getRow(),
+          bottom: currentMergedRange.getRow() + currentMergedRange.getNumRows() - 1,
+          left: currentMergedRange.getColumn(),
+          right: currentMergedRange.getColumn() + currentMergedRange.getNumColumns() - 1
         };
-        
+
         if ((thisRow == currentMergedRangeBoundaries.top && thisCol == currentMergedRangeBoundaries.left)) {
           // top left cell of range
           if (currentMergedRange.getNumRows() > 0) {
-            rcSpan = " rowspan='"+currentMergedRange.getNumRows()+"'";
+            rcSpan = " rowspan='" + currentMergedRange.getNumRows() + "'";
           }
           if (currentMergedRange.getNumColumns() > 0) {
-            rcSpan += " colspan='"+currentMergedRange.getNumColumns()+"'";
+            rcSpan += " colspan='" + currentMergedRange.getNumColumns() + "'";
           }
         } else if ((thisRow >= currentMergedRangeBoundaries.top && thisRow <= currentMergedRangeBoundaries.bottom) && (thisCol >= currentMergedRangeBoundaries.left && thisCol <= currentMergedRangeBoundaries.right)) {
           // falls in range
@@ -292,20 +292,20 @@ function convertRange2html(range){
         }
       }
       if (!isTdPartOfRange) {
-        html.push('<td XXX SPAN>'.replace('SPAN', rcSpan).replace('XXX',style)
-                +String(cellText)
-                +'</td>');
+        html.push('<td XXX SPAN>'.replace('SPAN', rcSpan).replace('XXX', style)
+          + String(cellText)
+          + '</td>');
       }
     }
     html.push('</tr>');
   }
   html.push('</tbody>');
   html.push('</table>');
-  
+
   //debugger;
   //return '<!--StartFragment--><meta name="generator" content="Sheets"><style type="text/css"><!--td {border: 1px solid #ccc;}br {mso-data-placement:same-cell;}--></style><table cellspacing="0" cellpadding="0" dir="ltr" border="1" style="table-layout:fixed;font-size:13px;font-family:arial,sans,sans-serif;border-collapse:collapse;border:1px solid #ccc"><colgroup><col width="100"><col width="155"><col width="100"></colgroup><tbody><tr style="height:21px;"><td style="padding:2px 3px 2px 3px;vertical-align:bottom;background-color:#ffff00;border-top:1px solid #000000;border-right:1px solid #000000;border-bottom:1px solid #000000;border-left:1px solid #000000;" data-sheets-value="[null,2,&quot;100px wide&quot;]">100px wide</td><td style="padding:2px 3px 2px 3px;vertical-align:bottom;background-color:#000000;border-top:1px solid #000000;border-right:1px solid #000000;border-bottom:1px solid #000000;font-family:georgia;font-size:140%;font-style:italic;color:#00ffff;" data-sheets-value="[null,2,&quot;Blue/Black&quot;]">Blue/Black</td><td style="padding:2px 3px 2px 3px;vertical-align:bottom;border-top:1px solid #000000;border-right:1px solid #000000;border-bottom:1px solid #000000;text-align:right;" data-sheets-value="[null,3,null,2]">2</td></tr><tr style="height:21px;"><td style="padding:2px 3px 2px 3px;vertical-align:bottom;border-right:1px solid #000000;border-bottom:1px solid #000000;border-left:1px solid #000000;text-align:right;" data-sheets-value="[null,3,null,2.3]">2.3</td><td style="padding:2px 3px 2px 3px;vertical-align:bottom;border-right:1px solid #000000;border-bottom:1px solid #000000;font-family:courier new,monospace;text-decoration:underline line-through;" data-sheets-value="[null,2,&quot;155 px wide&quot;]">155 px wide</td><td style="padding:2px 3px 2px 3px;vertical-align:bottom;border-right:1px solid #000000;border-bottom:1px solid #000000;text-align:right;" data-sheets-value="[null,3,null,41839]" data-sheets-numberformat="[null,5]" data-sheets-formula="=today()">7/19/2014</td></tr><tr style="height:30px;"><td style="padding:2px 3px 2px 3px;vertical-align:bottom;border-right:1px solid #000000;border-bottom:1px solid #000000;border-left:1px solid #000000;font-weight:bold;color:#ff0000;text-align:center;" data-sheets-value="[null,3,null,41822]" data-sheets-numberformat="[null,5,&quot;M/d/yyyy&quot;,1]">7/2/2014</td><td style="padding:2px 3px 2px 3px;vertical-align:bottom;border-right:1px solid #000000;border-bottom:1px solid #000000;"></td><td style="padding:2px 3px 2px 3px;vertical-align:bottom;border-right:1px solid #000000;border-bottom:1px solid #000000;font-family:georgia;font-weight:bold;" data-sheets-value="[null,2,&quot;sadf&quot;]">sadf</td></tr><tr style="height:50px;"><td style="padding:2px 3px 2px 3px;vertical-align:bottom;border-right:1px solid #000000;border-bottom:1px solid #000000;border-left:1px solid #000000;text-decoration:underline line-through;vertical-align:top;text-align:right;" data-sheets-value="[null,2,&quot;asr&quot;]">asr</td><td style="padding:2px 3px 2px 3px;vertical-align:bottom;border-right:1px solid #000000;border-bottom:1px solid #000000;font-size:360%;vertical-align:bottom;" data-sheets-value="[null,2,&quot;asdf&quot;]">asdf</td><td style="padding:2px 3px 2px 3px;vertical-align:bottom;border-right:1px solid #000000;border-bottom:1px solid #000000;vertical-align:middle;text-align:center;" data-sheets-value="[null,2,&quot;100 px wide&quot;]">100 px wide</td></tr></tbody></table><!--EndFragment-->'
 
-  return html.join('').replace('TABLEWIDTH',tableWidth);
+  return html.join('').replace('TABLEWIDTH', tableWidth);
 }
 
 
@@ -326,26 +326,26 @@ Usage:
  * @return {String}            Formatted string. May contain HTML, depending on
  *                             htmlReady.
  */
-function convertCell(cellText,format,htmlReady) {
+function convertCell(cellText, format, htmlReady) {
   // Must have 2 or 3 parameters, format must be string
-  if (arguments.length < 2 || !objIsClass_(format,"String"))
-    throw new Error( 'Invalid parameter(s)' );
+  if (arguments.length < 2 || !objIsClass_(format, "String"))
+    throw new Error('Invalid parameter(s)');
   htmlReady = htmlReady || false;
   thisInstance_.init(); // Ensure instance variables are set
-  
+
   if (cellText === null) return '';  // Not much to do with blank cells - just return an empty string
 
   // Treat all dates & times the same; we can adapt the spreadsheet formats
-  if (objIsClass_(cellText,"Date")) {
-    return( convertDateTime_(cellText,format) );
+  if (objIsClass_(cellText, "Date")) {
+    return (convertDateTime_(cellText, format));
   }
-  
+
   // Numbers come in many flavours; which do we have?
-  if (objIsClass_(cellText,"Number")){
+  if (objIsClass_(cellText, "Number")) {
     // General - Not so much a format, more of a guideline.
     if (format === "0.###############" || format === '') {
-      if (Math.abs(cellText) >= 1000000000000010 )
-        return convertExponential_(cellText,5);  // Overflow - automatic exponential, 5 fraction digits
+      if (Math.abs(cellText) >= 1000000000000010)
+        return convertExponential_(cellText, 5);  // Overflow - automatic exponential, 5 fraction digits
       else
         return String(cellText);
     }
@@ -359,19 +359,19 @@ function convertCell(cellText,format,htmlReady) {
     var paddedDecimal = re.test(format);
     if (paddedDecimal) {
       var thous = format.match(/,/) ? ',' : '';      // Check for thousand separators, remember
-      format = format.replace(/,/g,'');              // and remove them
+      format = format.replace(/,/g, '');              // and remove them
       var parts = format.match(re);  // Parts[1] is integer part, parts[2] is radix (null if none), parts[3] is fraction
       var whole = parts[1];
-      var wholeMin = whole.replace(/[^0]/g,'').length;  // minimum digits in whole part expressed by count of zeros
+      var wholeMin = whole.replace(/[^0]/g, '').length;  // minimum digits in whole part expressed by count of zeros
       var wholeMax = whole.length;                      // max digits in whole is length of zeros & #
       var fract = parts[3];
-      var fractMin = fract.replace(/[^0]/g,'').length;  // min digits in frac expressed by count of zeros
+      var fractMin = fract.replace(/[^0]/g, '').length;  // min digits in frac expressed by count of zeros
       var fractMax = fract.length;                      // max digits in frac is length of zeros & #
-      return convertPadded_(cellText,fractMax,fractMin,wholeMin,thous);
+      return convertPadded_(cellText, fractMax, fractMin, wholeMin, thous);
     }
     // Currency
     if (format.indexOf('$') !== -1) {
-      var options = {htmlReady:htmlReady};
+      var options = { htmlReady: htmlReady };
       // find out position of currency symbol
       if (format.slice(-1) === "]") options.symLoc = "after";
       // and what the symbol is - the default $ will be handled by the converter,
@@ -393,43 +393,43 @@ function convertCell(cellText,format,htmlReady) {
       matches = format.match(/;\[(.*?)\]/);
       if (matches) options.negColor = matches[1];
       // Then call the currency converter
-      return convertCurrency_(cellText,fract,options);
+      return convertCurrency_(cellText, fract, options);
     }
     // Percent
     if (format.indexOf('%') !== -1) {
       var matches = format.match(/\.(0*?)%/);
       var fract = matches ? matches[1].length : 0;     // Fractional part
-      return convertPercent_(cellText,fract);
+      return convertPercent_(cellText, fract);
     }
     // Exponentials
     var expon = format.match(/\.(0*?)E\+/);
     if (expon) {
       //var fract = format.match(/\.(0*?)E\+/)[1].length;  // Fractional part
       var fract = expon[1].length;  // Fractional part
-      return convertExponential_(cellText,fract);
+      return convertExponential_(cellText, fract);
     }
     // Fraction
     if (format.indexOf('?\/?') !== -1) {
       matches = format.match(/(\?*?)\//);
       var precision = matches ? matches[1].length : 1;     // Fractional part
-      return convertFraction_(cellText,precision);
+      return convertFraction_(cellText, precision);
     }
     if (this[format]) {                                    // TODO: kill off, then stop calling stand-alone converters
       return converter_[format](cellText);
     }
     else {
-      Logger.log("Unsupported format '"+format+"', cell='"+cellText+"'");
+      Logger.log("Unsupported format '" + format + "', cell='" + cellText + "'");
       return cellText;
     }
   }
   // No previous condition met, cell contains a string.
   var result = String(cellText);
   // Sanitize string if output is for html
-  if (htmlReady) result = result.replace(/ /g,"&nbsp;").replace(/</g,"&lt;").replace(/\n/g,"<br>");
+  if (htmlReady) result = result.replace(/ /g, "&nbsp;").replace(/</g, "&lt;").replace(/\n/g, "<br>");
   return result;
 }
 
-function convertDateTime_(date,format) {
+function convertDateTime_(date, format) {
   // The 'general' format for dates is blank
   if ('' == format) format = 'M/d/yyyy'; // TODO: Should be getSpreadsheetLocale() based
   // Translate spreadsheet date format elements to SimpleDateFormat
@@ -439,32 +439,32 @@ function convertDateTime_(date,format) {
   // of minutes in a time. Month will be used unless this code
   // is provided with hours or seconds as part of a time." 
   if (format.match(/am\/pm/i) == null) {
-    format = format.replace(/h/g,'H');   // Hour of day, 0-23
+    format = format.replace(/h/g, 'H');   // Hour of day, 0-23
   }
 
   // Check for elapsed time  
   if (format.indexOf("[") !== -1)
-    format = updFormatElapsedTime_(date,format);
+    format = updFormatElapsedTime_(date, format);
 
   var jsFormat = format
-               .replace(/am\/pm|AM\/PM/,'a') // Am/pm marker
-               .replace('dddd','EEEE')       // Day name in week (long)
-               .replace('ddd','EEE')         // Day name in week (short)
-               .replace(/S/g,'s')            // In Sheets, upper & lower s means Seconds
-               .replace(/D/g,'d')            // In Sheets, upper & lower d means Day
-               .replace(/M/g,'m')            // In Sheets, upper & lower m are the same, what matters is quantity & neighbors
-               .replace(/([hH]+)"*(.)"*(m+)/g,tempMinute_) // ... so find "minutes" around "hours"
-               .replace(/(m+)"*(.)"*(s+)/g,tempMinute_)    // ... or "seconds", and change to 'b' temporarily
-               .replace('mmmmm','"@"MMM"@"') // first letter in month - google-ism?
-               .replace(/m/g,"M")            // All remaining "m"s are months, so M for SimpleDateFormat
-               .replace(/b/g,'m')            // reassert temporary minutes
-               .replace(/0+/,'S')            // Milliseconds are 0 in Sheets, upper S in SimpleDateFormat
-               .replace(/"/g,"'")            // Change double to single quotes on filler
+    .replace(/am\/pm|AM\/PM/, 'a') // Am/pm marker
+    .replace('dddd', 'EEEE')       // Day name in week (long)
+    .replace('ddd', 'EEE')         // Day name in week (short)
+    .replace(/S/g, 's')            // In Sheets, upper & lower s means Seconds
+    .replace(/D/g, 'd')            // In Sheets, upper & lower d means Day
+    .replace(/M/g, 'm')            // In Sheets, upper & lower m are the same, what matters is quantity & neighbors
+    .replace(/([hH]+)"*(.)"*(m+)/g, tempMinute_) // ... so find "minutes" around "hours"
+    .replace(/(m+)"*(.)"*(s+)/g, tempMinute_)    // ... or "seconds", and change to 'b' temporarily
+    .replace('mmmmm', '"@"MMM"@"') // first letter in month - google-ism?
+    .replace(/m/g, "M")            // All remaining "m"s are months, so M for SimpleDateFormat
+    .replace(/b/g, 'm')            // reassert temporary minutes
+    .replace(/0+/, 'S')            // Milliseconds are 0 in Sheets, upper S in SimpleDateFormat
+    .replace(/"/g, "'")            // Change double to single quotes on filler
   var result = Utilities.formatDate(
-          date,
-          thisInstance_.tzone,
-          jsFormat)
-               .replace(/@.*@/g,firstChOfMonth_);   // Tidy first char in month, in post-processing
+    date,
+    thisInstance_.tzone,
+    jsFormat)
+    .replace(/@.*@/g, firstChOfMonth_);   // Tidy first char in month, in post-processing
   return result;
 }
 
@@ -475,8 +475,8 @@ function convertDateTime_(date,format) {
  * @param {string} match  Regex match containing 'm's and other stuff
  * @returns {string}      replacement for match.
  */
-function tempMinute_(match){
-  return match.replace(/m/g,'b');
+function tempMinute_(match) {
+  return match.replace(/m/g, 'b');
 }
 
 /**
@@ -485,7 +485,7 @@ function tempMinute_(match){
  * @param {string} match  Regex match, formatted @Month@
  * @returns {string}      replacement for match.
  */
-function firstChOfMonth_(match){
+function firstChOfMonth_(match) {
   return match.charAt(1)
 }
 
@@ -495,24 +495,24 @@ function firstChOfMonth_(match){
  * not minutes or seconds, so we replace elapsed minutes & seconds with
  * calculated values.
  */
-function updFormatElapsedTime_(date,format) {
+function updFormatElapsedTime_(date, format) {
   // For elapsed time, we are interested in the time since midnight.
   var elapsedMs = getMsSinceMidnight_(date);
-  
+
   // Generate elapsed seconds & minutes, just in case. While we could optimize these
   // operations to be performed only when needed, the tests are as expensive.
   // Check for elapsed second signature, determine its length for padding.
   var matches = format.match(/\[([sS]+)\]/);
   var pad = matches ? matches[1].length : 1;
-  var elapsedSec = convertPadded_(Math.floor(elapsedMs/1000),0,0,pad);
+  var elapsedSec = convertPadded_(Math.floor(elapsedMs / 1000), 0, 0, pad);
   // Check for elapsed minute signature, determine its length for padding.
   matches = format.match(/\[([mM]+)\]/);
   pad = matches ? matches[1].length : 1;
-  var elapsedMin = convertPadded_(Math.floor(elapsedMs/60000),0,0,pad);
+  var elapsedMin = convertPadded_(Math.floor(elapsedMs / 60000), 0, 0, pad);
   //var matches = format.match(/\[([^\]]+)\]/g); // Regex finds all elapsed time notations
-  var format = format.replace(/\[([hH]+)\]/,elapsedHours_)
-                     .replace(/\[([mM]+)\]/,elapsedMin)
-                     .replace(/\[([sS]+)\]/,elapsedSec)
+  var format = format.replace(/\[([hH]+)\]/, elapsedHours_)
+    .replace(/\[([mM]+)\]/, elapsedMin)
+    .replace(/\[([sS]+)\]/, elapsedSec)
   return format;
 }
 
@@ -524,8 +524,8 @@ function updFormatElapsedTime_(date,format) {
  * @param {string} match  Regex match containing '[h]'s and other stuff
  * @returns {string}      replacement for match.
  */
-function elapsedHours_(match){
-  return match.replace(/[hH]/g,'H').replace(/[\[\]]/g,'');
+function elapsedHours_(match) {
+  return match.replace(/[hH]/g, 'H').replace(/[\[\]]/g, '');
 }
 
 /**
@@ -537,7 +537,7 @@ function elapsedHours_(match){
  */
 function getMsSinceMidnight_(d) {
   var e = new Date(d);
-  return d - e.setHours(0,0,0,0);
+  return d - e.setHours(0, 0, 0, 0);
 }
 
 /**
@@ -549,19 +549,19 @@ function getMsSinceMidnight_(d) {
  * @param {number}   wholeMin   Min digits in whole, default 1 (pad)
  * @param {char}     thous      Thousand separator char, blank default
  */
-function convertPadded_(num,fractMax,fractMin,wholeMin,thous) {
+function convertPadded_(num, fractMax, fractMin, wholeMin, thous) {
   fractMin = fractMin || 0; // Set defaults for optional parameters
   wholeMin = wholeMin || 1;
   thous = thous || '';
-  var numStr = String(1*Utilities.formatString("%.Xf".replace('X',String(fractMax)), num));
+  var numStr = String(1 * Utilities.formatString("%.Xf".replace('X', String(fractMax)), num));
   var parts = numStr.split('.');
-  var whole = pad0_(parts[0],wholeMin,true);
-  var frac = pad0_((parts.length > 1) ? parts[1] : '',fractMin);
+  var whole = pad0_(parts[0], wholeMin, true);
+  var frac = pad0_((parts.length > 1) ? parts[1] : '', fractMin);
   var thouGroups = /(\d+)(\d{3})/;
-  while (thous&&thouGroups.test(whole)) {
+  while (thous && thouGroups.test(whole)) {
     whole = whole.replace(thouGroups, '$1' + thous + '$2');
   }
-  var result = whole + (frac ? ('.'+frac) : '');
+  var result = whole + (frac ? ('.' + frac) : '');
   return result;
 }
 
@@ -581,14 +581,14 @@ function pad0_(num, width, left) {
   if (left) {
     var result = (bunchazeros + num).substr(-width);
   } else {
-    result = (num + bunchazeros).substr(0,width);
+    result = (num + bunchazeros).substr(0, width);
   }
   return result;
 }
 
-function convertExponential_(num,fract) { return num.toExponential(fract).replace('e','E'); }
+function convertExponential_(num, fract) { return num.toExponential(fract).replace('e', 'E'); }
 
-function convertPercent_(num,fract) { return Utilities.formatString("%.Xf%".replace('X',String(fract)), 100*num); }
+function convertPercent_(num, fract) { return Utilities.formatString("%.Xf%".replace('X', String(fract)), 100 * num); }
 
 
 /**
@@ -598,12 +598,12 @@ function convertPercent_(num,fract) { return Utilities.formatString("%.Xf%".repl
  *    negBrackets {boolean} default false
  *    negColor {string} color for negative numbers
  */
-function convertCurrency_(num,fract,options) {
+function convertCurrency_(num, fract, options) {
   options = options || {};
   var result = "#RESULT#";
   var symbol = options.symbol ? options.symbol : '$';
   if (!options.symLoc || options.symLoc === 'before') {
-      result = symbol + "#RESULT#";
+    result = symbol + "#RESULT#";
   }
   else if (options.symLoc === 'after') {
     result = "#RESULT#" + symbol;
@@ -614,29 +614,29 @@ function convertCurrency_(num,fract,options) {
   if (num < 0) {
     num = -num;
     if (options.negBrackets) {
-      result = "("+result+")";
+      result = "(" + result + ")";
     }
     else {
-      result = '-'+result;
+      result = '-' + result;
     }
   }
   if (options.negColor && options.htmlReady) {
-    result = ("<span style=\"color:XXX;\">"+result+"</span>").replace("XXX",options.negColor.toLowerCase());
+    result = ("<span style=\"color:XXX;\">" + result + "</span>").replace("XXX", options.negColor.toLowerCase());
   }
-  num = convertPadded_(num,fract);
-  return result.replace("#RESULT#",num);
+  num = convertPadded_(num, fract);
+  return result.replace("#RESULT#", num);
 }
 
 //  "# ?/?", "# ??/??"
-function convertFraction_(num,precision) {
-  if (!thisInstance_.fracEst) thisInstance_.fracEst = new FractionEstimator_(); 
+function convertFraction_(num, precision) {
+  if (!thisInstance_.fracEst) thisInstance_.fracEst = new FractionEstimator_();
   var sign = (num < 0) ? -1 : 1;
   num = sign * num;
   var whole = Math.floor(num);
-//  var whole = String(num).match(/(.*?)\./)[1]+' ';
-  var frac = num%1; // introduces small rounding errors
-  var result = ((whole === 0) ? '' : String(sign*whole) + ' ') + thisInstance_.fracEst.estimate(frac,precision);
-  return result 
+  //  var whole = String(num).match(/(.*?)\./)[1]+' ';
+  var frac = num % 1; // introduces small rounding errors
+  var result = ((whole === 0) ? '' : String(sign * whole) + ' ') + thisInstance_.fracEst.estimate(frac, precision);
+  return result
 }
 
 /********************************************************************************************/
@@ -646,7 +646,7 @@ var converter_ = {};
 
 // TODO: this is just so similar to currency, some refactoring would take care of it.
 // should break out negBracket & color identification to be general
-converter_["#,##0.00;(#,##0.00)"] = function(num) {
+converter_["#,##0.00;(#,##0.00)"] = function (num) {
   if (num > 0) {
     var result = 'XXX';
   }
@@ -693,45 +693,45 @@ function FractionEstimator_() {   // constructor
  *
  * @return {String}          e.g. "14/25"
  */
-FractionEstimator_.prototype.estimate = function(value,precision) {
-  if (1 <= value || 0 > value) throw new Error( 'invalid fraction, 0 < fraction < 1' );
+FractionEstimator_.prototype.estimate = function (value, precision) {
+  if (1 <= value || 0 > value) throw new Error('invalid fraction, 0 < fraction < 1');
   precision = precision || 1;
   if (precision > 2) throw new Error('beyond max precision');
 
   var list = this.fracList_(precision);  // Get a handle on list of acceptable fractions
-  
+
   // Use bisection to find first value equal to or larger than value
-  var lo=0,hi=list.length-1;
-  while (lo<hi) {
-    var mid = (lo+hi)>>1;
-    if (value < list[mid].val) hi=mid;
-    else lo = mid+1;
+  var lo = 0, hi = list.length - 1;
+  while (lo < hi) {
+    var mid = (lo + hi) >> 1;
+    if (value < list[mid].val) hi = mid;
+    else lo = mid + 1;
   }
   // pick the closer of the found 'lo', and the element before that
-  if (Math.abs(list[lo-1].val - value) < Math.abs(list[lo].val - value))
-    var frac=list[lo-1].frac;
+  if (Math.abs(list[lo - 1].val - value) < Math.abs(list[lo].val - value))
+    var frac = list[lo - 1].frac;
   else
-    frac=list[lo].frac;
+    frac = list[lo].frac;
   return frac;
 }
 
 // Return acceptable fraction list for given precision, build if needed.
-FractionEstimator_.prototype.fracList_ = function(precision) {
+FractionEstimator_.prototype.fracList_ = function (precision) {
   if (!this.fracList[precision]) {
     var max = Math.pow(10, precision);
     var list = [];
-    for (var denom=2; denom<max; denom++) {
-      for (var nom = 1; nom<denom; nom++) {
-        var dec = nom/denom;
-        if (!list[dec]) list[dec]=Utilities.formatString("%u/%u", nom, denom);
-        if (!(denom%2)) nom++; // skip even/even, since they would reduce
+    for (var denom = 2; denom < max; denom++) {
+      for (var nom = 1; nom < denom; nom++) {
+        var dec = nom / denom;
+        if (!list[dec]) list[dec] = Utilities.formatString("%u/%u", nom, denom);
+        if (!(denom % 2)) nom++; // skip even/even, since they would reduce
         // Same case for any factors... but not worth the cycles to calculate
       }
     }
     var a = Object.keys(list).sort();
     this.fracList[precision] = [];
-    for (var i=0;i<a.length;i++) {
-      this.fracList[precision].push({"val":parseFloat(a[i]),"frac":list[a[i]]});
+    for (var i = 0; i < a.length; i++) {
+      this.fracList[precision].push({ "val": parseFloat(a[i]), "frac": list[a[i]] });
     }
   }
   return this.fracList[precision];
@@ -742,6 +742,6 @@ function test_Frac_() {
   var fracEst = new FractionEstimator_();
   var value = 0.56;
   var precision = 2; // 1 digit denominator
-  var frac = fracEst.estimate(value,precision);
+  var frac = fracEst.estimate(value, precision);
   debugger;
 }

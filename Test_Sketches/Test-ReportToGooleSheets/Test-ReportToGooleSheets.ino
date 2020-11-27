@@ -55,10 +55,9 @@ void reportToGoogleSheets()
   strcat_P(WebMessage, (PGM_P)F("{\"Log\":{\"IFan\":{\"Speed\":\"1\"},\"EFan\":{\"Speed\":\"1\"},\"Lt1\":{\"Status\":\"0\",\"Brightness\":\"15\",\"Timer\":\"1\",\"On\":\"04:20\",\"Off\":\"16:20\"}}}"));
   Serial.println(WebMessage);
   RestAPI.get(WebMessage);
-} 
+}
 
 //URL called by the script: api.pushingbox.com/pushingbox?devid=v420&BoxData={"Log":{"IFan":{"Speed":"1"},"EFan":{"Speed":"1"},"Lt1":{"Status":"0","Brightness":"15","Timer":"1","On":"04:20","Off":"16:20"}}}
-
 
 char *intToChar(int Number)
 {

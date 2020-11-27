@@ -13,8 +13,8 @@
 double Setpoint, Input, Output;
 
 //Specify the links and initial tuning parameters
-double Kp=0.2, Ki=1, Kd=0;
-PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd,P_ON_M, DIRECT);
+double Kp = 0.2, Ki = 1, Kd = 0;
+PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, P_ON_M, DIRECT);
 
 void setup()
 {
@@ -38,20 +38,20 @@ void loop()
   Serial.println(Output);
   delay(200);
 
-if(Serial.available())
+  if (Serial.available())
   {
     char temp = Serial.read();
-    if(temp == 'q')
+    if (temp == 'q')
       Kp += 0.1;
-    else if(temp == 'a')
+    else if (temp == 'a')
       Kp -= 0.1;
-    else if(temp == 'w')
+    else if (temp == 'w')
       Ki += 0.1;
-    else if(temp == 's')
+    else if (temp == 's')
       Ki -= 0.1;
-    else if(temp == 'e')
+    else if (temp == 'e')
       Kd += 0.1;
-     else if(temp == 'd')
+    else if (temp == 'd')
       Kd -= 0.1;
   }
   Serial.print(F("Kp: "));

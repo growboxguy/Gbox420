@@ -53,7 +53,7 @@ typedef struct
   struct DHTSensorSettings
   { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
     DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}
-    uint8_t Pin; ///DAT pin of the DHT sensor
+    uint8_t Pin;  ///DAT pin of the DHT sensor
     uint8_t Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
   };
   struct DHTSensorSettings DHT1 = {.Pin = 3, .Type = 22};
@@ -61,7 +61,7 @@ typedef struct
   struct PHSensorSettings
   {
     PHSensorSettings(uint8_t Pin = 0, float Slope = 0.0, float Intercept = 0.0) : Pin(Pin), Slope(Slope), Intercept(Intercept) {}
-    uint8_t Pin;  ///pH sensor Po pin
+    uint8_t Pin; ///pH sensor Po pin
     float Slope;
     float Intercept;
   };
@@ -84,7 +84,7 @@ typedef struct
   struct WaterTempSensorSettings
   {
     WaterTempSensorSettings(uint8_t Pin = 0) : Pin(Pin) {}
-    uint8_t Pin;  ///DS18B20 sensor yellow signal wire
+    uint8_t Pin; ///DS18B20 sensor yellow signal wire
   };
   struct WaterTempSensorSettings WTemp1 = {.Pin = 4}; ///Data(yellow) - DS18B20 waterproof temp sensor
 

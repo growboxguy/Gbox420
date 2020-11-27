@@ -5,8 +5,8 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   this->Parent = Parent;
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
-  pinMode(*Pin, OUTPUT); 
-  Parent->addToRefreshQueue_Sec(this);      
+  pinMode(*Pin, OUTPUT);
+  Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("Sound object created"), true, 1);
   checkEvents();
 }
@@ -18,16 +18,17 @@ void Sound::refresh_Sec()
   checkEvents();
 }
 
-void Sound::checkEvents(){
+void Sound::checkEvents()
+{
   if (*Enabled)
   {
     if (PlayOffSound)
       OffSound();
     if (PlayOnSound)
-      OnSound();    
+      OnSound();
   }
   PlayOnSound = false;
-  PlayOffSound = false;  
+  PlayOffSound = false;
 }
 
 void Sound::playOnSound()

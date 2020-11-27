@@ -1,19 +1,19 @@
 #include "PressureSensor_Web.h"
 
-PressureSensor_Web::PressureSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PressureSensorSettings *DefaultSettings) : Common(Name), PressureSensor(Name,Parent,DefaultSettings), Common_Web(Name)
+PressureSensor_Web::PressureSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PressureSensorSettings *DefaultSettings) : Common(Name), PressureSensor(Name, Parent, DefaultSettings), Common_Web(Name)
 {
   this->Parent = Parent;
-  this->Name = Name; 
-  Parent->addToReportQueue(this);         
-  Parent->addToRefreshQueue_Minute(this); 
-  Parent->addToWebsiteQueue_Load(this);   
-  Parent->addToWebsiteQueue_Button(this); 
-  Parent->addToWebsiteQueue_Field(this);    
+  this->Name = Name;
+  Parent->addToReportQueue(this);
+  Parent->addToRefreshQueue_Minute(this);
+  Parent->addToWebsiteQueue_Load(this);
+  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToWebsiteQueue_Field(this);
 }
 
 void PressureSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/S",2) == 0)
+  if (strncmp(url, "/S", 2) == 0)
   {
     WebServer.setArgString(getComponentName(F("Offset")), toText_floatDecimals(*Offset));
     WebServer.setArgString(getComponentName(F("Ratio")), toText_floatDecimals(*Ratio));

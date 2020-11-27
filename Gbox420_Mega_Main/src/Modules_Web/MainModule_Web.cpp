@@ -181,7 +181,7 @@ bool MainModule::getDayMode()
 {
   if (Lt1->getStatus() || Lt2->getStatus() || !(LtSen1->getDark()))
   {
-    return true;  ///Return true if any of the lights are on OR the light sensor is detecting daylight
+    return true; ///Return true if any of the lights are on OR the light sensor is detecting daylight
   }
   else
   {

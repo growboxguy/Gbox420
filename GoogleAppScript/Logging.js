@@ -4,7 +4,7 @@ function Test_SaveToLog() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Stores the received data on the Log sheet
 function SaveToLog(Log) {
-  LogToConsole("Updating Log sheet...",true,0);
+  LogToConsole("Updating Log sheet...", true, 0);
   var logSheet = SpreadsheetApp.getActive().getSheetByName("Log");
   var headings = logSheet.getDataRange().offset(0, 0, 1).getValues()[0]; //Get first row of the Log sheet
   var rowToInsert = [];
@@ -34,29 +34,27 @@ function SaveToLog(Log) {
   logSheet.autoResizeColumns(1, logSheet.getLastColumn()); //resize columns to fit the data  
 }
 
-function GetLogColumnRange(name,rowLimit){  //returns the entire column with the matching header name
+function GetLogColumnRange(name, rowLimit) {  //returns the entire column with the matching header name
   var logSheet = SpreadsheetApp.getActive().getSheetByName("Log");
   var logHeader = logSheet.getDataRange().offset(0, 0, 1).getValues()[0]; //Get first row of the Log sheet
-  
+
   match = null;
   for (var column in logHeader) {
     if (logHeader[column] == name) {
       match = parseInt(column);
     }
   }
-  if(match != null)
-  {
-    if(Debug)LogToConsole(name + " header matched log column: "+ match,true,3);
-    if(!isNaN(parseInt(rowLimit)) && isFinite(rowLimit) && rowLimit>0 && logSheet.getLastRow()>rowLimit){
-      return logSheet.getRange(logSheet.getLastRow()-rowLimit, match+1, logSheet.getLastRow(), 1);
+  if (match != null) {
+    if (Debug) LogToConsole(name + " header matched log column: " + match, true, 3);
+    if (!isNaN(parseInt(rowLimit)) && isFinite(rowLimit) && rowLimit > 0 && logSheet.getLastRow() > rowLimit) {
+      return logSheet.getRange(logSheet.getLastRow() - rowLimit, match + 1, logSheet.getLastRow(), 1);
     }
-    else{
-      return logSheet.getRange(1, match+1, logSheet.getLastRow(), 1);
+    else {
+      return logSheet.getRange(1, match + 1, logSheet.getLastRow(), 1);
     }
   }
-  else
-  {
-    LogToConsole(name + " header did not match any log columns",true,3);
+  else {
+    LogToConsole(name + " header did not match any log columns", true, 3);
     return null;
-  }  
+  }
 }

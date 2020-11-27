@@ -4,17 +4,17 @@
 #include "HX711.h"
 
 //Pins
-const byte  WeightSensor1_DT =  A0;
+const byte WeightSensor1_DT = A0;
 const byte WeightSensor1_SCK = A1;
-const byte  WeightSensor2_DT =  A2;
+const byte WeightSensor2_DT = A2;
 const byte WeightSensor2_SCK = A3;
 
 //Weights used during the calibration
-const float WeightSensor1_CalibrationWeight = 10.0;  //SET THIS TO the reference weight units (kg or lbs) that will be used during the calibration
-const float WeightSensor2_CalibrationWeight = 10.0;  //SET THIS TO the reference weight units (kg or lbs) that will be used during the calibration
+const float WeightSensor1_CalibrationWeight = 10.0; //SET THIS TO the reference weight units (kg or lbs) that will be used during the calibration
+const float WeightSensor2_CalibrationWeight = 10.0; //SET THIS TO the reference weight units (kg or lbs) that will be used during the calibration
 
-//Initial calibration values, once the calibration you can update these values and change CalibrationComplete to true 
-bool CalibrationComplete = false;  //Set this to true to skip the calibration and use the Offset and Scale values defined in the sketch
+//Initial calibration values, once the calibration you can update these values and change CalibrationComplete to true
+bool CalibrationComplete = false; //Set this to true to skip the calibration and use the Offset and Scale values defined in the sketch
 long WeightSensor1_Offset = -67842;
 float WeightSensor1_Scale = -22499.50;
 long WeightSensor2_Offset = 266229;
@@ -25,40 +25,41 @@ HX711 WeightSensor2;
 float WeightSensor1_Weight = 0;
 float WeightSensor2_Weight = 0;
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
-  Serial.println(F("Sketch for calibrating the hempy bucket weight sensors"));  
+  Serial.println(F("Sketch for calibrating the hempy bucket weight sensors"));
   Serial.println();
 
-  WeightSensor1.begin(WeightSensor1_DT, WeightSensor1_SCK);  
+  WeightSensor1.begin(WeightSensor1_DT, WeightSensor1_SCK);
   WeightSensor1.set_offset(WeightSensor1_Offset);
   WeightSensor1.set_scale(WeightSensor1_Scale);
   WeightSensor2.begin(WeightSensor2_DT, WeightSensor2_SCK);
   WeightSensor2.set_offset(WeightSensor2_Offset);
-  WeightSensor2.set_scale(WeightSensor2_Scale);  
+  WeightSensor2.set_scale(WeightSensor2_Scale);
 
-  if(CalibrationComplete)
+  if (CalibrationComplete)
   {
-    Serial.println(F("Calibration is already complete, reading weight..."));    
+    Serial.println(F("Calibration is already complete, reading weight..."));
   }
   else
   {
     Serial.println(F("!!Start the sketch with all weight removed from the scale!!"));
     Serial.println(F("!!Use the reset button to restart the sketch if any weight was left on the scale!!"));
     Serial.println();
-    
+
     Serial.println(F("Taring WeightSensor1..."));
-    WeightSensor1.tare(); //Reset the scale to 0  
+    WeightSensor1.tare(); //Reset the scale to 0
     WeightSensor1_Offset = WeightSensor1.get_offset();
     Serial.print(F("  WeightSensor1 offset: "));
     Serial.println(WeightSensor1_Offset);
-  
+
     Serial.println(F("Taring WeightSensor2..."));
-    WeightSensor2.tare(); //Reset the scale to 0  
+    WeightSensor2.tare(); //Reset the scale to 0
     WeightSensor2_Offset = WeightSensor2.get_offset();
     Serial.print(F("  WeightSensor2 offset: "));
     Serial.println(WeightSensor2_Offset);
-    
+
     Serial.println();
     Serial.println(F("Please place the following calibration weights on the scales:"));
     Serial.print(F("   WeightSensor1: "));
@@ -75,15 +76,16 @@ void setup() {
   }
 }
 
-void loop() {
-  if(!CalibrationComplete && Serial.available())
+void loop()
+{
+  if (!CalibrationComplete && Serial.available())
   {
     CalibrationComplete = true;
     Serial.print(F("Serial input received: "));
     Serial.print(Serial.readString());
     Serial.println(F("Stopping calibration..."));
     Serial.println();
-    
+
     Serial.println(F("WeightSensor1 calibration complete:"));
     Serial.print(F("  .Offset = "));
     Serial.print(WeightSensor1_Offset);
@@ -98,11 +100,11 @@ void loop() {
     Serial.println(WeightSensor2_Scale);
     Serial.println();
 
-    Serial.println(F("Calibration is complete, reading weight...")); 
+    Serial.println(F("Calibration is complete, reading weight..."));
     Serial.println();
   }
 
-  if(CalibrationComplete)
+  if (CalibrationComplete)
   {
     WeightSensor1_Weight = WeightSensor1.get_units();
     Serial.print(F("WeightSensor1 weight: "));
@@ -114,9 +116,9 @@ void loop() {
     Serial.print(WeightSensor2_Weight);
     Serial.println(F(" units"));
   }
-  else  //When sensors are under calibration
+  else //When sensors are under calibration
   {
-    if (WeightSensor1.wait_ready_timeout(200)) 
+    if (WeightSensor1.wait_ready_timeout(200))
     {
       WeightSensor1_Scale = WeightSensor1.get_value() / WeightSensor1_CalibrationWeight;
       WeightSensor1.set_scale(WeightSensor1_Scale);
@@ -126,8 +128,8 @@ void loop() {
       Serial.print(F(" , Reading: "));
       Serial.println(WeightSensor1_Weight);
     }
-  
-    if (WeightSensor2.wait_ready_timeout(200)) 
+
+    if (WeightSensor2.wait_ready_timeout(200))
     {
       WeightSensor2_Scale = WeightSensor2.get_value() / WeightSensor2_CalibrationWeight;
       WeightSensor2.set_scale(WeightSensor2_Scale);
@@ -137,7 +139,7 @@ void loop() {
       Serial.print(F(" , Reading: "));
       Serial.println(WeightSensor2_Weight);
     }
-  }    
+  }
   Serial.println();
   delay(10000);
-} 
+}

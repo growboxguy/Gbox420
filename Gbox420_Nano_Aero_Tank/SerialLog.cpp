@@ -7,7 +7,7 @@ void logToSerials(const __FlashStringHelper *ToPrint, bool BreakLine, byte Inden
 {
   while (Indent > 0)
   {
-    ArduinoSerial.print(F(" "));   
+    ArduinoSerial.print(F(" "));
     Indent--;
   }
   if (BreakLine)

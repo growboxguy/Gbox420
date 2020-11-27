@@ -16,10 +16,10 @@ public:
   char *getTempText(bool IncludeUnits = false);
   float Temp;
 
-private:  
+private:
   OneWire *TempSensorWire;
   DallasTemperature *TempSensor;
 
 protected:
-  Module* Parent;
+  Module *Parent;
 };

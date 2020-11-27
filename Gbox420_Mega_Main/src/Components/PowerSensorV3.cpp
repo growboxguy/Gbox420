@@ -4,8 +4,8 @@ PowerSensorV3::PowerSensorV3(const __FlashStringHelper *Name, Module *Parent, Ha
 {
   this->Parent = Parent;
   Sensor = new PZEM004Tv30(SerialPort);
-  Parent->addToReportQueue(this);          
-  Parent->addToRefreshQueue_FiveSec(this); 
+  Parent->addToReportQueue(this);
+  Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("PowerSensorV3 object created"), true, 1);
 }
 
@@ -13,12 +13,12 @@ void PowerSensorV3::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
-  Voltage = Sensor->voltage();      ///AC Voltage (V)
-  Current = Sensor->current();      ///Current (A)
-  Power = Sensor->power();          ///Actual power usage (W)
-  Energy = Sensor->energy(); ///Total power consumption (kWh)
-  Frequency = Sensor->frequency();  ///Frequency (hz)
-  PowerFactor = Sensor->pf();       ///Power factor
+  Voltage = Sensor->voltage();     ///AC Voltage (V)
+  Current = Sensor->current();     ///Current (A)
+  Power = Sensor->power();         ///Actual power usage (W)
+  Energy = Sensor->energy();       ///Total power consumption (kWh)
+  Frequency = Sensor->frequency(); ///Frequency (hz)
+  PowerFactor = Sensor->pf();      ///Power factor
 }
 
 void PowerSensorV3::report()

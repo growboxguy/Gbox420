@@ -1,25 +1,25 @@
 #include "ModuleSkeleton_Web.h"
 
-ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ModuleSkeletonSettings *DefaultSettings) : Common(Name), ModuleSkeleton(Name,Parent,DefaultSettings), Common_Web(Name)
+ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ModuleSkeletonSettings *DefaultSettings) : Common(Name), ModuleSkeleton(Name, Parent, DefaultSettings), Common_Web(Name)
 { ///constructor
   this->Parent = Parent;
-  this->Name = Name; 
-  Parent->addToReportQueue(this);              
-  Parent->addToRefreshQueue_Sec(this);         
-  Parent->addToRefreshQueue_FiveSec(this);     
-  Parent->addToRefreshQueue_Minute(this);    
-  Parent->addToRefreshQueue_QuarterHour(this);  
-  Parent->addToWebsiteQueue_Load(this);        
-  Parent->addToWebsiteQueue_Refresh(this);     
-  Parent->addToWebsiteQueue_Button(this);      
-  Parent->addToWebsiteQueue_Field(this);       
+  this->Name = Name;
+  Parent->addToReportQueue(this);
+  Parent->addToRefreshQueue_Sec(this);
+  Parent->addToRefreshQueue_FiveSec(this);
+  Parent->addToRefreshQueue_Minute(this);
+  Parent->addToRefreshQueue_QuarterHour(this);
+  Parent->addToWebsiteQueue_Load(this);
+  Parent->addToWebsiteQueue_Refresh(this);
+  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToWebsiteQueue_Field(this);
 }
 
 void ModuleSkeleton_Web::reportToJSON()
 {
-    Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end 
+  Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end
 
-    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///closing the curly bracket
 }
 
 void ModuleSkeleton_Web::websiteEvent_Load(__attribute__((unused)) char *url)

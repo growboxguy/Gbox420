@@ -10,7 +10,7 @@
 #include "../Components_Web/Sound_Web.h"
 #include "../Components_Web/Fan_Web.h"
 #include "../Components_Web/PowerSensor_Web.h"
-#include "../Components_Web/PowerSensorV3_Web.h"  ///Only for PZEM004T V3.0
+#include "../Components_Web/PowerSensorV3_Web.h" ///Only for PZEM004T V3.0
 #include "../Components_Web/PHSensor_Web.h"
 #include "../Components_Web/PressureSensor_Web.h"
 #include "../Components_Web/Aeroponics_Tank_Web.h"
@@ -23,13 +23,13 @@
 DEVModule_Web::DEVModule_Web(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Common_Web(Name), Module_Web(Wireless)
 { ///Constructor
   this->Name = Name;
-  SheetsReportingFrequency = &DefaultSettings-> SheetsReportingFrequency;
-  ReportToGoogleSheets = &DefaultSettings-> ReportToGoogleSheets; 
+  SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
+  ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
   Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
-  this -> SoundFeedback = Sound1;
+  this->SoundFeedback = Sound1;
   ///ModuleSkeleton1 = new ModuleSkeleton_Web(F("ModuleSkeleton1"),this,&ModuleSettings -> ModuleSkeleton1);  ///Only for demonstration purposes
   ///ModuleSkeleton2 = new ModuleSkeleton_Web(F("ModuleSkeleton2"),this,&ModuleSettings -> ModuleSkeleton2);  ///Only for demonstration purposes
-  IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan);      ///passing: Component name, DEVModule_Web object the component belongs to, Default settings)
+  IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan); ///passing: Component name, DEVModule_Web object the component belongs to, Default settings)
   EFan = new Fan_Web(F("EFan"), this, &ModuleSettings->EFan);
   Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
   LtSen1 = new LightSensor_Web(F("LtSen1"), this, &ModuleSettings->LtSen1, Lt1); ///Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
@@ -40,25 +40,23 @@ DEVModule_Web::DEVModule_Web(const __FlashStringHelper *Name, Settings::MainModu
   //WTemp1 = new WaterTempSensor_Web(F("WTemp1"), this, &ModuleSettings->WTemp1);
   //WLev1 = new WaterLevelSensor_Web(F("WLev1"), this, &ModuleSettings->WLev1);
   //Dist1 = new DistanceSensor_Web(F("Dist1"), this, &ModuleSettings->Dist1);
-  HempyModule1 = new HempyModule_Web(F("Hemp1"), this,&ModuleSettings->HempyModule1);
+  HempyModule1 = new HempyModule_Web(F("Hemp1"), this, &ModuleSettings->HempyModule1);
   //Weight1 = new WeightSensor_Web(F("Weight1"), this, &ModuleSettings->Weight1);
   //Weight2 = new WeightSensor_Web(F("Weight2"), this, &ModuleSettings->Weight2);
-  AeroModule1 = new AeroModule_Web(F("Aero1"), this,&ModuleSettings->AeroModule1);
-  ReservoirModule1 = new ReservoirModule_Web(F("Res1"), this,&ModuleSettings->ReservoirMod1);
+  AeroModule1 = new AeroModule_Web(F("Aero1"), this, &ModuleSettings->AeroModule1);
+  ReservoirModule1 = new ReservoirModule_Web(F("Res1"), this, &ModuleSettings->ReservoirMod1);
   //Pres1 = new PressureSensor_Web(F("Pres1"), this, &ModuleSettings->Pres1);
   //AeroPump1 = new WaterPump(F("AeroPump1"),this,&ModuleSettings->AeroPump1);
   //AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, AeroPump1); ///Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
   //AeroNT1 = new Aeroponics_NoTank_Web(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, Pres1, AeroPump1);
-  
- 
 
-  addToRefreshQueue_FiveSec(this);     
-  addToRefreshQueue_Minute(this);    
-  addToRefreshQueue_QuarterHour(this); 
-  addToWebsiteQueue_Load(this);        
-  addToWebsiteQueue_Refresh(this);     
-  addToWebsiteQueue_Field(this);       
-  addToWebsiteQueue_Button(this);      
+  addToRefreshQueue_FiveSec(this);
+  addToRefreshQueue_Minute(this);
+  addToRefreshQueue_QuarterHour(this);
+  addToWebsiteQueue_Load(this);
+  addToWebsiteQueue_Refresh(this);
+  addToWebsiteQueue_Field(this);
+  addToWebsiteQueue_Button(this);
   logToSerials(F("DEVModule_Web object created, refreshing..."), true, 0);
   runAll();
   addToLog(F("DEVModule_Web initialized"), 0);
@@ -66,14 +64,14 @@ DEVModule_Web::DEVModule_Web(const __FlashStringHelper *Name, Settings::MainModu
 
 void DEVModule_Web::reportToJSON()
 {
-    Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end 
+  Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end
 
-    strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
-    strcat(LongMessage, toText(*Metric));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Debug\":\""));
-    strcat(LongMessage, toText(*Debug));
+  strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
+  strcat(LongMessage, toText(*Metric));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Debug\":\""));
+  strcat(LongMessage, toText(*Debug));
 
-/*  strcat_P(LongMessage, (PGM_P)F("\",\"WaterLevel\":\""));
+  /*  strcat_P(LongMessage, (PGM_P)F("\",\"WaterLevel\":\""));
     strcat(LongMessage, WLev1->getLevelText());
     strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
     strcat(LongMessage, WTemp1->getTempText(false));
@@ -96,18 +94,18 @@ void DEVModule_Web::reportToJSON()
     strcat(LongMessage, toText(*Metric));
     strcat_P(LongMessage, (PGM_P)F("\"}}")); */
 
-    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///closing the curly bracket
 }
 
 void DEVModule_Web::websiteEvent_Load(char *url)
 {
-  if (strncmp(url, "/S",2) == 0)
+  if (strncmp(url, "/S", 2) == 0)
   {
     WebServer.setArgInt(getComponentName(F("Debug")), *Debug);
     WebServer.setArgInt(getComponentName(F("Metric")), *Metric);
     WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
     WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
-    WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings -> PushingBoxLogRelayID);
+    WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
   }
 }
 
@@ -127,7 +125,7 @@ void DEVModule_Web::websiteEvent_Button(char *Button)
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("SheetsRep")) == 0)
     {
-      ReportToGoogleSheetsRequested = true;  ///just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
+      ReportToGoogleSheetsRequested = true; ///just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
       addToLog(F("Reporting to Sheets"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("SerialRep")) == 0)
@@ -136,10 +134,10 @@ void DEVModule_Web::websiteEvent_Button(char *Button)
       addToLog(F("Reporting to Serial"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) ///Website signals to refresh all sensor readings
-    {        
+    {
       RefreshAllRequested = true;
       addToLog(F("Refresh triggered"), false);
-    } 
+    }
   }
 }
 
@@ -151,11 +149,26 @@ void DEVModule_Web::websiteEvent_Field(char *Field)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0){setDebug(WebServer.getArgBoolean());}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Metric")) == 0){setMetric(WebServer.getArgBoolean());}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0){setSheetsReportingOnOff(WebServer.getArgBoolean());}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsF")) == 0){setSheetsReportingFrequency(WebServer.getArgInt());}
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PushingBoxLogRelayID")) == 0){setPushingBoxLogRelayID(WebServer.getArgString());}
+    if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0)
+    {
+      setDebug(WebServer.getArgBoolean());
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Metric")) == 0)
+    {
+      setMetric(WebServer.getArgBoolean());
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0)
+    {
+      setSheetsReportingOnOff(WebServer.getArgBoolean());
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsF")) == 0)
+    {
+      setSheetsReportingFrequency(WebServer.getArgInt());
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PushingBoxLogRelayID")) == 0)
+    {
+      setPushingBoxLogRelayID(WebServer.getArgString());
+    }
   }
 }
 
@@ -171,17 +184,16 @@ void DEVModule_Web::refresh_FiveSec()
     RefreshAllRequested = false;
     runAll();
   }
-  if(ReportToGoogleSheetsRequested)
+  if (ReportToGoogleSheetsRequested)
   {
     ReportToGoogleSheetsRequested = false;
     reportToGoogleSheetsTrigger(true);
   }
-  if(ConsoleReportRequested)
+  if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
     runReport();
   }
-  
 }
 
 void DEVModule_Web::refresh_Minute()
@@ -231,7 +243,6 @@ void DEVModule_Web::setMetric(bool MetricEnabled)
   getSoundObject()->playOnSound();
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///Google Sheets reporting
 
@@ -263,22 +274,22 @@ void DEVModule_Web::reportToGoogleSheetsTrigger(bool ForceRun)
     SheetsRefreshCounter = 0; ///Reset the counter after one day (15 x 96 = 1440 = 24 hours)
   if (SheetsRefreshCounter++ % (*SheetsReportingFrequency / 15) == 0 || ForceRun)
   {
-    addPushingBoxLogRelayID(); ///Adds a curly bracket {  that needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{"));  ///Adds a curly bracket {  that needs to be closed at the end
+    addPushingBoxLogRelayID();                     ///Adds a curly bracket {  that needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///Adds a curly bracket {  that needs to be closed at the end
     for (int i = 0; i < reportQueueItemCount;)
-      {
-        ReportQueue[i++]->reportToJSON();
-        if(i != reportQueueItemCount) strcat_P(LongMessage, (PGM_P)F(",")); ///< Unless it was the last element add a , separator
-      }
-    strcat_P(LongMessage, (PGM_P)F("}}"));  ///closing both curly bracket
+    {
+      ReportQueue[i++]->reportToJSON();
+      if (i != reportQueueItemCount)
+        strcat_P(LongMessage, (PGM_P)F(",")); ///< Unless it was the last element add a , separator
+    }
+    strcat_P(LongMessage, (PGM_P)F("}}")); ///closing both curly bracket
     relayToGoogleSheets(&LongMessage);
   }
 }
 
-
 void DEVModule_Web::setPushingBoxLogRelayID(const char *ID)
 {
-  strncpy(ModuleSettings -> PushingBoxLogRelayID, ID, MaxWordLength);
+  strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
   addToLog(F("Sheets log relay ID updated"));
 }
 

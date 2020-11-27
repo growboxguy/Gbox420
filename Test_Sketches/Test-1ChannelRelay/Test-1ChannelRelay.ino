@@ -11,16 +11,16 @@ void setup()
     Serial.println(F("Sketch for testing: 1 channel relay module"));
 
     pinMode(Relay1OutPin, OUTPUT);
-    digitalWrite(Relay1OutPin, LOW);  //Start in off state     
+    digitalWrite(Relay1OutPin, LOW); //Start in off state
 }
 
 void loop()
-{ // put your main code here, to run repeatedly:    
+{ // put your main code here, to run repeatedly:
     Serial.println(F("  Turning Relay1 ON"));
     digitalWrite(Relay1OutPin, HIGH);
     delay(10000);
     Serial.println(F("  Turning Relay2 OFF"));
     digitalWrite(Relay1OutPin, LOW);
     Serial.println(F("The Cycle is complete, restarting in 10 sec..."));
-    delay(10000); 
+    delay(10000);
 }

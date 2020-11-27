@@ -14,20 +14,19 @@ public:
   float getWeight();
   char *getWeightText(bool IncludeUnits = false);
   void triggerTare();
-  void triggerCalibration(int CalibrationWeight); 
-  void setScale(float Scale); 
+  void triggerCalibration(int CalibrationWeight);
+  void setScale(float Scale);
   float Weight;
-  float *Scale;  ///Calibration value: Raw reading of one unit
+  float *Scale; ///Calibration value: Raw reading of one unit
   long *Offset; ///Read value at no weight on the scale
 
-private:  
-
+private:
 protected:
-  Module* Parent;
+  Module *Parent;
   HX711 *Sensor;
   void tare();
   void calibrate();
-  
+
   int CalibrationWeight;
   bool TareRequested = false;
   bool CalibrateRequested = false;

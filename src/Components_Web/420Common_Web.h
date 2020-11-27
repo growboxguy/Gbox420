@@ -2,7 +2,7 @@
 
 ///These are functions extending the functions of *_Web components, each component must include this file
 
-#include "ELClientWebServer.h"      ///ESP-link - WebServer API
+#include "ELClientWebServer.h" ///ESP-link - WebServer API
 #include "../Components/420Common.h"
 
 ///forward declaration
@@ -16,8 +16,8 @@ public:
   virtual void websiteEvent_Button(__attribute__((unused)) char *Button) = 0;
   virtual void websiteEvent_Field(__attribute__((unused)) char *Field) = 0;
   virtual void reportToJSON();
-   
+
 private:
-protected: 
+protected:
   Common_Web(const __FlashStringHelper *Name); ///Constructor
 };

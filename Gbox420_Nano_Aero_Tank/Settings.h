@@ -52,7 +52,7 @@ typedef struct
   bool Metric = true; ///Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
   struct AeroponicsSettings ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
-  { ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
+  {                         ///Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
     AeroponicsSettings(bool SprayEnabled = true, int DayInterval = 0, int DayDuration = 0, int NightInterval = 0, int NightDuration = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), DayInterval(DayInterval), DayDuration(DayDuration), NightInterval(NightInterval), NightDuration(NightDuration), MaxPressure(MaxPressure) {}
     bool SprayEnabled; ///Enable/disable spraying cycle
     int DayInterval;   ///Spray every X minutes - When the lights are ON
@@ -62,7 +62,7 @@ typedef struct
     float MaxPressure; ///Turn off pump above this pressure
   };
   struct AeroponicsSettings AeroT1_Common = {.SprayEnabled = true, .DayInterval = 15, .DayDuration = 10, .NightInterval = 30, .NightDuration = 10, .MaxPressure = 7.0};
- 
+
   struct AeroponicsSettings_TankSpecific
   { ///Settings for an Aeroponics setup WITH a pressure tank
     AeroponicsSettings_TankSpecific(float MinPressure = 0.0, uint8_t SpraySolenoidPin = 0, bool SpraySolenoidNegativeLogic = false) : MinPressure(MinPressure), SpraySolenoidPin(SpraySolenoidPin), SpraySolenoidNegativeLogic(SpraySolenoidNegativeLogic) {}
@@ -92,7 +92,7 @@ typedef struct
   struct WaterPumpSettings
   {
     WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic) {}
-    uint8_t PumpPin; ///Pump relay pin
+    uint8_t PumpPin;           ///Pump relay pin
     bool PumpPinNegativeLogic; ///true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     uint8_t BypassSolenoidPin; ///Bypass solenoid relay pin
     bool BypassSolenoidNegativeLogic;

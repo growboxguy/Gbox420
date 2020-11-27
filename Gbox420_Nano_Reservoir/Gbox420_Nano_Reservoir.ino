@@ -29,7 +29,7 @@ HardwareSerial &ArduinoSerial = Serial; ///Reference to the Arduino Serial
 Settings *ModuleSettings;               ///settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
 bool *Debug;
 bool *Metric;
-ReservoirModule *ReservoirMod1; ///Represents a Reservoir tote with temp,PH,water level sensors
+ReservoirModule *ReservoirMod1;               ///Represents a Reservoir tote with temp,PH,water level sensors
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 
 ///Thread initialization
@@ -140,20 +140,21 @@ void getWirelessStatus()
   {
     logToSerials(F("Wireless status report:"), true, 0);
     Wireless.printDetails();
-    logToSerials(F(""), true, 0);  ///Just a line break after the report
+    logToSerials(F(""), true, 0); ///Just a line break after the report
   }
 }
 
 time_t updateTime()
 {
-  time_t ReceivedTime = ((ReservoirModuleCommand*)ReceivedMessage) -> Time;
-  if(ReceivedTime > 0)
+  time_t ReceivedTime = ((ReservoirModuleCommand *)ReceivedMessage)->Time;
+  if (ReceivedTime > 0)
   {
     setTime(ReceivedTime);
-    logToSerials(F("Clock synced with Main module"),true,0); 
+    logToSerials(F("Clock synced with Main module"), true, 0);
   }
-  else {
-    logToSerials(F("Clock out of sync"),true,0); 
+  else
+  {
+    logToSerials(F("Clock out of sync"), true, 0);
   }
   return ReceivedTime;
 }

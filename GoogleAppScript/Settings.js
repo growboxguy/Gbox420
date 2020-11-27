@@ -12,7 +12,7 @@ function Test_UpdateColumns() {
 }
 
 function GetSettingsValue(key) {
-  if(Debug)LogToConsole("Looking up settings value for: " + key,true,3);
+    if (Debug) LogToConsole("Looking up settings value for: " + key, true, 3);
     //var SettingsLog = SpreadsheetApp.getActive().getRangeByName("Settings").getValues();
     var match = GetNamedRangeValues("Settings").filter(function (row) {
         return row[settings_keyColumn] == key;

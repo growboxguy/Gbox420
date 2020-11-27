@@ -1,701 +1,264 @@
 <style>
-      .google-color-palette {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        display: inline-block;
-        position: relative;
-        top: 10px;
-        height: 20px;
-        width: 20px;
-        border: 0;
-        border-radius: 50px;
-        cursor: pointer;
-        margin-right: -2px;
-        margin-bottom: -1px;
-        margin-top: -1px;
-        outline: none;
-      }
-      .google-color-palette:checked::before {
-        position: absolute;
-        font: 13px/1 "Open Sans", sans-serif;
-        left: 6.5px;
-        top: 2px;
-        content: "\02143";
-        transform: rotate(40deg);
-      }
-      .google-color-palette:hover {
-        box-shadow: 2px 2px 2px grey;
-      }
-      .hidden-col-picker {
-        position: absolute;
-        left: -10000px;
-        top: auto;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-      }
-      .color-pick {
-        margin-top: 10px;
-      }     
-      .color-result {
-        max-width: 220px;
-        font: 13px/1 "Open Sans", sans-serif;
-        color: #000000;
-        background-color: #ffffff;
-        border: 0;
-        border-radius: 4px;
-        padding: 5px;
-        box-shadow: 2px 2px 2px grey;
-        text-align: center;
-      }
-      .color-result:hover {
-        box-shadow: 2px 2px 2px #434343;
-        cursor: pointer;
-      }     
-      .color-picker {
-        display: block;
-      }
-    </style>
-    <div class="color-result" id="color-result" onclick="expander()">
-      <span id="color-result-hex">Select a </span>
-      <span id="color-result-name">color</span>      
-    </div>
-    <div class="color-picker" id="color-picker">
-      <input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#000000"
-        id="black"
-        class="google-color-palette"
-        style="background-color:#000000;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#434343"
-        id="dark-grey-4"
-        class="google-color-palette"
-        style="background-color:#434343;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#666666"
-        id="dark-grey-3"
-        class="google-color-palette"
-        style="background-color:#666666;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#999999"
-        id="dark-grey-2"
-        class="google-color-palette"
-        style="background-color:#999999;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#b7b7b7"
-        id="dark-grey-1"
-        class="google-color-palette"
-        style="background-color:#b7b7b7;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#cccccc"
-        id="grey"
-        class="google-color-palette"
-        style="background-color:#cccccc;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#d9d9d9"
-        id="light-grey-1"
-        class="google-color-palette"
-        style="background-color:#d9d9d9;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#efefef"
-        id="light-grey-2"
-        class="google-color-palette"
-        style="background-color:#efefef;color:#000000;border:#d9d9d9 solid 1px"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#f3f3f3"
-        id="light-grey-3"
-        class="google-color-palette"
-        style="background-color:#f3f3f3;color:#000000;border:#d9d9d9 solid 1px"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#ffffff"
-        id="white"
-        class="google-color-palette"
-        style="background-color:#ffffff;color:#000000;border:#d9d9d9 solid 1px"
-      /><br /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#980000"
-        id="red-berry"
-        class="google-color-palette"
-        style="background-color:#980000;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#ff0000"
-        id="red"
-        class="google-color-palette"
-        style="background-color:#ff0000;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#ff9900"
-        id="orange"
-        class="google-color-palette"
-        style="background-color:#ff9900;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#ffff00"
-        id="yellow"
-        class="google-color-palette"
-        style="background-color:#ffff00;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#00ff00"
-        id="green"
-        class="google-color-palette"
-        style="background-color:#00ff00;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#00ffff"
-        id="cyan"
-        class="google-color-palette"
-        style="background-color:#00ffff;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#4a86e8"
-        id="cornflower-blue"
-        class="google-color-palette"
-        style="background-color:#4a86e8;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#0000ff"
-        id="blue"
-        class="google-color-palette"
-        style="background-color:#0000ff;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#9900ff"
-        id="purple"
-        class="google-color-palette"
-        style="background-color:#9900ff;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#ff00ff"
-        id="magenta"
-        class="google-color-palette"
-        style="background-color:#ff00ff;color:#000000"
-      /><br /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#e6b8af"
-        id="light-red-berry-3"
-        class="google-color-palette"
-        style="background-color:#e6b8af;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#f4cccc"
-        id="light-red-3"
-        class="google-color-palette"
-        style="background-color:#f4cccc;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#fce5cd"
-        id="light-orange-3"
-        class="google-color-palette"
-        style="background-color:#fce5cd;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#fff2cc"
-        id="light-yellow-3"
-        class="google-color-palette"
-        style="background-color:#fff2cc;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#d9ead3"
-        id="light-green-3"
-        class="google-color-palette"
-        style="background-color:#d9ead3;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#d0e0e3"
-        id="light-cyan-3"
-        class="google-color-palette"
-        style="background-color:#d0e0e3;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#c9daf8"
-        id="light-cornflower-blue-3"
-        class="google-color-palette"
-        style="background-color:#c9daf8;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#cfe2f3"
-        id="light-blue-3"
-        class="google-color-palette"
-        style="background-color:#cfe2f3;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#d9d2e9"
-        id="light-purple-3"
-        class="google-color-palette"
-        style="background-color:#d9d2e9;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#ead1dc"
-        id="light-magenta-3"
-        class="google-color-palette"
-        style="background-color:#ead1dc;color:#000000"
-      /><br /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#dd7e6b"
-        id="light-red-berry-2"
-        class="google-color-palette"
-        style="background-color:#dd7e6b;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#ea9999"
-        id="light-red-2"
-        class="google-color-palette"
-        style="background-color:#ea9999;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#f9cb9c"
-        id="light-orange-2"
-        class="google-color-palette"
-        style="background-color:#f9cb9c;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#ffe599"
-        id="light-yellow-2"
-        class="google-color-palette"
-        style="background-color:#ffe599;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#b6d7a8"
-        id="light-green-2"
-        class="google-color-palette"
-        style="background-color:#b6d7a8;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#a2c4c9"
-        id="light-cyan-2"
-        class="google-color-palette"
-        style="background-color:#a2c4c9;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#a4c2f4"
-        id="light-cornflower-blue-2"
-        class="google-color-palette"
-        style="background-color:#a4c2f4;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#9fc5e8"
-        id="light-blue-2"
-        class="google-color-palette"
-        style="background-color:#9fc5e8;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#b4a7d6"
-        id="light-purple-2"
-        class="google-color-palette"
-        style="background-color:#b4a7d6;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#d5a6bd"
-        id="light-magenta-2"
-        class="google-color-palette"
-        style="background-color:#d5a6bd;color:#000000"
-      /><br /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#cc4125"
-        id="light-red-berry-1"
-        class="google-color-palette"
-        style="background-color:#cc4125;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#e06666"
-        id="light-red-1"
-        class="google-color-palette"
-        style="background-color:#e06666;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#f6b26b"
-        id="light-orange-1"
-        class="google-color-palette"
-        style="background-color:#f6b26b;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#ffd966"
-        id="light-yellow-1"
-        class="google-color-palette"
-        style="background-color:#ffd966;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#93c47d"
-        id="light-green-1"
-        class="google-color-palette"
-        style="background-color:#93c47d;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#76a5af"
-        id="light-cyan-1"
-        class="google-color-palette"
-        style="background-color:#76a5af;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#6d9eeb"
-        id="light-cornflower-blue-1"
-        class="google-color-palette"
-        style="background-color:#6d9eeb;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#6fa8dc"
-        id="light-blue-1"
-        class="google-color-palette"
-        style="background-color:#6fa8dc;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#8e7cc3"
-        id="light-purple-1"
-        class="google-color-palette"
-        style="background-color:#8e7cc3;color:#000000"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#c27ba0"
-        id="light-magenta-1"
-        class="google-color-palette"
-        style="background-color:#c27ba0;color:#000000"
-      /><br /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#a61c00"
-        id="dark-red-berry-1"
-        class="google-color-palette"
-        style="background-color:#a61c00;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#cc0000"
-        id="dark-red-1"
-        class="google-color-palette"
-        style="background-color:#cc0000;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#e69138"
-        id="dark-orange-1"
-        class="google-color-palette"
-        style="background-color:#e69138;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#f1c232"
-        id="dark-yellow-1"
-        class="google-color-palette"
-        style="background-color:#f1c232;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#6aa84f"
-        id="dark-green-1"
-        class="google-color-palette"
-        style="background-color:#6aa84f;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#45818e"
-        id="dark-cyan-1"
-        class="google-color-palette"
-        style="background-color:#45818e;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#3c78d8"
-        id="dark-cornflower-blue-1"
-        class="google-color-palette"
-        style="background-color:#3c78d8;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#3d85c6"
-        id="dark-blue-1"
-        class="google-color-palette"
-        style="background-color:#3d85c6;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#674ea7"
-        id="dark-purple-1"
-        class="google-color-palette"
-        style="background-color:#674ea7;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#a64d79"
-        id="dark-magenta-1"
-        class="google-color-palette"
-        style="background-color:#a64d79;color:#ffffff"
-      /><br /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#85200c"
-        id="dark-red-berry-2"
-        class="google-color-palette"
-        style="background-color:#85200c;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#990000"
-        id="dark-red-2"
-        class="google-color-palette"
-        style="background-color:#990000;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#b45f06"
-        id="dark-orange-2"
-        class="google-color-palette"
-        style="background-color:#b45f06;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#bf9000"
-        id="dark-yellow-2"
-        class="google-color-palette"
-        style="background-color:#bf9000;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#38761d"
-        id="dark-green-2"
-        class="google-color-palette"
-        style="background-color:#38761d;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#134f5c"
-        id="dark-cyan-2"
-        class="google-color-palette"
-        style="background-color:#134f5c;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#1155cc"
-        id="dark-cornflower-blue-2"
-        class="google-color-palette"
-        style="background-color:#1155cc;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#0b5394"
-        id="dark-blue-2"
-        class="google-color-palette"
-        style="background-color:#0b5394;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#351c75"
-        id="dark-purple-2"
-        class="google-color-palette"
-        style="background-color:#351c75;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#741b47"
-        id="dark-magenta-2"
-        class="google-color-palette"
-        style="background-color:#741b47;color:#ffffff"
-      /><br /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#5b0f00"
-        id="dark-red-berry-3"
-        class="google-color-palette"
-        style="background-color:#5b0f00;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#660000"
-        id="dark-red-3"
-        class="google-color-palette"
-        style="background-color:#660000;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#783f04"
-        id="dark-orange-3"
-        class="google-color-palette"
-        style="background-color:#783f04;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#7f6000"
-        id="dark-yellow-3"
-        class="google-color-palette"
-        style="background-color:#7f6000;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#274e13"
-        id="dark-green-3"
-        class="google-color-palette"
-        style="background-color:#274e13;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#0c343d"
-        id="dark-cyan-3"
-        class="google-color-palette"
-        style="background-color:#0c343d;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#1c4587"
-        id="dark-cornflower-blue-3"
-        class="google-color-palette"
-        style="background-color:#1c4587;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#073763"
-        id="dark-blue-3"
-        class="google-color-palette"
-        style="background-color:#073763;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#20124d"
-        id="dark-purple-3"
-        class="google-color-palette"
-        style="background-color:#20124d;color:#ffffff"
-      /><input
-        type="radio"
-        name="GoogleColorPalette"
-        value="#4c1130"
-        id="dark-magenta-3"
-        class="google-color-palette"
-        style="background-color:#4c1130;color:#ffffff"
-      /><br />
-      <div class="color-pick">
-        <input
-          type="color"
-          id="col-picker"
-          tabindex="-1"
-          class="hidden-col-picker"
-        />        
-      </div>
-    </div>
- 
-    <script>
-      //#### Color Picker ####
-      
- 
-      //Check when color picker is used.
-      document
-        .getElementById("col-picker")
-        .addEventListener("change", watchColorPicker);
- 
-      function watchColorPicker(e) {
-        //Uncheck radio button.
-        let checked =
-          document.querySelector('input[name="GoogleColorPalette"]:checked') !==
-          null;
-        if (checked) {
-          document.querySelector(
-            'input[name="GoogleColorPalette"]:checked'
-          ).checked = false;
-        }
-        //Get the selected hex color
-        let col_value = event.target.value;
-        //Determin if dark or light color
-        // https://codepen.io/andreaswik/pen/YjJqpK
- 
-        function blackOrWhite(hexcolor) {
-          hexcolor = hexcolor.replace("#", "");
-          var r = parseInt(hexcolor.substr(0, 2), 16);
-          var g = parseInt(hexcolor.substr(2, 2), 16);
-          var b = parseInt(hexcolor.substr(4, 2), 16);
-          var yiq = (r * 299 + g * 587 + b * 114) / 1000;
-          return yiq >= 128 ? "black" : "white";
-        }
- 
-        let text_col = blackOrWhite(col_value);
-        //Change color
-        colorSelected(col_value, "Custom", text_col);
-      }
- 
-      //#### Color Radio Buttons ####
-      //Get the value of the checked button.
-      function radioClick() {
-        let value = this.value;
-        let id = this.id;
-        let text_col = this.style.color;
- 
-        colorSelected(value, id, text_col);
-      }
- 
-      document
-        .querySelectorAll("input.google-color-palette")
-        .forEach(button => {
-          button.addEventListener("click", radioClick);
-        });
- 
-      //#### Dislplay Color ####
-      function colorSelected(value, id, text_col) {
-        //get the id
-        document.getElementById("color-result-hex").textContent = value;
-        document.getElementById("color-result-name").textContent = ", " + id;
- 
-        const result = document.getElementById("color-result");
-        result.style.color = text_col;
-        result.style.backgroundColor = value;
-        //add color val
-      }
-    </script>
+  .google-color-palette {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    position: relative;
+    top: 10px;
+    height: 20px;
+    width: 20px;
+    border: 0;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: -2px;
+    margin-bottom: -1px;
+    margin-top: -1px;
+    outline: none;
+  }
+
+  .google-color-palette:checked::before {
+    position: absolute;
+    font: 13px/1 "Open Sans", sans-serif;
+    left: 6.5px;
+    top: 2px;
+    content: "\02143";
+    transform: rotate(40deg);
+  }
+
+  .google-color-palette:hover {
+    box-shadow: 2px 2px 2px grey;
+  }
+
+  .hidden-col-picker {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .color-pick {
+    margin-top: 10px;
+  }
+
+  .color-result {
+    max-width: 220px;
+    font: 13px/1 "Open Sans", sans-serif;
+    color: #000000;
+    background-color: #ffffff;
+    border: 0;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 2px 2px 2px grey;
+    text-align: center;
+  }
+
+  .color-result:hover {
+    box-shadow: 2px 2px 2px #434343;
+    cursor: pointer;
+  }
+
+  .color-picker {
+    display: block;
+  }
+</style>
+<div class="color-result" id="color-result" onclick="expander()">
+  <span id="color-result-hex">Select a </span>
+  <span id="color-result-name">color</span>
+</div>
+<div class="color-picker" id="color-picker">
+  <input type="radio" name="GoogleColorPalette" value="#000000" id="black" class="google-color-palette"
+    style="background-color:#000000;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#434343"
+    id="dark-grey-4" class="google-color-palette" style="background-color:#434343;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#666666" id="dark-grey-3" class="google-color-palette"
+    style="background-color:#666666;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#999999"
+    id="dark-grey-2" class="google-color-palette" style="background-color:#999999;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#b7b7b7" id="dark-grey-1" class="google-color-palette"
+    style="background-color:#b7b7b7;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#cccccc"
+    id="grey" class="google-color-palette" style="background-color:#cccccc;color:#000000" /><input type="radio"
+    name="GoogleColorPalette" value="#d9d9d9" id="light-grey-1" class="google-color-palette"
+    style="background-color:#d9d9d9;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#efefef"
+    id="light-grey-2" class="google-color-palette"
+    style="background-color:#efefef;color:#000000;border:#d9d9d9 solid 1px" /><input type="radio"
+    name="GoogleColorPalette" value="#f3f3f3" id="light-grey-3" class="google-color-palette"
+    style="background-color:#f3f3f3;color:#000000;border:#d9d9d9 solid 1px" /><input type="radio"
+    name="GoogleColorPalette" value="#ffffff" id="white" class="google-color-palette"
+    style="background-color:#ffffff;color:#000000;border:#d9d9d9 solid 1px" /><br /><input type="radio"
+    name="GoogleColorPalette" value="#980000" id="red-berry" class="google-color-palette"
+    style="background-color:#980000;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#ff0000"
+    id="red" class="google-color-palette" style="background-color:#ff0000;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#ff9900" id="orange" class="google-color-palette"
+    style="background-color:#ff9900;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#ffff00"
+    id="yellow" class="google-color-palette" style="background-color:#ffff00;color:#000000" /><input type="radio"
+    name="GoogleColorPalette" value="#00ff00" id="green" class="google-color-palette"
+    style="background-color:#00ff00;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#00ffff"
+    id="cyan" class="google-color-palette" style="background-color:#00ffff;color:#000000" /><input type="radio"
+    name="GoogleColorPalette" value="#4a86e8" id="cornflower-blue" class="google-color-palette"
+    style="background-color:#4a86e8;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#0000ff"
+    id="blue" class="google-color-palette" style="background-color:#0000ff;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#9900ff" id="purple" class="google-color-palette"
+    style="background-color:#9900ff;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#ff00ff"
+    id="magenta" class="google-color-palette" style="background-color:#ff00ff;color:#000000" /><br /><input type="radio"
+    name="GoogleColorPalette" value="#e6b8af" id="light-red-berry-3" class="google-color-palette"
+    style="background-color:#e6b8af;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#f4cccc"
+    id="light-red-3" class="google-color-palette" style="background-color:#f4cccc;color:#000000" /><input type="radio"
+    name="GoogleColorPalette" value="#fce5cd" id="light-orange-3" class="google-color-palette"
+    style="background-color:#fce5cd;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#fff2cc"
+    id="light-yellow-3" class="google-color-palette" style="background-color:#fff2cc;color:#000000" /><input
+    type="radio" name="GoogleColorPalette" value="#d9ead3" id="light-green-3" class="google-color-palette"
+    style="background-color:#d9ead3;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#d0e0e3"
+    id="light-cyan-3" class="google-color-palette" style="background-color:#d0e0e3;color:#000000" /><input type="radio"
+    name="GoogleColorPalette" value="#c9daf8" id="light-cornflower-blue-3" class="google-color-palette"
+    style="background-color:#c9daf8;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#cfe2f3"
+    id="light-blue-3" class="google-color-palette" style="background-color:#cfe2f3;color:#000000" /><input type="radio"
+    name="GoogleColorPalette" value="#d9d2e9" id="light-purple-3" class="google-color-palette"
+    style="background-color:#d9d2e9;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#ead1dc"
+    id="light-magenta-3" class="google-color-palette" style="background-color:#ead1dc;color:#000000" /><br /><input
+    type="radio" name="GoogleColorPalette" value="#dd7e6b" id="light-red-berry-2" class="google-color-palette"
+    style="background-color:#dd7e6b;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#ea9999"
+    id="light-red-2" class="google-color-palette" style="background-color:#ea9999;color:#000000" /><input type="radio"
+    name="GoogleColorPalette" value="#f9cb9c" id="light-orange-2" class="google-color-palette"
+    style="background-color:#f9cb9c;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#ffe599"
+    id="light-yellow-2" class="google-color-palette" style="background-color:#ffe599;color:#000000" /><input
+    type="radio" name="GoogleColorPalette" value="#b6d7a8" id="light-green-2" class="google-color-palette"
+    style="background-color:#b6d7a8;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#a2c4c9"
+    id="light-cyan-2" class="google-color-palette" style="background-color:#a2c4c9;color:#000000" /><input type="radio"
+    name="GoogleColorPalette" value="#a4c2f4" id="light-cornflower-blue-2" class="google-color-palette"
+    style="background-color:#a4c2f4;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#9fc5e8"
+    id="light-blue-2" class="google-color-palette" style="background-color:#9fc5e8;color:#000000" /><input type="radio"
+    name="GoogleColorPalette" value="#b4a7d6" id="light-purple-2" class="google-color-palette"
+    style="background-color:#b4a7d6;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#d5a6bd"
+    id="light-magenta-2" class="google-color-palette" style="background-color:#d5a6bd;color:#000000" /><br /><input
+    type="radio" name="GoogleColorPalette" value="#cc4125" id="light-red-berry-1" class="google-color-palette"
+    style="background-color:#cc4125;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#e06666"
+    id="light-red-1" class="google-color-palette" style="background-color:#e06666;color:#000000" /><input type="radio"
+    name="GoogleColorPalette" value="#f6b26b" id="light-orange-1" class="google-color-palette"
+    style="background-color:#f6b26b;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#ffd966"
+    id="light-yellow-1" class="google-color-palette" style="background-color:#ffd966;color:#000000" /><input
+    type="radio" name="GoogleColorPalette" value="#93c47d" id="light-green-1" class="google-color-palette"
+    style="background-color:#93c47d;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#76a5af"
+    id="light-cyan-1" class="google-color-palette" style="background-color:#76a5af;color:#000000" /><input type="radio"
+    name="GoogleColorPalette" value="#6d9eeb" id="light-cornflower-blue-1" class="google-color-palette"
+    style="background-color:#6d9eeb;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#6fa8dc"
+    id="light-blue-1" class="google-color-palette" style="background-color:#6fa8dc;color:#000000" /><input type="radio"
+    name="GoogleColorPalette" value="#8e7cc3" id="light-purple-1" class="google-color-palette"
+    style="background-color:#8e7cc3;color:#000000" /><input type="radio" name="GoogleColorPalette" value="#c27ba0"
+    id="light-magenta-1" class="google-color-palette" style="background-color:#c27ba0;color:#000000" /><br /><input
+    type="radio" name="GoogleColorPalette" value="#a61c00" id="dark-red-berry-1" class="google-color-palette"
+    style="background-color:#a61c00;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#cc0000"
+    id="dark-red-1" class="google-color-palette" style="background-color:#cc0000;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#e69138" id="dark-orange-1" class="google-color-palette"
+    style="background-color:#e69138;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#f1c232"
+    id="dark-yellow-1" class="google-color-palette" style="background-color:#f1c232;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#6aa84f" id="dark-green-1" class="google-color-palette"
+    style="background-color:#6aa84f;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#45818e"
+    id="dark-cyan-1" class="google-color-palette" style="background-color:#45818e;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#3c78d8" id="dark-cornflower-blue-1" class="google-color-palette"
+    style="background-color:#3c78d8;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#3d85c6"
+    id="dark-blue-1" class="google-color-palette" style="background-color:#3d85c6;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#674ea7" id="dark-purple-1" class="google-color-palette"
+    style="background-color:#674ea7;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#a64d79"
+    id="dark-magenta-1" class="google-color-palette" style="background-color:#a64d79;color:#ffffff" /><br /><input
+    type="radio" name="GoogleColorPalette" value="#85200c" id="dark-red-berry-2" class="google-color-palette"
+    style="background-color:#85200c;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#990000"
+    id="dark-red-2" class="google-color-palette" style="background-color:#990000;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#b45f06" id="dark-orange-2" class="google-color-palette"
+    style="background-color:#b45f06;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#bf9000"
+    id="dark-yellow-2" class="google-color-palette" style="background-color:#bf9000;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#38761d" id="dark-green-2" class="google-color-palette"
+    style="background-color:#38761d;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#134f5c"
+    id="dark-cyan-2" class="google-color-palette" style="background-color:#134f5c;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#1155cc" id="dark-cornflower-blue-2" class="google-color-palette"
+    style="background-color:#1155cc;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#0b5394"
+    id="dark-blue-2" class="google-color-palette" style="background-color:#0b5394;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#351c75" id="dark-purple-2" class="google-color-palette"
+    style="background-color:#351c75;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#741b47"
+    id="dark-magenta-2" class="google-color-palette" style="background-color:#741b47;color:#ffffff" /><br /><input
+    type="radio" name="GoogleColorPalette" value="#5b0f00" id="dark-red-berry-3" class="google-color-palette"
+    style="background-color:#5b0f00;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#660000"
+    id="dark-red-3" class="google-color-palette" style="background-color:#660000;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#783f04" id="dark-orange-3" class="google-color-palette"
+    style="background-color:#783f04;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#7f6000"
+    id="dark-yellow-3" class="google-color-palette" style="background-color:#7f6000;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#274e13" id="dark-green-3" class="google-color-palette"
+    style="background-color:#274e13;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#0c343d"
+    id="dark-cyan-3" class="google-color-palette" style="background-color:#0c343d;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#1c4587" id="dark-cornflower-blue-3" class="google-color-palette"
+    style="background-color:#1c4587;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#073763"
+    id="dark-blue-3" class="google-color-palette" style="background-color:#073763;color:#ffffff" /><input type="radio"
+    name="GoogleColorPalette" value="#20124d" id="dark-purple-3" class="google-color-palette"
+    style="background-color:#20124d;color:#ffffff" /><input type="radio" name="GoogleColorPalette" value="#4c1130"
+    id="dark-magenta-3" class="google-color-palette" style="background-color:#4c1130;color:#ffffff" /><br />
+  <div class="color-pick">
+    <input type="color" id="col-picker" tabindex="-1" class="hidden-col-picker" />
+  </div>
+</div>
+
+<script>
+  //#### Color Picker ####
+
+
+  //Check when color picker is used.
+  document
+    .getElementById("col-picker")
+    .addEventListener("change", watchColorPicker);
+
+  function watchColorPicker(e) {
+    //Uncheck radio button.
+    let checked =
+      document.querySelector('input[name="GoogleColorPalette"]:checked') !==
+      null;
+    if (checked) {
+      document.querySelector(
+        'input[name="GoogleColorPalette"]:checked'
+      ).checked = false;
+    }
+    //Get the selected hex color
+    let col_value = event.target.value;
+    //Determin if dark or light color
+    // https://codepen.io/andreaswik/pen/YjJqpK
+
+    function blackOrWhite(hexcolor) {
+      hexcolor = hexcolor.replace("#", "");
+      var r = parseInt(hexcolor.substr(0, 2), 16);
+      var g = parseInt(hexcolor.substr(2, 2), 16);
+      var b = parseInt(hexcolor.substr(4, 2), 16);
+      var yiq = (r * 299 + g * 587 + b * 114) / 1000;
+      return yiq >= 128 ? "black" : "white";
+    }
+
+    let text_col = blackOrWhite(col_value);
+    //Change color
+    colorSelected(col_value, "Custom", text_col);
+  }
+
+  //#### Color Radio Buttons ####
+  //Get the value of the checked button.
+  function radioClick() {
+    let value = this.value;
+    let id = this.id;
+    let text_col = this.style.color;
+
+    colorSelected(value, id, text_col);
+  }
+
+  document
+    .querySelectorAll("input.google-color-palette")
+    .forEach(button => {
+      button.addEventListener("click", radioClick);
+    });
+
+  //#### Dislplay Color ####
+  function colorSelected(value, id, text_col) {
+    //get the id
+    document.getElementById("color-result-hex").textContent = value;
+    document.getElementById("color-result-name").textContent = ", " + id;
+
+    const result = document.getElementById("color-result");
+    result.style.color = text_col;
+    result.style.backgroundColor = value;
+    //add color val
+  }
+</script>

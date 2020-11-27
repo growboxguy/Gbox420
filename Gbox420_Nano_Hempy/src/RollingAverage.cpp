@@ -1,7 +1,8 @@
 #include "RollingAverage.h"
 #include "Helpers.h"
 
-RollingAverage::RollingAverage(){
+RollingAverage::RollingAverage()
+{
   History = new int[RollingAverageDepth];
 }
 

@@ -3,17 +3,17 @@
 ///This is a virtual class from which all other classes inherit from (GrowBox, PH reader, Lights, DHTSensor..)
 ///Enforces a set of Common functions shared by the components
 
-#include "Arduino.h"     
-#include "TimeLib.h"     ///keeping track of time
-#include "../../Settings.h" ///for loading defaults and storing/reading user settings
-#include "../../SerialLog.h"  ///global functions
-#include "../Helpers.h"  ///global functions
+#include "Arduino.h"
+#include "TimeLib.h"         ///keeping track of time
+#include "../../Settings.h"  ///for loading defaults and storing/reading user settings
+#include "../../SerialLog.h" ///global functions
+#include "../Helpers.h"      ///global functions
 
 ///forward declaration
 extern char LongMessage[MaxLongTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char CurrentTime[MaxWordLength];
-extern Settings * ModuleSettings;
+extern Settings *ModuleSettings;
 extern bool *Debug;
 extern bool *Metric;
 
@@ -34,9 +34,8 @@ public:
   void websiteEvent_Button(__attribute__((unused)) char *Button){};
   void websiteEvent_Field(__attribute__((unused)) char *Field){};
   */
-   
+
 private:
-  
 protected:
   Common(const __FlashStringHelper *Name); ///Constructor
   Common();

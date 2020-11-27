@@ -23,12 +23,12 @@ void setup()
   Serial.begin(115200);
   Serial.println(F("Sketch for calibrating PH sensor"));
   Serial.println();
-  if(!OffsetCalibrationComplete)
+  if (!OffsetCalibrationComplete)
   {
     Serial.println(F("Offset calibration starting..."));
     Serial.println(F(" Disconnect the PH probe and short circuit the inside of the BNC connector with the outside"));
-    Serial.println(F(" Adjust the offset potentiometer until the voltage reading shows 2.5V")); 
-    Serial.println(F(" Send any Serial input once the offset is set"));  
+    Serial.println(F(" Adjust the offset potentiometer until the voltage reading shows 2.5V"));
+    Serial.println(F(" Send any Serial input once the offset is set"));
   }
   else
   {
@@ -41,7 +41,8 @@ void setup()
 
 void loop()
 {
-  if(!OffsetCalibrationComplete && Serial.available()){
+  if (!OffsetCalibrationComplete && Serial.available())
+  {
     Serial.print(F("Serial input received: "));
     Serial.print(Serial.readString());
     Serial.println(F("Offset calibration complete"));
@@ -52,23 +53,24 @@ void loop()
     Serial.println(F("Starting to measure PH, send any Serial input when the readings stabilize..."));
     OffsetCalibrationComplete = true;
   }
-  
-  if(OffsetCalibrationComplete && !PHCalibrationComplete && Serial.available())
+
+  if (OffsetCalibrationComplete && !PHCalibrationComplete && Serial.available())
   {
     Serial.print(F("Serial input received: "));
     Serial.print(Serial.readString());
-        
+
     Serial.print(F("  Saving reading at PH: "));
-    if(FirstTestSolution)
+    if (FirstTestSolution)
     {
       Serial.println(TestSolution1PH);
       TestSolution1Reading = readPH();
       Serial.print(F("Insert the PH probe into the calibration solution with PH: "));
       Serial.println(TestSolution2PH);
       Serial.println(F("Starting to measure PH, send any Serial input when the readings stabilize..."));
-      FirstTestSolution = false;         
+      FirstTestSolution = false;
     }
-    else{
+    else
+    {
       Serial.println(TestSolution2PH);
       TestSolution2Reading = readPH();
       Serial.println();
@@ -81,8 +83,8 @@ void loop()
       Serial.println(TestSolution2Reading);
       Serial.println();
 
-      float Slope= (TestSolution2PH - TestSolution1PH) / (TestSolution2Reading - TestSolution1Reading);
-      float Intercept= Slope * -1 * TestSolution1Reading + TestSolution1PH;    
+      float Slope = (TestSolution2PH - TestSolution1PH) / (TestSolution2Reading - TestSolution1Reading);
+      float Intercept = Slope * -1 * TestSolution1Reading + TestSolution1PH;
       Serial.println(F("Calibration complete:"));
       Serial.print(F("  Slope: "));
       Serial.println(toText_floatDecimals(Slope));
@@ -90,11 +92,12 @@ void loop()
       Serial.println(toText_floatDecimals(Intercept));
       Serial.println();
       PHCalibrationComplete = true;
-    }    
+    }
   }
-  readPH(); 
-  if(PHCalibrationComplete){
-    delay(3000); 
+  readPH();
+  if (PHCalibrationComplete)
+  {
+    delay(3000);
   }
 }
 
@@ -119,7 +122,7 @@ float readPH()
 }
 
 char *toText_floatDecimals(float Number)
-{  
+{
   if (isnan(Number))
     Number = -1.0;
   dtostrf(Number, 8, 6, ShortMessage); ///minimum 8 char total length, with 6 decimals

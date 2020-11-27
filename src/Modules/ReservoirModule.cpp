@@ -34,7 +34,7 @@ void ReservoirModule::refresh_Sec()
   if (*Debug)
     Common::refresh_Sec();
   if (NextSequenceID != ReservoirMessages::ReservoirModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
-  {                                                         ///If there is a package exchange in progress
+  {                                                               ///If there is a package exchange in progress
     NextSequenceID = ReservoirMessages::ReservoirModuleResponse1; ///Reset back to the first response
     logToSerials(F("Timeout during message exchange, reseting to first response"), true, 0);
     updateAckData();
@@ -82,7 +82,7 @@ void ReservoirModule::processCommand(void *ReceivedCommand)
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(F(","), false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Metric, true, 1);
-     }
+    }
     break;
   case ReservoirMessages::ReservoirCommand1:
     if (((ReservoirCommand *)ReceivedCommand)->TareWeight)
@@ -90,11 +90,11 @@ void ReservoirModule::processCommand(void *ReceivedCommand)
     NextSequenceID = ReservoirMessages::ReservoirReset; // update the next Message that will be copied to the buffer
     if (*Debug)
     {
-      logToSerials(F("Command:"), false, 2);      
+      logToSerials(F("Command:"), false, 2);
       logToSerials(((ReservoirCommand *)ReceivedCommand)->TareWeight, true, 1);
-     }
+    }
     break;
-  case ReservoirMessages::ReservoirReset:                   ///Used to get all Responses that do not have a corresponding Command
+  case ReservoirMessages::ReservoirReset:                         ///Used to get all Responses that do not have a corresponding Command
     NextSequenceID = ReservoirMessages::ReservoirModuleResponse1; ///Load the first response for the next message exchange
     break;
   default:

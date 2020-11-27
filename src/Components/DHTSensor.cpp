@@ -6,9 +6,9 @@
 DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
-  Sensor = new DHT(DefaultSettings->Pin, DefaultSettings->Type);  
+  Sensor = new DHT(DefaultSettings->Pin, DefaultSettings->Type);
   Sensor->begin(); ///dereference the pointer to the object and then call begin() on it. Same as (*Sensor).begin();
-  Parent->addToReportQueue(this);          
+  Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("DHTSensor object created"), true, 1);
 }

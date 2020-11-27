@@ -12,8 +12,8 @@ float PressurePSI;
 
 void setup()
 {
-  Serial.begin(115200); 
-  Serial.println(F("Sketch for getting Pressure sensor offset")); 
+  Serial.begin(115200);
+  Serial.println(F("Sketch for getting Pressure sensor offset"));
   pinMode(PressureSensorInPin, INPUT);
   getOffset();
   Serial.print(F("Ratio: "));
@@ -30,9 +30,9 @@ void loop()
     delay(100);
   }
   Reading = Reading / 50;
-  float Voltage = ((float)Reading) * 5 / 1024;   //Sensor output voltage
-  Pressure = (Ratio * (Voltage - Offset)); // unit: bar / 100kPa
-  PressurePSI = Pressure * 14.5038;        //unit: PSI
+  float Voltage = ((float)Reading) * 5 / 1024; //Sensor output voltage
+  Pressure = (Ratio * (Voltage - Offset));     // unit: bar / 100kPa
+  PressurePSI = Pressure * 14.5038;            //unit: PSI
 
   Serial.print(F("Sensor Reading: "));
   Serial.println(Reading);
@@ -60,5 +60,5 @@ void getOffset()
   }
   Offset = (sum / 50) * 5 / 1024;
   Serial.print(F("Offset: "));
-  Serial.println(Offset); //expected ~0.5V  
+  Serial.println(Offset); //expected ~0.5V
 }

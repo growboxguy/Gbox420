@@ -10,7 +10,6 @@ void getFreeMemory()
   logToSerials(&ShortMessage, true, 0);
 }
 
-
 ///////////////////////////////////////////////////////////////
 ///Conversions
 
@@ -105,7 +104,7 @@ char *toText_time(uint8_t Hour, uint8_t Minute)
 
 char *toText_temp(float Temp)
 {
- dtostrf(Temp, 4, 2, ShortMessage);
+  dtostrf(Temp, 4, 2, ShortMessage);
   if (*Metric)
   {
     strcat_P(ShortMessage, (PGM_P)F("°C"));
@@ -177,7 +176,7 @@ char *toText_second(int Second)
 char *toText_distance(float Distance)
 {
   dtostrf(Distance, 4, 2, ShortMessage);
-    if (*Metric)
+  if (*Metric)
   {
     strcat_P(ShortMessage, (PGM_P)F("cm"));
   }
@@ -225,7 +224,7 @@ char *toText_onOffDisabled(bool Enabled, bool OnStatus)
   }
 }
 
-char* toText_onlineStatus(bool Status)
+char *toText_onlineStatus(bool Status)
 {
   if (Status)
     return toText(F("ONLINE"));
@@ -233,29 +232,30 @@ char* toText_onlineStatus(bool Status)
     return toText(F("OFFLINE"));
 }
 
-char *toText_pumpState(PumpStates State){
+char *toText_pumpState(PumpStates State)
+{
   switch (State)
   {
-    case PumpStates::DISABLED:
-      return toText(F("DISABLED"));
-      break;
-    case PumpStates::IDLE:
-      return toText(F("IDLE"));
-      break;
-    case PumpStates::PRIMING:
-      return toText(F("PRIMING"));
-      break;
-    case PumpStates::RUNNING:
-      return toText(F("RUNNING"));
-      break;
-    case PumpStates::BLOWOFF:
-      return toText(F("BLOWOFF"));
-      break;
-    case PumpStates::MIXING:
-      return toText(F("MIXING"));
-      break; 
-    default:
-      return toText(F("UNKNOWN"));
-      break;
-  }  
+  case PumpStates::DISABLED:
+    return toText(F("DISABLED"));
+    break;
+  case PumpStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case PumpStates::PRIMING:
+    return toText(F("PRIMING"));
+    break;
+  case PumpStates::RUNNING:
+    return toText(F("RUNNING"));
+    break;
+  case PumpStates::BLOWOFF:
+    return toText(F("BLOWOFF"));
+    break;
+  case PumpStates::MIXING:
+    return toText(F("MIXING"));
+    break;
+  default:
+    return toText(F("UNKNOWN"));
+    break;
+  }
 }

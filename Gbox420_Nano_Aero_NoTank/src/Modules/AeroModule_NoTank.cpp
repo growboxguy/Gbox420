@@ -144,7 +144,7 @@ void AeroModule::processCommand(void *ReceivedCommand)
       AeroNT1->Pump->disablePump();
     AeroNT1->Pump->setSpeed(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed);
     AeroNT1->Pump->setPumpTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);
-    AeroNT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime);    
+    AeroNT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime);
     if (((AeroCommand_P2 *)ReceivedCommand)->MixReservoir)
       AeroNT1->Pump->startMixing();
     if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight)

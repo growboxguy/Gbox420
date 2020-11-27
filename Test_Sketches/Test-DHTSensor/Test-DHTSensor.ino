@@ -8,7 +8,7 @@
 const int TempSensorInPin = 3; // DAT digital input - DHT22 sensor
 
 //Global Variables
-float Humidity;  //Stores humidity
+float Humidity;    //Stores humidity
 float Temperature; //Stores temperature
 
 //Component initialization
@@ -16,7 +16,7 @@ const uint8_t DHTType = DHT22;            //specify temp/humidity sensor type: D
 DHT TempSensor(TempSensorInPin, DHTType); // Initialize DHT sensor
 
 void setup()
-{  
+{
   Serial.begin(115200);
   Serial.println(F("Sketch for testing: DHT sensor (Humidity and temperature sensor)"));
   TempSensor.begin();

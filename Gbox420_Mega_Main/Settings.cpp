@@ -9,14 +9,14 @@ Only use these in the setup() function, or when a user initiated change is store
 #include "SerialLog.h"
 
 void saveSettings(Settings *ToSave)
-{                                                                                 
+{
   eeprom_update_block((const void *)ToSave, (void *)0, sizeof(Settings)); ///update_block only writes the bytes that changed
 }
 
-Settings *loadSettings(bool ResetEEPROM = false )   ///if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
+Settings *loadSettings(bool ResetEEPROM = false) ///if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
 {
-  Settings *DefaultSettings = new Settings();                                    ///This is where settings are stored, first it takes the sketch default settings defined in Settings.h
-  Settings EEPROMSettings;                                                       ///temporary storage with "Settings" type
+  Settings *DefaultSettings = new Settings();                              ///This is where settings are stored, first it takes the sketch default settings defined in Settings.h
+  Settings EEPROMSettings;                                                 ///temporary storage with "Settings" type
   eeprom_read_block((void *)&EEPROMSettings, (void *)0, sizeof(Settings)); ///Load EEPROM stored settings into EEPROMSettings
   if (DefaultSettings->CompatibilityVersion != EEPROMSettings.CompatibilityVersion || ResetEEPROM)
   { ///Making sure the EEPROM loaded settings are compatible with the sketch
@@ -36,8 +36,8 @@ Settings *loadSettings(bool ResetEEPROM = false )   ///if the function contains 
 void restoreDefaults(Settings *ToOverwrite)
 {
   logToSerials(F("Forcing settings update at next restart..."), false, 0);
-  ToOverwrite -> CompatibilityVersion = ToOverwrite -> CompatibilityVersion - 1;  
+  ToOverwrite->CompatibilityVersion = ToOverwrite->CompatibilityVersion - 1;
   saveSettings(ToOverwrite);
   logToSerials(F("done. Reseting the sketch..."), true, 1);
-  __asm__ __volatile__ ("jmp 0x0000");
+  __asm__ __volatile__("jmp 0x0000");
 }

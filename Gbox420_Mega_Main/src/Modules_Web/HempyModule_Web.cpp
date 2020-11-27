@@ -1,12 +1,12 @@
 #include "HempyModule_Web.h"
 
-struct HempyModuleCommand HempyModuleCommand1ToSend = {HempyMessages::HempyModuleCommand1};  ///Command to send will be stored here
-struct HempyModuleResponse HempyModuleResponse1Received = {HempyMessages::HempyModuleResponse1};  ///Response will be stored here
-struct HempyBucketCommand HempyBucketCommand1ToSend = {HempyMessages::HempyBucketCommand1}; ///Command to send will be stored here
-struct HempyBucketResponse HempyBucketResponse1Received = {HempyMessages::HempyBucketResponse1};  ///Response will be stored here
-struct HempyBucketCommand HempyBucketCommand2ToSend = {HempyMessages::HempyBucketCommand2}; ///Command to send will be stored here
-struct HempyBucketResponse HempyBucketResponse2Received = {HempyMessages::HempyBucketResponse2};  ///Response will be stored here
-struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};            ///Special command to fetch the next Response from the Receiver
+struct HempyModuleCommand HempyModuleCommand1ToSend = {HempyMessages::HempyModuleCommand1};      ///Command to send will be stored here
+struct HempyModuleResponse HempyModuleResponse1Received = {HempyMessages::HempyModuleResponse1}; ///Response will be stored here
+struct HempyBucketCommand HempyBucketCommand1ToSend = {HempyMessages::HempyBucketCommand1};      ///Command to send will be stored here
+struct HempyBucketResponse HempyBucketResponse1Received = {HempyMessages::HempyBucketResponse1}; ///Response will be stored here
+struct HempyBucketCommand HempyBucketCommand2ToSend = {HempyMessages::HempyBucketCommand2};      ///Command to send will be stored here
+struct HempyBucketResponse HempyBucketResponse2Received = {HempyMessages::HempyBucketResponse2}; ///Response will be stored here
+struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};                       ///Special command to fetch the next Response from the Receiver
 
 HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///Constructor
@@ -72,7 +72,7 @@ void HempyModule_Web::reportToJSON()
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightB));
-    strcat_P(LongMessage, (PGM_P)F("\",\"WeightWR2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WeightWR2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightWR));
   strcat_P(LongMessage, (PGM_P)F("\",\"StartB2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StartWeight));
@@ -90,16 +90,16 @@ void HempyModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgString(getComponentName(F("B1Stp")), toText(HempyBucketCommand1ToSend.StopWeight));
     WebServer.setArgBoolean(getComponentName(F("B1TBW")), HempyBucketCommand1ToSend.TimerBasedWatering);
     WebServer.setArgInt(getComponentName(F("B1Int")), HempyBucketCommand1ToSend.WateringInterval);
-    WebServer.setArgInt(getComponentName(F("B1Dur")), HempyBucketCommand1ToSend.WateringDuration);  
+    WebServer.setArgInt(getComponentName(F("B1Dur")), HempyBucketCommand1ToSend.WateringDuration);
     WebServer.setArgInt(getComponentName(F("B1PumpSp")), HempyBucketCommand1ToSend.PumpSpeed);
-    WebServer.setArgInt(getComponentName(F("B1PumpSpS")), HempyBucketCommand1ToSend.PumpSpeed);  
+    WebServer.setArgInt(getComponentName(F("B1PumpSpS")), HempyBucketCommand1ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B1Time")), HempyBucketCommand1ToSend.TimeOutPump);
     WebServer.setArgBoolean(getComponentName(F("B2WBW")), HempyBucketCommand2ToSend.WeightBasedWatering);
     WebServer.setArgString(getComponentName(F("B2Strt")), toText(HempyBucketCommand2ToSend.StartWeight));
     WebServer.setArgString(getComponentName(F("B2Stp")), toText(HempyBucketCommand2ToSend.StopWeight));
     WebServer.setArgBoolean(getComponentName(F("B2TBW")), HempyBucketCommand2ToSend.TimerBasedWatering);
     WebServer.setArgInt(getComponentName(F("B2Int")), HempyBucketCommand2ToSend.WateringInterval);
-    WebServer.setArgInt(getComponentName(F("B2Dur")), HempyBucketCommand2ToSend.WateringDuration); 
+    WebServer.setArgInt(getComponentName(F("B2Dur")), HempyBucketCommand2ToSend.WateringDuration);
     WebServer.setArgInt(getComponentName(F("B2PumpSp")), HempyBucketCommand2ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B2PumpSpS")), HempyBucketCommand2ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B2Time")), HempyBucketCommand2ToSend.TimeOutPump);
@@ -167,7 +167,7 @@ void HempyModule_Web::websiteEvent_Button(char *Button)
     {
       HempyBucketCommand1ToSend.TareWeightWR = true;
       Parent->addToLog(F("Taring Bucket 1 waste scale"), false);
-    }    
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareB")) == 0)
     {
       HempyBucketCommand2ToSend.TareWeightB = true;
@@ -177,7 +177,7 @@ void HempyModule_Web::websiteEvent_Button(char *Button)
     {
       HempyBucketCommand2ToSend.TareWeightWR = true;
       Parent->addToLog(F("Taring Bucket 2 waste scale"), false);
-    }    
+    }
     SyncRequested = true;
   }
 }
@@ -193,14 +193,14 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
     if (strcmp_P(ShortMessage, (PGM_P)F("B1WBW")) == 0)
     {
       DefaultSettings->WeightBasedWatering_B1 = WebServer.getArgBoolean();
-      if(DefaultSettings->WeightBasedWatering_B1)
+      if (DefaultSettings->WeightBasedWatering_B1)
       {
         Parent->addToLog(F("Weight based watering ON"), false);
       }
       else
       {
-       Parent->addToLog(F("Weight based watering OFF"), false);
-      }      
+        Parent->addToLog(F("Weight based watering OFF"), false);
+      }
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1Strt")) == 0)
     {
@@ -214,14 +214,14 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1TBW")) == 0)
     {
       DefaultSettings->TimerBasedWatering_B1 = WebServer.getArgBoolean();
-      if(DefaultSettings->TimerBasedWatering_B1)
+      if (DefaultSettings->TimerBasedWatering_B1)
       {
         Parent->addToLog(F("Timer based watering ON"), false);
       }
       else
       {
-       Parent->addToLog(F("Timer based watering OFF"), false);
-      }      
+        Parent->addToLog(F("Timer based watering OFF"), false);
+      }
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1Int")) == 0)
     {
@@ -246,14 +246,14 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2WBW")) == 0)
     {
       DefaultSettings->WeightBasedWatering_B2 = WebServer.getArgBoolean();
-      if(DefaultSettings->WeightBasedWatering_B2)
+      if (DefaultSettings->WeightBasedWatering_B2)
       {
         Parent->addToLog(F("Weight based watering ON"), false);
       }
       else
       {
-       Parent->addToLog(F("Weight based watering OFF"), false);
-      }      
+        Parent->addToLog(F("Weight based watering OFF"), false);
+      }
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2Strt")) == 0)
     {
@@ -267,14 +267,14 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2TBW")) == 0)
     {
       DefaultSettings->TimerBasedWatering_B2 = WebServer.getArgBoolean();
-      if(DefaultSettings->TimerBasedWatering_B2)
+      if (DefaultSettings->TimerBasedWatering_B2)
       {
         Parent->addToLog(F("Timer based watering ON"), false);
       }
       else
       {
-       Parent->addToLog(F("Timer based watering OFF"), false);
-      }      
+        Parent->addToLog(F("Timer based watering OFF"), false);
+      }
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2Int")) == 0)
     {
@@ -329,12 +329,12 @@ void HempyModule_Web::refresh_Minute()
 void HempyModule_Web::sendMessages()
 {
   updateCommands();
-  sendCommand(&HempyResetToSend);   ///special Command, resets communication to first message
-  sendCommand(&HempyModuleCommand1ToSend);   ///Command - Response exchange
-  sendCommand(&HempyBucketCommand1ToSend);   ///Command - Response exchange
-  sendCommand(&HempyBucketCommand2ToSend);   ///Command - Response exchange
-  sendCommand(&HempyResetToSend);   ///special Command, resets communication to first message
-  if(*Debug)
+  sendCommand(&HempyResetToSend);          ///special Command, resets communication to first message
+  sendCommand(&HempyModuleCommand1ToSend); ///Command - Response exchange
+  sendCommand(&HempyBucketCommand1ToSend); ///Command - Response exchange
+  sendCommand(&HempyBucketCommand2ToSend); ///Command - Response exchange
+  sendCommand(&HempyResetToSend);          ///special Command, resets communication to first message
+  if (*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
@@ -342,7 +342,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
 {
   HempyMessages SequenceIDToSend = ((HempyCommonTemplate *)CommandToSend)->SequenceID;
   HempyMessages ReceivedSequenceID = NULL;
-  if(*Debug)
+  if (*Debug)
   {
     logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);
@@ -392,7 +392,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         if (*Debug)
         {
           logToSerials(F("Bucket1:"), false, 4);
-          logToSerials(HempyBucketResponse1Received.PumpState, false, 1);         
+          logToSerials(HempyBucketResponse1Received.PumpState, false, 1);
           logToSerials(F(","), false, 1);
           logToSerials(HempyBucketResponse1Received.WeightB, false, 1);
           logToSerials(F(","), false, 1);
@@ -438,8 +438,8 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
     else
     {
       if (*Debug)
-        logToSerials(F("Acknowledgement received without any data"), true, 4);  ///Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+        
-    }    
+        logToSerials(F("Acknowledgement received without any data"), true, 4); ///Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+
+    }
   }
   else
   {

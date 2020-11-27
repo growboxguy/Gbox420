@@ -2,7 +2,7 @@
 //Sketch for testing: Light sensor with analog and digital outputs
 
 //Pins
-const int DigitalPin = 4;       // D0 digital input - LM393 light sensor
+const int DigitalPin = 4; // D0 digital input - LM393 light sensor
 const int AnalogPin = A0; // A0 analog input - LM393 light sensor
 
 void setup()

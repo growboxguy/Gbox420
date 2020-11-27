@@ -7,23 +7,25 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
   Scale = &DefaultSettings->Scale;
   Offset = &DefaultSettings->Offset;
   Sensor = new HX711();
-  Sensor -> begin(*(&DefaultSettings->DTPin), *(&DefaultSettings->SCKPin));
-  Sensor -> set_scale(*Scale);
-  Sensor -> set_offset(*Offset);  
-  Parent->addToReportQueue(this);         
-  Parent->addToRefreshQueue_FiveSec(this); 
+  Sensor->begin(*(&DefaultSettings->DTPin), *(&DefaultSettings->SCKPin));
+  Sensor->set_scale(*Scale);
+  Sensor->set_offset(*Offset);
+  Parent->addToReportQueue(this);
+  Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("WeightSensor object created"), true, 1);
 }
 
 void WeightSensor::refresh_FiveSec()
 {
-     if (*Debug)
+  if (*Debug)
     Common::refresh_Sec();
-  if(TareRequested){
+  if (TareRequested)
+  {
     TareRequested = false;
     tare();
   }
-  if(CalibrateRequested){
+  if (CalibrateRequested)
+  {
     CalibrateRequested = false;
     calibrate();
   }
@@ -39,9 +41,11 @@ void WeightSensor::report()
   logToSerials(&LongMessage, true, 1);
 }
 
-void WeightSensor::readWeight(){
-  if (Sensor -> wait_ready_timeout(200)) {
-    Weight = Sensor -> get_units();
+void WeightSensor::readWeight()
+{
+  if (Sensor->wait_ready_timeout(200))
+  {
+    Weight = Sensor->get_units();
   }
 }
 
@@ -58,29 +62,31 @@ char *WeightSensor::getWeightText(bool IncludeUnits)
     return toText(getWeight());
 }
 
-void WeightSensor::triggerTare(){
+void WeightSensor::triggerTare()
+{
   TareRequested = true;
   Parent->addToLog(F("Updating tare...")); ///This can take up to 1 minute, when the component is next refreshed
 }
 
 void WeightSensor::tare() ///Time intense, cannot be called straight from the website. Response would time out.
 {
-  Sensor -> tare();
-  *Offset = Sensor -> get_offset();
+  Sensor->tare();
+  *Offset = Sensor->get_offset();
   Parent->addToLog(F("Tare updated"));
   Parent->getSoundObject()->playOnSound();
 }
 
-void WeightSensor::triggerCalibration(int CalibrationWeight){
-  this -> CalibrationWeight = CalibrationWeight;
+void WeightSensor::triggerCalibration(int CalibrationWeight)
+{
+  this->CalibrationWeight = CalibrationWeight;
   CalibrateRequested = true;
   Parent->addToLog(F("Calibrating weight..")); ///This can take up to 1 minute, when the component is next refreshed
 }
 
 void WeightSensor::calibrate() ///Time intense, cannot be called straight from the website. Response would time out.
 {
-  *Scale = (float) Sensor -> get_value() / CalibrationWeight;
-  Sensor -> set_scale(*Scale);
+  *Scale = (float)Sensor->get_value() / CalibrationWeight;
+  Sensor->set_scale(*Scale);
   Parent->addToLog(F("Weight calibrated"));
   Parent->getSoundObject()->playOnSound();
 }
@@ -88,5 +94,5 @@ void WeightSensor::calibrate() ///Time intense, cannot be called straight from t
 void WeightSensor::setScale(float NewScale)
 {
   *Scale = NewScale;
-  Sensor -> set_scale(*Scale);
+  Sensor->set_scale(*Scale);
 }
