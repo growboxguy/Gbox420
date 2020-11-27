@@ -188,12 +188,12 @@
 				<h1>Ventilation</h1>
 				<table class="tg">
 					<tr>
-						<td class="headerRows"><span>Int<br/>temp</span></td>
-						<th class="headerRows"><span>Ext<br/>temp</span></th>
-						<th class="headerRows"><span>Int<br/>humidity</span></th>
-						<td class="headerRows"><span>Ext<br/>humidity</span></td>
-						<td class="headerRows"><span>Int<br/>fan</span></td>
-						<td class="headerRows"><span>Exh<br/>fan</span></td>
+						<td class="headerRows"><span>Int<br />temp</span></td>
+						<th class="headerRows"><span>Ext<br />temp</span></th>
+						<th class="headerRows"><span>Int<br />humidity</span></th>
+						<td class="headerRows"><span>Ext<br />humidity</span></td>
+						<td class="headerRows"><span>Int<br />fan</span></td>
+						<td class="headerRows"><span>Exh<br />fan</span></td>
 					</tr>
 					<tr>
 						<td id="DHT1_T" class="dataRows"></td>
@@ -201,7 +201,7 @@
 						<td id="DHT1_H" class="dataRows"></td>
 						<td id="Res1_Humi" class="dataRows"></td>
 						<td id="IFan_S" class="dataRows"></td>
-						<td id="EFan_S" class="dataRows"></td>						
+						<td id="EFan_S" class="dataRows"></td>
 					</tr>
 				</table>
 				<form>
@@ -269,7 +269,7 @@
 						<button id="Lt1_On" type="button" title="Turn grow lights ON">ON</button>
 						<button id="Lt1_Of" type="button" title="Turn grow lights OFF">OFF</button>
 						<button id="LtSen1_C" type="button"
-							title="Measure light reading in dark, 0 and 100% brightness">Calibrate</button>					
+							title="Measure light reading in dark, 0 and 100% brightness">Calibrate</button>
 					</p>
 				</form>
 				<form>
@@ -281,7 +281,7 @@
 							oninput="this.form.Lt1_BS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
-				</form>	
+				</form>
 				<form>
 					<p>
 						<label style="width: 3em;"><b>Timer </b></label>
@@ -304,15 +304,16 @@
 						<input style="width: 2.5em;" min=0 max=59 name="Lt1_OfM" type="number" />
 						<input class="setButton" type="submit" value="Set" title="Set grow light OFF time" />
 					</p>
-				</form>				
+				</form>
 				<form>
-					<p>						
-						<button id="Lt1_D" type="button"
-							title="Dim the lights for X minutes to 1%">Dim</button>  <!-- Temporary reduce the brightness to 1% while working on the plants -->
-						for <input style="width: 3em;" name="Lt1_DD" type="number" value='1' step='1' min='1' max='100' title="Dim Duration - How long should the temporary dimming last"/>min
+					<p>
+						<button id="Lt1_D" type="button" title="Dim the lights for X minutes to 1%">Dim</button>
+						<!-- Temporary reduce the brightness to 1% while working on the plants -->
+						for <input style="width: 3em;" name="Lt1_DD" type="number" value='1' step='1' min='1' max='100'
+							title="Dim Duration - How long should the temporary dimming last" />min
 						<input class="setButton" type="submit" value="Set">
 					</p>
-				</form>	
+				</form>
 				<form>
 					<p>
 						<input type="checkbox" name="Lt1_F"
@@ -321,16 +322,16 @@
 						<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
 					</p>
 				</form>		
-				<form style="padding-left: 0.5em;">
-					<p>	
-						<input style="padding-left: 0.5em; width: 2em;" name="Lt1_FInc" type="number" value='1' step='1' min='1' max='100'
-							title="Amount of Brightness increase/decrease at each step" />
+				<form style=" padding-left: 0.5em;">
+					<p>
+						<input style="padding-left: 0.5em; width: 2em;" name="Lt1_FInc" type="number" value='1' step='1'
+							min='1' max='100' title="Amount of Brightness increase/decrease at each step" />
 						<label>% every</label>
 						<input style="width: 3em;" name="Lt1_FInt" type="number" value='0' step='1' min='1'
-							title="Increase/decrease frequency - Interval between the changes"/>sec
+							title="Increase/decrease frequency - Interval between the changes" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
-				</form>						
+				</form>
 			</div>
 			<div class="card">
 				<h1>Light 2</h1>
@@ -367,7 +368,7 @@
 							oninput="this.form.Lt2_BS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
-				</form>		
+				</form>
 				<form>
 					<p>
 						<label style="width: 3em;"><b>Timer</b></label>
@@ -392,11 +393,13 @@
 					</p>
 				</form>
 				<form>
-					<p>						
-						<button id="Lt2_D" type="button"
-							title="Dim the lights for X minutes to 1%">Dim</button>  <!-- Temporary reduce the brightness to 1% while working on the plants -->
-						for <input style="width: 3em;" name="Lt2_DD" type="number" value='1' step='1' min='1' max='100' title="Dim Duration - How long should the temporary dimming last"/>min
-						<input class="setButton" type="submit" value="Set" title="Set how long should the temporary dimming should last">
+					<p>
+						<button id="Lt2_D" type="button" title="Dim the lights for X minutes to 1%">Dim</button>
+						<!-- Temporary reduce the brightness to 1% while working on the plants -->
+						for <input style="width: 3em;" name="Lt2_DD" type="number" value='1' step='1' min='1' max='100'
+							title="Dim Duration - How long should the temporary dimming last" />min
+						<input class="setButton" type="submit" value="Set"
+							title="Set how long should the temporary dimming should last">
 					</p>
 				</form>
 				<form>
@@ -407,8 +410,8 @@
 						<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
 					</p>
 				</form>		
-				<form style="padding-left: 0.5em;">
-					<p>	
+				<form style=" padding-left: 0.5em;">
+					<p>
 						<input style="width: 2em;" name="Lt2_FInc" type="number" value='1' step='1' min='1' max='100'
 							title="How much to Change the brightness at each step (1% increments)" />
 						<label>% every</label>
@@ -416,7 +419,7 @@
 							title="How often Step to the next brightness level" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
-				</form>						
+				</form>
 			</div>
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2">
@@ -428,7 +431,9 @@
 						<th class="headerRows"><span>Air pump</span></th>
 						<th class="headerRows"><span>PH</span></th>
 						<th class="headerRows"><span>Weight</span>
-							<button id="Res1_Tare" onclick="confirmTare(this)" style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button" title="Tare the reservoir weight scale. Do not have any weight on the scale!">Tare</button>
+							<button id="Res1_Tare" onclick="confirmTare(this)"
+								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
+								title="Tare the reservoir weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 						<th class="headerRows"><span>Temp</span></th>
 					</tr>
@@ -442,10 +447,8 @@
 				<form>
 					<p>
 						<label><b>Air pump</b></label>
-						<button id="APump1_On" type="button" align="right"
-							title="Starts the air pump">ON</button>
-						<button id="APump1_Off" type="button" align="right"
-							title="Stops the air pump">OFF</button>
+						<button id="APump1_On" type="button" align="right" title="Starts the air pump">ON</button>
+						<button id="APump1_Off" type="button" align="right" title="Stops the air pump">OFF</button>
 					<p>
 				</form>
 			</div>
@@ -455,10 +458,14 @@
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span>Bucket</span>
-							<button id="Hemp1_B1TareB" onclick="confirmTare(this)" style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button" title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
+							<button id="Hemp1_B1TareB" onclick="confirmTare(this)"
+								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
+								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 						<th class="headerRows"><span>Waste</span>
-							<button id="Hemp1_B1TareWR" onclick="confirmTare(this)" style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button" title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
+							<button id="Hemp1_B1TareWR" onclick="confirmTare(this)"
+								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
+								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 						<th class="headerRows"><span>Pump</span></th>
 					</tr>
@@ -482,8 +489,9 @@
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Hemp1_B1PumpSpS" min="0"
-							max="100" oninput="this.form.Hemp1_B1PumpSp.value=this.value" />
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range"
+							name="Hemp1_B1PumpSpS" min="0" max="100"
+							oninput="this.form.Hemp1_B1PumpSp.value=this.value" />
 						<input type="number" name="Hemp1_B1PumpSp" min="0" max="100"
 							oninput="this.form.Hemp1_B1PumpSpS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
@@ -546,10 +554,14 @@
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span>Bucket</span>
-							<button id="Hemp1_B2TareB" onclick="confirmTare(this)" style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button" title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
+							<button id="Hemp1_B2TareB" onclick="confirmTare(this)"
+								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
+								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 						<th class="headerRows"><span>Waste</span>
-							<button id="Hemp1_B2TareWR" onclick="confirmTare(this)" style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button" title="Tare the waste reservoir weight scale. Do not have any weight on the scale!">Tare</button>
+							<button id="Hemp1_B2TareWR" onclick="confirmTare(this)"
+								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
+								title="Tare the waste reservoir weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 						<th class="headerRows"><span>Pump</span></th>
 					</tr>
@@ -573,8 +585,9 @@
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Hemp1_B2PumpSpS" min="0"
-							max="100" oninput="this.form.Hemp1_B2PumpSp.value=this.value" />
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range"
+							name="Hemp1_B2PumpSpS" min="0" max="100"
+							oninput="this.form.Hemp1_B2PumpSp.value=this.value" />
 						<input type="number" name="Hemp1_B2PumpSp" min="0" max="100"
 							oninput="this.form.Hemp1_B2PumpSpS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
@@ -641,7 +654,10 @@
 						<th class="headerRows"><span>Pressure</span></span></th>
 						<th class="headerRows"><span>Last spray</span></th>
 						<th class="headerRows"><span>Weight</span>
-							<button id="Aero1_Tare" onclick="confirmTare(this)" style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: center;" type="button" title="Tare the aeroponics weight scale. Do not have any weight on the scale!">Tare</button>
+							<button id="Aero1_Tare" onclick="confirmTare(this)"
+								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: center;"
+								type="button"
+								title="Tare the aeroponics weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 					</tr>
 					<tr>
@@ -701,8 +717,8 @@
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Aero1_PumpSpS" min="0"
-							max="100" oninput="this.form.Aero1_PumpSp.value=this.value" />
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Aero1_PumpSpS"
+							min="0" max="100" oninput="this.form.Aero1_PumpSp.value=this.value" />
 						<input type="number" name="Aero1_PumpSp" min="0" max="100"
 							oninput="this.form.Aero1_PumpSpS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
@@ -862,20 +878,20 @@
 	}
 
 	function confirmTare(source) {
-	if(confirm("Only continue with an empty weight scale!")){
-		notifyButtonPressed(source.id);
-		}		
+		if (confirm("Only continue with an empty weight scale!")) {
+			notifyButtonPressed(source.id);
+		}
 	}
 
-	document.onload = replaceFavoritesIcon(); 
+	document.onload = replaceFavoritesIcon();
 
 	function replaceFavoritesIcon() {
-    var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = 'https://lh3.googleusercontent.com/pw/ACtC-3fQYOltHeTzGQfCXJ9t4w69Q9He8OFV4ubiwdjXgfPK-BUnN2W0dONv5upYRst7UQRuFLnusYNft_qTRfPUtbBK-XnArFD5ulpKV_AXNayiaqemd0GdBPieLqpnPtEGhiLr-c0yuk9LrRaXTWPtH4gP=s671-no?authuser=0';
-    document.getElementsByTagName('head')[0].appendChild(link);
-    };
+		var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+		link.type = 'image/x-icon';
+		link.rel = 'shortcut icon';
+		link.href = 'https://lh3.googleusercontent.com/pw/ACtC-3fQYOltHeTzGQfCXJ9t4w69Q9He8OFV4ubiwdjXgfPK-BUnN2W0dONv5upYRst7UQRuFLnusYNft_qTRfPUtbBK-XnArFD5ulpKV_AXNayiaqemd0GdBPieLqpnPtEGhiLr-c0yuk9LrRaXTWPtH4gP=s671-no?authuser=0';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	};
 
 </script>
 </body>

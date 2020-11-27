@@ -1,22 +1,22 @@
 #include "Sound_Web.h"
 
-Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name), Sound(Name,Parent,DefaultSettings), Common_Web(Name) 
+Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name), Sound(Name, Parent, DefaultSettings), Common_Web(Name)
 {
   this->Parent = Parent;
   this->Name = Name;
-  Parent->addToRefreshQueue_Sec(this);      
-  Parent->addToWebsiteQueue_Load(this);   
-  Parent->addToWebsiteQueue_Button(this); 
-  Parent->addToWebsiteQueue_Field(this);   
+  Parent->addToRefreshQueue_Sec(this);
+  Parent->addToWebsiteQueue_Load(this);
+  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToWebsiteQueue_Field(this);
 }
 
 void Sound_Web::reportToJSON()
 {
-    Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end 
+  Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end
 
-    strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
-    strcat(LongMessage, toText(*Enabled));    
-    strcat_P(LongMessage, (PGM_P)F("\"}"));  ///closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
+  strcat(LongMessage, toText(*Enabled));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///closing the curly bracket
 }
 
 void Sound_Web::refresh_Sec()
@@ -31,10 +31,9 @@ void Sound_Web::refresh_Sec()
   Sound::checkEvents();
 }
 
-
 void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/S",2) == 0)
+  if (strncmp(url, "/S", 2) == 0)
   {
     WebServer.setArgBoolean(getComponentName(F("Enabled")), *Enabled);
   }
@@ -89,7 +88,6 @@ void Sound_Web::EE()
     wdt_reset(); ///Reset Watchdog timeout to avoid Arduino reseting while playing the song
   }
 }
-
 
 void Sound_Web::buzz(uint32_t frequency, uint32_t length)
 {

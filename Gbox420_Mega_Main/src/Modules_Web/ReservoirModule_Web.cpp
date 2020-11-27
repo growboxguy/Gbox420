@@ -1,10 +1,10 @@
 #include "ReservoirModule_Web.h"
 
-struct ReservoirModuleCommand ReservoirModuleCommand1ToSend = {ReservoirMessages::ReservoirModuleCommand1};         ///Command to send will be stored here
-struct ReservoirModuleResponse ReservoirModuleResponse1Received = {ReservoirMessages::ReservoirModuleResponse1};  ///Response will be stored here
-struct ReservoirCommand ReservoirCommand1ToSend = {ReservoirMessages::ReservoirCommand1};         ///Command to send will be stored here
-struct ReservoirResponse ReservoirResponse1Received = {ReservoirMessages::ReservoirResponse1};  ///Response will be stored here
-struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset}; ///Special command to fetch the next Response from the Receiver
+struct ReservoirModuleCommand ReservoirModuleCommand1ToSend = {ReservoirMessages::ReservoirModuleCommand1};      ///Command to send will be stored here
+struct ReservoirModuleResponse ReservoirModuleResponse1Received = {ReservoirMessages::ReservoirModuleResponse1}; ///Response will be stored here
+struct ReservoirCommand ReservoirCommand1ToSend = {ReservoirMessages::ReservoirCommand1};                        ///Command to send will be stored here
+struct ReservoirResponse ReservoirResponse1Received = {ReservoirMessages::ReservoirResponse1};                   ///Response will be stored here
+struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset};                       ///Special command to fetch the next Response from the Receiver
 
 ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 {
@@ -109,11 +109,11 @@ void ReservoirModule_Web::sendMessages()
   * @brief Exchange messages with the Reservoir module
   */
   updateCommands();
-  sendCommand(&ReservoirResetToSend);   ///special Command, resets communication to first message
-  sendCommand(&ReservoirModuleCommand1ToSend);  ///Module specific Command - Response exchange 
-  sendCommand(&ReservoirCommand1ToSend); ///Command - Response exchange
-  sendCommand(&ReservoirResetToSend);   ///special Command, resets communication to first message
-  if(*Debug)
+  sendCommand(&ReservoirResetToSend);          ///special Command, resets communication to first message
+  sendCommand(&ReservoirModuleCommand1ToSend); ///Module specific Command - Response exchange
+  sendCommand(&ReservoirCommand1ToSend);       ///Command - Response exchange
+  sendCommand(&ReservoirResetToSend);          ///special Command, resets communication to first message
+  if (*Debug)
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
@@ -124,7 +124,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
   */
   ReservoirMessages SequenceIDToSend = ((ReservoirCommonTemplate *)CommandToSend)->SequenceID;
   ReservoirMessages ReceivedSequenceID = NULL;
-  if(*Debug)
+  if (*Debug)
   {
     logToSerials(F("Sending SequenceID:"), false, 3);
     logToSerials(SequenceIDToSend, false, 1);
@@ -157,12 +157,12 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         if (*Debug)
         {
           logToSerials(F("Module:"), false, 4);
-          logToSerials(ReservoirModuleResponse1Received.Status, true, 1);         
+          logToSerials(ReservoirModuleResponse1Received.Status, true, 1);
         }
-        break;     
+        break;
       case ReservoirMessages::ReservoirResponse1:
         memcpy(&ReservoirResponse1Received, ReceivedResponse, sizeof(struct ReservoirResponse));
-        if (ReservoirCommand1ToSend.TareWeight )
+        if (ReservoirCommand1ToSend.TareWeight)
         {
           SyncRequested = true; ///Force a second message exchange to actualize the response
           ReservoirCommand1ToSend.TareWeight = false;
@@ -180,7 +180,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
           logToSerials(F(","), false, 1);
           logToSerials(ReservoirResponse1Received.Humidity, true, 1);
         }
-        break;      
+        break;
       case ReservoirMessages::ReservoirReset:
         if (*Debug)
         {
@@ -191,7 +191,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         logToSerials(F("SequenceID not known, ignoring package"), true, 4);
         break;
       }
-      LastResponseReceived = millis();      
+      LastResponseReceived = millis();
     }
     else
     {

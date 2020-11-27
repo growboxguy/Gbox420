@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PZEM004T.h" 
+#include "PZEM004T.h"
 #include "420Common.h"
 #include "420Module.h"
 
@@ -26,5 +26,5 @@ private:
   float Current;            ///Power sensor - A
 
 protected:
-  Module* Parent;
+  Module *Parent;
 };

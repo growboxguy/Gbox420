@@ -16,8 +16,7 @@ public:
   bool getState();
   char *getStateToText();
 
-private:  
-
+private:
 protected:
   Module *Parent;
   bool *State;

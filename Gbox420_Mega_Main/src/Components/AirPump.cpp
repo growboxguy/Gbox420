@@ -9,7 +9,7 @@ AirPump::AirPump(const __FlashStringHelper *Name, Module *Parent, Settings::AirP
   Pin = &DefaultSettings->Pin;
   State = &DefaultSettings->State;
   pinMode(*Pin, OUTPUT);
-  digitalWrite(*Pin, HIGH); ///Turn relay off initially  
+  digitalWrite(*Pin, HIGH); ///Turn relay off initially
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Minute(this);
   logToSerials(F("AirPump object created"), true, 1);
@@ -36,7 +36,7 @@ void AirPump::checkStatus()
   if (*State) ///True turns relay ON (LOW signal activates the Relay)
     digitalWrite(*Pin, LOW);
   else
-    digitalWrite(*Pin, HIGH);  
+    digitalWrite(*Pin, HIGH);
 }
 
 void AirPump::TurnOff()
@@ -56,8 +56,8 @@ void AirPump::TurnOn()
 }
 
 bool AirPump::getState()
-{  
- return *State;
+{
+  return *State;
 }
 
 char *AirPump::getStateToText()
