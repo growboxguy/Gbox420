@@ -300,7 +300,7 @@ char *Lights::getCurrentBrightnessText(bool UseText)
   {
     itoa(0, ShortMessage, 10);
   }
-  else
+  else 
   {
     itoa(*Brightness, ShortMessage, 10);
   }

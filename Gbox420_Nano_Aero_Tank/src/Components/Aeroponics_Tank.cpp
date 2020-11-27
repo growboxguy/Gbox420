@@ -4,8 +4,8 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
 { ///constructor
   this->Name = Name;
   MinPressure = &TankSpecificSettings->MinPressure; ///Aeroponics - Turn on pump below this pressure (bar)
-  logToSerials(F(""), true, 0);                     //New line
-  logToSerials(F(""), false, 1);                    //Extra indentation
+  logToSerials(F(""),true,0);  //New line
+  logToSerials(F(""),false,1); //Extra indentation
   SpraySwitch = new Switch(F("SpraySolenoid"), TankSpecificSettings->SpraySolenoidPin, TankSpecificSettings->SpraySolenoidNegativeLogic);
 
   logToSerials(F("Aeroponics_Tank object created"), true, 1);
@@ -50,13 +50,13 @@ void Aeroponics_Tank::refresh_Sec()
   if (SpraySwitch->getState())
   { ///if spray is on
     uint32_t Duration;
-    if (DayMode)
+    if(DayMode)
     {
       Duration = *DayDuration * 1000; ///Duration is miliseconds, DayDuration in seconds
     }
     else
     {
-      Duration = *NightDuration * 1000; ///Duration is miliseconds
+     Duration = *NightDuration * 1000; ///Duration is miliseconds
     }
 
     if (millis() - SprayTimer >= Duration)
@@ -67,14 +67,14 @@ void Aeroponics_Tank::refresh_Sec()
   }
   else
   { ///if spray is off
-    uint32_t Interval;
-    if (DayMode)
+   uint32_t Interval;
+    if(DayMode)
     {
       Interval = *DayInterval * 60000; ///Duration is miliseconds, DayInterval is Minutes
     }
     else
     {
-      Interval = *NightInterval * 60000; ///Duration is miliseconds
+     Interval = *NightInterval * 60000; ///Duration is miliseconds
     }
 
     if (*SprayEnabled && millis() - SprayTimer >= Interval)

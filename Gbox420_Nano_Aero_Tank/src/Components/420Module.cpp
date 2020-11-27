@@ -3,8 +3,9 @@
 
 Module::Module()
 {
-  logToSerials(F("Module object created"), true, 1);
+   logToSerials(F("Module object created"), true, 1);
 }
+
 
 /* Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
 { ///Constructor
@@ -12,12 +13,12 @@ Module::Module()
   logToSerials(F("Module object created"), true, 0);
 } */
 
+
 void Module::runAll(bool AddToLog)
 {
-  if (AddToLog)
-  {
+  if(AddToLog){
     logToSerials(F("Refresing all sensor readings..."), true, 0);
-  }
+  }    
   wdt_reset();
   runSec();
   wdt_reset();
@@ -32,11 +33,10 @@ void Module::runAll(bool AddToLog)
 void Module::runReport(bool AddToLog)
 { ///Reports component status to Serial output (Arduino and ESP)
   getFormattedTime(true);
-  getFreeMemory();
-  if (AddToLog)
-  {
-    logToSerials(reportQueueItemCount, false, 2);
-    logToSerials(F("components reporting:"), true, 1);
+  getFreeMemory();  
+  if(AddToLog){
+    logToSerials(reportQueueItemCount,false,2);
+    logToSerials(F("components reporting:"),true,1);
   }
   for (int i = 0; i < reportQueueItemCount; i++)
   {
@@ -49,19 +49,17 @@ void Module::runReport(bool AddToLog)
 
 void Module::runSec(bool AddToLog)
 {
-  if (RunAllRequested)
+  if(RunAllRequested)
   {
     RunAllRequested = false;
-    if (AddToLog)
-    {
+    if(AddToLog){
       logToSerials(F("Running full refresh.."), true, 1);
     }
     runAll(AddToLog);
   }
   else
   {
-    if (*Debug && AddToLog)
-    {
+    if (*Debug && AddToLog){
       logToSerials(F("One sec trigger.."), true, 1);
     }
     for (int i = 0; i < refreshQueueItemCount_Sec; i++)
@@ -101,8 +99,7 @@ void Module::runQuarterHour(bool AddToLog)
   }
 }
 
-Sound *Module::getSoundObject()
-{
+Sound* Module::getSoundObject(){
   return SoundFeedback;
 }
 
@@ -155,7 +152,7 @@ void Module::addToRefreshQueue_QuarterHour(Common *Component)
 ///Even logs to the Serial output
 void Module::addToLog(const char *LongMessage, uint8_t Indent)
 {
-  logToSerials(&LongMessage, true, Indent);
+  logToSerials(&LongMessage, true, Indent); 
 }
 
 void Module::addToLog(const __FlashStringHelper *LongMessage, uint8_t Indent)
@@ -179,20 +176,20 @@ char *Module::getFormattedTime(bool PrintToSerials)
 //Settings
 void Module::setDebug(bool DebugEnabled)
 {
-  if (DebugEnabled != *Debug)
-  {
+   if (DebugEnabled != *Debug)
+   {
     *Debug = DebugEnabled;
     if (*Debug)
     {
       addToLog(F("Debug enabled"));
-      getSoundObject()->playOnSound();
+      getSoundObject() -> playOnSound();
     }
     else
     {
       addToLog(F("Debug disabled"));
-      getSoundObject()->playOffSound();
+      getSoundObject() -> playOffSound();
     }
-  }
+   }  
 }
 
 void Module::setMetric(bool MetricEnabled)
@@ -200,11 +197,11 @@ void Module::setMetric(bool MetricEnabled)
   if (MetricEnabled != *Metric)
   { //if there was a change
     *Metric = MetricEnabled;
-    RunAllRequested = true; ///Force a full sensor reading refresh
+    RunAllRequested = true;  ///Force a full sensor reading refresh
     if (*Metric)
       addToLog(F("Using Metric units"));
     else
       addToLog(F("Using Imperial units"));
-    getSoundObject()->playOnSound();
+    getSoundObject() -> playOnSound();
   }
 }
