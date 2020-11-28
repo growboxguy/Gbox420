@@ -23,6 +23,7 @@ enum PumpStates
   BLOWOFF,
   MIXING
 };
+
 ///< Global constants
 static const uint8_t MaxWordLength = 32;        ///< Default char * buffer length for storing a word + null terminator. Memory intense!
 static const uint8_t MaxShotTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
@@ -173,9 +174,15 @@ typedef struct
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;
 
-///< EEPROM related functions - Persistent storage between reboots
-///< Use cautiously, EEPROM has a write limit of 100.000 cycles - Only use these in the setup() function, or when a user initiated change is stored
-
+/**
+  \brief Store settings in EEPROM - Only updates changed bits
+  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles 
+*/
 void saveSettings(Settings *ToSave);
+/**
+  \brief Load settings from EEPROM
+  \param ResetEEPROM - Force loading the defaults from the sketch and overwriting the EEPROM with it
+  \return Reference to Settings object
+*/
 Settings *loadSettings(bool ResetEEPROM = false);
-void restoreDefaults(Settings *ToOverwrite);
+void restoreDefaults();

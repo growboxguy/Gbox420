@@ -241,7 +241,7 @@ void buttonPressCallback(char *Button)
 { ///< Called when any button on the website is pressed.
   if (strcmp_P(Button, (PGM_P)F("RestoreDefaults")) == 0)
   {
-    restoreDefaults(ModuleSettings);
+    restoreDefaults();
   }
   else
   {

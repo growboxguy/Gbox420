@@ -9,11 +9,20 @@ Only use these in the setup() function, or when a user initiated change is store
 #include "Settings.h"
 #include "SerialLog.h"
 
+/**
+  \brief Store settings in EEPROM - Only updates changed bits
+  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles 
+*/
 void saveSettings(Settings *ToSave)
 {
   eeprom_update_block((const void *)ToSave, (void *)0, sizeof(Settings)); ///< update_block only writes the bytes that changed
 }
 
+/**
+  \brief Load settings from EEPROM
+  \param ResetEEPROM - Force loading the defaults from the sketch and overwriting the EEPROM with it
+  \return Reference to Settings object
+*/
 Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
 {
   Settings *DefaultSettings = new Settings();                              ///< This is where settings are stored, first it takes the sketch default settings defined in Settings.h
@@ -34,11 +43,14 @@ Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments
   return DefaultSettings;
 }
 
-void restoreDefaults(Settings *ToOverwrite)
+/**
+  \brief Load sketch default settings into EEPROM and 
+  \attention Restart the Arduino sketch!
+*/
+void restoreDefaults()
 {
-  logToSerials(F("Restoring settings from sketch defaults..."), false, 0);
-  Settings *DefaultSettings = new Settings; ///< new "Settings" type objects with sketch defaults
-  memcpy(&ToOverwrite, &DefaultSettings, sizeof(ToOverwrite));
-  saveSettings(ToOverwrite);
-  ///<  GBox->addToLog(F("Default settings restored"), 1);
+  logToSerials(F("Forcing settings update at next restart..."), true, 0);
+  loadSettings(true);
+  logToSerials(F("Reseting the sketch..."), true, 1);
+  __asm__ __volatile__("jmp 0x0000");
 }
