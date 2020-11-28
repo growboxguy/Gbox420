@@ -20,7 +20,7 @@ This guide was made for indoor gardeners would like to build an Arduino based au
 
 <div>
 <h2>Assembly guide:<br> https://sites.google.com/site/growboxguy/ </h2>
-<h2>Doxygen documentation: https://growboxguy.github.io/Gbox420/classCommon.html </h2>
+<h2>Doxygen documentation: https://growboxguy.github.io/Gbox420/files.html </h2>
 </div>
 
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3etlEchfH2eX-HyE6f6iSRXFcdqbYqmVetXMMQ7SHdvaeFPfClqIH5bMfoUcP6uTBgLVmqOyBWSr0OFvARRFSO7SrlJvzgpWvjOOVEmpAWiKJ8eIfrv9OHwlxJssRaydEnYBqMfxdCjZALiKUEwTFoJ=w1055-h652-no?authuser=0)
