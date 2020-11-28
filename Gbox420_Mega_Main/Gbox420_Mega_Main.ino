@@ -239,7 +239,7 @@ void refreshCallback(__attribute__((unused)) char *Url)
 
 void buttonPressCallback(char *Button)
 { ///< Called when any button on the website is pressed.
-  if (strcmp_P(Button, (PGM_P)F("RestoreDefaults")) == 0)
+  if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
   {
     restoreDefaults();
   }
