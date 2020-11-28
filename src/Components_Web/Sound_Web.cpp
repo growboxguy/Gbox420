@@ -12,11 +12,11 @@ Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settin
 
 void Sound_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end
+  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
 
   strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
   strcat(LongMessage, toText(*Enabled));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
 void Sound_Web::refresh_Sec()
@@ -40,7 +40,7 @@ void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 }
 
 void Sound_Web::websiteEvent_Button(char *Button)
-{ ///When a button is pressed on the website
+{ ///< When a button is pressed on the website
   if (!isThisMyComponent(Button))
   {
     return;
@@ -55,7 +55,7 @@ void Sound_Web::websiteEvent_Button(char *Button)
 }
 
 void Sound_Web::websiteEvent_Field(char *Field)
-{ ///When the website field is submitted
+{ ///< When the website field is submitted
   if (!isThisMyComponent(Field))
   {
     return;
@@ -69,7 +69,7 @@ void Sound_Web::websiteEvent_Field(char *Field)
   }
 }
 
-///EE Section, can delete everything below if you need to save space
+///< EE Section, can delete everything below if you need to save space
 
 void Sound_Web::playEE()
 {
@@ -81,11 +81,11 @@ void Sound_Web::EE()
   Parent->addToLog(F("♬Easter egg♬"));
   for (int thisNote = 0; thisNote < 134; thisNote++)
   {
-    int noteDuration = 1000 / (uint8_t)pgm_read_word(&tempo[thisNote]); ///tempo is stored in PROGMEM (Flash), cannot read from it as RAM array (temp[thisNote] would not work) ///https:///forum.arduino.cc/index.php?topic=106603.0
+    int noteDuration = 1000 / (uint8_t)pgm_read_word(&tempo[thisNote]); ///< tempo is stored in PROGMEM (Flash), cannot read from it as RAM array (temp[thisNote] would not work) ///< https:///< forum.arduino.cc/index.php?topic=106603.0
     buzz((int)pgm_read_word(&melody[thisNote]), noteDuration);
     delay(noteDuration);
     buzz(0, noteDuration);
-    wdt_reset(); ///Reset Watchdog timeout to avoid Arduino reseting while playing the song
+    wdt_reset(); ///< Reset Watchdog timeout to avoid Arduino reseting while playing the song
   }
 }
 
@@ -104,7 +104,7 @@ void Sound_Web::buzz(uint32_t frequency, uint32_t length)
   digitalWrite(13, LOW);
 }
 
-const PROGMEM int Sound_Web::melody[] = { ///https:///www.arduino.cc/reference/en/language/variables/utilities/progmem/
+const PROGMEM int Sound_Web::melody[] = { ///< https:///< www.arduino.cc/reference/en/language/variables/utilities/progmem/
     2637, 2637, 0, 2637,
     0, 2093, 2637, 0,
     3136, 0, 0, 0,

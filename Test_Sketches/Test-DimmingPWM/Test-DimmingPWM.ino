@@ -20,14 +20,14 @@ void setup()
   pinMode(DimmingPin, OUTPUT);
   pinMode(LightRelayPin, OUTPUT);
   Serial.println(F("Turing on lights and starting dimming test..."));
-  digitalWrite(LightRelayPin, LOW); ///True turns relay ON (LOW signal activates Relay)
+  digitalWrite(LightRelayPin, LOW); ///< True turns relay ON (LOW signal activates Relay)
 }
 
 void loop()
 { // put your main code here, to run repeatedly:
   while (0 <= Brightness && Brightness <= 100)
   {
-    analogWrite(DimmingPin, map(Brightness, 0, 100, int(255 * (100 - DimmingLimit) / 100.0f), 0)); ///mapping brightness to duty cycle without allowing it to dimm below DimminGlimit. Example 1: Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 6% ->  int(255*((100-6)/100)) ~= 239 AnalogWrite (94% duty cycle on Arduino Side, 6% in Driver dimming side) https:///www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
+    analogWrite(DimmingPin, map(Brightness, 0, 100, int(255 * (100 - DimmingLimit) / 100.0f), 0)); ///< mapping brightness to duty cycle without allowing it to dimm below DimminGlimit. Example 1: Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 6% ->  int(255*((100-6)/100)) ~= 239 AnalogWrite (94% duty cycle on Arduino Side, 6% in Driver dimming side) https:///< www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
     if (Brightness % 10 == 0)                                                                      //modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
     {
       Serial.print(Brightness);

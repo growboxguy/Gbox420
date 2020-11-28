@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Helper functions: Retrieves a value for other functions
 function getLastRowInRange(range) {
   var rowNum = range.length;
@@ -17,8 +17,8 @@ function getLastRowInRange(range) {
   return rowNum;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Stackdriver logging - Add a log entry ( View it from Sheets: View \  Stackdriver logging
+
+///<  Stackdriver logging - Add a log entry ( View it from Sheets: View \  Stackdriver logging
 function LogToConsole(message, breakRow, indent) {
   var cache = CacheService.getScriptCache();
   var messageToLog = cache.get("previousMessage");
@@ -35,7 +35,7 @@ function LogToConsole(message, breakRow, indent) {
   cache.put("previousMessage", messageToLog);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Helper functions: For getting settings
 function Test_GetNamedRangeValues() {
   LogToConsole(GetNamedRangeValues("Status", false), true, 1);
@@ -56,7 +56,7 @@ function GetNamedRangeValues(rangeName, dropCache) {
   }
 }
 
-function WipeCache() {  ///Force to drop all cached named ranges
+function WipeCache() {  ///< Force to drop all cached named ranges
   LogToConsole("Wiping cached Named ranges", true, 1);
   var storedCache = CacheService.getUserCache();
   CacheService.getUserCache().remove(storedCache);

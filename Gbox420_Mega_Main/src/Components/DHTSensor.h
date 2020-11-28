@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DHT.h" ///DHT11 or DHT22 Digital Humidity and Temperature sensor
+#include "DHT.h" ///< DHT11 or DHT22 Digital Humidity and Temperature sensor
 #include "420Common.h"
 #include "420Module.h"
 
@@ -10,7 +10,7 @@ public:
   DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings);
   void refresh_FiveSec();
   void report();
-  void readSensor(); ///Refresh Temp and Humidity readings
+  void readSensor(); ///< Refresh Temp and Humidity readings
   float getTemp();
   char *getTempText(bool IncludeUnits = false);
   float getHumidity();
@@ -21,5 +21,5 @@ public:
 private:
 protected:
   Module *Parent;
-  DHT *Sensor; ///Pointer declaration, points to null initially
+  DHT *Sensor; ///< Pointer declaration, points to null initially
 };

@@ -1,7 +1,7 @@
 #include "ModuleSkeleton.h"
 
 ModuleSkeleton::ModuleSkeleton(const __FlashStringHelper *Name, Module *Parent, Settings::ModuleSkeletonSettings *DefaultSettings) : Common(Name)
-{ ///constructor
+{ ///< constructor
   this->Parent = Parent;
   PersistentBool = &DefaultSettings->PersistentBool;
   PersistentInt = &DefaultSettings->PersistentInt;
@@ -46,9 +46,9 @@ void ModuleSkeleton::refresh_QuarterHour()
 }
 
 void ModuleSkeleton::report()
-{ ///Report status to the Arduino Serial and ESP-lin console output
+{ ///< Report status to the Arduino Serial and ESP-lin console output
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("PersistentBool:"));
   strcat(LongMessage, toText_yesNo(*PersistentBool));
   strcat_P(LongMessage, (PGM_P)F(" ; PersistentInt:"));

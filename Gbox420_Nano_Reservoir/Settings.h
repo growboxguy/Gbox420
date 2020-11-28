@@ -1,17 +1,19 @@
 #pragma once
 
 /*! 
- *  \brief     Default Settings for each component. Loaded when the Arduino starts, updated by user interaction on the website.
- *  \details   The Settings object is stored in EEPROM and kept between reboots. 
+ *  \brief     Default Settings for each component within the module. Loaded when the Arduino starts.
+ *  \details   Settings are stored in EEPROM and kept between reboots. Stored values are updated by the website controls on user interaction.  
  *  \warning   EEPROM has a write limit of 100.000 cycles, constantly updating the variables inside a loop would wear out the EEPROM memory! 
  *  \attention Update the Version number when you change the structure of the settings. This will overwrite the EEPROM stored settings with the sketch defaults from this file.
  *  \author    GrowBoxGuy
  *  \version   4.20
  */
 
-static const uint8_t Version = 8; ///Increment this when you make a change in the SAVED TO EEPROM section
+static const uint8_t Version = 8; ///< Increment this when you make a change in the SAVED TO EEPROM section
 
-///State machine - Defining possible states
+///< NOT SAVED TO EEPROM
+
+///< State machine - Defining possible states
 enum PumpStates
 {
   DISABLED,
@@ -22,88 +24,87 @@ enum PumpStates
   MIXING
 };
 
-///THIS SECTION DOES NOT GET STORED IN EEPROM:
+///< Global constants
+static const uint8_t MaxWordLength = 32;       ///< Default char * buffer length for storing a word + null terminator. Memory intense!
+static const uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
+static const uint16_t MaxLongTextLength = 256; ///< Default char * buffer length for storing a long text. Memory intense!
+static const uint8_t QueueDepth = 8;           ///< Memory intense!
+static const uint8_t RollingAverageDepth = 10; ///< Memory intense!
 
-///Global constants
-static const uint8_t MaxWordLength = 32;       ///Default char * buffer length for storing a word + null terminator. Memory intense!
-static const uint8_t MaxShotTextLength = 64;   ///Default char * buffer length for storing mutiple words. Memory intense!
-static const uint16_t MaxLongTextLength = 256; ///Default char * buffer length for storing a long text. Memory intense!
-static const uint8_t QueueDepth = 8;           ///Memory intense!
-static const uint8_t RollingAverageDepth = 10; ///Memory intense!
+///< Global variables
+extern char LongMessage[MaxLongTextLength];  ///< Temp storage for assembling long messages (REST API - Google Sheets reporting)
+extern char ShortMessage[MaxShotTextLength]; ///< Temp storage for assembling short messages (Log entries, Error messages)
+extern char CurrentTime[MaxWordLength];      ///< Buffer for storing current time in text format
 
-///Global variables
-extern char LongMessage[MaxLongTextLength];  ///Temp storage for assembling long messages (REST API - Google Sheets reporting)
-extern char ShortMessage[MaxShotTextLength]; ///Temp storage for assembling short messages (Log entries, Error messages)
-extern char CurrentTime[MaxWordLength];      ///Buffer for storing current time in text format
+///< nRF24L01+ wireless receiver
+static const uint8_t WirelessCSNPin = 9;            ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
+static const uint8_t WirelessCEPin = 10;            ///< nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
+static const uint8_t WirelessChannel[6] = {"Res1"}; ///< This needs to be unique and match with the Name of the ReservoirModule_Web object in the MainModule_Web.cpp
+static const uint8_t WirelessPayloadSize = 32;      ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+static const uint16_t WirelessMessageTimeout = 500; ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
 
-///nRF24L01+ wireless receiver
-static const uint8_t WirelessCSNPin = 9;            ///nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
-static const uint8_t WirelessCEPin = 10;            ///nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
-static const uint8_t WirelessChannel[6] = {"Res1"}; ///This needs to be unique and match with the Name of the ReservoirModule_Web object in the MainModule_Web.cpp
-static const uint8_t WirelessPayloadSize = 32;      ///Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
-static const uint16_t WirelessMessageTimeout = 500; ///(ms) One package should be exchanged within this timeout (Including retries and delays)
+///< SAVED TO EEPROM - Settings struct
+///< If you change things here, increase the Version variable in line 12
 
-///SAVED TO EEPROM - Settings struct
-///If you change things here, increase the Version variable in line 12
 typedef struct
 {
-  bool Debug = true;  ///Logs debug messages to serial and web outputs
-  bool Metric = true; ///Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
+  bool Debug = true;  ///< Logs debug messages to serial and web outputs
+  bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
   struct DHTSensorSettings
-  { ///initialized via Designated initializer https:///riptutorial.com/c/example/18609/using-designated-initializers
+  { ///< initialized via Designated initializer https:///< riptutorial.com/c/example/18609/using-designated-initializers
     DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}
-    uint8_t Pin;  ///DAT pin of the DHT sensor
-    uint8_t Type; ///Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
+    uint8_t Pin;  ///< DAT pin of the DHT sensor
+    uint8_t Type; ///< Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
   };
   struct DHTSensorSettings DHT1 = {.Pin = 3, .Type = 22};
 
   struct PHSensorSettings
   {
     PHSensorSettings(uint8_t Pin = 0, float Slope = 0.0, float Intercept = 0.0) : Pin(Pin), Slope(Slope), Intercept(Intercept) {}
-    uint8_t Pin; ///pH sensor Po pin
+    uint8_t Pin; ///< pH sensor Po pin
     float Slope;
     float Intercept;
   };
-  struct PHSensorSettings PHSen1 = {.Pin = A0, .Slope = -0.031199, .Intercept = 22.557617}; ///Update this to your own PH meter calibration values: https://sites.google.com/site/growboxguy/arduino/reservoir-module?authuser=0#h.p_PGMrIJ9iRr0c
+  struct PHSensorSettings PHSen1 = {.Pin = A0, .Slope = -0.031199, .Intercept = 22.557617}; ///< Update this to your own PH meter calibration values: https://sites.google.com/site/growboxguy/arduino/reservoir-module?authuser=0#h.p_PGMrIJ9iRr0c
 
   struct ReservoirModuleSettings
   {
     //ReservoirModuleSettings() :  {}
   };
-  struct ReservoirModuleSettings ReservoirMod1 = {}; ///Default settings for the Hempy Module
+  struct ReservoirModuleSettings ReservoirMod1 = {}; ///< Default settings for the Hempy Module
 
   struct SoundSettings
   {
     SoundSettings(uint8_t Pin = 0) : Pin(Pin) {}
-    uint8_t Pin;         ///Piezo Buzzer red(+) cable
-    bool Enabled = true; ///Enable/Disable sound
+    uint8_t Pin;         ///< Piezo Buzzer red(+) cable
+    bool Enabled = true; ///< Enable/Disable sound
   };
   struct SoundSettings Sound1 = {.Pin = 2};
 
   struct WaterTempSensorSettings
   {
     WaterTempSensorSettings(uint8_t Pin = 0) : Pin(Pin) {}
-    uint8_t Pin; ///DS18B20 sensor yellow signal wire
+    uint8_t Pin; ///< DS18B20 sensor yellow signal wire
   };
-  struct WaterTempSensorSettings WTemp1 = {.Pin = 4}; ///Data(yellow) - DS18B20 waterproof temp sensor
+  struct WaterTempSensorSettings WTemp1 = {.Pin = 4}; ///< Data(yellow) - DS18B20 waterproof temp sensor
 
   struct WeightSensorSettings
   {
     WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, long Offset = 0, float Scale = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Offset(Offset), Scale(Scale) {}
-    uint8_t DTPin;  ///Weight sensor DT pin
-    uint8_t SCKPin; ///Weight sensor SCK pin
-    long Offset;    ///Reading at 0 weight on the scale
-    float Scale;    ///Scale factor
+    uint8_t DTPin;  ///< Weight sensor DT pin
+    uint8_t SCKPin; ///< Weight sensor SCK pin
+    long Offset;    ///< Reading at 0 weight on the scale
+    float Scale;    ///< Scale factor
   };
-  struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset = 255457, .Scale = -19615.00}; ///Update the calibration values here for the Weight Sensor
+  struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset = 255457, .Scale = -19615.00}; ///< Update the calibration values here for the Weight Sensor
 
-  uint8_t CompatibilityVersion = Version; ///Version should always be the last value stored in the struct
+  uint8_t CompatibilityVersion = Version; ///< Version should always be the last value stored in the struct
 } Settings;
 
-///////////////////////////////////////////////////////////////
-///EEPROM related functions - Persistent storage between reboots
-///Use cautiously, EEPROM has a write limit of 100.000 cycles - Only use these in the setup() function, or when a user initiated change is stored
+
+///< EEPROM related functions - Persistent storage between reboots
+///< Use cautiously, EEPROM has a write limit of 100.000 cycles - Only use these in the setup() function, or when a user initiated change is stored
 
 void saveSettings(Settings *ToSave);
 Settings *loadSettings(bool ResetEEPROM = false);

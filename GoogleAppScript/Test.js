@@ -1,7 +1,7 @@
 // IGNORE THIS SECTION, just a playground for testing new functions :)
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Trigger a fake JSON report for testing
 
 function getTestJSONData() {
@@ -11,7 +11,7 @@ function getTestJSONData() {
 
 function RunFakeReport() {
   LogToConsole(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", true, 0);
-  WipeCache(); ///Remove cached Named Ranges and get a fresh copy  
+  WipeCache(); ///< Remove cached Named Ranges and get a fresh copy  
   SpreadsheetApp.getActive().getRangeByName("LastReportTime").setValue(Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format")));
   SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Processing...");
   LogToConsole("Loading fake report data...", true, 0);
@@ -39,7 +39,7 @@ CheckAlerts(FakeJSONData.Log);
 function Test_LightSensor1_ProcessBoxData() {
   ProcessBoxData(FakeJSONData_LightCalibration);
 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
 // Stuff under development
 function UpdateCalibrationValues(Name, Readings) {
   Logger.log(Readings); //Log the received data on the console output  
@@ -59,7 +59,7 @@ function UpdateCalibrationValues(Name, Readings) {
     calibrationSheet.getRange(3 + i, 5).setValue(Readings[i]);
   }
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Updates the Settings sheets, adds newly discovered keys 
 /*
 function UpdateColumns(Settings){

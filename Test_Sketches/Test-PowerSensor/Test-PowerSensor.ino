@@ -21,7 +21,7 @@ void setup()
 
   Serial.println(F("Turning on the lights..."));
   pinMode(LightRelayPin, OUTPUT);
-  digitalWrite(LightRelayPin, LOW); ///True turns relay ON (LOW signal activates Relay)
+  digitalWrite(LightRelayPin, LOW); ///< True turns relay ON (LOW signal activates Relay)
 }
 
 void loop()

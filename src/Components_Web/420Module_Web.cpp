@@ -1,7 +1,7 @@
 #include "420Module_Web.h"
 #include "Sound_Web.h"
 
-static char Logs[LogDepth][MaxWordLength]; ///two dimensional array for storing log histroy displayed on the website (array of char arrays)
+static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
 Module_Web::Module_Web(RF24 *Wireless) : Module()
 {
@@ -23,7 +23,7 @@ void Module_Web::runAll()
 }
 
 void Module_Web::runReport()
-{ ///Reports component status to Serial output (Arduino and ESP)
+{ ///< Reports component status to Serial output (Arduino and ESP)
   getFormattedTime(true);
   getFreeMemory();
   logToSerials(reportQueueItemCount, false, 0);
@@ -34,8 +34,7 @@ void Module_Web::runReport()
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///Refresh queues: Refresh components inside the Module
+///< Refresh queues: Refresh components inside the Module
 
 void Module_Web::runSec()
 {
@@ -77,15 +76,14 @@ void Module_Web::runQuarterHour()
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
+///< Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
 
 void Module_Web::addToReportQueue(Common_Web *Component)
 {
   if (QueueDepth > reportQueueItemCount)
     ReportQueue[reportQueueItemCount++] = Component;
   else
-    logToSerials(F("Report queue overflow!"), true, 0); ///Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
+    logToSerials(F("Report queue overflow!"), true, 0); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
 void Module_Web::addToRefreshQueue_Sec(Common_Web *Component)
@@ -122,8 +120,7 @@ void Module_Web::addToRefreshQueue_QuarterHour(Common_Web *Component)
     logToSerials(F("RefreshQueue_QuarterHour overflow!"), true, 0);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///Website subscriptions: When a component needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
+///< Website subscriptions: When a component needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
 
 void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
 {
@@ -157,11 +154,10 @@ void Module_Web::addToWebsiteQueue_Field(Common_Web *Component)
     logToSerials(F("WebsiteQueue_Field_Count overflow!"), true, 0);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///Website queues: Notify components in the Module_Web of a website event
+///< Website queues: Notify components in the Module_Web of a website event
 
 void Module_Web::loadEvent(char *url)
-{ ///called when website is loaded. Runs through all components that subscribed for this event
+{ ///< called when website is loaded. Runs through all components that subscribed for this event
   for (int i = 0; i < WebsiteQueue_Load_Count; i++)
   {
     WebsiteQueue_Load[i]->websiteEvent_Load(url);
@@ -169,7 +165,7 @@ void Module_Web::loadEvent(char *url)
 }
 
 void Module_Web::refreshEvent(char *url)
-{ ///called when website is refreshed.
+{ ///< called when website is refreshed.
   for (int i = 0; i < WebsiteQueue_Refresh_Count; i++)
   {
     WebsiteQueue_Refresh[i]->websiteEvent_Refresh(url);
@@ -177,7 +173,7 @@ void Module_Web::refreshEvent(char *url)
 }
 
 void Module_Web::buttonEvent(char *button)
-{ ///Called when any button on the website is pressed.
+{ ///< Called when any button on the website is pressed.
   if (*Debug)
     logToSerials(&button, true, 0);
   for (int i = 0; i < WebsiteQueue_Button_Count; i++)
@@ -187,7 +183,7 @@ void Module_Web::buttonEvent(char *button)
 }
 
 void Module_Web::setFieldEvent(char *field)
-{ ///Called when any field on the website is updated.
+{ ///< Called when any field on the website is updated.
   if (*Debug)
     logToSerials(&field, true, 0);
   for (int i = 0; i < WebsiteQueue_Field_Count; i++)
@@ -196,34 +192,33 @@ void Module_Web::setFieldEvent(char *field)
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///Even logs on the website
+///< Even logs on the website
 void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) uint8_t Indent)
-{ ///adds a log entry that is displayed on the web interface
+{ ///< adds a log entry that is displayed on the web interface
   logToSerials(&LongMessage, true, Indent);
   for (uint8_t i = LogDepth - 1; i > 0; i--)
-  {                                       ///Shift every log entry one up, dropping the oldest
-    memset(&Logs[i], 0, sizeof(Logs[i])); ///clear variable
+  {                                       ///< Shift every log entry one up, dropping the oldest
+    memset(&Logs[i], 0, sizeof(Logs[i])); ///< clear variable
     strncpy(Logs[i], Logs[i - 1], MaxWordLength);
   }
-  memset(&Logs[0], 0, sizeof(Logs[0]));         ///clear variable
-  strncpy(Logs[0], LongMessage, MaxWordLength); ///instert new log to [0]
+  memset(&Logs[0], 0, sizeof(Logs[0]));         ///< clear variable
+  strncpy(Logs[0], LongMessage, MaxWordLength); ///< instert new log to [0]
 }
 
 void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__((unused)) uint8_t Indent)
-{ ///function overloading: same function name, different parameter type
+{ ///< function overloading: same function name, different parameter type
   logToSerials(&LongMessage, true, Indent);
   for (uint8_t i = LogDepth - 1; i > 0; i--)
-  {                                       ///Shift every log entry one up, dropping the oldest
-    memset(&Logs[i], 0, sizeof(Logs[i])); ///clear variable
+  {                                       ///< Shift every log entry one up, dropping the oldest
+    memset(&Logs[i], 0, sizeof(Logs[i])); ///< clear variable
     strncpy(Logs[i], Logs[i - 1], MaxWordLength);
   }
-  memset(&Logs[0], 0, sizeof(Logs[0]));                  ///clear variable
-  strncpy_P(Logs[0], (PGM_P)LongMessage, MaxWordLength); ///instert new log to [0]
+  memset(&Logs[0], 0, sizeof(Logs[0]));                  ///< clear variable
+  strncpy_P(Logs[0], (PGM_P)LongMessage, MaxWordLength); ///< instert new log to [0]
 }
 
 char *Module_Web::eventLogToJSON(bool Append)
-{ ///Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
+{ ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   if (!Append)
     memset(&LongMessage[0], 0, sizeof(LongMessage));
   strcat_P(LongMessage, (PGM_P)F("["));
@@ -239,11 +234,11 @@ char *Module_Web::eventLogToJSON(bool Append)
   return LongMessage;
 }
 
-///Google Sheets functions
+///< Google Sheets functions
 
 void Module_Web::addPushingBoxLogRelayID()
 {
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("/pushingbox?devid="));
   strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
   strcat_P(LongMessage, (PGM_P)F("&BoxData={"));
@@ -252,11 +247,11 @@ void Module_Web::addPushingBoxLogRelayID()
 void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
   if (*Debug)
-  { ///print the report command to console
+  { ///< print the report command to console
     logToSerials(F("api.pushingbox.com"), false, 4);
     logToSerials(JSONData, true, 0);
   }
-  PushingBoxRestAPI.get(*JSONData); ///PushingBoxRestAPI will append http:///api.pushingbox.com/ in front of the command
+  PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http:///< api.pushingbox.com/ in front of the command
 }
 
-///Wireless
+///< Wireless

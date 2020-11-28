@@ -7,7 +7,7 @@ function Test_CheckAlerts() {
   CheckAlerts(getTestJSONData().Log);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Triggers/Resolves email alerts based on the Alerts sheet settings
 function CheckAlerts(Log) {
   LogToConsole("Processing alerts...", true, 0);
@@ -88,7 +88,7 @@ function CheckAlerts(Log) {
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // Relay an email based on a HTML email template - Used to send out Alerts
 function sendEmail(emailTemplate) {
   if (GetSettingsValue("Send an email") != "Disabled") {

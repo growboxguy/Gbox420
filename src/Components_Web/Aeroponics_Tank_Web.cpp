@@ -1,7 +1,7 @@
 #include "Aeroponics_Tank_Web.h"
 
 Aeroponics_Tank_Web::Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Common(Name), Aeroponics_Tank(Name, Parent, DefaultSettings, TankSpecificSettings, FeedbackPressureSensor, Pump), Common_Web(Name)
-{ ///constructor
+{ ///< constructor
   this->Parent = Parent;
   this->Name = Name;
   Parent->addToReportQueue(this);
@@ -14,9 +14,9 @@ Aeroponics_Tank_Web::Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module
 
 void Aeroponics_Tank_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end
+  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
 
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
 void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *url)

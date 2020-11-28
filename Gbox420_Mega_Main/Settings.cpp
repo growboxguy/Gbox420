@@ -10,23 +10,23 @@ Only use these in the setup() function, or when a user initiated change is store
 
 void saveSettings(Settings *ToSave)
 {
-  eeprom_update_block((const void *)ToSave, (void *)0, sizeof(Settings)); ///update_block only writes the bytes that changed
+  eeprom_update_block((const void *)ToSave, (void *)0, sizeof(Settings)); ///< update_block only writes the bytes that changed
 }
 
-Settings *loadSettings(bool ResetEEPROM = false) ///if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
+Settings *loadSettings(bool ResetEEPROM = false) ///< if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
 {
-  Settings *DefaultSettings = new Settings();                              ///This is where settings are stored, first it takes the sketch default settings defined in Settings.h
-  Settings EEPROMSettings;                                                 ///temporary storage with "Settings" type
-  eeprom_read_block((void *)&EEPROMSettings, (void *)0, sizeof(Settings)); ///Load EEPROM stored settings into EEPROMSettings
+  Settings *DefaultSettings = new Settings();                              ///< This is where settings are stored, first it takes the sketch default settings defined in Settings.h
+  Settings EEPROMSettings;                                                 ///< temporary storage with "Settings" type
+  eeprom_read_block((void *)&EEPROMSettings, (void *)0, sizeof(Settings)); ///< Load EEPROM stored settings into EEPROMSettings
   if (DefaultSettings->CompatibilityVersion != EEPROMSettings.CompatibilityVersion || ResetEEPROM)
-  { ///Making sure the EEPROM loaded settings are compatible with the sketch
+  { ///< Making sure the EEPROM loaded settings are compatible with the sketch
     logToSerials(F("Incompatible stored settings detected, updating EEPROM..."), false, 1);
-    saveSettings(DefaultSettings); ///overwrites EEPROM stored settings with defaults from this sketch
+    saveSettings(DefaultSettings); ///< overwrites EEPROM stored settings with defaults from this sketch
   }
   else
   {
     logToSerials(F("Same settings version detected, applying EEPROM settings..."), false, 1);
-    ///DefaultSettings = EEPROMSettings; ///overwrite sketch defaults with loaded settings
+    ///< DefaultSettings = EEPROMSettings; ///< overwrite sketch defaults with loaded settings
     memcpy(DefaultSettings, &EEPROMSettings, sizeof(Settings));
   }
   logToSerials(F("done"), true, 1);

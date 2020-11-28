@@ -5,7 +5,7 @@ PowerSensor::PowerSensor(const __FlashStringHelper *Name, Module *Parent, Hardwa
   this->Parent = Parent;
   Sensor = new PZEM004T(SerialPort);
   PowerSensorIP = new IPAddress(192, 168, 1, 1);
-  Sensor->setAddress(*PowerSensorIP); ///start power meter
+  Sensor->setAddress(*PowerSensorIP); ///< start power meter
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("PowerSensor object created"), true, 1);
@@ -15,16 +15,16 @@ void PowerSensor::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
-  Voltage = Sensor->voltage(*PowerSensorIP);      ///AC Voltage (V)
-  Current = Sensor->current(*PowerSensorIP);      ///Current (A)
-  Power = Sensor->power(*PowerSensorIP);          ///Actual power usage (W)
-  Energy = Sensor->energy(*PowerSensorIP) / 1000; ///total power consumption (kWh)
+  Voltage = Sensor->voltage(*PowerSensorIP);      ///< AC Voltage (V)
+  Current = Sensor->current(*PowerSensorIP);      ///< Current (A)
+  Power = Sensor->power(*PowerSensorIP);          ///< Actual power usage (W)
+  Energy = Sensor->energy(*PowerSensorIP) / 1000; ///< total power consumption (kWh)
 }
 
 void PowerSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Power:"));
   strcat(LongMessage, getPowerText(true));
   strcat_P(LongMessage, (PGM_P)F(" ; Total:"));
@@ -40,8 +40,8 @@ char *PowerSensor::getPowerText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
+    static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
+    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
     strcat(ReturnChar, toText(Power));
     if (IncludeUnits)
       strcat_P(ReturnChar, (PGM_P)F("W"));
@@ -55,8 +55,8 @@ char *PowerSensor::getEnergyText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
+    static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
+    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
     strcat(ReturnChar, toText(Energy));
     if (IncludeUnits)
       strcat_P(ReturnChar, (PGM_P)F("kWh"));
@@ -70,8 +70,8 @@ char *PowerSensor::getVoltageText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
+    static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
+    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
     strcat(ReturnChar, toText(Voltage));
     if (IncludeUnits)
       strcat_P(ReturnChar, (PGM_P)F("V"));
@@ -85,8 +85,8 @@ char *PowerSensor::getCurrentText(bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    static char ReturnChar[MaxWordLength] = "";    ///each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///clear variable
+    static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
+    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
     strcat(ReturnChar, toText(Current));
     if (IncludeUnits)
       strcat_P(ReturnChar, (PGM_P)F("A"));

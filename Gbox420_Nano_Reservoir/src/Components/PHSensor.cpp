@@ -1,7 +1,7 @@
 #include "PHSensor.h"
 
 PHSensor::PHSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PHSensorSettings *DefaultSettings) : Common(Name)
-{ ///constructor
+{ ///< constructor
   this->Parent = Parent;
   this->Pin = &DefaultSettings->Pin;
   this->Intercept = &DefaultSettings->Intercept;
@@ -23,7 +23,7 @@ void PHSensor::refresh_FiveSec()
 void PHSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("PH:"));
   strcat(LongMessage, PH->getFloatText(true));
   logToSerials(&LongMessage, true, 1);

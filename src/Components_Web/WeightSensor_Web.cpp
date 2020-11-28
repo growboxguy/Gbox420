@@ -15,22 +15,22 @@ WeightSensor_Web::WeightSensor_Web(const __FlashStringHelper *Name, Module_Web *
 
 void WeightSensor_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end
+  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
 
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
 void WeightSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/S", 2) == 0)
   {
-    ///
+    ///< 
   }
 }
 
 void WeightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/S", 2) == 0) ////When the settings page is refreshed
+  if (strncmp(url, "/S", 2) == 0) ///< When the settings page is refreshed
   {
     WebServer.setArgString(getComponentName(F("Offset")), toText(*Offset));
     WebServer.setArgString(getComponentName(F("Scale")), toText(*Scale));

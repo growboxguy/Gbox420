@@ -13,12 +13,12 @@
  * 
  */
 
-#include "RF24.h" ///https://github.com/maniacbug/RF24
+#include "RF24.h" ///< https://github.com/maniacbug/RF24
 #include "../Components/420Common.h"
 #include "../Components/420Module.h"
 #include "../WirelessCommands_Reservoir.h"
 
-///forward declaration
+///< forward declaration
 class Sound;
 class DHTSensor;
 class PHSensor;
@@ -29,12 +29,12 @@ extern RF24 Wireless;
 class ReservoirModule : virtual public Common, virtual public Module
 {
 public:
-  ////@param Name Pointer to the Name of the object, stored in Flash
-  ////@param DefaultSettings A pointer to the default settings stuct loaded from EEPROM. Defined in Settings.h
+  ///< @param Name Pointer to the Name of the object, stored in Flash
+  ///< @param DefaultSettings A pointer to the default settings stuct loaded from EEPROM. Defined in Settings.h
 
-  ReservoirModule(const __FlashStringHelper *Name, Settings::ReservoirModuleSettings *DefaultSettings); ///constructor
-  Sound *Sound1;                                                                                        ///Pointer to a Piezo speaker - sound feedback
-  DHTSensor *DHT1;                                                                                      ///Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
+  ReservoirModule(const __FlashStringHelper *Name, Settings::ReservoirModuleSettings *DefaultSettings); ///< constructor
+  Sound *Sound1;                                                                                        ///< Pointer to a Piezo speaker - sound feedback
+  DHTSensor *DHT1;                                                                                      ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   PHSensor *PHSen1;
   WaterTempSensor *WTemp1;
   WeightSensor *Weight1;

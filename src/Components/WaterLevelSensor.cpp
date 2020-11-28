@@ -1,7 +1,7 @@
 #include "WaterLevelSensor.h"
 
 WaterLevelSensor::WaterLevelSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WaterLevelSensorSettings *DefaultSettings) : Common(Name)
-{ ///constructor
+{ ///< constructor
   this->Parent = Parent;
   Pin_1 = &DefaultSettings->Pin_1;
   Pin_2 = &DefaultSettings->Pin_2;
@@ -20,17 +20,17 @@ void WaterLevelSensor::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_Minute();
-  bool isAboveSensor1 = !digitalRead(*Pin_1); ///Empty: Lowest Water sensor, true if level reached
+  bool isAboveSensor1 = !digitalRead(*Pin_1); ///< Empty: Lowest Water sensor, true if level reached
   bool isAboveSensor2 = !digitalRead(*Pin_2);
   bool isAboveSensor3 = !digitalRead(*Pin_3);
-  bool isAboveSensor4 = !digitalRead(*Pin_4); ///Full: Highest Water sensor, true if level reached
+  bool isAboveSensor4 = !digitalRead(*Pin_4); ///< Full: Highest Water sensor, true if level reached
 
-  memset(&LevelGauge, 0, sizeof(LevelGauge)); ///clear variable
+  memset(&LevelGauge, 0, sizeof(LevelGauge)); ///< clear variable
   strcpy_P(LevelGauge, (PGM_P)F("E["));
   if (isAboveSensor1)
     strcat_P(LevelGauge, (PGM_P)F("#"));
   else
-    strcat_P(LevelGauge, (PGM_P)F("_")); ///Empty
+    strcat_P(LevelGauge, (PGM_P)F("_")); ///< Empty
   if (isAboveSensor2)
     strcat_P(LevelGauge, (PGM_P)F("#"));
   else
@@ -42,12 +42,12 @@ void WaterLevelSensor::refresh_FiveSec()
   if (isAboveSensor4)
     strcat_P(LevelGauge, (PGM_P)F("#"));
   else
-    strcat_P(LevelGauge, (PGM_P)F("_")); ///Full
+    strcat_P(LevelGauge, (PGM_P)F("_")); ///< Full
   strcat_P(LevelGauge, (PGM_P)F("]F"));
 
-  ///Get number representation of reservoir level 0-empty to 4-full
+  ///< Get number representation of reservoir level 0-empty to 4-full
   if (!isAboveSensor1 && !isAboveSensor2 && !isAboveSensor3 && !isAboveSensor4)
-    Level = 0; ///Empty
+    Level = 0; ///< Empty
   else if (isAboveSensor1 && !isAboveSensor2 && !isAboveSensor3 && !isAboveSensor4)
     Level = 1;
   else if (isAboveSensor1 && isAboveSensor2 && !isAboveSensor3 && !isAboveSensor4)
@@ -55,15 +55,15 @@ void WaterLevelSensor::refresh_FiveSec()
   else if (isAboveSensor1 && isAboveSensor2 && isAboveSensor3 && !isAboveSensor4)
     Level = 3;
   else if (isAboveSensor1 && isAboveSensor2 && isAboveSensor3 && isAboveSensor4)
-    Level = 4; ///Full
+    Level = 4; ///< Full
   else
-    Level = -1; ///non-valid sensor combination, like: E[#--#]F
+    Level = -1; ///< non-valid sensor combination, like: E[#--#]F
 }
 
 void WaterLevelSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Level:"));
   strcat(LongMessage, getLevelGauge());
   strcat_P(LongMessage, (PGM_P)F(" ("));

@@ -1,7 +1,7 @@
 #include "AirPump.h"
 #include "Sound.h"
 
-///AirPump controller (2 speed)
+///< AirPump controller (2 speed)
 
 AirPump::AirPump(const __FlashStringHelper *Name, Module *Parent, Settings::AirPumpSettings *DefaultSettings) : Common(Name)
 {
@@ -9,7 +9,7 @@ AirPump::AirPump(const __FlashStringHelper *Name, Module *Parent, Settings::AirP
   Pin = &DefaultSettings->Pin;
   State = &DefaultSettings->State;
   pinMode(*Pin, OUTPUT);
-  digitalWrite(*Pin, HIGH); ///Turn relay off initially
+  digitalWrite(*Pin, HIGH); ///< Turn relay off initially
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Minute(this);
   logToSerials(F("AirPump object created"), true, 1);
@@ -18,7 +18,7 @@ AirPump::AirPump(const __FlashStringHelper *Name, Module *Parent, Settings::AirP
 void AirPump::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Status:"));
   strcat(LongMessage, getStateToText());
   logToSerials(&LongMessage, true, 1);
@@ -33,7 +33,7 @@ void AirPump::refresh_Minute()
 
 void AirPump::checkStatus()
 {
-  if (*State) ///True turns relay ON (LOW signal activates the Relay)
+  if (*State) ///< True turns relay ON (LOW signal activates the Relay)
     digitalWrite(*Pin, LOW);
   else
     digitalWrite(*Pin, HIGH);

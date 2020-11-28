@@ -125,6 +125,6 @@ char *toText_floatDecimals(float Number)
 {
   if (isnan(Number))
     Number = -1.0;
-  dtostrf(Number, 8, 6, ShortMessage); ///minimum 8 char total length, with 6 decimals
+  dtostrf(Number, 8, 6, ShortMessage); ///< minimum 8 char total length, with 6 decimals
   return ShortMessage;
 }

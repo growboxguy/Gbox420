@@ -1,7 +1,7 @@
 #include "PHSensor_Web.h"
 
 PHSensor_Web::PHSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PHSensorSettings *DefaultSettings) : Common(Name), PHSensor(Name, Parent, DefaultSettings), Common_Web(Name)
-{ ///constructor
+{ ///< constructor
   this->Parent = Parent;
   this->Name = Name;
   Parent->addToReportQueue(this);
@@ -14,17 +14,17 @@ PHSensor_Web::PHSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, 
 
 void PHSensor_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///Adds a curly bracket {  that needs to be closed at the end
+  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
 
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
 void PHSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/S", 2) == 0)
   {
-    ///WebServer.setArgString(F("PHAlertLow"), toText(GBox -> Reservoir -> PHAlertLow));
-    ///WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> ModuleSettings -> PHAlertHigh));
+    ///< WebServer.setArgString(F("PHAlertLow"), toText(GBox -> Reservoir -> PHAlertLow));
+    ///< WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> ModuleSettings -> PHAlertHigh));
     WebServer.setArgString(getComponentName(F("Slope")), toText_floatDecimals(*Slope));
     WebServer.setArgString(getComponentName(F("Intercept")), toText_floatDecimals(*Intercept));
   }
@@ -39,7 +39,7 @@ void PHSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 }
 
 void PHSensor_Web::websiteEvent_Button(char *Button)
-{ ///When a button is pressed on the website
+{ ///< When a button is pressed on the website
   if (!isThisMyComponent(Button))
   {
     return;

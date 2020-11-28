@@ -6,16 +6,16 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Pa
   logToSerials(F(""), true, 0);  //New line
   logToSerials(F(""), false, 1); //Extra indentation
   logToSerials(F("Aeroponics_NoTank object created"), true, 1);
-  sprayNow(false); ///This is a safety feature,start with a spray after a reset
+  sprayNow(false); ///< This is a safety feature,start with a spray after a reset
 }
 
 void Aeroponics_NoTank::refresh_Sec()
-{ ///pump directly connected to aeroponics tote, with an electronically controlled bypass valve
+{ ///< pump directly connected to aeroponics tote, with an electronically controlled bypass valve
   if (*Debug)
     Common::refresh_Sec();
 
   if (Pump->getState() == RUNNING)
-  { ///if pump is on
+  { ///< if pump is on
     FeedbackPressureSensor->readPressure();
     if (FeedbackPressureSensor->getPressure() > *MaxPressure)
     {
@@ -26,15 +26,15 @@ void Aeroponics_NoTank::refresh_Sec()
     uint32_t Duration;
     if (DayMode)
     {
-      Duration = *DayDuration * 1000; ///Duration is miliseconds, DayDuration in seconds
+      Duration = *DayDuration * 1000; ///< Duration is miliseconds, DayDuration in seconds
     }
     else
     {
-      Duration = *NightDuration * 1000; ///Duration is miliseconds
+      Duration = *NightDuration * 1000; ///< Duration is miliseconds
     }
 
     if (!RunTillTimeout && (millis() - SprayTimer) >= Duration + (uint32_t)Pump->getPrimingTime() * 1000)
-    { ///bypass valve is closed and time to stop spraying
+    { ///< bypass valve is closed and time to stop spraying
       LastSprayPressure = Aeroponics::FeedbackPressureSensor->getPressure();
       logToSerials(F("Spray finished"), false, 3);
       Pump->stopPump();
@@ -44,18 +44,18 @@ void Aeroponics_NoTank::refresh_Sec()
   {
     if (Pump->getState() == IDLE)
     {
-      RunTillTimeout = false; ///Making sure the special flag is disabled as soon the Pump becomes IDLE. (RunTillTimeout forces the pump to run until the timeout is reached, used during mixing)
+      RunTillTimeout = false; ///< Making sure the special flag is disabled as soon the Pump becomes IDLE. (RunTillTimeout forces the pump to run until the timeout is reached, used during mixing)
       uint32_t Interval;
       if (DayMode)
       {
-        Interval = *DayInterval * 60000; ///Duration is miliseconds, DayInterval is Minutes
+        Interval = *DayInterval * 60000; ///< Duration is miliseconds, DayInterval is Minutes
       }
       else
       {
-        Interval = *NightInterval * 60000; ///Duration is miliseconds
+        Interval = *NightInterval * 60000; ///< Duration is miliseconds
       }
       if (millis() - SprayTimer >= Interval)
-      { ///if time to start spraying
+      { ///< if time to start spraying
         sprayNow(false);
         SprayTimer = millis();
       }
@@ -66,11 +66,11 @@ void Aeroponics_NoTank::refresh_Sec()
 void Aeroponics_NoTank::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("LastSprayPressure:"));
   strcat(LongMessage, toText_pressure(LastSprayPressure));
-  logToSerials(&LongMessage, false, 1); ///first print Aeroponics_Tank specific report, without a line break
-  Aeroponics::report();                 ///then print parent class report
+  logToSerials(&LongMessage, false, 1); ///< first print Aeroponics_Tank specific report, without a line break
+  Aeroponics::report();                 ///< then print parent class report
 }
 
 void Aeroponics_NoTank::sprayNow(bool UserRequest)

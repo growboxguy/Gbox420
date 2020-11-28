@@ -1,12 +1,12 @@
 /**@file*/
-///GrowBoxGuy - http:///sites.google.com/site/growboxguy/
-///Structs for wireless communication - Both the Transmitter and the Receiver needs to know these
-///Defines the package stucture of each message exchanged between the Main and the Hempy module
-///Max 32 bytes can be sent in a single package
+///< GrowBoxGuy - http:///< sites.google.com/site/growboxguy/
+///< Structs for wireless communication - Both the Transmitter and the Receiver needs to know these
+///< Defines the package stucture of each message exchanged between the Main and the Hempy module
+///< Max 32 bytes can be sent in a single package
 
 #pragma once
 
-#include "TimeLib.h" ///keeping track of time
+#include "TimeLib.h" ///< keeping track of time
 
 enum HempyMessages
 {
@@ -17,7 +17,7 @@ enum HempyMessages
    HempyBucketCommand2,
    HempyBucketResponse2,
    HempyReset
-}; ///An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+}; ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 static const __FlashStringHelper *toText_hempySequenceID(uint8_t SequenceID)
 {
@@ -49,10 +49,10 @@ static const __FlashStringHelper *toText_hempySequenceID(uint8_t SequenceID)
       break;
    }
 }
-///HempyReset should always be the last element
-struct HempyCommonTemplate ///Shared between Command and Respone packages
+///< HempyReset should always be the last element
+struct HempyCommonTemplate ///< Shared between Command and Respone packages
 {
-   HempyMessages SequenceID; ///Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
+   HempyMessages SequenceID; ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
    HempyCommonTemplate(HempyMessages SequenceID)
    {
       this->SequenceID = SequenceID;

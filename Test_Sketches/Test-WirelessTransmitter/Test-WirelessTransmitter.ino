@@ -5,7 +5,7 @@
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
-#include "TimeLib.h" ///keeping track of time
+#include "TimeLib.h" ///< keeping track of time
 
 //Ports for Arduino Nano or RF-Nano
 const byte CE_PIN = 10;
@@ -67,7 +67,7 @@ void setup()
     Serial.println(F("Setting up the wireless transmitter..."));
     Wireless.begin();
     Wireless.setDataRate(RF24_250KBPS);
-    Wireless.enableAckPayload(); ///Enable custom payloads on the acknowledge packets. Ack payloads are a handy way to return data back to senders without manually changing the radio modes on both units.
+    Wireless.enableAckPayload(); ///< Enable custom payloads on the acknowledge packets. Ack payloads are a handy way to return data back to senders without manually changing the radio modes on both units.
     Wireless.setRetries(RetryDelay, RetryCount);
     Wireless.openWritingPipe(WirelessChannel);
     sendCommand();

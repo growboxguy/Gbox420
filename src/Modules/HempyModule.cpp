@@ -1,6 +1,6 @@
 /**@file*/
-///Supports monitoring two Hempy buckets
-///Runs autonomously on an Arduino Nano RF and communicates wirelessly with the main module
+///< Supports monitoring two Hempy buckets
+///< Runs autonomously on an Arduino Nano RF and communicates wirelessly with the main module
 
 #include "HempyModule.h"
 //#include "../Components/DHTSensor.h"
@@ -9,16 +9,16 @@
 #include "../Components/WaterPump.h"
 #include "../Components/HempyBucket.h"
 
-///Variables used during wireless communication
+///< Variables used during wireless communication
 uint8_t NextSequenceID = HempyMessages::HempyModuleResponse1;
 struct HempyModuleResponse HempyModuleResponse1ToSend = {HempyMessages::HempyModuleResponse1};
 struct HempyBucketResponse HempyBucket1ResponseToSend = {HempyMessages::HempyBucketResponse1};
 struct HempyBucketResponse HempyBucket2ResponseToSend = {HempyMessages::HempyBucketResponse2};
-struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset}; ///Special response signaling the end of a message exchange to the Transmitter
+struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset}; ///< Special response signaling the end of a message exchange to the Transmitter
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
 {
-  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
   WeightB1 = new WeightSensor(F("WeightB1"), this, &ModuleSettings->WeightB1);
   WeightB2 = new WeightSensor(F("WeightB2"), this, &ModuleSettings->WeightB2);
@@ -45,8 +45,8 @@ void HempyModule::refresh_Sec()
     Common::refresh_Sec();
   }
   if (NextSequenceID != HempyMessages::HempyModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
-  {                                                       ///If there is a package exchange in progress, but a followup command was not received within the timeout
-    NextSequenceID = HempyMessages::HempyModuleResponse1; ///Reset back to the first response
+  {                                                       ///< If there is a package exchange in progress, but a followup command was not received within the timeout
+    NextSequenceID = HempyMessages::HempyModuleResponse1; ///< Reset back to the first response
     if (*Debug)
     {
       logToSerials(F("Timeout during message exchange, reseting to first response"), true, 0);
@@ -80,7 +80,7 @@ void HempyModule::updateResponse()
 void HempyModule::processCommand(void *ReceivedCommand)
 {
   HempyMessages ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedCommand)->SequenceID;
-  LastMessageReceived = millis(); ///Store current time
+  LastMessageReceived = millis(); ///< Store current time
   logToSerials(F("Received:"), false, 1);
   logToSerials(toText_hempySequenceID(ReceivedSequenceID), false, 1);
   logToSerials(F("- Sent:"), false, 1);
@@ -202,8 +202,8 @@ void HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->WateringDuration, true, 1);
     }
     break;
-  case HempyMessages::HempyReset:                         ///Used to get all Responses that do not have a corresponding Command
-    NextSequenceID = HempyMessages::HempyModuleResponse1; ///Load the first response for the next message exchange
+  case HempyMessages::HempyReset:                         ///< Used to get all Responses that do not have a corresponding Command
+    NextSequenceID = HempyMessages::HempyModuleResponse1; ///< Load the first response for the next message exchange
     break;
   default:
     if (*Debug)
@@ -212,8 +212,8 @@ void HempyModule::processCommand(void *ReceivedCommand)
     }
     break;
   }
-  updateAckData();              ///Loads the next ACK that will be sent out
-  saveSettings(ModuleSettings); ///Store changes in EEPROM
+  updateAckData();              ///< Loads the next ACK that will be sent out
+  saveSettings(ModuleSettings); ///< Store changes in EEPROM
 }
 
 void HempyModule::updateAckData()
@@ -223,7 +223,7 @@ void HempyModule::updateAckData()
     logToSerials(F("Updating Acknowledgement to:"), false, 2);
     logToSerials(toText_hempySequenceID(NextSequenceID), true, 1);
   }
-  Wireless.flush_tx(); ///Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
 
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer
   {
@@ -236,7 +236,7 @@ void HempyModule::updateAckData()
   case HempyMessages::HempyBucketResponse2:
     Wireless.writeAckPayload(1, &HempyBucket2ResponseToSend, WirelessPayloadSize);
     break;
-  case HempyMessages::HempyReset: ///HempyReset should always be the last element in the enum: Signals to stop the message exchange
+  case HempyMessages::HempyReset: ///< HempyReset should always be the last element in the enum: Signals to stop the message exchange
     Wireless.writeAckPayload(1, &HempyResetToSend, WirelessPayloadSize);
     break;
   default:

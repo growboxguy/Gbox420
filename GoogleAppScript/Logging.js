@@ -1,7 +1,7 @@
 function Test_SaveToLog() {
   SaveToLog(getTestJSONData().Log);
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Stores the received data on the Log sheet
 function SaveToLog(Log) {
   LogToConsole("Updating Log sheet...", true, 0);

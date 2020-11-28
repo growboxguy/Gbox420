@@ -1,7 +1,7 @@
 function Test_UpdateStatus() {
   UpdateStatus(getTestJSONData().Log);
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Updates the Status sheet
 function UpdateStatus(Log) {
   LogToConsole("Updating Status sheet...", true, 0);

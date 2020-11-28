@@ -1,5 +1,5 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///Columns section
+
+///< Columns section
 
 function Test_UpdateColumns() {
   UpdateColumns(getTestJSONData().Log);
@@ -26,7 +26,7 @@ function UpdateFriendlyName() {
   SaveNamedRange("Columns", columns);
 }
 
-function FindNewColumns(Log) { ///< Add newly discovered keys to Columns tab and update FriendlyName column
+function FindNewColumns(Log) { ///< < Add newly discovered keys to Columns tab and update FriendlyName column
   LogToConsole("Updating Columns sheet...", true, 0);
   var newColumnDiscovered = false;
   var columns = GetNamedRangeValues("Columns", true);

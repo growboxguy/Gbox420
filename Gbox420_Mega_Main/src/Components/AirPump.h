@@ -3,7 +3,7 @@
 #include "420Common.h"
 #include "420Module.h"
 
-///Air Pump controller
+///< Air Pump controller
 
 class AirPump : virtual public Common
 {

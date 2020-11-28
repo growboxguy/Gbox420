@@ -7,7 +7,7 @@ Module::Module()
 }
 
 /* Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
-{ ///Constructor
+{ ///< Constructor
   this -> SoundFeedback = SoundFeedback;
   logToSerials(F("Module object created"), true, 0);
 } */
@@ -30,7 +30,7 @@ void Module::runAll(bool AddToLog)
 }
 
 void Module::runReport(bool AddToLog)
-{ ///Reports component status to Serial output (Arduino and ESP)
+{ ///< Reports component status to Serial output (Arduino and ESP)
   getFormattedTime(true);
   getFreeMemory();
   if (AddToLog)
@@ -44,8 +44,7 @@ void Module::runReport(bool AddToLog)
   }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///Refresh queues: Refresh components inside the Module
+///< Refresh queues: Refresh components inside the Module
 
 void Module::runSec(bool AddToLog)
 {
@@ -106,15 +105,14 @@ Sound *Module::getSoundObject()
   return SoundFeedback;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
+///< Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
 
 void Module::addToReportQueue(Common *Component)
 {
   if (QueueDepth > reportQueueItemCount)
     ReportQueue[reportQueueItemCount++] = Component;
   else
-    logToSerials(F("Report queue overflow!"), true, 0); ///Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
+    logToSerials(F("Report queue overflow!"), true, 0); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
 void Module::addToRefreshQueue_Sec(Common *Component)
@@ -151,32 +149,29 @@ void Module::addToRefreshQueue_QuarterHour(Common *Component)
     logToSerials(F("RefreshQueue_QuarterHour overflow!"), true, 0);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///Even logs to the Serial output
+///< Even logs to the Serial output
 void Module::addToLog(const char *LongMessage, uint8_t Indent)
 {
   logToSerials(&LongMessage, true, Indent);
 }
 
 void Module::addToLog(const __FlashStringHelper *LongMessage, uint8_t Indent)
-{ ///function overloading: same function name, different parameter type
+{ ///< function overloading: same function name, different parameter type
   logToSerials(&LongMessage, true, Indent);
 }
 
-///////////////////////////////////////////////////////////////
-///Time
+///< Time
 
 char *Module::getFormattedTime(bool PrintToSerials)
 {
-  time_t Now = now();                                                                                                                                ///Get the current time and date from the TimeLib library
-  snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d", year(Now), month(Now), day(Now), hour(Now), minute(Now), second(Now)); ///YYYY/MM/DD-HH:mm:SS formatted time will be stored in CurrentTime global variable
+  time_t Now = now();                                                                                                                                ///< Get the current time and date from the TimeLib library
+  snprintf(CurrentTime, sizeof(CurrentTime), "%04d/%02d/%02d-%02d:%02d:%02d", year(Now), month(Now), day(Now), hour(Now), minute(Now), second(Now)); ///< YYYY/MM/DD-HH:mm:SS formatted time will be stored in CurrentTime global variable
   if (PrintToSerials)
     logToSerials(&CurrentTime, true, 0);
   return CurrentTime;
 }
 
-//////////////////////////////////////////////////////////////////
-//Settings
+///< Settings
 void Module::setDebug(bool DebugEnabled)
 {
   if (DebugEnabled != *Debug)
@@ -200,7 +195,7 @@ void Module::setMetric(bool MetricEnabled)
   if (MetricEnabled != *Metric)
   { //if there was a change
     *Metric = MetricEnabled;
-    RunAllRequested = true; ///Force a full sensor reading refresh
+    RunAllRequested = true; ///< Force a full sensor reading refresh
     if (*Metric)
       addToLog(F("Using Metric units"));
     else

@@ -22,7 +22,7 @@ void PressureSensor::refresh_FiveSec()
 void PressureSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Pressure:"));
   strcat(LongMessage, getPressureText(true, true));
   logToSerials(&LongMessage, true, 1);
@@ -33,9 +33,9 @@ void PressureSensor::readPressure()
   float Voltage = ((float)analogRead(*Pin)) * 5 / 1024;
 
   if (*Metric)
-    Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 1.0f); ///unit: bar / 100kPa
+    Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 1.0f); ///< unit: bar / 100kPa
   else
-    Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 14.5038f); ///unit: PSI
+    Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 14.5038f); ///< unit: PSI
 }
 
 float PressureSensor::getPressure(bool ReturnAverage)
@@ -52,14 +52,14 @@ char *PressureSensor::getPressureText(bool IncludeUnits, bool ReturnAverage)
 }
 
 void PressureSensor::readOffset()
-{ ///Should only be called when there is 0 pressure
+{ ///< Should only be called when there is 0 pressure
   float sum = 0;
   for (uint8_t i = 0; i < 50; i++)
   {
     sum += analogRead(*Pin);
     delay(10);
   }
-  float AeroOffsetRecommendation = (sum / 50) * 5 / 1024; ///Reads voltage at 0 pressure
+  float AeroOffsetRecommendation = (sum / 50) * 5 / 1024; ///< Reads voltage at 0 pressure
   strncpy_P(LongMessage, (PGM_P)F("0 pressure Offset: "), MaxWordLength);
   strcat(LongMessage, toText(AeroOffsetRecommendation));
   Parent->addToLog(LongMessage);

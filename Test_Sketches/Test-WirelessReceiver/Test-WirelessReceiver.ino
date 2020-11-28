@@ -5,7 +5,7 @@
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
-#include "TimeLib.h" ///keeping track of time
+#include "TimeLib.h" ///< keeping track of time
 
 //Ports for Arduino Nano or RF-Nano
 const byte CE_PIN = 10;

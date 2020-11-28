@@ -1,6 +1,6 @@
 /**@file*/
-///Supports monitoring an Aeroponics tote - With a pressure tank
-///Runs autonomously on an Arduino Nano RF and communicates wirelessly with the main module
+///< Supports monitoring an Aeroponics tote - With a pressure tank
+///< Runs autonomously on an Arduino Nano RF and communicates wirelessly with the main module
 
 #include "AeroModule_Tank.h"
 //#include "../Components/DHTSensor.h"
@@ -10,22 +10,22 @@
 #include "../Components/Aeroponics_Tank.h"
 #include "../Components/WeightSensor.h"
 
-///Variables used during wireless communication
+///< Variables used during wireless communication
 uint8_t NextSequenceID = AeroMessages::AeroModuleResponse1;
 struct AeroModuleResponse AeroModule1ResponseToSend = {AeroMessages::AeroModuleResponse1};
 struct AeroResponse_P1 Aero1Response1ToSend = {AeroMessages::AeroResponse1};
 struct AeroResponse_P2 Aero1Response2ToSend = {AeroMessages::AeroResponse2};
-struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset}; ///Special response signaling the end of a message exchange to the Transmitter
+struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset}; ///< Special response signaling the end of a message exchange to the Transmitter
 unsigned long LastMessageSent = 0;                                     //When was the last message sent
 
 AeroModule::AeroModule(const __FlashStringHelper *Name) : Common(Name), Module()
 {
-  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
   Pres1 = new PressureSensor(F("Pres1"), this, &ModuleSettings->Pres1);
   Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->AeroPump1);
   Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
-  AeroT1 = new Aeroponics_Tank(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, Pump1); ///Use this with a pressure tank
+  AeroT1 = new Aeroponics_Tank(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, Pump1); ///< Use this with a pressure tank
   Aero1Response1ToSend.PressureTankPresent = true;
 
   addToRefreshQueue_Sec(this);
@@ -43,8 +43,8 @@ void AeroModule::refresh_Sec()
   if (*Debug)
     Common::refresh_Sec();
   if (NextSequenceID != AeroMessages::AeroModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
-  {                                                     ///If there is a package exchange in progress
-    NextSequenceID = AeroMessages::AeroModuleResponse1; ///Reset back to the first response
+  {                                                     ///< If there is a package exchange in progress
+    NextSequenceID = AeroMessages::AeroModuleResponse1; ///< Reset back to the first response
     logToSerials(F("Timeout during message exchange, reseting to first response"), true, 0);
     updateAckData();
   }
@@ -70,7 +70,7 @@ void AeroModule::updateResponse()
 void AeroModule::processCommand(void *ReceivedCommand)
 {
   AeroMessages ReceivedSequenceID = ((AeroCommonTemplate *)ReceivedCommand)->SequenceID;
-  LastMessageReceived = millis(); ///Store current time
+  LastMessageReceived = millis(); ///< Store current time
   logToSerials(F("Received:"), false, 1);
   logToSerials(toText_aeroSequenceID(ReceivedSequenceID), false, 1);
   logToSerials(F("- Sent:"), false, 1);
@@ -168,8 +168,8 @@ void AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, true, 1);
     }
     break;
-  case AeroMessages::AeroReset:                         ///Used to get all Responses that do not have a corresponding Command
-    NextSequenceID = AeroMessages::AeroModuleResponse1; ///Load the first response for the next message exchange
+  case AeroMessages::AeroReset:                         ///< Used to get all Responses that do not have a corresponding Command
+    NextSequenceID = AeroMessages::AeroModuleResponse1; ///< Load the first response for the next message exchange
     break;
   default:
     logToSerials(F("SequenceID unknown, ignoring message"), true, 2);
@@ -186,7 +186,7 @@ void AeroModule::updateAckData()
     logToSerials(F("Updating Acknowledgement to:"), false, 2);
     logToSerials(toText_aeroSequenceID(NextSequenceID), true, 1);
   }
-  Wireless.flush_tx(); ///Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
 
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer
   {
@@ -199,7 +199,7 @@ void AeroModule::updateAckData()
   case AeroMessages::AeroResponse2:
     Wireless.writeAckPayload(1, &Aero1Response2ToSend, WirelessPayloadSize);
     break;
-  case AeroMessages::AeroReset: ///AeroReset should always be the last element in the enum: Signals to stop the message exchange
+  case AeroMessages::AeroReset: ///< AeroReset should always be the last element in the enum: Signals to stop the message exchange
     Wireless.writeAckPayload(1, &AeroResetToSend, WirelessPayloadSize);
     break;
   default:

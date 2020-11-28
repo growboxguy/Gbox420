@@ -1,18 +1,18 @@
 #include "Aeroponics.h"
 
-///This is a virtual class (cannot be instanciated), parent of two classes:
-///-Aeroponics_NoTank: High pressure pump is directly connected to the aeroponics tote
-///-Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid for spraying
+///< This is a virtual class (cannot be instanciated), parent of two classes:
+///< -Aeroponics_NoTank: High pressure pump is directly connected to the aeroponics tote
+///< -Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid for spraying
 
 Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Common(Name)
-{ ///constructor
+{ ///< constructor
   this->Parent = Parent;
-  SprayEnabled = &DefaultSettings->SprayEnabled;   ///Enable/disable misting
-  DayInterval = &DefaultSettings->DayInterval;     ///Spray every X minutes - With lights ON
-  DayDuration = &DefaultSettings->DayDuration;     ///Spray time in seconds - With lights ON
-  NightInterval = &DefaultSettings->NightInterval; ///Spray every X minutes - With lights OFF
-  NightDuration = &DefaultSettings->NightDuration; ///Spray time in seconds - With lights OFF
-  MaxPressure = &DefaultSettings->MaxPressure;     ///Aeroponics - Turn off pump above this pressure (bar)
+  SprayEnabled = &DefaultSettings->SprayEnabled;   ///< Enable/disable misting
+  DayInterval = &DefaultSettings->DayInterval;     ///< Spray every X minutes - With lights ON
+  DayDuration = &DefaultSettings->DayDuration;     ///< Spray time in seconds - With lights ON
+  NightInterval = &DefaultSettings->NightInterval; ///< Spray every X minutes - With lights OFF
+  NightDuration = &DefaultSettings->NightDuration; ///< Spray time in seconds - With lights OFF
+  MaxPressure = &DefaultSettings->MaxPressure;     ///< Aeroponics - Turn off pump above this pressure (bar)
   this->FeedbackPressureSensor = FeedbackPressureSensor;
   this->Pump = Pump;
   Parent->addToReportQueue(this);
@@ -20,8 +20,8 @@ Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings
 }
 
 void Aeroponics::report()
-{                                                  ///report status to Serial output, runs after the child class`s report function
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+{                                                  ///< report status to Serial output, runs after the child class`s report function
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F(" ; MaxPressure:"));
   strcat(LongMessage, toText_pressure(*MaxPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
@@ -36,7 +36,7 @@ void Aeroponics::report()
   strcat(LongMessage, toText_minute(*NightInterval));
   strcat_P(LongMessage, (PGM_P)F(" ; NightDuration:"));
   strcat(LongMessage, toText_second(*NightDuration));
-  logToSerials(&LongMessage, true, 0); ///Break line, No indentation needed: child class already printed it
+  logToSerials(&LongMessage, true, 0); ///< Break line, No indentation needed: child class already printed it
 }
 
 void Aeroponics::setDayMode(bool State)
@@ -160,9 +160,9 @@ float Aeroponics::getLastSprayPressure()
 
 char *Aeroponics::getLastSprayPressureText(bool IncludeCurrentPressure)
 {
-  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///clear variable
+  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///< clear variable
 
-  toText_pressure(LastSprayPressure); ///loads the Last pressure measured during spraying
+  toText_pressure(LastSprayPressure); ///< loads the Last pressure measured during spraying
   if (IncludeCurrentPressure)
   {
     strcat_P(ShortMessage, (PGM_P)F(" ["));
@@ -172,8 +172,8 @@ char *Aeroponics::getLastSprayPressureText(bool IncludeCurrentPressure)
   return ShortMessage;
 }
 
-////////////////////////////////////////
-///Pump controls
+
+///< Pump controls
 
 float Aeroponics::getPressure()
 {

@@ -4,7 +4,7 @@
 #include "Aeroponics.h"
 #include "Switch.h"
 
-///Aeroponics tote with pressure tank
+///< Aeroponics tote with pressure tank
 
 class Aeroponics_Tank : virtual public Aeroponics
 {

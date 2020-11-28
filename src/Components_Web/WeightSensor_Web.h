@@ -4,7 +4,7 @@
 #include "420Module_Web.h"
 #include "../Components/WeightSensor.h"
 
-///UNDER DEVELOPMENT - Weight sensor load cell - website component
+///< UNDER DEVELOPMENT - Weight sensor load cell - website component
 
 class WeightSensor_Web : public WeightSensor, public Common_Web
 {

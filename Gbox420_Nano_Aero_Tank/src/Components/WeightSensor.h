@@ -17,8 +17,8 @@ public:
   void triggerCalibration(int CalibrationWeight);
   void setScale(float Scale);
   float Weight;
-  float *Scale; ///Calibration value: Raw reading of one unit
-  long *Offset; ///Read value at no weight on the scale
+  float *Scale; ///< Calibration value: Raw reading of one unit
+  long *Offset; ///< Read value at no weight on the scale
 
 private:
 protected:

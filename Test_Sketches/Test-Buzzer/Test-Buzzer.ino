@@ -2,8 +2,8 @@
 //Sketch for testing: Piezo buzzer
 
 //Pins
-const int BuzzerOutPin = 2;      ///Port connecting the + side of the buzzer, over a minimum 200ohm resistor
-const int BuiltInLEDOutPin = 13; ///LED feedback when a sound note is played
+const int BuzzerOutPin = 2;      ///< Port connecting the + side of the buzzer, over a minimum 200ohm resistor
+const int BuiltInLEDOutPin = 13; ///< LED feedback when a sound note is played
 
 //Global constants
 const int c = 261;

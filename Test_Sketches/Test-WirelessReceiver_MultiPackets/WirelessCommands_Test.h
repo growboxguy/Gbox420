@@ -1,9 +1,9 @@
 #pragma once
 
-#include "TimeLib.h" ///keeping track of time
-///Structs for wireless communication
+#include "TimeLib.h" ///< keeping track of time
+///< Structs for wireless communication
 
-///Global constants
+///< Global constants
 enum HempyMessage
 {
    Module1Command,
@@ -14,7 +14,7 @@ enum HempyMessage
    Bucket2Response,
    DHT1Response,
    Reset
-}; ///An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+}; ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 //enum MessageType { Command, Response };
 
 const __FlashStringHelper *sequenceIDToText(uint8_t SequenceID)
@@ -50,10 +50,10 @@ const __FlashStringHelper *sequenceIDToText(uint8_t SequenceID)
       break;
    }
 }
-///Reset should always be the last element
-struct CommonTemplate ///Shared between Command and Respone packages
+///< Reset should always be the last element
+struct CommonTemplate ///< Shared between Command and Respone packages
 {
-   HempyMessage SequenceID; ///Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
+   HempyMessage SequenceID; ///< Commands and Responses can span across multiple 32byte packages. Packages with 0 SequenceID represent the initial attempt to exchange data
 
    CommonTemplate(HempyMessage SequenceID)
    {
@@ -61,9 +61,9 @@ struct CommonTemplate ///Shared between Command and Respone packages
    }
 };
 
-///Both the Transmitter and the Receiver needs to know these structures
+///< Both the Transmitter and the Receiver needs to know these structures
 
-///Commands are sent by the Main module
+///< Commands are sent by the Main module
 struct ModuleCommand : CommonTemplate //Max 32bytes. Module command sent by the Main module
 {
    ModuleCommand(HempyMessage SequenceID) : CommonTemplate(SequenceID) {}
@@ -85,7 +85,7 @@ struct BucketCommand : CommonTemplate //Max 32bytes. Command to control one hemp
    float StopWeight = 0.0;
 };
 
-///Responses are sent by all other modules, except Main
+///< Responses are sent by all other modules, except Main
 
 struct ModuleResponse : CommonTemplate //Max 32bytes. Module response sent back to the Main module
 {

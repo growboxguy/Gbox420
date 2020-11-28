@@ -270,7 +270,7 @@
 
 <script>
 
-	///Subscribe to the webpage load event and trigger an instant refresh
+	///< Subscribe to the webpage load event and trigger an instant refresh
 	if (window.addEventListener) {
 		window.addEventListener('load', refreshFormDataNow)
 	}
@@ -278,7 +278,7 @@
 		window.attachEvent('onload', refreshFormDataNow)
 	}
 
-	///Refresh on mouse click/tap event
+	///< Refresh on mouse click/tap event
 	document.addEventListener("click", function () {
 		loadCounter = 0;
 		refreshFormData();

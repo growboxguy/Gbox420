@@ -4,7 +4,7 @@
 #include "420Module_Web.h"
 #include "../Components/HempyBucket.h"
 
-///UNDER DEVELOPMENT - Hempy bucket - website component
+///< UNDER DEVELOPMENT - Hempy bucket - website component
 
 class HempyBucket_Web : public HempyBucket, public Common_Web
 {

@@ -9,7 +9,7 @@ public:
   DistanceSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DistanceSensorSettings *DefaultSettings);
   void refresh_FiveSec();
   void report();
-  void readSensor(); ///Refresh Temp and Humidity readings
+  void readSensor(); ///< Refresh Temp and Humidity readings
   float getDistance();
   char *getDistanceText(bool IncludeUnits = false);
   float Distance = 0.0;

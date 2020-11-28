@@ -3,10 +3,10 @@
 /*! 
  *  \brief     Printing serial messages to the Arduino Serial output and the esp-link Microcontroller Console (uC Console)
  *  \details   Uses templating to handle logging multiple variable types (int,float,char,bool..)
- *  \details   Functions implemented in header file due to: https:///stackoverflow.com/questions/10632251/undefined-reference-to-template-function
+ *  \details   Functions implemented in header file due to: https:///< stackoverflow.com/questions/10632251/undefined-reference-to-template-function
  */
 
-#include "Arduino.h" ///every inheriting class have Arduino commands available
+#include "Arduino.h" ///< every inheriting class have Arduino commands available
 
 //Forward declaration
 extern HardwareSerial &ArduinoSerial;

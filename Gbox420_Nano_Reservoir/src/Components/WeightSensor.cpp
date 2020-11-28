@@ -35,7 +35,7 @@ void WeightSensor::refresh_FiveSec()
 void WeightSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
   strcat(LongMessage, getWeightText(true));
   logToSerials(&LongMessage, true, 1);
@@ -65,10 +65,10 @@ char *WeightSensor::getWeightText(bool IncludeUnits)
 void WeightSensor::triggerTare()
 {
   TareRequested = true;
-  Parent->addToLog(F("Updating tare...")); ///This can take up to 1 minute, when the component is next refreshed
+  Parent->addToLog(F("Updating tare...")); ///< This can take up to 1 minute, when the component is next refreshed
 }
 
-void WeightSensor::tare() ///Time intense, cannot be called straight from the website. Response would time out.
+void WeightSensor::tare() ///< Time intense, cannot be called straight from the website. Response would time out.
 {
   Sensor->tare();
   *Offset = Sensor->get_offset();
@@ -80,10 +80,10 @@ void WeightSensor::triggerCalibration(int CalibrationWeight)
 {
   this->CalibrationWeight = CalibrationWeight;
   CalibrateRequested = true;
-  Parent->addToLog(F("Calibrating weight..")); ///This can take up to 1 minute, when the component is next refreshed
+  Parent->addToLog(F("Calibrating weight..")); ///< This can take up to 1 minute, when the component is next refreshed
 }
 
-void WeightSensor::calibrate() ///Time intense, cannot be called straight from the website. Response would time out.
+void WeightSensor::calibrate() ///< Time intense, cannot be called straight from the website. Response would time out.
 {
   *Scale = (float)Sensor->get_value() / CalibrationWeight;
   Sensor->set_scale(*Scale);

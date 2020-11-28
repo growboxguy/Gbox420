@@ -7,7 +7,7 @@ DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
 {
   this->Parent = Parent;
   Sensor = new DHT(DefaultSettings->Pin, DefaultSettings->Type);
-  Sensor->begin(); ///dereference the pointer to the object and then call begin() on it. Same as (*Sensor).begin();
+  Sensor->begin(); ///< dereference the pointer to the object and then call begin() on it. Same as (*Sensor).begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("DHTSensor object created"), true, 1);
@@ -36,9 +36,9 @@ void DHTSensor::readSensor()
 void DHTSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///clear variable
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Temp:"));
-  strcat(LongMessage, getTempText(true)); ///Shows the average reading
+  strcat(LongMessage, getTempText(true)); ///< Shows the average reading
   strcat_P(LongMessage, (PGM_P)F(" ; Humidity:"));
   strcat(LongMessage, getHumidityText(true));
   logToSerials(&LongMessage, true, 1);

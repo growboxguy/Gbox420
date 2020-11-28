@@ -34,13 +34,13 @@ var columns_targetAxisColumn = 11;
 var settings_keyColumn = 0;  //Relative position within the Settings named range
 var settings_valueColumn = 1;
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Test functions
 function Test_ProcessBoxData() {
   ProcessBoxData(getTestJSONData());
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //This is where data arrives for the Arduino for processing
 function doPost(receivedData) {
   try {
@@ -80,11 +80,11 @@ function doPost(receivedData) {
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //This is where the extracted JSON report is processed
 function ProcessBoxData(JSONBoxData) {
   try {
-    WipeCache();  ///Remove cached Named Ranges and get a fresh copy
+    WipeCache();  ///< Remove cached Named Ranges and get a fresh copy
     LogToConsole("Processing BoxDataJSON:", false, 0);
     if (JSONBoxData.Log != null) {
       LogToConsole(JSON.stringify(JSONBoxData.Log), true, 0);  //Print the JSON on the Stackdriver logging (View / Stackdriver logging)

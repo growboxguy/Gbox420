@@ -5,7 +5,7 @@ Switch::Switch(const __FlashStringHelper *Name, uint8_t Pin, bool NegativeLogic)
   this->Pin = Pin;
   this->NegativeLogic = NegativeLogic;
   pinMode(Pin, OUTPUT);
-  turnOff(); ///initialize in OFF state
+  turnOff(); ///< initialize in OFF state
   logToSerials(F("Switch object created"), true, 2);
 }
 
@@ -27,11 +27,11 @@ void Switch::turnOn()
 
   if (NegativeLogic)
   {
-    digitalWrite(Pin, LOW); ///with negative logic switches
+    digitalWrite(Pin, LOW); ///< with negative logic switches
   }
   else
   {
-    digitalWrite(Pin, HIGH); ///with positive logic switches
+    digitalWrite(Pin, HIGH); ///< with positive logic switches
   }
 }
 
@@ -41,11 +41,11 @@ void Switch::turnOff()
 
   if (NegativeLogic)
   {
-    digitalWrite(Pin, HIGH); ///with negative logic switches
+    digitalWrite(Pin, HIGH); ///< with negative logic switches
   }
   else
   {
-    digitalWrite(Pin, LOW); ///with positive logic switches
+    digitalWrite(Pin, LOW); ///< with positive logic switches
   }
 }
 

@@ -1,7 +1,6 @@
 #include "SerialLog.h"
 
-//////////////////////////////////////////
-//Logging
+///< Logging
 
 void logToSerials(const __FlashStringHelper *ToPrint, bool BreakLine, byte Indent)
 {
