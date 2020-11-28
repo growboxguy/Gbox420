@@ -18,7 +18,7 @@
 #include "src/Modules/ReservoirModule.h"
 #include "src/WirelessCommands_Reservoir.h" ///< Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul
 
-///< Global variable initialization
+// Global variable initialization
 char LongMessage[MaxLongTextLength] = "";            ///< Temp storage for assembling long messages (REST API - Google Sheets reporting)
 char ShortMessage[MaxShotTextLength] = "";           ///< Temp storage for assembling short messages (Log entries, Error messages)char CurrentTime[MaxWordLength] = "";      ///< Buffer for storing current time in text format
 char CurrentTime[MaxWordLength] = "";                ///< Buffer for storing current time in text format

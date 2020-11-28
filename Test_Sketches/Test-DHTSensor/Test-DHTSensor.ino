@@ -11,7 +11,7 @@ const int TempSensorInPin = 3; // DAT digital input - DHT22 sensor
 float Humidity;    //Stores humidity
 float Temperature; //Stores temperature
 
-//Component initialization
+// Component initialization
 const uint8_t DHTType = DHT22;            //specify temp/humidity sensor type: DHT21(AM2301) or DHT22(AM2302,AM2321)
 DHT TempSensor(TempSensorInPin, DHTType); // Initialize DHT sensor
 

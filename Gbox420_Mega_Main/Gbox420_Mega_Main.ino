@@ -1,40 +1,37 @@
-/**@file*/
-// GrowBoxGuy - http:///< sites.google.com/site/growboxguy/
-// Sketch for grow box monitoring and controlling
-
-///< HELLO, You are probably here looking for the following tab:
-///< Settings.h : Pin assignment, First time setup, Default settings
-
-///< \todo Proper doxygen documentation
-///< \todo Add pump cutout during aero spray in case pressure limit is reached
-///< \todo Light sensor is not linear, need a better way to estimate brightness percentage. Readings[10] and calibrate to every 10% , lookup closest 2 calibration rating (TopRange,BottomRange) and do a mapping between them?
-///< \todo Display module online/offline status, timeout to offline if no response is received in X minutes
+/*! 
+ *  \brief     Main module for Mega2560 - Grow tent monitoring and controlling sketch.
+ *  \details   To change the default pin layout / startup settings navigate to: Settings.h
+ *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
+ *  \version   4.20
+ * 
+ *  \todo Proper doxygen documentation
+ */
 
 #include "Arduino.h"
-#include "avr/wdt.h"                          ///< Watchdog timer for detecting a crash and automatically resetting the board
-#include "avr/boot.h"                         ///< Watchdog timer related bug fix
-#include "printf.h"                           ///< Printing the wireless status message from nRF24L01
-#include "TimerThree.h"                       ///< Interrupt handling for webpage
-#include "ELClient.h"                         ///< ESP-link
-#include "ELClientWebServer.h"                ///< ESP-link - WebServer API
-#include "ELClientCmd.h"                      ///< ESP-link - Get current time from the internet using NTP
-#include "ELClientRest.h"                     ///< ESP-link - REST API
-#include "Thread.h"                           ///< Splitting functions to threads for timing
-#include "StaticThreadController.h"           ///< Grouping threads
-#include "SerialLog.h"                        ///< Logging to the Serial console and to ESP-link's console
-#include "src/Components_Web/420Common_Web.h" ///< Base class where all web components inherits from
-#include "Settings.h"                         ///< EEPROM stored settings for every component
-#include "src/Modules_Web/MainModule_Web.h"   ///< Represents a complete box with all feautres
-#include "SPI.h"                              ///< allows you to communicate with SPI devices, with the Arduino as the master device
-#include "nRF24L01.h"                         ///< https://forum.arduino.cc/index.php?topic=421081
-#include "RF24.h"                             ///< https://github.com/maniacbug/RF24
+#include "avr/wdt.h"                          // Watchdog timer for detecting a crash and automatically resetting the board
+#include "avr/boot.h"                         // Watchdog timer related bug fix
+#include "printf.h"                           // Printing the wireless status message from nRF24L01
+#include "TimerThree.h"                       // Interrupt handling for webpage
+#include "ELClient.h"                         // ESP-link
+#include "ELClientWebServer.h"                // ESP-link - WebServer API
+#include "ELClientCmd.h"                      // ESP-link - Get current time from the internet using NTP
+#include "ELClientRest.h"                     // ESP-link - REST API
+#include "Thread.h"                           // Splitting functions to threads for timing
+#include "StaticThreadController.h"           // Grouping threads
+#include "SerialLog.h"                        // Logging to the Serial console and to ESP-link's console
+#include "src/Components_Web/420Common_Web.h" // Base class where all web components inherits from
+#include "Settings.h"                         // EEPROM stored settings for every component
+#include "src/Modules_Web/MainModule_Web.h"   // Represents a complete box with all feautres
+#include "SPI.h"                              // allows you to communicate with SPI devices, with the Arduino as the master device
+#include "nRF24L01.h"                         // https://forum.arduino.cc/index.php?topic=421081
+#include "RF24.h"                             // https://github.com/maniacbug/RF24
 
-//Global variable initialization
+// Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API - Google Sheets reporting)
 char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
 char CurrentTime[MaxWordLength] = "";      ///< Buffer for storing current time in text format
 
-//Component initialization
+// Component initialization
 HardwareSerial &ArduinoSerial = Serial;   ///< Reference to the Arduino Serial output
 HardwareSerial &ESPSerial = Serial3;      ///< Reference to the ESP Link Serial output
 ELClient ESPLink(&ESPSerial);             ///< ESP-link. Both SLIP and debug messages are sent to ESP over the ESP Serial link
@@ -42,9 +39,9 @@ ELClientWebServer WebServer(&ESPLink);    ///< ESP-link WebServer API
 ELClientCmd ESPCmd(&ESPLink);             ///< ESP-link - Helps getting the current time from the internet using NTP
 ELClientRest PushingBoxRestAPI(&ESPLink); ///< ESP-link REST API
 Settings *ModuleSettings;                 ///< This object will store the settings loaded from the EEPROM. Persistent between reboots.
-bool *Debug;
-bool *Metric;
-MainModule *Main1; ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
+bool *Debug;                              ///< True - Turns on extra debug messages on the Serial Output
+bool *Metric;                             ///< True - Use metric units, False - Use imperial units
+MainModule *Main1;                        ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///< Wireless communication with Modules over nRF24L01+
 

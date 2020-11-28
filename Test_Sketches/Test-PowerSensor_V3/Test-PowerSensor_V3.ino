@@ -6,7 +6,7 @@
 #include "SoftwareSerial.h" // Arduino IDE >1.6.6
 #include "PZEM004Tv30.h"
 
-//Component initialization
+// Component initialization
 PZEM004Tv30 PowerSensor(&Serial2);
 
 //For testing: Turn on the lights

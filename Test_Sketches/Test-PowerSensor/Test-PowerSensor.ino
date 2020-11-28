@@ -6,7 +6,7 @@
 //#include "SoftwareSerial.h" // Arduino IDE >1.6.6
 #include "PZEM004T.h"
 
-//Component initialization
+// Component initialization
 PZEM004T PowerSensor(&Serial2);
 IPAddress PowerSensorIP(192, 168, 1, 1);
 

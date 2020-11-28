@@ -11,7 +11,7 @@ const char PushingBoxLogRelayID[] = "v755877CF53383E1"; //UPDATE THIS to your Pu
 //Global variables - fake data to report
 char WebMessage[512]; //buffer for GoogleSheets report
 
-//Component initialization
+// Component initialization
 ELClient ESPLink(&Serial3);     //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
 ELClientRest RestAPI(&ESPLink); // ESP-link REST API
 

@@ -10,7 +10,7 @@ char WebMessage[512];
 //Global constants
 const char PushingBoxEmailAlertID[] = "vC5244859A2453AA"; //UPDATE THIS to your PushingBox email alert scenario`s DeviceID
 
-//Component initialization
+// Component initialization
 ELClient ESPLink(&Serial3);     //ESP-link. Both SLIP and debug messages are sent to ESP over Serial3
 ELClientRest RestAPI(&ESPLink); // ESP-link REST API
 

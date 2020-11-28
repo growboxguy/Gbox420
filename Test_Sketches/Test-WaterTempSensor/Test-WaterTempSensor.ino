@@ -12,7 +12,7 @@ const byte TempSensorInPin = 4; //Data(yellow) - DS18B20 waterproof temp sensor
 float TempC; // water temperature (°C)
 float TempF; // water temperature (°F)
 
-//Component initialization
+// Component initialization
 OneWire TempSensorWire(TempSensorInPin);
 DallasTemperature TempSensor(&TempSensorWire);
 

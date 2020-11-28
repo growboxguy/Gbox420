@@ -13,7 +13,7 @@
 //Global variable
 char CurrentTime[20]; //buffer for getting current time
 
-//Component initialization
+// Component initialization
 ELClient ESPLink(&Serial3);
 ELClientCmd EspCmd(&ESPLink);
 

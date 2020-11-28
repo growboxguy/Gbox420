@@ -37,8 +37,8 @@ Settings *loadSettings(bool ResetEEPROM = false) ///< if the function contains a
 }
 
 /**
-  \brief Load sketch default settings into EEPROM and 
-  \attention Restart the Arduino sketch!
+  \brief Load sketch default settings into EEPROM 
+  \attention Restarts the Arduino sketch!
 */
 void restoreDefaults()
 {
