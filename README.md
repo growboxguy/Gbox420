@@ -51,7 +51,7 @@ Placed outside the grow box.<br>
 
 <b>[Hempy module](https://sites.google.com/site/growboxguy/modules/hempy-module)</b>: Based on an Arduino Nano RF. Measures the weight of the Hempy buckets and controls watering.<br>
 ![Hempy module](https://lh3.googleusercontent.com/pw/ACtC-3dudHmGC8n4Kcgwcb-83gjC90rDndVKHWDJVZBVMnE6PNbyAThh4SHS5ZNTrKT6reoeZtoBUqaVVOZ6g1n4gIZ5182V9bFkOo8Whkh0aAA8t2sMvJTbO-WKcAyJIwn-IEUC7KWZ5bfSq27Xfs6glVSD=w1200-h801-no?authuser=0)
-![Hempy module circuit](https://lh3.googleusercontent.com/pw/ACtC-3ew7qpG5li8TltIYYdZK7ngf9Wka3IMk1g_Kiy5i7uJJOQLPP9CABn6rLc26dwO8D0-84yrN5VdhvqVBOXRxNPkZDPFpnsmWy4EOf5kJMB8Z29yU3j4428LaY6aWNTinxwh8THUKx96hHekYNOiHuzH=w1200-h889-no?authuser=0)
+![Hempy module circuit](https://docs.google.com/drawings/d/e/2PACX-1vTWVrmTSdWCOkS6FvIopGMlXBbXineVb2dVuMd0gzMYfiOSRRxonShToh1yVhzlUk7z0l_m_4dmdzXK/pub?w=2104&h=1920)
 
 <b>[Aeroponics module](https://sites.google.com/site/growboxguy/modules/aero-module)</b>: Based on an Arduino Nano RF. Measures the pressure and controls the high pressure pump, bypass solenoid and spray solenoids. <br>
 ![Aeroponics module](https://lh3.googleusercontent.com/pw/ACtC-3eiagyhv_J80jMzoPd-cynOjpfpJTxiGapRe3wNWmgyJnsxzGZbGnULGq9hxq6lds4vKPzBIYIhXW7J4ivQXb3hWxPlNT90PDObBekW19Pd2uMQFC2vSQevob1vP_xZd7tKOi5Ae9vfTJLv8udcrCRk=w1200-h801-no?authuser=0)
