@@ -40,7 +40,7 @@ The complete automation kit, including the Main, Aeroponics, Hempy bucket and Re
 <b>[Main module](https://sites.google.com/site/growboxguy/modules/main-module)</b>: Based on the Arduino Mega2560 and ESP8266 chips. Measures and controls AC power to the two PWM dimmed LED drivers, the dual speed Internal and Exhaust fans and to the 12V DC power brick powering all modules.Collects sensor readings from the other modules wirelessly and reports them to Google Sheets.
 Placed outside the grow box.<br>
 ![Main module](https://lh3.googleusercontent.com/pw/ACtC-3f9mNWcEYjtU5f1tdHX-KMrAYjO2jOn3d1OxBzmNKc2Ks3GEG6k4sIKgxc0RuagOZo2bk1hZBxS4kohtNuJ7_UDDagushsACgsxv-13qPD7kYhtlzTT3KzXf8dS6np45RzBocGLAsESsg74DEi4yTlV=w1200-h801-no?authuser=0)
-![Main module circuit](https://lh3.googleusercontent.com/pw/ACtC-3d_kFnsAjAEZR40xnVtmgArwwm-flMP83BC13oYXVeMe00Ivf0dg3_pGFAeo3EDN7nTPoXuEo8ubIy81NVVo7LzsJJgbXgjzMSaUnjJyZWrP3fBQXbDGJh2B0QX936-0VAFGQokV-BQqd5cpz4--x7-=w1200-h892-no?authuser=0)
+![Main module circuit](https://docs.google.com/drawings/d/e/2PACX-1vRC9YnKQyRT-BbdW2CJempLox1jY8OYQcGt8fqEfR0KcsUc03bmKwdV0i7CHmldAey-ZC_nQ66AJLzg/pub?w=1221&h=896)
 
 <b>Main module extension</b>: Temperature, humidity and light sensors connected to the main module via UTP cable. Placed inside the grow box.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3d0RY9H_sS4tyf9QsXPbRu4Dmo3j0MkfTi_iXFxKPSlXgyHFsKGfHFe1g0NQ0Vhz4qsiYNV4oVIYgt9rUr-bMQV9dXvcj3nk_4XGrgWVfTf-nATa9yZM1hk4IYu6m5Ze6bTE3ZDnEiA_IBzIqji3BDl=w1200-h801-no?authuser=0)
