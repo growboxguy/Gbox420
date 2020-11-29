@@ -47,7 +47,7 @@ Placed outside the grow box.<br>
 
 <b>[Reservoir module](https://sites.google.com/site/growboxguy/modules/reservoir-module)</b>: ased on an Arduino Nano RF. Measures the reservoir weight, temperature, pH and the air temperature and humidity around the reservoir.<br>
 ![Reservoir module](https://lh3.googleusercontent.com/pw/ACtC-3f2VaMcisIGxvBNdvfefVLztVS8ZZoiRN75YegEpFTWzUvLPIjvvQJEbDnwNDv7SrEL5GUPgjhy8asU0VALJWJWtYywP_0PrXSf4Sbr8mNe1UWMq12Ejylk7H2nVonGVy5qJL29gRUssHa5AtaVk5Xe=w1200-h801-no?authuser=0)
-![Reservoir module circuit](https://lh3.googleusercontent.com/pw/ACtC-3dWYUwdfsKYgwnBM7kQUHYzT-3laoEZHpQ5fpOGTYeBcr5vJYigMnVFhMS5GwZl8xdHm3P6NV3mBD9qb7mmVUrHp-UFFFIZ-S8YH_oi8YhnA47nv9fItrEEAnB6eXYLba00iSc-4ozk10Pg_zqFgwE0=w1200-h892-no?authuser=0)
+![Reservoir module circuit](https://docs.google.com/drawings/d/e/2PACX-1vTHcfBM6HR6hO9NSg53OPTgEhFS1ThZj5WV94_R20Qx79G963nKIyb6I_g4LDoUJ32dz28IAxgxa_tW/pub?w=1135&h=894)
 
 <b>[Hempy module](https://sites.google.com/site/growboxguy/modules/hempy-module)</b>: Based on an Arduino Nano RF. Measures the weight of the Hempy buckets and controls watering.<br>
 ![Hempy module](https://lh3.googleusercontent.com/pw/ACtC-3dudHmGC8n4Kcgwcb-83gjC90rDndVKHWDJVZBVMnE6PNbyAThh4SHS5ZNTrKT6reoeZtoBUqaVVOZ6g1n4gIZ5182V9bFkOo8Whkh0aAA8t2sMvJTbO-WKcAyJIwn-IEUC7KWZ5bfSq27Xfs6glVSD=w1200-h801-no?authuser=0)
