@@ -1,8 +1,0 @@
-<map id="Aeroponics" name="Aeroponics">
-<area shape="rect" id="node1" title="&lt; Aeroponics tote virtual parent class" alt="" coords="149,80,243,107"/>
-<area shape="rect" id="node3" href="$classAeroponics__NoTank.html" title="&lt; Aeroponics tote without pressure tank" alt="" coords="40,155,189,181"/>
-<area shape="rect" id="node5" href="$classAeroponics__Tank.html" title="&lt; Aeroponics tote with pressure tank" alt="" coords="223,155,353,181"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="155,5,237,32"/>
-<area shape="rect" id="node4" href="$classAeroponics__NoTank__Web.html" title="&lt; Aeroponics tote without pressure tank &#45; website component" alt="" coords="5,229,189,256"/>
-<area shape="rect" id="node6" href="$classAeroponics__Tank__Web.html" title="&lt; Aeroponics tote with pressure tank &#45; website component" alt="" coords="214,229,381,256"/>
-</map>

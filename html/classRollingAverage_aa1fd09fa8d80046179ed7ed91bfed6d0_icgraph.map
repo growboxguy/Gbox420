@@ -1,8 +1,0 @@
-<map id="RollingAverage::updateAverage" name="RollingAverage::updateAverage">
-<area shape="rect" id="node1" title=" " alt="" coords="543,103,769,130"/>
-<area shape="rect" id="node2" href="$classPressureSensor.html#a7a16702239fcf55a72e91c45fe4002ac" title=" " alt="" coords="274,78,489,105"/>
-<area shape="rect" id="node6" href="$classRollingAverage.html#a8b3550acbd16b942b565150334205d52" title=" " alt="" coords="268,129,495,155"/>
-<area shape="rect" id="node3" href="$classPressureSensor.html#a9948098b4c429144f4a2d865a3bf520e" title=" " alt="" coords="25,5,201,47"/>
-<area shape="rect" id="node4" href="$classAeroponics__NoTank.html#a8e0130107832f0a60d37ea581f6f67fb" title=" " alt="" coords="34,71,191,112"/>
-<area shape="rect" id="node5" href="$classAeroponics__Tank.html#a9b1c9377aec2a453e4562bca5ae7afa2" title=" " alt="" coords="5,137,220,163"/>
-</map>

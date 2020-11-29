@@ -1,9 +1,0 @@
-<map id="AirPump_Web" name="AirPump_Web">
-<area shape="rect" id="node1" title="&lt; AirPump controller &#45; website component" alt="" coords="357,449,469,476"/>
-<area shape="rect" id="node2" href="$classAirPump.html" title="&lt; Air Pump controller" alt="" coords="65,360,143,387"/>
-<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="73,5,154,32"/>
-<area shape="rect" id="node4" href="$classModule.html" title=" " alt="" coords="218,153,289,180"/>
-<area shape="rect" id="node5" href="$classSound.html" title="&lt; Sound feedback buzzer" alt="" coords="167,360,230,387"/>
-<area shape="rect" id="node6" href="$classCommon__Web.html" title=" " alt="" coords="378,153,494,180"/>
-<area shape="rect" id="node7" href="$classModule__Web.html" title=" " alt="" coords="361,360,466,387"/>
-</map>

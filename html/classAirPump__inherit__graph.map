@@ -1,5 +1,0 @@
-<map id="AirPump" name="AirPump">
-<area shape="rect" id="node1" title="&lt; Air Pump controller" alt="" coords="23,80,100,107"/>
-<area shape="rect" id="node3" href="$classAirPump__Web.html" title="&lt; AirPump controller &#45; website component" alt="" coords="5,155,117,181"/>
-<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="21,5,102,32"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="WaterPump::getStateText" name="WaterPump::getStateText">
-<area shape="rect" id="node1" title="Text representation of the current state: DISABLED/IDLE/RUNNING..." alt="" coords="260,97,447,124"/>
-<area shape="rect" id="node2" href="$classWaterPump.html#a87cb38733467fa420729df2f0bebb161" title=" " alt="" coords="37,5,181,32"/>
-<area shape="rect" id="node3" href="$classHempyBucket__Web.html#adcbe7b1d4b88e839477ca89700113a48" title=" " alt="" coords="5,57,212,98"/>
-<area shape="rect" id="node4" href="$classAeroponics__Tank__Web.html#acf883f3ff9b052706ea0548bdf8c04aa" title=" " alt="" coords="21,122,196,163"/>
-<area shape="rect" id="node5" href="$classAeroponics__NoTank__Web.html#a1248fe0a06097426645344b35aec0431" title=" " alt="" coords="17,187,201,229"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="Sound_Web" name="Sound_Web">
-<area shape="rect" id="node1" title="&lt; Sound feedback buzzer &#45; website component" alt="" coords="44,155,141,181"/>
-<area shape="rect" id="node2" href="$classSound.html" title="&lt; Sound feedback buzzer" alt="" coords="5,80,68,107"/>
-<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="52,5,133,32"/>
-<area shape="rect" id="node4" href="$classCommon__Web.html" title=" " alt="" coords="92,80,208,107"/>
-</map>

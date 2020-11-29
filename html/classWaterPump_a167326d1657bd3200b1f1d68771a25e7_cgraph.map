@@ -1,4 +1,0 @@
-<map id="WaterPump::getStateText" name="WaterPump::getStateText">
-<area shape="rect" id="node1" title="Text representation of the current state: DISABLED/IDLE/RUNNING..." alt="" coords="5,5,192,32"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a43176c6813f3b76da4af8e358665b707" title=" " alt="" coords="240,5,380,32"/>
-</map>

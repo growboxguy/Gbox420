@@ -1,4 +1,0 @@
-<map id="Aeroponics_NoTank::lockPumpOn" name="Aeroponics_NoTank::lockPumpOn">
-<area shape="rect" id="node1" title="On user request the pump can be turned ON without the spray timer turning it off." alt="" coords="279,5,436,47"/>
-<area shape="rect" id="node2" href="$classAeroModule.html#a6465def68343e695ae91ba01c714858d" title=" " alt="" coords="5,13,231,39"/>
-</map>

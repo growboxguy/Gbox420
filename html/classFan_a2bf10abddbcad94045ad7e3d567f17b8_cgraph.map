@@ -1,6 +1,0 @@
-<map id="Fan::Fan" name="Fan::Fan">
-<area shape="rect" id="node1" title="&lt; Fan controller (2 speed)" alt="" coords="5,71,80,98"/>
-<area shape="rect" id="node2" href="$classModule.html#a20d1125116f9a8c71339fde4626c5adb" title="Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method." alt="" coords="128,5,336,47"/>
-<area shape="rect" id="node3" href="$classModule.html#aee2cbab440d38d29948205820ad50be8" title="Subscribing to the report queue: Calls the report() method." alt="" coords="131,71,333,98"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="182,122,282,149"/>
-</map>

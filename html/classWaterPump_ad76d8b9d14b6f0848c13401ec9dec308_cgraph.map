@@ -1,8 +1,0 @@
-<map id="WaterPump::turnBypassOn" name="WaterPump::turnBypassOn">
-<area shape="rect" id="node1" title=" " alt="" coords="5,51,201,78"/>
-<area shape="rect" id="node2" href="$classModule.html#afacdeaf339646bee722be54aab7155be" title=" " alt="" coords="481,26,620,53"/>
-<area shape="rect" id="node3" href="$classModule.html#a173624381666c28f9d33e809f067711c" title=" " alt="" coords="251,26,432,53"/>
-<area shape="rect" id="node4" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="263,77,419,103"/>
-<area shape="rect" id="node5" href="$classWaterPump.html#a50e73bd11d6cbfd02a89fb958813506e" title=" " alt="" coords="249,127,433,154"/>
-<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="501,127,601,154"/>
-</map>

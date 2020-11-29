@@ -1,7 +1,0 @@
-<map id="PressureSensor::refresh_FiveSec" name="PressureSensor::refresh_FiveSec">
-<area shape="rect" id="node1" title=" " alt="" coords="5,23,181,65"/>
-<area shape="rect" id="node2" href="$classPressureSensor.html#a7a16702239fcf55a72e91c45fe4002ac" title=" " alt="" coords="229,5,444,32"/>
-<area shape="rect" id="node4" href="$classCommon.html#a604ab36b3a1d9a5bcfcb225149c82f90" title=" " alt="" coords="241,56,433,83"/>
-<area shape="rect" id="node3" href="$classRollingAverage.html#aa1fd09fa8d80046179ed7ed91bfed6d0" title=" " alt="" coords="492,5,719,32"/>
-<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="555,56,655,83"/>
-</map>

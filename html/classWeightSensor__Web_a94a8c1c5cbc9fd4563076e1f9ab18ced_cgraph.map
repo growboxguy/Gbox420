@@ -1,6 +1,0 @@
-<map id="WeightSensor_Web::websiteEvent_Button" name="WeightSensor_Web::websiteEvent_Button">
-<area shape="rect" id="node1" title=" " alt="" coords="5,23,211,65"/>
-<area shape="rect" id="node2" href="$classCommon.html#a0192d295366bf1e966d8b58a3ce57554" title="When it return true the component belongs to this object." alt="" coords="259,5,481,32"/>
-<area shape="rect" id="node3" href="$classWeightSensor.html#a54b241f48e63ef6b17eade0d55a78008" title=" " alt="" coords="275,56,465,83"/>
-<area shape="rect" id="node4" href="$classModule.html#afacdeaf339646bee722be54aab7155be" title=" " alt="" coords="529,56,668,83"/>
-</map>

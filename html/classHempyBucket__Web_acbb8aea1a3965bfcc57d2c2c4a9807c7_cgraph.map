@@ -1,7 +1,0 @@
-<map id="HempyBucket_Web::websiteEvent_Field" name="HempyBucket_Web::websiteEvent_Field">
-<area shape="rect" id="node1" title=" " alt="" coords="5,49,212,90"/>
-<area shape="rect" id="node2" href="$classCommon.html#a0192d295366bf1e966d8b58a3ce57554" title="When it return true the component belongs to this object." alt="" coords="265,5,488,32"/>
-<area shape="rect" id="node3" href="$classWeightSensor.html#aa190a87fa5e384d2ead40c99116dc8a7" title=" " alt="" coords="289,56,464,83"/>
-<area shape="rect" id="node4" href="$classWeightSensor.html#a37b50db6dc60c3bc6a22807af5e17283" title=" " alt="" coords="260,107,493,133"/>
-<area shape="rect" id="node5" href="$classModule.html#afacdeaf339646bee722be54aab7155be" title=" " alt="" coords="541,107,680,133"/>
-</map>

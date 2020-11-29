@@ -1,6 +1,0 @@
-<map id="Aeroponics_Tank_Web::websiteEvent_Load" name="Aeroponics_Tank_Web::websiteEvent_Load">
-<area shape="rect" id="node1" title=" " alt="" coords="5,49,172,90"/>
-<area shape="rect" id="node2" href="$classCommon.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title=" " alt="" coords="220,5,444,32"/>
-<area shape="rect" id="node3" href="$classWaterPump.html#a6cb879910860b2d4a50fb6b13d7ce54b" title=" " alt="" coords="227,56,437,83"/>
-<area shape="rect" id="node4" href="$classWaterPump.html#afb845b670cc69fdfffc0cccf3d429fbb" title=" " alt="" coords="223,107,441,133"/>
-</map>

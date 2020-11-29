@@ -1,7 +1,0 @@
-<map id="PHSensor_Web::websiteEvent_Field" name="PHSensor_Web::websiteEvent_Field">
-<area shape="rect" id="node1" title=" " alt="" coords="5,49,220,90"/>
-<area shape="rect" id="node2" href="$classCommon.html#a0192d295366bf1e966d8b58a3ce57554" title="When it return true the component belongs to this object." alt="" coords="268,5,491,32"/>
-<area shape="rect" id="node3" href="$classPHSensor.html#a41bd303fbad556aaf714da2f0bf4a69c" title=" " alt="" coords="294,56,465,83"/>
-<area shape="rect" id="node5" href="$classPHSensor.html#ae9b41f458fafd9ae475d9bfbbb27f8d5" title=" " alt="" coords="305,107,453,133"/>
-<area shape="rect" id="node4" href="$classModule.html#afacdeaf339646bee722be54aab7155be" title=" " alt="" coords="539,81,677,108"/>
-</map>

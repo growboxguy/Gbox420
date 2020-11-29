@@ -1,6 +1,0 @@
-<map id="ModuleSkeleton_Web" name="ModuleSkeleton_Web">
-<area shape="rect" id="node1" title="&lt; This is a template for creating new modules" alt="" coords="60,155,221,181"/>
-<area shape="rect" id="node2" href="$classModuleSkeleton.html" title="&lt; This is a template for creating new modules" alt="" coords="5,80,132,107"/>
-<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="100,5,181,32"/>
-<area shape="rect" id="node4" href="$classCommon__Web.html" title=" " alt="" coords="156,80,272,107"/>
-</map>

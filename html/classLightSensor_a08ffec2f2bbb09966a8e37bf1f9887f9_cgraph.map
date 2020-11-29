@@ -1,6 +1,0 @@
-<map id="LightSensor::report" name="LightSensor::report">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,151,83"/>
-<area shape="rect" id="node2" href="$classLightSensor.html#a91ff9a682a84e1b265da97140bb467d7" title="returns the current light sensor reading" alt="" coords="199,5,405,32"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="453,81,553,108"/>
-<area shape="rect" id="node4" href="$classCommon.html#a9e60e2c26a5f4d72342a59a969954636" title=" " alt="" coords="238,107,366,133"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="Aeroponics_NoTank_Web::Aeroponics_NoTank_Web" name="Aeroponics_NoTank_Web::Aeroponics_NoTank_Web">
-<area shape="rect" id="node1" title="constructor" alt="" coords="5,156,197,197"/>
-<area shape="rect" id="node2" href="$classModule__Web.html#a125e0abaefa5c6ab2379162a3ea9cf55" title=" " alt="" coords="263,5,464,47"/>
-<area shape="rect" id="node3" href="$classModule__Web.html#a9b1a806569076aa701e961d54f888447" title=" " alt="" coords="245,71,481,98"/>
-<area shape="rect" id="node4" href="$classModule__Web.html#adadb1643a6b460c0d53a7341bb356ee1" title="Subscribing to the Website button press event: Calls the websiteEvent_Button() method." alt="" coords="262,123,465,164"/>
-<area shape="rect" id="node5" href="$classModule__Web.html#a9f9ef9212523d06a130c5e9046b81adf" title="Subscribing to the Website field submit event: Calls the websiteEvent_Field() method." alt="" coords="262,188,465,229"/>
-<area shape="rect" id="node6" href="$classModule__Web.html#a11f84c9609ed88d1bfcd869d64775e93" title="Subscribing to the Website load event: Calls the websiteEvent_Load() method." alt="" coords="262,253,465,295"/>
-<area shape="rect" id="node7" href="$classModule__Web.html#aee7880f65926af22ba1b83a73607e3b6" title="Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method." alt="" coords="262,319,465,360"/>
-</map>

@@ -1,4 +1,0 @@
-<map id="LightSensor::triggerCalibration" name="LightSensor::triggerCalibration">
-<area shape="rect" id="node1" title="Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger." alt="" coords="245,13,465,39"/>
-<area shape="rect" id="node2" href="$classLightSensor__Web.html#abedb4cd4454f322ebbd7c3753bcd2a73" title=" " alt="" coords="5,5,197,47"/>
-</map>

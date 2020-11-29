@@ -1,7 +1,0 @@
-<map id="Switch_PWM::getDutyCycleText" name="Switch_PWM::getDutyCycleText">
-<area shape="rect" id="node1" title=" " alt="" coords="757,31,985,57"/>
-<area shape="rect" id="node2" href="$classSwitch__PWM.html#a568a22528e98480c84f250749b7074c0" title=" " alt="" coords="509,31,709,57"/>
-<area shape="rect" id="node3" href="$classWaterPump.html#a1b8dcaa0b0fae8325ef792322dde46dc" title=" " alt="" coords="296,31,461,57"/>
-<area shape="rect" id="node4" href="$classAeroModule.html#a6465def68343e695ae91ba01c714858d" title=" " alt="" coords="14,5,239,32"/>
-<area shape="rect" id="node5" href="$classHempyModule.html#a5578f429742c4685b52d599409da88ea" title=" " alt="" coords="5,56,248,83"/>
-</map>

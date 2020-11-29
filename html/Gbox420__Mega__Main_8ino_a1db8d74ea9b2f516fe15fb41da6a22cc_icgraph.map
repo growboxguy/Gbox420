@@ -1,6 +1,0 @@
-<map id="Wireless" name="Wireless">
-<area shape="rect" id="node1" title="Wireless communication with Modules over nRF24L01+." alt="" coords="436,31,515,57"/>
-<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title=" " alt="" coords="248,5,388,32"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Main_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,31,64,57"/>
-<area shape="rect" id="node3" href="$Gbox420__Mega__Main_8ino.html#a56c5bdcbeb79cd2246a2c88826850ca1" title=" " alt="" coords="112,5,200,32"/>
-</map>

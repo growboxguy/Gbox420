@@ -1,8 +1,0 @@
-<map id="HempyBucket_Web::websiteEvent_Refresh" name="HempyBucket_Web::websiteEvent_Refresh">
-<area shape="rect" id="node1" title=" " alt="" coords="5,74,212,115"/>
-<area shape="rect" id="node2" href="$classCommon.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title=" " alt="" coords="260,5,484,32"/>
-<area shape="rect" id="node3" href="$classWaterPump.html#a167326d1657bd3200b1f1d68771a25e7" title="Text representation of the current state: DISABLED/IDLE/RUNNING..." alt="" coords="279,56,465,83"/>
-<area shape="rect" id="node5" href="$classWeightSensor.html#a00d85fab4422a569a3f475d0586af926" title=" " alt="" coords="279,107,465,133"/>
-<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title=" " alt="" coords="341,157,403,184"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a43176c6813f3b76da4af8e358665b707" title=" " alt="" coords="532,56,672,83"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="Module::addToRefreshQueue_Minute" name="Module::addToRefreshQueue_Minute">
-<area shape="rect" id="node1" title="Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method." alt="" coords="292,74,500,115"/>
-<area shape="rect" id="node2" href="$classAirPump.html#aedf30b103454afa9821cb0ec73a7fee2" title="&lt; AirPump controller (2 speed)" alt="" coords="55,5,195,32"/>
-<area shape="rect" id="node3" href="$classFan.html#a2bf10abddbcad94045ad7e3d567f17b8" title="&lt; Fan controller (2 speed)" alt="" coords="87,56,162,83"/>
-<area shape="rect" id="node4" href="$classLights.html#a48acde7f45e4b9b22969e52fea689040" title="constructor" alt="" coords="71,107,179,133"/>
-<area shape="rect" id="node5" href="$classModuleSkeleton.html#a28db770cfd6d6a02110d0adb62666676" title="constructor" alt="" coords="5,157,244,184"/>
-</map>

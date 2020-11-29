@@ -1,9 +1,0 @@
-<map id="DistanceSensor_Web" name="DistanceSensor_Web">
-<area shape="rect" id="node1" title="Class for the Ultrasonic distance sensor &#45; HC&#45;SR04 or JSN&#45;SR04T &#45; Website component." alt="" coords="332,449,491,476"/>
-<area shape="rect" id="node2" href="$classDistanceSensor.html" title=" " alt="" coords="30,360,153,387"/>
-<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="71,5,152,32"/>
-<area shape="rect" id="node4" href="$classModule.html" title=" " alt="" coords="216,153,287,180"/>
-<area shape="rect" id="node5" href="$classSound.html" title="&lt; Sound feedback buzzer" alt="" coords="177,360,240,387"/>
-<area shape="rect" id="node6" href="$classCommon__Web.html" title=" " alt="" coords="376,153,492,180"/>
-<area shape="rect" id="node7" href="$classModule__Web.html" title=" " alt="" coords="359,360,464,387"/>
-</map>

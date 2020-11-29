@@ -1,9 +1,0 @@
-<map id="Aeroponics_NoTank::lockPumpOn" name="Aeroponics_NoTank::lockPumpOn">
-<area shape="rect" id="node1" title="On user request the pump can be turned ON without the spray timer turning it off." alt="" coords="5,74,163,115"/>
-<area shape="rect" id="node2" href="$classWaterPump.html#ac5356119ca29c80c861208cc4a31eb2f" title="Turn the pump ON." alt="" coords="211,81,383,108"/>
-<area shape="rect" id="node3" href="$classModule.html#a173624381666c28f9d33e809f067711c" title=" " alt="" coords="432,5,613,32"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="682,81,782,108"/>
-<area shape="rect" id="node5" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="445,107,601,133"/>
-<area shape="rect" id="node6" href="$classWaterPump.html#a50e73bd11d6cbfd02a89fb958813506e" title=" " alt="" coords="431,157,615,184"/>
-<area shape="rect" id="node7" href="$classModule.html#afacdeaf339646bee722be54aab7155be" title=" " alt="" coords="663,157,801,184"/>
-</map>

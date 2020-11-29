@@ -1,9 +1,0 @@
-<map id="LightSensor_Web" name="LightSensor_Web">
-<area shape="rect" id="node1" title="forward declaration" alt="" coords="346,449,479,476"/>
-<area shape="rect" id="node2" href="$classLightSensor.html" title="&lt; LM393 Light sensor" alt="" coords="48,360,147,387"/>
-<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="72,5,153,32"/>
-<area shape="rect" id="node4" href="$classModule.html" title=" " alt="" coords="217,153,288,180"/>
-<area shape="rect" id="node5" href="$classSound.html" title="&lt; Sound feedback buzzer" alt="" coords="172,360,234,387"/>
-<area shape="rect" id="node6" href="$classCommon__Web.html" title=" " alt="" coords="377,153,493,180"/>
-<area shape="rect" id="node7" href="$classModule__Web.html" title=" " alt="" coords="360,360,465,387"/>
-</map>

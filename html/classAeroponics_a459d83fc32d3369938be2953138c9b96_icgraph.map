@@ -1,8 +1,0 @@
-<map id="Aeroponics::setSprayOnOff" name="Aeroponics::setSprayOnOff">
-<area shape="rect" id="node1" title=" " alt="" coords="279,129,475,156"/>
-<area shape="rect" id="node2" href="$classAeroModule.html#a6465def68343e695ae91ba01c714858d" title=" " alt="" coords="5,5,231,32"/>
-<area shape="rect" id="node3" href="$classAeroponics__NoTank__Web.html#a33b388e724f870482f90106fdacaa3b4" title=" " alt="" coords="26,57,210,98"/>
-<area shape="rect" id="node4" href="$classAeroponics__Tank__Web.html#a2dea9353cb1709b51f496d8d0caa928e" title=" " alt="" coords="34,122,202,163"/>
-<area shape="rect" id="node5" href="$classAeroponics__NoTank__Web.html#ad91ef49025ae421e26f39a5df527d95e" title=" " alt="" coords="26,187,210,229"/>
-<area shape="rect" id="node6" href="$classAeroponics__Tank__Web.html#a5693a6f3eacc0a155e5639607368e0ea" title=" " alt="" coords="35,253,201,294"/>
-</map>

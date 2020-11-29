@@ -1,7 +1,0 @@
-<map id="ReservoirCommonTemplate" name="ReservoirCommonTemplate">
-<area shape="rect" id="node1" title="&lt; Shared between Command and Respone packages" alt="" coords="289,5,491,32"/>
-<area shape="rect" id="node2" href="$structReservoirCommand.html" title="&lt; Max 32 bytes. Command sent by the Main module" alt="" coords="5,80,156,107"/>
-<area shape="rect" id="node3" href="$structReservoirModuleCommand.html" title="&lt; Max 32 bytes. Command sent by the Main module" alt="" coords="180,80,379,107"/>
-<area shape="rect" id="node4" href="$structReservoirModuleResponse.html" title="&lt; Max 32 bytes. Response sent back to the Main module" alt="" coords="403,80,598,107"/>
-<area shape="rect" id="node5" href="$structReservoirResponse.html" title="&lt; Max 32 bytes. Response sent back to the Main module" alt="" coords="622,80,769,107"/>
-</map>

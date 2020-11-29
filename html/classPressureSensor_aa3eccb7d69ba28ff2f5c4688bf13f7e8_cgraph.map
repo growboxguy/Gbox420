@@ -1,7 +1,0 @@
-<map id="PressureSensor::getPressureText" name="PressureSensor::getPressureText">
-<area shape="rect" id="node1" title=" " alt="" coords="5,56,240,83"/>
-<area shape="rect" id="node2" href="$classRollingAverage.html#ada0ea15c7152230f9433329fba92d3f8" title=" " alt="" coords="545,5,728,32"/>
-<area shape="rect" id="node3" href="$classRollingAverage.html#aab001a981060af0948bd8b46c05c8e97" title=" " alt="" coords="288,56,497,83"/>
-<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a50e0796918ffab51d100465832e5cb1a" title=" " alt="" coords="330,107,455,133"/>
-<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title=" " alt="" coords="605,56,668,83"/>
-</map>
