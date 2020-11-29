@@ -1,0 +1,11 @@
+<map id="RollingAverage::getFloatText" name="RollingAverage::getFloatText">
+<area shape="rect" id="node1" title=" " alt="" coords="551,139,760,166"/>
+<area shape="rect" id="node2" href="$classPHSensor.html#afa1a5158732cd57ffb41ae089bf8850f" title=" " alt="" coords="306,30,465,57"/>
+<area shape="rect" id="node4" href="$classPressureSensor.html#aa3eccb7d69ba28ff2f5c4688bf13f7e8" title=" " alt="" coords="268,114,503,141"/>
+<area shape="rect" id="node8" href="$classPHSensor.html#af9730aece2d3bcb71ac9d4f1e6f96f1e" title=" " alt="" coords="320,165,451,191"/>
+<area shape="rect" id="node9" href="$classModuleSkeleton.html#a4b13bbc3ce0282781e36f450bd4f189a" title=" " alt="" coords="299,215,472,242"/>
+<area shape="rect" id="node3" href="$classPHSensor__Web.html#a73ad3c5be0e9dd8deaea4cf2eee654be" title=" " alt="" coords="5,5,220,47"/>
+<area shape="rect" id="node5" href="$classPressureSensor.html#ae9f360e068bc30f611ba50c7c9cf7e4a" title=" " alt="" coords="28,71,197,98"/>
+<area shape="rect" id="node6" href="$classAeroponics__Tank__Web.html#acf883f3ff9b052706ea0548bdf8c04aa" title=" " alt="" coords="25,123,200,164"/>
+<area shape="rect" id="node7" href="$classAeroponics__NoTank__Web.html#a1248fe0a06097426645344b35aec0431" title=" " alt="" coords="21,188,205,229"/>
+</map>

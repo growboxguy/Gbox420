@@ -1,0 +1,10 @@
+<map id="ReservoirModule_Web::ReservoirModule_Web" name="ReservoirModule_Web::ReservoirModule_Web">
+<area shape="rect" id="node1" title="constructor" alt="" coords="5,188,180,229"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a38624eecf0efaefb9210a60868327020" title=" " alt="" coords="245,5,447,47"/>
+<area shape="rect" id="node3" href="$classModule__Web.html#a125e0abaefa5c6ab2379162a3ea9cf55" title=" " alt="" coords="245,71,447,112"/>
+<area shape="rect" id="node4" href="$classModule__Web.html#a9b1a806569076aa701e961d54f888447" title=" " alt="" coords="228,137,464,163"/>
+<area shape="rect" id="node5" href="$classModule__Web.html#adadb1643a6b460c0d53a7341bb356ee1" title="Subscribing to the Website button press event: Calls the websiteEvent_Button() method." alt="" coords="245,188,447,229"/>
+<area shape="rect" id="node6" href="$classModule__Web.html#aee7880f65926af22ba1b83a73607e3b6" title="Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method." alt="" coords="245,253,447,295"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="296,319,396,346"/>
+<area shape="rect" id="node8" href="$classReservoirModule__Web.html#aaacd2f917ae585e9c73e6372aa206a80" title=" " alt="" coords="263,371,429,412"/>
+</map>

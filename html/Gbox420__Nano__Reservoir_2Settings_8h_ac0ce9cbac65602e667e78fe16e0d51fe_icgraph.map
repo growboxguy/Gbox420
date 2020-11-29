@@ -1,0 +1,11 @@
+<map id="saveSettings" name="saveSettings">
+<area shape="rect" id="node1" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="956,107,1063,133"/>
+<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html#a51e7fb049f4e601d609570e25bc10118" title=" " alt="" coords="285,85,440,112"/>
+<area shape="rect" id="node5" href="$Gbox420__Nano__Reservoir_2Settings_8h.html#ad971c9812747afb3057cd98892437c13" title="Load settings from EEPROM." alt="" coords="735,208,838,235"/>
+<area shape="rect" id="node7" href="$classAeroModule.html#a6465def68343e695ae91ba01c714858d" title=" " alt="" coords="674,107,899,133"/>
+<area shape="rect" id="node8" href="$classHempyModule.html#a5578f429742c4685b52d599409da88ea" title=" " alt="" coords="665,157,908,184"/>
+<area shape="rect" id="node9" href="$Gbox420__Mega__Main_8ino.html#ae784bf97b35a03486279475151a20abd" title=" " alt="" coords="488,5,617,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_8ino.html#af141387cf1674081eca9db00c3c869ab" title=" " alt="" coords="112,85,237,112"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title=" " alt="" coords="5,161,64,188"/>
+<area shape="rect" id="node6" href="$Gbox420__Nano__Reservoir_2Settings_8h.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="491,123,614,149"/>
+</map>

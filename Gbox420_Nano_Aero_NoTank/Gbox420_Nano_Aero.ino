@@ -1,28 +1,31 @@
-/**@file*/
-///< Aeroponics module - Without a pressure tank
-///< GrowBoxGuy - http:///< sites.google.com/site/growboxguy/
-///< Gbox420 Nano is a stripped down version of Gbox420 without a web interface support
-///< Runs autonomously on an Arduino Nano RF and supports wireless connection towards the main module
+/*! \file 
+ *  \brief     Aeroponics module without Pressure Tank for Nano 
+ *  \details   To change the default pin layout / startup settings navigate to: Settings.h
+ *  \details   Runs autonomously on an Arduino RF-Nano or Arduino Nano with an nRF24L01+ wireless transceiver.
+ *  \details   Supports wireless data exchange with the Main module
+ *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
+ *  \version   4.20
+ */
 
 #include "Arduino.h"
-#include "avr/wdt.h"  ///< Watchdog timer for detecting a crash and automatically resetting the board
-#include "avr/boot.h" ///< Watchdog timer related bug fix
+#include "avr/wdt.h"  // Watchdog timer for detecting a crash and automatically resetting the board
+#include "avr/boot.h" // Watchdog timer related bug fix
 #include "printf.h"
-#include "Thread.h"                 ///< Splitting functions to threads for timing
-#include "StaticThreadController.h" ///< Grouping threads
-#include "SPI.h"                    ///< allows you to communicate with SPI devices, with the Arduino as the master device
-#include "nRF24L01.h"               ///< https://forum.arduino.cc/index.php?topic=421081
-#include "RF24.h"                   ///< https://github.com/maniacbug/RF24
-#include "SerialLog.h"              ///< Logging debug messages to Serial
+#include "Thread.h"                 // Splitting functions to threads for timing
+#include "StaticThreadController.h" // Grouping threads
+#include "SPI.h"                    // allows you to communicate with SPI devices, with the Arduino as the master device
+#include "nRF24L01.h"               // https://forum.arduino.cc/index.php?topic=421081
+#include "RF24.h"                   // https://github.com/maniacbug/RF24
+#include "SerialLog.h"              // Logging debug messages to Serial
 #include "Settings.h"
 #include "src/Modules/AeroModule_NoTank.h"
-#include "src/WirelessCommands_Aero.h" ///< Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul
+#include "src/WirelessCommands_Aero.h" // Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul
 
 // Global variable initialization
-char LongMessage[MaxLongTextLength] = "";            ///< Temp storage for assembling long messages (REST API - Google Sheets reporting)
-char ShortMessage[MaxShotTextLength] = "";           ///< Temp storage for assembling short messages (Log entries, Error messages)char CurrentTime[MaxWordLength] = "";      ///< Buffer for storing current time in text format
-char CurrentTime[MaxWordLength] = "";                ///< Buffer for storing current time in text format
-void *ReceivedMessage = malloc(WirelessPayloadSize); ///< Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
+char LongMessage[MaxLongTextLength] = "";            // Temp storage for assembling long messages (REST API - Google Sheets reporting)
+char ShortMessage[MaxShotTextLength] = "";           // Temp storage for assembling short messages (Log entries, Error messages)
+char CurrentTime[MaxWordLength] = "";                // Buffer for storing current time in text format
+void *ReceivedMessage = malloc(WirelessPayloadSize); // Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
 
 ///< Component initialization
 HardwareSerial &ArduinoSerial = Serial; ///< Reference to the Arduino Serial
@@ -45,7 +48,7 @@ void setup()
   pinMode(13, OUTPUT);         ///< onboard LED - Heartbeat every second to confirm code is running
   printf_begin();
   logToSerials(F(""), true, 0);                                  ///< New line
-  logToSerials(F("Aeroponics module initializing..."), true, 0); ///< logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https:///< gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
+  logToSerials(F("Aeroponics module initializing..."), true, 0); ///< logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                           ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                             ///< fix watchdog not loading sketch after a reset error on Mega2560
   struct AeroModuleCommand BlankCommand = {AeroMessages::AeroModuleCommand1};

@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$structReservoirCommonTemplate.html" title="&lt; Shared between Command and Respone packages" alt="" coords="5,81,208,108"/>
+<area shape="rect" id="node2" href="$structReservoirCommand.html" title="&lt; Max 32 bytes. Command sent by the Main module" alt="" coords="280,5,431,32"/>
+<area shape="rect" id="node3" href="$structReservoirModuleCommand.html" title="&lt; Max 32 bytes. Command sent by the Main module" alt="" coords="256,56,455,83"/>
+<area shape="rect" id="node4" href="$structReservoirModuleResponse.html" title="&lt; Max 32 bytes. Response sent back to the Main module" alt="" coords="258,107,453,133"/>
+<area shape="rect" id="node5" href="$structReservoirResponse.html" title="&lt; Max 32 bytes. Response sent back to the Main module" alt="" coords="282,157,429,184"/>
+</map>

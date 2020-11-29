@@ -32,9 +32,9 @@ static const uint8_t QueueDepth = 8;           ///< Limits the maximum number of
 static const uint8_t RollingAverageDepth = 10; ///< Limits the maximum number of active modules. Memory intense!
 
 ///< Global variables
-extern char LongMessage[MaxLongTextLength];  ///< Temp storage for assembling long messages (REST API - Google Sheets reporting)
-extern char ShortMessage[MaxShotTextLength]; ///< Temp storage for assembling short messages (Log entries, Error messages)
-extern char CurrentTime[MaxWordLength];      ///< Buffer for storing current time in text format
+extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
+extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
+extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
 static const uint8_t WirelessCSNPin = 9;             ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
@@ -51,7 +51,8 @@ typedef struct
   bool Debug = true;  ///< Logs debug messages to serial and web outputs
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
-  struct HempyBucketSettings ///< initialized via Designated initializer https:///< riptutorial.com/c/example/18609/using-designated-initializers
+  // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
+  struct HempyBucketSettings ///< HempyBucket default settings
   {
     HempyBucketSettings(bool WeightBasedWatering = false, float StartWeight = 0.0, float StopWeight = 0.0, bool TimerBasedWatering = false, uint16_t WateringInterval = 0, uint16_t WateringDuration = 0) : WeightBasedWatering(WeightBasedWatering), StartWeight(StartWeight), StopWeight(StopWeight), TimerBasedWatering(TimerBasedWatering), WateringInterval(WateringInterval), WateringDuration(WateringDuration) {}
     bool WeightBasedWatering;  //Enable/Disable weight based watering
@@ -64,13 +65,13 @@ typedef struct
   struct HempyBucketSettings Bucket1 = {.WeightBasedWatering = true, .StartWeight = 4.2, .StopWeight = 6.9, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
   struct HempyBucketSettings Bucket2 = {.WeightBasedWatering = true, .StartWeight = 4.2, .StopWeight = 6.9, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
 
-  struct HempyModuleSettings
+  struct HempyModuleSettings  ///< HempyModule default settings
   {
     //HempyModuleSettings() :  {}
   };
   struct HempyModuleSettings HempyMod1 = {}; ///< Default settings for the Hempy Module
 
-  struct SoundSettings
+  struct SoundSettings ///< Sound default settings
   {
     SoundSettings(uint8_t Pin = 0, bool Enabled = false) : Pin(Pin), Enabled(Enabled) {}
     uint8_t Pin;  ///< Piezo Buzzer red(+) cable
@@ -78,7 +79,7 @@ typedef struct
   };
   struct SoundSettings Sound1 = {.Pin = 2, .Enabled = true};
 
-  struct WaterPumpSettings
+  struct WaterPumpSettings ///< WaterPump default settings
   {
     WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic) {}
     uint8_t PumpPin;                  ///< Pump relay pin
@@ -95,7 +96,7 @@ typedef struct
   struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
   struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
 
-  struct WeightSensorSettings
+  struct WeightSensorSettings ///< WeightSensor default settings
   {
     WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, long Offset = 0, float Scale = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Offset(Offset), Scale(Scale) {}
     uint8_t DTPin;  ///< Weight sensor DT pin
@@ -110,10 +111,6 @@ typedef struct
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;
-
-
-///< EEPROM related functions - Persistent storage between reboots
-///< Use cautiously, EEPROM has a write limit of 100.000 cycles - Only use these in the setup() function, or when a user initiated change is stored
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits

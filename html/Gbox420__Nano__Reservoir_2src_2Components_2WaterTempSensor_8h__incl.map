@@ -1,0 +1,15 @@
+<map id="Gbox420_Nano_Reservoir/src/Components/WaterTempSensor.h" name="Gbox420_Nano_Reservoir/src/Components/WaterTempSensor.h">
+<area shape="rect" id="node1" title=" " alt="" coords="125,5,387,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,95,96,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="120,95,277,121"/>
+<area shape="rect" id="node4" href="$Gbox420__Nano__Reservoir_2src_2Components_2420Common_8h.html" title=" " alt="" coords="255,169,372,196"/>
+<area shape="rect" id="node13" href="$Gbox420__Nano__Reservoir_2src_2Components_2420Module_8h.html" title=" " alt="" coords="355,95,461,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="198,393,282,420"/>
+<area shape="rect" id="node6" title=" " alt="" coords="194,319,281,345"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Reservoir_2Settings_8h.html" title=" " alt="" coords="759,319,870,345"/>
+<area shape="rect" id="node8" href="$Gbox420__Nano__Reservoir_2SerialLog_8h.html" title=" " alt="" coords="51,319,170,345"/>
+<area shape="rect" id="node9" href="$Gbox420__Nano__Reservoir_2src_2Helpers_8h.html" title="Set of common functions any class can use." alt="" coords="361,244,457,271"/>
+<area shape="rect" id="node10" title=" " alt="" coords="461,319,577,345"/>
+<area shape="rect" id="node11" title=" " alt="" coords="601,319,684,345"/>
+<area shape="rect" id="node12" href="$Gbox420__Nano__Reservoir_2src_2RollingAverage_8h.html" title=" " alt="" coords="305,319,437,345"/>
+</map>

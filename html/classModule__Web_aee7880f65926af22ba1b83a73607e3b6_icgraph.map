@@ -1,0 +1,24 @@
+<map id="Module_Web::addToWebsiteQueue_Refresh" name="Module_Web::addToWebsiteQueue_Refresh">
+<area shape="rect" id="node1" title="Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method." alt="" coords="344,551,547,593"/>
+<area shape="rect" id="node2" href="$classAeroModule__Web.html#ab428de02336385c258daad686aa431f0" title="constructor" alt="" coords="23,5,279,32"/>
+<area shape="rect" id="node3" href="$classAeroponics__NoTank__Web.html#a0efd6e50cd3203adaaf1cd6a5c21e6aa" title="constructor" alt="" coords="55,57,247,98"/>
+<area shape="rect" id="node4" href="$classAeroponics__Tank__Web.html#acc3a7b0658cdb74262a14b71809185c6" title=" " alt="" coords="63,122,238,163"/>
+<area shape="rect" id="node5" href="$classAirPump__Web.html#a1f13fdecaac22c336c7eed98ef8d1488" title=" " alt="" coords="45,188,256,215"/>
+<area shape="rect" id="node6" href="$classDEVModule__Web.html#a3b6305f0ac608f03bf1d4e78183f1eac" title="constructor" alt="" coords="25,239,276,265"/>
+<area shape="rect" id="node7" href="$classDHTSensor__Web.html#a422e637e9933551dd4bd85609d1d20bd" title=" " alt="" coords="29,289,273,316"/>
+<area shape="rect" id="node8" href="$classDistanceSensor__Web.html#a138e1b0850163ae5282313e5c45580e4" title=" " alt="" coords="67,341,234,382"/>
+<area shape="rect" id="node9" href="$classFan__Web.html#a54f9ab383ef943d6b7ffc770b2220024" title=" " alt="" coords="79,407,223,433"/>
+<area shape="rect" id="node10" href="$classHempyBucket__Web.html#af942e90948040b5bc9f87f6a8519d749" title=" " alt="" coords="9,457,292,484"/>
+<area shape="rect" id="node11" href="$classHempyModule__Web.html#a00b9e646494d3540f37dee684561259a" title="constructor" alt="" coords="5,508,296,535"/>
+<area shape="rect" id="node12" href="$classLights__Web.html#acaf75aed6b86ca10828c967049c59383" title="constructor" alt="" coords="61,559,240,585"/>
+<area shape="rect" id="node13" href="$classLightSensor__Web.html#a3ebeb8eb8a73bc3d9bc61dc31f668280" title=" " alt="" coords="25,609,277,636"/>
+<area shape="rect" id="node14" href="$classMainModule.html#a3a918c8c080f2a810b64e297cf1ce994" title="constructor" alt="" coords="55,660,246,687"/>
+<area shape="rect" id="node15" href="$classModuleSkeleton__Web.html#aec8ecee521cba264f403e7ff08d178d8" title="constructor" alt="" coords="66,711,235,753"/>
+<area shape="rect" id="node16" href="$classPHSensor__Web.html#a1620625830d29822b30407d064d207c5" title=" " alt="" coords="39,777,263,804"/>
+<area shape="rect" id="node17" href="$classPowerSensor__Web.html#a7557ab09526b936ca15b5dc4ecb6f1ef" title="constructor" alt="" coords="17,828,285,855"/>
+<area shape="rect" id="node18" href="$classPowerSensorV3__Web.html#ad7ac3b7dbf2e4cef928121ad92f7f528" title="constructor" alt="" coords="67,879,234,921"/>
+<area shape="rect" id="node19" href="$classReservoirModule__Web.html#a349a39dca681c59248bb463e0d6eeff7" title="constructor" alt="" coords="63,945,238,986"/>
+<area shape="rect" id="node20" href="$classWaterLevelSensor__Web.html#a822380f4ecf477d16e6d535edff71848" title="constructor" alt="" coords="59,1010,242,1051"/>
+<area shape="rect" id="node21" href="$classWaterTempSensor__Web.html#ae52b9b96ac5a1c38b4392df32fe4f2c8" title="constructor" alt="" coords="59,1075,242,1117"/>
+<area shape="rect" id="node22" href="$classWeightSensor__Web.html#a8528c52192e9e5c4859ce61099dd9c33" title=" " alt="" coords="51,1141,250,1182"/>
+</map>

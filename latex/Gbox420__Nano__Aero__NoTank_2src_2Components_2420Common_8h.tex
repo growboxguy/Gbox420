@@ -1,0 +1,134 @@
+\hypertarget{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h}{}\doxysection{Gbox420\+\_\+\+Nano\+\_\+\+Aero\+\_\+\+No\+Tank/src/\+Components/420\+Common.h File Reference}
+\label{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h}\index{Gbox420\_Nano\_Aero\_NoTank/src/Components/420Common.h@{Gbox420\_Nano\_Aero\_NoTank/src/Components/420Common.h}}
+{\ttfamily \#include \char`\"{}Arduino.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Time\+Lib.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../\+Settings.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../\+Serial\+Log.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../\+Helpers.\+h\char`\"{}}\newline
+Include dependency graph for 420Common.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classCommon}{Common}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_a29e392d833e97bf88f780e9fdf22373f}{Long\+Message}} \mbox{[}Max\+Long\+Text\+Length\mbox{]}
+\begin{DoxyCompactList}\small\item\em $<$ header guard, same as the ifndef/define guard \href{https://en.wikipedia.org/wiki/Pragma_once}{\texttt{ https\+://en.\+wikipedia.\+org/wiki/\+Pragma\+\_\+once}} \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_a6084d34751a3c3b5585d06dc1c0dd9f6}{Short\+Message}} \mbox{[}Max\+Shot\+Text\+Length\mbox{]}
+\begin{DoxyCompactList}\small\item\em Temp storage for assembling short messages (Log entries, Error messages) \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_a292e29d40fbb346a1fa51dfc5ba879c1}{Current\+Time}} \mbox{[}Max\+Word\+Length\mbox{]}
+\begin{DoxyCompactList}\small\item\em Buffer for storing current time in text format. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structSettings}{Settings}} $\ast$ \mbox{\hyperlink{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_aa5d20d2c57bfa8a66c233eb21b7cdf6e}{Module\+Settings}}
+\begin{DoxyCompactList}\small\item\em This object will store the settings loaded from the E\+E\+P\+R\+OM. Persistent between reboots. \end{DoxyCompactList}\item 
+bool $\ast$ \mbox{\hyperlink{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_aa3f2962c251cead6e535226e4da29861}{Debug}}
+\begin{DoxyCompactList}\small\item\em True -\/ Turns on extra debug messages on the Serial Output. \end{DoxyCompactList}\item 
+bool $\ast$ \mbox{\hyperlink{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_ae700c60c46e98092b96bb54c369fe891}{Metric}}
+\begin{DoxyCompactList}\small\item\em True -\/ Use metric units, False -\/ Use imperial units. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_a292e29d40fbb346a1fa51dfc5ba879c1}\label{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_a292e29d40fbb346a1fa51dfc5ba879c1}} 
+\index{420Common.h@{420Common.h}!CurrentTime@{CurrentTime}}
+\index{CurrentTime@{CurrentTime}!420Common.h@{420Common.h}}
+\doxysubsubsection{\texorpdfstring{CurrentTime}{CurrentTime}}
+{\footnotesize\ttfamily char Current\+Time\mbox{[}Max\+Word\+Length\mbox{]}}
+
+
+
+Buffer for storing current time in text format. 
+
+
+
+Definition at line 32 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_aa3f2962c251cead6e535226e4da29861}\label{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_aa3f2962c251cead6e535226e4da29861}} 
+\index{420Common.h@{420Common.h}!Debug@{Debug}}
+\index{Debug@{Debug}!420Common.h@{420Common.h}}
+\doxysubsubsection{\texorpdfstring{Debug}{Debug}}
+{\footnotesize\ttfamily bool$\ast$ Debug}
+
+
+
+True -\/ Turns on extra debug messages on the Serial Output. 
+
+
+
+Definition at line 42 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_a29e392d833e97bf88f780e9fdf22373f}\label{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_a29e392d833e97bf88f780e9fdf22373f}} 
+\index{420Common.h@{420Common.h}!LongMessage@{LongMessage}}
+\index{LongMessage@{LongMessage}!420Common.h@{420Common.h}}
+\doxysubsubsection{\texorpdfstring{LongMessage}{LongMessage}}
+{\footnotesize\ttfamily char Long\+Message\mbox{[}Max\+Long\+Text\+Length\mbox{]}}
+
+
+
+$<$ header guard, same as the ifndef/define guard \href{https://en.wikipedia.org/wiki/Pragma_once}{\texttt{ https\+://en.\+wikipedia.\+org/wiki/\+Pragma\+\_\+once}} 
+
+$<$ This is a virtual class from which all other classes inherit from (Grow\+Box, PH reader, \mbox{\hyperlink{classLights}{Lights}}, \mbox{\hyperlink{classDHTSensor}{D\+H\+T\+Sensor}}..) Enforces a set of \mbox{\hyperlink{classCommon}{Common}} functions shared by the components $<$ for loading defaults and storing/reading user settings $<$ global functions $<$ global functions $<$ forward declaration
+
+$<$ header guard, same as the ifndef/define guard \href{https://en.wikipedia.org/wiki/Pragma_once}{\texttt{ https\+://en.\+wikipedia.\+org/wiki/\+Pragma\+\_\+once}}
+
+$<$ header guard, same as the ifndef/define guard \href{https://en.wikipedia.org/wiki/Pragma_once}{\texttt{ https\+://en.\+wikipedia.\+org/wiki/\+Pragma\+\_\+once}}
+
+Temp storage for assembling long messages (R\+E\+ST A\+PI -\/ Google Sheets reporting) 
+
+Definition at line 30 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_ae700c60c46e98092b96bb54c369fe891}\label{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_ae700c60c46e98092b96bb54c369fe891}} 
+\index{420Common.h@{420Common.h}!Metric@{Metric}}
+\index{Metric@{Metric}!420Common.h@{420Common.h}}
+\doxysubsubsection{\texorpdfstring{Metric}{Metric}}
+{\footnotesize\ttfamily bool$\ast$ Metric}
+
+
+
+True -\/ Use metric units, False -\/ Use imperial units. 
+
+
+
+Definition at line 43 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_aa5d20d2c57bfa8a66c233eb21b7cdf6e}\label{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_aa5d20d2c57bfa8a66c233eb21b7cdf6e}} 
+\index{420Common.h@{420Common.h}!ModuleSettings@{ModuleSettings}}
+\index{ModuleSettings@{ModuleSettings}!420Common.h@{420Common.h}}
+\doxysubsubsection{\texorpdfstring{ModuleSettings}{ModuleSettings}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structSettings}{Settings}}$\ast$ Module\+Settings}
+
+
+
+This object will store the settings loaded from the E\+E\+P\+R\+OM. Persistent between reboots. 
+
+This object will store the settings loaded from the E\+E\+P\+R\+OM. Persistent between reboots. 
+
+Definition at line 41 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_a6084d34751a3c3b5585d06dc1c0dd9f6}\label{Gbox420__Nano__Aero__NoTank_2src_2Components_2420Common_8h_a6084d34751a3c3b5585d06dc1c0dd9f6}} 
+\index{420Common.h@{420Common.h}!ShortMessage@{ShortMessage}}
+\index{ShortMessage@{ShortMessage}!420Common.h@{420Common.h}}
+\doxysubsubsection{\texorpdfstring{ShortMessage}{ShortMessage}}
+{\footnotesize\ttfamily char Short\+Message\mbox{[}Max\+Shot\+Text\+Length\mbox{]}}
+
+
+
+Temp storage for assembling short messages (Log entries, Error messages) 
+
+
+
+Definition at line 31 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+

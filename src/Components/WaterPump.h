@@ -5,6 +5,8 @@
 #include "Sound.h"
 #include "Switch_PWM.h"
 
+///< Diaphragm pump controller
+
 class WaterPump : virtual public Common
 {
 public:
@@ -43,7 +45,7 @@ public:
   int getPrimingTime();
   //void setBlowOffTime(int NewTime);
   //int getBlowOffTime();
-  uint32_t PumpTimer = millis(); ///< Spray cycle timer, used for State runtime tracking, - https:///< www.arduino.cc/reference/en/language/functions/time/millis/
+  uint32_t PumpTimer = millis(); ///< Spray cycle timer, used for State runtime tracking, - https://www.arduino.cc/reference/en/language/functions/time/millis/
 
 private:
   PumpStates State = IDLE;

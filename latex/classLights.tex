@@ -1,0 +1,1322 @@
+\hypertarget{classLights}{}\doxysection{Lights Class Reference}
+\label{classLights}\index{Lights@{Lights}}
+
+
+{\ttfamily \#include $<$Lights.\+h$>$}
+
+
+
+Inheritance diagram for Lights\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=152pt]{classLights__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Lights\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{classLights__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classLights_a48acde7f45e4b9b22969e52fea689040}{Lights}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\mbox{\hyperlink{classCommon_aeea91a726dbe988e515057b32ba0726f}{Name}}, \mbox{\hyperlink{classModule}{Module}} $\ast$\mbox{\hyperlink{classLights_aae73ad0f2de1a24e5c12add1d302e367}{Parent}}, \mbox{\hyperlink{structSettings_1_1LightsSettings}{Settings\+::\+Lights\+Settings}} $\ast$Default\+Settings)
+\begin{DoxyCompactList}\small\item\em constructor \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLights_a7bf4d024918477d52eea78c94209fc66}{refresh\+\_\+\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classLights_a38c74606e1c2b4ff7db184920b225961}{refresh\+\_\+\+Minute}} ()
+\item 
+void \mbox{\hyperlink{classLights_a68fc62af07d71db2fb5a436e11ecad3c}{report}} ()
+\item 
+void \mbox{\hyperlink{classLights_a20392486d66032fd530046cd1f33aaa0}{set\+Brightness}} (uint8\+\_\+t \mbox{\hyperlink{classLights_a5f8ffb20e9326f92476420269a67cd84}{Brightness}}, bool Add\+To\+Log, bool Store\+Setting)
+\item 
+void \mbox{\hyperlink{classLights_ab18f05b043b61b6eb74bd7b564e1a1ec}{set\+Light\+On\+Off}} (bool State, bool Add\+To\+Log)
+\item 
+bool \mbox{\hyperlink{classLights_a240cc60cfb0f2b94b1cd9e8a9202b7ee}{get\+Status}} ()
+\item 
+int \mbox{\hyperlink{classLights_aea8e88f2668fbcc2d3e36dcfe51fbfa5}{get\+Brightness}} ()
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_afa4faecdb030fc227f545a460bbb0ef2}{get\+Brightness\+Text}} (bool Use\+Text)
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_aaac8ec5b8051a19d13711c5d0c4ebd8a}{get\+Current\+Brightness\+Text}} (bool Use\+Text)
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_a8899969e0175e8242f9139c17585bcd0}{get\+Timer\+On\+Off\+Text}} (bool Use\+Text)
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_a713a28eba8f6fd8fb259bac4175ece26}{get\+Status\+Text}} (bool Use\+Text)
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_a086687f7b443a0cc4434650636f02b27}{get\+State\+Text}} ()
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_a5e2894e6935173e46c8d70f4bc7d36ed}{get\+On\+Time\+Text}} ()
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_afa7da12d1c3c6646a547220f34c90bd3}{get\+Off\+Time\+Text}} ()
+\item 
+void \mbox{\hyperlink{classLights_a482dc659480f840747858394c5baec3c}{dim\+Lights\+On\+Off}} ()
+\begin{DoxyCompactList}\small\item\em Temporary dim the lights while working on the plants. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLights_a88aef6611519ff083000476c078b9fba}{set\+Dim\+Duration}} (int Dim\+Duration)
+\begin{DoxyCompactList}\small\item\em Set the duration of the temporary dimming in Seconds. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLights_ac6d200fd34e102cea67cf24d4f017284}{set\+Fade\+On\+Off}} (bool State)
+\begin{DoxyCompactList}\small\item\em Enable/disable slowly fadeing in and out the lights when the Status changes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLights_a8e9786fcb743a468232c6f314d5bc5bc}{set\+Fade\+Interval}} (uint16\+\_\+t Interval)
+\begin{DoxyCompactList}\small\item\em Set how often to increase/decrease the Brightness. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLights_a71359e2b1cb0629287aa6bf51973cbd0}{set\+Fade\+Increments}} (uint8\+\_\+t Increment)
+\begin{DoxyCompactList}\small\item\em Set the Percentage of change at one increment/decrement. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classLights_a48acde7f45e4b9b22969e52fea689040}{Lights}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\mbox{\hyperlink{classCommon_aeea91a726dbe988e515057b32ba0726f}{Name}}, \mbox{\hyperlink{classModule}{Module}} $\ast$\mbox{\hyperlink{classLights_aae73ad0f2de1a24e5c12add1d302e367}{Parent}}, \mbox{\hyperlink{structSettings_1_1LightsSettings}{Settings\+::\+Lights\+Settings}} $\ast$Default\+Settings)
+\begin{DoxyCompactList}\small\item\em constructor \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLights_a7bf4d024918477d52eea78c94209fc66}{refresh\+\_\+\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classLights_a38c74606e1c2b4ff7db184920b225961}{refresh\+\_\+\+Minute}} ()
+\item 
+void \mbox{\hyperlink{classLights_a68fc62af07d71db2fb5a436e11ecad3c}{report}} ()
+\item 
+void \mbox{\hyperlink{classLights_a20392486d66032fd530046cd1f33aaa0}{set\+Brightness}} (uint8\+\_\+t \mbox{\hyperlink{classLights_a5f8ffb20e9326f92476420269a67cd84}{Brightness}}, bool Add\+To\+Log, bool Store\+Setting)
+\item 
+void \mbox{\hyperlink{classLights_ab18f05b043b61b6eb74bd7b564e1a1ec}{set\+Light\+On\+Off}} (bool State, bool Add\+To\+Log)
+\item 
+bool \mbox{\hyperlink{classLights_a240cc60cfb0f2b94b1cd9e8a9202b7ee}{get\+Status}} ()
+\item 
+int \mbox{\hyperlink{classLights_aea8e88f2668fbcc2d3e36dcfe51fbfa5}{get\+Brightness}} ()
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_a56978695a6d77ddca100fe43d9b6c5f0}{get\+Brightness\+Text}} (bool Use\+Text)
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_a60ee60560496f914fe765345059bcb6b}{get\+Current\+Brightness\+Text}} (bool Use\+Text)
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_a912d1b2e51274277f2b70a8667d6bd6b}{get\+Timer\+On\+Off\+Text}} (bool Use\+Text)
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_a1091d64a103a8356b03f8b080d256054}{get\+Status\+Text}} (bool Use\+Text)
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_a3a7b93f436dbacfab09d270d3c131e9f}{get\+State\+Text}} ()
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_ae797ac0b4b64b1f0264508160bf7f5b3}{get\+On\+Time\+Text}} ()
+\item 
+char $\ast$ \mbox{\hyperlink{classLights_a03976471c6435ee329690da54224360b}{get\+Off\+Time\+Text}} ()
+\item 
+void \mbox{\hyperlink{classLights_a482dc659480f840747858394c5baec3c}{dim\+Lights\+On\+Off}} ()
+\begin{DoxyCompactList}\small\item\em Temporary dim the lights while working on the plants. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLights_a88aef6611519ff083000476c078b9fba}{set\+Dim\+Duration}} (int Dim\+Duration)
+\begin{DoxyCompactList}\small\item\em Set the duration of the temporary dimming in Seconds. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLights_ac6d200fd34e102cea67cf24d4f017284}{set\+Fade\+On\+Off}} (bool State)
+\begin{DoxyCompactList}\small\item\em Enable/disable slowly fadeing in and out the lights when the Status changes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLights_a8e9786fcb743a468232c6f314d5bc5bc}{set\+Fade\+Interval}} (uint16\+\_\+t Interval)
+\begin{DoxyCompactList}\small\item\em Set how often to increase/decrease the Brightness. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classLights_a71359e2b1cb0629287aa6bf51973cbd0}{set\+Fade\+Increments}} (uint8\+\_\+t Increment)
+\begin{DoxyCompactList}\small\item\em Set the Percentage of change at one increment/decrement. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classLights_a59a952f3c895a78f9e382401a9b9701d}{check\+Relay}} ()
+\item 
+void \mbox{\hyperlink{classLights_a2117d6df0bdbf234e627a9bceb000071}{check\+Timer}} ()
+\item 
+void \mbox{\hyperlink{classLights_adf24f09eb5273aad8eea4839f052c95e}{check\+Dimming}} ()
+\item 
+void \mbox{\hyperlink{classLights_a3c5051babf4dacdeecced14217f6f886}{set\+Timer\+On\+Off}} (bool State)
+\item 
+void \mbox{\hyperlink{classLights_aee95c9b14f3b1886a755d7d818b0cbf2}{set\+On\+Hour}} (uint8\+\_\+t \mbox{\hyperlink{classLights_a57e8c46cb8553afacfe8dccae84b27b6}{On\+Hour}})
+\item 
+void \mbox{\hyperlink{classLights_ada0e53ffae21eb386b8cef9e6a12fb8c}{set\+On\+Minute}} (uint8\+\_\+t \mbox{\hyperlink{classLights_a8067e9045c1cd6c80386989324841252}{On\+Minute}})
+\item 
+void \mbox{\hyperlink{classLights_a561b79359ab51821048e9d9bc30fc164}{set\+Off\+Hour}} (uint8\+\_\+t \mbox{\hyperlink{classLights_aa50ee194d899db263f3a6ce84cbbbbb7}{Off\+Hour}})
+\item 
+void \mbox{\hyperlink{classLights_afc2ad84d3e1c4d9e8f62d05791f82928}{set\+Off\+Minute}} (uint8\+\_\+t \mbox{\hyperlink{classLights_a2cce51e3b581d3c33ba2f2529629b348}{Off\+Minute}})
+\item 
+void \mbox{\hyperlink{classLights_a59a952f3c895a78f9e382401a9b9701d}{check\+Relay}} ()
+\item 
+void \mbox{\hyperlink{classLights_a2117d6df0bdbf234e627a9bceb000071}{check\+Timer}} ()
+\item 
+void \mbox{\hyperlink{classLights_adf24f09eb5273aad8eea4839f052c95e}{check\+Dimming}} ()
+\item 
+void \mbox{\hyperlink{classLights_a3c5051babf4dacdeecced14217f6f886}{set\+Timer\+On\+Off}} (bool State)
+\item 
+void \mbox{\hyperlink{classLights_aee95c9b14f3b1886a755d7d818b0cbf2}{set\+On\+Hour}} (uint8\+\_\+t \mbox{\hyperlink{classLights_a57e8c46cb8553afacfe8dccae84b27b6}{On\+Hour}})
+\item 
+void \mbox{\hyperlink{classLights_ada0e53ffae21eb386b8cef9e6a12fb8c}{set\+On\+Minute}} (uint8\+\_\+t \mbox{\hyperlink{classLights_a8067e9045c1cd6c80386989324841252}{On\+Minute}})
+\item 
+void \mbox{\hyperlink{classLights_a561b79359ab51821048e9d9bc30fc164}{set\+Off\+Hour}} (uint8\+\_\+t \mbox{\hyperlink{classLights_aa50ee194d899db263f3a6ce84cbbbbb7}{Off\+Hour}})
+\item 
+void \mbox{\hyperlink{classLights_afc2ad84d3e1c4d9e8f62d05791f82928}{set\+Off\+Minute}} (uint8\+\_\+t \mbox{\hyperlink{classLights_a2cce51e3b581d3c33ba2f2529629b348}{Off\+Minute}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classModule}{Module}} $\ast$ \mbox{\hyperlink{classLights_aae73ad0f2de1a24e5c12add1d302e367}{Parent}}
+\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classLights_aa4b35d15457aebc31fd1cb9f7e49c543}{Relay\+Pin}}
+\begin{DoxyCompactList}\small\item\em the Arduino pin controlling the AC relay \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classLights_a453513cb66d5604c37f052d1e45577c9}{Dimming\+Pin}}
+\begin{DoxyCompactList}\small\item\em P\+WM based dimming, connected to optocoupler\`{}s base over 1k ohm resistor0. \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classLights_a12fe71729d7dbffab728d6892e014557}{Dimming\+Limit}}
+\begin{DoxyCompactList}\small\item\em Sets the L\+ED dimming limit (Usually around 5\%) \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classLights_a99e6a6e48ae8660170996b6308beae71}{Dimming\+Duration}}
+\begin{DoxyCompactList}\small\item\em Timeout of temporary dumming in Minutes. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{Gbox420__Mega__Main_2src_2Components_2Lights_8h_ab7a12d86f977bfc4b0c179678594e1ab}{Light\+States}} \mbox{\hyperlink{classLights_adb1ccb3856201404f321624e7bf044be}{Before\+Dimming\+State}} = \mbox{\hyperlink{src_2Components_2Lights_8h_ab7a12d86f977bfc4b0c179678594e1abaac132f2982b98bcaa3445e535a03ff75}{Light\+States\+::\+O\+FF}}
+\begin{DoxyCompactList}\small\item\em Stores the state before the temporary dimming was activated. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{classLights_ab06ce174cc8a8a11efce3db1c65d193e}{Before\+Dimming\+Brightness}}
+\begin{DoxyCompactList}\small\item\em Stores the brightness before the temporary dimming was activated. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{classLights_a4438e436ef4c11919063f80dc41e73b8}{Dimming\+Timer}} = 0
+\begin{DoxyCompactList}\small\item\em Stores the time when the temporary dimmin got enabled. \end{DoxyCompactList}\item 
+bool $\ast$ \mbox{\hyperlink{classLights_a5f5ca6f90f96be38cbaa00cc6302eebd}{Status}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classLights}{Lights}} ON or O\+FF. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{Gbox420__Mega__Main_2src_2Components_2Lights_8h_ab7a12d86f977bfc4b0c179678594e1ab}{Light\+States}} \mbox{\hyperlink{classLights_a5d2bb89e5cedb01baebb01594eec62d5}{Current\+Status}} = \mbox{\hyperlink{src_2Components_2Lights_8h_ab7a12d86f977bfc4b0c179678594e1abaac132f2982b98bcaa3445e535a03ff75}{Light\+States\+::\+O\+FF}}
+\begin{DoxyCompactList}\small\item\em Tracks light state during fading in/out. \end{DoxyCompactList}\item 
+bool $\ast$ \mbox{\hyperlink{classLights_a2b2938ba677b462b6a464c325b085945}{Timer\+Enabled}}
+\begin{DoxyCompactList}\small\item\em Enable timer controlling lights\+: true -\/ Timer enabled, false -\/ Timer disabled. \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classLights_a57e8c46cb8553afacfe8dccae84b27b6}{On\+Hour}}
+\begin{DoxyCompactList}\small\item\em Light ON time -\/ hour. \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classLights_a8067e9045c1cd6c80386989324841252}{On\+Minute}}
+\begin{DoxyCompactList}\small\item\em Light ON time -\/ minute. \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classLights_aa50ee194d899db263f3a6ce84cbbbbb7}{Off\+Hour}}
+\begin{DoxyCompactList}\small\item\em Light O\+FF time -\/ hour. \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classLights_a2cce51e3b581d3c33ba2f2529629b348}{Off\+Minute}}
+\begin{DoxyCompactList}\small\item\em Light O\+FF time -\/ minute. \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classLights_a5f8ffb20e9326f92476420269a67cd84}{Brightness}}
+\begin{DoxyCompactList}\small\item\em Light intensity target\+: 0\% -\/ 100\% range for controlling led driver output. \end{DoxyCompactList}\item 
+int16\+\_\+t \mbox{\hyperlink{classLights_a76153b69c857a3226dd6c4636ad867ee}{Current\+Brightness}}
+\begin{DoxyCompactList}\small\item\em Tracks light intensity while fading in/out. \end{DoxyCompactList}\item 
+bool $\ast$ \mbox{\hyperlink{classLights_a4903d7736642e9a92b6b709ac205b711}{Fading\+Enabled}}
+\begin{DoxyCompactList}\small\item\em Enables/disables fading lights in when turning on, and fading lights out when turning off. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{classLights_ade389a3bed93ead09b8e8b5e2d7701c5}{Fading\+Timer}} = 0
+\begin{DoxyCompactList}\small\item\em Stores the last time the Fadein/out increased/decreased a increment. \end{DoxyCompactList}\item 
+uint16\+\_\+t $\ast$ \mbox{\hyperlink{classLights_a13938266da349c4020502e76fea34f7b}{Fading\+Interval}}
+\begin{DoxyCompactList}\small\item\em How often should the brightness change during a fade in/out (Seconds) \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classLights_afc169d709462a2f03de1577a7d3ee465}{Fading\+Increments}}
+\begin{DoxyCompactList}\small\item\em How much to change the brightness during a fade in/out (Percentage) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 16 of file Lights.\+h.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classLights_a48acde7f45e4b9b22969e52fea689040}\label{classLights_a48acde7f45e4b9b22969e52fea689040}} 
+\index{Lights@{Lights}!Lights@{Lights}}
+\index{Lights@{Lights}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{Lights()}{Lights()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Lights\+::\+Lights (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\mbox{\hyperlink{classModule}{Module}} $\ast$}]{Parent,  }\item[{\mbox{\hyperlink{structSettings_1_1LightsSettings}{Settings\+::\+Lights\+Settings}} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+constructor 
+
+$<$ Blocks dimming below a certain percentage (default 8\%), Most L\+ED drivers cannot fully dim, check the specification and adjust accordingly, only set 0 if it supports dimming fully! (Usually not the case..)
+
+$<$ Turn relay off initially
+
+$<$ start with low light intensity and slowly fade in to target Brightness
+
+$<$ instantly jump to target Brightness
+
+$<$ Set initial brightness
+
+Definition at line 4 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a48acde7f45e4b9b22969e52fea689040_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a48acde7f45e4b9b22969e52fea689040}\label{classLights_a48acde7f45e4b9b22969e52fea689040}} 
+\index{Lights@{Lights}!Lights@{Lights}}
+\index{Lights@{Lights}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{Lights()}{Lights()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Lights\+::\+Lights (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\mbox{\hyperlink{classModule}{Module}} $\ast$}]{Parent,  }\item[{\mbox{\hyperlink{structSettings_1_1LightsSettings}{Settings\+::\+Lights\+Settings}} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+constructor 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classLights_adf24f09eb5273aad8eea4839f052c95e}\label{classLights_adf24f09eb5273aad8eea4839f052c95e}} 
+\index{Lights@{Lights}!checkDimming@{checkDimming}}
+\index{checkDimming@{checkDimming}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{checkDimming()}{checkDimming()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::check\+Dimming (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+$<$ Check if the target brightness is reached
+
+$<$ Set new brightness
+
+$<$ Store the timestamp of the last change
+
+$<$ Check if zero brightness is reached
+
+$<$ Set new brightness
+
+$<$ Store the timestamp of the last change
+
+Definition at line 107 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_adf24f09eb5273aad8eea4839f052c95e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_adf24f09eb5273aad8eea4839f052c95e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_adf24f09eb5273aad8eea4839f052c95e}\label{classLights_adf24f09eb5273aad8eea4839f052c95e}} 
+\index{Lights@{Lights}!checkDimming@{checkDimming}}
+\index{checkDimming@{checkDimming}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{checkDimming()}{checkDimming()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::check\+Dimming (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classLights_a59a952f3c895a78f9e382401a9b9701d}\label{classLights_a59a952f3c895a78f9e382401a9b9701d}} 
+\index{Lights@{Lights}!checkRelay@{checkRelay}}
+\index{checkRelay@{checkRelay}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{checkRelay()}{checkRelay()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::check\+Relay (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+$<$ True turns relay O\+FF (H\+I\+GH signal de-\/activates Relay)
+
+$<$ L\+OW turns relay ON
+
+Definition at line 77 of file Lights.\+cpp.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a59a952f3c895a78f9e382401a9b9701d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a59a952f3c895a78f9e382401a9b9701d}\label{classLights_a59a952f3c895a78f9e382401a9b9701d}} 
+\index{Lights@{Lights}!checkRelay@{checkRelay}}
+\index{checkRelay@{checkRelay}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{checkRelay()}{checkRelay()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::check\+Relay (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classLights_a2117d6df0bdbf234e627a9bceb000071}\label{classLights_a2117d6df0bdbf234e627a9bceb000071}} 
+\index{Lights@{Lights}!checkTimer@{checkTimer}}
+\index{checkTimer@{checkTimer}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{checkTimer()}{checkTimer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::check\+Timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 147 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a2117d6df0bdbf234e627a9bceb000071_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a2117d6df0bdbf234e627a9bceb000071_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a2117d6df0bdbf234e627a9bceb000071}\label{classLights_a2117d6df0bdbf234e627a9bceb000071}} 
+\index{Lights@{Lights}!checkTimer@{checkTimer}}
+\index{checkTimer@{checkTimer}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{checkTimer()}{checkTimer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::check\+Timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classLights_a482dc659480f840747858394c5baec3c}\label{classLights_a482dc659480f840747858394c5baec3c}} 
+\index{Lights@{Lights}!dimLightsOnOff@{dimLightsOnOff}}
+\index{dimLightsOnOff@{dimLightsOnOff}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{dimLightsOnOff()}{dimLightsOnOff()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::dim\+Lights\+On\+Off (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Temporary dim the lights while working on the plants. 
+
+\mbox{\Hypertarget{classLights_a482dc659480f840747858394c5baec3c}\label{classLights_a482dc659480f840747858394c5baec3c}} 
+\index{Lights@{Lights}!dimLightsOnOff@{dimLightsOnOff}}
+\index{dimLightsOnOff@{dimLightsOnOff}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{dimLightsOnOff()}{dimLightsOnOff()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::dim\+Lights\+On\+Off (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Temporary dim the lights while working on the plants. 
+
+$<$ If temporary dimming is already ON -\/$>$ Turn it O\+FF
+
+$<$ If temporary dimming is O\+FF -\/$>$ Turn it ON
+
+Definition at line 85 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a482dc659480f840747858394c5baec3c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a482dc659480f840747858394c5baec3c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_aea8e88f2668fbcc2d3e36dcfe51fbfa5}\label{classLights_aea8e88f2668fbcc2d3e36dcfe51fbfa5}} 
+\index{Lights@{Lights}!getBrightness@{getBrightness}}
+\index{getBrightness@{getBrightness}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getBrightness()}{getBrightness()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily int Lights\+::get\+Brightness (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classLights_aea8e88f2668fbcc2d3e36dcfe51fbfa5}\label{classLights_aea8e88f2668fbcc2d3e36dcfe51fbfa5}} 
+\index{Lights@{Lights}!getBrightness@{getBrightness}}
+\index{getBrightness@{getBrightness}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getBrightness()}{getBrightness()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily int Lights\+::get\+Brightness (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 278 of file Lights.\+cpp.
+
+\mbox{\Hypertarget{classLights_a56978695a6d77ddca100fe43d9b6c5f0}\label{classLights_a56978695a6d77ddca100fe43d9b6c5f0}} 
+\index{Lights@{Lights}!getBrightnessText@{getBrightnessText}}
+\index{getBrightnessText@{getBrightnessText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getBrightnessText()}{getBrightnessText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char$\ast$ Lights\+::get\+Brightness\+Text (\begin{DoxyParamCaption}\item[{bool}]{Use\+Text }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classLights_afa4faecdb030fc227f545a460bbb0ef2}\label{classLights_afa4faecdb030fc227f545a460bbb0ef2}} 
+\index{Lights@{Lights}!getBrightnessText@{getBrightnessText}}
+\index{getBrightnessText@{getBrightnessText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getBrightnessText()}{getBrightnessText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char $\ast$ Lights\+::get\+Brightness\+Text (\begin{DoxyParamCaption}\item[{bool}]{Use\+Text }\end{DoxyParamCaption})}
+
+
+
+Definition at line 283 of file Lights.\+cpp.
+
+\mbox{\Hypertarget{classLights_aaac8ec5b8051a19d13711c5d0c4ebd8a}\label{classLights_aaac8ec5b8051a19d13711c5d0c4ebd8a}} 
+\index{Lights@{Lights}!getCurrentBrightnessText@{getCurrentBrightnessText}}
+\index{getCurrentBrightnessText@{getCurrentBrightnessText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getCurrentBrightnessText()}{getCurrentBrightnessText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char $\ast$ Lights\+::get\+Current\+Brightness\+Text (\begin{DoxyParamCaption}\item[{bool}]{Use\+Text }\end{DoxyParamCaption})}
+
+
+
+Definition at line 293 of file Lights.\+cpp.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_aaac8ec5b8051a19d13711c5d0c4ebd8a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a60ee60560496f914fe765345059bcb6b}\label{classLights_a60ee60560496f914fe765345059bcb6b}} 
+\index{Lights@{Lights}!getCurrentBrightnessText@{getCurrentBrightnessText}}
+\index{getCurrentBrightnessText@{getCurrentBrightnessText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getCurrentBrightnessText()}{getCurrentBrightnessText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char$\ast$ Lights\+::get\+Current\+Brightness\+Text (\begin{DoxyParamCaption}\item[{bool}]{Use\+Text }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classLights_a03976471c6435ee329690da54224360b}\label{classLights_a03976471c6435ee329690da54224360b}} 
+\index{Lights@{Lights}!getOffTimeText@{getOffTimeText}}
+\index{getOffTimeText@{getOffTimeText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getOffTimeText()}{getOffTimeText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char$\ast$ Lights\+::get\+Off\+Time\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classLights_afa7da12d1c3c6646a547220f34c90bd3}\label{classLights_afa7da12d1c3c6646a547220f34c90bd3}} 
+\index{Lights@{Lights}!getOffTimeText@{getOffTimeText}}
+\index{getOffTimeText@{getOffTimeText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getOffTimeText()}{getOffTimeText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char $\ast$ Lights\+::get\+Off\+Time\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 352 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=317pt]{classLights_afa7da12d1c3c6646a547220f34c90bd3_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_afa7da12d1c3c6646a547220f34c90bd3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_ae797ac0b4b64b1f0264508160bf7f5b3}\label{classLights_ae797ac0b4b64b1f0264508160bf7f5b3}} 
+\index{Lights@{Lights}!getOnTimeText@{getOnTimeText}}
+\index{getOnTimeText@{getOnTimeText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getOnTimeText()}{getOnTimeText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char$\ast$ Lights\+::get\+On\+Time\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classLights_a5e2894e6935173e46c8d70f4bc7d36ed}\label{classLights_a5e2894e6935173e46c8d70f4bc7d36ed}} 
+\index{Lights@{Lights}!getOnTimeText@{getOnTimeText}}
+\index{getOnTimeText@{getOnTimeText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getOnTimeText()}{getOnTimeText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char $\ast$ Lights\+::get\+On\+Time\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 348 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=316pt]{classLights_a5e2894e6935173e46c8d70f4bc7d36ed_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a5e2894e6935173e46c8d70f4bc7d36ed_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a3a7b93f436dbacfab09d270d3c131e9f}\label{classLights_a3a7b93f436dbacfab09d270d3c131e9f}} 
+\index{Lights@{Lights}!getStateText@{getStateText}}
+\index{getStateText@{getStateText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getStateText()}{getStateText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char$\ast$ Lights\+::get\+State\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classLights_a086687f7b443a0cc4434650636f02b27}\label{classLights_a086687f7b443a0cc4434650636f02b27}} 
+\index{Lights@{Lights}!getStateText@{getStateText}}
+\index{getStateText@{getStateText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getStateText()}{getStateText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char $\ast$ Lights\+::get\+State\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 323 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=276pt]{classLights_a086687f7b443a0cc4434650636f02b27_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a086687f7b443a0cc4434650636f02b27_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a240cc60cfb0f2b94b1cd9e8a9202b7ee}\label{classLights_a240cc60cfb0f2b94b1cd9e8a9202b7ee}} 
+\index{Lights@{Lights}!getStatus@{getStatus}}
+\index{getStatus@{getStatus}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getStatus()}{getStatus()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Lights\+::get\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classLights_a240cc60cfb0f2b94b1cd9e8a9202b7ee}\label{classLights_a240cc60cfb0f2b94b1cd9e8a9202b7ee}} 
+\index{Lights@{Lights}!getStatus@{getStatus}}
+\index{getStatus@{getStatus}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getStatus()}{getStatus()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Lights\+::get\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 273 of file Lights.\+cpp.
+
+\mbox{\Hypertarget{classLights_a1091d64a103a8356b03f8b080d256054}\label{classLights_a1091d64a103a8356b03f8b080d256054}} 
+\index{Lights@{Lights}!getStatusText@{getStatusText}}
+\index{getStatusText@{getStatusText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getStatusText()}{getStatusText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char$\ast$ Lights\+::get\+Status\+Text (\begin{DoxyParamCaption}\item[{bool}]{Use\+Text }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classLights_a713a28eba8f6fd8fb259bac4175ece26}\label{classLights_a713a28eba8f6fd8fb259bac4175ece26}} 
+\index{Lights@{Lights}!getStatusText@{getStatusText}}
+\index{getStatusText@{getStatusText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getStatusText()}{getStatusText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char $\ast$ Lights\+::get\+Status\+Text (\begin{DoxyParamCaption}\item[{bool}]{Use\+Text }\end{DoxyParamCaption})}
+
+
+
+Definition at line 315 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=313pt]{classLights_a713a28eba8f6fd8fb259bac4175ece26_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a713a28eba8f6fd8fb259bac4175ece26_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a912d1b2e51274277f2b70a8667d6bd6b}\label{classLights_a912d1b2e51274277f2b70a8667d6bd6b}} 
+\index{Lights@{Lights}!getTimerOnOffText@{getTimerOnOffText}}
+\index{getTimerOnOffText@{getTimerOnOffText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getTimerOnOffText()}{getTimerOnOffText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char$\ast$ Lights\+::get\+Timer\+On\+Off\+Text (\begin{DoxyParamCaption}\item[{bool}]{Use\+Text }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classLights_a8899969e0175e8242f9139c17585bcd0}\label{classLights_a8899969e0175e8242f9139c17585bcd0}} 
+\index{Lights@{Lights}!getTimerOnOffText@{getTimerOnOffText}}
+\index{getTimerOnOffText@{getTimerOnOffText}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{getTimerOnOffText()}{getTimerOnOffText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char $\ast$ Lights\+::get\+Timer\+On\+Off\+Text (\begin{DoxyParamCaption}\item[{bool}]{Use\+Text }\end{DoxyParamCaption})}
+
+
+
+Definition at line 265 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a8899969e0175e8242f9139c17585bcd0_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a8899969e0175e8242f9139c17585bcd0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a38c74606e1c2b4ff7db184920b225961}\label{classLights_a38c74606e1c2b4ff7db184920b225961}} 
+\index{Lights@{Lights}!refresh\_Minute@{refresh\_Minute}}
+\index{refresh\_Minute@{refresh\_Minute}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{refresh\_Minute()}{refresh\_Minute()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+$<$ makes the class non-\/virtual, by implementing the refresh function from \mbox{\hyperlink{classCommon}{Common}} (Else you get an error while trying to create a new \mbox{\hyperlink{classLights}{Lights}} object\+: invalid new-\/expression of abstract class type \textquotesingle{}\mbox{\hyperlink{classLights}{Lights}}\textquotesingle{})
+
+Reimplemented from \mbox{\hyperlink{classCommon_a14e4462a94bd118028ce1d487ca0292c}{Common}}.
+
+
+
+Definition at line 48 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a38c74606e1c2b4ff7db184920b225961_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a38c74606e1c2b4ff7db184920b225961}\label{classLights_a38c74606e1c2b4ff7db184920b225961}} 
+\index{Lights@{Lights}!refresh\_Minute@{refresh\_Minute}}
+\index{refresh\_Minute@{refresh\_Minute}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{refresh\_Minute()}{refresh\_Minute()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a14e4462a94bd118028ce1d487ca0292c}{Common}}.
+
+\mbox{\Hypertarget{classLights_a7bf4d024918477d52eea78c94209fc66}\label{classLights_a7bf4d024918477d52eea78c94209fc66}} 
+\index{Lights@{Lights}!refresh\_Sec@{refresh\_Sec}}
+\index{refresh\_Sec@{refresh\_Sec}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{refresh\_Sec()}{refresh\_Sec()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::refresh\+\_\+\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_acd1fdd47fbf8bb490f5c6d3ab6cd8d05}{Common}}.
+
+
+
+Definition at line 41 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a7bf4d024918477d52eea78c94209fc66_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a7bf4d024918477d52eea78c94209fc66}\label{classLights_a7bf4d024918477d52eea78c94209fc66}} 
+\index{Lights@{Lights}!refresh\_Sec@{refresh\_Sec}}
+\index{refresh\_Sec@{refresh\_Sec}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{refresh\_Sec()}{refresh\_Sec()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::refresh\+\_\+\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_acd1fdd47fbf8bb490f5c6d3ab6cd8d05}{Common}}.
+
+\mbox{\Hypertarget{classLights_a68fc62af07d71db2fb5a436e11ecad3c}\label{classLights_a68fc62af07d71db2fb5a436e11ecad3c}} 
+\index{Lights@{Lights}!report@{report}}
+\index{report@{report}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+$<$ clear variable
+
+Reimplemented from \mbox{\hyperlink{classCommon_a9e60e2c26a5f4d72342a59a969954636}{Common}}.
+
+
+
+Definition at line 56 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a68fc62af07d71db2fb5a436e11ecad3c_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a68fc62af07d71db2fb5a436e11ecad3c}\label{classLights_a68fc62af07d71db2fb5a436e11ecad3c}} 
+\index{Lights@{Lights}!report@{report}}
+\index{report@{report}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a9e60e2c26a5f4d72342a59a969954636}{Common}}.
+
+\mbox{\Hypertarget{classLights_a20392486d66032fd530046cd1f33aaa0}\label{classLights_a20392486d66032fd530046cd1f33aaa0}} 
+\index{Lights@{Lights}!setBrightness@{setBrightness}}
+\index{setBrightness@{setBrightness}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setBrightness()}{setBrightness()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Brightness (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Brightness,  }\item[{bool}]{Add\+To\+Log,  }\item[{bool}]{Store\+Setting }\end{DoxyParamCaption})}
+
+
+
+Definition at line 197 of file Lights.\+cpp.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a20392486d66032fd530046cd1f33aaa0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a20392486d66032fd530046cd1f33aaa0}\label{classLights_a20392486d66032fd530046cd1f33aaa0}} 
+\index{Lights@{Lights}!setBrightness@{setBrightness}}
+\index{setBrightness@{setBrightness}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setBrightness()}{setBrightness()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Brightness (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Brightness,  }\item[{bool}]{Add\+To\+Log,  }\item[{bool}]{Store\+Setting }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classLights_a88aef6611519ff083000476c078b9fba}\label{classLights_a88aef6611519ff083000476c078b9fba}} 
+\index{Lights@{Lights}!setDimDuration@{setDimDuration}}
+\index{setDimDuration@{setDimDuration}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setDimDuration()}{setDimDuration()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Dim\+Duration (\begin{DoxyParamCaption}\item[{int}]{Dim\+Duration }\end{DoxyParamCaption})}
+
+
+
+Set the duration of the temporary dimming in Seconds. 
+
+
+
+Definition at line 214 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=349pt]{classLights_a88aef6611519ff083000476c078b9fba_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a88aef6611519ff083000476c078b9fba_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a88aef6611519ff083000476c078b9fba}\label{classLights_a88aef6611519ff083000476c078b9fba}} 
+\index{Lights@{Lights}!setDimDuration@{setDimDuration}}
+\index{setDimDuration@{setDimDuration}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setDimDuration()}{setDimDuration()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Dim\+Duration (\begin{DoxyParamCaption}\item[{int}]{Dim\+Duration }\end{DoxyParamCaption})}
+
+
+
+Set the duration of the temporary dimming in Seconds. 
+
+\mbox{\Hypertarget{classLights_a71359e2b1cb0629287aa6bf51973cbd0}\label{classLights_a71359e2b1cb0629287aa6bf51973cbd0}} 
+\index{Lights@{Lights}!setFadeIncrements@{setFadeIncrements}}
+\index{setFadeIncrements@{setFadeIncrements}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setFadeIncrements()}{setFadeIncrements()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Fade\+Increments (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Increment }\end{DoxyParamCaption})}
+
+
+
+Set the Percentage of change at one increment/decrement. 
+
+\mbox{\Hypertarget{classLights_a71359e2b1cb0629287aa6bf51973cbd0}\label{classLights_a71359e2b1cb0629287aa6bf51973cbd0}} 
+\index{Lights@{Lights}!setFadeIncrements@{setFadeIncrements}}
+\index{setFadeIncrements@{setFadeIncrements}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setFadeIncrements()}{setFadeIncrements()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Fade\+Increments (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Increment }\end{DoxyParamCaption})}
+
+
+
+Set the Percentage of change at one increment/decrement. 
+
+
+
+Definition at line 417 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a71359e2b1cb0629287aa6bf51973cbd0_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a71359e2b1cb0629287aa6bf51973cbd0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a8e9786fcb743a468232c6f314d5bc5bc}\label{classLights_a8e9786fcb743a468232c6f314d5bc5bc}} 
+\index{Lights@{Lights}!setFadeInterval@{setFadeInterval}}
+\index{setFadeInterval@{setFadeInterval}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setFadeInterval()}{setFadeInterval()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Fade\+Interval (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{Interval }\end{DoxyParamCaption})}
+
+
+
+Set how often to increase/decrease the Brightness. 
+
+\mbox{\Hypertarget{classLights_a8e9786fcb743a468232c6f314d5bc5bc}\label{classLights_a8e9786fcb743a468232c6f314d5bc5bc}} 
+\index{Lights@{Lights}!setFadeInterval@{setFadeInterval}}
+\index{setFadeInterval@{setFadeInterval}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setFadeInterval()}{setFadeInterval()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Fade\+Interval (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{Interval }\end{DoxyParamCaption})}
+
+
+
+Set how often to increase/decrease the Brightness. 
+
+
+
+Definition at line 412 of file Lights.\+cpp.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a8e9786fcb743a468232c6f314d5bc5bc_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_ac6d200fd34e102cea67cf24d4f017284}\label{classLights_ac6d200fd34e102cea67cf24d4f017284}} 
+\index{Lights@{Lights}!setFadeOnOff@{setFadeOnOff}}
+\index{setFadeOnOff@{setFadeOnOff}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setFadeOnOff()}{setFadeOnOff()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Fade\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})}
+
+
+
+Enable/disable slowly fadeing in and out the lights when the Status changes. 
+
+
+
+Definition at line 397 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_ac6d200fd34e102cea67cf24d4f017284_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_ac6d200fd34e102cea67cf24d4f017284_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_ac6d200fd34e102cea67cf24d4f017284}\label{classLights_ac6d200fd34e102cea67cf24d4f017284}} 
+\index{Lights@{Lights}!setFadeOnOff@{setFadeOnOff}}
+\index{setFadeOnOff@{setFadeOnOff}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setFadeOnOff()}{setFadeOnOff()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Fade\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})}
+
+
+
+Enable/disable slowly fadeing in and out the lights when the Status changes. 
+
+\mbox{\Hypertarget{classLights_ab18f05b043b61b6eb74bd7b564e1a1ec}\label{classLights_ab18f05b043b61b6eb74bd7b564e1a1ec}} 
+\index{Lights@{Lights}!setLightOnOff@{setLightOnOff}}
+\index{setLightOnOff@{setLightOnOff}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setLightOnOff()}{setLightOnOff()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Light\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State,  }\item[{bool}]{Add\+To\+Log }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classLights_ab18f05b043b61b6eb74bd7b564e1a1ec}\label{classLights_ab18f05b043b61b6eb74bd7b564e1a1ec}} 
+\index{Lights@{Lights}!setLightOnOff@{setLightOnOff}}
+\index{setLightOnOff@{setLightOnOff}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setLightOnOff()}{setLightOnOff()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Light\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State,  }\item[{bool}]{Add\+To\+Log }\end{DoxyParamCaption})}
+
+
+
+Definition at line 220 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_ab18f05b043b61b6eb74bd7b564e1a1ec_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_ab18f05b043b61b6eb74bd7b564e1a1ec_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a561b79359ab51821048e9d9bc30fc164}\label{classLights_a561b79359ab51821048e9d9bc30fc164}} 
+\index{Lights@{Lights}!setOffHour@{setOffHour}}
+\index{setOffHour@{setOffHour}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setOffHour()}{setOffHour()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Off\+Hour (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Off\+Hour }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 385 of file Lights.\+cpp.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a561b79359ab51821048e9d9bc30fc164_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_a561b79359ab51821048e9d9bc30fc164}\label{classLights_a561b79359ab51821048e9d9bc30fc164}} 
+\index{Lights@{Lights}!setOffHour@{setOffHour}}
+\index{setOffHour@{setOffHour}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setOffHour()}{setOffHour()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Off\+Hour (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Off\+Hour }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classLights_afc2ad84d3e1c4d9e8f62d05791f82928}\label{classLights_afc2ad84d3e1c4d9e8f62d05791f82928}} 
+\index{Lights@{Lights}!setOffMinute@{setOffMinute}}
+\index{setOffMinute@{setOffMinute}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setOffMinute()}{setOffMinute()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Off\+Minute (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Off\+Minute }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 390 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_afc2ad84d3e1c4d9e8f62d05791f82928_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_afc2ad84d3e1c4d9e8f62d05791f82928_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_afc2ad84d3e1c4d9e8f62d05791f82928}\label{classLights_afc2ad84d3e1c4d9e8f62d05791f82928}} 
+\index{Lights@{Lights}!setOffMinute@{setOffMinute}}
+\index{setOffMinute@{setOffMinute}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setOffMinute()}{setOffMinute()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Off\+Minute (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Off\+Minute }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classLights_aee95c9b14f3b1886a755d7d818b0cbf2}\label{classLights_aee95c9b14f3b1886a755d7d818b0cbf2}} 
+\index{Lights@{Lights}!setOnHour@{setOnHour}}
+\index{setOnHour@{setOnHour}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setOnHour()}{setOnHour()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+On\+Hour (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{On\+Hour }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 373 of file Lights.\+cpp.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_aee95c9b14f3b1886a755d7d818b0cbf2_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_aee95c9b14f3b1886a755d7d818b0cbf2}\label{classLights_aee95c9b14f3b1886a755d7d818b0cbf2}} 
+\index{Lights@{Lights}!setOnHour@{setOnHour}}
+\index{setOnHour@{setOnHour}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setOnHour()}{setOnHour()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+On\+Hour (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{On\+Hour }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classLights_ada0e53ffae21eb386b8cef9e6a12fb8c}\label{classLights_ada0e53ffae21eb386b8cef9e6a12fb8c}} 
+\index{Lights@{Lights}!setOnMinute@{setOnMinute}}
+\index{setOnMinute@{setOnMinute}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setOnMinute()}{setOnMinute()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+On\+Minute (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{On\+Minute }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 378 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_ada0e53ffae21eb386b8cef9e6a12fb8c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_ada0e53ffae21eb386b8cef9e6a12fb8c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classLights_ada0e53ffae21eb386b8cef9e6a12fb8c}\label{classLights_ada0e53ffae21eb386b8cef9e6a12fb8c}} 
+\index{Lights@{Lights}!setOnMinute@{setOnMinute}}
+\index{setOnMinute@{setOnMinute}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setOnMinute()}{setOnMinute()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+On\+Minute (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{On\+Minute }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classLights_a3c5051babf4dacdeecced14217f6f886}\label{classLights_a3c5051babf4dacdeecced14217f6f886}} 
+\index{Lights@{Lights}!setTimerOnOff@{setTimerOnOff}}
+\index{setTimerOnOff@{setTimerOnOff}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setTimerOnOff()}{setTimerOnOff()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Timer\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classLights_a3c5051babf4dacdeecced14217f6f886}\label{classLights_a3c5051babf4dacdeecced14217f6f886}} 
+\index{Lights@{Lights}!setTimerOnOff@{setTimerOnOff}}
+\index{setTimerOnOff@{setTimerOnOff}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{setTimerOnOff()}{setTimerOnOff()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Lights\+::set\+Timer\+On\+Off (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 357 of file Lights.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a3c5051babf4dacdeecced14217f6f886_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classLights_a3c5051babf4dacdeecced14217f6f886_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classLights_ab06ce174cc8a8a11efce3db1c65d193e}\label{classLights_ab06ce174cc8a8a11efce3db1c65d193e}} 
+\index{Lights@{Lights}!BeforeDimmingBrightness@{BeforeDimmingBrightness}}
+\index{BeforeDimmingBrightness@{BeforeDimmingBrightness}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{BeforeDimmingBrightness}{BeforeDimmingBrightness}}
+{\footnotesize\ttfamily uint8\+\_\+t Lights\+::\+Before\+Dimming\+Brightness\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Stores the brightness before the temporary dimming was activated. 
+
+
+
+Definition at line 58 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_adb1ccb3856201404f321624e7bf044be}\label{classLights_adb1ccb3856201404f321624e7bf044be}} 
+\index{Lights@{Lights}!BeforeDimmingState@{BeforeDimmingState}}
+\index{BeforeDimmingState@{BeforeDimmingState}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{BeforeDimmingState}{BeforeDimmingState}}
+{\footnotesize\ttfamily \mbox{\hyperlink{Gbox420__Mega__Main_2src_2Components_2Lights_8h_ab7a12d86f977bfc4b0c179678594e1ab}{Light\+States}} Lights\+::\+Before\+Dimming\+State = \mbox{\hyperlink{src_2Components_2Lights_8h_ab7a12d86f977bfc4b0c179678594e1abaac132f2982b98bcaa3445e535a03ff75}{Light\+States\+::\+O\+FF}}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Stores the state before the temporary dimming was activated. 
+
+
+
+Definition at line 57 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a5f8ffb20e9326f92476420269a67cd84}\label{classLights_a5f8ffb20e9326f92476420269a67cd84}} 
+\index{Lights@{Lights}!Brightness@{Brightness}}
+\index{Brightness@{Brightness}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{Brightness}{Brightness}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ Lights\+::\+Brightness\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Light intensity target\+: 0\% -\/ 100\% range for controlling led driver output. 
+
+
+
+Definition at line 67 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a76153b69c857a3226dd6c4636ad867ee}\label{classLights_a76153b69c857a3226dd6c4636ad867ee}} 
+\index{Lights@{Lights}!CurrentBrightness@{CurrentBrightness}}
+\index{CurrentBrightness@{CurrentBrightness}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{CurrentBrightness}{CurrentBrightness}}
+{\footnotesize\ttfamily int16\+\_\+t Lights\+::\+Current\+Brightness\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Tracks light intensity while fading in/out. 
+
+
+
+Definition at line 68 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a5d2bb89e5cedb01baebb01594eec62d5}\label{classLights_a5d2bb89e5cedb01baebb01594eec62d5}} 
+\index{Lights@{Lights}!CurrentStatus@{CurrentStatus}}
+\index{CurrentStatus@{CurrentStatus}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{CurrentStatus}{CurrentStatus}}
+{\footnotesize\ttfamily \mbox{\hyperlink{Gbox420__Mega__Main_2src_2Components_2Lights_8h_ab7a12d86f977bfc4b0c179678594e1ab}{Light\+States}} Lights\+::\+Current\+Status = \mbox{\hyperlink{src_2Components_2Lights_8h_ab7a12d86f977bfc4b0c179678594e1abaac132f2982b98bcaa3445e535a03ff75}{Light\+States\+::\+O\+FF}}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Tracks light state during fading in/out. 
+
+
+
+Definition at line 61 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a99e6a6e48ae8660170996b6308beae71}\label{classLights_a99e6a6e48ae8660170996b6308beae71}} 
+\index{Lights@{Lights}!DimmingDuration@{DimmingDuration}}
+\index{DimmingDuration@{DimmingDuration}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{DimmingDuration}{DimmingDuration}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ Lights\+::\+Dimming\+Duration\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Timeout of temporary dumming in Minutes. 
+
+
+
+Definition at line 56 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a12fe71729d7dbffab728d6892e014557}\label{classLights_a12fe71729d7dbffab728d6892e014557}} 
+\index{Lights@{Lights}!DimmingLimit@{DimmingLimit}}
+\index{DimmingLimit@{DimmingLimit}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{DimmingLimit}{DimmingLimit}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ Lights\+::\+Dimming\+Limit\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Sets the L\+ED dimming limit (Usually around 5\%) 
+
+
+
+Definition at line 55 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a453513cb66d5604c37f052d1e45577c9}\label{classLights_a453513cb66d5604c37f052d1e45577c9}} 
+\index{Lights@{Lights}!DimmingPin@{DimmingPin}}
+\index{DimmingPin@{DimmingPin}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{DimmingPin}{DimmingPin}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ Lights\+::\+Dimming\+Pin\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+P\+WM based dimming, connected to optocoupler\`{}s base over 1k ohm resistor0. 
+
+
+
+Definition at line 54 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a4438e436ef4c11919063f80dc41e73b8}\label{classLights_a4438e436ef4c11919063f80dc41e73b8}} 
+\index{Lights@{Lights}!DimmingTimer@{DimmingTimer}}
+\index{DimmingTimer@{DimmingTimer}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{DimmingTimer}{DimmingTimer}}
+{\footnotesize\ttfamily uint32\+\_\+t Lights\+::\+Dimming\+Timer = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Stores the time when the temporary dimmin got enabled. 
+
+
+
+Definition at line 59 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a4903d7736642e9a92b6b709ac205b711}\label{classLights_a4903d7736642e9a92b6b709ac205b711}} 
+\index{Lights@{Lights}!FadingEnabled@{FadingEnabled}}
+\index{FadingEnabled@{FadingEnabled}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{FadingEnabled}{FadingEnabled}}
+{\footnotesize\ttfamily bool $\ast$ Lights\+::\+Fading\+Enabled\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Enables/disables fading lights in when turning on, and fading lights out when turning off. 
+
+
+
+Definition at line 69 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_afc169d709462a2f03de1577a7d3ee465}\label{classLights_afc169d709462a2f03de1577a7d3ee465}} 
+\index{Lights@{Lights}!FadingIncrements@{FadingIncrements}}
+\index{FadingIncrements@{FadingIncrements}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{FadingIncrements}{FadingIncrements}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ Lights\+::\+Fading\+Increments\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+How much to change the brightness during a fade in/out (Percentage) 
+
+
+
+Definition at line 72 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a13938266da349c4020502e76fea34f7b}\label{classLights_a13938266da349c4020502e76fea34f7b}} 
+\index{Lights@{Lights}!FadingInterval@{FadingInterval}}
+\index{FadingInterval@{FadingInterval}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{FadingInterval}{FadingInterval}}
+{\footnotesize\ttfamily uint16\+\_\+t $\ast$ Lights\+::\+Fading\+Interval\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+How often should the brightness change during a fade in/out (Seconds) 
+
+
+
+Definition at line 71 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_ade389a3bed93ead09b8e8b5e2d7701c5}\label{classLights_ade389a3bed93ead09b8e8b5e2d7701c5}} 
+\index{Lights@{Lights}!FadingTimer@{FadingTimer}}
+\index{FadingTimer@{FadingTimer}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{FadingTimer}{FadingTimer}}
+{\footnotesize\ttfamily uint32\+\_\+t Lights\+::\+Fading\+Timer = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Stores the last time the Fadein/out increased/decreased a increment. 
+
+
+
+Definition at line 70 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_aa50ee194d899db263f3a6ce84cbbbbb7}\label{classLights_aa50ee194d899db263f3a6ce84cbbbbb7}} 
+\index{Lights@{Lights}!OffHour@{OffHour}}
+\index{OffHour@{OffHour}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{OffHour}{OffHour}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ Lights\+::\+Off\+Hour\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Light O\+FF time -\/ hour. 
+
+
+
+Definition at line 65 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a2cce51e3b581d3c33ba2f2529629b348}\label{classLights_a2cce51e3b581d3c33ba2f2529629b348}} 
+\index{Lights@{Lights}!OffMinute@{OffMinute}}
+\index{OffMinute@{OffMinute}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{OffMinute}{OffMinute}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ Lights\+::\+Off\+Minute\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Light O\+FF time -\/ minute. 
+
+
+
+Definition at line 66 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a57e8c46cb8553afacfe8dccae84b27b6}\label{classLights_a57e8c46cb8553afacfe8dccae84b27b6}} 
+\index{Lights@{Lights}!OnHour@{OnHour}}
+\index{OnHour@{OnHour}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{OnHour}{OnHour}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ Lights\+::\+On\+Hour\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Light ON time -\/ hour. 
+
+
+
+Definition at line 63 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a8067e9045c1cd6c80386989324841252}\label{classLights_a8067e9045c1cd6c80386989324841252}} 
+\index{Lights@{Lights}!OnMinute@{OnMinute}}
+\index{OnMinute@{OnMinute}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{OnMinute}{OnMinute}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ Lights\+::\+On\+Minute\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Light ON time -\/ minute. 
+
+
+
+Definition at line 64 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_aae73ad0f2de1a24e5c12add1d302e367}\label{classLights_aae73ad0f2de1a24e5c12add1d302e367}} 
+\index{Lights@{Lights}!Parent@{Parent}}
+\index{Parent@{Parent}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classModule}{Module}} $\ast$ Lights\+::\+Parent\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 44 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_aa4b35d15457aebc31fd1cb9f7e49c543}\label{classLights_aa4b35d15457aebc31fd1cb9f7e49c543}} 
+\index{Lights@{Lights}!RelayPin@{RelayPin}}
+\index{RelayPin@{RelayPin}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{RelayPin}{RelayPin}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ Lights\+::\+Relay\+Pin\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+the Arduino pin controlling the AC relay 
+
+
+
+Definition at line 53 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a5f5ca6f90f96be38cbaa00cc6302eebd}\label{classLights_a5f5ca6f90f96be38cbaa00cc6302eebd}} 
+\index{Lights@{Lights}!Status@{Status}}
+\index{Status@{Status}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{Status}{Status}}
+{\footnotesize\ttfamily bool $\ast$ Lights\+::\+Status\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\mbox{\hyperlink{classLights}{Lights}} ON or O\+FF. 
+
+
+
+Definition at line 60 of file Lights.\+h.
+
+\mbox{\Hypertarget{classLights_a2b2938ba677b462b6a464c325b085945}\label{classLights_a2b2938ba677b462b6a464c325b085945}} 
+\index{Lights@{Lights}!TimerEnabled@{TimerEnabled}}
+\index{TimerEnabled@{TimerEnabled}!Lights@{Lights}}
+\doxysubsubsection{\texorpdfstring{TimerEnabled}{TimerEnabled}}
+{\footnotesize\ttfamily bool $\ast$ Lights\+::\+Timer\+Enabled\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Enable timer controlling lights\+: true -\/ Timer enabled, false -\/ Timer disabled. 
+
+
+
+Definition at line 62 of file Lights.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Gbox420\+\_\+\+Mega\+\_\+\+Main/src/\+Components/\mbox{\hyperlink{Gbox420__Mega__Main_2src_2Components_2Lights_8h}{Lights.\+h}}\item 
+Gbox420\+\_\+\+Mega\+\_\+\+Main/src/\+Components/\mbox{\hyperlink{Gbox420__Mega__Main_2src_2Components_2Lights_8cpp}{Lights.\+cpp}}\end{DoxyCompactItemize}

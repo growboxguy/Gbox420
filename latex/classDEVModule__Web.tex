@@ -1,0 +1,610 @@
+\hypertarget{classDEVModule__Web}{}\doxysection{D\+E\+V\+Module\+\_\+\+Web Class Reference}
+\label{classDEVModule__Web}\index{DEVModule\_Web@{DEVModule\_Web}}
+
+
+{\ttfamily \#include $<$D\+E\+V\+Module\+\_\+\+Web.\+h$>$}
+
+
+
+Inheritance diagram for D\+E\+V\+Module\+\_\+\+Web\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{classDEVModule__Web__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for D\+E\+V\+Module\+\_\+\+Web\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDEVModule__Web__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classDEVModule__Web_a3b6305f0ac608f03bf1d4e78183f1eac}{D\+E\+V\+Module\+\_\+\+Web}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\mbox{\hyperlink{classCommon_aeea91a726dbe988e515057b32ba0726f}{Name}}, \mbox{\hyperlink{structSettings_1_1MainModuleSettings}{Settings\+::\+Main\+Module\+Settings}} $\ast$Default\+Settings, R\+F24 $\ast$\mbox{\hyperlink{classModule__Web_a881710747e9bb9f3e88727436dd54c98}{Wireless}})
+\begin{DoxyCompactList}\small\item\em constructor \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDEVModule__Web_a06b3efac7a5e489da49aba198ed41fa3}{website\+Event\+\_\+\+Load}} (char $\ast$url)
+\item 
+void \mbox{\hyperlink{classDEVModule__Web_a250eae61fe09061ccbf2e43d9480902e}{website\+Event\+\_\+\+Refresh}} (char $\ast$url)
+\item 
+void \mbox{\hyperlink{classDEVModule__Web_acefbbfe99fe3da658ff228d9777535f1}{website\+Event\+\_\+\+Button}} (char $\ast$Button)
+\item 
+void \mbox{\hyperlink{classDEVModule__Web_a78b4dea7996203c2435bc1c5b1fbb0b4}{website\+Event\+\_\+\+Field}} (char $\ast$Field)
+\item 
+void \mbox{\hyperlink{classDEVModule__Web_ac8ea37f602295f12c39d9849aab8e512}{refresh\+\_\+\+Five\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classDEVModule__Web_ab0e28b8ddf2b462b3c13be6ddebc1d2a}{refresh\+\_\+\+Minute}} ()
+\item 
+void \mbox{\hyperlink{classDEVModule__Web_af53c52f8cc8d23d53fc1f652b740279a}{refresh\+\_\+\+Quarter\+Hour}} ()
+\item 
+void \mbox{\hyperlink{classDEVModule__Web_a682292be98131695448dce6dbb522e0f}{report\+To\+Google\+Sheets\+Trigger}} (bool Force\+Run=false)
+\item 
+void \mbox{\hyperlink{classDEVModule__Web_a1ed4c4cfab9073195b742bdbe5a94619}{report\+To\+J\+S\+ON}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSound__Web}{Sound\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_ae4c3b19ce0c7be18918b7c7198d8b4e0}{Sound1}}
+\begin{DoxyCompactList}\small\item\em Pointer to a Piezo speaker -\/ sound feedback. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFan__Web}{Fan\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_a8a0cebba6ee15ab24ee8a71b66a5e1a0}{I\+Fan}}
+\begin{DoxyCompactList}\small\item\em Internal fan. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classFan__Web}{Fan\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_a8d148de53de376f71fc8409a71c2e2bb}{E\+Fan}}
+\begin{DoxyCompactList}\small\item\em Exhaust fan. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classDHTSensor__Web}{D\+H\+T\+Sensor\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_a0ff5e26f87009567d99d093a05338f62}{D\+H\+T1}}
+\begin{DoxyCompactList}\small\item\em Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classLightSensor__Web}{Light\+Sensor\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_ad2c0665bfb08b4d8f41501210157a5e2}{Lt\+Sen1}}
+\begin{DoxyCompactList}\small\item\em Pointer to a Light Sensor object measuring light intensity in the grow box. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classLights__Web}{Lights\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_a775256429310e958076b61d4df607243}{Lt1}}
+\begin{DoxyCompactList}\small\item\em Pointer to a Light assembly. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classPowerSensor__Web}{Power\+Sensor\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_af8e0c4d10fffe6738c16ca814155776b}{Pow1}}
+\item 
+\mbox{\hyperlink{classPressureSensor__Web}{Pressure\+Sensor\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_af27e96e2a39a7b36d2c37b30aeb5258d}{Pres1}}
+\item 
+\mbox{\hyperlink{classPHSensor__Web}{P\+H\+Sensor\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_aacae5495ae3cc3fab36b402c679e072b}{P\+H\+Sen1}}
+\item 
+\mbox{\hyperlink{classWaterPump}{Water\+Pump}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_a0b4d742b854e335fb51471c94be7553d}{Aero\+Pump1}}
+\item 
+\mbox{\hyperlink{classAeroponics__Tank__Web}{Aeroponics\+\_\+\+Tank\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_aae1d2d76e9e46c460c785ba5719306ad}{Aero\+T1}}
+\item 
+\mbox{\hyperlink{classAeroponics__NoTank__Web}{Aeroponics\+\_\+\+No\+Tank\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_a7521628fd48943b647c93cc055fe24d9}{Aero\+N\+T1}}
+\item 
+\mbox{\hyperlink{classWaterTempSensor__Web}{Water\+Temp\+Sensor\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_a0dbd257c1a6d9119578e16a8a91fd60c}{W\+Temp1}}
+\item 
+\mbox{\hyperlink{classWaterLevelSensor__Web}{Water\+Level\+Sensor\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_a0ce3bfbe2eca9e56f8098e7a650ec203}{W\+Lev1}}
+\item 
+\mbox{\hyperlink{classDistanceSensor__Web}{Distance\+Sensor\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_aa84019d650a09bdca1aa17bbafef1f28}{Dist1}}
+\item 
+\mbox{\hyperlink{classHempyModule__Web}{Hempy\+Module\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_a2fdc3dff8cb91c8b318b1d1aefc06b31}{Hempy\+Module1}}
+\begin{DoxyCompactList}\small\item\em $<$Represents the website controls and feedback for a \mbox{\hyperlink{classHempyModule}{Hempy\+Module}} \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classAeroModule__Web}{Aero\+Module\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_a8e9ab32d2375a45354ae8cf77f96eba4}{Aero\+Module1}}
+\begin{DoxyCompactList}\small\item\em $<$Represents the website controls and feedback for a \mbox{\hyperlink{classAeroModule}{Aero\+Module}} \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classReservoirModule__Web}{Reservoir\+Module\+\_\+\+Web}} $\ast$ \mbox{\hyperlink{classDEVModule__Web_a1165151f128417f60cd4f4336a72a36c}{Reservoir\+Module1}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classDEVModule__Web_ad4caeb92a41d609a201989513c5c8f68}{Refresh\+All\+Requested}} = false
+\item 
+bool \mbox{\hyperlink{classDEVModule__Web_ac055890373d44f9b54fe2d5e43e6a0ff}{Console\+Report\+Requested}} = false
+\item 
+bool \mbox{\hyperlink{classDEVModule__Web_a09248a2ba510454c995bfa2e3d4d207e}{Report\+To\+Google\+Sheets\+Requested}} = false
+\item 
+uint16\+\_\+t $\ast$ \mbox{\hyperlink{classDEVModule__Web_a41d73020e1f3bebf89957bc34dac9287}{Sheets\+Reporting\+Frequency}}
+\item 
+bool $\ast$ \mbox{\hyperlink{classDEVModule__Web_a080d742a862e376a104aea127c9ecc05}{Report\+To\+Google\+Sheets}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{classDEVModule__Web_aa6b94215c2ffc12a5cead67b73ec5b2b}{Sheets\+Refresh\+Counter}} = 0
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 41 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classDEVModule__Web_a3b6305f0ac608f03bf1d4e78183f1eac}\label{classDEVModule__Web_a3b6305f0ac608f03bf1d4e78183f1eac}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!DEVModule\_Web@{DEVModule\_Web}}
+\index{DEVModule\_Web@{DEVModule\_Web}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{DEVModule\_Web()}{DEVModule\_Web()}}
+{\footnotesize\ttfamily D\+E\+V\+Module\+\_\+\+Web\+::\+D\+E\+V\+Module\+\_\+\+Web (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\mbox{\hyperlink{structSettings_1_1MainModuleSettings}{Settings\+::\+Main\+Module\+Settings}} $\ast$}]{Default\+Settings,  }\item[{R\+F24 $\ast$}]{Wireless }\end{DoxyParamCaption})}
+
+
+
+constructor 
+
+$<$ Only for P\+Z\+E\+M004T V3.\+0
+
+$<$ Only for demonstration purposes $<$ Constructor
+
+$<$ Passing Module\+Settings members as references\+: Changes get written back to Module\+Settings and saved to E\+E\+P\+R\+OM. (uint8\+\_\+t $\ast$)(((uint8\+\_\+t $\ast$)\&Module\+Settings) + offsetof(\+Settings, V\+A\+R\+I\+A\+B\+L\+E\+N\+A\+M\+E))
+
+$<$ Module\+Skeleton1 = new \mbox{\hyperlink{classModuleSkeleton__Web}{Module\+Skeleton\+\_\+\+Web}}(F(\char`\"{}\+Module\+Skeleton1\char`\"{}),this,\&Module\+Settings -\/$>$ Module\+Skeleton1); ///$<$ Only for demonstration purposes Module\+Skeleton2 = new \mbox{\hyperlink{classModuleSkeleton__Web}{Module\+Skeleton\+\_\+\+Web}}(F(\char`\"{}\+Module\+Skeleton2\char`\"{}),this,\&Module\+Settings -\/$>$ Module\+Skeleton2); ///$<$ Only for demonstration purposes
+
+$<$ passing\+: Component name, \mbox{\hyperlink{classDEVModule__Web}{D\+E\+V\+Module\+\_\+\+Web}} object the component belongs to, Default settings)
+
+$<$ Passing an extra Light object as parameter\+: Calibrates the light sensor against the passed Light object
+
+$<$ Pow1 = new \mbox{\hyperlink{classPowerSensorV3__Web}{Power\+Sensor\+V3\+\_\+\+Web}}(F(\char`\"{}\+Pow1\char`\"{}), this, \&Serial2); ///$<$ Only for P\+Z\+E\+M004T V3.\+0
+
+Definition at line 23 of file D\+E\+V\+Module\+\_\+\+Web.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDEVModule__Web_a3b6305f0ac608f03bf1d4e78183f1eac_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classDEVModule__Web_ac8ea37f602295f12c39d9849aab8e512}\label{classDEVModule__Web_ac8ea37f602295f12c39d9849aab8e512}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!refresh\_FiveSec@{refresh\_FiveSec}}
+\index{refresh\_FiveSec@{refresh\_FiveSec}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{refresh\_FiveSec()}{refresh\_FiveSec()}}
+{\footnotesize\ttfamily void D\+E\+V\+Module\+\_\+\+Web\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}}.
+
+
+
+Definition at line 175 of file D\+E\+V\+Module\+\_\+\+Web.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDEVModule__Web_ac8ea37f602295f12c39d9849aab8e512_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classDEVModule__Web_ab0e28b8ddf2b462b3c13be6ddebc1d2a}\label{classDEVModule__Web_ab0e28b8ddf2b462b3c13be6ddebc1d2a}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!refresh\_Minute@{refresh\_Minute}}
+\index{refresh\_Minute@{refresh\_Minute}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{refresh\_Minute()}{refresh\_Minute()}}
+{\footnotesize\ttfamily void D\+E\+V\+Module\+\_\+\+Web\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a14e4462a94bd118028ce1d487ca0292c}{Common}}.
+
+
+
+Definition at line 199 of file D\+E\+V\+Module\+\_\+\+Web.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDEVModule__Web_ab0e28b8ddf2b462b3c13be6ddebc1d2a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classDEVModule__Web_af53c52f8cc8d23d53fc1f652b740279a}\label{classDEVModule__Web_af53c52f8cc8d23d53fc1f652b740279a}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!refresh\_QuarterHour@{refresh\_QuarterHour}}
+\index{refresh\_QuarterHour@{refresh\_QuarterHour}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{refresh\_QuarterHour()}{refresh\_QuarterHour()}}
+{\footnotesize\ttfamily void D\+E\+V\+Module\+\_\+\+Web\+::refresh\+\_\+\+Quarter\+Hour (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_aa7222229739c89d441fadd6a40deff89}{Common}}.
+
+\mbox{\Hypertarget{classDEVModule__Web_a682292be98131695448dce6dbb522e0f}\label{classDEVModule__Web_a682292be98131695448dce6dbb522e0f}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!reportToGoogleSheetsTrigger@{reportToGoogleSheetsTrigger}}
+\index{reportToGoogleSheetsTrigger@{reportToGoogleSheetsTrigger}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{reportToGoogleSheetsTrigger()}{reportToGoogleSheetsTrigger()}}
+{\footnotesize\ttfamily void D\+E\+V\+Module\+\_\+\+Web\+::report\+To\+Google\+Sheets\+Trigger (\begin{DoxyParamCaption}\item[{bool}]{Force\+Run = {\ttfamily false} }\end{DoxyParamCaption})}
+
+$<$ Handles custom reporting frequency for Google Sheets, called every 15 minutes
+
+$<$ Reset the counter after one day (15 x 96 = 1440 = 24 hours)
+
+$<$ Adds a curly bracket \{ that needs to be closed at the end
+
+$<$ Adds a curly bracket \{ that needs to be closed at the end
+
+$<$ $<$ Unless it was the last element add a , separator
+
+$<$ closing both curly bracket
+
+Definition at line 269 of file D\+E\+V\+Module\+\_\+\+Web.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDEVModule__Web_a682292be98131695448dce6dbb522e0f_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDEVModule__Web_a682292be98131695448dce6dbb522e0f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classDEVModule__Web_a1ed4c4cfab9073195b742bdbe5a94619}\label{classDEVModule__Web_a1ed4c4cfab9073195b742bdbe5a94619}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!reportToJSON@{reportToJSON}}
+\index{reportToJSON@{reportToJSON}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{reportToJSON()}{reportToJSON()}}
+{\footnotesize\ttfamily void D\+E\+V\+Module\+\_\+\+Web\+::report\+To\+J\+S\+ON (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+$<$ Adds a curly bracket \{ that needs to be closed at the end
+
+$<$ closing the curly bracket
+
+Reimplemented from \mbox{\hyperlink{classCommon__Web_a6c2e0946d266ef2a3afe17b9869381cb}{Common\+\_\+\+Web}}.
+
+
+
+Definition at line 65 of file D\+E\+V\+Module\+\_\+\+Web.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDEVModule__Web_a1ed4c4cfab9073195b742bdbe5a94619_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classDEVModule__Web_acefbbfe99fe3da658ff228d9777535f1}\label{classDEVModule__Web_acefbbfe99fe3da658ff228d9777535f1}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!websiteEvent\_Button@{websiteEvent\_Button}}
+\index{websiteEvent\_Button@{websiteEvent\_Button}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{websiteEvent\_Button()}{websiteEvent\_Button()}}
+{\footnotesize\ttfamily void D\+E\+V\+Module\+\_\+\+Web\+::website\+Event\+\_\+\+Button (\begin{DoxyParamCaption}\item[{char $\ast$}]{Button }\end{DoxyParamCaption})}
+
+$<$ When a button is pressed on the website
+
+$<$ just signal that a report should be sent, do not actually run it\+: Takes too long from an interrupt
+
+$<$ Website signals to refresh all sensor readings
+
+Definition at line 118 of file D\+E\+V\+Module\+\_\+\+Web.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDEVModule__Web_acefbbfe99fe3da658ff228d9777535f1_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classDEVModule__Web_a78b4dea7996203c2435bc1c5b1fbb0b4}\label{classDEVModule__Web_a78b4dea7996203c2435bc1c5b1fbb0b4}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!websiteEvent\_Field@{websiteEvent\_Field}}
+\index{websiteEvent\_Field@{websiteEvent\_Field}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{websiteEvent\_Field()}{websiteEvent\_Field()}}
+{\footnotesize\ttfamily void D\+E\+V\+Module\+\_\+\+Web\+::website\+Event\+\_\+\+Field (\begin{DoxyParamCaption}\item[{char $\ast$}]{Field }\end{DoxyParamCaption})}
+
+$<$ When the website field is submitted
+
+Definition at line 144 of file D\+E\+V\+Module\+\_\+\+Web.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDEVModule__Web_a78b4dea7996203c2435bc1c5b1fbb0b4_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classDEVModule__Web_a06b3efac7a5e489da49aba198ed41fa3}\label{classDEVModule__Web_a06b3efac7a5e489da49aba198ed41fa3}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!websiteEvent\_Load@{websiteEvent\_Load}}
+\index{websiteEvent\_Load@{websiteEvent\_Load}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{websiteEvent\_Load()}{websiteEvent\_Load()}}
+{\footnotesize\ttfamily void D\+E\+V\+Module\+\_\+\+Web\+::website\+Event\+\_\+\+Load (\begin{DoxyParamCaption}\item[{char $\ast$}]{url }\end{DoxyParamCaption})}
+
+
+
+Definition at line 100 of file D\+E\+V\+Module\+\_\+\+Web.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDEVModule__Web_a06b3efac7a5e489da49aba198ed41fa3_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classDEVModule__Web_a250eae61fe09061ccbf2e43d9480902e}\label{classDEVModule__Web_a250eae61fe09061ccbf2e43d9480902e}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!websiteEvent\_Refresh@{websiteEvent\_Refresh}}
+\index{websiteEvent\_Refresh@{websiteEvent\_Refresh}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{websiteEvent\_Refresh()}{websiteEvent\_Refresh()}}
+{\footnotesize\ttfamily void D\+E\+V\+Module\+\_\+\+Web\+::website\+Event\+\_\+\+Refresh (\begin{DoxyParamCaption}\item[{char $\ast$}]{url }\end{DoxyParamCaption})}
+
+$<$ Last events that happened in J\+S\+ON format
+
+Definition at line 112 of file D\+E\+V\+Module\+\_\+\+Web.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDEVModule__Web_a250eae61fe09061ccbf2e43d9480902e_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classDEVModule__Web_a8e9ab32d2375a45354ae8cf77f96eba4}\label{classDEVModule__Web_a8e9ab32d2375a45354ae8cf77f96eba4}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!AeroModule1@{AeroModule1}}
+\index{AeroModule1@{AeroModule1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{AeroModule1}{AeroModule1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classAeroModule__Web}{Aero\+Module\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Aero\+Module1}
+
+
+
+$<$Represents the website controls and feedback for a \mbox{\hyperlink{classAeroModule}{Aero\+Module}} 
+
+
+
+Definition at line 62 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a7521628fd48943b647c93cc055fe24d9}\label{classDEVModule__Web_a7521628fd48943b647c93cc055fe24d9}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!AeroNT1@{AeroNT1}}
+\index{AeroNT1@{AeroNT1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{AeroNT1}{AeroNT1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classAeroponics__NoTank__Web}{Aeroponics\+\_\+\+No\+Tank\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Aero\+N\+T1}
+
+
+
+Definition at line 57 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a0b4d742b854e335fb51471c94be7553d}\label{classDEVModule__Web_a0b4d742b854e335fb51471c94be7553d}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!AeroPump1@{AeroPump1}}
+\index{AeroPump1@{AeroPump1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{AeroPump1}{AeroPump1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classWaterPump}{Water\+Pump}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Aero\+Pump1}
+
+
+
+Definition at line 55 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_aae1d2d76e9e46c460c785ba5719306ad}\label{classDEVModule__Web_aae1d2d76e9e46c460c785ba5719306ad}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!AeroT1@{AeroT1}}
+\index{AeroT1@{AeroT1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{AeroT1}{AeroT1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classAeroponics__Tank__Web}{Aeroponics\+\_\+\+Tank\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Aero\+T1}
+
+
+
+Definition at line 56 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_ac055890373d44f9b54fe2d5e43e6a0ff}\label{classDEVModule__Web_ac055890373d44f9b54fe2d5e43e6a0ff}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!ConsoleReportRequested@{ConsoleReportRequested}}
+\index{ConsoleReportRequested@{ConsoleReportRequested}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{ConsoleReportRequested}{ConsoleReportRequested}}
+{\footnotesize\ttfamily bool D\+E\+V\+Module\+\_\+\+Web\+::\+Console\+Report\+Requested = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 88 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a0ff5e26f87009567d99d093a05338f62}\label{classDEVModule__Web_a0ff5e26f87009567d99d093a05338f62}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!DHT1@{DHT1}}
+\index{DHT1@{DHT1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{DHT1}{DHT1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classDHTSensor__Web}{D\+H\+T\+Sensor\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+D\+H\+T1}
+
+
+
+Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box. 
+
+
+
+Definition at line 48 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_aa84019d650a09bdca1aa17bbafef1f28}\label{classDEVModule__Web_aa84019d650a09bdca1aa17bbafef1f28}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!Dist1@{Dist1}}
+\index{Dist1@{Dist1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{Dist1}{Dist1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classDistanceSensor__Web}{Distance\+Sensor\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Dist1}
+
+
+
+Definition at line 60 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a8d148de53de376f71fc8409a71c2e2bb}\label{classDEVModule__Web_a8d148de53de376f71fc8409a71c2e2bb}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!EFan@{EFan}}
+\index{EFan@{EFan}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{EFan}{EFan}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFan__Web}{Fan\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+E\+Fan}
+
+
+
+Exhaust fan. 
+
+
+
+Definition at line 47 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a2fdc3dff8cb91c8b318b1d1aefc06b31}\label{classDEVModule__Web_a2fdc3dff8cb91c8b318b1d1aefc06b31}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!HempyModule1@{HempyModule1}}
+\index{HempyModule1@{HempyModule1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{HempyModule1}{HempyModule1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classHempyModule__Web}{Hempy\+Module\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Hempy\+Module1}
+
+
+
+$<$Represents the website controls and feedback for a \mbox{\hyperlink{classHempyModule}{Hempy\+Module}} 
+
+
+
+Definition at line 61 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a8a0cebba6ee15ab24ee8a71b66a5e1a0}\label{classDEVModule__Web_a8a0cebba6ee15ab24ee8a71b66a5e1a0}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!IFan@{IFan}}
+\index{IFan@{IFan}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{IFan}{IFan}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classFan__Web}{Fan\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+I\+Fan}
+
+
+
+Internal fan. 
+
+
+
+Definition at line 46 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a775256429310e958076b61d4df607243}\label{classDEVModule__Web_a775256429310e958076b61d4df607243}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!Lt1@{Lt1}}
+\index{Lt1@{Lt1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{Lt1}{Lt1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classLights__Web}{Lights\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Lt1}
+
+
+
+Pointer to a Light assembly. 
+
+
+
+Definition at line 50 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_ad2c0665bfb08b4d8f41501210157a5e2}\label{classDEVModule__Web_ad2c0665bfb08b4d8f41501210157a5e2}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!LtSen1@{LtSen1}}
+\index{LtSen1@{LtSen1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{LtSen1}{LtSen1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classLightSensor__Web}{Light\+Sensor\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Lt\+Sen1}
+
+
+
+Pointer to a Light Sensor object measuring light intensity in the grow box. 
+
+
+
+Definition at line 49 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_aacae5495ae3cc3fab36b402c679e072b}\label{classDEVModule__Web_aacae5495ae3cc3fab36b402c679e072b}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!PHSen1@{PHSen1}}
+\index{PHSen1@{PHSen1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{PHSen1}{PHSen1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classPHSensor__Web}{P\+H\+Sensor\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+P\+H\+Sen1}
+
+
+
+Definition at line 54 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_af8e0c4d10fffe6738c16ca814155776b}\label{classDEVModule__Web_af8e0c4d10fffe6738c16ca814155776b}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!Pow1@{Pow1}}
+\index{Pow1@{Pow1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{Pow1}{Pow1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classPowerSensor__Web}{Power\+Sensor\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Pow1}
+
+
+
+Definition at line 51 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_af27e96e2a39a7b36d2c37b30aeb5258d}\label{classDEVModule__Web_af27e96e2a39a7b36d2c37b30aeb5258d}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!Pres1@{Pres1}}
+\index{Pres1@{Pres1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{Pres1}{Pres1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classPressureSensor__Web}{Pressure\+Sensor\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Pres1}
+
+
+
+Definition at line 53 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_ad4caeb92a41d609a201989513c5c8f68}\label{classDEVModule__Web_ad4caeb92a41d609a201989513c5c8f68}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!RefreshAllRequested@{RefreshAllRequested}}
+\index{RefreshAllRequested@{RefreshAllRequested}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{RefreshAllRequested}{RefreshAllRequested}}
+{\footnotesize\ttfamily bool D\+E\+V\+Module\+\_\+\+Web\+::\+Refresh\+All\+Requested = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 87 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a080d742a862e376a104aea127c9ecc05}\label{classDEVModule__Web_a080d742a862e376a104aea127c9ecc05}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!ReportToGoogleSheets@{ReportToGoogleSheets}}
+\index{ReportToGoogleSheets@{ReportToGoogleSheets}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{ReportToGoogleSheets}{ReportToGoogleSheets}}
+{\footnotesize\ttfamily bool$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Report\+To\+Google\+Sheets\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 91 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a09248a2ba510454c995bfa2e3d4d207e}\label{classDEVModule__Web_a09248a2ba510454c995bfa2e3d4d207e}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!ReportToGoogleSheetsRequested@{ReportToGoogleSheetsRequested}}
+\index{ReportToGoogleSheetsRequested@{ReportToGoogleSheetsRequested}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{ReportToGoogleSheetsRequested}{ReportToGoogleSheetsRequested}}
+{\footnotesize\ttfamily bool D\+E\+V\+Module\+\_\+\+Web\+::\+Report\+To\+Google\+Sheets\+Requested = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 89 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a1165151f128417f60cd4f4336a72a36c}\label{classDEVModule__Web_a1165151f128417f60cd4f4336a72a36c}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!ReservoirModule1@{ReservoirModule1}}
+\index{ReservoirModule1@{ReservoirModule1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{ReservoirModule1}{ReservoirModule1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classReservoirModule__Web}{Reservoir\+Module\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Reservoir\+Module1}
+
+
+
+Definition at line 63 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_aa6b94215c2ffc12a5cead67b73ec5b2b}\label{classDEVModule__Web_aa6b94215c2ffc12a5cead67b73ec5b2b}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!SheetsRefreshCounter@{SheetsRefreshCounter}}
+\index{SheetsRefreshCounter@{SheetsRefreshCounter}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{SheetsRefreshCounter}{SheetsRefreshCounter}}
+{\footnotesize\ttfamily uint8\+\_\+t D\+E\+V\+Module\+\_\+\+Web\+::\+Sheets\+Refresh\+Counter = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 92 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a41d73020e1f3bebf89957bc34dac9287}\label{classDEVModule__Web_a41d73020e1f3bebf89957bc34dac9287}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!SheetsReportingFrequency@{SheetsReportingFrequency}}
+\index{SheetsReportingFrequency@{SheetsReportingFrequency}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{SheetsReportingFrequency}{SheetsReportingFrequency}}
+{\footnotesize\ttfamily uint16\+\_\+t$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Sheets\+Reporting\+Frequency\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 90 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_ae4c3b19ce0c7be18918b7c7198d8b4e0}\label{classDEVModule__Web_ae4c3b19ce0c7be18918b7c7198d8b4e0}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!Sound1@{Sound1}}
+\index{Sound1@{Sound1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{Sound1}{Sound1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSound__Web}{Sound\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+Sound1}
+
+
+
+Pointer to a Piezo speaker -\/ sound feedback. 
+
+
+
+Definition at line 45 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a0ce3bfbe2eca9e56f8098e7a650ec203}\label{classDEVModule__Web_a0ce3bfbe2eca9e56f8098e7a650ec203}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!WLev1@{WLev1}}
+\index{WLev1@{WLev1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{WLev1}{WLev1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classWaterLevelSensor__Web}{Water\+Level\+Sensor\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+W\+Lev1}
+
+
+
+Definition at line 59 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+\mbox{\Hypertarget{classDEVModule__Web_a0dbd257c1a6d9119578e16a8a91fd60c}\label{classDEVModule__Web_a0dbd257c1a6d9119578e16a8a91fd60c}} 
+\index{DEVModule\_Web@{DEVModule\_Web}!WTemp1@{WTemp1}}
+\index{WTemp1@{WTemp1}!DEVModule\_Web@{DEVModule\_Web}}
+\doxysubsubsection{\texorpdfstring{WTemp1}{WTemp1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classWaterTempSensor__Web}{Water\+Temp\+Sensor\+\_\+\+Web}}$\ast$ D\+E\+V\+Module\+\_\+\+Web\+::\+W\+Temp1}
+
+
+
+Definition at line 58 of file D\+E\+V\+Module\+\_\+\+Web.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Modules\+\_\+\+Web/\mbox{\hyperlink{DEVModule__Web_8h}{D\+E\+V\+Module\+\_\+\+Web.\+h}}\item 
+src/\+Modules\+\_\+\+Web/\mbox{\hyperlink{DEVModule__Web_8cpp}{D\+E\+V\+Module\+\_\+\+Web.\+cpp}}\end{DoxyCompactItemize}

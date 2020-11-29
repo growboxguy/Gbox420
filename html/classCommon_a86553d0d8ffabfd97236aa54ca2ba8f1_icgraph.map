@@ -1,0 +1,32 @@
+<map id="Common::getComponentName" name="Common::getComponentName">
+<area shape="rect" id="node1" title=" " alt="" coords="320,858,544,885"/>
+<area shape="rect" id="node2" href="$classFan__Web.html#a2741ea624a781febbd4f3e2bf82c89ed" title=" " alt="" coords="51,5,226,47"/>
+<area shape="rect" id="node3" href="$classAeroponics__Tank__Web.html#a49ab14d7f9bffac4f4d9adf151589f15" title=" " alt="" coords="55,71,222,112"/>
+<area shape="rect" id="node4" href="$classPHSensor__Web.html#ad986c8800153e737e43fab3bd155b8af" title=" " alt="" coords="12,137,265,163"/>
+<area shape="rect" id="node5" href="$classAeroponics__NoTank__Web.html#a59a1c123bc843197e74c16e8aac7daa2" title=" " alt="" coords="47,188,231,229"/>
+<area shape="rect" id="node6" href="$classPressureSensor__Web.html#a235a466d2a93e7f53609c3113871c145" title=" " alt="" coords="60,253,217,295"/>
+<area shape="rect" id="node7" href="$classLights__Web.html#afab1fbd6391d25ab5f382b89d4a02b5e" title=" " alt="" coords="23,319,254,346"/>
+<area shape="rect" id="node8" href="$classModuleSkeleton__Web.html#a391e4cad5fa897f0b57e3992c68eac14" title=" " alt="" coords="58,371,219,412"/>
+<area shape="rect" id="node9" href="$classSound__Web.html#ae3a500bbde7e1264aeeb1bf43b5ba09f" title=" " alt="" coords="23,437,254,463"/>
+<area shape="rect" id="node10" href="$classMainModule.html#a20bc1bd8003e07068859028feccd067f" title=" " alt="" coords="21,487,257,514"/>
+<area shape="rect" id="node11" href="$classDEVModule__Web.html#a06b3efac7a5e489da49aba198ed41fa3" title=" " alt="" coords="5,538,272,565"/>
+<area shape="rect" id="node12" href="$classAirPump__Web.html#a523faab60fbb431ba927891e3dc70590" title=" " alt="" coords="35,589,243,631"/>
+<area shape="rect" id="node13" href="$classWaterTempSensor__Web.html#a930d46ab1e337e085a06058d8c07f76b" title=" " alt="" coords="51,655,226,696"/>
+<area shape="rect" id="node14" href="$classFan__Web.html#a328af0b2469de198e88f0dd51758a5cb" title=" " alt="" coords="51,720,226,761"/>
+<area shape="rect" id="node15" href="$classWaterLevelSensor__Web.html#a8caf8178b0128bad72e78c1c662af5c0" title=" " alt="" coords="51,785,226,827"/>
+<area shape="rect" id="node16" href="$classDHTSensor__Web.html#ad02a0f5edd3f948ae81f9ebe6032d443" title=" " alt="" coords="26,851,251,892"/>
+<area shape="rect" id="node17" href="$classAeroponics__NoTank__Web.html#a1248fe0a06097426645344b35aec0431" title=" " alt="" coords="47,916,231,957"/>
+<area shape="rect" id="node18" href="$classPowerSensor__Web.html#a430e9c91f3fa760d7930cee367b92125" title=" " alt="" coords="39,981,239,1023"/>
+<area shape="rect" id="node19" href="$classAeroponics__Tank__Web.html#acf883f3ff9b052706ea0548bdf8c04aa" title=" " alt="" coords="51,1047,226,1088"/>
+<area shape="rect" id="node20" href="$classHempyBucket__Web.html#adcbe7b1d4b88e839477ca89700113a48" title=" " alt="" coords="35,1112,242,1153"/>
+<area shape="rect" id="node21" href="$classWeightSensor__Web.html#aa47b67e39e6cbd1b543e482c94160a66" title=" " alt="" coords="36,1177,241,1219"/>
+<area shape="rect" id="node22" href="$classPHSensor__Web.html#a73ad3c5be0e9dd8deaea4cf2eee654be" title=" " alt="" coords="31,1243,246,1284"/>
+<area shape="rect" id="node23" href="$classLightSensor__Web.html#a6afe75f4f6cec3dc5f44454e23da1f8a" title=" " alt="" coords="43,1308,235,1349"/>
+<area shape="rect" id="node24" href="$classPowerSensorV3__Web.html#aa5516c0a4c5daa0f27a89e86abb0db26" title=" " alt="" coords="55,1373,222,1415"/>
+<area shape="rect" id="node25" href="$classHempyModule__Web.html#a1df6101df795a7a863667d2d28908a50" title=" " alt="" coords="33,1439,244,1480"/>
+<area shape="rect" id="node26" href="$classDistanceSensor__Web.html#a0bde479d65f8e2da0dfcf92241451ebf" title=" " alt="" coords="51,1504,226,1545"/>
+<area shape="rect" id="node27" href="$classAeroModule__Web.html#a35ff242acc077bb3a9d75ab70c7ce40f" title=" " alt="" coords="23,1569,254,1611"/>
+<area shape="rect" id="node28" href="$classLights__Web.html#af46bb9ec74ecb0f45b465c2722b9b18a" title=" " alt="" coords="43,1635,235,1676"/>
+<area shape="rect" id="node29" href="$classModuleSkeleton__Web.html#a4fbb767613efc275f91eac8e550f1a86" title=" " alt="" coords="51,1700,226,1741"/>
+<area shape="rect" id="node30" href="$classReservoirModule__Web.html#a435bceed806f4615668ce99630648c93" title=" " alt="" coords="51,1765,226,1807"/>
+</map>

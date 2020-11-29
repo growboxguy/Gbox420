@@ -81,7 +81,7 @@ void Sound_Web::EE()
   Parent->addToLog(F("♬Easter egg♬"));
   for (int thisNote = 0; thisNote < 134; thisNote++)
   {
-    int noteDuration = 1000 / (uint8_t)pgm_read_word(&tempo[thisNote]); ///< tempo is stored in PROGMEM (Flash), cannot read from it as RAM array (temp[thisNote] would not work) ///< https:///< forum.arduino.cc/index.php?topic=106603.0
+    int noteDuration = 1000 / (uint8_t)pgm_read_word(&tempo[thisNote]); ///< tempo is stored in PROGMEM (Flash), cannot read from it as RAM array (temp[thisNote] would not work) ///< https://forum.arduino.cc/index.php?topic=106603.0
     buzz((int)pgm_read_word(&melody[thisNote]), noteDuration);
     delay(noteDuration);
     buzz(0, noteDuration);
@@ -104,7 +104,7 @@ void Sound_Web::buzz(uint32_t frequency, uint32_t length)
   digitalWrite(13, LOW);
 }
 
-const PROGMEM int Sound_Web::melody[] = { ///< https:///< www.arduino.cc/reference/en/language/variables/utilities/progmem/
+const PROGMEM int Sound_Web::melody[] = { ///< https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
     2637, 2637, 0, 2637,
     0, 2093, 2637, 0,
     3136, 0, 0, 0,

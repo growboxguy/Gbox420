@@ -3,13 +3,11 @@
 ///< This class represents the website component of a AeroModule
 ///< Allows controlling the AeroModule wirelessly and receiving a status report from it
 
-#include "TimeLib.h" ///< keeping track of time
+#include "TimeLib.h" // Keeping track of time
 #include "../Components_Web/420Common_Web.h"
 #include "../Components_Web/420Module_Web.h"
 #include "../Modules_Web/MainModule_Web.h"
 #include "../WirelessCommands_Aero.h"
-
-///< forward declaration of classes
 
 class AeroModule_Web : public Common_Web
 {

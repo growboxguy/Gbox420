@@ -1,0 +1,347 @@
+\hypertarget{classReservoirModule}{}\doxysection{Reservoir\+Module Class Reference}
+\label{classReservoirModule}\index{ReservoirModule@{ReservoirModule}}
+
+
+{\ttfamily \#include $<$Reservoir\+Module.\+h$>$}
+
+
+
+Inheritance diagram for Reservoir\+Module\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=184pt]{classReservoirModule__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Reservoir\+Module\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classReservoirModule__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classReservoirModule_ab8bca3ce3768c3d800d21806d76d3aeb}{Reservoir\+Module}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\mbox{\hyperlink{classCommon_aeea91a726dbe988e515057b32ba0726f}{Name}}, \mbox{\hyperlink{structSettings_1_1ReservoirModuleSettings}{Settings\+::\+Reservoir\+Module\+Settings}} $\ast$Default\+Settings)
+\begin{DoxyCompactList}\small\item\em constructor \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classReservoirModule_a9b5fe855c700ec744554e0d346ef5c4d}{refresh\+\_\+\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classReservoirModule_a28480be2b512eb00e46824a6da335d53}{refresh\+\_\+\+Five\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classReservoirModule_ae24b22ae6329eca6b7c5ef7d25461318}{process\+Command}} (void $\ast$Command)
+\item 
+void \mbox{\hyperlink{classReservoirModule_a8f46e8f4d6a9b017752bdd11c16d0253}{update\+Response}} ()
+\item 
+void \mbox{\hyperlink{classReservoirModule_acdab0db204d565454131375724b70805}{update\+Ack\+Data}} ()
+\item 
+\mbox{\hyperlink{classReservoirModule_ab8bca3ce3768c3d800d21806d76d3aeb}{Reservoir\+Module}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\mbox{\hyperlink{classCommon_aeea91a726dbe988e515057b32ba0726f}{Name}}, \mbox{\hyperlink{structSettings_1_1ReservoirModuleSettings}{Settings\+::\+Reservoir\+Module\+Settings}} $\ast$Default\+Settings)
+\begin{DoxyCompactList}\small\item\em constructor \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classReservoirModule_a9b5fe855c700ec744554e0d346ef5c4d}{refresh\+\_\+\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classReservoirModule_a28480be2b512eb00e46824a6da335d53}{refresh\+\_\+\+Five\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classReservoirModule_ae24b22ae6329eca6b7c5ef7d25461318}{process\+Command}} (void $\ast$Command)
+\item 
+void \mbox{\hyperlink{classReservoirModule_a8f46e8f4d6a9b017752bdd11c16d0253}{update\+Response}} ()
+\item 
+void \mbox{\hyperlink{classReservoirModule_acdab0db204d565454131375724b70805}{update\+Ack\+Data}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSound}{Sound}} $\ast$ \mbox{\hyperlink{classReservoirModule_a01930df6b94b7390a6f92c1b4e19a64c}{Sound1}}
+\begin{DoxyCompactList}\small\item\em Pointer to a Piezo speaker -\/ sound feedback. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classDHTSensor}{D\+H\+T\+Sensor}} $\ast$ \mbox{\hyperlink{classReservoirModule_a0455cabf8535b4611f6600d1ae79db4a}{D\+H\+T1}}
+\begin{DoxyCompactList}\small\item\em Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classPHSensor}{P\+H\+Sensor}} $\ast$ \mbox{\hyperlink{classReservoirModule_a0ea9b75a9f3570e8857bc753f1b1f710}{P\+H\+Sen1}}
+\item 
+\mbox{\hyperlink{classWaterTempSensor}{Water\+Temp\+Sensor}} $\ast$ \mbox{\hyperlink{classReservoirModule_ac0177c4b9172a047231922392fc45565}{W\+Temp1}}
+\item 
+\mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$ \mbox{\hyperlink{classReservoirModule_abbf6f1d465fe3358a9bbe755c0afb798}{Weight1}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 29 of file Reservoir\+Module.\+h.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classReservoirModule_ab8bca3ce3768c3d800d21806d76d3aeb}\label{classReservoirModule_ab8bca3ce3768c3d800d21806d76d3aeb}} 
+\index{ReservoirModule@{ReservoirModule}!ReservoirModule@{ReservoirModule}}
+\index{ReservoirModule@{ReservoirModule}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{ReservoirModule()}{ReservoirModule()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Reservoir\+Module\+::\+Reservoir\+Module (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\mbox{\hyperlink{structSettings_1_1ReservoirModuleSettings}{Settings\+::\+Reservoir\+Module\+Settings}} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+constructor 
+
+$<$
+\begin{DoxyParams}{Parameters}
+{\em Name} & Pointer to the Name of the object, stored in Flash \\
+\hline
+{\em Default\+Settings} & A pointer to the default settings stuct loaded from E\+E\+P\+R\+OM. Defined in Settings.\+h \\
+\hline
+\end{DoxyParams}
+$<$ Passing Module\+Settings members as references\+: Changes get written back to Module\+Settings and saved to E\+E\+P\+R\+OM. (uint8\+\_\+t $\ast$)(((uint8\+\_\+t $\ast$)\&Module\+Settings) + offsetof(\+Settings, V\+A\+R\+I\+A\+B\+L\+E\+N\+A\+M\+E))
+
+Definition at line 14 of file Reservoir\+Module.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classReservoirModule_ab8bca3ce3768c3d800d21806d76d3aeb_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classReservoirModule_ab8bca3ce3768c3d800d21806d76d3aeb}\label{classReservoirModule_ab8bca3ce3768c3d800d21806d76d3aeb}} 
+\index{ReservoirModule@{ReservoirModule}!ReservoirModule@{ReservoirModule}}
+\index{ReservoirModule@{ReservoirModule}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{ReservoirModule()}{ReservoirModule()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Reservoir\+Module\+::\+Reservoir\+Module (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\mbox{\hyperlink{structSettings_1_1ReservoirModuleSettings}{Settings\+::\+Reservoir\+Module\+Settings}} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+constructor 
+
+$<$
+\begin{DoxyParams}{Parameters}
+{\em Name} & Pointer to the Name of the object, stored in Flash \\
+\hline
+{\em Default\+Settings} & A pointer to the default settings stuct loaded from E\+E\+P\+R\+OM. Defined in Settings.\+h \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classReservoirModule_ae24b22ae6329eca6b7c5ef7d25461318}\label{classReservoirModule_ae24b22ae6329eca6b7c5ef7d25461318}} 
+\index{ReservoirModule@{ReservoirModule}!processCommand@{processCommand}}
+\index{processCommand@{processCommand}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{processCommand()}{processCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Reservoir\+Module\+::process\+Command (\begin{DoxyParamCaption}\item[{void $\ast$}]{Command }\end{DoxyParamCaption})}
+
+$<$ Store current time
+
+$<$ Used to get all Responses that do not have a corresponding Command
+
+$<$ Load the first response for the next message exchange
+
+$<$ Loads the next A\+CK that will be sent out
+
+$<$ Store changes in E\+E\+P\+R\+OM
+
+Definition at line 62 of file Reservoir\+Module.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{classReservoirModule_ae24b22ae6329eca6b7c5ef7d25461318_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classReservoirModule_ae24b22ae6329eca6b7c5ef7d25461318}\label{classReservoirModule_ae24b22ae6329eca6b7c5ef7d25461318}} 
+\index{ReservoirModule@{ReservoirModule}!processCommand@{processCommand}}
+\index{processCommand@{processCommand}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{processCommand()}{processCommand()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Reservoir\+Module\+::process\+Command (\begin{DoxyParamCaption}\item[{void $\ast$}]{Command }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classReservoirModule_a28480be2b512eb00e46824a6da335d53}\label{classReservoirModule_a28480be2b512eb00e46824a6da335d53}} 
+\index{ReservoirModule@{ReservoirModule}!refresh\_FiveSec@{refresh\_FiveSec}}
+\index{refresh\_FiveSec@{refresh\_FiveSec}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{refresh\_FiveSec()}{refresh\_FiveSec()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Reservoir\+Module\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}}.
+
+
+
+Definition at line 44 of file Reservoir\+Module.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classReservoirModule_a28480be2b512eb00e46824a6da335d53_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classReservoirModule_a28480be2b512eb00e46824a6da335d53}\label{classReservoirModule_a28480be2b512eb00e46824a6da335d53}} 
+\index{ReservoirModule@{ReservoirModule}!refresh\_FiveSec@{refresh\_FiveSec}}
+\index{refresh\_FiveSec@{refresh\_FiveSec}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{refresh\_FiveSec()}{refresh\_FiveSec()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Reservoir\+Module\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}}.
+
+\mbox{\Hypertarget{classReservoirModule_a9b5fe855c700ec744554e0d346ef5c4d}\label{classReservoirModule_a9b5fe855c700ec744554e0d346ef5c4d}} 
+\index{ReservoirModule@{ReservoirModule}!refresh\_Sec@{refresh\_Sec}}
+\index{refresh\_Sec@{refresh\_Sec}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{refresh\_Sec()}{refresh\_Sec()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Reservoir\+Module\+::refresh\+\_\+\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+$<$ If there is a package exchange in progress
+
+$<$ Reset back to the first response
+
+Reimplemented from \mbox{\hyperlink{classCommon_acd1fdd47fbf8bb490f5c6d3ab6cd8d05}{Common}}.
+
+
+
+Definition at line 32 of file Reservoir\+Module.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classReservoirModule_a9b5fe855c700ec744554e0d346ef5c4d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classReservoirModule_a9b5fe855c700ec744554e0d346ef5c4d}\label{classReservoirModule_a9b5fe855c700ec744554e0d346ef5c4d}} 
+\index{ReservoirModule@{ReservoirModule}!refresh\_Sec@{refresh\_Sec}}
+\index{refresh\_Sec@{refresh\_Sec}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{refresh\_Sec()}{refresh\_Sec()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Reservoir\+Module\+::refresh\+\_\+\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_acd1fdd47fbf8bb490f5c6d3ab6cd8d05}{Common}}.
+
+\mbox{\Hypertarget{classReservoirModule_acdab0db204d565454131375724b70805}\label{classReservoirModule_acdab0db204d565454131375724b70805}} 
+\index{ReservoirModule@{ReservoirModule}!updateAckData@{updateAckData}}
+\index{updateAckData@{updateAckData}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{updateAckData()}{updateAckData()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Reservoir\+Module\+::update\+Ack\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+$<$ Dump all previously cached but unsent A\+CK messages from the TX F\+I\+FO buffer (Max 3 are saved)
+
+$<$ Reservoir\+Reset should always be the last element in the enum\+: Signals to stop the message exchange
+
+Definition at line 108 of file Reservoir\+Module.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classReservoirModule_acdab0db204d565454131375724b70805_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classReservoirModule_acdab0db204d565454131375724b70805_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classReservoirModule_acdab0db204d565454131375724b70805}\label{classReservoirModule_acdab0db204d565454131375724b70805}} 
+\index{ReservoirModule@{ReservoirModule}!updateAckData@{updateAckData}}
+\index{updateAckData@{updateAckData}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{updateAckData()}{updateAckData()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Reservoir\+Module\+::update\+Ack\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classReservoirModule_a8f46e8f4d6a9b017752bdd11c16d0253}\label{classReservoirModule_a8f46e8f4d6a9b017752bdd11c16d0253}} 
+\index{ReservoirModule@{ReservoirModule}!updateResponse@{updateResponse}}
+\index{updateResponse@{updateResponse}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{updateResponse()}{updateResponse()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Reservoir\+Module\+::update\+Response (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+$<$ Updates the response sent to the Main module
+
+Definition at line 52 of file Reservoir\+Module.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classReservoirModule_a8f46e8f4d6a9b017752bdd11c16d0253_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classReservoirModule_a8f46e8f4d6a9b017752bdd11c16d0253_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classReservoirModule_a8f46e8f4d6a9b017752bdd11c16d0253}\label{classReservoirModule_a8f46e8f4d6a9b017752bdd11c16d0253}} 
+\index{ReservoirModule@{ReservoirModule}!updateResponse@{updateResponse}}
+\index{updateResponse@{updateResponse}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{updateResponse()}{updateResponse()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Reservoir\+Module\+::update\+Response (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classReservoirModule_a0455cabf8535b4611f6600d1ae79db4a}\label{classReservoirModule_a0455cabf8535b4611f6600d1ae79db4a}} 
+\index{ReservoirModule@{ReservoirModule}!DHT1@{DHT1}}
+\index{DHT1@{DHT1}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{DHT1}{DHT1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classDHTSensor}{D\+H\+T\+Sensor}} $\ast$ Reservoir\+Module\+::\+D\+H\+T1}
+
+
+
+Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box. 
+
+
+
+Definition at line 37 of file Reservoir\+Module.\+h.
+
+\mbox{\Hypertarget{classReservoirModule_a0ea9b75a9f3570e8857bc753f1b1f710}\label{classReservoirModule_a0ea9b75a9f3570e8857bc753f1b1f710}} 
+\index{ReservoirModule@{ReservoirModule}!PHSen1@{PHSen1}}
+\index{PHSen1@{PHSen1}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{PHSen1}{PHSen1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classPHSensor}{P\+H\+Sensor}} $\ast$ Reservoir\+Module\+::\+P\+H\+Sen1}
+
+
+
+Definition at line 38 of file Reservoir\+Module.\+h.
+
+\mbox{\Hypertarget{classReservoirModule_a01930df6b94b7390a6f92c1b4e19a64c}\label{classReservoirModule_a01930df6b94b7390a6f92c1b4e19a64c}} 
+\index{ReservoirModule@{ReservoirModule}!Sound1@{Sound1}}
+\index{Sound1@{Sound1}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{Sound1}{Sound1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSound}{Sound}} $\ast$ Reservoir\+Module\+::\+Sound1}
+
+
+
+Pointer to a Piezo speaker -\/ sound feedback. 
+
+
+
+Definition at line 36 of file Reservoir\+Module.\+h.
+
+\mbox{\Hypertarget{classReservoirModule_abbf6f1d465fe3358a9bbe755c0afb798}\label{classReservoirModule_abbf6f1d465fe3358a9bbe755c0afb798}} 
+\index{ReservoirModule@{ReservoirModule}!Weight1@{Weight1}}
+\index{Weight1@{Weight1}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{Weight1}{Weight1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$ Reservoir\+Module\+::\+Weight1}
+
+
+
+Definition at line 40 of file Reservoir\+Module.\+h.
+
+\mbox{\Hypertarget{classReservoirModule_ac0177c4b9172a047231922392fc45565}\label{classReservoirModule_ac0177c4b9172a047231922392fc45565}} 
+\index{ReservoirModule@{ReservoirModule}!WTemp1@{WTemp1}}
+\index{WTemp1@{WTemp1}!ReservoirModule@{ReservoirModule}}
+\doxysubsubsection{\texorpdfstring{WTemp1}{WTemp1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classWaterTempSensor}{Water\+Temp\+Sensor}} $\ast$ Reservoir\+Module\+::\+W\+Temp1}
+
+
+
+Definition at line 39 of file Reservoir\+Module.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Gbox420\+\_\+\+Nano\+\_\+\+Reservoir/src/\+Modules/\mbox{\hyperlink{Gbox420__Nano__Reservoir_2src_2Modules_2ReservoirModule_8h}{Reservoir\+Module.\+h}}\item 
+Gbox420\+\_\+\+Nano\+\_\+\+Reservoir/src/\+Modules/\mbox{\hyperlink{Gbox420__Nano__Reservoir_2src_2Modules_2ReservoirModule_8cpp}{Reservoir\+Module.\+cpp}}\end{DoxyCompactItemize}

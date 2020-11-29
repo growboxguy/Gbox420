@@ -1,0 +1,12 @@
+<map id="Module::addToRefreshQueue_Sec" name="Module::addToRefreshQueue_Sec">
+<area shape="rect" id="node1" title="Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method." alt="" coords="292,208,531,235"/>
+<area shape="rect" id="node2" href="$classAeroModule.html#ac4b034d05f900f3afb1ae4a0920e2799" title="constructor" alt="" coords="31,5,218,32"/>
+<area shape="rect" id="node3" href="$classAeroponics.html#a53751e4f3d876ce9c8ff83c02216b109" title=" " alt="" coords="37,56,212,83"/>
+<area shape="rect" id="node4" href="$classHempyBucket.html#a1accb17828a9b43a0413bc51308a9ee9" title=" " alt="" coords="19,107,231,133"/>
+<area shape="rect" id="node5" href="$classHempyModule.html#a46b23ffbe28aa4dd39e080c7465de74a" title="constructor" alt="" coords="15,157,235,184"/>
+<area shape="rect" id="node6" href="$classLights.html#a48acde7f45e4b9b22969e52fea689040" title="constructor" alt="" coords="71,208,179,235"/>
+<area shape="rect" id="node7" href="$classModuleSkeleton.html#a28db770cfd6d6a02110d0adb62666676" title="constructor" alt="" coords="5,259,244,285"/>
+<area shape="rect" id="node8" href="$classReservoirModule.html#ab8bca3ce3768c3d800d21806d76d3aeb" title="constructor" alt="" coords="23,310,226,351"/>
+<area shape="rect" id="node9" href="$classSound.html#a9432356bb1ba946460c33f286d2b325b" title=" " alt="" coords="69,376,180,403"/>
+<area shape="rect" id="node10" href="$classWaterPump.html#a2f9e7815d9e3ff10ba3bf02be9ff8875" title=" " alt="" coords="35,427,215,453"/>
+</map>

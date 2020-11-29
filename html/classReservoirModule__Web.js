@@ -1,0 +1,28 @@
+var classReservoirModule__Web =
+[
+    [ "ReservoirModule_Web", "classReservoirModule__Web.html#a349a39dca681c59248bb463e0d6eeff7", null ],
+    [ "ReservoirModule_Web", "classReservoirModule__Web.html#a349a39dca681c59248bb463e0d6eeff7", null ],
+    [ "refresh_FiveSec", "classReservoirModule__Web.html#a9a11d3b4d046ef84d92917169c5db8da", null ],
+    [ "refresh_FiveSec", "classReservoirModule__Web.html#a9a11d3b4d046ef84d92917169c5db8da", null ],
+    [ "refresh_Sec", "classReservoirModule__Web.html#a7b12ae99c82ce17d9c2573d316251be4", null ],
+    [ "refresh_Sec", "classReservoirModule__Web.html#a7b12ae99c82ce17d9c2573d316251be4", null ],
+    [ "report", "classReservoirModule__Web.html#a9fff8b64d0097491d7ee36d4cf03ebd6", null ],
+    [ "report", "classReservoirModule__Web.html#a9fff8b64d0097491d7ee36d4cf03ebd6", null ],
+    [ "reportToJSON", "classReservoirModule__Web.html#a9afabb590e75518830e5fa8a9f343b1c", null ],
+    [ "reportToJSON", "classReservoirModule__Web.html#a9afabb590e75518830e5fa8a9f343b1c", null ],
+    [ "sendCommand", "classReservoirModule__Web.html#a44bae49e074a3bdf1a69203d66ab4222", null ],
+    [ "sendCommand", "classReservoirModule__Web.html#a44bae49e074a3bdf1a69203d66ab4222", null ],
+    [ "sendMessages", "classReservoirModule__Web.html#a4561e7088396d38e812535532f79d200", null ],
+    [ "sendMessages", "classReservoirModule__Web.html#a4561e7088396d38e812535532f79d200", null ],
+    [ "updateCommands", "classReservoirModule__Web.html#aaacd2f917ae585e9c73e6372aa206a80", null ],
+    [ "updateCommands", "classReservoirModule__Web.html#aaacd2f917ae585e9c73e6372aa206a80", null ],
+    [ "websiteEvent_Button", "classReservoirModule__Web.html#a46c2f41edb89b96769bbf8f24c95b4ae", null ],
+    [ "websiteEvent_Button", "classReservoirModule__Web.html#a46c2f41edb89b96769bbf8f24c95b4ae", null ],
+    [ "websiteEvent_Load", "classReservoirModule__Web.html#aa2a023f23aa84a6a739b85ed91c8dc78", null ],
+    [ "websiteEvent_Load", "classReservoirModule__Web.html#aa2a023f23aa84a6a739b85ed91c8dc78", null ],
+    [ "websiteEvent_Refresh", "classReservoirModule__Web.html#a435bceed806f4615668ce99630648c93", null ],
+    [ "websiteEvent_Refresh", "classReservoirModule__Web.html#a435bceed806f4615668ce99630648c93", null ],
+    [ "DefaultSettings", "classReservoirModule__Web.html#ab0f75e997a26f42932e73bce446c8a81", null ],
+    [ "Parent", "classReservoirModule__Web.html#a776972be918306bfdd696ed80dae1c0f", null ],
+    [ "WirelessChannel", "classReservoirModule__Web.html#adda53e282c9718fbd76511d7726e2534", null ]
+];

@@ -1,0 +1,4 @@
+<map id="HempyBucketCommand" name="HempyBucketCommand">
+<area shape="rect" id="node1" title="&lt; Hempy bucket wireless command" alt="" coords="9,80,189,107"/>
+<area shape="rect" id="node2" href="$structHempyCommonTemplate.html" title="&lt; Hempy wireless template &#45; Shared between Command and Respone packages" alt="" coords="5,5,193,32"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="PowerSensor_Web::PowerSensor_Web" name="PowerSensor_Web::PowerSensor_Web">
+<area shape="rect" id="node1" title="constructor" alt="" coords="5,71,273,98"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a38624eecf0efaefb9210a60868327020" title=" " alt="" coords="339,5,540,47"/>
+<area shape="rect" id="node3" href="$classModule__Web.html#a9b1a806569076aa701e961d54f888447" title=" " alt="" coords="321,71,557,98"/>
+<area shape="rect" id="node4" href="$classModule__Web.html#aee7880f65926af22ba1b83a73607e3b6" title="Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method." alt="" coords="338,123,541,164"/>
+</map>

@@ -148,32 +148,32 @@ void Lights::checkTimer()
 {
   if (*TimerEnabled)
   {
-    time_t Now = now();                             ///< Get the current time from TimeLib
-    int CombinedOnTime = *OnHour * 100 + *OnMinute; ///< convert time to number, Example: 8:10=810, 20:10=2010
+    time_t Now = now();                             // Get the current time from TimeLib
+    int CombinedOnTime = *OnHour * 100 + *OnMinute; // convert time to number, Example: 8:10=810, 20:10=2010
     int CombinedOffTime = *OffHour * 100 + *OffMinute;
     int CombinedCurrentTime = hour(Now) * 100 + minute(Now);
-    if (CombinedOnTime <= CombinedOffTime) ///< no midnight turnover, Example: On 8:10, Off: 20:10
+    if (CombinedOnTime <= CombinedOffTime) // no midnight turnover, Example: On 8:10, Off: 20:10
     {
       if (CombinedOnTime <= CombinedCurrentTime && CombinedCurrentTime < CombinedOffTime)
-      { ///< True: Light should be on
+      { // True: Light should be on
         if (!*Status)
         {
-          setLightOnOff(true, false); ///< If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
+          setLightOnOff(true, false); // If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
           if (*Debug)
             logToSerials(F("Timer:Light ON"), true, 4);
         }
       }
-      else ///< False: Light should be off
+      else // False: Light should be off
       {
         if (*Status)
-        {                              ///< If status is ON
-          setLightOnOff(false, false); ///< Turn OFF the lights (First bool), and do not add it to the log (Second bool)
+        {                              // If status is ON
+          setLightOnOff(false, false); // Turn OFF the lights (First bool), and do not add it to the log (Second bool)
           if (*Debug)
             logToSerials(F("Timer:Light OFF"), true, 4);
         }
       }
     }
-    else ///< midnight turnover, Example: On 21:20, Off: 9:20
+    else // midnight turnover, Example: On 21:20, Off: 9:20
     {
       if (CombinedOnTime <= CombinedCurrentTime || CombinedCurrentTime < CombinedOffTime)
       {
@@ -196,12 +196,12 @@ void Lights::checkTimer()
 
 void Lights::setBrightness(uint8_t Brightness, bool LogThis, bool StoreSetting)
 {
-  CurrentBrightness = Brightness; ///< Sets the dimming duty cycle (0-100%)
+  CurrentBrightness = Brightness; // Sets the dimming duty cycle (0-100%)
   if (StoreSetting)
   {
-    *(this->Brightness) = Brightness; ///< Store to EEPROM as a startup value
+    *(this->Brightness) = Brightness; // Store to EEPROM as a startup value
   }
-  analogWrite(*DimmingPin, map(CurrentBrightness, 0, 100, int(255 * (100 - *DimmingLimit) / 100.0f), 0)); ///< mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https:///< www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
+  analogWrite(*DimmingPin, map(CurrentBrightness, 0, 100, int(255 * (100 - *DimmingLimit) / 100.0f), 0)); // mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
   if (LogThis)
   {
     strncpy_P(LongMessage, (PGM_P)F("Brightness: "), MaxWordLength);
@@ -229,13 +229,13 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
     if (*FadingEnabled && CurrentStatus != LightStates::FADEIN && CurrentStatus != LightStates::ON)
     {
       CurrentStatus = LightStates::FADEIN;
-      CurrentBrightness = 0; ///< Start fading in from 0%
+      CurrentBrightness = 0; // Start fading in from 0%
       setBrightness(CurrentBrightness, false, false);
     }
     else
     {
       CurrentStatus = LightStates::ON;
-      CurrentBrightness = *Brightness; ///< Instantly set the target Brightness
+      CurrentBrightness = *Brightness; // Instantly set the target Brightness
       setBrightness(CurrentBrightness, false, false);
     }
   }
@@ -250,7 +250,7 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
     if (*FadingEnabled && CurrentStatus != LightStates::OFF && CurrentStatus != LightStates::FADEOUT)
     {
       CurrentStatus = LightStates::FADEOUT;
-      //CurrentBrightness = *Brightness; ///< Start fading out from the target brightness
+      //CurrentBrightness = *Brightness; // Start fading out from the target brightness
       //setBrightness(CurrentBrightness, false, false);
     }
     else
@@ -265,9 +265,9 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
 char *Lights::getTimerOnOffText(bool UseWords)
 {
   if (UseWords)
-    return toText_enabledDisabled(*TimerEnabled); ///< Returns ENABLED or DISABLED
+    return toText_enabledDisabled(*TimerEnabled); // Returns ENABLED or DISABLED
   else
-    return toText(*TimerEnabled); ///< Returns '1' or '0'
+    return toText(*TimerEnabled); // Returns '1' or '0'
 }
 
 bool Lights::getStatus()
@@ -315,9 +315,9 @@ char *Lights::getCurrentBrightnessText(bool UseText)
 char *Lights::getStatusText(bool UseWords)
 {
   if (UseWords)
-    return toText_onOff(*Status); ///< Returns ON or OFF
+    return toText_onOff(*Status); // Returns ON or OFF
   else
-    return toText(*Status); ///< Returns '1' or '0'
+    return toText(*Status); // Returns '1' or '0'
 }
 
 char *Lights::getStateText()

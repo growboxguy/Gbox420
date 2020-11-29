@@ -1,0 +1,9 @@
+<map id="ReservoirModule_Web" name="ReservoirModule_Web">
+<area shape="rect" id="node1" title=" " alt="" coords="109,464,276,491"/>
+<area shape="rect" id="node2" href="$classCommon__Web.html" title=" " alt="" coords="5,153,121,180"/>
+<area shape="rect" id="node5" href="$classModule__Web.html" title=" " alt="" coords="140,367,245,394"/>
+<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="243,5,324,32"/>
+<area shape="rect" id="node6" href="$classModule.html" title=" " alt="" coords="271,153,341,180"/>
+<area shape="rect" id="node7" href="$classSound.html" title="&lt; Sound feedback buzzer" alt="" coords="313,367,376,394"/>
+<area shape="rect" id="node4" href="$structSettings_1_1ReservoirModuleSettings.html" title="&lt; ReservoirModule default settings" alt="" coords="400,360,593,401"/>
+</map>

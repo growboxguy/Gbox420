@@ -4,6 +4,8 @@
 #include "420Module.h"
 #include "Sound.h"
 
+///< Weight sensor load cell
+
 class WeightSensor : virtual public Common
 {
 public:

@@ -32,9 +32,9 @@ static const uint8_t QueueDepth = 8;           ///< Limits the maximum number of
 static const uint8_t RollingAverageDepth = 10; ///< Smooth out sensor readings by calculating the average of the last X results. Memory intense!
 
 ///< Global variables
-extern char LongMessage[MaxLongTextLength];  ///< Temp storage for assembling long messages (REST API - Google Sheets reporting)
-extern char ShortMessage[MaxShotTextLength]; ///< Temp storage for assembling short messages (Log entries, Error messages)
-extern char CurrentTime[MaxWordLength];      ///< Buffer for storing current time in text format
+extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
+extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
+extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
 static const uint8_t WirelessCSNPin = 9;             ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
@@ -108,9 +108,6 @@ typedef struct
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;
-
-///< EEPROM related functions - Persistent storage between reboots
-///< Use cautiously, EEPROM has a write limit of 100.000 cycles - Only use these in the setup() function, or when a user initiated change is stored
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits

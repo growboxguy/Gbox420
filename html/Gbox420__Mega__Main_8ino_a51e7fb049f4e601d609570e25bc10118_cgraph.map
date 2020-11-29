@@ -1,0 +1,8 @@
+<map id="buttonPressCallback" name="buttonPressCallback">
+<area shape="rect" id="node1" title=" " alt="" coords="5,85,160,112"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#a522480d9045dd335a7679a7ab1c73b48" title=" " alt="" coords="208,35,400,61"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2Settings_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM." alt="" coords="243,85,365,112"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits." alt="" coords="251,136,357,163"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="504,5,604,32"/>
+<area shape="rect" id="node4" href="$classCommon__Web.html#acd10f27b30f3111277b4730ee5495090" title=" " alt="" coords="448,57,660,98"/>
+</map>

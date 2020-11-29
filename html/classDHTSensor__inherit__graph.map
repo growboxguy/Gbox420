@@ -1,0 +1,5 @@
+<map id="DHTSensor" name="DHTSensor">
+<area shape="rect" id="node1" title="&lt; DHT11 or DHT22 Digital Humidity and Temperature sensor" alt="" coords="23,80,117,107"/>
+<area shape="rect" id="node3" href="$classDHTSensor__Web.html" title="&lt; Digital Humidity and Temperature sensor Web (DHT11 or DHT22) &#45; website component" alt="" coords="5,155,135,181"/>
+<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="29,5,111,32"/>
+</map>

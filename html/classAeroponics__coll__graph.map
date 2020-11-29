@@ -1,0 +1,11 @@
+<map id="Aeroponics" name="Aeroponics">
+<area shape="rect" id="node1" title="&lt; Aeroponics tote virtual parent class" alt="" coords="391,421,486,448"/>
+<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="254,5,335,32"/>
+<area shape="rect" id="node3" href="$classModule.html" title=" " alt="" coords="455,153,526,180"/>
+<area shape="rect" id="node4" href="$classSound.html" title="&lt; Sound feedback buzzer" alt="" coords="322,243,385,269"/>
+<area shape="rect" id="node5" href="$classPressureSensor.html" title="&lt; Pressure sensor" alt="" coords="156,243,279,269"/>
+<area shape="rect" id="node7" href="$classWaterPump.html" title="&lt; Diaphragm pump controller" alt="" coords="634,332,731,359"/>
+<area shape="rect" id="node8" href="$classSwitch.html" title="&lt; Represents and electronic switch like a Relay or MOSFET" alt="" coords="650,153,715,180"/>
+<area shape="rect" id="node6" href="$classRollingAverage.html" title="Rolling average tracker for smoothing sensor readings. Supports float and int values only." alt="" coords="43,153,163,180"/>
+<area shape="rect" id="node9" href="$classSwitch__PWM.html" title="&lt; PWM controllable electronic switch like a MOSFET transistor" alt="" coords="802,243,907,269"/>
+</map>

@@ -1,0 +1,17 @@
+<map id="Lights_Web::websiteEvent_Field" name="Lights_Web::websiteEvent_Field">
+<area shape="rect" id="node1" title=" " alt="" coords="5,226,197,267"/>
+<area shape="rect" id="node2" href="$classCommon.html#a0192d295366bf1e966d8b58a3ce57554" title="When it return true the component belongs to this object." alt="" coords="245,5,468,32"/>
+<area shape="rect" id="node3" href="$classLights.html#a20392486d66032fd530046cd1f33aaa0" title=" " alt="" coords="277,56,436,83"/>
+<area shape="rect" id="node4" href="$classLights.html#a88aef6611519ff083000476c078b9fba" title="Set the duration of the temporary dimming in Seconds." alt="" coords="271,107,443,133"/>
+<area shape="rect" id="node6" href="$classLights.html#a71359e2b1cb0629287aa6bf51973cbd0" title="Set the Percentage of change at one increment/decrement." alt="" coords="261,157,453,184"/>
+<area shape="rect" id="node9" href="$classLights.html#a8e9786fcb743a468232c6f314d5bc5bc" title="Set how often to increase/decrease the Brightness." alt="" coords="272,360,441,387"/>
+<area shape="rect" id="node10" href="$classLights.html#ac6d200fd34e102cea67cf24d4f017284" title="Enable/disable slowly fadeing in and out the lights when the Status changes." alt="" coords="279,309,435,336"/>
+<area shape="rect" id="node12" href="$classLights.html#a561b79359ab51821048e9d9bc30fc164" title=" " alt="" coords="287,411,426,437"/>
+<area shape="rect" id="node13" href="$classLights.html#afc2ad84d3e1c4d9e8f62d05791f82928" title=" " alt="" coords="280,208,433,235"/>
+<area shape="rect" id="node14" href="$classLights.html#aee95c9b14f3b1886a755d7d818b0cbf2" title=" " alt="" coords="287,461,426,488"/>
+<area shape="rect" id="node15" href="$classLights.html#ada0e53ffae21eb386b8cef9e6a12fb8c" title=" " alt="" coords="281,259,433,285"/>
+<area shape="rect" id="node5" href="$classModule.html#afacdeaf339646bee722be54aab7155be" title=" " alt="" coords="537,157,676,184"/>
+<area shape="rect" id="node7" href="$classModule.html#a173624381666c28f9d33e809f067711c" title=" " alt="" coords="516,208,697,235"/>
+<area shape="rect" id="node8" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="529,259,685,285"/>
+<area shape="rect" id="node11" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="528,309,685,336"/>
+</map>

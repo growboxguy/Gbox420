@@ -1,0 +1,4 @@
+<map id="AeroModuleCommand" name="AeroModuleCommand">
+<area shape="rect" id="node1" title="&lt; Aeroponics wireless module commands" alt="" coords="7,80,174,107"/>
+<area shape="rect" id="node2" href="$structAeroCommonTemplate.html" title="&lt; Aeroponics wireless template &#45; Shared between Command and Respone packages" alt="" coords="5,5,176,32"/>
+</map>

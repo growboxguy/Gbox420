@@ -1,0 +1,6 @@
+<map id="LightSensor::getReadingText" name="LightSensor::getReadingText">
+<area shape="rect" id="node1" title="returns the current light sensor reading" alt="" coords="280,56,487,83"/>
+<area shape="rect" id="node2" href="$classLightSensor.html#a08ffec2f2bbb09966a8e37bf1f9887f9" title=" " alt="" coords="46,5,191,32"/>
+<area shape="rect" id="node3" href="$classLightSensor__Web.html#ae0f270aee80caed894f09df2bca85ef8" title="Not used." alt="" coords="5,56,232,83"/>
+<area shape="rect" id="node4" href="$classLightSensor__Web.html#a6afe75f4f6cec3dc5f44454e23da1f8a" title=" " alt="" coords="23,107,215,149"/>
+</map>

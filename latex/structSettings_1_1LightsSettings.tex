@@ -1,0 +1,271 @@
+\hypertarget{structSettings_1_1LightsSettings}{}\doxysection{Settings\+::Lights\+Settings Struct Reference}
+\label{structSettings_1_1LightsSettings}\index{Settings::LightsSettings@{Settings::LightsSettings}}
+
+
+$<$ \mbox{\hyperlink{classLights}{Lights}} default settings  
+
+
+
+
+{\ttfamily \#include $<$Settings.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structSettings_1_1LightsSettings_ae2174a0444b1d7a3001b5549abc0dfe0}{Lights\+Settings}} (uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a0bf1b7f96ff2e3ab14d2ad5e029ae655}{Relay\+Pin}}=0, uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a26618951ebacea0df224f9ea07a5756b}{Dimming\+Pin}}=0, uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a8d6e754a00896b403bb1d32a219f2df7}{Dimming\+Limit}}=0, uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a5920b7fc2a92a583157521c204b6f529}{Dimming\+Duration}}=0, uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a1b40be02a65c2b4f6cf958f9b28a1413}{Brightness}}=0, bool \mbox{\hyperlink{structSettings_1_1LightsSettings_a4ef1e968d6946baa04bceefaba3f66d3}{Timer\+Enabled}}=false, uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_af453d203ef530b6435d28b50623284fa}{On\+Hour}}=0, uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a85c39d30122177de59f88c9f41eee1af}{On\+Minute}}=0, uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a12b2e85492c0eab7e09ed8ebde4ac14c}{Off\+Hour}}=0, uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a834ce4a68899860b80608331714ba790}{Off\+Minute}}=0, bool \mbox{\hyperlink{structSettings_1_1LightsSettings_acaa21f5a7591c074b73cfc4edaf9d350}{Fading\+Enabled}}=false, uint16\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a67dcb17d1b40f518c3c7828726f0a555}{Fading\+Interval}}=0, uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a6199221d929dcf9848475b00712e3108}{Fading\+Increments}}=0)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a0bf1b7f96ff2e3ab14d2ad5e029ae655}{Relay\+Pin}}
+\begin{DoxyCompactList}\small\item\em Relay port controlling AC power to L\+ED driver. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a26618951ebacea0df224f9ea07a5756b}{Dimming\+Pin}}
+\begin{DoxyCompactList}\small\item\em P\+WM based dimming, connected to optocoupler\`{}s base over 1k ohm resistor. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a8d6e754a00896b403bb1d32a219f2df7}{Dimming\+Limit}}
+\begin{DoxyCompactList}\small\item\em Sets the L\+ED dimming limit (Usually around 5\%) \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a5920b7fc2a92a583157521c204b6f529}{Dimming\+Duration}}
+\begin{DoxyCompactList}\small\item\em Temporary dimming duration in Seconds. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structSettings_1_1LightsSettings_ae71c9b08249612f3ff26599004d189e6}{Status}} = false
+\begin{DoxyCompactList}\small\item\em Startup status for lights\+: True-\/\+ON / False-\/\+O\+FF. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a1b40be02a65c2b4f6cf958f9b28a1413}{Brightness}}
+\begin{DoxyCompactList}\small\item\em Light intensity\+: 0 -\/ 100 range for controlling led driver output. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structSettings_1_1LightsSettings_a4ef1e968d6946baa04bceefaba3f66d3}{Timer\+Enabled}}
+\begin{DoxyCompactList}\small\item\em Enable/\+Disable timer controlling lights. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_af453d203ef530b6435d28b50623284fa}{On\+Hour}}
+\begin{DoxyCompactList}\small\item\em Light ON time -\/ hour. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a85c39d30122177de59f88c9f41eee1af}{On\+Minute}}
+\begin{DoxyCompactList}\small\item\em Light ON time -\/ minute. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a12b2e85492c0eab7e09ed8ebde4ac14c}{Off\+Hour}}
+\begin{DoxyCompactList}\small\item\em Light O\+FF time -\/ hour. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a834ce4a68899860b80608331714ba790}{Off\+Minute}}
+\begin{DoxyCompactList}\small\item\em Light O\+FF time -\/ minute. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structSettings_1_1LightsSettings_acaa21f5a7591c074b73cfc4edaf9d350}{Fading\+Enabled}}
+\begin{DoxyCompactList}\small\item\em Enables/disables fading lights in when turning on, and fading lights out when turning off. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a67dcb17d1b40f518c3c7828726f0a555}{Fading\+Interval}}
+\begin{DoxyCompactList}\small\item\em (Sec) How often should the brightness change during a fade in/out \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{structSettings_1_1LightsSettings_a6199221d929dcf9848475b00712e3108}{Fading\+Increments}}
+\begin{DoxyCompactList}\small\item\em How much to change the brightness during a fade in/out in Percentage. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+$<$ \mbox{\hyperlink{classLights}{Lights}} default settings 
+
+Definition at line 140 of file Settings.\+h.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_ae2174a0444b1d7a3001b5549abc0dfe0}\label{structSettings_1_1LightsSettings_ae2174a0444b1d7a3001b5549abc0dfe0}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!LightsSettings@{LightsSettings}}
+\index{LightsSettings@{LightsSettings}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{LightsSettings()}{LightsSettings()}}
+{\footnotesize\ttfamily Settings\+::\+Lights\+Settings\+::\+Lights\+Settings (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{Relay\+Pin = {\ttfamily 0},  }\item[{uint8\+\_\+t}]{Dimming\+Pin = {\ttfamily 0},  }\item[{uint8\+\_\+t}]{Dimming\+Limit = {\ttfamily 0},  }\item[{uint8\+\_\+t}]{Dimming\+Duration = {\ttfamily 0},  }\item[{uint8\+\_\+t}]{Brightness = {\ttfamily 0},  }\item[{bool}]{Timer\+Enabled = {\ttfamily false},  }\item[{uint8\+\_\+t}]{On\+Hour = {\ttfamily 0},  }\item[{uint8\+\_\+t}]{On\+Minute = {\ttfamily 0},  }\item[{uint8\+\_\+t}]{Off\+Hour = {\ttfamily 0},  }\item[{uint8\+\_\+t}]{Off\+Minute = {\ttfamily 0},  }\item[{bool}]{Fading\+Enabled = {\ttfamily false},  }\item[{uint16\+\_\+t}]{Fading\+Interval = {\ttfamily 0},  }\item[{uint8\+\_\+t}]{Fading\+Increments = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 142 of file Settings.\+h.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_a1b40be02a65c2b4f6cf958f9b28a1413}\label{structSettings_1_1LightsSettings_a1b40be02a65c2b4f6cf958f9b28a1413}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!Brightness@{Brightness}}
+\index{Brightness@{Brightness}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{Brightness}{Brightness}}
+{\footnotesize\ttfamily uint8\+\_\+t Settings\+::\+Lights\+Settings\+::\+Brightness}
+
+
+
+Light intensity\+: 0 -\/ 100 range for controlling led driver output. 
+
+
+
+Definition at line 148 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_a5920b7fc2a92a583157521c204b6f529}\label{structSettings_1_1LightsSettings_a5920b7fc2a92a583157521c204b6f529}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!DimmingDuration@{DimmingDuration}}
+\index{DimmingDuration@{DimmingDuration}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{DimmingDuration}{DimmingDuration}}
+{\footnotesize\ttfamily uint8\+\_\+t Settings\+::\+Lights\+Settings\+::\+Dimming\+Duration}
+
+
+
+Temporary dimming duration in Seconds. 
+
+
+
+Definition at line 146 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_a8d6e754a00896b403bb1d32a219f2df7}\label{structSettings_1_1LightsSettings_a8d6e754a00896b403bb1d32a219f2df7}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!DimmingLimit@{DimmingLimit}}
+\index{DimmingLimit@{DimmingLimit}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{DimmingLimit}{DimmingLimit}}
+{\footnotesize\ttfamily uint8\+\_\+t Settings\+::\+Lights\+Settings\+::\+Dimming\+Limit}
+
+
+
+Sets the L\+ED dimming limit (Usually around 5\%) 
+
+
+
+Definition at line 145 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_a26618951ebacea0df224f9ea07a5756b}\label{structSettings_1_1LightsSettings_a26618951ebacea0df224f9ea07a5756b}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!DimmingPin@{DimmingPin}}
+\index{DimmingPin@{DimmingPin}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{DimmingPin}{DimmingPin}}
+{\footnotesize\ttfamily uint8\+\_\+t Settings\+::\+Lights\+Settings\+::\+Dimming\+Pin}
+
+
+
+P\+WM based dimming, connected to optocoupler\`{}s base over 1k ohm resistor. 
+
+
+
+Definition at line 144 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_acaa21f5a7591c074b73cfc4edaf9d350}\label{structSettings_1_1LightsSettings_acaa21f5a7591c074b73cfc4edaf9d350}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!FadingEnabled@{FadingEnabled}}
+\index{FadingEnabled@{FadingEnabled}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{FadingEnabled}{FadingEnabled}}
+{\footnotesize\ttfamily bool Settings\+::\+Lights\+Settings\+::\+Fading\+Enabled}
+
+
+
+Enables/disables fading lights in when turning on, and fading lights out when turning off. 
+
+
+
+Definition at line 154 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_a6199221d929dcf9848475b00712e3108}\label{structSettings_1_1LightsSettings_a6199221d929dcf9848475b00712e3108}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!FadingIncrements@{FadingIncrements}}
+\index{FadingIncrements@{FadingIncrements}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{FadingIncrements}{FadingIncrements}}
+{\footnotesize\ttfamily uint8\+\_\+t Settings\+::\+Lights\+Settings\+::\+Fading\+Increments}
+
+
+
+How much to change the brightness during a fade in/out in Percentage. 
+
+
+
+Definition at line 156 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_a67dcb17d1b40f518c3c7828726f0a555}\label{structSettings_1_1LightsSettings_a67dcb17d1b40f518c3c7828726f0a555}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!FadingInterval@{FadingInterval}}
+\index{FadingInterval@{FadingInterval}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{FadingInterval}{FadingInterval}}
+{\footnotesize\ttfamily uint16\+\_\+t Settings\+::\+Lights\+Settings\+::\+Fading\+Interval}
+
+
+
+(Sec) How often should the brightness change during a fade in/out 
+
+
+
+Definition at line 155 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_a12b2e85492c0eab7e09ed8ebde4ac14c}\label{structSettings_1_1LightsSettings_a12b2e85492c0eab7e09ed8ebde4ac14c}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!OffHour@{OffHour}}
+\index{OffHour@{OffHour}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{OffHour}{OffHour}}
+{\footnotesize\ttfamily uint8\+\_\+t Settings\+::\+Lights\+Settings\+::\+Off\+Hour}
+
+
+
+Light O\+FF time -\/ hour. 
+
+
+
+Definition at line 152 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_a834ce4a68899860b80608331714ba790}\label{structSettings_1_1LightsSettings_a834ce4a68899860b80608331714ba790}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!OffMinute@{OffMinute}}
+\index{OffMinute@{OffMinute}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{OffMinute}{OffMinute}}
+{\footnotesize\ttfamily uint8\+\_\+t Settings\+::\+Lights\+Settings\+::\+Off\+Minute}
+
+
+
+Light O\+FF time -\/ minute. 
+
+
+
+Definition at line 153 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_af453d203ef530b6435d28b50623284fa}\label{structSettings_1_1LightsSettings_af453d203ef530b6435d28b50623284fa}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!OnHour@{OnHour}}
+\index{OnHour@{OnHour}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{OnHour}{OnHour}}
+{\footnotesize\ttfamily uint8\+\_\+t Settings\+::\+Lights\+Settings\+::\+On\+Hour}
+
+
+
+Light ON time -\/ hour. 
+
+
+
+Definition at line 150 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_a85c39d30122177de59f88c9f41eee1af}\label{structSettings_1_1LightsSettings_a85c39d30122177de59f88c9f41eee1af}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!OnMinute@{OnMinute}}
+\index{OnMinute@{OnMinute}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{OnMinute}{OnMinute}}
+{\footnotesize\ttfamily uint8\+\_\+t Settings\+::\+Lights\+Settings\+::\+On\+Minute}
+
+
+
+Light ON time -\/ minute. 
+
+
+
+Definition at line 151 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_a0bf1b7f96ff2e3ab14d2ad5e029ae655}\label{structSettings_1_1LightsSettings_a0bf1b7f96ff2e3ab14d2ad5e029ae655}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!RelayPin@{RelayPin}}
+\index{RelayPin@{RelayPin}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{RelayPin}{RelayPin}}
+{\footnotesize\ttfamily uint8\+\_\+t Settings\+::\+Lights\+Settings\+::\+Relay\+Pin}
+
+
+
+Relay port controlling AC power to L\+ED driver. 
+
+
+
+Definition at line 143 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_ae71c9b08249612f3ff26599004d189e6}\label{structSettings_1_1LightsSettings_ae71c9b08249612f3ff26599004d189e6}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!Status@{Status}}
+\index{Status@{Status}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{Status}{Status}}
+{\footnotesize\ttfamily bool Settings\+::\+Lights\+Settings\+::\+Status = false}
+
+
+
+Startup status for lights\+: True-\/\+ON / False-\/\+O\+FF. 
+
+
+
+Definition at line 147 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_1_1LightsSettings_a4ef1e968d6946baa04bceefaba3f66d3}\label{structSettings_1_1LightsSettings_a4ef1e968d6946baa04bceefaba3f66d3}} 
+\index{Settings::LightsSettings@{Settings::LightsSettings}!TimerEnabled@{TimerEnabled}}
+\index{TimerEnabled@{TimerEnabled}!Settings::LightsSettings@{Settings::LightsSettings}}
+\doxysubsubsection{\texorpdfstring{TimerEnabled}{TimerEnabled}}
+{\footnotesize\ttfamily bool Settings\+::\+Lights\+Settings\+::\+Timer\+Enabled}
+
+
+
+Enable/\+Disable timer controlling lights. 
+
+
+
+Definition at line 149 of file Settings.\+h.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Gbox420\+\_\+\+Mega\+\_\+\+Main/\mbox{\hyperlink{Gbox420__Mega__Main_2Settings_8h}{Settings.\+h}}\end{DoxyCompactItemize}

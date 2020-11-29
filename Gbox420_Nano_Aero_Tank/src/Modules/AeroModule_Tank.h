@@ -5,7 +5,7 @@
 ///< updating their statuses and reporting it to the Main module wirelessly
 ///< Listens and reacts to wireless commands from the main module
 
-#include "RF24.h" ///< https://github.com/maniacbug/RF24
+#include "RF24.h" // https://github.com/maniacbug/RF24
 #include "../Components/420Common.h"
 #include "../Components/420Module.h"
 #include "../WirelessCommands_Aero.h"

@@ -1,0 +1,210 @@
+\hypertarget{classDistanceSensor}{}\doxysection{Distance\+Sensor Class Reference}
+\label{classDistanceSensor}\index{DistanceSensor@{DistanceSensor}}
+
+
+{\ttfamily \#include $<$Distance\+Sensor.\+h$>$}
+
+
+
+Inheritance diagram for Distance\+Sensor\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=199pt]{classDistanceSensor__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Distance\+Sensor\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDistanceSensor__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classDistanceSensor_afa58528c771efef1c90ffab32db9ac9a}{Distance\+Sensor}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\mbox{\hyperlink{classCommon_aeea91a726dbe988e515057b32ba0726f}{Name}}, \mbox{\hyperlink{classModule}{Module}} $\ast$\mbox{\hyperlink{classDistanceSensor_a61a4a7bde2df114e997e901773ca0f05}{Parent}}, Settings\+::\+Distance\+Sensor\+Settings $\ast$Default\+Settings)
+\begin{DoxyCompactList}\small\item\em Class for the Ultrasonic distance sensor -\/ H\+C-\/\+S\+R04 or J\+S\+N-\/\+S\+R04T. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classDistanceSensor_a0ea597e9c12947d238d7eda0dcef8e09}{refresh\+\_\+\+Five\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classDistanceSensor_a06e3435d594256c9db2cdaf40a4d1486}{report}} ()
+\item 
+void \mbox{\hyperlink{classDistanceSensor_a467fdd4b08e1242412122dcf6aaa9d49}{read\+Sensor}} ()
+\begin{DoxyCompactList}\small\item\em Refresh Temp and Humidity readings. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{classDistanceSensor_af6e59d6138bdd3eede34fc35e98d24b6}{get\+Distance}} ()
+\item 
+char $\ast$ \mbox{\hyperlink{classDistanceSensor_a68d9e3890f28d425f0aeda624c3db925}{get\+Distance\+Text}} (bool Include\+Units=false)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \mbox{\hyperlink{classDistanceSensor_aa02068dd1239372c0fbe7cc91020f720}{Distance}} = 0.\+0
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classModule}{Module}} $\ast$ \mbox{\hyperlink{classDistanceSensor_a61a4a7bde2df114e997e901773ca0f05}{Parent}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 6 of file Distance\+Sensor.\+h.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classDistanceSensor_afa58528c771efef1c90ffab32db9ac9a}\label{classDistanceSensor_afa58528c771efef1c90ffab32db9ac9a}} 
+\index{DistanceSensor@{DistanceSensor}!DistanceSensor@{DistanceSensor}}
+\index{DistanceSensor@{DistanceSensor}!DistanceSensor@{DistanceSensor}}
+\doxysubsubsection{\texorpdfstring{DistanceSensor()}{DistanceSensor()}}
+{\footnotesize\ttfamily Distance\+Sensor\+::\+Distance\+Sensor (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\mbox{\hyperlink{classModule}{Module}} $\ast$}]{Parent,  }\item[{Settings\+::\+Distance\+Sensor\+Settings $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+Class for the Ultrasonic distance sensor -\/ H\+C-\/\+S\+R04 or J\+S\+N-\/\+S\+R04T. 
+
+
+
+Definition at line 6 of file Distance\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDistanceSensor_afa58528c771efef1c90ffab32db9ac9a_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classDistanceSensor_af6e59d6138bdd3eede34fc35e98d24b6}\label{classDistanceSensor_af6e59d6138bdd3eede34fc35e98d24b6}} 
+\index{DistanceSensor@{DistanceSensor}!getDistance@{getDistance}}
+\index{getDistance@{getDistance}!DistanceSensor@{DistanceSensor}}
+\doxysubsubsection{\texorpdfstring{getDistance()}{getDistance()}}
+{\footnotesize\ttfamily float Distance\+Sensor\+::get\+Distance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 54 of file Distance\+Sensor.\+cpp.
+
+\mbox{\Hypertarget{classDistanceSensor_a68d9e3890f28d425f0aeda624c3db925}\label{classDistanceSensor_a68d9e3890f28d425f0aeda624c3db925}} 
+\index{DistanceSensor@{DistanceSensor}!getDistanceText@{getDistanceText}}
+\index{getDistanceText@{getDistanceText}!DistanceSensor@{DistanceSensor}}
+\doxysubsubsection{\texorpdfstring{getDistanceText()}{getDistanceText()}}
+{\footnotesize\ttfamily char $\ast$ Distance\+Sensor\+::get\+Distance\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 59 of file Distance\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDistanceSensor_a68d9e3890f28d425f0aeda624c3db925_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDistanceSensor_a68d9e3890f28d425f0aeda624c3db925_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classDistanceSensor_a467fdd4b08e1242412122dcf6aaa9d49}\label{classDistanceSensor_a467fdd4b08e1242412122dcf6aaa9d49}} 
+\index{DistanceSensor@{DistanceSensor}!readSensor@{readSensor}}
+\index{readSensor@{readSensor}!DistanceSensor@{DistanceSensor}}
+\doxysubsubsection{\texorpdfstring{readSensor()}{readSensor()}}
+{\footnotesize\ttfamily void Distance\+Sensor\+::read\+Sensor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Refresh Temp and Humidity readings. 
+
+
+
+Definition at line 25 of file Distance\+Sensor.\+cpp.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDistanceSensor_a467fdd4b08e1242412122dcf6aaa9d49_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classDistanceSensor_a0ea597e9c12947d238d7eda0dcef8e09}\label{classDistanceSensor_a0ea597e9c12947d238d7eda0dcef8e09}} 
+\index{DistanceSensor@{DistanceSensor}!refresh\_FiveSec@{refresh\_FiveSec}}
+\index{refresh\_FiveSec@{refresh\_FiveSec}!DistanceSensor@{DistanceSensor}}
+\doxysubsubsection{\texorpdfstring{refresh\_FiveSec()}{refresh\_FiveSec()}}
+{\footnotesize\ttfamily void Distance\+Sensor\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}}.
+
+
+
+Definition at line 18 of file Distance\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDistanceSensor_a0ea597e9c12947d238d7eda0dcef8e09_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classDistanceSensor_a06e3435d594256c9db2cdaf40a4d1486}\label{classDistanceSensor_a06e3435d594256c9db2cdaf40a4d1486}} 
+\index{DistanceSensor@{DistanceSensor}!report@{report}}
+\index{report@{report}!DistanceSensor@{DistanceSensor}}
+\doxysubsubsection{\texorpdfstring{report()}{report()}}
+{\footnotesize\ttfamily void Distance\+Sensor\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+$<$ clear variable
+
+Reimplemented from \mbox{\hyperlink{classCommon_a9e60e2c26a5f4d72342a59a969954636}{Common}}.
+
+
+
+Definition at line 45 of file Distance\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classDistanceSensor_a06e3435d594256c9db2cdaf40a4d1486_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classDistanceSensor_aa02068dd1239372c0fbe7cc91020f720}\label{classDistanceSensor_aa02068dd1239372c0fbe7cc91020f720}} 
+\index{DistanceSensor@{DistanceSensor}!Distance@{Distance}}
+\index{Distance@{Distance}!DistanceSensor@{DistanceSensor}}
+\doxysubsubsection{\texorpdfstring{Distance}{Distance}}
+{\footnotesize\ttfamily float Distance\+Sensor\+::\+Distance = 0.\+0}
+
+
+
+Definition at line 15 of file Distance\+Sensor.\+h.
+
+\mbox{\Hypertarget{classDistanceSensor_a61a4a7bde2df114e997e901773ca0f05}\label{classDistanceSensor_a61a4a7bde2df114e997e901773ca0f05}} 
+\index{DistanceSensor@{DistanceSensor}!Parent@{Parent}}
+\index{Parent@{Parent}!DistanceSensor@{DistanceSensor}}
+\doxysubsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classModule}{Module}}$\ast$ Distance\+Sensor\+::\+Parent\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 22 of file Distance\+Sensor.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Components/\mbox{\hyperlink{DistanceSensor_8h}{Distance\+Sensor.\+h}}\item 
+src/\+Components/\mbox{\hyperlink{DistanceSensor_8cpp}{Distance\+Sensor.\+cpp}}\end{DoxyCompactItemize}

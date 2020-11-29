@@ -27,7 +27,7 @@ void Switch_PWM::turnOn()
 
   if (NegativeLogic)
   {
-    analogWrite(Pin, 255 - map(*DutyCycle, 0, 100, int(255 * (*DutyCycleLowLimit / 100.0f)), 255)); ///< mapping motor speed to duty cycle https:///< www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
+    analogWrite(Pin, 255 - map(*DutyCycle, 0, 100, int(255 * (*DutyCycleLowLimit / 100.0f)), 255)); ///< mapping motor speed to duty cycle https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
   }
   else
   {

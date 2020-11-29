@@ -1,0 +1,38 @@
+var Gbox420__Mega__DEV_2Settings_8h =
+[
+    [ "Settings", "structSettings.html", "structSettings" ],
+    [ "AeroModuleSettings", "structSettings_1_1AeroModuleSettings.html", "structSettings_1_1AeroModuleSettings" ],
+    [ "AeroponicsSettings", "structSettings_1_1AeroponicsSettings.html", "structSettings_1_1AeroponicsSettings" ],
+    [ "AeroponicsSettings_TankSpecific", "structSettings_1_1AeroponicsSettings__TankSpecific.html", "structSettings_1_1AeroponicsSettings__TankSpecific" ],
+    [ "DHTSensorSettings", "structSettings_1_1DHTSensorSettings.html", "structSettings_1_1DHTSensorSettings" ],
+    [ "DistanceSensorSettings", "structSettings_1_1DistanceSensorSettings.html", "structSettings_1_1DistanceSensorSettings" ],
+    [ "FanSettings", "structSettings_1_1FanSettings.html", "structSettings_1_1FanSettings" ],
+    [ "MainModuleSettings", "structSettings_1_1MainModuleSettings.html", "structSettings_1_1MainModuleSettings" ],
+    [ "HempyBucketSettings", "structSettings_1_1HempyBucketSettings.html", "structSettings_1_1HempyBucketSettings" ],
+    [ "HempyModuleSettings", "structSettings_1_1HempyModuleSettings.html", "structSettings_1_1HempyModuleSettings" ],
+    [ "LightSensorSettings", "structSettings_1_1LightSensorSettings.html", "structSettings_1_1LightSensorSettings" ],
+    [ "LightsSettings", "structSettings_1_1LightsSettings.html", "structSettings_1_1LightsSettings" ],
+    [ "ModuleSkeletonSettings", "structSettings_1_1ModuleSkeletonSettings.html", "structSettings_1_1ModuleSkeletonSettings" ],
+    [ "PHSensorSettings", "structSettings_1_1PHSensorSettings.html", "structSettings_1_1PHSensorSettings" ],
+    [ "PressureSensorSettings", "structSettings_1_1PressureSensorSettings.html", "structSettings_1_1PressureSensorSettings" ],
+    [ "ReservoirModuleSettings", "structSettings_1_1ReservoirModuleSettings.html", null ],
+    [ "SoundSettings", "structSettings_1_1SoundSettings.html", "structSettings_1_1SoundSettings" ],
+    [ "WaterLevelSensorSettings", "structSettings_1_1WaterLevelSensorSettings.html", "structSettings_1_1WaterLevelSensorSettings" ],
+    [ "WaterPumpSettings", "structSettings_1_1WaterPumpSettings.html", "structSettings_1_1WaterPumpSettings" ],
+    [ "WaterTempSensorSettings", "structSettings_1_1WaterTempSensorSettings.html", "structSettings_1_1WaterTempSensorSettings" ],
+    [ "WeightSensorSettings", "structSettings_1_1WeightSensorSettings.html", "structSettings_1_1WeightSensorSettings" ],
+    [ "PumpState", "Gbox420__Mega__DEV_2Settings_8h.html#a34add8aab8f865d876932ad394f50768", [
+      [ "DISABLED", "Gbox420__Mega__DEV_2Settings_8h.html#a34add8aab8f865d876932ad394f50768a40f39385238042f6ec0cbac821a19fc4", null ],
+      [ "IDLE", "Gbox420__Mega__DEV_2Settings_8h.html#a34add8aab8f865d876932ad394f50768afd6a0e4343048b10646dd2976cc5ad18", null ],
+      [ "PRIMING", "Gbox420__Mega__DEV_2Settings_8h.html#a34add8aab8f865d876932ad394f50768a59b2e3b4f3bb05e35cd3a7062dc3a2a0", null ],
+      [ "RUNNING", "Gbox420__Mega__DEV_2Settings_8h.html#a34add8aab8f865d876932ad394f50768a1061be6c3fb88d32829cba6f6b2be304", null ],
+      [ "BLOWOFF", "Gbox420__Mega__DEV_2Settings_8h.html#a34add8aab8f865d876932ad394f50768a161fa48b5157298e551ce4a243273b90", null ],
+      [ "MIXING", "Gbox420__Mega__DEV_2Settings_8h.html#a34add8aab8f865d876932ad394f50768a61f5ad486f2c1cc06d64e9a3e92c42e1", null ]
+    ] ],
+    [ "loadSettings", "Gbox420__Mega__DEV_2Settings_8h.html#ad971c9812747afb3057cd98892437c13", null ],
+    [ "restoreDefaults", "Gbox420__Mega__DEV_2Settings_8h.html#ac6ea025bbd7c07eb499581c99b13ed58", null ],
+    [ "saveSettings", "Gbox420__Mega__DEV_2Settings_8h.html#ac0ce9cbac65602e667e78fe16e0d51fe", null ],
+    [ "CurrentTime", "Gbox420__Mega__DEV_2Settings_8h.html#a292e29d40fbb346a1fa51dfc5ba879c1", null ],
+    [ "LongMessage", "Gbox420__Mega__DEV_2Settings_8h.html#a29e392d833e97bf88f780e9fdf22373f", null ],
+    [ "ShortMessage", "Gbox420__Mega__DEV_2Settings_8h.html#a6084d34751a3c3b5585d06dc1c0dd9f6", null ]
+];

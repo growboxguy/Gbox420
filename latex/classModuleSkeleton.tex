@@ -1,0 +1,328 @@
+\hypertarget{classModuleSkeleton}{}\doxysection{Module\+Skeleton Class Reference}
+\label{classModuleSkeleton}\index{ModuleSkeleton@{ModuleSkeleton}}
+
+
+$<$ This is a template for creating new modules  
+
+
+
+
+{\ttfamily \#include $<$Module\+Skeleton.\+h$>$}
+
+
+
+Inheritance diagram for Module\+Skeleton\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{classModuleSkeleton__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Module\+Skeleton\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classModuleSkeleton__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classModuleSkeleton_a28db770cfd6d6a02110d0adb62666676}{Module\+Skeleton}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\mbox{\hyperlink{classCommon_aeea91a726dbe988e515057b32ba0726f}{Name}}, \mbox{\hyperlink{classModule}{Module}} $\ast$\mbox{\hyperlink{classModuleSkeleton_a154214b63d6820a2e6d9143b55419b73}{Parent}}, Settings\+::\+Module\+Skeleton\+Settings $\ast$Default\+Settings)
+\begin{DoxyCompactList}\small\item\em constructor \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classModuleSkeleton_ae9b2578a2c1ecb343cd7b3b21320145e}{refresh\+\_\+\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classModuleSkeleton_a5c9845eec6ca7fbaac1521f4b021712a}{refresh\+\_\+\+Five\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classModuleSkeleton_ada46fe93dc55850a1ccfb80d2a4ee5dd}{refresh\+\_\+\+Minute}} ()
+\item 
+void \mbox{\hyperlink{classModuleSkeleton_ade7e1fee2417a8e23a1f8f31502045ab}{refresh\+\_\+\+Quarter\+Hour}} ()
+\item 
+void \mbox{\hyperlink{classModuleSkeleton_a4b13bbc3ce0282781e36f450bd4f189a}{report}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classModule}{Module}} $\ast$ \mbox{\hyperlink{classModuleSkeleton_a154214b63d6820a2e6d9143b55419b73}{Parent}}
+\begin{DoxyCompactList}\small\item\em Variables stored in memory, values reset at reboot. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classModuleSkeleton_a35f805dbca9d18fa01eb08aaddb86284}{Runtime\+Bool}} = false
+\item 
+int \mbox{\hyperlink{classModuleSkeleton_a12b393d156b504dfb7c63fe9c5ae359c}{Runtime\+Int}} = 420
+\item 
+float \mbox{\hyperlink{classModuleSkeleton_acb206ae4738d39f94ab7aa9a9c3ebcd3}{Runtime\+Float}} = 4.\+2f
+\item 
+char \mbox{\hyperlink{classModuleSkeleton_aa9cb10e6023c594eedf5dda863ed59b4}{Runtime\+String}} \mbox{[}Max\+Word\+Length\mbox{]} = \char`\"{}Hail\+Mary\char`\"{}
+\item 
+\mbox{\hyperlink{classRollingAverage}{Rolling\+Average}} $\ast$ \mbox{\hyperlink{classModuleSkeleton_af6b3273717626db3dd106d37e2fb4bf8}{Rolling\+Int}}
+\item 
+\mbox{\hyperlink{classRollingAverage}{Rolling\+Average}} $\ast$ \mbox{\hyperlink{classModuleSkeleton_a7a2583d81a3cf2b12854501a779d7f47}{Rolling\+Float}}
+\begin{DoxyCompactList}\small\item\em Variables stored in E\+E\+P\+R\+OM, values kept between reboots. \end{DoxyCompactList}\item 
+bool $\ast$ \mbox{\hyperlink{classModuleSkeleton_a0881bc146cc919fc326d0705934d1b09}{Persistent\+Bool}}
+\item 
+int $\ast$ \mbox{\hyperlink{classModuleSkeleton_a4303553ace396e4f4a27b59b7b05c22b}{Persistent\+Int}}
+\item 
+float $\ast$ \mbox{\hyperlink{classModuleSkeleton_a92d4afd35fa978f1f054ae11029b699b}{Persistent\+Float}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+$<$ This is a template for creating new modules 
+
+$<$ \#include \char`\"{}3rd\+Party\+Modlue.\+h\char`\"{} ///$<$ Load any required 3rd party modules here $<$ Example module with test data 
+
+Definition at line 10 of file Module\+Skeleton.\+h.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classModuleSkeleton_a28db770cfd6d6a02110d0adb62666676}\label{classModuleSkeleton_a28db770cfd6d6a02110d0adb62666676}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!ModuleSkeleton@{ModuleSkeleton}}
+\index{ModuleSkeleton@{ModuleSkeleton}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{ModuleSkeleton()}{ModuleSkeleton()}}
+{\footnotesize\ttfamily Module\+Skeleton\+::\+Module\+Skeleton (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\mbox{\hyperlink{classModule}{Module}} $\ast$}]{Parent,  }\item[{Settings\+::\+Module\+Skeleton\+Settings $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+constructor 
+
+$<$ constructor
+
+Definition at line 3 of file Module\+Skeleton.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classModuleSkeleton_a28db770cfd6d6a02110d0adb62666676_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classModuleSkeleton_a5c9845eec6ca7fbaac1521f4b021712a}\label{classModuleSkeleton_a5c9845eec6ca7fbaac1521f4b021712a}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!refresh\_FiveSec@{refresh\_FiveSec}}
+\index{refresh\_FiveSec@{refresh\_FiveSec}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{refresh\_FiveSec()}{refresh\_FiveSec()}}
+{\footnotesize\ttfamily void Module\+Skeleton\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}}.
+
+
+
+Definition at line 25 of file Module\+Skeleton.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classModuleSkeleton_a5c9845eec6ca7fbaac1521f4b021712a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classModuleSkeleton_ada46fe93dc55850a1ccfb80d2a4ee5dd}\label{classModuleSkeleton_ada46fe93dc55850a1ccfb80d2a4ee5dd}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!refresh\_Minute@{refresh\_Minute}}
+\index{refresh\_Minute@{refresh\_Minute}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{refresh\_Minute()}{refresh\_Minute()}}
+{\footnotesize\ttfamily void Module\+Skeleton\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a14e4462a94bd118028ce1d487ca0292c}{Common}}.
+
+
+
+Definition at line 36 of file Module\+Skeleton.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classModuleSkeleton_ada46fe93dc55850a1ccfb80d2a4ee5dd_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classModuleSkeleton_ade7e1fee2417a8e23a1f8f31502045ab}\label{classModuleSkeleton_ade7e1fee2417a8e23a1f8f31502045ab}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!refresh\_QuarterHour@{refresh\_QuarterHour}}
+\index{refresh\_QuarterHour@{refresh\_QuarterHour}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{refresh\_QuarterHour()}{refresh\_QuarterHour()}}
+{\footnotesize\ttfamily void Module\+Skeleton\+::refresh\+\_\+\+Quarter\+Hour (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_aa7222229739c89d441fadd6a40deff89}{Common}}.
+
+
+
+Definition at line 42 of file Module\+Skeleton.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classModuleSkeleton_ade7e1fee2417a8e23a1f8f31502045ab_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classModuleSkeleton_ae9b2578a2c1ecb343cd7b3b21320145e}\label{classModuleSkeleton_ae9b2578a2c1ecb343cd7b3b21320145e}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!refresh\_Sec@{refresh\_Sec}}
+\index{refresh\_Sec@{refresh\_Sec}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{refresh\_Sec()}{refresh\_Sec()}}
+{\footnotesize\ttfamily void Module\+Skeleton\+::refresh\+\_\+\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_acd1fdd47fbf8bb490f5c6d3ab6cd8d05}{Common}}.
+
+
+
+Definition at line 19 of file Module\+Skeleton.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classModuleSkeleton_ae9b2578a2c1ecb343cd7b3b21320145e_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classModuleSkeleton_a4b13bbc3ce0282781e36f450bd4f189a}\label{classModuleSkeleton_a4b13bbc3ce0282781e36f450bd4f189a}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!report@{report}}
+\index{report@{report}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{report()}{report()}}
+{\footnotesize\ttfamily void Module\+Skeleton\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+$<$ Report status to the Arduino Serial and E\+S\+P-\/lin console output
+
+$<$ clear variable
+
+Reimplemented from \mbox{\hyperlink{classCommon_a9e60e2c26a5f4d72342a59a969954636}{Common}}.
+
+
+
+Definition at line 48 of file Module\+Skeleton.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classModuleSkeleton_a4b13bbc3ce0282781e36f450bd4f189a_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classModuleSkeleton_a154214b63d6820a2e6d9143b55419b73}\label{classModuleSkeleton_a154214b63d6820a2e6d9143b55419b73}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!Parent@{Parent}}
+\index{Parent@{Parent}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classModule}{Module}}$\ast$ Module\+Skeleton\+::\+Parent\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Variables stored in memory, values reset at reboot. 
+
+
+
+Definition at line 22 of file Module\+Skeleton.\+h.
+
+\mbox{\Hypertarget{classModuleSkeleton_a0881bc146cc919fc326d0705934d1b09}\label{classModuleSkeleton_a0881bc146cc919fc326d0705934d1b09}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!PersistentBool@{PersistentBool}}
+\index{PersistentBool@{PersistentBool}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{PersistentBool}{PersistentBool}}
+{\footnotesize\ttfamily bool$\ast$ Module\+Skeleton\+::\+Persistent\+Bool\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 32 of file Module\+Skeleton.\+h.
+
+\mbox{\Hypertarget{classModuleSkeleton_a92d4afd35fa978f1f054ae11029b699b}\label{classModuleSkeleton_a92d4afd35fa978f1f054ae11029b699b}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!PersistentFloat@{PersistentFloat}}
+\index{PersistentFloat@{PersistentFloat}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{PersistentFloat}{PersistentFloat}}
+{\footnotesize\ttfamily float$\ast$ Module\+Skeleton\+::\+Persistent\+Float\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 34 of file Module\+Skeleton.\+h.
+
+\mbox{\Hypertarget{classModuleSkeleton_a4303553ace396e4f4a27b59b7b05c22b}\label{classModuleSkeleton_a4303553ace396e4f4a27b59b7b05c22b}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!PersistentInt@{PersistentInt}}
+\index{PersistentInt@{PersistentInt}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{PersistentInt}{PersistentInt}}
+{\footnotesize\ttfamily int$\ast$ Module\+Skeleton\+::\+Persistent\+Int\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 33 of file Module\+Skeleton.\+h.
+
+\mbox{\Hypertarget{classModuleSkeleton_a7a2583d81a3cf2b12854501a779d7f47}\label{classModuleSkeleton_a7a2583d81a3cf2b12854501a779d7f47}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!RollingFloat@{RollingFloat}}
+\index{RollingFloat@{RollingFloat}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{RollingFloat}{RollingFloat}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classRollingAverage}{Rolling\+Average}}$\ast$ Module\+Skeleton\+::\+Rolling\+Float\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Variables stored in E\+E\+P\+R\+OM, values kept between reboots. 
+
+
+
+Definition at line 29 of file Module\+Skeleton.\+h.
+
+\mbox{\Hypertarget{classModuleSkeleton_af6b3273717626db3dd106d37e2fb4bf8}\label{classModuleSkeleton_af6b3273717626db3dd106d37e2fb4bf8}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!RollingInt@{RollingInt}}
+\index{RollingInt@{RollingInt}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{RollingInt}{RollingInt}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classRollingAverage}{Rolling\+Average}}$\ast$ Module\+Skeleton\+::\+Rolling\+Int\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 28 of file Module\+Skeleton.\+h.
+
+\mbox{\Hypertarget{classModuleSkeleton_a35f805dbca9d18fa01eb08aaddb86284}\label{classModuleSkeleton_a35f805dbca9d18fa01eb08aaddb86284}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!RuntimeBool@{RuntimeBool}}
+\index{RuntimeBool@{RuntimeBool}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{RuntimeBool}{RuntimeBool}}
+{\footnotesize\ttfamily bool Module\+Skeleton\+::\+Runtime\+Bool = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 24 of file Module\+Skeleton.\+h.
+
+\mbox{\Hypertarget{classModuleSkeleton_acb206ae4738d39f94ab7aa9a9c3ebcd3}\label{classModuleSkeleton_acb206ae4738d39f94ab7aa9a9c3ebcd3}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!RuntimeFloat@{RuntimeFloat}}
+\index{RuntimeFloat@{RuntimeFloat}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{RuntimeFloat}{RuntimeFloat}}
+{\footnotesize\ttfamily float Module\+Skeleton\+::\+Runtime\+Float = 4.\+2f\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 26 of file Module\+Skeleton.\+h.
+
+\mbox{\Hypertarget{classModuleSkeleton_a12b393d156b504dfb7c63fe9c5ae359c}\label{classModuleSkeleton_a12b393d156b504dfb7c63fe9c5ae359c}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!RuntimeInt@{RuntimeInt}}
+\index{RuntimeInt@{RuntimeInt}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{RuntimeInt}{RuntimeInt}}
+{\footnotesize\ttfamily int Module\+Skeleton\+::\+Runtime\+Int = 420\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 25 of file Module\+Skeleton.\+h.
+
+\mbox{\Hypertarget{classModuleSkeleton_aa9cb10e6023c594eedf5dda863ed59b4}\label{classModuleSkeleton_aa9cb10e6023c594eedf5dda863ed59b4}} 
+\index{ModuleSkeleton@{ModuleSkeleton}!RuntimeString@{RuntimeString}}
+\index{RuntimeString@{RuntimeString}!ModuleSkeleton@{ModuleSkeleton}}
+\doxysubsubsection{\texorpdfstring{RuntimeString}{RuntimeString}}
+{\footnotesize\ttfamily char Module\+Skeleton\+::\+Runtime\+String\mbox{[}Max\+Word\+Length\mbox{]} = \char`\"{}Hail\+Mary\char`\"{}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 27 of file Module\+Skeleton.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Components/\mbox{\hyperlink{ModuleSkeleton_8h}{Module\+Skeleton.\+h}}\item 
+src/\+Components/\mbox{\hyperlink{ModuleSkeleton_8cpp}{Module\+Skeleton.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,7 @@
+<map id="ModuleSkeleton" name="ModuleSkeleton">
+<area shape="rect" id="node1" title="&lt; This is a template for creating new modules" alt="" coords="5,257,132,284"/>
+<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="193,5,275,32"/>
+<area shape="rect" id="node4" href="$classModule.html" title=" " alt="" coords="221,153,292,180"/>
+<area shape="rect" id="node5" href="$classSound.html" title="&lt; Sound feedback buzzer" alt="" coords="303,257,365,284"/>
+<area shape="rect" id="node3" href="$classRollingAverage.html" title="Rolling average tracker for smoothing sensor readings. Supports float and int values only." alt="" coords="35,153,155,180"/>
+</map>

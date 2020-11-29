@@ -1,0 +1,113 @@
+\hypertarget{Gbox420__Nano__Aero__NoTank_2SerialLog_8h}{}\doxysection{Gbox420\+\_\+\+Nano\+\_\+\+Aero\+\_\+\+No\+Tank/\+Serial\+Log.h File Reference}
+\label{Gbox420__Nano__Aero__NoTank_2SerialLog_8h}\index{Gbox420\_Nano\_Aero\_NoTank/SerialLog.h@{Gbox420\_Nano\_Aero\_NoTank/SerialLog.h}}
+{\ttfamily \#include \char`\"{}Arduino.\+h\char`\"{}}\newline
+Include dependency graph for Serial\+Log.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=240pt]{Gbox420__Nano__Aero__NoTank_2SerialLog_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Nano__Aero__NoTank_2SerialLog_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{Gbox420__Nano__Aero__NoTank_2SerialLog_8h_afc1779c42e031f830a60d0785b32bd18}{log\+To\+Serials}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$To\+Print, bool Break\+Line=true, byte Indent=3)
+\begin{DoxyCompactList}\small\item\em $<$ Logging \end{DoxyCompactList}\item 
+{\footnotesize template$<$class log\+Line $>$ }\\void \mbox{\hyperlink{Gbox420__Nano__Aero__NoTank_2SerialLog_8h_a4591524a1a29ed7059bfe450e71bdfa0}{log\+To\+Serials}} (log\+Line $\ast$To\+Print, bool Break\+Line=true, byte Indent=3)
+\item 
+{\footnotesize template$<$class log\+Line $>$ }\\void \mbox{\hyperlink{Gbox420__Nano__Aero__NoTank_2SerialLog_8h_a812ded80783cfd1227277fed7a6f6a3b}{log\+To\+Serials}} (log\+Line \&To\+Print, bool Break\+Line=true, byte Indent=3)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Hardware\+Serial \& \mbox{\hyperlink{Gbox420__Nano__Aero__NoTank_2SerialLog_8h_aaa89c80a04f1a6b0b5f2e425a9d045db}{Arduino\+Serial}}
+\begin{DoxyCompactList}\small\item\em Printing serial messages to the Arduino Serial output and the esp-\/link Microcontroller Console (uC Console) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{Gbox420__Nano__Aero__NoTank_2SerialLog_8h_afc1779c42e031f830a60d0785b32bd18}\label{Gbox420__Nano__Aero__NoTank_2SerialLog_8h_afc1779c42e031f830a60d0785b32bd18}} 
+\index{SerialLog.h@{SerialLog.h}!logToSerials@{logToSerials}}
+\index{logToSerials@{logToSerials}!SerialLog.h@{SerialLog.h}}
+\doxysubsubsection{\texorpdfstring{logToSerials()}{logToSerials()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void log\+To\+Serials (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{To\+Print,  }\item[{bool}]{Break\+Line = {\ttfamily true},  }\item[{byte}]{Indent = {\ttfamily 3} }\end{DoxyParamCaption})}
+
+
+
+$<$ Logging 
+
+
+
+Definition at line 5 of file Serial\+Log.\+cpp.
+
+\mbox{\Hypertarget{Gbox420__Nano__Aero__NoTank_2SerialLog_8h_a812ded80783cfd1227277fed7a6f6a3b}\label{Gbox420__Nano__Aero__NoTank_2SerialLog_8h_a812ded80783cfd1227277fed7a6f6a3b}} 
+\index{SerialLog.h@{SerialLog.h}!logToSerials@{logToSerials}}
+\index{logToSerials@{logToSerials}!SerialLog.h@{SerialLog.h}}
+\doxysubsubsection{\texorpdfstring{logToSerials()}{logToSerials()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$class log\+Line $>$ \\
+void log\+To\+Serials (\begin{DoxyParamCaption}\item[{log\+Line \&}]{To\+Print,  }\item[{bool}]{Break\+Line = {\ttfamily true},  }\item[{byte}]{Indent = {\ttfamily 3} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 35 of file Serial\+Log.\+h.
+
+\mbox{\Hypertarget{Gbox420__Nano__Aero__NoTank_2SerialLog_8h_a4591524a1a29ed7059bfe450e71bdfa0}\label{Gbox420__Nano__Aero__NoTank_2SerialLog_8h_a4591524a1a29ed7059bfe450e71bdfa0}} 
+\index{SerialLog.h@{SerialLog.h}!logToSerials@{logToSerials}}
+\index{logToSerials@{logToSerials}!SerialLog.h@{SerialLog.h}}
+\doxysubsubsection{\texorpdfstring{logToSerials()}{logToSerials()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$class log\+Line $>$ \\
+void log\+To\+Serials (\begin{DoxyParamCaption}\item[{log\+Line $\ast$}]{To\+Print,  }\item[{bool}]{Break\+Line = {\ttfamily true},  }\item[{byte}]{Indent = {\ttfamily 3} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 17 of file Serial\+Log.\+h.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{Gbox420__Nano__Aero__NoTank_2SerialLog_8h_aaa89c80a04f1a6b0b5f2e425a9d045db}\label{Gbox420__Nano__Aero__NoTank_2SerialLog_8h_aaa89c80a04f1a6b0b5f2e425a9d045db}} 
+\index{SerialLog.h@{SerialLog.h}!ArduinoSerial@{ArduinoSerial}}
+\index{ArduinoSerial@{ArduinoSerial}!SerialLog.h@{SerialLog.h}}
+\doxysubsubsection{\texorpdfstring{ArduinoSerial}{ArduinoSerial}}
+{\footnotesize\ttfamily Hardware\+Serial\& Arduino\+Serial}
+
+
+
+Printing serial messages to the Arduino Serial output and the esp-\/link Microcontroller Console (uC Console) 
+
+Uses templating to handle logging multiple variable types (int,float,char,bool..)
+
+Functions implemented in header file due to\+: \href{https://stackoverflow.com/questions/10632251/undefined-reference-to-template-function}{\texttt{ https\+://stackoverflow.\+com/questions/10632251/undefined-\/reference-\/to-\/template-\/function}} $<$ every inheriting class have Arduino commands available
+
+Printing serial messages to the Arduino Serial output and the esp-\/link Microcontroller Console (uC Console)
+
+Reference to the Arduino Serial output.
+
+Printing serial messages to the Arduino Serial output and the esp-\/link Microcontroller Console (uC Console)
+
+Reference to the Arduino Serial
+
+Reference to the Arduino Serial output.
+
+Printing serial messages to the Arduino Serial output and the esp-\/link Microcontroller Console (uC Console)
+
+Reference to the Arduino Serial output.
+
+Uses templating to handle logging multiple variable types (int,float,char,bool..)
+
+Functions implemented in header file due to\+: \href{https://stackoverflow.com/questions/10632251/undefined-reference-to-template-function}{\texttt{ https\+://stackoverflow.\+com/questions/10632251/undefined-\/reference-\/to-\/template-\/function}}
+
+Printing serial messages to the Arduino Serial output and the esp-\/link Microcontroller Console (uC Console)
+
+Printing serial messages to the Arduino Serial output and the esp-\/link Microcontroller Console (uC Console)
+
+Reference to the Arduino Serial 
+
+Definition at line 35 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+

@@ -1,0 +1,6 @@
+<map id="AirPump" name="AirPump">
+<area shape="rect" id="node1" title="&lt; Air Pump controller" alt="" coords="5,243,83,269"/>
+<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="77,5,158,32"/>
+<area shape="rect" id="node3" href="$classModule.html" title=" " alt="" coords="105,153,175,180"/>
+<area shape="rect" id="node4" href="$classSound.html" title="&lt; Sound feedback buzzer" alt="" coords="186,243,249,269"/>
+</map>

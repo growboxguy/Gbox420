@@ -1,0 +1,4 @@
+<map id="DistanceSensor::readSensor" name="DistanceSensor::readSensor">
+<area shape="rect" id="node1" title="Refresh Temp and Humidity readings." alt="" coords="231,13,435,39"/>
+<area shape="rect" id="node2" href="$classDistanceSensor.html#a0ea597e9c12947d238d7eda0dcef8e09" title=" " alt="" coords="5,5,183,47"/>
+</map>

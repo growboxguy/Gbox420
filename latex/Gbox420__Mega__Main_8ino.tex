@@ -1,0 +1,716 @@
+\hypertarget{Gbox420__Mega__Main_8ino}{}\doxysection{Gbox420\+\_\+\+Mega\+\_\+\+Main/\+Gbox420\+\_\+\+Mega\+\_\+\+Main.ino File Reference}
+\label{Gbox420__Mega__Main_8ino}\index{Gbox420\_Mega\_Main/Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main/Gbox420\_Mega\_Main.ino}}
+
+
+Main module for Mega2560 -\/ Grow tent monitoring and controlling sketch.  
+
+
+{\ttfamily \#include \char`\"{}Arduino.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}avr/wdt.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}avr/boot.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}printf.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Timer\+Three.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}E\+L\+Client.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}E\+L\+Client\+Web\+Server.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}E\+L\+Client\+Cmd.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}E\+L\+Client\+Rest.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Thread.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Static\+Thread\+Controller.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Serial\+Log.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}src/\+Components\+\_\+\+Web/420\+Common\+\_\+\+Web.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Settings.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}src/\+Modules\+\_\+\+Web/\+Main\+Module\+\_\+\+Web.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}S\+P\+I.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}n\+R\+F24\+L01.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}R\+F24.\+h\char`\"{}}\newline
+Include dependency graph for Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+R\+F24 \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a1db8d74ea9b2f516fe15fb41da6a22cc}{Wireless}} (Wireless\+C\+E\+Pin, Wireless\+C\+S\+N\+Pin)
+\begin{DoxyCompactList}\small\item\em Wireless communication with Modules over n\+R\+F24\+L01+. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a3dd0de28dbd52701ac83ee0a76ebd4ce}{process\+Time\+Critical\+Stuff}} ()
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a56b12c2ed10250fdf9fadd1fcc243685}{run\+Sec}} ()
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a03cb9c97fb260fbbb47438197797a09d}{run\+Five\+Sec}} ()
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a56c5bdcbeb79cd2246a2c88826850ca1}{run\+Minute}} ()
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a6fdedfb173bd96eaa97b31538fada6b6}{run\+Quarter\+Hour}} ()
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a784bf3330e9224d3a36b0879c1195a98}{Heart\+Beat}} ()
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_af141387cf1674081eca9db00c3c869ab}{reset\+Web\+Server}} (void)
+\item 
+time\+\_\+t \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a42ab384e77148282f4730ec6c68ac2a3}{get\+Ntp\+Time}} ()
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_acbc7c8452769da2a269da64e2cca5e59}{load\+Callback}} (\+\_\+\+\_\+attribute\+\_\+\+\_\+((unused)) char $\ast$Url)
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_ac60586661fd52933e8fb2e91f29d3d84}{refresh\+Callback}} (\+\_\+\+\_\+attribute\+\_\+\+\_\+((unused)) char $\ast$Url)
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a51e7fb049f4e601d609570e25bc10118}{button\+Press\+Callback}} (char $\ast$Button)
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_ae784bf97b35a03486279475151a20abd}{set\+Field\+Callback}} (char $\ast$Field)
+\item 
+void \mbox{\hyperlink{Gbox420__Mega__Main_8ino_aefb388f6afb97c766f549d7c809c35f9}{get\+Wireless\+Status}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a29e392d833e97bf88f780e9fdf22373f}{Long\+Message}} \mbox{[}Max\+Long\+Text\+Length\mbox{]} = \char`\"{}\char`\"{}
+\begin{DoxyCompactList}\small\item\em Temp storage for assembling long messages (R\+E\+ST A\+PI -\/ Google Sheets reporting) \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a6084d34751a3c3b5585d06dc1c0dd9f6}{Short\+Message}} \mbox{[}Max\+Shot\+Text\+Length\mbox{]} = \char`\"{}\char`\"{}
+\begin{DoxyCompactList}\small\item\em Temp storage for assembling short messages (Log entries, Error messages) \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a292e29d40fbb346a1fa51dfc5ba879c1}{Current\+Time}} \mbox{[}Max\+Word\+Length\mbox{]} = \char`\"{}\char`\"{}
+\begin{DoxyCompactList}\small\item\em Buffer for storing current time in text format. \end{DoxyCompactList}\item 
+Hardware\+Serial \& \mbox{\hyperlink{Gbox420__Mega__Main_8ino_aaa89c80a04f1a6b0b5f2e425a9d045db}{Arduino\+Serial}} = Serial
+\begin{DoxyCompactList}\small\item\em Reference to the Arduino Serial output. \end{DoxyCompactList}\item 
+Hardware\+Serial \& \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a42d46ca1befe52b08a5fa43ecb03e4e5}{E\+S\+P\+Serial}} = Serial3
+\begin{DoxyCompactList}\small\item\em Reference to the E\+SP Link Serial output. \end{DoxyCompactList}\item 
+E\+L\+Client\+Web\+Server \mbox{\hyperlink{src_2Components__Web_2420Common__Web_8h_a2cf73c324d423d56ec041c07f1fb23d3}{Web\+Server}} \& \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a1b3c5562c681187ac6d96fc05c82033d}{E\+S\+P\+Link}}
+\begin{DoxyCompactList}\small\item\em E\+S\+P-\/link Web\+Server A\+PI. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structSettings}{Settings}} $\ast$ \mbox{\hyperlink{Gbox420__Mega__Main_8ino_aa5d20d2c57bfa8a66c233eb21b7cdf6e}{Module\+Settings}}
+\begin{DoxyCompactList}\small\item\em This object will store the settings loaded from the E\+E\+P\+R\+OM. Persistent between reboots. \end{DoxyCompactList}\item 
+bool $\ast$ \mbox{\hyperlink{Gbox420__Mega__Main_8ino_aa3f2962c251cead6e535226e4da29861}{Debug}}
+\begin{DoxyCompactList}\small\item\em True -\/ Turns on extra debug messages on the Serial Output. \end{DoxyCompactList}\item 
+bool $\ast$ \mbox{\hyperlink{Gbox420__Mega__Main_8ino_ae700c60c46e98092b96bb54c369fe891}{Metric}}
+\begin{DoxyCompactList}\small\item\em True -\/ Use metric units, False -\/ Use imperial units. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classMainModule}{Main\+Module}} $\ast$ \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a986f5751f967fdb64a3563042cedbbce}{Main1}}
+\begin{DoxyCompactList}\small\item\em Represents a Grow Box with all components (\mbox{\hyperlink{classLights}{Lights}}, D\+HT sensors, Power sensor..etc) \end{DoxyCompactList}\item 
+Thread \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a1254144f7fb7ab5a6e4610e1ba94a2b9}{One\+Sec\+Thread}} = Thread()
+\item 
+Thread \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a53a9d8bb350581bc4ffb215418731b79}{Five\+Sec\+Thread}} = Thread()
+\item 
+Thread \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a2ddf18e39c01b0be11987f5625da3a48}{Minute\+Thread}} = Thread()
+\item 
+Thread \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a8ed35a56f402972300302210a9c8809a}{Quarter\+Hour\+Thread}} = Thread()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main module for Mega2560 -\/ Grow tent monitoring and controlling sketch. 
+
+To change the default pin layout / startup settings navigate to\+: Settings.\+h \begin{DoxyAuthor}{Author}
+Grow\+Box\+Guy -\/ \href{https://sites.google.com/site/growboxguy/}{\texttt{ https\+://sites.\+google.\+com/site/growboxguy/}} 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+4.\+20
+\end{DoxyVersion}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000001}{Todo}}]Proper doxygen documentation \end{DoxyRefDesc}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a51e7fb049f4e601d609570e25bc10118}\label{Gbox420__Mega__Main_8ino_a51e7fb049f4e601d609570e25bc10118}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!buttonPressCallback@{buttonPressCallback}}
+\index{buttonPressCallback@{buttonPressCallback}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{buttonPressCallback()}{buttonPressCallback()}}
+{\footnotesize\ttfamily void button\+Press\+Callback (\begin{DoxyParamCaption}\item[{char $\ast$}]{Button }\end{DoxyParamCaption})}
+
+$<$ Called when any button on the website is pressed.
+
+Definition at line 237 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_a51e7fb049f4e601d609570e25bc10118_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_a51e7fb049f4e601d609570e25bc10118_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a42ab384e77148282f4730ec6c68ac2a3}\label{Gbox420__Mega__Main_8ino_a42ab384e77148282f4730ec6c68ac2a3}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!getNtpTime@{getNtpTime}}
+\index{getNtpTime@{getNtpTime}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{getNtpTime()}{getNtpTime()}}
+{\footnotesize\ttfamily time\+\_\+t get\+Ntp\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+$<$ blocking calling the sync again in an interrupt
+
+$<$ reset watchdog timeout
+
+$<$ send\+Email\+Alert(F(\char`\"{}\+N\+T\+P\%20time\%20sync\%20failed\char`\"{}));
+
+Definition at line 200 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{Gbox420__Mega__Main_8ino_a42ab384e77148282f4730ec6c68ac2a3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_aefb388f6afb97c766f549d7c809c35f9}\label{Gbox420__Mega__Main_8ino_aefb388f6afb97c766f549d7c809c35f9}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!getWirelessStatus@{getWirelessStatus}}
+\index{getWirelessStatus@{getWirelessStatus}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{getWirelessStatus()}{getWirelessStatus()}}
+{\footnotesize\ttfamily void get\+Wireless\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 256 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=296pt]{Gbox420__Mega__Main_8ino_aefb388f6afb97c766f549d7c809c35f9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_aefb388f6afb97c766f549d7c809c35f9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a784bf3330e9224d3a36b0879c1195a98}\label{Gbox420__Mega__Main_8ino_a784bf3330e9224d3a36b0879c1195a98}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!HeartBeat@{HeartBeat}}
+\index{HeartBeat@{HeartBeat}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{HeartBeat()}{HeartBeat()}}
+{\footnotesize\ttfamily void Heart\+Beat (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 154 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=312pt]{Gbox420__Mega__Main_8ino_a784bf3330e9224d3a36b0879c1195a98_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_acbc7c8452769da2a269da64e2cca5e59}\label{Gbox420__Mega__Main_8ino_acbc7c8452769da2a269da64e2cca5e59}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!loadCallback@{loadCallback}}
+\index{loadCallback@{loadCallback}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{loadCallback()}{loadCallback()}}
+{\footnotesize\ttfamily void load\+Callback (\begin{DoxyParamCaption}\item[{\+\_\+\+\_\+attribute\+\_\+\+\_\+((unused)) char $\ast$}]{Url }\end{DoxyParamCaption})}
+
+$<$ called when website is loaded. Runs through all components that subscribed for this event
+
+Definition at line 227 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_acbc7c8452769da2a269da64e2cca5e59_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_acbc7c8452769da2a269da64e2cca5e59_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_afe461d27b9c48d5921c00d521181f12f}\label{Gbox420__Mega__Main_8ino_afe461d27b9c48d5921c00d521181f12f}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!loop@{loop}}
+\index{loop@{loop}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily void loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+$<$ loop only checks if it\textquotesingle{}s time to trigger one of the threads (\mbox{\hyperlink{Gbox420__Mega__Main_8ino_a56b12c2ed10250fdf9fadd1fcc243685}{run\+Sec()}}, \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a03cb9c97fb260fbbb47438197797a09d}{run\+Five\+Sec()}},\mbox{\hyperlink{Gbox420__Mega__Main_8ino_a56c5bdcbeb79cd2246a2c88826850ca1}{run\+Minute()}}..etc)
+
+Definition at line 116 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a3dd0de28dbd52701ac83ee0a76ebd4ce}\label{Gbox420__Mega__Main_8ino_a3dd0de28dbd52701ac83ee0a76ebd4ce}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!processTimeCriticalStuff@{processTimeCriticalStuff}}
+\index{processTimeCriticalStuff@{processTimeCriticalStuff}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{processTimeCriticalStuff()}{processTimeCriticalStuff()}}
+{\footnotesize\ttfamily void process\+Time\+Critical\+Stuff (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+$<$ Interrupt calls this every 0.\+5 sec to process any request coming from the E\+S\+P-\/\+Link hosted webpage
+
+Definition at line 121 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=296pt]{Gbox420__Mega__Main_8ino_a3dd0de28dbd52701ac83ee0a76ebd4ce_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_ac60586661fd52933e8fb2e91f29d3d84}\label{Gbox420__Mega__Main_8ino_ac60586661fd52933e8fb2e91f29d3d84}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!refreshCallback@{refreshCallback}}
+\index{refreshCallback@{refreshCallback}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{refreshCallback()}{refreshCallback()}}
+{\footnotesize\ttfamily void refresh\+Callback (\begin{DoxyParamCaption}\item[{\+\_\+\+\_\+attribute\+\_\+\+\_\+((unused)) char $\ast$}]{Url }\end{DoxyParamCaption})}
+
+$<$ called when website is refreshed.
+
+Definition at line 232 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_ac60586661fd52933e8fb2e91f29d3d84_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_ac60586661fd52933e8fb2e91f29d3d84_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_af141387cf1674081eca9db00c3c869ab}\label{Gbox420__Mega__Main_8ino_af141387cf1674081eca9db00c3c869ab}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!resetWebServer@{resetWebServer}}
+\index{resetWebServer@{resetWebServer}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{resetWebServer()}{resetWebServer()}}
+{\footnotesize\ttfamily void reset\+Web\+Server (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+$<$ Callback made from esp-\/link to notify that it has just come out of a reset
+
+$<$ line break
+
+$<$ Pre-\/setup relay to Google Sheets
+
+$<$ If begin returns a negative number the initialization failed
+
+$<$ setup handling request from Grow\+Box.\+html
+
+$<$ setup handling request from Settings.\+html
+
+$<$ setup handling request from Test.\+html
+
+$<$ Grow\+Box tab -\/ Called then the website loads initially
+
+$<$ Grow\+Box tab -\/ Called periodically to refresh website content
+
+$<$ Grow\+Box tab -\/ Called when a button is pressed on the website
+
+$<$ Grow\+Box tab -\/ Called when a field is changed on the website
+
+$<$ \mbox{\hyperlink{structSettings}{Settings}} tab -\/ Called then the website loads initially
+
+$<$ \mbox{\hyperlink{structSettings}{Settings}} tab -\/ Called periodically to refresh website content
+
+$<$ \mbox{\hyperlink{structSettings}{Settings}} tab -\/ Called when a button is pressed on the website
+
+$<$ \mbox{\hyperlink{structSettings}{Settings}} tab -\/ Called when a field is changed on the website
+
+$<$ Test tab -\/ Called then the website loads initially
+
+$<$ Test tab -\/ Called periodically to refresh website content
+
+$<$ Test tab -\/ Called when a button is pressed on the website
+
+$<$ Test tab -\/ Called when a field is changed on the website
+
+Definition at line 163 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_af141387cf1674081eca9db00c3c869ab_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=254pt]{Gbox420__Mega__Main_8ino_af141387cf1674081eca9db00c3c869ab_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a03cb9c97fb260fbbb47438197797a09d}\label{Gbox420__Mega__Main_8ino_a03cb9c97fb260fbbb47438197797a09d}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!runFiveSec@{runFiveSec}}
+\index{runFiveSec@{runFiveSec}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{runFiveSec()}{runFiveSec()}}
+{\footnotesize\ttfamily void run\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 135 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_a03cb9c97fb260fbbb47438197797a09d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{Gbox420__Mega__Main_8ino_a03cb9c97fb260fbbb47438197797a09d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a56c5bdcbeb79cd2246a2c88826850ca1}\label{Gbox420__Mega__Main_8ino_a56c5bdcbeb79cd2246a2c88826850ca1}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!runMinute@{runMinute}}
+\index{runMinute@{runMinute}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{runMinute()}{runMinute()}}
+{\footnotesize\ttfamily void run\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 141 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_a56c5bdcbeb79cd2246a2c88826850ca1_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=226pt]{Gbox420__Mega__Main_8ino_a56c5bdcbeb79cd2246a2c88826850ca1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a6fdedfb173bd96eaa97b31538fada6b6}\label{Gbox420__Mega__Main_8ino_a6fdedfb173bd96eaa97b31538fada6b6}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!runQuarterHour@{runQuarterHour}}
+\index{runQuarterHour@{runQuarterHour}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{runQuarterHour()}{runQuarterHour()}}
+{\footnotesize\ttfamily void run\+Quarter\+Hour (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 148 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_a6fdedfb173bd96eaa97b31538fada6b6_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=252pt]{Gbox420__Mega__Main_8ino_a6fdedfb173bd96eaa97b31538fada6b6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a56b12c2ed10250fdf9fadd1fcc243685}\label{Gbox420__Mega__Main_8ino_a56b12c2ed10250fdf9fadd1fcc243685}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!runSec@{runSec}}
+\index{runSec@{runSec}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{runSec()}{runSec()}}
+{\footnotesize\ttfamily void run\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+$<$ reset watchdog timeout
+
+$<$ Blinks built-\/in led
+
+$<$ Calls the \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a56b12c2ed10250fdf9fadd1fcc243685}{run\+Sec()}} method in Grow\+Box.\+cpp
+
+Definition at line 128 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_a56b12c2ed10250fdf9fadd1fcc243685_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=210pt]{Gbox420__Mega__Main_8ino_a56b12c2ed10250fdf9fadd1fcc243685_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_ae784bf97b35a03486279475151a20abd}\label{Gbox420__Mega__Main_8ino_ae784bf97b35a03486279475151a20abd}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!setFieldCallback@{setFieldCallback}}
+\index{setFieldCallback@{setFieldCallback}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{setFieldCallback()}{setFieldCallback()}}
+{\footnotesize\ttfamily void set\+Field\+Callback (\begin{DoxyParamCaption}\item[{char $\ast$}]{Field }\end{DoxyParamCaption})}
+
+$<$ Called when any field on the website is updated.
+
+Definition at line 250 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_ae784bf97b35a03486279475151a20abd_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_ae784bf97b35a03486279475151a20abd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a4fc01d736fe50cf5b977f755b675f11d}\label{Gbox420__Mega__Main_8ino_a4fc01d736fe50cf5b977f755b675f11d}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!setup@{setup}}
+\index{setup@{setup}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+$<$ put your setup code here, to run once\+:
+
+$<$ 2560mega console output
+
+$<$ E\+SP Wi\+Fi console output
+
+$<$ onboard L\+ED -\/ Heartbeat every second to confirm code is running
+
+$<$ New line
+
+$<$ logs to both Arduino and E\+SP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(\char`\"{}\char`\"{})\+: \href{https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3}{\texttt{ https\+://gist.\+github.\+com/sticilface/e54016485fcccd10950e93ddcd4461a3}}
+
+$<$ Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
+
+$<$ fix watchdog not loading sketch after a reset error on Mega2560
+
+$<$ Callback subscription\+: What to do when Wi\+Fi reconnects
+
+$<$ reset the Web\+Server
+
+$<$ Points to method for updating time from N\+TP server
+
+$<$ Sync time every day
+
+$<$ check every 0.\+5sec, using a larger interval can cause web requests to time out
+
+$<$ Initialize the n\+R\+F24\+L01+ wireless chip for talking to Modules
+
+$<$ Set the speed to slow -\/ has longer range + No need for faster transmission, Other options\+: R\+F24\+\_\+2\+M\+B\+PS, R\+F24\+\_\+1\+M\+B\+PS
+
+$<$ R\+F24\+\_\+\+C\+R\+C\+\_\+8 for 8-\/bit or R\+F24\+\_\+\+C\+R\+C\+\_\+16 for 16-\/bit
+
+$<$ The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
+
+$<$ When sending a wireless package, expect a response confirming the package was received in a custom Acknowledgement package
+
+$<$ Defined in Settings.\+h. How many retries before giving up sending a single package and How long to wait between each retry
+
+$<$ This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the E\+E\+P\+R\+OM as parameters
+
+Definition at line 55 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_a4fc01d736fe50cf5b977f755b675f11d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a1db8d74ea9b2f516fe15fb41da6a22cc}\label{Gbox420__Mega__Main_8ino_a1db8d74ea9b2f516fe15fb41da6a22cc}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!Wireless@{Wireless}}
+\index{Wireless@{Wireless}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{Wireless()}{Wireless()}}
+{\footnotesize\ttfamily R\+F24 Wireless (\begin{DoxyParamCaption}\item[{Wireless\+C\+E\+Pin}]{,  }\item[{Wireless\+C\+S\+N\+Pin}]{ }\end{DoxyParamCaption})}
+
+
+
+Wireless communication with Modules over n\+R\+F24\+L01+. 
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gbox420__Mega__Main_8ino_a1db8d74ea9b2f516fe15fb41da6a22cc_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_aaa89c80a04f1a6b0b5f2e425a9d045db}\label{Gbox420__Mega__Main_8ino_aaa89c80a04f1a6b0b5f2e425a9d045db}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!ArduinoSerial@{ArduinoSerial}}
+\index{ArduinoSerial@{ArduinoSerial}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{ArduinoSerial}{ArduinoSerial}}
+{\footnotesize\ttfamily Hardware\+Serial\& Arduino\+Serial = Serial}
+
+
+
+Reference to the Arduino Serial output. 
+
+Printing serial messages to the Arduino Serial output and the esp-\/link Microcontroller Console (uC Console) 
+
+Definition at line 35 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a292e29d40fbb346a1fa51dfc5ba879c1}\label{Gbox420__Mega__Main_8ino_a292e29d40fbb346a1fa51dfc5ba879c1}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!CurrentTime@{CurrentTime}}
+\index{CurrentTime@{CurrentTime}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{CurrentTime}{CurrentTime}}
+{\footnotesize\ttfamily char Current\+Time\mbox{[}Max\+Word\+Length\mbox{]} = \char`\"{}\char`\"{}}
+
+
+
+Buffer for storing current time in text format. 
+
+
+
+Definition at line 32 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_aa3f2962c251cead6e535226e4da29861}\label{Gbox420__Mega__Main_8ino_aa3f2962c251cead6e535226e4da29861}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!Debug@{Debug}}
+\index{Debug@{Debug}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{Debug}{Debug}}
+{\footnotesize\ttfamily bool$\ast$ Debug}
+
+
+
+True -\/ Turns on extra debug messages on the Serial Output. 
+
+
+
+Definition at line 42 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a1b3c5562c681187ac6d96fc05c82033d}\label{Gbox420__Mega__Main_8ino_a1b3c5562c681187ac6d96fc05c82033d}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!ESPLink@{ESPLink}}
+\index{ESPLink@{ESPLink}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{ESPLink}{ESPLink}}
+{\footnotesize\ttfamily E\+L\+Client\+Rest \mbox{\hyperlink{src_2Modules__Web_2MainModule__Web_8h_ab70330d80a5126dd20de84187814ff9e}{Pushing\+Box\+Rest\+A\+PI}} \& E\+S\+P\+Link}
+
+
+
+E\+S\+P-\/link Web\+Server A\+PI. 
+
+E\+S\+P-\/link R\+E\+ST A\+PI.
+
+E\+S\+P-\/link -\/ Helps getting the current time from the internet using N\+TP. 
+
+Definition at line 38 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a42d46ca1befe52b08a5fa43ecb03e4e5}\label{Gbox420__Mega__Main_8ino_a42d46ca1befe52b08a5fa43ecb03e4e5}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!ESPSerial@{ESPSerial}}
+\index{ESPSerial@{ESPSerial}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{ESPSerial}{ESPSerial}}
+{\footnotesize\ttfamily E\+L\+Client \mbox{\hyperlink{Gbox420__Mega__Main_8ino_a1b3c5562c681187ac6d96fc05c82033d}{E\+S\+P\+Link}} \& E\+S\+P\+Serial = Serial3}
+
+
+
+Reference to the E\+SP Link Serial output. 
+
+E\+S\+P-\/link. Both S\+L\+IP and debug messages are sent to E\+SP over the E\+SP Serial link. 
+
+Definition at line 36 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a53a9d8bb350581bc4ffb215418731b79}\label{Gbox420__Mega__Main_8ino_a53a9d8bb350581bc4ffb215418731b79}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!FiveSecThread@{FiveSecThread}}
+\index{FiveSecThread@{FiveSecThread}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{FiveSecThread}{FiveSecThread}}
+{\footnotesize\ttfamily Thread Five\+Sec\+Thread = Thread()}
+
+
+
+Definition at line 50 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a29e392d833e97bf88f780e9fdf22373f}\label{Gbox420__Mega__Main_8ino_a29e392d833e97bf88f780e9fdf22373f}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!LongMessage@{LongMessage}}
+\index{LongMessage@{LongMessage}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{LongMessage}{LongMessage}}
+{\footnotesize\ttfamily char Long\+Message\mbox{[}Max\+Long\+Text\+Length\mbox{]} = \char`\"{}\char`\"{}}
+
+
+
+Temp storage for assembling long messages (R\+E\+ST A\+PI -\/ Google Sheets reporting) 
+
+$<$ header guard, same as the ifndef/define guard \href{https://en.wikipedia.org/wiki/Pragma_once}{\texttt{ https\+://en.\+wikipedia.\+org/wiki/\+Pragma\+\_\+once}} 
+
+Definition at line 30 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a986f5751f967fdb64a3563042cedbbce}\label{Gbox420__Mega__Main_8ino_a986f5751f967fdb64a3563042cedbbce}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!Main1@{Main1}}
+\index{Main1@{Main1}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{Main1}{Main1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classMainModule}{Main\+Module}}$\ast$ Main1}
+
+
+
+Represents a Grow Box with all components (\mbox{\hyperlink{classLights}{Lights}}, D\+HT sensors, Power sensor..etc) 
+
+
+
+Definition at line 44 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_ae700c60c46e98092b96bb54c369fe891}\label{Gbox420__Mega__Main_8ino_ae700c60c46e98092b96bb54c369fe891}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!Metric@{Metric}}
+\index{Metric@{Metric}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{Metric}{Metric}}
+{\footnotesize\ttfamily bool$\ast$ Metric}
+
+
+
+True -\/ Use metric units, False -\/ Use imperial units. 
+
+
+
+Definition at line 43 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a2ddf18e39c01b0be11987f5625da3a48}\label{Gbox420__Mega__Main_8ino_a2ddf18e39c01b0be11987f5625da3a48}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!MinuteThread@{MinuteThread}}
+\index{MinuteThread@{MinuteThread}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{MinuteThread}{MinuteThread}}
+{\footnotesize\ttfamily Thread Minute\+Thread = Thread()}
+
+
+
+Definition at line 51 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_aa5d20d2c57bfa8a66c233eb21b7cdf6e}\label{Gbox420__Mega__Main_8ino_aa5d20d2c57bfa8a66c233eb21b7cdf6e}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!ModuleSettings@{ModuleSettings}}
+\index{ModuleSettings@{ModuleSettings}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{ModuleSettings}{ModuleSettings}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structSettings}{Settings}}$\ast$ Module\+Settings}
+
+
+
+This object will store the settings loaded from the E\+E\+P\+R\+OM. Persistent between reboots. 
+
+
+
+Definition at line 41 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a1254144f7fb7ab5a6e4610e1ba94a2b9}\label{Gbox420__Mega__Main_8ino_a1254144f7fb7ab5a6e4610e1ba94a2b9}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!OneSecThread@{OneSecThread}}
+\index{OneSecThread@{OneSecThread}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{OneSecThread}{OneSecThread}}
+{\footnotesize\ttfamily Static\+Thread\+Controller$<$ 4 $>$ Thread\+Control \& One\+Sec\+Thread = Thread()}
+
+
+
+Definition at line 49 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a8ed35a56f402972300302210a9c8809a}\label{Gbox420__Mega__Main_8ino_a8ed35a56f402972300302210a9c8809a}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!QuarterHourThread@{QuarterHourThread}}
+\index{QuarterHourThread@{QuarterHourThread}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{QuarterHourThread}{QuarterHourThread}}
+{\footnotesize\ttfamily Thread Quarter\+Hour\+Thread = Thread()}
+
+
+
+Definition at line 52 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+
+\mbox{\Hypertarget{Gbox420__Mega__Main_8ino_a6084d34751a3c3b5585d06dc1c0dd9f6}\label{Gbox420__Mega__Main_8ino_a6084d34751a3c3b5585d06dc1c0dd9f6}} 
+\index{Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}!ShortMessage@{ShortMessage}}
+\index{ShortMessage@{ShortMessage}!Gbox420\_Mega\_Main.ino@{Gbox420\_Mega\_Main.ino}}
+\doxysubsubsection{\texorpdfstring{ShortMessage}{ShortMessage}}
+{\footnotesize\ttfamily char Short\+Message\mbox{[}Max\+Shot\+Text\+Length\mbox{]} = \char`\"{}\char`\"{}}
+
+
+
+Temp storage for assembling short messages (Log entries, Error messages) 
+
+
+
+Definition at line 31 of file Gbox420\+\_\+\+Mega\+\_\+\+Main.\+ino.
+

@@ -32,9 +32,9 @@ static const uint8_t QueueDepth = 8;           ///< Limits the maximum number of
 static const uint8_t RollingAverageDepth = 10; ///< Limits the maximum number of active modules. Memory intense!
 
 ///< Global variables
-extern char LongMessage[MaxLongTextLength];  ///< Temp storage for assembling long messages (REST API - Google Sheets reporting)
-extern char ShortMessage[MaxShotTextLength]; ///< Temp storage for assembling short messages (Log entries, Error messages)
-extern char CurrentTime[MaxWordLength];      ///< Buffer for storing current time in text format
+extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
+extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
+extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
 static const uint8_t WirelessCSNPin = 9;             ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
@@ -51,8 +51,9 @@ typedef struct
   bool Debug = true;  ///< Logs debug messages to serial and web outputs
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
-  struct AeroponicsSettings ///< initialized via Designated initializer https:///< riptutorial.com/c/example/18609/using-designated-initializers
-  {                         ///< Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
+  // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
+  struct AeroponicsSettings ///< Common default settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
+  {
     AeroponicsSettings(bool SprayEnabled = true, int DayInterval = 0, int DayDuration = 0, int NightInterval = 0, int NightDuration = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), DayInterval(DayInterval), DayDuration(DayDuration), NightInterval(NightInterval), NightDuration(NightDuration), MaxPressure(MaxPressure) {}
     bool SprayEnabled; ///< Enable/disable spraying cycle
     int DayInterval;   ///< Spray every X minutes - When the lights are ON
@@ -63,16 +64,16 @@ typedef struct
   };
   struct AeroponicsSettings AeroT1_Common = {.SprayEnabled = true, .DayInterval = 15, .DayDuration = 10, .NightInterval = 30, .NightDuration = 10, .MaxPressure = 7.0};
 
-  struct AeroponicsSettings_TankSpecific
-  { ///< Settings for an Aeroponics setup WITH a pressure tank
+  struct AeroponicsSettings_TankSpecific ///< Aeroponics_Tank default settings
+  {
     AeroponicsSettings_TankSpecific(float MinPressure = 0.0, uint8_t SpraySolenoidPin = 0, bool SpraySolenoidNegativeLogic = false) : MinPressure(MinPressure), SpraySolenoidPin(SpraySolenoidPin), SpraySolenoidNegativeLogic(SpraySolenoidNegativeLogic) {}
-    float MinPressure; ///< Turn on pump below this pressure
-    uint8_t SpraySolenoidPin;
-    bool SpraySolenoidNegativeLogic;
+    float MinPressure;               ///< Turn on pump below this pressure
+    uint8_t SpraySolenoidPin;        ///< Relay controlling DC power to the solenoid
+    bool SpraySolenoidNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
   };
   struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.MinPressure = 5.0, .SpraySolenoidPin = 5, .SpraySolenoidNegativeLogic = true};
 
-  struct PressureSensorSettings
+  struct PressureSensorSettings ///< PressureSensor default settings
   {
     PressureSensorSettings(uint8_t Pin = 0, float Offset = 0.0, float Ratio = 0.0) : Pin(Pin), Offset(Offset), Ratio(Ratio) {}
     uint8_t Pin;  ///< Pressure sensor Pin: Signal(yellow)
@@ -81,7 +82,7 @@ typedef struct
   };
   struct PressureSensorSettings Pres1 = {.Pin = A7, .Offset = 0.57, .Ratio = 2.7};
 
-  struct SoundSettings
+  struct SoundSettings ///< Sound default settings
   {
     SoundSettings(uint8_t Pin = 0) : Pin(Pin) {}
     uint8_t Pin;         ///< Piezo Buzzer red(+) cable
@@ -89,7 +90,7 @@ typedef struct
   };
   struct SoundSettings Sound1 = {.Pin = 2};
 
-  struct WaterPumpSettings
+  struct WaterPumpSettings ///< WaterPump default settings
   {
     WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic) {}
     uint8_t PumpPin;           ///< Pump relay pin
@@ -105,7 +106,7 @@ typedef struct
   };
   struct WaterPumpSettings AeroPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 120, .PrimingTime = 10, .BlowOffTime = 3, .BypassSolenoidPin = 4, .BypassSolenoidNegativeLogic = true};
 
-  struct WeightSensorSettings
+  struct WeightSensorSettings ///< WeightSensor default settings
   {
     WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, long Offset = 0, float Scale = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Offset(Offset), Scale(Scale) {}
     uint8_t DTPin;  ///< Weight sensor DT pin
@@ -117,10 +118,6 @@ typedef struct
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;
-
-
-///< EEPROM related functions - Persistent storage between reboots
-///< Use cautiously, EEPROM has a write limit of 100.000 cycles - Only use these in the setup() function, or when a user initiated change is stored
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits

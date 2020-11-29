@@ -1,0 +1,52 @@
+<map id="toText" name="toText">
+<area shape="rect" id="node1" title=" " alt="" coords="869,983,932,1010"/>
+<area shape="rect" id="node2" href="$classLightSensor.html#a73dea4504d64c13c43a5c68bee9aef27" title="Light reading at dark,0,10,20...100%." alt="" coords="593,5,791,47"/>
+<area shape="rect" id="node3" href="$classLightSensor.html#a70fd8f7252cbc9abb2ea501ccfaf08fe" title=" " alt="" coords="305,89,490,115"/>
+<area shape="rect" id="node6" href="$classAeroponics.html#a589e19eb14d132d53bb6beba4cf56394" title=" " alt="" coords="579,426,805,453"/>
+<area shape="rect" id="node7" href="$classDistanceSensor.html#a68d9e3890f28d425f0aeda624c3db925" title=" " alt="" coords="574,477,810,503"/>
+<area shape="rect" id="node10" href="$classRollingAverage.html#aab001a981060af0948bd8b46c05c8e97" title=" " alt="" coords="587,274,797,301"/>
+<area shape="rect" id="node14" href="$classModuleSkeleton.html#a4b13bbc3ce0282781e36f450bd4f189a" title=" " alt="" coords="311,161,484,187"/>
+<area shape="rect" id="node15" href="$classDHTSensor.html#a9770b8c3dddf36a7ebbd39f6135c2bb8" title=" " alt="" coords="587,578,797,605"/>
+<area shape="rect" id="node19" href="$classRollingAverage.html#a7b7015bd5a39e953983f73330b3d8c87" title=" " alt="" coords="595,223,789,250"/>
+<area shape="rect" id="node20" href="$classWaterLevelSensor.html#a8093a4963a9ac42e5f7c923db6758c1f" title=" " alt="" coords="577,629,807,655"/>
+<area shape="rect" id="node21" href="$classAeroponics.html#acba0190129d145cb942e0907711da256" title=" " alt="" coords="575,679,809,706"/>
+<area shape="rect" id="node22" href="$classPowerSensorV3.html#a0799057ba96ffc74b372b88d94874d33" title=" " alt="" coords="563,730,821,757"/>
+<area shape="rect" id="node23" href="$classAeroponics.html#a2a79417841d22601d6f542c98f638846" title=" " alt="" coords="571,781,813,807"/>
+<area shape="rect" id="node24" href="$classHempyBucket.html#a180c7a58aaef7b7a6e3429907bd4c271" title=" " alt="" coords="569,831,815,858"/>
+<area shape="rect" id="node25" href="$classLights.html#a086687f7b443a0cc4434650636f02b27" title=" " alt="" coords="617,882,767,909"/>
+<area shape="rect" id="node26" href="$classLights.html#a713a28eba8f6fd8fb259bac4175ece26" title=" " alt="" coords="318,958,477,985"/>
+<area shape="rect" id="node27" href="$classHempyBucket.html#a5b5138b909891faf8596fe8da27f47c0" title=" " alt="" coords="571,1034,813,1061"/>
+<area shape="rect" id="node28" href="$classDHTSensor.html#aa8f673e089408d2a435e0cd5631af44f" title=" " alt="" coords="599,527,785,554"/>
+<area shape="rect" id="node29" href="$classWaterTempSensor.html#adf0bb887371405a1136ebe1578e0d0e4" title=" " alt="" coords="577,1085,807,1111"/>
+<area shape="rect" id="node30" href="$classLights.html#a8899969e0175e8242f9139c17585bcd0" title=" " alt="" coords="301,1161,493,1187"/>
+<area shape="rect" id="node31" href="$classWeightSensor.html#a509480a184e7fdf11a30546683faf6c2" title=" " alt="" coords="586,1237,798,1263"/>
+<area shape="rect" id="node32" href="$classHempyModule__Web.html#a033e200e89351a69f29e6d1bb763ba9e" title=" " alt="" coords="593,1287,791,1314"/>
+<area shape="rect" id="node33" href="$classAeroModule__Web.html#aaecd85ed0e886d9798bfb6e69a827ecd" title=" " alt="" coords="306,363,489,390"/>
+<area shape="rect" id="node34" href="$classReservoirModule__Web.html#a9fff8b64d0097491d7ee36d4cf03ebd6" title=" " alt="" coords="609,1339,775,1380"/>
+<area shape="rect" id="node35" href="$classAirPump__Web.html#ab9a92ab30a953dd2b2f7d087a98321fd" title="Not used." alt="" coords="589,1405,795,1431"/>
+<area shape="rect" id="node36" href="$classSound__Web.html#afadc039648d4ddc47ff5d13c29e7bf94" title=" " alt="" coords="597,1455,787,1482"/>
+<area shape="rect" id="node37" href="$classHempyModule__Web.html#a9da2815609b2ad404e5eef502258b40c" title=" " alt="" coords="569,1506,815,1533"/>
+<area shape="rect" id="node38" href="$classAeroModule__Web.html#a0ab557dd0c6cda76cc44d89d42a57075" title=" " alt="" coords="578,1557,806,1583"/>
+<area shape="rect" id="node39" href="$classReservoirModule__Web.html#a9afabb590e75518830e5fa8a9f343b1c" title=" " alt="" coords="609,1608,775,1649"/>
+<area shape="rect" id="node40" href="$classMainModule.html#a34d999975eca6330686595643771d57f" title=" " alt="" coords="595,1674,789,1701"/>
+<area shape="rect" id="node41" href="$classDEVModule__Web.html#a1ed4c4cfab9073195b742bdbe5a94619" title=" " alt="" coords="579,1725,805,1751"/>
+<area shape="rect" id="node42" href="$Gbox420__Nano__Reservoir_2src_2Helpers_8h.html#a901734aff517f29931a27fd8568d8e9e" title=" " alt="" coords="603,1135,781,1162"/>
+<area shape="rect" id="node43" href="$Gbox420__Nano__Reservoir_2src_2Helpers_8h.html#a0c97bfe0748519233b3a087775ba6521" title=" " alt="" coords="617,1775,767,1802"/>
+<area shape="rect" id="node44" href="$classReservoirModule__Web.html#a435bceed806f4615668ce99630648c93" title=" " alt="" coords="310,1793,485,1835"/>
+<area shape="rect" id="node45" href="$Gbox420__Nano__Reservoir_2src_2Helpers_8h.html#a4b12c9e40cb4dac302d7e03fd73e709b" title=" " alt="" coords="640,933,744,959"/>
+<area shape="rect" id="node46" href="$src_2Helpers_8cpp.html#a01443677fbec004bc6c0fe5c46f1cbe7" title=" " alt="" coords="611,1877,773,1903"/>
+<area shape="rect" id="node47" href="$Gbox420__Nano__Reservoir_2src_2Helpers_8h.html#a43176c6813f3b76da4af8e358665b707" title=" " alt="" coords="622,325,762,351"/>
+<area shape="rect" id="node48" href="$Gbox420__Nano__Reservoir_2src_2Helpers_8h.html#a0fa70bd2116a004bbaca24c9bd23808c" title=" " alt="" coords="637,122,747,149"/>
+<area shape="rect" id="node49" href="$classWeightSensor__Web.html#aa47b67e39e6cbd1b543e482c94160a66" title=" " alt="" coords="589,1928,795,1969"/>
+<area shape="rect" id="node50" href="$classHempyBucket__Web.html#adcbe7b1d4b88e839477ca89700113a48" title=" " alt="" coords="589,1993,795,2035"/>
+<area shape="rect" id="node4" href="$classLightSensor__Web.html#ae0f270aee80caed894f09df2bca85ef8" title="Not used." alt="" coords="5,59,232,86"/>
+<area shape="rect" id="node5" href="$classLightSensor__Web.html#a6afe75f4f6cec3dc5f44454e23da1f8a" title=" " alt="" coords="23,111,215,152"/>
+<area shape="rect" id="node8" href="$classDistanceSensor.html#a06e3435d594256c9db2cdaf40a4d1486" title=" " alt="" coords="312,414,483,441"/>
+<area shape="rect" id="node9" href="$classDistanceSensor__Web.html#a0bde479d65f8e2da0dfcf92241451ebf" title=" " alt="" coords="310,465,485,507"/>
+<area shape="rect" id="node11" href="$classPHSensor.html#afa1a5158732cd57ffb41ae089bf8850f" title=" " alt="" coords="318,211,477,238"/>
+<area shape="rect" id="node12" href="$classPressureSensor.html#aa3eccb7d69ba28ff2f5c4688bf13f7e8" title=" " alt="" coords="280,262,515,289"/>
+<area shape="rect" id="node13" href="$classPHSensor.html#af9730aece2d3bcb71ac9d4f1e6f96f1e" title=" " alt="" coords="332,313,463,339"/>
+<area shape="rect" id="node16" href="$classDHTSensor.html#a2ef11882c3401c097b7a08e4b35eb103" title=" " alt="" coords="327,531,468,558"/>
+<area shape="rect" id="node17" href="$classDHTSensor__Web.html#a68071e155b60a81ff19df8ae1bd36893" title="Not used." alt="" coords="286,582,509,609"/>
+<area shape="rect" id="node18" href="$classDHTSensor__Web.html#ad02a0f5edd3f948ae81f9ebe6032d443" title=" " alt="" coords="285,633,510,675"/>
+</map>

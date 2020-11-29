@@ -33,9 +33,9 @@ static const uint8_t QueueDepth = 32;           ///< Limits the maximum number o
 static const uint8_t RollingAverageDepth = 10;  ///< Smooth out sensor readings by calculating the average of the last X results. Memory intense!
 
 ///< Global variables
-extern char LongMessage[MaxLongTextLength];  ///< Temp storage for assembling long messages (REST API - Google Sheets reporting)
-extern char ShortMessage[MaxShotTextLength]; ///< Temp storage for assembling short messages (Log entries, Error messages)
-extern char CurrentTime[MaxWordLength];      ///< Buffer for storing current time in text format
+extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
+extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
+extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
 static const uint8_t WirelessCSNPin = 49;           ///< nRF24l01+ wireless transmitter CSN pin
@@ -54,7 +54,8 @@ typedef struct
   bool Metric = true;                                              ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
 
-  struct AeroModuleSettings ///< initialized via Designated initializer https:///< riptutorial.com/c/example/18609/using-designated-initializers
+  // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
+  struct AeroModuleSettings ///< AeroModule default settings
   {
     AeroModuleSettings(bool PressureTankPresent = false, uint16_t DayInterval = 0, uint16_t DayDuration = 0, uint16_t NightInterval = 0, uint16_t NightDuration = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, float MaxPressure = 0.0, float MinPressure = 0.0) : PressureTankPresent(PressureTankPresent), DayInterval(DayInterval), DayDuration(DayDuration), NightInterval(NightInterval), NightDuration(NightDuration), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), MaxPressure(MaxPressure), MinPressure(MinPressure) {}
     bool PressureTankPresent; ///< Is there a pressure tank connected or not
@@ -70,7 +71,7 @@ typedef struct
   };
   struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .DayInterval = 15, .DayDuration = 10, .NightInterval = 30, .NightDuration = 8, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
 
-  struct AirPumpSettings
+  struct AirPumpSettings ///< AirPump default settings
   {
     AirPumpSettings(uint8_t Pin = 0, bool State = false) : Pin(Pin), State(State) {}
     uint8_t Pin; ///< Relay pin controlling AC power to the air pump
@@ -78,7 +79,7 @@ typedef struct
   };
   struct AirPumpSettings APump1 = {.Pin = 23, .State = true};
 
-  struct DHTSensorSettings
+  struct DHTSensorSettings ///< DHTSensor default settings
   {
     DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}
     uint8_t Pin;  ///< DAT pin of the DHT sensor
@@ -86,7 +87,7 @@ typedef struct
   };
   struct DHTSensorSettings DHT1 = {.Pin = 3, .Type = 22};
 
-  struct FanSettings
+  struct FanSettings ///< Fan default settings
   {
     FanSettings(uint8_t OnOffPin = 0, uint8_t SpeedPin = 0) : OnOffPin(OnOffPin), SpeedPin(SpeedPin) {}
     uint8_t OnOffPin;       ///< Relay pin controlling AC power
@@ -97,7 +98,7 @@ typedef struct
   struct FanSettings IFan = {.OnOffPin = 25, .SpeedPin = 26};
   struct FanSettings EFan = {.OnOffPin = 27, .SpeedPin = 28};
 
-  struct MainModuleSettings
+  struct MainModuleSettings ///< MainModule default settings
   {
     MainModuleSettings(bool ReportToGoogleSheets, uint16_t SheetsReportingFrequency) : ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency) {}
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
@@ -106,7 +107,7 @@ typedef struct
   };
   struct MainModuleSettings Main1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30};
 
-  struct HempyModuleSettings
+  struct HempyModuleSettings ///< Hempy default settings
   {
     HempyModuleSettings(bool WeightBasedWatering_B1 = false, float StartWeight_B1 = 0.0, float StopWeight_B1 = 0.0, bool TimerBasedWatering_B1 = false, uint16_t WateringInterval_B1 = 0, uint16_t WateringDuration_B1 = 0, uint8_t PumpSpeed_B1 = 0, uint16_t TimeOutPump_B1 = 0, bool WeightBasedWatering_B2 = false, float StartWeight_B2 = 0.0, float StopWeight_B2 = 0.0, bool TimerBasedWatering_B2 = false, uint16_t WateringInterval_B2 = 0, uint16_t WateringDuration_B2 = 0, uint8_t PumpSpeed_B2 = 0, uint16_t TimeOutPump_B2 = 0) : WeightBasedWatering_B1(WeightBasedWatering_B1), StartWeight_B1(StartWeight_B1), StopWeight_B1(StopWeight_B1), TimerBasedWatering_B1(TimerBasedWatering_B1), WateringInterval_B1(WateringInterval_B1), WateringDuration_B1(WateringDuration_B1), PumpSpeed_B1(PumpSpeed_B1), TimeOutPump_B1(TimeOutPump_B1), WeightBasedWatering_B2(WeightBasedWatering_B2), StartWeight_B2(StartWeight_B2), StopWeight_B2(StopWeight_B2), TimerBasedWatering_B2(TimerBasedWatering_B2), WateringInterval_B2(WateringInterval_B2), WateringDuration_B2(WateringDuration_B2), PumpSpeed_B2(PumpSpeed_B2), TimeOutPump_B2(TimeOutPump_B2) {}
     bool WeightBasedWatering_B1;  ///< Enable/Disable weight based watering
@@ -128,7 +129,7 @@ typedef struct
   };
   struct HempyModuleSettings HempyModule1 = {.WeightBasedWatering_B1 = true, .StartWeight_B1 = 13.0, .StopWeight_B1 = 18.0, .TimerBasedWatering_B1 = true, .WateringInterval_B1 = 1440, .WateringDuration_B1 = 30, .PumpSpeed_B1 = 100, .TimeOutPump_B1 = 420, .WeightBasedWatering_B2 = true, .StartWeight_B2 = 13.0, .StopWeight_B2 = 18.0, .TimerBasedWatering_B2 = true, .WateringInterval_B2 = 1440, .WateringDuration_B2 = 30, .PumpSpeed_B2 = 100, .TimeOutPump_B2 = 420};
 
-  struct LightSensorSettings
+  struct LightSensorSettings ///< LightSensor default settings
   {
     LightSensorSettings(uint8_t DigitalPin = 0, uint8_t AnalogPin = 0) : DigitalPin(DigitalPin), AnalogPin(AnalogPin) {}
     uint8_t DigitalPin; ///< Light sensor D0 pin
@@ -136,7 +137,7 @@ typedef struct
   };
   struct LightSensorSettings LtSen1 = {.DigitalPin = 4, .AnalogPin = A0};
 
-  struct LightsSettings
+  struct LightsSettings ///< Lights default settings
   {
     LightsSettings(uint8_t RelayPin = 0, uint8_t DimmingPin = 0, uint8_t DimmingLimit = 0, uint8_t DimmingDuration = 0, uint8_t Brightness = 0, bool TimerEnabled = false, uint8_t OnHour = 0, uint8_t OnMinute = 0, uint8_t OffHour = 0, uint8_t OffMinute = 0, bool FadingEnabled = false, uint16_t FadingInterval = 0, uint8_t FadingIncrements = 0) : RelayPin(RelayPin), DimmingPin(DimmingPin), DimmingLimit(DimmingLimit), DimmingDuration(DimmingDuration), Brightness(Brightness), TimerEnabled(TimerEnabled), OnHour(OnHour), OnMinute(OnMinute), OffHour(OffHour), OffMinute(OffMinute), FadingEnabled(FadingEnabled), FadingInterval(FadingInterval), FadingIncrements(FadingIncrements) {}
     uint8_t RelayPin;         ///< Relay port controlling AC power to LED driver
@@ -157,13 +158,13 @@ typedef struct
   struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 16, .DimmingDuration = 10, .Brightness = 75, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = true, .FadingInterval = 1, .FadingIncrements = 1}; ///< Creating a LightSettings instance, passing in the unique parameters
   struct LightsSettings Lt2 = {.RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6, .DimmingDuration = 10, .Brightness = 55, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = true, .FadingInterval = 1, .FadingIncrements = 1};  ///< Creating a LightSettings instance, passing in the unique parameters
 
-  struct ReservoirModuleSettings
+  struct ReservoirModuleSettings  ///< ReservoirModule default settings
   {
     //ReservoirModuleSettings() :  {}
   };
   struct ReservoirModuleSettings ReservoirMod1 = {};
 
-  struct SoundSettings
+  struct SoundSettings ///< Sound default settings
   {
     SoundSettings(uint8_t Pin = 0) : Pin(Pin) {}
     uint8_t Pin;         ///< Piezo Buzzer red(+) cable

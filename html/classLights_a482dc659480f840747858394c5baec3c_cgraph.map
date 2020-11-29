@@ -1,0 +1,10 @@
+<map id="Lights::dimLightsOnOff" name="Lights::dimLightsOnOff">
+<area shape="rect" id="node1" title="Temporary dim the lights while working on the plants." alt="" coords="5,107,176,133"/>
+<area shape="rect" id="node2" href="$classModule.html#afacdeaf339646bee722be54aab7155be" title=" " alt="" coords="245,5,384,32"/>
+<area shape="rect" id="node3" href="$classLights.html#adf24f09eb5273aad8eea4839f052c95e" title=" " alt="" coords="231,56,398,83"/>
+<area shape="rect" id="node5" href="$classLights.html#a20392486d66032fd530046cd1f33aaa0" title=" " alt="" coords="453,107,612,133"/>
+<area shape="rect" id="node6" href="$classModule.html#a173624381666c28f9d33e809f067711c" title=" " alt="" coords="224,157,405,184"/>
+<area shape="rect" id="node7" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="236,208,393,235"/>
+<area shape="rect" id="node8" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="237,259,393,285"/>
+<area shape="rect" id="node4" href="$classLights.html#a59a952f3c895a78f9e382401a9b9701d" title=" " alt="" coords="461,56,605,83"/>
+</map>

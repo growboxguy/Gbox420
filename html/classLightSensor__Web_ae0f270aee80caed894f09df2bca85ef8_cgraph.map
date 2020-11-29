@@ -1,0 +1,8 @@
+<map id="LightSensor_Web::reportToJSON" name="LightSensor_Web::reportToJSON">
+<area shape="rect" id="node1" title="Not used." alt="" coords="5,81,232,108"/>
+<area shape="rect" id="node2" href="$classLightSensor.html#a70fd8f7252cbc9abb2ea501ccfaf08fe" title=" " alt="" coords="292,31,477,57"/>
+<area shape="rect" id="node5" href="$classLightSensor.html#a91ff9a682a84e1b265da97140bb467d7" title="returns the current light sensor reading" alt="" coords="281,81,488,108"/>
+<area shape="rect" id="node6" href="$classCommon__Web.html#a6c2e0946d266ef2a3afe17b9869381cb" title=" " alt="" coords="280,132,489,159"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title=" " alt="" coords="561,5,624,32"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a0fa70bd2116a004bbaca24c9bd23808c" title=" " alt="" coords="537,56,648,83"/>
+</map>

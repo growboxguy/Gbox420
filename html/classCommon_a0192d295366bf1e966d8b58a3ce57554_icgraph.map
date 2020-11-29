@@ -1,0 +1,27 @@
+<map id="Common::isThisMyComponent" name="Common::isThisMyComponent">
+<area shape="rect" id="node1" title="When it return true the component belongs to this object." alt="" coords="281,765,504,791"/>
+<area shape="rect" id="node2" href="$classAirPump__Web.html#a36bc5a27ff544e292c8fbf6f24289053" title=" " alt="" coords="15,5,223,47"/>
+<area shape="rect" id="node3" href="$classFan__Web.html#a2741ea624a781febbd4f3e2bf82c89ed" title=" " alt="" coords="32,71,207,112"/>
+<area shape="rect" id="node4" href="$classPressureSensor__Web.html#ad4f31802ab30bf6f21157a8504fcb023" title=" " alt="" coords="35,136,203,177"/>
+<area shape="rect" id="node5" href="$classPHSensor__Web.html#a54944c4adb45f117e3e209f903cc5bec" title=" " alt="" coords="12,201,227,243"/>
+<area shape="rect" id="node6" href="$classAeroponics__NoTank__Web.html#a33b388e724f870482f90106fdacaa3b4" title=" " alt="" coords="27,267,211,308"/>
+<area shape="rect" id="node7" href="$classAeroponics__Tank__Web.html#a2dea9353cb1709b51f496d8d0caa928e" title=" " alt="" coords="35,332,203,373"/>
+<area shape="rect" id="node8" href="$classWeightSensor__Web.html#a94a8c1c5cbc9fd4563076e1f9ab18ced" title=" " alt="" coords="17,397,222,439"/>
+<area shape="rect" id="node9" href="$classHempyBucket__Web.html#a8fcff8b2cea0c6dd9382b28dfe222a2a" title=" " alt="" coords="16,463,223,504"/>
+<area shape="rect" id="node10" href="$classLightSensor__Web.html#abedb4cd4454f322ebbd7c3753bcd2a73" title=" " alt="" coords="23,528,215,569"/>
+<area shape="rect" id="node11" href="$classLights__Web.html#a2437d22a7e8b027c4d08d209675f5db9" title=" " alt="" coords="23,593,215,635"/>
+<area shape="rect" id="node12" href="$classDistanceSensor__Web.html#a4892480eeb98df4908944358e7f5f437" title="Not used." alt="" coords="35,659,203,700"/>
+<area shape="rect" id="node13" href="$classSound__Web.html#ab55e679fab59cd3fae2b7900d31a0893" title=" " alt="" coords="23,724,216,765"/>
+<area shape="rect" id="node14" href="$classModuleSkeleton__Web.html#a2946ad7edbf3aa43aa462a0c5350cb84" title=" " alt="" coords="35,789,203,831"/>
+<area shape="rect" id="node15" href="$classMainModule.html#a156833b0534382e7951b80d80b5457f7" title=" " alt="" coords="20,855,219,896"/>
+<area shape="rect" id="node16" href="$classDEVModule__Web.html#acefbbfe99fe3da658ff228d9777535f1" title=" " alt="" coords="5,920,233,961"/>
+<area shape="rect" id="node17" href="$classPressureSensor__Web.html#a0529277efb48cb5def4d6271d45a508f" title=" " alt="" coords="41,985,198,1027"/>
+<area shape="rect" id="node18" href="$classWeightSensor__Web.html#a450714f6d3c278a2f7ee97b10ec503c6" title=" " alt="" coords="17,1051,222,1092"/>
+<area shape="rect" id="node19" href="$classAeroponics__Tank__Web.html#a5693a6f3eacc0a155e5639607368e0ea" title=" " alt="" coords="36,1116,203,1157"/>
+<area shape="rect" id="node20" href="$classPHSensor__Web.html#a7e78a34b02adb20af3767c0db29a2dea" title=" " alt="" coords="12,1181,227,1223"/>
+<area shape="rect" id="node21" href="$classHempyBucket__Web.html#acbb8aea1a3965bfcc57d2c2c4a9807c7" title=" " alt="" coords="16,1247,223,1288"/>
+<area shape="rect" id="node22" href="$classModuleSkeleton__Web.html#aeff57d699bdcbab91538f8073cdbf9b0" title=" " alt="" coords="39,1312,200,1353"/>
+<area shape="rect" id="node23" href="$classLights__Web.html#a8e4f0fc6e2cba4303c306910b9c9ac86" title=" " alt="" coords="23,1377,215,1419"/>
+<area shape="rect" id="node24" href="$classMainModule.html#ab995f49ae07a230180a9f113b60cd82d" title=" " alt="" coords="20,1443,219,1484"/>
+<area shape="rect" id="node25" href="$classDEVModule__Web.html#a78b4dea7996203c2435bc1c5b1fbb0b4" title=" " alt="" coords="5,1508,233,1549"/>
+</map>

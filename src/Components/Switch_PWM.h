@@ -1,7 +1,6 @@
 #pragma once
 
-///< Switch_PWM class: Represents an adjustable electronic switch based on a transistor
-///< Warning: Mechanical relays cannot be used with PWM!!! Only Solid state relays.
+///< PWM controllable electronic switch like a MOSFET transistor
 
 #include "Switch.h"
 

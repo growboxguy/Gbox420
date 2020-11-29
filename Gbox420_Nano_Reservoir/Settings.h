@@ -32,9 +32,9 @@ static const uint8_t QueueDepth = 8;           ///< Memory intense!
 static const uint8_t RollingAverageDepth = 10; ///< Memory intense!
 
 ///< Global variables
-extern char LongMessage[MaxLongTextLength];  ///< Temp storage for assembling long messages (REST API - Google Sheets reporting)
-extern char ShortMessage[MaxShotTextLength]; ///< Temp storage for assembling short messages (Log entries, Error messages)
-extern char CurrentTime[MaxWordLength];      ///< Buffer for storing current time in text format
+extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
+extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
+extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
 static const uint8_t WirelessCSNPin = 9;            ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
@@ -51,15 +51,16 @@ typedef struct
   bool Debug = true;  ///< Logs debug messages to serial and web outputs
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
-  struct DHTSensorSettings
-  { ///< initialized via Designated initializer https:///< riptutorial.com/c/example/18609/using-designated-initializers
+  // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
+  struct DHTSensorSettings ///< DHTSensor default settings
+  { 
     DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}
     uint8_t Pin;  ///< DAT pin of the DHT sensor
     uint8_t Type; ///< Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
   };
   struct DHTSensorSettings DHT1 = {.Pin = 3, .Type = 22};
 
-  struct PHSensorSettings
+  struct PHSensorSettings ///< PHSensor default settings
   {
     PHSensorSettings(uint8_t Pin = 0, float Slope = 0.0, float Intercept = 0.0) : Pin(Pin), Slope(Slope), Intercept(Intercept) {}
     uint8_t Pin; ///< pH sensor Po pin
@@ -68,13 +69,13 @@ typedef struct
   };
   struct PHSensorSettings PHSen1 = {.Pin = A0, .Slope = -0.031199, .Intercept = 22.557617}; ///< Update this to your own PH meter calibration values: https://sites.google.com/site/growboxguy/arduino/reservoir-module?authuser=0#h.p_PGMrIJ9iRr0c
 
-  struct ReservoirModuleSettings
+  struct ReservoirModuleSettings ///< ReservoirModule default settings
   {
     //ReservoirModuleSettings() :  {}
   };
   struct ReservoirModuleSettings ReservoirMod1 = {}; ///< Default settings for the Hempy Module
 
-  struct SoundSettings
+  struct SoundSettings ///< Sound default settings
   {
     SoundSettings(uint8_t Pin = 0) : Pin(Pin) {}
     uint8_t Pin;         ///< Piezo Buzzer red(+) cable
@@ -82,14 +83,14 @@ typedef struct
   };
   struct SoundSettings Sound1 = {.Pin = 2};
 
-  struct WaterTempSensorSettings
+  struct WaterTempSensorSettings ///< WaterTempSensor default settings
   {
     WaterTempSensorSettings(uint8_t Pin = 0) : Pin(Pin) {}
     uint8_t Pin; ///< DS18B20 sensor yellow signal wire
   };
   struct WaterTempSensorSettings WTemp1 = {.Pin = 4}; ///< Data(yellow) - DS18B20 waterproof temp sensor
 
-  struct WeightSensorSettings
+  struct WeightSensorSettings ///< WeightSensor default settings
   {
     WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, long Offset = 0, float Scale = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Offset(Offset), Scale(Scale) {}
     uint8_t DTPin;  ///< Weight sensor DT pin
@@ -101,10 +102,6 @@ typedef struct
 
   uint8_t CompatibilityVersion = Version; ///< Version should always be the last value stored in the struct
 } Settings;
-
-
-///< EEPROM related functions - Persistent storage between reboots
-///< Use cautiously, EEPROM has a write limit of 100.000 cycles - Only use these in the setup() function, or when a user initiated change is stored
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits

@@ -1,0 +1,6 @@
+<map id="WaterPump::getOnState" name="WaterPump::getOnState">
+<area shape="rect" id="node1" title="Pump ON(1)/OFF(0)" alt="" coords="485,42,664,69"/>
+<area shape="rect" id="node2" href="$classHempyBucket.html#a11c26088512aba8c5230f0126c4ea5e1" title="Watering based on weight." alt="" coords="220,5,437,47"/>
+<area shape="rect" id="node4" href="$classHempyBucket.html#a9218a31e84cebe1630ab8d22c41cc48d" title=" " alt="" coords="230,71,427,98"/>
+<area shape="rect" id="node3" href="$classHempyBucket.html#ad9a11119072abf39b332556936938afa" title=" " alt="" coords="5,5,172,47"/>
+</map>

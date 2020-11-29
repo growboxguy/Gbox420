@@ -1,0 +1,8 @@
+<map id="WeightSensor::readWeight" name="WeightSensor::readWeight">
+<area shape="rect" id="node1" title=" " alt="" coords="516,78,709,105"/>
+<area shape="rect" id="node2" href="$classHempyBucket.html#a320d8c126d30abb113f45f8c4bbcef47" title="Stops the pump when target weight or watering duration is reached." alt="" coords="251,5,468,47"/>
+<area shape="rect" id="node4" href="$classHempyBucket.html#a11c26088512aba8c5230f0126c4ea5e1" title="Watering based on weight." alt="" coords="251,71,468,112"/>
+<area shape="rect" id="node6" href="$classWeightSensor.html#a415bb0273c313b6cf2b3f30ac9b1e306" title=" " alt="" coords="277,136,442,177"/>
+<area shape="rect" id="node3" href="$classHempyBucket.html#a9218a31e84cebe1630ab8d22c41cc48d" title=" " alt="" coords="5,13,203,39"/>
+<area shape="rect" id="node5" href="$classHempyBucket.html#ad9a11119072abf39b332556936938afa" title=" " alt="" coords="21,71,187,112"/>
+</map>

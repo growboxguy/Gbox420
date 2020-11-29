@@ -1,6 +1,6 @@
 #pragma once
 
-///< Switch class: Represents and electronic switch like a Relay or MOSFET
+///< Represents and electronic switch like a Relay or MOSFET
 
 #include "420Common.h"
 #include "420Module.h"

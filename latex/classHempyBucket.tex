@@ -1,0 +1,871 @@
+\hypertarget{classHempyBucket}{}\doxysection{Hempy\+Bucket Class Reference}
+\label{classHempyBucket}\index{HempyBucket@{HempyBucket}}
+
+
+{\ttfamily \#include $<$Hempy\+Bucket.\+h$>$}
+
+
+
+Inheritance diagram for Hempy\+Bucket\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=191pt]{classHempyBucket__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Hempy\+Bucket\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classHempyBucket_a1accb17828a9b43a0413bc51308a9ee9}{Hempy\+Bucket}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\mbox{\hyperlink{classCommon_aeea91a726dbe988e515057b32ba0726f}{Name}}, \mbox{\hyperlink{classModule}{Module}} $\ast$\mbox{\hyperlink{classHempyBucket_a1e877c2996cef736d7d49438d117a7b5}{Parent}}, \mbox{\hyperlink{structSettings_1_1HempyBucketSettings}{Settings\+::\+Hempy\+Bucket\+Settings}} $\ast$Default\+Settings, \mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$\mbox{\hyperlink{classHempyBucket_a50a1977d2c8c7b64517fdddaa446d540}{Bucket\+Weight\+Sensor}}, \mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$\mbox{\hyperlink{classHempyBucket_aafaa19d1506d3620af847415b0ecd9d3}{Waste\+Reservoir\+Weight\+Sensor}}, \mbox{\hyperlink{classWaterPump}{Water\+Pump}} $\ast$\mbox{\hyperlink{classHempyBucket_ac60eac4ddf199eb020fbd5b85b5fb2ab}{Bucket\+Pump}})
+\item 
+void \mbox{\hyperlink{classHempyBucket_a9218a31e84cebe1630ab8d22c41cc48d}{refresh\+\_\+\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classHempyBucket_ad9a11119072abf39b332556936938afa}{refresh\+\_\+\+Five\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classHempyBucket_acfee435c7b1c62a03ad067b92a676102}{report}} ()
+\item 
+void \mbox{\hyperlink{classHempyBucket_a21da05d20abb47a5230db715fbe6ae2a}{water\+Now}} (bool User\+Request=false)
+\begin{DoxyCompactList}\small\item\em Turn on water pump, run until Stop\+Weight is reached. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHempyBucket_a7cfa45290515a4d1dcfecf2049387b9b}{check\+Relay}} ()
+\begin{DoxyCompactList}\small\item\em Sets the relay controlling the pump. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHempyBucket_a11c26088512aba8c5230f0126c4ea5e1}{check\+Watering\+Weight}} ()
+\begin{DoxyCompactList}\small\item\em Watering based on weight. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHempyBucket_a65d4aa72cbe7ea2dbecd008a3a59bc9e}{check\+Watering\+Timer}} ()
+\begin{DoxyCompactList}\small\item\em Watering based on timer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHempyBucket_a320d8c126d30abb113f45f8c4bbcef47}{check\+Watering\+Finished}} ()
+\begin{DoxyCompactList}\small\item\em Stops the pump when target weight or watering duration is reached. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHempyBucket_a3de27d18b65ceb8432ca6b6cf5703f42}{set\+Weight\+Based\+Watering}} (bool State)
+\item 
+void \mbox{\hyperlink{classHempyBucket_af4c3814f1f9b37509c8ab6ea783df11f}{set\+Start\+Weight}} (float Weight)
+\item 
+void \mbox{\hyperlink{classHempyBucket_a9bbca063669c259010c94c22042c8315}{set\+Stop\+Weight}} (float Weight)
+\item 
+void \mbox{\hyperlink{classHempyBucket_a90384d26cc83b6bb4206189581203bfe}{set\+Timer\+Based\+Watering}} (bool State)
+\item 
+void \mbox{\hyperlink{classHempyBucket_a27385ed320e608e36e71b75f8c81ac4d}{set\+Watering\+Interval}} (uint16\+\_\+t Minutes)
+\item 
+void \mbox{\hyperlink{classHempyBucket_afe7c6467a6141f6e10f48970c6db9e9a}{set\+Watering\+Duration}} (uint16\+\_\+t Seconds)
+\item 
+void \mbox{\hyperlink{classHempyBucket_af17814ae16f2f65f0f9bb580baa55fdd}{start\+Watering}} ()
+\item 
+float \mbox{\hyperlink{classHempyBucket_afc9ca8e831da59b3cb0ceba3961de1ed}{get\+Stop\+Weight}} ()
+\item 
+float \mbox{\hyperlink{classHempyBucket_a05a0ed7a5af269ba380cc7668bf9a07c}{get\+Start\+Weight}} ()
+\item 
+char $\ast$ \mbox{\hyperlink{classHempyBucket_a5b5138b909891faf8596fe8da27f47c0}{get\+Stop\+Weight\+Text}} (bool Include\+Units)
+\item 
+char $\ast$ \mbox{\hyperlink{classHempyBucket_a180c7a58aaef7b7a6e3429907bd4c271}{get\+Start\+Weight\+Text}} (bool Include\+Units)
+\item 
+\mbox{\hyperlink{classHempyBucket_a1accb17828a9b43a0413bc51308a9ee9}{Hempy\+Bucket}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\mbox{\hyperlink{classCommon_aeea91a726dbe988e515057b32ba0726f}{Name}}, \mbox{\hyperlink{classModule}{Module}} $\ast$\mbox{\hyperlink{classHempyBucket_a1e877c2996cef736d7d49438d117a7b5}{Parent}}, \mbox{\hyperlink{structSettings_1_1HempyBucketSettings}{Settings\+::\+Hempy\+Bucket\+Settings}} $\ast$Default\+Settings, \mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$\mbox{\hyperlink{classHempyBucket_a50a1977d2c8c7b64517fdddaa446d540}{Bucket\+Weight\+Sensor}}, \mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$\mbox{\hyperlink{classHempyBucket_aafaa19d1506d3620af847415b0ecd9d3}{Waste\+Reservoir\+Weight\+Sensor}}, \mbox{\hyperlink{classWaterPump}{Water\+Pump}} $\ast$\mbox{\hyperlink{classHempyBucket_ac60eac4ddf199eb020fbd5b85b5fb2ab}{Bucket\+Pump}})
+\item 
+void \mbox{\hyperlink{classHempyBucket_a9218a31e84cebe1630ab8d22c41cc48d}{refresh\+\_\+\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classHempyBucket_ad9a11119072abf39b332556936938afa}{refresh\+\_\+\+Five\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classHempyBucket_acfee435c7b1c62a03ad067b92a676102}{report}} ()
+\item 
+void \mbox{\hyperlink{classHempyBucket_a21da05d20abb47a5230db715fbe6ae2a}{water\+Now}} (bool User\+Request=false)
+\begin{DoxyCompactList}\small\item\em Turn on water pump, run until Stop\+Weight is reached. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHempyBucket_a7cfa45290515a4d1dcfecf2049387b9b}{check\+Relay}} ()
+\begin{DoxyCompactList}\small\item\em Sets the relay controlling the pump. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHempyBucket_a11c26088512aba8c5230f0126c4ea5e1}{check\+Watering\+Weight}} ()
+\begin{DoxyCompactList}\small\item\em Watering based on weight. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHempyBucket_a65d4aa72cbe7ea2dbecd008a3a59bc9e}{check\+Watering\+Timer}} ()
+\begin{DoxyCompactList}\small\item\em Watering based on timer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHempyBucket_a320d8c126d30abb113f45f8c4bbcef47}{check\+Watering\+Finished}} ()
+\begin{DoxyCompactList}\small\item\em Stops the pump when target weight or watering duration is reached. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classHempyBucket_a3de27d18b65ceb8432ca6b6cf5703f42}{set\+Weight\+Based\+Watering}} (bool State)
+\item 
+void \mbox{\hyperlink{classHempyBucket_af4c3814f1f9b37509c8ab6ea783df11f}{set\+Start\+Weight}} (float Weight)
+\item 
+void \mbox{\hyperlink{classHempyBucket_a9bbca063669c259010c94c22042c8315}{set\+Stop\+Weight}} (float Weight)
+\item 
+void \mbox{\hyperlink{classHempyBucket_a90384d26cc83b6bb4206189581203bfe}{set\+Timer\+Based\+Watering}} (bool State)
+\item 
+void \mbox{\hyperlink{classHempyBucket_a27385ed320e608e36e71b75f8c81ac4d}{set\+Watering\+Interval}} (uint16\+\_\+t Minutes)
+\item 
+void \mbox{\hyperlink{classHempyBucket_afe7c6467a6141f6e10f48970c6db9e9a}{set\+Watering\+Duration}} (uint16\+\_\+t Seconds)
+\item 
+void \mbox{\hyperlink{classHempyBucket_af17814ae16f2f65f0f9bb580baa55fdd}{start\+Watering}} ()
+\item 
+float \mbox{\hyperlink{classHempyBucket_afc9ca8e831da59b3cb0ceba3961de1ed}{get\+Stop\+Weight}} ()
+\item 
+float \mbox{\hyperlink{classHempyBucket_a05a0ed7a5af269ba380cc7668bf9a07c}{get\+Start\+Weight}} ()
+\item 
+char $\ast$ \mbox{\hyperlink{classHempyBucket_a9ef238ad79538a3ab0eab3d7094d5c2a}{get\+Stop\+Weight\+Text}} (bool Include\+Units)
+\item 
+char $\ast$ \mbox{\hyperlink{classHempyBucket_aa5ec05b8853c93212a0fea2db5a2ce65}{get\+Start\+Weight\+Text}} (bool Include\+Units)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classModule}{Module}} $\ast$ \mbox{\hyperlink{classHempyBucket_a1e877c2996cef736d7d49438d117a7b5}{Parent}}
+\item 
+bool $\ast$ \mbox{\hyperlink{classHempyBucket_ad5a2ca2a6bc9a02c763f07bb53e90f39}{Timer\+Based\+Watering}}
+\begin{DoxyCompactList}\small\item\em Enables timed waterings to prevent the soil from drying out with seedlings. \end{DoxyCompactList}\item 
+uint16\+\_\+t $\ast$ \mbox{\hyperlink{classHempyBucket_a0b16ab97e6669da1d238f099fc6e8f20}{Watering\+Interval}}
+\begin{DoxyCompactList}\small\item\em How often to water in M\+I\+N\+U\+T\+ES. \end{DoxyCompactList}\item 
+uint16\+\_\+t $\ast$ \mbox{\hyperlink{classHempyBucket_a632aa8a3e9876540da1622d7f0051730}{Watering\+Duration}}
+\begin{DoxyCompactList}\small\item\em How long to water in S\+E\+C\+O\+N\+DS. \end{DoxyCompactList}\item 
+uint32\+\_\+t \mbox{\hyperlink{classHempyBucket_a9bcbaa4b3ce68213a0b6bd14b072f709}{Watering\+Timer}} = millis()
+\begin{DoxyCompactList}\small\item\em last time the plants were watered \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$ \mbox{\hyperlink{classHempyBucket_a50a1977d2c8c7b64517fdddaa446d540}{Bucket\+Weight\+Sensor}}
+\begin{DoxyCompactList}\small\item\em Weight sensor to monitor the Hempy Bucket\textquotesingle{}s weight, used to figure out when to start and stop watering. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$ \mbox{\hyperlink{classHempyBucket_aafaa19d1506d3620af847415b0ecd9d3}{Waste\+Reservoir\+Weight\+Sensor}}
+\begin{DoxyCompactList}\small\item\em Weight sensor to monitor the Hempy Bucket\textquotesingle{}s waste reservoir, used to figure out when to stop watering. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classWaterPump}{Water\+Pump}} $\ast$ \mbox{\hyperlink{classHempyBucket_ac60eac4ddf199eb020fbd5b85b5fb2ab}{Bucket\+Pump}}
+\begin{DoxyCompactList}\small\item\em Weight sensor to monitor the Hempy Bucket\textquotesingle{}s weight, used to figure out when to start and stop watering. \end{DoxyCompactList}\item 
+bool $\ast$ \mbox{\hyperlink{classHempyBucket_aa47aabbb3c9dee55ed470d3970e5c887}{Weight\+Based\+Watering}}
+\begin{DoxyCompactList}\small\item\em Enables weight based waterings. \end{DoxyCompactList}\item 
+float $\ast$ \mbox{\hyperlink{classHempyBucket_ac38502e4520248727e74464bc0d16ee7}{Start\+Weight}}
+\begin{DoxyCompactList}\small\item\em Start watering below this weight. \end{DoxyCompactList}\item 
+float $\ast$ \mbox{\hyperlink{classHempyBucket_aadb4fe29dd213fe011d41465da927c76}{Stop\+Weight}}
+\begin{DoxyCompactList}\small\item\em Stop watering above this weight. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 17 of file Hempy\+Bucket.\+h.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classHempyBucket_a1accb17828a9b43a0413bc51308a9ee9}\label{classHempyBucket_a1accb17828a9b43a0413bc51308a9ee9}} 
+\index{HempyBucket@{HempyBucket}!HempyBucket@{HempyBucket}}
+\index{HempyBucket@{HempyBucket}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{HempyBucket()}{HempyBucket()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Hempy\+Bucket\+::\+Hempy\+Bucket (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\mbox{\hyperlink{classModule}{Module}} $\ast$}]{Parent,  }\item[{\mbox{\hyperlink{structSettings_1_1HempyBucketSettings}{Settings\+::\+Hempy\+Bucket\+Settings}} $\ast$}]{Default\+Settings,  }\item[{\mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$}]{Bucket\+Weight\+Sensor,  }\item[{\mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$}]{Waste\+Reservoir\+Weight\+Sensor,  }\item[{\mbox{\hyperlink{classWaterPump}{Water\+Pump}} $\ast$}]{Bucket\+Pump }\end{DoxyParamCaption})}
+
+
+
+Definition at line 3 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a1accb17828a9b43a0413bc51308a9ee9_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_a1accb17828a9b43a0413bc51308a9ee9}\label{classHempyBucket_a1accb17828a9b43a0413bc51308a9ee9}} 
+\index{HempyBucket@{HempyBucket}!HempyBucket@{HempyBucket}}
+\index{HempyBucket@{HempyBucket}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{HempyBucket()}{HempyBucket()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Hempy\+Bucket\+::\+Hempy\+Bucket (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\mbox{\hyperlink{classModule}{Module}} $\ast$}]{Parent,  }\item[{\mbox{\hyperlink{structSettings_1_1HempyBucketSettings}{Settings\+::\+Hempy\+Bucket\+Settings}} $\ast$}]{Default\+Settings,  }\item[{\mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$}]{Bucket\+Weight\+Sensor,  }\item[{\mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$}]{Waste\+Reservoir\+Weight\+Sensor,  }\item[{\mbox{\hyperlink{classWaterPump}{Water\+Pump}} $\ast$}]{Bucket\+Pump }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classHempyBucket_a7cfa45290515a4d1dcfecf2049387b9b}\label{classHempyBucket_a7cfa45290515a4d1dcfecf2049387b9b}} 
+\index{HempyBucket@{HempyBucket}!checkRelay@{checkRelay}}
+\index{checkRelay@{checkRelay}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{checkRelay()}{checkRelay()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::check\+Relay (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets the relay controlling the pump. 
+
+\mbox{\Hypertarget{classHempyBucket_a7cfa45290515a4d1dcfecf2049387b9b}\label{classHempyBucket_a7cfa45290515a4d1dcfecf2049387b9b}} 
+\index{HempyBucket@{HempyBucket}!checkRelay@{checkRelay}}
+\index{checkRelay@{checkRelay}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{checkRelay()}{checkRelay()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::check\+Relay (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets the relay controlling the pump. 
+
+\mbox{\Hypertarget{classHempyBucket_a320d8c126d30abb113f45f8c4bbcef47}\label{classHempyBucket_a320d8c126d30abb113f45f8c4bbcef47}} 
+\index{HempyBucket@{HempyBucket}!checkWateringFinished@{checkWateringFinished}}
+\index{checkWateringFinished@{checkWateringFinished}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{checkWateringFinished()}{checkWateringFinished()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::check\+Watering\+Finished (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stops the pump when target weight or watering duration is reached. 
+
+$<$ If the weight is over the stop limit
+
+$<$ If the pump runtime reached the watering duration
+
+$<$ If watering triggered by weight\+: Run until weight tareget is reached
+
+$<$ If the weight is over the limit and the pump is on
+
+$<$ Turn the pump off when all criteria are met
+
+Definition at line 78 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a320d8c126d30abb113f45f8c4bbcef47_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a320d8c126d30abb113f45f8c4bbcef47_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_a320d8c126d30abb113f45f8c4bbcef47}\label{classHempyBucket_a320d8c126d30abb113f45f8c4bbcef47}} 
+\index{HempyBucket@{HempyBucket}!checkWateringFinished@{checkWateringFinished}}
+\index{checkWateringFinished@{checkWateringFinished}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{checkWateringFinished()}{checkWateringFinished()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::check\+Watering\+Finished (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stops the pump when target weight or watering duration is reached. 
+
+\mbox{\Hypertarget{classHempyBucket_a65d4aa72cbe7ea2dbecd008a3a59bc9e}\label{classHempyBucket_a65d4aa72cbe7ea2dbecd008a3a59bc9e}} 
+\index{HempyBucket@{HempyBucket}!checkWateringTimer@{checkWateringTimer}}
+\index{checkWateringTimer@{checkWateringTimer}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{checkWateringTimer()}{checkWateringTimer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::check\+Watering\+Timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Watering based on timer. 
+
+
+
+Definition at line 67 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a65d4aa72cbe7ea2dbecd008a3a59bc9e_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a65d4aa72cbe7ea2dbecd008a3a59bc9e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_a65d4aa72cbe7ea2dbecd008a3a59bc9e}\label{classHempyBucket_a65d4aa72cbe7ea2dbecd008a3a59bc9e}} 
+\index{HempyBucket@{HempyBucket}!checkWateringTimer@{checkWateringTimer}}
+\index{checkWateringTimer@{checkWateringTimer}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{checkWateringTimer()}{checkWateringTimer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::check\+Watering\+Timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Watering based on timer. 
+
+\mbox{\Hypertarget{classHempyBucket_a11c26088512aba8c5230f0126c4ea5e1}\label{classHempyBucket_a11c26088512aba8c5230f0126c4ea5e1}} 
+\index{HempyBucket@{HempyBucket}!checkWateringWeight@{checkWateringWeight}}
+\index{checkWateringWeight@{checkWateringWeight}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{checkWateringWeight()}{checkWateringWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::check\+Watering\+Weight (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Watering based on weight. 
+
+\mbox{\Hypertarget{classHempyBucket_a11c26088512aba8c5230f0126c4ea5e1}\label{classHempyBucket_a11c26088512aba8c5230f0126c4ea5e1}} 
+\index{HempyBucket@{HempyBucket}!checkWateringWeight@{checkWateringWeight}}
+\index{checkWateringWeight@{checkWateringWeight}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{checkWateringWeight()}{checkWateringWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::check\+Watering\+Weight (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Watering based on weight. 
+
+$<$ If the weight based watering is enabled A\+ND the weight is below the limit A\+ND the pump is off A\+ND pump is enabled
+
+Definition at line 54 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a11c26088512aba8c5230f0126c4ea5e1_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a11c26088512aba8c5230f0126c4ea5e1_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_a05a0ed7a5af269ba380cc7668bf9a07c}\label{classHempyBucket_a05a0ed7a5af269ba380cc7668bf9a07c}} 
+\index{HempyBucket@{HempyBucket}!getStartWeight@{getStartWeight}}
+\index{getStartWeight@{getStartWeight}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{getStartWeight()}{getStartWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float Hempy\+Bucket\+::get\+Start\+Weight (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 144 of file Hempy\+Bucket.\+cpp.
+
+\mbox{\Hypertarget{classHempyBucket_a05a0ed7a5af269ba380cc7668bf9a07c}\label{classHempyBucket_a05a0ed7a5af269ba380cc7668bf9a07c}} 
+\index{HempyBucket@{HempyBucket}!getStartWeight@{getStartWeight}}
+\index{getStartWeight@{getStartWeight}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{getStartWeight()}{getStartWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float Hempy\+Bucket\+::get\+Start\+Weight (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classHempyBucket_a180c7a58aaef7b7a6e3429907bd4c271}\label{classHempyBucket_a180c7a58aaef7b7a6e3429907bd4c271}} 
+\index{HempyBucket@{HempyBucket}!getStartWeightText@{getStartWeightText}}
+\index{getStartWeightText@{getStartWeightText}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{getStartWeightText()}{getStartWeightText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char $\ast$ Hempy\+Bucket\+::get\+Start\+Weight\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+
+
+Definition at line 154 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a180c7a58aaef7b7a6e3429907bd4c271_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_aa5ec05b8853c93212a0fea2db5a2ce65}\label{classHempyBucket_aa5ec05b8853c93212a0fea2db5a2ce65}} 
+\index{HempyBucket@{HempyBucket}!getStartWeightText@{getStartWeightText}}
+\index{getStartWeightText@{getStartWeightText}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{getStartWeightText()}{getStartWeightText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char$\ast$ Hempy\+Bucket\+::get\+Start\+Weight\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classHempyBucket_afc9ca8e831da59b3cb0ceba3961de1ed}\label{classHempyBucket_afc9ca8e831da59b3cb0ceba3961de1ed}} 
+\index{HempyBucket@{HempyBucket}!getStopWeight@{getStopWeight}}
+\index{getStopWeight@{getStopWeight}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{getStopWeight()}{getStopWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float Hempy\+Bucket\+::get\+Stop\+Weight (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 149 of file Hempy\+Bucket.\+cpp.
+
+\mbox{\Hypertarget{classHempyBucket_afc9ca8e831da59b3cb0ceba3961de1ed}\label{classHempyBucket_afc9ca8e831da59b3cb0ceba3961de1ed}} 
+\index{HempyBucket@{HempyBucket}!getStopWeight@{getStopWeight}}
+\index{getStopWeight@{getStopWeight}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{getStopWeight()}{getStopWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float Hempy\+Bucket\+::get\+Stop\+Weight (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classHempyBucket_a9ef238ad79538a3ab0eab3d7094d5c2a}\label{classHempyBucket_a9ef238ad79538a3ab0eab3d7094d5c2a}} 
+\index{HempyBucket@{HempyBucket}!getStopWeightText@{getStopWeightText}}
+\index{getStopWeightText@{getStopWeightText}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{getStopWeightText()}{getStopWeightText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char$\ast$ Hempy\+Bucket\+::get\+Stop\+Weight\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classHempyBucket_a5b5138b909891faf8596fe8da27f47c0}\label{classHempyBucket_a5b5138b909891faf8596fe8da27f47c0}} 
+\index{HempyBucket@{HempyBucket}!getStopWeightText@{getStopWeightText}}
+\index{getStopWeightText@{getStopWeightText}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{getStopWeightText()}{getStopWeightText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char $\ast$ Hempy\+Bucket\+::get\+Stop\+Weight\+Text (\begin{DoxyParamCaption}\item[{bool}]{Include\+Units }\end{DoxyParamCaption})}
+
+
+
+Definition at line 162 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a5b5138b909891faf8596fe8da27f47c0_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_ad9a11119072abf39b332556936938afa}\label{classHempyBucket_ad9a11119072abf39b332556936938afa}} 
+\index{HempyBucket@{HempyBucket}!refresh\_FiveSec@{refresh\_FiveSec}}
+\index{refresh\_FiveSec@{refresh\_FiveSec}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{refresh\_FiveSec()}{refresh\_FiveSec()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}}.
+
+\mbox{\Hypertarget{classHempyBucket_ad9a11119072abf39b332556936938afa}\label{classHempyBucket_ad9a11119072abf39b332556936938afa}} 
+\index{HempyBucket@{HempyBucket}!refresh\_FiveSec@{refresh\_FiveSec}}
+\index{refresh\_FiveSec@{refresh\_FiveSec}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{refresh\_FiveSec()}{refresh\_FiveSec()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}}.
+
+
+
+Definition at line 21 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_ad9a11119072abf39b332556936938afa_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_a9218a31e84cebe1630ab8d22c41cc48d}\label{classHempyBucket_a9218a31e84cebe1630ab8d22c41cc48d}} 
+\index{HempyBucket@{HempyBucket}!refresh\_Sec@{refresh\_Sec}}
+\index{refresh\_Sec@{refresh\_Sec}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{refresh\_Sec()}{refresh\_Sec()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::refresh\+\_\+\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+$<$ When pump is on check if it is time to stop
+
+Reimplemented from \mbox{\hyperlink{classCommon_acd1fdd47fbf8bb490f5c6d3ab6cd8d05}{Common}}.
+
+
+
+Definition at line 29 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a9218a31e84cebe1630ab8d22c41cc48d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_a9218a31e84cebe1630ab8d22c41cc48d}\label{classHempyBucket_a9218a31e84cebe1630ab8d22c41cc48d}} 
+\index{HempyBucket@{HempyBucket}!refresh\_Sec@{refresh\_Sec}}
+\index{refresh\_Sec@{refresh\_Sec}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{refresh\_Sec()}{refresh\_Sec()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::refresh\+\_\+\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_acd1fdd47fbf8bb490f5c6d3ab6cd8d05}{Common}}.
+
+\mbox{\Hypertarget{classHempyBucket_acfee435c7b1c62a03ad067b92a676102}\label{classHempyBucket_acfee435c7b1c62a03ad067b92a676102}} 
+\index{HempyBucket@{HempyBucket}!report@{report}}
+\index{report@{report}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a9e60e2c26a5f4d72342a59a969954636}{Common}}.
+
+\mbox{\Hypertarget{classHempyBucket_acfee435c7b1c62a03ad067b92a676102}\label{classHempyBucket_acfee435c7b1c62a03ad067b92a676102}} 
+\index{HempyBucket@{HempyBucket}!report@{report}}
+\index{report@{report}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+$<$ clear variable
+
+Reimplemented from \mbox{\hyperlink{classCommon_a9e60e2c26a5f4d72342a59a969954636}{Common}}.
+
+
+
+Definition at line 35 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_acfee435c7b1c62a03ad067b92a676102_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_af4c3814f1f9b37509c8ab6ea783df11f}\label{classHempyBucket_af4c3814f1f9b37509c8ab6ea783df11f}} 
+\index{HempyBucket@{HempyBucket}!setStartWeight@{setStartWeight}}
+\index{setStartWeight@{setStartWeight}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{setStartWeight()}{setStartWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::set\+Start\+Weight (\begin{DoxyParamCaption}\item[{float}]{Weight }\end{DoxyParamCaption})}
+
+
+
+Definition at line 189 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_af4c3814f1f9b37509c8ab6ea783df11f_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_af4c3814f1f9b37509c8ab6ea783df11f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_af4c3814f1f9b37509c8ab6ea783df11f}\label{classHempyBucket_af4c3814f1f9b37509c8ab6ea783df11f}} 
+\index{HempyBucket@{HempyBucket}!setStartWeight@{setStartWeight}}
+\index{setStartWeight@{setStartWeight}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{setStartWeight()}{setStartWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::set\+Start\+Weight (\begin{DoxyParamCaption}\item[{float}]{Weight }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classHempyBucket_a9bbca063669c259010c94c22042c8315}\label{classHempyBucket_a9bbca063669c259010c94c22042c8315}} 
+\index{HempyBucket@{HempyBucket}!setStopWeight@{setStopWeight}}
+\index{setStopWeight@{setStopWeight}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{setStopWeight()}{setStopWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::set\+Stop\+Weight (\begin{DoxyParamCaption}\item[{float}]{Weight }\end{DoxyParamCaption})}
+
+
+
+Definition at line 198 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a9bbca063669c259010c94c22042c8315_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a9bbca063669c259010c94c22042c8315_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_a9bbca063669c259010c94c22042c8315}\label{classHempyBucket_a9bbca063669c259010c94c22042c8315}} 
+\index{HempyBucket@{HempyBucket}!setStopWeight@{setStopWeight}}
+\index{setStopWeight@{setStopWeight}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{setStopWeight()}{setStopWeight()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::set\+Stop\+Weight (\begin{DoxyParamCaption}\item[{float}]{Weight }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classHempyBucket_a90384d26cc83b6bb4206189581203bfe}\label{classHempyBucket_a90384d26cc83b6bb4206189581203bfe}} 
+\index{HempyBucket@{HempyBucket}!setTimerBasedWatering@{setTimerBasedWatering}}
+\index{setTimerBasedWatering@{setTimerBasedWatering}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{setTimerBasedWatering()}{setTimerBasedWatering()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::set\+Timer\+Based\+Watering (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classHempyBucket_a90384d26cc83b6bb4206189581203bfe}\label{classHempyBucket_a90384d26cc83b6bb4206189581203bfe}} 
+\index{HempyBucket@{HempyBucket}!setTimerBasedWatering@{setTimerBasedWatering}}
+\index{setTimerBasedWatering@{setTimerBasedWatering}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{setTimerBasedWatering()}{setTimerBasedWatering()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::set\+Timer\+Based\+Watering (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})}
+
+
+
+Definition at line 209 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a90384d26cc83b6bb4206189581203bfe_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a90384d26cc83b6bb4206189581203bfe_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_afe7c6467a6141f6e10f48970c6db9e9a}\label{classHempyBucket_afe7c6467a6141f6e10f48970c6db9e9a}} 
+\index{HempyBucket@{HempyBucket}!setWateringDuration@{setWateringDuration}}
+\index{setWateringDuration@{setWateringDuration}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{setWateringDuration()}{setWateringDuration()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::set\+Watering\+Duration (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{Seconds }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classHempyBucket_afe7c6467a6141f6e10f48970c6db9e9a}\label{classHempyBucket_afe7c6467a6141f6e10f48970c6db9e9a}} 
+\index{HempyBucket@{HempyBucket}!setWateringDuration@{setWateringDuration}}
+\index{setWateringDuration@{setWateringDuration}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{setWateringDuration()}{setWateringDuration()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::set\+Watering\+Duration (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{Seconds }\end{DoxyParamCaption})}
+
+
+
+Definition at line 239 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_afe7c6467a6141f6e10f48970c6db9e9a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_afe7c6467a6141f6e10f48970c6db9e9a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_a27385ed320e608e36e71b75f8c81ac4d}\label{classHempyBucket_a27385ed320e608e36e71b75f8c81ac4d}} 
+\index{HempyBucket@{HempyBucket}!setWateringInterval@{setWateringInterval}}
+\index{setWateringInterval@{setWateringInterval}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{setWateringInterval()}{setWateringInterval()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::set\+Watering\+Interval (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{Minutes }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classHempyBucket_a27385ed320e608e36e71b75f8c81ac4d}\label{classHempyBucket_a27385ed320e608e36e71b75f8c81ac4d}} 
+\index{HempyBucket@{HempyBucket}!setWateringInterval@{setWateringInterval}}
+\index{setWateringInterval@{setWateringInterval}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{setWateringInterval()}{setWateringInterval()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::set\+Watering\+Interval (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{Minutes }\end{DoxyParamCaption})}
+
+
+
+Definition at line 228 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a27385ed320e608e36e71b75f8c81ac4d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a27385ed320e608e36e71b75f8c81ac4d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_a3de27d18b65ceb8432ca6b6cf5703f42}\label{classHempyBucket_a3de27d18b65ceb8432ca6b6cf5703f42}} 
+\index{HempyBucket@{HempyBucket}!setWeightBasedWatering@{setWeightBasedWatering}}
+\index{setWeightBasedWatering@{setWeightBasedWatering}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{setWeightBasedWatering()}{setWeightBasedWatering()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::set\+Weight\+Based\+Watering (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})}
+
+
+
+Definition at line 170 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a3de27d18b65ceb8432ca6b6cf5703f42_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_a3de27d18b65ceb8432ca6b6cf5703f42_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_a3de27d18b65ceb8432ca6b6cf5703f42}\label{classHempyBucket_a3de27d18b65ceb8432ca6b6cf5703f42}} 
+\index{HempyBucket@{HempyBucket}!setWeightBasedWatering@{setWeightBasedWatering}}
+\index{setWeightBasedWatering@{setWeightBasedWatering}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{setWeightBasedWatering()}{setWeightBasedWatering()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::set\+Weight\+Based\+Watering (\begin{DoxyParamCaption}\item[{bool}]{State }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classHempyBucket_af17814ae16f2f65f0f9bb580baa55fdd}\label{classHempyBucket_af17814ae16f2f65f0f9bb580baa55fdd}} 
+\index{HempyBucket@{HempyBucket}!startWatering@{startWatering}}
+\index{startWatering@{startWatering}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{startWatering()}{startWatering()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::start\+Watering (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classHempyBucket_af17814ae16f2f65f0f9bb580baa55fdd}\label{classHempyBucket_af17814ae16f2f65f0f9bb580baa55fdd}} 
+\index{HempyBucket@{HempyBucket}!startWatering@{startWatering}}
+\index{startWatering@{startWatering}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{startWatering()}{startWatering()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::start\+Watering (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 135 of file Hempy\+Bucket.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_af17814ae16f2f65f0f9bb580baa55fdd_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classHempyBucket_af17814ae16f2f65f0f9bb580baa55fdd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classHempyBucket_a21da05d20abb47a5230db715fbe6ae2a}\label{classHempyBucket_a21da05d20abb47a5230db715fbe6ae2a}} 
+\index{HempyBucket@{HempyBucket}!waterNow@{waterNow}}
+\index{waterNow@{waterNow}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{waterNow()}{waterNow()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::water\+Now (\begin{DoxyParamCaption}\item[{bool}]{User\+Request = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Turn on water pump, run until Stop\+Weight is reached. 
+
+\mbox{\Hypertarget{classHempyBucket_a21da05d20abb47a5230db715fbe6ae2a}\label{classHempyBucket_a21da05d20abb47a5230db715fbe6ae2a}} 
+\index{HempyBucket@{HempyBucket}!waterNow@{waterNow}}
+\index{waterNow@{waterNow}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{waterNow()}{waterNow()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Hempy\+Bucket\+::water\+Now (\begin{DoxyParamCaption}\item[{bool}]{User\+Request = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Turn on water pump, run until Stop\+Weight is reached. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classHempyBucket_ac60eac4ddf199eb020fbd5b85b5fb2ab}\label{classHempyBucket_ac60eac4ddf199eb020fbd5b85b5fb2ab}} 
+\index{HempyBucket@{HempyBucket}!BucketPump@{BucketPump}}
+\index{BucketPump@{BucketPump}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{BucketPump}{BucketPump}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classWaterPump}{Water\+Pump}} $\ast$ Hempy\+Bucket\+::\+Bucket\+Pump\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Weight sensor to monitor the Hempy Bucket\textquotesingle{}s weight, used to figure out when to start and stop watering. 
+
+
+
+Definition at line 53 of file Hempy\+Bucket.\+h.
+
+\mbox{\Hypertarget{classHempyBucket_a50a1977d2c8c7b64517fdddaa446d540}\label{classHempyBucket_a50a1977d2c8c7b64517fdddaa446d540}} 
+\index{HempyBucket@{HempyBucket}!BucketWeightSensor@{BucketWeightSensor}}
+\index{BucketWeightSensor@{BucketWeightSensor}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{BucketWeightSensor}{BucketWeightSensor}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$ Hempy\+Bucket\+::\+Bucket\+Weight\+Sensor\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Weight sensor to monitor the Hempy Bucket\textquotesingle{}s weight, used to figure out when to start and stop watering. 
+
+
+
+Definition at line 51 of file Hempy\+Bucket.\+h.
+
+\mbox{\Hypertarget{classHempyBucket_a1e877c2996cef736d7d49438d117a7b5}\label{classHempyBucket_a1e877c2996cef736d7d49438d117a7b5}} 
+\index{HempyBucket@{HempyBucket}!Parent@{Parent}}
+\index{Parent@{Parent}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classModule}{Module}} $\ast$ Hempy\+Bucket\+::\+Parent\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 46 of file Hempy\+Bucket.\+h.
+
+\mbox{\Hypertarget{classHempyBucket_ac38502e4520248727e74464bc0d16ee7}\label{classHempyBucket_ac38502e4520248727e74464bc0d16ee7}} 
+\index{HempyBucket@{HempyBucket}!StartWeight@{StartWeight}}
+\index{StartWeight@{StartWeight}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{StartWeight}{StartWeight}}
+{\footnotesize\ttfamily float $\ast$ Hempy\+Bucket\+::\+Start\+Weight\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Start watering below this weight. 
+
+
+
+Definition at line 55 of file Hempy\+Bucket.\+h.
+
+\mbox{\Hypertarget{classHempyBucket_aadb4fe29dd213fe011d41465da927c76}\label{classHempyBucket_aadb4fe29dd213fe011d41465da927c76}} 
+\index{HempyBucket@{HempyBucket}!StopWeight@{StopWeight}}
+\index{StopWeight@{StopWeight}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{StopWeight}{StopWeight}}
+{\footnotesize\ttfamily float $\ast$ Hempy\+Bucket\+::\+Stop\+Weight\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Stop watering above this weight. 
+
+
+
+Definition at line 56 of file Hempy\+Bucket.\+h.
+
+\mbox{\Hypertarget{classHempyBucket_ad5a2ca2a6bc9a02c763f07bb53e90f39}\label{classHempyBucket_ad5a2ca2a6bc9a02c763f07bb53e90f39}} 
+\index{HempyBucket@{HempyBucket}!TimerBasedWatering@{TimerBasedWatering}}
+\index{TimerBasedWatering@{TimerBasedWatering}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{TimerBasedWatering}{TimerBasedWatering}}
+{\footnotesize\ttfamily bool $\ast$ Hempy\+Bucket\+::\+Timer\+Based\+Watering\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Enables timed waterings to prevent the soil from drying out with seedlings. 
+
+
+
+Definition at line 47 of file Hempy\+Bucket.\+h.
+
+\mbox{\Hypertarget{classHempyBucket_aafaa19d1506d3620af847415b0ecd9d3}\label{classHempyBucket_aafaa19d1506d3620af847415b0ecd9d3}} 
+\index{HempyBucket@{HempyBucket}!WasteReservoirWeightSensor@{WasteReservoirWeightSensor}}
+\index{WasteReservoirWeightSensor@{WasteReservoirWeightSensor}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{WasteReservoirWeightSensor}{WasteReservoirWeightSensor}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} $\ast$ Hempy\+Bucket\+::\+Waste\+Reservoir\+Weight\+Sensor\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Weight sensor to monitor the Hempy Bucket\textquotesingle{}s waste reservoir, used to figure out when to stop watering. 
+
+
+
+Definition at line 52 of file Hempy\+Bucket.\+h.
+
+\mbox{\Hypertarget{classHempyBucket_a632aa8a3e9876540da1622d7f0051730}\label{classHempyBucket_a632aa8a3e9876540da1622d7f0051730}} 
+\index{HempyBucket@{HempyBucket}!WateringDuration@{WateringDuration}}
+\index{WateringDuration@{WateringDuration}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{WateringDuration}{WateringDuration}}
+{\footnotesize\ttfamily uint16\+\_\+t $\ast$ Hempy\+Bucket\+::\+Watering\+Duration\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+How long to water in S\+E\+C\+O\+N\+DS. 
+
+
+
+Definition at line 49 of file Hempy\+Bucket.\+h.
+
+\mbox{\Hypertarget{classHempyBucket_a0b16ab97e6669da1d238f099fc6e8f20}\label{classHempyBucket_a0b16ab97e6669da1d238f099fc6e8f20}} 
+\index{HempyBucket@{HempyBucket}!WateringInterval@{WateringInterval}}
+\index{WateringInterval@{WateringInterval}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{WateringInterval}{WateringInterval}}
+{\footnotesize\ttfamily uint16\+\_\+t $\ast$ Hempy\+Bucket\+::\+Watering\+Interval\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+How often to water in M\+I\+N\+U\+T\+ES. 
+
+
+
+Definition at line 48 of file Hempy\+Bucket.\+h.
+
+\mbox{\Hypertarget{classHempyBucket_a9bcbaa4b3ce68213a0b6bd14b072f709}\label{classHempyBucket_a9bcbaa4b3ce68213a0b6bd14b072f709}} 
+\index{HempyBucket@{HempyBucket}!WateringTimer@{WateringTimer}}
+\index{WateringTimer@{WateringTimer}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{WateringTimer}{WateringTimer}}
+{\footnotesize\ttfamily uint32\+\_\+t Hempy\+Bucket\+::\+Watering\+Timer = millis()\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+last time the plants were watered 
+
+
+
+Definition at line 50 of file Hempy\+Bucket.\+h.
+
+\mbox{\Hypertarget{classHempyBucket_aa47aabbb3c9dee55ed470d3970e5c887}\label{classHempyBucket_aa47aabbb3c9dee55ed470d3970e5c887}} 
+\index{HempyBucket@{HempyBucket}!WeightBasedWatering@{WeightBasedWatering}}
+\index{WeightBasedWatering@{WeightBasedWatering}!HempyBucket@{HempyBucket}}
+\doxysubsubsection{\texorpdfstring{WeightBasedWatering}{WeightBasedWatering}}
+{\footnotesize\ttfamily bool $\ast$ Hempy\+Bucket\+::\+Weight\+Based\+Watering\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Enables weight based waterings. 
+
+
+
+Definition at line 54 of file Hempy\+Bucket.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Gbox420\+\_\+\+Nano\+\_\+\+Hempy/src/\+Components/\mbox{\hyperlink{Gbox420__Nano__Hempy_2src_2Components_2HempyBucket_8h}{Hempy\+Bucket.\+h}}\item 
+Gbox420\+\_\+\+Nano\+\_\+\+Hempy/src/\+Components/\mbox{\hyperlink{Gbox420__Nano__Hempy_2src_2Components_2HempyBucket_8cpp}{Hempy\+Bucket.\+cpp}}\end{DoxyCompactItemize}

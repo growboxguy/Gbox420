@@ -20,7 +20,7 @@ void loop()
 { // put your main code here, to run repeatedly:
   while (0 <= DutyCycle && DutyCycle <= 100)
   {
-    analogWrite(Pin, map(DutyCycle, 0, 100, int(255 * (DutyCycleLowLimit / 100.0f)), 255)); ///< mapping motor speed to duty cycle https:///< www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
+    analogWrite(Pin, map(DutyCycle, 0, 100, int(255 * (DutyCycleLowLimit / 100.0f)), 255)); ///< mapping motor speed to duty cycle https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
     if (DutyCycle % 10 == 0)                                                                //modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
     {
       Serial.print(DutyCycle);

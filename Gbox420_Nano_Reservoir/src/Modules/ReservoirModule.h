@@ -13,7 +13,7 @@
  * 
  */
 
-#include "RF24.h" ///< https://github.com/maniacbug/RF24
+#include "RF24.h" // https://github.com/maniacbug/RF24
 #include "../Components/420Common.h"
 #include "../Components/420Module.h"
 #include "../WirelessCommands_Reservoir.h"

@@ -1,15 +1,19 @@
+/*! \file 
+ *  \brief     Set of common functions any class can use
+ *  \details   During conversion the result is always copied into the ShortMessage global char array
+ *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
+ *  \version   4.20
+ */
+
 #pragma once
 
-///< This is a collection of common functions that every component can use
-///< During conversion the result is always copied into the ShortMessage global char array.
-
 #include "Arduino.h"
-#include "TimeLib.h"    ///< Keeping track of time
-#include "MemoryFree.h" ///< checking remaining memory - only for debugging
-#include "avr/wdt.h"    ///< Watchdog timer
+#include "TimeLib.h"    // Keeping track of time
+#include "MemoryFree.h" // Checking remaining memory
+#include "avr/wdt.h"    // Watchdog timer
 #include "../SerialLog.h"
-#include "../Settings.h"    ///< for storing/reading defaults
-#include "RollingAverage.h" ///< for smoothing sensor readings, average of last readings
+#include "../Settings.h"    // Storing/reading defaults
+#include "RollingAverage.h" // Smoothing sensor readings, average of last readings
 
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;
@@ -20,7 +24,7 @@ extern Settings *ModuleSettings;
 extern bool *Debug;
 extern bool *Metric;
 
-///< Class specific variables
+// Class specific variables
 void getFreeMemory();
 float convertBetweenTempUnits(float);
 float convertBetweenPressureUnits(float);

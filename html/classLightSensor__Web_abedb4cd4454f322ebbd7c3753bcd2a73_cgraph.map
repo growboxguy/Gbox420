@@ -1,0 +1,8 @@
+<map id="LightSensor_Web::websiteEvent_Button" name="LightSensor_Web::websiteEvent_Button">
+<area shape="rect" id="node1" title=" " alt="" coords="5,23,197,65"/>
+<area shape="rect" id="node2" href="$classCommon.html#a0192d295366bf1e966d8b58a3ce57554" title="When it return true the component belongs to this object." alt="" coords="245,5,468,32"/>
+<area shape="rect" id="node3" href="$classLightSensor.html#a50559883ebb2c80a5d2144a6453bd1c3" title="Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger." alt="" coords="247,56,467,83"/>
+<area shape="rect" id="node4" href="$classModule.html#afacdeaf339646bee722be54aab7155be" title=" " alt="" coords="537,5,676,32"/>
+<area shape="rect" id="node5" href="$classModule.html#a173624381666c28f9d33e809f067711c" title=" " alt="" coords="516,56,697,83"/>
+<area shape="rect" id="node6" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="529,107,685,133"/>
+</map>

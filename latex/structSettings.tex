@@ -1,0 +1,538 @@
+\hypertarget{structSettings}{}\doxysection{Settings Struct Reference}
+\label{structSettings}\index{Settings@{Settings}}
+
+
+{\ttfamily \#include $<$Settings.\+h$>$}
+
+
+
+Collaboration diagram for Settings\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{structSettings__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1AeroModuleSettings}{Aero\+Module\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classAeroModule}{Aero\+Module}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1AeroponicsSettings}{Aeroponics\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classCommon}{Common}} default settings for both inheriting classes\+: \mbox{\hyperlink{classAeroponics__Tank}{Aeroponics\+\_\+\+Tank}} and \mbox{\hyperlink{classAeroponics__NoTank}{Aeroponics\+\_\+\+No\+Tank}} \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1AeroponicsSettings__TankSpecific}{Aeroponics\+Settings\+\_\+\+Tank\+Specific}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classAeroponics__Tank}{Aeroponics\+\_\+\+Tank}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1AirPumpSettings}{Air\+Pump\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classAirPump}{Air\+Pump}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1DHTSensorSettings}{D\+H\+T\+Sensor\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classDHTSensor}{D\+H\+T\+Sensor}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1FanSettings}{Fan\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classFan}{Fan}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1HempyBucketSettings}{Hempy\+Bucket\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classHempyBucket}{Hempy\+Bucket}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1HempyModuleSettings}{Hempy\+Module\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ Hempy default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1LightSensorSettings}{Light\+Sensor\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classLightSensor}{Light\+Sensor}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1LightsSettings}{Lights\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classLights}{Lights}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1MainModuleSettings}{Main\+Module\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classMainModule}{Main\+Module}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1PHSensorSettings}{P\+H\+Sensor\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classPHSensor}{P\+H\+Sensor}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1PressureSensorSettings}{Pressure\+Sensor\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classPressureSensor}{Pressure\+Sensor}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1ReservoirModuleSettings}{Reservoir\+Module\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classReservoirModule}{Reservoir\+Module}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1SoundSettings}{Sound\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classSound}{Sound}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1WaterPumpSettings}{Water\+Pump\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classWaterPump}{Water\+Pump}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1WaterTempSensorSettings}{Water\+Temp\+Sensor\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classWaterTempSensor}{Water\+Temp\+Sensor}} default settings \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1WeightSensorSettings}{Weight\+Sensor\+Settings}}
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classWeightSensor}{Weight\+Sensor}} default settings \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{structSettings_ae85fc15d5c9994d5249d43ff3009fbd5}{Debug}} = true
+\begin{DoxyCompactList}\small\item\em Logs debug messages to serial and web outputs. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structSettings_aaa7eb601917b369479553ede68e16581}{Metric}} = true
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classSwitch}{Switch}} between Imperial/\+Metric units. If changed update the default temp and pressure values below too. \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{structSettings_ad9fb19f404ca997b1fc964e24178cdad}{Pushing\+Box\+Log\+Relay\+ID}} \mbox{[}Max\+Word\+Length\mbox{]} = \{\char`\"{}v755877\+C\+F53383\+E1\char`\"{}\}
+\begin{DoxyCompactList}\small\item\em U\+P\+D\+A\+TE T\+H\+IS Device\+ID of the Pushing\+Box logging scenario\+: \href{https://sites.google.com/site/growboxguy/arduino/logging}{\texttt{ https\+://sites.\+google.\+com/site/growboxguy/arduino/logging}}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1AeroModuleSettings}{Aero\+Module\+Settings}} \mbox{\hyperlink{structSettings_a384089d7d207a69156cd768f1881e40c}{Aero\+Module1}} = \{.Pressure\+Tank\+Present = false, .Day\+Interval = 15, .Day\+Duration = 10, .Night\+Interval = 30, .Night\+Duration = 8, .Pump\+Time\+Out = 420, .Priming\+Time = 10, .Max\+Pressure = 7.\+0, .Min\+Pressure = 5.\+0\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1AirPumpSettings}{Air\+Pump\+Settings}} \mbox{\hyperlink{structSettings_aca9a0b3c800760d45ccea2deb4a095d5}{A\+Pump1}} = \{.Pin = 23, .State = true\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1DHTSensorSettings}{D\+H\+T\+Sensor\+Settings}} \mbox{\hyperlink{structSettings_aec1acd152ecb3b5e311b0c00d2d250ed}{D\+H\+T1}} = \{.Pin = 3, .Type = 22\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1FanSettings}{Fan\+Settings}} \mbox{\hyperlink{structSettings_ab4e978c3bd46bc349e83231c51609ae3}{I\+Fan}} = \{.On\+Off\+Pin = 25, .Speed\+Pin = 26\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1FanSettings}{Fan\+Settings}} \mbox{\hyperlink{structSettings_a418062c7b97898da50aa00f1c435580b}{E\+Fan}} = \{.On\+Off\+Pin = 27, .Speed\+Pin = 28\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1MainModuleSettings}{Main\+Module\+Settings}} \mbox{\hyperlink{structSettings_acf1b55c13b029f141c830fc43b6f795e}{Main1}} = \{.Report\+To\+Google\+Sheets = true, .Sheets\+Reporting\+Frequency = 30\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1HempyModuleSettings}{Hempy\+Module\+Settings}} \mbox{\hyperlink{structSettings_a8aad5f767d357df44327a0d67b48568c}{Hempy\+Module1}} = \{.Weight\+Based\+Watering\+\_\+\+B1 = true, .Start\+Weight\+\_\+\+B1 = 13.\+0, .Stop\+Weight\+\_\+\+B1 = 18.\+0, .Timer\+Based\+Watering\+\_\+\+B1 = true, .Watering\+Interval\+\_\+\+B1 = 1440, .Watering\+Duration\+\_\+\+B1 = 30, .Pump\+Speed\+\_\+\+B1 = 100, .Time\+Out\+Pump\+\_\+\+B1 = 420, .Weight\+Based\+Watering\+\_\+\+B2 = true, .Start\+Weight\+\_\+\+B2 = 13.\+0, .Stop\+Weight\+\_\+\+B2 = 18.\+0, .Timer\+Based\+Watering\+\_\+\+B2 = true, .Watering\+Interval\+\_\+\+B2 = 1440, .Watering\+Duration\+\_\+\+B2 = 30, .Pump\+Speed\+\_\+\+B2 = 100, .Time\+Out\+Pump\+\_\+\+B2 = 420\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1LightSensorSettings}{Light\+Sensor\+Settings}} \mbox{\hyperlink{structSettings_a499fd8a31b36a6dc07df6719197b5d5e}{Lt\+Sen1}} = \{.Digital\+Pin = 4, .Analog\+Pin = A0\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1LightsSettings}{Lights\+Settings}} \mbox{\hyperlink{structSettings_a09771e5b5bdc58f62c2f38db6648b9ff}{Lt1}} = \{.Relay\+Pin = 29, .Dimming\+Pin = 11, .Dimming\+Limit = 16, .Dimming\+Duration = 10, .Brightness = 75, .Timer\+Enabled = true, .On\+Hour = 4, .On\+Minute = 20, .Off\+Hour = 16, .Off\+Minute = 20, .Fading\+Enabled = true, .Fading\+Interval = 1, .Fading\+Increments = 1\}
+\begin{DoxyCompactList}\small\item\em Creating a Light\+Settings instance, passing in the unique parameters. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1LightsSettings}{Lights\+Settings}} \mbox{\hyperlink{structSettings_a5d7c18bf01bb1f3443e73c7416d44c06}{Lt2}} = \{.Relay\+Pin = 24, .Dimming\+Pin = 12, .Dimming\+Limit = 6, .Dimming\+Duration = 10, .Brightness = 55, .Timer\+Enabled = true, .On\+Hour = 4, .On\+Minute = 20, .Off\+Hour = 16, .Off\+Minute = 20, .Fading\+Enabled = true, .Fading\+Interval = 1, .Fading\+Increments = 1\}
+\begin{DoxyCompactList}\small\item\em Creating a Light\+Settings instance, passing in the unique parameters. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1ReservoirModuleSettings}{Reservoir\+Module\+Settings}} \mbox{\hyperlink{structSettings_a10455d02c43f3c699a25ad37a2f3013a}{Reservoir\+Mod1}} = \{\}
+\begin{DoxyCompactList}\small\item\em Default settings for the Hempy \mbox{\hyperlink{classModule}{Module}}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1SoundSettings}{Sound\+Settings}} \mbox{\hyperlink{structSettings_a8a8e8440de1c81b9a0db84cc701c47e8}{Sound1}} = \{.Pin = 2\}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structSettings_a073845c882435533a9058bddc336f951}{Compatibility\+Version}} = Version
+\begin{DoxyCompactList}\small\item\em Should always be the last value stored. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1AeroponicsSettings}{Aeroponics\+Settings}} \mbox{\hyperlink{structSettings_a8b39fc24ec71f2c0a16ceac2f3f6eb25}{Aero\+N\+T1\+\_\+\+Common}} = \{.Spray\+Enabled = true, .Day\+Interval = 15, .Day\+Duration = 10, .Night\+Interval = 30, .Night\+Duration = 10, .Max\+Pressure = 7.\+0\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1PressureSensorSettings}{Pressure\+Sensor\+Settings}} \mbox{\hyperlink{structSettings_a633ec2a87581e7bbd5e124b5cfb3fb80}{Pres1}} = \{.Pin = A7, .Offset = 0.\+57, .Ratio = 2.\+7\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1WaterPumpSettings}{Water\+Pump\+Settings}} \mbox{\hyperlink{structSettings_a266b0eb306dc87c198d8471d6345e767}{Aero\+Pump1}} = \{.Pump\+Pin = 3, .Pump\+Pin\+Negative\+Logic = false, .Pump\+Enabled = true, .Speed = 100, .Speed\+Low\+Limit = 30, .Pump\+Time\+Out = 420, .Priming\+Time = 10, .Blow\+Off\+Time = 3, .Bypass\+Solenoid\+Pin = 4, .Bypass\+Solenoid\+Negative\+Logic = true\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1WeightSensorSettings}{Weight\+Sensor\+Settings}} \mbox{\hyperlink{structSettings_a04ff80018a76e8e43ec93b400fdd5175}{Weight1}} = \{.D\+T\+Pin = A0, .S\+C\+K\+Pin = A1, .Offset = 19793, .Scale = -\/22280.\+70\}
+\begin{DoxyCompactList}\small\item\em Generate the calibration values using\+: \href{https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_Aero/Test-WeightSensor_Aero.ino}{\texttt{ https\+://github.\+com/growboxguy/\+Gbox420/blob/master/\+Test\+\_\+\+Sketches/\+Test-\/\+Weight\+Sensor\+\_\+\+Aero/\+Test-\/\+Weight\+Sensor\+\_\+\+Aero.\+ino}}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1AeroponicsSettings}{Aeroponics\+Settings}} \mbox{\hyperlink{structSettings_a6ec59b1aee19add68b8724ce686a8a77}{Aero\+T1\+\_\+\+Common}} = \{.Spray\+Enabled = true, .Day\+Interval = 15, .Day\+Duration = 10, .Night\+Interval = 30, .Night\+Duration = 10, .Max\+Pressure = 7.\+0\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1AeroponicsSettings__TankSpecific}{Aeroponics\+Settings\+\_\+\+Tank\+Specific}} \mbox{\hyperlink{structSettings_ab6250c7f010ce991a18f7fc4b23bf078}{Aero\+T1\+\_\+\+Specific}} = \{.Min\+Pressure = 5.\+0, .Spray\+Solenoid\+Pin = 5, .Spray\+Solenoid\+Negative\+Logic = true\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1HempyBucketSettings}{Hempy\+Bucket\+Settings}} \mbox{\hyperlink{structSettings_a312d8c1c5c6370ab52b75ba4e0ade18e}{Bucket1}} = \{.Weight\+Based\+Watering = true, .Start\+Weight = 4.\+2, .Stop\+Weight = 6.\+9, .Timer\+Based\+Watering = false, .Watering\+Interval = 1440, .Watering\+Duration = 30\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1HempyBucketSettings}{Hempy\+Bucket\+Settings}} \mbox{\hyperlink{structSettings_a40c442f2ab78fa04e15f5920e2e72ddb}{Bucket2}} = \{.Weight\+Based\+Watering = true, .Start\+Weight = 4.\+2, .Stop\+Weight = 6.\+9, .Timer\+Based\+Watering = false, .Watering\+Interval = 1440, .Watering\+Duration = 30\}
+\item 
+struct \mbox{\hyperlink{structSettings_1_1HempyModuleSettings}{Hempy\+Module\+Settings}} \mbox{\hyperlink{structSettings_a121100b65b01c0434735a421ace24f79}{Hempy\+Mod1}} = \{\}
+\begin{DoxyCompactList}\small\item\em Default settings for the Hempy \mbox{\hyperlink{classModule}{Module}}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1WaterPumpSettings}{Water\+Pump\+Settings}} \mbox{\hyperlink{structSettings_ab97c074d1d101e3ebad215e5050a369b}{Hempy\+Pump1}} = \{.Pump\+Pin = 3, .Pump\+Pin\+Negative\+Logic = false, .Pump\+Enabled = true, .Speed = 70, .Speed\+Low\+Limit = 30, .Pump\+Time\+Out = 420\}
+\begin{DoxyCompactList}\small\item\em Pumps do not need a bypass solenoid. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1WaterPumpSettings}{Water\+Pump\+Settings}} \mbox{\hyperlink{structSettings_ace005f695de72f1325e24b600163b4fa}{Hempy\+Pump2}} = \{.Pump\+Pin = 5, .Pump\+Pin\+Negative\+Logic = false, .Pump\+Enabled = true, .Speed = 70, .Speed\+Low\+Limit = 30, .Pump\+Time\+Out = 420\}
+\begin{DoxyCompactList}\small\item\em Pumps do not need a bypass solenoid. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1WeightSensorSettings}{Weight\+Sensor\+Settings}} \mbox{\hyperlink{structSettings_a9df2a50bb560bafbbbc9782d42dbfc4e}{Weight\+B1}} = \{.D\+T\+Pin = 4, .S\+C\+K\+Pin = 6, .Offset = -\/163641, .Scale = -\/21362.\+00\}
+\begin{DoxyCompactList}\small\item\em Bucket 1 Weight Sensor -\/ Generate the calibration values using\+: \href{https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino}{\texttt{ https\+://github.\+com/growboxguy/\+Gbox420/blob/master/\+Test\+\_\+\+Sketches/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Bucket\+Platforms/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Bucket\+Platforms.\+ino}}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1WeightSensorSettings}{Weight\+Sensor\+Settings}} \mbox{\hyperlink{structSettings_ab4a13b6a2857b5b817fe580f396d39d2}{Weight\+B2}} = \{.D\+T\+Pin = 7, .S\+C\+K\+Pin = 8, .Offset = 402140, .Scale = -\/21218.\+50\}
+\begin{DoxyCompactList}\small\item\em Bucket 2 Weight Sensor -\/ Generate the calibration values using\+: \href{https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino}{\texttt{ https\+://github.\+com/growboxguy/\+Gbox420/blob/master/\+Test\+\_\+\+Sketches/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Bucket\+Platforms/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Bucket\+Platforms.\+ino}}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1WeightSensorSettings}{Weight\+Sensor\+Settings}} \mbox{\hyperlink{structSettings_a29e364c9912c6f0900727b832d57b4ce}{Weight\+W\+R1}} = \{.D\+T\+Pin = A0, .S\+C\+K\+Pin = A1, .Offset = -\/67842, .Scale = -\/22499.\+50\}
+\begin{DoxyCompactList}\small\item\em Waste Reservoir 1 Weight Sensor -\/ Generate the calibration values using\+: \href{https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino}{\texttt{ https\+://github.\+com/growboxguy/\+Gbox420/blob/master/\+Test\+\_\+\+Sketches/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Waste\+Platforms/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Waste\+Platforms.\+ino}}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1WeightSensorSettings}{Weight\+Sensor\+Settings}} \mbox{\hyperlink{structSettings_a6f276df4b52aa66b7ac57a85801a0553}{Weight\+W\+R2}} = \{.D\+T\+Pin = A2, .S\+C\+K\+Pin = A3, .Offset = 266229, .Scale = -\/20892.\+00\}
+\begin{DoxyCompactList}\small\item\em Waste Reservoir 2 Weight Sensor -\/ Generate the calibration values using\+: \href{https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino}{\texttt{ https\+://github.\+com/growboxguy/\+Gbox420/blob/master/\+Test\+\_\+\+Sketches/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Waste\+Platforms/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Waste\+Platforms.\+ino}}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1PHSensorSettings}{P\+H\+Sensor\+Settings}} \mbox{\hyperlink{structSettings_a14bf23feee28df79fd6e70f40842cd48}{P\+H\+Sen1}} = \{.Pin = A0, .Slope = -\/0.\+031199, .Intercept = 22.\+557617\}
+\begin{DoxyCompactList}\small\item\em Update this to your own PH meter calibration values\+: \href{https://sites.google.com/site/growboxguy/arduino/reservoir-module?authuser=0\#h.p_PGMrIJ9iRr0c}{\texttt{ https\+://sites.\+google.\+com/site/growboxguy/arduino/reservoir-\/module?authuser=0\#h.\+p\+\_\+\+P\+G\+Mr\+I\+J9i\+Rr0c}}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structSettings_1_1WaterTempSensorSettings}{Water\+Temp\+Sensor\+Settings}} \mbox{\hyperlink{structSettings_afa4a8fc0205dc74f3ecd7be1e105efd4}{W\+Temp1}} = \{.Pin = 4\}
+\begin{DoxyCompactList}\small\item\em Data(yellow) -\/ D\+S18\+B20 waterproof temp sensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 51 of file Settings.\+h.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structSettings_a384089d7d207a69156cd768f1881e40c}\label{structSettings_a384089d7d207a69156cd768f1881e40c}} 
+\index{Settings@{Settings}!AeroModule1@{AeroModule1}}
+\index{AeroModule1@{AeroModule1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{AeroModule1}{AeroModule1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1AeroModuleSettings}{Aero\+Module\+Settings}} Settings\+::\+Aero\+Module1 = \{.Pressure\+Tank\+Present = false, .Day\+Interval = 15, .Day\+Duration = 10, .Night\+Interval = 30, .Night\+Duration = 8, .Pump\+Time\+Out = 420, .Priming\+Time = 10, .Max\+Pressure = 7.\+0, .Min\+Pressure = 5.\+0\}}
+
+
+
+Definition at line 72 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a8b39fc24ec71f2c0a16ceac2f3f6eb25}\label{structSettings_a8b39fc24ec71f2c0a16ceac2f3f6eb25}} 
+\index{Settings@{Settings}!AeroNT1\_Common@{AeroNT1\_Common}}
+\index{AeroNT1\_Common@{AeroNT1\_Common}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{AeroNT1\_Common}{AeroNT1\_Common}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1AeroponicsSettings}{Aeroponics\+Settings}} Settings\+::\+Aero\+N\+T1\+\_\+\+Common = \{.Spray\+Enabled = true, .Day\+Interval = 15, .Day\+Duration = 10, .Night\+Interval = 30, .Night\+Duration = 10, .Max\+Pressure = 7.\+0\}}
+
+
+
+Definition at line 64 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a266b0eb306dc87c198d8471d6345e767}\label{structSettings_a266b0eb306dc87c198d8471d6345e767}} 
+\index{Settings@{Settings}!AeroPump1@{AeroPump1}}
+\index{AeroPump1@{AeroPump1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{AeroPump1}{AeroPump1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1WaterPumpSettings}{Water\+Pump\+Settings}} Settings\+::\+Aero\+Pump1 = \{.Pump\+Pin = 3, .Pump\+Pin\+Negative\+Logic = false, .Pump\+Enabled = true, .Speed = 100, .Speed\+Low\+Limit = 30, .Pump\+Time\+Out = 420, .Priming\+Time = 10, .Blow\+Off\+Time = 3, .Bypass\+Solenoid\+Pin = 4, .Bypass\+Solenoid\+Negative\+Logic = true\}}
+
+
+
+Definition at line 97 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a6ec59b1aee19add68b8724ce686a8a77}\label{structSettings_a6ec59b1aee19add68b8724ce686a8a77}} 
+\index{Settings@{Settings}!AeroT1\_Common@{AeroT1\_Common}}
+\index{AeroT1\_Common@{AeroT1\_Common}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{AeroT1\_Common}{AeroT1\_Common}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1AeroponicsSettings}{Aeroponics\+Settings}} Settings\+::\+Aero\+T1\+\_\+\+Common = \{.Spray\+Enabled = true, .Day\+Interval = 15, .Day\+Duration = 10, .Night\+Interval = 30, .Night\+Duration = 10, .Max\+Pressure = 7.\+0\}}
+
+
+
+Definition at line 65 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_ab6250c7f010ce991a18f7fc4b23bf078}\label{structSettings_ab6250c7f010ce991a18f7fc4b23bf078}} 
+\index{Settings@{Settings}!AeroT1\_Specific@{AeroT1\_Specific}}
+\index{AeroT1\_Specific@{AeroT1\_Specific}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{AeroT1\_Specific}{AeroT1\_Specific}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1AeroponicsSettings__TankSpecific}{Aeroponics\+Settings\+\_\+\+Tank\+Specific}} Settings\+::\+Aero\+T1\+\_\+\+Specific = \{.Min\+Pressure = 5.\+0, .Spray\+Solenoid\+Pin = 5, .Spray\+Solenoid\+Negative\+Logic = true\}}
+
+
+
+Definition at line 74 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_aca9a0b3c800760d45ccea2deb4a095d5}\label{structSettings_aca9a0b3c800760d45ccea2deb4a095d5}} 
+\index{Settings@{Settings}!APump1@{APump1}}
+\index{APump1@{APump1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{APump1}{APump1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1AirPumpSettings}{Air\+Pump\+Settings}} Settings\+::\+A\+Pump1 = \{.Pin = 23, .State = true\}}
+
+
+
+Definition at line 80 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a312d8c1c5c6370ab52b75ba4e0ade18e}\label{structSettings_a312d8c1c5c6370ab52b75ba4e0ade18e}} 
+\index{Settings@{Settings}!Bucket1@{Bucket1}}
+\index{Bucket1@{Bucket1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{Bucket1}{Bucket1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1HempyBucketSettings}{Hempy\+Bucket\+Settings}} Settings\+::\+Bucket1 = \{.Weight\+Based\+Watering = true, .Start\+Weight = 4.\+2, .Stop\+Weight = 6.\+9, .Timer\+Based\+Watering = false, .Watering\+Interval = 1440, .Watering\+Duration = 30\}}
+
+
+
+Definition at line 65 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a40c442f2ab78fa04e15f5920e2e72ddb}\label{structSettings_a40c442f2ab78fa04e15f5920e2e72ddb}} 
+\index{Settings@{Settings}!Bucket2@{Bucket2}}
+\index{Bucket2@{Bucket2}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{Bucket2}{Bucket2}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1HempyBucketSettings}{Hempy\+Bucket\+Settings}} Settings\+::\+Bucket2 = \{.Weight\+Based\+Watering = true, .Start\+Weight = 4.\+2, .Stop\+Weight = 6.\+9, .Timer\+Based\+Watering = false, .Watering\+Interval = 1440, .Watering\+Duration = 30\}}
+
+
+
+Definition at line 66 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a073845c882435533a9058bddc336f951}\label{structSettings_a073845c882435533a9058bddc336f951}} 
+\index{Settings@{Settings}!CompatibilityVersion@{CompatibilityVersion}}
+\index{CompatibilityVersion@{CompatibilityVersion}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{CompatibilityVersion}{CompatibilityVersion}}
+{\footnotesize\ttfamily uint8\+\_\+t Settings\+::\+Compatibility\+Version = Version}
+
+
+
+Should always be the last value stored. 
+
+Version should always be the last value stored in the struct. 
+
+Definition at line 175 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_ae85fc15d5c9994d5249d43ff3009fbd5}\label{structSettings_ae85fc15d5c9994d5249d43ff3009fbd5}} 
+\index{Settings@{Settings}!Debug@{Debug}}
+\index{Debug@{Debug}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{Debug}{Debug}}
+{\footnotesize\ttfamily bool Settings\+::\+Debug = true}
+
+
+
+Logs debug messages to serial and web outputs. 
+
+
+
+Definition at line 53 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_aec1acd152ecb3b5e311b0c00d2d250ed}\label{structSettings_aec1acd152ecb3b5e311b0c00d2d250ed}} 
+\index{Settings@{Settings}!DHT1@{DHT1}}
+\index{DHT1@{DHT1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{DHT1}{DHT1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1DHTSensorSettings}{D\+H\+T\+Sensor\+Settings}} Settings\+::\+D\+H\+T1 = \{.Pin = 3, .Type = 22\}}
+
+
+
+Definition at line 88 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a418062c7b97898da50aa00f1c435580b}\label{structSettings_a418062c7b97898da50aa00f1c435580b}} 
+\index{Settings@{Settings}!EFan@{EFan}}
+\index{EFan@{EFan}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{EFan}{EFan}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1FanSettings}{Fan\+Settings}} Settings\+::\+E\+Fan = \{.On\+Off\+Pin = 27, .Speed\+Pin = 28\}}
+
+
+
+Definition at line 99 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a121100b65b01c0434735a421ace24f79}\label{structSettings_a121100b65b01c0434735a421ace24f79}} 
+\index{Settings@{Settings}!HempyMod1@{HempyMod1}}
+\index{HempyMod1@{HempyMod1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{HempyMod1}{HempyMod1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1HempyModuleSettings}{Hempy\+Module\+Settings}} Settings\+::\+Hempy\+Mod1 = \{\}}
+
+
+
+Default settings for the Hempy \mbox{\hyperlink{classModule}{Module}}. 
+
+
+
+Definition at line 72 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a8aad5f767d357df44327a0d67b48568c}\label{structSettings_a8aad5f767d357df44327a0d67b48568c}} 
+\index{Settings@{Settings}!HempyModule1@{HempyModule1}}
+\index{HempyModule1@{HempyModule1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{HempyModule1}{HempyModule1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1HempyModuleSettings}{Hempy\+Module\+Settings}} Settings\+::\+Hempy\+Module1 = \{.Weight\+Based\+Watering\+\_\+\+B1 = true, .Start\+Weight\+\_\+\+B1 = 13.\+0, .Stop\+Weight\+\_\+\+B1 = 18.\+0, .Timer\+Based\+Watering\+\_\+\+B1 = true, .Watering\+Interval\+\_\+\+B1 = 1440, .Watering\+Duration\+\_\+\+B1 = 30, .Pump\+Speed\+\_\+\+B1 = 100, .Time\+Out\+Pump\+\_\+\+B1 = 420, .Weight\+Based\+Watering\+\_\+\+B2 = true, .Start\+Weight\+\_\+\+B2 = 13.\+0, .Stop\+Weight\+\_\+\+B2 = 18.\+0, .Timer\+Based\+Watering\+\_\+\+B2 = true, .Watering\+Interval\+\_\+\+B2 = 1440, .Watering\+Duration\+\_\+\+B2 = 30, .Pump\+Speed\+\_\+\+B2 = 100, .Time\+Out\+Pump\+\_\+\+B2 = 420\}}
+
+
+
+Definition at line 130 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_ab97c074d1d101e3ebad215e5050a369b}\label{structSettings_ab97c074d1d101e3ebad215e5050a369b}} 
+\index{Settings@{Settings}!HempyPump1@{HempyPump1}}
+\index{HempyPump1@{HempyPump1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{HempyPump1}{HempyPump1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1WaterPumpSettings}{Water\+Pump\+Settings}} Settings\+::\+Hempy\+Pump1 = \{.Pump\+Pin = 3, .Pump\+Pin\+Negative\+Logic = false, .Pump\+Enabled = true, .Speed = 70, .Speed\+Low\+Limit = 30, .Pump\+Time\+Out = 420\}}
+
+
+
+Pumps do not need a bypass solenoid. 
+
+
+
+Definition at line 96 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_ace005f695de72f1325e24b600163b4fa}\label{structSettings_ace005f695de72f1325e24b600163b4fa}} 
+\index{Settings@{Settings}!HempyPump2@{HempyPump2}}
+\index{HempyPump2@{HempyPump2}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{HempyPump2}{HempyPump2}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1WaterPumpSettings}{Water\+Pump\+Settings}} Settings\+::\+Hempy\+Pump2 = \{.Pump\+Pin = 5, .Pump\+Pin\+Negative\+Logic = false, .Pump\+Enabled = true, .Speed = 70, .Speed\+Low\+Limit = 30, .Pump\+Time\+Out = 420\}}
+
+
+
+Pumps do not need a bypass solenoid. 
+
+
+
+Definition at line 97 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_ab4e978c3bd46bc349e83231c51609ae3}\label{structSettings_ab4e978c3bd46bc349e83231c51609ae3}} 
+\index{Settings@{Settings}!IFan@{IFan}}
+\index{IFan@{IFan}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{IFan}{IFan}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1FanSettings}{Fan\+Settings}} Settings\+::\+I\+Fan = \{.On\+Off\+Pin = 25, .Speed\+Pin = 26\}}
+
+
+
+Definition at line 98 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a09771e5b5bdc58f62c2f38db6648b9ff}\label{structSettings_a09771e5b5bdc58f62c2f38db6648b9ff}} 
+\index{Settings@{Settings}!Lt1@{Lt1}}
+\index{Lt1@{Lt1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{Lt1}{Lt1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1LightsSettings}{Lights\+Settings}} Settings\+::\+Lt1 = \{.Relay\+Pin = 29, .Dimming\+Pin = 11, .Dimming\+Limit = 16, .Dimming\+Duration = 10, .Brightness = 75, .Timer\+Enabled = true, .On\+Hour = 4, .On\+Minute = 20, .Off\+Hour = 16, .Off\+Minute = 20, .Fading\+Enabled = true, .Fading\+Interval = 1, .Fading\+Increments = 1\}}
+
+
+
+Creating a Light\+Settings instance, passing in the unique parameters. 
+
+
+
+Definition at line 158 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a5d7c18bf01bb1f3443e73c7416d44c06}\label{structSettings_a5d7c18bf01bb1f3443e73c7416d44c06}} 
+\index{Settings@{Settings}!Lt2@{Lt2}}
+\index{Lt2@{Lt2}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{Lt2}{Lt2}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1LightsSettings}{Lights\+Settings}} Settings\+::\+Lt2 = \{.Relay\+Pin = 24, .Dimming\+Pin = 12, .Dimming\+Limit = 6, .Dimming\+Duration = 10, .Brightness = 55, .Timer\+Enabled = true, .On\+Hour = 4, .On\+Minute = 20, .Off\+Hour = 16, .Off\+Minute = 20, .Fading\+Enabled = true, .Fading\+Interval = 1, .Fading\+Increments = 1\}}
+
+
+
+Creating a Light\+Settings instance, passing in the unique parameters. 
+
+
+
+Definition at line 159 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a499fd8a31b36a6dc07df6719197b5d5e}\label{structSettings_a499fd8a31b36a6dc07df6719197b5d5e}} 
+\index{Settings@{Settings}!LtSen1@{LtSen1}}
+\index{LtSen1@{LtSen1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{LtSen1}{LtSen1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1LightSensorSettings}{Light\+Sensor\+Settings}} Settings\+::\+Lt\+Sen1 = \{.Digital\+Pin = 4, .Analog\+Pin = A0\}}
+
+
+
+Definition at line 138 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_acf1b55c13b029f141c830fc43b6f795e}\label{structSettings_acf1b55c13b029f141c830fc43b6f795e}} 
+\index{Settings@{Settings}!Main1@{Main1}}
+\index{Main1@{Main1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{Main1}{Main1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1MainModuleSettings}{Main\+Module\+Settings}} Settings\+::\+Main1 = \{.Report\+To\+Google\+Sheets = true, .Sheets\+Reporting\+Frequency = 30\}}
+
+
+
+Definition at line 108 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_aaa7eb601917b369479553ede68e16581}\label{structSettings_aaa7eb601917b369479553ede68e16581}} 
+\index{Settings@{Settings}!Metric@{Metric}}
+\index{Metric@{Metric}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{Metric}{Metric}}
+{\footnotesize\ttfamily bool Settings\+::\+Metric = true}
+
+
+
+\mbox{\hyperlink{classSwitch}{Switch}} between Imperial/\+Metric units. If changed update the default temp and pressure values below too. 
+
+
+
+Definition at line 54 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a14bf23feee28df79fd6e70f40842cd48}\label{structSettings_a14bf23feee28df79fd6e70f40842cd48}} 
+\index{Settings@{Settings}!PHSen1@{PHSen1}}
+\index{PHSen1@{PHSen1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{PHSen1}{PHSen1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1PHSensorSettings}{P\+H\+Sensor\+Settings}} Settings\+::\+P\+H\+Sen1 = \{.Pin = A0, .Slope = -\/0.\+031199, .Intercept = 22.\+557617\}}
+
+
+
+Update this to your own PH meter calibration values\+: \href{https://sites.google.com/site/growboxguy/arduino/reservoir-module?authuser=0\#h.p_PGMrIJ9iRr0c}{\texttt{ https\+://sites.\+google.\+com/site/growboxguy/arduino/reservoir-\/module?authuser=0\#h.\+p\+\_\+\+P\+G\+Mr\+I\+J9i\+Rr0c}}. 
+
+
+
+Definition at line 70 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a633ec2a87581e7bbd5e124b5cfb3fb80}\label{structSettings_a633ec2a87581e7bbd5e124b5cfb3fb80}} 
+\index{Settings@{Settings}!Pres1@{Pres1}}
+\index{Pres1@{Pres1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{Pres1}{Pres1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1PressureSensorSettings}{Pressure\+Sensor\+Settings}} Settings\+::\+Pres1 = \{.Pin = A7, .Offset = 0.\+57, .Ratio = 2.\+7\}}
+
+
+
+Definition at line 73 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_ad9fb19f404ca997b1fc964e24178cdad}\label{structSettings_ad9fb19f404ca997b1fc964e24178cdad}} 
+\index{Settings@{Settings}!PushingBoxLogRelayID@{PushingBoxLogRelayID}}
+\index{PushingBoxLogRelayID@{PushingBoxLogRelayID}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{PushingBoxLogRelayID}{PushingBoxLogRelayID}}
+{\footnotesize\ttfamily char Settings\+::\+Pushing\+Box\+Log\+Relay\+ID\mbox{[}Max\+Word\+Length\mbox{]} = \{\char`\"{}v755877\+C\+F53383\+E1\char`\"{}\}}
+
+
+
+U\+P\+D\+A\+TE T\+H\+IS Device\+ID of the Pushing\+Box logging scenario\+: \href{https://sites.google.com/site/growboxguy/arduino/logging}{\texttt{ https\+://sites.\+google.\+com/site/growboxguy/arduino/logging}}. 
+
+
+
+Definition at line 55 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a10455d02c43f3c699a25ad37a2f3013a}\label{structSettings_a10455d02c43f3c699a25ad37a2f3013a}} 
+\index{Settings@{Settings}!ReservoirMod1@{ReservoirMod1}}
+\index{ReservoirMod1@{ReservoirMod1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{ReservoirMod1}{ReservoirMod1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1ReservoirModuleSettings}{Reservoir\+Module\+Settings}} Settings\+::\+Reservoir\+Mod1 = \{\}}
+
+
+
+Default settings for the Hempy \mbox{\hyperlink{classModule}{Module}}. 
+
+
+
+Definition at line 165 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a8a8e8440de1c81b9a0db84cc701c47e8}\label{structSettings_a8a8e8440de1c81b9a0db84cc701c47e8}} 
+\index{Settings@{Settings}!Sound1@{Sound1}}
+\index{Sound1@{Sound1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{Sound1}{Sound1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1SoundSettings}{Sound\+Settings}} Settings\+::\+Sound1 = \{.Pin = 2\}}
+
+
+
+Definition at line 173 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a04ff80018a76e8e43ec93b400fdd5175}\label{structSettings_a04ff80018a76e8e43ec93b400fdd5175}} 
+\index{Settings@{Settings}!Weight1@{Weight1}}
+\index{Weight1@{Weight1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{Weight1}{Weight1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1WeightSensorSettings}{Weight\+Sensor\+Settings}} Settings\+::\+Weight1 = \{.D\+T\+Pin = A0, .S\+C\+K\+Pin = A1, .Offset = 19793, .Scale = -\/22280.\+70\}}
+
+
+
+Generate the calibration values using\+: \href{https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_Aero/Test-WeightSensor_Aero.ino}{\texttt{ https\+://github.\+com/growboxguy/\+Gbox420/blob/master/\+Test\+\_\+\+Sketches/\+Test-\/\+Weight\+Sensor\+\_\+\+Aero/\+Test-\/\+Weight\+Sensor\+\_\+\+Aero.\+ino}}. 
+
+Update the calibration values here for the Weight Sensor.
+
+Waste Reservoir 1 Weight Sensor -\/ Generate the calibration values using\+: \href{https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino}{\texttt{ https\+://github.\+com/growboxguy/\+Gbox420/blob/master/\+Test\+\_\+\+Sketches/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Waste\+Platforms/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Waste\+Platforms.\+ino}}. 
+
+Definition at line 107 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a9df2a50bb560bafbbbc9782d42dbfc4e}\label{structSettings_a9df2a50bb560bafbbbc9782d42dbfc4e}} 
+\index{Settings@{Settings}!WeightB1@{WeightB1}}
+\index{WeightB1@{WeightB1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{WeightB1}{WeightB1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1WeightSensorSettings}{Weight\+Sensor\+Settings}} Settings\+::\+Weight\+B1 = \{.D\+T\+Pin = 4, .S\+C\+K\+Pin = 6, .Offset = -\/163641, .Scale = -\/21362.\+00\}}
+
+
+
+Bucket 1 Weight Sensor -\/ Generate the calibration values using\+: \href{https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino}{\texttt{ https\+://github.\+com/growboxguy/\+Gbox420/blob/master/\+Test\+\_\+\+Sketches/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Bucket\+Platforms/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Bucket\+Platforms.\+ino}}. 
+
+
+
+Definition at line 107 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_ab4a13b6a2857b5b817fe580f396d39d2}\label{structSettings_ab4a13b6a2857b5b817fe580f396d39d2}} 
+\index{Settings@{Settings}!WeightB2@{WeightB2}}
+\index{WeightB2@{WeightB2}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{WeightB2}{WeightB2}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1WeightSensorSettings}{Weight\+Sensor\+Settings}} Settings\+::\+Weight\+B2 = \{.D\+T\+Pin = 7, .S\+C\+K\+Pin = 8, .Offset = 402140, .Scale = -\/21218.\+50\}}
+
+
+
+Bucket 2 Weight Sensor -\/ Generate the calibration values using\+: \href{https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino}{\texttt{ https\+://github.\+com/growboxguy/\+Gbox420/blob/master/\+Test\+\_\+\+Sketches/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Bucket\+Platforms/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Bucket\+Platforms.\+ino}}. 
+
+
+
+Definition at line 108 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a29e364c9912c6f0900727b832d57b4ce}\label{structSettings_a29e364c9912c6f0900727b832d57b4ce}} 
+\index{Settings@{Settings}!WeightWR1@{WeightWR1}}
+\index{WeightWR1@{WeightWR1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{WeightWR1}{WeightWR1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1WeightSensorSettings}{Weight\+Sensor\+Settings}} Settings\+::\+Weight\+W\+R1 = \{.D\+T\+Pin = A0, .S\+C\+K\+Pin = A1, .Offset = -\/67842, .Scale = -\/22499.\+50\}}
+
+
+
+Waste Reservoir 1 Weight Sensor -\/ Generate the calibration values using\+: \href{https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino}{\texttt{ https\+://github.\+com/growboxguy/\+Gbox420/blob/master/\+Test\+\_\+\+Sketches/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Waste\+Platforms/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Waste\+Platforms.\+ino}}. 
+
+
+
+Definition at line 109 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_a6f276df4b52aa66b7ac57a85801a0553}\label{structSettings_a6f276df4b52aa66b7ac57a85801a0553}} 
+\index{Settings@{Settings}!WeightWR2@{WeightWR2}}
+\index{WeightWR2@{WeightWR2}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{WeightWR2}{WeightWR2}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1WeightSensorSettings}{Weight\+Sensor\+Settings}} Settings\+::\+Weight\+W\+R2 = \{.D\+T\+Pin = A2, .S\+C\+K\+Pin = A3, .Offset = 266229, .Scale = -\/20892.\+00\}}
+
+
+
+Waste Reservoir 2 Weight Sensor -\/ Generate the calibration values using\+: \href{https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino}{\texttt{ https\+://github.\+com/growboxguy/\+Gbox420/blob/master/\+Test\+\_\+\+Sketches/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Waste\+Platforms/\+Test-\/\+Weight\+Sensor\+\_\+\+Hempy\+Waste\+Platforms.\+ino}}. 
+
+
+
+Definition at line 110 of file Settings.\+h.
+
+\mbox{\Hypertarget{structSettings_afa4a8fc0205dc74f3ecd7be1e105efd4}\label{structSettings_afa4a8fc0205dc74f3ecd7be1e105efd4}} 
+\index{Settings@{Settings}!WTemp1@{WTemp1}}
+\index{WTemp1@{WTemp1}!Settings@{Settings}}
+\doxysubsubsection{\texorpdfstring{WTemp1}{WTemp1}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structSettings_1_1WaterTempSensorSettings}{Water\+Temp\+Sensor\+Settings}} Settings\+::\+W\+Temp1 = \{.Pin = 4\}}
+
+
+
+Data(yellow) -\/ D\+S18\+B20 waterproof temp sensor. 
+
+
+
+Definition at line 91 of file Settings.\+h.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Gbox420\+\_\+\+Mega\+\_\+\+Main/\mbox{\hyperlink{Gbox420__Mega__Main_2Settings_8h}{Settings.\+h}}\end{DoxyCompactItemize}

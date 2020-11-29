@@ -3,12 +3,10 @@
 ///< This class represents the website component of a HempyModule
 ///< Allows controlling the HempyModule wirelessly and receiving a status report from it
 
-#include "TimeLib.h" ///< keeping track of time
+#include "TimeLib.h" // Keeping track of time
 #include "../Components_Web/420Common_Web.h"
 #include "../Components_Web/420Module_Web.h"
 #include "../WirelessCommands_Hempy.h"
-
-///< forward declaration of classes
 
 class HempyModule_Web : public Common_Web
 {

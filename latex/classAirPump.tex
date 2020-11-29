@@ -1,0 +1,268 @@
+\hypertarget{classAirPump}{}\doxysection{Air\+Pump Class Reference}
+\label{classAirPump}\index{AirPump@{AirPump}}
+
+
+$<$ Air Pump controller  
+
+
+
+
+{\ttfamily \#include $<$Air\+Pump.\+h$>$}
+
+
+
+Inheritance diagram for Air\+Pump\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=164pt]{classAirPump__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Air\+Pump\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{classAirPump__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classAirPump_aedf30b103454afa9821cb0ec73a7fee2}{Air\+Pump}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\mbox{\hyperlink{classCommon_aeea91a726dbe988e515057b32ba0726f}{Name}}, \mbox{\hyperlink{classModule}{Module}} $\ast$\mbox{\hyperlink{classAirPump_a180858064ed6a5511a9907f3d4fbe4a5}{Parent}}, \mbox{\hyperlink{structSettings_1_1AirPumpSettings}{Settings\+::\+Air\+Pump\+Settings}} $\ast$Default\+Settings)
+\begin{DoxyCompactList}\small\item\em $<$ \mbox{\hyperlink{classAirPump}{Air\+Pump}} controller (2 speed) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classAirPump_a01551d165fc6ac14a4e625961fbf584b}{refresh\+\_\+\+Minute}} ()
+\item 
+void \mbox{\hyperlink{classAirPump_a8e17db065bec765838eb696af9d18ad0}{report}} ()
+\item 
+void \mbox{\hyperlink{classAirPump_a2545e4f11f9004488deec68ab74afea7}{Turn\+On}} ()
+\item 
+void \mbox{\hyperlink{classAirPump_adbce295ddc8dd194850ebfbfabb343e5}{Turn\+Off}} ()
+\item 
+bool \mbox{\hyperlink{classAirPump_a0274edf60781c3a7b6fc6996f99e1438}{get\+State}} ()
+\item 
+char $\ast$ \mbox{\hyperlink{classAirPump_a005d7f25d77783b6f24fed32084e2421}{get\+State\+To\+Text}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classAirPump_a1ddf4b37cff43430563de75c2c50b9cf}{check\+Status}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classModule}{Module}} $\ast$ \mbox{\hyperlink{classAirPump_a180858064ed6a5511a9907f3d4fbe4a5}{Parent}}
+\item 
+bool $\ast$ \mbox{\hyperlink{classAirPump_a5f0fc3d43fcc0f10d4dee751fb637ea3}{State}}
+\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classAirPump_a147ddfae7b43d94550e170d2cc3ea745}{Pin}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+$<$ Air Pump controller 
+
+Definition at line 8 of file Air\+Pump.\+h.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classAirPump_aedf30b103454afa9821cb0ec73a7fee2}\label{classAirPump_aedf30b103454afa9821cb0ec73a7fee2}} 
+\index{AirPump@{AirPump}!AirPump@{AirPump}}
+\index{AirPump@{AirPump}!AirPump@{AirPump}}
+\doxysubsubsection{\texorpdfstring{AirPump()}{AirPump()}}
+{\footnotesize\ttfamily Air\+Pump\+::\+Air\+Pump (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\mbox{\hyperlink{classModule}{Module}} $\ast$}]{Parent,  }\item[{\mbox{\hyperlink{structSettings_1_1AirPumpSettings}{Settings\+::\+Air\+Pump\+Settings}} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+$<$ \mbox{\hyperlink{classAirPump}{Air\+Pump}} controller (2 speed) 
+
+$<$ Turn relay off initially
+
+Definition at line 6 of file Air\+Pump.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classAirPump_aedf30b103454afa9821cb0ec73a7fee2_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classAirPump_a1ddf4b37cff43430563de75c2c50b9cf}\label{classAirPump_a1ddf4b37cff43430563de75c2c50b9cf}} 
+\index{AirPump@{AirPump}!checkStatus@{checkStatus}}
+\index{checkStatus@{checkStatus}!AirPump@{AirPump}}
+\doxysubsubsection{\texorpdfstring{checkStatus()}{checkStatus()}}
+{\footnotesize\ttfamily void Air\+Pump\+::check\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+$<$ True turns relay ON (L\+OW signal activates the Relay)
+
+Definition at line 34 of file Air\+Pump.\+cpp.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classAirPump_a1ddf4b37cff43430563de75c2c50b9cf_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classAirPump_a0274edf60781c3a7b6fc6996f99e1438}\label{classAirPump_a0274edf60781c3a7b6fc6996f99e1438}} 
+\index{AirPump@{AirPump}!getState@{getState}}
+\index{getState@{getState}!AirPump@{AirPump}}
+\doxysubsubsection{\texorpdfstring{getState()}{getState()}}
+{\footnotesize\ttfamily bool Air\+Pump\+::get\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 58 of file Air\+Pump.\+cpp.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classAirPump_a0274edf60781c3a7b6fc6996f99e1438_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classAirPump_a005d7f25d77783b6f24fed32084e2421}\label{classAirPump_a005d7f25d77783b6f24fed32084e2421}} 
+\index{AirPump@{AirPump}!getStateToText@{getStateToText}}
+\index{getStateToText@{getStateToText}!AirPump@{AirPump}}
+\doxysubsubsection{\texorpdfstring{getStateToText()}{getStateToText()}}
+{\footnotesize\ttfamily char $\ast$ Air\+Pump\+::get\+State\+To\+Text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 63 of file Air\+Pump.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=330pt]{classAirPump_a005d7f25d77783b6f24fed32084e2421_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classAirPump_a005d7f25d77783b6f24fed32084e2421_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classAirPump_a01551d165fc6ac14a4e625961fbf584b}\label{classAirPump_a01551d165fc6ac14a4e625961fbf584b}} 
+\index{AirPump@{AirPump}!refresh\_Minute@{refresh\_Minute}}
+\index{refresh\_Minute@{refresh\_Minute}!AirPump@{AirPump}}
+\doxysubsubsection{\texorpdfstring{refresh\_Minute()}{refresh\_Minute()}}
+{\footnotesize\ttfamily void Air\+Pump\+::refresh\+\_\+\+Minute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a14e4462a94bd118028ce1d487ca0292c}{Common}}.
+
+
+
+Definition at line 27 of file Air\+Pump.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classAirPump_a01551d165fc6ac14a4e625961fbf584b_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classAirPump_a8e17db065bec765838eb696af9d18ad0}\label{classAirPump_a8e17db065bec765838eb696af9d18ad0}} 
+\index{AirPump@{AirPump}!report@{report}}
+\index{report@{report}!AirPump@{AirPump}}
+\doxysubsubsection{\texorpdfstring{report()}{report()}}
+{\footnotesize\ttfamily void Air\+Pump\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+$<$ clear variable
+
+Reimplemented from \mbox{\hyperlink{classCommon_a9e60e2c26a5f4d72342a59a969954636}{Common}}.
+
+
+
+Definition at line 18 of file Air\+Pump.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classAirPump_a8e17db065bec765838eb696af9d18ad0_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classAirPump_adbce295ddc8dd194850ebfbfabb343e5}\label{classAirPump_adbce295ddc8dd194850ebfbfabb343e5}} 
+\index{AirPump@{AirPump}!TurnOff@{TurnOff}}
+\index{TurnOff@{TurnOff}!AirPump@{AirPump}}
+\doxysubsubsection{\texorpdfstring{TurnOff()}{TurnOff()}}
+{\footnotesize\ttfamily void Air\+Pump\+::\+Turn\+Off (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 42 of file Air\+Pump.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classAirPump_adbce295ddc8dd194850ebfbfabb343e5_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classAirPump_a2545e4f11f9004488deec68ab74afea7}\label{classAirPump_a2545e4f11f9004488deec68ab74afea7}} 
+\index{AirPump@{AirPump}!TurnOn@{TurnOn}}
+\index{TurnOn@{TurnOn}!AirPump@{AirPump}}
+\doxysubsubsection{\texorpdfstring{TurnOn()}{TurnOn()}}
+{\footnotesize\ttfamily void Air\+Pump\+::\+Turn\+On (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 50 of file Air\+Pump.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classAirPump_a2545e4f11f9004488deec68ab74afea7_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classAirPump_a180858064ed6a5511a9907f3d4fbe4a5}\label{classAirPump_a180858064ed6a5511a9907f3d4fbe4a5}} 
+\index{AirPump@{AirPump}!Parent@{Parent}}
+\index{Parent@{Parent}!AirPump@{AirPump}}
+\doxysubsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classModule}{Module}}$\ast$ Air\+Pump\+::\+Parent\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 21 of file Air\+Pump.\+h.
+
+\mbox{\Hypertarget{classAirPump_a147ddfae7b43d94550e170d2cc3ea745}\label{classAirPump_a147ddfae7b43d94550e170d2cc3ea745}} 
+\index{AirPump@{AirPump}!Pin@{Pin}}
+\index{Pin@{Pin}!AirPump@{AirPump}}
+\doxysubsubsection{\texorpdfstring{Pin}{Pin}}
+{\footnotesize\ttfamily uint8\+\_\+t$\ast$ Air\+Pump\+::\+Pin\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 23 of file Air\+Pump.\+h.
+
+\mbox{\Hypertarget{classAirPump_a5f0fc3d43fcc0f10d4dee751fb637ea3}\label{classAirPump_a5f0fc3d43fcc0f10d4dee751fb637ea3}} 
+\index{AirPump@{AirPump}!State@{State}}
+\index{State@{State}!AirPump@{AirPump}}
+\doxysubsubsection{\texorpdfstring{State}{State}}
+{\footnotesize\ttfamily bool$\ast$ Air\+Pump\+::\+State\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 22 of file Air\+Pump.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Gbox420\+\_\+\+Mega\+\_\+\+Main/src/\+Components/\mbox{\hyperlink{AirPump_8h}{Air\+Pump.\+h}}\item 
+Gbox420\+\_\+\+Mega\+\_\+\+Main/src/\+Components/\mbox{\hyperlink{AirPump_8cpp}{Air\+Pump.\+cpp}}\end{DoxyCompactItemize}

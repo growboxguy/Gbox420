@@ -1,0 +1,11 @@
+<map id="HempyBucket::checkWateringFinished" name="HempyBucket::checkWateringFinished">
+<area shape="rect" id="node1" title="Stops the pump when target weight or watering duration is reached." alt="" coords="5,49,223,90"/>
+<area shape="rect" id="node2" href="$classWeightSensor.html#a00d85fab4422a569a3f475d0586af926" title=" " alt="" coords="275,5,460,32"/>
+<area shape="rect" id="node3" href="$classWeightSensor.html#ac4a6f05281cc7fa0c602e2f0b2efdbaa" title=" " alt="" coords="271,56,464,83"/>
+<area shape="rect" id="node4" href="$classWaterPump.html#aa302ba1406dfa730d00626d67f5287a1" title="Turn the pump OFF." alt="" coords="282,107,453,133"/>
+<area shape="rect" id="node5" href="$classModule.html#a173624381666c28f9d33e809f067711c" title=" " alt="" coords="513,31,695,57"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="763,107,863,133"/>
+<area shape="rect" id="node7" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="525,132,683,159"/>
+<area shape="rect" id="node8" href="$classWaterPump.html#a50e73bd11d6cbfd02a89fb958813506e" title=" " alt="" coords="512,183,696,209"/>
+<area shape="rect" id="node9" href="$classModule.html#afacdeaf339646bee722be54aab7155be" title=" " alt="" coords="744,183,883,209"/>
+</map>

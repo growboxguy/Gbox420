@@ -1,0 +1,4 @@
+<map id="Switch::getState" name="Switch::getState">
+<area shape="rect" id="node1" title="Pump ON(1)/OFF(0)" alt="" coords="268,5,396,32"/>
+<area shape="rect" id="node2" href="$classAeroponics__Tank.html#a9b1c9377aec2a453e4562bca5ae7afa2" title=" " alt="" coords="5,5,220,32"/>
+</map>

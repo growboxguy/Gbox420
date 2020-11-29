@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TimeLib.h" ///< keeping track of time
+#include "TimeLib.h" // Keeping track of time
 ///< Structs for wireless communication
 
 ///< Global constants

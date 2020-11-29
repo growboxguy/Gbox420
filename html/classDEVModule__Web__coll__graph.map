@@ -1,0 +1,44 @@
+<map id="DEVModule_Web" name="DEVModule_Web">
+<area shape="rect" id="node1" title=" " alt="" coords="2080,1026,2212,1052"/>
+<area shape="rect" id="node2" href="$classCommon__Web.html" title=" " alt="" coords="997,804,1113,831"/>
+<area shape="rect" id="node4" href="$classModule__Web.html" title=" " alt="" coords="1404,1032,1509,1059"/>
+<area shape="rect" id="node7" href="$classAeroModule__Web.html" title=" " alt="" coords="1750,263,1885,290"/>
+<area shape="rect" id="node9" href="$classAeroponics__Tank__Web.html" title="&lt; Aeroponics tote with pressure tank &#45; website component" alt="" coords="1734,1879,1901,1906"/>
+<area shape="rect" id="node17" href="$classDHTSensor__Web.html" title="&lt; Digital Humidity and Temperature sensor Web (DHT11 or DHT22) &#45; website component" alt="" coords="1753,1479,1882,1506"/>
+<area shape="rect" id="node19" href="$classFan__Web.html" title="&lt; Fan controller (2 speed) &#45; website component" alt="" coords="1778,1720,1857,1747"/>
+<area shape="rect" id="node21" href="$classAeroponics__NoTank__Web.html" title="&lt; Aeroponics tote without pressure tank &#45; website component" alt="" coords="1725,884,1909,911"/>
+<area shape="rect" id="node23" href="$classDistanceSensor__Web.html" title="Class for the Ultrasonic distance sensor &#45; HC&#45;SR04 or JSN&#45;SR04T &#45; Website component." alt="" coords="1738,510,1897,536"/>
+<area shape="rect" id="node25" href="$classReservoirModule__Web.html" title=" " alt="" coords="1734,67,1901,94"/>
+<area shape="rect" id="node27" href="$classHempyModule__Web.html" title=" " alt="" coords="1741,195,1893,222"/>
+<area shape="rect" id="node29" href="$classPressureSensor__Web.html" title="&lt; Pressure sensor &#45; website component" alt="" coords="1739,755,1896,782"/>
+<area shape="rect" id="node30" href="$classLights__Web.html" title="forward declaration" alt="" coords="1769,824,1865,851"/>
+<area shape="rect" id="node32" href="$classLightSensor__Web.html" title="forward declaration" alt="" coords="1751,1304,1884,1331"/>
+<area shape="rect" id="node34" href="$classSound__Web.html" title="&lt; Sound feedback buzzer &#45; website component" alt="" coords="1769,1779,1866,1806"/>
+<area shape="rect" id="node35" href="$classWaterTempSensor__Web.html" title="&lt; DS18B20 water temperature sensor &#45; website component" alt="" coords="1730,1142,1905,1168"/>
+<area shape="rect" id="node37" href="$classWaterLevelSensor__Web.html" title="&lt; Contactless water sensor array (4 levels) &#45; website component" alt="" coords="1730,955,1905,982"/>
+<area shape="rect" id="node39" href="$classPHSensor__Web.html" title="&lt; PH sensor &#45; website component" alt="" coords="1758,1584,1877,1611"/>
+<area shape="rect" id="node41" href="$classPowerSensor__Web.html" title="&lt; PZEM004T power sensor &#45; website component" alt="" coords="1747,1026,1888,1052"/>
+<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="5,1404,87,1431"/>
+<area shape="rect" id="node5" href="$classModule.html" title=" " alt="" coords="394,1432,465,1459"/>
+<area shape="rect" id="node6" href="$classSound.html" title="&lt; Sound feedback buzzer" alt="" coords="682,1928,745,1955"/>
+<area shape="rect" id="node11" href="$classAeroponics.html" title="&lt; Aeroponics tote virtual parent class" alt="" coords="1008,1415,1103,1442"/>
+<area shape="rect" id="node12" href="$classPressureSensor.html" title="&lt; Pressure sensor" alt="" coords="652,1087,775,1114"/>
+<area shape="rect" id="node14" href="$classWaterPump.html" title="&lt; Diaphragm pump controller" alt="" coords="665,1792,762,1819"/>
+<area shape="rect" id="node15" href="$classSwitch.html" title="&lt; Represents and electronic switch like a Relay or MOSFET" alt="" coords="195,1850,261,1876"/>
+<area shape="rect" id="node18" href="$classDHTSensor.html" title="&lt; DHT11 or DHT22 Digital Humidity and Temperature sensor" alt="" coords="666,1626,761,1652"/>
+<area shape="rect" id="node20" href="$classFan.html" title="&lt; Fan controller (2 speed)" alt="" coords="691,1843,735,1870"/>
+<area shape="rect" id="node24" href="$classDistanceSensor.html" title=" " alt="" coords="652,675,775,702"/>
+<area shape="rect" id="node31" href="$classLights.html" title=" " alt="" coords="683,726,744,752"/>
+<area shape="rect" id="node33" href="$classLightSensor.html" title="&lt; LM393 Light sensor" alt="" coords="664,1538,763,1564"/>
+<area shape="rect" id="node36" href="$classWaterTempSensor.html" title="&lt; DS18B20 waterproof temperature sensor" alt="" coords="644,1323,783,1350"/>
+<area shape="rect" id="node38" href="$classWaterLevelSensor.html" title="&lt; Contactless water sensor array (4 levels)" alt="" coords="644,1036,783,1063"/>
+<area shape="rect" id="node40" href="$classPHSensor.html" title=" " alt="" coords="671,1684,755,1711"/>
+<area shape="rect" id="node42" href="$classPowerSensor.html" title="&lt; PZEM004T power sensor" alt="" coords="660,1272,767,1299"/>
+<area shape="rect" id="node8" href="$structSettings_1_1AeroModuleSettings.html" title="&lt; AeroModule default settings" alt="" coords="1349,230,1564,256"/>
+<area shape="rect" id="node10" href="$classAeroponics__Tank.html" title="&lt; Aeroponics tote with pressure tank" alt="" coords="1391,1946,1522,1972"/>
+<area shape="rect" id="node22" href="$classAeroponics__NoTank.html" title="&lt; Aeroponics tote without pressure tank" alt="" coords="1382,806,1531,832"/>
+<area shape="rect" id="node13" href="$classRollingAverage.html" title="Rolling average tracker for smoothing sensor readings. Supports float and int values only." alt="" coords="369,1280,489,1307"/>
+<area shape="rect" id="node16" href="$classSwitch__PWM.html" title="&lt; PWM controllable electronic switch like a MOSFET transistor" alt="" coords="377,1887,482,1914"/>
+<area shape="rect" id="node26" href="$structSettings_1_1ReservoirModuleSettings.html" title="&lt; ReservoirModule default settings" alt="" coords="1360,49,1553,90"/>
+<area shape="rect" id="node28" href="$structSettings_1_1HempyModuleSettings.html" title="&lt; Hempy default settings" alt="" coords="1341,128,1572,155"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="HempyModule_Web" name="HempyModule_Web">
+<area shape="rect" id="node1" title=" " alt="" coords="117,449,269,476"/>
+<area shape="rect" id="node2" href="$classCommon__Web.html" title=" " alt="" coords="5,153,121,180"/>
+<area shape="rect" id="node4" href="$classModule__Web.html" title=" " alt="" coords="140,360,245,387"/>
+<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="243,5,324,32"/>
+<area shape="rect" id="node5" href="$classModule.html" title=" " alt="" coords="271,153,341,180"/>
+<area shape="rect" id="node6" href="$classSound.html" title="&lt; Sound feedback buzzer" alt="" coords="313,360,376,387"/>
+<area shape="rect" id="node7" href="$structSettings_1_1HempyModuleSettings.html" title="&lt; Hempy default settings" alt="" coords="400,360,631,387"/>
+</map>

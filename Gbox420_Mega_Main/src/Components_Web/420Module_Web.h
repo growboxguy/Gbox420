@@ -5,7 +5,7 @@
 #include "ELClientWebServer.h" ///< ESP-link - WebServer API
 #include "ELClientRest.h"      ///< ESP-link - REST API
 #include "ELClientCmd.h"       ///< ESP-link - Get current time from the internet using NTP
-#include "TimeLib.h"           ///< Keeping track of time
+#include "TimeLib.h"           // Keeping track of time
 #include "RF24.h"
 #include "SPI.h"
 #include "nRF24L01.h"

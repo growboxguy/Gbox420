@@ -1,0 +1,9 @@
+<map id="Lights_Web" name="Lights_Web">
+<area shape="rect" id="node1" title="forward declaration" alt="" coords="366,449,462,476"/>
+<area shape="rect" id="node2" href="$classLights.html" title=" " alt="" coords="78,360,139,387"/>
+<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="73,5,155,32"/>
+<area shape="rect" id="node4" href="$classModule.html" title=" " alt="" coords="219,153,289,180"/>
+<area shape="rect" id="node5" href="$classSound.html" title="&lt; Sound feedback buzzer" alt="" coords="164,360,227,387"/>
+<area shape="rect" id="node6" href="$classCommon__Web.html" title=" " alt="" coords="379,153,495,180"/>
+<area shape="rect" id="node7" href="$classModule__Web.html" title=" " alt="" coords="361,360,467,387"/>
+</map>

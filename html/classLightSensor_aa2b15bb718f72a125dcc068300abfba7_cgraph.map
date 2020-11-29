@@ -1,0 +1,6 @@
+<map id="LightSensor::LightSensor" name="LightSensor::LightSensor">
+<area shape="rect" id="node1" title=" " alt="" coords="5,71,188,98"/>
+<area shape="rect" id="node2" href="$classModule.html#a2dffaa526893d852b722cf890a6821c6" title="Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method." alt="" coords="236,5,444,47"/>
+<area shape="rect" id="node3" href="$classModule.html#aee2cbab440d38d29948205820ad50be8" title="Subscribing to the report queue: Calls the report() method." alt="" coords="239,71,441,98"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging" alt="" coords="290,122,390,149"/>
+</map>

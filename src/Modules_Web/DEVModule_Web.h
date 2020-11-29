@@ -12,7 +12,7 @@
 #include "ELClientRest.h" ///< ESP-link - REST API
 #include "../WirelessCommands_Hempy.h"
 
-///< forward declaration of classes
+// forward declaration of classes
 class WaterPump;
 class DHTSensor_Web;
 class DistanceSensor_Web;

@@ -1,0 +1,4 @@
+<map id="ReservoirModuleCommand" name="ReservoirModuleCommand">
+<area shape="rect" id="node1" title="&lt; Max 32 bytes. Command sent by the Main module" alt="" coords="7,80,206,107"/>
+<area shape="rect" id="node2" href="$structReservoirCommonTemplate.html" title="&lt; Shared between Command and Respone packages" alt="" coords="5,5,208,32"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="Fan_Web::Fan_Web" name="Fan_Web::Fan_Web">
+<area shape="rect" id="node1" title=" " alt="" coords="5,101,149,127"/>
+<area shape="rect" id="node2" href="$classModule__Web.html#ac449bdaf2aae62ba30ee63a58b1bdd5d" title=" " alt="" coords="215,5,416,47"/>
+<area shape="rect" id="node3" href="$classModule__Web.html#a9b1a806569076aa701e961d54f888447" title=" " alt="" coords="197,71,433,98"/>
+<area shape="rect" id="node4" href="$classModule__Web.html#adadb1643a6b460c0d53a7341bb356ee1" title="Subscribing to the Website button press event: Calls the websiteEvent_Button() method." alt="" coords="214,123,417,164"/>
+<area shape="rect" id="node5" href="$classModule__Web.html#aee7880f65926af22ba1b83a73607e3b6" title="Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method." alt="" coords="214,188,417,229"/>
+</map>

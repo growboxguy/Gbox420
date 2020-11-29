@@ -1,0 +1,10 @@
+<map id="PressureSensor_Web" name="PressureSensor_Web">
+<area shape="rect" id="node1" title="&lt; Pressure sensor &#45; website component" alt="" coords="462,449,620,476"/>
+<area shape="rect" id="node2" href="$classPressureSensor.html" title="&lt; Pressure sensor" alt="" coords="89,360,212,387"/>
+<area shape="rect" id="node3" href="$classCommon.html" title=" " alt="" coords="200,5,282,32"/>
+<area shape="rect" id="node5" href="$classModule.html" title=" " alt="" coords="320,153,391,180"/>
+<area shape="rect" id="node6" href="$classSound.html" title="&lt; Sound feedback buzzer" alt="" coords="286,360,348,387"/>
+<area shape="rect" id="node7" href="$classCommon__Web.html" title=" " alt="" coords="506,153,622,180"/>
+<area shape="rect" id="node4" href="$classRollingAverage.html" title="Rolling average tracker for smoothing sensor readings. Supports float and int values only." alt="" coords="40,153,160,180"/>
+<area shape="rect" id="node8" href="$classModule__Web.html" title=" " alt="" coords="488,360,594,387"/>
+</map>

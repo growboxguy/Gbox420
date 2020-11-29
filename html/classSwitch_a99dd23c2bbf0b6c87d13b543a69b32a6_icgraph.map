@@ -1,0 +1,9 @@
+<map id="Switch::turnOn" name="Switch::turnOn">
+<area shape="rect" id="node1" title=" " alt="" coords="553,56,671,83"/>
+<area shape="rect" id="node2" href="$classSwitch.html#a7783960e9e4926350b20ce0002d5c489" title="invert the current state" alt="" coords="357,5,450,32"/>
+<area shape="rect" id="node3" href="$classWaterPump.html#af2bf227984554917e66c713cadf32660" title=" " alt="" coords="313,56,494,83"/>
+<area shape="rect" id="node4" href="$classAeroponics__Tank.html#a5770080bacf50e9e02fa6b431016d47a" title=" " alt="" coords="301,107,505,133"/>
+<area shape="rect" id="node5" href="$classAeroponics__Tank.html#ac4e80c9dc6754dd425ac699484f3e2c1" title=" " alt="" coords="5,56,253,83"/>
+<area shape="rect" id="node6" href="$classAeroponics__Tank.html#a9b1c9377aec2a453e4562bca5ae7afa2" title=" " alt="" coords="22,107,237,133"/>
+<area shape="rect" id="node7" href="$classAeroponics__Tank__Web.html#a2dea9353cb1709b51f496d8d0caa928e" title=" " alt="" coords="45,158,213,199"/>
+</map>

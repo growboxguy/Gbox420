@@ -1,0 +1,14 @@
+<map id="Fan_Web::websiteEvent_Button" name="Fan_Web::websiteEvent_Button">
+<area shape="rect" id="node1" title=" " alt="" coords="5,125,180,166"/>
+<area shape="rect" id="node2" href="$classFan.html#a492f2551cf8f05d4ce64911807269764" title=" " alt="" coords="263,5,417,32"/>
+<area shape="rect" id="node3" href="$classCommon.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title=" " alt="" coords="228,56,452,83"/>
+<area shape="rect" id="node4" href="$classCommon.html#a0192d295366bf1e966d8b58a3ce57554" title="When it return true the component belongs to this object." alt="" coords="229,107,451,133"/>
+<area shape="rect" id="node5" href="$classFan.html#ad462f4c80b5024a1266e0a070527425e" title=" " alt="" coords="269,208,411,235"/>
+<area shape="rect" id="node10" href="$classFan.html#a817f97adfe3990ef302f49359b3237f7" title=" " alt="" coords="271,259,409,285"/>
+<area shape="rect" id="node11" href="$classFan.html#af5a22c8800d5a4f3295f44a313af71d2" title=" " alt="" coords="291,157,389,184"/>
+<area shape="rect" id="node6" href="$classModule.html#afacdeaf339646bee722be54aab7155be" title=" " alt="" coords="521,157,660,184"/>
+<area shape="rect" id="node7" href="$classFan.html#a32c99a0575098a2600ea3c9f27013a98" title=" " alt="" coords="514,208,667,235"/>
+<area shape="rect" id="node8" href="$classModule.html#a173624381666c28f9d33e809f067711c" title=" " alt="" coords="500,259,681,285"/>
+<area shape="rect" id="node9" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title=" " alt="" coords="513,309,669,336"/>
+<area shape="rect" id="node12" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title=" " alt="" coords="512,107,669,133"/>
+</map>

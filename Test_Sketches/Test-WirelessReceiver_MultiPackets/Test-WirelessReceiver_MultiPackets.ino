@@ -5,7 +5,7 @@
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
-#include "TimeLib.h" ///< keeping track of time
+#include "TimeLib.h" // Keeping track of time
 #include "WirelessCommands_Test.h"
 
 const uint8_t PayloadSize = 32; ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+

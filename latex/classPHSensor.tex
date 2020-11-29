@@ -1,0 +1,376 @@
+\hypertarget{classPHSensor}{}\doxysection{P\+H\+Sensor Class Reference}
+\label{classPHSensor}\index{PHSensor@{PHSensor}}
+
+
+{\ttfamily \#include $<$P\+H\+Sensor.\+h$>$}
+
+
+
+Inheritance diagram for P\+H\+Sensor\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=169pt]{classPHSensor__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for P\+H\+Sensor\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classPHSensor__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classPHSensor_afe168dbbb29e3ecda521de4ef47ad6ee}{P\+H\+Sensor}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\mbox{\hyperlink{classCommon_aeea91a726dbe988e515057b32ba0726f}{Name}}, \mbox{\hyperlink{classModule}{Module}} $\ast$\mbox{\hyperlink{classPHSensor_ac969f556dfd81281095f4b3af97105c6}{Parent}}, \mbox{\hyperlink{structSettings_1_1PHSensorSettings}{Settings\+::\+P\+H\+Sensor\+Settings}} $\ast$Default\+Settings)
+\item 
+void \mbox{\hyperlink{classPHSensor_ae5cb84e8da2e2d09cf8e8a840693cc25}{refresh\+\_\+\+Five\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classPHSensor_af9730aece2d3bcb71ac9d4f1e6f96f1e}{report}} ()
+\item 
+float \mbox{\hyperlink{classPHSensor_ad277a03459aff975ad61039dfe22635d}{get\+PH}} (bool Return\+Average=true)
+\item 
+char $\ast$ \mbox{\hyperlink{classPHSensor_afa1a5158732cd57ffb41ae089bf8850f}{get\+P\+H\+Text}} (bool Return\+Average=true)
+\item 
+\mbox{\hyperlink{classPHSensor_afe168dbbb29e3ecda521de4ef47ad6ee}{P\+H\+Sensor}} (const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$\mbox{\hyperlink{classCommon_aeea91a726dbe988e515057b32ba0726f}{Name}}, \mbox{\hyperlink{classModule}{Module}} $\ast$\mbox{\hyperlink{classPHSensor_ac969f556dfd81281095f4b3af97105c6}{Parent}}, \mbox{\hyperlink{structSettings_1_1PHSensorSettings}{Settings\+::\+P\+H\+Sensor\+Settings}} $\ast$Default\+Settings)
+\item 
+void \mbox{\hyperlink{classPHSensor_ae5cb84e8da2e2d09cf8e8a840693cc25}{refresh\+\_\+\+Five\+Sec}} ()
+\item 
+void \mbox{\hyperlink{classPHSensor_af9730aece2d3bcb71ac9d4f1e6f96f1e}{report}} ()
+\item 
+float \mbox{\hyperlink{classPHSensor_ad277a03459aff975ad61039dfe22635d}{get\+PH}} (bool Return\+Average=true)
+\item 
+char $\ast$ \mbox{\hyperlink{classPHSensor_a4ea187ef097a55404e3cb3dbd8214cc0}{get\+P\+H\+Text}} (bool Return\+Average=true)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classPHSensor_aefd9f4f73636b8827a22b8246cbc4dee}{update\+PH}} (bool Show\+Raw)
+\item 
+void \mbox{\hyperlink{classPHSensor_ae9b41f458fafd9ae475d9bfbbb27f8d5}{set\+Slope}} (float Value)
+\item 
+void \mbox{\hyperlink{classPHSensor_a41bd303fbad556aaf714da2f0bf4a69c}{set\+Intercept}} (float Value)
+\item 
+void \mbox{\hyperlink{classPHSensor_aefd9f4f73636b8827a22b8246cbc4dee}{update\+PH}} (bool Show\+Raw)
+\item 
+void \mbox{\hyperlink{classPHSensor_ae9b41f458fafd9ae475d9bfbbb27f8d5}{set\+Slope}} (float Value)
+\item 
+void \mbox{\hyperlink{classPHSensor_a41bd303fbad556aaf714da2f0bf4a69c}{set\+Intercept}} (float Value)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classModule}{Module}} $\ast$ \mbox{\hyperlink{classPHSensor_ac969f556dfd81281095f4b3af97105c6}{Parent}}
+\item 
+uint8\+\_\+t $\ast$ \mbox{\hyperlink{classPHSensor_a5a6b9abec4fd386ea6cc9b1b15fb2cbc}{Pin}}
+\item 
+\mbox{\hyperlink{classRollingAverage}{Rolling\+Average}} $\ast$ \mbox{\hyperlink{classPHSensor_afb34dcf01c73122064cabd52056a5b24}{PH}}
+\item 
+float $\ast$ \mbox{\hyperlink{classPHSensor_a9630af0220d3754863e93965ac8e6d5a}{Intercept}}
+\item 
+float $\ast$ \mbox{\hyperlink{classPHSensor_a5779881cfbad7c625ad536aaa031bfc3}{Slope}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line 6 of file P\+H\+Sensor.\+h.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classPHSensor_afe168dbbb29e3ecda521de4ef47ad6ee}\label{classPHSensor_afe168dbbb29e3ecda521de4ef47ad6ee}} 
+\index{PHSensor@{PHSensor}!PHSensor@{PHSensor}}
+\index{PHSensor@{PHSensor}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{PHSensor()}{PHSensor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily P\+H\+Sensor\+::\+P\+H\+Sensor (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\mbox{\hyperlink{classModule}{Module}} $\ast$}]{Parent,  }\item[{\mbox{\hyperlink{structSettings_1_1PHSensorSettings}{Settings\+::\+P\+H\+Sensor\+Settings}} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+$<$ constructor
+
+Definition at line 3 of file P\+H\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classPHSensor_afe168dbbb29e3ecda521de4ef47ad6ee_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classPHSensor_afe168dbbb29e3ecda521de4ef47ad6ee}\label{classPHSensor_afe168dbbb29e3ecda521de4ef47ad6ee}} 
+\index{PHSensor@{PHSensor}!PHSensor@{PHSensor}}
+\index{PHSensor@{PHSensor}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{PHSensor()}{PHSensor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily P\+H\+Sensor\+::\+P\+H\+Sensor (\begin{DoxyParamCaption}\item[{const \+\_\+\+\_\+\+Flash\+String\+Helper $\ast$}]{Name,  }\item[{\mbox{\hyperlink{classModule}{Module}} $\ast$}]{Parent,  }\item[{\mbox{\hyperlink{structSettings_1_1PHSensorSettings}{Settings\+::\+P\+H\+Sensor\+Settings}} $\ast$}]{Default\+Settings }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classPHSensor_ad277a03459aff975ad61039dfe22635d}\label{classPHSensor_ad277a03459aff975ad61039dfe22635d}} 
+\index{PHSensor@{PHSensor}!getPH@{getPH}}
+\index{getPH@{getPH}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{getPH()}{getPH()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float P\+H\+Sensor\+::get\+PH (\begin{DoxyParamCaption}\item[{bool}]{Return\+Average = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 44 of file P\+H\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classPHSensor_ad277a03459aff975ad61039dfe22635d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classPHSensor_ad277a03459aff975ad61039dfe22635d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classPHSensor_ad277a03459aff975ad61039dfe22635d}\label{classPHSensor_ad277a03459aff975ad61039dfe22635d}} 
+\index{PHSensor@{PHSensor}!getPH@{getPH}}
+\index{getPH@{getPH}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{getPH()}{getPH()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float P\+H\+Sensor\+::get\+PH (\begin{DoxyParamCaption}\item[{bool}]{Return\+Average = {\ttfamily true} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classPHSensor_afa1a5158732cd57ffb41ae089bf8850f}\label{classPHSensor_afa1a5158732cd57ffb41ae089bf8850f}} 
+\index{PHSensor@{PHSensor}!getPHText@{getPHText}}
+\index{getPHText@{getPHText}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{getPHText()}{getPHText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char $\ast$ P\+H\+Sensor\+::get\+P\+H\+Text (\begin{DoxyParamCaption}\item[{bool}]{Return\+Average = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 49 of file P\+H\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classPHSensor_afa1a5158732cd57ffb41ae089bf8850f_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classPHSensor_afa1a5158732cd57ffb41ae089bf8850f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classPHSensor_a4ea187ef097a55404e3cb3dbd8214cc0}\label{classPHSensor_a4ea187ef097a55404e3cb3dbd8214cc0}} 
+\index{PHSensor@{PHSensor}!getPHText@{getPHText}}
+\index{getPHText@{getPHText}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{getPHText()}{getPHText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char$\ast$ P\+H\+Sensor\+::get\+P\+H\+Text (\begin{DoxyParamCaption}\item[{bool}]{Return\+Average = {\ttfamily true} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classPHSensor_ae5cb84e8da2e2d09cf8e8a840693cc25}\label{classPHSensor_ae5cb84e8da2e2d09cf8e8a840693cc25}} 
+\index{PHSensor@{PHSensor}!refresh\_FiveSec@{refresh\_FiveSec}}
+\index{refresh\_FiveSec@{refresh\_FiveSec}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{refresh\_FiveSec()}{refresh\_FiveSec()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void P\+H\+Sensor\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}}.
+
+\mbox{\Hypertarget{classPHSensor_ae5cb84e8da2e2d09cf8e8a840693cc25}\label{classPHSensor_ae5cb84e8da2e2d09cf8e8a840693cc25}} 
+\index{PHSensor@{PHSensor}!refresh\_FiveSec@{refresh\_FiveSec}}
+\index{refresh\_FiveSec@{refresh\_FiveSec}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{refresh\_FiveSec()}{refresh\_FiveSec()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void P\+H\+Sensor\+::refresh\+\_\+\+Five\+Sec (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a604ab36b3a1d9a5bcfcb225149c82f90}{Common}}.
+
+
+
+Definition at line 16 of file P\+H\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classPHSensor_ae5cb84e8da2e2d09cf8e8a840693cc25_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classPHSensor_af9730aece2d3bcb71ac9d4f1e6f96f1e}\label{classPHSensor_af9730aece2d3bcb71ac9d4f1e6f96f1e}} 
+\index{PHSensor@{PHSensor}!report@{report}}
+\index{report@{report}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void P\+H\+Sensor\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+$<$ clear variable
+
+Reimplemented from \mbox{\hyperlink{classCommon_a9e60e2c26a5f4d72342a59a969954636}{Common}}.
+
+
+
+Definition at line 23 of file P\+H\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classPHSensor_af9730aece2d3bcb71ac9d4f1e6f96f1e_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classPHSensor_af9730aece2d3bcb71ac9d4f1e6f96f1e}\label{classPHSensor_af9730aece2d3bcb71ac9d4f1e6f96f1e}} 
+\index{PHSensor@{PHSensor}!report@{report}}
+\index{report@{report}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{report()}{report()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void P\+H\+Sensor\+::report (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classCommon_a9e60e2c26a5f4d72342a59a969954636}{Common}}.
+
+\mbox{\Hypertarget{classPHSensor_a41bd303fbad556aaf714da2f0bf4a69c}\label{classPHSensor_a41bd303fbad556aaf714da2f0bf4a69c}} 
+\index{PHSensor@{PHSensor}!setIntercept@{setIntercept}}
+\index{setIntercept@{setIntercept}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{setIntercept()}{setIntercept()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void P\+H\+Sensor\+::set\+Intercept (\begin{DoxyParamCaption}\item[{float}]{Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classPHSensor_a41bd303fbad556aaf714da2f0bf4a69c}\label{classPHSensor_a41bd303fbad556aaf714da2f0bf4a69c}} 
+\index{PHSensor@{PHSensor}!setIntercept@{setIntercept}}
+\index{setIntercept@{setIntercept}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{setIntercept()}{setIntercept()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void P\+H\+Sensor\+::set\+Intercept (\begin{DoxyParamCaption}\item[{float}]{Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 60 of file P\+H\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classPHSensor_a41bd303fbad556aaf714da2f0bf4a69c_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classPHSensor_a41bd303fbad556aaf714da2f0bf4a69c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classPHSensor_ae9b41f458fafd9ae475d9bfbbb27f8d5}\label{classPHSensor_ae9b41f458fafd9ae475d9bfbbb27f8d5}} 
+\index{PHSensor@{PHSensor}!setSlope@{setSlope}}
+\index{setSlope@{setSlope}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{setSlope()}{setSlope()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void P\+H\+Sensor\+::set\+Slope (\begin{DoxyParamCaption}\item[{float}]{Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classPHSensor_ae9b41f458fafd9ae475d9bfbbb27f8d5}\label{classPHSensor_ae9b41f458fafd9ae475d9bfbbb27f8d5}} 
+\index{PHSensor@{PHSensor}!setSlope@{setSlope}}
+\index{setSlope@{setSlope}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{setSlope()}{setSlope()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void P\+H\+Sensor\+::set\+Slope (\begin{DoxyParamCaption}\item[{float}]{Value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 54 of file P\+H\+Sensor.\+cpp.
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=331pt]{classPHSensor_ae9b41f458fafd9ae475d9bfbbb27f8d5_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classPHSensor_ae9b41f458fafd9ae475d9bfbbb27f8d5_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classPHSensor_aefd9f4f73636b8827a22b8246cbc4dee}\label{classPHSensor_aefd9f4f73636b8827a22b8246cbc4dee}} 
+\index{PHSensor@{PHSensor}!updatePH@{updatePH}}
+\index{updatePH@{updatePH}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{updatePH()}{updatePH()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void P\+H\+Sensor\+::update\+PH (\begin{DoxyParamCaption}\item[{bool}]{Show\+Raw }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 32 of file P\+H\+Sensor.\+cpp.
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classPHSensor_aefd9f4f73636b8827a22b8246cbc4dee_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classPHSensor_aefd9f4f73636b8827a22b8246cbc4dee}\label{classPHSensor_aefd9f4f73636b8827a22b8246cbc4dee}} 
+\index{PHSensor@{PHSensor}!updatePH@{updatePH}}
+\index{updatePH@{updatePH}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{updatePH()}{updatePH()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void P\+H\+Sensor\+::update\+PH (\begin{DoxyParamCaption}\item[{bool}]{Show\+Raw }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classPHSensor_a9630af0220d3754863e93965ac8e6d5a}\label{classPHSensor_a9630af0220d3754863e93965ac8e6d5a}} 
+\index{PHSensor@{PHSensor}!Intercept@{Intercept}}
+\index{Intercept@{Intercept}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{Intercept}{Intercept}}
+{\footnotesize\ttfamily float $\ast$ P\+H\+Sensor\+::\+Intercept\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 20 of file P\+H\+Sensor.\+h.
+
+\mbox{\Hypertarget{classPHSensor_ac969f556dfd81281095f4b3af97105c6}\label{classPHSensor_ac969f556dfd81281095f4b3af97105c6}} 
+\index{PHSensor@{PHSensor}!Parent@{Parent}}
+\index{Parent@{Parent}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{Parent}{Parent}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classModule}{Module}} $\ast$ P\+H\+Sensor\+::\+Parent\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 17 of file P\+H\+Sensor.\+h.
+
+\mbox{\Hypertarget{classPHSensor_afb34dcf01c73122064cabd52056a5b24}\label{classPHSensor_afb34dcf01c73122064cabd52056a5b24}} 
+\index{PHSensor@{PHSensor}!PH@{PH}}
+\index{PH@{PH}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{PH}{PH}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classRollingAverage}{Rolling\+Average}} $\ast$ P\+H\+Sensor\+::\+PH\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 19 of file P\+H\+Sensor.\+h.
+
+\mbox{\Hypertarget{classPHSensor_a5a6b9abec4fd386ea6cc9b1b15fb2cbc}\label{classPHSensor_a5a6b9abec4fd386ea6cc9b1b15fb2cbc}} 
+\index{PHSensor@{PHSensor}!Pin@{Pin}}
+\index{Pin@{Pin}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{Pin}{Pin}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ P\+H\+Sensor\+::\+Pin\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 18 of file P\+H\+Sensor.\+h.
+
+\mbox{\Hypertarget{classPHSensor_a5779881cfbad7c625ad536aaa031bfc3}\label{classPHSensor_a5779881cfbad7c625ad536aaa031bfc3}} 
+\index{PHSensor@{PHSensor}!Slope@{Slope}}
+\index{Slope@{Slope}!PHSensor@{PHSensor}}
+\doxysubsubsection{\texorpdfstring{Slope}{Slope}}
+{\footnotesize\ttfamily float $\ast$ P\+H\+Sensor\+::\+Slope\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line 21 of file P\+H\+Sensor.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Gbox420\+\_\+\+Nano\+\_\+\+Reservoir/src/\+Components/\mbox{\hyperlink{Gbox420__Nano__Reservoir_2src_2Components_2PHSensor_8h}{P\+H\+Sensor.\+h}}\item 
+Gbox420\+\_\+\+Nano\+\_\+\+Reservoir/src/\+Components/\mbox{\hyperlink{Gbox420__Nano__Reservoir_2src_2Components_2PHSensor_8cpp}{P\+H\+Sensor.\+cpp}}\end{DoxyCompactItemize}

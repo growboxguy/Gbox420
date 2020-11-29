@@ -1,0 +1,5 @@
+<map id="WaterTempSensor" name="WaterTempSensor">
+<area shape="rect" id="node1" title="&lt; DS18B20 waterproof temperature sensor" alt="" coords="23,80,162,107"/>
+<area shape="rect" id="node3" href="$classWaterTempSensor__Web.html" title="&lt; DS18B20 water temperature sensor &#45; website component" alt="" coords="5,155,180,181"/>
+<area shape="rect" id="node2" href="$classCommon.html" title=" " alt="" coords="52,5,133,32"/>
+</map>

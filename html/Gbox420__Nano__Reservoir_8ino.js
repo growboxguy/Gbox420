@@ -1,0 +1,26 @@
+var Gbox420__Nano__Reservoir_8ino =
+[
+    [ "getWirelessData", "Gbox420__Nano__Reservoir_8ino.html#a16c49958e5626b4e9844870a44edf469", null ],
+    [ "getWirelessStatus", "Gbox420__Nano__Reservoir_8ino.html#aefb388f6afb97c766f549d7c809c35f9", null ],
+    [ "loop", "Gbox420__Nano__Reservoir_8ino.html#afe461d27b9c48d5921c00d521181f12f", null ],
+    [ "runFiveSec", "Gbox420__Nano__Reservoir_8ino.html#a03cb9c97fb260fbbb47438197797a09d", null ],
+    [ "runMinute", "Gbox420__Nano__Reservoir_8ino.html#a56c5bdcbeb79cd2246a2c88826850ca1", null ],
+    [ "runQuarterHour", "Gbox420__Nano__Reservoir_8ino.html#a6fdedfb173bd96eaa97b31538fada6b6", null ],
+    [ "runSec", "Gbox420__Nano__Reservoir_8ino.html#a56b12c2ed10250fdf9fadd1fcc243685", null ],
+    [ "setup", "Gbox420__Nano__Reservoir_8ino.html#a4fc01d736fe50cf5b977f755b675f11d", null ],
+    [ "updateTime", "Gbox420__Nano__Reservoir_8ino.html#a82a77128f231eac657525d7eb3014b01", null ],
+    [ "Wireless", "Gbox420__Nano__Reservoir_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc", null ],
+    [ "ArduinoSerial", "Gbox420__Nano__Reservoir_8ino.html#aaa89c80a04f1a6b0b5f2e425a9d045db", null ],
+    [ "CurrentTime", "Gbox420__Nano__Reservoir_8ino.html#a292e29d40fbb346a1fa51dfc5ba879c1", null ],
+    [ "Debug", "Gbox420__Nano__Reservoir_8ino.html#aa3f2962c251cead6e535226e4da29861", null ],
+    [ "FiveSecThread", "Gbox420__Nano__Reservoir_8ino.html#a53a9d8bb350581bc4ffb215418731b79", null ],
+    [ "LongMessage", "Gbox420__Nano__Reservoir_8ino.html#a29e392d833e97bf88f780e9fdf22373f", null ],
+    [ "Metric", "Gbox420__Nano__Reservoir_8ino.html#ae700c60c46e98092b96bb54c369fe891", null ],
+    [ "MinuteThread", "Gbox420__Nano__Reservoir_8ino.html#a2ddf18e39c01b0be11987f5625da3a48", null ],
+    [ "ModuleSettings", "Gbox420__Nano__Reservoir_8ino.html#aa5d20d2c57bfa8a66c233eb21b7cdf6e", null ],
+    [ "OneSecThread", "Gbox420__Nano__Reservoir_8ino.html#a85e9e6feba35ef899d443e5f1f8c8e9a", null ],
+    [ "QuarterHourThread", "Gbox420__Nano__Reservoir_8ino.html#a8ed35a56f402972300302210a9c8809a", null ],
+    [ "ReceivedMessage", "Gbox420__Nano__Reservoir_8ino.html#ac88414a5652d3c6eba2243c334ceeb1b", null ],
+    [ "ReservoirMod1", "Gbox420__Nano__Reservoir_8ino.html#a238068d6909c9b95a9ebe70c7a33131b", null ],
+    [ "ShortMessage", "Gbox420__Nano__Reservoir_8ino.html#a6084d34751a3c3b5585d06dc1c0dd9f6", null ]
+];
