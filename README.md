@@ -23,19 +23,19 @@ This guide was made for indoor gardeners would like to build an Arduino based au
 <h2>Doxygen documentation: https://growboxguy.github.io/Gbox420/files.html </h2>
 </div>
 
-![alt text](https://lh3.googleusercontent.com/pw/ACtC-3etlEchfH2eX-HyE6f6iSRXFcdqbYqmVetXMMQ7SHdvaeFPfClqIH5bMfoUcP6uTBgLVmqOyBWSr0OFvARRFSO7SrlJvzgpWvjOOVEmpAWiKJ8eIfrv9OHwlxJssRaydEnYBqMfxdCjZALiKUEwTFoJ=w1055-h652-no?authuser=0)
+![Logical overview](https://docs.google.com/drawings/d/e/2PACX-1vQsxO7OZ90bM3eCMFq2eOzFzVyCqzIKtckicU_njHFmHmpo_ga3UDpZ9YaGFs83qkIe2RCCsTgEfDv6/pub?w=1018&h=614)
 
 <b>Gbox420 user interface</b>: The ESP-link firmware's built in webserver hosts the control interface for the grow box. This is available on the local WiFi from a mobile, tablet or desktop PC.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3c-2j05-O9FE06BzfPP4TTC43UszOYteR3BX9x--eIgj4tKfLv5644zgGQKqnPrwW5-We4JG8LeEcxlS0f5Qtcsk1gxCsro-M2Rjb2eQisdS9UC6X39Kk1rIY10MSCHQdlWemWFNJNV7nkhgG0ROlZD=w898-h1092-no?authuser=0)
 
 <b>Serial output relayed to the web interface</b>: There is no need to connect a USB cable to monitor the Arduino's serial output, it is relayed to the grow box control website.<br>
-![alt text](https://lh3.googleusercontent.com/pw/ACtC-3dYHgQPSjFgytEfSkKt7SaMcD6PDtLsX1UcmKIsaYqmRTEyt_ZOahGe9ConQdW6uZ8q9GsIHTxhk76tvRcf5KmEgwWlppEihKlWP8yPwhm2WBIhajls76n8Gb3FLSu_x1BF6vPWWBwSeE_V--VujShi=w657-h1140-no?authuser=0)
+![Gbox420 - Web interface](https://lh3.googleusercontent.com/pw/ACtC-3dYHgQPSjFgytEfSkKt7SaMcD6PDtLsX1UcmKIsaYqmRTEyt_ZOahGe9ConQdW6uZ8q9GsIHTxhk76tvRcf5KmEgwWlppEihKlWP8yPwhm2WBIhajls76n8Gb3FLSu_x1BF6vPWWBwSeE_V--VujShi=w657-h1140-no?authuser=0)
 
 <b>Email alert example</b>: TWhen a new alert triggers, or an existing alert is resolved a summary email is triggered. Several charts are attached to the email for a quick overview.<br>
 ![alt text](https://lh3.googleusercontent.com/pw/ACtC-3euTh98iZcKUGZrIvDGN68GyGxAaRiwtes9e8expmese2jSrZ2UlPHhyBx_I8x5lAi4E6bpkLIdRolshcr8tI9a_B-3VDKSQUHNiFwWzL1VibNYVCNSS-1827h37dabDf49rOdkTgyjTwAYJFi7S8Go=w741-h1289-no?authuser=0)
 
 The complete automation kit, including the Main, Aeroponics, Hempy bucket and Reservoir modules, two LED drivers and AC outlets for dual speed Internal and Exhaust fans.<br>
-![alt text](https://lh3.googleusercontent.com/pw/ACtC-3eaGQD-ZrbG_jQPcvH0MqhBifQFIfGyrfq49SbDHr_pT9wdi1mHTIPFNX3RU0QFcKM0DrfoZFnSleH4EOVYjvL7UsD7UDHblcxxBvI66pMtYg7XcAaEw7cnCFCLLJ_hl-cDsuFJ-PE8V-_AuW5IAfA-=w1200-h855-no?authuser=0)
+![Physical overview](https://lh3.googleusercontent.com/pw/ACtC-3eaGQD-ZrbG_jQPcvH0MqhBifQFIfGyrfq49SbDHr_pT9wdi1mHTIPFNX3RU0QFcKM0DrfoZFnSleH4EOVYjvL7UsD7UDHblcxxBvI66pMtYg7XcAaEw7cnCFCLLJ_hl-cDsuFJ-PE8V-_AuW5IAfA-=w1200-h855-no?authuser=0)
 
 <b>[Main module](https://sites.google.com/site/growboxguy/modules/main-module)</b>: Based on the Arduino Mega2560 and ESP8266 chips. Measures and controls AC power to the two PWM dimmed LED drivers, the dual speed Internal and Exhaust fans and to the 12V DC power brick powering all modules.Collects sensor readings from the other modules wirelessly and reports them to Google Sheets.
 Placed outside the grow box.<br>
