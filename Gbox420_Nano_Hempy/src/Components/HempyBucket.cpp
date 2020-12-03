@@ -83,9 +83,8 @@ void HempyBucket::checkWateringFinished()
   {
     if (*WeightBasedWatering) //Weight based watering enabled
     {
-      BucketWeightSensor->readWeight();
-      WasteReservoirWeightSensor->readWeight();
-      if (BucketWeightSensor->getWeight() > *StopWeight || (BucketWeightSensor->getWeight() + WasteReservoirWeightSensor->getWeight()) - StartTotalWeight > *StopWeight - *StartWeight) ///< If the weight is over the stop limit
+      BucketWeight.updateAverage(BucketWeightSensor->readWeight());
+      if (BucketWeightSensor->getWeight() > *StopWeight || (BucketWeightSensor->getWeight() + WasteReservoirWeightSensor->readWeight()) - StartTotalWeight > *StopWeight - *StartWeight) ///< If the weight is over the stop limit
       {
         WeightReached = true;
       }
@@ -110,9 +109,8 @@ void HempyBucket::checkWateringFinished()
   else if (WateringTrigger == WateringMode::WEIGHT) ///< If watering triggered by weight: Run until weight tareget is reached
   {
     TimerReached = true;              //Fake ready signal, only weight is considered in this watering mode
-    BucketWeightSensor->readWeight(); //Force a weight refresh
-    WasteReservoirWeightSensor->readWeight();
-    if (BucketWeightSensor->getWeight() > *StopWeight || (BucketWeightSensor->getWeight() + WasteReservoirWeightSensor->getWeight()) - StartTotalWeight > *StopWeight - *StartWeight) ///< If the weight is over the limit and the pump is on
+    BucketWeight.updateAverage(BucketWeightSensor->readWeight()); //Force a weight refresh
+    if (BucketWeightSensor->getWeight() > *StopWeight || (BucketWeightSensor->getWeight() + WasteReservoirWeightSensor->readWeight()) - StartTotalWeight > *StopWeight - *StartWeight) ///< If the weight is over the limit and the pump is on
     {
       WeightReached = true;
     }
