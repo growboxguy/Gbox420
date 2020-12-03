@@ -5,7 +5,7 @@
  *  \details   Supports wireless data exchange with the Main module
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
  *  \version   4.20
- */e
+ */
 
 #include "Arduino.h"
 #include "avr/wdt.h"  // Watchdog timer for detecting a crash and automatically resetting the board
