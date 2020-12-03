@@ -127,6 +127,8 @@ void HempyBucket::checkWateringFinished()
   if (WeightReached && TimerReached)
   {
     BucketPump->stopPump(); ///< Turn the pump off when all criteria are met
+    BucketWeight.resetAverage();  ///< Reset the average weight of the bucket after finishing watering
+    BucketWeight.updateAverage(BucketWeightSensor->readWeight());  //Add new reading to the average
   }
 }
 
