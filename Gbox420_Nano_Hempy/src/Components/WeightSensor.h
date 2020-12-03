@@ -12,7 +12,7 @@ public:
   WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings);
   void refresh_FiveSec();
   void report();
-  void readWeight();
+  float readWeight();
   float getWeight();
   char *getWeightText(bool IncludeUnits = false);
   void triggerTare();

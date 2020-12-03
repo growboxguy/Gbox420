@@ -41,12 +41,13 @@ void WeightSensor::report()
   logToSerials(&LongMessage, true, 1);
 }
 
-void WeightSensor::readWeight()
+float WeightSensor::readWeight()
 {
   if (Sensor->wait_ready_timeout(200))
   {
     Weight = Sensor->get_units();
   }
+  return Weight;
 }
 
 float WeightSensor::getWeight()
