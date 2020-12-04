@@ -523,6 +523,9 @@
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
+					<p>	
+					<span style=" padding-left: 0.5em;"><label>Remaining: </label><label id="Hemp1_B1_RemainingWater"></label></span>
+					</p>	
 				<form>
 					<p>
 						<input type="checkbox" name="Hemp1_B1TBW" title="Turn timer based watering ON/OFF" />
@@ -607,7 +610,7 @@
 						<b>Weight based watering</b>
 						<input class="setButton" type="submit" value="Set" title="Turn weight based watering ON/OFF"">
 					</p>
-				</form>				
+				</form>					
 				<form>
 					<p>			
 					<label style=" padding-left: 0.5em;text-align: right;">Start</label>
@@ -619,6 +622,11 @@
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
+				</form>
+					<p>	
+					<span style=" padding-left: 0.5em;"><label>Remaining: </label><label id="Hemp1_B2_RemainingWater"></label></span>
+					</p>	
+				<form>		
 				<form>
 					<p>
 						<input type="checkbox" name="Hemp1_B2TBW" title="Turn timer based watering ON/OFF" />
@@ -857,6 +865,31 @@
 	setInterval(function () {
 		Hempy1_Bucket1_Interval_Friendly.innerHTML = Math.trunc(Hempy1_Bucket1_Interval.value / 60) + "hr, " + Hempy1_Bucket1_Interval.value % 60 + "min";
 	}, 5)  ///< Refresh every 5 seconds
+
+	///< Calculate remaining water in Hempy Bucket 1
+	var Hempy1_Bucket1_Weight = document.getElementById("Hemp1_B1Weight");
+	var Hempy1_Bucket1_StartWeight = document.getElementsByName("Hemp1_B1Strt")[0];
+	var Hempy1_Bucket1_RemainingWater = document.getElementById("Hemp1_B1_RemainingWater");
+	setInterval(function () {
+		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
+		var Unit = Hempy1_Bucket1_Weight.textContent.replaceAll(/[0-9.]/g, "");
+		Hempy1_Bucket1_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket1_Weight.textContent.slice(0,-2) - Hempy1_Bucket1_StartWeight.value)).toFixed(1) + Unit;
+		
+		///<  Math.trunc(Weight - Hempy1_Bucket1_StartWeight.value);
+	}, 5)  ///< Refresh every 5 seconds
+
+		///< Calculate remaining water in Hempy Bucket 2
+		var Hempy1_Bucket2_Weight = document.getElementById("Hemp1_B2Weight");
+	var Hempy1_Bucket2_StartWeight = document.getElementsByName("Hemp1_B2Strt")[0];
+	var Hempy1_Bucket2_RemainingWater = document.getElementById("Hemp1_B2_RemainingWater");
+	setInterval(function () {
+		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
+		var Unit = Hempy1_Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
+		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0,-2) - Hempy1_Bucket2_StartWeight.value)).toFixed(1) + Unit;
+		
+		///<  Math.trunc(Weight - Hempy1_Bucket1_StartWeight.value);
+	}, 5)  ///< Refresh every 5 seconds
+	
 
 	///< Friendly timeout value for Hempy Bucket 2
 	var Hempy1_Bucket2_Interval = document.getElementsByName("Hemp1_B2Int")[0];
