@@ -53,11 +53,11 @@ Thread QuarterHourThread = Thread();
 StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread, &QuarterHourThread);
 
 void setup()
-{                               ///<  put your setup code here, to run once:
-  ArduinoSerial.begin(115200);  ///< 2560mega console output
-  ESPSerial.begin(115200);      ///< ESP WiFi console output
-  pinMode(LED_BUILTIN, OUTPUT); ///< onboard LED - Heartbeat every second to confirm code is running
-  printf_begin();
+{                                                          ///<  put your setup code here, to run once:
+  ArduinoSerial.begin(115200);                             ///< 2560mega console output
+  ESPSerial.begin(115200);                                 ///< ESP WiFi console output
+  pinMode(LED_BUILTIN, OUTPUT);                            ///< onboard LED - Heartbeat every second to confirm code is running
+  printf_begin();                                          ///< Needed to print wireless status to Serial
   logToSerials(F(""), true, 0);                            ///< New line
   logToSerials(F("Main module initializing..."), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                     ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
@@ -94,7 +94,7 @@ void setup()
   Timer3.start();
   logToSerials(F("done"), true, 1);
 
-  //Initialize wireless communication with Modules
+  //Initialize wireless communication with remote Modules
   logToSerials(F("Setting up wireless transceiver..."), false, 0);
   Wireless.begin();                                  ///< Initialize the nRF24L01+ wireless chip for talking to Modules
   Wireless.setDataRate(RF24_250KBPS);                ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
@@ -145,12 +145,18 @@ void runMinute()
   getWirelessStatus();
 }
 
+/**
+  \brief Called every 30 minutes by ThreadControl in loop()
+*/
 void runQuarterHour()
 {
   wdt_reset();
   Main1->runQuarterHour();
 }
 
+/**
+  \brief Turns the integrated LED on the Arduino board ON/OFF 
+*/
 void HeartBeat()
 {
   static bool ledStatus;
@@ -160,7 +166,10 @@ void HeartBeat()
 
 // Website related functions
 
-void resetWebServer(void)
+/**
+  \brief (re-)Initialize the ESP-link connection
+*/
+void resetWebServer()
 { ///<  Callback made from esp-link to notify that it has just come out of a reset
   logToSerials(F("(re)Connecting ESP-link..."), false, 1);
   while (!ESPLink.Sync())
@@ -178,30 +187,33 @@ void resetWebServer(void)
   WebServer.setup();
   URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json");   ///< setup handling request from GrowBox.html
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); ///< setup handling request from Settings.html
-  URLHandler *TestHandler = WebServer.createURLHandler("/Test.html.json");         ///< setup handling request from Test.html
-  GrowBoxHandler->loadCb.attach(&loadCallback);                                    ///< GrowBox tab - Called then the website loads initially
-  GrowBoxHandler->refreshCb.attach(&refreshCallback);                              ///< GrowBox tab - Called periodically to refresh website content
-  GrowBoxHandler->buttonCb.attach(&buttonPressCallback);                           ///< GrowBox tab - Called when a button is pressed on the website
-  GrowBoxHandler->setFieldCb.attach(&setFieldCallback);                            ///< GrowBox tab - Called when a field is changed on the website
-  SettingsHandler->loadCb.attach(&loadCallback);                                   ///< Settings tab - Called then the website loads initially
-  SettingsHandler->refreshCb.attach(&refreshCallback);                             ///< Settings tab - Called periodically to refresh website content
-  SettingsHandler->buttonCb.attach(&buttonPressCallback);                          ///< Settings tab - Called when a button is pressed on the website
-  SettingsHandler->setFieldCb.attach(&setFieldCallback);                           ///< Settings tab - Called when a field is changed on the website
-  TestHandler->loadCb.attach(&loadCallback);                                       ///< Test tab - Called then the website loads initially
-  TestHandler->refreshCb.attach(&refreshCallback);                                 ///< Test tab - Called periodically to refresh website content
-  TestHandler->buttonCb.attach(&buttonPressCallback);                              ///< Test tab - Called when a button is pressed on the website
-  TestHandler->setFieldCb.attach(&setFieldCallback);                               ///< Test tab - Called when a field is changed on the website
+  //URLHandler *TestHandler = WebServer.createURLHandler("/Test.html.json");         ///< setup handling request from Test.html
+  GrowBoxHandler->loadCb.attach(&loadCallback);           ///< GrowBox tab - Called then the website loads initially
+  GrowBoxHandler->refreshCb.attach(&refreshCallback);     ///< GrowBox tab - Called periodically to refresh website content
+  GrowBoxHandler->buttonCb.attach(&buttonPressCallback);  ///< GrowBox tab - Called when a button is pressed on the website
+  GrowBoxHandler->setFieldCb.attach(&setFieldCallback);   ///< GrowBox tab - Called when a field is changed on the website
+  SettingsHandler->loadCb.attach(&loadCallback);          ///< Settings tab - Called then the website loads initially
+  SettingsHandler->refreshCb.attach(&refreshCallback);    ///< Settings tab - Called periodically to refresh website content
+  SettingsHandler->buttonCb.attach(&buttonPressCallback); ///< Settings tab - Called when a button is pressed on the website
+  SettingsHandler->setFieldCb.attach(&setFieldCallback);  ///< Settings tab - Called when a field is changed on the website
+  //TestHandler->loadCb.attach(&loadCallback);                                       ///< Test tab - Called then the website loads initially
+  //TestHandler->refreshCb.attach(&refreshCallback);                                 ///< Test tab - Called periodically to refresh website content
+  //TestHandler->buttonCb.attach(&buttonPressCallback);                              ///< Test tab - Called when a button is pressed on the website
+  //TestHandler->setFieldCb.attach(&setFieldCallback);                               ///< Test tab - Called when a field is changed on the website
   logToSerials(F("ESP-link ready"), true, 2);
 }
 
-// Time
+static bool SyncInProgress = false;  ///< True if an time sync is in progress
 
-static bool SyncInProgress = false;
+/**
+  \brief Update the time over ESP-link using NTP (Network Time Protocol)
+
+*/
 time_t getNtpTime()
 {
   time_t NTPResponse = 0;
   if (!SyncInProgress)
-  { ///< blocking calling the sync again in an interrupt
+  { // block calling the sync again inside an interrupt while already waiting for a sync to finish
     SyncInProgress = true;
     uint32_t LastRefresh = millis();
     logToSerials(F("Waiting for NTP time..."), false, 0);
@@ -210,13 +222,13 @@ time_t getNtpTime()
       NTPResponse = ESPCmd.GetTime();
       delay(500);
       logToSerials(F("."), false, 0);
-      wdt_reset(); ///< reset watchdog timeout
+      wdt_reset(); ///reset watchdog timeout
     }
     SyncInProgress = false;
     if (NTPResponse == 0)
     {
       logToSerials(F("NTP time sync failed"), true, 1);
-      ///< sendEmailAlert(F("NTP%20time%20sync%20failed"));
+      // sendEmailAlert(F("NTP%20time%20sync%20failed"));
     }
     else
       logToSerials(F("time synchronized"), true, 1);
@@ -224,18 +236,30 @@ time_t getNtpTime()
   return NTPResponse;
 }
 
+/**
+  \brief Called when a website is loading on the ESP-link webserver
+  \param Url - HTML filename that is getting loaded
+*/
 void loadCallback(__attribute__((unused)) char *Url)
-{ ///< called when website is loaded. Runs through all components that subscribed for this event
-  Main1->loadEvent(Url);
+{ ///< 
+  Main1->loadEvent(Url);  //Runs through all components that are subscribed to this event
 }
 
+/**
+  \brief Called when a website is refreshing on the ESP-link webserver
+  \param Url - HTML filename that is refreshinging
+*/
 void refreshCallback(__attribute__((unused)) char *Url)
-{ ///< called when website is refreshed.
+{ 
   Main1->refreshEvent(Url);
 }
 
+/**
+  \brief Called when a button is pressed.
+  \param Button - ID of the button HTML element
+*/
 void buttonPressCallback(char *Button)
-{ ///< Called when any button on the website is pressed.
+{
   if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
   {
     restoreDefaults();
@@ -247,12 +271,19 @@ void buttonPressCallback(char *Button)
   saveSettings(ModuleSettings);
 }
 
+/**
+  \brief Called when a field on the website is submitted
+  \param Field - Name of the input HTML element
+*/
 void setFieldCallback(char *Field)
 { ///< Called when any field on the website is updated.
   Main1->setFieldEvent(Field);
   saveSettings(ModuleSettings);
 }
 
+/**
+  \brief Prints the nRF24L01+ wireless transceiver's status to the Serial log
+*/
 void getWirelessStatus()
 {
   if (*Debug)
