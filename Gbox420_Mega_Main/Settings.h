@@ -151,12 +151,12 @@ typedef struct
     uint8_t OnMinute;         ///< Light ON time - minute
     uint8_t OffHour;          ///< Light OFF time - hour
     uint8_t OffMinute;        ///< Light OFF time - minute
-    bool FadingEnabled;       ///< Enables/disables fading lights in when turning on, and fading lights out when turning off
-    uint16_t FadingInterval;  ///< (Sec) How often should the brightness change during a fade in/out
-    uint8_t FadingIncrements; ///< How much to change the brightness during a fade in/out in Percentage
+    bool FadingEnabled;       ///< Enables/disables fading lights in when turning on, and fading lights out when turning off <Not exposed to Web interface>
+    uint16_t FadingInterval;  ///< (Sec) How often should the brightness change during a fade in/out <Not exposed to Web interface>
+    uint8_t FadingIncrements; ///< How much to change the brightness during a fade in/out in Percentage <Not exposed to Web interface>
   };
-  struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 16, .DimmingDuration = 10, .Brightness = 75, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = true, .FadingInterval = 1, .FadingIncrements = 1}; ///< Creating a LightSettings instance, passing in the unique parameters
-  struct LightsSettings Lt2 = {.RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6, .DimmingDuration = 10, .Brightness = 55, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = true, .FadingInterval = 1, .FadingIncrements = 1};  ///< Creating a LightSettings instance, passing in the unique parameters
+  struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 16, .DimmingDuration = 10, .Brightness = 75, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1}; ///< Creating a LightSettings instance, passing in the unique parameters
+  struct LightsSettings Lt2 = {.RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6, .DimmingDuration = 10, .Brightness = 55, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1};  ///< Creating a LightSettings instance, passing in the unique parameters
 
   struct ReservoirModuleSettings  ///< ReservoirModule default settings
   {

@@ -39,9 +39,9 @@ void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
     WebServer.setArgInt(getComponentName(F("OfM")), *OffMinute);         ///< Off minute
     WebServer.setArgInt(getComponentName(F("B")), *Brightness);          ///< Brightness percentage
     WebServer.setArgInt(getComponentName(F("BS")), *Brightness);         ///< Brightness slider
-    WebServer.setArgBoolean(getComponentName(F("F")), *FadingEnabled);   ///< Enable or disable Fade in/out
-    WebServer.setArgInt(getComponentName(F("FInc")), *FadingIncrements); ///< Fade change (%)
-    WebServer.setArgInt(getComponentName(F("FInt")), *FadingInterval);   ///< Fade step interval (sec)
+    // WebServer.setArgBoolean(getComponentName(F("F")), *FadingEnabled);   ///< Enable or disable Fade in/out
+    // WebServer.setArgInt(getComponentName(F("FInc")), *FadingIncrements); ///< Fade change (%)
+    // WebServer.setArgInt(getComponentName(F("FInt")), *FadingInterval);   ///< Fade step interval (sec)
     WebServer.setArgInt(getComponentName(F("DD")), *DimmingDuration);    ///< Fade step interval (sec)
   }
 }
@@ -117,18 +117,18 @@ void Lights_Web::websiteEvent_Field(char *Field)
     {
       setOffMinute(WebServer.getArgInt());
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("F")) == 0)
-    {
-      setFadeOnOff(WebServer.getArgBoolean());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("FInc")) == 0)
-    {
-      setFadeIncrements(WebServer.getArgInt());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("FInt")) == 0)
-    {
-      setFadeInterval(WebServer.getArgInt());
-    }
+    // else if (strcmp_P(ShortMessage, (PGM_P)F("F")) == 0)
+    // {
+    //   setFadeOnOff(WebServer.getArgBoolean());
+    // }
+    // else if (strcmp_P(ShortMessage, (PGM_P)F("FInc")) == 0)
+    // {
+    //   setFadeIncrements(WebServer.getArgInt());
+    // }
+    // else if (strcmp_P(ShortMessage, (PGM_P)F("FInt")) == 0)
+    // {
+    //   setFadeInterval(WebServer.getArgInt());
+    // }
     else if (strcmp_P(ShortMessage, (PGM_P)F("DD")) == 0)
     {
       setDimDuration(WebServer.getArgInt());
