@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -57,7 +57,7 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroModuleSettings ///< AeroModule default settings
   {
-    AeroModuleSettings(bool PressureTankPresent = false, uint16_t DayInterval = 0, uint16_t DayDuration = 0, uint16_t NightInterval = 0, uint16_t NightDuration = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, float MaxPressure = 0.0, float MinPressure = 0.0) : PressureTankPresent(PressureTankPresent), DayInterval(DayInterval), DayDuration(DayDuration), NightInterval(NightInterval), NightDuration(NightDuration), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), MaxPressure(MaxPressure), MinPressure(MinPressure) {}
+    AeroModuleSettings(bool PressureTankPresent = false, uint16_t DayInterval = 0, uint16_t DayDuration = 0, uint16_t NightInterval = 0, uint16_t NightDuration = 0, uint8_t PumpSpeed = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, float MaxPressure = 0.0, float MinPressure = 0.0) : PressureTankPresent(PressureTankPresent), DayInterval(DayInterval), DayDuration(DayDuration), NightInterval(NightInterval), NightDuration(NightDuration), PumpSpeed(PumpSpeed), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), MaxPressure(MaxPressure), MinPressure(MinPressure) {}
     bool PressureTankPresent; ///< Is there a pressure tank connected or not
     uint16_t DayInterval;     ///< Spray every X minutes - When the lights are ON
     uint16_t DayDuration;     ///< Spray length in seconds - When the lights are ON
@@ -69,7 +69,7 @@ typedef struct
     float MaxPressure;        ///< Turn off pump above this pressure
     float MinPressure;        ///< Turn on pump below this pressure
   };
-  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .DayInterval = 15, .DayDuration = 10, .NightInterval = 30, .NightDuration = 8, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
+  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .DayInterval = 15, .DayDuration = 3, .NightInterval = 25, .NightDuration = 2, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
 
   struct AirPumpSettings ///< AirPump default settings
   {
@@ -127,7 +127,7 @@ typedef struct
     uint16_t WateringDuration_B2; //Water for X seconds
     uint16_t TimeOutPump_B2;      ///< Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached ///< \todo Add email alert when pump fails
   };
-  struct HempyModuleSettings HempyModule1 = {.WeightBasedWatering_B1 = true, .StartWeight_B1 = 13.0, .StopWeight_B1 = 18.0, .TimerBasedWatering_B1 = true, .WateringInterval_B1 = 1440, .WateringDuration_B1 = 30, .PumpSpeed_B1 = 100, .TimeOutPump_B1 = 420, .WeightBasedWatering_B2 = true, .StartWeight_B2 = 13.0, .StopWeight_B2 = 18.0, .TimerBasedWatering_B2 = true, .WateringInterval_B2 = 1440, .WateringDuration_B2 = 30, .PumpSpeed_B2 = 100, .TimeOutPump_B2 = 420};
+  struct HempyModuleSettings HempyModule1 = {.WeightBasedWatering_B1 = true, .StartWeight_B1 = 16.0, .StopWeight_B1 = 19.0, .TimerBasedWatering_B1 = true, .WateringInterval_B1 = 1440, .WateringDuration_B1 = 30, .PumpSpeed_B1 = 100, .TimeOutPump_B1 = 420, .WeightBasedWatering_B2 = true, .StartWeight_B2 = 16.0, .StopWeight_B2 = 19.0, .TimerBasedWatering_B2 = true, .WateringInterval_B2 = 1440, .WateringDuration_B2 = 30, .PumpSpeed_B2 = 100, .TimeOutPump_B2 = 420};
 
   struct LightSensorSettings ///< LightSensor default settings
   {
@@ -156,7 +156,7 @@ typedef struct
     uint8_t FadingIncrements; ///< How much to change the brightness during a fade in/out in Percentage <Not exposed to Web interface>
   };
   struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 16, .DimmingDuration = 10, .Brightness = 75, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1}; ///< Creating a LightSettings instance, passing in the unique parameters
-  struct LightsSettings Lt2 = {.RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6, .DimmingDuration = 10, .Brightness = 55, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1};  ///< Creating a LightSettings instance, passing in the unique parameters
+  struct LightsSettings Lt2 = {.RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6, .DimmingDuration = 10, .Brightness = 55, .TimerEnabled = false, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1};  ///< Creating a LightSettings instance, passing in the unique parameters
 
   struct ReservoirModuleSettings  ///< ReservoirModule default settings
   {
