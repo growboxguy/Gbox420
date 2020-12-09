@@ -86,7 +86,7 @@ void AeroModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\",\"PSpeed\":\""));
   strcat(LongMessage, toText(AeroCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"SprayEn\":\""));
-  strcat(LongMessage, toText(AeroCommand1ToSend.SprayEnabled));
+  strcat(LongMessage, toText(AeroResponse1Received.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F("\",\"DayInt\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.DayInterval));
   strcat_P(LongMessage, (PGM_P)F("\",\"DayDur\":\""));
