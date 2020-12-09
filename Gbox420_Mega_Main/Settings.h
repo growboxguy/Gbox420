@@ -127,7 +127,7 @@ typedef struct
     uint16_t WateringDuration_B2; //Water for X seconds
     uint16_t TimeOutPump_B2;      ///< Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached ///< \todo Add email alert when pump fails
   };
-  struct HempyModuleSettings HempyModule1 = {.WeightBasedWatering_B1 = true, .StartWeight_B1 = 16.0, .StopWeight_B1 = 19.0, .TimerBasedWatering_B1 = true, .WateringInterval_B1 = 1440, .WateringDuration_B1 = 30, .PumpSpeed_B1 = 100, .TimeOutPump_B1 = 420, .WeightBasedWatering_B2 = true, .StartWeight_B2 = 16.0, .StopWeight_B2 = 19.0, .TimerBasedWatering_B2 = true, .WateringInterval_B2 = 1440, .WateringDuration_B2 = 30, .PumpSpeed_B2 = 100, .TimeOutPump_B2 = 420};
+  struct HempyModuleSettings HempyModule1 = {.WeightBasedWatering_B1 = true, .StartWeight_B1 = 16.0, .StopWeight_B1 = 19.0, .TimerBasedWatering_B1 = false, .WateringInterval_B1 = 1440, .WateringDuration_B1 = 30, .PumpSpeed_B1 = 100, .TimeOutPump_B1 = 420, .WeightBasedWatering_B2 = true, .StartWeight_B2 = 16.0, .StopWeight_B2 = 19.0, .TimerBasedWatering_B2 = true, .WateringInterval_B2 = 1440, .WateringDuration_B2 = 30, .PumpSpeed_B2 = 100, .TimeOutPump_B2 = 420};
 
   struct LightSensorSettings ///< LightSensor default settings
   {

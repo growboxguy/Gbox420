@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -62,8 +62,8 @@ typedef struct
     uint16_t WateringInterval; //Water every X minutes
     uint16_t WateringDuration; //Water for X seconds
   };
-  struct HempyBucketSettings Bucket1 = {.WeightBasedWatering = true, .StartWeight = 4.2, .StopWeight = 6.9, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
-  struct HempyBucketSettings Bucket2 = {.WeightBasedWatering = true, .StartWeight = 4.2, .StopWeight = 6.9, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
+  struct HempyBucketSettings Bucket1 = {.WeightBasedWatering = true, .StartWeight = 16.0, .StopWeight = 19.0, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
+  struct HempyBucketSettings Bucket2 = {.WeightBasedWatering = true, .StartWeight = 16.0, .StopWeight = 19.0, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
 
   struct HempyModuleSettings  ///< HempyModule default settings
   {
@@ -93,8 +93,8 @@ typedef struct
     int PrimingTime;                  ///< (Sec) Only if BypassSolenoid is present. For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
     int BlowOffTime;                  ///< (Sec) Only if BypassSolenoid is present. For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
   };
-  struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
-  struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
+  struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 100, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
+  struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 100, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
 
   struct WeightSensorSettings ///< WeightSensor default settings
   {
