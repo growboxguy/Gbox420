@@ -73,7 +73,8 @@ function CheckAlerts(Log) {
   }
   SaveNamedRange("Columns", columns); //Write back the alert status changes to Sheets
 
-  if (sendEmailAlert || GetSettingsValue("Send an email") == "When a report is received") //When there was a new event
+  var EmailMode = GetSettingsValue("Send an email");
+  if (sendEmailAlert ||  EmailMode == "When a report is received" || (EmailMode == "When an alert is active" && alerts.length != 0)) //When there was a new event
   {
     LogToConsole("Generating email template...", true, 1);
     var emailTemplate = HtmlService.createTemplateFromFile('AlertTemplate'); //Prepare the AlertEmailTemplate.html as a template

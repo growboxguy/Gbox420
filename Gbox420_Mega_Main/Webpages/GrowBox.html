@@ -243,6 +243,35 @@
 				-->
 			</div>
 			<div class="card">
+				<h1 style="display: inline;">Reservoir</h1>
+				<span style="float:right" id="Res1_Status">CONNECTING...</span>
+				<table class="tg">
+					<tr>
+						<th class="headerRows"><span>Air pump</span></th>
+						<th class="headerRows"><span>PH</span></th>
+						<th class="headerRows"><span>Weight</span>
+							<button id="Res1_Tare" onclick="confirmTare(this)"
+								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
+								title="Tare the reservoir weight scale. Do not have any weight on the scale!">Tare</button>
+						</th>
+						<th class="headerRows"><span>Temp</span></th>
+					</tr>
+					<tr>
+						<td id="APump1_Stat" class="dataRows"></td>
+						<td id="Res1_PH" class="dataRows"></td>
+						<td id="Res1_Weight" class="dataRows"></td>
+						<td id="Res1_WTemp" class="dataRows"></td>
+					</tr>
+				</table>
+				<form>
+					<p>
+						<label><b>Air pump</b></label>
+						<button id="APump1_On" type="button" align="right" title="Starts the air pump">ON</button>
+						<button id="APump1_Off" type="button" align="right" title="Stops the air pump">OFF</button>
+					<p>
+				</form>
+			</div>
+			<div class="card">
 				<h1>Light 1</h1>
 				<table class="tg">
 					<tr>
@@ -308,7 +337,7 @@
 				<!-- <form>
 					<p>
 						<button id="Lt1_D" type="button" title="Dim the lights for X minutes to 1%">Dim</button>
-						<!-- Temporary reduce the brightness to 1% while working on the plants -->
+						<!- -- Temporary reduce the brightness to 1% while working on the plants -- ->
 						for <input style="width: 3em;" name="Lt1_DD" type="number" value='1' step='1' min='1' max='100'
 							title="Dim Duration - How long should the temporary dimming last" />min
 						<input class="setButton" type="submit" value="Set">
@@ -395,7 +424,7 @@
 				<!-- <form>
 					<p>
 						<button id="Lt2_D" type="button" title="Dim the lights for X minutes to 1%">Dim</button>
-						<!-- Temporary reduce the brightness to 1% while working on the plants -->
+						<!- -- Temporary reduce the brightness to 1% while working on the plants -- ->
 						for <input style="width: 3em;" name="Lt2_DD" type="number" value='1' step='1' min='1' max='100'
 							title="Dim Duration - How long should the temporary dimming last" />min
 						<input class="setButton" type="submit" value="Set"
@@ -423,35 +452,6 @@
 			</div>
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2">
-			<div class="card">
-				<h1 style="display: inline;">Reservoir</h1>
-				<span style="float:right" id="Res1_Status">CONNECTING...</span>
-				<table class="tg">
-					<tr>
-						<th class="headerRows"><span>Air pump</span></th>
-						<th class="headerRows"><span>PH</span></th>
-						<th class="headerRows"><span>Weight</span>
-							<button id="Res1_Tare" onclick="confirmTare(this)"
-								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
-								title="Tare the reservoir weight scale. Do not have any weight on the scale!">Tare</button>
-						</th>
-						<th class="headerRows"><span>Temp</span></th>
-					</tr>
-					<tr>
-						<td id="APump1_Stat" class="dataRows"></td>
-						<td id="Res1_PH" class="dataRows"></td>
-						<td id="Res1_Weight" class="dataRows"></td>
-						<td id="Res1_WTemp" class="dataRows"></td>
-					</tr>
-				</table>
-				<form>
-					<p>
-						<label><b>Air pump</b></label>
-						<button id="APump1_On" type="button" align="right" title="Starts the air pump">ON</button>
-						<button id="APump1_Off" type="button" align="right" title="Stops the air pump">OFF</button>
-					<p>
-				</form>
-			</div>
 			<div class="card">
 				<h1 style="display: inline;">Hempy 1</h1>
 				<span style="float:right" id="Hemp1_Status">CONNECTING...</span>
@@ -523,9 +523,10 @@
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
-					<p>	
-					<span style=" padding-left: 0.5em;"><label>Remaining: </label><label id="Hemp1_B1_RemainingWater"></label></span>
-					</p>	
+				<p>
+					<span style=" padding-left: 0.5em;"><label>Remaining: </label><label
+							id="Hemp1_B1_RemainingWater"></label></span>
+				</p>
 				<form>
 					<p>
 						<input type="checkbox" name="Hemp1_B1TBW" title="Turn timer based watering ON/OFF" />
@@ -623,34 +624,35 @@
 					</p>
 				</form>
 				</form>
-					<p>	
-					<span style=" padding-left: 0.5em;"><label>Remaining: </label><label id="Hemp1_B2_RemainingWater"></label></span>
-					</p>	
-				<form>		
+				<p>
+					<span style=" padding-left: 0.5em;"><label>Remaining: </label><label
+							id="Hemp1_B2_RemainingWater"></label></span>
+				</p>
 				<form>
-					<p>
-						<input type="checkbox" name="Hemp1_B2TBW" title="Turn timer based watering ON/OFF" />
-						<b>Timer based watering</b>
-						<input class="setButton" type="submit" value="Set" title="Turn timer based watering ON/OFF"">
+					<form>
+						<p>
+							<input type="checkbox" name="Hemp1_B2TBW" title="Turn timer based watering ON/OFF" />
+							<b>Timer based watering</b>
+							<input class="setButton" type="submit" value="Set" title="Turn timer based watering ON/OFF"">
 					</p>
 				</form>
 				<form>	
 					<p>
 					<label style=" padding-left: 0.5em; width: 3.7em;">Interval</label>
-						<input style="width: 55px;" min=1 name="Hemp1_B2Int" type="number" />min
-						<input class="setButton" type="submit" value="Set"
-							title="Set how often a spray should start (Minutes)">
-						<label id="Hemp1_B2Int_Friendly" />
-					</p>
-				</form>
-				<form>
-					<p>
-						<label style="padding-left: 0.5em; width: 3.7em;">Duration</label>
-						<input style="width: 35px;" min=1 name="Hemp1_B2Dur" type="number" />sec
-						<input class="setButton" type="submit" value="Set"
-							title="Set how long one spray should last (Seconds)">
-					</p>
-				</form>
+							<input style="width: 55px;" min=1 name="Hemp1_B2Int" type="number" />min
+							<input class="setButton" type="submit" value="Set"
+								title="Set how often a spray should start (Minutes)">
+							<label id="Hemp1_B2Int_Friendly" />
+						</p>
+					</form>
+					<form>
+						<p>
+							<label style="padding-left: 0.5em; width: 3.7em;">Duration</label>
+							<input style="width: 35px;" min=1 name="Hemp1_B2Dur" type="number" />sec
+							<input class="setButton" type="submit" value="Set"
+								title="Set how long one spray should last (Seconds)">
+						</p>
+					</form>
 			</div>
 			<div class="card">
 				<h1 style="display: inline;">Aeroponics</h1>
@@ -681,7 +683,7 @@
 						<label><b>Spray</b></label>
 						<button id="Aero1_SprayEn" type="button" align="right"
 							title="Enable spray cycle timer">Enable</button>
-						<button id="Aero1_SprayDis" type="button" align="right"
+						<button id="Aero1_SprayDis" type="button" align="right" onclick="confirmSprayDisable(this)"
 							title="Disable spray cycle timer">Disable</button>
 						<button id="Aero1_SprayNow" type="button" title="Spray now and re-enable timer">Spray</button>
 						<button id="Aero1_SprayOff" type="button" title="Stop spraying">OFF</button>
@@ -873,23 +875,21 @@
 	setInterval(function () {
 		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
 		var Unit = Hempy1_Bucket1_Weight.textContent.replaceAll(/[0-9.]/g, "");
-		Hempy1_Bucket1_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket1_Weight.textContent.slice(0,-2) - Hempy1_Bucket1_StartWeight.value)).toFixed(1) + Unit;
-		
+		Hempy1_Bucket1_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket1_Weight.textContent.slice(0, -2) - Hempy1_Bucket1_StartWeight.value)).toFixed(1) + Unit;
 		///<  Math.trunc(Weight - Hempy1_Bucket1_StartWeight.value);
 	}, 5)  ///< Refresh every 5 seconds
 
-		///< Calculate remaining water in Hempy Bucket 2
-		var Hempy1_Bucket2_Weight = document.getElementById("Hemp1_B2Weight");
+	///< Calculate remaining water in Hempy Bucket 2
+	var Hempy1_Bucket2_Weight = document.getElementById("Hemp1_B2Weight");
 	var Hempy1_Bucket2_StartWeight = document.getElementsByName("Hemp1_B2Strt")[0];
 	var Hempy1_Bucket2_RemainingWater = document.getElementById("Hemp1_B2_RemainingWater");
 	setInterval(function () {
 		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
 		var Unit = Hempy1_Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
-		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0,-2) - Hempy1_Bucket2_StartWeight.value)).toFixed(1) + Unit;
-		
+		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0, -2) - Hempy1_Bucket2_StartWeight.value)).toFixed(1) + Unit;
+
 		///<  Math.trunc(Weight - Hempy1_Bucket1_StartWeight.value);
 	}, 5)  ///< Refresh every 5 seconds
-	
 
 	///< Friendly timeout value for Hempy Bucket 2
 	var Hempy1_Bucket2_Interval = document.getElementsByName("Hemp1_B2Int")[0];
@@ -912,6 +912,12 @@
 
 	function confirmTare(source) {
 		if (confirm("Only continue with an empty weight scale!")) {
+			notifyButtonPressed(source.id);
+		}
+	}
+
+	function confirmSprayDisable(source) {
+		if (confirm("Only continue without plants, roots dry out fast!")) {
 			notifyButtonPressed(source.id);
 		}
 	}
