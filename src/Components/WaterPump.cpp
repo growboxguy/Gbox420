@@ -199,6 +199,12 @@ void WaterPump::disablePump()
   updateState(DISABLED);
 }
 
+void WaterPump::startBlowOff(){  
+  PumpTimer = millis();
+  logToSerials(F("Pressure blow off"), true, 2);
+  updateState(PumpStates::BLOWOFF);
+}
+
 void WaterPump::setSpeed(uint8_t DutyCycle) //Set PWM duty cycle
 {
   PumpSwitch->setDutyCycle(DutyCycle);

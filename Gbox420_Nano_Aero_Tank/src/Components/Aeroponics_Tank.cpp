@@ -52,11 +52,11 @@ void Aeroponics_Tank::refresh_Sec()
     uint32_t Duration;
     if (DayMode)
     {
-      Duration = *DayDuration * 1000; ///< Duration is miliseconds, DayDuration in seconds
+      Duration = *DayDuration * 1000; ///< Duration is in miliseconds
     }
     else
     {
-      Duration = *NightDuration * 1000; ///< Duration is miliseconds
+      Duration = *NightDuration * 1000; ///< Duration is in miliseconds
     }
 
     if (millis() - SprayTimer >= Duration)
@@ -70,11 +70,11 @@ void Aeroponics_Tank::refresh_Sec()
     uint32_t Interval;
     if (DayMode)
     {
-      Interval = *DayInterval * 60000; ///< Duration is miliseconds, DayInterval is Minutes
+      Interval = *DayInterval * 60000; ///< Interval is in minutes
     }
     else
     {
-      Interval = *NightInterval * 60000; ///< Duration is miliseconds
+      Interval = *NightInterval * 60000; ///< Interval is in minutes
     }
 
     if (*SprayEnabled && millis() - SprayTimer >= Interval)
@@ -103,9 +103,10 @@ void Aeroponics_Tank::sprayOff(bool UserRequest)
 {
   SpraySwitch->turnOff();
   SprayTimer = millis();
-  Parent->getSoundObject()->playOffSound();
+  Pump->startBlowOff(); //< The pump's bypass is used to release pressure from the misting loop: Stops spraying immediately
   if (UserRequest)
   {
+    Parent->getSoundObject()->playOffSound();
     Parent->addToLog(F("Aeroponics spray OFF"));
   }
   else
