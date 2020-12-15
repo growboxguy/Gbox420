@@ -35,7 +35,6 @@ function LogToConsole(message, breakRow, indent) {
   cache.put("previousMessage", messageToLog);
 }
 
-
 //Helper functions: For getting settings
 function Test_GetNamedRangeValues() {
   LogToConsole(GetNamedRangeValues("Status", false), true, 1);
@@ -76,7 +75,7 @@ function Test_GetFriendlyColumnName() {
   LogToConsole(GetFriendlyColumnName("Lt1_On"), true, 0);
 }
 
-function GetFriendlyColumnName(key) {
+function GetFriendlyColumnName(key,includeUnits = true) {
   var match = GetNamedRangeValues("Columns").filter(function (row) {
     return row[columns_keyColumn] == key;
   });
@@ -84,7 +83,10 @@ function GetFriendlyColumnName(key) {
     return key;
   }
   else {
-    return match[0][columns_friendlyNameColumn];
+    if(includeUnits)
+      return match[0][columns_friendlyNameColumn];
+    else
+      return match[0][columns_nameColumn];
   }
 }
 

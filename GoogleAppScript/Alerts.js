@@ -32,18 +32,18 @@ function CheckAlerts(Log) {
         if (match[0][columns_alertEnabledColumn]) {
           var minLimit = match[0][columns_alertMinColumn];
           var maxLimit = match[0][columns_alertMaxColumn];
-          LogToConsole(key + " : " + value + ", Alert active: [" + minLimit + "/" + maxLimit + "]", false, 1);
+          LogToConsole(GetFriendlyColumnName(key,false) + " : " + GetFriendlyValue(key, value) + " [" + key + " : " + value + "], Alert limits: [" + minLimit + "/" + maxLimit + "]", false, 1);
 
           if ((minLimit != "" && maxLimit != "" && (value < minLimit || maxLimit < value)) || (minLimit == "" && maxLimit != "" && maxLimit < value) || (maxLimit == "" && minLimit != "" && value < minLimit)) { //if reading was out of limits: activate alert
             alerts.push(key);
             LogToConsole(" -> Out of range", true, 0);
             if (match[0][columns_triggeredColumn] != 'YES') { //if alert is new
-              alertMessages.push("<strong>" + "[NEW] " + "</strong><font color='red'>" + key + "</font> out of limits: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); //save new alerts for the email
+              alertMessages.push("<strong>" + "NEW " + "<font color='red'>" + GetFriendlyColumnName(key,false) + " : " + GetFriendlyValue(key, value) + "</font></strong> - " + key + " : <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); //save new alerts for the email
               sendEmailAlert = true; //Send notification that a new value is out of range 
               columns[originalRow][columns_triggeredColumn] = 'YES'; //Flag the alert active
             }
             else {
-              alertMessages.push("<strong><font color='red'>" + key + "</font></strong> out of limits: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); //save active alerts for the email       
+              alertMessages.push("<strong><font color='red'>" + GetFriendlyColumnName(key,false) + " : " + GetFriendlyValue(key, value) + "</font></strong> - " + key + " : <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); //save active alerts for the email       
             }
             //Mark alert active on Status page
             //settingsSheet.getRange(match.getRow(), 5).setValue('YES'); //Triggered column       
@@ -54,7 +54,7 @@ function CheckAlerts(Log) {
           else {
             LogToConsole(" -> OK", true, 0);
             if (match[0][columns_triggeredColumn] != 'NO') { //if alert was active before
-              recoveredMessages.push("<strong><font color='green'>" + key + "</font></strong> recovered: <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); // //save recovered alerts for the email
+              recoveredMessages.push("<strong><font color='green'>" + GetFriendlyColumnName(key,false) + " : " + GetFriendlyValue(key, value) + "</font></strong> - " + key + " : <strong>" + value + "</strong> [" + minLimit + " / " + maxLimit + "]"); // //save recovered alerts for the email
               sendEmailAlert = true; //Send notification that a parameter recovered
               columns[originalRow][columns_triggeredColumn] = 'NO'; //Flag the alert active
             }
@@ -66,15 +66,16 @@ function CheckAlerts(Log) {
           }
         }
         else {
-          if (Debug) LogToConsole(key + ": Alert not active", true, 3);
+          if (Debug) LogToConsole(GetFriendlyColumnName(key,false) + " : " + GetFriendlyValue(key, value) + " [" + key + " : " + value + "] : Alert not active", true, 3);
         }
       }
     }
   }
   SaveNamedRange("Columns", columns); //Write back the alert status changes to Sheets
+  LogToConsole("Total alerts: " + alerts.length + ", Recovered alerts: " + recoveredMessages.length, true, 1);
 
   var EmailMode = GetSettingsValue("Send an email");
-  if (sendEmailAlert ||  EmailMode == "When a report is received" || (EmailMode == "When an alert is active" && alerts.length != 0)) //When there was a new event
+  if (sendEmailAlert || EmailMode == "When a report is received" || (EmailMode == "When an alert is active" && alerts.length != 0)) //When there was a new event
   {
     LogToConsole("Generating email template...", true, 1);
     var emailTemplate = HtmlService.createTemplateFromFile('AlertTemplate'); //Prepare the AlertEmailTemplate.html as a template
@@ -86,6 +87,9 @@ function CheckAlerts(Log) {
     //  return row[columns_keyColumn] != null && row[columns_keyColumn] != "";  //Filter out rows with a blank key colum
     //});
     sendEmail(emailTemplate);
+  }
+  else {
+    LogToConsole("Skipped sending an email", true, 1);
   }
 }
 
