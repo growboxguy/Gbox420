@@ -40,6 +40,8 @@ ln ../src/Components/420Common.h ./src/Components
 ln ../src/Components/420Common.cpp ./src/Components
 ln ../src/Components/420Module.h ./src/Components
 ln ../src/Components/420Module.cpp ./src/Components
+ln ../src/Components/AirPump.h ./src/Components
+ln ../src/Components/AirPump.cpp ./src/Components
 ln ../src/Components/Sound.h ./src/Components
 ln ../src/Components/Sound.cpp ./src/Components
 ln ../src/Components/DHTSensor.h ./src/Components
@@ -59,6 +61,8 @@ ln ../src/Components_Web/420Common_Web.h ./src/Components_Web
 ln ../src/Components_Web/420Common_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/420Module_Web.h ./src/Components_Web
 ln ../src/Components_Web/420Module_Web.cpp ./src/Components_Web
+ln ../src/Components_Web/AirPump_Web.h ./src/Components_Web
+ln ../src/Components_Web/AirPump_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/Sound_Web.h ./src/Components_Web
 ln ../src/Components_Web/Sound_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/DHTSensor_Web.h ./src/Components_Web

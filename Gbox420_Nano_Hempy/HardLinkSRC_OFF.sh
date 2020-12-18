@@ -52,6 +52,8 @@ unlink ./src/Components/Aeroponics_NoTank.h
 unlink ./src/Components/Aeroponics_NoTank.cpp
 unlink ./src/Components/Aeroponics_Tank.h
 unlink ./src/Components/Aeroponics_Tank.cpp
+unlink ./src/Components/AirPump.h
+unlink ./src/Components/AirPump.cpp
 unlink ./src/Components/DHTSensor.h
 unlink ./src/Components/DHTSensor.cpp
 unlink ./src/Components/DistanceSensor.h
@@ -99,6 +101,8 @@ unlink ./src/Components_Web/Aeroponics_NoTank_Web.h
 unlink ./src/Components_Web/Aeroponics_NoTank_Web.cpp
 unlink ./src/Components_Web/Aeroponics_Tank_Web.h
 unlink ./src/Components_Web/Aeroponics_Tank_Web.cpp
+unlink ./src/Components_Web/AirPump_Web.h
+unlink ./src/Components_Web/AirPump_Web.cpp
 unlink ./src/Components_Web/DHTSensor_Web.h
 unlink ./src/Components_Web/DHTSensor_Web.cpp
 unlink ./src/Components_Web/DistanceSensor_Web.h
