@@ -445,7 +445,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
   {
     if (*Debug)
       logToSerials(F("No response"), true, 3);
-    OnlineStatus = false;
+    if (millis() - LastResponseReceived > WirelessRetry * WirelessMessageTimeout)
+    {
+      OnlineStatus = false; ///< Comment this out if you have modules that do not return any data
+    }
   }
   return ReceivedSequenceID;
 }

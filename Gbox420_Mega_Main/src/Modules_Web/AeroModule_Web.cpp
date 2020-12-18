@@ -383,14 +383,16 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
     {
       if (*Debug)
         logToSerials(F("Acknowledgement received without any data"), true, 4);
-      OnlineStatus = false; ///< Comment this out if you have modules that do not return any data
     }
   }
   else
   {
     if (*Debug)
       logToSerials(F("No response"), true, 3);
-    OnlineStatus = false;
+    if (millis() - LastResponseReceived > WirelessRetry * WirelessMessageTimeout)
+    {
+      OnlineStatus = false;
+    }
   }
   return ReceivedSequenceID;
 }
