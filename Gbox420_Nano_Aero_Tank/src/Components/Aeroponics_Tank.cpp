@@ -29,7 +29,7 @@ void Aeroponics_Tank::refresh_Sec()
   if (*Debug)
     Common::refresh_Sec();
   checkPump();
-  checkSpray();
+  checkSpray(false);
 }
 
 void Aeroponics_Tank::processTimeCriticalStuff(){

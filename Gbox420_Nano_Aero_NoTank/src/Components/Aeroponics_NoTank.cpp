@@ -9,11 +9,30 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Pa
   sprayNow(false); ///< This is a safety feature,start with a spray after a reset
 }
 
+void Aeroponics_NoTank::report()
+{
+  Common::report();
+  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  strcat_P(LongMessage, (PGM_P)F("LastSprayPressure:"));
+  strcat(LongMessage, toText_pressure(LastSprayPressure));
+  logToSerials(&LongMessage, false, 1); ///< first print Aeroponics_Tank specific report, without a line break
+  Aeroponics::report();                 ///< then print parent class report
+}
+
 void Aeroponics_NoTank::refresh_Sec()
 { ///< pump directly connected to aeroponics tote, with an electronically controlled bypass valve
   if (*Debug)
     Common::refresh_Sec();
+  checkPump(false);
+}
 
+void Aeroponics_NoTank::processTimeCriticalStuff()
+{
+  checkPump(true);
+}
+
+void Aeroponics_NoTank::checkPump(bool OnlyTurnOff)
+{
   if (Pump->getState() == RUNNING)
   { ///< if pump is on
     FeedbackPressureSensor->readPressure();
@@ -42,7 +61,7 @@ void Aeroponics_NoTank::refresh_Sec()
   }
   else
   {
-    if (Pump->getState() == IDLE)
+    if (!OnlyTurnOff && Pump->getState() == IDLE)
     {
       RunTillTimeout = false; ///< Making sure the special flag is disabled as soon the Pump becomes IDLE. (RunTillTimeout forces the pump to run until the timeout is reached, used during mixing)
       uint32_t Interval;
@@ -61,16 +80,6 @@ void Aeroponics_NoTank::refresh_Sec()
       }
     }
   }
-}
-
-void Aeroponics_NoTank::report()
-{
-  Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("LastSprayPressure:"));
-  strcat(LongMessage, toText_pressure(LastSprayPressure));
-  logToSerials(&LongMessage, false, 1); ///< first print Aeroponics_Tank specific report, without a line break
-  Aeroponics::report();                 ///< then print parent class report
 }
 
 void Aeroponics_NoTank::sprayNow(bool UserRequest)

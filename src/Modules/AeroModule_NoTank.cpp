@@ -57,13 +57,8 @@ void AeroModule::refresh_FiveSec()
   updateResponse();
 }
 
-void AeroModule::updateResponse()
-{
-  Aero1Response1ToSend.SprayEnabled = AeroNT1->getSprayEnabled();
-  Aero1Response1ToSend.Pressure = AeroNT1->getPressure();
-  Aero1Response1ToSend.State = AeroNT1->Pump->getState();
-  Aero1Response1ToSend.LastSprayPressure = AeroNT1->getLastSprayPressure();
-  Aero1Response1ToSend.Weight = Weight1->getWeight();
+void AeroModule::processTimeCriticalStuff(){
+  AeroNT1 -> processTimeCriticalStuff();
 }
 
 void AeroModule::processCommand(void *ReceivedCommand)
@@ -179,6 +174,15 @@ void AeroModule::processCommand(void *ReceivedCommand)
   }
   updateAckData();
   saveSettings(ModuleSettings);
+}
+
+void AeroModule::updateResponse()
+{
+  Aero1Response1ToSend.SprayEnabled = AeroNT1->getSprayEnabled();
+  Aero1Response1ToSend.Pressure = AeroNT1->getPressure();
+  Aero1Response1ToSend.State = AeroNT1->Pump->getState();
+  Aero1Response1ToSend.LastSprayPressure = AeroNT1->getLastSprayPressure();
+  Aero1Response1ToSend.Weight = Weight1->getWeight();
 }
 
 void AeroModule::updateAckData()

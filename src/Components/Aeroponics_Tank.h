@@ -17,7 +17,7 @@ public:
   void refillTank();  ///< Recharge the pressure tank
   void checkPump();  ///< Turn the pump on or off based on the current state
   void checkSpray(bool OnlyTurnOff = false); ///< Turn the spray solenoid on or off based on the current state.
-  void processTimeCriticalStuff();
+  void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
 
 private:
 protected:

@@ -99,12 +99,12 @@ void loop()
   getWirelessData();
 }
 
+///< Threads
+
 void processTimeCriticalStuff() ///< Process things that need precise timing
 {
   AeroMod1->processTimeCriticalStuff();
 }
-
-///< Threads
 
 void runSec()
 {
