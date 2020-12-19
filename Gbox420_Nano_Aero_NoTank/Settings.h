@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -60,7 +60,7 @@ typedef struct
     int NightInterval; ///< Spray every X minutes - When the lights are OFF
     float MaxPressure; ///< Turn off pump above this pressure
   };
-  struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled = true, .Duration = 1, .DayInterval = 15, .NightInterval = 25, .MaxPressure = 7.0};
+  struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled = true, .Duration = 1.0, .DayInterval = 15, .NightInterval = 25, .MaxPressure = 7.0};
 
   struct PressureSensorSettings
   {
