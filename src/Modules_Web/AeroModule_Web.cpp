@@ -201,20 +201,18 @@ void AeroModule_Web::websiteEvent_Field(char *Field)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("DInt")) == 0)
-    {
-      DefaultSettings->DayInterval = WebServer.getArgInt();
-      Parent->addToLog(F("Day interval updated"), false);
-    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
     {
       DefaultSettings->Duration = WebServer.getArgInt();
       Parent->addToLog(F("Spray duration updated"), false);
     }
+    if (strcmp_P(ShortMessage, (PGM_P)F("DInt")) == 0)
+    {
+      DefaultSettings->DayInterval = WebServer.getArgInt();
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("NInt")) == 0)
     {
       DefaultSettings->NightInterval = WebServer.getArgInt();
-      Parent->addToLog(F("Night interval updated"), false);
     }   
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpSp")) == 0)
     {

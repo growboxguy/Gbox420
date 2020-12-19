@@ -41,8 +41,8 @@ protected:
   uint32_t SprayTimer = millis();
   bool *SprayEnabled;          ///< Enable/disable misting
   float *Duration;            ///< Spray time in seconds
-  int *DayInterval;            ///< Spray every 15 minutes - With lights ON  
-  int *NightInterval;          ///< Spray every 15 minutes - With lights OFF
+  int *DayInterval;            ///< Spray every X minutes - With lights ON
+  int *NightInterval;          ///< Spray every X minutes - With lights OFF
   float *MinPressure;          ///< Minimum acceptable spray pressure
   float *MaxPressure;          ///< Maximum allowed pressure
   float LastSprayPressure = 0; ///< tracks the last pressure reading during a spray cycle
