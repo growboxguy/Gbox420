@@ -25,21 +25,22 @@ public:
   ///< @param DefaultSettings A pointer to the default settings stuct loaded from EEPROM. Defined in Settings.h
 
   AeroModule(const __FlashStringHelper *Name); ///< constructor
-  Sound *Sound1 = NULL;                        ///< Pointer to a Piezo speaker - sound feedback
-  PressureSensor *Pres1 = NULL;
-  WaterPump *Pump1 = NULL;
-  Aeroponics_Tank *AeroT1 = NULL;
-  WeightSensor *Weight1;
+  Sound *Sound1 = NULL;                        ///< Piezo speaker - sound feedback
+  PressureSensor *Pres1 = NULL;  ///< Pressure sensor
+  WaterPump *Pump1 = NULL; ///< High pressure pump
+  Aeroponics_Tank *AeroT1 = NULL; ///< Logic to control the Aeroponics system with a pressure tank
+  WeightSensor *Weight1; ///< Tote weight sensor
   void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();
   //void refresh_QuarterHour();
-  void processCommand(void *Command);
-  void updateResponse();
-  void updateAckData();
+  void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
+  void processCommand(void *Command); ///< Process a received wireless command  
+  void updateResponse();  ///< Updates the wireless response package content
+  void updateAckData();   ///< pre-loads the ACK buffer that gets sent back when receiving a wireless message
 
 private:
-  unsigned long LastMessageReceived = 0; //When was the last wireless message received
+  unsigned long LastMessageReceived = 0; ///< Timestamp of the last received wireless message 
 
 protected:
 };

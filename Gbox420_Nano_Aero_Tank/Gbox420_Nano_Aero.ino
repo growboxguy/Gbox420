@@ -36,11 +36,12 @@ AeroModule *AeroMod1;                         ///< Represents a Aeroponics tote 
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///< Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 
 ///< Thread initialization
+Thread TimeCriticalThread = Thread();
 Thread OneSecThread = Thread();
 Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
 Thread QuarterHourThread = Thread();
-StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread, &QuarterHourThread);
+StaticThreadController<5> ThreadControl(&TimeCriticalThread, &OneSecThread, &FiveSecThread, &MinuteThread, &QuarterHourThread);
 
 void setup()
 {                              ///< put your setup code here, to run once:
@@ -74,7 +75,9 @@ void setup()
   //Wireless.flush_rx();  ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
 
   ///< Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
-  OneSecThread.setInterval(1000); ///< 1000ms
+  TimeCriticalThread.setInterval(100); ///< 100ms, 0.1sec
+  TimeCriticalThread.onRun(processTimeCriticalStuff);
+  OneSecThread.setInterval(1000); ///< 1000ms, 1sec
   OneSecThread.onRun(runSec);
   FiveSecThread.setInterval(5000);
   FiveSecThread.onRun(runFiveSec);
@@ -96,6 +99,10 @@ void loop()
   getWirelessData();
 }
 
+void processTimeCriticalStuff() ///< Process things that need precise timing
+{
+  AeroMod1->processTimeCriticalStuff();
+}
 
 ///< Threads
 

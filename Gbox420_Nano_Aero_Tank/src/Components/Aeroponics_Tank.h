@@ -12,9 +12,12 @@ public:
   Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump);
   void refresh_Sec();
   void report();
-  void sprayNow(bool UserRequest = false);
-  void sprayOff(bool UserRequest = false);
-  void refillTank();
+  void sprayNow(bool UserRequest = false);  ///< Start spraying
+  void sprayOff(bool UserRequest = false);  ///< Stop spraying
+  void refillTank();  ///< Recharge the pressure tank
+  void checkPump();  ///< Turn the pump on or off based on the current state
+  void checkSpray(bool OnlyTurnOff = false); ///< Turn the spray solenoid on or off based on the current state.
+  void processTimeCriticalStuff();
 
 private:
 protected:

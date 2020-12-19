@@ -28,7 +28,16 @@ void Aeroponics_Tank::refresh_Sec()
 {
   if (*Debug)
     Common::refresh_Sec();
+  checkPump();
+  checkSpray();
+}
 
+void Aeroponics_Tank::processTimeCriticalStuff(){
+  checkSpray(true);
+}
+
+void Aeroponics_Tank::checkPump()
+{
   if (Pump->getState() == RUNNING) ///< if pump is on
   {
     FeedbackPressureSensor->readPressure();
@@ -46,7 +55,10 @@ void Aeroponics_Tank::refresh_Sec()
       Pump->startPump();
     }
   }
+}
 
+void Aeroponics_Tank::checkSpray(bool OnlyTurnOff)
+{
   if (SpraySwitch->getState())
   { ///< if spray is on
     uint32_t Duration;
@@ -67,19 +79,22 @@ void Aeroponics_Tank::refresh_Sec()
   }
   else
   { ///< if spray is off
-    uint32_t Interval;
-    if (DayMode)
+    if (!OnlyTurnOff)
     {
-      Interval = *DayInterval * 60000; ///< Interval is in minutes
-    }
-    else
-    {
-      Interval = *NightInterval * 60000; ///< Interval is in minutes
-    }
+      uint32_t Interval;
+      if (DayMode)
+      {
+        Interval = *DayInterval * 60000; ///< Interval is in minutes
+      }
+      else
+      {
+        Interval = *NightInterval * 60000; ///< Interval is in minutes
+      }
 
-    if (*SprayEnabled && millis() - SprayTimer >= Interval)
-    { ///< if time to start spraying (AeroInterval in Minutes)
-      sprayNow(false);
+      if (*SprayEnabled && millis() - SprayTimer >= Interval)
+      { ///< if time to start spraying (AeroInterval in Minutes)
+        sprayNow(false);
+      }
     }
   }
 }
