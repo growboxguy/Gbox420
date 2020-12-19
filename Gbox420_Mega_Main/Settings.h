@@ -57,7 +57,7 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroModuleSettings ///< AeroModule default settings
   {
-    AeroModuleSettings(bool PressureTankPresent = false, float Duration = 0.0, uint16_t DayInterval = 0, uint16_t NightInterval = 0, uint8_t PumpSpeed = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, float MaxPressure = 0.0, float MinPressure = 0.0) : PressureTankPresent(PressureTankPresent), DayInterval(DayInterval), Duration(Duration), NightInterval(NightInterval), PumpSpeed(PumpSpeed), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), MaxPressure(MaxPressure), MinPressure(MinPressure) {}
+    AeroModuleSettings(bool PressureTankPresent = false, float Duration = 0.0, uint16_t DayInterval = 0, uint16_t NightInterval = 0, uint8_t PumpSpeed = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, float MaxPressure = 0.0, float MinPressure = 0.0) : PressureTankPresent(PressureTankPresent), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), PumpSpeed(PumpSpeed), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), MaxPressure(MaxPressure), MinPressure(MinPressure) {}
     bool PressureTankPresent; ///< Is there a pressure tank connected or not
     float Duration;     ///< Spray length in seconds
     uint16_t DayInterval;     ///< Spray every X minutes - When the lights are ON
@@ -68,7 +68,7 @@ typedef struct
     float MaxPressure;        ///< Turn off pump above this pressure
     float MinPressure;        ///< Turn on pump below this pressure
   };
-  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .DayInterval = 15, .Duration = 1.0, .NightInterval = 25, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
+  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .Duration = 1.0, .DayInterval = 6,  .NightInterval = 10, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
 
   struct AirPumpSettings ///< AirPump default settings
   {

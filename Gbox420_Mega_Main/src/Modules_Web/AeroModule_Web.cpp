@@ -99,8 +99,8 @@ void AeroModule_Web::websiteEvent_Load(char *url)
   if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgBoolean(getComponentName(F("Tank")), AeroResponse1Received.PressureTankPresent);
-    WebServer.setArgInt(getComponentName(F("DInt")), AeroCommand1ToSend.DayInterval);
     WebServer.setArgFloat(getComponentName(F("Dur")), AeroCommand1ToSend.Duration);
+    WebServer.setArgInt(getComponentName(F("DInt")), AeroCommand1ToSend.DayInterval);
     WebServer.setArgInt(getComponentName(F("NInt")), AeroCommand1ToSend.NightInterval);
     WebServer.setArgFloat(getComponentName(F("PresMax")), AeroCommand1ToSend.MaxPressure);
     WebServer.setArgFloat(getComponentName(F("PresMin")), AeroCommand1ToSend.MinPressure);

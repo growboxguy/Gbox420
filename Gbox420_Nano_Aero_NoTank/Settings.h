@@ -60,7 +60,7 @@ typedef struct
     int NightInterval; ///< Spray every X minutes - When the lights are OFF
     float MaxPressure; ///< Turn off pump above this pressure
   };
-  struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled = true, .Duration = 1.0, .DayInterval = 15, .NightInterval = 25, .MaxPressure = 7.0};
+  struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled = true, .Duration = 3.0, .DayInterval = 6, .NightInterval = 10, .MaxPressure = 7.0};
 
   struct PressureSensorSettings
   {
