@@ -109,6 +109,7 @@ void Aeroponics_Tank::sprayOff(bool UserRequest)
 {
   SpraySwitch->turnOff();
   SprayTimer = millis();
+  delay(400); ///< Wait 0.4sec for the spray solenoid to close
   Pump->startBlowOff(); //< The pump's bypass is used to release pressure from the misting loop: Stops spraying immediately
   if (UserRequest)
   {

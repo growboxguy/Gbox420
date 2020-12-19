@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -91,7 +91,7 @@ typedef struct
 
   struct WaterPumpSettings ///< WaterPump default settings
   {
-    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic) {}
+    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime) {}
     uint8_t PumpPin;           ///< Pump relay pin
     bool PumpPinNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     uint8_t BypassSolenoidPin; ///< Bypass solenoid relay pin
