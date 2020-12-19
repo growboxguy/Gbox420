@@ -42,17 +42,7 @@ void Aeroponics_NoTank::checkPump(bool OnlyTurnOff)
       Pump->stopPump();
     }
 
-    uint32_t Duration;
-    if (DayMode)
-    {
-      Duration = *DayDuration * 1000; ///< Duration is miliseconds, DayDuration in seconds
-    }
-    else
-    {
-      Duration = *NightDuration * 1000; ///< Duration is miliseconds
-    }
-
-    if (!RunTillTimeout && (millis() - SprayTimer) >= Duration + (uint32_t)Pump->getPrimingTime() * 1000)
+    if (!RunTillTimeout && (millis() - SprayTimer) >= *Duration * 1000 + (uint32_t)Pump->getPrimingTime() * 1000)
     { ///< bypass valve is closed and time to stop spraying
       LastSprayPressure = Aeroponics::FeedbackPressureSensor->getPressure();
       logToSerials(F("Spray finished"), false, 3);

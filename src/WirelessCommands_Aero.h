@@ -80,16 +80,15 @@ struct AeroModuleResponse : AeroCommonTemplate ///< Aeroponics wireless module r
 struct AeroCommand_P1 : AeroCommonTemplate ///< Aeroponics wireless commands - Part1
 {
    AeroCommand_P1(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroCommand_P1(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool DayMode, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) bool SprayDisabled, __attribute__((unused)) bool SprayNow, __attribute__((unused)) bool SprayOff, __attribute__((unused)) int DayInterval, __attribute__((unused)) int DayDuration, __attribute__((unused)) int NightInterval, __attribute__((unused)) int NightDuration, __attribute__((unused)) float MinPressure, __attribute__((unused)) float MaxPressure) : AeroCommonTemplate(SequenceID) {}
+   AeroCommand_P1(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool DayMode, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) bool SprayDisabled, __attribute__((unused)) bool SprayNow, __attribute__((unused)) bool SprayOff, __attribute__((unused)) float Duration, __attribute__((unused)) int DayInterval, __attribute__((unused)) int NightInterval, __attribute__((unused)) float MinPressure, __attribute__((unused)) float MaxPressure) : AeroCommonTemplate(SequenceID) {}
    bool DayMode = true;
    bool SprayEnabled = false;
    bool SprayDisabled = false;
    bool SprayNow = false;
    bool SprayOff = false;
+   float Duration = 0.0;
    int DayInterval = 0;
-   int DayDuration = 0;
    int NightInterval = 0;
-   int NightDuration = 0;
    float MinPressure = 0.0;
    float MaxPressure = 0.0;
 };

@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -57,19 +57,18 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroModuleSettings ///< AeroModule default settings
   {
-    AeroModuleSettings(bool PressureTankPresent = false, uint16_t DayInterval = 0, uint16_t DayDuration = 0, uint16_t NightInterval = 0, uint16_t NightDuration = 0, uint8_t PumpSpeed = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, float MaxPressure = 0.0, float MinPressure = 0.0) : PressureTankPresent(PressureTankPresent), DayInterval(DayInterval), DayDuration(DayDuration), NightInterval(NightInterval), NightDuration(NightDuration), PumpSpeed(PumpSpeed), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), MaxPressure(MaxPressure), MinPressure(MinPressure) {}
+    AeroModuleSettings(bool PressureTankPresent = false, uint16_t DayInterval = 0, uint16_t Duration = 0, uint16_t NightInterval = 0, uint8_t PumpSpeed = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, float MaxPressure = 0.0, float MinPressure = 0.0) : PressureTankPresent(PressureTankPresent), DayInterval(DayInterval), Duration(Duration), NightInterval(NightInterval), PumpSpeed(PumpSpeed), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), MaxPressure(MaxPressure), MinPressure(MinPressure) {}
     bool PressureTankPresent; ///< Is there a pressure tank connected or not
     uint16_t DayInterval;     ///< Spray every X minutes - When the lights are ON
-    uint16_t DayDuration;     ///< Spray length in seconds - When the lights are ON
+    uint16_t Duration;     ///< Spray length in seconds - When the lights are ON
     uint16_t NightInterval;   ///< Spray every X minutes - When the lights are OFF
-    uint16_t NightDuration;   ///< Spray length in seconds - When the lights are OFF
     uint8_t PumpSpeed;        ///< Pump duty cycle to adjust motor speed
     uint16_t PumpTimeOut;     ///< (Sec) Max pump run time
     uint16_t PrimingTime;     ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Removes air bubbles from the lines
     float MaxPressure;        ///< Turn off pump above this pressure
     float MinPressure;        ///< Turn on pump below this pressure
   };
-  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .DayInterval = 15, .DayDuration = 3, .NightInterval = 25, .NightDuration = 2, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
+  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .DayInterval = 15, .Duration = 3, .NightInterval = 25, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
 
   struct AirPumpSettings ///< AirPump default settings
   {

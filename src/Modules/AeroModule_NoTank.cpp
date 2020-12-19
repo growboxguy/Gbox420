@@ -97,10 +97,9 @@ void AeroModule::processCommand(void *ReceivedCommand)
     if (((AeroCommand_P1 *)ReceivedCommand)->SprayOff)
       AeroNT1->sprayOff();
     AeroNT1->setDayMode(((AeroCommand_P1 *)ReceivedCommand)->DayMode);
+    AeroNT1->setDuration(((AeroCommand_P1 *)ReceivedCommand)->Duration);
     AeroNT1->setDayInterval(((AeroCommand_P1 *)ReceivedCommand)->DayInterval);
-    AeroNT1->setDayDuration(((AeroCommand_P1 *)ReceivedCommand)->DayDuration);
     AeroNT1->setNightInterval(((AeroCommand_P1 *)ReceivedCommand)->NightInterval);
-    AeroNT1->setNightDuration(((AeroCommand_P1 *)ReceivedCommand)->NightDuration);
     AeroNT1->setMaxPressure(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure);
 
     if (*Debug)
@@ -116,14 +115,12 @@ void AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->DayMode, false, 1);
       logToSerials(F(","), false, 1);
+      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->Duration, false, 1);
+      logToSerials(F(";"), false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->DayInterval, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->DayDuration, false, 1);
-      logToSerials(F(";"), false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->NightInterval, false, 1);
-      logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand_P1 *)ReceivedCommand)->NightDuration, false, 1);
-      logToSerials(F(","), false, 1);
+      logToSerials(F(","), false, 1);      
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MinPressure, false, 1);
       logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure, true, 1);

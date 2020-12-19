@@ -53,15 +53,14 @@ typedef struct
 
   struct AeroponicsSettings
   { ///< Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
-    AeroponicsSettings(bool SprayEnabled = true, int DayInterval = 0, int DayDuration = 0, int NightInterval = 0, int NightDuration = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), DayInterval(DayInterval), DayDuration(DayDuration), NightInterval(NightInterval), NightDuration(NightDuration), MaxPressure(MaxPressure) {}
+    AeroponicsSettings(bool SprayEnabled = true, float Duration = 0.0, int DayInterval = 0, int NightInterval = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), MaxPressure(MaxPressure) {}
     bool SprayEnabled; ///< Enable/disable spraying cycle
-    int DayInterval;   ///< Spray every X minutes - When the lights are ON
-    int DayDuration;   ///< Spray time in seconds - When the lights are ON
+    float Duration;   ///< Spray time in seconds (Due to thread scheduling this could last 0,1sec longer in reality)
+    int DayInterval;   ///< Spray every X minutes - When the lights are ON    
     int NightInterval; ///< Spray every X minutes - When the lights are OFF
-    int NightDuration; ///< Spray time in seconds - When the lights are OFF
     float MaxPressure; ///< Turn off pump above this pressure
   };
-  struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled = true, .DayInterval = 15, .DayDuration = 3, .NightInterval = 25, .NightDuration = 2, .MaxPressure = 7.0};
+  struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled = true, .Duration = 1, .DayInterval = 15, .NightInterval = 25, .MaxPressure = 7.0};
 
   struct PressureSensorSettings
   {

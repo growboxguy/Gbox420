@@ -54,15 +54,14 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroponicsSettings ///< Common default settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
   {
-    AeroponicsSettings(bool SprayEnabled = true, int DayInterval = 0, int DayDuration = 0, int NightInterval = 0, int NightDuration = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), DayInterval(DayInterval), DayDuration(DayDuration), NightInterval(NightInterval), NightDuration(NightDuration), MaxPressure(MaxPressure) {}
+    AeroponicsSettings(bool SprayEnabled = true, float Duration = 0.0, int DayInterval = 0, int NightInterval = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), DayInterval(DayInterval), Duration(Duration), NightInterval(NightInterval), MaxPressure(MaxPressure) {}
     bool SprayEnabled; ///< Enable/disable spraying cycle
+    float Duration;   ///< Spray time in seconds
     int DayInterval;   ///< Spray every X minutes - When the lights are ON
-    int DayDuration;   ///< Spray time in seconds - When the lights are ON
     int NightInterval; ///< Spray every X minutes - When the lights are OFF
-    int NightDuration; ///< Spray time in seconds - When the lights are OFF
     float MaxPressure; ///< Turn off pump above this pressure
   };
-  struct AeroponicsSettings AeroT1_Common = {.SprayEnabled = true, .DayInterval = 15, .DayDuration = 10, .NightInterval = 30, .NightDuration = 10, .MaxPressure = 7.0};
+  struct AeroponicsSettings AeroT1_Common = {.SprayEnabled = true, .Duration = 1.0, .DayInterval = 15, .NightInterval = 30, .MaxPressure = 7.0};
 
   struct AeroponicsSettings_TankSpecific ///< Aeroponics_Tank default settings
   {

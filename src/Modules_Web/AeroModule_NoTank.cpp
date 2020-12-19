@@ -102,10 +102,9 @@ void AeroModule::processCommand(void *ReceivedCommand)
     if (((AeroCommand *)ReceivedCommand)->TareWeight)
       Weight1->triggerTare();
     AeroNT1->setDayMode(((AeroCommand *)ReceivedCommand)->DayMode);
+    AeroNT1->setDuration(((AeroCommand *)ReceivedCommand)->Duration);
     AeroNT1->setDayInterval(((AeroCommand *)ReceivedCommand)->DayInterval);
-    AeroNT1->setDayDuration(((AeroCommand *)ReceivedCommand)->DayDuration);
     AeroNT1->setNightInterval(((AeroCommand *)ReceivedCommand)->NightInterval);
-    AeroNT1->setNightDuration(((AeroCommand *)ReceivedCommand)->NightDuration);
     if (((AeroCommand *)ReceivedCommand)->PumpOn)
       AeroNT1->lockPumpOn();
     if (((AeroCommand *)ReceivedCommand)->PumpOff)
@@ -132,14 +131,12 @@ void AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->DayMode, false, 1);
       logToSerials(F(","), false, 1);
+      logToSerials(((AeroCommand *)ReceivedCommand)->Duration, false, 1);
+      logToSerials(F(";"), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->DayInterval, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->DayDuration, false, 1);
-      logToSerials(F(";"), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->NightInterval, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((AeroCommand *)ReceivedCommand)->NightDuration, false, 1);
-      logToSerials(F(";"), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->PumpSpeed, false, 1);
       logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->PumpOn, false, 1);

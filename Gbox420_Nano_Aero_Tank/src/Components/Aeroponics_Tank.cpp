@@ -61,17 +61,7 @@ void Aeroponics_Tank::checkSpray(bool OnlyTurnOff)
 {
   if (SpraySwitch->getState())
   { ///< if spray is on
-    uint32_t Duration;
-    if (DayMode)
-    {
-      Duration = *DayDuration * 1000; ///< Duration is in miliseconds
-    }
-    else
-    {
-      Duration = *NightDuration * 1000; ///< Duration is in miliseconds
-    }
-
-    if (millis() - SprayTimer >= Duration)
+    if (millis() - SprayTimer >= *Duration * 1000)
     { ///< if time to stop spraying
       LastSprayPressure = Aeroponics::FeedbackPressureSensor->getPressure();
       sprayOff(false);
