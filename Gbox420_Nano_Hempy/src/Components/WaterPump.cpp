@@ -54,26 +54,7 @@ void WaterPump::refresh_Sec()
   {
     Common::refresh_Sec();
   }
-
   updateState();
-
-  if (PumpOn)
-  {
-    PumpSwitch->turnOn();
-  }
-  else
-  {
-    PumpSwitch->turnOff();
-  }
-
-  if (BypassOn)
-  {
-    BypassSwitch->turnOn();
-  }
-  else
-  {
-    BypassSwitch->turnOff();
-  }
 }
 
 void WaterPump::updateState(PumpStates NewState) ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State
@@ -149,6 +130,24 @@ void WaterPump::updateState(PumpStates NewState) ///< Without a parameter actual
     BypassOn = false;
     *PumpEnabled = false;
     break;
+  }
+
+  if (PumpOn)
+  {
+    PumpSwitch->turnOn();
+  }
+  else
+  {
+    PumpSwitch->turnOff();
+  }
+
+  if (BypassOn)
+  {
+    BypassSwitch->turnOn();
+  }
+  else
+  {
+    BypassSwitch->turnOff();
   }
 }
 

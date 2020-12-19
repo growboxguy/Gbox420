@@ -91,6 +91,7 @@ void Aeroponics_Tank::checkSpray(bool OnlyTurnOff)
 
 void Aeroponics_Tank::sprayNow(bool UserRequest)
 {
+  Pump->turnBypassOff();
   SpraySwitch->turnOn();
   SprayTimer = millis();
   Parent->getSoundObject()->playOnSound();
