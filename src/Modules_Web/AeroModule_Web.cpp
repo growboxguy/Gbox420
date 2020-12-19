@@ -100,7 +100,7 @@ void AeroModule_Web::websiteEvent_Load(char *url)
   {
     WebServer.setArgBoolean(getComponentName(F("Tank")), AeroResponse1Received.PressureTankPresent);
     WebServer.setArgInt(getComponentName(F("DInt")), AeroCommand1ToSend.DayInterval);
-    WebServer.setArgInt(getComponentName(F("Dur")), AeroCommand1ToSend.Duration);
+    WebServer.setArgFloat(getComponentName(F("Dur")), AeroCommand1ToSend.Duration);
     WebServer.setArgInt(getComponentName(F("NInt")), AeroCommand1ToSend.NightInterval);
     WebServer.setArgFloat(getComponentName(F("PresMax")), AeroCommand1ToSend.MaxPressure);
     WebServer.setArgFloat(getComponentName(F("PresMin")), AeroCommand1ToSend.MinPressure);
@@ -201,12 +201,12 @@ void AeroModule_Web::websiteEvent_Field(char *Field)
   }
   else
   {
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
+    if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
     {
-      DefaultSettings->Duration = WebServer.getArgInt();
+      DefaultSettings->Duration = WebServer.getArgFloat();
       Parent->addToLog(F("Spray duration updated"), false);
     }
-    if (strcmp_P(ShortMessage, (PGM_P)F("DInt")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("DInt")) == 0)
     {
       DefaultSettings->DayInterval = WebServer.getArgInt();
     }

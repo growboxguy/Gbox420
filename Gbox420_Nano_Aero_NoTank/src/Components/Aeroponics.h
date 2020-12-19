@@ -18,8 +18,8 @@ public:
   char *sprayStateToText();
   virtual void sprayNow(bool UserRequest = false) = 0;
   void setDayMode(bool State);
-  void setDayInterval(int Interval);
   void setDuration(float Duration);
+  void setDayInterval(int Interval);
   void setNightInterval(int Interval);
   float getDuration();
   int getDayInterval();

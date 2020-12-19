@@ -90,11 +90,11 @@ char *Aeroponics::getNightIntervalText()
   return toText(*NightInterval);
 }
 
-void Aeroponics::setDuration(float Duration)
+void Aeroponics::setDuration(float duration)
 {
-  if (*Duration != Duration && Duration > 0)
+  if (*Duration != duration && duration > 0)
   {
-    *Duration = Duration;
+    *Duration = duration;
     Parent->addToLog(F("Spray duration updated"));
     Parent->getSoundObject()->playOnSound();
   }

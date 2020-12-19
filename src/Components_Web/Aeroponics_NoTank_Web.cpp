@@ -26,7 +26,7 @@ void Aeroponics_NoTank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
     WebServer.setArgInt(getComponentName(F("Timeout")), Pump->getPumpTimeOut());
     WebServer.setArgInt(getComponentName(F("Priming")), Pump->getPrimingTime());
     WebServer.setArgInt(getComponentName(F("Int")), *Interval);
-    WebServer.setArgInt(getComponentName(F("Dur")), *Duration);
+    WebServer.setArgFloat(getComponentName(F("Dur")), *Duration);
   }
 }
 
@@ -104,7 +104,7 @@ void Aeroponics_NoTank_Web::websiteEvent_Field(__attribute__((unused)) char *Fie
   }
   else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
   {
-    setSprayDuration(WebServer.getArgInt());
+    setSprayDuration(WebServer.getArgFloat());
   }
   else if (strcmp_P(ShortMessage, (PGM_P)F("Int")) == 0)
   {
