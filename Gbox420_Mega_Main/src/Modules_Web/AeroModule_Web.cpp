@@ -213,6 +213,7 @@ void AeroModule_Web::websiteEvent_Field(char *Field)
     else if (strcmp_P(ShortMessage, (PGM_P)F("NInt")) == 0)
     {
       DefaultSettings->NightInterval = WebServer.getArgInt();
+      Parent->addToLog(F("Spray interval updated"), false);
     }   
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpSp")) == 0)
     {
