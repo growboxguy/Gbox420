@@ -102,7 +102,6 @@ void WaterPump::updateState(PumpStates NewState) ///< Without a parameter actual
   case BLOWOFF:
     PumpOn = false;
     BypassOn = true;
-    *PumpEnabled = true;
     if (millis() - PumpTimer > ((uint32_t)*BlowOffTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
       logToSerials(F("Pressure released"), true, 3);
@@ -235,7 +234,14 @@ void WaterPump::turnBypassOff()
 {
   Parent->addToLog(F("Bypass OFF"));
   Parent->getSoundObject()->playOffSound();
-  updateState(IDLE);
+  if(*PumpEnabled){
+     updateState(PumpStates::IDLE);
+  }
+  else
+  {
+    updateState(PumpStates::DISABLED);
+  }
+  
 }
 
 PumpStates WaterPump::getState()
