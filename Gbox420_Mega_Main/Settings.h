@@ -59,7 +59,7 @@ typedef struct
   {
     AeroModuleSettings(bool PressureTankPresent = false, float Duration = 0.0, uint16_t DayInterval = 0, uint16_t NightInterval = 0, uint8_t PumpSpeed = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, float MaxPressure = 0.0, float MinPressure = 0.0) : PressureTankPresent(PressureTankPresent), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), PumpSpeed(PumpSpeed), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), MaxPressure(MaxPressure), MinPressure(MinPressure) {}
     bool PressureTankPresent; ///< Is there a pressure tank connected or not
-    float Duration;     ///< Spray length in seconds
+    float Duration;     ///< Spray length in seconds (Actual duration is ~0.5sec longer due to thread + solenoid delay)
     uint16_t DayInterval;     ///< Spray every X minutes - When the lights are ON
     uint16_t NightInterval;   ///< Spray every X minutes - When the lights are OFF
     uint8_t PumpSpeed;        ///< Pump duty cycle to adjust motor speed

@@ -4,6 +4,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
 { ///< constructor
   this->Name = Name;
   MinPressure = &TankSpecificSettings->MinPressure; ///< Aeroponics - Turn on pump below this pressure (bar)
+  SpraySolenoidClosingDelay = &TankSpecificSettings->SpraySolenoidClosingDelay;
   logToSerials(F(""), true, 0);                     //New line
   logToSerials(F(""), false, 1);                    //Extra indentation
   SpraySwitch = new Switch(F("SpraySolenoid"), TankSpecificSettings->SpraySolenoidPin, TankSpecificSettings->SpraySolenoidNegativeLogic);
@@ -109,8 +110,8 @@ void Aeroponics_Tank::sprayOff(bool UserRequest)
 {
   SpraySwitch->turnOff();
   SprayTimer = millis();
-  delay(400); ///< Wait 0.4sec for the spray solenoid to close
-  Pump->startBlowOff(); //< The pump's bypass is used to release pressure from the misting loop: Stops spraying immediately
+  delay(*SpraySolenoidClosingDelay); ///< Wait until the spray solenoid is closed
+  Pump->startBlowOff(); //< The pump's bypass is used to release pressure from the misting loop
   if (UserRequest)
   {
     Parent->getSoundObject()->playOffSound();

@@ -22,4 +22,5 @@ public:
 private:
 protected:
   Switch *SpraySwitch; //Relay or MOSFET controlling the spray solenoid
+  uint16_t *SpraySolenoidClosingDelay;
 };

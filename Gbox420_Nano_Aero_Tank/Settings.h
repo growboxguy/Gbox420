@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 3; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -56,7 +56,7 @@ typedef struct
   {
     AeroponicsSettings(bool SprayEnabled = true, float Duration = 0.0, int DayInterval = 0, int NightInterval = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), MaxPressure(MaxPressure) {}
     bool SprayEnabled; ///< Enable/disable spraying cycle
-    float Duration;   ///< Spray time in seconds
+    float Duration;   ///< Spray time in seconds (Actual duration is ~0.5sec longer due to thread + solenoid delay)
     int DayInterval;   ///< Spray every X minutes - When the lights are ON
     int NightInterval; ///< Spray every X minutes - When the lights are OFF
     float MaxPressure; ///< Turn off pump above this pressure
@@ -65,12 +65,13 @@ typedef struct
 
   struct AeroponicsSettings_TankSpecific ///< Aeroponics_Tank default settings
   {
-    AeroponicsSettings_TankSpecific(float MinPressure = 0.0, uint8_t SpraySolenoidPin = 0, bool SpraySolenoidNegativeLogic = false) : MinPressure(MinPressure), SpraySolenoidPin(SpraySolenoidPin), SpraySolenoidNegativeLogic(SpraySolenoidNegativeLogic) {}
+    AeroponicsSettings_TankSpecific(float MinPressure = 0.0, uint8_t SpraySolenoidPin = 0, bool SpraySolenoidNegativeLogic = false, uint16_t SpraySolenoidClosingDelay = 0.0) : MinPressure(MinPressure), SpraySolenoidPin(SpraySolenoidPin), SpraySolenoidNegativeLogic(SpraySolenoidNegativeLogic), SpraySolenoidClosingDelay(SpraySolenoidClosingDelay) {}
     float MinPressure;               ///< Turn on pump below this pressure
     uint8_t SpraySolenoidPin;        ///< Relay controlling DC power to the solenoid
     bool SpraySolenoidNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
+    uint16_t SpraySolenoidClosingDelay;     ///< (ms) Time required for the solenoid to close. To avoid draining the tank the bypass valve is not allowed to open until the Spray solenoid is not closed
   };
-  struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.MinPressure = 5.0, .SpraySolenoidPin = 5, .SpraySolenoidNegativeLogic = true};
+  struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.MinPressure = 5.0, .SpraySolenoidPin = 5, .SpraySolenoidNegativeLogic = true, .SpraySolenoidClosingDelay = 600};
 
   struct PressureSensorSettings ///< PressureSensor default settings
   {

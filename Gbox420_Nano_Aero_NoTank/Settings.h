@@ -55,7 +55,7 @@ typedef struct
   { ///< Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
     AeroponicsSettings(bool SprayEnabled = true, float Duration = 0.0, int DayInterval = 0, int NightInterval = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), MaxPressure(MaxPressure) {}
     bool SprayEnabled; ///< Enable/disable spraying cycle
-    float Duration;   ///< Spray time in seconds (Due to thread scheduling this could last 0,1sec longer in reality)
+    float Duration;   ///< Spray time in seconds
     int DayInterval;   ///< Spray every X minutes - When the lights are ON    
     int NightInterval; ///< Spray every X minutes - When the lights are OFF
     float MaxPressure; ///< Turn off pump above this pressure
