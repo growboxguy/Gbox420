@@ -33,6 +33,8 @@ ln ../src/Components/DHTSensor.h ./src/Components
 ln ../src/Components/DHTSensor.cpp ./src/Components
 ln ../src/Components/PHSensor.h ./src/Components
 ln ../src/Components/PHSensor.cpp ./src/Components
+ln ../src/Components/TDSSensor.h ./src/Components
+ln ../src/Components/TDSSensor.cpp ./src/Components
 ln ../src/Components/WaterTempSensor.h ./src/Components
 ln ../src/Components/WaterTempSensor.cpp ./src/Components
 ln ../src/Components/WeightSensor.h ./src/Components
