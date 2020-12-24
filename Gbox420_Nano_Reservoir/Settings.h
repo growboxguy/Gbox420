@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 8; ///< Increment this when you make a change in the SAVED TO EEPROM section
+static const uint8_t Version = 9; ///< Increment this when you make a change in the SAVED TO EEPROM section
 
 ///< NOT SAVED TO EEPROM
 
@@ -68,6 +68,13 @@ typedef struct
     float Intercept;
   };
   struct PHSensorSettings PHSen1 = {.Pin = A0, .Slope = -0.031199, .Intercept = 22.557617}; ///< Update this to your own PH meter calibration values: https://sites.google.com/site/growboxguy/arduino/reservoir-module?authuser=0#h.p_PGMrIJ9iRr0c
+
+  struct TDSSensorSettings ///< PHSensor default settings
+  {
+    TDSSensorSettings(uint8_t Pin = 0) : Pin(Pin) {}
+    uint8_t Pin; ///< TDS sensor A pin
+  };
+  struct TDSSensorSettings TDS1 = {.Pin = A1};
 
   struct ReservoirModuleSettings ///< ReservoirModule default settings
   {

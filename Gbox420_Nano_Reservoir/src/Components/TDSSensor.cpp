@@ -28,7 +28,7 @@ void TDSSensor::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("TDS:"));
-  strcat(LongMessage, getTDSText());
+  strcat(LongMessage, getTDSText(false));
   logToSerials(&LongMessage, true, 1);
 }
 

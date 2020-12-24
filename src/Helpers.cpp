@@ -186,7 +186,7 @@ char *toText_distance(float Distance)
 
 char *toText_TDS(float TDS)
 {
-  dtostrf(Distance, 4, 2, ShortMessage);
+  dtostrf(TDS, 4, 2, ShortMessage);
   strcat_P(ShortMessage, (PGM_P)F("ppm"));
   return ShortMessage;
 }

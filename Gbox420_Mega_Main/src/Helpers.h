@@ -49,3 +49,4 @@ char *toText_pumpState(PumpStates State);
 char *toText_minute(int Minute);
 char *toText_second(int Second);
 char *toText_distance(float Distance);
+char *toText_TDS(float TDS);
