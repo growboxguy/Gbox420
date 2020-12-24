@@ -6,8 +6,6 @@
 
 ///< Light controller with PWM dimming - website component
 
-class GrowBox; ///< forward declaration
-
 class Lights_Web : public Lights, public Common_Web
 {
 public:
