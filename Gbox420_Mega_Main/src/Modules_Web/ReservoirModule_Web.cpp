@@ -26,6 +26,8 @@ void ReservoirModule_Web::report()
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("PH:"));
   strcat(LongMessage, toText(ReservoirResponse1Received.PH));
+  strcat_P(LongMessage, (PGM_P)F("TDS:"));
+  strcat(LongMessage, toText(ReservoirResponse1Received.TDS));
   strcat_P(LongMessage, (PGM_P)F(" ; Weight:"));
   strcat(LongMessage, toText_weight(ReservoirResponse1Received.Weight));
   strcat_P(LongMessage, (PGM_P)F(" ; Water temp:"));
@@ -44,6 +46,8 @@ void ReservoirModule_Web::reportToJSON()
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.PH));
+  strcat_P(LongMessage, (PGM_P)F("\",\"TDS\":\""));
+  strcat(LongMessage, toText(ReservoirResponse1Received.TDS));
   strcat_P(LongMessage, (PGM_P)F("\",\"Wght\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.Weight));
   strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
@@ -61,6 +65,7 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
   {
     WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
     WebServer.setArgString(getComponentName(F("PH")), toText(ReservoirResponse1Received.PH));
+    WebServer.setArgString(getComponentName(F("TDS")), toText(ReservoirResponse1Received.TDS));
     WebServer.setArgString(getComponentName(F("Weight")), toText_weight(ReservoirResponse1Received.Weight));
     WebServer.setArgString(getComponentName(F("WTemp")), toText_temp(ReservoirResponse1Received.WaterTemperature));
     WebServer.setArgString(getComponentName(F("ATemp")), toText_temp(ReservoirResponse1Received.AirTemperature));
@@ -171,6 +176,8 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         {
           logToSerials(F("Reservoir:"), false, 4);
           logToSerials(ReservoirResponse1Received.PH, false, 1);
+          logToSerials(F(","), false, 1);
+          logToSerials(ReservoirResponse1Received.TDS, false, 1);
           logToSerials(F(","), false, 1);
           logToSerials(ReservoirResponse1Received.Weight, false, 1);
           logToSerials(F(","), false, 1);

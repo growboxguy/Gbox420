@@ -77,8 +77,9 @@ struct ReservoirCommand : ReservoirCommonTemplate ///< Max 32 bytes. Command sen
 struct ReservoirResponse : ReservoirCommonTemplate ///< Max 32 bytes. Response sent back to the Main module
 {
    ReservoirResponse(__attribute__((unused)) ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
-   ReservoirResponse(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) float PH, __attribute__((unused)) float Weight, __attribute__((unused)) float WaterTemperature, __attribute__((unused)) float AirTemperature, __attribute__((unused)) float Humidity) : ReservoirCommonTemplate(SequenceID) {}
+   ReservoirResponse(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) float PH,  __attribute__((unused)) float TDS, __attribute__((unused)) float Weight, __attribute__((unused)) float WaterTemperature, __attribute__((unused)) float AirTemperature, __attribute__((unused)) float Humidity) : ReservoirCommonTemplate(SequenceID) {}
    float PH = 0.0;
+   float TDS = 0.0;
    float Weight = 0.0;
    float WaterTemperature = 0.0;
    float AirTemperature = 0.0;
