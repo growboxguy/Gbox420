@@ -65,7 +65,7 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
   {
     WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
     WebServer.setArgString(getComponentName(F("PH")), toText(ReservoirResponse1Received.PH));
-    WebServer.setArgString(getComponentName(F("TDS")), toText(ReservoirResponse1Received.TDS));
+    WebServer.setArgString(getComponentName(F("TDS")), toText_TDS(ReservoirResponse1Received.TDS));
     WebServer.setArgString(getComponentName(F("Weight")), toText_weight(ReservoirResponse1Received.Weight));
     WebServer.setArgString(getComponentName(F("WTemp")), toText_temp(ReservoirResponse1Received.WaterTemperature));
     WebServer.setArgString(getComponentName(F("ATemp")), toText_temp(ReservoirResponse1Received.AirTemperature));
