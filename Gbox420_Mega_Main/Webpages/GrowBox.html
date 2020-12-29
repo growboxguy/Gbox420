@@ -690,7 +690,7 @@
 						<button id="Aero1_SprayNow" type="button" title="Spray now and re-enable timer">Spray</button>
 						<button id="Aero1_SprayOff" type="button" title="Stop spraying">OFF</button>
 					</p>
-				</form>				
+				</form>
 				<form>
 					<p>
 						<label><b>Spray duration</b></label>
@@ -854,6 +854,32 @@
 		loadCounter = 0;
 		refreshFormData();
 	});
+
+	///< Duplicating the ON and OFF time of Light1
+	var Light1OnTime = document.getElementById("Lt1_OnT");
+	var Light1OnHour = document.getElementsByName("Lt1_OnH")[0];
+	var Light1OnMinute = document.getElementsByName("Lt1_OnM")[0];
+	var Light1OffTime = document.getElementById("Lt1_OfT");
+	var Light1OffHour = document.getElementsByName("Lt1_OfH")[0];
+	var Light1OffMinute = document.getElementsByName("Lt1_OfM")[0];
+
+	setInterval(function () {
+		Light1OnTime.innerHTML = Light1OnHour.value + ":" + Light1OnMinute.value;
+		Light1OffTime.innerHTML = Light1OffHour.value + ":" + Light1OffMinute.value;
+	}, 5) ///< Refresh every 5 seconds
+
+	///< Duplicating the ON and OFF time of Light2
+	var Light2OnTime = document.getElementById("Lt2_OnT");
+	var Light2OnHour = document.getElementsByName("Lt2_OnH")[0];
+	var Light2OnMinute = document.getElementsByName("Lt2_OnM")[0];
+	var Light2OffTime = document.getElementById("Lt2_OfT");
+	var Light2OffHour = document.getElementsByName("Lt2_OfH")[0];
+	var Light2OffMinute = document.getElementsByName("Lt2_OfM")[0];
+
+	setInterval(function () {
+		Light2OnTime.innerHTML = Light2OnHour.value + ":" + Light2OnMinute.value;
+		Light2OffTime.innerHTML = Light2OffHour.value + ":" + Light2OffMinute.value;
+	}, 5) ///< Refresh every 5 seconds
 
 	///< Duplicating the status of the Hempy Module to both Buckets
 	var Hempy1Status = document.getElementById("Hemp1_Status");

@@ -53,8 +53,6 @@ void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
     WebServer.setArgString(getComponentName(F("S")), getStateText());                  ///< State
     WebServer.setArgString(getComponentName(F("Br")), getCurrentBrightnessText(true)); ///< Timer on or off
     WebServer.setArgString(getComponentName(F("T")), getTimerOnOffText(true));         ///< Timer on or off
-    WebServer.setArgString(getComponentName(F("OnT")), getOnTimeText());               ///< Turn on time
-    WebServer.setArgString(getComponentName(F("OfT")), getOffTimeText());              ///< Turn off time
   }
 }
 
