@@ -59,7 +59,7 @@ protected:
   bool *PumpEnabled;       ///< Enable/disable pump. false= Block running the pump
   uint8_t *Speed = NULL;   ///< Set PWM speed of the motor (!!!Needs a MOSFET based relay!!!)
   int RunTime = 0;         ///< Max pump run time in seconds
-  int16_t *PumpTimeOut = NULL; ///< Max pump run time in seconds
+  uint16_t *PumpTimeOut = NULL; ///< Max pump run time in seconds
   int *PrimingTime = NULL; ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
   int *BlowOffTime = NULL; ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
 };
