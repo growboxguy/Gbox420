@@ -43,6 +43,8 @@ void HempyBucket::report()
   strcat(LongMessage, toText_weight(*StartWeight));
   strcat_P(LongMessage, (PGM_P)F(" ; Stop weight:"));
   strcat(LongMessage, toText_weight(*StopWeight));
+  strcat_P(LongMessage, (PGM_P)F(" ; Waste limit:"));
+  strcat(LongMessage, toText_weight(*WasteLimit));
   strcat_P(LongMessage, (PGM_P)F(" ; Timer based watering:"));
   strcat(LongMessage, toText_enabledDisabled(*TimerBasedWatering));
   strcat_P(LongMessage, (PGM_P)F(" ; Interval:"));
@@ -55,9 +57,9 @@ void HempyBucket::report()
 void HempyBucket::checkWateringWeight()
 {
   BucketWeight.updateAverage(BucketWeightSensor->readWeight()); //Force a weight refresh
-  if (*WeightBasedWatering)
+  if (*WeightBasedWatering  && BucketPump->getEnabledState()) ///< If the weight based watering is enabled AND the pump is enabled
   {
-    if (BucketWeight.getFloat() < *StartWeight && !BucketPump->getOnState() && BucketPump->getEnabledState()) ///< If the weight based watering is enabled AND the weight is below the limit AND the pump is off AND pump is enabled
+    if (BucketWeight.getFloat() < *StartWeight && !BucketPump->getOnState()) ///< If the weight is below the limit AND the pump is off
     {
       WateringTrigger = WateringMode::WEIGHT;
       StartTotalWeight = BucketWeightSensor->getWeight() + WasteReservoirWeightSensor->getWeight();
