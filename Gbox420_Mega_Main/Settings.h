@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -112,18 +112,20 @@ typedef struct
     bool WeightBasedWatering_B1;  ///< Enable/Disable weight based watering
     float StartWeight_B1;         ///< Start watering below this weight
     float StopWeight_B1;          ///< Stop watering above this weight
+    float WasteLimit_B1;          ///< Waste reservoir full weight -> Pump gets disabled if reached
     bool TimerBasedWatering_B1;   ///< Enable/Disable timer based watering
     uint16_t WateringInterval_B1; ///< Water every X minutes
     uint16_t WateringDuration_B1; ///< Water for X seconds
     uint8_t PumpSpeed_B1;         ///< Bucket 1 - Pump duty cycle to adjust motor speed
     uint16_t TimeOutPump_B1;      ///< Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached ///< \todo Add email alert when pump fails
-    bool WeightBasedWatering_B2;  //Enable/Disable weight based watering
+    bool WeightBasedWatering_B2;  ///< Enable/Disable weight based watering
     float StartWeight_B2;         ///< Start watering below this weight
     float StopWeight_B2;          ///< Stop watering above this weight
-    bool TimerBasedWatering_B2;   //Enable/Disable timer based watering
+    float WasteLimit_B2;          ///< Waste reservoir full weight -> Pump gets disabled if reached
+    bool TimerBasedWatering_B2;   ///< Enable/Disable timer based watering
     uint8_t PumpSpeed_B2;         ///< Bucket 2 - Pump duty cycle to adjust motor speed
-    uint16_t WateringInterval_B2; //Water every X minutes
-    uint16_t WateringDuration_B2; //Water for X seconds
+    uint16_t WateringInterval_B2; ///< Water every X minutes
+    uint16_t WateringDuration_B2; ///< Water for X seconds
     uint16_t TimeOutPump_B2;      ///< Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached ///< \todo Add email alert when pump fails
   };
   struct HempyModuleSettings HempyModule1 = {.WeightBasedWatering_B1 = true, .StartWeight_B1 = 16.0, .StopWeight_B1 = 19.0, .TimerBasedWatering_B1 = false, .WateringInterval_B1 = 1440, .WateringDuration_B1 = 30, .PumpSpeed_B1 = 100, .TimeOutPump_B1 = 420, .WeightBasedWatering_B2 = true, .StartWeight_B2 = 16.0, .StopWeight_B2 = 19.0, .TimerBasedWatering_B2 = true, .WateringInterval_B2 = 1440, .WateringDuration_B2 = 30, .PumpSpeed_B2 = 100, .TimeOutPump_B2 = 420};

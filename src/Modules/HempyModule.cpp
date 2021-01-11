@@ -118,6 +118,7 @@ void HempyModule::processCommand(void *ReceivedCommand)
     Bucket1->setWeightBasedWatering(((HempyBucketCommand *)ReceivedCommand)->WeightBasedWatering);
     Bucket1->setStartWeight(((HempyBucketCommand *)ReceivedCommand)->StartWeight);
     Bucket1->setStopWeight(((HempyBucketCommand *)ReceivedCommand)->StopWeight);
+    Bucket1->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     Bucket1->setTimerBasedWatering(((HempyBucketCommand *)ReceivedCommand)->TimerBasedWatering);
     Bucket1->setWateringInterval(((HempyBucketCommand *)ReceivedCommand)->WateringInterval);
     Bucket1->setWateringDuration(((HempyBucketCommand *)ReceivedCommand)->WateringDuration);
@@ -145,6 +146,8 @@ void HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWeight, false, 1);
       logToSerials(F(","), false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
+      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TimerBasedWatering, false, 1);
       logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->WateringInterval, false, 1);
@@ -168,6 +171,7 @@ void HempyModule::processCommand(void *ReceivedCommand)
     Bucket2->setWeightBasedWatering(((HempyBucketCommand *)ReceivedCommand)->WeightBasedWatering);
     Bucket2->setStartWeight(((HempyBucketCommand *)ReceivedCommand)->StartWeight);
     Bucket2->setStopWeight(((HempyBucketCommand *)ReceivedCommand)->StopWeight);
+    Bucket2->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     Bucket2->setTimerBasedWatering(((HempyBucketCommand *)ReceivedCommand)->TimerBasedWatering);
     Bucket2->setWateringInterval(((HempyBucketCommand *)ReceivedCommand)->WateringInterval);
     Bucket2->setWateringDuration(((HempyBucketCommand *)ReceivedCommand)->WateringDuration);
@@ -194,6 +198,8 @@ void HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWeight, false, 1);
       logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWeight, false, 1);
+      logToSerials(F(","), false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
       logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TimerBasedWatering, false, 1);
       logToSerials(F(","), false, 1);

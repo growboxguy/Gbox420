@@ -9,6 +9,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   WeightBasedWatering = &DefaultSettings->WeightBasedWatering;
   StartWeight = &DefaultSettings->StartWeight;
   StopWeight = &DefaultSettings->StopWeight;
+  WasteLimit = &DefaultSettings->WasteLimit;
   TimerBasedWatering = &DefaultSettings->TimerBasedWatering;
   WateringInterval = &DefaultSettings->WateringInterval;
   WateringDuration = &DefaultSettings->WateringDuration;
@@ -151,6 +152,11 @@ float HempyBucket::getStopWeight()
   return *StopWeight;
 }
 
+float HempyBucket::getWasteLimit()
+{
+  return *WasteLimit;
+}
+
 char *HempyBucket::getStartWeightText(bool IncludeUnits)
 {
   if (IncludeUnits)
@@ -165,6 +171,14 @@ char *HempyBucket::getStopWeightText(bool IncludeUnits)
     return toText_weight(*StopWeight);
   else
     return toText(*StopWeight);
+}
+
+char *HempyBucket::getWasteLimitText(bool IncludeUnits)
+{
+  if (IncludeUnits)
+    return toText_weight(*WasteLimit);
+  else
+    return toText(*WasteLimit);
 }
 
 void HempyBucket::setWeightBasedWatering(bool State)
@@ -202,6 +216,17 @@ void HempyBucket::setStopWeight(float Weight)
     *StopWeight = Weight;
     logToSerials(Name, false, 1);
     logToSerials(F("Watering limits updated"), true, 1);
+    Parent->getSoundObject()->playOnSound();
+  }
+}
+
+void HempyBucket::setWasteLimit(float Weight)
+{
+  if (*WasteLimit != Weight)
+  {
+    *WasteLimit = Weight;
+    logToSerials(Name, false, 1);
+    logToSerials(F("Waste limit updated"), true, 1);
     Parent->getSoundObject()->playOnSound();
   }
 }
