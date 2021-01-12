@@ -210,6 +210,12 @@ function GetFriendlyValue(key, value) {
           }
           returnValue += 'W';
           break;
+        case "PPM":
+          if (value != null) {
+            returnValue = value + ' ';
+          }
+          returnValue += 'ppm';
+          break;
         case "PumpState":
           if (value != null) {
             switch (value) {
