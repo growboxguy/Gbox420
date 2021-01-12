@@ -878,8 +878,23 @@
 	var Light1OffMinute = document.getElementsByName("Lt1_OfM")[0];
 
 	setInterval(function () {
-		Light1OnTime.innerHTML = Light1OnHour.value + ":" + Light1OnMinute.value;
-		Light1OffTime.innerHTML = Light1OffHour.value + ":" + Light1OffMinute.value;
+		if(Light1OnMinute.value.length === 1)
+		{
+			Light1OnTime.innerHTML = Light1OnHour.value + ":0" + Light1OnMinute.value;
+		}
+		else
+		{
+			Light1OnTime.innerHTML = Light1OnHour.value + ":" + Light1OnMinute.value;
+		}
+
+		if(Light1OffMinute.value.length === 1)
+		{
+			Light1OffTime.innerHTML = Light1OffHour.value + ":0" + Light1OffMinute.value;
+		}
+		else
+		{
+			Light1OffTime.innerHTML = Light1OffHour.value + ":" + Light1OffMinute.value;
+		}
 	}, 1000) ///< Refresh every second
 
 	///< Duplicating the ON and OFF time of Light2
@@ -891,8 +906,23 @@
 	var Light2OffMinute = document.getElementsByName("Lt2_OfM")[0];
 
 	setInterval(function () {
-		Light2OnTime.innerHTML = Light2OnHour.value + ":" + Light2OnMinute.value;
-		Light2OffTime.innerHTML = Light2OffHour.value + ":" + Light2OffMinute.value;
+		if(Light2OnMinute.value.length === 1)
+		{
+			Light2OnTime.innerHTML = Light2OnHour.value + ":0" + Light2OnMinute.value;
+		}
+		else
+		{
+			Light2OnTime.innerHTML = Light2OnHour.value + ":" + Light2OnMinute.value;
+		}
+
+		if(Light2OffMinute.value.length === 1)
+		{
+			Light2OffTime.innerHTML = Light2OffHour.value + ":0" + Light2OffMinute.value;
+		}
+		else
+		{
+			Light2OffTime.innerHTML = Light2OffHour.value + ":" + Light2OffMinute.value;
+		}		
 	}, 1000) ///< Refresh every second
 
 	///< Duplicating the status of the Hempy Module to both Buckets
