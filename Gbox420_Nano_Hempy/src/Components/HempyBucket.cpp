@@ -67,7 +67,7 @@ void HempyBucket::checkWateringWeight()
       WateringTimer = millis();
       logToSerials(F("Weight based watering..."), true, 1);
     }
-    if(WasteReservoirWeightSensor->readWeight() > *WasteLimit) //< Check if the waste reservoir is full
+    if(*WasteLimit > 0 && WasteReservoirWeightSensor->readWeight() > *WasteLimit) //< Check if the waste reservoir is full
     {
       BucketPump->disablePump();
       logToSerials(F("Waste weight limit reached"), true, 1);

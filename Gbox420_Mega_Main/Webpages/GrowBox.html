@@ -477,6 +477,14 @@
 						<td id="Hemp1_B1Pump" class="dataRows"></td>
 					</tr>
 				</table>
+				<p>
+					<span style=" padding-left: 0.5em;">
+						<label>Next watering: </label>
+						<b><label id="Hemp1_B1_RemainingWater"></label></b>
+						<label>Waste remaining: </label>
+						<b><label id="Hemp1_B1_RemainingWaste"></label></b>
+					</span>
+				</p>
 				<form>
 					<p>
 						<label><b>Pump</b></label>
@@ -526,17 +534,13 @@
 					</p>
 				</form>
 				<form>
-					<p>			
-					<label style=" padding-left: 0.5em;text-align: right;">Waste limit</label>
+					<p>
+						<label style=" padding-left: 0.5em;text-align: right;">Waste limit</label>
 						<input style="width: 60px;" name="Hemp1_B1WL" type="number" value='0' step='0.1'
-							title="Disable pump when waste reservoir is full, 0-do not disable" />						
+							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
-				<p>
-					<span style=" padding-left: 0.5em;"><label>Remaining: </label><label
-							id="Hemp1_B1_RemainingWater"></label></span>
-				</p>
 				<form>
 					<p>
 						<input type="checkbox" name="Hemp1_B1TBW" title="Turn timer based watering ON/OFF" />
@@ -585,6 +589,14 @@
 						<td id="Hemp1_B2Pump" class="dataRows"></td>
 					</tr>
 				</table>
+				<p>
+					<span style=" padding-left: 0.5em;">
+						<label>Next watering: </label>
+						<b><label id="Hemp1_B2_RemainingWater"></label></b>
+						<label>Waste remaining: </label>
+						<b><label id="Hemp1_B2_RemainingWaste"></label></b>
+					</span>
+				</p>
 				<form>
 					<p>
 						<label><b>Pump</b></label>
@@ -614,7 +626,7 @@
 							title="Maximum time the pump can run continuously" />sec
 						<input class="setButton" type="submit" value="Set" />
 					</p>
-				</form>				
+				</form>
 				<form>
 					<p>
 						<input type="checkbox" name="Hemp1_B2WBW" title="Turn weight based watering ON/OFF" />
@@ -634,17 +646,13 @@
 					</p>
 				</form>
 				<form>
-					<p>			
-					<label style=" padding-left: 0.5em;text-align: right;">Waste limit</label>
+					<p>
+						<label style=" padding-left: 0.5em;text-align: right;">Waste limit</label>
 						<input style="width: 60px;" name="Hemp1_B2WL" type="number" value='0' step='0.1'
-							title="Disable pump when waste reservoir is full, 0-do not disable" />						
+							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
-				<p>
-					<span style=" padding-left: 0.5em;"><label>Remaining: </label><label
-							id="Hemp1_B2_RemainingWater"></label></span>
-				</p>
 				<form>
 					<p>
 						<input type="checkbox" name="Hemp1_B2TBW" title="Turn timer based watering ON/OFF" />
@@ -878,21 +886,17 @@
 	var Light1OffMinute = document.getElementsByName("Lt1_OfM")[0];
 
 	setInterval(function () {
-		if(Light1OnMinute.value.length === 1)
-		{
+		if (Light1OnMinute.value.length === 1) {
 			Light1OnTime.innerHTML = Light1OnHour.value + ":0" + Light1OnMinute.value;
 		}
-		else
-		{
+		else {
 			Light1OnTime.innerHTML = Light1OnHour.value + ":" + Light1OnMinute.value;
 		}
 
-		if(Light1OffMinute.value.length === 1)
-		{
+		if (Light1OffMinute.value.length === 1) {
 			Light1OffTime.innerHTML = Light1OffHour.value + ":0" + Light1OffMinute.value;
 		}
-		else
-		{
+		else {
 			Light1OffTime.innerHTML = Light1OffHour.value + ":" + Light1OffMinute.value;
 		}
 	}, 1000) ///< Refresh every second
@@ -906,23 +910,19 @@
 	var Light2OffMinute = document.getElementsByName("Lt2_OfM")[0];
 
 	setInterval(function () {
-		if(Light2OnMinute.value.length === 1)
-		{
+		if (Light2OnMinute.value.length === 1) {
 			Light2OnTime.innerHTML = Light2OnHour.value + ":0" + Light2OnMinute.value;
 		}
-		else
-		{
+		else {
 			Light2OnTime.innerHTML = Light2OnHour.value + ":" + Light2OnMinute.value;
 		}
 
-		if(Light2OffMinute.value.length === 1)
-		{
+		if (Light2OffMinute.value.length === 1) {
 			Light2OffTime.innerHTML = Light2OffHour.value + ":0" + Light2OffMinute.value;
 		}
-		else
-		{
+		else {
 			Light2OffTime.innerHTML = Light2OffHour.value + ":" + Light2OffMinute.value;
-		}		
+		}
 	}, 1000) ///< Refresh every second
 
 	///< Duplicating the status of the Hempy Module to both Buckets
@@ -939,23 +939,31 @@
 
 	///< Calculate remaining water in Hempy Bucket 1
 	var Hempy1_Bucket1_Weight = document.getElementById("Hemp1_B1Weight");
+	var Hempy1_Bucket1_Waste = document.getElementById("Hemp1_B1Waste");
 	var Hempy1_Bucket1_StartWeight = document.getElementsByName("Hemp1_B1Strt")[0];
+	var Hempy1_Bucket1_WasteLimit = document.getElementsByName("Hemp1_B1WL")[0];
 	var Hempy1_Bucket1_RemainingWater = document.getElementById("Hemp1_B1_RemainingWater");
+	var Hempy1_Bucket1_RemainingWaste = document.getElementById("Hemp1_B1_RemainingWaste");
 	setInterval(function () {
 		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
 		var Unit = Hempy1_Bucket1_Weight.textContent.replaceAll(/[0-9.]/g, "");
 		Hempy1_Bucket1_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket1_Weight.textContent.slice(0, -2) - Hempy1_Bucket1_StartWeight.value)).toFixed(1) + Unit;
+		Hempy1_Bucket1_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket1_WasteLimit.value - Hempy1_Bucket1_Waste.textContent.slice(0, -2))).toFixed(1) + Unit;
 		///<  Math.trunc(Weight - Hempy1_Bucket1_StartWeight.value);
 	}, 1000)  ///< Refresh every second
 
 	///< Calculate remaining water in Hempy Bucket 2
 	var Hempy1_Bucket2_Weight = document.getElementById("Hemp1_B2Weight");
+	var Hempy1_Bucket2_Waste = document.getElementById("Hemp1_B2Waste");
 	var Hempy1_Bucket2_StartWeight = document.getElementsByName("Hemp1_B2Strt")[0];
+	var Hempy1_Bucket2_WasteLimit = document.getElementsByName("Hemp1_B2WL")[0];
 	var Hempy1_Bucket2_RemainingWater = document.getElementById("Hemp1_B2_RemainingWater");
+	var Hempy1_Bucket2_RemainingWaste = document.getElementById("Hemp1_B2_RemainingWaste");
 	setInterval(function () {
 		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
 		var Unit = Hempy1_Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
 		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0, -2) - Hempy1_Bucket2_StartWeight.value)).toFixed(1) + Unit;
+		Hempy1_Bucket2_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket2_WasteLimit.value - Hempy1_Bucket2_Waste.textContent.slice(0, -2))).toFixed(1) + Unit;
 
 		///<  Math.trunc(Weight - Hempy1_Bucket1_StartWeight.value);
 	}, 1000)  ///< Refresh every second
