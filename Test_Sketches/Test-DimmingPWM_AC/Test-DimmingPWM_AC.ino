@@ -1,12 +1,15 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for testing PWM Output/controlling of AC devices using Robodyn AC Light Dimmin Module with Zero-cross detection
+//Library: https://github.com/RobotDynOfficial/RBDDimmer
+//PS: Library acts funky below 25% output, best not to dim under 25%
 
 #include "RBDdimmer.h"
 
 //Pins
-//const byte ZC_Pin = 2;   //Zero Cross detection pin - This pin is FIXED to D2 digital pin due to Interroupt handling
-const byte PWM_Pin = 12;  //PWM signal that sets the Output
-const byte MinOutput = 35;
+//const byte ZC_Pin = 2;   //Zero Cross detection pin - This pin is FIXED to D2 digital pin due to Interroupt handling (Mega2560 and Nano)
+const byte PWM_Pin = 13;  //Mega2560 PWM signal that sets the Output (D2-D13 supported)
+//const byte PWM_Pin = 6;  //Nano PWM signal that sets the Output (D3,D5,D6,D9-D12 supported)
+const byte MinOutput = 30;
 const byte MaxOutput = 100;
 int Output = MaxOutput;  //Start with full power
 bool isGettingHigh = true; //Direction to increase or decrease Output
@@ -15,7 +18,7 @@ dimmerLamp ACDevice(PWM_Pin);   //Any device that can be controlled adjusted usi
 
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println(F("Sketch for testing AC PWM Output/controlling"));
   Serial.println();
 
