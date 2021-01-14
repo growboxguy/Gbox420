@@ -105,7 +105,6 @@ void AeroModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgFloat(getComponentName(F("PresMax")), AeroCommand1ToSend.MaxPressure);
     WebServer.setArgFloat(getComponentName(F("PresMin")), AeroCommand1ToSend.MinPressure);
     WebServer.setArgInt(getComponentName(F("PumpSp")), AeroCommand2ToSend.PumpSpeed);
-    WebServer.setArgInt(getComponentName(F("PumpSpS")), AeroCommand2ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("Timeout")), AeroCommand2ToSend.PumpTimeOut);
     WebServer.setArgInt(getComponentName(F("Priming")), AeroCommand2ToSend.PumpPrimingTime);
   }

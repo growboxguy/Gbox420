@@ -38,7 +38,6 @@ void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
     WebServer.setArgInt(getComponentName(F("OfH")), *OffHour);           ///< Off hour
     WebServer.setArgInt(getComponentName(F("OfM")), *OffMinute);         ///< Off minute
     WebServer.setArgInt(getComponentName(F("B")), *Brightness);          ///< Brightness percentage
-    WebServer.setArgInt(getComponentName(F("BS")), *Brightness);         ///< Brightness slider
     // WebServer.setArgBoolean(getComponentName(F("F")), *FadingEnabled);   ///< Enable or disable Fade in/out
     // WebServer.setArgInt(getComponentName(F("FInc")), *FadingIncrements); ///< Fade change (%)
     // WebServer.setArgInt(getComponentName(F("FInt")), *FadingInterval);   ///< Fade step interval (sec)

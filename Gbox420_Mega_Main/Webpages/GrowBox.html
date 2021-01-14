@@ -926,6 +926,18 @@
 		refreshFormData();
 	});
 
+	///< Set the slider values to match the numeric up/down	
+	setInterval(function () {
+		document.getElementsByName("FanI_SS")[0].value = document.getElementsByName("FanI_S")[0].value;
+		document.getElementsByName("FanE_SS")[0].value = document.getElementsByName("FanE_S")[0].value;
+		document.getElementsByName("Hemp1_B1PumpSpS")[0].value = document.getElementsByName("Hemp1_B1PumpSp")[0].value;
+		document.getElementsByName("Hemp1_B2PumpSpS")[0].value = document.getElementsByName("Hemp1_B2PumpSp")[0].value
+		document.getElementsByName("Lt1_BS")[0].value = document.getElementsByName("Lt1_B")[0].value;
+		document.getElementsByName("Lt2_BS")[0].value = document.getElementsByName("Lt1_B")[0].value
+		document.getElementsByName("Aero1_PumpSpS")[0].value = document.getElementsByName("Aero1_PumpSp")[0].value
+	}, 1000) ///< Refresh every second
+
+
 	///< Duplicating the ON and OFF time of Light1
 	var Light1OnTime = document.getElementById("Lt1_OnT");
 	var Light1OnHour = document.getElementsByName("Lt1_OnH")[0];
@@ -975,15 +987,12 @@
 	}, 1000) ///< Refresh every second
 
 	///< Duplicating the status of the Hempy Module to both Buckets
-	var Hempy1Status = document.getElementById("Hemp1_Status");
-	var Hempy1Status2 = document.getElementById("Hemp1_Status2");
-	setInterval(function () { Hempy1Status2.innerHTML = Hempy1Status.innerHTML; }, 5)  ///< Refresh every 5 seconds
+	setInterval(function () { document.getElementById("Hemp1_Status2").innerHTML = document.getElementById("Hemp1_Status").innerHTML; }, 5)  ///< Refresh every 5 seconds
 
 	///< Friendly timeout value for Hempy Bucket 1
 	var Hempy1_Bucket1_Interval = document.getElementsByName("Hemp1_B1Int")[0];
-	var Hempy1_Bucket1_Interval_Friendly = document.getElementById("Hemp1_B1Int_Friendly");
 	setInterval(function () {
-		Hempy1_Bucket1_Interval_Friendly.innerHTML = Math.trunc(Hempy1_Bucket1_Interval.value / 60) + "hr, " + Hempy1_Bucket1_Interval.value % 60 + "min";
+		document.getElementById("Hemp1_B1Int_Friendly").innerHTML = Math.trunc(Hempy1_Bucket1_Interval.value / 60) + "hr, " + Hempy1_Bucket1_Interval.value % 60 + "min";
 	}, 1000)  ///< Refresh every second
 
 	///< Calculate remaining water in Hempy Bucket 1
@@ -1013,7 +1022,6 @@
 		var Unit = Hempy1_Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
 		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0, -2) - Hempy1_Bucket2_StartWeight.value)).toFixed(1) + Unit;
 		Hempy1_Bucket2_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket2_WasteLimit.value - Hempy1_Bucket2_Waste.textContent.slice(0, -2))).toFixed(1) + Unit;
-
 		///<  Math.trunc(Weight - Hempy1_Bucket1_StartWeight.value);
 	}, 1000)  ///< Refresh every second
 

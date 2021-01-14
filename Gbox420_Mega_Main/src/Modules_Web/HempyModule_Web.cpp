@@ -102,7 +102,6 @@ void HempyModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("B1Int")), HempyBucketCommand1ToSend.WateringInterval);
     WebServer.setArgInt(getComponentName(F("B1Dur")), HempyBucketCommand1ToSend.WateringDuration);
     WebServer.setArgInt(getComponentName(F("B1PumpSp")), HempyBucketCommand1ToSend.PumpSpeed);
-    WebServer.setArgInt(getComponentName(F("B1PumpSpS")), HempyBucketCommand1ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B1Time")), HempyBucketCommand1ToSend.TimeOutPump);
     WebServer.setArgBoolean(getComponentName(F("B2WBW")), HempyBucketCommand2ToSend.WeightBasedWatering);
     WebServer.setArgString(getComponentName(F("B2Strt")), toText(HempyBucketCommand2ToSend.StartWeight));
@@ -112,7 +111,6 @@ void HempyModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("B2Int")), HempyBucketCommand2ToSend.WateringInterval);
     WebServer.setArgInt(getComponentName(F("B2Dur")), HempyBucketCommand2ToSend.WateringDuration);
     WebServer.setArgInt(getComponentName(F("B2PumpSp")), HempyBucketCommand2ToSend.PumpSpeed);
-    WebServer.setArgInt(getComponentName(F("B2PumpSpS")), HempyBucketCommand2ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B2Time")), HempyBucketCommand2ToSend.TimeOutPump);
   }
 }
