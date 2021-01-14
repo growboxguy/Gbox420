@@ -243,6 +243,55 @@
 				-->
 			</div>
 			<div class="card">
+				<h1>Ventilation PWM</h1>
+				<table class="tg">
+					<tr>
+						<td class="headerRows"><span>Internal<br />fan</span></td>  
+						<td class="headerRows"><span>Exhaust<br />fan</span></td>
+					</tr>
+					<tr>
+						<td id="FanI_C" class="dataRows"></td>  <!-- Internal Fan - Current speed -->
+						<td id="FanE_C" class="dataRows"></td>  <!-- Exhaust Fan - Current speed -->
+					</tr>
+				</table>
+				<form>
+					<p>
+						<label><b>Internal fan</b></label>
+						<button id="FanI_On" type="button" align="right" title="Starts the Internal fan">ON</button>
+						<button id="FanI_Of" type="button" align="right" title="Stops the Internal fan">OFF</button>
+					<p>
+				</form>
+				<form>
+					<p>
+						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range"
+							name="FanI_SS" min="1" max="100"
+							oninput="this.form.FanI_S.value=this.value" />
+						<input type="number" name="FanI_S" min="1" max="100"
+							oninput="this.form.FanI_SS.value=this.value" />
+						<input class="setButton" type="submit" value="Set" />
+					</p>
+				</form>
+				<form>
+					<p>
+						<label><b>Exhaust fan</b></label>
+						<button id="FanE_On" type="button" align="right" title="Starts the Exhaust fan">ON</button>
+						<button id="FanE_Of" type="button" align="right" title="Stops the Exhaust fan">OFF</button>
+					<p>					
+				</form>	
+				<form>
+					<p>
+						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range"
+							name="FanE_SS" min="1" max="100"
+							oninput="this.form.FanE_S.value=this.value" />
+						<input type="number" name="FanE_S" min="1" max="100"
+							oninput="this.form.FanE_SS.value=this.value" />
+						<input class="setButton" type="submit" value="Set" />
+					</p>
+				</form>			
+			</div>
+			<div class="card">
 				<h1 style="display: inline;">Reservoir</h1>
 				<span style="float:right" id="Res1_Status">CONNECTING...</span>
 				<table class="tg">
