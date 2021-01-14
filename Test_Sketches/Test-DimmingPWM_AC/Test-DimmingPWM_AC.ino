@@ -1,5 +1,5 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
-//Sketch for testing PWM Output/controlling of AC devices using Robodyn AC Light Dimmin Module with Zero-cross detection
+//Sketch for testing PWM Output/controlling of AC devices using Robodyn AC Light Dimming Module with Zero-cross detection
 //Library: https://github.com/RobotDynOfficial/RBDDimmer
 //PS: Library acts funky below 25% output, best not to dim under 25%
 

@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 3; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -59,7 +59,7 @@ typedef struct
   {
     AeroModuleSettings(bool PressureTankPresent = false, float Duration = 0.0, uint16_t DayInterval = 0, uint16_t NightInterval = 0, uint8_t PumpSpeed = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, float MaxPressure = 0.0, float MinPressure = 0.0) : PressureTankPresent(PressureTankPresent), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), PumpSpeed(PumpSpeed), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), MaxPressure(MaxPressure), MinPressure(MinPressure) {}
     bool PressureTankPresent; ///< Is there a pressure tank connected or not
-    float Duration;     ///< Spray length in seconds (Actual duration is ~0.5sec longer due to thread + solenoid delay)
+    float Duration;           ///< Spray length in seconds (Actual duration is ~0.5sec longer due to thread + solenoid delay)
     uint16_t DayInterval;     ///< Spray every X minutes - When the lights are ON
     uint16_t NightInterval;   ///< Spray every X minutes - When the lights are OFF
     uint8_t PumpSpeed;        ///< Pump duty cycle to adjust motor speed
@@ -68,7 +68,7 @@ typedef struct
     float MaxPressure;        ///< Turn off pump above this pressure
     float MinPressure;        ///< Turn on pump below this pressure
   };
-  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .Duration = 1.0, .DayInterval = 6,  .NightInterval = 10, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
+  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .Duration = 1.0, .DayInterval = 6, .NightInterval = 10, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
 
   struct AirPumpSettings ///< AirPump default settings
   {
@@ -96,6 +96,18 @@ typedef struct
   };
   struct FanSettings IFan = {.OnOffPin = 25, .SpeedPin = 26};
   struct FanSettings EFan = {.OnOffPin = 27, .SpeedPin = 28};
+
+  struct Fan_PWMSettings ///< Fan default settings
+  {
+    Fan_PWMSettings(uint8_t ZeroCrossingPin = 0, uint8_t PWMPin = 0, bool State = false, uint8_t MinSpeed = 0, uint8_t Speed = 0) : ZeroCrossingPin(ZeroCrossingPin), PWMPin(PWMPin), State(State), MinSpeed(MinSpeed), Speed(Speed) {}
+    uint8_t ZeroCrossingPin; ///< On Arduino Mega2560 and Nano this has to be D2 pin
+    uint8_t PWMPin;          ///< PWM capable digital pin
+    bool State = true;       //ON or OFF
+    uint8_t MinSpeed;       //Limit the lowest output (%)
+    uint8_t Speed;          //Speed between 0-100 (%)  (Real output mapped between MinSpeed - 100)
+  };
+  struct Fan_PWMSettings FanI = {.ZeroCrossingPin = 2, .PWMPin = 9, .State = true, .MinSpeed = 35, .Speed = 80};
+  struct Fan_PWMSettings FanE = {.ZeroCrossingPin = 2, .PWMPin = 10, .State = true, .MinSpeed = 35, .Speed = 80};
 
   struct MainModuleSettings ///< MainModule default settings
   {
@@ -157,9 +169,9 @@ typedef struct
     uint8_t FadingIncrements; ///< How much to change the brightness during a fade in/out in Percentage <Not exposed to Web interface>
   };
   struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 16, .DimmingDuration = 10, .Brightness = 75, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1}; ///< Creating a LightSettings instance, passing in the unique parameters
-  struct LightsSettings Lt2 = {.RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6, .DimmingDuration = 10, .Brightness = 55, .TimerEnabled = false, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1};  ///< Creating a LightSettings instance, passing in the unique parameters
+  struct LightsSettings Lt2 = {.RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6, .DimmingDuration = 10, .Brightness = 55, .TimerEnabled = false, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1}; ///< Creating a LightSettings instance, passing in the unique parameters
 
-  struct ReservoirModuleSettings  ///< ReservoirModule default settings
+  struct ReservoirModuleSettings ///< ReservoirModule default settings
   {
     //ReservoirModuleSettings() :  {}
   };
