@@ -6,8 +6,8 @@
 ///< Light controller with PWM dimming
 enum LightStates
 {
-  OFF,
-  ON,
+  TURNEDOFF,
+  TURNEDON,
   FADEIN,
   FADEOUT,
   DIMMED
@@ -54,11 +54,11 @@ protected:
   uint8_t *DimmingPin;                               ///< PWM based dimming, connected to optocoupler`s base over 1k ohm resistor0
   uint8_t *DimmingLimit;                             ///< Sets the LED dimming limit (Usually around 5%)
   uint8_t *DimmingDuration;                          ///< Timeout of temporary dumming in Minutes
-  LightStates BeforeDimmingState = LightStates::OFF; ///< Stores the state before the temporary dimming was activated
+  LightStates BeforeDimmingState = LightStates::TURNEDOFF; ///< Stores the state before the temporary dimming was activated
   uint8_t BeforeDimmingBrightness;                   ///< Stores the brightness before the temporary dimming was activated
   uint32_t DimmingTimer = 0;                         ///< Stores the time when the temporary dimmin got enabled
   bool *Status;                                      ///< Lights ON or OFF
-  LightStates CurrentStatus = LightStates::OFF;      ///< Tracks light state during fading in/out
+  LightStates CurrentStatus = LightStates::TURNEDOFF;      ///< Tracks light state during fading in/out
   bool *TimerEnabled;                                ///< Enable timer controlling lights: true - Timer enabled, false - Timer disabled
   uint8_t *OnHour;                                   ///< Light ON time - hour
   uint8_t *OnMinute;                                 ///< Light ON time - minute

@@ -76,7 +76,7 @@ void Lights::report()
 
 void Lights::checkRelay()
 {
-  if (CurrentStatus == LightStates::OFF)
+  if (CurrentStatus == LightStates::TURNEDOFF)
     digitalWrite(*RelayPin, HIGH); ///< True turns relay OFF (HIGH signal de-activates Relay)
   else
     digitalWrite(*RelayPin, LOW); ///< LOW turns relay ON
@@ -114,7 +114,7 @@ void Lights::checkDimming()
       if (CurrentBrightness >= *Brightness)                      ///< Check if the target brightness is reached
       {
         CurrentBrightness = *Brightness;
-        CurrentStatus = LightStates::ON;
+        CurrentStatus = LightStates::TURNEDON;
       }
       setBrightness(CurrentBrightness, false, false); ///< Set new brightness
       FadingTimer = millis();                         ///< Store the timestamp of the last change
@@ -128,7 +128,7 @@ void Lights::checkDimming()
       if (CurrentBrightness <= 0)                                ///< Check if zero brightness is reached
       {
         CurrentBrightness = 0;
-        CurrentStatus = LightStates::OFF;
+        CurrentStatus = LightStates::TURNEDOFF;
       }
       setBrightness(CurrentBrightness, false, false); ///< Set new brightness
       FadingTimer = millis();                         ///< Store the timestamp of the last change
@@ -226,7 +226,7 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
       Parent->addToLog(F("Light ON"));
     }
     Parent->getSoundObject()->playOnSound();
-    if (*FadingEnabled && CurrentStatus != LightStates::FADEIN && CurrentStatus != LightStates::ON)
+    if (*FadingEnabled && CurrentStatus != LightStates::FADEIN && CurrentStatus != LightStates::TURNEDON)
     {
       CurrentStatus = LightStates::FADEIN;
       CurrentBrightness = 0; // Start fading in from 0%
@@ -234,7 +234,7 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
     }
     else
     {
-      CurrentStatus = LightStates::ON;
+      CurrentStatus = LightStates::TURNEDON;
       CurrentBrightness = *Brightness; // Instantly set the target Brightness
       setBrightness(CurrentBrightness, false, false);
     }
@@ -247,7 +247,7 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
     }
     Parent->getSoundObject()->playOffSound();
 
-    if (*FadingEnabled && CurrentStatus != LightStates::OFF && CurrentStatus != LightStates::FADEOUT)
+    if (*FadingEnabled && CurrentStatus != LightStates::TURNEDOFF && CurrentStatus != LightStates::FADEOUT)
     {
       CurrentStatus = LightStates::FADEOUT;
       //CurrentBrightness = *Brightness; // Start fading out from the target brightness
@@ -255,7 +255,7 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
     }
     else
     {
-      CurrentStatus = LightStates::OFF;
+      CurrentStatus = LightStates::TURNEDOFF;
     }
   }
   *(this->Status) = Status;
@@ -324,10 +324,10 @@ char *Lights::getStateText()
 {
   switch (CurrentStatus)
   {
-  case LightStates::OFF:
+  case LightStates::TURNEDOFF:
     return toText(F("OFF"));
     break;
-  case LightStates::ON:
+  case LightStates::TURNEDON:
     return toText(F("ON"));
     break;
   case LightStates::FADEIN:
