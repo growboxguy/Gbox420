@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 3; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 5; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -140,7 +140,7 @@ typedef struct
     uint16_t WateringDuration_B2; ///< Water for X seconds
     uint16_t TimeOutPump_B2;      ///< Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached ///< \todo Add email alert when pump fails
   };
-  struct HempyModuleSettings HempyModule1 = {.WeightBasedWatering_B1 = true, .StartWeight_B1 = 16.0, .StopWeight_B1 = 19.0, .WasteLimit_B1 = 13.0, .TimerBasedWatering_B1 = false, .WateringInterval_B1 = 1440, .WateringDuration_B1 = 30, .PumpSpeed_B1 = 100, .TimeOutPump_B1 = 420, .WeightBasedWatering_B2 = true, .StartWeight_B2 = 16.0, .StopWeight_B2 = 19.0, .WasteLimit_B2 = 13.0, .TimerBasedWatering_B2 = false, .WateringInterval_B2 = 1440, .WateringDuration_B2 = 30, .PumpSpeed_B2 = 100, .TimeOutPump_B2 = 420};
+  struct HempyModuleSettings HempyModule1 = {.WeightBasedWatering_B1 = true, .StartWeight_B1 = 16.0, .StopWeight_B1 = 19.0, .WasteLimit_B1 = 13.0, .TimerBasedWatering_B1 = false, .WateringInterval_B1 = 1440, .WateringDuration_B1 = 30, .PumpSpeed_B1 = 100, .TimeOutPump_B1 = 180, .WeightBasedWatering_B2 = true, .StartWeight_B2 = 16.0, .StopWeight_B2 = 19.0, .WasteLimit_B2 = 13.0, .TimerBasedWatering_B2 = false, .WateringInterval_B2 = 1440, .WateringDuration_B2 = 30, .PumpSpeed_B2 = 100, .TimeOutPump_B2 = 180};
 
   struct LightSensorSettings ///< LightSensor default settings
   {
@@ -183,7 +183,7 @@ typedef struct
     uint8_t Pin;         ///< Piezo Buzzer red(+) cable
     bool Enabled = true; ///< Enable/Disable sound
   };
-  struct SoundSettings Sound1 = {.Pin = 2};
+  struct SoundSettings Sound1 = {.Pin = 13};
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;

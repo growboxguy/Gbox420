@@ -12,6 +12,7 @@ Fan_PWM::Fan_PWM(const __FlashStringHelper *Name, Module *Parent, Settings::Fan_
   MinSpeed = &DefaultSettings->MinSpeed;
   Speed = &DefaultSettings->Speed;
   PWMDimmer = new dimmerLamp(*PWMPin);
+  PWMDimmer->begin(NORMAL_MODE, OFF);
   PWMDimmer->setPower(*Speed);
   checkState();
   Parent->addToReportQueue(this);
