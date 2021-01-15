@@ -7,14 +7,13 @@
 
 //Pins
 //const byte ZC_Pin = 2;   //Zero Cross detection pin - This pin is FIXED to D2 digital pin due to Interroupt handling (Mega2560 and Nano)
-const byte PWM_Pin = 10;  //Mega2560 PWM signal that sets the Output (D2-D13 supported)
-//const byte PWM_Pin = 6;  //Nano PWM signal that sets the Output (D3,D5,D6,D9-D12 supported)
+const byte PWM_Pin = 10;  //PWM signal that sets the Output (Mega2560: D2-D13 supported, Nano: D3,D5,D6,D9-D12 supported)
 const byte MinOutput = 30;
 const byte MaxOutput = 100;
 int Output = MaxOutput;  //Start with full power
 bool isGettingHigh = true; //Direction to increase or decrease Output
 
-dimmerLamp ACDevice(PWM_Pin);   //Any device that can be controlled adjusted using AC PWM signals (AC Motors, Incandescent light bulb)
+dimmerLamp PWMDimmer(PWM_Pin);   //Any device that can be controlled using AC PWM signals (AC Motors, Incandescent light bulb)
 
 void setup()
 {
@@ -22,11 +21,11 @@ void setup()
   Serial.println(F("Sketch for testing AC PWM Output/controlling"));
   Serial.println();
 
-  ACDevice.begin(NORMAL_MODE, OFF); //dimmer initialisation: name.begin(Mode: NORMAL_MODE/TOGGLE_MODE, State:ON/OFF) 
+  PWMDimmer.begin(NORMAL_MODE, OFF); //dimmer initialisation: name.begin(Mode: NORMAL_MODE/TOGGLE_MODE, State:ON/OFF) 
   delay(5000); //Wait 5 seconds
   Serial.println(F("Turning on device..."));
-  ACDevice.setPower(Output);
-  ACDevice.setState(ON); //Turn on device
+  PWMDimmer.setPower(Output);
+  PWMDimmer.setState(ON); //Turn on device
 
   //Mode: NORMAL_MODE to make dimmer work in defined value from 0 to 100 (%) (integer)
   //Mode: TOGGLE_MODE smooth change of Output value up or down in a defined range. This solutions implies change of Output values by means of hardware timer, without using the cycle code.
@@ -38,7 +37,7 @@ void loop()
 {
  while (MinOutput <= Output && Output <= MaxOutput)
   {
-    ACDevice.setPower(Output); 
+    PWMDimmer.setPower(Output); 
     
     if (Output % 10 == 0)   //modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
     {
