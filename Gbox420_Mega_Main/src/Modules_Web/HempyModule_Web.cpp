@@ -79,7 +79,7 @@ void HempyModule_Web::reportToJSON()
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"WB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightB));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WWR2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WR2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightWR));
   strcat_P(LongMessage, (PGM_P)F("\",\"SWB2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StartWeight));
