@@ -21,7 +21,7 @@ class Common
 {
 public:
   const __FlashStringHelper *Name;
-  bool isThisMyComponent(char const *lookupName); ///< When it return true the component belongs to this object
+  bool isThisMyComponent(char const *lookupName); ///< Checks whether a component belongs to the caller class or not
   char *getComponentName(const __FlashStringHelper *Name);
   virtual void report();
   virtual void refresh_Sec();

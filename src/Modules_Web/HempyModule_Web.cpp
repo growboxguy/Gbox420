@@ -57,35 +57,35 @@ void HempyModule_Web::report()
 void HempyModule_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(OnlineStatus));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.PumpState));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1Spd\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PB1S\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WeightB1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.WeightB));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WeightWR1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WR1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.WeightWR));
-  strcat_P(LongMessage, (PGM_P)F("\",\"StartB1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SWB1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StartWeight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"StopB1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"StWB1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StopWeight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WlB1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WLB1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.WasteLimit));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.PumpState));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2Spd\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PB2S\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightB));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WeightWR2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WWR2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightWR));
-  strcat_P(LongMessage, (PGM_P)F("\",\"StartB2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SWB2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StartWeight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"StopB2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"StWB2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StopWeight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WlB2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WLB2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.WasteLimit));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }

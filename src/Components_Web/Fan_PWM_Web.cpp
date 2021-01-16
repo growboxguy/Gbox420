@@ -15,7 +15,7 @@ Fan_PWM_Web::Fan_PWM_Web(const __FlashStringHelper *Name, Module_Web *Parent, Se
 void Fan_PWM_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Spd\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, getSpeed());
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }

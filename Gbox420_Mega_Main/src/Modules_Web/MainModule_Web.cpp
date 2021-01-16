@@ -60,9 +60,9 @@ void MainModule::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
 
-  strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"M\":\""));
   strcat(LongMessage, toText(*Metric));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Debug\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
   strcat(LongMessage, toText(*Debug));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }

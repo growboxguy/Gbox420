@@ -13,9 +13,9 @@ LightSensor_Web::LightSensor_Web(const __FlashStringHelper *Name, Module_Web *Pa
 void LightSensor_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Read\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"R\":\""));
   strcat(LongMessage, getReadingText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Dark\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
   strcat(LongMessage, getDarkText(false));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }

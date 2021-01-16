@@ -64,32 +64,32 @@ void AeroModule_Web::report()
 void AeroModule_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(OnlineStatus));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Pres\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.Pressure));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Wght\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.Weight));
   if (AeroResponse1Received.PressureTankPresent)
   {
-    strcat_P(LongMessage, (PGM_P)F("\",\"Min\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Mi\":\""));
     strcat(LongMessage, toText(AeroCommand1ToSend.MinPressure));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Max\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Ma\":\""));
     strcat(LongMessage, toText(AeroCommand1ToSend.MaxPressure));
   }
-  strcat_P(LongMessage, (PGM_P)F("\",\"LastSpray\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"LS\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.LastSprayPressure));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PState\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"St\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.State));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PSpeed\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PS\":\""));
   strcat(LongMessage, toText(AeroCommand2ToSend.PumpSpeed));
-  strcat_P(LongMessage, (PGM_P)F("\",\"SprayEn\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.SprayEnabled));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Dur\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.Duration));
-  strcat_P(LongMessage, (PGM_P)F("\",\"DayInt\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DI\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.DayInterval));
-  strcat_P(LongMessage, (PGM_P)F("\",\"NightInt\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.NightInterval));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
