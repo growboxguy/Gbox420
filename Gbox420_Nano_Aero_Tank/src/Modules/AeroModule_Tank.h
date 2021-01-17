@@ -35,7 +35,7 @@ public:
   //void refresh_Minute();
   //void refresh_QuarterHour();
   void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
-  void processCommand(void *Command); ///< Process a received wireless command  
+  bool processCommand(void *Command); ///< Process a received wireless command, returns true when the last message in the exchange sequence was processed 
   void updateResponse();  ///< Updates the wireless response package content
   void updateAckData();   ///< pre-loads the ACK buffer that gets sent back when receiving a wireless message
 
