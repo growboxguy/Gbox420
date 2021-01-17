@@ -13,7 +13,7 @@ AirPump_Web::AirPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Se
 void AirPump_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(getState()));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }

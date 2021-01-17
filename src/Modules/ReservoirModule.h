@@ -22,6 +22,7 @@
 class Sound;
 class DHTSensor;
 class PHSensor;
+class TDSSensor;
 class WaterTempSensor;
 class WeightSensor;
 extern RF24 Wireless;
@@ -36,6 +37,7 @@ public:
   Sound *Sound1;                                                                                        ///< Pointer to a Piezo speaker - sound feedback
   DHTSensor *DHT1;                                                                                      ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   PHSensor *PHSen1;
+  TDSSensor *TDS1;
   WaterTempSensor *WTemp1;
   WeightSensor *Weight1;
   void refresh_Sec();

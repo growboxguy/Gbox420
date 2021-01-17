@@ -29,14 +29,17 @@ public:
   void setWeightBasedWatering(bool State);
   void setStartWeight(float Weight);
   void setStopWeight(float Weight);
+  void setWasteLimit(float Weight);
   void setTimerBasedWatering(bool State);
   void setWateringInterval(uint16_t Minutes);
   void setWateringDuration(uint16_t Seconds);
   void startWatering();
   float getStopWeight();
   float getStartWeight();
+  float getWasteLimit();
   char *getStopWeightText(bool IncludeUnits);
   char *getStartWeightText(bool IncludeUnits);
+  char *getWasteLimitText(bool IncludeUnits);
 
 private:
   WateringMode WateringTrigger;
@@ -55,4 +58,5 @@ protected:
   bool *WeightBasedWatering;                ///< Enables weight based waterings
   float *StartWeight;                       ///< Start watering below this weight
   float *StopWeight;                        ///< Stop watering above this weight
+  float *WasteLimit;                        ///< Waste reservoir full weight -> Pump gets disabled if reached
 };

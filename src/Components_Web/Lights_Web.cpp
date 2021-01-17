@@ -16,15 +16,15 @@ Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Sett
 void Lights_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, getStatusText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Brt\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"B\":\""));
   strcat(LongMessage, getCurrentBrightnessText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Timer\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
   strcat(LongMessage, getTimerOnOffText(false));
   strcat_P(LongMessage, (PGM_P)F("\",\"On\":\""));
   strcat(LongMessage, getOnTimeText());
-  strcat_P(LongMessage, (PGM_P)F("\",\"Off\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Of\":\""));
   strcat(LongMessage, getOffTimeText());
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
@@ -38,7 +38,6 @@ void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
     WebServer.setArgInt(getComponentName(F("OfH")), *OffHour);           ///< Off hour
     WebServer.setArgInt(getComponentName(F("OfM")), *OffMinute);         ///< Off minute
     WebServer.setArgInt(getComponentName(F("B")), *Brightness);          ///< Brightness percentage
-    WebServer.setArgInt(getComponentName(F("BS")), *Brightness);         ///< Brightness slider
     // WebServer.setArgBoolean(getComponentName(F("F")), *FadingEnabled);   ///< Enable or disable Fade in/out
     // WebServer.setArgInt(getComponentName(F("FInc")), *FadingIncrements); ///< Fade change (%)
     // WebServer.setArgInt(getComponentName(F("FInt")), *FadingInterval);   ///< Fade step interval (sec)

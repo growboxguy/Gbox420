@@ -42,19 +42,19 @@ void ReservoirModule_Web::report()
 void ReservoirModule_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(OnlineStatus));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.PH));
-  strcat_P(LongMessage, (PGM_P)F("\",\"TDS\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.TDS));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Wght\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.Weight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WT\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.WaterTemperature));
-  strcat_P(LongMessage, (PGM_P)F("\",\"AirTemp\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"AT\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.AirTemperature));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Hum\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
   strcat(LongMessage, toText(ReservoirResponse1Received.Humidity));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }

@@ -60,6 +60,8 @@ unlink ./src/Components/DistanceSensor.h
 unlink ./src/Components/DistanceSensor.cpp
 unlink ./src/Components/Fan.h
 unlink ./src/Components/Fan.cpp
+unlink ./src/Components/Fan_PWM.h
+unlink ./src/Components/Fan_PWM.cpp
 unlink ./src/Components/HempyBucket.h
 unlink ./src/Components/HempyBucket.cpp
 unlink ./src/Components/Lights.h
@@ -82,6 +84,8 @@ unlink ./src/Components/Switch.h
 unlink ./src/Components/Switch.cpp
 unlink ./src/Components/Switch_PWM.h
 unlink ./src/Components/Switch_PWM.cpp
+unlink ./src/Components/TDSSensor.h
+unlink ./src/Components/TDSSensor.cpp
 unlink ./src/Components/WaterLevelSensor.h
 unlink ./src/Components/WaterLevelSensor.cpp
 unlink ./src/Components/WaterPump.h

@@ -242,6 +242,55 @@
 				</form>
 				-->
 			</div>
+			<!--div class="card">
+				<h1>Ventilation PWM</h1>
+				<table class="tg">
+					<tr>
+						<td class="headerRows"><span>Internal<br />fan</span></td>  
+						<td class="headerRows"><span>Exhaust<br />fan</span></td>
+					</tr>
+					<tr>
+						<td id="FanI_C" class="dataRows"></td>  <-- Internal Fan - Current speed ->
+						<td id="FanE_C" class="dataRows"></td>  <!-- Exhaust Fan - Current speed ->
+					</tr>
+				</table>
+				<form>
+					<p>
+						<label><b>Internal fan</b></label>
+						<button id="FanI_On" type="button" align="right" title="Starts the Internal fan">ON</button>
+						<button id="FanI_Of" type="button" align="right" title="Stops the Internal fan">OFF</button>
+					<p>
+				</form>
+				<form>
+					<p>
+						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range"
+							name="FanI_SS" min="1" max="100"
+							oninput="this.form.FanI_S.value=this.value" />
+						<input type="number" name="FanI_S" min="1" max="100"
+							oninput="this.form.FanI_SS.value=this.value" />
+						<input class="setButton" type="submit" value="Set" />
+					</p>
+				</form>
+				<form>
+					<p>
+						<label><b>Exhaust fan</b></label>
+						<button id="FanE_On" type="button" align="right" title="Starts the Exhaust fan">ON</button>
+						<button id="FanE_Of" type="button" align="right" title="Stops the Exhaust fan">OFF</button>
+					<p>					
+				</form>	
+				<form>
+					<p>
+						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range"
+							name="FanE_SS" min="1" max="100"
+							oninput="this.form.FanE_S.value=this.value" />
+						<input type="number" name="FanE_S" min="1" max="100"
+							oninput="this.form.FanE_SS.value=this.value" />
+						<input class="setButton" type="submit" value="Set" />
+					</p>
+				</form>			
+			</div-->
 			<div class="card">
 				<h1 style="display: inline;">Reservoir</h1>
 				<span style="float:right" id="Res1_Status">CONNECTING...</span>
@@ -306,7 +355,7 @@
 				<form>
 					<p>
 						<label><b>Brightness</b></label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Lt1_BS" min="0"
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Lt1_BS" min="1"
 							max="100" oninput="this.form.Lt1_B.value=this.value">
 						<input type="number" name="Lt1_B" min="1" max="100"
 							oninput="this.form.Lt1_BS.value=this.value" />
@@ -393,7 +442,7 @@
 				<form>
 					<p>
 						<label><b>Brightness</b></label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Lt2_BS" min="0"
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Lt2_BS" min="1"
 							max="100" oninput="this.form.Lt2_B.value=this.value" />
 						<input type="number" name="Lt2_B" min="1" max="100"
 							oninput="this.form.Lt2_BS.value=this.value" />
@@ -477,6 +526,14 @@
 						<td id="Hemp1_B1Pump" class="dataRows"></td>
 					</tr>
 				</table>
+				<p>
+					<span style=" padding-left: 0.5em;">
+						<label>Next watering: </label>
+						<b><label id="Hemp1_B1_RemainingWater"></label></b>
+						<label>Waste remaining: </label>
+						<b><label id="Hemp1_B1_RemainingWaste"></label></b>
+					</span>
+				</p>
 				<form>
 					<p>
 						<label><b>Pump</b></label>
@@ -492,7 +549,7 @@
 					<p>
 						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
 						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range"
-							name="Hemp1_B1PumpSpS" min="0" max="100"
+							name="Hemp1_B1PumpSpS" min="1" max="100"
 							oninput="this.form.Hemp1_B1PumpSp.value=this.value" />
 						<input type="number" name="Hemp1_B1PumpSp" min="1" max="100"
 							oninput="this.form.Hemp1_B1PumpSpS.value=this.value" />
@@ -525,10 +582,14 @@
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
-				<p>
-					<span style=" padding-left: 0.5em;"><label>Remaining: </label><label
-							id="Hemp1_B1_RemainingWater"></label></span>
-				</p>
+				<form>
+					<p>
+						<label style=" padding-left: 0.5em;text-align: right;">Waste limit</label>
+						<input style="width: 60px;" name="Hemp1_B1WL" type="number" value='0' step='0.1'
+							title="Disable pump when waste reservoir is full, 0-do not disable" />
+						<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>
 				<form>
 					<p>
 						<input type="checkbox" name="Hemp1_B1TBW" title="Turn timer based watering ON/OFF" />
@@ -577,6 +638,14 @@
 						<td id="Hemp1_B2Pump" class="dataRows"></td>
 					</tr>
 				</table>
+				<p>
+					<span style=" padding-left: 0.5em;">
+						<label>Next watering: </label>
+						<b><label id="Hemp1_B2_RemainingWater"></label></b>
+						<label>Waste remaining: </label>
+						<b><label id="Hemp1_B2_RemainingWaste"></label></b>
+					</span>
+				</p>
 				<form>
 					<p>
 						<label><b>Pump</b></label>
@@ -592,7 +661,7 @@
 					<p>
 						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
 						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range"
-							name="Hemp1_B2PumpSpS" min="0" max="100"
+							name="Hemp1_B2PumpSpS" min="1" max="100"
 							oninput="this.form.Hemp1_B2PumpSp.value=this.value" />
 						<input type="number" name="Hemp1_B2PumpSp" min="1" max="100"
 							oninput="this.form.Hemp1_B2PumpSpS.value=this.value" />
@@ -625,36 +694,38 @@
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
-				</form>
-				<p>
-					<span style=" padding-left: 0.5em;"><label>Remaining: </label><label
-							id="Hemp1_B2_RemainingWater"></label></span>
-				</p>
 				<form>
-					<form>
-						<p>
-							<input type="checkbox" name="Hemp1_B2TBW" title="Turn timer based watering ON/OFF" />
-							<b>Timer based watering</b>
-							<input class="setButton" type="submit" value="Set" title="Turn timer based watering ON/OFF"">
+					<p>
+						<label style=" padding-left: 0.5em;text-align: right;">Waste limit</label>
+						<input style="width: 60px;" name="Hemp1_B2WL" type="number" value='0' step='0.1'
+							title="Disable pump when waste reservoir is full, 0-do not disable" />
+						<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>
+				<form>
+					<p>
+						<input type="checkbox" name="Hemp1_B2TBW" title="Turn timer based watering ON/OFF" />
+						<b>Timer based watering</b>
+						<input class="setButton" type="submit" value="Set" title="Turn timer based watering ON/OFF"">
 					</p>
 				</form>
 				<form>	
 					<p>
 					<label style=" padding-left: 0.5em; width: 3.7em;">Interval</label>
-							<input style="width: 55px;" min=1 name="Hemp1_B2Int" type="number" />min
-							<input class="setButton" type="submit" value="Set"
-								title="Set how often a spray should start (Minutes)">
-							<label id="Hemp1_B2Int_Friendly" />
-						</p>
-					</form>
-					<form>
-						<p>
-							<label style="padding-left: 0.5em; width: 3.7em;">Duration</label>
-							<input style="width: 35px;" min=1 name="Hemp1_B2Dur" type="number" />sec
-							<input class="setButton" type="submit" value="Set"
-								title="Set how long one spray should last (Seconds)">
-						</p>
-					</form>
+						<input style="width: 55px;" min=1 name="Hemp1_B2Int" type="number" />min
+						<input class="setButton" type="submit" value="Set"
+							title="Set how often a spray should start (Minutes)">
+						<label id="Hemp1_B2Int_Friendly" />
+					</p>
+				</form>
+				<form>
+					<p>
+						<label style="padding-left: 0.5em; width: 3.7em;">Duration</label>
+						<input style="width: 35px;" min=1 name="Hemp1_B2Dur" type="number" />sec
+						<input class="setButton" type="submit" value="Set"
+							title="Set how long one spray should last (Seconds)">
+					</p>
+				</form>
 			</div>
 			<div class="card">
 				<h1 style="display: inline;">Aeroponics</h1>
@@ -727,7 +798,7 @@
 					<p>
 						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
 						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Aero1_PumpSpS"
-							min="0" max="100" oninput="this.form.Aero1_PumpSp.value=this.value" />
+							min="1" max="100" oninput="this.form.Aero1_PumpSp.value=this.value" />
 						<input type="number" name="Aero1_PumpSp" min="1" max="100"
 							oninput="this.form.Aero1_PumpSpS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
@@ -855,6 +926,18 @@
 		refreshFormData();
 	});
 
+	///< Set the slider values to match the numeric up/down	
+	setInterval(function () {
+		//document.getElementsByName("FanI_SS")[0].value = document.getElementsByName("FanI_S")[0].value;
+		//document.getElementsByName("FanE_SS")[0].value = document.getElementsByName("FanE_S")[0].value;
+		document.getElementsByName("Hemp1_B1PumpSpS")[0].value = document.getElementsByName("Hemp1_B1PumpSp")[0].value;
+		document.getElementsByName("Hemp1_B2PumpSpS")[0].value = document.getElementsByName("Hemp1_B2PumpSp")[0].value
+		document.getElementsByName("Lt1_BS")[0].value = document.getElementsByName("Lt1_B")[0].value;
+		document.getElementsByName("Lt2_BS")[0].value = document.getElementsByName("Lt1_B")[0].value
+		document.getElementsByName("Aero1_PumpSpS")[0].value = document.getElementsByName("Aero1_PumpSp")[0].value
+	}, 1000) ///< Refresh every second
+
+
 	///< Duplicating the ON and OFF time of Light1
 	var Light1OnTime = document.getElementById("Lt1_OnT");
 	var Light1OnHour = document.getElementsByName("Lt1_OnH")[0];
@@ -864,8 +947,19 @@
 	var Light1OffMinute = document.getElementsByName("Lt1_OfM")[0];
 
 	setInterval(function () {
-		Light1OnTime.innerHTML = Light1OnHour.value + ":" + Light1OnMinute.value;
-		Light1OffTime.innerHTML = Light1OffHour.value + ":" + Light1OffMinute.value;
+		if (Light1OnMinute.value.length === 1) {
+			Light1OnTime.innerHTML = Light1OnHour.value + ":0" + Light1OnMinute.value;
+		}
+		else {
+			Light1OnTime.innerHTML = Light1OnHour.value + ":" + Light1OnMinute.value;
+		}
+
+		if (Light1OffMinute.value.length === 1) {
+			Light1OffTime.innerHTML = Light1OffHour.value + ":0" + Light1OffMinute.value;
+		}
+		else {
+			Light1OffTime.innerHTML = Light1OffHour.value + ":" + Light1OffMinute.value;
+		}
 	}, 1000) ///< Refresh every second
 
 	///< Duplicating the ON and OFF time of Light2
@@ -877,42 +971,57 @@
 	var Light2OffMinute = document.getElementsByName("Lt2_OfM")[0];
 
 	setInterval(function () {
-		Light2OnTime.innerHTML = Light2OnHour.value + ":" + Light2OnMinute.value;
-		Light2OffTime.innerHTML = Light2OffHour.value + ":" + Light2OffMinute.value;
+		if (Light2OnMinute.value.length === 1) {
+			Light2OnTime.innerHTML = Light2OnHour.value + ":0" + Light2OnMinute.value;
+		}
+		else {
+			Light2OnTime.innerHTML = Light2OnHour.value + ":" + Light2OnMinute.value;
+		}
+
+		if (Light2OffMinute.value.length === 1) {
+			Light2OffTime.innerHTML = Light2OffHour.value + ":0" + Light2OffMinute.value;
+		}
+		else {
+			Light2OffTime.innerHTML = Light2OffHour.value + ":" + Light2OffMinute.value;
+		}
 	}, 1000) ///< Refresh every second
 
 	///< Duplicating the status of the Hempy Module to both Buckets
-	var Hempy1Status = document.getElementById("Hemp1_Status");
-	var Hempy1Status2 = document.getElementById("Hemp1_Status2");
-	setInterval(function () { Hempy1Status2.innerHTML = Hempy1Status.innerHTML; }, 5)  ///< Refresh every 5 seconds
+	setInterval(function () { document.getElementById("Hemp1_Status2").innerHTML = document.getElementById("Hemp1_Status").innerHTML; }, 5)  ///< Refresh every 5 seconds
 
 	///< Friendly timeout value for Hempy Bucket 1
 	var Hempy1_Bucket1_Interval = document.getElementsByName("Hemp1_B1Int")[0];
-	var Hempy1_Bucket1_Interval_Friendly = document.getElementById("Hemp1_B1Int_Friendly");
 	setInterval(function () {
-		Hempy1_Bucket1_Interval_Friendly.innerHTML = Math.trunc(Hempy1_Bucket1_Interval.value / 60) + "hr, " + Hempy1_Bucket1_Interval.value % 60 + "min";
+		document.getElementById("Hemp1_B1Int_Friendly").innerHTML = Math.trunc(Hempy1_Bucket1_Interval.value / 60) + "hr, " + Hempy1_Bucket1_Interval.value % 60 + "min";
 	}, 1000)  ///< Refresh every second
 
 	///< Calculate remaining water in Hempy Bucket 1
 	var Hempy1_Bucket1_Weight = document.getElementById("Hemp1_B1Weight");
+	var Hempy1_Bucket1_Waste = document.getElementById("Hemp1_B1Waste");
 	var Hempy1_Bucket1_StartWeight = document.getElementsByName("Hemp1_B1Strt")[0];
+	var Hempy1_Bucket1_WasteLimit = document.getElementsByName("Hemp1_B1WL")[0];
 	var Hempy1_Bucket1_RemainingWater = document.getElementById("Hemp1_B1_RemainingWater");
+	var Hempy1_Bucket1_RemainingWaste = document.getElementById("Hemp1_B1_RemainingWaste");
 	setInterval(function () {
 		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
 		var Unit = Hempy1_Bucket1_Weight.textContent.replaceAll(/[0-9.]/g, "");
 		Hempy1_Bucket1_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket1_Weight.textContent.slice(0, -2) - Hempy1_Bucket1_StartWeight.value)).toFixed(1) + Unit;
+		Hempy1_Bucket1_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket1_WasteLimit.value - Hempy1_Bucket1_Waste.textContent.slice(0, -2))).toFixed(1) + Unit;
 		///<  Math.trunc(Weight - Hempy1_Bucket1_StartWeight.value);
 	}, 1000)  ///< Refresh every second
 
 	///< Calculate remaining water in Hempy Bucket 2
 	var Hempy1_Bucket2_Weight = document.getElementById("Hemp1_B2Weight");
+	var Hempy1_Bucket2_Waste = document.getElementById("Hemp1_B2Waste");
 	var Hempy1_Bucket2_StartWeight = document.getElementsByName("Hemp1_B2Strt")[0];
+	var Hempy1_Bucket2_WasteLimit = document.getElementsByName("Hemp1_B2WL")[0];
 	var Hempy1_Bucket2_RemainingWater = document.getElementById("Hemp1_B2_RemainingWater");
+	var Hempy1_Bucket2_RemainingWaste = document.getElementById("Hemp1_B2_RemainingWaste");
 	setInterval(function () {
 		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
 		var Unit = Hempy1_Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
 		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0, -2) - Hempy1_Bucket2_StartWeight.value)).toFixed(1) + Unit;
-
+		Hempy1_Bucket2_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket2_WasteLimit.value - Hempy1_Bucket2_Waste.textContent.slice(0, -2))).toFixed(1) + Unit;
 		///<  Math.trunc(Weight - Hempy1_Bucket1_StartWeight.value);
 	}, 1000)  ///< Refresh every second
 

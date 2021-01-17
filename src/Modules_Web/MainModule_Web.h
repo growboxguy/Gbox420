@@ -11,6 +11,7 @@
 class Lights_Web;
 class Sound_Web;
 class Fan_Web;
+class Fan_PWM_Web;
 class AirPump_Web;
 //class PowerSensor_Web;  ///< For PZEM004T V1.0 or PZEM004T V2.0
 class PowerSensorV3_Web; ///< Only for PZEM004T V3.0
@@ -30,7 +31,9 @@ public:
   MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless); ///< constructor
   Sound_Web *Sound1;                                                                                          ///< Pointer to a Piezo speaker - sound feedback
   Fan_Web *IFan;                                                                                              ///< Internal fan
-  Fan_Web *EFan;                                                                                              ///< Exhaust fan
+  Fan_Web *EFan;  
+  Fan_PWM_Web *FanI;                                                                                              ///< Internal fan
+  Fan_PWM_Web *FanE;                                                                                               ///< Exhaust fan
   AirPump_Web *APump1;                                                                                        ///< Air pump
   Lights_Web *Lt1;                                                                                            ///< Pointer to a Light assembly No1
   Lights_Web *Lt2;                                                                                            ///< Pointer to a Light assembly No2

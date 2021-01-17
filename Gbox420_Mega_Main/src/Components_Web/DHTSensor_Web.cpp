@@ -12,9 +12,9 @@ DHTSensor_Web::DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent
 void DHTSensor_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Tmp\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
   strcat(LongMessage, getTempText());
-  strcat_P(LongMessage, (PGM_P)F("\",\"Hum\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
   strcat(LongMessage, getHumidityText());
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }

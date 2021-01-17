@@ -38,7 +38,9 @@ void HempyModule_Web::report()
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StopWeight));
   strcat_P(LongMessage, (PGM_P)F("] ; Waste1 Weight:"));
   strcat(LongMessage, toText_weight(HempyBucketResponse1Received.WeightWR));
-  strcat_P(LongMessage, (PGM_P)F(" ; Bucket2 Weight:"));
+  strcat_P(LongMessage, (PGM_P)F(" ["));
+  strcat(LongMessage, toText_weight(HempyBucketCommand1ToSend.WasteLimit));
+  strcat_P(LongMessage, (PGM_P)F("] ; Bucket2 Weight:"));
   strcat(LongMessage, toText_weight(HempyBucketResponse2Received.WeightB));
   strcat_P(LongMessage, (PGM_P)F(" ["));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StartWeight));
@@ -46,38 +48,45 @@ void HempyModule_Web::report()
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StopWeight));
   strcat_P(LongMessage, (PGM_P)F("] ; Waste2 Weight:"));
   strcat(LongMessage, toText_weight(HempyBucketResponse2Received.WeightWR));
+  strcat_P(LongMessage, (PGM_P)F(" ["));
+  strcat(LongMessage, toText_weight(HempyBucketCommand2ToSend.WasteLimit));
+  strcat_P(LongMessage, (PGM_P)F("]"));
   logToSerials(&LongMessage, true, 1);
 }
 
 void HempyModule_Web::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Stat\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(OnlineStatus));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.PumpState));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB1Spd\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PB1S\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WeightB1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.WeightB));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WeightWR1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WR1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.WeightWR));
-  strcat_P(LongMessage, (PGM_P)F("\",\"StartB1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SWB1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StartWeight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"StopB1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"StWB1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.StopWeight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WLB1\":\""));
+  strcat(LongMessage, toText(HempyBucketCommand1ToSend.WasteLimit));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.PumpState));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PumpB2Spd\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PB2S\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WeightB2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightB));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WeightWR2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WR2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightWR));
-  strcat_P(LongMessage, (PGM_P)F("\",\"StartB2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SWB2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StartWeight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"StopB2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"StWB2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.StopWeight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WLB2\":\""));
+  strcat(LongMessage, toText(HempyBucketCommand2ToSend.WasteLimit));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
@@ -88,20 +97,20 @@ void HempyModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgBoolean(getComponentName(F("B1WBW")), HempyBucketCommand1ToSend.WeightBasedWatering);
     WebServer.setArgString(getComponentName(F("B1Strt")), toText(HempyBucketCommand1ToSend.StartWeight));
     WebServer.setArgString(getComponentName(F("B1Stp")), toText(HempyBucketCommand1ToSend.StopWeight));
+    WebServer.setArgString(getComponentName(F("B1WL")), toText(HempyBucketCommand1ToSend.WasteLimit));
     WebServer.setArgBoolean(getComponentName(F("B1TBW")), HempyBucketCommand1ToSend.TimerBasedWatering);
     WebServer.setArgInt(getComponentName(F("B1Int")), HempyBucketCommand1ToSend.WateringInterval);
     WebServer.setArgInt(getComponentName(F("B1Dur")), HempyBucketCommand1ToSend.WateringDuration);
     WebServer.setArgInt(getComponentName(F("B1PumpSp")), HempyBucketCommand1ToSend.PumpSpeed);
-    WebServer.setArgInt(getComponentName(F("B1PumpSpS")), HempyBucketCommand1ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B1Time")), HempyBucketCommand1ToSend.TimeOutPump);
     WebServer.setArgBoolean(getComponentName(F("B2WBW")), HempyBucketCommand2ToSend.WeightBasedWatering);
     WebServer.setArgString(getComponentName(F("B2Strt")), toText(HempyBucketCommand2ToSend.StartWeight));
     WebServer.setArgString(getComponentName(F("B2Stp")), toText(HempyBucketCommand2ToSend.StopWeight));
+    WebServer.setArgString(getComponentName(F("B2WL")), toText(HempyBucketCommand2ToSend.WasteLimit));
     WebServer.setArgBoolean(getComponentName(F("B2TBW")), HempyBucketCommand2ToSend.TimerBasedWatering);
     WebServer.setArgInt(getComponentName(F("B2Int")), HempyBucketCommand2ToSend.WateringInterval);
     WebServer.setArgInt(getComponentName(F("B2Dur")), HempyBucketCommand2ToSend.WateringDuration);
     WebServer.setArgInt(getComponentName(F("B2PumpSp")), HempyBucketCommand2ToSend.PumpSpeed);
-    WebServer.setArgInt(getComponentName(F("B2PumpSpS")), HempyBucketCommand2ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B2Time")), HempyBucketCommand2ToSend.TimeOutPump);
   }
 }
@@ -211,6 +220,11 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
       DefaultSettings->StopWeight_B1 = WebServer.getArgFloat();
       Parent->addToLog(F("Bucket 1 limits updated"), false);
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1WL")) == 0)
+    {
+      DefaultSettings->WasteLimit_B1 = WebServer.getArgFloat();
+      Parent->addToLog(F("Bucket 1 waste limit updated"), false);
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1TBW")) == 0)
     {
       DefaultSettings->TimerBasedWatering_B1 = WebServer.getArgBoolean();
@@ -263,6 +277,11 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
     {
       DefaultSettings->StopWeight_B2 = WebServer.getArgFloat();
       Parent->addToLog(F("Bucket 2 limits updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2WL")) == 0)
+    {
+      DefaultSettings->WasteLimit_B2 = WebServer.getArgFloat();
+      Parent->addToLog(F("Bucket 2 waste limit updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2TBW")) == 0)
     {
@@ -461,6 +480,7 @@ void HempyModule_Web::updateCommands()
   HempyBucketCommand1ToSend.WeightBasedWatering = DefaultSettings->WeightBasedWatering_B1;
   HempyBucketCommand1ToSend.StartWeight = DefaultSettings->StartWeight_B1;
   HempyBucketCommand1ToSend.StopWeight = DefaultSettings->StopWeight_B1;
+  HempyBucketCommand1ToSend.WasteLimit = DefaultSettings->WasteLimit_B1;
   HempyBucketCommand1ToSend.TimerBasedWatering = DefaultSettings->TimerBasedWatering_B1;
   HempyBucketCommand1ToSend.WateringInterval = DefaultSettings->WateringInterval_B1;
   HempyBucketCommand1ToSend.WateringDuration = DefaultSettings->WateringDuration_B1;
@@ -469,6 +489,7 @@ void HempyModule_Web::updateCommands()
   HempyBucketCommand2ToSend.WeightBasedWatering = DefaultSettings->WeightBasedWatering_B2;
   HempyBucketCommand2ToSend.StartWeight = DefaultSettings->StartWeight_B2;
   HempyBucketCommand2ToSend.StopWeight = DefaultSettings->StopWeight_B2;
+  HempyBucketCommand2ToSend.WasteLimit = DefaultSettings->WasteLimit_B2;
   HempyBucketCommand2ToSend.TimerBasedWatering = DefaultSettings->TimerBasedWatering_B2;
   HempyBucketCommand2ToSend.WateringInterval = DefaultSettings->WateringInterval_B2;
   HempyBucketCommand2ToSend.WateringDuration = DefaultSettings->WateringDuration_B2;

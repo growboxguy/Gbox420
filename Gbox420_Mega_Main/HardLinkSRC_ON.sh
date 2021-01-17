@@ -52,6 +52,8 @@ ln ../src/Components/LightSensor.h ./src/Components
 ln ../src/Components/LightSensor.cpp ./src/Components
 ln ../src/Components/Fan.h ./src/Components
 ln ../src/Components/Fan.cpp ./src/Components
+ln ../src/Components/Fan_PWM.h ./src/Components
+ln ../src/Components/Fan_PWM.cpp ./src/Components
 ln ../src/Components/PowerSensor.h ./src/Components
 ln ../src/Components/PowerSensor.cpp ./src/Components
 ln ../src/Components/PowerSensorV3.h ./src/Components
@@ -73,6 +75,8 @@ ln ../src/Components_Web/LightSensor_Web.h ./src/Components_Web
 ln ../src/Components_Web/LightSensor_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/Fan_Web.h ./src/Components_Web
 ln ../src/Components_Web/Fan_Web.cpp ./src/Components_Web
+ln ../src/Components_Web/Fan_PWM_Web.h ./src/Components_Web
+ln ../src/Components_Web/Fan_PWM_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/PowerSensor_Web.h ./src/Components_Web
 ln ../src/Components_Web/PowerSensor_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/PowerSensorV3_Web.h ./src/Components_Web
