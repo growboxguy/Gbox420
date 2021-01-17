@@ -22,8 +22,8 @@ void setup()
 {
   // put your setup code here, to run once:
   Serial.begin(115200);             //2560mega console output
-  Serial3.begin(115200);            //wifi console output
-  ESPLink.resetCb = ResetWebServer; //Callback subscription: When wifi is reset, restart the webServer
+  Serial3.begin(115200);            //WiFi console output
+  ESPLink.resetCb = ResetWebServer; //Callback subscription: When WiFi is reset, restart the webServer
   ResetWebServer();
 }
 

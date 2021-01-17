@@ -1,5 +1,6 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for testing: Reporting to Google Sheets using ESP-Link REST API
+//More details: https://sites.google.com/site/growboxguy/arduino/logging
 //Update the SheetsRelayDeviceID constant before uploading!
 
 //Libraries
@@ -19,8 +20,8 @@ void setup()
 {
   // put your setup code here, to run once:
   Serial.begin(115200);             //2560mega console output
-  Serial3.begin(115200);            //wifi console output
-  ESPLink.resetCb = ResetWebServer; //Callback subscription: When wifi is reset, restart the webServer
+  Serial3.begin(115200);            //WiFi console output
+  ESPLink.resetCb = ResetWebServer; //Callback subscription: When WiFi is reset, restart the webServer
   ResetWebServer();
 }
 
@@ -52,23 +53,9 @@ void reportToGoogleSheets()
   strcat(WebMessage, "/pushingbox?devid=");
   strcat(WebMessage, PushingBoxLogRelayID);
   strcat_P(WebMessage, (PGM_P)F("&BoxData="));
-  strcat_P(WebMessage, (PGM_P)F("{\"Log\":{\"IFan\":{\"Speed\":\"1\"},\"EFan\":{\"Speed\":\"1\"},\"Lt1\":{\"Status\":\"0\",\"Brightness\":\"15\",\"Timer\":\"1\",\"On\":\"04:20\",\"Off\":\"16:20\"}}}"));
+  strcat_P(WebMessage, (PGM_P)F("{\"Log\":{\"IFan\":{\"S\":\"1\"},\"EFan\":{\"S\":\"1\"},\"Lt1\":{\"S\":\"1\",\"B\":\"15\",\"T\":\"1\",\"On\":\"04:20\",\"Of\":\"16:20\"}}}"));
   Serial.println(WebMessage);
   RestAPI.get(WebMessage);
 }
 
-//URL called by the script: api.pushingbox.com/pushingbox?devid=v420&BoxData={"Log":{"IFan":{"Speed":"1"},"EFan":{"Speed":"1"},"Lt1":{"Status":"0","Brightness":"15","Timer":"1","On":"04:20","Off":"16:20"}}}
-
-char *intToChar(int Number)
-{
-  static char ReturnChar[8] = ""; //7 digits + null terminator
-  itoa(Number, ReturnChar, 10);
-  return ReturnChar;
-}
-
-char *floatToChar(float Number)
-{ //4 digits + decimal sign + 2 decimals + null terminator
-  static char ReturnFloatChar[8] = "";
-  dtostrf(Number, 4, 2, ReturnFloatChar);
-  return ReturnFloatChar;
-}
+//URL called by the script: http://api.pushingbox.com/pushingbox?devid=v755877CF53383E1&BoxData={"Log":{"IFan":{"S":"1"},"EFan":{"S":"2"},"Lt1":{"S":"1","B":"42","T":"1","On":"04:20","Of":"16:20"}}}
