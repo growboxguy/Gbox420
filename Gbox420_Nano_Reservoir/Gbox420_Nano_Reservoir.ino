@@ -83,13 +83,13 @@ void setup()
 void InitializeWireless()
 {
   logToSerials(F("(re)Initializing wireless transceiver..."), false, 0);
-  Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
-  Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
-  Wireless.powerDown();
-  pinMode(WirelessCSNPin, OUTPUT);
-  digitalWrite(WirelessCSNPin, HIGH);
-  pinMode(WirelessCEPin, OUTPUT);
-  digitalWrite(WirelessCEPin, HIGH);
+  //Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  //Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
+  //Wireless.powerDown();
+  //pinMode(WirelessCSNPin, OUTPUT);
+  //digitalWrite(WirelessCSNPin, HIGH);
+  //pinMode(WirelessCEPin, OUTPUT);
+  //digitalWrite(WirelessCEPin, HIGH);
   Wireless.begin();
   Wireless.setDataRate(RF24_250KBPS);           ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
   Wireless.setCRCLength(RF24_CRC_8);            ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
@@ -100,6 +100,7 @@ void InitializeWireless()
   Wireless.startListening();
   Wireless.powerUp(); ///< Not necessary, startListening should switch back to normal power mode
   logToSerials(F("done"), true, 1);
+  ReceivedMessageTimestamp = millis();   ///< Reset timeout counter
 }
 
 void loop()

@@ -101,6 +101,7 @@ void InitializeWireless()
   Wireless.startListening();
   Wireless.powerUp(); ///< Not necessary, startListening should switch back to normal power mode
   logToSerials(F("done"), true, 1);
+  ReceivedMessageTimestamp = millis();   ///< Reset timeout counter
 }
 
 void loop()

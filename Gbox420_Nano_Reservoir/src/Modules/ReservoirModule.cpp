@@ -82,7 +82,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
   case ReservoirMessages::ReservoirModuleCommand1:
     setDebug(((ReservoirModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((ReservoirModuleCommand *)ReceivedCommand)->Metric);
-    NextSequenceID = ReservoirMessages::ReservoirCommand1; // update the next Message that will be copied to the buffer
+    NextSequenceID = ReservoirMessages::ReservoirResponse1; // update the next Message that will be copied to the buffer
     if (*Debug)
     {
       logToSerials(F("Module:"), false, 2);
@@ -137,7 +137,7 @@ void ReservoirModule::updateAckData()
     break;
   default:
     logToSerials(F("Unknown next Sequence number, Ack defaults loaded"), true, 3);
-    Wireless.writeAckPayload(1, &ReservoirResponse1ToSend, WirelessPayloadSize); // load the first Response into the buffer
+    Wireless.writeAckPayload(1, &ReservoirModuleResponse1ToSend, WirelessPayloadSize); // load the first Response into the buffer
     break;
   }
 }
