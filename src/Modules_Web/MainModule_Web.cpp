@@ -20,8 +20,8 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   this->SoundFeedback = Sound1;
   IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan); ///< passing: Component name, MainModule object the component belongs to, Default settings)
   EFan = new Fan_Web(F("EFan"), this, &ModuleSettings->EFan);
-  FanI = new Fan_PWM_Web(F("FanI"), this, &ModuleSettings->FanI);
-  FanE = new Fan_PWM_Web(F("FanE"), this, &ModuleSettings->FanE);
+  //FanI = new Fan_PWM_Web(F("FanI"), this, &ModuleSettings->FanI);
+  //FanE = new Fan_PWM_Web(F("FanE"), this, &ModuleSettings->FanE);
   APump1 = new AirPump_Web(F("APump1"), this, &ModuleSettings->APump1);
   Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
   Lt2 = new Lights_Web(F("Lt2"), this, &ModuleSettings->Lt2);
@@ -60,9 +60,9 @@ void MainModule::reportToJSON()
 {
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
 
-  strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"M\":\""));
   strcat(LongMessage, toText(*Metric));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Debug\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
   strcat(LongMessage, toText(*Debug));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
