@@ -35,7 +35,7 @@ public:
   //void refresh_Minute();
   //void refresh_QuarterHour();
   void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
-  void processCommand(void *Command);
+  bool processCommand(void *Command);
   void updateResponse();
   void updateAckData();
 

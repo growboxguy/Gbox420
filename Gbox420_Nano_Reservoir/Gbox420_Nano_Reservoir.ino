@@ -26,6 +26,7 @@ char LongMessage[MaxLongTextLength] = "";            // Temp storage for assembl
 char ShortMessage[MaxShotTextLength] = "";           // Temp storage for assembling short messages (Log entries, Error messages)
 char CurrentTime[MaxWordLength] = "";                // Buffer for storing current time in text format
 void *ReceivedMessage = malloc(WirelessPayloadSize); // Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
+uint32_t ReceivedMessageTimestamp = millis();        // Stores the timestamp when the last wireless package was received
 
 // Component initialization
 HardwareSerial &ArduinoSerial = Serial; // Reference to the Arduino Serial
@@ -61,14 +62,7 @@ void setup()
   Metric = &ModuleSettings->Metric;
 
   // Setting up wireless module
-  Wireless.begin();
-  Wireless.setDataRate(RF24_250KBPS);           // Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
-  Wireless.setCRCLength(RF24_CRC_8);            // RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
-  Wireless.setPALevel(RF24_PA_MAX);             //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
-  Wireless.setPayloadSize(WirelessPayloadSize); // The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
-  Wireless.enableAckPayload();
-  Wireless.openReadingPipe(1, WirelessChannel);
-  Wireless.startListening();
+  InitializeWireless();
 
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.setInterval(1000); // 1000ms
@@ -86,13 +80,34 @@ void setup()
   logToSerials(F("Setup ready, starting loops:"), true, 0);
 }
 
+void InitializeWireless()
+{
+  logToSerials(F("(re)Initializing wireless transceiver..."), false, 0);
+  Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
+  Wireless.powerDown();
+  pinMode(WirelessCSNPin, OUTPUT);
+  digitalWrite(WirelessCSNPin, HIGH);
+  pinMode(WirelessCEPin, OUTPUT);
+  digitalWrite(WirelessCEPin, HIGH);
+  Wireless.begin();
+  Wireless.setDataRate(RF24_250KBPS);           ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
+  Wireless.setCRCLength(RF24_CRC_8);            ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
+  Wireless.setPALevel(RF24_PA_MAX);             //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
+  Wireless.setPayloadSize(WirelessPayloadSize); ///< The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
+  Wireless.enableAckPayload();
+  Wireless.openReadingPipe(1, WirelessChannel);
+  Wireless.startListening();
+  Wireless.powerUp(); ///< Not necessary, startListening should switch back to normal power mode
+  logToSerials(F("done"), true, 1);
+}
+
 void loop()
 {                      // put your main code here, to run repeatedly:
   ThreadControl.run(); // loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
   // If a control package is received from the main module
   getWirelessData();
 }
-
 
 // Threads
 
@@ -121,7 +136,6 @@ void runQuarterHour()
   ReservoirMod1->runQuarterHour();
 }
 
-
 // Wireless communication
 
 void getWirelessData()
@@ -133,7 +147,17 @@ void getWirelessData()
     {
       updateTime(); // Updating internal timer
     }
-    ReservoirMod1->processCommand(ReceivedMessage);
+    if(ReservoirMod1->processCommand(ReceivedMessage))
+    {
+      ReceivedMessageTimestamp = millis();  //< Reset the timer after the last message was exchanged
+    }
+  }
+  else
+  {
+    if (millis() - ReceivedMessageTimestamp > WirelessReceiveTimeout)
+    {
+      InitializeWireless();
+    }
   }
 }
 

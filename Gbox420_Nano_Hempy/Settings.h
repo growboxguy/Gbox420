@@ -42,6 +42,7 @@ static const uint8_t WirelessCEPin = 10;             ///< nRF24l01+ wireless tra
 static const uint8_t WirelessChannel[6] = {"Hemp1"}; ///< This needs to be unique and match with the Name of the HempyModule_Web object in the MainModule_Web.cpp
 static const uint8_t WirelessPayloadSize = 32;       ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
 static const uint16_t WirelessMessageTimeout = 500;  ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
+static const uint16_t WirelessReceiveTimeout = 60000;  ///< (ms) If no packages are received from the Main module over this limit, try reseting the nRF24L01+ wireless receiver
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12

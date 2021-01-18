@@ -44,7 +44,7 @@ public:
   void refresh_FiveSec();
   //void refresh_Minute();
   //void refresh_QuarterHour();
-  void processCommand(void *Command);
+  bool processCommand(void *Command);
   void updateResponse();
   void updateAckData();
 

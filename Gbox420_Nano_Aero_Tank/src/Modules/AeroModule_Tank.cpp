@@ -58,22 +58,22 @@ void AeroModule::refresh_FiveSec()
   updateResponse();
 }
 
-void AeroModule::processTimeCriticalStuff(){
-  AeroT1 -> processTimeCriticalStuff();
+void AeroModule::processTimeCriticalStuff()
+{
+  AeroT1->processTimeCriticalStuff();
 }
 
-
 bool AeroModule::processCommand(void *ReceivedCommand)
-{  
+{
   AeroMessages ReceivedSequenceID = ((AeroCommonTemplate *)ReceivedCommand)->SequenceID;
   LastMessageReceived = millis(); ///< Store current time
   logToSerials(F("Received:"), false, 1);
-  logToSerials(toText_aeroSequenceID(ReceivedSequenceID), false, 1); 
+  logToSerials(toText_aeroSequenceID(ReceivedSequenceID), false, 1);
   logToSerials(F("- Sent:"), false, 1);
-  logToSerials(toText_aeroSequenceID(NextSequenceID), true, 1);  ///< This is the pre-buffered response that was instantly sent when a command was received
-  
+  logToSerials(toText_aeroSequenceID(NextSequenceID), true, 1); ///< This is the pre-buffered response that was instantly sent when a command was received
+
   bool LastMessageReached = false;
-  if(ReceivedSequenceID == AeroMessages::AeroCommand2 && NextSequenceID == AeroMessages::AeroResponse2) ///< Last real command-response exchange reached
+  if (ReceivedSequenceID == AeroMessages::AeroCommand2 && NextSequenceID == AeroMessages::AeroResponse2) ///< Last real command-response exchange reached
   {
     LastMessageReached = true;
   }

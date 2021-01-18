@@ -62,14 +62,20 @@ void ReservoirModule::updateResponse()
   updateAckData();
 }
 
-void ReservoirModule::processCommand(void *ReceivedCommand)
+bool ReservoirModule::processCommand(void *ReceivedCommand)
 {
   ReservoirMessages ReceivedSequenceID = ((ReservoirCommonTemplate *)ReceivedCommand)->SequenceID;
   LastMessageReceived = millis(); ///< Store current time
   logToSerials(F("Received:"), false, 1);
   logToSerials(toText_reservoirSequenceID(ReceivedSequenceID), false, 1);
   logToSerials(F("- Sent:"), false, 1);
-  logToSerials(toText_reservoirSequenceID(NextSequenceID), true, 1);
+  logToSerials(toText_reservoirSequenceID(NextSequenceID), true, 1);  ///< This is the pre-buffered response that was instantly sent when a command was received
+
+  bool LastMessageReached = false;
+  if(ReceivedSequenceID == ReservoirMessages::ReservoirCommand1 && NextSequenceID == ReservoirMessages::ReservoirResponse1) ///< Last real command-response exchange reached
+  {
+    LastMessageReached = true;
+  }
 
   switch (ReceivedSequenceID)
   {
@@ -106,6 +112,7 @@ void ReservoirModule::processCommand(void *ReceivedCommand)
   }
   updateAckData();              ///< Loads the next ACK that will be sent out
   saveSettings(ModuleSettings); ///< Store changes in EEPROM
+  return LastMessageReached;
 }
 
 void ReservoirModule::updateAckData()
