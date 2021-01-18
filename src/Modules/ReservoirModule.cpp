@@ -19,7 +19,7 @@ ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::Rese
   DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
   WTemp1 = new WaterTempSensor(F("WTemp1"), this, &ModuleSettings->WTemp1);
   PHSen1 = new PHSensor(F("PHSen1"), this, &ModuleSettings->PHSen1);
-  TDS1 = new TDSSensor(F("TDS1"),this,&ModuleSettings->TDS1);
+  //TDS1 = new TDSSensor(F("TDS1"),this,&ModuleSettings->TDS1);
   Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
