@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 2; ///< Increment this when you make a change in the SAVED TO EEPROM section
+static const uint8_t Version = 5; ///< Increment this when you make a change in the SAVED TO EEPROM section
 
 ///< NOT SAVED TO EEPROM
 
@@ -106,7 +106,7 @@ typedef struct
     long Offset;    ///< Reading at 0 weight on the scale
     float Scale;    ///< Scale factor
   };
-  struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset = 255457, .Scale = -19615.00}; ///< Update the calibration values here for the Weight Sensor
+  struct WeightSensorSettings Weight1 = {.DTPin = 5, .SCKPin = 6, .Offset = 246106, .Scale = -22716.50}; ///< Update the calibration values here for the Weight Sensor
 
   uint8_t CompatibilityVersion = Version; ///< Version should always be the last value stored in the struct
 } Settings;
