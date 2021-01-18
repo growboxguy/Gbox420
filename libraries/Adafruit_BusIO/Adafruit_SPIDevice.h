@@ -17,7 +17,7 @@ typedef enum _BitOrder {
   SPI_BITORDER_LSBFIRST = LSBFIRST,
 } BitOrder;
 
-#elif defined(ESP32)
+#elif defined(ESP32) || defined(__ASR6501__)
 
 // some modern SPI definitions don't have BitOrder enum and have different SPI
 // mode defines
@@ -47,7 +47,9 @@ typedef uint32_t BusIO_PortMask;
     !defined(ARDUINO_ARCH_MBED)
 typedef volatile uint32_t BusIO_PortReg;
 typedef uint32_t BusIO_PortMask;
+#if not defined(__ASR6501__)
 #define BUSIO_USE_FAST_PINIO
+#endif
 
 #else
 #undef BUSIO_USE_FAST_PINIO
@@ -64,6 +66,7 @@ public:
                      uint32_t freq = 1000000,
                      BitOrder dataOrder = SPI_BITORDER_MSBFIRST,
                      uint8_t dataMode = SPI_MODE0);
+  ~Adafruit_SPIDevice();
 
   bool begin(void);
   bool read(uint8_t *buffer, size_t len, uint8_t sendvalue = 0xFF);

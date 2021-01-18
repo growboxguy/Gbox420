@@ -47,7 +47,7 @@
 #endif
 
 // Use the avr pgmspace commands
-///< Avoid spurious warnings
+//// Avoid spurious warnings
 //#if 1
 //#if ! defined( NATIVE ) && defined( ARDUINO )
 //#undef PROGMEM
@@ -62,7 +62,7 @@ typedef uint16_t prog_uint16_t;
 //#define printf_P printf
 //#define strlen_P strlen
 //#define PROGMEM
-//#define pgm_read_word(p) (*(p)) 
+//#define pgm_read_word(p) (*(p))
 #define PRIPSTR "%s"
 //#define pgm_read_byte(p) (*(p))
 
@@ -80,4 +80,4 @@ typedef uint16_t prog_uint16_t;
 #endif // __RF24_ARCH_CONFIG_H__
 
 
-/*@}*/	
+/*@}*/

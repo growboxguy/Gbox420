@@ -1,3 +1,4 @@
+
 /*
  TMRh20 2015
  ATTiny Configuration File
@@ -15,19 +16,25 @@
 #define rf24_min(a, b) (a<b?a:b)
 
 #if ARDUINO < 100
-
     #include <WProgram.h>
-
 #else
     #include <Arduino.h>
 #endif
 
 #include <stddef.h>
 
-// Include the header file for SPI functions ( Main SPI code is contained in RF24.cpp for simplicity )
-#include "spi.h"
+#include <SPI.h>
 
 #define _SPI SPI
+
+#if !defined(RF24_CSN_SETTLE_LOW_DELAY)
+#define RF24_CSN_SETTLE_LOW_DELAY 11
+#endif
+
+#if !defined(RF24_CSN_SETTLE_HIGH_DELAY)
+#define RF24_CSN_SETTLE_HIGH_DELAY 100
+#endif
+
 
 #ifdef SERIAL_DEBUG
     #define IF_SERIAL_DEBUG(x) ({x;})
