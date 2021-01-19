@@ -8,7 +8,6 @@
 #include "TimeLib.h"           // Keeping track of time
 #include "RF24.h"
 #include "SPI.h"
-#include "nRF24L01.h"
 #include "../../Settings.h"
 #include "../Helpers.h"
 #include "../WirelessCommands_Hempy.h"

@@ -14,7 +14,6 @@
 #include "Thread.h"                 // Splitting functions to threads for timing
 #include "StaticThreadController.h" // Grouping threads
 #include "SPI.h"                    // allows you to communicate with SPI devices, with the Arduino as the master device
-#include "nRF24L01.h"               // https://forum.arduino.cc/index.php?topic=421081
 #include "RF24.h"                   // https://github.com/maniacbug/RF24
 #include "SerialLog.h"              // Logging debug messages to Serial
 #include "Settings.h"
@@ -97,6 +96,7 @@ void InitializeWireless()
   Wireless.setCRCLength(RF24_CRC_8);            ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
   Wireless.setPALevel(RF24_PA_MAX);             //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
   Wireless.setPayloadSize(WirelessPayloadSize); ///< The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
+  Wireless.enableDynamicPayloads();
   Wireless.enableAckPayload();
   Wireless.openReadingPipe(1, WirelessChannel);
   Wireless.startListening();
@@ -184,7 +184,7 @@ void getWirelessStatus()
   if (*Debug)
   {
     logToSerials(F("Wireless status report:"), true, 0);
-    Wireless.printDetails();
+    Wireless.printPrettyDetails();
     logToSerials(F(""), true, 0);
   }
 }

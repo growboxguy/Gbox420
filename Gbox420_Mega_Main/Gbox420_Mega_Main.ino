@@ -23,7 +23,6 @@
 #include "Settings.h"                         // EEPROM stored settings for every component
 #include "src/Modules_Web/MainModule_Web.h"   // Represents a complete box with all feautres
 #include "SPI.h"                              // allows you to communicate with SPI devices, with the Arduino as the master device
-#include "nRF24L01.h"                         // https://forum.arduino.cc/index.php?topic=421081
 #include "RF24.h"                             // https://github.com/maniacbug/RF24
 
 // Global variable initialization
@@ -101,8 +100,10 @@ void setup()
   Wireless.setCRCLength(RF24_CRC_8);                 ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
   Wireless.setPALevel(RF24_PA_MAX);                  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
   Wireless.setPayloadSize(WirelessPayloadSize);      ///< The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
+  Wireless.enableDynamicPayloads();                  ///< Required for ACK messages
   Wireless.enableAckPayload();                       ///< When sending a wireless package, expect a response confirming the package was received in a custom Acknowledgement package
   Wireless.setRetries(WirelessDelay, WirelessRetry); ///< Defined in Settings.h. How many retries before giving up sending a single package and How long to wait between each retry
+  Wireless.stopListening();
   logToSerials(F("done"), true, 1);
 
   // Create the Module objects
@@ -289,7 +290,7 @@ void getWirelessStatus()
   if (*Debug)
   {
     logToSerials(F("Wireless status report:"), true, 0);
-    Wireless.printDetails();
+    Wireless.printPrettyDetails();
     logToSerials(F(""), true, 0);
   }
 }
