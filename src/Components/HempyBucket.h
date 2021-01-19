@@ -52,8 +52,9 @@ protected:
   uint16_t *WateringDuration;               ///< How long to water in SECONDS
   uint32_t WateringTimer = millis();        ///< last time the plants were watered
   WeightSensor *BucketWeightSensor;         ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
+  RollingAverage *BucketWeight;              ///< Average bucket weight based on the last few readings, RollingAverageDepth in Settings.h defines how many readings to calculate from
   WeightSensor *WasteReservoirWeightSensor; ///< Weight sensor to monitor the Hempy Bucket's waste reservoir, used to figure out when to stop watering
-  RollingAverage BucketWeight;              ///< Average bucket weight based on the last few readings, RollingAverageDepth in Settings.h defines how many readings to calculate from
+  RollingAverage *WasteReservoirWeight;              ///< Average bucket weight based on the last few readings, RollingAverageDepth in Settings.h defines how many readings to calculate from
   WaterPump *BucketPump;                    ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
   bool *WeightBasedWatering;                ///< Enables weight based waterings
   float *StartWeight;                       ///< Start watering below this weight

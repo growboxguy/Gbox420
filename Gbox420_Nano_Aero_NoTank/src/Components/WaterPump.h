@@ -21,7 +21,7 @@ public:
   void startPump(bool ResetStatus = false); ///< Turn the pump ON
   void stopPump();                          ///< Turn the pump OFF
   void disablePump();                       ///< Disable the pump
-  void startMixing(int TimeOutSec = 0);
+  void startMixing(uint16_t TimeOutSec = 0);
 
   void turnBypassOn();
   void turnBypassOff();
@@ -39,10 +39,10 @@ public:
 
   //void checkRelay(); ///< Flit the relay into the correct status ON/OFF based on PumpOn variable
 
-  void setPumpTimeOut(int NewTime);
-  int getPumpTimeOut();
-  void setPrimingTime(int NewTime);
-  int getPrimingTime();
+  void setPumpTimeOut(uint16_t NewTime);
+  uint16_t getPumpTimeOut();
+  void setPrimingTime(uint16_t NewTime);
+  uint16_t getPrimingTime();
   //void setBlowOffTime(int NewTime);
   //int getBlowOffTime();
   uint32_t PumpTimer = millis(); ///< Spray cycle timer, used for State runtime tracking, - https://www.arduino.cc/reference/en/language/functions/time/millis/
@@ -58,8 +58,8 @@ protected:
   bool BypassOn = false;   ///< true turns the bypass solenoid on
   bool *PumpEnabled;       ///< Enable/disable pump. false= Block running the pump
   uint8_t *Speed = NULL;   ///< Set PWM speed of the motor (!!!Needs a MOSFET based relay!!!)
-  int RunTime = 0;         ///< Max pump run time in seconds
+  uint16_t RunTime = 0;         ///< Max pump run time in seconds
   uint16_t *PumpTimeOut = NULL; ///< Max pump run time in seconds
-  int *PrimingTime = NULL; ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
-  int *BlowOffTime = NULL; ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
+  uint16_t *PrimingTime = NULL; ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+  uint16_t *BlowOffTime = NULL; ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
 };

@@ -208,7 +208,7 @@ void WaterPump::setSpeed(uint8_t DutyCycle) //Set PWM duty cycle
   PumpSwitch->setDutyCycle(DutyCycle);
 }
 
-void WaterPump::startMixing(int TimeOutSec) ///< Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout
+void WaterPump::startMixing(uint16_t TimeOutSec) ///< Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout
 {
   if (TimeOutSec > 0)
   {
@@ -274,14 +274,14 @@ bool WaterPump::getEnabledState()
   return *PumpEnabled;
 }
 
-int WaterPump::getPumpTimeOut()
+uint16_t WaterPump::getPumpTimeOut()
 {
   return *PumpTimeOut;
 }
 
-void WaterPump::setPumpTimeOut(int TimeOut)
+void WaterPump::setPumpTimeOut(uint16_t TimeOut)
 {
-  if (*this->PumpTimeOut != TimeOut && TimeOut > 0)
+  if (TimeOut > 0 && *this->PumpTimeOut != TimeOut)
   {
     *this->PumpTimeOut = TimeOut;
     logToSerials(Name, false, 1);
@@ -290,12 +290,12 @@ void WaterPump::setPumpTimeOut(int TimeOut)
   }
 }
 
-int WaterPump::getPrimingTime()
+uint16_t WaterPump::getPrimingTime()
 {
   return *PrimingTime;
 }
 
-void WaterPump::setPrimingTime(int Timing)
+void WaterPump::setPrimingTime(uint16_t Timing)
 {
   if (*PrimingTime != Timing && Timing > 0)
   {
