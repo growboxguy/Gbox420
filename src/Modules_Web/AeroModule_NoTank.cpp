@@ -43,7 +43,7 @@ void AeroModule::refresh_Sec()
   if (NextSequenceID != AeroMessages::AeroModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   {                                                     ///< If there is a package exchange in progress
     NextSequenceID = AeroMessages::AeroModuleResponse1; ///< Reset back to the first response
-    logToSerials(F("Timeout during message exchange, reseting to first response"), true, 0);
+    logToSerials(F("Message exchange timeout"), true, 0);
     updateAckData();
   }
 }
@@ -162,7 +162,7 @@ void AeroModule::processCommand(void *ReceivedCommand)
     NextSequenceID = AeroMessages::AeroModuleResponse1; ///< Load the first response for the next message exchange
     break;
   default:
-    logToSerials(F("SequenceID unknown, ignoring message"), true, 2);
+    logToSerials(F("SequenceID unknown"), true, 2);
     break;
   }
   updateAckData();
@@ -190,7 +190,7 @@ void AeroModule::updateAckData()
     Wireless.writeAckPayload(1, &AeroResetToSend, WirelessPayloadSize);
     break;
   default:
-    logToSerials(F("Unknown next Sequence number, Ack defaults loaded"), true, 3);
+    logToSerials(F("Ack defaults loaded"), true, 3);
     Wireless.writeAckPayload(1, &AeroModule1ResponseToSend, WirelessPayloadSize); // load the first Response into the buffer
     break;
   }

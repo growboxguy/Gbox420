@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -93,7 +93,7 @@ typedef struct
 
   struct WaterPumpSettings ///< WaterPump default settings
   {
-    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, uint16_t BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime) {}
+    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime) {}
     uint8_t PumpPin;           ///< Pump relay pin
     bool PumpPinNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     uint8_t BypassSolenoidPin; ///< Bypass solenoid relay pin
@@ -102,8 +102,8 @@ typedef struct
     uint8_t Speed;         ///< Duty cycle of the PWM Motor speed
     uint8_t SpeedLowLimit; ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
     uint16_t PumpTimeOut;  ///< (Sec) Max pump run time
-    uint16_t PrimingTime;       ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
-    uint16_t BlowOffTime;       ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
+    int PrimingTime;       ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+    int BlowOffTime;       ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
   };
   struct WaterPumpSettings AeroPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .BypassSolenoidPin = 4, .BypassSolenoidNegativeLogic = true, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 120, .PrimingTime = 10, .BlowOffTime = 3};
 

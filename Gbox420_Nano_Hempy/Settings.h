@@ -83,7 +83,7 @@ typedef struct
 
   struct WaterPumpSettings ///< WaterPump default settings
   {
-    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, uint16_t BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic) {}
+    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic) {}
     uint8_t PumpPin;                  ///< Pump relay pin
     bool PumpPinNegativeLogic;        ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin [optional]
@@ -92,8 +92,8 @@ typedef struct
     uint8_t Speed;                    ///< Duty cycle of the PWM Motor speed
     uint8_t SpeedLowLimit;            ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
     uint16_t PumpTimeOut;             ///< (Sec) Max pump run time
-    uint16_t PrimingTime;                  ///< (Sec) Only if BypassSolenoid is present. For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
-    uint16_t BlowOffTime;                  ///< (Sec) Only if BypassSolenoid is present. For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
+    int PrimingTime;                  ///< (Sec) Only if BypassSolenoid is present. For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+    int BlowOffTime;                  ///< (Sec) Only if BypassSolenoid is present. For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
   };
   struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 100, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
   struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 100, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
