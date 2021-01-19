@@ -57,8 +57,9 @@ void AeroModule::refresh_FiveSec()
   updateResponse();
 }
 
-void AeroModule::processTimeCriticalStuff(){
-  AeroNT1 -> processTimeCriticalStuff();
+void AeroModule::processTimeCriticalStuff()
+{
+  AeroNT1->processTimeCriticalStuff();
 }
 
 bool AeroModule::processCommand(void *ReceivedCommand)
@@ -68,10 +69,10 @@ bool AeroModule::processCommand(void *ReceivedCommand)
   logToSerials(F("Received:"), false, 1);
   logToSerials(toText_aeroSequenceID(ReceivedSequenceID), false, 1);
   logToSerials(F("- Sent:"), false, 1);
-  logToSerials(toText_aeroSequenceID(NextSequenceID), true, 1);  ///< This is the pre-buffered response that was instantly sent when a command was received
+  logToSerials(toText_aeroSequenceID(NextSequenceID), true, 1); ///< This is the pre-buffered response that was instantly sent when a command was received
 
   bool LastMessageReached = false;
-  if(ReceivedSequenceID == AeroMessages::AeroCommand2 && NextSequenceID == AeroMessages::AeroResponse2) ///< Last real command-response exchange reached
+  if (ReceivedSequenceID == AeroMessages::AeroCommand2 && NextSequenceID == AeroMessages::AeroResponse2) ///< Last real command-response exchange reached
   {
     LastMessageReached = true;
   }
@@ -126,7 +127,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->DayInterval, false, 1);
       logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->NightInterval, false, 1);
-      logToSerials(F(","), false, 1);      
+      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MinPressure, false, 1);
       logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure, true, 1);
@@ -173,6 +174,8 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     break;
   default:
     logToSerials(F("SequenceID unknown, ignoring message"), true, 2);
+    Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+    Wireless.flush_rx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     break;
   }
   updateAckData();

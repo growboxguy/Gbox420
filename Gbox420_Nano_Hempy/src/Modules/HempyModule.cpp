@@ -182,7 +182,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket2->setWateringInterval(((HempyBucketCommand *)ReceivedCommand)->WateringInterval);
     Bucket2->setWateringDuration(((HempyBucketCommand *)ReceivedCommand)->WateringDuration);
     NextSequenceID = HempyMessages::HempyReset; // update the next Message that will be copied to the buffer
-    //if(*Debug)
+    if(*Debug)
     {
       logToSerials(F("Bucket2:"), false, 2);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DisablePump, false, 1);
@@ -218,10 +218,9 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     NextSequenceID = HempyMessages::HempyModuleResponse1; ///< Load the first response for the next message exchange
     break;
   default:
-    if (*Debug)
-    {
-      logToSerials(F("SequenceID unknown, ignoring message"), true, 2);
-    }
+    logToSerials(F("SequenceID unknown, ignoring message"), true, 2);
+    Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+    Wireless.flush_rx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     break;
   }
   updateAckData();              ///< Loads the next ACK that will be sent out

@@ -44,6 +44,7 @@ static const uint8_t WirelessDelay = 8;             ///< How long to wait betwee
 static const uint8_t WirelessRetry = 10;            ///< How many retries before giving up, max 15
 static const uint8_t WirelessPayloadSize = 32;      ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
 static const uint16_t WirelessMessageTimeout = 500; ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
+static const uint16_t WirelessReceiveTimeout = 65000;  ///< (ms) Consider a module offline after this timeout. Should be a few seconds longer then the WirelessReceiveTimeout configured on the Modules
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12

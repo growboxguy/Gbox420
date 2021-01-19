@@ -69,10 +69,10 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
   logToSerials(F("Received:"), false, 1);
   logToSerials(toText_reservoirSequenceID(ReceivedSequenceID), false, 1);
   logToSerials(F("- Sent:"), false, 1);
-  logToSerials(toText_reservoirSequenceID(NextSequenceID), true, 1);  ///< This is the pre-buffered response that was instantly sent when a command was received
+  logToSerials(toText_reservoirSequenceID(NextSequenceID), true, 1); ///< This is the pre-buffered response that was instantly sent when a command was received
 
   bool LastMessageReached = false;
-  if(ReceivedSequenceID == ReservoirMessages::ReservoirCommand1 && NextSequenceID == ReservoirMessages::ReservoirResponse1) ///< Last real command-response exchange reached
+  if (ReceivedSequenceID == ReservoirMessages::ReservoirCommand1 && NextSequenceID == ReservoirMessages::ReservoirResponse1) ///< Last real command-response exchange reached
   {
     LastMessageReached = true;
   }
@@ -108,6 +108,8 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     break;
   default:
     logToSerials(F("SequenceID unknown, ignoring message"), true, 2);
+    Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+    Wireless.flush_rx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     break;
   }
   updateAckData();              ///< Loads the next ACK that will be sent out

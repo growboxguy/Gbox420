@@ -379,7 +379,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
   {
     if (*Debug)
       logToSerials(F("No response"), true, 3);
-    if (millis() - LastResponseReceived > WirelessRetry * WirelessMessageTimeout)
+    if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
       OnlineStatus = false;
     }

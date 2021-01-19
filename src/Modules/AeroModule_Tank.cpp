@@ -172,6 +172,8 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     break;
   default:
     logToSerials(F("SequenceID unknown, ignoring message"), true, 2);
+    Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+    Wireless.flush_rx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     break;
   }
   updateAckData();
