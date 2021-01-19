@@ -157,10 +157,10 @@ void updateFakeData()
 
 void updateAckData()
 { // so you can see that new data is being sent
-    if (*Debug)
+    if (Debug)
     {
-        logToSerials(F("Updating Acknowledgement to:"), false, 2);
-        logToSerials(NextSequenceID, true, 1);
+        Serial.print(F("  Updating Acknowledgement to: "));
+        Serial.println(NextSequenceID);
     }
     Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
 

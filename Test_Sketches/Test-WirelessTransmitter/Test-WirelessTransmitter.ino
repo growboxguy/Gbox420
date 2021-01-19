@@ -3,8 +3,8 @@
 //Based on: https://forum.arduino.cc/index.php?topic=421081.0
 
 #include <SPI.h>
-#include <nRF24L01.h>
 #include <RF24.h>
+#include "printf.h"
 #include "TimeLib.h" // Keeping track of time
 
 //Ports for Arduino Nano or RF-Nano
@@ -65,11 +65,19 @@ void setup()
 {
     Serial.begin(115200);
     Serial.println(F("Setting up the wireless transmitter..."));
-    Wireless.begin();
+    if (!Wireless.begin()) {
+     Serial.println(F("radio hardware is not responding!!"));
+     while (1) {} // hold in infinite loop
+    }
+    Wireless.setPALevel(RF24_PA_LOW); 
     Wireless.setDataRate(RF24_250KBPS);
+    Wireless.enableDynamicPayloads();
     Wireless.enableAckPayload(); ///< Enable custom payloads on the acknowledge packets. Ack payloads are a handy way to return data back to senders without manually changing the radio modes on both units.
     Wireless.setRetries(RetryDelay, RetryCount);
+    Wireless.stopListening();
     Wireless.openWritingPipe(WirelessChannel);
+    printf_begin();
+    Wireless.printPrettyDetails();
     sendCommand();
 }
 

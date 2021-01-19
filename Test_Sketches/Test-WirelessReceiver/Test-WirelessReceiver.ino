@@ -3,8 +3,8 @@
 //Based on: https://forum.arduino.cc/index.php?topic=421081.0
 
 #include <SPI.h>
-#include <nRF24L01.h>
 #include <RF24.h>
+#include "printf.h"
 #include "TimeLib.h" // Keeping track of time
 
 //Ports for Arduino Nano or RF-Nano
@@ -12,7 +12,7 @@ const byte CE_PIN = 10;
 const byte CSN_PIN = 9;
 
 const byte WirelessChannel[6] = {"Test1"}; //Identifies the communication channel, needs to match on the Transmitter
-RF24 radio(CE_PIN, CSN_PIN);
+RF24 Wireless(CE_PIN, CSN_PIN);
 
 struct commandTemplate //Max 32bytes. Template of the command sent by the Transmitter. Both Transmitter and Receiver needs to know this structure
 {
@@ -53,20 +53,27 @@ void setup()
 {
     Serial.begin(115200);
     Serial.println(F("Setting up the wireless receiver..."));
-    radio.begin();
-    radio.setDataRate(RF24_250KBPS);
-    radio.openReadingPipe(1, WirelessChannel);
-    radio.enableAckPayload();
+    if (!Wireless.begin()) {
+     Serial.println(F("Wireless hardware is not responding!!"));
+     while (1) {} // hold in infinite loop
+    }
+    Wireless.setPALevel(RF24_PA_LOW); 
+    Wireless.setDataRate(RF24_250KBPS);
+    Wireless.enableDynamicPayloads();        
+    Wireless.enableAckPayload();
+    Wireless.openReadingPipe(1, WirelessChannel);
     updateReplyData();
-    radio.startListening();
+    Wireless.startListening();
     Serial.println(F("Listening..."));
+    printf_begin();
+    Wireless.printPrettyDetails();
 }
 
 void loop()
 {
-    if (radio.available())
+    if (Wireless.available())
     {                                                          //When a command is received
-        radio.read(&ReceivedCommand, sizeof(ReceivedCommand)); //Load the command to the ReceivedCommand variable
+        Wireless.read(&ReceivedCommand, sizeof(ReceivedCommand)); //Load the command to the ReceivedCommand variable
         Serial.print(F("Command received ["));
         Serial.print(sizeof(ReceivedCommand));
         Serial.println(F(" bytes]"));
@@ -105,5 +112,5 @@ void updateReplyData()
     Response.Weight_B1 = random(400, 500) / 100.0;
     Response.Weight_B2 = random(400, 500) / 100.0;
     Response.Humidity = random(0, 10000) / 100;
-    radio.writeAckPayload(1, &Response, sizeof(Response)); // load the payload to get sent out when the next control message is received
+    Wireless.writeAckPayload(1, &Response, sizeof(Response)); // load the payload to get sent out when the next control message is received
 }
