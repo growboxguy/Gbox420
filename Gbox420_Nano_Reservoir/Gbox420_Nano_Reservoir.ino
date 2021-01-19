@@ -96,11 +96,11 @@ void InitializeWireless()
   Wireless.enableAckPayload();
   Wireless.openReadingPipe(1, WirelessChannel);
   Wireless.startListening();
-  Wireless.powerUp(); ///< Not necessary, startListening should switch back to normal power mode
+  Wireless.powerUp();  ///< Not necessary, startListening should switch back to normal power mode
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
   logToSerials(F("done"), true, 1);
-  ReceivedMessageTimestamp = millis();   ///< Reset timeout counter
+  ReceivedMessageTimestamp = millis(); ///< Reset timeout counter
 }
 
 void loop()
@@ -148,17 +148,14 @@ void getWirelessData()
     {
       updateTime(); // Updating internal timer
     }
-    if(ReservoirMod1->processCommand(ReceivedMessage))
+    if (ReservoirMod1->processCommand(ReceivedMessage))
     {
-      ReceivedMessageTimestamp = millis();  //< Reset the timer after the last message was exchanged
+      ReceivedMessageTimestamp = millis(); //< Reset the timer after the last message was exchanged
     }
   }
-  else
+  if (millis() - ReceivedMessageTimestamp > WirelessReceiveTimeout)
   {
-    if (millis() - ReceivedMessageTimestamp > WirelessReceiveTimeout)
-    {
-      InitializeWireless();
-    }
+    InitializeWireless();
   }
 }
 
