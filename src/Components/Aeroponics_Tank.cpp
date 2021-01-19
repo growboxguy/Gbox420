@@ -70,7 +70,7 @@ void Aeroponics_Tank::checkSpray(bool OnlyTurnOff)
   }
   else
   { ///< if spray is off
-    if (!OnlyTurnOff)
+    if (!OnlyTurnOff && (Pump->getState() == IDLE || Pump->getState() == DISABLED))
     {
       uint32_t Interval;
       if (DayMode)
