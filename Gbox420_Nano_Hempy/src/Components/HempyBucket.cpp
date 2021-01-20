@@ -13,8 +13,6 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   TimerBasedWatering = &DefaultSettings->TimerBasedWatering;
   WateringInterval = &DefaultSettings->WateringInterval;
   WateringDuration = &DefaultSettings->WateringDuration;
-  BucketWeight = new RollingAverage();
-  WasteReservoirWeight = new RollingAverage();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
@@ -70,7 +68,7 @@ void HempyBucket::checkWateringWeight()
       WateringTimer = millis();
       logToSerials(F("Weight based watering..."), true, 1);
     }
-    if (*WasteLimit > 0 && ((BucketPump->getOnState() && WasteReservoirWeight.getFloat(false) > *WasteLimit) || (!BucketPump->getOnState() && WasteReservoirWeight->getFloat() > *WasteLimit))) //< Check if the waste reservoir is full
+    if (*WasteLimit > 0 && ((BucketPump->getOnState() && WasteReservoirWeight.getFloat(false) > *WasteLimit) || (!BucketPump->getOnState() && WasteReservoirWeight.getFloat() > *WasteLimit))) //< Check if the waste reservoir is full
      {
       BucketPump->disablePump();
       logToSerials(F("Waste weight limit reached"), true, 1);
@@ -99,7 +97,7 @@ void HempyBucket::checkWateringFinished()
   {
     if (*WeightBasedWatering) //Weight based watering enabled
     {
-      if (BucketWeight->getFloat(false) > *StopWeight || (BucketWeight->getFloat(false) + WasteReservoirWeight->getFloat(false)) - StartTotalWeight > (*StopWeight - *StartWeight)) ///< If the weight is over the stop limit
+      if (BucketWeight.getFloat(false) > *StopWeight || (BucketWeight.getFloat(false) + WasteReservoirWeight.getFloat(false)) - StartTotalWeight > (*StopWeight - *StartWeight)) ///< If the weight is over the stop limit
       {
         WeightReached = true;
       }
@@ -124,7 +122,7 @@ void HempyBucket::checkWateringFinished()
   else if (WateringTrigger == WateringMode::WEIGHT) ///< If watering triggered by weight: Run until weight tareget is reached
   {
     TimerReached = true;                                                                                                                                                               //Fake ready signal, only weight is considered in this watering mode
-    if (BucketWeight->getFloat(false) > *StopWeight || (BucketWeight->getFloat(false) + WasteReservoirWeight->getFloat(false)) - StartTotalWeight > (*StopWeight - *StartWeight)) ///< If the weight is over the limit and the pump is on
+    if (BucketWeight.getFloat(false) > *StopWeight || (BucketWeight.getFloat(false) + WasteReservoirWeight.getFloat(false)) - StartTotalWeight > (*StopWeight - *StartWeight)) ///< If the weight is over the limit and the pump is on
     {
       WeightReached = true;
     }
