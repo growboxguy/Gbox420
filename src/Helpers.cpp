@@ -258,6 +258,9 @@ char *toText_pumpState(PumpStates State)
   case PumpStates::MIXING:
     return toText(F("MIXING"));
     break;
+  case PumpStates::CLOSINGBYPASS:
+    return toText(F("BYPASS"));
+    break;
   default:
     return toText(F("UNKNOWN"));
     break;
