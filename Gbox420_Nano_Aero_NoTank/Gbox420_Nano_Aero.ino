@@ -93,7 +93,7 @@ void InitializeWireless()
   Wireless.begin();
   Wireless.powerDown();
   Wireless.setDataRate(RF24_250KBPS);           ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
-  Wireless.setCRCLength(RF24_CRC_8);            ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
+  Wireless.setCRCLength(RF24_CRC_16);            ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
   Wireless.setPALevel(RF24_PA_MAX);             //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
   Wireless.setPayloadSize(WirelessPayloadSize); ///< The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
   Wireless.enableDynamicPayloads();
@@ -180,7 +180,7 @@ void getWirelessStatus()
 {
   if (*Debug)
   {
-    logToSerials(F("Wireless status report:"), true, 0);
+    logToSerials(F("Wireless report:"), true, 0);
     Wireless.printPrettyDetails();
     logToSerials(F(""), true, 0);
   }
@@ -192,7 +192,7 @@ time_t updateTime()
   if (ReceivedTime > 0)
   {
     setTime(ReceivedTime);
-    logToSerials(F("Clock synced with Main module"), true, 0);
+    logToSerials(F("Clock synced"), true, 0);
   }
   else
   {

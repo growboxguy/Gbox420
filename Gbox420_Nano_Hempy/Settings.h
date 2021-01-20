@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 7; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -21,7 +21,8 @@ enum PumpStates
   PRIMING,
   RUNNING,
   BLOWOFF,
-  MIXING
+  MIXING,
+  CLOSINGBYPASS
 };
 
 ///< Global constants
@@ -83,11 +84,12 @@ typedef struct
 
   struct WaterPumpSettings ///< WaterPump default settings
   {
-    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic) {}
+    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, uint16_t BypassSolenoidClosingDelay = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), BypassSolenoidClosingDelay(BypassSolenoidClosingDelay) {}
     uint8_t PumpPin;                  ///< Pump relay pin
     bool PumpPinNegativeLogic;        ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin [optional]
     bool BypassSolenoidNegativeLogic; ///< Set to true if Relay/MOSFET controlling the power to the solenoid requires LOW signal to Turn ON [optional]
+    uint16_t BypassSolenoidClosingDelay; ///< (ms) How long it takes to close the solenoid
     bool PumpEnabled;                 ///< Enable/disable pump. false= Block running the pump
     uint8_t Speed;                    ///< Duty cycle of the PWM Motor speed
     uint8_t SpeedLowLimit;            ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor

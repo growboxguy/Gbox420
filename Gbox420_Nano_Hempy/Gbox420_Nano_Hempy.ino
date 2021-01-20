@@ -10,7 +10,7 @@
 #include "Arduino.h"
 #include "avr/wdt.h"  // Watchdog timer for detecting a crash and automatically resetting the board
 #include "avr/boot.h" // Watchdog timer related bug fix
-#include "printf.h"
+//#include "printf.h"
 #include "Thread.h"                 // Splitting functions to threads for timing
 #include "StaticThreadController.h" // Grouping threads
 #include "SPI.h"                    ///< communicate with SPI devices, with the Arduino as the master device
@@ -46,7 +46,7 @@ void setup()
 {                              // put your setup code here, to run once:
   ArduinoSerial.begin(115200); // Nano console output
   pinMode(LED_BUILTIN, OUTPUT);
-  printf_begin();
+  //printf_begin();
   logToSerials(F(""), true, 0);                             ///< New line
   logToSerials(F("Hempy module initializing..."), true, 0); ///< logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                      ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
@@ -90,7 +90,7 @@ void InitializeWireless()
   Wireless.begin();
   Wireless.powerDown();
   Wireless.setDataRate(RF24_250KBPS);           ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
-  Wireless.setCRCLength(RF24_CRC_8);            ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
+  Wireless.setCRCLength(RF24_CRC_16);            ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
   Wireless.setPALevel(RF24_PA_MAX);             //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
   Wireless.setPayloadSize(WirelessPayloadSize); ///< The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
   Wireless.enableDynamicPayloads();
@@ -172,8 +172,8 @@ void getWirelessStatus()
 {
   if (*Debug)
   {
-    logToSerials(F("Wireless status report:"), true, 0);
-    Wireless.printPrettyDetails();
+    logToSerials(F("Wireless report:"), true, 0);
+   // Wireless.printPrettyDetails();
     logToSerials(F(""), true, 0);
   }
 }
@@ -184,7 +184,7 @@ time_t updateTime()
   if (ReceivedTime > 0)
   {
     setTime(ReceivedTime);
-    logToSerials(F("Clock synced with Main module"), true, 0);
+    logToSerials(F("Clock synced"), true, 0);
   }
   else
   {

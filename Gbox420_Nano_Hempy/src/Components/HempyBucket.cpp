@@ -13,6 +13,8 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   TimerBasedWatering = &DefaultSettings->TimerBasedWatering;
   WateringInterval = &DefaultSettings->WateringInterval;
   WateringDuration = &DefaultSettings->WateringDuration;
+  //BucketWeight = new RollingAverage();
+  //WasteReservoirWeight = new RollingAverage();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
@@ -57,19 +59,18 @@ void HempyBucket::report()
 void HempyBucket::checkWateringWeight()
 {
   BucketWeight.updateAverage(BucketWeightSensor->readWeight()); //Force a weight refresh
-  WasteReservoirWeight.updateAverage(WasteReservoirWeightSensor->readWeight()); //Force a weight refresh
   if (*WeightBasedWatering  && BucketPump->getEnabledState()) ///< If the weight based watering is enabled AND the pump is enabled
   {
     if (BucketWeight.getFloat() < *StartWeight && !BucketPump->getOnState()) ///< If the weight is below the limit AND the pump is off
     {
       WateringTrigger = WateringMode::WEIGHT;
-      StartTotalWeight = BucketWeight.getFloat(false) + WasteReservoirWeight.getFloat(false);
+      StartTotalWeight = BucketWeightSensor->getWeight() + WasteReservoirWeightSensor->getWeight();
       BucketPump->startPump();
       WateringTimer = millis();
       logToSerials(F("Weight based watering..."), true, 1);
     }
-    if (*WasteLimit > 0 && ((BucketPump->getOnState() && WasteReservoirWeight.getFloat(false) > *WasteLimit) || (!BucketPump->getOnState() && WasteReservoirWeight.getFloat() > *WasteLimit))) //< Check if the waste reservoir is full
-     {
+    if(*WasteLimit > 0 && WasteReservoirWeightSensor->readWeight() > *WasteLimit) //< Check if the waste reservoir is full
+    {
       BucketPump->disablePump();
       logToSerials(F("Waste weight limit reached"), true, 1);
     }
