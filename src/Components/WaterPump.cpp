@@ -11,7 +11,7 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
     logToSerials(F(""), false, 1); //Extra indentation
     BypassSwitch = new Switch(F("BypassSolenoid"), DefaultSettings->BypassSolenoidPin, DefaultSettings->BypassSolenoidNegativeLogic);
   }
-
+  BypassSolenoidClosingDelay = &DefaultSettings->BypassSolenoidClosingDelay;
   PumpTimeOut = &DefaultSettings->PumpTimeOut;
   PumpEnabled = &DefaultSettings->PumpEnabled;
   if (*PumpEnabled)
@@ -68,8 +68,8 @@ void WaterPump::updateState(PumpStates NewState) ///< Without a parameter actual
   switch (State)
   {
   case PRIMING:
-    PumpOn = true;
-    BypassOn = true;
+    PumpSwitch->turnOn();
+    BypassSwitch->turnOn();
     if (millis() - PumpTimer > ((uint32_t)*PrimingTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
       logToSerials(F("Priming complete, running..."), true, 3);
@@ -77,8 +77,8 @@ void WaterPump::updateState(PumpStates NewState) ///< Without a parameter actual
     }
     break;
   case RUNNING:
-    PumpOn = true;
-    BypassOn = false;
+    PumpSwitch->turnOn();
+    BypassSwitch->turnOff();
     *PumpEnabled = true;
     if (RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000))
     {
@@ -100,53 +100,57 @@ void WaterPump::updateState(PumpStates NewState) ///< Without a parameter actual
     }
     break;
   case BLOWOFF:
-    PumpOn = false;
-    BypassOn = true;
+    PumpSwitch->turnOff();
+    BypassSwitch->turnOn();
     if (millis() - PumpTimer > ((uint32_t)*BlowOffTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
       logToSerials(F("Pressure released"), true, 3);
-      updateState(IDLE);
+      if (BypassSolenoidClosingDelay != NULL && *BypassSolenoidClosingDelay > 0)
+      {
+        updateState(CLOSINGBYPASS);
+      }
+      else
+      {
+        updateState(IDLE);
+      }
     }
     break;
   case IDLE:
-    PumpOn = false;
-    BypassOn = false;
+    PumpSwitch->turnOff();
+    BypassSwitch->turnOff();
     *PumpEnabled = true;
     break;
+  case CLOSINGBYPASS:
+    PumpSwitch->turnOff();
+    BypassSwitch->turnOff();
+    if (millis() - PumpTimer > ((uint32_t)*BypassSolenoidClosingDelay)) ///< Bypass is fully closed
+    {
+      updateState(IDLE);
+    }
+    break;
   case MIXING:
-    PumpOn = true;
-    BypassOn = true;
+    PumpSwitch->turnOn();
+    BypassSwitch->turnOn();
     *PumpEnabled = true;
     if ((RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000)) || millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000))
     {
       RunTime = 0;
       logToSerials(F("Mixing finished"), true, 3);
-      updateState(IDLE);
+      if (BypassSolenoidClosingDelay != NULL && *BypassSolenoidClosingDelay > 0)
+      {
+        updateState(CLOSINGBYPASS);
+      }
+      else
+      {
+        updateState(IDLE);
+      }
     }
     break;
   case DISABLED:
-    PumpOn = false;
-    BypassOn = false;
+    PumpSwitch->turnOff();
+    BypassSwitch->turnOff();
     *PumpEnabled = false;
     break;
-  }
-
-  if (PumpOn)
-  {
-    PumpSwitch->turnOn();
-  }
-  else
-  {
-    PumpSwitch->turnOff();
-  }
-
-  if (BypassOn)
-  {
-    BypassSwitch->turnOn();
-  }
-  else
-  {
-    BypassSwitch->turnOff();
   }
 }
 
@@ -197,7 +201,8 @@ void WaterPump::disablePump()
   updateState(DISABLED);
 }
 
-void WaterPump::startBlowOff(){  
+void WaterPump::startBlowOff()
+{
   PumpTimer = millis();
   logToSerials(F("Pressure blow off"), true, 2);
   updateState(PumpStates::BLOWOFF);
@@ -234,14 +239,14 @@ void WaterPump::turnBypassOff()
 {
   Parent->addToLog(F("Bypass OFF"));
   Parent->getSoundObject()->playOffSound();
-  if(*PumpEnabled){
-     updateState(PumpStates::IDLE);
+  if (*PumpEnabled)
+  {
+    updateState(PumpStates::IDLE);
   }
   else
   {
     updateState(PumpStates::DISABLED);
   }
-  
 }
 
 PumpStates WaterPump::getState()
