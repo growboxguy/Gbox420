@@ -5,8 +5,8 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   this->Name = Name;
   MinPressure = &TankSpecificSettings->MinPressure; ///< Aeroponics - Turn on pump below this pressure (bar)
   SpraySolenoidClosingDelay = &TankSpecificSettings->SpraySolenoidClosingDelay;
-  logToSerials(F(""), true, 0);                     //New line
-  logToSerials(F(""), false, 1);                    //Extra indentation
+  logToSerials(F(""), true, 0);  //New line
+  logToSerials(F(""), false, 1); //Extra indentation
   SpraySwitch = new Switch(F("SpraySolenoid"), TankSpecificSettings->SpraySolenoidPin, TankSpecificSettings->SpraySolenoidNegativeLogic);
 
   logToSerials(F("Aeroponics_Tank object created"), true, 1);
@@ -33,7 +33,8 @@ void Aeroponics_Tank::refresh_Sec()
   checkSpray(false);
 }
 
-void Aeroponics_Tank::processTimeCriticalStuff(){
+void Aeroponics_Tank::processTimeCriticalStuff()
+{
   checkSpray(true);
 }
 
@@ -92,17 +93,24 @@ void Aeroponics_Tank::checkSpray(bool OnlyTurnOff)
 
 void Aeroponics_Tank::sprayNow(bool UserRequest)
 {
-  Pump->turnBypassOff();
-  SpraySwitch->turnOn();
-  SprayTimer = millis();
-  Parent->getSoundObject()->playOnSound();
-  if (UserRequest)
+  if (Pump->getState() == PumpStates::IDLE || Pump->getState() == PumpStates::DISABLED)  //Only allow spraying when pump and bypass solenoid is off
   {
-    Parent->addToLog(F("Aeroponics spraying"));
+    SpraySwitch->turnOn();
+    SprayTimer = millis();
+    Parent->getSoundObject()->playOnSound();
+    if (UserRequest)
+    {
+      Parent->addToLog(F("Aeroponics spraying"));
+    }
+    else
+    {
+      logToSerials(F("Aeroponics spraying"), true, 3);
+    }
   }
   else
   {
-    logToSerials(F("Aeroponics spraying"), true, 3);
+    Parent->getSoundObject()->playOffSound();
+    logToSerials(F("Cannot spray while pump or bypass is on"), true, 3);
   }
 }
 
@@ -111,7 +119,7 @@ void Aeroponics_Tank::sprayOff(bool UserRequest)
   SpraySwitch->turnOff();
   SprayTimer = millis();
   delay(*SpraySolenoidClosingDelay); ///< Wait until the spray solenoid is closed
-  Pump->startBlowOff(); //< The pump's bypass is used to release pressure from the misting loop
+  Pump->startBlowOff();              //< The pump's bypass is used to release pressure from the misting loop
   if (UserRequest)
   {
     Parent->getSoundObject()->playOffSound();
