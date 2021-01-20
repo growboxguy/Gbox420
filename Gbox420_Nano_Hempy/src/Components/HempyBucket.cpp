@@ -43,17 +43,17 @@ void HempyBucket::report()
 
 void HempyBucket::checkWateringWeight()
 {
-  BucketWeightSensor->readWeight();                          //Force a weight refresh
-  WasteReservoirWeightSensor->readWeight();                  //Force a weight refresh
+  BucketWeight.updateAverage(BucketWeightSensor->readWeight());                          //Force a weight refresh
+  BucketWeight.updateAverage(WasteReservoirWeightSensor->readWeight());                  //Force a weight refresh
   if (BucketPump->getEnabledState()) ///< If the weight based watering is enabled AND the pump is enabled
   {
-    if (BucketWeightSensor->getWeight() < *StartWeight && !BucketPump->getOnState()) ///< If the weight is below the limit AND the pump is off
+    if (BucketWeight.getFloat() < *StartWeight && !BucketPump->getOnState()) ///< If the weight is below the limit AND the pump is off
     {
-      StartTotalWeight = BucketWeightSensor->getWeight() + WasteReservoirWeightSensor->getWeight();
+      StartTotalWeight = BucketWeight.getFloat() + WasteReservoirWeight.getFloat();
       BucketPump->startPump();
       logToSerials(F("Weight based watering..."), true, 1);
     }
-    if (*WasteLimit > 0 && WasteReservoirWeightSensor->getWeight() > *WasteLimit) //< Check if the waste reservoir is full
+    if (*WasteLimit > 0 && WasteReservoirWeight.getFloat() > *WasteLimit) //< Check if the waste reservoir is full
     {
       BucketPump->disablePump();
       logToSerials(F("Waste weight limit reached"), true, 1);
@@ -63,12 +63,12 @@ void HempyBucket::checkWateringWeight()
 
 void HempyBucket::checkWateringFinished()
 {
-  BucketWeightSensor->readWeight();         //Force a weight refresh
-  WasteReservoirWeightSensor->readWeight(); //Force a weight refresh
-  logToSerials(toText(BucketWeightSensor->getWeight()), true, 0);
-  logToSerials(toText(WasteReservoirWeightSensor->getWeight()), true, 0);
+  BucketWeight.updateAverage(BucketWeightSensor->readWeight());                          //Force a weight refresh
+  BucketWeight.updateAverage(WasteReservoirWeightSensor->readWeight());                  //Force a weight refresh
+  logToSerials(toText(BucketWeight.getFloat()), true, 0);
+  logToSerials(toText(WasteReservoirWeight.getFloat()), true, 0);
 
-  if ((BucketWeightSensor->getWeight() > *StopWeight) || (BucketWeightSensor->getWeight() + WasteReservoirWeightSensor->getWeight() - StartTotalWeight > *StopWeight - *StartWeight)) ///< If the weight is over the stop limit
+  if ((BucketWeight.getFloat() > *StopWeight) || (BucketWeight.getFloat() + WasteReservoirWeight.getFloat() - StartTotalWeight > *StopWeight - *StartWeight)) ///< If the weight is over the stop limit
   {
     BucketPump->stopPump();
     logToSerials("Stop weight reached", true, 0);    
@@ -77,9 +77,9 @@ void HempyBucket::checkWateringFinished()
 
 void HempyBucket::startWatering()
 {
-  BucketWeightSensor->readWeight();         //Force a weight refresh
-  WasteReservoirWeightSensor->readWeight(); //Force a weight refresh
-  StartTotalWeight = BucketWeightSensor->getWeight() + WasteReservoirWeightSensor->getWeight();
+  BucketWeight.updateAverage(BucketWeightSensor->readWeight());                          //Force a weight refresh
+  BucketWeight.updateAverage(WasteReservoirWeightSensor->readWeight());                  //Force a weight refresh
+  StartTotalWeight = BucketWeight.getFloat() + WasteReservoirWeight.getFloat();
   BucketPump->startPump(true);
   logToSerials(F("Watering..."), true, 1);
 }
