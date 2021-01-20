@@ -94,22 +94,14 @@ void HempyModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgBoolean(getComponentName(F("B1WBW")), HempyBucketCommand1ToSend.WeightBasedWatering);
     WebServer.setArgString(getComponentName(F("B1Strt")), toText(HempyBucketCommand1ToSend.StartWeight));
     WebServer.setArgString(getComponentName(F("B1Stp")), toText(HempyBucketCommand1ToSend.StopWeight));
     WebServer.setArgString(getComponentName(F("B1WL")), toText(HempyBucketCommand1ToSend.WasteLimit));
-    WebServer.setArgBoolean(getComponentName(F("B1TBW")), HempyBucketCommand1ToSend.TimerBasedWatering);
-    WebServer.setArgInt(getComponentName(F("B1Int")), HempyBucketCommand1ToSend.WateringInterval);
-    WebServer.setArgInt(getComponentName(F("B1Dur")), HempyBucketCommand1ToSend.WateringDuration);
     WebServer.setArgInt(getComponentName(F("B1PumpSp")), HempyBucketCommand1ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B1Time")), HempyBucketCommand1ToSend.TimeOutPump);
-    WebServer.setArgBoolean(getComponentName(F("B2WBW")), HempyBucketCommand2ToSend.WeightBasedWatering);
     WebServer.setArgString(getComponentName(F("B2Strt")), toText(HempyBucketCommand2ToSend.StartWeight));
     WebServer.setArgString(getComponentName(F("B2Stp")), toText(HempyBucketCommand2ToSend.StopWeight));
     WebServer.setArgString(getComponentName(F("B2WL")), toText(HempyBucketCommand2ToSend.WasteLimit));
-    WebServer.setArgBoolean(getComponentName(F("B2TBW")), HempyBucketCommand2ToSend.TimerBasedWatering);
-    WebServer.setArgInt(getComponentName(F("B2Int")), HempyBucketCommand2ToSend.WateringInterval);
-    WebServer.setArgInt(getComponentName(F("B2Dur")), HempyBucketCommand2ToSend.WateringDuration);
     WebServer.setArgInt(getComponentName(F("B2PumpSp")), HempyBucketCommand2ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B2Time")), HempyBucketCommand2ToSend.TimeOutPump);
   }
@@ -199,19 +191,7 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("B1WBW")) == 0)
-    {
-      DefaultSettings->WeightBasedWatering_B1 = WebServer.getArgBoolean();
-      if (DefaultSettings->WeightBasedWatering_B1)
-      {
-        Parent->addToLog(F("Weight based watering ON"), false);
-      }
-      else
-      {
-        Parent->addToLog(F("Weight based watering OFF"), false);
-      }
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Strt")) == 0)
+   if (strcmp_P(ShortMessage, (PGM_P)F("B1Strt")) == 0)
     {
       DefaultSettings->StartWeight_B1 = WebServer.getArgFloat();
     }
@@ -224,29 +204,7 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
     {
       DefaultSettings->WasteLimit_B1 = WebServer.getArgFloat();
       Parent->addToLog(F("Bucket 1 waste limit updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TBW")) == 0)
-    {
-      DefaultSettings->TimerBasedWatering_B1 = WebServer.getArgBoolean();
-      if (DefaultSettings->TimerBasedWatering_B1)
-      {
-        Parent->addToLog(F("Timer based watering ON"), false);
-      }
-      else
-      {
-        Parent->addToLog(F("Timer based watering OFF"), false);
-      }
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Int")) == 0)
-    {
-      DefaultSettings->WateringInterval_B1 = WebServer.getArgInt();
-      Parent->addToLog(F("Watering interval updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Dur")) == 0)
-    {
-      DefaultSettings->WateringDuration_B1 = WebServer.getArgInt();
-      Parent->addToLog(F("Watering duration updated"), false);
-    }
+    }    
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1PumpSp")) == 0)
     {
       DefaultSettings->PumpSpeed_B1 = WebServer.getArgInt();
@@ -256,19 +214,7 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
     {
       DefaultSettings->TimeOutPump_B1 = WebServer.getArgInt();
       Parent->addToLog(F("Pump 1 timeout updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2WBW")) == 0)
-    {
-      DefaultSettings->WeightBasedWatering_B2 = WebServer.getArgBoolean();
-      if (DefaultSettings->WeightBasedWatering_B2)
-      {
-        Parent->addToLog(F("Weight based watering ON"), false);
-      }
-      else
-      {
-        Parent->addToLog(F("Weight based watering OFF"), false);
-      }
-    }
+    }   
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2Strt")) == 0)
     {
       DefaultSettings->StartWeight_B2 = WebServer.getArgFloat();
@@ -282,29 +228,7 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
     {
       DefaultSettings->WasteLimit_B2 = WebServer.getArgFloat();
       Parent->addToLog(F("Bucket 2 waste limit updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TBW")) == 0)
-    {
-      DefaultSettings->TimerBasedWatering_B2 = WebServer.getArgBoolean();
-      if (DefaultSettings->TimerBasedWatering_B2)
-      {
-        Parent->addToLog(F("Timer based watering ON"), false);
-      }
-      else
-      {
-        Parent->addToLog(F("Timer based watering OFF"), false);
-      }
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Int")) == 0)
-    {
-      DefaultSettings->WateringInterval_B2 = WebServer.getArgInt();
-      Parent->addToLog(F("Watering interval updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Dur")) == 0)
-    {
-      DefaultSettings->WateringDuration_B2 = WebServer.getArgInt();
-      Parent->addToLog(F("Watering duration updated"), false);
-    }
+    }   
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2PumpSp")) == 0)
     {
       DefaultSettings->PumpSpeed_B2 = WebServer.getArgInt();
@@ -477,22 +401,14 @@ void HempyModule_Web::updateCommands()
   HempyModuleCommand1ToSend.Time = now();
   HempyModuleCommand1ToSend.Debug = *Debug;
   HempyModuleCommand1ToSend.Metric = *Metric;
-  HempyBucketCommand1ToSend.WeightBasedWatering = DefaultSettings->WeightBasedWatering_B1;
   HempyBucketCommand1ToSend.StartWeight = DefaultSettings->StartWeight_B1;
   HempyBucketCommand1ToSend.StopWeight = DefaultSettings->StopWeight_B1;
   HempyBucketCommand1ToSend.WasteLimit = DefaultSettings->WasteLimit_B1;
-  HempyBucketCommand1ToSend.TimerBasedWatering = DefaultSettings->TimerBasedWatering_B1;
-  HempyBucketCommand1ToSend.WateringInterval = DefaultSettings->WateringInterval_B1;
-  HempyBucketCommand1ToSend.WateringDuration = DefaultSettings->WateringDuration_B1;
   HempyBucketCommand1ToSend.PumpSpeed = DefaultSettings->PumpSpeed_B1;
   HempyBucketCommand1ToSend.TimeOutPump = DefaultSettings->TimeOutPump_B1;
-  HempyBucketCommand2ToSend.WeightBasedWatering = DefaultSettings->WeightBasedWatering_B2;
   HempyBucketCommand2ToSend.StartWeight = DefaultSettings->StartWeight_B2;
   HempyBucketCommand2ToSend.StopWeight = DefaultSettings->StopWeight_B2;
   HempyBucketCommand2ToSend.WasteLimit = DefaultSettings->WasteLimit_B2;
-  HempyBucketCommand2ToSend.TimerBasedWatering = DefaultSettings->TimerBasedWatering_B2;
-  HempyBucketCommand2ToSend.WateringInterval = DefaultSettings->WateringInterval_B2;
-  HempyBucketCommand2ToSend.WateringDuration = DefaultSettings->WateringDuration_B2;
   HempyBucketCommand2ToSend.PumpSpeed = DefaultSettings->PumpSpeed_B2;
   HempyBucketCommand2ToSend.TimeOutPump = DefaultSettings->TimeOutPump_B2;
 }

@@ -10,7 +10,7 @@
 #include "Arduino.h"
 #include "avr/wdt.h"  // Watchdog timer for detecting a crash and automatically resetting the board
 #include "avr/boot.h" // Watchdog timer related bug fix
-//#include "printf.h"
+#include "printf.h"
 #include "Thread.h"                 // Splitting functions to threads for timing
 #include "StaticThreadController.h" // Grouping threads
 #include "SPI.h"                    ///< communicate with SPI devices, with the Arduino as the master device
@@ -46,7 +46,7 @@ void setup()
 {                              // put your setup code here, to run once:
   ArduinoSerial.begin(115200); // Nano console output
   pinMode(LED_BUILTIN, OUTPUT);
-  //printf_begin();
+  printf_begin();
   logToSerials(F(""), true, 0);                             ///< New line
   logToSerials(F("Hempy module initializing..."), true, 0); ///< logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                      ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
@@ -173,7 +173,7 @@ void getWirelessStatus()
   if (*Debug)
   {
     logToSerials(F("Wireless report:"), true, 0);
-   // Wireless.printPrettyDetails();
+    Wireless.printPrettyDetails();
     logToSerials(F(""), true, 0);
   }
 }

@@ -86,13 +86,9 @@ struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless comma
    bool TareWeightWR = false; //Tare waste reservoir weight scale
    uint8_t PumpSpeed = 0;
    uint16_t TimeOutPump = 0;
-   bool WeightBasedWatering = false;
    float StartWeight = 0.0;
    float StopWeight = 0.0;
    float WasteLimit = 0.0;
-   bool TimerBasedWatering = false;
-   uint16_t WateringInterval = 0;
-   uint16_t WateringDuration = 0;
 };
 
 struct HempyBucketResponse : HempyCommonTemplate ///< Hempy bucket wireless response

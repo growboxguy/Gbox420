@@ -21,7 +21,8 @@ enum PumpStates
   PRIMING,
   RUNNING,
   BLOWOFF,
-  MIXING
+  MIXING,
+  CLOSINGBYPASS
 };
 
 ///< Global constants
@@ -121,27 +122,19 @@ typedef struct
 
   struct HempyModuleSettings ///< Hempy default settings
   {
-    HempyModuleSettings(bool WeightBasedWatering_B1 = false, float StartWeight_B1 = 0.0, float StopWeight_B1 = 0.0, float WasteLimit_B1 = 0.0, bool TimerBasedWatering_B1 = false, uint16_t WateringInterval_B1 = 0, uint16_t WateringDuration_B1 = 0, uint8_t PumpSpeed_B1 = 0, uint16_t TimeOutPump_B1 = 0, bool WeightBasedWatering_B2 = false, float StartWeight_B2 = 0.0, float StopWeight_B2 = 0.0, float WasteLimit_B2 = 0.0, bool TimerBasedWatering_B2 = false, uint16_t WateringInterval_B2 = 0, uint16_t WateringDuration_B2 = 0, uint8_t PumpSpeed_B2 = 0, uint16_t TimeOutPump_B2 = 0) : WeightBasedWatering_B1(WeightBasedWatering_B1), StartWeight_B1(StartWeight_B1), StopWeight_B1(StopWeight_B1), WasteLimit_B1(WasteLimit_B1), TimerBasedWatering_B1(TimerBasedWatering_B1), WateringInterval_B1(WateringInterval_B1), WateringDuration_B1(WateringDuration_B1), PumpSpeed_B1(PumpSpeed_B1), TimeOutPump_B1(TimeOutPump_B1), WeightBasedWatering_B2(WeightBasedWatering_B2), StartWeight_B2(StartWeight_B2), StopWeight_B2(StopWeight_B2), WasteLimit_B2(WasteLimit_B2), TimerBasedWatering_B2(TimerBasedWatering_B2), WateringInterval_B2(WateringInterval_B2), WateringDuration_B2(WateringDuration_B2), PumpSpeed_B2(PumpSpeed_B2), TimeOutPump_B2(TimeOutPump_B2) {}
-    bool WeightBasedWatering_B1;  ///< Enable/Disable weight based watering
+    HempyModuleSettings(float StartWeight_B1 = 0.0, float StopWeight_B1 = 0.0, float WasteLimit_B1 = 0.0, uint8_t PumpSpeed_B1 = 0, uint16_t TimeOutPump_B1 = 0, float StartWeight_B2 = 0.0, float StopWeight_B2 = 0.0, float WasteLimit_B2 = 0.0, uint8_t PumpSpeed_B2 = 0, uint16_t TimeOutPump_B2 = 0) : StartWeight_B1(StartWeight_B1), StopWeight_B1(StopWeight_B1), WasteLimit_B1(WasteLimit_B1), PumpSpeed_B1(PumpSpeed_B1), TimeOutPump_B1(TimeOutPump_B1), StartWeight_B2(StartWeight_B2), StopWeight_B2(StopWeight_B2), WasteLimit_B2(WasteLimit_B2), PumpSpeed_B2(PumpSpeed_B2), TimeOutPump_B2(TimeOutPump_B2) {}
     float StartWeight_B1;         ///< Start watering below this weight
     float StopWeight_B1;          ///< Stop watering above this weight
     float WasteLimit_B1;          ///< Waste reservoir full weight -> Pump gets disabled if reached
-    bool TimerBasedWatering_B1;   ///< Enable/Disable timer based watering
-    uint16_t WateringInterval_B1; ///< Water every X minutes
-    uint16_t WateringDuration_B1; ///< Water for X seconds
     uint8_t PumpSpeed_B1;         ///< Bucket 1 - Pump duty cycle to adjust motor speed
     uint16_t TimeOutPump_B1;      ///< Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached ///< \todo Add email alert when pump fails
-    bool WeightBasedWatering_B2;  ///< Enable/Disable weight based watering
     float StartWeight_B2;         ///< Start watering below this weight
     float StopWeight_B2;          ///< Stop watering above this weight
     float WasteLimit_B2;          ///< Waste reservoir full weight -> Pump gets disabled if reached
-    bool TimerBasedWatering_B2;   ///< Enable/Disable timer based watering
     uint8_t PumpSpeed_B2;         ///< Bucket 2 - Pump duty cycle to adjust motor speed
-    uint16_t WateringInterval_B2; ///< Water every X minutes
-    uint16_t WateringDuration_B2; ///< Water for X seconds
     uint16_t TimeOutPump_B2;      ///< Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached ///< \todo Add email alert when pump fails
   };
-  struct HempyModuleSettings HempyModule1 = {.WeightBasedWatering_B1 = true, .StartWeight_B1 = 16.0, .StopWeight_B1 = 19.0, .WasteLimit_B1 = 13.0, .TimerBasedWatering_B1 = false, .WateringInterval_B1 = 1440, .WateringDuration_B1 = 30, .PumpSpeed_B1 = 100, .TimeOutPump_B1 = 180, .WeightBasedWatering_B2 = true, .StartWeight_B2 = 16.0, .StopWeight_B2 = 19.0, .WasteLimit_B2 = 13.0, .TimerBasedWatering_B2 = false, .WateringInterval_B2 = 1440, .WateringDuration_B2 = 30, .PumpSpeed_B2 = 100, .TimeOutPump_B2 = 180};
+  struct HempyModuleSettings HempyModule1 = {.StartWeight_B1 = 16.0, .StopWeight_B1 = 19.0, .WasteLimit_B1 = 13.0, .PumpSpeed_B1 = 100, .TimeOutPump_B1 = 180, .StartWeight_B2 = 16.0, .StopWeight_B2 = 19.0, .WasteLimit_B2 = 13.0, .PumpSpeed_B2 = 100, .TimeOutPump_B2 = 180};
 
   struct LightSensorSettings ///< LightSensor default settings
   {

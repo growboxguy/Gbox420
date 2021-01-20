@@ -56,17 +56,13 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct HempyBucketSettings ///< HempyBucket default settings
   {
-    HempyBucketSettings(bool WeightBasedWatering = false, float StartWeight = 0.0, float StopWeight = 0.0, float WasteLimit = 0.0, bool TimerBasedWatering = false, uint16_t WateringInterval = 0, uint16_t WateringDuration = 0) : WeightBasedWatering(WeightBasedWatering), StartWeight(StartWeight), StopWeight(StopWeight), WasteLimit(WasteLimit), TimerBasedWatering(TimerBasedWatering), WateringInterval(WateringInterval), WateringDuration(WateringDuration) {}
-    bool WeightBasedWatering;  //Enable/Disable weight based watering
+    HempyBucketSettings(float StartWeight = 0.0, float StopWeight = 0.0, float WasteLimit = 0.0) : StartWeight(StartWeight), StopWeight(StopWeight), WasteLimit(WasteLimit) {}
     float StartWeight;         ///< Start watering below this weight
     float StopWeight;          ///< Stop watering above this weight
-    float WasteLimit;          ///< Waste reservoir full weight -> Pump gets disabled if reached
-    bool TimerBasedWatering;   //Enable/Disable timer based watering
-    uint16_t WateringInterval; //Water every X minutes
-    uint16_t WateringDuration; //Water for X seconds
+    float WasteLimit;          ///< Waste reservoir full weight -> Pump gets disabled if reached   
   };
-  struct HempyBucketSettings Bucket1 = {.WeightBasedWatering = true, .StartWeight = 16.0, .StopWeight = 19.0, .WasteLimit = 13.0, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
-  struct HempyBucketSettings Bucket2 = {.WeightBasedWatering = true, .StartWeight = 16.0, .StopWeight = 19.0, .WasteLimit = 13.0, .TimerBasedWatering = false, .WateringInterval = 1440, .WateringDuration = 30};
+  struct HempyBucketSettings Bucket1 = {.StartWeight = 16.0, .StopWeight = 19.0, .WasteLimit = 13.0};
+  struct HempyBucketSettings Bucket2 = {.StartWeight = 16.0, .StopWeight = 19.0, .WasteLimit = 13.0};
 
   struct HempyModuleSettings  ///< HempyModule default settings
   {
