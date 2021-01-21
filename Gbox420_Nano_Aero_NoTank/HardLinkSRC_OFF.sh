@@ -111,6 +111,8 @@ unlink ./src/Components_Web/DistanceSensor_Web.h
 unlink ./src/Components_Web/DistanceSensor_Web.cpp
 unlink ./src/Components_Web/Fan_Web.h
 unlink ./src/Components_Web/Fan_Web.cpp
+unlink ./src/Components_Web/Fan_PWM_Web.h
+unlink ./src/Components_Web/Fan_PWM_Web.cpp
 unlink ./src/Components_Web/HempyBucket_Web.h
 unlink ./src/Components_Web/HempyBucket_Web.cpp
 unlink ./src/Components_Web/Lights_Web.h

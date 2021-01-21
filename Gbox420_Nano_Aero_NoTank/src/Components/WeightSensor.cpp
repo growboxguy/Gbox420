@@ -19,7 +19,7 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
 void WeightSensor::refresh_FiveSec()
 {
   if (*Debug)
-    Common::refresh_Sec();
+    Common::refresh_FiveSec();
   if (TareRequested)
   {
     TareRequested = false;
@@ -39,7 +39,7 @@ void WeightSensor::report()
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
   strcat(LongMessage, getWeightText(false, true));
-  strcat_P(LongMessage, (PGM_P)F("Average:"));
+  strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
   strcat(LongMessage, getWeightText(true, true));
   logToSerials(&LongMessage, true, 1);
 }
@@ -49,11 +49,13 @@ float WeightSensor::readWeight(bool ReturnAverage)
   if (Sensor->wait_ready_timeout(200))
   {
     Weight = Sensor->get_units();
-    AverageWeight->reading(Weight * 100);
+    if(Weight<0) 
+      {Weight = 0.0;}  ///< Zero out negative weight
+    AverageWeight->reading(Weight * 100);  ///< AverageWeight is integer based to save memory, multipy by 100 to store the first two decimal digits
   }
   if (ReturnAverage)
   {
-    return AverageWeight->getAvg() / 100.0;
+    return AverageWeight->getAvg() / 100.0;  ///< Divide by floating point 100 to regain the first two decimal digits
   }
   else
   {
@@ -84,7 +86,7 @@ char *WeightSensor::getWeightText(bool ReturnAverage, bool IncludeUnits)
 void WeightSensor::triggerTare()
 {
   TareRequested = true;
-  Parent->addToLog(F("Updating tare")); ///< This can take up to 1 minute, when the component is next refreshed
+  Parent->addToLog(F("Updating tare...")); ///< This can take up to 1 minute, when the component is next refreshed
 }
 
 void WeightSensor::tare() ///< Time intense, cannot be called straight from the website. Response would time out.
@@ -100,7 +102,7 @@ void WeightSensor::triggerCalibration(int CalibrationWeight)
 {
   this->CalibrationWeight = CalibrationWeight;
   CalibrateRequested = true;
-  Parent->addToLog(F("Calibrating")); ///< This can take up to 1 minute, when the component is next refreshed
+  Parent->addToLog(F("Calibrating weight..")); ///< This can take up to 1 minute, when the component is next refreshed
 }
 
 void WeightSensor::calibrate() ///< Time intense, cannot be called straight from the website. Response would time out.
@@ -108,7 +110,7 @@ void WeightSensor::calibrate() ///< Time intense, cannot be called straight from
   *Scale = (float)Sensor->get_value() / CalibrationWeight;
   Sensor->set_scale(*Scale);
   AverageWeight->reset();
-  Parent->addToLog(F("Calibrated"));
+  Parent->addToLog(F("Weight calibrated"));
   Parent->getSoundObject()->playOnSound();
 }
 
