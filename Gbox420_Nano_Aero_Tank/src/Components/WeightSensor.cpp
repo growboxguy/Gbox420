@@ -3,7 +3,7 @@
 WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
-  AverageWeight = new movingAvgFloat(MovingAverageDepth);
+  AverageWeight = new movingAvg(MovingAverageDepth);
   AverageWeight->begin();
   Scale = &DefaultSettings->Scale;
   Offset = &DefaultSettings->Offset;
@@ -49,11 +49,11 @@ float WeightSensor::readWeight(bool ReturnAverage)
   if (Sensor->wait_ready_timeout(200))
   {
     Weight = Sensor->get_units();
-    AverageWeight->reading(Weight);
+    AverageWeight->reading(Weight * 100);
   }
   if (ReturnAverage)
   {
-    return AverageWeight->getAvg();
+    return AverageWeight->getAvg() / 100.0;
   }
   else
   {
@@ -64,7 +64,7 @@ float WeightSensor::readWeight(bool ReturnAverage)
 float WeightSensor::getWeight(bool ReturnAverage)
 {
   if (ReturnAverage)
-    return AverageWeight->getAvg();
+    return AverageWeight->getAvg() / 100.0;
   else
     return Weight;
 }

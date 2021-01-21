@@ -7,7 +7,7 @@ PHSensor::PHSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PH
   this->Intercept = &DefaultSettings->Intercept;
   this->Slope = &DefaultSettings->Slope;
   pinMode(*Pin, INPUT);
-  PH = new RollingAverage();
+  AveragePH = new movingAvg(MovingAverageDepth);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("PHSensor object created"), true, 1);
@@ -25,7 +25,9 @@ void PHSensor::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("PH:"));
-  strcat(LongMessage, PH->getFloatText(true));
+  strcat(LongMessage, getPHText(false));
+  strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
+  strcat(LongMessage, getPHText(true));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -38,27 +40,36 @@ void PHSensor::updatePH(bool ShowRaw)
     strcat(LongMessage, toText(PHRaw));
     Parent->addToLog(LongMessage);
   }
-  PH->updateAverage((*Slope) * PHRaw + (*Intercept));
+  PH = (*Slope) * PHRaw + (*Intercept);
+  AveragePH->reading(PH * 100);
 }
 
 float PHSensor::getPH(bool ReturnAverage)
 {
-  return PH->getFloat(ReturnAverage);
+  if (ReturnAverage)
+    return AveragePH->getAvg();
+  else
+    return PH;
 }
 
 char *PHSensor::getPHText(bool ReturnAverage)
 {
-  return PH->getFloatText(ReturnAverage);
+  if (ReturnAverage)
+    return toText(AveragePH->getAvg());
+  else
+    return toText(PH);
 }
 
 void PHSensor::setSlope(float Value)
 {
   *Slope = Value;
+  AveragePH->reset();
   Parent->addToLog(F("PH slope updated"));
 }
 
 void PHSensor::setIntercept(float Value)
 {
   *Intercept = Value;
+  AveragePH->reset();
   Parent->addToLog(F("PH intercept updated"));
 }

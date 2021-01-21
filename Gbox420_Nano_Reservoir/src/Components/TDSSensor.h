@@ -1,5 +1,6 @@
 #pragma once
 
+#include "movingAvg.h"
 #include "420Common.h"
 #include "420Module.h"
 #include "WaterTempSensor.h"
@@ -12,13 +13,14 @@ public:
   void refresh_FiveSec();
   void report();
   float getTDS(bool ReturnAverage = true);
-  char *getTDSText(bool ReturnAverage = true);
+  char *getTDSText(bool ReturnAverage = true, bool IncludeUnits = false);
 
 private:
 protected:
   Module *Parent;
   WaterTempSensor *WaterTempSensor1 = NULL;
   uint8_t *Pin;
-  RollingAverage *TDS;
+  float TDS;
+  movingAvg *AverageTDS;
   void updateTDS(bool ShowRaw);
 };

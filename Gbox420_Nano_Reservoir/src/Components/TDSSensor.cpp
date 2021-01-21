@@ -5,7 +5,7 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
   this->Parent = Parent;
   this->Pin = &DefaultSettings->Pin;
   pinMode(*Pin, INPUT);
-  TDS = new RollingAverage();
+  AverageTDS = new movingAvg(MovingAverageDepth);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("TDSSensor object created"), true, 1);
@@ -28,7 +28,9 @@ void TDSSensor::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("TDS:"));
-  strcat(LongMessage, getTDSText(false));
+  strcat(LongMessage, getTDSText(false,true));
+  strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
+  strcat(LongMessage, getTDSText(true,true));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -45,23 +47,31 @@ void TDSSensor::updateTDS(bool ShowRaw)
   float Voltage = ((float)TDSRaw) * 5 / 1024;
   if (WaterTempSensor1) // if a Water Temperature is available
   {
-    if(*Metric){
-      Voltage = Voltage / (1.0 + 0.02 * (WaterTempSensor1 -> getTemp() - 25.0));  //Compensate TDS reading with temperature
+    if (*Metric)
+    {
+      Voltage = Voltage / (1.0 + 0.02 * (WaterTempSensor1->getTemp() - 25.0)); //Compensate TDS reading with temperature
     }
     else
     {
-       Voltage = Voltage / (1.0 + 0.02 * ((WaterTempSensor1 -> getTemp() - 32) * 0.55555 - 25.0));  //Compensate TDS reading with temperature
-    }    
+      Voltage = Voltage / (1.0 + 0.02 * ((WaterTempSensor1->getTemp() - 32) * 0.55555 - 25.0)); //Compensate TDS reading with temperature
+    }
   }
-  TDS->updateAverage((float)((133.42 * pow(Voltage, 3) - 255.86 * pow(Voltage, 2) + 857.39 * Voltage) * 0.5));
+  TDS = (float)((133.42 * pow(Voltage, 3) - 255.86 * pow(Voltage, 2) + 857.39 * Voltage) * 0.5);
+  AverageTDS->reading(TDS);
 }
 
 float TDSSensor::getTDS(bool ReturnAverage)
 {
-  return TDS->getFloat(ReturnAverage);
+  if (ReturnAverage)
+    return AverageTDS->getAvg();
+  else
+    return TDS;
 }
 
-char *TDSSensor::getTDSText(bool ReturnAverage)
+char *TDSSensor::getTDSText(bool ReturnAverage, bool IncludeUnits)
 {
-  return toText_TDS(TDS->getFloat(ReturnAverage));
+  if (IncludeUnits)
+    return toText_TDS(getTDS(ReturnAverage));
+  else
+    return toText(getTDS(ReturnAverage));
 }
