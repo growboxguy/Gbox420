@@ -38,7 +38,9 @@ void WeightSensor::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
-  strcat(LongMessage, getWeightText(true));
+  strcat(LongMessage, getWeightText(false,true));
+  strcat_P(LongMessage, (PGM_P)F("Average:"));
+  strcat(LongMessage, getWeightText(true,true));
   logToSerials(&LongMessage, true, 1);
 }
 
