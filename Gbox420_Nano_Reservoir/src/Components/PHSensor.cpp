@@ -48,17 +48,14 @@ void PHSensor::updatePH(bool ShowRaw)
 float PHSensor::getPH(bool ReturnAverage)
 {
   if (ReturnAverage)
-    return AveragePH->getAvg();
+    return AveragePH->getAvg() / 100.0;
   else
     return PH;
 }
 
 char *PHSensor::getPHText(bool ReturnAverage)
 {
-  if (ReturnAverage)
-    return toText(AveragePH->getAvg());
-  else
-    return toText(PH);
+  return toText(getPH(ReturnAverage));
 }
 
 void PHSensor::setSlope(float Value)
