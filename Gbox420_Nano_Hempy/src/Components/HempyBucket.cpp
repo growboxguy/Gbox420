@@ -24,7 +24,9 @@ void HempyBucket::refresh_FiveSec()
 
 void HempyBucket::refresh_Sec()
 {
-  if (BucketPump->getOnState())
+  if (*Debug)
+    Common::refresh_Sec();
+  if (BucketPump->getState() == PumpStates::RUNNING)
   {
     checkWateringFinished(); ///< When pump is on check if it is time to stop
   }
