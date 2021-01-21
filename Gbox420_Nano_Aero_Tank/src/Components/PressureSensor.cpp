@@ -7,7 +7,7 @@ PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, 
   Ratio = &DefaultSettings->Ratio;
   Offset = &DefaultSettings->Offset;
   AveragePressure = new movingAvg(MovingAverageDepth);
-  AveragePressure.begin();
+  AveragePressure->begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("Pressure Sensor object created"), true, 1);

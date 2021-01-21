@@ -6,7 +6,7 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
   this->Pin = &DefaultSettings->Pin;
   pinMode(*Pin, INPUT);
   AverageTDS = new movingAvg(MovingAverageDepth);
-  AverageTDS.begin();
+  AverageTDS->begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("TDSSensor object created"), true, 1);
@@ -29,9 +29,9 @@ void TDSSensor::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("TDS:"));
-  strcat(LongMessage, getTDSText(false,true));
+  strcat(LongMessage, getTDSText(false, true));
   strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
-  strcat(LongMessage, getTDSText(true,true));
+  strcat(LongMessage, getTDSText(true, true));
   logToSerials(&LongMessage, true, 1);
 }
 

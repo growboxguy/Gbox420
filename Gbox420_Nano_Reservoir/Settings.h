@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this when you make a change in the SAVED TO EEPROM section
+static const uint8_t Version = 5; ///< Increment this when you make a change in the SAVED TO EEPROM section
 
 ///< NOT SAVED TO EEPROM
 
