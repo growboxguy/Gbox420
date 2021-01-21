@@ -144,7 +144,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWeight, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, true, 1);
     }
     break;
   case HempyMessages::HempyBucketCommand2:
@@ -185,7 +185,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWeight, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, true, 1);
     }
     break;
   case HempyMessages::HempyReset:                         ///< Used to get all Responses that do not have a corresponding Command
