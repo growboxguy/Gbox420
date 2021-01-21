@@ -9,8 +9,8 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   StartWeight = &DefaultSettings->StartWeight;
   StopWeight = &DefaultSettings->StopWeight;
   WasteLimit = &DefaultSettings->WasteLimit;
-  BucketWeight = new RollingAverage();
-  WasteReservoirWeight = new RollingAverage();
+  //BucketWeight = new RollingAverage();
+  //WasteReservoirWeight = new RollingAverage();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
@@ -27,14 +27,17 @@ void HempyBucket::refresh_FiveSec()
 void HempyBucket::refresh_Sec()
 {
   if (BucketPump->getOnState())
+  {
+    logToSerials("Watering.....");
     checkWateringFinished(); ///< When pump is on check if it is time to stop
+  }
 }
 
 void HempyBucket::report()
 {
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F(" ; Start weight:"));
+  strcat_P(LongMessage, (PGM_P)F("Start weight:"));
   strcat(LongMessage, toText_weight(*StartWeight));
   strcat_P(LongMessage, (PGM_P)F(" ; Stop weight:"));
   strcat(LongMessage, toText_weight(*StopWeight));
@@ -45,8 +48,8 @@ void HempyBucket::report()
 
 void HempyBucket::checkWateringWeight()
 {
-  float AverageBucketWeight = BucketWeight->updateAverage(BucketWeightSensor->readWeight());  
-  float AverageWasteReservoirWeight = WasteReservoirWeight->updateAverage(WasteReservoirWeightSensor->readWeight()); 
+  float AverageBucketWeight = BucketWeightSensor->readWeight(); // BucketWeight->updateAverage(BucketWeightSensor->readWeight());  
+  float AverageWasteReservoirWeight = WasteReservoirWeightSensor->readWeight();// WasteReservoirWeight->updateAverage(WasteReservoirWeightSensor->readWeight()); 
     
   logToSerials(AverageBucketWeight, true, 0);
   logToSerials(AverageWasteReservoirWeight, true, 0);
@@ -69,13 +72,13 @@ void HempyBucket::checkWateringWeight()
 
 void HempyBucket::checkWateringFinished()
 {
-  float AverageBucketWeight = BucketWeight->updateAverage(BucketWeightSensor->readWeight());  
-  float AverageWasteReservoirWeight = WasteReservoirWeight->updateAverage(WasteReservoirWeightSensor->readWeight()); 
-    
-  logToSerials(AverageBucketWeight, true, 0);
-  logToSerials(AverageWasteReservoirWeight, true, 0);
-
-  if (AverageBucketWeight > *StopWeight || AverageBucketWeight + AverageWasteReservoirWeight - StartTotalWeight > *StopWeight - *StartWeight) ///< If the weight is over the stop limit
+  float CurrentBucketWeight = BucketWeightSensor->readWeight();  
+  float CurrentWasteReservoirWeight = WasteReservoirWeightSensor->readWeight(); 
+    logToSerials("Current");
+  logToSerials(CurrentBucketWeight, true, 0);
+  logToSerials(CurrentWasteReservoirWeight, true, 0);
+  
+  if (CurrentBucketWeight > *StopWeight || CurrentBucketWeight + CurrentWasteReservoirWeight - StartTotalWeight > *StopWeight - *StartWeight) ///< If the weight is over the stop limit
   {
     BucketPump->stopPump();
     logToSerials("Stop weight reached", true, 0);    
@@ -84,8 +87,8 @@ void HempyBucket::checkWateringFinished()
 
 void HempyBucket::startWatering()
 {
-  float AverageBucketWeight = BucketWeight->updateAverage(BucketWeightSensor->readWeight());  
-  float AverageWasteReservoirWeight = WasteReservoirWeight->updateAverage(WasteReservoirWeightSensor->readWeight()); 
+  float AverageBucketWeight = BucketWeightSensor->readWeight(); //BucketWeight->updateAverage(BucketWeightSensor->readWeight());  
+  float AverageWasteReservoirWeight = WasteReservoirWeightSensor->readWeight(); // WasteReservoirWeight->updateAverage(WasteReservoirWeightSensor->readWeight()); 
   StartTotalWeight = AverageBucketWeight + AverageWasteReservoirWeight;
   BucketPump->startPump(true);
   logToSerials(F("Watering..."), true, 1);
