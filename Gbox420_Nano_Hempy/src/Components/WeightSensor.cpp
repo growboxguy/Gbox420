@@ -3,7 +3,7 @@
 WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
-  AverageWeight = new movingAvg(RollingAverageDepth);
+  AverageWeight = new movingAvg(MovingAverageDepth);
   AverageWeight->begin();
   Scale = &DefaultSettings->Scale;
   Offset = &DefaultSettings->Offset;

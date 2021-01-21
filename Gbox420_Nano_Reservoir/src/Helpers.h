@@ -13,7 +13,6 @@
 #include "avr/wdt.h"    // Watchdog timer
 #include "../SerialLog.h"
 #include "../Settings.h"    // Storing/reading defaults
-#include "RollingAverage.h" // Smoothing sensor readings, average of last readings
 
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;

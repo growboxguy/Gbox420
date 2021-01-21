@@ -30,7 +30,7 @@ static const uint8_t MaxWordLength = 32;       ///< Default char * buffer length
 static const uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 256; ///< Default char * buffer length for storing a long text. Memory intense!
 static const uint8_t QueueDepth = 8;           ///< Limits the maximum number of components within a module. Memory intense!
-static const uint8_t RollingAverageDepth = 10; ///< Smooth out sensor readings by calculating the average of the last X results. Memory intense!
+static const uint8_t MovingAverageDepth = 10; ///< Smooth out sensor readings by calculating the average of the last X results. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
