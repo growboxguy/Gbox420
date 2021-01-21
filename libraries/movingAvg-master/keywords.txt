@@ -1,0 +1,7 @@
+movingAvg	KEYWORD1
+begin	KEYWORD2
+reading	KEYWORD2
+getAvg	KEYWORD2
+getCount	KEYWORD2
+reset	KEYWORD2
+getReadings	KEYWORD2

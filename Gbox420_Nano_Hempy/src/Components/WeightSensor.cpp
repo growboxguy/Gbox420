@@ -3,7 +3,8 @@
 WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
-  Weight = 0.0;
+  AverageWeight = new movingAvgFloat(RollingAverageDepth);
+  AverageWeight->begin();
   Scale = &DefaultSettings->Scale;
   Offset = &DefaultSettings->Offset;
   Sensor = new HX711();
@@ -41,26 +42,47 @@ void WeightSensor::report()
   logToSerials(&LongMessage, true, 1);
 }
 
-float WeightSensor::readWeight()
+float WeightSensor::readWeight(bool ReturnAverage)
 {
   if (Sensor->wait_ready_timeout(200))
   {
     Weight = Sensor->get_units();
+    AverageWeight->reading(Weight);
   }
-  return Weight;
+  if (ReturnAverage)
+  {
+    return AverageWeight->getAvg();
+  }
+  else
+  {
+    return Weight;
+  }
 }
 
-float WeightSensor::getWeight()
+float WeightSensor::getWeight(bool ReturnAverage)
 {
-  return Weight;
+  if (ReturnAverage)
+    return AverageWeight->getAvg();
+  else
+    return Weight;
 }
 
-char *WeightSensor::getWeightText(bool IncludeUnits)
+char *WeightSensor::getWeightText(bool ReturnAverage, bool IncludeUnits)
 {
   if (IncludeUnits)
-    return toText_weight(getWeight());
+  {
+    if (ReturnAverage)
+      return toText_weight(AverageWeight->getAvg());
+    else
+      return toText_weight(Weight);
+  }
   else
-    return toText(getWeight());
+  {
+    if (ReturnAverage)
+      return toText(AverageWeight->getAvg());
+    else
+      return toText(Weight);
+  }
 }
 
 void WeightSensor::triggerTare()
@@ -73,6 +95,7 @@ void WeightSensor::tare() ///< Time intense, cannot be called straight from the 
 {
   Sensor->tare();
   *Offset = Sensor->get_offset();
+  AverageWeight->reset();
   Parent->addToLog(F("Tare updated"));
   Parent->getSoundObject()->playOnSound();
 }
@@ -88,6 +111,7 @@ void WeightSensor::calibrate() ///< Time intense, cannot be called straight from
 {
   *Scale = (float)Sensor->get_value() / CalibrationWeight;
   Sensor->set_scale(*Scale);
+  AverageWeight->reset();
   Parent->addToLog(F("Weight calibrated"));
   Parent->getSoundObject()->playOnSound();
 }

@@ -1,4 +1,0 @@
-MovingAverage	KEYWORD1
-MovingAverage	KEYWORD2
-~movingAverage	KEYWORD2
-CalculateMovingAverage	KEYWORD2
