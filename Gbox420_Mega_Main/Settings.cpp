@@ -23,12 +23,12 @@ Settings *loadSettings(bool ResetEEPROM = false) ///< if the function contains a
   eeprom_read_block((void *)&EEPROMSettings, (void *)0, sizeof(Settings)); // Load EEPROM stored settings into EEPROMSettings
   if (DefaultSettings->CompatibilityVersion != EEPROMSettings.CompatibilityVersion || ResetEEPROM)
   { // Making sure the EEPROM loaded settings are compatible with the sketch
-    logToSerials(F("Incompatible stored settings detected, updating EEPROM..."), false, 1);
+    logToSerials(F("Updating EEPROM..."), false, 1);
     saveSettings(DefaultSettings); // overwrites EEPROM stored settings with defaults from this sketch
   }
   else
   {
-    logToSerials(F("Same settings version detected, applying EEPROM settings..."), false, 1);
+    logToSerials(F("Applying EEPROM settings..."), false, 1);
     // DefaultSettings = EEPROMSettings; // overwrite sketch defaults with loaded settings
     memcpy(DefaultSettings, &EEPROMSettings, sizeof(Settings));
   }

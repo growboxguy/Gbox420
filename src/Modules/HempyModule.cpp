@@ -100,9 +100,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     {
       logToSerials(F("Module:"), false, 2);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Debug, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Metric, true, 1);
     }
     break;
@@ -127,23 +125,14 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     {
       logToSerials(F("Bucket1:"), false, 2);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DisablePump, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TurnOnPump, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TurnOffPump, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TimeOutPump, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWeight, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWeight, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, true, 1);
     }
     break;
@@ -168,23 +157,14 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     {
       logToSerials(F("Bucket2:"), false, 2);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DisablePump, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TurnOnPump, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TurnOffPump, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TimeOutPump, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWeight, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWeight, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, true, 1);
     }
     break;

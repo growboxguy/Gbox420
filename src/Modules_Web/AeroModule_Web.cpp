@@ -331,15 +331,10 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         {
           logToSerials(F("Aero1:"), false, 4);
           logToSerials(AeroResponse1Received.PressureTankPresent, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(AeroResponse1Received.SprayEnabled, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(AeroResponse1Received.State, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(AeroResponse1Received.Pressure, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(AeroResponse1Received.LastSprayPressure, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(AeroResponse1Received.Weight, true, 1);
         }
         break;
