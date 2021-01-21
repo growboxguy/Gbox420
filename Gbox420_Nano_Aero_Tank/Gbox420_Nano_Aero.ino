@@ -40,7 +40,7 @@ Thread TimeCriticalThread = Thread();
 Thread OneSecThread = Thread();
 Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
-StaticThreadController<5> ThreadControl(&TimeCriticalThread, &OneSecThread, &FiveSecThread, &MinuteThread);
+StaticThreadController<4> ThreadControl(&TimeCriticalThread, &OneSecThread, &FiveSecThread, &MinuteThread);
 
 void setup()
 {                              ///< put your setup code here, to run once:

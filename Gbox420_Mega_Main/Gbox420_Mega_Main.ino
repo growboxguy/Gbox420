@@ -48,7 +48,7 @@ RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///< Wireless communication with M
 Thread OneSecThread = Thread();
 Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
-StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread);
+StaticThreadController<3> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread);
 
 void setup()
 {                                                          ///<  put your setup code here, to run once:
