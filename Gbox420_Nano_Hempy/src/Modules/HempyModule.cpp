@@ -68,11 +68,11 @@ void HempyModule::refresh_FiveSec()
 void HempyModule::updateResponse()
 {
   HempyBucket1ResponseToSend.PumpState = Pump1->getState();
-  HempyBucket1ResponseToSend.WeightB = WeightB1->getWeight();
-  HempyBucket1ResponseToSend.WeightWR = WeightWR1->getWeight();
+  HempyBucket1ResponseToSend.WeightB = WeightB1->getWeight(false);
+  HempyBucket1ResponseToSend.WeightWR = WeightWR1->getWeight(false);
   HempyBucket2ResponseToSend.PumpState = Pump2->getState();
-  HempyBucket2ResponseToSend.WeightB = WeightB2->getWeight();
-  HempyBucket2ResponseToSend.WeightWR = WeightWR2->getWeight();
+  HempyBucket2ResponseToSend.WeightB = WeightB2->getWeight(false);
+  HempyBucket2ResponseToSend.WeightWR = WeightWR2->getWeight(false);
   updateAckData();
 }
 

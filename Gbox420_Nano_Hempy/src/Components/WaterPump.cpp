@@ -43,7 +43,7 @@ void WaterPump::report()
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("State:"));
   strcat(LongMessage, getStateText());
-  strcat_P(LongMessage, (PGM_P)F(" , TimeOut:"));
+  strcat_P(LongMessage, (PGM_P)F(" ; TimeOut:"));
   strcat(LongMessage, toText_second(*PumpTimeOut));
   logToSerials(&LongMessage, true, 1);
 }

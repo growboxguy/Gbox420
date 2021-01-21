@@ -3,7 +3,7 @@
 WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
-  AverageWeight = new movingAvgFloat(RollingAverageDepth);
+  AverageWeight = new movingAvg(RollingAverageDepth);
   AverageWeight->begin();
   Scale = &DefaultSettings->Scale;
   Offset = &DefaultSettings->Offset;
@@ -38,9 +38,9 @@ void WeightSensor::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
-  strcat(LongMessage, getWeightText(false,true));
-  strcat_P(LongMessage, (PGM_P)F("Average:"));
-  strcat(LongMessage, getWeightText(true,true));
+  strcat(LongMessage, getWeightText(false, true));
+  strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
+  strcat(LongMessage, getWeightText(true, true));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -49,11 +49,13 @@ float WeightSensor::readWeight(bool ReturnAverage)
   if (Sensor->wait_ready_timeout(200))
   {
     Weight = Sensor->get_units();
-    AverageWeight->reading(Weight);
+    if(Weight<0) 
+      {Weight = 0.0;}  ///< Zero out negative weight
+    AverageWeight->reading(Weight * 100);  ///< AverageWeight is integer based to save memory, multipy by 100 to store the first two decimal digits
   }
   if (ReturnAverage)
   {
-    return AverageWeight->getAvg();
+    return AverageWeight->getAvg() / 100.0;  ///< Divide by floating point 100 to regain the first two decimal digits
   }
   else
   {
@@ -64,7 +66,7 @@ float WeightSensor::readWeight(bool ReturnAverage)
 float WeightSensor::getWeight(bool ReturnAverage)
 {
   if (ReturnAverage)
-    return AverageWeight->getAvg();
+    return AverageWeight->getAvg() / 100.0;
   else
     return Weight;
 }
@@ -73,17 +75,11 @@ char *WeightSensor::getWeightText(bool ReturnAverage, bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    if (ReturnAverage)
-      return toText_weight(AverageWeight->getAvg());
-    else
-      return toText_weight(Weight);
+    return toText_weight(getWeight(ReturnAverage));
   }
   else
   {
-    if (ReturnAverage)
-      return toText(AverageWeight->getAvg());
-    else
-      return toText(Weight);
+    return toText(getWeight(ReturnAverage));
   }
 }
 
