@@ -83,9 +83,7 @@ void AeroModule::processCommand(void *ReceivedCommand)
     {
       logToSerials(F("Module:"), false, 2);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
-      logToSerials(F(","), false, 0);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Debug, false, 1);
-      logToSerials(F(","), false, 0);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Metric, true, 1);
     }
     break;
@@ -121,39 +119,22 @@ void AeroModule::processCommand(void *ReceivedCommand)
     {
       logToSerials(F("Aero1:"), false, 2);
       logToSerials(((AeroCommand *)ReceivedCommand)->SprayEnabled, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->SprayDisabled, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->SprayNow, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->SprayOff, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->DayMode, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->Duration, false, 1);
-      logToSerials(F(";"), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->DayInterval, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->NightInterval, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->PumpOn, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->PumpOff, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->PumpDisable, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->PumpPrimingTime, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->MinPressure, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->MaxPressure, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->MixReservoir, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->TareWeight, true, 1);
     }
     break;

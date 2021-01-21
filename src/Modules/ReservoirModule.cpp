@@ -86,9 +86,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     {
       logToSerials(F("Module:"), false, 2);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Time, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Debug, false, 1);
-      logToSerials(F(","), false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Metric, true, 1);
     }
     break;

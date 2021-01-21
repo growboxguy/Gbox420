@@ -210,7 +210,7 @@ void WaterPump::disablePump()
 void WaterPump::startBlowOff()
 {
   PumpTimer = millis();
-  logToSerials(F("Pressure blow off"), true, 2);
+  logToSerials(F("Pressure blow off"), true, 3);
   updateState(PumpStates::BLOWOFF);
 }
 

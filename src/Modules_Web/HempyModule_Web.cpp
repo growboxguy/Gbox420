@@ -335,9 +335,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         {
           logToSerials(F("Bucket1:"), false, 4);
           logToSerials(HempyBucketResponse1Received.PumpState, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(HempyBucketResponse1Received.WeightB, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(HempyBucketResponse1Received.WeightWR, true, 1);
         }
         break;
@@ -356,9 +354,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         {
           logToSerials(F("Bucket2:"), false, 4);
           logToSerials(HempyBucketResponse2Received.PumpState, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(HempyBucketResponse2Received.WeightB, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(HempyBucketResponse1Received.WeightWR, true, 1);
         }
         break;

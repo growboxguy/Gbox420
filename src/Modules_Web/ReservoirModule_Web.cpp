@@ -26,7 +26,7 @@ void ReservoirModule_Web::report()
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("PH:"));
   strcat(LongMessage, toText(ReservoirResponse1Received.PH));
-  strcat_P(LongMessage, (PGM_P)F("TDS:"));
+  strcat_P(LongMessage, (PGM_P)F(" ; TDS:"));
   strcat(LongMessage, toText(ReservoirResponse1Received.TDS));
   strcat_P(LongMessage, (PGM_P)F(" ; Weight:"));
   strcat(LongMessage, toText_weight(ReservoirResponse1Received.Weight));
@@ -176,15 +176,10 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         {
           logToSerials(F("Reservoir:"), false, 4);
           logToSerials(ReservoirResponse1Received.PH, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(ReservoirResponse1Received.TDS, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(ReservoirResponse1Received.Weight, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(ReservoirResponse1Received.WaterTemperature, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(ReservoirResponse1Received.AirTemperature, false, 1);
-          logToSerials(F(","), false, 1);
           logToSerials(ReservoirResponse1Received.Humidity, true, 1);
         }
         break;

@@ -9,7 +9,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   logToSerials(F(""), false, 1); //Extra indentation
   SpraySwitch = new Switch(F("SpraySolenoid"), TankSpecificSettings->SpraySolenoidPin, TankSpecificSettings->SpraySolenoidNegativeLogic);
 
-  logToSerials(F("Aeroponics_Tank object created"), true, 1);
+  logToSerials(F("Aeroponics_Tank object created"), true, 2);
   sprayNow(false); ///< This is a safety feature,start with a spray after a reset
 }
 
