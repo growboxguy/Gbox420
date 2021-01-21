@@ -7,6 +7,7 @@ PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, 
   Ratio = &DefaultSettings->Ratio;
   Offset = &DefaultSettings->Offset;
   AveragePressure = new movingAvg(MovingAverageDepth);
+  AveragePressure.begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("Pressure Sensor object created"), true, 1);
@@ -24,6 +25,8 @@ void PressureSensor::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Pressure:"));
+  strcat(LongMessage, getPressureText(false, true));
+  strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
   strcat(LongMessage, getPressureText(true, true));
   logToSerials(&LongMessage, true, 1);
 }
@@ -35,10 +38,10 @@ float PressureSensor::readPressure(bool ReturnAverage)
     Pressure = *Ratio * (Voltage - *Offset) * 1.0f; ///< unit: bar / 100kPa
   else
     Pressure = *Ratio * (Voltage - *Offset) * 14.5038f; ///< unit: PSI
-  AveragePressure->reading(Pressure);
+  AveragePressure->reading(Pressure * 100);
   if (ReturnAverage)
   {
-    return AveragePressure->getAvg();
+    return AveragePressure->getAvg() / 100.0;
   }
   else
   {
@@ -49,7 +52,7 @@ float PressureSensor::readPressure(bool ReturnAverage)
 float PressureSensor::getPressure(bool ReturnAverage)
 {
   if (ReturnAverage)
-    return AveragePressure->getAvg();
+    return AveragePressure->getAvg() / 100.0;
   else
     return Pressure;
 }

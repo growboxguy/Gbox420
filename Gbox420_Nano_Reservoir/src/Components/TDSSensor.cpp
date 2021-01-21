@@ -6,6 +6,7 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
   this->Pin = &DefaultSettings->Pin;
   pinMode(*Pin, INPUT);
   AverageTDS = new movingAvg(MovingAverageDepth);
+  AverageTDS.begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("TDSSensor object created"), true, 1);

@@ -8,6 +8,7 @@ PHSensor::PHSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PH
   this->Slope = &DefaultSettings->Slope;
   pinMode(*Pin, INPUT);
   AveragePH = new movingAvg(MovingAverageDepth);
+  AveragePH.begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("PHSensor object created"), true, 1);
