@@ -42,9 +42,9 @@ private:
 protected:
   Module *Parent;
   WeightSensor *BucketWeightSensor;         ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
-  RollingAverage *BucketWeight;
+  //RollingAverage *BucketWeight;
   WeightSensor *WasteReservoirWeightSensor; ///< Weight sensor to monitor the Hempy Bucket's waste reservoir, used to figure out when to stop watering
-  RollingAverage *WasteReservoirWeight;
+  //RollingAverage *WasteReservoirWeight;
   WaterPump *BucketPump;                    ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
   float *StartWeight;                       ///< Start watering below this weight
   float *StopWeight;                        ///< Stop watering above this weight
