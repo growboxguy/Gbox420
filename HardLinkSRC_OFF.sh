@@ -36,8 +36,6 @@ unlink ./src/Modules_Web/DEVModule_Web.cpp
 
 unlink ./src/Helpers.cpp
 unlink ./src/Helpers.h
-unlink ./src/RollingAverage.h
-unlink ./src/RollingAverage.cpp
 unlink ./src/WirelessCommands_Hempy.h
 unlink ./src/WirelessCommands_Aero.h
 unlink ./src/WirelessCommands_Reservoir.h

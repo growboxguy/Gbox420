@@ -67,11 +67,11 @@ void HempyModule::refresh_FiveSec()
 void HempyModule::updateResponse()
 {
   HempyBucket1ResponseToSend.PumpState = Pump1->getState();
-  HempyBucket1ResponseToSend.WeightB = WeightB1->getWeight();
-  HempyBucket1ResponseToSend.WeightWR = WeightWR1->getWeight();
+  HempyBucket1ResponseToSend.WeightB = WeightB1->getWeight(false);
+  HempyBucket1ResponseToSend.WeightWR = WeightWR1->getWeight(false);
   HempyBucket2ResponseToSend.PumpState = Pump2->getState();
-  HempyBucket2ResponseToSend.WeightB = WeightB2->getWeight();
-  HempyBucket2ResponseToSend.WeightWR = WeightWR2->getWeight();
+  HempyBucket2ResponseToSend.WeightB = WeightB2->getWeight(false);
+  HempyBucket2ResponseToSend.WeightWR = WeightWR2->getWeight(false);
   updateAckData();
 }
 
@@ -144,7 +144,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWeight, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, true, 1);
     }
     break;
   case HempyMessages::HempyBucketCommand2:
@@ -185,7 +185,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(F(","), false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWeight, false, 1);
       logToSerials(F(","), false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, true, 1);
     }
     break;
   case HempyMessages::HempyReset:                         ///< Used to get all Responses that do not have a corresponding Command

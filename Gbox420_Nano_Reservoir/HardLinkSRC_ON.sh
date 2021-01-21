@@ -19,8 +19,6 @@ ln ../src/Modules/ReservoirModule.h ./src/Modules
 
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
-ln ../src/RollingAverage.cpp ./src
-ln ../src/RollingAverage.h ./src
 ln ../src/WirelessCommands_Reservoir.h ./src
 
 ln ../src/Components/420Common.h ./src/Components

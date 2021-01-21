@@ -19,8 +19,6 @@ ln ../src/Modules/AeroModule_NoTank.h ./src/Modules
 
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
-ln ../src/RollingAverage.cpp ./src
-ln ../src/RollingAverage.h ./src
 ln ../src/WirelessCommands_Aero.h ./src
 
 ln ../src/Components/420Common.h ./src/Components
