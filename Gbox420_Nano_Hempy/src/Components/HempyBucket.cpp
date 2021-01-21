@@ -9,6 +9,8 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   StartWeight = &DefaultSettings->StartWeight;
   StopWeight = &DefaultSettings->StopWeight;
   WasteLimit = &DefaultSettings->WasteLimit;
+  BucketWeight = new RollingAverage();
+  WasteReservoirWeight = new RollingAverage();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
@@ -43,17 +45,21 @@ void HempyBucket::report()
 
 void HempyBucket::checkWateringWeight()
 {
-  BucketWeight.updateAverage(BucketWeightSensor->readWeight());                          //Force a weight refresh
-  BucketWeight.updateAverage(WasteReservoirWeightSensor->readWeight());                  //Force a weight refresh
+  float AverageBucketWeight = BucketWeight->updateAverage(BucketWeightSensor->readWeight());  
+  float AverageWasteReservoirWeight = WasteReservoirWeight->updateAverage(WasteReservoirWeightSensor->readWeight()); 
+    
+  logToSerials(AverageBucketWeight, true, 0);
+  logToSerials(AverageWasteReservoirWeight, true, 0);
+
   if (BucketPump->getEnabledState()) ///< If the weight based watering is enabled AND the pump is enabled
   {
-    if (BucketWeight.getFloat() < *StartWeight && !BucketPump->getOnState()) ///< If the weight is below the limit AND the pump is off
+    if (AverageBucketWeight < *StartWeight && !BucketPump->getOnState()) ///< If the weight is below the limit AND the pump is off
     {
-      StartTotalWeight = BucketWeight.getFloat() + WasteReservoirWeight.getFloat();
+      StartTotalWeight = AverageBucketWeight + AverageWasteReservoirWeight;
       BucketPump->startPump();
-      logToSerials(F("Weight based watering..."), true, 1);
+      logToSerials(F("Watering..."), true, 1);
     }
-    if (*WasteLimit > 0 && WasteReservoirWeight.getFloat() > *WasteLimit) //< Check if the waste reservoir is full
+    if (*WasteLimit > 0 && AverageWasteReservoirWeight > *WasteLimit) //< Check if the waste reservoir is full
     {
       BucketPump->disablePump();
       logToSerials(F("Waste weight limit reached"), true, 1);
@@ -63,12 +69,13 @@ void HempyBucket::checkWateringWeight()
 
 void HempyBucket::checkWateringFinished()
 {
-  BucketWeight.updateAverage(BucketWeightSensor->readWeight());                          //Force a weight refresh
-  BucketWeight.updateAverage(WasteReservoirWeightSensor->readWeight());                  //Force a weight refresh
-  logToSerials(toText(BucketWeight.getFloat()), true, 0);
-  logToSerials(toText(WasteReservoirWeight.getFloat()), true, 0);
+  float AverageBucketWeight = BucketWeight->updateAverage(BucketWeightSensor->readWeight());  
+  float AverageWasteReservoirWeight = WasteReservoirWeight->updateAverage(WasteReservoirWeightSensor->readWeight()); 
+    
+  logToSerials(AverageBucketWeight, true, 0);
+  logToSerials(AverageWasteReservoirWeight, true, 0);
 
-  if ((BucketWeight.getFloat() > *StopWeight) || (BucketWeight.getFloat() + WasteReservoirWeight.getFloat() - StartTotalWeight > *StopWeight - *StartWeight)) ///< If the weight is over the stop limit
+  if (AverageBucketWeight > *StopWeight || AverageBucketWeight + AverageWasteReservoirWeight - StartTotalWeight > *StopWeight - *StartWeight) ///< If the weight is over the stop limit
   {
     BucketPump->stopPump();
     logToSerials("Stop weight reached", true, 0);    
@@ -77,9 +84,9 @@ void HempyBucket::checkWateringFinished()
 
 void HempyBucket::startWatering()
 {
-  BucketWeight.updateAverage(BucketWeightSensor->readWeight());                          //Force a weight refresh
-  BucketWeight.updateAverage(WasteReservoirWeightSensor->readWeight());                  //Force a weight refresh
-  StartTotalWeight = BucketWeight.getFloat() + WasteReservoirWeight.getFloat();
+  float AverageBucketWeight = BucketWeight->updateAverage(BucketWeightSensor->readWeight());  
+  float AverageWasteReservoirWeight = WasteReservoirWeight->updateAverage(WasteReservoirWeightSensor->readWeight()); 
+  StartTotalWeight = AverageBucketWeight + AverageWasteReservoirWeight;
   BucketPump->startPump(true);
   logToSerials(F("Watering..."), true, 1);
 }
