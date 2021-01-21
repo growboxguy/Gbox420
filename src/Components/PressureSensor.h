@@ -1,5 +1,6 @@
 #pragma once
 
+#include "movingAvg.h"
 #include "420Common.h"
 #include "420Module.h"
 
@@ -11,14 +12,15 @@ public:
   PressureSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PressureSensorSettings *DefaultSettings);
   void refresh_FiveSec();
   void report();
-  void readPressure();
+  float readPressure(bool ReturnAverage = true);
   float getPressure(bool ReturnAverage = true);
-  char *getPressureText(bool IncludeUnits, bool ReturnAverage);
-  RollingAverage *Pressure;
+  char *getPressureText(bool ReturnAverage = true, bool IncludeUnits=false);
 
 private:
 protected:
   Module *Parent;
+  float Pressure;
+  movingAvg *AveragePressure;
   void readOffset();
   void setOffset(float Value);
   void setRatio(float Value);

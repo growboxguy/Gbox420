@@ -45,7 +45,7 @@ void Aeroponics_Tank::checkPump()
     FeedbackPressureSensor->readPressure();
     if (Aeroponics::FeedbackPressureSensor->getPressure() >= *MaxPressure)
     { ///< refill complete, target pressure reached
-      logToSerials(F("Pressure tank recharged"), false, 3);
+      logToSerials(F("Tank recharged"), false, 3);
       Pump->stopPump();
     }
   }
@@ -53,7 +53,7 @@ void Aeroponics_Tank::checkPump()
   {
     if (!SpraySwitch->getState() && Pump->getState() == IDLE && Aeroponics::FeedbackPressureSensor->getPressure() <= *MinPressure)
     { ///< If there is no spray in progress AND the pump is idle AND the pressure is below the minimum
-      logToSerials(F("Pressure tank recharging..."), false, 3);
+      logToSerials(F("Tank recharging..."), false, 3);
       Pump->startPump();
     }
   }
@@ -100,11 +100,11 @@ void Aeroponics_Tank::sprayNow(bool UserRequest)
     Parent->getSoundObject()->playOnSound();
     if (UserRequest)
     {
-      Parent->addToLog(F("Aeroponics spraying"));
+      Parent->addToLog(F("Spraying"));
     }
     else
     {
-      logToSerials(F("Aeroponics spraying"), true, 3);
+      logToSerials(F("Spraying"), true, 3);
     }
   }
   else
@@ -123,7 +123,7 @@ void Aeroponics_Tank::sprayOff(bool UserRequest)
   if (UserRequest)
   {
     Parent->getSoundObject()->playOffSound();
-    Parent->addToLog(F("Aeroponics spray OFF"));
+    Parent->addToLog(F("Spray OFF"));
   }
   else
   {

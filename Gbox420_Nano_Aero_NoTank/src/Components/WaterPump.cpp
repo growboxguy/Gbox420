@@ -72,7 +72,7 @@ void WaterPump::updateState(PumpStates NewState) ///< Without a parameter actual
     BypassSwitch->turnOn();
     if (millis() - PumpTimer > ((uint32_t)*PrimingTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
-      logToSerials(F("Priming complete, running..."), true, 3);
+      logToSerials(F("Priming complete"), true, 3);
       updateState(RUNNING);
     }
     break;
@@ -83,7 +83,7 @@ void WaterPump::updateState(PumpStates NewState) ///< Without a parameter actual
     if (RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000))
     {
       RunTime = 0;
-      logToSerials(F("Running complete, stopping..."), true, 3);
+      logToSerials(F("Stopping pump"), true, 3);
       if (BlowOffTime != NULL && *BlowOffTime > 0)
       {
         updateState(BLOWOFF);
@@ -95,7 +95,7 @@ void WaterPump::updateState(PumpStates NewState) ///< Without a parameter actual
     }
     if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
     {
-      Parent->addToLog(F("ALERT: Pump timeout reached"), 3); ///< \todo send email alert
+      Parent->addToLog(F("Pump timeout"), 3); ///< \todo send email alert
       updateState(DISABLED);
     }
     break;
@@ -204,7 +204,7 @@ void WaterPump::disablePump()
 void WaterPump::startBlowOff()
 {
   PumpTimer = millis();
-  logToSerials(F("Pressure blow off"), true, 2);
+  logToSerials(F("Blow off"), true, 2);
   updateState(PumpStates::BLOWOFF);
 }
 
@@ -305,7 +305,7 @@ void WaterPump::setPrimingTime(int Timing)
   if (*PrimingTime != Timing && Timing > 0)
   {
     *PrimingTime = Timing;
-    Parent->addToLog(F("Aero priming time updated"));
+    Parent->addToLog(F("Priming time updated"));
     Parent->getSoundObject()->playOnSound();
   }
 }

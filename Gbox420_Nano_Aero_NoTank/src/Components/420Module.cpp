@@ -16,7 +16,7 @@ void Module::runAll(bool AddToLog)
 {
   if (AddToLog)
   {
-    logToSerials(F("Refresing all sensor readings..."), true, 0);
+    logToSerials(F("Refresing sensor readings..."), true, 0);
   }
   wdt_reset();
   runSec();
@@ -175,9 +175,9 @@ void Module::setMetric(bool MetricEnabled)
     *Metric = MetricEnabled;
     RunAllRequested = true; ///< Force a full sensor reading refresh
     if (*Metric)
-      addToLog(F("Using Metric units"));
+      addToLog(F("Metric units"));
     else
-      addToLog(F("Using Imperial units"));
+      addToLog(F("Imperial units"));
     getSoundObject()->playOnSound();
   }
 }

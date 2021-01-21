@@ -23,12 +23,12 @@ Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments
   eeprom_read_block((void *)&EEPROMSettings, (void *)0, sizeof(Settings)); // Load EEPROM stored settings into EEPROMSettings
   if (DefaultSettings->CompatibilityVersion != EEPROMSettings.CompatibilityVersion || ResetEEPROM)
   { // Making sure the EEPROM loaded settings are compatible with the sketch
-    logToSerials(F("Incompatible stored settings detected, updating EEPROM..."), false, 0);
+    logToSerials(F("Updating EEPROM..."), false, 0);
     saveSettings(DefaultSettings); // overwrites EEPROM stored settings with defaults from this sketch
   }
   else
   {
-    logToSerials(F("Same settings version detected, applying EEPROM settings..."), false, 0);
+    logToSerials(F("Applying EEPROM settings..."), false, 0);
     // DefaultSettings = EEPROMSettings; // overwrite sketch defaults with loaded settings
     memcpy(DefaultSettings, &EEPROMSettings, sizeof(Settings));
   }
@@ -42,8 +42,8 @@ Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments
 */
 void restoreDefaults()
 {
-  logToSerials(F("Forcing settings update at next restart..."), true, 0);
+  logToSerials(F("Restoring settings"), true, 0);
   loadSettings(true);
-  logToSerials(F("Reseting the sketch..."), true, 1);
+  logToSerials(F("Restarting"), true, 1);
   __asm__ __volatile__("jmp 0x0000");
 }

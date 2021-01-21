@@ -6,7 +6,7 @@ PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, 
   Pin = &DefaultSettings->Pin;
   Ratio = &DefaultSettings->Ratio;
   Offset = &DefaultSettings->Offset;
-  Pressure = new RollingAverage();
+  AveragePressure = new movingAvg(MovingAverageDepth);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("Pressure Sensor object created"), true, 1);
@@ -28,27 +28,38 @@ void PressureSensor::report()
   logToSerials(&LongMessage, true, 1);
 }
 
-void PressureSensor::readPressure()
+float PressureSensor::readPressure(bool ReturnAverage)
 {
   float Voltage = ((float)analogRead(*Pin)) * 5 / 1024;
-
   if (*Metric)
-    Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 1.0f); ///< unit: bar / 100kPa
+    Pressure = *Ratio * (Voltage - *Offset) * 1.0f; ///< unit: bar / 100kPa
   else
-    Pressure->updateAverage(*Ratio * (Voltage - *Offset) * 14.5038f); ///< unit: PSI
+    Pressure = *Ratio * (Voltage - *Offset) * 14.5038f; ///< unit: PSI
+  AveragePressure->reading(Pressure);
+  if (ReturnAverage)
+  {
+    return AveragePressure->getAvg();
+  }
+  else
+  {
+    return Pressure;
+  }
 }
 
 float PressureSensor::getPressure(bool ReturnAverage)
 {
-  return Pressure->getFloat(ReturnAverage);
+  if (ReturnAverage)
+    return AveragePressure->getAvg();
+  else
+    return Pressure;
 }
 
-char *PressureSensor::getPressureText(bool IncludeUnits, bool ReturnAverage)
+char *PressureSensor::getPressureText(bool ReturnAverage, bool IncludeUnits)
 {
   if (IncludeUnits)
-    return toText_pressure(Pressure->getFloat(ReturnAverage));
+    return toText_pressure(getPressure(ReturnAverage));
   else
-    return Pressure->getFloatText(ReturnAverage);
+    return toText(getPressure(ReturnAverage));
 }
 
 void PressureSensor::readOffset()
@@ -68,13 +79,13 @@ void PressureSensor::readOffset()
 void PressureSensor::setOffset(float Value)
 {
   *Offset = Value;
-  Pressure->resetAverage();
-  Parent->addToLog(F("Pressure offset updated"));
+  AveragePressure->reset();
+  Parent->addToLog(F("Offset updated"));
 }
 
 void PressureSensor::setRatio(float Value)
 {
   *Ratio = Value;
-  Pressure->resetAverage();
-  Parent->addToLog(F("Pressure/voltage ratio updated"));
+  AveragePressure->reset();
+  Parent->addToLog(F("Ratio updated"));
 }

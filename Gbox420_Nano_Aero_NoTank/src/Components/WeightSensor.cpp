@@ -38,9 +38,9 @@ void WeightSensor::report()
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Weight:"));
-  strcat(LongMessage, getWeightText(false,true));
+  strcat(LongMessage, getWeightText(false, true));
   strcat_P(LongMessage, (PGM_P)F("Average:"));
-  strcat(LongMessage, getWeightText(true,true));
+  strcat(LongMessage, getWeightText(true, true));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -73,24 +73,18 @@ char *WeightSensor::getWeightText(bool ReturnAverage, bool IncludeUnits)
 {
   if (IncludeUnits)
   {
-    if (ReturnAverage)
-      return toText_weight(AverageWeight->getAvg());
-    else
-      return toText_weight(Weight);
+    return toText_weight(getWeight(ReturnAverage));
   }
   else
   {
-    if (ReturnAverage)
-      return toText(AverageWeight->getAvg());
-    else
-      return toText(Weight);
+    return toText(getWeight(ReturnAverage));
   }
 }
 
 void WeightSensor::triggerTare()
 {
   TareRequested = true;
-  Parent->addToLog(F("Updating tare...")); ///< This can take up to 1 minute, when the component is next refreshed
+  Parent->addToLog(F("Updating tare")); ///< This can take up to 1 minute, when the component is next refreshed
 }
 
 void WeightSensor::tare() ///< Time intense, cannot be called straight from the website. Response would time out.
@@ -106,7 +100,7 @@ void WeightSensor::triggerCalibration(int CalibrationWeight)
 {
   this->CalibrationWeight = CalibrationWeight;
   CalibrateRequested = true;
-  Parent->addToLog(F("Calibrating weight..")); ///< This can take up to 1 minute, when the component is next refreshed
+  Parent->addToLog(F("Calibrating")); ///< This can take up to 1 minute, when the component is next refreshed
 }
 
 void WeightSensor::calibrate() ///< Time intense, cannot be called straight from the website. Response would time out.
@@ -114,7 +108,7 @@ void WeightSensor::calibrate() ///< Time intense, cannot be called straight from
   *Scale = (float)Sensor->get_value() / CalibrationWeight;
   Sensor->set_scale(*Scale);
   AverageWeight->reset();
-  Parent->addToLog(F("Weight calibrated"));
+  Parent->addToLog(F("Calibrated"));
   Parent->getSoundObject()->playOnSound();
 }
 

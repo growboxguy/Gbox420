@@ -105,12 +105,12 @@ void Aeroponics::setSprayOnOff(bool State)
   *SprayEnabled = State;
   if (*SprayEnabled)
   {
-    Parent->addToLog(F("Aero spray enabled"));
+    Parent->addToLog(F("Spray enabled"));
     Parent->getSoundObject()->playOnSound();
   }
   else
   {
-    Parent->addToLog(F("Aero spray disabled"));
+    Parent->addToLog(F("Spray disabled"));
     Parent->getSoundObject()->playOffSound();
   }
 }
@@ -175,7 +175,7 @@ void Aeroponics::setMaxPressure(float Pressure)
   if (*MaxPressure != Pressure && Pressure > 0)
   {
     *MaxPressure = Pressure;
-    Parent->addToLog(F("Tank limits updated"));
+    Parent->addToLog(F("Max pressure updated"));
     Parent->getSoundObject()->playOnSound();
   }
 }

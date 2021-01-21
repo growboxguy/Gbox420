@@ -77,7 +77,7 @@ void DEVModule_Web::reportToJSON()
     strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
     strcat(LongMessage, PHSen1->getPHText(true));
     strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));
-    strcat(LongMessage, Pres1->getPressureText(false, true));    
+    strcat(LongMessage, Pres1->getPressureText(true,false));    
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroInterval\":\""));
     strcat(LongMessage, AeroNT1->getSprayIntervalText());
     strcat_P(LongMessage, (PGM_P)F("\",\"AeroDuration\":\""));

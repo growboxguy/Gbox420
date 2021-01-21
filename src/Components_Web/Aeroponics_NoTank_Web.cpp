@@ -34,7 +34,7 @@ void Aeroponics_NoTank_Web::websiteEvent_Refresh(__attribute__((unused)) char *u
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("Pres")), FeedbackPressureSensor->getPressureText(true, false));
+    WebServer.setArgString(getComponentName(F("Pres")), FeedbackPressureSensor->getPressureText(false,true));
     WebServer.setArgString(getComponentName(F("Spray")), sprayStateToText());
     WebServer.setArgString(getComponentName(F("Pump")), Pump->getStateText());
     WebServer.setArgString(getComponentName(F("LastSP")), toText_pressure(LastSprayPressure));
