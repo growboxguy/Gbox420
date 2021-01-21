@@ -40,8 +40,7 @@ Thread TimeCriticalThread = Thread();
 Thread OneSecThread = Thread();
 Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
-Thread QuarterHourThread = Thread();
-StaticThreadController<5> ThreadControl(&TimeCriticalThread, &OneSecThread, &FiveSecThread, &MinuteThread, &QuarterHourThread);
+StaticThreadController<5> ThreadControl(&TimeCriticalThread, &OneSecThread, &FiveSecThread, &MinuteThread);
 
 void setup()
 {                              ///< put your setup code here, to run once:
@@ -74,8 +73,6 @@ void setup()
   FiveSecThread.onRun(runFiveSec);
   MinuteThread.setInterval(60000);
   MinuteThread.onRun(runMinute);
-  QuarterHourThread.setInterval(900000);
-  QuarterHourThread.onRun(runQuarterHour);
 
   ///< Create the Aeroponics object
   AeroMod1 = new AeroModule(F("Aero1")); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
@@ -139,12 +136,6 @@ void runMinute()
   wdt_reset();
   AeroMod1->runMinute();
   getWirelessStatus();
-}
-
-void runQuarterHour()
-{
-  wdt_reset();
-  AeroMod1->runQuarterHour();
 }
 
 void HeartBeat()

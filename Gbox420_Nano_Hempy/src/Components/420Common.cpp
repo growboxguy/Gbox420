@@ -38,12 +38,6 @@ void Common::refresh_Minute()
   logToSerials(F("refreshing (1min)"), true, 1); ///< Prints "COMPONENTNAME refreshing (1 min)" to the console
 }
 
-void Common::refresh_QuarterHour()
-{
-  logToSerials(Name, false, 2);
-  logToSerials(F("refreshing (15min)"), true, 1); ///< Prints "COMPONENTNAME refreshing (15 min)" to the console
-}
-
 char *Common::getComponentName(const __FlashStringHelper *ComponentName)
 {
   static char ReturnChar[MaxWordLength] = "";

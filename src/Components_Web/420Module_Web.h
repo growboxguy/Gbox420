@@ -29,8 +29,6 @@ public:
   void runSec();
   void runFiveSec();
   void runMinute();
-  void runQuarterHour();
-
   void addToWebsiteQueue_Load(Common_Web *Component);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
   void addToWebsiteQueue_Refresh(Common_Web *Component); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   void addToWebsiteQueue_Button(Common_Web *Component);  ///< Subscribing to the Website button press event: Calls the websiteEvent_Button() method
@@ -43,7 +41,6 @@ public:
   void addToRefreshQueue_Sec(Common_Web *Component);
   void addToRefreshQueue_FiveSec(Common_Web *Component);
   void addToRefreshQueue_Minute(Common_Web *Component);
-  void addToRefreshQueue_QuarterHour(Common_Web *Component);
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);
   char *eventLogToJSON(bool Append = false); ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
@@ -58,7 +55,6 @@ protected:
   Common_Web *RefreshQueue_Sec[QueueDepth] = {};
   Common_Web *RefreshQueue_FiveSec[QueueDepth] = {};
   Common_Web *RefreshQueue_Minute[QueueDepth] = {};
-  Common_Web *RefreshQueue_QuarterHour[QueueDepth] = {};
   Common_Web *WebsiteQueue_Load[QueueDepth] = {};
   Common_Web *WebsiteQueue_Refresh[QueueDepth] = {};
   Common_Web *WebsiteQueue_Button[QueueDepth] = {};
@@ -67,7 +63,6 @@ protected:
   uint8_t refreshQueueItemCount_Sec = 0;
   uint8_t refreshQueueItemCount_FiveSec = 0;
   uint8_t refreshQueueItemCount_Minute = 0;
-  uint8_t refreshQueueItemCount_QuarterHour = 0;
   uint8_t WebsiteQueue_Load_Count = 0;
   uint8_t WebsiteQueue_Refresh_Count = 0;
   uint8_t WebsiteQueue_Button_Count = 0;

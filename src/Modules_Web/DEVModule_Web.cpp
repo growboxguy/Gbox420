@@ -52,7 +52,6 @@ DEVModule_Web::DEVModule_Web(const __FlashStringHelper *Name, Settings::MainModu
 
   addToRefreshQueue_FiveSec(this);
   addToRefreshQueue_Minute(this);
-  addToRefreshQueue_QuarterHour(this);
   addToWebsiteQueue_Load(this);
   addToWebsiteQueue_Refresh(this);
   addToWebsiteQueue_Field(this);
@@ -201,12 +200,6 @@ void DEVModule_Web::refresh_Minute()
   if (*Debug)
     Common::refresh_Minute();
   runReport();
-}
-
-void DEVModule_Web::refresh_QuarterHour()
-{
-  if (*Debug)
-    Common::refresh_QuarterHour();
   reportToGoogleSheetsTrigger();
 }
 

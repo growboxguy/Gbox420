@@ -33,7 +33,6 @@ public:
   void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();
-  //void refresh_QuarterHour();
   void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
   bool processCommand(void *Command); ///< Process a received wireless command, returns true when the last message in the exchange sequence was processed 
   void updateResponse();  ///< Updates the wireless response package content

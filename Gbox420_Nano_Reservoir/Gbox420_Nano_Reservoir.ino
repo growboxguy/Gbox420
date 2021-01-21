@@ -39,8 +39,7 @@ RF24 Wireless(WirelessCEPin, WirelessCSNPin); // Initialize the NRF24L01 wireles
 Thread OneSecThread = Thread();
 Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
-Thread QuarterHourThread = Thread();
-StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread, &QuarterHourThread);
+StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread);
 
 void setup()
 {                              // put your setup code here, to run once:
@@ -70,8 +69,6 @@ void setup()
   FiveSecThread.onRun(runFiveSec);
   MinuteThread.setInterval(60000);
   MinuteThread.onRun(runMinute);
-  QuarterHourThread.setInterval(900000);
-  QuarterHourThread.onRun(runQuarterHour);
 
   // Create the Reservoir Module object
   ReservoirMod1 = new ReservoirModule(F("Res1"), &ModuleSettings->ReservoirMod1); // This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
@@ -129,12 +126,6 @@ void runMinute()
   wdt_reset();
   ReservoirMod1->runMinute();
   getWirelessStatus();
-}
-
-void runQuarterHour()
-{
-  wdt_reset();
-  ReservoirMod1->runQuarterHour();
 }
 
 // Wireless communication

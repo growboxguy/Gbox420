@@ -18,8 +18,6 @@ void Module_Web::runAll()
   wdt_reset();
   runMinute();
   wdt_reset();
-  runQuarterHour();
-  wdt_reset();
 }
 
 void Module_Web::runReport()
@@ -66,16 +64,6 @@ void Module_Web::runMinute()
   }
 }
 
-void Module_Web::runQuarterHour()
-{
-  if (*Debug)
-    logToSerials(F("Quarter hour trigger.."), true, 1);
-  for (int i = 0; i < refreshQueueItemCount_QuarterHour; i++)
-  {
-    RefreshQueue_QuarterHour[i]->refresh_QuarterHour();
-  }
-}
-
 ///< Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
 
 void Module_Web::addToReportQueue(Common_Web *Component)
@@ -108,16 +96,6 @@ void Module_Web::addToRefreshQueue_Minute(Common_Web *Component)
     RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
   else
     logToSerials(F("RefreshQueue_Minute overflow!"), true, 0);
-}
-
-void Module_Web::addToRefreshQueue_QuarterHour(Common_Web *Component)
-{
-  if (QueueDepth > refreshQueueItemCount_QuarterHour)
-  {
-    RefreshQueue_QuarterHour[refreshQueueItemCount_QuarterHour++] = Component;
-  }
-  else
-    logToSerials(F("RefreshQueue_QuarterHour overflow!"), true, 0);
 }
 
 ///< Website subscriptions: When a component needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods

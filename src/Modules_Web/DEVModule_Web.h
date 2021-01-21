@@ -71,7 +71,6 @@ public:
   void websiteEvent_Field(char *Field);
   void refresh_FiveSec();
   void refresh_Minute();
-  void refresh_QuarterHour();
   void reportToGoogleSheetsTrigger(bool ForceRun = false);
   void reportToJSON();
   // void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);

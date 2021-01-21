@@ -18,7 +18,6 @@ AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Pare
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
   Parent->addToRefreshQueue_Minute(this);
-  //addToRefreshQueue_QuarterHour(this);
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToWebsiteQueue_Field(this);

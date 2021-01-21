@@ -35,7 +35,6 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   addToReportQueue(this);
   addToRefreshQueue_FiveSec(this);
   addToRefreshQueue_Minute(this);
-  addToRefreshQueue_QuarterHour(this);
   addToWebsiteQueue_Load(this);
   addToWebsiteQueue_Refresh(this);
   addToWebsiteQueue_Field(this);
@@ -171,12 +170,6 @@ void MainModule::refresh_Minute()
   if (*Debug)
     Common::refresh_Minute();
   runReport();
-}
-
-void MainModule::refresh_QuarterHour()
-{
-  if (*Debug)
-    Common::refresh_QuarterHour();
   reportToGoogleSheetsTrigger();
 }
 
@@ -247,10 +240,8 @@ void MainModule::setSheetsReportingFrequency(uint16_t Frequency)
 }
 
 void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
-{ ///< Handles custom reporting frequency for Google Sheets, called every 15 minutes
-  if (SheetsRefreshCounter == 96)
-    SheetsRefreshCounter = 0; ///< Reset the counter after one day (15 x 96 = 1440 = 24 hours)
-  if (SheetsRefreshCounter++ % (*SheetsReportingFrequency / 15) == 0 || ForceRun)
+{ ///< Handles custom reporting frequency for Google Sheets
+  if (SheetsRefreshCounter++ % (*SheetsReportingFrequency) == 0 || ForceRun)
   {
     addPushingBoxLogRelayID();                    ///< Adds a curly bracket {  that needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"Log\":{")); ///< Adds a curly bracket {  that needs to be closed at the end

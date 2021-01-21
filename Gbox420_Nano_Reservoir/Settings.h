@@ -21,7 +21,8 @@ enum PumpStates
   PRIMING,
   RUNNING,
   BLOWOFF,
-  MIXING
+  MIXING,
+  CLOSINGBYPASS
 };
 
 ///< Global constants

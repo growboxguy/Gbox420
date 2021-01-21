@@ -14,7 +14,6 @@ public:
   void refresh_Sec();
   void refresh_FiveSec();
   void refresh_Minute();
-  void refresh_QuarterHour();
   void report();
 
 private:

@@ -8,7 +8,6 @@ ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_W
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
   Parent->addToRefreshQueue_Minute(this);
-  Parent->addToRefreshQueue_QuarterHour(this);
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToWebsiteQueue_Button(this);

@@ -12,7 +12,6 @@ ModuleSkeleton::ModuleSkeleton(const __FlashStringHelper *Name, Module *Parent, 
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
   Parent->addToRefreshQueue_Minute(this);
-  Parent->addToRefreshQueue_QuarterHour(this);
   logToSerials(F("ModuleSkeleton object created"), true, 1);
 }
 
@@ -37,12 +36,6 @@ void ModuleSkeleton::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();
-}
-
-void ModuleSkeleton::refresh_QuarterHour()
-{
-  if (*Debug)
-    Common::refresh_QuarterHour();
 }
 
 void ModuleSkeleton::report()

@@ -48,8 +48,7 @@ RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///< Wireless communication with M
 Thread OneSecThread = Thread();
 Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
-Thread QuarterHourThread = Thread();
-StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread, &QuarterHourThread);
+StaticThreadController<4> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread);
 
 void setup()
 {                                                          ///<  put your setup code here, to run once:
@@ -82,8 +81,6 @@ void setup()
   FiveSecThread.onRun(runFiveSec);
   MinuteThread.setInterval(60000);
   MinuteThread.onRun(runMinute);
-  QuarterHourThread.setInterval(900000);
-  QuarterHourThread.onRun(runQuarterHour);
   logToSerials(F("done"), true, 1);
 
   // Start interrupts to handle request from ESP-Link firmware
@@ -144,15 +141,6 @@ void runMinute()
   wdt_reset();
   Main1->runMinute();
   getWirelessStatus();
-}
-
-/**
-  \brief Called every 30 minutes by ThreadControl in loop()
-*/
-void runQuarterHour()
-{
-  wdt_reset();
-  Main1->runQuarterHour();
 }
 
 /**

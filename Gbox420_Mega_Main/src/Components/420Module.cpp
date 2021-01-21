@@ -25,8 +25,6 @@ void Module::runAll(bool AddToLog)
   wdt_reset();
   runMinute();
   wdt_reset();
-  runQuarterHour();
-  wdt_reset();
 }
 
 void Module::runReport(bool AddToLog)
@@ -90,16 +88,6 @@ void Module::runMinute(bool AddToLog)
   }
 }
 
-void Module::runQuarterHour(bool AddToLog)
-{
-  if (*Debug && AddToLog)
-    logToSerials(F("Quarter hour trigger.."), true, 1);
-  for (int i = 0; i < refreshQueueItemCount_QuarterHour; i++)
-  {
-    RefreshQueue_QuarterHour[i]->refresh_QuarterHour();
-  }
-}
-
 Sound *Module::getSoundObject()
 {
   return SoundFeedback;
@@ -137,16 +125,6 @@ void Module::addToRefreshQueue_Minute(Common *Component)
     RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
   else
     logToSerials(F("RefreshQueue_Minute overflow!"), true, 0);
-}
-
-void Module::addToRefreshQueue_QuarterHour(Common *Component)
-{
-  if (QueueDepth > refreshQueueItemCount_QuarterHour)
-  {
-    RefreshQueue_QuarterHour[refreshQueueItemCount_QuarterHour++] = Component;
-  }
-  else
-    logToSerials(F("RefreshQueue_QuarterHour overflow!"), true, 0);
 }
 
 ///< Even logs to the Serial output

@@ -51,7 +51,6 @@ public:
   void report();
   void refresh_FiveSec();
   void refresh_Minute();
-  void refresh_QuarterHour();
   void reportToGoogleSheetsTrigger(bool ForceRun = false);
   void reportToJSON();
   bool getDayMode(); ///< Returns true if the lights are on or daylight is detected
