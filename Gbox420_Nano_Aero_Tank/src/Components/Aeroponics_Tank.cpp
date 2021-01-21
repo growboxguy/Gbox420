@@ -42,8 +42,7 @@ void Aeroponics_Tank::checkPump()
 {
   if (Pump->getState() == RUNNING) ///< if pump is on
   {
-    FeedbackPressureSensor->readPressure();
-    if (Aeroponics::FeedbackPressureSensor->getPressure() >= *MaxPressure)
+    if (FeedbackPressureSensor->readPressure(false) >= *MaxPressure)
     { ///< refill complete, target pressure reached
       logToSerials(F("Tank recharged"), false, 3);
       Pump->stopPump();
@@ -51,10 +50,10 @@ void Aeroponics_Tank::checkPump()
   }
   else
   {
-    if (!SpraySwitch->getState() && Pump->getState() == IDLE && Aeroponics::FeedbackPressureSensor->getPressure() <= *MinPressure)
+    if (!SpraySwitch->getState() && Pump->getState() == IDLE && FeedbackPressureSensor->getPressure() <= *MinPressure)
     { ///< If there is no spray in progress AND the pump is idle AND the pressure is below the minimum
       logToSerials(F("Tank recharging..."), false, 3);
-      Pump->startPump();
+      Pump->startPump(false);
     }
   }
 }

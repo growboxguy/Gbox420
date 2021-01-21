@@ -111,7 +111,10 @@ void WaterPump::updateState(PumpStates NewState) ///< Without a parameter actual
       }
       else
       {
-        updateState(IDLE);
+        if (*PumpEnabled)
+          updateState(IDLE);
+        else
+          updateState(DISABLED);
       }
     }
     break;
@@ -125,7 +128,10 @@ void WaterPump::updateState(PumpStates NewState) ///< Without a parameter actual
     BypassSwitch->turnOff();
     if (millis() - PumpTimer > ((uint32_t)*BypassSolenoidClosingDelay)) ///< Bypass is fully closed
     {
-      updateState(IDLE);
+      if (*PumpEnabled)
+        updateState(IDLE);
+      else
+        updateState(DISABLED);
     }
     break;
   case MIXING:
