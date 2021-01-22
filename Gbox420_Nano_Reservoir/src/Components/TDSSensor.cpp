@@ -58,13 +58,13 @@ void TDSSensor::updateTDS(bool ShowRaw)
     }
   }
   TDS = (float)((133.42 * pow(Voltage, 3) - 255.86 * pow(Voltage, 2) + 857.39 * Voltage) * 0.5);
-  AverageTDS->reading(TDS * 100);
+  AverageTDS->reading(TDS);  //Reading will be parsed to integer, loosing decimal digits
 }
 
 float TDSSensor::getTDS(bool ReturnAverage)
 {
   if (ReturnAverage)
-    return AverageTDS->getAvg() / 100.0;
+    return AverageTDS->getAvg();
   else
     return TDS;
 }
