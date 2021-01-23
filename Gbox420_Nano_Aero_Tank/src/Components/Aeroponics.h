@@ -3,15 +3,15 @@
 #include "420Common.h"
 #include "Sound.h"
 #include "PressureSensor.h"
-#include "WaterPump.h"
+#include "PressurePump.h"
 
 ///< Aeroponics tote virtual parent class
 
 class Aeroponics : public Common
 {
 public:
-  Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump);
-  WaterPump *Pump;
+  Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, PressurePump *Pump);
+  PressurePump *Pump;
   virtual void report();
   virtual void refresh_Sec() = 0;
   void setSprayOnOff(bool State);

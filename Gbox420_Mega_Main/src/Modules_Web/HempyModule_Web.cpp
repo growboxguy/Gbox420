@@ -59,7 +59,7 @@ void HempyModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"PB1\":\""));
-  strcat(LongMessage, toText(HempyBucketResponse1Received.PumpState));
+  strcat(LongMessage, toText((int)HempyBucketResponse1Received.PumpState));
   strcat_P(LongMessage, (PGM_P)F("\",\"PB1S\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"WB1\":\""));
@@ -73,7 +73,7 @@ void HempyModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\",\"WLB1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.WasteLimit));
   strcat_P(LongMessage, (PGM_P)F("\",\"PB2\":\""));
-  strcat(LongMessage, toText(HempyBucketResponse2Received.PumpState));
+  strcat(LongMessage, toText((int)HempyBucketResponse2Received.PumpState));
   strcat_P(LongMessage, (PGM_P)F("\",\"PB2S\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"WB2\":\""));
@@ -115,8 +115,8 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
     WebServer.setArgString(getComponentName(F("B2Weight")), toText_weight(HempyBucketResponse2Received.WeightB));
     WebServer.setArgString(getComponentName(F("B1Waste")), toText_weight(HempyBucketResponse1Received.WeightWR));
     WebServer.setArgString(getComponentName(F("B2Waste")), toText_weight(HempyBucketResponse2Received.WeightWR));
-    WebServer.setArgString(getComponentName(F("B1Pump")), toText_pressurePumpState(HempyBucketResponse1Received.PumpState));
-    WebServer.setArgString(getComponentName(F("B2Pump")), toText_pressurePumpState(HempyBucketResponse2Received.PumpState));
+    WebServer.setArgString(getComponentName(F("B1Pump")), toText_waterPumpState(HempyBucketResponse1Received.PumpState));
+    WebServer.setArgString(getComponentName(F("B2Pump")), toText_waterPumpState(HempyBucketResponse2Received.PumpState));
   }
 }
 
@@ -334,7 +334,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         if (*Debug)
         {
           logToSerials(F("Bucket1:"), false, 4);
-          logToSerials(HempyBucketResponse1Received.PumpState, false, 1);
+          logToSerials(toText((int)HempyBucketResponse1Received.PumpState), false, 1);
           logToSerials(HempyBucketResponse1Received.WeightB, false, 1);
           logToSerials(HempyBucketResponse1Received.WeightWR, true, 1);
         }
@@ -353,7 +353,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         if (*Debug)
         {
           logToSerials(F("Bucket2:"), false, 4);
-          logToSerials(HempyBucketResponse2Received.PumpState, false, 1);
+          logToSerials(toText((int)HempyBucketResponse2Received.PumpState), false, 1);
           logToSerials(HempyBucketResponse2Received.WeightB, false, 1);
           logToSerials(HempyBucketResponse1Received.WeightWR, true, 1);
         }

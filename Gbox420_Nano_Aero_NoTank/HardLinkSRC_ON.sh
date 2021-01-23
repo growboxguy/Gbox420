@@ -29,6 +29,8 @@ ln ../src/Components/Aeroponics.h ./src/Components
 ln ../src/Components/Aeroponics.cpp ./src/Components
 ln ../src/Components/Aeroponics_NoTank.h ./src/Components
 ln ../src/Components/Aeroponics_NoTank.cpp ./src/Components
+ln ../src/Components/PressurePump.h ./src/Components
+ln ../src/Components/PressurePump.cpp ./src/Components
 ln ../src/Components/PressureSensor.h ./src/Components
 ln ../src/Components/PressureSensor.cpp ./src/Components
 ln ../src/Components/Sound.h ./src/Components
@@ -37,8 +39,6 @@ ln ../src/Components/Switch.h ./src/Components
 ln ../src/Components/Switch.cpp ./src/Components
 ln ../src/Components/Switch_PWM.h ./src/Components
 ln ../src/Components/Switch_PWM.cpp ./src/Components
-ln ../src/Components/WaterPump.h ./src/Components
-ln ../src/Components/WaterPump.cpp ./src/Components
 ln ../src/Components/WeightSensor.h ./src/Components
 ln ../src/Components/WeightSensor.cpp ./src/Components
 

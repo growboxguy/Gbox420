@@ -79,7 +79,7 @@ void AeroModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\",\"LS\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.LastSprayPressure));
   strcat_P(LongMessage, (PGM_P)F("\",\"St\":\""));
-  strcat(LongMessage, toText(AeroResponse1Received.State));
+  strcat(LongMessage, toText((int)AeroResponse1Received.State));
   strcat_P(LongMessage, (PGM_P)F("\",\"PS\":\""));
   strcat(LongMessage, toText(AeroCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
@@ -332,7 +332,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           logToSerials(F("Aero1:"), false, 4);
           logToSerials(AeroResponse1Received.PressureTankPresent, false, 1);
           logToSerials(AeroResponse1Received.SprayEnabled, false, 1);
-          logToSerials(AeroResponse1Received.State, false, 1);
+          logToSerials(toText((int)AeroResponse1Received.State), false, 1);
           logToSerials(AeroResponse1Received.Pressure, false, 1);
           logToSerials(AeroResponse1Received.LastSprayPressure, false, 1);
           logToSerials(AeroResponse1Received.Weight, true, 1);

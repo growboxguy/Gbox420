@@ -9,7 +9,7 @@
 class Aeroponics_Tank : virtual public Aeroponics
 {
 public:
-  Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump);
+  Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor, PressurePump *Pump);
   void refresh_Sec();
   void report();
   void sprayNow(bool UserRequest = false);  ///< Start spraying

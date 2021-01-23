@@ -13,18 +13,6 @@ static const uint8_t Version = 5; ///< Increment this when you make a change in 
 
 ///< NOT SAVED TO EEPROM
 
-///< State machine - Defining possible states
-enum PressurePumpStates
-{
-  DISABLED,
-  IDLE,
-  PRIMING,
-  RUNNING,
-  BLOWOFF,
-  MIXING,
-  CLOSINGBYPASS
-};
-
 ///< Global constants
 static const uint8_t MaxWordLength = 32;       ///< Default char * buffer length for storing a word + null terminator. Memory intense!
 static const uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!

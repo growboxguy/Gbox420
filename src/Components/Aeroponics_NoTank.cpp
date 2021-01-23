@@ -1,6 +1,6 @@
 #include "Aeroponics_NoTank.h"
 
-Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Aeroponics(Name, Parent, DefaultSettings, FeedbackPressureSensor, Pump)
+Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, PressurePump *Pump) : Aeroponics(Name, Parent, DefaultSettings, FeedbackPressureSensor, Pump)
 {
   this->Name = Name;
   logToSerials(F(""), true, 0);  //New line
@@ -33,7 +33,7 @@ void Aeroponics_NoTank::processTimeCriticalStuff()
 
 void Aeroponics_NoTank::checkPump(bool OnlyTurnOff)
 {
-  if (Pump->getState() == RUNNING)
+  if (Pump->getState() == PressurePumpStates::RUNNING)
   { ///< if pump is on
     FeedbackPressureSensor->readPressure();
     if (FeedbackPressureSensor->getPressure() > *MaxPressure)
@@ -51,7 +51,7 @@ void Aeroponics_NoTank::checkPump(bool OnlyTurnOff)
   }
   else
   {
-    if (!OnlyTurnOff && Pump->getState() == IDLE)
+    if (!OnlyTurnOff && Pump->getState() == PressurePumpStates::IDLE)
     {
       RunTillTimeout = false; ///< Making sure the special flag is disabled as soon the Pump becomes IDLE. (RunTillTimeout forces the pump to run until the timeout is reached, used during mixing)
       uint32_t Interval;

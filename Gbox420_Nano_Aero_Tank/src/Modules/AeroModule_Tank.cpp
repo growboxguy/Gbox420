@@ -6,7 +6,7 @@
 //#include "../Components/DHTSensor.h"
 #include "../Components/Sound.h"
 #include "../Components/PressureSensor.h"
-#include "../Components/WaterPump.h"
+#include "../Components/PressurePump.h"
 #include "../Components/Aeroponics_Tank.h"
 #include "../Components/WeightSensor.h"
 
@@ -23,7 +23,7 @@ AeroModule::AeroModule(const __FlashStringHelper *Name) : Common(Name), Module()
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
   Pres1 = new PressureSensor(F("Pres1"), this, &ModuleSettings->Pres1);
-  Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->AeroPump1);
+  Pump1 = new PressurePump(F("Pump1"), this, &ModuleSettings->AeroPump1);
   Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
   AeroT1 = new Aeroponics_Tank(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, Pump1); ///< Use this with a pressure tank
   Aero1Response1ToSend.PressureTankPresent = true;

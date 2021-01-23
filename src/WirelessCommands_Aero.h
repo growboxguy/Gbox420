@@ -116,7 +116,7 @@ struct AeroResponse_P1 : AeroCommonTemplate ///< Aeroponics wireless response - 
    bool PressureTankPresent = false;
    bool SprayEnabled = false;
    float Pressure = 0.0;
-   PressurePumpStates State = DISABLED;
+   PressurePumpStates State = PressurePumpStates::DISABLED;
    float LastSprayPressure = 0.0; // Used only without pressure tank. last spray pressure
    float Weight = 0.0;
 };

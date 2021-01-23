@@ -4,7 +4,7 @@
 ///< -Aeroponics_NoTank: High pressure pump is directly connected to the aeroponics tote
 ///< -Aeroponics_Tank: A pressure tank is added between the high pressure pump and aeroponics tote, requires an extra solenoid for spraying
 
-Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Common(Name)
+Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, PressurePump *Pump) : Common(Name)
 { ///< constructor
   this->Parent = Parent;
   SprayEnabled = &DefaultSettings->SprayEnabled;   ///< Enable/disable misting

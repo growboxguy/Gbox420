@@ -66,6 +66,8 @@ unlink ./src/Components/Lights.h
 unlink ./src/Components/Lights.cpp
 unlink ./src/Components/LightSensor.h
 unlink ./src/Components/LightSensor.cpp
+unlink ./src/Components/PressurePump.h
+unlink ./src/Components/PressurePump.cpp
 unlink ./src/Components/PressureSensor.h
 unlink ./src/Components/PressureSensor.cpp
 unlink ./src/Components/PHSensor.h

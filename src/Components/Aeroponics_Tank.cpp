@@ -1,6 +1,6 @@
 #include "Aeroponics_Tank.h"
 
-Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Aeroponics(Name, Parent, DefaultSettings, FeedbackPressureSensor, Pump)
+Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor, PressurePump *Pump) : Aeroponics(Name, Parent, DefaultSettings, FeedbackPressureSensor, Pump)
 { ///< constructor
   this->Name = Name;
   MinPressure = &TankSpecificSettings->MinPressure; ///< Aeroponics - Turn on pump below this pressure (bar)
@@ -40,7 +40,7 @@ void Aeroponics_Tank::processTimeCriticalStuff()
 
 void Aeroponics_Tank::checkPump()
 {
-  if (Pump->getState() == RUNNING) ///< if pump is on
+  if (Pump->getState() == PressurePumpStates::RUNNING) ///< if pump is on
   {
     if (FeedbackPressureSensor->readPressure(false) >= *MaxPressure)
     { ///< refill complete, target pressure reached
@@ -50,7 +50,7 @@ void Aeroponics_Tank::checkPump()
   }
   else
   {
-    if (!SpraySwitch->getState() && Pump->getState() == IDLE && FeedbackPressureSensor->getPressure() <= *MinPressure)
+    if (!SpraySwitch->getState() && Pump->getState() == PressurePumpStates::IDLE && FeedbackPressureSensor->getPressure() <= *MinPressure)
     { ///< If there is no spray in progress AND the pump is idle AND the pressure is below the minimum
       logToSerials(F("Tank recharging..."), false, 3);
       Pump->startPump(false);
@@ -70,7 +70,7 @@ void Aeroponics_Tank::checkSpray(bool OnlyTurnOff)
   }
   else
   { ///< if spray is off
-    if (!OnlyTurnOff && (Pump->getState() == IDLE || Pump->getState() == DISABLED))
+    if (!OnlyTurnOff && (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED))
     {
       uint32_t Interval;
       if (DayMode)

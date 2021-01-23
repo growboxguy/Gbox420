@@ -14,7 +14,7 @@
 class Sound;
 class Aeroponics_Tank;
 class PressureSensor;
-class WaterPump;
+class PressurePump;
 class WeightSensor;
 extern RF24 Wireless;
 
@@ -27,7 +27,7 @@ public:
   AeroModule(const __FlashStringHelper *Name); ///< constructor
   Sound *Sound1 = NULL;                        ///< Piezo speaker - sound feedback
   PressureSensor *Pres1 = NULL;  ///< Pressure sensor
-  WaterPump *Pump1 = NULL; ///< High pressure pump
+  PressurePump *Pump1 = NULL; ///< High pressure pump
   Aeroponics_Tank *AeroT1 = NULL; ///< Logic to control the Aeroponics system with a pressure tank
   WeightSensor *Weight1; ///< Tote weight sensor
   void refresh_Sec();

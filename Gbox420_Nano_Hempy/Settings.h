@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 5; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 6; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -18,7 +18,7 @@ static const uint8_t MaxWordLength = 32;       ///< Default char * buffer length
 static const uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 192; ///< Default char * buffer length for storing a long text. Memory intense!
 static const uint8_t QueueDepth = 8;           ///< Limits the maximum number of active modules. Memory intense!
-static const uint8_t MovingAverageDepth = 8; ///< Limits the maximum number of active modules. Memory intense!
+static const uint8_t MovingAverageDepth = 8;   ///< Limits the maximum number of active modules. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
@@ -26,12 +26,12 @@ extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling shor
 extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
-static const uint8_t WirelessCSNPin = 9;             ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
-static const uint8_t WirelessCEPin = 10;             ///< nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
-static const uint8_t WirelessChannel[6] = {"Hemp1"}; ///< This needs to be unique and match with the Name of the HempyModule_Web object in the MainModule_Web.cpp
-static const uint8_t WirelessPayloadSize = 32;       ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
-static const uint16_t WirelessMessageTimeout = 500;  ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
-static const uint16_t WirelessReceiveTimeout = 60000;  ///< (ms) If no packages are received from the Main module over this limit, try reseting the nRF24L01+ wireless receiver
+static const uint8_t WirelessCSNPin = 9;              ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
+static const uint8_t WirelessCEPin = 10;              ///< nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
+static const uint8_t WirelessChannel[6] = {"Hemp1"};  ///< This needs to be unique and match with the Name of the HempyModule_Web object in the MainModule_Web.cpp
+static const uint8_t WirelessPayloadSize = 32;        ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+static const uint16_t WirelessMessageTimeout = 500;   ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
+static const uint16_t WirelessReceiveTimeout = 60000; ///< (ms) If no packages are received from the Main module over this limit, try reseting the nRF24L01+ wireless receiver
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12
@@ -45,14 +45,14 @@ typedef struct
   struct HempyBucketSettings ///< HempyBucket default settings
   {
     HempyBucketSettings(float StartWeight = 0.0, float StopWeight = 0.0, float WasteLimit = 0.0) : StartWeight(StartWeight), StopWeight(StopWeight), WasteLimit(WasteLimit) {}
-    float StartWeight;         ///< Start watering below this weight
-    float StopWeight;          ///< Stop watering above this weight
-    float WasteLimit;          ///< Waste reservoir full weight -> Pump gets disabled if reached   
+    float StartWeight; ///< Start watering below this weight
+    float StopWeight;  ///< Stop watering above this weight
+    float WasteLimit;  ///< Waste reservoir full weight -> Pump gets disabled if reached
   };
   struct HempyBucketSettings Bucket1 = {.StartWeight = 16.0, .StopWeight = 19.0, .WasteLimit = 13.0};
   struct HempyBucketSettings Bucket2 = {.StartWeight = 16.0, .StopWeight = 19.0, .WasteLimit = 13.0};
 
-  struct HempyModuleSettings  ///< HempyModule default settings
+  struct HempyModuleSettings ///< HempyModule default settings
   {
     //HempyModuleSettings() :  {}
   };
@@ -68,21 +68,16 @@ typedef struct
 
   struct WaterPumpSettings ///< WaterPump default settings
   {
-    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, int PrimingTime = 0, int BlowOffTime = 0, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, uint16_t BypassSolenoidClosingDelay = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), BypassSolenoidClosingDelay(BypassSolenoidClosingDelay) {}
-    uint8_t PumpPin;                  ///< Pump relay pin
-    bool PumpPinNegativeLogic;        ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
-    uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin [optional]
-    bool BypassSolenoidNegativeLogic; ///< Set to true if Relay/MOSFET controlling the power to the solenoid requires LOW signal to Turn ON [optional]
-    uint16_t BypassSolenoidClosingDelay; ///< (ms) How long it takes to close the solenoid
-    bool PumpEnabled;                 ///< Enable/disable pump. false= Block running the pump
-    uint8_t Speed;                    ///< Duty cycle of the PWM Motor speed
-    uint8_t SpeedLowLimit;            ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
-    uint16_t PumpTimeOut;             ///< (Sec) Max pump run time
-    int PrimingTime;                  ///< (Sec) Only if BypassSolenoid is present. For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
-    int BlowOffTime;                  ///< (Sec) Only if BypassSolenoid is present. For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
+    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint16_t PumpTimeOut = 0, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), PumpTimeOut(PumpTimeOut), Speed(Speed), SpeedLowLimit(SpeedLowLimit) {}
+    uint8_t PumpPin;           ///< Pump relay pin
+    bool PumpPinNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
+    bool PumpEnabled;          ///< Enable/disable pump. false= Block running the pump
+    uint16_t PumpTimeOut;      ///< (Sec) Max pump run time
+    uint8_t Speed;             ///< Duty cycle of the PWM Motor speed
+    uint8_t SpeedLowLimit;     ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
   };
-  struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 100, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
-  struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .Speed = 100, .SpeedLowLimit = 30, .PumpTimeOut = 420}; ///< Pumps do not need a bypass solenoid
+  struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 180, .Speed = 100, .SpeedLowLimit = 30};
+  struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 180, .Speed = 100, .SpeedLowLimit = 30};
 
   struct WeightSensorSettings ///< WeightSensor default settings
   {
@@ -92,8 +87,8 @@ typedef struct
     long Offset;    ///< Reading at 0 weight on the scale
     float Scale;    ///< Scale factor
   };
-  struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = 382746, .Scale = -21787.00};   ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
-  struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = -192194, .Scale = -20213.20};    ///< Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = 382746, .Scale = -21787.00};    ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = -192194, .Scale = -20213.20};   ///< Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
   struct WeightSensorSettings WeightWR1 = {.DTPin = A0, .SCKPin = A1, .Offset = -64705, .Scale = -22366.30}; ///< Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
   struct WeightSensorSettings WeightWR2 = {.DTPin = A2, .SCKPin = A3, .Offset = 261992, .Scale = -22139.30}; ///< Waste Reservoir 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
 
