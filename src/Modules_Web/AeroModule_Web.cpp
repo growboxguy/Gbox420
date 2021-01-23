@@ -46,7 +46,7 @@ void AeroModule_Web::report()
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(AeroResponse1Received.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F(" ; PumpState:"));
-  strcat(LongMessage, toText_pumpState(AeroResponse1Received.State));
+  strcat(LongMessage, toText_pressurePumpState(AeroResponse1Received.State));
   strcat_P(LongMessage, (PGM_P)F(" ; PumpSpeed:"));
   strcat(LongMessage, toText_percentage(AeroCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F(" ; DayMode:"));
@@ -115,7 +115,7 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
   {
     WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
     WebServer.setArgString(getComponentName(F("Spray")), toText_enabledDisabled(AeroResponse1Received.SprayEnabled));
-    WebServer.setArgString(getComponentName(F("Pump")), toText_pumpState(AeroResponse1Received.State));
+    WebServer.setArgString(getComponentName(F("Pump")), toText_pressurePumpState(AeroResponse1Received.State));
     WebServer.setArgString(getComponentName(F("Pres")), toText_pressure(AeroResponse1Received.Pressure));
     WebServer.setArgString(getComponentName(F("LastSP")), toText_pressure(AeroResponse1Received.LastSprayPressure));
     WebServer.setArgString(getComponentName(F("Weight")), toText_weight(AeroResponse1Received.Weight));

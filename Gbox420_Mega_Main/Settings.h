@@ -13,17 +13,6 @@ static const uint8_t Version = 5; ///< Increment this after changing the stuctur
 
 ///< NOT SAVED TO EEPROM
 
-///< State machine - Defining possible states
-enum PumpStates
-{
-  DISABLED,
-  IDLE,
-  PRIMING,
-  RUNNING,
-  BLOWOFF,
-  MIXING,
-  CLOSINGBYPASS
-};
 
 ///< Global constants
 static const uint8_t MaxWordLength = 32;        ///< Default char * buffer length for storing a word + null terminator. Memory intense!

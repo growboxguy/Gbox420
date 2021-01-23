@@ -92,7 +92,7 @@ void Aeroponics_Tank::checkSpray(bool OnlyTurnOff)
 
 void Aeroponics_Tank::sprayNow(bool UserRequest)
 {
-  if (Pump->getState() == PumpStates::IDLE || Pump->getState() == PumpStates::DISABLED)  //Only allow spraying when pump and bypass solenoid is off
+  if (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED)  //Only allow spraying when pump and bypass solenoid is off
   {
     SpraySwitch->turnOn();
     SprayTimer = millis();

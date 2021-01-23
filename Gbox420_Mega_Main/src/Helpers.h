@@ -14,6 +14,27 @@
 #include "../SerialLog.h"
 #include "../Settings.h"    // Storing/reading defaults
 
+///< State machine - Defining possible states
+
+enum class WaterPumpStates
+{
+  DISABLED,
+  IDLE,  
+  RUNNING  
+};
+
+enum class PressurePumpStates
+{
+  DISABLED,
+  IDLE,
+  PRIMING,
+  RUNNING,
+  BLOWOFF,
+  MIXING,
+  CLOSINGBYPASS
+};
+
+
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;
 extern char CurrentTime[MaxWordLength];
@@ -44,7 +65,8 @@ char *toText_onOff(bool Status);
 char *toText_yesNo(bool Status);
 char *toText_enabledDisabled(bool Status);
 char *toText_onlineStatus(bool Status);
-char *toText_pumpState(PumpStates State);
+char *toText_waterPumpState(WaterPumpStates State);
+char *toText_pressurePumpState(PressurePumpStates State);
 char *toText_minute(int Minute);
 char *toText_second(int Second);
 char *toText_distance(float Distance);

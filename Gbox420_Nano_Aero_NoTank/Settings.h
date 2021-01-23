@@ -14,7 +14,7 @@ static const uint8_t Version = 5; ///< Increment this after changing the stuctur
 ///< NOT SAVED TO EEPROM
 
 ///< State machine - Defining possible states
-enum PumpStates
+enum PressurePumpStates
 {
   DISABLED,
   IDLE,

@@ -236,29 +236,48 @@ char *toText_onlineStatus(bool Status)
     return toText(F("OFFLINE"));
 }
 
-char *toText_pumpState(PumpStates State)
+char *toText_waterPumpState(WaterPumpStates State)
 {
   switch (State)
   {
-  case PumpStates::DISABLED:
+  case WaterPumpStates::DISABLED:
     return toText(F("DISABLED"));
     break;
-  case PumpStates::IDLE:
+  case WaterPumpStates::IDLE:
     return toText(F("IDLE"));
-    break;
-  case PumpStates::PRIMING:
-    return toText(F("PRIMING"));
-    break;
-  case PumpStates::RUNNING:
+    break;  
+  case WaterPumpStates::RUNNING:
     return toText(F("RUNNING"));
     break;
-  case PumpStates::BLOWOFF:
+  default:
+    return toText(F("UNKNOWN"));
+    break;
+  }
+}
+
+char *toText_pressurePumpState(PressurePumpStates State)
+{
+  switch (State)
+  {
+  case PressurePumpStates::DISABLED:
+    return toText(F("DISABLED"));
+    break;
+  case PressurePumpStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case PressurePumpStates::PRIMING:
+    return toText(F("PRIMING"));
+    break;
+  case PressurePumpStates::RUNNING:
+    return toText(F("RUNNING"));
+    break;
+  case PressurePumpStates::BLOWOFF:
     return toText(F("BLOWOFF"));
     break;
-  case PumpStates::MIXING:
+  case PressurePumpStates::MIXING:
     return toText(F("MIXING"));
     break;
-  case PumpStates::CLOSINGBYPASS:
+  case PressurePumpStates::CLOSINGBYPASS:
     return toText(F("BYPASS"));
     break;
   default:

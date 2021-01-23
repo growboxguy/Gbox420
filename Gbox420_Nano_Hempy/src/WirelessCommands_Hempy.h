@@ -95,7 +95,7 @@ struct HempyBucketResponse : HempyCommonTemplate ///< Hempy bucket wireless resp
 {
    HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
    HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpEnabled, __attribute__((unused)) float Weight) : HempyCommonTemplate(SequenceID) {}
-   PumpStates PumpState = DISABLED;
+   WaterPumpStates PumpState = WaterPumpStates::DISABLED;
    float WeightB = 0.0;
    float WeightWR = 0.0;
 };

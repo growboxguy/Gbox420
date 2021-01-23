@@ -115,8 +115,8 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
     WebServer.setArgString(getComponentName(F("B2Weight")), toText_weight(HempyBucketResponse2Received.WeightB));
     WebServer.setArgString(getComponentName(F("B1Waste")), toText_weight(HempyBucketResponse1Received.WeightWR));
     WebServer.setArgString(getComponentName(F("B2Waste")), toText_weight(HempyBucketResponse2Received.WeightWR));
-    WebServer.setArgString(getComponentName(F("B1Pump")), toText_pumpState(HempyBucketResponse1Received.PumpState));
-    WebServer.setArgString(getComponentName(F("B2Pump")), toText_pumpState(HempyBucketResponse2Received.PumpState));
+    WebServer.setArgString(getComponentName(F("B1Pump")), toText_pressurePumpState(HempyBucketResponse1Received.PumpState));
+    WebServer.setArgString(getComponentName(F("B2Pump")), toText_pressurePumpState(HempyBucketResponse2Received.PumpState));
   }
 }
 
