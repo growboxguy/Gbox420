@@ -96,13 +96,14 @@ struct AeroCommand_P1 : AeroCommonTemplate ///< Aeroponics wireless commands - P
 struct AeroCommand_P2 : AeroCommonTemplate ///< Aeroponics wireless commands - Part2
 {
    AeroCommand_P2(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroCommand_P2(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) uint16_t PumpTimeOut, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) bool TareWeight) : AeroCommonTemplate(SequenceID) {}
+   AeroCommand_P2(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) uint16_t PumpTimeOut, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) bool DrainPressureTank, __attribute__((unused)) bool TareWeight) : AeroCommonTemplate(SequenceID) {}
 
    bool PumpOn = false;
    bool PumpOff = false;
    bool PumpDisable = false;
    bool MixReservoir = false;
    bool RefillPressureTank = false;
+   bool DrainPressureTank = false;
    bool TareWeight = false;
    uint8_t PumpSpeed = 0;
    int PumpPrimingTime = 0;

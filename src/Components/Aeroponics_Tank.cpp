@@ -52,7 +52,7 @@ void Aeroponics_Tank::checkPump()
   {
     if (!SpraySwitch->getState() && Pump->getState() == PressurePumpStates::IDLE && FeedbackPressureSensor->getPressure() <= *MinPressure)
     { ///< If there is no spray in progress AND the pump is idle AND the pressure is below the minimum
-      logToSerials(F("Tank recharging..."), false, 3);
+      logToSerials(F("Tank recharging"), false, 3);
       Pump->startPump(false);
     }
   }
@@ -109,7 +109,7 @@ void Aeroponics_Tank::sprayNow(bool UserRequest)
   else
   {
     Parent->getSoundObject()->playOffSound();
-    logToSerials(F("Cannot spray while pump or bypass is on"), true, 3);
+    logToSerials(F("Cannot spray now"), true, 3);
   }
 }
 
@@ -135,3 +135,13 @@ void Aeroponics_Tank::refillTank()
   Parent->addToLog(F("Refilling tank"));
   Pump->startPump(true);
 }
+
+/*
+void Aeroponics_Tank::drainTank()
+{
+  Parent->addToLog(F("Draining tank"));
+  SpraySwitch->turnOn();
+  SprayTimer = millis();
+  Pump->startBlowOff(); 
+}
+*/

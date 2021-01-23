@@ -48,7 +48,7 @@ void setup()
   pinMode(13, OUTPUT);         ///< onboard LED - Heartbeat every second to confirm code is running
   printf_begin();
   logToSerials(F(""), true, 0);                                  ///< New line
-  logToSerials(F("Aeroponics module initializing..."), true, 0); ///< logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
+  logToSerials(F("Aeroponics module initializing"), true, 0); ///< logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                           ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                             ///< fix watchdog not loading sketch after a reset error on Mega2560
   struct AeroModuleCommand BlankCommand = {AeroMessages::AeroModuleCommand1};
@@ -77,12 +77,12 @@ void setup()
   ///< Create the Aeroponics object
   AeroMod1 = new AeroModule(F("Aero1")); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
-  logToSerials(F("Setup ready, starting loops:"), true, 0);
+  logToSerials(F("Starting loops:"), true, 0);
 }
 
 void InitializeWireless()
 {
-  logToSerials(F("(re)Initializing wireless transceiver..."), false, 0);
+  logToSerials(F("(re)Initializing wireless"), false, 0);
   pinMode(WirelessCSNPin, OUTPUT);
   digitalWrite(WirelessCSNPin, HIGH);
   pinMode(WirelessCEPin, OUTPUT);
@@ -100,7 +100,7 @@ void InitializeWireless()
   Wireless.powerUp();  ///< Not necessary, startListening should switch back to normal power mode
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
-  logToSerials(F("done"), true, 1);
+  logToSerials(F("done"), true, 3);
   ReceivedMessageTimestamp = millis(); ///< Reset timeout counter
 }
 

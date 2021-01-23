@@ -15,6 +15,7 @@ public:
   void sprayNow(bool UserRequest = false);  ///< Start spraying
   void sprayOff(bool UserRequest = false);  ///< Stop spraying
   void refillTank();  ///< Recharge the pressure tank
+  void drainTank(){};  ///< Release pressure from the tank
   void checkPump();  ///< Turn the pump on or off based on the current state
   void checkSpray(bool OnlyTurnOff = false); ///< Turn the spray solenoid on or off based on the current state.
   void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing

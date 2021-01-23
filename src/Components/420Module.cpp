@@ -16,7 +16,7 @@ void Module::runAll(bool AddToLog)
 {
   if (AddToLog)
   {
-    logToSerials(F("Refresing sensor readings..."), true, 0);
+    logToSerials(F("Refresing readings"), true, 0);
   }
   wdt_reset();
   runSec();
@@ -34,7 +34,7 @@ void Module::runReport(bool AddToLog)
   if (AddToLog)
   {
     logToSerials(reportQueueItemCount, false, 2);
-    logToSerials(F("components reporting:"), true, 1);
+    logToSerials(F("Reporting:"), true, 1);
   }
   for (int i = 0; i < reportQueueItemCount; i++)
   {
@@ -51,7 +51,7 @@ void Module::runSec(bool AddToLog)
     RunAllRequested = false;
     if (AddToLog)
     {
-      logToSerials(F("Running full refresh.."), true, 1);
+      logToSerials(F("Full refresh:"), true, 1);
     }
     runAll(AddToLog);
   }
@@ -59,7 +59,7 @@ void Module::runSec(bool AddToLog)
   {
     if (*Debug && AddToLog)
     {
-      logToSerials(F("One sec trigger.."), true, 1);
+      logToSerials(F("One sec trigger"), true, 1);
     }
     for (int i = 0; i < refreshQueueItemCount_Sec; i++)
     {
@@ -71,7 +71,7 @@ void Module::runSec(bool AddToLog)
 void Module::runFiveSec(bool AddToLog)
 {
   if (*Debug && AddToLog)
-    logToSerials(F("Five sec trigger.."), true, 1);
+    logToSerials(F("Five sec trigger"), true, 1);
   for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
   {
     RefreshQueue_FiveSec[i]->refresh_FiveSec();
@@ -81,7 +81,7 @@ void Module::runFiveSec(bool AddToLog)
 void Module::runMinute(bool AddToLog)
 {
   if (*Debug && AddToLog)
-    logToSerials(F("Minute trigger.."), true, 1);
+    logToSerials(F("Minute trigger"), true, 1);
   for (int i = 0; i < refreshQueueItemCount_Minute; i++)
   {
     RefreshQueue_Minute[i]->refresh_Minute();
@@ -100,7 +100,7 @@ void Module::addToReportQueue(Common *Component)
   if (QueueDepth > reportQueueItemCount)
     ReportQueue[reportQueueItemCount++] = Component;
   else
-    logToSerials(F("Report queue overflow!"), true, 0); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
+    logToSerials(F("Report queue overflow"), true, 0); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
 void Module::addToRefreshQueue_Sec(Common *Component)
@@ -108,7 +108,7 @@ void Module::addToRefreshQueue_Sec(Common *Component)
   if (QueueDepth > refreshQueueItemCount_Sec)
     RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
   else
-    logToSerials(F("RefreshQueue_Sec overflow!"), true, 0);
+    logToSerials(F("RefreshQueue_Sec overflow"), true, 0);
 }
 
 void Module::addToRefreshQueue_FiveSec(Common *Component)

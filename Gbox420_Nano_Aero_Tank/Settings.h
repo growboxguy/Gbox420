@@ -55,11 +55,12 @@ typedef struct
 
   struct AeroponicsSettings_TankSpecific ///< Aeroponics_Tank default settings
   {
-    AeroponicsSettings_TankSpecific(float MinPressure = 0.0, uint8_t SpraySolenoidPin = 0, bool SpraySolenoidNegativeLogic = false, uint16_t SpraySolenoidClosingDelay = 0.0) : MinPressure(MinPressure), SpraySolenoidPin(SpraySolenoidPin), SpraySolenoidNegativeLogic(SpraySolenoidNegativeLogic), SpraySolenoidClosingDelay(SpraySolenoidClosingDelay) {}
+    AeroponicsSettings_TankSpecific(float MinPressure = 0.0, uint8_t SpraySolenoidPin = 0, bool SpraySolenoidNegativeLogic = false, uint16_t SpraySolenoidClosingDelay = 0, uint16_t TankDrainingTimeout = 0) : MinPressure(MinPressure), SpraySolenoidPin(SpraySolenoidPin), SpraySolenoidNegativeLogic(SpraySolenoidNegativeLogic), SpraySolenoidClosingDelay(SpraySolenoidClosingDelay),TankDrainingTimeout(TankDrainingTimeout) {}
     float MinPressure;               ///< Turn on pump below this pressure
     uint8_t SpraySolenoidPin;        ///< Relay controlling DC power to the solenoid
     bool SpraySolenoidNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     uint16_t SpraySolenoidClosingDelay;     ///< (ms) Time required for the solenoid to close. To avoid draining the tank the bypass valve is not allowed to open until the Spray solenoid is not closed
+    uint16_t TankDrainingTimeout;
   };
   struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.MinPressure = 5.0, .SpraySolenoidPin = 5, .SpraySolenoidNegativeLogic = true, .SpraySolenoidClosingDelay = 600};
 

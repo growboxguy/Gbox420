@@ -6,14 +6,14 @@ PressurePump::PressurePump(const __FlashStringHelper *Name, Module *Parent, Sett
   logToSerials(F(""), true, 0);  //New line
   logToSerials(F(""), false, 1); //Extra indentation
   PumpSwitch = new Switch_PWM(F("SpraySolenoid"), DefaultSettings->PumpPin, &DefaultSettings->Speed, &DefaultSettings->SpeedLowLimit, DefaultSettings->PumpPinNegativeLogic);
-  if (DefaultSettings->BypassSolenoidPin != 255) //TODO: Split PressurePump into: PressurePump and PressurePump (inherits from PressurePump)
-  {
-    logToSerials(F(""), false, 1); //Extra indentation
-    BypassSwitch = new Switch(F("BypassSolenoid"), DefaultSettings->BypassSolenoidPin, DefaultSettings->BypassSolenoidNegativeLogic);
-  }
+  logToSerials(F(""), false, 1); //Extra indentation
+  BypassSwitch = new Switch(F("BypassSolenoid"), DefaultSettings->BypassSolenoidPin, DefaultSettings->BypassSolenoidNegativeLogic);
   BypassSolenoidClosingDelay = &DefaultSettings->BypassSolenoidClosingDelay;
+  PrimingTime = &DefaultSettings->PrimingTime;
+  BlowOffTime = &DefaultSettings->BlowOffTime;
   PumpTimeOut = &DefaultSettings->PumpTimeOut;
   PumpEnabled = &DefaultSettings->PumpEnabled;
+
   if (*PumpEnabled)
   {
     State = PressurePumpStates::IDLE;
@@ -22,16 +22,6 @@ PressurePump::PressurePump(const __FlashStringHelper *Name, Module *Parent, Sett
   {
     State = PressurePumpStates::DISABLED;
   }
-
-  if (DefaultSettings->PrimingTime != -1)
-  {
-    PrimingTime = &DefaultSettings->PrimingTime;
-  }
-  if (DefaultSettings->BlowOffTime != -1)
-  {
-    BlowOffTime = &DefaultSettings->BlowOffTime;
-  }
-
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("PressurePump object created"), true, 2);
@@ -72,7 +62,6 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Without a param
     BypassSwitch->turnOn();
     if (millis() - PumpTimer > ((uint32_t)*PrimingTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
-      logToSerials(F("Priming complete, running..."), true, 3);
       updateState(PressurePumpStates::RUNNING);
     }
     break;
@@ -83,19 +72,11 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Without a param
     if (RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000))
     {
       RunTime = 0;
-      logToSerials(F("Running complete, stopping..."), true, 3);
-      if (BlowOffTime != NULL && *BlowOffTime > 0)
-      {
-        updateState(PressurePumpStates::BLOWOFF);
-      }
-      else
-      {
-        updateState(PressurePumpStates::IDLE);
-      }
+      updateState(PressurePumpStates::BLOWOFF);
     }
     if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
     {
-      Parent->addToLog(F("ALERT: Pump timeout reached"), 3); ///< \todo send email alert
+      Parent->addToLog(F("Pump timeout"), 3); ///< \todo send email alert
       updateState(PressurePumpStates::DISABLED);
     }
     break;
@@ -104,18 +85,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Without a param
     BypassSwitch->turnOn();
     if (millis() - PumpTimer > ((uint32_t)*BlowOffTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
-      logToSerials(F("Pressure released"), true, 3);
-      if (BypassSolenoidClosingDelay != NULL && *BypassSolenoidClosingDelay > 0)
-      {
-        updateState(PressurePumpStates::CLOSINGBYPASS);
-      }
-      else
-      {
-        if (*PumpEnabled)
-          updateState(PressurePumpStates::IDLE);
-        else
-          updateState(PressurePumpStates::DISABLED);
-      }
+      updateState(PressurePumpStates::CLOSINGBYPASS);
     }
     break;
   case PressurePumpStates::IDLE:
@@ -141,15 +111,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Without a param
     if ((RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000)) || millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000))
     {
       RunTime = 0;
-      logToSerials(F("Mixing finished"), true, 3);
-      if (BypassSolenoidClosingDelay != NULL && *BypassSolenoidClosingDelay > 0)
-      {
-        updateState(PressurePumpStates::CLOSINGBYPASS);
-      }
-      else
-      {
-        updateState(PressurePumpStates::IDLE);
-      }
+      updateState(PressurePumpStates::CLOSINGBYPASS);
     }
     break;
   case PressurePumpStates::DISABLED:
@@ -171,17 +133,10 @@ void PressurePump::startPump(bool ResetStatus)
   {
     logToSerials(F("ON"), true, 1);
     Parent->getSoundObject()->playOnSound();
-    if (PrimingTime != NULL && *PrimingTime > 0)
-    {
-      updateState(PressurePumpStates::PRIMING);
-    }
-    else
-    {
-      updateState(PressurePumpStates::RUNNING);
-    }
+    updateState(PressurePumpStates::PRIMING);    
   }
   else
-    logToSerials(F("disabled, cannot turn ON"), true, 1);
+    logToSerials(F("disabled"), true, 1);
 }
 
 void PressurePump::stopPump()
@@ -189,14 +144,7 @@ void PressurePump::stopPump()
   logToSerials(Name, false, 3);
   logToSerials(F("OFF"), true, 1);
   Parent->getSoundObject()->playOffSound();
-  if (BlowOffTime != NULL && *BlowOffTime > 0)
-  {
-    updateState(PressurePumpStates::BLOWOFF);
-  }
-  else
-  {
-    updateState(PressurePumpStates::IDLE);
-  }
+  updateState(PressurePumpStates::BLOWOFF);
 }
 
 void PressurePump::disablePump()
@@ -210,7 +158,7 @@ void PressurePump::disablePump()
 void PressurePump::startBlowOff()
 {
   PumpTimer = millis();
-  logToSerials(F("Pressure blow off"), true, 3);
+  logToSerials(F("Blow off"), true, 3);
   updateState(PressurePumpStates::BLOWOFF);
 }
 
@@ -229,7 +177,7 @@ void PressurePump::startMixing(int TimeOutSec) ///< Mix the nutrient reservoir b
   {
     RunTime = 0; ///< if no mix timeout defined -> Run until pump timeout is reached
   }
-  Parent->addToLog(F("Mixing nutrients"));
+  Parent->addToLog(F("Mixing"));
   Parent->getSoundObject()->playOnSound();
   updateState(PressurePumpStates::MIXING);
 }
@@ -265,16 +213,6 @@ char *PressurePump::getStateText()
   return toText_pressurePumpState(State);
 }
 
-bool PressurePump::getBypassOnState()
-{
-  return BypassOn;
-}
-
-char *PressurePump::getBypassOnStateText()
-{
-  return toText_onOff(BypassOn);
-}
-
 bool PressurePump::getEnabledState()
 {
   return *PumpEnabled;
@@ -306,7 +244,7 @@ void PressurePump::setPrimingTime(int Timing)
   if (*PrimingTime != Timing && Timing > 0)
   {
     *PrimingTime = Timing;
-    Parent->addToLog(F("Aero priming time updated"));
+    Parent->addToLog(F("Priming time updated"));
     Parent->getSoundObject()->playOnSound();
   }
 }

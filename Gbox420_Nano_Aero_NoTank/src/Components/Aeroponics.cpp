@@ -95,7 +95,7 @@ void Aeroponics::setDuration(float duration)
   if (*Duration != duration && duration > 0)
   {
     *Duration = duration;
-    Parent->addToLog(F("Spray duration updated"));
+    Parent->addToLog(F("Duration updated"));
     Parent->getSoundObject()->playOnSound();
   }
 }

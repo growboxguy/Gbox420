@@ -180,7 +180,19 @@ void AeroModule_Web::websiteEvent_Button(char *Button)
       if (AeroResponse1Received.PressureTankPresent)
       {
         AeroCommand2ToSend.RefillPressureTank = true;
-        Parent->addToLog(F("Refilling pressure tank"), false);
+        Parent->addToLog(F("Refilling tank"), false);
+      }
+      else
+      {
+        Parent->addToLog(F("Pressure tank not available"), false);
+      }
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Drain")) == 0)
+    {
+      if (AeroResponse1Received.PressureTankPresent)
+      {
+        AeroCommand2ToSend.DrainPressureTank = true;
+        Parent->addToLog(F("Draining tank"), false);
       }
       else
       {
@@ -340,7 +352,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         break;
       case AeroMessages::AeroResponse2:
         memcpy(&AeroResponse2Received, ReceivedResponse, sizeof(struct AeroResponse_P2));
-        if (AeroCommand2ToSend.PumpOn || AeroCommand2ToSend.PumpOff || AeroCommand2ToSend.PumpDisable || AeroCommand2ToSend.MixReservoir || AeroCommand2ToSend.RefillPressureTank || AeroCommand2ToSend.TareWeight)
+        if (AeroCommand2ToSend.PumpOn || AeroCommand2ToSend.PumpOff || AeroCommand2ToSend.PumpDisable || AeroCommand2ToSend.MixReservoir || AeroCommand2ToSend.RefillPressureTank || AeroCommand2ToSend.DrainPressureTank || AeroCommand2ToSend.TareWeight)
         {
           SyncRequested = true; ///< Force a second message exchange to actualize the response
           AeroCommand2ToSend.PumpOn = false;
@@ -348,6 +360,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           AeroCommand2ToSend.PumpDisable = false;
           AeroCommand2ToSend.MixReservoir = false;
           AeroCommand2ToSend.RefillPressureTank = false;
+          AeroCommand2ToSend.DrainPressureTank = false;
           AeroCommand2ToSend.TareWeight = false;
         }
         break;

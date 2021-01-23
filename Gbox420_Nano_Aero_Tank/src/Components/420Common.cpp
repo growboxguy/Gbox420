@@ -5,13 +5,11 @@ Common::Common(const __FlashStringHelper *Name)
   this->Name = Name;
   logToSerials(F("Initializing "), false, 2);
   logToSerials(this->Name, false, 0);
-  logToSerials(F("..."), false, 0); ///< Prints "Initializing NAME..." to the console
 }
 
 Common::Common()
 {
   logToSerials(F("Initializing "), false, 4);
-  logToSerials(F("..."), false, 0); ///< Prints "Initializing..." to the console
 }
 
 void Common::report()
@@ -89,14 +87,14 @@ bool Common::isThisMyComponent(char const *lookupName)
         break; ///< if we have reached the string termination sign. ( null terminator is the numerical value 0, sometimes also marked as '\0')
       if (SafetyCount++ > MaxWordLength)
       {
-        logToSerials(F("Name too long: "), false, 3);
-        logToSerials(lookupName, true, 0);
+        logToSerials(F("Name too long:"), false, 3);
+        logToSerials(lookupName, true, 1);
         return false;
       }
     }
     ///< Serial.println("Match");
-    logToSerials(F("Extracted function: "), false, 1);
-    logToSerials(&ShortMessage, true, 0);
+    logToSerials(F("Function:"), false, 1);
+    logToSerials(&ShortMessage, true, 1);
     return true;
   }
   else

@@ -137,6 +137,8 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       AeroT1->Pump->disablePump();
     if (((AeroCommand_P2 *)ReceivedCommand)->MixReservoir)
       AeroT1->Pump->startMixing();
+    if (((AeroCommand_P2 *)ReceivedCommand)->DrainPressureTank)
+      AeroT1->drainTank();
     AeroT1->Pump->setSpeed(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed);
     AeroT1->Pump->setPumpTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);
     AeroT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime);
@@ -181,7 +183,7 @@ void AeroModule::updateAckData()
 { // so you can see that new data is being sent
   if (*Debug)
   {
-    logToSerials(F("Updating Acknowledgement to:"), false, 2);
+    logToSerials(F("Updating Ack to:"), false, 2);
     logToSerials(toText_aeroSequenceID(NextSequenceID), true, 1);
   }
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)

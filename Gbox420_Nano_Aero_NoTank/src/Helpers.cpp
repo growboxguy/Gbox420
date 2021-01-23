@@ -13,10 +13,6 @@ void getFreeMemory()
 
 float convertBetweenTempUnits(float Value)
 {
-  logToSerials(F("DEBUG: "), false, 0);
-  logToSerials(Value, true, 0);
-  logToSerials(F("DEBUG: "), false, 0);
-  logToSerials(*Metric, true, 0);
   if (*Metric)
     return round((Value - 32) * 55.555555) / 100.0;
   else
