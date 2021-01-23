@@ -265,11 +265,6 @@ char *PressurePump::getStateText()
   return toText_pressurePumpState(State);
 }
 
-bool PressurePump::getOnState()
-{
-  return PumpOn;
-}
-
 bool PressurePump::getBypassOnState()
 {
   return BypassOn;

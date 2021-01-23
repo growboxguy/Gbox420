@@ -32,7 +32,6 @@ public:
 
   PressurePumpStates getState();
   char *getStateText();    ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
-  bool getOnState();       ///< Pump ON(1)/OFF(0)
   bool getBypassOnState(); ///< Bypass solenoid ON(1)/OFF(0)
   char *getBypassOnStateText();
   bool getEnabledState(); ///< Pump ENABLED(1)/DISABLED(0)
@@ -54,7 +53,6 @@ protected:
   Module *Parent;
   Switch_PWM *PumpSwitch;
   Switch *BypassSwitch;
-  bool PumpOn = false;     ///< true turns the pump on
   bool BypassOn = false;   ///< true turns the bypass solenoid on
   bool *PumpEnabled;       ///< Enable/disable pump. false= Block running the pump
   uint8_t *Speed = NULL;   ///< Set PWM speed of the motor (!!!Needs a MOSFET based relay!!!)

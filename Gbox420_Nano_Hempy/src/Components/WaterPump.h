@@ -21,7 +21,6 @@ public:
 
   WaterPumpStates getState();  ///< Get the current pump state
   char *getStateText();    ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
-  bool getOnState();       ///< Pump ON(1)/OFF(0)  
   bool getEnabledState(); ///< Pump ENABLED(1)/DISABLED(0)
   void setPumpTimeOut(int NewTime);
   int getPumpTimeOut();
@@ -33,7 +32,6 @@ private:
 protected:
   Module *Parent;
   Switch_PWM *PumpSwitch;
-  bool PumpOn = false;     ///< true turns the pump on
   bool *PumpEnabled;       ///< Enable/disable pump. false= Block running the pump
   uint8_t *Speed = NULL;   ///< Set PWM speed of the motor (!!!Needs a MOSFET based relay!!!)
   int RunTime = 0;         ///< Max pump run time in seconds

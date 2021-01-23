@@ -52,7 +52,7 @@ void HempyBucket::checkWateringWeight()
     
   if (BucketPump->getEnabledState()) ///< If the weight based watering is enabled AND the pump is enabled
   {
-    if (BucketWeightSensor->getWeight(true) < *StartWeight && !BucketPump->getOnState()) ///< If the weight is below the limit AND the pump is off
+    if (BucketWeightSensor->getWeight(true) < *StartWeight && BucketPump->getState() != WaterPumpStates::RUNNING) ///< If the weight is below the limit AND the pump is off
     {
       StartTotalWeight = BucketWeightSensor->getWeight(true) + WasteReservoirWeightSensor->getWeight(true);
       BucketPump->startPump();

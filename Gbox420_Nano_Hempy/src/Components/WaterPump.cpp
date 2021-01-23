@@ -125,11 +125,6 @@ char *WaterPump::getStateText()
   return toText_waterPumpState(State);
 }
 
-bool WaterPump::getOnState()
-{
-  return PumpOn;
-}
-
 bool WaterPump::getEnabledState()
 {
   return *PumpEnabled;
@@ -142,7 +137,7 @@ int WaterPump::getPumpTimeOut()
 
 void WaterPump::setPumpTimeOut(int TimeOut)
 {
-  if (*this->PumpTimeOut != TimeOut && TimeOut > 0)
+  if (*this->PumpTimeOut != (uint16_t)TimeOut && TimeOut > 0)
   {
     *this->PumpTimeOut = TimeOut;
     logToSerials(Name, false, 1);
