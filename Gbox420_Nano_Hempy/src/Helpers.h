@@ -35,6 +35,17 @@ enum class PressurePumpStates
   BYPASSOPEN
 };
 
+enum class AeroTankStates
+{
+  DISABLED,
+  IDLE,  
+  SPRAYING,
+  STOPSPRAYING,
+  RELEASELINEPRESSURE,
+  REFILLING,
+  DRAINING,
+  MIXING
+};
 
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;

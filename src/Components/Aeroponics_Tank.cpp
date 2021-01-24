@@ -55,72 +55,101 @@ void Aeroponics_Tank::refresh_Sec()
 
 void Aeroponics_Tank::processTimeCriticalStuff()
 {
-  if (State == AeroTankStates::SPRAYING)
+  if (State == AeroTankStates::SPRAYING || State == AeroTankStates::STOPSPRAYING)
     updateState(State);
 }
 
 void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State
 {
-  if (State != NewState)
+  if (State != NewState) //When the state changes
   {
-    State = NewState;
+    StateTimer = millis(); //Start measuring the time spent in the new state
   }
 
-  switch (State)
+  switch (NewState)
   {
-  case AeroTankStates::IDLE:
-    if (Pump->getState() == PressurePumpStates::IDLE && FeedbackPressureSensor->getPressure() <= *MinPressure)
-    { ///< If there is no spray in progress AND the pump is idle AND the pressure is below the minimum
-      logToSerials(F("Tank recharging"), false, 3);
-      Pump->startPump(false);
-      updateState(AeroTankStates::REFILLING);
+  case AeroTankStates::DISABLED:
+    if (State != NewState)
+    {
+      SpraySwitch->turnOff();
     }
-    if (*SprayEnabled && (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED))
+    break;
+  case AeroTankStates::IDLE:
+    if (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED)
     {
       uint32_t Interval;
       if (DayMode)
-      {
         Interval = *DayInterval * 60000; ///< Interval is in minutes
-      }
       else
-      {
         Interval = *NightInterval * 60000; ///< Interval is in minutes
-      }
       if (millis() - SprayTimer >= Interval)
       { ///< if time to start spraying (AeroInterval in Minutes)
-        sprayNow(false);
+        updateState(AeroTankStates::SPRAYING);
       }
+    }
+    if (Pump->getState() == PressurePumpStates::IDLE && FeedbackPressureSensor->getPressure() <= *MinPressure)
+    { ///< Refill tank: When the pump is idle AND the pressure is below the minimum
+      logToSerials(F("Tank recharging"), false, 3);
+      updateState(AeroTankStates::REFILLING);
     }
     break;
   case AeroTankStates::SPRAYING:
+    if (State != NewState)
+    {
+      SpraySwitch->turnOn();
+      SprayTimer = millis();
+    }
     if (millis() - SprayTimer >= *Duration * 1000)
     { ///< if time to stop spraying
       LastSprayPressure = Aeroponics_Tank::FeedbackPressureSensor->getPressure();
-      sprayOff(false);
-      updateState(AeroTankStates::RELEASEPRESSURE);
+      updateState(AeroTankStates::RELEASELINEPRESSURE);
     }
     break;
-  case AeroTankStates::RELEASEPRESSURE:
-    if (Pump->getState() != PressurePumpStates::BLOWOFF) ///< Wait until pump finishes blowing off pressure
+  case AeroTankStates::STOPSPRAYING:
+    if (State != NewState)
     {
+      SpraySwitch->turnOff();
+      SprayTimer = millis();
+    }
+    if (millis() - SprayTimer >= *SpraySolenoidClosingDelay)
+    {                        ///< Closing a solenoid takes time, wait for the spray solenoid to close before opening bypass solenoid to release pressure
+      SprayTimer = millis(); ///< Start measuring the time since the last spray
+      updateState(AeroTankStates::RELEASELINEPRESSURE);
+    }
+    break;
+  case AeroTankStates::RELEASELINEPRESSURE:
+    if (State != NewState)
+    {
+      Pump->startBlowOff(); ///< The pressure pump's bypass solenoid is used to release pressure from the misting loop
+    }
+    if (Pump->getState() != PressurePumpStates::BLOWOFF && Pump->getState() != PressurePumpStates::CLOSINGBYPASS)
+    { ///< Wait until pump finishes blowing off and closes the bypass solenoid
       updateState(AeroTankStates::IDLE);
     }
     break;
   case AeroTankStates::REFILLING:
-    if (Pump->getState() == PressurePumpStates::RUNNING && FeedbackPressureSensor->readPressure(false) >= *MaxPressure)
+    if (State != NewState)
+    {
+      Pump->startPump(false);
+    }
+    if (FeedbackPressureSensor->readPressure(false) >= *MaxPressure)
     { ///< refill complete, target pressure reached
       logToSerials(F("Tank recharged"), false, 3);
-      Pump->stopPump();
-      updateState(AeroTankStates::RELEASEPRESSURE);
+      updateState(AeroTankStates::RELEASELINEPRESSURE);
     }
-    if (Pump->getState() == PressurePumpStates::DISABLED) ///< if pump is on
+    if (Pump->getState() == PressurePumpStates::DISABLED) ///< if pump ended up getting disabled
     {                                                     ///< refill failed, target pressure was not reached before the pump timeout was reached
       logToSerials(F("Recharge failed"), false, 3);
-      updateState(AeroTankStates::RELEASEPRESSURE);
+      updateState(AeroTankStates::RELEASELINEPRESSURE);
     }
     break;
   case AeroTankStates::DRAINING:
-    if (FeedbackPressureSensor->readPressure(false) <= 0.1 || Pump->getState() != PressurePumpStates::BYPASSOPEN) ///< if pump is on
+    if (State != NewState)
+    {
+      Pump->turnBypassOn(true);
+      SpraySwitch->turnOn();
+    }
+    if (FeedbackPressureSensor->readPressure(false) <= 0.1 || Pump->getState() != PressurePumpStates::BYPASSOPEN)
     {
       ///< refill failed, target pressure was not reached before the pump timeout was reached
       if (Pump->getState() == PressurePumpStates::BYPASSOPEN)
@@ -138,16 +167,18 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
     }
     break;
   }
+
+  if (State != NewState)
+  {
+    State = NewState;
+  }
 }
 
 void Aeroponics_Tank::sprayNow(bool UserRequest)
 {
   if (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED) //Only allow spraying when pump and bypass solenoid is off
   {
-    SpraySwitch->turnOn();
-    SprayTimer = millis();
     updateState(AeroTankStates::SPRAYING);
-
     if (UserRequest)
     {
       Parent->getSoundObject()->playOnSound();
@@ -167,10 +198,7 @@ void Aeroponics_Tank::sprayNow(bool UserRequest)
 
 void Aeroponics_Tank::sprayOff(bool UserRequest)
 {
-  SpraySwitch->turnOff();
-  SprayTimer = millis();
-  delay(*SpraySolenoidClosingDelay); ///< Wait until the spray solenoid is closed
-  Pump->startBlowOff();              //< The pump's bypass is used to release pressure from the misting loop
+  updateState(AeroTankStates::STOPSPRAYING);
   if (UserRequest)
   {
     Parent->getSoundObject()->playOffSound();
@@ -178,21 +206,19 @@ void Aeroponics_Tank::sprayOff(bool UserRequest)
   }
   else
   {
-    logToSerials(F("Stopping spray"), true, 3);
+    logToSerials(F("Spray OFF"), true, 3);
   }
 }
 
 void Aeroponics_Tank::refillTank()
 {
   Parent->addToLog(F("Refilling tank"));
-  Pump->startPump(true);
+  updateState(AeroTankStates::REFILLING);
 }
 
 void Aeroponics_Tank::drainTank()
 {
   Parent->addToLog(F("Draining tank"));
-  Pump->turnBypassOn(true);
-  SpraySwitch->turnOn();
   updateState(AeroTankStates::DRAINING);
 }
 

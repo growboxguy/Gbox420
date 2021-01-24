@@ -284,3 +284,37 @@ char *toText_pressurePumpState(PressurePumpStates State)
     break;
   }
 }
+
+char *toText_aeroTankState(AeroTankStates State)
+{
+  switch (State)
+  {
+  case AeroTankStates::DISABLED:
+    return toText(F("DISABLED"));
+    break;
+  case AeroTankStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case AeroTankStates::SPRAYING:
+    return toText(F("SPRAYING"));
+    break;
+  case AeroTankStates::STOPSPRAYING:
+    return toText(F("STOPSPRAYING"));
+    break;
+  case AeroTankStates::RELEASELINEPRESSURE:
+    return toText(F("RELEASELINEPRESSURE"));
+    break;
+  case AeroTankStates::REFILLING:
+    return toText(F("REFILLING"));
+    break;
+  case AeroTankStates::DRAINING:
+    return toText(F("DRAINING"));
+    break;
+  case AeroTankStates::MIXING:
+    return toText(F("MIXING"));
+    break;    
+  default:
+    return toText(F("UNKNOWN"));
+    break;
+  }
+}
