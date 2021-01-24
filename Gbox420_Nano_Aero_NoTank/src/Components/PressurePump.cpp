@@ -172,7 +172,7 @@ void PressurePump::setSpeed(uint8_t DutyCycle) //Set PWM duty cycle
 
 void PressurePump::startMixing() ///< Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout
 {
-  Parent->addToLog(F("Mixing"));
+  
   Parent->getSoundObject()->playOnSound();
   updateState(PressurePumpStates::MIXING);
 }

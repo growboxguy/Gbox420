@@ -77,6 +77,7 @@ char *toText_onOff(bool Status);
 char *toText_yesNo(bool Status);
 char *toText_enabledDisabled(bool Status);
 char *toText_onlineStatus(bool Status);
+char *toText_aeroTankState(AeroTankStates State);
 char *toText_waterPumpState(WaterPumpStates State);
 char *toText_pressurePumpState(PressurePumpStates State);
 char *toText_minute(int Minute);

@@ -96,7 +96,7 @@ struct AeroCommand_P1 : AeroCommonTemplate ///< Aeroponics wireless commands - P
 struct AeroCommand_P2 : AeroCommonTemplate ///< Aeroponics wireless commands - Part2
 {
    AeroCommand_P2(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroCommand_P2(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) uint16_t PumpTimeOut, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) bool DrainPressureTank, __attribute__((unused)) bool TareWeight) : AeroCommonTemplate(SequenceID) {}
+   AeroCommand_P2(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) bool DrainPressureTank, __attribute__((unused)) bool TareWeight, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) uint16_t PumpTimeOut) : AeroCommonTemplate(SequenceID) {}
 
    bool PumpOn = false;
    bool PumpOff = false;
@@ -113,11 +113,12 @@ struct AeroCommand_P2 : AeroCommonTemplate ///< Aeroponics wireless commands - P
 struct AeroResponse_P1 : AeroCommonTemplate ///< Aeroponics wireless response - Part1
 {
    AeroResponse_P1(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroResponse_P1(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool PressureTankPresent, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) float Pressure, __attribute__((unused)) PressurePumpStates State, __attribute__((unused)) float LastSprayPressure, __attribute__((unused)) float Weight) : AeroCommonTemplate(SequenceID) {}
+   AeroResponse_P1(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) PressurePumpStates AeroState, __attribute__((unused)) bool PressureTankPresent, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) float Pressure, __attribute__((unused)) PressurePumpStates PumpState, __attribute__((unused)) float LastSprayPressure, __attribute__((unused)) float Weight) : AeroCommonTemplate(SequenceID) {}
+   AeroTankStates AeroState = AeroTankStates::DISABLED;
    bool PressureTankPresent = false;
    bool SprayEnabled = false;
    float Pressure = 0.0;
-   PressurePumpStates State = PressurePumpStates::DISABLED;
+   PressurePumpStates PumpState = PressurePumpStates::DISABLED;
    float LastSprayPressure = 0.0; // Used only without pressure tank. last spray pressure
    float Weight = 0.0;
 };

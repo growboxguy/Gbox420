@@ -19,6 +19,7 @@ public:
   void sprayOff(bool UserRequest = false);  ///< Stop spraying
   void refillTank();  ///< Recharge the pressure tank
   void drainTank();  ///< Release pressure from the tank  
+  void startMixing();  ///< Start spraying
   void setSprayOnOff(bool State);
   char *sprayStateToText();
   void setDayMode(bool State);
@@ -26,6 +27,7 @@ public:
   void setDayInterval(int Interval);
   void setNightInterval(int Interval);  
   bool getSprayEnabled();
+  AeroTankStates getState();
   float getLastSprayPressure();
   void setMinPressure(float Pressure);
   void setMaxPressure(float Pressure);

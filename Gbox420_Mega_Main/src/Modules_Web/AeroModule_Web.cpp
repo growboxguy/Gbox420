@@ -29,7 +29,9 @@ void AeroModule_Web::report()
 {
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("Pressure:"));
+  strcat_P(LongMessage, (PGM_P)F("State:"));
+  strcat(LongMessage, toText_aeroTankState(AeroResponse1Received.AeroState));
+  strcat_P(LongMessage, (PGM_P)F(" ; Pressure:"));
   strcat(LongMessage, toText_pressure(AeroResponse1Received.Pressure));
   if (AeroResponse1Received.PressureTankPresent)
   {
@@ -46,7 +48,7 @@ void AeroModule_Web::report()
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(AeroResponse1Received.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F(" ; PumpState:"));
-  strcat(LongMessage, toText_pressurePumpState(AeroResponse1Received.State));
+  strcat(LongMessage, toText_pressurePumpState(AeroResponse1Received.PumpState));
   strcat_P(LongMessage, (PGM_P)F(" ; PumpSpeed:"));
   strcat(LongMessage, toText_percentage(AeroCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F(" ; DayMode:"));
@@ -78,8 +80,8 @@ void AeroModule_Web::reportToJSON()
   }
   strcat_P(LongMessage, (PGM_P)F("\",\"LS\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.LastSprayPressure));
-  strcat_P(LongMessage, (PGM_P)F("\",\"St\":\""));
-  strcat(LongMessage, toText((int)AeroResponse1Received.State));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PSt\":\""));
+  strcat(LongMessage, toText((int)AeroResponse1Received.PumpState));
   strcat_P(LongMessage, (PGM_P)F("\",\"PS\":\""));
   strcat(LongMessage, toText(AeroCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
@@ -114,8 +116,8 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
   if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getComponentName(F("Spray")), toText_enabledDisabled(AeroResponse1Received.SprayEnabled));
-    WebServer.setArgString(getComponentName(F("Pump")), toText_pressurePumpState(AeroResponse1Received.State));
+    WebServer.setArgString(getComponentName(F("AState")), toText_aeroTankState(AeroResponse1Received.AeroState));
+    WebServer.setArgString(getComponentName(F("Pump")), toText_pressurePumpState(AeroResponse1Received.PumpState));
     WebServer.setArgString(getComponentName(F("Pres")), toText_pressure(AeroResponse1Received.Pressure));
     WebServer.setArgString(getComponentName(F("LastSP")), toText_pressure(AeroResponse1Received.LastSprayPressure));
     WebServer.setArgString(getComponentName(F("Weight")), toText_weight(AeroResponse1Received.Weight));
@@ -224,7 +226,7 @@ void AeroModule_Web::websiteEvent_Field(char *Field)
     {
       DefaultSettings->NightInterval = WebServer.getArgInt();
       Parent->addToLog(F("Spray interval updated"), false);
-    }   
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpSp")) == 0)
     {
       DefaultSettings->PumpSpeed = WebServer.getArgInt();
@@ -342,10 +344,11 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         if (*Debug)
         {
           logToSerials(F("Aero1:"), false, 4);
+          logToSerials(toText_aeroTankState(AeroResponse1Received.AeroState), false, 1);
           logToSerials(AeroResponse1Received.PressureTankPresent, false, 1);
           logToSerials(AeroResponse1Received.SprayEnabled, false, 1);
-          logToSerials(toText((int)AeroResponse1Received.State), false, 1);
           logToSerials(AeroResponse1Received.Pressure, false, 1);
+          logToSerials(toText_pressurePumpState(AeroResponse1Received.PumpState), false, 1);
           logToSerials(AeroResponse1Received.LastSprayPressure, false, 1);
           logToSerials(AeroResponse1Received.Weight, true, 1);
         }

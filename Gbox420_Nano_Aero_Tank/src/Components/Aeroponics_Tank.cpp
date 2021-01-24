@@ -27,8 +27,8 @@ void Aeroponics_Tank::report()
 {
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("Spray Solenoid:"));
-  strcat(LongMessage, SpraySwitch->getStateText());
+  strcat_P(LongMessage, (PGM_P)F("State:"));
+  strcat(LongMessage, toText_aeroTankState(State));
   strcat_P(LongMessage, (PGM_P)F(" ; MinPressure:"));
   strcat(LongMessage, toText_pressure(*MinPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; MaxPressure:"));
@@ -166,6 +166,23 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
       }
     }
     break;
+  case AeroTankStates::MIXING:
+    if (State != NewState)
+    {
+      Pump->startMixing();
+    }
+    if (Pump->getState() != PressurePumpStates::MIXING)
+    { /// When mixing finished (Mixing runs till pump timeout)
+      if (*SprayEnabled)
+      {
+        updateState(AeroTankStates::IDLE);
+      }
+      else
+      {
+        updateState(AeroTankStates::DISABLED);
+      }
+    }
+    break;
   }
 
   if (State != NewState)
@@ -220,6 +237,12 @@ void Aeroponics_Tank::drainTank()
 {
   Parent->addToLog(F("Draining tank"));
   updateState(AeroTankStates::DRAINING);
+}
+
+void Aeroponics_Tank::startMixing()
+{
+  Parent->addToLog(F("Mixing"));
+  updateState(AeroTankStates::MIXING);
 }
 
 void Aeroponics_Tank::setDayMode(bool State)
@@ -286,6 +309,11 @@ void Aeroponics_Tank::setSprayOnOff(bool State)
 bool Aeroponics_Tank::getSprayEnabled()
 {
   return *SprayEnabled;
+}
+
+AeroTankStates Aeroponics_Tank::getState()
+{
+  return State;
 }
 
 char *Aeroponics_Tank::sprayStateToText()
