@@ -13,7 +13,6 @@ enum class AeroTankStates
   SPRAYING,
   RELEASEPRESSURE,
   REFILLING,
-  MIXING,
   DRAINING  
 };
 
@@ -22,38 +21,30 @@ class Aeroponics_Tank : public Common
 {
 public:
   Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::Aeroponics_TankSettings *DefaultSettings, PressurePump *Pump, PressureSensor *FeedbackPressureSensor);
+  void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
   void refresh_Sec();
-  void report();
-  PressurePump *Pump;
+  void report();  
   void updateState(AeroTankStates NewState);
   void sprayNow(bool UserRequest = false);  ///< Start spraying
   void sprayOff(bool UserRequest = false);  ///< Stop spraying
   void refillTank();  ///< Recharge the pressure tank
-  void drainTank(){};  ///< Release pressure from the tank
-  void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
+  void drainTank();  ///< Release pressure from the tank  
   void setSprayOnOff(bool State);
   char *sprayStateToText();
   void setDayMode(bool State);
   void setDuration(float Duration);
   void setDayInterval(int Interval);
-  void setNightInterval(int Interval);
-  float getDuration();
-  int getDayInterval();
-  int getNightInterval();
-  char *getDayIntervalText();
-  char *getNightIntervalText();
-  char *getSprayDurationText();
+  void setNightInterval(int Interval);  
   bool getSprayEnabled();
-  float getPressure();
   float getLastSprayPressure();
-  char *getLastSprayPressureText(bool IncludeCurrentPressure);
   void setMinPressure(float Pressure);
   void setMaxPressure(float Pressure);
+  PressurePump *Pump;
+  PressureSensor *FeedbackPressureSensor; ///< Pressure sensor object that will monitor the spray pressure
 
 private:
 protected:
-  Module *Parent;
-  PressureSensor *FeedbackPressureSensor; ///< Pressure sensor object that will monitor the spray pressure
+  Module *Parent;  
   Switch *SpraySwitch; //Relay or MOSFET controlling the spray solenoid
   AeroTankStates State = AeroTankStates::SPRAYING;  //< Stores the current state of the Aeroponics tote
   uint16_t *SpraySolenoidClosingDelay;  //< How long it takes to close the Spray solenoid. 

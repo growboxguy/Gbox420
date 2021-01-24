@@ -241,7 +241,7 @@ char *toText_waterPumpState(WaterPumpStates State)
     break;
   case WaterPumpStates::IDLE:
     return toText(F("IDLE"));
-    break;  
+    break;
   case WaterPumpStates::RUNNING:
     return toText(F("RUNNING"));
     break;
@@ -276,6 +276,9 @@ char *toText_pressurePumpState(PressurePumpStates State)
   case PressurePumpStates::CLOSINGBYPASS:
     return toText(F("BYPASS"));
     break;
+  case PressurePumpStates::BYPASSOPEN:
+    return toText(F("BYPASSOPEN"));
+    break;    
   default:
     return toText(F("UNKNOWN"));
     break;

@@ -8,6 +8,7 @@ PressurePump::PressurePump(const __FlashStringHelper *Name, Module *Parent, Sett
   PumpSwitch = new Switch_PWM(F("SpraySolenoid"), DefaultSettings->PumpPin, &DefaultSettings->Speed, &DefaultSettings->SpeedLowLimit, DefaultSettings->PumpPinNegativeLogic);
   logToSerials(F(""), false, 1); //Extra indentation
   BypassSwitch = new Switch(F("BypassSolenoid"), DefaultSettings->BypassSolenoidPin, DefaultSettings->BypassSolenoidNegativeLogic);
+  BypassSolenoidMaxOpenTime = &DefaultSettings->BypassSolenoidMaxOpenTime;
   BypassSolenoidClosingDelay = &DefaultSettings->BypassSolenoidClosingDelay;
   PrimingTime = &DefaultSettings->PrimingTime;
   BlowOffTime = &DefaultSettings->BlowOffTime;
@@ -83,6 +84,14 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Without a param
       updateState(PressurePumpStates::CLOSINGBYPASS);
     }
     break;
+  case PressurePumpStates::BYPASSOPEN:
+    PumpSwitch->turnOff();
+    BypassSwitch->turnOn();
+    if (millis() - PumpTimer > ((uint32_t)*BypassSolenoidMaxOpenTime * 1000)) ///< Is it time to disable the Bypass solenoid
+    {
+      updateState(PressurePumpStates::CLOSINGBYPASS);
+    }
+    break;
   case PressurePumpStates::IDLE:
     PumpSwitch->turnOff();
     BypassSwitch->turnOff();
@@ -127,7 +136,7 @@ void PressurePump::startPump(bool ResetStatus)
   {
     logToSerials(F("ON"), true, 1);
     Parent->getSoundObject()->playOnSound();
-    updateState(PressurePumpStates::PRIMING);    
+    updateState(PressurePumpStates::PRIMING);
   }
   else
     logToSerials(F("disabled"), true, 1);
@@ -162,31 +171,27 @@ void PressurePump::setSpeed(uint8_t DutyCycle) //Set PWM duty cycle
 }
 
 void PressurePump::startMixing() ///< Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout
-{ 
+{
   Parent->addToLog(F("Mixing"));
   Parent->getSoundObject()->playOnSound();
   updateState(PressurePumpStates::MIXING);
 }
 
-void PressurePump::turnBypassOn()
+void PressurePump::turnBypassOn(bool KeepOpen)
 {
   Parent->addToLog(F("Bypass ON"));
   Parent->getSoundObject()->playOnSound();
-  updateState(PressurePumpStates::BLOWOFF);
+  if (KeepOpen)
+    updateState(PressurePumpStates::BYPASSOPEN);
+  else
+    updateState(PressurePumpStates::BLOWOFF);
 }
 
 void PressurePump::turnBypassOff()
 {
   Parent->addToLog(F("Bypass OFF"));
   Parent->getSoundObject()->playOffSound();
-  if (*PumpEnabled)
-  {
-    updateState(PressurePumpStates::IDLE);
-  }
-  else
-  {
-    updateState(PressurePumpStates::DISABLED);
-  }
+  updateState(PressurePumpStates::CLOSINGBYPASS);
 }
 
 PressurePumpStates PressurePump::getState()

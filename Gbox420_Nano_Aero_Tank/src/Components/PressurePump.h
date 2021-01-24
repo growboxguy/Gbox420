@@ -23,7 +23,7 @@ public:
   void disablePump();                       ///< Disable the pump
   void startMixing();
 
-  void turnBypassOn();
+  void turnBypassOn(bool KeepOpen = false);  ///< KeepOpen False - Opens the bypass vale for a short period to blow off pressure, KeepOpen True: Keep the bypass open up to BypassSolenoidMaxOpenTime
   void turnBypassOff();
 
   void startPrime();
@@ -31,7 +31,7 @@ public:
   void startBlowOff();
 
   PressurePumpStates getState();
-  char *getStateText();    ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
+  char *getStateText();   ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
   bool getEnabledState(); ///< Pump ENABLED(1)/DISABLED(0)
 
   //void checkRelay(); ///< Flit the relay into the correct status ON/OFF based on PumpOn variable
@@ -51,10 +51,11 @@ protected:
   Module *Parent;
   Switch_PWM *PumpSwitch;
   Switch *BypassSwitch;
-  bool *PumpEnabled;       ///< Enable/disable pump. false= Block running the pump
-  uint8_t *Speed = NULL;   ///< Set PWM speed of the motor (!!!Needs a MOSFET based relay!!!)
-  uint16_t *PumpTimeOut = NULL; ///< Max pump run time in seconds
-  uint16_t *BypassSolenoidClosingDelay = NULL;  ///< (ms) How long it takes for the solenoid to close
-  int *PrimingTime = NULL; ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
-  int *BlowOffTime = NULL; ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
+  bool *PumpEnabled;                           ///< Enable/disable pump. false= Block running the pump
+  uint8_t *Speed = NULL;                       ///< Set PWM speed of the motor (!!!Needs a MOSFET based relay!!!)
+  uint16_t *PumpTimeOut = NULL;                ///< Max pump run time in seconds
+  uint16_t *BypassSolenoidMaxOpenTime = NULL;  ///< (sec) Max time the bypass can stay open
+  uint16_t *BypassSolenoidClosingDelay = NULL; ///< (ms) How long it takes for the solenoid to close
+  int *PrimingTime = NULL;                     ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+  int *BlowOffTime = NULL;                     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
 };
