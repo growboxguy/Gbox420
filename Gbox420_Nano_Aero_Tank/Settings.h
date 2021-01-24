@@ -42,27 +42,21 @@ typedef struct
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
-  struct AeroponicsSettings ///< Common default settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
+  struct Aeroponics_TankSettings ///< Aeroponics_Tank default settings
   {
-    AeroponicsSettings(bool SprayEnabled = true, float Duration = 0.0, int DayInterval = 0, int NightInterval = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), MaxPressure(MaxPressure) {}
+    Aeroponics_TankSettings(float MinPressure = 0.0, uint8_t SpraySolenoidPin = 0, bool SpraySolenoidNegativeLogic = false, uint16_t SpraySolenoidClosingDelay = 0, uint16_t TankDrainingTimeout = 0, bool SprayEnabled = true, float Duration = 0.0, int DayInterval = 0, int NightInterval = 0, float MaxPressure = 0.0) : MinPressure(MinPressure), SpraySolenoidPin(SpraySolenoidPin), SpraySolenoidNegativeLogic(SpraySolenoidNegativeLogic), SpraySolenoidClosingDelay(SpraySolenoidClosingDelay),TankDrainingTimeout(TankDrainingTimeout), SprayEnabled(SprayEnabled), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), MaxPressure(MaxPressure) {}
+    uint8_t SpraySolenoidPin;        ///< Relay controlling DC power to the solenoid
+    bool SpraySolenoidNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
+    uint16_t SpraySolenoidClosingDelay;     ///< (ms) Time required for the solenoid to close. To avoid draining the tank the bypass valve is not allowed to open until the Spray solenoid is not closed
+    uint16_t TankDrainingTimeout; ///< (sec) How long does it take to fully drain the pressure tank by opening the spray and bypass solenoid at the same time
     bool SprayEnabled; ///< Enable/disable spraying cycle
     float Duration;   ///< Spray time in seconds (Actual duration is ~0.5sec longer due to thread + solenoid delay)
     int DayInterval;   ///< Spray every X minutes - When the lights are ON
     int NightInterval; ///< Spray every X minutes - When the lights are OFF
+    float MinPressure; ///< Turn on pump below this pressure
     float MaxPressure; ///< Turn off pump above this pressure
   };
-  struct AeroponicsSettings AeroT1_Common = {.SprayEnabled = true, .Duration = 1.0, .DayInterval = 6, .NightInterval = 10, .MaxPressure = 7.0};
-
-  struct AeroponicsSettings_TankSpecific ///< Aeroponics_Tank default settings
-  {
-    AeroponicsSettings_TankSpecific(float MinPressure = 0.0, uint8_t SpraySolenoidPin = 0, bool SpraySolenoidNegativeLogic = false, uint16_t SpraySolenoidClosingDelay = 0, uint16_t TankDrainingTimeout = 0) : MinPressure(MinPressure), SpraySolenoidPin(SpraySolenoidPin), SpraySolenoidNegativeLogic(SpraySolenoidNegativeLogic), SpraySolenoidClosingDelay(SpraySolenoidClosingDelay),TankDrainingTimeout(TankDrainingTimeout) {}
-    float MinPressure;               ///< Turn on pump below this pressure
-    uint8_t SpraySolenoidPin;        ///< Relay controlling DC power to the solenoid
-    bool SpraySolenoidNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
-    uint16_t SpraySolenoidClosingDelay;     ///< (ms) Time required for the solenoid to close. To avoid draining the tank the bypass valve is not allowed to open until the Spray solenoid is not closed
-    uint16_t TankDrainingTimeout;
-  };
-  struct AeroponicsSettings_TankSpecific AeroT1_Specific = {.MinPressure = 5.0, .SpraySolenoidPin = 5, .SpraySolenoidNegativeLogic = true, .SpraySolenoidClosingDelay = 600};
+  struct Aeroponics_TankSettings AeroT1 = {.SpraySolenoidPin = 5, .SpraySolenoidNegativeLogic = true, .SpraySolenoidClosingDelay = 600, .SprayEnabled = true, .Duration = 1.0, .DayInterval = 6, .NightInterval = 10,.MinPressure = 5.0, .MaxPressure = 7.0};
 
   struct PressureSensorSettings ///< PressureSensor default settings
   {

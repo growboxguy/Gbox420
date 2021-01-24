@@ -1,8 +1,10 @@
 #pragma once
 
 #include "420Common.h"
-#include "Aeroponics.h"
 #include "Switch.h"
+#include "Sound.h"
+#include "PressureSensor.h"
+#include "PressurePump.h"
 
 enum class AeroTankStates
 {
@@ -16,22 +18,52 @@ enum class AeroTankStates
 };
 
 ///< Aeroponics tote with pressure tank
-class Aeroponics_Tank : virtual public Aeroponics
+class Aeroponics_Tank : public Common
 {
 public:
-  Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, Settings::AeroponicsSettings_TankSpecific *TankSpecificSettings, PressureSensor *FeedbackPressureSensor, PressurePump *Pump);
+  Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::Aeroponics_TankSettings *DefaultSettings, PressurePump *Pump, PressureSensor *FeedbackPressureSensor);
   void refresh_Sec();
   void report();
+  PressurePump *Pump;
   void updateState(AeroTankStates NewState);
   void sprayNow(bool UserRequest = false);  ///< Start spraying
   void sprayOff(bool UserRequest = false);  ///< Stop spraying
   void refillTank();  ///< Recharge the pressure tank
   void drainTank(){};  ///< Release pressure from the tank
   void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
+  void setSprayOnOff(bool State);
+  char *sprayStateToText();
+  void setDayMode(bool State);
+  void setDuration(float Duration);
+  void setDayInterval(int Interval);
+  void setNightInterval(int Interval);
+  float getDuration();
+  int getDayInterval();
+  int getNightInterval();
+  char *getDayIntervalText();
+  char *getNightIntervalText();
+  char *getSprayDurationText();
+  bool getSprayEnabled();
+  float getPressure();
+  float getLastSprayPressure();
+  char *getLastSprayPressureText(bool IncludeCurrentPressure);
+  void setMinPressure(float Pressure);
+  void setMaxPressure(float Pressure);
 
 private:
 protected:
-  AeroTankStates State = AeroTankStates::SPRAYING;
+  Module *Parent;
+  PressureSensor *FeedbackPressureSensor; ///< Pressure sensor object that will monitor the spray pressure
   Switch *SpraySwitch; //Relay or MOSFET controlling the spray solenoid
-  uint16_t *SpraySolenoidClosingDelay;
+  AeroTankStates State = AeroTankStates::SPRAYING;  //< Stores the current state of the Aeroponics tote
+  uint16_t *SpraySolenoidClosingDelay;  //< How long it takes to close the Spray solenoid. 
+  uint32_t SprayTimer = millis();   ///< Times functions regarding to spraying
+  bool *SprayEnabled;          ///< Enable/disable misting
+  float *Duration;            ///< Spray time in seconds
+  int *DayInterval;            ///< Spray every X minutes - With lights ON
+  int *NightInterval;          ///< Spray every X minutes - With lights OFF
+  float *MinPressure;          ///< Minimum acceptable spray pressure
+  float *MaxPressure;          ///< Maximum allowed pressure
+  float LastSprayPressure = 0; ///< tracks the last pressure reading during a spray cycle
+  bool DayMode = true;         ///< Switch between Day and Night spray interval and duration.
 };
