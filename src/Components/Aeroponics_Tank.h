@@ -24,8 +24,8 @@ public:
   char *sprayStateToText();
   void setDayMode(bool State);
   void setDuration(float Duration);
-  void setDayInterval(int Interval);
-  void setNightInterval(int Interval);  
+  void setDayInterval(uint16_t Interval);
+  void setNightInterval(uint16_t Interval);  
   bool getSprayEnabled();
   AeroTankStates getState();
   float getLastSprayPressure();
@@ -44,8 +44,8 @@ protected:
   uint32_t SprayTimer = millis();   ///< Times functions regarding to spraying
   bool *SprayEnabled;          ///< Enable/disable misting
   float *Duration;            ///< Spray time in seconds
-  int *DayInterval;            ///< Spray every X minutes - With lights ON
-  int *NightInterval;          ///< Spray every X minutes - With lights OFF
+  uint16_t *DayInterval;            ///< Spray every X minutes - With lights ON
+  uint16_t *NightInterval;          ///< Spray every X minutes - With lights OFF
   float *MinPressure;          ///< Minimum acceptable spray pressure
   float *MaxPressure;          ///< Maximum allowed pressure
   float LastSprayPressure = 0; ///< tracks the last pressure reading during a spray cycle

@@ -261,7 +261,7 @@ void Aeroponics_Tank::setDayMode(bool State)
   }
 }
 
-void Aeroponics_Tank::setDayInterval(int Interval)
+void Aeroponics_Tank::setDayInterval(uint16_t Interval)
 {
   if (*DayInterval != Interval && Interval > 0)
   {
@@ -270,7 +270,7 @@ void Aeroponics_Tank::setDayInterval(int Interval)
   }
 }
 
-void Aeroponics_Tank::setNightInterval(int Interval)
+void Aeroponics_Tank::setNightInterval(uint16_t Interval)
 {
   if (*NightInterval != Interval && Interval > 0)
   {
