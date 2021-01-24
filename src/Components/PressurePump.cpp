@@ -69,11 +69,6 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Without a param
     PumpSwitch->turnOn();
     BypassSwitch->turnOff();
     *PumpEnabled = true;
-    if (RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000))
-    {
-      RunTime = 0;
-      updateState(PressurePumpStates::BLOWOFF);
-    }
     if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
     {
       Parent->addToLog(F("Pump timeout"), 3); ///< \todo send email alert
@@ -108,9 +103,8 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Without a param
     PumpSwitch->turnOn();
     BypassSwitch->turnOn();
     *PumpEnabled = true;
-    if ((RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000)) || millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000))
+    if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000))
     {
-      RunTime = 0;
       updateState(PressurePumpStates::CLOSINGBYPASS);
     }
     break;
@@ -167,16 +161,8 @@ void PressurePump::setSpeed(uint8_t DutyCycle) //Set PWM duty cycle
   PumpSwitch->setDutyCycle(DutyCycle);
 }
 
-void PressurePump::startMixing(int TimeOutSec) ///< Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout
-{
-  if (TimeOutSec > 0)
-  {
-    RunTime = TimeOutSec;
-  }
-  else
-  {
-    RunTime = 0; ///< if no mix timeout defined -> Run until pump timeout is reached
-  }
+void PressurePump::startMixing() ///< Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout
+{ 
   Parent->addToLog(F("Mixing"));
   Parent->getSoundObject()->playOnSound();
   updateState(PressurePumpStates::MIXING);

@@ -21,7 +21,7 @@ public:
   void startPump(bool ResetStatus = false); ///< Turn the pump ON
   void stopPump();                          ///< Turn the pump OFF
   void disablePump();                       ///< Disable the pump
-  void startMixing(int TimeOutSec = 0);
+  void startMixing();
 
   void turnBypassOn();
   void turnBypassOff();
@@ -53,7 +53,6 @@ protected:
   Switch *BypassSwitch;
   bool *PumpEnabled;       ///< Enable/disable pump. false= Block running the pump
   uint8_t *Speed = NULL;   ///< Set PWM speed of the motor (!!!Needs a MOSFET based relay!!!)
-  int RunTime = 0;         ///< Max pump run time in seconds
   uint16_t *PumpTimeOut = NULL; ///< Max pump run time in seconds
   uint16_t *BypassSolenoidClosingDelay = NULL;  ///< (ms) How long it takes for the solenoid to close
   int *PrimingTime = NULL; ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
