@@ -19,7 +19,7 @@ public:
   void setSpeed(uint8_t DutyCycle); //Set PWM duty cycle
 
   void startPump(bool ResetStatus = false); ///< Turn the pump ON
-  void stopPump();                          ///< Turn the pump OFF
+  void stopPump(bool ResetStatus = false);                          ///< Turn the pump OFF
   void disablePump();                       ///< Disable the pump
   void startMixing();
 

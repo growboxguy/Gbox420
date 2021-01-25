@@ -130,9 +130,9 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight)
       Weight1->triggerTare();
     if (((AeroCommand_P2 *)ReceivedCommand)->PumpOn)
-      AeroT1->Pump->startPump(true);
+      AeroT1->refillTank();
     if (((AeroCommand_P2 *)ReceivedCommand)->PumpOff)
-      AeroT1->Pump->stopPump();
+      AeroT1->Pump->stopPump(true);
     if (((AeroCommand_P2 *)ReceivedCommand)->PumpDisable)
       AeroT1->Pump->disablePump();
     if (((AeroCommand_P2 *)ReceivedCommand)->MixReservoir)

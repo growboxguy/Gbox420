@@ -108,7 +108,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Without a param
         updateState(PressurePumpStates::DISABLED);
     }
     break;
-  case PressurePumpStates::MIXING:
+  case PressurePumpStates::MIX:
     PumpSwitch->turnOn();
     BypassSwitch->turnOn();
     *PumpEnabled = true;
@@ -142,8 +142,12 @@ void PressurePump::startPump(bool ResetStatus)
     logToSerials(F("disabled"), true, 1);
 }
 
-void PressurePump::stopPump()
+void PressurePump::stopPump(bool ResetStatus)
 {
+  if (ResetStatus)
+  {
+    *PumpEnabled = true;
+  }
   logToSerials(Name, false, 3);
   logToSerials(F("OFF"), true, 1);
   Parent->getSoundObject()->playOffSound();
@@ -174,7 +178,7 @@ void PressurePump::startMixing() ///< Mix the nutrient reservoir by turning on t
 {
   
   Parent->getSoundObject()->playOnSound();
-  updateState(PressurePumpStates::MIXING);
+  updateState(PressurePumpStates::MIX);
 }
 
 void PressurePump::turnBypassOn(bool KeepOpen)
