@@ -151,7 +151,14 @@ void PressurePump::stopPump(bool ResetStatus)
   logToSerials(Name, false, 3);
   logToSerials(F("OFF"), true, 1);
   Parent->getSoundObject()->playOffSound();
-  updateState(PressurePumpStates::BLOWOFF);
+  if (State == PressurePumpStates::RUNNING)
+  {
+    updateState(PressurePumpStates::BLOWOFF);
+  }
+  else
+  {
+    updateState(PressurePumpStates::CLOSINGBYPASS);
+  }
 }
 
 void PressurePump::disablePump()
@@ -176,7 +183,7 @@ void PressurePump::setSpeed(uint8_t DutyCycle) //Set PWM duty cycle
 
 void PressurePump::startMixing() ///< Mix the nutrient reservoir by turning on the bypass solenoid and the pump. Runs till the TimeOutSec parameter or the pump timeout
 {
-  
+
   Parent->getSoundObject()->playOnSound();
   updateState(PressurePumpStates::MIX);
 }
