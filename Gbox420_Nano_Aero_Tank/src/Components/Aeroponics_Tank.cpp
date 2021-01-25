@@ -152,13 +152,13 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
     }
     if (FeedbackPressureSensor->readPressure(false) >= *MaxPressure)
     { ///< refill complete, target pressure reached
-      logToSerials(F("Tank recharged"), false, 3);
+      logToSerials(F("Tank recharged"), true, 3);
       updateState(AeroTankStates::RELEASE);
       BlockOverWritingState = true;
     }
     if (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED)
     { ///< refill failed, target pressure was not reached before the pump timeout
-      logToSerials(F("Recharge failed"), false, 3);
+      logToSerials(F("Recharge failed"), true, 3);
       updateState(AeroTankStates::IDLE);
       BlockOverWritingState = true;
     }
