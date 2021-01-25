@@ -48,80 +48,122 @@ void PressurePump::refresh_Sec()
   updateState(State);
 }
 
-void PressurePump::updateState(PressurePumpStates NewState) ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State
+void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the current State
 {
-  if (State != NewState) ///< if not the default value was passed
+  bool BlockOverWritingState = false; //Used when a state transitions to a new state
+  if (State != NewState)
   {
-    State = NewState;
+    logToSerials(Name, false, 1);
+    logToSerials(F("state:"), false, 1);
+    logToSerials(toText_pressurePumpState(State), false, 1);
+    logToSerials(F("->"), false, 1);
+    logToSerials(toText_pressurePumpState(NewState), true, 1);
+
     PumpTimer = millis(); ///< Start measuring the time spent in the new State
   }
 
-  switch (State)
+  switch (NewState)
   {
+  case PressurePumpStates::IDLE:
+    if (State != NewState)
+    {
+      PumpSwitch->turnOff();
+      BypassSwitch->turnOff();
+      *PumpEnabled = true;
+    }
+    break;
   case PressurePumpStates::PRIMING:
-    PumpSwitch->turnOn();
-    BypassSwitch->turnOn();
+    if (State != NewState)
+    {
+      PumpSwitch->turnOn();
+      BypassSwitch->turnOn();
+    }
     if (millis() - PumpTimer > ((uint32_t)*PrimingTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
       updateState(PressurePumpStates::RUNNING);
+      BlockOverWritingState = true;
     }
     break;
   case PressurePumpStates::RUNNING:
-    PumpSwitch->turnOn();
-    BypassSwitch->turnOff();
-    *PumpEnabled = true;
+    if (State != NewState)
+    {
+      PumpSwitch->turnOn();
+      BypassSwitch->turnOff();
+      *PumpEnabled = true;
+    }
     if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
     {
-      Parent->addToLog(F("Pump timeout"), 3); ///< \todo send email alert
-      updateState(PressurePumpStates::DISABLED);
+      Parent->addToLog(F("Pump timeout"), 3);
+      *PumpEnabled = false;
+      updateState(PressurePumpStates::BLOWOFF);
+      BlockOverWritingState = true;
     }
     break;
   case PressurePumpStates::BLOWOFF:
-    PumpSwitch->turnOff();
-    BypassSwitch->turnOn();
+    if (State != NewState)
+    {
+      PumpSwitch->turnOff();
+      BypassSwitch->turnOn();
+    }
     if (millis() - PumpTimer > ((uint32_t)*BlowOffTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
       updateState(PressurePumpStates::CLOSINGBYPASS);
+      BlockOverWritingState = true;
     }
     break;
   case PressurePumpStates::BYPASSOPEN:
-    PumpSwitch->turnOff();
-    BypassSwitch->turnOn();
+    if (State != NewState)
+    {
+      PumpSwitch->turnOff();
+      BypassSwitch->turnOn();
+    }
     if (millis() - PumpTimer > ((uint32_t)*BypassSolenoidMaxOpenTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
       updateState(PressurePumpStates::CLOSINGBYPASS);
+      BlockOverWritingState = true;
     }
-    break;
-  case PressurePumpStates::IDLE:
-    PumpSwitch->turnOff();
-    BypassSwitch->turnOff();
-    *PumpEnabled = true;
-    break;
+    break;  
   case PressurePumpStates::CLOSINGBYPASS:
-    PumpSwitch->turnOff();
-    BypassSwitch->turnOff();
+    if (State != NewState)
+    {
+      PumpSwitch->turnOff();
+      BypassSwitch->turnOff();
+    }
     if (millis() - PumpTimer > ((uint32_t)*BypassSolenoidClosingDelay)) ///< Bypass is fully closed
     {
       if (*PumpEnabled)
         updateState(PressurePumpStates::IDLE);
       else
         updateState(PressurePumpStates::DISABLED);
+      BlockOverWritingState = true;
     }
     break;
   case PressurePumpStates::MIX:
-    PumpSwitch->turnOn();
-    BypassSwitch->turnOn();
+    if (State != NewState)
+    {
+      PumpSwitch->turnOn();
+      BypassSwitch->turnOn();
+    }
     *PumpEnabled = true;
     if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000))
     {
       updateState(PressurePumpStates::CLOSINGBYPASS);
+      BlockOverWritingState = true;
     }
     break;
   case PressurePumpStates::DISABLED:
-    PumpSwitch->turnOff();
-    BypassSwitch->turnOff();
-    *PumpEnabled = false;
+    if (State != NewState)
+    {
+      PumpSwitch->turnOff();
+      BypassSwitch->turnOff();
+      *PumpEnabled = false;
+    }
     break;
+  }
+
+  if (State != NewState && !BlockOverWritingState)
+  {
+    State = NewState;
   }
 }
 
@@ -131,15 +173,11 @@ void PressurePump::startPump(bool ResetStatus)
   {
     *PumpEnabled = true;
   }
-  logToSerials(Name, false, 3);
   if (*PumpEnabled)
   {
-    logToSerials(F("ON"), true, 1);
     Parent->getSoundObject()->playOnSound();
     updateState(PressurePumpStates::PRIMING);
   }
-  else
-    logToSerials(F("disabled"), true, 1);
 }
 
 void PressurePump::stopPump(bool ResetStatus)
@@ -148,8 +186,6 @@ void PressurePump::stopPump(bool ResetStatus)
   {
     *PumpEnabled = true;
   }
-  logToSerials(Name, false, 3);
-  logToSerials(F("OFF"), true, 1);
   Parent->getSoundObject()->playOffSound();
   if (State == PressurePumpStates::RUNNING)
   {
@@ -166,7 +202,15 @@ void PressurePump::disablePump()
   logToSerials(Name, false, 3);
   logToSerials(F("disabled"), true, 1);
   Parent->getSoundObject()->playOffSound();
-  updateState(PressurePumpStates::DISABLED);
+  *PumpEnabled = false;
+  if (State == PressurePumpStates::RUNNING)
+  {
+    updateState(PressurePumpStates::BLOWOFF);
+  }
+  else
+  {
+    updateState(PressurePumpStates::CLOSINGBYPASS);
+  }
 }
 
 void PressurePump::startBlowOff()
@@ -190,7 +234,6 @@ void PressurePump::startMixing() ///< Mix the nutrient reservoir by turning on t
 
 void PressurePump::turnBypassOn(bool KeepOpen)
 {
-  Parent->addToLog(F("Bypass ON"));
   Parent->getSoundObject()->playOnSound();
   if (KeepOpen)
     updateState(PressurePumpStates::BYPASSOPEN);
@@ -200,7 +243,6 @@ void PressurePump::turnBypassOn(bool KeepOpen)
 
 void PressurePump::turnBypassOff()
 {
-  Parent->addToLog(F("Bypass OFF"));
   Parent->getSoundObject()->playOffSound();
   updateState(PressurePumpStates::CLOSINGBYPASS);
 }

@@ -62,6 +62,14 @@ void Aeroponics_Tank::processTimeCriticalStuff() ///< Called every 0.1sec
 void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State
 {
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
+  if (State != NewState)
+  {
+    logToSerials(Name, false, 1);
+    logToSerials(F("state:"), false, 1);
+    logToSerials(toText_aeroTankState(State), false, 1);
+    logToSerials(F("->"), false, 1);
+    logToSerials(toText_aeroTankState(NewState), true, 1);
+  }
 
   switch (NewState)
   {
@@ -197,40 +205,25 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
 
 void Aeroponics_Tank::sprayNow(bool UserRequest)
 {
-  if (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED) //Only allow spraying when pump and bypass solenoid is off
+  if (UserRequest)
+  {
+    Parent->getSoundObject()->playOnSound();
+  }
+  if (State == AeroTankStates::IDLE || State == AeroTankStates::DISABLED)
   {
     updateState(AeroTankStates::SPRAY);
-    if (UserRequest)
-    {
-      Parent->getSoundObject()->playOnSound();
-      Parent->addToLog(F("Spraying"));
-    }
-    else
-    {
-      logToSerials(F("Spraying"), true, 3);
-    }
-  }
-  else
-  {
-    Parent->getSoundObject()->playOffSound();
-    logToSerials(F("Cannot spray now"), true, 3);
   }
 }
 
 void Aeroponics_Tank::sprayOff(bool UserRequest)
 {
-  if (State == AeroTankStates::SPRAY)
-  {
-    updateState(AeroTankStates::STOPSPRAY);
-  }
   if (UserRequest)
   {
     Parent->getSoundObject()->playOffSound();
-    Parent->addToLog(F("Spray OFF"));
   }
-  else
+  if (State == AeroTankStates::SPRAY)
   {
-    logToSerials(F("Spray OFF"), true, 3);
+    updateState(AeroTankStates::STOPSPRAY);
   }
 }
 
@@ -238,7 +231,7 @@ void Aeroponics_Tank::refillTank()
 {
   if (State == AeroTankStates::IDLE || State == AeroTankStates::DISABLED)
   {
-    Parent->addToLog(F("REFILL tank"));
+    Parent->getSoundObject()->playOnSound();
     updateState(AeroTankStates::REFILL);
   }
 }
@@ -247,7 +240,7 @@ void Aeroponics_Tank::drainTank()
 {
   if (State == AeroTankStates::IDLE || State == AeroTankStates::DISABLED)
   {
-    Parent->addToLog(F("Draining tank"));
+    Parent->getSoundObject()->playOnSound();
     updateState(AeroTankStates::DRAIN);
   }
 }
@@ -256,7 +249,7 @@ void Aeroponics_Tank::startMixing()
 {
   if (State == AeroTankStates::IDLE || State == AeroTankStates::DISABLED)
   {
-    Parent->addToLog(F("Mixing"));
+    Parent->getSoundObject()->playOnSound();
     updateState(AeroTankStates::MIX);
   }
 }
