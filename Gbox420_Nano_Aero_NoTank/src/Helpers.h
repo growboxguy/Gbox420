@@ -30,7 +30,7 @@ enum class PressurePumpStates
   PRIMING,
   RUNNING,
   BLOWOFF,
-  MIXING,
+  MIX,
   BYPASSCLOSE,
   BYPASSOPEN
 };
@@ -39,12 +39,12 @@ enum class AeroTankStates
 {
   DISABLED,
   IDLE,  
-  SPRAYING,
-  STOPSPRAYING,
-  RELEASELINEPRESSURE,
-  REFILLING,
-  DRAINING,
-  MIXING
+  SPRAY,
+  STOPSPRAY,
+  RELEASE,
+  REFILL,
+  DRAIN,
+  MIX
 };
 
 extern HardwareSerial &ArduinoSerial;

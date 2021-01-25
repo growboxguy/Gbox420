@@ -270,8 +270,8 @@ char *toText_pressurePumpState(PressurePumpStates State)
   case PressurePumpStates::BLOWOFF:
     return toText(F("BLOWOFF"));
     break;
-  case PressurePumpStates::MIXING:
-    return toText(F("MIXING"));
+  case PressurePumpStates::MIX:
+    return toText(F("MIX"));
     break;
   case PressurePumpStates::BYPASSCLOSE:
     return toText(F("BYPASSCLOSE"));
@@ -295,23 +295,23 @@ char *toText_aeroTankState(AeroTankStates State)
   case AeroTankStates::IDLE:
     return toText(F("IDLE"));
     break;
-  case AeroTankStates::SPRAYING:
-    return toText(F("SPRAYING"));
+  case AeroTankStates::SPRAY:
+    return toText(F("SPRAY"));
     break;
-  case AeroTankStates::STOPSPRAYING:
-    return toText(F("STOPSPRAYING"));
+  case AeroTankStates::STOPSPRAY:
+    return toText(F("STOPSPRAY"));
     break;
-  case AeroTankStates::RELEASELINEPRESSURE:
-    return toText(F("RELEASELINEPRESSURE"));
+  case AeroTankStates::RELEASE:
+    return toText(F("RELEASE"));
     break;
-  case AeroTankStates::REFILLING:
-    return toText(F("REFILLING"));
+  case AeroTankStates::REFILL:
+    return toText(F("REFILL"));
     break;
-  case AeroTankStates::DRAINING:
-    return toText(F("DRAINING"));
+  case AeroTankStates::DRAIN:
+    return toText(F("DRAIN"));
     break;
-  case AeroTankStates::MIXING:
-    return toText(F("MIXING"));
+  case AeroTankStates::MIX:
+    return toText(F("MIX"));
     break;    
   default:
     return toText(F("UNKNOWN"));
