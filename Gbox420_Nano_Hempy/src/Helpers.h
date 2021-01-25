@@ -31,7 +31,7 @@ enum class PressurePumpStates
   RUNNING,
   BLOWOFF,
   MIX,
-  CLOSINGBYPASS,
+  BYPASSCLOSE,
   BYPASSOPEN
 };
 

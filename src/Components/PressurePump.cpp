@@ -81,7 +81,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Without a param
     BypassSwitch->turnOn();
     if (millis() - PumpTimer > ((uint32_t)*BlowOffTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
-      updateState(PressurePumpStates::CLOSINGBYPASS);
+      updateState(PressurePumpStates::BYPASSCLOSE);
     }
     break;
   case PressurePumpStates::BYPASSOPEN:
@@ -89,7 +89,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Without a param
     BypassSwitch->turnOn();
     if (millis() - PumpTimer > ((uint32_t)*BypassSolenoidMaxOpenTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
-      updateState(PressurePumpStates::CLOSINGBYPASS);
+      updateState(PressurePumpStates::BYPASSCLOSE);
     }
     break;
   case PressurePumpStates::IDLE:
@@ -97,7 +97,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Without a param
     BypassSwitch->turnOff();
     *PumpEnabled = true;
     break;
-  case PressurePumpStates::CLOSINGBYPASS:
+  case PressurePumpStates::BYPASSCLOSE:
     PumpSwitch->turnOff();
     BypassSwitch->turnOff();
     if (millis() - PumpTimer > ((uint32_t)*BypassSolenoidClosingDelay)) ///< Bypass is fully closed
@@ -114,7 +114,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Without a param
     *PumpEnabled = true;
     if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000))
     {
-      updateState(PressurePumpStates::CLOSINGBYPASS);
+      updateState(PressurePumpStates::BYPASSCLOSE);
     }
     break;
   case PressurePumpStates::DISABLED:
@@ -195,7 +195,7 @@ void PressurePump::turnBypassOff()
 {
   Parent->addToLog(F("Bypass OFF"));
   Parent->getSoundObject()->playOffSound();
-  updateState(PressurePumpStates::CLOSINGBYPASS);
+  updateState(PressurePumpStates::BYPASSCLOSE);
 }
 
 PressurePumpStates PressurePump::getState()

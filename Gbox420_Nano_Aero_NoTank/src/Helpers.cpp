@@ -273,8 +273,8 @@ char *toText_pressurePumpState(PressurePumpStates State)
   case PressurePumpStates::MIXING:
     return toText(F("MIXING"));
     break;
-  case PressurePumpStates::CLOSINGBYPASS:
-    return toText(F("BYPASS"));
+  case PressurePumpStates::BYPASSCLOSE:
+    return toText(F("BYPASSCLOSE"));
     break;
   case PressurePumpStates::BYPASSOPEN:
     return toText(F("BYPASSOPEN"));

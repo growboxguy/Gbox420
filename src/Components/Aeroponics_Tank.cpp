@@ -127,7 +127,7 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
     {
       Pump->startBlowOff(); ///< The pressure pump's bypass solenoid is used to release pressure from the misting loop
     }
-    if (Pump->getState() != PressurePumpStates::BLOWOFF && Pump->getState() != PressurePumpStates::CLOSINGBYPASS)
+    if (Pump->getState() != PressurePumpStates::BLOWOFF && Pump->getState() != PressurePumpStates::BYPASSCLOSE)
     { ///< Wait until pump finishes blowing off and closes the bypass solenoid
       updateState(AeroTankStates::IDLE);
       BlockOverWritingState = true;

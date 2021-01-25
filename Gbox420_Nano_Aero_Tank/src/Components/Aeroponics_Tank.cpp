@@ -64,11 +64,13 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState)
   {
-    logToSerials(Name, false, 1);
-    logToSerials(F("state:"), false, 1);
-    logToSerials(toText_aeroTankState(State), false, 1);
-    logToSerials(F("->"), false, 1);
-    logToSerials(toText_aeroTankState(NewState), true, 1);
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)Name);
+    strcat_P(LongMessage, (PGM_P)F(" state: "));
+    strcat(LongMessage, toText_aeroTankState(State));
+    strcat_P(LongMessage, (PGM_P)F(" -> "));
+    strcat(LongMessage, toText_aeroTankState(NewState));
+    logToSerials(&LongMessage, true, 3);
   }
 
   switch (NewState)
@@ -137,7 +139,7 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
     {
       Pump->startBlowOff();
     }
-    if (Pump->getState() != PressurePumpStates::BLOWOFF && Pump->getState() != PressurePumpStates::CLOSINGBYPASS)
+    if (Pump->getState() != PressurePumpStates::BLOWOFF && Pump->getState() != PressurePumpStates::BYPASSCLOSE)
     { ///< Wait until pump finishes blowing off and closes the bypass solenoid
       updateState(AeroTankStates::IDLE);
       BlockOverWritingState = true;

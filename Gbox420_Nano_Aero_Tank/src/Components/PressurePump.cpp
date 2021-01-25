@@ -53,11 +53,13 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState)
   {
-    logToSerials(Name, false, 1);
-    logToSerials(F("state:"), false, 1);
-    logToSerials(toText_pressurePumpState(State), false, 1);
-    logToSerials(F("->"), false, 1);
-    logToSerials(toText_pressurePumpState(NewState), true, 1);
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)Name);
+    strcat_P(LongMessage, (PGM_P)F(" state: "));
+    strcat(LongMessage, toText_pressurePumpState(State));
+    strcat_P(LongMessage, (PGM_P)F(" -> "));
+    strcat(LongMessage, toText_pressurePumpState(NewState));
+    logToSerials(&LongMessage, true, 3);
 
     PumpTimer = millis(); ///< Start measuring the time spent in the new State
   }
@@ -107,7 +109,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
     }
     if (millis() - PumpTimer > ((uint32_t)*BlowOffTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
-      updateState(PressurePumpStates::CLOSINGBYPASS);
+      updateState(PressurePumpStates::BYPASSCLOSE);
       BlockOverWritingState = true;
     }
     break;
@@ -119,11 +121,11 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
     }
     if (millis() - PumpTimer > ((uint32_t)*BypassSolenoidMaxOpenTime * 1000)) ///< Is it time to disable the Bypass solenoid
     {
-      updateState(PressurePumpStates::CLOSINGBYPASS);
+      updateState(PressurePumpStates::BYPASSCLOSE);
       BlockOverWritingState = true;
     }
-    break;  
-  case PressurePumpStates::CLOSINGBYPASS:
+    break;
+  case PressurePumpStates::BYPASSCLOSE:
     if (State != NewState)
     {
       PumpSwitch->turnOff();
@@ -147,7 +149,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
     *PumpEnabled = true;
     if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000))
     {
-      updateState(PressurePumpStates::CLOSINGBYPASS);
+      updateState(PressurePumpStates::BYPASSCLOSE);
       BlockOverWritingState = true;
     }
     break;
@@ -193,7 +195,7 @@ void PressurePump::stopPump(bool ResetStatus)
   }
   else
   {
-    updateState(PressurePumpStates::CLOSINGBYPASS);
+    updateState(PressurePumpStates::BYPASSCLOSE);
   }
 }
 
@@ -209,14 +211,12 @@ void PressurePump::disablePump()
   }
   else
   {
-    updateState(PressurePumpStates::CLOSINGBYPASS);
+    updateState(PressurePumpStates::BYPASSCLOSE);
   }
 }
 
 void PressurePump::startBlowOff()
 {
-  PumpTimer = millis();
-  logToSerials(F("Blow off"), true, 3);
   updateState(PressurePumpStates::BLOWOFF);
 }
 
@@ -244,7 +244,7 @@ void PressurePump::turnBypassOn(bool KeepOpen)
 void PressurePump::turnBypassOff()
 {
   Parent->getSoundObject()->playOffSound();
-  updateState(PressurePumpStates::CLOSINGBYPASS);
+  updateState(PressurePumpStates::BYPASSCLOSE);
 }
 
 PressurePumpStates PressurePump::getState()
