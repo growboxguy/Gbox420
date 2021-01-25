@@ -53,7 +53,7 @@ void Aeroponics_Tank::refresh_Sec()
   updateState(State);
 }
 
-void Aeroponics_Tank::processTimeCriticalStuff()
+void Aeroponics_Tank::processTimeCriticalStuff() ///< Called every 0.1sec
 {
   if (State == AeroTankStates::SPRAY || State == AeroTankStates::STOPSPRAY)
     updateState(State);
@@ -61,36 +61,32 @@ void Aeroponics_Tank::processTimeCriticalStuff()
 
 void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State
 {
-  bool BlockOverWritingState = false;
-  if (State != NewState) //When the state changes
-  {
-    StateTimer = millis(); //Start measuring the time spent in the new state
-  }
+  bool BlockOverWritingState = false; //Used when a state transitions to a new state
 
   switch (NewState)
   {
-  case AeroTankStates::DISABLED:
+  case AeroTankStates::DISABLED: ///< Turns off spray cycle and tank pressure monitoring, plants die within hours in this state!!
     if (State != NewState)
     {
       SpraySwitch->turnOff();
       Pump->stopPump();
     }
     break;
-  case AeroTankStates::IDLE:
+  case AeroTankStates::IDLE: ///< Spray cycle and tank pressure monitoring active
     if (State != NewState)
     {
       SpraySwitch->turnOff();
       Pump->stopPump();
     }
     if (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED)
-    {
+    { ///Start spraying only when the pump is not busy
       uint32_t Interval;
       if (DayMode)
         Interval = *DayInterval * 60000; ///< Interval is in minutes
       else
         Interval = *NightInterval * 60000; ///< Interval is in minutes
       if (millis() - SprayTimer >= Interval)
-      { ///< if time to start spraying (AeroInterval in Minutes)
+      { ///< Time to start spraying
         updateState(AeroTankStates::SPRAY);
         BlockOverWritingState = true;
       }
@@ -102,7 +98,7 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
       BlockOverWritingState = true;
     }
     break;
-  case AeroTankStates::SPRAY:
+  case AeroTankStates::SPRAY: ///< Turns on spray solenoid
     if (State != NewState)
     {
       SpraySwitch->turnOn();
@@ -115,7 +111,7 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
       BlockOverWritingState = true;
     }
     break;
-  case AeroTankStates::STOPSPRAY:
+  case AeroTankStates::STOPSPRAY: //< Closes the spray solenoid (Takes around ~0.5sec, check solenoid specification and adjust SpraySolenoidClosingDelay in Settings.h)
     if (State != NewState)
     {
       SpraySwitch->turnOff();
@@ -128,25 +124,18 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
       BlockOverWritingState = true;
     }
     break;
-  case AeroTankStates::RELEASE:
+  case AeroTankStates::RELEASE: //< Release remaining pressure from the misting loop AND pump output side
     if (State != NewState)
     {
-      Pump->startBlowOff(); ///< The pressure pump's bypass solenoid is used to release pressure from the misting loop
+      Pump->startBlowOff();
     }
     if (Pump->getState() != PressurePumpStates::BLOWOFF && Pump->getState() != PressurePumpStates::CLOSINGBYPASS)
     { ///< Wait until pump finishes blowing off and closes the bypass solenoid
-      if (*SprayEnabled)
-      {
-        updateState(AeroTankStates::IDLE);
-      }
-      else
-      {
-        updateState(AeroTankStates::DISABLED);
-      }
+      updateState(AeroTankStates::IDLE);
       BlockOverWritingState = true;
     }
     break;
-  case AeroTankStates::REFILL:
+  case AeroTankStates::REFILL: ///< Refills the pressure tank. Re-enables the Spray cycle once finished.
     if (State != NewState)
     {
       Pump->startPump(true);
@@ -157,59 +146,44 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
       updateState(AeroTankStates::RELEASE);
       BlockOverWritingState = true;
     }
-    if (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED) ///< if pump ended up getting disabled
-    {                                                                                                     ///< refill failed, target pressure was not reached before the pump timeout was reached
+    if (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED)
+    { ///< refill failed, target pressure was not reached before the pump timeout
       logToSerials(F("Recharge failed"), false, 3);
-      if (*SprayEnabled)
-      {
-        updateState(AeroTankStates::IDLE);
-      }
-      else
-      {
-        updateState(AeroTankStates::DISABLED);
-      }
+      updateState(AeroTankStates::IDLE);
       BlockOverWritingState = true;
     }
     break;
-  case AeroTankStates::DRAIN:
+  case AeroTankStates::DRAIN: ///< Drains the pressure tank. Will NOT re-enable the Spray cycle if it was disabled before draining.
     if (State != NewState)
     {
       Pump->turnBypassOn(true);
       SpraySwitch->turnOn();
     }
     if (FeedbackPressureSensor->readPressure(false) <= 0.1 || Pump->getState() != PressurePumpStates::BYPASSOPEN)
-    {
-      ///< refill failed, target pressure was not reached before the pump timeout was reached
+    { ///< Pressure close to zero OR the pump's bypass solenoid reached it's maximum open time and closed itself
       if (Pump->getState() == PressurePumpStates::BYPASSOPEN)
         Pump->turnBypassOff();
       SpraySwitch->turnOff();
       logToSerials(F("Tank drained"), false, 3);
       if (*SprayEnabled)
       {
-        updateState(AeroTankStates::IDLE);
+        updateState(AeroTankStates::IDLE); /// If spray cycle was enabled before draining: Return to IDLE (will trigger a refill)
       }
       else
       {
-        updateState(AeroTankStates::DISABLED);
+        updateState(AeroTankStates::DISABLED); /// If spray cycle was disabled before draining: Return to DISABLED (plants will die)
       }
       BlockOverWritingState = true;
     }
     break;
-  case AeroTankStates::MIX:
+  case AeroTankStates::MIX: ///< Opens bypass valve and turns on the pump to mix the reservoir. Re-enables the Spray cycle once finished.
     if (State != NewState)
     {
       Pump->startMixing();
     }
     if (Pump->getState() != PressurePumpStates::MIX)
     { /// When mixing finished (Mixing runs till pump timeout)
-      if (*SprayEnabled)
-      {
-        updateState(AeroTankStates::IDLE);
-      }
-      else
-      {
-        updateState(AeroTankStates::DISABLED);
-      }
+      updateState(AeroTankStates::IDLE);
       BlockOverWritingState = true;
     }
     break;

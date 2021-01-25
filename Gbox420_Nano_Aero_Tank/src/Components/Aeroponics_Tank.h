@@ -40,7 +40,6 @@ protected:
   Switch *SpraySwitch; //Relay or MOSFET controlling the spray solenoid
   AeroTankStates State = AeroTankStates::IDLE;  //< Stores the current state of the Aeroponics tote
   uint16_t *SpraySolenoidClosingDelay;  //< (ms) Time required for the solenoid to close. To avoid draining the tank the bypass valve is not allowed to open until the Spray solenoid is not closed
-  uint32_t StateTimer = millis();   ///< Times functions regarding to states
   uint32_t SprayTimer = millis();   ///< Times functions regarding to spraying
   bool *SprayEnabled;          ///< Enable/disable misting
   float *Duration;            ///< Spray time in seconds
