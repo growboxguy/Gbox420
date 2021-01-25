@@ -195,7 +195,8 @@ void PressurePump::stopPump(bool ResetStatus)
   }
   else
   {
-    updateState(PressurePumpStates::BYPASSCLOSE);
+    if (State != PressurePumpStates::IDLE || State != PressurePumpStates::DISABLED)
+      updateState(PressurePumpStates::BYPASSCLOSE);
   }
 }
 
