@@ -318,3 +318,31 @@ char *toText_aeroTankState(AeroTankStates State)
     break;
   }
 }
+
+char *toText_aeroNoTankState(AeroNoTankStates State)
+{
+  switch (State)
+  {
+  case AeroNoTankStates::DISABLED:
+    return toText(F("DISABLED"));
+    break;
+  case AeroNoTankStates::PRIMING:
+    return toText(F("PRIMING"));
+    break;
+  case AeroNoTankStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case AeroNoTankStates::SPRAY:
+    return toText(F("SPRAY"));
+    break;  
+  case AeroNoTankStates::RELEASE:
+    return toText(F("RELEASE"));
+    break;
+  case AeroNoTankStates::MIX:
+    return toText(F("MIX"));
+    break; 
+  default:
+    return toText(F("UNKNOWN"));
+    break;
+  }
+}
