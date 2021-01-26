@@ -78,6 +78,8 @@ void AeroModule_Web::reportToJSON()
     strcat_P(LongMessage, (PGM_P)F("\",\"Ma\":\""));
     strcat(LongMessage, toText(AeroCommand1ToSend.MaxPressure));
   }
+  strcat_P(LongMessage, (PGM_P)F("\",\"AS\":\""));
+  strcat(LongMessage, toText((int)AeroResponse1Received.AeroState));
   strcat_P(LongMessage, (PGM_P)F("\",\"LS\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.LastSprayPressure));
   strcat_P(LongMessage, (PGM_P)F("\",\"PSt\":\""));
