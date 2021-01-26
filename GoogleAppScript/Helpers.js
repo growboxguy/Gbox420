@@ -75,7 +75,7 @@ function Test_GetFriendlyColumnName() {
   LogToConsole(GetFriendlyColumnName("Lt1_On"), true, 0);
 }
 
-function GetFriendlyColumnName(key,includeUnits = true) {
+function GetFriendlyColumnName(key, includeUnits = true) {
   var match = GetNamedRangeValues("Columns").filter(function (row) {
     return row[columns_keyColumn] == key;
   });
@@ -83,7 +83,7 @@ function GetFriendlyColumnName(key,includeUnits = true) {
     return key;
   }
   else {
-    if(includeUnits)
+    if (includeUnits)
       return match[0][columns_friendlyNameColumn];
     else
       return match[0][columns_nameColumn];
@@ -107,6 +107,60 @@ function GetFriendlyValue(key, value) {
       var dataType = match[0][columns_dataTypeColumn];
       var returnValue = "";
       switch (dataType) {
+        case "AeroNoTankState":
+          if (value != null) {
+            switch (value) {
+              case "0":
+                returnValue = "DISABLED";
+                break;
+              case "1":
+                returnValue = "IDLE";
+                break;
+              case "2":
+                returnValue = "PRIMING";
+                break;
+              case "3":
+                returnValue = "SPRAY";
+                break;
+              case "4":
+                returnValue = "RELEASE";
+                break;
+              case "5":
+                returnValue = "MIX";
+                break;
+            }
+          }
+          break;
+        case "AeroTankState":
+          if (value != null) {
+            switch (value) {
+              case "0":
+                returnValue = "DISABLED";
+                break;
+              case "1":
+                returnValue = "IDLE";
+                break;
+              case "2":
+                returnValue = "SPRAY";
+                break;
+              case "3":
+                returnValue = "STOPSPRAY";
+                break;
+              case "4":
+                returnValue = "RELEASE";
+                break;
+              case "5":
+                returnValue = "REFILL";
+                break;
+              case "6":
+                returnValue = "DRAIN";
+                break;
+              case "7":
+                returnValue = "MIX";
+                break;
+            }
+          }
+          break;
         case "Date":
           if (value != null) {
             returnValue = Utilities.formatDate(value, GetSettingsValue("Time zone"), GetSettingsValue("Date format")); //https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateformat.html
@@ -216,7 +270,7 @@ function GetFriendlyValue(key, value) {
           }
           returnValue += 'ppm';
           break;
-        case "PumpState":
+        case "PressurePumpStates":
           if (value != null) {
             switch (value) {
               case "0":
@@ -235,7 +289,13 @@ function GetFriendlyValue(key, value) {
                 returnValue = "BLOWOFF";
                 break;
               case "5":
-                returnValue = "MIXING";
+                returnValue = "MIX";
+                break;
+              case "6":
+                returnValue = "BYPASSCLOSE";
+                break;
+              case "7":
+                returnValue = "BYPASSOPEN";
                 break;
             }
           }
@@ -293,6 +353,21 @@ function GetFriendlyValue(key, value) {
             returnValue = value + ' ';
           }
           returnValue += 'V';
+          break;
+        case "WaterPumpState":
+          if (value != null) {
+            switch (value) {
+              case "0":
+                returnValue = "DISABLED";
+                break;
+              case "1":
+                returnValue = "IDLE";
+                break;
+              case "2":
+                returnValue = "RUNNING";
+                break;
+            }
+          }
           break;
         case "Weight":
           if (value != null) {
