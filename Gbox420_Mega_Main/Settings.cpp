@@ -16,7 +16,7 @@ void saveSettings(Settings *ToSave)
   \param ResetEEPROM - Force loading the defaults from the sketch and overwriting the EEPROM with it
   \return Reference to Settings object
 */
-Settings *loadSettings(bool ResetEEPROM = false) ///< if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
+Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
 {
   Settings *DefaultSettings = new Settings();                              // This is where settings are stored, first it takes the sketch default settings defined in Settings.h
   Settings EEPROMSettings;                                                 // temporary storage with "Settings" type

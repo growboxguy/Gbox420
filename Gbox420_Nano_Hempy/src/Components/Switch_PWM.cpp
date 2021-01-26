@@ -8,7 +8,7 @@ Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t *Du
   this->DutyCycleLowLimit = DutyCycleLowLimit;
   pinMode(Pin, OUTPUT);
   turnOff(); ///< initialize in OFF state
-  logToSerials(F("Switch_PWM object created"), true, 2);
+  logToSerials(F("Switch_PWM object created"), true, 3);
 }
 
 void Switch_PWM::setDutyCycle(uint8_t DutyCycle)

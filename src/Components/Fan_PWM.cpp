@@ -94,7 +94,7 @@ char *Fan_PWM::getSpeedText(bool CurrentSpeed, bool IncludeUnits)
     }
     else
     {
-      return '0';
+      return toText('0');
     }
   }
   else

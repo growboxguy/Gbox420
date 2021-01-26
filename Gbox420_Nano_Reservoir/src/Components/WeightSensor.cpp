@@ -13,7 +13,7 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
   Sensor->set_offset(*Offset);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("WeightSensor object created"), true, 1);
+  logToSerials(F("WeightSensor object created"), true, 3);
 }
 
 void WeightSensor::refresh_FiveSec()

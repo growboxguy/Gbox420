@@ -25,7 +25,7 @@ ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::Rese
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
   logToSerials(Name, false, 0);
-  logToSerials(F("- ReservoirModule object created, refreshing..."), true, 1);
+  logToSerials(F("- ReservoirModule object created, refreshing"), true, 1);
   runAll();
   addToLog(F("ReservoirModule initialized"), 0);
 }

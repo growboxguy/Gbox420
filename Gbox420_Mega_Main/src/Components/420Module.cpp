@@ -9,7 +9,7 @@ Module::Module()
 /* Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
 { ///< Constructor
   this -> SoundFeedback = SoundFeedback;
-  logToSerials(F("Module object created"), true, 2);
+  logToSerials(F("Module object created"), true, 3);
 } */
 
 void Module::runAll(bool AddToLog)

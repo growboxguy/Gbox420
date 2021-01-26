@@ -25,7 +25,7 @@ PressurePump::PressurePump(const __FlashStringHelper *Name, Module *Parent, Sett
   }
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
-  logToSerials(F("PressurePump object created"), true, 2);
+  logToSerials(F("PressurePump object created"), true, 3);
 }
 
 void PressurePump::report()

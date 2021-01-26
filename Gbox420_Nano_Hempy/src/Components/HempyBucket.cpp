@@ -12,7 +12,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("Hempy bucket object created"), true, 1);
+  logToSerials(F("Hempy bucket object created"), true, 3);
 }
 
 void HempyBucket::refresh_FiveSec()
@@ -56,7 +56,7 @@ void HempyBucket::checkWateringWeight()
     {
       StartTotalWeight = BucketWeightSensor->getWeight(true) + WasteReservoirWeightSensor->getWeight(true);
       BucketPump->startPump();
-      logToSerials(F("Watering..."), true, 1);
+      logToSerials(F("Watering"), true, 1);
     }
     if (*WasteLimit > 0 && WasteReservoirWeightSensor->getWeight(true) > *WasteLimit) //< Check if the waste reservoir is full
     {
@@ -84,7 +84,7 @@ void HempyBucket::startWatering()
   WasteReservoirWeightSensor->readWeight(); ///< Force Waste Reservoir weight update
   StartTotalWeight = BucketWeightSensor->getWeight(true)  + WasteReservoirWeightSensor->getWeight(true);
   BucketPump->startPump(true);
-  logToSerials(F("Watering..."), true, 1);
+  logToSerials(F("Watering"), true, 1);
 }
 
 float HempyBucket::getStartWeight()
