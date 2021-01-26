@@ -12,7 +12,7 @@ AirPump::AirPump(const __FlashStringHelper *Name, Module *Parent, Settings::AirP
   digitalWrite(*Pin, HIGH); ///< Turn relay off initially
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Minute(this);
-  logToSerials(F("AirPump object created"), true, 1);
+  logToSerials(F("AirPump object created"), true, 3);
 }
 
 void AirPump::report()

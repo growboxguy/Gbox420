@@ -39,7 +39,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   addToWebsiteQueue_Refresh(this);
   addToWebsiteQueue_Field(this);
   addToWebsiteQueue_Button(this);
-  logToSerials(F("MainModule object created, refreshing..."), true, 0);
+  logToSerials(F("MainModule object created, refreshing"), true, 0);
   runAll();
   addToLog(F("MainModule initialized"), 0);
 }

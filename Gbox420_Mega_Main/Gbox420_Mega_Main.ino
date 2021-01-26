@@ -57,41 +57,41 @@ void setup()
   pinMode(LED_BUILTIN, OUTPUT);                            ///< onboard LED - Heartbeat every second to confirm code is running
   printf_begin();                                          ///< Needed to print wireless status to Serial
   logToSerials(F(""), true, 0);                            ///< New line
-  logToSerials(F("Main module initializing..."), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
+  logToSerials(F("Main module initializing"), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                     ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                       ///< fix watchdog not loading sketch after a reset error on Mega2560
 
   // Loading settings from EEPROM
-  logToSerials(F("Loading settings..."), true, 0);
+  logToSerials(F("Loading settings"), true, 0);
   ModuleSettings = loadSettings();
   Debug = &ModuleSettings->Debug;
   Metric = &ModuleSettings->Metric;
 
-  logToSerials(F("Setting up ESP-link connection..."), true, 0);
+  logToSerials(F("Setting up ESP-link connection"), true, 0);
   ESPLink.resetCb = &resetWebServer; ///< Callback subscription: What to do when WiFi reconnects
   resetWebServer();                  ///< reset the WebServer
   setSyncProvider(getNtpTime);       ///< Points to method for updating time from NTP server
   setSyncInterval(86400);            ///< Sync time every day
 
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
-  logToSerials(F("Setting up refresh threads..."), false, 0);
+  logToSerials(F("Setting up refresh threads"), false, 0);
   OneSecThread.setInterval(1000);
   OneSecThread.onRun(runSec);
   FiveSecThread.setInterval(5000);
   FiveSecThread.onRun(runFiveSec);
   MinuteThread.setInterval(60000);
   MinuteThread.onRun(runMinute);
-  logToSerials(F("done"), true, 1);
+  logToSerials(F("done"), true, 3);
 
   // Start interrupts to handle request from ESP-Link firmware
-  logToSerials(F("Setting up interrupt handler..."), false, 0);
+  logToSerials(F("Setting up interrupt handler"), false, 0);
   Timer3.initialize(500); ///< check every 0.5sec, using a larger interval can cause web requests to time out
   Timer3.attachInterrupt(processTimeCriticalStuff);
   Timer3.start();
-  logToSerials(F("done"), true, 1);
+  logToSerials(F("done"), true, 3);
 
   //Initialize wireless communication with remote Modules
-  logToSerials(F("Setting up wireless transceiver..."), false, 0);
+  logToSerials(F("Setting up wireless transceiver"), false, 0);
   Wireless.begin();                                  ///< Initialize the nRF24L01+ wireless chip for talking to Modules
   Wireless.setDataRate(RF24_250KBPS);                ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
   Wireless.setCRCLength(RF24_CRC_16);                 ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
@@ -101,10 +101,10 @@ void setup()
   Wireless.enableAckPayload();                       ///< When sending a wireless package, expect a response confirming the package was received in a custom Acknowledgement package
   Wireless.setRetries(WirelessDelay, WirelessRetry); ///< Defined in Settings.h. How many retries before giving up sending a single package and How long to wait between each retry
   Wireless.stopListening();
-  logToSerials(F("done"), true, 1);
+  logToSerials(F("done"), true, 3);
 
   // Create the Module objects
-  logToSerials(F("Creating main module..."), true, 0);
+  logToSerials(F("Creating main module"), true, 0);
   Main1 = new MainModule(F("Main1"), &ModuleSettings->Main1, &Wireless); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   //   sendEmailAlert(F("Grow%20box%20(re)started"));
@@ -160,10 +160,10 @@ void HeartBeat()
 */
 void resetWebServer()
 { ///<  Callback made from esp-link to notify that it has just come out of a reset
-  logToSerials(F("(re)Connecting ESP-link..."), false, 1);
+  logToSerials(F("(re)Connecting ESP-link"), false, 1);
   while (!ESPLink.Sync())
   {
-    logToSerials(F("."), false, 0);
+    logToSerials(F(""), false, 0);
     delay(500);
   };
   logToSerials(F(""), true, 0);                           ///< line break
@@ -205,12 +205,12 @@ time_t getNtpTime()
   { // block calling the sync again inside an interrupt while already waiting for a sync to finish
     SyncInProgress = true;
     uint32_t LastRefresh = millis();
-    logToSerials(F("Waiting for NTP time..."), false, 0);
+    logToSerials(F("Waiting for NTP time"), false, 0);
     while (NTPResponse == 0 && millis() - LastRefresh < 15000)
     {
       NTPResponse = ESPCmd.GetTime();
       delay(500);
-      logToSerials(F("."), false, 0);
+      logToSerials(F(""), false, 0);
       wdt_reset(); ///reset watchdog timeout
     }
     SyncInProgress = false;

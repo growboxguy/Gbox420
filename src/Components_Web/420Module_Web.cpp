@@ -37,7 +37,7 @@ void Module_Web::runReport()
 void Module_Web::runSec()
 {
   if (*Debug)
-    logToSerials(F("One sec trigger.."), true, 1);
+    logToSerials(F("One sec trigger"), true, 1);
   for (int i = 0; i < refreshQueueItemCount_Sec; i++)
   {
     RefreshQueue_Sec[i]->refresh_Sec();
@@ -47,7 +47,7 @@ void Module_Web::runSec()
 void Module_Web::runFiveSec()
 {
   if (*Debug)
-    logToSerials(F("Five sec trigger.."), true, 1);
+    logToSerials(F("Five sec trigger"), true, 1);
   for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
   {
     RefreshQueue_FiveSec[i]->refresh_FiveSec();
@@ -57,7 +57,7 @@ void Module_Web::runFiveSec()
 void Module_Web::runMinute()
 {
   if (*Debug)
-    logToSerials(F("Minute trigger.."), true, 1);
+    logToSerials(F("Minute trigger"), true, 1);
   for (int i = 0; i < refreshQueueItemCount_Minute; i++)
   {
     RefreshQueue_Minute[i]->refresh_Minute();

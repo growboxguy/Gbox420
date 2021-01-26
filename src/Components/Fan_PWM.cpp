@@ -17,7 +17,7 @@ Fan_PWM::Fan_PWM(const __FlashStringHelper *Name, Module *Parent, Settings::Fan_
   checkState();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Minute(this);
-  logToSerials(F("Fan_PWM object created"), true, 1);
+  logToSerials(F("Fan_PWM object created"), true, 3);
 }
 
 void Fan_PWM::refresh_Minute()
@@ -94,7 +94,7 @@ char *Fan_PWM::getSpeedText(bool CurrentSpeed, bool IncludeUnits)
     }
     else
     {
-      return "0";
+      return '0';
     }
   }
   else
