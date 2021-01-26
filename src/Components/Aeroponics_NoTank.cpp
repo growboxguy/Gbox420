@@ -6,7 +6,7 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Pa
   this->FeedbackPressureSensor = FeedbackPressureSensor;
   this->Pump = Pump;
   SprayEnabled = &DefaultSettings->SprayEnabled;   ///< Enable/disable misting
-  Duration = &DefaultSettings->Duration;     ///< Spray time in seconds
+  Duration = &DefaultSettings->Duration;           ///< Spray time in seconds
   DayInterval = &DefaultSettings->DayInterval;     ///< Spray every X minutes - With lights ON
   NightInterval = &DefaultSettings->NightInterval; ///< Spray every X minutes - With lights OFF
   MaxPressure = &DefaultSettings->MaxPressure;     ///< Aeroponics - Turn off pump above this pressure (bar)
@@ -14,7 +14,6 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Pa
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("Aeroponics_NoTank object created"), true, 1);
   sprayNow(false); ///< This is a safety feature,start with a spray after a reset
-
 }
 
 void Aeroponics_NoTank::report()
@@ -35,90 +34,136 @@ void Aeroponics_NoTank::report()
   strcat(LongMessage, toText_minute(*DayInterval));
   strcat_P(LongMessage, (PGM_P)F(" ; NightInterval:"));
   strcat(LongMessage, toText_minute(*NightInterval));
-  logToSerials(&LongMessage, true, 1); ///< Break line, No indentation needed: child class already printed it
-
-
+  logToSerials(&LongMessage, true, 1);
 }
 
 void Aeroponics_NoTank::refresh_Sec()
-{ ///< pump directly connected to aeroponics tote, with an electronically controlled bypass valve
+{
   if (*Debug)
     Common::refresh_Sec();
-  checkPump(false);
+  updateState(State);
 }
 
-void Aeroponics_NoTank::processTimeCriticalStuff()
+void Aeroponics_NoTank::processTimeCriticalStuff() ///< Runs every 0.1 sec
 {
-  checkPump(true);
+  if (State == AeroNoTankStates::PRIMING || State == AeroNoTankStates::SPRAY)
+    updateState(State);
 }
 
-void Aeroponics_NoTank::checkPump(bool OnlyTurnOff)
+void Aeroponics_NoTank::updateState(AeroNoTankStates NewState) ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State
 {
-  if (Pump->getState() == PressurePumpStates::RUNNING)
-  { ///< if pump is on
-    FeedbackPressureSensor->readPressure();
-    if (FeedbackPressureSensor->getPressure() > *MaxPressure)
-    {
-      logToSerials(F("Max pressure reached"), false, 3);
-      Pump->stopPump();
-    }
-
-    if (!RunTillTimeout && (millis() - SprayTimer) >= *Duration * 1000 + (uint32_t)Pump->getPrimingTime() * 1000)
-    { ///< bypass valve is closed and time to stop spraying
-      LastSprayPressure = FeedbackPressureSensor->getPressure();
-      logToSerials(F("Spray finished"), false, 3);
-      Pump->stopPump();
-    }
-  }
-  else
+  bool BlockOverWritingState = false; //Used when a state transitions to a new state
+  if (State != NewState)
   {
-    if (!OnlyTurnOff && Pump->getState() == PressurePumpStates::IDLE)
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)Name);
+    strcat_P(LongMessage, (PGM_P)F(" state: "));
+    strcat(LongMessage, toText_aeroNoTankState(State));
+    strcat_P(LongMessage, (PGM_P)F(" -> "));
+    strcat(LongMessage, toText_aeroNoTankState(NewState));
+    logToSerials(&LongMessage, true, 3);
+  }
+
+  switch (NewState)
+  {
+  case AeroNoTankStates::DISABLED: ///< Turns off spray cycle and tank pressure monitoring, plants die within hours in this state!!
+    if (State != NewState)
     {
-      RunTillTimeout = false; ///< Making sure the special flag is disabled as soon the Pump becomes IDLE. (RunTillTimeout forces the pump to run until the timeout is reached, used during mixing)
-      uint32_t Interval;
-      if (DayMode)
-      {
-        Interval = *DayInterval * 60000; ///< Duration is miliseconds, DayInterval is Minutes
-      }
-      else
-      {
-        Interval = *NightInterval * 60000; ///< Duration is miliseconds
-      }
-      if (millis() - SprayTimer >= Interval)
-      { ///< if time to start spraying
-        sprayNow(false);
-        SprayTimer = millis();
-      }
+      Pump->stopPump();
     }
+    break;
+  case AeroNoTankStates::IDLE: ///< Spray cycle and tank pressure monitoring active
+    if (State != NewState)
+    {
+      Pump->stopPump();
+    }
+    uint32_t Interval;
+    if (DayMode)
+    {
+      Interval = *DayInterval * 60000; ///< Duration is miliseconds, DayInterval is Minutes
+    }
+    else
+    {
+      Interval = *NightInterval * 60000; ///< Duration is miliseconds
+    }
+    if (millis() - SprayTimer >= Interval)
+    { ///< if time to start spraying
+      updateState(AeroNoTankStates::PRIMING);
+      BlockOverWritingState = true;
+    }
+    break;
+  case AeroNoTankStates::PRIMING: ///< Turns off spray cycle and tank pressure monitoring, plants die within hours in this state!!
+    if (State != NewState)
+    {
+      Pump->startPump(true);
+    }
+    if (Pump->getState() != PressurePumpStates::PRIMING)
+    {
+      updateState(AeroNoTankStates::SPRAY);
+      BlockOverWritingState = true;
+    }
+    break;
+  case AeroNoTankStates::SPRAY: ///< Turns on spray solenoid
+    if (State != NewState)
+    {
+      SprayTimer = millis();
+    }
+    if (FeedbackPressureSensor->readPressure(false) > *MaxPressure || millis() - SprayTimer >= *Duration * 1000)
+    {
+      LastSprayPressure = FeedbackPressureSensor->getPressure();
+      updateState(AeroNoTankStates::RELEASE);
+      BlockOverWritingState = true;
+    }
+    break;
+  case AeroNoTankStates::RELEASE: //< Closes the spray solenoid (Takes around ~0.5sec, check solenoid specification and adjust SpraySolenoidClosingDelay in Settings.h)
+    if (State != NewState)
+    {
+      Pump->stopPump();
+    }
+    if (Pump->getState() == PressurePumpStates::IDLE)
+    {
+      updateState(AeroNoTankStates::IDLE);
+      BlockOverWritingState = true;
+    }
+    if (Pump->getState() == PressurePumpStates::DISABLED)
+    {
+      updateState(AeroNoTankStates::DISABLED);
+      BlockOverWritingState = true;
+    }
+    break;
+  case AeroNoTankStates::MIX: //< Release remaining pressure from the misting loop AND pump output side
+    if (State != NewState)
+    {
+      Pump->startMixing();
+    }
+    if (Pump->getState() != PressurePumpStates::MIX)
+    { /// When mixing finished (Mixing runs till pump timeout)
+      updateState(AeroNoTankStates::IDLE);
+      BlockOverWritingState = true;
+    }
+    break;
+  }
+
+  if (State != NewState && !BlockOverWritingState)
+  {
+    State = NewState;
   }
 }
 
 void Aeroponics_NoTank::sprayNow(bool UserRequest)
 {
-  if (*SprayEnabled || UserRequest)
+  if (UserRequest)
   {
     Parent->getSoundObject()->playOnSound();
-    if (UserRequest)
-      Parent->addToLog(F("Aeroponics spraying"));
-    else
-      logToSerials(F("Aeroponics spraying"), false, 3);
-    Pump->startPump(UserRequest);
-    SprayTimer = millis();
   }
+  updateState(AeroNoTankStates::PRIMING);
 }
 
 void Aeroponics_NoTank::sprayOff()
 {
-  Parent->addToLog(F("Aeroponics spray OFF"));
-  Pump->stopPump();
+  if (State == AeroNoTankStates::SPRAY)
+    updateState(AeroNoTankStates::RELEASE);
 }
-
-void Aeroponics_NoTank::lockPumpOn()
-{
-  Pump->startPump(true);
-  RunTillTimeout = true;
-}
-
 
 void Aeroponics_NoTank::setDayMode(bool State)
 {
@@ -189,12 +234,12 @@ void Aeroponics_NoTank::setSprayOnOff(bool State)
   *SprayEnabled = State;
   if (*SprayEnabled)
   {
-    Parent->addToLog(F("Spray enabled"));
+    updateState(AeroNoTankStates::IDLE);
     Parent->getSoundObject()->playOnSound();
   }
   else
   {
-    Parent->addToLog(F("Spray disabled"));
+    updateState(AeroNoTankStates::DISABLED);
     Parent->getSoundObject()->playOffSound();
   }
 }
@@ -222,20 +267,6 @@ char *Aeroponics_NoTank::sprayStateToText()
 float Aeroponics_NoTank::getLastSprayPressure()
 {
   return LastSprayPressure;
-}
-
-char *Aeroponics_NoTank::getLastSprayPressureText(bool IncludeCurrentPressure)
-{
-  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///< clear variable
-
-  toText_pressure(LastSprayPressure); ///< loads the Last pressure measured during spraying
-  if (IncludeCurrentPressure)
-  {
-    strcat_P(ShortMessage, (PGM_P)F(" ["));
-    dtostrf(FeedbackPressureSensor->getPressure(), 4, 2, ShortMessage);
-    strcat_P(ShortMessage, (PGM_P)F("]"));
-  }
-  return ShortMessage;
 }
 
 float Aeroponics_NoTank::getPressure()

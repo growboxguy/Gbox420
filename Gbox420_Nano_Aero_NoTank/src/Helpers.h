@@ -47,6 +47,16 @@ enum class AeroTankStates
   MIX
 };
 
+enum class AeroNoTankStates
+{
+  DISABLED,
+  IDLE,
+  PRIMING,
+  SPRAY,  
+  RELEASE,  
+  MIX
+};
+
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;
 extern char CurrentTime[MaxWordLength];
@@ -78,6 +88,7 @@ char *toText_yesNo(bool Status);
 char *toText_enabledDisabled(bool Status);
 char *toText_onlineStatus(bool Status);
 char *toText_aeroTankState(AeroTankStates State);
+char *toText_aeroNoTankState(AeroNoTankStates State);
 char *toText_waterPumpState(WaterPumpStates State);
 char *toText_pressurePumpState(PressurePumpStates State);
 char *toText_minute(int Minute);

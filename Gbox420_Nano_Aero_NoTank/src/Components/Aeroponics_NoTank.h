@@ -16,10 +16,10 @@ public:
   void sprayNow(bool UserRequest = false);
   void sprayOff();
   void checkPump(bool OnlyTurnOff = false);  ///< Turn the pump on or off based on the current state
-  void lockPumpOn(); ///< On user request the pump can be turned ON without the spray timer turning it off.
   void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
 
   PressurePump *Pump;
+  void updateState(AeroNoTankStates State);
 
 
   void setSprayOnOff(bool State);
@@ -37,7 +37,6 @@ public:
   bool getSprayEnabled();
   float getPressure();
   float getLastSprayPressure();
-  char *getLastSprayPressureText(bool IncludeCurrentPressure);
   void setMinPressure(float Pressure);
   void setMaxPressure(float Pressure);
 
@@ -45,6 +44,7 @@ private:
 protected:
   bool RunTillTimeout = false; ///< While true only the Pump Timeout will stop the pump.
   Module *Parent;
+  AeroNoTankStates State = AeroNoTankStates::IDLE;  //< Stores the current state of the Aeroponics tote
   PressureSensor *FeedbackPressureSensor; ///< Pressure sensor object that will monitor the spray pressure
   uint32_t SprayTimer = millis();
   bool *SprayEnabled;          ///< Enable/disable misting

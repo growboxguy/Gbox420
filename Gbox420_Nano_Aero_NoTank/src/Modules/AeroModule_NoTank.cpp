@@ -124,7 +124,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
   case AeroMessages::AeroCommand2:
     NextSequenceID = AeroMessages::AeroReset; // update the next Message that will be copied to the buffer
     if (((AeroCommand_P2 *)ReceivedCommand)->PumpOn)
-      AeroNT1->lockPumpOn();
+      AeroNT1->sprayNow(true);
     if (((AeroCommand_P2 *)ReceivedCommand)->PumpOff)
       AeroNT1->Pump->stopPump();
     if (((AeroCommand_P2 *)ReceivedCommand)->PumpDisable)
