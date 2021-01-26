@@ -344,11 +344,11 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         if (*Debug)
         {
           logToSerials(F("Aero1:"), false, 4);
-          logToSerials(toText_aeroTankState(AeroResponse1Received.AeroState), false, 1);
+          logToSerials(toText((int)AeroResponse1Received.AeroState), false, 1);
           logToSerials(AeroResponse1Received.PressureTankPresent, false, 1);
           logToSerials(AeroResponse1Received.SprayEnabled, false, 1);
           logToSerials(AeroResponse1Received.Pressure, false, 1);
-          logToSerials(toText_pressurePumpState(AeroResponse1Received.PumpState), false, 1);
+          logToSerials(toText((int)AeroResponse1Received.PumpState), false, 1);
           logToSerials(AeroResponse1Received.LastSprayPressure, false, 1);
           logToSerials(AeroResponse1Received.Weight, true, 1);
         }
