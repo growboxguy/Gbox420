@@ -16,7 +16,7 @@ Fan::Fan(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings 
   digitalWrite(*SpeedPin, HIGH); ///< Turn relay off initially
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Minute(this);
-  logToSerials(F("Fan object created"), true, 1);
+  logToSerials(F("Fan object created"), true, 3);
 }
 
 void Fan::refresh_Minute()

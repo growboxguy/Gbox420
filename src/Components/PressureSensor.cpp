@@ -10,7 +10,7 @@ PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, 
   AveragePressure->begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("Pressure Sensor object created"), true, 1);
+  logToSerials(F("Pressure Sensor object created"), true, 3);
 }
 
 void PressureSensor::refresh_FiveSec()

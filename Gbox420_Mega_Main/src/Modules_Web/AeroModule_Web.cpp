@@ -22,7 +22,7 @@ AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Pare
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToWebsiteQueue_Field(this);
   Parent->addToWebsiteQueue_Button(this);
-  logToSerials(F("AeroModule_Web object created"), true, 1);
+  logToSerials(F("AeroModule_Web object created"), true, 3);
 }
 
 void AeroModule_Web::report()
@@ -303,7 +303,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
     logToSerials(SequenceIDToSend, false, 1);
     logToSerials(F("-"), false, 1);
     logToSerials(toText_aeroSequenceID(SequenceIDToSend), false, 1);
-    logToSerials(F("and waiting for Acknowledgment..."), true, 1);
+    logToSerials(F("and waiting for Acknowledgment"), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
   Parent->Wireless->flush_rx(); ///< Dump all previously received but unprocessed messages
@@ -346,11 +346,11 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         if (*Debug)
         {
           logToSerials(F("Aero1:"), false, 4);
-          logToSerials(toText_aeroTankState(AeroResponse1Received.AeroState), false, 1);
+          logToSerials(toText((int)AeroResponse1Received.AeroState), false, 1);
           logToSerials(AeroResponse1Received.PressureTankPresent, false, 1);
           logToSerials(AeroResponse1Received.SprayEnabled, false, 1);
           logToSerials(AeroResponse1Received.Pressure, false, 1);
-          logToSerials(toText_pressurePumpState(AeroResponse1Received.PumpState), false, 1);
+          logToSerials(toText((int)AeroResponse1Received.PumpState), false, 1);
           logToSerials(AeroResponse1Received.LastSprayPressure, false, 1);
           logToSerials(AeroResponse1Received.Weight, true, 1);
         }

@@ -35,7 +35,7 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_Minute(this);
-  logToSerials(F("Lights object created"), true, 1);
+  logToSerials(F("Lights object created"), true, 3);
 }
 
 void Lights::refresh_Sec()

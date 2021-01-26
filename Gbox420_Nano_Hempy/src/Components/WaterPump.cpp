@@ -18,7 +18,7 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
   }
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
-  logToSerials(F("WaterPump object created"), true, 2);
+  logToSerials(F("WaterPump object created"), true, 3);
 }
 
 void WaterPump::report()
@@ -57,7 +57,7 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< Without a parameter a
     if (RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000))  //< Check if it is time to stop
     {
       RunTime = 0;
-      logToSerials(F("Running complete, stopping..."), true, 3);
+      logToSerials(F("Running complete, stopping"), true, 3);
       updateState(WaterPumpStates::IDLE);
     }
     if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached

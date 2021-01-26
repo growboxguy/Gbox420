@@ -17,7 +17,7 @@ ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module
   Parent->addToRefreshQueue_FiveSec(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToWebsiteQueue_Button(this);
-  logToSerials(F("ReservoirModule_Web object created"), true, 1);
+  logToSerials(F("ReservoirModule_Web object created"), true, 3);
 }
 
 void ReservoirModule_Web::report()
@@ -135,7 +135,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
     logToSerials(SequenceIDToSend, false, 1);
     logToSerials(F("-"), false, 1);
     logToSerials(toText_reservoirSequenceID(SequenceIDToSend), false, 1);
-    logToSerials(F("and waiting for Acknowledgment..."), true, 1);
+    logToSerials(F("and waiting for Acknowledgment"), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
   Parent->Wireless->flush_rx(); ///< Dump all previously received but unprocessed messages

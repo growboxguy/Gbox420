@@ -32,7 +32,7 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
   logToSerials(Name, false, 0);
-  logToSerials(F("- HempyModule object created, refreshing..."), true, 1);
+  logToSerials(F("- HempyModule object created, refreshing"), true, 1);
   runAll();
   addToLog(F("HempyModule initialized"), 0);
 }

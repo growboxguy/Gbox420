@@ -19,7 +19,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   SpraySwitch = new Switch(F("SpraySolenoid"), DefaultSettings->SpraySolenoidPin, DefaultSettings->SpraySolenoidNegativeLogic);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
-  logToSerials(F("Aeroponics_Tank object created"), true, 2);
+  logToSerials(F("Aeroponics_Tank object created"), true, 3);
   sprayNow(false); ///< This is a safety feature,start with a spray after a reset
 }
 

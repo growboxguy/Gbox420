@@ -9,7 +9,7 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
   AverageTDS->begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("TDSSensor object created"), true, 1);
+  logToSerials(F("TDSSensor object created"), true, 3);
 }
 
 TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::TDSSensorSettings *DefaultSettings, WaterTempSensor *WaterTempSensor1) : TDSSensor(Name, Parent, DefaultSettings)
