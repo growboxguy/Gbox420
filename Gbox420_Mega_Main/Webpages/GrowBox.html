@@ -931,12 +931,6 @@
 	///< Duplicating the status of the Hempy Module to both Buckets
 	setInterval(function () { document.getElementById("Hemp1_Status2").innerHTML = document.getElementById("Hemp1_Status").innerHTML; }, 5)  ///< Refresh every 5 seconds
 
-	///< Friendly timeout value for Hempy Bucket 1
-	var Hempy1_Bucket1_Interval = document.getElementsByName("Hemp1_B1Int")[0];
-	setInterval(function () {
-		document.getElementById("Hemp1_B1Int_Friendly").innerHTML = Math.trunc(Hempy1_Bucket1_Interval.value / 60) + "hr, " + Hempy1_Bucket1_Interval.value % 60 + "min";
-	}, 1000)  ///< Refresh every second
-
 	///< Calculate remaining water in Hempy Bucket 1
 	var Hempy1_Bucket1_Weight = document.getElementById("Hemp1_B1Weight");
 	var Hempy1_Bucket1_Waste = document.getElementById("Hemp1_B1Waste");
@@ -967,13 +961,6 @@
 		///<  Math.trunc(Weight - Hempy1_Bucket1_StartWeight.value);
 	}, 1000)  ///< Refresh every second
 
-	///< Friendly timeout value for Hempy Bucket 2
-	var Hempy1_Bucket2_Interval = document.getElementsByName("Hemp1_B2Int")[0];
-	var Hempy1_Bucket2_Interval_Friendly = document.getElementById("Hemp1_B2Int_Friendly");
-	setInterval(function () {
-		Hempy1_Bucket2_Interval_Friendly.innerHTML = Math.trunc(Hempy1_Bucket2_Interval.value / 60) + "hr, " + Hempy1_Bucket2_Interval.value % 60 + "min";
-	}, 1000)  ///< Refresh every second
-
 	if (window.addEventListener) {
 		window.addEventListener('load', refreshFormDataNow);
 	}
@@ -986,7 +973,7 @@
 		refreshFormData();
 	}
 
-	function confirmTare(source) {
+	function confirmDrain(source) {
 		if (confirm("This will completely drain the pressure tank!")) {
 			notifyButtonPressed(source.id);
 		}
