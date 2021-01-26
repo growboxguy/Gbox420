@@ -85,7 +85,7 @@ void AeroModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\",\"PS\":\""));
   strcat(LongMessage, toText(AeroCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
-  strcat(LongMessage, toText(AeroCommand1ToSend.SprayEnabled));
+  strcat(LongMessage, toText(AeroResponse1Received.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
   strcat(LongMessage, toText(AeroCommand1ToSend.Duration));
   strcat_P(LongMessage, (PGM_P)F("\",\"DI\":\""));
