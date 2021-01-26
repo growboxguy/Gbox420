@@ -270,7 +270,7 @@ function GetFriendlyValue(key, value) {
           }
           returnValue += 'ppm';
           break;
-        case "PressurePumpStates":
+        case "PressurePumpState":
           if (value != null) {
             switch (value) {
               case "0":
