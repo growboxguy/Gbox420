@@ -169,12 +169,12 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
       Pump->turnBypassOn(true);
       SpraySwitch->turnOn();
     }
-    if (FeedbackPressureSensor->readPressure(false) <= 0.1 || Pump->getState() != PressurePumpStates::BYPASSOPEN)
+    if (FeedbackPressureSensor->readPressure(false) <= 0.1 || (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED))
     { ///< Pressure close to zero OR the pump's bypass solenoid reached it's maximum open time and closed itself
       if (Pump->getState() == PressurePumpStates::BYPASSOPEN)
         Pump->turnBypassOff();
       SpraySwitch->turnOff();
-      logToSerials(F("Tank drained"), false, 3);
+      logToSerials(F("Tank drained"), true, 3);
       if (*SprayEnabled)
       {
         updateState(AeroTankStates::IDLE); /// If spray cycle was enabled before draining: Return to IDLE (will trigger a refill)
