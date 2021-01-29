@@ -20,7 +20,15 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("Aeroponics_Tank object created"), true, 3);
-  sprayNow(false); ///< This is a safety feature,start with a spray after a reset
+  if (*SprayEnabled)
+  {
+    State = AeroTankStates::IDLE;
+    sprayNow(false); ///< This is a safety feature,start with a spray after a reset
+  }
+  else
+  {
+    State = AeroTankStates::DISABLED;
+  }  
 }
 
 void Aeroponics_Tank::report()
