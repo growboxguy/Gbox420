@@ -23,6 +23,14 @@ enum class WaterPumpStates
   RUNNING  
 };
 
+enum class HempyStates
+{
+  DISABLED,
+  IDLE,  
+  WATERING,
+  DRAINING  
+};
+
 enum class PressurePumpStates
 {
   DISABLED,
@@ -91,6 +99,7 @@ char *toText_aeroTankState(AeroTankStates State);
 char *toText_aeroNoTankState(AeroNoTankStates State);
 char *toText_waterPumpState(WaterPumpStates State);
 char *toText_pressurePumpState(PressurePumpStates State);
+char *toText_hempyState(HempyStates State);
 char *toText_minute(int Minute);
 char *toText_second(int Second);
 char *toText_distance(float Distance);

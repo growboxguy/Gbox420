@@ -346,3 +346,25 @@ char *toText_aeroNoTankState(AeroNoTankStates State)
     break;
   }
 }
+
+char *toText_hempyState(HempyStates State)
+{
+  switch (State)
+  {
+  case HempyStates::DISABLED:
+    return toText(F("DISABLED"));
+    break;
+  case HempyStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case HempyStates::WATERING:
+    return toText(F("WATERING"));
+    break;
+  case HempyStates::DRAINING:
+    return toText(F("DRAINING"));
+    break;  
+  default:
+    return toText(F("UNKNOWN"));
+    break;
+  }
+}

@@ -6,8 +6,8 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   this->BucketWeightSensor = BucketWeightSensor;
   this->BucketPump = BucketPump;
   this->WasteReservoirWeightSensor = WasteReservoirWeightSensor;
-  StartWeight = &DefaultSettings->StartWeight;
-  StopWeight = &DefaultSettings->StopWeight;
+  //StartWeight = &DefaultSettings->StartWeight;
+ // StopWeight = &DefaultSettings->StopWeight;
   WasteLimit = &DefaultSettings->WasteLimit;
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
@@ -19,16 +19,16 @@ void HempyBucket::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
-  checkWateringWeight();
+  updateState(State);
 }
 
 void HempyBucket::refresh_Sec()
 {
   if (*Debug)
     Common::refresh_Sec();
-  if (BucketPump->getState() == WaterPumpStates::RUNNING)
+  if (State == HempyStates::WATERING)
   {
-    checkWateringFinished(); ///< When pump is on check if it is time to stop
+    updateState(State);
   }
 }
 
@@ -36,15 +36,81 @@ void HempyBucket::report()
 {
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("Start weight:"));
-  strcat(LongMessage, toText_weight(*StartWeight));
-  strcat_P(LongMessage, (PGM_P)F(" ; Stop weight:"));
-  strcat(LongMessage, toText_weight(*StopWeight));
-  strcat_P(LongMessage, (PGM_P)F(" ; Waste limit:"));
-  strcat(LongMessage, toText_weight(*WasteLimit));
+  //strcat_P(LongMessage, (PGM_P)F("Start weight:"));
+  //strcat(LongMessage, toText_weight(*StartWeight));
+  //(LongMessage, (PGM_P)F(" ; Stop weight:"));
+  //strcat(LongMessage, toText_weight(*StopWeight));
+  //strcat_P(LongMessage, (PGM_P)F(" ; Waste limit:"));
+  //strcat(LongMessage, toText_weight(*WasteLimit));
   logToSerials(&LongMessage, true, 1);
 }
 
+void HempyBucket::updateState(HempyStates NewState) ///< When NewState parameter is passed it overwrites State
+{
+  bool BlockOverWritingState = false; //Used when a state transitions to a new state
+  if (State != NewState)
+  {
+    StateTimer = millis(); ///< Start measuring the time spent in the new State
+
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)Name);
+    strcat_P(LongMessage, (PGM_P)F(" state: "));
+    strcat(LongMessage, toText_hempyState(State));
+    strcat_P(LongMessage, (PGM_P)F(" -> "));
+    strcat(LongMessage, toText_hempyState(NewState));
+    logToSerials(&LongMessage, true, 3);
+  }
+
+  BucketWeightSensor->readWeight(false); ///< Force Bucket weight update 
+  WasteReservoirWeightSensor->readWeight(false); ///< Force Waste Reservoir weight update
+
+  switch (State)
+  {  
+  case HempyStates::DISABLED:
+    
+    break;  
+  case HempyStates::IDLE:
+    
+    break;  
+  case HempyStates::WATERING:
+    
+    break;
+  case HempyStates::DRAINING:
+    
+    break;
+  }
+
+  if (State != NewState && !BlockOverWritingState)
+  {
+    State = NewState;
+  }
+}
+
+float HempyBucket::getWasteLimit()
+{
+  return *WasteLimit;
+}
+
+char *HempyBucket::getWasteLimitText(bool IncludeUnits)
+{
+  if (IncludeUnits)
+    return toText_weight(*WasteLimit);
+  else
+    return toText(*WasteLimit);
+}
+
+void HempyBucket::setWasteLimit(float Weight)
+{
+  if (*WasteLimit != Weight)
+  {
+    *WasteLimit = Weight;
+    logToSerials(Name, false, 1);
+    logToSerials(F("Waste limit updated"), true, 1);
+    Parent->getSoundObject()->playOnSound();
+  }
+}
+
+/*
 void HempyBucket::checkWateringWeight()
 {
   BucketWeightSensor->readWeight(); ///< Force Bucket weight update 
@@ -79,13 +145,12 @@ void HempyBucket::checkWateringFinished()
 }
 
 void HempyBucket::startWatering()
-{
-  BucketWeightSensor->readWeight(); ///< Force Bucket weight update 
-  WasteReservoirWeightSensor->readWeight(); ///< Force Waste Reservoir weight update
+{  
   StartTotalWeight = BucketWeightSensor->getWeight(true)  + WasteReservoirWeightSensor->getWeight(true);
   BucketPump->startPump(true);
   logToSerials(F("Watering"), true, 1);
 }
+
 
 float HempyBucket::getStartWeight()
 {
@@ -95,11 +160,6 @@ float HempyBucket::getStartWeight()
 float HempyBucket::getStopWeight()
 {
   return *StopWeight;
-}
-
-float HempyBucket::getWasteLimit()
-{
-  return *WasteLimit;
 }
 
 char *HempyBucket::getStartWeightText(bool IncludeUnits)
@@ -117,15 +177,6 @@ char *HempyBucket::getStopWeightText(bool IncludeUnits)
   else
     return toText(*StopWeight);
 }
-
-char *HempyBucket::getWasteLimitText(bool IncludeUnits)
-{
-  if (IncludeUnits)
-    return toText_weight(*WasteLimit);
-  else
-    return toText(*WasteLimit);
-}
-
 void HempyBucket::setStartWeight(float Weight)
 {
   if (*StartWeight != Weight)
@@ -146,13 +197,4 @@ void HempyBucket::setStopWeight(float Weight)
   }
 }
 
-void HempyBucket::setWasteLimit(float Weight)
-{
-  if (*WasteLimit != Weight)
-  {
-    *WasteLimit = Weight;
-    logToSerials(Name, false, 1);
-    logToSerials(F("Waste limit updated"), true, 1);
-    Parent->getSoundObject()->playOnSound();
-  }
-}
+*/

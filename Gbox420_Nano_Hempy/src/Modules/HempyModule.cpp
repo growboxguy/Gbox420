@@ -108,7 +108,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     if (((HempyBucketCommand *)ReceivedCommand)->DisablePump)
       Pump1->disablePump();
     if (((HempyBucketCommand *)ReceivedCommand)->TurnOnPump)
-      Bucket1->startWatering();
+      Bucket1->waterNow();
     if (((HempyBucketCommand *)ReceivedCommand)->TurnOffPump)
       Pump1->stopPump();
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightB)
@@ -117,8 +117,8 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       WeightWR1->triggerTare();
     Pump1->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->TimeOutPump);
     Pump1->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
-    Bucket1->setStartWeight(((HempyBucketCommand *)ReceivedCommand)->StartWeight);
-    Bucket1->setStopWeight(((HempyBucketCommand *)ReceivedCommand)->StopWeight);
+    //Bucket1->setStartWeight(((HempyBucketCommand *)ReceivedCommand)->StartWeight);
+    //Bucket1->setStopWeight(((HempyBucketCommand *)ReceivedCommand)->StopWeight);
     Bucket1->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     NextSequenceID = HempyMessages::HempyBucketResponse2; // update the next Message that will be copied to the buffer
     // if(*Debug)
@@ -140,7 +140,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     if (((HempyBucketCommand *)ReceivedCommand)->DisablePump)
       Pump2->disablePump();
     if (((HempyBucketCommand *)ReceivedCommand)->TurnOnPump)
-      Bucket2->startWatering();
+      Bucket2->waterNow();
     if (((HempyBucketCommand *)ReceivedCommand)->TurnOffPump)
       Pump2->stopPump();
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightB)
@@ -149,8 +149,8 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       WeightWR2->triggerTare();
     Pump2->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->TimeOutPump);
     Pump2->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
-    Bucket2->setStartWeight(((HempyBucketCommand *)ReceivedCommand)->StartWeight);
-    Bucket2->setStopWeight(((HempyBucketCommand *)ReceivedCommand)->StopWeight);
+    //Bucket2->setStartWeight(((HempyBucketCommand *)ReceivedCommand)->StartWeight);
+    //Bucket2->setStopWeight(((HempyBucketCommand *)ReceivedCommand)->StopWeight);
     Bucket2->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     NextSequenceID = HempyMessages::HempyReset; // update the next Message that will be copied to the buffer
     if(*Debug)

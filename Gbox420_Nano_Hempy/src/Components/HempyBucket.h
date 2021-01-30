@@ -21,19 +21,20 @@ public:
   void refresh_Sec();
   void refresh_FiveSec();
   void report();
-  void waterNow(bool UserRequest = false); ///< Turn on water pump, run until StopWeight is reached
-  void checkRelay();                       ///< Sets the relay controlling the pump
-  void checkWateringWeight();              ///< Watering based on weight
-  void checkWateringFinished();            ///< Stops the pump when target weight or watering duration is reached
-  void setStartWeight(float Weight);
-  void setStopWeight(float Weight);
+  void updateState(HempyStates NewState);
+  void waterNow(bool UserRequest = false){}; ///< Turn on water pump, run until StopWeight is reached
+  //void checkRelay();                       ///< Sets the relay controlling the pump
+  //void checkWateringWeight();              ///< Watering based on weight
+  //void checkWateringFinished();            ///< Stops the pump when target weight or watering duration is reached
+  //void setStartWeight(float Weight);
+  //void setStopWeight(float Weight);  
+ // void startWatering();
+  //float getStopWeight();
+  //float getStartWeight();
+  // char *getStopWeightText(bool IncludeUnits);
+  //char *getStartWeightText(bool IncludeUnits);
   void setWasteLimit(float Weight);
-  void startWatering();
-  float getStopWeight();
-  float getStartWeight();
   float getWasteLimit();
-  char *getStopWeightText(bool IncludeUnits);
-  char *getStartWeightText(bool IncludeUnits);
   char *getWasteLimitText(bool IncludeUnits);
 
 private:
@@ -44,7 +45,12 @@ protected:
   WeightSensor *BucketWeightSensor;         ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
   WeightSensor *WasteReservoirWeightSensor; ///< Weight sensor to monitor the Hempy Bucket's waste reservoir, used to figure out when to stop watering
   WaterPump *BucketPump;                    ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
-  float *StartWeight;                       ///< Start watering below this weight
-  float *StopWeight;                        ///< Stop watering above this weight
+  HempyStates State = HempyStates::IDLE;
+  float OverflowTarget = 0.2;  ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+  float WasteReservoirStartWeight = 0.0;   ///< Store the waste reservoir weight at the start of watering
+  float BucketStartWeight;  ///< Store the bucket start weight at each watering cycle
+  uint32_t WateringTimer = millis(); ///< Measures total watering time
+  uint32_t StateTimer = millis(); ///< Measures how much time is spent in a state
+ 
   float *WasteLimit;                        ///< Waste reservoir full weight -> Pump gets disabled if reached
 };

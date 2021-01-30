@@ -41,38 +41,46 @@ void WaterPump::refresh_Sec()
   updateState(State);
 }
 
-void WaterPump::updateState(WaterPumpStates NewState) ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State
+void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState parameter is passed it overwrites State
 {
-  if (State != NewState) ///< if not the default value was passed
+  if (State != NewState)
   {
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)Name);
+    strcat_P(LongMessage, (PGM_P)F(" state: "));
+    strcat(LongMessage, toText_waterPumpState(State));
+    strcat_P(LongMessage, (PGM_P)F(" -> "));
+    strcat(LongMessage, toText_waterPumpState(NewState));
+    logToSerials(&LongMessage, true, 3);
+
     State = NewState;
-    PumpTimer = millis(); ///< Start measuring the time spent in the new State
+    StateTimer = millis(); ///< Start measuring the time spent in the new State
   }
 
   switch (State)
-  {  
+  {
+  case WaterPumpStates::DISABLED:
+    PumpSwitch->turnOff();
+    *PumpEnabled = false;
+    break;
+  case WaterPumpStates::IDLE:
+    PumpSwitch->turnOff();
+    *PumpEnabled = true;
+    break;
   case WaterPumpStates::RUNNING:
     PumpSwitch->turnOn();
     *PumpEnabled = true;
-    if (RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000))  //< Check if it is time to stop
+    if (RunTime > 0 && millis() - StateTimer > ((uint32_t)RunTime * 1000)) //< Check if it is time to stop
     {
       RunTime = 0;
       logToSerials(F("Running complete, stopping"), true, 3);
       updateState(WaterPumpStates::IDLE);
     }
-    if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
+    if (millis() - StateTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
     {
       Parent->addToLog(F("ALERT: Pump timeout reached"), 3); ///< \todo send email alert
       updateState(WaterPumpStates::DISABLED);
     }
-    break;  
-  case WaterPumpStates::IDLE:
-    PumpSwitch->turnOff();
-    *PumpEnabled = true;
-    break;  
-  case WaterPumpStates::DISABLED:
-    PumpSwitch->turnOff();
-    *PumpEnabled = false;
     break;
   }
 }

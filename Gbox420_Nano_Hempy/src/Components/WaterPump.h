@@ -27,7 +27,7 @@ public:
   
 private:
   WaterPumpStates State = WaterPumpStates::IDLE;
-  uint32_t PumpTimer = millis(); ///< Spray cycle timer, used for State runtime tracking, - https://www.arduino.cc/reference/en/language/functions/time/millis/
+  uint32_t StateTimer = millis(); ///< Spray cycle timer, used for State runtime tracking, - https://www.arduino.cc/reference/en/language/functions/time/millis/
 
 protected:
   Module *Parent;
