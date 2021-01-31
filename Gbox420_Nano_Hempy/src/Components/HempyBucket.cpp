@@ -64,7 +64,7 @@ void HempyBucket::updateState(HempyStates NewState)
   BucketWeightSensor->readWeight(false);         ///< Force Bucket weight update
   WasteReservoirWeightSensor->readWeight(false); ///< Force Waste Reservoir weight update
 
-  switch (State)
+  switch (NewState)
   {
   case HempyStates::DISABLED:
     if (State != NewState)
@@ -99,7 +99,7 @@ void HempyBucket::updateState(HempyStates NewState)
       updateState(HempyStates::DRAINING);
       BlockOverWritingState = true;
     }
-    if (millis() - WateringTimer > ((uint32_t)WateringTimeout * 1000)) ///< Timeout before the waste target was reached, assume the pump or weight sensor failed
+    if (millis() - WateringTimer > ((uint32_t)WateringTimeout * 1000) || BucketPump->getState() == WaterPumpStates::DISABLED) ///< Timeout before the waste target was reached
     {
       updateState(HempyStates::DISABLED);
       BlockOverWritingState = true;

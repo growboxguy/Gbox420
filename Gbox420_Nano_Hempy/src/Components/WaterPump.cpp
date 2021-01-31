@@ -57,7 +57,7 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
     StateTimer = millis(); ///< Start measuring the time spent in the new State
   }
 
-  switch (State)
+  switch (NewState)
   {
   case WaterPumpStates::DISABLED:
     PumpSwitch->turnOff();
