@@ -110,7 +110,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     if (((HempyBucketCommand *)ReceivedCommand)->TurnOnPump)
       Bucket1->waterNow();
     if (((HempyBucketCommand *)ReceivedCommand)->TurnOffPump)
-      Pump1->stopPump();
+      Pump1->stopPump(true);
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightB)
       WeightB1->triggerTare();
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR)
@@ -142,7 +142,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     if (((HempyBucketCommand *)ReceivedCommand)->TurnOnPump)
       Bucket2->waterNow();
     if (((HempyBucketCommand *)ReceivedCommand)->TurnOffPump)
-      Pump2->stopPump();
+      Pump2->stopPump(true);
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightB)
       WeightB2->triggerTare();
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR)

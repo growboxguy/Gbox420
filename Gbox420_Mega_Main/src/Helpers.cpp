@@ -232,6 +232,9 @@ char *toText_onlineStatus(bool Status)
     return toText(F("OFFLINE"));
 }
 
+
+///TODO: The below section should be split between the modules to reduce memory usage
+
 char *toText_waterPumpState(WaterPumpStates State)
 {
   switch (State)

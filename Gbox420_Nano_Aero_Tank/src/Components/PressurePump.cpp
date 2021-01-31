@@ -202,8 +202,6 @@ void PressurePump::stopPump(bool ResetStatus)
 
 void PressurePump::disablePump()
 {
-  logToSerials(Name, false, 3);
-  logToSerials(F("disabled"), true, 1);
   Parent->getSoundObject()->playOffSound();
   *PumpEnabled = false;
   if (State == PressurePumpStates::RUNNING)

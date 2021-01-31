@@ -15,8 +15,8 @@ public:
 
   void updateState(WaterPumpStates NewState = (WaterPumpStates)-1);
   void setSpeed(uint8_t DutyCycle); //Set Motor speed - Adjust PWM duty cycle
-  void startPump(bool ResetStatus = false); ///< Turn the pump ON
-  void stopPump();                          ///< Turn the pump OFF
+  void startPump(bool ResetState = false); ///< Turn the pump ON
+  void stopPump(bool ResetState = false);                          ///< Turn the pump OFF
   void disablePump();                       ///< Disable the pump
 
   WaterPumpStates getState();  ///< Get the current pump state

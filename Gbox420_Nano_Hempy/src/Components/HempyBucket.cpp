@@ -7,7 +7,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   this->BucketPump = BucketPump;
   this->WasteReservoirWeightSensor = WasteReservoirWeightSensor;
   //StartWeight = &DefaultSettings->StartWeight;
- // StopWeight = &DefaultSettings->StopWeight;
+  // StopWeight = &DefaultSettings->StopWeight;
   WasteLimit = &DefaultSettings->WasteLimit;
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
@@ -36,8 +36,8 @@ void HempyBucket::report()
 {
   Common::report();
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
-  //strcat_P(LongMessage, (PGM_P)F("Start weight:"));
-  //strcat(LongMessage, toText_weight(*StartWeight));
+  strcat_P(LongMessage, (PGM_P)F("State:"));
+  strcat(LongMessage, toText_hempyState(State));
   //(LongMessage, (PGM_P)F(" ; Stop weight:"));
   //strcat(LongMessage, toText_weight(*StopWeight));
   //strcat_P(LongMessage, (PGM_P)F(" ; Waste limit:"));
@@ -45,7 +45,7 @@ void HempyBucket::report()
   logToSerials(&LongMessage, true, 1);
 }
 
-void HempyBucket::updateState(HempyStates NewState) ///< When NewState parameter is passed it overwrites State
+void HempyBucket::updateState(HempyStates NewState)
 {
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState)
@@ -61,22 +61,68 @@ void HempyBucket::updateState(HempyStates NewState) ///< When NewState parameter
     logToSerials(&LongMessage, true, 3);
   }
 
-  BucketWeightSensor->readWeight(false); ///< Force Bucket weight update 
+  BucketWeightSensor->readWeight(false);         ///< Force Bucket weight update
   WasteReservoirWeightSensor->readWeight(false); ///< Force Waste Reservoir weight update
 
   switch (State)
-  {  
+  {
   case HempyStates::DISABLED:
-    
-    break;  
+    if (State != NewState)
+    {
+      BucketPump->disablePump();
+    }
+    break;
   case HempyStates::IDLE:
-    
-    break;  
+    if (State != NewState)
+    {
+      BucketPump->stopPump();
+    }
+    if (NextWateringWeight = 0 || BucketWeightSensor->getWeight() <= NextWateringWeight)
+    {
+      updateState(HempyStates::WATERING);
+      BlockOverWritingState = true;
+    }
+    break;
   case HempyStates::WATERING:
-    
+    if (State != NewState)
+    {
+      BucketStartWeight = BucketWeightSensor->getWeight(); // Store the bucket weight before starting the pump
+      BucketPump->startPump();
+      if (State == HempyStates::IDLE) // First time entering the WATERING-DRIAINING cycles
+      {
+        WateringTimer = millis(); ///Start measuring the total watering time
+        WasteReservoirStartWeight = WasteReservoirWeightSensor->getWeight();
+      }
+    }
+    if ((BucketWeightSensor->getWeight(false) - BucketStartWeight) + WasteReservoirWeightSensor->getWeight() - WasteReservoirStartWeight >= OverflowTarget) //Target overflow's worth of water was added, wait for it to drain
+    {
+      updateState(HempyStates::DRAINING);
+      BlockOverWritingState = true;
+    }
+    if (millis() - WateringTimer > ((uint32_t)WateringTimeout * 1000)) ///< Timeout before the waste target was reached, assume the pump or weight sensor failed
+    {
+      updateState(HempyStates::DISABLED);
+      BlockOverWritingState = true;
+    }
     break;
   case HempyStates::DRAINING:
-    
+    if (State != NewState)
+    {
+      BucketPump->stopPump();
+    }
+    if (millis() - StateTimer > ((uint32_t)DrainWaitTime * 1000)) ///< Waiting for the water to drain
+    {
+      if (WasteReservoirWeightSensor->getWeight(false) - WasteReservoirStartWeight >= OverflowTarget) //Check if target overflow weight is reached
+      {
+        NextWateringWeight = BucketWeightSensor->getWeight() - EvaporationTarget;
+        updateState(HempyStates::IDLE);
+      }
+      else
+      {
+        updateState(HempyStates::WATERING); /// Continue watering
+      }
+      BlockOverWritingState = true;
+    }
     break;
   }
 
