@@ -6,9 +6,11 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   this->BucketWeightSensor = BucketWeightSensor;
   this->BucketPump = BucketPump;
   this->WasteReservoirWeightSensor = WasteReservoirWeightSensor;
-  //StartWeight = &DefaultSettings->StartWeight;
-  // StopWeight = &DefaultSettings->StopWeight;
+  EvaporationTarget = &DefaultSettings->EvaporationTarget;
+  OverflowTarget = &DefaultSettings->OverflowTarget;
   WasteLimit = &DefaultSettings->WasteLimit;
+  DrainWaitTime = &DefaultSettings->DrainWaitTime;
+  WateringTimeout = &DefaultSettings->WateringTimeout;
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
@@ -38,10 +40,16 @@ void HempyBucket::report()
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("State:"));
   strcat(LongMessage, toText_hempyState(State));
-  //(LongMessage, (PGM_P)F(" ; Stop weight:"));
-  //strcat(LongMessage, toText_weight(*StopWeight));
-  //strcat_P(LongMessage, (PGM_P)F(" ; Waste limit:"));
-  //strcat(LongMessage, toText_weight(*WasteLimit));
+  (LongMessage, (PGM_P)F(" ; NextWatering:"));
+  strcat(LongMessage, toText_weight(NextWateringWeight));
+  strcat_P(LongMessage, (PGM_P)F(" ; Evaporation:"));
+  strcat(LongMessage, toText_weight(*EvaporationTarget));
+  strcat_P(LongMessage, (PGM_P)F(" ; OverFlow:"));
+  strcat(LongMessage, toText_weight(*OverflowTarget));
+  strcat_P(LongMessage, (PGM_P)F(" ; DrainTimeOut:"));
+  strcat(LongMessage, toText_weight(*DrainWaitTime));
+  strcat_P(LongMessage, (PGM_P)F(" ; WateringTimeOut:"));
+  strcat(LongMessage, toText_weight(*WateringTimeout));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -77,7 +85,7 @@ void HempyBucket::updateState(HempyStates NewState)
     {
       BucketPump->stopPump();
     }
-    if (NextWateringWeight = 0 || BucketWeightSensor->getWeight() <= NextWateringWeight)
+    if (NextWateringWeight == 0 || BucketWeightSensor->getWeight() <= NextWateringWeight)
     {
       updateState(HempyStates::WATERING);
       BlockOverWritingState = true;
@@ -94,12 +102,12 @@ void HempyBucket::updateState(HempyStates NewState)
         WasteReservoirStartWeight = WasteReservoirWeightSensor->getWeight();
       }
     }
-    if ((BucketWeightSensor->getWeight(false) - BucketStartWeight) + WasteReservoirWeightSensor->getWeight() - WasteReservoirStartWeight >= OverflowTarget) //Target overflow's worth of water was added, wait for it to drain
+    if ((BucketWeightSensor->getWeight(false) - BucketStartWeight) + WasteReservoirWeightSensor->getWeight() - WasteReservoirStartWeight >= *OverflowTarget) //Target overflow's worth of water was added, wait for it to drain
     {
       updateState(HempyStates::DRAINING);
       BlockOverWritingState = true;
     }
-    if (millis() - WateringTimer > ((uint32_t)WateringTimeout * 1000) || BucketPump->getState() == WaterPumpStates::DISABLED) ///< Timeout before the waste target was reached
+    if (millis() - WateringTimer > ((uint32_t)*WateringTimeout * 1000) || BucketPump->getState() == WaterPumpStates::DISABLED) ///< Timeout before the waste target was reached
     {
       updateState(HempyStates::DISABLED);
       BlockOverWritingState = true;
@@ -110,11 +118,11 @@ void HempyBucket::updateState(HempyStates NewState)
     {
       BucketPump->stopPump();
     }
-    if (millis() - StateTimer > ((uint32_t)DrainWaitTime * 1000)) ///< Waiting for the water to drain
+    if (millis() - StateTimer > ((uint32_t)*DrainWaitTime * 1000)) ///< Waiting for the water to drain
     {
-      if (WasteReservoirWeightSensor->getWeight(false) - WasteReservoirStartWeight >= OverflowTarget) //Check if target overflow weight is reached
+      if (WasteReservoirWeightSensor->getWeight(false) - WasteReservoirStartWeight >= *OverflowTarget) //Check if target overflow weight is reached
       {
-        NextWateringWeight = BucketWeightSensor->getWeight() - EvaporationTarget;
+        NextWateringWeight = BucketWeightSensor->getWeight() - *EvaporationTarget;
         updateState(HempyStates::IDLE);
       }
       else

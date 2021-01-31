@@ -46,13 +46,13 @@ protected:
   WeightSensor *WasteReservoirWeightSensor; ///< Weight sensor to monitor the Hempy Bucket's waste reservoir, used to figure out when to stop watering
   WaterPump *BucketPump;                    ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
   HempyStates State = HempyStates::IDLE;
-  float EvaporationTarget = 3; ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
-  float OverflowTarget = 0.3;  ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+  float *EvaporationTarget; ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
+  float *OverflowTarget;  ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+  uint16_t *DrainWaitTime; ///< (sec) How long to wait after watering for the water to drain
+  uint16_t *WateringTimeout; ///< (sec) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
   float NextWateringWeight = 0.0; ///< (kg/lbs) If Bucket weight drops below this: Start the watering cycles. Automatically calculated from the wet bucket weight minus the EvaportationTarget
   float WasteReservoirStartWeight = 0.0;   ///< Store the waste reservoir weight at the start of watering
-  float BucketStartWeight;  ///< Store the bucket start weight at each watering cycle
-  uint16_t DrainWaitTime = 60; ///< (sec) How long to wait after watering for the water to drain
-  uint16_t WateringTimeout = 820; ///< (sec) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
+  float BucketStartWeight = 0.0;  ///< Store the bucket start weight at each watering cycle
   uint32_t WateringTimer = millis(); ///< Measures total watering time
   uint32_t StateTimer = millis(); ///< Measures how much time is spent in a state
  
