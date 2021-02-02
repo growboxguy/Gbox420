@@ -96,7 +96,7 @@ void InitializeWireless()
   Wireless.powerUp();  ///< Not necessary, startListening should switch back to normal power mode
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
-  logToSerials(F("done"), true, 1);
+  logToSerials(F("done"), true, 3);
   ReceivedMessageTimestamp = millis(); ///< Reset timeout counter
 }
 

@@ -22,23 +22,21 @@ public:
   void refresh_FiveSec();
   void report();
   void updateState(HempyStates NewState);
-  void waterNow(bool UserRequest = false){}; ///< Turn on water pump, run until StopWeight is reached
-  //void checkRelay();                       ///< Sets the relay controlling the pump
-  //void checkWateringWeight();              ///< Watering based on weight
-  //void checkWateringFinished();            ///< Stops the pump when target weight or watering duration is reached
-  //void setStartWeight(float Weight);
-  //void setStopWeight(float Weight);  
- // void startWatering();
-  //float getStopWeight();
-  //float getStartWeight();
-  // char *getStopWeightText(bool IncludeUnits);
-  //char *getStartWeightText(bool IncludeUnits);
+  void disable();
+  void startWatering(); ///< Turn on water pump, run until StopWeight is reached
+  void stopWatering();  ///< Turn on water pump, run until StopWeight is reached
+  void setEvaporationTarget(float Weight);
+  void setOverflowTarget(float Weight);
+  void setDrainWaitTime(uint16_t Seconds);
+  void setWateringTimeOut(uint16_t Seconds);
   void setWasteLimit(float Weight);
-  float getWasteLimit();
-  char *getWasteLimitText(bool IncludeUnits);
 
 private:
   float StartTotalWeight; ///< Bucket + Waste reservoir combined weight, filled when starting the watering
+  uint32_t WateringTimer = millis();     ///< Measures total watering time
+  uint32_t StateTimer = millis();        ///< Measures how much time is spent in a state
+  float WasteReservoirStartWeight = 0.0; ///< Store the waste reservoir weight at the start of watering
+  float BucketStartWeight = 0.0;         ///< Store the bucket start weight at each watering cycle
 
 protected:
   Module *Parent;
@@ -46,15 +44,10 @@ protected:
   WeightSensor *WasteReservoirWeightSensor; ///< Weight sensor to monitor the Hempy Bucket's waste reservoir, used to figure out when to stop watering
   WaterPump *BucketPump;                    ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
   HempyStates State = HempyStates::IDLE;
-  float *EvaporationTarget; ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
-  float *OverflowTarget;  ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
-  uint16_t *DrainWaitTime; ///< (sec) How long to wait after watering for the water to drain
-  uint16_t *WateringTimeout; ///< (sec) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
-  float NextWateringWeight = 0.0; ///< (kg/lbs) If Bucket weight drops below this: Start the watering cycles. Automatically calculated from the wet bucket weight minus the EvaportationTarget
-  float WasteReservoirStartWeight = 0.0;   ///< Store the waste reservoir weight at the start of watering
-  float BucketStartWeight = 0.0;  ///< Store the bucket start weight at each watering cycle
-  uint32_t WateringTimer = millis(); ///< Measures total watering time
-  uint32_t StateTimer = millis(); ///< Measures how much time is spent in a state
- 
-  float *WasteLimit;                        ///< Waste reservoir full weight -> Pump gets disabled if reached
+  float *EvaporationTarget;              ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
+  float *OverflowTarget;                 ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+  float *WasteLimit; ///< Waste reservoir full weight -> Pump gets disabled if reached
+  uint16_t *DrainWaitTime;               ///< (sec) How long to wait after watering for the water to drain
+  uint16_t *WateringTimeOut;             ///< (sec) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
+  float NextWateringWeight = 0.0;        ///< (kg/lbs) If Bucket weight drops below this: Start the watering cycles. Automatically calculated from the wet bucket weight minus the EvaportationTarget
 };

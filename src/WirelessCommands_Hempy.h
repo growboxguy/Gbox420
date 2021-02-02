@@ -78,17 +78,19 @@ struct HempyModuleResponse : HempyCommonTemplate  ///< Hempy module wireless res
 struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless command
 {
    HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
-   HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool DisablePump, __attribute__((unused)) bool TurnOnPump, __attribute__((unused)) bool TurnOffPump, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) int TimeOutPump, __attribute__((unused)) bool WeightBasedWatering, __attribute__((unused)) float StartWeight, __attribute__((unused)) float StopWeight,  __attribute__((unused)) float WasteLimit, __attribute__((unused)) bool TimerBasedWatering, __attribute__((unused)) uint16_t WateringInterval, __attribute__((unused)) uint16_t WateringDuration) : HempyCommonTemplate(SequenceID) {}
-   bool DisablePump = false;
-   bool TurnOnPump = false;
-   bool TurnOffPump = false;
+   HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool Disable, __attribute__((unused)) bool StartWatering, __attribute__((unused)) bool StopWatering,  __attribute__((unused)) bool TareWeightB,  __attribute__((unused)) bool TareWeightWR, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) uint16_t TimeOutPump, __attribute__((unused)) float EvaporationTarget, __attribute__((unused)) float OverflowTarget, __attribute__((unused)) float WasteLimit,  __attribute__((unused)) uint16_t DrainWaitTime, __attribute__((unused)) uint16_t WateringTimeOut) : HempyCommonTemplate(SequenceID) {}
+   bool Disable = false;
+   bool StartWatering = false;
+   bool StopWatering = false;
    bool TareWeightB = false;  //Tare bucket weight scale
    bool TareWeightWR = false; //Tare waste reservoir weight scale
    uint8_t PumpSpeed = 0;
    uint16_t TimeOutPump = 0;
-   float StartWeight = 0.0;
-   float StopWeight = 0.0;
+   float EvaporationTarget = 0.0;
+   float OverflowTarget = 0.0;
    float WasteLimit = 0.0;
+   uint16_t DrainWaitTime;
+   uint16_t WateringTimeOut;
 };
 
 struct HempyBucketResponse : HempyCommonTemplate ///< Hempy bucket wireless response
