@@ -508,6 +508,7 @@
 				<span style="float:right" id="Hemp1_Status">CONNECTING...</span>
 				<table class="tg">
 					<tr>
+						<th class="headerRows"><span>State</span></th>
 						<th class="headerRows"><span>Bucket</span>
 							<button id="Hemp1_B1TareB" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
@@ -521,6 +522,7 @@
 						<th class="headerRows"><span>Pump</span></th>
 					</tr>
 					<tr>
+						<td id="Hemp1_B1State" class="dataRows"></td>
 						<td id="Hemp1_B1Weight" class="dataRows"></td>
 						<td id="Hemp1_B1Waste" class="dataRows"></td>
 						<td id="Hemp1_B1Pump" class="dataRows"></td>
@@ -529,19 +531,21 @@
 				<p>
 					<span style=" padding-left: 0.5em;">
 						<label>Next watering: </label>
-						<b><label id="Hemp1_B1_RemainingWater"></label></b>
-						<label>Waste remaining: </label>
+						<b><label id="Hemp1_B1Next"></label></b>
+						<label>[</label>
+						<label id="Hemp1_B1_RemainingWater"></label>
+						<label>] Waste remaining: </label>
 						<b><label id="Hemp1_B1_RemainingWaste"></label></b>
 					</span>
 				</p>
 				<form>
 					<p>
 						<label><b>Pump</b></label>
-						<button id="Hemp1_B1PumpOn" type="button" align="right"
+						<button id="Hemp1_B1On" type="button" align="right"
 							title="Starts the pump and reset its status to OK">ON</button>
-						<button id="Hemp1_B1PumpOff" type="button" align="right"
+						<button id="Hemp1_B1Off" type="button" align="right"
 							title="Stops the pump and reset its status to OK">OFF</button>
-						<button id="Hemp1_B1PumpDis" type="button" align="right"
+						<button id="Hemp1_B1Dis" type="button" align="right"
 							title="Stops and disables pump">Disable</button>
 					<p>
 				</form>
@@ -563,16 +567,16 @@
 							title="Maximum time the pump can run continuously" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
-				</form>	
-				<label><b>Weight based watering</b></label>	
+				</form>
+				<label><b>Weight based watering</b></label>
 				<form>
-					<p>			
-					<label style=" padding-left: 0.5em;text-align: right;">Start</label>
-						<input style="width: 60px;" name="Hemp1_B1Strt" type="number" value='0' step='0.1'
-							title="Start watering plant below this weight" />
-						<label style="width: 2.2em;text-align: right;">Stop</label>
-						<input style="width: 60px;" name="Hemp1_B1Stp" type="number" value='0' step='0.1'
-							title="Stop watering plant above this weight" />
+					<p>
+						<label style=" padding-left: 0.5em;text-align: right;">Evaporation</label>
+						<input style="width: 60px;" name="Hemp1_B1ET" type="number" value='0' step='0.1'
+							title="Amount of water that should evaporate between waterings" />
+						<label style="width: 2.2em;text-align: right;">Overflow</label>
+						<input style="width: 60px;" name="Hemp1_B1OF" type="number" value='0' step='0.1'
+							title="Amount of water that should drain into the waste reservoir before stopping watering" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
@@ -583,13 +587,14 @@
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
-				</form>				
+				</form>
 			</div>
 			<div class="card">
 				<h1 style="display: inline;">Hempy 2</h1>
 				<span style="float:right" id="Hemp1_Status2">CONNECTING...</span>
 				<table class="tg">
 					<tr>
+						<th class="headerRows"><span>State</span></th>
 						<th class="headerRows"><span>Bucket</span>
 							<button id="Hemp1_B2TareB" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
@@ -603,6 +608,7 @@
 						<th class="headerRows"><span>Pump</span></th>
 					</tr>
 					<tr>
+						<td id="Hemp1_B2State" class="dataRows"></td>
 						<td id="Hemp1_B2Weight" class="dataRows"></td>
 						<td id="Hemp1_B2Waste" class="dataRows"></td>
 						<td id="Hemp1_B2Pump" class="dataRows"></td>
@@ -611,19 +617,21 @@
 				<p>
 					<span style=" padding-left: 0.5em;">
 						<label>Next watering: </label>
-						<b><label id="Hemp1_B2_RemainingWater"></label></b>
-						<label>Waste remaining: </label>
+						<b><label id="Hemp1_B2Next"></label></b>
+						<label>[</label>
+						<label id="Hemp1_B2_RemainingWater"></label>
+						<label>] Waste remaining: </label>
 						<b><label id="Hemp1_B2_RemainingWaste"></label></b>
 					</span>
 				</p>
 				<form>
 					<p>
 						<label><b>Pump</b></label>
-						<button id="Hemp1_B2PumpOn" type="button" align="right"
+						<button id="Hemp1_B2On" type="button" align="right"
 							title="Starts the pump and reset its status to OK">ON</button>
-						<button id="Hemp1_B2PumpOff" type="button" align="right"
+						<button id="Hemp1_B2Off" type="button" align="right"
 							title="Stops the pump and reset its status to OK">OFF</button>
-						<button id="Hemp1_B2PumpDis" type="button" align="right"
+						<button id="Hemp1_B2Dis" type="button" align="right"
 							title="Stops and disables pump">Disable</button>
 					</p>
 				</form>
@@ -645,16 +653,16 @@
 							title="Maximum time the pump can run continuously" />sec
 						<input class="setButton" type="submit" value="Set" />
 					</p>
-				</form>	
-				<label><b>Weight based watering</b></label>						
+				</form>
+				<label><b>Weight based watering</b></label>
 				<form>
-					<p>									
-					<label style=" padding-left: 0.5em;text-align: right;">Start</label>
-						<input style="width: 60px;" name="Hemp1_B2Strt" type="number" value='0' step='0.1'
-							title="Start watering plant below this weight" />
-						<label style="width: 2.2em;text-align: right;">Stop</label>
-						<input style="width: 60px;" name="Hemp1_B2Stp" type="number" value='0' step='0.1'
-							title="Stop watering plant above this weight" />
+					<p>
+						<label style=" padding-left: 0.5em;text-align: right;">Evaporation</label>
+						<input style="width: 60px;" name="Hemp1_B2ET" type="number" value='0' step='0.1'
+							title="Amount of water that should evaporate between waterings" />
+						<label style="width: 2.2em;text-align: right;">Overflow</label>
+						<input style="width: 60px;" name="Hemp1_B2OF" type="number" value='0' step='0.1'
+							title="Amount of water that should drain into the waste reservoir before stopping watering" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
@@ -665,7 +673,7 @@
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
-				</form>				
+				</form>
 			</div>
 			<div class="card">
 				<h1 style="display: inline;">Aeroponics</h1>

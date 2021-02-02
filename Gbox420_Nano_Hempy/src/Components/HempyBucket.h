@@ -22,6 +22,7 @@ public:
   void refresh_FiveSec();
   void report();
   void updateState(HempyStates NewState);
+  HempyStates getState();
   void disable();
   void startWatering(); ///< Turn on water pump, run until StopWeight is reached
   void stopWatering();  ///< Turn on water pump, run until StopWeight is reached
@@ -30,6 +31,7 @@ public:
   void setDrainWaitTime(uint16_t Seconds);
   void setWateringTimeOut(uint16_t Seconds);
   void setWasteLimit(float Weight);
+  float getNextWateringWeight();
 
 private:
   float StartTotalWeight; ///< Bucket + Waste reservoir combined weight, filled when starting the watering

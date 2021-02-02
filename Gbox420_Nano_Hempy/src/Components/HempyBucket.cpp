@@ -108,7 +108,7 @@ void HempyBucket::updateState(HempyStates NewState)
       updateState(HempyStates::DRAINING);
       BlockOverWritingState = true;
     }
-    if (millis() - WateringTimer > ((uint32_t)*WateringTimeOut * 1000) || BucketPump->getState() == WaterPumpStates::DISABLED) ///< Timeout before the waste target was reached
+    if (millis() - WateringTimer > ((uint32_t)*WateringTimeOut * 1000) || BucketPump->getState() == WaterPumpStates::DISABLED || WasteReservoirWeightSensor->getWeight() >= *WasteLimit) ///< Timeout before the waste target was reached
     {
       updateState(HempyStates::DISABLED);
       BlockOverWritingState = true;
@@ -128,7 +128,14 @@ void HempyBucket::updateState(HempyStates NewState)
       }
       else
       {
-        updateState(HempyStates::WATERING); /// Continue watering
+        if( WasteReservoirWeightSensor->getWeight() >= *WasteLimit) ///Is waste reservoir full?
+         {
+           updateState(HempyStates::DISABLED);
+         }
+         else
+         {
+           updateState(HempyStates::WATERING); /// Continue watering
+         } 
       }
       BlockOverWritingState = true;
     }
@@ -163,7 +170,7 @@ void HempyBucket::setEvaporationTarget(float Weight)
 {
   if (*EvaporationTarget != Weight)
   {
-    if (NextWateringWeight > 0)  //If the next watering weight is already known
+    if (NextWateringWeight > 0) //If the next watering weight is already known
     {
       NextWateringWeight += *EvaporationTarget - Weight;
     }
@@ -206,4 +213,14 @@ void HempyBucket::setWasteLimit(float Weight)
     *WasteLimit = Weight;
     Parent->getSoundObject()->playOnSound();
   }
+}
+
+HempyStates HempyBucket::getState()
+{
+  return State;
+}
+
+float HempyBucket::getNextWateringWeight()
+{
+  return NextWateringWeight;
 }

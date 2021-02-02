@@ -19,7 +19,7 @@ static const uint8_t MaxShotTextLength = 128;   ///< Default char * buffer lengt
 static const uint16_t MaxLongTextLength = 1024; ///< Default char * buffer length for storing a long text. Memory intense!
 static const uint8_t LogDepth = 4;              ///< Show X number of log entries on website. Be careful, Max 1024 bits can be passed during a Website Refresh/Load event
 static const uint8_t QueueDepth = 32;           ///< Limits the maximum number of components within a module. Memory intense!
-static const uint8_t MovingAverageDepth = 10;  ///< Smooth out sensor readings by calculating the average of the last X results. Memory intense!
+static const uint8_t MovingAverageDepth = 10;   ///< Smooth out sensor readings by calculating the average of the last X results. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
@@ -27,13 +27,13 @@ extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling shor
 extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
-static const uint8_t WirelessCSNPin = 49;           ///< nRF24l01+ wireless transmitter CSN pin
-static const uint8_t WirelessCEPin = 53;            ///< nRF24l01+ wireless transmitter CE pin
-static const uint8_t WirelessDelay = 8;             ///< How long to wait between each retry (250ms increments), Max 15. 0 means 250us, 15 means 4000us,
-static const uint8_t WirelessRetry = 10;            ///< How many retries before giving up, max 15
-static const uint8_t WirelessPayloadSize = 32;      ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
-static const uint16_t WirelessMessageTimeout = 500; ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
-static const uint16_t WirelessReceiveTimeout = 65000;  ///< (ms) Consider a module offline after this timeout. Should be a few seconds longer then the WirelessReceiveTimeout configured on the Modules
+static const uint8_t WirelessCSNPin = 49;             ///< nRF24l01+ wireless transmitter CSN pin
+static const uint8_t WirelessCEPin = 53;              ///< nRF24l01+ wireless transmitter CE pin
+static const uint8_t WirelessDelay = 8;               ///< How long to wait between each retry (250ms increments), Max 15. 0 means 250us, 15 means 4000us,
+static const uint8_t WirelessRetry = 10;              ///< How many retries before giving up, max 15
+static const uint8_t WirelessPayloadSize = 32;        ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+static const uint16_t WirelessMessageTimeout = 500;   ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
+static const uint16_t WirelessReceiveTimeout = 65000; ///< (ms) Consider a module offline after this timeout. Should be a few seconds longer then the WirelessReceiveTimeout configured on the Modules
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12
@@ -93,8 +93,8 @@ typedef struct
     uint8_t ZeroCrossingPin; ///< On Arduino Mega2560 and Nano this has to be D2 pin
     uint8_t PWMPin;          ///< PWM capable digital pin
     bool State = true;       //ON or OFF
-    uint8_t MinSpeed;       //Limit the lowest output (%)
-    uint8_t Speed;          //Speed between 0-100 (%)  (Real output mapped between MinSpeed - 100)
+    uint8_t MinSpeed;        //Limit the lowest output (%)
+    uint8_t Speed;           //Speed between 0-100 (%)  (Real output mapped between MinSpeed - 100)
   };
   struct Fan_PWMSettings FanI = {.ZeroCrossingPin = 2, .PWMPin = 9, .State = true, .MinSpeed = 35, .Speed = 80};
   struct Fan_PWMSettings FanE = {.ZeroCrossingPin = 2, .PWMPin = 10, .State = true, .MinSpeed = 35, .Speed = 80};
@@ -110,19 +110,23 @@ typedef struct
 
   struct HempyModuleSettings ///< Hempy default settings
   {
-    HempyModuleSettings(float StartWeight_B1 = 0.0, float StopWeight_B1 = 0.0, float WasteLimit_B1 = 0.0, uint8_t PumpSpeed_B1 = 0, uint16_t TimeOutPump_B1 = 0, float StartWeight_B2 = 0.0, float StopWeight_B2 = 0.0, float WasteLimit_B2 = 0.0, uint8_t PumpSpeed_B2 = 0, uint16_t TimeOutPump_B2 = 0) : StartWeight_B1(StartWeight_B1), StopWeight_B1(StopWeight_B1), WasteLimit_B1(WasteLimit_B1), PumpSpeed_B1(PumpSpeed_B1), TimeOutPump_B1(TimeOutPump_B1), StartWeight_B2(StartWeight_B2), StopWeight_B2(StopWeight_B2), WasteLimit_B2(WasteLimit_B2), PumpSpeed_B2(PumpSpeed_B2), TimeOutPump_B2(TimeOutPump_B2) {}
-    float StartWeight_B1;         ///< Start watering below this weight
-    float StopWeight_B1;          ///< Stop watering above this weight
-    float WasteLimit_B1;          ///< Waste reservoir full weight -> Pump gets disabled if reached
-    uint8_t PumpSpeed_B1;         ///< Bucket 1 - Pump duty cycle to adjust motor speed
-    uint16_t TimeOutPump_B1;      ///< Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached ///< \todo Add email alert when pump fails
-    float StartWeight_B2;         ///< Start watering below this weight
-    float StopWeight_B2;          ///< Stop watering above this weight
-    float WasteLimit_B2;          ///< Waste reservoir full weight -> Pump gets disabled if reached
-    uint8_t PumpSpeed_B2;         ///< Bucket 2 - Pump duty cycle to adjust motor speed
-    uint16_t TimeOutPump_B2;      ///< Max pump runtime in seconds, target StopWeight should be reached before hitting this. Pump gets disabled if timeout is reached ///< \todo Add email alert when pump fails
+    HempyModuleSettings(float EvaporationTarget_B1 = 0.0, float OverflowTarget_B1 = 0.0, float WasteLimit_B1 = 0.0, uint8_t PumpSpeed_B1 = 0, uint16_t PumpTimeOut_B1 = 0, uint16_t DrainWaitTime_B1 = 0.0, uint16_t WateringTimeOut_B1 = 0.0, float EvaporationTarget_B2 = 0.0, float OverflowTarget_B2 = 0.0, float WasteLimit_B2 = 0.0, uint8_t PumpSpeed_B2 = 0, uint16_t PumpTimeOut_B2 = 0, uint16_t DrainWaitTime_B2 = 0.0, uint16_t WateringTimeOut_B2 = 0.0) : EvaporationTarget_B1(EvaporationTarget_B1), OverflowTarget_B1(OverflowTarget_B1), WasteLimit_B1(WasteLimit_B1), PumpSpeed_B1(PumpSpeed_B1), PumpTimeOut_B1(PumpTimeOut_B1), DrainWaitTime_B1(DrainWaitTime_B1), WateringTimeOut_B1(WateringTimeOut_B1), EvaporationTarget_B2(EvaporationTarget_B2), OverflowTarget_B2(OverflowTarget_B2), WasteLimit_B2(WasteLimit_B2), PumpSpeed_B2(PumpSpeed_B2), PumpTimeOut_B2(PumpTimeOut_B2), DrainWaitTime_B2(DrainWaitTime_B2), WateringTimeOut_B2(WateringTimeOut_B2) {}
+    float EvaporationTarget_B1;  ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
+    float OverflowTarget_B1;     ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+    float WasteLimit_B1;         ///< Waste reservoir full weight -> Pump gets disabled if reached
+    uint8_t PumpSpeed_B1;        ///< Pump duty cycle to adjust motor speed
+    uint16_t PumpTimeOut_B1;     ///< Waste reservoir full weight -> Pump gets disabled if reached
+    uint16_t DrainWaitTime_B1;   ///< (sec) How long to wait after watering for the water to drain
+    uint16_t WateringTimeOut_B1; ///< (sec) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
+    float EvaporationTarget_B2;  ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
+    float OverflowTarget_B2;     ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+    float WasteLimit_B2;         ///< Waste reservoir full weight -> Pump gets disabled if reached
+    uint8_t PumpSpeed_B2;        ///< Pump duty cycle to adjust motor speed
+    uint16_t PumpTimeOut_B2;     ///< Waste reservoir full weight -> Pump gets disabled if reached
+    uint16_t DrainWaitTime_B2;   ///< (sec) How long to wait after watering for the water to drain
+    uint16_t WateringTimeOut_B2; ///< (sec) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
   };
-  struct HempyModuleSettings HempyModule1 = {.StartWeight_B1 = 16.0, .StopWeight_B1 = 19.0, .WasteLimit_B1 = 13.0, .PumpSpeed_B1 = 100, .TimeOutPump_B1 = 180, .StartWeight_B2 = 16.0, .StopWeight_B2 = 19.0, .WasteLimit_B2 = 13.0, .PumpSpeed_B2 = 100, .TimeOutPump_B2 = 180};
+  struct HempyModuleSettings HempyModule1 = {.EvaporationTarget_B1 = 3.0, .OverflowTarget_B1 = 0.3, .WasteLimit_B1 = 13.0, .PumpSpeed_B1 = 100, .PumpTimeOut_B1 = 60, .DrainWaitTime_B1 = 60, .WateringTimeOut_B1 = 1500, .EvaporationTarget_B2 = 3.0, .OverflowTarget_B2 = 0.3, .WasteLimit_B2 = 13.0, .PumpSpeed_B2 = 100, .PumpTimeOut_B2 = 60, .DrainWaitTime_B2 = 60, .WateringTimeOut_B2 = 1500};
 
   struct LightSensorSettings ///< LightSensor default settings
   {

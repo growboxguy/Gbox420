@@ -51,8 +51,8 @@ typedef struct
     uint16_t DrainWaitTime; ///< (sec) How long to wait after watering for the water to drain
     uint16_t WateringTimeOut; ///< (sec) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
   };
-  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 3.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .DrainWaitTime=60, .WateringTimeOut=840};
-  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 3.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .DrainWaitTime=60, .WateringTimeOut=840};
+  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 3.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .DrainWaitTime=60, .WateringTimeOut=1500};
+  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 3.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .DrainWaitTime=60, .WateringTimeOut=1500};
 
   struct HempyModuleSettings ///< HempyModule default settings
   {
@@ -78,8 +78,8 @@ typedef struct
     uint8_t Speed;             ///< Duty cycle of the PWM Motor speed
     uint8_t SpeedLowLimit;     ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
   };
-  struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 180, .Speed = 100, .SpeedLowLimit = 30};
-  struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 180, .Speed = 100, .SpeedLowLimit = 30};
+  struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 60, .Speed = 100, .SpeedLowLimit = 30};
+  struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 60, .Speed = 100, .SpeedLowLimit = 30};
 
   struct WeightSensorSettings ///< WeightSensor default settings
   {
