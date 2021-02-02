@@ -197,9 +197,9 @@
 					</tr>
 					<tr>
 						<td id="DHT1_T" class="dataRows"></td>
-						<td id="Res1_ATemp" class="dataRows"></td>
+						<td id="Res1_AT" class="dataRows"></td>
 						<td id="DHT1_H" class="dataRows"></td>
-						<td id="Res1_Humi" class="dataRows"></td>
+						<td id="Res1_H" class="dataRows"></td>
 						<td id="IFan_S" class="dataRows"></td>
 						<td id="EFan_S" class="dataRows"></td>
 					</tr>
@@ -293,14 +293,14 @@
 			</div-->
 			<div class="card">
 				<h1 style="display: inline;">Reservoir</h1>
-				<span style="float:right" id="Res1_Status">CONNECTING...</span>
+				<span style="float:right" id="Res1_S">CONNECTING...</span>
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span>Air pump</span></th>
 						<th class="headerRows"><span>PH</span></th>
 						<th class="headerRows"><span>TDS</span></th>
 						<th class="headerRows"><span>Weight</span>
-							<button id="Res1_Tare" onclick="confirmTare(this)"
+							<button id="Res1_T" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the reservoir weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
@@ -310,8 +310,8 @@
 						<td id="APump1_Stat" class="dataRows"></td>
 						<td id="Res1_PH" class="dataRows"></td>
 						<td id="Res1_TDS" class="dataRows"></td>
-						<td id="Res1_Weight" class="dataRows"></td>
-						<td id="Res1_WTemp" class="dataRows"></td>
+						<td id="Res1_W" class="dataRows"></td>
+						<td id="Res1_WT" class="dataRows"></td>
 					</tr>
 				</table>
 				<form>
@@ -505,7 +505,7 @@
 		<div class="pure-u-1 pure-u-md-1-2">
 			<div class="card">
 				<h1 style="display: inline;">Hempy 1</h1>
-				<span style="float:right" id="Hemp1_Status">CONNECTING...</span>
+				<span style="float:right" id="Hemp1_S">CONNECTING...</span>
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span>State</span></th>
@@ -522,16 +522,16 @@
 						<th class="headerRows"><span>Pump</span></th>
 					</tr>
 					<tr>
-						<td id="Hemp1_B1State" class="dataRows"></td>
-						<td id="Hemp1_B1Weight" class="dataRows"></td>
-						<td id="Hemp1_B1Waste" class="dataRows"></td>
-						<td id="Hemp1_B1Pump" class="dataRows"></td>
+						<td id="Hemp1_B1S" class="dataRows"></td>
+						<td id="Hemp1_B1W" class="dataRows"></td>
+						<td id="Hemp1_B1WR" class="dataRows"></td>
+						<td id="Hemp1_B1P" class="dataRows"></td>
 					</tr>
 				</table>
 				<p>
 					<span style=" padding-left: 0.5em;">
 						<label>Next watering: </label>
-						<b><label id="Hemp1_B1Next"></label></b>
+						<b><label id="Hemp1_B1N"></label></b>
 						<label>[</label>
 						<label id="Hemp1_B1_RemainingWater"></label>
 						<label>] Waste remaining: </label>
@@ -553,17 +553,17 @@
 					<p>
 						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
 						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range"
-							name="Hemp1_B1PumpSpS" min="1" max="100"
-							oninput="this.form.Hemp1_B1PumpSp.value=this.value" />
-						<input type="number" name="Hemp1_B1PumpSp" min="1" max="100"
-							oninput="this.form.Hemp1_B1PumpSpS.value=this.value" />
+							name="Hemp1_B1PSS" min="1" max="100"
+							oninput="this.form.Hemp1_B1PS.value=this.value" />
+						<input type="number" name="Hemp1_B1PS" min="1" max="100"
+							oninput="this.form.Hemp1_B1PSS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
-						<input style="width: 55px;" min=1 max=9999 name="Hemp1_B1Time" type="number"
+						<input style="width: 55px;" min=1 max=9999 name="Hemp1_B1T" type="number"
 							title="Maximum time the pump can run continuously" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -591,7 +591,7 @@
 			</div>
 			<div class="card">
 				<h1 style="display: inline;">Hempy 2</h1>
-				<span style="float:right" id="Hemp1_Status2">CONNECTING...</span>
+				<span style="float:right" id="Hemp1_S2">CONNECTING...</span>
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span>State</span></th>
@@ -608,16 +608,16 @@
 						<th class="headerRows"><span>Pump</span></th>
 					</tr>
 					<tr>
-						<td id="Hemp1_B2State" class="dataRows"></td>
-						<td id="Hemp1_B2Weight" class="dataRows"></td>
-						<td id="Hemp1_B2Waste" class="dataRows"></td>
-						<td id="Hemp1_B2Pump" class="dataRows"></td>
+						<td id="Hemp1_B2S" class="dataRows"></td>
+						<td id="Hemp1_B2W" class="dataRows"></td>
+						<td id="Hemp1_B2WR" class="dataRows"></td>
+						<td id="Hemp1_B2P" class="dataRows"></td>
 					</tr>
 				</table>
 				<p>
 					<span style=" padding-left: 0.5em;">
 						<label>Next watering: </label>
-						<b><label id="Hemp1_B2Next"></label></b>
+						<b><label id="Hemp1_B2N"></label></b>
 						<label>[</label>
 						<label id="Hemp1_B2_RemainingWater"></label>
 						<label>] Waste remaining: </label>
@@ -639,17 +639,17 @@
 					<p>
 						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
 						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range"
-							name="Hemp1_B2PumpSpS" min="1" max="100"
-							oninput="this.form.Hemp1_B2PumpSp.value=this.value" />
-						<input type="number" name="Hemp1_B2PumpSp" min="1" max="100"
-							oninput="this.form.Hemp1_B2PumpSpS.value=this.value" />
+							name="Hemp1_B2PSS" min="1" max="100"
+							oninput="this.form.Hemp1_B2PS.value=this.value" />
+						<input type="number" name="Hemp1_B2PS" min="1" max="100"
+							oninput="this.form.Hemp1_B2PSS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
-						<input style="width: 55px;" min=1 max=9999 name="Hemp1_B2Time" type="number"
+						<input style="width: 55px;" min=1 max=9999 name="Hemp1_B2T" type="number"
 							title="Maximum time the pump can run continuously" />sec
 						<input class="setButton" type="submit" value="Set" />
 					</p>
@@ -677,7 +677,7 @@
 			</div>
 			<div class="card">
 				<h1 style="display: inline;">Aeroponics</h1>
-				<span style="float:right" id="Aero1_Status">CONNECTING...</span>
+				<span style="float:right" id="Aero1_S">CONNECTING...</span>
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span>State</span></span></th>
@@ -685,18 +685,18 @@
 						<th class="headerRows"><span>Pressure</span></span></th>
 						<th class="headerRows"><span>Last spray</span></th>
 						<th class="headerRows"><span>Weight</span>
-							<button id="Aero1_Tare" onclick="confirmTare(this)"
+							<button id="Aero1_T" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: center;"
 								type="button"
 								title="Tare the aeroponics weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 					</tr>
 					<tr>
-						<td id="Aero1_AState" class="dataRows"></td>
-						<td id="Aero1_Pump" class="dataRows"></td>
-						<td id="Aero1_Pres" class="dataRows"></td>
-						<td id="Aero1_LastSP" class="dataRows"></td>
-						<td id="Aero1_Weight" class="dataRows"></td>
+						<td id="Aero1_AS" class="dataRows"></td>
+						<td id="Aero1_P" class="dataRows"></td>
+						<td id="Aero1_Pr" class="dataRows"></td>
+						<td id="Aero1_LSP" class="dataRows"></td>
+						<td id="Aero1_W" class="dataRows"></td>
 					</tr>
 				</table>
 				<form>
@@ -747,7 +747,7 @@
 						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
 						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Aero1_PumpSpS"
 							min="1" max="100" oninput="this.form.Aero1_PumpSp.value=this.value" />
-						<input type="number" name="Aero1_PumpSp" min="1" max="100"
+						<input type="number" name="Aero1_PS" min="1" max="100"
 							oninput="this.form.Aero1_PumpSpS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
@@ -755,7 +755,7 @@
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; width: 3.5em;">Timeout</label>
-						<input style="width: 45px;" min=1 max=9999 name="Aero1_Timeout" type="number"
+						<input style="width: 45px;" min=1 max=9999 name="Aero1_PT" type="number"
 							title="Maximum continuous pump runtime in seconds" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -763,7 +763,7 @@
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; width: 3.5em;">Priming</label>
-						<input style="width: 45px;" min=1 max=9999 name="Aero1_Priming" type="number"
+						<input style="width: 45px;" min=1 max=9999 name="Aero1_PPT" type="number"
 							title="At pump startup the bypass valve is open for X seconds" />sec
 						<input class="setButton" type="submit" value="Set">
 				</form>
@@ -772,10 +772,10 @@
 				<form>
 					<p>
 						<label><b>Pressure</b> Min</label>
-						<input style="width: 45px;" min=0 max=10 step='0.1' name="Aero1_PresMin" type="number"
+						<input style="width: 45px;" min=0 max=10 step='0.1' name="Aero1_PMn" type="number"
 							title="Below this pressure refill the tank" />
 						<label style="width: 2.2em;text-align: right">Max</label>
-						<input style="width: 45px;" min=0 max=10 step='0.1' name="Aero1_PresMax" type="number"
+						<input style="width: 45px;" min=0 max=10 step='0.1' name="Aero1_PMx" type="number"
 							title="Stop refilling when this pressure is reached" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -856,14 +856,14 @@
 
 
 	function f_color(){
-	if (document.getElementById('Aero1_Status').value = 'OK') {
-		document.getElementById('Aero1_Status').style.color = "green";
+	if (document.getElementById('Aero1_S').value = 'OK') {
+		document.getElementById('Aero1_S').style.color = "green";
 	}
 	else	{
-		document.getElementById('Aero1_Status').style.color = "red";
+		document.getElementById('Aero1_S').style.color = "red";
 	}
 	}
-	document.getElementById('Aero1_Status').onchange= f_color;
+	document.getElementById('Aero1_S').onchange= f_color;
 	document.onload= f_color;
 
 	
@@ -880,11 +880,11 @@
 	setInterval(function () {
 		//document.getElementsByName("FanI_SS")[0].value = document.getElementsByName("FanI_S")[0].value;
 		//document.getElementsByName("FanE_SS")[0].value = document.getElementsByName("FanE_S")[0].value;
-		document.getElementsByName("Hemp1_B1PumpSpS")[0].value = document.getElementsByName("Hemp1_B1PumpSp")[0].value;
-		document.getElementsByName("Hemp1_B2PumpSpS")[0].value = document.getElementsByName("Hemp1_B2PumpSp")[0].value
+		document.getElementsByName("Hemp1_B1PSS")[0].value = document.getElementsByName("Hemp1_B1PS")[0].value;
+		document.getElementsByName("Hemp1_B2PSS")[0].value = document.getElementsByName("Hemp1_B2PS")[0].value
 		document.getElementsByName("Lt1_BS")[0].value = document.getElementsByName("Lt1_B")[0].value;
 		document.getElementsByName("Lt2_BS")[0].value = document.getElementsByName("Lt1_B")[0].value
-		document.getElementsByName("Aero1_PumpSpS")[0].value = document.getElementsByName("Aero1_PumpSp")[0].value
+		document.getElementsByName("Aero1_PumpSpS")[0].value = document.getElementsByName("Aero1_PS")[0].value
 	}, 1000) ///< Refresh every second
 
 
@@ -937,11 +937,11 @@
 	}, 1000) ///< Refresh every second
 
 	///< Duplicating the status of the Hempy Module to both Buckets
-	setInterval(function () { document.getElementById("Hemp1_Status2").innerHTML = document.getElementById("Hemp1_Status").innerHTML; }, 5)  ///< Refresh every 5 seconds
+	setInterval(function () { document.getElementById("Hemp1_S2").innerHTML = document.getElementById("Hemp1_S").innerHTML; }, 5)  ///< Refresh every 5 seconds
 
 	///< Calculate remaining water in Hempy Bucket 1
-	var Hempy1_Bucket1_Weight = document.getElementById("Hemp1_B1Weight");
-	var Hempy1_Bucket1_Waste = document.getElementById("Hemp1_B1Waste");
+	var Hempy1_Bucket1_Weight = document.getElementById("Hemp1_B1W");
+	var Hempy1_Bucket1_Waste = document.getElementById("Hemp1_B1WR");
 	var Hempy1_Bucket1_StartWeight = document.getElementsByName("Hemp1_B1Strt")[0];
 	var Hempy1_Bucket1_WasteLimit = document.getElementsByName("Hemp1_B1WL")[0];
 	var Hempy1_Bucket1_RemainingWater = document.getElementById("Hemp1_B1_RemainingWater");
@@ -955,8 +955,8 @@
 	}, 1000)  ///< Refresh every second
 
 	///< Calculate remaining water in Hempy Bucket 2
-	var Hempy1_Bucket2_Weight = document.getElementById("Hemp1_B2Weight");
-	var Hempy1_Bucket2_Waste = document.getElementById("Hemp1_B2Waste");
+	var Hempy1_Bucket2_Weight = document.getElementById("Hemp1_B2W");
+	var Hempy1_Bucket2_Waste = document.getElementById("Hemp1_B2WR");
 	var Hempy1_Bucket2_StartWeight = document.getElementsByName("Hemp1_B2Strt")[0];
 	var Hempy1_Bucket2_WasteLimit = document.getElementsByName("Hemp1_B2WL")[0];
 	var Hempy1_Bucket2_RemainingWater = document.getElementById("Hemp1_B2_RemainingWater");

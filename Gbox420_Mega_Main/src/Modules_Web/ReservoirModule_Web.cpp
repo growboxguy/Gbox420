@@ -63,13 +63,13 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
+    WebServer.setArgString(getComponentName(F("S")), toText_onlineStatus(OnlineStatus));
     WebServer.setArgString(getComponentName(F("PH")), toText(ReservoirResponse1Received.PH));
     WebServer.setArgString(getComponentName(F("TDS")), toText_TDS(ReservoirResponse1Received.TDS));
-    WebServer.setArgString(getComponentName(F("Weight")), toText_weight(ReservoirResponse1Received.Weight));
-    WebServer.setArgString(getComponentName(F("WTemp")), toText_temp(ReservoirResponse1Received.WaterTemperature));
-    WebServer.setArgString(getComponentName(F("ATemp")), toText_temp(ReservoirResponse1Received.AirTemperature));
-    WebServer.setArgString(getComponentName(F("Humi")), toText_percentage(ReservoirResponse1Received.Humidity));
+    WebServer.setArgString(getComponentName(F("W")), toText_weight(ReservoirResponse1Received.Weight));
+    WebServer.setArgString(getComponentName(F("WT")), toText_temp(ReservoirResponse1Received.WaterTemperature));
+    WebServer.setArgString(getComponentName(F("AT")), toText_temp(ReservoirResponse1Received.AirTemperature));
+    WebServer.setArgString(getComponentName(F("H")), toText_percentage(ReservoirResponse1Received.Humidity));
   }
 }
 
@@ -81,7 +81,7 @@ void ReservoirModule_Web::websiteEvent_Button(char *Button)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Tare")) == 0)
+    if (strcmp_P(ShortMessage, (PGM_P)F("T")) == 0)
     {
       ReservoirCommand1ToSend.TareWeight = true;
       Parent->addToLog(F("Taring reservoir scale"), false);

@@ -220,7 +220,7 @@ time_t getNtpTime()
       // sendEmailAlert(F("NTP%20time%20sync%20failed"));
     }
     else
-      logToSerials(F("time synchronized"), true, 1);
+      logToSerials(F("time synchronized"), true, 3);
   }
   return NTPResponse;
 }

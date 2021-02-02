@@ -9,6 +9,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   EvaporationTarget = &DefaultSettings->EvaporationTarget;
   OverflowTarget = &DefaultSettings->OverflowTarget;
   WasteLimit = &DefaultSettings->WasteLimit;
+  NextWateringWeight = DefaultSettings->InitialNextWatering;
   DrainWaitTime = &DefaultSettings->DrainWaitTime;
   WateringTimeOut = &DefaultSettings->WateringTimeOut;
   Parent->addToReportQueue(this);

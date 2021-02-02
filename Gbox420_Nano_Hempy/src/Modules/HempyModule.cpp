@@ -120,7 +120,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR)
       WeightWR1->triggerTare();
     Pump1->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
-    Pump1->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->TimeOutPump);    
+    Pump1->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);    
     Bucket1->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
     Bucket1->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
     Bucket1->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
@@ -136,7 +136,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TimeOutPump, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
@@ -155,7 +155,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       WeightB2->triggerTare();
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR)
       WeightWR2->triggerTare();
-    Pump2->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->TimeOutPump);
+    Pump2->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
     Pump2->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
     Bucket2->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
     Bucket2->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
@@ -172,7 +172,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TimeOutPump, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);

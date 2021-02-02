@@ -106,13 +106,13 @@ void HempyModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgString(getComponentName(F("B1ET")), toText(HempyBucketCommand1ToSend.EvaporationTarget));
     WebServer.setArgString(getComponentName(F("B1OF")), toText(HempyBucketCommand1ToSend.OverflowTarget));
     WebServer.setArgString(getComponentName(F("B1WL")), toText(HempyBucketCommand1ToSend.WasteLimit));
-    WebServer.setArgInt(getComponentName(F("B1PumpSp")), HempyBucketCommand1ToSend.PumpSpeed);
-    WebServer.setArgInt(getComponentName(F("B1Time")), HempyBucketCommand1ToSend.TimeOutPump);
+    WebServer.setArgInt(getComponentName(F("B1PS")), HempyBucketCommand1ToSend.PumpSpeed);
+    WebServer.setArgInt(getComponentName(F("B1T")), HempyBucketCommand1ToSend.PumpTimeOut);
     WebServer.setArgString(getComponentName(F("B2ET")), toText(HempyBucketCommand2ToSend.EvaporationTarget));
     WebServer.setArgString(getComponentName(F("B2OF")), toText(HempyBucketCommand2ToSend.OverflowTarget));
     WebServer.setArgString(getComponentName(F("B2WL")), toText(HempyBucketCommand2ToSend.WasteLimit));
-    WebServer.setArgInt(getComponentName(F("B2PumpSp")), HempyBucketCommand2ToSend.PumpSpeed);
-    WebServer.setArgInt(getComponentName(F("B2Time")), HempyBucketCommand2ToSend.TimeOutPump);
+    WebServer.setArgInt(getComponentName(F("B2PS")), HempyBucketCommand2ToSend.PumpSpeed);
+    WebServer.setArgInt(getComponentName(F("B2T")), HempyBucketCommand2ToSend.PumpTimeOut);
   }
 }
 
@@ -120,17 +120,17 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getComponentName(F("B1Weight")), toText_weight(HempyBucketResponse1Received.WeightB));
-    WebServer.setArgString(getComponentName(F("B2Weight")), toText_weight(HempyBucketResponse2Received.WeightB));
-    WebServer.setArgString(getComponentName(F("B1Waste")), toText_weight(HempyBucketResponse1Received.WeightWR));
-    WebServer.setArgString(getComponentName(F("B2Waste")), toText_weight(HempyBucketResponse2Received.WeightWR));
-    WebServer.setArgString(getComponentName(F("B1Next")), toText_weight(HempyBucketResponse1Received.NextWatering));
-    WebServer.setArgString(getComponentName(F("B1Next")), toText_weight(HempyBucketResponse1Received.NextWatering));
-    WebServer.setArgString(getComponentName(F("B1State")), toText_hempyState(HempyBucketResponse1Received.HempyState));
-    WebServer.setArgString(getComponentName(F("B2State")), toText_hempyState(HempyBucketResponse2Received.HempyState));
-    WebServer.setArgString(getComponentName(F("B1Pump")), toText_waterPumpState(HempyBucketResponse1Received.PumpState));
-    WebServer.setArgString(getComponentName(F("B2Pump")), toText_waterPumpState(HempyBucketResponse2Received.PumpState));
+    WebServer.setArgString(getComponentName(F("S")), toText_onlineStatus(OnlineStatus));
+    WebServer.setArgString(getComponentName(F("B1W")), toText_weight(HempyBucketResponse1Received.WeightB));
+    WebServer.setArgString(getComponentName(F("B2W")), toText_weight(HempyBucketResponse2Received.WeightB));
+    WebServer.setArgString(getComponentName(F("B1WR")), toText_weight(HempyBucketResponse1Received.WeightWR));
+    WebServer.setArgString(getComponentName(F("B2WR")), toText_weight(HempyBucketResponse2Received.WeightWR));
+    WebServer.setArgString(getComponentName(F("B1N")), toText_weight(HempyBucketResponse1Received.NextWatering));
+    WebServer.setArgString(getComponentName(F("B1N")), toText_weight(HempyBucketResponse1Received.NextWatering));
+    WebServer.setArgString(getComponentName(F("B1S")), toText_hempyState(HempyBucketResponse1Received.HempyState));
+    WebServer.setArgString(getComponentName(F("B2S")), toText_hempyState(HempyBucketResponse2Received.HempyState));
+    WebServer.setArgString(getComponentName(F("B1P")), toText_waterPumpState(HempyBucketResponse1Received.PumpState));
+    WebServer.setArgString(getComponentName(F("B2P")), toText_waterPumpState(HempyBucketResponse2Received.PumpState));
   }
 }
 
@@ -218,12 +218,12 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
       DefaultSettings->WasteLimit_B1 = WebServer.getArgFloat();
       Parent->addToLog(F("Bucket 1 waste limit updated"), false);
     }    
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1PumpSp")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1PS")) == 0)
     {
       DefaultSettings->PumpSpeed_B1 = WebServer.getArgInt();
       Parent->addToLog(F("Pump 1 speed updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Time")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1T")) == 0)
     {
       DefaultSettings->PumpTimeOut_B1 = WebServer.getArgInt();
       Parent->addToLog(F("Pump 1 timeout updated"), false);
@@ -242,12 +242,12 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
       DefaultSettings->WasteLimit_B2 = WebServer.getArgFloat();
       Parent->addToLog(F("Bucket 2 waste limit updated"), false);
     }   
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2PumpSp")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2PS")) == 0)
     {
       DefaultSettings->PumpSpeed_B2 = WebServer.getArgInt();
       Parent->addToLog(F("Pump 2 speed updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Time")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2T")) == 0)
     {
       DefaultSettings->PumpTimeOut_B2 = WebServer.getArgInt();
       Parent->addToLog(F("Pump 2 timeout updated"), false);
@@ -420,12 +420,12 @@ void HempyModule_Web::updateCommands()
   HempyBucketCommand1ToSend.DrainWaitTime = DefaultSettings->DrainWaitTime_B1;
   HempyBucketCommand1ToSend.WateringTimeOut = DefaultSettings->WateringTimeOut_B1;
   HempyBucketCommand1ToSend.PumpSpeed = DefaultSettings->PumpSpeed_B1;
-  HempyBucketCommand1ToSend.TimeOutPump = DefaultSettings->PumpTimeOut_B1;
+  HempyBucketCommand1ToSend.PumpTimeOut = DefaultSettings->PumpTimeOut_B1;
   HempyBucketCommand2ToSend.EvaporationTarget = DefaultSettings->EvaporationTarget_B2;
   HempyBucketCommand2ToSend.OverflowTarget = DefaultSettings->OverflowTarget_B2;
   HempyBucketCommand2ToSend.WasteLimit = DefaultSettings->WasteLimit_B2;
   HempyBucketCommand2ToSend.DrainWaitTime = DefaultSettings->DrainWaitTime_B2;
   HempyBucketCommand2ToSend.WateringTimeOut = DefaultSettings->WateringTimeOut_B2;
   HempyBucketCommand2ToSend.PumpSpeed = DefaultSettings->PumpSpeed_B2;
-  HempyBucketCommand2ToSend.TimeOutPump = DefaultSettings->PumpTimeOut_B2;
+  HempyBucketCommand2ToSend.PumpTimeOut = DefaultSettings->PumpTimeOut_B2;
 }
