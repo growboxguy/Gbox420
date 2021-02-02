@@ -91,7 +91,7 @@ typedef struct
     int PrimingTime;       ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
     int BlowOffTime;       ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
   };
-  struct PressurePumpSettings AeroPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .BypassSolenoidPin = 4, .BypassSolenoidNegativeLogic = true, .BypassSolenoidMaxOpenTime = 180, .BypassSolenoidClosingDelay = 600, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 120, .PrimingTime = 10, .BlowOffTime = 3};
+  struct PressurePumpSettings AeroPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .BypassSolenoidPin = 4, .BypassSolenoidNegativeLogic = true, .BypassSolenoidMaxOpenTime = 180, .BypassSolenoidClosingDelay = 600, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 420, .PrimingTime = 10, .BlowOffTime = 3};
 
   struct WeightSensorSettings ///< WeightSensor default settings
   {
