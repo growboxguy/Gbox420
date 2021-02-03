@@ -50,10 +50,10 @@ typedef struct
     float WasteLimit;  ///< Waste reservoir full weight -> Pump gets disabled if reached
     float InitialNextWatering; ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until OverflowTarget is reached.
     uint16_t DrainWaitTime; ///< (sec) How long to wait after watering for the water to drain
-    uint16_t WateringTimeOut; ///< (sec) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
+    uint16_t WateringTimeOut; ///< (min) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
   };
-  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 3.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialNextWatering = 17.0, .DrainWaitTime=60, .WateringTimeOut=1500};
-  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 3.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialNextWatering = 17.0, .DrainWaitTime=60, .WateringTimeOut=1500};
+  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 3.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialNextWatering = 17.0, .DrainWaitTime=60, .WateringTimeOut=20};
+  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 3.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialNextWatering = 17.0, .DrainWaitTime=60, .WateringTimeOut=20};
 
   struct HempyModuleSettings ///< HempyModule default settings
   {

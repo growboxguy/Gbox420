@@ -52,7 +52,7 @@ void HempyBucket::report()
   strcat_P(LongMessage, (PGM_P)F(" ; DrainTimeOut:"));
   strcat(LongMessage, toText_second(*DrainWaitTime));
   strcat_P(LongMessage, (PGM_P)F(" ; WateringTimeOut:"));
-  strcat(LongMessage, toText_second(*WateringTimeOut));
+  strcat(LongMessage, toText_minute(*WateringTimeOut));
   logToSerials(&LongMessage, true, 1);
 }
 
@@ -85,7 +85,7 @@ void HempyBucket::updateState(HempyStates NewState)
   case HempyStates::IDLE:
     if (State != NewState)
     {
-      BucketPump->stopPump();
+      BucketPump->stopPump(true);
     }
     if (BucketPump->getState() != WaterPumpStates::DISABLED && (NextWateringWeight <= 0 || BucketWeightSensor->getWeight() <= NextWateringWeight))
     {
@@ -109,7 +109,7 @@ void HempyBucket::updateState(HempyStates NewState)
       updateState(HempyStates::DRAINING);
       BlockOverWritingState = true;
     }
-    if (millis() - WateringTimer > ((uint32_t)*WateringTimeOut * 1000) || BucketPump->getState() == WaterPumpStates::DISABLED || WasteReservoirWeightSensor->getWeight() >= *WasteLimit) ///< Timeout before the waste target was reached
+    if (millis() - WateringTimer > ((uint32_t)*WateringTimeOut * 60000) || BucketPump->getState() == WaterPumpStates::DISABLED || WasteReservoirWeightSensor->getWeight() >= *WasteLimit) ///< Timeout before the waste target was reached
     {
       updateState(HempyStates::DISABLED);
       BlockOverWritingState = true;
@@ -198,11 +198,11 @@ void HempyBucket::setDrainWaitTime(uint16_t Seconds)
   }
 }
 
-void HempyBucket::setWateringTimeOut(uint16_t Seconds)
+void HempyBucket::setWateringTimeOut(uint16_t Minutes)
 {
-  if (*WateringTimeOut != Seconds)
+  if (*WateringTimeOut != Minutes)
   {
-    *WateringTimeOut = Seconds;
+    *WateringTimeOut = Minutes;
     Parent->getSoundObject()->playOnSound();
   }
 }
