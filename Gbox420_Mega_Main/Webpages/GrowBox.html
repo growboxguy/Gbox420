@@ -528,33 +528,33 @@
 						<td id="Hemp1_B1P" class="dataRows"></td>
 					</tr>
 				</table>
+				<form>
+					<p>
+						<label><b>Watering</b></label>
+						<button id="Hemp1_B1On" type="button" align="right"
+							title="Starts the pump and reset its status to OK">Start</button>
+						<button id="Hemp1_B1Off" type="button" align="right"
+							title="Stops the pump and reset its status to OK">Stop</button>
+						<button id="Hemp1_B1Dis" type="button" align="right"
+							title="Stops and disables pump">Disable</button>
+					</p>
+				</form>
 				<p>
-					<span style=" padding-left: 0.5em;">
-						<label>Watering:</label>
-						<b><span id="Hemp1_B1N" style="display: table-cell;vertical-align: middle;padding-left: 0.1em;padding-right: 0.1em;white-space: nowrap;"></span></b>
-						<label>[</label>
-						<label id="Hemp1_B1_RemainingWater"></label>
-						<label>], Waste:</label>
-						<b><label id="Hemp1_B1_RemainingWaste"></label></b>
+					<span style=" padding-left: 0.5em;"></span>
+					<label>Next:</label>
+					<span id="Hemp1_B1_RemainingWater" style="font-weight:bold;"></span>
+					<label>[</label>
+					<span id="Hemp1_B1N"></span>
+					<label>], Waste remaining:</label>
+					<label id="Hemp1_B1_RemainingWaste" style="font-weight:bold;"></label>
 					</span>
 				</p>
 				<form>
 					<p>
 						<label><b>Pump</b></label>
-						<button id="Hemp1_B1On" type="button" align="right"
-							title="Starts the pump and reset its status to OK">ON</button>
-						<button id="Hemp1_B1Off" type="button" align="right"
-							title="Stops the pump and reset its status to OK">OFF</button>
-						<button id="Hemp1_B1Dis" type="button" align="right"
-							title="Stops and disables pump">Disable</button>
-					<p>
-				</form>
-				<form>
-					<p>
-						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range"
-							name="Hemp1_B1PSS" min="1" max="100"
-							oninput="this.form.Hemp1_B1PS.value=this.value" />
+						<label style="padding-left: 0em; text-align: right;">speed</label>
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Hemp1_B1PSS"
+							min="1" max="100" oninput="this.form.Hemp1_B1PS.value=this.value" />
 						<input type="number" name="Hemp1_B1PS" min="1" max="100"
 							oninput="this.form.Hemp1_B1PSS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
@@ -562,43 +562,38 @@
 				</form>
 				<form>
 					<p>
-						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
-						<input style="width: 55px;" min=1 max=9999 name="Hemp1_B1T" type="number"
-							title="Maximum time the pump can run continuously" />sec
-						<input class="setButton" type="submit" value="Set">
+						<label style="padding-left: 0.5em;text-align: right;"><b><i>TimeOut:</i></b> Cycle</label>
+						<input style="width: 35px;" min=1 max=9999 name="Hemp1_B1T" type="number"
+							title="Maximum time the pump can run continuously" />sec,
+						<label style="width: 1.8em;text-align: right;">Full</label>
+						<input style="width: 35px;" name="Hemp1_B1WT" type="number" value='0' step='1'
+							title="Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled" />min
+						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<label><b>Weight based watering</b></label>
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: right;">Waste limit</label>
-						<input style="width: 60px;" name="Hemp1_B1WL" type="number" value='0' step='0.1'
+						<input style="width: 57px;" name="Hemp1_B1WL" type="number" value='0' step='0.1'
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
+						<label style=" padding-left: 0em;text-align: right;">Drain time</label>
+						<input style="width: 41px;" name="Hemp1_B1D" type="number" value='0' step='1'
+							title="How long to wait after watering for the water to drain" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: right;">Evaporation</label>
-						<input style="width: 60px;" name="Hemp1_B1ET" type="number" value='0' step='0.1'
+						<input style="width: 50px;" name="Hemp1_B1ET" type="number" value='0' step='0.1'
 							title="Amount of water that should evaporate between waterings" />
 						<label style="width: 2.2em;text-align: right;">Overflow</label>
-						<input style="width: 60px;" name="Hemp1_B1OF" type="number" value='0' step='0.1'
+						<input style="width: 50px;" name="Hemp1_B1OF" type="number" value='0' step='0.1'
 							title="Amount of water that should drain into the waste reservoir before stopping watering" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
-				<form>
-					<p>
-						<label style=" padding-left: 0.5em;text-align: right;">Drain</label>
-						<input style="width: 60px;" name="Hemp1_B1D" type="number" value='0' step='1'
-							title="(sec) How long to wait after watering for the water to drain" />sec,
-						<label style="width: 2.2em;text-align: right;">Timeout</label>
-						<input style="width: 60px;" name="Hemp1_B1WT" type="number" value='0' step='1'
-							title="(min) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled" />min
-						<input class="setButton" type="submit" value="Set">
-					</p>
-				</form>		
 			</div>
 			<div class="card">
 				<h1 style="display: inline;">Hempy 2</h1>
@@ -625,33 +620,33 @@
 						<td id="Hemp1_B2P" class="dataRows"></td>
 					</tr>
 				</table>
+				<form>
+					<p>
+						<label><b>Watering</b></label>
+						<button id="Hemp1_B2On" type="button" align="right"
+							title="Starts the pump and reset its status to OK">Start</button>
+						<button id="Hemp1_B2Off" type="button" align="right"
+							title="Stops the pump and reset its status to OK">Stop</button>
+						<button id="Hemp1_B2Dis" type="button" align="right"
+							title="Stops and disables pump">Disable</button>
+					</p>
+				</form>
 				<p>
-					<span style=" padding-left: 0.5em;">
-						<label>Watering:</label>
-						<b><span id="Hemp1_B2N" style="display: table-cell;vertical-align: middle;padding-left: 0.1em;padding-right: 0.1em;white-space: nowrap;"></span></b>
-						<label>[</label>
-						<label id="Hemp1_B2_RemainingWater"></label>
-						<label>], Waste:</label>
-						<b><label id="Hemp1_B2_RemainingWaste"></label></b>
+					<span style=" padding-left: 0.5em;"></span>
+					<label>Next:</label>
+					<span id="Hemp1_B2_RemainingWater" style="font-weight:bold;"></span>
+					<label>[</label>
+					<span id="Hemp1_B2N"></span>
+					<label>], Waste remaining:</label>
+					<label id="Hemp1_B2_RemainingWaste" style="font-weight:bold;"></label>
 					</span>
 				</p>
 				<form>
 					<p>
 						<label><b>Pump</b></label>
-						<button id="Hemp1_B2On" type="button" align="right"
-							title="Starts the pump and reset its status to OK">ON</button>
-						<button id="Hemp1_B2Off" type="button" align="right"
-							title="Stops the pump and reset its status to OK">OFF</button>
-						<button id="Hemp1_B2Dis" type="button" align="right"
-							title="Stops and disables pump">Disable</button>
-					</p>
-				</form>
-				<form>
-					<p>
-						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range"
-							name="Hemp1_B2PSS" min="1" max="100"
-							oninput="this.form.Hemp1_B2PS.value=this.value" />
+						<label style="padding-left: 0em; text-align: right;">speed</label>
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Hemp1_B2PSS"
+							min="1" max="100" oninput="this.form.Hemp1_B2PS.value=this.value" />
 						<input type="number" name="Hemp1_B2PS" min="1" max="100"
 							oninput="this.form.Hemp1_B2PSS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
@@ -659,9 +654,12 @@
 				</form>
 				<form>
 					<p>
-						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
-						<input style="width: 55px;" min=1 max=9999 name="Hemp1_B2T" type="number"
-							title="Maximum time the pump can run continuously" />sec
+						<label style="padding-left: 0.5em;text-align: right;"><b><i>TimeOut:</i></b> Cycle</label>
+						<input style="width: 35px;" min=1 max=9999 name="Hemp1_B2T" type="number"
+							title="Maximum time the pump can run continuously" />sec,
+						<label style="width: 1.8em;text-align: right;">Full</label>
+						<input style="width: 35px;" name="Hemp1_B2WT" type="number" value='0' step='1'
+							title="Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled" />min
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
@@ -669,30 +667,22 @@
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: right;">Waste limit</label>
-						<input style="width: 60px;" name="Hemp1_B2WL" type="number" value='0' step='0.1'
+						<input style="width: 57px;" name="Hemp1_B2WL" type="number" value='0' step='0.1'
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
+						<label style=" padding-left: 0em;text-align: right;">Drain time</label>
+						<input style="width: 41px;" name="Hemp1_B2D" type="number" value='0' step='1'
+							title="How long to wait after watering for the water to drain" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: right;">Evaporation</label>
-						<input style="width: 60px;" name="Hemp1_B2ET" type="number" value='0' step='0.1'
+						<input style="width: 50px;" name="Hemp1_B2ET" type="number" value='0' step='0.1'
 							title="Amount of water that should evaporate between waterings" />
 						<label style="width: 2.2em;text-align: right;">Overflow</label>
-						<input style="width: 60px;" name="Hemp1_B2OF" type="number" value='0' step='0.1'
+						<input style="width: 50px;" name="Hemp1_B2OF" type="number" value='0' step='0.1'
 							title="Amount of water that should drain into the waste reservoir before stopping watering" />
-						<input class="setButton" type="submit" value="Set">
-					</p>
-				</form>
-				<form>
-					<p>
-						<label style=" padding-left: 0.5em;text-align: right;">Drain</label>
-						<input style="width: 60px;" name="Hemp1_B2D" type="number" value='0' step='1'
-							title="(sec) How long to wait after watering for the water to drain" />sec,
-						<label style="width: 2.2em;text-align: right;">Timeout</label>
-						<input style="width: 60px;" name="Hemp1_B2WT" type="number" value='0' step='1'
-							title="(min) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled" />min
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
