@@ -12,6 +12,7 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
   Sensor->set_scale(*Scale);
   Sensor->set_offset(*Offset);
   Parent->addToReportQueue(this);
+  readWeight();
   //Parent->addToRefreshQueue_FiveSec(this);  //< HempyBucket component takes care of refreshing
   logToSerials(F("WeightSensor object created"), true, 3);
 }
@@ -46,7 +47,7 @@ void WeightSensor::report()
 
 float WeightSensor::readWeight(bool ReturnAverage)
 {
-  if (Sensor->wait_ready_timeout(200))
+  if (Sensor->wait_ready_timeout(500))
   {
     Weight = Sensor->get_units();
     if(Weight<0) 
