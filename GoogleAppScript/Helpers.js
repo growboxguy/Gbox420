@@ -222,6 +222,24 @@ function GetFriendlyValue(key, value) {
           }
           returnValue += 'hz';
           break;
+        case "HempyState":
+          if (value != null) {
+            switch (value) {
+              case "0":
+                returnValue = "DISABLED";
+                break;
+              case "1":
+                returnValue = "IDLE";
+                break;
+              case "2":
+                returnValue = "WATERING";
+                break;
+              case "3":
+                returnValue = "DRAINING";
+                break;
+            }
+          }
+          break;
         case "Minute":
           if (value != null) {
             returnValue = value + ' ';
