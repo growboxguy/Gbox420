@@ -60,7 +60,7 @@ void HempyModule_Web::reportToJSON()
   Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(OnlineStatus));
-  strcat_P(LongMessage, (PGM_P)F("\"H1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"H1\":\""));
   strcat(LongMessage, toText((int)HempyBucketResponse1Received.HempyState));
   strcat_P(LongMessage, (PGM_P)F("\",\"P1\":\""));
   strcat(LongMessage, toText((int)HempyBucketResponse1Received.PumpState));
@@ -78,7 +78,7 @@ void HempyModule_Web::reportToJSON()
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.OverflowTarget));
   strcat_P(LongMessage, (PGM_P)F("\",\"WL1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.WasteLimit));
-  strcat_P(LongMessage, (PGM_P)F("\"H2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"H2\":\""));
   strcat(LongMessage, toText((int)HempyBucketResponse2Received.HempyState));
   strcat_P(LongMessage, (PGM_P)F("\",\"P2\":\""));
   strcat(LongMessage, toText((int)HempyBucketResponse2Received.PumpState));
