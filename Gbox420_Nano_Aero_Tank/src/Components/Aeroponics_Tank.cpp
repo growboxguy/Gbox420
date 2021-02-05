@@ -28,7 +28,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   else
   {
     State = AeroTankStates::DISABLED;
-  }  
+  }
 }
 
 void Aeroponics_Tank::report()
@@ -86,6 +86,7 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
   case AeroTankStates::DISABLED: ///< Turns off spray cycle and tank pressure monitoring, plants die within hours in this state!!
     if (State != NewState)
     {
+      *SprayEnabled = false;
       SpraySwitch->turnOff();
       Pump->stopPump();
     }
@@ -93,6 +94,7 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
   case AeroTankStates::IDLE: ///< Spray cycle and tank pressure monitoring active
     if (State != NewState)
     {
+      *SprayEnabled = true;
       SpraySwitch->turnOff();
       Pump->stopPump();
     }
@@ -119,6 +121,7 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
   case AeroTankStates::SPRAY: ///< Turns on spray solenoid
     if (State != NewState)
     {
+      *SprayEnabled = true;
       SpraySwitch->turnOn();
       SprayTimer = millis();
     }
@@ -235,6 +238,10 @@ void Aeroponics_Tank::sprayOff(bool UserRequest)
   {
     updateState(AeroTankStates::STOPSPRAY);
   }
+  else
+  {
+    updateState(AeroTankStates::IDLE); /// If spray cycle was enabled before: Return to IDLE
+  }
 }
 
 void Aeroponics_Tank::refillTank()
@@ -310,8 +317,7 @@ void Aeroponics_Tank::setDuration(float duration)
 
 void Aeroponics_Tank::setSprayOnOff(bool State)
 {
-  *SprayEnabled = State;
-  if (*SprayEnabled)
+  if (State)
   {
     updateState(AeroTankStates::IDLE);
     Parent->addToLog(F("Spray enabled"));
