@@ -89,8 +89,11 @@ void HempyBucket::updateState(HempyStates NewState)
     }
     if (BucketPump->getState() != WaterPumpStates::DISABLED && (NextWateringWeight <= 0 || BucketWeightSensor->getWeight() <= NextWateringWeight))
     {
+      if(BucketWeightSensor->getWeight() >= NextWateringWeight - OverflowTarget) ///< Filters out waterings triggered by a disconnected weight sensor
+      {
       updateState(HempyStates::WATERING);
       BlockOverWritingState = true;
+      }
     }
     break;
   case HempyStates::WATERING:
