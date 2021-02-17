@@ -89,10 +89,10 @@ void HempyBucket::updateState(HempyStates NewState)
     }
     if (BucketPump->getState() != WaterPumpStates::DISABLED && (NextWateringWeight <= 0 || BucketWeightSensor->getWeight() <= NextWateringWeight))
     {
-      if(BucketWeightSensor->getWeight() >= NextWateringWeight - OverflowTarget) ///< Filters out waterings triggered by a disconnected weight sensor
+      if (BucketWeightSensor->getWeight() >= NextWateringWeight - *OverflowTarget) ///< Filters out waterings triggered by a disconnected weight sensor
       {
-      updateState(HempyStates::WATERING);
-      BlockOverWritingState = true;
+        updateState(HempyStates::WATERING);
+        BlockOverWritingState = true;
       }
     }
     break;
@@ -132,14 +132,14 @@ void HempyBucket::updateState(HempyStates NewState)
       }
       else
       {
-        if( WasteReservoirWeightSensor->getWeight() >= *WasteLimit) ///Is waste reservoir full?
-         {
-           updateState(HempyStates::DISABLED);
-         }
-         else
-         {
-           updateState(HempyStates::WATERING); /// Continue watering
-         } 
+        if (WasteReservoirWeightSensor->getWeight() >= *WasteLimit) ///Is waste reservoir full?
+        {
+          updateState(HempyStates::DISABLED);
+        }
+        else
+        {
+          updateState(HempyStates::WATERING); /// Continue watering
+        }
       }
       BlockOverWritingState = true;
     }
