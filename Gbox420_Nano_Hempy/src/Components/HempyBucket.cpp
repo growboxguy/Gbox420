@@ -101,7 +101,7 @@ void HempyBucket::updateState(HempyStates NewState)
     {
       BucketStartWeight = BucketWeightSensor->getWeight(); // Store the bucket weight before starting the pump
       BucketPump->startPump(true);
-      if (State == HempyStates::IDLE) // First time entering the WATERING-DRIAINING cycles
+      if (State == HempyStates::IDLE || State == HempyStates::DISABLED) // First time entering the WATERING-DRIAINING cycles
       {
         WateringTimer = millis(); ///Start measuring the total watering time
         WasteReservoirStartWeight = WasteReservoirWeightSensor->getWeight();
