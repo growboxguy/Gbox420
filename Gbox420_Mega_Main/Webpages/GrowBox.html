@@ -520,12 +520,14 @@
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
+						<th class="headerRows"><span>Dry/Wet</span></th>
 					</tr>
 					<tr>
 						<td id="Hemp1_B1S" class="dataRows"></td>
 						<td id="Hemp1_B1P" class="dataRows"></td>
 						<td id="Hemp1_B1W" class="dataRows"></td>
-						<td id="Hemp1_B1WR" class="dataRows"></td>						
+						<td id="Hemp1_B1WR" class="dataRows"></td>
+						<td id="Hemp1_B2DW" class="dataRows"></td>
 					</tr>
 				</table>
 				<form>
@@ -543,9 +545,7 @@
 					<span style=" padding-left: 0.5em;"></span>
 					<label>Next:</label>
 					<span id="Hemp1_B1_RemainingWater" style="font-weight:bold;"></span>
-					<label>[</label>
-					<span id="Hemp1_B1N"></span>
-					<label>], Waste remaining:</label>
+					<label>, Waste remaining:</label>
 					<label id="Hemp1_B1_RemainingWaste" style="font-weight:bold;"></label>
 					</span>
 				</p>
@@ -594,6 +594,14 @@
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
+				<form>
+					<p>
+						<label style=" padding-left: 0.5em;text-align: right;">DryWeight</label>
+						<input style="width: 50px;" name="Hemp1_B1D" type="number" value='0' step='0.1'
+							title="Next watering weight, automatically calculated based: Wet weight minus Evaporation target" />
+						<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>
 			</div>
 			<div class="card">
 				<h1 style="display: inline;">Hempy 2</h1>
@@ -611,13 +619,15 @@
 							<button id="Hemp1_B2TareWR" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the waste reservoir weight scale. Do not have any weight on the scale!">Tare</button>
-						</th>						
+						</th>
+						<th class="headerRows"><span>Dry/Wet</span></th>
 					</tr>
 					<tr>
 						<td id="Hemp1_B2S" class="dataRows"></td>
 						<td id="Hemp1_B2P" class="dataRows"></td>
 						<td id="Hemp1_B2W" class="dataRows"></td>
-						<td id="Hemp1_B2WR" class="dataRows"></td>						
+						<td id="Hemp1_B2WR" class="dataRows"></td>
+						<td id="Hemp1_B2DW" class="dataRows"></td>
 					</tr>
 				</table>
 				<form>
@@ -635,9 +645,7 @@
 					<span style=" padding-left: 0.5em;"></span>
 					<label>Next:</label>
 					<span id="Hemp1_B2_RemainingWater" style="font-weight:bold;"></span>
-					<label>[</label>
-					<span id="Hemp1_B2N"></span>
-					<label>], Waste remaining:</label>
+					<label>, Waste remaining:</label>
 					<label id="Hemp1_B2_RemainingWaste" style="font-weight:bold;"></label>
 					</span>
 				</p>
@@ -656,7 +664,7 @@
 					<p>
 						<label style="padding-left: 0.5em;text-align: right;"><b><i>TimeOut:</i></b></label>
 						<input style="width: 45px;" min=1 max=9999 name="Hemp1_B2T" type="number"
-							title="How long can the pump run continuously"/>sec,
+							title="How long can the pump run continuously" />sec,
 						<label style="width: 1.8em;text-align: right;">Watering</label>
 						<input style="width: 35px;" name="Hemp1_B2WT" type="number" value='0' step='1'
 							title="Maximum time the watering can take (including all Draining timeout). If reached the Hempy bucket will get disabled" />min
@@ -683,6 +691,14 @@
 						<label style="width: 2.2em;text-align: right;">Overflow</label>
 						<input style="width: 50px;" name="Hemp1_B2OF" type="number" value='0' step='0.1'
 							title="Amount of water that should drain into the waste reservoir before stopping watering" />
+						<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>
+				<form>
+					<p>
+						<label style=" padding-left: 0.5em;text-align: right;">DryWeight</label>
+						<input style="width: 50px;" name="Hemp1_B2D" type="number" value='0' step='0.1'
+							title="Next watering weight, automatically calculated based: Wet weight minus Evaporation target" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
@@ -954,31 +970,31 @@
 	///< Calculate remaining water in Hempy Bucket 1
 	var Hempy1_Bucket1_Weight = document.getElementById("Hemp1_B1W");
 	var Hempy1_Bucket1_Waste = document.getElementById("Hemp1_B1WR");
-	var Hempy1_Bucket1_NextWatering = document.getElementById("Hemp1_B1N");
+	var Hempy1_Bucket1_DryWeight = document.getElementById("Hemp1_B1D");
 	var Hempy1_Bucket1_WasteLimit = document.getElementsByName("Hemp1_B1WL")[0];
 	var Hempy1_Bucket1_RemainingWater = document.getElementById("Hemp1_B1_RemainingWater");
 	var Hempy1_Bucket1_RemainingWaste = document.getElementById("Hemp1_B1_RemainingWaste");
 	setInterval(function () {
 		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
 		var Unit = Hempy1_Bucket1_Weight.textContent.replaceAll(/[0-9.]/g, "");
-		Hempy1_Bucket1_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket1_Weight.textContent.slice(0, -2) - Hempy1_Bucket1_NextWatering.textContent.slice(0, -2))).toFixed(1) + Unit;
+		Hempy1_Bucket1_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket1_Weight.textContent.slice(0, -2) - Hempy1_Bucket1_DryWeight.textContent.slice(0, -2))).toFixed(1) + Unit;
 		Hempy1_Bucket1_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket1_WasteLimit.value - Hempy1_Bucket1_Waste.textContent.slice(0, -2))).toFixed(1) + Unit;
-		///<  Math.trunc(Weight - Hempy1_Bucket1_NextWatering.value);
+		///<  Math.trunc(Weight - Hempy1_Bucket1_DryWeight.value);
 	}, 1000)  ///< Refresh every second
 
 	///< Calculate remaining water in Hempy Bucket 2
 	var Hempy1_Bucket2_Weight = document.getElementById("Hemp1_B2W");
 	var Hempy1_Bucket2_Waste = document.getElementById("Hemp1_B2WR");
-	var Hempy1_Bucket2_NextWatering = document.getElementById("Hemp1_B2N");
+	var Hempy1_Bucket2_DryWeight = document.getElementById("Hemp1_B2D");
 	var Hempy1_Bucket2_WasteLimit = document.getElementsByName("Hemp1_B2WL")[0];
 	var Hempy1_Bucket2_RemainingWater = document.getElementById("Hemp1_B2_RemainingWater");
 	var Hempy1_Bucket2_RemainingWaste = document.getElementById("Hemp1_B2_RemainingWaste");
 	setInterval(function () {
 		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
 		var Unit = Hempy1_Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
-		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0, -2) - Hempy1_Bucket2_NextWatering.textContent.slice(0, -2))).toFixed(1) + Unit;
+		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0, -2) - Hempy1_Bucket2_DryWeight.textContent.slice(0, -2))).toFixed(1) + Unit;
 		Hempy1_Bucket2_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket2_WasteLimit.value - Hempy1_Bucket2_Waste.textContent.slice(0, -2))).toFixed(1) + Unit;
-		///<  Math.trunc(Weight - Hempy1_Bucket1_NextWatering.value);
+		///<  Math.trunc(Weight - Hempy1_Bucket1_DryWeight.value);
 	}, 1000)  ///< Refresh every second
 
 	if (window.addEventListener) {
