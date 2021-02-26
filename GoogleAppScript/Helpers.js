@@ -433,7 +433,42 @@ function GetLatestLogEntry(key, useFriendlyFormat) {
 */
 
 function scrollToLast() {
+  LogToConsole("Scrolling to last row...", true, 0);
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  sheet.setActiveSelection(sheet.getRange(1, 1));
   var range = sheet.getRange(sheet.getLastRow(), 1);
   sheet.setActiveSelection(range);
+}
+
+
+function cleanUpDebug() { /// < Removes log entries with debug mode enabled
+  LogToConsole("Cleaning up the logs from debug messages...", true, 0);
+  var logSheet = SpreadsheetApp.getActive().getSheetByName("Log");
+  var logHeader = logSheet.getDataRange().offset(0, 0, 1).getValues()[0]; //Get first row of the Log sheet
+
+  match = null;
+  for (var column in logHeader) {
+    if (logHeader[column] == "Main1_D") {
+      match = parseInt(column);
+    }
+  }
+  if (match != null) {
+    if (Debug) LogToConsole("Main1_D matched log column: " + match, true, 3);
+    var range = logSheet.getDataRange();
+    var column = match;
+    var deleteCriteria = "1";  //Delete rows where cell content equals criteria        
+    var rangeValues = range.getValues();
+
+    var filteredValues = rangeValues.filter(function (val) {
+      return val[column] != deleteCriteria;
+    });
+    range.clearContent();
+    var newRange = logSheet.getRange(1, 1, FilteredValues.length, FilteredValues[0].length);
+    newRange.setValues(FilteredValues);
+
+  }
+  else {
+    LogToConsole("Main1_D did not match any log columns", true, 3);
+    return null;
+  }
 }
