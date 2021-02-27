@@ -43,6 +43,8 @@ void HempyBucket::report()
   strcat(LongMessage, toText_hempyState(State));
   strcat_P(LongMessage, (PGM_P)F(" ; DryWeight:"));
   strcat(LongMessage, toText_weight(DryWeight));
+  strcat_P(LongMessage, (PGM_P)F(" ; WetWeight:"));
+  strcat(LongMessage, toText_weight(WetWeight));
   strcat_P(LongMessage, (PGM_P)F(" ; Evaporation:"));
   strcat(LongMessage, toText_weight(*EvaporationTarget));
   strcat_P(LongMessage, (PGM_P)F(" ; OverFlow:"));

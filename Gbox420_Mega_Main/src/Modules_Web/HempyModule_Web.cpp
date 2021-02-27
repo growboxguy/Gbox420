@@ -31,7 +31,11 @@ void HempyModule_Web::report()
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Bucket1 Weight:"));
   strcat(LongMessage, toText_weight(HempyBucketResponse1Received.WeightB));
-  strcat_P(LongMessage, (PGM_P)F(" ; EvaporationTarget:"));
+  strcat_P(LongMessage, (PGM_P)F(" [Dry:"));
+  strcat(LongMessage, toText_weight(HempyBucketResponse1Received.DryWeight));
+  strcat_P(LongMessage, (PGM_P)F(", Wet:"));
+  strcat(LongMessage, toText_weight(HempyBucketResponse1Received.WetWeight));
+  strcat_P(LongMessage, (PGM_P)F("] ; EvaporationTarget:"));
   strcat(LongMessage, toText_weight(HempyBucketCommand1ToSend.EvaporationTarget));
   strcat_P(LongMessage, (PGM_P)F(" ; OverFlowTarget:"));
   strcat(LongMessage, toText_weight(HempyBucketCommand1ToSend.OverflowTarget));
@@ -43,7 +47,11 @@ void HempyModule_Web::report()
   strcat(LongMessage, toText_weight(HempyBucketCommand1ToSend.WasteLimit));
   strcat_P(LongMessage, (PGM_P)F("] ; Bucket2 Weight:"));
   strcat(LongMessage, toText_weight(HempyBucketResponse2Received.WeightB));
-  strcat_P(LongMessage, (PGM_P)F(" ; EvaporationTarget:"));
+  strcat_P(LongMessage, (PGM_P)F(" [Dry:"));
+  strcat(LongMessage, toText_weight(HempyBucketResponse2Received.DryWeight));
+  strcat_P(LongMessage, (PGM_P)F(", Wet:"));
+  strcat(LongMessage, toText_weight(HempyBucketResponse2Received.WetWeight));
+  strcat_P(LongMessage, (PGM_P)F("] ; EvaporationTarget:"));
   strcat(LongMessage, toText_weight(HempyBucketCommand2ToSend.EvaporationTarget));
   strcat_P(LongMessage, (PGM_P)F(" ; OverFlowTarget:"));
   strcat(LongMessage, toText_weight(HempyBucketCommand2ToSend.OverflowTarget));
@@ -70,8 +78,10 @@ void HempyModule_Web::reportToJSON()
   strcat(LongMessage, toText(HempyBucketResponse1Received.WeightB));
   strcat_P(LongMessage, (PGM_P)F("\",\"WR1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.WeightWR));
-  strcat_P(LongMessage, (PGM_P)F("\",\"NW1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DW1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.DryWeight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WW1\":\""));
+  strcat(LongMessage, toText(HempyBucketResponse1Received.WetWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"ET1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.EvaporationTarget));
   strcat_P(LongMessage, (PGM_P)F("\",\"OT1\":\""));
@@ -88,8 +98,10 @@ void HempyModule_Web::reportToJSON()
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightB));
   strcat_P(LongMessage, (PGM_P)F("\",\"WR2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightWR));
-  strcat_P(LongMessage, (PGM_P)F("\",\"NW2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DW2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.DryWeight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WW2\":\""));
+  strcat(LongMessage, toText(HempyBucketResponse2Received.WetWeight));
   strcat_P(LongMessage, (PGM_P)F("\",\"ET2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.EvaporationTarget));
   strcat_P(LongMessage, (PGM_P)F("\",\"OT2\":\""));
