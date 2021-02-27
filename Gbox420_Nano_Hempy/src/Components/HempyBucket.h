@@ -31,7 +31,8 @@ public:
   void setDrainWaitTime(uint16_t Seconds);
   void setWateringTimeOut(uint16_t Minutes);
   void setWasteLimit(float Weight);
-  float getNextWateringWeight();
+  float getDryWeight();
+  float getWetWeight();
 
 private:
   float StartTotalWeight; ///< Bucket + Waste reservoir combined weight, filled when starting the watering
@@ -51,5 +52,6 @@ protected:
   float *WasteLimit; ///< Waste reservoir full weight -> Pump gets disabled if reached
   uint16_t *DrainWaitTime;               ///< (sec) How long to wait after watering for the water to drain
   uint16_t *WateringTimeOut;             ///< (min) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
-  float NextWateringWeight = 0.0;        ///< (kg/lbs) If Bucket weight drops below this: Start the watering cycles. Automatically calculated from the wet bucket weight minus the EvaportationTarget
+  float DryWeight = 0.0;        ///< (kg/lbs) If Bucket weight drops below this: Start the watering cycles. Automatically calculated from the wet bucket weight minus the EvaportationTarget
+  float WetWeight = 0.0;        ///< (kg/lbs) Bucket weight after watering, measured after watering timeout is expired.
 };
