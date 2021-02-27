@@ -970,14 +970,14 @@
 	///< Calculate remaining water in Hempy Bucket 1
 	var Hempy1_Bucket1_Weight = document.getElementById("Hemp1_B1W");
 	var Hempy1_Bucket1_Waste = document.getElementById("Hemp1_B1WR");
-	var Hempy1_Bucket1_DryWeight = document.getElementById("Hemp1_B1D");
+	var Hempy1_Bucket1_DryWeight = document.getElementsByName("Hemp1_B1DW")[0];
 	var Hempy1_Bucket1_WasteLimit = document.getElementsByName("Hemp1_B1WL")[0];
 	var Hempy1_Bucket1_RemainingWater = document.getElementById("Hemp1_B1_RemainingWater");
 	var Hempy1_Bucket1_RemainingWaste = document.getElementById("Hemp1_B1_RemainingWaste");
 	setInterval(function () {
 		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
 		var Unit = Hempy1_Bucket1_Weight.textContent.replaceAll(/[0-9.]/g, "");
-		Hempy1_Bucket1_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket1_Weight.textContent.slice(0, -2) - Hempy1_Bucket1_DryWeight.textContent.slice(0, -2))).toFixed(1) + Unit;
+		Hempy1_Bucket1_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket1_Weight.textContent.slice(0, -2) - Hempy1_Bucket1_DryWeight.value)).toFixed(1) + Unit;
 		Hempy1_Bucket1_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket1_WasteLimit.value - Hempy1_Bucket1_Waste.textContent.slice(0, -2))).toFixed(1) + Unit;
 		///<  Math.trunc(Weight - Hempy1_Bucket1_DryWeight.value);
 	}, 1000)  ///< Refresh every second
@@ -985,14 +985,14 @@
 	///< Calculate remaining water in Hempy Bucket 2
 	var Hempy1_Bucket2_Weight = document.getElementById("Hemp1_B2W");
 	var Hempy1_Bucket2_Waste = document.getElementById("Hemp1_B2WR");
-	var Hempy1_Bucket2_DryWeight = document.getElementById("Hemp1_B2D");
+	var Hempy1_Bucket2_DryWeight = document.getElementsByName("Hemp1_B2DW")[0];
 	var Hempy1_Bucket2_WasteLimit = document.getElementsByName("Hemp1_B2WL")[0];
 	var Hempy1_Bucket2_RemainingWater = document.getElementById("Hemp1_B2_RemainingWater");
 	var Hempy1_Bucket2_RemainingWaste = document.getElementById("Hemp1_B2_RemainingWaste");
 	setInterval(function () {
 		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
 		var Unit = Hempy1_Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
-		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0, -2) - Hempy1_Bucket2_DryWeight.textContent.slice(0, -2))).toFixed(1) + Unit;
+		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0, -2) - Hempy1_Bucket2_DryWeight.value)).toFixed(1) + Unit;
 		Hempy1_Bucket2_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket2_WasteLimit.value - Hempy1_Bucket2_Waste.textContent.slice(0, -2))).toFixed(1) + Unit;
 		///<  Math.trunc(Weight - Hempy1_Bucket1_DryWeight.value);
 	}, 1000)  ///< Refresh every second
