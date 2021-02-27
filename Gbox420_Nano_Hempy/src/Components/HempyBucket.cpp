@@ -9,6 +9,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   EvaporationTarget = &DefaultSettings->EvaporationTarget;
   OverflowTarget = &DefaultSettings->OverflowTarget;
   WasteLimit = &DefaultSettings->WasteLimit;
+  InitialDryWeight = &DefaultSettings->InitialDryWeight;
   DryWeight = DefaultSettings->InitialDryWeight;
   DrainWaitTime = &DefaultSettings->DrainWaitTime;
   WateringTimeOut = &DefaultSettings->WateringTimeOut;
@@ -127,15 +128,18 @@ void HempyBucket::updateState(HempyStates NewState)
     }
     if (millis() - StateTimer > ((uint32_t)*DrainWaitTime * 1000)) ///< Waiting for the water to drain
     {
-      if (millis() - StateTimer > ((uint32_t)*WateringTimeOut * 60000) && WasteReservoirWeightSensor->getWeight(false) - WasteReservoirStartWeight >= *OverflowTarget) //Check if target overflow weight is reached
+      if (WasteReservoirWeightSensor->getWeight(false) - WasteReservoirStartWeight >= *OverflowTarget) //Check if target overflow weight is reached
       {
-        WetWeight = BucketWeightSensor->getWeight();
-        DryWeight = WetWeight - *EvaporationTarget;
-        updateState(HempyStates::IDLE);
+        if (millis() - StateTimer > ((uint32_t)*WateringTimeOut * 60000)) //Wait for the bucket to fully drain excess water
+        {
+          WetWeight = BucketWeightSensor->getWeight(); //Measure wet weight
+          DryWeight = WetWeight - *EvaporationTarget;  //Calculate next watering weight
+          updateState(HempyStates::IDLE);
+        }
       }
       else
       {
-        if (WasteReservoirWeightSensor->getWeight() >= *WasteLimit) ///Is waste reservoir full?
+        if (WasteReservoirWeightSensor->getWeight() >= *WasteLimit) ///Safety feature: Disable pump if waste reservoir full
         {
           updateState(HempyStates::DISABLED);
         }
@@ -237,6 +241,7 @@ void HempyBucket::setDryWeight(float Weight)
   if (!isnan(Weight) && DryWeight != Weight)
   {
     DryWeight = Weight;
+    *InitialDryWeight = Weight;  //Store the value in EEPROM
     Parent->getSoundObject()->playOnSound();
   }
 }

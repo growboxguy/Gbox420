@@ -463,8 +463,8 @@ function cleanUpDebug() { /// < Removes log entries with debug mode enabled
       return val[column] != deleteCriteria;
     });
     range.clearContent();
-    var newRange = logSheet.getRange(1, 1, FilteredValues.length, FilteredValues[0].length);
-    newRange.setValues(FilteredValues);
+    var newRange = logSheet.getRange(1, 1, filteredValues.length, filteredValues[0].length);
+    newRange.setValues(filteredValues);
 
   }
   else {

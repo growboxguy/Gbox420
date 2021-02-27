@@ -515,19 +515,20 @@
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
+						<th class="headerRows"><span>Dry/Wet</span></th>
 						<th class="headerRows"><span>Waste</span>
 							<button id="Hemp1_B1TareWR" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
-						<th class="headerRows"><span>Dry/Wet</span></th>
 					</tr>
 					<tr>
 						<td id="Hemp1_B1S" class="dataRows"></td>
 						<td id="Hemp1_B1P" class="dataRows"></td>
 						<td id="Hemp1_B1W" class="dataRows"></td>
-						<td id="Hemp1_B1WR" class="dataRows"></td>
 						<td id="Hemp1_B1DWW" class="dataRows"></td>
+						<td id="Hemp1_B1WR" class="dataRows"></td>
+
 					</tr>
 				</table>
 				<form>
@@ -562,43 +563,42 @@
 				</form>
 				<form>
 					<p>
-						<label style="padding-left: 0.5em;text-align: right;"><b><i>TimeOut:</i></b></label>
+						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
 						<input style="width: 45px;" min=1 max=9999 name="Hemp1_B1T" type="number"
-							title="How long can the pump run continuously" />sec,
-						<label style="width: 1.8em;text-align: right;">Watering</label>
-						<input style="width: 35px;" name="Hemp1_B1WT" type="number" value='0' step='1'
-							title="Maximum time the watering can take (including all Draining timeout). If reached the Hempy bucket will get disabled" />min
+							title="How long can the pump run continuously. Do not set it too long, in one run the pump only needs to deliver an Overflow target's worth of water." />sec
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<label><b>Weight based watering</b></label>
 				<form>
 					<p>
-						<label style=" padding-left: 0.5em;text-align: right;">Waste limit</label>
+						<label style=" padding-left: 0.5em;text-align: right;">Dry weight</label>
+						<input style="width: 50px;" name="Hemp1_B1DW" type="number" value='0' step='0.1'
+							title="Next watering weight, automatically calculated based on: Wet weight minus Evaporation target" />
+						<label style="text-align: right;">Waste limit</label>
 						<input style="width: 57px;" name="Hemp1_B1WL" type="number" value='0' step='0.1'
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
-						<label style=" padding-left: 0em;text-align: right;">Drain time</label>
-						<input style="width: 41px;" name="Hemp1_B1D" type="number" value='0' step='1'
-							title="How long to wait after watering for the water to drain" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
-						<label style=" padding-left: 0.5em;text-align: right;">Evaporation</label>
+						<label style="padding-left: 0.5em; width: 2.2em;text-align: right;">Overflow</label>
+						<input style="width: 50px;" name="Hemp1_B1OF" type="number" value='0' step='0.1'
+							title="Dual purpose: 1: Amount of water that should drain into the Waste reservoir before stopping watering. 2: Amount of water that is pumped into the Bucket in one cycle" />
+						<label style="text-align: right;">Evaporation</label>
 						<input style="width: 50px;" name="Hemp1_B1ET" type="number" value='0' step='0.1'
 							title="Amount of water that should evaporate between waterings" />
-						<label style="width: 2.2em;text-align: right;">Overflow</label>
-						<input style="width: 50px;" name="Hemp1_B1OF" type="number" value='0' step='0.1'
-							title="Amount of water that should drain into the waste reservoir before stopping watering" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
-						<label style=" padding-left: 0.5em;text-align: right;">DryWeight</label>
-						<input style="width: 50px;" name="Hemp1_B1DW" type="number" value='0' step='0.1'
-							title="Next watering weight, automatically calculated based: Wet weight minus Evaporation target" />
+						<label style="text-align: right;"><b>Drain</b> cycle</label>
+						<input style="width: 41px;" name="Hemp1_B1D" type="number" value='0' step='1'
+							title="How long to wait between watering cycles. Each cycle pumps an Overflow target's worth of water, the cycles run until Overflow target in Waste reservoir is reached" />sec, total
+						<input style="width: 35px;" name="Hemp1_B1WT" type="number" value='0' step='1'
+							title="Dual purpose: 1: How long to wait before measuring the wet weight after watering. 2: Overflow target in Waste reservoir should be reached within this timeout (Including watering+cycle draining time)" />min
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
@@ -615,19 +615,19 @@
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
+						<th class="headerRows"><span>Dry/Wet</span></th>
 						<th class="headerRows"><span>Waste</span>
 							<button id="Hemp1_B2TareWR" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the waste reservoir weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
-						<th class="headerRows"><span>Dry/Wet</span></th>
 					</tr>
 					<tr>
 						<td id="Hemp1_B2S" class="dataRows"></td>
 						<td id="Hemp1_B2P" class="dataRows"></td>
 						<td id="Hemp1_B2W" class="dataRows"></td>
-						<td id="Hemp1_B2WR" class="dataRows"></td>
 						<td id="Hemp1_B2DWW" class="dataRows"></td>
+						<td id="Hemp1_B2WR" class="dataRows"></td>
 					</tr>
 				</table>
 				<form>
@@ -662,43 +662,42 @@
 				</form>
 				<form>
 					<p>
-						<label style="padding-left: 0.5em;text-align: right;"><b><i>TimeOut:</i></b></label>
+						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
 						<input style="width: 45px;" min=1 max=9999 name="Hemp1_B2T" type="number"
-							title="How long can the pump run continuously" />sec,
-						<label style="width: 1.8em;text-align: right;">Watering</label>
-						<input style="width: 35px;" name="Hemp1_B2WT" type="number" value='0' step='1'
-							title="Maximum time the watering can take (including all Draining timeout). If reached the Hempy bucket will get disabled" />min
+							title="How long can the pump run continuously. Do not set it too long, in one run the pump only needs to deliver an Overflow target's worth of water." />sec
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<label><b>Weight based watering</b></label>
 				<form>
 					<p>
-						<label style=" padding-left: 0.5em;text-align: right;">Waste limit</label>
+						<label style=" padding-left: 0.5em;text-align: right;">Dry weight</label>
+						<input style="width: 50px;" name="Hemp1_B2DW" type="number" value='0' step='0.1'
+							title="Next watering weight, automatically calculated based on: Wet weight minus Evaporation target" />
+						<label style="text-align: right;">Waste limit</label>
 						<input style="width: 57px;" name="Hemp1_B2WL" type="number" value='0' step='0.1'
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
-						<label style=" padding-left: 0em;text-align: right;">Drain time</label>
-						<input style="width: 41px;" name="Hemp1_B2D" type="number" value='0' step='1'
-							title="How long to wait after watering for the water to drain" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
-						<label style=" padding-left: 0.5em;text-align: right;">Evaporation</label>
+						<label style="padding-left: 0.5em; width: 2.2em;text-align: right;">Overflow</label>
+						<input style="width: 50px;" name="Hemp1_B2OF" type="number" value='0' step='0.1'
+							title="Dual purpose: 1: Amount of water that should drain into the Waste reservoir before stopping watering. 2: Amount of water that is pumped into the Bucket in one cycle" />
+						<label style="text-align: right;">Evaporation</label>
 						<input style="width: 50px;" name="Hemp1_B2ET" type="number" value='0' step='0.1'
 							title="Amount of water that should evaporate between waterings" />
-						<label style="width: 2.2em;text-align: right;">Overflow</label>
-						<input style="width: 50px;" name="Hemp1_B2OF" type="number" value='0' step='0.1'
-							title="Amount of water that should drain into the waste reservoir before stopping watering" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
-						<label style=" padding-left: 0.5em;text-align: right;">DryWeight</label>
-						<input style="width: 50px;" name="Hemp1_B2DW" type="number" value='0' step='0.1'
-							title="Next watering weight, automatically calculated based: Wet weight minus Evaporation target" />
+						<label style="text-align: right;"><b>Drain</b> cycle</label>
+						<input style="width: 41px;" name="Hemp1_B2D" type="number" value='0' step='1'
+							title="How long to wait between watering cycles. Each cycle pumps an Overflow target's worth of water, the cycles run until Overflow target in Waste reservoir is reached" />sec, total
+						<input style="width: 35px;" name="Hemp1_B2WT" type="number" value='0' step='1'
+							title="Dual purpose: 1: How long to wait before measuring the wet weight after watering. 2: Overflow target in Waste reservoir should be reached within this timeout (Including watering+cycle draining time)" />min
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
@@ -977,8 +976,8 @@
 	setInterval(function () {
 		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
 		var Unit = Hempy1_Bucket1_Weight.textContent.replaceAll(/[0-9.]/g, "");
-		Hempy1_Bucket1_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket1_Weight.textContent.slice(0, -2) - Hempy1_Bucket1_DryWeight.value)).toFixed(1) + Unit;
-		Hempy1_Bucket1_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket1_WasteLimit.value - Hempy1_Bucket1_Waste.textContent.slice(0, -2))).toFixed(1) + Unit;
+		Hempy1_Bucket1_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket1_Weight.textContent.slice(0, -1 * Unit.length) - Hempy1_Bucket1_DryWeight.value)).toFixed(1) + Unit;
+		Hempy1_Bucket1_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket1_WasteLimit.value - Hempy1_Bucket1_Waste.textContent.slice(0, -1 * Unit.length))).toFixed(1) + Unit;
 		///<  Math.trunc(Weight - Hempy1_Bucket1_DryWeight.value);
 	}, 1000)  ///< Refresh every second
 
@@ -992,8 +991,8 @@
 	setInterval(function () {
 		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
 		var Unit = Hempy1_Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
-		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0, -2) - Hempy1_Bucket2_DryWeight.value)).toFixed(1) + Unit;
-		Hempy1_Bucket2_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket2_WasteLimit.value - Hempy1_Bucket2_Waste.textContent.slice(0, -2))).toFixed(1) + Unit;
+		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0, -1 * Unit.length) - Hempy1_Bucket2_DryWeight.value)).toFixed(1) + Unit;
+		Hempy1_Bucket2_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket2_WasteLimit.value - Hempy1_Bucket2_Waste.textContent.slice(0, -1 * Unit.length))).toFixed(1) + Unit;
 		///<  Math.trunc(Weight - Hempy1_Bucket1_DryWeight.value);
 	}, 1000)  ///< Refresh every second
 
