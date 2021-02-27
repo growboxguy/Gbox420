@@ -32,6 +32,7 @@ public:
   void setWateringTimeOut(uint16_t Minutes);
   void setWasteLimit(float Weight);
   float getDryWeight();
+  void setDryWeight(float Weight);
   float getWetWeight();
 
 private:

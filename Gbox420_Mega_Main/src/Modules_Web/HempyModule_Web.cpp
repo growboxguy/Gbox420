@@ -254,6 +254,11 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
       DefaultSettings->WateringTimeOut_B1 = WebServer.getArgInt();
       Parent->addToLog(F("B1 Watering timeout updated"), false);
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1DW")) == 0)
+    {
+      HempyBucketCommand1ToSend.DryWeight = WebServer.getArgFloat();
+      Parent->addToLog(F("B1 DryWeight updated"), false);
+    }    
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2ET")) == 0)
     {
       DefaultSettings->EvaporationTarget_B2 = WebServer.getArgFloat();
@@ -288,6 +293,11 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
       DefaultSettings->WateringTimeOut_B2 = WebServer.getArgInt();
       Parent->addToLog(F("B2 Watering timeout updated"), false);
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2DW")) == 0)
+    {
+      HempyBucketCommand1ToSend.DryWeight = WebServer.getArgFloat();
+      Parent->addToLog(F("B2 DryWeight updated"), false);
+    } 
     SyncRequested = true;
   }
 }
@@ -381,6 +391,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           HempyBucketCommand1ToSend.TareWeightB = false;
           HempyBucketCommand1ToSend.TareWeightWR = false;
         }
+        if(!isnan(HempyBucketCommand1ToSend.DryWeight) && HempyBucketResponse1Received.DryWeight ==  HempyBucketCommand1ToSend.DryWeight)
+        {
+          HempyBucketCommand1ToSend.DryWeight = NAN;
+        }
         if (*Debug)
         {
           logToSerials(F("Bucket1:"), false, 4);
@@ -401,6 +415,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           HempyBucketCommand2ToSend.StopWatering = false;
           HempyBucketCommand2ToSend.TareWeightB = false;
           HempyBucketCommand2ToSend.TareWeightWR = false;
+        }
+        if(!isnan(HempyBucketCommand2ToSend.DryWeight) && HempyBucketResponse2Received.DryWeight ==  HempyBucketCommand2ToSend.DryWeight)
+        {
+          HempyBucketCommand2ToSend.DryWeight = NAN;
         }
         if (*Debug)
         {

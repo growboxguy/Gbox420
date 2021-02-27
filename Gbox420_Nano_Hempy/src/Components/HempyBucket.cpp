@@ -232,6 +232,15 @@ float HempyBucket::getDryWeight()
   return DryWeight;
 }
 
+void HempyBucket::setDryWeight(float Weight)
+{
+  if (!isnan(Weight) && DryWeight != Weight)
+  {
+    DryWeight = Weight;
+    Parent->getSoundObject()->playOnSound();
+  }
+}
+
 float HempyBucket::getWetWeight()
 {
   return WetWeight;

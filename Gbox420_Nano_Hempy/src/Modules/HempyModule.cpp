@@ -122,7 +122,8 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR)
       WeightWR1->triggerTare();
     Pump1->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
-    Pump1->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);    
+    Pump1->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);  
+    Bucket1->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
     Bucket1->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
     Bucket1->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
     Bucket1->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
@@ -159,6 +160,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       WeightWR2->triggerTare();
     Pump2->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
     Pump2->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
+    Bucket2->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
     Bucket2->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
     Bucket2->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
     Bucket2->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
