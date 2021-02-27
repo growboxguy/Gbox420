@@ -100,21 +100,27 @@ void WaterPump::startPump(bool ResetState)
 
 void WaterPump::stopPump(bool ResetState)
 {
-  Parent->getSoundObject()->playOffSound();
-  if (*PumpEnabled || ResetState)
+  if (State != WaterPumpStates::IDLE || State != WaterPumpStates::DISABLED)
   {
-    updateState(WaterPumpStates::IDLE);
-  }
-  else
-  {
-    updateState(WaterPumpStates::DISABLED);
+    Parent->getSoundObject()->playOffSound();
+    if (*PumpEnabled || ResetState)
+    {
+      updateState(WaterPumpStates::IDLE);
+    }
+    else
+    {
+      updateState(WaterPumpStates::DISABLED);
+    }
   }
 }
 
 void WaterPump::disablePump()
 {
-  Parent->getSoundObject()->playOffSound();
-  updateState(WaterPumpStates::DISABLED);
+  if (State != WaterPumpStates::DISABLED)
+  {
+    Parent->getSoundObject()->playOffSound();
+    updateState(WaterPumpStates::DISABLED);
+  }
 }
 
 void WaterPump::setSpeed(uint8_t DutyCycle) //Set PWM duty cycle

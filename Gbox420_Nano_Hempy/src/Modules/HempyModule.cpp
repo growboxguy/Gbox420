@@ -130,7 +130,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket1->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
     Bucket1->setWateringTimeOut(((HempyBucketCommand *)ReceivedCommand)->WateringTimeOut);
     NextSequenceID = HempyMessages::HempyBucketResponse2; // update the next Message that will be copied to the buffer
-    // if(*Debug)
+    if(*Debug)
     {
       logToSerials(F("Bucket1:"), false, 2);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);

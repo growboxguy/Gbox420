@@ -80,16 +80,10 @@ void HempyBucket::updateState(HempyStates NewState)
   switch (NewState)
   {
   case HempyStates::DISABLED:
-    if (State != NewState)
-    {
-      BucketPump->disablePump();
-    }
+    BucketPump->disablePump();
     break;
   case HempyStates::IDLE:
-    if (State != NewState)
-    {
-      BucketPump->stopPump(true);
-    }
+    BucketPump->stopPump(true);
     if (BucketPump->getState() != WaterPumpStates::DISABLED && (DryWeight <= 0 || BucketWeightSensor->getWeight() <= DryWeight))
     {
       if (BucketWeightSensor->getWeight() >= DryWeight - *OverflowTarget) ///< Filters out waterings triggered by a disconnected weight sensor
@@ -122,10 +116,7 @@ void HempyBucket::updateState(HempyStates NewState)
     }
     break;
   case HempyStates::DRAINING:
-    if (State != NewState)
-    {
-      BucketPump->stopPump();
-    }
+    BucketPump->stopPump();
     if (millis() - StateTimer > ((uint32_t)*DrainWaitTime * 1000)) ///< Waiting for the water to drain
     {
       if (WasteReservoirWeightSensor->getWeight(false) - WasteReservoirStartWeight >= *OverflowTarget) //Check if target overflow weight is reached

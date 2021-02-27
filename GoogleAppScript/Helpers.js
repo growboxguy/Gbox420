@@ -440,7 +440,6 @@ function scrollToLast() {
   sheet.setActiveSelection(range);
 }
 
-
 function cleanUpDebug() { /// < Removes log entries with debug mode enabled
   LogToConsole("Cleaning up the logs from debug messages...", true, 0);
   var logSheet = SpreadsheetApp.getActive().getSheetByName("Log");
@@ -454,7 +453,7 @@ function cleanUpDebug() { /// < Removes log entries with debug mode enabled
   }
   if (match != null) {
     if (Debug) LogToConsole("Main1_D matched log column: " + match, true, 3);
-    var range = logSheet.getDataRange();
+    var range = logSheet.getDataRange().offset(2,0);
     var column = match;
     var deleteCriteria = "1";  //Delete rows where cell content equals criteria        
     var rangeValues = range.getValues();
@@ -463,9 +462,8 @@ function cleanUpDebug() { /// < Removes log entries with debug mode enabled
       return val[column] != deleteCriteria;
     });
     range.clearContent();
-    var newRange = logSheet.getRange(1, 1, filteredValues.length, filteredValues[0].length);
+    var newRange = logSheet.getRange(3, 1, filteredValues.length, filteredValues[0].length);
     newRange.setValues(filteredValues);
-
   }
   else {
     LogToConsole("Main1_D did not match any log columns", true, 3);

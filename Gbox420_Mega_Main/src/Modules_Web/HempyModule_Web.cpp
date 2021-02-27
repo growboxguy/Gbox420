@@ -257,7 +257,7 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1DW")) == 0)
     {
       HempyBucketCommand1ToSend.DryWeight = WebServer.getArgFloat();
-      Parent->addToLog(F("B1 DryWeight updated"), false);
+      Parent->addToLog(F("B1 dry weight updated"), false);
     }    
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2ET")) == 0)
     {
@@ -296,7 +296,7 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2DW")) == 0)
     {
       HempyBucketCommand2ToSend.DryWeight = WebServer.getArgFloat();
-      Parent->addToLog(F("B2 DryWeight updated"), false);
+      Parent->addToLog(F("B2 dry weight updated"), false);
     } 
     SyncRequested = true;
   }
