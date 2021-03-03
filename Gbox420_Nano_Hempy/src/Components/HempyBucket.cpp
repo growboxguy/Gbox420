@@ -248,5 +248,4 @@ void HempyBucket::tareDryWetWeight()
   DryWeight = *InitialDryWeight;
   WetWeight = 0.0;
   Parent->getSoundObject()->playOnSound();
-
 }

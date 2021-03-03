@@ -52,8 +52,8 @@ typedef struct
     uint16_t DrainWaitTime; ///< (sec) How long to wait after watering for the water to drain
     uint16_t WateringTimeOut; ///< (min) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
   };
-  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 3.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 17.0, .DrainWaitTime=60, .WateringTimeOut=20};
-  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 3.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 17.0, .DrainWaitTime=60, .WateringTimeOut=20};
+  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .DrainWaitTime=120, .WateringTimeOut=30};
+  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .DrainWaitTime=120, .WateringTimeOut=30};
 
   struct HempyModuleSettings ///< HempyModule default settings
   {
