@@ -105,11 +105,11 @@ void AeroModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgFloat(getComponentName(F("Dur")), AeroCommand1ToSend.Duration);
     WebServer.setArgInt(getComponentName(F("DInt")), AeroCommand1ToSend.DayInterval);
     WebServer.setArgInt(getComponentName(F("NInt")), AeroCommand1ToSend.NightInterval);
-    WebServer.setArgFloat(getComponentName(F("PresMax")), AeroCommand1ToSend.MaxPressure);
-    WebServer.setArgFloat(getComponentName(F("PresMin")), AeroCommand1ToSend.MinPressure);
-    WebServer.setArgInt(getComponentName(F("PumpSp")), AeroCommand2ToSend.PumpSpeed);
-    WebServer.setArgInt(getComponentName(F("Timeout")), AeroCommand2ToSend.PumpTimeOut);
-    WebServer.setArgInt(getComponentName(F("Priming")), AeroCommand2ToSend.PumpPrimingTime);
+    WebServer.setArgFloat(getComponentName(F("PMx")), AeroCommand1ToSend.MaxPressure);
+    WebServer.setArgFloat(getComponentName(F("PMn")), AeroCommand1ToSend.MinPressure);
+    WebServer.setArgInt(getComponentName(F("PS")), AeroCommand2ToSend.PumpSpeed);
+    WebServer.setArgInt(getComponentName(F("PT")), AeroCommand2ToSend.PumpTimeOut);
+    WebServer.setArgInt(getComponentName(F("PPT")), AeroCommand2ToSend.PumpPrimingTime);
   }
 }
 
@@ -117,12 +117,12 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("Status")), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getComponentName(F("AState")), toText_aeroTankState(AeroResponse1Received.AeroState));
-    WebServer.setArgString(getComponentName(F("Pump")), toText_pressurePumpState(AeroResponse1Received.PumpState));
-    WebServer.setArgString(getComponentName(F("Pres")), toText_pressure(AeroResponse1Received.Pressure));
-    WebServer.setArgString(getComponentName(F("LastSP")), toText_pressure(AeroResponse1Received.LastSprayPressure));
-    WebServer.setArgString(getComponentName(F("Weight")), toText_weight(AeroResponse1Received.Weight));
+    WebServer.setArgString(getComponentName(F("S")), toText_onlineStatus(OnlineStatus));
+    WebServer.setArgString(getComponentName(F("AS")), toText_aeroTankState(AeroResponse1Received.AeroState));
+    WebServer.setArgString(getComponentName(F("P")), toText_pressurePumpState(AeroResponse1Received.PumpState));
+    WebServer.setArgString(getComponentName(F("Pr")), toText_pressure(AeroResponse1Received.Pressure));
+    WebServer.setArgString(getComponentName(F("LSP")), toText_pressure(AeroResponse1Received.LastSprayPressure));
+    WebServer.setArgString(getComponentName(F("W")), toText_weight(AeroResponse1Received.Weight));
   }
 }
 
@@ -174,7 +174,7 @@ void AeroModule_Web::websiteEvent_Button(char *Button)
       AeroCommand2ToSend.MixReservoir = true;
       Parent->addToLog(F("Mixing reservoir"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Tare")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("T")) == 0)
     {
       AeroCommand2ToSend.TareWeight = true;
       Parent->addToLog(F("Taring aero scale"), false);
@@ -229,26 +229,26 @@ void AeroModule_Web::websiteEvent_Field(char *Field)
       DefaultSettings->NightInterval = WebServer.getArgInt();
       Parent->addToLog(F("Spray interval updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpSp")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PS")) == 0)
     {
       DefaultSettings->PumpSpeed = WebServer.getArgInt();
       Parent->addToLog(F("Pump speed updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PT")) == 0)
     {
       DefaultSettings->PumpTimeOut = WebServer.getArgInt();
       Parent->addToLog(F("Pump timeout updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Priming")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PPT")) == 0)
     {
       DefaultSettings->PrimingTime = WebServer.getArgInt();
       Parent->addToLog(F("Priming time updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PresMin")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PMn")) == 0)
     {
       DefaultSettings->MinPressure = WebServer.getArgFloat();
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PresMax")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PMx")) == 0)
     {
       DefaultSettings->MaxPressure = WebServer.getArgFloat();
       Parent->addToLog(F("Pressure limits updated"), false);
@@ -303,7 +303,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
     logToSerials(SequenceIDToSend, false, 1);
     logToSerials(F("-"), false, 1);
     logToSerials(toText_aeroSequenceID(SequenceIDToSend), false, 1);
-    logToSerials(F("and waiting for Acknowledgment..."), true, 1);
+    logToSerials(F("and waiting for Acknowledgment"), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
   Parent->Wireless->flush_rx(); ///< Dump all previously received but unprocessed messages
@@ -346,11 +346,11 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         if (*Debug)
         {
           logToSerials(F("Aero1:"), false, 4);
-          logToSerials(toText_aeroTankState(AeroResponse1Received.AeroState), false, 1);
+          logToSerials(toText((int)AeroResponse1Received.AeroState), false, 1);
           logToSerials(AeroResponse1Received.PressureTankPresent, false, 1);
           logToSerials(AeroResponse1Received.SprayEnabled, false, 1);
           logToSerials(AeroResponse1Received.Pressure, false, 1);
-          logToSerials(toText_pressurePumpState(AeroResponse1Received.PumpState), false, 1);
+          logToSerials(toText((int)AeroResponse1Received.PumpState), false, 1);
           logToSerials(AeroResponse1Received.LastSprayPressure, false, 1);
           logToSerials(AeroResponse1Received.Weight, true, 1);
         }

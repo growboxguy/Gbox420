@@ -56,6 +56,6 @@ protected:
   uint16_t *PumpTimeOut = NULL;                ///< Max pump run time in seconds
   uint16_t *BypassSolenoidMaxOpenTime = NULL;  ///< (sec) Max time the bypass can stay open
   uint16_t *BypassSolenoidClosingDelay = NULL; ///< (ms) How long it takes for the solenoid to close
-  int *PrimingTime = NULL;                     ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
-  int *BlowOffTime = NULL;                     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
+  uint16_t *PrimingTime = NULL;                     ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+  uint16_t *BlowOffTime = NULL;                     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
 };
