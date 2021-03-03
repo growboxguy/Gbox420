@@ -41,73 +41,86 @@ void WaterPump::refresh_Sec()
   updateState(State);
 }
 
-void WaterPump::updateState(WaterPumpStates NewState) ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State
+void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState parameter is passed it overwrites State
 {
-  if (State != NewState) ///< if not the default value was passed
+  if (State != NewState)
   {
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)Name);
+    strcat_P(LongMessage, (PGM_P)F(" state: "));
+    strcat(LongMessage, toText_waterPumpState(State));
+    strcat_P(LongMessage, (PGM_P)F(" -> "));
+    strcat(LongMessage, toText_waterPumpState(NewState));
+    logToSerials(&LongMessage, true, 3);
+
     State = NewState;
-    PumpTimer = millis(); ///< Start measuring the time spent in the new State
+    StateTimer = millis(); ///< Start measuring the time spent in the new State
   }
 
-  switch (State)
-  {  
-  case WaterPumpStates::RUNNING:
-    PumpSwitch->turnOn();
-    *PumpEnabled = true;
-    if (RunTime > 0 && millis() - PumpTimer > ((uint32_t)RunTime * 1000))  //< Check if it is time to stop
-    {
-      RunTime = 0;
-      logToSerials(F("Running complete, stopping..."), true, 3);
-      updateState(WaterPumpStates::IDLE);
-    }
-    if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
-    {
-      Parent->addToLog(F("ALERT: Pump timeout reached"), 3); ///< \todo send email alert
-      updateState(WaterPumpStates::DISABLED);
-    }
-    break;  
-  case WaterPumpStates::IDLE:
-    PumpSwitch->turnOff();
-    *PumpEnabled = true;
-    break;  
+  switch (NewState)
+  {
   case WaterPumpStates::DISABLED:
     PumpSwitch->turnOff();
     *PumpEnabled = false;
     break;
+  case WaterPumpStates::IDLE:
+    PumpSwitch->turnOff();
+    *PumpEnabled = true;
+    break;
+  case WaterPumpStates::RUNNING:
+    PumpSwitch->turnOn();
+    *PumpEnabled = true;
+    if (RunTime > 0 && millis() - StateTimer > ((uint32_t)RunTime * 1000)) //< Check if it is time to stop
+    {
+      RunTime = 0;
+      logToSerials(F("Running complete"), true, 3);
+      updateState(WaterPumpStates::IDLE);
+    }
+    if (millis() - StateTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
+    {
+      Parent->addToLog(F("Pump timeout"), 3); ///< \todo send email alert
+      updateState(WaterPumpStates::DISABLED);
+    }
+    break;
   }
 }
 
-void WaterPump::startPump(bool ResetStatus)
+void WaterPump::startPump(bool ResetState)
 {
-  if (ResetStatus)
+  Parent->getSoundObject()->playOnSound();
+  if (*PumpEnabled || ResetState)
   {
-    *PumpEnabled = true;
-  }
-  logToSerials(Name, false, 3);
-  if (*PumpEnabled)
-  {
-    logToSerials(F("ON"), true, 1);
-    Parent->getSoundObject()->playOnSound();
     updateState(WaterPumpStates::RUNNING);
   }
   else
-    logToSerials(F("disabled, cannot turn ON"), true, 1);
+  {
+    logToSerials(F("Cannot turn ON"), true, 1);
+  }
 }
 
-void WaterPump::stopPump()
+void WaterPump::stopPump(bool ResetState)
 {
-  logToSerials(Name, false, 3);
-  logToSerials(F("OFF"), true, 1);
-  Parent->getSoundObject()->playOffSound();
-  updateState(WaterPumpStates::IDLE);
+  if (State != WaterPumpStates::IDLE || State != WaterPumpStates::DISABLED)
+  {
+    Parent->getSoundObject()->playOffSound();
+    if (*PumpEnabled || ResetState)
+    {
+      updateState(WaterPumpStates::IDLE);
+    }
+    else
+    {
+      updateState(WaterPumpStates::DISABLED);
+    }
+  }
 }
 
 void WaterPump::disablePump()
 {
-  logToSerials(Name, false, 3);
-  logToSerials(F("disabled"), true, 1);
-  Parent->getSoundObject()->playOffSound();
-  updateState(WaterPumpStates::DISABLED);
+  if (State != WaterPumpStates::DISABLED)
+  {
+    Parent->getSoundObject()->playOffSound();
+    updateState(WaterPumpStates::DISABLED);
+  }
 }
 
 void WaterPump::setSpeed(uint8_t DutyCycle) //Set PWM duty cycle

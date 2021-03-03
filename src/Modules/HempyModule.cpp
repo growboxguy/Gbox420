@@ -32,7 +32,7 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
   logToSerials(Name, false, 0);
-  logToSerials(F("- HempyModule object created, refreshing..."), true, 1);
+  logToSerials(F("- HempyModule object created, refreshing"), true, 1);
   runAll();
   addToLog(F("HempyModule initialized"), 0);
 }
@@ -65,13 +65,19 @@ void HempyModule::refresh_FiveSec()
 }
 
 void HempyModule::updateResponse()
-{
+{  
+  HempyBucket1ResponseToSend.HempyState = Bucket1->getState();
   HempyBucket1ResponseToSend.PumpState = Pump1->getState();
   HempyBucket1ResponseToSend.WeightB = WeightB1->getWeight(false);
   HempyBucket1ResponseToSend.WeightWR = WeightWR1->getWeight(false);
+  HempyBucket1ResponseToSend.DryWeight = Bucket1->getDryWeight();
+  HempyBucket1ResponseToSend.WetWeight = Bucket1->getWetWeight();
+  HempyBucket2ResponseToSend.HempyState = Bucket2->getState();
   HempyBucket2ResponseToSend.PumpState = Pump2->getState();
   HempyBucket2ResponseToSend.WeightB = WeightB2->getWeight(false);
   HempyBucket2ResponseToSend.WeightWR = WeightWR2->getWeight(false);
+  HempyBucket2ResponseToSend.DryWeight = Bucket2->getDryWeight();
+  HempyBucket2ResponseToSend.WetWeight = Bucket2->getWetWeight();
   updateAckData();
 }
 
@@ -105,67 +111,79 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     }
     break;
   case HempyMessages::HempyBucketCommand1:
-    if (((HempyBucketCommand *)ReceivedCommand)->DisablePump)
-      Pump1->disablePump();
-    if (((HempyBucketCommand *)ReceivedCommand)->TurnOnPump)
+    if (((HempyBucketCommand *)ReceivedCommand)->Disable)
+      Bucket1->disable();
+    if (((HempyBucketCommand *)ReceivedCommand)->StartWatering)
       Bucket1->startWatering();
-    if (((HempyBucketCommand *)ReceivedCommand)->TurnOffPump)
-      Pump1->stopPump();
+    if (((HempyBucketCommand *)ReceivedCommand)->StopWatering)
+      Bucket1->stopWatering();
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightB)
       WeightB1->triggerTare();
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR)
       WeightWR1->triggerTare();
-    Pump1->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->TimeOutPump);
     Pump1->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
-    Bucket1->setStartWeight(((HempyBucketCommand *)ReceivedCommand)->StartWeight);
-    Bucket1->setStopWeight(((HempyBucketCommand *)ReceivedCommand)->StopWeight);
+    Pump1->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);  
+    Bucket1->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
+    Bucket1->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
+    Bucket1->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
     Bucket1->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
+    Bucket1->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
+    Bucket1->setWateringTimeOut(((HempyBucketCommand *)ReceivedCommand)->WateringTimeOut);
     NextSequenceID = HempyMessages::HempyBucketResponse2; // update the next Message that will be copied to the buffer
-    // if(*Debug)
+    if(*Debug)
     {
       logToSerials(F("Bucket1:"), false, 2);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DisablePump, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TurnOnPump, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TurnOffPump, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TimeOutPump, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, true, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WateringTimeOut, true, 1);  
     }
     break;
   case HempyMessages::HempyBucketCommand2:
-    if (((HempyBucketCommand *)ReceivedCommand)->DisablePump)
-      Pump2->disablePump();
-    if (((HempyBucketCommand *)ReceivedCommand)->TurnOnPump)
+    if (((HempyBucketCommand *)ReceivedCommand)->Disable)
+      Bucket2->disable();
+    if (((HempyBucketCommand *)ReceivedCommand)->StartWatering)
       Bucket2->startWatering();
-    if (((HempyBucketCommand *)ReceivedCommand)->TurnOffPump)
-      Pump2->stopPump();
+    if (((HempyBucketCommand *)ReceivedCommand)->StopWatering)
+      Bucket2->stopWatering();
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightB)
       WeightB2->triggerTare();
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR)
       WeightWR2->triggerTare();
-    Pump2->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->TimeOutPump);
+    Pump2->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
     Pump2->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
-    Bucket2->setStartWeight(((HempyBucketCommand *)ReceivedCommand)->StartWeight);
-    Bucket2->setStopWeight(((HempyBucketCommand *)ReceivedCommand)->StopWeight);
+    Bucket2->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
+    Bucket2->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
+    Bucket2->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
     Bucket2->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
+    Bucket2->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
+    Bucket2->setWateringTimeOut(((HempyBucketCommand *)ReceivedCommand)->WateringTimeOut);
     NextSequenceID = HempyMessages::HempyReset; // update the next Message that will be copied to the buffer
     if(*Debug)
     {
       logToSerials(F("Bucket2:"), false, 2);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DisablePump, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TurnOnPump, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TurnOffPump, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TimeOutPump, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, true, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WateringTimeOut, true, 1);
     }
     break;
   case HempyMessages::HempyReset:                         ///< Used to get all Responses that do not have a corresponding Command

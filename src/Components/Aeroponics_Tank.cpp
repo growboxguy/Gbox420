@@ -20,7 +20,15 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("Aeroponics_Tank object created"), true, 3);
-  sprayNow(false); ///< This is a safety feature,start with a spray after a reset
+  if (*SprayEnabled)
+  {
+    State = AeroTankStates::IDLE;
+    sprayNow(false); ///< This is a safety feature,start with a spray after a reset
+  }
+  else
+  {
+    State = AeroTankStates::DISABLED;
+  }
 }
 
 void Aeroponics_Tank::report()
@@ -78,6 +86,7 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
   case AeroTankStates::DISABLED: ///< Turns off spray cycle and tank pressure monitoring, plants die within hours in this state!!
     if (State != NewState)
     {
+      *SprayEnabled = false;
       SpraySwitch->turnOff();
       Pump->stopPump();
     }
@@ -85,6 +94,7 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
   case AeroTankStates::IDLE: ///< Spray cycle and tank pressure monitoring active
     if (State != NewState)
     {
+      *SprayEnabled = true;
       SpraySwitch->turnOff();
       Pump->stopPump();
     }
@@ -111,6 +121,7 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
   case AeroTankStates::SPRAY: ///< Turns on spray solenoid
     if (State != NewState)
     {
+      *SprayEnabled = true;
       SpraySwitch->turnOn();
       SprayTimer = millis();
     }
@@ -169,12 +180,12 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
       Pump->turnBypassOn(true);
       SpraySwitch->turnOn();
     }
-    if (FeedbackPressureSensor->readPressure(false) <= 0.1 || Pump->getState() != PressurePumpStates::BYPASSOPEN)
+    if (FeedbackPressureSensor->readPressure(false) <= 0.1 || (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED))
     { ///< Pressure close to zero OR the pump's bypass solenoid reached it's maximum open time and closed itself
       if (Pump->getState() == PressurePumpStates::BYPASSOPEN)
         Pump->turnBypassOff();
       SpraySwitch->turnOff();
-      logToSerials(F("Tank drained"), false, 3);
+      logToSerials(F("Tank drained"), true, 3);
       if (*SprayEnabled)
       {
         updateState(AeroTankStates::IDLE); /// If spray cycle was enabled before draining: Return to IDLE (will trigger a refill)
@@ -226,6 +237,10 @@ void Aeroponics_Tank::sprayOff(bool UserRequest)
   if (State == AeroTankStates::SPRAY)
   {
     updateState(AeroTankStates::STOPSPRAY);
+  }
+  else
+  {
+    updateState(AeroTankStates::IDLE); /// If spray cycle was enabled before: Return to IDLE
   }
 }
 
@@ -302,8 +317,7 @@ void Aeroponics_Tank::setDuration(float duration)
 
 void Aeroponics_Tank::setSprayOnOff(bool State)
 {
-  *SprayEnabled = State;
-  if (*SprayEnabled)
+  if (State)
   {
     updateState(AeroTankStates::IDLE);
     Parent->addToLog(F("Spray enabled"));
