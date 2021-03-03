@@ -139,6 +139,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightDW, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
@@ -179,6 +180,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightDW, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);

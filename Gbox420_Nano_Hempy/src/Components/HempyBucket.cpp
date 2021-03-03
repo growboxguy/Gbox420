@@ -244,6 +244,7 @@ float HempyBucket::getWetWeight()
 
 void HempyBucket::tareDryWetWeight()
 {
+  logToSerials(F("Taring Dry/Wet weight"), true, 3);
   DryWeight = *InitialDryWeight;
   WetWeight = 0.0;
   Parent->getSoundObject()->playOnSound();
