@@ -193,6 +193,11 @@ void HempyModule_Web::websiteEvent_Button(char *Button)
       HempyBucketCommand1ToSend.TareWeightB = true;
       Parent->addToLog(F("Taring Bucket 1 scale"), false);
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareDW")) == 0)
+    {
+      HempyBucketCommand1ToSend.TareWeightDW = true;
+      Parent->addToLog(F("Taring Bucket 1 Dry/Wet"), false);
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareWR")) == 0)
     {
       HempyBucketCommand1ToSend.TareWeightWR = true;
@@ -202,6 +207,11 @@ void HempyModule_Web::websiteEvent_Button(char *Button)
     {
       HempyBucketCommand2ToSend.TareWeightB = true;
       Parent->addToLog(F("Taring Bucket 2 scale"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareDW")) == 0)
+    {
+      HempyBucketCommand2ToSend.TareWeightDW = true;
+      Parent->addToLog(F("Taring Bucket 2 Dry/Wet"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareWR")) == 0)
     {
@@ -382,13 +392,14 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         break;
       case HempyMessages::HempyBucketResponse1:
         memcpy(&HempyBucketResponse1Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
-        if (HempyBucketCommand1ToSend.Disable || HempyBucketCommand1ToSend.StartWatering || HempyBucketCommand1ToSend.StopWatering || HempyBucketCommand1ToSend.TareWeightB || HempyBucketCommand1ToSend.TareWeightWR) ///< Turn off command flags
+        if (HempyBucketCommand1ToSend.Disable || HempyBucketCommand1ToSend.StartWatering || HempyBucketCommand1ToSend.StopWatering || HempyBucketCommand1ToSend.TareWeightB  || HempyBucketCommand2ToSend.TareWeightDW || HempyBucketCommand1ToSend.TareWeightWR) ///< Turn off command flags
         {
           SyncRequested = true; ///< Force a second packet to actualize the response
           HempyBucketCommand1ToSend.Disable = false;
           HempyBucketCommand1ToSend.StartWatering = false;
           HempyBucketCommand1ToSend.StopWatering = false;
           HempyBucketCommand1ToSend.TareWeightB = false;
+          HempyBucketCommand1ToSend.TareWeightDW = false;          
           HempyBucketCommand1ToSend.TareWeightWR = false;
         }
         if(!isnan(HempyBucketCommand1ToSend.DryWeight) && HempyBucketResponse1Received.DryWeight ==  HempyBucketCommand1ToSend.DryWeight)
@@ -408,13 +419,14 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         break;
       case HempyMessages::HempyBucketResponse2:
         memcpy(&HempyBucketResponse2Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
-        if (HempyBucketCommand2ToSend.Disable || HempyBucketCommand2ToSend.StartWatering || HempyBucketCommand2ToSend.StopWatering || HempyBucketCommand2ToSend.TareWeightB || HempyBucketCommand2ToSend.TareWeightWR) ///< Turn off command flags
+        if (HempyBucketCommand2ToSend.Disable || HempyBucketCommand2ToSend.StartWatering || HempyBucketCommand2ToSend.StopWatering || HempyBucketCommand2ToSend.TareWeightB || HempyBucketCommand2ToSend.TareWeightDW || HempyBucketCommand2ToSend.TareWeightWR) ///< Turn off command flags
         {
           SyncRequested = true; ///< Force a second message exchange to actualize the response
           HempyBucketCommand2ToSend.Disable = false;
           HempyBucketCommand2ToSend.StartWatering = false;
           HempyBucketCommand2ToSend.StopWatering = false;
           HempyBucketCommand2ToSend.TareWeightB = false;
+          HempyBucketCommand2ToSend.TareWeightDW = false; 
           HempyBucketCommand2ToSend.TareWeightWR = false;
         }
         if(!isnan(HempyBucketCommand2ToSend.DryWeight) && HempyBucketResponse2Received.DryWeight ==  HempyBucketCommand2ToSend.DryWeight)

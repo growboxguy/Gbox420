@@ -515,7 +515,11 @@
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
-						<th class="headerRows"><span>Dry/Wet</span></th>
+						<th class="headerRows"><span>Dry/Wet</span>
+							<button id="Hemp1_B1TareDW" onclick="confirmDryWetTare(this)"
+								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
+								title="Tare the last measured Wet weight and restore the Dry weight from Settings.h">Tare</button>
+						</th>
 						<th class="headerRows"><span>Waste</span>
 							<button id="Hemp1_B1TareWR" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
@@ -615,7 +619,11 @@
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
-						<th class="headerRows"><span>Dry/Wet</span></th>
+						<th class="headerRows"><span>Dry/Wet</span>
+							<button id="Hemp1_B2TareDW" onclick="confirmDryWetTare(this)"
+								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
+								title="Tare the last measured Wet weight and restore the Dry weight from Settings.h">Tare</button>
+						</th>
 						<th class="headerRows"><span>Waste</span>
 							<button id="Hemp1_B2TareWR" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
@@ -1016,6 +1024,12 @@
 
 	function confirmTare(source) {
 		if (confirm("Only continue with an empty weight scale!")) {
+			notifyButtonPressed(source.id);
+		}
+	}
+
+	function confirmDryWetTare(source) {
+		if (confirm("This will zero out the Wet weight and restore Dry weight from Settings.h")) {
 			notifyButtonPressed(source.id);
 		}
 	}
