@@ -6,7 +6,6 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   this->BucketWeightSensor = BucketWeightSensor;
   this->BucketPump = BucketPump;
   this->WasteReservoirWeightSensor = WasteReservoirWeightSensor;
-  this->DefaultSettings = DefaultSettings;
   EvaporationTarget = &DefaultSettings->EvaporationTarget;
   OverflowTarget = &DefaultSettings->OverflowTarget;
   WasteLimit = &DefaultSettings->WasteLimit;
@@ -245,7 +244,7 @@ float HempyBucket::getWetWeight()
 
 void HempyBucket::tareDryWetWeight()
 {
-  DryWeight = DefaultSettings->InitialDryWeight;
+  DryWeight = *InitialDryWeight;
   WetWeight = 0.0;
   Parent->getSoundObject()->playOnSound();
 
