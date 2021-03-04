@@ -104,7 +104,7 @@ void HempyBucket::updateState(HempyStates NewState)
         WasteReservoirStartWeight = WasteReservoirWeightSensor->getWeight();
       }
     }
-    if ((BucketWeightSensor->getWeight(false) - BucketStartWeight) + WasteReservoirWeightSensor->getWeight() - WasteReservoirStartWeight >= *OverflowTarget) //Target overflow's worth of water was added, wait for it to drain
+    if (BucketWeightSensor->getWeight(false) >= WetWeight && BucketWeightSensor->getWeight(false) - BucketStartWeight + WasteReservoirWeightSensor->getWeight() - WasteReservoirStartWeight >= *OverflowTarget) //Target overflow's worth of water was added, wait for it to drain
     {
       updateState(HempyStates::DRAINING);
       BlockOverWritingState = true;
