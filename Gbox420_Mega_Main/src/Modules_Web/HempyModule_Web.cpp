@@ -119,7 +119,6 @@ void HempyModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("B1PS")), HempyBucketCommand1ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B1T")), HempyBucketCommand1ToSend.PumpTimeOut);
     WebServer.setArgInt(getComponentName(F("B1D")), HempyBucketCommand1ToSend.DrainWaitTime);
-    WebServer.setArgInt(getComponentName(F("B1WT")), HempyBucketCommand1ToSend.WateringTimeOut);
     WebServer.setArgFloat(getComponentName(F("B1DW")), HempyBucketResponse1Received.DryWeight);
     WebServer.setArgString(getComponentName(F("B2ET")), toText(HempyBucketCommand2ToSend.EvaporationTarget));
     WebServer.setArgString(getComponentName(F("B2OF")), toText(HempyBucketCommand2ToSend.OverflowTarget));
@@ -127,7 +126,6 @@ void HempyModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("B2PS")), HempyBucketCommand2ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B2T")), HempyBucketCommand2ToSend.PumpTimeOut);
     WebServer.setArgInt(getComponentName(F("B2D")), HempyBucketCommand2ToSend.DrainWaitTime);
-    WebServer.setArgInt(getComponentName(F("B2WT")), HempyBucketCommand2ToSend.WateringTimeOut);
     WebServer.setArgFloat(getComponentName(F("B2DW")), HempyBucketResponse2Received.DryWeight);
   }
 }
@@ -259,16 +257,11 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
       DefaultSettings->DrainWaitTime_B1 = WebServer.getArgInt();
       Parent->addToLog(F("B1 Drain wait updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1WT")) == 0)
-    {
-      DefaultSettings->WateringTimeOut_B1 = WebServer.getArgInt();
-      Parent->addToLog(F("B1 Watering timeout updated"), false);
-    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1DW")) == 0)
     {
       HempyBucketCommand1ToSend.DryWeight = WebServer.getArgFloat();
       Parent->addToLog(F("B1 dry weight updated"), false);
-    }    
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2ET")) == 0)
     {
       DefaultSettings->EvaporationTarget_B2 = WebServer.getArgFloat();
@@ -298,16 +291,11 @@ void HempyModule_Web::websiteEvent_Field(char *Field)
       DefaultSettings->DrainWaitTime_B2 = WebServer.getArgInt();
       Parent->addToLog(F("B2 Drain wait updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2WT")) == 0)
-    {
-      DefaultSettings->WateringTimeOut_B2 = WebServer.getArgInt();
-      Parent->addToLog(F("B2 Watering timeout updated"), false);
-    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2DW")) == 0)
     {
       HempyBucketCommand2ToSend.DryWeight = WebServer.getArgFloat();
       Parent->addToLog(F("B2 dry weight updated"), false);
-    } 
+    }
     SyncRequested = true;
   }
 }
@@ -392,17 +380,17 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         break;
       case HempyMessages::HempyBucketResponse1:
         memcpy(&HempyBucketResponse1Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
-        if (HempyBucketCommand1ToSend.Disable || HempyBucketCommand1ToSend.StartWatering || HempyBucketCommand1ToSend.StopWatering || HempyBucketCommand1ToSend.TareWeightB  || HempyBucketCommand2ToSend.TareWeightDW || HempyBucketCommand1ToSend.TareWeightWR) ///< Turn off command flags
+        if (HempyBucketCommand1ToSend.Disable || HempyBucketCommand1ToSend.StartWatering || HempyBucketCommand1ToSend.StopWatering || HempyBucketCommand1ToSend.TareWeightB || HempyBucketCommand2ToSend.TareWeightDW || HempyBucketCommand1ToSend.TareWeightWR) ///< Turn off command flags
         {
           SyncRequested = true; ///< Force a second packet to actualize the response
           HempyBucketCommand1ToSend.Disable = false;
           HempyBucketCommand1ToSend.StartWatering = false;
           HempyBucketCommand1ToSend.StopWatering = false;
           HempyBucketCommand1ToSend.TareWeightB = false;
-          HempyBucketCommand1ToSend.TareWeightDW = false;          
+          HempyBucketCommand1ToSend.TareWeightDW = false;
           HempyBucketCommand1ToSend.TareWeightWR = false;
         }
-        if(!isnan(HempyBucketCommand1ToSend.DryWeight) && HempyBucketResponse1Received.DryWeight ==  HempyBucketCommand1ToSend.DryWeight)
+        if (!isnan(HempyBucketCommand1ToSend.DryWeight) && HempyBucketResponse1Received.DryWeight == HempyBucketCommand1ToSend.DryWeight)
         {
           HempyBucketCommand1ToSend.DryWeight = NAN;
         }
@@ -426,10 +414,10 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           HempyBucketCommand2ToSend.StartWatering = false;
           HempyBucketCommand2ToSend.StopWatering = false;
           HempyBucketCommand2ToSend.TareWeightB = false;
-          HempyBucketCommand2ToSend.TareWeightDW = false; 
+          HempyBucketCommand2ToSend.TareWeightDW = false;
           HempyBucketCommand2ToSend.TareWeightWR = false;
         }
-        if(!isnan(HempyBucketCommand2ToSend.DryWeight) && HempyBucketResponse2Received.DryWeight ==  HempyBucketCommand2ToSend.DryWeight)
+        if (!isnan(HempyBucketCommand2ToSend.DryWeight) && HempyBucketResponse2Received.DryWeight == HempyBucketCommand2ToSend.DryWeight)
         {
           HempyBucketCommand2ToSend.DryWeight = NAN;
         }
@@ -486,14 +474,12 @@ void HempyModule_Web::updateCommands()
   HempyBucketCommand1ToSend.OverflowTarget = DefaultSettings->OverflowTarget_B1;
   HempyBucketCommand1ToSend.WasteLimit = DefaultSettings->WasteLimit_B1;
   HempyBucketCommand1ToSend.DrainWaitTime = DefaultSettings->DrainWaitTime_B1;
-  HempyBucketCommand1ToSend.WateringTimeOut = DefaultSettings->WateringTimeOut_B1;
   HempyBucketCommand1ToSend.PumpSpeed = DefaultSettings->PumpSpeed_B1;
   HempyBucketCommand1ToSend.PumpTimeOut = DefaultSettings->PumpTimeOut_B1;
   HempyBucketCommand2ToSend.EvaporationTarget = DefaultSettings->EvaporationTarget_B2;
   HempyBucketCommand2ToSend.OverflowTarget = DefaultSettings->OverflowTarget_B2;
   HempyBucketCommand2ToSend.WasteLimit = DefaultSettings->WasteLimit_B2;
   HempyBucketCommand2ToSend.DrainWaitTime = DefaultSettings->DrainWaitTime_B2;
-  HempyBucketCommand2ToSend.WateringTimeOut = DefaultSettings->WateringTimeOut_B2;
   HempyBucketCommand2ToSend.PumpSpeed = DefaultSettings->PumpSpeed_B2;
   HempyBucketCommand2ToSend.PumpTimeOut = DefaultSettings->PumpTimeOut_B2;
 }

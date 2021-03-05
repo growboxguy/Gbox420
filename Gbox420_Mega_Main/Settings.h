@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 4; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 5; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -111,23 +111,21 @@ typedef struct
 
   struct HempyModuleSettings ///< Hempy default settings
   {
-    HempyModuleSettings(float EvaporationTarget_B1 = 0.0, float OverflowTarget_B1 = 0.0, float WasteLimit_B1 = 0.0, uint8_t PumpSpeed_B1 = 0, uint16_t PumpTimeOut_B1 = 0, uint16_t DrainWaitTime_B1 = 0.0, uint16_t WateringTimeOut_B1 = 0.0, float EvaporationTarget_B2 = 0.0, float OverflowTarget_B2 = 0.0, float WasteLimit_B2 = 0.0, uint8_t PumpSpeed_B2 = 0, uint16_t PumpTimeOut_B2 = 0, uint16_t DrainWaitTime_B2 = 0.0, uint16_t WateringTimeOut_B2 = 0.0) : EvaporationTarget_B1(EvaporationTarget_B1), OverflowTarget_B1(OverflowTarget_B1), WasteLimit_B1(WasteLimit_B1), PumpSpeed_B1(PumpSpeed_B1), PumpTimeOut_B1(PumpTimeOut_B1), DrainWaitTime_B1(DrainWaitTime_B1), WateringTimeOut_B1(WateringTimeOut_B1), EvaporationTarget_B2(EvaporationTarget_B2), OverflowTarget_B2(OverflowTarget_B2), WasteLimit_B2(WasteLimit_B2), PumpSpeed_B2(PumpSpeed_B2), PumpTimeOut_B2(PumpTimeOut_B2), DrainWaitTime_B2(DrainWaitTime_B2), WateringTimeOut_B2(WateringTimeOut_B2) {}
+    HempyModuleSettings(float EvaporationTarget_B1 = 0.0, float OverflowTarget_B1 = 0.0, float WasteLimit_B1 = 0.0, uint8_t PumpSpeed_B1 = 0, uint16_t PumpTimeOut_B1 = 0, uint16_t DrainWaitTime_B1 = 0.0, float EvaporationTarget_B2 = 0.0, float OverflowTarget_B2 = 0.0, float WasteLimit_B2 = 0.0, uint8_t PumpSpeed_B2 = 0, uint16_t PumpTimeOut_B2 = 0, uint16_t DrainWaitTime_B2 = 0.0) : EvaporationTarget_B1(EvaporationTarget_B1), OverflowTarget_B1(OverflowTarget_B1), WasteLimit_B1(WasteLimit_B1), PumpSpeed_B1(PumpSpeed_B1), PumpTimeOut_B1(PumpTimeOut_B1), DrainWaitTime_B1(DrainWaitTime_B1), EvaporationTarget_B2(EvaporationTarget_B2), OverflowTarget_B2(OverflowTarget_B2), WasteLimit_B2(WasteLimit_B2), PumpSpeed_B2(PumpSpeed_B2), PumpTimeOut_B2(PumpTimeOut_B2), DrainWaitTime_B2(DrainWaitTime_B2)) {}
     float EvaporationTarget_B1;  ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
     float OverflowTarget_B1;     ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
     float WasteLimit_B1;         ///< Waste reservoir full weight -> Pump gets disabled if reached
     uint8_t PumpSpeed_B1;        ///< Pump duty cycle to adjust motor speed
     uint16_t PumpTimeOut_B1;     ///< Waste reservoir full weight -> Pump gets disabled if reached
     uint16_t DrainWaitTime_B1;   ///< (sec) How long to wait after watering for the water to drain
-    uint16_t WateringTimeOut_B1; ///< (sec) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
     float EvaporationTarget_B2;  ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
     float OverflowTarget_B2;     ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
     float WasteLimit_B2;         ///< Waste reservoir full weight -> Pump gets disabled if reached
     uint8_t PumpSpeed_B2;        ///< Pump duty cycle to adjust motor speed
     uint16_t PumpTimeOut_B2;     ///< Waste reservoir full weight -> Pump gets disabled if reached
     uint16_t DrainWaitTime_B2;   ///< (sec) How long to wait after watering for the water to drain
-    uint16_t WateringTimeOut_B2; ///< (min) Maximum time the watering can take (including all Watering-Draining cycles). If reached the Hempy bucket will get disabled
-  };
-  struct HempyModuleSettings HempyModule1 = {.EvaporationTarget_B1 = 3.0, .OverflowTarget_B1 = 0.3, .WasteLimit_B1 = 13.0, .PumpSpeed_B1 = 100, .PumpTimeOut_B1 = 60, .DrainWaitTime_B1 = 60, .WateringTimeOut_B1 = 20, .EvaporationTarget_B2 = 3.0, .OverflowTarget_B2 = 0.3, .WasteLimit_B2 = 13.0, .PumpSpeed_B2 = 100, .PumpTimeOut_B2 = 60, .DrainWaitTime_B2 = 60, .WateringTimeOut_B2 = 20};
+    };
+  struct HempyModuleSettings HempyModule1 = {.EvaporationTarget_B1 = 2.0, .OverflowTarget_B1 = 0.3, .WasteLimit_B1 = 13.0, .PumpSpeed_B1 = 100, .PumpTimeOut_B1 = 120, .DrainWaitTime_B1 = 180, .EvaporationTarget_B2 = 2.0, .OverflowTarget_B2 = 0.3, .WasteLimit_B2 = 13.0, .PumpSpeed_B2 = 100, .PumpTimeOut_B2 = 120, .DrainWaitTime_B2 = 180};
 
   struct LightSensorSettings ///< LightSensor default settings
   {

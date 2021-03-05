@@ -569,18 +569,21 @@
 					<p>
 						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
 						<input style="width: 45px;" min=1 max=9999 name="Hemp1_B1T" type="number"
-							title="How long can the pump run continuously. Do not set it too long, in one run the pump only needs to deliver an Overflow target's worth of water." />sec
-						<input class="setButton" type="submit" value="Set" />
+							title="Maximum total run time of the pump during the watering. Safety feature - disables the watering! The weight target should be reached sooner than this counter" />sec,
+						<label style="text-align: right;">Drain</label>
+						<input style="width: 57px;" name="Hemp1_B1D" type="number" value='0' step='1' min='0'
+								title="How long to wait between watering cycles. Drain time required by the nutrient solution to reach the waste reservoir."/>sec
+						<input class=" setButton" type="submit" value="Set" />
 					</p>
 				</form>
-				<label><b>Weight based watering</b></label>
+				<label><b>Weight based watering</b><button class="setButton" onclick="hempyWateringInfo()">?</button></label>
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: right;">Dry weight</label>
-						<input style="width: 50px;" name="Hemp1_B1DW" type="number" value='0' step='0.1'
+						<input style="width: 50px;" name="Hemp1_B1DW" type="number" value='0' step='0.1' min='0'
 							title="Next watering weight, automatically calculated based on: Wet weight minus Evaporation target" />
 						<label style="text-align: right;">Waste limit</label>
-						<input style="width: 57px;" name="Hemp1_B1WL" type="number" value='0' step='0.1'
+						<input style="width: 57px;" name="Hemp1_B1WL" type="number" value='0' step='0.1' min='0'
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -588,21 +591,11 @@
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; width: 2.2em;text-align: right;">Overflow</label>
-						<input style="width: 50px;" name="Hemp1_B1OF" type="number" value='0' step='0.1'
+						<input style="width: 50px;" name="Hemp1_B1OF" type="number" value='0' step='0.1' min='0'
 							title="Dual purpose: 1: Amount of water that should drain into the Waste reservoir before stopping watering. 2: Amount of water that is pumped into the Bucket in one cycle" />
 						<label style="text-align: right;">Evaporation</label>
-						<input style="width: 50px;" name="Hemp1_B1ET" type="number" value='0' step='0.1'
+						<input style="width: 50px;" name="Hemp1_B1ET" type="number" value='0' step='0.1' min='0'
 							title="Amount of water that should evaporate between waterings" />
-						<input class="setButton" type="submit" value="Set">
-					</p>
-				</form>
-				<form>
-					<p>
-						<label style="text-align: right;"><b>Drain</b> cycle</label>
-						<input style="width: 41px;" name="Hemp1_B1D" type="number" value='0' step='1'
-							title="How long to wait between watering cycles. Each cycle pumps an Overflow target's worth of water, the cycles run until Overflow target in Waste reservoir is reached" />sec, total
-						<input style="width: 35px;" name="Hemp1_B1WT" type="number" value='0' step='1'
-							title="Dual purpose: 1: How long to wait before measuring the wet weight after watering. 2: Overflow target in Waste reservoir should be reached within this timeout (Including watering+cycle draining time)" />min
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
@@ -672,18 +665,21 @@
 					<p>
 						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
 						<input style="width: 45px;" min=1 max=9999 name="Hemp1_B2T" type="number"
-							title="How long can the pump run continuously. Do not set it too long, in one run the pump only needs to deliver an Overflow target's worth of water." />sec
-						<input class="setButton" type="submit" value="Set" />
+							title="Maximum total run time of the pump during the watering. Safety feature, The weight target should be reached sooner than this counter." />sec, 
+						<label style="text-align: right;">Drain</label>
+						<input style="width: 57px;" name="Hemp1_B2D" type="number" value='0' step='1' min='0'
+							title="How long to wait between watering cycles. Drain time required by the nutrient solution to reach the waste reservoir."/>sec
+						<input class=" setButton" type="submit" value="Set" />
 					</p>
 				</form>
-				<label><b>Weight based watering</b></label>
+				<label><b>Weight based watering</b><button class="setButton" onclick="hempyWateringInfo()">?</button></label>
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: right;">Dry weight</label>
-						<input style="width: 50px;" name="Hemp1_B2DW" type="number" value='0' step='0.1'
+						<input style="width: 50px;" name="Hemp1_B2DW" type="number" value='0' step='0.1' min='0'
 							title="Next watering weight, automatically calculated based on: Wet weight minus Evaporation target" />
 						<label style="text-align: right;">Waste limit</label>
-						<input style="width: 57px;" name="Hemp1_B2WL" type="number" value='0' step='0.1'
+						<input style="width: 57px;" name="Hemp1_B2WL" type="number" value='0' step='0.1' min='0'
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -691,21 +687,11 @@
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; width: 2.2em;text-align: right;">Overflow</label>
-						<input style="width: 50px;" name="Hemp1_B2OF" type="number" value='0' step='0.1'
+						<input style="width: 50px;" name="Hemp1_B2OF" type="number" value='0' step='0.1' min='0'
 							title="Dual purpose: 1: Amount of water that should drain into the Waste reservoir before stopping watering. 2: Amount of water that is pumped into the Bucket in one cycle" />
 						<label style="text-align: right;">Evaporation</label>
-						<input style="width: 50px;" name="Hemp1_B2ET" type="number" value='0' step='0.1'
+						<input style="width: 50px;" name="Hemp1_B2ET" type="number" value='0' step='0.1' min='0'
 							title="Amount of water that should evaporate between waterings" />
-						<input class="setButton" type="submit" value="Set">
-					</p>
-				</form>
-				<form>
-					<p>
-						<label style="text-align: right;"><b>Drain</b> cycle</label>
-						<input style="width: 41px;" name="Hemp1_B2D" type="number" value='0' step='1'
-							title="How long to wait between watering cycles. Each cycle pumps an Overflow target's worth of water, the cycles run until Overflow target in Waste reservoir is reached" />sec, total
-						<input style="width: 35px;" name="Hemp1_B2WT" type="number" value='0' step='1'
-							title="Dual purpose: 1: How long to wait before measuring the wet weight after watering. 2: Overflow target in Waste reservoir should be reached within this timeout (Including watering+cycle draining time)" />min
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
@@ -739,7 +725,7 @@
 						<label><b>Spray</b></label>
 						<button id="Aero1_SprayEn" type="button" align="right"
 							title="Enable spray cycle timer">Enable</button>
-						<button id="Aero1_SprayDis" type="button" align="right" onclick="confirmSprayDisable(this)"
+						<button id="Aero1_SprayDis" type="button" align="right" onclick="confirmSprayDisable(this)"  
 							title="Disable spray cycle timer">Disable</button>
 						<button id="Aero1_SprayNow" type="button" title="Spray now and re-enable timer">Spray</button>
 						<button id="Aero1_SprayOff" type="button" title="Stop spraying">OFF</button>
@@ -791,7 +777,7 @@
 					<p>
 						<label style="padding-left: 0.5em; width: 3.5em;">Timeout</label>
 						<input style="width: 45px;" min=1 max=9999 name="Aero1_PT" type="number"
-							title="Maximum continuous pump runtime in seconds" />sec
+							title="Maximum total run time of the pump. Safety feature, The weight target should be reached sooner than this counter." />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
@@ -869,49 +855,13 @@
 <!-- /Footer -->
 
 <script>
-	/* function showRefillButton() {
-		//Hidden checkbox to signal if Pressure tank is present or not
-		var PressureTankAvailable = document.getElementById("Aero1_Tank");
-		// Get the output text
-		var TankTitle = document.getElementById("Aero1_TankTitle");
-		var RefillButton = document.getElementById("Aero1_Refill");
-		
-
-		// If the checkbox is checked, display the output text
-		if (PressureTankAvailable.checked == true){
-			TankTitle.style.display = "inline";
-			RefillButton.style.display = "inline";
-		} 
-		else {
-			TankTitle.style.display = "none";
-			RefillButton.style.display = "none";
-		}		
-	}
-	document.onload = showRefillButton(); 
-
-
-	function f_color(){
-	if (document.getElementById('Aero1_S').value = 'OK') {
-		document.getElementById('Aero1_S').style.color = "green";
-	}
-	else	{
-		document.getElementById('Aero1_S').style.color = "red";
-	}
-	}
-	document.getElementById('Aero1_S').onchange= f_color;
-	document.onload= f_color;
-
-	
-
-	*/
-
 	///< Refresh on mouse click/tap event
 	document.addEventListener("click", function () {
 		loadCounter = 0;
 		refreshFormData();
 	});
 
-	///< Set the slider values to match the numeric up/down	
+	///< Set slider values to match the numeric up/down	selectors
 	setInterval(function () {
 		//document.getElementsByName("FanI_SS")[0].value = document.getElementsByName("FanI_S")[0].value;
 		//document.getElementsByName("FanE_SS")[0].value = document.getElementsByName("FanE_S")[0].value;
@@ -1040,6 +990,11 @@
 		}
 	}
 
+	function hempyWateringInfo() {
+		if (confirm("Watering starts when the Hempy bucket's weight drops below the Dry weight.\n\nWatering runs in cycles: Pump a certain amount of nutrient solution, then wait for it to drain.\n\nOnce the waste reservoir's weight increases by the Overflow target the watering stops.\n")) {
+		}
+	}
+
 	document.onload = replaceFavoritesIcon();
 
 	function replaceFavoritesIcon() {
@@ -1049,6 +1004,43 @@
 		link.href = 'https://lh3.googleusercontent.com/pw/ACtC-3fQYOltHeTzGQfCXJ9t4w69Q9He8OFV4ubiwdjXgfPK-BUnN2W0dONv5upYRst7UQRuFLnusYNft_qTRfPUtbBK-XnArFD5ulpKV_AXNayiaqemd0GdBPieLqpnPtEGhiLr-c0yuk9LrRaXTWPtH4gP=s671-no?authuser=0';
 		document.getElementsByTagName('head')[0].appendChild(link);
 	};
+
+ 
+	/* function showRefillButton() {
+		//Hidden checkbox to signal if Pressure tank is present or not
+		var PressureTankAvailable = document.getElementById("Aero1_Tank");
+		// Get the output text
+		var TankTitle = document.getElementById("Aero1_TankTitle");
+		var RefillButton = document.getElementById("Aero1_Refill");
+		
+
+		// If the checkbox is checked, display the output text
+		if (PressureTankAvailable.checked == true){
+			TankTitle.style.display = "inline";
+			RefillButton.style.display = "inline";
+		} 
+		else {
+			TankTitle.style.display = "none";
+			RefillButton.style.display = "none";
+		}		
+	}
+	document.onload = showRefillButton(); 
+
+
+	function f_color(){
+	if (document.getElementById('Aero1_S').value = 'OK') {
+		document.getElementById('Aero1_S').style.color = "green";
+	}
+	else	{
+		document.getElementById('Aero1_S').style.color = "red";
+	}
+	}
+	document.getElementById('Aero1_S').onchange= f_color;
+	document.onload= f_color;
+
+	
+
+	*/
 
 </script>
 </body>
