@@ -100,7 +100,7 @@ void WaterPump::startPump(bool ResetState)
 
 void WaterPump::stopPump(bool ResetState)
 {
-  if (State != WaterPumpStates::IDLE || State != WaterPumpStates::DISABLED)
+  if (State != WaterPumpStates::IDLE && State != WaterPumpStates::DISABLED)
   {
     Parent->getSoundObject()->playOffSound();
     if (*PumpEnabled || ResetState)
