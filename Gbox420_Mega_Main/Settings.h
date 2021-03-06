@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 6; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -43,10 +43,10 @@ typedef struct
   bool Debug = true;                                               ///< Logs debug messages to serial and web outputs
   bool Metric = true;                                              ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
-  const char *MqttROOT = "/growboxguy@gmail.com/";                 //all mqtt messages have this root topic in front of them
-  const char *MqttPUBLISH = "Gbox420";                             //MQTT logs will be sent to this topic.
-  const char *MqttLwtTopic = "LWT";                                //When the connection is lost the MQTT broker will publish a final message to this topic
-  const char *MqttLwtMessage = "Gbox420 Offline";                  //this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the box goes offline
+  char MqttROOT[MaxWordLength] = {"/growboxguy@gmail.com/"};                 //all mqtt messages have this root topic in front of them
+  char MqttPUBLISH[MaxWordLength] = {"Gbox420"};                             //MQTT logs will be sent to this topic.
+  char MqttLwtTopic[MaxWordLength] = {"LWT"};                                //When the connection is lost the MQTT broker will publish a final message to this topic
+  char MqttLwtMessage[MaxWordLength] = {"Gbox420 Offline"};                  //this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the box goes offline
 
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroModuleSettings ///< AeroModule default settings
