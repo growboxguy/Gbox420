@@ -4,6 +4,7 @@
 #include "ELClient.h"          ///< ESP-link
 #include "ELClientWebServer.h" ///< ESP-link - WebServer API
 #include "ELClientRest.h"      ///< ESP-link - REST API
+#include "ELClientMqtt.h"      // ESP-link - MQTT protocol for sending and receiving IoT messages
 #include "ELClientCmd.h"       ///< ESP-link - Get current time from the internet using NTP
 #include "TimeLib.h"           // Keeping track of time
 #include "RF24.h"
@@ -18,6 +19,7 @@
 ///< Responsible for setting up each module, updating their statuses and reporting it
 
 extern ELClientRest PushingBoxRestAPI;
+extern ELClientMqtt MqttAPI;
 class Sound_Web;
 
 class Module_Web : public Module
@@ -48,6 +50,7 @@ public:
 
   void addPushingBoxLogRelayID();
   void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);
+  void mqttPublish(char (*JSONData)[MaxLongTextLength]);
 
 private:
 protected:

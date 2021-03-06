@@ -171,6 +171,7 @@ void MainModule::refresh_Minute()
     Common::refresh_Minute();
   runReport();
   reportToGoogleSheetsTrigger();
+  reportToMQTTTrigger();
 }
 
 bool MainModule::getDayMode()
@@ -257,6 +258,26 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
 }
 ///< This is how a sent out message looks like:
 ///< {parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
+
+void MainModule::reportToMQTTTrigger(bool ForceRun)
+{ ///< Handles custom reporting frequency for Google Sheets
+  if (MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0 || ForceRun)
+  {
+    strcat_P(LongMessage, (PGM_P)F("\"Log\":{")); ///< Adds a curly bracket {  that needs to be closed at the end
+    for (int i = 0; i < reportQueueItemCount;)
+    {
+      ReportQueue[i++]->reportToJSON();
+      if (i != reportQueueItemCount)
+        strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
+    }
+    strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
+    mqttPublish(&LongMessage);  //publish readings via ESP MQTT API
+  }
+}
+///< This is how a sent out message looks like:
+///< {parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
+
+
 
 void MainModule::setPushingBoxLogRelayID(const char *ID)
 {

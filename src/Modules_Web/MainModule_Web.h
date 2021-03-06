@@ -52,6 +52,7 @@ public:
   void refresh_FiveSec();
   void refresh_Minute();
   void reportToGoogleSheetsTrigger(bool ForceRun = false);
+  void reportToMQTTTrigger(bool ForceRun = false);
   void reportToJSON();
   bool getDayMode(); ///< Returns true if the lights are on or daylight is detected
                      // void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
@@ -70,4 +71,7 @@ protected:
   uint16_t *SheetsReportingFrequency;
   bool *ReportToGoogleSheets;
   uint8_t SheetsRefreshCounter = 0;
+  uint16_t *MQTTReportingFrequency;
+  bool *ReportToMQTT;
+  uint8_t MQTTRefreshCounter = 0;
 };

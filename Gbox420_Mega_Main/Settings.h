@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 5; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 6; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -43,6 +43,10 @@ typedef struct
   bool Debug = true;                                               ///< Logs debug messages to serial and web outputs
   bool Metric = true;                                              ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
+  const char *MqttROOT = "/growboxguy@gmail.com/";                 //all mqtt messages have this root topic in front of them
+  const char *MqttPUBLISH = "Gbox420";                             //MQTT logs will be sent to this topic.
+  const char *MqttLwtTopic = "LWT";                                //When the connection is lost the MQTT broker will publish a final message to this topic
+  const char *MqttLwtMessage = "Gbox420 Offline";                  //this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the box goes offline
 
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroModuleSettings ///< AeroModule default settings
@@ -102,29 +106,30 @@ typedef struct
 
   struct MainModuleSettings ///< MainModule default settings
   {
-    MainModuleSettings(bool ReportToGoogleSheets, uint16_t SheetsReportingFrequency) : ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency) {}
+    MainModuleSettings(bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMQTT = false, uint16_t MQTTReportingFrequency = 0) : ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMQTT(ReportToMQTT), MQTTReportingFrequency(MQTTReportingFrequency) {}
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
     uint16_t SheetsReportingFrequency; ///< How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
-    ///< bool ReportToMqtt = true;    ///< Controls reporting sensor readings to an MQTT broker
+    bool ReportToMQTT;                 ///< Controls reporting sensor readings to an MQTT broker
+    uint16_t MQTTReportingFrequency;   ///< How often to report to MQTT. Use 15 minute increments only! Min 15min, Max 1440 (1day)
   };
-  struct MainModuleSettings Main1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30};
+  struct MainModuleSettings Main1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportingFrequency = 30};
 
   struct HempyModuleSettings ///< Hempy default settings
   {
     HempyModuleSettings(float EvaporationTarget_B1 = 0.0, float OverflowTarget_B1 = 0.0, float WasteLimit_B1 = 0.0, uint8_t PumpSpeed_B1 = 0, uint16_t PumpTimeOut_B1 = 0, uint16_t DrainWaitTime_B1 = 0.0, float EvaporationTarget_B2 = 0.0, float OverflowTarget_B2 = 0.0, float WasteLimit_B2 = 0.0, uint8_t PumpSpeed_B2 = 0, uint16_t PumpTimeOut_B2 = 0, uint16_t DrainWaitTime_B2 = 0.0) : EvaporationTarget_B1(EvaporationTarget_B1), OverflowTarget_B1(OverflowTarget_B1), WasteLimit_B1(WasteLimit_B1), PumpSpeed_B1(PumpSpeed_B1), PumpTimeOut_B1(PumpTimeOut_B1), DrainWaitTime_B1(DrainWaitTime_B1), EvaporationTarget_B2(EvaporationTarget_B2), OverflowTarget_B2(OverflowTarget_B2), WasteLimit_B2(WasteLimit_B2), PumpSpeed_B2(PumpSpeed_B2), PumpTimeOut_B2(PumpTimeOut_B2), DrainWaitTime_B2(DrainWaitTime_B2) {}
-    float EvaporationTarget_B1;  ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
-    float OverflowTarget_B1;     ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
-    float WasteLimit_B1;         ///< Waste reservoir full weight -> Pump gets disabled if reached
-    uint8_t PumpSpeed_B1;        ///< Pump duty cycle to adjust motor speed
-    uint16_t PumpTimeOut_B1;     ///< Waste reservoir full weight -> Pump gets disabled if reached
-    uint16_t DrainWaitTime_B1;   ///< (sec) How long to wait after watering for the water to drain
-    float EvaporationTarget_B2;  ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
-    float OverflowTarget_B2;     ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
-    float WasteLimit_B2;         ///< Waste reservoir full weight -> Pump gets disabled if reached
-    uint8_t PumpSpeed_B2;        ///< Pump duty cycle to adjust motor speed
-    uint16_t PumpTimeOut_B2;     ///< Waste reservoir full weight -> Pump gets disabled if reached
-    uint16_t DrainWaitTime_B2;   ///< (sec) How long to wait after watering for the water to drain
-    };
+    float EvaporationTarget_B1; ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
+    float OverflowTarget_B1;    ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+    float WasteLimit_B1;        ///< Waste reservoir full weight -> Pump gets disabled if reached
+    uint8_t PumpSpeed_B1;       ///< Pump duty cycle to adjust motor speed
+    uint16_t PumpTimeOut_B1;    ///< Waste reservoir full weight -> Pump gets disabled if reached
+    uint16_t DrainWaitTime_B1;  ///< (sec) How long to wait after watering for the water to drain
+    float EvaporationTarget_B2; ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
+    float OverflowTarget_B2;    ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+    float WasteLimit_B2;        ///< Waste reservoir full weight -> Pump gets disabled if reached
+    uint8_t PumpSpeed_B2;       ///< Pump duty cycle to adjust motor speed
+    uint16_t PumpTimeOut_B2;    ///< Waste reservoir full weight -> Pump gets disabled if reached
+    uint16_t DrainWaitTime_B2;  ///< (sec) How long to wait after watering for the water to drain
+  };
   struct HempyModuleSettings HempyModule1 = {.EvaporationTarget_B1 = 2.0, .OverflowTarget_B1 = 0.3, .WasteLimit_B1 = 13.0, .PumpSpeed_B1 = 100, .PumpTimeOut_B1 = 120, .DrainWaitTime_B1 = 180, .EvaporationTarget_B2 = 2.0, .OverflowTarget_B2 = 0.3, .WasteLimit_B2 = 13.0, .PumpSpeed_B2 = 100, .PumpTimeOut_B2 = 120, .DrainWaitTime_B2 = 180};
 
   struct LightSensorSettings ///< LightSensor default settings

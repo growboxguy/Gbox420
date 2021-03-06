@@ -16,6 +16,7 @@
 #include "ELClientWebServer.h"                // ESP-link - WebServer API
 #include "ELClientCmd.h"                      // ESP-link - Get current time from the internet using NTP
 #include "ELClientRest.h"                     // ESP-link - REST API
+#include "ELClientMqtt.h"                     // ESP-link - MQTT protocol for sending and receiving IoT messages
 #include "Thread.h"                           // Splitting functions to threads for timing
 #include "StaticThreadController.h"           // Grouping threads
 #include "SerialLog.h"                        // Logging to the Serial console and to ESP-link's console
@@ -36,7 +37,8 @@ HardwareSerial &ESPSerial = Serial3;      ///< Reference to the ESP Link Serial 
 ELClient ESPLink(&ESPSerial);             ///< ESP-link. Both SLIP and debug messages are sent to ESP over the ESP Serial link
 ELClientWebServer WebServer(&ESPLink);    ///< ESP-link WebServer API
 ELClientCmd ESPCmd(&ESPLink);             ///< ESP-link - Helps getting the current time from the internet using NTP
-ELClientRest PushingBoxRestAPI(&ESPLink); ///< ESP-link REST API
+ELClientRest PushingBoxRestAPI(&ESPLink); ///< ESP-link - REST API
+ELClientMqtt MqttAPI(&ESPLink);           ///< ESP-link - MQTT protocol for sending and receiving IoT messages
 Settings *ModuleSettings;                 ///< This object will store the settings loaded from the EEPROM. Persistent between reboots.
 bool *Debug;                              ///< True - Turns on extra debug messages on the Serial Output
 bool *Metric;                             ///< True - Use metric units, False - Use imperial units
@@ -51,15 +53,15 @@ Thread MinuteThread = Thread();
 StaticThreadController<3> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread);
 
 void setup()
-{                                                          ///<  put your setup code here, to run once:
-  ArduinoSerial.begin(115200);                             ///< 2560mega console output
-  ESPSerial.begin(115200);                                 ///< ESP WiFi console output
-  pinMode(LED_BUILTIN, OUTPUT);                            ///< onboard LED - Heartbeat every second to confirm code is running
-  printf_begin();                                          ///< Needed to print wireless status to Serial
-  logToSerials(F(""), true, 0);                            ///< New line
+{                                                       ///<  put your setup code here, to run once:
+  ArduinoSerial.begin(115200);                          ///< 2560mega console output
+  ESPSerial.begin(115200);                              ///< ESP WiFi console output
+  pinMode(LED_BUILTIN, OUTPUT);                         ///< onboard LED - Heartbeat every second to confirm code is running
+  printf_begin();                                       ///< Needed to print wireless status to Serial
+  logToSerials(F(""), true, 0);                         ///< New line
   logToSerials(F("Main module initializing"), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
-  wdt_enable(WDTO_8S);                                     ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
-  boot_rww_enable();                                       ///< fix watchdog not loading sketch after a reset error on Mega2560
+  wdt_enable(WDTO_8S);                                  ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
+  boot_rww_enable();                                    ///< fix watchdog not loading sketch after a reset error on Mega2560
 
   // Loading settings from EEPROM
   logToSerials(F("Loading settings"), true, 0);
@@ -72,6 +74,7 @@ void setup()
   resetWebServer();                  ///< reset the WebServer
   setSyncProvider(getNtpTime);       ///< Points to method for updating time from NTP server
   setSyncInterval(86400);            ///< Sync time every day
+  setupMqtt();                       //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
 
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   logToSerials(F("Setting up refresh threads"), false, 0);
@@ -94,7 +97,7 @@ void setup()
   logToSerials(F("Setting up wireless transceiver"), false, 0);
   Wireless.begin();                                  ///< Initialize the nRF24L01+ wireless chip for talking to Modules
   Wireless.setDataRate(RF24_250KBPS);                ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
-  Wireless.setCRCLength(RF24_CRC_16);                 ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
+  Wireless.setCRCLength(RF24_CRC_16);                ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
   Wireless.setPALevel(RF24_PA_MAX);                  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
   Wireless.setPayloadSize(WirelessPayloadSize);      ///< The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
   Wireless.enableDynamicPayloads();                  ///< Required for ACK messages
@@ -192,11 +195,65 @@ void resetWebServer()
   logToSerials(F("ESP-link ready"), true, 2);
 }
 
-static bool SyncInProgress = false;  ///< True if an time sync is in progress
+/**
+  \brief Sets up the MQTT relay
+*/
+//const char* MqttLights = "Lights";
+//const char* MqttBrightness = "Brightness";
+
+void setupMqtt()
+{
+  MqttAPI.connectedCb.attach(mqttConnected);
+  MqttAPI.disconnectedCb.attach(mqttDisconnected);
+  MqttAPI.publishedCb.attach(mqttPublished);
+  MqttAPI.dataCb.attach(mqttReceived);
+  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable to store the Publish to path
+  strcat(ShortMessage, ModuleSettings->MqttROOT);
+  strcat(ShortMessage, ModuleSettings->MqttLwtTopic);
+  MqttAPI.lwt(ShortMessage, ModuleSettings->MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
+  MqttAPI.setup();
+}
+
+void mqttConnected(void *response)
+{
+  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable
+  strcat(ShortMessage, ModuleSettings->MqttROOT);
+  strcat_P(ShortMessage, (PGM_P)F("#"));
+  MqttAPI.subscribe(ShortMessage);
+  logToSerials(F("MQTT connected!"), true);
+}
+
+void mqttDisconnected(void *response)
+{
+  logToSerials(F("MQTT disconnected"), true);
+}
+
+void mqttPublished(void *response)
+{
+  logToSerials(F("MQTT published"), true);
+}
+
+void mqttReceived(void *response)
+{
+  ELClientResponse *res = (ELClientResponse *)response;
+  char topic[64];
+  char data[16];
+  ((*res).popString()).toCharArray(topic, 64);
+  ((*res).popString()).toCharArray(data, 16);
+
+  logToSerials(F("Received: "), false);
+  logToSerials(topic, false);
+  logToSerials(F(" - "), false);
+  logToSerials(data, true);
+  // if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(true); else if(strcmp(data,"0")==0)turnLightOFF(true); }
+  // else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data),true); }
+  //mqttPublish(); //send out a fresh report
+}
+
+static bool SyncInProgress = false; ///< True if an time sync is in progress
 
 /**
   \brief Update the time over ESP-link using NTP (Network Time Protocol)
-
 */
 time_t getNtpTime()
 {
@@ -230,8 +287,8 @@ time_t getNtpTime()
   \param Url - HTML filename that is getting loaded
 */
 void loadCallback(__attribute__((unused)) char *Url)
-{ ///< 
-  Main1->loadEvent(Url);  //Runs through all components that are subscribed to this event
+{
+  Main1->loadEvent(Url); //Runs through all components that are subscribed to this event
 }
 
 /**
@@ -239,7 +296,7 @@ void loadCallback(__attribute__((unused)) char *Url)
   \param Url - HTML filename that is refreshinging
 */
 void refreshCallback(__attribute__((unused)) char *Url)
-{ 
+{
   Main1->refreshEvent(Url);
 }
 
