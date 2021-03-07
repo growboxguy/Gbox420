@@ -16,6 +16,8 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
 { ///< Constructor
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
+  MQTTReportingFrequency = &DefaultSettings->MQTTReportingFrequency;
+  ReportToMQTT = &DefaultSettings->ReportToMQTT;
   Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
   IFan = new Fan_Web(F("IFan"), this, &ModuleSettings->IFan); ///< passing: Component name, MainModule object the component belongs to, Default settings)
@@ -75,6 +77,12 @@ void MainModule::websiteEvent_Load(char *url)
     WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
     WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
     WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
+    WebServer.setArgBoolean(getComponentName(F("MQTT")), *ReportToMQTT);
+    WebServer.setArgInt(getComponentName(F("MQTTF")), *MQTTReportingFrequency);
+    WebServer.setArgString(getComponentName(F("MRT")), ModuleSettings->MqttRootTopic);
+    WebServer.setArgString(getComponentName(F("MST")), ModuleSettings->MqttSubTopic);
+    WebServer.setArgString(getComponentName(F("MLT")), ModuleSettings->MqttLwtTopic);
+    WebServer.setArgString(getComponentName(F("MLM")), ModuleSettings->MqttLwtMessage);
   }
 }
 
@@ -101,6 +109,11 @@ void MainModule::websiteEvent_Button(char *Button)
     {
       ConsoleReportRequested = true;
       addToLog(F("Reporting to Serial"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("MQTTRep")) == 0)
+    {
+      MQTTReportRequested = true;
+      addToLog(F("Reporting to MQTT"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) ///< Website signals to refresh all sensor readings
     {
@@ -138,6 +151,30 @@ void MainModule::websiteEvent_Field(char *Field)
     {
       setPushingBoxLogRelayID(WebServer.getArgString());
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("MQTT")) == 0)
+    {
+      setMQTTReportingOnOff(WebServer.getArgBoolean());
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("MQTTF")) == 0)
+    {
+      setMQTTReportingFrequency(WebServer.getArgInt());
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("MRT")) == 0)
+    {
+      setMQTTRootTopic(WebServer.getArgString());
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("MST")) == 0)
+    {
+      setMQTTSubTopic(WebServer.getArgString());
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("MLT")) == 0)
+    {
+      setMQTTLWTTopic(WebServer.getArgString());
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("MLM")) == 0)
+    {
+      setMQTTLWTMessage(WebServer.getArgString());
+    }
   }
 }
 
@@ -162,6 +199,11 @@ void MainModule::refresh_FiveSec()
   {
     ConsoleReportRequested = false;
     runReport();
+  }
+  if (MQTTReportRequested)
+  {
+    MQTTReportRequested = false;
+    reportToMQTTTrigger(true);
   }
 }
 
@@ -236,8 +278,15 @@ void MainModule::setSheetsReportingOnOff(bool State)
 void MainModule::setSheetsReportingFrequency(uint16_t Frequency)
 {
   *SheetsReportingFrequency = Frequency;
-  addToLog(F("Reporting freqency updated"));
+  addToLog(F("Sheets freqency updated"));
   getSoundObject()->playOnSound();
+}
+
+void MainModule::setPushingBoxLogRelayID(const char *ID)
+{
+  strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
+  getSoundObject()->playOnSound();
+  addToLog(F("Sheets log relay ID updated"));
 }
 
 void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
@@ -259,11 +308,63 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
 ///< This is how a sent out message looks like:
 ///< {parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
 
+void MainModule::setMQTTReportingOnOff(bool State)
+{
+  *ReportToGoogleSheets = State;
+  if (State)
+  {
+    addToLog(F("MQTT enabled"));
+    getSoundObject()->playOnSound();
+  }
+  else
+  {
+    addToLog(F("MQTT disabled"));
+    getSoundObject()->playOffSound();
+  }
+}
+
+void MainModule::setMQTTReportingFrequency(uint16_t Frequency)
+{
+  *SheetsReportingFrequency = Frequency;
+  addToLog(F("MQTT freqency updated"));
+  getSoundObject()->playOnSound();
+}
+
+void MainModule::setMQTTRootTopic(const char *RootTopic)
+{
+  strncpy(ModuleSettings->MqttRootTopic, RootTopic, MaxWordLength);
+  getSoundObject()->playOnSound();
+  addToLog(F("Root topic updated"));
+}
+
+void MainModule::setMQTTSubTopic(const char *SubTopic)
+{
+  strncpy(ModuleSettings->MqttSubTopic, SubTopic, MaxWordLength);
+  getSoundObject()->playOnSound();
+  addToLog(F("Sub topic updated"));
+}
+
+void MainModule::setMQTTLWTTopic(const char *LWTTopic)
+{
+  strncpy(ModuleSettings->MqttLwtTopic, LWTTopic, MaxWordLength);
+  getSoundObject()->playOnSound();
+  addToLog(F("LWT topic updated"));
+}
+
+void MainModule::setMQTTLWTMessage(const char *LWTMessage)
+{
+  strncpy(ModuleSettings->MqttLwtMessage, LWTMessage, MaxWordLength);
+  getSoundObject()->playOnSound();
+  addToLog(F("LWT message updated"));
+}
+
 void MainModule::reportToMQTTTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets
   if (MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0 || ForceRun)
   {
-    strcat_P(LongMessage, (PGM_P)F("\"Log\":{")); ///< Adds a curly bracket {  that needs to be closed at the end
+    //if(*Debug)logToSerials(F("Starting MQTT reporting..."), true, 1);
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds a curly bracket {  that needs to be closed at the end
     for (int i = 0; i < reportQueueItemCount;)
     {
       ReportQueue[i++]->reportToJSON();
@@ -271,20 +372,11 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
     }
     strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
-    mqttPublish(&LongMessage);  //publish readings via ESP MQTT API
+    mqttPublish(&LongMessage);             //publish readings via ESP MQTT API
   }
 }
 ///< This is how a sent out message looks like:
 ///< {parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
-
-
-
-void MainModule::setPushingBoxLogRelayID(const char *ID)
-{
-  strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
-  getSoundObject()->playOnSound();
-  addToLog(F("Sheets log relay ID updated"));
-}
 
 /*
 void MainModule::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength])

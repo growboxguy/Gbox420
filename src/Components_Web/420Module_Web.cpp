@@ -226,23 +226,25 @@ void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
   if (*Debug)
   { ///< print the report command to console
-    logToSerials(F("api.pushingbox.com"), false, 4);
+    logToSerials(F("REST API reporting: api.pushingbox.com"), false, 2);
     logToSerials(JSONData, true, 0);
   }
-  PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http:///< api.pushingbox.com/ in front of the command
+  PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
 }
 
 void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
-  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable
-  strcat(ShortMessage,ModuleSettings->MqttROOT);
-  strcat(ShortMessage,ModuleSettings->MqttPUBLISH);
+  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///< clear variable
+  strcat_P(ShortMessage, (PGM_P)F("/"));
+  strcat(ShortMessage,ModuleSettings->MqttRootTopic);
+  strcat_P(ShortMessage, (PGM_P)F("/"));
+  strcat(ShortMessage,ModuleSettings->MqttSubTopic);
   if (*Debug)
   { ///< print the report command to console
-    logToSerials(F("MQTT reporting:"), false, 1);
-    logToSerials(ShortMessage,false,1);
-    logToSerials(F("-"),false,1);
-    logToSerials(*JSONData, true, 1);
+    logToSerials(F("MQTT reporting:"), false, 2);
+    logToSerials(&ShortMessage,false,1);
+    logToSerials(F("/"),false,0);
+    logToSerials(JSONData, true, 0);
   }
   MqttAPI.publish(ShortMessage, *JSONData,0,1); //(topic,message,qos,retain)
 }
