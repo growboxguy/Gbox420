@@ -352,33 +352,12 @@ void MainModule::setMQTTLWTMessage(const char *LWTMessage)
 }
 
 void MainModule::reportToMQTTTrigger(bool ForceRun)
-{ ///< Handles custom reporting frequency for Google Sheets
+{ ///< Handles custom reporting frequency for MQTT
   if (MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0 || ForceRun)
   {
-    //if(*Debug)logToSerials(F("Starting MQTT reporting..."), true, 1);
     getJSONReport(true);       //Load the JSON report to LongMessage
     mqttPublish(&LongMessage); //publish readings via ESP MQTT API
   }
 }
 ///< This is how a sent out message looks like:
-///< {parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
-
-/*
-void MainModule::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength])
-{
-  char ValueToReport[MaxLongTextLength] = "";
-  strcat_P(ValueToReport, (PGM_P)F("/pushingbox?devid="));
-  strcat(ValueToReport, ModuleSettings -> PushingBoxLogRelayID);
-  strcat_P(ValueToReport, (PGM_P)F("&BoxData={\""));
-  strcat_P(ValueToReport, (PGM_P)Title);
-  strcat_P(ValueToReport, (PGM_P)F("\":"));
-  strcat(ValueToReport, *JSONData);
-  strcat_P(ValueToReport, (PGM_P)F("}"));
-  if (*Debug)
-  { ///< print the report command to console
-    logToSerials(F("api.pushingbox.com"), false, 4);
-    logToSerials(&ValueToReport, true, 0);
-  }
-  PushingBoxRestAPI.get(ValueToReport); ///< PushingBoxRestAPI will append http:///< api.pushingbox.com/ in front of the command
-}
-*/
+///< /growboxguy@gmail.com/Gbox420/{"Log":{"IFan":{"S":"1"},"EFan":{"S":"0"},"APump1":{"S":"1"},"Lt1":{"S":"1","B":"75","T":"1","On":"08:20","Of":"02:20"},"Lt2":{"S":"0","B":"0","T":"0","On":"08:20","Of":"16:20"},"LtSen1":{"R":"967","D":"0"},"DHT1":{"T":"25.10","H":"43.10"},"Pow1":{"P":"34.40","E":"510.93","V":"231.90","C":"0.34","F":"50.00","PF":"0.44"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","WB1":"18.29","WR1":"3.96","DW1":"18.10","WW1":"0.00","ET1":"2.00","OT1":"0.30","WL1":"13.00","H2":"1","P2":"1","PS2":"100","WB2":"20.17","WR2":"12.21","DW2":"18.49","WW2":"20.49","ET2":"2.00","OT2":"0.30","WL2":"13.00"},"Aero1":{"S":"1","P":"6.43","W":"19.68","Mi":"5.00","Ma":"7.00","AS":"1","LS":"6.47","PSt":"1","PS":"100","SE":"1","D":"1.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"1.85","T":"1126.00","W":"24.16","WT":"17.06","AT":"24.70","H":"27.60"},"Main1":{"M":"1","D":"1"}}}
