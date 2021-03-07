@@ -113,7 +113,7 @@ void MainModule::websiteEvent_Button(char *Button)
     else if (strcmp_P(ShortMessage, (PGM_P)F("MQTTRep")) == 0)
     {
       MQTTReportRequested = true;
-      addToLog(F("Reporting to Serial"), false);
+      addToLog(F("Reporting to MQTT"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) ///< Website signals to refresh all sensor readings
     {
@@ -203,7 +203,7 @@ void MainModule::refresh_FiveSec()
   if (MQTTReportRequested)
   {
     MQTTReportRequested = false;
-    reportToMQTTTrigger();
+    reportToMQTTTrigger(true);
   }
 }
 
@@ -362,7 +362,7 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets
   if (MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0 || ForceRun)
   {
-    logToSerials(F("Starting MQTT reporting..."), true, 1);
+    //if(*Debug)logToSerials(F("Starting MQTT reporting..."), true, 1);
     memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
     strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds a curly bracket {  that needs to be closed at the end
     for (int i = 0; i < reportQueueItemCount;)

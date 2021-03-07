@@ -221,17 +221,17 @@ void mqttConnected(void *response)
   strcat(ShortMessage, ModuleSettings->MqttRootTopic);
   strcat_P(ShortMessage, (PGM_P)F("/#"));
   MqttAPI.subscribe(ShortMessage);
-  logToSerials(F("MQTT connected!"), true);
+  //if(*Debug) logToSerials(F("MQTT connected"), true);
 }
 
 void mqttDisconnected(void *response)
 {
-  logToSerials(F("MQTT disconnected"), true);
+  //if(*Debug) logToSerials(F("MQTT disconnected"), true);
 }
 
 void mqttPublished(void *response)
 {
-  logToSerials(F("MQTT published"), true);
+  //if(*Debug) logToSerials(F("MQTT published"), true);
 }
 
 void mqttReceived(void *response)
