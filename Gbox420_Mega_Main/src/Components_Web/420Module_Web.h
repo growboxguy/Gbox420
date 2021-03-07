@@ -26,6 +26,7 @@ class Module_Web : public Module
 {
 public:
   Module_Web(RF24 *Wireless); ///< constructor
+  RF24 *Wireless;
   void runReport();
   void runAll();
   void runSec();
@@ -46,8 +47,7 @@ public:
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);
   char *eventLogToJSON(bool Append = false); ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
-  RF24 *Wireless;
-
+  char *getJSONReport(bool BlankLongMessage = false);  
   void addPushingBoxLogRelayID();
   void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);
   void mqttPublish(char (*JSONData)[MaxLongTextLength]);

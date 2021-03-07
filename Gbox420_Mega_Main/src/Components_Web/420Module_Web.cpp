@@ -212,6 +212,22 @@ char *Module_Web::eventLogToJSON(bool Append)
   return LongMessage;
 }
 
+char *Module_Web::getJSONReport(bool BlankLongMessage)
+{
+  if (BlankLongMessage)
+  {
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  }
+  strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds two curly brackets that needs to be closed at the end
+  for (int i = 0; i < reportQueueItemCount;)
+  {
+    ReportQueue[i++]->reportToJSON();
+    if (i != reportQueueItemCount)
+      strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
+  }
+  strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
+}
+
 ///< Google Sheets functions
 
 void Module_Web::addPushingBoxLogRelayID()
@@ -219,7 +235,7 @@ void Module_Web::addPushingBoxLogRelayID()
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("/pushingbox?devid="));
   strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
-  strcat_P(LongMessage, (PGM_P)F("&BoxData={"));
+  strcat_P(LongMessage, (PGM_P)F("&BoxData="));
 }
 
 void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])

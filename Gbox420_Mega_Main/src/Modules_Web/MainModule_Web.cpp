@@ -293,15 +293,8 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets
   if (SheetsRefreshCounter++ % (*SheetsReportingFrequency) == 0 || ForceRun)
   {
-    addPushingBoxLogRelayID();                    ///< Adds a curly bracket {  that needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"Log\":{")); ///< Adds a curly bracket {  that needs to be closed at the end
-    for (int i = 0; i < reportQueueItemCount;)
-    {
-      ReportQueue[i++]->reportToJSON();
-      if (i != reportQueueItemCount)
-        strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
-    }
-    strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
+    addPushingBoxLogRelayID(); //Loads Pushingbox relay ID into LongMessage
+    getJSONReport(false);      //Adds the JSON report to LongMessage
     relayToGoogleSheets(&LongMessage);
   }
 }
@@ -363,16 +356,8 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
   if (MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0 || ForceRun)
   {
     //if(*Debug)logToSerials(F("Starting MQTT reporting..."), true, 1);
-    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds a curly bracket {  that needs to be closed at the end
-    for (int i = 0; i < reportQueueItemCount;)
-    {
-      ReportQueue[i++]->reportToJSON();
-      if (i != reportQueueItemCount)
-        strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
-    }
-    strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
-    mqttPublish(&LongMessage);             //publish readings via ESP MQTT API
+    getJSONReport(true);       //Load the JSON report to LongMessage
+    mqttPublish(&LongMessage); //publish readings via ESP MQTT API
   }
 }
 ///< This is how a sent out message looks like:
