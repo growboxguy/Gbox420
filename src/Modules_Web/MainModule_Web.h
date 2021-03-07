@@ -58,16 +58,24 @@ public:
                      // void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
 
 private:
-  void setSheetsReportingOnOff(bool State);
-  void setSheetsReportingFrequency(uint16_t Frequency);
+
   void setDebug(bool DebugEnabled);
   void setMetric(bool MetricEnabled);
+  void setSheetsReportingOnOff(bool State);
+  void setSheetsReportingFrequency(uint16_t Frequency);
   void setPushingBoxLogRelayID(const char *ID);
+  void setMQTTReportingOnOff(bool State);
+  void setMQTTReportingFrequency(uint16_t Frequency);
+  void setMQTTRootTopic(const char *ID);
+  void setMQTTSubTopic(const char *ID);
+  void setMQTTLWTTopic(const char *ID);
+  void setMQTTLWTMessage(const char *ID);
 
 protected:
   bool RefreshAllRequested = false;
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;
+  bool MQTTReportRequested = false;
   uint16_t *SheetsReportingFrequency;
   bool *ReportToGoogleSheets;
   uint8_t SheetsRefreshCounter = 0;

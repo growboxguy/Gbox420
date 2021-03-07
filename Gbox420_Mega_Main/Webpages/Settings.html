@@ -162,7 +162,8 @@
 						id="Sound1_Ee" type="button"><img style="padding:0px !important;height:0.88em;width:0.88em;"
 							src="https://lh3.googleusercontent.com/GAoRKaB09BobBln1BQgRHL0qmbfyTmnMn6_6JBmCVZ3gvUuCOzhRep7HkBYL4_bWqa5Vk70W7dgq_t5vgwisNYon5yXiM0hbBoUauYdnv9ujxtkVrn5hB4SXhT2X-nWb7BS4Bo_-fL-Pj2TLdzMcbJN4597KkEvYGrqv6CtPy_wf06wc9t1WN2jL5lbhWHdvkleKIU6Hpp1AXPjOI_3c9lY0jpIdEtcjbOZ3fYIgrEvm1HO7JrAbyllYIgpSpZlMr6uUQh2h6PuA9tDSb8-V3NmMuvRtOQi5qfH6rJKrOBv5oNN4_t-C-V3BLKjXqx82oAmP65RAnH1Y3EXG8FbuEsQvqYcWiEp9iaNeuYbjokQoVM8h61Gh1cPr717j0D1GjEYhYzba32UvVZ3iXiVr1zmonOw810HP5oTWhc-o0mNdW211dhs80tvOyaggxKGX_I7r5kcak9nK7PSP3ppAi-wjrsqhW0UBiRvsyHwpHRfIu-A0lbnQ4ukwWiw28dnBPQMZUu8rLAXVNRnBjoAPU5udjLwyCUyCeU6YjUlC9TTe7QpbTZCrVueTaytD3GOqtP2dKg2wZse3CCGPrnNq2vg5DpRV4Qb0sOBv8oyJzKfdWLCMgYJYTw9rpYg6Y3zgUjJWqmLdX3upj8an069FddUa33Sgb6YhQe6NSz1sdW7cq_-8zYosD0RmeavL4t3sfpNDXw95OOmQJ0LEFKRZSa3PBApRvl2GIOpNmLI2Li_QSw-y=s671-no" /></button>
 				</h1>
-				<button id="RestoreDef" type="button" onclick="confirmSettingsRestore(this)" title="Restore settings to sketch defaults">Restore
+				<button id="RestoreDef" type="button" onclick="confirmSettingsRestore(this)"
+					title="Restore settings to sketch defaults">Restore
 					defaults</button>
 				<div class="checkboxes">
 					<form>
@@ -191,27 +192,70 @@
 							<input class="setButton" type="submit" value="Set">
 						</p>
 					</form>
-					</form>
-					<b>Google Sheets reporting</b>
-					<!--<form><label><input type="checkbox" name="Main1_MqttEnabled">MQTT </label><input class="setButton" type="submit" value="Set"> <button id="btn_Mqtt" type="button">Trigger</button></form>-->
-					<form>
-						<p>
-							<label>
-								<input style="width: 1em;" type="checkbox" name="Main1_Sheets" />
-								Report every </label>
-							<input min=10 max=1440 step=5 name="Main1_SheetsF" type="number" />min
-							<input class="setButton" type="submit" value="Set">
-						</p>
-					</form>
-					<form>
-						<p>
-							<label>RelayID</label>
-							<input type="text" name="Main1_Relay" style="width: 150px;"
-								title="DeviceID of the PushingBox logging scenario" />
-							<input class="setButton" type="submit" value="Set" />
-						</p>
-					</form>
 				</div>
+			</div>
+			<div class="card">
+				<h1>Reporting</h1>
+				<b>Google Sheets reporting (HTTP REST API)</b>
+				<form>
+					<p>
+						<label>
+							<input style="width: 1em;" type="checkbox" name="Main1_Sheets" />
+							Report every </label>
+						<input min=10 max=1440 step=5 name="Main1_SheetsF" type="number" />min
+						<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>
+				<form>
+					<p>
+						<label>RelayID</label>
+						<input type="text" name="Main1_Relay" style="width: 150px;"
+							title="DeviceID of the PushingBox logging scenario" />
+						<input class="setButton" type="submit" value="Set" />
+					</p>
+				</form>
+				<b>MQTT reporting</b>
+				<!--<form><label><input type="checkbox" name="Main1_MqttEnabled">MQTT </label><input class="setButton" type="submit" value="Set"> <button id="btn_Mqtt" type="button">Trigger</button></form>-->
+				<form>
+					<p>
+						<label>
+							<input style="width: 1em;" type="checkbox" name="Main1_MQTT" />
+							Report every </label>
+						<input min=10 max=1440 step=5 name="Main1_MQTTF" type="number" />min
+						<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>
+				<form>
+					<p>
+						<label>Root topic</label>
+						<input type="text" name="Main1_MRT" style="width: 150px;" title="First topic level" />
+						<input class="setButton" type="submit" value="Set" />
+					</p>
+				</form>
+				<form>
+					<p>
+						<label>Sub topic</label>
+						<input type="text" name="Main1_MST" style="width: 150px;" title="First topic level" />
+						<input class="setButton" type="submit" value="Set" />
+					</p>
+				</form>
+				<form>
+					<p>
+						<label>LWT topic</label>
+						<input type="text" name="Main1_MLT" style="width: 150px;"
+							title="Last Will and Testament topic when the Gbox420 stops reporting unexpectedly" />
+						<!-- https://www.hivemq.com/blog/mqtt-essentials-part-9-last-will-and-testament/ -->
+						<input class="setButton" type="submit" value="Set" />
+					</p>
+				</form>
+				<form>
+					<p>
+						<label>LWT message</label>
+						<input type="text" name="Main1_MLM" style="width: 150px;"
+							title="LWT message when the Gbox420 stops reporting unexpectedly" />
+						<input class="setButton" type="submit" value="Set" />
+					</p>
+				</form>
 			</div>
 		</div>
 		<div class="pure-u-1 pure-u-md-1-2">
@@ -221,11 +265,11 @@
 				<form>
 					<p>
 						<button id="Main1_Refresh" type="button"
-							title="Update sensor readings and report to console and Sheets">Refresh</button>
+							title="Force refreshing sensor readings">&#8635;</button>
 						<button id="Main1_SerialRep" type="button"
 							title="Report current status to Serial (ESP and Arduino)">Console report</button>
-						<button id="Main1_SheetsRep" type="button" title="Report current status to Google Sheets">Sheets
-							report</button>
+						<button id="Main1_SheetsRep" type="button" title="Report current status to Google Sheets">Sheets report</button>
+						<button id="Main1_MQTTRep" type="button" title="Report current status to Google Sheets">MQTT report</button>
 					</p>
 				</form>
 			</div>

@@ -235,8 +235,10 @@ void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///< clear variable
-  strcat(ShortMessage,ModuleSettings->MqttROOT);
-  strcat(ShortMessage,ModuleSettings->MqttPUBLISH);
+  strcat_P(ShortMessage, (PGM_P)F("/"));
+  strcat(ShortMessage,ModuleSettings->MqttRootTopic);
+  strcat_P(ShortMessage, (PGM_P)F("/"));
+  strcat(ShortMessage,ModuleSettings->MqttSubTopic);
   if (*Debug)
   { ///< print the report command to console
     logToSerials(F("MQTT reporting:"), false, 1);

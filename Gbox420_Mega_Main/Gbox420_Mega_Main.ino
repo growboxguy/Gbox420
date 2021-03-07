@@ -208,7 +208,7 @@ void setupMqtt()
   MqttAPI.publishedCb.attach(mqttPublished);
   MqttAPI.dataCb.attach(mqttReceived);
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable to store the Publish to path
-  strcat(ShortMessage, ModuleSettings->MqttROOT);
+  strcat(ShortMessage, ModuleSettings->MqttRootTopic);
   strcat(ShortMessage, ModuleSettings->MqttLwtTopic);
   MqttAPI.lwt(ShortMessage, ModuleSettings->MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
   MqttAPI.setup();
@@ -217,8 +217,9 @@ void setupMqtt()
 void mqttConnected(void *response)
 {
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable
-  strcat(ShortMessage, ModuleSettings->MqttROOT);
-  strcat_P(ShortMessage, (PGM_P)F("#"));
+  strcat_P(ShortMessage, (PGM_P)F("/"));
+  strcat(ShortMessage, ModuleSettings->MqttRootTopic);
+  strcat_P(ShortMessage, (PGM_P)F("/#"));
   MqttAPI.subscribe(ShortMessage);
   logToSerials(F("MQTT connected!"), true);
 }
