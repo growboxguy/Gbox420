@@ -217,7 +217,7 @@ void mqttConnected(void *response)
 {
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable
   strcat(ShortMessage, ModuleSettings->MqttTopic);
-  strcat_P(ShortMessage, (PGM_P)F("/#"));
+  strcat_P(ShortMessage, (PGM_P)F("#"));
   MqttAPI.subscribe(ShortMessage);
   //if(*Debug) logToSerials(F("MQTT connected"), true);
 }

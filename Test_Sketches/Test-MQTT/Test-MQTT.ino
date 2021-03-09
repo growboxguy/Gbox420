@@ -6,8 +6,8 @@
 #include "ELClientMqtt.h"
 
 //Global constants
-const char* MqttTopic = "GrowBoxGuy/Gbox420"; //UPDATE THIS - Topic of every MQTT message
-const char* MqttLwtTopic = "GrowBoxGuy/LWT";  //When the connection is lost the MQTT broker will publish a final message to this topic
+const char* MqttTopic = "GrowBoxGuy/Gbox420/"; //UPDATE THIS - Topic of every MQTT message. Ends with a forward slash
+const char* MqttLwtTopic = "GrowBoxGuy/LWT/";  //When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
 const char* MqttLwtMessage = "Gbox420 Offline"; //this is the message subscribers will get under the topic specified by MqttLwtTopic variable
 
 const char* MqttInternalFan = "InternalFan"; //MQTT command the code responds to 
@@ -76,9 +76,7 @@ void mqttPublish(){
     strcat(WebMessage,"\"}");  //closing the JSON 
       
     memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable to store the Publish to path
-    strcat(MqttPath,MqttTopic);
-    strcat_P(MqttPath,F("/"));
-    
+    strcat(MqttPath,MqttTopic);    
     Serial.print(PublishedCounter); Serial.print(". publish to: ");Serial.print(MqttPath);Serial.print(" - ");Serial.println(WebMessage);
     Mqtt.publish(MqttPath, WebMessage,0,1); //(topic,message,QoS[only 0 supported],retain)
 }
@@ -86,7 +84,7 @@ void mqttPublish(){
 void mqttConnected(void* response) {
   memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable
   strcat(MqttPath,MqttTopic);
-  strcat(MqttPath,"/#"); //subscribe to all sub-topics
+  strcat(MqttPath,"#"); //subscribe to all sub-topics
   Mqtt.subscribe(MqttPath);
   Serial.println(F("MQTT connected!"));
   Serial.print(F("Listening to: "));Serial.println(MqttPath);
