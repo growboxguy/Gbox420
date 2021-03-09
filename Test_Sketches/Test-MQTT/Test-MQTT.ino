@@ -6,10 +6,10 @@
 #include "ELClientMqtt.h"
 
 //Global constants
-const char* MqttROOT = "growboxguy@gmail.com/"; //UPDATE THIS - Root of every MQTT message, / at the end is important!
-const char* MqttPUBLISH = "Gbox420";  //Readings get published under this topic
-const char* MqttLwtTopic = "LWT";  //When the connection is lost the MQTT broker will publish a final message to this topic
+const char* MqttTopic = "GrowBoxGuy/Gbox420"; //UPDATE THIS - Topic of every MQTT message
+const char* MqttLwtTopic = "GrowBoxGuy/LWT";  //When the connection is lost the MQTT broker will publish a final message to this topic
 const char* MqttLwtMessage = "Gbox420 Offline"; //this is the message subscribers will get under the topic specified by MqttLwtTopic variable
+
 const char* MqttInternalFan = "InternalFan"; //MQTT command the code responds to 
 const char* MqttBrightness = "Brightness";  //MQTT command the code responds to
 const char* MqttLightOn = "LightOn"; //MQTT command the code responds to
@@ -20,6 +20,7 @@ const char* MqttString = "MqttString"; //MQTT command the code responds to
 char MqttPath[64];
 unsigned long LastPublish;
 int PublishedCounter = 0;
+
 //fake variables to report and update
 int InternalFan = 0;
 int LightBrightness = 50;
@@ -47,7 +48,6 @@ void setup() {
   Mqtt.publishedCb.attach(mqttPublished);
   Mqtt.dataCb.attach(mqttReceived);
   memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable to store the Publish to path
-  strcat(MqttPath,MqttROOT);
   strcat(MqttPath,MqttLwtTopic);
   Mqtt.lwt(MqttPath, MqttLwtMessage, 0, 1); //(topic,message,QoS[only 0 supported],retain)
   Mqtt.setup();
@@ -65,7 +65,7 @@ void loop() {
 }
 
 void mqttPublish(){ 
-    char WebMessage[512];   //buffer for MQTT API messages (severly oversized)
+    char WebMessage[512];   //buffer for MQTT API messages (oversized)
     memset(&WebMessage[0], 0, sizeof(WebMessage));  //clear variable
     strcat(WebMessage,"{\"Counter\":\"");  strcat(WebMessage,intToChar(PublishedCounter));
     strcat(WebMessage,"\",\"InternalFan\":\""); strcat(WebMessage,intToChar(InternalFan));
@@ -73,11 +73,11 @@ void mqttPublish(){
     strcat(WebMessage,"\",\"LightOn\":\"");  strcat(WebMessage,intToChar(LightOn)); //bool is int (0 or 1)
     strcat(WebMessage,"\",\"AeroMaxPressure\":\"");  strcat(WebMessage,floatToChar(AeroMaxPressure));
     strcat(WebMessage,"\",\"MqttString\":\"");  strcat(WebMessage,TestString);  
-    strcat(WebMessage,"\"}");  //closing the JSON formatted 
+    strcat(WebMessage,"\"}");  //closing the JSON 
       
     memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable to store the Publish to path
-    strcat(MqttPath,MqttROOT);
-    strcat(MqttPath,MqttPUBLISH);
+    strcat(MqttPath,MqttTopic);
+    strcat_P(MqttPath,F("/"));
     
     Serial.print(PublishedCounter); Serial.print(". publish to: ");Serial.print(MqttPath);Serial.print(" - ");Serial.println(WebMessage);
     Mqtt.publish(MqttPath, WebMessage,0,1); //(topic,message,QoS[only 0 supported],retain)
@@ -85,8 +85,8 @@ void mqttPublish(){
   
 void mqttConnected(void* response) {
   memset(&MqttPath[0], 0, sizeof(MqttPath)); //reset variable
-  strcat(MqttPath,MqttROOT);
-  strcat(MqttPath,"#"); //subscribe to all subtopics of MQTT Root
+  strcat(MqttPath,MqttTopic);
+  strcat(MqttPath,"/#"); //subscribe to all sub-topics
   Mqtt.subscribe(MqttPath);
   Serial.println(F("MQTT connected!"));
   Serial.print(F("Listening to: "));Serial.println(MqttPath);

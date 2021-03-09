@@ -79,8 +79,7 @@ void MainModule::websiteEvent_Load(char *url)
     WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
     WebServer.setArgBoolean(getComponentName(F("MQTT")), *ReportToMQTT);
     WebServer.setArgInt(getComponentName(F("MQTTF")), *MQTTReportingFrequency);
-    WebServer.setArgString(getComponentName(F("MRT")), ModuleSettings->MqttRootTopic);
-    WebServer.setArgString(getComponentName(F("MST")), ModuleSettings->MqttSubTopic);
+    WebServer.setArgString(getComponentName(F("MT")), ModuleSettings->MqttTopic);
     WebServer.setArgString(getComponentName(F("MLT")), ModuleSettings->MqttLwtTopic);
     WebServer.setArgString(getComponentName(F("MLM")), ModuleSettings->MqttLwtMessage);
   }
@@ -159,13 +158,9 @@ void MainModule::websiteEvent_Field(char *Field)
     {
       setMQTTReportingFrequency(WebServer.getArgInt());
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MRT")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("MT")) == 0)
     {
-      setMQTTRootTopic(WebServer.getArgString());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MST")) == 0)
-    {
-      setMQTTSubTopic(WebServer.getArgString());
+      setMQTTTopic(WebServer.getArgString());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("MLT")) == 0)
     {
@@ -323,23 +318,16 @@ void MainModule::setMQTTReportingFrequency(uint16_t Frequency)
   getSoundObject()->playOnSound();
 }
 
-void MainModule::setMQTTRootTopic(const char *RootTopic)
+void MainModule::setMQTTTopic(const char *RootTopic)
 {
-  strncpy(ModuleSettings->MqttRootTopic, RootTopic, MaxWordLength);
+  strncpy(ModuleSettings->MqttTopic, RootTopic, MaxShotTextLength);
   getSoundObject()->playOnSound();
-  addToLog(F("Root topic updated"));
-}
-
-void MainModule::setMQTTSubTopic(const char *SubTopic)
-{
-  strncpy(ModuleSettings->MqttSubTopic, SubTopic, MaxWordLength);
-  getSoundObject()->playOnSound();
-  addToLog(F("Sub topic updated"));
+  addToLog(F("MQTT topic updated"));
 }
 
 void MainModule::setMQTTLWTTopic(const char *LWTTopic)
 {
-  strncpy(ModuleSettings->MqttLwtTopic, LWTTopic, MaxWordLength);
+  strncpy(ModuleSettings->MqttLwtTopic, LWTTopic, MaxShotTextLength);
   getSoundObject()->playOnSound();
   addToLog(F("LWT topic updated"));
 }

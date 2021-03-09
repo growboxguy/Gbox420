@@ -209,7 +209,7 @@
 				<form>
 					<p>
 						<label>RelayID</label>
-						<input type="text" name="Main1_Relay" style="width: 150px;"
+						<input type="text" name="Main1_Relay" style="width: 160px;" maxlength="31"
 							title="DeviceID of the PushingBox logging scenario" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
@@ -227,22 +227,15 @@
 				</form>
 				<form>
 					<p>
-						<label>Root topic</label>
-						<input type="text" name="Main1_MRT" style="width: 150px;" title="First topic level" />
-						<input class="setButton" type="submit" value="Set" />
-					</p>
-				</form>
-				<form>
-					<p>
-						<label>Sub topic</label>
-						<input type="text" name="Main1_MST" style="width: 150px;" title="First topic level" />
+						<label>Topic</label>
+						<input type="text" name="Main1_MT" style="width: 220px;" title="First topic level" maxlength="127" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<form>
 					<p>
 						<label>LWT topic</label>
-						<input type="text" name="Main1_MLT" style="width: 150px;"
+						<input type="text" name="Main1_MLT" style="width: 187px;" maxlength="127"
 							title="Last Will and Testament topic when the Gbox420 stops reporting unexpectedly" />
 						<!-- https://www.hivemq.com/blog/mqtt-essentials-part-9-last-will-and-testament/ -->
 						<input class="setButton" type="submit" value="Set" />
@@ -251,7 +244,7 @@
 				<form>
 					<p>
 						<label>LWT message</label>
-						<input type="text" name="Main1_MLM" style="width: 150px;"
+						<input type="text" name="Main1_MLM" style="width: 162px;" maxlength="31"
 							title="LWT message when the Gbox420 stops reporting unexpectedly" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
@@ -268,8 +261,10 @@
 							title="Force refreshing sensor readings">&#8635;</button>
 						<button id="Main1_SerialRep" type="button"
 							title="Report current status to Serial (ESP and Arduino)">Console report</button>
-						<button id="Main1_SheetsRep" type="button" title="Report current status to Google Sheets">Sheets report</button>
-						<button id="Main1_MQTTRep" type="button" title="Report current status to Google Sheets">MQTT report</button>
+						<button id="Main1_SheetsRep" type="button" title="Report current status to Google Sheets">Sheets
+							report</button>
+						<button id="Main1_MQTTRep" type="button" title="Report current status to Google Sheets">MQTT
+							report</button>
 					</p>
 				</form>
 			</div>

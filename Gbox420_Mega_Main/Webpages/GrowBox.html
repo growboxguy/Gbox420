@@ -176,9 +176,10 @@
 				<form>
 					<p>
 					<button id="Main1_Refresh" type="button" title="Force refreshing sensor readings">&#8635;</button>
-					<button id="Main1_SerialRep" type="button" title="Report current status to Serial (ESP and Arduino)">Console report</button>
-					<button id="Main1_SheetsRep" type="button" title="Report current status to Google Sheets">Sheets report</button>
-					<button id="Main1_MQTTRep" type="button" title="Report current status to Google Sheets">MQTT report</button>
+					Report to:
+					<button id="Main1_SerialRep" type="button" title="Report current status to Serial (ESP and Arduino)">Console</button>
+					<button id="Main1_SheetsRep" type="button" title="Report current status to Google Sheets">Sheets</button>
+					<button id="Main1_MQTTRep" type="button" title="Report current status to Google Sheets">MQTT</button>
 					</p>
 				</form>
 			</div>
@@ -731,21 +732,26 @@
 				</form>
 				<form>
 					<p>
-						<label><b>Spray duration</b></label>
-						<input style="width: 55px;" min=0.1 step='0.1' name="Aero1_Dur" type="number" />sec
+						<label style="padding-left: 0.5em;">Duration</label>
+						<input style="width: 40px;" min=0.1 step='0.1' name="Aero1_Dur" type="number" />sec
 						<input class="setButton" type="submit" value="Set"
 							title="How long should a spray last (Seconds)">
 					</p>
-				</form>
-				<label><b>Spray interval</b> (min)</label>
+				</form>				
 				<form>
 					<p>
-						<label style="padding-left: 0.5em; text-align: right;">Day</label>
-						<input style="width: 35px;" min=1 name="Aero1_DInt" type="number" />
-						<label style="width: 2em"> Night</label>
-						<input style="width: 35px;" min=1 name="Aero1_NInt" type="number" />
+						<label style="padding-left: 0.5em;">Day interval</label>
+						<input style="width: 35px;" min=1 name="Aero1_DInt" type="number" />sec						
 						<input class="setButton" type="submit" value="Set"
-							title="How often should the spraying start (Minutes)">
+							title="How often should the spraying start when the lights are ON (Minutes)">
+					</p>
+				</form>
+				<form>
+					<p>						
+						<label style="padding-left: 0.5em;">Night interval</label>
+						<input style="width: 35px;" min=1 name="Aero1_NInt" type="number" />sec
+						<input class="setButton" type="submit" value="Set"
+							title="How often should the spraying start when the lights are OFF (Minutes)">
 					</p>
 				</form>
 				<form>
