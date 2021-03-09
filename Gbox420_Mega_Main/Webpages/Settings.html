@@ -244,7 +244,7 @@
 				<form>
 					<p>
 						<label>LWT message</label>
-						<input type="text" name="Main1_MLM" style="width: 162px;" maxlength="31"
+						<input type="text" name="Main1_MLM" style="width: 160px;" maxlength="31"
 							title="LWT message when the Gbox420 stops reporting unexpectedly" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
@@ -257,15 +257,12 @@
 				<ul id="Log"></ul>
 				<form>
 					<p>
-						<button id="Main1_Refresh" type="button"
-							title="Force refreshing sensor readings">&#8635;</button>
-						<button id="Main1_SerialRep" type="button"
-							title="Report current status to Serial (ESP and Arduino)">Console report</button>
-						<button id="Main1_SheetsRep" type="button" title="Report current status to Google Sheets">Sheets
-							report</button>
-						<button id="Main1_MQTTRep" type="button" title="Report current status to Google Sheets">MQTT
-							report</button>
-					</p>
+						<button id="Main1_Refresh" type="button" title="Force refreshing sensor readings">&#8635;</button>
+						Report to:
+						<button id="Main1_SerialRep" type="button" title="Report current status to Serial (ESP and Arduino)">Console</button>
+						<button id="Main1_SheetsRep" type="button" title="Report current status to Google Sheets">Sheets</button>
+						<button id="Main1_MQTTRep" type="button" title="Report current status to Google Sheets">MQTT</button>
+						</p>
 				</form>
 			</div>
 		</div>
