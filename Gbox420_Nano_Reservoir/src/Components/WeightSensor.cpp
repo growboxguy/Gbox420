@@ -13,7 +13,7 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
   Sensor->set_offset(*Offset);
   Parent->addToReportQueue(this);
   readWeight();
-  Parent->addToRefreshQueue_FiveSec(this);  //< HempyBucket component takes care of refreshing
+  Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("WeightSensor object created"), true, 3);
 }
 
