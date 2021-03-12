@@ -298,7 +298,7 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
 
 void MainModule::setMQTTReportingOnOff(bool State)
 {
-  *ReportToGoogleSheets = State;
+  *ReportToMQTT = State;
   if (State)
   {
     addToLog(F("MQTT enabled"));
