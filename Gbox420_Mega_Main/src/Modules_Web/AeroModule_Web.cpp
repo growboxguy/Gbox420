@@ -8,7 +8,7 @@ struct AeroCommand_P2 AeroCommand2ToSend = {AeroMessages::AeroCommand2};        
 struct AeroResponse_P2 AeroResponse2Received = {AeroMessages::AeroResponse2};                ///< Default startup values
 struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};                       ///< Special command to fetch the next Response from the Receiver
 
-AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common(Name)
+AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common_Web(Name)
 { ///< Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;

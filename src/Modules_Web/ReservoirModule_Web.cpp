@@ -6,7 +6,7 @@ struct ReservoirCommand ReservoirCommand1ToSend = {ReservoirMessages::ReservoirC
 struct ReservoirResponse ReservoirResponse1Received = {ReservoirMessages::ReservoirResponse1};                   ///< Response will be stored here
 struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset};                       ///< Special command to fetch the next Response from the Receiver
 
-ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Common(Name)
+ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common_Web(Name)
 {
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;

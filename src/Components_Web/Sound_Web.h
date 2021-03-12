@@ -6,7 +6,7 @@
 
 ///< Sound feedback buzzer - website component
 
-class Sound_Web : public Sound, public Common
+class Sound_Web : public Sound, virtual public Common
 {
 public:
   Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings);

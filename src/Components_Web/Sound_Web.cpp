@@ -1,6 +1,6 @@
 #include "Sound_Web.h"
 
-Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name), Sound(Name, Parent, DefaultSettings), Common(Name)
+Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name), Sound(Name, Parent, DefaultSettings)
 {
   this->Parent = Parent;
   this->Name = Name;
@@ -28,7 +28,7 @@ void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/S", 2) == 0)
   {
-    WebServer.setArgBoolean(getComponentName(F("Enabled")), *Enabled);
+    
   }
 }
 
@@ -55,10 +55,7 @@ void Sound_Web::websiteEvent_Field(char *Field)
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Enabled")) == 0)
-    {
-      setSoundOnOff(WebServer.getArgBoolean());
-    }
+    
   }
 }
 

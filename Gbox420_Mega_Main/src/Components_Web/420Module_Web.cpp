@@ -1,5 +1,5 @@
 #include "420Module_Web.h"
-#include "Sound_Web.h"
+#include "../Components/Sound.h"
 
 static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
@@ -98,36 +98,36 @@ void Module_Web::addToRefreshQueue_Minute(Common *Component)
     logToSerials(F("RefreshQueue_Minute overflow!"), true, 0);
 }
 
-///< Website subscriptions: When a component needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
+///< Website subscriptions: When a Module needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
 
-void Module_Web::addToWebsiteQueue_Load(Common *Component)
+void Module_Web::addToWebsiteQueue_Load(Common_Web *Module)
 {
   if (QueueDepth > WebsiteQueue_Load_Count)
-    WebsiteQueue_Load[WebsiteQueue_Load_Count++] = Component;
+    WebsiteQueue_Load[WebsiteQueue_Load_Count++] = Module;
   else
     logToSerials(F("WebsiteQueue_Load_Count overflow!"), true, 0);
 }
 
-void Module_Web::addToWebsiteQueue_Refresh(Common *Component)
+void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Module)
 {
   if (QueueDepth > WebsiteQueue_Refresh_Count)
-    WebsiteQueue_Refresh[WebsiteQueue_Refresh_Count++] = Component;
+    WebsiteQueue_Refresh[WebsiteQueue_Refresh_Count++] = Module;
   else
     logToSerials(F("WebsiteQueue_Refresh_Count overflow!"), true, 0);
 }
 
-void Module_Web::addToWebsiteQueue_Button(Common *Component)
+void Module_Web::addToWebsiteQueue_Button(Common_Web *Module)
 {
   if (QueueDepth > WebsiteQueue_Button_Count)
-    WebsiteQueue_Button[WebsiteQueue_Button_Count++] = Component;
+    WebsiteQueue_Button[WebsiteQueue_Button_Count++] = Module;
   else
     logToSerials(F("WebsiteQueue_Button_Count overflow!"), true, 0);
 }
 
-void Module_Web::addToWebsiteQueue_Field(Common *Component)
+void Module_Web::addToWebsiteQueue_Field(Common_Web *Module)
 {
   if (QueueDepth > WebsiteQueue_Field_Count)
-    WebsiteQueue_Field[WebsiteQueue_Field_Count++] = Component;
+    WebsiteQueue_Field[WebsiteQueue_Field_Count++] = Module;
   else
     logToSerials(F("WebsiteQueue_Field_Count overflow!"), true, 0);
 }

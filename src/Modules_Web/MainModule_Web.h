@@ -9,7 +9,7 @@
 
 // forward declaration of classes
 class Lights;
-class Sound_Web;
+class Sound;
 class Fan;
 class Fan_PWM;
 class AirPump;
@@ -25,11 +25,11 @@ extern ELClientRest PushingBoxRestAPI;
 
 ///< Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
-class MainModule : public Common, public Module_Web
+class MainModule : virtual public Common_Web, public Module_Web
 {
 public:
   MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless); ///< constructor
-  Sound_Web *Sound1;                                                                                          ///< Pointer to a Piezo speaker - sound feedback
+  Sound *Sound1;                                                                                          ///< Pointer to a Piezo speaker - sound feedback
   Fan *IFan;                                                                                              ///< Internal fan
   Fan *EFan;  
   Fan_PWM *FanI;                                                                                              ///< Internal fan

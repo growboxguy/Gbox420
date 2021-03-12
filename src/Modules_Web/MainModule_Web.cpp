@@ -2,7 +2,7 @@
 #include "HempyModule_Web.h"
 #include "AeroModule_Web.h"
 #include "ReservoirModule_Web.h"
-#include "../Components_Web/Sound_Web.h"
+#include "../Components/Sound.h"
 #include "../Components/DHTSensor.h"
 #include "../Components/Lights.h"
 #include "../Components/LightSensor.h"
@@ -12,13 +12,13 @@
 //#include "../Components/PowerSensor.h"  ///< For PZEM004T V1.0 or PZEM004T V2.0
 #include "../Components/PowerSensorV3.h" ///< Only for PZEM004T V3.0
 
-MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Module_Web(Wireless)
+MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common_Web(Name), Module_Web(Wireless)
 { ///< Constructor
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
   MQTTReportingFrequency = &DefaultSettings->MQTTReportingFrequency;
   ReportToMQTT = &DefaultSettings->ReportToMQTT;
-  Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
   IFan = new Fan(F("IFan"), this, &ModuleSettings->IFan); ///< passing: Component name, MainModule object the component belongs to, Default settings)
   EFan = new Fan(F("EFan"), this, &ModuleSettings->EFan);
@@ -74,17 +74,17 @@ void MainModule::websiteEvent_Load(char *url)
     //WebServer.setArgInt(getComponentName(F("FIS")), FanI->getSpeed()); ///< Internal PWM Fan speed
     //WebServer.setArgInt(getComponentName(F("FES")), FanE->getSpeed()); ///< Exhaust PWM Fan speed
     //Light1
-    WebServer.setArgInt(getComponentName(F("L1OnH")), Lt1 -> *OnHour);            ///< On hour
-    WebServer.setArgInt(getComponentName(F("L1OnM")), Lt1 -> *OnMinute);          ///< On minute
-    WebServer.setArgInt(getComponentName(F("L1OfH")), Lt1 -> *OffHour);           ///< Off hour
-    WebServer.setArgInt(getComponentName(F("L1OfM")), Lt1 -> *OffMinute);         ///< Off minute
-    WebServer.setArgInt(getComponentName(F("L1B")), Lt1 -> *Brightness);          ///< Brightness percentage
+    WebServer.setArgInt(getComponentName(F("L1OnH")), *(Lt1 -> OnHour));            ///< On hour
+    WebServer.setArgInt(getComponentName(F("L1OnM")), *(Lt1 -> OnMinute));          ///< On minute
+    WebServer.setArgInt(getComponentName(F("L1OfH")), *(Lt1 -> OffHour));           ///< Off hour
+    WebServer.setArgInt(getComponentName(F("L1OfM")), *(Lt1 -> OffMinute));         ///< Off minute
+    WebServer.setArgInt(getComponentName(F("L1B")), *(Lt1 -> Brightness));          ///< Brightness percentage
     //Light2
-    WebServer.setArgInt(getComponentName(F("L2OnH")), Lt2 -> *OnHour);            ///< On hour
-    WebServer.setArgInt(getComponentName(F("L2OnM")), Lt2 -> *OnMinute);          ///< On minute
-    WebServer.setArgInt(getComponentName(F("L2OfH")), Lt2 -> *OffHour);           ///< Off hour
-    WebServer.setArgInt(getComponentName(F("L2OfM")), Lt2 -> *OffMinute);         ///< Off minute
-    WebServer.setArgInt(getComponentName(F("L2B")), Lt2 -> *Brightness);          ///< Brightness percentage
+    WebServer.setArgInt(getComponentName(F("L2OnH")), *(Lt2 -> OnHour));            ///< On hour
+    WebServer.setArgInt(getComponentName(F("L2OnM")), *(Lt2 -> OnMinute));          ///< On minute
+    WebServer.setArgInt(getComponentName(F("L2OfH")), *(Lt2 -> OffHour));           ///< Off hour
+    WebServer.setArgInt(getComponentName(F("L2OfM")), *(Lt2 -> OffMinute));         ///< Off minute
+    WebServer.setArgInt(getComponentName(F("L2B")), *(Lt2 -> Brightness));          ///< Brightness percentage
   }
   else if (strncmp(url, "/S", 2) == 0) //Settings tab
   {
@@ -98,6 +98,7 @@ void MainModule::websiteEvent_Load(char *url)
     WebServer.setArgString(getComponentName(F("MT")), ModuleSettings->MqttTopic);
     WebServer.setArgString(getComponentName(F("MLT")), ModuleSettings->MqttLwtTopic);
     WebServer.setArgString(getComponentName(F("MLM")), ModuleSettings->MqttLwtMessage);
+    WebServer.setArgBoolean(getComponentName(F("Sound")), Sound1 -> getEnabledState());
   }
 }
 
@@ -376,6 +377,11 @@ void MainModule::websiteEvent_Field(char *Field)
     else if (strcmp_P(ShortMessage, (PGM_P)F("L2DD")) == 0)
     {
       Lt2 -> setDimDuration(WebServer.getArgInt());
+    }
+    //Sound1
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Sound")) == 0)
+    {
+     Sound1 -> setSoundOnOff(WebServer.getArgBoolean());
     }
   }
 }

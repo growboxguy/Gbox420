@@ -4,11 +4,11 @@
 ///< Allows controlling the HempyModule wirelessly and receiving a status report from it
 
 #include "TimeLib.h" // Keeping track of time
-#include "../Components/420Common.h"
+#include "../Components_Web/420Common_Web.h"
 #include "../Components_Web/420Module_Web.h"
 #include "../WirelessCommands_Hempy.h"
 
-class HempyModule_Web : public Common
+class HempyModule_Web : public Common_Web
 {
 public:
   HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings); ///< constructor

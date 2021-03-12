@@ -90,3 +90,8 @@ void Sound::OffSound()
     noTone(*Pin);
   }
 }
+
+bool Sound::getEnabledState()
+{
+  return *Enabled;
+}
