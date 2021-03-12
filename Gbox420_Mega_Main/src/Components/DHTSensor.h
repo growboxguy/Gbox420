@@ -10,6 +10,7 @@ public:
   DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings);
   void refresh_FiveSec();
   void report();
+  void reportToJSON();
   void readSensor(); ///< Refresh Temp and Humidity readings
   float getTemp();
   char *getTempText(bool IncludeUnits = false);

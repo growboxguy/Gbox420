@@ -11,8 +11,12 @@ public:
   Fan(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings *DefaultSettings);
   void refresh_Minute();
   void report();
+  void reportToJSON();
   char *fanSpeedToText();
   char *fanSpeedToNumber();
+  void TurnOff();
+  void SetLowSpeed();
+  void SetHighSpeed();
 
 private:
 protected:
@@ -22,7 +26,4 @@ protected:
   uint8_t *OnOffPin;
   uint8_t *SpeedPin;
   void checkFanStatus();
-  void TurnOff();
-  void SetLowSpeed();
-  void SetHighSpeed();
 };

@@ -8,16 +8,16 @@
 #include "../WirelessCommands_Hempy.h"
 
 // forward declaration of classes
-class Lights_Web;
+class Lights;
 class Sound_Web;
-class Fan_Web;
-class Fan_PWM_Web;
-class AirPump_Web;
-//class PowerSensor_Web;  ///< For PZEM004T V1.0 or PZEM004T V2.0
-class PowerSensorV3_Web; ///< Only for PZEM004T V3.0
-class LightSensor_Web;
+class Fan;
+class Fan_PWM;
+class AirPump;
+//class PowerSensor;  ///< For PZEM004T V1.0 or PZEM004T V2.0
+class PowerSensorV3; ///< Only for PZEM004T V3.0
+class LightSensor;
+class DHTSensor;
 class HempyModule_Web;
-class DHTSensor_Web;
 class AeroModule_Web;
 class ReservoirModule_Web;
 
@@ -30,17 +30,17 @@ class MainModule : public Common, public Module_Web
 public:
   MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless); ///< constructor
   Sound_Web *Sound1;                                                                                          ///< Pointer to a Piezo speaker - sound feedback
-  Fan_Web *IFan;                                                                                              ///< Internal fan
-  Fan_Web *EFan;  
-  Fan_PWM_Web *FanI;                                                                                              ///< Internal fan
-  Fan_PWM_Web *FanE;                                                                                               ///< Exhaust fan
-  AirPump_Web *APump1;                                                                                        ///< Air pump
-  Lights_Web *Lt1;                                                                                            ///< Pointer to a Light assembly No1
-  Lights_Web *Lt2;                                                                                            ///< Pointer to a Light assembly No2
-  LightSensor_Web *LtSen1;                                                                                    ///< Pointer to a Light Sensor object measuring light intensity in the grow box
-  //PowerSensor_Web *Pow1;   ///< For PZEM004T V1.0 or PZEM004T V2.0
-  PowerSensorV3_Web *Pow1;               ///< Only for PZEM004T V3.0
-  DHTSensor_Web *DHT1;                   ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
+  Fan *IFan;                                                                                              ///< Internal fan
+  Fan *EFan;  
+  Fan_PWM *FanI;                                                                                              ///< Internal fan
+  Fan_PWM *FanE;                                                                                               ///< Exhaust fan
+  AirPump *APump1;                                                                                        ///< Air pump
+  Lights *Lt1;                                                                                            ///< Pointer to a Light assembly No1
+  Lights *Lt2;                                                                                            ///< Pointer to a Light assembly No2
+  LightSensor *LtSen1;                                                                                    ///< Pointer to a Light Sensor object measuring light intensity in the grow box
+  //PowerSensor *Pow1;   ///< For PZEM004T V1.0 or PZEM004T V2.0
+  PowerSensorV3 *Pow1;               ///< Only for PZEM004T V3.0
+  DHTSensor *DHT1;                   ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   AeroModule_Web *AeroModule1;           ///< <Represents the website controls and feedback for a AeroModule
   ReservoirModule_Web *ReservoirModule1; ///< <Represents the website controls and feedback for a ReservoirModule
   HempyModule_Web *HempyModule1;         ///< <Represents the website controls and feedback for a HempyModule

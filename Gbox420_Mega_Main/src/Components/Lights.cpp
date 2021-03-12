@@ -74,6 +74,22 @@ void Lights::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+void Lights::reportToJSON()
+{
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, getStatusText(false));
+  strcat_P(LongMessage, (PGM_P)F("\",\"B\":\""));
+  strcat(LongMessage, getCurrentBrightnessText(false));
+  strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
+  strcat(LongMessage, getTimerOnOffText(false));
+  strcat_P(LongMessage, (PGM_P)F("\",\"On\":\""));
+  strcat(LongMessage, getOnTimeText());
+  strcat_P(LongMessage, (PGM_P)F("\",\"Of\":\""));
+  strcat(LongMessage, getOffTimeText());
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 void Lights::checkRelay()
 {
   if (CurrentStatus == LightStates::TURNEDOFF)

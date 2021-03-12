@@ -12,6 +12,7 @@ public:
   PowerSensor(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort); ///< constructor
   void refresh_FiveSec();
   void report();
+  void reportToJSON();
   char *getPowerText(bool IncludeUnits);
   char *getEnergyText(bool IncludeUnits);
   char *getVoltageText(bool IncludeUnits);

@@ -10,14 +10,7 @@ Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settin
   Parent->addToWebsiteQueue_Field(this);
 }
 
-void Sound_Web::reportToJSON()
-{
-  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
 
-  strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
-  strcat(LongMessage, toText(*Enabled));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
-}
 
 void Sound_Web::refresh_Sec()
 {

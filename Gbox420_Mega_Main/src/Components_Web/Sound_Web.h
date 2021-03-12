@@ -17,7 +17,6 @@ public:
   void websiteEvent_Button(char *Button);
   void websiteEvent_Refresh(__attribute__((unused)) char *url){}; ///< Not used
   void playEE();
-  void reportToJSON();
 
 private:
 protected:

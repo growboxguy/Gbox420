@@ -36,6 +36,14 @@ void Fan_PWM::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+void Fan_PWM::reportToJSON()
+{
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, toText(getSpeed()));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 void Fan_PWM::checkState()
 {
   if (*State) // Device should be ON

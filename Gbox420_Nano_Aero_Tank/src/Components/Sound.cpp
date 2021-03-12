@@ -11,6 +11,15 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   checkEvents();
 }
 
+void Sound::reportToJSON()
+{
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+
+  strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
+  strcat(LongMessage, toText(*Enabled));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 void Sound::refresh_Sec()
 {
   if (*Debug)

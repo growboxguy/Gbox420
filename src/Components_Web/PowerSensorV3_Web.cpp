@@ -9,25 +9,6 @@ PowerSensorV3_Web::PowerSensorV3_Web(const __FlashStringHelper *Name, Module_Web
   Parent->addToWebsiteQueue_Refresh(this);
 }
 
-void PowerSensorV3_Web::reportToJSON()
-{
-  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-
-  strcat_P(LongMessage, (PGM_P)F("\"P\":\""));
-  strcat(LongMessage, getPowerText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"E\":\""));
-  strcat(LongMessage, getEnergyText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"V\":\""));
-  strcat(LongMessage, getVoltageText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"C\":\""));
-  strcat(LongMessage, getCurrentText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"F\":\""));
-  strcat(LongMessage, getFrequencyText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PF\":\""));
-  strcat(LongMessage, getPowerFactorText());
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
-}
-
 void PowerSensorV3_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G", 2) == 0)

@@ -14,7 +14,7 @@ public:
   void websiteEvent_Button(char *Button);
   void websiteEvent_Load(__attribute__((unused)) char *url){};    ///< Not used
   void websiteEvent_Field(__attribute__((unused)) char *Field){}; ///< Not used
-  void reportToJSON();
+
 
 private:
 protected:
