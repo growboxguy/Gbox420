@@ -2,13 +2,13 @@
 
 #define PZEM004_NO_SWSERIAL ///< Singals to the PZEM004Tv30 module to use HardwareSerial instead of SoftwareSerial
 #include "PZEM004Tv30.h"    ///< 3rd party module for the PZEM004T V3.0 power sensor
-#include "420Common_Web.h"
+#include "../Components/420Common.h"
 #include "420Module_Web.h"
 #include "../Components/PowerSensorV3.h"
 
 ///< PZEM004T v3.0 power sensor - website component
 
-class PowerSensorV3_Web : public PowerSensorV3, public Common_Web
+class PowerSensorV3_Web : public PowerSensorV3, public Common
 {
 public:
   PowerSensorV3_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort); ///< constructor

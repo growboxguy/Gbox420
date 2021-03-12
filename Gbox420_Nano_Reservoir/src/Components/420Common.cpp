@@ -45,6 +45,13 @@ char *Common::getComponentName(const __FlashStringHelper *ComponentName)
   return ReturnChar;
 }
 
+void Common::reportToJSON()
+{
+  strcat_P(LongMessage, (PGM_P)F("\""));
+  strcat_P(LongMessage, (PGM_P)Name);
+  strcat_P(LongMessage, (PGM_P)F("\":{"));
+}
+
 bool Common::isThisMyComponent(char const *lookupName)
 { ///< When a web component triggers an action, this function decides if the component belonged to the class
   ///< lookupName is in the form of: InstanceName_FunctionName . Examles: Lt1_On , Lt1_OnTime, LtSen1_Raw

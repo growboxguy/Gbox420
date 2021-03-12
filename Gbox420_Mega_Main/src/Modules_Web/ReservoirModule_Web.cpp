@@ -6,7 +6,7 @@ struct ReservoirCommand ReservoirCommand1ToSend = {ReservoirMessages::ReservoirC
 struct ReservoirResponse ReservoirResponse1Received = {ReservoirMessages::ReservoirResponse1};                   ///< Response will be stored here
 struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset};                       ///< Special command to fetch the next Response from the Receiver
 
-ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
+ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Common(Name)
 {
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -41,7 +41,7 @@ void ReservoirModule_Web::report()
 
 void ReservoirModule_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));

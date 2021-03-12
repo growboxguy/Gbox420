@@ -1,6 +1,6 @@
 #include "Fan_Web.h"
 
-Fan_Web::Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::FanSettings *DefaultSettings) : Common(Name), Fan(Name, Parent, DefaultSettings), Common_Web(Name)
+Fan_Web::Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::FanSettings *DefaultSettings) : Common(Name), Fan(Name, Parent, DefaultSettings), Common(Name)
 {
   this->Parent = Parent;
   this->Name = Name;
@@ -12,7 +12,7 @@ Fan_Web::Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::
 
 void Fan_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, fanSpeedToNumber());
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket

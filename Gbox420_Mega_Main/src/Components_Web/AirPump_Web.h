@@ -1,12 +1,12 @@
 #pragma once
 
-#include "420Common_Web.h"
+#include "../Components/420Common.h"
 #include "420Module_Web.h"
 #include "../Components/AirPump.h"
 
 ///< AirPump controller - website component
 
-class AirPump_Web : public AirPump, public Common_Web
+class AirPump_Web : public AirPump, public Common
 {
 public:
   AirPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AirPumpSettings *DefaultSettings);

@@ -1,13 +1,13 @@
 #pragma once
 
 #include "DHT.h"
-#include "420Common_Web.h"
+#include "../Components/420Common.h"
 #include "420Module_Web.h"
 #include "../Components/DHTSensor.h"
 
 ///< Digital Humidity and Temperature sensor Web (DHT11 or DHT22) - website component
 
-class DHTSensor_Web : public DHTSensor, public Common_Web
+class DHTSensor_Web : public DHTSensor, public Common
 {
 public:
   DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::DHTSensorSettings *DefaultSettings);

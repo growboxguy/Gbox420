@@ -20,7 +20,6 @@
 #include "Thread.h"                           // Splitting functions to threads for timing
 #include "StaticThreadController.h"           // Grouping threads
 #include "SerialLog.h"                        // Logging to the Serial console and to ESP-link's console
-#include "src/Components_Web/420Common_Web.h" // Base class where all web components inherits from
 #include "Settings.h"                         // EEPROM stored settings for every component
 #include "src/Modules_Web/MainModule_Web.h"   // Represents a complete box with all feautres
 #include "SPI.h"                              // allows you to communicate with SPI devices, with the Arduino as the master device

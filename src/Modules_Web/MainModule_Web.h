@@ -25,7 +25,7 @@ extern ELClientRest PushingBoxRestAPI;
 
 ///< Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
-class MainModule : public Common_Web, public Module_Web
+class MainModule : public Common, public Module_Web
 {
 public:
   MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless); ///< constructor

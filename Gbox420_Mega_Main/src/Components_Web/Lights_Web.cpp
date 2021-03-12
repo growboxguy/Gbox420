@@ -1,6 +1,6 @@
 #include "Lights_Web.h"
 
-Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightsSettings *DefaultSettings) : Common(Name), Lights(Name, Parent, DefaultSettings), Common_Web(Name)
+Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightsSettings *DefaultSettings) : Common(Name), Lights(Name, Parent, DefaultSettings), Common(Name)
 {
   this->Parent = Parent;
   this->Name = Name;
@@ -15,7 +15,7 @@ Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Sett
 
 void Lights_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, getStatusText(false));
   strcat_P(LongMessage, (PGM_P)F("\",\"B\":\""));

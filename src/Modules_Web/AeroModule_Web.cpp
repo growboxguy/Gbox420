@@ -8,7 +8,7 @@ struct AeroCommand_P2 AeroCommand2ToSend = {AeroMessages::AeroCommand2};        
 struct AeroResponse_P2 AeroResponse2Received = {AeroMessages::AeroResponse2};                ///< Default startup values
 struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};                       ///< Special command to fetch the next Response from the Receiver
 
-AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
+AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common(Name)
 { ///< Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -64,7 +64,7 @@ void AeroModule_Web::report()
 
 void AeroModule_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));

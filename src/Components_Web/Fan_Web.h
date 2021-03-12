@@ -1,12 +1,12 @@
 #pragma once
 
-#include "420Common_Web.h"
+#include "../Components/420Common.h"
 #include "420Module_Web.h"
 #include "../Components/Fan.h"
 
 ///< Fan controller (2 speed) - website component
 
-class Fan_Web : public Fan, public Common_Web
+class Fan_Web : public Fan, public Common
 {
 public:
   Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::FanSettings *DefaultSettings);

@@ -57,8 +57,6 @@ ln ../src/Components/PowerSensor.cpp ./src/Components
 ln ../src/Components/PowerSensorV3.h ./src/Components
 ln ../src/Components/PowerSensorV3.cpp ./src/Components
 
-ln ../src/Components_Web/420Common_Web.h ./src/Components_Web
-ln ../src/Components_Web/420Common_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/420Module_Web.h ./src/Components_Web
 ln ../src/Components_Web/420Module_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/AirPump_Web.h ./src/Components_Web

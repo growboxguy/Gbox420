@@ -1,6 +1,6 @@
 #include "PowerSensorV3_Web.h"
 
-PowerSensorV3_Web::PowerSensorV3_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort) : Common(Name), PowerSensorV3(Name, Parent, SerialPort), Common_Web(Name)
+PowerSensorV3_Web::PowerSensorV3_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort) : Common(Name), PowerSensorV3(Name, Parent, SerialPort), Common(Name)
 {
   this->Parent = Parent;
   this->Name = Name;
@@ -11,7 +11,7 @@ PowerSensorV3_Web::PowerSensorV3_Web(const __FlashStringHelper *Name, Module_Web
 
 void PowerSensorV3_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
 
   strcat_P(LongMessage, (PGM_P)F("\"P\":\""));
   strcat(LongMessage, getPowerText(false));

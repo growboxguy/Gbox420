@@ -1,12 +1,12 @@
 #pragma once
 
-#include "420Common_Web.h"
+#include "../Components/420Common.h"
 #include "420Module_Web.h"
 #include "../Components/Sound.h"
 
 ///< Sound feedback buzzer - website component
 
-class Sound_Web : public Sound, public Common_Web
+class Sound_Web : public Sound, public Common
 {
 public:
   Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings);

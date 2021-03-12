@@ -1,6 +1,6 @@
 #include "Fan_PWM_Web.h"
 
-Fan_PWM_Web::Fan_PWM_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::Fan_PWMSettings *DefaultSettings) : Common(Name), Fan_PWM(Name, Parent, DefaultSettings), Common_Web(Name)
+Fan_PWM_Web::Fan_PWM_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::Fan_PWMSettings *DefaultSettings) : Common(Name), Fan_PWM(Name, Parent, DefaultSettings), Common(Name)
 {
   this->Parent = Parent;
   this->Name = Name;
@@ -14,7 +14,7 @@ Fan_PWM_Web::Fan_PWM_Web(const __FlashStringHelper *Name, Module_Web *Parent, Se
 
 void Fan_PWM_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(getSpeed()));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "420Common_Web.h"
+#include "../Components/420Common.h"
 #include "420Module_Web.h"
 #include "../Components/Lights.h"
 
 ///< Light controller with PWM dimming - website component
 
-class Lights_Web : public Lights, public Common_Web
+class Lights_Web : public Lights, public Common
 {
 public:
   Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightsSettings *DefaultSettings); ///< constructor

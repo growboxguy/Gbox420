@@ -66,7 +66,7 @@ void Module_Web::runMinute()
 
 ///< Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
 
-void Module_Web::addToReportQueue(Common_Web *Component)
+void Module_Web::addToReportQueue(Common *Component)
 {
   if (QueueDepth > reportQueueItemCount)
     ReportQueue[reportQueueItemCount++] = Component;
@@ -74,7 +74,7 @@ void Module_Web::addToReportQueue(Common_Web *Component)
     logToSerials(F("Report queue overflow!"), true, 0); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
-void Module_Web::addToRefreshQueue_Sec(Common_Web *Component)
+void Module_Web::addToRefreshQueue_Sec(Common *Component)
 {
   if (QueueDepth > refreshQueueItemCount_Sec)
     RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
@@ -82,7 +82,7 @@ void Module_Web::addToRefreshQueue_Sec(Common_Web *Component)
     logToSerials(F("RefreshQueue_Sec overflow!"), true, 0);
 }
 
-void Module_Web::addToRefreshQueue_FiveSec(Common_Web *Component)
+void Module_Web::addToRefreshQueue_FiveSec(Common *Component)
 {
   if (QueueDepth > refreshQueueItemCount_FiveSec)
     RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
@@ -90,7 +90,7 @@ void Module_Web::addToRefreshQueue_FiveSec(Common_Web *Component)
     logToSerials(F("RefreshQueue_FiveSec overflow!"), true, 0);
 }
 
-void Module_Web::addToRefreshQueue_Minute(Common_Web *Component)
+void Module_Web::addToRefreshQueue_Minute(Common *Component)
 {
   if (QueueDepth > refreshQueueItemCount_Minute)
     RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
@@ -100,7 +100,7 @@ void Module_Web::addToRefreshQueue_Minute(Common_Web *Component)
 
 ///< Website subscriptions: When a component needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
 
-void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
+void Module_Web::addToWebsiteQueue_Load(Common *Component)
 {
   if (QueueDepth > WebsiteQueue_Load_Count)
     WebsiteQueue_Load[WebsiteQueue_Load_Count++] = Component;
@@ -108,7 +108,7 @@ void Module_Web::addToWebsiteQueue_Load(Common_Web *Component)
     logToSerials(F("WebsiteQueue_Load_Count overflow!"), true, 0);
 }
 
-void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Component)
+void Module_Web::addToWebsiteQueue_Refresh(Common *Component)
 {
   if (QueueDepth > WebsiteQueue_Refresh_Count)
     WebsiteQueue_Refresh[WebsiteQueue_Refresh_Count++] = Component;
@@ -116,7 +116,7 @@ void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Component)
     logToSerials(F("WebsiteQueue_Refresh_Count overflow!"), true, 0);
 }
 
-void Module_Web::addToWebsiteQueue_Button(Common_Web *Component)
+void Module_Web::addToWebsiteQueue_Button(Common *Component)
 {
   if (QueueDepth > WebsiteQueue_Button_Count)
     WebsiteQueue_Button[WebsiteQueue_Button_Count++] = Component;
@@ -124,7 +124,7 @@ void Module_Web::addToWebsiteQueue_Button(Common_Web *Component)
     logToSerials(F("WebsiteQueue_Button_Count overflow!"), true, 0);
 }
 
-void Module_Web::addToWebsiteQueue_Field(Common_Web *Component)
+void Module_Web::addToWebsiteQueue_Field(Common *Component)
 {
   if (QueueDepth > WebsiteQueue_Field_Count)
     WebsiteQueue_Field[WebsiteQueue_Field_Count++] = Component;

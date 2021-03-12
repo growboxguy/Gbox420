@@ -4,12 +4,12 @@
 ///< Allows controlling the AeroModule wirelessly and receiving a status report from it
 
 #include "TimeLib.h" // Keeping track of time
-#include "../Components_Web/420Common_Web.h"
+#include "../Components/420Common.h"
 #include "../Components_Web/420Module_Web.h"
 #include "../Modules_Web/MainModule_Web.h"
 #include "../WirelessCommands_Aero.h"
 
-class AeroModule_Web : public Common_Web
+class AeroModule_Web : public Common
 {
 public:
   AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings); ///< constructor

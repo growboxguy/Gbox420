@@ -12,7 +12,7 @@
 //#include "../Components_Web/PowerSensor_Web.h"  ///< For PZEM004T V1.0 or PZEM004T V2.0
 #include "../Components_Web/PowerSensorV3_Web.h" ///< Only for PZEM004T V3.0
 
-MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Common_Web(Name), Module_Web(Wireless)
+MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Module_Web(Wireless)
 { ///< Constructor
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
@@ -59,7 +59,7 @@ void MainModule::report()
 
 void MainModule::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
 
   strcat_P(LongMessage, (PGM_P)F("\"M\":\""));
   strcat(LongMessage, toText(*Metric));

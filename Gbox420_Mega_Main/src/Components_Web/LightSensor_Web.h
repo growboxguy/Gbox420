@@ -1,12 +1,12 @@
 #pragma once
 
-#include "420Common_Web.h"
+#include "../Components/420Common.h"
 #include "420Module_Web.h"
 #include "../Components/LightSensor.h"
 
 ///< LM393 Light sensor - website component
 
-class LightSensor_Web : public LightSensor, public Common_Web
+class LightSensor_Web : public LightSensor, public Common
 {
 public:
   LightSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource);

@@ -1,13 +1,13 @@
 #pragma once
 
 #include "PZEM004T.h"
-#include "420Common_Web.h"
+#include "../Components/420Common.h"
 #include "420Module_Web.h"
 #include "../Components/PowerSensor.h"
 
 ///< PZEM004T power sensor - website component
 
-class PowerSensor_Web : public PowerSensor, public Common_Web
+class PowerSensor_Web : public PowerSensor, public Common
 {
 public:
   PowerSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort); ///< constructor

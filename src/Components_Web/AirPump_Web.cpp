@@ -1,6 +1,6 @@
 #include "AirPump_Web.h"
 
-AirPump_Web::AirPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AirPumpSettings *DefaultSettings) : Common(Name), AirPump(Name, Parent, DefaultSettings), Common_Web(Name)
+AirPump_Web::AirPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AirPumpSettings *DefaultSettings) : Common(Name), AirPump(Name, Parent, DefaultSettings), Common(Name)
 {
   this->Parent = Parent;
   this->Name = Name;
@@ -12,7 +12,7 @@ AirPump_Web::AirPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Se
 
 void AirPump_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(getState()));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket

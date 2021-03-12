@@ -6,7 +6,7 @@
 #include "../Components/420Common.h"
 
 ///< forward declaration
-extern ELClientWebServer WebServer;
+
 
 class Common_Web : virtual public Common
 {
