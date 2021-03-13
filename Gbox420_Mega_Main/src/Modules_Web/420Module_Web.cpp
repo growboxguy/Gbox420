@@ -8,7 +8,7 @@ Module_Web::Module_Web(RF24 *Wireless) : Module()
   this->Wireless = Wireless;
   //logToSerials(F("Module_Web object created"), true, 3);
 }
-
+/*
 void Module_Web::runAll()
 {
   wdt_reset();
@@ -19,6 +19,7 @@ void Module_Web::runAll()
   runMinute();
   wdt_reset();
 }
+
 
 void Module_Web::runReport()
 { ///< Reports component status to Serial output (Arduino and ESP)
@@ -63,9 +64,10 @@ void Module_Web::runMinute()
     RefreshQueue_Minute[i]->refresh_Minute();
   }
 }
+*/
 
 ///< Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
-
+/*
 void Module_Web::addToReportQueue(Common *Component)
 {
   if (QueueDepth > reportQueueItemCount)
@@ -97,6 +99,7 @@ void Module_Web::addToRefreshQueue_Minute(Common *Component)
   else
     logToSerials(F("RefreshQueue_Minute overflow!"), true, 0);
 }
+*/
 
 ///< Website subscriptions: When a Module needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
 
