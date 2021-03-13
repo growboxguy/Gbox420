@@ -110,12 +110,17 @@ void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< ca
 
   if (strncmp(url, "/G", 2) == 0) //GrowBox tab
   {
+    //Air pump
     WebServer.setArgString(getComponentName(F("AP")), APump1->getStateToText());
+    //DHT1
     WebServer.setArgString(getComponentName(F("DT")), DHT1->getTempText(true)); ///< Shows the latest reading
     WebServer.setArgString(getComponentName(F("DH")), DHT1->getHumidityText(true));
+    //PWM FAN
     //WebServer.setArgString(getComponentName(F("FIST")), getSpeedText(true,true));  ///PWM Fan speed text
     //WebServer.setArgString(getComponentName(F("FEST")), getSpeedText(true,true));  ///PWM Fan speed text
+    //Internal Fan
     WebServer.setArgString(getComponentName(F("IFS")), IFan -> fanSpeedToText());
+    //Exhaust Fan
     WebServer.setArgString(getComponentName(F("EFS")), EFan -> fanSpeedToText());
     //Light1
     WebServer.setArgString(getComponentName(F("L1S")), Lt1 -> getStateText());                  ///< State
