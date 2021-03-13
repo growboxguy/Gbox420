@@ -3,7 +3,7 @@
 ///< This class represents a complete MainModule with all of its components
 ///< Responsible for setting up each module, updating their statuses and reporting it
 
-#include "../Components_Web/420Module_Web.h"
+#include "420Module_Web.h"
 #include "ELClientRest.h" ///< ESP-link - REST API
 #include "../WirelessCommands_Hempy.h"
 

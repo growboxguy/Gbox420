@@ -25,6 +25,10 @@ ln ../src/WirelessCommands_Aero.h ./src
 ln ../src/WirelessCommands_Hempy.h ./src
 ln ../src/WirelessCommands_Reservoir.h ./src
 
+ln ../src/Modules_Web/420Common_Web.cpp ./src/Modules_Web
+ln ../src/Modules_Web/420Common_Web.h ./src/Modules_Web
+ln ../src/Modules_Web/420Module_Web.cpp ./src/Modules_Web
+ln ../src/Modules_Web/420Module_Web.h ./src/Modules_Web
 ln ../src/Modules_Web/MainModule_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/MainModule_Web.h ./src/Modules_Web
 ln ../src/Modules_Web/AeroModule_Web.cpp ./src/Modules_Web
@@ -33,6 +37,7 @@ ln ../src/Modules_Web/HempyModule_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/HempyModule_Web.h ./src/Modules_Web
 ln ../src/Modules_Web/ReservoirModule_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/ReservoirModule_Web.h ./src/Modules_Web
+
 
 ln ../src/Components/420Common.h ./src/Components
 ln ../src/Components/420Common.cpp ./src/Components
@@ -57,7 +62,7 @@ ln ../src/Components/PowerSensor.cpp ./src/Components
 ln ../src/Components/PowerSensorV3.h ./src/Components
 ln ../src/Components/PowerSensorV3.cpp ./src/Components
 
-ln ../src/Components_Web/420Module_Web.h ./src/Components_Web
+
 ln ../src/Components_Web/420Module_Web.cpp ./src/Components_Web
 
 

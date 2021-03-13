@@ -12,8 +12,8 @@
  */
 
 #include "TimeLib.h" // Keeping track of time
-#include "../Components_Web/420Common_Web.h"
-#include "../Components_Web/420Module_Web.h"
+#include "420Common_Web.h"
+#include "420Module_Web.h"
 #include "../WirelessCommands_Reservoir.h"
 
 class ReservoirModule_Web : public Common_Web
