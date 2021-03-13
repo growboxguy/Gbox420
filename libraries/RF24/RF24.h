@@ -478,7 +478,7 @@ public:
      * differs from printDetails() because it makes the information more
      * understandable without having to look up the datasheet or convert
      * hexadecimal to binary. Only use this function if your application can
-     * spare a few extra bytes of memory.
+     * spare extra bytes of memory.
      *
      * @warning Does nothing if stdout is not defined.  See fdevopen in stdio.h
      * The printf.h file is included with the library for Arduino.
@@ -490,6 +490,11 @@ public:
      *  ...
      * }
      * @endcode
+     *
+     * @note If the automatic acknowledgements feature is configured differently
+     * for each pipe, then a binary representation is used in which bits 0-5
+     * represent pipes 0-5 respectively. A `0` means the feature is disabled and
+     * a `1` means the feature is enabled.
      */
     void printPrettyDetails(void);
 
@@ -2111,41 +2116,17 @@ private:
  *
  * @section News News
  *
- * **Aug 2020** <br>
- * v1.3.9
- * - Fix broken compilation for some devices due to recent changes
- * v1.3.8
- * - Introduces change that mainly reduces the time required to call RF24::startListening(), RF24::powerUp(), and RF24::powerDown()
- * - Affects speed of switching from TX->RX. Users might consider starting updates of slower devices with this<br>
- *   release to prevent missed packets when similar changes are introduced, affecting switching from RX->TX
- * - Clean up RF24::begin() function (reduce program size)
- *
- * v1.3.7
- * - Bug fix for RF24::writeFast() function affecting RF24 stack (all RF24 libraries)
- * - Unify Arduino & Linux constructor. Accept SPI speed in Hz as optional parameter
- * - Removal of BCM2835 SPI speed constants due to removal from BCM library
- * - Update to latest BCM2835 driver
- * - Bug fix for RPi millis() code
- * - Added Constant Carrier Wave functionality & added to scanner example
- * - Modify RF24::setPALevel() to allow setting LNA gain via optional parameter
- * - Cleanup of warnings, errors and old files
- *
- * **March-July 2020**
- * - Fixes for SPI_HAS_TRANSACTION detection (Affecting many devices)
- * - Add ability to configure SPI speed properly in Linux constructor
- * - Support multiple instances of SPIDEV on Linux
- * - Minor fixes & changes
- *
- *
+ * @li See the releases' descriptions on
+ * [the library's release page](http://github.com/nRF24/RF24/releases) for a list of
+ * changes.
  *
  * @section Useful Useful References
- *
  *
  * @li <a href="classRF24.html"><b>RF24 Class Documentation</b></a>
  * @li <a href="pages.html"><b>Support & Configuration</b></a>
  * @li <a href="https://github.com/nRF24/RF24/"><b>Source Code</b></a>
- * @li <a href="http://github.com/nRF24/RF24/datasheets/nRF24L01_datasheet_v2.pdf">nRF24L01 v2.0 Datasheet</a>
- * @li <a href="http://github.com/nRF24/RF24/datasheets/nRF24L01P_datasheet_v1.pdf">nRF24L01+ v1.0 Datasheet</a>
+ * @li <a href="http://github.com/nRF24/RF24/raw/master/datasheets/nRF24L01_datasheet_v2.pdf">nRF24L01 v2.0 Datasheet</a>
+ * @li <a href="http://github.com/nRF24/RF24/raw/master/datasheets/nRF24L01P_datasheet_v1.pdf">nRF24L01+ v1.0 Datasheet</a>
  *
  * **Additional Information and Add-ons**
  *
@@ -2171,7 +2152,7 @@ private:
  *
  * @li <a href="Arduino.html"><b>Arduino</b></a> (Uno, Nano, Mega, Due, Galileo, etc)
  * @li <a href="ATTiny.html"><b>ATTiny</b></a>
- * @li <a href="Linux.html"><b>Linux Installation</b></a>( <a href="RPi.html"><b>Linux/RPi General</b></a> , <a href="MRAA.html"><b>MRAA</b></a> supported boards ( Galileo, Edison, etc), <a href="LittleWire.html"><b>LittleWire</b></a>)
+ * @li <a href="Linux.html"><b>Linux Installation</b></a>( <a href="RPi.html"><b>Linux/RPi General</b></a> , <a href="MRAA.html"><b>MRAA</b></a> supported boards (Galileo, Edison, etc), LittleWire)
  * @li <a href="CrossCompile.html"><b>Cross-compilation</b></a> for linux devices
  * @li <a href="Python.html"><b>Python</b></a> wrapper available for Linux devices
  *
@@ -2193,8 +2174,8 @@ private:
  * |  8  |   IRQ    |      -      |        -           |         -       | -                       |    -       |       -           |
  *
  * @li [0] https://learn.sparkfun.com/tutorials/tiny-avr-programmer-hookup-guide/attiny85-use-hints
- * @li [1] http://highlowtech.org/?p=1695
- * @li [2] http://littlewire.cc/
+ * @li [1] http://highlowtech.org/?p=1695 The ATTiny2313 is unsupported due to lack of sufficient memory resources.
+ * @li [2] http://littlewire.github.io/
  * <br><br><br>
  *
  *
@@ -2276,6 +2257,8 @@ private:
  * ATTiny support for this library relys on the SpenceKonde ATTinyCore. Be sure to have added this core to the Arduino Boards Manager with the following guide:<br>
  * http://highlowtech.org/?p=1695 <br>
  * See the included rf24ping85 example for pin info and usage
+ *
+ * @warning The ATTiny2313 is unsupported due to lack of sufficient memory resources
  *
  * Some versions of Arduino IDE may require a patch to allow use of the full program space on ATTiny<br>
  * See https://github.com/TCWORLD/ATTinyCore/tree/master/PCREL%20Patch%20for%20GCC for ATTiny patch
