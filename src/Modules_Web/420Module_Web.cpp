@@ -153,5 +153,5 @@ void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
     logToSerials(&ShortMessage,false,1);
     logToSerials(JSONData, true, 0);
   }
-  MqttAPI.publish(ShortMessage, *JSONData,0,1); //(topic,message,qos,retain)
+  MqttAPI.publish(ShortMessage, *JSONData,0,1); //(topic,message,qos (Only level 0 supported),retain )
 }

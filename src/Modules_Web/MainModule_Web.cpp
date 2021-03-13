@@ -504,7 +504,7 @@ void MainModule::setPushingBoxLogRelayID(const char *ID)
 
 void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets
-  if (SheetsRefreshCounter++ % (*SheetsReportingFrequency) == 0 || ForceRun)
+  if ( (*ReportToGoogleSheets && SheetsRefreshCounter++ % (*SheetsReportingFrequency) == 0 ) || ForceRun)
   {
     addPushingBoxLogRelayID(); //Loads Pushingbox relay ID into LongMessage
     getJSONReport(false);      //Adds the JSON report to LongMessage
@@ -559,7 +559,7 @@ void MainModule::setMQTTLWTMessage(const char *LWTMessage)
 
 void MainModule::reportToMQTTTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
-  if (MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0 || ForceRun)
+  if ((*ReportToMQTT && MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0 )|| ForceRun)
   {
     getJSONReport(true);       //Load the JSON report to LongMessage
     mqttPublish(&LongMessage); //publish readings via ESP MQTT API
