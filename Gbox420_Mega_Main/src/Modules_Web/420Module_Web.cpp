@@ -8,98 +8,6 @@ Module_Web::Module_Web(RF24 *Wireless) : Module()
   this->Wireless = Wireless;
   //logToSerials(F("Module_Web object created"), true, 3);
 }
-/*
-void Module_Web::runAll()
-{
-  wdt_reset();
-  runSec();
-  wdt_reset();
-  runFiveSec();
-  wdt_reset();
-  runMinute();
-  wdt_reset();
-}
-
-
-void Module_Web::runReport()
-{ ///< Reports component status to Serial output (Arduino and ESP)
-  getFormattedTime(true);
-  getFreeMemory();
-  logToSerials(reportQueueItemCount, false, 0);
-  logToSerials(F("web components reporting:"), true, 1);
-  for (int i = 0; i < reportQueueItemCount; i++)
-  {
-    ReportQueue[i]->report();
-  }
-}
-
-///< Refresh queues: Refresh components inside the Module
-
-void Module_Web::runSec()
-{
-  if (*Debug)
-    logToSerials(F("One sec trigger"), true, 1);
-  for (int i = 0; i < refreshQueueItemCount_Sec; i++)
-  {
-    RefreshQueue_Sec[i]->refresh_Sec();
-  }
-}
-
-void Module_Web::runFiveSec()
-{
-  if (*Debug)
-    logToSerials(F("Five sec trigger"), true, 1);
-  for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
-  {
-    RefreshQueue_FiveSec[i]->refresh_FiveSec();
-  }
-}
-
-void Module_Web::runMinute()
-{
-  if (*Debug)
-    logToSerials(F("Minute trigger"), true, 1);
-  for (int i = 0; i < refreshQueueItemCount_Minute; i++)
-  {
-    RefreshQueue_Minute[i]->refresh_Minute();
-  }
-}
-*/
-
-///< Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
-/*
-void Module_Web::addToReportQueue(Common *Component)
-{
-  if (QueueDepth > reportQueueItemCount)
-    ReportQueue[reportQueueItemCount++] = Component;
-  else
-    logToSerials(F("Report queue overflow!"), true, 0); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
-}
-
-void Module_Web::addToRefreshQueue_Sec(Common *Component)
-{
-  if (QueueDepth > refreshQueueItemCount_Sec)
-    RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
-  else
-    logToSerials(F("RefreshQueue_Sec overflow!"), true, 0);
-}
-
-void Module_Web::addToRefreshQueue_FiveSec(Common *Component)
-{
-  if (QueueDepth > refreshQueueItemCount_FiveSec)
-    RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
-  else
-    logToSerials(F("RefreshQueue_FiveSec overflow!"), true, 0);
-}
-
-void Module_Web::addToRefreshQueue_Minute(Common *Component)
-{
-  if (QueueDepth > refreshQueueItemCount_Minute)
-    RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
-  else
-    logToSerials(F("RefreshQueue_Minute overflow!"), true, 0);
-}
-*/
 
 ///< Website subscriptions: When a Module needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
 
@@ -213,22 +121,6 @@ char *Module_Web::eventLogToJSON(bool Append)
   }
   LongMessage[strlen(LongMessage)] = ']';
   return LongMessage;
-}
-
-char *Module_Web::getJSONReport(bool BlankLongMessage)
-{
-  if (BlankLongMessage)
-  {
-    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
-  }
-  strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds two curly brackets that needs to be closed at the end
-  for (int i = 0; i < reportQueueItemCount;)
-  {
-    ReportQueue[i++]->reportToJSON();
-    if (i != reportQueueItemCount)
-      strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
-  }
-  strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
 }
 
 ///< Google Sheets functions

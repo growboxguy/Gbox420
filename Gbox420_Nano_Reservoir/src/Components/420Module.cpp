@@ -138,6 +138,25 @@ void Module::addToLog(const __FlashStringHelper *LongMessage, uint8_t Indent)
   logToSerials(&LongMessage, true, Indent);
 }
 
+//JSON report generating
+
+char *Module::getJSONReport(bool BlankLongMessage)
+{
+  if (BlankLongMessage)
+  {
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  }
+  strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds two curly brackets that needs to be closed at the end
+  for (int i = 0; i < reportQueueItemCount;)
+  {
+    ReportQueue[i++]->reportToJSON();
+    if (i != reportQueueItemCount)
+      strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
+  }
+  strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
+}
+
+
 ///< Time
 
 char *Module::getFormattedTime(bool PrintToSerials)
