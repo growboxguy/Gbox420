@@ -59,24 +59,7 @@ ln ../src/Components/PowerSensorV3.cpp ./src/Components
 
 ln ../src/Components_Web/420Module_Web.h ./src/Components_Web
 ln ../src/Components_Web/420Module_Web.cpp ./src/Components_Web
-ln ../src/Components_Web/AirPump_Web.h ./src/Components_Web
-ln ../src/Components_Web/AirPump_Web.cpp ./src/Components_Web
-ln ../src/Components_Web/Sound_Web.h ./src/Components_Web
-ln ../src/Components_Web/Sound_Web.cpp ./src/Components_Web
-ln ../src/Components_Web/DHTSensor_Web.h ./src/Components_Web
-ln ../src/Components_Web/DHTSensor_Web.cpp ./src/Components_Web
-ln ../src/Components_Web/Lights_Web.h ./src/Components_Web
-ln ../src/Components_Web/Lights_Web.cpp ./src/Components_Web
-ln ../src/Components_Web/LightSensor_Web.h ./src/Components_Web
-ln ../src/Components_Web/LightSensor_Web.cpp ./src/Components_Web
-ln ../src/Components_Web/Fan_Web.h ./src/Components_Web
-ln ../src/Components_Web/Fan_Web.cpp ./src/Components_Web
-ln ../src/Components_Web/Fan_PWM_Web.h ./src/Components_Web
-ln ../src/Components_Web/Fan_PWM_Web.cpp ./src/Components_Web
-ln ../src/Components_Web/PowerSensor_Web.h ./src/Components_Web
-ln ../src/Components_Web/PowerSensor_Web.cpp ./src/Components_Web
-ln ../src/Components_Web/PowerSensorV3_Web.h ./src/Components_Web
-ln ../src/Components_Web/PowerSensorV3_Web.cpp ./src/Components_Web
+
 
 echo "Done, press enter to exit"
 read fakeinput 
