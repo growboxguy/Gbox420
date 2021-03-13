@@ -9,7 +9,8 @@ Common::Common(const __FlashStringHelper *Name)
 
 Common::Common()
 {
-  logToSerials(F("Initializing "), false, 4);
+  logToSerials(F("Initializing "), false, 2);
+  logToSerials(this->Name, false, 0);
 }
 
 void Common::report()
