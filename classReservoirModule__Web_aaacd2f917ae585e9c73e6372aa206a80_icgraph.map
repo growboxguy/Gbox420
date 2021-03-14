@@ -1,0 +1,7 @@
+<map id="ReservoirModule_Web::updateCommands" name="ReservoirModule_Web::updateCommands">
+<area shape="rect" id="node2" href="$classReservoirModule__Web.html#a349a39dca681c59248bb463e0d6eeff7" title="constructor " alt="" coords="208,28,371,69"/>
+<area shape="rect" id="node3" href="$classReservoirModule__Web.html#a4561e7088396d38e812535532f79d200" title="ReservoirModule_Web\l::sendMessages" alt="" coords="212,93,367,135"/>
+<area shape="rect" id="node5" href="$classReservoirModule__Web.html#a3a3bd1a24f5df21cac157a726d65f7fe" title="not used " alt="" coords="621,93,776,135"/>
+<area shape="rect" id="node4" href="$classReservoirModule__Web.html#a7b12ae99c82ce17d9c2573d316251be4" title="ReservoirModule_Web\l::refresh_Sec" alt="" coords="419,5,573,47"/>
+<area shape="rect" id="node6" href="$classReservoirModule__Web.html#a9a11d3b4d046ef84d92917169c5db8da" title="ReservoirModule_Web\l::refresh_FiveSec" alt="" coords="419,123,573,164"/>
+</map>

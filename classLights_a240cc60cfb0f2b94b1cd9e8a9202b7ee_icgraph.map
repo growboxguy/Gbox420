@@ -1,0 +1,5 @@
+<map id="Lights::getStatus" name="Lights::getStatus">
+<area shape="rect" id="node2" href="$classLightSensor.html#a50559883ebb2c80a5d2144a6453bd1c3" title="Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger. " alt="" coords="175,13,372,39"/>
+<area shape="rect" id="node4" href="$classMainModule.html#ae0b9ebcc9015f37993766a3a39c4e710" title="Returns true if the lights are on or daylight is detected. " alt="" coords="186,63,361,90"/>
+<area shape="rect" id="node3" href="$classLightSensor__Web.html#abedb4cd4454f322ebbd7c3753bcd2a73" title="LightSensor_Web::website\lEvent_Button" alt="" coords="420,5,599,47"/>
+</map>

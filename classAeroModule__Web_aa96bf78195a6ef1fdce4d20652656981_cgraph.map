@@ -1,0 +1,8 @@
+<map id="AeroModule_Web::refresh_Sec" name="AeroModule_Web::refresh_Sec">
+<area shape="rect" id="node2" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Common::refresh_Sec" alt="" coords="290,5,443,32"/>
+<area shape="rect" id="node4" href="$classAeroModule__Web.html#ad83e9eb1ac33623941328aa877a7234b" title="AeroModule_Web::sendMessages" alt="" coords="256,81,477,108"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="812,43,907,69"/>
+<area shape="rect" id="node5" href="$classAeroModule__Web.html#ac7dff4137986e2704ec0039b8b81fa52" title="AeroModule_Web::updateCommands" alt="" coords="525,93,764,120"/>
+<area shape="rect" id="node6" href="$classAeroModule__Web.html#af0b99fb08b73ddded7470cc3e4028c29" title="AeroModule_Web::sendCommand" alt="" coords="534,144,755,171"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="830,144,889,171"/>
+</map>

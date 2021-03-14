@@ -1,0 +1,8 @@
+<map id="WaterTempSensor_Web" name="WaterTempSensor_Web">
+<area shape="rect" id="node2" href="$classWaterTempSensor.html" title="&lt; DS18B20 waterproof temperature sensor " alt="" coords="5,331,136,357"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="461,5,536,32"/>
+<area shape="rect" id="node4" href="$classModule.html" title="Module" alt="" coords="467,139,531,165"/>
+<area shape="rect" id="node5" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="721,331,780,357"/>
+<area shape="rect" id="node6" href="$classCommon__Web.html" title="Common_Web" alt="" coords="149,139,259,165"/>
+<area shape="rect" id="node7" href="$classModule__Web.html" title="Module_Web" alt="" coords="303,331,401,357"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="AirPump_Web::reportToJSON" name="AirPump_Web::reportToJSON">
+<area shape="rect" id="node2" href="$classCommon__Web.html#a6c2e0946d266ef2a3afe17b9869381cb" title="Common_Web::reportToJSON" alt="" coords="252,5,453,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="323,56,382,83"/>
+<area shape="rect" id="node4" href="$classAirPump.html#a0274edf60781c3a7b6fc6996f99e1438" title="AirPump::getState" alt="" coords="288,107,417,133"/>
+</map>

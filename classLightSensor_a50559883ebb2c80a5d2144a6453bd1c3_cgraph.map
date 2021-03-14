@@ -1,0 +1,14 @@
+<map id="LightSensor::triggerCalibration" name="LightSensor::triggerCalibration">
+<area shape="rect" id="node2" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Time. " alt="" coords="691,245,820,272"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="868,342,963,369"/>
+<area shape="rect" id="node4" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="477,68,643,94"/>
+<area shape="rect" id="node5" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="487,118,633,145"/>
+<area shape="rect" id="node6" href="$classLights.html#a240cc60cfb0f2b94b1cd9e8a9202b7ee" title="Lights::getStatus" alt="" coords="279,220,401,246"/>
+<area shape="rect" id="node7" href="$classLights.html#aea8e88f2668fbcc2d3e36dcfe51fbfa5" title="Lights::getBrightness" alt="" coords="267,270,413,297"/>
+<area shape="rect" id="node8" href="$classLights.html#ab18f05b043b61b6eb74bd7b564e1a1ec" title="Lights::setLightOnOff" alt="" coords="267,169,413,196"/>
+<area shape="rect" id="node9" href="$classLights.html#a20392486d66032fd530046cd1f33aaa0" title="Lights::setBrightness" alt="" coords="487,321,633,348"/>
+<area shape="rect" id="node13" href="$classLightSensor.html#a73dea4504d64c13c43a5c68bee9aef27" title="Light reading at dark,0,10,20...100%. " alt="" coords="251,372,429,414"/>
+<area shape="rect" id="node11" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="487,220,633,246"/>
+<area shape="rect" id="node12" href="$classLights.html#a59a952f3c895a78f9e382401a9b9701d" title="Lights::checkRelay" alt="" coords="493,270,627,297"/>
+<area shape="rect" id="node10" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="726,346,785,373"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="WaterTempSensor_Web::websiteEvent_Refresh" name="WaterTempSensor_Web::websiteEvent_Refresh">
+<area shape="rect" id="node2" href="$classCommon.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="225,5,428,32"/>
+<area shape="rect" id="node3" href="$classWaterTempSensor.html#adf0bb887371405a1136ebe1578e0d0e4" title="WaterTempSensor::getTempText" alt="" coords="219,56,435,83"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a7b18c86ed2ebd405cd6f1d5d55fe773c" title="toText_temp" alt="" coords="483,31,577,57"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="501,81,559,108"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="ReservoirModule_Web::ReservoirModule_Web" name="ReservoirModule_Web::ReservoirModule_Web">
+<area shape="rect" id="node2" href="$classReservoirModule__Web.html#aaacd2f917ae585e9c73e6372aa206a80" title="ReservoirModule_Web\l::updateCommands" alt="" coords="248,5,403,47"/>
+<area shape="rect" id="node3" href="$classModule__Web.html#a9b1a806569076aa701e961d54f888447" title="Module_Web::addToReportQueue" alt="" coords="216,71,435,98"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="483,214,577,241"/>
+<area shape="rect" id="node5" href="$classModule__Web.html#a125e0abaefa5c6ab2379162a3ea9cf55" title="Module_Web::addToRefresh\lQueue_Sec" alt="" coords="231,173,419,215"/>
+<area shape="rect" id="node6" href="$classModule__Web.html#a38624eecf0efaefb9210a60868327020" title="Module_Web::addToRefresh\lQueue_FiveSec" alt="" coords="231,239,419,280"/>
+<area shape="rect" id="node7" href="$classModule__Web.html#aee7880f65926af22ba1b83a73607e3b6" title="Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method. " alt="" coords="230,304,421,345"/>
+<area shape="rect" id="node8" href="$classModule__Web.html#adadb1643a6b460c0d53a7341bb356ee1" title="Subscribing to the Website button press event: Calls the websiteEvent_Button() method. " alt="" coords="230,369,421,411"/>
+</map>

@@ -1,0 +1,12 @@
+<map id="HempyModule_Web::HempyModule_Web" name="HempyModule_Web::HempyModule_Web">
+<area shape="rect" id="node2" href="$classHempyModule__Web.html#aea8051a4d58d6f0c7157cf9a36a95b9a" title="HempyModule_Web::updateCommands" alt="" coords="320,5,575,32"/>
+<area shape="rect" id="node3" href="$classModule__Web.html#a9b1a806569076aa701e961d54f888447" title="Module_Web::addToReportQueue" alt="" coords="338,56,557,83"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="623,296,717,323"/>
+<area shape="rect" id="node5" href="$classModule__Web.html#a125e0abaefa5c6ab2379162a3ea9cf55" title="Module_Web::addToRefresh\lQueue_Sec" alt="" coords="353,158,541,199"/>
+<area shape="rect" id="node6" href="$classModule__Web.html#a38624eecf0efaefb9210a60868327020" title="Module_Web::addToRefresh\lQueue_FiveSec" alt="" coords="353,223,541,265"/>
+<area shape="rect" id="node7" href="$classModule__Web.html#ac449bdaf2aae62ba30ee63a58b1bdd5d" title="Website subscriptions: When a component needs to get notified of a Website events from the ESP&#45;link i..." alt="" coords="353,289,541,330"/>
+<area shape="rect" id="node8" href="$classModule__Web.html#a11f84c9609ed88d1bfcd869d64775e93" title="Subscribing to the Website load event: Calls the websiteEvent_Load() method. " alt="" coords="352,354,543,395"/>
+<area shape="rect" id="node9" href="$classModule__Web.html#aee7880f65926af22ba1b83a73607e3b6" title="Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method. " alt="" coords="352,419,543,461"/>
+<area shape="rect" id="node10" href="$classModule__Web.html#a9f9ef9212523d06a130c5e9046b81adf" title="Subscribing to the Website field submit event: Calls the websiteEvent_Field() method. " alt="" coords="352,485,543,526"/>
+<area shape="rect" id="node11" href="$classModule__Web.html#adadb1643a6b460c0d53a7341bb356ee1" title="Subscribing to the Website button press event: Calls the websiteEvent_Button() method. " alt="" coords="352,550,543,591"/>
+</map>

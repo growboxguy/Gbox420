@@ -1,0 +1,7 @@
+<map id="Sound::refresh_Sec" name="Sound::refresh_Sec">
+<area shape="rect" id="node2" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Common::refresh_Sec" alt="" coords="191,5,344,32"/>
+<area shape="rect" id="node4" href="$classSound.html#a93a63a862c3aa1dd50acb0d8eaa61d6c" title="Sound::checkEvents" alt="" coords="196,56,339,83"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="406,5,501,32"/>
+<area shape="rect" id="node5" href="$classSound.html#ab1fb7a2e72d848ca335b4721cd8540b7" title="Sound::OffSound" alt="" coords="392,56,515,83"/>
+<area shape="rect" id="node6" href="$classSound.html#ac26eda99f623e5a839d1c408d8a591d9" title="Sound::OnSound" alt="" coords="393,107,514,133"/>
+</map>

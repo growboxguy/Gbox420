@@ -1,0 +1,12 @@
+<map id="Switch_PWM::getDutyCycleText" name="Switch_PWM::getDutyCycleText">
+<area shape="rect" id="node2" href="$classSwitch__PWM.html#a568a22528e98480c84f250749b7074c0" title="Switch_PWM::setDutyCycle" alt="" coords="269,81,460,108"/>
+<area shape="rect" id="node3" href="$classPressurePump.html#a9ec8ec6f90a6f262f4d0ab8af6026b84" title="PressurePump::setSpeed" alt="" coords="508,56,679,83"/>
+<area shape="rect" id="node8" href="$classWaterPump.html#a1b8dcaa0b0fae8325ef792322dde46dc" title="WaterPump::setSpeed" alt="" coords="516,107,671,133"/>
+<area shape="rect" id="node4" href="$classAeroModule.html#a6465def68343e695ae91ba01c714858d" title="AeroModule::processCommand" alt="" coords="734,5,939,32"/>
+<area shape="rect" id="node7" href="$classAeroModule.html#ac6a550d571e3bfedc712ba3e73701498" title="constructor " alt="" coords="995,56,1163,83"/>
+<area shape="rect" id="node5" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="1019,5,1138,32"/>
+<area shape="rect" id="node6" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="1211,5,1257,32"/>
+<area shape="rect" id="node9" href="$classHempyModule.html#ae76db12a22770b12cb7ff1aa579e0a27" title="HempyModule::processCommand" alt="" coords="727,107,947,133"/>
+<area shape="rect" id="node10" href="$Gbox420__Nano__Hempy_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="1019,107,1138,133"/>
+<area shape="rect" id="node11" href="$Gbox420__Nano__Hempy_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="1211,107,1257,133"/>
+</map>

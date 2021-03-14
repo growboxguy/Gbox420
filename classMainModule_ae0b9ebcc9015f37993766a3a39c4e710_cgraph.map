@@ -1,0 +1,8 @@
+<map id="MainModule::getDayMode" name="MainModule::getDayMode">
+<area shape="rect" id="node2" href="$classLights.html#a240cc60cfb0f2b94b1cd9e8a9202b7ee" title="Lights::getStatus" alt="" coords="250,5,371,32"/>
+<area shape="rect" id="node3" href="$classLightSensor.html#a06881cb787b1968daf4d1a49923617fe" title="Light sensor digital feedback: True(Dark) or False(Bright) " alt="" coords="238,56,383,83"/>
+<area shape="rect" id="node4" href="$classModule__Web.html#a54a0a2a3106a9068aa0d15b592602601" title="Time. " alt="" coords="229,107,392,133"/>
+<area shape="rect" id="node5" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="228,157,393,184"/>
+<area shape="rect" id="node6" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="238,208,383,235"/>
+<area shape="rect" id="node7" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="237,259,384,285"/>
+</map>

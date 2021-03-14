@@ -1,0 +1,8 @@
+<map id="Module_Web::relayToGoogleSheets" name="Module_Web::relayToGoogleSheets">
+<area shape="rect" id="node2" href="$classMainModule.html#af579c539beb7471a55975549522b6a98" title="MainModule::reportToGoogle\lSheetsTrigger" alt="" coords="261,71,450,112"/>
+<area shape="rect" id="node5" href="$classDEVModule__Web.html#a682292be98131695448dce6dbb522e0f" title="DEVModule_Web::reportToGoogle\lSheetsTrigger" alt="" coords="244,136,467,177"/>
+<area shape="rect" id="node3" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="MainModule::refresh\l_FiveSec" alt="" coords="532,5,672,47"/>
+<area shape="rect" id="node4" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="MainModule::refresh\l_Minute" alt="" coords="532,71,672,112"/>
+<area shape="rect" id="node6" href="$classDEVModule__Web.html#ac8ea37f602295f12c39d9849aab8e512" title="DEVModule_Web::refresh\l_FiveSec" alt="" coords="515,136,689,177"/>
+<area shape="rect" id="node7" href="$classDEVModule__Web.html#ab0e28b8ddf2b462b3c13be6ddebc1d2a" title="Settings. " alt="" coords="515,201,689,243"/>
+</map>

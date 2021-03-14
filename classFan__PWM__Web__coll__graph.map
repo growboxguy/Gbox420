@@ -1,0 +1,8 @@
+<map id="Fan_PWM_Web" name="Fan_PWM_Web">
+<area shape="rect" id="node2" href="$classFan__PWM.html" title="Fan_PWM" alt="" coords="5,331,89,357"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="463,5,538,32"/>
+<area shape="rect" id="node4" href="$classModule.html" title="Module" alt="" coords="469,139,533,165"/>
+<area shape="rect" id="node5" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="723,331,782,357"/>
+<area shape="rect" id="node6" href="$classCommon__Web.html" title="Common_Web" alt="" coords="141,139,250,165"/>
+<area shape="rect" id="node7" href="$classModule__Web.html" title="Module_Web" alt="" coords="293,331,391,357"/>
+</map>

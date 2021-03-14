@@ -1,0 +1,7 @@
+<map id="Fan::SetHighSpeed" name="Fan::SetHighSpeed">
+<area shape="rect" id="node2" href="$classFan.html#a32c99a0575098a2600ea3c9f27013a98" title="Fan::checkFanStatus" alt="" coords="199,5,345,32"/>
+<area shape="rect" id="node3" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Time. " alt="" coords="207,56,337,83"/>
+<area shape="rect" id="node5" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="189,107,355,133"/>
+<area shape="rect" id="node6" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="199,157,345,184"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="403,56,497,83"/>
+</map>

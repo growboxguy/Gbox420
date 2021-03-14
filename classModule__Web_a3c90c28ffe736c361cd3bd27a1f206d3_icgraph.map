@@ -1,0 +1,6 @@
+<map id="Module_Web::getJSONReport" name="Module_Web::getJSONReport">
+<area shape="rect" id="node2" href="$classMainModule.html#af579c539beb7471a55975549522b6a98" title="MainModule::reportToGoogle\lSheetsTrigger" alt="" coords="270,9,459,51"/>
+<area shape="rect" id="node5" href="$classMainModule.html#a14b8851731f543ad9a20a3c2b4a8584b" title="MainModule::reportToMQTTTrigger" alt="" coords="252,75,477,102"/>
+<area shape="rect" id="node3" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="MainModule::refresh\l_FiveSec" alt="" coords="525,5,665,47"/>
+<area shape="rect" id="node4" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="MainModule::refresh\l_Minute" alt="" coords="525,71,665,112"/>
+</map>

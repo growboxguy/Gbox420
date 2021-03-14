@@ -1,0 +1,14 @@
+<map id="Module::getFormattedTime" name="Module::getFormattedTime">
+<area shape="rect" id="node2" href="$classModule.html#aded882b387f715fdc5011cffaf7e66bb" title="Refresh queues: Refresh components inside the Module. " alt="" coords="275,130,404,157"/>
+<area shape="rect" id="node7" href="$classModule__Web.html#a32622fc4e87a9885319c73c5b4802cc5" title="Refresh queues: Refresh components inside the Module. " alt="" coords="258,326,421,353"/>
+<area shape="rect" id="node12" href="$classMainModule.html#a20bc1bd8003e07068859028feccd067f" title="MainModule::websiteEvent_Load" alt="" coords="232,377,447,403"/>
+<area shape="rect" id="node13" href="$classDEVModule__Web.html#a250eae61fe09061ccbf2e43d9480902e" title="DEVModule_Web::websiteEvent\l_Refresh" alt="" coords="233,428,446,469"/>
+<area shape="rect" id="node3" href="$classAeroModule.html#a74b231207f7d3857696acec8432f4322" title="AeroModule::refresh\l_FiveSec" alt="" coords="513,5,651,47"/>
+<area shape="rect" id="node4" href="$classAeroModule.html#ac6a550d571e3bfedc712ba3e73701498" title="constructor " alt="" coords="717,42,885,69"/>
+<area shape="rect" id="node5" href="$classHempyModule.html#a46b60e0abf225624dc7caba51b40dafc" title="HempyModule::refresh\l_FiveSec" alt="" coords="505,123,659,164"/>
+<area shape="rect" id="node6" href="$classReservoirModule.html#a28480be2b512eb00e46824a6da335d53" title="ReservoirModule::refresh\l_FiveSec" alt="" coords="498,188,666,229"/>
+<area shape="rect" id="node8" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="MainModule::refresh\l_FiveSec" alt="" coords="512,253,652,295"/>
+<area shape="rect" id="node9" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="MainModule::refresh\l_Minute" alt="" coords="512,319,652,360"/>
+<area shape="rect" id="node10" href="$classDEVModule__Web.html#ac8ea37f602295f12c39d9849aab8e512" title="DEVModule_Web::refresh\l_FiveSec" alt="" coords="495,384,669,425"/>
+<area shape="rect" id="node11" href="$classDEVModule__Web.html#ab0e28b8ddf2b462b3c13be6ddebc1d2a" title="Settings. " alt="" coords="495,449,669,491"/>
+</map>

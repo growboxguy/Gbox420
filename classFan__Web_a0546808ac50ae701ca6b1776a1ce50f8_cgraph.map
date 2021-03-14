@@ -1,0 +1,5 @@
+<map id="Fan_Web::websiteEvent_Field" name="Fan_Web::websiteEvent_Field">
+<area shape="rect" id="node2" href="$classFan__Web.html#a0649dd281bce277abe215f88463a74a7" title="Not used. " alt="" coords="219,31,389,57"/>
+<area shape="rect" id="node3" href="$classCommon__Web.html#a6c2e0946d266ef2a3afe17b9869381cb" title="Common_Web::reportToJSON" alt="" coords="437,5,639,32"/>
+<area shape="rect" id="node4" href="$classFan.html#acd41482f79dd009bcecd7740f8dbf002" title="Fan::fanSpeedToNumber" alt="" coords="454,56,622,83"/>
+</map>

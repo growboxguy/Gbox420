@@ -1,0 +1,9 @@
+<map id="Lights::setLightOnOff" name="Lights::setLightOnOff">
+<area shape="rect" id="node2" href="$classLights.html#a48acde7f45e4b9b22969e52fea689040" title="constructor " alt="" coords="249,5,349,32"/>
+<area shape="rect" id="node3" href="$classLights.html#a2117d6df0bdbf234e627a9bceb000071" title="Lights::checkTimer" alt="" coords="232,56,365,83"/>
+<area shape="rect" id="node6" href="$classLights__Web.html#a2437d22a7e8b027c4d08d209675f5db9" title="Lights_Web::websiteEvent\l_Button" alt="" coords="672,74,851,115"/>
+<area shape="rect" id="node7" href="$classLightSensor.html#a50559883ebb2c80a5d2144a6453bd1c3" title="Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger. " alt="" coords="200,161,397,188"/>
+<area shape="rect" id="node4" href="$classLights.html#a38c74606e1c2b4ff7db184920b225961" title="Lights::refresh_Minute" alt="" coords="459,5,610,32"/>
+<area shape="rect" id="node5" href="$classLights.html#a3c5051babf4dacdeecced14217f6f886" title="Lights::setTimerOnOff" alt="" coords="459,56,610,83"/>
+<area shape="rect" id="node8" href="$classLightSensor__Web.html#abedb4cd4454f322ebbd7c3753bcd2a73" title="LightSensor_Web::website\lEvent_Button" alt="" coords="445,158,624,199"/>
+</map>

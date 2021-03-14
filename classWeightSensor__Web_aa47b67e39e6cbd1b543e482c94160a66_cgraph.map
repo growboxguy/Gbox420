@@ -1,0 +1,5 @@
+<map id="WeightSensor_Web::websiteEvent_Refresh" name="WeightSensor_Web::websiteEvent_Refresh">
+<area shape="rect" id="node2" href="$classCommon.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="244,5,447,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="316,56,375,83"/>
+<area shape="rect" id="node4" href="$classWeightSensor.html#a0a42742e1516e6723b1246e789ba9253" title="WeightSensor::getWeight" alt="" coords="260,107,431,133"/>
+</map>

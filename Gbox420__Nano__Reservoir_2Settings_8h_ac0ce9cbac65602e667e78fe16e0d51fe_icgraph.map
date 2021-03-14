@@ -1,0 +1,18 @@
+<map id="saveSettings" name="saveSettings">
+<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html#a51e7fb049f4e601d609570e25bc10118" title="Called when a button is pressed. " alt="" coords="636,50,779,77"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_8ino.html#ae784bf97b35a03486279475151a20abd" title="Called when a field on the website is submitted. " alt="" coords="648,114,767,141"/>
+<area shape="rect" id="node6" href="$Gbox420__Nano__Reservoir_2Settings_8h.html#ad971c9812747afb3057cd98892437c13" title="Load settings from EEPROM. " alt="" coords="215,25,309,51"/>
+<area shape="rect" id="node8" href="$classAeroModule.html#a6465def68343e695ae91ba01c714858d" title="AeroModule::processCommand" alt="" coords="159,177,365,203"/>
+<area shape="rect" id="node11" href="$classAeroModule.html#ac6a550d571e3bfedc712ba3e73701498" title="constructor " alt="" coords="420,227,588,254"/>
+<area shape="rect" id="node12" href="$classHempyModule.html#ae76db12a22770b12cb7ff1aa579e0a27" title="HempyModule::processCommand" alt="" coords="152,278,372,305"/>
+<area shape="rect" id="node15" href="$classReservoirModule.html#acb4372e3a979154538b63434bb252bfe" title="ReservoirModule::process\lCommand" alt="" coords="175,329,349,371"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection " alt="" coords="827,50,943,77"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="991,13,1045,39"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Reservoir_2Settings_8h.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM. " alt="" coords="449,25,559,51"/>
+<area shape="rect" id="node9" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="445,177,563,203"/>
+<area shape="rect" id="node10" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="684,177,731,203"/>
+<area shape="rect" id="node13" href="$Gbox420__Nano__Hempy_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="445,278,563,305"/>
+<area shape="rect" id="node14" href="$Gbox420__Nano__Hempy_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="684,278,731,305"/>
+<area shape="rect" id="node16" href="$Gbox420__Nano__Reservoir_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="445,337,563,363"/>
+<area shape="rect" id="node17" href="$Gbox420__Nano__Reservoir_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="684,337,731,363"/>
+</map>

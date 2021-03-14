@@ -1,0 +1,29 @@
+<map id="Common::refresh_Minute" name="Common::refresh_Minute">
+<area shape="rect" id="node2" href="$classModule.html#aa7154c7e6619f87df7cb3f1b46d96a95" title="Module::runMinute" alt="" coords="252,100,381,127"/>
+<area shape="rect" id="node11" href="$classAirPump.html#a01551d165fc6ac14a4e625961fbf584b" title="AirPump::refresh_Minute" alt="" coords="233,151,400,177"/>
+<area shape="rect" id="node12" href="$classFan.html#ad4605196f9611585e9416bcce3d84723" title="Fan::refresh_Minute" alt="" coords="247,201,386,228"/>
+<area shape="rect" id="node13" href="$classFan__PWM.html#ac0d2dcb086bc37586b2472366c7b7710" title="Fan_PWM::refresh_Minute" alt="" coords="227,252,406,279"/>
+<area shape="rect" id="node14" href="$classLights.html#a38c74606e1c2b4ff7db184920b225961" title="Lights::refresh_Minute" alt="" coords="241,303,392,329"/>
+<area shape="rect" id="node15" href="$classModule__Web.html#a580c12222077d148fe86cd0b07b263ec" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="235,353,398,380"/>
+<area shape="rect" id="node23" href="$classAeroModule__Web.html#a9c4e85d145ef163d8eb734af4df6d25c" title="AeroModule_Web::refresh\l_Minute" alt="" coords="230,405,403,446"/>
+<area shape="rect" id="node24" href="$classHempyModule__Web.html#af66340c49108c31842e58d2624e51e6d" title="HempyModule_Web::refresh\l_Minute" alt="" coords="223,470,411,511"/>
+<area shape="rect" id="node25" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="MainModule::refresh\l_Minute" alt="" coords="247,535,387,577"/>
+<area shape="rect" id="node26" href="$classModuleSkeleton.html#ada46fe93dc55850a1ccfb80d2a4ee5dd" title="ModuleSkeleton::refresh\l_Minute" alt="" coords="235,601,398,642"/>
+<area shape="rect" id="node27" href="$classWaterLevelSensor.html#a575a909c40dbdfbf43831875abfd5927" title="WaterLevelSensor::refresh\l_FiveSec" alt="" coords="228,666,405,707"/>
+<area shape="rect" id="node28" href="$classDEVModule__Web.html#ab0e28b8ddf2b462b3c13be6ddebc1d2a" title="Settings. " alt="" coords="229,731,404,773"/>
+<area shape="rect" id="node3" href="$classModule.html#ac2566489e05811d381489f96b8dd43af" title="Module::runAll" alt="" coords="475,95,581,121"/>
+<area shape="rect" id="node10" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a56c5bdcbeb79cd2246a2c88826850ca1" title="runMinute" alt="" coords="932,140,1011,167"/>
+<area shape="rect" id="node4" href="$classModule.html#a496c104a3e5b7062aa562aad4a9acd53" title="Module::runSec" alt="" coords="708,5,821,32"/>
+<area shape="rect" id="node7" href="$classAeroModule.html#ac4b034d05f900f3afb1ae4a0920e2799" title="constructor " alt="" coords="681,56,849,83"/>
+<area shape="rect" id="node8" href="$classHempyModule.html#a46b23ffbe28aa4dd39e080c7465de74a" title="constructor " alt="" coords="665,107,864,133"/>
+<area shape="rect" id="node9" href="$classReservoirModule.html#ab8bca3ce3768c3d800d21806d76d3aeb" title="constructor " alt="" coords="673,158,857,199"/>
+<area shape="rect" id="node5" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a56b12c2ed10250fdf9fadd1fcc243685" title="runSec" alt="" coords="940,48,1003,75"/>
+<area shape="rect" id="node6" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="1059,95,1113,121"/>
+<area shape="rect" id="node16" href="$Gbox420__Mega__Main_8ino.html#a56c5bdcbeb79cd2246a2c88826850ca1" title="runMinute" alt="" coords="489,332,567,359"/>
+<area shape="rect" id="node18" href="$classModule__Web.html#a1aa0d196cbc4ad14f561e1334a0ae98f" title="Module_Web::runAll" alt="" coords="459,395,597,421"/>
+<area shape="rect" id="node17" href="$Gbox420__Mega__Main_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="737,285,792,312"/>
+<area shape="rect" id="node19" href="$classMainModule.html#a3a918c8c080f2a810b64e297cf1ce994" title="constructor " alt="" coords="679,336,850,363"/>
+<area shape="rect" id="node20" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="MainModule::refresh\l_FiveSec" alt="" coords="695,387,835,429"/>
+<area shape="rect" id="node21" href="$classDEVModule__Web.html#a3b6305f0ac608f03bf1d4e78183f1eac" title="constructor " alt="" coords="645,453,884,480"/>
+<area shape="rect" id="node22" href="$classDEVModule__Web.html#ac8ea37f602295f12c39d9849aab8e512" title="DEVModule_Web::refresh\l_FiveSec" alt="" coords="677,505,852,546"/>
+</map>

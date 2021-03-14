@@ -1,0 +1,6 @@
+<map id="AirPump::checkStatus" name="AirPump::checkStatus">
+<area shape="rect" id="node2" href="$classAirPump.html#a01551d165fc6ac14a4e625961fbf584b" title="AirPump::refresh_Minute" alt="" coords="220,5,387,32"/>
+<area shape="rect" id="node3" href="$classAirPump.html#adbce295ddc8dd194850ebfbfabb343e5" title="AirPump::TurnOff" alt="" coords="241,56,365,83"/>
+<area shape="rect" id="node4" href="$classAirPump.html#a2545e4f11f9004488deec68ab74afea7" title="AirPump::TurnOn" alt="" coords="242,107,365,133"/>
+<area shape="rect" id="node5" href="$classAirPump__Web.html#a36bc5a27ff544e292c8fbf6f24289053" title="AirPump_Web::websiteEvent\l_Button" alt="" coords="207,158,400,199"/>
+</map>

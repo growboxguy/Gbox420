@@ -1,0 +1,10 @@
+<map id="WaterPump::startPump" name="WaterPump::startPump">
+<area shape="rect" id="node2" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="214,31,379,57"/>
+<area shape="rect" id="node3" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="224,81,369,108"/>
+<area shape="rect" id="node4" href="$classWaterPump.html#a4211806cd0c62a57f3accc37c1c1eb00" title="WaterPump::updateState" alt="" coords="212,132,381,159"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="640,208,735,235"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aaa9810e7291e97d1fac5b0f3fa0b8f3c" title="TODO: The below section should be split between the modules to reduce memory usage. " alt="" coords="429,5,592,32"/>
+<area shape="rect" id="node7" href="$classSwitch.html#a3f10d75adaf6a110de455d1f7bb49fc0" title="Switch::turnOff" alt="" coords="455,107,566,133"/>
+<area shape="rect" id="node8" href="$classSwitch__PWM.html#a717d6337a0df8903779b81feea21a7bb" title="Switch_PWM::turnOn" alt="" coords="436,157,585,184"/>
+<area shape="rect" id="node9" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Time. " alt="" coords="446,208,575,235"/>
+</map>

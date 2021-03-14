@@ -1,0 +1,16 @@
+<map id="getWirelessData" name="getWirelessData">
+<area shape="rect" id="node2" href="$Gbox420__Nano__Reservoir_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Wireless" alt="" coords="445,5,519,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Nano__Reservoir_8ino.html#a82a77128f231eac657525d7eb3014b01" title="updateTime" alt="" coords="214,339,305,365"/>
+<area shape="rect" id="node5" href="$classReservoirModule.html#acb4372e3a979154538b63434bb252bfe" title="ReservoirModule::process\lCommand" alt="" coords="172,201,347,242"/>
+<area shape="rect" id="node15" href="$Gbox420__Nano__Reservoir_8ino.html#a95db03d1e7e16b28a065a97809c55551" title="InitializeWireless" alt="" coords="199,56,320,83"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="884,309,979,336"/>
+<area shape="rect" id="node6" href="$classModule.html#a79c2d0237995c6680a490f8a9c678fec" title="Module::setDebug" alt="" coords="418,157,546,184"/>
+<area shape="rect" id="node11" href="$classModule.html#a966279a6ac1ac3f0dcd17859a94e18c9" title="Module::setMetric" alt="" coords="419,208,545,235"/>
+<area shape="rect" id="node12" href="$classWeightSensor.html#a54b241f48e63ef6b17eade0d55a78008" title="WeightSensor::triggerTare" alt="" coords="395,259,569,285"/>
+<area shape="rect" id="node13" href="$classReservoirModule.html#acdab0db204d565454131375724b70805" title="ReservoirModule::updateAckData" alt="" coords="617,107,836,133"/>
+<area shape="rect" id="node14" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits. " alt="" coords="433,309,531,336"/>
+<area shape="rect" id="node7" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Time. " alt="" coords="662,309,791,336"/>
+<area shape="rect" id="node8" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="644,259,809,285"/>
+<area shape="rect" id="node9" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="654,208,799,235"/>
+<area shape="rect" id="node10" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="653,157,800,184"/>
+</map>

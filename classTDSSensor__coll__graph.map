@@ -1,0 +1,6 @@
+<map id="TDSSensor" name="TDSSensor">
+<area shape="rect" id="node2" href="$classCommon.html" title="Common" alt="" coords="184,5,259,32"/>
+<area shape="rect" id="node3" href="$classWaterTempSensor.html" title="&lt; DS18B20 waterproof temperature sensor " alt="" coords="64,228,195,255"/>
+<area shape="rect" id="node4" href="$classModule.html" title="Module" alt="" coords="189,139,253,165"/>
+<area shape="rect" id="node5" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="516,228,575,255"/>
+</map>

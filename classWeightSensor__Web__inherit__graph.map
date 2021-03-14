@@ -1,0 +1,5 @@
+<map id="WeightSensor_Web" name="WeightSensor_Web">
+<area shape="rect" id="node2" href="$classWeightSensor.html" title="&lt; Weight sensor load cell " alt="" coords="5,80,109,107"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="20,5,95,32"/>
+<area shape="rect" id="node4" href="$classCommon__Web.html" title="Common_Web" alt="" coords="133,80,243,107"/>
+</map>

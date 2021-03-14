@@ -1,0 +1,8 @@
+<map id="PHSensor::getPH" name="PHSensor::getPH">
+<area shape="rect" id="node2" href="$classPHSensor.html#afa1a5158732cd57ffb41ae089bf8850f" title="PHSensor::getPHText" alt="" coords="217,85,370,112"/>
+<area shape="rect" id="node6" href="$classReservoirModule.html#a8f46e8f4d6a9b017752bdd11c16d0253" title="ReservoirModule::updateResponse" alt="" coords="180,143,407,169"/>
+<area shape="rect" id="node3" href="$classPHSensor.html#af9730aece2d3bcb71ac9d4f1e6f96f1e" title="PHSensor::report" alt="" coords="497,5,620,32"/>
+<area shape="rect" id="node4" href="$classPHSensor__Web.html#a134bb9a1271e141a8e82ec341b576bce" title="PHSensor_Web::reportToJSON" alt="" coords="455,56,663,83"/>
+<area shape="rect" id="node5" href="$classPHSensor__Web.html#a73ad3c5be0e9dd8deaea4cf2eee654be" title="PHSensor_Web::websiteEvent\l_Refresh" alt="" coords="457,107,660,149"/>
+<area shape="rect" id="node7" href="$classReservoirModule.html#a28480be2b512eb00e46824a6da335d53" title="ReservoirModule::refresh\l_FiveSec" alt="" coords="475,173,643,214"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="PowerSensorV3_Web::websiteEvent_Field" name="PowerSensorV3_Web::websiteEvent_Field">
+<area shape="rect" id="node2" href="$classPowerSensorV3__Web.html#a598dcccb28c0ab1a578db88736647485" title="Not used. " alt="" coords="212,150,371,191"/>
+<area shape="rect" id="node3" href="$classCommon__Web.html#a6c2e0946d266ef2a3afe17b9869381cb" title="Common_Web::reportToJSON" alt="" coords="439,5,641,32"/>
+<area shape="rect" id="node4" href="$classPowerSensorV3.html#a17c2031435f3ada2c531c41cdf58c629" title="PowerSensorV3::getPowerText" alt="" coords="437,56,643,83"/>
+<area shape="rect" id="node6" href="$classPowerSensorV3.html#a63517e9f76afef5ee7da103cc46abc84" title="PowerSensorV3::getEnergyText" alt="" coords="435,107,645,133"/>
+<area shape="rect" id="node7" href="$classPowerSensorV3.html#a506c7292897607d7dd31d3ff3696806a" title="PowerSensorV3::getVoltageText" alt="" coords="434,157,646,184"/>
+<area shape="rect" id="node8" href="$classPowerSensorV3.html#afae9ea1a12d8b7fc3eb012b1c38d0639" title="PowerSensorV3::getCurrentText" alt="" coords="435,208,645,235"/>
+<area shape="rect" id="node9" href="$classPowerSensorV3.html#adc5ce409d7bf0b6dac4d65fa64619bdb" title="PowerSensorV3::getFrequencyText" alt="" coords="425,259,655,285"/>
+<area shape="rect" id="node10" href="$classPowerSensorV3.html#a0799057ba96ffc74b372b88d94874d33" title="PowerSensorV3::getPowerFactorText" alt="" coords="419,309,661,336"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="709,183,768,209"/>
+</map>

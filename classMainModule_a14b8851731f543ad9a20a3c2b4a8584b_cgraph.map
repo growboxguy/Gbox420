@@ -1,0 +1,6 @@
+<map id="MainModule::reportToMQTTTrigger" name="MainModule::reportToMQTTTrigger">
+<area shape="rect" id="node2" href="$classModule__Web.html#a3c90c28ffe736c361cd3bd27a1f206d3" title="Google Sheets functions. " alt="" coords="279,5,477,32"/>
+<area shape="rect" id="node4" href="$classModule__Web.html#a84fadf4edaff868c72330d7879dd3708" title="Module_Web::mqttPublish" alt="" coords="291,56,465,83"/>
+<area shape="rect" id="node3" href="$classCommon__Web.html#a6c2e0946d266ef2a3afe17b9869381cb" title="Common_Web::reportToJSON" alt="" coords="525,5,727,32"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="579,56,673,83"/>
+</map>

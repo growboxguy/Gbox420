@@ -1,0 +1,5 @@
+<map id="PHSensor::getPHText" name="PHSensor::getPHText">
+<area shape="rect" id="node2" href="$classPHSensor.html#af9730aece2d3bcb71ac9d4f1e6f96f1e" title="PHSensor::report" alt="" coords="249,5,372,32"/>
+<area shape="rect" id="node3" href="$classPHSensor__Web.html#a134bb9a1271e141a8e82ec341b576bce" title="PHSensor_Web::reportToJSON" alt="" coords="207,56,415,83"/>
+<area shape="rect" id="node4" href="$classPHSensor__Web.html#a73ad3c5be0e9dd8deaea4cf2eee654be" title="PHSensor_Web::websiteEvent\l_Refresh" alt="" coords="209,107,412,149"/>
+</map>

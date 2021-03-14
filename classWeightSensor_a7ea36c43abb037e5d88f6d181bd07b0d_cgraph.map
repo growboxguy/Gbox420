@@ -1,0 +1,6 @@
+<map id="WeightSensor::WeightSensor" name="WeightSensor::WeightSensor">
+<area shape="rect" id="node2" href="$classModule.html#aee2cbab440d38d29948205820ad50be8" title="Subscribing to the report queue: Calls the report() method. " alt="" coords="251,5,437,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="488,56,583,83"/>
+<area shape="rect" id="node4" href="$classWeightSensor.html#a8f0079c7dda1650f37b273781c9bbd8b" title="WeightSensor::readWeight" alt="" coords="255,107,433,133"/>
+<area shape="rect" id="node5" href="$classModule.html#a2dffaa526893d852b722cf890a6821c6" title="Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method. " alt="" coords="248,158,440,199"/>
+</map>

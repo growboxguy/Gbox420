@@ -1,0 +1,13 @@
+<map id="toText_temp" name="toText_temp">
+<area shape="rect" id="node2" href="$classDHTSensor.html#aa8f673e089408d2a435e0cd5631af44f" title="DHTSensor::getTempText" alt="" coords="168,88,344,115"/>
+<area shape="rect" id="node7" href="$classReservoirModule__Web.html#a9fff8b64d0097491d7ee36d4cf03ebd6" title="ReservoirModule_Web\l::report" alt="" coords="179,154,333,195"/>
+<area shape="rect" id="node9" href="$classReservoirModule__Web.html#a435bceed806f4615668ce99630648c93" title="ReservoirModule_Web\l::websiteEvent_Refresh" alt="" coords="175,219,337,261"/>
+<area shape="rect" id="node10" href="$classWaterTempSensor.html#adf0bb887371405a1136ebe1578e0d0e4" title="WaterTempSensor::getTempText" alt="" coords="148,285,364,312"/>
+<area shape="rect" id="node3" href="$classDHTSensor.html#a2ef11882c3401c097b7a08e4b35eb103" title="DHTSensor::report" alt="" coords="455,5,587,32"/>
+<area shape="rect" id="node4" href="$classDHTSensor__Web.html#a68071e155b60a81ff19df8ae1bd36893" title="Not used. " alt="" coords="412,56,629,83"/>
+<area shape="rect" id="node6" href="$classDHTSensor__Web.html#ad02a0f5edd3f948ae81f9ebe6032d443" title="DHTSensor_Web::websiteEvent\l_Refresh" alt="" coords="415,107,627,149"/>
+<area shape="rect" id="node5" href="$classDHTSensor__Web.html#a1bd32356da7d365f165a05475fcc1877" title="Not used. " alt="" coords="677,49,889,90"/>
+<area shape="rect" id="node8" href="$classReservoirModule__Web.html#a3a3bd1a24f5df21cac157a726d65f7fe" title="not used " alt="" coords="443,173,598,214"/>
+<area shape="rect" id="node11" href="$classWaterTempSensor.html#a116d049ce3a6d7150494eb938a6fb6cc" title="WaterTempSensor::report" alt="" coords="435,256,607,283"/>
+<area shape="rect" id="node12" href="$classWaterTempSensor__Web.html#a930d46ab1e337e085a06058d8c07f76b" title="WaterTempSensor_Web\l::websiteEvent_Refresh" alt="" coords="438,307,603,349"/>
+</map>

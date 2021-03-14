@@ -1,0 +1,39 @@
+<map id="HempyModule::processCommand" name="HempyModule::processCommand">
+<area shape="rect" id="node2" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="1461,300,1556,326"/>
+<area shape="rect" id="node3" href="$classModule.html#a79c2d0237995c6680a490f8a9c678fec" title="Module::setDebug" alt="" coords="811,300,939,326"/>
+<area shape="rect" id="node8" href="$classModule.html#a966279a6ac1ac3f0dcd17859a94e18c9" title="Module::setMetric" alt="" coords="811,958,938,985"/>
+<area shape="rect" id="node9" href="$classHempyBucket.html#a39ff41c1e17d1b491f6cc3889733e4b0" title="HempyBucket::disable" alt="" coords="291,565,446,592"/>
+<area shape="rect" id="node23" href="$classHempyBucket.html#af17814ae16f2f65f0f9bb580baa55fdd" title="Turn on water pump, run until StopWeight is reached. " alt="" coords="273,958,464,985"/>
+<area shape="rect" id="node24" href="$classHempyBucket.html#a973120ba0e6bd9a43762bedd8218d6a0" title="Turn on water pump, run until StopWeight is reached. " alt="" coords="273,882,464,909"/>
+<area shape="rect" id="node25" href="$classWeightSensor.html#a54b241f48e63ef6b17eade0d55a78008" title="WeightSensor::triggerTare" alt="" coords="527,237,701,264"/>
+<area shape="rect" id="node26" href="$classHempyBucket.html#ae69e961b538f1f33875c57638717ae6c" title="HempyBucket::tareDryWetWeight" alt="" coords="764,1445,985,1472"/>
+<area shape="rect" id="node27" href="$classWaterPump.html#a1b8dcaa0b0fae8325ef792322dde46dc" title="WaterPump::setSpeed" alt="" coords="291,105,446,132"/>
+<area shape="rect" id="node31" href="$classWaterPump.html#af28231fbfd9af89b49b2e0d35f0862b0" title="WaterPump::setPumpTimeOut" alt="" coords="774,1009,975,1036"/>
+<area shape="rect" id="node32" href="$classHempyBucket.html#aaefed81a475cf3efec0fa835631eb022" title="HempyBucket::setDryWeight" alt="" coords="778,1344,971,1370"/>
+<area shape="rect" id="node33" href="$classHempyBucket.html#aa3d22228d09b06555e14f2ce499116b5" title="HempyBucket::setEvaporation\lTarget" alt="" coords="775,1111,975,1152"/>
+<area shape="rect" id="node34" href="$classHempyBucket.html#a141e8a9929cb689e9c9bf8c432e6f737" title="HempyBucket::setOverflow\lTarget" alt="" coords="783,1176,966,1218"/>
+<area shape="rect" id="node35" href="$classHempyBucket.html#a23663fb2a9b79f9853a175683b988663" title="HempyBucket::setWasteLimit" alt="" coords="776,1242,973,1269"/>
+<area shape="rect" id="node36" href="$classHempyBucket.html#a1eb8d7ee5c0a5c2a1a68fde9bbdc54c2" title="HempyBucket::setDrainWaitTime" alt="" coords="765,1293,984,1320"/>
+<area shape="rect" id="node37" href="$classHempyModule.html#a1fea8afde93f00cf4cfdd6d5965f46b7" title="HempyModule::updateAckData" alt="" coords="512,156,716,182"/>
+<area shape="rect" id="node38" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits. " alt="" coords="319,1496,418,1522"/>
+<area shape="rect" id="node4" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Time. " alt="" coords="1267,300,1397,326"/>
+<area shape="rect" id="node5" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="1035,958,1201,985"/>
+<area shape="rect" id="node6" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="1045,1150,1191,1177"/>
+<area shape="rect" id="node7" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="1045,350,1191,377"/>
+<area shape="rect" id="node10" href="$classHempyBucket.html#aa534fb9169c4a572eb248970410f1fc3" title="HempyBucket::updateState" alt="" coords="523,629,705,656"/>
+<area shape="rect" id="node11" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a9584fe3b73c8ed3efccaf337bb272e6b" title="toText_hempyState" alt="" coords="807,604,943,630"/>
+<area shape="rect" id="node12" href="$classWeightSensor.html#a8f0079c7dda1650f37b273781c9bbd8b" title="WeightSensor::readWeight" alt="" coords="785,654,964,681"/>
+<area shape="rect" id="node13" href="$classWaterPump.html#a95644a76e18a9449d48d7a955de27b42" title="Disable the pump. " alt="" coords="787,452,962,478"/>
+<area shape="rect" id="node18" href="$classWaterPump.html#a9adfab6b4c4d79acf84158d2f1ab4972" title="Turn the pump OFF. " alt="" coords="795,401,954,428"/>
+<area shape="rect" id="node19" href="$classWaterPump.html#acf53c46d93105645131694387a9990c0" title="Get the current pump state. " alt="" coords="801,705,949,732"/>
+<area shape="rect" id="node20" href="$classWeightSensor.html#a0a42742e1516e6723b1246e789ba9253" title="WeightSensor::getWeight" alt="" coords="789,756,960,782"/>
+<area shape="rect" id="node21" href="$classWaterPump.html#ac5ad910ece76068fcb0c321aabc19a6f" title="Turn the pump ON. " alt="" coords="795,553,954,580"/>
+<area shape="rect" id="node22" href="$classWaterPump.html#afb845b670cc69fdfffc0cccf3d429fbb" title="WaterPump::getPumpTimeOut" alt="" coords="774,806,975,833"/>
+<area shape="rect" id="node14" href="$classWaterPump.html#a4211806cd0c62a57f3accc37c1c1eb00" title="WaterPump::updateState" alt="" coords="1033,452,1203,478"/>
+<area shape="rect" id="node15" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aaa9810e7291e97d1fac5b0f3fa0b8f3c" title="TODO: The below section should be split between the modules to reduce memory usage. " alt="" coords="1251,401,1413,428"/>
+<area shape="rect" id="node16" href="$classSwitch.html#a3f10d75adaf6a110de455d1f7bb49fc0" title="Switch::turnOff" alt="" coords="1277,452,1387,478"/>
+<area shape="rect" id="node17" href="$classSwitch__PWM.html#a717d6337a0df8903779b81feea21a7bb" title="Switch_PWM::turnOn" alt="" coords="1257,502,1407,529"/>
+<area shape="rect" id="node28" href="$classSwitch__PWM.html#a568a22528e98480c84f250749b7074c0" title="Switch_PWM::setDutyCycle" alt="" coords="519,97,709,124"/>
+<area shape="rect" id="node29" href="$classSwitch__PWM.html#a49a60c843b2f1a01c24838704b926c45" title="Switch_PWM::getDutyCycleText" alt="" coords="767,97,983,124"/>
+<area shape="rect" id="node30" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#ac6a7718046dd13997fdade1da48ecb25" title="toText_percentage" alt="" coords="1053,97,1183,124"/>
+</map>

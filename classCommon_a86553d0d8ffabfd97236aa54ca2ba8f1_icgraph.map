@@ -1,0 +1,36 @@
+<map id="Common::getComponentName" name="Common::getComponentName">
+<area shape="rect" id="node2" href="$classAirPump__Web.html#a523faab60fbb431ba927891e3dc70590" title="AirPump_Web::websiteEvent\l_Refresh" alt="" coords="283,5,477,47"/>
+<area shape="rect" id="node3" href="$classDHTSensor__Web.html#ad02a0f5edd3f948ae81f9ebe6032d443" title="DHTSensor_Web::websiteEvent\l_Refresh" alt="" coords="274,71,486,112"/>
+<area shape="rect" id="node4" href="$classFan__PWM__Web.html#a8eda70bf90af1f61bb49050a0ebe636f" title="Fan_PWM_Web::websiteEvent_Load" alt="" coords="260,137,500,163"/>
+<area shape="rect" id="node5" href="$classFan__PWM__Web.html#a9632d6b532fab2b013cf7cdce32bc8ed" title="Fan_PWM_Web::websiteEvent\l_Refresh" alt="" coords="277,188,483,229"/>
+<area shape="rect" id="node6" href="$classFan__Web.html#a328af0b2469de198e88f0dd51758a5cb" title="Fan_Web::websiteEvent\l_Refresh" alt="" coords="297,253,463,295"/>
+<area shape="rect" id="node7" href="$classFan__Web.html#a2741ea624a781febbd4f3e2bf82c89ed" title="Fan_Web::websiteEvent\l_Button" alt="" coords="297,319,463,360"/>
+<area shape="rect" id="node8" href="$classLights__Web.html#afab1fbd6391d25ab5f382b89d4a02b5e" title="Lights_Web::websiteEvent_Load" alt="" coords="273,385,487,411"/>
+<area shape="rect" id="node9" href="$classLights__Web.html#af46bb9ec74ecb0f45b465c2722b9b18a" title="Lights_Web::websiteEvent\l_Refresh" alt="" coords="291,436,469,477"/>
+<area shape="rect" id="node10" href="$classLightSensor__Web.html#a6afe75f4f6cec3dc5f44454e23da1f8a" title="LightSensor_Web::website\lEvent_Refresh" alt="" coords="291,501,469,543"/>
+<area shape="rect" id="node11" href="$classPowerSensor__Web.html#a430e9c91f3fa760d7930cee367b92125" title="PowerSensor_Web::website\lEvent_Refresh" alt="" coords="287,567,473,608"/>
+<area shape="rect" id="node12" href="$classPowerSensorV3__Web.html#aa5516c0a4c5daa0f27a89e86abb0db26" title="PowerSensorV3_Web::\lwebsiteEvent_Refresh" alt="" coords="301,632,459,673"/>
+<area shape="rect" id="node13" href="$classSound__Web.html#ae3a500bbde7e1264aeeb1bf43b5ba09f" title="Sound_Web::websiteEvent_Load" alt="" coords="273,698,487,725"/>
+<area shape="rect" id="node14" href="$classAeroModule__Web.html#a0ab557dd0c6cda76cc44d89d42a57075" title="AeroModule_Web::reportToJSON" alt="" coords="271,749,489,775"/>
+<area shape="rect" id="node15" href="$classAeroModule__Web.html#a35ff242acc077bb3a9d75ab70c7ce40f" title="AeroModule_Web::websiteEvent\l_Refresh" alt="" coords="274,800,486,841"/>
+<area shape="rect" id="node16" href="$classHempyModule__Web.html#a9da2815609b2ad404e5eef502258b40c" title="HempyModule_Web::reportToJSON" alt="" coords="264,866,496,893"/>
+<area shape="rect" id="node17" href="$classHempyModule__Web.html#a1df6101df795a7a863667d2d28908a50" title="HempyModule_Web::website\lEvent_Refresh" alt="" coords="283,917,477,959"/>
+<area shape="rect" id="node18" href="$classMainModule.html#a20bc1bd8003e07068859028feccd067f" title="MainModule::websiteEvent_Load" alt="" coords="273,983,487,1010"/>
+<area shape="rect" id="node19" href="$classReservoirModule__Web.html#a435bceed806f4615668ce99630648c93" title="ReservoirModule_Web\l::websiteEvent_Refresh" alt="" coords="299,1035,461,1076"/>
+<area shape="rect" id="node20" href="$classAeroponics__NoTank__Web.html#a59a1c123bc843197e74c16e8aac7daa2" title="Aeroponics_NoTank_Web\l::websiteEvent_Load" alt="" coords="293,1100,467,1141"/>
+<area shape="rect" id="node21" href="$classAeroponics__NoTank__Web.html#a1248fe0a06097426645344b35aec0431" title="Aeroponics_NoTank_Web\l::websiteEvent_Refresh" alt="" coords="293,1165,467,1207"/>
+<area shape="rect" id="node22" href="$classAeroponics__Tank__Web.html#a49ab14d7f9bffac4f4d9adf151589f15" title="Aeroponics_Tank_Web\l::websiteEvent_Load" alt="" coords="301,1231,459,1272"/>
+<area shape="rect" id="node23" href="$classAeroponics__Tank__Web.html#acf883f3ff9b052706ea0548bdf8c04aa" title="Aeroponics_Tank_Web\l::websiteEvent_Refresh" alt="" coords="299,1296,461,1337"/>
+<area shape="rect" id="node24" href="$classDistanceSensor__Web.html#a0bde479d65f8e2da0dfcf92241451ebf" title="DistanceSensor_Web\l::websiteEvent_Refresh" alt="" coords="299,1361,461,1403"/>
+<area shape="rect" id="node25" href="$classHempyBucket__Web.html#adcbe7b1d4b88e839477ca89700113a48" title="HempyBucket_Web::website\lEvent_Refresh" alt="" coords="284,1427,476,1468"/>
+<area shape="rect" id="node26" href="$classModuleSkeleton__Web.html#a391e4cad5fa897f0b57e3992c68eac14" title="ModuleSkeleton_Web\l::websiteEvent_Load" alt="" coords="305,1492,455,1533"/>
+<area shape="rect" id="node27" href="$classModuleSkeleton__Web.html#a4fbb767613efc275f91eac8e550f1a86" title="ModuleSkeleton_Web\l::websiteEvent_Refresh" alt="" coords="299,1557,461,1599"/>
+<area shape="rect" id="node28" href="$classPHSensor__Web.html#ad986c8800153e737e43fab3bd155b8af" title="PHSensor_Web::websiteEvent_Load" alt="" coords="261,1623,499,1650"/>
+<area shape="rect" id="node29" href="$classPHSensor__Web.html#a73ad3c5be0e9dd8deaea4cf2eee654be" title="PHSensor_Web::websiteEvent\l_Refresh" alt="" coords="279,1675,481,1716"/>
+<area shape="rect" id="node30" href="$classPressureSensor__Web.html#a235a466d2a93e7f53609c3113871c145" title="PressureSensor_Web\l::websiteEvent_Load" alt="" coords="305,1740,455,1781"/>
+<area shape="rect" id="node31" href="$classTDSSensor__Web.html#ab42be2620a25d1b07781583f48927645" title="TDSSensor_Web::websiteEvent\l_Refresh" alt="" coords="275,1805,485,1847"/>
+<area shape="rect" id="node32" href="$classWaterLevelSensor__Web.html#a8caf8178b0128bad72e78c1c662af5c0" title="WaterLevelSensor_Web\l::websiteEvent_Refresh" alt="" coords="299,1871,461,1912"/>
+<area shape="rect" id="node33" href="$classWaterTempSensor__Web.html#a930d46ab1e337e085a06058d8c07f76b" title="WaterTempSensor_Web\l::websiteEvent_Refresh" alt="" coords="297,1936,463,1977"/>
+<area shape="rect" id="node34" href="$classWeightSensor__Web.html#aa47b67e39e6cbd1b543e482c94160a66" title="WeightSensor_Web::website\lEvent_Refresh" alt="" coords="285,2001,475,2043"/>
+<area shape="rect" id="node35" href="$classDEVModule__Web.html#a06b3efac7a5e489da49aba198ed41fa3" title="DEVModule_Web::websiteEvent_Load" alt="" coords="256,2067,504,2094"/>
+</map>

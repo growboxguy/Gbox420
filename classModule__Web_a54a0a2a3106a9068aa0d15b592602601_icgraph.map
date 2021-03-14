@@ -1,0 +1,24 @@
+<map id="Module_Web::addToLog" name="Module_Web::addToLog">
+<area shape="rect" id="node2" href="$classModule__Web.html#abd603f024a00f8fd3bfd646ec38d6997" title="Even logs on the website. " alt="" coords="242,5,429,32"/>
+<area shape="rect" id="node6" href="$classAirPump__Web.html#a36bc5a27ff544e292c8fbf6f24289053" title="AirPump_Web::websiteEvent\l_Button" alt="" coords="239,57,432,98"/>
+<area shape="rect" id="node7" href="$classSound__Web.html#aa5db49eac845c3c700c0391b9b787e77" title="Sound_Web::EE" alt="" coords="276,123,395,149"/>
+<area shape="rect" id="node10" href="$classAeroModule__Web.html#a35ff242acc077bb3a9d75ab70c7ce40f" title="AeroModule_Web::websiteEvent\l_Refresh" alt="" coords="229,174,441,215"/>
+<area shape="rect" id="node11" href="$classHempyModule__Web.html#a1df6101df795a7a863667d2d28908a50" title="HempyModule_Web::website\lEvent_Refresh" alt="" coords="239,239,432,281"/>
+<area shape="rect" id="node12" href="$classMainModule.html#a3a918c8c080f2a810b64e297cf1ce994" title="constructor " alt="" coords="250,305,421,332"/>
+<area shape="rect" id="node13" href="$classMainModule.html#a156833b0534382e7951b80d80b5457f7" title="MainModule::websiteEvent\l_Button" alt="" coords="246,357,425,398"/>
+<area shape="rect" id="node14" href="$classMainModule.html#ae0b9ebcc9015f37993766a3a39c4e710" title="Returns true if the lights are on or daylight is detected. " alt="" coords="248,423,423,449"/>
+<area shape="rect" id="node15" href="$classMainModule.html#af579c539beb7471a55975549522b6a98" title="MainModule::reportToGoogle\lSheetsTrigger" alt="" coords="241,474,430,515"/>
+<area shape="rect" id="node18" href="$classReservoirModule__Web.html#a435bceed806f4615668ce99630648c93" title="ReservoirModule_Web\l::websiteEvent_Refresh" alt="" coords="254,539,417,581"/>
+<area shape="rect" id="node19" href="$classDEVModule__Web.html#a3b6305f0ac608f03bf1d4e78183f1eac" title="constructor " alt="" coords="216,605,455,632"/>
+<area shape="rect" id="node20" href="$classDEVModule__Web.html#acefbbfe99fe3da658ff228d9777535f1" title="DEVModule_Web::websiteEvent\l_Button" alt="" coords="229,657,442,698"/>
+<area shape="rect" id="node21" href="$classDEVModule__Web.html#ab0e28b8ddf2b462b3c13be6ddebc1d2a" title="Settings. " alt="" coords="505,715,680,757"/>
+<area shape="rect" id="node22" href="$classDEVModule__Web.html#a682292be98131695448dce6dbb522e0f" title="DEVModule_Web::reportToGoogle\lSheetsTrigger" alt="" coords="224,774,447,815"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_8ino.html#ae784bf97b35a03486279475151a20abd" title="Called when a field on the website is submitted. " alt="" coords="533,5,652,32"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection " alt="" coords="731,5,847,32"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="895,5,949,32"/>
+<area shape="rect" id="node8" href="$classSound__Web.html#a6aabcf8a2c805624d22b45076e97a0d5" title="Sound_Web::refresh_Sec" alt="" coords="507,93,678,120"/>
+<area shape="rect" id="node9" href="$classSound__Web.html#a4b2c5db998fe35455bd3e82ae021d81b" title="Sound_Web::websiteEvent\l_Refresh" alt="" coords="503,145,683,186"/>
+<area shape="rect" id="node16" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="MainModule::refresh\l_FiveSec" alt="" coords="523,442,663,483"/>
+<area shape="rect" id="node17" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="MainModule::refresh\l_Minute" alt="" coords="523,507,663,549"/>
+<area shape="rect" id="node23" href="$classDEVModule__Web.html#ac8ea37f602295f12c39d9849aab8e512" title="DEVModule_Web::refresh\l_FiveSec" alt="" coords="505,781,680,822"/>
+</map>

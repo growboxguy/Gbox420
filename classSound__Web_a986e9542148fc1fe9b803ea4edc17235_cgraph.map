@@ -1,0 +1,7 @@
+<map id="Sound_Web::Sound_Web" name="Sound_Web::Sound_Web">
+<area shape="rect" id="node2" href="$classModule__Web.html#a125e0abaefa5c6ab2379162a3ea9cf55" title="Module_Web::addToRefresh\lQueue_Sec" alt="" coords="227,5,415,47"/>
+<area shape="rect" id="node4" href="$classModule__Web.html#a11f84c9609ed88d1bfcd869d64775e93" title="Subscribing to the Website load event: Calls the websiteEvent_Load() method. " alt="" coords="225,71,416,112"/>
+<area shape="rect" id="node5" href="$classModule__Web.html#adadb1643a6b460c0d53a7341bb356ee1" title="Subscribing to the Website button press event: Calls the websiteEvent_Button() method. " alt="" coords="225,136,416,177"/>
+<area shape="rect" id="node6" href="$classModule__Web.html#a9f9ef9212523d06a130c5e9046b81adf" title="Subscribing to the Website field submit event: Calls the websiteEvent_Field() method. " alt="" coords="225,201,416,243"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="464,111,559,138"/>
+</map>

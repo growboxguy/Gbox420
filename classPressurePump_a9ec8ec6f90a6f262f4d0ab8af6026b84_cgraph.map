@@ -1,0 +1,6 @@
+<map id="PressurePump::setSpeed" name="PressurePump::setSpeed">
+<area shape="rect" id="node2" href="$classSwitch__PWM.html#a568a22528e98480c84f250749b7074c0" title="Switch_PWM::setDutyCycle" alt="" coords="224,31,415,57"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="523,5,618,32"/>
+<area shape="rect" id="node4" href="$classSwitch__PWM.html#a49a60c843b2f1a01c24838704b926c45" title="Switch_PWM::getDutyCycleText" alt="" coords="463,56,679,83"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#ac6a7718046dd13997fdade1da48ecb25" title="toText_percentage" alt="" coords="727,56,857,83"/>
+</map>

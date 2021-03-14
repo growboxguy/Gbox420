@@ -1,0 +1,8 @@
+<map id="PowerSensorV3_Web" name="PowerSensorV3_Web">
+<area shape="rect" id="node2" href="$classPowerSensorV3.html" title="PowerSensorV3" alt="" coords="5,331,121,357"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="495,5,570,32"/>
+<area shape="rect" id="node4" href="$classModule.html" title="Module" alt="" coords="501,139,565,165"/>
+<area shape="rect" id="node5" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="755,331,814,357"/>
+<area shape="rect" id="node6" href="$classCommon__Web.html" title="Common_Web" alt="" coords="173,139,282,165"/>
+<area shape="rect" id="node7" href="$classModule__Web.html" title="Module_Web" alt="" coords="325,331,423,357"/>
+</map>

@@ -1,0 +1,16 @@
+<map id="toText_onOff" name="toText_onOff">
+<area shape="rect" id="node2" href="$classAirPump.html#a005d7f25d77783b6f24fed32084e2421" title="AirPump::getStateToText" alt="" coords="166,64,337,91"/>
+<area shape="rect" id="node5" href="$classFan__PWM.html#a856d2b45b46bb962ca721948e227add2" title="Fan_PWM::getSpeedText" alt="" coords="165,181,338,208"/>
+<area shape="rect" id="node8" href="$classLights.html#a713a28eba8f6fd8fb259bac4175ece26" title="Lights::getStatusText" alt="" coords="178,236,325,263"/>
+<area shape="rect" id="node10" href="$classAeroponics__NoTank.html#aa5c6ddd4017a8666d0205da53f04c36d" title="Aeroponics_NoTank::\lsprayStateToText" alt="" coords="177,287,325,329"/>
+<area shape="rect" id="node12" href="$classSwitch.html#a9a4db63e6dc514225d4808c75e5d0861" title="Text representation of the current state: DISABLED/IDLE/RUNNING... " alt="" coords="179,353,324,380"/>
+<area shape="rect" id="node13" href="$classAeroponics__Tank.html#a0c9c9616ee380d0e4dd0ccc41d7e7a0f" title="Aeroponics_Tank::sprayState\lToText" alt="" coords="154,405,349,446"/>
+<area shape="rect" id="node15" href="$classAeroponics.html#ac07e1826d91c193844e2273244116ac5" title="Aeroponics::sprayStateToText" alt="" coords="152,471,351,497"/>
+<area shape="rect" id="node3" href="$classAirPump.html#a8e17db065bec765838eb696af9d18ad0" title="AirPump::report" alt="" coords="445,5,558,32"/>
+<area shape="rect" id="node4" href="$classAirPump__Web.html#a523faab60fbb431ba927891e3dc70590" title="AirPump_Web::websiteEvent\l_Refresh" alt="" coords="405,57,598,98"/>
+<area shape="rect" id="node6" href="$classFan__PWM.html#a1b88bd6c288208d69f50f5ef7940e059" title="Fan_PWM::report" alt="" coords="439,123,564,149"/>
+<area shape="rect" id="node7" href="$classFan__PWM__Web.html#a9632d6b532fab2b013cf7cdce32bc8ed" title="Fan_PWM_Web::websiteEvent\l_Refresh" alt="" coords="399,174,604,215"/>
+<area shape="rect" id="node9" href="$classLights__Web.html#ae85b3fa68524315070fef4c9bcdb6a12" title="Lights_Web::reportToJSON" alt="" coords="410,240,593,267"/>
+<area shape="rect" id="node11" href="$classAeroponics__NoTank__Web.html#a1248fe0a06097426645344b35aec0431" title="Aeroponics_NoTank_Web\l::websiteEvent_Refresh" alt="" coords="414,291,589,333"/>
+<area shape="rect" id="node14" href="$classAeroponics__Tank__Web.html#acf883f3ff9b052706ea0548bdf8c04aa" title="Aeroponics_Tank_Web\l::websiteEvent_Refresh" alt="" coords="420,405,583,446"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="Lights_Web::websiteEvent_Refresh" name="Lights_Web::websiteEvent_Refresh">
+<area shape="rect" id="node2" href="$classCommon.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="238,5,441,32"/>
+<area shape="rect" id="node3" href="$classLights.html#a086687f7b443a0cc4434650636f02b27" title="Lights::getStateText" alt="" coords="269,56,409,83"/>
+<area shape="rect" id="node5" href="$classLights.html#aaac8ec5b8051a19d13711c5d0c4ebd8a" title="Lights::getCurrentBrightnessText" alt="" coords="232,107,447,133"/>
+<area shape="rect" id="node6" href="$classLights.html#a8899969e0175e8242f9139c17585bcd0" title="Lights::getTimerOnOffText" alt="" coords="251,157,428,184"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="547,81,605,108"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a901734aff517f29931a27fd8568d8e9e" title="toText_enabledDisabled" alt="" coords="495,157,657,184"/>
+</map>

@@ -1,0 +1,28 @@
+<map id="MainModule" name="MainModule">
+<area shape="rect" id="node2" href="$classCommon__Web.html" title="Common_Web" alt="" coords="268,663,377,690"/>
+<area shape="rect" id="node4" href="$classModule__Web.html" title="Module_Web" alt="" coords="625,971,724,998"/>
+<area shape="rect" id="node7" href="$classAeroModule__Web.html" title="AeroModule_Web" alt="" coords="937,94,1063,120"/>
+<area shape="rect" id="node9" href="$classDHTSensor__Web.html" title="&lt; Digital Humidity and Temperature sensor Web (DHT11 or DHT22) &#45; website component ..." alt="" coords="937,503,1063,530"/>
+<area shape="rect" id="node11" href="$classPowerSensorV3__Web.html" title="PowerSensorV3_Web" alt="" coords="925,1599,1075,1626"/>
+<area shape="rect" id="node13" href="$classFan__Web.html" title="&lt; Fan controller (2 speed) &#45; website component " alt="" coords="961,823,1039,850"/>
+<area shape="rect" id="node15" href="$classAirPump__Web.html" title="&lt; AirPump controller &#45; website component " alt="" coords="947,1279,1053,1306"/>
+<area shape="rect" id="node17" href="$classFan__PWM__Web.html" title="&lt; PWM AC Fan controller &#45; website component " alt="" coords="941,1656,1059,1683"/>
+<area shape="rect" id="node19" href="$classReservoirModule__Web.html" title="ReservoirModule_Web" alt="" coords="923,195,1077,222"/>
+<area shape="rect" id="node21" href="$classHempyModule__Web.html" title="HempyModule_Web" alt="" coords="930,343,1070,370"/>
+<area shape="rect" id="node23" href="$classLights__Web.html" title="&lt; Light controller with PWM dimming &#45; website component " alt="" coords="955,1439,1045,1466"/>
+<area shape="rect" id="node25" href="$classLightSensor__Web.html" title="&lt; LM393 Light sensor &#45; website component " alt="" coords="937,663,1063,690"/>
+<area shape="rect" id="node27" href="$classSound__Web.html" title="&lt; Sound feedback buzzer &#45; website component " alt="" coords="953,1074,1047,1100"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="5,1416,80,1443"/>
+<area shape="rect" id="node5" href="$classModule.html" title="Module" alt="" coords="291,1348,355,1375"/>
+<area shape="rect" id="node6" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="645,1590,704,1616"/>
+<area shape="rect" id="node10" href="$classDHTSensor.html" title="&lt; DHT11 or DHT22 Digital Humidity and Temperature sensor " alt="" coords="629,359,720,386"/>
+<area shape="rect" id="node12" href="$classPowerSensorV3.html" title="PowerSensorV3" alt="" coords="617,1842,733,1868"/>
+<area shape="rect" id="node14" href="$classFan.html" title="&lt; Fan controller (2 speed) " alt="" coords="653,920,697,947"/>
+<area shape="rect" id="node16" href="$classAirPump.html" title="&lt; Air Pump controller " alt="" coords="639,1640,711,1667"/>
+<area shape="rect" id="node18" href="$classFan__PWM.html" title="Fan_PWM" alt="" coords="633,1892,717,1919"/>
+<area shape="rect" id="node24" href="$classLights.html" title="Lights" alt="" coords="646,1742,703,1768"/>
+<area shape="rect" id="node26" href="$classLightSensor.html" title="&lt; LM393 Light sensor " alt="" coords="629,668,720,695"/>
+<area shape="rect" id="node8" href="$structSettings_1_1AeroModuleSettings.html" title="&lt; AeroModule default settings " alt="" coords="577,110,772,136"/>
+<area shape="rect" id="node20" href="$structSettings_1_1ReservoirModuleSettings.html" title="&lt; ReservoirModule default settings " alt="" coords="587,161,763,202"/>
+<area shape="rect" id="node22" href="$structSettings_1_1HempyModuleSettings.html" title="&lt; Hempy default settings " alt="" coords="569,302,780,328"/>
+</map>

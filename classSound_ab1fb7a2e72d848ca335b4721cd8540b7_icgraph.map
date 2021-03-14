@@ -1,0 +1,6 @@
+<map id="Sound::OffSound" name="Sound::OffSound">
+<area shape="rect" id="node2" href="$classSound.html#a93a63a862c3aa1dd50acb0d8eaa61d6c" title="Sound::checkEvents" alt="" coords="176,56,319,83"/>
+<area shape="rect" id="node3" href="$classSound.html#a9432356bb1ba946460c33f286d2b325b" title="Sound::Sound" alt="" coords="400,5,504,32"/>
+<area shape="rect" id="node4" href="$classSound.html#a747a131af54af0747775b918aa3f7925" title="Sound::refresh_Sec" alt="" coords="383,56,521,83"/>
+<area shape="rect" id="node5" href="$classSound__Web.html#a6aabcf8a2c805624d22b45076e97a0d5" title="Sound_Web::refresh_Sec" alt="" coords="367,107,537,133"/>
+</map>

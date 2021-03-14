@@ -1,0 +1,14 @@
+<map id="Lights::setBrightness" name="Lights::setBrightness">
+<area shape="rect" id="node2" href="$classLights.html#a48acde7f45e4b9b22969e52fea689040" title="constructor " alt="" coords="474,107,574,133"/>
+<area shape="rect" id="node3" href="$classLights.html#a482dc659480f840747858394c5baec3c" title="Temporary dim the lights while working on the plants. " alt="" coords="210,56,366,83"/>
+<area shape="rect" id="node4" href="$classLights.html#adf24f09eb5273aad8eea4839f052c95e" title="Lights::checkDimming" alt="" coords="448,5,600,32"/>
+<area shape="rect" id="node7" href="$classLights.html#ab18f05b043b61b6eb74bd7b564e1a1ec" title="Lights::setLightOnOff" alt="" coords="215,157,361,184"/>
+<area shape="rect" id="node11" href="$classLightSensor.html#a50559883ebb2c80a5d2144a6453bd1c3" title="Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger. " alt="" coords="425,259,623,285"/>
+<area shape="rect" id="node13" href="$classLights__Web.html#a8e4f0fc6e2cba4303c306910b9c9ac86" title="Lights_Web::websiteEvent\l_Field" alt="" coords="199,259,377,301"/>
+<area shape="rect" id="node6" href="$classLights__Web.html#a2437d22a7e8b027c4d08d209675f5db9" title="Lights_Web::websiteEvent\l_Button" alt="" coords="897,150,1076,191"/>
+<area shape="rect" id="node5" href="$classLights.html#a7bf4d024918477d52eea78c94209fc66" title="Lights::refresh_Sec" alt="" coords="693,5,827,32"/>
+<area shape="rect" id="node8" href="$classLights.html#a2117d6df0bdbf234e627a9bceb000071" title="Lights::checkTimer" alt="" coords="457,208,591,235"/>
+<area shape="rect" id="node9" href="$classLights.html#a38c74606e1c2b4ff7db184920b225961" title="Lights::refresh_Minute" alt="" coords="685,208,835,235"/>
+<area shape="rect" id="node10" href="$classLights.html#a3c5051babf4dacdeecced14217f6f886" title="Lights::setTimerOnOff" alt="" coords="685,259,835,285"/>
+<area shape="rect" id="node12" href="$classLightSensor__Web.html#abedb4cd4454f322ebbd7c3753bcd2a73" title="LightSensor_Web::website\lEvent_Button" alt="" coords="671,310,849,351"/>
+</map>

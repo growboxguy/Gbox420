@@ -1,0 +1,24 @@
+<map id="Gbox420_Nano_Reservoir/Settings.h" name="Gbox420_Nano_Reservoir/Settings.h">
+<area shape="rect" id="node2" href="$Gbox420__Nano__Reservoir_8ino.html" title="Reservoir module for Nano. " alt="" coords="759,452,959,493"/>
+<area shape="rect" id="node3" href="$Gbox420__Nano__Reservoir_2src_2Components_2420Common_8h.html" title="Gbox420_Nano_Reservoir\l/src/Components/420Common.h" alt="" coords="1171,184,1382,225"/>
+<area shape="rect" id="node6" href="$Gbox420__Nano__Reservoir_2src_2Components_2420Module_8h.html" title="Gbox420_Nano_Reservoir\l/src/Components/420Module.h" alt="" coords="875,273,1075,315"/>
+<area shape="rect" id="node21" href="$Gbox420__Nano__Reservoir_2src_2Helpers_8h.html" title="Set of common functions any class can use. " alt="" coords="947,95,1121,136"/>
+<area shape="rect" id="node23" href="$Gbox420__Nano__Reservoir_2Settings_8cpp.html" title="Gbox420_Nano_Reservoir\l/Settings.cpp" alt="" coords="1197,95,1372,136"/>
+<area shape="rect" id="node4" href="$Gbox420__Nano__Reservoir_2src_2Modules_2ReservoirModule_8h.html" title="Gbox420_Nano_Reservoir\l/src/Modules/ReservoirModule.h" alt="" coords="870,363,1081,404"/>
+<area shape="rect" id="node8" href="$Gbox420__Nano__Reservoir_2src_2Components_2Sound_8h.html" title="Gbox420_Nano_Reservoir\l/src/Components/Sound.h" alt="" coords="443,363,617,404"/>
+<area shape="rect" id="node10" href="$Gbox420__Nano__Reservoir_2src_2Components_2WeightSensor_8h.html" title="Gbox420_Nano_Reservoir\l/src/Components/WeightSensor.h" alt="" coords="13,452,231,493"/>
+<area shape="rect" id="node12" href="$Gbox420__Nano__Reservoir_2src_2Components_2DHTSensor_8h.html" title="Gbox420_Nano_Reservoir\l/src/Components/DHTSensor.h" alt="" coords="1105,363,1312,404"/>
+<area shape="rect" id="node14" href="$Gbox420__Nano__Reservoir_2src_2Components_2PHSensor_8h.html" title="Gbox420_Nano_Reservoir\l/src/Components/PHSensor.h" alt="" coords="1337,363,1534,404"/>
+<area shape="rect" id="node16" href="$Gbox420__Nano__Reservoir_2src_2Components_2TDSSensor_8h.html" title="Gbox420_Nano_Reservoir\l/src/Components/TDSSensor.h" alt="" coords="1950,452,2155,493"/>
+<area shape="rect" id="node18" href="$Gbox420__Nano__Reservoir_2src_2Components_2WaterTempSensor_8h.html" title="Gbox420_Nano_Reservoir\l/src/Components/WaterTempSensor.h" alt="" coords="1559,363,1805,404"/>
+<area shape="rect" id="node20" href="$Gbox420__Nano__Reservoir_2src_2Components_2420Common_8cpp.html" title="Gbox420_Nano_Reservoir\l/src/Components/420Common.cpp" alt="" coords="1364,273,1589,315"/>
+<area shape="rect" id="node5" href="$Gbox420__Nano__Reservoir_2src_2Modules_2ReservoirModule_8cpp.html" title="Gbox420_Nano_Reservoir\l/src/Modules/ReservoirModule.cpp" alt="" coords="1181,541,1405,583"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Reservoir_2src_2Components_2420Module_8cpp.html" title="Gbox420_Nano_Reservoir\l/src/Components/420Module.cpp" alt="" coords="520,452,735,493"/>
+<area shape="rect" id="node9" href="$Gbox420__Nano__Reservoir_2src_2Components_2Sound_8cpp.html" title="Gbox420_Nano_Reservoir\l/src/Components/Sound.cpp" alt="" coords="256,452,444,493"/>
+<area shape="rect" id="node11" href="$Gbox420__Nano__Reservoir_2src_2Components_2WeightSensor_8cpp.html" title="Gbox420_Nano_Reservoir\l/src/Components/WeightSensor.cpp" alt="" coords="5,541,239,583"/>
+<area shape="rect" id="node13" href="$Gbox420__Nano__Reservoir_2src_2Components_2DHTSensor_8cpp.html" title="Gbox420_Nano_Reservoir\l/src/Components/DHTSensor.cpp" alt="" coords="1035,452,1255,493"/>
+<area shape="rect" id="node15" href="$Gbox420__Nano__Reservoir_2src_2Components_2PHSensor_8cpp.html" title="Gbox420_Nano_Reservoir\l/src/Components/PHSensor.cpp" alt="" coords="1330,452,1541,493"/>
+<area shape="rect" id="node17" href="$Gbox420__Nano__Reservoir_2src_2Components_2TDSSensor_8cpp.html" title="Gbox420_Nano_Reservoir\l/src/Components/TDSSensor.cpp" alt="" coords="1943,541,2162,583"/>
+<area shape="rect" id="node19" href="$Gbox420__Nano__Reservoir_2src_2Components_2WaterTempSensor_8cpp.html" title="Gbox420_Nano_Reservoir\l/src/Components/WaterTempSensor.cpp" alt="" coords="1665,452,1925,493"/>
+<area shape="rect" id="node22" href="$Gbox420__Nano__Reservoir_2src_2Helpers_8cpp.html" title="Gbox420_Nano_Reservoir\l/src/Helpers.cpp" alt="" coords="972,184,1147,225"/>
+</map>

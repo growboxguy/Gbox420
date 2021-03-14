@@ -1,0 +1,18 @@
+<map id="ReservoirModule_Web::websiteEvent_Field" name="ReservoirModule_Web::websiteEvent_Field">
+<area shape="rect" id="node2" href="$classReservoirModule__Web.html#a9fff8b64d0097491d7ee36d4cf03ebd6" title="ReservoirModule_Web\l::report" alt="" coords="208,150,363,191"/>
+<area shape="rect" id="node9" href="$classReservoirModule__Web.html#a9afabb590e75518830e5fa8a9f343b1c" title="ReservoirModule_Web\l::reportToJSON" alt="" coords="208,282,363,323"/>
+<area shape="rect" id="node11" href="$classReservoirModule__Web.html#a7b12ae99c82ce17d9c2573d316251be4" title="ReservoirModule_Web\l::refresh_Sec" alt="" coords="208,579,363,621"/>
+<area shape="rect" id="node13" href="$classReservoirModule__Web.html#a4561e7088396d38e812535532f79d200" title="ReservoirModule_Web\l::sendMessages" alt="" coords="434,462,589,503"/>
+<area shape="rect" id="node14" href="$classReservoirModule__Web.html#aaacd2f917ae585e9c73e6372aa206a80" title="ReservoirModule_Web\l::updateCommands" alt="" coords="672,521,827,562"/>
+<area shape="rect" id="node15" href="$classReservoirModule__Web.html#a44bae49e074a3bdf1a69203d66ab4222" title="ReservoirModule_Web\l::sendCommand" alt="" coords="672,403,827,445"/>
+<area shape="rect" id="node16" href="$classReservoirModule__Web.html#a9a11d3b4d046ef84d92917169c5db8da" title="ReservoirModule_Web\l::refresh_FiveSec" alt="" coords="208,347,363,389"/>
+<area shape="rect" id="node3" href="$classCommon.html#a9e60e2c26a5f4d72342a59a969954636" title="Common::report" alt="" coords="691,229,807,256"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="887,381,981,408"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="482,259,541,285"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a16cea647c358524dcff92bd8056f6ff8" title="toText_weight" alt="" coords="459,107,563,133"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a7b18c86ed2ebd405cd6f1d5d55fe773c" title="toText_temp" alt="" coords="464,208,559,235"/>
+<area shape="rect" id="node8" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#ac6a7718046dd13997fdade1da48ecb25" title="toText_percentage" alt="" coords="446,5,577,32"/>
+<area shape="rect" id="node10" href="$classCommon__Web.html#a6c2e0946d266ef2a3afe17b9869381cb" title="Common_Web::reportToJSON" alt="" coords="411,309,612,336"/>
+<area shape="rect" id="node12" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Common::refresh_Sec" alt="" coords="673,587,826,613"/>
+<area shape="rect" id="node17" href="$classCommon.html#a604ab36b3a1d9a5bcfcb225149c82f90" title="Common::refresh_FiveSec" alt="" coords="660,352,839,379"/>
+</map>

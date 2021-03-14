@@ -1,0 +1,8 @@
+<map id="WeightSensor_Web" name="WeightSensor_Web">
+<area shape="rect" id="node2" href="$classWeightSensor.html" title="&lt; Weight sensor load cell " alt="" coords="5,331,109,357"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="436,5,511,32"/>
+<area shape="rect" id="node4" href="$classModule.html" title="Module" alt="" coords="441,139,505,165"/>
+<area shape="rect" id="node5" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="711,331,769,357"/>
+<area shape="rect" id="node6" href="$classCommon__Web.html" title="Common_Web" alt="" coords="143,139,252,165"/>
+<area shape="rect" id="node7" href="$classModule__Web.html" title="Module_Web" alt="" coords="284,331,383,357"/>
+</map>

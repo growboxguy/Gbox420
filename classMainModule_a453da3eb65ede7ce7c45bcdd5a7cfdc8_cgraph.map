@@ -1,0 +1,19 @@
+<map id="MainModule::refresh_Minute" name="MainModule::refresh_Minute">
+<area shape="rect" id="node2" href="$classCommon.html#a14e4462a94bd118028ce1d487ca0292c" title="Common::refresh_Minute" alt="" coords="221,40,391,67"/>
+<area shape="rect" id="node4" href="$classModule__Web.html#a32622fc4e87a9885319c73c5b4802cc5" title="Refresh queues: Refresh components inside the Module. " alt="" coords="225,141,387,168"/>
+<area shape="rect" id="node8" href="$classMainModule.html#af579c539beb7471a55975549522b6a98" title="MainModule::reportToGoogle\lSheetsTrigger" alt="" coords="211,429,401,470"/>
+<area shape="rect" id="node17" href="$classMainModule.html#a14b8851731f543ad9a20a3c2b4a8584b" title="MainModule::reportToMQTTTrigger" alt="" coords="193,243,419,269"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="767,167,861,193"/>
+<area shape="rect" id="node5" href="$classModule.html#ab709520f109ae6a355fbc10a40f860a1" title="Settings. " alt="" coords="477,91,655,117"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a1c32dc98349863213572e4a117046fc1" title="&lt; Debug " alt="" coords="509,40,623,67"/>
+<area shape="rect" id="node7" href="$classCommon.html#a9e60e2c26a5f4d72342a59a969954636" title="Common::report" alt="" coords="508,141,624,168"/>
+<area shape="rect" id="node9" href="$classModule__Web.html#a3bbe46c867c2d15f62ee6aa582b0bd56" title="Module_Web::addPushingBox\lLogRelayID" alt="" coords="467,563,665,605"/>
+<area shape="rect" id="node10" href="$classModule__Web.html#a3c90c28ffe736c361cd3bd27a1f206d3" title="Google Sheets functions. " alt="" coords="467,293,665,320"/>
+<area shape="rect" id="node12" href="$classModule__Web.html#a36f0880e022ca1e06cdb9e0a126849aa" title="Module_Web::relayToGoogle\lSheets" alt="" coords="471,345,661,386"/>
+<area shape="rect" id="node13" href="$classModule__Web.html#a54a0a2a3106a9068aa0d15b592602601" title="Time. " alt="" coords="485,629,647,656"/>
+<area shape="rect" id="node14" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="483,411,649,437"/>
+<area shape="rect" id="node15" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="493,461,639,488"/>
+<area shape="rect" id="node16" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="493,512,639,539"/>
+<area shape="rect" id="node11" href="$classCommon__Web.html#a6c2e0946d266ef2a3afe17b9869381cb" title="Common_Web::reportToJSON" alt="" coords="713,293,915,320"/>
+<area shape="rect" id="node18" href="$classModule__Web.html#a84fadf4edaff868c72330d7879dd3708" title="Module_Web::mqttPublish" alt="" coords="479,243,653,269"/>
+</map>

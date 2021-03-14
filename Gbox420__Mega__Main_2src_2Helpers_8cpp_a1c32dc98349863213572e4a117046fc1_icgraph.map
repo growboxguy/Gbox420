@@ -1,0 +1,12 @@
+<map id="getFreeMemory" name="getFreeMemory">
+<area shape="rect" id="node2" href="$classModule.html#aded882b387f715fdc5011cffaf7e66bb" title="Refresh queues: Refresh components inside the Module. " alt="" coords="183,130,313,157"/>
+<area shape="rect" id="node7" href="$classModule__Web.html#a32622fc4e87a9885319c73c5b4802cc5" title="Refresh queues: Refresh components inside the Module. " alt="" coords="167,326,329,353"/>
+<area shape="rect" id="node3" href="$classAeroModule.html#a74b231207f7d3857696acec8432f4322" title="AeroModule::refresh\l_FiveSec" alt="" coords="395,5,534,47"/>
+<area shape="rect" id="node4" href="$classAeroModule.html#ac6a550d571e3bfedc712ba3e73701498" title="constructor " alt="" coords="600,42,768,69"/>
+<area shape="rect" id="node5" href="$classHempyModule.html#a46b60e0abf225624dc7caba51b40dafc" title="HempyModule::refresh\l_FiveSec" alt="" coords="387,123,542,164"/>
+<area shape="rect" id="node6" href="$classReservoirModule.html#a28480be2b512eb00e46824a6da335d53" title="ReservoirModule::refresh\l_FiveSec" alt="" coords="381,188,549,229"/>
+<area shape="rect" id="node8" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="MainModule::refresh\l_FiveSec" alt="" coords="395,253,535,295"/>
+<area shape="rect" id="node9" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="MainModule::refresh\l_Minute" alt="" coords="395,319,535,360"/>
+<area shape="rect" id="node10" href="$classDEVModule__Web.html#ac8ea37f602295f12c39d9849aab8e512" title="DEVModule_Web::refresh\l_FiveSec" alt="" coords="377,384,552,425"/>
+<area shape="rect" id="node11" href="$classDEVModule__Web.html#ab0e28b8ddf2b462b3c13be6ddebc1d2a" title="Settings. " alt="" coords="377,449,552,491"/>
+</map>

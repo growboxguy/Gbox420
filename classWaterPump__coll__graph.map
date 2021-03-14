@@ -1,0 +1,7 @@
+<map id="WaterPump" name="WaterPump">
+<area shape="rect" id="node2" href="$classCommon.html" title="Common" alt="" coords="205,5,280,32"/>
+<area shape="rect" id="node4" href="$classSwitch.html" title="&lt; Represents and electronic switch like a Relay or MOSFET " alt="" coords="82,139,145,165"/>
+<area shape="rect" id="node5" href="$classModule.html" title="Module" alt="" coords="211,139,275,165"/>
+<area shape="rect" id="node6" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="537,228,596,255"/>
+<area shape="rect" id="node3" href="$classSwitch__PWM.html" title="&lt; PWM controllable electronic switch like a MOSFET transistor " alt="" coords="62,228,165,255"/>
+</map>

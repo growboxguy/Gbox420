@@ -1,0 +1,20 @@
+<map id="toText_waterPumpState" name="toText_waterPumpState">
+<area shape="rect" id="node2" href="$classHempyModule__Web.html#a1df6101df795a7a863667d2d28908a50" title="HempyModule_Web::website\lEvent_Refresh" alt="" coords="216,56,409,97"/>
+<area shape="rect" id="node3" href="$classWaterPump.html#a4211806cd0c62a57f3accc37c1c1eb00" title="WaterPump::updateState" alt="" coords="228,122,397,149"/>
+<area shape="rect" id="node17" href="$classWaterPump.html#a167326d1657bd3200b1f1d68771a25e7" title="Text representation of the current state: DISABLED/IDLE/RUNNING... " alt="" coords="225,223,400,250"/>
+<area shape="rect" id="node4" href="$classWaterPump.html#af2bf227984554917e66c713cadf32660" title="WaterPump::refresh_Sec" alt="" coords="469,21,638,47"/>
+<area shape="rect" id="node5" href="$classWaterPump.html#ac5ad910ece76068fcb0c321aabc19a6f" title="Turn the pump ON. " alt="" coords="474,71,633,98"/>
+<area shape="rect" id="node15" href="$classWaterPump.html#a9adfab6b4c4d79acf84158d2f1ab4972" title="Turn the pump OFF. " alt="" coords="474,122,633,149"/>
+<area shape="rect" id="node16" href="$classWaterPump.html#a95644a76e18a9449d48d7a955de27b42" title="Disable the pump. " alt="" coords="466,173,641,199"/>
+<area shape="rect" id="node6" href="$classHempyBucket.html#aa534fb9169c4a572eb248970410f1fc3" title="HempyBucket::updateState" alt="" coords="697,122,880,149"/>
+<area shape="rect" id="node7" href="$classHempyBucket.html#ad9a11119072abf39b332556936938afa" title="HempyBucket::refresh\l_FiveSec" alt="" coords="947,5,1100,47"/>
+<area shape="rect" id="node8" href="$classHempyBucket.html#a9218a31e84cebe1630ab8d22c41cc48d" title="HempyBucket::refresh_Sec" alt="" coords="932,71,1115,98"/>
+<area shape="rect" id="node9" href="$classHempyBucket.html#a39ff41c1e17d1b491f6cc3889733e4b0" title="HempyBucket::disable" alt="" coords="946,122,1101,149"/>
+<area shape="rect" id="node13" href="$classHempyBucket.html#af17814ae16f2f65f0f9bb580baa55fdd" title="Turn on water pump, run until StopWeight is reached. " alt="" coords="928,173,1119,199"/>
+<area shape="rect" id="node14" href="$classHempyBucket.html#a973120ba0e6bd9a43762bedd8218d6a0" title="Turn on water pump, run until StopWeight is reached. " alt="" coords="928,223,1119,250"/>
+<area shape="rect" id="node10" href="$classHempyModule.html#ae76db12a22770b12cb7ff1aa579e0a27" title="HempyModule::processCommand" alt="" coords="1167,173,1387,199"/>
+<area shape="rect" id="node11" href="$Gbox420__Nano__Hempy_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="1435,173,1553,199"/>
+<area shape="rect" id="node12" href="$Gbox420__Nano__Hempy_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="1601,173,1648,199"/>
+<area shape="rect" id="node18" href="$classWaterPump.html#a87cb38733467fa420729df2f0bebb161" title="WaterPump::report" alt="" coords="487,223,619,250"/>
+<area shape="rect" id="node19" href="$classHempyBucket__Web.html#adcbe7b1d4b88e839477ca89700113a48" title="HempyBucket_Web::website\lEvent_Refresh" alt="" coords="457,275,649,316"/>
+</map>

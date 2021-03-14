@@ -1,0 +1,28 @@
+var classFan__PWM =
+[
+    [ "Fan_PWM", "classFan__PWM.html#a230aa46882b9d6523e84234c902ca4f6", null ],
+    [ "Fan_PWM", "classFan__PWM.html#a230aa46882b9d6523e84234c902ca4f6", null ],
+    [ "checkState", "classFan__PWM.html#a0c11aa694b037f8962ce36206a2048c1", null ],
+    [ "checkState", "classFan__PWM.html#a0c11aa694b037f8962ce36206a2048c1", null ],
+    [ "getSpeed", "classFan__PWM.html#a7b8ae4da75a65bbe637ad4d85d8cc585", null ],
+    [ "getSpeed", "classFan__PWM.html#a7b8ae4da75a65bbe637ad4d85d8cc585", null ],
+    [ "getSpeedText", "classFan__PWM.html#a856d2b45b46bb962ca721948e227add2", null ],
+    [ "getSpeedText", "classFan__PWM.html#a4f7d9dd0149ffd229ec50a71f418e1f8", null ],
+    [ "refresh_Minute", "classFan__PWM.html#ac0d2dcb086bc37586b2472366c7b7710", null ],
+    [ "refresh_Minute", "classFan__PWM.html#ac0d2dcb086bc37586b2472366c7b7710", null ],
+    [ "report", "classFan__PWM.html#a1b88bd6c288208d69f50f5ef7940e059", null ],
+    [ "report", "classFan__PWM.html#a1b88bd6c288208d69f50f5ef7940e059", null ],
+    [ "setSpeed", "classFan__PWM.html#a575f7bb355a8a916e887c984b14c92bb", null ],
+    [ "setSpeed", "classFan__PWM.html#a575f7bb355a8a916e887c984b14c92bb", null ],
+    [ "turnOff", "classFan__PWM.html#aa2c7a4fa5d6603dd2e690854af87b8ec", null ],
+    [ "turnOff", "classFan__PWM.html#aa2c7a4fa5d6603dd2e690854af87b8ec", null ],
+    [ "turnOn", "classFan__PWM.html#a102c1533175f884aad67c58cecb4a4f9", null ],
+    [ "turnOn", "classFan__PWM.html#a102c1533175f884aad67c58cecb4a4f9", null ],
+    [ "MinSpeed", "classFan__PWM.html#abde13c8a117050bec27370d529bec050", null ],
+    [ "Parent", "classFan__PWM.html#afa607514ccb5e41588faba6f98de9887", null ],
+    [ "PWMDimmer", "classFan__PWM.html#ac57091d0f2b0006e790f688fc7421deb", null ],
+    [ "PWMPin", "classFan__PWM.html#a74cfcde1e2714db8132cf9c1080510fd", null ],
+    [ "Speed", "classFan__PWM.html#a5cf408a88910e2ae906366648fce66a1", null ],
+    [ "State", "classFan__PWM.html#a204ce3ba64e4f85fe45af204f5593cd4", null ],
+    [ "ZeroCrossingPin", "classFan__PWM.html#ad3d649ffd49c05b6c155a5053f8e355c", null ]
+];

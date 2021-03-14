@@ -1,0 +1,8 @@
+<map id="DHTSensor_Web" name="DHTSensor_Web">
+<area shape="rect" id="node2" href="$classDHTSensor.html" title="&lt; DHT11 or DHT22 Digital Humidity and Temperature sensor " alt="" coords="5,331,96,357"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="455,5,529,32"/>
+<area shape="rect" id="node4" href="$classModule.html" title="Module" alt="" coords="460,139,524,165"/>
+<area shape="rect" id="node5" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="723,331,781,357"/>
+<area shape="rect" id="node6" href="$classCommon__Web.html" title="Common_Web" alt="" coords="140,139,249,165"/>
+<area shape="rect" id="node7" href="$classModule__Web.html" title="Module_Web" alt="" coords="295,331,393,357"/>
+</map>

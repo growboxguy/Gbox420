@@ -1,0 +1,10 @@
+<map id="ReservoirModule" name="ReservoirModule">
+<area shape="rect" id="node2" href="$classCommon.html" title="Common" alt="" coords="565,5,640,32"/>
+<area shape="rect" id="node3" href="$classModule.html" title="Module" alt="" coords="571,139,635,165"/>
+<area shape="rect" id="node4" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="111,228,169,255"/>
+<area shape="rect" id="node5" href="$classTDSSensor.html" title="TDSSensor" alt="" coords="875,317,965,344"/>
+<area shape="rect" id="node6" href="$classWaterTempSensor.html" title="&lt; DS18B20 waterproof temperature sensor " alt="" coords="832,228,963,255"/>
+<area shape="rect" id="node7" href="$classDHTSensor.html" title="&lt; DHT11 or DHT22 Digital Humidity and Temperature sensor " alt="" coords="212,228,303,255"/>
+<area shape="rect" id="node8" href="$classPHSensor.html" title="PHSensor" alt="" coords="725,228,808,255"/>
+<area shape="rect" id="node9" href="$classWeightSensor.html" title="&lt; Weight sensor load cell " alt="" coords="1012,228,1116,255"/>
+</map>

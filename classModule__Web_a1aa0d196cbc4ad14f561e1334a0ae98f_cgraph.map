@@ -1,0 +1,9 @@
+<map id="Module_Web::runAll" name="Module_Web::runAll">
+<area shape="rect" id="node2" href="$classModule__Web.html#adec2319a465bb9478e3699ce2d9612db" title="Module_Web::runSec" alt="" coords="205,37,351,64"/>
+<area shape="rect" id="node5" href="$classModule__Web.html#a39cb72b8b1193e6a7d27d4ff414e07c6" title="Module_Web::runFiveSec" alt="" coords="192,113,364,140"/>
+<area shape="rect" id="node7" href="$classModule__Web.html#a580c12222077d148fe86cd0b07b263ec" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="197,189,359,216"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="639,113,733,140"/>
+<area shape="rect" id="node4" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Common::refresh_Sec" alt="" coords="425,37,578,64"/>
+<area shape="rect" id="node6" href="$classCommon.html#a604ab36b3a1d9a5bcfcb225149c82f90" title="Common::refresh_FiveSec" alt="" coords="412,138,591,165"/>
+<area shape="rect" id="node8" href="$classCommon.html#a14e4462a94bd118028ce1d487ca0292c" title="Common::refresh_Minute" alt="" coords="417,240,586,266"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="LightSensor_Web" name="LightSensor_Web">
+<area shape="rect" id="node2" href="$classLightSensor.html" title="&lt; LM393 Light sensor " alt="" coords="5,80,96,107"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="75,5,149,32"/>
+<area shape="rect" id="node4" href="$classCommon__Web.html" title="Common_Web" alt="" coords="120,80,229,107"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="Module::addToRefreshQueue_Minute" name="Module::addToRefreshQueue_Minute">
+<area shape="rect" id="node2" href="$classAirPump.html#aedf30b103454afa9821cb0ec73a7fee2" title="&lt; AirPump controller (2 speed) " alt="" coords="288,5,419,32"/>
+<area shape="rect" id="node3" href="$classFan.html#a2bf10abddbcad94045ad7e3d567f17b8" title="&lt; Fan controller (2 speed) " alt="" coords="316,56,391,83"/>
+<area shape="rect" id="node4" href="$classFan__PWM.html#a230aa46882b9d6523e84234c902ca4f6" title="&lt; PWM control an AC device using a Robodyn AC Light Dimming Module with Zero&#45;cross detection ..." alt="" coords="276,107,431,133"/>
+<area shape="rect" id="node5" href="$classLights.html#a48acde7f45e4b9b22969e52fea689040" title="constructor " alt="" coords="303,157,403,184"/>
+<area shape="rect" id="node6" href="$classModuleSkeleton.html#a28db770cfd6d6a02110d0adb62666676" title="constructor " alt="" coords="245,208,461,235"/>
+</map>

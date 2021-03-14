@@ -1,0 +1,9 @@
+<map id="PowerSensor_Web::websiteEvent_Field" name="PowerSensor_Web::websiteEvent_Field">
+<area shape="rect" id="node2" href="$classPowerSensor__Web.html#a32bd1594d3ff6a298b171d47960bae1d" title="Not used. " alt="" coords="240,107,467,133"/>
+<area shape="rect" id="node3" href="$classCommon__Web.html#a6c2e0946d266ef2a3afe17b9869381cb" title="Common_Web::reportToJSON" alt="" coords="515,5,716,32"/>
+<area shape="rect" id="node4" href="$classPowerSensor.html#ad1544079a0a3b7eafbb02411a2553cff" title="PowerSensor::getPowerText" alt="" coords="521,56,710,83"/>
+<area shape="rect" id="node6" href="$classPowerSensor.html#a20b1412111d88dbf9ec19b1716dadb11" title="PowerSensor::getEnergyText" alt="" coords="519,107,712,133"/>
+<area shape="rect" id="node7" href="$classPowerSensor.html#a168a4f9e8ea56397b1d67889ce3575b6" title="PowerSensor::getVoltageText" alt="" coords="517,157,713,184"/>
+<area shape="rect" id="node8" href="$classPowerSensor.html#ac3795cfd4910157ca6046272d53cab1f" title="PowerSensor::getCurrentText" alt="" coords="518,208,713,235"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="764,132,823,159"/>
+</map>

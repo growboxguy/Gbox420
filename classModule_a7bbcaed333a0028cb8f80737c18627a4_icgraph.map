@@ -1,0 +1,51 @@
+<map id="Module::addToLog" name="Module::addToLog">
+<area shape="rect" id="node2" href="$classModule.html#a79c2d0237995c6680a490f8a9c678fec" title="Module::setDebug" alt="" coords="232,145,360,172"/>
+<area shape="rect" id="node6" href="$classModule.html#a966279a6ac1ac3f0dcd17859a94e18c9" title="Module::setMetric" alt="" coords="233,44,359,71"/>
+<area shape="rect" id="node7" href="$classAirPump.html#adbce295ddc8dd194850ebfbfabb343e5" title="AirPump::TurnOff" alt="" coords="234,379,358,405"/>
+<area shape="rect" id="node8" href="$classAirPump.html#a2545e4f11f9004488deec68ab74afea7" title="AirPump::TurnOn" alt="" coords="235,429,357,456"/>
+<area shape="rect" id="node9" href="$classFan.html#af5a22c8800d5a4f3295f44a313af71d2" title="Fan::TurnOff" alt="" coords="248,480,344,507"/>
+<area shape="rect" id="node10" href="$classFan.html#a817f97adfe3990ef302f49359b3237f7" title="Fan::SetLowSpeed" alt="" coords="229,531,363,557"/>
+<area shape="rect" id="node11" href="$classFan.html#ad462f4c80b5024a1266e0a070527425e" title="Fan::SetHighSpeed" alt="" coords="228,581,364,608"/>
+<area shape="rect" id="node12" href="$classFan__PWM.html#aa2c7a4fa5d6603dd2e690854af87b8ec" title="Fan_PWM::turnOff" alt="" coords="230,632,362,659"/>
+<area shape="rect" id="node13" href="$classFan__PWM.html#a102c1533175f884aad67c58cecb4a4f9" title="Fan_PWM::turnOn" alt="" coords="231,683,361,709"/>
+<area shape="rect" id="node14" href="$classFan__PWM.html#a575f7bb355a8a916e887c984b14c92bb" title="Fan_PWM::setSpeed" alt="" coords="223,733,369,760"/>
+<area shape="rect" id="node15" href="$classLights.html#a482dc659480f840747858394c5baec3c" title="Temporary dim the lights while working on the plants. " alt="" coords="489,835,645,861"/>
+<area shape="rect" id="node16" href="$classLights.html#a20392486d66032fd530046cd1f33aaa0" title="Lights::setBrightness" alt="" coords="223,885,369,912"/>
+<area shape="rect" id="node17" href="$classLights.html#ab18f05b043b61b6eb74bd7b564e1a1ec" title="Lights::setLightOnOff" alt="" coords="494,936,641,963"/>
+<area shape="rect" id="node18" href="$classLightSensor.html#a50559883ebb2c80a5d2144a6453bd1c3" title="Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger. " alt="" coords="725,885,923,912"/>
+<area shape="rect" id="node19" href="$classLights.html#a88aef6611519ff083000476c078b9fba" title="Set the duration of the temporary dimming in Seconds. " alt="" coords="218,987,374,1013"/>
+<area shape="rect" id="node20" href="$classLights.html#a3c5051babf4dacdeecced14217f6f886" title="Lights::setTimerOnOff" alt="" coords="221,1037,371,1064"/>
+<area shape="rect" id="node21" href="$classLights.html#ada0e53ffae21eb386b8cef9e6a12fb8c" title="Lights::setOnMinute" alt="" coords="227,1088,365,1115"/>
+<area shape="rect" id="node22" href="$classLights.html#afc2ad84d3e1c4d9e8f62d05791f82928" title="Lights::setOffMinute" alt="" coords="226,1139,366,1165"/>
+<area shape="rect" id="node23" href="$classLights.html#ac6d200fd34e102cea67cf24d4f017284" title="Enable/disable slowly fadeing in and out the lights when the Status changes. " alt="" coords="223,1189,369,1216"/>
+<area shape="rect" id="node24" href="$classLights.html#a71359e2b1cb0629287aa6bf51973cbd0" title="Set the Percentage of change at one increment/decrement. " alt="" coords="207,1240,385,1267"/>
+<area shape="rect" id="node25" href="$classSound.html#a6917e650a721b0e7fc6d998edf6a3cf7" title="Sound::setSoundOnOff" alt="" coords="217,1291,375,1317"/>
+<area shape="rect" id="node26" href="$classAeroponics__NoTank.html#a1ceea321694c711877a6bf0e883023df" title="Aeroponics_NoTank::\lsetDuration" alt="" coords="222,247,370,289"/>
+<area shape="rect" id="node27" href="$classAeroponics__NoTank.html#a42b50599169ed659b9f5869a1847957b" title="Aeroponics_NoTank::\lsetMaxPressure" alt="" coords="222,313,370,354"/>
+<area shape="rect" id="node28" href="$classPressurePump.html#ac09af28cf6949ab3d716c9a2250fb398" title="PressurePump::updateState" alt="" coords="203,1341,389,1368"/>
+<area shape="rect" id="node29" href="$classPressurePump.html#a1ad00330e25daa460bf1829294146e02" title="PressurePump::setPrimingTime" alt="" coords="193,196,399,223"/>
+<area shape="rect" id="node30" href="$classPressureSensor.html#a9a97fa923ea86256eadff802549f0081" title="PressureSensor::readOffset" alt="" coords="204,1392,388,1419"/>
+<area shape="rect" id="node31" href="$classPressureSensor.html#af4ea57467bb0d6ae89b0f1a65c7863da" title="PressureSensor::setOffset" alt="" coords="207,1443,385,1469"/>
+<area shape="rect" id="node32" href="$classPressureSensor.html#a5c46cbf770e053a41dad7ee63549ae7e" title="PressureSensor::setRatio" alt="" coords="210,1493,382,1520"/>
+<area shape="rect" id="node33" href="$classWeightSensor.html#a54b241f48e63ef6b17eade0d55a78008" title="WeightSensor::triggerTare" alt="" coords="209,95,383,121"/>
+<area shape="rect" id="node34" href="$classWeightSensor.html#a02fe54254ed51deefc115fad34053061" title="WeightSensor::tare" alt="" coords="229,1544,363,1571"/>
+<area shape="rect" id="node35" href="$classWeightSensor.html#a37b50db6dc60c3bc6a22807af5e17283" title="WeightSensor::triggerCalibration" alt="" coords="191,1595,401,1621"/>
+<area shape="rect" id="node36" href="$classWeightSensor.html#a7718da9f72a6f354ea19550567d42fbf" title="WeightSensor::calibrate" alt="" coords="215,1645,377,1672"/>
+<area shape="rect" id="node37" href="$classAeroModule.html#ac4b034d05f900f3afb1ae4a0920e2799" title="constructor " alt="" coords="212,1696,380,1723"/>
+<area shape="rect" id="node38" href="$classAeroponics__Tank.html#a410abb27249a9c22ab8759c0f83231a5" title="Aeroponics_Tank::setDuration" alt="" coords="197,1747,395,1773"/>
+<area shape="rect" id="node39" href="$classAeroponics__Tank.html#a601c8e6612ce40ca0cb84b3e5ab426fa" title="Aeroponics_Tank::setSpray\lOnOff" alt="" coords="205,1798,387,1839"/>
+<area shape="rect" id="node40" href="$classAeroponics__Tank.html#a4f21269366e4bc91edaf807a0548b281" title="Aeroponics_Tank::setMaxPressure" alt="" coords="183,1864,409,1891"/>
+<area shape="rect" id="node41" href="$classWaterPump.html#a4211806cd0c62a57f3accc37c1c1eb00" title="WaterPump::updateState" alt="" coords="211,1915,381,1941"/>
+<area shape="rect" id="node42" href="$classHempyModule.html#a46b23ffbe28aa4dd39e080c7465de74a" title="constructor " alt="" coords="197,1965,395,1992"/>
+<area shape="rect" id="node43" href="$classPHSensor.html#aefd9f4f73636b8827a22b8246cbc4dee" title="PHSensor::updatePH" alt="" coords="222,2016,370,2043"/>
+<area shape="rect" id="node44" href="$classPHSensor.html#ae9b41f458fafd9ae475d9bfbbb27f8d5" title="PHSensor::setSlope" alt="" coords="225,2067,367,2093"/>
+<area shape="rect" id="node45" href="$classPHSensor.html#a41bd303fbad556aaf714da2f0bf4a69c" title="PHSensor::setIntercept" alt="" coords="217,2117,375,2144"/>
+<area shape="rect" id="node46" href="$classTDSSensor.html#ab3c3b279412f52bb666bb8560c34e967" title="TDSSensor::updateTDS" alt="" coords="214,2168,378,2195"/>
+<area shape="rect" id="node47" href="$classReservoirModule.html#ab8bca3ce3768c3d800d21806d76d3aeb" title="constructor " alt="" coords="204,2219,388,2261"/>
+<area shape="rect" id="node48" href="$classAeroponics.html#af6136c959da1c769a71047ecea2af177" title="Aeroponics::setDuration" alt="" coords="215,2285,377,2312"/>
+<area shape="rect" id="node49" href="$classAeroponics.html#a459d83fc32d3369938be2953138c9b96" title="Aeroponics::setSprayOnOff" alt="" coords="205,2336,387,2363"/>
+<area shape="rect" id="node50" href="$classAeroponics.html#a81cee647fe16d146a574592441d3ef59" title="Aeroponics::setMaxPressure" alt="" coords="201,2387,391,2413"/>
+<area shape="rect" id="node3" href="$classAeroModule.html#a6465def68343e695ae91ba01c714858d" title="AeroModule::processCommand" alt="" coords="465,196,670,223"/>
+<area shape="rect" id="node4" href="$classAeroModule.html#ac6a550d571e3bfedc712ba3e73701498" title="constructor " alt="" coords="740,196,908,223"/>
+<area shape="rect" id="node5" href="$classHempyModule.html#ae76db12a22770b12cb7ff1aa579e0a27" title="HempyModule::processCommand" alt="" coords="457,44,677,71"/>
+</map>

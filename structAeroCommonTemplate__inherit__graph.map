@@ -1,0 +1,8 @@
+<map id="AeroCommonTemplate" name="AeroCommonTemplate">
+<area shape="rect" id="node2" href="$structAeroCommand__P1.html" title="&lt; Aeroponics wireless commands &#45; Part1 " alt="" coords="219,18,351,44"/>
+<area shape="rect" id="node3" href="$structAeroCommand__P2.html" title="&lt; Aeroponics wireless commands &#45; Part2 " alt="" coords="219,68,351,95"/>
+<area shape="rect" id="node4" href="$structAeroModuleCommand.html" title="&lt; Aeroponics wireless module commands " alt="" coords="209,119,360,146"/>
+<area shape="rect" id="node5" href="$structAeroModuleResponse.html" title="&lt; Aeroponics wireless module response " alt="" coords="209,170,360,196"/>
+<area shape="rect" id="node6" href="$structAeroResponse__P1.html" title="&lt; Aeroponics wireless response &#45; Part1 " alt="" coords="219,220,350,247"/>
+<area shape="rect" id="node7" href="$structAeroResponse__P2.html" title="&lt; Aeroponics wireless response &#45; Part2 " alt="" coords="219,271,350,298"/>
+</map>

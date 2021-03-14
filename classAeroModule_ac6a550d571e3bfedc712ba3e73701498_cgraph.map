@@ -1,0 +1,51 @@
+<map id="AeroModule::AeroModule" name="AeroModule::AeroModule">
+<area shape="rect" id="node2" href="$classModule.html#a08595d2a2bd347eec39c47a3b9e770fb" title="Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method. " alt="" coords="221,15,444,42"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="1696,623,1791,650"/>
+<area shape="rect" id="node4" href="$classModule.html#a2dffaa526893d852b722cf890a6821c6" title="Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method. " alt="" coords="237,185,429,227"/>
+<area shape="rect" id="node5" href="$classModule.html#ac2566489e05811d381489f96b8dd43af" title="Module::runAll" alt="" coords="1013,269,1118,295"/>
+<area shape="rect" id="node7" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Common::refresh_Sec" alt="" coords="1476,395,1629,422"/>
+<area shape="rect" id="node9" href="$classCommon.html#a604ab36b3a1d9a5bcfcb225149c82f90" title="Common::refresh_FiveSec" alt="" coords="1463,471,1642,498"/>
+<area shape="rect" id="node11" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Time. " alt="" coords="1488,2274,1617,2301"/>
+<area shape="rect" id="node12" href="$classAeroModule.html#a9c91703196095f1f8c53d7366b09fbd4" title="AeroModule::refresh_Sec" alt="" coords="248,539,417,566"/>
+<area shape="rect" id="node13" href="$classAeroModule.html#ac37768f41a485e3c488ca0e5e4f8bae3" title="AeroModule::updateAckData" alt="" coords="496,623,685,650"/>
+<area shape="rect" id="node14" href="$classAeroModule.html#a74b231207f7d3857696acec8432f4322" title="AeroModule::refresh\l_FiveSec" alt="" coords="263,659,402,700"/>
+<area shape="rect" id="node15" href="$classModule.html#aded882b387f715fdc5011cffaf7e66bb" title="Refresh queues: Refresh components inside the Module. " alt="" coords="1251,725,1381,751"/>
+<area shape="rect" id="node19" href="$classAeroModule.html#a0a6063415ebead3f88e64ff636a520cd" title="AeroModule::updateResponse" alt="" coords="492,925,689,951"/>
+<area shape="rect" id="node20" href="$classAeroponics__NoTank.html#a9171d02db4e810e2f49cb8a9e4c494b2" title="Aeroponics_NoTank::\lgetSprayEnabled" alt="" coords="749,827,897,868"/>
+<area shape="rect" id="node21" href="$classAeroponics__NoTank.html#aab859dab0716accb6308b77f6a4e1e30" title="Aeroponics_NoTank::\lgetPressure" alt="" coords="749,1061,897,1103"/>
+<area shape="rect" id="node23" href="$classPressurePump.html#af9df6a215a607772719e9cc2984dc97c" title="PressurePump::getState" alt="" coords="983,893,1148,919"/>
+<area shape="rect" id="node24" href="$classAeroponics__NoTank.html#a45c503f702e04d22f13f67fa6ed1a77c" title="Aeroponics_NoTank::\lgetLastSprayPressure" alt="" coords="747,944,898,985"/>
+<area shape="rect" id="node25" href="$classWeightSensor.html#a0a42742e1516e6723b1246e789ba9253" title="WeightSensor::getWeight" alt="" coords="737,1010,908,1037"/>
+<area shape="rect" id="node26" href="$classAeroModule.html#a6465def68343e695ae91ba01c714858d" title="AeroModule::processCommand" alt="" coords="230,1782,435,1809"/>
+<area shape="rect" id="node27" href="$classModule.html#a79c2d0237995c6680a490f8a9c678fec" title="Module::setDebug" alt="" coords="1001,1962,1129,1989"/>
+<area shape="rect" id="node31" href="$classModule.html#a966279a6ac1ac3f0dcd17859a94e18c9" title="Module::setMetric" alt="" coords="1002,2333,1129,2359"/>
+<area shape="rect" id="node32" href="$classAeroponics__NoTank.html#a4aaa6c9d269f040800908b5c44c18d28" title="Aeroponics_NoTank::\lsetSprayOnOff" alt="" coords="517,1448,665,1489"/>
+<area shape="rect" id="node34" href="$classPressurePump.html#a0878240ddd132601c32f44b12a18d819" title="Turn the pump OFF. " alt="" coords="978,1397,1153,1423"/>
+<area shape="rect" id="node36" href="$classPressurePump.html#a5ddc97da3499cc0e6ecf374fc82b38d1" title="PressurePump::startMixing" alt="" coords="975,1671,1155,1698"/>
+<area shape="rect" id="node37" href="$classAeroponics__NoTank.html#af7be37cf20fc3af632879e93d4a1ca15" title="Aeroponics_NoTank::\lsprayNow" alt="" coords="517,1513,665,1555"/>
+<area shape="rect" id="node38" href="$classAeroponics__NoTank.html#a37537625cd3d80d6c49adeae298d4a76" title="Aeroponics_NoTank::\lsprayOff" alt="" coords="517,1331,665,1372"/>
+<area shape="rect" id="node39" href="$classAeroponics__NoTank.html#a72097bb5d81c26b7b8cce0ee4a2b2aaf" title="Aeroponics_NoTank::\lsetDayMode" alt="" coords="991,1744,1139,1785"/>
+<area shape="rect" id="node40" href="$classAeroponics__NoTank.html#a1ceea321694c711877a6bf0e883023df" title="Aeroponics_NoTank::\lsetDuration" alt="" coords="991,2384,1139,2425"/>
+<area shape="rect" id="node41" href="$classAeroponics__NoTank.html#ac899eda5f9e6ae39042918e0ff0bcfa6" title="Aeroponics_NoTank::\lsetDayInterval" alt="" coords="749,2172,897,2213"/>
+<area shape="rect" id="node42" href="$classAeroponics__NoTank.html#ab962411a24bcaea35029f6b9936f801c" title="Aeroponics_NoTank::\lsetNightInterval" alt="" coords="749,2107,897,2148"/>
+<area shape="rect" id="node43" href="$classAeroponics__NoTank.html#a42b50599169ed659b9f5869a1847957b" title="Aeroponics_NoTank::\lsetMaxPressure" alt="" coords="991,2267,1139,2308"/>
+<area shape="rect" id="node44" href="$classPressurePump.html#a4f668020e2b58f6f4ea97f92026fdbbf" title="Disable the pump. " alt="" coords="970,1341,1161,1367"/>
+<area shape="rect" id="node45" href="$classPressurePump.html#a9ec8ec6f90a6f262f4d0ab8af6026b84" title="PressurePump::setSpeed" alt="" coords="505,1127,676,1154"/>
+<area shape="rect" id="node47" href="$classPressurePump.html#ae19b1a0b863bd4fec485253edec09f29" title="PressurePump::setPumpTimeOut" alt="" coords="956,1810,1175,1837"/>
+<area shape="rect" id="node48" href="$classPressurePump.html#a1ad00330e25daa460bf1829294146e02" title="PressurePump::setPrimingTime" alt="" coords="962,2215,1169,2242"/>
+<area shape="rect" id="node49" href="$classWeightSensor.html#a54b241f48e63ef6b17eade0d55a78008" title="WeightSensor::triggerTare" alt="" coords="503,2694,678,2721"/>
+<area shape="rect" id="node50" href="$Gbox420__Mega__Main_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits. " alt="" coords="541,2238,640,2265"/>
+<area shape="rect" id="node6" href="$classModule.html#a496c104a3e5b7062aa562aad4a9acd53" title="Module::runSec" alt="" coords="1259,269,1373,295"/>
+<area shape="rect" id="node8" href="$classModule.html#a8b5f1ab76c7ffa4090bf825b69add821" title="Module::runFiveSec" alt="" coords="1247,319,1385,346"/>
+<area shape="rect" id="node10" href="$classModule.html#aa7154c7e6619f87df7cb3f1b46d96a95" title="Module::runMinute" alt="" coords="1488,167,1617,194"/>
+<area shape="rect" id="node16" href="$classModule.html#ab709520f109ae6a355fbc10a40f860a1" title="Settings. " alt="" coords="1463,826,1642,853"/>
+<area shape="rect" id="node17" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a1c32dc98349863213572e4a117046fc1" title="&lt; Debug " alt="" coords="1496,674,1609,701"/>
+<area shape="rect" id="node18" href="$classCommon.html#a9e60e2c26a5f4d72342a59a969954636" title="Common::report" alt="" coords="1495,725,1611,751"/>
+<area shape="rect" id="node22" href="$classPressureSensor.html#a39f2f08252640aeb9cf9c094ac796ed6" title="PressureSensor::getPressure" alt="" coords="969,1178,1162,1205"/>
+<area shape="rect" id="node28" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="1233,1835,1399,1862"/>
+<area shape="rect" id="node29" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="1243,2089,1389,2115"/>
+<area shape="rect" id="node30" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="1243,1447,1389,1474"/>
+<area shape="rect" id="node33" href="$classAeroponics__NoTank.html#a209860847d982e45e068d6aecfeb0f1d" title="Aeroponics_NoTank::\lupdateState" alt="" coords="749,1331,897,1372"/>
+<area shape="rect" id="node35" href="$classPressurePump.html#ac09af28cf6949ab3d716c9a2250fb398" title="PressurePump::updateState" alt="" coords="1223,1397,1409,1423"/>
+<area shape="rect" id="node46" href="$classSwitch__PWM.html#a568a22528e98480c84f250749b7074c0" title="Switch_PWM::setDutyCycle" alt="" coords="1457,1002,1648,1029"/>
+</map>

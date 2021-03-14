@@ -1,0 +1,19 @@
+<map id="HempyBucket::updateState" name="HempyBucket::updateState">
+<area shape="rect" id="node2" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a9584fe3b73c8ed3efccaf337bb272e6b" title="toText_hempyState" alt="" coords="269,81,405,108"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="913,233,1008,260"/>
+<area shape="rect" id="node4" href="$classWeightSensor.html#a8f0079c7dda1650f37b273781c9bbd8b" title="WeightSensor::readWeight" alt="" coords="247,360,426,387"/>
+<area shape="rect" id="node5" href="$classWaterPump.html#a95644a76e18a9449d48d7a955de27b42" title="Disable the pump. " alt="" coords="249,183,424,209"/>
+<area shape="rect" id="node13" href="$classWaterPump.html#a9adfab6b4c4d79acf84158d2f1ab4972" title="Turn the pump OFF. " alt="" coords="257,132,416,159"/>
+<area shape="rect" id="node14" href="$classWaterPump.html#acf53c46d93105645131694387a9990c0" title="Get the current pump state. " alt="" coords="263,411,411,437"/>
+<area shape="rect" id="node15" href="$classWeightSensor.html#a0a42742e1516e6723b1246e789ba9253" title="WeightSensor::getWeight" alt="" coords="251,461,422,488"/>
+<area shape="rect" id="node16" href="$classWaterPump.html#ac5ad910ece76068fcb0c321aabc19a6f" title="Turn the pump ON. " alt="" coords="257,233,416,260"/>
+<area shape="rect" id="node18" href="$classWaterPump.html#afb845b670cc69fdfffc0cccf3d429fbb" title="WaterPump::getPumpTimeOut" alt="" coords="236,512,437,539"/>
+<area shape="rect" id="node6" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="487,132,653,159"/>
+<area shape="rect" id="node7" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="497,81,643,108"/>
+<area shape="rect" id="node8" href="$classWaterPump.html#a4211806cd0c62a57f3accc37c1c1eb00" title="WaterPump::updateState" alt="" coords="485,183,655,209"/>
+<area shape="rect" id="node9" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aaa9810e7291e97d1fac5b0f3fa0b8f3c" title="TODO: The below section should be split between the modules to reduce memory usage. " alt="" coords="703,107,865,133"/>
+<area shape="rect" id="node10" href="$classSwitch.html#a3f10d75adaf6a110de455d1f7bb49fc0" title="Switch::turnOff" alt="" coords="729,157,839,184"/>
+<area shape="rect" id="node11" href="$classSwitch__PWM.html#a717d6337a0df8903779b81feea21a7bb" title="Switch_PWM::turnOn" alt="" coords="709,5,859,32"/>
+<area shape="rect" id="node12" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Time. " alt="" coords="719,208,849,235"/>
+<area shape="rect" id="node17" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="497,284,643,311"/>
+</map>

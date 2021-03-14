@@ -1,0 +1,12 @@
+<map id="Lights::setTimerOnOff" name="Lights::setTimerOnOff">
+<area shape="rect" id="node2" href="$classLights.html#a2117d6df0bdbf234e627a9bceb000071" title="Lights::checkTimer" alt="" coords="204,48,337,74"/>
+<area shape="rect" id="node4" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Time. " alt="" coords="793,149,923,176"/>
+<area shape="rect" id="node6" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="580,22,745,49"/>
+<area shape="rect" id="node7" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="590,225,735,252"/>
+<area shape="rect" id="node10" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="589,276,736,302"/>
+<area shape="rect" id="node3" href="$classLights.html#ab18f05b043b61b6eb74bd7b564e1a1ec" title="Lights::setLightOnOff" alt="" coords="385,149,532,176"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="971,61,1065,88"/>
+<area shape="rect" id="node8" href="$classLights.html#a20392486d66032fd530046cd1f33aaa0" title="Lights::setBrightness" alt="" coords="590,73,735,100"/>
+<area shape="rect" id="node11" href="$classLights.html#a59a952f3c895a78f9e382401a9b9701d" title="Lights::checkRelay" alt="" coords="595,124,730,150"/>
+<area shape="rect" id="node9" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="829,73,887,100"/>
+</map>

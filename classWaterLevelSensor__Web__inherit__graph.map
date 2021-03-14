@@ -1,0 +1,5 @@
+<map id="WaterLevelSensor_Web" name="WaterLevelSensor_Web">
+<area shape="rect" id="node2" href="$classWaterLevelSensor.html" title="&lt; Contactless water sensor array (4 levels) " alt="" coords="5,80,135,107"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="177,5,251,32"/>
+<area shape="rect" id="node4" href="$classCommon__Web.html" title="Common_Web" alt="" coords="159,80,269,107"/>
+</map>

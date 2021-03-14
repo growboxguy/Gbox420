@@ -1,0 +1,4 @@
+<map id="Switch_PWM" name="Switch_PWM">
+<area shape="rect" id="node2" href="$classSwitch.html" title="&lt; Represents and electronic switch like a Relay or MOSFET " alt="" coords="25,80,88,107"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="19,5,94,32"/>
+</map>

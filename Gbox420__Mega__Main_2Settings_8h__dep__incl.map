@@ -1,0 +1,51 @@
+<map id="Gbox420_Mega_Main/Settings.h" name="Gbox420_Mega_Main/Settings.h">
+<area shape="rect" id="node2" href="$Gbox420__Mega__Main_2src_2Components_2420Common_8h.html" title="Gbox420_Mega_Main/src\l/Components/420Common.h" alt="" coords="3069,169,3258,211"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_8ino.html" title="Main module for Mega2560 &#45; Grow tent monitoring and controlling sketch. " alt="" coords="5,563,209,605"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2src_2Components__Web_2420Module__Web_8h.html" title="Gbox420_Mega_Main/src\l/Components_Web/420Module_Web.h" alt="" coords="1496,355,1743,397"/>
+<area shape="rect" id="node27" href="$Gbox420__Mega__Main_2src_2Components_2420Module_8h.html" title="Gbox420_Mega_Main/src\l/Components/420Module.h" alt="" coords="3138,259,3317,300"/>
+<area shape="rect" id="node48" href="$Gbox420__Mega__Main_2src_2Helpers_8h.html" title="Set of common functions any class can use. " alt="" coords="2089,80,2259,121"/>
+<area shape="rect" id="node50" href="$Gbox420__Mega__Main_2Settings_8cpp.html" title="Gbox420_Mega_Main/Settings.cpp" alt="" coords="2333,87,2559,114"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2src_2Components__Web_2420Common__Web_8h.html" title="Gbox420_Mega_Main/src\l/Components_Web/420Common_Web.h" alt="" coords="2140,259,2397,300"/>
+<area shape="rect" id="node29" href="$Gbox420__Mega__Main_2src_2Components_2Sound_8h.html" title="Gbox420_Mega_Main/src\l/Components/Sound.h" alt="" coords="3650,355,3821,397"/>
+<area shape="rect" id="node36" href="$Gbox420__Mega__Main_2src_2Components_2AirPump_8h.html" title="Gbox420_Mega_Main/src\l/Components/AirPump.h" alt="" coords="3455,355,3626,397"/>
+<area shape="rect" id="node37" href="$Gbox420__Mega__Main_2src_2Components_2DHTSensor_8h.html" title="Gbox420_Mega_Main/src\l/Components/DHTSensor.h" alt="" coords="4090,355,4274,397"/>
+<area shape="rect" id="node39" href="$Gbox420__Mega__Main_2src_2Components_2Fan_8h.html" title="Gbox420_Mega_Main/src\l/Components/Fan.h" alt="" coords="1282,355,1453,397"/>
+<area shape="rect" id="node40" href="$Gbox420__Mega__Main_2src_2Components_2Fan__PWM_8h.html" title="PWM control AC power to a Fan. " alt="" coords="2752,355,2929,397"/>
+<area shape="rect" id="node41" href="$Gbox420__Mega__Main_2src_2Components_2Lights_8h.html" title="Gbox420_Mega_Main/src\l/Components/Lights.h" alt="" coords="3845,355,4015,397"/>
+<area shape="rect" id="node42" href="$Gbox420__Mega__Main_2src_2Components_2LightSensor_8h.html" title="Gbox420_Mega_Main/src\l/Components/LightSensor.h" alt="" coords="4965,459,5149,501"/>
+<area shape="rect" id="node43" href="$Gbox420__Mega__Main_2src_2Components_2PowerSensor_8h.html" title="Gbox420_Mega_Main/src\l/Components/PowerSensor.h" alt="" coords="2953,355,3147,397"/>
+<area shape="rect" id="node45" href="$Gbox420__Mega__Main_2src_2Components_2PowerSensorV3_8h.html" title="Gbox420_Mega_Main/src\l/Components/PowerSensorV3.h" alt="" coords="3171,355,3380,397"/>
+<area shape="rect" id="node47" href="$Gbox420__Mega__Main_2src_2Components_2420Common_8cpp.html" title="Gbox420_Mega_Main/src\l/Components/420Common.cpp" alt="" coords="3341,259,3543,300"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Main_2src_2Modules__Web_2AeroModule__Web_8h.html" title="Gbox420_Mega_Main/src\l/Modules_Web/AeroModule_Web.h" alt="" coords="298,563,525,605"/>
+<area shape="rect" id="node10" href="$Gbox420__Mega__Main_2src_2Components__Web_2Sound__Web_8h.html" title="Gbox420_Mega_Main/src\l/Components_Web/Sound_Web.h" alt="" coords="3119,459,3339,501"/>
+<area shape="rect" id="node12" href="$Gbox420__Mega__Main_2src_2Components__Web_2AirPump__Web_8h.html" title="Gbox420_Mega_Main/src\l/Components_Web/AirPump_Web.h" alt="" coords="2291,459,2524,501"/>
+<area shape="rect" id="node14" href="$Gbox420__Mega__Main_2src_2Components__Web_2DHTSensor__Web_8h.html" title="Gbox420_Mega_Main/src\l/Components_Web/DHTSensor_Web.h" alt="" coords="2843,459,3095,501"/>
+<area shape="rect" id="node16" href="$Gbox420__Mega__Main_2src_2Components__Web_2Fan__PWM__Web_8h.html" title="Gbox420_Mega_Main/src\l/Components_Web/Fan_PWM_Web.h" alt="" coords="729,459,974,501"/>
+<area shape="rect" id="node18" href="$Gbox420__Mega__Main_2src_2Components__Web_2Fan__Web_8h.html" title="Gbox420_Mega_Main/src\l/Components_Web/Fan_Web.h" alt="" coords="449,459,654,501"/>
+<area shape="rect" id="node20" href="$Gbox420__Mega__Main_2src_2Components__Web_2Lights__Web_8h.html" title="Gbox420_Mega_Main/src\l/Components_Web/Lights_Web.h" alt="" coords="2599,459,2818,501"/>
+<area shape="rect" id="node21" href="$Gbox420__Mega__Main_2src_2Components__Web_2LightSensor__Web_8h.html" title="Gbox420_Mega_Main/src\l/Components_Web/LightSensor_\lWeb.h" alt="" coords="2439,556,2653,612"/>
+<area shape="rect" id="node22" href="$Gbox420__Mega__Main_2src_2Components__Web_2PowerSensor__Web_8h.html" title="Gbox420_Mega_Main/src\l/Components_Web/PowerSensor_\lWeb.h" alt="" coords="1803,452,2025,508"/>
+<area shape="rect" id="node23" href="$Gbox420__Mega__Main_2src_2Components__Web_2PowerSensorV3__Web_8h.html" title="Gbox420_Mega_Main/src\l/Components_Web/PowerSensor\lV3_Web.h" alt="" coords="2050,452,2266,508"/>
+<area shape="rect" id="node24" href="$Gbox420__Mega__Main_2src_2Modules__Web_2HempyModule__Web_8h.html" title="Gbox420_Mega_Main/src\l/Modules_Web/HempyModule_Web.h" alt="" coords="998,459,1241,501"/>
+<area shape="rect" id="node25" href="$Gbox420__Mega__Main_2src_2Modules__Web_2ReservoirModule__Web_8h.html" title="Gbox420_Mega_Main/src\l/Modules_Web/ReservoirModule_\lWeb.h" alt="" coords="1510,452,1729,508"/>
+<area shape="rect" id="node26" href="$Gbox420__Mega__Main_2src_2Components__Web_2420Common__Web_8cpp.html" title="Gbox420_Mega_Main/src\l/Components_Web/420Common\l_Web.cpp" alt="" coords="1767,348,1979,404"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2src_2Modules__Web_2MainModule__Web_8h.html" title="Gbox420_Mega_Main/src\l/Modules_Web/MainModule_Web.h" alt="" coords="145,459,373,501"/>
+<area shape="rect" id="node9" href="$Gbox420__Mega__Main_2src_2Components__Web_2420Module__Web_8cpp.html" title="Gbox420_Mega_Main/src\l/Components_Web/420Module\l_Web.cpp" alt="" coords="1916,556,2117,612"/>
+<area shape="rect" id="node8" href="$Gbox420__Mega__Main_2src_2Modules__Web_2MainModule__Web_8cpp.html" title="Gbox420_Mega_Main/src\l/Modules_Web/MainModule\l_Web.cpp" alt="" coords="1644,660,1827,716"/>
+<area shape="rect" id="node11" href="$Gbox420__Mega__Main_2src_2Components__Web_2Sound__Web_8cpp.html" title="Gbox420_Mega_Main/src\l/Components_Web/Sound\l_Web.cpp" alt="" coords="3141,556,3316,612"/>
+<area shape="rect" id="node13" href="$Gbox420__Mega__Main_2src_2Components__Web_2AirPump__Web_8cpp.html" title="Gbox420_Mega_Main/src\l/Components_Web/AirPump\l_Web.cpp" alt="" coords="2175,556,2363,612"/>
+<area shape="rect" id="node15" href="$Gbox420__Mega__Main_2src_2Components__Web_2DHTSensor__Web_8cpp.html" title="Gbox420_Mega_Main/src\l/Components_Web/DHTSensor\l_Web.cpp" alt="" coords="2729,556,2936,612"/>
+<area shape="rect" id="node17" href="$Gbox420__Mega__Main_2src_2Components__Web_2Fan__PWM__Web_8cpp.html" title="Gbox420_Mega_Main/src\l/Components_Web/Fan_PWM\l_Web.cpp" alt="" coords="842,556,1042,612"/>
+<area shape="rect" id="node19" href="$Gbox420__Mega__Main_2src_2Components__Web_2Fan__Web_8cpp.html" title="Gbox420_Mega_Main/src\l/Components_Web/Fan_Web.cpp" alt="" coords="549,563,767,605"/>
+<area shape="rect" id="node28" href="$Gbox420__Mega__Main_2src_2Components_2420Module_8cpp.html" title="Gbox420_Mega_Main/src\l/Components/420Module.cpp" alt="" coords="4055,459,4247,501"/>
+<area shape="rect" id="node30" href="$Gbox420__Mega__Main_2src_2Components_2AirPump_8cpp.html" title="Gbox420_Mega_Main/src\l/Components/AirPump.cpp" alt="" coords="4271,459,4450,501"/>
+<area shape="rect" id="node31" href="$Gbox420__Mega__Main_2src_2Components_2Fan_8cpp.html" title="Gbox420_Mega_Main/src\l/Components/Fan.cpp" alt="" coords="1265,459,1435,501"/>
+<area shape="rect" id="node32" href="$Gbox420__Mega__Main_2src_2Components_2Fan__PWM_8cpp.html" title="Gbox420_Mega_Main/src\l/Components/Fan_PWM.cpp" alt="" coords="3363,459,3553,501"/>
+<area shape="rect" id="node33" href="$Gbox420__Mega__Main_2src_2Components_2Lights_8cpp.html" title="Gbox420_Mega_Main/src\l/Components/Lights.cpp" alt="" coords="4719,459,4890,501"/>
+<area shape="rect" id="node34" href="$Gbox420__Mega__Main_2src_2Components_2LightSensor_8cpp.html" title="Gbox420_Mega_Main/src\l/Components/LightSensor.cpp" alt="" coords="4828,563,5027,605"/>
+<area shape="rect" id="node35" href="$Gbox420__Mega__Main_2src_2Components_2Sound_8cpp.html" title="Gbox420_Mega_Main/src\l/Components/Sound.cpp" alt="" coords="4525,459,4695,501"/>
+<area shape="rect" id="node38" href="$Gbox420__Mega__Main_2src_2Components_2DHTSensor_8cpp.html" title="Gbox420_Mega_Main/src\l/Components/DHTSensor.cpp" alt="" coords="5173,459,5372,501"/>
+<area shape="rect" id="node44" href="$Gbox420__Mega__Main_2src_2Components_2PowerSensor_8cpp.html" title="Gbox420_Mega_Main/src\l/Components/PowerSensor.cpp" alt="" coords="3577,459,3784,501"/>
+<area shape="rect" id="node46" href="$Gbox420__Mega__Main_2src_2Components_2PowerSensorV3_8cpp.html" title="Gbox420_Mega_Main/src\l/Components/PowerSensorV3.cpp" alt="" coords="3808,459,4031,501"/>
+<area shape="rect" id="node49" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html" title="Gbox420_Mega_Main/src\l/Helpers.cpp" alt="" coords="2211,169,2382,211"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="Fan_PWM::checkState" name="Fan_PWM::checkState">
+<area shape="rect" id="node2" href="$classFan__PWM.html#a230aa46882b9d6523e84234c902ca4f6" title="&lt; PWM control an AC device using a Robodyn AC Light Dimming Module with Zero&#45;cross detection ..." alt="" coords="224,5,379,32"/>
+<area shape="rect" id="node3" href="$classFan__PWM.html#ac0d2dcb086bc37586b2472366c7b7710" title="Fan_PWM::refresh_Minute" alt="" coords="212,56,391,83"/>
+<area shape="rect" id="node4" href="$classFan__PWM.html#aa2c7a4fa5d6603dd2e690854af87b8ec" title="Fan_PWM::turnOff" alt="" coords="235,107,367,133"/>
+<area shape="rect" id="node6" href="$classFan__PWM.html#a102c1533175f884aad67c58cecb4a4f9" title="Fan_PWM::turnOn" alt="" coords="236,157,367,184"/>
+<area shape="rect" id="node5" href="$classFan__PWM__Web.html#a37f4e9c2c5745391c28ebbbe026e7369" title="Fan_PWM_Web::websiteEvent\l_Button" alt="" coords="439,125,644,166"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="DistanceSensor::report" name="DistanceSensor::report">
+<area shape="rect" id="node2" href="$classCommon.html#a9e60e2c26a5f4d72342a59a969954636" title="Common::report" alt="" coords="261,5,377,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="486,19,581,45"/>
+<area shape="rect" id="node4" href="$classDistanceSensor.html#a68d9e3890f28d425f0aeda624c3db925" title="DistanceSensor::getDistanceText" alt="" coords="209,107,428,133"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#a12506db99fbb4f29e603edbac38cbf94" title="toText_distance" alt="" coords="476,81,591,108"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Main_2src_2Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="504,132,563,159"/>
+</map>

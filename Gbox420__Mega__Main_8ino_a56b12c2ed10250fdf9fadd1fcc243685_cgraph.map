@@ -1,0 +1,6 @@
+<map id="runSec" name="runSec">
+<area shape="rect" id="node2" href="$Gbox420__Mega__Main_8ino.html#a784bf3330e9224d3a36b0879c1195a98" title="Turns the integrated LED on the Arduino board ON/OFF. " alt="" coords="149,5,230,32"/>
+<area shape="rect" id="node3" href="$classModule__Web.html#adec2319a465bb9478e3699ce2d9612db" title="Module_Web::runSec" alt="" coords="116,56,263,83"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="512,56,607,83"/>
+<area shape="rect" id="node5" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Common::refresh_Sec" alt="" coords="311,81,464,108"/>
+</map>

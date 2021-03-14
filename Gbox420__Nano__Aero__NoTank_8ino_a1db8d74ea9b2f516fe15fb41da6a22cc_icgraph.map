@@ -1,0 +1,8 @@
+<map id="Wireless" name="Wireless">
+<area shape="rect" id="node2" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title="InitializeWireless" alt="" coords="131,56,252,83"/>
+<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="304,107,423,133"/>
+<area shape="rect" id="node6" href="$Gbox420__Nano__Aero__NoTank_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title="getWirelessStatus" alt="" coords="127,5,256,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="471,31,525,57"/>
+<area shape="rect" id="node5" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="475,107,521,133"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a56c5bdcbeb79cd2246a2c88826850ca1" title="runMinute" alt="" coords="324,5,403,32"/>
+</map>

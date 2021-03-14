@@ -1,0 +1,14 @@
+<map id="Fan_Web::websiteEvent_Button" name="Fan_Web::websiteEvent_Button">
+<area shape="rect" id="node2" href="$classCommon.html#a0192d295366bf1e966d8b58a3ce57554" title="Checks whether a component belongs to the caller class or not. " alt="" coords="469,5,672,32"/>
+<area shape="rect" id="node4" href="$classFan.html#af5a22c8800d5a4f3295f44a313af71d2" title="Fan::TurnOff" alt="" coords="272,208,368,235"/>
+<area shape="rect" id="node9" href="$classCommon.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="219,259,421,285"/>
+<area shape="rect" id="node10" href="$classFan.html#a492f2551cf8f05d4ce64911807269764" title="Fan::fanSpeedToText" alt="" coords="246,309,394,336"/>
+<area shape="rect" id="node11" href="$classFan.html#a817f97adfe3990ef302f49359b3237f7" title="Fan::SetLowSpeed" alt="" coords="253,107,387,133"/>
+<area shape="rect" id="node13" href="$classFan.html#ad462f4c80b5024a1266e0a070527425e" title="Fan::SetHighSpeed" alt="" coords="252,157,388,184"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Main_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="720,56,815,83"/>
+<area shape="rect" id="node5" href="$classFan.html#a32c99a0575098a2600ea3c9f27013a98" title="Fan::checkFanStatus" alt="" coords="497,157,644,184"/>
+<area shape="rect" id="node6" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Time. " alt="" coords="506,107,635,133"/>
+<area shape="rect" id="node7" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="488,208,653,235"/>
+<area shape="rect" id="node8" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="497,259,644,285"/>
+<area shape="rect" id="node12" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="498,56,643,83"/>
+</map>
