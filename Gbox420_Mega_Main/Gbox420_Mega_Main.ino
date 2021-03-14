@@ -74,8 +74,10 @@ void setup()
   resetWebServer();                  ///< reset the WebServer
   setSyncProvider(getNtpTime);       ///< Points to method for updating time from NTP server
   setSyncInterval(86400);            ///< Sync time every day
-  setupMqtt();                       //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
-
+  if(ModuleSettings->Main1.ReportToMQTT)
+  {
+    setupMqtt();                       //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
+  }
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   logToSerials(F("Setting up refresh threads"), false, 0);
   OneSecThread.setInterval(1000);
@@ -203,16 +205,19 @@ void resetWebServer()
 
 void setupMqtt()
 {
+  /*
   MqttAPI.connectedCb.attach(mqttConnected);
   MqttAPI.disconnectedCb.attach(mqttDisconnected);
   MqttAPI.publishedCb.attach(mqttPublished);
   MqttAPI.dataCb.attach(mqttReceived);
+  */
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable to store the Publish to path
   strcat(ShortMessage, ModuleSettings->MqttLwtTopic);
   MqttAPI.lwt(ShortMessage, ModuleSettings->MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
   MqttAPI.setup();
 }
 
+/*
 void mqttConnected(void *response)
 {
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable
@@ -248,6 +253,7 @@ void mqttReceived(void *response)
   // else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data),true); }
   //mqttPublish(); //send out a fresh report
 }
+*/
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress
 
