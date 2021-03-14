@@ -8,22 +8,22 @@
  */
 
 #include "Arduino.h"
-#include "avr/wdt.h"                          // Watchdog timer for detecting a crash and automatically resetting the board
-#include "avr/boot.h"                         // Watchdog timer related bug fix
-#include "printf.h"                           // Printing the wireless status message from nRF24L01
-#include "TimerThree.h"                       // Interrupt handling for webpage
-#include "ELClient.h"                         // ESP-link
-#include "ELClientWebServer.h"                // ESP-link - WebServer API
-#include "ELClientCmd.h"                      // ESP-link - Get current time from the internet using NTP
-#include "ELClientRest.h"                     // ESP-link - REST API
-#include "ELClientMqtt.h"                     // ESP-link - MQTT protocol for sending and receiving IoT messages
-#include "Thread.h"                           // Splitting functions to threads for timing
-#include "StaticThreadController.h"           // Grouping threads
-#include "SerialLog.h"                        // Logging to the Serial console and to ESP-link's console
-#include "Settings.h"                         // EEPROM stored settings for every component
-#include "src/Modules_Web/MainModule_Web.h"   // Represents a complete box with all feautres
-#include "SPI.h"                              // allows you to communicate with SPI devices, with the Arduino as the master device
-#include "RF24.h"                             // https://github.com/maniacbug/RF24
+#include "avr/wdt.h"                        // Watchdog timer for detecting a crash and automatically resetting the board
+#include "avr/boot.h"                       // Watchdog timer related bug fix
+#include "printf.h"                         // Printing the wireless status message from nRF24L01
+#include "TimerThree.h"                     // Interrupt handling for webpage
+#include "ELClient.h"                       // ESP-link
+#include "ELClientWebServer.h"              // ESP-link - WebServer API
+#include "ELClientCmd.h"                    // ESP-link - Get current time from the internet using NTP
+#include "ELClientRest.h"                   // ESP-link - REST API
+#include "ELClientMqtt.h"                   // ESP-link - MQTT protocol for sending and receiving IoT messages
+#include "Thread.h"                         // Splitting functions to threads for timing
+#include "StaticThreadController.h"         // Grouping threads
+#include "SerialLog.h"                      // Logging to the Serial console and to ESP-link's console
+#include "Settings.h"                       // EEPROM stored settings for every component
+#include "src/Modules_Web/MainModule_Web.h" // Represents a complete box with all feautres
+#include "SPI.h"                            // allows you to communicate with SPI devices, with the Arduino as the master device
+#include "RF24.h"                           // https://github.com/maniacbug/RF24
 
 // Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API - Google Sheets reporting)
@@ -73,8 +73,10 @@ void setup()
   resetWebServer();                  ///< reset the WebServer
   setSyncProvider(getNtpTime);       ///< Points to method for updating time from NTP server
   setSyncInterval(86400);            ///< Sync time every day
-  setupMqtt();                       //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
-
+  if ((ModuleSettings->Main1).ReportToMQTT)
+  {
+    setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
+  }
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   logToSerials(F("Setting up refresh threads"), false, 0);
   OneSecThread.setInterval(1000);
@@ -202,16 +204,17 @@ void resetWebServer()
 
 void setupMqtt()
 {
-  MqttAPI.connectedCb.attach(mqttConnected);
-  MqttAPI.disconnectedCb.attach(mqttDisconnected);
-  MqttAPI.publishedCb.attach(mqttPublished);
-  MqttAPI.dataCb.attach(mqttReceived);
+  //MqttAPI.connectedCb.attach(mqttConnected);
+  //MqttAPI.disconnectedCb.attach(mqttDisconnected);
+  //MqttAPI.publishedCb.attach(mqttPublished);
+  //MqttAPI.dataCb.attach(mqttReceived);
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable to store the Publish to path
   strcat(ShortMessage, ModuleSettings->MqttLwtTopic);
   MqttAPI.lwt(ShortMessage, ModuleSettings->MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
   MqttAPI.setup();
 }
 
+/*
 void mqttConnected(void *response)
 {
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable
@@ -247,6 +250,7 @@ void mqttReceived(void *response)
   // else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data),true); }
   //mqttPublish(); //send out a fresh report
 }
+*/
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress
 
