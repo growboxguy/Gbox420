@@ -74,7 +74,7 @@ void HempyModule_Web::reportToJSON()
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"PT1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpTimeOut));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PD1\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DT1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.DrainWaitTime));
   strcat_P(LongMessage, (PGM_P)F("\",\"WB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.WeightB));
@@ -98,7 +98,7 @@ void HempyModule_Web::reportToJSON()
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F("\",\"PT2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpTimeOut));
-  strcat_P(LongMessage, (PGM_P)F("\",\"PD2\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DT2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.DrainWaitTime));
   strcat_P(LongMessage, (PGM_P)F("\",\"WB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightB));
