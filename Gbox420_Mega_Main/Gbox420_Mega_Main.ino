@@ -204,26 +204,24 @@ void resetWebServer()
 
 void setupMqtt()
 {
-  //MqttAPI.connectedCb.attach(mqttConnected);
+  MqttAPI.connectedCb.attach(mqttConnected);
   //MqttAPI.disconnectedCb.attach(mqttDisconnected);
   //MqttAPI.publishedCb.attach(mqttPublished);
-  //MqttAPI.dataCb.attach(mqttReceived);
+  MqttAPI.dataCb.attach(mqttReceived);
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable to store the Publish to path
   strcat(ShortMessage, ModuleSettings->MqttLwtTopic);
   MqttAPI.lwt(ShortMessage, ModuleSettings->MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
   MqttAPI.setup();
 }
 
-/*
+
 void mqttConnected(void *response)
 {
-  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable
-  strcat(ShortMessage, ModuleSettings->MqttTopic);
-  strcat_P(ShortMessage, (PGM_P)F("#"));
-  MqttAPI.subscribe(ShortMessage);
+  MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
   //if(*Debug) logToSerials(F("MQTT connected"), true);
 }
 
+/*
 void mqttDisconnected(void *response)
 {
   //if(*Debug) logToSerials(F("MQTT disconnected"), true);
@@ -233,24 +231,25 @@ void mqttPublished(void *response)
 {
   //if(*Debug) logToSerials(F("MQTT published"), true);
 }
+*/
 
 void mqttReceived(void *response)
 {
   ELClientResponse *res = (ELClientResponse *)response;
-  char topic[64];
-  char data[16];
-  ((*res).popString()).toCharArray(topic, 64);
-  ((*res).popString()).toCharArray(data, 16);
+  char topic[MaxShotTextLength];
+  char data[MaxShotTextLength];
+  ((*res).popString()).toCharArray(topic, MaxShotTextLength);
+  ((*res).popString()).toCharArray(data, MaxShotTextLength);
 
-  logToSerials(F("Received: "), false);
-  logToSerials(topic, false);
-  logToSerials(F(" - "), false);
+  logToSerials(F("MQTT Topic: "), false);
+  logToSerials(topic, true);
+  logToSerials(F("MQTT Data"), false);
   logToSerials(data, true);
   // if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(true); else if(strcmp(data,"0")==0)turnLightOFF(true); }
   // else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data),true); }
-  //mqttPublish(); //send out a fresh report
+  Main1->reportToMQTTTrigger(true); //send out a fresh report
 }
-*/
+
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress
 

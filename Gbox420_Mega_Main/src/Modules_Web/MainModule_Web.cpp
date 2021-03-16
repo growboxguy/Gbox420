@@ -95,7 +95,7 @@ void MainModule::websiteEvent_Load(char *url)
     WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
     WebServer.setArgBoolean(getComponentName(F("MQTT")), *ReportToMQTT);
     WebServer.setArgInt(getComponentName(F("MQTTF")), *MQTTReportingFrequency);
-    WebServer.setArgString(getComponentName(F("MT")), ModuleSettings->MqttTopic);
+    WebServer.setArgString(getComponentName(F("MT")), ModuleSettings->MqttPubTopic);
     WebServer.setArgString(getComponentName(F("MLT")), ModuleSettings->MqttLwtTopic);
     WebServer.setArgString(getComponentName(F("MLM")), ModuleSettings->MqttLwtMessage);
     WebServer.setArgBoolean(getComponentName(F("Sound")), Sound1 -> getEnabledState());
@@ -538,7 +538,7 @@ void MainModule::setMQTTReportingFrequency(uint16_t Frequency)
 
 void MainModule::setMQTTTopic(const char *RootTopic)
 {
-  strncpy(ModuleSettings->MqttTopic, RootTopic, MaxShotTextLength);
+  strncpy(ModuleSettings->MqttPubTopic, RootTopic, MaxShotTextLength);
   getSoundObject()->playOnSound();
   addToLog(F("MQTT topic updated"));
 }

@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 3; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 4; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -43,8 +43,9 @@ typedef struct
   bool Debug = true;                                               ///< Logs debug messages to serial and web outputs
   bool Metric = true;                                              ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
-  char MqttTopic[MaxShotTextLength] = {"GrowBoxGuy/Gbox420/"};     ///< MQTT messages are sent to this topic. Ends with a forward slash
-  char MqttLwtTopic[MaxShotTextLength] = {"GrowBoxGuy/LWT/"};      ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
+  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/"};     ///< Publish MQTT messages to this topic. Ends with a forward slash
+  char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/#"};     ///< Subscribe to messages of this topic and all sub-topic
+  char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/"};      ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
   char MqttLwtMessage[MaxWordLength] = {"Gbox420 Offline"};        ///< this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the MQTT client unexpectedly goes offline
 
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers

@@ -146,7 +146,7 @@ void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///< clear variable
-  strcat(ShortMessage,ModuleSettings->MqttTopic);
+  strcat(ShortMessage,ModuleSettings->MqttPubTopic);
   if (*Debug)
   { ///< print the report command to console
     logToSerials(F("MQTT reporting:"), false, 2);
