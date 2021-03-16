@@ -49,7 +49,7 @@ function GetNamedRangeValues(rangeName, dropCache) {
   }
   else {
     if (Debug) LogToConsole("Updating cache for: " + rangeName, true, 2);
-    var rangeData = SpreadsheetApp.getActive().getRangeByName(rangeName).getValues();
+    var rangeData = ActiveSpreadsheetApp.getRangeByName(rangeName).getValues();
     cache.put(rangeName, JSON.stringify(rangeData), 21600); // cache for 6 hours to ensure it is not queried multiple times during script execution
     return rangeData;
   }
@@ -57,7 +57,7 @@ function GetNamedRangeValues(rangeName, dropCache) {
 
 function LoadCache(rangeName)
 {
-   var rangeData = SpreadsheetApp.getActive().getRangeByName(rangeName).getValues();
+   var rangeData = ActiveSpreadsheetApp.getRangeByName(rangeName).getValues();
    CacheService.getScriptCache().put(rangeName, JSON.stringify(rangeData), 21600); // cache for 6 hours to ensure it is not queried multiple times during script execution
 }
 
@@ -86,7 +86,7 @@ function Test_SaveNamedRange() {
 }
 
 function SaveNamedRange(rangeName, data) {  //updates a Named Range in Google Sheets with data (type: Object[][] )
-  SpreadsheetApp.getActive().getRangeByName(rangeName).setValues(data);
+  ActiveSpreadsheetApp.getRangeByName(rangeName).setValues(data);
   var cache = CacheService.getScriptCache();
   cache.remove(rangeName);  //Clear cached entry
   cache.put(rangeName, JSON.stringify(data), 21600); // cache for 6 hours to ensure it is not queried multiple times during script execution
@@ -463,7 +463,6 @@ function scrollToLast() {
 
 function cleanUpDebug() { /// < Removes log entries with debug mode enabled
   LogToConsole("Cleaning up the logs from debug messages...", true, 0);
-  var logSheet = SpreadsheetApp.getActive().getSheetByName("Log");
   var logHeader = logSheet.getDataRange().offset(0, 0, 1).getValues()[0]; //Get first row of the Log sheet
 
   match = null;

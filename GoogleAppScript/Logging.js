@@ -5,7 +5,7 @@ function Test_SaveToLog() {
 //Stores the received data on the Log sheet
 function SaveToLog(Log) {
   LogToConsole("Updating Log sheet...", true, 0);
-  var logSheet = SpreadsheetApp.getActive().getSheetByName("Log");
+
   var headings = logSheet.getDataRange().offset(0, 0, 1).getValues()[0]; //Get first row of the Log sheet
   var rowToInsert = [];
   for (var i = 0; i < headings.length; i++) {
@@ -35,7 +35,6 @@ function SaveToLog(Log) {
 }
 
 function GetLogColumnRange(name, rowLimit) {  //returns the entire column with the matching header name
-  var logSheet = SpreadsheetApp.getActive().getSheetByName("Log");
   var logHeader = logSheet.getDataRange().offset(0, 0, 1).getValues()[0]; //Get first row of the Log sheet
 
   match = null;

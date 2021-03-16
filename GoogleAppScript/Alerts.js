@@ -82,7 +82,7 @@ function CheckAlerts(Log) {
     emailTemplate.Alerts = alerts; //Fill Alert messages into the template
     emailTemplate.AlertMessages = alertMessages; //Fill Alert messages into the template
     emailTemplate.RecoveredMessages = recoveredMessages; //Fill Recovered messages into the template
-    emailTemplate.LatestStatus = convertRange2html(SpreadsheetApp.getActive().getRangeByName("Status").getDataRegion());
+    emailTemplate.LatestStatus = convertRange2html(ActiveSpreadsheetApp.getRangeByName("Status").getDataRegion());
     //emailTemplate.LatestStatus = GetNamedRangeValues("Status",true).filter(function (row) {
     //  return row[columns_keyColumn] != null && row[columns_keyColumn] != "";  //Filter out rows with a blank key colum
     //});
@@ -110,7 +110,7 @@ function sendEmail(emailTemplate) {
     var emailImages = {};
     if (GetSettingsValue("Attach charts") == "Yes") {
       if (Debug) LogToConsole("Attaching charts...", true, 2);
-      var charts = SpreadsheetApp.getActive().getSheetByName("Charts").getCharts();
+      var charts = chartsSheet.getCharts();
       var chartBlobs = new Array(charts.length);
       for (var i = 0; i < charts.length; i++) {
         var builder = charts[i].modify();
