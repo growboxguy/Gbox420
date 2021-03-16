@@ -50,15 +50,33 @@ function GetNamedRangeValues(rangeName, dropCache) {
   else {
     if (Debug) LogToConsole("Updating cache for: " + rangeName, true, 2);
     var rangeData = SpreadsheetApp.getActive().getRangeByName(rangeName).getValues();
-    cache.put(rangeName, JSON.stringify(rangeData), 120); // cache for 120 seconds to ensure it is not queried multiple times during script execution
+    cache.put(rangeName, JSON.stringify(rangeData), 21600); // cache for 6 hours to ensure it is not queried multiple times during script execution
     return rangeData;
   }
 }
 
+function LoadCache(rangeName)
+{
+   var rangeData = SpreadsheetApp.getActive().getRangeByName(rangeName).getValues();
+   CacheService.getScriptCache().put(rangeName, JSON.stringify(rangeData), 21600); // cache for 6 hours to ensure it is not queried multiple times during script execution
+}
+
 function WipeCache() {  ///< Force to drop all cached named ranges
   LogToConsole("Wiping cached Named ranges", true, 1);
-  var storedCache = CacheService.getUserCache();
-  CacheService.getUserCache().remove(storedCache);
+  var cache = CacheService.getScriptCache();
+  cache.remove("Charts");
+  cache.remove("Columns");
+  cache.remove("Settings");
+  cache.remove("Status");
+}
+
+function ReloadCache() {  ///< Force to drop all cached named ranges
+  LogToConsole("Reloading cached Named ranges", true, 1);
+  WipeCache();
+  LoadCache("Charts");
+  LoadCache("Columns");
+  LoadCache("Settings");
+  LoadCache("Status");
 }
 
 function Test_SaveNamedRange() {
@@ -69,6 +87,9 @@ function Test_SaveNamedRange() {
 
 function SaveNamedRange(rangeName, data) {  //updates a Named Range in Google Sheets with data (type: Object[][] )
   SpreadsheetApp.getActive().getRangeByName(rangeName).setValues(data);
+  var cache = CacheService.getScriptCache();
+  cache.remove(rangeName);  //Clear cached entry
+  cache.put(rangeName, JSON.stringify(data), 21600); // cache for 6 hours to ensure it is not queried multiple times during script execution
 }
 
 function Test_GetFriendlyColumnName() {

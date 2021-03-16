@@ -84,7 +84,7 @@ function doPost(receivedData) {
 //This is where the extracted JSON report is processed
 function ProcessBoxData(JSONBoxData) {
   try {
-    WipeCache();  ///< Remove cached Named Ranges and get a fresh copy
+    //ReloadCache();  ///< Remove cached Named Ranges and get a fresh copy
     LogToConsole("Processing BoxDataJSON:", false, 0);
     if (JSONBoxData.Log != null) {
       LogToConsole(JSON.stringify(JSONBoxData.Log), true, 0);  //Print the JSON on the Stackdriver logging (View / Stackdriver logging)
@@ -92,7 +92,7 @@ function ProcessBoxData(JSONBoxData) {
       UpdateColumns(JSONBoxData.Log); //Add missing columns to the Settings sheet 
       UpdateStatus(JSONBoxData.Log); //Add the latest status to the Status page     
       CheckAlerts(JSONBoxData.Log); //Checks for alerts and send an email alert
-      UpdateCharts();  //Updates all Charts (Overview + Charts tab)    
+      //UpdateCharts();  //Updates all Charts (Overview + Charts tab)    
     }
     else {
       LogToConsole("Received BoxData does not contain a Log section. Skipping log processing.", true, 1);
@@ -103,9 +103,9 @@ function ProcessBoxData(JSONBoxData) {
     // else{
     //    console.log("Received BoxData does not contain a Settings section. Skipping settings processing."
     // }
-    if (JSONBoxData.LightSensor1 != null) {
-      UpdateCalibrationValues("LightSensor1", JSONBoxData.LightSensor1.Readings);
-    }
+    //if (JSONBoxData.LightSensor1 != null) {
+    //  UpdateCalibrationValues("LightSensor1", JSONBoxData.LightSensor1.Readings);
+    //}
     SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("BoxData processed successfully");
   }
   catch (e) {

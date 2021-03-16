@@ -11,7 +11,7 @@ function UpdateColumns(Log) {
 }
 
 function UpdateFriendlyName() {
-  var columns = GetNamedRangeValues("Columns", true);
+  var columns = GetNamedRangeValues("Columns");
   for (var i = 0; i < columns.length; i++) {
     key = columns[i][columns_keyColumn];
     friendlyName = GetFriendlyValue(key, null);
@@ -29,7 +29,7 @@ function UpdateFriendlyName() {
 function FindNewColumns(Log) { ///< Add newly discovered keys to Columns tab and update FriendlyName column
   LogToConsole("Updating Columns sheet...", true, 0);
   var newColumnDiscovered = false;
-  var columns = GetNamedRangeValues("Columns", true);
+  var columns = GetNamedRangeValues("Columns");
   //Adding all columns from the received Log JSON
   var Components = Object.getOwnPropertyNames(Log);
   for (var i = 0; i < Components.length; i++) {

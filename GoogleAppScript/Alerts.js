@@ -16,7 +16,7 @@ function CheckAlerts(Log) {
   var recoveredMessages = []; //For storing recovery messages  
   var sendEmailAlert = false; //Initially assume everything is OK
 
-  var columns = GetNamedRangeValues("Columns", true);
+  var columns = GetNamedRangeValues("Columns");
   var Components = Object.getOwnPropertyNames(Log);
   for (var i = 0; i < Components.length; i++) {
     var Properties = Object.getOwnPropertyNames(Log[Components[i]]);
@@ -114,7 +114,7 @@ function sendEmail(emailTemplate) {
       var chartBlobs = new Array(charts.length);
       for (var i = 0; i < charts.length; i++) {
         var builder = charts[i].modify();
-        builder.setOption('chartArea', { width: '90%', height: '75%', bottom: '17%', left: '8%' }); //{left:10,left:10,width:'90%',height:'75%'}
+        builder.setOption('chartArea', { width: '90%', height: '75%', left: '8%' }); //{left:10,left:10,width:'90%',height:'75%'}
         builder.setOption('width', 1024);
         builder.setOption('height', 768);
         //builder.setOption('maxLines', 3);

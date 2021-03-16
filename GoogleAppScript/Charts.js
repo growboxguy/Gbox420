@@ -1,5 +1,4 @@
 function UpdateCharts() {
-  GetNamedRangeValues("Columns", true);  ///< Force a refresh of the Columns named range
   UpdateOverviewChart();
   UpdateChartsTab();
 }

@@ -11,7 +11,7 @@ function getTestJSONData() {
 
 function RunFakeReport() {
   LogToConsole(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", true, 0);
-  WipeCache(); ///< Remove cached Named Ranges and get a fresh copy  
+  ReloadCache(); ///< Remove cached Named Ranges and get a fresh copy  
   SpreadsheetApp.getActive().getRangeByName("LastReportTime").setValue(Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format")));
   SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Processing...");
   LogToConsole("Loading fake report data...", true, 0);
