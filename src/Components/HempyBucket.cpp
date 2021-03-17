@@ -126,7 +126,7 @@ void HempyBucket::updateState(HempyStates NewState)
       if (WasteReservoirWeightSensor->getWeight(false) - WasteReservoirStartWeight >= *OverflowTarget) //Check if target overflow weight is reached
       {
         WetWeight = BucketWeightSensor->getWeight(); //Measure wet weight
-        DryWeight = WetWeight - *EvaporationTarget;  //Calculate next watering weight
+        DryWeight = ((float)((int)(WetWeight - *EvaporationTarget * 10))) / 10; //Calculate next watering weight
         updateState(HempyStates::IDLE);
       }
       else
