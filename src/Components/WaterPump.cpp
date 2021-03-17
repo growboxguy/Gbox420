@@ -5,7 +5,7 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
   this->Parent = Parent;
   logToSerials(F(""), true, 0);  //New line
   logToSerials(F(""), false, 1); //Extra indentation
-  PumpSwitch = new Switch_PWM(F("SpraySolenoid"), DefaultSettings->PumpPin, &DefaultSettings->Speed, &DefaultSettings->SpeedLowLimit, DefaultSettings->PumpPinNegativeLogic);
+  PumpSwitch = new Switch_PWM(F("PumpPWM"), DefaultSettings->PumpPin, &DefaultSettings->Speed, &DefaultSettings->SpeedLowLimit, DefaultSettings->PumpPinNegativeLogic);
   PumpTimeOut = &DefaultSettings->PumpTimeOut;
   PumpEnabled = &DefaultSettings->PumpEnabled;
   if (*PumpEnabled)
@@ -47,8 +47,8 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
   {
     State = NewState;
     StateTimer = millis(); ///< Start measuring the time spent in the new State
-    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)Name);
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); //reset variable to store the Publish to path
+    strcpy_P(LongMessage, (PGM_P)Name);
     strcat_P(LongMessage, (PGM_P)F(" state: "));
     strcat(LongMessage, toText_waterPumpState(State));
     strcat_P(LongMessage, (PGM_P)F(" -> "));

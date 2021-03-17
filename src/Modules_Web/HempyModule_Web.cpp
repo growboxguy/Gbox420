@@ -11,7 +11,7 @@ struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};      
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common_Web(Name)
+HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
 { ///< Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -129,14 +129,14 @@ void HempyModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("B1PS")), HempyBucketCommand1ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B1T")), HempyBucketCommand1ToSend.PumpTimeOut);
     WebServer.setArgInt(getComponentName(F("B1D")), HempyBucketCommand1ToSend.DrainWaitTime);
-    WebServer.setArgString(getComponentName(F("B1DW")), HempyBucketResponse1Received.DryWeight);
+    WebServer.setArgString(getComponentName(F("B1DW")), toText(HempyBucketResponse1Received.DryWeight));
     WebServer.setArgString(getComponentName(F("B2ET")), toText(HempyBucketCommand2ToSend.EvaporationTarget));
     WebServer.setArgString(getComponentName(F("B2OF")), toText(HempyBucketCommand2ToSend.OverflowTarget));
     WebServer.setArgString(getComponentName(F("B2WL")), toText(HempyBucketCommand2ToSend.WasteLimit));
     WebServer.setArgInt(getComponentName(F("B2PS")), HempyBucketCommand2ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B2T")), HempyBucketCommand2ToSend.PumpTimeOut);
     WebServer.setArgInt(getComponentName(F("B2D")), HempyBucketCommand2ToSend.DrainWaitTime);
-    WebServer.setArgString(getComponentName(F("B2DW")), HempyBucketResponse2Received.DryWeight);
+    WebServer.setArgString(getComponentName(F("B2DW")), toText(HempyBucketResponse2Received.DryWeight));
   }
 }
 

@@ -11,7 +11,7 @@ struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};          
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common_Web(Name)
+AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
 { ///< Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -117,11 +117,11 @@ void AeroModule_Web::websiteEvent_Load(char *url)
   if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgBoolean(getComponentName(F("Tank")), AeroResponse1Received.PressureTankPresent);
-    WebServer.setArgString(getComponentName(F("Dur")), AeroCommand1ToSend.Duration);
+    WebServer.setArgString(getComponentName(F("Dur")), toText(AeroCommand1ToSend.Duration));
     WebServer.setArgInt(getComponentName(F("DInt")), AeroCommand1ToSend.DayInterval);
     WebServer.setArgInt(getComponentName(F("NInt")), AeroCommand1ToSend.NightInterval);
-    WebServer.setArgString(getComponentName(F("PMx")), AeroCommand1ToSend.MaxPressure);
-    WebServer.setArgString(getComponentName(F("PMn")), AeroCommand1ToSend.MinPressure);
+    WebServer.setArgString(getComponentName(F("PMx")), toText(AeroCommand1ToSend.MaxPressure));
+    WebServer.setArgString(getComponentName(F("PMn")), toText(AeroCommand1ToSend.MinPressure));
     WebServer.setArgInt(getComponentName(F("PS")), AeroCommand2ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("PT")), AeroCommand2ToSend.PumpTimeOut);
     WebServer.setArgInt(getComponentName(F("PPT")), AeroCommand2ToSend.PumpPrimingTime);

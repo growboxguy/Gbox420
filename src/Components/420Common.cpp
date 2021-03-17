@@ -7,11 +7,13 @@ Common::Common(const __FlashStringHelper *Name)
   logToSerials(this->Name, false, 0);
 }
 
+/*
 Common::Common()
 {
   logToSerials(F("Initializing "), false, 2);
   logToSerials(this->Name, false, 0);
 }
+*/
 
 void Common::report()
 {
@@ -119,5 +121,5 @@ void Common::appendName(bool Clear)
     memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable to store the Publish to path
   }
   strcpy_P(ShortMessage, (PGM_P)Name);
-  strcpy_P(ShortMessage, (PGM_P)F(" "));
+  strcat_P(ShortMessage, (PGM_P)F(" "));
 }
