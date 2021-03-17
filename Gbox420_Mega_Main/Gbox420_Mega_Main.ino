@@ -181,13 +181,13 @@ void resetWebServer()
   URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json");   ///< setup handling request from GrowBox.html
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); ///< setup handling request from Settings.html
   //URLHandler *TestHandler = WebServer.createURLHandler("/Test.html.json");         ///< setup handling request from Test.html
-  GrowBoxHandler->loadCb.attach(&loadCallback);           ///< GrowBox tab - Called then the website loads initially
-  GrowBoxHandler->refreshCb.attach(&refreshCallback);     ///< GrowBox tab - Called periodically to refresh website content
-  GrowBoxHandler->buttonCb.attach(&buttonCallback);  ///< GrowBox tab - Called when a button is pressed on the website
+  GrowBoxHandler->loadCb.attach(&loadCallback);        ///< GrowBox tab - Called then the website loads initially
+  GrowBoxHandler->refreshCb.attach(&refreshCallback);  ///< GrowBox tab - Called periodically to refresh website content
+  GrowBoxHandler->buttonCb.attach(&buttonCallback);    ///< GrowBox tab - Called when a button is pressed on the website
   GrowBoxHandler->setFieldCb.attach(&fieldCallback);   ///< GrowBox tab - Called when a field is changed on the website
-  SettingsHandler->loadCb.attach(&loadCallback);          ///< Settings tab - Called then the website loads initially
-  SettingsHandler->refreshCb.attach(&refreshCallback);    ///< Settings tab - Called periodically to refresh website content
-  SettingsHandler->buttonCb.attach(&buttonCallback); ///< Settings tab - Called when a button is pressed on the website
+  SettingsHandler->loadCb.attach(&loadCallback);       ///< Settings tab - Called then the website loads initially
+  SettingsHandler->refreshCb.attach(&refreshCallback); ///< Settings tab - Called periodically to refresh website content
+  SettingsHandler->buttonCb.attach(&buttonCallback);   ///< Settings tab - Called when a button is pressed on the website
   SettingsHandler->setFieldCb.attach(&fieldCallback);  ///< Settings tab - Called when a field is changed on the website
   //TestHandler->loadCb.attach(&loadCallback);                                       ///< Test tab - Called then the website loads initially
   //TestHandler->refreshCb.attach(&refreshCallback);                                 ///< Test tab - Called periodically to refresh website content
@@ -235,24 +235,26 @@ void mqttPublished(void *response)
 void mqttReceived(void *response)
 {
   ELClientResponse *res = (ELClientResponse *)response;
-  String topic = (*res).popString();  
+  char command[MaxShotTextLength];
   char data[MaxShotTextLength];
+  String topic = (*res).popString();
   ((*res).popString()).toCharArray(data, MaxShotTextLength);
-
-  static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic)-1;
-  //strncpy(command, topic +MqttSubTopicLength, sizeof(topic) - MqttSubTopicLength );
-
-  logToSerials(F("MQTT Topic:"), false, 0);
-  logToSerials(&topic, true, 1);
-
-  topic.remove(0,MqttSubTopicLength);
-  logToSerials(F("MQTT Command:"), false, 0);
-  logToSerials(topic, true, 1);
-
-  logToSerials(F("MQTT Data:"), false, 0);
-  logToSerials(&data, true, 1);
-  // if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(true); else if(strcmp(data,"0")==0)turnLightOFF(true); }
-  // else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data),true); }
+  if (*Debug)
+  {
+    logToSerials(F("MQTT Topic:"), false, 0);
+    logToSerials(&topic, true, 1);
+  }
+  static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1;  //Get length of the command topic
+  topic.remove(0, MqttSubTopicLength);  //Cut the known command topic from the arrived topic
+  topic.toCharArray(command, MaxShotTextLength);
+  if (*Debug)
+  {
+    logToSerials(F("MQTT Command:"), false, 0);
+    logToSerials(&command, true, 1);
+    logToSerials(F("MQTT Data:"), false, 0);
+    logToSerials(&data, true, 1);
+  }
+  Main1->commandEventTrigger(command, data);
   Main1->reportToMQTTTrigger(true); //send out a fresh report
 }
 
@@ -294,7 +296,7 @@ time_t getNtpTime()
 */
 void loadCallback(__attribute__((unused)) char *Url)
 {
-  Main1->loadEvent(Url); //Runs through all components that are subscribed to this event
+  Main1->loadEventTrigger(Url); //Runs through all components that are subscribed to this event
 }
 
 /**
@@ -303,7 +305,7 @@ void loadCallback(__attribute__((unused)) char *Url)
 */
 void refreshCallback(__attribute__((unused)) char *Url)
 {
-  Main1->refreshEvent(Url);
+  Main1->refreshEventTrigger(Url);
 }
 
 /**
@@ -318,7 +320,7 @@ void buttonCallback(char *Button)
   }
   else
   {
-    Main1->commandEvent(Button,"");
+    Main1->commandEventTrigger(Button, "");
   }
   saveSettings(ModuleSettings);
 }
@@ -329,7 +331,7 @@ void buttonCallback(char *Button)
 */
 void fieldCallback(char *Field)
 { ///< Called when any field on the website is updated.
-  Main1->commandEvent(Field,WebServer.getArgString());
+  Main1->commandEvent(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
 }
 

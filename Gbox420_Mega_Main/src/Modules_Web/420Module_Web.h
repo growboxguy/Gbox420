@@ -30,9 +30,9 @@ public:
   void addToWebsiteQueue_Load(Common_Web *Module);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
   void addToWebsiteQueue_Refresh(Common_Web *Module); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   void addToCommandQueue(Common_Web *Module);  ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method
-  void loadEvent(char *Url);
-  void refreshEvent(char *Url);
-  void commandEvent(char *command, char *data);
+  void loadEventTrigger(char *Url);
+  void refreshEventTrigger(char *Url);
+  void commandEventTrigger(char *command, char *data);
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);
   char *eventLogToJSON(bool Append = false); ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]

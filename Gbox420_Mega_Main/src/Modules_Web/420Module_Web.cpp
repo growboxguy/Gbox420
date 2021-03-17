@@ -37,7 +37,7 @@ void Module_Web::addToCommandQueue(Common_Web *Module)
 
 ///< Website queues: Notify components in the Module_Web of a website event
 
-void Module_Web::loadEvent(char *url)
+void Module_Web::loadEventTrigger(char *url)
 { ///< called when website is loaded. Runs through all components that subscribed for this event
   for (int i = 0; i < WebsiteQueue_Load_Count; i++)
   {
@@ -45,7 +45,7 @@ void Module_Web::loadEvent(char *url)
   }
 }
 
-void Module_Web::refreshEvent(char *url)
+void Module_Web::refreshEventTrigger(char *url)
 { ///< called when website is refreshed.
   for (int i = 0; i < WebsiteQueue_Refresh_Count; i++)
   {
@@ -53,7 +53,7 @@ void Module_Web::refreshEvent(char *url)
   }
 }
 
-void Module_Web::commandEvent(char *command, char *data)
+void Module_Web::commandEventTrigger(char *command, char *data)
 {
   if (*Debug)
     logToSerials(&command, false, 0);
