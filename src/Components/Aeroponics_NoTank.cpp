@@ -298,7 +298,7 @@ void Aeroponics_NoTank::setMaxPressure(float Pressure)
   {
     *MaxPressure = Pressure;
     appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("Max pressure updated"));
+    strcat_P(ShortMessage, (PGM_P)F("max pressure updated"));
     Parent->addToLog(ShortMessage);
     Parent->getSoundObject()->playOnSound();
   }

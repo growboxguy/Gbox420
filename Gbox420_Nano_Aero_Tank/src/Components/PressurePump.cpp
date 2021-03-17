@@ -95,7 +95,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
     if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
     {
       appendName(true);
-      strcat_P(ShortMessage, (PGM_P)F("pump timeout"));
+      strcat_P(ShortMessage, (PGM_P)F("timeout"));
       Parent->addToLog(ShortMessage);
       *PumpEnabled = false;
       updateState(PressurePumpStates::BLOWOFF);

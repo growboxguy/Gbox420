@@ -252,7 +252,7 @@ void Lights::setDimDuration(int DimmingDuration)
 {
   *(this->DimmingDuration) = DimmingDuration;
   appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("Dimming updated"));
+  strcat_P(ShortMessage, (PGM_P)F("dimming updated"));
   Parent->addToLog(ShortMessage);
 }
 
@@ -453,14 +453,14 @@ void Lights::setFadeOnOff(bool State)
   if (*FadingEnabled)
   {
     appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("Fading ON"));
+    strcat_P(ShortMessage, (PGM_P)F("fading ON"));
     Parent->addToLog(ShortMessage);
     Parent->getSoundObject()->playOnSound();
   }
   else
   {
     appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("Fading OFF"));
+    strcat_P(ShortMessage, (PGM_P)F("fading OFF"));
     Parent->addToLog(ShortMessage);
     Parent->getSoundObject()->playOffSound();
   }
@@ -475,7 +475,7 @@ void Lights::setFadeIncrements(uint8_t Increment)
 {
   *FadingIncrements = Increment;
   appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("Fading updated"));
+  strcat_P(ShortMessage, (PGM_P)F("fading updated"));
   Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
