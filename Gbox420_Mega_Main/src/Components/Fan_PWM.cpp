@@ -56,27 +56,33 @@ void Fan_PWM::checkState()
   }
 }
 
-void Fan_PWM::turnOff()
-{
-  *State = false;
-  checkState();
-  Parent->addToLog(F("Fan OFF"));
-  Parent->getSoundObject()->playOffSound();
-}
-
 void Fan_PWM::turnOn()
 {
   *State = true;
   checkState();
-  Parent->addToLog(F("Fan ON"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("ON"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
+}
+
+void Fan_PWM::turnOff()
+{
+  *State = false;
+  checkState();
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("OFF"));
+  Parent->addToLog(ShortMessage);
+  Parent->getSoundObject()->playOffSound();
 }
 
 void Fan_PWM::setSpeed(uint8_t NewSpeed)
 {
   *Speed = NewSpeed;
   PWMDimmer->setPower(map(NewSpeed,*MinSpeed,100,0,100));
-  Parent->addToLog(F("Fan speed updated"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("speed updated"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
 

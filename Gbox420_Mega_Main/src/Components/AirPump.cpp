@@ -49,18 +49,30 @@ void AirPump::checkStatus()
 
 void AirPump::TurnOff()
 {
-  *State = false;
-  checkStatus();
-  Parent->addToLog(F("AirPump OFF"));
-  Parent->getSoundObject()->playOffSound();
+  setState(false);
 }
 
 void AirPump::TurnOn()
 {
-  *State = true;
-  checkStatus();
-  Parent->addToLog(F("AirPump ON"));
-  Parent->getSoundObject()->playOnSound();
+  setState(true);
+}
+
+bool AirPump::setState(bool NewState)
+{
+  *State = NewState;
+  appendName(true);
+  if (*State)
+  {
+    strcat_P(ShortMessage, (PGM_P)F("ON"));
+    Parent->addToLog(ShortMessage);
+    Parent->getSoundObject()->playOnSound();
+  }
+  else
+  {    
+    strcat_P(ShortMessage, (PGM_P)F("OFF"));
+    Parent->addToLog(ShortMessage);
+    Parent->getSoundObject()->playOffSound();
+  }
 }
 
 bool AirPump::getState()

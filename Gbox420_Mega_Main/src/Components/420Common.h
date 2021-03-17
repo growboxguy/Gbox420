@@ -23,6 +23,7 @@ public:
   const __FlashStringHelper *Name;
   bool isThisMyComponent(char const *lookupName); ///< Checks whether a component belongs to the caller class or not
   char *getComponentName(const __FlashStringHelper *Name);
+  void appendName(bool Clear);  //< Adds the component name to the ShortMessage Buffor. If Clear=true flush the cache before adding the name
   virtual void report();
   virtual void refresh_Sec();
   virtual void refresh_FiveSec();

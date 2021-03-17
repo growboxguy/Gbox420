@@ -158,13 +158,17 @@ void MainModule::commandEvent(char *Command, char *Data)
   else
   {
     //Air pump
-    if (strcmp_P(ShortMessage, (PGM_P)F("APOn")) == 0)
+    if (strcmp_P(ShortMessage, (PGM_P)F("AP")) == 0)
     {
-      APump1->TurnOn();
+      APump1->setState(toBool(Data));
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("APOn")) == 0)
+    {
+      APump1->setState(true);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("APOff")) == 0)
     {
-      APump1->TurnOff();
+      APump1->setState(false);
     }
     //Internal Fan
     else if (strcmp_P(ShortMessage, (PGM_P)F("IFO")) == 0)

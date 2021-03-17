@@ -14,6 +14,7 @@ public:
   void report();
   void TurnOn();
   void TurnOff();
+  bool setState(bool NewState);
   bool getState();
   char *getStateToText();
 
