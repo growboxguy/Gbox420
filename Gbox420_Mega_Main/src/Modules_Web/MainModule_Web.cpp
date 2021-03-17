@@ -15,7 +15,7 @@
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings, creates components that the instance controls, and subscribes to events
 */
-MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common_Web(Name), Module_Web(Wireless)
+MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common_Web(Name), Common(Name), Module_Web(Wireless)
 {
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
