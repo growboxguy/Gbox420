@@ -214,7 +214,6 @@ void setupMqtt()
   MqttAPI.setup();
 }
 
-
 void mqttConnected(void *response)
 {
   MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
@@ -236,20 +235,26 @@ void mqttPublished(void *response)
 void mqttReceived(void *response)
 {
   ELClientResponse *res = (ELClientResponse *)response;
-  char topic[MaxShotTextLength];
+  String topic = (*res).popString();  
   char data[MaxShotTextLength];
-  ((*res).popString()).toCharArray(topic, MaxShotTextLength);
   ((*res).popString()).toCharArray(data, MaxShotTextLength);
 
-  logToSerials(F("MQTT Topic: "), false);
-  logToSerials(topic, true);
-  logToSerials(F("MQTT Data"), false);
-  logToSerials(data, true);
+  static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic)-1;
+  //strncpy(command, topic +MqttSubTopicLength, sizeof(topic) - MqttSubTopicLength );
+
+  logToSerials(F("MQTT Topic:"), false, 0);
+  logToSerials(&topic, true, 1);
+
+  topic.remove(0,MqttSubTopicLength);
+  logToSerials(F("MQTT Command:"), false, 0);
+  logToSerials(topic, true, 1);
+
+  logToSerials(F("MQTT Data:"), false, 0);
+  logToSerials(&data, true, 1);
   // if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(true); else if(strcmp(data,"0")==0)turnLightOFF(true); }
   // else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data),true); }
   Main1->reportToMQTTTrigger(true); //send out a fresh report
 }
-
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress
 
