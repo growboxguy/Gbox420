@@ -296,7 +296,7 @@ time_t getNtpTime()
 */
 void loadCallback(__attribute__((unused)) char *Url)
 {
-  Main1->loadEventTrigger(Url); //Runs through all components that are subscribed to this event
+  Main1->websiteLoadEventTrigger(Url); //Runs through all components that are subscribed to this event
 }
 
 /**
@@ -305,7 +305,7 @@ void loadCallback(__attribute__((unused)) char *Url)
 */
 void refreshCallback(__attribute__((unused)) char *Url)
 {
-  Main1->refreshEventTrigger(Url);
+  Main1->websiteRefreshEventTrigger(Url);
 }
 
 /**

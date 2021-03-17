@@ -30,8 +30,8 @@ public:
   void addToWebsiteQueue_Load(Common_Web *Module);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
   void addToWebsiteQueue_Refresh(Common_Web *Module); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   void addToCommandQueue(Common_Web *Module);  ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method
-  void loadEventTrigger(char *Url);
-  void refreshEventTrigger(char *Url);
+  void websiteLoadEventTrigger(char *Url);
+  void websiteRefreshEventTrigger(char *Url);
   void commandEventTrigger(char *command, char *data);
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);

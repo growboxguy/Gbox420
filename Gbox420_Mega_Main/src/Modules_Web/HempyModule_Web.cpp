@@ -8,6 +8,9 @@ struct HempyBucketCommand HempyBucketCommand2ToSend = {HempyMessages::HempyBucke
 struct HempyBucketResponse HempyBucketResponse2Received = {HempyMessages::HempyBucketResponse2}; ///< Response will be stored here
 struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};                       ///< Special command to fetch the next Response from the Receiver
 
+/**
+* @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
+*/
 HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common_Web(Name)
 { ///< Constructor
   this->Parent = Parent;

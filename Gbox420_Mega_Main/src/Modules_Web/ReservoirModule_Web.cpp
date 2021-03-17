@@ -6,6 +6,9 @@ struct ReservoirCommand ReservoirCommand1ToSend = {ReservoirMessages::ReservoirC
 struct ReservoirResponse ReservoirResponse1Received = {ReservoirMessages::ReservoirResponse1};                   ///< Response will be stored here
 struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset};                       ///< Special command to fetch the next Response from the Receiver
 
+/**
+* @brief Constructor, creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
+*/
 ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common_Web(Name)
 {
   this->Parent = Parent;
@@ -20,6 +23,9 @@ ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module
   logToSerials(F("ReservoirModule_Web object created"), true, 3);
 }
 
+/**
+* @brief Report the current state to the serial console
+*/
 void ReservoirModule_Web::report()
 {
   Common::report();
@@ -73,6 +79,9 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
   }
 }
 
+/**
+* @brief Process commands received from MQTT subscription or from the ESP-link website
+*/
 void ReservoirModule_Web::commandEvent(char *Command, char *Data)
 { ///< When a button is pressed on the website
   if (!isThisMyComponent(Command))
@@ -108,11 +117,11 @@ void ReservoirModule_Web::refresh_FiveSec()
   sendMessages();
 }
 
+/**
+* @brief Exchange messages with the Reservoir module
+*/
 void ReservoirModule_Web::sendMessages()
 {
-  /**
-  * @brief Exchange messages with the Reservoir module
-  */
   updateCommands();
   sendCommand(&ReservoirResetToSend);          ///< special Command, resets communication to first message
   sendCommand(&ReservoirModuleCommand1ToSend); ///< Module specific Command - Response exchange
@@ -122,11 +131,11 @@ void ReservoirModule_Web::sendMessages()
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
+/**
+* @brief Send a single command and process the Response received in the Acknowledgement package
+*/
 ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
 {
-  /**
-  * @brief Send a single command and process the Response received in the Acknowledgement package
-  */
   ReservoirMessages SequenceIDToSend = ((ReservoirCommonTemplate *)CommandToSend)->SequenceID;
   ReservoirMessages ReceivedSequenceID = NULL;
   if (*Debug)
@@ -213,11 +222,11 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
   return ReceivedSequenceID;
 }
 
+/**
+ * @brief Updates the command sent to the remote Reservoir Module wirelessly
+*/
 void ReservoirModule_Web::updateCommands()
 {
-  /**
-   * @brief Updates the command sent to the remote Reservoir Module wirelessly
-  */
   ReservoirModuleCommand1ToSend.Time = now();
   ReservoirModuleCommand1ToSend.Debug = *Debug;
   ReservoirModuleCommand1ToSend.Metric = *Metric;

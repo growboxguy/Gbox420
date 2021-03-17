@@ -8,6 +8,9 @@ struct AeroCommand_P2 AeroCommand2ToSend = {AeroMessages::AeroCommand2};        
 struct AeroResponse_P2 AeroResponse2Received = {AeroMessages::AeroResponse2};                ///< Default startup values
 struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};                       ///< Special command to fetch the next Response from the Receiver
 
+/**
+* @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
+*/
 AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common_Web(Name)
 { ///< Constructor
   this->Parent = Parent;
@@ -24,6 +27,9 @@ AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Pare
   logToSerials(F("AeroModule_Web object created"), true, 3);
 }
 
+/**
+* @brief Report current state to the Serial console
+*/
 void AeroModule_Web::report()
 {
   Common::report();
@@ -61,6 +67,9 @@ void AeroModule_Web::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+/**
+* @brief Report current state to a JSON object
+*/
 void AeroModule_Web::reportToJSON()
 {
   Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
@@ -100,6 +109,9 @@ void AeroModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
+/**
+* @brief Set values on the ESP-link website when it loads
+*/
 void AeroModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
@@ -116,6 +128,9 @@ void AeroModule_Web::websiteEvent_Load(char *url)
   }
 }
 
+/**
+* @brief Set values on the ESP-link website when it refreshes
+*/
 void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
   if (strncmp(url, "/G", 2) == 0)
@@ -129,6 +144,9 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
   }
 }
 
+/**
+* @brief Process commands received from MQTT subscription or from the ESP-link website
+*/
 void AeroModule_Web::commandEvent(char *Command, char *Data)
 { ///< When a button is pressed on the website
   if (!isThisMyComponent(Command))
@@ -248,6 +266,9 @@ void AeroModule_Web::commandEvent(char *Command, char *Data)
   }
 }
 
+/**
+* @brief Refresh state, Called every second
+*/
 void AeroModule_Web::refresh_Sec()
 {
   if (*Debug)
@@ -259,6 +280,9 @@ void AeroModule_Web::refresh_Sec()
   }
 }
 
+/**
+* @brief Refresh state, Called every five seconds
+*/
 void AeroModule_Web::refresh_FiveSec()
 {
   if (*Debug)
@@ -266,12 +290,18 @@ void AeroModule_Web::refresh_FiveSec()
   sendMessages();
 }
 
+/**
+* @brief Refresh state, Called every minute
+*/
 void AeroModule_Web::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();
 }
 
+/**
+* @brief Exchange messages with the wireless Aeroponics module
+*/
 void AeroModule_Web::sendMessages()
 {
   updateCommands();
@@ -284,6 +314,9 @@ void AeroModule_Web::sendMessages()
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
+/**
+* @brief Send a command message and process the response message
+*/
 AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 {
   AeroMessages SequenceIDToSend = ((AeroCommonTemplate *)CommandToSend)->SequenceID;
@@ -390,8 +423,11 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
   return ReceivedSequenceID;
 }
 
+/**
+* @brief Update the wireless command content
+*/
 void AeroModule_Web::updateCommands()
-{ // so you can see that new data is being sent
+{
   AeroModuleCommand1ToSend.Time = now();
   AeroModuleCommand1ToSend.Debug = *Debug;
   AeroModuleCommand1ToSend.Metric = *Metric;
