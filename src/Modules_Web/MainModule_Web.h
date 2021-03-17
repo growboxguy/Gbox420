@@ -46,8 +46,7 @@ public:
   HempyModule_Web *HempyModule1;         ///< <Represents the website controls and feedback for a HempyModule
   void websiteEvent_Load(char *url);
   void websiteEvent_Refresh(char *url);
-  void websiteEvent_Button(char *Button);
-  void websiteEvent_Field(char *Field);
+  void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report();
   void refresh_FiveSec();
   void refresh_Minute();

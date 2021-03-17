@@ -105,7 +105,9 @@ void Lights::dimLightsOnOff()
     CurrentStatus = BeforeDimmingState;
     setBrightness(BeforeDimmingBrightness, false, false);
     Parent->getSoundObject()->playOffSound();
-    Parent->addToLog(F("Dimming disabled"));
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("dimming OFF"));
+    Parent->addToLog(ShortMessage);
   }
   else ///< If temporary dimming is OFF -> Turn it ON
   {
@@ -115,7 +117,9 @@ void Lights::dimLightsOnOff()
     setBrightness(1, false, false);
     DimmingTimer = millis();
     Parent->getSoundObject()->playOnSound();
-    Parent->addToLog(F("Dimming enabled"));
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("dimming ON"));
+    Parent->addToLog(ShortMessage);
   }
   checkDimming();
 }
@@ -176,7 +180,11 @@ void Lights::checkTimer()
         {
           setLightOnOff(true, false); // If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
           if (*Debug)
-            logToSerials(F("Timer:Light ON"), true, 4);
+          {
+            appendName(true);
+            strcat_P(ShortMessage, (PGM_P)F("Timer: ON"));
+            logToSerials(ShortMessage);
+          }
         }
       }
       else // False: Light should be off
@@ -185,7 +193,11 @@ void Lights::checkTimer()
         {                              // If status is ON
           setLightOnOff(false, false); // Turn OFF the lights (First bool), and do not add it to the log (Second bool)
           if (*Debug)
-            logToSerials(F("Timer:Light OFF"), true, 4);
+          {
+            appendName(true);
+            strcat_P(ShortMessage, (PGM_P)F("Timer: OFF"));
+            logToSerials(ShortMessage);
+          }
         }
       }
     }
@@ -197,14 +209,22 @@ void Lights::checkTimer()
         {
           setLightOnOff(true, false);
           if (*Debug)
-            logToSerials(F("Timer:Light ON"), true, 4);
+          {
+            appendName(true);
+            strcat_P(ShortMessage, (PGM_P)F("Timer: ON"));
+            logToSerials(ShortMessage);
+          }
         }
       }
       else if (*Status)
       {
         setLightOnOff(false, false);
         if (*Debug)
-          logToSerials(F("Timer:Light OFF"), true, 4);
+        {
+          appendName(true);
+          strcat_P(ShortMessage, (PGM_P)F("Timer: OFF"));
+          logToSerials(ShortMessage);
+        }
       }
     }
   }
@@ -220,17 +240,20 @@ void Lights::setBrightness(uint8_t Brightness, bool LogThis, bool StoreSetting)
   analogWrite(*DimmingPin, map(CurrentBrightness, 0, 100, int(255 * (100 - *DimmingLimit) / 100.0f), 0)); // mapping brightness to duty cycle. Example 1: Mapping Brightness 100 -> PWM duty cycle will be 0% on Arduino side, 100% on LED driver side. Example2: Mapping Brightness 0 with Dimming limit 8% ->  int(255*((100-8)/100)) ~= 234 AnalogWrite (92% duty cycle on Arduino Side, 8% in Driver dimming side) https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
   if (LogThis)
   {
-    strncpy_P(LongMessage, (PGM_P)F("Brightness: "), MaxWordLength);
-    strcat(LongMessage, toText(Brightness));
-    strcat_P(LongMessage, (PGM_P)F("%"));
-    Parent->addToLog(LongMessage);
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("Brightness "));
+    strcat(ShortMessage, toText(Brightness));
+    strcat_P(ShortMessage, (PGM_P)F("%"));
+    Parent->addToLog(ShortMessage);
   }
 }
 
 void Lights::setDimDuration(int DimmingDuration)
 {
   *(this->DimmingDuration) = DimmingDuration;
-  Parent->addToLog(F("Dimming duration updated"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("Dimming updated"));
+  Parent->addToLog(ShortMessage);
 }
 
 void Lights::setLightOnOff(bool Status, bool LogThis)
@@ -239,7 +262,9 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
   {
     if (LogThis)
     {
-      Parent->addToLog(F("Light ON"));
+      appendName(true);
+      strcat_P(ShortMessage, (PGM_P)F("ON"));
+      Parent->addToLog(ShortMessage);
     }
     Parent->getSoundObject()->playOnSound();
     if (*FadingEnabled && CurrentStatus != LightStates::FADEIN && CurrentStatus != LightStates::TURNEDON)
@@ -259,7 +284,9 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
   {
     if (LogThis)
     {
-      Parent->addToLog(F("Light OFF"));
+      appendName(true);
+      strcat_P(ShortMessage, (PGM_P)F("OFF"));
+      Parent->addToLog(ShortMessage);
     }
     Parent->getSoundObject()->playOffSound();
 
@@ -376,12 +403,18 @@ void Lights::setTimerOnOff(bool TimerState)
   if (*TimerEnabled)
   {
     checkTimer();
-    Parent->addToLog(F("Timer enabled"));
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("Timer ON"));
+    Parent->addToLog(ShortMessage);
+    ;
     Parent->getSoundObject()->playOnSound();
   }
   else
   {
-    Parent->addToLog(F("Timer disabled"));
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("Timer OFF"));
+    Parent->addToLog(ShortMessage);
+    ;
     Parent->getSoundObject()->playOffSound();
   }
 }
@@ -394,7 +427,9 @@ void Lights::setOnHour(uint8_t OnHour)
 void Lights::setOnMinute(uint8_t OnMinute)
 {
   *(this->OnMinute) = OnMinute;
-  Parent->addToLog(F("Light ON updated"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("ON time updated"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
 
@@ -406,7 +441,9 @@ void Lights::setOffHour(uint8_t OffHour)
 void Lights::setOffMinute(uint8_t OffMinute)
 {
   *(this->OffMinute) = OffMinute;
-  Parent->addToLog(F("Light OFF updated"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("OFF time updated"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
 
@@ -415,12 +452,16 @@ void Lights::setFadeOnOff(bool State)
   *FadingEnabled = State;
   if (*FadingEnabled)
   {
-    Parent->addToLog(F("Fading enabled"));
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("Fading ON"));
+    Parent->addToLog(ShortMessage);
     Parent->getSoundObject()->playOnSound();
   }
   else
   {
-    Parent->addToLog(F("Fading disabled"));
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("Fading OFF"));
+    Parent->addToLog(ShortMessage);
     Parent->getSoundObject()->playOffSound();
   }
 }
@@ -433,6 +474,8 @@ void Lights::setFadeInterval(uint16_t Interval)
 void Lights::setFadeIncrements(uint8_t Increment)
 {
   *FadingIncrements = Increment;
-  Parent->addToLog(F("Fade timing updated"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("Fading updated"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }

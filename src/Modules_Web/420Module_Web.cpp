@@ -3,49 +3,52 @@
 
 static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
+/**
+* @brief Constructor: creates an instance of the class, and stores wireless transmitter object used to communicate with other modules
+*/
 Module_Web::Module_Web(RF24 *Wireless) : Module()
 {
   this->Wireless = Wireless;
   //logToSerials(F("Module_Web object created"), true, 3);
 }
 
-///< Website subscriptions: When a Module needs to get notified of a Website events from the ESP-link it subscribes to one or more website queues using these methods
-
+/**
+* @brief Subscribe to the ESP-link website load event
+*/
 void Module_Web::addToWebsiteQueue_Load(Common_Web *Module)
 {
   if (QueueDepth > WebsiteQueue_Load_Count)
     WebsiteQueue_Load[WebsiteQueue_Load_Count++] = Module;
   else
-    logToSerials(F("WebsiteQueue_Load_Count overflow!"), true, 0);
+    logToSerials(F("WebsiteQueue_Load overflow!"), true, 0);
 }
 
+/**
+* @brief Subscribe to the ESP-link website refresh event
+*/
 void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Module)
 {
   if (QueueDepth > WebsiteQueue_Refresh_Count)
     WebsiteQueue_Refresh[WebsiteQueue_Refresh_Count++] = Module;
   else
-    logToSerials(F("WebsiteQueue_Refresh_Count overflow!"), true, 0);
+    logToSerials(F("WebsiteQueue_Refresh overflow!"), true, 0);
 }
 
-void Module_Web::addToWebsiteQueue_Button(Common_Web *Module)
+/**
+* @brief Subscribe to MQTT or ESP-link website commands  (Pressing a button, setting a value)
+*/
+void Module_Web::addToCommandQueue(Common_Web *Module)
 {
-  if (QueueDepth > WebsiteQueue_Button_Count)
-    WebsiteQueue_Button[WebsiteQueue_Button_Count++] = Module;
+  if (QueueDepth > CommandQueue_Count)
+    CommandQueue[CommandQueue_Count++] = Module;
   else
-    logToSerials(F("WebsiteQueue_Button_Count overflow!"), true, 0);
+    logToSerials(F("CommandQueue overflow!"), true, 0);
 }
 
-void Module_Web::addToWebsiteQueue_Field(Common_Web *Module)
-{
-  if (QueueDepth > WebsiteQueue_Field_Count)
-    WebsiteQueue_Field[WebsiteQueue_Field_Count++] = Module;
-  else
-    logToSerials(F("WebsiteQueue_Field_Count overflow!"), true, 0);
-}
-
-///< Website queues: Notify components in the Module_Web of a website event
-
-void Module_Web::loadEvent(char *url)
+/**
+* @brief Notify subscribed modules of a website load event
+*/
+void Module_Web::websiteLoadEventTrigger(char *url)
 { ///< called when website is loaded. Runs through all components that subscribed for this event
   for (int i = 0; i < WebsiteQueue_Load_Count; i++)
   {
@@ -53,7 +56,10 @@ void Module_Web::loadEvent(char *url)
   }
 }
 
-void Module_Web::refreshEvent(char *url)
+/**
+* @brief Notify subscribed modules of a website refresh event
+*/
+void Module_Web::websiteRefreshEventTrigger(char *url)
 { ///< called when website is refreshed.
   for (int i = 0; i < WebsiteQueue_Refresh_Count; i++)
   {
@@ -61,27 +67,23 @@ void Module_Web::refreshEvent(char *url)
   }
 }
 
-void Module_Web::buttonEvent(char *button)
-{ ///< Called when any button on the website is pressed.
+/**
+* @brief Notify subscribed modules of a received MQTT/Website command
+*/
+void Module_Web::commandEventTrigger(char *command, char *data)
+{
   if (*Debug)
-    logToSerials(&button, true, 0);
-  for (int i = 0; i < WebsiteQueue_Button_Count; i++)
+    logToSerials(&command, false, 0);
+    logToSerials(&data, true, 2);
+  for (int i = 0; i < CommandQueue_Count; i++)
   {
-    WebsiteQueue_Button[i]->websiteEvent_Button(button);
+    CommandQueue[i]->commandEvent(command,data);
   }
 }
 
-void Module_Web::setFieldEvent(char *field)
-{ ///< Called when any field on the website is updated.
-  if (*Debug)
-    logToSerials(&field, true, 0);
-  for (int i = 0; i < WebsiteQueue_Field_Count; i++)
-  {
-    WebsiteQueue_Field[i]->websiteEvent_Field(field);
-  }
-}
-
-///< Even logs on the website
+/**
+* @brief Adds a log entry to the top of the log and removes the oldest log entry
+*/
 void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) uint8_t Indent)
 { ///< adds a log entry that is displayed on the web interface
   logToSerials(&LongMessage, true, Indent);
@@ -94,6 +96,9 @@ void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) uint8
   strncpy(Logs[0], LongMessage, MaxWordLength); ///< instert new log to [0]
 }
 
+/**
+* @brief Adds a log entry to the top of the log and removes the oldest log entry
+*/
 void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__((unused)) uint8_t Indent)
 { ///< function overloading: same function name, different parameter type
   logToSerials(&LongMessage, true, Indent);
@@ -106,6 +111,9 @@ void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__(
   strncpy_P(Logs[0], (PGM_P)LongMessage, MaxWordLength); ///< instert new log to [0]
 }
 
+/**
+* @brief Converts the log entries to a JSON object
+*/
 char *Module_Web::eventLogToJSON(bool Append)
 { ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   if (!Append)
@@ -123,8 +131,11 @@ char *Module_Web::eventLogToJSON(bool Append)
   return LongMessage;
 }
 
-///< Google Sheets functions
+///< Google Sheets functions - https://sites.google.com/site/growboxguy/esp-link/logging
 
+/**
+* @brief Sets the PushingBox device ID that is used to send reports to Google Sheets
+*/
 void Module_Web::addPushingBoxLogRelayID()
 {
   memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
@@ -133,6 +144,9 @@ void Module_Web::addPushingBoxLogRelayID()
   strcat_P(LongMessage, (PGM_P)F("&BoxData="));
 }
 
+/**
+* @brief Send a JSON formatted report to Google Sheets
+*/
 void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
   if (*Debug)
@@ -143,10 +157,13 @@ void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
   PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
 }
 
+/**
+* @brief Publish an MQTT message containing a JSON formatted report
+*/
 void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///< clear variable
-  strcat(ShortMessage,ModuleSettings->MqttTopic);
+  strcat(ShortMessage,ModuleSettings->MqttPubTopic);
   if (*Debug)
   { ///< print the report command to console
     logToSerials(F("MQTT reporting:"), false, 2);

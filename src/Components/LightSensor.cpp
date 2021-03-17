@@ -52,7 +52,9 @@ void LightSensor::reportToJSON()
 void LightSensor::triggerCalibration()
 { ///< website signals to calibrate light sensor MAX and MIN readings the next time a refresh runs
   CalibrateRequested = true;
-  Parent->addToLog(F("Calibrating light"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("Calibrating"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
 
@@ -77,7 +79,9 @@ void LightSensor::calibrate(bool AddToLog)
   getCalibrationReadings();
   if (AddToLog)
   {
-    Parent->addToLog(F("Lights calibrated"), 4);
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("Calibrated"));
+    Parent->addToLog(ShortMessage);
     logToSerials(&LongMessage, true, 4);
   }
 }

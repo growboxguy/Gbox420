@@ -71,7 +71,7 @@ bool Common::isThisMyComponent(char const *lookupName)
   while (1)
   {
     FlashCurrentChar = pgm_read_byte(FlashAddressPointer++); ///< read back from the memory address on character, and then increment the pointer to the next char
-    RAMCurrentChar = lookupName[CharacterCount++];           ///< 
+    RAMCurrentChar = lookupName[CharacterCount++];           ///<
     ///< Serial.print(FlashCurrentChar);
     ///< Serial.print(RAMCurrentChar);
     if (FlashCurrentChar == 0)
@@ -88,7 +88,7 @@ bool Common::isThisMyComponent(char const *lookupName)
     ///< Serial.print("Inside second check: ");
     while (1)
     {
-      RAMCurrentChar = lookupName[CharacterCount++]; ///< 
+      RAMCurrentChar = lookupName[CharacterCount++]; ///<
       ///< Serial.print(RAMCurrentChar);
       *ReturnChar++ = RAMCurrentChar;
       if (RAMCurrentChar == 0)
@@ -110,4 +110,14 @@ bool Common::isThisMyComponent(char const *lookupName)
     ///< Serial.println("Not match");
     return false;
   }
+}
+
+void Common::appendName(bool Clear)
+{
+  if (Clear)
+  {
+    memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable to store the Publish to path
+  }
+  strcpy_P(ShortMessage, (PGM_P)Name);
+  strcpy_P(ShortMessage, (PGM_P)F(" "));
 }
