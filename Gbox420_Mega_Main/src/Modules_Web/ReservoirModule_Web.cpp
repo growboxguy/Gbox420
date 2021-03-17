@@ -15,6 +15,7 @@ ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
+  Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
   logToSerials(F("ReservoirModule_Web object created"), true, 3);
 }

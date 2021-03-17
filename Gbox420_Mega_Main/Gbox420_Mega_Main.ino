@@ -331,7 +331,7 @@ void buttonCallback(char *Button)
 */
 void fieldCallback(char *Field)
 { ///< Called when any field on the website is updated.
-  Main1->commandEvent(Field, WebServer.getArgString());
+  Main1->commandEventTrigger(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
 }
 
