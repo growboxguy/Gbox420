@@ -404,7 +404,7 @@ void Lights::setTimerOnOff(bool TimerState)
   {
     checkTimer();
     appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("Timer ON"));
+    strcat_P(ShortMessage, (PGM_P)F("timer ON"));
     Parent->addToLog(ShortMessage);
     ;
     Parent->getSoundObject()->playOnSound();
@@ -412,7 +412,7 @@ void Lights::setTimerOnOff(bool TimerState)
   else
   {
     appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("Timer OFF"));
+    strcat_P(ShortMessage, (PGM_P)F("timer OFF"));
     Parent->addToLog(ShortMessage);
     ;
     Parent->getSoundObject()->playOffSound();
