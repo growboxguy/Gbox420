@@ -28,13 +28,7 @@ public:
   virtual void refresh_FiveSec();
   virtual void refresh_Minute();
   virtual void reportToJSON();
-  /*
-  void websiteEvent_Load(__attribute__((unused)) char *url){};
-  void websiteEvent_Refresh(__attribute__((unused)) char *url){};
-  void websiteEvent_Button(__attribute__((unused)) char *Button){};
-  void websiteEvent_Field(__attribute__((unused)) char *Field){};
-  */
-
+  
 private:
 protected:
   Common(const __FlashStringHelper *Name); ///< Constructor

@@ -16,7 +16,7 @@ void Module_Web::addToWebsiteQueue_Load(Common_Web *Module)
   if (QueueDepth > WebsiteQueue_Load_Count)
     WebsiteQueue_Load[WebsiteQueue_Load_Count++] = Module;
   else
-    logToSerials(F("WebsiteQueue_Load_Count overflow!"), true, 0);
+    logToSerials(F("WebsiteQueue_Load overflow!"), true, 0);
 }
 
 void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Module)
@@ -24,23 +24,15 @@ void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Module)
   if (QueueDepth > WebsiteQueue_Refresh_Count)
     WebsiteQueue_Refresh[WebsiteQueue_Refresh_Count++] = Module;
   else
-    logToSerials(F("WebsiteQueue_Refresh_Count overflow!"), true, 0);
+    logToSerials(F("WebsiteQueue_Refresh overflow!"), true, 0);
 }
 
-void Module_Web::addToWebsiteQueue_Button(Common_Web *Module)
+void Module_Web::addToCommandQueue(Common_Web *Module)
 {
-  if (QueueDepth > WebsiteQueue_Button_Count)
-    WebsiteQueue_Button[WebsiteQueue_Button_Count++] = Module;
+  if (QueueDepth > CommandQueue_Count)
+    CommandQueue[CommandQueue_Count++] = Module;
   else
-    logToSerials(F("WebsiteQueue_Button_Count overflow!"), true, 0);
-}
-
-void Module_Web::addToWebsiteQueue_Field(Common_Web *Module)
-{
-  if (QueueDepth > WebsiteQueue_Field_Count)
-    WebsiteQueue_Field[WebsiteQueue_Field_Count++] = Module;
-  else
-    logToSerials(F("WebsiteQueue_Field_Count overflow!"), true, 0);
+    logToSerials(F("CommandQueue overflow!"), true, 0);
 }
 
 ///< Website queues: Notify components in the Module_Web of a website event
@@ -61,23 +53,14 @@ void Module_Web::refreshEvent(char *url)
   }
 }
 
-void Module_Web::buttonEvent(char *button)
-{ ///< Called when any button on the website is pressed.
+void Module_Web::commandEvent(char *command, char *data)
+{
   if (*Debug)
-    logToSerials(&button, true, 0);
-  for (int i = 0; i < WebsiteQueue_Button_Count; i++)
+    logToSerials(&command, false, 0);
+    logToSerials(&data, true, 2);
+  for (int i = 0; i < CommandQueue_Count; i++)
   {
-    WebsiteQueue_Button[i]->websiteEvent_Button(button);
-  }
-}
-
-void Module_Web::setFieldEvent(char *field)
-{ ///< Called when any field on the website is updated.
-  if (*Debug)
-    logToSerials(&field, true, 0);
-  for (int i = 0; i < WebsiteQueue_Field_Count; i++)
-  {
-    WebsiteQueue_Field[i]->websiteEvent_Field(field);
+    CommandQueue[i]->commandEvent(command,data);
   }
 }
 

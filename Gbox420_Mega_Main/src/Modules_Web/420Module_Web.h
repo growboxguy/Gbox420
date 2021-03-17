@@ -29,12 +29,10 @@ public:
   RF24 *Wireless;
   void addToWebsiteQueue_Load(Common_Web *Module);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
   void addToWebsiteQueue_Refresh(Common_Web *Module); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  void addToWebsiteQueue_Button(Common_Web *Module);  ///< Subscribing to the Website button press event: Calls the websiteEvent_Button() method
-  void addToWebsiteQueue_Field(Common_Web *Module);   ///< Subscribing to the Website field submit event: Calls the websiteEvent_Field() method
+  void addToCommandQueue(Common_Web *Module);  ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method
   void loadEvent(char *Url);
   void refreshEvent(char *Url);
-  void buttonEvent(char *Button);
-  void setFieldEvent(char *Field);
+  void commandEvent(char *command, char *data);
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);
   char *eventLogToJSON(bool Append = false); ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
@@ -46,10 +44,8 @@ private:
 protected:
   Common_Web *WebsiteQueue_Load[QueueDepth] = {};
   Common_Web *WebsiteQueue_Refresh[QueueDepth] = {};
-  Common_Web *WebsiteQueue_Button[QueueDepth] = {};
-  Common_Web *WebsiteQueue_Field[QueueDepth] = {};
+  Common_Web *CommandQueue[QueueDepth] = {};
   uint8_t WebsiteQueue_Load_Count = 0;
   uint8_t WebsiteQueue_Refresh_Count = 0;
-  uint8_t WebsiteQueue_Button_Count = 0;
-  uint8_t WebsiteQueue_Field_Count = 0;
+  uint8_t CommandQueue_Count = 0;
 };

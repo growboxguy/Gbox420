@@ -183,16 +183,16 @@ void resetWebServer()
   //URLHandler *TestHandler = WebServer.createURLHandler("/Test.html.json");         ///< setup handling request from Test.html
   GrowBoxHandler->loadCb.attach(&loadCallback);           ///< GrowBox tab - Called then the website loads initially
   GrowBoxHandler->refreshCb.attach(&refreshCallback);     ///< GrowBox tab - Called periodically to refresh website content
-  GrowBoxHandler->buttonCb.attach(&buttonPressCallback);  ///< GrowBox tab - Called when a button is pressed on the website
-  GrowBoxHandler->setFieldCb.attach(&setFieldCallback);   ///< GrowBox tab - Called when a field is changed on the website
+  GrowBoxHandler->buttonCb.attach(&buttonCallback);  ///< GrowBox tab - Called when a button is pressed on the website
+  GrowBoxHandler->setFieldCb.attach(&fieldCallback);   ///< GrowBox tab - Called when a field is changed on the website
   SettingsHandler->loadCb.attach(&loadCallback);          ///< Settings tab - Called then the website loads initially
   SettingsHandler->refreshCb.attach(&refreshCallback);    ///< Settings tab - Called periodically to refresh website content
-  SettingsHandler->buttonCb.attach(&buttonPressCallback); ///< Settings tab - Called when a button is pressed on the website
-  SettingsHandler->setFieldCb.attach(&setFieldCallback);  ///< Settings tab - Called when a field is changed on the website
+  SettingsHandler->buttonCb.attach(&buttonCallback); ///< Settings tab - Called when a button is pressed on the website
+  SettingsHandler->setFieldCb.attach(&fieldCallback);  ///< Settings tab - Called when a field is changed on the website
   //TestHandler->loadCb.attach(&loadCallback);                                       ///< Test tab - Called then the website loads initially
   //TestHandler->refreshCb.attach(&refreshCallback);                                 ///< Test tab - Called periodically to refresh website content
-  //TestHandler->buttonCb.attach(&buttonPressCallback);                              ///< Test tab - Called when a button is pressed on the website
-  //TestHandler->setFieldCb.attach(&setFieldCallback);                               ///< Test tab - Called when a field is changed on the website
+  //TestHandler->buttonCb.attach(&buttonCallback);                              ///< Test tab - Called when a button is pressed on the website
+  //TestHandler->setFieldCb.attach(&fieldCallback);                               ///< Test tab - Called when a field is changed on the website
   logToSerials(F("ESP-link ready"), true, 2);
 }
 
@@ -305,7 +305,7 @@ void refreshCallback(__attribute__((unused)) char *Url)
   \brief Called when a button is pressed.
   \param Button - ID of the button HTML element
 */
-void buttonPressCallback(char *Button)
+void buttonCallback(char *Button)
 {
   if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
   {
@@ -313,7 +313,7 @@ void buttonPressCallback(char *Button)
   }
   else
   {
-    Main1->buttonEvent(Button);
+    Main1->commandEvent(Button,"");
   }
   saveSettings(ModuleSettings);
 }
@@ -322,9 +322,9 @@ void buttonPressCallback(char *Button)
   \brief Called when a field on the website is submitted
   \param Field - Name of the input HTML element
 */
-void setFieldCallback(char *Field)
+void fieldCallback(char *Field)
 { ///< Called when any field on the website is updated.
-  Main1->setFieldEvent(Field);
+  Main1->commandEvent(Field,WebServer.getArgString());
   saveSettings(ModuleSettings);
 }
 

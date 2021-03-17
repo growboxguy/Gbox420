@@ -20,8 +20,7 @@ AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Pare
   Parent->addToRefreshQueue_Minute(this);
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
-  Parent->addToWebsiteQueue_Field(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
   logToSerials(F("AeroModule_Web object created"), true, 3);
 }
 
@@ -130,9 +129,9 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
   }
 }
 
-void AeroModule_Web::websiteEvent_Button(char *Button)
+void AeroModule_Web::commandEvent(char *Command, char *Data)
 { ///< When a button is pressed on the website
-  if (!isThisMyComponent(Button))
+  if (!isThisMyComponent(Command))
   {
     return;
   }
@@ -207,54 +206,42 @@ void AeroModule_Web::websiteEvent_Button(char *Button)
         Parent->addToLog(F("Pressure tank not available"), false);
       }
     }
-    SyncRequested = true;
-  }
-}
-
-void AeroModule_Web::websiteEvent_Field(char *Field)
-{ ///< When the website field is submitted
-  if (!isThisMyComponent(Field))
-  {
-    return;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
     {
-      DefaultSettings->Duration = WebServer.getArgFloat();
+      DefaultSettings->Duration = toFloat(Data);
       Parent->addToLog(F("Spray duration updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("DInt")) == 0)
     {
-      DefaultSettings->DayInterval = WebServer.getArgInt();
+      DefaultSettings->DayInterval = toInt(Data);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("NInt")) == 0)
     {
-      DefaultSettings->NightInterval = WebServer.getArgInt();
+      DefaultSettings->NightInterval = toInt(Data);
       Parent->addToLog(F("Spray interval updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PS")) == 0)
     {
-      DefaultSettings->PumpSpeed = WebServer.getArgInt();
+      DefaultSettings->PumpSpeed = toInt(Data);
       Parent->addToLog(F("Pump speed updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PT")) == 0)
     {
-      DefaultSettings->PumpTimeOut = WebServer.getArgInt();
+      DefaultSettings->PumpTimeOut = toInt(Data);
       Parent->addToLog(F("Pump timeout updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PPT")) == 0)
     {
-      DefaultSettings->PrimingTime = WebServer.getArgInt();
+      DefaultSettings->PrimingTime = toInt(Data);
       Parent->addToLog(F("Priming time updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PMn")) == 0)
     {
-      DefaultSettings->MinPressure = WebServer.getArgFloat();
+      DefaultSettings->MinPressure = toFloat(Data);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PMx")) == 0)
     {
-      DefaultSettings->MaxPressure = WebServer.getArgFloat();
+      DefaultSettings->MaxPressure = toFloat(Data);
       Parent->addToLog(F("Pressure limits updated"), false);
     }
     SyncRequested = true;

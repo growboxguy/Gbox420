@@ -39,8 +39,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   addToRefreshQueue_Minute(this);
   addToWebsiteQueue_Load(this);
   addToWebsiteQueue_Refresh(this);
-  addToWebsiteQueue_Field(this);
-  addToWebsiteQueue_Button(this);
+  addToCommandQueue(this);
   logToSerials(F("MainModule object created, refreshing"), true, 0);
   runAll();
   addToLog(F("MainModule initialized"), 0);
@@ -144,9 +143,9 @@ void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< ca
   }
 }
 
-void MainModule::websiteEvent_Button(char *Button)
+void MainModule::commandEvent(char *Command, char *Data)
 { ///< When a button is pressed on the website
-  if (!isThisMyComponent(Button))
+  if (!isThisMyComponent(Command))
   {
     return;
   }
@@ -172,6 +171,7 @@ void MainModule::websiteEvent_Button(char *Button)
       RefreshAllRequested = true;
       addToLog(F("Refresh triggered"), false);
     }
+    //Air pump
     else if (strcmp_P(ShortMessage, (PGM_P)F("APOn")) == 0)
     {
       APump1->TurnOn();
@@ -180,24 +180,6 @@ void MainModule::websiteEvent_Button(char *Button)
     {
       APump1->TurnOff();
     }
-    /*
-    else if (strcmp_P(ShortMessage, (PGM_P)F("FIOf")) == 0)
-    {
-      FanI -> turnOff();
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("FIOn")) == 0)
-    {
-     FanI -> turnOn();
-    }  
-    else if (strcmp_P(ShortMessage, (PGM_P)F("FEOf")) == 0)
-    {
-      FanE -> turnOff();
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("FEOn")) == 0)
-    {
-     FanE -> turnOn();
-    }  
-    */
     //Internal Fan
     else if (strcmp_P(ShortMessage, (PGM_P)F("IFO")) == 0)
     {
@@ -272,32 +254,21 @@ void MainModule::websiteEvent_Button(char *Button)
     {
       Lt2 -> dimLightsOnOff();
     }
-  }
-}
-
-void MainModule::websiteEvent_Field(char *Field)
-{ ///< When the website field is submitted
-  if (!isThisMyComponent(Field))
-  {
-    return;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0)
     {
-      setDebug(WebServer.getArgBoolean());
+      setDebug(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Metric")) == 0)
     {
-      setMetric(WebServer.getArgBoolean());
+      setMetric(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0)
     {
-      setSheetsReportingOnOff(WebServer.getArgBoolean());
+      setSheetsReportingOnOff(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsF")) == 0)
     {
-      setSheetsReportingFrequency(WebServer.getArgInt());
+      setSheetsReportingFrequency(toInt(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Relay")) == 0)
     {
@@ -305,11 +276,11 @@ void MainModule::websiteEvent_Field(char *Field)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("MQTT")) == 0)
     {
-      setMQTTReportingOnOff(WebServer.getArgBoolean());
+      setMQTTReportingOnOff(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("MQTTF")) == 0)
     {
-      setMQTTReportingFrequency(WebServer.getArgInt());
+      setMQTTReportingFrequency(toInt(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("MT")) == 0)
     {
@@ -323,70 +294,59 @@ void MainModule::websiteEvent_Field(char *Field)
     {
       setMQTTLWTMessage(WebServer.getArgString());
     }
-    /*
-    else if (strcmp_P(ShortMessage, (PGM_P)F("FIS")) == 0)
-    {
-      FanI - > setSpeed(WebServer.getArgInt());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("FES")) == 0)
-    {
-      FanE - > setSpeed(WebServer.getArgInt());
-    }
-    */
-   //Light1
     else if (strcmp_P(ShortMessage, (PGM_P)F("L1B")) == 0)
     {
-      Lt1 -> setBrightness(WebServer.getArgInt(), true, true);
+      Lt1 -> setBrightness(toInt(Data), true, true);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L1OnH")) == 0)
     {
-      Lt1 -> setOnHour(WebServer.getArgInt());
+      Lt1 -> setOnHour(toInt(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L1OnM")) == 0)
     {
-      Lt1 -> setOnMinute(WebServer.getArgInt());
+      Lt1 -> setOnMinute(toInt(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L1OfH")) == 0)
     {
-      Lt1 -> setOffHour(WebServer.getArgInt());
+      Lt1 -> setOffHour(toInt(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L1OfM")) == 0)
     {
-      Lt1 -> setOffMinute(WebServer.getArgInt());
+      Lt1 -> setOffMinute(toInt(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L1DD")) == 0)
     {
-      Lt1 -> setDimDuration(WebServer.getArgInt());
+      Lt1 -> setDimDuration(toInt(Data));
     }
     //Light2
     else if (strcmp_P(ShortMessage, (PGM_P)F("L2B")) == 0)
     {
-      Lt2 -> setBrightness(WebServer.getArgInt(), true, true);
+      Lt2 -> setBrightness(toInt(Data), true, true);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L2OnH")) == 0)
     {
-      Lt2 -> setOnHour(WebServer.getArgInt());
+      Lt2 -> setOnHour(toInt(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L2OnM")) == 0)
     {
-      Lt2 -> setOnMinute(WebServer.getArgInt());
+      Lt2 -> setOnMinute(toInt(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L2OfH")) == 0)
     {
-      Lt2 -> setOffHour(WebServer.getArgInt());
+      Lt2 -> setOffHour(toInt(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L2OfM")) == 0)
     {
-      Lt2 -> setOffMinute(WebServer.getArgInt());
+      Lt2 -> setOffMinute(toInt(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L2DD")) == 0)
     {
-      Lt2 -> setDimDuration(WebServer.getArgInt());
+      Lt2 -> setDimDuration(toInt(Data));
     }
     //Sound1
     else if (strcmp_P(ShortMessage, (PGM_P)F("Sound")) == 0)
     {
-     Sound1 -> setSoundOnOff(WebServer.getArgBoolean());
+     Sound1 -> setSoundOnOff(toBool(Data));
     }
   }
 }
@@ -566,4 +526,4 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
   }
 }
 ///< This is how a sent out message looks like:
-///< /growboxguy@gmail.com/Gbox420/{"Log":{"IFan":{"S":"1"},"EFan":{"S":"0"},"APump1":{"S":"1"},"Lt1":{"S":"1","B":"75","T":"1","On":"08:20","Of":"02:20"},"Lt2":{"S":"0","B":"0","T":"0","On":"08:20","Of":"16:20"},"LtSen1":{"R":"967","D":"0"},"DHT1":{"T":"25.10","H":"43.10"},"Pow1":{"P":"34.40","E":"510.93","V":"231.90","C":"0.34","F":"50.00","PF":"0.44"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","WB1":"18.29","WR1":"3.96","DW1":"18.10","WW1":"0.00","ET1":"2.00","OT1":"0.30","WL1":"13.00","H2":"1","P2":"1","PS2":"100","WB2":"20.17","WR2":"12.21","DW2":"18.49","WW2":"20.49","ET2":"2.00","OT2":"0.30","WL2":"13.00"},"Aero1":{"S":"1","P":"6.43","W":"19.68","Mi":"5.00","Ma":"7.00","AS":"1","LS":"6.47","PSt":"1","PS":"100","SE":"1","D":"1.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"1.85","T":"1126.00","W":"24.16","WT":"17.06","AT":"24.70","H":"27.60"},"Main1":{"M":"1","D":"1"}}}
+///< Gbox420/{"Log":{"IFan":{"S":"1"},"EFan":{"S":"0"},"APump1":{"S":"1"},"Lt1":{"S":"1","B":"75","T":"1","On":"08:20","Of":"02:20"},"Lt2":{"S":"0","B":"0","T":"0","On":"08:20","Of":"16:20"},"LtSen1":{"R":"967","D":"0"},"DHT1":{"T":"25.10","H":"43.10"},"Pow1":{"P":"34.40","E":"510.93","V":"231.90","C":"0.34","F":"50.00","PF":"0.44"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","WB1":"18.29","WR1":"3.96","DW1":"18.10","WW1":"0.00","ET1":"2.00","OT1":"0.30","WL1":"13.00","H2":"1","P2":"1","PS2":"100","WB2":"20.17","WR2":"12.21","DW2":"18.49","WW2":"20.49","ET2":"2.00","OT2":"0.30","WL2":"13.00"},"Aero1":{"S":"1","P":"6.43","W":"19.68","Mi":"5.00","Ma":"7.00","AS":"1","LS":"6.47","PSt":"1","PS":"100","SE":"1","D":"1.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"1.85","T":"1126.00","W":"24.16","WT":"17.06","AT":"24.70","H":"27.60"},"Main1":{"M":"1","D":"1"}}}

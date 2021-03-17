@@ -15,8 +15,7 @@ ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  Parent->addToWebsiteQueue_Refresh(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
   logToSerials(F("ReservoirModule_Web object created"), true, 3);
 }
 
@@ -73,9 +72,9 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
   }
 }
 
-void ReservoirModule_Web::websiteEvent_Button(char *Button)
+void ReservoirModule_Web::commandEvent(char *Command, char *Data)
 { ///< When a button is pressed on the website
-  if (!isThisMyComponent(Button))
+  if (!isThisMyComponent(Command))
   {
     return;
   }
