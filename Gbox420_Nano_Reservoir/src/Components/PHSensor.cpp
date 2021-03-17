@@ -62,12 +62,16 @@ void PHSensor::setSlope(float Value)
 {
   *Slope = Value;
   AveragePH->reset();
-  Parent->addToLog(F("PH slope updated"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("slope updated"));
+  Parent->addToLog(ShortMessage);
 }
 
 void PHSensor::setIntercept(float Value)
 {
   *Intercept = Value;
   AveragePH->reset();
-  Parent->addToLog(F("PH intercept updated"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("intercept updated"));
+  Parent->addToLog(ShortMessage);
 }

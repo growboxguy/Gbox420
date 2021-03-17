@@ -45,16 +45,14 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
 {
   if (State != NewState)
   {
-    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)Name);
-    strcat_P(LongMessage, (PGM_P)F(" state: "));
-    strcat(LongMessage, toText_waterPumpState(State));
-    strcat_P(LongMessage, (PGM_P)F(" -> "));
-    strcat(LongMessage, toText_waterPumpState(NewState));
-    logToSerials(&LongMessage, true, 3);
-
     State = NewState;
     StateTimer = millis(); ///< Start measuring the time spent in the new State
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("state: "));
+    strcat(ShortMessage, toText_waterPumpState(State));
+    strcat_P(ShortMessage, (PGM_P)F(" -> "));
+    strcat(ShortMessage, toText_waterPumpState(NewState));
+    logToSerials(&ShortMessage, true, 3);
   }
 
   switch (NewState)
@@ -73,12 +71,16 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
     if (RunTime > 0 && millis() - StateTimer > ((uint32_t)RunTime * 1000)) //< Check if it is time to stop
     {
       RunTime = 0;
-      logToSerials(F("Running complete"), true, 3);
+      appendName(true);
+      strcat_P(ShortMessage, (PGM_P)F("finished"));
+      logToSerials(&ShortMessage, true, 3);
       updateState(WaterPumpStates::IDLE);
     }
     if (millis() - StateTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
     {
-      Parent->addToLog(F("Pump timeout"), 3); ///< \todo send email alert
+      appendName(true);
+      strcat_P(ShortMessage, (PGM_P)F("pump timeout"));
+      Parent->addToLog(ShortMessage);
       updateState(WaterPumpStates::DISABLED);
     }
     break;
@@ -94,7 +96,9 @@ void WaterPump::startPump(bool ResetState)
   }
   else
   {
-    logToSerials(F("Cannot turn ON"), true, 1);
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("pump timeout"));
+    logToSerials(ShortMessage, true, 1);
   }
 }
 
@@ -153,8 +157,9 @@ void WaterPump::setPumpTimeOut(int TimeOut)
   if (*this->PumpTimeOut != (uint16_t)TimeOut && TimeOut > 0)
   {
     *this->PumpTimeOut = TimeOut;
-    logToSerials(Name, false, 1);
-    logToSerials(F("timeout updated"), true, 1);
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("timeout updated"));
+    logToSerials(ShortMessage, true, 1);
     Parent->getSoundObject()->playOnSound();
   }
 }

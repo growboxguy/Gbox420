@@ -16,8 +16,9 @@ void Switch_PWM::setDutyCycle(uint8_t DutyCycle)
   if (*this->DutyCycle != DutyCycle)
   {
     *this->DutyCycle = DutyCycle;
-    logToSerials(F("PWM duty cycle:"), false, 1);
-    logToSerials(getDutyCycleText(), true, 1);
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("duty cycle updated"));
+    logToSerials(ShortMessage);
   }
 }
 

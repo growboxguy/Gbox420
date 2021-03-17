@@ -74,21 +74,26 @@ void PressureSensor::readOffset()
     delay(10);
   }
   float AeroOffsetRecommendation = (sum / 50) * 5 / 1024; ///< Reads voltage at 0 pressure
-  strncpy_P(LongMessage, (PGM_P)F("0 pressure Offset: "), MaxWordLength);
-  strcat(LongMessage, toText(AeroOffsetRecommendation));
-  Parent->addToLog(LongMessage);
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("0 pressure Offset: "));
+  strcat(ShortMessage, toText(AeroOffsetRecommendation));
+  Parent->addToLog(ShortMessage);
 }
 
 void PressureSensor::setOffset(float Value)
 {
   *Offset = Value;
   AveragePressure->reset();
-  Parent->addToLog(F("Offset updated"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("offset updated"));
+  Parent->addToLog(ShortMessage);
 }
 
 void PressureSensor::setRatio(float Value)
 {
   *Ratio = Value;
   AveragePressure->reset();
-  Parent->addToLog(F("Ratio updated"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("ratio updated"));
+  Parent->addToLog(ShortMessage);
 }
