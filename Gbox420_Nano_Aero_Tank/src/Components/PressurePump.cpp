@@ -53,7 +53,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState)
   {
-    memset(&LongMessage[0], 0, sizeof(ShortMessage)); //reset variable to store the Publish to path
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); //reset variable to store the Publish to path
     strcpy_P(LongMessage, (PGM_P)Name);
     strcat_P(LongMessage, (PGM_P)F(" state"));
     strcat(LongMessage, toText_pressurePumpState(State));

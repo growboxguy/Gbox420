@@ -53,12 +53,13 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState)
   {
-    appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("state"));
-    strcat(ShortMessage, toText_pressurePumpState(State));
-    strcat_P(ShortMessage, (PGM_P)F(" -> "));
-    strcat(ShortMessage, toText_pressurePumpState(NewState));
-    logToSerials(&ShortMessage, true, 3);
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); //reset variable to store the Publish to path
+    strcpy_P(LongMessage, (PGM_P)Name);
+    strcat_P(LongMessage, (PGM_P)F(" state"));
+    strcat(LongMessage, toText_pressurePumpState(State));
+    strcat_P(LongMessage, (PGM_P)F(" -> "));
+    strcat(LongMessage, toText_pressurePumpState(NewState));
+    logToSerials(&LongMessage, true, 3);
 
     PumpTimer = millis(); ///< Start measuring the time spent in the new State
   }
