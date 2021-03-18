@@ -53,7 +53,7 @@ void LightSensor::triggerCalibration()
 { ///< website signals to calibrate light sensor MAX and MIN readings the next time a refresh runs
   CalibrateRequested = true;
   appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("Calibrating"));
+  strcat_P(ShortMessage, (PGM_P)F("calibrating"));
   Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
@@ -80,7 +80,7 @@ void LightSensor::calibrate(bool AddToLog)
   if (AddToLog)
   {
     appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("Calibrated"));
+    strcat_P(ShortMessage, (PGM_P)F("calibrated"));
     Parent->addToLog(ShortMessage);
     logToSerials(&LongMessage, true, 4);
   }

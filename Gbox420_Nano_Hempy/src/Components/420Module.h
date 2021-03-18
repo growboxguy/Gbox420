@@ -5,8 +5,7 @@
 #include "../Helpers.h"
 
 //This class is the parent of all physical modules, like the Main / Hempy Bucket / Aeroponics / Environment module
-//Responsible for creating and
-//Adds
+
 class Sound;
 
 class Module : virtual public Common
