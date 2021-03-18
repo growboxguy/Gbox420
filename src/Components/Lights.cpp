@@ -183,7 +183,7 @@ void Lights::checkTimer()
           {
             appendName(true);
             strcat_P(ShortMessage, (PGM_P)F("timer: ON"));
-            logToSerials(ShortMessage);
+            logToSerials(&ShortMessage);
           }
         }
       }
@@ -196,7 +196,7 @@ void Lights::checkTimer()
           {
             appendName(true);
             strcat_P(ShortMessage, (PGM_P)F("timer: OFF"));
-            logToSerials(ShortMessage);
+            logToSerials(&ShortMessage);
           }
         }
       }
@@ -212,7 +212,7 @@ void Lights::checkTimer()
           {
             appendName(true);
             strcat_P(ShortMessage, (PGM_P)F("timer: ON"));
-            logToSerials(ShortMessage);
+            logToSerials(&ShortMessage);
           }
         }
       }
@@ -223,7 +223,7 @@ void Lights::checkTimer()
         {
           appendName(true);
           strcat_P(ShortMessage, (PGM_P)F("timer: OFF"));
-          logToSerials(ShortMessage);
+          logToSerials(&ShortMessage);
         }
       }
     }
