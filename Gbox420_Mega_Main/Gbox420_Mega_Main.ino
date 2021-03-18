@@ -235,9 +235,9 @@ void mqttPublished(void *response)
 void mqttReceived(void *response)
 {
   static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1;  //Get length of the command topic
+  static char command[MaxShotTextLength];
+  static char data[MaxShotTextLength];
   ELClientResponse *res = (ELClientResponse *)response;
-  char command[MaxShotTextLength];
-  char data[MaxShotTextLength];
   String mqttTopic = (*res).popString();
   String mqttData = (*res).popString();
 
@@ -247,15 +247,16 @@ void mqttReceived(void *response)
     logToSerials(&mqttTopic, true, 1);
   }  
   mqttTopic.remove(0, MqttSubTopicLength);  //Cut the known command topic from the arrived topic  
+  mqttTopic.toCharArray(command, MaxShotTextLength);
+  mqttData.toCharArray(data, MaxShotTextLength);
+
   if (*Debug)
   {
     logToSerials(F("MQTT Command:"), false, 0);
-    logToSerials(&mqttTopic, true, 1);
+    logToSerials(&command, true, 1);
     logToSerials(F("MQTT Data:"), false, 0);
-    logToSerials(&mqttData, true, 1);
+    logToSerials(&data, true, 1);
   }
-  mqttTopic.toCharArray(command, MaxShotTextLength);
-  mqttData.toCharArray(data, MaxShotTextLength);
   Main1->commandEventTrigger(command, data);
   //Main1->reportToMQTTTrigger(true); //send out a fresh report
 }

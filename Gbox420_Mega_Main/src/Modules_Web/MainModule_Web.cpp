@@ -216,7 +216,7 @@ void MainModule::commandEvent(char *Command, char *Data)
     {
       Lt1->setLightOnOff(false, true);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("L2T")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L1T")) == 0)
     {
       Lt1->setTimerOnOff(toBool(Data));
     }
@@ -234,7 +234,7 @@ void MainModule::commandEvent(char *Command, char *Data)
     }
      else if (strcmp_P(ShortMessage, (PGM_P)F("L1B")) == 0)
     {
-      Lt1->setBrightness(toInt(Data), true, true);
+      Lt1->setBrightness(toInt(Data), false, true);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L1OnH")) == 0)
     {

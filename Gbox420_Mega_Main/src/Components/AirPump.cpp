@@ -64,15 +64,14 @@ bool AirPump::setState(bool NewState)
   if (*State)
   {
     strcat_P(ShortMessage, (PGM_P)F("ON"));
-    Parent->addToLog(ShortMessage);
     Parent->getSoundObject()->playOnSound();
   }
   else
-  {    
+  {
     strcat_P(ShortMessage, (PGM_P)F("OFF"));
-    Parent->addToLog(ShortMessage);
     Parent->getSoundObject()->playOffSound();
   }
+  Parent->addToLog(ShortMessage);
 }
 
 bool AirPump::getState()
