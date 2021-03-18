@@ -131,6 +131,25 @@ char *Module_Web::eventLogToJSON(bool Append)
   return LongMessage;
 }
 
+/**
+* @brief Iterate through all object subscribed to the Report queue and complie a JSON report of their statuses
+*/
+char *Module::getJSONReport(bool BlankLongMessage)
+{
+  if (BlankLongMessage)
+  {
+    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  }
+  strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds two curly brackets that needs to be closed at the end
+  for (int i = 0; i < reportQueueItemCount;)
+  {
+    ReportQueue[i++]->reportToJSON();
+    if (i != reportQueueItemCount)
+      strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
+  }
+  strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
+}
+
 ///< Google Sheets functions - https://sites.google.com/site/growboxguy/esp-link/logging
 
 /**
