@@ -100,14 +100,13 @@ void Lights::checkRelay()
 
 void Lights::dimLightsOnOff()
 {
+  appendName(true);
   if (CurrentStatus == LightStates::DIMMED)
   { ///< If temporary dimming is already ON -> Turn it OFF
     CurrentStatus = BeforeDimmingState;
-    setBrightness(BeforeDimmingBrightness, false, false);
-    Parent->getSoundObject()->playOffSound();
-    appendName(true);
+    setBrightness(BeforeDimmingBrightness, false, false);    
     strcat_P(ShortMessage, (PGM_P)F("dimming OFF"));
-    Parent->addToLog(ShortMessage);
+    Parent->getSoundObject()->playOffSound();
   }
   else ///< If temporary dimming is OFF -> Turn it ON
   {
@@ -115,13 +114,12 @@ void Lights::dimLightsOnOff()
     BeforeDimmingBrightness = CurrentBrightness;
     CurrentStatus = LightStates::DIMMED;
     setBrightness(1, false, false);
-    DimmingTimer = millis();
-    Parent->getSoundObject()->playOnSound();
-    appendName(true);
+    DimmingTimer = millis();    
     strcat_P(ShortMessage, (PGM_P)F("dimming ON"));
-    Parent->addToLog(ShortMessage);
+    Parent->getSoundObject()->playOnSound();
   }
   checkDimming();
+  Parent->addToLog(ShortMessage);
 }
 
 void Lights::checkDimming()
@@ -211,7 +209,7 @@ void Lights::checkTimer()
           if (*Debug)
           {
             appendName(true);
-            strcat_P(ShortMessage, (PGM_P)F("timer: ON"));
+            strcat_P(ShortMessage, (PGM_P)F("timer ON"));
             logToSerials(&ShortMessage);
           }
         }
@@ -222,7 +220,7 @@ void Lights::checkTimer()
         if (*Debug)
         {
           appendName(true);
-          strcat_P(ShortMessage, (PGM_P)F("timer: OFF"));
+          strcat_P(ShortMessage, (PGM_P)F("timer OFF"));
           logToSerials(&ShortMessage);
         }
       }
@@ -241,9 +239,7 @@ void Lights::setBrightness(uint8_t Brightness, bool LogThis, bool StoreSetting)
   if (LogThis)
   {
     appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("Brightness "));
-    strcat(ShortMessage, toText(Brightness));
-    strcat_P(ShortMessage, (PGM_P)F("%"));
+    strcat_P(ShortMessage, (PGM_P)F("brightness updated"));
     Parent->addToLog(ShortMessage);
   }
 }
@@ -400,23 +396,19 @@ char *Lights::getOffTimeText()
 void Lights::setTimerOnOff(bool TimerState)
 {
   *(this->TimerEnabled) = TimerState;
+  appendName(true);
   if (*TimerEnabled)
   {
     checkTimer();
-    appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("timer ON"));
-    Parent->addToLog(ShortMessage);
-    ;
+    strcat_P(ShortMessage, (PGM_P)F("timer ON"));    
     Parent->getSoundObject()->playOnSound();
   }
   else
   {
-    appendName(true);
     strcat_P(ShortMessage, (PGM_P)F("timer OFF"));
-    Parent->addToLog(ShortMessage);
-    ;
     Parent->getSoundObject()->playOffSound();
   }
+  Parent->addToLog(ShortMessage);
 }
 
 void Lights::setOnHour(uint8_t OnHour)
@@ -450,20 +442,18 @@ void Lights::setOffMinute(uint8_t OffMinute)
 void Lights::setFadeOnOff(bool State)
 {
   *FadingEnabled = State;
+  appendName(true);
   if (*FadingEnabled)
-  {
-    appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("fading ON"));
-    Parent->addToLog(ShortMessage);
+  {    
+    strcat_P(ShortMessage, (PGM_P)F("fading ON"));    
     Parent->getSoundObject()->playOnSound();
   }
   else
   {
-    appendName(true);
     strcat_P(ShortMessage, (PGM_P)F("fading OFF"));
-    Parent->addToLog(ShortMessage);
     Parent->getSoundObject()->playOffSound();
   }
+  Parent->addToLog(ShortMessage);
 }
 
 void Lights::setFadeInterval(uint16_t Interval)

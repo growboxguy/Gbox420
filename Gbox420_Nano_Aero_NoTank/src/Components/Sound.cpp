@@ -56,16 +56,15 @@ void Sound::setSoundOnOff(bool State)
   appendName(true);
   if (*Enabled)
   {    
-    strcat_P(ShortMessage, (PGM_P)F("ON"));
-    Parent->addToLog(ShortMessage);
+    strcat_P(ShortMessage, (PGM_P)F("ON"));    
     playOnSound();
   }
   else
   {
     strcat_P(ShortMessage, (PGM_P)F("OFF"));
-    Parent->addToLog(ShortMessage);
     playOffSound();
   }
+  Parent->addToLog(ShortMessage);
 }
 
 void Sound::OnSound()

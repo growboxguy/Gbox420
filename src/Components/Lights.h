@@ -66,7 +66,7 @@ protected:
   bool *Status;                                            ///< Lights ON or OFF
   LightStates CurrentStatus = LightStates::TURNEDOFF;      ///< Tracks light state during fading in/out
   bool *TimerEnabled;                                      ///< Enable timer controlling lights: true - Timer enabled, false - Timer disabled
-  int16_t CurrentBrightness;                               ///< Tracks light intensity while fading in/out
+  uint8_t CurrentBrightness;                               ///< Tracks light intensity while fading in/out
   bool *FadingEnabled;                                     ///< Enables/disables fading lights in when turning on, and fading lights out when turning off
   uint32_t FadingTimer = 0;                                ///< Stores the last time the Fadein/out increased/decreased a increment
   uint16_t *FadingInterval;                                ///< How often should the brightness change during a fade in/out (Seconds)
