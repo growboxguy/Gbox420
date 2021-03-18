@@ -227,8 +227,15 @@
 				</form>
 				<form>
 					<p>
-						<label>Topic</label>
-						<input type="text" name="Main1_MT" style="width: 220px;" title="First topic level" maxlength="127" />
+						<label>Publish Topic <button class="setButton" onclick="mqttPublishInfo()">?</button></label>
+						<input type="text" name="Main1_MPT" style="width: 220px;" title="Topic to Publish MQTT messages to" maxlength="127" />
+						<input class="setButton" type="submit" value="Set" />
+					</p>
+				</form>
+				<form>
+					<p>
+						<label>Subscribe Topic <button class="setButton" onclick="mqttSubscribeInfo()">?</button></label>
+						<input type="text" name="Main1_MST" style="width: 220px;" title="Subscribe to receiving commands from this MQTT topic" maxlength="127" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
@@ -341,6 +348,16 @@
 		link.href = 'https://lh3.googleusercontent.com/pw/ACtC-3fQYOltHeTzGQfCXJ9t4w69Q9He8OFV4ubiwdjXgfPK-BUnN2W0dONv5upYRst7UQRuFLnusYNft_qTRfPUtbBK-XnArFD5ulpKV_AXNayiaqemd0GdBPieLqpnPtEGhiLr-c0yuk9LrRaXTWPtH4gP=s671-no?authuser=0';
 		document.getElementsByTagName('head')[0].appendChild(link);
 	};
+
+	function mqttPublishInfo() {
+		if (confirm("MQTT topic where a JSON formatted status report is sent to")) {
+		}
+	}
+
+	function mqttSubscribeInfo() {
+		if (confirm("MQTT topic that the Gbox420 sketch listens for incoming commands.\nCommand format: SUBSCRIBETOPIC/ComponentName_Command/Data\nExample:Gbox420CMD/Main1_Lt1/true")) {
+		}
+	}
 
 </script>
 </body>

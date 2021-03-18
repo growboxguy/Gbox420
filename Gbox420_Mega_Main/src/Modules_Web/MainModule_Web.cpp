@@ -97,7 +97,8 @@ void MainModule::websiteEvent_Load(char *url)
     WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
     WebServer.setArgBoolean(getComponentName(F("MQTT")), *ReportToMQTT);
     WebServer.setArgInt(getComponentName(F("MQTTF")), *MQTTReportingFrequency);
-    WebServer.setArgString(getComponentName(F("MT")), ModuleSettings->MqttPubTopic);
+    WebServer.setArgString(getComponentName(F("MPT")), ModuleSettings->MqttPubTopic);
+    WebServer.setArgString(getComponentName(F("MST")), ModuleSettings->MqttSubTopic);
     WebServer.setArgString(getComponentName(F("MLT")), ModuleSettings->MqttLwtTopic);
     WebServer.setArgString(getComponentName(F("MLM")), ModuleSettings->MqttLwtMessage);
     WebServer.setArgBoolean(getComponentName(F("Sound")), Sound1->getEnabledState());
@@ -366,9 +367,13 @@ void MainModule::commandEvent(char *Command, char *Data)
     {
       setMQTTReportingFrequency(toInt(Data));
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MT")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("MPT")) == 0)
     {
-      setMQTTTopic(WebServer.getArgString());
+      setMqttPublishTopic(WebServer.getArgString());
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("MST")) == 0)
+    {
+      setMqttSubscribeTopic(WebServer.getArgString());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("MLT")) == 0)
     {
@@ -526,11 +531,18 @@ void MainModule::setMQTTReportingFrequency(uint16_t Frequency)
   getSoundObject()->playOnSound();
 }
 
-void MainModule::setMQTTTopic(const char *RootTopic)
+void MainModule::setMqttPublishTopic(const char *Topic)
 {
-  strncpy(ModuleSettings->MqttPubTopic, RootTopic, MaxShotTextLength);
+  strncpy(ModuleSettings->MqttPubTopic, Topic, MaxShotTextLength);
   getSoundObject()->playOnSound();
-  addToLog(F("MQTT topic updated"));
+  addToLog(F("MQTT publish updated"));
+}
+
+void MainModule::setMqttSubscribeTopic(const char *Topic)
+{
+  strncpy(ModuleSettings->MqttSubTopic, Topic, MaxShotTextLength);
+  getSoundObject()->playOnSound();
+  addToLog(F("MQTT subscribe updated"));
 }
 
 void MainModule::setMQTTLWTTopic(const char *LWTTopic)

@@ -65,7 +65,8 @@ private:
   void setPushingBoxLogRelayID(const char *ID);
   void setMQTTReportingOnOff(bool State);
   void setMQTTReportingFrequency(uint16_t Frequency);
-  void setMQTTTopic(const char *ID);
+  void setMqttPublishTopic(const char *ID);
+  void setMqttSubscribeTopic(const char *ID);
   void setMQTTLWTTopic(const char *ID);
   void setMQTTLWTMessage(const char *ID);
 

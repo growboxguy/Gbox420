@@ -193,7 +193,7 @@ void resetWebServer()
   //TestHandler->refreshCb.attach(&refreshCallback);                                 ///< Test tab - Called periodically to refresh website content
   //TestHandler->buttonCb.attach(&buttonCallback);                              ///< Test tab - Called when a button is pressed on the website
   //TestHandler->setFieldCb.attach(&fieldCallback);                               ///< Test tab - Called when a field is changed on the website
-  logToSerials(F("ESP-link ready"), true, 2);
+  logToSerials(F("ESP-link ready"), true, 1);
 }
 
 /**
