@@ -243,10 +243,8 @@ void mqttReceived(void *response)
 
   if (*Debug)
   {
-    logToSerials(F("MQTT Topic ["), false, 0);
-    logToSerials(MqttSubTopicLength, false, 0);
-    logToSerials(F("]:"), false, 0);
-    logToSerials(&topic, true, 1);
+    logToSerials(F("MQTT Topic"), false, 0);
+    logToSerials(&mqttTopic, true, 1);
   }  
   mqttTopic.remove(0, MqttSubTopicLength);  //Cut the known command topic from the arrived topic  
   if (*Debug)

@@ -249,9 +249,9 @@ bool toBool(char *Boolean)
   return 0;
 }
 
-int32_t toInt(char *Integer)
+int toInt(char *Integer)
 {
-  return (int32_t)atol(Integer);
+  return atoi(Integer);
 }
 
 float toFloat(char *Float)

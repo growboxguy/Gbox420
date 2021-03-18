@@ -105,5 +105,5 @@ char *toText_second(int Second);
 char *toText_distance(float Distance);
 char *toText_TDS(float TDS);
 bool toBool(char *Boolean);
-int32_t toInt(char *Integer);
+int toInt(char *Integer);
 float toFloat(char *Float);
