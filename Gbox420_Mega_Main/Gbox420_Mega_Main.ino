@@ -234,28 +234,32 @@ void mqttPublished(void *response)
 
 void mqttReceived(void *response)
 {
+  static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1;  //Get length of the command topic
   ELClientResponse *res = (ELClientResponse *)response;
   char command[MaxShotTextLength];
   char data[MaxShotTextLength];
-  String topic = (*res).popString();
-  ((*res).popString()).toCharArray(data, MaxShotTextLength);
+  String mqttTopic = (*res).popString();
+  String mqttData = (*res).popString();
+
   if (*Debug)
   {
-    logToSerials(F("MQTT Topic:"), false, 0);
+    logToSerials(F("MQTT Topic ["), false, 0);
+    logToSerials(MqttSubTopicLength, false, 0);
+    logToSerials(F("]:"), false, 0);
     logToSerials(&topic, true, 1);
-  }
-  static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1;  //Get length of the command topic
-  topic.remove(0, MqttSubTopicLength);  //Cut the known command topic from the arrived topic
-  topic.toCharArray(command, MaxShotTextLength);
+  }  
+  mqttTopic.remove(0, MqttSubTopicLength);  //Cut the known command topic from the arrived topic  
   if (*Debug)
   {
     logToSerials(F("MQTT Command:"), false, 0);
-    logToSerials(&command, true, 1);
+    logToSerials(&mqttTopic, true, 1);
     logToSerials(F("MQTT Data:"), false, 0);
-    logToSerials(&data, true, 1);
+    logToSerials(&mqttData, true, 1);
   }
+  mqttTopic.toCharArray(command, MaxShotTextLength);
+  mqttData.toCharArray(data, MaxShotTextLength);
   Main1->commandEventTrigger(command, data);
-  Main1->reportToMQTTTrigger(true); //send out a fresh report
+  //Main1->reportToMQTTTrigger(true); //send out a fresh report
 }
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress

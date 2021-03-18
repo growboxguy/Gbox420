@@ -232,8 +232,32 @@ void MainModule::commandEvent(char *Command, char *Data)
     {
       Lt1->dimLightsOnOff();
     }
+     else if (strcmp_P(ShortMessage, (PGM_P)F("L1B")) == 0)
+    {
+      Lt1->setBrightness(toInt(Data), true, true);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L1OnH")) == 0)
+    {
+      Lt1->setOnHour(toInt(Data));
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L1OnM")) == 0)
+    {
+      Lt1->setOnMinute(toInt(Data));
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L1OfH")) == 0)
+    {
+      Lt1->setOffHour(toInt(Data));
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L1OfM")) == 0)
+    {
+      Lt1->setOffMinute(toInt(Data));
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L1DD")) == 0)
+    {
+      Lt1->setDimDuration(toInt(Data));
+    }
     //Light2
-    else if (strcmp_P(ShortMessage, (PGM_P)F("L1")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L2")) == 0)
     {
       Lt2->setLightOnOff(toBool(Data), true);
     }
@@ -261,31 +285,6 @@ void MainModule::commandEvent(char *Command, char *Data)
     {
       Lt2->dimLightsOnOff();
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("L1B")) == 0)
-    {
-      Lt1->setBrightness(toInt(Data), true, true);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("L1OnH")) == 0)
-    {
-      Lt1->setOnHour(toInt(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("L1OnM")) == 0)
-    {
-      Lt1->setOnMinute(toInt(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("L1OfH")) == 0)
-    {
-      Lt1->setOffHour(toInt(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("L1OfM")) == 0)
-    {
-      Lt1->setOffMinute(toInt(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("L1DD")) == 0)
-    {
-      Lt1->setDimDuration(toInt(Data));
-    }
-    //Light2
     else if (strcmp_P(ShortMessage, (PGM_P)F("L2B")) == 0)
     {
       Lt2->setBrightness(toInt(Data), true, true);
