@@ -28,7 +28,7 @@ public:
   virtual void refresh_Sec();
   virtual void refresh_FiveSec();
   virtual void refresh_Minute();
-  virtual void reportToJSON();
+  void reportToJSON();
   
 private:
 protected:

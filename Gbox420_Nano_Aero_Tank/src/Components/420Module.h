@@ -26,7 +26,6 @@ public:
   void addToRefreshQueue_FiveSec(Common *Component); ///< Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   void addToRefreshQueue_Minute(Common *Component);  ///< Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   char *getFormattedTime(bool PrintToSerials);
-  char *getJSONReport(bool BlankLongMessage = false);  
   Sound *getSoundObject();
 
 private:
