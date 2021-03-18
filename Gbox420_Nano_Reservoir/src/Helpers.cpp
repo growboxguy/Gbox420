@@ -238,11 +238,13 @@ bool toBool(char *Boolean)
 {
   if (strcmp_P(Boolean, PSTR("on")) == 0)
     return 1;
+  if (strcmp_P(Boolean, PSTR("1")) == 0)
+    return 1;
   if (strcmp_P(Boolean, PSTR("true")) == 0)
     return 1;
-  if (strcmp_P(Boolean, PSTR("yes")) == 0)
+  if (strcmp_P(Boolean, PSTR("on")) == 0)
     return 1;
-  if (strcmp_P(Boolean, PSTR("1")) == 0)
+  if (strcmp_P(Boolean, PSTR("yes")) == 0)
     return 1;
   return 0;
 }
@@ -257,9 +259,9 @@ float toFloat(char *Float)
   return atof(Float);
 }
 
-    ///TODO: The below section should be split between the modules to reduce memory usage
+///TODO: The below section should be split between the modules to reduce memory usage
 
-    char *toText_waterPumpState(WaterPumpStates State)
+char *toText_waterPumpState(WaterPumpStates State)
 {
   switch (State)
   {

@@ -134,7 +134,7 @@ char *Module_Web::eventLogToJSON(bool Append)
 /**
 * @brief Iterate through all object subscribed to the Report queue and complie a JSON report of their statuses
 */
-char *Module::getJSONReport(bool BlankLongMessage)
+char *Module_Web::getJSONReport(bool BlankLongMessage)
 {
   if (BlankLongMessage)
   {
