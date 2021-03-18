@@ -99,7 +99,7 @@ void WaterPump::startPump(bool ResetState)
   {
     appendName(true);
     strcat_P(ShortMessage, (PGM_P)F("timeout"));
-    logToSerials(ShortMessage, true, 1);
+    logToSerials(&ShortMessage, true, 1);
   }
 }
 
@@ -160,7 +160,7 @@ void WaterPump::setPumpTimeOut(int TimeOut)
     *this->PumpTimeOut = TimeOut;
     appendName(true);
     strcat_P(ShortMessage, (PGM_P)F("timeout updated"));
-    logToSerials(ShortMessage, true, 1);
+    logToSerials(&ShortMessage, true, 1);
     Parent->getSoundObject()->playOnSound();
   }
 }
