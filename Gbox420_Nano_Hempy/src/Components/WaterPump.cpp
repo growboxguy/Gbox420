@@ -45,8 +45,6 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
 {
   if (State != NewState)
   {
-    State = NewState;
-    StateTimer = millis(); ///< Start measuring the time spent in the new State
     memset(&LongMessage[0], 0, sizeof(LongMessage)); //reset variable to store the Publish to path
     strcpy_P(LongMessage, (PGM_P)Name);
     strcat_P(LongMessage, (PGM_P)F(" state: "));
@@ -54,6 +52,9 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
     strcat_P(LongMessage, (PGM_P)F(" -> "));
     strcat(LongMessage, toText_waterPumpState(NewState));
     logToSerials(&LongMessage, true, 3);
+
+    State = NewState;
+    StateTimer = millis(); ///< Start measuring the time spent in the new State
   }
 
   switch (NewState)
