@@ -171,9 +171,9 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
   }
 }
 
-void PressurePump::startPump(bool ResetStatus)
+void PressurePump::startPump(bool ResetState)
 {
-  if (ResetStatus)
+  if (ResetState)
   {
     *PumpEnabled = true;
   }
@@ -184,9 +184,9 @@ void PressurePump::startPump(bool ResetStatus)
   }
 }
 
-void PressurePump::stopPump(bool ResetStatus)
+void PressurePump::stopPump(bool ResetState)
 {
-  if (ResetStatus)
+  if (ResetState)
   {
     *PumpEnabled = true;
   }
@@ -197,7 +197,7 @@ void PressurePump::stopPump(bool ResetStatus)
   }
   else
   {
-    if (State != PressurePumpStates::IDLE && State != PressurePumpStates::DISABLED)
+    if ((State != PressurePumpStates::IDLE && State != PressurePumpStates::DISABLED) || (State == PressurePumpStates::DISABLED && ResetState))
       updateState(PressurePumpStates::BYPASSCLOSE);
   }
 }
