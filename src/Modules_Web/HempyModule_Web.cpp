@@ -166,35 +166,22 @@ void HempyModule_Web::commandEvent(char *Command, char *Data)
   }
   else
   {
+    //Bucket1
     if (strcmp_P(ShortMessage, (PGM_P)F("B1On")) == 0)
     {
       HempyBucketCommand1ToSend.StartWatering = true;
       Parent->addToLog(F("Watering HempyBucket 1"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2On")) == 0)
-    {
-      HempyBucketCommand2ToSend.StartWatering = true;
-      Parent->addToLog(F("Watering HempyBucket 2"), false);
-    }
+
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1Off")) == 0)
     {
       HempyBucketCommand1ToSend.StopWatering = true;
       Parent->addToLog(F("Stop watering HempyBucket 1"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Off")) == 0)
-    {
-      HempyBucketCommand2ToSend.StopWatering = true;
-      Parent->addToLog(F("Stop watering HempyBucket 2"), false);
-    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1Dis")) == 0)
     {
       HempyBucketCommand1ToSend.Disable = true;
       Parent->addToLog(F("Disabled HempyBucket 1"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Dis")) == 0)
-    {
-      HempyBucketCommand2ToSend.Disable = true;
-      Parent->addToLog(F("Disabled HempyBucket 2"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareB")) == 0)
     {
@@ -210,21 +197,6 @@ void HempyModule_Web::commandEvent(char *Command, char *Data)
     {
       HempyBucketCommand1ToSend.TareWeightWR = true;
       Parent->addToLog(F("Taring Bucket 1 waste scale"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareB")) == 0)
-    {
-      HempyBucketCommand2ToSend.TareWeightB = true;
-      Parent->addToLog(F("Taring Bucket 2 scale"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareDW")) == 0)
-    {
-      HempyBucketCommand2ToSend.TareWeightDW = true;
-      Parent->addToLog(F("Taring Bucket 2 Dry/Wet"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareWR")) == 0)
-    {
-      HempyBucketCommand2ToSend.TareWeightWR = true;
-      Parent->addToLog(F("Taring Bucket 2 waste scale"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1ET")) == 0)
     {
@@ -260,6 +232,38 @@ void HempyModule_Web::commandEvent(char *Command, char *Data)
       HempyBucketCommand1ToSend.DryWeight = toFloat(Data);
       Parent->addToLog(F("B1 dry weight updated"), false);
     }
+    //Bucket
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2On")) == 0)
+    {
+      HempyBucketCommand2ToSend.StartWatering = true;
+      Parent->addToLog(F("Watering HempyBucket 2"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Off")) == 0)
+    {
+      HempyBucketCommand2ToSend.StopWatering = true;
+      Parent->addToLog(F("Stop watering HempyBucket 2"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Dis")) == 0)
+    {
+      HempyBucketCommand2ToSend.Disable = true;
+      Parent->addToLog(F("Disabled HempyBucket 2"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareB")) == 0)
+    {
+      HempyBucketCommand2ToSend.TareWeightB = true;
+      Parent->addToLog(F("Taring Bucket 2 scale"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareDW")) == 0)
+    {
+      HempyBucketCommand2ToSend.TareWeightDW = true;
+      Parent->addToLog(F("Taring Bucket 2 Dry/Wet"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareWR")) == 0)
+    {
+      HempyBucketCommand2ToSend.TareWeightWR = true;
+      Parent->addToLog(F("Taring Bucket 2 waste scale"), false);
+    }
+
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2ET")) == 0)
     {
       DefaultSettings->EvaporationTarget_B2 = toFloat(Data);
