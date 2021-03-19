@@ -104,7 +104,7 @@ void Lights::dimLightsOnOff()
   if (CurrentStatus == LightStates::DIMMED)
   { ///< If temporary dimming is already ON -> Turn it OFF
     CurrentStatus = BeforeDimmingState;
-    setBrightness(BeforeDimmingBrightness, false, false);    
+    setBrightness(BeforeDimmingBrightness, false, false);
     strcat_P(ShortMessage, (PGM_P)F("dimming OFF"));
     Parent->getSoundObject()->playOffSound();
   }
@@ -114,7 +114,7 @@ void Lights::dimLightsOnOff()
     BeforeDimmingBrightness = CurrentBrightness;
     CurrentStatus = LightStates::DIMMED;
     setBrightness(1, false, false);
-    DimmingTimer = millis();    
+    DimmingTimer = millis();
     strcat_P(ShortMessage, (PGM_P)F("dimming ON"));
     Parent->getSoundObject()->playOnSound();
   }
@@ -400,7 +400,7 @@ void Lights::setTimerOnOff(bool TimerState)
   if (*TimerEnabled)
   {
     checkTimer();
-    strcat_P(ShortMessage, (PGM_P)F("timer ON"));    
+    strcat_P(ShortMessage, (PGM_P)F("timer ON"));
     Parent->getSoundObject()->playOnSound();
   }
   else
@@ -409,6 +409,22 @@ void Lights::setTimerOnOff(bool TimerState)
     Parent->getSoundObject()->playOffSound();
   }
   Parent->addToLog(ShortMessage);
+}
+
+void Lights::setOnTime(char *OnTime)
+{
+  if (strlen(OnTime) == 4) //strlen does not include the null terminator in the size like sizeof() does
+  {
+    char Hour[3]; //null terminator included
+    memcpy(Hour, &OnTime[0], 2);
+    Hour[2] = '\0';
+    setOnHour(toInt(Hour));
+
+    char Minute[3];
+    memcpy(Minute, &OnTime[2], 2);
+    Hour[2] = '\0';
+    setOnMinute(toInt(Minute));
+  }
 }
 
 void Lights::setOnHour(uint8_t OnHour)
@@ -423,6 +439,22 @@ void Lights::setOnMinute(uint8_t OnMinute)
   strcat_P(ShortMessage, (PGM_P)F("ON time updated"));
   Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
+}
+
+void Lights::setOffTime(char *OffTime)
+{
+  if (strlen(OffTime) == 4) //strlen does not include the null terminator in the size like sizeof() does
+  {
+    char Hour[3]; //null terminator included
+    memcpy(Hour, &OffTime[0], 2);
+    Hour[2] = '\0';
+    setOffHour(toInt(Hour));
+
+    char Minute[3];
+    memcpy(Minute, &OffTime[2], 2);
+    Hour[2] = '\0';
+    setOffMinute(toInt(Minute));
+  }
 }
 
 void Lights::setOffHour(uint8_t OffHour)
@@ -444,8 +476,8 @@ void Lights::setFadeOnOff(bool State)
   *FadingEnabled = State;
   appendName(true);
   if (*FadingEnabled)
-  {    
-    strcat_P(ShortMessage, (PGM_P)F("fading ON"));    
+  {
+    strcat_P(ShortMessage, (PGM_P)F("fading ON"));
     Parent->getSoundObject()->playOnSound();
   }
   else

@@ -232,9 +232,13 @@ void MainModule::commandEvent(char *Command, char *Data)
     {
       Lt1->dimLightsOnOff();
     }
-     else if (strcmp_P(ShortMessage, (PGM_P)F("L1B")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L1B")) == 0)
     {
       Lt1->setBrightness(toInt(Data), false, true);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L1OnT")) == 0)
+    {
+      Lt1->setOnTime(Data);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L1OnH")) == 0)
     {
@@ -243,6 +247,10 @@ void MainModule::commandEvent(char *Command, char *Data)
     else if (strcmp_P(ShortMessage, (PGM_P)F("L1OnM")) == 0)
     {
       Lt1->setOnMinute(toInt(Data));
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L1OfT")) == 0)
+    {
+      Lt1->setOffTime(Data);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L1OfH")) == 0)
     {
@@ -289,6 +297,10 @@ void MainModule::commandEvent(char *Command, char *Data)
     {
       Lt2->setBrightness(toInt(Data), true, true);
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L2OnT")) == 0)
+    {
+      Lt2->setOnTime(Data);
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L2OnH")) == 0)
     {
       Lt2->setOnHour(toInt(Data));
@@ -296,6 +308,10 @@ void MainModule::commandEvent(char *Command, char *Data)
     else if (strcmp_P(ShortMessage, (PGM_P)F("L2OnM")) == 0)
     {
       Lt2->setOnMinute(toInt(Data));
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("L2OfT")) == 0)
+    {
+      Lt2->setOffTime(Data);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L2OfH")) == 0)
     {
