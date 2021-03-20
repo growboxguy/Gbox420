@@ -263,7 +263,6 @@ void mqttReceived(void *response)
   Main1->commandEventTrigger(command, data);
   Main1->reportToMQTTTrigger(true); //send out a fresh report
 }
-*/
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress
 
