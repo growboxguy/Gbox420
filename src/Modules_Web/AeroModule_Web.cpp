@@ -49,7 +49,7 @@ void AeroModule_Web::report()
   strcat_P(LongMessage, (PGM_P)F(" ; LastSprayPressure:"));
   strcat(LongMessage, toText_pressure(AeroResponse1Received.LastSprayPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; Weight:"));
-  strcat(LongMessage, toText_pressure(AeroResponse1Received.Weight));
+  strcat(LongMessage, toText_weight(AeroResponse1Received.Weight));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(AeroResponse1Received.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F(" ; PumpState:"));
@@ -180,10 +180,10 @@ void AeroModule_Web::commandEvent(char *Command, char *Data)
       AeroCommand2ToSend.PumpOn = true;
       Parent->addToLog(F("Aero pump ON"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0) //Sending a turn OFF command re-enables the pump and resets its status to IDLE
     {
       AeroCommand2ToSend.PumpOff = true;
-      Parent->addToLog(F("Aero pump OFF"), false);
+      Parent->addToLog(F("Aero pump IDLE"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0)
     {

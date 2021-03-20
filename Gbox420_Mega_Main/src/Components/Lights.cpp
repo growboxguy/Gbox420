@@ -79,8 +79,10 @@ void Lights::reportToJSON()
   Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, getStatusText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"B\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\",\"CB\":\""));
   strcat(LongMessage, getCurrentBrightnessText(false));
+  strcat_P(LongMessage, (PGM_P)F("\",\"B\":\""));
+  strcat(LongMessage, getBrightnessText(false));
   strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
   strcat(LongMessage, getTimerOnOffText(false));
   strcat_P(LongMessage, (PGM_P)F("\",\"On\":\""));
