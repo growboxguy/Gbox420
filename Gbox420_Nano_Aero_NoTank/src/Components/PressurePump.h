@@ -18,8 +18,8 @@ public:
   void setMaxPressure(float MaxPressure);
   void setSpeed(uint8_t DutyCycle); //Set PWM duty cycle
 
-  void startPump(bool ResetStatus = false); ///< Turn the pump ON
-  void stopPump(bool ResetStatus = false);                          ///< Turn the pump OFF
+  void startPump(bool ResetState = false); ///< Turn the pump ON
+  void stopPump(bool ResetState = false);                          ///< Turn the pump OFF
   void disablePump();                       ///< Disable the pump
   void startMixing();
 

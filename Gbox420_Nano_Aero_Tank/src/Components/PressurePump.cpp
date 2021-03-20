@@ -55,7 +55,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
   {
     memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
     strcat_P(LongMessage, (PGM_P)Name);
-    strcat_P(LongMessage, (PGM_P)F(" state: "));
+    strcat_P(LongMessage, (PGM_P)F(" state"));
     strcat(LongMessage, toText_pressurePumpState(State));
     strcat_P(LongMessage, (PGM_P)F(" -> "));
     strcat(LongMessage, toText_pressurePumpState(NewState));
@@ -95,7 +95,9 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
     }
     if (millis() - PumpTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
     {
-      Parent->addToLog(F("Pump timeout"), 3);
+      appendName(true);
+      strcat_P(ShortMessage, (PGM_P)F("timeout"));
+      Parent->addToLog(ShortMessage);
       *PumpEnabled = false;
       updateState(PressurePumpStates::BLOWOFF);
       BlockOverWritingState = true;
@@ -169,9 +171,9 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
   }
 }
 
-void PressurePump::startPump(bool ResetStatus)
+void PressurePump::startPump(bool ResetState)
 {
-  if (ResetStatus)
+  if (ResetState)
   {
     *PumpEnabled = true;
   }
@@ -182,9 +184,9 @@ void PressurePump::startPump(bool ResetStatus)
   }
 }
 
-void PressurePump::stopPump(bool ResetStatus)
+void PressurePump::stopPump(bool ResetState)
 {
-  if (ResetStatus)
+  if (ResetState)
   {
     *PumpEnabled = true;
   }
@@ -195,15 +197,16 @@ void PressurePump::stopPump(bool ResetStatus)
   }
   else
   {
-    if (State != PressurePumpStates::IDLE && State != PressurePumpStates::DISABLED)
+    if ((State != PressurePumpStates::IDLE && State != PressurePumpStates::DISABLED) || (State == PressurePumpStates::DISABLED && ResetState))
       updateState(PressurePumpStates::BYPASSCLOSE);
   }
 }
 
 void PressurePump::disablePump()
 {
-  logToSerials(Name, false, 3);
-  logToSerials(F("disabled"), true, 1);
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("disabled"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOffSound();
   *PumpEnabled = false;
   if (State == PressurePumpStates::RUNNING)
@@ -273,8 +276,9 @@ void PressurePump::setPumpTimeOut(int TimeOut)
   if (*this->PumpTimeOut != TimeOut && TimeOut > 0)
   {
     *this->PumpTimeOut = TimeOut;
-    logToSerials(Name, false, 1);
-    logToSerials(F("timeout updated"), true, 1);
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("timeout updated"));
+    logToSerials(&ShortMessage, true, 1);
     Parent->getSoundObject()->playOnSound();
   }
 }
@@ -289,7 +293,9 @@ void PressurePump::setPrimingTime(int Timing)
   if (*PrimingTime != Timing && Timing > 0)
   {
     *PrimingTime = Timing;
-    Parent->addToLog(F("Priming time updated"));
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("priming time updated"));
+    Parent->addToLog(ShortMessage);
     Parent->getSoundObject()->playOnSound();
   }
 }

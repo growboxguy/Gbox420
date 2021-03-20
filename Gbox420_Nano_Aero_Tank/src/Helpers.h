@@ -12,23 +12,23 @@
 #include "MemoryFree.h" // Checking remaining memory
 #include "avr/wdt.h"    // Watchdog timer
 #include "../SerialLog.h"
-#include "../Settings.h"    // Storing/reading defaults
+#include "../Settings.h" // Storing/reading defaults
 
 ///< State machine - Defining possible states
 
 enum class WaterPumpStates
 {
   DISABLED,
-  IDLE,  
-  RUNNING  
+  IDLE,
+  RUNNING
 };
 
 enum class HempyStates
 {
   DISABLED,
-  IDLE,  
+  IDLE,
   WATERING,
-  DRAINING  
+  DRAINING
 };
 
 enum class PressurePumpStates
@@ -46,7 +46,7 @@ enum class PressurePumpStates
 enum class AeroTankStates
 {
   DISABLED,
-  IDLE,  
+  IDLE,
   SPRAY,
   STOPSPRAY,
   RELEASE,
@@ -60,8 +60,8 @@ enum class AeroNoTankStates
   DISABLED,
   IDLE,
   PRIMING,
-  SPRAY,  
-  RELEASE,  
+  SPRAY,
+  RELEASE,
   MIX
 };
 
@@ -104,3 +104,6 @@ char *toText_minute(int Minute);
 char *toText_second(int Second);
 char *toText_distance(float Distance);
 char *toText_TDS(float TDS);
+bool toBool(char *Boolean);
+int toInt(char *Integer);
+float toFloat(char *Float);

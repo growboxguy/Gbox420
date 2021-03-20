@@ -36,6 +36,14 @@ void Fan_PWM::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+void Fan_PWM::reportToJSON()
+{
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, toText(getSpeed()));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 void Fan_PWM::checkState()
 {
   if (*State) // Device should be ON
@@ -48,27 +56,33 @@ void Fan_PWM::checkState()
   }
 }
 
-void Fan_PWM::turnOff()
-{
-  *State = false;
-  checkState();
-  Parent->addToLog(F("Fan OFF"));
-  Parent->getSoundObject()->playOffSound();
-}
-
 void Fan_PWM::turnOn()
 {
   *State = true;
   checkState();
-  Parent->addToLog(F("Fan ON"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("ON"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
+}
+
+void Fan_PWM::turnOff()
+{
+  *State = false;
+  checkState();
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("OFF"));
+  Parent->addToLog(ShortMessage);
+  Parent->getSoundObject()->playOffSound();
 }
 
 void Fan_PWM::setSpeed(uint8_t NewSpeed)
 {
   *Speed = NewSpeed;
   PWMDimmer->setPower(map(NewSpeed,*MinSpeed,100,0,100));
-  Parent->addToLog(F("Fan speed updated"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("speed updated"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
 

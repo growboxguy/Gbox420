@@ -8,7 +8,10 @@ struct HempyBucketCommand HempyBucketCommand2ToSend = {HempyMessages::HempyBucke
 struct HempyBucketResponse HempyBucketResponse2Received = {HempyMessages::HempyBucketResponse2}; ///< Response will be stored here
 struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};                       ///< Special command to fetch the next Response from the Receiver
 
-HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
+/**
+* @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
+*/
+HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
 { ///< Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -20,8 +23,7 @@ HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Pa
   Parent->addToRefreshQueue_Minute(this);
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
-  Parent->addToWebsiteQueue_Field(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
   logToSerials(F("HempyModule_Web object created"), true, 3);
 }
 
@@ -63,7 +65,7 @@ void HempyModule_Web::report()
 
 void HempyModule_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"H1\":\""));
@@ -72,6 +74,10 @@ void HempyModule_Web::reportToJSON()
   strcat(LongMessage, toText((int)HempyBucketResponse1Received.PumpState));
   strcat_P(LongMessage, (PGM_P)F("\",\"PS1\":\""));
   strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PT1\":\""));
+  strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpTimeOut));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DT1\":\""));
+  strcat(LongMessage, toText(HempyBucketCommand1ToSend.DrainWaitTime));
   strcat_P(LongMessage, (PGM_P)F("\",\"WB1\":\""));
   strcat(LongMessage, toText(HempyBucketResponse1Received.WeightB));
   strcat_P(LongMessage, (PGM_P)F("\",\"WR1\":\""));
@@ -92,6 +98,10 @@ void HempyModule_Web::reportToJSON()
   strcat(LongMessage, toText((int)HempyBucketResponse2Received.PumpState));
   strcat_P(LongMessage, (PGM_P)F("\",\"PS2\":\""));
   strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PT2\":\""));
+  strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpTimeOut));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DT2\":\""));
+  strcat(LongMessage, toText(HempyBucketCommand2ToSend.DrainWaitTime));
   strcat_P(LongMessage, (PGM_P)F("\",\"WB2\":\""));
   strcat(LongMessage, toText(HempyBucketResponse2Received.WeightB));
   strcat_P(LongMessage, (PGM_P)F("\",\"WR2\":\""));
@@ -119,14 +129,14 @@ void HempyModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("B1PS")), HempyBucketCommand1ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B1T")), HempyBucketCommand1ToSend.PumpTimeOut);
     WebServer.setArgInt(getComponentName(F("B1D")), HempyBucketCommand1ToSend.DrainWaitTime);
-    WebServer.setArgFloat(getComponentName(F("B1DW")), HempyBucketResponse1Received.DryWeight);
+    WebServer.setArgString(getComponentName(F("B1DW")), toText(HempyBucketResponse1Received.DryWeight));
     WebServer.setArgString(getComponentName(F("B2ET")), toText(HempyBucketCommand2ToSend.EvaporationTarget));
     WebServer.setArgString(getComponentName(F("B2OF")), toText(HempyBucketCommand2ToSend.OverflowTarget));
     WebServer.setArgString(getComponentName(F("B2WL")), toText(HempyBucketCommand2ToSend.WasteLimit));
     WebServer.setArgInt(getComponentName(F("B2PS")), HempyBucketCommand2ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("B2T")), HempyBucketCommand2ToSend.PumpTimeOut);
     WebServer.setArgInt(getComponentName(F("B2D")), HempyBucketCommand2ToSend.DrainWaitTime);
-    WebServer.setArgFloat(getComponentName(F("B2DW")), HempyBucketResponse2Received.DryWeight);
+    WebServer.setArgString(getComponentName(F("B2DW")), toText(HempyBucketResponse2Received.DryWeight));
   }
 }
 
@@ -148,43 +158,30 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
   }
 }
 
-void HempyModule_Web::websiteEvent_Button(char *Button)
-{ ///< When a button is pressed on the website
-  if (!isThisMyComponent(Button))
+void HempyModule_Web::commandEvent(char *Command, char *Data)
+{
+  if (!isThisMyComponent(Command))
   {
     return;
   }
   else
   {
+    //Bucket1
     if (strcmp_P(ShortMessage, (PGM_P)F("B1On")) == 0)
     {
       HempyBucketCommand1ToSend.StartWatering = true;
       Parent->addToLog(F("Watering HempyBucket 1"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2On")) == 0)
-    {
-      HempyBucketCommand2ToSend.StartWatering = true;
-      Parent->addToLog(F("Watering HempyBucket 2"), false);
-    }
+
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1Off")) == 0)
     {
       HempyBucketCommand1ToSend.StopWatering = true;
       Parent->addToLog(F("Stop watering HempyBucket 1"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Off")) == 0)
-    {
-      HempyBucketCommand2ToSend.StopWatering = true;
-      Parent->addToLog(F("Stop watering HempyBucket 2"), false);
-    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1Dis")) == 0)
     {
       HempyBucketCommand1ToSend.Disable = true;
       Parent->addToLog(F("Disabled HempyBucket 1"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Dis")) == 0)
-    {
-      HempyBucketCommand2ToSend.Disable = true;
-      Parent->addToLog(F("Disabled HempyBucket 2"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareB")) == 0)
     {
@@ -201,6 +198,56 @@ void HempyModule_Web::websiteEvent_Button(char *Button)
       HempyBucketCommand1ToSend.TareWeightWR = true;
       Parent->addToLog(F("Taring Bucket 1 waste scale"), false);
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1ET")) == 0)
+    {
+      DefaultSettings->EvaporationTarget_B1 = toFloat(Data);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1OF")) == 0)
+    {
+      DefaultSettings->OverflowTarget_B1 = toFloat(Data);
+      Parent->addToLog(F("Bucket 1 targets updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1WL")) == 0)
+    {
+      DefaultSettings->WasteLimit_B1 = toFloat(Data);
+      Parent->addToLog(F("Bucket 1 waste limit updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1PS")) == 0)
+    {
+      DefaultSettings->PumpSpeed_B1 = toInt(Data);
+      Parent->addToLog(F("Pump 1 speed updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1T")) == 0)
+    {
+      DefaultSettings->PumpTimeOut_B1 = toInt(Data);
+      Parent->addToLog(F("Pump 1 timeout updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1D")) == 0)
+    {
+      DefaultSettings->DrainWaitTime_B1 = toInt(Data);
+      Parent->addToLog(F("B1 Drain wait updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1DW")) == 0)
+    {
+      HempyBucketCommand1ToSend.DryWeight = toFloat(Data);
+      Parent->addToLog(F("B1 dry weight updated"), false);
+    }
+    //Bucket
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2On")) == 0)
+    {
+      HempyBucketCommand2ToSend.StartWatering = true;
+      Parent->addToLog(F("Watering HempyBucket 2"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Off")) == 0)
+    {
+      HempyBucketCommand2ToSend.StopWatering = true;
+      Parent->addToLog(F("Stop watering HempyBucket 2"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Dis")) == 0)
+    {
+      HempyBucketCommand2ToSend.Disable = true;
+      Parent->addToLog(F("Disabled HempyBucket 2"), false);
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareB")) == 0)
     {
       HempyBucketCommand2ToSend.TareWeightB = true;
@@ -216,84 +263,39 @@ void HempyModule_Web::websiteEvent_Button(char *Button)
       HempyBucketCommand2ToSend.TareWeightWR = true;
       Parent->addToLog(F("Taring Bucket 2 waste scale"), false);
     }
-    SyncRequested = true;
-  }
-}
 
-void HempyModule_Web::websiteEvent_Field(char *Field)
-{ ///< When the website field is submitted
-  if (!isThisMyComponent(Field))
-  {
-    return;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("B1ET")) == 0)
-    {
-      DefaultSettings->EvaporationTarget_B1 = WebServer.getArgFloat();
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1OF")) == 0)
-    {
-      DefaultSettings->OverflowTarget_B1 = WebServer.getArgFloat();
-      Parent->addToLog(F("Bucket 1 targets updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1WL")) == 0)
-    {
-      DefaultSettings->WasteLimit_B1 = WebServer.getArgFloat();
-      Parent->addToLog(F("Bucket 1 waste limit updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1PS")) == 0)
-    {
-      DefaultSettings->PumpSpeed_B1 = WebServer.getArgInt();
-      Parent->addToLog(F("Pump 1 speed updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1T")) == 0)
-    {
-      DefaultSettings->PumpTimeOut_B1 = WebServer.getArgInt();
-      Parent->addToLog(F("Pump 1 timeout updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1D")) == 0)
-    {
-      DefaultSettings->DrainWaitTime_B1 = WebServer.getArgInt();
-      Parent->addToLog(F("B1 Drain wait updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1DW")) == 0)
-    {
-      HempyBucketCommand1ToSend.DryWeight = WebServer.getArgFloat();
-      Parent->addToLog(F("B1 dry weight updated"), false);
-    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2ET")) == 0)
     {
-      DefaultSettings->EvaporationTarget_B2 = WebServer.getArgFloat();
+      DefaultSettings->EvaporationTarget_B2 = toFloat(Data);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2OF")) == 0)
     {
-      DefaultSettings->OverflowTarget_B2 = WebServer.getArgFloat();
+      DefaultSettings->OverflowTarget_B2 = toFloat(Data);
       Parent->addToLog(F("Bucket 2 targets updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2WL")) == 0)
     {
-      DefaultSettings->WasteLimit_B2 = WebServer.getArgFloat();
+      DefaultSettings->WasteLimit_B2 = toFloat(Data);
       Parent->addToLog(F("Bucket 2 waste limit updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2PS")) == 0)
     {
-      DefaultSettings->PumpSpeed_B2 = WebServer.getArgInt();
+      DefaultSettings->PumpSpeed_B2 = toInt(Data);
       Parent->addToLog(F("Pump 2 speed updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2T")) == 0)
     {
-      DefaultSettings->PumpTimeOut_B2 = WebServer.getArgInt();
+      DefaultSettings->PumpTimeOut_B2 = toInt(Data);
       Parent->addToLog(F("Pump 2 timeout updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2D")) == 0)
     {
-      DefaultSettings->DrainWaitTime_B2 = WebServer.getArgInt();
+      DefaultSettings->DrainWaitTime_B2 = toInt(Data);
       Parent->addToLog(F("B2 Drain wait updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2DW")) == 0)
     {
-      HempyBucketCommand2ToSend.DryWeight = WebServer.getArgFloat();
+      HempyBucketCommand2ToSend.DryWeight = toFloat(Data);
       Parent->addToLog(F("B2 dry weight updated"), false);
     }
     SyncRequested = true;

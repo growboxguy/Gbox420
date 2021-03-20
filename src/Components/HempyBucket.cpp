@@ -126,6 +126,7 @@ void HempyBucket::updateState(HempyStates NewState)
       if (WasteReservoirWeightSensor->getWeight(false) - WasteReservoirStartWeight >= *OverflowTarget) //Check if target overflow weight is reached
       {
         WetWeight = BucketWeightSensor->getWeight(); //Measure wet weight
+        // DryWeight = ((float)((int)(WetWeight - *EvaporationTarget * 10))) / 10; //Calculate next watering weight
         DryWeight = WetWeight - *EvaporationTarget;  //Calculate next watering weight
         updateState(HempyStates::IDLE);
       }
@@ -236,8 +237,10 @@ float HempyBucket::getWetWeight()
 
 void HempyBucket::tareDryWetWeight()
 {
-  logToSerials(F("Taring Dry/Wet weight"), true, 3);
   DryWeight = *InitialDryWeight;
   WetWeight = 0.0;
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("Dry/Wet tared"));
+  logToSerials(&ShortMessage,true,3);
   Parent->getSoundObject()->playOnSound();
 }

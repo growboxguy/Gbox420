@@ -21,7 +21,7 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Pa
   else
   {
     State = AeroNoTankStates::DISABLED;
-  }  
+  }
 }
 
 void Aeroponics_NoTank::report()
@@ -232,7 +232,9 @@ void Aeroponics_NoTank::setDuration(float duration)
   if (*Duration != duration && duration > 0)
   {
     *Duration = duration;
-    Parent->addToLog(F("Duration updated"));
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("duration updated"));
+    Parent->addToLog(ShortMessage);
     Parent->getSoundObject()->playOnSound();
   }
 }
@@ -295,7 +297,9 @@ void Aeroponics_NoTank::setMaxPressure(float Pressure)
   if (*MaxPressure != Pressure && Pressure > 0)
   {
     *MaxPressure = Pressure;
-    Parent->addToLog(F("Max pressure updated"));
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("max pressure updated"));
+    Parent->addToLog(ShortMessage);
     Parent->getSoundObject()->playOnSound();
   }
 }

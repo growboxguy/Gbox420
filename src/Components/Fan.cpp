@@ -35,6 +35,14 @@ void Fan::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+void Fan::reportToJSON()
+{
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, fanSpeedToNumber());
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 void Fan::checkFanStatus()
 {
   if (*State) ///< True turns relay ON (LOW signal activates the Relay)
@@ -52,7 +60,9 @@ void Fan::TurnOff()
   *State = false;
   *HighSpeed = false;
   checkFanStatus();
-  Parent->addToLog(F("Fan OFF"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("OFF"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOffSound();
 }
 
@@ -61,7 +71,9 @@ void Fan::SetLowSpeed()
   *State = true;
   *HighSpeed = false;
   checkFanStatus();
-  Parent->addToLog(F("Fan speed LOW"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("LOW"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
 
@@ -70,7 +82,9 @@ void Fan::SetHighSpeed()
   *State = true;
   *HighSpeed = true;
   checkFanStatus();
-  Parent->addToLog(F("Fan speed HIGH"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("HIGH"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
 

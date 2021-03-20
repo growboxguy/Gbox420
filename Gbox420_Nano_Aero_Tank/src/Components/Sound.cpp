@@ -11,6 +11,15 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   checkEvents();
 }
 
+void Sound::reportToJSON()
+{
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+
+  strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
+  strcat(LongMessage, toText(*Enabled));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 void Sound::refresh_Sec()
 {
   if (*Debug)
@@ -44,16 +53,18 @@ void Sound::playOffSound()
 void Sound::setSoundOnOff(bool State)
 {
   *Enabled = State;
+  appendName(true);
   if (*Enabled)
-  {
-    Parent->addToLog(F("Sound enabled"));
+  {    
+    strcat_P(ShortMessage, (PGM_P)F("ON"));    
     playOnSound();
   }
   else
   {
-    Parent->addToLog(F("Sound disabled"));
+    strcat_P(ShortMessage, (PGM_P)F("OFF"));
     playOffSound();
   }
+  Parent->addToLog(ShortMessage);
 }
 
 void Sound::OnSound()
@@ -80,4 +91,9 @@ void Sound::OffSound()
     delay(100);
     noTone(*Pin);
   }
+}
+
+bool Sound::getEnabledState()
+{
+  return *Enabled;
 }

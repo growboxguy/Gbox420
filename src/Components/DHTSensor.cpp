@@ -44,6 +44,16 @@ void DHTSensor::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+void DHTSensor::reportToJSON()
+{
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
+  strcat(LongMessage, getTempText());
+  strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
+  strcat(LongMessage, getHumidityText());
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 float DHTSensor::getTemp()
 {
   return Temp;

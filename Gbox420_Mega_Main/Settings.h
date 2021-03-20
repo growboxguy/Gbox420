@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 3; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -43,8 +43,9 @@ typedef struct
   bool Debug = true;                                               ///< Logs debug messages to serial and web outputs
   bool Metric = true;                                              ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
-  char MqttTopic[MaxShotTextLength] = {"GrowBoxGuy/Gbox420/"};     ///< MQTT messages are sent to this topic. Ends with a forward slash
-  char MqttLwtTopic[MaxShotTextLength] = {"GrowBoxGuy/LWT/"};      ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
+  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/"};     ///< Publish MQTT messages to this topic. Ends with a forward slash
+  char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/#"};     ///< Subscribe to messages of this topic and all sub-topic
+  char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/"};      ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
   char MqttLwtMessage[MaxWordLength] = {"Gbox420 Offline"};        ///< this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the MQTT client unexpectedly goes offline
 
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
@@ -61,7 +62,7 @@ typedef struct
     float MaxPressure;        ///< Turn off pump above this pressure
     float MinPressure;        ///< Turn on pump below this pressure
   };
-  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .Duration = 1.0, .DayInterval = 6, .NightInterval = 10, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
+  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .Duration = 3.0, .DayInterval = 6, .NightInterval = 10, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
 
   struct AirPumpSettings ///< AirPump default settings
   {
@@ -109,9 +110,9 @@ typedef struct
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
     uint16_t SheetsReportingFrequency; ///< How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
     bool ReportToMQTT;                 ///< Controls reporting sensor readings to an MQTT broker
-    uint16_t MQTTReportingFrequency;   ///< How often to report to MQTT. Use 15 minute increments only! Min 15min, Max 1440 (1day)
+    uint16_t MQTTReportingFrequency;   ///< How often to report to MQTT. Min 1min, Max 1440 (1day)
   };
-  struct MainModuleSettings Main1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportingFrequency = 30};
+  struct MainModuleSettings Main1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportingFrequency = 1};
 
   struct HempyModuleSettings ///< Hempy default settings
   {
@@ -129,7 +130,7 @@ typedef struct
     uint16_t PumpTimeOut_B2;    ///< Waste reservoir full weight -> Pump gets disabled if reached
     uint16_t DrainWaitTime_B2;  ///< (sec) How long to wait after watering for the water to drain
   };
-  struct HempyModuleSettings HempyModule1 = {.EvaporationTarget_B1 = 2.0, .OverflowTarget_B1 = 0.3, .WasteLimit_B1 = 13.0, .PumpSpeed_B1 = 100, .PumpTimeOut_B1 = 120, .DrainWaitTime_B1 = 180, .EvaporationTarget_B2 = 2.0, .OverflowTarget_B2 = 0.3, .WasteLimit_B2 = 13.0, .PumpSpeed_B2 = 100, .PumpTimeOut_B2 = 120, .DrainWaitTime_B2 = 180};
+  struct HempyModuleSettings HempyModule1 = {.EvaporationTarget_B1 = 2.0, .OverflowTarget_B1 = 0.2, .WasteLimit_B1 = 13.0, .PumpSpeed_B1 = 100, .PumpTimeOut_B1 = 120, .DrainWaitTime_B1 = 300, .EvaporationTarget_B2 = 2.0, .OverflowTarget_B2 = 0.2, .WasteLimit_B2 = 13.0, .PumpSpeed_B2 = 100, .PumpTimeOut_B2 = 120, .DrainWaitTime_B2 = 300};
 
   struct LightSensorSettings ///< LightSensor default settings
   {

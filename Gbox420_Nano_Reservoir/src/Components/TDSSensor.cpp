@@ -40,9 +40,10 @@ void TDSSensor::updateTDS(bool ShowRaw)
   int TDSRaw = analogRead(*Pin);
   if (ShowRaw)
   {
-    strncpy_P(LongMessage, (PGM_P)F("TDS analog read: "), MaxWordLength);
-    strcat(LongMessage, toText(TDSRaw));
-    Parent->addToLog(LongMessage);
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("TDS reading: "));
+    strcat(ShortMessage, toText(TDSRaw));
+    Parent->addToLog(ShortMessage);
   }
 
   float Voltage = ((float)TDSRaw) * 5 / 1024;
@@ -58,7 +59,7 @@ void TDSSensor::updateTDS(bool ShowRaw)
     }
   }
   TDS = (float)((133.42 * pow(Voltage, 3) - 255.86 * pow(Voltage, 2) + 857.39 * Voltage) * 0.5);
-  AverageTDS->reading(TDS * 10);  //Reading will be parsed to integer, keep first decimal digit
+  AverageTDS->reading(TDS * 10); //Reading will be parsed to integer, keep first decimal digit
 }
 
 float TDSSensor::getTDS(bool ReturnAverage)

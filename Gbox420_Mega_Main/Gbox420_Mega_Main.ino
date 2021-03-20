@@ -8,23 +8,22 @@
  */
 
 #include "Arduino.h"
-#include "avr/wdt.h"                          // Watchdog timer for detecting a crash and automatically resetting the board
-#include "avr/boot.h"                         // Watchdog timer related bug fix
-#include "printf.h"                           // Printing the wireless status message from nRF24L01
-#include "TimerThree.h"                       // Interrupt handling for webpage
-#include "ELClient.h"                         // ESP-link
-#include "ELClientWebServer.h"                // ESP-link - WebServer API
-#include "ELClientCmd.h"                      // ESP-link - Get current time from the internet using NTP
-#include "ELClientRest.h"                     // ESP-link - REST API
-#include "ELClientMqtt.h"                     // ESP-link - MQTT protocol for sending and receiving IoT messages
-#include "Thread.h"                           // Splitting functions to threads for timing
-#include "StaticThreadController.h"           // Grouping threads
-#include "SerialLog.h"                        // Logging to the Serial console and to ESP-link's console
-#include "src/Components_Web/420Common_Web.h" // Base class where all web components inherits from
-#include "Settings.h"                         // EEPROM stored settings for every component
-#include "src/Modules_Web/MainModule_Web.h"   // Represents a complete box with all feautres
-#include "SPI.h"                              // allows you to communicate with SPI devices, with the Arduino as the master device
-#include "RF24.h"                             // https://github.com/maniacbug/RF24
+#include "avr/wdt.h"                        // Watchdog timer for detecting a crash and automatically resetting the board
+#include "avr/boot.h"                       // Watchdog timer related bug fix
+#include "printf.h"                         // Printing the wireless status message from nRF24L01
+#include "TimerThree.h"                     // Interrupt handling for webpage
+#include "ELClient.h"                       // ESP-link
+#include "ELClientWebServer.h"              // ESP-link - WebServer API
+#include "ELClientCmd.h"                    // ESP-link - Get current time from the internet using NTP
+#include "ELClientRest.h"                   // ESP-link - REST API
+#include "ELClientMqtt.h"                   // ESP-link - MQTT protocol for sending and receiving IoT messages
+#include "Thread.h"                         // Splitting functions to threads for timing
+#include "StaticThreadController.h"         // Grouping threads
+#include "SerialLog.h"                      // Logging to the Serial console and to ESP-link's console
+#include "Settings.h"                       // EEPROM stored settings for every component
+#include "src/Modules_Web/MainModule_Web.h" // Represents a complete box with all feautres
+#include "SPI.h"                            // allows you to communicate with SPI devices, with the Arduino as the master device
+#include "RF24.h"                           // https://github.com/maniacbug/RF24
 
 // Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API - Google Sheets reporting)
@@ -74,9 +73,9 @@ void setup()
   resetWebServer();                  ///< reset the WebServer
   setSyncProvider(getNtpTime);       ///< Points to method for updating time from NTP server
   setSyncInterval(86400);            ///< Sync time every day
-  if(ModuleSettings->Main1.ReportToMQTT)
+  if ((ModuleSettings->Main1).ReportToMQTT)
   {
-    setupMqtt();                       //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
+    setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
   }
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   logToSerials(F("Setting up refresh threads"), false, 0);
@@ -182,19 +181,19 @@ void resetWebServer()
   URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json");   ///< setup handling request from GrowBox.html
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); ///< setup handling request from Settings.html
   //URLHandler *TestHandler = WebServer.createURLHandler("/Test.html.json");         ///< setup handling request from Test.html
-  GrowBoxHandler->loadCb.attach(&loadCallback);           ///< GrowBox tab - Called then the website loads initially
-  GrowBoxHandler->refreshCb.attach(&refreshCallback);     ///< GrowBox tab - Called periodically to refresh website content
-  GrowBoxHandler->buttonCb.attach(&buttonPressCallback);  ///< GrowBox tab - Called when a button is pressed on the website
-  GrowBoxHandler->setFieldCb.attach(&setFieldCallback);   ///< GrowBox tab - Called when a field is changed on the website
-  SettingsHandler->loadCb.attach(&loadCallback);          ///< Settings tab - Called then the website loads initially
-  SettingsHandler->refreshCb.attach(&refreshCallback);    ///< Settings tab - Called periodically to refresh website content
-  SettingsHandler->buttonCb.attach(&buttonPressCallback); ///< Settings tab - Called when a button is pressed on the website
-  SettingsHandler->setFieldCb.attach(&setFieldCallback);  ///< Settings tab - Called when a field is changed on the website
+  GrowBoxHandler->loadCb.attach(&loadCallback);        ///< GrowBox tab - Called then the website loads initially
+  GrowBoxHandler->refreshCb.attach(&refreshCallback);  ///< GrowBox tab - Called periodically to refresh website content
+  GrowBoxHandler->buttonCb.attach(&buttonCallback);    ///< GrowBox tab - Called when a button is pressed on the website
+  GrowBoxHandler->setFieldCb.attach(&fieldCallback);   ///< GrowBox tab - Called when a field is changed on the website
+  SettingsHandler->loadCb.attach(&loadCallback);       ///< Settings tab - Called then the website loads initially
+  SettingsHandler->refreshCb.attach(&refreshCallback); ///< Settings tab - Called periodically to refresh website content
+  SettingsHandler->buttonCb.attach(&buttonCallback);   ///< Settings tab - Called when a button is pressed on the website
+  SettingsHandler->setFieldCb.attach(&fieldCallback);  ///< Settings tab - Called when a field is changed on the website
   //TestHandler->loadCb.attach(&loadCallback);                                       ///< Test tab - Called then the website loads initially
   //TestHandler->refreshCb.attach(&refreshCallback);                                 ///< Test tab - Called periodically to refresh website content
-  //TestHandler->buttonCb.attach(&buttonPressCallback);                              ///< Test tab - Called when a button is pressed on the website
-  //TestHandler->setFieldCb.attach(&setFieldCallback);                               ///< Test tab - Called when a field is changed on the website
-  logToSerials(F("ESP-link ready"), true, 2);
+  //TestHandler->buttonCb.attach(&buttonCallback);                              ///< Test tab - Called when a button is pressed on the website
+  //TestHandler->setFieldCb.attach(&fieldCallback);                               ///< Test tab - Called when a field is changed on the website
+  logToSerials(F("ESP-link ready"), true, 1);
 }
 
 /**
@@ -207,8 +206,8 @@ void setupMqtt()
 {
   /*
   MqttAPI.connectedCb.attach(mqttConnected);
-  MqttAPI.disconnectedCb.attach(mqttDisconnected);
-  MqttAPI.publishedCb.attach(mqttPublished);
+  //MqttAPI.disconnectedCb.attach(mqttDisconnected);
+  //MqttAPI.publishedCb.attach(mqttPublished);
   MqttAPI.dataCb.attach(mqttReceived);
   */
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable to store the Publish to path
@@ -220,13 +219,11 @@ void setupMqtt()
 /*
 void mqttConnected(void *response)
 {
-  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable
-  strcat(ShortMessage, ModuleSettings->MqttTopic);
-  strcat_P(ShortMessage, (PGM_P)F("#"));
-  MqttAPI.subscribe(ShortMessage);
+  MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
   //if(*Debug) logToSerials(F("MQTT connected"), true);
 }
 
+/*
 void mqttDisconnected(void *response)
 {
   //if(*Debug) logToSerials(F("MQTT disconnected"), true);
@@ -236,22 +233,35 @@ void mqttPublished(void *response)
 {
   //if(*Debug) logToSerials(F("MQTT published"), true);
 }
+*/
 
 void mqttReceived(void *response)
 {
+  static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1;  //Get length of the command topic
+  static char command[MaxShotTextLength];
+  static char data[MaxShotTextLength];
   ELClientResponse *res = (ELClientResponse *)response;
-  char topic[64];
-  char data[16];
-  ((*res).popString()).toCharArray(topic, 64);
-  ((*res).popString()).toCharArray(data, 16);
+  String mqttTopic = (*res).popString();
+  String mqttData = (*res).popString();
 
-  logToSerials(F("Received: "), false);
-  logToSerials(topic, false);
-  logToSerials(F(" - "), false);
-  logToSerials(data, true);
-  // if(strstr(topic,MqttLights)!=NULL) { if(strcmp(data,"1")==0)turnLightON(true); else if(strcmp(data,"0")==0)turnLightOFF(true); }
-  // else if(strstr(topic,MqttBrightness)!=NULL) { setBrightness(atoi(data),true); }
-  //mqttPublish(); //send out a fresh report
+  if (*Debug)
+  {
+    logToSerials(F("MQTT Topic"), false, 0);
+    logToSerials(&mqttTopic, true, 1);
+  }  
+  mqttTopic.remove(0, MqttSubTopicLength);  //Cut the known command topic from the arrived topic  
+  mqttTopic.toCharArray(command, MaxShotTextLength);
+  mqttData.toCharArray(data, MaxShotTextLength);
+
+  if (*Debug)
+  {
+    logToSerials(F("MQTT Command:"), false, 0);
+    logToSerials(&command, true, 1);
+    logToSerials(F("MQTT Data:"), false, 0);
+    logToSerials(&data, true, 1);
+  }
+  Main1->commandEventTrigger(command, data);
+  Main1->reportToMQTTTrigger(true); //send out a fresh report
 }
 */
 
@@ -293,7 +303,7 @@ time_t getNtpTime()
 */
 void loadCallback(__attribute__((unused)) char *Url)
 {
-  Main1->loadEvent(Url); //Runs through all components that are subscribed to this event
+  Main1->websiteLoadEventTrigger(Url); //Runs through all components that are subscribed to this event
 }
 
 /**
@@ -302,14 +312,14 @@ void loadCallback(__attribute__((unused)) char *Url)
 */
 void refreshCallback(__attribute__((unused)) char *Url)
 {
-  Main1->refreshEvent(Url);
+  Main1->websiteRefreshEventTrigger(Url);
 }
 
 /**
   \brief Called when a button is pressed.
   \param Button - ID of the button HTML element
 */
-void buttonPressCallback(char *Button)
+void buttonCallback(char *Button)
 {
   if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
   {
@@ -317,7 +327,7 @@ void buttonPressCallback(char *Button)
   }
   else
   {
-    Main1->buttonEvent(Button);
+    Main1->commandEventTrigger(Button, "");
   }
   saveSettings(ModuleSettings);
 }
@@ -326,9 +336,9 @@ void buttonPressCallback(char *Button)
   \brief Called when a field on the website is submitted
   \param Field - Name of the input HTML element
 */
-void setFieldCallback(char *Field)
+void fieldCallback(char *Field)
 { ///< Called when any field on the website is updated.
-  Main1->setFieldEvent(Field);
+  Main1->commandEventTrigger(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
 }
 

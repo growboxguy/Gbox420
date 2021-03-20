@@ -11,7 +11,7 @@ function UpdateColumns(Log) {
 }
 
 function UpdateFriendlyName() {
-  var columns = GetNamedRangeValues("Columns", true);
+  var columns = GetNamedRangeValues("Columns");
   for (var i = 0; i < columns.length; i++) {
     key = columns[i][columns_keyColumn];
     friendlyName = GetFriendlyValue(key, null);
@@ -29,7 +29,7 @@ function UpdateFriendlyName() {
 function FindNewColumns(Log) { ///< Add newly discovered keys to Columns tab and update FriendlyName column
   LogToConsole("Updating Columns sheet...", true, 0);
   var newColumnDiscovered = false;
-  var columns = GetNamedRangeValues("Columns", true);
+  var columns = GetNamedRangeValues("Columns");
   //Adding all columns from the received Log JSON
   var Components = Object.getOwnPropertyNames(Log);
   for (var i = 0; i < Components.length; i++) {
@@ -49,7 +49,7 @@ function FindNewColumns(Log) { ///< Add newly discovered keys to Columns tab and
     }
   }
   if (newColumnDiscovered) GetNamedRangeValues("Columns", true); //Force a cache refresh if a new column was added
-  //SpreadsheetApp.getActive().getSheetByName("Settings").autoResizeColumns(1, SpreadsheetApp.getActive().getSheetByName("Settings").getLastColumn()); //resize columns to fit the data 
+  //ActiveSpreadsheetApp.getSheetByName("Settings").autoResizeColumns(1, ActiveSpreadsheetApp.getSheetByName("Settings").getLastColumn()); //resize columns to fit the data 
 
 }
 
@@ -59,8 +59,8 @@ function test_addColumnsRow() {
 
 function addColumnsRow(newKey) {
   LogToConsole("Adding new key to Columns: " + newKey, false, 3);
-  var columnsSheet = SpreadsheetApp.getActive().getSheetByName("Columns");
-  var columnsRange = SpreadsheetApp.getActive().getRangeByName("Columns");
+  var columnsSheet = ActiveSpreadsheetApp.getSheetByName("Columns");
+  var columnsRange = ActiveSpreadsheetApp.getRangeByName("Columns");
   var lastRow = getLastRowInRange(columnsRange.getValues());
   var lastColumn = columnsRange.getLastColumn();
   LogToConsole(" (lastRow: " + lastRow + " , lastColumn: " + lastColumn + ")", true, 0);

@@ -1,5 +1,4 @@
 function UpdateCharts() {
-  GetNamedRangeValues("Columns", true);  ///< Force a refresh of the Columns named range
   UpdateOverviewChart();
   UpdateChartsTab();
 }
@@ -14,8 +13,7 @@ function ClearCharts(sheet) {
 }
 
 function UpdateChartsTab() {
-  LogToConsole("Generating charts...", true, 0);
-  chartsSheet = SpreadsheetApp.getActive().getSheetByName("Charts");
+  LogToConsole("Generating charts...", true, 0);  
   ClearCharts(chartsSheet);
 
   var columns = GetNamedRangeValues("Columns");
@@ -51,7 +49,6 @@ function UpdateChartsTab() {
 
 function UpdateOverviewChart() {
   LogToConsole("Generating overview chart...", true, 0);
-  statusSheet = SpreadsheetApp.getActive().getSheetByName("Status");
   ClearCharts(statusSheet);
 
   var columns = GetNamedRangeValues("Columns");
@@ -71,7 +68,7 @@ function UpdateOverviewChart() {
   if (Debug) LogToConsole(seriesType, true, 3);
 
   chartBuilder
-    .setOption('title', "Overview - " + SpreadsheetApp.getActive().getRangeByName("LastReportTime").getDisplayValue())
+    .setOption('title', "Overview - " + ActiveSpreadsheetApp.getRangeByName("LastReportTime").getDisplayValue())
     .setOption('series', seriesType)
     .setOption('vAxes.0.logScale', true)
     .setPosition(10, 4, 0, 0)

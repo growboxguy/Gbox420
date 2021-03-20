@@ -39,10 +39,22 @@ void LightSensor::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+void LightSensor::reportToJSON()
+{
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"R\":\""));
+  strcat(LongMessage, getReadingText(false));
+  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
+  strcat(LongMessage, getDarkText(false));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 void LightSensor::triggerCalibration()
 { ///< website signals to calibrate light sensor MAX and MIN readings the next time a refresh runs
   CalibrateRequested = true;
-  Parent->addToLog(F("Calibrating light"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("calibrating"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
 
@@ -67,7 +79,9 @@ void LightSensor::calibrate(bool AddToLog)
   getCalibrationReadings();
   if (AddToLog)
   {
-    Parent->addToLog(F("Lights calibrated"), 4);
+    appendName(true);
+    strcat_P(ShortMessage, (PGM_P)F("calibrated"));
+    Parent->addToLog(ShortMessage);
     logToSerials(&LongMessage, true, 4);
   }
 }

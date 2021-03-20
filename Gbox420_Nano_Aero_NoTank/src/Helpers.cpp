@@ -232,6 +232,32 @@ char *toText_onlineStatus(bool Status)
     return toText(F("OFFLINE"));
 }
 
+///Converting text
+
+bool toBool(char *Boolean)
+{
+  if (strcmp_P(Boolean, PSTR("on")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("1")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("true")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("on")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("yes")) == 0)
+    return 1;
+  return 0;
+}
+
+int toInt(char *Integer)
+{
+  return atoi(Integer);
+}
+
+float toFloat(char *Float)
+{
+  return atof(Float);
+}
 
 ///TODO: The below section should be split between the modules to reduce memory usage
 
@@ -281,7 +307,7 @@ char *toText_pressurePumpState(PressurePumpStates State)
     break;
   case PressurePumpStates::BYPASSOPEN:
     return toText(F("BYPASSOPEN"));
-    break;    
+    break;
   default:
     return toText(F("UNKNOWN"));
     break;
@@ -315,7 +341,7 @@ char *toText_aeroTankState(AeroTankStates State)
     break;
   case AeroTankStates::MIX:
     return toText(F("MIX"));
-    break;    
+    break;
   default:
     return toText(F("UNKNOWN"));
     break;
@@ -337,13 +363,13 @@ char *toText_aeroNoTankState(AeroNoTankStates State)
     break;
   case AeroNoTankStates::SPRAY:
     return toText(F("SPRAY"));
-    break;  
+    break;
   case AeroNoTankStates::RELEASE:
     return toText(F("RELEASE"));
     break;
   case AeroNoTankStates::MIX:
     return toText(F("MIX"));
-    break; 
+    break;
   default:
     return toText(F("UNKNOWN"));
     break;
@@ -365,7 +391,7 @@ char *toText_hempyState(HempyStates State)
     break;
   case HempyStates::DRAINING:
     return toText(F("DRAINING"));
-    break;  
+    break;
   default:
     return toText(F("UNKNOWN"));
     break;

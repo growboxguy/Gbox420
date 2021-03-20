@@ -24,6 +24,14 @@ void AirPump::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+void AirPump::reportToJSON()
+{
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, toText(getState()));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 void AirPump::refresh_Minute()
 {
   if (*Debug)
@@ -41,18 +49,29 @@ void AirPump::checkStatus()
 
 void AirPump::TurnOff()
 {
-  *State = false;
-  checkStatus();
-  Parent->addToLog(F("AirPump OFF"));
-  Parent->getSoundObject()->playOffSound();
+  setState(false);
 }
 
 void AirPump::TurnOn()
 {
-  *State = true;
-  checkStatus();
-  Parent->addToLog(F("AirPump ON"));
-  Parent->getSoundObject()->playOnSound();
+  setState(true);
+}
+
+bool AirPump::setState(bool NewState)
+{
+  *State = NewState;
+  appendName(true);
+  if (*State)
+  {
+    strcat_P(ShortMessage, (PGM_P)F("ON"));
+    Parent->getSoundObject()->playOnSound();
+  }
+  else
+  {
+    strcat_P(ShortMessage, (PGM_P)F("OFF"));
+    Parent->getSoundObject()->playOffSound();
+  }
+  Parent->addToLog(ShortMessage);
 }
 
 bool AirPump::getState()

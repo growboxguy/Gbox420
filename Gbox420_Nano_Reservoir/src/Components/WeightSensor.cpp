@@ -50,13 +50,13 @@ float WeightSensor::readWeight(bool ReturnAverage)
   if (Sensor->wait_ready_timeout(500))
   {
     Weight = Sensor->get_units();
-    //if(Weight<0) 
+    //if(Weight<0)
     //  {Weight = 0.0;}  ///< Zero out negative weight
-    AverageWeight->reading(Weight * 100);  ///< AverageWeight is integer based to save memory, multipy by 100 to store the first two decimal digits
+    AverageWeight->reading(Weight * 100); ///< AverageWeight is integer based to save memory, multipy by 100 to store the first two decimal digits
   }
   if (ReturnAverage)
   {
-    return AverageWeight->getAvg() / 100.0;  ///< Divide by floating point 100 to regain the first two decimal digits
+    return AverageWeight->getAvg() / 100.0; ///< Divide by floating point 100 to regain the first two decimal digits
   }
   else
   {
@@ -87,7 +87,9 @@ char *WeightSensor::getWeightText(bool ReturnAverage, bool IncludeUnits)
 void WeightSensor::triggerTare()
 {
   TareRequested = true;
-  Parent->addToLog(F("Updating tare")); ///< This can take up to 1 minute, when the component is next refreshed
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("updating tare"));
+  Parent->addToLog(ShortMessage);
 }
 
 void WeightSensor::tare() ///< Time intense, cannot be called straight from the website. Response would time out.
@@ -95,7 +97,9 @@ void WeightSensor::tare() ///< Time intense, cannot be called straight from the 
   Sensor->tare();
   *Offset = Sensor->get_offset();
   AverageWeight->reset();
-  Parent->addToLog(F("Tare updated"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("tare updated"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
 
@@ -103,7 +107,9 @@ void WeightSensor::triggerCalibration(int CalibrationWeight)
 {
   this->CalibrationWeight = CalibrationWeight;
   CalibrateRequested = true;
-  Parent->addToLog(F("Calibrating")); ///< This can take up to 1 minute, when the component is next refreshed
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("calibrating"));
+  Parent->addToLog(ShortMessage);
 }
 
 void WeightSensor::calibrate() ///< Time intense, cannot be called straight from the website. Response would time out.
@@ -111,7 +117,9 @@ void WeightSensor::calibrate() ///< Time intense, cannot be called straight from
   *Scale = (float)Sensor->get_value() / CalibrationWeight;
   Sensor->set_scale(*Scale);
   AverageWeight->reset();
-  Parent->addToLog(F("Calibrated"));
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F("calibrated"));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
 

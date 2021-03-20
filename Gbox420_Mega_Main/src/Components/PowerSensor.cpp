@@ -36,6 +36,20 @@ void PowerSensor::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+void PowerSensor::reportToJSON()
+{
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"P\":\""));
+  strcat(LongMessage, getPowerText(false));
+  strcat_P(LongMessage, (PGM_P)F("\",\"E\":\""));
+  strcat(LongMessage, getEnergyText(false));
+  strcat_P(LongMessage, (PGM_P)F("\",\"V\":\""));
+  strcat(LongMessage, getVoltageText(false));
+  strcat_P(LongMessage, (PGM_P)F("\",\"C\":\""));
+  strcat(LongMessage, getCurrentText(false));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 char *PowerSensor::getPowerText(bool IncludeUnits)
 {
   if (IncludeUnits)

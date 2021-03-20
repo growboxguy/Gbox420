@@ -8,7 +8,10 @@ struct AeroCommand_P2 AeroCommand2ToSend = {AeroMessages::AeroCommand2};        
 struct AeroResponse_P2 AeroResponse2Received = {AeroMessages::AeroResponse2};                ///< Default startup values
 struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};                       ///< Special command to fetch the next Response from the Receiver
 
-AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
+/**
+* @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
+*/
+AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
 { ///< Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -20,11 +23,13 @@ AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Pare
   Parent->addToRefreshQueue_Minute(this);
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
-  Parent->addToWebsiteQueue_Field(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
   logToSerials(F("AeroModule_Web object created"), true, 3);
 }
 
+/**
+* @brief Report current state to the Serial console
+*/
 void AeroModule_Web::report()
 {
   Common::report();
@@ -44,7 +49,7 @@ void AeroModule_Web::report()
   strcat_P(LongMessage, (PGM_P)F(" ; LastSprayPressure:"));
   strcat(LongMessage, toText_pressure(AeroResponse1Received.LastSprayPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; Weight:"));
-  strcat(LongMessage, toText_pressure(AeroResponse1Received.Weight));
+  strcat(LongMessage, toText_weight(AeroResponse1Received.Weight));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
   strcat(LongMessage, toText_yesNo(AeroResponse1Received.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F(" ; PumpState:"));
@@ -62,9 +67,12 @@ void AeroModule_Web::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+/**
+* @brief Report current state to a JSON object
+*/
 void AeroModule_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
@@ -86,6 +94,10 @@ void AeroModule_Web::reportToJSON()
   strcat(LongMessage, toText((int)AeroResponse1Received.PumpState));
   strcat_P(LongMessage, (PGM_P)F("\",\"PS\":\""));
   strcat(LongMessage, toText(AeroCommand2ToSend.PumpSpeed));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PT\":\""));
+  strcat(LongMessage, toText(AeroCommand2ToSend.PumpTimeOut));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PP\":\""));
+  strcat(LongMessage, toText(AeroCommand2ToSend.PumpPrimingTime));
   strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
   strcat(LongMessage, toText(AeroResponse1Received.SprayEnabled));
   strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
@@ -97,22 +109,28 @@ void AeroModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
+/**
+* @brief Set values on the ESP-link website when it loads
+*/
 void AeroModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgBoolean(getComponentName(F("Tank")), AeroResponse1Received.PressureTankPresent);
-    WebServer.setArgFloat(getComponentName(F("Dur")), AeroCommand1ToSend.Duration);
+    WebServer.setArgString(getComponentName(F("Dur")), toText(AeroCommand1ToSend.Duration));
     WebServer.setArgInt(getComponentName(F("DInt")), AeroCommand1ToSend.DayInterval);
     WebServer.setArgInt(getComponentName(F("NInt")), AeroCommand1ToSend.NightInterval);
-    WebServer.setArgFloat(getComponentName(F("PMx")), AeroCommand1ToSend.MaxPressure);
-    WebServer.setArgFloat(getComponentName(F("PMn")), AeroCommand1ToSend.MinPressure);
+    WebServer.setArgString(getComponentName(F("PMx")), toText(AeroCommand1ToSend.MaxPressure));
+    WebServer.setArgString(getComponentName(F("PMn")), toText(AeroCommand1ToSend.MinPressure));
     WebServer.setArgInt(getComponentName(F("PS")), AeroCommand2ToSend.PumpSpeed);
     WebServer.setArgInt(getComponentName(F("PT")), AeroCommand2ToSend.PumpTimeOut);
     WebServer.setArgInt(getComponentName(F("PPT")), AeroCommand2ToSend.PumpPrimingTime);
   }
 }
 
+/**
+* @brief Set values on the ESP-link website when it refreshes
+*/
 void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
   if (strncmp(url, "/G", 2) == 0)
@@ -126,9 +144,12 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
   }
 }
 
-void AeroModule_Web::websiteEvent_Button(char *Button)
+/**
+* @brief Process commands received from MQTT subscription or from the ESP-link website
+*/
+void AeroModule_Web::commandEvent(char *Command, char *Data)
 { ///< When a button is pressed on the website
-  if (!isThisMyComponent(Button))
+  if (!isThisMyComponent(Command))
   {
     return;
   }
@@ -159,10 +180,10 @@ void AeroModule_Web::websiteEvent_Button(char *Button)
       AeroCommand2ToSend.PumpOn = true;
       Parent->addToLog(F("Aero pump ON"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("PumpOff")) == 0) //Sending a turn OFF command re-enables the pump and resets its status to IDLE
     {
       AeroCommand2ToSend.PumpOff = true;
-      Parent->addToLog(F("Aero pump OFF"), false);
+      Parent->addToLog(F("Aero pump IDLE"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PumpDis")) == 0)
     {
@@ -203,60 +224,51 @@ void AeroModule_Web::websiteEvent_Button(char *Button)
         Parent->addToLog(F("Pressure tank not available"), false);
       }
     }
-    SyncRequested = true;
-  }
-}
-
-void AeroModule_Web::websiteEvent_Field(char *Field)
-{ ///< When the website field is submitted
-  if (!isThisMyComponent(Field))
-  {
-    return;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
     {
-      DefaultSettings->Duration = WebServer.getArgFloat();
+      DefaultSettings->Duration = toFloat(Data);
       Parent->addToLog(F("Spray duration updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("DInt")) == 0)
     {
-      DefaultSettings->DayInterval = WebServer.getArgInt();
+      DefaultSettings->DayInterval = toInt(Data);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("NInt")) == 0)
     {
-      DefaultSettings->NightInterval = WebServer.getArgInt();
+      DefaultSettings->NightInterval = toInt(Data);
       Parent->addToLog(F("Spray interval updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PS")) == 0)
     {
-      DefaultSettings->PumpSpeed = WebServer.getArgInt();
+      DefaultSettings->PumpSpeed = toInt(Data);
       Parent->addToLog(F("Pump speed updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PT")) == 0)
     {
-      DefaultSettings->PumpTimeOut = WebServer.getArgInt();
+      DefaultSettings->PumpTimeOut = toInt(Data);
       Parent->addToLog(F("Pump timeout updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PPT")) == 0)
     {
-      DefaultSettings->PrimingTime = WebServer.getArgInt();
+      DefaultSettings->PrimingTime = toInt(Data);
       Parent->addToLog(F("Priming time updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PMn")) == 0)
     {
-      DefaultSettings->MinPressure = WebServer.getArgFloat();
+      DefaultSettings->MinPressure = toFloat(Data);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PMx")) == 0)
     {
-      DefaultSettings->MaxPressure = WebServer.getArgFloat();
+      DefaultSettings->MaxPressure = toFloat(Data);
       Parent->addToLog(F("Pressure limits updated"), false);
     }
     SyncRequested = true;
   }
 }
 
+/**
+* @brief Refresh state, Called every second
+*/
 void AeroModule_Web::refresh_Sec()
 {
   if (*Debug)
@@ -268,6 +280,9 @@ void AeroModule_Web::refresh_Sec()
   }
 }
 
+/**
+* @brief Refresh state, Called every five seconds
+*/
 void AeroModule_Web::refresh_FiveSec()
 {
   if (*Debug)
@@ -275,12 +290,18 @@ void AeroModule_Web::refresh_FiveSec()
   sendMessages();
 }
 
+/**
+* @brief Refresh state, Called every minute
+*/
 void AeroModule_Web::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();
 }
 
+/**
+* @brief Exchange messages with the wireless Aeroponics module
+*/
 void AeroModule_Web::sendMessages()
 {
   updateCommands();
@@ -293,6 +314,9 @@ void AeroModule_Web::sendMessages()
     logToSerials(F("Message exchange finished"), true, 3);
 }
 
+/**
+* @brief Send a command message and process the response message
+*/
 AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 {
   AeroMessages SequenceIDToSend = ((AeroCommonTemplate *)CommandToSend)->SequenceID;
@@ -399,8 +423,11 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
   return ReceivedSequenceID;
 }
 
+/**
+* @brief Update the wireless command content
+*/
 void AeroModule_Web::updateCommands()
-{ // so you can see that new data is being sent
+{
   AeroModuleCommand1ToSend.Time = now();
   AeroModuleCommand1ToSend.Debug = *Debug;
   AeroModuleCommand1ToSend.Metric = *Metric;

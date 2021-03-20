@@ -416,7 +416,7 @@ void RF24::print_address_register(const char* name, uint8_t reg, uint8_t qty)
     printf_P(PSTR("\r\n"));
 }
 
-#endif
+#endif // !defined(MINIMAL)
 
 /****************************************************************************/
 
@@ -619,16 +619,29 @@ void RF24::printPrettyDetails(void) {
     "\r\n"), (char*)pgm_read_ptr(&rf24_feature_e_str_P[(bool)(features & _BV(EN_ACK_PAY)) * 1]));
 
     uint8_t dynPl = read_register(DYNPD);
-    uint8_t autoAck = read_register(EN_AA);
     printf_P(PSTR("Dynamic Payloads\t"
     PRIPSTR
     "\r\n"), (char*)pgm_read_ptr(&rf24_feature_e_str_P[(dynPl && (features &_BV(EN_DPL))) * 1]));
-    printf_P(PSTR("Auto Acknowledgment\t"
-    PRIPSTR
-    "\r\n"), (char*)pgm_read_ptr(&rf24_feature_e_str_P[(bool)(autoAck & 1) * 1]));
+
+    uint8_t autoAck = read_register(EN_AA);
+    if (autoAck == 0x3F || autoAck == 0) {
+        // all pipes have the same configuration about auto-ack feature
+        printf_P(PSTR("Auto Acknowledgment\t"
+        PRIPSTR
+        "\r\n"), (char*)pgm_read_ptr(&rf24_feature_e_str_P[(bool)(autoAck) * 1]));
+    } else {
+        // representation per pipe
+        printf_P(PSTR("Auto Acknowledgment\t= 0b%c%c%c%c%c%c\r\n"),
+                 (char)((bool)(autoAck & _BV(ENAA_P5)) + 48),
+                 (char)((bool)(autoAck & _BV(ENAA_P4)) + 48),
+                 (char)((bool)(autoAck & _BV(ENAA_P3)) + 48),
+                 (char)((bool)(autoAck & _BV(ENAA_P2)) + 48),
+                 (char)((bool)(autoAck & _BV(ENAA_P1)) + 48),
+                 (char)((bool)(autoAck & _BV(ENAA_P0)) + 48));
+    }
 
     config_reg = read_register(NRF_CONFIG);
-    printf_P(PSTR("Primary Mode\t\t= %cX\r\n"), config_reg & _BV(PWR_UP) ? 'T' : 'R');
+    printf_P(PSTR("Primary Mode\t\t= %cX\r\n"), config_reg & _BV(PRIM_RX) ? 'R' : 'T');
     print_address_register(PSTR("TX address\t"), TX_ADDR);
 
     uint8_t openPipes = read_register(EN_RXADDR);
@@ -741,7 +754,7 @@ bool RF24::begin(void)
     write_register(DYNPD, 0);         // disable dynamic payloads by default (for all pipes)
     dynamic_payloads_enabled = false;
     write_register(EN_AA, 0x3F);      // enable auto-ack on all pipes
-    write_register(EN_RXADDR, 0);     // close all RX pipes
+    write_register(EN_RXADDR, 3);     // only open RX pipes 0 & 1
     setPayloadSize(32);               // set static payload size to 32 (max) bytes by default
     setAddressWidth(5);               // set default address length to (max) 5 bytes
 
@@ -1341,8 +1354,8 @@ void RF24::enableAckPayload(void)
 
         IF_SERIAL_DEBUG(printf("FEATURE=%i\r\n", read_register(FEATURE)));
 
-        // Enable dynamic payload on pipes 0
-        write_register(DYNPD, read_register(DYNPD) | _BV(DPL_P0));
+        // Enable dynamic payload on pipes 0 & 1
+        write_register(DYNPD, read_register(DYNPD) | _BV(DPL_P1) | _BV(DPL_P0));
         dynamic_payloads_enabled = true;
         ack_payloads_enabled = true;
     }
@@ -1596,7 +1609,7 @@ void RF24::disableCRC(void)
 /****************************************************************************/
 void RF24::setRetries(uint8_t delay, uint8_t count)
 {
-    write_register(SETUP_RETR, (delay & 0xf) << ARD | (count & 0xf) << ARC);
+    write_register(SETUP_RETR, rf24_min(15, delay) << ARD | rf24_min(15, count));
 }
 
 /****************************************************************************/

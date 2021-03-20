@@ -12,8 +12,8 @@
  */
 
 #include "TimeLib.h" // Keeping track of time
-#include "../Components_Web/420Common_Web.h"
-#include "../Components_Web/420Module_Web.h"
+#include "420Common_Web.h"
+#include "420Module_Web.h"
 #include "../WirelessCommands_Reservoir.h"
 
 class ReservoirModule_Web : public Common_Web
@@ -21,9 +21,8 @@ class ReservoirModule_Web : public Common_Web
 public:
   ReservoirModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ReservoirModuleSettings *DefaultSettings); ///< constructor
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void websiteEvent_Load(__attribute__((unused)) char *url){}; ///< not used \todo Remove the need to declare these when not needed (Should not be virtual in Common_Web)
-  void websiteEvent_Button(__attribute__((unused)) char *Button);
-  void websiteEvent_Field(__attribute__((unused)) char *Field) {} ///< not used
+  void websiteEvent_Load(__attribute__((unused)) char *url){}; //Not used
+  void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report();
   void reportToJSON();
   void refresh_Sec();

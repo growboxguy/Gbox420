@@ -51,5 +51,5 @@ function UpdateStatus(Log) {
     }
   }
   LogToConsole("Writing " + newStatus, true, 1);
-  SpreadsheetApp.getActive().getSheetByName("Status").getRange(1, 1, newStatus.length, 2).setValues(newStatus);
+  statusSheet.getRange(1, 1, newStatus.length, 2).setValues(newStatus);
 }

@@ -5,17 +5,17 @@
 //Trigger a fake JSON report for testing
 
 function getTestJSONData() {
-  return JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
+  return JSON.parse(ActiveSpreadsheetApp.getRangeByName("LastReportJSON").getDisplayValue());
 }
 
 
 function RunFakeReport() {
   LogToConsole(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", true, 0);
-  WipeCache(); ///< Remove cached Named Ranges and get a fresh copy  
-  SpreadsheetApp.getActive().getRangeByName("LastReportTime").setValue(Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format")));
-  SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Processing...");
+  ReloadCache(); ///< Remove cached Named Ranges and get a fresh copy  
+  ActiveSpreadsheetApp.getRangeByName("LastReportTime").setValue(Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format")));
+  ImportResultRange.setValue("Processing...");
   LogToConsole("Loading fake report data...", true, 0);
-  var FakeBoxData = SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue();
+  var FakeBoxData = ActiveSpreadsheetApp.getRangeByName("LastReportJSON").getDisplayValue();
   //Browser.msgBox(FakeReportData);
   LogToConsole("Parsing fake BoxData: ", false, 1);
   try {
@@ -24,7 +24,7 @@ function RunFakeReport() {
   }
   catch (e) {
     LogToConsole("Error parsing BoxData to JSON. Error: " + e, true, 0);
-    SpreadsheetApp.getActive().getRangeByName("ImportResult").setValue("Error parsing BoxData to JSON. Error: " + e);
+    ImportResultRange.setValue("Error parsing BoxData to JSON. Error: " + e);
   }
   ProcessBoxData(FakeBoxDataJSON);
   LogToConsole(">>>>>>>End of script>>>>>>>", true, 0);
@@ -32,7 +32,7 @@ function RunFakeReport() {
 
 /*
 function Test_MainModule_CheckAlerts() {
-FakeJSONData = JSON.parse(SpreadsheetApp.getActive().getRangeByName("LastReportJSON").getDisplayValue());
+FakeJSONData = JSON.parse(ActiveSpreadsheetApp.getRangeByName("LastReportJSON").getDisplayValue());
 CheckAlerts(FakeJSONData.Log);
 }
 */
@@ -154,13 +154,12 @@ function createColumnChart() {
   var yAxisTitle = 'Speed & Power';
 
   // Get the active sheet.
-  var spreadsheet = SpreadsheetApp.getActive();
-  var sheet = spreadsheet.getActiveSheet();
+  var sheet = ActiveSpreadsheetApp.getActiveSheet();
 
   // Create a chart.
   var chart = sheet.newChart()
     .asColumnChart()
-    .addRange(spreadsheet.getRange(dataRange))
+    .addRange(ActiveSpreadsheetApp.getRange(dataRange))
 
     // Set the generic options.
     .setNumHeaders(1)

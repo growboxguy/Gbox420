@@ -3,13 +3,13 @@
 Common::Common(const __FlashStringHelper *Name)
 {
   this->Name = Name;
-  logToSerials(F("Initializing "), false, 2);
-  logToSerials(this->Name, false, 0);
+  logToSerials(F("Initializing"), false, 2);
+  logToSerials(this->Name, false, 1);
 }
 
 Common::Common()
 {
-  logToSerials(F("Initializing "), false, 4);
+  logToSerials(F("Initializing"), false, 2);
 }
 
 void Common::report()
@@ -45,6 +45,13 @@ char *Common::getComponentName(const __FlashStringHelper *ComponentName)
   return ReturnChar;
 }
 
+void Common::reportToJSON()
+{
+  strcat_P(LongMessage, (PGM_P)F("\""));
+  strcat_P(LongMessage, (PGM_P)Name);
+  strcat_P(LongMessage, (PGM_P)F("\":{"));
+}
+
 bool Common::isThisMyComponent(char const *lookupName)
 { ///< When a web component triggers an action, this function decides if the component belonged to the class
   ///< lookupName is in the form of: InstanceName_FunctionName . Examles: Lt1_On , Lt1_OnTime, LtSen1_Raw
@@ -63,7 +70,7 @@ bool Common::isThisMyComponent(char const *lookupName)
   while (1)
   {
     FlashCurrentChar = pgm_read_byte(FlashAddressPointer++); ///< read back from the memory address on character, and then increment the pointer to the next char
-    RAMCurrentChar = lookupName[CharacterCount++];           ///< 
+    RAMCurrentChar = lookupName[CharacterCount++];           ///<
     ///< Serial.print(FlashCurrentChar);
     ///< Serial.print(RAMCurrentChar);
     if (FlashCurrentChar == 0)
@@ -80,7 +87,7 @@ bool Common::isThisMyComponent(char const *lookupName)
     ///< Serial.print("Inside second check: ");
     while (1)
     {
-      RAMCurrentChar = lookupName[CharacterCount++]; ///< 
+      RAMCurrentChar = lookupName[CharacterCount++]; ///<
       ///< Serial.print(RAMCurrentChar);
       *ReturnChar++ = RAMCurrentChar;
       if (RAMCurrentChar == 0)
@@ -102,4 +109,14 @@ bool Common::isThisMyComponent(char const *lookupName)
     ///< Serial.println("Not match");
     return false;
   }
+}
+
+void Common::appendName(bool Clear)
+{
+  if (Clear)
+  {
+    memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable to store the Publish to path
+  }
+  strcpy_P(ShortMessage, (PGM_P)Name);
+  strcat_P(ShortMessage, (PGM_P)F(" "));
 }
