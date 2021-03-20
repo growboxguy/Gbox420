@@ -585,5 +585,5 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
   }
 }
 ///< This is how a sent out message looks like:
-///< Gbox420/{"EventLog":{}}
+///< Gbox420/{"EventLog":["Event log entry 1","Event log entry 2","Event log entry 3","Event log entry 4"]}
 

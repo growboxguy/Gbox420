@@ -8,7 +8,6 @@ ln ../HardLinkSRC_OFF.sh ./
 echo "Creating folders"
 mkdir ./src
 mkdir ./src/Components
-mkdir ./src/Components_Web
 mkdir ./src/Modules_Web
 
 echo "Creating hard links"
