@@ -114,10 +114,16 @@ void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__(
 /**
 * @brief Converts the log entries to a JSON object
 */
-char *Module_Web::eventLogToJSON(bool Append)
+char *Module_Web::eventLogToJSON(bool Append, bool Encapsulate)
 { ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   if (!Append)
+  {
     memset(&LongMessage[0], 0, sizeof(LongMessage));
+  }
+  if(Encapsulate)
+  {
+    strcat_P(LongMessage, (PGM_P)F("{\"EventLog\":")); ///< Adds a curly bracket that needs to be closed at the end
+  }
   strcat_P(LongMessage, (PGM_P)F("["));
   for (int i = LogDepth - 1; i >= 0; i--)
   {
@@ -128,6 +134,10 @@ char *Module_Web::eventLogToJSON(bool Append)
       strcat_P(LongMessage, (PGM_P)F(","));
   }
   LongMessage[strlen(LongMessage)] = ']';
+  if(Encapsulate)
+  {
+     strcat_P(LongMessage, (PGM_P)F("}")); ///< closing curly bracket
+  }
   return LongMessage;
 }
 

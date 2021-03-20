@@ -580,7 +580,10 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
   {
     getJSONReport(true);       //Load the JSON report to LongMessage
     mqttPublish(&LongMessage); //publish readings via ESP MQTT API
+    eventLogToJSON(false,true); //Load the event log in JSON format to LongMessage
+    mqttPublish(&LongMessage); //publish the log via ESP MQTT API
   }
 }
 ///< This is how a sent out message looks like:
-///< Gbox420/{"Log":{"IFan":{"S":"1"},"EFan":{"S":"0"},"APump1":{"S":"1"},"Lt1":{"S":"1","B":"75","T":"1","On":"08:20","Of":"02:20"},"Lt2":{"S":"0","B":"0","T":"0","On":"08:20","Of":"16:20"},"LtSen1":{"R":"967","D":"0"},"DHT1":{"T":"25.10","H":"43.10"},"Pow1":{"P":"34.40","E":"510.93","V":"231.90","C":"0.34","F":"50.00","PF":"0.44"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","WB1":"18.29","WR1":"3.96","DW1":"18.10","WW1":"0.00","ET1":"2.00","OT1":"0.30","WL1":"13.00","H2":"1","P2":"1","PS2":"100","WB2":"20.17","WR2":"12.21","DW2":"18.49","WW2":"20.49","ET2":"2.00","OT2":"0.30","WL2":"13.00"},"Aero1":{"S":"1","P":"6.43","W":"19.68","Mi":"5.00","Ma":"7.00","AS":"1","LS":"6.47","PSt":"1","PS":"100","SE":"1","D":"1.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"1.85","T":"1126.00","W":"24.16","WT":"17.06","AT":"24.70","H":"27.60"},"Main1":{"M":"1","D":"1"}}}
+///< Gbox420/{"EventLog":{}}
+
