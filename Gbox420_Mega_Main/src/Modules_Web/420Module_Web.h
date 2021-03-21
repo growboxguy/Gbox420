@@ -29,17 +29,17 @@ public:
   RF24 *Wireless;
   void addToWebsiteQueue_Load(Common_Web *Module);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
   void addToWebsiteQueue_Refresh(Common_Web *Module); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  void addToCommandQueue(Common_Web *Module);  ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method
+  void addToCommandQueue(Common_Web *Module);         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method
   void websiteLoadEventTrigger(char *Url);
   void websiteRefreshEventTrigger(char *Url);
   void commandEventTrigger(char *command, char *data);
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);
   char *eventLogToJSON(bool Append = false, bool Encapsulate = false); ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
-  char *getJSONReport(bool BlankLongMessage = false);  
+  char *getJSONReport(bool Append = true);
   void addPushingBoxLogRelayID();
-  void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);
-  void mqttPublish(char (*JSONData)[MaxLongTextLength]);
+  void relayToGoogleSheets(char *JSONData);
+  void mqttPublish(char *JSONData);
 
 private:
 protected:

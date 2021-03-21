@@ -74,10 +74,10 @@ void Module_Web::commandEventTrigger(char *command, char *data)
 {
   if (*Debug)
     logToSerials(&command, false, 0);
-    logToSerials(&data, true, 2);
+  logToSerials(&data, true, 2);
   for (int i = 0; i < CommandQueue_Count; i++)
   {
-    CommandQueue[i]->commandEvent(command,data);
+    CommandQueue[i]->commandEvent(command, data);
   }
 }
 
@@ -120,7 +120,7 @@ char *Module_Web::eventLogToJSON(bool Append, bool Encapsulate)
   {
     memset(&LongMessage[0], 0, sizeof(LongMessage));
   }
-  if(Encapsulate)
+  if (Encapsulate)
   {
     strcat_P(LongMessage, (PGM_P)F("{\"EventLog\":")); ///< Adds a curly bracket that needs to be closed at the end
   }
@@ -134,9 +134,9 @@ char *Module_Web::eventLogToJSON(bool Append, bool Encapsulate)
       strcat_P(LongMessage, (PGM_P)F(","));
   }
   LongMessage[strlen(LongMessage)] = ']';
-  if(Encapsulate)
+  if (Encapsulate)
   {
-     strcat_P(LongMessage, (PGM_P)F("}")); ///< closing curly bracket
+    strcat_P(LongMessage, (PGM_P)F("}")); ///< closing curly bracket
   }
   return LongMessage;
 }
@@ -144,9 +144,9 @@ char *Module_Web::eventLogToJSON(bool Append, bool Encapsulate)
 /**
 * @brief Iterate through all object subscribed to the Report queue and complie a JSON report of their statuses
 */
-char *Module_Web::getJSONReport(bool BlankLongMessage)
+char *Module_Web::getJSONReport(bool Append)
 {
-  if (BlankLongMessage)
+  if (!Append)
   {
     memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
   }
@@ -158,6 +158,7 @@ char *Module_Web::getJSONReport(bool BlankLongMessage)
       strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
   }
   strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
+  return LongMessage;
 }
 
 ///< Google Sheets functions - https://sites.google.com/site/growboxguy/esp-link/logging
@@ -176,7 +177,7 @@ void Module_Web::addPushingBoxLogRelayID()
 /**
 * @brief Send a JSON formatted report to Google Sheets
 */
-void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
+void Module_Web::relayToGoogleSheets(char *JSONData)
 {
   if (*Debug)
   { ///< print the report command to console
@@ -189,15 +190,15 @@ void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 /**
 * @brief Publish an MQTT message containing a JSON formatted report
 */
-void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
+void Module_Web::mqttPublish(char *JSONData)
 {
   memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///< clear variable
-  strcat(ShortMessage,ModuleSettings->MqttPubTopic);
+  strcat(ShortMessage, ModuleSettings->MqttPubTopic);
   if (*Debug)
   { ///< print the report command to console
     logToSerials(F("MQTT reporting:"), false, 2);
-    logToSerials(&ShortMessage,false,1);
+    logToSerials(&ShortMessage, false, 1);
     logToSerials(JSONData, true, 0);
   }
-  MqttAPI.publish(ShortMessage, *JSONData,0,1); //(topic,message,qos (Only level 0 supported),retain )
+  MqttAPI.publish(ShortMessage, JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
 }
