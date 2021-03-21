@@ -24,7 +24,7 @@ void PowerSensor::refresh_FiveSec()
 void PowerSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Power:"));
   strcat(LongMessage, getPowerText(true));
   strcat_P(LongMessage, (PGM_P)F(" ; Total:"));
@@ -55,7 +55,7 @@ char *PowerSensor::getPowerText(bool IncludeUnits)
   if (IncludeUnits)
   {
     static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
+    memset(&ReturnChar[0], 0, MaxWordLength); ///< clear variable
     strcat(ReturnChar, toText(Power));
     if (IncludeUnits)
       strcat_P(ReturnChar, (PGM_P)F("W"));
@@ -70,7 +70,7 @@ char *PowerSensor::getEnergyText(bool IncludeUnits)
   if (IncludeUnits)
   {
     static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
+    memset(&ReturnChar[0], 0, MaxWordLength); ///< clear variable
     strcat(ReturnChar, toText(Energy));
     if (IncludeUnits)
       strcat_P(ReturnChar, (PGM_P)F("kWh"));
@@ -85,7 +85,7 @@ char *PowerSensor::getVoltageText(bool IncludeUnits)
   if (IncludeUnits)
   {
     static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
+    memset(&ReturnChar[0], 0, MaxWordLength); ///< clear variable
     strcat(ReturnChar, toText(Voltage));
     if (IncludeUnits)
       strcat_P(ReturnChar, (PGM_P)F("V"));
@@ -100,7 +100,7 @@ char *PowerSensor::getCurrentText(bool IncludeUnits)
   if (IncludeUnits)
   {
     static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
+    memset(&ReturnChar[0], 0, MaxWordLength); ///< clear variable
     strcat(ReturnChar, toText(Current));
     if (IncludeUnits)
       strcat_P(ReturnChar, (PGM_P)F("A"));

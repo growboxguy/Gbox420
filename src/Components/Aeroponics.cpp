@@ -20,7 +20,7 @@ Aeroponics::Aeroponics(const __FlashStringHelper *Name, Module *Parent, Settings
 
 void Aeroponics::report()
 {                                                  ///< report status to Serial output, runs after the child class`s report function
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F(" ; MaxPressure:"));
   strcat(LongMessage, toText_pressure(*MaxPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
@@ -142,7 +142,7 @@ float Aeroponics::getLastSprayPressure()
 
 char *Aeroponics::getLastSprayPressureText(bool IncludeCurrentPressure)
 {
-  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///< clear variable
+  memset(&ShortMessage[0], 0, MaxShotTextLength); ///< clear variable
 
   toText_pressure(LastSprayPressure); ///< loads the Last pressure measured during spraying
   if (IncludeCurrentPressure)

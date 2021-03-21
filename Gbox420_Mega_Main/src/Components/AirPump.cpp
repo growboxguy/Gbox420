@@ -18,7 +18,7 @@ AirPump::AirPump(const __FlashStringHelper *Name, Module *Parent, Settings::AirP
 void AirPump::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Status:"));
   strcat(LongMessage, getStateToText());
   logToSerials(&LongMessage, true, 1);

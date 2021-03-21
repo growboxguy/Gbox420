@@ -30,7 +30,7 @@ HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Pa
 void HempyModule_Web::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Bucket1 Weight:"));
   strcat(LongMessage, toText_weight(HempyBucketResponse1Received.WeightB));
   strcat_P(LongMessage, (PGM_P)F(" [Dry:"));

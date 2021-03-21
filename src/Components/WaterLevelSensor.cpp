@@ -63,7 +63,7 @@ void WaterLevelSensor::refresh_FiveSec()
 void WaterLevelSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Level:"));
   strcat(LongMessage, getLevelGauge());
   strcat_P(LongMessage, (PGM_P)F(" ("));

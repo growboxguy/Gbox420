@@ -56,7 +56,7 @@ void Lights::refresh_Minute()
 void Lights::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("State:"));
   strcat(LongMessage, getStateText());
   strcat_P(LongMessage, (PGM_P)F(" ; Brightness:"));

@@ -24,7 +24,7 @@ void PHSensor::refresh_FiveSec()
 void PHSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("PH:"));
   strcat(LongMessage, getPHText(false));
   strcat_P(LongMessage, (PGM_P)F(" ; Average:"));

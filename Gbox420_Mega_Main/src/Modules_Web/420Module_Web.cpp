@@ -118,7 +118,7 @@ char *Module_Web::eventLogToJSON(bool Append, bool Encapsulate)
 { ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
   if (!Append)
   {
-    memset(&LongMessage[0], 0, sizeof(LongMessage));
+    memset(&LongMessage[0], 0, MaxLongTextLength);
   }
   if (Encapsulate)
   {
@@ -148,7 +148,7 @@ char *Module_Web::getJSONReport(bool Append)
 {
   if (!Append)
   {
-    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   }
   strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds two curly brackets that needs to be closed at the end
   for (int i = 0; i < reportQueueItemCount;)
@@ -168,7 +168,7 @@ char *Module_Web::getJSONReport(bool Append)
 */
 void Module_Web::addPushingBoxLogRelayID()
 {
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("/pushingbox?devid="));
   strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
   strcat_P(LongMessage, (PGM_P)F("&BoxData="));
@@ -192,7 +192,7 @@ void Module_Web::relayToGoogleSheets(char *JSONData)
 */
 void Module_Web::mqttPublish(char *JSONData)
 {
-  memset(&ShortMessage[0], 0, sizeof(ShortMessage)); ///< clear variable
+  memset(&ShortMessage[0], 0, MaxShotTextLength); ///< clear variable
   strcat(ShortMessage, ModuleSettings->MqttPubTopic);
   if (*Debug)
   { ///< print the report command to console

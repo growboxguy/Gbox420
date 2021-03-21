@@ -24,7 +24,7 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
 void WaterPump::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("State:"));
   strcat(LongMessage, getStateText());
   strcat_P(LongMessage, (PGM_P)F(" ; TimeOut:"));
@@ -45,7 +45,7 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
 {
   if (State != NewState)
   {
-    memset(&LongMessage[0], 0, sizeof(LongMessage)); //reset variable to store the Publish to path
+    memset(&LongMessage[0], 0, MaxLongTextLength); //reset variable to store the Publish to path
     strcpy_P(LongMessage, (PGM_P)Name);
     strcat_P(LongMessage, (PGM_P)F(" state: "));
     strcat(LongMessage, toText_waterPumpState(State));

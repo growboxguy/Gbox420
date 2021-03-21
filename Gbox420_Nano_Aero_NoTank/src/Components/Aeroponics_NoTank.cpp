@@ -27,7 +27,7 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Pa
 void Aeroponics_NoTank::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("LastSprayPressure:"));
   strcat(LongMessage, toText_pressure(LastSprayPressure));
   strcat_P(LongMessage, (PGM_P)F(" ; MaxPressure:"));
@@ -63,7 +63,7 @@ void Aeroponics_NoTank::updateState(AeroNoTankStates NewState) ///< Without a pa
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState)
   {
-    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)Name);
     strcat_P(LongMessage, (PGM_P)F(" state: "));
     strcat(LongMessage, toText_aeroNoTankState(State));

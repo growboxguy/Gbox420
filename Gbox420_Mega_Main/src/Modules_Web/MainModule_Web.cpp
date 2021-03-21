@@ -51,7 +51,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
 void MainModule::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Debug:"));
   strcat(LongMessage, toText_enabledDisabled(Debug));
   strcat_P(LongMessage, (PGM_P)F(" ; Metric mode:"));

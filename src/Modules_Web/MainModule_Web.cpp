@@ -51,7 +51,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
 void MainModule::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Debug:"));
   strcat(LongMessage, toText_enabledDisabled(Debug));
   strcat_P(LongMessage, (PGM_P)F(" ; Metric mode:"));
@@ -516,9 +516,8 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets
   if ((*ReportToGoogleSheets && SheetsRefreshCounter++ % (*SheetsReportingFrequency) == 0) || ForceRun)
   {
-    addPushingBoxLogRelayID(); //Loads Pushingbox relay ID into LongMessage
-    getJSONReport(false);      //Adds the JSON report to LongMessage
-    relayToGoogleSheets(&LongMessage);
+    addPushingBoxLogRelayID();                //Loads Pushingbox relay ID into LongMessage
+    relayToGoogleSheets(getJSONReport(true)); //Adds the JSON report to LongMessage and sends it to Google Sheets
   }
 }
 ///< This is how a sent out message looks like:
@@ -578,12 +577,9 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
   if ((*ReportToMQTT && MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0) || ForceRun)
   {
-    getJSONReport(true);       //Load the JSON report to LongMessage
-    mqttPublish(&LongMessage); //publish readings via ESP MQTT API
-    eventLogToJSON(false,true); //Load the event log in JSON format to LongMessage
-    mqttPublish(&LongMessage); //publish the log via ESP MQTT API
+    mqttPublish(getJSONReport(false));        // Load the JSON report to LongMessage and publish readings via ESP MQTT API
+    mqttPublish(eventLogToJSON(false, true)); //Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
   }
 }
 ///< This is how a sent out message looks like:
 ///< Gbox420/{"EventLog":["Event log entry 1","Event log entry 2","Event log entry 3","Event log entry 4"]}
-

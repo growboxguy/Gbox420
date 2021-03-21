@@ -38,7 +38,7 @@ void HempyBucket::refresh_Sec()
 void HempyBucket::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("State:"));
   strcat(LongMessage, toText_hempyState(State));
   strcat_P(LongMessage, (PGM_P)F(" ; DryWeight:"));
@@ -62,7 +62,7 @@ void HempyBucket::updateState(HempyStates NewState)
   if (State != NewState)
   {
     StateTimer = millis();                           ///< Start measuring the time spent in the new State
-    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)Name);
     strcat_P(LongMessage, (PGM_P)F(" state: "));
     strcat(LongMessage, toText_hempyState(State));

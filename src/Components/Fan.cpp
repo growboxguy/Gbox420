@@ -29,7 +29,7 @@ void Fan::refresh_Minute()
 void Fan::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Status:"));
   strcat(LongMessage, fanSpeedToText());
   logToSerials(&LongMessage, true, 1);

@@ -45,7 +45,7 @@ void DistanceSensor::readSensor()
 void DistanceSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Distance:"));
   strcat(LongMessage, getDistanceText(true));
   logToSerials(&LongMessage, true, 1);

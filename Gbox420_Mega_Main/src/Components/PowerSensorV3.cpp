@@ -24,7 +24,7 @@ void PowerSensorV3::refresh_FiveSec()
 void PowerSensorV3::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("Power:"));
   strcat(LongMessage, getPowerText(true));
   strcat_P(LongMessage, (PGM_P)F(" ; Total:"));
@@ -63,7 +63,7 @@ char *PowerSensorV3::getPowerText(bool IncludeUnits)
   if (IncludeUnits)
   {
     static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
+    memset(&ReturnChar[0], 0, MaxWordLength); ///< clear variable
     strcat(ReturnChar, toText(Power));
     if (IncludeUnits)
       strcat_P(ReturnChar, (PGM_P)F("W"));
@@ -78,7 +78,7 @@ char *PowerSensorV3::getEnergyText(bool IncludeUnits)
   if (IncludeUnits)
   {
     static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
+    memset(&ReturnChar[0], 0, MaxWordLength); ///< clear variable
     strcat(ReturnChar, toText(Energy));
     if (IncludeUnits)
       strcat_P(ReturnChar, (PGM_P)F("kWh"));
@@ -93,7 +93,7 @@ char *PowerSensorV3::getVoltageText(bool IncludeUnits)
   if (IncludeUnits)
   {
     static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
+    memset(&ReturnChar[0], 0, MaxWordLength); ///< clear variable
     strcat(ReturnChar, toText(Voltage));
     if (IncludeUnits)
       strcat_P(ReturnChar, (PGM_P)F("V"));
@@ -108,7 +108,7 @@ char *PowerSensorV3::getCurrentText(bool IncludeUnits)
   if (IncludeUnits)
   {
     static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
+    memset(&ReturnChar[0], 0, MaxWordLength); ///< clear variable
     strcat(ReturnChar, toText(Current));
     if (IncludeUnits)
       strcat_P(ReturnChar, (PGM_P)F("A"));
@@ -123,7 +123,7 @@ char *PowerSensorV3::getFrequencyText(bool IncludeUnits)
   if (IncludeUnits)
   {
     static char ReturnChar[MaxWordLength] = "";    ///< each call will overwrite the same variable
-    memset(&ReturnChar[0], 0, sizeof(ReturnChar)); ///< clear variable
+    memset(&ReturnChar[0], 0, MaxWordLength); ///< clear variable
     strcat(ReturnChar, toText(Frequency));
     strcat_P(ReturnChar, (PGM_P)F("Hz"));
     return ReturnChar;

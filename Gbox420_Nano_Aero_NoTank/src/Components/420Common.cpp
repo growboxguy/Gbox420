@@ -115,7 +115,7 @@ void Common::appendName(bool Clear)
 {
   if (Clear)
   {
-    memset(&ShortMessage[0], 0, sizeof(ShortMessage)); //reset variable to store the Publish to path
+    memset(&ShortMessage[0], 0, MaxShotTextLength);//reset variable to store the Publish to path
   }
   strcpy_P(ShortMessage, (PGM_P)Name);
   strcat_P(ShortMessage, (PGM_P)F(" "));

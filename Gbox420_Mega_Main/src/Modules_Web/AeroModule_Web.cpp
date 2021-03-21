@@ -33,7 +33,7 @@ AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Pare
 void AeroModule_Web::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("State:"));
   strcat(LongMessage, toText_aeroTankState(AeroResponse1Received.AeroState));
   strcat_P(LongMessage, (PGM_P)F(" ; Pressure:"));
@@ -57,7 +57,7 @@ void AeroModule_Web::report()
   strcat_P(LongMessage, (PGM_P)F(" ; PumpSpeed:"));
   strcat(LongMessage, toText_percentage(AeroCommand2ToSend.PumpSpeed));
   strcat_P(LongMessage, (PGM_P)F(" ; DayMode:"));
-  strcat(LongMessage, toText(AeroCommand1ToSend.DayMode));
+  strcat(LongMessage, toText_yesNo(AeroCommand1ToSend.DayMode));
   strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
   strcat(LongMessage, toText_second(AeroCommand1ToSend.Duration));
   strcat_P(LongMessage, (PGM_P)F(" ; DayInterval:"));

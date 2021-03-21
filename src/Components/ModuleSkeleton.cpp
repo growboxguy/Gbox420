@@ -41,7 +41,7 @@ void ModuleSkeleton::refresh_Minute()
 void ModuleSkeleton::report()
 { ///< Report status to the Arduino Serial and ESP-lin console output
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("PersistentBool:"));
   strcat(LongMessage, toText_yesNo(*PersistentBool));
   strcat_P(LongMessage, (PGM_P)F(" ; PersistentInt:"));

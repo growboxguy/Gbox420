@@ -31,7 +31,7 @@ PressurePump::PressurePump(const __FlashStringHelper *Name, Module *Parent, Sett
 void PressurePump::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("State:"));
   strcat(LongMessage, getStateText());
   strcat_P(LongMessage, (PGM_P)F(" ; TimeOut:"));
@@ -53,7 +53,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState)
   {
-    memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)Name);
     strcat_P(LongMessage, (PGM_P)F(" state"));
     strcat(LongMessage, toText_pressurePumpState(State));

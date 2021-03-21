@@ -31,7 +31,7 @@ void LightSensor::refresh_FiveSec()
 void LightSensor::report()
 {
   Common::report();
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   //strcat_P(LongMessage, (PGM_P)F("Dark:"));
   // strcat(LongMessage, getDarkText(true));
   strcat_P(LongMessage, (PGM_P)F("LightReading:"));
@@ -88,7 +88,7 @@ void LightSensor::calibrate(bool AddToLog)
 
 void LightSensor::getCalibrationReadings()
 {                                                  ///< Returns a pointer to a char array
-  memset(&LongMessage[0], 0, sizeof(LongMessage)); ///< clear variable
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("{\"Readings\":["));
   for (uint8_t ReadingCounter = 0; ReadingCounter < ReadingArrayDepth; ReadingCounter++)
   {
