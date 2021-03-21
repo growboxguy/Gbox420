@@ -45,6 +45,14 @@ void WeightSensor::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+void WeightSensor::reportToJSON(char *BufferToWriteInto, __attribute__((unused)) bool CloseJSON)
+{
+  Common::reportToJSON(BufferToWriteInto); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(BufferToWriteInto, (PGM_P)F("\"WT\":\""));
+  strcat(BufferToWriteInto, getWeightText(false, true));
+  strcat_P(BufferToWriteInto, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 float WeightSensor::readWeight(bool ReturnAverage)
 {
   if (Sensor->wait_ready_timeout(500))

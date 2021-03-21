@@ -12,6 +12,16 @@ Module::Module()
   logToSerials(F("Module object created"), true, 3);
 } */
 
+void Module::report()
+{
+ //logToSerials(Name, false, 0);
+}
+
+void Module::reportToJSON(char *BufferToWriteInto, __attribute__((unused)) bool CloseJSON)
+{
+  //logToSerials(Name, false, 0);
+}
+
 void Module::runAll(bool AddToLog)
 {
   if (AddToLog)

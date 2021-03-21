@@ -61,7 +61,7 @@ void MainModule::report()
 
 void MainModule::reportToJSON()
 {
-  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"M\":\""));
   strcat(LongMessage, toText(*Metric));
   strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));

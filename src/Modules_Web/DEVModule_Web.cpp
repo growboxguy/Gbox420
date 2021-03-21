@@ -63,7 +63,7 @@ DEVModule_Web::DEVModule_Web(const __FlashStringHelper *Name, Settings::MainModu
 
 void DEVModule_Web::reportToJSON()
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common_Web::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
 
   strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
   strcat(LongMessage, toText(*Metric));
@@ -265,8 +265,8 @@ void DEVModule_Web::reportToGoogleSheetsTrigger(bool ForceRun)
     SheetsRefreshCounter = 0; ///< Reset the counter after one day (15 x 96 = 1440 = 24 hours)
   if (SheetsRefreshCounter++ % (*SheetsReportingFrequency / 15) == 0 || ForceRun)
   {
-    addPushingBoxLogRelayID();                     ///< Adds a curly bracket {  that needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds a curly bracket {  that needs to be closed at the end
+    addPushingBoxLogRelayID();                     ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     for (int i = 0; i < reportQueueItemCount;)
     {
       ReportQueue[i++]->reportToJSON();

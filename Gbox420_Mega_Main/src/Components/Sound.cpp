@@ -13,7 +13,7 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
 
 void Sound::reportToJSON()
 {
-  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
 
   strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
   strcat(LongMessage, toText(*Enabled));

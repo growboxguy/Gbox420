@@ -12,8 +12,9 @@ class Module : virtual public Common
 {
 public:
   Module(); ///< constructor
-
   //Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
+  void report();
+  void reportToJSON(char *BufferToWriteInto, bool CloseJSON = true);
   void runReport(bool AddToLog = true);
   void runAll(bool AddToLog = true);
   void runSec(bool AddToLog = true);

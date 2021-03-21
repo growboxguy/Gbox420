@@ -9,6 +9,26 @@ Switch::Switch(const __FlashStringHelper *Name, uint8_t Pin, bool NegativeLogic)
   logToSerials(F("Switch object created"), true, 3);
 }
 
+void Switch::report()
+{
+  Common::report();
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+  strcat_P(LongMessage, (PGM_P)F("State:"));
+  strcat(LongMessage, getStateText()); 
+  logToSerials(&LongMessage, true, 1);
+}
+
+void Switch::reportToJSON(char *BufferToWriteInto, bool CloseJSON)
+{
+  Common::reportToJSON(BufferToWriteInto); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(BufferToWriteInto, (PGM_P)F("\"S\":\""));
+  strcat(BufferToWriteInto, getStateText());
+  if (CloseJSON)
+  {
+    strcat_P(BufferToWriteInto, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+}
+
 Switch::Switch(const __FlashStringHelper *Name) : Common(Name)
 {
 }

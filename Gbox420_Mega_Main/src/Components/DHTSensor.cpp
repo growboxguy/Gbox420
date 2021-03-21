@@ -46,7 +46,7 @@ void DHTSensor::report()
 
 void DHTSensor::reportToJSON()
 {
-  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
   strcat(LongMessage, getTempText());
   strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));

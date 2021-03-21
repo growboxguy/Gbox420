@@ -11,6 +11,23 @@ Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t *Du
   logToSerials(F("Switch_PWM object created"), true, 3);
 }
 
+void Switch_PWM::report()
+{
+  Common::report();
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+  strcat_P(LongMessage, (PGM_P)F("DutyCycle:"));
+  strcat(LongMessage, getDutyCycleText()); 
+  logToSerials(&LongMessage, true, 1);
+}
+
+void Switch_PWM::reportToJSON(char *BufferToWriteInto, __attribute__((unused)) bool CloseJSON)
+{
+  Switch::reportToJSON(BufferToWriteInto,false); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(BufferToWriteInto, (PGM_P)F("\",\"DC\":\""));
+  strcat(BufferToWriteInto, getDutyCycleText());
+  strcat_P(BufferToWriteInto, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 void Switch_PWM::setDutyCycle(uint8_t DutyCycle)
 {
   if (*this->DutyCycle != DutyCycle)

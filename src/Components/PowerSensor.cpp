@@ -38,7 +38,7 @@ void PowerSensor::report()
 
 void PowerSensor::reportToJSON()
 {
-  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"P\":\""));
   strcat(LongMessage, getPowerText(false));
   strcat_P(LongMessage, (PGM_P)F("\",\"E\":\""));

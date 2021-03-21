@@ -9,17 +9,19 @@ class Sound : virtual public Common
 {
 public:
   Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSettings *DefaultSettings);
-  void reportToJSON();
+  void report();
+  void reportToJSON(char *BufferToWriteInto, bool CloseJSON = true);
   void checkEvents();
   void refresh_Sec();
   void playOnSound();
   void playOffSound();
   void setSoundOnOff(bool State);
   bool getEnabledState();
+  char *getEnabledStateText();
 
 private:
 protected:
-  Module *Parent;  
+  Module *Parent;
   void OnSound();
   void OffSound();
   uint8_t *Pin;             ///< Pin connecting the piezo Sound positive(+) side over a 330Ω resistor)

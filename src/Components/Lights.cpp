@@ -76,7 +76,7 @@ void Lights::report()
 
 void Lights::reportToJSON()
 {
-  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, getStatusText(false));
   strcat_P(LongMessage, (PGM_P)F("\",\"CB\":\""));

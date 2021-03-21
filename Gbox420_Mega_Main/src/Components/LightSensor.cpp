@@ -41,7 +41,7 @@ void LightSensor::report()
 
 void LightSensor::reportToJSON()
 {
-  Common::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
+  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"R\":\""));
   strcat(LongMessage, getReadingText(false));
   strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
