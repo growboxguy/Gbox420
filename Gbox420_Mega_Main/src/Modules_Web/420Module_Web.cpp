@@ -6,7 +6,7 @@ static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storin
 /**
 * @brief Constructor: creates an instance of the class, and stores wireless transmitter object used to communicate with other modules
 */
-Module_Web::Module_Web(RF24 *Wireless) : Module()
+Module_Web::Module_Web(RF24 *Wireless) : Common(Name), Module()
 {
   this->Wireless = Wireless;
   //logToSerials(F("Module_Web object created"), true, 3);

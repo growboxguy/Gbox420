@@ -22,7 +22,7 @@ extern ELClientRest PushingBoxRestAPI;
 extern ELClientMqtt MqttAPI;
 class Sound;
 
-class Module_Web : public Module
+class Module_Web : virtual public Common, virtual public Module
 {
 public:
   Module_Web(RF24 *Wireless); ///< constructor

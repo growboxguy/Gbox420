@@ -25,6 +25,7 @@ public:
   char *getComponentName(const __FlashStringHelper *Name);
   void appendName(bool Clear = true); //< Adds the component name to the ShortMessage Buffor. If Clear=true flush the cache before adding the name
   virtual void report(); //Pure virtual function with body, must be implemented in child classes  https://www.learncpp.com/cpp-tutorial/pure-virtual-functions-abstract-base-classes-and-interface-classes/
+  void reportToJSON(bool CloseJSON = true);  //Pure virtual function with body, must be implemented in child classes  https://www.learncpp.com/cpp-tutorial/pure-virtual-functions-abstract-base-classes-and-interface-classes/
   virtual void refresh_Sec();
   virtual void refresh_FiveSec();
   virtual void refresh_Minute();
@@ -33,5 +34,4 @@ private:
 protected:
   Common(const __FlashStringHelper *Name); ///< Constructor
   Common();
-  void reportToJSON(bool CloseJSON = true);  //Pure virtual function with body, must be implemented in child classes  https://www.learncpp.com/cpp-tutorial/pure-virtual-functions-abstract-base-classes-and-interface-classes/
-};
+ };
