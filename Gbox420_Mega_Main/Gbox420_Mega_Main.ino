@@ -204,19 +204,19 @@ void resetWebServer()
 
 void setupMqtt()
 {
-  /*
+  
   MqttAPI.connectedCb.attach(mqttConnected);
-  //MqttAPI.disconnectedCb.attach(mqttDisconnected);
-  //MqttAPI.publishedCb.attach(mqttPublished);
+  MqttAPI.disconnectedCb.attach(mqttDisconnected);
+  MqttAPI.publishedCb.attach(mqttPublished);
   MqttAPI.dataCb.attach(mqttReceived);
-  */
+
   memset(&ShortMessage[0], 0, MaxShotTextLength); //reset variable to store the Publish to path
   strcat(ShortMessage, ModuleSettings->MqttLwtTopic);
   MqttAPI.lwt(ShortMessage, ModuleSettings->MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
   MqttAPI.setup();
 }
 
-/*
+
 void mqttConnected(void *response)
 {
   MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
@@ -232,7 +232,7 @@ void mqttPublished(void *response)
 {
   //if(*Debug) logToSerials(F("MQTT published"), true);
 }
-*/
+
 
 void mqttReceived(void *response)
 {
