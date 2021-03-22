@@ -12,6 +12,26 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
   logToSerials(F("TDSSensor object created"), true, 3);
 }
 
+void TDSSensor::report(bool JSONReport)
+{
+  Common::report(JSONReport);
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
+    strcat(LongMessage, getTDSText(false, true));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("TDS:"));
+    strcat(LongMessage, getTDSText(false, true));
+    strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
+    strcat(LongMessage, getTDSText(true, true));
+    logToSerials(&LongMessage, true, 1);
+  }
+}
+
 TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::TDSSensorSettings *DefaultSettings, WaterTempSensor *WaterTempSensor1) : TDSSensor(Name, Parent, DefaultSettings)
 { ///< constructor with an extra WaterTemperature object
   this->WaterTempSensor1 = WaterTempSensor1;
@@ -22,17 +42,6 @@ void TDSSensor::refresh_FiveSec()
   if (*Debug)
     Common::refresh_FiveSec();
   updateTDS(false);
-}
-
-void TDSSensor::report()
-{
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("TDS:"));
-  strcat(LongMessage, getTDSText(false, true));
-  strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
-  strcat(LongMessage, getTDSText(true, true));
-  logToSerials(&LongMessage, true, 1);
 }
 
 void TDSSensor::updateTDS(bool ShowRaw)

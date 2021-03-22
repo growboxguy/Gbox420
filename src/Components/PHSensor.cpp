@@ -21,15 +21,24 @@ void PHSensor::refresh_FiveSec()
   updatePH(false);
 }
 
-void PHSensor::report()
+void PHSensor::report(bool JSONReport)
 {
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("PH:"));
-  strcat(LongMessage, getPHText(false));
-  strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
-  strcat(LongMessage, getPHText(true));
-  logToSerials(&LongMessage, true, 1);
+  Common::report(JSONReport);
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    strcat_P(LongMessage, (PGM_P)F("\"P\":\""));
+    strcat(LongMessage, getPHText(false));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("PH:"));
+    strcat(LongMessage, getPHText(false));
+    strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
+    strcat(LongMessage, getPHText(true));
+    logToSerials(&LongMessage, true, 1);
+  }
 }
 
 void PHSensor::updatePH(bool ShowRaw)

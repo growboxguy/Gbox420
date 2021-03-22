@@ -13,20 +13,29 @@ WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent
   logToSerials(F("WaterTempSensor object created"), true, 3);
 }
 
+void WaterTempSensor::report(bool JSONReport)
+{
+  Common::report(JSONReport);
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
+    strcat(LongMessage, getTempText(true));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("Temp:"));
+    strcat(LongMessage, getTempText(true));
+    logToSerials(&LongMessage, true, 1);
+  }
+}
+
 void WaterTempSensor::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
   readSensor();
-}
-
-void WaterTempSensor::report()
-{
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("Temp:"));
-  strcat(LongMessage, getTempText(true));
-  logToSerials(&LongMessage, true, 1);
 }
 
 void WaterTempSensor::readSensor()

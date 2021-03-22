@@ -9,7 +9,7 @@ class PHSensor : virtual public Common
 public:
   PHSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PHSensorSettings *DefaultSettings);
   void refresh_FiveSec();
-  void report();
+  void report(bool JSONReport = false);
   float getPH(bool ReturnAverage = true);
   char *getPHText(bool ReturnAverage = true);
 

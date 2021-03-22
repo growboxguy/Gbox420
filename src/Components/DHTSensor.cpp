@@ -15,9 +15,9 @@ DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
 
 void DHTSensor::report(bool JSONReport)
 {
+  Common::report(JSONReport);
   if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  {
-    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  {    
     strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
     strcat(LongMessage, getTempText());
     strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
@@ -25,8 +25,7 @@ void DHTSensor::report(bool JSONReport)
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
   }
   else //Print a report to the Serial console
-  {
-    Common::report();
+  {    
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)F("Temp:"));
     strcat(LongMessage, getTempText(true)); ///< Shows the average reading
