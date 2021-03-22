@@ -10,7 +10,7 @@ class Sound : virtual public Common
 public:
   Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSettings *DefaultSettings);
   void report();
-  void reportToJSON(char *BufferToWriteInto, bool CloseJSON = true);
+  void reportToJSON(bool CloseJSON = true);
   void checkEvents();
   void refresh_Sec();
   void playOnSound();

@@ -12,7 +12,7 @@ public:
   Switch(const __FlashStringHelper *Name, uint8_t Pin, bool NegativeLogic = false);
   Switch(const __FlashStringHelper *Name);
   void report();
-  void reportToJSON(char *BufferToWriteInto, bool CloseJSON = true); 
+  void reportToJSON(bool CloseJSON = true); 
   void turnOn();
   void turnOff();
   void flip();          ///< invert the current state

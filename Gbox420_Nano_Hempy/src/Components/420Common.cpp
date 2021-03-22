@@ -18,11 +18,11 @@ void Common::report()
   logToSerials(F("-"), false, 1); ///< Prints "    COMPONENTNAME -" to the console
 }
 
-void Common::reportToJSON(char *BufferToWriteInto, __attribute__((unused)) bool CloseJSON)
+void Common::reportToJSON(__attribute__((unused)) bool CloseJSON)
 {
-  strcat_P(BufferToWriteInto, (PGM_P)F("\""));
-  strcat_P(BufferToWriteInto, (PGM_P)Name);
-  strcat_P(BufferToWriteInto, (PGM_P)F("\":{"));
+  strcat_P(LongMessage, (PGM_P)F("\""));
+  strcat_P(LongMessage, (PGM_P)Name);
+  strcat_P(LongMessage, (PGM_P)F("\":{"));
 }
 
 void Common::refresh_Sec()

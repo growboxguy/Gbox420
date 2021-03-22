@@ -20,12 +20,15 @@ void Switch_PWM::report()
   logToSerials(&LongMessage, true, 1);
 }
 
-void Switch_PWM::reportToJSON(char *BufferToWriteInto, __attribute__((unused)) bool CloseJSON)
+void Switch_PWM::reportToJSON(__attribute__((unused)) bool CloseJSON)
 {
-  Switch::reportToJSON(BufferToWriteInto,false); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(BufferToWriteInto, (PGM_P)F("\",\"DC\":\""));
-  strcat(BufferToWriteInto, getDutyCycleText());
-  strcat_P(BufferToWriteInto, (PGM_P)F("\"}")); ///< closing the curly bracket
+  //Switch::reportToJSON(LongMessage,false); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\""));
+  strcat_P(LongMessage, (PGM_P)Name);
+  strcat_P(LongMessage, (PGM_P)F("\":{"));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DC\":\""));
+  strcat(LongMessage, getDutyCycleText());
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
 void Switch_PWM::setDutyCycle(uint8_t DutyCycle)

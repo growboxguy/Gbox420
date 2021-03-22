@@ -37,16 +37,6 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   addToLog(F("HempyModule initialized"), 0);
 }
 
-void HempyModule::report()
-{
- //logToSerials(Name, false, 0);
-}
-
-void HempyModule::reportToJSON(char *BufferToWriteInto, __attribute__((unused)) bool CloseJSON)
-{
-  //logToSerials(Name, false, 0);
-}
-
 void HempyModule::refresh_Sec()
 {
   if (*Debug)

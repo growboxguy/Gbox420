@@ -56,24 +56,27 @@ void HempyBucket::report()
   logToSerials(&LongMessage, true, 1);
 }
 
-void HempyBucket::reportToJSON(char *BufferToWriteInto, __attribute__((unused)) bool CloseJSON)
+void HempyBucket::reportToJSON(__attribute__((unused)) bool CloseJSON)
 {
-  Common::reportToJSON(BufferToWriteInto); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(BufferToWriteInto, (PGM_P)F("\"S\":\""));
-  strcat(BufferToWriteInto, toText((int)getState()));
-  strcat_P(BufferToWriteInto, (PGM_P)F("\",\"DW\":\""));
-  strcat(BufferToWriteInto, toText_weight(DryWeight));
-  strcat_P(BufferToWriteInto, (PGM_P)F("\",\"WW\":\""));
-  strcat(BufferToWriteInto, toText_weight(WetWeight));
-  strcat_P(BufferToWriteInto, (PGM_P)F("\",\"ET\":\""));
-  strcat(BufferToWriteInto, toText_weight(*EvaporationTarget));
-  strcat_P(BufferToWriteInto, (PGM_P)F("\",\"OF\":\""));
-  strcat(BufferToWriteInto, toText_weight(*OverflowTarget));
-  strcat_P(BufferToWriteInto, (PGM_P)F("\",\"WL\":\""));
-  strcat(BufferToWriteInto, toText_weight(*WasteLimit));
-  strcat_P(BufferToWriteInto, (PGM_P)F("\",\"DT\":\""));
-  strcat(BufferToWriteInto, toText_second(*DrainWaitTime));
-  strcat_P(BufferToWriteInto, (PGM_P)F("\"}")); ///< closing the curly bracket
+  //Common::reportToJSON(LongMessage); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\""));
+  strcat_P(LongMessage, (PGM_P)Name);
+  strcat_P(LongMessage, (PGM_P)F("\":{"));
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, toText((int)getState()));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DW\":\""));
+  strcat(LongMessage, toText_weight(DryWeight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WW\":\""));
+  strcat(LongMessage, toText_weight(WetWeight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"ET\":\""));
+  strcat(LongMessage, toText_weight(*EvaporationTarget));
+  strcat_P(LongMessage, (PGM_P)F("\",\"OF\":\""));
+  strcat(LongMessage, toText_weight(*OverflowTarget));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WL\":\""));
+  strcat(LongMessage, toText_weight(*WasteLimit));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DT\":\""));
+  strcat(LongMessage, toText_second(*DrainWaitTime));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
 void HempyBucket::updateState(HempyStates NewState)

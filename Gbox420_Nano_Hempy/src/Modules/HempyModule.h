@@ -34,8 +34,8 @@ public:
   HempyBucket *Bucket2;
   WaterPump *Pump1;
   WaterPump *Pump2;
-  void report();
-  void reportToJSON(char *BufferToWriteInto, bool CloseJSON = true);
+  //void report(){};
+  void reportToJSON(bool CloseJSON = true){};
   void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();

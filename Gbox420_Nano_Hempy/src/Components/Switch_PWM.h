@@ -9,7 +9,7 @@ class Switch_PWM : public Switch
 public:
   Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t *DutyCycle, uint8_t *DutyCycleLowLimit, bool NegativeLogic = false);
   void report();
-  void reportToJSON(char *BufferToWriteInto, bool CloseJSON = true); 
+  void reportToJSON(bool CloseJSON = true); 
   void setDutyCycle(uint8_t DutyCycle);
   void turnOn();
   uint8_t getDutyCycle();
