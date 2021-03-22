@@ -24,25 +24,51 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Pa
   }
 }
 
-void Aeroponics_NoTank::report()
+void Aeroponics_NoTank::report(bool JSONReport)
 {
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("LastSprayPressure:"));
-  strcat(LongMessage, toText_pressure(LastSprayPressure));
-  strcat_P(LongMessage, (PGM_P)F(" ; MaxPressure:"));
-  strcat(LongMessage, toText_pressure(*MaxPressure));
-  strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
-  strcat(LongMessage, toText_yesNo(SprayEnabled));
-  strcat_P(LongMessage, (PGM_P)F(" ; DayMode:"));
-  strcat(LongMessage, toText_enabledDisabled(DayMode));
-  strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
-  strcat(LongMessage, toText_second(*Duration));
-  strcat_P(LongMessage, (PGM_P)F(" ; DayInterval:"));
-  strcat(LongMessage, toText_minute(*DayInterval));
-  strcat_P(LongMessage, (PGM_P)F(" ; NightInterval:"));
-  strcat(LongMessage, toText_minute(*NightInterval));
-  logToSerials(&LongMessage, true, 1);
+  Common::report(JSONReport);
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    //Not implemented, handled by AeroModule_Web in mainmodule;
+
+     /*
+    strcat_P(LongMessage, (PGM_P)F("\"LS\":\""));
+    strcat(LongMessage, toText_pressure(LastSprayPressure));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Mn\":\""));
+    strcat(LongMessage, toText_pressure(*MinPressure));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Mx\":\""));
+    strcat(LongMessage, toText_pressure(*MaxPressure));
+    strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
+    strcat(LongMessage, toText_yesNo(SprayEnabled));
+    strcat_P(LongMessage, (PGM_P)F("\",\"DM\":\""));
+    strcat(LongMessage, toText_enabledDisabled(DayMode));
+    strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
+    strcat(LongMessage, toText_second(*Duration));
+    strcat_P(LongMessage, (PGM_P)F("\",\"DI\":\""));
+    strcat(LongMessage, toText_minute(*DayInterval));
+    strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
+    strcat(LongMessage, toText_minute(*NightInterval));
+    */
+  }
+  else //Print a report to the Serial console
+  {
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("LastSprayPressure:"));
+    strcat(LongMessage, toText_pressure(LastSprayPressure));
+    strcat_P(LongMessage, (PGM_P)F(" ; MaxPressure:"));
+    strcat(LongMessage, toText_pressure(*MaxPressure));
+    strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
+    strcat(LongMessage, toText_yesNo(SprayEnabled));
+    strcat_P(LongMessage, (PGM_P)F(" ; DayMode:"));
+    strcat(LongMessage, toText_enabledDisabled(DayMode));
+    strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
+    strcat(LongMessage, toText_second(*Duration));
+    strcat_P(LongMessage, (PGM_P)F(" ; DayInterval:"));
+    strcat(LongMessage, toText_minute(*DayInterval));
+    strcat_P(LongMessage, (PGM_P)F(" ; NightInterval:"));
+    strcat(LongMessage, toText_minute(*NightInterval));
+    logToSerials(&LongMessage, true, 1);
+  }
 }
 
 void Aeroponics_NoTank::refresh_Sec()

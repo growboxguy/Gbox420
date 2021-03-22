@@ -35,7 +35,7 @@ public:
   HempyBucket *Bucket2 = NULL;
   WaterPump *Pump1 = NULL;
   WaterPump *Pump2 = NULL;
-  void report(bool JSONReport = false){};
+  void report(__attribute__((unused)) bool JSONReport = false){};
   void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();
