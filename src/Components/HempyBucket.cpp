@@ -58,10 +58,7 @@ void HempyBucket::report()
 
 void HempyBucket::reportToJSON()
 {
-  //Common::reportToJSON(LongMessage); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\""));
-  strcat_P(LongMessage, (PGM_P)Name);
-  strcat_P(LongMessage, (PGM_P)F("\":{"));
+  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, toText((int)getState()));
   strcat_P(LongMessage, (PGM_P)F("\",\"DW\":\""));

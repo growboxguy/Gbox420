@@ -11,6 +11,7 @@
 #include "../WirelessCommands_Hempy.h"
 
 ///< forward declaration
+
 class Sound;
 class WeightSensor;
 class WaterPump;
@@ -24,16 +25,16 @@ public:
   ///< @param DefaultSettings A pointer to the default settings stuct loaded from EEPROM. Defined in Settings.h
 
   HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings); ///< constructor
-  Sound *Sound1;                                                                                ///< Pointer to a Piezo speaker - sound feedback
+  Sound *Sound1 = NULL;                                                                                ///< Pointer to a Piezo speaker - sound feedback
   //DHTSensor *DHT1;          ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
-  WeightSensor *WeightB1;
-  WeightSensor *WeightB2;
-  WeightSensor *WeightWR1;
-  WeightSensor *WeightWR2;
-  HempyBucket *Bucket1;
-  HempyBucket *Bucket2;
-  WaterPump *Pump1;
-  WaterPump *Pump2;
+  WeightSensor *WeightB1 = NULL;
+  WeightSensor *WeightB2 = NULL;
+  WeightSensor *WeightWR1 = NULL;
+  WeightSensor *WeightWR2 = NULL;
+  HempyBucket *Bucket1 = NULL;
+  HempyBucket *Bucket2 = NULL;
+  WaterPump *Pump1 = NULL;
+  WaterPump *Pump2 = NULL;
   void report(){};
   void reportToJSON(){};
   void refresh_Sec();

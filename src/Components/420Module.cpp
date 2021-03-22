@@ -1,7 +1,7 @@
 #include "420Module.h"
 #include "Sound.h"
 
-Module::Module()
+Module::Module():Common()
 {
   logToSerials(F("Module object created"), true, 3);
 }

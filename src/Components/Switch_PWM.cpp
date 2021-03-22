@@ -22,10 +22,7 @@ void Switch_PWM::report()
 
 void Switch_PWM::reportToJSON()
 {
-  //Switch::reportToJSON(LongMessage,false); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\""));
-  strcat_P(LongMessage, (PGM_P)Name);
-  strcat_P(LongMessage, (PGM_P)F("\":{"));
+  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\",\"DC\":\""));
   strcat(LongMessage, getDutyCycleText());
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
