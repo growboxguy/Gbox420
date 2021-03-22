@@ -18,7 +18,7 @@ void Common::report()
   logToSerials(F("-"), false, 1); ///< Prints "    COMPONENTNAME -" to the console
 }
 
-void Common::reportToJSON(__attribute__((unused)) bool CloseJSON)
+void Common::reportToJSON()
 {
   strcat_P(LongMessage, (PGM_P)F("\""));
   strcat_P(LongMessage, (PGM_P)Name);
