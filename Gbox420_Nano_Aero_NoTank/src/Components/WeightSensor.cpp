@@ -17,23 +17,6 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
   logToSerials(F("WeightSensor object created"), true, 3);
 }
 
-void WeightSensor::refresh_FiveSec()
-{
-  if (*Debug)
-    Common::refresh_FiveSec();
-  if (TareRequested)
-  {
-    TareRequested = false;
-    tare();
-  }
-  if (CalibrateRequested)
-  {
-    CalibrateRequested = false;
-    calibrate();
-  }
-  readWeight();
-}
-
 void WeightSensor::report(bool JSONReport)
 {
   Common::report(JSONReport);
@@ -52,6 +35,23 @@ void WeightSensor::report(bool JSONReport)
     strcat(LongMessage, getWeightText(true, true));
     logToSerials(&LongMessage, true, 1);
   }
+}
+
+void WeightSensor::refresh_FiveSec()
+{
+  if (*Debug)
+    Common::refresh_FiveSec();
+  if (TareRequested)
+  {
+    TareRequested = false;
+    tare();
+  }
+  if (CalibrateRequested)
+  {
+    CalibrateRequested = false;
+    calibrate();
+  }
+  readWeight();
 }
 
 float WeightSensor::readWeight(bool ReturnAverage)

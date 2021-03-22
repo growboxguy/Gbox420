@@ -9,7 +9,7 @@ Common::Common(const __FlashStringHelper *Name)
 
 Common::Common()
 {
-  logToSerials(F("Initializing without name"), false, 2);
+  //logToSerials(F("Initializing without name"), false, 2);
 }
 
 void Common::report(bool JSONReport)

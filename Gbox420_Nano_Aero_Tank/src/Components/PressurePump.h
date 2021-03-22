@@ -11,7 +11,7 @@ class PressurePump : virtual public Common
 {
 public:
   PressurePump(const __FlashStringHelper *Name, Module *Parent, Settings::PressurePumpSettings *DefaultSettings);
-  void report();
+  void report(bool JSONReport = false);
   void refresh_Sec();
 
   void updateState(PressurePumpStates NewState = (PressurePumpStates)-1);

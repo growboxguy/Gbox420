@@ -13,7 +13,7 @@ public:
   Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::Aeroponics_TankSettings *DefaultSettings, PressurePump *Pump, PressureSensor *FeedbackPressureSensor);
   void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
   void refresh_Sec();
-  void report();  
+  void report(bool JSONReport = false);  
   void updateState(AeroTankStates NewState);
   void sprayNow(bool UserRequest = false);  ///< Start spraying
   void sprayOff(bool UserRequest = false);  ///< Stop spraying

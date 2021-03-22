@@ -13,22 +13,31 @@ PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, 
   logToSerials(F("Pressure Sensor object created"), true, 3);
 }
 
+void PressureSensor::report(bool JSONReport)
+{
+  Common::report(JSONReport);
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    strcat_P(LongMessage, (PGM_P)F("\"P\":\""));
+    strcat(LongMessage, getPressureText(false, true));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("Pressure:"));
+    strcat(LongMessage, getPressureText(false, true));
+    strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
+    strcat(LongMessage, getPressureText(true, true));
+    logToSerials(&LongMessage, true, 1);
+  }
+}
+
 void PressureSensor::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
   readPressure();
-}
-
-void PressureSensor::report()
-{
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("Pressure:"));
-  strcat(LongMessage, getPressureText(false, true));
-  strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
-  strcat(LongMessage, getPressureText(true, true));
-  logToSerials(&LongMessage, true, 1);
 }
 
 float PressureSensor::readPressure(bool ReturnAverage)
