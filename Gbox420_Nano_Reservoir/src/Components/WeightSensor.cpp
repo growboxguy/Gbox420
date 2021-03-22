@@ -34,23 +34,24 @@ void WeightSensor::refresh_FiveSec()
   readWeight();
 }
 
-void WeightSensor::report()
+void WeightSensor::report(bool JSONReport)
 {
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("Weight:"));
-  strcat(LongMessage, getWeightText(false, true));
-  strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
-  strcat(LongMessage, getWeightText(true, true));
-  logToSerials(&LongMessage, true, 1);
-}
-
-void WeightSensor::reportToJSON()
-{
-  //Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"WT\":\""));
-  strcat(LongMessage, getWeightText(false, true));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  Common::report(JSONReport);
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    strcat_P(LongMessage, (PGM_P)F("\"WT\":\""));
+    strcat(LongMessage, getWeightText(false, true));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else                                             //Print a report to the Serial console
+  {                                                ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("Weight:"));
+    strcat(LongMessage, getWeightText(false, true));
+    strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
+    strcat(LongMessage, getWeightText(true, true));
+    logToSerials(&LongMessage, true, 1);
+  }
 }
 
 float WeightSensor::readWeight(bool ReturnAverage)

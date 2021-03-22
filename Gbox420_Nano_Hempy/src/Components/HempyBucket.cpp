@@ -35,45 +35,46 @@ void HempyBucket::refresh_Sec()
   }
 }
 
-void HempyBucket::report()
+void HempyBucket::report(bool JSONReport)
 {
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("State:"));
-  strcat(LongMessage, toText_hempyState(State));
-  strcat_P(LongMessage, (PGM_P)F(" ; DryWeight:"));
-  strcat(LongMessage, toText_weight(DryWeight));
-  strcat_P(LongMessage, (PGM_P)F(" ; WetWeight:"));
-  strcat(LongMessage, toText_weight(WetWeight));
-  strcat_P(LongMessage, (PGM_P)F(" ; Evaporation:"));
-  strcat(LongMessage, toText_weight(*EvaporationTarget));
-  strcat_P(LongMessage, (PGM_P)F(" ; OverFlow:"));
-  strcat(LongMessage, toText_weight(*OverflowTarget));
-  strcat_P(LongMessage, (PGM_P)F(" ; WasteLimit:"));
-  strcat(LongMessage, toText_weight(*WasteLimit));
-  strcat_P(LongMessage, (PGM_P)F(" ; DrainTimeOut:"));
-  strcat(LongMessage, toText_second(*DrainWaitTime));
-  logToSerials(&LongMessage, true, 1);
-}
-
-void HempyBucket::reportToJSON()
-{
-  //Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-  strcat(LongMessage, toText((int)getState()));
-  strcat_P(LongMessage, (PGM_P)F("\",\"DW\":\""));
-  strcat(LongMessage, toText_weight(DryWeight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WW\":\""));
-  strcat(LongMessage, toText_weight(WetWeight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"ET\":\""));
-  strcat(LongMessage, toText_weight(*EvaporationTarget));
-  strcat_P(LongMessage, (PGM_P)F("\",\"OF\":\""));
-  strcat(LongMessage, toText_weight(*OverflowTarget));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WL\":\""));
-  strcat(LongMessage, toText_weight(*WasteLimit));
-  strcat_P(LongMessage, (PGM_P)F("\",\"DT\":\""));
-  strcat(LongMessage, toText_second(*DrainWaitTime));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  Common::report(JSONReport);
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  { ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+    strcat(LongMessage, toText((int)getState()));
+    strcat_P(LongMessage, (PGM_P)F("\",\"DW\":\""));
+    strcat(LongMessage, toText_weight(DryWeight));
+    strcat_P(LongMessage, (PGM_P)F("\",\"WW\":\""));
+    strcat(LongMessage, toText_weight(WetWeight));
+    strcat_P(LongMessage, (PGM_P)F("\",\"ET\":\""));
+    strcat(LongMessage, toText_weight(*EvaporationTarget));
+    strcat_P(LongMessage, (PGM_P)F("\",\"OF\":\""));
+    strcat(LongMessage, toText_weight(*OverflowTarget));
+    strcat_P(LongMessage, (PGM_P)F("\",\"WL\":\""));
+    strcat(LongMessage, toText_weight(*WasteLimit));
+    strcat_P(LongMessage, (PGM_P)F("\",\"DT\":\""));
+    strcat(LongMessage, toText_second(*DrainWaitTime));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("State:"));
+    strcat(LongMessage, toText_hempyState(State));
+    strcat_P(LongMessage, (PGM_P)F(" ; DryWeight:"));
+    strcat(LongMessage, toText_weight(DryWeight));
+    strcat_P(LongMessage, (PGM_P)F(" ; WetWeight:"));
+    strcat(LongMessage, toText_weight(WetWeight));
+    strcat_P(LongMessage, (PGM_P)F(" ; Evaporation:"));
+    strcat(LongMessage, toText_weight(*EvaporationTarget));
+    strcat_P(LongMessage, (PGM_P)F(" ; OverFlow:"));
+    strcat(LongMessage, toText_weight(*OverflowTarget));
+    strcat_P(LongMessage, (PGM_P)F(" ; WasteLimit:"));
+    strcat(LongMessage, toText_weight(*WasteLimit));
+    strcat_P(LongMessage, (PGM_P)F(" ; DrainTimeOut:"));
+    strcat(LongMessage, toText_second(*DrainWaitTime));
+    logToSerials(&LongMessage, true, 1);
+  }
 }
 
 void HempyBucket::updateState(HempyStates NewState)

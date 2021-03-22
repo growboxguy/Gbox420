@@ -11,21 +11,22 @@ Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t *Du
   logToSerials(F("Switch_PWM object created"), true, 3);
 }
 
-void Switch_PWM::report()
+void Switch_PWM::report(bool JSONReport)
 {
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("DutyCycle:"));
-  strcat(LongMessage, getDutyCycleText()); 
-  logToSerials(&LongMessage, true, 1);
-}
-
-void Switch_PWM::reportToJSON()
-{
-  //Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\",\"DC\":\""));
-  strcat(LongMessage, getDutyCycleText());
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  Common::report(JSONReport);
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  { ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\",\"DC\":\""));
+    strcat(LongMessage, getDutyCycleText());
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("DutyCycle:"));
+    strcat(LongMessage, getDutyCycleText());
+    logToSerials(&LongMessage, true, 1);
+  }
 }
 
 void Switch_PWM::setDutyCycle(uint8_t DutyCycle)

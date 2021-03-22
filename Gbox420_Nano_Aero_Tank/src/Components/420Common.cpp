@@ -12,20 +12,20 @@ Common::Common()
   logToSerials(F("Initializing without name"), false, 2);
 }
 
-void Common::report()
+void Common::report(bool JSONReport)
 {
-  logToSerials(Name, false, 4);
-  logToSerials(F("-"), false, 1); ///< Prints "    COMPONENTNAME -" to the console
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    strcat_P(LongMessage, (PGM_P)F("\""));
+    strcat_P(LongMessage, (PGM_P)Name);
+    strcat_P(LongMessage, (PGM_P)F("\":{"));
+  }
+  else //Print a report to the Serial console
+  {
+    logToSerials(Name, false, 4);
+    logToSerials(F("-"), false, 1); ///< Prints "    COMPONENTNAME -" to the console
+  }
 }
-
-/*
-void Common::reportToJSON()
-{  
-  strcat_P(LongMessage, (PGM_P)F("\""));
-  strcat_P(LongMessage, (PGM_P)Name);
-  strcat_P(LongMessage, (PGM_P)F("\":{"));
-}
-*/
 
 void Common::refresh_Sec()
 {

@@ -20,8 +20,7 @@ public:
   HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WeightSensor *WasteReservoirWeightSensor, WaterPump *BucketPump);
   void refresh_Sec();
   void refresh_FiveSec();
-  void report();
-  void reportToJSON();
+  void report(bool JSONReport = false);
   void updateState(HempyStates NewState);
   HempyStates getState();
   void disable();

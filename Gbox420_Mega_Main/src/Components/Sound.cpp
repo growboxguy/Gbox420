@@ -11,21 +11,22 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   checkEvents();
 }
 
-void Sound::report()
+void Sound::report(bool JSONReport)
 {
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("State:"));
-  strcat(LongMessage, getEnabledStateText()); 
-  logToSerials(&LongMessage, true, 1);
-}
-
-void Sound::reportToJSON()
-{
-  //Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
-  strcat(LongMessage, toText(*Enabled));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  Common::report(JSONReport);
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  { ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
+    strcat(LongMessage, toText(*Enabled));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("State:"));
+    strcat(LongMessage, getEnabledStateText());
+    logToSerials(&LongMessage, true, 1);
+  }
 }
 
 void Sound::refresh_Sec()
@@ -106,7 +107,7 @@ bool Sound::getEnabledState()
   return *Enabled;
 }
 
-char* Sound::getEnabledStateText()
+char *Sound::getEnabledStateText()
 {
   return toText_enabledDisabled(*Enabled);
 }

@@ -21,25 +21,27 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
   logToSerials(F("WaterPump object created"), true, 3);
 }
 
-void WaterPump::report()
+void WaterPump::report(bool JSONReport)
 {
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("State:"));
-  strcat(LongMessage, getStateText());
-  strcat_P(LongMessage, (PGM_P)F(" ; TimeOut:"));
-  strcat(LongMessage, toText_second(*PumpTimeOut));
-  logToSerials(&LongMessage, true, 1);
-}
-
-void WaterPump::reportToJSON()
-{
-  //Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-  strcat(LongMessage, getStateText());
-  strcat_P(LongMessage, (PGM_P)F("\",\"TO\":\""));
-  strcat(LongMessage, toText_second(*PumpTimeOut));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  Common::report(JSONReport);
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+     ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+    strcat(LongMessage, getStateText());
+    strcat_P(LongMessage, (PGM_P)F("\",\"TO\":\""));
+    strcat(LongMessage, toText_second(*PumpTimeOut));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("State:"));
+    strcat(LongMessage, getStateText());
+    strcat_P(LongMessage, (PGM_P)F(" ; TimeOut:"));
+    strcat(LongMessage, toText_second(*PumpTimeOut));
+    logToSerials(&LongMessage, true, 1);
+  }
 }
 
 void WaterPump::refresh_Sec()
