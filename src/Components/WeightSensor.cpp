@@ -47,7 +47,7 @@ void WeightSensor::report()
 
 void WeightSensor::reportToJSON()
 {
-  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  //Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\"WT\":\""));
   strcat(LongMessage, getWeightText(false, true));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket

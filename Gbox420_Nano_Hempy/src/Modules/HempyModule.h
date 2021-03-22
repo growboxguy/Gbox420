@@ -18,7 +18,7 @@ class WaterPump;
 class HempyBucket;
 extern RF24 Wireless;
 
-class HempyModule : virtual public Common, virtual public Module
+class HempyModule : virtual public Module
 {
 public:
   ///< @param Name Pointer to the Name of the object, stored in Flash

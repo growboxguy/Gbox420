@@ -18,12 +18,14 @@ void Common::report()
   logToSerials(F("-"), false, 1); ///< Prints "    COMPONENTNAME -" to the console
 }
 
+/*
 void Common::reportToJSON()
-{
+{  
   strcat_P(LongMessage, (PGM_P)F("\""));
   strcat_P(LongMessage, (PGM_P)Name);
   strcat_P(LongMessage, (PGM_P)F("\":{"));
 }
+*/
 
 void Common::refresh_Sec()
 {
