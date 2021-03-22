@@ -518,7 +518,7 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
   {
     addPushingBoxLogRelayID();                //Loads Pushingbox relay ID into LongMessage
     getJSONReport(true);   //Adds the JSON report to LongMessage 
-    relayToGoogleSheets(LongMessage); //Sends it to Google Sheets
+    relayToGoogleSheets(&LongMessage); //Sends it to Google Sheets
   }
 }
 ///< This is how a sent out message looks like:
@@ -579,9 +579,9 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
   if ((*ReportToMQTT && MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0) || ForceRun)
   {
     getJSONReport(false);
-    mqttPublish(LongMessage);        // Load the JSON report to LongMessage and publish readings via ESP MQTT API
+    mqttPublish(&LongMessage);        // Load the JSON report to LongMessage and publish readings via ESP MQTT API
     eventLogToJSON(false, true);
-    mqttPublish(LongMessage); //Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
+    mqttPublish(&LongMessage); //Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
   }
 }
 ///< This is how a sent out message looks like:

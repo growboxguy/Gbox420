@@ -176,7 +176,7 @@ void Module_Web::addPushingBoxLogRelayID()
 /**
 * @brief Send a JSON formatted report to Google Sheets
 */
-void Module_Web::relayToGoogleSheets(char *JSONData)
+void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
   if (*Debug)
   { ///< print the report command to console
@@ -189,7 +189,7 @@ void Module_Web::relayToGoogleSheets(char *JSONData)
 /**
 * @brief Publish an MQTT message containing a JSON formatted report
 */
-void Module_Web::mqttPublish(char *JSONData)
+void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
   memset(&ShortMessage[0], 0, MaxShotTextLength); ///< clear variable
   strcat(ShortMessage, ModuleSettings->MqttPubTopic);
@@ -199,5 +199,5 @@ void Module_Web::mqttPublish(char *JSONData)
     logToSerials(&ShortMessage, false, 1);
     logToSerials(JSONData, true, 0);
   }
-  MqttAPI.publish(ShortMessage, JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
+  MqttAPI.publish(ShortMessage, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
 }
