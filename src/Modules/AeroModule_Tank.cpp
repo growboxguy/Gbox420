@@ -32,7 +32,7 @@ AeroModule::AeroModule(const __FlashStringHelper *Name) : Common(Name), Module()
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
   logToSerials(Name, false, 0);
-  logToSerials(F("- AeroModule object created, refreshing"), true, 1);
+  logToSerials(F("- AeroModule created, refreshing"), true, 1);
   runAll();
   addToLog(F("AeroModule initialized"), 0);
 }
@@ -184,7 +184,7 @@ void AeroModule::updateAckData()
 { // so you can see that new data is being sent
   if (*Debug)
   {
-    logToSerials(F("Updating Ack to:"), false, 2);
+    logToSerials(F("Ack:"), false, 2);
     logToSerials(toText_aeroSequenceID(NextSequenceID), true, 1);
   }
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)

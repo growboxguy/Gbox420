@@ -3,21 +3,16 @@
 
 Module::Module():Common()
 {
-  logToSerials(F("Module object created"), true, 3);
 }
 
 /* Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
 { ///< Constructor
   this -> SoundFeedback = SoundFeedback;
-  logToSerials(F("Module object created"), true, 3);
+  logToSerials(F("Module created"), true, 3);
 } */
 
-void Module::runAll(bool AddToLog)
-{
-  if (AddToLog)
-  {
-    logToSerials(F("Refresing readings"), true, 0);
-  }
+void Module::runAll()
+{  
   wdt_reset();
   runSec();
   wdt_reset();
@@ -44,22 +39,18 @@ void Module::runReport(bool AddToLog)
 
 ///< Refresh queues: Refresh components inside the Module
 
-void Module::runSec(bool AddToLog)
+void Module::runSec()
 {
   if (RunAllRequested)
   {
-    RunAllRequested = false;
-    if (AddToLog)
-    {
-      logToSerials(F("Full refresh:"), true, 1);
-    }
-    runAll(AddToLog);
+    RunAllRequested = false;   
+    runAll();
   }
   else
   {
-    if (*Debug && AddToLog)
+    if (*Debug)
     {
-      logToSerials(F("One sec trigger"), true, 1);
+      logToSerials(F("1sec trigger"), true, 1);
     }
     for (int i = 0; i < refreshQueueItemCount_Sec; i++)
     {
@@ -68,20 +59,20 @@ void Module::runSec(bool AddToLog)
   }
 }
 
-void Module::runFiveSec(bool AddToLog)
+void Module::runFiveSec()
 {
-  if (*Debug && AddToLog)
-    logToSerials(F("Five sec trigger"), true, 1);
+  if (*Debug)
+    logToSerials(F("5sec trigger"), true, 1);
   for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
   {
     RefreshQueue_FiveSec[i]->refresh_FiveSec();
   }
 }
 
-void Module::runMinute(bool AddToLog)
+void Module::runMinute()
 {
-  if (*Debug && AddToLog)
-    logToSerials(F("Minute trigger"), true, 1);
+  if (*Debug)
+    logToSerials(F("Min trigger"), true, 1);
   for (int i = 0; i < refreshQueueItemCount_Minute; i++)
   {
     RefreshQueue_Minute[i]->refresh_Minute();
@@ -100,7 +91,7 @@ void Module::addToReportQueue(Common *Component)
   if (QueueDepth > reportQueueItemCount)
     ReportQueue[reportQueueItemCount++] = Component;
   else
-    logToSerials(F("Report queue overflow"), true, 0); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
+    logToSerials(F("Overflow"), true, 0); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
 void Module::addToRefreshQueue_Sec(Common *Component)
@@ -108,7 +99,7 @@ void Module::addToRefreshQueue_Sec(Common *Component)
   if (QueueDepth > refreshQueueItemCount_Sec)
     RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
   else
-    logToSerials(F("RefreshQueue_Sec overflow"), true, 0);
+    logToSerials(F("Overflow"), true, 0);
 }
 
 void Module::addToRefreshQueue_FiveSec(Common *Component)
@@ -116,7 +107,7 @@ void Module::addToRefreshQueue_FiveSec(Common *Component)
   if (QueueDepth > refreshQueueItemCount_FiveSec)
     RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
   else
-    logToSerials(F("RefreshQueue_FiveSec overflow!"), true, 0);
+    logToSerials(F("Overflow"), true, 0);
 }
 
 void Module::addToRefreshQueue_Minute(Common *Component)
@@ -124,7 +115,7 @@ void Module::addToRefreshQueue_Minute(Common *Component)
   if (QueueDepth > refreshQueueItemCount_Minute)
     RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
   else
-    logToSerials(F("RefreshQueue_Minute overflow!"), true, 0);
+    logToSerials(F("Overflow"), true, 0);
 }
 
 ///< Even logs to the Serial output
@@ -161,12 +152,12 @@ void Module::setDebug(bool DebugEnabled)
     *Debug = DebugEnabled;
     if (*Debug)
     {
-      addToLog(F("Debug enabled"));
+      addToLog(F("Debug ON"));
       getSoundObject()->playOnSound();
     }
     else
     {
-      addToLog(F("Debug disabled"));
+      addToLog(F("Debug OFF"));
       getSoundObject()->playOffSound();
     }
   }
@@ -179,9 +170,9 @@ void Module::setMetric(bool MetricEnabled)
     *Metric = MetricEnabled;
     RunAllRequested = true; ///< Force a full sensor reading refresh
     if (*Metric)
-      addToLog(F("Metric units"));
+      addToLog(F("Metric"));
     else
-      addToLog(F("Imperial units"));
+      addToLog(F("Imperial"));
     getSoundObject()->playOnSound();
   }
 }

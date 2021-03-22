@@ -19,7 +19,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   SpraySwitch = new Switch(F("SpraySolenoid"), DefaultSettings->SpraySolenoidPin, DefaultSettings->SpraySolenoidNegativeLogic);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
-  logToSerials(F("Aeroponics_Tank object created"), true, 3);
+  logToSerials(F("Aeroponics_Tank created"), true, 3);
   if (*SprayEnabled)
   {
     State = AeroTankStates::IDLE;
@@ -37,7 +37,7 @@ void Aeroponics_Tank::report(bool JSONReport)
   if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   { 
     //Not implemented, handled by AeroModule_Web in mainmodule;
-    
+
     /*
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
     strcat(LongMessage, toText((int)State));
@@ -139,7 +139,6 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
     }
     if (Pump->getState() == PressurePumpStates::IDLE && FeedbackPressureSensor->getPressure() <= *MinPressure)
     { ///< Refill tank: When the pump is idle AND the pressure is below the minimum
-      logToSerials(F("Tank recharging"), false, 3);
       updateState(AeroTankStates::REFILL);
       BlockOverWritingState = true;
     }
@@ -189,7 +188,6 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
     }
     if (FeedbackPressureSensor->readPressure(false) >= *MaxPressure)
     { ///< refill complete, target pressure reached
-      logToSerials(F("Tank recharged"), true, 3);
       updateState(AeroTankStates::RELEASE);
       BlockOverWritingState = true;
     }
@@ -211,7 +209,6 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
       if (Pump->getState() == PressurePumpStates::BYPASSOPEN)
         Pump->turnBypassOff();
       SpraySwitch->turnOff();
-      logToSerials(F("Tank drained"), true, 3);
       if (*SprayEnabled)
       {
         updateState(AeroTankStates::IDLE); /// If spray cycle was enabled before draining: Return to IDLE (will trigger a refill)

@@ -96,19 +96,15 @@ bool Common::isThisMyComponent(char const *lookupName)
         break; ///< if we have reached the string termination sign. ( null terminator is the numerical value 0, sometimes also marked as '\0')
       if (SafetyCount++ > MaxWordLength)
       {
-        logToSerials(F("Name too long:"), false, 3);
+        logToSerials(F("Too long:"), false, 3);
         logToSerials(lookupName, true, 1);
         return false;
       }
     }
-    ///< Serial.println("Match");
-    logToSerials(F("Function:"), false, 1);
-    logToSerials(&ShortMessage, true, 1);
     return true;
   }
   else
   {
-    ///< Serial.println("Not match");
     return false;
   }
 }

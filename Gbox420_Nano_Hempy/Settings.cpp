@@ -42,7 +42,6 @@ Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments
 */
 void restoreDefaults()
 {
-  logToSerials(F("Restoring settings"), true, 0);
   loadSettings(true);
   __asm__ __volatile__("jmp 0x0000");  //Restart sketch
 }

@@ -8,7 +8,7 @@ Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t *Du
   this->DutyCycleLowLimit = DutyCycleLowLimit;
   pinMode(Pin, OUTPUT);
   turnOff(); ///< initialize in OFF state
-  logToSerials(F("Switch_PWM object created"), true, 3);
+  logToSerials(F("Switch_PWM created"), true, 3);
 }
 
 void Switch_PWM::report(bool JSONReport)
@@ -34,9 +34,6 @@ void Switch_PWM::setDutyCycle(uint8_t DutyCycle)
   if (*this->DutyCycle != DutyCycle)
   {
     *this->DutyCycle = DutyCycle;
-    appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("duty cycle updated"));
-    logToSerials(&ShortMessage);
   }
 }
 

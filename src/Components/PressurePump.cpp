@@ -25,7 +25,7 @@ PressurePump::PressurePump(const __FlashStringHelper *Name, Module *Parent, Sett
   }
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
-  logToSerials(F("PressurePump object created"), true, 3);
+  logToSerials(F("PressurePump created"), true, 3);
 }
 
 void PressurePump::report(bool JSONReport)
@@ -285,10 +285,7 @@ void PressurePump::setPumpTimeOut(int TimeOut)
 {
   if (*this->PumpTimeOut != TimeOut && TimeOut > 0)
   {
-    *this->PumpTimeOut = TimeOut;
-    appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("timeout updated"));
-    logToSerials(&ShortMessage, true, 1);
+    *this->PumpTimeOut = TimeOut;   
     Parent->getSoundObject()->playOnSound();
   }
 }
@@ -302,10 +299,7 @@ void PressurePump::setPrimingTime(int Timing)
 {
   if (*PrimingTime != Timing && Timing > 0)
   {
-    *PrimingTime = Timing;
-    appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("priming time updated"));
-    Parent->addToLog(ShortMessage);
+    *PrimingTime = Timing;    
     Parent->getSoundObject()->playOnSound();
   }
 }

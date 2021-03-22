@@ -6,7 +6,7 @@ Switch::Switch(const __FlashStringHelper *Name, uint8_t Pin, bool NegativeLogic)
   this->NegativeLogic = NegativeLogic;
   pinMode(Pin, OUTPUT);
   turnOff(); ///< initialize in OFF state
-  logToSerials(F("Switch object created"), true, 3);
+  logToSerials(F("Switch created"), true, 3);
 }
 
 void Switch::report(bool JSONReport)

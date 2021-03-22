@@ -32,7 +32,7 @@ public:
   void setMinPressure(float Pressure);
   void setMaxPressure(float Pressure);
   PressurePump *Pump;
-  PressureSensor *FeedbackPressureSensor; ///< Pressure sensor object that will monitor the spray pressure
+  PressureSensor *FeedbackPressureSensor; ///< Pressure sensor that will monitor the spray pressure
 
 private:
 protected:
