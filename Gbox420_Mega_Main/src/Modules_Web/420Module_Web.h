@@ -35,8 +35,8 @@ public:
   void commandEventTrigger(char *command, char *data);
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);
-  char *eventLogToJSON(bool Append = false, bool Encapsulate = false); ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
-  char *getJSONReport(bool Append = true);
+  char * eventLogToJSON(bool Append = false, bool Encapsulate = false); ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"] and loads it to LongMessage buffer
+  void getJSONReport(bool Append = true); //Creates a JSON report of all component statuses and loads it to LongMessage buffer
   void addPushingBoxLogRelayID();
   void relayToGoogleSheets(char *JSONData);
   void mqttPublish(char *JSONData);

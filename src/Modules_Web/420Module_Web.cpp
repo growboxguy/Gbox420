@@ -144,7 +144,7 @@ char *Module_Web::eventLogToJSON(bool Append, bool Encapsulate)
 /**
 * @brief Iterate through all object subscribed to the Report queue and complie a JSON report of their statuses
 */
-char *Module_Web::getJSONReport(bool Append)
+void Module_Web::getJSONReport(bool Append)
 {
   if (!Append)
   {
@@ -158,7 +158,6 @@ char *Module_Web::getJSONReport(bool Append)
       strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
   }
   strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
-  return LongMessage;
 }
 
 ///< Google Sheets functions - https://sites.google.com/site/growboxguy/esp-link/logging
