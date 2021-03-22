@@ -10,8 +10,7 @@ class Fan : virtual public Common
 public:
   Fan(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings *DefaultSettings);
   void refresh_Minute();
-  void report();
-  void reportToJSON();
+  void report(bool JSONReport = false);
   char *fanSpeedToText();
   char *fanSpeedToNumber();
   void TurnOff();

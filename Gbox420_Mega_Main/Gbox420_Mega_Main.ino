@@ -223,7 +223,6 @@ void mqttConnected(void *response)
   //if(*Debug) logToSerials(F("MQTT connected"), true);
 }
 
-/*
 void mqttDisconnected(void *response)
 {
   //if(*Debug) logToSerials(F("MQTT disconnected"), true);
@@ -326,7 +325,7 @@ void buttonCallback(char *Button)
   }
   else
   {
-    Main1->commandEventTrigger(Button, "");
+    Main1->commandEventTrigger(Button, NULL);
   }
   saveSettings(ModuleSettings);
 }

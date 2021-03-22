@@ -153,7 +153,7 @@ void Module_Web::getJSONReport(bool Append)
   strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds two curly brackets that needs to be closed at the end
   for (int i = 0; i < reportQueueItemCount;)
   {
-    ReportQueue[i++]->reportToJSON();
+    ReportQueue[i++]->report(true);
     if (i != reportQueueItemCount)
       strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
   }

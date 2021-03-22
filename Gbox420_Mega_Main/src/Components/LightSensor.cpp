@@ -28,25 +28,28 @@ void LightSensor::refresh_FiveSec()
   LightReading = (1023 - analogRead(*AnalogPin));
 }
 
-void LightSensor::report()
+void LightSensor::report(bool JSONReport)
 {
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  //strcat_P(LongMessage, (PGM_P)F("Dark:"));
-  // strcat(LongMessage, getDarkText(true));
-  strcat_P(LongMessage, (PGM_P)F("LightReading:"));
-  strcat(LongMessage, getReadingText(true));
-  logToSerials(&LongMessage, true, 1);
-}
 
-void LightSensor::reportToJSON()
-{
-  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"R\":\""));
-  strcat(LongMessage, getReadingText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
-  strcat(LongMessage, getDarkText(false));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"R\":\""));
+    strcat(LongMessage, getReadingText(false));
+    strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
+    strcat(LongMessage, getDarkText(false));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    Common::report();
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    //strcat_P(LongMessage, (PGM_P)F("Dark:"));
+    // strcat(LongMessage, getDarkText(true));
+    strcat_P(LongMessage, (PGM_P)F("LightReading:"));
+    strcat(LongMessage, getReadingText(true));
+    logToSerials(&LongMessage, true, 1);
+  }
 }
 
 void LightSensor::triggerCalibration()
@@ -87,7 +90,7 @@ void LightSensor::calibrate(bool AddToLog)
 }
 
 void LightSensor::getCalibrationReadings()
-{                                                  ///< Returns a pointer to a char array
+{                                                ///< Returns a pointer to a char array
   memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat_P(LongMessage, (PGM_P)F("{\"Readings\":["));
   for (uint8_t ReadingCounter = 0; ReadingCounter < ReadingArrayDepth; ReadingCounter++)

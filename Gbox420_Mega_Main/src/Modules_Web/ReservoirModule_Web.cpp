@@ -26,43 +26,45 @@ ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module
 /**
 * @brief Report the current state to the serial console
 */
-void ReservoirModule_Web::report()
+void ReservoirModule_Web::report(bool JSONReport)
 {
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("PH:"));
-  strcat(LongMessage, toText(ReservoirResponse1Received.PH));
-  strcat_P(LongMessage, (PGM_P)F(" ; TDS:"));
-  strcat(LongMessage, toText(ReservoirResponse1Received.TDS));
-  strcat_P(LongMessage, (PGM_P)F(" ; Weight:"));
-  strcat(LongMessage, toText_weight(ReservoirResponse1Received.Weight));
-  strcat_P(LongMessage, (PGM_P)F(" ; Water temp:"));
-  strcat(LongMessage, toText_temp(ReservoirResponse1Received.WaterTemperature));
-  strcat_P(LongMessage, (PGM_P)F(" ; Air temp:"));
-  strcat(LongMessage, toText_temp(ReservoirResponse1Received.AirTemperature));
-  strcat_P(LongMessage, (PGM_P)F(" ; Humidity:"));
-  strcat(LongMessage, toText_percentage(ReservoirResponse1Received.Humidity));
-  logToSerials(&LongMessage, true, 1);
-}
-
-void ReservoirModule_Web::reportToJSON()
-{
-  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-  strcat(LongMessage, toText(OnlineStatus));
-  strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
-  strcat(LongMessage, toText(ReservoirResponse1Received.PH));
-  strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
-  strcat(LongMessage, toText(ReservoirResponse1Received.TDS));
-  strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
-  strcat(LongMessage, toText(ReservoirResponse1Received.Weight));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WT\":\""));
-  strcat(LongMessage, toText(ReservoirResponse1Received.WaterTemperature));
-  strcat_P(LongMessage, (PGM_P)F("\",\"AT\":\""));
-  strcat(LongMessage, toText(ReservoirResponse1Received.AirTemperature));
-  strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
-  strcat(LongMessage, toText(ReservoirResponse1Received.Humidity));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+    strcat(LongMessage, toText(OnlineStatus));
+    strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
+    strcat(LongMessage, toText(ReservoirResponse1Received.PH));
+    strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
+    strcat(LongMessage, toText(ReservoirResponse1Received.TDS));
+    strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
+    strcat(LongMessage, toText(ReservoirResponse1Received.Weight));
+    strcat_P(LongMessage, (PGM_P)F("\",\"WT\":\""));
+    strcat(LongMessage, toText(ReservoirResponse1Received.WaterTemperature));
+    strcat_P(LongMessage, (PGM_P)F("\",\"AT\":\""));
+    strcat(LongMessage, toText(ReservoirResponse1Received.AirTemperature));
+    strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
+    strcat(LongMessage, toText(ReservoirResponse1Received.Humidity));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    Common::report();
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("PH:"));
+    strcat(LongMessage, toText(ReservoirResponse1Received.PH));
+    strcat_P(LongMessage, (PGM_P)F(" ; TDS:"));
+    strcat(LongMessage, toText(ReservoirResponse1Received.TDS));
+    strcat_P(LongMessage, (PGM_P)F(" ; Weight:"));
+    strcat(LongMessage, toText_weight(ReservoirResponse1Received.Weight));
+    strcat_P(LongMessage, (PGM_P)F(" ; Water temp:"));
+    strcat(LongMessage, toText_temp(ReservoirResponse1Received.WaterTemperature));
+    strcat_P(LongMessage, (PGM_P)F(" ; Air temp:"));
+    strcat(LongMessage, toText_temp(ReservoirResponse1Received.AirTemperature));
+    strcat_P(LongMessage, (PGM_P)F(" ; Humidity:"));
+    strcat(LongMessage, toText_percentage(ReservoirResponse1Received.Humidity));
+    logToSerials(&LongMessage, true, 1);
+  }
 }
 
 void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.

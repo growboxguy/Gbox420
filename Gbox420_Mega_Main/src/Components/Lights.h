@@ -19,8 +19,7 @@ public:
   Lights(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings); ///< constructor
   void refresh_Sec();
   void refresh_Minute();
-  void report();
-  void reportToJSON();
+  void report(bool JSONReport = false);
   void setBrightness(uint8_t Brightness, bool AddToLog, bool StoreSetting);
   void setLightOnOff(bool State, bool AddToLog);
   void setTimerOnOff(bool State);

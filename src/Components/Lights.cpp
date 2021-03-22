@@ -53,43 +53,45 @@ void Lights::refresh_Minute()
   checkRelay();
 }
 
-void Lights::report()
+void Lights::report(bool JSONReport)
 {
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("State:"));
-  strcat(LongMessage, getStateText());
-  strcat_P(LongMessage, (PGM_P)F(" ; Brightness:"));
-  strcat(LongMessage, toText_percentage(*Brightness));
-  if (*Debug || CurrentStatus == LightStates::FADEIN || CurrentStatus == LightStates::FADEOUT)
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
-    strcat_P(LongMessage, (PGM_P)F(" ("));
-    strcat(LongMessage, toText_percentage(CurrentBrightness));
-    strcat_P(LongMessage, (PGM_P)F(")"));
+    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+    strcat(LongMessage, getStatusText(false));
+    strcat_P(LongMessage, (PGM_P)F("\",\"CB\":\""));
+    strcat(LongMessage, getCurrentBrightnessText(false));
+    strcat_P(LongMessage, (PGM_P)F("\",\"B\":\""));
+    strcat(LongMessage, getBrightnessText(false));
+    strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
+    strcat(LongMessage, getTimerOnOffText(false));
+    strcat_P(LongMessage, (PGM_P)F("\",\"On\":\""));
+    strcat(LongMessage, getOnTimeText());
+    strcat_P(LongMessage, (PGM_P)F("\",\"Of\":\""));
+    strcat(LongMessage, getOffTimeText());
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
   }
-  strcat_P(LongMessage, (PGM_P)F(" ; LightON:"));
-  strcat(LongMessage, getOnTimeText());
-  strcat_P(LongMessage, (PGM_P)F(" ; LightOFF:"));
-  strcat(LongMessage, getOffTimeText());
-  logToSerials(&LongMessage, true, 1);
-}
-
-void Lights::reportToJSON()
-{
-  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-  strcat(LongMessage, getStatusText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"CB\":\""));
-  strcat(LongMessage, getCurrentBrightnessText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"B\":\""));
-  strcat(LongMessage, getBrightnessText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
-  strcat(LongMessage, getTimerOnOffText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"On\":\""));
-  strcat(LongMessage, getOnTimeText());
-  strcat_P(LongMessage, (PGM_P)F("\",\"Of\":\""));
-  strcat(LongMessage, getOffTimeText());
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  else //Print a report to the Serial console
+  {
+    Common::report();
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("State:"));
+    strcat(LongMessage, getStateText());
+    strcat_P(LongMessage, (PGM_P)F(" ; Brightness:"));
+    strcat(LongMessage, toText_percentage(*Brightness));
+    if (*Debug || CurrentStatus == LightStates::FADEIN || CurrentStatus == LightStates::FADEOUT)
+    {
+      strcat_P(LongMessage, (PGM_P)F(" ("));
+      strcat(LongMessage, toText_percentage(CurrentBrightness));
+      strcat_P(LongMessage, (PGM_P)F(")"));
+    }
+    strcat_P(LongMessage, (PGM_P)F(" ; LightON:"));
+    strcat(LongMessage, getOnTimeText());
+    strcat_P(LongMessage, (PGM_P)F(" ; LightOFF:"));
+    strcat(LongMessage, getOffTimeText());
+    logToSerials(&LongMessage, true, 1);
+  }
 }
 
 void Lights::checkRelay()

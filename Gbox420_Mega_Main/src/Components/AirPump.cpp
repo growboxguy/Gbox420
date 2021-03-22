@@ -15,21 +15,23 @@ AirPump::AirPump(const __FlashStringHelper *Name, Module *Parent, Settings::AirP
   logToSerials(F("AirPump object created"), true, 3);
 }
 
-void AirPump::report()
+void AirPump::report(bool JSONReport)
 {
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("Status:"));
-  strcat(LongMessage, getStateToText());
-  logToSerials(&LongMessage, true, 1);
-}
-
-void AirPump::reportToJSON()
-{
-  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-  strcat(LongMessage, toText(getState()));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+    strcat(LongMessage, toText(getState()));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    Common::report();
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("Status:"));
+    strcat(LongMessage, getStateToText());
+    logToSerials(&LongMessage, true, 1);
+  }
 }
 
 void AirPump::refresh_Minute()

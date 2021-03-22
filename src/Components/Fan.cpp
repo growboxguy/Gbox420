@@ -26,21 +26,23 @@ void Fan::refresh_Minute()
   checkFanStatus();
 }
 
-void Fan::report()
+void Fan::report(bool JSONReport)
 {
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("Status:"));
-  strcat(LongMessage, fanSpeedToText());
-  logToSerials(&LongMessage, true, 1);
-}
-
-void Fan::reportToJSON()
-{
-  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-  strcat(LongMessage, fanSpeedToNumber());
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+    strcat(LongMessage, fanSpeedToNumber());
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    Common::report();
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("Status:"));
+    strcat(LongMessage, fanSpeedToText());
+    logToSerials(&LongMessage, true, 1);
+  }
 }
 
 void Fan::checkFanStatus()

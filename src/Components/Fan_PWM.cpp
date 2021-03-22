@@ -20,28 +20,30 @@ Fan_PWM::Fan_PWM(const __FlashStringHelper *Name, Module *Parent, Settings::Fan_
   logToSerials(F("Fan_PWM object created"), true, 3);
 }
 
+void Fan_PWM::report(bool JSONReport)
+{
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+    strcat(LongMessage, toText(getSpeed()));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    Common::report();
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("State:"));
+    strcat(LongMessage, getSpeedText(true));
+    logToSerials(&LongMessage, true, 1);
+  }
+}
+
 void Fan_PWM::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();
   checkState();
-}
-
-void Fan_PWM::report()
-{
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("State:"));
-  strcat(LongMessage, getSpeedText(true));
-  logToSerials(&LongMessage, true, 1);
-}
-
-void Fan_PWM::reportToJSON()
-{
-  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-  strcat(LongMessage, toText(getSpeed()));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
 void Fan_PWM::checkState()
@@ -79,7 +81,7 @@ void Fan_PWM::turnOff()
 void Fan_PWM::setSpeed(uint8_t NewSpeed)
 {
   *Speed = NewSpeed;
-  PWMDimmer->setPower(map(NewSpeed,*MinSpeed,100,0,100));
+  PWMDimmer->setPower(map(NewSpeed, *MinSpeed, 100, 0, 100));
   appendName(true);
   strcat_P(ShortMessage, (PGM_P)F("speed updated"));
   Parent->addToLog(ShortMessage);

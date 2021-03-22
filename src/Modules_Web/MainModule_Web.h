@@ -47,12 +47,11 @@ public:
   void websiteEvent_Load(char *url);
   void websiteEvent_Refresh(char *url);
   void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
-  void report();
+  void report(bool JSONReport = false);
   void refresh_FiveSec();
   void refresh_Minute();
   void reportToGoogleSheetsTrigger(bool ForceRun = false);
   void reportToMQTTTrigger(bool ForceRun = false);
-  void reportToJSON();
   bool getDayMode(); ///< Returns true if the lights are on or daylight is detected
                      // void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
 

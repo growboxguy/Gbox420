@@ -13,6 +13,29 @@ DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
   logToSerials(F("DHTSensor object created"), true, 3);
 }
 
+void DHTSensor::report(bool JSONReport)
+{
+  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
+    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
+    strcat(LongMessage, getTempText());
+    strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
+    strcat(LongMessage, getHumidityText());
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  }
+  else //Print a report to the Serial console
+  {
+    Common::report();
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)F("Temp:"));
+    strcat(LongMessage, getTempText(true)); ///< Shows the average reading
+    strcat_P(LongMessage, (PGM_P)F(" ; Humidity:"));
+    strcat(LongMessage, getHumidityText(true));
+    logToSerials(&LongMessage, true, 1);
+  }
+}
+
 void DHTSensor::refresh_FiveSec()
 {
   if (*Debug)
@@ -31,27 +54,6 @@ void DHTSensor::readSensor()
     Temp = Sensor->readTemperature() * 1.8f + 32;
   }
   Humidity = Sensor->readHumidity();
-}
-
-void DHTSensor::report()
-{
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("Temp:"));
-  strcat(LongMessage, getTempText(true)); ///< Shows the average reading
-  strcat_P(LongMessage, (PGM_P)F(" ; Humidity:"));
-  strcat(LongMessage, getHumidityText(true));
-  logToSerials(&LongMessage, true, 1);
-}
-
-void DHTSensor::reportToJSON()
-{
-  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
-  strcat(LongMessage, getTempText());
-  strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
-  strcat(LongMessage, getHumidityText());
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
 float DHTSensor::getTemp()
