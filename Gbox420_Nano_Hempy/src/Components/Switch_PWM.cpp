@@ -20,7 +20,7 @@ void Switch_PWM::report()
   logToSerials(&LongMessage, true, 1);
 }
 
-void Switch_PWM::reportToJSON(__attribute__((unused)) bool CloseJSON)
+void Switch_PWM::reportToJSON()
 {
   //Switch::reportToJSON(LongMessage,false); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\""));

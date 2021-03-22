@@ -11,7 +11,7 @@ class WaterPump : virtual public Common
 public:
   WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::WaterPumpSettings *DefaultSettings);
   void report();
-  void reportToJSON(bool CloseJSON = true);
+  void reportToJSON();
   void refresh_Sec();
   void updateState(WaterPumpStates NewState = (WaterPumpStates)-1);
   void setSpeed(uint8_t DutyCycle); //Set Motor speed - Adjust PWM duty cycle

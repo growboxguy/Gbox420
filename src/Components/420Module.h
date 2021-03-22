@@ -14,7 +14,7 @@ public:
   Module(); ///< constructor
   //Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
   //virtual void report()=0;
-  void reportToJSON(bool CloseJSON = true){};
+  void reportToJSON(){};
   void runReport(bool AddToLog = true);
   void runAll(bool AddToLog = true);
   void runSec(bool AddToLog = true);

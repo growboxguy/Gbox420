@@ -32,7 +32,7 @@ void WaterPump::report()
   logToSerials(&LongMessage, true, 1);
 }
 
-void WaterPump::reportToJSON(__attribute__((unused)) bool CloseJSON)
+void WaterPump::reportToJSON()
 {
   //Common::reportToJSON(LongMessage); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\""));

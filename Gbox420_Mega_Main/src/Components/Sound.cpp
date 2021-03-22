@@ -20,7 +20,7 @@ void Sound::report()
   logToSerials(&LongMessage, true, 1);
 }
 
-void Sound::reportToJSON(__attribute__((unused)) bool CloseJSON)
+void Sound::reportToJSON()
 {
   //Common::reportToJSON(LongMessage); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
   strcat_P(LongMessage, (PGM_P)F("\""));
