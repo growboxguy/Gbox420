@@ -21,6 +21,7 @@ public:
   void refresh_Sec();
   void refresh_FiveSec();
   void report();
+  void reportToJSON(bool CloseJSON = true);
   void updateState(HempyStates NewState);
   HempyStates getState();
   void disable();

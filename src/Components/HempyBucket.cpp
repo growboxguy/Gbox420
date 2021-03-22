@@ -56,12 +56,35 @@ void HempyBucket::report()
   logToSerials(&LongMessage, true, 1);
 }
 
+void HempyBucket::reportToJSON(__attribute__((unused)) bool CloseJSON)
+{
+  //Common::reportToJSON(LongMessage); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\""));
+  strcat_P(LongMessage, (PGM_P)Name);
+  strcat_P(LongMessage, (PGM_P)F("\":{"));
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, toText((int)getState()));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DW\":\""));
+  strcat(LongMessage, toText_weight(DryWeight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WW\":\""));
+  strcat(LongMessage, toText_weight(WetWeight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"ET\":\""));
+  strcat(LongMessage, toText_weight(*EvaporationTarget));
+  strcat_P(LongMessage, (PGM_P)F("\",\"OF\":\""));
+  strcat(LongMessage, toText_weight(*OverflowTarget));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WL\":\""));
+  strcat(LongMessage, toText_weight(*WasteLimit));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DT\":\""));
+  strcat(LongMessage, toText_second(*DrainWaitTime));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+}
+
 void HempyBucket::updateState(HempyStates NewState)
 {
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState)
   {
-    StateTimer = millis();                           ///< Start measuring the time spent in the new State
+    StateTimer = millis();                         ///< Start measuring the time spent in the new State
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)Name);
     strcat_P(LongMessage, (PGM_P)F(" state: "));
@@ -127,7 +150,7 @@ void HempyBucket::updateState(HempyStates NewState)
       {
         WetWeight = BucketWeightSensor->getWeight(); //Measure wet weight
         // DryWeight = ((float)((int)(WetWeight - *EvaporationTarget * 10))) / 10; //Calculate next watering weight
-        DryWeight = WetWeight - *EvaporationTarget;  //Calculate next watering weight
+        DryWeight = WetWeight - *EvaporationTarget; //Calculate next watering weight
         updateState(HempyStates::IDLE);
       }
       else
@@ -241,6 +264,6 @@ void HempyBucket::tareDryWetWeight()
   WetWeight = 0.0;
   appendName(true);
   strcat_P(ShortMessage, (PGM_P)F("Dry/Wet tared"));
-  logToSerials(&ShortMessage,true,3);
+  logToSerials(&ShortMessage, true, 3);
   Parent->getSoundObject()->playOnSound();
 }

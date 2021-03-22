@@ -12,6 +12,7 @@ public:
   WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings);
   void refresh_FiveSec();
   void report();
+  void reportToJSON(bool CloseJSON = true);
   float readWeight(bool ReturnAverage=true);
   float getWeight(bool ReturnAverage=true);
   char *getWeightText(bool ReturnAverage=true, bool IncludeUnits = false);

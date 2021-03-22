@@ -18,6 +18,13 @@ void Common::report()
   logToSerials(F("-"), false, 1); ///< Prints "    COMPONENTNAME -" to the console
 }
 
+void Common::reportToJSON(__attribute__((unused)) bool CloseJSON)
+{
+  strcat_P(LongMessage, (PGM_P)F("\""));
+  strcat_P(LongMessage, (PGM_P)Name);
+  strcat_P(LongMessage, (PGM_P)F("\":{"));
+}
+
 void Common::refresh_Sec()
 {
   logToSerials(Name, false, 2);
@@ -43,13 +50,6 @@ char *Common::getComponentName(const __FlashStringHelper *ComponentName)
   strcat_P(ReturnChar, (PGM_P)F("_"));
   strcat_P(ReturnChar, (PGM_P)ComponentName);
   return ReturnChar;
-}
-
-void Common::reportToJSON()
-{
-  strcat_P(LongMessage, (PGM_P)F("\""));
-  strcat_P(LongMessage, (PGM_P)Name);
-  strcat_P(LongMessage, (PGM_P)F("\":{"));
 }
 
 bool Common::isThisMyComponent(char const *lookupName)
@@ -115,7 +115,7 @@ void Common::appendName(bool Clear)
 {
   if (Clear)
   {
-    memset(&ShortMessage[0], 0, MaxShotTextLength);//reset variable to store the Publish to path
+    memset(&ShortMessage[0], 0, MaxShotTextLength); //reset variable to store the Publish to path
   }
   strcpy_P(ShortMessage, (PGM_P)Name);
   strcat_P(ShortMessage, (PGM_P)F(" "));

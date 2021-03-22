@@ -11,10 +11,21 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   checkEvents();
 }
 
-void Sound::reportToJSON()
+void Sound::report()
 {
-  Common::reportToJSON(); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  Common::report();
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+  strcat_P(LongMessage, (PGM_P)F("State:"));
+  strcat(LongMessage, getEnabledStateText()); 
+  logToSerials(&LongMessage, true, 1);
+}
 
+void Sound::reportToJSON(__attribute__((unused)) bool CloseJSON)
+{
+  //Common::reportToJSON(LongMessage); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\""));
+  strcat_P(LongMessage, (PGM_P)Name);
+  strcat_P(LongMessage, (PGM_P)F("\":{"));
   strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
   strcat(LongMessage, toText(*Enabled));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
@@ -55,8 +66,8 @@ void Sound::setSoundOnOff(bool State)
   *Enabled = State;
   appendName(true);
   if (*Enabled)
-  {    
-    strcat_P(ShortMessage, (PGM_P)F("ON"));    
+  {
+    strcat_P(ShortMessage, (PGM_P)F("ON"));
     playOnSound();
   }
   else
@@ -96,4 +107,9 @@ void Sound::OffSound()
 bool Sound::getEnabledState()
 {
   return *Enabled;
+}
+
+char* Sound::getEnabledStateText()
+{
+  return toText_enabledDisabled(*Enabled);
 }
