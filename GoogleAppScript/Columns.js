@@ -40,11 +40,13 @@ function FindNewColumns(Log) { ///< Add newly discovered keys to Columns tab and
       var match = columns.filter(function (row) {
         return row[columns_keyColumn] == key;
       });
-
-      if (Debug) LogToConsole(key + " column matched settings row: [" + match + "]", true, 4);
+    
       if (match == null || match.length == 0) { //If settings row does not exists
         newColumnDiscovered = true;
-        addColumnsRow(key);
+        addColumnsRow(key,columns);
+      }
+      else{
+        if (Debug) LogToConsole(key + " column matched settings row: [" + match + "]", true, 4);
       }
     }
   }
@@ -54,30 +56,33 @@ function FindNewColumns(Log) { ///< Add newly discovered keys to Columns tab and
 }
 
 function test_addColumnsRow() {
-  addColumnsRow("TestKey");
+  addColumnsRow("TestKey",GetNamedRangeValues("Columns"));
 }
 
-function addColumnsRow(newKey) {
-  LogToConsole("Adding new key to Columns: " + newKey, false, 3);
-  var columnsSheet = ActiveSpreadsheetApp.getSheetByName("Columns");
-  var columnsRange = ActiveSpreadsheetApp.getRangeByName("Columns");
-  var lastRow = getLastRowInRange(columnsRange.getValues());
-  var lastColumn = columnsRange.getLastColumn();
-  LogToConsole(" (lastRow: " + lastRow + " , lastColumn: " + lastColumn + ")", true, 0);
-
-  var range = columnsSheet.getRange(lastRow, 1, 1, lastColumn);
-  range.copyTo(columnsSheet.getRange(lastRow + 1, 1, 1, lastColumn), { contentsOnly: false }); //copy last row, including the validation rules for each cell
-
-  defaultValues = range.getValues();
+function addColumnsRow(newKey, columns) {
+  LogToConsole("Adding new key to Columns: " + newKey, false, 3);  
+  //var lastColumn = columnsSheet.getLastColumn();
+  //var lastRow = columnsSheet.getLastRow(); 
+  var lastRow = columns.length; 
+  var lastColumn = columns[lastRow-1].length; 
+  LogToConsole(" (lastRow: " + (lastRow+1) + " , lastColumn: " + lastColumn + ")", true, 0); 
+      
+  var lastRowRange = columnsSheet.getRange(lastRow,1,1,lastColumn);  
+  defaultValues = lastRowRange.getValues();
+  columnsSheet.insertRowsAfter(lastRow, 1);
+  var newRowRange = columnsSheet.getRange(lastRow + 1, 1, 1, lastColumn);  
+  
+  lastRowRange.copyTo(newRowRange, { contentsOnly: false }); //copy last row, including the validation rules for each cell  
   defaultValues[0][columns_keyColumn] = newKey;
+  defaultValues[0][columns_nameColumn] = newKey;
+  defaultValues[0][columns_dataTypeColumn] = "Text";
   defaultValues[0][columns_alertEnabledColumn] = false;
   defaultValues[0][columns_alertMinColumn] = "";
   defaultValues[0][columns_alertMaxColumn] = "";
-  defaultValues[0][columns_triggeredColumn] = "NO";
-  defaultValues[0][columns_dataTypeColumn] = "Text";
+  defaultValues[0][columns_triggeredColumn] = "NO";  
   defaultValues[0][columns_chartColumn] = "-";
   defaultValues[0][columns_seriesColumn] = "line";
-  defaultValues[0][columns_nameColumn] = newKey;
+  defaultValues[0][columns_friendlyNameColumn] = newKey;
   defaultValues[0][columns_targetAxisColumn] = 0;
-  columnsSheet.getRange(lastRow + 1, 1, 1, lastColumn).setValues(defaultValues);  //Setting default values for the new column  
+  newRowRange.setValues(defaultValues);  //Setting default values for the new column    
 }

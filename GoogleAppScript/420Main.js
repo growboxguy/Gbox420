@@ -37,9 +37,10 @@ var settings_valueColumn = 1;
 //Storing frequently used stuff to reduce Sheets API queries
 var ActiveSpreadsheetApp = SpreadsheetApp.getActive();
 var ImportResultRange = ActiveSpreadsheetApp.getRangeByName("ImportResult");
-var logSheet = ActiveSpreadsheetApp.getSheetByName("Log");
 var statusSheet = ActiveSpreadsheetApp.getSheetByName("Status");
 var chartsSheet = ActiveSpreadsheetApp.getSheetByName("Charts");
+var logSheet = ActiveSpreadsheetApp.getSheetByName("Log");
+var columnsSheet = ActiveSpreadsheetApp.getSheetByName("Columns");
 
 
 //Test functions
@@ -91,7 +92,7 @@ function doPost(receivedData) {
 //This is where the extracted JSON report is processed
 function ProcessBoxData(JSONBoxData) {
   try {
-    ReloadCache();  ///< Remove cached Named Ranges and get a fresh copy
+    //ReloadCache();  ///< Remove cached Named Ranges and get a fresh copy
     LogToConsole("Processing BoxDataJSON:", false, 0);
     if (JSONBoxData.Log != null) {
       LogToConsole(JSON.stringify(JSONBoxData.Log), true, 0);  //Print the JSON on the Stackdriver logging (View / Stackdriver logging)
