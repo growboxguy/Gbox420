@@ -41,6 +41,16 @@ typedef struct
   bool Debug = true;  ///< Logs debug messages to serial and web outputs
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
+ struct AeroponicsModuleSettings
+  { ///< Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
+    AeroponicsModuleSettings(bool JSONtoSerialMode = true, bool RealTimeMode = true) : JSONtoSerialMode(JSONtoSerialMode), RealTimeMode(RealTimeMode) {}
+    bool JSONtoSerialMode;             ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool RealTimeMode;                 ///< Enable/disable sending a full JSON report every 5 seconds via Serial. Enables the JSONtoSerialMode as well!
+    
+  };
+  struct AeroponicsModuleSettings Aero1 = {.JSONtoSerialMode = false, .RealTimeMode = false};
+
+
   struct AeroponicsSettings
   { ///< Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
     AeroponicsSettings(bool SprayEnabled = true, float Duration = 0.0, int DayInterval = 0, int NightInterval = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), MaxPressure(MaxPressure) {}
@@ -50,7 +60,7 @@ typedef struct
     int NightInterval; ///< Spray every X minutes - When the lights are OFF
     float MaxPressure; ///< Turn off pump above this pressure
   };
-  struct AeroponicsSettings AeroNT1_Common = {.SprayEnabled = true, .Duration = 3.0, .DayInterval = 6, .NightInterval = 10, .MaxPressure = 7.0};
+  struct AeroponicsSettings AeroNT1 = {.SprayEnabled = true, .Duration = 3.0, .DayInterval = 6, .NightInterval = 10, .MaxPressure = 7.0};
 
   struct PressureSensorSettings
   {

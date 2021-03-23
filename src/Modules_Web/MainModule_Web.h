@@ -68,6 +68,7 @@ private:
   void setMqttSubscribeTopic(const char *ID);
   void setMQTTLWTTopic(const char *ID);
   void setMQTTLWTMessage(const char *ID);
+   
 
 protected:
   bool RefreshAllRequested = false;
@@ -80,4 +81,5 @@ protected:
   uint16_t *MQTTReportingFrequency;
   bool *ReportToMQTT;
   uint8_t MQTTRefreshCounter = 0;
+  bool *RealTimeMode;                 ///< Enable/disable sending a full report every 5 seconds via MQTT and Serial. Enables the JSONtoSerialMode as well!  
 };

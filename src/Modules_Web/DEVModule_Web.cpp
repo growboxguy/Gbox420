@@ -47,8 +47,8 @@ DEVModule_Web::DEVModule_Web(const __FlashStringHelper *Name, Settings::MainModu
   ReservoirModule1 = new ReservoirModule_Web(F("Res1"), this, &ModuleSettings->ReservoirMod1);
   //Pres1 = new PressureSensor_Web(F("Pres1"), this, &ModuleSettings->Pres1);
   //AeroPump1 = new WaterPump(F("AeroPump1"),this,&ModuleSettings->AeroPump1);
-  //AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &ModuleSettings->AeroT1_Common, &ModuleSettings->AeroT1_Specific, Pres1, AeroPump1); ///< Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
-  //AeroNT1 = new Aeroponics_NoTank_Web(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, Pres1, AeroPump1);
+  //AeroT1 = new Aeroponics_Tank_Web(F("AeroT1"), this, &ModuleSettings->AeroT1, Pres1, AeroPump1); ///< Passing the pressure sensor object that monitors the pressure inside the Aeroponics system
+  //AeroNT1 = new Aeroponics_NoTank_Web(F("AeroNT1"), this, &ModuleSettings->AeroNT1, Pres1, AeroPump1);
 
   addToRefreshQueue_FiveSec(this);
   addToRefreshQueue_Minute(this);

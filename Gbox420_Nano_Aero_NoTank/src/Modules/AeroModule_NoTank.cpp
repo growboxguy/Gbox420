@@ -18,14 +18,15 @@ struct AeroResponse_P2 Aero1Response2ToSend = {AeroMessages::AeroResponse2};
 struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset}; ///< Special response signaling the end of a message exchange to the Transmitter
 unsigned long LastMessageSent = 0;                                     //When was the last message sent
 
-AeroModule::AeroModule(const __FlashStringHelper *Name) : Common(Name), Module()
+AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModuleSettings *DefaultSettings) : Common(Name), Module()
 {
+  JSONtoSerialMode = &DefaultSettings->JSONtoSerialMode;
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
   Pres1 = new PressureSensor(F("Pres1"), this, &ModuleSettings->Pres1);
   Pump1 = new PressurePump(F("Pump1"), this, &ModuleSettings->AeroPump1);
   Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
-  AeroNT1 = new Aeroponics_NoTank(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, Pres1, Pump1); ///< Use this without a pressure tank
+  AeroNT1 = new Aeroponics_NoTank(F("AeroNT1"), this, &ModuleSettings->AeroNT1, Pres1, Pump1); ///< Use this without a pressure tank
   Aero1Response1ToSend.PressureTankPresent = false;
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
@@ -52,7 +53,7 @@ void AeroModule::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
-  runReport();
+  runReport(*JSONtoSerialMode);
   updateResponse();
 }
 

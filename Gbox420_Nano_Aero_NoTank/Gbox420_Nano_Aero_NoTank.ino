@@ -75,7 +75,7 @@ void setup()
   MinuteThread.onRun(runMinute);
 
   ///< Create the Aeroponics object
-  AeroMod1 = new AeroModule(F("Aero1")); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  AeroMod1 = new AeroModule(F("Aero1"), &ModuleSettings->Aero1); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   logToSerials(F("Setup ready, starting loops:"), true, 0);
 }

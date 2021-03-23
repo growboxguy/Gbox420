@@ -21,6 +21,9 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
   MQTTReportingFrequency = &DefaultSettings->MQTTReportingFrequency;
   ReportToMQTT = &DefaultSettings->ReportToMQTT;
+  JSONtoSerialMode = &DefaultSettings->JSONtoSerialMode;
+  RealTimeMode = &DefaultSettings->RealTimeMode;
+  ///< Enable/disable sending JSON formatted reports to the Serial output
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;                                   ///< Pointer for child objects to use sound feedback
   IFan = new Fan(F("IFan"), this, &ModuleSettings->IFan);         ///< passing parameters: 1. Component name; 2. MainModule object the component belongs to; 3. Persistent settings stored in EEPROM)
@@ -111,7 +114,7 @@ void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< ca
 {
   //All tabs
   WebServer.setArgString(getComponentName(F("Time")), getFormattedTime(false));
-  WebServer.setArgJson(getComponentName(F("Log")), eventLogToJSON()); ///< Last events that happened in JSON format
+  WebServer.setArgJson(getComponentName(F("Log")), eventLogToJSON(false, false)); ///< Last events that happened in JSON format
 
   if (strncmp(url, "/G", 2) == 0) //GrowBox tab
   {
@@ -518,8 +521,8 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets
   if ((*ReportToGoogleSheets && SheetsRefreshCounter++ % (*SheetsReportingFrequency) == 0) || ForceRun)
   {
-    addPushingBoxLogRelayID();         //Loads Pushingbox relay ID into LongMessage
-    getJSONReport(true);               //Adds the JSON report to LongMessage
+    addPushingBoxLogRelayID(); //Loads Pushingbox relay ID into LongMessage
+    runReport(true, true);     //Append the sensor readings in a JSON format to LongMessage buffer
     relayToGoogleSheets(&LongMessage); //Sends it to Google Sheets
   }
 }
@@ -580,12 +583,12 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
   if ((*ReportToMQTT && MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0) || ForceRun)
   {
-    getJSONReport(false);
-    runReport(true,false);
-    mqttPublish(&LongMessage); // Load the JSON report to LongMessage and publish readings via ESP MQTT API
-    eventLogToJSON(false, true);
-    mqttPublish(&LongMessage); //Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
+    runReport(true, false);      //< Loads a JSON Log to LongMessage buffer
+    mqttPublish(&LongMessage);   //  and publish readings via ESP MQTT API
+    eventLogToJSON(true, false); //<Loads the EventLog as a JSON with EventLog key
+    mqttPublish(&LongMessage);   //Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
   }
 }
-///< This is how a sent out message looks like:
+///< This is how the two sent out messages looks like:
+///< Gbox420/{"Log":{"IFan":{"S":"1"},"EFan":{"S":"1"},"APump1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"92","B":"92","T":"1","On":"10:20","Of":"02:20"},"LtSen1":{"R":"955","D":"0"},"DHT1":{"T":"25.60","H":"45.20"},"Pow1":{"P":"569.30","E":"636.74","V":"227.50","C":"2.62","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"19.12","WR1":"6.23","DW1":"18.60","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"21.13","WR2":"3.65","DW2":"19.19","WW2":"21.19","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"6.12","W":"17.53","Mi":"5.00","Ma":"7.00","AS":"1","LS":"6.22","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"1.84","T":"1110.70","W":"24.37","WT":"18.56","AT":"26.20","H":"39.40"},"Main1":{"M":"1","D":"1"}}}
 ///< Gbox420/{"EventLog":["Event log entry 1","Event log entry 2","Event log entry 3","Event log entry 4"]}

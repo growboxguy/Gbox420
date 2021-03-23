@@ -113,14 +113,17 @@ void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__(
 
 /**
 * @brief Converts the log entries to a JSON object
+* IncludeKey false: ["Log1","Log2","Log3",...,"LogN"], 
+* IncludeKey true:  {"EventLog"\["Log1","Log2","Log3",...,"LogN"]}
+* Append false: Clear the LongMessage buffer before
 */
-char *Module_Web::eventLogToJSON(bool Append, bool Encapsulate)
-{ ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"]
+char *Module_Web::eventLogToJSON(bool IncludeKey, bool Append)
+{
   if (!Append)
   {
     memset(&LongMessage[0], 0, MaxLongTextLength);
   }
-  if (Encapsulate)
+  if (IncludeKey)
   {
     strcat_P(LongMessage, (PGM_P)F("{\"EventLog\":")); ///< Adds a curly bracket that needs to be closed at the end
   }
@@ -134,31 +137,13 @@ char *Module_Web::eventLogToJSON(bool Append, bool Encapsulate)
       strcat_P(LongMessage, (PGM_P)F(","));
   }
   LongMessage[strlen(LongMessage)] = ']';
-  if (Encapsulate)
+  if (IncludeKey)
   {
     strcat_P(LongMessage, (PGM_P)F("}")); ///< closing curly bracket
   }
   return LongMessage;
 }
 
-/**
-* @brief Iterate through all object subscribed to the Report queue and complie a JSON report of their statuses
-*/
-void Module_Web::getJSONReport(bool Append)
-{
-  if (!Append)
-  {
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  }
-  strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds two curly brackets that needs to be closed at the end
-  for (int i = 0; i < reportQueueItemCount;)
-  {
-    ReportQueue[i++]->report(true);
-    if (i != reportQueueItemCount)
-      strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
-  }
-  strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
-}
 
 ///< Google Sheets functions - https://sites.google.com/site/growboxguy/esp-link/logging
 

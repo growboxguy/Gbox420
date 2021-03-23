@@ -24,7 +24,7 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
   Pres1 = new PressureSensor(F("Pres1"), this, &ModuleSettings->Pres1);
   Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->AeroPump1);
   Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
-  AeroNT1 = new Aeroponics_NoTank(F("AeroNT1"), this, &ModuleSettings->AeroNT1_Common, Pres1, Pump1); ///< Use this without a pressure tank
+  AeroNT1 = new Aeroponics_NoTank(F("AeroNT1"), this, &ModuleSettings->AeroNT1, Pres1, Pump1); ///< Use this without a pressure tank
   Aero1ResponseToSend.PressureTankPresent = false;
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
