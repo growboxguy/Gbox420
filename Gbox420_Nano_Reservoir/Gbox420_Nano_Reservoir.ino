@@ -71,7 +71,7 @@ void setup()
   MinuteThread.onRun(runMinute);
 
   // Create the Reservoir Module object
-  ReservoirMod1 = new ReservoirModule(F("Res1"), &ModuleSettings->ReservoirMod1); // This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  ReservoirMod1 = new ReservoirModule(F("Res1"), &ModuleSettings->Res1); // This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   logToSerials(F("Setup ready, starting loops:"), true, 0);
 }

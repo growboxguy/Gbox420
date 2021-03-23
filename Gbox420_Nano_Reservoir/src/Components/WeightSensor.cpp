@@ -96,9 +96,6 @@ char *WeightSensor::getWeightText(bool ReturnAverage, bool IncludeUnits)
 void WeightSensor::triggerTare()
 {
   TareRequested = true;
-  appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("updating tare"));
-  Parent->addToLog(ShortMessage);
 }
 
 void WeightSensor::tare() ///< Time intense, cannot be called straight from the website. Response would time out.
@@ -116,9 +113,6 @@ void WeightSensor::triggerCalibration(int CalibrationWeight)
 {
   this->CalibrationWeight = CalibrationWeight;
   CalibrateRequested = true;
-  appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("calibrating"));
-  Parent->addToLog(ShortMessage);
 }
 
 void WeightSensor::calibrate() ///< Time intense, cannot be called straight from the website. Response would time out.

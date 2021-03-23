@@ -18,7 +18,7 @@ static const uint8_t MaxWordLength = 32;       ///< Default char * buffer length
 static const uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 256; ///< Default char * buffer length for storing a long text. Memory intense!
 static const uint8_t QueueDepth = 8;           ///< Memory intense!
-static const uint8_t MovingAverageDepth = 10; ///< Memory intense!
+static const uint8_t MovingAverageDepth = 10;  ///< Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
@@ -26,12 +26,12 @@ extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling shor
 extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
-static const uint8_t WirelessCSNPin = 9;            ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
-static const uint8_t WirelessCEPin = 10;            ///< nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
-static const uint8_t WirelessChannel[6] = {"Res1"}; ///< This needs to be unique and match with the Name of the ReservoirModule_Web object in the MainModule_Web.cpp
-static const uint8_t WirelessPayloadSize = 32;      ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
-static const uint16_t WirelessMessageTimeout = 500; ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
-static const uint16_t WirelessReceiveTimeout = 60000;  ///< (ms) If no packages are received from the Main module over this limit, try reseting the nRF24L01+ wireless receiver
+static const uint8_t WirelessCSNPin = 9;              ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
+static const uint8_t WirelessCEPin = 10;              ///< nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
+static const uint8_t WirelessChannel[6] = {"Res1"};   ///< This needs to be unique and match with the Name of the ReservoirModule_Web object in the MainModule_Web.cpp
+static const uint8_t WirelessPayloadSize = 32;        ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+static const uint16_t WirelessMessageTimeout = 500;   ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
+static const uint16_t WirelessReceiveTimeout = 60000; ///< (ms) If no packages are received from the Main module over this limit, try reseting the nRF24L01+ wireless receiver
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12
@@ -42,8 +42,16 @@ typedef struct
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
+  struct ReservoirModuleSettings
+  {
+    ReservoirModuleSettings(bool JSONtoSerialMode = true, bool RealTimeMode = true) : JSONtoSerialMode(JSONtoSerialMode), RealTimeMode(RealTimeMode) {}
+    bool JSONtoSerialMode; ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool RealTimeMode;     ///< Enable/disable sending a full JSON report every 5 seconds via Serial. Enables the JSONtoSerialMode as well!
+  };
+  struct ReservoirModuleSettings Res1 = {.JSONtoSerialMode = false, .RealTimeMode = false};
+
   struct DHTSensorSettings ///< DHTSensor default settings
-  { 
+  {
     DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}
     uint8_t Pin;  ///< DAT pin of the DHT sensor
     uint8_t Type; ///< Type defines the sensor type: 11 - DHT11, 12 - DHT12, 21 - DHT21 or AM2301 , 22 - DHT22
@@ -65,12 +73,6 @@ typedef struct
     uint8_t Pin; ///< TDS sensor A pin
   };
   struct TDSSensorSettings TDS1 = {.Pin = A1};
-
-  struct ReservoirModuleSettings ///< ReservoirModule default settings
-  {
-    //ReservoirModuleSettings() :  {}
-  };
-  struct ReservoirModuleSettings ReservoirMod1 = {}; ///< Default settings for the Hempy Module
 
   struct SoundSettings ///< Sound default settings
   {
