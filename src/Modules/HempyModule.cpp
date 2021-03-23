@@ -86,10 +86,13 @@ bool HempyModule::processCommand(void *ReceivedCommand)
 {
   HempyMessages ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedCommand)->SequenceID;
   LastMessageReceived = millis(); ///< Store current time
-  logToSerials(F("Received:"), false, 1);
-  logToSerials(toText_hempySequenceID(ReceivedSequenceID), false, 1);
-  logToSerials(F("- Sent:"), false, 1);
-  logToSerials(toText_hempySequenceID(NextSequenceID), true, 1); ///< This is the pre-buffered response that was instantly sent when a command was received
+  if (*Debug)
+  {
+    logToSerials(F("Received:"), false, 1);
+    logToSerials(toText_hempySequenceID(ReceivedSequenceID), false, 1);
+    logToSerials(F("- Sent:"), false, 1);
+    logToSerials(toText_hempySequenceID(NextSequenceID), true, 1); ///< This is the pre-buffered response that was instantly sent when a command was received
+  }
 
   bool LastMessageReached = false;
   if (ReceivedSequenceID == HempyMessages::HempyBucketCommand2 && NextSequenceID == HempyMessages::HempyBucketResponse2) ///< Last real command-response exchange reached
