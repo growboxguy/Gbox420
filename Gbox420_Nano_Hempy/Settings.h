@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 3; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -42,6 +42,14 @@ typedef struct
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
+  struct HempyModuleSettings
+  {
+    HempyModuleSettings(bool JSONtoSerialMode = true, bool RealTimeMode = true) : JSONtoSerialMode(JSONtoSerialMode), RealTimeMode(RealTimeMode) {}
+    bool JSONtoSerialMode; ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool RealTimeMode;     ///< Enable/disable sending a full JSON report every 5 seconds via Serial. Enables the JSONtoSerialMode as well!
+  };
+  struct HempyModuleSettings Hemp1 = {.JSONtoSerialMode = false, .RealTimeMode = false};
+
   struct HempyBucketSettings ///< HempyBucket default settings
   {
     HempyBucketSettings(float EvaporationTarget = 0.0, float OverflowTarget = 0.0, float WasteLimit = 0.0, float InitialDryWeight = 0.0, uint16_t DrainWaitTime = 0) : EvaporationTarget(EvaporationTarget), OverflowTarget(OverflowTarget), WasteLimit(WasteLimit), InitialDryWeight(InitialDryWeight), DrainWaitTime(DrainWaitTime) {}
@@ -53,12 +61,6 @@ typedef struct
   };
   struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .DrainWaitTime=180};
   struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .DrainWaitTime=180};
-
-  struct HempyModuleSettings ///< HempyModule default settings
-  {
-    //HempyModuleSettings() :  {}
-  };
-  struct HempyModuleSettings HempyMod1 = {}; ///< Default settings for the Hempy Module
 
   struct SoundSettings ///< Sound default settings
   {
