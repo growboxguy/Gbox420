@@ -40,6 +40,7 @@ var ImportResultRange = ActiveSpreadsheetApp.getRangeByName("ImportResult");
 var statusSheet = ActiveSpreadsheetApp.getSheetByName("Status");
 var chartsSheet = ActiveSpreadsheetApp.getSheetByName("Charts");
 var logSheet = ActiveSpreadsheetApp.getSheetByName("Log");
+var logHeaders = logSheet.getDataRange().offset(0, 0, 1).getValues()[0];
 var columnsSheet = ActiveSpreadsheetApp.getSheetByName("Columns");
 
 
@@ -100,7 +101,7 @@ function ProcessBoxData(JSONBoxData) {
       UpdateColumns(JSONBoxData.Log); //Add missing columns to the Settings sheet 
       UpdateStatus(JSONBoxData.Log); //Add the latest status to the Status page     
       CheckAlerts(JSONBoxData.Log); //Checks for alerts and send an email alert
-      //UpdateCharts();  //Updates all Charts (Overview + Charts tab)    
+      //UpdateCharts();  //Rebuild all Charts (Overview + Charts tab)    
     }
     else {
       LogToConsole("Received BoxData does not contain a Log section. Skipping log processing.", true, 1);

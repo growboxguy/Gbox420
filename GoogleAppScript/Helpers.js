@@ -463,11 +463,10 @@ function scrollToLast() {
 
 function cleanUpDebug() { /// < Removes log entries with debug mode enabled
   LogToConsole("Cleaning up the logs from debug messages...", true, 0);
-  var logHeader = logSheet.getDataRange().offset(0, 0, 1).getValues()[0]; //Get first row of the Log sheet
-
+  
   match = null;
-  for (var column in logHeader) {
-    if (logHeader[column] == "Main1_D") {
+  for (var column in logHeaders) {
+    if (logHeaders[column] == "Main1_D") {
       match = parseInt(column);
     }
   }

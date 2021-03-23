@@ -52,7 +52,6 @@ function FindNewColumns(Log) { ///< Add newly discovered keys to Columns tab and
   }
   if (newColumnDiscovered) GetNamedRangeValues("Columns", true); //Force a cache refresh if a new column was added
   //ActiveSpreadsheetApp.getSheetByName("Settings").autoResizeColumns(1, ActiveSpreadsheetApp.getSheetByName("Settings").getLastColumn()); //resize columns to fit the data 
-
 }
 
 function test_addColumnsRow() {

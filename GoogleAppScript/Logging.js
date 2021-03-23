@@ -6,9 +6,8 @@ function Test_SaveToLog() {
 function SaveToLog(Log) {
   LogToConsole("Updating Log sheet...", true, 0);
 
-  var headings = logSheet.getDataRange().offset(0, 0, 1).getValues()[0]; //Get first row of the Log sheet
   var rowToInsert = [];
-  for (var i = 0; i < headings.length; i++) {
+  for (var i = 0; i < logHeaders.length; i++) {
     rowToInsert.push(null); //pre-fill with null values
   }
   rowToInsert[0] = (Utilities.formatDate(new Date(), GetSettingsValue("Time zone"), GetSettingsValue("Date format"))); //Place the current date+time to the first cell
@@ -17,17 +16,21 @@ function SaveToLog(Log) {
     var Properties = Object.getOwnPropertyNames(Log[Components[i]]);
     for (var j = 0; j < Properties.length; j++) {
       var key = Components[i] + '_' + Properties[j];
-      if (!headings.includes(key)) {
-        headings.push(key); //add key to the header's end
+      if (!logHeaders.includes(key)) {
+        logHeaders.push(key); //add key to the header's end
         rowToInsert.push(); //add empty value to the end
       }
-      rowToInsert[headings.indexOf(key)] = Log[Components[i]][Properties[j]];  //insert the value under the matching heading
+      rowToInsert[logHeaders.indexOf(key)] = Log[Components[i]][Properties[j]];  //insert the value under the matching heading
     }
   }
-  LogToConsole("Heading: " + headings, true, 2);
+  LogToConsole("Heading: " + logHeaders, true, 2);
   LogToConsole("Data: " + rowToInsert, true, 2);
-  logSheet.getRange(1, 1, 1, headings.length).setValues([headings]);
+  logSheet.getRange(1, 1, 1, logHeaders.length).setValues([logHeaders]);
   logSheet.appendRow(rowToInsert);
+  //ApplyFormatting();
+}
+
+function ApplyFormatting() {
   //Apply some formatting
   logSheet.getRange(1, 1, 1, logSheet.getLastColumn()).setFontWeight("bold"); //Set header bold (Frendly name)
   logSheet.setFrozenRows(2); //sets headers row frozen to the top
@@ -35,11 +38,10 @@ function SaveToLog(Log) {
 }
 
 function GetLogColumnRange(name, rowLimit) {  //returns the entire column with the matching header name
-  var logHeader = logSheet.getDataRange().offset(0, 0, 1).getValues()[0]; //Get first row of the Log sheet
-
+  
   match = null;
-  for (var column in logHeader) {
-    if (logHeader[column] == name) {
+  for (var column in logHeaders) {
+    if (logHeaders[column] == name) {
       match = parseInt(column);
     }
   }
