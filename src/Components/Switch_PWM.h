@@ -12,7 +12,7 @@ public:
   void setDutyCycle(uint8_t DutyCycle);
   void turnOn();
   uint8_t getDutyCycle();
-  char *getDutyCycleText();
+  char *getDutyCycleText(bool IncludeUnits = false);
 
 private:
 protected:

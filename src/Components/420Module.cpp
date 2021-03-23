@@ -24,7 +24,7 @@ void Module::runAll()
 
 /**
 * @brief Reports sensor readings to he Serial output (Arduino and ESP)
-* @param[JSONFormat]  rrel full of monkeys
+* @param[JSONFormat] false: Text format, true: JSON format
 */
 void Module::runReport(bool JSONFormat, bool Append)
 {

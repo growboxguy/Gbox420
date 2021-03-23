@@ -15,7 +15,7 @@ void Sound::report(bool JSONReport)
 {
   Common::report(JSONReport); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
   if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  { ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  {
     strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
     strcat(LongMessage, toText(*Enabled));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON

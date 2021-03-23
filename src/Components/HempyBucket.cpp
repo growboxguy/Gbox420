@@ -18,23 +18,6 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   logToSerials(F("Hempy bucket ready"), true, 3);
 }
 
-void HempyBucket::refresh_FiveSec()
-{
-  if (*Debug)
-    Common::refresh_FiveSec();
-  updateState(State);
-}
-
-void HempyBucket::refresh_Sec()
-{
-  if (*Debug)
-    Common::refresh_Sec();
-  if (State == HempyStates::WATERING || State == HempyStates::DRAINING)
-  {
-    updateState(State);
-  }
-}
-
 void HempyBucket::report(bool JSONReport)
 {
   Common::report(JSONReport); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
@@ -43,17 +26,17 @@ void HempyBucket::report(bool JSONReport)
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
     strcat(LongMessage, toText((int)getState()));
     strcat_P(LongMessage, (PGM_P)F("\",\"DW\":\""));
-    strcat(LongMessage, toText_weight(DryWeight));
+    strcat(LongMessage, toText(DryWeight));
     strcat_P(LongMessage, (PGM_P)F("\",\"WW\":\""));
-    strcat(LongMessage, toText_weight(WetWeight));
+    strcat(LongMessage, toText(WetWeight));
     strcat_P(LongMessage, (PGM_P)F("\",\"ET\":\""));
-    strcat(LongMessage, toText_weight(*EvaporationTarget));
+    strcat(LongMessage, toText(*EvaporationTarget));
     strcat_P(LongMessage, (PGM_P)F("\",\"OF\":\""));
-    strcat(LongMessage, toText_weight(*OverflowTarget));
+    strcat(LongMessage, toText(*OverflowTarget));
     strcat_P(LongMessage, (PGM_P)F("\",\"WL\":\""));
-    strcat(LongMessage, toText_weight(*WasteLimit));
+    strcat(LongMessage, toText(*WasteLimit));
     strcat_P(LongMessage, (PGM_P)F("\",\"DT\":\""));
-    strcat(LongMessage, toText_second(*DrainWaitTime));
+    strcat(LongMessage, toText(*DrainWaitTime));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
@@ -74,6 +57,23 @@ void HempyBucket::report(bool JSONReport)
     strcat_P(LongMessage, (PGM_P)F(" ; DrainTimeOut:"));
     strcat(LongMessage, toText_second(*DrainWaitTime));
     logToSerials(&LongMessage, true, 1);
+  }
+}
+
+void HempyBucket::refresh_FiveSec()
+{
+  if (*Debug)
+    Common::refresh_FiveSec();
+  updateState(State);
+}
+
+void HempyBucket::refresh_Sec()
+{
+  if (*Debug)
+    Common::refresh_Sec();
+  if (State == HempyStates::WATERING || State == HempyStates::DRAINING)
+  {
+    updateState(State);
   }
 }
 

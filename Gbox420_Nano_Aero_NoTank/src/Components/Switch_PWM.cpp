@@ -14,17 +14,17 @@ Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t *Du
 void Switch_PWM::report(bool JSONReport)
 {
   Common::report(JSONReport); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  { ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  if (JSONReport)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  {
     strcat_P(LongMessage, (PGM_P)F("\"DC\":\""));
-    strcat(LongMessage, getDutyCycleText());
+    strcat(LongMessage, getDutyCycleText(false));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)F("DutyCycle:"));
-    strcat(LongMessage, getDutyCycleText());
+    strcat(LongMessage, getDutyCycleText(true));
     logToSerials(&LongMessage, true, 1);
   }
 }
@@ -56,7 +56,14 @@ uint8_t Switch_PWM::getDutyCycle()
   return *DutyCycle;
 }
 
-char *Switch_PWM::getDutyCycleText()
+char *Switch_PWM::getDutyCycleText(bool IncludeUnits)
 {
-  return toText_percentage(*DutyCycle);
+  if (IncludeUnits)
+  {
+    return toText_percentage(*DutyCycle);
+  }
+  else
+  {
+    return toText(*DutyCycle);
+  }
 }
