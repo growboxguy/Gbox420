@@ -18,7 +18,7 @@ void TDSSensor::report(bool JSONReport)
   if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
-    strcat(LongMessage, getTDSText(false, true));
+    strcat(LongMessage, getTDSText(false, false));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
