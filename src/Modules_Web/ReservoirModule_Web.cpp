@@ -45,7 +45,7 @@ void ReservoirModule_Web::report(bool JSONReport)
     strcat(LongMessage, toText(ReservoirResponse1Received.AirTemperature));
     strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
     strcat(LongMessage, toText(ReservoirResponse1Received.Humidity));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
   {

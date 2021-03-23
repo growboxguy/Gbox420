@@ -38,7 +38,7 @@ void LightSensor::report(bool JSONReport)
     strcat(LongMessage, getReadingText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
     strcat(LongMessage, getDarkText(false));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
   {

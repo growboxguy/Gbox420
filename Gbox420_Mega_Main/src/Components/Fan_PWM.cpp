@@ -27,7 +27,7 @@ void Fan_PWM::report(bool JSONReport)
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
     strcat(LongMessage, toText(getSpeed()));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
   {

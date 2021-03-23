@@ -82,7 +82,7 @@ void HempyModule_Web::report(bool JSONReport)
     strcat(LongMessage, toText(HempyBucketCommand2ToSend.OverflowTarget));
     strcat_P(LongMessage, (PGM_P)F("\",\"WL2\":\""));
     strcat(LongMessage, toText(HempyBucketCommand2ToSend.WasteLimit));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
   {

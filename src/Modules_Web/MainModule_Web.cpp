@@ -57,7 +57,7 @@ void MainModule::report(bool JSONReport)
     strcat(LongMessage, toText(*Metric));
     strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
     strcat(LongMessage, toText(*Debug));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
   {
@@ -581,6 +581,7 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
   if ((*ReportToMQTT && MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0) || ForceRun)
   {
     getJSONReport(false);
+    runReport(true,false);
     mqttPublish(&LongMessage); // Load the JSON report to LongMessage and publish readings via ESP MQTT API
     eventLogToJSON(false, true);
     mqttPublish(&LongMessage); //Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API

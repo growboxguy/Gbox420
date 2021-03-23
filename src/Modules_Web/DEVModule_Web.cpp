@@ -93,7 +93,7 @@ void DEVModule_Web::reportToJSON()
     strcat(LongMessage, toText(*Metric));
     strcat_P(LongMessage, (PGM_P)F("\"}}")); */
 
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 void DEVModule_Web::websiteEvent_Load(char *url)

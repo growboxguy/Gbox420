@@ -34,7 +34,7 @@ void PowerSensor::report(bool JSONReport)
     strcat(LongMessage, getVoltageText(false));
     strcat_P(LongMessage, (PGM_P)F("\",\"C\":\""));
     strcat(LongMessage, getCurrentText(false));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
   {

@@ -107,9 +107,11 @@ typedef struct
   struct MainModuleSettings ///< MainModule default settings
   {
     MainModuleSettings(bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMQTT = false, uint16_t MQTTReportingFrequency = 0) : ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMQTT(ReportToMQTT), MQTTReportingFrequency(MQTTReportingFrequency) {}
+    bool JSONtoSerialMode;             ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool RealTimeMode;                 ///< Enable/disable sending a full report every 5 seconds via MQTT and Serial. Enables the JSONtoSerialMode as well!
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
     uint16_t SheetsReportingFrequency; ///< How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
-    bool ReportToMQTT;                 ///< Controls reporting sensor readings to an MQTT broker
+    bool ReportToMQTT;                 ///< Enable/disable reporting sensor readings to an MQTT broker
     uint16_t MQTTReportingFrequency;   ///< How often to report to MQTT. Min 1min, Max 1440 (1day)
   };
   struct MainModuleSettings Main1 = {.ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportingFrequency = 1};

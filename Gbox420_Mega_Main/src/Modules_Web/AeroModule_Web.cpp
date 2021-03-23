@@ -68,7 +68,7 @@ void AeroModule_Web::report(bool JSONReport)
     strcat(LongMessage, toText(AeroCommand1ToSend.DayInterval));
     strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
     strcat(LongMessage, toText(AeroCommand1ToSend.NightInterval));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
   {

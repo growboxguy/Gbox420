@@ -70,7 +70,7 @@ void Lights::report(bool JSONReport)
     strcat(LongMessage, getOnTimeText());
     strcat_P(LongMessage, (PGM_P)F("\",\"Of\":\""));
     strcat(LongMessage, getOffTimeText());
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
   {
