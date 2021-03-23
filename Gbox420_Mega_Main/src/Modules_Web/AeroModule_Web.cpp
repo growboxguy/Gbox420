@@ -24,7 +24,7 @@ AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Pare
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
-  logToSerials(F("AeroModule_Web object created"), true, 3);
+  logToSerials(F("AeroModule_Web ready"), true, 3);
 }
 
 /**

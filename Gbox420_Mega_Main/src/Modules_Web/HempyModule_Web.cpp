@@ -24,7 +24,7 @@ HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Pa
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
-  logToSerials(F("HempyModule_Web object created"), true, 3);
+  logToSerials(F("HempyModule_Web ready"), true, 3);
 }
 
 void HempyModule_Web::report(bool JSONReport)

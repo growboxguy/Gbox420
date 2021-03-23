@@ -8,11 +8,11 @@ Module::Module():Common()
 /* Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
 { ///< Constructor
   this -> SoundFeedback = SoundFeedback;
-  logToSerials(F("Module created"), true, 3);
+  logToSerials(F("Module ready"), true, 3);
 } */
 
 void Module::runAll()
-{  
+{
   wdt_reset();
   runSec();
   wdt_reset();
@@ -22,18 +22,38 @@ void Module::runAll()
   wdt_reset();
 }
 
-void Module::runReport(bool AddToLog)
-{ ///< Reports component status to Serial output (Arduino and ESP)
-  getFormattedTime(true);
-  getFreeMemory();
-  if (AddToLog)
+/**
+* @brief Reports sensor readings to he Serial output (Arduino and ESP)
+* @param[JSONFormat]  rrel full of monkeys
+*/
+void Module::runReport(bool JSONFormat, bool Append)
+{
+  if (JSONFormat)
   {
-    logToSerials(reportQueueItemCount, false, 2);
-    logToSerials(F("Reporting:"), true, 1);
+    if (!Append)
+    {
+      memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    }
+    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds two curly brackets that needs to be closed at the end
+    for (int i = 0; i < reportQueueItemCount;)
+    {
+      ReportQueue[i++]->report(JSONFormat);
+      if (i != reportQueueItemCount)
+        strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
+    }
+    strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
+    logToSerials(&LongMessage, true, 1);
   }
-  for (int i = 0; i < reportQueueItemCount; i++)
+  else
   {
-    ReportQueue[i]->report();
+    getFormattedTime(true);
+    getFreeMemory();
+    logToSerials(reportQueueItemCount, false, 2);  ///< Prints the number of items that will report
+    logToSerials(F("reporting:"), true, 1);
+    for (int i = 0; i < reportQueueItemCount; i++)
+    {
+      ReportQueue[i]->report(JSONFormat);
+    }
   }
 }
 
@@ -43,7 +63,7 @@ void Module::runSec()
 {
   if (RunAllRequested)
   {
-    RunAllRequested = false;   
+    RunAllRequested = false;
     runAll();
   }
   else
@@ -130,8 +150,6 @@ void Module::addToLog(const __FlashStringHelper *LongMessage, uint8_t Indent)
 }
 
 //JSON report generating
-
-
 
 ///< Time
 

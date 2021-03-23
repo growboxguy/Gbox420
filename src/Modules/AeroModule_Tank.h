@@ -24,7 +24,7 @@ public:
   ///< @param Name Pointer to the Name of the object, stored in Flash
   ///< @param DefaultSettings A pointer to the default settings stuct loaded from EEPROM. Defined in Settings.h
 
-  AeroModule(const __FlashStringHelper *Name); ///< constructor
+  AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModuleSettings *DefaultSettings); ///< constructor
   Sound *Sound1 = NULL;                        ///< Piezo speaker - sound feedback
   PressureSensor *Pres1 = NULL;  ///< Pressure sensor
   PressurePump *Pump1 = NULL; ///< High pressure pump

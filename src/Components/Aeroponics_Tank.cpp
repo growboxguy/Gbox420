@@ -2,7 +2,7 @@
 
 ///<TODO: Spray solenoid timeout, SprayTimer review
 
-Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::Aeroponics_TankSettings *DefaultSettings, PressurePump *Pump, PressureSensor *FeedbackPressureSensor) : Common(Name)
+Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressurePump *Pump, PressureSensor *FeedbackPressureSensor) : Common(Name)
 { ///< constructor
   this->Parent = Parent;
   this->FeedbackPressureSensor = FeedbackPressureSensor;
@@ -19,7 +19,7 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   SpraySwitch = new Switch(F("SpraySolenoid"), DefaultSettings->SpraySolenoidPin, DefaultSettings->SpraySolenoidNegativeLogic);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
-  logToSerials(F("Aeroponics_Tank created"), true, 3);
+  logToSerials(F("Aeroponics_Tank ready"), true, 3);
   if (*SprayEnabled)
   {
     State = AeroTankStates::IDLE;
@@ -333,7 +333,6 @@ void Aeroponics_Tank::setDuration(float duration)
   if (*Duration != duration && duration > 0)
   {
     *Duration = duration;
-    Parent->addToLog(F("Duration updated"));
     Parent->getSoundObject()->playOnSound();
   }
 }
@@ -343,13 +342,11 @@ void Aeroponics_Tank::setSprayOnOff(bool State)
   if (State)
   {
     updateState(AeroTankStates::IDLE);
-    Parent->addToLog(F("Spray enabled"));
     Parent->getSoundObject()->playOnSound();
   }
   else
   {
     updateState(AeroTankStates::DISABLED);
-    Parent->addToLog(F("Spray disabled"));
     Parent->getSoundObject()->playOffSound();
   }
 }
@@ -372,7 +369,6 @@ void Aeroponics_Tank::setMaxPressure(float Pressure)
   if (*MaxPressure != Pressure && Pressure > 0)
   {
     *MaxPressure = Pressure;
-    Parent->addToLog(F("Pressure limits updated"));
     Parent->getSoundObject()->playOnSound();
   }
 }

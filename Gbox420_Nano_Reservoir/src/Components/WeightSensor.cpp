@@ -14,7 +14,7 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
   Parent->addToReportQueue(this);
   readWeight();
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("WeightSensor created"), true, 3);
+  logToSerials(F("WeightSensor ready"), true, 3);
 }
 
 void WeightSensor::report(bool JSONReport)

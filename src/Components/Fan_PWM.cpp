@@ -17,7 +17,7 @@ Fan_PWM::Fan_PWM(const __FlashStringHelper *Name, Module *Parent, Settings::Fan_
   checkState();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Minute(this);
-  logToSerials(F("Fan_PWM object created"), true, 3);
+  logToSerials(F("Fan_PWM ready"), true, 3);
 }
 
 void Fan_PWM::report(bool JSONReport)

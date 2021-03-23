@@ -20,7 +20,7 @@ ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module
   Parent->addToRefreshQueue_FiveSec(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
-  logToSerials(F("ReservoirModule_Web object created"), true, 3);
+  logToSerials(F("ReservoirModule_Web ready"), true, 3);
 }
 
 /**

@@ -10,7 +10,7 @@
 class Aeroponics_Tank : public Common
 {
 public:
-  Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::Aeroponics_TankSettings *DefaultSettings, PressurePump *Pump, PressureSensor *FeedbackPressureSensor);
+  Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressurePump *Pump, PressureSensor *FeedbackPressureSensor);
   void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
   void refresh_Sec();
   void report(bool JSONReport = false);  

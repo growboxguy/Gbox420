@@ -10,7 +10,7 @@ WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent
   TempSensor->begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("WaterTempSensor object created"), true, 3);
+  logToSerials(F("WaterTempSensor ready"), true, 3);
 }
 
 void WaterTempSensor::report(bool JSONReport)

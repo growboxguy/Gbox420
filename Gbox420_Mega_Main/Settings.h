@@ -114,7 +114,7 @@ typedef struct
     bool ReportToMQTT;                 ///< Enable/disable reporting sensor readings to an MQTT broker
     uint16_t MQTTReportingFrequency;   ///< How often to report to MQTT. Min 1min, Max 1440 (1day)
   };
-  struct MainModuleSettings Main1 = {.JSONtoSerialMode = false, .RealTimeMode = false; .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportingFrequency = 1};
+  struct MainModuleSettings Main1 = {.JSONtoSerialMode = false, .RealTimeMode = false, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportingFrequency = 1};
 
   struct HempyModuleSettings ///< Hempy default settings
   {

@@ -9,7 +9,7 @@ static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storin
 Module_Web::Module_Web(RF24 *Wireless) : Common(Name), Module()
 {
   this->Wireless = Wireless;
-  //logToSerials(F("Module_Web object created"), true, 3);
+  //logToSerials(F("Module_Web ready"), true, 3);
 }
 
 /**

@@ -7,7 +7,7 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   Enabled = &DefaultSettings->Enabled;
   pinMode(*Pin, OUTPUT);
   Parent->addToRefreshQueue_Sec(this);
-  logToSerials(F("Sound created"), true, 3);
+  logToSerials(F("Sound ready"), true, 3);
   checkEvents();
 }
 

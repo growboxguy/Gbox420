@@ -10,7 +10,7 @@ PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, 
   AveragePressure->begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("Pressure Sensor created"), true, 3);
+  logToSerials(F("PressureSensor ready"), true, 3);
 }
 
 void PressureSensor::report(bool JSONReport)
@@ -84,7 +84,7 @@ void PressureSensor::readOffset()
   }
   float AeroOffsetRecommendation = (sum / 50) * 5 / 1024; ///< Reads voltage at 0 pressure
   appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("0 pressure Offset: "));
+  strcat_P(ShortMessage, (PGM_P)F("Offset: "));
   strcat(ShortMessage, toText(AeroOffsetRecommendation));
   Parent->addToLog(ShortMessage);
 }

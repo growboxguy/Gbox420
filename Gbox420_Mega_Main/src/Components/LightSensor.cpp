@@ -13,7 +13,7 @@ LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settin
   //calibrate(false);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("LightSensor object created"), true, 3);
+  logToSerials(F("LightSensor ready"), true, 3);
 }
 
 void LightSensor::refresh_FiveSec()

@@ -18,7 +18,7 @@ static const uint8_t MaxWordLength = 32;       ///< Default char * buffer length
 static const uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 256; ///< Default char * buffer length for storing a long text. Memory intense!
 static const uint8_t QueueDepth = 8;           ///< Limits the maximum number of components within a module. Memory intense!
-static const uint8_t MovingAverageDepth = 10; ///< Smooth out sensor readings by calculating the average of the last X results. Memory intense!
+static const uint8_t MovingAverageDepth = 10;  ///< Smooth out sensor readings by calculating the average of the last X results. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
@@ -26,12 +26,12 @@ extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling shor
 extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< nRF24L01+ wireless receiver
-static const uint8_t WirelessCSNPin = 9;             ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
-static const uint8_t WirelessCEPin = 10;             ///< nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
-static const uint8_t WirelessChannel[6] = {"Aero1"}; ///< This needs to be unique and match with the Name of the AeroModule_Web object in the MainModule_Web.cpp
-static const uint8_t WirelessPayloadSize = 32;       ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
-static const uint16_t WirelessMessageTimeout = 500;  ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
-static const uint16_t WirelessReceiveTimeout = 60000;  ///< (ms) If no packages are received from the Main module over this limit, try reseting the nRF24L01+ wireless receiver
+static const uint8_t WirelessCSNPin = 9;              ///< nRF24l01+ wireless transmitter CSN pin - Pre-connected on RF-Nano
+static const uint8_t WirelessCEPin = 10;              ///< nRF24l01+ wireless transmitter CE pin - Pre-connected on RF-Nano
+static const uint8_t WirelessChannel[6] = {"Aero1"};  ///< This needs to be unique and match with the Name of the AeroModule_Web object in the MainModule_Web.cpp
+static const uint8_t WirelessPayloadSize = 32;        ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+static const uint16_t WirelessMessageTimeout = 500;   ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
+static const uint16_t WirelessReceiveTimeout = 60000; ///< (ms) If no packages are received from the Main module over this limit, try reseting the nRF24L01+ wireless receiver
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12
@@ -41,22 +41,21 @@ typedef struct
   bool Debug = true;  ///< Logs debug messages to serial and web outputs
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
- struct AeroponicsModuleSettings
-  { ///< Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
+  //<initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
+  struct AeroponicsModuleSettings
+  {
     AeroponicsModuleSettings(bool JSONtoSerialMode = true, bool RealTimeMode = true) : JSONtoSerialMode(JSONtoSerialMode), RealTimeMode(RealTimeMode) {}
-    bool JSONtoSerialMode;             ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool RealTimeMode;                 ///< Enable/disable sending a full JSON report every 5 seconds via Serial. Enables the JSONtoSerialMode as well!
-    
+    bool JSONtoSerialMode; ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool RealTimeMode;     ///< Enable/disable sending a full JSON report every 5 seconds via Serial. Enables the JSONtoSerialMode as well!
   };
   struct AeroponicsModuleSettings Aero1 = {.JSONtoSerialMode = false, .RealTimeMode = false};
 
-
   struct AeroponicsSettings
-  { ///< Common settings for both inheriting classes: Aeroponics_Tank and Aeroponics_NoTank
+  {
     AeroponicsSettings(bool SprayEnabled = true, float Duration = 0.0, int DayInterval = 0, int NightInterval = 0, float MaxPressure = 0.0) : SprayEnabled(SprayEnabled), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), MaxPressure(MaxPressure) {}
     bool SprayEnabled; ///< Enable/disable spraying cycle
-    float Duration;   ///< Spray time in seconds
-    int DayInterval;   ///< Spray every X minutes - When the lights are ON    
+    float Duration;    ///< Spray time in seconds
+    int DayInterval;   ///< Spray every X minutes - When the lights are ON
     int NightInterval; ///< Spray every X minutes - When the lights are OFF
     float MaxPressure; ///< Turn off pump above this pressure
   };
@@ -82,18 +81,18 @@ typedef struct
   struct PressurePumpSettings
   {
     PressurePumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, uint16_t = 0, uint16_t BypassSolenoidClosingDelay = 0, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, uint16_t BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), BypassSolenoidMaxOpenTime(BypassSolenoidMaxOpenTime), BypassSolenoidClosingDelay(BypassSolenoidClosingDelay), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime) {}
-    uint8_t PumpPin;                  ///< Pump relay pin
-    bool PumpPinNegativeLogic;        ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
-    uint8_t BypassSolenoidPin;        ///< Bypass solenoid relay pin
-    bool BypassSolenoidNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
-    uint16_t BypassSolenoidMaxOpenTime; ///< (sec) Max time the bypass can stay open
+    uint8_t PumpPin;                     ///< Pump relay pin
+    bool PumpPinNegativeLogic;           ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
+    uint8_t BypassSolenoidPin;           ///< Bypass solenoid relay pin
+    bool BypassSolenoidNegativeLogic;    ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
+    uint16_t BypassSolenoidMaxOpenTime;  ///< (sec) Max time the bypass can stay open
     uint16_t BypassSolenoidClosingDelay; ///< (ms) How long it takes for the solenoid to close
-    bool PumpEnabled;                 ///< Enable/disable pump
-    uint8_t Speed;                    ///< Duty cycle of the PWM Motor speed (0-100%)
-    uint8_t SpeedLowLimit;            ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
-    uint16_t PumpTimeOut;             ///< (Sec) Max pump run time
-    uint16_t PrimingTime;             ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
-    uint16_t BlowOffTime;             ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
+    bool PumpEnabled;                    ///< Enable/disable pump
+    uint8_t Speed;                       ///< Duty cycle of the PWM Motor speed (0-100%)
+    uint8_t SpeedLowLimit;               ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
+    uint16_t PumpTimeOut;                ///< (Sec) Max pump run time
+    uint16_t PrimingTime;                ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+    uint16_t BlowOffTime;                ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
   };
   struct PressurePumpSettings AeroPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .BypassSolenoidPin = 4, .BypassSolenoidNegativeLogic = true, .BypassSolenoidMaxOpenTime = 180, .BypassSolenoidClosingDelay = 600, .PumpEnabled = true, .Speed = 100, .SpeedLowLimit = 30, .PumpTimeOut = 420, .PrimingTime = 10, .BlowOffTime = 3};
 

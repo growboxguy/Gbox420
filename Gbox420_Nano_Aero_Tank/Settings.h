@@ -41,10 +41,19 @@ typedef struct
   bool Debug = true;  ///< Logs debug messages to serial and web outputs
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
-  // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
-  struct Aeroponics_TankSettings ///< Aeroponics_Tank default settings
+  //<initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
+    struct AeroponicsModuleSettings
   {
-    Aeroponics_TankSettings(uint8_t SpraySolenoidPin = 0, bool SpraySolenoidNegativeLogic = false, uint16_t SpraySolenoidClosingDelay = 0, uint16_t TankDrainingTimeout = 0, bool SprayEnabled = true, float Duration = 0.0, uint16_t DayInterval = 0, uint16_t NightInterval = 0, float MinPressure = 0.0, float MaxPressure = 0.0) : SpraySolenoidPin(SpraySolenoidPin), SpraySolenoidNegativeLogic(SpraySolenoidNegativeLogic), SpraySolenoidClosingDelay(SpraySolenoidClosingDelay),TankDrainingTimeout(TankDrainingTimeout), SprayEnabled(SprayEnabled), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), MinPressure(MinPressure), MaxPressure(MaxPressure) {}
+    AeroponicsModuleSettings(bool JSONtoSerialMode = true, bool RealTimeMode = true) : JSONtoSerialMode(JSONtoSerialMode), RealTimeMode(RealTimeMode) {}
+    bool JSONtoSerialMode;             ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool RealTimeMode;                 ///< Enable/disable sending a full JSON report every 5 seconds via Serial. Enables the JSONtoSerialMode as well!
+  };
+  struct AeroponicsModuleSettings Aero1 = {.JSONtoSerialMode = false, .RealTimeMode = false};
+
+  
+  struct AeroponicsSettings ///< Aeroponics_Tank default settings
+  {
+    AeroponicsSettings(uint8_t SpraySolenoidPin = 0, bool SpraySolenoidNegativeLogic = false, uint16_t SpraySolenoidClosingDelay = 0, uint16_t TankDrainingTimeout = 0, bool SprayEnabled = true, float Duration = 0.0, uint16_t DayInterval = 0, uint16_t NightInterval = 0, float MinPressure = 0.0, float MaxPressure = 0.0) : SpraySolenoidPin(SpraySolenoidPin), SpraySolenoidNegativeLogic(SpraySolenoidNegativeLogic), SpraySolenoidClosingDelay(SpraySolenoidClosingDelay),TankDrainingTimeout(TankDrainingTimeout), SprayEnabled(SprayEnabled), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), MinPressure(MinPressure), MaxPressure(MaxPressure) {}
     uint8_t SpraySolenoidPin;        ///< Relay controlling DC power to the solenoid
     bool SpraySolenoidNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     uint16_t SpraySolenoidClosingDelay;     ///< (ms) Time required for the solenoid to close. To avoid draining the tank the bypass valve is not allowed to open until the Spray solenoid is not closed
@@ -56,7 +65,7 @@ typedef struct
     float MinPressure; ///< Turn on pump below this pressure
     float MaxPressure; ///< Turn off pump above this pressure
   };
-  struct Aeroponics_TankSettings AeroT1 = {.SpraySolenoidPin = 5, .SpraySolenoidNegativeLogic = true, .SpraySolenoidClosingDelay = 600, .TankDrainingTimeout= 180, .SprayEnabled = true, .Duration = 1.0, .DayInterval = 6, .NightInterval = 10, .MinPressure = 5.0, .MaxPressure = 7.0};
+  struct AeroponicsSettings AeroT1 = {.SpraySolenoidPin = 5, .SpraySolenoidNegativeLogic = true, .SpraySolenoidClosingDelay = 600, .TankDrainingTimeout= 180, .SprayEnabled = true, .Duration = 1.0, .DayInterval = 6, .NightInterval = 10, .MinPressure = 5.0, .MaxPressure = 7.0};
 
   struct PressureSensorSettings ///< PressureSensor default settings
   {

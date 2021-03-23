@@ -8,7 +8,7 @@ PowerSensor::PowerSensor(const __FlashStringHelper *Name, Module *Parent, Hardwa
   Sensor->setAddress(*PowerSensorIP); ///< start power meter
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("PowerSensor object created"), true, 3);
+  logToSerials(F("PowerSensor ready"), true, 3);
 }
 
 void PowerSensor::refresh_FiveSec()

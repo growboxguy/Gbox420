@@ -7,7 +7,7 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   Enabled = &DefaultSettings->Enabled;
   pinMode(*Pin, OUTPUT);
   Parent->addToRefreshQueue_Sec(this);
-  logToSerials(F("Sound created"), true, 3);
+  logToSerials(F("Sound ready"), true, 3);
   checkEvents();
 }
 
@@ -63,14 +63,13 @@ void Sound::setSoundOnOff(bool State)
 {
   *Enabled = State;
   appendName(true);
+  strcat(ShortMessage, toText_onOff(*Enabled));
   if (*Enabled)
   {
-    strcat_P(ShortMessage, (PGM_P)F("ON"));
     playOnSound();
   }
   else
   {
-    strcat_P(ShortMessage, (PGM_P)F("OFF"));
     playOffSound();
   }
   Parent->addToLog(ShortMessage);

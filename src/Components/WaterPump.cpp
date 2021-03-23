@@ -18,7 +18,7 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
   }
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
-  logToSerials(F("WaterPump object created"), true, 3);
+  logToSerials(F("WaterPump ready"), true, 3);
 }
 
 void WaterPump::report(bool JSONReport)

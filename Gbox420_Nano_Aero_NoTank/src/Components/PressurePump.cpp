@@ -25,7 +25,7 @@ PressurePump::PressurePump(const __FlashStringHelper *Name, Module *Parent, Sett
   }
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
-  logToSerials(F("PressurePump created"), true, 3);
+  logToSerials(F("PressurePump ready"), true, 3);
 }
 
 void PressurePump::report(bool JSONReport)
@@ -214,9 +214,6 @@ void PressurePump::stopPump(bool ResetState)
 
 void PressurePump::disablePump()
 {
-  appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("disabled"));
-  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOffSound();
   *PumpEnabled = false;
   if (State == PressurePumpStates::RUNNING)

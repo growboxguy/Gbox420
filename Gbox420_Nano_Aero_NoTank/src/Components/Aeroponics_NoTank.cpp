@@ -12,7 +12,7 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Pa
   MaxPressure = &DefaultSettings->MaxPressure;     ///< Aeroponics - Turn off pump above this pressure (bar)
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
-  logToSerials(F("Aeroponics_NoTank object created"), true, 3);
+  logToSerials(F("Aeroponics_NoTank ready"), true, 3);
   if (*SprayEnabled)
   {
     State = AeroNoTankStates::IDLE;

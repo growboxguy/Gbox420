@@ -6,7 +6,7 @@ PowerSensorV3::PowerSensorV3(const __FlashStringHelper *Name, Module *Parent, Ha
   Sensor = new PZEM004Tv30(SerialPort);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("PowerSensorV3 object created"), true, 3);
+  logToSerials(F("PowerSensorV3 ready"), true, 3);
 }
 
 void PowerSensorV3::refresh_FiveSec()

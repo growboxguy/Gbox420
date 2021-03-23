@@ -12,7 +12,7 @@ DistanceSensor::DistanceSensor(const __FlashStringHelper *Name, Module *Parent, 
   pinMode(*EchoPin, INPUT);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("Distance Sensor object created"), true, 3);
+  logToSerials(F("Distance Sensor ready"), true, 3);
 }
 
 void DistanceSensor::refresh_FiveSec()

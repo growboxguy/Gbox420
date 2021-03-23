@@ -12,7 +12,7 @@ ModuleSkeleton::ModuleSkeleton(const __FlashStringHelper *Name, Module *Parent, 
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
   Parent->addToRefreshQueue_Minute(this);
-  logToSerials(F("ModuleSkeleton object created"), true, 3);
+  logToSerials(F("ModuleSkeleton ready"), true, 3);
 }
 
 void ModuleSkeleton::refresh_Sec()

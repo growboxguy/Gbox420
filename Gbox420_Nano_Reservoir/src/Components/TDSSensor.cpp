@@ -9,7 +9,7 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
   AverageTDS->begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("TDSSensor object created"), true, 3);
+  logToSerials(F("TDSSensor ready"), true, 3);
 }
 
 void TDSSensor::report(bool JSONReport)

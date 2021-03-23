@@ -11,7 +11,7 @@ PHSensor::PHSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PH
   AveragePH->begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("PHSensor object created"), true, 3);
+  logToSerials(F("PHSensor ready"), true, 3);
 }
 
 void PHSensor::refresh_FiveSec()
