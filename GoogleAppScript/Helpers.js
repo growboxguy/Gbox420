@@ -55,10 +55,9 @@ function GetNamedRangeValues(rangeName, dropCache) {
   }
 }
 
-function LoadCache(rangeName)
-{
-   var rangeData = ActiveSpreadsheetApp.getRangeByName(rangeName).getValues();
-   CacheService.getScriptCache().put(rangeName, JSON.stringify(rangeData), 21600); // cache for 6 hours to ensure it is not queried multiple times during script execution
+function LoadCache(rangeName) {
+  var rangeData = ActiveSpreadsheetApp.getRangeByName(rangeName).getValues();
+  CacheService.getScriptCache().put(rangeName, JSON.stringify(rangeData), 21600); // cache for 6 hours to ensure it is not queried multiple times during script execution
 }
 
 function WipeCache() {  ///< Force to drop all cached named ranges
@@ -462,30 +461,43 @@ function scrollToLast() {
 }
 
 function cleanUpDebug() { /// < Removes log entries with debug mode enabled
-  LogToConsole("Cleaning up the logs from debug messages...", true, 0);
-  
-  match = null;
-  for (var column in logHeaders) {
-    if (logHeaders[column] == "Main1_D") {
-      match = parseInt(column);
-    }
-  }
-  if (match != null) {
-    if (Debug) LogToConsole("Main1_D matched log column: " + match, true, 3);
-    var range = logSheet.getDataRange().offset(2,0);
-    var column = match;
-    var deleteCriteria = "1";  //Delete rows where cell content equals criteria        
-    var rangeValues = range.getValues();
 
-    var filteredValues = rangeValues.filter(function (val) {
-      return val[column] != deleteCriteria;
-    });
-    range.clearContent();
-    var newRange = logSheet.getRange(3, 1, filteredValues.length, filteredValues[0].length);
-    newRange.setValues(filteredValues);
-  }
-  else {
-    LogToConsole("Main1_D did not match any log columns", true, 3);
-    return null;
+  var ui = SpreadsheetApp.getUi(); // Same variations  
+  var result = ui.alert(
+    'Delete all Debug log entries',
+    'This will delete every log entry where the Main1_D column is equal to "1" ! Would you like to proceed?',
+    ui.ButtonSet.YES_NO);
+
+  // Process the user's response.
+  if (result == ui.Button.YES) {
+    LogToConsole("Cleaning up the logs from debug messages...", true, 0);
+
+    match = null;
+    for (var column in logHeaders) {
+      if (logHeaders[column] == "Main1_D") {
+        match = parseInt(column);
+      }
+    }
+    if (match != null) {
+      if (Debug) LogToConsole("Main1_D matched log column: " + match, true, 3);
+      var range = logSheet.getDataRange().offset(2, 0);
+      var column = match;
+      var deleteCriteria = "1";  //Delete rows where cell content equals criteria        
+      var rangeValues = range.getValues();
+
+      var filteredValues = rangeValues.filter(function (val) {
+        return val[column] != deleteCriteria;
+      });
+      range.clearContent();
+      var newRange = logSheet.getRange(3, 1, filteredValues.length, filteredValues[0].length);
+      newRange.setValues(filteredValues);
+    }
+    else {
+      LogToConsole("Main1_D did not match any log columns", true, 3);
+      return null;
+    }
+  } else {
+    // User clicked "No" or X in the title bar.
+    LogToConsole("Cleanup cancelled", true, 3);
   }
 }
