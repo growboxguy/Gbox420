@@ -75,7 +75,7 @@ function CheckAlerts(Log) {
   LogToConsole("Total alerts: " + alerts.length + ", Recovered alerts: " + recoveredMessages.length, true, 1);
 
   var EmailMode = GetSettingsValue("Send an email");
-  if (sendEmailAlert || EmailMode == "When a report is received" || (EmailMode == "Only at new alerts" && alerts.length != 0)) //When there was a new event
+  if (sendEmailAlert || EmailMode == "When a report is received" || (EmailMode == "When an alert is active" && alertMessages.length != 0)) //When there was a new event
   {
     LogToConsole("Generating email template...", true, 1);
     var emailTemplate = HtmlService.createTemplateFromFile('AlertTemplate'); //Prepare the AlertEmailTemplate.html as a template
