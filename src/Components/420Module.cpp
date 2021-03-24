@@ -82,7 +82,7 @@ void Module::runSec()
   {
     if (*Debug)
     {
-      logToSerials(F("1sec trigger"), true, 1);
+      logToSerials(F("1sec"), true, 1);
     }
     for (int i = 0; i < refreshQueueItemCount_Sec; i++)
     {
@@ -94,7 +94,7 @@ void Module::runSec()
 void Module::runFiveSec()
 {
   if (*Debug)
-    logToSerials(F("5sec trigger"), true, 1);
+    logToSerials(F("5sec"), true, 1);
   for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
   {
     RefreshQueue_FiveSec[i]->refresh_FiveSec();
@@ -104,7 +104,7 @@ void Module::runFiveSec()
 void Module::runMinute()
 {
   if (*Debug)
-    logToSerials(F("Min trigger"), true, 1);
+    logToSerials(F("1min"), true, 1);
   for (int i = 0; i < refreshQueueItemCount_Minute; i++)
   {
     RefreshQueue_Minute[i]->refresh_Minute();

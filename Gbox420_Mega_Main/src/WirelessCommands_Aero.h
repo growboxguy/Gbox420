@@ -24,28 +24,28 @@ static const __FlashStringHelper *toText_aeroSequenceID(uint8_t SequenceID)
    switch (SequenceID)
    {
    case AeroMessages::AeroModuleCommand1:
-      return F("AeroModuleCommand1");
+      return F("AMC1");
       break;
    case AeroMessages::AeroModuleResponse1:
-      return F("AeroModuleResponse1");
+      return F("AMR1");
       break;
    case AeroMessages::AeroCommand1:
-      return F("AeroCommand1");
+      return F("AC1");
       break;
    case AeroMessages::AeroResponse1:
-      return F("AeroResponse1");
+      return F("AR1");
       break;
    case AeroMessages::AeroCommand2:
-      return F("AeroCommand2");
+      return F("AC2");
       break;
    case AeroMessages::AeroResponse2:
-      return F("AeroResponse2");
+      return F("AR2");
       break;
    case AeroMessages::AeroReset:
-      return F("AeroReset");
+      return F("AR");
       break;
    default:
-      return F("UNKNOWN");
+      return F("?");
       break;
    }
 }

@@ -84,8 +84,8 @@ void Aeroponics_NoTank::processTimeCriticalStuff() ///< Runs every 0.1 sec
 void Aeroponics_NoTank::updateState(AeroNoTankStates NewState) ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State
 {
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
-  if (State != NewState)
-  {
+  if (State != NewState && *Debug)
+  {    
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)Name);
     strcat_P(LongMessage, (PGM_P)F(" state: "));

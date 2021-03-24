@@ -24,7 +24,7 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
 void WaterPump::report(bool JSONReport)
 {
   Common::report(JSONReport); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  if (JSONReport)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
     strcat(LongMessage, toText((int)getState()));
@@ -56,14 +56,16 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
 {
   if (State != NewState)
   {
-    memset(&LongMessage[0], 0, MaxLongTextLength); //reset variable to store the Publish to path
-    strcpy_P(LongMessage, (PGM_P)Name);
-    strcat_P(LongMessage, (PGM_P)F(" state: "));
-    strcat(LongMessage, toText_waterPumpState(State));
-    strcat_P(LongMessage, (PGM_P)F(" -> "));
-    strcat(LongMessage, toText_waterPumpState(NewState));
-    logToSerials(&LongMessage, true, 3);
-
+    if (*Debug)
+    {
+      memset(&LongMessage[0], 0, MaxLongTextLength); //reset variable to store the Publish to path
+      strcpy_P(LongMessage, (PGM_P)Name);
+      strcat_P(LongMessage, (PGM_P)F(" state: "));
+      strcat(LongMessage, toText_waterPumpState(State));
+      strcat_P(LongMessage, (PGM_P)F(" -> "));
+      strcat(LongMessage, toText_waterPumpState(NewState));
+      logToSerials(&LongMessage, true, 3);
+    }
     State = NewState;
     StateTimer = millis(); ///< Start measuring the time spent in the new State
   }

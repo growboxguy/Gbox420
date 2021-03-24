@@ -24,28 +24,28 @@ static const __FlashStringHelper *toText_hempySequenceID(uint8_t SequenceID)
    switch (SequenceID)
    {
    case HempyMessages::HempyModuleCommand1:
-      return F("HempyModuleCommand1");
+      return F("HMC1");
       break;
    case HempyMessages::HempyModuleResponse1:
-      return F("HempyModuleResponse1");
+      return F("HMR1");
       break;
    case HempyMessages::HempyBucketCommand1:
-      return F("HempyBucketCommand1");
+      return F("HC1");
       break;
    case HempyMessages::HempyBucketResponse1:
-      return F("HempyBucketResponse1");
+      return F("HR1");
       break;
    case HempyMessages::HempyBucketCommand2:
-      return F("HempyBucketCommand2");
+      return F("HC2");
       break;
    case HempyMessages::HempyBucketResponse2:
-      return F("HempyBucketResponse2");
+      return F("HR2");
       break;
    case HempyMessages::HempyReset:
-      return F("HempyReset");
+      return F("HR");
       break;
    default:
-      return F("UNKNOWN");
+      return F("?");
       break;
    }
 }

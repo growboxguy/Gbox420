@@ -93,7 +93,7 @@ void Aeroponics_Tank::processTimeCriticalStuff() ///< Called every 0.1sec
 void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State
 {
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
-  if (State != NewState)
+  if (State != NewState && *Debug)
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)Name);
@@ -190,7 +190,7 @@ void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parame
     }
     if (Pump->getState() == PressurePumpStates::IDLE || Pump->getState() == PressurePumpStates::DISABLED)
     { ///< refill failed, target pressure was not reached before the pump timeout
-      logToSerials(F("Recharge failed"), true, 3);
+      //logToSerials(F("Recharge failed"), true, 3);
       updateState(AeroTankStates::IDLE);
       BlockOverWritingState = true;
     }

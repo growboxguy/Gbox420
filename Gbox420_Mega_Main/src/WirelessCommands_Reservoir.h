@@ -22,22 +22,22 @@ static const __FlashStringHelper *toText_reservoirSequenceID(uint8_t SequenceID)
    switch (SequenceID)
    {
    case ReservoirMessages::ReservoirModuleCommand1:
-      return F("ReservoirModuleCommand1");
+      return F("RMC1");
       break;
    case ReservoirMessages::ReservoirModuleResponse1:
-      return F("ReservoirModuleResponse1");
+      return F("RMR1");
       break;
    case ReservoirMessages::ReservoirCommand1:
-      return F("ReservoirCommand1");
+      return F("RC1");
       break;
    case ReservoirMessages::ReservoirResponse1:
-      return F("ReservoirResponse1");
+      return F("RR1");
       break;
    case ReservoirMessages::ReservoirReset:
-      return F("ReservoirReset");
+      return F("RR");
       break;
    default:
-      return F("UNKNOWN");
+      return F("?");
       break;
    }
 }

@@ -259,7 +259,7 @@ float toFloat(char *Float)
   return atof(Float);
 }
 
-///TODO: The below section should be split between the modules to reduce memory usage
+//< State related functions
 
 char *toText_waterPumpState(WaterPumpStates State)
 {

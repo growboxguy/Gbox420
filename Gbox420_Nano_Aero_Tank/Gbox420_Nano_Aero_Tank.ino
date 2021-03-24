@@ -77,7 +77,7 @@ void setup()
   ///< Create the Aeroponics object
   AeroMod1 = new AeroModule(F("Aero1"), &ModuleSettings->Aero1 ); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
-  logToSerials(F("Starting loops:"), true, 0);
+  //logToSerials(F("Starting loops:"), true, 0);
 }
 
 void InitializeWireless()
@@ -171,7 +171,7 @@ void getWirelessStatus()
 {
   if (*Debug)
   {
-    logToSerials(F("Wireless report:"), true, 0);
+    //logToSerials(F("Wireless report:"), true, 0);
     Wireless.printPrettyDetails();
     logToSerials(F(""), true, 0);
   }
@@ -183,11 +183,11 @@ time_t updateTime()
   if (ReceivedTime > 0)
   {
     setTime(ReceivedTime);
-    logToSerials(F("Clock synced"), true, 0);
+    //logToSerials(F("Clock synced"), true, 0);
   }
   else
   {
-    logToSerials(F("Clock out of sync"), true, 0);
+   //logToSerials(F("Clock out of sync"), true, 0);
   }
   return ReceivedTime;
 }
