@@ -30,21 +30,21 @@ void Aeroponics_NoTank::report(bool JSONReport)
   if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"LS\":\""));
-    strcat(LongMessage, toText_pressure(LastSprayPressure));
+    strcat(LongMessage, toText(LastSprayPressure));
     strcat_P(LongMessage, (PGM_P)F("\",\"Mn\":\""));
-    strcat(LongMessage, toText_pressure(*MinPressure));
+    strcat(LongMessage, toText(*MinPressure));
     strcat_P(LongMessage, (PGM_P)F("\",\"Mx\":\""));
-    strcat(LongMessage, toText_pressure(*MaxPressure));
+    strcat(LongMessage, toText(*MaxPressure));
     strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
-    strcat(LongMessage, toText_yesNo(SprayEnabled));
+    strcat(LongMessage, toText(*SprayEnabled));
     strcat_P(LongMessage, (PGM_P)F("\",\"DM\":\""));
-    strcat(LongMessage, toText_enabledDisabled(DayMode));
+    strcat(LongMessage, toText(DayMode));
     strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
-    strcat(LongMessage, toText_second(*Duration));
+    strcat(LongMessage, toText(*Duration));
     strcat_P(LongMessage, (PGM_P)F("\",\"DI\":\""));
-    strcat(LongMessage, toText_minute(*DayInterval));
+    strcat(LongMessage, toText(*DayInterval));
     strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
-    strcat(LongMessage, toText_minute(*NightInterval));
+    strcat(LongMessage, toText(*NightInterval));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console

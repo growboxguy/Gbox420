@@ -39,19 +39,19 @@ void Aeroponics_Tank::report(bool JSONReport)
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
     strcat(LongMessage, toText((int)State));
     strcat_P(LongMessage, (PGM_P)F("\",\"Mn\":\""));
-    strcat(LongMessage, toText_pressure(*MinPressure));
+    strcat(LongMessage, toText(*MinPressure));
     strcat_P(LongMessage, (PGM_P)F("\",\"Mx\":\""));
-    strcat(LongMessage, toText_pressure(*MaxPressure));
+    strcat(LongMessage, toText(*MaxPressure));
     strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
-    strcat(LongMessage, toText_yesNo(SprayEnabled));
+    strcat(LongMessage, toText(*SprayEnabled));
     strcat_P(LongMessage, (PGM_P)F("\",\"DM\":\""));
-    strcat(LongMessage, toText_enabledDisabled(DayMode));
+    strcat(LongMessage, toText(DayMode));
     strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
-    strcat(LongMessage, toText_second(*Duration));
+    strcat(LongMessage, toText(*Duration));
     strcat_P(LongMessage, (PGM_P)F("\",\"DI\":\""));
-    strcat(LongMessage, toText_minute(*DayInterval));
+    strcat(LongMessage, toText(*DayInterval));
     strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
-    strcat(LongMessage, toText_minute(*NightInterval));
+    strcat(LongMessage, toText(*NightInterval));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
