@@ -62,7 +62,7 @@ void HempyModule::refresh_FiveSec()
   {
     Common::refresh_FiveSec();
   }
-  runReport(true,false);
+  runReport(*JSONtoSerialMode);
   updateResponse();
 }
 

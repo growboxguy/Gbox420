@@ -40,7 +40,6 @@ void Module::runReport(bool JSONFormat, bool Append)
       ReportQueue[i++]->report(JSONFormat);
       if (i != reportQueueItemCount)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
-      //logToSerials(&LongMessage, true, 1);
     }
     strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
     logToSerials(&LongMessage, true, 1);
@@ -149,6 +148,8 @@ void Module::addToLog(const __FlashStringHelper *LongMessage, uint8_t Indent)
 { ///< function overloading: same function name, different parameter type
   logToSerials(&LongMessage, true, Indent);
 }
+
+//JSON report generating
 
 ///< Time
 

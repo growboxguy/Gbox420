@@ -15,7 +15,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("HempyBucket ready"), true, 3);
+  logToSerials(F("Hempy bucket ready"), true, 3);
 }
 
 void HempyBucket::report(bool JSONReport)
@@ -29,7 +29,6 @@ void HempyBucket::report(bool JSONReport)
     strcat(LongMessage, toText(DryWeight));
     strcat_P(LongMessage, (PGM_P)F("\",\"WW\":\""));
     strcat(LongMessage, toText(WetWeight));
-    /* //These do not fit in the LongMessage buffer
     strcat_P(LongMessage, (PGM_P)F("\",\"ET\":\""));
     strcat(LongMessage, toText(*EvaporationTarget));
     strcat_P(LongMessage, (PGM_P)F("\",\"OF\":\""));
@@ -37,8 +36,7 @@ void HempyBucket::report(bool JSONReport)
     strcat_P(LongMessage, (PGM_P)F("\",\"WL\":\""));
     strcat(LongMessage, toText(*WasteLimit));
     strcat_P(LongMessage, (PGM_P)F("\",\"DT\":\""));
-    strcat(LongMessage, toText(*DrainWaitTime));    
-    */
+    strcat(LongMessage, toText(*DrainWaitTime));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
