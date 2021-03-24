@@ -72,7 +72,7 @@ void setup()
   MinuteThread.onRun(runMinute);
 
   ///< Create the Hempy bucket object
-  HempyMod1 = new HempyModule(F("Hempy1"), &ModuleSettings->Hemp1); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  HempyMod1 = new HempyModule(F("H1"), &ModuleSettings->Hemp1); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   logToSerials(F("Setup ready, starting loops:"), true, 0);
 }

@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 3; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -48,7 +48,7 @@ typedef struct
     bool JSONtoSerialMode; ///< Enable/disable sending JSON formatted reports to the Serial output
     bool RealTimeMode;     ///< Enable/disable sending a full JSON report every 5 seconds via Serial. Enables the JSONtoSerialMode as well!
   };
-  struct HempyModuleSettings Hemp1 = {.JSONtoSerialMode = false, .RealTimeMode = false};
+  struct HempyModuleSettings Hemp1 = {.JSONtoSerialMode = true, .RealTimeMode = false};
 
   struct HempyBucketSettings ///< HempyBucket default settings
   {
