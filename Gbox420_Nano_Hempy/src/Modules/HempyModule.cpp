@@ -16,20 +16,20 @@ struct HempyBucketResponse HempyBucket1ResponseToSend = {HempyMessages::HempyBuc
 struct HempyBucketResponse HempyBucket2ResponseToSend = {HempyMessages::HempyBucketResponse2};
 struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset}; ///< Special response signaling the end of a message exchange to the Transmitter
 
-HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module(Name)
+HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
 {
   logToSerials(F(""), true, 0); // line break
   JSONtoSerialMode = &DefaultSettings->JSONtoSerialMode;
   Sound1 = new Sound(F("S1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
-  //WeightB1 = new WeightSensor(F("WB1"), this, &ModuleSettings->WeightB1);
-  //WeightB2 = new WeightSensor(F("WB2"), this, &ModuleSettings->WeightB2);
-  //WeightWR1 = new WeightSensor(F("WR1"), this, &ModuleSettings->WeightWR1);
-  //WeightWR2 = new WeightSensor(F("WR2"), this, &ModuleSettings->WeightWR2);
+  WeightB1 = new WeightSensor(F("WB1"), this, &ModuleSettings->WeightB1);
+  WeightB2 = new WeightSensor(F("WB2"), this, &ModuleSettings->WeightB2);
+  WeightWR1 = new WeightSensor(F("WR1"), this, &ModuleSettings->WeightWR1);
+  WeightWR2 = new WeightSensor(F("WR2"), this, &ModuleSettings->WeightWR2);
   Pump1 = new WaterPump(F("P1"), this, &ModuleSettings->HempyPump1);
   Pump2 = new WaterPump(F("P2"), this, &ModuleSettings->HempyPump2);
-  //Bucket1 = new HempyBucket(F("B1"), this, &ModuleSettings->Bucket1, WeightB1, WeightWR1, Pump1);
-  //Bucket2 = new HempyBucket(F("B2"), this, &ModuleSettings->Bucket2, WeightB2, WeightWR2, Pump2);
+  Bucket1 = new HempyBucket(F("B1"), this, &ModuleSettings->Bucket1, WeightB1, WeightWR1, Pump1);
+  Bucket2 = new HempyBucket(F("B2"), this, &ModuleSettings->Bucket2, WeightB2, WeightWR2, Pump2);
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
@@ -62,7 +62,7 @@ void HempyModule::refresh_FiveSec()
   {
     Common::refresh_FiveSec();
   }
-  runReport(*JSONtoSerialMode);
+  runReport(true,false);
   updateResponse();
 }
 

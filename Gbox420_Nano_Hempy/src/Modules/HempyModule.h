@@ -44,7 +44,7 @@ public:
   void updateAckData();
 
 private:
-  unsigned long LastMessageReceived = 0; //When was the last wireless message received
+  uint32_t LastMessageReceived = 0; //When was the last wireless message received
 
 protected:
 };

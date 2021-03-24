@@ -149,9 +149,9 @@ void getWirelessData()
       updateTime(); ///< Updating internal timer
     }
     if (HempyMod1->processCommand(ReceivedMessage))
-    {
-      ReceivedMessageTimestamp = millis(); //< Reset the timer after the last message was exchanged
-    }
+   {
+     ReceivedMessageTimestamp = millis(); //< Reset the timer after the last message was exchanged
+   }
   }
   if (millis() - ReceivedMessageTimestamp > WirelessReceiveTimeout)
   {

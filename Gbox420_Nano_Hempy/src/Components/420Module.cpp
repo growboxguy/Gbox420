@@ -1,7 +1,7 @@
 #include "420Module.h"
 #include "Sound.h"
 
-Module::Module(const __FlashStringHelper *Name):Common(Name)
+Module::Module():Common()
 {
 }
 
@@ -40,6 +40,7 @@ void Module::runReport(bool JSONFormat, bool Append)
       ReportQueue[i++]->report(JSONFormat);
       if (i != reportQueueItemCount)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
+      //logToSerials(&LongMessage, true, 1);
     }
     strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
     logToSerials(&LongMessage, true, 1);

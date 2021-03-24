@@ -165,9 +165,9 @@ int WaterPump::getPumpTimeOut()
   return *PumpTimeOut;
 }
 
-void WaterPump::setPumpTimeOut(int TimeOut)
+void WaterPump::setPumpTimeOut(uint16_t TimeOut)
 {
-  if (*this->PumpTimeOut != (uint16_t)TimeOut && TimeOut > 0)
+  if (*this->PumpTimeOut != TimeOut && TimeOut > 0)
   {
     *this->PumpTimeOut = TimeOut;
     appendName(true);
