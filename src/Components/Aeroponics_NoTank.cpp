@@ -29,9 +29,6 @@ void Aeroponics_NoTank::report(bool JSONReport)
   Common::report(JSONReport); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
   if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
-    //Not implemented, handled by AeroModule_Web in mainmodule;
-
-     /*
     strcat_P(LongMessage, (PGM_P)F("\"LS\":\""));
     strcat(LongMessage, toText_pressure(LastSprayPressure));
     strcat_P(LongMessage, (PGM_P)F("\",\"Mn\":\""));
@@ -48,7 +45,7 @@ void Aeroponics_NoTank::report(bool JSONReport)
     strcat(LongMessage, toText_minute(*DayInterval));
     strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
     strcat(LongMessage, toText_minute(*NightInterval));
-    */
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
   {

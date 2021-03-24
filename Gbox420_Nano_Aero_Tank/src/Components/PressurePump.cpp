@@ -37,6 +37,7 @@ void PressurePump::report(bool JSONReport)
     strcat(LongMessage, getStateText());
     strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
     strcat(LongMessage, toText_second(*PumpTimeOut));
+    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
   {
