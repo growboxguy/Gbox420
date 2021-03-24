@@ -46,10 +46,10 @@ void setup()
   ArduinoSerial.begin(115200); // Nano console output
   pinMode(LED_BUILTIN, OUTPUT);
   printf_begin();
-  logToSerials(F(""), true, 0);                             ///< New line
+  logToSerials(F(""), true, 0);                          ///< New line
   logToSerials(F("Hempy module initializing"), true, 0); ///< logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
-  wdt_enable(WDTO_8S);                                      ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
-  boot_rww_enable();                                        ///< fix watchdog not loading sketch after a reset error on Mega2560
+  wdt_enable(WDTO_8S);                                   ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
+  boot_rww_enable();                                     ///< fix watchdog not loading sketch after a reset error on Mega2560
   struct HempyModuleCommand BlankCommand = {HempyMessages::HempyModuleCommand1};
   memcpy(ReceivedMessage, &BlankCommand, sizeof(struct HempyModuleCommand)); ///< Copy a blank command to the memory block pointed ReceivedMessage. Without this ReceivedMessage would contain random data
   setSyncProvider(updateTime);
@@ -61,7 +61,7 @@ void setup()
   Metric = &ModuleSettings->Metric;
 
   ///< Setting up wireless module
-  InitializeWireless();
+  InitializeWireless(true);
 
   ///< Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.setInterval(1000); ///< 1000ms
@@ -77,9 +77,12 @@ void setup()
   logToSerials(F("Setup ready, starting loops:"), true, 0);
 }
 
-void InitializeWireless()
+void InitializeWireless(bool ForceReport)
 {
-  logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
+  if (*Debug || ForceReport)
+  {
+    logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
+  }
   pinMode(WirelessCSNPin, OUTPUT);
   digitalWrite(WirelessCSNPin, HIGH);
   pinMode(WirelessCEPin, OUTPUT);
@@ -87,7 +90,7 @@ void InitializeWireless()
   Wireless.begin();
   Wireless.powerDown();
   Wireless.setDataRate(RF24_250KBPS);           ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
-  Wireless.setCRCLength(RF24_CRC_16);            ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
+  Wireless.setCRCLength(RF24_CRC_16);           ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
   Wireless.setPALevel(RF24_PA_MAX);             //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
   Wireless.setPayloadSize(WirelessPayloadSize); ///< The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
   Wireless.enableDynamicPayloads();
@@ -97,7 +100,10 @@ void InitializeWireless()
   Wireless.powerUp();  ///< Not necessary, startListening should switch back to normal power mode
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
-  logToSerials(F("done"), true, 3);
+  if (*Debug || ForceReport)
+  {
+    logToSerials(F("done"), true, 3);
+  }
   ReceivedMessageTimestamp = millis(); ///< Reset timeout counter
 }
 
@@ -149,13 +155,13 @@ void getWirelessData()
       updateTime(); ///< Updating internal timer
     }
     if (HempyMod1->processCommand(ReceivedMessage))
-   {
-     ReceivedMessageTimestamp = millis(); //< Reset the timer after the last message was exchanged
-   }
+    {
+      ReceivedMessageTimestamp = millis(); //< Reset the timer after the last message was exchanged
+    }
   }
   if (millis() - ReceivedMessageTimestamp > WirelessReceiveTimeout)
   {
-    InitializeWireless();
+    InitializeWireless(false);
   }
 }
 

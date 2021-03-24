@@ -39,7 +39,7 @@ void Module::runReport(bool JSONFormat, bool ClearBuffer, bool KeepBuffer)
     strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds two curly brackets that needs to be closed at the end
     if (!KeepBuffer)
     {
-      logToSerials(&LongMessage, true, 1);
+      logToSerials(&LongMessage, true, 0);
       memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     }
     for (int i = 0; i < reportQueueItemCount;)
@@ -49,12 +49,12 @@ void Module::runReport(bool JSONFormat, bool ClearBuffer, bool KeepBuffer)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
       {
-        logToSerials(&LongMessage, true, 1);
+        logToSerials(&LongMessage, true, 0);
         memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
       }
     }
     strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
-    logToSerials(&LongMessage, true, 1);
+    logToSerials(&LongMessage, true, 0);
   }
   else
   {
