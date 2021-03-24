@@ -1,7 +1,7 @@
 #include "420Module.h"
 #include "Sound.h"
 
-Module::Module():Common()
+Module::Module() : Common()
 {
 }
 
@@ -25,21 +25,33 @@ void Module::runAll()
 /**
 * @brief Reports sensor readings to he Serial output (Arduino and ESP)
 * @param[JSONFormat] false: Text format, true: JSON format
+* @param[ClearBuffer] true: Flush the LongMessage buffer before starting to report
+* @param[KeepBuffer] true: Stores the full JSON report in the LongMessage buffer - Only use this on the Mega2560 where LongMessage is large enough to store a complete report (Can be up to 1024kB)
 */
-void Module::runReport(bool JSONFormat, bool Append)
+void Module::runReport(bool JSONFormat, bool ClearBuffer, bool KeepBuffer)
 {
   if (JSONFormat)
   {
-    if (!Append)
+    if (ClearBuffer)
     {
       memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     }
     strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds two curly brackets that needs to be closed at the end
+    if (!KeepBuffer)
+    {
+      logToSerials(&LongMessage, true, 1);
+      memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    }
     for (int i = 0; i < reportQueueItemCount;)
     {
       ReportQueue[i++]->report(JSONFormat);
       if (i != reportQueueItemCount)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
+      if (!KeepBuffer)
+      {
+        logToSerials(&LongMessage, true, 1);
+        memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+      }
     }
     strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
     logToSerials(&LongMessage, true, 1);
@@ -48,7 +60,7 @@ void Module::runReport(bool JSONFormat, bool Append)
   {
     getFormattedTime(true);
     getFreeMemory();
-    logToSerials(reportQueueItemCount, false, 2);  ///< Prints the number of items that will report
+    logToSerials(reportQueueItemCount, false, 2); ///< Prints the number of items that will report
     logToSerials(F("reporting:"), true, 1);
     for (int i = 0; i < reportQueueItemCount; i++)
     {

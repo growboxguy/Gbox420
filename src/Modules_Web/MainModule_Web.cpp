@@ -114,7 +114,7 @@ void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< ca
 {
   //All tabs
   WebServer.setArgString(getComponentName(F("Time")), getFormattedTime(false));
-  WebServer.setArgJson(getComponentName(F("Log")), eventLogToJSON(false, false)); ///< Last events that happened in JSON format
+  WebServer.setArgJson(getComponentName(F("Log")), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 
   if (strncmp(url, "/G", 2) == 0) //GrowBox tab
   {
@@ -411,7 +411,7 @@ void MainModule::refresh_FiveSec()
   if (*Debug)
   {
     Common::refresh_FiveSec();
-    runReport();
+    runReport(*JSONtoSerialMode, true, true);
   }
   if (RefreshAllRequested)
   {
@@ -426,7 +426,7 @@ void MainModule::refresh_FiveSec()
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
-    runReport();
+    runReport(*JSONtoSerialMode, true, true);
   }
   if (MQTTReportRequested)
   {
@@ -439,7 +439,7 @@ void MainModule::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();
-  runReport();
+  runReport(*JSONtoSerialMode, true, true);
   reportToGoogleSheetsTrigger();
   reportToMQTTTrigger();
 }
@@ -521,8 +521,8 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets
   if ((*ReportToGoogleSheets && SheetsRefreshCounter++ % (*SheetsReportingFrequency) == 0) || ForceRun)
   {
-    addPushingBoxLogRelayID(); //Loads Pushingbox relay ID into LongMessage
-    runReport(true, true);     //Append the sensor readings in a JSON format to LongMessage buffer
+    addPushingBoxLogRelayID();         //Loads Pushingbox relay ID into LongMessage
+    runReport(true, false, true);      //Append the sensor readings in a JSON format to LongMessage buffer
     relayToGoogleSheets(&LongMessage); //Sends it to Google Sheets
   }
 }
@@ -583,9 +583,9 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
   if ((*ReportToMQTT && MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0) || ForceRun)
   {
-    runReport(true, false);      //< Loads a JSON Log to LongMessage buffer
+    runReport(true, true, true);       //< Loads a JSON Log to LongMessage buffer
     mqttPublish(&LongMessage);   //  and publish readings via ESP MQTT API
-    eventLogToJSON(true, false); //<Loads the EventLog as a JSON with EventLog key
+    eventLogToJSON(true, true); //<Loads the EventLog as a JSON with EventLog key
     mqttPublish(&LongMessage);   //Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
   }
 }

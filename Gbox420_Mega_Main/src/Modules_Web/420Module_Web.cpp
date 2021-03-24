@@ -117,9 +117,9 @@ void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__(
 * IncludeKey true:  {"EventLog"\["Log1","Log2","Log3",...,"LogN"]}
 * Append false: Clear the LongMessage buffer before
 */
-char *Module_Web::eventLogToJSON(bool IncludeKey, bool Append)
+char *Module_Web::eventLogToJSON(bool IncludeKey, bool ClearBuffer)
 {
-  if (!Append)
+  if (ClearBuffer)
   {
     memset(&LongMessage[0], 0, MaxLongTextLength);
   }

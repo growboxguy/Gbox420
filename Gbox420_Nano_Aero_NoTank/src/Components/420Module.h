@@ -13,7 +13,7 @@ class Module : virtual public Common
 public:
   Module(); ///< constructor
   //Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
-  void runReport(bool JSONFormat = false, bool Append = false); ///< Generate a text log of all sensor readings to the Serial output. If JSONFormat is enabled the report is printed as a JSON and also stored in LongMessage buffer. Append=false: Clear the buffer before adding the report.
+  void runReport(bool JSONFormat = false, bool ClearBuffer = true, bool KeepBuffer = false); ///< Generate a text log of all sensor readings to the Serial output. If JSONFormat is enabled the report is printed as a JSON format.
   void runAll();
   void runSec();
   void runFiveSec();
@@ -31,7 +31,7 @@ private:
 protected:
   void setDebug(bool State);
   void setMetric(bool MetricEnabled);
-  bool *JSONtoSerialMode;             ///< Enable/disable sending JSON formatted reports to the Serial output  
+  bool *JSONtoSerialMode; ///< Enable/disable sending JSON formatted reports to the Serial output
   Sound *SoundFeedback = NULL;
   bool RunAllRequested = false;
   bool ConsoleReportRequested = false;

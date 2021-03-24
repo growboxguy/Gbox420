@@ -111,7 +111,7 @@ void DEVModule_Web::websiteEvent_Load(char *url)
 void DEVModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
   WebServer.setArgString(F("Time"), getFormattedTime(false));
-  WebServer.setArgJson(F("Log"), eventLogToJSON()); ///< Last events that happened in JSON format
+  WebServer.setArgJson(F("Log"), eventLogToJSON(false,true)); ///< Last events that happened in JSON format
 }
 
 void DEVModule_Web::websiteEvent_Button(char *Button)
@@ -176,7 +176,7 @@ void DEVModule_Web::refresh_FiveSec()
   if (*Debug)
   {
     Common::refresh_FiveSec();
-    runReport();
+    runReport(*JSONtoSerialMode,true,false);
   }
   if (RefreshAllRequested)
   {
@@ -191,7 +191,7 @@ void DEVModule_Web::refresh_FiveSec()
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
-    runReport();
+    runReport(*JSONtoSerialMode,true,false);
   }
 }
 
@@ -199,7 +199,7 @@ void DEVModule_Web::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();
-  runReport();
+  runReport(*JSONtoSerialMode,true,false);
   reportToGoogleSheetsTrigger();
 }
 

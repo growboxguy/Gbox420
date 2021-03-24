@@ -54,7 +54,7 @@ void AeroModule::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
-  runReport(*JSONtoSerialMode);
+  runReport(*JSONtoSerialMode,true,false);
   ;
   updateResponse();
 }
