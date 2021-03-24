@@ -15,7 +15,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToRefreshQueue_FiveSec(this);
-  logToSerials(F("Hempy bucket ready"), true, 3);
+  logToSerials(F("HempyBucket ready"), true, 3);
 }
 
 void HempyBucket::report(bool JSONReport)

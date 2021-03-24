@@ -149,8 +149,6 @@ void Module::addToLog(const __FlashStringHelper *LongMessage, uint8_t Indent)
   logToSerials(&LongMessage, true, Indent);
 }
 
-//JSON report generating
-
 ///< Time
 
 char *Module::getFormattedTime(bool PrintToSerials)

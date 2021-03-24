@@ -32,7 +32,6 @@ protected:
   void setDebug(bool State);
   void setMetric(bool MetricEnabled);
   bool *JSONtoSerialMode;             ///< Enable/disable sending JSON formatted reports to the Serial output  
-    
   Sound *SoundFeedback = NULL;
   bool RunAllRequested = false;
   bool ConsoleReportRequested = false;
