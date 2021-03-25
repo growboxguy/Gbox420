@@ -417,7 +417,7 @@ void MainModule::refresh_FiveSec()
   if (*Debug)
   {
     Common::refresh_FiveSec();
-    runReport(*JSONToSerialMode, true, true);
+    runReport(*JSONToSerialMode, true, false);
   }
   if (RefreshAllRequested)
   {
@@ -432,7 +432,7 @@ void MainModule::refresh_FiveSec()
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
-    runReport(*JSONToSerialMode, true, true);
+    runReport(*JSONToSerialMode, true, false);
   }
   if (MQTTReportRequested)
   {
@@ -445,7 +445,7 @@ void MainModule::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();
-  runReport(*JSONToSerialMode, true, true);
+  runReport(*JSONToSerialMode, true, false);
   reportToGoogleSheetsTrigger();
   reportToMQTTTrigger();
 }

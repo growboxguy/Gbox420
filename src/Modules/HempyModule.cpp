@@ -87,7 +87,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
 {
   HempyMessages ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedCommand)->SequenceID;
   LastMessageReceived = millis(); ///< Store current time
-  if (*Debug)
+  //if (*Debug)
   {
     logToSerials(F("Received:"), false, 1);
     logToSerials(toText_hempySequenceID(ReceivedSequenceID), false, 1);
@@ -108,7 +108,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     setMetric(((HempyModuleCommand *)ReceivedCommand)->Metric);
     setJSONToSerial(((HempyModuleCommand *)ReceivedCommand)->JSONToSerialMode);
     NextSequenceID = HempyMessages::HempyBucketResponse1; // update the next Message that will be copied to the buffer
-    if (*Debug)
+    //if (*Debug)
     {
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Debug, false, 1);
@@ -137,7 +137,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket1->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     Bucket1->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
     NextSequenceID = HempyMessages::HempyBucketResponse2; // update the next Message that will be copied to the buffer
-    if (*Debug)
+    //if (*Debug)
     {
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
@@ -175,7 +175,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket2->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     Bucket2->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
     NextSequenceID = HempyMessages::HempyReset; // update the next Message that will be copied to the buffer
-    if (*Debug)
+    //if (*Debug)
     {
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
