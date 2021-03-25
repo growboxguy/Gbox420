@@ -18,7 +18,7 @@ struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset}; ///< 
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
 {
-  JSONtoSerialMode = &DefaultSettings->JSONtoSerialMode;
+  JSONToSerialMode = &DefaultSettings->JSONToSerialMode;
   logToSerials(F(""), true, 0); // line break
   Sound1 = new Sound(F("S1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
@@ -62,7 +62,7 @@ void HempyModule::refresh_FiveSec()
   {
     Common::refresh_FiveSec();
   }
-  runReport(*JSONtoSerialMode,true,false);
+  runReport(*JSONToSerialMode,true,false);
   updateResponse();
 }
 
@@ -106,12 +106,14 @@ bool HempyModule::processCommand(void *ReceivedCommand)
   case HempyMessages::HempyModuleCommand1:
     setDebug(((HempyModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((HempyModuleCommand *)ReceivedCommand)->Metric);
+    setJSONToSerial(((HempyModuleCommand *)ReceivedCommand)->JSONToSerialMode);
     NextSequenceID = HempyMessages::HempyBucketResponse1; // update the next Message that will be copied to the buffer
     if (*Debug)
     {
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Debug, false, 1);
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->Metric, true, 1);
+      logToSerials(((HempyModuleCommand *)ReceivedCommand)->Metric, false, 1);
+      logToSerials(((HempyModuleCommand *)ReceivedCommand)->JSONToSerialMode, true, 1);
     }
     break;
   case HempyMessages::HempyBucketCommand1:

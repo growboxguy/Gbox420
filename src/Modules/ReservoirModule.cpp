@@ -14,7 +14,7 @@ struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::Reserv
 
 ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Module()
 {
-  JSONtoSerialMode = &DefaultSettings->JSONtoSerialMode;
+  JSONToSerialMode = &DefaultSettings->JSONToSerialMode;
   logToSerials(F(""), true, 0);  //<Line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
@@ -48,7 +48,7 @@ void ReservoirModule::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
-  runReport(*JSONtoSerialMode,true, false);
+  runReport(*JSONToSerialMode,true, false);
   updateResponse();
 }
 
@@ -86,12 +86,14 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
   case ReservoirMessages::ReservoirModuleCommand1:
     setDebug(((ReservoirModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((ReservoirModuleCommand *)ReceivedCommand)->Metric);
+    setJSONToSerial(((ReservoirModuleCommand *)ReceivedCommand)->JSONToSerialMode);
     NextSequenceID = ReservoirMessages::ReservoirResponse1; // update the next Message that will be copied to the buffer
     if (*Debug)
     {
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Debug, false, 1);
-      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Metric, true, 1);
+      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Metric, false, 1);
+      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->JSONToSerialMode, true, 1);
     }
     break;
   case ReservoirMessages::ReservoirCommand1:

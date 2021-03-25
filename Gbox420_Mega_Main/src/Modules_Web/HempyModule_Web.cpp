@@ -474,6 +474,7 @@ void HempyModule_Web::updateCommands()
   HempyModuleCommand1ToSend.Time = now();
   HempyModuleCommand1ToSend.Debug = *Debug;
   HempyModuleCommand1ToSend.Metric = *Metric;
+  HempyModuleCommand1ToSend.JSONToSerialMode = *(Parent->JSONToSerialMode);
   HempyBucketCommand1ToSend.EvaporationTarget = DefaultSettings->EvaporationTarget_B1;
   HempyBucketCommand1ToSend.OverflowTarget = DefaultSettings->OverflowTarget_B1;
   HempyBucketCommand1ToSend.WasteLimit = DefaultSettings->WasteLimit_B1;

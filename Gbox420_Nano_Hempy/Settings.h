@@ -44,11 +44,11 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct HempyModuleSettings
   {
-    HempyModuleSettings(bool JSONtoSerialMode = true, bool RealTimeMode = true) : JSONtoSerialMode(JSONtoSerialMode), RealTimeMode(RealTimeMode) {}
-    bool JSONtoSerialMode; ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool RealTimeMode;     ///< Enable/disable sending a full JSON report every 5 seconds via Serial. Enables the JSONtoSerialMode as well!
+    HempyModuleSettings(bool JSONToSerialMode = true, bool RealTimeMode = true) : JSONToSerialMode(JSONToSerialMode), RealTimeMode(RealTimeMode) {}
+    bool JSONToSerialMode; ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool RealTimeMode;     ///< Enable/disable sending a full JSON report every 5 seconds via Serial. Enables the JSONToSerialMode as well!
   };
-  struct HempyModuleSettings Hemp1 = {.JSONtoSerialMode = true, .RealTimeMode = false};
+  struct HempyModuleSettings Hemp1 = {.JSONToSerialMode = true, .RealTimeMode = false};
 
   struct HempyBucketSettings ///< HempyBucket default settings
   {

@@ -177,7 +177,7 @@ void DEVModule_Web::refresh_FiveSec()
   if (*Debug)
   {
     Common::refresh_FiveSec();
-    runReport(*JSONtoSerialMode,true,false);
+    runReport(*JSONToSerialMode,true,false);
   }
   if (RefreshAllRequested)
   {
@@ -192,7 +192,7 @@ void DEVModule_Web::refresh_FiveSec()
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
-    runReport(*JSONtoSerialMode,true,false);
+    runReport(*JSONToSerialMode,true,false);
   }
 }
 
@@ -200,7 +200,7 @@ void DEVModule_Web::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();
-  runReport(*JSONtoSerialMode,true,false);
+  runReport(*JSONToSerialMode,true,false);
   reportToGoogleSheetsTrigger();
 }
 

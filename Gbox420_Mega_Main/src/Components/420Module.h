@@ -26,13 +26,13 @@ public:
   void addToRefreshQueue_Minute(Common *Component);  ///< Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   char *getFormattedTime(bool PrintToSerials);
   Sound *getSoundObject();
+  bool *JSONToSerialMode; ///< Enable/disable sending JSON formatted reports to the Serial output
 
 private:
 protected:
   void setDebug(bool State);
   void setMetric(bool MetricEnabled);
-  void setJSONToSerial(bool JSONEnabled);
-  bool *JSONtoSerialMode; ///< Enable/disable sending JSON formatted reports to the Serial output
+  void setJSONToSerial(bool JSONEnabled);  
   Sound *SoundFeedback = NULL;
   bool RunAllRequested = false;
   bool ConsoleReportRequested = false;

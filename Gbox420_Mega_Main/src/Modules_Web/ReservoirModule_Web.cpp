@@ -232,4 +232,5 @@ void ReservoirModule_Web::updateCommands()
   ReservoirModuleCommand1ToSend.Time = now();
   ReservoirModuleCommand1ToSend.Debug = *Debug;
   ReservoirModuleCommand1ToSend.Metric = *Metric;
+  ReservoirModuleCommand1ToSend.JSONToSerialMode = *(Parent->JSONToSerialMode);
 }
