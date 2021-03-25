@@ -31,8 +31,6 @@ void WeightSensor::report(bool JSONReport)
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)F("Weight:"));
     strcat(LongMessage, getWeightText(false, true));
-    strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
-    strcat(LongMessage, getWeightText(true, true));
     logToSerials(&LongMessage, true, 1);
   }
 }
