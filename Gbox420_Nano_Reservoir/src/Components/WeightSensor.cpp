@@ -104,7 +104,7 @@ void WeightSensor::tare() ///< Time intense, cannot be called straight from the 
   *Offset = Sensor->get_offset();
   AverageWeight->reset();
   appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("tare updated"));
+  strcat_P(ShortMessage, (PGM_P)F("tared"));
   Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }

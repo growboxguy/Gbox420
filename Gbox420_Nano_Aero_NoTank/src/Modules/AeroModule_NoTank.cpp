@@ -31,8 +31,8 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModu
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
-  logToSerials(Name, false, 0);
-  logToSerials(F("- AeroModule object created, refreshing"), true, 1);
+  //logToSerials(Name, false, 0);
+  //logToSerials(F("- AeroModule object created, refreshing"), true, 1);
   runAll();
   addToLog(F("AeroModule initialized"), 0);
 }
@@ -44,7 +44,7 @@ void AeroModule::refresh_Sec()
   if (NextSequenceID != AeroMessages::AeroModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   {                                                     ///< If there is a package exchange in progress
     NextSequenceID = AeroMessages::AeroModuleResponse1; ///< Reset back to the first response
-    logToSerials(F("Message exchange timeout"), true, 0);
+    logToSerials(F("Message timeout"), true, 0);
     updateAckData();
   }
 }
@@ -88,7 +88,6 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     NextSequenceID = AeroMessages::AeroResponse1; // update the next Message that will be copied to the buffer
     if (*Debug)
     {
-      logToSerials(F("Module:"), false, 2);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Metric, true, 1);
@@ -112,7 +111,6 @@ bool AeroModule::processCommand(void *ReceivedCommand)
 
     if (*Debug)
     {
-      logToSerials(F("Aero1:"), false, 2);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled, false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled, false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayNow, false, 1);
@@ -143,7 +141,6 @@ bool AeroModule::processCommand(void *ReceivedCommand)
 
     if (*Debug)
     {
-      logToSerials(F("Aero1:"), false, 2);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOn, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOff, false, 1);
@@ -158,7 +155,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     NextSequenceID = AeroMessages::AeroModuleResponse1; ///< Load the first response for the next message exchange
     break;
   default:
-    logToSerials(F("SequenceID unknown"), true, 2);
+    //logToSerials(F("SequenceID unknown"), true, 2);
     Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     Wireless.flush_rx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     break;
@@ -181,7 +178,7 @@ void AeroModule::updateAckData()
 { // so you can see that new data is being sent
   if (*Debug)
   {
-    logToSerials(F("Updating Acknowledgement to:"), false, 2);
+    logToSerials(F("Ack:"), false, 2);
     logToSerials(toText_aeroSequenceID(NextSequenceID), true, 1);
   }
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
@@ -201,7 +198,7 @@ void AeroModule::updateAckData()
     Wireless.writeAckPayload(1, &AeroResetToSend, WirelessPayloadSize);
     break;
   default:
-    logToSerials(F("Ack defaults loaded"), true, 3);
+    //logToSerials(F("Ack defaults loaded"), true, 3);
     Wireless.writeAckPayload(1, &AeroModule1ResponseToSend, WirelessPayloadSize); // load the first Response into the buffer
     break;
   }

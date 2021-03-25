@@ -93,16 +93,16 @@ void PressureSensor::setOffset(float Value)
 {
   *Offset = Value;
   AveragePressure->reset();
-  appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("offset updated"));
-  Parent->addToLog(ShortMessage);
+  // appendName(true);
+  // strcat_P(ShortMessage, (PGM_P)F("offset updated"));
+  // Parent->addToLog(ShortMessage);
 }
 
 void PressureSensor::setRatio(float Value)
 {
   *Ratio = Value;
   AveragePressure->reset();
-  appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("ratio updated"));
-  Parent->addToLog(ShortMessage);
+  // appendName(true);
+  // strcat_P(ShortMessage, (PGM_P)F("ratio updated"));
+  // Parent->addToLog(ShortMessage);
 }

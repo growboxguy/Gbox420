@@ -55,7 +55,6 @@ void AeroModule::refresh_FiveSec()
   if (*Debug)
     Common::refresh_FiveSec();
   runReport(*JSONtoSerialMode,true,false);
-  ;
   updateResponse();
 }
 
@@ -90,7 +89,6 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     NextSequenceID = AeroMessages::AeroResponse1; // update the next Message that will be copied to the buffer
     if (*Debug)
     {
-      logToSerials(F("Module:"), false, 2);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Metric, true, 1);
@@ -112,10 +110,8 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     AeroT1->setNightInterval(((AeroCommand_P1 *)ReceivedCommand)->NightInterval);
     AeroT1->setMinPressure(((AeroCommand_P1 *)ReceivedCommand)->MinPressure);
     AeroT1->setMaxPressure(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure);
-
     if (*Debug)
-    {
-      logToSerials(F("Aero1:"), false, 2);
+    {      
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled, false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled, false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayNow, false, 1);
@@ -147,10 +143,8 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     AeroT1->Pump->setSpeed(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed);
     AeroT1->Pump->setPumpTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);
     AeroT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime);
-
     if (*Debug)
     {
-      logToSerials(F("Aero2:"), false, 2);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOn, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOff, false, 1);

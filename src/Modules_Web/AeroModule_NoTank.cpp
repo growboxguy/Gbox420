@@ -42,7 +42,7 @@ void AeroModule::refresh_Sec()
   if (NextSequenceID != AeroMessages::AeroModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   {                                                     ///< If there is a package exchange in progress
     NextSequenceID = AeroMessages::AeroModuleResponse1; ///< Reset back to the first response
-    logToSerials(F("Message exchange timeout"), true, 0);
+    logToSerials(F("Message timeout"), true, 0);
     updateAckData();
   }
 }

@@ -25,8 +25,8 @@ ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::Rese
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
-  logToSerials(Name, false, 0);
-  logToSerials(F("- ReservoirModule object created, refreshing"), true, 1);
+  //logToSerials(Name, false, 0);
+  //logToSerials(F("- ReservoirModule object created, refreshing"), true, 1);
   runAll();
   addToLog(F("ReservoirModule initialized"), 0);
 }
@@ -38,7 +38,7 @@ void ReservoirModule::refresh_Sec()
   if (NextSequenceID != ReservoirMessages::ReservoirModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   {                                                               ///< If there is a package exchange in progress
     NextSequenceID = ReservoirMessages::ReservoirModuleResponse1; ///< Reset back to the first response
-    logToSerials(F("Message exchange timeout"), true, 0);
+    logToSerials(F("Message timeout"), true, 0);
     updateAckData();
   }
 }
@@ -88,7 +88,6 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     NextSequenceID = ReservoirMessages::ReservoirResponse1; // update the next Message that will be copied to the buffer
     if (*Debug)
     {
-      logToSerials(F("Module:"), false, 2);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Metric, true, 1);
@@ -100,7 +99,6 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     NextSequenceID = ReservoirMessages::ReservoirReset; // update the next Message that will be copied to the buffer
     if (*Debug)
     {
-      logToSerials(F("Command:"), false, 2);
       logToSerials(((ReservoirCommand *)ReceivedCommand)->TareWeight, true, 1);
     }
     break;
@@ -108,7 +106,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     NextSequenceID = ReservoirMessages::ReservoirModuleResponse1; ///< Load the first response for the next message exchange
     break;
   default:
-    logToSerials(F("SequenceID unknown"), true, 2);
+    //logToSerials(F("SequenceID unknown"), true, 2);
     Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     Wireless.flush_rx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     break;
@@ -122,7 +120,7 @@ void ReservoirModule::updateAckData()
 {
   if (*Debug)
   {
-    logToSerials(F("Updating Acknowledgement to:"), false, 2);
+    logToSerials(F("Ack:"), false, 2);
     logToSerials(toText_reservoirSequenceID(NextSequenceID), true, 1);
   }
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
@@ -139,7 +137,7 @@ void ReservoirModule::updateAckData()
     Wireless.writeAckPayload(1, &ReservoirResetToSend, WirelessPayloadSize);
     break;
   default:
-    logToSerials(F("Ack defaults loaded"), true, 3);
+    //logToSerials(F("Ack defaults loaded"), true, 3);
     Wireless.writeAckPayload(1, &ReservoirModuleResponse1ToSend, WirelessPayloadSize); // load the first Response into the buffer
     break;
   }

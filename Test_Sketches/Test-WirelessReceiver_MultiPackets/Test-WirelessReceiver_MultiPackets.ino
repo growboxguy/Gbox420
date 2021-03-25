@@ -143,7 +143,7 @@ void loop()
     if (NextSequenceID != HempyMessage::Module1Response && millis() - LastMessageSent >= WirelessMessageTimeout)
     {                                                   ///< If there is a package exchange in progress
         NextSequenceID = HempyMessage::Module1Response; ///< Reset back to the first response
-        Serial.println(F("Message exchange timeout"));
+        Serial.println(F("Message timeout"));
         updateAckData();
     }
 }
