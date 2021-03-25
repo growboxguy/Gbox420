@@ -18,8 +18,8 @@ struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset}; ///< 
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
 {
-  logToSerials(F(""), true, 0); // line break
   JSONtoSerialMode = &DefaultSettings->JSONtoSerialMode;
+  logToSerials(F(""), true, 0);  //<Line break
   Sound1 = new Sound(F("S1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
   WeightB1 = new WeightSensor(F("WB1"), this, &ModuleSettings->WeightB1);
@@ -33,8 +33,8 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
-  //logToSerials(Name, false, 0);
-  //logToSerials(F("- HempyModule object created, refreshing"), true, 1);
+  logToSerials(Name, false, 0);
+  logToSerials(F("refreshing"), true, 1);
   runAll();
   addToLog(F("HempyModule initialized"), 0);
 }

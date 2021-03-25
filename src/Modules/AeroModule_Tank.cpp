@@ -32,8 +32,8 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModu
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
-  //logToSerials(Name, false, 0);
-  //logToSerials(F("- AeroModule created, refreshing"), true, 1);
+  logToSerials(Name, false, 0);
+  logToSerials(F("refreshing"), true, 1);
   runAll();
   addToLog(F("AeroModule initialized"), 0);
 }

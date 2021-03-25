@@ -50,12 +50,12 @@ void Aeroponics_NoTank::report(bool JSONReport)
   else //Print a report to the Serial console
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)F("LastSprayPressure:"));
+    strcat_P(LongMessage, (PGM_P)F("LastSpray:"));
     strcat(LongMessage, toText_pressure(LastSprayPressure));
-    strcat_P(LongMessage, (PGM_P)F(" ; MaxPressure:"));
+    strcat_P(LongMessage, (PGM_P)F(" ; Max:"));
     strcat(LongMessage, toText_pressure(*MaxPressure));
-    strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
-    strcat(LongMessage, toText_yesNo(SprayEnabled));
+    strcat_P(LongMessage, (PGM_P)F(" ; Spray:"));
+    strcat(LongMessage, toText_enabledDisabled(*SprayEnabled));
     strcat_P(LongMessage, (PGM_P)F(" ; DayMode:"));
     strcat(LongMessage, toText_enabledDisabled(DayMode));
     strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));

@@ -23,7 +23,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   ReportToMQTT = &DefaultSettings->ReportToMQTT;
   JSONtoSerialMode = &DefaultSettings->JSONtoSerialMode;
   RealTimeMode = &DefaultSettings->RealTimeMode;
-  ///< Enable/disable sending JSON formatted reports to the Serial output
+  logToSerials(F(""), true, 0);                                   //<Line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;                                   ///< Pointer for child objects to use sound feedback
   IFan = new Fan(F("IFan"), this, &ModuleSettings->IFan);         ///< passing parameters: 1. Component name; 2. MainModule object the component belongs to; 3. Persistent settings stored in EEPROM)
@@ -45,8 +45,9 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   addToRefreshQueue_Minute(this);                                                              //< Attach to a trigger that fires every second and calls refresh_Sec()
   addToWebsiteQueue_Load(this);                                                                //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
   addToWebsiteQueue_Refresh(this);                                                             //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
-  addToCommandQueue(this);                                                                     //< Attach to MQTT/Website commands: Calls commandEvent() with the command + data strings
-  logToSerials(F("MainModule object created, refreshing"), true, 0);
+  addToCommandQueue(this);
+  logToSerials(Name, false, 0);
+  logToSerials(F("refreshing"), true, 1);
   runAll();
   addToLog(F("MainModule initialized"), 0);
 }
@@ -583,9 +584,9 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
   if ((*ReportToMQTT && MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0) || ForceRun)
   {
-    runReport(true, true, true);       //< Loads a JSON Log to LongMessage buffer
+    runReport(true, true, true); //< Loads a JSON Log to LongMessage buffer
     mqttPublish(&LongMessage);   //  and publish readings via ESP MQTT API
-    eventLogToJSON(true, true); //<Loads the EventLog as a JSON with EventLog key
+    eventLogToJSON(true, true);  //<Loads the EventLog as a JSON with EventLog key
     mqttPublish(&LongMessage);   //Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
   }
 }

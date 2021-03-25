@@ -45,8 +45,9 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   addToRefreshQueue_Minute(this);                                                              //< Attach to a trigger that fires every second and calls refresh_Sec()
   addToWebsiteQueue_Load(this);                                                                //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
   addToWebsiteQueue_Refresh(this);                                                             //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
-  addToCommandQueue(this);                                                                     //< Attach to MQTT/Website commands: Calls commandEvent() with the command + data strings
-  logToSerials(F("MainModule object created, refreshing"), true, 0);
+  addToCommandQueue(this);  
+  logToSerials(Name, false, 0);                                                                   //< Attach to MQTT/Website commands: Calls commandEvent() with the command + data strings
+  logToSerials(F("refreshing"), true, 1);
   runAll();
   addToLog(F("MainModule initialized"), 0);
 }

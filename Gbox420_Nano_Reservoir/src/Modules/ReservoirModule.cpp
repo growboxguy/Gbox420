@@ -15,6 +15,7 @@ struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::Reserv
 ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Module()
 {
   JSONtoSerialMode = &DefaultSettings->JSONtoSerialMode;
+  logToSerials(F(""), true, 0);  //<Line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
   DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
@@ -25,8 +26,8 @@ ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::Rese
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
-  //logToSerials(Name, false, 0);
-  //logToSerials(F("- ReservoirModule object created, refreshing"), true, 1);
+  logToSerials(Name, false, 0);
+  logToSerials(F("refreshing"), true, 1);
   runAll();
   addToLog(F("ReservoirModule initialized"), 0);
 }

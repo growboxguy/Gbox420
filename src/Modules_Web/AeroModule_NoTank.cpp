@@ -30,7 +30,7 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
   logToSerials(Name, false, 0);
-  logToSerials(F("- AeroModule object created, refreshing..."), true, 1);
+  logToSerials(F("refreshing"), true, 1);
   runAll();
   addToLog(F("AeroModule initialized"), 0);
 }
