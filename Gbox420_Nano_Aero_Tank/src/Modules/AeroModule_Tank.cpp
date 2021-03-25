@@ -87,12 +87,14 @@ bool AeroModule::processCommand(void *ReceivedCommand)
   case AeroMessages::AeroModuleCommand1:
     setDebug(((AeroModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((AeroModuleCommand *)ReceivedCommand)->Metric);
+    setJSONToSerial(((AeroModuleCommand *)ReceivedCommand)->JSONToSerial);
     NextSequenceID = AeroMessages::AeroResponse1; // update the next Message that will be copied to the buffer
     if (*Debug)
     {
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Debug, false, 1);
-      logToSerials(((AeroModuleCommand *)ReceivedCommand)->Metric, true, 1);
+      logToSerials(((AeroModuleCommand *)ReceivedCommand)->Metric, false, 1);
+      logToSerials(((AeroModuleCommand *)ReceivedCommand)->JSONToSerial, true, 1);
     }
     break;
   case AeroMessages::AeroCommand1:

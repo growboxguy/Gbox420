@@ -27,8 +27,6 @@ void PressureSensor::report(bool JSONReport)
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)F("Pressure:"));
     strcat(LongMessage, getPressureText(false, true));
-    strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
-    strcat(LongMessage, getPressureText(true, true));
     logToSerials(&LongMessage, true, 1);
   }
 }
