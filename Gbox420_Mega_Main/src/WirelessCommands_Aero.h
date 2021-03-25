@@ -64,10 +64,11 @@ struct AeroCommonTemplate ///< Aeroponics wireless template - Shared between Com
 struct AeroModuleCommand : AeroCommonTemplate ///< Aeroponics wireless module commands
 {
    AeroModuleCommand(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroModuleCommand(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric) : AeroCommonTemplate(SequenceID) {}
+   AeroModuleCommand(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) bool JSONToSerial) : AeroCommonTemplate(SequenceID) {}
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
+   bool JSONToSerial = true;
 };
 
 struct AeroModuleResponse : AeroCommonTemplate ///< Aeroponics wireless module response

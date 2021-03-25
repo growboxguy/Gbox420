@@ -206,3 +206,12 @@ void Module::setMetric(bool MetricEnabled)
     getSoundObject()->playOnSound();
   }
 }
+
+void Module::setJSONToSerial(bool JSONEnabled)
+{
+  if (JSONEnabled != *JSONtoSerialMode)
+  { //if there was a change
+    *JSONtoSerialMode = JSONEnabled;
+    getSoundObject()->playOnSound();
+  }
+}
