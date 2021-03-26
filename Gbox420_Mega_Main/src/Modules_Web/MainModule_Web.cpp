@@ -436,7 +436,7 @@ void MainModule::refresh_FiveSec()
   if (*Debug)
   {
     Common::refresh_FiveSec();
-    runReport(*ReportToJSON, true, false);
+    runReport();
   }
   if (RefreshAllRequested)
   {
@@ -451,7 +451,7 @@ void MainModule::refresh_FiveSec()
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
-    runReport(*ReportToJSON, true, false);
+    runReport();
   }
   if (MQTTReportRequested)
   {
@@ -464,7 +464,7 @@ void MainModule::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();
-  runReport(*ReportToJSON, true, false);
+  runReport();
   reportToGoogleSheetsTrigger();
   reportToMQTTTrigger();
 }
@@ -547,7 +547,7 @@ void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
   if ((*ReportToGoogleSheets && SheetsRefreshCounter++ % (*SheetsReportingFrequency) == 0) || ForceRun)
   {
     addPushingBoxLogRelayID();         //Loads Pushingbox relay ID into LongMessage
-    runReport(true, false, true);      //Append the sensor readings in a JSON format to LongMessage buffer
+    runReport(false, true, true);      //Append the sensor readings in a JSON format to LongMessage buffer
     relayToGoogleSheets(&LongMessage); //Sends it to Google Sheets
   }
 }

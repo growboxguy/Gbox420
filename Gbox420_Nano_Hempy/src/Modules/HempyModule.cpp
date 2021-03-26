@@ -65,7 +65,7 @@ void HempyModule::refresh_FiveSec()
   {
     Common::refresh_FiveSec();
   }
-  runReport(*ReportToJSON, true, false);
+  runReport();
   updateResponse();
 }
 
