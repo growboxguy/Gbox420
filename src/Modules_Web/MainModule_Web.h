@@ -75,11 +75,14 @@ protected:
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;
   bool MQTTReportRequested = false;
-  uint16_t *SheetsReportingFrequency;
+  bool * ReportDate;
+  bool * ReportMemory;
+  bool * ReportToText;
+  bool * ReportToJSON;  
   bool *ReportToGoogleSheets;
+  uint16_t *SheetsReportingFrequency;
   uint8_t SheetsRefreshCounter = 0;
-  uint16_t *MQTTReportingFrequency;
   bool *ReportToMQTT;
-  uint8_t MQTTRefreshCounter = 0;
-  bool *RealTimeMode;                 ///< Enable/disable sending a full report every 5 seconds via MQTT and Serial. Enables the JSONToSerialMode as well!  
+  uint16_t *MQTTReportingFrequency;  
+  uint8_t MQTTRefreshCounter = 0;  
 };
