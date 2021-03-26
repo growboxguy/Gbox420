@@ -90,7 +90,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
   case AeroMessages::AeroModuleCommand1:
     setDebug(((AeroModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((AeroModuleCommand *)ReceivedCommand)->Metric);
-    setJSONToSerial(((AeroModuleCommand *)ReceivedCommand)->ReportToJSON);
+    setReportToJSON(((AeroModuleCommand *)ReceivedCommand)->ReportToJSON);
     NextSequenceID = AeroMessages::AeroResponse1; // update the next Message that will be copied to the buffer
     //if (*Debug)
     {

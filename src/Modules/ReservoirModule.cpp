@@ -90,7 +90,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
   case ReservoirMessages::ReservoirModuleCommand1:
     setDebug(((ReservoirModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((ReservoirModuleCommand *)ReceivedCommand)->Metric);
-    setJSONToSerial(((ReservoirModuleCommand *)ReceivedCommand)->ReportToJSON);
+    setReportToJSON(((ReservoirModuleCommand *)ReceivedCommand)->ReportToJSON);
     NextSequenceID = ReservoirMessages::ReservoirResponse1; // update the next Message that will be copied to the buffer
     //if (*Debug)
     {

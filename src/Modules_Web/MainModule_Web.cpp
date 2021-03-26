@@ -372,7 +372,7 @@ void MainModule::commandEvent(char *Command, char *Data)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("JSON")) == 0)
     {
-      setJSONToSerial(toBool(Data));
+      setReportToJSON(toBool(Data));
     }
     //Settings - Google Sheets
     else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0)
