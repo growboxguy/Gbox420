@@ -50,7 +50,7 @@ typedef struct
     bool ReportToText;                ///< Enable/disable sending Text formatted reports to the Serial output
     bool ReportToJSON;                ///< Enable/disable sending JSON formatted reports to the Serial outpu
   };
-  struct HempyModuleSettings Hemp1 = {.ReportDate = false, .ReportMemory = false, .ReportToText = false, .ReportToJSON = false};
+  struct HempyModuleSettings Hemp1 = {.ReportDate = true, .ReportMemory = true, .ReportToText = true, .ReportToJSON = true};
 
   struct HempyBucketSettings ///< HempyBucket default settings
   {

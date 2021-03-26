@@ -37,6 +37,15 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONOnly)
   {
     getFreeMemory();
   }
+  if (*ReportToText && !JSONOnly)
+  {
+    logToSerials(reportQueueItemCount, false, 2); ///< Prints the number of items that will report
+    logToSerials(F("reporting:"), true, 1);
+    for (int i = 0; i < reportQueueItemCount; i++)
+    {
+      ReportQueue[i]->report(false);
+    }
+  }
   if (*ReportToJSON || JSONOnly)
   {
     if (ClearBuffer)
@@ -62,16 +71,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONOnly)
     }
     strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
     logToSerials(&LongMessage, true, 0);
-  }
-  if (*ReportToText && !JSONOnly)
-  {
-    logToSerials(reportQueueItemCount, false, 2); ///< Prints the number of items that will report
-    logToSerials(F("reporting:"), true, 1);
-    for (int i = 0; i < reportQueueItemCount; i++)
-    {
-      ReportQueue[i]->report();
-    }
-  }
+  } 
 }
 
 ///< Refresh queues: Refresh components inside the Module

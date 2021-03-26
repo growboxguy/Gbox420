@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -50,7 +50,7 @@ typedef struct
     bool ReportToText;                ///< Enable/disable sending Text formatted reports to the Serial output
     bool ReportToJSON;                ///< Enable/disable sending JSON formatted reports to the Serial output
   };
-  struct AeroponicsModuleSettings Aero1 = {.ReportDate = false, .ReportMemory = false, .ReportToText = false, .ReportToJSON = false};
+  struct AeroponicsModuleSettings Aero1 = {.ReportDate = true, .ReportMemory = true, .ReportToText = true, .ReportToJSON = true};
 
   
   struct AeroponicsSettings ///< Aeroponics_Tank default settings

@@ -22,10 +22,10 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   ReportToText = &DefaultSettings->ReportToText;
   ReportToJSON = &DefaultSettings->ReportToJSON;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
-  SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency; 
-  ReportToMQTT = &DefaultSettings->ReportToMQTT; 
+  SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
+  ReportToMQTT = &DefaultSettings->ReportToMQTT;
   MQTTReportingFrequency = &DefaultSettings->MQTTReportingFrequency;
-  
+
   logToSerials(F(""), true, 0);                                   //<Line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;                                   ///< Pointer for child objects to use sound feedback
@@ -64,6 +64,14 @@ void MainModule::report(bool JSONReport)
     strcat(LongMessage, toText(*Metric));
     strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
     strcat(LongMessage, toText(*Debug));
+    strcat_P(LongMessage, (PGM_P)F("\"RD\":\""));
+    strcat(LongMessage, toText(*ReportDate));
+    strcat_P(LongMessage, (PGM_P)F("\",\"RM\":\""));
+    strcat(LongMessage, toText(*ReportMemory));
+    strcat_P(LongMessage, (PGM_P)F("\"RT\":\""));
+    strcat(LongMessage, toText(*ReportToText));
+    strcat_P(LongMessage, (PGM_P)F("\",\"RJ\":\""));
+    strcat(LongMessage, toText(*ReportToJSON));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
@@ -74,6 +82,14 @@ void MainModule::report(bool JSONReport)
     strcat(LongMessage, toText_enabledDisabled(Debug));
     strcat_P(LongMessage, (PGM_P)F(" ; Metric mode:"));
     strcat(LongMessage, toText_enabledDisabled(Metric));
+    strcat_P(LongMessage, (PGM_P)F(" ; Report date:"));
+    strcat(LongMessage, toText_yesNo(ReportDate));
+    strcat_P(LongMessage, (PGM_P)F(" ; Report memory:"));
+    strcat(LongMessage, toText_yesNo(ReportMemory));
+    strcat_P(LongMessage, (PGM_P)F(" ; Report text:"));
+    strcat(LongMessage, toText_yesNo(ReportToText));
+    strcat_P(LongMessage, (PGM_P)F(" ; Report JSON:"));
+    strcat(LongMessage, toText_yesNo(ReportToJSON));
     logToSerials(&LongMessage, true, 1);
   }
 }
@@ -374,15 +390,15 @@ void MainModule::commandEvent(char *Command, char *Data)
       setMetric(toBool(Data));
     }
     //Settings - Serial reporting
-     else if (strcmp_P(ShortMessage, (PGM_P)F("Date")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Date")) == 0)
     {
       setReportDate(toBool(Data));
     }
-     else if (strcmp_P(ShortMessage, (PGM_P)F("Mem")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Mem")) == 0)
     {
       setReportMemory(toBool(Data));
     }
-     else if (strcmp_P(ShortMessage, (PGM_P)F("Text")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Text")) == 0)
     {
       setReportToText(toBool(Data));
     }
@@ -435,7 +451,7 @@ void MainModule::refresh_FiveSec()
 {
   if (*Debug)
   {
-    Common::refresh_FiveSec();    
+    Common::refresh_FiveSec();
   }
   runReport();
   if (RefreshAllRequested)
