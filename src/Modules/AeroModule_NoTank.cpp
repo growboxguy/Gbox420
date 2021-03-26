@@ -24,7 +24,7 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModu
   ReportMemory = &DefaultSettings->ReportMemory;
   ReportToText = &DefaultSettings->ReportToText;
   ReportToJSON = &DefaultSettings->ReportToJSON;
-  logToSerials(F(""), true, 0);  //<Line break
+  logToSerials(F(""), true, 0);                                   //<Line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
   Pres1 = new PressureSensor(F("Pres1"), this, &ModuleSettings->Pres1);
@@ -57,7 +57,7 @@ void AeroModule::refresh_FiveSec()
 {
   if (*Debug)
     Common::refresh_FiveSec();
-  runReport(*ReportToJSON,true,false);
+  runReport(*ReportToJSON, true, false);
   updateResponse();
 }
 
@@ -90,6 +90,9 @@ bool AeroModule::processCommand(void *ReceivedCommand)
   case AeroMessages::AeroModuleCommand1:
     setDebug(((AeroModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((AeroModuleCommand *)ReceivedCommand)->Metric);
+    setReportDate(((AeroModuleCommand *)ReceivedCommand)->ReportDate);
+    setReportMemory(((AeroModuleCommand *)ReceivedCommand)->ReportMemory);
+    setReportToText(((AeroModuleCommand *)ReceivedCommand)->ReportToText);
     setReportToJSON(((AeroModuleCommand *)ReceivedCommand)->ReportToJSON);
     NextSequenceID = AeroMessages::AeroResponse1; // update the next Message that will be copied to the buffer
     //if (*Debug)
@@ -97,6 +100,9 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Metric, false, 1);
+      logToSerials(((AeroModuleCommand *)ReceivedCommand)->ReportDate, false, 1);
+      logToSerials(((AeroModuleCommand *)ReceivedCommand)->ReportMemory, false, 1);
+      logToSerials(((AeroModuleCommand *)ReceivedCommand)->ReportToText, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->ReportToJSON, true, 1);
     }
     break;

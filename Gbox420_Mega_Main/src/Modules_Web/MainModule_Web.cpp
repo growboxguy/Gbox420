@@ -101,6 +101,9 @@ void MainModule::websiteEvent_Load(char *url)
   {
     WebServer.setArgInt(getComponentName(F("Debug")), *Debug);
     WebServer.setArgInt(getComponentName(F("Metric")), *Metric);
+    WebServer.setArgInt(getComponentName(F("Date")), *ReportDate);
+    WebServer.setArgInt(getComponentName(F("Mem")), *ReportMemory);
+    WebServer.setArgInt(getComponentName(F("Text")), *ReportToText);
     WebServer.setArgInt(getComponentName(F("JSON")), *ReportToJSON);
     WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
     WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
@@ -369,6 +372,19 @@ void MainModule::commandEvent(char *Command, char *Data)
     else if (strcmp_P(ShortMessage, (PGM_P)F("Metric")) == 0)
     {
       setMetric(toBool(Data));
+    }
+    //Settings - Serial reporting
+     else if (strcmp_P(ShortMessage, (PGM_P)F("Date")) == 0)
+    {
+      setReportDate(toBool(Data));
+    }
+     else if (strcmp_P(ShortMessage, (PGM_P)F("Mem")) == 0)
+    {
+      setReportMemory(toBool(Data));
+    }
+     else if (strcmp_P(ShortMessage, (PGM_P)F("Text")) == 0)
+    {
+      setReportToText(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("JSON")) == 0)
     {

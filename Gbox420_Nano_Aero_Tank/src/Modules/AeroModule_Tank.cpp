@@ -91,6 +91,9 @@ bool AeroModule::processCommand(void *ReceivedCommand)
   case AeroMessages::AeroModuleCommand1:
     setDebug(((AeroModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((AeroModuleCommand *)ReceivedCommand)->Metric);
+    setReportDate(((AeroModuleCommand *)ReceivedCommand)->ReportDate);
+    setReportMemory(((AeroModuleCommand *)ReceivedCommand)->ReportMemory);
+    setReportToText(((AeroModuleCommand *)ReceivedCommand)->ReportToText);
     setReportToJSON(((AeroModuleCommand *)ReceivedCommand)->ReportToJSON);
     NextSequenceID = AeroMessages::AeroResponse1; // update the next Message that will be copied to the buffer
     //if (*Debug)
@@ -98,6 +101,9 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Metric, false, 1);
+      logToSerials(((AeroModuleCommand *)ReceivedCommand)->ReportDate, false, 1);
+      logToSerials(((AeroModuleCommand *)ReceivedCommand)->ReportMemory, false, 1);
+      logToSerials(((AeroModuleCommand *)ReceivedCommand)->ReportToText, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->ReportToJSON, true, 1);
     }
     break;

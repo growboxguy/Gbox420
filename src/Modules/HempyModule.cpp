@@ -22,7 +22,7 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   ReportMemory = &DefaultSettings->ReportMemory;
   ReportToText = &DefaultSettings->ReportToText;
   ReportToJSON = &DefaultSettings->ReportToJSON;
-  logToSerials(F(""), true, 0); // line break
+  logToSerials(F(""), true, 0);                               // line break
   Sound1 = new Sound(F("S1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
   WeightB1 = new WeightSensor(F("WB1"), this, &ModuleSettings->WeightB1);
@@ -65,7 +65,7 @@ void HempyModule::refresh_FiveSec()
   {
     Common::refresh_FiveSec();
   }
-  runReport(*ReportToJSON,true,false);
+  runReport(*ReportToJSON, true, false);
   updateResponse();
 }
 
@@ -110,6 +110,9 @@ bool HempyModule::processCommand(void *ReceivedCommand)
   case HempyMessages::HempyModuleCommand1:
     setDebug(((HempyModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((HempyModuleCommand *)ReceivedCommand)->Metric);
+    setReportDate(((HempyModuleCommand *)ReceivedCommand)->ReportDate);
+    setReportMemory(((HempyModuleCommand *)ReceivedCommand)->ReportMemory);
+    setReportToText(((HempyModuleCommand *)ReceivedCommand)->ReportToText);
     setReportToJSON(((HempyModuleCommand *)ReceivedCommand)->ReportToJSON);
     NextSequenceID = HempyMessages::HempyBucketResponse1; // update the next Message that will be copied to the buffer
     //if (*Debug)
@@ -117,6 +120,9 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Metric, false, 1);
+      logToSerials(((HempyModuleCommand *)ReceivedCommand)->ReportDate, false, 1);
+      logToSerials(((HempyModuleCommand *)ReceivedCommand)->ReportMemory, false, 1);
+      logToSerials(((HempyModuleCommand *)ReceivedCommand)->ReportToText, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->ReportToJSON, true, 1);
     }
     break;
