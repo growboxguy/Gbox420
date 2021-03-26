@@ -207,11 +207,38 @@ void Module::setMetric(bool MetricEnabled)
   }
 }
 
-void Module::setJSONToSerial(bool JSONEnabled)
+void Module::setReportDate(bool State)
 {
-  if (JSONEnabled != *ReportToJSON)
+  if (State != *ReportDate)
   { //if there was a change
-    *ReportToJSON = JSONEnabled;
+    *ReportDate = State;
+    getSoundObject()->playOnSound();
+  }
+}
+
+void Module::setReportMemory(bool State)
+{
+  if (State != *ReportMemory)
+  { //if there was a change
+    *ReportMemory = State;
+    getSoundObject()->playOnSound();
+  }
+}
+
+void Module::setReportToText(bool State)
+{
+  if (State != *ReportToText)
+  { //if there was a change
+    *ReportToText = State;
+    getSoundObject()->playOnSound();
+  }
+}
+
+void Module::setReportToJSON(bool State)
+{
+  if (State != *ReportToJSON)
+  { //if there was a change
+    *ReportToJSON = State;
     getSoundObject()->playOnSound();
   }
 }

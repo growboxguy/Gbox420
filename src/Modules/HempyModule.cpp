@@ -110,7 +110,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
   case HempyMessages::HempyModuleCommand1:
     setDebug(((HempyModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((HempyModuleCommand *)ReceivedCommand)->Metric);
-    setJSONToSerial(((HempyModuleCommand *)ReceivedCommand)->ReportToJSON);
+    setReportToJSON(((HempyModuleCommand *)ReceivedCommand)->ReportToJSON);
     NextSequenceID = HempyMessages::HempyBucketResponse1; // update the next Message that will be copied to the buffer
     //if (*Debug)
     {
