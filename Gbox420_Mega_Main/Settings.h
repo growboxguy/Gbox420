@@ -40,13 +40,13 @@ static const uint16_t WirelessReceiveTimeout = 65000; ///< (ms) Consider a modul
 
 typedef struct
 {
-  bool Debug = true;                                               ///< Logs debug messages to serial and web outputs
-  bool Metric = true;                                              ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
-  
+  bool Debug = true;  ///< Logs debug messages to serial and web outputs
+  bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
+
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
-  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/"};     ///< Publish MQTT messages to this topic. Ends with a forward slash
-  char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/#"};     ///< Subscribe to messages of this topic and all sub-topic
-  char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/"};      ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
+  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/"};             ///< Publish MQTT messages to this topic. Ends with a forward slash
+  char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/#"};         ///< Subscribe to messages of this topic and all sub-topic
+  char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/"};          ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
   char MqttLwtMessage[MaxWordLength] = {"Gbox420 Offline"};        ///< this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the MQTT client unexpectedly goes offline
 
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
@@ -107,15 +107,17 @@ typedef struct
 
   struct MainModuleSettings ///< MainModule default settings
   {
-    MainModuleSettings(bool JSONToSerialMode = true, bool RealTimeMode = true, bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMQTT = false, uint16_t MQTTReportingFrequency = 0) : JSONToSerialMode(JSONToSerialMode), RealTimeMode(RealTimeMode), ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMQTT(ReportToMQTT), MQTTReportingFrequency(MQTTReportingFrequency) {}
-    bool JSONToSerialMode;             ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool RealTimeMode;                 ///< Enable/disable sending a full JSON report every 5 seconds via MQTT and Serial. Enables the JSONToSerialMode as well!
+    MainModuleSettings(bool ReportDate = true, bool ReportMemory = true, bool ReportToText = true, bool ReportToJSON = true, bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMQTT = false, uint16_t MQTTReportingFrequency = 0) : ReportDate(ReportDate), ReportMemory(ReportMemory), ReportToText(ReportToText), ReportToJSON(ReportToJSON), ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMQTT(ReportToMQTT), MQTTReportingFrequency(MQTTReportingFrequency) {}
+    bool ReportDate;                  ///< Enable/disable reporting the current time to the Serial output
+    bool ReportMemory;                ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool ReportToText;                ///< Enable/disable sending Text formatted reports to the Serial output
+    bool ReportToJSON;                ///< Enable/disable sending JSON formatted reports to the Serial output
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
     uint16_t SheetsReportingFrequency; ///< How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
     bool ReportToMQTT;                 ///< Enable/disable reporting sensor readings to an MQTT broker
     uint16_t MQTTReportingFrequency;   ///< How often to report to MQTT. Min 1min, Max 1440 (1day)
   };
-  struct MainModuleSettings Main1 = {.JSONToSerialMode = false, .RealTimeMode = false, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportingFrequency = 1};
+  struct MainModuleSettings Main1 = {.ReportDate = false, .ReportMemory = false, .ReportToText = false, .ReportToJSON = false, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportingFrequency = 1};
 
   struct HempyModuleSettings ///< Hempy default settings
   {

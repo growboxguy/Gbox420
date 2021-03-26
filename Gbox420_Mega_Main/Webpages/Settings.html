@@ -110,11 +110,14 @@
 			width: 95%;
 		}
 
-		form {
+		form:not(.SimpleSturcture) {
 			display: table;
+			vertical-align: middle;
+		}
+
+		form {
 			padding: 0px;
 			margin: 0em;
-			vertical-align: middle;
 		}
 
 		p {
@@ -178,8 +181,8 @@
 						<p>
 							<label>
 								<input style="width: 1em;" type="checkbox" name="Main1_Debug"
-									title="Debug messages on Serial log">
-								Debug enabled</label>
+									title="Print Debug messages to serial output(s)">
+								Debug </label>
 							<input class="setButton" type="submit" value="Set">
 						</p>
 					</form>
@@ -192,26 +195,53 @@
 							<input class="setButton" type="submit" value="Set">
 						</p>
 					</form>
-					<form>
-						<p>
-							<label>
-								<input style="width: 1em;" type="checkbox" name="Main1_JSON"
-									title="Serial log reports are sent in a JSON format when enabled">
-								JSON serial </label>
-							<input class="setButton" type="submit" value="Set">
-						</p>
-					</form>
 				</div>
 			</div>
 			<div class="card">
-				<h1>Reporting</h1>
-				<b>Google Sheets reporting (HTTP REST API)</b>
+				<h1>Serial reporting</h1>
+				<table>
+					<form class="SimpleSturcture">
+						<p>
+							<label>
+								<input style="width: 1em;" type="checkbox" name="Main1_Date"
+									title="Serial log reports are sent in a JSON format when enabled">
+								Date</label>
+							<input class="setButton" type="submit" value="Set">
+							<label style="padding-left: 2em;">
+								<input style="width: 1em;" type="checkbox" name="Main1_Mem"
+									title="Serial log reports are sent in a JSON format when enabled">
+								Free memory </label>
+							<input class="setButton" type="submit" value="Set">
+						</p>
+					</form>					
+					<form class="SimpleSturcture">
+						<p>
+							<label>
+								<input style="width: 1em;" type="checkbox" name="Main1_Text" />
+								<!-- Enable/disable text based reporting to Serial(s) -->
+								Text report</label>
+							<input class="setButton" type="submit" value="Set" />
+							<label style="padding-left: 2em;">
+								<input style="width: 1em;" type="checkbox" name="Main1_JSON" />
+								<!-- Enable/disable JSON based reporting to Serial(s) -->
+								JSON report</label>
+							<input class="setButton" type="submit" value="Set" />
+						</p>
+					</form>
+				</table>
+				</form>
+			</div>
+			<div class="card">
+				<h1>REST API Reporting</h1>
+				<b>Google Sheets reporting</b>
 				<form>
 					<p>
 						<label>
 							<input style="width: 1em;" type="checkbox" name="Main1_Sheets" />
+							<!-- Enable/disable Google Sheets reporting via PushingBox (HTTP REST API) -->
 							Report every </label>
 						<input min=10 max=1440 step=5 name="Main1_SheetsF" type="number" />min
+						<!-- Reporting frequency-->
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
@@ -223,28 +253,34 @@
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
-				<b>MQTT reporting</b>
-				<!--<form><label><input type="checkbox" name="Main1_MqttEnabled">MQTT </label><input class="setButton" type="submit" value="Set"> <button id="btn_Mqtt" type="button">Trigger</button></form>-->
+			</div>
+		</div>
+		<div class="pure-u-1 pure-u-md-1-2">
+			<div class="card">
+				<h1>MQTT reporting</h1>
 				<form>
 					<p>
 						<label>
 							<input style="width: 1em;" type="checkbox" name="Main1_MQTT" />
 							Report every </label>
-						<input min=1 max=1440 step=1 name="Main1_MQTTF" type="number" />min
+						<input min=5 max=1440 step=5 name="Main1_MQTTF" type="number" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
 						<label>Publish</label>
-						<input type="text" name="Main1_MPT" style="width: 205px;" title="MQTT topic where a JSON formatted status report is sent too" maxlength="127" />
+						<input type="text" name="Main1_MPT" style="width: 205px;"
+							title="MQTT topic where a JSON formatted status report is sent too" maxlength="127" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<form>
 					<p>
 						<label>Subscribe</label>
-						<input type="text" name="Main1_MST" style="width: 190px;" title="MQTT topic that the Gbox420 sketch listens on for incoming commands" maxlength="127" />
+						<input type="text" name="Main1_MST" style="width: 190px;"
+							title="MQTT topic that the Gbox420 sketch listens on for incoming commands"
+							maxlength="127" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
@@ -266,19 +302,21 @@
 					</p>
 				</form>
 			</div>
-		</div>
-		<div class="pure-u-1 pure-u-md-1-2">
 			<div class="card">
 				<h1><span id="Main1_Time"></span></h1>
 				<ul id="Main1_Log"></ul>
 				<form>
 					<p>
-						<button id="Main1_Refresh" type="button" title="Force refreshing sensor readings">&#8635;</button>
+						<button id="Main1_Refresh" type="button"
+							title="Force refreshing sensor readings">&#8635;</button>
 						Report to:
-						<button id="Main1_SerialRep" type="button" title="Report current status to Serial (ESP and Arduino)">Console</button>
-						<button id="Main1_SheetsRep" type="button" title="Report current status to Google Sheets">Sheets</button>
-						<button id="Main1_MQTTRep" type="button" title="Report current status to Google Sheets">MQTT</button>
-						</p>
+						<button id="Main1_SerialRep" type="button"
+							title="Report current status to Serial (ESP and Arduino)">Console</button>
+						<button id="Main1_SheetsRep" type="button"
+							title="Report current status to Google Sheets">Sheets</button>
+						<button id="Main1_MQTTRep" type="button"
+							title="Report current status to Google Sheets">MQTT</button>
+					</p>
 				</form>
 			</div>
 		</div>

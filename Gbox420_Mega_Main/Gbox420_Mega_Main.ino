@@ -319,6 +319,10 @@ void refreshCallback(__attribute__((unused)) char *Url)
 */
 void buttonCallback(char *Button)
 {
+  if(*Debug)
+  {
+   logToSerials(Button,true,0);
+  }
   if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
   {
     restoreDefaults();

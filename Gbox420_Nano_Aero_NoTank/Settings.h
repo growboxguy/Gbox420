@@ -44,11 +44,13 @@ typedef struct
   //<initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroponicsModuleSettings
   {
-    AeroponicsModuleSettings(bool JSONToSerialMode = true, bool RealTimeMode = true) : JSONToSerialMode(JSONToSerialMode), RealTimeMode(RealTimeMode) {}
-    bool JSONToSerialMode; ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool RealTimeMode;     ///< Enable/disable sending a full JSON report every 5 seconds via Serial. Enables the JSONToSerialMode as well!
+    AeroponicsModuleSettings(bool ReportDate = true, bool ReportMemory = true, bool ReportToText = true, bool ReportToJSON = true) :  ReportDate(ReportDate), ReportMemory(ReportMemory), ReportToText(ReportToText), ReportToJSON(ReportToJSON) {}
+    bool ReportDate;                  ///< Enable/disable reporting the current time to the Serial output
+    bool ReportMemory;                ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool ReportToText;                ///< Enable/disable sending Text formatted reports to the Serial output
+    bool ReportToJSON;                ///< Enable/disable sending JSON formatted reports to the Serial output
   };
-  struct AeroponicsModuleSettings Aero1 = {.JSONToSerialMode = false, .RealTimeMode = false};
+  struct AeroponicsModuleSettings Aero1 = {.ReportDate = false, .ReportMemory = false, .ReportToText = false, .ReportToJSON = false};
 
   struct AeroponicsSettings
   {

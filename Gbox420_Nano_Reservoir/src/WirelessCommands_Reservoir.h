@@ -54,11 +54,14 @@ struct ReservoirCommonTemplate ///< Shared between Command and Respone packages
 struct ReservoirModuleCommand : ReservoirCommonTemplate ///< Max 32 bytes. Command sent by the Main module
 {
    ReservoirModuleCommand(__attribute__((unused)) ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
-   ReservoirModuleCommand(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) bool JSONToSerialMode) : ReservoirCommonTemplate(SequenceID) {}
+   ReservoirModuleCommand(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) bool ReportDate, __attribute__((unused)) bool ReportMemory, __attribute__((unused)) bool ReportToText, __attribute__((unused)) bool ReportToJSON) : ReservoirCommonTemplate(SequenceID) {}
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
-   bool JSONToSerialMode = true;
+   bool ReportDate = true;
+   bool ReportMemory = true;
+   bool ReportToText = true;
+   bool ReportToJSON = true;
 };
 
 struct ReservoirModuleResponse : ReservoirCommonTemplate ///< Max 32 bytes. Response sent back to the Main module
@@ -78,7 +81,7 @@ struct ReservoirCommand : ReservoirCommonTemplate ///< Max 32 bytes. Command sen
 struct ReservoirResponse : ReservoirCommonTemplate ///< Max 32 bytes. Response sent back to the Main module
 {
    ReservoirResponse(__attribute__((unused)) ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
-   ReservoirResponse(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) float PH,  __attribute__((unused)) float TDS, __attribute__((unused)) float Weight, __attribute__((unused)) float WaterTemperature, __attribute__((unused)) float AirTemperature, __attribute__((unused)) float Humidity) : ReservoirCommonTemplate(SequenceID) {}
+   ReservoirResponse(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) float PH, __attribute__((unused)) float TDS, __attribute__((unused)) float Weight, __attribute__((unused)) float WaterTemperature, __attribute__((unused)) float AirTemperature, __attribute__((unused)) float Humidity) : ReservoirCommonTemplate(SequenceID) {}
    float PH = 0.0;
    float TDS = 0.0;
    float Weight = 0.0;

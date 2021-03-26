@@ -17,12 +17,15 @@
 */
 MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common_Web(Name), Common(Name), Module_Web(Wireless)
 {
-  SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
+  ReportDate = &DefaultSettings->ReportDate;
+  ReportMemory = &DefaultSettings->ReportMemory;
+  ReportToText = &DefaultSettings->ReportToText;
+  ReportToJSON = &DefaultSettings->ReportToJSON;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
+  SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency; 
+  ReportToMQTT = &DefaultSettings->ReportToMQTT; 
   MQTTReportingFrequency = &DefaultSettings->MQTTReportingFrequency;
-  ReportToMQTT = &DefaultSettings->ReportToMQTT;
-  JSONToSerialMode = &DefaultSettings->JSONToSerialMode;
-  RealTimeMode = &DefaultSettings->RealTimeMode;
+  
   logToSerials(F(""), true, 0);                                   //<Line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;                                   ///< Pointer for child objects to use sound feedback
@@ -98,7 +101,7 @@ void MainModule::websiteEvent_Load(char *url)
   {
     WebServer.setArgInt(getComponentName(F("Debug")), *Debug);
     WebServer.setArgInt(getComponentName(F("Metric")), *Metric);
-    WebServer.setArgInt(getComponentName(F("JSON")), *JSONToSerialMode);
+    WebServer.setArgInt(getComponentName(F("JSON")), *ReportToJSON);
     WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
     WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
     WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
@@ -417,7 +420,7 @@ void MainModule::refresh_FiveSec()
   if (*Debug)
   {
     Common::refresh_FiveSec();
-    runReport(*JSONToSerialMode, true, false);
+    runReport(*ReportToJSON, true, false);
   }
   if (RefreshAllRequested)
   {
@@ -432,7 +435,7 @@ void MainModule::refresh_FiveSec()
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
-    runReport(*JSONToSerialMode, true, false);
+    runReport(*ReportToJSON, true, false);
   }
   if (MQTTReportRequested)
   {
@@ -445,7 +448,7 @@ void MainModule::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();
-  runReport(*JSONToSerialMode, true, false);
+  runReport(*ReportToJSON, true, false);
   reportToGoogleSheetsTrigger();
   reportToMQTTTrigger();
 }
