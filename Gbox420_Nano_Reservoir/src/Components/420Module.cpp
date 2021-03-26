@@ -188,12 +188,10 @@ void Module::setDebug(bool DebugEnabled)
     *Debug = DebugEnabled;
     if (*Debug)
     {
-      addToLog(F("Debug ON"));
       getSoundObject()->playOnSound();
     }
     else
     {
-      addToLog(F("Debug OFF"));
       getSoundObject()->playOffSound();
     }
   }
@@ -205,10 +203,6 @@ void Module::setMetric(bool MetricEnabled)
   { //if there was a change
     *Metric = MetricEnabled;
     RunAllRequested = true; ///< Force a full sensor reading refresh
-    if (*Metric)
-      addToLog(F("Metric"));
-    else
-      addToLog(F("Imperial"));
     getSoundObject()->playOnSound();
   }
 }
