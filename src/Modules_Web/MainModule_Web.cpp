@@ -435,9 +435,9 @@ void MainModule::refresh_FiveSec()
 {
   if (*Debug)
   {
-    Common::refresh_FiveSec();
-    runReport();
+    Common::refresh_FiveSec();    
   }
+  runReport();
   if (RefreshAllRequested)
   {
     RefreshAllRequested = false;
@@ -464,7 +464,6 @@ void MainModule::refresh_Minute()
 {
   if (*Debug)
     Common::refresh_Minute();
-  runReport();
   reportToGoogleSheetsTrigger();
   reportToMQTTTrigger();
 }

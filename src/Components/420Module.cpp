@@ -51,7 +51,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONOnly)
     }
     for (int i = 0; i < reportQueueItemCount;)
     {
-      ReportQueue[i++]->report();
+      ReportQueue[i++]->report(true);
       if (i != reportQueueItemCount)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
@@ -65,7 +65,6 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONOnly)
   }
   if (*ReportToText && !JSONOnly)
   {
-
     logToSerials(reportQueueItemCount, false, 2); ///< Prints the number of items that will report
     logToSerials(F("reporting:"), true, 1);
     for (int i = 0; i < reportQueueItemCount; i++)
