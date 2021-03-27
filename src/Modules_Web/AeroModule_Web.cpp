@@ -307,7 +307,7 @@ void AeroModule_Web::sendMessages()
   sendCommand(&AeroCommand2ToSend); ///< Command - Response exchange
   sendCommand(&AeroResetToSend);    ///< special Command, resets communication to first message
   if (*Debug)
-    logToSerials(F("Message exchange finished"), true, 3);
+    logToSerials(F("Message exchange finished"), true, 1);
 }
 
 /**
