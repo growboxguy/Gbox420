@@ -171,7 +171,7 @@ void getWirelessStatus()
 {
   if (*Debug)
   {
-    logToSerials(F("Wireless report:"), true, 0);
+    //logToSerials(F("Wireless report:"), true, 0);
     Wireless.printPrettyDetails();
     logToSerials(F(""), true, 0);
   }

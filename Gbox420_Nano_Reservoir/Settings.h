@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this when you make a change in the SAVED TO EEPROM section
+static const uint8_t Version = 4; ///< Increment this when you make a change in the SAVED TO EEPROM section
 
 ///< NOT SAVED TO EEPROM
 
@@ -44,13 +44,14 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct ReservoirModuleSettings
   {
-    ReservoirModuleSettings(bool ReportDate = true, bool ReportMemory = true, bool ReportToText = true, bool ReportToJSON = true) : ReportDate(ReportDate), ReportMemory(ReportMemory), ReportToText(ReportToText), ReportToJSON(ReportToJSON) {}
-    bool ReportDate;   ///< Enable/disable reporting the current time to the Serial output
-    bool ReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool ReportToText; ///< Enable/disable sending Text formatted reports to the Serial output
-    bool ReportToJSON; ///< Enable/disable sending JSON formatted reports to the Serial output
+    ReservoirModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportToText = true, bool SerialReportToJSON = true) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportToText(SerialReportToText), SerialReportToJSON(SerialReportToJSON) {}
+    uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
+    bool SerialReportDate;   ///< Enable/disable reporting the current time to the Serial output
+    bool SerialReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool SerialReportToText; ///< Enable/disable sending Text formatted reports to the Serial output
+    bool SerialReportToJSON; ///< Enable/disable sending JSON formatted reports to the Serial output
   };
-  struct ReservoirModuleSettings Res1 = {.ReportDate = true, .ReportMemory = true, .ReportToText = true, .ReportToJSON = true};
+  struct ReservoirModuleSettings Res1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportToText = true, .SerialReportToJSON = true};
 
   struct DHTSensorSettings ///< DHTSensor default settings
   {

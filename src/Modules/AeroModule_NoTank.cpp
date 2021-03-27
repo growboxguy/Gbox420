@@ -20,7 +20,7 @@ unsigned long LastMessageSent = 0;                                     //When wa
 
 AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModuleSettings *DefaultSettings) : Common(Name), Module()
 {
-  SerialReportFrequency = &DefaultSettings->SerialReportFrequency
+  SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
   SerialReportToText = &DefaultSettings->SerialReportToText;

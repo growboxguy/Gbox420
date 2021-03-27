@@ -4,7 +4,7 @@
 
 void getFreeMemory()
 {
-  logToSerials(F("Free(bytes):"), false, 0);
+  logToSerials(F("Free bytes:"), false, 0);
   itoa(freeMemory(), ShortMessage, 10);
   logToSerials(&ShortMessage, true, 1);
 }
@@ -217,10 +217,7 @@ char *toText_onOffDisabled(bool Enabled, bool OnStatus)
     return toText(F("DISABLED"));
   else
   {
-    if (OnStatus)
-      return toText(F("ON"));
-    else
-      return toText(F("OFF"));
+    return toText_onOff(OnStatus);
   }
 }
 

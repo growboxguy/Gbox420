@@ -49,7 +49,7 @@ void AeroModule::refresh_Sec()
   if (NextSequenceID != AeroMessages::AeroModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   {                                                     ///< If there is a package exchange in progress
     NextSequenceID = AeroMessages::AeroModuleResponse1; ///< Reset back to the first response
-    logToSerials(F("Message timeout"), true, 0);
+    //logToSerials(F("Message timeout"), true, 0);
     updateAckData();
   }
 }
@@ -98,7 +98,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->Metric, false, 1);
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
-    logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemoryMemory, false, 1);
+    logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportToText, false, 1);
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportToJSON, true, 1);
     break;
@@ -162,7 +162,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     logToSerials(F("-"), true, 1);
     break;
   default:
-    logToSerials(F("SequenceID unknown"), true, 1);
+    //logToSerials(F("SequenceID unknown"), true, 1);
     Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     Wireless.flush_rx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     break;
