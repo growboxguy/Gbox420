@@ -39,7 +39,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
   }
   if (*ReportToText && !JSONToBufferOnly)
   {
-    logToSerials(reportQueueItemCount, false, 2); ///< Prints the number of items that will report
+    logToSerials(reportQueueItemCount, false, 0); ///< Prints the number of items that will report
     logToSerials(F("reporting:"), true, 1);
     for (int i = 0; i < reportQueueItemCount; i++)
     {

@@ -22,7 +22,7 @@ void Common::report(bool JSONReport)
   }
   else //Print a report to the Serial console
   {
-    logToSerials(Name, false, 4);
+    logToSerials(Name, false, 2);
     logToSerials(F("-"), false, 1); ///< Prints "    COMPONENTNAME -" to the console
   }
 }
