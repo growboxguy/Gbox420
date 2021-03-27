@@ -17,6 +17,7 @@
 */
 MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common_Web(Name), Common(Name), Module_Web(Wireless)
 {
+  SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
   SerialReportToText = &DefaultSettings->SerialReportToText;
@@ -109,7 +110,7 @@ void MainModule::websiteEvent_Load(char *url)
   {
     WebServer.setArgInt(getComponentName(F("Debug")), *Debug);
     WebServer.setArgInt(getComponentName(F("Metric")), *Metric);
-    //WebServer.setArgInt(getComponentName(F("SerialF")), *SerialReportFrequency);
+    WebServer.setArgInt(getComponentName(F("SerialF")), *SerialReportFrequency);
     WebServer.setArgInt(getComponentName(F("Date")), *SerialReportDate);
     WebServer.setArgInt(getComponentName(F("Mem")), *SerialReportMemory);
     WebServer.setArgInt(getComponentName(F("Text")), *SerialReportToText);
@@ -383,21 +384,25 @@ void MainModule::commandEvent(char *Command, char *Data)
       setMetric(toBool(Data));
     }
     //Settings - Serial reporting
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SerialF")) == 0)
+    {
+      setSerialReportingFrequency(toInt(Data));
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Date")) == 0)
     {
-      setReportDate(toBool(Data));
+      setSerialReportDate(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Mem")) == 0)
     {
-      setReportMemory(toBool(Data));
+      setSerialReportMemory(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Text")) == 0)
     {
-      setReportToText(toBool(Data));
+      setSerialReportToText(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("JSON")) == 0)
     {
-      setReportToJSON(toBool(Data));
+      setSerialReportToJSON(toBool(Data));
     }
     //Settings - Google Sheets
     else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0)
@@ -443,7 +448,8 @@ void MainModule::commandEvent(char *Command, char *Data)
 void MainModule::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
-  runReport();
+  reportToSerialTrigger();
+  reportToMQTTTrigger();
   if (RefreshAllRequested)
   {
     RefreshAllRequested = false;
@@ -469,8 +475,7 @@ void MainModule::refresh_FiveSec()
 void MainModule::refresh_Minute()
 {
   Common::refresh_Minute();
-  reportToGoogleSheetsTrigger();
-  reportToMQTTTrigger();
+  reportToGoogleSheetsTrigger();  
 }
 
 bool MainModule::getDayMode()
@@ -548,7 +553,7 @@ void MainModule::setPushingBoxLogRelayID(const char *ID)
 
 void MainModule::reportToGoogleSheetsTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets
-  if ((*ReportToGoogleSheets && SheetsRefreshCounter++ % (*SheetsReportingFrequency) == 0) || ForceRun)
+  if ((*ReportToGoogleSheets && SheetsTriggerCounter++ % (*SheetsReportingFrequency) == 0) || ForceRun)
   {
     addPushingBoxLogRelayID();         //Loads Pushingbox relay ID into LongMessage
     runReport(false, true, true);      //Append the sensor readings in a JSON format to LongMessage buffer
@@ -610,7 +615,7 @@ void MainModule::setMQTTLWTMessage(const char *LWTMessage)
 
 void MainModule::reportToMQTTTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
-  if ((*ReportToMQTT && MQTTRefreshCounter++ % (*MQTTReportFrequency) == 0) || ForceRun)
+  if ((*ReportToMQTT && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
   {
     runReport(true, true, true); //< Loads a JSON Log to LongMessage buffer
     mqttPublish(&LongMessage);   //  and publish readings via ESP MQTT API
