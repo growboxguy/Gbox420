@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -117,7 +117,7 @@ typedef struct
     bool ReportToMQTT;                 ///< Enable/disable reporting sensor readings to an MQTT broker
     uint16_t MQTTReportingFrequency;   ///< How often to report to MQTT. Min 1min, Max 1440 (1day)
   };
-  struct MainModuleSettings Main1 = {.ReportDate = false, .ReportMemory = false, .ReportToText = false, .ReportToJSON = false, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportingFrequency = 1};
+  struct MainModuleSettings Main1 = {.ReportDate = true, .ReportMemory = true, .ReportToText = true, .ReportToJSON = true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportingFrequency = 1};
 
   struct HempyModuleSettings ///< Hempy default settings
   {

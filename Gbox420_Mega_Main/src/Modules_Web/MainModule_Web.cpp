@@ -79,17 +79,17 @@ void MainModule::report(bool JSONReport)
     Common::report();
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)F("Debug:"));
-    strcat(LongMessage, toText_enabledDisabled(Debug));
+    strcat(LongMessage, toText_enabledDisabled(*Debug));
     strcat_P(LongMessage, (PGM_P)F(" ; Metric mode:"));
-    strcat(LongMessage, toText_enabledDisabled(Metric));
+    strcat(LongMessage, toText_enabledDisabled(*Metric));
     strcat_P(LongMessage, (PGM_P)F(" ; Report date:"));
-    strcat(LongMessage, toText_yesNo(ReportDate));
+    strcat(LongMessage, toText_yesNo(*ReportDate));
     strcat_P(LongMessage, (PGM_P)F(" ; Report memory:"));
-    strcat(LongMessage, toText_yesNo(ReportMemory));
+    strcat(LongMessage, toText_yesNo(*ReportMemory));
     strcat_P(LongMessage, (PGM_P)F(" ; Report text:"));
-    strcat(LongMessage, toText_yesNo(ReportToText));
+    strcat(LongMessage, toText_yesNo(*ReportToText));
     strcat_P(LongMessage, (PGM_P)F(" ; Report JSON:"));
-    strcat(LongMessage, toText_yesNo(ReportToJSON));
+    strcat(LongMessage, toText_yesNo(*ReportToJSON));
     logToSerials(&LongMessage, true, 1);
   }
 }

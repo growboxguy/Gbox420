@@ -29,18 +29,18 @@ class MainModule : virtual public Common_Web, public Module_Web
 {
 public:
   MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless); ///< constructor
-  Sound *Sound1;                                                                                          ///< Pointer to a Piezo speaker - sound feedback
-  Fan *IFan;                                                                                              ///< Internal fan
-  Fan *EFan;  
-  Fan_PWM *FanI;                                                                                              ///< Internal fan
-  Fan_PWM *FanE;                                                                                               ///< Exhaust fan
-  AirPump *APump1;                                                                                        ///< Air pump
-  Lights *Lt1;                                                                                            ///< Pointer to a Light assembly No1
-  Lights *Lt2;                                                                                            ///< Pointer to a Light assembly No2
-  LightSensor *LtSen1;                                                                                    ///< Pointer to a Light Sensor object measuring light intensity in the grow box
+  Sound *Sound1;                                                                                              ///< Pointer to a Piezo speaker - sound feedback
+  Fan *IFan;                                                                                                  ///< Internal fan
+  Fan *EFan;
+  Fan_PWM *FanI;       ///< Internal fan
+  Fan_PWM *FanE;       ///< Exhaust fan
+  AirPump *APump1;     ///< Air pump
+  Lights *Lt1;         ///< Pointer to a Light assembly No1
+  Lights *Lt2;         ///< Pointer to a Light assembly No2
+  LightSensor *LtSen1; ///< Pointer to a Light Sensor object measuring light intensity in the grow box
   //PowerSensor *Pow1;   ///< For PZEM004T V1.0 or PZEM004T V2.0
-  PowerSensorV3 *Pow1;               ///< Only for PZEM004T V3.0
-  DHTSensor *DHT1;                   ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
+  PowerSensorV3 *Pow1;                   ///< Only for PZEM004T V3.0
+  DHTSensor *DHT1;                       ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   AeroModule_Web *AeroModule1;           ///< <Represents the website controls and feedback for a AeroModule
   ReservoirModule_Web *ReservoirModule1; ///< <Represents the website controls and feedback for a ReservoirModule
   HempyModule_Web *HempyModule1;         ///< <Represents the website controls and feedback for a HempyModule
@@ -56,7 +56,6 @@ public:
                      // void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
 
 private:
-
   void setDebug(bool DebugEnabled);
   void setMetric(bool MetricEnabled);
   void setSheetsReportingOnOff(bool State);
@@ -68,21 +67,16 @@ private:
   void setMqttSubscribeTopic(const char *ID);
   void setMQTTLWTTopic(const char *ID);
   void setMQTTLWTMessage(const char *ID);
-   
 
 protected:
   bool RefreshAllRequested = false;
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;
   bool MQTTReportRequested = false;
-  bool * ReportDate;
-  bool * ReportMemory;
-  bool * ReportToText;
-  bool * ReportToJSON;  
   bool *ReportToGoogleSheets;
   uint16_t *SheetsReportingFrequency;
   uint8_t SheetsRefreshCounter = 0;
   bool *ReportToMQTT;
-  uint16_t *MQTTReportingFrequency;  
-  uint8_t MQTTRefreshCounter = 0;  
+  uint16_t *MQTTReportingFrequency;
+  uint8_t MQTTRefreshCounter = 0;
 };
