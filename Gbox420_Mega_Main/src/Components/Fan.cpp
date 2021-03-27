@@ -21,7 +21,7 @@ Fan::Fan(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings 
 
 void Fan::refresh_Minute()
 {
-Common::refresh_Minute();
+  Common::refresh_Minute();
   checkFanStatus();
 }
 

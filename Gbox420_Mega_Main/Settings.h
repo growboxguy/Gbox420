@@ -108,10 +108,10 @@ typedef struct
   struct MainModuleSettings ///< MainModule default settings
   {
     MainModuleSettings(bool ReportDate = true, bool ReportMemory = true, bool ReportToText = true, bool ReportToJSON = true, bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMQTT = false, uint16_t MQTTReportingFrequency = 0) : ReportDate(ReportDate), ReportMemory(ReportMemory), ReportToText(ReportToText), ReportToJSON(ReportToJSON), ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMQTT(ReportToMQTT), MQTTReportingFrequency(MQTTReportingFrequency) {}
-    bool ReportDate;                  ///< Enable/disable reporting the current time to the Serial output
-    bool ReportMemory;                ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool ReportToText;                ///< Enable/disable sending Text formatted reports to the Serial output
-    bool ReportToJSON;                ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool ReportDate;                   ///< Enable/disable reporting the current time to the Serial output
+    bool ReportMemory;                 ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool ReportToText;                 ///< Enable/disable sending Text formatted reports to the Serial output
+    bool ReportToJSON;                 ///< Enable/disable sending JSON formatted reports to the Serial output
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
     uint16_t SheetsReportingFrequency; ///< How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
     bool ReportToMQTT;                 ///< Enable/disable reporting sensor readings to an MQTT broker

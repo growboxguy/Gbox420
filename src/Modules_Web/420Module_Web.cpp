@@ -143,7 +143,6 @@ char *Module_Web::eventLogToJSON(bool IncludeKey, bool ClearBuffer)
   return LongMessage;
 }
 
-
 ///< Google Sheets functions - https://sites.google.com/site/growboxguy/esp-link/logging
 
 /**

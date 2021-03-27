@@ -25,7 +25,7 @@ public:
   ///< @param DefaultSettings A pointer to the default settings stuct loaded from EEPROM. Defined in Settings.h
 
   AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModuleSettings *DefaultSettings); ///< constructor
-  Sound *Sound1 = NULL;                        ///< Pointer to a Piezo speaker - sound feedback
+  Sound *Sound1 = NULL;                                                                             ///< Pointer to a Piezo speaker - sound feedback
   PressureSensor *Pres1 = NULL;
   PressurePump *Pump1 = NULL;
   Aeroponics_NoTank *AeroNT1 = NULL;

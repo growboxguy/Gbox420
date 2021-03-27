@@ -16,7 +16,7 @@ WaterTempSensor::WaterTempSensor(const __FlashStringHelper *Name, Module *Parent
 void WaterTempSensor::report(bool JSONReport)
 {
   Common::report(JSONReport); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  if (JSONReport)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
     strcat(LongMessage, getTempText(false));

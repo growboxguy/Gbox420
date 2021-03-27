@@ -12,7 +12,7 @@ class Common_Web : virtual public Common
 public:
   virtual void websiteEvent_Load(__attribute__((unused)) char *url) = 0;
   virtual void websiteEvent_Refresh(__attribute__((unused)) char *url) = 0;
-  virtual void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data) = 0;  
+  virtual void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data) = 0;
 
 private:
 protected:

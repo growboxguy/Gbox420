@@ -5,7 +5,7 @@
 void getFreeMemory()
 {
   logToSerials(F("Free(bytes):"), false, 0);
-  itoa(freeMemory(), ShortMessage, 10);  
+  itoa(freeMemory(), ShortMessage, 10);
   logToSerials(&ShortMessage, true, 1);
 }
 

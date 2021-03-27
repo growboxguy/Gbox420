@@ -44,11 +44,11 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct HempyModuleSettings
   {
-    HempyModuleSettings(bool ReportDate = true, bool ReportMemory = true, bool ReportToText = true, bool ReportToJSON = true) :  ReportDate(ReportDate), ReportMemory(ReportMemory), ReportToText(ReportToText), ReportToJSON(ReportToJSON) {}
-    bool ReportDate;                  ///< Enable/disable reporting the current time to the Serial output
-    bool ReportMemory;                ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool ReportToText;                ///< Enable/disable sending Text formatted reports to the Serial output
-    bool ReportToJSON;                ///< Enable/disable sending JSON formatted reports to the Serial outpu
+    HempyModuleSettings(bool ReportDate = true, bool ReportMemory = true, bool ReportToText = true, bool ReportToJSON = true) : ReportDate(ReportDate), ReportMemory(ReportMemory), ReportToText(ReportToText), ReportToJSON(ReportToJSON) {}
+    bool ReportDate;   ///< Enable/disable reporting the current time to the Serial output
+    bool ReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool ReportToText; ///< Enable/disable sending Text formatted reports to the Serial output
+    bool ReportToJSON; ///< Enable/disable sending JSON formatted reports to the Serial outpu
   };
   struct HempyModuleSettings Hemp1 = {.ReportDate = true, .ReportMemory = true, .ReportToText = true, .ReportToJSON = true};
 
@@ -56,13 +56,13 @@ typedef struct
   {
     HempyBucketSettings(float EvaporationTarget = 0.0, float OverflowTarget = 0.0, float WasteLimit = 0.0, float InitialDryWeight = 0.0, uint16_t DrainWaitTime = 0) : EvaporationTarget(EvaporationTarget), OverflowTarget(OverflowTarget), WasteLimit(WasteLimit), InitialDryWeight(InitialDryWeight), DrainWaitTime(DrainWaitTime) {}
     float EvaporationTarget; //< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
-    float OverflowTarget; //< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
-    float WasteLimit;  ///< Waste reservoir full weight -> Pump gets disabled if reached
-    float InitialDryWeight; ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until OverflowTarget is reached.
-    uint16_t DrainWaitTime; ///< (sec) How long to wait after watering for the water to drain
+    float OverflowTarget;    //< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+    float WasteLimit;        ///< Waste reservoir full weight -> Pump gets disabled if reached
+    float InitialDryWeight;  ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until OverflowTarget is reached.
+    uint16_t DrainWaitTime;  ///< (sec) How long to wait after watering for the water to drain
   };
-  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .DrainWaitTime=180};
-  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .DrainWaitTime=180};
+  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
 
   struct SoundSettings ///< Sound default settings
   {

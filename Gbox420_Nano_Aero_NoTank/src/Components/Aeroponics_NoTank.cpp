@@ -27,7 +27,7 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Pa
 void Aeroponics_NoTank::report(bool JSONReport)
 {
   Common::report(JSONReport); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  if (JSONReport)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"LS\":\""));
     strcat(LongMessage, toText(LastSprayPressure));
@@ -84,7 +84,7 @@ void Aeroponics_NoTank::updateState(AeroNoTankStates NewState) ///< Without a pa
 {
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState && *Debug)
-  {    
+  {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)Name);
     strcat_P(LongMessage, (PGM_P)F(" state: "));

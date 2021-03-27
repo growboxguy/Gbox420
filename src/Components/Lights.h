@@ -23,10 +23,10 @@ public:
   void setBrightness(uint8_t Brightness, bool AddToLog, bool StoreSetting);
   void setLightOnOff(bool State, bool AddToLog);
   void setTimerOnOff(bool State);
-  void setOnTime(char *OnTime);  //Format: hhmm (24h). Example: 0420 (4:20AM), 1620 (4:20PM). Single digit hour or minute should have a 0 in front!
+  void setOnTime(char *OnTime); //Format: hhmm (24h). Example: 0420 (4:20AM), 1620 (4:20PM). Single digit hour or minute should have a 0 in front!
   void setOnHour(uint8_t OnHour);
   void setOnMinute(uint8_t OnMinute);
-  void setOffTime(char *OffTime);  //Format: hhmm (24h). Example: 0420 (4:20AM), 1620 (4:20PM). Single digit hour or minute should have a 0 in front!
+  void setOffTime(char *OffTime); //Format: hhmm (24h). Example: 0420 (4:20AM), 1620 (4:20PM). Single digit hour or minute should have a 0 in front!
   void setOffHour(uint8_t OffHour);
   void setOffMinute(uint8_t OffMinute);
 

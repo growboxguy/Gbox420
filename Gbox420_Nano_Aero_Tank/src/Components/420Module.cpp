@@ -70,8 +70,9 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
       }
     }
     strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
-    if(!JSONToBufferOnly) logToSerials(&LongMessage, true, 0);
-  } 
+    if (!JSONToBufferOnly)
+      logToSerials(&LongMessage, true, 0);
+  }
 }
 
 ///< Refresh queues: Refresh components inside the Module

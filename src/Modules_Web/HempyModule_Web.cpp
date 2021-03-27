@@ -324,7 +324,7 @@ void HempyModule_Web::refresh_FiveSec()
 
 void HempyModule_Web::refresh_Minute()
 {
-Common::refresh_Minute();
+  Common::refresh_Minute();
 }
 
 void HempyModule_Web::sendMessages()

@@ -12,12 +12,12 @@ public:
   WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings);
   void refresh_FiveSec();
   void report(bool JSONReport = false);
-  float readWeight(bool ReturnAverage=true);
-  float getWeight(bool ReturnAverage=true);
-  char *getWeightText(bool ReturnAverage=true, bool IncludeUnits = false);
+  float readWeight(bool ReturnAverage = true);
+  float getWeight(bool ReturnAverage = true);
+  char *getWeightText(bool ReturnAverage = true, bool IncludeUnits = false);
   void triggerTare();
   void triggerCalibration(int CalibrationWeight);
-  void setScale(float Scale);  
+  void setScale(float Scale);
   float *Scale; ///< Calibration value: Raw reading of one unit
   long *Offset; ///< Read value at no weight on the scale
 
@@ -25,9 +25,9 @@ private:
 protected:
   Module *Parent;
   HX711 *Sensor;
-   
+
   float Weight = 0.0;
-  movingAvg *AverageWeight; 
+  movingAvg *AverageWeight;
   void tare();
   void calibrate();
 

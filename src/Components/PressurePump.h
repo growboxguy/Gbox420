@@ -19,11 +19,11 @@ public:
   void setSpeed(uint8_t DutyCycle); //Set PWM duty cycle
 
   void startPump(bool ResetState = false); ///< Turn the pump ON
-  void stopPump(bool ResetState = false);                          ///< Turn the pump OFF
-  void disablePump();                       ///< Disable the pump
+  void stopPump(bool ResetState = false);  ///< Turn the pump OFF
+  void disablePump();                      ///< Disable the pump
   void startMixing();
 
-  void turnBypassOn(bool KeepOpen = false);  ///< KeepOpen False - Opens the bypass vale for a short period to blow off pressure, KeepOpen True: Keep the bypass open up to BypassSolenoidMaxOpenTime
+  void turnBypassOn(bool KeepOpen = false); ///< KeepOpen False - Opens the bypass vale for a short period to blow off pressure, KeepOpen True: Keep the bypass open up to BypassSolenoidMaxOpenTime
   void turnBypassOff();
 
   void startPrime();
@@ -56,6 +56,6 @@ protected:
   uint16_t *PumpTimeOut = NULL;                ///< Max pump run time in seconds
   uint16_t *BypassSolenoidMaxOpenTime = NULL;  ///< (sec) Max time the bypass can stay open
   uint16_t *BypassSolenoidClosingDelay = NULL; ///< (ms) How long it takes for the solenoid to close
-  uint16_t *PrimingTime = NULL;                     ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
-  uint16_t *BlowOffTime = NULL;                     ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
+  uint16_t *PrimingTime = NULL;                ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Remove air bubbles from pump intake side
+  uint16_t *BlowOffTime = NULL;                ///< (Sec) For how long to open the bypass solenoid on after turning the pump off - Release pressure from pump discharge side
 };

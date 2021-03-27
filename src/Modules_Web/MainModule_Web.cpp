@@ -478,7 +478,7 @@ void MainModule::refresh_FiveSec()
 
 void MainModule::refresh_Minute()
 {
-Common::refresh_Minute();
+  Common::refresh_Minute();
   reportToGoogleSheetsTrigger();
   reportToMQTTTrigger();
 }

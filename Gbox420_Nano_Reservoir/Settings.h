@@ -44,11 +44,11 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct ReservoirModuleSettings
   {
-    ReservoirModuleSettings(bool ReportDate = true, bool ReportMemory = true, bool ReportToText = true, bool ReportToJSON = true) :  ReportDate(ReportDate), ReportMemory(ReportMemory), ReportToText(ReportToText), ReportToJSON(ReportToJSON) {}
-    bool ReportDate;                  ///< Enable/disable reporting the current time to the Serial output
-    bool ReportMemory;                ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool ReportToText;                ///< Enable/disable sending Text formatted reports to the Serial output
-    bool ReportToJSON;                ///< Enable/disable sending JSON formatted reports to the Serial output
+    ReservoirModuleSettings(bool ReportDate = true, bool ReportMemory = true, bool ReportToText = true, bool ReportToJSON = true) : ReportDate(ReportDate), ReportMemory(ReportMemory), ReportToText(ReportToText), ReportToJSON(ReportToJSON) {}
+    bool ReportDate;   ///< Enable/disable reporting the current time to the Serial output
+    bool ReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool ReportToText; ///< Enable/disable sending Text formatted reports to the Serial output
+    bool ReportToJSON; ///< Enable/disable sending JSON formatted reports to the Serial output
   };
   struct ReservoirModuleSettings Res1 = {.ReportDate = true, .ReportMemory = true, .ReportToText = true, .ReportToJSON = true};
 

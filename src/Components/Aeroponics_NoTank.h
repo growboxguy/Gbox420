@@ -15,12 +15,11 @@ public:
   void report(bool JSONReport = false);
   void sprayNow(bool UserRequest = false);
   void sprayOff();
-  void checkPump(bool OnlyTurnOff = false);  ///< Turn the pump on or off based on the current state
-  void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
+  void checkPump(bool OnlyTurnOff = false); ///< Turn the pump on or off based on the current state
+  void processTimeCriticalStuff();          ///< Process things that cannot wait or need precise timing
 
   PressurePump *Pump;
   void updateState(AeroNoTankStates State);
-
 
   void setSprayOnOff(bool State);
   char *sprayStateToText();
@@ -44,11 +43,11 @@ private:
 protected:
   bool RunTillTimeout = false; ///< While true only the Pump Timeout will stop the pump.
   Module *Parent;
-  AeroNoTankStates State = AeroNoTankStates::IDLE;  //< Stores the current state of the Aeroponics tote
-  PressureSensor *FeedbackPressureSensor; ///< Pressure sensor object that will monitor the spray pressure
+  AeroNoTankStates State = AeroNoTankStates::IDLE; //< Stores the current state of the Aeroponics tote
+  PressureSensor *FeedbackPressureSensor;          ///< Pressure sensor object that will monitor the spray pressure
   uint32_t SprayTimer = millis();
   bool *SprayEnabled;          ///< Enable/disable misting
-  float *Duration;            ///< Spray time in seconds
+  float *Duration;             ///< Spray time in seconds
   int *DayInterval;            ///< Spray every X minutes - With lights ON
   int *NightInterval;          ///< Spray every X minutes - With lights OFF
   float *MinPressure;          ///< Minimum acceptable spray pressure

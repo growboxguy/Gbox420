@@ -292,7 +292,7 @@ void AeroModule_Web::refresh_FiveSec()
 */
 void AeroModule_Web::refresh_Minute()
 {
-Common::refresh_Minute();
+  Common::refresh_Minute();
 }
 
 /**

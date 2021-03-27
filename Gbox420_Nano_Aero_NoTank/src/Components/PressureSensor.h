@@ -13,7 +13,7 @@ public:
   void report(bool JSONReport = false);
   float readPressure(bool ReturnAverage = true);
   float getPressure(bool ReturnAverage = true);
-  char *getPressureText(bool ReturnAverage = true, bool IncludeUnits=false);
+  char *getPressureText(bool ReturnAverage = true, bool IncludeUnits = false);
 
 private:
 protected:
