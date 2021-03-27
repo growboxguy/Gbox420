@@ -40,15 +40,13 @@ Lights::Lights(const __FlashStringHelper *Name, Module *Parent, Settings::Lights
 
 void Lights::refresh_Sec()
 {
-  if (*Debug)
-    Common::refresh_Sec();
+  Common::refresh_Sec();
   checkDimming();
 }
 
 void Lights::refresh_Minute()
 { ///< makes the class non-virtual, by implementing the refresh function from Common (Else you get an error while trying to create a new Lights object: invalid new-expression of abstract class type 'Lights')
-  if (*Debug)
-    Common::refresh_Minute();
+  Common::refresh_Minute();
   checkTimer();
   checkRelay();
 }
@@ -181,7 +179,7 @@ void Lights::checkTimer()
         if (!*Status)
         {
           setLightOnOff(true, false); // If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
-          if (*Debug)
+          //if (*Debug)
           {
             appendName(true);
             strcat_P(ShortMessage, (PGM_P)F("timer: ON"));
@@ -194,7 +192,7 @@ void Lights::checkTimer()
         if (*Status)
         {                              // If status is ON
           setLightOnOff(false, false); // Turn OFF the lights (First bool), and do not add it to the log (Second bool)
-          if (*Debug)
+          //if (*Debug)
           {
             appendName(true);
             strcat_P(ShortMessage, (PGM_P)F("timer: OFF"));
@@ -210,7 +208,7 @@ void Lights::checkTimer()
         if (!*Status)
         {
           setLightOnOff(true, false);
-          if (*Debug)
+          //if (*Debug)
           {
             appendName(true);
             strcat_P(ShortMessage, (PGM_P)F("timer ON"));
@@ -221,7 +219,7 @@ void Lights::checkTimer()
       else if (*Status)
       {
         setLightOnOff(false, false);
-        if (*Debug)
+        //if (*Debug)
         {
           appendName(true);
           strcat_P(ShortMessage, (PGM_P)F("timer OFF"));

@@ -37,8 +37,7 @@ void DHTSensor::report(bool JSONReport)
 
 void DHTSensor::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   readSensor();
 }
 

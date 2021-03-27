@@ -16,8 +16,7 @@ PHSensor::PHSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PH
 
 void PHSensor::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   updatePH(false);
 }
 

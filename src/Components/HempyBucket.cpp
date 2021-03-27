@@ -62,15 +62,13 @@ void HempyBucket::report(bool JSONReport)
 
 void HempyBucket::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   updateState(State);
 }
 
 void HempyBucket::refresh_Sec()
 {
-  if (*Debug)
-    Common::refresh_Sec();
+  Common::refresh_Sec();
   if (State == HempyStates::WATERING || State == HempyStates::DRAINING)
   {
     updateState(State);

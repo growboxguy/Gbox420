@@ -13,8 +13,7 @@ PowerSensor::PowerSensor(const __FlashStringHelper *Name, Module *Parent, Hardwa
 
 void PowerSensor::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   Voltage = Sensor->voltage(*PowerSensorIP);      ///< AC Voltage (V)
   Current = Sensor->current(*PowerSensorIP);      ///< Current (A)
   Power = Sensor->power(*PowerSensorIP);          ///< Actual power usage (W)

@@ -31,8 +31,7 @@ void Sound::report(bool JSONReport)
 
 void Sound::refresh_Sec()
 {
-  if (*Debug)
-    Common::refresh_Sec();
+  Common::refresh_Sec();
   checkEvents();
 }
 

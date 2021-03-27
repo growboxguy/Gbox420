@@ -18,8 +18,7 @@ LightSensor::LightSensor(const __FlashStringHelper *Name, Module *Parent, Settin
 
 void LightSensor::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   if (CalibrateRequested)
   {
     calibrate();

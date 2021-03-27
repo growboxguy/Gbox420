@@ -83,8 +83,7 @@ void Aeroponics_Tank::report(bool JSONReport)
 
 void Aeroponics_Tank::refresh_Sec()
 {
-  if (*Debug)
-    Common::refresh_Sec();
+  Common::refresh_Sec();
   updateState(State);
 }
 

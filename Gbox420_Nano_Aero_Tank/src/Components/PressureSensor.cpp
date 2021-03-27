@@ -33,8 +33,7 @@ void PressureSensor::report(bool JSONReport)
 
 void PressureSensor::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   readPressure();
 }
 
