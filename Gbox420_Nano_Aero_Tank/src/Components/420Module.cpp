@@ -27,17 +27,17 @@ void Module::runAll()
 * @param[ClearBuffer] true: Flush the LongMessage buffer before starting to report
 * @param[KeepBuffer] true: Stores the full JSON report in the LongMessage buffer - Only use this on the Mega2560 where LongMessage is large enough to store a complete report (Can be up to 1024kB)
 */
-void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONOnly)
+void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
-  if (*ReportDate && !JSONOnly)
+  if (*ReportDate && !JSONToBufferOnly)
   {
     getFormattedTime(true);
   }
-  if (*ReportMemory && !JSONOnly)
+  if (*ReportMemory && !JSONToBufferOnly)
   {
     getFreeMemory();
   }
-  if (*ReportToText && !JSONOnly)
+  if (*ReportToText && !JSONToBufferOnly)
   {
     logToSerials(reportQueueItemCount, false, 2); ///< Prints the number of items that will report
     logToSerials(F("reporting:"), true, 1);
@@ -46,7 +46,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONOnly)
       ReportQueue[i]->report(false);
     }
   }
-  if (*ReportToJSON || JSONOnly)
+  if (*ReportToJSON || JSONToBufferOnly)
   {
     if (ClearBuffer)
     {
@@ -70,7 +70,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONOnly)
       }
     }
     strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
-    logToSerials(&LongMessage, true, 0);
+    if(!JSONToBufferOnly) logToSerials(&LongMessage, true, 0);
   } 
 }
 
