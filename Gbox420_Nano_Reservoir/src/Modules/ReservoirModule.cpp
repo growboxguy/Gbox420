@@ -68,14 +68,11 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
 {
   ReservoirMessages ReceivedSequenceID = ((ReservoirCommonTemplate *)ReceivedCommand)->SequenceID;
   LastMessageReceived = millis(); ///< Store current time
-  //if (*Debug)
-  {
     logToSerials(F("Received:"), false, 1);
     logToSerials(toText_reservoirSequenceID(ReceivedSequenceID), false, 1);
     logToSerials(F("- Sent:"), false, 1);
     logToSerials(toText_reservoirSequenceID(NextSequenceID), false, 1); ///< This is the pre-buffered response that was instantly sent when a command was received
     logToSerials(F(". Data:"), false, 1);
-  }
 
   bool LastMessageReached = false;
   if (ReceivedSequenceID == ReservoirMessages::ReservoirCommand1 && NextSequenceID == ReservoirMessages::ReservoirResponse1) ///< Last real command-response exchange reached
@@ -93,8 +90,6 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     setReportToText(((ReservoirModuleCommand *)ReceivedCommand)->ReportToText);
     setReportToJSON(((ReservoirModuleCommand *)ReceivedCommand)->ReportToJSON);
     NextSequenceID = ReservoirMessages::ReservoirResponse1; // update the next Message that will be copied to the buffer
-    //if (*Debug)
-    {
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Metric, false, 1);
@@ -102,23 +97,19 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->ReportMemory, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->ReportToText, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->ReportToJSON, true, 1);
-    }
     break;
   case ReservoirMessages::ReservoirCommand1:
     if (((ReservoirCommand *)ReceivedCommand)->TareWeight)
       Weight1->triggerTare();
     NextSequenceID = ReservoirMessages::ReservoirReset; // update the next Message that will be copied to the buffer
-    //if (*Debug)
-    {
       logToSerials(((ReservoirCommand *)ReceivedCommand)->TareWeight, true, 1);
-    }
     break;
   case ReservoirMessages::ReservoirReset:                         ///< Used to get all Responses that do not have a corresponding Command
     NextSequenceID = ReservoirMessages::ReservoirModuleResponse1; ///< Load the first response for the next message exchange
-    logToSerials(F("-"), true, 0);
+    logToSerials(F("-"), true, 1);
     break;
   default:
-    //logToSerials(F("SequenceID unknown"), true, 2);
+    logToSerials(F("SequenceID unknown"), true, 1);
     Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     Wireless.flush_rx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     break;
@@ -130,11 +121,6 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
 
 void ReservoirModule::updateAckData()
 {
-  // if (*Debug)
-  // {
-  //   logToSerials(F("Ack:"), false, 2);
-  //   logToSerials(toText_reservoirSequenceID(NextSequenceID), true, 1);
-  // }
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
 
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer
@@ -149,7 +135,6 @@ void ReservoirModule::updateAckData()
     Wireless.writeAckPayload(1, &ReservoirResetToSend, WirelessPayloadSize);
     break;
   default:
-    //logToSerials(F("Ack defaults loaded"), true, 3);
     Wireless.writeAckPayload(1, &ReservoirModuleResponse1ToSend, WirelessPayloadSize); // load the first Response into the buffer
     break;
   }

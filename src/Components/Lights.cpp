@@ -179,12 +179,9 @@ void Lights::checkTimer()
         if (!*Status)
         {
           setLightOnOff(true, false); // If status is OFF: Turn ON the lights (First bool), and do not add it to the log (Second bool)
-          //if (*Debug)
-          {
-            appendName(true);
-            strcat_P(ShortMessage, (PGM_P)F("timer: ON"));
-            logToSerials(&ShortMessage);
-          }
+          appendName(true);
+          strcat_P(ShortMessage, (PGM_P)F("timer: ON"));
+          logToSerials(&ShortMessage);
         }
       }
       else // False: Light should be off
@@ -192,12 +189,9 @@ void Lights::checkTimer()
         if (*Status)
         {                              // If status is ON
           setLightOnOff(false, false); // Turn OFF the lights (First bool), and do not add it to the log (Second bool)
-          //if (*Debug)
-          {
-            appendName(true);
-            strcat_P(ShortMessage, (PGM_P)F("timer: OFF"));
-            logToSerials(&ShortMessage);
-          }
+          appendName(true);
+          strcat_P(ShortMessage, (PGM_P)F("timer: OFF"));
+          logToSerials(&ShortMessage);
         }
       }
     }
@@ -208,23 +202,17 @@ void Lights::checkTimer()
         if (!*Status)
         {
           setLightOnOff(true, false);
-          //if (*Debug)
-          {
-            appendName(true);
-            strcat_P(ShortMessage, (PGM_P)F("timer ON"));
-            logToSerials(&ShortMessage);
-          }
+          appendName(true);
+          strcat_P(ShortMessage, (PGM_P)F("timer ON"));
+          logToSerials(&ShortMessage);
         }
       }
       else if (*Status)
       {
         setLightOnOff(false, false);
-        //if (*Debug)
-        {
-          appendName(true);
-          strcat_P(ShortMessage, (PGM_P)F("timer OFF"));
-          logToSerials(&ShortMessage);
-        }
+        appendName(true);
+        strcat_P(ShortMessage, (PGM_P)F("timer OFF"));
+        logToSerials(&ShortMessage);
       }
     }
   }

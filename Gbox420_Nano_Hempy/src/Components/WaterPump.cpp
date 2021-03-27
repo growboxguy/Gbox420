@@ -45,10 +45,7 @@ void WaterPump::report(bool JSONReport)
 
 void WaterPump::refresh_Sec()
 {
-  if (*Debug)
-  {
-    Common::refresh_Sec();
-  }
+  Common::refresh_Sec();
   updateState(State);
 }
 
@@ -56,16 +53,14 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
 {
   if (State != NewState)
   {
-    if (*Debug)
-    {
-      memset(&LongMessage[0], 0, MaxLongTextLength); //reset variable to store the Publish to path
-      strcpy_P(LongMessage, (PGM_P)Name);
-      strcat_P(LongMessage, (PGM_P)F(" state: "));
-      strcat(LongMessage, toText_waterPumpState(State));
-      strcat_P(LongMessage, (PGM_P)F(" -> "));
-      strcat(LongMessage, toText_waterPumpState(NewState));
-      logToSerials(&LongMessage, true, 3);
-    }
+    memset(&LongMessage[0], 0, MaxLongTextLength); //reset variable to store the Publish to path
+    strcpy_P(LongMessage, (PGM_P)Name);
+    strcat_P(LongMessage, (PGM_P)F(" state: "));
+    strcat(LongMessage, toText_waterPumpState(State));
+    strcat_P(LongMessage, (PGM_P)F(" -> "));
+    strcat(LongMessage, toText_waterPumpState(NewState));
+    logToSerials(&LongMessage, true, 3);
+
     State = NewState;
     StateTimer = millis(); ///< Start measuring the time spent in the new State
   }

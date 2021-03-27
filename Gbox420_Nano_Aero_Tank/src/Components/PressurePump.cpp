@@ -52,10 +52,7 @@ void PressurePump::report(bool JSONReport)
 
 void PressurePump::refresh_Sec()
 {
-  if (*Debug)
-  {
-    Common::refresh_Sec();
-  }
+  Common::refresh_Sec();
   updateState(State);
 }
 
@@ -64,16 +61,14 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState)
   {
-    if (*Debug)
-    {
-      memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-      strcat_P(LongMessage, (PGM_P)Name);
-      strcat_P(LongMessage, (PGM_P)F(" state"));
-      strcat(LongMessage, toText_pressurePumpState(State));
-      strcat_P(LongMessage, (PGM_P)F(" -> "));
-      strcat(LongMessage, toText_pressurePumpState(NewState));
-      logToSerials(&LongMessage, true, 3);
-    }
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat_P(LongMessage, (PGM_P)Name);
+    strcat_P(LongMessage, (PGM_P)F(" state"));
+    strcat(LongMessage, toText_pressurePumpState(State));
+    strcat_P(LongMessage, (PGM_P)F(" -> "));
+    strcat(LongMessage, toText_pressurePumpState(NewState));
+    logToSerials(&LongMessage, true, 3);
+
     PumpTimer = millis(); ///< Start measuring the time spent in the new State
   }
 

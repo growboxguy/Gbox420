@@ -319,11 +319,8 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
   AeroMessages ReceivedSequenceID = NULL;
   if (*Debug)
   {
-    logToSerials(F("Sending SequenceID:"), false, 3);
-    logToSerials(SequenceIDToSend, false, 1);
-    logToSerials(F("-"), false, 1);
+    logToSerials(F("Sending:"), false, 1);
     logToSerials(toText_aeroSequenceID(SequenceIDToSend), false, 1);
-    logToSerials(F("and waiting for Ack"), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
   Parent->Wireless->flush_rx(); ///< Dump all previously received but unprocessed messages
@@ -337,10 +334,9 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
       ReceivedSequenceID = ((AeroCommonTemplate *)ReceivedResponse)->SequenceID;
       if (*Debug)
       {
-        logToSerials(F("Response SequenceID:"), false, 4);
-        logToSerials(ReceivedSequenceID, false, 1);
-        logToSerials(F("-"), false, 1);
-        logToSerials(toText_aeroSequenceID(ReceivedSequenceID), true, 1);
+        logToSerials(F("Response:"), false, 1);
+        logToSerials(toText_aeroSequenceID(ReceivedSequenceID), false, 1);
+        logToSerials(F(". Data:"), false, 0);
       }
 
       switch (ReceivedSequenceID)
@@ -349,7 +345,6 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         memcpy(&AeroModuleResponse1Received, ReceivedResponse, sizeof(struct AeroModuleResponse));
         if (*Debug)
         {
-          logToSerials(F("Module1:"), false, 4);
           logToSerials(AeroModuleResponse1Received.Status, true, 1);
         }
         break;
@@ -365,7 +360,6 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         }
         if (*Debug)
         {
-          logToSerials(F("Aero1:"), false, 4);
           logToSerials(toText((int)AeroResponse1Received.AeroState), false, 1);
           logToSerials(AeroResponse1Received.PressureTankPresent, false, 1);
           logToSerials(AeroResponse1Received.SprayEnabled, false, 1);
@@ -392,11 +386,11 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
       case AeroMessages::AeroReset:
         if (*Debug)
         {
-          logToSerials(F("Last message received"), true, 4);
+          logToSerials(F("-"), true, 1);
         }
         break;
       default:
-        logToSerials(F("SequenceID not known, ignoring package"), true, 4);
+        logToSerials(F("SequenceID unknown"), true, 1);
         break;
       }
       LastResponseReceived = millis();
@@ -404,13 +398,13 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
     else
     {
       if (*Debug)
-        logToSerials(F("Acknowledgement received without any data"), true, 4);
+        logToSerials(F("Ack received without data"), true, 1);
     }
   }
   else
   {
     if (*Debug)
-      logToSerials(F("No response"), true, 3);
+      logToSerials(F("No response"), true, 1);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
       OnlineStatus = false;

@@ -345,11 +345,8 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
   HempyMessages ReceivedSequenceID = NULL;
   if (*Debug)
   {
-    logToSerials(F("Sending SequenceID:"), false, 3);
-    logToSerials(SequenceIDToSend, false, 1);
-    logToSerials(F("-"), false, 1);
+    logToSerials(F("Sending:"), false, 1);
     logToSerials(toText_hempySequenceID(SequenceIDToSend), false, 1);
-    logToSerials(F("and waiting for Ack"), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
   Parent->Wireless->flush_rx(); ///< Dump all previously received but unprocessed messages
@@ -363,10 +360,9 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
       ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedResponse)->SequenceID;
       if (*Debug)
       {
-        logToSerials(F("Response SequenceID:"), false, 4);
-        logToSerials(ReceivedSequenceID, false, 1);
-        logToSerials(F("-"), false, 1);
-        logToSerials(toText_hempySequenceID(ReceivedSequenceID), true, 1);
+        logToSerials(F("Response:"), false, 1);
+        logToSerials(toText_hempySequenceID(ReceivedSequenceID), false, 1);
+        logToSerials(F(". Data:"), false, 0);
       }
 
       switch (ReceivedSequenceID)
@@ -375,7 +371,6 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         memcpy(&HempyModuleResponse1Received, ReceivedResponse, sizeof(struct HempyModuleResponse));
         if (*Debug)
         {
-          logToSerials(F("Module:"), false, 4);
           logToSerials(HempyModuleResponse1Received.Status, true, 1);
         }
         break;
@@ -397,7 +392,6 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         }
         if (*Debug)
         {
-          logToSerials(F("Bucket1:"), false, 4);
           logToSerials(toText((int)HempyBucketResponse1Received.HempyState), false, 1);
           logToSerials(toText((int)HempyBucketResponse1Received.PumpState), false, 1);
           logToSerials(HempyBucketResponse1Received.WeightB, false, 1);
@@ -424,7 +418,6 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         }
         if (*Debug)
         {
-          logToSerials(F("Bucket2:"), false, 4);
           logToSerials(toText((int)HempyBucketResponse2Received.HempyState), false, 1);
           logToSerials(toText((int)HempyBucketResponse2Received.PumpState), false, 1);
           logToSerials(HempyBucketResponse2Received.WeightB, false, 1);
@@ -436,13 +429,13 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
       case HempyMessages::HempyReset:
         if (*Debug)
         {
-          logToSerials(F("Last message received"), true, 4);
+          logToSerials(F("-"), true, 1);
         }
         break;
       default:
         if (*Debug)
         {
-          logToSerials(F("SequenceID not known, ignoring package"), true, 4);
+          logToSerials(F("SequenceID unknown"), true, 1);
         }
         break;
       }
@@ -451,13 +444,13 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
     else
     {
       if (*Debug)
-        logToSerials(F("Acknowledgement received without any data"), true, 4); ///< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+
+        logToSerials(F("Ack received without data"), true, 1); ///< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+
     }
   }
   else
   {
     if (*Debug)
-      logToSerials(F("No response"), true, 3);
+      logToSerials(F("No response"), true, 1);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
       OnlineStatus = false; ///< Comment this out if you have modules that do not return any data

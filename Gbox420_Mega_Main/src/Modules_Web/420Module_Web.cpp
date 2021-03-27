@@ -161,11 +161,8 @@ void Module_Web::addPushingBoxLogRelayID()
 */
 void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
-  //if (*Debug)
-  { ///< print the report command to console
-    logToSerials(F("REST API reporting: api.pushingbox.com"), false, 2);
-    logToSerials(JSONData, true, 0);
-  }
+  logToSerials(F("REST API reporting: api.pushingbox.com"), false, 2);
+  logToSerials(JSONData, true, 0);
   PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
 }
 
@@ -176,11 +173,8 @@ void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
   memset(&ShortMessage[0], 0, MaxShotTextLength); ///< clear variable
   strcat(ShortMessage, ModuleSettings->MqttPubTopic);
-  //if (*Debug)
-  { ///< print the report command to console
-    logToSerials(F("MQTT reporting:"), false, 2);
-    logToSerials(&ShortMessage, false, 1);
-    logToSerials(JSONData, true, 0);
-  }
+  logToSerials(F("MQTT reporting:"), false, 2);
+  logToSerials(&ShortMessage, false, 1);
+  logToSerials(JSONData, true, 0);
   MqttAPI.publish(ShortMessage, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
 }

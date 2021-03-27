@@ -140,11 +140,8 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
   ReservoirMessages ReceivedSequenceID = NULL;
   if (*Debug)
   {
-    logToSerials(F("Sending SequenceID:"), false, 3);
-    logToSerials(SequenceIDToSend, false, 1);
-    logToSerials(F("-"), false, 1);
+    logToSerials(F("Sending:"), false, 1);
     logToSerials(toText_reservoirSequenceID(SequenceIDToSend), false, 1);
-    logToSerials(F("and waiting for Ack"), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
   Parent->Wireless->flush_rx(); ///< Dump all previously received but unprocessed messages
@@ -158,10 +155,9 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
       ReceivedSequenceID = ((ReservoirCommonTemplate *)ReceivedResponse)->SequenceID;
       if (*Debug)
       {
-        logToSerials(F("Response SequenceID:"), false, 4);
-        logToSerials(ReceivedSequenceID, false, 1);
-        logToSerials(F("-"), false, 1);
-        logToSerials(toText_reservoirSequenceID(ReceivedSequenceID), true, 1);
+        logToSerials(F("Response:"), false, 1);
+        logToSerials(toText_reservoirSequenceID(ReceivedSequenceID), false, 1);
+        logToSerials(F(". Data:"), false, 0);
       }
 
       switch (ReceivedSequenceID)
@@ -170,7 +166,6 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         memcpy(&ReservoirModuleResponse1Received, ReceivedResponse, sizeof(struct ReservoirModuleResponse));
         if (*Debug)
         {
-          logToSerials(F("Module:"), false, 4);
           logToSerials(ReservoirModuleResponse1Received.Status, true, 1);
         }
         break;
@@ -183,7 +178,6 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         }
         if (*Debug)
         {
-          logToSerials(F("Reservoir:"), false, 4);
           logToSerials(ReservoirResponse1Received.PH, false, 1);
           logToSerials(ReservoirResponse1Received.TDS, false, 1);
           logToSerials(ReservoirResponse1Received.Weight, false, 1);
@@ -195,11 +189,11 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
       case ReservoirMessages::ReservoirReset:
         if (*Debug)
         {
-          logToSerials(F("Last message received"), true, 4);
+          logToSerials(F("-"), true, 1);
         }
         break;
       default:
-        logToSerials(F("SequenceID not known, ignoring package"), true, 4);
+        logToSerials(F("SequenceID unknown"), true, 1);
         break;
       }
       LastResponseReceived = millis();
@@ -207,13 +201,13 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
     else
     {
       if (*Debug)
-        logToSerials(F("Acknowledgement received without any data"), true, 4);
+        logToSerials(F("Ack received without data"), true, 1);
     }
   }
   else
   {
     if (*Debug)
-      logToSerials(F("No response"), true, 3);
+      logToSerials(F("No response"), true, 1);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
       OnlineStatus = false; ///< Comment this out if you have modules that do not return any data

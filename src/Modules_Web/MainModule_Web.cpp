@@ -449,10 +449,7 @@ void MainModule::commandEvent(char *Command, char *Data)
 
 void MainModule::refresh_FiveSec()
 {
-  if (*Debug)
-  {
-    Common::refresh_FiveSec();
-  }
+  Common::refresh_FiveSec();
   runReport();
   if (RefreshAllRequested)
   {
