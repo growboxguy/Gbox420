@@ -64,11 +64,11 @@ void MainModule::report(bool JSONReport)
     strcat(LongMessage, toText(*Metric));
     strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
     strcat(LongMessage, toText(*Debug));
-    strcat_P(LongMessage, (PGM_P)F("\"RD\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\",\"RD\":\""));
     strcat(LongMessage, toText(*ReportDate));
     strcat_P(LongMessage, (PGM_P)F("\",\"RM\":\""));
     strcat(LongMessage, toText(*ReportMemory));
-    strcat_P(LongMessage, (PGM_P)F("\"RT\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\",\"RT\":\""));
     strcat(LongMessage, toText(*ReportToText));
     strcat_P(LongMessage, (PGM_P)F("\",\"RJ\":\""));
     strcat(LongMessage, toText(*ReportToJSON));
