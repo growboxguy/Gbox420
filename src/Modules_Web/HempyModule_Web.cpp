@@ -336,7 +336,7 @@ void HempyModule_Web::sendMessages()
   sendCommand(&HempyBucketCommand2ToSend); ///< Command - Response exchange
   sendCommand(&HempyResetToSend);          ///< special Command, resets communication to first message
   if (*Debug)
-    logToSerials(F("Message exchange finished"), true, 3);
+    logToSerials(F("Message exchange finished"), true, 1);
 }
 
 HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)

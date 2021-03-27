@@ -128,7 +128,7 @@ void ReservoirModule_Web::sendMessages()
   sendCommand(&ReservoirCommand1ToSend);       ///< Command - Response exchange
   sendCommand(&ReservoirResetToSend);          ///< special Command, resets communication to first message
   if (*Debug)
-    logToSerials(F("Message exchange finished"), true, 3);
+    logToSerials(F("Message exchange finished"), true, 1);
 }
 
 /**

@@ -412,7 +412,7 @@ void Lights::setOnTime(char *OnTime)
 
     char Minute[3];
     memcpy(Minute, &OnTime[2], 2);
-    Hour[2] = '\0';
+    Minute[2] = '\0';
     setOnMinute(toInt(Minute));
   }
 }
@@ -442,7 +442,7 @@ void Lights::setOffTime(char *OffTime)
 
     char Minute[3];
     memcpy(Minute, &OffTime[2], 2);
-    Hour[2] = '\0';
+    Minute[2] = '\0';
     setOffMinute(toInt(Minute));
   }
 }
