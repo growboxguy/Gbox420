@@ -22,6 +22,23 @@ void Module::runAll()
   wdt_reset();
 }
 
+void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
+{ ///< Handles custom reporting frequency for Serial
+  if ((SerialTriggerCounter++ % (*SerialReportFrequency / 5) == 0) || ForceRun)
+  {
+    runReport(ClearBuffer, KeepBuffer, JSONToBufferOnly);
+  }
+}
+
+void Module::setSerialReportingFrequency(uint16_t Frequency)
+{
+  if (Frequency != *SerialReportFrequency)
+  {
+    *SerialReportFrequency = Frequency;
+    getSoundObject()->playOnSound();
+  }
+}
+
 /**
 * @brief Reports sensor readings to he Serial output (Arduino and ESP)
 * @param[ClearBuffer] true: Flush the LongMessage buffer before starting to report
@@ -207,7 +224,7 @@ void Module::setMetric(bool MetricEnabled)
   }
 }
 
-void Module::setReportDate(bool State)
+void Module::setSerialReportDate(bool State)
 {
   if (State != *SerialReportDate)
   { //if there was a change
@@ -216,7 +233,7 @@ void Module::setReportDate(bool State)
   }
 }
 
-void Module::setReportMemory(bool State)
+void Module::setSerialReportMemory(bool State)
 {
   if (State != *SerialReportMemory)
   { //if there was a change
@@ -225,7 +242,7 @@ void Module::setReportMemory(bool State)
   }
 }
 
-void Module::setReportToText(bool State)
+void Module::setSerialReportToText(bool State)
 {
   if (State != *SerialReportToText)
   { //if there was a change
@@ -234,7 +251,7 @@ void Module::setReportToText(bool State)
   }
 }
 
-void Module::setReportToJSON(bool State)
+void Module::setSerialReportToJSON(bool State)
 {
   if (State != *SerialReportToJSON)
   { //if there was a change

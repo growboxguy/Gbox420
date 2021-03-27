@@ -421,6 +421,7 @@ void AeroModule_Web::updateCommands()
   AeroModuleCommand1ToSend.Time = now();
   AeroModuleCommand1ToSend.Debug = *Debug;
   AeroModuleCommand1ToSend.Metric = *Metric;
+  AeroModuleCommand1ToSend.SerialReportFrequency = *(Parent->SerialReportFrequency);
   AeroModuleCommand1ToSend.SerialReportDate = *(Parent->SerialReportDate);
   AeroModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
   AeroModuleCommand1ToSend.SerialReportToText = *(Parent->SerialReportToText);

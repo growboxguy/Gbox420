@@ -13,6 +13,7 @@ class Module : virtual public Common
 public:
   Module(); ///< constructor
   //Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
+  void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false);
   void runReport(bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false); ///< Generate a text log of all sensor readings to the Serial output.
   void runAll();
   void runSec();
@@ -26,19 +27,22 @@ public:
   void addToRefreshQueue_Minute(Common *Component);  ///< Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   char *getFormattedTime(bool PrintToSerials);
   Sound *getSoundObject();
-  bool *SerialReportDate;   ///< Enable/disable reporting the current time to the Serial output
-  bool *SerialReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
-  bool *SerialReportToText; ///< Enable/disable sending Text formatted reports to the Serial output
-  bool *SerialReportToJSON; ///< Enable/disable sending JSON formatted reports to the Serial output
+  void setSerialReportingFrequency(uint16_t Frequency);
+  uint16_t *SerialReportFrequency;   ///< Frequency of Serial reports in seconds
+  uint16_t SerialTriggerCounter = 0; ///< Helps with timing when to send the Serial report out
+  bool *SerialReportDate;            ///< Enable/disable reporting the current time to the Serial output
+  bool *SerialReportMemory;          ///< Enable/disable reporting the remaining free memory to the Serial output
+  bool *SerialReportToText;          ///< Enable/disable sending Text formatted reports to the Serial output
+  bool *SerialReportToJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
 
 private:
 protected:
   void setDebug(bool State);
   void setMetric(bool MetricEnabled);
-  void setReportDate(bool State);
-  void setReportMemory(bool State);
-  void setReportToText(bool State);
-  void setReportToJSON(bool State);
+  void setSerialReportDate(bool State);
+  void setSerialReportMemory(bool State);
+  void setSerialReportToText(bool State);
+  void setSerialReportToJSON(bool State);
 
   Sound *SoundFeedback = NULL;
   bool RunAllRequested = false;

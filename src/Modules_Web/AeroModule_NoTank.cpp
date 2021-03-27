@@ -49,7 +49,7 @@ void AeroModule::refresh_Sec()
 void AeroModule::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
-  runReport();
+  reportToSerialTrigger();
   updateResponse();
 }
 

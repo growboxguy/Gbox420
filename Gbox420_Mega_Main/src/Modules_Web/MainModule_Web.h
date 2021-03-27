@@ -75,8 +75,8 @@ protected:
   bool MQTTReportRequested = false;
   bool *ReportToGoogleSheets;
   uint16_t *SheetsReportingFrequency;
-  uint8_t SheetsRefreshCounter = 0;
+  uint8_t SheetsTriggerCounter = 0;
   bool *ReportToMQTT;
   uint16_t *MQTTReportFrequency;
-  uint8_t MQTTRefreshCounter = 0;
+  uint16_t MQTTTriggerCounter = 0;
 };

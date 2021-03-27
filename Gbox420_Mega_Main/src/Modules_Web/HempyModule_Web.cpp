@@ -464,6 +464,7 @@ void HempyModule_Web::updateCommands()
   HempyModuleCommand1ToSend.Time = now();
   HempyModuleCommand1ToSend.Debug = *Debug;
   HempyModuleCommand1ToSend.Metric = *Metric;
+  HempyModuleCommand1ToSend.SerialReportFrequency = *(Parent->SerialReportFrequency);
   HempyModuleCommand1ToSend.SerialReportDate = *(Parent->SerialReportDate);
   HempyModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
   HempyModuleCommand1ToSend.SerialReportToText = *(Parent->SerialReportToText);

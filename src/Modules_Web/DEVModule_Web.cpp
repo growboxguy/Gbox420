@@ -177,7 +177,7 @@ void DEVModule_Web::refresh_FiveSec()
   if (*Debug)
   {
     Common::refresh_FiveSec();
-    runReport();
+    reportToSerialTrigger();
   }
   if (RefreshAllRequested)
   {
@@ -199,7 +199,6 @@ void DEVModule_Web::refresh_FiveSec()
 void DEVModule_Web::refresh_Minute()
 {
 Common::refresh_Minute();
-  runReport();
   reportToGoogleSheetsTrigger();
 }
 
@@ -269,7 +268,7 @@ void DEVModule_Web::reportToGoogleSheetsTrigger(bool ForceRun)
     strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     for (int i = 0; i < reportQueueItemCount;)
     {
-      ReportQueue[i++]->reportToJSON();
+      ReportQueue[i++]->SerialReportToJSON();
       if (i != reportQueueItemCount)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
     }
