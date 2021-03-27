@@ -72,9 +72,8 @@ void Module_Web::websiteRefreshEventTrigger(char *url)
 */
 void Module_Web::commandEventTrigger(char *command, char *data)
 {
-  if (*Debug)
-    logToSerials(&command, false, 0);
-  logToSerials(&data, true, 2);
+  logToSerials(command, false, 0);
+  logToSerials(data, true, 2);
   for (int i = 0; i < CommandQueue_Count; i++)
   {
     CommandQueue[i]->commandEvent(command, data);

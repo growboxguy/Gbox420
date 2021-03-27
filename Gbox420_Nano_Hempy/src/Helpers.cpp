@@ -242,8 +242,6 @@ bool toBool(char *Boolean)
     return 1;
   if (strcmp_P(Boolean, PSTR("true")) == 0)
     return 1;
-  if (strcmp_P(Boolean, PSTR("on")) == 0)
-    return 1;
   if (strcmp_P(Boolean, PSTR("yes")) == 0)
     return 1;
   return 0;
