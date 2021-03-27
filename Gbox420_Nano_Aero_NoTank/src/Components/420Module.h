@@ -26,10 +26,10 @@ public:
   void addToRefreshQueue_Minute(Common *Component);  ///< Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   char *getFormattedTime(bool PrintToSerials);
   Sound *getSoundObject();
-  bool *ReportDate;   ///< Enable/disable reporting the current time to the Serial output
-  bool *ReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
-  bool *ReportToText; ///< Enable/disable sending Text formatted reports to the Serial output
-  bool *ReportToJSON; ///< Enable/disable sending JSON formatted reports to the Serial output
+  bool *SerialReportDate;   ///< Enable/disable reporting the current time to the Serial output
+  bool *SerialReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
+  bool *SerialReportToText; ///< Enable/disable sending Text formatted reports to the Serial output
+  bool *SerialReportToJSON; ///< Enable/disable sending JSON formatted reports to the Serial output
 
 private:
 protected:

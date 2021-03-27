@@ -77,6 +77,6 @@ protected:
   uint16_t *SheetsReportingFrequency;
   uint8_t SheetsRefreshCounter = 0;
   bool *ReportToMQTT;
-  uint16_t *MQTTReportingFrequency;
+  uint16_t *MQTTReportFrequency;
   uint8_t MQTTRefreshCounter = 0;
 };

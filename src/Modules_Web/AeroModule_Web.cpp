@@ -421,10 +421,10 @@ void AeroModule_Web::updateCommands()
   AeroModuleCommand1ToSend.Time = now();
   AeroModuleCommand1ToSend.Debug = *Debug;
   AeroModuleCommand1ToSend.Metric = *Metric;
-  AeroModuleCommand1ToSend.ReportDate = *(Parent->ReportDate);
-  AeroModuleCommand1ToSend.ReportMemory = *(Parent->ReportMemory);
-  AeroModuleCommand1ToSend.ReportToText = *(Parent->ReportToText);
-  AeroModuleCommand1ToSend.ReportToJSON = *(Parent->ReportToJSON);
+  AeroModuleCommand1ToSend.SerialReportDate = *(Parent->SerialReportDate);
+  AeroModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
+  AeroModuleCommand1ToSend.SerialReportToText = *(Parent->SerialReportToText);
+  AeroModuleCommand1ToSend.SerialReportToJSON = *(Parent->SerialReportToJSON);
   AeroCommand1ToSend.DayMode = ((MainModule *)Parent)->getDayMode();
   AeroCommand1ToSend.Duration = DefaultSettings->Duration;
   AeroCommand1ToSend.DayInterval = DefaultSettings->DayInterval;

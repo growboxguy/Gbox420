@@ -17,14 +17,14 @@
 */
 MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common_Web(Name), Common(Name), Module_Web(Wireless)
 {
-  ReportDate = &DefaultSettings->ReportDate;
-  ReportMemory = &DefaultSettings->ReportMemory;
-  ReportToText = &DefaultSettings->ReportToText;
-  ReportToJSON = &DefaultSettings->ReportToJSON;
+  SerialReportDate = &DefaultSettings->SerialReportDate;
+  SerialReportMemory = &DefaultSettings->SerialReportMemory;
+  SerialReportToText = &DefaultSettings->SerialReportToText;
+  SerialReportToJSON = &DefaultSettings->SerialReportToJSON;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
   ReportToMQTT = &DefaultSettings->ReportToMQTT;
-  MQTTReportingFrequency = &DefaultSettings->MQTTReportingFrequency;
+  MQTTReportFrequency = &DefaultSettings->MQTTReportFrequency;
 
   logToSerials(F(""), true, 0);                                   //<Line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
@@ -64,14 +64,6 @@ void MainModule::report(bool JSONReport)
     strcat(LongMessage, toText(*Metric));
     strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
     strcat(LongMessage, toText(*Debug));
-    strcat_P(LongMessage, (PGM_P)F("\",\"RD\":\""));
-    strcat(LongMessage, toText(*ReportDate));
-    strcat_P(LongMessage, (PGM_P)F("\",\"RM\":\""));
-    strcat(LongMessage, toText(*ReportMemory));
-    strcat_P(LongMessage, (PGM_P)F("\",\"RT\":\""));
-    strcat(LongMessage, toText(*ReportToText));
-    strcat_P(LongMessage, (PGM_P)F("\",\"RJ\":\""));
-    strcat(LongMessage, toText(*ReportToJSON));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
   else //Print a report to the Serial console
@@ -83,13 +75,13 @@ void MainModule::report(bool JSONReport)
     strcat_P(LongMessage, (PGM_P)F(" ; Metric mode:"));
     strcat(LongMessage, toText_enabledDisabled(*Metric));
     strcat_P(LongMessage, (PGM_P)F(" ; Report date:"));
-    strcat(LongMessage, toText_yesNo(*ReportDate));
+    strcat(LongMessage, toText_yesNo(*SerialReportDate));
     strcat_P(LongMessage, (PGM_P)F(" ; Report memory:"));
-    strcat(LongMessage, toText_yesNo(*ReportMemory));
+    strcat(LongMessage, toText_yesNo(*SerialReportMemory));
     strcat_P(LongMessage, (PGM_P)F(" ; Report text:"));
-    strcat(LongMessage, toText_yesNo(*ReportToText));
+    strcat(LongMessage, toText_yesNo(*SerialReportToText));
     strcat_P(LongMessage, (PGM_P)F(" ; Report JSON:"));
-    strcat(LongMessage, toText_yesNo(*ReportToJSON));
+    strcat(LongMessage, toText_yesNo(*SerialReportToJSON));
     logToSerials(&LongMessage, true, 1);
   }
 }
@@ -117,15 +109,16 @@ void MainModule::websiteEvent_Load(char *url)
   {
     WebServer.setArgInt(getComponentName(F("Debug")), *Debug);
     WebServer.setArgInt(getComponentName(F("Metric")), *Metric);
-    WebServer.setArgInt(getComponentName(F("Date")), *ReportDate);
-    WebServer.setArgInt(getComponentName(F("Mem")), *ReportMemory);
-    WebServer.setArgInt(getComponentName(F("Text")), *ReportToText);
-    WebServer.setArgInt(getComponentName(F("JSON")), *ReportToJSON);
+    //WebServer.setArgInt(getComponentName(F("SerialF")), *SerialReportFrequency);
+    WebServer.setArgInt(getComponentName(F("Date")), *SerialReportDate);
+    WebServer.setArgInt(getComponentName(F("Mem")), *SerialReportMemory);
+    WebServer.setArgInt(getComponentName(F("Text")), *SerialReportToText);
+    WebServer.setArgInt(getComponentName(F("JSON")), *SerialReportToJSON);
     WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
     WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
     WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
     WebServer.setArgBoolean(getComponentName(F("MQTT")), *ReportToMQTT);
-    WebServer.setArgInt(getComponentName(F("MQTTF")), *MQTTReportingFrequency);
+    WebServer.setArgInt(getComponentName(F("MQTTF")), *MQTTReportFrequency);
     WebServer.setArgString(getComponentName(F("MPT")), ModuleSettings->MqttPubTopic);
     WebServer.setArgString(getComponentName(F("MST")), ModuleSettings->MqttSubTopic);
     WebServer.setArgString(getComponentName(F("MLT")), ModuleSettings->MqttLwtTopic);
@@ -617,7 +610,7 @@ void MainModule::setMQTTLWTMessage(const char *LWTMessage)
 
 void MainModule::reportToMQTTTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
-  if ((*ReportToMQTT && MQTTRefreshCounter++ % (*MQTTReportingFrequency) == 0) || ForceRun)
+  if ((*ReportToMQTT && MQTTRefreshCounter++ % (*MQTTReportFrequency) == 0) || ForceRun)
   {
     runReport(true, true, true); //< Loads a JSON Log to LongMessage buffer
     mqttPublish(&LongMessage);   //  and publish readings via ESP MQTT API

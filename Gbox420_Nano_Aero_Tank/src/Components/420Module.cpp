@@ -29,15 +29,15 @@ void Module::runAll()
 */
 void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
-  if (*ReportDate && !JSONToBufferOnly)
+  if (*SerialReportDate && !JSONToBufferOnly)
   {
     getFormattedTime(true);
   }
-  if (*ReportMemory && !JSONToBufferOnly)
+  if (*SerialReportMemory && !JSONToBufferOnly)
   {
     getFreeMemory();
   }
-  if (*ReportToText && !JSONToBufferOnly)
+  if (*SerialReportToText && !JSONToBufferOnly)
   {
     logToSerials(reportQueueItemCount, false, 0); ///< Prints the number of items that will report
     logToSerials(F("reporting:"), true, 1);
@@ -46,7 +46,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
       ReportQueue[i]->report(false);
     }
   }
-  if (*ReportToJSON || JSONToBufferOnly)
+  if (*SerialReportToJSON || JSONToBufferOnly)
   {
     if (ClearBuffer)
     {
@@ -209,36 +209,36 @@ void Module::setMetric(bool MetricEnabled)
 
 void Module::setReportDate(bool State)
 {
-  if (State != *ReportDate)
+  if (State != *SerialReportDate)
   { //if there was a change
-    *ReportDate = State;
+    *SerialReportDate = State;
     getSoundObject()->playOnSound();
   }
 }
 
 void Module::setReportMemory(bool State)
 {
-  if (State != *ReportMemory)
+  if (State != *SerialReportMemory)
   { //if there was a change
-    *ReportMemory = State;
+    *SerialReportMemory = State;
     getSoundObject()->playOnSound();
   }
 }
 
 void Module::setReportToText(bool State)
 {
-  if (State != *ReportToText)
+  if (State != *SerialReportToText)
   { //if there was a change
-    *ReportToText = State;
+    *SerialReportToText = State;
     getSoundObject()->playOnSound();
   }
 }
 
 void Module::setReportToJSON(bool State)
 {
-  if (State != *ReportToJSON)
+  if (State != *SerialReportToJSON)
   { //if there was a change
-    *ReportToJSON = State;
+    *SerialReportToJSON = State;
     getSoundObject()->playOnSound();
   }
 }

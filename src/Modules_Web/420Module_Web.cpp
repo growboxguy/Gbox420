@@ -146,7 +146,9 @@ char *Module_Web::eventLogToJSON(bool IncludeKey, bool ClearBuffer)
 ///< Google Sheets functions - https://sites.google.com/site/growboxguy/esp-link/logging
 
 /**
-* @brief Sets the PushingBox device ID that is used to send reports to Google Sheets
+* @brief Loads the PushingBox device ID to the LongMessage buffer. Pushingbox is a relay service that is used to send reports to Google Sheets: https://sites.google.com/site/growboxguy/esp-link/logging
+* Example
+* /pushingbox?devid=v755877CF53383E1&BoxData=
 */
 void Module_Web::addPushingBoxLogRelayID()
 {
@@ -158,23 +160,32 @@ void Module_Web::addPushingBoxLogRelayID()
 
 /**
 * @brief Send a JSON formatted report to Google Sheets
+* Example
+* REST API reporting: api.pushingbox.com/pushingbox?devid=v755877CF53383E1&BoxData={"Log":{"IFan":{"S":"1"},"EFan":{"S":"1"},"APump1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"LtSen1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"44.50"},"Pow1":{"P":"572.20","E":"665.26","V":"228.00","C":"2.62","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.44","WR1":"6.85","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.71","WR2":"5.28","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.68","W":"23.31","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.77","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.28","T":"1082.70","W":"14.63","WT":"19.13","AT":"27.20","H":"37.90"},"Main1":{"M":"1","D":"0","RD":"0","RM":"0","RT":"0","RJ":"0"}}}
 */
 void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
-  logToSerials(F("REST API reporting: api.pushingbox.com"), false, 2);
-  logToSerials(JSONData, true, 0);
+  if (*Debug)
+  {
+    logToSerials(F("REST API reporting: api.pushingbox.com"), false, 2);
+    logToSerials(JSONData, true, 0);
+  }
   PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
 }
 
 /**
 * @brief Publish an MQTT message containing a JSON formatted report
+* Examples:
+* MQTT reporting: Gbox420/{"Log":{"IFan":{"S":"1"},"EFan":{"S":"1"},"APump1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"LtSen1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"45.20"},"Pow1":{"P":"573.60","E":"665.47","V":"227.20","C":"2.64","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.45","WR1":"6.77","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.69","WR2":"5.31","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.41","W":"23.57","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.50","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.41","T":"1071.30","W":"14.64","WT":"19.13","AT":"27.30","H":"38.50"},"Main1":{"M":"1","D":"0","RD":"0","RM":"1","RT":"0","RJ":"1"}}}
+* MQTT reporting: Gbox420/{"EventLog":["","","MainModule initialized","Lt2 brightness updated"]}
 */
 void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
-  memset(&ShortMessage[0], 0, MaxShotTextLength); ///< clear variable
-  strcat(ShortMessage, ModuleSettings->MqttPubTopic);
-  logToSerials(F("MQTT reporting:"), false, 2);
-  logToSerials(&ShortMessage, false, 1);
-  logToSerials(JSONData, true, 0);
-  MqttAPI.publish(ShortMessage, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
+  if (*Debug)
+  {
+    logToSerials(F("MQTT reporting:"), false, 2);
+    logToSerials(ModuleSettings->MqttPubTopic, false, 1);
+    logToSerials(JSONData, true, 0);
+  }
+  MqttAPI.publish(ModuleSettings->MqttPubTopic, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
 }

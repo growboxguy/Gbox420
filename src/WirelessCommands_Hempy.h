@@ -62,14 +62,14 @@ struct HempyCommonTemplate ///< Hempy wireless template - Shared between Command
 struct HempyModuleCommand : HempyCommonTemplate ///< Hempy module wireless command
 {
    HempyModuleCommand(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
-   HempyModuleCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) bool ReportDate, __attribute__((unused)) bool ReportMemory, __attribute__((unused)) bool ReportToText, __attribute__((unused)) bool ReportToJSON) : HempyCommonTemplate(SequenceID) {}
+   HempyModuleCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportToText, __attribute__((unused)) bool SerialReportToJSON) : HempyCommonTemplate(SequenceID) {}
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
-   bool ReportDate = true;
-   bool ReportMemory = true;
-   bool ReportToText = true;
-   bool ReportToJSON = true;
+   bool SerialReportDate = true;
+   bool SerialReportMemory = true;
+   bool SerialReportToText = true;
+   bool SerialReportToJSON = true;
 };
 
 struct HempyModuleResponse : HempyCommonTemplate ///< Hempy module wireless response

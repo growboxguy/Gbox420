@@ -107,17 +107,17 @@ typedef struct
 
   struct MainModuleSettings ///< MainModule default settings
   {
-    MainModuleSettings(bool ReportDate = true, bool ReportMemory = true, bool ReportToText = true, bool ReportToJSON = true, bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMQTT = false, uint16_t MQTTReportingFrequency = 0) : ReportDate(ReportDate), ReportMemory(ReportMemory), ReportToText(ReportToText), ReportToJSON(ReportToJSON), ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMQTT(ReportToMQTT), MQTTReportingFrequency(MQTTReportingFrequency) {}
-    bool ReportDate;                   ///< Enable/disable reporting the current time to the Serial output
-    bool ReportMemory;                 ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool ReportToText;                 ///< Enable/disable sending Text formatted reports to the Serial output
-    bool ReportToJSON;                 ///< Enable/disable sending JSON formatted reports to the Serial output
+    MainModuleSettings(bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportToText = true, bool SerialReportToJSON = true, bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMQTT = false, uint16_t MQTTReportFrequency = 0) : SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportToText(SerialReportToText), SerialReportToJSON(SerialReportToJSON), ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMQTT(ReportToMQTT), MQTTReportFrequency(MQTTReportFrequency) {}
+    bool SerialReportDate;                   ///< Enable/disable reporting the current time to the Serial output
+    bool SerialReportMemory;                 ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool SerialReportToText;                 ///< Enable/disable sending Text formatted reports to the Serial output
+    bool SerialReportToJSON;                 ///< Enable/disable sending JSON formatted reports to the Serial output
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
     uint16_t SheetsReportingFrequency; ///< How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
     bool ReportToMQTT;                 ///< Enable/disable reporting sensor readings to an MQTT broker
-    uint16_t MQTTReportingFrequency;   ///< How often to report to MQTT. Min 1min, Max 1440 (1day)
+    uint16_t MQTTReportFrequency;   ///< How often to report to MQTT. Min 1min, Max 1440 (1day)
   };
-  struct MainModuleSettings Main1 = {.ReportDate = true, .ReportMemory = true, .ReportToText = true, .ReportToJSON = true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportingFrequency = 1};
+  struct MainModuleSettings Main1 = {.SerialReportDate = true, .SerialReportMemory = true, .SerialReportToText = true, .SerialReportToJSON = true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportFrequency = 1};
 
   struct HempyModuleSettings ///< Hempy default settings
   {
