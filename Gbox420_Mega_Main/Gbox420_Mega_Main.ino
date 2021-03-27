@@ -319,6 +319,10 @@ void refreshCallback(__attribute__((unused)) char *Url)
 */
 void buttonCallback(char *Button)
 {
+  if (*Debug)
+  {
+    logToSerials(F("Button press:"), false, 0);
+  }
   if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
   {
     restoreDefaults();
@@ -336,6 +340,10 @@ void buttonCallback(char *Button)
 */
 void fieldCallback(char *Field)
 { ///< Called when any field on the website is updated.
+  if (*Debug)
+  {
+    logToSerials(F("Field submit:"), false, 0);
+  }
   Main1->commandEventTrigger(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
 }

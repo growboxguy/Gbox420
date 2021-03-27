@@ -190,9 +190,9 @@
 						<p>
 							<label>
 								<input style="width: 1em;" type="checkbox" name="Main1_Metric"
-									title="Use imperial units(F,PSI) or metric (C,bar)">
+									title="Use imperial units(F,PSI) or metric (C,bar)"/>
 								Metric units </label>
-							<input class="setButton" type="submit" value="Set">
+							<input class="setButton" type="submit" value="Set"/>
 						</p>
 					</form>
 				</div>
@@ -200,34 +200,38 @@
 			<div class="card">
 				<h1>Serial reporting</h1>
 				<table>
-					<form class="SimpleSturcture">
-						<p>
-							<label>
-								<input style="width: 1em;" type="checkbox" name="Main1_Date"
-									title="Serial log reports are sent in a JSON format when enabled">
-								Date</label>
-							<input class="setButton" type="submit" value="Set">
-							<label style="padding-left: 2em;">
-								<input style="width: 1em;" type="checkbox" name="Main1_Mem"
-									title="Serial log reports are sent in a JSON format when enabled">
-								Free memory </label>
-							<input class="setButton" type="submit" value="Set">
-						</p>
-					</form>					
-					<form class="SimpleSturcture">
-						<p>
-							<label>
-								<input style="width: 1em;" type="checkbox" name="Main1_Text" />
-								<!-- Enable/disable text based reporting to Serial(s) -->
-								Text report</label>
-							<input class="setButton" type="submit" value="Set" />
-							<label style="padding-left: 2em;">
-								<input style="width: 1em;" type="checkbox" name="Main1_JSON" />
-								<!-- Enable/disable JSON based reporting to Serial(s) -->
-								JSON report</label>
-							<input class="setButton" type="submit" value="Set" />
-						</p>
+					<p>
+					<form class="SimpleSturcture">						
+						<label>
+							<input style="width: 1em;" type="checkbox" name="Main1_Date"
+								title="Serial log reports are sent in a JSON format when enabled"/>
+							Date</label>
+						<input class="setButton" type="submit" value="Set"/>					
 					</form>
+					<form class="SimpleSturcture">
+						<label style="padding-left: 2em;">
+							<input style="width: 1em;" type="checkbox" name="Main1_Mem"
+								title="Serial log reports are sent in a JSON format when enabled"/>
+							Free memory </label>
+						<input class="setButton" type="submit" value="Set"/>
+					</form>
+				</p>				
+				<p>
+					<form class="SimpleSturcture">
+						<label>
+							<input style="width: 1em;" type="checkbox" name="Main1_Text" />
+							<!-- Enable/disable text based reporting to Serial(s) -->
+							Text report</label>
+						<input class="setButton" type="submit" value="Set" />
+					</form>
+					<form class="SimpleSturcture">
+						<label style="padding-left: 2em;">
+							<input style="width: 1em;" type="checkbox" name="Main1_JSON" />
+							<!-- Enable/disable JSON based reporting to Serial(s) -->
+							JSON report</label>
+						<input class="setButton" type="submit" value="Set" />
+					</form>
+				</p>
 				</table>
 				</form>
 			</div>
