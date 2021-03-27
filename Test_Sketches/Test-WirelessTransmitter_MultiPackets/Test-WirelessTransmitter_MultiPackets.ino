@@ -94,7 +94,7 @@ HempyMessage sendCommand(void *CommandToSend)
         Serial.print(SequenceIDToSend);
         Serial.print(F(" - "));
         Serial.print(sequenceIDToText(SequenceIDToSend));
-        Serial.println(F(" and waiting for Acknowledgment..."));
+        Serial.println(F(" and waiting for Ack..."));
     }
     Wireless.flush_rx(); ///< Dump all previously received but unprocessed messages
     bool Result = Wireless.write(CommandToSend, WirelessPayloadSize);

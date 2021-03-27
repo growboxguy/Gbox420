@@ -37,8 +37,7 @@ void WeightSensor::report(bool JSONReport)
 
 void WeightSensor::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   if (TareRequested)
   {
     TareRequested = false;

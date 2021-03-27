@@ -306,8 +306,7 @@ void HempyModule_Web::commandEvent(char *Command, char *Data)
 
 void HempyModule_Web::refresh_Sec()
 {
-  if (*Debug)
-    Common::refresh_Sec();
+  Common::refresh_Sec();
   if (SyncRequested)
   {
     SyncRequested = false;
@@ -318,16 +317,14 @@ void HempyModule_Web::refresh_Sec()
 
 void HempyModule_Web::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   //syncModule(WirelessChannel,&Command,&Response);
   sendMessages();
 }
 
 void HempyModule_Web::refresh_Minute()
 {
-  if (*Debug)
-    Common::refresh_Minute();
+Common::refresh_Minute();
 }
 
 void HempyModule_Web::sendMessages()
@@ -352,7 +349,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
     logToSerials(SequenceIDToSend, false, 1);
     logToSerials(F("-"), false, 1);
     logToSerials(toText_hempySequenceID(SequenceIDToSend), false, 1);
-    logToSerials(F("and waiting for Acknowledgment"), true, 1);
+    logToSerials(F("and waiting for Ack"), true, 1);
   }
   Parent->Wireless->openWritingPipe(WirelessChannel);
   Parent->Wireless->flush_rx(); ///< Dump all previously received but unprocessed messages

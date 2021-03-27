@@ -41,8 +41,7 @@ void Fan_PWM::report(bool JSONReport)
 
 void Fan_PWM::refresh_Minute()
 {
-  if (*Debug)
-    Common::refresh_Minute();
+Common::refresh_Minute();
   checkState();
 }
 

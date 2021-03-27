@@ -29,20 +29,29 @@ void Common::report(bool JSONReport)
 
 void Common::refresh_Sec()
 {
-  logToSerials(Name, false, 2);
-  logToSerials(F("- 1sec"), true, 1); ///< Prints "COMPONENTNAME refreshing (1 sec)" to the console
+  if (*Debug)
+  {
+    logToSerials(Name, false, 2);
+    logToSerials(F("- 1sec"), true, 1); ///< Prints "COMPONENTNAME refreshing (1 sec)" to the console
+  }
 }
 
 void Common::refresh_FiveSec()
 {
-  logToSerials(Name, false, 2);
-  logToSerials(F("- 5sec"), true, 1); ///< Prints "COMPONENTNAME refreshing (5 sec)" to the console
+  if (*Debug)
+  {
+    logToSerials(Name, false, 2);
+    logToSerials(F("- 5sec"), true, 1); ///< Prints "COMPONENTNAME refreshing (5 sec)" to the console
+  }
 }
 
 void Common::refresh_Minute()
 {
-  logToSerials(Name, false, 2);
-  logToSerials(F("- 1min"), true, 1); ///< Prints "COMPONENTNAME refreshing (1 min)" to the console
+  if (*Debug)
+  {
+    logToSerials(Name, false, 2);
+    logToSerials(F("- 1min"), true, 1); ///< Prints "COMPONENTNAME refreshing (1 min)" to the console
+  }
 }
 
 char *Common::getComponentName(const __FlashStringHelper *ComponentName)

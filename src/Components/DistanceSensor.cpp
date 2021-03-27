@@ -17,8 +17,7 @@ DistanceSensor::DistanceSensor(const __FlashStringHelper *Name, Module *Parent, 
 
 void DistanceSensor::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   readSensor();
 }
 

@@ -204,7 +204,7 @@ void resetWebServer()
 
 void setupMqtt()
 {
-  
+
   MqttAPI.connectedCb.attach(mqttConnected);
   MqttAPI.disconnectedCb.attach(mqttDisconnected);
   MqttAPI.publishedCb.attach(mqttPublished);
@@ -215,7 +215,6 @@ void setupMqtt()
   MqttAPI.lwt(ShortMessage, ModuleSettings->MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
   MqttAPI.setup();
 }
-
 
 void mqttConnected(void *response)
 {
@@ -233,32 +232,22 @@ void mqttPublished(void *response)
   //if(*Debug) logToSerials(F("MQTT published"), true);
 }
 
-
 void mqttReceived(void *response)
 {
-  static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1;  //Get length of the command topic
+  static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1; //Get length of the command topic
   static char command[MaxShotTextLength];
   static char data[MaxShotTextLength];
   ELClientResponse *res = (ELClientResponse *)response;
   String mqttTopic = (*res).popString();
   String mqttData = (*res).popString();
-
   if (*Debug)
   {
-    logToSerials(F("MQTT Topic"), false, 0);
-    logToSerials(&mqttTopic, true, 1);
-  }  
-  mqttTopic.remove(0, MqttSubTopicLength);  //Cut the known command topic from the arrived topic  
+    logToSerials(F("MQTT"), false, 0);
+    logToSerials(&mqttTopic, false, 1);
+  }
+  mqttTopic.remove(0, MqttSubTopicLength); //Cut the known command topic from the arrived topic
   mqttTopic.toCharArray(command, MaxShotTextLength);
   mqttData.toCharArray(data, MaxShotTextLength);
-
-  if (*Debug)
-  {
-    logToSerials(F("MQTT Command:"), false, 0);
-    logToSerials(&command, true, 1);
-    logToSerials(F("MQTT Data:"), false, 0);
-    logToSerials(&data, true, 1);
-  }
   Main1->commandEventTrigger(command, data);
   Main1->reportToMQTTTrigger(true); //send out a fresh report
 }
@@ -321,7 +310,7 @@ void buttonCallback(char *Button)
 {
   if (*Debug)
   {
-    logToSerials(F("Button press:"), false, 0);
+    logToSerials(F("ESP button:"), false, 0);
   }
   if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
   {
@@ -342,7 +331,7 @@ void fieldCallback(char *Field)
 { ///< Called when any field on the website is updated.
   if (*Debug)
   {
-    logToSerials(F("Field submit:"), false, 0);
+    logToSerials(F("ESP field:"), false, 0);
   }
   Main1->commandEventTrigger(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);

@@ -198,8 +198,7 @@ void DEVModule_Web::refresh_FiveSec()
 
 void DEVModule_Web::refresh_Minute()
 {
-  if (*Debug)
-    Common::refresh_Minute();
+Common::refresh_Minute();
   runReport();
   reportToGoogleSheetsTrigger();
 }

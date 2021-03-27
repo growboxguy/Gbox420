@@ -37,8 +37,7 @@ ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::Rese
 
 void ReservoirModule::refresh_Sec()
 {
-  if (*Debug)
-    Common::refresh_Sec();
+  Common::refresh_Sec();
   if (NextSequenceID != ReservoirMessages::ReservoirModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   {                                                               ///< If there is a package exchange in progress
     NextSequenceID = ReservoirMessages::ReservoirModuleResponse1; ///< Reset back to the first response
@@ -49,8 +48,7 @@ void ReservoirModule::refresh_Sec()
 
 void ReservoirModule::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   runReport();
   updateResponse();
 }

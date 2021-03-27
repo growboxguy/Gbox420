@@ -33,8 +33,7 @@ void WaterTempSensor::report(bool JSONReport)
 
 void WaterTempSensor::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   readSensor();
 }
 

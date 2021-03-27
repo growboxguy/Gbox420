@@ -36,8 +36,7 @@ void AirPump::report(bool JSONReport)
 
 void AirPump::refresh_Minute()
 {
-  if (*Debug)
-    Common::refresh_Minute();
+Common::refresh_Minute();
   checkStatus();
 }
 

@@ -37,8 +37,7 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroModuleSett
 
 void AeroModule::refresh_Sec()
 {
-  if (*Debug)
-    Common::refresh_Sec();
+  Common::refresh_Sec();
   if (NextSequenceID != AeroMessages::AeroModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   {                                                     ///< If there is a package exchange in progress
     NextSequenceID = AeroMessages::AeroModuleResponse1; ///< Reset back to the first response
@@ -49,8 +48,7 @@ void AeroModule::refresh_Sec()
 
 void AeroModule::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   runReport();
   updateResponse();
 }

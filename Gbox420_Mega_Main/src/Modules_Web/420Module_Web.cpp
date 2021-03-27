@@ -72,7 +72,7 @@ void Module_Web::websiteRefreshEventTrigger(char *url)
 */
 void Module_Web::commandEventTrigger(char *command, char *data)
 {
-  logToSerials(&command, false, 0);
+  logToSerials(&command, false, 1);
   logToSerials(&data, true, 2);
   for (int i = 0; i < CommandQueue_Count; i++)
   {
@@ -162,7 +162,7 @@ void Module_Web::addPushingBoxLogRelayID()
 */
 void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
-  if (*Debug)
+  //if (*Debug)
   { ///< print the report command to console
     logToSerials(F("REST API reporting: api.pushingbox.com"), false, 2);
     logToSerials(JSONData, true, 0);
@@ -177,7 +177,7 @@ void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
   memset(&ShortMessage[0], 0, MaxShotTextLength); ///< clear variable
   strcat(ShortMessage, ModuleSettings->MqttPubTopic);
-  if (*Debug)
+  //if (*Debug)
   { ///< print the report command to console
     logToSerials(F("MQTT reporting:"), false, 2);
     logToSerials(&ShortMessage, false, 1);

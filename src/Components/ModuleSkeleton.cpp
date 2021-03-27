@@ -17,14 +17,12 @@ ModuleSkeleton::ModuleSkeleton(const __FlashStringHelper *Name, Module *Parent, 
 
 void ModuleSkeleton::refresh_Sec()
 {
-  if (*Debug)
-    Common::refresh_Sec();
+  Common::refresh_Sec();
 }
 
 void ModuleSkeleton::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   if (RuntimeBool)
   {
     RuntimeInt++;
@@ -34,8 +32,7 @@ void ModuleSkeleton::refresh_FiveSec()
 
 void ModuleSkeleton::refresh_Minute()
 {
-  if (*Debug)
-    Common::refresh_Minute();
+Common::refresh_Minute();
 }
 
 void ModuleSkeleton::report()

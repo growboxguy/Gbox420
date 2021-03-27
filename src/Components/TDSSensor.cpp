@@ -39,8 +39,7 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
 
 void TDSSensor::refresh_FiveSec()
 {
-  if (*Debug)
-    Common::refresh_FiveSec();
+  Common::refresh_FiveSec();
   updateTDS(false);
 }
 

@@ -99,7 +99,7 @@ void updateCommand()
 
 void sendCommand()
 {
-    Serial.println(F("Sending command and waiting for Acknowledgment..."));
+    Serial.println(F("Sending command and waiting for Ack..."));
     bool Result = Wireless.write(&Command, sizeof(Command));
 
     Serial.print(F("  Data Sent, "));
