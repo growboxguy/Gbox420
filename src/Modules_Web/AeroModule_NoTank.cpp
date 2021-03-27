@@ -69,7 +69,8 @@ void AeroModule::processCommand(void *ReceivedCommand)
   logToSerials(F("Received:"), false, 1);
   logToSerials(toText_aeroSequenceID(ReceivedSequenceID), false, 1);
   logToSerials(F("- Sent:"), false, 1);
-  logToSerials(toText_aeroSequenceID(NextSequenceID), true, 1);
+  logToSerials(toText_aeroSequenceID(NextSequenceID), false, 1);
+  logToSerials(F(". Data:"), false, 0);
 
   switch (ReceivedSequenceID)
   {
@@ -77,13 +78,9 @@ void AeroModule::processCommand(void *ReceivedCommand)
     setDebug(((AeroModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((AeroModuleCommand *)ReceivedCommand)->Metric);
     NextSequenceID = AeroMessages::AeroResponse1; // update the next Message that will be copied to the buffer
-    if (*Debug)
-    {
-      logToSerials(F("Module:"), false, 2);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Debug, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Metric, true, 1);
-    }
     break;
   case AeroMessages::AeroCommand1:
     if (((AeroCommand *)ReceivedCommand)->SprayEnabled)
@@ -113,9 +110,6 @@ void AeroModule::processCommand(void *ReceivedCommand)
     if (((AeroCommand *)ReceivedCommand)->MixReservoir)
       AeroNT1->Pump->startMixing();
     NextSequenceID = AeroMessages::AeroReset; // update the next Message that will be copied to the buffer
-    if (*Debug)
-    {
-      logToSerials(F("Aero1:"), false, 2);
       logToSerials(((AeroCommand *)ReceivedCommand)->SprayEnabled, false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->SprayDisabled, false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->SprayNow, false, 1);
@@ -134,13 +128,13 @@ void AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroCommand *)ReceivedCommand)->MaxPressure, false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->MixReservoir, false, 1);
       logToSerials(((AeroCommand *)ReceivedCommand)->TareWeight, true, 1);
-    }
     break;
   case AeroMessages::AeroReset:                         ///< Used to get all Responses that do not have a corresponding Command
     NextSequenceID = AeroMessages::AeroModuleResponse1; ///< Load the first response for the next message exchange
+    logToSerials(F("-"), true, 1);
     break;
   default:
-    logToSerials(F("SequenceID unknown"), true, 2);
+    logToSerials(F("SequenceID unknown"), true, 1);
     break;
   }
   updateAckData();
@@ -148,12 +142,7 @@ void AeroModule::processCommand(void *ReceivedCommand)
 }
 
 void AeroModule::updateAckData()
-{ // so you can see that new data is being sent
-  if (*Debug)
-  {
-    logToSerials(F("Updating Acknowledgement to:"), false, 2);
-    logToSerials(toText_aeroSequenceID(NextSequenceID), true, 1);
-  }
+{ 
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
 
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer
@@ -168,7 +157,6 @@ void AeroModule::updateAckData()
     Wireless.writeAckPayload(1, &AeroResetToSend, WirelessPayloadSize);
     break;
   default:
-    logToSerials(F("Ack defaults loaded"), true, 3);
     Wireless.writeAckPayload(1, &AeroModule1ResponseToSend, WirelessPayloadSize); // load the first Response into the buffer
     break;
   }
