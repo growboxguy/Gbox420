@@ -101,7 +101,8 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportText, false, 1);
-    logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSON, true, 1);
+    logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSON, false, 1);
+    logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportWireless, true, 1);
     break;
   case AeroMessages::AeroCommand1:
     NextSequenceID = AeroMessages::AeroResponse2; // update the next Message that will be copied to the buffer
@@ -178,7 +179,7 @@ void AeroModule::updateResponse()
 }
 
 void AeroModule::updateAckData()
-{ 
+{
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
 
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer
