@@ -33,7 +33,7 @@ public:
   bool *SerialReportMemory;          ///< Enable/disable reporting the remaining free memory to the Serial output
   bool *SerialReportToText;          ///< Enable/disable sending Text formatted reports to the Serial output
   bool *SerialReportToJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
-  bool *SerialReportWireless;          ///< Enable/disable sending wireless package exchange reports to the Serial output
+  bool *SerialReportWireless;        ///< Enable/disable sending wireless package exchange reports to the Serial output
 
 private:
 protected:
@@ -44,7 +44,7 @@ protected:
   void setSerialReportMemory(bool State);               ///< Enable/disable reporting the remaining free memory to the Serial output
   void setSerialReportToText(bool State);               ///< Enable/disable sending Text formatted reports to the Serial output
   void setSerialReportToJSON(bool State);               ///< Enable/disable sending JSON formatted reports to the Serial outpu
-  void setSerialReportWireless(bool State);           ///< Enable/disable sending wireless package exchange reports to the Serial output
+  void setSerialReportWireless(bool State);             ///< Enable/disable sending wireless package exchange reports to the Serial output
 
   Sound *SoundFeedback = NULL;
   bool RunAllRequested = false;
