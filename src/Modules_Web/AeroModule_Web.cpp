@@ -426,6 +426,7 @@ void AeroModule_Web::updateCommands()
   AeroModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
   AeroModuleCommand1ToSend.SerialReportText = *(Parent->SerialReportText);
   AeroModuleCommand1ToSend.SerialReportJSON = *(Parent->SerialReportJSON);
+  AeroModuleCommand1ToSend.SerialReportWireless = *(Parent->SerialReportWireless);
   AeroCommand1ToSend.DayMode = ((MainModule *)Parent)->getDayMode();
   AeroCommand1ToSend.Duration = DefaultSettings->Duration;
   AeroCommand1ToSend.DayInterval = DefaultSettings->DayInterval;
