@@ -21,8 +21,8 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency; 
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
-  SerialReportToText = &DefaultSettings->SerialReportToText;
-  SerialReportToJSON = &DefaultSettings->SerialReportToJSON;
+  SerialReportText = &DefaultSettings->SerialReportText;
+  SerialReportJSON = &DefaultSettings->SerialReportJSON;
   logToSerials(F(""), true, 0);                               // line break
   Sound1 = new Sound(F("S1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
@@ -105,8 +105,8 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     setSerialReportingFrequency(((HempyModuleCommand *)ReceivedCommand)->SerialReportFrequency);
     setSerialReportDate(((HempyModuleCommand *)ReceivedCommand)->SerialReportDate);
     setSerialReportMemory(((HempyModuleCommand *)ReceivedCommand)->SerialReportMemory);
-    setSerialReportToText(((HempyModuleCommand *)ReceivedCommand)->SerialReportToText);
-    setSerialReportToJSON(((HempyModuleCommand *)ReceivedCommand)->SerialReportToJSON);
+    setSerialReportText(((HempyModuleCommand *)ReceivedCommand)->SerialReportText);
+    setSerialReportJSON(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON);
     NextSequenceID = HempyMessages::HempyBucketResponse1; // update the next Message that will be copied to the buffer
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Debug, false, 1);
@@ -114,8 +114,8 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportToText, false, 1);
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportToJSON, true, 1);
+      logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportText, false, 1);
+      logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON, true, 1);
     break;
   case HempyMessages::HempyBucketCommand1:
     if (((HempyBucketCommand *)ReceivedCommand)->Disable)

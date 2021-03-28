@@ -17,8 +17,8 @@ ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::Rese
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
-  SerialReportToText = &DefaultSettings->SerialReportToText;
-  SerialReportToJSON = &DefaultSettings->SerialReportToJSON;
+  SerialReportText = &DefaultSettings->SerialReportText;
+  SerialReportJSON = &DefaultSettings->SerialReportJSON;
   logToSerials(F(""), true, 0);                                   //<Line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
@@ -89,8 +89,8 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     setSerialReportingFrequency(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportFrequency);
     setSerialReportDate(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportDate);
     setSerialReportMemory(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportMemory);
-    setSerialReportToText(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportToText);
-    setSerialReportToJSON(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportToJSON);
+    setSerialReportText(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportText);
+    setSerialReportJSON(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSON);
     NextSequenceID = ReservoirMessages::ReservoirResponse1; // update the next Message that will be copied to the buffer
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Debug, false, 1);
@@ -98,8 +98,8 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
-      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportToText, false, 1);
-      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportToJSON, true, 1);
+      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportText, false, 1);
+      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSON, true, 1);
     break;
   case ReservoirMessages::ReservoirCommand1:
     if (((ReservoirCommand *)ReceivedCommand)->TareWeight)

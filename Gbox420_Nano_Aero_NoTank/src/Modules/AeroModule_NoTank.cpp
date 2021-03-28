@@ -23,8 +23,8 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModu
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
-  SerialReportToText = &DefaultSettings->SerialReportToText;
-  SerialReportToJSON = &DefaultSettings->SerialReportToJSON;
+  SerialReportText = &DefaultSettings->SerialReportText;
+  SerialReportJSON = &DefaultSettings->SerialReportJSON;
   logToSerials(F(""), true, 0);                                   //<Line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
@@ -89,8 +89,8 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     setSerialReportingFrequency(((AeroModuleCommand *)ReceivedCommand)->SerialReportFrequency);
     setSerialReportDate(((AeroModuleCommand *)ReceivedCommand)->SerialReportDate);
     setSerialReportMemory(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemory);
-    setSerialReportToText(((AeroModuleCommand *)ReceivedCommand)->SerialReportToText);
-    setSerialReportToJSON(((AeroModuleCommand *)ReceivedCommand)->SerialReportToJSON);
+    setSerialReportText(((AeroModuleCommand *)ReceivedCommand)->SerialReportText);
+    setSerialReportJSON(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSON);
     NextSequenceID = AeroMessages::AeroResponse1; // update the next Message that will be copied to the buffer
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->Debug, false, 1);
@@ -98,8 +98,8 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
-    logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportToText, false, 1);
-    logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportToJSON, true, 1);
+    logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportText, false, 1);
+    logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSON, true, 1);
     break;
   case AeroMessages::AeroCommand1:
     NextSequenceID = AeroMessages::AeroResponse2; // update the next Message that will be copied to the buffer

@@ -44,14 +44,14 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct ReservoirModuleSettings
   {
-    ReservoirModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportToText = true, bool SerialReportToJSON = true) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportToText(SerialReportToText), SerialReportToJSON(SerialReportToJSON) {}
+    ReservoirModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportText = true, bool SerialReportJSON = true) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportText(SerialReportText), SerialReportJSON(SerialReportJSON) {}
     uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
     bool SerialReportDate;   ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool SerialReportToText; ///< Enable/disable sending Text formatted reports to the Serial output
-    bool SerialReportToJSON; ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool SerialReportText; ///< Enable/disable sending Text formatted reports to the Serial output
+    bool SerialReportJSON; ///< Enable/disable sending JSON formatted reports to the Serial output
   };
-  struct ReservoirModuleSettings Res1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportToText = true, .SerialReportToJSON = true};
+  struct ReservoirModuleSettings Res1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportText = true, .SerialReportJSON = true};
 
   struct DHTSensorSettings ///< DHTSensor default settings
   {

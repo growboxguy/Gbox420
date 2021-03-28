@@ -32,8 +32,8 @@ public:
   uint16_t SerialTriggerCounter = 0; ///< Helps with timing when to send the Serial report out
   bool *SerialReportDate;            ///< Enable/disable reporting the current time to the Serial output
   bool *SerialReportMemory;          ///< Enable/disable reporting the remaining free memory to the Serial output
-  bool *SerialReportToText;          ///< Enable/disable sending Text formatted reports to the Serial output
-  bool *SerialReportToJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
+  bool *SerialReportText;          ///< Enable/disable sending Text formatted reports to the Serial output
+  bool *SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
 
 private:
 protected:
@@ -41,8 +41,8 @@ protected:
   void setMetric(bool MetricEnabled);
   void setSerialReportDate(bool State);
   void setSerialReportMemory(bool State);
-  void setSerialReportToText(bool State);
-  void setSerialReportToJSON(bool State);
+  void setSerialReportText(bool State);
+  void setSerialReportJSON(bool State);
 
   Sound *SoundFeedback = NULL;
   bool RunAllRequested = false;

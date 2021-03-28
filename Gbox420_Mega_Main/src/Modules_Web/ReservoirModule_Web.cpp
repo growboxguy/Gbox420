@@ -232,7 +232,7 @@ void ReservoirModule_Web::updateCommands()
   ReservoirModuleCommand1ToSend.SerialReportFrequency = *(Parent->SerialReportFrequency);
   ReservoirModuleCommand1ToSend.SerialReportDate = *(Parent->SerialReportDate);
   ReservoirModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
-  ReservoirModuleCommand1ToSend.SerialReportToText = *(Parent->SerialReportToText);
-  ReservoirModuleCommand1ToSend.SerialReportToJSON = *(Parent->SerialReportToJSON);
+  ReservoirModuleCommand1ToSend.SerialReportText = *(Parent->SerialReportText);
+  ReservoirModuleCommand1ToSend.SerialReportJSON = *(Parent->SerialReportJSON);
   ReservoirModuleCommand1ToSend.SerialReportWireless = *(Parent->SerialReportWireless);
 }

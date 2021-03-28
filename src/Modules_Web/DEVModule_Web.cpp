@@ -268,7 +268,7 @@ void DEVModule_Web::reportToGoogleSheetsTrigger(bool ForceRun)
     strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     for (int i = 0; i < reportQueueItemCount;)
     {
-      ReportQueue[i++]->SerialReportToJSON();
+      ReportQueue[i++]->SerialReportJSON();
       if (i != reportQueueItemCount)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
     }

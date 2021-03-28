@@ -19,9 +19,10 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
-  SerialReportMemory = &DefaultSettings->SerialReportMemory;
-  SerialReportToText = &DefaultSettings->SerialReportToText;
-  SerialReportToJSON = &DefaultSettings->SerialReportToJSON;
+  SerialReportMemory = &DefaultSettings->SerialReportMemory;  
+  SerialReportText = &DefaultSettings->SerialReportText;
+  SerialReportJSON = &DefaultSettings->SerialReportJSON;
+  SerialReportWireless = &DefaultSettings->SerialReportWireless;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
   ReportToMQTT = &DefaultSettings->ReportToMQTT;
@@ -80,9 +81,9 @@ void MainModule::report(bool JSONReport)
     strcat_P(LongMessage, (PGM_P)F(" ; Report memory:"));
     strcat(LongMessage, toText_yesNo(*SerialReportMemory));
     strcat_P(LongMessage, (PGM_P)F(" ; Report text:"));
-    strcat(LongMessage, toText_yesNo(*SerialReportToText));
+    strcat(LongMessage, toText_yesNo(*SerialReportText));
     strcat_P(LongMessage, (PGM_P)F(" ; Report JSON:"));
-    strcat(LongMessage, toText_yesNo(*SerialReportToJSON));
+    strcat(LongMessage, toText_yesNo(*SerialReportJSON));
     logToSerials(&LongMessage, true, 1);
   }
 }
@@ -113,8 +114,8 @@ void MainModule::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("SerialF")), *SerialReportFrequency);
     WebServer.setArgInt(getComponentName(F("Date")), *SerialReportDate);
     WebServer.setArgInt(getComponentName(F("Mem")), *SerialReportMemory);
-    WebServer.setArgInt(getComponentName(F("Text")), *SerialReportToText);
-    WebServer.setArgInt(getComponentName(F("JSON")), *SerialReportToJSON);
+    WebServer.setArgInt(getComponentName(F("Text")), *SerialReportText);
+    WebServer.setArgInt(getComponentName(F("JSON")), *SerialReportJSON);
     WebServer.setArgInt(getComponentName(F("Wire")), *SerialReportWireless);
     WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
     WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
@@ -399,11 +400,11 @@ void MainModule::commandEvent(char *Command, char *Data)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Text")) == 0)
     {
-      setSerialReportToText(toBool(Data));
+      setSerialReportText(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("JSON")) == 0)
     {
-      setSerialReportToJSON(toBool(Data));
+      setSerialReportJSON(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Wire")) == 0)
     {
@@ -480,7 +481,7 @@ void MainModule::refresh_FiveSec()
 void MainModule::refresh_Minute()
 {
   Common::refresh_Minute();
-  reportToGoogleSheetsTrigger();  
+  reportToGoogleSheetsTrigger();
 }
 
 bool MainModule::getDayMode()

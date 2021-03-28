@@ -31,8 +31,8 @@ public:
   uint16_t SerialTriggerCounter = 0; ///< Helps with timing when to send the Serial report out
   bool *SerialReportDate;            ///< Enable/disable reporting the current time to the Serial output
   bool *SerialReportMemory;          ///< Enable/disable reporting the remaining free memory to the Serial output
-  bool *SerialReportToText;          ///< Enable/disable sending Text formatted reports to the Serial output
-  bool *SerialReportToJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
+  bool *SerialReportText;          ///< Enable/disable sending Text formatted reports to the Serial output
+  bool *SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
   bool *SerialReportWireless;        ///< Enable/disable sending wireless package exchange reports to the Serial output
 
 private:
@@ -42,8 +42,8 @@ protected:
   void setSerialReportingFrequency(uint16_t Frequency); ///< Set the of Frequency of Serial reports in seconds (5 sec increments, 5 sec minimum)
   void setSerialReportDate(bool State);                 ///< Enable/disable reporting the current time to the Serial output
   void setSerialReportMemory(bool State);               ///< Enable/disable reporting the remaining free memory to the Serial output
-  void setSerialReportToText(bool State);               ///< Enable/disable sending Text formatted reports to the Serial output
-  void setSerialReportToJSON(bool State);               ///< Enable/disable sending JSON formatted reports to the Serial outpu
+  void setSerialReportText(bool State);               ///< Enable/disable sending Text formatted reports to the Serial output
+  void setSerialReportJSON(bool State);               ///< Enable/disable sending JSON formatted reports to the Serial outpu
   void setSerialReportWireless(bool State);             ///< Enable/disable sending wireless package exchange reports to the Serial output
 
   Sound *SoundFeedback = NULL;
