@@ -27,22 +27,24 @@ public:
   void addToRefreshQueue_Minute(Common *Component);  ///< Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   char *getFormattedTime(bool PrintToSerials);
   Sound *getSoundObject();
-  void setSerialReportingFrequency(uint16_t Frequency);
   uint16_t *SerialReportFrequency;   ///< Frequency of Serial reports in seconds
   uint16_t SerialTriggerCounter = 0; ///< Helps with timing when to send the Serial report out
   bool *SerialReportDate;            ///< Enable/disable reporting the current time to the Serial output
   bool *SerialReportMemory;          ///< Enable/disable reporting the remaining free memory to the Serial output
   bool *SerialReportToText;          ///< Enable/disable sending Text formatted reports to the Serial output
   bool *SerialReportToJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
+  bool *SerialReportWireless;          ///< Enable/disable sending wireless package exchange reports to the Serial output
 
 private:
 protected:
   void setDebug(bool State);
   void setMetric(bool MetricEnabled);
-  void setSerialReportDate(bool State);
-  void setSerialReportMemory(bool State);
-  void setSerialReportToText(bool State);
-  void setSerialReportToJSON(bool State);
+  void setSerialReportingFrequency(uint16_t Frequency); ///< Set the of Frequency of Serial reports in seconds (5 sec increments, 5 sec minimum)
+  void setSerialReportDate(bool State);                 ///< Enable/disable reporting the current time to the Serial output
+  void setSerialReportMemory(bool State);               ///< Enable/disable reporting the remaining free memory to the Serial output
+  void setSerialReportToText(bool State);               ///< Enable/disable sending Text formatted reports to the Serial output
+  void setSerialReportToJSON(bool State);               ///< Enable/disable sending JSON formatted reports to the Serial outpu
+  void setSerialReportWireless(bool State);           ///< Enable/disable sending wireless package exchange reports to the Serial output
 
   Sound *SoundFeedback = NULL;
   bool RunAllRequested = false;

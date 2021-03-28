@@ -115,6 +115,7 @@ void MainModule::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("Mem")), *SerialReportMemory);
     WebServer.setArgInt(getComponentName(F("Text")), *SerialReportToText);
     WebServer.setArgInt(getComponentName(F("JSON")), *SerialReportToJSON);
+    WebServer.setArgInt(getComponentName(F("Wire")), *SerialReportWireless);
     WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
     WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
     WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
@@ -403,6 +404,10 @@ void MainModule::commandEvent(char *Command, char *Data)
     else if (strcmp_P(ShortMessage, (PGM_P)F("JSON")) == 0)
     {
       setSerialReportToJSON(toBool(Data));
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Wire")) == 0)
+    {
+      setSerialReportWireless(toBool(Data));
     }
     //Settings - Google Sheets
     else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0)

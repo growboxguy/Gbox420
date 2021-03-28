@@ -306,8 +306,10 @@ void AeroModule_Web::sendMessages()
   sendCommand(&AeroCommand1ToSend);
   sendCommand(&AeroCommand2ToSend); ///< Command - Response exchange
   sendCommand(&AeroResetToSend);    ///< special Command, resets communication to first message
-  if (*Debug)
+  if (*(Parent->SerialReportWireless) && *Debug)
+  {
     logToSerials(F("Message exchange finished"), true, 1);
+  }
 }
 
 /**
@@ -317,7 +319,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
 {
   AeroMessages SequenceIDToSend = ((AeroCommonTemplate *)CommandToSend)->SequenceID;
   AeroMessages ReceivedSequenceID = NULL;
-  if (*Debug)
+  if (*(Parent->SerialReportWireless))
   {
     logToSerials(F("Sending:"), false, 1);
     logToSerials(toText_aeroSequenceID(SequenceIDToSend), false, 1);
@@ -332,7 +334,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
       OnlineStatus = true;
       Parent->Wireless->read(ReceivedResponse, WirelessPayloadSize);
       ReceivedSequenceID = ((AeroCommonTemplate *)ReceivedResponse)->SequenceID;
-      if (*Debug)
+      if (*(Parent->SerialReportWireless))
       {
         logToSerials(F("Response:"), false, 1);
         logToSerials(toText_aeroSequenceID(ReceivedSequenceID), false, 1);
@@ -343,7 +345,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
       {
       case AeroMessages::AeroModuleResponse1:
         memcpy(&AeroModuleResponse1Received, ReceivedResponse, sizeof(struct AeroModuleResponse));
-        if (*Debug)
+        if (*(Parent->SerialReportWireless))
         {
           logToSerials(AeroModuleResponse1Received.Status, true, 1);
         }
@@ -358,7 +360,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           AeroCommand1ToSend.SprayNow = false;
           AeroCommand1ToSend.SprayOff = false;
         }
-        if (*Debug)
+        if (*(Parent->SerialReportWireless))
         {
           logToSerials(toText((int)AeroResponse1Received.AeroState), false, 1);
           logToSerials(AeroResponse1Received.PressureTankPresent, false, 1);
@@ -384,7 +386,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         }
         break;
       case AeroMessages::AeroReset:
-        if (*Debug)
+        if (*(Parent->SerialReportWireless))
         {
           logToSerials(F("-"), true, 1);
         }
@@ -397,13 +399,13 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
     }
     else
     {
-      if (*Debug)
+      if (*(Parent->SerialReportWireless))
         logToSerials(F("Ack received without data"), true, 1);
     }
   }
   else
   {
-    if (*Debug)
+    if (*(Parent->SerialReportWireless))
       logToSerials(F("No response"), true, 1);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
@@ -426,6 +428,7 @@ void AeroModule_Web::updateCommands()
   AeroModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
   AeroModuleCommand1ToSend.SerialReportToText = *(Parent->SerialReportToText);
   AeroModuleCommand1ToSend.SerialReportToJSON = *(Parent->SerialReportToJSON);
+  AeroModuleCommand1ToSend.SerialReportWireless = *(Parent->SerialReportWireless);
   AeroCommand1ToSend.DayMode = ((MainModule *)Parent)->getDayMode();
   AeroCommand1ToSend.Duration = DefaultSettings->Duration;
   AeroCommand1ToSend.DayInterval = DefaultSettings->DayInterval;
