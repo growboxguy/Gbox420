@@ -92,6 +92,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     setSerialReportMemory(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemory);
     setSerialReportText(((AeroModuleCommand *)ReceivedCommand)->SerialReportText);
     setSerialReportJSON(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSON);
+    setSerialReportWireless(((AeroModuleCommand *)ReceivedCommand)->SerialReportWireless);
     NextSequenceID = AeroMessages::AeroResponse1; // update the next Message that will be copied to the buffer
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
     logToSerials(((AeroModuleCommand *)ReceivedCommand)->Debug, false, 1);

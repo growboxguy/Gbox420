@@ -92,6 +92,8 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     setSerialReportMemory(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportMemory);
     setSerialReportText(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportText);
     setSerialReportJSON(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSON);
+    setSerialReportWireless(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportWireless);
+    
     NextSequenceID = ReservoirMessages::ReservoirResponse1; // update the next Message that will be copied to the buffer
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Time, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Debug, false, 1);
@@ -100,7 +102,8 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportText, false, 1);
-      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSON, true, 1);
+      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSON, false, 1);
+      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportWireless, true, 1);
     break;
   case ReservoirMessages::ReservoirCommand1:
     if (((ReservoirCommand *)ReceivedCommand)->TareWeight)

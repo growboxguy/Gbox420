@@ -259,3 +259,12 @@ void Module::setSerialReportJSON(bool State)
     getSoundObject()->playOnSound();
   }
 }
+
+void Module::setSerialReportWireless(bool State)
+{
+  if (State != *SerialReportWireless)
+  { //if there was a change
+    *SerialReportWireless = State;
+    getSoundObject()->playOnSound();
+  }
+}

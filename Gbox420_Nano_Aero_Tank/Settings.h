@@ -44,14 +44,15 @@ typedef struct
   //<initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroponicsModuleSettings
   {
-    AeroponicsModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportText = true, bool SerialReportJSON = true) : SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportText(SerialReportText), SerialReportJSON(SerialReportJSON) {}
+    AeroponicsModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportText = true, bool SerialReportJSON = true, bool SerialReportWireless = true) : SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportText(SerialReportText), SerialReportJSON(SerialReportJSON), SerialReportWireless(SerialReportWireless) {}
     uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)    
     bool SerialReportDate;   ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
     bool SerialReportText; ///< Enable/disable sending Text formatted reports to the Serial output
     bool SerialReportJSON; ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool SerialReportWireless;   ///< Enable/disable sending wireless package exchange reports to the Serial output
   };
-  struct AeroponicsModuleSettings Aero1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportText = true, .SerialReportJSON = true};
+  struct AeroponicsModuleSettings Aero1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportText = true, .SerialReportJSON = true, .SerialReportWireless = true};
 
   struct AeroponicsSettings ///< Aeroponics_Tank default settings
   {

@@ -84,6 +84,8 @@ void MainModule::report(bool JSONReport)
     strcat(LongMessage, toText_yesNo(*SerialReportText));
     strcat_P(LongMessage, (PGM_P)F(" ; Report JSON:"));
     strcat(LongMessage, toText_yesNo(*SerialReportJSON));
+    strcat_P(LongMessage, (PGM_P)F(" ; Report Wireless:"));
+    strcat(LongMessage, toText_yesNo(*SerialReportWireless));
     logToSerials(&LongMessage, true, 1);
   }
 }

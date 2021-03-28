@@ -18,13 +18,13 @@ struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset}; ///< 
 
 HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Module()
 {
-  SerialReportFrequency = &DefaultSettings->SerialReportFrequency; 
+  SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
   SerialReportText = &DefaultSettings->SerialReportText;
   SerialReportJSON = &DefaultSettings->SerialReportJSON;
   SerialReportWireless = &DefaultSettings->SerialReportWireless;
-  logToSerials(F(""), true, 0);                               // line break
+  logToSerials(F(""), true, 0);                                   // line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
   WeightB1 = new WeightSensor(F("WeightB1"), this, &ModuleSettings->WeightB1);
@@ -86,11 +86,11 @@ bool HempyModule::processCommand(void *ReceivedCommand)
 {
   HempyMessages ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedCommand)->SequenceID;
   LastMessageReceived = millis(); ///< Store current time
-    logToSerials(F("Received:"), false, 1);
-    logToSerials(toText_hempySequenceID(ReceivedSequenceID), false, 1);
-    logToSerials(F("- Sent:"), false, 1);
-    logToSerials(toText_hempySequenceID(NextSequenceID), false, 1); ///< This is the pre-buffered response that was instantly sent when a command was received
-    logToSerials(F(". Data:"), false, 0);
+  logToSerials(F("Received:"), false, 1);
+  logToSerials(toText_hempySequenceID(ReceivedSequenceID), false, 1);
+  logToSerials(F("- Sent:"), false, 1);
+  logToSerials(toText_hempySequenceID(NextSequenceID), false, 1); ///< This is the pre-buffered response that was instantly sent when a command was received
+  logToSerials(F(". Data:"), false, 0);
 
   bool LastMessageReached = false;
   if (ReceivedSequenceID == HempyMessages::HempyBucketCommand2 && NextSequenceID == HempyMessages::HempyBucketResponse2) ///< Last real command-response exchange reached
@@ -108,15 +108,17 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     setSerialReportMemory(((HempyModuleCommand *)ReceivedCommand)->SerialReportMemory);
     setSerialReportText(((HempyModuleCommand *)ReceivedCommand)->SerialReportText);
     setSerialReportJSON(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON);
+    setSerialReportWireless(((HempyModuleCommand *)ReceivedCommand)->SerialReportWireless);
     NextSequenceID = HempyMessages::HempyBucketResponse1; // update the next Message that will be copied to the buffer
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->Debug, false, 1);
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->Metric, false, 1);
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportText, false, 1);
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON, true, 1);
+    logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
+    logToSerials(((HempyModuleCommand *)ReceivedCommand)->Debug, false, 1);
+    logToSerials(((HempyModuleCommand *)ReceivedCommand)->Metric, false, 1);
+    logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
+    logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
+    logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
+    logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportText, false, 1);
+    logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON, false, 1);
+    logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportWireless, true, 1);
     break;
   case HempyMessages::HempyBucketCommand1:
     if (((HempyBucketCommand *)ReceivedCommand)->Disable)
@@ -139,19 +141,19 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket1->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     Bucket1->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
     NextSequenceID = HempyMessages::HempyBucketResponse2; // update the next Message that will be copied to the buffer
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightDW, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightDW, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
     break;
   case HempyMessages::HempyBucketCommand2:
     if (((HempyBucketCommand *)ReceivedCommand)->Disable)
@@ -174,19 +176,19 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket2->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     Bucket2->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
     NextSequenceID = HempyMessages::HempyReset; // update the next Message that will be copied to the buffer
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightDW, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightDW, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
+    logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
     break;
   case HempyMessages::HempyReset:                         ///< Used to get all Responses that do not have a corresponding Command
     NextSequenceID = HempyMessages::HempyModuleResponse1; ///< Load the first response for the next message exchange
@@ -204,7 +206,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
 }
 
 void HempyModule::updateAckData()
-{ 
+{
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
 
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer
