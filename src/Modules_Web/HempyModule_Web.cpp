@@ -335,15 +335,17 @@ void HempyModule_Web::sendMessages()
   sendCommand(&HempyBucketCommand1ToSend); ///< Command - Response exchange
   sendCommand(&HempyBucketCommand2ToSend); ///< Command - Response exchange
   sendCommand(&HempyResetToSend);          ///< special Command, resets communication to first message
-  if (*Debug)
+  if (*(Parent->SerialReportWireless) && *Debug)
+  {
     logToSerials(F("Message exchange finished"), true, 1);
+  }
 }
 
 HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
 {
   HempyMessages SequenceIDToSend = ((HempyCommonTemplate *)CommandToSend)->SequenceID;
   HempyMessages ReceivedSequenceID = NULL;
-  if (*Debug)
+  if (*(Parent->SerialReportWireless))
   {
     logToSerials(F("Sending:"), false, 1);
     logToSerials(toText_hempySequenceID(SequenceIDToSend), false, 1);
@@ -358,7 +360,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
       OnlineStatus = true; ///< Mark that the module responded
       Parent->Wireless->read(ReceivedResponse, WirelessPayloadSize);
       ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedResponse)->SequenceID;
-      if (*Debug)
+      if (*(Parent->SerialReportWireless))
       {
         logToSerials(F("Response:"), false, 1);
         logToSerials(toText_hempySequenceID(ReceivedSequenceID), false, 1);
@@ -369,7 +371,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
       {
       case HempyMessages::HempyModuleResponse1:
         memcpy(&HempyModuleResponse1Received, ReceivedResponse, sizeof(struct HempyModuleResponse));
-        if (*Debug)
+        if (*(Parent->SerialReportWireless))
         {
           logToSerials(HempyModuleResponse1Received.Status, true, 1);
         }
@@ -390,7 +392,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         {
           HempyBucketCommand1ToSend.DryWeight = NAN;
         }
-        if (*Debug)
+        if (*(Parent->SerialReportWireless))
         {
           logToSerials(toText((int)HempyBucketResponse1Received.HempyState), false, 1);
           logToSerials(toText((int)HempyBucketResponse1Received.PumpState), false, 1);
@@ -416,7 +418,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         {
           HempyBucketCommand2ToSend.DryWeight = NAN;
         }
-        if (*Debug)
+        if (*(Parent->SerialReportWireless))
         {
           logToSerials(toText((int)HempyBucketResponse2Received.HempyState), false, 1);
           logToSerials(toText((int)HempyBucketResponse2Received.PumpState), false, 1);
@@ -427,13 +429,13 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         }
         break;
       case HempyMessages::HempyReset:
-        if (*Debug)
+        if (*(Parent->SerialReportWireless))
         {
           logToSerials(F("-"), true, 1);
         }
         break;
       default:
-        if (*Debug)
+        if (*(Parent->SerialReportWireless))
         {
           logToSerials(F("SequenceID unknown"), true, 1);
         }
@@ -443,13 +445,13 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
     }
     else
     {
-      if (*Debug)
+      if (*(Parent->SerialReportWireless))
         logToSerials(F("Ack received without data"), true, 1); ///< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+
     }
   }
   else
   {
-    if (*Debug)
+    if (*(Parent->SerialReportWireless))
       logToSerials(F("No response"), true, 1);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
@@ -469,6 +471,7 @@ void HempyModule_Web::updateCommands()
   HempyModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
   HempyModuleCommand1ToSend.SerialReportText = *(Parent->SerialReportText);
   HempyModuleCommand1ToSend.SerialReportJSON = *(Parent->SerialReportJSON);
+  HempyModuleCommand1ToSend.SerialReportWireless = *(Parent->SerialReportWireless);
   HempyBucketCommand1ToSend.EvaporationTarget = DefaultSettings->EvaporationTarget_B1;
   HempyBucketCommand1ToSend.OverflowTarget = DefaultSettings->OverflowTarget_B1;
   HempyBucketCommand1ToSend.WasteLimit = DefaultSettings->WasteLimit_B1;

@@ -19,7 +19,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
-  SerialReportMemory = &DefaultSettings->SerialReportMemory;  
+  SerialReportMemory = &DefaultSettings->SerialReportMemory;
   SerialReportText = &DefaultSettings->SerialReportText;
   SerialReportJSON = &DefaultSettings->SerialReportJSON;
   SerialReportWireless = &DefaultSettings->SerialReportWireless;

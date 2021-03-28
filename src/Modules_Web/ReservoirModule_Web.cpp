@@ -127,8 +127,10 @@ void ReservoirModule_Web::sendMessages()
   sendCommand(&ReservoirModuleCommand1ToSend); ///< Module specific Command - Response exchange
   sendCommand(&ReservoirCommand1ToSend);       ///< Command - Response exchange
   sendCommand(&ReservoirResetToSend);          ///< special Command, resets communication to first message
-  if (*Debug)
+  if (*(Parent->SerialReportWireless) && *Debug)
+  {
     logToSerials(F("Message exchange finished"), true, 1);
+  }
 }
 
 /**
@@ -138,7 +140,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
 {
   ReservoirMessages SequenceIDToSend = ((ReservoirCommonTemplate *)CommandToSend)->SequenceID;
   ReservoirMessages ReceivedSequenceID = NULL;
-  if (*Debug)
+  if (*(Parent->SerialReportWireless))
   {
     logToSerials(F("Sending:"), false, 1);
     logToSerials(toText_reservoirSequenceID(SequenceIDToSend), false, 1);
@@ -153,7 +155,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
       OnlineStatus = true;
       Parent->Wireless->read(ReceivedResponse, WirelessPayloadSize);
       ReceivedSequenceID = ((ReservoirCommonTemplate *)ReceivedResponse)->SequenceID;
-      if (*Debug)
+      if (*(Parent->SerialReportWireless))
       {
         logToSerials(F("Response:"), false, 1);
         logToSerials(toText_reservoirSequenceID(ReceivedSequenceID), false, 1);
@@ -164,7 +166,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
       {
       case ReservoirMessages::ReservoirModuleResponse1:
         memcpy(&ReservoirModuleResponse1Received, ReceivedResponse, sizeof(struct ReservoirModuleResponse));
-        if (*Debug)
+        if (*(Parent->SerialReportWireless))
         {
           logToSerials(ReservoirModuleResponse1Received.Status, true, 1);
         }
@@ -176,7 +178,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
           SyncRequested = true; ///< Force a second message exchange to actualize the response
           ReservoirCommand1ToSend.TareWeight = false;
         }
-        if (*Debug)
+        if (*(Parent->SerialReportWireless))
         {
           logToSerials(ReservoirResponse1Received.PH, false, 1);
           logToSerials(ReservoirResponse1Received.TDS, false, 1);
@@ -187,26 +189,29 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         }
         break;
       case ReservoirMessages::ReservoirReset:
-        if (*Debug)
+        if (*(Parent->SerialReportWireless))
         {
           logToSerials(F("-"), true, 1);
         }
         break;
       default:
-        logToSerials(F("SequenceID unknown"), true, 1);
+        if (*(Parent->SerialReportWireless))
+        {
+          logToSerials(F("SequenceID unknown"), true, 1);
+        }
         break;
       }
       LastResponseReceived = millis();
     }
     else
     {
-      if (*Debug)
+      if (*(Parent->SerialReportWireless))
         logToSerials(F("Ack received without data"), true, 1);
     }
   }
   else
   {
-    if (*Debug)
+    if (*(Parent->SerialReportWireless))
       logToSerials(F("No response"), true, 1);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
@@ -229,4 +234,5 @@ void ReservoirModule_Web::updateCommands()
   ReservoirModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
   ReservoirModuleCommand1ToSend.SerialReportText = *(Parent->SerialReportText);
   ReservoirModuleCommand1ToSend.SerialReportJSON = *(Parent->SerialReportJSON);
+  ReservoirModuleCommand1ToSend.SerialReportWireless = *(Parent->SerialReportWireless);
 }

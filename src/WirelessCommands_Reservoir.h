@@ -54,7 +54,7 @@ struct ReservoirCommonTemplate ///< Shared between Command and Respone packages
 struct ReservoirModuleCommand : ReservoirCommonTemplate ///< Max 32 bytes. Command sent by the Main module
 {
    ReservoirModuleCommand(__attribute__((unused)) ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
-   ReservoirModuleCommand(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) uint16_t SerialReportFrequency, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportText, __attribute__((unused)) bool SerialReportJSON) : ReservoirCommonTemplate(SequenceID) {}
+   ReservoirModuleCommand(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) uint16_t SerialReportFrequency, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportText, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : ReservoirCommonTemplate(SequenceID) {}
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
@@ -63,6 +63,7 @@ struct ReservoirModuleCommand : ReservoirCommonTemplate ///< Max 32 bytes. Comma
    bool SerialReportMemory = true;
    bool SerialReportText = true;
    bool SerialReportJSON = true;
+   bool SerialReportWireless = true;
 };
 
 struct ReservoirModuleResponse : ReservoirCommonTemplate ///< Max 32 bytes. Response sent back to the Main module

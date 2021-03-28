@@ -22,6 +22,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
   SerialReportText = &DefaultSettings->SerialReportText;
   SerialReportJSON = &DefaultSettings->SerialReportJSON;
+  SerialReportWireless = &DefaultSettings->SerialReportWireless;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
   ReportToMQTT = &DefaultSettings->ReportToMQTT;
@@ -115,6 +116,7 @@ void MainModule::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("Mem")), *SerialReportMemory);
     WebServer.setArgInt(getComponentName(F("Text")), *SerialReportText);
     WebServer.setArgInt(getComponentName(F("JSON")), *SerialReportJSON);
+    WebServer.setArgInt(getComponentName(F("Wire")), *SerialReportWireless);
     WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
     WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
     WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
@@ -404,6 +406,10 @@ void MainModule::commandEvent(char *Command, char *Data)
     {
       setSerialReportJSON(toBool(Data));
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Wire")) == 0)
+    {
+      setSerialReportWireless(toBool(Data));
+    }
     //Settings - Google Sheets
     else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0)
     {
@@ -475,7 +481,7 @@ void MainModule::refresh_FiveSec()
 void MainModule::refresh_Minute()
 {
   Common::refresh_Minute();
-  reportToGoogleSheetsTrigger();  
+  reportToGoogleSheetsTrigger();
 }
 
 bool MainModule::getDayMode()

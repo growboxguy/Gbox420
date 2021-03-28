@@ -24,7 +24,7 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModu
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
   SerialReportText = &DefaultSettings->SerialReportText;
-  SerialReportJSON = &DefaultSettings->SerialReportJSON;
+  SerialReportJSON = &DefaultSettings->SerialReportJSON;  
   SerialReportWireless = &DefaultSettings->SerialReportWireless;
   logToSerials(F(""), true, 0);                                   //<Line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
