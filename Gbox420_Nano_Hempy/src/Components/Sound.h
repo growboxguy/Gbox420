@@ -9,7 +9,7 @@ class Sound : virtual public Common
 {
 public:
   Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSettings *DefaultSettings);
-  void report(bool JSONReport = false);
+  void report(bool IncludeUnits = false);
   void checkEvents();
   void refresh_Sec();
   void playOnSound();

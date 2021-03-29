@@ -26,9 +26,9 @@ ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module
 /**
 * @brief Report the current state to the serial console
 */
-void ReservoirModule_Web::report(bool JSONReport)
+void ReservoirModule_Web::report(bool IncludeUnits)
 {
-  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  if (IncludeUnits) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));

@@ -12,9 +12,9 @@ Common::Common()
   //logToSerials(F("Initializing without name"), false, 2);
 }
 
-void Common::report(bool JSONReport)
+void Common::report(bool IncludeUnits)
 {
-  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  if (IncludeUnits) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\""));
     strcat_P(LongMessage, (PGM_P)Name);
