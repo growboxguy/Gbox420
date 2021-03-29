@@ -20,24 +20,31 @@ public:
 
   PressurePump *Pump;
   void updateState(AeroNoTankStates State);
-
+  AeroNoTankStates getState();
+  char *getStateText(bool FriendlyFormat = false);
   void setSprayOnOff(bool State);
   char *sprayStateToText();
   void setDayMode(bool State);
+  char *getDayModeText(bool FriendlyFormat = false);
   void setDuration(float Duration);
   void setDayInterval(int Interval);
-  void setNightInterval(int Interval);
   float getDuration();
+  char *getDurationText(bool FriendlyFormat = false);
+  void setNightInterval(int Interval);
   int getDayInterval();
   int getNightInterval();
-  char *getDayIntervalText();
-  char *getNightIntervalText();
-  char *getSprayDurationText();
+  char *getDayIntervalText(bool FriendlyFormat = false);
+  char *getNightIntervalText(bool FriendlyFormat = false);
+  char *getSprayDurationText(bool FriendlyFormat = false);
   bool getSprayEnabled();
+  char *getSprayEnabledText(bool FriendlyFormat = false);
   float getPressure();
   float getLastSprayPressure();
+  char *getLastSprayPressureText(bool FriendlyFormat = false);
   void setMinPressure(float Pressure);
+  char *getMinPressureText(bool FriendlyFormat = false);
   void setMaxPressure(float Pressure);
+  char *getMaxPressureText(bool FriendlyFormat = false);
 
 private:
 protected:

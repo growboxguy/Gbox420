@@ -16,9 +16,21 @@ WaterLevelSensor::WaterLevelSensor(const __FlashStringHelper *Name, Module *Pare
   logToSerials(F("WaterLevelSensor ready"), true, 3);
 }
 
+void WaterLevelSensor::report()
+{
+  Common::report();
+  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+  strcat_P(LongMessage, (PGM_P)F("Level:"));
+  strcat(LongMessage, getLevelGauge());
+  strcat_P(LongMessage, (PGM_P)F(" ("));
+  strcat(LongMessage, getLevelText());
+  strcat_P(LongMessage, (PGM_P)F(")"));
+  logToSerials(&LongMessage, true, 1);
+}
+
 void WaterLevelSensor::refresh_FiveSec()
 {
-Common::refresh_Minute();
+  Common::refresh_Minute();
   bool isAboveSensor1 = !digitalRead(*Pin_1); ///< Empty: Lowest Water sensor, true if level reached
   bool isAboveSensor2 = !digitalRead(*Pin_2);
   bool isAboveSensor3 = !digitalRead(*Pin_3);
@@ -57,18 +69,6 @@ Common::refresh_Minute();
     Level = 4; ///< Full
   else
     Level = -1; ///< non-valid sensor combination, like: E[#--#]F
-}
-
-void WaterLevelSensor::report()
-{
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("Level:"));
-  strcat(LongMessage, getLevelGauge());
-  strcat_P(LongMessage, (PGM_P)F(" ("));
-  strcat(LongMessage, getLevelText());
-  strcat_P(LongMessage, (PGM_P)F(")"));
-  logToSerials(&LongMessage, true, 1);
 }
 
 int8_t WaterLevelSensor::getLevel()

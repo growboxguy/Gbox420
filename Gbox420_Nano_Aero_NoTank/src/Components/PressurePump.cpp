@@ -31,14 +31,17 @@ PressurePump::PressurePump(const __FlashStringHelper *Name, Module *Parent, Sett
 void PressurePump::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+                                  // if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, toText((int)getState()));
+    strcat(LongMessage, getStateText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
-    strcat(LongMessage, toText(*PumpTimeOut));
+    strcat(LongMessage, getTimeOutText(FriendlyFormat));
+    strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
+    strcat(LongMessage, getPrimingTimeText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
@@ -48,6 +51,7 @@ void PressurePump::report(bool FriendlyFormat)
     strcat(LongMessage, toText_second(*PumpTimeOut));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void PressurePump::refresh_Sec()
@@ -261,19 +265,21 @@ PressurePumpStates PressurePump::getState()
   return State;
 }
 
-char *PressurePump::getStateText()
+char *PressurePump::getStateText(bool FriendlyFormat)
 {
-  return toText_pressurePumpState(State);
+  if (FriendlyFormat)
+  {
+    return toText_pressurePumpState(State);
+  }
+  else
+  {
+    return toText((int)State);
+  }
 }
 
 bool PressurePump::getEnabledState()
 {
   return *PumpEnabled;
-}
-
-int PressurePump::getPumpTimeOut()
-{
-  return *PumpTimeOut;
 }
 
 void PressurePump::setPumpTimeOut(int TimeOut)
@@ -285,9 +291,17 @@ void PressurePump::setPumpTimeOut(int TimeOut)
   }
 }
 
-int PressurePump::getPrimingTime()
+int PressurePump::getPumpTimeOut()
 {
-  return *PrimingTime;
+  return *PumpTimeOut;
+}
+
+char *PressurePump::getTimeOutText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+    return toText_second(*PumpTimeOut);
+  else
+    return toText(*PumpTimeOut);
 }
 
 void PressurePump::setPrimingTime(int Timing)
@@ -297,4 +311,17 @@ void PressurePump::setPrimingTime(int Timing)
     *PrimingTime = Timing;
     Parent->getSoundObject()->playOnSound();
   }
+}
+
+int PressurePump::getPrimingTime()
+{
+  return *PrimingTime;
+}
+
+char *PressurePump::getPrimingTimeText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+    return toText_second(*PrimingTime);
+  else
+    return toText(*PrimingTime);
 }

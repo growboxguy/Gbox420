@@ -16,7 +16,7 @@ public:
   void turnOff();
   void flip();          ///< invert the current state
   bool getState();      ///< Pump ON(1)/OFF(0)
-  char *getStateText(); ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
+  char *getStateText(bool FriendlyFormat = false); ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
 
 private:
 protected:

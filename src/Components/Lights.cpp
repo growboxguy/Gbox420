@@ -355,6 +355,7 @@ char *Lights::getStateText()
 {
   return toText_lightState(CurrentStatus);
 }
+
 char *Lights::getOnTimeText()
 {
   return toText_time(*OnHour, *OnMinute);

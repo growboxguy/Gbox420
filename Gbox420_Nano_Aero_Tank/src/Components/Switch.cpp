@@ -12,12 +12,13 @@ Switch::Switch(const __FlashStringHelper *Name, uint8_t Pin, bool NegativeLogic)
 void Switch::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, toText((int)getState()));
+    strcat(LongMessage, getStateText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
@@ -25,6 +26,7 @@ void Switch::report(bool FriendlyFormat)
     strcat(LongMessage, getStateText());
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 Switch::Switch(const __FlashStringHelper *Name) : Common(Name)
@@ -72,7 +74,14 @@ bool Switch::getState()
   return State;
 }
 
-char *Switch::getStateText()
+char *Switch::getStateText(bool FriendlyFormat)
 {
-  return toText_onOff(State);
+  if (FriendlyFormat)
+  {
+    return toText_onOff(State);
+  }
+  else
+  {
+    return toText(State);
+  }
 }

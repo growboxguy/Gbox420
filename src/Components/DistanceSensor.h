@@ -8,7 +8,7 @@ class DistanceSensor : virtual public Common
 public:
   DistanceSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DistanceSensorSettings *DefaultSettings);
   void refresh_FiveSec();
-  void report();
+  void report(bool FriendlyFormat = false);
   void readSensor(); ///< Refresh Temp and Humidity readings
   float getDistance();
   char *getDistanceText(bool FriendlyFormat = false);

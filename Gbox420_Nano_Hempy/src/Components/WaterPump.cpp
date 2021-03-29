@@ -24,14 +24,15 @@ WaterPump::WaterPump(const __FlashStringHelper *Name, Module *Parent, Settings::
 void WaterPump::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, toText((int)getState()));
-    strcat_P(LongMessage, (PGM_P)F("\",\"TO\":\""));
-    strcat(LongMessage, toText(*PumpTimeOut));
+    strcat(LongMessage, getStateText(FriendlyFormat));
+    strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
+    strcat(LongMessage, getTimeOutText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
@@ -41,6 +42,7 @@ void WaterPump::report(bool FriendlyFormat)
     strcat(LongMessage, toText_second(*PumpTimeOut));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void WaterPump::refresh_Sec()
@@ -147,19 +149,21 @@ WaterPumpStates WaterPump::getState()
   return State;
 }
 
-char *WaterPump::getStateText()
+char *WaterPump::getStateText(bool FriendlyFormat)
 {
-  return toText_waterPumpState(State);
+  if (FriendlyFormat)
+  {
+    return toText_waterPumpState(State);
+  }
+  else
+  {
+    return toText((int)State);
+  }
 }
 
 bool WaterPump::getEnabledState()
 {
   return *PumpEnabled;
-}
-
-int WaterPump::getPumpTimeOut()
-{
-  return *PumpTimeOut;
 }
 
 void WaterPump::setPumpTimeOut(uint16_t TimeOut)
@@ -172,4 +176,17 @@ void WaterPump::setPumpTimeOut(uint16_t TimeOut)
     logToSerials(&ShortMessage, true, 1);
     Parent->getSoundObject()->playOnSound();
   }
+}
+
+int WaterPump::getPumpTimeOut()
+{
+  return *PumpTimeOut;
+}
+
+char *WaterPump::getTimeOutText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+    return toText_second(*PumpTimeOut);
+  else
+    return toText(*PumpTimeOut);
 }

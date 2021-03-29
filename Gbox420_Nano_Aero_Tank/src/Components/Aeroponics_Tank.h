@@ -23,14 +23,25 @@ public:
   void setSprayOnOff(bool State);
   char *sprayStateToText();
   void setDayMode(bool State);
+  char *getDayModeText(bool FriendlyFormat = false);
   void setDuration(float Duration);
+  float getDuration();
+  char *getDurationText(bool FriendlyFormat = false);
   void setDayInterval(uint16_t Interval);
   void setNightInterval(uint16_t Interval);
+  char *getDayIntervalText(bool FriendlyFormat = false);
+  char *getNightIntervalText(bool FriendlyFormat = false);
+  char *getSprayDurationText(bool FriendlyFormat = false);
   bool getSprayEnabled();
+  char *getSprayEnabledText(bool FriendlyFormat = false);
   AeroTankStates getState();
+  char *getStateText(bool FriendlyFormat = false);
   float getLastSprayPressure();
+  char *getLastSprayPressureText(bool FriendlyFormat = false);
   void setMinPressure(float Pressure);
+  char *getMinPressureText(bool FriendlyFormat = false);
   void setMaxPressure(float Pressure);
+  char *getMaxPressureText(bool FriendlyFormat = false);
   PressurePump *Pump;
   PressureSensor *FeedbackPressureSensor; ///< Pressure sensor that will monitor the spray pressure
 

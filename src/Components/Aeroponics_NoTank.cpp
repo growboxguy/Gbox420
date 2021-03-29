@@ -27,28 +27,31 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Pa
 void Aeroponics_NoTank::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+                                  // if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
+    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+    strcat(LongMessage, getStateText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"LS\":\""));
-    strcat(LongMessage, toText(LastSprayPressure));
+    strcat(LongMessage, getLastSprayPressureText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"Mn\":\""));
-    strcat(LongMessage, toText(*MinPressure));
+    strcat(LongMessage, getMinPressureText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"Mx\":\""));
-    strcat(LongMessage, toText(*MaxPressure));
+    strcat(LongMessage, getMaxPressureText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
-    strcat(LongMessage, toText(*SprayEnabled));
+    strcat(LongMessage, getSprayEnabledText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"DM\":\""));
-    strcat(LongMessage, toText(DayMode));
+    strcat(LongMessage, getDayModeText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
-    strcat(LongMessage, toText(*Duration));
+    strcat(LongMessage, getDurationText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"DI\":\""));
-    strcat(LongMessage, toText(*DayInterval));
+    strcat(LongMessage, getDayIntervalText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
-    strcat(LongMessage, toText(*NightInterval));
+    strcat(LongMessage, getNightIntervalText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
-  {
+  {    
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)F("LastSpray:"));
     strcat(LongMessage, toText_pressure(LastSprayPressure));
@@ -64,8 +67,9 @@ void Aeroponics_NoTank::report(bool FriendlyFormat)
     strcat(LongMessage, toText_minute(*DayInterval));
     strcat_P(LongMessage, (PGM_P)F(" ; NightInterval:"));
     strcat(LongMessage, toText_minute(*NightInterval));
-    logToSerials(&LongMessage, true, 1);
+    logToSerials(&LongMessage, true, 1);    
   }
+  */
 }
 
 void Aeroponics_NoTank::refresh_Sec()
@@ -180,6 +184,23 @@ void Aeroponics_NoTank::updateState(AeroNoTankStates NewState) ///< Without a pa
   }
 }
 
+AeroNoTankStates Aeroponics_NoTank::getState()
+{
+  return State;
+}
+
+char *Aeroponics_NoTank::getStateText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_aeroNoTankState(State);
+  }
+  else
+  {
+    return toText((int)State);
+  }
+}
+
 void Aeroponics_NoTank::sprayNow(bool UserRequest)
 {
   if (UserRequest)
@@ -211,6 +232,18 @@ void Aeroponics_NoTank::setDayMode(bool State)
   }
 }
 
+char *Aeroponics_NoTank::getDayModeText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_onOff(DayMode);
+  }
+  else
+  {
+    return toText(DayMode);
+  }
+}
+
 void Aeroponics_NoTank::setDayInterval(int Interval)
 {
   if (*DayInterval != Interval && Interval > 0)
@@ -225,9 +258,16 @@ int Aeroponics_NoTank::getDayInterval()
   return *DayInterval;
 }
 
-char *Aeroponics_NoTank::getDayIntervalText()
+char *Aeroponics_NoTank::getDayIntervalText(bool FriendlyFormat)
 {
-  return toText(*DayInterval);
+  if (FriendlyFormat)
+  {
+    return toText_minute(*DayInterval);
+  }
+  else
+  {
+    return toText(*DayInterval);
+  }
 }
 
 void Aeroponics_NoTank::setNightInterval(int Interval)
@@ -244,9 +284,16 @@ int Aeroponics_NoTank::getNightInterval()
   return *NightInterval;
 }
 
-char *Aeroponics_NoTank::getNightIntervalText()
+char *Aeroponics_NoTank::getNightIntervalText(bool FriendlyFormat)
 {
-  return toText(*NightInterval);
+   if (FriendlyFormat)
+  {
+    return toText_minute(*NightInterval);
+  }
+  else
+  {
+    return toText(*NightInterval);
+  }
 }
 
 void Aeroponics_NoTank::setDuration(float duration)
@@ -281,14 +328,33 @@ bool Aeroponics_NoTank::getSprayEnabled()
   return *SprayEnabled;
 }
 
+char *Aeroponics_NoTank::getSprayEnabledText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_enabledDisabled(*SprayEnabled);
+  }
+  else
+  {
+    return toText(*SprayEnabled);
+  }
+}
+
 float Aeroponics_NoTank::getDuration()
 {
   return *Duration;
 }
 
-char *Aeroponics_NoTank::getSprayDurationText()
+char *Aeroponics_NoTank::getDurationText(bool FriendlyFormat)
 {
-  return toText(*Duration);
+  if (FriendlyFormat)
+  {
+    return toText_second(*Duration);
+  }
+  else
+  {
+    return toText(*Duration);
+  }
 }
 
 char *Aeroponics_NoTank::sprayStateToText()
@@ -299,6 +365,18 @@ char *Aeroponics_NoTank::sprayStateToText()
 float Aeroponics_NoTank::getLastSprayPressure()
 {
   return LastSprayPressure;
+}
+
+char *Aeroponics_NoTank::getLastSprayPressureText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_pressure(LastSprayPressure);
+  }
+  else
+  {
+    return toText(LastSprayPressure);
+  }
 }
 
 float Aeroponics_NoTank::getPressure()
@@ -314,6 +392,18 @@ void Aeroponics_NoTank::setMinPressure(float Pressure)
   }
 }
 
+char *Aeroponics_NoTank::getMinPressureText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_pressure(*MinPressure);
+  }
+  else
+  {
+    return toText(*MinPressure);
+  }
+}
+
 void Aeroponics_NoTank::setMaxPressure(float Pressure)
 {
   if (*MaxPressure != Pressure && Pressure > 0)
@@ -323,5 +413,17 @@ void Aeroponics_NoTank::setMaxPressure(float Pressure)
     strcat_P(ShortMessage, (PGM_P)F("max pressure updated"));
     Parent->addToLog(ShortMessage);
     Parent->getSoundObject()->playOnSound();
+  }
+}
+
+char *Aeroponics_NoTank::getMaxPressureText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_pressure(*MaxPressure);
+  }
+  else
+  {
+    return toText(*MaxPressure);
   }
 }

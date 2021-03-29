@@ -11,11 +11,11 @@ public:
   PowerSensorV3(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort); ///< constructor
   void refresh_FiveSec();
   void report(bool FriendlyFormat = false);
-  char *getPowerText(bool FriendlyFormat);
-  char *getEnergyText(bool FriendlyFormat);
-  char *getVoltageText(bool FriendlyFormat);
-  char *getCurrentText(bool FriendlyFormat);
-  char *getFrequencyText(bool FriendlyFormat);
+  char *getPowerText(bool FriendlyFormat = false);
+  char *getEnergyText(bool FriendlyFormat = false);
+  char *getVoltageText(bool FriendlyFormat = false);
+  char *getCurrentText(bool FriendlyFormat = false);
+  char *getFrequencyText(bool FriendlyFormat = false);
   char *getPowerFactorText();
 
 private:

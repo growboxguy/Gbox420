@@ -31,15 +31,17 @@ public:
   void startBlowOff();
 
   PressurePumpStates getState();
-  char *getStateText();   ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
+  char *getStateText(bool FriendlyFormat = false);   ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
   bool getEnabledState(); ///< Pump ENABLED(1)/DISABLED(0)
 
   //void checkRelay(); ///< Flit the relay into the correct status ON/OFF based on PumpOn variable
 
   void setPumpTimeOut(int NewTime);
   int getPumpTimeOut();
+  char *getTimeOutText(bool FriendlyFormat = false);
   void setPrimingTime(int NewTime);
   int getPrimingTime();
+  char *getPrimingTimeText(bool FriendlyFormat = false);
   //void setBlowOffTime(int NewTime);
   //int getBlowOffTime();
   uint32_t PumpTimer = millis(); ///< Spray cycle timer, used for State runtime tracking, - https://www.arduino.cc/reference/en/language/functions/time/millis/

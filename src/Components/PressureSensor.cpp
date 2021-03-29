@@ -16,12 +16,13 @@ PressureSensor::PressureSensor(const __FlashStringHelper *Name, Module *Parent, 
 void PressureSensor::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"P\":\""));
-    strcat(LongMessage, getPressureText(false, false));
+    strcat(LongMessage, getPressureText(false, FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
@@ -29,6 +30,7 @@ void PressureSensor::report(bool FriendlyFormat)
     strcat(LongMessage, getPressureText(false, true));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void PressureSensor::refresh_FiveSec()

@@ -28,7 +28,7 @@ void HempyBucket::report(bool FriendlyFormat)
     strcat_P(LongMessage, (PGM_P)F("\",\"DW\":\""));
     strcat(LongMessage, getDryWeightText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"WW\":\""));
-    strcat(LongMessage, getWetWeight(FriendlyFormat));
+    strcat(LongMessage, getWetWeightText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"ET\":\""));
     strcat(LongMessage, getEvaporationTargetText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"OF\":\""));
@@ -204,12 +204,36 @@ void HempyBucket::setEvaporationTarget(float Weight)
   }
 }
 
+char *HempyBucket::getEvaporationTargetText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_weight(*EvaporationTarget);
+  }
+  else
+  {
+    return toText(*EvaporationTarget);
+  }
+}
+
 void HempyBucket::setOverflowTarget(float Weight)
 {
   if (*OverflowTarget != Weight)
   {
     *OverflowTarget = Weight;
     Parent->getSoundObject()->playOnSound();
+  }
+}
+
+char *HempyBucket::getOverflowTargetText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_weight(*OverflowTarget);
+  }
+  else
+  {
+    return toText(*OverflowTarget);
   }
 }
 
@@ -226,7 +250,7 @@ char *HempyBucket::getDrainWaitTimeText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_hempyState(*DrainWaitTime);
+    return toText_second(*DrainWaitTime);
   }
   else
   {

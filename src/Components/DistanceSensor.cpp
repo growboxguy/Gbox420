@@ -15,6 +15,14 @@ DistanceSensor::DistanceSensor(const __FlashStringHelper *Name, Module *Parent, 
   logToSerials(F("Distance Sensor ready"), true, 3);
 }
 
+void DistanceSensor::report(bool FriendlyFormat)
+{
+  Common::report(FriendlyFormat);
+  strcat_P(LongMessage, (PGM_P)F("\"D\":\""));
+  strcat(LongMessage, getDistanceText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
+}
+
 void DistanceSensor::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
@@ -39,15 +47,6 @@ void DistanceSensor::readSensor()
   {
     Distance = Duration * 0.00665;
   }
-}
-
-void DistanceSensor::report()
-{
-  Common::report();
-  memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("Distance:"));
-  strcat(LongMessage, getDistanceText(true));
-  logToSerials(&LongMessage, true, 1);
 }
 
 float DistanceSensor::getDistance()

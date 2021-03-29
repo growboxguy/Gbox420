@@ -19,10 +19,11 @@ public:
   void disablePump();                      ///< Disable the pump
 
   WaterPumpStates getState(); ///< Get the current pump state
-  char *getStateText();       ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
+  char *getStateText(bool FriendlyFormat = false);   ///< Text representation of the current state: DISABLED/IDLE/RUNNING..
   bool getEnabledState();     ///< Pump ENABLED(1)/DISABLED(0)
   void setPumpTimeOut(uint16_t NewTime);
   int getPumpTimeOut();
+  char *getTimeOutText(bool FriendlyFormat = false);
 
 private:
   WaterPumpStates State = WaterPumpStates::IDLE;

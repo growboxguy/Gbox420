@@ -20,12 +20,13 @@ WeightSensor::WeightSensor(const __FlashStringHelper *Name, Module *Parent, Sett
 void WeightSensor::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"WT\":\""));
-    strcat(LongMessage, getWeightText(false, false));
+    strcat(LongMessage, getWeightText(false, FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else                                             //Print a report to the Serial console
   {                                                ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
@@ -33,6 +34,7 @@ void WeightSensor::report(bool FriendlyFormat)
     strcat(LongMessage, getWeightText(false, true));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void WeightSensor::refresh_FiveSec()

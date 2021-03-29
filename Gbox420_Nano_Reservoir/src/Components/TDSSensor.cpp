@@ -15,12 +15,13 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
 void TDSSensor::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
-    strcat(LongMessage, getTDSText(false, false));
+    strcat(LongMessage, getTDSText(false, FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
@@ -30,6 +31,7 @@ void TDSSensor::report(bool FriendlyFormat)
     strcat(LongMessage, getTDSText(true, true));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::TDSSensorSettings *DefaultSettings, WaterTempSensor *WaterTempSensor1) : TDSSensor(Name, Parent, DefaultSettings)
