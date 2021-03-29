@@ -11,7 +11,7 @@ class PressurePump : virtual public Common
 {
 public:
   PressurePump(const __FlashStringHelper *Name, Module *Parent, Settings::PressurePumpSettings *DefaultSettings);
-  void report(bool IncludeUnits = false);
+  void report(bool FriendlyFormat = false);
   void refresh_Sec();
 
   void updateState(PressurePumpStates NewState = (PressurePumpStates)-1);

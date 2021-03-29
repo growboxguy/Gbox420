@@ -65,6 +65,16 @@ enum class AeroNoTankStates
   MIX
 };
 
+///< Light controller with PWM dimming
+enum class LightStates
+{
+  TURNEDOFF,
+  TURNEDON,
+  FADEIN,
+  FADEOUT,
+  DIMMED
+};
+
 extern HardwareSerial &ArduinoSerial;
 extern HardwareSerial &ESPSerial;
 extern char CurrentTime[MaxWordLength];
@@ -100,6 +110,7 @@ char *toText_aeroNoTankState(AeroNoTankStates State);
 char *toText_waterPumpState(WaterPumpStates State);
 char *toText_pressurePumpState(PressurePumpStates State);
 char *toText_hempyState(HempyStates State);
+char *toText_lightState(LightStates State);
 char *toText_minute(int Minute);
 char *toText_second(int Second);
 char *toText_distance(float Distance);

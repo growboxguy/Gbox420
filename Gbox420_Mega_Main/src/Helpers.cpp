@@ -392,3 +392,28 @@ char *toText_hempyState(HempyStates State)
     break;
   }
 }
+
+char *toText_lightState(LightStates State)
+{
+  switch (State)
+  {
+  case LightStates::TURNEDOFF:
+    return toText(F("OFF"));
+    break;
+  case LightStates::TURNEDON:
+    return toText(F("ON"));
+    break;
+  case LightStates::FADEIN:
+    return toText(F("FADEIN"));
+    break;
+  case LightStates::FADEOUT:
+    return toText(F("FADEOUT"));
+    break;
+  case LightStates::DIMMED:
+    return toText(F("DIMMED"));
+    break;
+  default:
+    return toText(F("UNKNOWN"));
+    break;
+  }
+}

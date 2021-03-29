@@ -12,7 +12,7 @@ class Aeroponics_NoTank : public Common
 public:
   Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, PressurePump *Pump); ///< constructor
   void refresh_Sec();
-  void report(bool IncludeUnits = false);
+  void report(bool FriendlyFormat = false);
   void sprayNow(bool UserRequest = false);
   void sprayOff();
   void checkPump(bool OnlyTurnOff = false); ///< Turn the pump on or off based on the current state

@@ -55,9 +55,9 @@ float DistanceSensor::getDistance()
   return Distance;
 }
 
-char *DistanceSensor::getDistanceText(bool IncludeUnits)
+char *DistanceSensor::getDistanceText(bool FriendlyFormat)
 {
-  if (IncludeUnits)
+  if (FriendlyFormat)
     return toText_distance(Distance);
   else
     return toText(Distance);

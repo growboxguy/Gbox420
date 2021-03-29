@@ -57,9 +57,9 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   addToLog(F("MainModule initialized"), 0);
 }
 
-void MainModule::report(bool IncludeUnits)
+void MainModule::report(bool FriendlyFormat)
 {
-  if (IncludeUnits) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"M\":\""));
@@ -141,7 +141,7 @@ void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< ca
   if (strncmp(url, "/G", 2) == 0) //GrowBox tab
   {
     //Air pump
-    WebServer.setArgString(getComponentName(F("AP")), APump1->getStateToText());
+    WebServer.setArgString(getComponentName(F("AP")), APump1->getStateText());
     //DHT1
     WebServer.setArgString(getComponentName(F("DT")), DHT1->getTempText(true)); ///< Shows the latest reading
     WebServer.setArgString(getComponentName(F("DH")), DHT1->getHumidityText(true));
@@ -149,9 +149,9 @@ void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< ca
     //WebServer.setArgString(getComponentName(F("FIST")), getSpeedText(true,true));  ///PWM Fan speed text
     //WebServer.setArgString(getComponentName(F("FEST")), getSpeedText(true,true));  ///PWM Fan speed text
     //Internal Fan
-    WebServer.setArgString(getComponentName(F("IFS")), IFan->fanSpeedToText());
+    WebServer.setArgString(getComponentName(F("IFS")), IFan->fanSpeedText(true));
     //Exhaust Fan
-    WebServer.setArgString(getComponentName(F("EFS")), EFan->fanSpeedToText());
+    WebServer.setArgString(getComponentName(F("EFS")), EFan->fanSpeedText(true));
     //Light1
     WebServer.setArgString(getComponentName(F("L1S")), Lt1->getStateText());                  ///< State
     WebServer.setArgString(getComponentName(F("L1Br")), Lt1->getCurrentBrightnessText(true)); ///< Timer on or off
@@ -202,33 +202,33 @@ void MainModule::commandEvent(char *Command, char *Data)
     else if (strcmp_P(ShortMessage, (PGM_P)F("IFO")) == 0)
     {
       IFan->TurnOff();
-      WebServer.setArgString(getComponentName(F("IFS")), IFan->fanSpeedToText());
+      WebServer.setArgString(getComponentName(F("IFS")), IFan->fanSpeedText(true));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("IFL")) == 0)
     {
       IFan->SetLowSpeed();
-      WebServer.setArgString(getComponentName(F("IFS")), IFan->fanSpeedToText());
+      WebServer.setArgString(getComponentName(F("IFS")), IFan->fanSpeedText(true));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("IFH")) == 0)
     {
       IFan->SetHighSpeed();
-      WebServer.setArgString(getComponentName(F("IFS")), IFan->fanSpeedToText());
+      WebServer.setArgString(getComponentName(F("IFS")), IFan->fanSpeedText(true));
     }
     //Exhaust Fan
     else if (strcmp_P(ShortMessage, (PGM_P)F("EFO")) == 0)
     {
       EFan->TurnOff();
-      WebServer.setArgString(getComponentName(F("EFS")), EFan->fanSpeedToText());
+      WebServer.setArgString(getComponentName(F("EFS")), EFan->fanSpeedText(true));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("EFL")) == 0)
     {
       EFan->SetLowSpeed();
-      WebServer.setArgString(getComponentName(F("EFS")), EFan->fanSpeedToText());
+      WebServer.setArgString(getComponentName(F("EFS")), EFan->fanSpeedText(true));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("EFH")) == 0)
     {
       EFan->SetHighSpeed();
-      WebServer.setArgString(getComponentName(F("EFS")), EFan->fanSpeedToText());
+      WebServer.setArgString(getComponentName(F("EFS")), EFan->fanSpeedText(true));
     }
     //Light1
     else if (strcmp_P(ShortMessage, (PGM_P)F("L1")) == 0)

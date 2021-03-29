@@ -15,23 +15,25 @@ AirPump::AirPump(const __FlashStringHelper *Name, Module *Parent, Settings::AirP
   logToSerials(F("AirPump ready"), true, 3);
 }
 
-void AirPump::report(bool IncludeUnits)
+void AirPump::report(bool FriendlyFormat)
 {
-  if (IncludeUnits) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
-    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+    Common::report(true); ///< Appends "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, toText(getState()));
+    strcat(LongMessage, getStateText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     Common::report();
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)F("Status:"));
-    strcat(LongMessage, getStateToText());
+    strcat(LongMessage, getStateText());
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void AirPump::refresh_Minute()
@@ -80,7 +82,14 @@ bool AirPump::getState()
   return *State;
 }
 
-char *AirPump::getStateToText()
+char *AirPump::getStateText(bool FriendlyFormat)
 {
-  return toText_onOff(*State);
+  if (FriendlyFormat)
+  {
+    return toText_onOff(*State);
+  }
+  else
+  {
+    return toText(*State);
+  }
 }

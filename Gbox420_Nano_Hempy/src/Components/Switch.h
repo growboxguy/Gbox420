@@ -11,7 +11,7 @@ class Switch : public Common
 public:
   Switch(const __FlashStringHelper *Name, uint8_t Pin, bool NegativeLogic = false);
   Switch(const __FlashStringHelper *Name);
-  void report(bool IncludeUnits = false);
+  void report(bool FriendlyFormat = false);
   void turnOn();
   void turnOff();
   void flip();          ///< invert the current state

@@ -10,12 +10,12 @@ class PowerSensorV3 : virtual public Common
 public:
   PowerSensorV3(const __FlashStringHelper *Name, Module *Parent, HardwareSerial *SerialPort); ///< constructor
   void refresh_FiveSec();
-  void report(bool IncludeUnits = false);
-  char *getPowerText(bool IncludeUnits);
-  char *getEnergyText(bool IncludeUnits);
-  char *getVoltageText(bool IncludeUnits);
-  char *getCurrentText(bool IncludeUnits);
-  char *getFrequencyText(bool IncludeUnits);
+  void report(bool FriendlyFormat = false);
+  char *getPowerText(bool FriendlyFormat);
+  char *getEnergyText(bool FriendlyFormat);
+  char *getVoltageText(bool FriendlyFormat);
+  char *getCurrentText(bool FriendlyFormat);
+  char *getFrequencyText(bool FriendlyFormat);
   char *getPowerFactorText();
 
 private:

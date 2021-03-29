@@ -31,10 +31,10 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   }
 }
 
-void Aeroponics_Tank::report(bool IncludeUnits)
+void Aeroponics_Tank::report(bool FriendlyFormat)
 {
-  Common::report(IncludeUnits); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (IncludeUnits)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
+  if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
     strcat(LongMessage, toText((int)State));

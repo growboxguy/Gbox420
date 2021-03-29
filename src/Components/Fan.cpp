@@ -25,23 +25,25 @@ void Fan::refresh_Minute()
   checkFanStatus();
 }
 
-void Fan::report(bool IncludeUnits)
+void Fan::report(bool FriendlyFormat)
 {
-  if (IncludeUnits) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, fanSpeedToNumber());
+    strcat(LongMessage, fanSpeedText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     Common::report();
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)F("Status:"));
-    strcat(LongMessage, fanSpeedToText());
+    strcat(LongMessage, fanSpeedText());
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void Fan::checkFanStatus()
@@ -89,24 +91,36 @@ void Fan::SetHighSpeed()
   Parent->getSoundObject()->playOnSound();
 }
 
-char *Fan::fanSpeedToText()
+uint8_t *Fan::fanSpeed()
 {
   if (!*State)
-    return (char *)"OFF";
+    return 0;
   else if (*HighSpeed)
-    return (char *)"HIGH";
+    return 2;
   else
-    return (char *)"LOW";
+    return 1;
 }
 
-char *Fan::fanSpeedToNumber()
+char *Fan::fanSpeedText(bool FriendlyFormat)
 {
-  if (!*State)
-    return (char *)"0";
-  else if (*HighSpeed)
-    return (char *)"2";
+  if (FriendlyFormat)
+  {
+    if (!*State)
+      return (char *)"OFF";
+    else if (*HighSpeed)
+      return (char *)"HIGH";
+    else
+      return (char *)"LOW";
+  }
   else
-    return (char *)"1";
+  {
+    if (!*State)
+      return (char *)"0";
+    else if (*HighSpeed)
+      return (char *)"2";
+    else
+      return (char *)"1";
+  }
 }
 
 // WebServer.setArgBoolean(F("AutoIFan"),GBox -> ModuleSettings -> AutomaticIFan);

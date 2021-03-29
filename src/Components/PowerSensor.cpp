@@ -20,21 +20,22 @@ void PowerSensor::refresh_FiveSec()
   Energy = Sensor->energy(*PowerSensorIP) / 1000; ///< total power consumption (kWh)
 }
 
-void PowerSensor::report(bool IncludeUnits)
+void PowerSensor::report(bool FriendlyFormat)
 {
-  if (IncludeUnits) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"P\":\""));
-    strcat(LongMessage, getPowerText(false));
+    strcat(LongMessage, getPowerText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"E\":\""));
-    strcat(LongMessage, getEnergyText(false));
+    strcat(LongMessage, getEnergyText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"V\":\""));
-    strcat(LongMessage, getVoltageText(false));
+    strcat(LongMessage, getVoltageText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"C\":\""));
-    strcat(LongMessage, getCurrentText(false));
+    strcat(LongMessage, getCurrentText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     Common::report();
@@ -49,16 +50,17 @@ void PowerSensor::report(bool IncludeUnits)
     strcat(LongMessage, getCurrentText(true));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
-char *PowerSensor::getPowerText(bool IncludeUnits)
+char *PowerSensor::getPowerText(bool FriendlyFormat)
 {
-  if (IncludeUnits)
+  if (FriendlyFormat)
   {
     static char ReturnChar[MaxWordLength] = ""; ///< each call will overwrite the same variable
     memset(&ReturnChar[0], 0, MaxWordLength);   ///< clear variable
     strcat(ReturnChar, toText(Power));
-    if (IncludeUnits)
+    if (FriendlyFormat)
       strcat_P(ReturnChar, (PGM_P)F("W"));
     return ReturnChar;
   }
@@ -66,14 +68,14 @@ char *PowerSensor::getPowerText(bool IncludeUnits)
     return toText(Power);
 }
 
-char *PowerSensor::getEnergyText(bool IncludeUnits)
+char *PowerSensor::getEnergyText(bool FriendlyFormat)
 {
-  if (IncludeUnits)
+  if (FriendlyFormat)
   {
     static char ReturnChar[MaxWordLength] = ""; ///< each call will overwrite the same variable
     memset(&ReturnChar[0], 0, MaxWordLength);   ///< clear variable
     strcat(ReturnChar, toText(Energy));
-    if (IncludeUnits)
+    if (FriendlyFormat)
       strcat_P(ReturnChar, (PGM_P)F("kWh"));
     return ReturnChar;
   }
@@ -81,14 +83,14 @@ char *PowerSensor::getEnergyText(bool IncludeUnits)
     return toText(Energy);
 }
 
-char *PowerSensor::getVoltageText(bool IncludeUnits)
+char *PowerSensor::getVoltageText(bool FriendlyFormat)
 {
-  if (IncludeUnits)
+  if (FriendlyFormat)
   {
     static char ReturnChar[MaxWordLength] = ""; ///< each call will overwrite the same variable
     memset(&ReturnChar[0], 0, MaxWordLength);   ///< clear variable
     strcat(ReturnChar, toText(Voltage));
-    if (IncludeUnits)
+    if (FriendlyFormat)
       strcat_P(ReturnChar, (PGM_P)F("V"));
     return ReturnChar;
   }
@@ -96,14 +98,14 @@ char *PowerSensor::getVoltageText(bool IncludeUnits)
     return toText(Voltage);
 }
 
-char *PowerSensor::getCurrentText(bool IncludeUnits)
+char *PowerSensor::getCurrentText(bool FriendlyFormat)
 {
-  if (IncludeUnits)
+  if (FriendlyFormat)
   {
     static char ReturnChar[MaxWordLength] = ""; ///< each call will overwrite the same variable
     memset(&ReturnChar[0], 0, MaxWordLength);   ///< clear variable
     strcat(ReturnChar, toText(Current));
-    if (IncludeUnits)
+    if (FriendlyFormat)
       strcat_P(ReturnChar, (PGM_P)F("A"));
     return ReturnChar;
   }

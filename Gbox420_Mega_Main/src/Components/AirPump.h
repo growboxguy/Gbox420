@@ -10,12 +10,12 @@ class AirPump : virtual public Common
 public:
   AirPump(const __FlashStringHelper *Name, Module *Parent, Settings::AirPumpSettings *DefaultSettings);
   void refresh_Minute();
-  void report(bool IncludeUnits = false);
+  void report(bool FriendlyFormat = false);
   void TurnOn();
   void TurnOff();
   bool setState(bool NewState);
   bool getState();
-  char *getStateToText();
+  char *getStateText(bool FriendlyFormat = false);
 
 private:
 protected:

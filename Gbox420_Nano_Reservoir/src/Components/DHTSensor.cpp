@@ -13,17 +13,18 @@ DHTSensor::DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
   logToSerials(F("DHTSensor ready"), true, 3);
 }
 
-void DHTSensor::report(bool IncludeUnits)
+void DHTSensor::report(bool FriendlyFormat)
 {
-  Common::report(IncludeUnits); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (IncludeUnits)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
+//  if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
-    strcat(LongMessage, getTempText(false));
+    strcat(LongMessage, getTempText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
-    strcat(LongMessage, getHumidityText(false));
+    strcat(LongMessage, getHumidityText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
@@ -33,6 +34,7 @@ void DHTSensor::report(bool IncludeUnits)
     strcat(LongMessage, getHumidityText(true));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void DHTSensor::refresh_FiveSec()
@@ -59,9 +61,9 @@ float DHTSensor::getTemp()
   return Temp;
 }
 
-char *DHTSensor::getTempText(bool IncludeUnits)
+char *DHTSensor::getTempText(bool FriendlyFormat)
 {
-  if (IncludeUnits)
+  if (FriendlyFormat)
     return toText_temp(Temp);
   else
     return toText(Temp);
@@ -72,9 +74,9 @@ float DHTSensor::getHumidity()
   return Humidity;
 }
 
-char *DHTSensor::getHumidityText(bool IncludeUnits)
+char *DHTSensor::getHumidityText(bool FriendlyFormat)
 {
-  if (IncludeUnits)
+  if (FriendlyFormat)
     return toText_percentage(Humidity);
   else
     return toText(Humidity);

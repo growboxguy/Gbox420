@@ -20,19 +20,26 @@ public:
   HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WeightSensor *WasteReservoirWeightSensor, WaterPump *BucketPump);
   void refresh_Sec();
   void refresh_FiveSec();
-  void report(bool IncludeUnits = false);
+  void report(bool FriendlyFormat = false);
   void updateState(HempyStates NewState);
   HempyStates getState();
+  char *getStateText(bool FriendlyFormat);
   void disable();
   void startWatering(); ///< Turn on water pump, run until StopWeight is reached
   void stopWatering();  ///< Turn on water pump, run until StopWeight is reached
   void setEvaporationTarget(float Weight);
+  char *getEvaporationTargetText(bool FriendlyFormat = false);
   void setOverflowTarget(float Weight);
+  char *getOverflowTargetText(bool FriendlyFormat = false);
   void setDrainWaitTime(uint16_t Seconds);
+  char *getDrainWaitTimeText(bool FriendlyFormat = false);
   void setWasteLimit(float Weight);
+  char *getWasteLimitText(bool FriendlyFormat = false);
   float getDryWeight();
+  char *getDryWeightText(bool FriendlyFormat = false);
   void setDryWeight(float Weight);
   float getWetWeight();
+  char *getWetWeightText(bool FriendlyFormat = false);
   void tareDryWetWeight();
 
 private:

@@ -18,27 +18,28 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   logToSerials(F("Hempy bucket ready"), true, 3);
 }
 
-void HempyBucket::report(bool IncludeUnits)
+void HempyBucket::report(bool FriendlyFormat)
 {
-  Common::report(IncludeUnits); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (IncludeUnits)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  {                           ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
+  //if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  { ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, toText((int)getState()));
+    strcat(LongMessage, getStateText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"DW\":\""));
-    strcat(LongMessage, toText(DryWeight));
+    strcat(LongMessage, getDryWeightText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"WW\":\""));
-    strcat(LongMessage, toText(WetWeight));
+    strcat(LongMessage, getWetWeight(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"ET\":\""));
-    strcat(LongMessage, toText(*EvaporationTarget));
+    strcat(LongMessage, getEvaporationTargetText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"OF\":\""));
-    strcat(LongMessage, toText(*OverflowTarget));
+    strcat(LongMessage, getOverflowTargetText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"WL\":\""));
-    strcat(LongMessage, toText(*WasteLimit));
+    strcat(LongMessage, getWasteLimitText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"DT\":\""));
-    strcat(LongMessage, toText(*DrainWaitTime));
+    strcat(LongMessage, getDrainWaitTimeText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
@@ -58,6 +59,7 @@ void HempyBucket::report(bool IncludeUnits)
     strcat(LongMessage, toText_second(*DrainWaitTime));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void HempyBucket::refresh_FiveSec()
@@ -220,6 +222,18 @@ void HempyBucket::setDrainWaitTime(uint16_t Seconds)
   }
 }
 
+char *HempyBucket::getDrainWaitTimeText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_hempyState(*DrainWaitTime);
+  }
+  else
+  {
+    return toText(*DrainWaitTime);
+  }
+}
+
 void HempyBucket::setWasteLimit(float Weight)
 {
   if (*WasteLimit != Weight)
@@ -229,14 +243,50 @@ void HempyBucket::setWasteLimit(float Weight)
   }
 }
 
+char *HempyBucket::getWasteLimitText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_weight(*WasteLimit);
+  }
+  else
+  {
+    return toText(*WasteLimit);
+  }
+}
+
 HempyStates HempyBucket::getState()
 {
   return State;
 }
 
+char *HempyBucket::getStateText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_hempyState(State);
+  }
+  else
+  {
+    return toText((int)State);
+  }
+}
+
 float HempyBucket::getDryWeight()
 {
   return DryWeight;
+}
+
+char *HempyBucket::getDryWeightText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_weight(DryWeight);
+  }
+  else
+  {
+    return toText(DryWeight);
+  }
 }
 
 void HempyBucket::setDryWeight(float Weight)
@@ -252,6 +302,18 @@ void HempyBucket::setDryWeight(float Weight)
 float HempyBucket::getWetWeight()
 {
   return WetWeight;
+}
+
+char *HempyBucket::getWetWeightText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_weight(WetWeight);
+  }
+  else
+  {
+    return toText(WetWeight);
+  }
 }
 
 void HempyBucket::tareDryWetWeight()

@@ -11,15 +11,16 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   checkEvents();
 }
 
-void Sound::report(bool IncludeUnits)
+void Sound::report(bool FriendlyFormat)
 {
-  Common::report(IncludeUnits); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (IncludeUnits)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
+  //if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
-    strcat(LongMessage, toText(*Enabled));
+    strcat(LongMessage, getEnabledStateText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
@@ -27,6 +28,7 @@ void Sound::report(bool IncludeUnits)
     strcat(LongMessage, getEnabledStateText());
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void Sound::refresh_Sec()
@@ -105,7 +107,14 @@ bool Sound::getEnabledState()
   return *Enabled;
 }
 
-char *Sound::getEnabledStateText()
+char *Sound::getEnabledStateText(bool FriendlyFormat)
 {
-  return toText_enabledDisabled(*Enabled);
+  if (FriendlyFormat)
+  {
+    return toText_enabledDisabled(*Enabled);
+  }
+  else
+  {
+    return toText(*Enabled);
+  }
 }

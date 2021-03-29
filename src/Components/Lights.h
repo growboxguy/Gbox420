@@ -3,23 +3,13 @@
 #include "420Common.h"
 #include "420Module.h"
 
-///< Light controller with PWM dimming
-enum LightStates
-{
-  TURNEDOFF,
-  TURNEDON,
-  FADEIN,
-  FADEOUT,
-  DIMMED
-};
-
 class Lights : virtual public Common
 {
 public:
   Lights(const __FlashStringHelper *Name, Module *Parent, Settings::LightsSettings *DefaultSettings); ///< constructor
   void refresh_Sec();
   void refresh_Minute();
-  void report(bool IncludeUnits = false);
+  void report(bool FriendlyFormat = false);
   void setBrightness(uint8_t Brightness, bool AddToLog, bool StoreSetting);
   void setLightOnOff(bool State, bool AddToLog);
   void setTimerOnOff(bool State);
@@ -32,10 +22,10 @@ public:
 
   bool getStatus();
   int getBrightness();
-  char *getBrightnessText(bool UseText);
-  char *getCurrentBrightnessText(bool UseText); //Takes into account the ON/OFF state of the light too
-  char *getTimerOnOffText(bool UseText);
-  char *getStatusText(bool UseText);
+  char *getBrightnessText(bool FriendlyFormat);
+  char *getCurrentBrightnessText(bool FriendlyFormat); //Takes into account the ON/OFF state of the light too
+  char *getTimerOnOffText(bool FriendlyFormat);
+  char *getStatusText(bool FriendlyFormat);
   char *getStateText();
 
   char *getOnTimeText();

@@ -51,25 +51,26 @@ void Lights::refresh_Minute()
   checkRelay();
 }
 
-void Lights::report(bool IncludeUnits)
+void Lights::report(bool FriendlyFormat)
 {
-  if (IncludeUnits) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, getStatusText(false));
+    strcat(LongMessage, getStatusText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"CB\":\""));
-    strcat(LongMessage, getCurrentBrightnessText(false));
+    strcat(LongMessage, getCurrentBrightnessText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"B\":\""));
-    strcat(LongMessage, getBrightnessText(false));
+    strcat(LongMessage, getBrightnessText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
-    strcat(LongMessage, getTimerOnOffText(false));
+    strcat(LongMessage, getTimerOnOffText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"On\":\""));
     strcat(LongMessage, getOnTimeText());
     strcat_P(LongMessage, (PGM_P)F("\",\"Of\":\""));
     strcat(LongMessage, getOffTimeText());
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     Common::report();
@@ -90,6 +91,7 @@ void Lights::report(bool IncludeUnits)
     strcat(LongMessage, getOffTimeText());
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void Lights::checkRelay()
@@ -309,17 +311,17 @@ int Lights::getBrightness()
   return *Brightness;
 }
 
-char *Lights::getBrightnessText(bool UseText)
+char *Lights::getBrightnessText(bool FriendlyFormat)
 {
   itoa(*Brightness, ShortMessage, 10);
-  if (UseText)
+  if (FriendlyFormat)
   {
     strcat_P(ShortMessage, (PGM_P)F("%"));
   }
   return ShortMessage;
 }
 
-char *Lights::getCurrentBrightnessText(bool UseText)
+char *Lights::getCurrentBrightnessText(bool FriendlyFormat)
 {
   if (CurrentStatus == LightStates::FADEIN || CurrentStatus == LightStates::FADEOUT)
   {
@@ -334,16 +336,16 @@ char *Lights::getCurrentBrightnessText(bool UseText)
     itoa(*Brightness, ShortMessage, 10);
   }
 
-  if (UseText)
+  if (FriendlyFormat)
   {
     strcat_P(ShortMessage, (PGM_P)F("%"));
   }
   return ShortMessage;
 }
 
-char *Lights::getStatusText(bool UseWords)
+char *Lights::getStatusText(bool FriendlyFormat)
 {
-  if (UseWords)
+  if (FriendlyFormat)
     return toText_onOff(*Status); // Returns ON or OFF
   else
     return toText(*Status); // Returns '1' or '0'
@@ -351,29 +353,8 @@ char *Lights::getStatusText(bool UseWords)
 
 char *Lights::getStateText()
 {
-  switch (CurrentStatus)
-  {
-  case LightStates::TURNEDOFF:
-    return toText(F("OFF"));
-    break;
-  case LightStates::TURNEDON:
-    return toText(F("ON"));
-    break;
-  case LightStates::FADEIN:
-    return toText(F("FADEIN"));
-    break;
-  case LightStates::FADEOUT:
-    return toText(F("FADEOUT"));
-    break;
-  case LightStates::DIMMED:
-    return toText(F("DIMMED"));
-    break;
-  default:
-    return toText(F("UNKNOWN"));
-    break;
-  }
+  return toText_lightState(CurrentStatus);
 }
-
 char *Lights::getOnTimeText()
 {
   return toText_time(*OnHour, *OnMinute);

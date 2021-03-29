@@ -23,7 +23,7 @@ public:
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Load(__attribute__((unused)) char *url){}; //Not used
   void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
-  void report(bool IncludeUnits = false);
+  void report(bool FriendlyFormat = false);
   void refresh_Sec();
   void refresh_FiveSec();
   void updateCommands();

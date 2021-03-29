@@ -27,18 +27,19 @@ void LightSensor::refresh_FiveSec()
   LightReading = (1023 - analogRead(*AnalogPin));
 }
 
-void LightSensor::report(bool IncludeUnits)
+void LightSensor::report(bool FriendlyFormat)
 {
 
-  if (IncludeUnits) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"R\":\""));
-    strcat(LongMessage, getReadingText(false));
+    strcat(LongMessage, getReadingText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
-    strcat(LongMessage, getDarkText(false));
+    strcat(LongMessage, getDarkText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     Common::report();
@@ -49,6 +50,7 @@ void LightSensor::report(bool IncludeUnits)
     strcat(LongMessage, getReadingText(true));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void LightSensor::triggerCalibration()
@@ -106,10 +108,10 @@ int LightSensor::getReading() ///< Gets the average light sensor reading, if pas
   return LightReading;
 }
 
-char *LightSensor::getReadingText(bool UseText)
+char *LightSensor::getReadingText(bool FriendlyFormat)
 {
   itoa(LightReading, ShortMessage, 10);
-  if (UseText)
+  if (FriendlyFormat)
   {
     if (Dark)
     {

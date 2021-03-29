@@ -11,10 +11,10 @@ Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t *Du
   logToSerials(F("Switch_PWM ready"), true, 3);
 }
 
-void Switch_PWM::report(bool IncludeUnits)
+void Switch_PWM::report(bool FriendlyFormat)
 {
-  Common::report(IncludeUnits); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (IncludeUnits)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
+  if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"DC\":\""));
     strcat(LongMessage, getDutyCycleText(false));
@@ -56,9 +56,9 @@ uint8_t Switch_PWM::getDutyCycle()
   return *DutyCycle;
 }
 
-char *Switch_PWM::getDutyCycleText(bool IncludeUnits)
+char *Switch_PWM::getDutyCycleText(bool FriendlyFormat)
 {
-  if (IncludeUnits)
+  if (FriendlyFormat)
   {
     return toText_percentage(*DutyCycle);
   }

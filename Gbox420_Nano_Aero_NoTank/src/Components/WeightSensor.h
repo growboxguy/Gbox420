@@ -11,10 +11,10 @@ class WeightSensor : virtual public Common
 public:
   WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings);
   void refresh_FiveSec();
-  void report(bool IncludeUnits = false);
+  void report(bool FriendlyFormat = false);
   float readWeight(bool ReturnAverage = true);
   float getWeight(bool ReturnAverage = true);
-  char *getWeightText(bool ReturnAverage = true, bool IncludeUnits = false);
+  char *getWeightText(bool ReturnAverage = true, bool FriendlyFormat = false);
   void triggerTare();
   void triggerCalibration(int CalibrationWeight);
   void setScale(float Scale);

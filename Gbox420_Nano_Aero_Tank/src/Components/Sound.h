@@ -9,14 +9,14 @@ class Sound : virtual public Common
 {
 public:
   Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSettings *DefaultSettings);
-  void report(bool IncludeUnits = false);
+  void report(bool FriendlyFormat = false);
   void checkEvents();
   void refresh_Sec();
   void playOnSound();
   void playOffSound();
   void setSoundOnOff(bool State);
   bool getEnabledState();
-  char *getEnabledStateText();
+  char *getEnabledStateText(bool FriendlyFormat=false);
 
 private:
 protected:
