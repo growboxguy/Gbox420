@@ -54,6 +54,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
   {
     getFreeMemory();
   }
+  /*
   if (*SerialReportText && !JSONToBufferOnly)
   {
     logToSerials(reportQueueItemCount, false, 0); ///< Prints the number of items that will report
@@ -63,6 +64,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
       ReportQueue[i]->report(false);
     }
   }
+  */
   if (*SerialReportJSON || JSONToBufferOnly)
   {
     if (ClearBuffer)
@@ -77,7 +79,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
     }
     for (int i = 0; i < reportQueueItemCount;)
     {
-      ReportQueue[i++]->report(true);
+      ReportQueue[i++]->report(*SerialReportText);
       if (i != reportQueueItemCount)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
