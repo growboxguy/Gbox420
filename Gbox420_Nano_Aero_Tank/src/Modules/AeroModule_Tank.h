@@ -30,7 +30,7 @@ public:
   PressurePump *Pump1 = NULL;                                                                       ///< High pressure pump
   Aeroponics_Tank *AeroT1 = NULL;                                                                   ///< Logic to control the Aeroponics system with a pressure tank
   WeightSensor *Weight1;                                                                            ///< Tote weight sensor
-  void report(__attribute__((unused)) bool JSONReport = false){};
+  void report(__attribute__((unused)) bool IncludeUnits = false){};
   void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();

@@ -9,7 +9,7 @@ class DHTSensor : virtual public Common
 public:
   DHTSensor(const __FlashStringHelper *Name, Module *Parent, Settings::DHTSensorSettings *DefaultSettings);
   void refresh_FiveSec();
-  void report(bool JSONReport = false);
+  void report(bool IncludeUnits = false);
   void readSensor(); ///< Refresh Temp and Humidity readings
   float getTemp();
   char *getTempText(bool IncludeUnits = false);

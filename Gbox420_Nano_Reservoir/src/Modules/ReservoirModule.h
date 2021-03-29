@@ -40,7 +40,7 @@ public:
   TDSSensor *TDS1;
   WaterTempSensor *WTemp1;
   WeightSensor *Weight1;
-  void report(__attribute__((unused)) bool JSONReport = false){};
+  void report(__attribute__((unused)) bool IncludeUnits = false){};
   void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();

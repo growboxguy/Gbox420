@@ -31,10 +31,10 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   }
 }
 
-void Aeroponics_Tank::report(bool JSONReport)
+void Aeroponics_Tank::report(bool IncludeUnits)
 {
-  Common::report(JSONReport); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (JSONReport)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  Common::report(IncludeUnits); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
+  if (IncludeUnits)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
     strcat(LongMessage, toText((int)State));
@@ -96,7 +96,7 @@ void Aeroponics_Tank::processTimeCriticalStuff() ///< Called every 0.1sec
 void Aeroponics_Tank::updateState(AeroTankStates NewState) ///< Without a parameter actualize the current State. When NewState parameter is passed it overwrites State
 {
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
-  if (State != NewState && *Debug)
+  if (State != NewState)
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)Name);

@@ -20,10 +20,10 @@ void PHSensor::refresh_FiveSec()
   updatePH(false);
 }
 
-void PHSensor::report(bool JSONReport)
+void PHSensor::report(bool IncludeUnits)
 {
-  Common::report(JSONReport); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (JSONReport)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  Common::report(IncludeUnits); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
+  if (IncludeUnits)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"P\":\""));
     strcat(LongMessage, getPHText(false));

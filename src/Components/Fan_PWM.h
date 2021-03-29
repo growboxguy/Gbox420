@@ -16,7 +16,7 @@ class Fan_PWM : virtual public Common
 public:
   Fan_PWM(const __FlashStringHelper *Name, Module *Parent, Settings::Fan_PWMSettings *DefaultSettings);
   void refresh_Minute();
-  void report(bool JSONReport = false);
+  void report(bool IncludeUnits = false);
   uint8_t getSpeed(bool CurrentSpeed = true); //Returns the speed of the fan, if CurrentSpeed is true it takes into account if the fan is ON or OFF
   char *getSpeedText(bool CurrentSpeed = true, bool IncludeUnits = true);
 

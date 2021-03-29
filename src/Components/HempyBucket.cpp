@@ -18,10 +18,10 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   logToSerials(F("Hempy bucket ready"), true, 3);
 }
 
-void HempyBucket::report(bool JSONReport)
+void HempyBucket::report(bool IncludeUnits)
 {
-  Common::report(JSONReport); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (JSONReport)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  Common::report(IncludeUnits); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
+  if (IncludeUnits)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {                           ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
     strcat(LongMessage, toText((int)getState()));

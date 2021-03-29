@@ -10,7 +10,7 @@ class PressureSensor : virtual public Common
 public:
   PressureSensor(const __FlashStringHelper *Name, Module *Parent, Settings::PressureSensorSettings *DefaultSettings);
   void refresh_FiveSec();
-  void report(bool JSONReport = false);
+  void report(bool IncludeUnits = false);
   float readPressure(bool ReturnAverage = true);
   float getPressure(bool ReturnAverage = true);
   char *getPressureText(bool ReturnAverage = true, bool IncludeUnits = false);

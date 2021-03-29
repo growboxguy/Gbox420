@@ -11,7 +11,7 @@ class LightSensor : virtual public Common
 public:
   LightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource);
   void refresh_FiveSec();
-  void report(bool JSONReport = false);
+  void report(bool IncludeUnits = false);
   void triggerCalibration();          ///< Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger
   void getCalibrationReadings();      ///< Light reading at dark,0,10,20...100%
   int getReading();                   ///< Light sensor analog feedback: 0(darkest) to 1023 (brightest)

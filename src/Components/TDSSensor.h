@@ -11,7 +11,7 @@ public:
   TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::TDSSensorSettings *DefaultSettings);
   TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::TDSSensorSettings *DefaultSettings, WaterTempSensor *WaterTempSensor1);
   void refresh_FiveSec();
-  void report(bool JSONReport = false);
+  void report(bool IncludeUnits = false);
   float getTDS(bool ReturnAverage = true);
   char *getTDSText(bool ReturnAverage = true, bool IncludeUnits = false);
 

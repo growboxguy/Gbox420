@@ -57,9 +57,9 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   addToLog(F("MainModule initialized"), 0);
 }
 
-void MainModule::report(bool JSONReport)
+void MainModule::report(bool IncludeUnits)
 {
-  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  if (IncludeUnits) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"M\":\""));

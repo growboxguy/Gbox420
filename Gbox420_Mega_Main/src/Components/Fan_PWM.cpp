@@ -20,9 +20,9 @@ Fan_PWM::Fan_PWM(const __FlashStringHelper *Name, Module *Parent, Settings::Fan_
   logToSerials(F("Fan_PWM ready"), true, 3);
 }
 
-void Fan_PWM::report(bool JSONReport)
+void Fan_PWM::report(bool IncludeUnits)
 {
-  if (JSONReport) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  if (IncludeUnits) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));

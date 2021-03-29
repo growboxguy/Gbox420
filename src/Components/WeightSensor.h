@@ -11,7 +11,7 @@ class WeightSensor : virtual public Common
 public:
   WeightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::WeightSensorSettings *DefaultSettings);
   void refresh_FiveSec();
-  void report(bool JSONReport = false);
+  void report(bool IncludeUnits = false);
   float readWeight(bool ReturnAverage = true);
   float getWeight(bool ReturnAverage = true);
   char *getWeightText(bool ReturnAverage = true, bool IncludeUnits = false);

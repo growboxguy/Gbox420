@@ -24,10 +24,10 @@ Aeroponics_NoTank::Aeroponics_NoTank(const __FlashStringHelper *Name, Module *Pa
   }
 }
 
-void Aeroponics_NoTank::report(bool JSONReport)
+void Aeroponics_NoTank::report(bool IncludeUnits)
 {
-  Common::report(JSONReport); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  if (JSONReport)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  Common::report(IncludeUnits); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
+  if (IncludeUnits)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     strcat_P(LongMessage, (PGM_P)F("\"LS\":\""));
     strcat(LongMessage, toText(LastSprayPressure));
