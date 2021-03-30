@@ -39,6 +39,7 @@ public:
   void addPushingBoxLogRelayID();
   void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);
   void mqttPublish(char (*JSONData)[MaxLongTextLength]);
+  bool *SerialReportText;          ///< Enable/disable sending Text formatted reports to the Serial output
 
 private:
 protected:
@@ -48,4 +49,5 @@ protected:
   uint8_t WebsiteQueue_Load_Count = 0;
   uint8_t WebsiteQueue_Refresh_Count = 0;
   uint8_t CommandQueue_Count = 0;
+  void setSerialReportText(bool State);               ///< Enable/disable sending Text formatted reports to the Serial output
 };

@@ -21,7 +21,7 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
-  SerialReportText = &DefaultSettings->SerialReportText;
+  SerialReportJSONFriendly = &DefaultSettings->SerialReportJSONFriendly;
   SerialReportJSON = &DefaultSettings->SerialReportJSON;
   SerialReportWireless = &DefaultSettings->SerialReportWireless;
   logToSerials(F(""), true, 0);                                   // line break
@@ -108,7 +108,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     setSerialReportingFrequency(((HempyModuleCommand *)ReceivedCommand)->SerialReportFrequency);
     setSerialReportDate(((HempyModuleCommand *)ReceivedCommand)->SerialReportDate);
     setSerialReportMemory(((HempyModuleCommand *)ReceivedCommand)->SerialReportMemory);
-    setSerialReportText(((HempyModuleCommand *)ReceivedCommand)->SerialReportText);
+    setSerialReportJSONFriendly(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
     setSerialReportJSON(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON);
     setSerialReportWireless(((HempyModuleCommand *)ReceivedCommand)->SerialReportWireless);
     NextSequenceID = HempyMessages::HempyBucketResponse1; // update the next Message that will be copied to the buffer
@@ -120,7 +120,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
-      logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportText, false, 1);
+      logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportWireless, true, 1);
     }

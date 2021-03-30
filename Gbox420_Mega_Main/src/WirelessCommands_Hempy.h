@@ -62,14 +62,14 @@ struct HempyCommonTemplate ///< Hempy wireless template - Shared between Command
 struct HempyModuleCommand : HempyCommonTemplate ///< Hempy module wireless command
 {
    HempyModuleCommand(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
-   HempyModuleCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) uint16_t SerialReportFrequency, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportText, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : HempyCommonTemplate(SequenceID) {}
+   HempyModuleCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) uint16_t SerialReportFrequency, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportJSONFriendly, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : HempyCommonTemplate(SequenceID) {}
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
    uint16_t SerialReportFrequency = 0;
    bool SerialReportDate = true;
    bool SerialReportMemory = true;
-   bool SerialReportText = true;
+   bool SerialReportJSONFriendly = true;
    bool SerialReportJSON = true;
    bool SerialReportWireless = true;
 };

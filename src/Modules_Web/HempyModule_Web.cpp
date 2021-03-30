@@ -469,7 +469,7 @@ void HempyModule_Web::updateCommands()
   HempyModuleCommand1ToSend.SerialReportFrequency = *(Parent->SerialReportFrequency);
   HempyModuleCommand1ToSend.SerialReportDate = *(Parent->SerialReportDate);
   HempyModuleCommand1ToSend.SerialReportMemory = *(Parent->SerialReportMemory);
-  HempyModuleCommand1ToSend.SerialReportText = *(Parent->SerialReportText);
+  HempyModuleCommand1ToSend.SerialReportJSONFriendly = *(Parent->SerialReportJSONFriendly);
   HempyModuleCommand1ToSend.SerialReportJSON = *(Parent->SerialReportJSON);
   HempyModuleCommand1ToSend.SerialReportWireless = *(Parent->SerialReportWireless);
   HempyBucketCommand1ToSend.EvaporationTarget = DefaultSettings->EvaporationTarget_B1;

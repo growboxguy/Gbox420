@@ -23,7 +23,7 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModu
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
-  SerialReportText = &DefaultSettings->SerialReportText;
+  SerialReportJSONFriendly = &DefaultSettings->SerialReportJSONFriendly;
   SerialReportJSON = &DefaultSettings->SerialReportJSON;
   SerialReportWireless = &DefaultSettings->SerialReportWireless;
   logToSerials(F(""), true, 0);                                   //<Line break
@@ -93,7 +93,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     setSerialReportingFrequency(((AeroModuleCommand *)ReceivedCommand)->SerialReportFrequency);
     setSerialReportDate(((AeroModuleCommand *)ReceivedCommand)->SerialReportDate);
     setSerialReportMemory(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemory);
-    setSerialReportText(((AeroModuleCommand *)ReceivedCommand)->SerialReportText);
+    setSerialReportJSONFriendly(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
     setSerialReportJSON(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSON);
     setSerialReportWireless(((AeroModuleCommand *)ReceivedCommand)->SerialReportWireless);
     NextSequenceID = AeroMessages::AeroResponse1; // update the next Message that will be copied to the buffer
@@ -105,7 +105,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
-      logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportText, false, 1);
+      logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSON, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportWireless, true, 1);
     }

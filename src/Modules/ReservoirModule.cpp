@@ -17,7 +17,7 @@ ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::Rese
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
-  SerialReportText = &DefaultSettings->SerialReportText;
+  SerialReportJSONFriendly = &DefaultSettings->SerialReportJSONFriendly;
   SerialReportJSON = &DefaultSettings->SerialReportJSON;
   SerialReportWireless = &DefaultSettings->SerialReportWireless;
   logToSerials(F(""), true, 0);                                   //<Line break
@@ -93,7 +93,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     setSerialReportingFrequency(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportFrequency);
     setSerialReportDate(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportDate);
     setSerialReportMemory(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportMemory);
-    setSerialReportText(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportText);
+    setSerialReportJSONFriendly(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
     setSerialReportJSON(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSON);
     setSerialReportWireless(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportWireless);
     NextSequenceID = ReservoirMessages::ReservoirResponse1; // update the next Message that will be copied to the buffer
@@ -105,7 +105,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportFrequency, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportDate, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportMemory, false, 1);
-      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportText, false, 1);
+      logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSON, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportWireless, true, 1);
     }

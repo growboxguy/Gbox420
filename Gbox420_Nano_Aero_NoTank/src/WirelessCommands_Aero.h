@@ -64,14 +64,14 @@ struct AeroCommonTemplate ///< Aeroponics wireless template - Shared between Com
 struct AeroModuleCommand : AeroCommonTemplate ///< Aeroponics wireless module commands
 {
    AeroModuleCommand(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroModuleCommand(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) uint16_t SerialReportFrequency, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportText, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : AeroCommonTemplate(SequenceID) {}
+   AeroModuleCommand(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) time_t Time, __attribute__((unused)) bool Debug, __attribute__((unused)) bool Metric, __attribute__((unused)) uint16_t SerialReportFrequency, __attribute__((unused)) bool SerialReportDate, __attribute__((unused)) bool SerialReportMemory, __attribute__((unused)) bool SerialReportJSONFriendly, __attribute__((unused)) bool SerialReportJSON, __attribute__((unused)) bool SerialReportWireless) : AeroCommonTemplate(SequenceID) {}
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
    uint16_t SerialReportFrequency = 0;
    bool SerialReportDate = true;
    bool SerialReportMemory = true;
-   bool SerialReportText = true;
+   bool SerialReportJSONFriendly = true;
    bool SerialReportJSON = true;
    bool SerialReportWireless = true;
 };

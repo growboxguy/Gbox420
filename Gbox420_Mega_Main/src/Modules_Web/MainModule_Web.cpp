@@ -20,7 +20,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
   SerialReportMemory = &DefaultSettings->SerialReportMemory;
-  SerialReportText = &DefaultSettings->SerialReportText;
+  SerialReportJSONFriendly = &DefaultSettings->SerialReportJSONFriendly;
   SerialReportJSON = &DefaultSettings->SerialReportJSON;
   SerialReportWireless = &DefaultSettings->SerialReportWireless;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
@@ -81,7 +81,7 @@ void MainModule::report(bool FriendlyFormat)
     strcat_P(LongMessage, (PGM_P)F(" ; Report memory:"));
     strcat(LongMessage, toText_yesNo(*SerialReportMemory));
     strcat_P(LongMessage, (PGM_P)F(" ; Report text:"));
-    strcat(LongMessage, toText_yesNo(*SerialReportText));
+    strcat(LongMessage, toText_yesNo(*SerialReportJSONFriendly));
     strcat_P(LongMessage, (PGM_P)F(" ; Report JSON:"));
     strcat(LongMessage, toText_yesNo(*SerialReportJSON));
     strcat_P(LongMessage, (PGM_P)F(" ; Report Wireless:"));
@@ -116,8 +116,9 @@ void MainModule::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("SerialF")), *SerialReportFrequency);
     WebServer.setArgInt(getComponentName(F("Date")), *SerialReportDate);
     WebServer.setArgInt(getComponentName(F("Mem")), *SerialReportMemory);
-    WebServer.setArgInt(getComponentName(F("Text")), *SerialReportText);
+    WebServer.setArgInt(getComponentName(F("Text")), *SerialReportJSONFriendly);
     WebServer.setArgInt(getComponentName(F("JSON")), *SerialReportJSON);
+    WebServer.setArgInt(getComponentName(F("FJSON")), *SerialReportJSONFriendly);
     WebServer.setArgInt(getComponentName(F("Wire")), *SerialReportWireless);
     WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
     WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
@@ -407,6 +408,10 @@ void MainModule::commandEvent(char *Command, char *Data)
     else if (strcmp_P(ShortMessage, (PGM_P)F("JSON")) == 0)
     {
       setSerialReportJSON(toBool(Data));
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("FJSON")) == 0)
+    {
+      setSerialReportJSONFriendly(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Wire")) == 0)
     {

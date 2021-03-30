@@ -55,7 +55,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
     getFreeMemory();
   }
   /*
-  if (*SerialReportText && !JSONToBufferOnly)
+  if (*SerialReportJSONFriendly && !JSONToBufferOnly)
   {
     logToSerials(reportQueueItemCount, false, 0); ///< Prints the number of items that will report
     logToSerials(F("reporting:"), true, 1);
@@ -79,7 +79,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
     }
     for (int i = 0; i < reportQueueItemCount;)
     {
-      ReportQueue[i++]->report(*SerialReportText);
+      ReportQueue[i++]->report(*SerialReportJSONFriendly);
       if (i != reportQueueItemCount)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
@@ -244,11 +244,11 @@ void Module::setSerialReportMemory(bool State)
   }
 }
 
-void Module::setSerialReportText(bool State)
+void Module::setSerialReportJSONFriendly(bool State)
 {
-  if (State != *SerialReportText)
+  if (State != *SerialReportJSONFriendly)
   { //if there was a change
-    *SerialReportText = State;
+    *SerialReportJSONFriendly = State;
     getSoundObject()->playOnSound();
   }
 }
