@@ -42,7 +42,7 @@ void ReservoirModule_Web::report(bool FriendlyFormat)
     strcat_P(LongMessage, (PGM_P)F("\",\"AT\":\""));
     strcat(LongMessage, FriendlyFormat ? toText_temp(ReservoirResponse1Received.AirTemperature) : toText(ReservoirResponse1Received.AirTemperature));
     strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_hempySequenceID(ReservoirResponse1Received.Humidity) : toText(ReservoirResponse1Received.Humidity));
+    strcat(LongMessage, FriendlyFormat ? toText_percentage(ReservoirResponse1Received.Humidity) : toText(ReservoirResponse1Received.Humidity));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
