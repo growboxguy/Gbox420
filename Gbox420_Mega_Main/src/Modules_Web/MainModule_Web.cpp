@@ -118,7 +118,6 @@ void MainModule::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("SerialF")), *SerialReportFrequency);
     WebServer.setArgInt(getComponentName(F("Date")), *SerialReportDate);
     WebServer.setArgInt(getComponentName(F("Mem")), *SerialReportMemory);
-    WebServer.setArgInt(getComponentName(F("Text")), *SerialReportJSONFriendly);
     WebServer.setArgInt(getComponentName(F("JSON")), *SerialReportJSON);
     WebServer.setArgInt(getComponentName(F("FJSON")), *SerialReportJSONFriendly);
     WebServer.setArgInt(getComponentName(F("Wire")), *SerialReportWireless);
@@ -402,10 +401,6 @@ void MainModule::commandEvent(char *Command, char *Data)
     else if (strcmp_P(ShortMessage, (PGM_P)F("Mem")) == 0)
     {
       setSerialReportMemory(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Text")) == 0)
-    {
-      setSerialReportText(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("JSON")) == 0)
     {
