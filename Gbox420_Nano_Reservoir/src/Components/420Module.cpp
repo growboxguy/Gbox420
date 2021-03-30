@@ -79,7 +79,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
     }
     for (int i = 0; i < reportQueueItemCount;)
     {
-      ReportQueue[i++]->report(*SerialReportJSONFriendly);
+      ReportQueue[i++]->report(JSONToBufferOnly || KeepBuffer ? false : *SerialReportJSONFriendly);
       if (i != reportQueueItemCount)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
