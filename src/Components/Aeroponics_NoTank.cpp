@@ -33,9 +33,9 @@ void Aeroponics_NoTank::report(bool FriendlyFormat)
     strcat(LongMessage, getStateText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"LS\":\""));
     strcat(LongMessage, getLastSprayPressureText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Mn\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\",\"MN\":\""));
     strcat(LongMessage, getMinPressureText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Mx\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\",\"MX\":\""));
     strcat(LongMessage, getMaxPressureText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
     strcat(LongMessage, getSprayEnabledText(FriendlyFormat));

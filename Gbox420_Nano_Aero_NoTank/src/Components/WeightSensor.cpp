@@ -22,7 +22,7 @@ void WeightSensor::report(bool FriendlyFormat)
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
   //if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
-    strcat_P(LongMessage, (PGM_P)F("\"WT\":\""));
+    strcat_P(LongMessage, (PGM_P)F("\"W\":\""));
     strcat(LongMessage, getWeightText(false, FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
