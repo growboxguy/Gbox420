@@ -29,61 +29,62 @@ HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Pa
 
 void HempyModule_Web::report(bool FriendlyFormat)
 {
-  if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, toText(OnlineStatus));
+    strcat(LongMessage, FriendlyFormat ? toText_onlineStatus(OnlineStatus) : toText(OnlineStatus));
     strcat_P(LongMessage, (PGM_P)F("\",\"H1\":\""));
-    strcat(LongMessage, toText((int)HempyBucketResponse1Received.HempyState));
+    strcat(LongMessage, FriendlyFormat ? toText_hempyState(HempyBucketResponse1Received.HempyState) : toText((int)HempyBucketResponse1Received.HempyState));
     strcat_P(LongMessage, (PGM_P)F("\",\"P1\":\""));
-    strcat(LongMessage, toText((int)HempyBucketResponse1Received.PumpState));
+    strcat(LongMessage, FriendlyFormat ? toText_waterPumpState(HempyBucketResponse1Received.PumpState) : toText((int)HempyBucketResponse1Received.PumpState));
     strcat_P(LongMessage, (PGM_P)F("\",\"PS1\":\""));
-    strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpSpeed));
+    strcat(LongMessage, FriendlyFormat ? toText_percentage(HempyBucketCommand1ToSend.PumpSpeed) : toText(HempyBucketCommand1ToSend.PumpSpeed));
     strcat_P(LongMessage, (PGM_P)F("\",\"PT1\":\""));
-    strcat(LongMessage, toText(HempyBucketCommand1ToSend.PumpTimeOut));
+    strcat(LongMessage, FriendlyFormat ? toText_second(HempyBucketCommand1ToSend.PumpTimeOut) : toText(HempyBucketCommand1ToSend.PumpTimeOut));
     strcat_P(LongMessage, (PGM_P)F("\",\"DT1\":\""));
-    strcat(LongMessage, toText(HempyBucketCommand1ToSend.DrainWaitTime));
+    strcat(LongMessage, FriendlyFormat ? toText_second(HempyBucketCommand1ToSend.DrainWaitTime) : toText(HempyBucketCommand1ToSend.DrainWaitTime));
     strcat_P(LongMessage, (PGM_P)F("\",\"WB1\":\""));
-    strcat(LongMessage, toText(HempyBucketResponse1Received.WeightB));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketResponse1Received.WeightB) : toText(HempyBucketResponse1Received.WeightB));
     strcat_P(LongMessage, (PGM_P)F("\",\"WR1\":\""));
-    strcat(LongMessage, toText(HempyBucketResponse1Received.WeightWR));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketResponse1Received.WeightWR) : toText(HempyBucketResponse1Received.WeightWR));
     strcat_P(LongMessage, (PGM_P)F("\",\"DW1\":\""));
-    strcat(LongMessage, toText(HempyBucketResponse1Received.DryWeight));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketResponse1Received.DryWeight) : toText(HempyBucketResponse1Received.DryWeight));
     strcat_P(LongMessage, (PGM_P)F("\",\"WW1\":\""));
-    strcat(LongMessage, toText(HempyBucketResponse1Received.WetWeight));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketResponse1Received.WetWeight) : toText(HempyBucketResponse1Received.WetWeight));
     strcat_P(LongMessage, (PGM_P)F("\",\"ET1\":\""));
-    strcat(LongMessage, toText(HempyBucketCommand1ToSend.EvaporationTarget));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand1ToSend.EvaporationTarget) : toText(HempyBucketCommand1ToSend.EvaporationTarget));
     strcat_P(LongMessage, (PGM_P)F("\",\"OT1\":\""));
-    strcat(LongMessage, toText(HempyBucketCommand1ToSend.OverflowTarget));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand1ToSend.OverflowTarget) : toText(HempyBucketCommand1ToSend.OverflowTarget));
     strcat_P(LongMessage, (PGM_P)F("\",\"WL1\":\""));
-    strcat(LongMessage, toText(HempyBucketCommand1ToSend.WasteLimit));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand1ToSend.WasteLimit) : toText(HempyBucketCommand1ToSend.WasteLimit));
     strcat_P(LongMessage, (PGM_P)F("\",\"H2\":\""));
-    strcat(LongMessage, toText((int)HempyBucketResponse2Received.HempyState));
+    strcat(LongMessage, FriendlyFormat ? toText_hempyState(HempyBucketResponse2Received.HempyState) : toText((int)HempyBucketResponse2Received.HempyState));
     strcat_P(LongMessage, (PGM_P)F("\",\"P2\":\""));
-    strcat(LongMessage, toText((int)HempyBucketResponse2Received.PumpState));
+    strcat(LongMessage, FriendlyFormat ? toText_waterPumpState(HempyBucketResponse2Received.PumpState) : toText((int)HempyBucketResponse2Received.PumpState));
     strcat_P(LongMessage, (PGM_P)F("\",\"PS2\":\""));
-    strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpSpeed));
+    strcat(LongMessage, FriendlyFormat ? toText_percentage(HempyBucketCommand2ToSend.PumpSpeed) : toText(HempyBucketCommand2ToSend.PumpSpeed));
     strcat_P(LongMessage, (PGM_P)F("\",\"PT2\":\""));
-    strcat(LongMessage, toText(HempyBucketCommand2ToSend.PumpTimeOut));
+    strcat(LongMessage, FriendlyFormat ? toText_second(HempyBucketCommand2ToSend.PumpTimeOut) : toText(HempyBucketCommand2ToSend.PumpTimeOut));
     strcat_P(LongMessage, (PGM_P)F("\",\"DT2\":\""));
-    strcat(LongMessage, toText(HempyBucketCommand2ToSend.DrainWaitTime));
+    strcat(LongMessage, FriendlyFormat ? toText_second(HempyBucketCommand2ToSend.DrainWaitTime) : toText(HempyBucketCommand2ToSend.DrainWaitTime));
     strcat_P(LongMessage, (PGM_P)F("\",\"WB2\":\""));
-    strcat(LongMessage, toText(HempyBucketResponse2Received.WeightB));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketResponse2Received.WeightB) : toText(HempyBucketResponse2Received.WeightB));
     strcat_P(LongMessage, (PGM_P)F("\",\"WR2\":\""));
-    strcat(LongMessage, toText(HempyBucketResponse2Received.WeightWR));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketResponse2Received.WeightWR) : toText(HempyBucketResponse2Received.WeightWR));
     strcat_P(LongMessage, (PGM_P)F("\",\"DW2\":\""));
-    strcat(LongMessage, toText(HempyBucketResponse2Received.DryWeight));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketResponse2Received.DryWeight) : toText(HempyBucketResponse2Received.DryWeight));
     strcat_P(LongMessage, (PGM_P)F("\",\"WW2\":\""));
-    strcat(LongMessage, toText(HempyBucketResponse2Received.WetWeight));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketResponse2Received.WetWeight) : toText(HempyBucketResponse2Received.WetWeight));
     strcat_P(LongMessage, (PGM_P)F("\",\"ET2\":\""));
-    strcat(LongMessage, toText(HempyBucketCommand2ToSend.EvaporationTarget));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand2ToSend.EvaporationTarget) : toText(HempyBucketCommand2ToSend.EvaporationTarget));
     strcat_P(LongMessage, (PGM_P)F("\",\"OT2\":\""));
-    strcat(LongMessage, toText(HempyBucketCommand2ToSend.OverflowTarget));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand2ToSend.OverflowTarget) : toText(HempyBucketCommand2ToSend.OverflowTarget));
     strcat_P(LongMessage, (PGM_P)F("\",\"WL2\":\""));
-    strcat(LongMessage, toText(HempyBucketCommand2ToSend.WasteLimit));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(HempyBucketCommand2ToSend.WasteLimit) : toText(HempyBucketCommand2ToSend.WasteLimit));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     Common::report();
@@ -119,6 +120,7 @@ void HempyModule_Web::report(bool FriendlyFormat)
     strcat_P(LongMessage, (PGM_P)F("]"));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void HempyModule_Web::websiteEvent_Load(char *url)

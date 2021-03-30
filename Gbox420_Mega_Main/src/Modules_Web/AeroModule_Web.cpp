@@ -32,44 +32,50 @@ AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Pare
 */
 void AeroModule_Web::report(bool FriendlyFormat)
 {
-  if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, toText(OnlineStatus));
+    strcat(LongMessage, FriendlyFormat ? toText_onlineStatus(OnlineStatus) : toText(OnlineStatus));
     strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
-    strcat(LongMessage, toText(AeroResponse1Received.Pressure));
+    strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroResponse1Received.Pressure) : toText(AeroResponse1Received.Pressure));
     strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
-    strcat(LongMessage, toText(AeroResponse1Received.Weight));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(AeroResponse1Received.Weight) : toText(AeroResponse1Received.Weight));
+    strcat_P(LongMessage, (PGM_P)F("\",\"Ma\":\""));
+    strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroCommand1ToSend.MaxPressure) : toText(AeroCommand1ToSend.MaxPressure));
     if (AeroResponse1Received.PressureTankPresent)
     {
       strcat_P(LongMessage, (PGM_P)F("\",\"Mi\":\""));
-      strcat(LongMessage, toText(AeroCommand1ToSend.MinPressure));
-      strcat_P(LongMessage, (PGM_P)F("\",\"Ma\":\""));
-      strcat(LongMessage, toText(AeroCommand1ToSend.MaxPressure));
+      strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroCommand1ToSend.MinPressure) : toText(AeroCommand1ToSend.MinPressure));
+      strcat_P(LongMessage, (PGM_P)F("\",\"AS\":\""));
+      strcat(LongMessage, FriendlyFormat ? toText_aeroTankState((AeroTankStates)AeroResponse1Received.AeroState) : toText(AeroResponse1Received.AeroState));
     }
-    strcat_P(LongMessage, (PGM_P)F("\",\"AS\":\""));
-    strcat(LongMessage, toText((int)AeroResponse1Received.AeroState));
+    else
+    {
+      strcat_P(LongMessage, (PGM_P)F("\",\"AS\":\""));
+      strcat(LongMessage, FriendlyFormat ? toText_aeroNoTankState((AeroNoTankStates)AeroResponse1Received.AeroState) : toText(AeroResponse1Received.AeroState));
+    }
     strcat_P(LongMessage, (PGM_P)F("\",\"LS\":\""));
-    strcat(LongMessage, toText(AeroResponse1Received.LastSprayPressure));
+    strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroResponse1Received.LastSprayPressure) : toText(AeroResponse1Received.LastSprayPressure));
     strcat_P(LongMessage, (PGM_P)F("\",\"PSt\":\""));
-    strcat(LongMessage, toText((int)AeroResponse1Received.PumpState));
+    strcat(LongMessage, FriendlyFormat ? toText_pressurePumpState(AeroResponse1Received.PumpState) : toText((int)AeroResponse1Received.PumpState));
     strcat_P(LongMessage, (PGM_P)F("\",\"PS\":\""));
-    strcat(LongMessage, toText(AeroCommand2ToSend.PumpSpeed));
+    strcat(LongMessage, FriendlyFormat ? toText_percentage(AeroCommand2ToSend.PumpSpeed) : toText(AeroCommand2ToSend.PumpSpeed));
     strcat_P(LongMessage, (PGM_P)F("\",\"PT\":\""));
-    strcat(LongMessage, toText(AeroCommand2ToSend.PumpTimeOut));
+    strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand2ToSend.PumpTimeOut) : toText(AeroCommand2ToSend.PumpTimeOut));
     strcat_P(LongMessage, (PGM_P)F("\",\"PP\":\""));
-    strcat(LongMessage, toText(AeroCommand2ToSend.PumpPrimingTime));
+    strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand2ToSend.PumpPrimingTime) : toText(AeroCommand2ToSend.PumpPrimingTime));
     strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
-    strcat(LongMessage, toText(AeroResponse1Received.SprayEnabled));
+    strcat(LongMessage, FriendlyFormat ? toText_enabledDisabled(AeroResponse1Received.SprayEnabled) : toText(AeroResponse1Received.SprayEnabled));
     strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
-    strcat(LongMessage, toText(AeroCommand1ToSend.Duration));
+    strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand1ToSend.Duration) : toText(AeroCommand1ToSend.Duration));
     strcat_P(LongMessage, (PGM_P)F("\",\"DI\":\""));
-    strcat(LongMessage, toText(AeroCommand1ToSend.DayInterval));
+    strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand1ToSend.DayInterval) : toText(AeroCommand1ToSend.DayInterval));
     strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
-    strcat(LongMessage, toText(AeroCommand1ToSend.NightInterval));
+    strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand1ToSend.NightInterval) : toText(AeroCommand1ToSend.NightInterval));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     Common::report();
@@ -106,6 +112,7 @@ void AeroModule_Web::report(bool FriendlyFormat)
     strcat(LongMessage, toText_minute(AeroCommand1ToSend.NightInterval));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 /**
@@ -135,7 +142,15 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
   if (strncmp(url, "/G", 2) == 0)
   {
     WebServer.setArgString(getComponentName(F("S")), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getComponentName(F("AS")), toText_aeroTankState(AeroResponse1Received.AeroState));
+    if (AeroResponse1Received.PressureTankPresent)
+    {
+      WebServer.setArgString(getComponentName(F("AS")), toText_aeroTankState((AeroTankStates)AeroResponse1Received.AeroState));
+    }
+    else
+    {
+      WebServer.setArgString(getComponentName(F("AS")), toText_aeroNoTankState((AeroNoTankStates)AeroResponse1Received.AeroState));
+    }
+
     WebServer.setArgString(getComponentName(F("P")), toText_pressurePumpState(AeroResponse1Received.PumpState));
     WebServer.setArgString(getComponentName(F("Pr")), toText_pressure(AeroResponse1Received.Pressure));
     WebServer.setArgString(getComponentName(F("LSP")), toText_pressure(AeroResponse1Received.LastSprayPressure));

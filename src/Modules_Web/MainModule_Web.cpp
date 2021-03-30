@@ -59,15 +59,16 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
 
 void MainModule::report(bool FriendlyFormat)
 {
-  if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"M\":\""));
-    strcat(LongMessage, toText(*Metric));
+    strcat(LongMessage, getMetricText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
-    strcat(LongMessage, toText(*Debug));
+    strcat(LongMessage, getDebugText(FriendlyFormat));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     Common::report();
@@ -88,6 +89,7 @@ void MainModule::report(bool FriendlyFormat)
     strcat(LongMessage, toText_yesNo(*SerialReportWireless));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void MainModule::websiteEvent_Load(char *url)
@@ -142,7 +144,7 @@ void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< ca
   if (strncmp(url, "/G", 2) == 0) //GrowBox tab
   {
     //Air pump
-    WebServer.setArgString(getComponentName(F("AP")), APump1->getStateText());
+    WebServer.setArgString(getComponentName(F("AP")), APump1->getStateText(true));
     //DHT1
     WebServer.setArgString(getComponentName(F("DT")), DHT1->getTempText(true)); ///< Shows the latest reading
     WebServer.setArgString(getComponentName(F("DH")), DHT1->getHumidityText(true));
@@ -503,6 +505,18 @@ bool MainModule::getDayMode()
   }
 }
 
+char *MainModule::getDayModeText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_onOff(getDayMode());
+  }
+  else
+  {
+    return toText(getDayMode());
+  }
+}
+
 ///< Settings
 void MainModule::setDebug(bool DebugEnabled)
 {
@@ -519,6 +533,18 @@ void MainModule::setDebug(bool DebugEnabled)
   }
 }
 
+char *MainModule::getDebugText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_onOff(*Debug);
+  }
+  else
+  {
+    return toText(*Debug);
+  }
+}
+
 void MainModule::setMetric(bool MetricEnabled)
 {
   if (MetricEnabled != *Metric)
@@ -531,6 +557,18 @@ void MainModule::setMetric(bool MetricEnabled)
   else
     addToLog(F("Using Imperial units"));
   getSoundObject()->playOnSound();
+}
+
+char *MainModule::getMetricText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_onOff(*Metric);
+  }
+  else
+  {
+    return toText(*Metric);
+  }
 }
 
 ///< Google Sheets reporting

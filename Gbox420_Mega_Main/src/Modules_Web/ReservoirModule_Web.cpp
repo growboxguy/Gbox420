@@ -28,25 +28,26 @@ ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, Module
 */
 void ReservoirModule_Web::report(bool FriendlyFormat)
 {
-  if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
   {
     Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
     strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, toText(OnlineStatus));
+    strcat(LongMessage, FriendlyFormat ? toText_onlineStatus(OnlineStatus) : toText(OnlineStatus));
     strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
     strcat(LongMessage, toText(ReservoirResponse1Received.PH));
     strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
-    strcat(LongMessage, toText(ReservoirResponse1Received.TDS));
+    strcat(LongMessage, FriendlyFormat ? toText_TDS(ReservoirResponse1Received.TDS) : toText(ReservoirResponse1Received.TDS));
     strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
-    strcat(LongMessage, toText(ReservoirResponse1Received.Weight));
+    strcat(LongMessage, FriendlyFormat ? toText_weight(ReservoirResponse1Received.Weight) : toText(ReservoirResponse1Received.Weight));
     strcat_P(LongMessage, (PGM_P)F("\",\"WT\":\""));
-    strcat(LongMessage, toText(ReservoirResponse1Received.WaterTemperature));
+    strcat(LongMessage, FriendlyFormat ? toText_temp(ReservoirResponse1Received.WaterTemperature) : toText(ReservoirResponse1Received.WaterTemperature));
     strcat_P(LongMessage, (PGM_P)F("\",\"AT\":\""));
-    strcat(LongMessage, toText(ReservoirResponse1Received.AirTemperature));
+    strcat(LongMessage, FriendlyFormat ? toText_temp(ReservoirResponse1Received.AirTemperature) : toText(ReservoirResponse1Received.AirTemperature));
     strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
-    strcat(LongMessage, toText(ReservoirResponse1Received.Humidity));
+    strcat(LongMessage, FriendlyFormat ? toText_hempySequenceID(ReservoirResponse1Received.Humidity) : toText(ReservoirResponse1Received.Humidity));
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
   }
+  /*
   else //Print a report to the Serial console
   {
     Common::report();
@@ -65,6 +66,7 @@ void ReservoirModule_Web::report(bool FriendlyFormat)
     strcat(LongMessage, toText_percentage(ReservoirResponse1Received.Humidity));
     logToSerials(&LongMessage, true, 1);
   }
+  */
 }
 
 void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.

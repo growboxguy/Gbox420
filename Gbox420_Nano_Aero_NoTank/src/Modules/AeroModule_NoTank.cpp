@@ -188,6 +188,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
 
 void AeroModule::updateResponse()
 {
+  Aero1Response1ToSend.AeroState = (int)AeroNT1->getState();
   Aero1Response1ToSend.SprayEnabled = AeroNT1->getSprayEnabled();
   Aero1Response1ToSend.Pressure = AeroNT1->getPressure();
   Aero1Response1ToSend.PumpState = AeroNT1->Pump->getState();

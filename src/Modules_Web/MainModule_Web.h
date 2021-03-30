@@ -53,11 +53,13 @@ public:
   void reportToGoogleSheetsTrigger(bool ForceRun = false);
   void reportToMQTTTrigger(bool ForceRun = false);
   bool getDayMode(); ///< Returns true if the lights are on or daylight is detected
-                     // void relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength]);
+  char *getDayModeText(bool FriendlyFormat = false);
 
 private:
   void setDebug(bool DebugEnabled);
+  char *getDebugText(bool FriendlyFormat = false);
   void setMetric(bool MetricEnabled);
+  char *getMetricText(bool FriendlyFormat = false);
   void setSheetsReportingOnOff(bool State);
   void setSheetsReportingFrequency(uint16_t Frequency);
   void setPushingBoxLogRelayID(const char *ID);
