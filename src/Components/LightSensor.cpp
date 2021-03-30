@@ -27,30 +27,17 @@ void LightSensor::refresh_FiveSec()
   LightReading = (1023 - analogRead(*AnalogPin));
 }
 
+/**
+* @brief Report current state in a JSON format to the LongMessage buffer
+*/
 void LightSensor::report(bool FriendlyFormat)
 {
-
-  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  {
-    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"R\":\""));
-    strcat(LongMessage, getReadingText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
-    strcat(LongMessage, getDarkText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
-  }
-  /*
-  else //Print a report to the Serial console
-  {
-    Common::report();
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    //strcat_P(LongMessage, (PGM_P)F("Dark:"));
-    // strcat(LongMessage, getDarkText(true));
-    strcat_P(LongMessage, (PGM_P)F("LightReading:"));
-    strcat(LongMessage, getReadingText(true));
-    logToSerials(&LongMessage, true, 1);
-  }
-  */
+  Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"R\":\""));
+  strcat(LongMessage, getReadingText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
+  strcat(LongMessage, getDarkText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 void LightSensor::triggerCalibration()

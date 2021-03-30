@@ -15,6 +15,9 @@ DistanceSensor::DistanceSensor(const __FlashStringHelper *Name, Module *Parent, 
   logToSerials(F("Distance Sensor ready"), true, 3);
 }
 
+/**
+* @brief Report current state in a JSON format to the LongMessage buffer
+*/
 void DistanceSensor::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat);

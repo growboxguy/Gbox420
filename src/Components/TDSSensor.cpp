@@ -12,26 +12,15 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
   logToSerials(F("TDSSensor ready"), true, 3);
 }
 
+/**
+* @brief Report current state in a JSON format to the LongMessage buffer
+*/
 void TDSSensor::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  //if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  {
-    strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
-    strcat(LongMessage, getTDSText(false, FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
-  }
-  /*
-  else //Print a report to the Serial console
-  {
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)F("TDS:"));
-    strcat(LongMessage, getTDSText(false, true));
-    strcat_P(LongMessage, (PGM_P)F(" ; Average:"));
-    strcat(LongMessage, getTDSText(true, true));
-    logToSerials(&LongMessage, true, 1);
-  }
-  */
+  strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
+  strcat(LongMessage, getTDSText(false, FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::TDSSensorSettings *DefaultSettings, WaterTempSensor *WaterTempSensor1) : TDSSensor(Name, Parent, DefaultSettings)

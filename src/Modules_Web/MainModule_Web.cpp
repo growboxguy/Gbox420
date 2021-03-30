@@ -57,39 +57,17 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   addToLog(F("MainModule initialized"), 0);
 }
 
+/**
+* @brief Report current state in a JSON format to the LongMessage buffer
+*/
 void MainModule::report(bool FriendlyFormat)
 {
-  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  {
-    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"M\":\""));
-    strcat(LongMessage, getMetricText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
-    strcat(LongMessage, getDebugText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
-  }
-  /*
-  else //Print a report to the Serial console
-  {
-    Common::report();
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)F("Debug:"));
-    strcat(LongMessage, toText_enabledDisabled(*Debug));
-    strcat_P(LongMessage, (PGM_P)F(" ; Metric mode:"));
-    strcat(LongMessage, toText_enabledDisabled(*Metric));
-    strcat_P(LongMessage, (PGM_P)F(" ; Report date:"));
-    strcat(LongMessage, toText_yesNo(*SerialReportDate));
-    strcat_P(LongMessage, (PGM_P)F(" ; Report memory:"));
-    strcat(LongMessage, toText_yesNo(*SerialReportMemory));
-    strcat_P(LongMessage, (PGM_P)F(" ; Report text:"));
-    strcat(LongMessage, toText_yesNo(*SerialReportJSONFriendly));
-    strcat_P(LongMessage, (PGM_P)F(" ; Report JSON:"));
-    strcat(LongMessage, toText_yesNo(*SerialReportJSON));
-    strcat_P(LongMessage, (PGM_P)F(" ; Report Wireless:"));
-    strcat(LongMessage, toText_yesNo(*SerialReportWireless));
-    logToSerials(&LongMessage, true, 1);
-  }
-  */
+  Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"M\":\""));
+  strcat(LongMessage, getMetricText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
+  strcat(LongMessage, getDebugText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 void MainModule::websiteEvent_Load(char *url)

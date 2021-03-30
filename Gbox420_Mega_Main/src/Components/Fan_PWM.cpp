@@ -20,25 +20,15 @@ Fan_PWM::Fan_PWM(const __FlashStringHelper *Name, Module *Parent, Settings::Fan_
   logToSerials(F("Fan_PWM ready"), true, 3);
 }
 
+/**
+* @brief Report current state in a JSON format to the LongMessage buffer
+*/
 void Fan_PWM::report(bool FriendlyFormat)
 {
- // if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  {
-    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, getSpeedText(true,FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
-  }
-  /*
-  else //Print a report to the Serial console
-  {
-    Common::report();
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)F("State:"));
-    strcat(LongMessage, getSpeedText(true));
-    logToSerials(&LongMessage, true, 1);
-  }
-  */
+  Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, getSpeedText(true, FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 void Fan_PWM::refresh_Minute()

@@ -28,30 +28,19 @@ PressurePump::PressurePump(const __FlashStringHelper *Name, Module *Parent, Sett
   logToSerials(F("PressurePump ready"), true, 3);
 }
 
+/**
+* @brief Report current state in a JSON format to the LongMessage buffer
+*/
 void PressurePump::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-                                  // if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  {
-    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, getStateText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
-    strcat(LongMessage, getTimeOutText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
-    strcat(LongMessage, getPrimingTimeText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
-  }
-  /*
-  else //Print a report to the Serial console
-  {
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)F("State:"));
-    strcat(LongMessage, getStateText());
-    strcat_P(LongMessage, (PGM_P)F(" ; TimeOut:"));
-    strcat(LongMessage, toText_second(*PumpTimeOut));
-    logToSerials(&LongMessage, true, 1);
-  }
-  */
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, getStateText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
+  strcat(LongMessage, getTimeOutText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
+  strcat(LongMessage, getPrimingTimeText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 void PressurePump::refresh_Sec()

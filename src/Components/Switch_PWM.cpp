@@ -11,24 +11,15 @@ Switch_PWM::Switch_PWM(const __FlashStringHelper *Name, uint8_t Pin, uint8_t *Du
   logToSerials(F("Switch_PWM ready"), true, 3);
 }
 
+/**
+* @brief Report current state in a JSON format to the LongMessage buffer
+*/
 void Switch_PWM::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  //if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  {
-    strcat_P(LongMessage, (PGM_P)F("\"DC\":\""));
-    strcat(LongMessage, getDutyCycleText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
-  }
-  /*
-  else //Print a report to the Serial console
-  {
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)F("DutyCycle:"));
-    strcat(LongMessage, getDutyCycleText(true));
-    logToSerials(&LongMessage, true, 1);
-  }
-  */
+  strcat_P(LongMessage, (PGM_P)F("\"DC\":\""));
+  strcat(LongMessage, getDutyCycleText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 void Switch_PWM::setDutyCycle(uint8_t DutyCycle)

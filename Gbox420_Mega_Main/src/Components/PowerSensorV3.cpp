@@ -20,45 +20,25 @@ void PowerSensorV3::refresh_FiveSec()
   PowerFactor = Sensor->pf();      ///< Power factor
 }
 
+/**
+* @brief Report current state in a JSON format to the LongMessage buffer
+*/
 void PowerSensorV3::report(bool FriendlyFormat)
 {
-  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  {
-    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"P\":\""));
-    strcat(LongMessage, getPowerText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"E\":\""));
-    strcat(LongMessage, getEnergyText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"V\":\""));
-    strcat(LongMessage, getVoltageText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"C\":\""));
-    strcat(LongMessage, getCurrentText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"F\":\""));
-    strcat(LongMessage, getFrequencyText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"PF\":\""));
-    strcat(LongMessage, getPowerFactorText());
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
-  }
-  /*
-  else //Print a report to the Serial console
-  {
-    Common::report();
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)F("Power:"));
-    strcat(LongMessage, getPowerText(true));
-    strcat_P(LongMessage, (PGM_P)F(" ; Total:"));
-    strcat(LongMessage, getEnergyText(true));
-    strcat_P(LongMessage, (PGM_P)F(" ; Voltage:"));
-    strcat(LongMessage, getVoltageText(true));
-    strcat_P(LongMessage, (PGM_P)F(" ; Current:"));
-    strcat(LongMessage, getCurrentText(true));
-    strcat_P(LongMessage, (PGM_P)F(" ; Frequency:"));
-    strcat(LongMessage, getFrequencyText(true));
-    strcat_P(LongMessage, (PGM_P)F(" ; PowerFactor:"));
-    strcat(LongMessage, getPowerFactorText());
-    logToSerials(&LongMessage, true, 1);
-  }
-  */
+  Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"P\":\""));
+  strcat(LongMessage, getPowerText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"E\":\""));
+  strcat(LongMessage, getEnergyText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"V\":\""));
+  strcat(LongMessage, getVoltageText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"C\":\""));
+  strcat(LongMessage, getCurrentText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"F\":\""));
+  strcat(LongMessage, getFrequencyText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PF\":\""));
+  strcat(LongMessage, getPowerFactorText());
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 char *PowerSensorV3::getPowerText(bool FriendlyFormat)

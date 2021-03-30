@@ -31,56 +31,31 @@ Aeroponics_Tank::Aeroponics_Tank(const __FlashStringHelper *Name, Module *Parent
   }
 }
 
+/**
+* @brief Report current state in a JSON format to the LongMessage buffer
+*/
 void Aeroponics_Tank::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  //if (FriendlyFormat)             //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  {
-    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, getStateText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"LS\":\""));
-    strcat(LongMessage, getLastSprayPressureText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Mn\":\""));
-    strcat(LongMessage, getMinPressureText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Mx\":\""));
-    strcat(LongMessage, getMaxPressureText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
-    strcat(LongMessage, getSprayEnabledText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"DM\":\""));
-    strcat(LongMessage, getDayModeText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
-    strcat(LongMessage, getDurationText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"DI\":\""));
-    strcat(LongMessage, getDayIntervalText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
-    strcat(LongMessage, getNightIntervalText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
-  }
-  /*
-  else //Print a report to the Serial console
-  {
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)F("State:"));
-    strcat(LongMessage, toText_aeroTankState(State));
-    strcat_P(LongMessage, (PGM_P)F(" ; LastSpray:"));
-    strcat(LongMessage, toText_pressure(LastSprayPressure));
-    strcat_P(LongMessage, (PGM_P)F(" ; Min:"));
-    strcat(LongMessage, toText_pressure(*MinPressure));
-    strcat_P(LongMessage, (PGM_P)F(" ; Max:"));
-    strcat(LongMessage, toText_pressure(*MaxPressure));
-    strcat_P(LongMessage, (PGM_P)F(" ; Spray:"));
-    strcat(LongMessage, toText_enabledDisabled(*SprayEnabled));
-    strcat_P(LongMessage, (PGM_P)F(" ; DayMode:"));
-    strcat(LongMessage, toText_enabledDisabled(DayMode));
-    strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
-    strcat(LongMessage, toText_second(*Duration));
-    strcat_P(LongMessage, (PGM_P)F(" ; DayInterval:"));
-    strcat(LongMessage, toText_minute(*DayInterval));
-    strcat_P(LongMessage, (PGM_P)F(" ; NightInterval:"));
-    strcat(LongMessage, toText_minute(*NightInterval));
-    logToSerials(&LongMessage, true, 1); ///< Break line, No indentation needed: child class already printed it
-  }
-  */
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, getStateText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"LS\":\""));
+  strcat(LongMessage, getLastSprayPressureText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Mn\":\""));
+  strcat(LongMessage, getMinPressureText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Mx\":\""));
+  strcat(LongMessage, getMaxPressureText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
+  strcat(LongMessage, getSprayEnabledText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DM\":\""));
+  strcat(LongMessage, getDayModeText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
+  strcat(LongMessage, getDurationText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DI\":\""));
+  strcat(LongMessage, getDayIntervalText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
+  strcat(LongMessage, getNightIntervalText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 void Aeroponics_Tank::refresh_Sec()
@@ -373,7 +348,7 @@ void Aeroponics_Tank::setNightInterval(uint16_t Interval)
 
 char *Aeroponics_Tank::getNightIntervalText(bool FriendlyFormat)
 {
-   if (FriendlyFormat)
+  if (FriendlyFormat)
   {
     return toText_minute(*NightInterval);
   }

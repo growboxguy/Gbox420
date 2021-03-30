@@ -51,47 +51,25 @@ void Lights::refresh_Minute()
   checkRelay();
 }
 
+/**
+* @brief Report current state in a JSON format to the LongMessage buffer
+*/
 void Lights::report(bool FriendlyFormat)
 {
-  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
-  {
-    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, getStatusText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"CB\":\""));
-    strcat(LongMessage, getCurrentBrightnessText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"B\":\""));
-    strcat(LongMessage, getBrightnessText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
-    strcat(LongMessage, getTimerOnOffText(FriendlyFormat));
-    strcat_P(LongMessage, (PGM_P)F("\",\"On\":\""));
-    strcat(LongMessage, getOnTimeText());
-    strcat_P(LongMessage, (PGM_P)F("\",\"Of\":\""));
-    strcat(LongMessage, getOffTimeText());
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
-  }
-  /*
-  else //Print a report to the Serial console
-  {
-    Common::report();
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)F("State:"));
-    strcat(LongMessage, getStateText());
-    strcat_P(LongMessage, (PGM_P)F(" ; Brightness:"));
-    strcat(LongMessage, toText_percentage(*Brightness));
-    if (*Debug || CurrentStatus == LightStates::FADEIN || CurrentStatus == LightStates::FADEOUT)
-    {
-      strcat_P(LongMessage, (PGM_P)F(" ("));
-      strcat(LongMessage, toText_percentage(CurrentBrightness));
-      strcat_P(LongMessage, (PGM_P)F(")"));
-    }
-    strcat_P(LongMessage, (PGM_P)F(" ; LightON:"));
-    strcat(LongMessage, getOnTimeText());
-    strcat_P(LongMessage, (PGM_P)F(" ; LightOFF:"));
-    strcat(LongMessage, getOffTimeText());
-    logToSerials(&LongMessage, true, 1);
-  }
-  */
+  Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, getStatusText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"CB\":\""));
+  strcat(LongMessage, getCurrentBrightnessText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"B\":\""));
+  strcat(LongMessage, getBrightnessText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
+  strcat(LongMessage, getTimerOnOffText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"On\":\""));
+  strcat(LongMessage, getOnTimeText());
+  strcat_P(LongMessage, (PGM_P)F("\",\"Of\":\""));
+  strcat(LongMessage, getOffTimeText());
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 void Lights::checkRelay()

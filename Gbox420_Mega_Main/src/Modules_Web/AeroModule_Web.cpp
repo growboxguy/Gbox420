@@ -28,91 +28,50 @@ AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Pare
 }
 
 /**
-* @brief Report current state to the Serial console
+* @brief Report current state in a JSON format to the LongMessage buffer
 */
 void AeroModule_Web::report(bool FriendlyFormat)
 {
-  //if (FriendlyFormat) //Caller requested a JSON formatted report: Append it to the LogMessage buffer. Caller is responsible of clearing the LongMessage buffer
+  Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_onlineStatus(OnlineStatus) : toText(OnlineStatus));
+  strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroResponse1Received.Pressure) : toText(AeroResponse1Received.Pressure));
+  strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_weight(AeroResponse1Received.Weight) : toText(AeroResponse1Received.Weight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Ma\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroCommand1ToSend.MaxPressure) : toText(AeroCommand1ToSend.MaxPressure));
+  if (AeroResponse1Received.PressureTankPresent)
   {
-    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_onlineStatus(OnlineStatus) : toText(OnlineStatus));
-    strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroResponse1Received.Pressure) : toText(AeroResponse1Received.Pressure));
-    strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_weight(AeroResponse1Received.Weight) : toText(AeroResponse1Received.Weight));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Ma\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroCommand1ToSend.MaxPressure) : toText(AeroCommand1ToSend.MaxPressure));
-    if (AeroResponse1Received.PressureTankPresent)
-    {
-      strcat_P(LongMessage, (PGM_P)F("\",\"Mi\":\""));
-      strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroCommand1ToSend.MinPressure) : toText(AeroCommand1ToSend.MinPressure));
-      strcat_P(LongMessage, (PGM_P)F("\",\"AS\":\""));
-      strcat(LongMessage, FriendlyFormat ? toText_aeroTankState((AeroTankStates)AeroResponse1Received.AeroState) : toText(AeroResponse1Received.AeroState));
-    }
-    else
-    {
-      strcat_P(LongMessage, (PGM_P)F("\",\"AS\":\""));
-      strcat(LongMessage, FriendlyFormat ? toText_aeroNoTankState((AeroNoTankStates)AeroResponse1Received.AeroState) : toText(AeroResponse1Received.AeroState));
-    }
-    strcat_P(LongMessage, (PGM_P)F("\",\"LS\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroResponse1Received.LastSprayPressure) : toText(AeroResponse1Received.LastSprayPressure));
-    strcat_P(LongMessage, (PGM_P)F("\",\"PSt\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_pressurePumpState(AeroResponse1Received.PumpState) : toText((int)AeroResponse1Received.PumpState));
-    strcat_P(LongMessage, (PGM_P)F("\",\"PS\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_percentage(AeroCommand2ToSend.PumpSpeed) : toText(AeroCommand2ToSend.PumpSpeed));
-    strcat_P(LongMessage, (PGM_P)F("\",\"PT\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand2ToSend.PumpTimeOut) : toText(AeroCommand2ToSend.PumpTimeOut));
-    strcat_P(LongMessage, (PGM_P)F("\",\"PP\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand2ToSend.PumpPrimingTime) : toText(AeroCommand2ToSend.PumpPrimingTime));
-    strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_enabledDisabled(AeroResponse1Received.SprayEnabled) : toText(AeroResponse1Received.SprayEnabled));
-    strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand1ToSend.Duration) : toText(AeroCommand1ToSend.Duration));
-    strcat_P(LongMessage, (PGM_P)F("\",\"DI\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand1ToSend.DayInterval) : toText(AeroCommand1ToSend.DayInterval));
-    strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand1ToSend.NightInterval) : toText(AeroCommand1ToSend.NightInterval));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
+    strcat_P(LongMessage, (PGM_P)F("\",\"Mi\":\""));
+    strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroCommand1ToSend.MinPressure) : toText(AeroCommand1ToSend.MinPressure));
+    strcat_P(LongMessage, (PGM_P)F("\",\"AS\":\""));
+    strcat(LongMessage, FriendlyFormat ? toText_aeroTankState((AeroTankStates)AeroResponse1Received.AeroState) : toText(AeroResponse1Received.AeroState));
   }
-  /*
-  else //Print a report to the Serial console
+  else
   {
-    Common::report();
-    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)F("State:"));
-    strcat(LongMessage, toText_aeroTankState(AeroResponse1Received.AeroState));
-    strcat_P(LongMessage, (PGM_P)F(" ; Pressure:"));
-    strcat(LongMessage, toText_pressure(AeroResponse1Received.Pressure));
-    if (AeroResponse1Received.PressureTankPresent)
-    {
-      strcat_P(LongMessage, (PGM_P)F(" ["));
-      strcat(LongMessage, toText(AeroCommand1ToSend.MinPressure));
-      strcat_P(LongMessage, (PGM_P)F("/"));
-      strcat(LongMessage, toText(AeroCommand1ToSend.MaxPressure));
-      strcat_P(LongMessage, (PGM_P)F("]"));
-    }
-    strcat_P(LongMessage, (PGM_P)F(" ; LastSprayPressure:"));
-    strcat(LongMessage, toText_pressure(AeroResponse1Received.LastSprayPressure));
-    strcat_P(LongMessage, (PGM_P)F(" ; Weight:"));
-    strcat(LongMessage, toText_weight(AeroResponse1Received.Weight));
-    strcat_P(LongMessage, (PGM_P)F(" ; SprayEnabled:"));
-    strcat(LongMessage, toText_yesNo(AeroResponse1Received.SprayEnabled));
-    strcat_P(LongMessage, (PGM_P)F(" ; PumpState:"));
-    strcat(LongMessage, toText_pressurePumpState(AeroResponse1Received.PumpState));
-    strcat_P(LongMessage, (PGM_P)F(" ; PumpSpeed:"));
-    strcat(LongMessage, toText_percentage(AeroCommand2ToSend.PumpSpeed));
-    strcat_P(LongMessage, (PGM_P)F(" ; DayMode:"));
-    strcat(LongMessage, toText_yesNo(AeroCommand1ToSend.DayMode));
-    strcat_P(LongMessage, (PGM_P)F(" ; Duration:"));
-    strcat(LongMessage, toText_second(AeroCommand1ToSend.Duration));
-    strcat_P(LongMessage, (PGM_P)F(" ; DayInterval:"));
-    strcat(LongMessage, toText_minute(AeroCommand1ToSend.DayInterval));
-    strcat_P(LongMessage, (PGM_P)F(" ; NightInterval:"));
-    strcat(LongMessage, toText_minute(AeroCommand1ToSend.NightInterval));
-    logToSerials(&LongMessage, true, 1);
+    strcat_P(LongMessage, (PGM_P)F("\",\"AS\":\""));
+    strcat(LongMessage, FriendlyFormat ? toText_aeroNoTankState((AeroNoTankStates)AeroResponse1Received.AeroState) : toText(AeroResponse1Received.AeroState));
   }
-  */
+  strcat_P(LongMessage, (PGM_P)F("\",\"LS\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroResponse1Received.LastSprayPressure) : toText(AeroResponse1Received.LastSprayPressure));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PSt\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_pressurePumpState(AeroResponse1Received.PumpState) : toText((int)AeroResponse1Received.PumpState));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PS\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_percentage(AeroCommand2ToSend.PumpSpeed) : toText(AeroCommand2ToSend.PumpSpeed));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PT\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand2ToSend.PumpTimeOut) : toText(AeroCommand2ToSend.PumpTimeOut));
+  strcat_P(LongMessage, (PGM_P)F("\",\"PP\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand2ToSend.PumpPrimingTime) : toText(AeroCommand2ToSend.PumpPrimingTime));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SE\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_enabledDisabled(AeroResponse1Received.SprayEnabled) : toText(AeroResponse1Received.SprayEnabled));
+  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand1ToSend.Duration) : toText(AeroCommand1ToSend.Duration));
+  strcat_P(LongMessage, (PGM_P)F("\",\"DI\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand1ToSend.DayInterval) : toText(AeroCommand1ToSend.DayInterval));
+  strcat_P(LongMessage, (PGM_P)F("\",\"NI\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_second(AeroCommand1ToSend.NightInterval) : toText(AeroCommand1ToSend.NightInterval));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 /**

@@ -70,30 +70,6 @@ void DEVModule_Web::reportToJSON()
   strcat(LongMessage, toText(*Metric));
   strcat_P(LongMessage, (PGM_P)F("\",\"Debug\":\""));
   strcat(LongMessage, toText(*Debug));
-
-  /*  strcat_P(LongMessage, (PGM_P)F("\",\"WaterLevel\":\""));
-    strcat(LongMessage, WLev1->getLevelText());
-    strcat_P(LongMessage, (PGM_P)F("\",\"WaterTemp\":\""));
-    strcat(LongMessage, WTemp1->getTempText(false));
-    strcat_P(LongMessage, (PGM_P)F("\",\"PH\":\""));
-    strcat(LongMessage, PHSen1->getPHText(true));
-    strcat_P(LongMessage, (PGM_P)F("\",\"Pressure\":\""));
-    strcat(LongMessage, Pres1->getPressureText(true,false));    
-    strcat_P(LongMessage, (PGM_P)F("\",\"AeroInterval\":\""));
-    strcat(LongMessage, AeroNT1->getSprayIntervalText());
-    strcat_P(LongMessage, (PGM_P)F("\",\"AeroDuration\":\""));
-    strcat(LongMessage, AeroNT1->getSprayDurationText());
-    strcat_P(LongMessage, (PGM_P)F("\",\"AeroSprayPressure\":\""));
-    strcat(LongMessage, toText(AeroNT1->getLastSprayPressure()));
-    ///< strcat_P(LongMessage,(PGM_P)F("\",\"AeroInterval\":\"")); 
-    strcat(LongMessage,AeroT1 -> getSprayInterval());
-    ///< strcat_P(LongMessage,(PGM_P)F("\",\"AeroDuration\":\"")); 
-    strcat(LongMessage,AeroT1 -> getSprayDuration());
-    strcat_P(LongMessage, (PGM_P)F("\"},\"Settings\":{"));
-    strcat_P(LongMessage, (PGM_P)F("\"Metric\":\""));
-    strcat(LongMessage, toText(*Metric));
-    strcat_P(LongMessage, (PGM_P)F("\"}}")); */
-
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
