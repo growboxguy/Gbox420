@@ -4,12 +4,17 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
 { ///< constructor
   this->Parent = Parent;
   this->Pin = &DefaultSettings->Pin;
+  this->PowerPin = &DefaultSettings->PowerPin;
   pinMode(*Pin, INPUT);
+  pinMode(*PowerPin, OUTPUT);
+  digitalWrite(*PowerPin, HIGH);  //Turn on power
+  delay(50);
   AverageTDS = new movingAvg(MovingAverageDepth);
   AverageTDS->begin();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("TDSSensor ready"), true, 3);
+  digitalWrite(*PowerPin, LOW);  //Turn off power
 }
 
 /**
@@ -36,6 +41,8 @@ void TDSSensor::refresh_FiveSec()
 
 void TDSSensor::updateTDS(bool ShowRaw)
 {
+  digitalWrite(*PowerPin, HIGH);  //Turn on power
+  delay(50);
   int TDSRaw = analogRead(*Pin);
   if (ShowRaw)
   {
@@ -59,6 +66,7 @@ void TDSSensor::updateTDS(bool ShowRaw)
   }
   TDS = (float)((133.42 * pow(Voltage, 3) - 255.86 * pow(Voltage, 2) + 857.39 * Voltage) * 0.5);
   AverageTDS->reading(TDS * 10); //Reading will be parsed to integer, keep first decimal digit
+  digitalWrite(*PowerPin, LOW);  //Turn off power
 }
 
 float TDSSensor::getTDS(bool ReturnAverage)
