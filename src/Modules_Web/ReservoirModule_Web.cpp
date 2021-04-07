@@ -191,7 +191,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
   else
   {
     if (*(Parent->SerialReportWireless))
-      logToSerials(F("; No response"), true, 0);
+      logToSerials(F("; No response"), true, 1);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
       OnlineStatus = false; ///< Comment this out if you have modules that do not return any data
