@@ -76,7 +76,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     logToSerials(toText_reservoirSequenceID(ReceivedSequenceID), false, 1);
     logToSerials(F("- Sent:"), false, 1);
     logToSerials(toText_reservoirSequenceID(NextSequenceID), false, 1); ///< This is the pre-buffered response that was instantly sent when a command was received
-    logToSerials(F(". Data:"), false, 1);
+    logToSerials(F("; Data:"), false, 1);
   }
 
   bool LastMessageReached = false;

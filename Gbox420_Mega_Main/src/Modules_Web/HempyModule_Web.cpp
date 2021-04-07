@@ -327,9 +327,9 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
       ReceivedSequenceID = ((HempyCommonTemplate *)ReceivedResponse)->SequenceID;
       if (*(Parent->SerialReportWireless))
       {
-        logToSerials(F("Response:"), false, 1);
+        logToSerials(F("; Response:"), false, 1);
         logToSerials(toText_hempySequenceID(ReceivedSequenceID), false, 1);
-        logToSerials(F(". Data:"), false, 0);
+        logToSerials(F("; Data:"), false, 1);
       }
 
       switch (ReceivedSequenceID)
@@ -411,13 +411,13 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
     else
     {
       if (*(Parent->SerialReportWireless))
-        logToSerials(F("Ack received without data"), true, 1); ///< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+
+        logToSerials(F("; Ack received without data"), true, 1); ///< Indicates a communication problem - Make sure to have bypass capacitors across the 3.3V power line and ground powering the nRF24L01+
     }
   }
   else
   {
     if (*(Parent->SerialReportWireless))
-      logToSerials(F("No response"), true, 1);
+      logToSerials(F("; No response"), true, 0);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
       OnlineStatus = false; ///< Comment this out if you have modules that do not return any data

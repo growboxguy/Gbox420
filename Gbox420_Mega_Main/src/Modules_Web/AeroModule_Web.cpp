@@ -310,9 +310,9 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
       ReceivedSequenceID = ((AeroCommonTemplate *)ReceivedResponse)->SequenceID;
       if (*(Parent->SerialReportWireless))
       {
-        logToSerials(F("Response:"), false, 1);
+        logToSerials(F("; Response:"), false, 1);
         logToSerials(toText_aeroSequenceID(ReceivedSequenceID), false, 1);
-        logToSerials(F(". Data:"), false, 0);
+        logToSerials(F("; Data:"), false, 1);
       }
 
       switch (ReceivedSequenceID)
@@ -358,6 +358,10 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           AeroCommand2ToSend.DrainPressureTank = false;
           AeroCommand2ToSend.TareWeight = false;
         }
+        if (*(Parent->SerialReportWireless))
+        {
+          logToSerials(F("-"), true, 1);
+        }
         break;
       case AeroMessages::AeroReset:
         if (*(Parent->SerialReportWireless))
@@ -374,13 +378,13 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
     else
     {
       if (*(Parent->SerialReportWireless))
-        logToSerials(F("Ack received without data"), true, 1);
+        logToSerials(F("; Ack received without data"), true, 1);
     }
   }
   else
   {
     if (*(Parent->SerialReportWireless))
-      logToSerials(F("No response"), true, 1);
+      logToSerials(F("; No response"), true, 0);
     if (millis() - LastResponseReceived > WirelessReceiveTimeout)
     {
       OnlineStatus = false;

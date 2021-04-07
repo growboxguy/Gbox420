@@ -33,6 +33,9 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModu
   Pump1 = new PressurePump(F("Pump1"), this, &ModuleSettings->AeroPump1);
   Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
   AeroT1 = new Aeroponics_Tank(F("AeroT1"), this, &ModuleSettings->AeroT1, Pump1, Pres1); ///< Use this with a pressure tank
+  AeroT2 = new Aeroponics_Tank(F("AeroT2"), this, &ModuleSettings->AeroT2, Pump1, Pres1); ///< Tote 2
+  AeroT3 = new Aeroponics_Tank(F("AeroT3"), this, &ModuleSettings->AeroT3, Pump1, Pres1); ///< Tote 3
+  AeroT4 = new Aeroponics_Tank(F("AeroT4"), this, &ModuleSettings->AeroT4, Pump1, Pres1); ///< Tote 4
   Aero1Response1ToSend.PressureTankPresent = true;
 
   addToRefreshQueue_Sec(this);
@@ -77,7 +80,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     logToSerials(toText_aeroSequenceID(ReceivedSequenceID), false, 1);
     logToSerials(F("- Sent:"), false, 1);
     logToSerials(toText_aeroSequenceID(NextSequenceID), false, 1); ///< This is the pre-buffered response that was instantly sent when a command was received
-    logToSerials(F(". Data:"), false, 0);
+    logToSerials(F("; Data:"), false, 1);
   }
   bool LastMessageReached = false;
   if (ReceivedSequenceID == AeroMessages::AeroCommand2 && NextSequenceID == AeroMessages::AeroResponse2) ///< Last real command-response exchange reached
