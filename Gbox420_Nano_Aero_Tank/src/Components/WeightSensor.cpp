@@ -51,7 +51,7 @@ float WeightSensor::readWeight(bool ReturnAverage)
     Weight = Sensor->get_units();
     //if(Weight<0)
     //  {Weight = 0.0;}  ///< Zero out negative weight
-    AverageWeight->reading(Weight * 100); ///< AverageWeight is integer based to save memory, multipy by 100 to store the first two decimal digits
+    AverageWeight->reading(Weight * 100); ///< AverageWeight is integer based to save memory, multiply by 100 to store the first two decimal digits
   }
   if (ReturnAverage)
   {

@@ -58,7 +58,7 @@ void ReservoirModule::refresh_FiveSec()
 void ReservoirModule::updateResponse()
 { ///< Updates the response sent to the Main module
   ReservoirResponse1ToSend.PH = PHSen1->getPH();
-  ReservoirResponse1ToSend.TDS = TDS1->getTDS(true);
+  ReservoirResponse1ToSend.TDS = TDS1->getTDS();
   ReservoirResponse1ToSend.Weight = Weight1->getWeight();
   ReservoirResponse1ToSend.WaterTemperature = WTemp1->getTemp();
   ReservoirResponse1ToSend.AirTemperature = DHT1->getTemp();
