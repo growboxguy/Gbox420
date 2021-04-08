@@ -35,13 +35,16 @@ unlink ./src/Modules_Web/ReservoirModule_Web.h
 unlink ./src/Modules_Web/ReservoirModule_Web.cpp
 unlink ./src/Modules_Web/MainModule_Web.h 
 unlink ./src/Modules_Web/MainModule_Web.cpp
+unlink ./src/Modules_Web/DevModule_Web.h 
+unlink ./src/Modules_Web/DevModule_Web.cpp
 unlink ./src/Modules_Web/DEVModule_Web.h 
 unlink ./src/Modules_Web/DEVModule_Web.cpp
 
 unlink ./src/Helpers.cpp
 unlink ./src/Helpers.h
-unlink ./src/WirelessCommands_Hempy.h
 unlink ./src/WirelessCommands_Aero.h
+unlink ./src/WirelessCommands_Dev.h
+unlink ./src/WirelessCommands_Hempy.h
 unlink ./src/WirelessCommands_Reservoir.h
 
 unlink ./src/Components/420Common.h

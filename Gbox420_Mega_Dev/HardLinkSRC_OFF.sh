@@ -42,8 +42,9 @@ unlink ./src/Modules_Web/DEVModule_Web.cpp
 
 unlink ./src/Helpers.cpp
 unlink ./src/Helpers.h
-unlink ./src/WirelessCommands_Hempy.h
 unlink ./src/WirelessCommands_Aero.h
+unlink ./src/WirelessCommands_Dev.h
+unlink ./src/WirelessCommands_Hempy.h
 unlink ./src/WirelessCommands_Reservoir.h
 
 unlink ./src/Components/420Common.h

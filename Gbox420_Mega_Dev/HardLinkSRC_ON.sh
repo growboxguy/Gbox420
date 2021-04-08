@@ -7,6 +7,7 @@ ln ../HardLinkSRC_OFF.sh ./
 
 echo "Creating folders"
 mkdir ./src
+mkdir ./Webpages
 mkdir ./src/Components
 mkdir ./src/Modules_Web
 
@@ -16,6 +17,7 @@ ln ../Gbox420_Mega/SerialLog.cpp ./
 ln ../Gbox420_Mega/SerialLog.h ./
 
 ln ../Gbox420_Mega/Webpages/Settings.html ./Webpages/
+ln ../Gbox420_Mega/Webpages/Logs.html ./Webpages/
 
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
