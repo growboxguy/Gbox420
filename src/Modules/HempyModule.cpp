@@ -48,13 +48,13 @@ void HempyModule::refresh_Sec()
 {
   Common::refresh_Sec();
   if (NextSequenceID != HempyMessages::HempyModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
-  {                                                       ///< If there is a package exchange in progress, but a followup command was not received within the timeout
-    NextSequenceID = HempyMessages::HempyModuleResponse1; ///< Reset back to the first response
+  { ///< If there is a package exchange in progress, but a followup command was not received within the timeout
     if (*Debug)
     {
       logToSerials(F("Message timeout"), true, 0);
     }
-    updateAckData();
+    Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+    updateAckData(HempyMessages::HempyModuleResponse1);
   }
 }
 
@@ -79,7 +79,6 @@ void HempyModule::updateResponse()
   HempyBucket2ResponseToSend.WeightWR = WeightWR2->getWeight(false);
   HempyBucket2ResponseToSend.DryWeight = Bucket2->getDryWeight();
   HempyBucket2ResponseToSend.WetWeight = Bucket2->getWetWeight();
-  updateAckData();
 }
 
 bool HempyModule::processCommand(void *ReceivedCommand)
@@ -103,6 +102,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
   switch (ReceivedSequenceID)
   {
   case HempyMessages::HempyModuleCommand1:
+    updateAckData(HempyMessages::HempyBucketResponse1); // update the next Message that will be copied to the buffer
     setDebug(((HempyModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((HempyModuleCommand *)ReceivedCommand)->Metric);
     setSerialReportingFrequency(((HempyModuleCommand *)ReceivedCommand)->SerialReportFrequency);
@@ -111,7 +111,6 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     setSerialReportJSONFriendly(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
     setSerialReportJSON(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON);
     setSerialReportWireless(((HempyModuleCommand *)ReceivedCommand)->SerialReportWireless);
-    NextSequenceID = HempyMessages::HempyBucketResponse1; // update the next Message that will be copied to the buffer
     if (*SerialReportWireless)
     {
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
@@ -126,6 +125,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     }
     break;
   case HempyMessages::HempyBucketCommand1:
+    updateAckData(HempyMessages::HempyBucketResponse2); // update the next Message that will be copied to the buffer
     if (((HempyBucketCommand *)ReceivedCommand)->Disable)
       Bucket1->disable();
     if (((HempyBucketCommand *)ReceivedCommand)->StartWatering)
@@ -145,7 +145,6 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket1->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
     Bucket1->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     Bucket1->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
-    NextSequenceID = HempyMessages::HempyBucketResponse2; // update the next Message that will be copied to the buffer
     if (*SerialReportWireless)
     {
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
@@ -164,6 +163,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     }
     break;
   case HempyMessages::HempyBucketCommand2:
+    updateAckData(HempyMessages::HempyReset); // update the next Message that will be copied to the buffer
     if (((HempyBucketCommand *)ReceivedCommand)->Disable)
       Bucket2->disable();
     if (((HempyBucketCommand *)ReceivedCommand)->StartWatering)
@@ -183,7 +183,6 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket2->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
     Bucket2->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     Bucket2->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
-    NextSequenceID = HempyMessages::HempyReset; // update the next Message that will be copied to the buffer
     if (*SerialReportWireless)
     {
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
@@ -201,8 +200,8 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
     }
     break;
-  case HempyMessages::HempyReset:                         ///< Used to get all Responses that do not have a corresponding Command
-    NextSequenceID = HempyMessages::HempyModuleResponse1; ///< Load the first response for the next message exchange
+  case HempyMessages::HempyReset:                       ///< Used to get all Responses that do not have a corresponding Command
+    updateAckData(HempyMessages::HempyModuleResponse1); ///< Load the first response for the next message exchange
     if (*SerialReportWireless)
     {
       logToSerials(F("-"), true, 1);
@@ -217,14 +216,14 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Wireless.flush_rx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     break;
   }
-  updateAckData();              ///< Loads the next ACK that will be sent out
   saveSettings(ModuleSettings); ///< Store changes in EEPROM
   return LastMessageReached;
 }
 
-void HempyModule::updateAckData()
+void HempyModule::updateAckData(HempyMessages NewSequenceID)
 {
-  Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  //Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  NextSequenceID = NewSequenceID; // update the next Message that will be copied to the buffer
 
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer
   {

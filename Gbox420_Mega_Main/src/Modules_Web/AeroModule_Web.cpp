@@ -279,7 +279,6 @@ void AeroModule_Web::sendMessages()
   sendCommand(&AeroModuleCommand1ToSend); ///< Command - Response exchange
   sendCommand(&AeroCommand1ToSend);
   sendCommand(&AeroCommand2ToSend); ///< Command - Response exchange
-  sendCommand(&AeroResetToSend);    ///< special Command, resets communication to first message
   if (*(Parent->SerialReportWireless) && *Debug)
   {
     logToSerials(F("Message exchange finished"), true, 1);

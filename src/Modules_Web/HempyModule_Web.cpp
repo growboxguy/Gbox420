@@ -299,7 +299,6 @@ void HempyModule_Web::sendMessages()
   sendCommand(&HempyModuleCommand1ToSend); ///< Command - Response exchange
   sendCommand(&HempyBucketCommand1ToSend); ///< Command - Response exchange
   sendCommand(&HempyBucketCommand2ToSend); ///< Command - Response exchange
-  sendCommand(&HempyResetToSend);          ///< special Command, resets communication to first message
   if (*(Parent->SerialReportWireless) && *Debug)
   {
     logToSerials(F("Message exchange finished"), true, 1);

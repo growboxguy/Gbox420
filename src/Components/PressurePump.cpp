@@ -56,7 +56,7 @@ void PressurePump::updateState(PressurePumpStates NewState) ///< Actualize the c
   {
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat_P(LongMessage, (PGM_P)Name);
-    strcat_P(LongMessage, (PGM_P)F(" state"));
+    strcat_P(LongMessage, (PGM_P)F(" state: "));
     strcat(LongMessage, toText_pressurePumpState(State));
     strcat_P(LongMessage, (PGM_P)F(" -> "));
     strcat(LongMessage, toText_pressurePumpState(NewState));

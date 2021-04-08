@@ -49,9 +49,12 @@ void AeroModule::refresh_Sec()
   Common::refresh_Sec();
   if (NextSequenceID != AeroMessages::AeroModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   {                                                     ///< If there is a package exchange in progress
-    NextSequenceID = AeroMessages::AeroModuleResponse1; ///< Reset back to the first response
-    //logToSerials(F("Message timeout"), true, 0);
-    updateAckData();
+    if (*Debug)
+    {
+      logToSerials(F("Message timeout"), true, 0);
+    }
+    Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+    updateAckData(AeroMessages::AeroModuleResponse1);
   }
 }
 
@@ -88,6 +91,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
   switch (ReceivedSequenceID)
   {
   case AeroMessages::AeroModuleCommand1:
+    updateAckData(AeroMessages::AeroResponse1); // update the next Message that will be copied to the buffer
     setDebug(((AeroModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((AeroModuleCommand *)ReceivedCommand)->Metric);
     setSerialReportingFrequency(((AeroModuleCommand *)ReceivedCommand)->SerialReportFrequency);
@@ -95,8 +99,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     setSerialReportMemory(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemory);
     setSerialReportJSONFriendly(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
     setSerialReportJSON(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSON);
-    setSerialReportWireless(((AeroModuleCommand *)ReceivedCommand)->SerialReportWireless);
-    NextSequenceID = AeroMessages::AeroResponse1; // update the next Message that will be copied to the buffer
+    setSerialReportWireless(((AeroModuleCommand *)ReceivedCommand)->SerialReportWireless);    
     if (*SerialReportWireless)
     {
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
@@ -111,7 +114,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     }
     break;
   case AeroMessages::AeroCommand1:
-    NextSequenceID = AeroMessages::AeroResponse2; // update the next Message that will be copied to the buffer
+    updateAckData(AeroMessages::AeroResponse2); // update the next Message that will be copied to the buffer
     if (((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled)
       AeroT1->setSprayOnOff(true);
     if (((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled)
@@ -141,7 +144,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     }
     break;
   case AeroMessages::AeroCommand2:
-    NextSequenceID = AeroMessages::AeroReset; // update the next Message that will be copied to the buffer
+    updateAckData(AeroMessages::AeroReset); // update the next Message that will be copied to the buffer
     if (((AeroCommand_P2 *)ReceivedCommand)->RefillPressureTank)
       AeroT1->refillTank();
     if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight)
@@ -172,7 +175,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     }
     break;
   case AeroMessages::AeroReset:                         ///< Used to get all Responses that do not have a corresponding Command
-    NextSequenceID = AeroMessages::AeroModuleResponse1; ///< Load the first response for the next message exchange
+    updateAckData(AeroMessages::AeroModuleResponse1); ///< Load the first response for the next message exchange
     if (*SerialReportWireless)
     {
       logToSerials(F("-"), true, 1);
@@ -187,7 +190,6 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     Wireless.flush_rx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     break;
   }
-  updateAckData();
   saveSettings(ModuleSettings);
   return LastMessageReached;
 }
@@ -202,10 +204,11 @@ void AeroModule::updateResponse()
   Aero1Response1ToSend.Weight = Weight1->getWeight();
 }
 
-void AeroModule::updateAckData()
+void AeroModule::updateAckData(AeroMessages NewSequenceID)
 {
-  Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
-
+  //Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  NextSequenceID = NewSequenceID; // update the next Message that will be copied to the buffer
+  
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer
   {
   case AeroMessages::AeroModuleResponse1:

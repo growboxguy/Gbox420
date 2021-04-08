@@ -46,7 +46,7 @@ public:
   //void refresh_Minute();
   bool processCommand(void *Command);
   void updateResponse();
-  void updateAckData();
+  void updateAckData(ReservoirMessages NewSequenceID);
 
 private:
   unsigned long LastMessageReceived = 0; //When was the last wireless message received

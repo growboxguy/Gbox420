@@ -41,7 +41,7 @@ public:
   //void refresh_Minute();
   bool processCommand(void *Command);
   void updateResponse();
-  void updateAckData();
+  void updateAckData(HempyMessages NewSequenceID);
 
 private:
   uint32_t LastMessageReceived = 0; //When was the last wireless message received

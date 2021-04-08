@@ -42,9 +42,12 @@ void ReservoirModule::refresh_Sec()
   Common::refresh_Sec();
   if (NextSequenceID != ReservoirMessages::ReservoirModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   {                                                               ///< If there is a package exchange in progress
-    NextSequenceID = ReservoirMessages::ReservoirModuleResponse1; ///< Reset back to the first response
-    logToSerials(F("Message timeout"), true, 0);
-    updateAckData();
+    if (*Debug)
+    {
+      logToSerials(F("Message timeout"), true, 0);
+    }
+    Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+    updateAckData(ReservoirMessages::ReservoirModuleResponse1);
   }
 }
 
@@ -63,7 +66,6 @@ void ReservoirModule::updateResponse()
   ReservoirResponse1ToSend.WaterTemperature = WTemp1->getTemp();
   ReservoirResponse1ToSend.AirTemperature = DHT1->getTemp();
   ReservoirResponse1ToSend.Humidity = DHT1->getHumidity();
-  updateAckData();
 }
 
 bool ReservoirModule::processCommand(void *ReceivedCommand)
@@ -88,6 +90,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
   switch (ReceivedSequenceID)
   {
   case ReservoirMessages::ReservoirModuleCommand1:
+    updateAckData(ReservoirMessages::ReservoirResponse1); // update the next Message that will be copied to the buffer
     setDebug(((ReservoirModuleCommand *)ReceivedCommand)->Debug);
     setMetric(((ReservoirModuleCommand *)ReceivedCommand)->Metric);
     setSerialReportingFrequency(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportFrequency);
@@ -96,7 +99,6 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     setSerialReportJSONFriendly(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
     setSerialReportJSON(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSON);
     setSerialReportWireless(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportWireless);
-    NextSequenceID = ReservoirMessages::ReservoirResponse1; // update the next Message that will be copied to the buffer
     if (*SerialReportWireless)
     {
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Time, false, 1);
@@ -111,16 +113,16 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     }
     break;
   case ReservoirMessages::ReservoirCommand1:
+    updateAckData(ReservoirMessages::ReservoirReset); // update the next Message that will be copied to the buffer
     if (((ReservoirCommand *)ReceivedCommand)->TareWeight)
       Weight1->triggerTare();
-    NextSequenceID = ReservoirMessages::ReservoirReset; // update the next Message that will be copied to the buffer
     if (*SerialReportWireless)
     {
       logToSerials(((ReservoirCommand *)ReceivedCommand)->TareWeight, true, 1);
     }
     break;
-  case ReservoirMessages::ReservoirReset:                         ///< Used to get all Responses that do not have a corresponding Command
-    NextSequenceID = ReservoirMessages::ReservoirModuleResponse1; ///< Load the first response for the next message exchange
+  case ReservoirMessages::ReservoirReset:                       ///< Used to get all Responses that do not have a corresponding Command
+    updateAckData(ReservoirMessages::ReservoirModuleResponse1); ///< Load the first response for the next message exchange
     if (*SerialReportWireless)
     {
       logToSerials(F("-"), true, 1);
@@ -135,14 +137,14 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     Wireless.flush_rx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     break;
   }
-  updateAckData();              ///< Loads the next ACK that will be sent out
   saveSettings(ModuleSettings); ///< Store changes in EEPROM
   return LastMessageReached;
 }
 
-void ReservoirModule::updateAckData()
+void ReservoirModule::updateAckData(ReservoirMessages NewSequenceID)
 {
-  Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  //Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+  NextSequenceID = NewSequenceID; // update the next Message that will be copied to the buffer
 
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer
   {

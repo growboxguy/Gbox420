@@ -45,7 +45,7 @@ void setup()
     Serial.println(F("Setting up the wireless receiver..."));
     Wireless.begin();
     Wireless.setDataRate(RF24_250KBPS);
-    Wireless.setCRCLength(RF24_CRC_16);    ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
+    Wireless.setCRCLength(RF24_CRC_16);   ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
     Wireless.setPALevel(RF24_PA_MAX);     //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
     Wireless.setPayloadSize(PayloadSize); ///< Set the number of bytes in the payload
     Wireless.openReadingPipe(1, WirelessChannel);
@@ -143,8 +143,12 @@ void loop()
     if (NextSequenceID != HempyMessage::Module1Response && millis() - LastMessageSent >= WirelessMessageTimeout)
     {                                                   ///< If there is a package exchange in progress
         NextSequenceID = HempyMessage::Module1Response; ///< Reset back to the first response
-        Serial.println(F("Message timeout"));
-        updateAckData();
+        if (*Debug)
+        {
+            logToSerials(F("Message timeout"), true, 0);
+        }
+        Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+        updateAckData()
     }
 }
 

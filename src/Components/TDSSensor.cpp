@@ -4,12 +4,15 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
 { ///< constructor
   this->Parent = Parent;
   this->Pin = &DefaultSettings->Pin;
+  this->PowerPin = &DefaultSettings->PowerPin;
   pinMode(*Pin, INPUT);
-  AverageTDS = new movingAvg(MovingAverageDepth);
-  AverageTDS->begin();
+  pinMode(*PowerPin, OUTPUT);
+  digitalWrite(*PowerPin, HIGH); //Turn on power
+  delay(50);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_FiveSec(this);
   logToSerials(F("TDSSensor ready"), true, 3);
+  digitalWrite(*PowerPin, LOW); //Turn off power
 }
 
 /**
@@ -19,7 +22,7 @@ void TDSSensor::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
   strcat_P(LongMessage, (PGM_P)F("\"T\":\""));
-  strcat(LongMessage, getTDSText(false, FriendlyFormat));
+  strcat(LongMessage, getTDSText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
@@ -36,6 +39,8 @@ void TDSSensor::refresh_FiveSec()
 
 void TDSSensor::updateTDS(bool ShowRaw)
 {
+  digitalWrite(*PowerPin, HIGH); //Turn on power
+  delay(50);
   int TDSRaw = analogRead(*Pin);
   if (ShowRaw)
   {
@@ -58,21 +63,18 @@ void TDSSensor::updateTDS(bool ShowRaw)
     }
   }
   TDS = (float)((133.42 * pow(Voltage, 3) - 255.86 * pow(Voltage, 2) + 857.39 * Voltage) * 0.5);
-  AverageTDS->reading(TDS * 10); //Reading will be parsed to integer, keep first decimal digit
+  digitalWrite(*PowerPin, LOW); //Turn off power
 }
 
-float TDSSensor::getTDS(bool ReturnAverage)
+float TDSSensor::getTDS()
 {
-  if (ReturnAverage)
-    return AverageTDS->getAvg() / 10.0;
-  else
-    return TDS;
+  return TDS;
 }
 
-char *TDSSensor::getTDSText(bool ReturnAverage, bool FriendlyFormat)
+char *TDSSensor::getTDSText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
-    return toText_TDS(getTDS(ReturnAverage));
+    return toText_TDS(getTDS());
   else
-    return toText(getTDS(ReturnAverage));
+    return toText(getTDS());
 }

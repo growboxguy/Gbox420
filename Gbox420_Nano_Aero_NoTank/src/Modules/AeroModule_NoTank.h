@@ -37,7 +37,7 @@ public:
   void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
   bool processCommand(void *Command);
   void updateResponse();
-  void updateAckData();
+  void updateAckData(AeroMessages NewSequenceID);
 
 private:
   unsigned long LastMessageReceived = 0; //When was the last wireless message received
