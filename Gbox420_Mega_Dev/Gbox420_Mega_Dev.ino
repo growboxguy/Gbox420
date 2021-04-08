@@ -1,5 +1,5 @@
 /*! \file 
- *  \brief     Main module for Mega2560 - Grow tent monitoring and controlling sketch.
+ *  \brief     Dev module for Arduino Mega2560 - Grow tent monitoring and controlling sketch.
  *  \details   To change the default pin layout / startup settings navigate to: Settings.h
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
  *  \version   4.20
@@ -21,7 +21,7 @@
 #include "StaticThreadController.h"         // Grouping threads
 #include "SerialLog.h"                      // Logging to the Serial console and to ESP-link's console
 #include "Settings.h"                       // EEPROM stored settings for every component
-#include "src/Modules_Web/MainModule_Web.h" // Represents a complete box with all feautres
+#include "src/Modules_Web/DevModule_Web.h"  // Represents a complete box with all feautres
 #include "SPI.h"                            // allows you to communicate with SPI devices, with the Arduino as the master device
 #include "RF24.h"                           // https://github.com/maniacbug/RF24
 
@@ -41,7 +41,7 @@ ELClientMqtt MqttAPI(&ESPLink);           ///< ESP-link - MQTT protocol for send
 Settings *ModuleSettings;                 ///< This object will store the settings loaded from the EEPROM. Persistent between reboots.
 bool *Debug;                              ///< True - Turns on extra debug messages on the Serial Output
 bool *Metric;                             ///< True - Use metric units, False - Use imperial units
-MainModule *Main1;                        ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
+DevModule_Web *DevModule_Web1;                        ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///< Wireless communication with Modules over nRF24L01+
 
@@ -58,7 +58,7 @@ void setup()
   pinMode(LED_BUILTIN, OUTPUT);                         ///< onboard LED - Heartbeat every second to confirm code is running
   printf_begin();                                       ///< Needed to print wireless status to Serial
   logToSerials(F(""), true, 0);                         ///< New line
-  logToSerials(F("Main module initializing"), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
+  logToSerials(F("Dev module initializing"), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                  ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                    ///< fix watchdog not loading sketch after a reset error on Mega2560
 
@@ -73,7 +73,7 @@ void setup()
   resetWebServer();                  ///< reset the WebServer
   setSyncProvider(getNtpTime);       ///< Points to method for updating time from NTP server
   setSyncInterval(86400);            ///< Sync time every day
-  if ((ModuleSettings->Main1).ReportToMQTT)
+  if ((ModuleSettings->DevModule_Web1).ReportToMQTT)
   {
     setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
   }
@@ -108,8 +108,8 @@ void setup()
   logToSerials(F("done"), true, 3);
 
   // Create the Module objects
-  logToSerials(F("Creating main module"), true, 0);
-  Main1 = new MainModule(F("Main1"), &ModuleSettings->Main1, &Wireless); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  logToSerials(F("Creating Dev module"), true, 0);
+  DevModule_Web1 = new DevModule_Web(F("Dev1"), &ModuleSettings->DevModule_Web1, &Wireless); ///< This is the dev object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   //   sendEmailAlert(F("Grow%20box%20(re)started"));
   logToSerials(F("Setup ready, starting loops:"), true, 0);
@@ -131,19 +131,19 @@ void runSec()
 {
   wdt_reset();     ///< reset watchdog timeout
   HeartBeat();     ///< Blinks built-in led
-  Main1->runSec(); ///< Calls the runSec() method in GrowBox.cpp
+  DevModule_Web1->runSec(); ///< Calls the runSec() method in GrowBox.cpp
 }
 
 void runFiveSec()
 {
   wdt_reset();
-  Main1->runFiveSec();
+  DevModule_Web1->runFiveSec();
 }
 
 void runMinute()
 {
   wdt_reset();
-  Main1->runMinute();
+  DevModule_Web1->runMinute();
   getWirelessStatus();
 }
 
@@ -248,8 +248,8 @@ void mqttReceived(void *response)
   mqttTopic.remove(0, MqttSubTopicLength); //Cut the known command topic from the arrived topic
   mqttTopic.toCharArray(command, MaxShotTextLength);
   mqttData.toCharArray(data, MaxShotTextLength);
-  Main1->commandEventTrigger(command, data);
-  Main1->reportToMQTTTrigger(true); //send out a fresh report
+  DevModule_Web1->commandEventTrigger(command, data);
+  DevModule_Web1->reportToMQTTTrigger(true); //send out a fresh report
 }
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress
@@ -290,7 +290,7 @@ time_t getNtpTime()
 */
 void loadCallback(__attribute__((unused)) char *Url)
 {
-  Main1->websiteLoadEventTrigger(Url); //Runs through all components that are subscribed to this event
+  DevModule_Web1->websiteLoadEventTrigger(Url); //Runs through all components that are subscribed to this event
 }
 
 /**
@@ -299,7 +299,7 @@ void loadCallback(__attribute__((unused)) char *Url)
 */
 void refreshCallback(__attribute__((unused)) char *Url)
 {
-  Main1->websiteRefreshEventTrigger(Url);
+  DevModule_Web1->websiteRefreshEventTrigger(Url);
 }
 
 /**
@@ -318,7 +318,7 @@ void buttonCallback(char *Button)
   }
   else
   {
-    Main1->commandEventTrigger(Button, NULL);
+    DevModule_Web1->commandEventTrigger(Button, NULL);
   }
   saveSettings(ModuleSettings);
 }
@@ -333,7 +333,7 @@ void fieldCallback(char *Field)
   {
     logToSerials(F("ESP field:"), false, 0);
   }
-  Main1->commandEventTrigger(Field, WebServer.getArgString());
+  DevModule_Web1->commandEventTrigger(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
 }
 

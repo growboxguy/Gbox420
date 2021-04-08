@@ -108,7 +108,7 @@ void setup()
   logToSerials(F("done"), true, 3);
 
   // Create the Module objects
-  logToSerials(F("Creating main module"), true, 0);
+  logToSerials(F("Creating Main module"), true, 0);
   Main1 = new MainModule(F("Main1"), &ModuleSettings->Main1, &Wireless); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   //   sendEmailAlert(F("Grow%20box%20(re)started"));

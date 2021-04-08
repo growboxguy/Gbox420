@@ -31,7 +31,7 @@ static const uint8_t WirelessCSNPin = 49;             ///< nRF24l01+ wireless tr
 static const uint8_t WirelessCEPin = 53;              ///< nRF24l01+ wireless transmitter CE pin
 static const uint8_t WirelessDelay = 8;               ///< How long to wait between each retry (250ms increments), Max 15. 0 means 250us, 15 means 4000us,
 static const uint8_t WirelessRetry = 10;              ///< How many retries before giving up, max 15
-static const uint8_t WirelessPayloadSize = 32;        ///< Size of the wireless packages exchanged with the Main module. Max 32 bytes are supported on nRF24L01+
+static const uint8_t WirelessPayloadSize = 32;        ///< Size of the wireless packages exchanged. Max 32 bytes are supported on nRF24L01+
 static const uint16_t WirelessMessageTimeout = 500;   ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
 static const uint16_t WirelessReceiveTimeout = 65000; ///< (ms) Consider a module offline after this timeout. Should be a few seconds longer then the WirelessReceiveTimeout configured on the Modules
 
@@ -49,30 +49,6 @@ typedef struct
   char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/"};          ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
   char MqttLwtMessage[MaxWordLength] = {"Gbox420 Offline"};        ///< this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the MQTT client unexpectedly goes offline
 
-  // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
-  struct AeroModuleSettings ///< AeroModule default settings
-  {
-    AeroModuleSettings(bool PressureTankPresent = false, float Duration = 0.0, uint16_t DayInterval = 0, uint16_t NightInterval = 0, uint8_t PumpSpeed = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, float MaxPressure = 0.0, float MinPressure = 0.0) : PressureTankPresent(PressureTankPresent), Duration(Duration), DayInterval(DayInterval), NightInterval(NightInterval), PumpSpeed(PumpSpeed), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), MaxPressure(MaxPressure), MinPressure(MinPressure) {}
-    bool PressureTankPresent; ///< Is there a pressure tank connected or not
-    float Duration;           ///< Spray length in seconds (Actual duration is ~0.5sec longer due to thread + solenoid delay)
-    uint16_t DayInterval;     ///< Spray every X minutes - When the lights are ON
-    uint16_t NightInterval;   ///< Spray every X minutes - When the lights are OFF
-    uint8_t PumpSpeed;        ///< Pump duty cycle to adjust motor speed
-    uint16_t PumpTimeOut;     ///< (Sec) Max pump run time
-    uint16_t PrimingTime;     ///< (Sec) For how long to keep the bypass solenoid on when starting the pump - Removes air bubbles from the lines
-    float MaxPressure;        ///< Turn off pump above this pressure
-    float MinPressure;        ///< Turn on pump below this pressure
-  };
-  struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .Duration = 3.0, .DayInterval = 6, .NightInterval = 10, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
-
-  struct AirPumpSettings ///< AirPump default settings
-  {
-    AirPumpSettings(uint8_t Pin = 0, bool State = false) : Pin(Pin), State(State) {}
-    uint8_t Pin; ///< Relay pin controlling AC power to the air pump
-    bool State;  ///< true - ON, false - OFF
-  };
-  struct AirPumpSettings APump1 = {.Pin = 23, .State = true};
-
   struct DHTSensorSettings ///< DHTSensor default settings
   {
     DHTSensorSettings(uint8_t Pin = 0, uint8_t Type = 0) : Pin(Pin), Type(Type) {}
@@ -81,33 +57,9 @@ typedef struct
   };
   struct DHTSensorSettings DHT1 = {.Pin = 3, .Type = 22};
 
-  struct FanSettings ///< Fan default settings
+  struct DevModule_WebSettings ///< Dev module default settings
   {
-    FanSettings(uint8_t OnOffPin = 0, uint8_t SpeedPin = 0) : OnOffPin(OnOffPin), SpeedPin(SpeedPin) {}
-    uint8_t OnOffPin;       ///< Relay pin controlling AC power
-    uint8_t SpeedPin;       ///< Relay pin for speed selection
-    bool State = true;      ///< true - ON, false - OFF
-    bool HighSpeed = false; ///< true - High speed, false - Low speed
-  };
-  struct FanSettings IFan = {.OnOffPin = 25, .SpeedPin = 26};
-  struct FanSettings EFan = {.OnOffPin = 27, .SpeedPin = 28};
-
-  // PWM adjusted AC signal - Need to move this to a dedicated module, Mega already uses interrupts to talk to ESP-link and it messes with counting the phase zero crossings
-  struct Fan_PWMSettings ///< Fan default settings
-  {
-    Fan_PWMSettings(uint8_t ZeroCrossingPin = 0, uint8_t PWMPin = 0, bool State = false, uint8_t MinSpeed = 0, uint8_t Speed = 0) : ZeroCrossingPin(ZeroCrossingPin), PWMPin(PWMPin), State(State), MinSpeed(MinSpeed), Speed(Speed) {}
-    uint8_t ZeroCrossingPin; ///< On Arduino Mega2560 and Nano this has to be D2 pin
-    uint8_t PWMPin;          ///< PWM capable digital pin
-    bool State = true;       //ON or OFF
-    uint8_t MinSpeed;        //Limit the lowest output (%)
-    uint8_t Speed;           //Speed between 0-100 (%)  (Real output mapped between MinSpeed - 100)
-  };
-  struct Fan_PWMSettings FanI = {.ZeroCrossingPin = 2, .PWMPin = 9, .State = true, .MinSpeed = 35, .Speed = 80};
-  struct Fan_PWMSettings FanE = {.ZeroCrossingPin = 2, .PWMPin = 10, .State = true, .MinSpeed = 35, .Speed = 80};
-
-  struct MainModuleSettings ///< MainModule default settings
-  {
-    MainModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSON = true, bool SerialReportJSONFriendly = true, bool SerialReportWireless = true, bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMQTT = false, uint16_t MQTTReportFrequency = 0) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSON(SerialReportJSON), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportWireless(SerialReportWireless), ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMQTT(ReportToMQTT), MQTTReportFrequency(MQTTReportFrequency) {}
+    DevModule_WebSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSON = true, bool SerialReportJSONFriendly = true, bool SerialReportWireless = true, bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMQTT = false, uint16_t MQTTReportFrequency = 0) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSON(SerialReportJSON), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportWireless(SerialReportWireless), ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMQTT(ReportToMQTT), MQTTReportFrequency(MQTTReportFrequency) {}
     uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
     bool SerialReportDate;             ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory;           ///< Enable/disable reporting the remaining free memory to the Serial output
@@ -119,60 +71,7 @@ typedef struct
     bool ReportToMQTT;                 ///< Enable/disable reporting sensor readings to an MQTT broker
     uint16_t MQTTReportFrequency;      ///< How often to report to MQTT. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
   };
-  struct MainModuleSettings Main1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless=true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportFrequency = 5};
-
-  struct HempyModuleSettings ///< Hempy default settings
-  {
-    HempyModuleSettings(float EvaporationTarget_B1 = 0.0, float OverflowTarget_B1 = 0.0, float WasteLimit_B1 = 0.0, uint8_t PumpSpeed_B1 = 0, uint16_t PumpTimeOut_B1 = 0, uint16_t DrainWaitTime_B1 = 0.0, float EvaporationTarget_B2 = 0.0, float OverflowTarget_B2 = 0.0, float WasteLimit_B2 = 0.0, uint8_t PumpSpeed_B2 = 0, uint16_t PumpTimeOut_B2 = 0, uint16_t DrainWaitTime_B2 = 0.0) : EvaporationTarget_B1(EvaporationTarget_B1), OverflowTarget_B1(OverflowTarget_B1), WasteLimit_B1(WasteLimit_B1), PumpSpeed_B1(PumpSpeed_B1), PumpTimeOut_B1(PumpTimeOut_B1), DrainWaitTime_B1(DrainWaitTime_B1), EvaporationTarget_B2(EvaporationTarget_B2), OverflowTarget_B2(OverflowTarget_B2), WasteLimit_B2(WasteLimit_B2), PumpSpeed_B2(PumpSpeed_B2), PumpTimeOut_B2(PumpTimeOut_B2), DrainWaitTime_B2(DrainWaitTime_B2) {}
-    float EvaporationTarget_B1; ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
-    float OverflowTarget_B1;    ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
-    float WasteLimit_B1;        ///< Waste reservoir full weight -> Pump gets disabled if reached
-    uint8_t PumpSpeed_B1;       ///< Pump duty cycle to adjust motor speed
-    uint16_t PumpTimeOut_B1;    ///< Waste reservoir full weight -> Pump gets disabled if reached
-    uint16_t DrainWaitTime_B1;  ///< (sec) How long to wait after watering for the water to drain
-    float EvaporationTarget_B2; ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
-    float OverflowTarget_B2;    ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
-    float WasteLimit_B2;        ///< Waste reservoir full weight -> Pump gets disabled if reached
-    uint8_t PumpSpeed_B2;       ///< Pump duty cycle to adjust motor speed
-    uint16_t PumpTimeOut_B2;    ///< Waste reservoir full weight -> Pump gets disabled if reached
-    uint16_t DrainWaitTime_B2;  ///< (sec) How long to wait after watering for the water to drain
-  };
-  struct HempyModuleSettings HempyModule1 = {.EvaporationTarget_B1 = 2.0, .OverflowTarget_B1 = 0.2, .WasteLimit_B1 = 13.0, .PumpSpeed_B1 = 100, .PumpTimeOut_B1 = 120, .DrainWaitTime_B1 = 300, .EvaporationTarget_B2 = 2.0, .OverflowTarget_B2 = 0.2, .WasteLimit_B2 = 13.0, .PumpSpeed_B2 = 100, .PumpTimeOut_B2 = 120, .DrainWaitTime_B2 = 300};
-
-  struct LightSensorSettings ///< LightSensor default settings
-  {
-    LightSensorSettings(uint8_t DigitalPin = 0, uint8_t AnalogPin = 0) : DigitalPin(DigitalPin), AnalogPin(AnalogPin) {}
-    uint8_t DigitalPin; ///< Light sensor D0 pin
-    uint8_t AnalogPin;  ///< Light sensor A0 pin
-  };
-  struct LightSensorSettings LtSen1 = {.DigitalPin = 4, .AnalogPin = A0};
-
-  struct LightsSettings ///< Lights default settings
-  {
-    LightsSettings(uint8_t RelayPin = 0, uint8_t DimmingPin = 0, uint8_t DimmingLimit = 0, uint8_t DimmingDuration = 0, uint8_t Brightness = 0, bool TimerEnabled = false, uint8_t OnHour = 0, uint8_t OnMinute = 0, uint8_t OffHour = 0, uint8_t OffMinute = 0, bool FadingEnabled = false, uint16_t FadingInterval = 0, uint8_t FadingIncrements = 0) : RelayPin(RelayPin), DimmingPin(DimmingPin), DimmingLimit(DimmingLimit), DimmingDuration(DimmingDuration), Brightness(Brightness), TimerEnabled(TimerEnabled), OnHour(OnHour), OnMinute(OnMinute), OffHour(OffHour), OffMinute(OffMinute), FadingEnabled(FadingEnabled), FadingInterval(FadingInterval), FadingIncrements(FadingIncrements) {}
-    uint8_t RelayPin;         ///< Relay port controlling AC power to LED driver
-    uint8_t DimmingPin;       ///< PWM based dimming, connected to optocoupler`s base over 1k ohm resistor
-    uint8_t DimmingLimit;     ///< Sets the LED dimming limit (Usually around 5%)
-    uint8_t DimmingDuration;  ///< Temporary dimming duration in Seconds
-    bool Status = false;      ///< Startup status for lights: True-ON / False-OFF
-    uint8_t Brightness;       ///< Light intensity: 0 - 100 range for controlling led driver output
-    bool TimerEnabled;        ///< Enable/Disable timer controlling lights
-    uint8_t OnHour;           ///< Light ON time - hour
-    uint8_t OnMinute;         ///< Light ON time - minute
-    uint8_t OffHour;          ///< Light OFF time - hour
-    uint8_t OffMinute;        ///< Light OFF time - minute
-    bool FadingEnabled;       ///< Enables/disables fading lights in when turning on, and fading lights out when turning off <Not exposed to Web interface>
-    uint16_t FadingInterval;  ///< (Sec) How often should the brightness change during a fade in/out <Not exposed to Web interface>
-    uint8_t FadingIncrements; ///< How much to change the brightness during a fade in/out in Percentage <Not exposed to Web interface>
-  };
-  struct LightsSettings Lt1 = {.RelayPin = 29, .DimmingPin = 11, .DimmingLimit = 16, .DimmingDuration = 10, .Brightness = 75, .TimerEnabled = true, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1}; ///< Creating a LightSettings instance, passing in the unique parameters
-  struct LightsSettings Lt2 = {.RelayPin = 24, .DimmingPin = 12, .DimmingLimit = 6, .DimmingDuration = 10, .Brightness = 55, .TimerEnabled = false, .OnHour = 4, .OnMinute = 20, .OffHour = 16, .OffMinute = 20, .FadingEnabled = false, .FadingInterval = 1, .FadingIncrements = 1}; ///< Creating a LightSettings instance, passing in the unique parameters
-
-  struct ReservoirModuleSettings ///< ReservoirModule default settings
-  {
-    //ReservoirModuleSettings() :  {}
-  };
-  struct ReservoirModuleSettings ReservoirMod1 = {};
+  struct DevModule_WebSettings DevModule_Web1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless=true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportFrequency = 5};
 
   struct SoundSettings ///< Sound default settings
   {

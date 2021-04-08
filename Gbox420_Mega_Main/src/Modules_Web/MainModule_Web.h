@@ -5,7 +5,6 @@
 
 #include "420Module_Web.h"
 #include "ELClientRest.h" ///< ESP-link - REST API
-#include "../WirelessCommands_Hempy.h"
 
 // forward declaration of classes
 class Lights;

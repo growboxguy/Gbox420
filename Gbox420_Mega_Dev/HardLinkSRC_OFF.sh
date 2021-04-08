@@ -35,6 +35,8 @@ unlink ./src/Modules_Web/ReservoirModule_Web.h
 unlink ./src/Modules_Web/ReservoirModule_Web.cpp
 unlink ./src/Modules_Web/MainModule_Web.h 
 unlink ./src/Modules_Web/MainModule_Web.cpp
+unlink ./src/Modules_Web/DevModule_Web.h 
+unlink ./src/Modules_Web/DevModule_Web.cpp
 unlink ./src/Modules_Web/DEVModule_Web.h 
 unlink ./src/Modules_Web/DEVModule_Web.cpp
 

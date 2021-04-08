@@ -11,7 +11,6 @@
 #include "SPI.h"
 #include "../../Settings.h"
 #include "../Helpers.h"
-#include "../WirelessCommands_Hempy.h"
 #include "../Components/420Module.h"
 #include "420Common_Web.h"
 ///< This class represents a complete Module_Web with all of its components
