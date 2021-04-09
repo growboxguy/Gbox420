@@ -32,7 +32,8 @@ Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments
     // DefaultSettings = EEPROMSettings; // overwrite sketch defaults with loaded settings
     memcpy(DefaultSettings, &EEPROMSettings, sizeof(Settings));
   }
-  logToSerials(F("done"), true, 3);
+  logToSerials(F("Version "), false, 3);
+  logToSerials(DefaultSettings->CompatibilityVersion, true, 1);
   return DefaultSettings;
 }
 
