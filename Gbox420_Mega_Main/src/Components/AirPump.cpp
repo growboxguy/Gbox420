@@ -43,16 +43,19 @@ void AirPump::checkStatus()
 void AirPump::TurnOff()
 {
   setState(false);
+  checkStatus();
 }
 
 void AirPump::TurnOn()
 {
   setState(true);
+  checkStatus();
 }
 
 bool AirPump::setState(bool NewState)
 {
   *State = NewState;
+  checkStatus();
   appendName(true);
   if (*State)
   {
