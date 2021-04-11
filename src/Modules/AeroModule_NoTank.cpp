@@ -142,7 +142,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     }
     break;
   case AeroMessages::AeroCommand2:
-    updateAckData(AeroMessages::AeroReset); // update the next Message that will be copied to the buffer
+    updateAckData(AeroMessages::AeroModuleResponse1); // update the next Message that will be copied to the buffer
     if (((AeroCommand_P2 *)ReceivedCommand)->PumpOn)
       AeroNT1->sprayNow(true);
     if (((AeroCommand_P2 *)ReceivedCommand)->PumpOff)

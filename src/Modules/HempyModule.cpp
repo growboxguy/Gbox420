@@ -163,7 +163,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     }
     break;
   case HempyMessages::HempyBucketCommand2:
-    updateAckData(HempyMessages::HempyReset); // update the next Message that will be copied to the buffer
+    updateAckData(HempyMessages::HempyModuleResponse1); // update the next Message that will be copied to the buffer
     if (((HempyBucketCommand *)ReceivedCommand)->Disable)
       Bucket2->disable();
     if (((HempyBucketCommand *)ReceivedCommand)->StartWatering)

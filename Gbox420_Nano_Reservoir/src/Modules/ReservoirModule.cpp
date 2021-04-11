@@ -113,7 +113,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     }
     break;
   case ReservoirMessages::ReservoirCommand1:
-    updateAckData(ReservoirMessages::ReservoirReset); // update the next Message that will be copied to the buffer
+    updateAckData(ReservoirMessages::ReservoirModuleResponse1); // update the next Message that will be copied to the buffer
     if (((ReservoirCommand *)ReceivedCommand)->TareWeight)
       Weight1->triggerTare();
     if (*SerialReportWireless)
