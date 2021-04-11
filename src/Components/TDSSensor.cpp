@@ -10,7 +10,7 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
   digitalWrite(*PowerPin, HIGH); //Turn on power
   delay(50);
   Parent->addToReportQueue(this);
-  Parent->addToRefreshQueue_FiveSec(this);
+  Parent->addToRefreshQueue_Minute(this);
   logToSerials(F("TDSSensor ready"), true, 3);
   digitalWrite(*PowerPin, LOW); //Turn off power
 }
@@ -31,9 +31,9 @@ TDSSensor::TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::
   this->WaterTempSensor1 = WaterTempSensor1;
 }
 
-void TDSSensor::refresh_FiveSec()
+void TDSSensor::refresh_Minute()
 {
-  Common::refresh_FiveSec();
+  Common::refresh_Minute();
   updateTDS(false);
 }
 

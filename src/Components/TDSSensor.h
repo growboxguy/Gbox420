@@ -9,7 +9,7 @@ class TDSSensor : virtual public Common
 public:
   TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::TDSSensorSettings *DefaultSettings);
   TDSSensor(const __FlashStringHelper *Name, Module *Parent, Settings::TDSSensorSettings *DefaultSettings, WaterTempSensor *WaterTempSensor1);
-  void refresh_FiveSec();
+  void refresh_Minute();
   void report(bool FriendlyFormat = false);
   float getTDS();
   char *getTDSText(bool FriendlyFormat = false);
