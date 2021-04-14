@@ -181,11 +181,21 @@ void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 */
 void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
-  if (*Debug)
+  if (MqttConnected)
   {
-    logToSerials(F("MQTT reporting:"), false, 2);
-    logToSerials(&(ModuleSettings->MqttPubTopic), false, 1);
-    logToSerials(JSONData, true, 0);
+    if (*Debug)
+    {
+      logToSerials(F("MQTT reporting:"), false, 2);
+      logToSerials(&(ModuleSettings->MqttPubTopic), false, 1);
+      logToSerials(JSONData, true, 0);
+    }
+    MqttAPI.publish(ModuleSettings->MqttPubTopic, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
   }
-  MqttAPI.publish(ModuleSettings->MqttPubTopic, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
+  else
+  {
+    if (*Debug)
+    {
+      logToSerials(F("MQTT broker not connected"), true, 2);
+    }
+  }
 }
