@@ -36,11 +36,11 @@
       "includeVars": false,
       "keepTime": false,
       "tags": [],
-      "targetBlank": false,
-      "title": "Google Sheets",
-      "tooltip": "Google Sheets log",
+      "targetBlank": true,
+      "title": "Node-RED",
+      "tooltip": "Node-RED dashboard",
       "type": "link",
-      "url": "https://docs.google.com/spreadsheets/d/162557mj4XdpdER_PC6Kbq_GGUgc5nV-MYzr7J0Ims4Q"
+      "url": "https://192.168.1.166:1880/endpoint/ui"
     },
     {
       "asDropdown": false,
@@ -48,11 +48,11 @@
       "includeVars": false,
       "keepTime": false,
       "tags": [],
-      "targetBlank": true,
-      "title": "Node-RED",
-      "tooltip": "Node-RED dashboard",
+      "targetBlank": false,
+      "title": "Google Sheets",
+      "tooltip": "Google Sheets log",
       "type": "link",
-      "url": "https://192.168.1.166:1880/endpoint/ui"
+      "url": "https://docs.google.com/spreadsheets/d/162557mj4XdpdER_PC6Kbq_GGUgc5nV-MYzr7J0Ims4Q"
     }
   ],
   "panels": [
@@ -234,6 +234,7 @@
       "timeFrom": null,
       "timeShift": "0h",
       "title": "Energy",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -377,6 +378,7 @@
       "timeFrom": null,
       "timeShift": "0h",
       "title": "Light brightness",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -525,6 +527,7 @@
       "timeFrom": null,
       "timeShift": "0h",
       "title": "Temperature",
+      "transparent": true,
       "type": "gauge"
     },
     {
@@ -699,6 +702,7 @@
       "timeFrom": null,
       "timeShift": "0h",
       "title": "Humidity",
+      "transparent": true,
       "type": "gauge"
     },
     {
@@ -721,11 +725,11 @@
               "legend": false,
               "tooltip": false
             },
-            "lineInterpolation": "linear",
+            "lineInterpolation": "smooth",
             "lineStyle": {
               "fill": "solid"
             },
-            "lineWidth": 4,
+            "lineWidth": 2,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -752,7 +756,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 10,
         "x": 0,
         "y": 5
@@ -952,6 +956,7 @@
       "timeFrom": null,
       "timeShift": "0h",
       "title": "Temp & Humidity",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -974,8 +979,8 @@
               "legend": false,
               "tooltip": false
             },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -1015,7 +1020,7 @@
         ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 10,
         "x": 10,
         "y": 5
@@ -1172,6 +1177,7 @@
       "timeFrom": null,
       "timeShift": "0h",
       "title": "Reservoir",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -1194,8 +1200,8 @@
               "legend": false,
               "tooltip": false
             },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -1248,285 +1254,10 @@
         ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 10,
         "x": 0,
-        "y": 13
-      },
-      "hideTimeOverride": true,
-      "id": 3,
-      "options": {
-        "graph": {},
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltipOptions": {
-          "mode": "multi"
-        }
-      },
-      "pluginVersion": "7.5.4",
-      "targets": [
-        {
-          "alias": "Bucket weight",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "kg",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Bucket weight",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_bucket2_weight"
-            }
-          ]
-        },
-        {
-          "alias": "Waste weight",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "kg",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Waste weight",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_bucket2_wasteweight"
-            }
-          ]
-        },
-        {
-          "alias": "Dry weight",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "kg",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Dry weight",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_bucket2_dryweight"
-            }
-          ]
-        },
-        {
-          "alias": "Wet weight",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "kg",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Wet weight",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_bucket2_wetweight"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": "0h",
-      "title": "Hempy bucket 2",
-      "type": "timeseries"
-    },
-    {
-      "datasource": null,
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false
-          },
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "masskg"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Dry weight"
-            },
-            "properties": [
-              {
-                "id": "custom.fillOpacity",
-                "value": 0
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Wet weight"
-            },
-            "properties": [
-              {
-                "id": "custom.fillOpacity",
-                "value": 0
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 10,
-        "x": 10,
-        "y": 13
+        "y": 14
       },
       "hideTimeOverride": true,
       "id": 2,
@@ -1724,6 +1455,283 @@
       "timeFrom": null,
       "timeShift": "0h",
       "title": "Hempy bucket 1",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "masskg"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Dry weight"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Wet weight"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 10,
+        "x": 10,
+        "y": 14
+      },
+      "hideTimeOverride": true,
+      "id": 3,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "7.5.4",
+      "targets": [
+        {
+          "alias": "Bucket weight",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "kg",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Bucket weight",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_bucket2_weight"
+            }
+          ]
+        },
+        {
+          "alias": "Waste weight",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "kg",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Waste weight",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_bucket2_wasteweight"
+            }
+          ]
+        },
+        {
+          "alias": "Dry weight",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "kg",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Dry weight",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_bucket2_dryweight"
+            }
+          ]
+        },
+        {
+          "alias": "Wet weight",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "kg",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Wet weight",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_bucket2_wetweight"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": "0h",
+      "title": "Hempy bucket 2",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -1791,7 +1799,7 @@
         "h": 3,
         "w": 5,
         "x": 0,
-        "y": 21
+        "y": 23
       },
       "hideTimeOverride": true,
       "id": 18,
@@ -1948,6 +1956,7 @@
       "timeFrom": null,
       "timeShift": "0h",
       "title": "Spray",
+      "transparent": true,
       "type": "stat"
     },
     {
@@ -1970,7 +1979,7 @@
               "legend": false,
               "tooltip": false
             },
-            "lineInterpolation": "linear",
+            "lineInterpolation": "smooth",
             "lineStyle": {
               "fill": "solid"
             },
@@ -1983,7 +1992,6 @@
             "spanNulls": true
           },
           "mappings": [],
-          "max": 8,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -2044,10 +2052,10 @@
         ]
       },
       "gridPos": {
-        "h": 10,
+        "h": 11,
         "w": 15,
         "x": 5,
-        "y": 21
+        "y": 23
       },
       "hideTimeOverride": true,
       "id": 7,
@@ -2194,11 +2202,56 @@
               "value": "gbox420_aero1_maxpressure"
             }
           ]
+        },
+        {
+          "alias": "Max pressure",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "measurement": "kg",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Weight",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_aero1_weight"
+            }
+          ]
         }
       ],
       "timeFrom": null,
       "timeShift": "0h",
       "title": "Aero pressure",
+      "transparent": true,
       "type": "timeseries"
     },
     {
@@ -2238,7 +2291,7 @@
         "h": 5,
         "w": 5,
         "x": 0,
-        "y": 24
+        "y": 26
       },
       "hideTimeOverride": true,
       "id": 5,
@@ -2347,6 +2400,7 @@
       "timeFrom": null,
       "timeShift": "0h",
       "title": "Pressure",
+      "transparent": true,
       "type": "gauge"
     },
     {
@@ -2355,10 +2409,10 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "continuous-GrYlRd"
           },
+          "decimals": 2,
           "mappings": [],
-          "max": 15,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -2378,16 +2432,18 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 2,
+        "h": 3,
         "w": 5,
         "x": 0,
-        "y": 29
+        "y": 31
       },
       "hideTimeOverride": true,
       "id": 9,
       "options": {
-        "displayMode": "lcd",
-        "orientation": "horizontal",
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -2395,8 +2451,8 @@
           "fields": "",
           "values": false
         },
-        "showUnfilled": true,
-        "text": {}
+        "text": {},
+        "textMode": "auto"
       },
       "pluginVersion": "7.5.4",
       "targets": [
@@ -2410,7 +2466,7 @@
             },
             {
               "params": [
-                "null"
+                "previous"
               ],
               "type": "fill"
             }
@@ -2446,7 +2502,8 @@
       "timeFrom": null,
       "timeShift": "0h",
       "title": "Aero tote weight",
-      "type": "bargauge"
+      "transparent": true,
+      "type": "stat"
     }
   ],
   "refresh": "10s",
@@ -2459,7 +2516,7 @@
     "list": []
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {
@@ -2479,5 +2536,5 @@
   "timezone": "",
   "title": "Gbox420",
   "uid": "x84g-i9Gz",
-  "version": 103
+  "version": 112
 }
