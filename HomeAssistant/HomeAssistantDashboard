@@ -8,7 +8,7 @@ views:
     cards:
       - type: iframe
         url: >-
-          https://growboxguy.duckdns.org:8123/api/hassio_ingress/TOpyF6QeW2rUUYsm4VJzNO6-vgmEl0mOizlrCfpUcdA/d/x84g-i9Gz/gbox420?orgId=1&refresh=10s&kiosk
+          https://growboxguy.duckdns.org:8123/api/hassio_ingress/TOpyF6QeW2rUUYsm4VJzNO6-vgmEl0mOizlrCfpUcdA/d/x84g-i9Gz/gbox420?orgId=1&refresh=10s&kiosk&from=now-2d&to=now
         aspect_ratio: 100%
   - title: Node-RED
     path: gbox420
