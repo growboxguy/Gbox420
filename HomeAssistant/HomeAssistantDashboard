@@ -3,6 +3,7 @@ views:
   - panel: true
     title: Grafana
     path: ''
+    icon: 'mdi:desktop-mac-dashboard'
     badges: []
     cards:
       - type: iframe
@@ -12,6 +13,7 @@ views:
   - title: Node-RED
     path: gbox420
     panel: true
+    icon: 'mdi:sitemap'
     badges: []
     cards:
       - type: iframe
@@ -19,6 +21,7 @@ views:
         aspect_ratio: 100%
   - path: default_view
     title: Home Assistant
+    icon: 'mdi:home-assistant'
     badges: []
     cards:
       - type: entities
@@ -167,6 +170,7 @@ views:
   - title: Google Sheets
     path: google-sheets
     panel: true
+    icon: 'mdi:google-spreadsheet'
     badges: []
     cards:
       - type: iframe
