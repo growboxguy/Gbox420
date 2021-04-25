@@ -1,0 +1,175 @@
+title: Gbox420
+views:
+  - panel: true
+    title: Grafana
+    path: ''
+    badges: []
+    cards:
+      - type: iframe
+        url: >-
+          https://growboxguy.duckdns.org:8123/api/hassio_ingress/TOpyF6QeW2rUUYsm4VJzNO6-vgmEl0mOizlrCfpUcdA/d/x84g-i9Gz/gbox420?orgId=1&refresh=10s&from=1619292193236&to=1619378593236
+        aspect_ratio: 100%
+  - title: Node-RED
+    path: gbox420
+    panel: true
+    badges: []
+    cards:
+      - type: iframe
+        url: 'https://growboxguy.duckdns.org:1880/endpoint/ui'
+        aspect_ratio: 100%
+  - path: default_view
+    title: Home Assistant
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: sensor.bitone_battery_level
+          - entity: sensor.gbox420_remote_battery_level
+          - entity: sensor.mediacenter_battery_level
+        title: Battery levels
+        state_color: true
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - entity: switch.gbox420_light1_state
+          - entity: sensor.gbox420_light1_brightness
+          - entity: switch.gbox420_light1_timer
+          - entity: sensor.gbox420_light1_ontime
+          - entity: sensor.gbox420_light1_offtime
+          - entity: sensor.gbox420_lightsensor1_daylight
+          - entity: sensor.gbox420_lightsensor1_reading
+        title: Gbox420 Light1
+        state_color: true
+        footer:
+          type: graph
+          entity: sensor.gbox420_lightsensor1_reading
+          hours_to_show: 24
+          detail: 2
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - entity: switch.gbox420_light2_state
+          - entity: sensor.gbox420_light2_brightness
+          - entity: switch.gbox420_light2_timer
+          - entity: sensor.gbox420_light2_ontime
+          - entity: sensor.gbox420_light2_offtime
+        title: Gbox420 Light2
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
+          - entity: sensor.gbox420_power1_power
+          - entity: sensor.gbox420_power1_energy
+          - entity: sensor.gbox420_power1_voltage
+          - entity: sensor.gbox420_power1_current
+        title: Power sensor
+        state_color: true
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - entity: sensor.gbox420_internal_temp
+          - entity: sensor.gbox420_internal_humidity
+          - entity: sensor.gbox420_external_temp
+          - entity: sensor.gbox420_external_humidity
+          - entity: sensor.gbox420_internal_fan
+          - entity: sensor.gbox420_exhaust_fan
+        title: Ventilation
+        state_color: true
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - entity: sensor.gbox420_reservoir_modulestate
+          - entity: switch.gbox420_airpump
+          - entity: sensor.gbox420_reservoir_weight
+          - entity: sensor.gbox420_reservoir_watertemp
+          - entity: sensor.gbox420_reservoir_ph
+          - entity: sensor.gbox420_reservoir_tds
+        title: Reservoir
+        footer:
+          type: graph
+          entity: sensor.gbox420_reservoir_weight
+          hours_to_show: 168
+        state_color: true
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - entity: sensor.gbox420_hempy_modulestate
+          - entity: sensor.gbox420_bucket1_state
+          - entity: sensor.gbox420_bucket1_weight
+          - entity: sensor.gbox420_bucket1_dryweight
+          - entity: sensor.gbox420_bucket1_wetweight
+          - entity: sensor.gbox420_bucket1_nextwatering
+          - entity: sensor.gbox420_bucket1_evaporationtarget
+          - entity: sensor.gbox420_bucket1_overflowtarget
+          - entity: sensor.gbox420_bucket1_pumpstate
+          - entity: sensor.gbox420_bucket1_pumpspeed
+          - entity: sensor.gbox420_bucket1_pumptimeout
+          - entity: sensor.gbox420_bucket1_draintime
+          - entity: sensor.gbox420_bucket1_wasteweight
+          - entity: sensor.gbox420_bucket1_wastelimit
+          - entity: sensor.gbox420_bucket1_wasteremaining
+        title: Hempy bucket 1
+        footer:
+          type: graph
+          entity: sensor.gbox420_bucket1_weight
+          hours_to_show: 168
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
+          - entity: sensor.gbox420_hempy_modulestate
+          - entity: sensor.gbox420_bucket2_state
+          - entity: sensor.gbox420_bucket2_weight
+          - entity: sensor.gbox420_bucket2_dryweight
+          - entity: sensor.gbox420_bucket2_wetweight
+          - entity: sensor.gbox420_bucket2_nextwatering
+          - entity: sensor.gbox420_bucket2_evaporationtarget
+          - entity: sensor.gbox420_bucket2_overflowtarget
+          - entity: sensor.gbox420_bucket2_pumpstate
+          - entity: sensor.gbox420_bucket2_pumpspeed
+          - entity: sensor.gbox420_bucket2_pumptimeout
+          - entity: sensor.gbox420_bucket2_draintime
+          - entity: sensor.gbox420_bucket2_wasteweight
+          - entity: sensor.gbox420_bucket2_wastelimit
+          - entity: sensor.gbox420_bucket2_wasteremaining
+        title: Hempy bucket 2
+        footer:
+          type: graph
+          entity: sensor.gbox420_bucket2_weight
+          hours_to_show: 168
+        state_color: true
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - entity: sensor.gbox420_aero1_modulestate
+          - entity: sensor.gbox420_aero1_state
+          - entity: sensor.gbox420_aero1_pressure
+          - entity: sensor.gbox420_aero1_lastspray
+          - entity: sensor.gbox420_aero1_minpressure
+          - entity: sensor.gbox420_aero1_maxpressure
+          - entity: switch.gbox420_aero1_sprayenabled
+          - entity: sensor.gbox420_aero1_sprayduration
+          - entity: sensor.gbox420_aero1_dayinterval
+          - entity: sensor.gbox420_aero1_nightinterval
+          - entity: sensor.gbox420_aero1_weight
+          - entity: sensor.gbox420_aero1_pumpstate
+          - entity: switch.gbox420_aero1_pumpenabled
+          - entity: sensor.gbox420_aero1_pumpspeed
+          - entity: sensor.gbox420_aero1_pumpprimingtime
+          - entity: sensor.gbox420_aero1_pumptimeout
+        title: Aeroponics
+        footer:
+          type: graph
+          entity: sensor.gbox420_aero1_weight
+          hours_to_show: 168
+        show_header_toggle: false
+        state_color: true
+  - title: Google Sheets
+    path: google-sheets
+    panel: true
+    badges: []
+    cards:
+      - type: iframe
+        url: >-
+          https://docs.google.com/spreadsheets/d/162557mj4XdpdER_PC6Kbq_GGUgc5nV-MYzr7J0Ims4Q/edit#gid=247713073
+        aspect_ratio: 100%
