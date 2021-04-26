@@ -119,7 +119,7 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 7,
+        "w": 6,
         "x": 0,
         "y": 0
       },
@@ -263,8 +263,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 5,
-        "x": 7,
+        "w": 4,
+        "x": 6,
         "y": 0
       },
       "hideTimeOverride": true,
@@ -415,8 +415,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 12,
+        "w": 6,
+        "x": 10,
         "y": 0
       },
       "hideTimeOverride": true,
@@ -589,7 +589,7 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
+        "w": 6,
         "x": 16,
         "y": 0
       },
@@ -718,8 +718,8 @@
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
-        "h": 9,
-        "w": 10,
+        "h": 10,
+        "w": 11,
         "x": 0,
         "y": 5
       },
@@ -746,7 +746,18 @@
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:2809",
+          "alias": "Internal humidity",
+          "yaxis": 2
+        },
+        {
+          "$$hashKey": "object:2816",
+          "alias": "External humidity",
+          "yaxis": 2
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
@@ -796,50 +807,6 @@
           ]
         },
         {
-          "alias": "Internal humidity",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "%",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Internal humidity",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_internal_humidity"
-            }
-          ]
-        },
-        {
           "alias": "External temp",
           "groupBy": [
             {
@@ -880,6 +847,50 @@
               "key": "entity_id",
               "operator": "=",
               "value": "gbox420_external_temp"
+            }
+          ]
+        },
+        {
+          "alias": "Internal humidity",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "%",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Internal humidity",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_internal_humidity"
             }
           ]
         },
@@ -950,7 +961,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:538",
-          "format": "short",
+          "format": "celsius",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -959,17 +970,17 @@
         },
         {
           "$$hashKey": "object:539",
-          "format": "short",
-          "label": null,
+          "format": "humidity",
+          "label": "",
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": true,
+        "alignLevel": 50
       }
     },
     {
@@ -979,17 +990,15 @@
       "dashes": false,
       "datasource": null,
       "fieldConfig": {
-        "defaults": {
-          "unit": "short"
-        },
+        "defaults": {},
         "overrides": []
       },
-      "fill": 0,
+      "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 9,
-        "w": 10,
-        "x": 10,
+        "h": 10,
+        "w": 11,
+        "x": 11,
         "y": 5
       },
       "hiddenSeries": false,
@@ -1021,7 +1030,13 @@
         {
           "$$hashKey": "object:922",
           "alias": "Weight",
-          "fill": 1
+          "yaxis": 1
+        },
+        {
+          "$$hashKey": "object:2145",
+          "alias": "Water temp",
+          "fill": 0,
+          "yaxis": 2
         }
       ],
       "spaceLength": 10,
@@ -1073,7 +1088,7 @@
           ]
         },
         {
-          "alias": "Weight",
+          "alias": "Reservoir weight",
           "groupBy": [
             {
               "params": [
@@ -1182,7 +1197,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:791",
-          "format": "short",
+          "format": "masskg",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1191,17 +1206,17 @@
         },
         {
           "$$hashKey": "object:792",
-          "format": "short",
+          "format": "celsius",
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": true,
+        "alignLevel": 30
       }
     },
     {
@@ -1220,10 +1235,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 9,
-        "w": 10,
+        "h": 10,
+        "w": 11,
         "x": 0,
-        "y": 14
+        "y": 15
       },
       "hiddenSeries": false,
       "hideTimeOverride": true,
@@ -1502,10 +1517,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 9,
-        "w": 10,
-        "x": 10,
-        "y": 14
+        "h": 10,
+        "w": 11,
+        "x": 11,
+        "y": 15
       },
       "hiddenSeries": false,
       "hideTimeOverride": true,
@@ -1829,9 +1844,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 5,
+        "w": 6,
         "x": 0,
-        "y": 23
+        "y": 25
       },
       "hideTimeOverride": true,
       "id": 18,
@@ -2007,9 +2022,9 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 11,
-        "w": 15,
-        "x": 5,
-        "y": 23
+        "w": 16,
+        "x": 6,
+        "y": 25
       },
       "hiddenSeries": false,
       "hideTimeOverride": true,
@@ -2305,9 +2320,9 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 5,
+        "w": 6,
         "x": 0,
-        "y": 26
+        "y": 28
       },
       "hideTimeOverride": true,
       "id": 5,
@@ -2449,9 +2464,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 5,
+        "w": 6,
         "x": 0,
-        "y": 31
+        "y": 33
       },
       "hideTimeOverride": true,
       "id": 9,
@@ -2532,7 +2547,7 @@
     "list": []
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {
@@ -2552,5 +2567,5 @@
   "timezone": "",
   "title": "Gbox420",
   "uid": "x84g-i9Gz",
-  "version": 130
+  "version": 145
 }
