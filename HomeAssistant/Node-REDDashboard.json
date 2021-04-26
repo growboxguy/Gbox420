@@ -1141,8 +1141,8 @@
         "wires": [
             [
                 "a62ba806.ebc148",
-                "2bacf7a1.e81928",
-                "fb31c9be.f233f8"
+                "fb31c9be.f233f8",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -1628,9 +1628,9 @@
         "y": 2700,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "c25dab12.f7bb98",
-                "4757b8fa.753ae8"
+                "4757b8fa.753ae8",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -1665,9 +1665,9 @@
         "y": 2650,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "9c651de0.32001",
-                "bebbb0cf.ac5d8"
+                "bebbb0cf.ac5d8",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -1744,7 +1744,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1160,
+        "x": 1170,
         "y": 2600,
         "wires": [
             [
@@ -2346,9 +2346,9 @@
         "y": 3850,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "3a63bce5.f488e4",
-                "7c1441fc.68778"
+                "7c1441fc.68778",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -2379,13 +2379,13 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1360,
+        "x": 1370,
         "y": 3800,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "3ad7f3bf.44646c",
-                "fe1164d6.2c5d58"
+                "fe1164d6.2c5d58",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -4779,9 +4779,9 @@
         "y": 3450,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "7059fc83.67bf34",
-                "eae93c70.ec231"
+                "eae93c70.ec231",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -4816,9 +4816,9 @@
         "y": 3400,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "bd3794ac.9b5318",
-                "41ac1f14.3adab"
+                "41ac1f14.3adab",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -7238,7 +7238,7 @@
         "outputOnStateChange": false,
         "outputPayload": "$entity().state ? \"on\": \"off\"",
         "outputPayloadType": "jsonata",
-        "x": 1610,
+        "x": 1620,
         "y": 2350,
         "wires": [
             []
@@ -8941,9 +8941,9 @@
         "y": 3750,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "ff2cea21.3c0db8",
-                "37c673af.c55c5c"
+                "37c673af.c55c5c",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -9082,9 +9082,9 @@
         "y": 2050,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "5aefd709.fce398",
-                "50f639bf.9d6948"
+                "50f639bf.9d6948",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -9103,9 +9103,9 @@
         "y": 1800,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "2fe74185.1f540e",
-                "43eb4e6.f8348b"
+                "43eb4e6.f8348b",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -9244,7 +9244,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Last spray",
                 "tot": "str"
@@ -9265,13 +9265,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "PressureUnit",
@@ -9287,9 +9280,9 @@
         "y": 3700,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "5fa32961.bd9ae8",
-                "ebcdf9d4.cb0a18"
+                "ebcdf9d4.cb0a18",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -9308,7 +9301,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Aero pressure",
                 "tot": "str"
@@ -9329,13 +9322,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "PressureUnit",
@@ -9351,9 +9337,9 @@
         "y": 3600,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "98a907e3.be3638",
-                "5af057b8.467ca8"
+                "5af057b8.467ca8",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -9372,7 +9358,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Aero weight",
                 "tot": "str"
@@ -9393,13 +9379,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "WeightUnit",
@@ -9415,9 +9394,9 @@
         "y": 3650,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "4c82f6ef.bd3448",
-                "3cafbeff.271972"
+                "3cafbeff.271972",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -9426,14 +9405,14 @@
         "type": "function",
         "z": "ad48211d.234ea",
         "name": "Process alerts",
-        "func": "var name = msg.name;\nvar value = msg.value;  //The value to check (Must be a number)\nvar valueText = msg.valueText || msg.value; //Text formatted value (or the value itself if valueText is undefined)\nvar unit = msg.unit || '';  //The value to check (Must be a number)\nvar minLimit = msg.minLimit || null;  //The minimum acceptable value. Set to null if undefined\nvar maxLimit = msg.maxLimit || null; //The maximum acceptable value. Set to null if undefined\n\nvar Alerts = flow.get(\"Alerts\"); //Fetch the active alerts\nif ((minLimit !== null && value < minLimit) || (maxLimit !== null && maxLimit < value))  //Check if value is outside of acceptable range\n{\n  var ActiveAlerts = flow.get(\"ActiveAlerts\"); //get the list of currently active alerts\n  if (!Alerts.some(alert => alert === name)) //Check if the alert was active prevoiusly, if not: store it \n  {\n    flow.set(\"SendEmail\",true);\n    Alerts.push(name);  \n    flow.set(\"Alerts\", Alerts); //adding the Alert to the ActiveAlert list\n    ActiveAlerts.push(\"<b>[NEW] </b>\" + name + \" : \" + \"<b>\" + valueText + unit + \"</b>\" + \" [\" + minLimit + \" / \" + maxLimit + \"]\");  //Alert HTML line for the email message\n    flow.set(\"ActiveAlerts\", ActiveAlerts);\n  }\n  else  //if alert was active before: Add to email\n  {\n    ActiveAlerts.push(name + \" : \" + \"<b>\" + valueText + unit + \"</b>\" + \" [\" + minLimit + \" / \" + maxLimit + \"]\");  //Alert HTML line for the email message\n    flow.set(\"ActiveAlerts\", ActiveAlerts);\n  }\n  \n}\nelse  //if value is withing the acceptable range\n{\n  if (Alerts.some(alert => alert === name))  //Check if the alert was active prevoiusly, if it was: remove it\n  {\n    flow.set(\"SendEmail\",true);\n    flow.set(\"Alerts\", Alerts.filter(function(alert) { return alert !== name; }));  //removing the Alert from the ActiveAlert list\n    var RecoveredAlerts = flow.get(\"RecoveredAlerts\");\n    RecoveredAlerts.push(\"\" + name + \" : \" + \"<b>\" + valueText + unit + \"</b>\" + \" [\" + minLimit + \" / \" + maxLimit + \"]\");  //Alert HTML line for the email message\n    flow.set(\"RecoveredAlerts\", RecoveredAlerts);\n  }\n}",
+        "func": "var name = msg.topic;\nvar value = msg.payload;  //The value to check (Must be a number)\nvar valueText = msg.valueText || value; //Text formatted value (or the value itself if valueText is undefined)\nvar unit = msg.unit || '';  //The value to check (Must be a number)\nvar minLimit = msg.minLimit || null;  //The minimum acceptable value. Set to null if undefined\nvar maxLimit = msg.maxLimit || null; //The maximum acceptable value. Set to null if undefined\n\nvar Alerts = flow.get(\"Alerts\"); //Fetch the active alerts\nif ((minLimit !== null && value < minLimit) || (maxLimit !== null && maxLimit < value))  //Check if value is outside of acceptable range\n{\n  var ActiveAlerts = flow.get(\"ActiveAlerts\"); //get the list of currently active alerts\n  if (!Alerts.some(alert => alert === name)) //Check if the alert was active prevoiusly, if not: store it \n  {\n    flow.set(\"SendEmail\",true);\n    Alerts.push(name);  \n    flow.set(\"Alerts\", Alerts); //adding the Alert to the ActiveAlert list\n    ActiveAlerts.push(\"<b>[NEW] </b>\" + name + \" : \" + \"<b>\" + valueText + unit + \"</b>\" + \" [\" + minLimit + \" / \" + maxLimit + \"]\");  //Alert HTML line for the email message\n    flow.set(\"ActiveAlerts\", ActiveAlerts);\n  }\n  else  //if alert was active before: Add to email\n  {\n    ActiveAlerts.push(name + \" : \" + \"<b>\" + valueText + unit + \"</b>\" + \" [\" + minLimit + \" / \" + maxLimit + \"]\");  //Alert HTML line for the email message\n    flow.set(\"ActiveAlerts\", ActiveAlerts);\n  }\n  \n}\nelse  //if value is withing the acceptable range\n{\n  if (Alerts.some(alert => alert === name))  //Check if the alert was active prevoiusly, if it was: remove it\n  {\n    flow.set(\"SendEmail\",true);\n    flow.set(\"Alerts\", Alerts.filter(function(alert) { return alert !== name; }));  //removing the Alert from the ActiveAlert list\n    var RecoveredAlerts = flow.get(\"RecoveredAlerts\");\n    RecoveredAlerts.push(\"\" + name + \" : \" + \"<b>\" + valueText + unit + \"</b>\" + \" [\" + minLimit + \" / \" + maxLimit + \"]\");  //Alert HTML line for the email message\n    flow.set(\"RecoveredAlerts\", RecoveredAlerts);\n  }\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 2300,
-        "y": 1980,
+        "x": 2530,
+        "y": 1990,
         "wires": [
             []
         ]
@@ -9730,7 +9709,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Voltage",
                 "tot": "str"
@@ -9751,13 +9730,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "palyload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "V",
@@ -9773,9 +9745,9 @@
         "y": 1120,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "7498f92b.c3c0f8",
-                "8a255e70.59f22"
+                "8a255e70.59f22",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -9794,7 +9766,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Internal temp",
                 "tot": "str"
@@ -9815,13 +9787,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "TempUnit",
@@ -9837,9 +9802,9 @@
         "y": 1220,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "4abb473.c249cb8",
-                "1341235b.1039ad"
+                "1341235b.1039ad",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -9968,7 +9933,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Pump state",
                 "tot": "str"
@@ -9979,13 +9944,6 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
             }
         ],
         "action": "",
@@ -10050,7 +10008,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Aero state",
                 "tot": "str"
@@ -10061,13 +10019,6 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
             }
         ],
         "action": "",
@@ -10075,7 +10026,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1160,
+        "x": 1170,
         "y": 3800,
         "wires": [
             [
@@ -10264,7 +10215,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Bucket2 state",
                 "tot": "str"
@@ -10275,13 +10226,6 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
             }
         ],
         "action": "",
@@ -10312,7 +10256,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Bucket2 pump",
                 "tot": "str"
@@ -10323,13 +10267,6 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
             }
         ],
         "action": "",
@@ -10360,7 +10297,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Aero module",
                 "tot": "str"
@@ -10371,13 +10308,6 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
             }
         ],
         "action": "",
@@ -10408,7 +10338,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Bucket2 Weight",
                 "tot": "str"
@@ -10429,13 +10359,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "WeightUnit",
@@ -10451,9 +10374,9 @@
         "y": 2850,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "268d8430.d5563c",
-                "15e9ff47.45a781"
+                "15e9ff47.45a781",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -10472,7 +10395,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Bucket2 Waste",
                 "tot": "str"
@@ -10493,13 +10416,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "WeightUnit",
@@ -10515,9 +10431,9 @@
         "y": 2900,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "bc693b17.0a61c8",
-                "48385fd6.a22fe"
+                "48385fd6.a22fe",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -10536,7 +10452,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Bucket1 Weight",
                 "tot": "str"
@@ -10557,13 +10473,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "WeightUnit",
@@ -10579,9 +10488,9 @@
         "y": 2100,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "e1d627d6.212c58",
-                "f664ddca.dc5c2"
+                "f664ddca.dc5c2",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -10600,7 +10509,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Bucket1 Waste",
                 "tot": "str"
@@ -10621,13 +10530,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "WeightUnit",
@@ -10643,9 +10545,9 @@
         "y": 2150,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "876a94c7.9a7d18",
-                "b967de33.11ca2"
+                "b967de33.11ca2",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -10712,7 +10614,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Bucket1 pump",
                 "tot": "str"
@@ -10723,13 +10625,6 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
             }
         ],
         "action": "",
@@ -10760,7 +10655,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Bucket1 state",
                 "tot": "str"
@@ -10771,13 +10666,6 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
             }
         ],
         "action": "",
@@ -10808,7 +10696,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Reservoir module",
                 "tot": "str"
@@ -10819,13 +10707,6 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
             }
         ],
         "action": "",
@@ -10883,7 +10764,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "AirPump state",
                 "tot": "str"
@@ -10894,13 +10775,6 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
             }
         ],
         "action": "",
@@ -10931,7 +10805,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "pH",
                 "tot": "str"
@@ -10949,13 +10823,6 @@
                 "pt": "msg",
                 "to": "6.5",
                 "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
             }
         ],
         "action": "",
@@ -10967,9 +10834,9 @@
         "y": 1850,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "4b999253.8064ac",
-                "672c5c66.fee584"
+                "672c5c66.fee584",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -10988,7 +10855,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Reservoir Weight",
                 "tot": "str"
@@ -11009,13 +10876,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "WeightUnit",
@@ -11031,9 +10891,9 @@
         "y": 1950,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "4afb1748.3873b8",
-                "7080005b.e359c"
+                "7080005b.e359c",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -11052,7 +10912,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Reservoir Temp",
                 "tot": "str"
@@ -11073,13 +10933,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "TempUnit",
@@ -11095,9 +10948,9 @@
         "y": 1900,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "b0025e3b.ca2b1",
-                "3a059e45.946e32"
+                "3a059e45.946e32",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -11116,7 +10969,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "External temp",
                 "tot": "str"
@@ -11137,13 +10990,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "TempUnit",
@@ -11159,9 +11005,9 @@
         "y": 1320,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "cabd4fb0.22395",
-                "a653b118.af6aa"
+                "a653b118.af6aa",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -11180,7 +11026,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "External humidity",
                 "tot": "str"
@@ -11201,13 +11047,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "%",
@@ -11223,9 +11062,9 @@
         "y": 1370,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "fb96aeb0.795ee",
-                "49cbddad.f72b04"
+                "49cbddad.f72b04",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -11244,7 +11083,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Internal humidity",
                 "tot": "str"
@@ -11265,13 +11104,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "%",
@@ -11287,9 +11119,9 @@
         "y": 1270,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "745af073.ce3c3",
-                "39385860.7790c8"
+                "39385860.7790c8",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -11308,7 +11140,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Current",
                 "tot": "str"
@@ -11329,13 +11161,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "palyload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "A",
@@ -11351,9 +11176,9 @@
         "y": 1170,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "4950296b.e12d08",
-                "cfcb35cf.398698"
+                "cfcb35cf.398698",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -11372,7 +11197,7 @@
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Power",
                 "tot": "str"
@@ -11393,13 +11218,6 @@
             },
             {
                 "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "palyload",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
                 "p": "unit",
                 "pt": "msg",
                 "to": "W",
@@ -11415,9 +11233,9 @@
         "y": 1020,
         "wires": [
             [
-                "2bacf7a1.e81928",
                 "7010b832.c4a5f8",
-                "1fbddc27.363694"
+                "1fbddc27.363694",
+                "877792b2.baeea"
             ]
         ]
     },
@@ -13351,6 +13169,22 @@
         "wires": [
             [
                 "559d3bb2.6bd564"
+            ]
+        ]
+    },
+    {
+        "id": "877792b2.baeea",
+        "type": "deglitch",
+        "z": "ad48211d.234ea",
+        "name": "",
+        "mode": 1,
+        "time": "1",
+        "timeUnits": "minutes",
+        "x": 2340,
+        "y": 1990,
+        "wires": [
+            [
+                "2bacf7a1.e81928"
             ]
         ]
     },
