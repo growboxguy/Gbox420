@@ -2,16 +2,16 @@ title: Gbox420
 views:
   - panel: true
     title: Grafana
-    path: ''
+    path: Grafana
     icon: 'mdi:desktop-mac-dashboard'
     badges: []
     cards:
       - type: iframe
         url: >-
-          https://growboxguy.duckdns.org:8123/api/hassio_ingress/TOpyF6QeW2rUUYsm4VJzNO6-vgmEl0mOizlrCfpUcdA/d/x84g-i9Gz/gbox420?orgId=1&refresh=10s&kiosk&from=now-2d&to=now
+          https://growboxguy.duckdns.org:3000/api/hassio_ingress/TOpyF6QeW2rUUYsm4VJzNO6-vgmEl0mOizlrCfpUcdA/d/x84g-i9Gz/gbox420?orgId=1&refresh=10s&kiosk=tv&from=now-7d&to=now
         aspect_ratio: 100%
   - title: Node-RED
-    path: gbox420
+    path: NodeRED
     panel: true
     icon: 'mdi:sitemap'
     badges: []
@@ -19,17 +19,18 @@ views:
       - type: iframe
         url: 'https://growboxguy.duckdns.org:1880/endpoint/ui'
         aspect_ratio: 100%
-  - path: default_view
+  - path: HomeAssistant
     title: Home Assistant
     icon: 'mdi:home-assistant'
     badges: []
     cards:
       - type: entities
         entities:
-          - entity: sensor.bitone_battery_level
-          - entity: sensor.gbox420_remote_battery_level
-          - entity: sensor.mediacenter_battery_level
-        title: Battery levels
+          - entity: sensor.gbox420_power1_power
+          - entity: sensor.gbox420_power1_energy
+          - entity: sensor.gbox420_power1_voltage
+          - entity: sensor.gbox420_power1_current
+        title: Power sensor
         state_color: true
         show_header_toggle: false
       - type: entities
@@ -59,15 +60,6 @@ views:
         title: Gbox420 Light2
         show_header_toggle: false
         state_color: true
-      - type: entities
-        entities:
-          - entity: sensor.gbox420_power1_power
-          - entity: sensor.gbox420_power1_energy
-          - entity: sensor.gbox420_power1_voltage
-          - entity: sensor.gbox420_power1_current
-        title: Power sensor
-        state_color: true
-        show_header_toggle: false
       - type: entities
         entities:
           - entity: sensor.gbox420_internal_temp
@@ -168,7 +160,7 @@ views:
         show_header_toggle: false
         state_color: true
   - title: Google Sheets
-    path: google-sheets
+    path: GoogleSheets
     panel: true
     icon: 'mdi:google-spreadsheet'
     badges: []
