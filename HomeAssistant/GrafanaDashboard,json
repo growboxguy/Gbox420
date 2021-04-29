@@ -2319,7 +2319,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 4,
         "w": 6,
         "x": 0,
         "y": 28
@@ -2453,8 +2453,12 @@
                 "value": null
               },
               {
+                "color": "yellow",
+                "value": 3
+              },
+              {
                 "color": "green",
-                "value": 2
+                "value": 5
               }
             ]
           },
@@ -2466,7 +2470,7 @@
         "h": 3,
         "w": 6,
         "x": 0,
-        "y": 33
+        "y": 32
       },
       "hideTimeOverride": true,
       "id": 9,
@@ -2477,7 +2481,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "last"
           ],
           "fields": "",
           "values": false
@@ -2517,7 +2521,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -2537,7 +2541,7 @@
       "type": "stat"
     }
   ],
-  "refresh": "10s",
+  "refresh": false,
   "schemaVersion": 27,
   "style": "dark",
   "tags": [
@@ -2547,7 +2551,7 @@
     "list": []
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
@@ -2567,5 +2571,5 @@
   "timezone": "",
   "title": "Gbox420",
   "uid": "x84g-i9Gz",
-  "version": 145
+  "version": 147
 }
