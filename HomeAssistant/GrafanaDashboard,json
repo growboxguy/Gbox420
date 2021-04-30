@@ -825,7 +825,7 @@
       ],
       "timeFrom": null,
       "timeShift": "0h",
-      "title": "Energy",
+      "title": "Energy usage",
       "transparent": true,
       "type": "stat"
     },
@@ -974,7 +974,7 @@
       ],
       "timeFrom": null,
       "timeShift": "0h",
-      "title": "Pressure",
+      "title": "Aeroponics pressure",
       "transparent": true,
       "type": "gauge"
     },
@@ -1216,7 +1216,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": "0h",
-      "title": "Temp & Humidity",
+      "title": "Air temp & humidity",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1745,7 +1745,7 @@
       ],
       "timeFrom": null,
       "timeShift": "0h",
-      "title": "Spray",
+      "title": "Aeroponics timing",
       "transparent": true,
       "type": "stat"
     },
@@ -2015,12 +2015,12 @@
       "seriesOverrides": [
         {
           "$$hashKey": "object:1228",
-          "alias": "Dry weight",
+          "alias": "Dry",
           "fill": 0
         },
         {
           "$$hashKey": "object:1235",
-          "alias": "Wet weight",
+          "alias": "Wet",
           "fill": 0
         }
       ],
@@ -2029,7 +2029,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Bucket weight",
+          "alias": "Bucket",
           "groupBy": [
             {
               "params": [
@@ -2048,7 +2048,7 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"value\") FROM \"kg\" WHERE (\"entity_id\" = 'gbox420_bucket1_weight') AND $timeFilter GROUP BY time($__interval) fill(previous)",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "Bucket weight",
           "resultFormat": "time_series",
           "select": [
@@ -2074,7 +2074,7 @@
           ]
         },
         {
-          "alias": "Waste weight",
+          "alias": "Waste",
           "groupBy": [
             {
               "params": [
@@ -2118,7 +2118,7 @@
           ]
         },
         {
-          "alias": "Dry weight",
+          "alias": "Dry",
           "groupBy": [
             {
               "params": [
@@ -2162,7 +2162,7 @@
           ]
         },
         {
-          "alias": "Wet weight",
+          "alias": "Wet",
           "groupBy": [
             {
               "params": [
@@ -2210,7 +2210,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": "0h",
-      "title": "Hempy bucket 1",
+      "title": "Hempy bucket 1 weight",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -2297,12 +2297,12 @@
       "seriesOverrides": [
         {
           "$$hashKey": "object:1488",
-          "alias": "Dry weight",
+          "alias": "Dry",
           "fill": 0
         },
         {
           "$$hashKey": "object:1495",
-          "alias": "Wet weight",
+          "alias": "Wet",
           "fill": 0
         }
       ],
@@ -2311,7 +2311,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Bucket weight",
+          "alias": "Bucket",
           "groupBy": [
             {
               "params": [
@@ -2354,7 +2354,7 @@
           ]
         },
         {
-          "alias": "Waste weight",
+          "alias": "Waste",
           "groupBy": [
             {
               "params": [
@@ -2398,7 +2398,7 @@
           ]
         },
         {
-          "alias": "Dry weight",
+          "alias": "Dry",
           "groupBy": [
             {
               "params": [
@@ -2442,7 +2442,7 @@
           ]
         },
         {
-          "alias": "Wet weight",
+          "alias": "Wet",
           "groupBy": [
             {
               "params": [
@@ -2490,7 +2490,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": "0h",
-      "title": "Hempy bucket 2",
+      "title": "Hempy bucket 2 weight",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -2858,5 +2858,5 @@
   "timezone": "",
   "title": "Gbox420",
   "uid": "x84g-i9Gz",
-  "version": 161
+  "version": 163
 }
