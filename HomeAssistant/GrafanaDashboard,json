@@ -2059,7 +2059,7 @@
         {
           "$$hashKey": "object:1235",
           "alias": "Wet",
-          "color": "#73BF69",
+          "color": "#56A64B",
           "fill": 0
         },
         {
@@ -2120,50 +2120,6 @@
               "key": "entity_id",
               "operator": "=",
               "value": "gbox420_bucket1_weight"
-            }
-          ]
-        },
-        {
-          "alias": "Waste",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "kg",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Waste weight",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_bucket1_wasteweight"
             }
           ]
         },
@@ -2252,6 +2208,50 @@
               "key": "entity_id",
               "operator": "=",
               "value": "gbox420_bucket1_wetweight"
+            }
+          ]
+        },
+        {
+          "alias": "Waste",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "kg",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Waste weight",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_bucket1_wasteweight"
             }
           ]
         }
@@ -2354,7 +2354,7 @@
         {
           "$$hashKey": "object:1495",
           "alias": "Wet",
-          "color": "#73BF69",
+          "color": "#56A64B",
           "fill": 0
         },
         {
@@ -2413,50 +2413,6 @@
               "key": "entity_id",
               "operator": "=",
               "value": "gbox420_bucket2_weight"
-            }
-          ]
-        },
-        {
-          "alias": "Waste",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "kg",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Waste weight",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_bucket2_wasteweight"
             }
           ]
         },
@@ -2545,6 +2501,50 @@
               "key": "entity_id",
               "operator": "=",
               "value": "gbox420_bucket2_wetweight"
+            }
+          ]
+        },
+        {
+          "alias": "Waste",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "kg",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Waste weight",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_bucket2_wasteweight"
             }
           ]
         }
@@ -2653,13 +2653,13 @@
       "seriesOverrides": [
         {
           "$$hashKey": "object:1748",
-          "alias": "Min pressure",
+          "alias": "Min",
           "color": "#FADE2A",
           "fill": 0
         },
         {
           "$$hashKey": "object:1753",
-          "alias": "Max pressure",
+          "alias": "Max",
           "color": "#73BF69",
           "fill": 0
         },
@@ -2724,7 +2724,7 @@
           ]
         },
         {
-          "alias": "Min pressure",
+          "alias": "Min",
           "groupBy": [
             {
               "params": [
@@ -2768,7 +2768,7 @@
           ]
         },
         {
-          "alias": "Max pressure",
+          "alias": "Max",
           "groupBy": [
             {
               "params": [
@@ -2931,5 +2931,5 @@
   "timezone": "",
   "title": "Gbox420",
   "uid": "x84g-i9Gz",
-  "version": 176
+  "version": 180
 }
