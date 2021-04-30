@@ -58,331 +58,6 @@
   "panels": [
     {
       "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Energy"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "kwatth"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Voltage"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "volt"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Power"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "watt"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 5,
-        "x": 0,
-        "y": 0
-      },
-      "hideTimeOverride": true,
-      "id": 21,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "vertical",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.4",
-      "targets": [
-        {
-          "alias": "Power",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "W",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Power",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_power1_power"
-            }
-          ]
-        },
-        {
-          "alias": "Energy",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "kWh",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Energy",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_power1_energy"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": "0h",
-      "title": "Energy",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-GrYlRd"
-          },
-          "decimals": 0,
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 3,
-        "x": 5,
-        "y": 0
-      },
-      "hideTimeOverride": true,
-      "id": 23,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "vertical",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.4",
-      "targets": [
-        {
-          "alias": "Light1",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "%",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Light1 brightness",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_light1_brightness"
-            }
-          ]
-        },
-        {
-          "alias": "Light2",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "%",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Light2 brightness",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_light2_brightness"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": "0h",
-      "title": "Light brightness",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "datasource": null,
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -417,7 +92,7 @@
       "gridPos": {
         "h": 5,
         "w": 4,
-        "x": 8,
+        "x": 0,
         "y": 0
       },
       "hideTimeOverride": true,
@@ -591,7 +266,7 @@
       "gridPos": {
         "h": 5,
         "w": 4,
-        "x": 12,
+        "x": 4,
         "y": 0
       },
       "hideTimeOverride": true,
@@ -708,6 +383,454 @@
     },
     {
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 8,
+        "y": 0
+      },
+      "hideTimeOverride": true,
+      "id": 23,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.4",
+      "targets": [
+        {
+          "alias": "Light1",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "%",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Light1 brightness",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_light1_brightness"
+            }
+          ]
+        },
+        {
+          "alias": "Light2",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "%",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Light2 brightness",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_light2_brightness"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": "0h",
+      "title": "Light brightness",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Daily energy"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "kwatth"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 0.5
+                    },
+                    {
+                      "color": "green",
+                      "value": 2
+                    },
+                    {
+                      "color": "orange",
+                      "value": 24
+                    },
+                    {
+                      "color": "red",
+                      "value": 30
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total energy"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "kwatth"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "purple",
+                      "value": null
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Power"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "watt"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 5
+                    },
+                    {
+                      "color": "blue",
+                      "value": 50
+                    },
+                    {
+                      "color": "green",
+                      "value": 100
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 600
+                    },
+                    {
+                      "color": "red",
+                      "value": 800
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 11,
+        "y": 0
+      },
+      "hideTimeOverride": true,
+      "id": 21,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.4",
+      "targets": [
+        {
+          "alias": "Power",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "W",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'gbox420_power1_power') AND $timeFilter GROUP BY time($__interval) fill(previous)",
+          "rawQuery": true,
+          "refId": "Power",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_power1_power"
+            }
+          ]
+        },
+        {
+          "alias": "Daily energy",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "kWh",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT first(*) FROM (SELECT spread(\"value\") FROM \"homeassistant\".\"autogen\".\"kWh\" WHERE (\"entity_id\"='gbox420_power1_energy' ) GROUP BY time(1d) fill(null) ORDER BY DESC LIMIT 2) ORDER BY DESC",
+          "rawQuery": true,
+          "refId": "Daily",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_power1_energy"
+            }
+          ]
+        },
+        {
+          "alias": "Total energy",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "kWh",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT Spread(\"value\") FROM \"homeassistant\".\"autogen\".\"kWh\" WHERE (\"entity_id\"='gbox420_power1_energy' ) GROUP BY time(1d) fill(null)",
+          "rawQuery": false,
+          "refId": "Energy",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_power1_energy"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": "0h",
+      "title": "Energy",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -741,8 +864,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 8,
-        "x": 16,
+        "w": 6,
+        "x": 17,
         "y": 0
       },
       "hideTimeOverride": true,
@@ -2735,5 +2858,5 @@
   "timezone": "",
   "title": "Gbox420",
   "uid": "x84g-i9Gz",
-  "version": 148
+  "version": 161
 }
