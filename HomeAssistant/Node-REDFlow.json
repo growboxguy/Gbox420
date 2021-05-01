@@ -7,361 +7,6 @@
         "info": ""
     },
     {
-        "id": "a7c93785.9fe448",
-        "type": "server",
-        "name": "Home Assistant",
-        "addon": true
-    },
-    {
-        "id": "69d56562.8f32ac",
-        "type": "mqtt-broker",
-        "name": "Local Mosquitto MQTT",
-        "broker": "192.168.1.166",
-        "port": "1883",
-        "tls": "",
-        "clientid": "Node-RED",
-        "usetls": false,
-        "compatmode": false,
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthPayload": "",
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": ""
-    },
-    {
-        "id": "bda16d8e.5cef7",
-        "type": "ui_group",
-        "name": "Light1",
-        "tab": "44180358.75752c",
-        "order": 5,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "48150cd2.dd7124",
-        "type": "ui_group",
-        "name": "Light2",
-        "tab": "44180358.75752c",
-        "order": 6,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "65d54d78.294e74",
-        "type": "ui_group",
-        "name": "Power sensor",
-        "tab": "44180358.75752c",
-        "order": 3,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "578e9d2e.2450e4",
-        "type": "ui_group",
-        "name": "Ventilation",
-        "tab": "44180358.75752c",
-        "order": 4,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "e3c44224.e25c8",
-        "type": "ui_group",
-        "name": "Reservoir",
-        "tab": "44180358.75752c",
-        "order": 7,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "ee644883.b6e878",
-        "type": "ui_group",
-        "name": "Hempy bucket 1",
-        "tab": "44180358.75752c",
-        "order": 8,
-        "disp": true,
-        "width": 7,
-        "collapse": true
-    },
-    {
-        "id": "7fd41d0.72483e4",
-        "type": "ui_group",
-        "name": "Hempy bucket 2",
-        "tab": "44180358.75752c",
-        "order": 9,
-        "disp": true,
-        "width": 7,
-        "collapse": true
-    },
-    {
-        "id": "f4760b27.ac0428",
-        "type": "ui_group",
-        "name": "Aeroponics",
-        "tab": "44180358.75752c",
-        "order": 10,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "daea9443.544e58",
-        "type": "ui_group",
-        "name": "GrowBox",
-        "tab": "44180358.75752c",
-        "order": 1,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "44180358.75752c",
-        "type": "ui_tab",
-        "name": "GrowBox",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "65b9771b.f130b8",
-        "type": "ui_base",
-        "theme": {
-            "name": "theme-dark",
-            "lightTheme": {
-                "default": "#0094CE",
-                "baseColor": "#0094CE",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": true,
-                "reset": false
-            },
-            "darkTheme": {
-                "default": "#097479",
-                "baseColor": "#097479",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": true,
-                "reset": false
-            },
-            "customTheme": {
-                "name": "Untitled Theme 1",
-                "default": "#4B7930",
-                "baseColor": "#4B7930",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
-            },
-            "themeState": {
-                "base-color": {
-                    "default": "#097479",
-                    "value": "#097479",
-                    "edited": true
-                },
-                "page-titlebar-backgroundColor": {
-                    "value": "#097479",
-                    "edited": false
-                },
-                "page-backgroundColor": {
-                    "value": "#111111",
-                    "edited": false
-                },
-                "page-sidebar-backgroundColor": {
-                    "value": "#333333",
-                    "edited": false
-                },
-                "group-textColor": {
-                    "value": "#0eb8c0",
-                    "edited": false
-                },
-                "group-borderColor": {
-                    "value": "#555555",
-                    "edited": false
-                },
-                "group-backgroundColor": {
-                    "value": "#333333",
-                    "edited": false
-                },
-                "widget-textColor": {
-                    "value": "#eeeeee",
-                    "edited": false
-                },
-                "widget-backgroundColor": {
-                    "value": "#097479",
-                    "edited": false
-                },
-                "widget-borderColor": {
-                    "value": "#333333",
-                    "edited": false
-                },
-                "base-font": {
-                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
-                }
-            },
-            "angularTheme": {
-                "primary": "indigo",
-                "accents": "blue",
-                "warn": "red",
-                "background": "grey"
-            }
-        },
-        "site": {
-            "name": "Node-RED Dashboard",
-            "hideToolbar": "true",
-            "allowSwipe": "false",
-            "lockMenu": "false",
-            "allowTempTheme": "true",
-            "dateFormat": "DD/MM/YYYY",
-            "sizes": {
-                "sx": 48,
-                "sy": 48,
-                "gx": 6,
-                "gy": 6,
-                "cx": 6,
-                "cy": 6,
-                "px": 0,
-                "py": 0
-            }
-        }
-    },
-    {
-        "id": "c4aa95f6.0a88",
-        "type": "ui_group",
-        "name": "Default",
-        "tab": "b06ddd9b.614eb8",
-        "order": 1,
-        "disp": false,
-        "width": "24",
-        "collapse": false
-    },
-    {
-        "id": "b06ddd9b.614eb8",
-        "type": "ui_tab",
-        "name": "Home",
-        "icon": "dashboard"
-    },
-    {
-        "id": "6dd08518.542dac",
-        "type": "ui_group",
-        "name": "Alerts",
-        "tab": "44180358.75752c",
-        "order": 2,
-        "disp": true,
-        "width": "7",
-        "collapse": true
-    },
-    {
-        "id": "f1377daf.080bb",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "daea9443.544e58",
-        "order": 8,
-        "width": 2,
-        "height": 1
-    },
-    {
-        "id": "abc3f7ec.fe7748",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "578e9d2e.2450e4",
-        "order": 6,
-        "width": 1,
-        "height": 1
-    },
-    {
-        "id": "ef41616b.7c4b9",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "578e9d2e.2450e4",
-        "order": 8,
-        "width": 1,
-        "height": 1
-    },
-    {
-        "id": "6a5c3c5e.52b504",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "bda16d8e.5cef7",
-        "order": 3,
-        "width": 1,
-        "height": 1
-    },
-    {
-        "id": "a4df3e43.df648",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "bda16d8e.5cef7",
-        "order": 6,
-        "width": 1,
-        "height": 1
-    },
-    {
-        "id": "e6bfb650.92e688",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "48150cd2.dd7124",
-        "order": 3,
-        "width": 1,
-        "height": 1
-    },
-    {
-        "id": "89732b96.9d91e8",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "48150cd2.dd7124",
-        "order": 6,
-        "width": 1,
-        "height": 1
-    },
-    {
-        "id": "481a5e50.65ce3",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "f4760b27.ac0428",
-        "order": 6,
-        "width": 1,
-        "height": 1
-    },
-    {
-        "id": "1a25b7b7.7f1fd8",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "f4760b27.ac0428",
-        "order": 9,
-        "width": 1,
-        "height": 1
-    },
-    {
-        "id": "10fc1886.76b4a7",
-        "type": "ui_spacer",
-        "name": "spacer",
-        "group": "f4760b27.ac0428",
-        "order": 12,
-        "width": 1,
-        "height": 1
-    },
-    {
-        "id": "1ebe6305.3aa6ad",
-        "type": "ui_group",
-        "name": "LAB",
-        "tab": "2d3c18ea.7ea3d8",
-        "order": 3,
-        "disp": false,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "2d3c18ea.7ea3d8",
-        "type": "ui_tab",
-        "name": "Table",
-        "icon": "dashboard"
-    },
-    {
         "id": "54146217.1d083c",
         "type": "mqtt in",
         "z": "ad48211d.234ea",
@@ -10807,7 +10452,7 @@
         "type": "switch",
         "z": "ad48211d.234ea",
         "name": "Alerts active",
-        "property": "ActiveAlerts",
+        "property": "Alerts",
         "propertyType": "flow",
         "rules": [
             {
@@ -10915,13 +10560,13 @@
         "type": "function",
         "z": "ad48211d.234ea",
         "name": "Format Alerts",
-        "func": "msg.Alerts = \"\"\nfor (var alert of flow.get(\"ActiveAlerts\")) {\nmsg.Alerts = msg.Alerts + \"&nbsp;&nbsp;·&nbsp;\"+ alert + \"<br>\";\n}\n\nreturn msg;",
+        "func": "msg.Alerts = \"\"\nfor (var alert of flow.get(\"Alerts\")) {\nmsg.Alerts = msg.Alerts + \"&nbsp;&nbsp;·&nbsp;\"+ alert + \"<br>\";\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1680,
+        "x": 1690,
         "y": 180,
         "wires": [
             [
@@ -10936,12 +10581,12 @@
         "group": "6dd08518.542dac",
         "order": 1,
         "width": 7,
-        "height": 1,
+        "height": "2",
         "name": "Alerts",
         "label": "",
         "format": "{{msg.Alerts}}",
         "layout": "row-left",
-        "x": 1820,
+        "x": 1840,
         "y": 180,
         "wires": []
     },
@@ -13938,5 +13583,141 @@
                 "2bacf7a1.e81928"
             ]
         ]
+    },
+    {
+        "id": "69d56562.8f32ac",
+        "type": "mqtt-broker",
+        "name": "Local Mosquitto MQTT",
+        "broker": "192.168.1.166",
+        "port": "1883",
+        "tls": "",
+        "clientid": "Node-RED",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "bda16d8e.5cef7",
+        "type": "ui_group",
+        "name": "Light1",
+        "tab": "44180358.75752c",
+        "order": 5,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "48150cd2.dd7124",
+        "type": "ui_group",
+        "name": "Light2",
+        "tab": "44180358.75752c",
+        "order": 6,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "65d54d78.294e74",
+        "type": "ui_group",
+        "name": "Power sensor",
+        "tab": "44180358.75752c",
+        "order": 3,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "578e9d2e.2450e4",
+        "type": "ui_group",
+        "name": "Ventilation",
+        "tab": "44180358.75752c",
+        "order": 4,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "e3c44224.e25c8",
+        "type": "ui_group",
+        "name": "Reservoir",
+        "tab": "44180358.75752c",
+        "order": 7,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "ee644883.b6e878",
+        "type": "ui_group",
+        "name": "Hempy bucket 1",
+        "tab": "44180358.75752c",
+        "order": 8,
+        "disp": true,
+        "width": 7,
+        "collapse": true
+    },
+    {
+        "id": "7fd41d0.72483e4",
+        "type": "ui_group",
+        "name": "Hempy bucket 2",
+        "tab": "44180358.75752c",
+        "order": 9,
+        "disp": true,
+        "width": 7,
+        "collapse": true
+    },
+    {
+        "id": "f4760b27.ac0428",
+        "type": "ui_group",
+        "name": "Aeroponics",
+        "tab": "44180358.75752c",
+        "order": 10,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "daea9443.544e58",
+        "type": "ui_group",
+        "name": "GrowBox",
+        "tab": "44180358.75752c",
+        "order": 1,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "a7c93785.9fe448",
+        "type": "server",
+        "name": "Home Assistant",
+        "addon": true
+    },
+    {
+        "id": "6dd08518.542dac",
+        "type": "ui_group",
+        "name": "Alerts",
+        "tab": "44180358.75752c",
+        "order": 2,
+        "disp": true,
+        "width": "7",
+        "collapse": true
+    },
+    {
+        "id": "44180358.75752c",
+        "type": "ui_tab",
+        "name": "GrowBox",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
     }
 ]
