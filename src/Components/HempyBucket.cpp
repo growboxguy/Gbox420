@@ -11,6 +11,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
   WasteLimit = &DefaultSettings->WasteLimit;
   InitialDryWeight = &DefaultSettings->InitialDryWeight;
   DryWeight = DefaultSettings->InitialDryWeight;
+  WetWeight = DryWeight + *EvaporationTarget - *OverflowTarget; //Initial value will get re-calculated after a watering
   DrainWaitTime = &DefaultSettings->DrainWaitTime;
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
@@ -126,7 +127,6 @@ void HempyBucket::updateState(HempyStates NewState)
       if (WasteReservoirWeightSensor->getWeight(false) - WasteReservoirStartWeight >= *OverflowTarget) //Check if target overflow weight is reached
       {
         WetWeight = BucketWeightSensor->getWeight(); //Measure wet weight
-        // DryWeight = ((float)((int)(WetWeight - *EvaporationTarget * 10))) / 10; //Calculate next watering weight
         DryWeight = WetWeight - *EvaporationTarget; //Calculate next watering weight
         updateState(HempyStates::IDLE);
       }
@@ -322,7 +322,7 @@ char *HempyBucket::getWetWeightText(bool FriendlyFormat)
 void HempyBucket::tareDryWetWeight()
 {
   DryWeight = *InitialDryWeight;
-  WetWeight = 0.0;
+  WetWeight = DryWeight + *EvaporationTarget - *OverflowTarget;
   appendName(true);
   strcat_P(ShortMessage, (PGM_P)F("Dry/Wet tared"));
   logToSerials(&ShortMessage, true, 3);
