@@ -40,8 +40,8 @@ views:
           - entity: switch.gbox420_light1_timer
           - entity: sensor.gbox420_light1_ontime
           - entity: sensor.gbox420_light1_offtime
-          - entity: sensor.gbox420_lightsensor1_daylight
           - entity: sensor.gbox420_lightsensor1_reading
+          - entity: sensor.gbox420_lightsensor1_darklight
         title: Gbox420 Light1
         state_color: true
         footer:
