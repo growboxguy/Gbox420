@@ -1962,7 +1962,7 @@
         "height": 1,
         "name": "Pump state",
         "label": "<font color={{msg.color}} ><i class=\"fa fa-circle\" style=\"font-size:30px;\"></i>&nbsp;</font>Pump",
-        "format": "{{msg.payload}}",
+        "format": "{{msg.valueText}}",
         "layout": "col-center",
         "x": 2022,
         "y": 2701,
@@ -1973,7 +1973,7 @@
         "type": "function",
         "z": "789e39dd.fc3078",
         "name": "Pump state",
-        "func": "switch(msg.payload) {\n  case \"0\":\n    msg.payload = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case \"1\":\n     msg.payload = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case \"2\":\n     msg.payload = \"RUNNING\";\n     msg.color = \"orange\";\n    break;\n  default:\n     msg.payload = \"???\";\n     msg.color = \"black\";\n    break;\n}\nmsg.valueText = msg.payload;\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case 2:\n     msg.valueText = \"RUNNING\";\n     msg.color = \"orange\";\n    break;\n  default:\n     msg.valueText = \"???\";\n     msg.color = \"black\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1999,7 +1999,7 @@
         "height": 1,
         "name": "Hempy state",
         "label": "<font color={{msg.color}} ><i class=\"fa fa-circle\" style=\"font-size:30px;\"></i>&nbsp;</font>State",
-        "format": "{{msg.payload}}",
+        "format": "{{msg.valueText}}",
         "layout": "col-center",
         "x": 2022,
         "y": 2651,
@@ -2010,7 +2010,7 @@
         "type": "function",
         "z": "789e39dd.fc3078",
         "name": "Bucket1 state",
-        "func": "switch(msg.payload) {\n  case \"0\":\n    msg.payload = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case \"1\":\n     msg.payload = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case \"2\":\n     msg.payload = \"WATERING\";\n     msg.color = \"orange\";\n    break;\n  case \"3\":\n     msg.payload = \"DRAINING\";\n     msg.color = \"blue\";\n    break;\n  default:\n     msg.payload = \"???\";\n     msg.color = \"black\";\n    break;\n}\nmsg.valueText = msg.payload;\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case 2:\n     msg.valueText = \"WATERING\";\n     msg.color = \"orange\";\n    break;\n  case 3:\n     msg.valueText = \"DRAINING\";\n     msg.color = \"blue\";\n    break;\n  default:\n     msg.valueText = \"???\";\n     msg.color = \"black\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2591,7 +2591,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1160,
+        "x": 1170,
         "y": 3350,
         "wires": [
             [
@@ -2680,7 +2680,7 @@
         "height": 1,
         "name": "Pressure pump state",
         "label": "<font color={{msg.color}} ><i class=\"fa fa-circle\" style=\"font-size:30px;\"></i>&nbsp;</font>Pump",
-        "format": "{{msg.payload}}",
+        "format": "{{msg.valueText}}",
         "layout": "col-center",
         "x": 2030,
         "y": 3850,
@@ -2691,7 +2691,7 @@
         "type": "function",
         "z": "789e39dd.fc3078",
         "name": "Pump state",
-        "func": "switch(msg.payload) {\n  case \"0\":\n    msg.payload = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case \"1\":\n     msg.payload = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case \"2\":\n     msg.payload = \"PRIMING\";\n     msg.color = \"yellow\";\n    break;\n  case \"3\":\n     msg.payload = \"RUNNING\";\n     msg.color = \"orange\";\n    break;\n  case \"4\":\n     msg.payload = \"BLOWOFF\";\n     msg.color = \"yellowgreen\";\n    break;\n  case \"5\":\n     msg.payload = \"MIX\";\n     msg.color = \"DarkMagenta\";\n    break;\n  case \"6\":\n     msg.payload = \"BYPASSCLOSING\";\n     msg.color = \"blue\";\n    break;\n  case \"7\":\n     msg.payload = \"BYPASSOPEN\";\n     msg.color = \"deeppink\";\n    break;\n  default:\n     msg.payload = \"???\";\n     msg.color = \"black\";\n    break;\n}\nmsg.valueText = msg.payload;\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case 2:\n     msg.valueText = \"PRIMING\";\n     msg.color = \"yellow\";\n    break;\n  case 3:\n     msg.valueText = \"RUNNING\";\n     msg.color = \"orange\";\n    break;\n  case 4:\n     msg.valueText = \"BLOWOFF\";\n     msg.color = \"yellowgreen\";\n    break;\n  case 5:\n     msg.valueText = \"MIX\";\n     msg.color = \"DarkMagenta\";\n    break;\n  case 6:\n     msg.valueText = \"BYPASSCLOSING\";\n     msg.color = \"blue\";\n    break;\n  case 7:\n     msg.valueText = \"BYPASSOPEN\";\n     msg.color = \"deeppink\";\n    break;\n  default:\n     msg.valueText = \"???\";\n     msg.color = \"black\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2717,7 +2717,7 @@
         "height": 1,
         "name": "Aero state",
         "label": "<font color={{msg.color}} ><i class=\"fa fa-circle\" style=\"font-size:30px;\"></i>&nbsp;</font>State",
-        "format": "{{msg.payload}}",
+        "format": "{{msg.valueText}}",
         "layout": "col-center",
         "x": 2000,
         "y": 3800,
@@ -2728,7 +2728,7 @@
         "type": "function",
         "z": "789e39dd.fc3078",
         "name": "Aero state",
-        "func": "switch(msg.payload) {\n  case \"0\":\n    msg.payload = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case \"1\":\n     msg.payload = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case \"2\":\n     msg.payload = \"SPRAY\";\n     msg.color = \"blue\";\n    break;\n  case \"3\":\n     msg.payload = \"STOPSPRAY\";\n     msg.color = \"yellow\";\n    break;\n  case \"4\":\n     msg.payload = \"RELEASE\";\n     msg.color = \"magenta\";\n    break;\n  case \"5\":\n     msg.payload = \"REFILL\";\n     msg.color = \"LimeGreen\";\n    break;\n  case \"6\":\n     msg.payload = \"DRAIN\";\n     msg.color = \"orange\";\n    break;\n  case \"7\":\n     msg.payload = \"MIX\";\n     msg.color = \"DarkMagenta\";\n    break;\n  default:\n     msg.payload = \"???\";\n     msg.color = \"black\";\n    break;\n}\nmsg.valueText = msg.payload;\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case 2:\n     msg.valueText = \"SPRAY\";\n     msg.color = \"blue\";\n    break;\n  case 3:\n     msg.valueText = \"STOPSPRAY\";\n     msg.color = \"yellow\";\n    break;\n  case 4:\n     msg.valueText = \"RELEASE\";\n     msg.color = \"magenta\";\n    break;\n  case 5:\n     msg.valueText = \"REFILL\";\n     msg.color = \"LimeGreen\";\n    break;\n  case 6:\n     msg.valueText = \"DRAIN\";\n     msg.color = \"orange\";\n    break;\n  case 7:\n     msg.valueText = \"MIX\";\n     msg.color = \"DarkMagenta\";\n    break;\n  default:\n     msg.valueText = \"???\";\n     msg.color = \"black\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5113,7 +5113,7 @@
         "height": 1,
         "name": "Pump state",
         "label": "<font color={{msg.color}} ><i class=\"fa fa-circle\" style=\"font-size:30px;\"></i>&nbsp;</font>Pump",
-        "format": "{{msg.payload}}",
+        "format": "{{msg.valueText}}",
         "layout": "col-center",
         "x": 2000,
         "y": 3450,
@@ -5124,7 +5124,7 @@
         "type": "function",
         "z": "789e39dd.fc3078",
         "name": "Pump state",
-        "func": "switch(msg.payload) {\n  case \"0\":\n    msg.payload = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case \"1\":\n     msg.payload = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case \"2\":\n     msg.payload = \"RUNNING\";\n     msg.color = \"orange\";\n    break;\n  default:\n     msg.payload = \"???\";\n     msg.color = \"black\";\n    break;\n}\nmsg.valueText = msg.payload;\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case 2:\n     msg.valueText = \"RUNNING\";\n     msg.color = \"orange\";\n    break;\n  default:\n     msg.valueText = \"???\";\n     msg.color = \"black\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5150,7 +5150,7 @@
         "height": 1,
         "name": "Hempy state",
         "label": "<font color={{msg.color}} ><i class=\"fa fa-circle\" style=\"font-size:30px;\"></i>&nbsp;</font>State",
-        "format": "{{msg.payload}}",
+        "format": "{{msg.valueText}}",
         "layout": "col-center",
         "x": 2000,
         "y": 3400,
@@ -5161,7 +5161,7 @@
         "type": "function",
         "z": "789e39dd.fc3078",
         "name": "Bucket state",
-        "func": "switch(msg.payload) {\n  case \"0\":\n    msg.payload = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case \"1\":\n     msg.payload = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case \"2\":\n     msg.payload = \"WATERING\";\n     msg.color = \"orange\";\n    break;\n  case \"3\":\n     msg.payload = \"DRAINING\";\n     msg.color = \"blue\";\n    break;\n  default:\n     msg.payload = \"???\";\n     msg.color = \"black\";\n    break;\n}\nmsg.valueText = msg.payload;\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"DISABLED\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"IDLE\";\n     msg.color = \"lime\";\n    break;\n  case 2:\n     msg.valueText = \"WATERING\";\n     msg.color = \"orange\";\n    break;\n  case 3:\n     msg.valueText = \"DRAINING\";\n     msg.color = \"blue\";\n    break;\n  default:\n     msg.valueText = \"???\";\n     msg.color = \"black\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -6062,12 +6062,14 @@
         "id": "334201a8.6c15be",
         "type": "function",
         "z": "789e39dd.fc3078",
+        "d": true,
         "name": "Temp/Humidity to array",
         "func": "var InternalTemp = {}\nvar InternalHumidity = {}\nvar ExternalTemp = {}\nvar ExternalHumidity = {}\n\nInternalTemp.payload = parseFloat(msg.payload.DHT1.T);\nInternalTemp.topic = 'Internal Temp';\n\nInternalHumidity.payload = parseFloat(msg.payload.DHT1.H);\nInternalHumidity.topic = 'Internal Humidity';\n\nExternalTemp.payload = parseFloat(msg.payload.Res1.AT);\nExternalTemp.topic = 'External Temp';\n\nExternalHumidity.payload = parseFloat(msg.payload.Res1.H);\nExternalHumidity.topic = 'External Humidity';\n\nreturn [InternalTemp,InternalHumidity,ExternalTemp,ExternalHumidity]",
         "outputs": 4,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 1200,
         "y": 1440,
         "wires": [
@@ -6114,6 +6116,7 @@
         "id": "2b9039d1.1a8006",
         "type": "delay",
         "z": "789e39dd.fc3078",
+        "d": true,
         "name": "Rate limit - 1min",
         "pauseType": "rate",
         "timeout": "5",
@@ -8012,7 +8015,7 @@
         "name": "Gbox420 Bucket1 State",
         "server": "a7c93785.9fe448",
         "version": 1,
-        "debugenabled": false,
+        "debugenabled": true,
         "outputs": 1,
         "entityType": "sensor",
         "config": [
@@ -8033,7 +8036,7 @@
                 "value": ""
             }
         ],
-        "state": "payload",
+        "state": "valueText",
         "stateType": "msg",
         "attributes": [
             {
@@ -8083,7 +8086,7 @@
                 "value": ""
             }
         ],
-        "state": "payload",
+        "state": "valueText",
         "stateType": "msg",
         "attributes": [
             {
@@ -8733,7 +8736,7 @@
                 "value": ""
             }
         ],
-        "state": "payload",
+        "state": "valueText",
         "stateType": "msg",
         "attributes": [
             {
@@ -8783,7 +8786,7 @@
                 "value": ""
             }
         ],
-        "state": "payload",
+        "state": "valueText",
         "stateType": "msg",
         "attributes": [
             {
@@ -9483,7 +9486,7 @@
                 "value": ""
             }
         ],
-        "state": "payload",
+        "state": "valueText",
         "stateType": "msg",
         "attributes": [
             {
@@ -9533,7 +9536,7 @@
                 "value": ""
             }
         ],
-        "state": "payload",
+        "state": "valueText",
         "stateType": "msg",
         "attributes": [
             {
@@ -9658,7 +9661,7 @@
         "type": "function",
         "z": "789e39dd.fc3078",
         "name": "Module state",
-        "func": "switch(msg.payload) {\n  case \"0\":\n    msg.payload = \"OFFLINE\";\n    msg.color = \"red\";\n    break;\n  case \"1\":\n     msg.payload = \"ONLINE\";\n     msg.color = \"lime\";\n    break;\n  default:\n     msg.payload = \"OFFLINE\";\n     msg.color = \"red\";\n    break;\n}\nmsg.valueText = msg.payload;\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"OFFLINE\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"ONLINE\";\n     msg.color = \"lime\";\n    break;\n  default:\n     msg.valueText = \"OFFLINE\";\n     msg.color = \"red\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -9702,7 +9705,7 @@
                 "value": ""
             }
         ],
-        "state": "payload",
+        "state": "valueText",
         "stateType": "msg",
         "attributes": [
             {
@@ -9784,7 +9787,7 @@
                 "value": ""
             }
         ],
-        "state": "payload",
+        "state": "valueText",
         "stateType": "msg",
         "attributes": [
             {
@@ -9811,7 +9814,7 @@
         "type": "function",
         "z": "789e39dd.fc3078",
         "name": "Module state",
-        "func": "switch(msg.payload) {\n  case \"0\":\n    msg.payload = \"OFFLINE\";\n    msg.color = \"red\";\n    break;\n  case \"1\":\n     msg.payload = \"ONLINE\";\n     msg.color = \"lime\";\n    break;\n  default:\n     msg.payload = \"OFFLINE\";\n     msg.color = \"red\";\n    break;\n}\nmsg.valueText = msg.payload;\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"OFFLINE\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"ONLINE\";\n     msg.color = \"lime\";\n    break;\n  default:\n     msg.valueText = \"OFFLINE\";\n     msg.color = \"red\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -9832,7 +9835,7 @@
         "type": "function",
         "z": "789e39dd.fc3078",
         "name": "Module state",
-        "func": "switch(msg.payload) {\n  case \"0\":\n    msg.payload = \"OFFLINE\";\n    msg.color = \"red\";\n    break;\n  case \"1\":\n     msg.payload = \"ONLINE\";\n     msg.color = \"lime\";\n    break;\n  default:\n     msg.payload = \"OFFLINE\";\n     msg.color = \"red\";\n    break;\n}\nmsg.valueText = msg.payload;\nreturn msg;",
+        "func": "switch(msg.payload) {\n  case 0:\n    msg.valueText = \"OFFLINE\";\n    msg.color = \"red\";\n    break;\n  case 1:\n     msg.valueText = \"ONLINE\";\n     msg.color = \"lime\";\n    break;\n  default:\n     msg.valueText = \"OFFLINE\";\n     msg.color = \"red\";\n    break;\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -9876,7 +9879,7 @@
                 "value": ""
             }
         ],
-        "state": "payload",
+        "state": "valueText",
         "stateType": "msg",
         "attributes": [
             {
@@ -10680,7 +10683,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "msg.payload.PSt",
+                "to": "$number(msg.payload.PSt)",
                 "tot": "jsonata"
             },
             {
@@ -10755,7 +10758,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "msg.payload.AS",
+                "to": "$number(msg.payload.AS)",
                 "tot": "jsonata"
             },
             {
@@ -10778,7 +10781,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1160,
+        "x": 1170,
         "y": 3800,
         "wires": [
             [
@@ -10814,7 +10817,7 @@
         "type": "switch",
         "z": "789e39dd.fc3078",
         "name": "Alerts active",
-        "property": "Alerts",
+        "property": "ActiveAlerts",
         "propertyType": "flow",
         "rules": [
             {
@@ -10922,7 +10925,7 @@
         "type": "function",
         "z": "789e39dd.fc3078",
         "name": "Format Alerts",
-        "func": "msg.Alerts = \"\"\nfor (var alert of flow.get(\"Alerts\")) {\nmsg.Alerts = msg.Alerts + \"&nbsp;&nbsp;·&nbsp;\"+ alert + \"<br>\";\n}\n\nreturn msg;",
+        "func": "msg.Alerts = \"\"\nfor (var alert of flow.get(\"ActiveAlerts\")) {\nmsg.Alerts = msg.Alerts + \"&nbsp;&nbsp;·&nbsp;\"+ alert + \"<br>\";\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -10962,7 +10965,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "msg.payload.H2",
+                "to": "$number(msg.payload.H2)",
                 "tot": "jsonata"
             },
             {
@@ -11003,7 +11006,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "msg.payload.P2",
+                "to": "$number(msg.payload.P2)",
                 "tot": "jsonata"
             },
             {
@@ -11044,7 +11047,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "msg.payload.S",
+                "to": "$number(msg.payload.S)",
                 "tot": "jsonata"
             },
             {
@@ -11313,12 +11316,12 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "msg.payload.S",
+                "to": "$number(msg.payload.S)",
                 "tot": "jsonata"
             },
             {
                 "t": "set",
-                "p": "name",
+                "p": "topic",
                 "pt": "msg",
                 "to": "Hempy module",
                 "tot": "str"
@@ -11329,13 +11332,6 @@
                 "pt": "msg",
                 "to": "1",
                 "tot": "num"
-            },
-            {
-                "t": "set",
-                "p": "value",
-                "pt": "msg",
-                "to": "payload",
-                "tot": "msg"
             }
         ],
         "action": "",
@@ -11361,7 +11357,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "msg.payload.P1",
+                "to": "$number(msg.payload.P1)",
                 "tot": "jsonata"
             },
             {
@@ -11402,7 +11398,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "msg.payload.H1",
+                "to": "$number(msg.payload.H1)",
                 "tot": "jsonata"
             },
             {
@@ -11443,7 +11439,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "msg.payload.S",
+                "to": "$number(msg.payload.S)",
                 "tot": "jsonata"
             },
             {
