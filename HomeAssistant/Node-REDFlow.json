@@ -1406,6 +1406,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 1180,
         "y": 1500,
         "wires": [
@@ -7194,6 +7195,11 @@
                 "property": "timestamp",
                 "value": "",
                 "valueType": "date"
+            },
+            {
+                "property": "value",
+                "value": "payload",
+                "valueType": "msg"
             }
         ],
         "resend": true,
@@ -7244,6 +7250,11 @@
                 "property": "timestamp",
                 "value": "",
                 "valueType": "date"
+            },
+            {
+                "property": "value",
+                "value": "payload",
+                "valueType": "msg"
             }
         ],
         "resend": true,
@@ -8043,6 +8054,11 @@
                 "property": "timestamp",
                 "value": "",
                 "valueType": "date"
+            },
+            {
+                "property": "value",
+                "value": "payload",
+                "valueType": "msg"
             }
         ],
         "resend": true,
@@ -8093,6 +8109,11 @@
                 "property": "timestamp",
                 "value": "",
                 "valueType": "date"
+            },
+            {
+                "property": "value",
+                "value": "payload",
+                "valueType": "msg"
             }
         ],
         "resend": true,
@@ -8743,6 +8764,11 @@
                 "property": "timestamp",
                 "value": "",
                 "valueType": "date"
+            },
+            {
+                "property": "value",
+                "value": "payload",
+                "valueType": "msg"
             }
         ],
         "resend": true,
@@ -8793,6 +8819,11 @@
                 "property": "timestamp",
                 "value": "",
                 "valueType": "date"
+            },
+            {
+                "property": "value",
+                "value": "payload",
+                "valueType": "msg"
             }
         ],
         "resend": true,
@@ -9493,6 +9524,11 @@
                 "property": "timestamp",
                 "value": "",
                 "valueType": "date"
+            },
+            {
+                "property": "value",
+                "value": "payload",
+                "valueType": "msg"
             }
         ],
         "resend": true,
@@ -9543,6 +9579,11 @@
                 "property": "timestamp",
                 "value": "",
                 "valueType": "date"
+            },
+            {
+                "property": "value",
+                "value": "payload",
+                "valueType": "msg"
             }
         ],
         "resend": true,
@@ -9712,6 +9753,11 @@
                 "property": "timestamp",
                 "value": "",
                 "valueType": "date"
+            },
+            {
+                "property": "value",
+                "value": "payload",
+                "valueType": "msg"
             }
         ],
         "resend": true,
@@ -9794,6 +9840,11 @@
                 "property": "timestamp",
                 "value": "",
                 "valueType": "date"
+            },
+            {
+                "property": "value",
+                "value": "payload",
+                "valueType": "msg"
             }
         ],
         "resend": true,
@@ -9886,6 +9937,11 @@
                 "property": "timestamp",
                 "value": "",
                 "valueType": "date"
+            },
+            {
+                "property": "value",
+                "value": "payload",
+                "valueType": "msg"
             }
         ],
         "resend": true,

@@ -64,41 +64,52 @@
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 1,
-          "mappings": [],
-          "max": 35,
-          "min": 0,
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "OFFLINE",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "ONLINE",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "semi-dark-blue",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "semi-dark-green",
-                "value": 20
-              },
-              {
-                "color": "semi-dark-red",
-                "value": 30
+                "color": "green",
+                "value": 1
               }
             ]
-          },
-          "unit": "celsius"
+          }
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 4,
+        "h": 2,
+        "w": 5,
         "x": 0,
         "y": 0
       },
-      "hideTimeOverride": true,
-      "id": 13,
+      "id": 26,
       "options": {
-        "orientation": "horizontal",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -106,32 +117,18 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
+        "text": {},
+        "textMode": "auto"
       },
       "pluginVersion": "7.5.5",
       "targets": [
         {
-          "alias": "Internal",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "°C",
+          "alias": "Aero",
+          "groupBy": [],
+          "measurement": "state",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "Internal temp",
+          "refId": "Aero module",
           "resultFormat": "time_series",
           "select": [
             [
@@ -143,7 +140,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -151,31 +148,18 @@
             {
               "key": "entity_id",
               "operator": "=",
-              "value": "gbox420_internal_temp"
+              "value": "gbox420_aero1_modulestate"
             }
           ]
         },
         {
-          "alias": "External",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "alias": "Hempy",
+          "groupBy": [],
           "hide": false,
-          "measurement": "°C",
+          "measurement": "state",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "External temp",
+          "refId": "Hempy module",
           "resultFormat": "time_series",
           "select": [
             [
@@ -187,7 +171,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -195,84 +179,111 @@
             {
               "key": "entity_id",
               "operator": "=",
-              "value": "gbox420_external_temp"
+              "value": "gbox420_hempy_modulestate"
+            }
+          ]
+        },
+        {
+          "alias": "Reservoir",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "state",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Reservoir module",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_reservoir_modulestate"
             }
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": "0h",
-      "title": "Air temperature",
       "transparent": true,
-      "type": "gauge"
+      "type": "stat"
     },
     {
       "datasource": null,
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "decimals": 1,
-          "mappings": [],
-          "max": 100,
-          "min": 0,
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "OFF",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "LOW",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 3,
+              "text": "HIGH",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "semi-dark-red",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "semi-dark-green",
-                "value": 40
+                "color": "green",
+                "value": 1
               },
               {
-                "color": "semi-dark-blue",
-                "value": 70
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Internal humidity"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "percent"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "External humidity"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "percent"
+                "color": "orange",
+                "value": 2
               }
             ]
           }
-        ]
+        },
+        "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 4,
+        "h": 2,
+        "w": 3,
+        "x": 5,
         "y": 0
       },
-      "hideTimeOverride": true,
-      "id": 14,
+      "id": 27,
       "options": {
-        "orientation": "horizontal",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -280,33 +291,18 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
+        "text": {},
+        "textMode": "auto"
       },
       "pluginVersion": "7.5.5",
       "targets": [
         {
-          "alias": "Internal",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "%",
+          "alias": "Internal fan",
+          "groupBy": [],
+          "measurement": "state",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "Internal humidity",
+          "refId": "Aero module",
           "resultFormat": "time_series",
           "select": [
             [
@@ -318,7 +314,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -326,31 +322,18 @@
             {
               "key": "entity_id",
               "operator": "=",
-              "value": "gbox420_internal_humidity"
+              "value": "gbox420_internal_fan"
             }
           ]
         },
         {
-          "alias": "External",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "alias": "Exhaust fan",
+          "groupBy": [],
           "hide": false,
-          "measurement": "%",
+          "measurement": "state",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "External humidity",
+          "refId": "Hempy module",
           "resultFormat": "time_series",
           "select": [
             [
@@ -362,7 +345,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -370,16 +353,13 @@
             {
               "key": "entity_id",
               "operator": "=",
-              "value": "gbox420_external_humidity"
+              "value": "gbox420_exhaust_fan"
             }
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": "0h",
-      "title": "Humidity",
       "transparent": true,
-      "type": "gauge"
+      "type": "stat"
     },
     {
       "datasource": null,
@@ -426,8 +406,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 3,
+        "h": 2,
+        "w": 2,
         "x": 8,
         "y": 0
       },
@@ -541,7 +521,224 @@
       ],
       "timeFrom": null,
       "timeShift": "0h",
-      "title": "Light brightness",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Aero tote"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "masskg"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "semi-dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 2
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 3
+                    },
+                    {
+                      "color": "semi-dark-green",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Hempy reservoir"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "masskg"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "semi-dark-red",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 4
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 8
+                    },
+                    {
+                      "color": "semi-dark-green",
+                      "value": 10
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 3,
+        "x": 10,
+        "y": 0
+      },
+      "hideTimeOverride": true,
+      "id": 24,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "alias": "Aero tote",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "kg",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Aeroponics tote",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_aero1_weight"
+            }
+          ]
+        },
+        {
+          "alias": "Hempy reservoir",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "kg",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Hempy reservoir",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_reservoir_weight"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": "0h",
       "transparent": true,
       "type": "stat"
     },
@@ -680,9 +877,9 @@
         ]
       },
       "gridPos": {
-        "h": 5,
+        "h": 2,
         "w": 6,
-        "x": 11,
+        "x": 13,
         "y": 0
       },
       "hideTimeOverride": true,
@@ -845,158 +1042,8 @@
       ],
       "timeFrom": null,
       "timeShift": "0h",
-      "title": "Energy usage",
       "transparent": true,
       "type": "stat"
-    },
-    {
-      "datasource": null,
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 2,
-          "mappings": [],
-          "max": 8,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "semi-dark-yellow",
-                "value": null
-              },
-              {
-                "color": "semi-dark-green",
-                "value": 5
-              },
-              {
-                "color": "semi-dark-red",
-                "value": 7
-              }
-            ]
-          },
-          "unit": "pressurebar"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 17,
-        "y": 0
-      },
-      "hideTimeOverride": true,
-      "id": 5,
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.5.5",
-      "targets": [
-        {
-          "alias": "Tank",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "bar",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Tank pressure",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_aero1_pressure"
-            }
-          ]
-        },
-        {
-          "alias": "Last spray",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "bar",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Last spray",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_aero1_lastspray"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": "0h",
-      "title": "Aeroponics pressure",
-      "transparent": true,
-      "type": "gauge"
     },
     {
       "aliasColors": {},
@@ -1011,10 +1058,10 @@
       "fill": 0,
       "fillGradient": 0,
       "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 8,
         "x": 0,
-        "y": 5
+        "y": 2
       },
       "hiddenSeries": false,
       "hideTimeOverride": true,
@@ -1289,68 +1336,63 @@
       }
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": null,
+      "description": "",
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 35,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-blue",
+                "value": null
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 20
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 30
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
-        "h": 10,
-        "w": 8,
+        "h": 4,
+        "w": 4,
         "x": 8,
-        "y": 5
+        "y": 2
       },
-      "hiddenSeries": false,
       "hideTimeOverride": true,
-      "id": 20,
-      "interval": null,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "maxDataPoints": null,
-      "nullPointMode": "null",
+      "id": 13,
       "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.5.5",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "$$hashKey": "object:922",
-          "alias": "Reservoir weight",
-          "color": "#1F60C4"
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
         },
-        {
-          "$$hashKey": "object:2145",
-          "alias": "Water temp",
-          "color": "#C4162A",
-          "fill": 0,
-          "yaxis": 2
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.5.5",
       "targets": [
         {
-          "alias": "Water temp",
+          "alias": "Internal",
           "groupBy": [
             {
               "params": [
@@ -1360,16 +1402,15 @@
             },
             {
               "params": [
-                "previous"
+                "null"
               ],
               "type": "fill"
             }
           ],
-          "hide": false,
           "measurement": "°C",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "Water temp",
+          "refId": "Internal temp",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1389,12 +1430,453 @@
             {
               "key": "entity_id",
               "operator": "=",
-              "value": "gbox420_reservoir_watertemp"
+              "value": "gbox420_internal_temp"
             }
           ]
         },
         {
-          "alias": "Reservoir weight",
+          "alias": "External",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "°C",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "External temp",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_external_temp"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": "0h",
+      "transparent": true,
+      "type": "gauge"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-red",
+                "value": null
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 40
+              },
+              {
+                "color": "semi-dark-blue",
+                "value": 70
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Internal humidity"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "External humidity"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 2
+      },
+      "hideTimeOverride": true,
+      "id": 14,
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "alias": "Internal",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "%",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Internal humidity",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_internal_humidity"
+            }
+          ]
+        },
+        {
+          "alias": "External",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "%",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "External humidity",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_external_humidity"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": "0h",
+      "transparent": true,
+      "type": "gauge"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pressurebar"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Weight"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "masskg"
+              }
+            ]
+          }
+        ]
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 2
+      },
+      "hiddenSeries": false,
+      "hideTimeOverride": true,
+      "id": 7,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 2,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.5.5",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:1748",
+          "alias": "Min",
+          "color": "#FADE2A",
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:1753",
+          "alias": "Max",
+          "color": "#73BF69",
+          "fill": 0
+        },
+        {
+          "$$hashKey": "object:328",
+          "alias": "Weight",
+          "color": "#3274D9",
+          "yaxis": 2
+        },
+        {
+          "$$hashKey": "object:3518",
+          "alias": "Pressure",
+          "color": "#E02F44",
+          "fill": 0
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Pressure",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "bar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Pressure",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_aero1_pressure"
+            }
+          ]
+        },
+        {
+          "alias": "Min",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "bar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Min pressure",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_aero1_minpressure"
+            }
+          ]
+        },
+        {
+          "alias": "Max",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "bar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Max pressure",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_aero1_maxpressure"
+            }
+          ]
+        },
+        {
+          "alias": "Weight",
           "groupBy": [
             {
               "params": [
@@ -1425,7 +1907,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -1433,50 +1915,7 @@
             {
               "key": "entity_id",
               "operator": "=",
-              "value": "gbox420_reservoir_weight"
-            }
-          ]
-        },
-        {
-          "alias": "pH",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "pH",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_reservoir_ph"
+              "value": "gbox420_aero1_weight"
             }
           ]
         }
@@ -1485,7 +1924,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": "0h",
-      "title": "Reservoir",
+      "title": "Aero pressure",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1502,289 +1941,28 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:791",
-          "format": "masskg",
+          "$$hashKey": "object:1720",
+          "format": "pressurebar",
           "label": null,
           "logBase": 1,
-          "max": "25",
+          "max": null,
           "min": "0",
           "show": true
         },
         {
-          "$$hashKey": "object:792",
-          "format": "celsius",
+          "$$hashKey": "object:1721",
+          "format": "masskg",
           "label": null,
           "logBase": 1,
-          "max": "25",
+          "max": null,
           "min": "0",
           "show": true
         }
       ],
       "yaxis": {
         "align": true,
-        "alignLevel": 30
+        "alignLevel": 20
       }
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Duration"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "s"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "dark-purple",
-                      "value": null
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Day interval"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "m"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "semi-dark-purple",
-                      "value": null
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Night interval"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "m"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "light-purple",
-                      "value": null
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 8,
-        "x": 16,
-        "y": 5
-      },
-      "hideTimeOverride": true,
-      "id": 18,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "vertical",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.5.5",
-      "targets": [
-        {
-          "alias": "Duration",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "sec",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Duration",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_aero1_sprayduration"
-            }
-          ]
-        },
-        {
-          "alias": "Day interval",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "min",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Day interval",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_aero1_dayinterval"
-            }
-          ]
-        },
-        {
-          "alias": "Night interval",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "min",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Night interval",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_aero1_nightinterval"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": "0h",
-      "title": "Aeroponics timing",
-      "transparent": true,
-      "type": "stat"
     },
     {
       "datasource": null,
@@ -1796,108 +1974,38 @@
           },
           "decimals": 2,
           "mappings": [],
+          "max": 8,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "semi-dark-yellow",
                 "value": null
               },
               {
-                "color": "orange",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Aeroponics tote"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "masskg"
+                "color": "semi-dark-green",
+                "value": 5
               },
               {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "semi-dark-red",
-                      "value": null
-                    },
-                    {
-                      "color": "orange",
-                      "value": 2
-                    },
-                    {
-                      "color": "#EAB839",
-                      "value": 3
-                    },
-                    {
-                      "color": "semi-dark-green",
-                      "value": 4
-                    }
-                  ]
-                }
+                "color": "semi-dark-red",
+                "value": 7
               }
             ]
           },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Hempy reservoir"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "masskg"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "semi-dark-red",
-                      "value": null
-                    },
-                    {
-                      "color": "orange",
-                      "value": 4
-                    },
-                    {
-                      "color": "yellow",
-                      "value": 8
-                    },
-                    {
-                      "color": "semi-dark-green",
-                      "value": 10
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        ]
+          "unit": "pressurebar"
+        },
+        "overrides": []
       },
       "gridPos": {
         "h": 5,
         "w": 8,
-        "x": 16,
-        "y": 10
+        "x": 8,
+        "y": 6
       },
       "hideTimeOverride": true,
-      "id": 24,
+      "id": 5,
       "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "vertical",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1905,13 +2013,14 @@
           "fields": "",
           "values": false
         },
-        "text": {},
-        "textMode": "auto"
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
       },
       "pluginVersion": "7.5.5",
       "targets": [
         {
-          "alias": "Aeroponics tote",
+          "alias": "Tank",
           "groupBy": [
             {
               "params": [
@@ -1926,11 +2035,10 @@
               "type": "fill"
             }
           ],
-          "hide": false,
-          "measurement": "kg",
+          "measurement": "bar",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "Aeroponics tote",
+          "refId": "Tank pressure",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1942,7 +2050,7 @@
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               }
             ]
           ],
@@ -1950,12 +2058,12 @@
             {
               "key": "entity_id",
               "operator": "=",
-              "value": "gbox420_aero1_weight"
+              "value": "gbox420_aero1_pressure"
             }
           ]
         },
         {
-          "alias": "Hempy reservoir",
+          "alias": "Last spray",
           "groupBy": [
             {
               "params": [
@@ -1971,10 +2079,10 @@
             }
           ],
           "hide": false,
-          "measurement": "kg",
+          "measurement": "bar",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "Hempy reservoir",
+          "refId": "Last spray",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1986,7 +2094,7 @@
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               }
             ]
           ],
@@ -1994,16 +2102,15 @@
             {
               "key": "entity_id",
               "operator": "=",
-              "value": "gbox420_reservoir_weight"
+              "value": "gbox420_aero1_lastspray"
             }
           ]
         }
       ],
       "timeFrom": null,
       "timeShift": "0h",
-      "title": "Nutrient solution",
       "transparent": true,
-      "type": "stat"
+      "type": "gauge"
     },
     {
       "aliasColors": {},
@@ -2021,19 +2128,21 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 8,
         "x": 0,
-        "y": 15
+        "y": 11
       },
       "hiddenSeries": false,
       "hideTimeOverride": true,
       "id": 2,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": false
@@ -2316,10 +2425,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 8,
         "x": 8,
-        "y": 15
+        "y": 11
       },
       "hiddenSeries": false,
       "hideTimeOverride": true,
@@ -2601,35 +2710,21 @@
       "dashes": false,
       "datasource": null,
       "fieldConfig": {
-        "defaults": {
-          "unit": "pressurebar"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Weight"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "masskg"
-              }
-            ]
-          }
-        ]
+        "defaults": {},
+        "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 10,
+        "h": 9,
         "w": 8,
         "x": 16,
-        "y": 15
+        "y": 11
       },
       "hiddenSeries": false,
       "hideTimeOverride": true,
-      "id": 7,
+      "id": 20,
+      "interval": null,
       "legend": {
         "avg": false,
         "current": false,
@@ -2641,6 +2736,7 @@
       },
       "lines": true,
       "linewidth": 2,
+      "maxDataPoints": null,
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
@@ -2652,28 +2748,16 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:1748",
-          "alias": "Min",
-          "color": "#FADE2A",
-          "fill": 0
+          "$$hashKey": "object:922",
+          "alias": "Reservoir weight",
+          "color": "#1F60C4"
         },
         {
-          "$$hashKey": "object:1753",
-          "alias": "Max",
-          "color": "#73BF69",
-          "fill": 0
-        },
-        {
-          "$$hashKey": "object:328",
-          "alias": "Weight",
-          "color": "#3274D9",
+          "$$hashKey": "object:2145",
+          "alias": "Water temp",
+          "color": "#C4162A",
+          "fill": 0,
           "yaxis": 2
-        },
-        {
-          "$$hashKey": "object:3518",
-          "alias": "Pressure",
-          "color": "#E02F44",
-          "fill": 0
         }
       ],
       "spaceLength": 10,
@@ -2681,50 +2765,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Pressure",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "bar",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Pressure",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_aero1_pressure"
-            }
-          ]
-        },
-        {
-          "alias": "Min",
+          "alias": "Water temp",
           "groupBy": [
             {
               "params": [
@@ -2740,10 +2781,10 @@
             }
           ],
           "hide": false,
-          "measurement": "bar",
+          "measurement": "°C",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "Min pressure",
+          "refId": "Water temp",
           "resultFormat": "time_series",
           "select": [
             [
@@ -2763,56 +2804,12 @@
             {
               "key": "entity_id",
               "operator": "=",
-              "value": "gbox420_aero1_minpressure"
+              "value": "gbox420_reservoir_watertemp"
             }
           ]
         },
         {
-          "alias": "Max",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "previous"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "bar",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "Max pressure",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "entity_id",
-              "operator": "=",
-              "value": "gbox420_aero1_maxpressure"
-            }
-          ]
-        },
-        {
-          "alias": "Weight",
+          "alias": "Reservoir weight",
           "groupBy": [
             {
               "params": [
@@ -2843,7 +2840,7 @@
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               }
             ]
           ],
@@ -2851,7 +2848,50 @@
             {
               "key": "entity_id",
               "operator": "=",
-              "value": "gbox420_aero1_weight"
+              "value": "gbox420_reservoir_weight"
+            }
+          ]
+        },
+        {
+          "alias": "pH",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "pH",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_reservoir_ph"
             }
           ]
         }
@@ -2860,7 +2900,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": "0h",
-      "title": "Aero pressure",
+      "title": "Reservoir",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -2877,28 +2917,1124 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1720",
-          "format": "pressurebar",
+          "$$hashKey": "object:791",
+          "format": "masskg",
           "label": null,
           "logBase": 1,
-          "max": null,
+          "max": "25",
           "min": "0",
           "show": true
         },
         {
-          "$$hashKey": "object:1721",
-          "format": "masskg",
+          "$$hashKey": "object:792",
+          "format": "celsius",
           "label": null,
           "logBase": 1,
-          "max": null,
+          "max": "25",
           "min": "0",
           "show": true
         }
       ],
       "yaxis": {
         "align": true,
-        "alignLevel": 20
+        "alignLevel": 30
       }
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "DISABLED",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "IDLE",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 3,
+              "text": "WATERING",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            },
+            {
+              "from": "",
+              "id": 4,
+              "text": "DRAINING",
+              "to": "",
+              "type": 1,
+              "value": "3"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              },
+              {
+                "color": "#EAB839",
+                "value": 2
+              },
+              {
+                "color": "#6ED0E0",
+                "value": 3
+              },
+              {
+                "color": "red",
+                "value": 4
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 0,
+        "y": 20
+      },
+      "id": 31,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "alias": "Bucket 1",
+          "groupBy": [],
+          "measurement": "state",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Bucket 1",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_bucket1_state"
+            }
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "DISABLED",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "IDLE",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 3,
+              "text": "RUNNING",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              },
+              {
+                "color": "#EAB839",
+                "value": 2
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 2,
+        "y": 20
+      },
+      "id": 32,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "alias": "Pump 1",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "state",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Pump 1",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_bucket1_pumpstate"
+            }
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "DISABLED",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "IDLE",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 3,
+              "text": "WATERING",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            },
+            {
+              "from": "",
+              "id": 4,
+              "text": "DRAINING",
+              "to": "",
+              "type": 1,
+              "value": "3"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              },
+              {
+                "color": "#EAB839",
+                "value": 2
+              },
+              {
+                "color": "#6ED0E0",
+                "value": 3
+              },
+              {
+                "color": "red",
+                "value": 4
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 4,
+        "y": 20
+      },
+      "id": 29,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "alias": "Bucket 2",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "state",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Bucket 2",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_bucket2_state"
+            }
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "DISABLED",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "IDLE",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 3,
+              "text": "RUNNING",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              },
+              {
+                "color": "#EAB839",
+                "value": 2
+              },
+              {
+                "color": "red",
+                "value": 3
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 6,
+        "y": 20
+      },
+      "id": 33,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "alias": "Pump 2",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "state",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Pump 2",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_bucket2_pumpstate"
+            }
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Duration"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "dark-purple",
+                      "value": null
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Day interval"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "m"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "semi-dark-purple",
+                      "value": null
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Night interval"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "m"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "light-purple",
+                      "value": null
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 5,
+        "x": 8,
+        "y": 20
+      },
+      "hideTimeOverride": true,
+      "id": 18,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "alias": "Duration",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "sec",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Duration",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_aero1_sprayduration"
+            }
+          ]
+        },
+        {
+          "alias": "Day interval",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "min",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Day interval",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_aero1_dayinterval"
+            }
+          ]
+        },
+        {
+          "alias": "Night interval",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "previous"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "min",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Night interval",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_aero1_nightinterval"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": "0h",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "DISABLED",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "IDLE",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 3,
+              "text": "SPRAY",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            },
+            {
+              "from": "",
+              "id": 4,
+              "text": "STOPSPRAY",
+              "to": "",
+              "type": 1,
+              "value": "3"
+            },
+            {
+              "from": "",
+              "id": 5,
+              "text": "RELEASE",
+              "to": "",
+              "type": 1,
+              "value": "4"
+            },
+            {
+              "from": "",
+              "id": 6,
+              "text": "REFILL",
+              "to": "",
+              "type": 1,
+              "value": "5"
+            },
+            {
+              "from": "",
+              "id": 7,
+              "text": "DRAIN",
+              "to": "",
+              "type": 1,
+              "value": "6"
+            },
+            {
+              "from": "",
+              "id": 8,
+              "text": "MIX",
+              "to": "",
+              "type": 1,
+              "value": "7"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              },
+              {
+                "color": "blue",
+                "value": 2
+              },
+              {
+                "color": "#EAB839",
+                "value": 3
+              },
+              {
+                "color": "light-purple",
+                "value": 4
+              },
+              {
+                "color": "super-light-green",
+                "value": 5
+              },
+              {
+                "color": "orange",
+                "value": 6
+              },
+              {
+                "color": "dark-purple",
+                "value": 7
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 13,
+        "y": 20
+      },
+      "id": 30,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "alias": "Aero",
+          "groupBy": [],
+          "measurement": "state",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Aero module",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_aero1_state"
+            }
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "DISABLED",
+              "to": "",
+              "type": 1,
+              "value": "0"
+            },
+            {
+              "from": "",
+              "id": 2,
+              "text": "IDLE",
+              "to": "",
+              "type": 1,
+              "value": "1"
+            },
+            {
+              "from": "",
+              "id": 3,
+              "text": "PRIMING",
+              "to": "",
+              "type": 1,
+              "value": "2"
+            },
+            {
+              "from": "",
+              "id": 4,
+              "text": "RUNNING",
+              "to": "",
+              "type": 1,
+              "value": "3"
+            },
+            {
+              "from": "",
+              "id": 5,
+              "text": "BLOWOFF",
+              "to": "",
+              "type": 1,
+              "value": "4"
+            },
+            {
+              "from": "",
+              "id": 6,
+              "text": "MIX",
+              "to": "",
+              "type": 1,
+              "value": "5"
+            },
+            {
+              "from": "",
+              "id": 7,
+              "text": "BYPASSCLOSING",
+              "to": "",
+              "type": 1,
+              "value": "6"
+            },
+            {
+              "from": "",
+              "id": 8,
+              "text": "BYPASSOPEN",
+              "to": "",
+              "type": 1,
+              "value": "7"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              },
+              {
+                "color": "#EAB839",
+                "value": 2
+              },
+              {
+                "color": "orange",
+                "value": 3
+              },
+              {
+                "color": "super-light-yellow",
+                "value": 4
+              },
+              {
+                "color": "dark-purple",
+                "value": 5
+              },
+              {
+                "color": "dark-blue",
+                "value": 6
+              },
+              {
+                "color": "light-blue",
+                "value": 7
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 15,
+        "y": 20
+      },
+      "id": 34,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.5",
+      "targets": [
+        {
+          "alias": "Pump",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "state",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "Hempy module",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "gbox420_aero1_pumpstate"
+            }
+          ]
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
     }
   ],
   "refresh": false,
@@ -2931,5 +4067,5 @@
   "timezone": "",
   "title": "Gbox420",
   "uid": "x84g-i9Gz",
-  "version": 182
+  "version": 223
 }
