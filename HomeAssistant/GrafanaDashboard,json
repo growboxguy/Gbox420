@@ -2891,7 +2891,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         }
       ],
@@ -2931,5 +2931,5 @@
   "timezone": "",
   "title": "Gbox420",
   "uid": "x84g-i9Gz",
-  "version": 181
+  "version": 182
 }
