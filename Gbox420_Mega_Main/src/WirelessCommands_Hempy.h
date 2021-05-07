@@ -78,7 +78,7 @@ struct HempyModuleResponse : HempyCommonTemplate ///< Hempy module wireless resp
 {
    HempyModuleResponse(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
    HempyModuleResponse(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool Status) : HempyCommonTemplate(SequenceID) {}
-   bool Status = true;
+   bool Status = false;
 };
 
 struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless command
@@ -97,7 +97,7 @@ struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless comma
    float EvaporationTarget = 0.0;
    float OverflowTarget = 0.0;
    float WasteLimit = 0.0;
-   uint16_t DrainWaitTime;
+   uint16_t DrainWaitTime = 0;
 };
 
 struct HempyBucketResponse : HempyCommonTemplate ///< Hempy bucket wireless response

@@ -70,7 +70,7 @@ struct ReservoirModuleResponse : ReservoirCommonTemplate ///< Max 32 bytes. Resp
 {
    ReservoirModuleResponse(__attribute__((unused)) ReservoirMessages SequenceID) : ReservoirCommonTemplate(SequenceID) {}
    ReservoirModuleResponse(__attribute__((unused)) ReservoirMessages SequenceID, __attribute__((unused)) bool Status) : ReservoirCommonTemplate(SequenceID) {}
-   bool Status = true;
+   bool Status = false;
 };
 
 struct ReservoirCommand : ReservoirCommonTemplate ///< Max 32 bytes. Command sent by the Main module

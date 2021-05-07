@@ -80,7 +80,7 @@ struct AeroModuleResponse : AeroCommonTemplate ///< Aeroponics wireless module r
 {
    AeroModuleResponse(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
    AeroModuleResponse(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool Status) : AeroCommonTemplate(SequenceID) {}
-   bool Status = true;
+   bool Status = false;
 };
 
 struct AeroCommand_P1 : AeroCommonTemplate ///< Aeroponics wireless commands - Part1
