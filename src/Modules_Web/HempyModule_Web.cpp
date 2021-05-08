@@ -139,7 +139,6 @@ void HempyModule_Web::commandEvent(char *Command, char *Data)
       HempyBucketCommand1ToSend.StartWatering = true;
       Parent->addToLog(F("Watering HempyBucket 1"), false);
     }
-
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1Off")) == 0)
     {
       HempyBucketCommand1ToSend.StopWatering = true;
@@ -230,7 +229,6 @@ void HempyModule_Web::commandEvent(char *Command, char *Data)
       HempyBucketCommand2ToSend.TareWeightWR = true;
       Parent->addToLog(F("Taring Bucket 2 waste scale"), false);
     }
-
     else if (strcmp_P(ShortMessage, (PGM_P)F("B2ET")) == 0)
     {
       DefaultSettings->EvaporationTarget_B2 = toFloat(Data);
@@ -342,7 +340,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         break;
       case HempyMessages::HempyBucketResponse1:
         memcpy(&HempyBucketResponse1Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
-        if (HempyBucketCommand1ToSend.Disable || HempyBucketCommand1ToSend.StartWatering || HempyBucketCommand1ToSend.StopWatering || HempyBucketCommand1ToSend.TareWeightB || HempyBucketCommand2ToSend.TareWeightDW || HempyBucketCommand1ToSend.TareWeightWR) ///< Turn off command flags
+        if (HempyBucketCommand1ToSend.Disable || HempyBucketCommand1ToSend.StartWatering || HempyBucketCommand1ToSend.StopWatering || HempyBucketCommand1ToSend.TareWeightB || HempyBucketCommand1ToSend.TareWeightDW || HempyBucketCommand1ToSend.TareWeightWR) ///< Turn off command flags
         {
           SyncRequested = true; ///< Force a second packet to actualize the response
           HempyBucketCommand1ToSend.Disable = false;
