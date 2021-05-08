@@ -32,8 +32,7 @@ void WeightSensor::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
   if (TareRequested)
-  {
-    TareRequested = false;
+  {    
     tare();
   }
   if (CalibrateRequested)
@@ -90,12 +89,14 @@ void WeightSensor::triggerTare()
 
 void WeightSensor::tare() ///< Time intense, cannot be called straight from the website. Response would time out.
 {
+  TareRequested = false;  ///< Clear the flag requesting a tare
   Sensor->tare();
   *Offset = Sensor->get_offset();
   AverageWeight->reset();
-  // appendName(true);
-  // strcat_P(ShortMessage, (PGM_P)F("tared"));
-  // Parent->addToLog(ShortMessage);
+  appendName(true);
+  strcat_P(ShortMessage, (PGM_P)F(" offset "));
+  strcat(ShortMessage, toText(*Offset));
+  Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
 
