@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version =9; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 10; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -95,7 +95,7 @@ typedef struct
     long Offset;    ///< Reading at 0 weight on the scale
     float Scale;    ///< Scale factor
   };
-  struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = 133716, .Scale = -7369.10};    ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = 378161, .Scale = -21484.20};    ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
   struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = -182833, .Scale = -22089.00};   ///< Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
   struct WeightSensorSettings WeightWR1 = {.DTPin = A0, .SCKPin = A1, .Offset = -76382, .Scale = -22697.10}; ///< Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
   struct WeightSensorSettings WeightWR2 = {.DTPin = A2, .SCKPin = A3, .Offset = 260682, .Scale = -22084.60}; ///< Waste Reservoir 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino

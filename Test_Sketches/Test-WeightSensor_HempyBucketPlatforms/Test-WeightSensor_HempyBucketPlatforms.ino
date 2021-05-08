@@ -15,8 +15,8 @@ const float WeightSensor2_CalibrationWeight = 10.0; //SET THIS TO the reference 
 
 //Initial calibration values, once the calibration you can update these values and change CalibrationComplete to true
 bool CalibrationComplete = false; //Set this to true to skip the calibration and use the Offset and Scale values defined in the sketch
-long WeightSensor1_Offset = 133716;
-float WeightSensor1_Scale = -7369.10;
+long WeightSensor1_Offset = 378161;
+float WeightSensor1_Scale = -21484.20;
 long WeightSensor2_Offset = -182833;
 float WeightSensor2_Scale = -22089.00;
 
