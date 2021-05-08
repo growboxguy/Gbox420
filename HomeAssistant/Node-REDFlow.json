@@ -233,17 +233,11 @@
         "id": "c4aa95f6.0a88",
         "type": "ui_group",
         "name": "Default",
-        "tab": "b06ddd9b.614eb8",
+        "tab": "",
         "order": 1,
         "disp": false,
         "width": "24",
         "collapse": false
-    },
-    {
-        "id": "b06ddd9b.614eb8",
-        "type": "ui_tab",
-        "name": "Home",
-        "icon": "dashboard"
     },
     {
         "id": "6dd08518.542dac",
@@ -349,17 +343,21 @@
         "id": "1ebe6305.3aa6ad",
         "type": "ui_group",
         "name": "LAB",
-        "tab": "2d3c18ea.7ea3d8",
+        "tab": "",
         "order": 3,
         "disp": false,
         "width": "6",
         "collapse": false
     },
     {
-        "id": "2d3c18ea.7ea3d8",
-        "type": "ui_tab",
-        "name": "Table",
-        "icon": "dashboard"
+        "id": "5c06971a.d78e58",
+        "type": "ui_group",
+        "name": "DemoTab",
+        "tab": "",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
     },
     {
         "id": "dcfc5be0.736668",
@@ -1027,7 +1025,7 @@
         "label": "",
         "format": "<font color={{msg.Color}} ><i class=\"fa fa-circle\" style=\"font-size:30px;\"></i>&nbsp;</font>{{msg.Text}}",
         "layout": "row-left",
-        "x": 1850,
+        "x": 1860,
         "y": 420,
         "wires": []
     },
@@ -6496,6 +6494,11 @@
                 "property": "timestamp",
                 "value": "",
                 "valueType": "date"
+            },
+            {
+                "property": "value",
+                "value": "payload",
+                "valueType": "msg"
             }
         ],
         "resend": true,
@@ -10025,7 +10028,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1160,
+        "x": 1170,
         "y": 420,
         "wires": [
             [
@@ -10991,25 +10994,9 @@
         "y": 180,
         "wires": [
             [
-                "fa5ede26.292e5"
+                "b03ce495.811338"
             ]
         ]
-    },
-    {
-        "id": "fa5ede26.292e5",
-        "type": "ui_text",
-        "z": "789e39dd.fc3078",
-        "group": "6dd08518.542dac",
-        "order": 1,
-        "width": 7,
-        "height": "2",
-        "name": "Alerts",
-        "label": "",
-        "format": "{{msg.Alerts}}",
-        "layout": "row-left",
-        "x": 1840,
-        "y": 180,
-        "wires": []
     },
     {
         "id": "423860e6.85342",
@@ -14015,6 +14002,26 @@
             [
                 "2aedf045.5c2b9"
             ]
+        ]
+    },
+    {
+        "id": "b03ce495.811338",
+        "type": "ui_template",
+        "z": "789e39dd.fc3078",
+        "group": "6dd08518.542dac",
+        "name": "Alerts template",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<div style=\"height:auto; overflow:auto\" ng-bind-html=\"msg.Alerts\"></div>\n\n<style>\n  #GrowBox_Alerts > div {\n       height:200px;\n   }\n   \n  #GrowBox_Alerts > div > p[style] {\n      height:100% !important;\n  }\n  \n   #GrowBox_Alerts_cards[style] {\n      height:100% !important;\n  }\n  \n  #GrowBox_Alerts_cards > md-card[style] {\n       height:100% !important;\n  }\n </style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 1860,
+        "y": 180,
+        "wires": [
+            []
         ]
     }
 ]
