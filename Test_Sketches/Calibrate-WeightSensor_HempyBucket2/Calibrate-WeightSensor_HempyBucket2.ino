@@ -15,10 +15,10 @@ const float WeightWR2_CalibrationWeight = 10.0; //SET THIS TO the reference weig
 
 //Initial calibration values, once the calibration you can update these values and change CalibrationComplete to true
 bool CalibrationComplete = false; //Set this to true to skip the calibration and use the Offset and Scale values defined in the sketch
-long WeightB2_Offset = -163641;
-float WeightB2_Scale = -21362.00;
-long WeightWR2_Offset = 402140;
-float WeightWR2_Scale = -21218.50;
+long WeightB2_Offset = -182833;
+float WeightB2_Scale = -22089.00;
+long WeightWR2_Offset = 260682;
+float WeightWR2_Scale = -22084.60;
 
 HX711 WeightB2;
 HX711 WeightWR2;
