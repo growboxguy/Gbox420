@@ -117,9 +117,15 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     {
       logToSerials(((ReservoirCommand *)ReceivedCommand)->TareWeight, true, 1);
     }
-    if (((ReservoirCommand *)ReceivedCommand)->TareWeight)
+    if (((ReservoirCommand *)ReceivedCommand)->TareWeight && !HempyBucket1ResponseToSend.ConfirmTareWeight)
+    {
       Weight1->triggerTare();
-
+      HempyBucket1ResponseToSend.ConfirmTareWeight = true;
+    }
+    else
+    {
+      HempyBucket1ResponseToSend.ConfirmTareWeight = false;
+    }
     break;
   case ReservoirMessages::ReservoirReset:                       ///< Used to get all Responses that do not have a corresponding Command
     updateAckData(ReservoirMessages::ReservoirModuleResponse1); ///< Load the first response for the next message exchange

@@ -1,22 +1,31 @@
 /**@file*/
-///< GrowBoxGuy - http:///< sites.google.com/site/growboxguy/
-///< Structs for wireless communication - Both the Transmitter and the Receiver needs to know these
-///< Defines the package stucture of each message exchanged between the Main and the Aero module
-///< Max 32 bytes can be sent in a single package
+///< GrowBoxGuy - https://sites.google.com/site/growboxguy/
+///< Structs for wireless communication using an nRF24L01+ transceiver
+
+///< Defines the stucture of each message exchanged between the Main and the Aero module
+///< Both the Transmitter (Main module) and the Receiver (Aero module) needs to include this
+///< Max 32 bytes can be sent in one message
+
+///< The Main module is always the Transmitter, sending a Command defined in AeroMessages
+///< The Aero module is always the Receiver that instantly replies to an incoming message with a pre-cached Acknowledgement(ACK) package
+///< AeroReset is a special message: 
+///<   -  Transmitter (Main module) always starts the multi-message exchange with this message
+///<   -  When the Receiver gets this message it pre-loads the ACK message for the first "real" message it will receive from the Main module
 
 #pragma once
 
 #include "TimeLib.h" // Keeping track of time
+
 ///< Structs for wireless communication
 enum AeroMessages
 {
-   AeroModuleCommand1,
+   AeroModuleCommand1, /// First "real" message where the module-level variables are synced, send by the Main module: Time, Debug, Serial logging settings
    AeroModuleResponse1,
    AeroCommand1,
    AeroResponse1,
    AeroCommand2,
    AeroResponse2,
-   AeroReset
+   AeroReset /// Special command sent at the start and end of a multi-message exchange. 
 }; ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 static const __FlashStringHelper *toText_aeroSequenceID(uint8_t SequenceID)
@@ -99,6 +108,19 @@ struct AeroCommand_P1 : AeroCommonTemplate ///< Aeroponics wireless commands - P
    float MaxPressure = 0.0;
 };
 
+struct AeroResponse_P1 : AeroCommonTemplate ///< Aeroponics wireless response - Part1
+{
+   AeroResponse_P1(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
+   AeroResponse_P1(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) int AeroState, __attribute__((unused)) bool PressureTankPresent, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) float Pressure, __attribute__((unused)) PressurePumpStates PumpState, __attribute__((unused)) float LastSprayPressure, __attribute__((unused)) float Weight) : AeroCommonTemplate(SequenceID) {}
+   int AeroState = 0;
+   bool PressureTankPresent = false;
+   bool SprayEnabled = false;
+   float Pressure = 0.0;
+   PressurePumpStates PumpState = PressurePumpStates::DISABLED;
+   float LastSprayPressure = 0.0; // Used only without pressure tank. last spray pressure
+   float Weight = 0.0;
+};
+
 struct AeroCommand_P2 : AeroCommonTemplate ///< Aeroponics wireless commands - Part2
 {
    AeroCommand_P2(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
@@ -114,19 +136,6 @@ struct AeroCommand_P2 : AeroCommonTemplate ///< Aeroponics wireless commands - P
    uint8_t PumpSpeed = 0;
    int PumpPrimingTime = 0;
    uint16_t PumpTimeOut = 0;
-};
-
-struct AeroResponse_P1 : AeroCommonTemplate ///< Aeroponics wireless response - Part1
-{
-   AeroResponse_P1(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroResponse_P1(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) int AeroState, __attribute__((unused)) bool PressureTankPresent, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) float Pressure, __attribute__((unused)) PressurePumpStates PumpState, __attribute__((unused)) float LastSprayPressure, __attribute__((unused)) float Weight) : AeroCommonTemplate(SequenceID) {}
-   int AeroState = 0;
-   bool PressureTankPresent = false;
-   bool SprayEnabled = false;
-   float Pressure = 0.0;
-   PressurePumpStates PumpState = PressurePumpStates::DISABLED;
-   float LastSprayPressure = 0.0; // Used only without pressure tank. last spray pressure
-   float Weight = 0.0;
 };
 
 struct AeroResponse_P2 : AeroCommonTemplate ///< Aeroponics wireless response - Part2

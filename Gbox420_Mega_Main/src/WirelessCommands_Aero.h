@@ -20,7 +20,7 @@
 enum AeroMessages
 {
    AeroModuleCommand1, /// First "real" message where the module-level variables are synced, send by the Main module: Time, Debug, Serial logging settings
-   AeroModuleResponse1, 
+   AeroModuleResponse1,
    AeroCommand1,
    AeroResponse1,
    AeroCommand2,
