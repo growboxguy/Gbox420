@@ -98,7 +98,7 @@ struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless comma
    bool StopWatering = false;
    bool TareWeightB = false;  ///< Flag to signal a request to Tare bucket weight scale
    bool TareWeightDW = false; ///< Flag to signal a request to Tare dry/wet weight
-   bool TareWeightWR = false; //T/< Flag to signal a request to Tare waste reservoir weight scale
+   bool TareWeightWR = false; ///< Flag to signal a request to Tare waste reservoir weight scale
    uint8_t PumpSpeed = 0;
    uint16_t PumpTimeOut = 0;
    float DryWeight = NAN;
