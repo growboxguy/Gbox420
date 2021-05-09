@@ -1,8 +1,16 @@
 /**@file*/
-///< GrowBoxGuy - http:///< sites.google.com/site/growboxguy/
-///< Structs for wireless communication - Both the Transmitter and the Receiver needs to know these
-///< Defines the package stucture of each message exchanged between the Main and the Hempy module
-///< Max 32 bytes can be sent in a single package
+///< GrowBoxGuy - https://sites.google.com/site/growboxguy/
+///< Structs for wireless communication using an nRF24L01+ transceiver
+
+///< Defines the stucture of each message exchanged between the Main and the Hempy module
+///< Both the Transmitter (Main module) and the Receiver (Hempy module) needs to include this
+///< Max 32 bytes can be sent in one message
+
+///< The Main module is always the Transmitter, sending a Command defined in HempyMessages
+///< The Hempy module is always the Receiver that instantly replies to an incoming message with a pre-cached Acknowledgement(ACK) package
+///< HempyReset is a special message: 
+///<   -  Transmitter (Main module) always starts the multi-message exchange with this message
+///<   -  When the Receiver gets this message it pre-loads the ACK message for the first "real" message it will receive from the Main module
 
 #pragma once
 
@@ -10,13 +18,13 @@
 
 enum HempyMessages
 {
-   HempyModuleCommand1,
+   HempyModuleCommand1, /// First "real" message where the module-level variables are synced: Time, Debug, Serial logging settings
    HempyModuleResponse1,
    HempyBucketCommand1,
    HempyBucketResponse1,
    HempyBucketCommand2,
    HempyBucketResponse2,
-   HempyReset
+   HempyReset /// Special command sent at the start and end of a multi-message exchange.
 }; ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 static const __FlashStringHelper *toText_hempySequenceID(uint8_t SequenceID)

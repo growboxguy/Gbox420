@@ -393,7 +393,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
       case HempyMessages::HempyReset:
         if (*(Parent->SerialReportWireless))
         {
-          logToSerials(F("-"), true, 1);
+          logToSerials(F("-"), true, 1);  ///< Reset messages does not have any data
         }
         break;
       default:

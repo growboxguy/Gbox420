@@ -335,6 +335,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         }
         if (*(Parent->SerialReportWireless))
         {
+          \todo Use Helpers.h to convert raw values to friendly format
           logToSerials(toText((int)AeroResponse1Received.AeroState), false, 1);
           logToSerials(AeroResponse1Received.PressureTankPresent, false, 1);
           logToSerials(AeroResponse1Received.SprayEnabled, false, 1);
@@ -359,13 +360,13 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         }
         if (*(Parent->SerialReportWireless))
         {
-          logToSerials(F("-"), true, 1);
+          logToSerials(F("-"), true, 1);  ///< Response messages does not have any data
         }
         break;
       case AeroMessages::AeroReset:
         if (*(Parent->SerialReportWireless))
         {
-          logToSerials(F("-"), true, 1);
+          logToSerials(F("-"), true, 1);  ///< Reset messages does not have any data
         }
         break;
       default:
