@@ -41,7 +41,7 @@ void ReservoirModule::refresh_Sec()
 {
   Common::refresh_Sec();
   if (NextSequenceID != ReservoirMessages::ReservoirModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
-  {                                                               ///< If there is a package exchange in progress
+  { ///< If there is a package exchange in progress
     if (*Debug)
     {
       logToSerials(F("Message timeout"), true, 0);
@@ -80,7 +80,6 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     logToSerials(toText_reservoirSequenceID(NextSequenceID), false, 1); ///< This is the pre-buffered response that was instantly sent when a command was received
     logToSerials(F("; Data:"), false, 1);
   }
-
   bool LastMessageReached = false;
   if (ReceivedSequenceID == ReservoirMessages::ReservoirCommand1 && NextSequenceID == ReservoirMessages::ReservoirResponse1) ///< Last real command-response exchange reached
   {
@@ -91,14 +90,6 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
   {
   case ReservoirMessages::ReservoirModuleCommand1:
     updateAckData(ReservoirMessages::ReservoirResponse1); // update the next Message that will be copied to the buffer
-    setDebug(((ReservoirModuleCommand *)ReceivedCommand)->Debug);
-    setMetric(((ReservoirModuleCommand *)ReceivedCommand)->Metric);
-    setSerialReportingFrequency(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportFrequency);
-    setSerialReportDate(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportDate);
-    setSerialReportMemory(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportMemory);
-    setSerialReportJSONFriendly(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
-    setSerialReportJSON(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSON);
-    setSerialReportWireless(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportWireless);
     if (*SerialReportWireless)
     {
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->Time, false, 1);
@@ -111,15 +102,24 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSON, false, 1);
       logToSerials(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportWireless, true, 1);
     }
+    setDebug(((ReservoirModuleCommand *)ReceivedCommand)->Debug);
+    setMetric(((ReservoirModuleCommand *)ReceivedCommand)->Metric);
+    setSerialReportingFrequency(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportFrequency);
+    setSerialReportDate(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportDate);
+    setSerialReportMemory(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportMemory);
+    setSerialReportJSONFriendly(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
+    setSerialReportJSON(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportJSON);
+    setSerialReportWireless(((ReservoirModuleCommand *)ReceivedCommand)->SerialReportWireless);
     break;
   case ReservoirMessages::ReservoirCommand1:
     updateAckData(ReservoirMessages::ReservoirModuleResponse1); // update the next Message that will be copied to the buffer
-    if (((ReservoirCommand *)ReceivedCommand)->TareWeight)
-      Weight1->triggerTare();
     if (*SerialReportWireless)
     {
       logToSerials(((ReservoirCommand *)ReceivedCommand)->TareWeight, true, 1);
     }
+    if (((ReservoirCommand *)ReceivedCommand)->TareWeight)
+      Weight1->triggerTare();
+
     break;
   case ReservoirMessages::ReservoirReset:                       ///< Used to get all Responses that do not have a corresponding Command
     updateAckData(ReservoirMessages::ReservoirModuleResponse1); ///< Load the first response for the next message exchange

@@ -103,14 +103,6 @@ bool HempyModule::processCommand(void *ReceivedCommand)
   {
   case HempyMessages::HempyModuleCommand1:
     updateAckData(HempyMessages::HempyBucketResponse1); // update the next Message that will be copied to the buffer
-    setDebug(((HempyModuleCommand *)ReceivedCommand)->Debug);
-    setMetric(((HempyModuleCommand *)ReceivedCommand)->Metric);
-    setSerialReportingFrequency(((HempyModuleCommand *)ReceivedCommand)->SerialReportFrequency);
-    setSerialReportDate(((HempyModuleCommand *)ReceivedCommand)->SerialReportDate);
-    setSerialReportMemory(((HempyModuleCommand *)ReceivedCommand)->SerialReportMemory);
-    setSerialReportJSONFriendly(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
-    setSerialReportJSON(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON);
-    setSerialReportWireless(((HempyModuleCommand *)ReceivedCommand)->SerialReportWireless);
     if (*SerialReportWireless)
     {
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->Time, false, 1);
@@ -123,9 +115,33 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON, false, 1);
       logToSerials(((HempyModuleCommand *)ReceivedCommand)->SerialReportWireless, true, 1);
     }
+    setDebug(((HempyModuleCommand *)ReceivedCommand)->Debug);
+    setMetric(((HempyModuleCommand *)ReceivedCommand)->Metric);
+    setSerialReportingFrequency(((HempyModuleCommand *)ReceivedCommand)->SerialReportFrequency);
+    setSerialReportDate(((HempyModuleCommand *)ReceivedCommand)->SerialReportDate);
+    setSerialReportMemory(((HempyModuleCommand *)ReceivedCommand)->SerialReportMemory);
+    setSerialReportJSONFriendly(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
+    setSerialReportJSON(((HempyModuleCommand *)ReceivedCommand)->SerialReportJSON);
+    setSerialReportWireless(((HempyModuleCommand *)ReceivedCommand)->SerialReportWireless);
     break;
   case HempyMessages::HempyBucketCommand1:
     updateAckData(HempyMessages::HempyBucketResponse2); // update the next Message that will be copied to the buffer
+    if (*SerialReportWireless)
+    {
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightDW, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
+      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
+    }
     if (((HempyBucketCommand *)ReceivedCommand)->Disable)
       Bucket1->disable();
     if (((HempyBucketCommand *)ReceivedCommand)->StartWatering)
@@ -145,6 +161,9 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket1->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
     Bucket1->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     Bucket1->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
+    break;
+  case HempyMessages::HempyBucketCommand2:
+    updateAckData(HempyMessages::HempyModuleResponse1); // update the next Message that will be copied to the buffer
     if (*SerialReportWireless)
     {
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
@@ -161,9 +180,6 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
       logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
     }
-    break;
-  case HempyMessages::HempyBucketCommand2:
-    updateAckData(HempyMessages::HempyModuleResponse1); // update the next Message that will be copied to the buffer
     if (((HempyBucketCommand *)ReceivedCommand)->Disable && !HempyBucket1ResponseToSend.ConfirmDisable)
     {
       Bucket2->disable();
@@ -225,22 +241,6 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket2->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
     Bucket2->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     Bucket2->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
-    if (*SerialReportWireless)
-    {
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->Disable, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StartWatering, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->StopWatering, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightB, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightDW, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->TareWeightWR, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DryWeight, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->WasteLimit, false, 1);
-      logToSerials(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime, true, 1);
-    }
     break;
   case HempyMessages::HempyReset:                       ///< Used to get all Responses that do not have a corresponding Command
     updateAckData(HempyMessages::HempyModuleResponse1); ///< Load the first response for the next message exchange

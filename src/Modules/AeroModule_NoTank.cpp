@@ -47,12 +47,12 @@ void AeroModule::refresh_Sec()
 {
   Common::refresh_Sec();
   if (NextSequenceID != AeroMessages::AeroModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
-  {                                                     ///< If there is a package exchange in progress
+  { ///< If there is a package exchange in progress
     if (*Debug)
     {
       logToSerials(F("Message timeout"), true, 0);
     }
-    Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
+    Wireless.flush_tx();                              ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     updateAckData(AeroMessages::AeroModuleResponse1); ///< Reset back to the first response
   }
 }
@@ -91,14 +91,6 @@ bool AeroModule::processCommand(void *ReceivedCommand)
   {
   case AeroMessages::AeroModuleCommand1:
     updateAckData(AeroMessages::AeroResponse1); // update the next Message that will be copied to the buffer
-    setDebug(((AeroModuleCommand *)ReceivedCommand)->Debug);
-    setMetric(((AeroModuleCommand *)ReceivedCommand)->Metric);
-    setSerialReportingFrequency(((AeroModuleCommand *)ReceivedCommand)->SerialReportFrequency);
-    setSerialReportDate(((AeroModuleCommand *)ReceivedCommand)->SerialReportDate);
-    setSerialReportMemory(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemory);
-    setSerialReportJSONFriendly(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
-    setSerialReportJSON(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSON);
-    setSerialReportWireless(((AeroModuleCommand *)ReceivedCommand)->SerialReportWireless);
     if (*SerialReportWireless)
     {
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->Time, false, 1);
@@ -111,22 +103,17 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSON, false, 1);
       logToSerials(((AeroModuleCommand *)ReceivedCommand)->SerialReportWireless, true, 1);
     }
+    setDebug(((AeroModuleCommand *)ReceivedCommand)->Debug);
+    setMetric(((AeroModuleCommand *)ReceivedCommand)->Metric);
+    setSerialReportingFrequency(((AeroModuleCommand *)ReceivedCommand)->SerialReportFrequency);
+    setSerialReportDate(((AeroModuleCommand *)ReceivedCommand)->SerialReportDate);
+    setSerialReportMemory(((AeroModuleCommand *)ReceivedCommand)->SerialReportMemory);
+    setSerialReportJSONFriendly(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSONFriendly);
+    setSerialReportJSON(((AeroModuleCommand *)ReceivedCommand)->SerialReportJSON);
+    setSerialReportWireless(((AeroModuleCommand *)ReceivedCommand)->SerialReportWireless);
     break;
   case AeroMessages::AeroCommand1:
     updateAckData(AeroMessages::AeroResponse2); // update the next Message that will be copied to the buffer
-    if (((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled)
-      AeroNT1->setSprayOnOff(true);
-    if (((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled)
-      AeroNT1->setSprayOnOff(false);
-    if (((AeroCommand_P1 *)ReceivedCommand)->SprayNow)
-      AeroNT1->sprayNow(true);
-    if (((AeroCommand_P1 *)ReceivedCommand)->SprayOff)
-      AeroNT1->sprayOff();
-    AeroNT1->setDayMode(((AeroCommand_P1 *)ReceivedCommand)->DayMode);
-    AeroNT1->setDuration(((AeroCommand_P1 *)ReceivedCommand)->Duration);
-    AeroNT1->setDayInterval(((AeroCommand_P1 *)ReceivedCommand)->DayInterval);
-    AeroNT1->setNightInterval(((AeroCommand_P1 *)ReceivedCommand)->NightInterval);
-    AeroNT1->setMaxPressure(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure);
     if (*SerialReportWireless)
     {
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled, false, 1);
@@ -140,9 +127,33 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MinPressure, false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure, true, 1);
     }
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled)
+      AeroNT1->setSprayOnOff(true);
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled)
+      AeroNT1->setSprayOnOff(false);
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayNow)
+      AeroNT1->sprayNow(true);
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayOff)
+      AeroNT1->sprayOff();
+    AeroNT1->setDayMode(((AeroCommand_P1 *)ReceivedCommand)->DayMode);
+    AeroNT1->setDuration(((AeroCommand_P1 *)ReceivedCommand)->Duration);
+    AeroNT1->setDayInterval(((AeroCommand_P1 *)ReceivedCommand)->DayInterval);
+    AeroNT1->setNightInterval(((AeroCommand_P1 *)ReceivedCommand)->NightInterval);
+    AeroNT1->setMaxPressure(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure);
     break;
   case AeroMessages::AeroCommand2:
     updateAckData(AeroMessages::AeroModuleResponse1); // update the next Message that will be copied to the buffer
+        if (*SerialReportWireless)
+    {
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOn, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOff, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpDisable, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->MixReservoir, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, true, 1);
+    }
     if (((AeroCommand_P2 *)ReceivedCommand)->PumpOn)
       AeroNT1->sprayNow(true);
     if (((AeroCommand_P2 *)ReceivedCommand)->PumpOff)
@@ -156,20 +167,9 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       AeroNT1->Pump->startMixing();
     if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight)
       Weight1->triggerTare();
-    if (*SerialReportWireless)
-    {
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOn, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOff, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpDisable, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->MixReservoir, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, true, 1);
-    }
     break;
-  case AeroMessages::AeroReset:                         ///< Used to get all Responses that do not have a corresponding Command
-    updateAckData(AeroMessages::AeroModuleResponse1); ///< Load the first response for the next message exchange    
+  case AeroMessages::AeroReset:                       ///< Used to get all Responses that do not have a corresponding Command
+    updateAckData(AeroMessages::AeroModuleResponse1); ///< Load the first response for the next message exchange
     if (*SerialReportWireless)
     {
       logToSerials(F("-"), true, 1);
@@ -202,7 +202,7 @@ void AeroModule::updateAckData(AeroMessages NewSequenceID)
 {
   //Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   NextSequenceID = NewSequenceID; // update the next Message that will be copied to the buffer
-  
+
   switch (NextSequenceID) // based on the NextSeqenceID load the next response into the Acknowledgement buffer
   {
   case AeroMessages::AeroModuleResponse1:

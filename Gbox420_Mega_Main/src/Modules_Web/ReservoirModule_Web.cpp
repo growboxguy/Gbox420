@@ -154,8 +154,9 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         if (ReservoirCommand1ToSend.TareWeight)
         {
           SyncRequested = true; ///< Force a second message exchange to actualize the response
-          ReservoirCommand1ToSend.TareWeight = false;
         }
+        if(ReservoirResponse1Received.ConfirmTareWeight) ReservoirCommand1ToSend.TareWeight = false;  //Turn off the Flag once the Receiver confirms processing it 
+                
         if (*(Parent->SerialReportWireless))
         {
           logToSerials(ReservoirResponse1Received.PH, false, 1);
