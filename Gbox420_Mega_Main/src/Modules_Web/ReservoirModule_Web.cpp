@@ -151,12 +151,6 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         break;
       case ReservoirMessages::ReservoirResponse1:
         memcpy(&ReservoirResponse1Received, ReceivedResponse, sizeof(struct ReservoirResponse));
-        if (ReservoirCommand1ToSend.TareWeight)
-        {
-          SyncRequested = true; ///< Force a second message exchange to actualize the response
-        }
-        if(ReservoirResponse1Received.ConfirmTareWeight) ReservoirCommand1ToSend.TareWeight = false;  //Turn off the Flag once the Receiver confirms processing it 
-                
         if (*(Parent->SerialReportWireless))
         {
           logToSerials(ReservoirResponse1Received.PH, false, 1);
@@ -166,6 +160,11 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
           logToSerials(ReservoirResponse1Received.AirTemperature, false, 1);
           logToSerials(ReservoirResponse1Received.Humidity, true, 1);
         }
+        if (ReservoirCommand1ToSend.TareWeight)
+        {
+          SyncRequested = true; ///< Force a second message exchange to actualize the response
+        }
+        if(ReservoirResponse1Received.ConfirmTareWeight) ReservoirCommand1ToSend.TareWeight = false;  //Turn off the Flag once the Receiver confirms processing it 
         break;
       case ReservoirMessages::ReservoirReset:
         if (*(Parent->SerialReportWireless))
