@@ -164,18 +164,60 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     break;
   case HempyMessages::HempyBucketCommand2:
     updateAckData(HempyMessages::HempyModuleResponse1); // update the next Message that will be copied to the buffer
-    if (((HempyBucketCommand *)ReceivedCommand)->Disable)
+    if (((HempyBucketCommand *)ReceivedCommand)->Disable && !HempyBucket1ResponseToSend.ConfirmDisable)
+    {
       Bucket2->disable();
-    if (((HempyBucketCommand *)ReceivedCommand)->StartWatering)
+      HempyBucket1ResponseToSend.ConfirmDisable = true;
+    }
+    else
+    {
+      HempyBucket1ResponseToSend.ConfirmDisable = false;
+    }
+    if (((HempyBucketCommand *)ReceivedCommand)->StartWatering && !HempyBucket1ResponseToSend.ConfirmStartWatering)
+    {
       Bucket2->startWatering();
-    if (((HempyBucketCommand *)ReceivedCommand)->StopWatering)
+      HempyBucket1ResponseToSend.ConfirmStartWatering = true;
+    }
+    else
+    {
+      HempyBucket1ResponseToSend.ConfirmStartWatering = false;
+    }
+    if (((HempyBucketCommand *)ReceivedCommand)->StopWatering && !HempyBucket1ResponseToSend.ConfirmStopWatering)
+    {
       Bucket2->stopWatering();
-    if (((HempyBucketCommand *)ReceivedCommand)->TareWeightB)
+      HempyBucket1ResponseToSend.ConfirmStopWatering = true;
+    }
+    else
+    {
+      HempyBucket1ResponseToSend.ConfirmStopWatering = false;
+    }
+    if (((HempyBucketCommand *)ReceivedCommand)->TareWeightB && !HempyBucket1ResponseToSend.ConfirmTareWeightB)
+    {
       WeightB2->triggerTare();
-    if (((HempyBucketCommand *)ReceivedCommand)->TareWeightDW)
+      HempyBucket1ResponseToSend.ConfirmTareWeightB = true;
+    }
+    else
+    {
+      HempyBucket1ResponseToSend.ConfirmTareWeightB = false;
+    }
+    if (((HempyBucketCommand *)ReceivedCommand)->TareWeightDW && !HempyBucket1ResponseToSend.ConfirmTareWeightDW)
+    {
       Bucket2->tareDryWetWeight();
-    if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR)
+      HempyBucket1ResponseToSend.ConfirmTareWeightDW = true;
+    }
+    else
+    {
+      HempyBucket1ResponseToSend.ConfirmTareWeightDW = false;
+    }
+    if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR && !HempyBucket1ResponseToSend.ConfirmTareWeightWR)
+    {
       WeightWR2->triggerTare();
+      HempyBucket1ResponseToSend.ConfirmTareWeightWR = true;
+    }
+    else
+    {
+      HempyBucket1ResponseToSend.ConfirmTareWeightWR = false;
+    }
     Pump2->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
     Pump2->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
     Bucket2->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);

@@ -343,13 +343,14 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         if (HempyBucketCommand1ToSend.Disable || HempyBucketCommand1ToSend.StartWatering || HempyBucketCommand1ToSend.StopWatering || HempyBucketCommand1ToSend.TareWeightB || HempyBucketCommand1ToSend.TareWeightDW || HempyBucketCommand1ToSend.TareWeightWR) ///< Turn off command flags
         {
           SyncRequested = true; ///< Force a second packet to actualize the response
-          HempyBucketCommand1ToSend.Disable = false;
-          HempyBucketCommand1ToSend.StartWatering = false;
-          HempyBucketCommand1ToSend.StopWatering = false;
-          HempyBucketCommand1ToSend.TareWeightB = false;
-          HempyBucketCommand1ToSend.TareWeightDW = false;
-          HempyBucketCommand1ToSend.TareWeightWR = false;
         }
+        if(HempyBucketResponse1Received.ConfirmDisable) HempyBucketCommand1ToSend.Disable = false;  //Turn off the Flag once the Receiver confirms processing it 
+        if(HempyBucketResponse1Received.ConfirmStartWatering) HempyBucketCommand1ToSend.StartWatering = false;
+        if(HempyBucketResponse1Received.ConfirmStopWatering) HempyBucketCommand1ToSend.StopWatering = false;
+        if(HempyBucketResponse1Received.ConfirmTareWeightB) HempyBucketCommand1ToSend.TareWeightB = false;
+        if(HempyBucketResponse1Received.ConfirmTareWeightDW) HempyBucketCommand1ToSend.TareWeightDW = false;
+        if(HempyBucketResponse1Received.ConfirmTareWeightWR) HempyBucketCommand1ToSend.TareWeightWR = false;
+
         if (!isnan(HempyBucketCommand1ToSend.DryWeight) && HempyBucketResponse1Received.DryWeight == HempyBucketCommand1ToSend.DryWeight)
         {
           HempyBucketCommand1ToSend.DryWeight = NAN;

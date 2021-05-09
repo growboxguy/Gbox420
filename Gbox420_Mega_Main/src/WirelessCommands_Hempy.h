@@ -93,12 +93,12 @@ struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless comma
 {
    HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
    HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool Disable, __attribute__((unused)) bool StartWatering, __attribute__((unused)) bool StopWatering, __attribute__((unused)) bool TareWeightB, __attribute__((unused)) bool TareWeightDW, __attribute__((unused)) bool TareWeightWR, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) uint16_t PumpTimeOut, __attribute__((unused)) float DryWeight, __attribute__((unused)) float EvaporationTarget, __attribute__((unused)) float OverflowTarget, __attribute__((unused)) float WasteLimit, __attribute__((unused)) uint16_t DrainWaitTime) : HempyCommonTemplate(SequenceID) {}
-   bool Disable = false;
+   bool Disable = false;  ///< Flag to signal a request to disable the watering logic. Flag is kept true until the Receiver confirms processing the request.
    bool StartWatering = false;
    bool StopWatering = false;
-   bool TareWeightB = false;  //Tare bucket weight scale
-   bool TareWeightDW = false; //Tare dry/wet weight
-   bool TareWeightWR = false; //Tare waste reservoir weight scale
+   bool TareWeightB = false;  ///< Flag to signal a request to Tare bucket weight scale
+   bool TareWeightDW = false; ///< Flag to signal a request to Tare dry/wet weight
+   bool TareWeightWR = false; //T/< Flag to signal a request to Tare waste reservoir weight scale
    uint8_t PumpSpeed = 0;
    uint16_t PumpTimeOut = 0;
    float DryWeight = NAN;
@@ -114,6 +114,12 @@ struct HempyBucketResponse : HempyCommonTemplate ///< Hempy bucket wireless resp
    HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) HempyStates HempyState, __attribute__((unused)) WaterPumpStates PumpState, __attribute__((unused)) float WeightB, __attribute__((unused)) float WeightWR, __attribute__((unused)) float DryWeight, __attribute__((unused)) float WetWeight) : HempyCommonTemplate(SequenceID) {}
    HempyStates HempyState = HempyStates::DISABLED;
    WaterPumpStates PumpState = WaterPumpStates::DISABLED;
+   bool ConfirmDisable = false;  //Feedback to the Main module that the command was processed and it can turn off the request flag. 
+   bool ConfirmStartWatering = false;
+   bool ConfirmStopWatering = false;
+   bool ConfirmTareWeightB = false;
+   bool ConfirmTareWeightDW = false;
+   bool ConfirmTareWeightWR = false;
    float WeightB = 0.0;
    float WeightWR = 0.0;
    float DryWeight = 0.0;
