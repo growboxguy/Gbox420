@@ -342,6 +342,12 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         memcpy(&HempyBucketResponse1Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
         if (*(Parent->SerialReportWireless))
         {
+          logToSerials(HempyBucketResponse1Received.ConfirmDisable, false, 1);
+          logToSerials(HempyBucketResponse1Received.ConfirmStartWatering, false, 1);
+          logToSerials(HempyBucketResponse1Received.ConfirmStopWatering, false, 1);
+          logToSerials(HempyBucketResponse1Received.ConfirmTareWeightB, false, 1);
+          logToSerials(HempyBucketResponse1Received.ConfirmTareWeightDW, false, 1);
+          logToSerials(HempyBucketResponse1Received.ConfirmTareWeightWR, false, 1);
           logToSerials(toText((int)HempyBucketResponse1Received.HempyState), false, 1);
           logToSerials(toText((int)HempyBucketResponse1Received.PumpState), false, 1);
           logToSerials(HempyBucketResponse1Received.WeightB, false, 1);
@@ -369,6 +375,12 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         memcpy(&HempyBucketResponse2Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
         if (*(Parent->SerialReportWireless))
         {
+          logToSerials(HempyBucketResponse2Received.ConfirmDisable, false, 1);
+          logToSerials(HempyBucketResponse2Received.ConfirmStartWatering, false, 1);
+          logToSerials(HempyBucketResponse2Received.ConfirmStopWatering, false, 1);
+          logToSerials(HempyBucketResponse2Received.ConfirmTareWeightB, false, 1);
+          logToSerials(HempyBucketResponse2Received.ConfirmTareWeightDW, false, 1);
+          logToSerials(HempyBucketResponse2Received.ConfirmTareWeightWR, false, 1);
           logToSerials(toText((int)HempyBucketResponse2Received.HempyState), false, 1);
           logToSerials(toText((int)HempyBucketResponse2Received.PumpState), false, 1);
           logToSerials(HempyBucketResponse2Received.WeightB, false, 1);
@@ -378,7 +390,7 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         }
         if (HempyBucketCommand2ToSend.Disable || HempyBucketCommand2ToSend.StartWatering || HempyBucketCommand2ToSend.StopWatering || HempyBucketCommand2ToSend.TareWeightB || HempyBucketCommand2ToSend.TareWeightDW || HempyBucketCommand2ToSend.TareWeightWR) ///< Turn off command flags
         {
-          SyncRequested = true; ///< Force a second message exchange to actualize the response
+          SyncRequested = true; ///< Force another message exchange when a command is active
         }
         if(HempyBucketResponse2Received.ConfirmDisable) HempyBucketCommand2ToSend.Disable = false;  //Turn off the Flag once the Receiver confirms processing it 
         if(HempyBucketResponse2Received.ConfirmStartWatering) HempyBucketCommand2ToSend.StartWatering = false;

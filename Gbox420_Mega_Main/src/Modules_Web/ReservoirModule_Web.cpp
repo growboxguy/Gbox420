@@ -153,6 +153,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         memcpy(&ReservoirResponse1Received, ReceivedResponse, sizeof(struct ReservoirResponse));
         if (*(Parent->SerialReportWireless))
         {
+          logToSerials(ReservoirResponse1Received.ConfirmTareWeight, false, 1);
           logToSerials(ReservoirResponse1Received.PH, false, 1);
           logToSerials(ReservoirResponse1Received.TDS, false, 1);
           logToSerials(ReservoirResponse1Received.Weight, false, 1);
@@ -162,7 +163,7 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         }
         if (ReservoirCommand1ToSend.TareWeight)
         {
-          SyncRequested = true; ///< Force a second message exchange to actualize the response
+          SyncRequested = true; ///< Force another message exchange when a command is active
         }
         if(ReservoirResponse1Received.ConfirmTareWeight) ReservoirCommand1ToSend.TareWeight = false;  //Turn off the Flag once the Receiver confirms processing it 
         break;
