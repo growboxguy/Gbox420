@@ -127,14 +127,35 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MinPressure, false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure, true, 1);
     }
-    if (((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled)
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled && !Aero1Response1ToSend.ConfirmSprayEnabled)
+    {
       AeroNT1->setSprayOnOff(true);
-    if (((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled)
+      Aero1Response1ToSend.ConfirmSprayEnabled = true;
+    }
+    else
+      Aero1Response1ToSend.ConfirmSprayEnabled = false;
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled && !Aero1Response1ToSend.ConfirmSprayDisabled)
+    {
       AeroNT1->setSprayOnOff(false);
-    if (((AeroCommand_P1 *)ReceivedCommand)->SprayNow)
+      Aero1Response1ToSend.ConfirmSprayDisabled = true;
+    }
+    else
+      Aero1Response1ToSend.ConfirmSprayDisabled = false;
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayNow && !Aero1Response1ToSend.ConfirmSprayNow)
+    {
       AeroNT1->sprayNow(true);
-    if (((AeroCommand_P1 *)ReceivedCommand)->SprayOff)
+      Aero1Response1ToSend.ConfirmSprayNow = true;
+    }
+    else
+      Aero1Response1ToSend.ConfirmSprayNow = false;
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayOff && !Aero1Response1ToSend.ConfirmSprayOff)
+    {
       AeroNT1->sprayOff();
+      Aero1Response1ToSend.ConfirmSprayOff = true;
+    }
+    else
+      Aero1Response1ToSend.ConfirmSprayOff = false;
+
     AeroNT1->setDayMode(((AeroCommand_P1 *)ReceivedCommand)->DayMode);
     AeroNT1->setDuration(((AeroCommand_P1 *)ReceivedCommand)->Duration);
     AeroNT1->setDayInterval(((AeroCommand_P1 *)ReceivedCommand)->DayInterval);
@@ -143,30 +164,56 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     break;
   case AeroMessages::AeroCommand2:
     updateAckData(AeroMessages::AeroModuleResponse1); // update the next Message that will be copied to the buffer
-        if (*SerialReportWireless)
+    if (*SerialReportWireless)
     {
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->MixReservoir, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, true, 1);      
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOn, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOff, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpDisable, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->MixReservoir, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, true, 1);
     }
-    if (((AeroCommand_P2 *)ReceivedCommand)->PumpOn)
+    if (((AeroCommand_P2 *)ReceivedCommand)->MixReservoir && !Aero1Response2ToSend.ConfirmMixReservoir)
+    {
+      AeroNT1->Pump->startMixing();
+      Aero1Response2ToSend.ConfirmMixReservoir = true;
+    }
+    else
+      Aero1Response2ToSend.ConfirmMixReservoir = false;      
+    if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight && !Aero1Response2ToSend.ConfirmTareWeight)
+    {
+      Weight1->triggerTare();
+      Aero1Response2ToSend.ConfirmTareWeight = true;
+    }
+    else
+      Aero1Response2ToSend.ConfirmTareWeight = false;
+    if (((AeroCommand_P2 *)ReceivedCommand)->PumpOn && !Aero1Response2ToSend.ConfirmPumpOn)
+    {
       AeroNT1->sprayNow(true);
-    if (((AeroCommand_P2 *)ReceivedCommand)->PumpOff)
+      Aero1Response2ToSend.ConfirmPumpOn = true;
+    }
+    else
+      Aero1Response2ToSend.ConfirmPumpOn = false;
+    if (((AeroCommand_P2 *)ReceivedCommand)->PumpOff && !Aero1Response2ToSend.ConfirmPumpOff)
+    {
       AeroNT1->Pump->stopPump();
-    if (((AeroCommand_P2 *)ReceivedCommand)->PumpDisable)
+      Aero1Response2ToSend.ConfirmPumpOff = true;
+    }
+    else
+      Aero1Response2ToSend.ConfirmPumpOff = false;
+    if (((AeroCommand_P2 *)ReceivedCommand)->PumpDisable && !Aero1Response2ToSend.ConfirmPumpDisable)
+    {
       AeroNT1->Pump->disablePump();
+      Aero1Response2ToSend.ConfirmPumpDisable = true;
+    }
+    else
+      Aero1Response2ToSend.ConfirmPumpDisable = false;
+    
     AeroNT1->Pump->setSpeed(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed);
     AeroNT1->Pump->setPumpTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);
-    AeroNT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime);
-    if (((AeroCommand_P2 *)ReceivedCommand)->MixReservoir)
-      AeroNT1->Pump->startMixing();
-    if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight)
-      Weight1->triggerTare();
+    AeroNT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime);    
     break;
   case AeroMessages::AeroReset:                       ///< Used to get all Responses that do not have a corresponding Command
     updateAckData(AeroMessages::AeroModuleResponse1); ///< Load the first response for the next message exchange

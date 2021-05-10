@@ -128,14 +128,35 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MinPressure, false, 1);
       logToSerials(((AeroCommand_P1 *)ReceivedCommand)->MaxPressure, true, 1);
     }
-    if (((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled)
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayEnabled && !Aero1Response1ToSend.ConfirmSprayEnabled)
+    {
       AeroT1->setSprayOnOff(true);
-    if (((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled)
+      Aero1Response1ToSend.ConfirmSprayEnabled = true;
+    }
+    else
+      Aero1Response1ToSend.ConfirmSprayEnabled = false;
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayDisabled && !Aero1Response1ToSend.ConfirmSprayDisabled)
+    {
       AeroT1->setSprayOnOff(false);
-    if (((AeroCommand_P1 *)ReceivedCommand)->SprayNow)
+      Aero1Response1ToSend.ConfirmSprayDisabled = true;
+    }
+    else
+      Aero1Response1ToSend.ConfirmSprayDisabled = false;
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayNow && !Aero1Response1ToSend.ConfirmSprayNow)
+    {
       AeroT1->sprayNow(true);
-    if (((AeroCommand_P1 *)ReceivedCommand)->SprayOff)
+      Aero1Response1ToSend.ConfirmSprayNow = true;
+    }
+    else
+      Aero1Response1ToSend.ConfirmSprayNow = false;
+    if (((AeroCommand_P1 *)ReceivedCommand)->SprayOff && !Aero1Response1ToSend.ConfirmSprayOff)
+    {
       AeroT1->sprayOff();
+      Aero1Response1ToSend.ConfirmSprayOff = true;
+    }
+    else
+      Aero1Response1ToSend.ConfirmSprayOff = false;
+
     AeroT1->setDayMode(((AeroCommand_P1 *)ReceivedCommand)->DayMode);
     AeroT1->setDuration(((AeroCommand_P1 *)ReceivedCommand)->Duration);
     AeroT1->setDayInterval(((AeroCommand_P1 *)ReceivedCommand)->DayInterval);
@@ -147,29 +168,67 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     updateAckData(AeroMessages::AeroModuleResponse1); // update the next Message that will be copied to the buffer
     if (*SerialReportWireless)
     {
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->MixReservoir, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->RefillPressureTank, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->DrainPressureTank, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOn, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOff, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpDisable, false, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->MixReservoir, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, true, 1);
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime, true, 1);
     }
-    if (((AeroCommand_P2 *)ReceivedCommand)->RefillPressureTank)
-      AeroT1->refillTank();
-    if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight)
-      Weight1->triggerTare();
-    if (((AeroCommand_P2 *)ReceivedCommand)->PumpOn)
-      AeroT1->refillTank();
-    if (((AeroCommand_P2 *)ReceivedCommand)->PumpOff)
-      AeroT1->Pump->stopPump(true);
-    if (((AeroCommand_P2 *)ReceivedCommand)->PumpDisable)
-      AeroT1->Pump->disablePump();
-    if (((AeroCommand_P2 *)ReceivedCommand)->MixReservoir)
+    if (((AeroCommand_P2 *)ReceivedCommand)->MixReservoir && !Aero1Response2ToSend.ConfirmMixReservoir)
+    {
       AeroT1->startMixing();
-    if (((AeroCommand_P2 *)ReceivedCommand)->DrainPressureTank)
+      Aero1Response2ToSend.ConfirmMixReservoir = true;
+    }
+    else
+      Aero1Response2ToSend.ConfirmMixReservoir = false;
+    if (((AeroCommand_P2 *)ReceivedCommand)->RefillPressureTank && !Aero1Response2ToSend.ConfirmRefillPressureTank)
+    {
+      AeroT1->refillTank();
+      Aero1Response2ToSend.ConfirmRefillPressureTank = true;
+    }
+    else
+      Aero1Response2ToSend.ConfirmRefillPressureTank = false;
+    if (((AeroCommand_P2 *)ReceivedCommand)->DrainPressureTank && !Aero1Response2ToSend.ConfirmDrainPressureTank)
+    {
       AeroT1->drainTank();
+      Aero1Response2ToSend.ConfirmDrainPressureTank = true;
+    }
+    else
+      Aero1Response2ToSend.ConfirmDrainPressureTank = false;
+    if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight && !Aero1Response2ToSend.ConfirmTareWeight)
+    {
+      Weight1->triggerTare();
+      Aero1Response2ToSend.ConfirmTareWeight = true;
+    }
+    else
+      Aero1Response2ToSend.ConfirmTareWeight = false;
+    if (((AeroCommand_P2 *)ReceivedCommand)->PumpOn && !Aero1Response2ToSend.ConfirmPumpOn)
+    {
+      AeroT1->refillTank();
+      Aero1Response2ToSend.ConfirmPumpOn = true;
+    }
+    else
+      Aero1Response2ToSend.ConfirmPumpOn = false;
+    if (((AeroCommand_P2 *)ReceivedCommand)->PumpOff && !Aero1Response2ToSend.ConfirmPumpOff)
+    {
+      AeroT1->Pump->stopPump(true);
+      Aero1Response2ToSend.ConfirmPumpOff = true;
+    }
+    else
+      Aero1Response2ToSend.ConfirmPumpOff = false;
+    if (((AeroCommand_P2 *)ReceivedCommand)->PumpDisable && !Aero1Response2ToSend.ConfirmPumpDisable)
+    {
+      AeroT1->Pump->disablePump();
+      Aero1Response2ToSend.ConfirmPumpDisable = true;
+    }
+    else
+      Aero1Response2ToSend.ConfirmPumpDisable = false;    
+
     AeroT1->Pump->setSpeed(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed);
     AeroT1->Pump->setPumpTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);
     AeroT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime);

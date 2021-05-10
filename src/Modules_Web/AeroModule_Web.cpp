@@ -325,17 +325,12 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         break;
       case AeroMessages::AeroResponse1:
         memcpy(&AeroResponse1Received, ReceivedResponse, sizeof(struct AeroResponse_P1));
-        if (AeroCommand1ToSend.SprayEnabled || AeroCommand1ToSend.SprayDisabled || AeroCommand1ToSend.SprayNow || AeroCommand1ToSend.SprayOff)
-        {
-          SyncRequested = true; ///< Force a second message exchange to actualize the response
-          AeroCommand1ToSend.SprayEnabled = false;
-          AeroCommand1ToSend.SprayDisabled = false;
-          AeroCommand1ToSend.SprayNow = false;
-          AeroCommand1ToSend.SprayOff = false;
-        }
         if (*(Parent->SerialReportWireless))
         {
-          /// \todo Use Helpers.h to convert raw values to friendly format
+          logToSerials(AeroResponse1Received.ConfirmSprayEnabled, false, 1);
+          logToSerials(AeroResponse1Received.ConfirmSprayDisabled, false, 1);
+          logToSerials(AeroResponse1Received.ConfirmSprayNow, false, 1);
+          logToSerials(AeroResponse1Received.ConfirmSprayOff, false, 1);
           logToSerials(toText((int)AeroResponse1Received.AeroState), false, 1);
           logToSerials(AeroResponse1Received.PressureTankPresent, false, 1);
           logToSerials(AeroResponse1Received.SprayEnabled, false, 1);
@@ -344,24 +339,38 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           logToSerials(AeroResponse1Received.LastSprayPressure, false, 1);
           logToSerials(AeroResponse1Received.Weight, true, 1);
         }
+        if (AeroCommand1ToSend.SprayEnabled || AeroCommand1ToSend.SprayDisabled || AeroCommand1ToSend.SprayNow || AeroCommand1ToSend.SprayOff)
+        {
+          SyncRequested = true; ///< Force another message exchange when a command is active
+        }
+        if(AeroResponse1Received.ConfirmSprayEnabled) AeroCommand1ToSend.SprayEnabled = false;  //Turn off the Flag once the Receiver confirms processing it 
+        if(AeroResponse1Received.ConfirmSprayDisabled) AeroCommand1ToSend.SprayDisabled = false;
+        if(AeroResponse1Received.ConfirmSprayNow) AeroCommand1ToSend.SprayNow = false;
+        if(AeroResponse1Received.ConfirmSprayOff) AeroCommand1ToSend.SprayOff = false;    
         break;
       case AeroMessages::AeroResponse2:
         memcpy(&AeroResponse2Received, ReceivedResponse, sizeof(struct AeroResponse_P2));
-        if (AeroCommand2ToSend.PumpOn || AeroCommand2ToSend.PumpOff || AeroCommand2ToSend.PumpDisable || AeroCommand2ToSend.MixReservoir || AeroCommand2ToSend.RefillPressureTank || AeroCommand2ToSend.DrainPressureTank || AeroCommand2ToSend.TareWeight)
-        {
-          SyncRequested = true; ///< Force a second message exchange to actualize the response
-          AeroCommand2ToSend.PumpOn = false;
-          AeroCommand2ToSend.PumpOff = false;
-          AeroCommand2ToSend.PumpDisable = false;
-          AeroCommand2ToSend.MixReservoir = false;
-          AeroCommand2ToSend.RefillPressureTank = false;
-          AeroCommand2ToSend.DrainPressureTank = false;
-          AeroCommand2ToSend.TareWeight = false;
-        }
         if (*(Parent->SerialReportWireless))
         {
-          logToSerials(F("-"), true, 1);  ///< Response messages does not have any data
+          logToSerials(AeroResponse2Received.ConfirmPumpOn, false, 1);
+          logToSerials(AeroResponse2Received.ConfirmPumpOff, false, 1);
+          logToSerials(AeroResponse2Received.ConfirmPumpDisable, false, 1);
+          logToSerials(AeroResponse2Received.ConfirmMixReservoir, false, 1);
+          logToSerials(AeroResponse2Received.ConfirmRefillPressureTank, false, 1);
+          logToSerials(AeroResponse2Received.ConfirmDrainPressureTank, false, 1);
+          logToSerials(AeroResponse2Received.ConfirmTareWeight, true, 1);
         }
+        if (AeroCommand2ToSend.PumpOn || AeroCommand2ToSend.PumpOff || AeroCommand2ToSend.PumpDisable || AeroCommand2ToSend.MixReservoir || AeroCommand2ToSend.RefillPressureTank || AeroCommand2ToSend.DrainPressureTank || AeroCommand2ToSend.TareWeight)
+        {
+          SyncRequested = true; ///< Force another message exchange when a command is active
+        }
+        if(AeroResponse2Received.ConfirmPumpOn) AeroCommand2ToSend.PumpOn = false;  //Turn off the Flag once the Receiver confirms processing it 
+        if(AeroResponse2Received.ConfirmPumpOff) AeroCommand2ToSend.PumpOff = false;
+        if(AeroResponse2Received.ConfirmPumpDisable) AeroCommand2ToSend.PumpDisable = false;
+        if(AeroResponse2Received.ConfirmMixReservoir) AeroCommand2ToSend.MixReservoir = false;
+        if(AeroResponse2Received.ConfirmRefillPressureTank) AeroCommand2ToSend.RefillPressureTank = false;
+        if(AeroResponse2Received.ConfirmDrainPressureTank) AeroCommand2ToSend.DrainPressureTank = false;
+        if(AeroResponse2Received.ConfirmTareWeight) AeroCommand2ToSend.TareWeight = false;
         break;
       case AeroMessages::AeroReset:
         if (*(Parent->SerialReportWireless))

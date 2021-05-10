@@ -340,6 +340,21 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         break;
       case HempyMessages::HempyBucketResponse1:
         memcpy(&HempyBucketResponse1Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
+        if (*(Parent->SerialReportWireless))
+        {
+          logToSerials(HempyBucketResponse1Received.ConfirmDisable, false, 1);
+          logToSerials(HempyBucketResponse1Received.ConfirmStartWatering, false, 1);
+          logToSerials(HempyBucketResponse1Received.ConfirmStopWatering, false, 1);
+          logToSerials(HempyBucketResponse1Received.ConfirmTareWeightB, false, 1);
+          logToSerials(HempyBucketResponse1Received.ConfirmTareWeightDW, false, 1);
+          logToSerials(HempyBucketResponse1Received.ConfirmTareWeightWR, false, 1);
+          logToSerials(toText((int)HempyBucketResponse1Received.HempyState), false, 1);
+          logToSerials(toText((int)HempyBucketResponse1Received.PumpState), false, 1);
+          logToSerials(HempyBucketResponse1Received.WeightB, false, 1);
+          logToSerials(HempyBucketResponse1Received.WeightWR, false, 1);
+          logToSerials(HempyBucketResponse1Received.DryWeight, false, 1);
+          logToSerials(HempyBucketResponse1Received.WetWeight, true, 1);
+        }
         if (HempyBucketCommand1ToSend.Disable || HempyBucketCommand1ToSend.StartWatering || HempyBucketCommand1ToSend.StopWatering || HempyBucketCommand1ToSend.TareWeightB || HempyBucketCommand1ToSend.TareWeightDW || HempyBucketCommand1ToSend.TareWeightWR) ///< Turn off command flags
         {
           SyncRequested = true; ///< Force a second packet to actualize the response
@@ -354,35 +369,18 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         if (!isnan(HempyBucketCommand1ToSend.DryWeight) && HempyBucketResponse1Received.DryWeight == HempyBucketCommand1ToSend.DryWeight)
         {
           HempyBucketCommand1ToSend.DryWeight = NAN;
-        }
-        if (*(Parent->SerialReportWireless))
-        {
-          logToSerials(toText((int)HempyBucketResponse1Received.HempyState), false, 1);
-          logToSerials(toText((int)HempyBucketResponse1Received.PumpState), false, 1);
-          logToSerials(HempyBucketResponse1Received.WeightB, false, 1);
-          logToSerials(HempyBucketResponse1Received.WeightWR, false, 1);
-          logToSerials(HempyBucketResponse1Received.DryWeight, false, 1);
-          logToSerials(HempyBucketResponse1Received.WetWeight, true, 1);
-        }
+        }        
         break;
       case HempyMessages::HempyBucketResponse2:
         memcpy(&HempyBucketResponse2Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
-        if (HempyBucketCommand2ToSend.Disable || HempyBucketCommand2ToSend.StartWatering || HempyBucketCommand2ToSend.StopWatering || HempyBucketCommand2ToSend.TareWeightB || HempyBucketCommand2ToSend.TareWeightDW || HempyBucketCommand2ToSend.TareWeightWR) ///< Turn off command flags
-        {
-          SyncRequested = true; ///< Force a second message exchange to actualize the response
-          HempyBucketCommand2ToSend.Disable = false;
-          HempyBucketCommand2ToSend.StartWatering = false;
-          HempyBucketCommand2ToSend.StopWatering = false;
-          HempyBucketCommand2ToSend.TareWeightB = false;
-          HempyBucketCommand2ToSend.TareWeightDW = false;
-          HempyBucketCommand2ToSend.TareWeightWR = false;
-        }
-        if (!isnan(HempyBucketCommand2ToSend.DryWeight) && HempyBucketResponse2Received.DryWeight == HempyBucketCommand2ToSend.DryWeight)
-        {
-          HempyBucketCommand2ToSend.DryWeight = NAN;
-        }
         if (*(Parent->SerialReportWireless))
         {
+          logToSerials(HempyBucketResponse2Received.ConfirmDisable, false, 1);
+          logToSerials(HempyBucketResponse2Received.ConfirmStartWatering, false, 1);
+          logToSerials(HempyBucketResponse2Received.ConfirmStopWatering, false, 1);
+          logToSerials(HempyBucketResponse2Received.ConfirmTareWeightB, false, 1);
+          logToSerials(HempyBucketResponse2Received.ConfirmTareWeightDW, false, 1);
+          logToSerials(HempyBucketResponse2Received.ConfirmTareWeightWR, false, 1);
           logToSerials(toText((int)HempyBucketResponse2Received.HempyState), false, 1);
           logToSerials(toText((int)HempyBucketResponse2Received.PumpState), false, 1);
           logToSerials(HempyBucketResponse2Received.WeightB, false, 1);
@@ -390,6 +388,21 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
           logToSerials(HempyBucketResponse2Received.DryWeight, false, 1);
           logToSerials(HempyBucketResponse2Received.WetWeight, true, 1);
         }
+        if (HempyBucketCommand2ToSend.Disable || HempyBucketCommand2ToSend.StartWatering || HempyBucketCommand2ToSend.StopWatering || HempyBucketCommand2ToSend.TareWeightB || HempyBucketCommand2ToSend.TareWeightDW || HempyBucketCommand2ToSend.TareWeightWR) ///< Turn off command flags
+        {
+          SyncRequested = true; ///< Force another message exchange when a command is active
+        }
+        if(HempyBucketResponse2Received.ConfirmDisable) HempyBucketCommand2ToSend.Disable = false;  //Turn off the Flag once the Receiver confirms processing it 
+        if(HempyBucketResponse2Received.ConfirmStartWatering) HempyBucketCommand2ToSend.StartWatering = false;
+        if(HempyBucketResponse2Received.ConfirmStopWatering) HempyBucketCommand2ToSend.StopWatering = false;
+        if(HempyBucketResponse2Received.ConfirmTareWeightB) HempyBucketCommand2ToSend.TareWeightB = false;
+        if(HempyBucketResponse2Received.ConfirmTareWeightDW) HempyBucketCommand2ToSend.TareWeightDW = false;
+        if(HempyBucketResponse2Received.ConfirmTareWeightWR) HempyBucketCommand2ToSend.TareWeightWR = false;
+
+        if (!isnan(HempyBucketCommand2ToSend.DryWeight) && HempyBucketResponse2Received.DryWeight == HempyBucketCommand2ToSend.DryWeight)
+        {
+          HempyBucketCommand2ToSend.DryWeight = NAN;
+        }        
         break;
       case HempyMessages::HempyReset:
         if (*(Parent->SerialReportWireless))
