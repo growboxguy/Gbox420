@@ -113,7 +113,7 @@ typedef struct
     long Offset;    ///< Reading at 0 weight on the scale
     float Scale;    ///< Scale factor
   };
-  struct WeightSensorSettings Weight1 = {.DTPin = A0, .SCKPin = A1, .Offset = -388055, .Scale = -22280.70}; ///< Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/tree/master/Test_Sketches/Test-WeightSensor_Aero
+  struct WeightSensorSettings Weight1 = {.DTPin = A0, .SCKPin = A1, .Offset = -288069, .Scale = -22280.70}; ///< Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/tree/master/Test_Sketches/Test-WeightSensor_Aero
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;
