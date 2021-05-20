@@ -120,7 +120,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Aero",
@@ -375,7 +375,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Power",
@@ -398,7 +398,7 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT last(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'gbox420_power1_power') AND $timeFilter GROUP BY time($__interval) fill(previous)",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "Power",
           "resultFormat": "time_series",
           "select": [
@@ -444,7 +444,7 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT first(*) FROM (SELECT spread(\"value\") FROM \"homeassistant\".\"autogen\".\"kWh\" WHERE (\"entity_id\"='gbox420_power1_energy' ) GROUP BY time(1d) fill(null) ORDER BY DESC LIMIT 2) ORDER BY DESC",
-          "rawQuery": true,
+          "rawQuery": false,
           "refId": "Daily",
           "resultFormat": "time_series",
           "select": [
@@ -678,7 +678,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Power",
@@ -981,7 +981,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Power",
@@ -1194,7 +1194,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Light1",
@@ -1366,7 +1366,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Internal fan",
@@ -1555,7 +1555,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Aero tote",
@@ -1773,7 +1773,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Aero tote",
@@ -1906,7 +1906,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2140,7 +2140,7 @@
           "format": "celsius",
           "label": null,
           "logBase": 1,
-          "max": "100",
+          "max": null,
           "min": "0",
           "show": true
         },
@@ -2149,14 +2149,14 @@
           "format": "humidity",
           "label": "",
           "logBase": 1,
-          "max": "100",
+          "max": null,
           "min": "0",
           "show": true
         }
       ],
       "yaxis": {
         "align": true,
-        "alignLevel": 50
+        "alignLevel": null
       }
     },
     {
@@ -2213,7 +2213,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Internal temp",
@@ -2246,7 +2246,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -2290,7 +2290,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -2386,7 +2386,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Internal humidity",
@@ -2420,7 +2420,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -2464,7 +2464,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -2534,7 +2534,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2776,7 +2776,7 @@
         {
           "$$hashKey": "object:1721",
           "format": "masskg",
-          "label": null,
+          "label": "",
           "logBase": 1,
           "max": null,
           "min": "0",
@@ -2785,7 +2785,7 @@
       ],
       "yaxis": {
         "align": true,
-        "alignLevel": null
+        "alignLevel": 25
       }
     },
     {
@@ -2841,7 +2841,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Tank",
@@ -2874,7 +2874,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -2918,7 +2918,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -3056,7 +3056,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Duration",
@@ -3238,7 +3238,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3474,7 +3474,7 @@
           "format": "masskg",
           "label": null,
           "logBase": 1,
-          "max": "25",
+          "max": null,
           "min": "0",
           "show": true
         },
@@ -3489,7 +3489,7 @@
         }
       ],
       "yaxis": {
-        "align": false,
+        "align": true,
         "alignLevel": null
       }
     },
@@ -3533,7 +3533,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3768,7 +3768,7 @@
           "format": "masskg",
           "label": null,
           "logBase": 1,
-          "max": "25",
+          "max": null,
           "min": "0",
           "show": true
         },
@@ -3826,7 +3826,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -4005,7 +4005,7 @@
           "format": "masskg",
           "label": null,
           "logBase": 1,
-          "max": "25",
+          "max": null,
           "min": "0",
           "show": true
         },
@@ -4014,7 +4014,7 @@
           "format": "celsius",
           "label": null,
           "logBase": 1,
-          "max": "25",
+          "max": null,
           "min": "0",
           "show": true
         }
@@ -4116,7 +4116,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Bucket 1",
@@ -4232,7 +4232,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Pump 1",
@@ -4361,7 +4361,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Bucket 2",
@@ -4478,7 +4478,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Pump 2",
@@ -4651,7 +4651,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Aero",
@@ -4823,7 +4823,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "alias": "Pump",
@@ -4904,7 +4904,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.5.5",
+      "pluginVersion": "7.5.6",
       "targets": [
         {
           "groupBy": [],
@@ -4970,5 +4970,5 @@
   "timezone": "",
   "title": "Gbox420",
   "uid": "x84g-i9Gz",
-  "version": 237
+  "version": 249
 }
