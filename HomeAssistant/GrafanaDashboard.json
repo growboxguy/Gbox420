@@ -120,7 +120,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Aero",
@@ -375,7 +375,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Power",
@@ -678,7 +678,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Power",
@@ -981,7 +981,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Power",
@@ -1194,7 +1194,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Light1",
@@ -1366,7 +1366,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Internal fan",
@@ -1555,7 +1555,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Aero tote",
@@ -1773,7 +1773,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Aero tote",
@@ -1906,7 +1906,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2213,7 +2213,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Internal temp",
@@ -2386,7 +2386,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Internal humidity",
@@ -2534,7 +2534,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2841,7 +2841,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Tank",
@@ -3056,7 +3056,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Duration",
@@ -3238,7 +3238,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3533,7 +3533,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3826,7 +3826,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -4116,7 +4116,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Bucket 1",
@@ -4232,7 +4232,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Pump 1",
@@ -4361,7 +4361,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Bucket 2",
@@ -4478,7 +4478,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Pump 2",
@@ -4651,7 +4651,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Aero",
@@ -4823,7 +4823,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "alias": "Pump",
@@ -4904,7 +4904,7 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "7.5.6",
+      "pluginVersion": "7.5.7",
       "targets": [
         {
           "groupBy": [],
