@@ -95,7 +95,7 @@ function Test_GetFriendlyColumnName() {
   LogToConsole(GetFriendlyColumnName("Lt1_On"), true, 0);
 }
 
-function GetFriendlyColumnName(key, FriendlyFormat = true) {
+function GetFriendlyColumnName(key, includeUnits = true) {
   var match = GetNamedRangeValues("Columns").filter(function (row) {
     return row[columns_keyColumn] == key;
   });
@@ -103,7 +103,7 @@ function GetFriendlyColumnName(key, FriendlyFormat = true) {
     return key;
   }
   else {
-    if (FriendlyFormat)
+    if (includeUnits)
       return match[0][columns_friendlyNameColumn];
     else
       return match[0][columns_nameColumn];
