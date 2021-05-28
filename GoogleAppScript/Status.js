@@ -14,10 +14,9 @@ function UpdateStatus(Log) {
   }
   //Add all Key + Data pairs to the Status sheet from the received Log JSON  
   var Components = Object.getOwnPropertyNames(Log);
-  if (Debug) LogToConsole(Components, true, 3);
   for (var i = 0; i < Components.length; i++) {
     var Properties = Object.getOwnPropertyNames(Log[Components[i]]);
-    if (Debug) LogToConsole(Log[Components[i]] + " : " + Properties, true, 3);
+    if (Debug) LogToConsole(Components[i]  + " : " + JSON.stringify(Log[Components[i]]), true, 3);
     for (var j = 0; j < Properties.length; j++) {
       var key = Components[i] + '_' + Properties[j];
       var keyColumnName = GetFriendlyColumnName(key);

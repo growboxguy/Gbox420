@@ -44,11 +44,11 @@ function GetNamedRangeValues(rangeName, dropCache) {
   var cache = CacheService.getScriptCache();
   var cached = cache.get(rangeName);
   if (cached != null && dropCache != true) {
-    if (Debug) LogToConsole("Returning cached version of: " + rangeName, true, 2);
+    //if (Debug) LogToConsole("Returning cached version of: " + rangeName, true, 2);
     return JSON.parse(cached);
   }
   else {
-    if (Debug) LogToConsole("Updating cache for: " + rangeName, true, 2);
+    //if (Debug) LogToConsole("Updating cache for: " + rangeName, true, 2);
     var rangeData = ActiveSpreadsheetApp.getRangeByName(rangeName).getValues();
     cache.put(rangeName, JSON.stringify(rangeData), 21600); // cache for 6 hours to ensure it is not queried multiple times during script execution
     return rangeData;
@@ -422,8 +422,7 @@ function GetFriendlyValue(key, value) {
           returnValue = value;
           break;
       }
-      if (Debug)
-        LogToConsole(key + " : " + value + " , type: " + dataType + " , FriendlyValue: " + returnValue, true, 3);
+      //if (Debug)LogToConsole(key + " : " + value + " , type: " + dataType + " , FriendlyValue: " + returnValue, true, 3);
     }
     return returnValue;
   }

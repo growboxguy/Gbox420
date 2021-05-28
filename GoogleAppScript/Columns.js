@@ -21,7 +21,7 @@ function UpdateFriendlyName() {
     else {
       columns[i][columns_friendlyNameColumn] = columns[i][columns_nameColumn];
     }
-    if (Debug) LogToConsole(key + " column matched friendly name: " + columns[i][columns_friendlyNameColumn], true, 3);
+    //if (Debug) LogToConsole(key + " column matched friendly name: " + columns[i][columns_friendlyNameColumn], true, 3);
   }
   SaveNamedRange("Columns", columns);
 }

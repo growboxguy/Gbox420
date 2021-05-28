@@ -34,7 +34,7 @@ function UpdateChartsTab() {
       chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn], GetSettingsValue("Chart point limit")));
       seriesType[j] = { areaOpacity: 0.1, type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_friendlyNameColumn], targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn] };
     }
-    if (Debug) LogToConsole(seriesType, true, 3);
+    if (Debug) LogToConsole(JSON.stringify(seriesType), true, 3);
 
     chartBuilder
       .setOption('title', charts[i][1])
@@ -52,8 +52,6 @@ function UpdateOverviewChart() {
   ClearCharts(statusSheet);
 
   var columns = GetNamedRangeValues("Columns");
-
-  if (Debug) LogToConsole("Generating overview chart", true, 3);
   var chartBuilder = statusSheet.newChart();
   var columnsToInclude = columns.filter(function (row) {
     return row[columns_overviewColumn] == true;  ///< Selecting the columns to include in the chart based on Settings tab - Columns section- Show on Overview column
@@ -65,7 +63,7 @@ function UpdateOverviewChart() {
     chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn], GetSettingsValue("Chart point limit")));
     seriesType[j] = { areaOpacity: 0.1, type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_friendlyNameColumn], targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn] };
   }
-  if (Debug) LogToConsole(seriesType, true, 3);
+  if (Debug) LogToConsole(JSON.stringify(seriesType), true, 3);
 
   chartBuilder
     .setOption('title', "Overview - " + ActiveSpreadsheetApp.getRangeByName("LastReportTime").getDisplayValue())

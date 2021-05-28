@@ -66,7 +66,7 @@ function CheckAlerts(Log) {
           }
         }
         else {
-          if (Debug) LogToConsole(GetFriendlyColumnName(key,false) + " : " + GetFriendlyValue(key, value) + " [" + key + " : " + value + "] : Alert not active", true, 3);
+          //if (Debug) LogToConsole(GetFriendlyColumnName(key,false) + " : " + GetFriendlyValue(key, value) + " [" + key + " : " + value + "] : Alert not active", true, 3);
         }
       }
     }

@@ -46,7 +46,7 @@ function GetLogColumnRange(name, rowLimit) {  //returns the entire column with t
     }
   }
   if (match != null) {
-    if (Debug) LogToConsole(name + " header matched log column: " + match, true, 3);
+    //if (Debug) LogToConsole(name + " header matched log column: " + match, true, 3);
     if (!isNaN(parseInt(rowLimit)) && isFinite(rowLimit) && rowLimit > 0 && logSheet.getLastRow() > rowLimit) {
       return logSheet.getRange(logSheet.getLastRow() - rowLimit, match + 1, logSheet.getLastRow(), 1);
     }

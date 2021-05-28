@@ -4,9 +4,8 @@ JSON data receiver and Google Sheets logging
 
 -Works with the new App Scripts V8 only
 -Enable Google Apps Script API from: https://script.google.com/home/usersettings
--DEVs ONLY:
-Connect Google App Scripts to Visual Studio Code: https://yagisanatode.com/2019/04/01/working-with-google-apps-script-in-visual-studio-code-using-clasp/
-You will also need the latest version of NPM,https://phoenixnap.com/kb/update-node-js-version
+-Connect Google App Scripts to Visual Studio Code: https://yagisanatode.com/2019/04/01/working-with-google-apps-script-in-visual-studio-code-using-clasp/
+-You will also need the latest version of NPM,https://phoenixnap.com/kb/update-node-js-version
 */
 
 //Relative position of Columns within named ranges - Change these only when rearranging the columns
@@ -96,12 +95,12 @@ function ProcessBoxData(JSONBoxData) {
     //ReloadCache();  ///< Remove cached Named Ranges and get a fresh copy
     LogToConsole("Processing BoxDataJSON:", false, 0);
     if (JSONBoxData.Log != null) {
-      LogToConsole(JSON.stringify(JSONBoxData.Log), true, 0);  //Print the JSON on the Stackdriver logging (View / Stackdriver logging)
+      LogToConsole(JSON.stringify(JSONBoxData), true, 0);  //Print the JSON on the Stackdriver logging (View / Stackdriver logging)
       SaveToLog(JSONBoxData.Log); //Save the log to the Logs sheet 
       UpdateColumns(JSONBoxData.Log); //Add missing columns to the Settings sheet 
-      UpdateStatus(JSONBoxData.Log); //Add the latest status to the Status page     
-      CheckAlerts(JSONBoxData.Log); //Checks for alerts and send an email alert
-      UpdateCharts();  //Rebuild all Charts (Overview + Charts tab)    
+      UpdateStatus(JSONBoxData.Log); //Add the latest status to the Status page   
+      UpdateCharts();  //Rebuild all Charts (Overview + Charts tab)  
+      CheckAlerts(JSONBoxData.Log); //Checks for alerts and send an email alert          
     }
     else {
       LogToConsole("Received BoxData does not contain a Log section. Skipping log processing.", true, 1);
