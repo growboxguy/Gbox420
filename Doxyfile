@@ -912,7 +912,7 @@ EXCLUDE_SYMLINKS       = YES
 EXCLUDE_PATTERNS       = */Archive/*
 EXCLUDE_PATTERNS       += */Gbox420_Mega/*
 EXCLUDE_PATTERNS       += */Gbox420_Nano/*
-EXCLUDE_PATTERNS       += */*/src/*
+EXCLUDE_PATTERNS       += */Gbox420*/src/*
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names
 # (namespaces, classes, functions, etc.) that should be excluded from the
