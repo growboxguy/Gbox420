@@ -80,7 +80,7 @@ struct DevModuleResponse : DevCommonTemplate ///< Devponics wireless module resp
 {
    DevModuleResponse(__attribute__((unused)) DevMessages SequenceID) : DevCommonTemplate(SequenceID) {}
    DevModuleResponse(__attribute__((unused)) DevMessages SequenceID, __attribute__((unused)) bool Status) : DevCommonTemplate(SequenceID) {}
-   bool Status = true;
+   bool Status = false;
 };
 
 struct DevCommand_P1 : DevCommonTemplate ///< Devponics wireless commands - Part1
