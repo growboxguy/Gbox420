@@ -1,5 +1,5 @@
-echo "This script is for developement only"
-echo "Protects shared Gbox420 and Gbox420 Nano Components from going out of sync by hard linking the source files"
+echo "------------------------------------------"
+echo "Processing "$PWD
 echo "------------------------------------------"
 
 echo "Creating unlink command"
@@ -38,7 +38,5 @@ ln ../src/Components/WaterPump.cpp ./src/Components
 ln ../src/Components/WeightSensor.h ./src/Components
 ln ../src/Components/WeightSensor.cpp ./src/Components
 
-
-echo "Done, press enter to exit"
-read fakeinput 
-
+#echo "Done, press enter to exit"
+#read fakeinput

@@ -29,16 +29,17 @@ function UpdateChartsTab() {
     });
 
     chartBuilder.addRange(GetLogColumnRange("LogDate", GetSettingsValue("Chart point limit")));
-    var seriesType = {};
+    var series = {};
     for (var j = 0; j < columnsToInclude.length; j++) {
       chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn], GetSettingsValue("Chart point limit")));
-      seriesType[j] = { areaOpacity: 0.1, type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_friendlyNameColumn], targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn] };
+      series[j] = { areaOpacity: 0.1, type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_friendlyNameColumn], targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn] };
     }
-    if (Debug) LogToConsole(JSON.stringify(seriesType), true, 3);
+    if (Debug) LogToConsole(JSON.stringify(series), true, 3);
 
     chartBuilder
       .setOption('title', charts[i][1])
-      .setOption('series', seriesType)
+      .setOption('seriesType', 'line')   
+      .setOption('series', series)   
       .setPosition(1 + i * 29, 1, 0, 0)
       .setChartType(GetChartType(charts[i][2]))
 
@@ -58,25 +59,26 @@ function UpdateOverviewChart() {
   });
 
   chartBuilder.addRange(GetLogColumnRange("LogDate", GetSettingsValue("Chart point limit")));
-  var seriesType = {};
+  var series = {};
   for (var j = 0; j < columnsToInclude.length; j++) {
     chartBuilder.addRange(GetLogColumnRange(columnsToInclude[j][columns_keyColumn], GetSettingsValue("Chart point limit")));
-    seriesType[j] = { areaOpacity: 0.1, type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_friendlyNameColumn], targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn] };
+    series[j] = { areaOpacity: 0.1, type: columnsToInclude[j][columns_seriesColumn], labelInLegend: columnsToInclude[j][columns_friendlyNameColumn], targetAxisIndex: columnsToInclude[j][columns_targetAxisColumn] };
   }
-  if (Debug) LogToConsole(JSON.stringify(seriesType), true, 3);
+  if (Debug) LogToConsole(JSON.stringify(series), true, 3);
 
   chartBuilder
     .setOption('title', "Overview - " + ActiveSpreadsheetApp.getRangeByName("LastReportTime").getDisplayValue())
-    .setOption('series', seriesType)
+    .setOption('seriesType', 'line')        
+    .setOption('series', series)
     .setOption('vAxes.0.logScale', true)
     .setPosition(10, 4, 0, 0)
     .setChartType(Charts.ChartType.COMBO)
 
-  ApplyStandardFormatting(chartBuilder, seriesType);
+  ApplyStandardFormatting(chartBuilder, series);
   statusSheet.insertChart(chartBuilder.build());
 }
 
-function ApplyStandardFormatting(chartBuilder, seriesType) {
+function ApplyStandardFormatting(chartBuilder, series) {
   chartBuilder
     .setNumHeaders(1)
     .setOption('width', 800)

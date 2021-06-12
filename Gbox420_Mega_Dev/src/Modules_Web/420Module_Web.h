@@ -19,6 +19,7 @@
 extern ELClientWebServer WebServer;
 extern ELClientRest PushingBoxRestAPI;
 extern ELClientMqtt MqttAPI;
+extern bool MqttConnected;
 class Sound;
 
 class Module_Web : virtual public Common, virtual public Module

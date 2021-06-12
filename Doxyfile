@@ -266,7 +266,7 @@ TCL_SUBST              =
 # members will be omitted, etc.
 # The default value is: NO.
 
-OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_FOR_C  = YES
 
 # Set the OPTIMIZE_OUTPUT_JAVA tag to YES if your project consists of Java or
 # Python sources only. Doxygen will then generate output that is more tailored
@@ -900,7 +900,7 @@ EXCLUDE                = libraries \
 # from the input.
 # The default value is: NO.
 
-EXCLUDE_SYMLINKS       = NO
+EXCLUDE_SYMLINKS       = YES
 
 # If the value of the INPUT tag contains directories, you can use the
 # EXCLUDE_PATTERNS tag to specify one or more wildcard patterns to exclude
@@ -912,6 +912,7 @@ EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = */Archive/*
 EXCLUDE_PATTERNS       += */Gbox420_Mega/*
 EXCLUDE_PATTERNS       += */Gbox420_Nano/*
+EXCLUDE_PATTERNS       += */Gbox420_*/src/*
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names
 # (namespaces, classes, functions, etc.) that should be excluded from the

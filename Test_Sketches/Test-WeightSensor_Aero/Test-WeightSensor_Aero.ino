@@ -1,5 +1,5 @@
 //GrowBoxGuy - http://sites.google.com/site/growboxguy/
-//Sketch for calibrating the reservoir weight sensor
+//Sketch for calibrating the aeroponics tote weight sensor
 
 #include "HX711.h"
 
@@ -21,7 +21,7 @@ float WeightSensor_Weight = 0;
 void setup()
 {
   Serial.begin(115200);
-  Serial.println(F("Sketch for calibrating the reservoir weight sensor"));
+  Serial.println(F("Sketch for calibrating the aeroponics tote weight sensor"));
   Serial.println();
 
   WeightSensor.begin(WeightSensor_DT, WeightSensor_SCK);

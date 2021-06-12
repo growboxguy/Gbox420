@@ -1,5 +1,5 @@
-echo "This script is for developement only"
-echo "Protects shared Gbox420 and Gbox420 Nano Components from going out of sync by hard linking the source files"
+echo "------------------------------------------"
+echo "Processing "$PWD
 echo "------------------------------------------"
 
 echo "Creating unlink command"
@@ -37,7 +37,6 @@ ln ../src/Modules_Web/HempyModule_Web.h ./src/Modules_Web
 ln ../src/Modules_Web/ReservoirModule_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/ReservoirModule_Web.h ./src/Modules_Web
 
-
 ln ../src/Components/420Common.h ./src/Components
 ln ../src/Components/420Common.cpp ./src/Components
 ln ../src/Components/420Module.h ./src/Components
@@ -61,10 +60,6 @@ ln ../src/Components/PowerSensor.cpp ./src/Components
 ln ../src/Components/PowerSensorV3.h ./src/Components
 ln ../src/Components/PowerSensorV3.cpp ./src/Components
 
-
-ln ../src/Components_Web/420Module_Web.cpp ./src/Components_Web
-
-
-echo "Done, press enter to exit"
-read fakeinput 
+#echo "Done, press enter to exit"
+#read fakeinput 
 

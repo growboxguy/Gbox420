@@ -26,6 +26,7 @@ select yn in "Yes" "No"; do
         No ) ls "$SOURCE" | cat -n | while read n f; do cp "$SOURCE/$f" "$DESTINATION/original_$TAG/${TAG}_$f"; done; break;;
     esac
 done
+echo "Saving original JPG images to $DESTINATION/original_$TAG..."
 echo "Saved original images to: $DESTINATION/original_$TAG"
 
 echo "Converting PNG files to JPG..."
