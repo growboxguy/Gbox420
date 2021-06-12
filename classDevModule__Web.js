@@ -1,0 +1,26 @@
+var classDevModule__Web =
+[
+    [ "DevModule_Web", "classDevModule__Web.html#ae334c16d42a2359be4c4ba56b92ba518", null ],
+    [ "commandEvent", "classDevModule__Web.html#ad83e371e521312fc4f0aff2fd3f80526", null ],
+    [ "getDayMode", "classDevModule__Web.html#a976eb1af72c03f616efb0093debdfdde", null ],
+    [ "getDayModeText", "classDevModule__Web.html#abb6eb01c000d3746f79ce7b1c9ed358f", null ],
+    [ "refresh_FiveSec", "classDevModule__Web.html#a3b22dd2b5355e66403a2e15d488c1196", null ],
+    [ "refresh_Minute", "classDevModule__Web.html#a43cc8925e452a50e6797bbe6421e44c9", null ],
+    [ "report", "classDevModule__Web.html#adef29c3cd5145a7a404959468f0bd5e1", null ],
+    [ "reportToGoogleSheetsTrigger", "classDevModule__Web.html#a00d609f950f4981b7dc30ad4c4987aea", null ],
+    [ "reportToMQTTTrigger", "classDevModule__Web.html#a4436d6126a62bfcc9f8817d97607f8ce", null ],
+    [ "websiteEvent_Load", "classDevModule__Web.html#a8294b7c5e4adff931a4ffcd72ae7ce1e", null ],
+    [ "websiteEvent_Refresh", "classDevModule__Web.html#a9b93b90da799c483922f36cdd5849a95", null ],
+    [ "ConsoleReportRequested", "classDevModule__Web.html#ae1560a535e72b5ec95558b19d6a4df1d", null ],
+    [ "DHT1", "classDevModule__Web.html#acad593b6a60a8a9ca1794854e500c256", null ],
+    [ "MQTTReportFrequency", "classDevModule__Web.html#a81004e9e4c713841a66c5806891448fe", null ],
+    [ "MQTTReportRequested", "classDevModule__Web.html#a53325da82ed73a28e685caa879f39993", null ],
+    [ "MQTTTriggerCounter", "classDevModule__Web.html#a2aec4ef943d019c9e06d7e2c5bf2e881", null ],
+    [ "RefreshAllRequested", "classDevModule__Web.html#a7f7be7bf343ae2a3cdff0cbde5220221", null ],
+    [ "ReportToGoogleSheets", "classDevModule__Web.html#a0971c140b4bbb0d91bcbe1a776668517", null ],
+    [ "ReportToGoogleSheetsRequested", "classDevModule__Web.html#a308ba00b12834b49e62265290e77e11c", null ],
+    [ "ReportToMQTT", "classDevModule__Web.html#a8e7d317906ddcc24f5360b356128c692", null ],
+    [ "SheetsReportingFrequency", "classDevModule__Web.html#a386239c6857f6453efb37bf581a0860d", null ],
+    [ "SheetsTriggerCounter", "classDevModule__Web.html#ae401830adb9566a5c595eb5dd97b8b2d", null ],
+    [ "Sound1", "classDevModule__Web.html#a2662b6d46e549c1069fa7b9ac4a70d48", null ]
+];

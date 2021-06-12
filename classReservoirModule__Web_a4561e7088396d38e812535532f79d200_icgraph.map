@@ -1,0 +1,5 @@
+<map id="ReservoirModule_Web::sendMessages" name="ReservoirModule_Web::sendMessages">
+<area shape="rect" id="node2" href="$classReservoirModule__Web.html#a7b12ae99c82ce17d9c2573d316251be4" title="ReservoirModule_Web\l::refresh_Sec" alt="" coords="208,5,363,47"/>
+<area shape="rect" id="node3" href="$classReservoirModule__Web.html#aa2a023f23aa84a6a739b85ed91c8dc78" title="ReservoirModule_Web\l::websiteEvent_Load" alt="" coords="411,64,565,105"/>
+<area shape="rect" id="node4" href="$classReservoirModule__Web.html#a9a11d3b4d046ef84d92917169c5db8da" title="ReservoirModule_Web\l::refresh_FiveSec" alt="" coords="208,123,363,164"/>
+</map>

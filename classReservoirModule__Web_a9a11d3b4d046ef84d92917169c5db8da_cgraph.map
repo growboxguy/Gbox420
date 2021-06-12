@@ -1,0 +1,7 @@
+<map id="ReservoirModule_Web::refresh_FiveSec" name="ReservoirModule_Web::refresh_FiveSec">
+<area shape="rect" id="node2" href="$classCommon.html#a604ab36b3a1d9a5bcfcb225149c82f90" title="Common::refresh_FiveSec" alt="" coords="208,5,387,32"/>
+<area shape="rect" id="node4" href="$classReservoirModule__Web.html#a4561e7088396d38e812535532f79d200" title="Exchange messages with the Reservoir module. " alt="" coords="220,82,375,123"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="637,43,732,69"/>
+<area shape="rect" id="node5" href="$classReservoirModule__Web.html#aaacd2f917ae585e9c73e6372aa206a80" title="Updates the command sent to the remote Reservoir Module wirelessly. " alt="" coords="435,94,589,135"/>
+<area shape="rect" id="node6" href="$classReservoirModule__Web.html#a44bae49e074a3bdf1a69203d66ab4222" title="Send a single command and process the Response received in the Acknowledgement package. " alt="" coords="435,159,589,201"/>
+</map>

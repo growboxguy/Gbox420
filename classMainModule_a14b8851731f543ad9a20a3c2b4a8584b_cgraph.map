@@ -1,0 +1,9 @@
+<map id="MainModule::reportToMQTTTrigger" name="MainModule::reportToMQTTTrigger">
+<area shape="rect" id="node2" href="$classModule.html#a2dba78d91803ee6241f922d7c0f673fc" title="Generate a text log of all sensor readings to the Serial output. " alt="" coords="319,107,449,133"/>
+<area shape="rect" id="node7" href="$classModule__Web.html#a84fadf4edaff868c72330d7879dd3708" title="Publish an MQTT message containing a JSON formatted report Examples: MQTT reporting: Gbox420/{&quot;Log&quot;:{..." alt="" coords="297,183,471,209"/>
+<area shape="rect" id="node8" href="$classModule__Web.html#aff154e1bc1f8ec0f9f804a1af25f658d" title="Creates a JSON array: [&quot;Log1&quot;,&quot;Log2&quot;,&quot;Log3&quot;,...,&quot;LogN&quot;] and loads it to LongMessage buffer..." alt="" coords="279,233,489,260"/>
+<area shape="rect" id="node3" href="$classModule.html#ab709520f109ae6a355fbc10a40f860a1" title="&lt; Time " alt="" coords="537,5,716,32"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="764,81,859,108"/>
+<area shape="rect" id="node5" href="$Helpers_8cpp.html#a1c32dc98349863213572e4a117046fc1" title="&lt; Debug " alt="" coords="570,107,683,133"/>
+<area shape="rect" id="node6" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="569,157,685,184"/>
+</map>

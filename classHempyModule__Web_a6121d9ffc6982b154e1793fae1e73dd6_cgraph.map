@@ -1,0 +1,10 @@
+<map id="HempyModule_Web::report" name="HempyModule_Web::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="258,5,374,32"/>
+<area shape="rect" id="node3" href="$Helpers_8cpp.html#a0c97bfe0748519233b3a087775ba6521" title="toText_onlineStatus" alt="" coords="247,56,385,83"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="445,132,504,159"/>
+<area shape="rect" id="node5" href="$Helpers_8cpp.html#a9584fe3b73c8ed3efccaf337bb272e6b" title="toText_hempyState" alt="" coords="248,157,384,184"/>
+<area shape="rect" id="node6" href="$Helpers_8cpp.html#aaa9810e7291e97d1fac5b0f3fa0b8f3c" title="toText_waterPumpState" alt="" coords="235,208,397,235"/>
+<area shape="rect" id="node7" href="$Helpers_8cpp.html#ac6a7718046dd13997fdade1da48ecb25" title="toText_percentage" alt="" coords="251,259,381,285"/>
+<area shape="rect" id="node8" href="$Helpers_8cpp.html#a0654f78341ead1a20ca206ebb23d01a4" title="toText_second" alt="" coords="262,309,370,336"/>
+<area shape="rect" id="node9" href="$Helpers_8cpp.html#a16cea647c358524dcff92bd8056f6ff8" title="toText_weight" alt="" coords="264,360,368,387"/>
+</map>

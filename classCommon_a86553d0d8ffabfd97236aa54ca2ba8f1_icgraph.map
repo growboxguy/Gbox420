@@ -1,0 +1,13 @@
+<map id="Common::getComponentName" name="Common::getComponentName">
+<area shape="rect" id="node2" href="$classAeroModule__Web.html#a45df02b033540c3d60b1f6444062d3fe" title="Set values on the ESP&#45;link website when it loads. " alt="" coords="257,5,503,32"/>
+<area shape="rect" id="node3" href="$classAeroModule__Web.html#a35ff242acc077bb3a9d75ab70c7ce40f" title="Set values on the ESP&#45;link website when it refreshes. " alt="" coords="274,57,486,98"/>
+<area shape="rect" id="node4" href="$classDevModule__Web.html#a8294b7c5e4adff931a4ffcd72ae7ce1e" title="DevModule_Web::websiteEvent_Load" alt="" coords="258,123,502,149"/>
+<area shape="rect" id="node5" href="$classDevModule__Web.html#a9b93b90da799c483922f36cdd5849a95" title="DevModule_Web::websiteEvent\l_Refresh" alt="" coords="275,174,485,215"/>
+<area shape="rect" id="node6" href="$classDEVModule__Web.html#a06b3efac7a5e489da49aba198ed41fa3" title="DEVModule_Web::websiteEvent_Load" alt="" coords="256,240,504,267"/>
+<area shape="rect" id="node7" href="$classHempyModule__Web.html#a78e873ef22c3775854c6ed55642e6820" title="HempyModule_Web::website\lEvent_Load" alt="" coords="283,291,477,333"/>
+<area shape="rect" id="node8" href="$classHempyModule__Web.html#a1df6101df795a7a863667d2d28908a50" title="HempyModule_Web::website\lEvent_Refresh" alt="" coords="283,357,477,398"/>
+<area shape="rect" id="node9" href="$classMainModule.html#a20bc1bd8003e07068859028feccd067f" title="MainModule::websiteEvent_Load" alt="" coords="273,423,487,449"/>
+<area shape="rect" id="node10" href="$classMainModule.html#ac116642e44a6e3d06aaf104bef172921" title="MainModule::websiteEvent\l_Refresh" alt="" coords="291,474,469,515"/>
+<area shape="rect" id="node11" href="$classMainModule.html#a89985ce0d1367b5d92eaddf43d478b4b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="285,540,475,567"/>
+<area shape="rect" id="node12" href="$classReservoirModule__Web.html#a435bceed806f4615668ce99630648c93" title="ReservoirModule_Web\l::websiteEvent_Refresh" alt="" coords="299,591,461,633"/>
+</map>

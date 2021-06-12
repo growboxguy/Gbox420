@@ -1,0 +1,15 @@
+<map id="LightSensor::triggerCalibration" name="LightSensor::triggerCalibration">
+<area shape="rect" id="node2" href="$classCommon.html#a62ed1b6917f3510fad082fd1399a1017" title="Common::appendName" alt="" coords="691,341,851,368"/>
+<area shape="rect" id="node3" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Module::addToLog" alt="" coords="706,265,835,292"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="899,355,993,381"/>
+<area shape="rect" id="node5" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="477,37,643,64"/>
+<area shape="rect" id="node6" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="487,88,633,115"/>
+<area shape="rect" id="node7" href="$classLights.html#a240cc60cfb0f2b94b1cd9e8a9202b7ee" title="Lights::getStatus" alt="" coords="279,291,401,317"/>
+<area shape="rect" id="node8" href="$classLights.html#aea8e88f2668fbcc2d3e36dcfe51fbfa5" title="Lights::getBrightness" alt="" coords="267,341,413,368"/>
+<area shape="rect" id="node9" href="$classLights.html#ab18f05b043b61b6eb74bd7b564e1a1ec" title="Lights::setLightOnOff" alt="" coords="267,189,413,216"/>
+<area shape="rect" id="node10" href="$classLights.html#a20392486d66032fd530046cd1f33aaa0" title="Lights::setBrightness" alt="" coords="487,341,633,368"/>
+<area shape="rect" id="node13" href="$classLightSensor.html#a73dea4504d64c13c43a5c68bee9aef27" title="Light reading at dark,0,10,20...100%. " alt="" coords="251,494,429,535"/>
+<area shape="rect" id="node11" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="487,139,633,165"/>
+<area shape="rect" id="node12" href="$classLights.html#a59a952f3c895a78f9e382401a9b9701d" title="Lights::checkRelay" alt="" coords="493,189,627,216"/>
+<area shape="rect" id="node14" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="531,501,589,528"/>
+</map>

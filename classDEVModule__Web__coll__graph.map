@@ -1,0 +1,16 @@
+<map id="DEVModule_Web" name="DEVModule_Web">
+<area shape="rect" id="node2" href="$classCommon__Web.html" title="&lt; header guard, same as the ifndef/define guard https://en.wikipedia.org/wiki/Pragma_once ..." alt="" coords="268,239,377,265"/>
+<area shape="rect" id="node4" href="$classModule__Web.html" title="Module_Web" alt="" coords="625,344,724,371"/>
+<area shape="rect" id="node7" href="$classAeroModule__Web.html" title="AeroModule_Web" alt="" coords="937,203,1063,229"/>
+<area shape="rect" id="node9" href="$classReservoirModule__Web.html" title="ReservoirModule_Web" alt="" coords="923,89,1077,116"/>
+<area shape="rect" id="node11" href="$classHempyModule__Web.html" title="HempyModule_Web" alt="" coords="930,301,1070,328"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="5,491,80,517"/>
+<area shape="rect" id="node5" href="$classModule.html" title="Module" alt="" coords="291,521,355,548"/>
+<area shape="rect" id="node6" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="645,575,704,601"/>
+<area shape="rect" id="node13" href="$classWaterPump.html" title="&lt; Diaphragm pump controller " alt="" coords="955,473,1045,500"/>
+<area shape="rect" id="node15" href="$classSwitch.html" title="&lt; Represents and electronic switch like a Relay or MOSFET " alt="" coords="291,457,354,484"/>
+<area shape="rect" id="node8" href="$structSettings_1_1AeroModuleSettings.html" title="&lt; AeroModule default settings " alt="" coords="577,125,772,152"/>
+<area shape="rect" id="node10" href="$structSettings_1_1ReservoirModuleSettings.html" title="&lt; ReservoirModule default settings " alt="" coords="587,59,763,101"/>
+<area shape="rect" id="node12" href="$structSettings_1_1HempyModuleSettings.html" title="&lt; Hempy default settings " alt="" coords="569,395,780,421"/>
+<area shape="rect" id="node14" href="$classSwitch__PWM.html" title="&lt; PWM controllable electronic switch like a MOSFET transistor " alt="" coords="623,445,726,472"/>
+</map>

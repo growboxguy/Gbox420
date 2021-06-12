@@ -1,0 +1,51 @@
+<map id="Common::appendName" name="Common::appendName">
+<area shape="rect" id="node2" href="$classAeroponics__NoTank.html#a1ceea321694c711877a6bf0e883023df" title="Aeroponics_NoTank::\lsetDuration" alt="" coords="250,81,398,122"/>
+<area shape="rect" id="node5" href="$classAeroponics__NoTank.html#a42b50599169ed659b9f5869a1847957b" title="Aeroponics_NoTank::\lsetMaxPressure" alt="" coords="250,11,398,53"/>
+<area shape="rect" id="node6" href="$classAirPump.html#a98858bae6e4eb378553fc40f529a1063" title="AirPump::setState" alt="" coords="259,153,389,180"/>
+<area shape="rect" id="node10" href="$classFan.html#af5a22c8800d5a4f3295f44a313af71d2" title="Fan::TurnOff" alt="" coords="1027,208,1123,235"/>
+<area shape="rect" id="node11" href="$classFan.html#a817f97adfe3990ef302f49359b3237f7" title="Fan::SetLowSpeed" alt="" coords="1009,259,1142,285"/>
+<area shape="rect" id="node12" href="$classFan.html#ad462f4c80b5024a1266e0a070527425e" title="Fan::SetHighSpeed" alt="" coords="1007,309,1143,336"/>
+<area shape="rect" id="node13" href="$classFan__PWM.html#a102c1533175f884aad67c58cecb4a4f9" title="Fan_PWM::turnOn" alt="" coords="259,917,389,944"/>
+<area shape="rect" id="node14" href="$classFan__PWM.html#aa2c7a4fa5d6603dd2e690854af87b8ec" title="Fan_PWM::turnOff" alt="" coords="258,968,390,995"/>
+<area shape="rect" id="node15" href="$classFan__PWM.html#a575f7bb355a8a916e887c984b14c92bb" title="Fan_PWM::setSpeed" alt="" coords="251,1019,397,1045"/>
+<area shape="rect" id="node16" href="$classHempyBucket.html#ae69e961b538f1f33875c57638717ae6c" title="HempyBucket::tareDryWetWeight" alt="" coords="213,1120,435,1147"/>
+<area shape="rect" id="node18" href="$classLights.html#a482dc659480f840747858394c5baec3c" title="Temporary dim the lights while working on the plants. " alt="" coords="515,613,671,640"/>
+<area shape="rect" id="node20" href="$classLights.html#a2117d6df0bdbf234e627a9bceb000071" title="Lights::checkTimer" alt="" coords="784,715,917,741"/>
+<area shape="rect" id="node22" href="$classLights.html#a3c5051babf4dacdeecced14217f6f886" title="Lights::setTimerOnOff" alt="" coords="1000,664,1151,691"/>
+<area shape="rect" id="node23" href="$classLights.html#a20392486d66032fd530046cd1f33aaa0" title="Lights::setBrightness" alt="" coords="251,715,397,741"/>
+<area shape="rect" id="node25" href="$classLights.html#ab18f05b043b61b6eb74bd7b564e1a1ec" title="Lights::setLightOnOff" alt="" coords="520,867,667,893"/>
+<area shape="rect" id="node26" href="$classLightSensor.html#a50559883ebb2c80a5d2144a6453bd1c3" title="Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger. " alt="" coords="752,917,949,944"/>
+<area shape="rect" id="node27" href="$classLights.html#a88aef6611519ff083000476c078b9fba" title="Set the duration of the temporary dimming in Seconds. " alt="" coords="997,968,1153,995"/>
+<area shape="rect" id="node28" href="$classLights.html#ada0e53ffae21eb386b8cef9e6a12fb8c" title="Lights::setOnMinute" alt="" coords="781,512,920,539"/>
+<area shape="rect" id="node30" href="$classLights.html#afc2ad84d3e1c4d9e8f62d05791f82928" title="Lights::setOffMinute" alt="" coords="781,461,921,488"/>
+<area shape="rect" id="node32" href="$classLights.html#ac6d200fd34e102cea67cf24d4f017284" title="Enable/disable slowly fadeing in and out the lights when the Status changes. " alt="" coords="251,1171,397,1197"/>
+<area shape="rect" id="node33" href="$classLights.html#a71359e2b1cb0629287aa6bf51973cbd0" title="Set the Percentage of change at one increment/decrement. " alt="" coords="235,1221,413,1248"/>
+<area shape="rect" id="node34" href="$classPHSensor.html#ae9b41f458fafd9ae475d9bfbbb27f8d5" title="PHSensor::setSlope" alt="" coords="253,1272,395,1299"/>
+<area shape="rect" id="node35" href="$classPHSensor.html#a41bd303fbad556aaf714da2f0bf4a69c" title="PHSensor::setIntercept" alt="" coords="245,1323,403,1349"/>
+<area shape="rect" id="node36" href="$classPressureSensor.html#a9a97fa923ea86256eadff802549f0081" title="PressureSensor::readOffset" alt="" coords="232,1373,416,1400"/>
+<area shape="rect" id="node37" href="$classSound.html#a6917e650a721b0e7fc6d998edf6a3cf7" title="Sound::setSoundOnOff" alt="" coords="245,411,403,437"/>
+<area shape="rect" id="node39" href="$classTDSSensor.html#ab3c3b279412f52bb666bb8560c34e967" title="TDSSensor::updateTDS" alt="" coords="242,1424,406,1451"/>
+<area shape="rect" id="node41" href="$classWaterPump.html#a4211806cd0c62a57f3accc37c1c1eb00" title="WaterPump::updateState" alt="" coords="239,1475,409,1501"/>
+<area shape="rect" id="node43" href="$classWaterPump.html#ac5ad910ece76068fcb0c321aabc19a6f" title="Turn the pump ON. " alt="" coords="514,1547,673,1573"/>
+<area shape="rect" id="node47" href="$classWaterPump.html#a3d0bb0668a741c9f8ccdb100af846ec6" title="WaterPump::setPumpTimeOut" alt="" coords="223,1069,425,1096"/>
+<area shape="rect" id="node48" href="$classWeightSensor.html#a02fe54254ed51deefc115fad34053061" title="WeightSensor::tare" alt="" coords="257,1627,391,1653"/>
+<area shape="rect" id="node50" href="$classWeightSensor.html#a7718da9f72a6f354ea19550567d42fbf" title="WeightSensor::calibrate" alt="" coords="243,1576,405,1603"/>
+<area shape="rect" id="node3" href="$classAeroModule.html#ac6bc85dba93618f7bef00a5961a6647f" title="AeroModule::processCommand" alt="" coords="491,5,696,32"/>
+<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="791,5,910,32"/>
+<area shape="rect" id="node7" href="$classAirPump.html#adbce295ddc8dd194850ebfbfabb343e5" title="AirPump::TurnOff" alt="" coords="531,157,655,184"/>
+<area shape="rect" id="node8" href="$classAirPump.html#a2545e4f11f9004488deec68ab74afea7" title="AirPump::TurnOn" alt="" coords="532,56,655,83"/>
+<area shape="rect" id="node9" href="$classMainModule.html#a89985ce0d1367b5d92eaddf43d478b4b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="1201,487,1392,513"/>
+<area shape="rect" id="node17" href="$classHempyModule.html#ae76db12a22770b12cb7ff1aa579e0a27" title="HempyModule::processCommand" alt="" coords="483,1095,703,1121"/>
+<area shape="rect" id="node19" href="$classLights.html#adf24f09eb5273aad8eea4839f052c95e" title="Lights::checkDimming" alt="" coords="775,664,927,691"/>
+<area shape="rect" id="node21" href="$classLights.html#a38c74606e1c2b4ff7db184920b225961" title="Lights::refresh_Minute" alt="" coords="1000,715,1151,741"/>
+<area shape="rect" id="node24" href="$classLights.html#a48acde7f45e4b9b22969e52fea689040" title="constructor " alt="" coords="801,816,901,843"/>
+<area shape="rect" id="node29" href="$classLights.html#a7f46426260cb74c597f6efbcee434620" title="Lights::setOnTime" alt="" coords="1011,563,1140,589"/>
+<area shape="rect" id="node31" href="$classLights.html#af60cd6d4e97ffab139e93d94777a44c4" title="Lights::setOffTime" alt="" coords="1010,461,1141,488"/>
+<area shape="rect" id="node38" href="$classDevModule__Web.html#ad83e371e521312fc4f0aff2fd3f80526" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="483,411,704,437"/>
+<area shape="rect" id="node40" href="$classTDSSensor.html#a8c800135641affc55ae05c10a707f9a1" title="TDSSensor::refresh\l_Minute" alt="" coords="524,1329,663,1370"/>
+<area shape="rect" id="node42" href="$classWaterPump.html#af2bf227984554917e66c713cadf32660" title="WaterPump::refresh_Sec" alt="" coords="509,1445,678,1472"/>
+<area shape="rect" id="node45" href="$classWaterPump.html#a9adfab6b4c4d79acf84158d2f1ab4972" title="Turn the pump OFF. " alt="" coords="514,1496,673,1523"/>
+<area shape="rect" id="node46" href="$classWaterPump.html#a95644a76e18a9449d48d7a955de27b42" title="Disable the pump. " alt="" coords="506,1395,681,1421"/>
+<area shape="rect" id="node44" href="$classHempyBucket.html#aa534fb9169c4a572eb248970410f1fc3" title="HempyBucket::updateState" alt="" coords="759,1496,942,1523"/>
+<area shape="rect" id="node49" href="$classWeightSensor.html#a415bb0273c313b6cf2b3f30ac9b1e306" title="WeightSensor::refresh\l_FiveSec" alt="" coords="517,1609,669,1650"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="toText_distance" name="toText_distance">
+<area shape="rect" id="node2" href="$classDistanceSensor.html#a55ce50a85c120e7a0931038dd445feda" title="DistanceSensor::getDistanceText" alt="" coords="168,5,387,32"/>
+<area shape="rect" id="node3" href="$classDistanceSensor.html#a5837fee9eae2a7e0254b0bb9677f3b43" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="435,5,591,32"/>
+</map>

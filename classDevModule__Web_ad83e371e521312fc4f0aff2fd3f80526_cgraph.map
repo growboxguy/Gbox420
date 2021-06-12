@@ -1,0 +1,19 @@
+<map id="DevModule_Web::commandEvent" name="DevModule_Web::commandEvent">
+<area shape="rect" id="node2" href="$classCommon.html#a0192d295366bf1e966d8b58a3ce57554" title="Checks whether a component belongs to the caller class or not. " alt="" coords="567,5,769,32"/>
+<area shape="rect" id="node4" href="$classSound.html#a6917e650a721b0e7fc6d998edf6a3cf7" title="Sound::setSoundOnOff" alt="" coords="318,81,475,108"/>
+<area shape="rect" id="node9" href="$Helpers_8cpp.html#af9592cbcbc78ca4594b6bcf3ad41a400" title="Converting text. " alt="" coords="367,452,426,479"/>
+<area shape="rect" id="node10" href="$classModule__Web.html#a54a0a2a3106a9068aa0d15b592602601" title="Module_Web::addToLog" alt="" coords="315,503,478,529"/>
+<area shape="rect" id="node11" href="$classModule.html#a7d3b2a7cec54783a64ff8153f5ff3533" title="Set the of Frequency of Serial reports in seconds (5 sec increments, 5 sec minimum) ..." alt="" coords="307,285,486,326"/>
+<area shape="rect" id="node13" href="$Helpers_8cpp.html#aaee73d482f433a830544f005207ba6c9" title="toInt" alt="" coords="373,553,421,580"/>
+<area shape="rect" id="node14" href="$classModule.html#a58c519c3102d120deae618aba6b62ee5" title="Enable/disable reporting the current time to the Serial output. " alt="" coords="301,351,492,377"/>
+<area shape="rect" id="node15" href="$classModule.html#acb15da911f5673d2ffb152e9ffae1c06" title="Enable/disable reporting the remaining free memory to the Serial output. " alt="" coords="292,401,501,428"/>
+<area shape="rect" id="node16" href="$classModule.html#ab71609e8b31d66336f8c22f0abe20cd7" title="Enable/disable sending JSON formatted reports to the Serial output. " alt="" coords="297,132,496,159"/>
+<area shape="rect" id="node17" href="$classModule.html#a7c9d28b0e40ac3c2aa4e773a21790de9" title="Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial..." alt="" coords="275,183,519,209"/>
+<area shape="rect" id="node18" href="$classModule.html#a51b0bb25e26589592ad6f866cfdd34a8" title="Enable/disable sending wireless package exchange reports to the Serial output. " alt="" coords="290,233,503,260"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="817,31,912,57"/>
+<area shape="rect" id="node5" href="$classCommon.html#a62ed1b6917f3510fad082fd1399a1017" title="Common::appendName" alt="" coords="588,107,748,133"/>
+<area shape="rect" id="node6" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="595,233,741,260"/>
+<area shape="rect" id="node7" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="595,157,741,184"/>
+<area shape="rect" id="node8" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Module::addToLog" alt="" coords="603,56,733,83"/>
+<area shape="rect" id="node12" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="585,288,751,315"/>
+</map>

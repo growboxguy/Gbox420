@@ -1,0 +1,9 @@
+<map id="TDSSensor::refresh_Minute" name="TDSSensor::refresh_Minute">
+<area shape="rect" id="node2" href="$classCommon.html#a14e4462a94bd118028ce1d487ca0292c" title="Common::refresh_Minute" alt="" coords="192,8,361,35"/>
+<area shape="rect" id="node4" href="$classTDSSensor.html#ab3c3b279412f52bb666bb8560c34e967" title="TDSSensor::updateTDS" alt="" coords="195,84,359,111"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="648,59,743,86"/>
+<area shape="rect" id="node5" href="$classCommon.html#a62ed1b6917f3510fad082fd1399a1017" title="Common::appendName" alt="" coords="425,34,585,60"/>
+<area shape="rect" id="node6" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="475,84,534,111"/>
+<area shape="rect" id="node7" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Module::addToLog" alt="" coords="440,135,569,162"/>
+<area shape="rect" id="node8" href="$classWaterTempSensor.html#af74e4efdaf92e79bb9e92d026673c656" title="WaterTempSensor::getTemp" alt="" coords="409,186,600,212"/>
+</map>

@@ -1,0 +1,28 @@
+<map id="Module::addToReportQueue" name="Module::addToReportQueue">
+<area shape="rect" id="node2" href="$classAeroponics__NoTank.html#ad442cf2f921a061022abf4de0645e19e" title="constructor " alt="" coords="298,5,446,47"/>
+<area shape="rect" id="node3" href="$classAeroponics__Tank.html#a778f62abebd3361eeffc7e070f30dad5" title="&lt;TODO: Spray solenoid timeout, SprayTimer review " alt="" coords="256,71,488,98"/>
+<area shape="rect" id="node4" href="$classAirPump.html#aedf30b103454afa9821cb0ec73a7fee2" title="&lt; AirPump controller (2 speed) " alt="" coords="307,122,437,149"/>
+<area shape="rect" id="node5" href="$classDHTSensor.html#a75c40cadfc569af7abf80b2cb557b296" title="Class for the Digital Humidity and Temperature sensor. " alt="" coords="288,173,456,199"/>
+<area shape="rect" id="node6" href="$classDistanceSensor.html#afa58528c771efef1c90ffab32db9ac9a" title="Class for the Ultrasonic distance sensor &#45; HC&#45;SR04 or JSN&#45;SR04T. " alt="" coords="285,224,459,265"/>
+<area shape="rect" id="node7" href="$classFan.html#a2bf10abddbcad94045ad7e3d567f17b8" title="&lt; Fan controller (2 speed) " alt="" coords="335,290,409,317"/>
+<area shape="rect" id="node8" href="$classFan__PWM.html#a230aa46882b9d6523e84234c902ca4f6" title="&lt; PWM control an AC device using a Robodyn AC Light Dimming Module with Zero&#45;cross detection ..." alt="" coords="295,341,449,367"/>
+<area shape="rect" id="node9" href="$classHempyBucket.html#a1accb17828a9b43a0413bc51308a9ee9" title="HempyBucket::HempyBucket" alt="" coords="274,391,470,418"/>
+<area shape="rect" id="node10" href="$classLights.html#a48acde7f45e4b9b22969e52fea689040" title="constructor " alt="" coords="322,442,422,469"/>
+<area shape="rect" id="node11" href="$classLightSensor.html#aa2b15bb718f72a125dcc068300abfba7" title="LightSensor::LightSensor" alt="" coords="288,493,456,519"/>
+<area shape="rect" id="node12" href="$classModuleSkeleton.html#a28db770cfd6d6a02110d0adb62666676" title="constructor " alt="" coords="264,543,480,570"/>
+<area shape="rect" id="node13" href="$classPHSensor.html#afe168dbbb29e3ecda521de4ef47ad6ee" title="PHSensor::PHSensor" alt="" coords="297,594,447,621"/>
+<area shape="rect" id="node14" href="$classPowerSensor.html#ac075e36efa8d0786590a7a2179f22520" title="constructor " alt="" coords="279,645,465,671"/>
+<area shape="rect" id="node15" href="$classPowerSensorV3.html#a254a0502c2a42a5ccff07147a8a6ccfc" title="constructor " alt="" coords="263,695,481,722"/>
+<area shape="rect" id="node16" href="$classPressurePump.html#a45807a3d0e7b05bd54f140654ee36960" title="PressurePump::PressurePump" alt="" coords="271,746,473,773"/>
+<area shape="rect" id="node17" href="$classPressureSensor.html#a4eb0a9c44b5ebf1a1d932b8975e43b4b" title="PressureSensor::Pressure\lSensor" alt="" coords="285,797,459,839"/>
+<area shape="rect" id="node18" href="$classTDSSensor.html#a459aadc4af7a889f2d2f73149d80b07e" title="TDSSensor::TDSSensor" alt="" coords="289,863,455,890"/>
+<area shape="rect" id="node19" href="$classWaterLevelSensor.html#aae6f402057511b5a9c30024dc483244c" title="constructor " alt="" coords="271,915,473,956"/>
+<area shape="rect" id="node20" href="$classWaterPump.html#a2f9e7815d9e3ff10ba3bf02be9ff8875" title="WaterPump::WaterPump" alt="" coords="288,981,456,1007"/>
+<area shape="rect" id="node21" href="$classWaterTempSensor.html#a88e6058500175b82a043ad682f968011" title="constructor " alt="" coords="269,1032,475,1073"/>
+<area shape="rect" id="node22" href="$classWeightSensor.html#a7ea36c43abb037e5d88f6d181bd07b0d" title="WeightSensor::WeightSensor" alt="" coords="275,1098,469,1125"/>
+<area shape="rect" id="node23" href="$classAeroModule__Web.html#ab428de02336385c258daad686aa431f0" title="constructor " alt="" coords="254,1149,490,1175"/>
+<area shape="rect" id="node24" href="$classDevModule__Web.html#ae334c16d42a2359be4c4ba56b92ba518" title="constructor " alt="" coords="257,1199,487,1226"/>
+<area shape="rect" id="node25" href="$classHempyModule__Web.html#a00b9e646494d3540f37dee684561259a" title="constructor " alt="" coords="239,1250,505,1277"/>
+<area shape="rect" id="node26" href="$classMainModule.html#a3a918c8c080f2a810b64e297cf1ce994" title="constructor " alt="" coords="287,1301,457,1327"/>
+<area shape="rect" id="node27" href="$classReservoirModule__Web.html#a349a39dca681c59248bb463e0d6eeff7" title="constructor " alt="" coords="291,1352,453,1393"/>
+</map>

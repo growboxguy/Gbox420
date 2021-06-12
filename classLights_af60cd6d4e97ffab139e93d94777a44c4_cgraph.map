@@ -1,0 +1,10 @@
+<map id="Lights::setOffTime" name="Lights::setOffTime">
+<area shape="rect" id="node2" href="$classLights.html#a561b79359ab51821048e9d9bc30fc164" title="Lights::setOffHour" alt="" coords="189,5,319,32"/>
+<area shape="rect" id="node3" href="$Helpers_8cpp.html#aaee73d482f433a830544f005207ba6c9" title="toInt" alt="" coords="230,56,278,83"/>
+<area shape="rect" id="node4" href="$classLights.html#afc2ad84d3e1c4d9e8f62d05791f82928" title="Lights::setOffMinute" alt="" coords="184,107,324,133"/>
+<area shape="rect" id="node5" href="$classCommon.html#a62ed1b6917f3510fad082fd1399a1017" title="Common::appendName" alt="" coords="375,31,535,57"/>
+<area shape="rect" id="node6" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Module::addToLog" alt="" coords="390,81,519,108"/>
+<area shape="rect" id="node8" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="372,132,537,159"/>
+<area shape="rect" id="node9" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="382,183,527,209"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="585,81,680,108"/>
+</map>

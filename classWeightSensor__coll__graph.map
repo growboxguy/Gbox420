@@ -1,0 +1,5 @@
+<map id="WeightSensor" name="WeightSensor">
+<area shape="rect" id="node2" href="$classCommon.html" title="Common" alt="" coords="108,5,183,32"/>
+<area shape="rect" id="node3" href="$classModule.html" title="Module" alt="" coords="120,139,184,165"/>
+<area shape="rect" id="node4" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="196,228,255,255"/>
+</map>

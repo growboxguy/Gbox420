@@ -1,0 +1,4 @@
+<map id="LightSensor::getReadingText" name="LightSensor::getReadingText">
+<area shape="rect" id="node2" href="$classLightSensor.html#a6bef06ab77b470b44c45b35de30b1336" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="267,5,399,32"/>
+<area shape="rect" id="node3" href="$classMainModule.html#ac116642e44a6e3d06aaf104bef172921" title="MainModule::websiteEvent\l_Refresh" alt="" coords="244,57,423,98"/>
+</map>

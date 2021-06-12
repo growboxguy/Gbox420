@@ -1,0 +1,4 @@
+<map id="PowerSensorV3::getCurrentText" name="PowerSensorV3::getCurrentText">
+<area shape="rect" id="node2" href="$classPowerSensorV3.html#ace47eb07dc51e859f620a1dd9ab39dbf" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="275,5,432,32"/>
+<area shape="rect" id="node3" href="$classMainModule.html#ac116642e44a6e3d06aaf104bef172921" title="MainModule::websiteEvent\l_Refresh" alt="" coords="264,57,443,98"/>
+</map>

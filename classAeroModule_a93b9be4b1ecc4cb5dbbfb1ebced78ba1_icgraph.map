@@ -1,0 +1,5 @@
+<map id="AeroModule::processTimeCriticalStuff" name="AeroModule::processTimeCriticalStuff">
+<area shape="rect" id="node2" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a3dd0de28dbd52701ac83ee0a76ebd4ce" title="processTimeCriticalStuff" alt="" coords="268,5,435,32"/>
+<area shape="rect" id="node4" href="$classAeroModule.html#ab103ea15dde0982daaa2e09adb87bd09" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="285,56,417,83"/>
+<area shape="rect" id="node3" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="483,5,537,32"/>
+</map>

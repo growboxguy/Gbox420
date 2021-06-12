@@ -1,0 +1,6 @@
+<map id="PHSensor::report" name="PHSensor::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="195,5,311,32"/>
+<area shape="rect" id="node3" href="$classPHSensor.html#afa1a5158732cd57ffb41ae089bf8850f" title="PHSensor::getPHText" alt="" coords="176,56,329,83"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="411,31,470,57"/>
+<area shape="rect" id="node5" href="$classPHSensor.html#ad277a03459aff975ad61039dfe22635d" title="PHSensor::getPH" alt="" coords="377,81,504,108"/>
+</map>

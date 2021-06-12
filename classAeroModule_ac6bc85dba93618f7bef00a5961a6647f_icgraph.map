@@ -1,0 +1,5 @@
+<map id="AeroModule::processCommand" name="AeroModule::processCommand">
+<area shape="rect" id="node2" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="265,5,384,32"/>
+<area shape="rect" id="node4" href="$classAeroModule.html#ab103ea15dde0982daaa2e09adb87bd09" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="259,56,391,83"/>
+<area shape="rect" id="node3" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="439,5,485,32"/>
+</map>

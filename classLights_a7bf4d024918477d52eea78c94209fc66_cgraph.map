@@ -1,0 +1,13 @@
+<map id="Lights::refresh_Sec" name="Lights::refresh_Sec">
+<area shape="rect" id="node2" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Common::refresh_Sec" alt="" coords="188,41,341,67"/>
+<area shape="rect" id="node4" href="$classLights.html#adf24f09eb5273aad8eea4839f052c95e" title="Lights::checkDimming" alt="" coords="189,154,341,181"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="1015,103,1109,130"/>
+<area shape="rect" id="node5" href="$classLights.html#a20392486d66032fd530046cd1f33aaa0" title="Lights::setBrightness" alt="" coords="603,281,749,307"/>
+<area shape="rect" id="node8" href="$classLights.html#a482dc659480f840747858394c5baec3c" title="Temporary dim the lights while working on the plants. " alt="" coords="389,154,545,181"/>
+<area shape="rect" id="node12" href="$classLights.html#a59a952f3c895a78f9e382401a9b9701d" title="Lights::checkRelay" alt="" coords="400,103,535,130"/>
+<area shape="rect" id="node6" href="$classCommon.html#a62ed1b6917f3510fad082fd1399a1017" title="Common::appendName" alt="" coords="807,154,967,181"/>
+<area shape="rect" id="node7" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Module::addToLog" alt="" coords="822,230,951,257"/>
+<area shape="rect" id="node9" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="593,78,759,105"/>
+<area shape="rect" id="node10" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="603,179,749,206"/>
+<area shape="rect" id="node11" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="603,27,749,54"/>
+</map>

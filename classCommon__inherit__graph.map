@@ -1,0 +1,38 @@
+<map id="Common" name="Common">
+<area shape="rect" id="node2" href="$classAeroModule.html" title="AeroModule" alt="" coords="331,18,421,44"/>
+<area shape="rect" id="node3" href="$classAeroponics__NoTank.html" title="&lt; Aeroponics tote without pressure tank " alt="" coords="128,276,268,303"/>
+<area shape="rect" id="node4" href="$classAeroponics__Tank.html" title="&lt; Aeroponics tote with pressure tank " alt="" coords="137,327,259,354"/>
+<area shape="rect" id="node5" href="$classAirPump.html" title="&lt; Air Pump controller " alt="" coords="162,378,234,404"/>
+<area shape="rect" id="node6" href="$classCommon__Web.html" title="&lt; header guard, same as the ifndef/define guard https://en.wikipedia.org/wiki/Pragma_once ..." alt="" coords="321,226,431,252"/>
+<area shape="rect" id="node13" href="$classDHTSensor.html" title="&lt; DHT11 or DHT22 Digital Humidity and Temperature sensor " alt="" coords="153,428,243,455"/>
+<area shape="rect" id="node14" href="$classDistanceSensor.html" title="DistanceSensor" alt="" coords="141,479,255,506"/>
+<area shape="rect" id="node15" href="$classFan.html" title="&lt; Fan controller (2 speed) " alt="" coords="176,530,220,556"/>
+<area shape="rect" id="node16" href="$classFan__PWM.html" title="Fan_PWM" alt="" coords="156,580,240,607"/>
+<area shape="rect" id="node17" href="$classHempyBucket.html" title="HempyBucket" alt="" coords="145,631,251,658"/>
+<area shape="rect" id="node18" href="$classLights.html" title="Lights" alt="" coords="169,682,227,708"/>
+<area shape="rect" id="node19" href="$classLightSensor.html" title="&lt; LM393 Light sensor " alt="" coords="153,732,243,759"/>
+<area shape="rect" id="node20" href="$classModule.html" title="Module" alt="" coords="166,74,230,100"/>
+<area shape="rect" id="node22" href="$classModule__Web.html" title="Module_Web" alt="" coords="327,124,425,151"/>
+<area shape="rect" id="node23" href="$classReservoirModule.html" title="ReservoirModule" alt="" coords="316,175,436,202"/>
+<area shape="rect" id="node24" href="$classModuleSkeleton.html" title="&lt; This is a template for creating new modules " alt="" coords="141,783,255,810"/>
+<area shape="rect" id="node25" href="$classPHSensor.html" title="PHSensor" alt="" coords="157,834,239,860"/>
+<area shape="rect" id="node26" href="$classPowerSensor.html" title="&lt; PZEM004T power sensor " alt="" coords="148,884,248,911"/>
+<area shape="rect" id="node27" href="$classPowerSensorV3.html" title="PowerSensorV3" alt="" coords="140,935,256,962"/>
+<area shape="rect" id="node28" href="$classPressurePump.html" title="&lt; Diaphragm pump controller " alt="" coords="144,986,252,1012"/>
+<area shape="rect" id="node29" href="$classPressureSensor.html" title="&lt; Pressure sensor " alt="" coords="141,1036,255,1063"/>
+<area shape="rect" id="node30" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="169,1087,227,1114"/>
+<area shape="rect" id="node31" href="$classSwitch.html" title="&lt; Represents and electronic switch like a Relay or MOSFET " alt="" coords="167,1138,229,1164"/>
+<area shape="rect" id="node33" href="$classTDSSensor.html" title="TDSSensor" alt="" coords="153,1188,243,1215"/>
+<area shape="rect" id="node34" href="$classWaterLevelSensor.html" title="&lt; Contactless water sensor array (4 levels) " alt="" coords="133,1239,263,1266"/>
+<area shape="rect" id="node35" href="$classWaterPump.html" title="&lt; Diaphragm pump controller " alt="" coords="153,1290,243,1316"/>
+<area shape="rect" id="node36" href="$classWaterTempSensor.html" title="&lt; DS18B20 waterproof temperature sensor " alt="" coords="133,1340,263,1367"/>
+<area shape="rect" id="node37" href="$classWeightSensor.html" title="&lt; Weight sensor load cell " alt="" coords="146,1391,250,1418"/>
+<area shape="rect" id="node7" href="$classAeroModule__Web.html" title="AeroModule_Web" alt="" coords="499,226,624,252"/>
+<area shape="rect" id="node8" href="$classDevModule__Web.html" title="DevModule_Web" alt="" coords="500,74,623,100"/>
+<area shape="rect" id="node9" href="$classDEVModule__Web.html" title="DEVModule_Web" alt="" coords="498,124,625,151"/>
+<area shape="rect" id="node10" href="$classHempyModule__Web.html" title="HempyModule_Web" alt="" coords="491,276,631,303"/>
+<area shape="rect" id="node11" href="$classMainModule.html" title="MainModule" alt="" coords="515,175,607,202"/>
+<area shape="rect" id="node12" href="$classReservoirModule__Web.html" title="ReservoirModule_Web" alt="" coords="484,327,639,354"/>
+<area shape="rect" id="node21" href="$classHempyModule.html" title="HempyModule" alt="" coords="323,74,429,100"/>
+<area shape="rect" id="node32" href="$classSwitch__PWM.html" title="&lt; PWM controllable electronic switch like a MOSFET transistor " alt="" coords="325,1138,427,1164"/>
+</map>

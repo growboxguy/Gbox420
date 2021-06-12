@@ -1,0 +1,3 @@
+<map id="Lights::getBrightness" name="Lights::getBrightness">
+<area shape="rect" id="node2" href="$classLightSensor.html#a50559883ebb2c80a5d2144a6453bd1c3" title="Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger. " alt="" coords="199,5,396,32"/>
+</map>

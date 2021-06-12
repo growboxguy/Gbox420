@@ -1,0 +1,13 @@
+<map id="Lights::report" name="Lights::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="201,5,317,32"/>
+<area shape="rect" id="node3" href="$classLights.html#af3c912d7571b0ad89b996a4e871f0c02" title="Lights::getStatusText" alt="" coords="186,56,333,83"/>
+<area shape="rect" id="node6" href="$classLights.html#a6399f9768a4f87239e53f76f198b7db1" title="Lights::getCurrentBrightnessText" alt="" coords="152,107,367,133"/>
+<area shape="rect" id="node7" href="$classLights.html#a509b9b42c4fa0932f0a7cae9725f7552" title="Lights::getBrightnessText" alt="" coords="174,157,345,184"/>
+<area shape="rect" id="node8" href="$classLights.html#ad7859560f5b0f2303f51663e2a0a5dda" title="Lights::getTimerOnOffText" alt="" coords="171,208,348,235"/>
+<area shape="rect" id="node10" href="$classLights.html#a5e2894e6935173e46c8d70f4bc7d36ed" title="Lights::getOnTimeText" alt="" coords="182,259,337,285"/>
+<area shape="rect" id="node12" href="$classLights.html#afa7da12d1c3c6646a547220f34c90bd3" title="Lights::getOffTimeText" alt="" coords="181,309,337,336"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title="toText_onOff" alt="" coords="447,56,545,83"/>
+<area shape="rect" id="node5" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="625,132,684,159"/>
+<area shape="rect" id="node9" href="$Helpers_8cpp.html#a901734aff517f29931a27fd8568d8e9e" title="toText_enabledDisabled" alt="" coords="415,208,577,235"/>
+<area shape="rect" id="node11" href="$Helpers_8cpp.html#a378f2588baecb0092cfce601fbcedd1d" title="toText_time" alt="" coords="451,284,541,311"/>
+</map>

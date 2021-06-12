@@ -1,0 +1,7 @@
+<map id="PressurePump" name="PressurePump">
+<area shape="rect" id="node2" href="$classCommon.html" title="Common" alt="" coords="215,5,290,32"/>
+<area shape="rect" id="node3" href="$classSwitch.html" title="&lt; Represents and electronic switch like a Relay or MOSFET " alt="" coords="144,139,206,165"/>
+<area shape="rect" id="node5" href="$classModule.html" title="Module" alt="" coords="264,139,328,165"/>
+<area shape="rect" id="node6" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="363,228,422,255"/>
+<area shape="rect" id="node4" href="$classSwitch__PWM.html" title="&lt; PWM controllable electronic switch like a MOSFET transistor " alt="" coords="124,228,226,255"/>
+</map>

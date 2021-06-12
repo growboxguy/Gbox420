@@ -1,0 +1,7 @@
+<map id="TDSSensor::report" name="TDSSensor::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="211,5,327,32"/>
+<area shape="rect" id="node3" href="$classTDSSensor.html#a1c6eb7d4b1b6ffb8977122fe1269816f" title="TDSSensor::getTDSText" alt="" coords="184,56,353,83"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#a8266349527dd2966a430e1f029dcce36" title="toText_TDS" alt="" coords="426,5,519,32"/>
+<area shape="rect" id="node5" href="$classTDSSensor.html#ad66ecae96b09ca7cdefa4b6c5bc42883" title="TDSSensor::getTDS" alt="" coords="401,56,544,83"/>
+<area shape="rect" id="node6" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="443,107,502,133"/>
+</map>

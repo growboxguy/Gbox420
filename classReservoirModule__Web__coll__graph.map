@@ -1,0 +1,8 @@
+<map id="ReservoirModule_Web" name="ReservoirModule_Web">
+<area shape="rect" id="node2" href="$classCommon__Web.html" title="&lt; header guard, same as the ifndef/define guard https://en.wikipedia.org/wiki/Pragma_once ..." alt="" coords="5,139,115,165"/>
+<area shape="rect" id="node5" href="$classModule__Web.html" title="Module_Web" alt="" coords="175,265,273,291"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="220,5,295,32"/>
+<area shape="rect" id="node6" href="$classModule.html" title="Module" alt="" coords="269,139,333,165"/>
+<area shape="rect" id="node7" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="321,265,380,291"/>
+<area shape="rect" id="node4" href="$structSettings_1_1ReservoirModuleSettings.html" title="&lt; ReservoirModule default settings " alt="" coords="404,257,580,299"/>
+</map>

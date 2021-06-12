@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['priming',['PRIMING',['../Helpers_8h.html#afdc891296f28f6976e7b881bca654abea6d89f799c947bdbf14cc29c650d47418',1,'PRIMING():&#160;Helpers.h'],['../Helpers_8h.html#a9262144b69fd5f8c8bb05aaf87091ea5a6d89f799c947bdbf14cc29c650d47418',1,'PRIMING():&#160;Helpers.h']]]
+];

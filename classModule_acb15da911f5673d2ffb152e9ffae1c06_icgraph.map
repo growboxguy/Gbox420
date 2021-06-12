@@ -1,0 +1,16 @@
+<map id="Module::setSerialReportMemory" name="Module::setSerialReportMemory">
+<area shape="rect" id="node2" href="$classAeroModule.html#ac6bc85dba93618f7bef00a5961a6647f" title="AeroModule::processCommand" alt="" coords="271,56,476,83"/>
+<area shape="rect" id="node6" href="$classHempyModule.html#ae76db12a22770b12cb7ff1aa579e0a27" title="HempyModule::processCommand" alt="" coords="263,149,483,176"/>
+<area shape="rect" id="node10" href="$classReservoirModule.html#acb4372e3a979154538b63434bb252bfe" title="ReservoirModule::process\lCommand" alt="" coords="286,201,461,242"/>
+<area shape="rect" id="node14" href="$classDevModule__Web.html#ad83e371e521312fc4f0aff2fd3f80526" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="263,267,484,293"/>
+<area shape="rect" id="node15" href="$classMainModule.html#a89985ce0d1367b5d92eaddf43d478b4b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="278,317,469,344"/>
+<area shape="rect" id="node3" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="553,5,672,32"/>
+<area shape="rect" id="node5" href="$classAeroModule.html#ab103ea15dde0982daaa2e09adb87bd09" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="547,56,679,83"/>
+<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="741,5,788,32"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Hempy_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="553,107,672,133"/>
+<area shape="rect" id="node9" href="$classHempyModule.html#ac3b2b00f142ffaea5176deccfa12b43a" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="539,157,686,184"/>
+<area shape="rect" id="node8" href="$Gbox420__Nano__Hempy_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="741,107,788,133"/>
+<area shape="rect" id="node11" href="$Gbox420__Nano__Reservoir_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="553,208,672,235"/>
+<area shape="rect" id="node13" href="$classReservoirModule.html#a2e17fcf457366ac0755ed884d9c3b872" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="532,259,693,285"/>
+<area shape="rect" id="node12" href="$Gbox420__Nano__Reservoir_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="741,208,788,235"/>
+</map>

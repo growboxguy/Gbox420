@@ -1,0 +1,20 @@
+<map id="toText_aeroNoTankState" name="toText_aeroNoTankState">
+<area shape="rect" id="node2" href="$classAeroponics__NoTank.html#a209860847d982e45e068d6aecfeb0f1d" title="Aeroponics_NoTank::\lupdateState" alt="" coords="253,168,401,209"/>
+<area shape="rect" id="node16" href="$classAeroponics__NoTank.html#a246f24a4f332b34778795975ff9777fd" title="Aeroponics_NoTank::\lgetStateText" alt="" coords="253,299,401,340"/>
+<area shape="rect" id="node18" href="$classAeroModule__Web.html#a7c527dfe2ab6fb4a6db97d5f9cfb89e7" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="244,365,411,391"/>
+<area shape="rect" id="node19" href="$classAeroModule__Web.html#a35ff242acc077bb3a9d75ab70c7ce40f" title="Set values on the ESP&#45;link website when it refreshes. " alt="" coords="221,416,433,457"/>
+<area shape="rect" id="node3" href="$classAeroponics__NoTank.html#a8e0130107832f0a60d37ea581f6f67fb" title="Aeroponics_NoTank::\lrefresh_Sec" alt="" coords="491,5,639,47"/>
+<area shape="rect" id="node4" href="$classAeroponics__NoTank.html#a5c514f79260c9ab0bf1df7724e8d1844" title="Process things that cannot wait or need precise timing. " alt="" coords="481,71,648,112"/>
+<area shape="rect" id="node9" href="$classAeroponics__NoTank.html#af7be37cf20fc3af632879e93d4a1ca15" title="Aeroponics_NoTank::\lsprayNow" alt="" coords="491,136,639,177"/>
+<area shape="rect" id="node14" href="$classAeroponics__NoTank.html#a37537625cd3d80d6c49adeae298d4a76" title="Aeroponics_NoTank::\lsprayOff" alt="" coords="491,201,639,243"/>
+<area shape="rect" id="node15" href="$classAeroponics__NoTank.html#a4aaa6c9d269f040800908b5c44c18d28" title="Aeroponics_NoTank::\lsetSprayOnOff" alt="" coords="491,267,639,308"/>
+<area shape="rect" id="node5" href="$classAeroModule.html#a93b9be4b1ecc4cb5dbbfb1ebced78ba1" title="Process things that cannot wait or need precise timing. " alt="" coords="696,71,911,112"/>
+<area shape="rect" id="node6" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a3dd0de28dbd52701ac83ee0a76ebd4ce" title="processTimeCriticalStuff" alt="" coords="959,78,1125,105"/>
+<area shape="rect" id="node8" href="$classAeroModule.html#ab103ea15dde0982daaa2e09adb87bd09" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="976,143,1108,170"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="1173,78,1228,105"/>
+<area shape="rect" id="node10" href="$classAeroponics__NoTank.html#ad442cf2f921a061022abf4de0645e19e" title="constructor " alt="" coords="729,136,877,177"/>
+<area shape="rect" id="node11" href="$classAeroModule.html#ac6bc85dba93618f7bef00a5961a6647f" title="AeroModule::processCommand" alt="" coords="701,206,906,233"/>
+<area shape="rect" id="node12" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="983,206,1101,233"/>
+<area shape="rect" id="node13" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="1177,206,1224,233"/>
+<area shape="rect" id="node17" href="$classAeroponics__NoTank.html#a073c3d9b4469335c54cfc4f5115c13ca" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="491,332,639,373"/>
+</map>

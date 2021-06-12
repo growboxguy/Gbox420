@@ -1,0 +1,8 @@
+<map id="buttonCallback" name="buttonCallback">
+<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="465,5,559,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM. " alt="" coords="206,41,317,68"/>
+<area shape="rect" id="node4" href="$classModule__Web.html#abc22b1d690e82c271f8070ce89370a42" title="Notify subscribed modules of a received MQTT/Website command. " alt="" coords="163,93,360,134"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits. " alt="" coords="212,159,311,185"/>
+<area shape="rect" id="node5" href="$classCommon__Web.html#a2012b9c6685448fb16ef3a91087e738c" title="Common_Web::commandEvent" alt="" coords="408,85,616,112"/>
+<area shape="rect" id="node6" href="$classModule__Web.html#a54a0a2a3106a9068aa0d15b592602601" title="Module_Web::addToLog" alt="" coords="431,136,593,163"/>
+</map>

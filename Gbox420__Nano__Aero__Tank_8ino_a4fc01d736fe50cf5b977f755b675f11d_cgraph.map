@@ -1,0 +1,39 @@
+<map id="setup" name="setup">
+<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="1527,613,1622,640"/>
+<area shape="rect" id="node3" href="$Gbox420__Nano__Aero__Tank_8ino.html#a82a77128f231eac657525d7eb3014b01" title="updateTime" alt="" coords="146,917,237,944"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM. " alt="" coords="144,968,239,995"/>
+<area shape="rect" id="node5" href="$Gbox420__Nano__Aero__Tank_8ino.html#a95db03d1e7e16b28a065a97809c55551" title="InitializeWireless" alt="" coords="1041,461,1162,488"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Aero__Tank_8ino.html#a3dd0de28dbd52701ac83ee0a76ebd4ce" title="processTimeCriticalStuff" alt="" coords="108,432,275,459"/>
+<area shape="rect" id="node27" href="$Gbox420__Nano__Aero__Tank_8ino.html#a56b12c2ed10250fdf9fadd1fcc243685" title="runSec" alt="" coords="399,715,461,741"/>
+<area shape="rect" id="node36" href="$Gbox420__Nano__Aero__Tank_8ino.html#a03cb9c97fb260fbbb47438197797a09d" title="runFiveSec" alt="" coords="386,765,474,792"/>
+<area shape="rect" id="node37" href="$Gbox420__Nano__Aero__Tank_8ino.html#a56c5bdcbeb79cd2246a2c88826850ca1" title="runMinute" alt="" coords="837,563,916,589"/>
+<area shape="rect" id="node6" href="$Gbox420__Nano__Aero__Tank_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF) ..." alt="" coords="1306,461,1379,488"/>
+<area shape="rect" id="node8" href="$classAeroModule.html#a93b9be4b1ecc4cb5dbbfb1ebced78ba1" title="Process things that cannot wait or need precise timing. " alt="" coords="323,421,537,462"/>
+<area shape="rect" id="node9" href="$classAeroponics__NoTank.html#a5c514f79260c9ab0bf1df7724e8d1844" title="Process things that cannot wait or need precise timing. " alt="" coords="585,323,752,365"/>
+<area shape="rect" id="node10" href="$classAeroponics__NoTank.html#a209860847d982e45e068d6aecfeb0f1d" title="Aeroponics_NoTank::\lupdateState" alt="" coords="803,201,951,242"/>
+<area shape="rect" id="node11" href="$Helpers_8cpp.html#a219173526adec69222049554f52cef26" title="toText_aeroNoTankState" alt="" coords="1491,272,1659,299"/>
+<area shape="rect" id="node13" href="$classPressurePump.html#aaca2fbf710967a834bc53ea8d494c6f5" title="Turn the pump OFF. " alt="" coords="1014,5,1189,32"/>
+<area shape="rect" id="node21" href="$classPressurePump.html#ac01f58cb89460754985a190a9f70f62c" title="Turn the pump ON. " alt="" coords="1013,56,1189,83"/>
+<area shape="rect" id="node23" href="$classPressurePump.html#af9df6a215a607772719e9cc2984dc97c" title="PressurePump::getState" alt="" coords="1019,107,1184,133"/>
+<area shape="rect" id="node24" href="$classPressureSensor.html#aab2344165db5283ba8203dc45cb97688" title="PressureSensor::readPressure" alt="" coords="1001,157,1201,184"/>
+<area shape="rect" id="node25" href="$classPressureSensor.html#a39f2f08252640aeb9cf9c094ac796ed6" title="PressureSensor::getPressure" alt="" coords="1005,208,1198,235"/>
+<area shape="rect" id="node26" href="$classPressurePump.html#a5ddc97da3499cc0e6ecf374fc82b38d1" title="PressurePump::startMixing" alt="" coords="1011,259,1191,285"/>
+<area shape="rect" id="node12" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="1713,203,1772,229"/>
+<area shape="rect" id="node14" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="1260,132,1425,159"/>
+<area shape="rect" id="node15" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="1269,5,1416,32"/>
+<area shape="rect" id="node16" href="$classPressurePump.html#ac09af28cf6949ab3d716c9a2250fb398" title="PressurePump::updateState" alt="" coords="1249,81,1436,108"/>
+<area shape="rect" id="node17" href="$Helpers_8cpp.html#ad8aa64fccaa28ab3a26b3ec086958e2b" title="toText_pressurePumpState" alt="" coords="1484,132,1665,159"/>
+<area shape="rect" id="node18" href="$classSwitch.html#a3f10d75adaf6a110de455d1f7bb49fc0" title="Switch::turnOff" alt="" coords="1519,183,1630,209"/>
+<area shape="rect" id="node19" href="$classSwitch__PWM.html#a717d6337a0df8903779b81feea21a7bb" title="Switch_PWM::turnOn" alt="" coords="1500,31,1649,57"/>
+<area shape="rect" id="node20" href="$classSwitch.html#a99dd23c2bbf0b6c87d13b543a69b32a6" title="Switch::turnOn" alt="" coords="1520,81,1629,108"/>
+<area shape="rect" id="node22" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="1270,208,1415,235"/>
+<area shape="rect" id="node28" href="$Gbox420__Nano__Aero__Tank_8ino.html#a784bf3330e9224d3a36b0879c1195a98" title="Wireless communication. " alt="" coords="628,715,709,741"/>
+<area shape="rect" id="node29" href="$classModule.html#ace01fc8566dc1d6367560d1ac61c2c18" title="Module::runSec" alt="" coords="612,664,725,691"/>
+<area shape="rect" id="node30" href="$classModule.html#a7ed8e04ba630f6734ac15d06c4eae999" title="Module::runAll" alt="" coords="824,613,929,640"/>
+<area shape="rect" id="node35" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Common::refresh_Sec" alt="" coords="800,715,953,741"/>
+<area shape="rect" id="node31" href="$classModule.html#adb37fcc3cf7c1a693e5b6e92a873bf72" title="Module::runFiveSec" alt="" coords="1032,740,1171,767"/>
+<area shape="rect" id="node33" href="$classModule.html#aa13cfb83b001955abfeb3b87789a7ab8" title="Module::runMinute" alt="" coords="1037,588,1166,615"/>
+<area shape="rect" id="node32" href="$classCommon.html#a604ab36b3a1d9a5bcfcb225149c82f90" title="Common::refresh_FiveSec" alt="" coords="1253,765,1432,792"/>
+<area shape="rect" id="node34" href="$classCommon.html#a14e4462a94bd118028ce1d487ca0292c" title="Common::refresh_Minute" alt="" coords="1258,613,1427,640"/>
+<area shape="rect" id="node38" href="$Gbox420__Nano__Aero__Tank_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title="getWirelessStatus" alt="" coords="1037,512,1166,539"/>
+</map>

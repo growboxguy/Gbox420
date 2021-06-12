@@ -1,0 +1,5 @@
+<map id="AirPump::setState" name="AirPump::setState">
+<area shape="rect" id="node2" href="$classAirPump.html#adbce295ddc8dd194850ebfbfabb343e5" title="AirPump::TurnOff" alt="" coords="216,5,340,32"/>
+<area shape="rect" id="node3" href="$classAirPump.html#a2545e4f11f9004488deec68ab74afea7" title="AirPump::TurnOn" alt="" coords="217,56,339,83"/>
+<area shape="rect" id="node4" href="$classMainModule.html#a89985ce0d1367b5d92eaddf43d478b4b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="183,107,373,133"/>
+</map>

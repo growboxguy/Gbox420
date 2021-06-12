@@ -1,0 +1,6 @@
+<map id="DistanceSensor::report" name="DistanceSensor::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="261,5,377,32"/>
+<area shape="rect" id="node3" href="$classDistanceSensor.html#a55ce50a85c120e7a0931038dd445feda" title="DistanceSensor::getDistanceText" alt="" coords="209,56,428,83"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#a12506db99fbb4f29e603edbac38cbf94" title="toText_distance" alt="" coords="476,31,591,57"/>
+<area shape="rect" id="node5" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="504,81,563,108"/>
+</map>

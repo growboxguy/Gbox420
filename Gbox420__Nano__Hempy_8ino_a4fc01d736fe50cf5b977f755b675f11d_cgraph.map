@@ -1,0 +1,19 @@
+<map id="setup" name="setup">
+<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="1027,279,1121,306"/>
+<area shape="rect" id="node3" href="$Gbox420__Nano__Hempy_8ino.html#a82a77128f231eac657525d7eb3014b01" title="updateTime" alt="" coords="262,76,353,103"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#a2e10a02528024ef17aa54ffd8bef85a8" title="Load settings from EEPROM. " alt="" coords="108,355,203,382"/>
+<area shape="rect" id="node5" href="$Gbox420__Nano__Hempy_8ino.html#a1a2efc80ff04796de2c76155c154b8d9" title="InitializeWireless" alt="" coords="622,152,743,179"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Hempy_8ino.html#a56b12c2ed10250fdf9fadd1fcc243685" title="runSec" alt="" coords="124,304,187,331"/>
+<area shape="rect" id="node16" href="$Gbox420__Nano__Hempy_8ino.html#a03cb9c97fb260fbbb47438197797a09d" title="runFiveSec" alt="" coords="111,254,199,280"/>
+<area shape="rect" id="node17" href="$Gbox420__Nano__Hempy_8ino.html#a56c5bdcbeb79cd2246a2c88826850ca1" title="runMinute" alt="" coords="449,203,528,230"/>
+<area shape="rect" id="node6" href="$Gbox420__Nano__Hempy_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Wireless" alt="" coords="853,152,926,179"/>
+<area shape="rect" id="node8" href="$Gbox420__Nano__Hempy_8ino.html#a784bf3330e9224d3a36b0879c1195a98" title="Wireless communication. " alt="" coords="267,304,348,331"/>
+<area shape="rect" id="node9" href="$classModule.html#ace01fc8566dc1d6367560d1ac61c2c18" title="Module::runSec" alt="" coords="251,355,364,382"/>
+<area shape="rect" id="node10" href="$classModule.html#a7ed8e04ba630f6734ac15d06c4eae999" title="Module::runAll" alt="" coords="436,355,541,382"/>
+<area shape="rect" id="node15" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Common::refresh_Sec" alt="" coords="412,507,565,534"/>
+<area shape="rect" id="node11" href="$classModule.html#adb37fcc3cf7c1a693e5b6e92a873bf72" title="Module::runFiveSec" alt="" coords="613,355,752,382"/>
+<area shape="rect" id="node13" href="$classModule.html#aa13cfb83b001955abfeb3b87789a7ab8" title="Module::runMinute" alt="" coords="618,279,747,306"/>
+<area shape="rect" id="node12" href="$classCommon.html#a604ab36b3a1d9a5bcfcb225149c82f90" title="Common::refresh_FiveSec" alt="" coords="800,406,979,432"/>
+<area shape="rect" id="node14" href="$classCommon.html#a14e4462a94bd118028ce1d487ca0292c" title="Common::refresh_Minute" alt="" coords="805,254,974,280"/>
+<area shape="rect" id="node18" href="$Gbox420__Nano__Hempy_8ino.html#aefb388f6afb97c766f549d7c809c35f9" title="getWirelessStatus" alt="" coords="618,203,747,230"/>
+</map>

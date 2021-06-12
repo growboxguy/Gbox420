@@ -1,0 +1,28 @@
+<map id="Module::getFormattedTime" name="Module::getFormattedTime">
+<area shape="rect" id="node2" href="$classModule.html#a2dba78d91803ee6241f922d7c0f673fc" title="Generate a text log of all sensor readings to the Serial output. " alt="" coords="274,362,403,389"/>
+<area shape="rect" id="node25" href="$classDevModule__Web.html#a9b93b90da799c483922f36cdd5849a95" title="DevModule_Web::websiteEvent\l_Refresh" alt="" coords="234,413,443,455"/>
+<area shape="rect" id="node26" href="$classDEVModule__Web.html#a250eae61fe09061ccbf2e43d9480902e" title="DEVModule_Web::websiteEvent\l_Refresh" alt="" coords="232,479,445,520"/>
+<area shape="rect" id="node27" href="$classMainModule.html#ac116642e44a6e3d06aaf104bef172921" title="MainModule::websiteEvent\l_Refresh" alt="" coords="249,544,428,585"/>
+<area shape="rect" id="node3" href="$classModule.html#aa18eb8322b20b72e952e308d358bbd53" title="Module::reportToSerialTrigger" alt="" coords="524,173,717,199"/>
+<area shape="rect" id="node10" href="$classDevModule__Web.html#a3b22dd2b5355e66403a2e15d488c1196" title="DevModule_Web::refresh\l_FiveSec" alt="" coords="798,267,969,308"/>
+<area shape="rect" id="node11" href="$classDEVModule__Web.html#ac8ea37f602295f12c39d9849aab8e512" title="DEVModule_Web::refresh\l_FiveSec" alt="" coords="796,201,971,243"/>
+<area shape="rect" id="node12" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="MainModule::refresh\l_FiveSec" alt="" coords="813,449,953,491"/>
+<area shape="rect" id="node13" href="$classDevModule__Web.html#a00d609f950f4981b7dc30ad4c4987aea" title="DevModule_Web::reportToGoogle\lSheetsTrigger" alt="" coords="511,325,730,367"/>
+<area shape="rect" id="node15" href="$classDevModule__Web.html#a4436d6126a62bfcc9f8817d97607f8ce" title="DevModule_Web::reportToMQTTTrigger" alt="" coords="493,391,748,418"/>
+<area shape="rect" id="node19" href="$classMainModule.html#af579c539beb7471a55975549522b6a98" title="MainModule::reportToGoogle\lSheetsTrigger" alt="" coords="526,493,715,535"/>
+<area shape="rect" id="node21" href="$classMainModule.html#a14b8851731f543ad9a20a3c2b4a8584b" title="MainModule::reportToMQTTTrigger" alt="" coords="508,559,733,586"/>
+<area shape="rect" id="node4" href="$classAeroModule.html#a74b231207f7d3857696acec8432f4322" title="AeroModule::refresh\l_FiveSec" alt="" coords="814,5,953,47"/>
+<area shape="rect" id="node6" href="$classHempyModule.html#a46b60e0abf225624dc7caba51b40dafc" title="HempyModule::refresh\l_FiveSec" alt="" coords="806,71,961,112"/>
+<area shape="rect" id="node8" href="$classReservoirModule.html#a28480be2b512eb00e46824a6da335d53" title="ReservoirModule::refresh\l_FiveSec" alt="" coords="799,136,967,177"/>
+<area shape="rect" id="node5" href="$classAeroModule.html#ab103ea15dde0982daaa2e09adb87bd09" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="1033,13,1165,39"/>
+<area shape="rect" id="node7" href="$classHempyModule.html#ac3b2b00f142ffaea5176deccfa12b43a" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="1026,78,1173,105"/>
+<area shape="rect" id="node9" href="$classReservoirModule.html#a2e17fcf457366ac0755ed884d9c3b872" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="1019,143,1180,170"/>
+<area shape="rect" id="node14" href="$classDevModule__Web.html#a43cc8925e452a50e6797bbe6421e44c9" title="Settings. " alt="" coords="798,332,969,373"/>
+<area shape="rect" id="node16" href="$Gbox420__Mega__Dev_8ino.html#a5817593b2815aca99b49db41903204d3" title="mqttReceived" alt="" coords="832,398,935,425"/>
+<area shape="rect" id="node17" href="$Gbox420__Mega__Dev_8ino.html#ad05a6aa6821baf0d8fe74cf150c3c57c" title="Sets up the MQTT relay. " alt="" coords="1059,398,1139,425"/>
+<area shape="rect" id="node18" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="1228,398,1283,425"/>
+<area shape="rect" id="node20" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="MainModule::refresh\l_Minute" alt="" coords="813,515,953,556"/>
+<area shape="rect" id="node22" href="$Gbox420__Mega__Main_8ino.html#a5817593b2815aca99b49db41903204d3" title="mqttReceived" alt="" coords="832,581,935,607"/>
+<area shape="rect" id="node23" href="$Gbox420__Mega__Main_8ino.html#ad05a6aa6821baf0d8fe74cf150c3c57c" title="Sets up the MQTT relay. " alt="" coords="1059,581,1139,607"/>
+<area shape="rect" id="node24" href="$Gbox420__Mega__Main_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="1228,581,1283,607"/>
+</map>

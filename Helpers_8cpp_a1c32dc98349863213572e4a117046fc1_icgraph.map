@@ -1,0 +1,25 @@
+<map id="getFreeMemory" name="getFreeMemory">
+<area shape="rect" id="node2" href="$classModule.html#a2dba78d91803ee6241f922d7c0f673fc" title="Generate a text log of all sensor readings to the Serial output. " alt="" coords="167,362,296,389"/>
+<area shape="rect" id="node3" href="$classModule.html#aa18eb8322b20b72e952e308d358bbd53" title="Module::reportToSerialTrigger" alt="" coords="375,173,568,199"/>
+<area shape="rect" id="node10" href="$classDevModule__Web.html#a3b22dd2b5355e66403a2e15d488c1196" title="DevModule_Web::refresh\l_FiveSec" alt="" coords="649,267,819,308"/>
+<area shape="rect" id="node11" href="$classDEVModule__Web.html#ac8ea37f602295f12c39d9849aab8e512" title="DEVModule_Web::refresh\l_FiveSec" alt="" coords="647,201,821,243"/>
+<area shape="rect" id="node12" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="MainModule::refresh\l_FiveSec" alt="" coords="664,449,804,491"/>
+<area shape="rect" id="node13" href="$classDevModule__Web.html#a00d609f950f4981b7dc30ad4c4987aea" title="DevModule_Web::reportToGoogle\lSheetsTrigger" alt="" coords="362,325,581,367"/>
+<area shape="rect" id="node15" href="$classDevModule__Web.html#a4436d6126a62bfcc9f8817d97607f8ce" title="DevModule_Web::reportToMQTTTrigger" alt="" coords="344,391,599,418"/>
+<area shape="rect" id="node19" href="$classMainModule.html#af579c539beb7471a55975549522b6a98" title="MainModule::reportToGoogle\lSheetsTrigger" alt="" coords="377,493,566,535"/>
+<area shape="rect" id="node21" href="$classMainModule.html#a14b8851731f543ad9a20a3c2b4a8584b" title="MainModule::reportToMQTTTrigger" alt="" coords="359,559,584,586"/>
+<area shape="rect" id="node4" href="$classAeroModule.html#a74b231207f7d3857696acec8432f4322" title="AeroModule::refresh\l_FiveSec" alt="" coords="665,5,803,47"/>
+<area shape="rect" id="node6" href="$classHempyModule.html#a46b60e0abf225624dc7caba51b40dafc" title="HempyModule::refresh\l_FiveSec" alt="" coords="657,71,811,112"/>
+<area shape="rect" id="node8" href="$classReservoirModule.html#a28480be2b512eb00e46824a6da335d53" title="ReservoirModule::refresh\l_FiveSec" alt="" coords="650,136,818,177"/>
+<area shape="rect" id="node5" href="$classAeroModule.html#ab103ea15dde0982daaa2e09adb87bd09" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="884,13,1016,39"/>
+<area shape="rect" id="node7" href="$classHempyModule.html#ac3b2b00f142ffaea5176deccfa12b43a" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="877,78,1023,105"/>
+<area shape="rect" id="node9" href="$classReservoirModule.html#a2e17fcf457366ac0755ed884d9c3b872" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="869,143,1031,170"/>
+<area shape="rect" id="node14" href="$classDevModule__Web.html#a43cc8925e452a50e6797bbe6421e44c9" title="Settings. " alt="" coords="649,332,819,373"/>
+<area shape="rect" id="node16" href="$Gbox420__Mega__Dev_8ino.html#a5817593b2815aca99b49db41903204d3" title="mqttReceived" alt="" coords="683,398,785,425"/>
+<area shape="rect" id="node17" href="$Gbox420__Mega__Dev_8ino.html#ad05a6aa6821baf0d8fe74cf150c3c57c" title="Sets up the MQTT relay. " alt="" coords="910,398,990,425"/>
+<area shape="rect" id="node18" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="1079,398,1133,425"/>
+<area shape="rect" id="node20" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="MainModule::refresh\l_Minute" alt="" coords="664,515,804,556"/>
+<area shape="rect" id="node22" href="$Gbox420__Mega__Main_8ino.html#a5817593b2815aca99b49db41903204d3" title="mqttReceived" alt="" coords="683,581,785,607"/>
+<area shape="rect" id="node23" href="$Gbox420__Mega__Main_8ino.html#ad05a6aa6821baf0d8fe74cf150c3c57c" title="Sets up the MQTT relay. " alt="" coords="910,581,990,607"/>
+<area shape="rect" id="node24" href="$Gbox420__Mega__Main_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="1079,581,1133,607"/>
+</map>

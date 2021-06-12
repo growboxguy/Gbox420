@@ -1,0 +1,7 @@
+<map id="TDSSensor::getTDS" name="TDSSensor::getTDS">
+<area shape="rect" id="node2" href="$classTDSSensor.html#a1c6eb7d4b1b6ffb8977122fe1269816f" title="TDSSensor::getTDSText" alt="" coords="225,9,394,36"/>
+<area shape="rect" id="node4" href="$classReservoirModule.html#a8f46e8f4d6a9b017752bdd11c16d0253" title="ReservoirModule::updateResponse" alt="" coords="196,64,423,91"/>
+<area shape="rect" id="node3" href="$classTDSSensor.html#a9ff422338c274ee68de3fba929a6b01f" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="489,5,620,32"/>
+<area shape="rect" id="node5" href="$classReservoirModule.html#a28480be2b512eb00e46824a6da335d53" title="ReservoirModule::refresh\l_FiveSec" alt="" coords="471,57,639,98"/>
+<area shape="rect" id="node6" href="$classReservoirModule.html#a2e17fcf457366ac0755ed884d9c3b872" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="687,93,848,120"/>
+</map>

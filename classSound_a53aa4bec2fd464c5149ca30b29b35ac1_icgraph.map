@@ -1,0 +1,51 @@
+<map id="Sound::playOffSound" name="Sound::playOffSound">
+<area shape="rect" id="node2" href="$classModule.html#a79c2d0237995c6680a490f8a9c678fec" title="Module::setDebug" alt="" coords="767,57,895,84"/>
+<area shape="rect" id="node12" href="$classAeroponics__NoTank.html#a72097bb5d81c26b7b8cce0ee4a2b2aaf" title="Aeroponics_NoTank::\lsetDayMode" alt="" coords="757,109,905,150"/>
+<area shape="rect" id="node13" href="$classAeroponics__NoTank.html#a4aaa6c9d269f040800908b5c44c18d28" title="Aeroponics_NoTank::\lsetSprayOnOff" alt="" coords="757,174,905,215"/>
+<area shape="rect" id="node14" href="$classAeroponics__Tank.html#a7436a7c296a4c0899c87e5a8554b5bdc" title="Stop spraying. " alt="" coords="741,349,922,376"/>
+<area shape="rect" id="node15" href="$classAeroponics__Tank.html#a3f28d0670bfb8aa61dc362d80cd4ae1b" title="Aeroponics_Tank::setDayMode" alt="" coords="207,645,412,672"/>
+<area shape="rect" id="node16" href="$classAeroponics__Tank.html#a601c8e6612ce40ca0cb84b3e5ab426fa" title="Aeroponics_Tank::setSpray\lOnOff" alt="" coords="740,410,923,451"/>
+<area shape="rect" id="node17" href="$classAirPump.html#a98858bae6e4eb378553fc40f529a1063" title="AirPump::setState" alt="" coords="245,747,374,773"/>
+<area shape="rect" id="node21" href="$classFan.html#af5a22c8800d5a4f3295f44a313af71d2" title="Fan::TurnOff" alt="" coords="783,1203,879,1229"/>
+<area shape="rect" id="node22" href="$classFan__PWM.html#aa2c7a4fa5d6603dd2e690854af87b8ec" title="Fan_PWM::turnOff" alt="" coords="243,1101,375,1128"/>
+<area shape="rect" id="node23" href="$classHempyBucket.html#a39ff41c1e17d1b491f6cc3889733e4b0" title="HempyBucket::disable" alt="" coords="754,493,909,520"/>
+<area shape="rect" id="node24" href="$classLights.html#a482dc659480f840747858394c5baec3c" title="Temporary dim the lights while working on the plants. " alt="" coords="231,1000,387,1027"/>
+<area shape="rect" id="node27" href="$classLights.html#ab18f05b043b61b6eb74bd7b564e1a1ec" title="Lights::setLightOnOff" alt="" coords="236,949,383,976"/>
+<area shape="rect" id="node30" href="$classLights.html#a3c5051babf4dacdeecced14217f6f886" title="Lights::setTimerOnOff" alt="" coords="756,899,907,925"/>
+<area shape="rect" id="node32" href="$classLights.html#ac6d200fd34e102cea67cf24d4f017284" title="Enable/disable slowly fadeing in and out the lights when the Status changes. " alt="" coords="236,1152,383,1179"/>
+<area shape="rect" id="node33" href="$classPressurePump.html#aaca2fbf710967a834bc53ea8d494c6f5" title="Turn the pump OFF. " alt="" coords="222,240,397,267"/>
+<area shape="rect" id="node36" href="$classPressurePump.html#a4f668020e2b58f6f4ea97f92026fdbbf" title="Disable the pump. " alt="" coords="736,291,927,317"/>
+<area shape="rect" id="node37" href="$classPressurePump.html#aa550bc8aa4372ecb62a0c35b67e7d794" title="PressurePump::turnBypassOff" alt="" coords="209,392,409,419"/>
+<area shape="rect" id="node38" href="$classSound.html#a6917e650a721b0e7fc6d998edf6a3cf7" title="Sound::setSoundOnOff" alt="" coords="231,696,388,723"/>
+<area shape="rect" id="node40" href="$classWaterPump.html#a9adfab6b4c4d79acf84158d2f1ab4972" title="Turn the pump OFF. " alt="" coords="230,595,389,621"/>
+<area shape="rect" id="node42" href="$classWaterPump.html#a95644a76e18a9449d48d7a955de27b42" title="Disable the pump. " alt="" coords="222,544,397,571"/>
+<area shape="rect" id="node43" href="$classDevModule__Web.html#a43cc8925e452a50e6797bbe6421e44c9" title="Settings. " alt="" coords="492,1254,663,1295"/>
+<area shape="rect" id="node44" href="$classDevModule__Web.html#a00d609f950f4981b7dc30ad4c4987aea" title="DevModule_Web::reportToGoogle\lSheetsTrigger" alt="" coords="200,1254,419,1295"/>
+<area shape="rect" id="node46" href="$classDEVModule__Web.html#ab0e28b8ddf2b462b3c13be6ddebc1d2a" title="Settings. " alt="" coords="222,1319,397,1361"/>
+<area shape="rect" id="node47" href="$classMainModule.html#a2125ed832f36e3af4b2a0bf1db8fa8e0" title="Settings. " alt="" coords="209,1385,409,1412"/>
+<area shape="rect" id="node48" href="$classMainModule.html#af579c539beb7471a55975549522b6a98" title="MainModule::reportToGoogle\lSheetsTrigger" alt="" coords="215,1437,404,1478"/>
+<area shape="rect" id="node3" href="$classAeroModule.html#ac6bc85dba93618f7bef00a5961a6647f" title="AeroModule::processCommand" alt="" coords="982,181,1187,208"/>
+<area shape="rect" id="node6" href="$classHempyModule.html#ae76db12a22770b12cb7ff1aa579e0a27" title="HempyModule::processCommand" alt="" coords="975,392,1195,419"/>
+<area shape="rect" id="node9" href="$classReservoirModule.html#acb4372e3a979154538b63434bb252bfe" title="ReservoirModule::process\lCommand" alt="" coords="997,50,1172,91"/>
+<area shape="rect" id="node4" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="1264,163,1383,189"/>
+<area shape="rect" id="node5" href="$classAeroModule.html#ab103ea15dde0982daaa2e09adb87bd09" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="1257,213,1389,240"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Hempy_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="1264,367,1383,393"/>
+<area shape="rect" id="node8" href="$classHempyModule.html#ac3b2b00f142ffaea5176deccfa12b43a" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="1250,417,1397,444"/>
+<area shape="rect" id="node10" href="$Gbox420__Nano__Reservoir_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="1264,44,1383,71"/>
+<area shape="rect" id="node11" href="$classReservoirModule.html#a2e17fcf457366ac0755ed884d9c3b872" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="1243,95,1404,121"/>
+<area shape="rect" id="node18" href="$classAirPump.html#adbce295ddc8dd194850ebfbfabb343e5" title="AirPump::TurnOff" alt="" coords="515,747,639,773"/>
+<area shape="rect" id="node19" href="$classAirPump.html#a2545e4f11f9004488deec68ab74afea7" title="AirPump::TurnOn" alt="" coords="516,696,639,723"/>
+<area shape="rect" id="node20" href="$classMainModule.html#a89985ce0d1367b5d92eaddf43d478b4b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="989,924,1180,951"/>
+<area shape="rect" id="node25" href="$classLights.html#adf24f09eb5273aad8eea4839f052c95e" title="Lights::checkDimming" alt="" coords="501,1101,653,1128"/>
+<area shape="rect" id="node26" href="$classLights.html#a7bf4d024918477d52eea78c94209fc66" title="Lights::refresh_Sec" alt="" coords="764,1101,899,1128"/>
+<area shape="rect" id="node28" href="$classLights.html#a48acde7f45e4b9b22969e52fea689040" title="constructor " alt="" coords="527,1051,627,1077"/>
+<area shape="rect" id="node29" href="$classLights.html#a2117d6df0bdbf234e627a9bceb000071" title="Lights::checkTimer" alt="" coords="511,899,644,925"/>
+<area shape="rect" id="node31" href="$classLightSensor.html#a50559883ebb2c80a5d2144a6453bd1c3" title="Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger. " alt="" coords="479,1000,676,1027"/>
+<area shape="rect" id="node34" href="$classAeroponics__NoTank.html#a209860847d982e45e068d6aecfeb0f1d" title="Aeroponics_NoTank::\lupdateState" alt="" coords="503,174,651,215"/>
+<area shape="rect" id="node35" href="$classAeroponics__Tank.html#ac70acd360b88e7bf1449eae7251af925" title="Aeroponics_Tank::updateState" alt="" coords="477,392,678,419"/>
+<area shape="rect" id="node39" href="$classDevModule__Web.html#ad83e371e521312fc4f0aff2fd3f80526" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="467,645,688,672"/>
+<area shape="rect" id="node41" href="$classHempyBucket.html#aa534fb9169c4a572eb248970410f1fc3" title="HempyBucket::updateState" alt="" coords="486,544,669,571"/>
+<area shape="rect" id="node45" href="$classDevModule__Web.html#a3b22dd2b5355e66403a2e15d488c1196" title="DevModule_Web::refresh\l_FiveSec" alt="" coords="492,1319,663,1361"/>
+<area shape="rect" id="node49" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="MainModule::refresh\l_FiveSec" alt="" coords="507,1410,647,1451"/>
+<area shape="rect" id="node50" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="MainModule::refresh\l_Minute" alt="" coords="507,1475,647,1517"/>
+</map>

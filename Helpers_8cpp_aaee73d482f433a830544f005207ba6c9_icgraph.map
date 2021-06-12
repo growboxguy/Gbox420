@@ -1,0 +1,8 @@
+<map id="toInt" name="toInt">
+<area shape="rect" id="node2" href="$classLights.html#a7f46426260cb74c597f6efbcee434620" title="Lights::setOnTime" alt="" coords="149,5,278,32"/>
+<area shape="rect" id="node3" href="$classMainModule.html#a89985ce0d1367b5d92eaddf43d478b4b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="373,56,564,83"/>
+<area shape="rect" id="node4" href="$classLights.html#af60cd6d4e97ffab139e93d94777a44c4" title="Lights::setOffTime" alt="" coords="148,107,279,133"/>
+<area shape="rect" id="node5" href="$classAeroModule__Web.html#a68b200454110c62f3710d0940e15d42b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="101,157,325,184"/>
+<area shape="rect" id="node6" href="$classDevModule__Web.html#ad83e371e521312fc4f0aff2fd3f80526" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="103,208,324,235"/>
+<area shape="rect" id="node7" href="$classHempyModule__Web.html#a6b7f44fb8d5c32417f8111a9c069cce7" title="HempyModule_Web::command\lEvent" alt="" coords="111,259,316,301"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="WaterPump::report" name="WaterPump::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="224,5,340,32"/>
+<area shape="rect" id="node3" href="$classWaterPump.html#a1b21ae284e50f44976a56b11103f13fb" title="Text representation of the current state: DISABLED/IDLE/RUNNING.. " alt="" coords="195,56,369,83"/>
+<area shape="rect" id="node6" href="$classWaterPump.html#a464f06dd02bc60c9842955de48b7d844" title="WaterPump::getTimeOutText" alt="" coords="185,107,379,133"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#aaa9810e7291e97d1fac5b0f3fa0b8f3c" title="toText_waterPumpState" alt="" coords="427,5,589,32"/>
+<area shape="rect" id="node5" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="637,56,696,83"/>
+<area shape="rect" id="node7" href="$Helpers_8cpp.html#a0654f78341ead1a20ca206ebb23d01a4" title="toText_second" alt="" coords="454,157,562,184"/>
+</map>

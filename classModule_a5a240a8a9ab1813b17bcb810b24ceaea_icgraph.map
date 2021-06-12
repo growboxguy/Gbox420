@@ -1,0 +1,11 @@
+<map id="Module::Module" name="Module::Module">
+<area shape="rect" id="node2" href="$classModule__Web.html#a84be95e574dfb837e55d2b8fff6dddec" title="Subscribing to the Website load event: Calls the websiteEvent_Load() method. " alt="" coords="174,205,365,247"/>
+<area shape="rect" id="node8" href="$classModule__Web.html#a2d0f9996ab9db13212c13ca0c9783077" title="Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method. " alt="" coords="174,140,365,181"/>
+<area shape="rect" id="node10" href="$classModule__Web.html#add18d67e06d4b8c31fba25d1ea37009b" title="Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method..." alt="" coords="168,75,371,116"/>
+<area shape="rect" id="node3" href="$classAeroModule__Web.html#ab428de02336385c258daad686aa431f0" title="constructor " alt="" coords="434,173,670,199"/>
+<area shape="rect" id="node4" href="$classDevModule__Web.html#ae334c16d42a2359be4c4ba56b92ba518" title="constructor " alt="" coords="437,223,667,250"/>
+<area shape="rect" id="node5" href="$classDEVModule__Web.html#a3b6305f0ac608f03bf1d4e78183f1eac" title="constructor " alt="" coords="433,274,671,301"/>
+<area shape="rect" id="node6" href="$classHempyModule__Web.html#a00b9e646494d3540f37dee684561259a" title="constructor " alt="" coords="419,71,685,98"/>
+<area shape="rect" id="node7" href="$classMainModule.html#a3a918c8c080f2a810b64e297cf1ce994" title="constructor " alt="" coords="467,122,637,149"/>
+<area shape="rect" id="node9" href="$classReservoirModule__Web.html#a349a39dca681c59248bb463e0d6eeff7" title="constructor " alt="" coords="471,5,633,47"/>
+</map>

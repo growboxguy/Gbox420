@@ -1,0 +1,5 @@
+<map id="PowerSensor" name="PowerSensor">
+<area shape="rect" id="node2" href="$classCommon.html" title="Common" alt="" coords="106,5,181,32"/>
+<area shape="rect" id="node3" href="$classModule.html" title="Module" alt="" coords="118,139,182,165"/>
+<area shape="rect" id="node4" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="194,228,253,255"/>
+</map>

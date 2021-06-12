@@ -1,0 +1,7 @@
+<map id="WeightSensor::report" name="WeightSensor::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="239,5,355,32"/>
+<area shape="rect" id="node3" href="$classWeightSensor.html#a99f04ef9c2addedfc02d00685faf5a97" title="WeightSensor::getWeightText" alt="" coords="199,56,396,83"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#a16cea647c358524dcff92bd8056f6ff8" title="toText_weight" alt="" coords="477,5,581,32"/>
+<area shape="rect" id="node5" href="$classWeightSensor.html#a0a42742e1516e6723b1246e789ba9253" title="WeightSensor::getWeight" alt="" coords="444,56,615,83"/>
+<area shape="rect" id="node6" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="500,107,559,133"/>
+</map>

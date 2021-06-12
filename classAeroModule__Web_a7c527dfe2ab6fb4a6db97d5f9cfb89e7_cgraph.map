@@ -1,0 +1,13 @@
+<map id="AeroModule_Web::report" name="AeroModule_Web::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="253,5,369,32"/>
+<area shape="rect" id="node3" href="$Helpers_8cpp.html#a0c97bfe0748519233b3a087775ba6521" title="toText_onlineStatus" alt="" coords="241,56,380,83"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="449,284,508,311"/>
+<area shape="rect" id="node5" href="$Helpers_8cpp.html#a50e0796918ffab51d100465832e5cb1a" title="toText_pressure" alt="" coords="253,157,369,184"/>
+<area shape="rect" id="node6" href="$Helpers_8cpp.html#a16cea647c358524dcff92bd8056f6ff8" title="toText_weight" alt="" coords="259,208,363,235"/>
+<area shape="rect" id="node7" href="$Helpers_8cpp.html#a8e9aa605390d551378e20933ab37d4cf" title="toText_aeroTankState" alt="" coords="235,259,386,285"/>
+<area shape="rect" id="node8" href="$Helpers_8cpp.html#a219173526adec69222049554f52cef26" title="toText_aeroNoTankState" alt="" coords="227,309,395,336"/>
+<area shape="rect" id="node9" href="$Helpers_8cpp.html#ad8aa64fccaa28ab3a26b3ec086958e2b" title="toText_pressurePumpState" alt="" coords="220,360,401,387"/>
+<area shape="rect" id="node10" href="$Helpers_8cpp.html#ac6a7718046dd13997fdade1da48ecb25" title="toText_percentage" alt="" coords="245,411,376,437"/>
+<area shape="rect" id="node11" href="$Helpers_8cpp.html#a0654f78341ead1a20ca206ebb23d01a4" title="toText_second" alt="" coords="257,461,365,488"/>
+<area shape="rect" id="node12" href="$Helpers_8cpp.html#a901734aff517f29931a27fd8568d8e9e" title="toText_enabledDisabled" alt="" coords="229,512,392,539"/>
+</map>

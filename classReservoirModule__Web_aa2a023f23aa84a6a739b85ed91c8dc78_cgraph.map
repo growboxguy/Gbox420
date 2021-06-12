@@ -1,0 +1,21 @@
+<map id="ReservoirModule_Web::websiteEvent_Load" name="ReservoirModule_Web::websiteEvent_Load">
+<area shape="rect" id="node2" href="$classReservoirModule__Web.html#a6fe8fc5f3566b7beb4b4dd0289f54bcc" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="208,378,363,419"/>
+<area shape="rect" id="node6" href="$classReservoirModule__Web.html#a045121819f7123b8ce7522312f0c5e91" title="Report the current state to the serial console. " alt="" coords="208,158,363,199"/>
+<area shape="rect" id="node14" href="$classReservoirModule__Web.html#a7b12ae99c82ce17d9c2573d316251be4" title="ReservoirModule_Web\l::refresh_Sec" alt="" coords="208,663,363,705"/>
+<area shape="rect" id="node16" href="$classReservoirModule__Web.html#a4561e7088396d38e812535532f79d200" title="Exchange messages with the Reservoir module. " alt="" coords="415,546,569,587"/>
+<area shape="rect" id="node17" href="$classReservoirModule__Web.html#aaacd2f917ae585e9c73e6372aa206a80" title="Updates the command sent to the remote Reservoir Module wirelessly. " alt="" coords="645,605,800,646"/>
+<area shape="rect" id="node18" href="$classReservoirModule__Web.html#a44bae49e074a3bdf1a69203d66ab4222" title="Send a single command and process the Response received in the Acknowledgement package. " alt="" coords="645,437,800,478"/>
+<area shape="rect" id="node19" href="$classReservoirModule__Web.html#a9a11d3b4d046ef84d92917169c5db8da" title="ReservoirModule_Web\l::refresh_FiveSec" alt="" coords="208,495,363,537"/>
+<area shape="rect" id="node3" href="$classCommon.html#a0192d295366bf1e966d8b58a3ce57554" title="Checks whether a component belongs to the caller class or not. " alt="" coords="621,364,824,391"/>
+<area shape="rect" id="node5" href="$classModule__Web.html#a54a0a2a3106a9068aa0d15b592602601" title="Module_Web::addToLog" alt="" coords="411,393,573,420"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="872,503,967,529"/>
+<area shape="rect" id="node7" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="434,39,550,65"/>
+<area shape="rect" id="node8" href="$Helpers_8cpp.html#a0c97bfe0748519233b3a087775ba6521" title="toText_onlineStatus" alt="" coords="423,89,561,116"/>
+<area shape="rect" id="node9" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="693,39,752,65"/>
+<area shape="rect" id="node10" href="$Helpers_8cpp.html#a8266349527dd2966a430e1f029dcce36" title="toText_TDS" alt="" coords="445,140,539,167"/>
+<area shape="rect" id="node11" href="$Helpers_8cpp.html#a16cea647c358524dcff92bd8056f6ff8" title="toText_weight" alt="" coords="440,191,544,217"/>
+<area shape="rect" id="node12" href="$Helpers_8cpp.html#a7b18c86ed2ebd405cd6f1d5d55fe773c" title="toText_temp" alt="" coords="445,241,539,268"/>
+<area shape="rect" id="node13" href="$Helpers_8cpp.html#ac6a7718046dd13997fdade1da48ecb25" title="toText_percentage" alt="" coords="427,292,557,319"/>
+<area shape="rect" id="node15" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Common::refresh_Sec" alt="" coords="646,671,799,697"/>
+<area shape="rect" id="node20" href="$classCommon.html#a604ab36b3a1d9a5bcfcb225149c82f90" title="Common::refresh_FiveSec" alt="" coords="633,503,812,529"/>
+</map>

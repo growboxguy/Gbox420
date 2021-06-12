@@ -1,0 +1,3 @@
+<map id="Sound::getEnabledStateText" name="Sound::getEnabledStateText">
+<area shape="rect" id="node2" href="$classSound.html#a4e1368a08c24cea45a490416e5412bce" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="243,5,343,32"/>
+</map>

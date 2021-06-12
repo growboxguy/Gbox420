@@ -1,0 +1,6 @@
+<map id="Module_Web" name="Module_Web">
+<area shape="rect" id="node2" href="$classCommon.html" title="Common" alt="" coords="109,5,184,32"/>
+<area shape="rect" id="node3" href="$classModule.html" title="Module" alt="" coords="231,139,295,165"/>
+<area shape="rect" id="node4" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="307,257,365,284"/>
+<area shape="rect" id="node5" href="$classCommon__Web.html" title="&lt; header guard, same as the ifndef/define guard https://en.wikipedia.org/wiki/Pragma_once ..." alt="" coords="48,139,157,165"/>
+</map>

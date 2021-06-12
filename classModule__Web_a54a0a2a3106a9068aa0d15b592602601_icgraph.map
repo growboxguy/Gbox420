@@ -1,0 +1,29 @@
+<map id="Module_Web::addToLog" name="Module_Web::addToLog">
+<area shape="rect" id="node2" href="$classModule__Web.html#abc22b1d690e82c271f8070ce89370a42" title="Notify subscribed modules of a received MQTT/Website command. " alt="" coords="237,49,434,90"/>
+<area shape="rect" id="node9" href="$classAeroModule__Web.html#a68b200454110c62f3710d0940e15d42b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="223,115,447,141"/>
+<area shape="rect" id="node10" href="$classDevModule__Web.html#ae334c16d42a2359be4c4ba56b92ba518" title="constructor " alt="" coords="220,165,451,192"/>
+<area shape="rect" id="node11" href="$classDevModule__Web.html#ad83e371e521312fc4f0aff2fd3f80526" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="225,216,446,243"/>
+<area shape="rect" id="node12" href="$classDevModule__Web.html#a43cc8925e452a50e6797bbe6421e44c9" title="Settings. " alt="" coords="505,259,675,301"/>
+<area shape="rect" id="node13" href="$classDevModule__Web.html#a00d609f950f4981b7dc30ad4c4987aea" title="DevModule_Web::reportToGoogle\lSheetsTrigger" alt="" coords="226,318,445,359"/>
+<area shape="rect" id="node15" href="$classDEVModule__Web.html#a3b6305f0ac608f03bf1d4e78183f1eac" title="constructor " alt="" coords="216,384,455,411"/>
+<area shape="rect" id="node16" href="$classDEVModule__Web.html#acefbbfe99fe3da658ff228d9777535f1" title="DEVModule_Web::websiteEvent\l_Button" alt="" coords="229,435,442,477"/>
+<area shape="rect" id="node17" href="$classDEVModule__Web.html#ab0e28b8ddf2b462b3c13be6ddebc1d2a" title="Settings. " alt="" coords="503,494,677,535"/>
+<area shape="rect" id="node18" href="$classDEVModule__Web.html#a682292be98131695448dce6dbb522e0f" title="DEVModule_Web::reportToGoogle\lSheetsTrigger" alt="" coords="224,553,447,594"/>
+<area shape="rect" id="node20" href="$classHempyModule__Web.html#a6b7f44fb8d5c32417f8111a9c069cce7" title="HempyModule_Web::command\lEvent" alt="" coords="233,618,438,659"/>
+<area shape="rect" id="node21" href="$classMainModule.html#a3a918c8c080f2a810b64e297cf1ce994" title="constructor " alt="" coords="250,684,421,711"/>
+<area shape="rect" id="node22" href="$classMainModule.html#a89985ce0d1367b5d92eaddf43d478b4b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="240,735,431,761"/>
+<area shape="rect" id="node23" href="$classMainModule.html#a2125ed832f36e3af4b2a0bf1db8fa8e0" title="Settings. " alt="" coords="235,785,435,812"/>
+<area shape="rect" id="node24" href="$classMainModule.html#af579c539beb7471a55975549522b6a98" title="MainModule::reportToGoogle\lSheetsTrigger" alt="" coords="241,837,430,878"/>
+<area shape="rect" id="node27" href="$classReservoirModule__Web.html#a6fe8fc5f3566b7beb4b4dd0289f54bcc" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="258,902,413,943"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_8ino.html#a5817593b2815aca99b49db41903204d3" title="mqttReceived" alt="" coords="539,5,641,32"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Dev_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed. " alt="" coords="535,56,645,83"/>
+<area shape="rect" id="node8" href="$Gbox420__Mega__Dev_8ino.html#a25a408223edda76c980269258c24e022" title="Called when a field on the website is submitted. " alt="" coords="541,107,639,133"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_8ino.html#ad05a6aa6821baf0d8fe74cf150c3c57c" title="Sets up the MQTT relay. " alt="" coords="743,5,823,32"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="889,31,944,57"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Dev_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection " alt="" coords="725,56,841,83"/>
+<area shape="rect" id="node14" href="$classDevModule__Web.html#a3b22dd2b5355e66403a2e15d488c1196" title="DevModule_Web::refresh\l_FiveSec" alt="" coords="505,325,675,366"/>
+<area shape="rect" id="node19" href="$classDEVModule__Web.html#ac8ea37f602295f12c39d9849aab8e512" title="DEVModule_Web::refresh\l_FiveSec" alt="" coords="503,559,677,601"/>
+<area shape="rect" id="node25" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="MainModule::refresh\l_FiveSec" alt="" coords="520,771,660,813"/>
+<area shape="rect" id="node26" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="MainModule::refresh\l_Minute" alt="" coords="520,837,660,878"/>
+<area shape="rect" id="node28" href="$classReservoirModule__Web.html#aa2a023f23aa84a6a739b85ed91c8dc78" title="ReservoirModule_Web\l::websiteEvent_Load" alt="" coords="513,902,667,943"/>
+</map>

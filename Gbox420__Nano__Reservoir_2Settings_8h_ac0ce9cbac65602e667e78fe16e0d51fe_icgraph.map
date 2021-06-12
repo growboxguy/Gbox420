@@ -1,0 +1,20 @@
+<map id="saveSettings" name="saveSettings">
+<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed. " alt="" coords="629,81,739,108"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_8ino.html#a25a408223edda76c980269258c24e022" title="Called when a field on the website is submitted. " alt="" coords="635,5,733,32"/>
+<area shape="rect" id="node6" href="$Gbox420__Nano__Reservoir_2Settings_8h.html#ad971c9812747afb3057cd98892437c13" title="Load settings from EEPROM. " alt="" coords="215,144,309,171"/>
+<area shape="rect" id="node8" href="$classAeroModule.html#ac6bc85dba93618f7bef00a5961a6647f" title="AeroModule::processCommand" alt="" coords="159,195,365,221"/>
+<area shape="rect" id="node12" href="$classHempyModule.html#ae76db12a22770b12cb7ff1aa579e0a27" title="HempyModule::processCommand" alt="" coords="152,296,372,323"/>
+<area shape="rect" id="node16" href="$classReservoirModule.html#acb4372e3a979154538b63434bb252bfe" title="ReservoirModule::process\lCommand" alt="" coords="175,390,349,431"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection " alt="" coords="787,81,903,108"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="951,113,1005,140"/>
+<area shape="rect" id="node7" href="$Gbox420__Nano__Reservoir_2Settings_8h.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM. " alt="" coords="445,93,556,120"/>
+<area shape="rect" id="node9" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="441,195,560,221"/>
+<area shape="rect" id="node11" href="$classAeroModule.html#ab103ea15dde0982daaa2e09adb87bd09" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="435,245,567,272"/>
+<area shape="rect" id="node10" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="661,195,707,221"/>
+<area shape="rect" id="node13" href="$Gbox420__Nano__Hempy_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="441,296,560,323"/>
+<area shape="rect" id="node15" href="$classHempyModule.html#ac3b2b00f142ffaea5176deccfa12b43a" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="427,347,574,373"/>
+<area shape="rect" id="node14" href="$Gbox420__Nano__Hempy_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="661,296,707,323"/>
+<area shape="rect" id="node17" href="$Gbox420__Nano__Reservoir_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="441,397,560,424"/>
+<area shape="rect" id="node19" href="$classReservoirModule.html#a2e17fcf457366ac0755ed884d9c3b872" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="420,448,581,475"/>
+<area shape="rect" id="node18" href="$Gbox420__Nano__Reservoir_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="loop" alt="" coords="661,397,707,424"/>
+</map>

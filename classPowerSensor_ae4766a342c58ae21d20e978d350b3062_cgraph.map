@@ -1,0 +1,8 @@
+<map id="PowerSensor::report" name="PowerSensor::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="235,5,351,32"/>
+<area shape="rect" id="node3" href="$classPowerSensor.html#a059f0c4355e89a0536c31f3eda652743" title="PowerSensor::getPowerText" alt="" coords="198,56,387,83"/>
+<area shape="rect" id="node5" href="$classPowerSensor.html#a73604eb01facef251ed6b5e6c2ce474d" title="PowerSensor::getEnergyText" alt="" coords="196,107,389,133"/>
+<area shape="rect" id="node6" href="$classPowerSensor.html#a25ab8eb20467b230004bdbfb4176fb36" title="PowerSensor::getVoltageText" alt="" coords="195,157,391,184"/>
+<area shape="rect" id="node7" href="$classPowerSensor.html#ab7cb032b20b3fa3b44f27ccd0eddf41f" title="PowerSensor::getCurrentText" alt="" coords="195,208,390,235"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="439,132,497,159"/>
+</map>

@@ -1,0 +1,14 @@
+<map id="HempyBucket::report" name="HempyBucket::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="253,5,369,32"/>
+<area shape="rect" id="node3" href="$classHempyBucket.html#ad213cc39a0d2fd77d038948963188dc8" title="HempyBucket::getStateText" alt="" coords="217,56,405,83"/>
+<area shape="rect" id="node6" href="$classHempyBucket.html#ac015c472de49428c42274dac96099ec1" title="HempyBucket::getDryWeightText" alt="" coords="202,191,421,217"/>
+<area shape="rect" id="node8" href="$classHempyBucket.html#acfa3b88cf7cec4fc713cadab285bd94e" title="HempyBucket::getWetWeightText" alt="" coords="200,241,423,268"/>
+<area shape="rect" id="node9" href="$classHempyBucket.html#a7777c8404fdb1a943632eb618b2611be" title="HempyBucket::getEvaporation\lTargetText" alt="" coords="211,293,411,334"/>
+<area shape="rect" id="node10" href="$classHempyBucket.html#a62ae7e4e7774685a22ff87b965810886" title="HempyBucket::getOverflow\lTargetText" alt="" coords="220,358,403,399"/>
+<area shape="rect" id="node11" href="$classHempyBucket.html#a6f66bc50fc7861ce97968490e0653c87" title="HempyBucket::getWasteLimitText" alt="" coords="200,424,423,451"/>
+<area shape="rect" id="node12" href="$classHempyBucket.html#ae8cb8f09874695e3853e3d341537ec46" title="HempyBucket::getDrainWait\lTimeText" alt="" coords="217,125,406,166"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#a9584fe3b73c8ed3efccaf337bb272e6b" title="toText_hempyState" alt="" coords="471,39,607,65"/>
+<area shape="rect" id="node5" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="655,216,713,243"/>
+<area shape="rect" id="node7" href="$Helpers_8cpp.html#a16cea647c358524dcff92bd8056f6ff8" title="toText_weight" alt="" coords="487,343,591,369"/>
+<area shape="rect" id="node13" href="$Helpers_8cpp.html#a0654f78341ead1a20ca206ebb23d01a4" title="toText_second" alt="" coords="485,89,593,116"/>
+</map>

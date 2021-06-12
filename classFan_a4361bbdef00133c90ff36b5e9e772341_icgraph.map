@@ -1,0 +1,5 @@
+<map id="Fan::fanSpeedText" name="Fan::fanSpeedText">
+<area shape="rect" id="node2" href="$classFan.html#a325b203fc67d2cc61c40c253afad9417" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="239,5,325,32"/>
+<area shape="rect" id="node3" href="$classMainModule.html#ac116642e44a6e3d06aaf104bef172921" title="MainModule::websiteEvent\l_Refresh" alt="" coords="193,57,371,98"/>
+<area shape="rect" id="node4" href="$classMainModule.html#a89985ce0d1367b5d92eaddf43d478b4b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="187,123,377,149"/>
+</map>

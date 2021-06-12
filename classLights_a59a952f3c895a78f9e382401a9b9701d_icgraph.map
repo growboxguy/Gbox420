@@ -1,0 +1,12 @@
+<map id="Lights::checkRelay" name="Lights::checkRelay">
+<area shape="rect" id="node2" href="$classLights.html#a48acde7f45e4b9b22969e52fea689040" title="constructor " alt="" coords="437,107,537,133"/>
+<area shape="rect" id="node3" href="$classLights.html#a38c74606e1c2b4ff7db184920b225961" title="Lights::refresh_Minute" alt="" coords="633,309,784,336"/>
+<area shape="rect" id="node4" href="$classLights.html#adf24f09eb5273aad8eea4839f052c95e" title="Lights::checkDimming" alt="" coords="188,56,340,83"/>
+<area shape="rect" id="node8" href="$classLights.html#ab18f05b043b61b6eb74bd7b564e1a1ec" title="Lights::setLightOnOff" alt="" coords="191,157,337,184"/>
+<area shape="rect" id="node5" href="$classLights.html#a7bf4d024918477d52eea78c94209fc66" title="Lights::refresh_Sec" alt="" coords="419,5,554,32"/>
+<area shape="rect" id="node6" href="$classLights.html#a482dc659480f840747858394c5baec3c" title="Temporary dim the lights while working on the plants. " alt="" coords="409,56,565,83"/>
+<area shape="rect" id="node7" href="$classMainModule.html#a89985ce0d1367b5d92eaddf43d478b4b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="832,208,1023,235"/>
+<area shape="rect" id="node9" href="$classLights.html#a2117d6df0bdbf234e627a9bceb000071" title="Lights::checkTimer" alt="" coords="420,259,553,285"/>
+<area shape="rect" id="node11" href="$classLightSensor.html#a50559883ebb2c80a5d2144a6453bd1c3" title="Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger. " alt="" coords="388,157,585,184"/>
+<area shape="rect" id="node10" href="$classLights.html#a3c5051babf4dacdeecced14217f6f886" title="Lights::setTimerOnOff" alt="" coords="633,259,784,285"/>
+</map>

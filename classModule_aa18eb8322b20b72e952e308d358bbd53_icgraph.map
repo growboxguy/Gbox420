@@ -1,0 +1,11 @@
+<map id="Module::reportToSerialTrigger" name="Module::reportToSerialTrigger">
+<area shape="rect" id="node2" href="$classAeroModule.html#a74b231207f7d3857696acec8432f4322" title="AeroModule::refresh\l_FiveSec" alt="" coords="265,5,403,47"/>
+<area shape="rect" id="node4" href="$classHempyModule.html#a46b60e0abf225624dc7caba51b40dafc" title="HempyModule::refresh\l_FiveSec" alt="" coords="257,71,411,112"/>
+<area shape="rect" id="node6" href="$classReservoirModule.html#a28480be2b512eb00e46824a6da335d53" title="ReservoirModule::refresh\l_FiveSec" alt="" coords="250,136,418,177"/>
+<area shape="rect" id="node8" href="$classDevModule__Web.html#a3b22dd2b5355e66403a2e15d488c1196" title="DevModule_Web::refresh\l_FiveSec" alt="" coords="249,201,419,243"/>
+<area shape="rect" id="node9" href="$classDEVModule__Web.html#ac8ea37f602295f12c39d9849aab8e512" title="DEVModule_Web::refresh\l_FiveSec" alt="" coords="247,267,421,308"/>
+<area shape="rect" id="node10" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="MainModule::refresh\l_FiveSec" alt="" coords="264,332,404,373"/>
+<area shape="rect" id="node3" href="$classAeroModule.html#ab103ea15dde0982daaa2e09adb87bd09" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="484,13,616,39"/>
+<area shape="rect" id="node5" href="$classHempyModule.html#ac3b2b00f142ffaea5176deccfa12b43a" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="477,78,623,105"/>
+<area shape="rect" id="node7" href="$classReservoirModule.html#a2e17fcf457366ac0755ed884d9c3b872" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="469,143,631,170"/>
+</map>

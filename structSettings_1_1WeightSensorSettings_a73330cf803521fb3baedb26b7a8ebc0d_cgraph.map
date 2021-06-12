@@ -1,0 +1,5 @@
+<map id="Settings::WeightSensorSettings::WeightSensorSettings" name="Settings::WeightSensorSettings::WeightSensorSettings">
+<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_2Settings_8h.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits. " alt="" coords="267,5,366,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_2Settings_8h.html#ad971c9812747afb3057cd98892437c13" title="Load settings from EEPROM. " alt="" coords="269,56,364,83"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2Settings_8h.html#a1e64e2a81ba79fa159ec927aa0e538d8" title="Load sketch default settings into EEPROM. " alt="" coords="261,107,372,133"/>
+</map>

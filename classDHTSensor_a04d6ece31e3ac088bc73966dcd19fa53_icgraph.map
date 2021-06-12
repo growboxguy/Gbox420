@@ -1,0 +1,5 @@
+<map id="DHTSensor::getTempText" name="DHTSensor::getTempText">
+<area shape="rect" id="node2" href="$classDHTSensor.html#ab607f63b67b20f13ed70a67a3f0a3553" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="268,5,400,32"/>
+<area shape="rect" id="node3" href="$classDevModule__Web.html#a9b93b90da799c483922f36cdd5849a95" title="DevModule_Web::websiteEvent\l_Refresh" alt="" coords="229,57,439,98"/>
+<area shape="rect" id="node4" href="$classMainModule.html#ac116642e44a6e3d06aaf104bef172921" title="MainModule::websiteEvent\l_Refresh" alt="" coords="245,122,423,163"/>
+</map>

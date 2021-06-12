@@ -1,0 +1,21 @@
+<map id="getWirelessData" name="getWirelessData">
+<area shape="rect" id="node2" href="$Gbox420__Nano__Reservoir_8ino.html#a1db8d74ea9b2f516fe15fb41da6a22cc" title="Wireless" alt="" coords="480,5,553,32"/>
+<area shape="rect" id="node3" href="$Gbox420__Nano__Reservoir_8ino.html#a82a77128f231eac657525d7eb3014b01" title="updateTime" alt="" coords="214,107,305,133"/>
+<area shape="rect" id="node5" href="$classReservoirModule.html#acb4372e3a979154538b63434bb252bfe" title="ReservoirModule::process\lCommand" alt="" coords="172,302,347,343"/>
+<area shape="rect" id="node20" href="$Gbox420__Nano__Reservoir_8ino.html#a95db03d1e7e16b28a065a97809c55551" title="InitializeWireless" alt="" coords="199,56,320,83"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="469,56,564,83"/>
+<area shape="rect" id="node6" href="$classReservoirModule.html#adfb2a142a73a552075f0eeabbac5fda2" title="ReservoirModule::updateAckData" alt="" coords="407,411,626,437"/>
+<area shape="rect" id="node7" href="$classModule.html#a79c2d0237995c6680a490f8a9c678fec" title="Module::setDebug" alt="" coords="453,107,581,133"/>
+<area shape="rect" id="node11" href="$classModule.html#a966279a6ac1ac3f0dcd17859a94e18c9" title="Module::setMetric" alt="" coords="453,461,580,488"/>
+<area shape="rect" id="node12" href="$classModule.html#a7d3b2a7cec54783a64ff8153f5ff3533" title="Set the of Frequency of Serial reports in seconds (5 sec increments, 5 sec minimum) ..." alt="" coords="427,513,606,554"/>
+<area shape="rect" id="node13" href="$classModule.html#a58c519c3102d120deae618aba6b62ee5" title="Enable/disable reporting the current time to the Serial output. " alt="" coords="421,259,612,285"/>
+<area shape="rect" id="node14" href="$classModule.html#acb15da911f5673d2ffb152e9ffae1c06" title="Enable/disable reporting the remaining free memory to the Serial output. " alt="" coords="412,157,621,184"/>
+<area shape="rect" id="node15" href="$classModule.html#a7c9d28b0e40ac3c2aa4e773a21790de9" title="Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial..." alt="" coords="395,208,639,235"/>
+<area shape="rect" id="node16" href="$classModule.html#ab71609e8b31d66336f8c22f0abe20cd7" title="Enable/disable sending JSON formatted reports to the Serial output. " alt="" coords="417,579,616,605"/>
+<area shape="rect" id="node17" href="$classModule.html#a51b0bb25e26589592ad6f866cfdd34a8" title="Enable/disable sending wireless package exchange reports to the Serial output. " alt="" coords="410,629,623,656"/>
+<area shape="rect" id="node18" href="$classWeightSensor.html#a54b241f48e63ef6b17eade0d55a78008" title="WeightSensor::triggerTare" alt="" coords="429,309,604,336"/>
+<area shape="rect" id="node19" href="$Gbox420__Mega__Dev_2Settings_8cpp.html#ac0ce9cbac65602e667e78fe16e0d51fe" title="Store settings in EEPROM &#45; Only updates changed bits. " alt="" coords="467,360,566,387"/>
+<area shape="rect" id="node8" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="687,424,852,451"/>
+<area shape="rect" id="node9" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="697,297,842,324"/>
+<area shape="rect" id="node10" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="696,107,843,133"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="Sound::report" name="Sound::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="190,5,306,32"/>
+<area shape="rect" id="node3" href="$classSound.html#ab373ff3570a57c9df918efec87f960b9" title="Sound::getEnabledStateText" alt="" coords="153,56,343,83"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#a901734aff517f29931a27fd8568d8e9e" title="toText_enabledDisabled" alt="" coords="391,31,553,57"/>
+<area shape="rect" id="node5" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="601,56,660,83"/>
+</map>

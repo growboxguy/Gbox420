@@ -1,0 +1,10 @@
+<map id="PowerSensorV3::report" name="PowerSensorV3::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="274,5,390,32"/>
+<area shape="rect" id="node3" href="$classPowerSensorV3.html#a70459497649018854d41b2e9bc7946f7" title="PowerSensorV3::getPowerText" alt="" coords="229,56,435,83"/>
+<area shape="rect" id="node5" href="$classPowerSensorV3.html#ae9dd868528a7ef83f200df1899b1ca7f" title="PowerSensorV3::getEnergyText" alt="" coords="227,107,437,133"/>
+<area shape="rect" id="node6" href="$classPowerSensorV3.html#a005648e8466a3259e77ac5864ac602ba" title="PowerSensorV3::getVoltageText" alt="" coords="226,157,438,184"/>
+<area shape="rect" id="node7" href="$classPowerSensorV3.html#ab9a8bb76e83f879f9f958fab27978046" title="PowerSensorV3::getCurrentText" alt="" coords="227,208,437,235"/>
+<area shape="rect" id="node8" href="$classPowerSensorV3.html#a31d0022aaf63b4f3b58857dc0899a6ba" title="PowerSensorV3::getFrequencyText" alt="" coords="217,259,447,285"/>
+<area shape="rect" id="node9" href="$classPowerSensorV3.html#a0799057ba96ffc74b372b88d94874d33" title="PowerSensorV3::getPowerFactorText" alt="" coords="211,309,453,336"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="501,183,560,209"/>
+</map>

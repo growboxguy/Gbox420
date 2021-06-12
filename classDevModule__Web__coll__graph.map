@@ -1,0 +1,8 @@
+<map id="DevModule_Web" name="DevModule_Web">
+<area shape="rect" id="node2" href="$classCommon__Web.html" title="&lt; header guard, same as the ifndef/define guard https://en.wikipedia.org/wiki/Pragma_once ..." alt="" coords="5,139,115,165"/>
+<area shape="rect" id="node4" href="$classModule__Web.html" title="Module_Web" alt="" coords="179,257,277,284"/>
+<area shape="rect" id="node3" href="$classCommon.html" title="Common" alt="" coords="247,5,321,32"/>
+<area shape="rect" id="node5" href="$classModule.html" title="Module" alt="" coords="309,139,373,165"/>
+<area shape="rect" id="node6" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="305,257,364,284"/>
+<area shape="rect" id="node7" href="$classDHTSensor.html" title="&lt; DHT11 or DHT22 Digital Humidity and Temperature sensor " alt="" coords="499,257,589,284"/>
+</map>

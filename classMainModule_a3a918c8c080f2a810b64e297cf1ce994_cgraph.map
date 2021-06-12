@@ -1,0 +1,18 @@
+<map id="MainModule::MainModule" name="MainModule::MainModule">
+<area shape="rect" id="node2" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="955,444,1049,470"/>
+<area shape="rect" id="node3" href="$classModule.html#aee2cbab440d38d29948205820ad50be8" title="Subscribing to the report queue: Calls the report() method. " alt="" coords="718,128,903,154"/>
+<area shape="rect" id="node4" href="$classModule.html#a2dffaa526893d852b722cf890a6821c6" title="Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method. " alt="" coords="475,175,667,216"/>
+<area shape="rect" id="node5" href="$classModule.html#a20d1125116f9a8c71339fde4626c5adb" title="Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method. " alt="" coords="715,234,907,275"/>
+<area shape="rect" id="node6" href="$classModule__Web.html#a84be95e574dfb837e55d2b8fff6dddec" title="Subscribing to the Website load event: Calls the websiteEvent_Load() method. " alt="" coords="230,292,421,334"/>
+<area shape="rect" id="node8" href="$classModule__Web.html#a2d0f9996ab9db13212c13ca0c9783077" title="Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method. " alt="" coords="230,358,421,399"/>
+<area shape="rect" id="node9" href="$classModule__Web.html#add18d67e06d4b8c31fba25d1ea37009b" title="Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method..." alt="" coords="224,423,427,464"/>
+<area shape="rect" id="node10" href="$classModule.html#a7ed8e04ba630f6734ac15d06c4eae999" title="Module::runAll" alt="" coords="273,520,378,546"/>
+<area shape="rect" id="node17" href="$classModule__Web.html#a54a0a2a3106a9068aa0d15b592602601" title="Module_Web::addToLog" alt="" coords="244,570,407,597"/>
+<area shape="rect" id="node7" href="$classModule.html#a5a240a8a9ab1813b17bcb810b24ceaea" title="constructor " alt="" coords="513,342,628,369"/>
+<area shape="rect" id="node11" href="$classModule.html#ace01fc8566dc1d6367560d1ac61c2c18" title="Module::runSec" alt="" coords="514,520,627,546"/>
+<area shape="rect" id="node13" href="$classModule.html#adb37fcc3cf7c1a693e5b6e92a873bf72" title="Module::runFiveSec" alt="" coords="501,596,640,622"/>
+<area shape="rect" id="node15" href="$classModule.html#aa13cfb83b001955abfeb3b87789a7ab8" title="Module::runMinute" alt="" coords="506,697,635,724"/>
+<area shape="rect" id="node12" href="$classCommon.html#acd1fdd47fbf8bb490f5c6d3ab6cd8d05" title="Common::refresh_Sec" alt="" coords="734,494,887,521"/>
+<area shape="rect" id="node14" href="$classCommon.html#a604ab36b3a1d9a5bcfcb225149c82f90" title="Common::refresh_FiveSec" alt="" coords="721,596,900,622"/>
+<area shape="rect" id="node16" href="$classCommon.html#a14e4462a94bd118028ce1d487ca0292c" title="Common::refresh_Minute" alt="" coords="726,697,895,724"/>
+</map>

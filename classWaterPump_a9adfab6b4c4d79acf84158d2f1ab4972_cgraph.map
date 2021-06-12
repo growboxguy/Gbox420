@@ -1,0 +1,12 @@
+<map id="WaterPump::stopPump" name="WaterPump::stopPump">
+<area shape="rect" id="node2" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="214,31,379,57"/>
+<area shape="rect" id="node3" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="223,81,370,108"/>
+<area shape="rect" id="node4" href="$classWaterPump.html#a4211806cd0c62a57f3accc37c1c1eb00" title="WaterPump::updateState" alt="" coords="212,132,381,159"/>
+<area shape="rect" id="node5" href="$Helpers_8cpp.html#aaa9810e7291e97d1fac5b0f3fa0b8f3c" title="toText_waterPumpState" alt="" coords="429,5,592,32"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="640,157,735,184"/>
+<area shape="rect" id="node8" href="$classSwitch.html#a3f10d75adaf6a110de455d1f7bb49fc0" title="Switch::turnOff" alt="" coords="455,107,566,133"/>
+<area shape="rect" id="node9" href="$classSwitch__PWM.html#a717d6337a0df8903779b81feea21a7bb" title="Switch_PWM::turnOn" alt="" coords="436,157,585,184"/>
+<area shape="rect" id="node10" href="$classCommon.html#a62ed1b6917f3510fad082fd1399a1017" title="Common::appendName" alt="" coords="431,208,591,235"/>
+<area shape="rect" id="node11" href="$classModule.html#a7bbcaed333a0028cb8f80737c18627a4" title="Module::addToLog" alt="" coords="446,259,575,285"/>
+<area shape="rect" id="node6" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="658,5,717,32"/>
+</map>

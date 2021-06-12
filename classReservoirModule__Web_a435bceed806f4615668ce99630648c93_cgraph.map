@@ -1,0 +1,9 @@
+<map id="ReservoirModule_Web::websiteEvent_Refresh" name="ReservoirModule_Web::websiteEvent_Refresh">
+<area shape="rect" id="node2" href="$classCommon.html#a86553d0d8ffabfd97236aa54ca2ba8f1" title="Common::getComponentName" alt="" coords="216,5,419,32"/>
+<area shape="rect" id="node3" href="$Helpers_8cpp.html#a0c97bfe0748519233b3a087775ba6521" title="toText_onlineStatus" alt="" coords="248,56,387,83"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="467,81,525,108"/>
+<area shape="rect" id="node5" href="$Helpers_8cpp.html#a8266349527dd2966a430e1f029dcce36" title="toText_TDS" alt="" coords="271,157,364,184"/>
+<area shape="rect" id="node6" href="$Helpers_8cpp.html#a16cea647c358524dcff92bd8056f6ff8" title="toText_weight" alt="" coords="265,208,369,235"/>
+<area shape="rect" id="node7" href="$Helpers_8cpp.html#a7b18c86ed2ebd405cd6f1d5d55fe773c" title="toText_temp" alt="" coords="270,259,365,285"/>
+<area shape="rect" id="node8" href="$Helpers_8cpp.html#ac6a7718046dd13997fdade1da48ecb25" title="toText_percentage" alt="" coords="252,309,383,336"/>
+</map>

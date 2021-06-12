@@ -1,0 +1,13 @@
+<map id="Module::addToRefreshQueue_Minute" name="Module::addToRefreshQueue_Minute">
+<area shape="rect" id="node2" href="$classAirPump.html#aedf30b103454afa9821cb0ec73a7fee2" title="&lt; AirPump controller (2 speed) " alt="" coords="313,5,444,32"/>
+<area shape="rect" id="node3" href="$classFan.html#a2bf10abddbcad94045ad7e3d567f17b8" title="&lt; Fan controller (2 speed) " alt="" coords="341,56,416,83"/>
+<area shape="rect" id="node4" href="$classFan__PWM.html#a230aa46882b9d6523e84234c902ca4f6" title="&lt; PWM control an AC device using a Robodyn AC Light Dimming Module with Zero&#45;cross detection ..." alt="" coords="301,107,456,133"/>
+<area shape="rect" id="node5" href="$classLights.html#a48acde7f45e4b9b22969e52fea689040" title="constructor " alt="" coords="329,157,429,184"/>
+<area shape="rect" id="node6" href="$classModuleSkeleton.html#a28db770cfd6d6a02110d0adb62666676" title="constructor " alt="" coords="271,208,487,235"/>
+<area shape="rect" id="node7" href="$classTDSSensor.html#a459aadc4af7a889f2d2f73149d80b07e" title="TDSSensor::TDSSensor" alt="" coords="295,259,462,285"/>
+<area shape="rect" id="node8" href="$classAeroModule__Web.html#ab428de02336385c258daad686aa431f0" title="constructor " alt="" coords="261,309,497,336"/>
+<area shape="rect" id="node9" href="$classDevModule__Web.html#ae334c16d42a2359be4c4ba56b92ba518" title="constructor " alt="" coords="263,360,494,387"/>
+<area shape="rect" id="node10" href="$classDEVModule__Web.html#a3b6305f0ac608f03bf1d4e78183f1eac" title="constructor " alt="" coords="259,411,498,437"/>
+<area shape="rect" id="node11" href="$classHempyModule__Web.html#a00b9e646494d3540f37dee684561259a" title="constructor " alt="" coords="245,461,512,488"/>
+<area shape="rect" id="node12" href="$classMainModule.html#a3a918c8c080f2a810b64e297cf1ce994" title="constructor " alt="" coords="293,512,464,539"/>
+</map>

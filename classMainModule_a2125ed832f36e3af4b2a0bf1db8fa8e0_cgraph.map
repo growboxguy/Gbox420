@@ -1,0 +1,11 @@
+<map id="MainModule::getDayModeText" name="MainModule::getDayModeText">
+<area shape="rect" id="node2" href="$Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title="toText_onOff" alt="" coords="291,5,390,32"/>
+<area shape="rect" id="node3" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="519,31,578,57"/>
+<area shape="rect" id="node4" href="$classMainModule.html#ae0b9ebcc9015f37993766a3a39c4e710" title="Returns true if the lights are on or daylight is detected. " alt="" coords="253,107,428,133"/>
+<area shape="rect" id="node7" href="$classModule__Web.html#a54a0a2a3106a9068aa0d15b592602601" title="Module_Web::addToLog" alt="" coords="259,157,422,184"/>
+<area shape="rect" id="node8" href="$classModule.html#a1c18e93583f527d470be447a9fcd1a0b" title="Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to on..." alt="" coords="258,208,423,235"/>
+<area shape="rect" id="node9" href="$classSound.html#a038f9173934d27db8004ded6db667df6" title="Sound::playOnSound" alt="" coords="268,259,413,285"/>
+<area shape="rect" id="node10" href="$classSound.html#a53aa4bec2fd464c5149ca30b29b35ac1" title="Sound::playOffSound" alt="" coords="267,309,414,336"/>
+<area shape="rect" id="node5" href="$classLights.html#a240cc60cfb0f2b94b1cd9e8a9202b7ee" title="Lights::getStatus" alt="" coords="488,81,609,108"/>
+<area shape="rect" id="node6" href="$classLightSensor.html#a06881cb787b1968daf4d1a49923617fe" title="Light sensor digital feedback: True(Dark) or False(Bright) " alt="" coords="476,132,621,159"/>
+</map>

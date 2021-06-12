@@ -1,0 +1,7 @@
+<map id="AirPump::checkStatus" name="AirPump::checkStatus">
+<area shape="rect" id="node2" href="$classAirPump.html#a01551d165fc6ac14a4e625961fbf584b" title="AirPump::refresh_Minute" alt="" coords="207,5,373,32"/>
+<area shape="rect" id="node3" href="$classAirPump.html#adbce295ddc8dd194850ebfbfabb343e5" title="AirPump::TurnOff" alt="" coords="455,56,579,83"/>
+<area shape="rect" id="node4" href="$classAirPump.html#a2545e4f11f9004488deec68ab74afea7" title="AirPump::TurnOn" alt="" coords="455,157,578,184"/>
+<area shape="rect" id="node5" href="$classAirPump.html#a98858bae6e4eb378553fc40f529a1063" title="AirPump::setState" alt="" coords="225,107,355,133"/>
+<area shape="rect" id="node6" href="$classMainModule.html#a89985ce0d1367b5d92eaddf43d478b4b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="421,107,612,133"/>
+</map>

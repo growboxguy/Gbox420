@@ -1,0 +1,5 @@
+<map id="Lights::checkTimer" name="Lights::checkTimer">
+<area shape="rect" id="node2" href="$classLights.html#a38c74606e1c2b4ff7db184920b225961" title="Lights::refresh_Minute" alt="" coords="187,5,337,32"/>
+<area shape="rect" id="node3" href="$classLights.html#a3c5051babf4dacdeecced14217f6f886" title="Lights::setTimerOnOff" alt="" coords="187,56,337,83"/>
+<area shape="rect" id="node4" href="$classMainModule.html#a89985ce0d1367b5d92eaddf43d478b4b" title="Process commands received from MQTT subscription or from the ESP&#45;link website. " alt="" coords="385,56,576,83"/>
+</map>

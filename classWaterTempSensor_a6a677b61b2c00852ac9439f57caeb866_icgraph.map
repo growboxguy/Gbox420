@@ -1,0 +1,3 @@
+<map id="WaterTempSensor::getTempText" name="WaterTempSensor::getTempText">
+<area shape="rect" id="node2" href="$classWaterTempSensor.html#a29f7cf690de3d59c0bdb2b070af11d7a" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="269,5,441,32"/>
+</map>

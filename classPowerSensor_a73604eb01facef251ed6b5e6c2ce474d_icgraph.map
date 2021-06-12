@@ -1,0 +1,3 @@
+<map id="PowerSensor::getEnergyText" name="PowerSensor::getEnergyText">
+<area shape="rect" id="node2" href="$classPowerSensor.html#ae4766a342c58ae21d20e978d350b3062" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="247,5,388,32"/>
+</map>

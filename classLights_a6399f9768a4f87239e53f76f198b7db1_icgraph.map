@@ -1,0 +1,4 @@
+<map id="Lights::getCurrentBrightnessText" name="Lights::getCurrentBrightnessText">
+<area shape="rect" id="node2" href="$classLights.html#a18bac98660998f7bbefc6759f52c07b9" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="308,5,407,32"/>
+<area shape="rect" id="node3" href="$classMainModule.html#ac116642e44a6e3d06aaf104bef172921" title="MainModule::websiteEvent\l_Refresh" alt="" coords="268,57,447,98"/>
+</map>

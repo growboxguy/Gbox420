@@ -1,0 +1,9 @@
+<map id="ReservoirModule_Web::report" name="ReservoirModule_Web::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="219,5,335,32"/>
+<area shape="rect" id="node3" href="$Helpers_8cpp.html#a0c97bfe0748519233b3a087775ba6521" title="toText_onlineStatus" alt="" coords="208,56,347,83"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="395,81,453,108"/>
+<area shape="rect" id="node5" href="$Helpers_8cpp.html#a8266349527dd2966a430e1f029dcce36" title="toText_TDS" alt="" coords="231,157,324,184"/>
+<area shape="rect" id="node6" href="$Helpers_8cpp.html#a16cea647c358524dcff92bd8056f6ff8" title="toText_weight" alt="" coords="225,208,329,235"/>
+<area shape="rect" id="node7" href="$Helpers_8cpp.html#a7b18c86ed2ebd405cd6f1d5d55fe773c" title="toText_temp" alt="" coords="230,259,325,285"/>
+<area shape="rect" id="node8" href="$Helpers_8cpp.html#ac6a7718046dd13997fdade1da48ecb25" title="toText_percentage" alt="" coords="212,309,343,336"/>
+</map>

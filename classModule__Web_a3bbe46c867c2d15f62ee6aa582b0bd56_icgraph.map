@@ -1,0 +1,11 @@
+<map id="Module_Web::addPushingBoxLogRelayID" name="Module_Web::addPushingBoxLogRelayID">
+<area shape="rect" id="node2" href="$classDevModule__Web.html#a00d609f950f4981b7dc30ad4c4987aea" title="DevModule_Web::reportToGoogle\lSheetsTrigger" alt="" coords="253,71,471,112"/>
+<area shape="rect" id="node5" href="$classDEVModule__Web.html#a682292be98131695448dce6dbb522e0f" title="DEVModule_Web::reportToGoogle\lSheetsTrigger" alt="" coords="251,169,473,211"/>
+<area shape="rect" id="node8" href="$classMainModule.html#af579c539beb7471a55975549522b6a98" title="MainModule::reportToGoogle\lSheetsTrigger" alt="" coords="267,267,457,308"/>
+<area shape="rect" id="node3" href="$classDevModule__Web.html#a3b22dd2b5355e66403a2e15d488c1196" title="DevModule_Web::refresh\l_FiveSec" alt="" coords="523,5,694,47"/>
+<area shape="rect" id="node4" href="$classDevModule__Web.html#a43cc8925e452a50e6797bbe6421e44c9" title="Settings. " alt="" coords="523,71,694,112"/>
+<area shape="rect" id="node6" href="$classDEVModule__Web.html#ac8ea37f602295f12c39d9849aab8e512" title="DEVModule_Web::refresh\l_FiveSec" alt="" coords="521,136,696,177"/>
+<area shape="rect" id="node7" href="$classDEVModule__Web.html#ab0e28b8ddf2b462b3c13be6ddebc1d2a" title="Settings. " alt="" coords="521,201,696,243"/>
+<area shape="rect" id="node9" href="$classMainModule.html#ad8bcc57ac967efafd3a854ba09828c72" title="MainModule::refresh\l_FiveSec" alt="" coords="539,267,679,308"/>
+<area shape="rect" id="node10" href="$classMainModule.html#a453da3eb65ede7ce7c45bcdd5a7cfdc8" title="MainModule::refresh\l_Minute" alt="" coords="539,332,679,373"/>
+</map>

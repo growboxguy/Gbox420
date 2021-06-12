@@ -1,0 +1,12 @@
+<map id="AeroModule" name="AeroModule">
+<area shape="rect" id="node2" href="$classCommon.html" title="Common" alt="" coords="5,365,80,392"/>
+<area shape="rect" id="node3" href="$classModule.html" title="Module" alt="" coords="338,269,402,296"/>
+<area shape="rect" id="node4" href="$classSound.html" title="&lt; Sound feedback buzzer " alt="" coords="596,163,655,189"/>
+<area shape="rect" id="node5" href="$classAeroponics__NoTank.html" title="&lt; Aeroponics tote without pressure tank " alt="" coords="885,404,1025,431"/>
+<area shape="rect" id="node6" href="$classPressurePump.html" title="&lt; Diaphragm pump controller " alt="" coords="571,579,679,605"/>
+<area shape="rect" id="node7" href="$classSwitch.html" title="&lt; Represents and electronic switch like a Relay or MOSFET " alt="" coords="168,613,231,640"/>
+<area shape="rect" id="node9" href="$classPressureSensor.html" title="&lt; Pressure sensor " alt="" coords="568,377,683,404"/>
+<area shape="rect" id="node10" href="$classAeroponics__Tank.html" title="&lt; Aeroponics tote with pressure tank " alt="" coords="894,640,1017,667"/>
+<area shape="rect" id="node11" href="$classWeightSensor.html" title="&lt; Weight sensor load cell " alt="" coords="573,231,677,257"/>
+<area shape="rect" id="node8" href="$classSwitch__PWM.html" title="&lt; PWM controllable electronic switch like a MOSFET transistor " alt="" coords="319,643,421,669"/>
+</map>

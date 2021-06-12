@@ -1,0 +1,5 @@
+<map id="DHTSensor::getHumidityText" name="DHTSensor::getHumidityText">
+<area shape="rect" id="node2" href="$classDHTSensor.html#ab607f63b67b20f13ed70a67a3f0a3553" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="287,5,419,32"/>
+<area shape="rect" id="node3" href="$classDevModule__Web.html#a9b93b90da799c483922f36cdd5849a95" title="DevModule_Web::websiteEvent\l_Refresh" alt="" coords="248,57,457,98"/>
+<area shape="rect" id="node4" href="$classMainModule.html#ac116642e44a6e3d06aaf104bef172921" title="MainModule::websiteEvent\l_Refresh" alt="" coords="263,122,442,163"/>
+</map>

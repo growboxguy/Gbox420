@@ -1,0 +1,4 @@
+<map id="Fan::report" name="Fan::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="147,5,263,32"/>
+<area shape="rect" id="node3" href="$classFan.html#a4361bbdef00133c90ff36b5e9e772341" title="Fan::fanSpeedText" alt="" coords="139,56,272,83"/>
+</map>

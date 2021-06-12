@@ -1,0 +1,6 @@
+<map id="Switch::report" name="Switch::report">
+<area shape="rect" id="node2" href="$classCommon.html#ac4aacd0d519e94e2f6776d07f6515adb" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="171,5,287,32"/>
+<area shape="rect" id="node3" href="$classSwitch.html#a116cc3b37f403fca393fb564c7b69155" title="Text representation of the current state: DISABLED/IDLE/RUNNING... " alt="" coords="156,56,301,83"/>
+<area shape="rect" id="node4" href="$Helpers_8cpp.html#a4b12c9e40cb4dac302d7e03fd73e709b" title="toText_onOff" alt="" coords="349,31,448,57"/>
+<area shape="rect" id="node5" href="$Helpers_8cpp.html#aa13f229d47e2d68e33f7b62d9ccdb15d" title="toText" alt="" coords="496,56,555,83"/>
+</map>

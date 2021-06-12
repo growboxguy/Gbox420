@@ -1,0 +1,12 @@
+<map id="toText_enabledDisabled" name="toText_enabledDisabled">
+<area shape="rect" id="node2" href="$classAeroponics__NoTank.html#a830eaafa619d07ce5a2592a49d40cffa" title="Aeroponics_NoTank::\lgetSprayEnabledText" alt="" coords="237,5,385,47"/>
+<area shape="rect" id="node4" href="$classAeroponics__Tank.html#ac6ba34ceea59cd6fd62003834520f45e" title="Aeroponics_Tank::getSpray\lEnabledText" alt="" coords="219,71,402,112"/>
+<area shape="rect" id="node6" href="$classLights.html#ad7859560f5b0f2303f51663e2a0a5dda" title="Lights::getTimerOnOffText" alt="" coords="222,137,399,163"/>
+<area shape="rect" id="node9" href="$classSound.html#ab373ff3570a57c9df918efec87f960b9" title="Sound::getEnabledStateText" alt="" coords="216,187,405,214"/>
+<area shape="rect" id="node11" href="$classAeroModule__Web.html#a7c527dfe2ab6fb4a6db97d5f9cfb89e7" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="227,238,394,265"/>
+<area shape="rect" id="node3" href="$classAeroponics__NoTank.html#a073c3d9b4469335c54cfc4f5115c13ca" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="469,5,617,47"/>
+<area shape="rect" id="node5" href="$classAeroponics__Tank.html#ad9c67a7486448620ccfa511c9085ace4" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="461,74,625,101"/>
+<area shape="rect" id="node7" href="$classLights.html#a18bac98660998f7bbefc6759f52c07b9" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="493,125,592,151"/>
+<area shape="rect" id="node8" href="$classMainModule.html#ac116642e44a6e3d06aaf104bef172921" title="MainModule::websiteEvent\l_Refresh" alt="" coords="453,176,632,217"/>
+<area shape="rect" id="node10" href="$classSound.html#a4e1368a08c24cea45a490416e5412bce" title="Report current state in a JSON format to the LongMessage buffer. " alt="" coords="493,242,593,269"/>
+</map>

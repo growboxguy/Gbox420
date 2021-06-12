@@ -1,0 +1,12 @@
+<map id="HempyModule_Web::HempyModule_Web" name="HempyModule_Web::HempyModule_Web">
+<area shape="rect" id="node2" href="$classHempyModule__Web.html#aea8051a4d58d6f0c7157cf9a36a95b9a" title="HempyModule_Web::updateCommands" alt="" coords="320,5,575,32"/>
+<area shape="rect" id="node3" href="$classModule.html#aee2cbab440d38d29948205820ad50be8" title="Subscribing to the report queue: Calls the report() method. " alt="" coords="355,239,540,265"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_2SerialLog_8cpp.html#a144a94d1be393a07bb6ec696926e2153" title="&lt; Logging " alt="" coords="633,264,727,291"/>
+<area shape="rect" id="node5" href="$classModule.html#a08595d2a2bd347eec39c47a3b9e770fb" title="Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method. " alt="" coords="336,289,559,316"/>
+<area shape="rect" id="node6" href="$classModule.html#a2dffaa526893d852b722cf890a6821c6" title="Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method. " alt="" coords="351,57,543,98"/>
+<area shape="rect" id="node7" href="$classModule.html#a20d1125116f9a8c71339fde4626c5adb" title="Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method. " alt="" coords="351,122,543,163"/>
+<area shape="rect" id="node8" href="$classModule__Web.html#a84be95e574dfb837e55d2b8fff6dddec" title="Subscribing to the Website load event: Calls the websiteEvent_Load() method. " alt="" coords="352,341,543,382"/>
+<area shape="rect" id="node10" href="$classModule__Web.html#a2d0f9996ab9db13212c13ca0c9783077" title="Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method. " alt="" coords="352,406,543,447"/>
+<area shape="rect" id="node11" href="$classModule__Web.html#add18d67e06d4b8c31fba25d1ea37009b" title="Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method..." alt="" coords="346,471,549,513"/>
+<area shape="rect" id="node9" href="$classModule.html#a5a240a8a9ab1813b17bcb810b24ceaea" title="constructor " alt="" coords="623,413,737,440"/>
+</map>

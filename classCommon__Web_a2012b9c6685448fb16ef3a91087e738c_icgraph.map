@@ -1,0 +1,9 @@
+<map id="Common_Web::commandEvent" name="Common_Web::commandEvent">
+<area shape="rect" id="node2" href="$classModule__Web.html#abc22b1d690e82c271f8070ce89370a42" title="Notify subscribed modules of a received MQTT/Website command. " alt="" coords="261,49,459,90"/>
+<area shape="rect" id="node3" href="$Gbox420__Mega__Dev_8ino.html#a5817593b2815aca99b49db41903204d3" title="mqttReceived" alt="" coords="510,5,613,32"/>
+<area shape="rect" id="node6" href="$Gbox420__Mega__Dev_8ino.html#a4a2cfece0a181ca0f95f1f342f645612" title="Called when a button is pressed. " alt="" coords="507,56,616,83"/>
+<area shape="rect" id="node8" href="$Gbox420__Mega__Dev_8ino.html#a25a408223edda76c980269258c24e022" title="Called when a field on the website is submitted. " alt="" coords="513,107,610,133"/>
+<area shape="rect" id="node4" href="$Gbox420__Mega__Dev_8ino.html#ad05a6aa6821baf0d8fe74cf150c3c57c" title="Sets up the MQTT relay. " alt="" coords="682,5,762,32"/>
+<area shape="rect" id="node5" href="$Gbox420__Mega__Dev_8ino.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="828,31,883,57"/>
+<area shape="rect" id="node7" href="$Gbox420__Mega__Dev_8ino.html#a22db4b2ca083420ea1ff827990a68b52" title="(re&#45;)Initialize the ESP&#45;link connection " alt="" coords="664,56,780,83"/>
+</map>

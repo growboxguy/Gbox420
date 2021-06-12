@@ -1,0 +1,51 @@
+<map id="Switch::turnOff" name="Switch::turnOff">
+<area shape="rect" id="node2" href="$classAeroponics__Tank.html#ac70acd360b88e7bf1449eae7251af925" title="Aeroponics_Tank::updateState" alt="" coords="651,333,852,360"/>
+<area shape="rect" id="node12" href="$classPressurePump.html#ac09af28cf6949ab3d716c9a2250fb398" title="PressurePump::updateState" alt="" coords="166,523,353,549"/>
+<area shape="rect" id="node34" href="$classSwitch.html#aad2ade9d02d22212f507571ea0fe9218" title="Switch::Switch" alt="" coords="204,573,315,600"/>
+<area shape="rect" id="node35" href="$classSwitch.html#a7783960e9e4926350b20ce0002d5c489" title="invert the current state " alt="" coords="216,624,303,651"/>
+<area shape="rect" id="node36" href="$classSwitch__PWM.html#ade01fcc041fa055502ee661315b0b0ba" title="Switch_PWM::Switch_PWM" alt="" coords="164,675,355,701"/>
+<area shape="rect" id="node37" href="$classWaterPump.html#a4211806cd0c62a57f3accc37c1c1eb00" title="WaterPump::updateState" alt="" coords="175,935,344,961"/>
+<area shape="rect" id="node3" href="$classAeroponics__Tank.html#a9b1c9377aec2a453e4562bca5ae7afa2" title="Aeroponics_Tank::refresh_Sec" alt="" coords="900,275,1101,301"/>
+<area shape="rect" id="node4" href="$classAeroponics__Tank.html#adad0d90e2979b3d469fdbcd5eb18b5b3" title="Process things that cannot wait or need precise timing. " alt="" coords="912,326,1089,367"/>
+<area shape="rect" id="node5" href="$classAeroponics__Tank.html#a5770080bacf50e9e02fa6b431016d47a" title="Start spraying. " alt="" coords="905,392,1096,419"/>
+<area shape="rect" id="node7" href="$classAeroponics__Tank.html#a7436a7c296a4c0899c87e5a8554b5bdc" title="Stop spraying. " alt="" coords="910,5,1091,32"/>
+<area shape="rect" id="node8" href="$classAeroponics__Tank.html#a95906ab4c83355062f26e898edbc2337" title="Recharge the pressure tank. " alt="" coords="909,56,1093,83"/>
+<area shape="rect" id="node9" href="$classAeroponics__Tank.html#a523e77a6d515c01305c8272619343da1" title="Release pressure from the tank. " alt="" coords="907,107,1095,133"/>
+<area shape="rect" id="node10" href="$classAeroponics__Tank.html#af3821515ad979d5a92482e7b9779c332" title="Start spraying. " alt="" coords="903,157,1098,184"/>
+<area shape="rect" id="node11" href="$classAeroponics__Tank.html#a601c8e6612ce40ca0cb84b3e5ab426fa" title="Aeroponics_Tank::setSpray\lOnOff" alt="" coords="909,209,1092,250"/>
+<area shape="rect" id="node6" href="$classAeroponics__Tank.html#a778f62abebd3361eeffc7e070f30dad5" title="&lt;TODO: Spray solenoid timeout, SprayTimer review " alt="" coords="1149,392,1381,419"/>
+<area shape="rect" id="node13" href="$classPressurePump.html#a2e23bd3c09a5e80be31f6a69178186cd" title="PressurePump::refresh_Sec" alt="" coords="409,599,596,625"/>
+<area shape="rect" id="node14" href="$classPressurePump.html#ac01f58cb89460754985a190a9f70f62c" title="Turn the pump ON. " alt="" coords="415,497,591,524"/>
+<area shape="rect" id="node28" href="$classPressurePump.html#aaca2fbf710967a834bc53ea8d494c6f5" title="Turn the pump OFF. " alt="" coords="415,649,590,676"/>
+<area shape="rect" id="node29" href="$classPressurePump.html#a4f668020e2b58f6f4ea97f92026fdbbf" title="Disable the pump. " alt="" coords="656,872,847,899"/>
+<area shape="rect" id="node30" href="$classPressurePump.html#ac4cf6ca1d3b67254a6c180621baa782f" title="PressurePump::startBlowOff" alt="" coords="408,447,597,473"/>
+<area shape="rect" id="node31" href="$classPressurePump.html#a5ddc97da3499cc0e6ecf374fc82b38d1" title="PressurePump::startMixing" alt="" coords="413,548,593,575"/>
+<area shape="rect" id="node32" href="$classPressurePump.html#ace8c0189196c479d601628daffc8352b" title="KeepOpen False &#45; Opens the bypass vale for a short period to blow off pressure, KeepOpen True: Keep t..." alt="" coords="403,345,602,372"/>
+<area shape="rect" id="node33" href="$classPressurePump.html#aa550bc8aa4372ecb62a0c35b67e7d794" title="PressurePump::turnBypassOff" alt="" coords="403,396,603,423"/>
+<area shape="rect" id="node15" href="$classAeroponics__NoTank.html#a209860847d982e45e068d6aecfeb0f1d" title="Aeroponics_NoTank::\lupdateState" alt="" coords="677,563,825,605"/>
+<area shape="rect" id="node16" href="$classAeroponics__NoTank.html#a8e0130107832f0a60d37ea581f6f67fb" title="Aeroponics_NoTank::\lrefresh_Sec" alt="" coords="927,509,1075,550"/>
+<area shape="rect" id="node17" href="$classAeroponics__NoTank.html#a5c514f79260c9ab0bf1df7724e8d1844" title="Process things that cannot wait or need precise timing. " alt="" coords="917,443,1084,485"/>
+<area shape="rect" id="node21" href="$classAeroponics__NoTank.html#af7be37cf20fc3af632879e93d4a1ca15" title="Aeroponics_NoTank::\lsprayNow" alt="" coords="927,574,1075,615"/>
+<area shape="rect" id="node26" href="$classAeroponics__NoTank.html#a37537625cd3d80d6c49adeae298d4a76" title="Aeroponics_NoTank::\lsprayOff" alt="" coords="927,639,1075,681"/>
+<area shape="rect" id="node27" href="$classAeroponics__NoTank.html#a4aaa6c9d269f040800908b5c44c18d28" title="Aeroponics_NoTank::\lsetSprayOnOff" alt="" coords="927,705,1075,746"/>
+<area shape="rect" id="node18" href="$classAeroModule.html#a93b9be4b1ecc4cb5dbbfb1ebced78ba1" title="Process things that cannot wait or need precise timing. " alt="" coords="1158,475,1373,517"/>
+<area shape="rect" id="node19" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a3dd0de28dbd52701ac83ee0a76ebd4ce" title="processTimeCriticalStuff" alt="" coords="1429,483,1596,509"/>
+<area shape="rect" id="node20" href="$classAeroModule.html#ab103ea15dde0982daaa2e09adb87bd09" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="1447,597,1579,624"/>
+<area shape="rect" id="node22" href="$classAeroponics__NoTank.html#ad442cf2f921a061022abf4de0645e19e" title="constructor " alt="" coords="1191,574,1339,615"/>
+<area shape="rect" id="node23" href="$classAeroModule.html#ac6bc85dba93618f7bef00a5961a6647f" title="AeroModule::processCommand" alt="" coords="1163,712,1368,739"/>
+<area shape="rect" id="node24" href="$Gbox420__Nano__Aero__NoTank_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="1453,712,1572,739"/>
+<area shape="rect" id="node25" href="$Gbox420__Nano__Aero__NoTank_8ino.html#afe461d27b9c48d5921c00d521181f12f" title="Threads. " alt="" coords="1644,712,1691,739"/>
+<area shape="rect" id="node38" href="$classWaterPump.html#af2bf227984554917e66c713cadf32660" title="WaterPump::refresh_Sec" alt="" coords="418,935,587,961"/>
+<area shape="rect" id="node39" href="$classWaterPump.html#ac5ad910ece76068fcb0c321aabc19a6f" title="Turn the pump ON. " alt="" coords="423,1036,582,1063"/>
+<area shape="rect" id="node49" href="$classWaterPump.html#a9adfab6b4c4d79acf84158d2f1ab4972" title="Turn the pump OFF. " alt="" coords="423,884,582,911"/>
+<area shape="rect" id="node50" href="$classWaterPump.html#a95644a76e18a9449d48d7a955de27b42" title="Disable the pump. " alt="" coords="415,985,590,1012"/>
+<area shape="rect" id="node40" href="$classHempyBucket.html#aa534fb9169c4a572eb248970410f1fc3" title="HempyBucket::updateState" alt="" coords="660,1011,843,1037"/>
+<area shape="rect" id="node41" href="$classHempyBucket.html#ad9a11119072abf39b332556936938afa" title="HempyBucket::refresh\l_FiveSec" alt="" coords="924,974,1077,1015"/>
+<area shape="rect" id="node42" href="$classHempyBucket.html#a9218a31e84cebe1630ab8d22c41cc48d" title="HempyBucket::refresh_Sec" alt="" coords="909,1040,1092,1067"/>
+<area shape="rect" id="node43" href="$classHempyBucket.html#a39ff41c1e17d1b491f6cc3889733e4b0" title="HempyBucket::disable" alt="" coords="923,1091,1078,1117"/>
+<area shape="rect" id="node47" href="$classHempyBucket.html#af17814ae16f2f65f0f9bb580baa55fdd" title="Turn on water pump, run until StopWeight is reached. " alt="" coords="905,1141,1096,1168"/>
+<area shape="rect" id="node48" href="$classHempyBucket.html#a973120ba0e6bd9a43762bedd8218d6a0" title="Turn on water pump, run until StopWeight is reached. " alt="" coords="905,923,1096,949"/>
+<area shape="rect" id="node44" href="$classHempyModule.html#ae76db12a22770b12cb7ff1aa579e0a27" title="HempyModule::processCommand" alt="" coords="1155,1091,1375,1117"/>
+<area shape="rect" id="node45" href="$Gbox420__Nano__Hempy_8ino.html#a16c49958e5626b4e9844870a44edf469" title="getWirelessData" alt="" coords="1453,1116,1572,1143"/>
+<area shape="rect" id="node46" href="$classHempyModule.html#ac3b2b00f142ffaea5176deccfa12b43a" title="Report current state in a JSON format to the LongMessage buffer &#45; Append the start of the JSON..." alt="" coords="1439,1065,1586,1092"/>
+</map>
