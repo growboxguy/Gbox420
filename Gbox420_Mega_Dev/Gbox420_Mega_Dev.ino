@@ -41,6 +41,7 @@ ELClientMqtt MqttAPI(&ESPLink);           ///< ESP-link - MQTT protocol for send
 Settings *ModuleSettings;                 ///< This object will store the settings loaded from the EEPROM. Persistent between reboots.
 bool *Debug;                              ///< True - Turns on extra debug messages on the Serial Output
 bool *Metric;                             ///< True - Use metric units, False - Use imperial units
+bool MqttConnected = false;               ///< Track the connection state to the MQTT broker configured on the ESP-link's REST/MQTT tab
 DevModule_Web *DevModule_Web1;                        ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///< Wireless communication with Modules over nRF24L01+
@@ -219,11 +220,13 @@ void setupMqtt()
 void mqttConnected(void *response)
 {
   MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
+  MqttConnected = true;
   //if(*Debug) logToSerials(F("MQTT connected"), true);
 }
 
 void mqttDisconnected(void *response)
 {
+  MqttConnected = false;
   //if(*Debug) logToSerials(F("MQTT disconnected"), true);
 }
 
@@ -275,7 +278,7 @@ time_t getNtpTime()
     SyncInProgress = false;
     if (NTPResponse == 0)
     {
-      logToSerials(F("NTP time sync failed"), true, 1);
+      logToSerials(F("NTP time sync failed"), true, 3);
       // sendEmailAlert(F("NTP%20time%20sync%20failed"));
     }
     else

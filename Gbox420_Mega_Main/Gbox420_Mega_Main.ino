@@ -278,7 +278,7 @@ time_t getNtpTime()
     SyncInProgress = false;
     if (NTPResponse == 0)
     {
-      logToSerials(F("NTP time sync failed"), true, 1);
+      logToSerials(F("NTP time sync failed"), true, 3);
       // sendEmailAlert(F("NTP%20time%20sync%20failed"));
     }
     else
