@@ -26,7 +26,7 @@
 #include "RF24.h"                           // https://github.com/maniacbug/RF24
 
 // Global variable initialization
-char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API - Google Sheets reporting)
+char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
 char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
 char CurrentTime[MaxWordLength] = "";      ///< Buffer for storing current time in text format
 
