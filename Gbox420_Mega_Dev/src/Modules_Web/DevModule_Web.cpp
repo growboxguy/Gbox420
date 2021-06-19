@@ -22,11 +22,11 @@ DevModule_Web::DevModule_Web(const __FlashStringHelper *Name, Settings::DevModul
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;                                   ///< Pointer for child objects to use sound feedback
   DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
-  addToReportQueue(this);                                                                      //< Attach to the report event: When triggered the module reports to the Serial Console or the MQTT
-  addToRefreshQueue_FiveSec(this);                                                             //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
-  addToRefreshQueue_Minute(this);                                                              //< Attach to a trigger that fires every second and calls refresh_Sec()
-  addToWebsiteQueue_Load(this);                                                                //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
-  addToWebsiteQueue_Refresh(this);                                                             //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
+  addToReportQueue(this);          //< Attach to the report event: When triggered the module reports to the Serial Console or the MQTT
+  addToRefreshQueue_FiveSec(this); //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
+  addToRefreshQueue_Minute(this);  //< Attach to a trigger that fires every second and calls refresh_Sec()
+  addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
+  addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
   addToCommandQueue(this);
   logToSerials(Name, false, 0);
   logToSerials(F("refreshing"), true, 1);
@@ -52,7 +52,7 @@ void DevModule_Web::websiteEvent_Load(char *url)
   if (strncmp(url, "/G", 2) == 0) //GrowBox tab
   {
     //WebServer.setArgInt(getComponentName(F("FIS")), FanI->getSpeed()); ///< Internal PWM Fan speed
-    //WebServer.setArgInt(getComponentName(F("FES")), FanE->getSpeed()); ///< Exhaust PWM Fan speed    
+    //WebServer.setArgInt(getComponentName(F("FES")), FanE->getSpeed()); ///< Exhaust PWM Fan speed
   }
   else if (strncmp(url, "/S", 2) == 0) //Settings tab
   {
@@ -101,7 +101,7 @@ void DevModule_Web::commandEvent(char *Command, char *Data)
     return;
   }
   else
-  {   
+  {
     //Sound1
     if (strcmp_P(ShortMessage, (PGM_P)F("Sound")) == 0)
     {
@@ -388,9 +388,9 @@ void DevModule_Web::reportToMQTTTrigger(bool ForceRun)
   if ((*ReportToMQTT && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
   {
     runReport(true, true, true); //< Loads a JSON Log to LongMessage buffer
-    mqttPublish(&LongMessage);   //  and publish readings via ESP MQTT API
-    eventLogToJSON(true, true);  //<Loads the EventLog as a JSON with EventLog key
-    mqttPublish(&LongMessage);   //Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
+    mqttPublish(&LongMessage);   //< and publish readings via ESP MQTT API
+    eventLogToJSON(true, true);  //< Loads the EventLog as a JSON with EventLog key
+    mqttPublish(&LongMessage);   //< Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
   }
 }
 ///< This is how the two sent out messages looks like:

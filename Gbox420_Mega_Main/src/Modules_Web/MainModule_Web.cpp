@@ -642,9 +642,9 @@ void MainModule::reportToMQTTTrigger(bool ForceRun)
   if ((*ReportToMQTT && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
   {
     runReport(true, true, true); //< Loads a JSON Log to LongMessage buffer
-    mqttPublish(&LongMessage);   //  and publish readings via ESP MQTT API
-    eventLogToJSON(true, true);  //<Loads the EventLog as a JSON with EventLog key
-    mqttPublish(&LongMessage);   //Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
+    mqttPublish(&LongMessage);   //< and publish readings via ESP MQTT API
+    eventLogToJSON(true, true);  //< Loads the EventLog as a JSON with EventLog key
+    mqttPublish(&LongMessage);   //< Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
   }
 }
 ///< This is how the two sent out messages looks like:

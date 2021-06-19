@@ -34,10 +34,10 @@ char CurrentTime[MaxWordLength] = "";      ///< Buffer for storing current time 
 HardwareSerial &ArduinoSerial = Serial;   ///< Reference to the Arduino Serial output
 HardwareSerial &ESPSerial = Serial3;      ///< Reference to the ESP Link Serial output
 ELClient ESPLink(&ESPSerial);             ///< ESP-link. Both SLIP and debug messages are sent to ESP over the ESP Serial link
-ELClientWebServer WebServer(&ESPLink);    ///< ESP-link WebServer API
+ELClientWebServer WebServer(&ESPLink);    ///< ESP-link - WebServer API
 ELClientCmd ESPCmd(&ESPLink);             ///< ESP-link - Helps getting the current time from the internet using NTP
 ELClientRest PushingBoxRestAPI(&ESPLink); ///< ESP-link - REST API
-ELClientMqtt MqttAPI(&ESPLink);           ///< ESP-link - MQTT protocol for sending and receiving IoT messages
+ELClientMqtt MqttAPI(&ESPLink);           ///< ESP-link - MQTT protocol for sending and receiving messages
 Settings *ModuleSettings;                 ///< This object will store the settings loaded from the EEPROM. Persistent between reboots.
 bool *Debug;                              ///< True - Turns on extra debug messages on the Serial Output
 bool *Metric;                             ///< True - Use metric units, False - Use imperial units
@@ -100,7 +100,7 @@ void setup()
   Wireless.begin();                                  ///< Initialize the nRF24L01+ wireless chip for talking to Modules
   Wireless.setDataRate(RF24_250KBPS);                ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
   Wireless.setCRCLength(RF24_CRC_16);                ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
-  Wireless.setPALevel(RF24_PA_MAX);                  //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
+  Wireless.setPALevel(RF24_PA_MAX);                  ///< RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
   Wireless.setPayloadSize(WirelessPayloadSize);      ///< The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
   Wireless.enableDynamicPayloads();                  ///< Required for ACK messages
   Wireless.enableAckPayload();                       ///< When sending a wireless package, expect a response confirming the package was received in a custom Acknowledgement package
@@ -168,7 +168,7 @@ void resetWebServer()
   logToSerials(F("(re)Connecting ESP-link"), false, 1);
   while (!ESPLink.Sync())
   {
-    logToSerials(F(""), false, 0);
+    logToSerials(F("."), false, 0);
     delay(500);
   };
   logToSerials(F(""), true, 0);                           ///< line break

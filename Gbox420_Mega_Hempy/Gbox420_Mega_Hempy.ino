@@ -1,6 +1,7 @@
 /*! \file 
- *  \brief     Dev module for Arduino Mega2560 - Grow tent monitoring and controlling sketch.
+ *  \brief     !!UNDER DEVELOPMENT!! - Home Assistance module for Arduino Mega2560 + ESP-01
  *  \details   To change the default pin layout / startup settings navigate to: Settings.h
+ *  \details   
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
  *  \version   4.20
  * 
@@ -10,7 +11,7 @@
 #include "Arduino.h"
 #include "avr/wdt.h"                        // Watchdog timer for detecting a crash and automatically resetting the board
 #include "avr/boot.h"                       // Watchdog timer related bug fix
-#include "printf.h"                         // Printing the wireless status message from nRF24L01
+//#include "printf.h"                         // Printing the wireless status message from nRF24L01
 #include "TimerThree.h"                     // Interrupt handling for webpage
 #include "ELClient.h"                       // ESP-link
 #include "ELClientWebServer.h"              // ESP-link - WebServer API
@@ -23,7 +24,7 @@
 #include "Settings.h"                       // EEPROM stored settings for every component
 #include "src/Modules_Web/DevModule_Web.h"  // Represents a complete box with all feautres
 #include "SPI.h"                            // allows you to communicate with SPI devices, with the Arduino as the master device
-#include "RF24.h"                           // https://github.com/maniacbug/RF24
+//#include "RF24.h"                           // https://github.com/maniacbug/RF24
 
 // Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)

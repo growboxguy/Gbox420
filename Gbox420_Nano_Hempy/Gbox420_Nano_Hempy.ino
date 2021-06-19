@@ -21,6 +21,8 @@
 #include "src/WirelessCommands_Hempy.h" // Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul
 
 // Global variable initialization
+bool *Debug;
+bool *Metric;
 char LongMessage[MaxLongTextLength] = "";            // Temp storage for assembling long messages (REST API - Google Sheets reporting)
 char ShortMessage[MaxShotTextLength] = "";           // Temp storage for assembling short messages (Log entries, Error messages)
 char CurrentTime[MaxWordLength] = "";                // Buffer for storing current time in text format
@@ -30,8 +32,6 @@ uint32_t ReceivedMessageTimestamp = millis();        // Stores the timestamp whe
 ///< Component initialization
 HardwareSerial &ArduinoSerial = Serial; // Reference to the Arduino Serial
 Settings *ModuleSettings;               // settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
-bool *Debug;
-bool *Metric;
 HempyModule *HempyMod1;                       // Represents a Hempy bucket with weight sensors and pumps
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); // Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 
@@ -91,7 +91,7 @@ void InitializeWireless(bool ForceReport)
   Wireless.powerDown();
   Wireless.setDataRate(RF24_250KBPS);           ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
   Wireless.setCRCLength(RF24_CRC_16);           ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
-  Wireless.setPALevel(RF24_PA_MAX);             //RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
+  Wireless.setPALevel(RF24_PA_MAX);             ///< RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
   Wireless.setPayloadSize(WirelessPayloadSize); ///< The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
   Wireless.enableDynamicPayloads();
   Wireless.enableAckPayload();
