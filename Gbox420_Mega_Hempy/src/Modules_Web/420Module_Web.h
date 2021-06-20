@@ -7,7 +7,6 @@
 #include "ELClientMqtt.h"      // ESP-link - MQTT protocol for sending and receiving IoT messages
 #include "ELClientCmd.h"       ///< ESP-link - Get current time from the internet using NTP
 #include "TimeLib.h"           // Keeping track of time
-#include "RF24.h"
 #include "SPI.h"
 #include "../../Settings.h"
 #include "../Helpers.h"
@@ -25,8 +24,7 @@ class Sound;
 class Module_Web : virtual public Common, virtual public Module
 {
 public:
-  Module_Web(RF24 *Wireless); ///< constructor
-  RF24 *Wireless;
+  Module_Web(); ///< constructor
   void addToWebsiteQueue_Load(Common_Web *Module);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
   void addToWebsiteQueue_Refresh(Common_Web *Module); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   void addToCommandQueue(Common_Web *Module);         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method

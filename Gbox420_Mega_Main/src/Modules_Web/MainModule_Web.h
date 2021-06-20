@@ -5,6 +5,7 @@
 
 #include "420Module_Web.h"
 #include "ELClientRest.h" ///< ESP-link - REST API
+#include "RF24.h"
 
 // forward declaration of classes
 class Lights;
@@ -28,21 +29,22 @@ class MainModule : virtual public Common_Web, public Module_Web
 {
 public:
   MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless); ///< constructor
-  Sound *Sound1;                                                                                              ///< Pointer to a Piezo speaker - sound feedback
-  Fan *IFan;                                                                                                  ///< Internal fan
-  Fan *EFan;
-  Fan_PWM *FanI;       ///< Internal fan
-  Fan_PWM *FanE;       ///< Exhaust fan
-  AirPump *APump1;     ///< Air pump
-  Lights *Lt1;         ///< Pointer to a Light assembly No1
-  Lights *Lt2;         ///< Pointer to a Light assembly No2
-  LightSensor *LtSen1; ///< Pointer to a Light Sensor object measuring light intensity in the grow box
-  //PowerSensor *Pow1;   ///< For PZEM004T V1.0 or PZEM004T V2.0
-  PowerSensorV3 *Pow1;                   ///< Only for PZEM004T V3.0
-  DHTSensor *DHT1;                       ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
-  AeroModule_Web *AeroModule1;           ///< <Represents the website controls and feedback for a AeroModule
-  ReservoirModule_Web *ReservoirModule1; ///< <Represents the website controls and feedback for a ReservoirModule
-  HempyModule_Web *HempyModule1;         ///< <Represents the website controls and feedback for a HempyModule
+  RF24 *Wireless = 0;  //Pointer to NRF24L01 wireless transmitter
+  Sound *Sound1 = 0;                                                                                              ///< Pointer to a Piezo speaker - sound feedback
+  Fan *IFan = 0;                                                                                                  ///< Internal fan
+  Fan *EFan = 0;
+  Fan_PWM *FanI = 0;       ///< Internal fan
+  Fan_PWM *FanE = 0;       ///< Exhaust fan
+  AirPump *APump1 = 0;     ///< Air pump
+  Lights *Lt1 = 0;         ///< Pointer to a Light assembly No1
+  Lights *Lt2 = 0;         ///< Pointer to a Light assembly No2
+  LightSensor *LtSen1 = 0; ///< Pointer to a Light Sensor object measuring light intensity in the grow box
+  //PowerSensor *Pow1 = 0;   ///< For PZEM004T V1.0 or PZEM004T V2.0
+  PowerSensorV3 *Pow1 = 0;                   ///< Only for PZEM004T V3.0
+  DHTSensor *DHT1 = 0;                       ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
+  AeroModule_Web *AeroModule1 = 0;           ///< <Represents the website controls and feedback for a AeroModule
+  ReservoirModule_Web *ReservoirModule1 = 0; ///< <Represents the website controls and feedback for a ReservoirModule
+  HempyModule_Web *HempyModule1 = 0;         ///< <Represents the website controls and feedback for a HempyModule
   void websiteEvent_Load(char *url);
   void websiteEvent_Refresh(char *url);
   void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);

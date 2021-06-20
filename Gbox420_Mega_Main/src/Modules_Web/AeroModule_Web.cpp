@@ -11,7 +11,7 @@ struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};          
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
+AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
 { ///< Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;

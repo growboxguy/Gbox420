@@ -88,7 +88,7 @@ void setup()
   MinuteThread.onRun(runMinute);
   logToSerials(F("done"), true, 3);
 
-  // Start interrupts to handle request from ESP-Link firmware
+  // Start interrupts to handle request from ESP-link firmware
   logToSerials(F("Setting up interrupt handler"), false, 0);
   Timer3.initialize(500); ///< check every 0.5sec, using a larger interval can cause web requests to time out
   Timer3.attachInterrupt(processTimeCriticalStuff);
@@ -200,9 +200,6 @@ void resetWebServer()
 /**
   \brief Sets up the MQTT relay
 */
-//const char* MqttLights = "Lights";
-//const char* MqttBrightness = "Brightness";
-
 void setupMqtt()
 {
 
@@ -279,7 +276,6 @@ time_t getNtpTime()
     if (NTPResponse == 0)
     {
       logToSerials(F("NTP time sync failed"), true, 3);
-      // sendEmailAlert(F("NTP%20time%20sync%20failed"));
     }
     else
       logToSerials(F("time synchronized"), true, 3);

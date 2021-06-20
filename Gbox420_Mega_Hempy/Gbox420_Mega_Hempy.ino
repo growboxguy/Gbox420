@@ -9,22 +9,20 @@
  */
 
 #include "Arduino.h"
-#include "avr/wdt.h"                        // Watchdog timer for detecting a crash and automatically resetting the board
-#include "avr/boot.h"                       // Watchdog timer related bug fix
-//#include "printf.h"                         // Printing the wireless status message from nRF24L01
-#include "TimerThree.h"                     // Interrupt handling for webpage
-#include "ELClient.h"                       // ESP-link
-#include "ELClientWebServer.h"              // ESP-link - WebServer API
-#include "ELClientCmd.h"                    // ESP-link - Get current time from the internet using NTP
-#include "ELClientRest.h"                   // ESP-link - REST API
-#include "ELClientMqtt.h"                   // ESP-link - MQTT protocol for sending and receiving IoT messages
-#include "Thread.h"                         // Splitting functions to threads for timing
-#include "StaticThreadController.h"         // Grouping threads
-#include "SerialLog.h"                      // Logging to the Serial console and to ESP-link's console
-#include "Settings.h"                       // EEPROM stored settings for every component
-#include "src/Modules_Web/DevModule_Web.h"  // Represents a complete box with all feautres
-#include "SPI.h"                            // allows you to communicate with SPI devices, with the Arduino as the master device
-//#include "RF24.h"                           // https://github.com/maniacbug/RF24
+#include "avr/wdt.h"  // Watchdog timer for detecting a crash and automatically resetting the board
+#include "avr/boot.h" // Watchdog timer related bug fix
+#include "TimerThree.h"                       // Interrupt handling for webpage
+#include "ELClient.h"                         // ESP-link
+#include "ELClientWebServer.h"                // ESP-link - WebServer API
+#include "ELClientCmd.h"                      // ESP-link - Get current time from the internet using NTP
+#include "ELClientRest.h"                     // ESP-link - REST API
+#include "ELClientMqtt.h"                     // ESP-link - MQTT protocol for sending and receiving IoT messages
+#include "Thread.h"                           // Splitting functions to threads for timing
+#include "StaticThreadController.h"           // Grouping threads
+#include "SerialLog.h"                        // Logging to the Serial console and to ESP-link's console
+#include "Settings.h"                         // EEPROM stored settings for every component
+#include "src/Modules_Web/Hempy_Standalone.h" // Represents a complete box with all feautres
+#include "SPI.h"                              // allows you to communicate with SPI devices, with the Arduino as the master device
 
 // Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
@@ -43,9 +41,7 @@ Settings *ModuleSettings;                 ///< This object will store the settin
 bool *Debug;                              ///< True - Turns on extra debug messages on the Serial Output
 bool *Metric;                             ///< True - Use metric units, False - Use imperial units
 bool MqttConnected = false;               ///< Track the connection state to the MQTT broker configured on the ESP-link's REST/MQTT tab
-DevModule_Web *DevModule_Web1;            ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
-
-RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///< Wireless communication with Modules over nRF24L01+
+Hempy_Standalone *Hempy_Standalone1;      ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
 
 // Thread initialization
 Thread OneSecThread = Thread();
@@ -54,15 +50,15 @@ Thread MinuteThread = Thread();
 StaticThreadController<3> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread);
 
 void setup()
-{                                                       ///<  put your setup code here, to run once:
-  ArduinoSerial.begin(115200);                          ///< 2560mega console output
-  ESPSerial.begin(115200);                              ///< ESP WiFi console output
-  pinMode(LED_BUILTIN, OUTPUT);                         ///< onboard LED - Heartbeat every second to confirm code is running
-  printf_begin();                                       ///< Needed to print wireless status to Serial
-  logToSerials(F(""), true, 0);                         ///< New line
-  logToSerials(F("Dev module initializing"), true, 0);  ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
-  wdt_enable(WDTO_8S);                                  ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
-  boot_rww_enable();                                    ///< fix watchdog not loading sketch after a reset error on Mega2560
+{                                                      ///<  put your setup code here, to run once:
+  ArduinoSerial.begin(115200);                         ///< 2560mega console output
+  ESPSerial.begin(115200);                             ///< ESP WiFi console output
+  pinMode(LED_BUILTIN, OUTPUT);                        ///< onboard LED - Heartbeat every second to confirm code is running
+  printf_begin();                                      ///< Needed to print wireless status to Serial
+  logToSerials(F(""), true, 0);                        ///< New line
+  logToSerials(F("Hempy module initializing"), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
+  wdt_enable(WDTO_8S);                                 ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
+  boot_rww_enable();                                   ///< fix watchdog not loading sketch after a reset error on Mega2560
 
   // Loading settings from EEPROM
   logToSerials(F("Loading settings"), true, 0);
@@ -75,7 +71,7 @@ void setup()
   resetWebServer();                  ///< reset the WebServer
   setSyncProvider(getNtpTime);       ///< Points to method for updating time from NTP server
   setSyncInterval(86400);            ///< Sync time every day
-  if ((ModuleSettings->DevModule_Web1).ReportToMQTT)
+  if ((ModuleSettings->Hempy_Standalone1).ReportToMQTT)
   {
     setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
   }
@@ -89,29 +85,16 @@ void setup()
   MinuteThread.onRun(runMinute);
   logToSerials(F("done"), true, 3);
 
-  // Start interrupts to handle request from ESP-Link firmware
+  // Start interrupts to handle request from ESP-link firmware
   logToSerials(F("Setting up interrupt handler"), false, 0);
   Timer3.initialize(500); ///< check every 0.5sec, using a larger interval can cause web requests to time out
   Timer3.attachInterrupt(processTimeCriticalStuff);
   Timer3.start();
   logToSerials(F("done"), true, 3);
 
-  //Initialize wireless communication with remote Modules
-  logToSerials(F("Setting up wireless transceiver"), false, 0);
-  Wireless.begin();                                  ///< Initialize the nRF24L01+ wireless chip for talking to Modules
-  Wireless.setDataRate(RF24_250KBPS);                ///< Set the speed to slow - has longer range + No need for faster transmission, Other options: RF24_2MBPS, RF24_1MBPS
-  Wireless.setCRCLength(RF24_CRC_16);                ///< RF24_CRC_8 for 8-bit or RF24_CRC_16 for 16-bit
-  Wireless.setPALevel(RF24_PA_MAX);                  ///< RF24_PA_MIN=-18dBm, RF24_PA_LOW=-12dBm, RF24_PA_HIGH=-6dBm, and RF24_PA_MAX=0dBm.
-  Wireless.setPayloadSize(WirelessPayloadSize);      ///< The number of bytes in the payload. This implementation uses a fixed payload size for all transmissions
-  Wireless.enableDynamicPayloads();                  ///< Required for ACK messages
-  Wireless.enableAckPayload();                       ///< When sending a wireless package, expect a response confirming the package was received in a custom Acknowledgement package
-  Wireless.setRetries(WirelessDelay, WirelessRetry); ///< Defined in Settings.h. How many retries before giving up sending a single package and How long to wait between each retry
-  Wireless.stopListening();
-  logToSerials(F("done"), true, 3);
-
   // Create the Module objects
-  logToSerials(F("Creating Dev module"), true, 0);
-  DevModule_Web1 = new DevModule_Web(F("Dev1"), &ModuleSettings->DevModule_Web1, &Wireless); ///< This is the dev object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  logToSerials(F("Creating Hempy module"), true, 0);
+  Hempy_Standalone1 = new Hempy_Standalone(F("Hemp1"), &ModuleSettings->Hempy_Standalone1); ///< This is the dev object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   //   sendEmailAlert(F("Grow%20box%20(re)started"));
   logToSerials(F("Setup ready, starting loops:"), true, 0);
@@ -131,21 +114,21 @@ void processTimeCriticalStuff()
 
 void runSec()
 {
-  wdt_reset();     ///< reset watchdog timeout
-  HeartBeat();     ///< Blinks built-in led
-  DevModule_Web1->runSec(); ///< Calls the runSec() method in GrowBox.cpp
+  wdt_reset();                 ///< reset watchdog timeout
+  HeartBeat();                 ///< Blinks built-in led
+  Hempy_Standalone1->runSec(); ///< Calls the runSec() method in GrowBox.cpp
 }
 
 void runFiveSec()
 {
   wdt_reset();
-  DevModule_Web1->runFiveSec();
+  Hempy_Standalone1->runFiveSec();
 }
 
 void runMinute()
 {
   wdt_reset();
-  DevModule_Web1->runMinute();
+  Hempy_Standalone1->runMinute();
   getWirelessStatus();
 }
 
@@ -201,9 +184,6 @@ void resetWebServer()
 /**
   \brief Sets up the MQTT relay
 */
-//const char* MqttLights = "Lights";
-//const char* MqttBrightness = "Brightness";
-
 void setupMqtt()
 {
 
@@ -252,8 +232,8 @@ void mqttReceived(void *response)
   mqttTopic.remove(0, MqttSubTopicLength); //Cut the known command topic from the arrived topic
   mqttTopic.toCharArray(command, MaxShotTextLength);
   mqttData.toCharArray(data, MaxShotTextLength);
-  DevModule_Web1->commandEventTrigger(command, data);
-  DevModule_Web1->reportToMQTTTrigger(true); //send out a fresh report
+  Hempy_Standalone1->commandEventTrigger(command, data);
+  Hempy_Standalone1->reportToMQTTTrigger(true); //send out a fresh report
 }
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress
@@ -280,7 +260,6 @@ time_t getNtpTime()
     if (NTPResponse == 0)
     {
       logToSerials(F("NTP time sync failed"), true, 3);
-      // sendEmailAlert(F("NTP%20time%20sync%20failed"));
     }
     else
       logToSerials(F("time synchronized"), true, 3);
@@ -294,7 +273,7 @@ time_t getNtpTime()
 */
 void loadCallback(__attribute__((unused)) char *Url)
 {
-  DevModule_Web1->websiteLoadEventTrigger(Url); //Runs through all components that are subscribed to this event
+  Hempy_Standalone1->websiteLoadEventTrigger(Url); //Runs through all components that are subscribed to this event
 }
 
 /**
@@ -303,7 +282,7 @@ void loadCallback(__attribute__((unused)) char *Url)
 */
 void refreshCallback(__attribute__((unused)) char *Url)
 {
-  DevModule_Web1->websiteRefreshEventTrigger(Url);
+  Hempy_Standalone1->websiteRefreshEventTrigger(Url);
 }
 
 /**
@@ -322,7 +301,7 @@ void buttonCallback(char *Button)
   }
   else
   {
-    DevModule_Web1->commandEventTrigger(Button, NULL);
+    Hempy_Standalone1->commandEventTrigger(Button, NULL);
   }
   saveSettings(ModuleSettings);
 }
@@ -337,19 +316,6 @@ void fieldCallback(char *Field)
   {
     logToSerials(F("ESP field:"), false, 0);
   }
-  DevModule_Web1->commandEventTrigger(Field, WebServer.getArgString());
+  Hempy_Standalone1->commandEventTrigger(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
-}
-
-/**
-  \brief Prints the nRF24L01+ wireless transceiver's status to the Serial log
-*/
-void getWirelessStatus()
-{
-  if (*Debug)
-  {
-    logToSerials(F("Wireless report:"), true, 0);
-    Wireless.printPrettyDetails();
-    logToSerials(F(""), true, 0);
-  }
 }

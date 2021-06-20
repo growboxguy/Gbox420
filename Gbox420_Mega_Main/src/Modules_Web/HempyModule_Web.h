@@ -6,12 +6,13 @@
 #include "TimeLib.h" // Keeping track of time
 #include "420Common_Web.h"
 #include "420Module_Web.h"
+#include "../Modules_Web/MainModule_Web.h"
 #include "../WirelessCommands_Hempy.h"
 
 class HempyModule_Web : public Common_Web
 {
 public:
-  HempyModule_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyModuleSettings *DefaultSettings); ///< constructor
+  HempyModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::HempyModuleSettings *DefaultSettings); ///< constructor
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
@@ -30,7 +31,7 @@ private:
   unsigned long LastResponseReceived = 0;               //Timestamp of the last response received
 
 protected:
-  Module_Web *Parent;
+  MainModule *Parent;
   const byte WirelessChannel[6];
   Settings::HempyModuleSettings *DefaultSettings;
 };
