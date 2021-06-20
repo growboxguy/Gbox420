@@ -25,9 +25,9 @@ class Module_Web : virtual public Common, virtual public Module
 {
 public:
   Module_Web(); ///< constructor
-  void addToWebsiteQueue_Load(Common_Web *Module);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
-  void addToWebsiteQueue_Refresh(Common_Web *Module); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  void addToCommandQueue(Common_Web *Module);         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method
+  void addToWebsiteQueue_Load(Common_Web *Subscriber);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
+  void addToWebsiteQueue_Refresh(Common_Web *Subscriber); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
+  void addToCommandQueue(Common *Subscriber);         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method
   void websiteLoadEventTrigger(char *Url);
   void websiteRefreshEventTrigger(char *Url);
   void commandEventTrigger(char *command, char *data);
@@ -42,7 +42,7 @@ private:
 protected:
   Common_Web *WebsiteQueue_Load[QueueDepth] = {};
   Common_Web *WebsiteQueue_Refresh[QueueDepth] = {};
-  Common_Web *CommandQueue[QueueDepth] = {};
+  Common *CommandQueue[QueueDepth] = {};
   uint8_t WebsiteQueue_Load_Count = 0;
   uint8_t WebsiteQueue_Refresh_Count = 0;
   uint8_t CommandQueue_Count = 0;

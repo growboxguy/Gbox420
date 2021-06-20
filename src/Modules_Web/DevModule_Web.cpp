@@ -96,7 +96,7 @@ void DevModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///<
 */
 void DevModule_Web::commandEvent(char *Command, char *Data)
 {
-  if (!isThisMyComponent(Command))
+  if (!isThisMine(Command))
   {
     return;
   }

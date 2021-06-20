@@ -33,7 +33,7 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->Pump2);
   Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1, WeightB1, WeightWR1, Pump1);
   Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2, WeightB2, WeightWR1, Pump2);
-  addToReportQueue(this);          //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
+  addToReportQueue(this); //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   //addToRefreshQueue_Sec(this);     //< Attach to a trigger that fires every second and calls refresh_Sec()
   addToRefreshQueue_FiveSec(this); //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
   addToRefreshQueue_Minute(this);  //< Attach to a trigger that fires every second and calls refresh_Minute()
@@ -63,25 +63,41 @@ void Hempy_Standalone::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G", 2) == 0) //GrowBox tab
   {
-    //WebServer.setArgInt(getComponentName(F("FIS")), FanI->getSpeed()); ///< Internal PWM Fan speed
-    //WebServer.setArgInt(getComponentName(F("FES")), FanE->getSpeed()); ///< Exhaust PWM Fan speed
+    WebServer.setArgString(getComponentName(F("B1ET")), Bucket1->getEvaporationTargetText());
+    WebServer.setArgString(getComponentName(F("B1OF")), Bucket1->getOverflowTargetText());
+    WebServer.setArgString(getComponentName(F("B1WL")), Bucket1->getWasteLimitText());
+    WebServer.setArgInt(getComponentName(F("B1PS")), Pump1->getSpeed());
+    WebServer.setArgInt(getComponentName(F("B1T")), Pump1->getPumpTimeOut());
+    WebServer.setArgInt(getComponentName(F("B1D")), Bucket1->getDrainWaitTime());
+    WebServer.setArgString(getComponentName(F("B1DW")), Bucket1->getDryWeightText());
+    WebServer.setArgString(getComponentName(F("B2ET")), Bucket2->getEvaporationTargetText());
+    WebServer.setArgString(getComponentName(F("B2OF")), Bucket2->getOverflowTargetText());
+    WebServer.setArgString(getComponentName(F("B2WL")), Bucket2->getWasteLimitText());
+    WebServer.setArgInt(getComponentName(F("B2PS")), Pump2->getSpeed());
+    WebServer.setArgInt(getComponentName(F("B2T")), Pump2->getPumpTimeOut());
+    WebServer.setArgInt(getComponentName(F("B2D")), Bucket2->getDrainWaitTime());
+    WebServer.setArgString(getComponentName(F("B2DW")), Bucket2->getDryWeightText());
   }
   else if (strncmp(url, "/S", 2) == 0) //Settings tab
   {
-    WebServer.setArgString(getComponentName(F("B1ET")), Bucket1 -> getEvaporationTargetText());
-    WebServer.setArgString(getComponentName(F("B1OF")), Bucket1 -> getOverflowTargetText());
-    WebServer.setArgString(getComponentName(F("B1WL")), Bucket1 -> getWasteLimitText());
-    WebServer.setArgInt(getComponentName(F("B1PS")), Pump1 -> getSpeed());
-    WebServer.setArgInt(getComponentName(F("B1T")), Pump1 -> getPumpTimeOut());
-    WebServer.setArgInt(getComponentName(F("B1D")), Bucket1 -> getDrainWaitTime());
-    WebServer.setArgString(getComponentName(F("B1DW")), Bucket1 -> getDryWeightText());
-    WebServer.setArgString(getComponentName(F("B2ET")), Bucket2 -> getEvaporationTargetText());
-    WebServer.setArgString(getComponentName(F("B2OF")), Bucket2 -> getOverflowTargetText());
-    WebServer.setArgString(getComponentName(F("B2WL")), Bucket2 -> getWasteLimitText());
-    WebServer.setArgInt(getComponentName(F("B2PS")), Pump2 -> getSpeed());
-    WebServer.setArgInt(getComponentName(F("B2T")), Pump2 -> getPumpTimeOut());
-    WebServer.setArgInt(getComponentName(F("B2D")), Bucket2 -> getDrainWaitTime());
-    WebServer.setArgString(getComponentName(F("B2DW")), Bucket2 -> getDryWeightText());
+    WebServer.setArgInt(getComponentName(F("Debug")), *Debug);
+    WebServer.setArgInt(getComponentName(F("Metric")), *Metric);
+    WebServer.setArgInt(getComponentName(F("SerialF")), *SerialReportFrequency);
+    WebServer.setArgInt(getComponentName(F("Date")), *SerialReportDate);
+    WebServer.setArgInt(getComponentName(F("Mem")), *SerialReportMemory);
+    WebServer.setArgInt(getComponentName(F("JSON")), *SerialReportJSON);
+    WebServer.setArgInt(getComponentName(F("FJSON")), *SerialReportJSONFriendly);
+    WebServer.setArgInt(getComponentName(F("Wire")), *SerialReportWireless);
+    WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
+    WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
+    WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
+    WebServer.setArgBoolean(getComponentName(F("MQTT")), *ReportToMQTT);
+    WebServer.setArgInt(getComponentName(F("MQTTF")), *MQTTReportFrequency);
+    WebServer.setArgString(getComponentName(F("MPT")), ModuleSettings->MqttPubTopic);
+    WebServer.setArgString(getComponentName(F("MST")), ModuleSettings->MqttSubTopic);
+    WebServer.setArgString(getComponentName(F("MLT")), ModuleSettings->MqttLwtTopic);
+    WebServer.setArgString(getComponentName(F("MLM")), ModuleSettings->MqttLwtMessage);
+    WebServer.setArgBoolean(getComponentName(F("Sound")), Sound1->getEnabledState());
   }
 }
 
@@ -97,14 +113,14 @@ void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *url) /
     WebServer.setArgString(getComponentName(F("DT")), DHT1->getTempText(true)); ///< Shows the latest reading
     WebServer.setArgString(getComponentName(F("DH")), DHT1->getHumidityText(true));
     //Bucket 1
-    WebServer.setArgString(getComponentName(F("B1W")), WeightB1->getWeightText(false,true));
-    WebServer.setArgString(getComponentName(F("B1WR")), WeightWR1->getWeightText(false,true));
+    WebServer.setArgString(getComponentName(F("B1W")), WeightB1->getWeightText(false, true));
+    WebServer.setArgString(getComponentName(F("B1WR")), WeightWR1->getWeightText(false, true));
     WebServer.setArgString(getComponentName(F("B1DWW")), toText(Bucket1->getDryWeight(), Bucket1->getWetWeight(), "/"));
     WebServer.setArgString(getComponentName(F("B1S")), Bucket1->getStateText());
     WebServer.setArgString(getComponentName(F("B1P")), Pump1->getStateText());
     //Bucket 2
-    WebServer.setArgString(getComponentName(F("B2W")), WeightB2->getWeightText(false,true));
-    WebServer.setArgString(getComponentName(F("B2WR")), WeightWR1->getWeightText(false,true));
+    WebServer.setArgString(getComponentName(F("B2W")), WeightB2->getWeightText(false, true));
+    WebServer.setArgString(getComponentName(F("B2WR")), WeightWR1->getWeightText(false, true));
     WebServer.setArgString(getComponentName(F("B2DWW")), toText(Bucket2->getDryWeight(), Bucket2->getWetWeight(), "/"));
     WebServer.setArgString(getComponentName(F("B2S")), Bucket2->getStateText());
     WebServer.setArgString(getComponentName(F("B2P")), Pump2->getStateText());
@@ -116,7 +132,7 @@ void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *url) /
 */
 void Hempy_Standalone::commandEvent(char *Command, char *Data)
 {
-  if (!isThisMyComponent(Command))
+  if (!isThisMine(Command))
   {
     return;
   }

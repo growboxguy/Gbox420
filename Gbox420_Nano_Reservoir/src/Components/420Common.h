@@ -20,14 +20,15 @@ extern bool *Metric;
 class Common
 {
 public:
-  const __FlashStringHelper *Name;
-  bool isThisMyComponent(char const *lookupName); ///< Checks whether a component belongs to the caller class or not
+  const __FlashStringHelper *Name;         ///< Name of the instance
+  bool isThisMine(char const *lookupName); ///< Checks if lookupName starts with the Name of the instance followed by _
   char *getComponentName(const __FlashStringHelper *Name);
-  void appendName(bool Clear = true);               //< Adds the component name to the ShortMessage Buffor. If Clear=true flush the cache before adding the name
+  void appendName(bool Clear = true);                                           //< Adds the component name to the ShortMessage Buffor. If Clear=true flush the cache before adding the name
   virtual void report(__attribute__((unused)) bool FriendlyFormat = false) = 0; //Pure virtual function with body, must be implemented in child classes  https://www.learncpp.com/cpp-tutorial/pure-virtual-functions-abstract-base-classes-and-interface-classes/
-  virtual void refresh_Sec();
-  virtual void refresh_FiveSec();
-  virtual void refresh_Minute();
+  virtual void refresh_Sec();  ///< Called every second
+  virtual void refresh_FiveSec(); ///< Called every five seconds
+  virtual void refresh_Minute(); ///< Called every minute
+  virtual void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data){}; //Called then an external command arrives (From MQTT or User Interface)
 
 private:
 protected:

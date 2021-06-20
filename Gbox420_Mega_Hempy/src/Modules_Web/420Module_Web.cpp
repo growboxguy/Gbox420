@@ -14,10 +14,10 @@ Module_Web::Module_Web() : Common(Name), Module()
 /**
 * @brief Subscribe to the ESP-link website load event
 */
-void Module_Web::addToWebsiteQueue_Load(Common_Web *Module)
+void Module_Web::addToWebsiteQueue_Load(Common_Web *Subscriber)
 {
   if (QueueDepth > WebsiteQueue_Load_Count)
-    WebsiteQueue_Load[WebsiteQueue_Load_Count++] = Module;
+    WebsiteQueue_Load[WebsiteQueue_Load_Count++] = Subscriber;
   else
     logToSerials(F("WebsiteQueue_Load overflow!"), true, 0);
 }
@@ -25,10 +25,10 @@ void Module_Web::addToWebsiteQueue_Load(Common_Web *Module)
 /**
 * @brief Subscribe to the ESP-link website refresh event
 */
-void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Module)
+void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Subscriber)
 {
   if (QueueDepth > WebsiteQueue_Refresh_Count)
-    WebsiteQueue_Refresh[WebsiteQueue_Refresh_Count++] = Module;
+    WebsiteQueue_Refresh[WebsiteQueue_Refresh_Count++] = Subscriber;
   else
     logToSerials(F("WebsiteQueue_Refresh overflow!"), true, 0);
 }
@@ -36,10 +36,10 @@ void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Module)
 /**
 * @brief Subscribe to MQTT or ESP-link website commands  (Pressing a button, setting a value)
 */
-void Module_Web::addToCommandQueue(Common_Web *Module)
+void Module_Web::addToCommandQueue(Common *Subscriber)
 {
   if (QueueDepth > CommandQueue_Count)
-    CommandQueue[CommandQueue_Count++] = Module;
+    CommandQueue[CommandQueue_Count++] = Subscriber;
   else
     logToSerials(F("CommandQueue overflow!"), true, 0);
 }

@@ -65,7 +65,7 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
 */
 void ReservoirModule_Web::commandEvent(char *Command, char *Data)
 { ///< When a button is pressed on the website
-  if (!isThisMyComponent(Command))
+  if (!isThisMine(Command))
   {
     return;
   }

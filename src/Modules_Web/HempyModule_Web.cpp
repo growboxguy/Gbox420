@@ -127,7 +127,7 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
 
 void HempyModule_Web::commandEvent(char *Command, char *Data)
 {
-  if (!isThisMyComponent(Command))
+  if (!isThisMine(Command))
   {
     return;
   }

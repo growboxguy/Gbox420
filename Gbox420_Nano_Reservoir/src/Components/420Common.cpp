@@ -58,48 +58,49 @@ char *Common::getComponentName(const __FlashStringHelper *ComponentName)
   return ReturnChar;
 }
 
-bool Common::isThisMyComponent(char const *lookupName)
-{ ///< When a web component triggers an action, this function decides if the component belonged to the class
-  ///< lookupName is in the form of: InstanceName_FunctionName . Examles: Lt1_On , Lt1_OnTime, LtSen1_Raw
-
+bool Common::isThisMine(char const *lookupName) 
+{ 
+  ///< Returns true when the lookupName starts with the Name of the instance followed by _
+ 
   ///< Serial.print("Component :");
   ///< Serial.println(lookupName);
   ///< Serial.print("Object :");
   ///< Serial.println(Name);
 
   char *ReturnChar = ShortMessage; ///< return text will be loaded into a global temp buffer
-  uint8_t CharacterCount = 0;
-  char FlashCurrentChar;
-  char RAMCurrentChar;
+  uint8_t CharacterCount = 0;  //Tracks which character is currently getting compared 
+  char FlashCurrentChar;  // Character read back from the Flash storage (Name is stored in flash)
+  char RAMCurrentChar;   // Character read back from the RAM (lookupName is stored in RAM)
 
-  const char *FlashAddressPointer = (const char PROGMEM *)Name;
+  const char *FlashAddressPointer = (const char PROGMEM *)Name;  ///< Get the flash storage address of the first character of Name
   while (1)
   {
-    FlashCurrentChar = pgm_read_byte(FlashAddressPointer++); ///< read back from the memory address on character, and then increment the pointer to the next char
-    RAMCurrentChar = lookupName[CharacterCount++];           ///<
+    FlashCurrentChar = pgm_read_byte(FlashAddressPointer++); ///< read the current character from the flash and increment the pointer to the next char
+    RAMCurrentChar = lookupName[CharacterCount++];           ///< read the character at the same position from the lookupName
     ///< Serial.print(FlashCurrentChar);
     ///< Serial.print(RAMCurrentChar);
-    if (FlashCurrentChar == 0)
-      break; ///< if we have reached the string termination sign. ( null terminator is the numerical value 0, sometimes also marked as '\0')
+    if (FlashCurrentChar == '\0')
+      break; ///< reached the string termination sign
     if (FlashCurrentChar != RAMCurrentChar)
     {
       ///< Serial.println("Not match");
       return false; ///< stop the while loop
     }
   }
-  if (FlashCurrentChar == 0 && RAMCurrentChar == '_')
-  { ///< if instance name is confirmed: continue reading the HTML component name describing the function
+  if (FlashCurrentChar == '\0' && RAMCurrentChar == '_') ///< End of the Name, _ sign at the lookupName
+  { ///< if instance name is confirmed: continue reading the remaining characters from the lookupName
     int SafetyCount = 0;
     ///< Serial.print("Inside second check: ");
     while (1)
     {
-      RAMCurrentChar = lookupName[CharacterCount++]; ///<
+      RAMCurrentChar = lookupName[CharacterCount++]; ///<read the next lookName character from RAM
       ///< Serial.print(RAMCurrentChar);
       *ReturnChar++ = RAMCurrentChar;
-      if (RAMCurrentChar == 0)
-        break; ///< if we have reached the string termination sign. ( null terminator is the numerical value 0, sometimes also marked as '\0')
+      if (RAMCurrentChar == '\0')
+        break; ///< reached the string termination sign
       if (SafetyCount++ > MaxWordLength)
       {
+        *ReturnChar = '\0';
         logToSerials(F("Too long:"), false, 3);
         logToSerials(lookupName, true, 1);
         return false;

@@ -160,7 +160,7 @@ void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< ca
 */
 void MainModule::commandEvent(char *Command, char *Data)
 {
-  if (!isThisMyComponent(Command))
+  if (!isThisMine(Command))
   {
     return;
   }

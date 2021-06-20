@@ -107,7 +107,7 @@ void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *url) /
 */
 void Hempy_Standalone::commandEvent(char *Command, char *Data)
 {
-  if (!isThisMyComponent(Command))
+  if (!isThisMine(Command))
   {
     return;
   }

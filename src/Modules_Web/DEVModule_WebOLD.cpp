@@ -93,7 +93,7 @@ void DEVModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///<
 
 void DEVModule_Web::websiteEvent_Button(char *Button)
 { ///< When a button is pressed on the website
-  if (!isThisMyComponent(Button))
+  if (!isThisMine(Button))
   {
     return;
   }
@@ -119,7 +119,7 @@ void DEVModule_Web::websiteEvent_Button(char *Button)
 
 void DEVModule_Web::websiteEvent_Field(char *Field)
 { ///< When the website field is submitted
-  if (!isThisMyComponent(Field))
+  if (!isThisMine(Field))
   {
     return;
   }
