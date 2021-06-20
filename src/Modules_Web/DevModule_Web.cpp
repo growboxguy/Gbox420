@@ -22,9 +22,9 @@ DevModule_Web::DevModule_Web(const __FlashStringHelper *Name, Settings::DevModul
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;                                   ///< Pointer for child objects to use sound feedback
   DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
-  addToReportQueue(this);          //< Attach to the report event: When triggered the module reports to the Serial Console or the MQTT
+  addToReportQueue(this);          //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   addToRefreshQueue_FiveSec(this); //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
-  addToRefreshQueue_Minute(this);  //< Attach to a trigger that fires every second and calls refresh_Sec()
+  addToRefreshQueue_Minute(this);  //< Attach to a trigger that fires every second and calls refresh_Minute()
   addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
   addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
   addToCommandQueue(this);

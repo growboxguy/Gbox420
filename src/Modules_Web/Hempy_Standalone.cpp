@@ -33,9 +33,9 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->HempyPump2);
   Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1, WeightB1, WeightWR1, Pump1);
   Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2, WeightB2, WeightWR2, Pump2);
-  addToReportQueue(this);          //< Attach to the report event: When triggered the module reports to the Serial Console or the MQTT
+  addToReportQueue(this);          //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   addToRefreshQueue_FiveSec(this); //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
-  addToRefreshQueue_Minute(this);  //< Attach to a trigger that fires every second and calls refresh_Sec()
+  addToRefreshQueue_Minute(this);  //< Attach to a trigger that fires every second and calls refresh_Minute()
   addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
   addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
   addToCommandQueue(this);

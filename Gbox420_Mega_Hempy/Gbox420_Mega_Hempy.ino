@@ -54,7 +54,6 @@ void setup()
   ArduinoSerial.begin(115200);                         ///< 2560mega console output
   ESPSerial.begin(115200);                             ///< ESP WiFi console output
   pinMode(LED_BUILTIN, OUTPUT);                        ///< onboard LED - Heartbeat every second to confirm code is running
-  printf_begin();                                      ///< Needed to print wireless status to Serial
   logToSerials(F(""), true, 0);                        ///< New line
   logToSerials(F("Hempy module initializing"), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                 ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
@@ -129,7 +128,6 @@ void runMinute()
 {
   wdt_reset();
   Hempy_Standalone1->runMinute();
-  getWirelessStatus();
 }
 
 /**

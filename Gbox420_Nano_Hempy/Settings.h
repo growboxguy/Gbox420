@@ -72,7 +72,7 @@ typedef struct
     uint8_t Pin;  ///< Piezo Buzzer red(+) cable
     bool Enabled; ///< Enable/Disable sound
   };
-  struct SoundSettings Sound1 = {.Pin = 2, .Enabled = true};
+  struct SoundSettings Sound1 = {.Pin = 4, .Enabled = true};
 
   struct WaterPumpSettings ///< WaterPump default settings
   {

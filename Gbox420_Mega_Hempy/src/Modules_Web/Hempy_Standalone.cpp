@@ -8,7 +8,7 @@
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings, creates components that the instance controls, and subscribes to events
 */
-Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings, RF24 *Wireless) : Common_Web(Name), Common(Name), Module_Web(Wireless)
+Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings) : Common_Web(Name), Common(Name), Module_Web()
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
@@ -25,17 +25,17 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;                                   ///< Pointer for child objects to use sound feedback
   DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
-  WeightB1 = new WeightSensor(F("WeightB1"), this, &ModuleSettings->WeightB1);
-  WeightB2 = new WeightSensor(F("WeightB2"), this, &ModuleSettings->WeightB2);
-  WeightWR1 = new WeightSensor(F("WeightWR1"), this, &ModuleSettings->WeightWR1);
-  WeightWR2 = new WeightSensor(F("WeightWR2"), this, &ModuleSettings->WeightWR2);
-  Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->HempyPump1);
-  Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->HempyPump2);
+  WeightB1 = new WeightSensor(F("WeightB1"), this, &ModuleSettings->WeightB1);    //< Bucket 1 weight sensor
+  WeightB2 = new WeightSensor(F("WeightB2"), this, &ModuleSettings->WeightB2);    //< Bucket 2 weight sensor
+  WeightWR1 = new WeightSensor(F("WeightWR1"), this, &ModuleSettings->WeightWR1); //< Common Waste reservoir weight sensor
+  Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->Pump1);
+  Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->Pump2);
   Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1, WeightB1, WeightWR1, Pump1);
-  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2, WeightB2, WeightWR2, Pump2);
-  addToReportQueue(this);          //< Attach to the report event: When triggered the module reports to the Serial Console or the MQTT
+  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2, WeightB2, WeightWR1, Pump2);
+  addToReportQueue(this);          //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
+  //addToRefreshQueue_Sec(this);     //< Attach to a trigger that fires every second and calls refresh_Sec()
   addToRefreshQueue_FiveSec(this); //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
-  addToRefreshQueue_Minute(this);  //< Attach to a trigger that fires every second and calls refresh_Sec()
+  addToRefreshQueue_Minute(this);  //< Attach to a trigger that fires every second and calls refresh_Minute()
   addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
   addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
   addToCommandQueue(this);

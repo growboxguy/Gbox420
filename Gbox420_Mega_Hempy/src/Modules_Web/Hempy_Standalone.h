@@ -5,11 +5,13 @@
 
 #include "420Module_Web.h"
 #include "ELClientRest.h" ///< ESP-link - REST API
-#include "../WirelessCommands_Dev.h"
 
 // forward declaration of classes
 class Sound;
 class DHTSensor;
+class WeightSensor;
+class WaterPump;
+class HempyBucket;
 
 extern ELClientRest PushingBoxRestAPI;
 
@@ -18,9 +20,16 @@ extern ELClientRest PushingBoxRestAPI;
 class Hempy_Standalone : virtual public Common_Web, public Module_Web
 {
 public:
-  Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings, RF24 *Wireless); ///< constructor
-  Sound *Sound1;                                                                                              ///< Pointer to a Piezo speaker - sound feedback
-  DHTSensor *DHT1;                       ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
+  Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings); ///< constructor
+  Sound *Sound1;                                                                                                          ///< Pointer to a Piezo speaker - sound feedback
+  DHTSensor *DHT1;                                                                                                        ///< Pointer to a Digital Humidity and Temp Sensor object 
+  WeightSensor *WeightB1 = NULL;
+  WeightSensor *WeightB2 = NULL;
+  WeightSensor *WeightWR1 = NULL;
+  HempyBucket *Bucket1 = NULL;
+  HempyBucket *Bucket2 = NULL;
+  WaterPump *Pump1 = NULL;
+  WaterPump *Pump2 = NULL;
   void websiteEvent_Load(char *url);
   void websiteEvent_Refresh(char *url);
   void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);

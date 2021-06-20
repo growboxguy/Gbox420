@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 9; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -25,15 +25,6 @@ static const uint8_t MovingAverageDepth = 10;   ///< Smooth out sensor readings 
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
 extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
 extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
-
-///< nRF24L01+ wireless receiver
-static const uint8_t WirelessCSNPin = 49;             ///< nRF24l01+ wireless transmitter CSN pin
-static const uint8_t WirelessCEPin = 53;              ///< nRF24l01+ wireless transmitter CE pin
-static const uint8_t WirelessDelay = 8;               ///< How long to wait between each retry (250ms increments), Max 15. 0 means 250us, 15 means 4000us,
-static const uint8_t WirelessRetry = 10;              ///< How many retries before giving up, max 15
-static const uint8_t WirelessPayloadSize = 32;        ///< Size of the wireless packages exchanged. Max 32 bytes are supported on nRF24L01+
-static const uint16_t WirelessMessageTimeout = 500;   ///< (ms) One package should be exchanged within this timeout (Including retries and delays)
-static const uint16_t WirelessReceiveTimeout = 65000; ///< (ms) Consider a module offline after this timeout. Should be a few seconds longer then the WirelessReceiveTimeout configured on the Modules
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable in line 12
@@ -63,15 +54,27 @@ typedef struct
     uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
     bool SerialReportDate;             ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory;           ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool SerialReportJSON;           ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool SerialReportJSONFriendly;           ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
-    bool SerialReportWireless;   ///< Enable/disable sending wireless package exchange reports to the Serial output  
+    bool SerialReportJSON;             ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool SerialReportJSONFriendly;     ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
+    bool SerialReportWireless;         ///< Enable/disable sending wireless package exchange reports to the Serial output
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
     uint16_t SheetsReportingFrequency; ///< How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
     bool ReportToMQTT;                 ///< Enable/disable reporting sensor readings to an MQTT broker
     uint16_t MQTTReportFrequency;      ///< How often to report to MQTT. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
   };
-  struct Hempy_StandaloneSettings Hempy_Standalone1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless=true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportFrequency = 5};
+  struct Hempy_StandaloneSettings Hempy_Standalone1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportFrequency = 5};
+
+  struct HempyBucketSettings ///< HempyBucket default settings
+  {
+    HempyBucketSettings(float EvaporationTarget = 0.0, float OverflowTarget = 0.0, float WasteLimit = 0.0, float InitialDryWeight = 0.0, uint16_t DrainWaitTime = 0) : EvaporationTarget(EvaporationTarget), OverflowTarget(OverflowTarget), WasteLimit(WasteLimit), InitialDryWeight(InitialDryWeight), DrainWaitTime(DrainWaitTime) {}
+    float EvaporationTarget; //< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
+    float OverflowTarget;    //< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
+    float WasteLimit;        ///< Waste reservoir full weight -> Pump gets disabled if reached
+    float InitialDryWeight;  ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until OverflowTarget is reached.
+    uint16_t DrainWaitTime;  ///< (sec) How long to wait after watering for the water to drain
+  };
+  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
 
   struct SoundSettings ///< Sound default settings
   {
@@ -80,6 +83,33 @@ typedef struct
     bool Enabled = true; ///< Enable/Disable sound
   };
   struct SoundSettings Sound1 = {.Pin = 2};
+
+  struct WaterPumpSettings ///< WaterPump default settings
+  {
+    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint16_t PumpTimeOut = 0, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), PumpTimeOut(PumpTimeOut), Speed(Speed), SpeedLowLimit(SpeedLowLimit) {}
+    uint8_t PumpPin;           ///< Pump relay pin
+    bool PumpPinNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
+    bool PumpEnabled;          ///< Enable/disable pump. false= Block running the pump
+    uint16_t PumpTimeOut;      ///< (Sec) Max pump run time
+    uint8_t Speed;             ///< Duty cycle of the PWM Motor speed
+    uint8_t SpeedLowLimit;     ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
+  };
+  struct WaterPumpSettings Pump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLowLimit = 30};
+  struct WaterPumpSettings Pump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLowLimit = 30};
+
+  struct WeightSensorSettings ///< WeightSensor default settings
+  {
+    WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, long Offset = 0, float Scale = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Offset(Offset), Scale(Scale) {}
+    uint8_t DTPin;  ///< Weight sensor DT pin
+    uint8_t SCKPin; ///< Weight sensor SCK pin
+    long Offset;    ///< Reading at 0 weight on the scale
+    float Scale;    ///< Scale factor
+  };
+  struct WeightSensorSettings WeightB1 = {.DTPin = 24, .SCKPin = 25, .Offset = 378161, .Scale = -21484.20};    ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightB2 = {.DTPin = 26, .SCKPin = 27, .Offset = -182833, .Scale = -22089.00};   ///< Bucket 2 Weight Sensor
+  struct WeightSensorSettings WeightWR1 = {.DTPin = 28, .SCKPin = 29, .Offset = -76382, .Scale = -22697.10}; ///< Waste Reservoir Weight Sensor
+  struct WeightSensorSettings WeightWR2 = {.DTPin = 30, .SCKPin = 31, .Offset = 260682, .Scale = -22084.60}; ///< Waste Reservoir Weight Sensor
+
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;
