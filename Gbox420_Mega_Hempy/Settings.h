@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -35,10 +35,10 @@ typedef struct
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
-  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/"};             ///< Publish MQTT messages to this topic. Ends with a forward slash
-  char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/#"};         ///< Subscribe to messages of this topic and all sub-topic
-  char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/"};          ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
-  char MqttLwtMessage[MaxWordLength] = {"Gbox420 Offline"};        ///< this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the MQTT client unexpectedly goes offline
+  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/Hempy"};             ///< Publish MQTT messages to this topic. Ends with a forward slash
+  char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/Hempy/#"};         ///< Subscribe to messages of this topic and all sub-topic
+  char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/Hempy/"};          ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
+  char MqttLwtMessage[MaxWordLength] = {"Hempy Offline"};        ///< this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the MQTT client unexpectedly goes offline
 
   struct DHTSensorSettings ///< DHTSensor default settings
   {
@@ -105,11 +105,10 @@ typedef struct
     long Offset;    ///< Reading at 0 weight on the scale
     float Scale;    ///< Scale factor
   };
-  struct WeightSensorSettings WeightB1 = {.DTPin = 24, .SCKPin = 25, .Offset = 378161, .Scale = -21484.20};    ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
-  struct WeightSensorSettings WeightB2 = {.DTPin = 26, .SCKPin = 27, .Offset = -182833, .Scale = -22089.00};   ///< Bucket 2 Weight Sensor
-  struct WeightSensorSettings WeightWR1 = {.DTPin = 28, .SCKPin = 29, .Offset = -76382, .Scale = -22697.10}; ///< Waste Reservoir Weight Sensor
-  struct WeightSensorSettings WeightWR2 = {.DTPin = 30, .SCKPin = 31, .Offset = 260682, .Scale = -22084.60}; ///< Waste Reservoir Weight Sensor
-
+  struct WeightSensorSettings WeightNR1 = {.DTPin = 24, .SCKPin = 25, .Offset = 378161, .Scale = -21484.20};    ///< Nutrient Reservoir Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightWR1 = {.DTPin = 26, .SCKPin = 27, .Offset = -182833, .Scale = -22089.00};   ///< Waste Reservoir Weight Sensor
+  struct WeightSensorSettings WeightB1 = {.DTPin = 28, .SCKPin = 29, .Offset = -76382, .Scale = -22697.10}; ///< Bucket 1 Weight Sensor
+  struct WeightSensorSettings WeightB2 = {.DTPin = 30, .SCKPin = 31, .Offset = 260682, .Scale = -22084.60}; ///< Bucket 2 Weight Sensor
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;

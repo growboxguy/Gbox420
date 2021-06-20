@@ -133,6 +133,16 @@ void WaterPump::setSpeed(uint8_t DutyCycle) //Set PWM duty cycle
   PumpSwitch->setDutyCycle(DutyCycle);
 }
 
+uint8_t WaterPump::getSpeed() //Get PWM duty cycle
+{
+  return PumpSwitch->getDutyCycle();
+}
+
+char *WaterPump::getSpeedText(bool FriendlyFormat) //Get PWM duty cycle text
+{
+  return PumpSwitch->getDutyCycleText(FriendlyFormat);
+}
+
 WaterPumpStates WaterPump::getState()
 {
   return State;

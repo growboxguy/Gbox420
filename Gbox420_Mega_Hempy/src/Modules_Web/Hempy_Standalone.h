@@ -1,6 +1,6 @@
 #pragma once
 
-///< This class represents a complete Hempy_Standalone with all of its components
+///< This class represents a two bucket Hempy setup with common nutrient and waste reservoirs
 ///< Responsible for setting up each module, updating their statuses and reporting it
 
 #include "420Module_Web.h"
@@ -20,26 +20,25 @@ extern ELClientRest PushingBoxRestAPI;
 class Hempy_Standalone : virtual public Common_Web, public Module_Web
 {
 public:
-  Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings); ///< constructor
-  Sound *Sound1;                                                                                                          ///< Pointer to a Piezo speaker - sound feedback
-  DHTSensor *DHT1;                                                                                                        ///< Pointer to a Digital Humidity and Temp Sensor object 
-  WeightSensor *WeightB1 = NULL;
-  WeightSensor *WeightB2 = NULL;
-  WeightSensor *WeightWR1 = NULL;
-  HempyBucket *Bucket1 = NULL;
-  HempyBucket *Bucket2 = NULL;
-  WaterPump *Pump1 = NULL;
-  WaterPump *Pump2 = NULL;
-  void websiteEvent_Load(char *url);
-  void websiteEvent_Refresh(char *url);
+  Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings);
+  Sound *Sound1 = NULL;           ///< Pointer to a Piezo speaker - sound feedback
+  DHTSensor *DHT1 = NULL;         ///< Humidity and temp sensor
+  WeightSensor *WeightNR1 = NULL; ///< Nutrient reservoir weight sensor
+  WeightSensor *WeightWR1 = NULL; ///< Waste reservoir weight sensor                                                                                                     ///< Pointer to a Digital Humidity and Temp Sensor object
+  WeightSensor *WeightB1 = NULL;  ///< Bucket 1 reservoir weight sensor
+  WeightSensor *WeightB2 = NULL;  ///< Bucket 2 reservoir weight sensor
+  HempyBucket *Bucket1 = NULL;    ///< Hempy bucket 1
+  HempyBucket *Bucket2 = NULL;    ///< Hempy bucket 2
+  WaterPump *Pump1 = NULL;        ///< Bucket 1 water pump
+  WaterPump *Pump2 = NULL;        ///< Bucket 2 water pump
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Load(__attribute__((unused)) char *url);
   void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report(bool FriendlyFormat = false);
   void refresh_FiveSec();
   void refresh_Minute();
   void reportToGoogleSheetsTrigger(bool ForceRun = false);
   void reportToMQTTTrigger(bool ForceRun = false);
-  bool getDayMode(); ///< Returns true if the lights are on or daylight is detected
-  char *getDayModeText(bool FriendlyFormat = false);
 
 private:
   void setDebug(bool DebugEnabled);

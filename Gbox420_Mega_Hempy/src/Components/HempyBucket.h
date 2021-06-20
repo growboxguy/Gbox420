@@ -23,7 +23,7 @@ public:
   void report(bool FriendlyFormat = false);
   void updateState(HempyStates NewState);
   HempyStates getState();
-  char *getStateText(bool FriendlyFormat);
+  char *getStateText(bool FriendlyFormat = false);
   void disable();
   void startWatering(); ///< Turn on water pump, run until StopWeight is reached
   void stopWatering();  ///< Turn on water pump, run until StopWeight is reached
@@ -32,6 +32,7 @@ public:
   void setOverflowTarget(float Weight);
   char *getOverflowTargetText(bool FriendlyFormat = false);
   void setDrainWaitTime(uint16_t Seconds);
+  uint16_t getDrainWaitTime();
   char *getDrainWaitTimeText(bool FriendlyFormat = false);
   void setWasteLimit(float Weight);
   char *getWasteLimitText(bool FriendlyFormat = false);

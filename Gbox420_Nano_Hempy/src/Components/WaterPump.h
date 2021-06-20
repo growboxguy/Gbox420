@@ -13,14 +13,16 @@ public:
   void report(bool FriendlyFormat = false);
   void refresh_Sec();
   void updateState(WaterPumpStates NewState = (WaterPumpStates)-1);
-  void setSpeed(uint8_t DutyCycle);        //Set Motor speed - Adjust PWM duty cycle
+  void setSpeed(uint8_t DutyCycle); //Set Motor speed - Adjust PWM duty cycle
+  uint8_t getSpeed();
+  char *getSpeedText(bool FriendlyFormat);
   void startPump(bool ResetState = false); ///< Turn the pump ON
   void stopPump(bool ResetState = false);  ///< Turn the pump OFF
   void disablePump();                      ///< Disable the pump
 
-  WaterPumpStates getState(); ///< Get the current pump state
-  char *getStateText(bool FriendlyFormat = false);   ///< Text representation of the current state: DISABLED/IDLE/RUNNING..
-  bool getEnabledState();     ///< Pump ENABLED(1)/DISABLED(0)
+  WaterPumpStates getState();                      ///< Get the current pump state
+  char *getStateText(bool FriendlyFormat = false); ///< Text representation of the current state: DISABLED/IDLE/RUNNING..
+  bool getEnabledState();                          ///< Pump ENABLED(1)/DISABLED(0)
   void setPumpTimeOut(uint16_t NewTime);
   int getPumpTimeOut();
   char *getTimeOutText(bool FriendlyFormat = false);

@@ -127,7 +127,7 @@ void HempyBucket::updateState(HempyStates NewState)
       if (WasteReservoirWeightSensor->getWeight(false) - WasteReservoirStartWeight >= *OverflowTarget) //Check if target overflow weight is reached
       {
         WetWeight = BucketWeightSensor->getWeight(); //Measure wet weight
-        DryWeight = WetWeight - *EvaporationTarget; //Calculate next watering weight
+        DryWeight = WetWeight - *EvaporationTarget;  //Calculate next watering weight
         updateState(HempyStates::IDLE);
       }
       else
@@ -223,6 +223,11 @@ void HempyBucket::setDrainWaitTime(uint16_t Seconds)
     *DrainWaitTime = Seconds;
     Parent->getSoundObject()->playOnSound();
   }
+}
+
+uint16_t HempyBucket::getDrainWaitTime()
+{
+  return *DrainWaitTime;
 }
 
 char *HempyBucket::getDrainWaitTimeText(bool FriendlyFormat)
