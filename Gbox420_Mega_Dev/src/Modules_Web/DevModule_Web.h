@@ -5,6 +5,7 @@
 
 #include "420Module_Web.h"
 #include "ELClientRest.h" ///< ESP-link - REST API
+#include "RF24.h"
 #include "../WirelessCommands_Dev.h"
 
 // forward declaration of classes
@@ -15,7 +16,7 @@ extern ELClientRest PushingBoxRestAPI;
 
 ///< Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
-class DevModule_Web : virtual public Common_Web, public Module_Web
+class DevModule_Web : public Module_Web
 {
 public:
   DevModule_Web(const __FlashStringHelper *Name, Settings::DevModule_WebSettings *DefaultSettings, RF24 *Wireless); ///< constructor
@@ -23,7 +24,7 @@ public:
   DHTSensor *DHT1;                       ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   void websiteEvent_Load(char *url);
   void websiteEvent_Refresh(char *url);
-  void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
+  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report(bool FriendlyFormat = false);
   void refresh_FiveSec();
   void refresh_Minute();

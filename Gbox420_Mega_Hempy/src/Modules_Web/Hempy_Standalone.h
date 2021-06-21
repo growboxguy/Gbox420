@@ -17,7 +17,7 @@ extern ELClientRest PushingBoxRestAPI;
 
 ///< Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
-class Hempy_Standalone : virtual public Common, public Module_Web
+class Hempy_Standalone : public Module_Web
 {
 public:
   Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings);

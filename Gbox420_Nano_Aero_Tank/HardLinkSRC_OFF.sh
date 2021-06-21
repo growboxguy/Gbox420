@@ -36,6 +36,10 @@ unlink ./src/Modules_Web/DevModule_Web.h > /dev/null 2>&1
 unlink ./src/Modules_Web/DevModule_Web.cpp > /dev/null 2>&1
 unlink ./src/Modules_Web/DEVModule_Web.h > /dev/null 2>&1 
 unlink ./src/Modules_Web/DEVModule_Web.cpp > /dev/null 2>&1
+unlink ./src/Modules_Web/Hempy_Standalone.h > /dev/null 2>&1 
+unlink ./src/Modules_Web/Hempy_Standalone.cpp > /dev/null 2>&1
+unlink ./src/Modules_Web/Hempy_Standalone.h > /dev/null 2>&1 
+unlink ./src/Modules_Web/Hempy_Standalone.cpp > /dev/null 2>&1
 
 unlink ./src/Helpers.cpp > /dev/null 2>&1
 unlink ./src/Helpers.h > /dev/null 2>&1

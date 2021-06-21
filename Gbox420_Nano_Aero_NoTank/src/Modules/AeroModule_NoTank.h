@@ -18,7 +18,7 @@ class PressurePump;
 class WeightSensor;
 extern RF24 Wireless;
 
-class AeroModule : virtual public Common, virtual public Module
+class AeroModule : public Module
 {
 public:
   ///< @param Name Pointer to the Name of the object, stored in Flash

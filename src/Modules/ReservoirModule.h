@@ -27,7 +27,7 @@ class WaterTempSensor;
 class WeightSensor;
 extern RF24 Wireless;
 
-class ReservoirModule : virtual public Common, virtual public Module
+class ReservoirModule : public Module
 {
 public:
   ///< @param Name Pointer to the Name of the object, stored in Flash

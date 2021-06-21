@@ -8,10 +8,10 @@
 
 class Sound;
 
-class Module : virtual public Common
+class Module : public Common
 {
 public:
-  Module(); ///< constructor
+  Module(const __FlashStringHelper *Name); ///< constructor
   //Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
   void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false);
   void runReport(bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false); ///< Generate a text log of all sensor readings to the Serial output.

@@ -1,7 +1,7 @@
 #include "420Module.h"
 #include "Sound.h"
 
-Module::Module() : Common()
+Module::Module(const __FlashStringHelper *Name) : Common(Name)
 {
 }
 

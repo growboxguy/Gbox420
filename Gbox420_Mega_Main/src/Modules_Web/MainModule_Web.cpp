@@ -52,10 +52,10 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   addToWebsiteQueue_Load(this);                                                                //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
   addToWebsiteQueue_Refresh(this);                                                             //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
   addToCommandQueue(this);
+  addToLog(F("MainModule initialized"), 0);
   logToSerials(Name, false, 0);
   logToSerials(F("refreshing"), true, 1);
-  runAll();
-  addToLog(F("MainModule initialized"), 0);
+  runAll();  
 }
 
 /**

@@ -21,7 +21,7 @@ extern ELClientMqtt MqttAPI;
 extern bool MqttConnected;
 class Sound;
 
-class Module_Web : virtual public Common, virtual public Module
+class Module_Web : public Module
 {
 public:
   Module_Web(const __FlashStringHelper *Name); ///< constructor

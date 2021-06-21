@@ -7,10 +7,12 @@ Common::Common(const __FlashStringHelper *Name)
   logToSerials(this->Name, false, 1);
 }
 
+/*
 Common::Common()
 {
   //logToSerials(F("Initializing without name"), false, 2);
 }
+*/
 
 /**
 * @brief Report current state in a JSON format to the LongMessage buffer - Append the start of the JSON

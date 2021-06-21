@@ -7,12 +7,11 @@
 #include "ELClientMqtt.h"      // ESP-link - MQTT protocol for sending and receiving IoT messages
 #include "ELClientCmd.h"       ///< ESP-link - Get current time from the internet using NTP
 #include "TimeLib.h"           // Keeping track of time
-#include "RF24.h"
 #include "SPI.h"
 #include "../../Settings.h"
 #include "../Helpers.h"
 #include "../Components/420Module.h"
-#include "420Common_Web.h"
+
 ///< This class represents a complete Module_Web with all of its components
 ///< Responsible for setting up each module, updating their statuses and reporting it
 
@@ -22,16 +21,17 @@ extern ELClientMqtt MqttAPI;
 extern bool MqttConnected;
 class Sound;
 
-class Module_Web : virtual public Common, virtual public Module
+class Module_Web : public Module
 {
 public:
-  Module_Web(RF24 *Wireless); ///< constructor
-  RF24 *Wireless;
-  void addToWebsiteQueue_Load(Common_Web *Module);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
-  void addToWebsiteQueue_Refresh(Common_Web *Module); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  void addToCommandQueue(Common_Web *Module);         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method
+  Module_Web(const __FlashStringHelper *Name); ///< constructor
+  void addToWebsiteQueue_Load(Module_Web *Subscriber);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
+  void addToWebsiteQueue_Refresh(Module_Web *Subscriber); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
+  void addToCommandQueue(Module_Web *Subscriber);         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method
   void websiteLoadEventTrigger(char *Url);
   void websiteRefreshEventTrigger(char *Url);
+  virtual void websiteEvent_Load(__attribute__((unused)) char *url);
+  virtual void websiteEvent_Refresh(__attribute__((unused)) char *url){};  
   void commandEventTrigger(char *command, char *data);
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);
@@ -39,13 +39,41 @@ public:
   void addPushingBoxLogRelayID();
   void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);
   void mqttPublish(char (*JSONData)[MaxLongTextLength]);
+  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
+  void reportToGoogleSheetsTrigger(bool ForceRun = false);
+  void reportToMQTTTrigger(bool ForceRun = false);
+
   
 private:
+
 protected:
-  Common_Web *WebsiteQueue_Load[QueueDepth] = {};
-  Common_Web *WebsiteQueue_Refresh[QueueDepth] = {};
-  Common_Web *CommandQueue[QueueDepth] = {};
+  void setDebug(bool DebugEnabled);
+  char *getDebugText(bool FriendlyFormat = false);
+  void setMetric(bool MetricEnabled);
+  char *getMetricText(bool FriendlyFormat = false);
+  void setSheetsReportingOnOff(bool State);
+  void setSheetsReportingFrequency(uint16_t Frequency);
+  void setPushingBoxLogRelayID(const char *ID);
+  void setMQTTReportingOnOff(bool State);
+  void setMQTTReportingFrequency(uint16_t Frequency);
+  void setMqttPublishTopic(const char *ID);
+  void setMqttSubscribeTopic(const char *ID);
+  void setMQTTLWTTopic(const char *ID);
+  void setMQTTLWTMessage(const char *ID);
+  Module_Web *WebsiteQueue_Load[QueueDepth] = {};
+  Module_Web *WebsiteQueue_Refresh[QueueDepth] = {};
+  Module_Web *CommandQueue[QueueDepth] = {};
   uint8_t WebsiteQueue_Load_Count = 0;
   uint8_t WebsiteQueue_Refresh_Count = 0;
   uint8_t CommandQueue_Count = 0;
+  bool RefreshAllRequested = false;
+  bool ConsoleReportRequested = false;
+  bool ReportToGoogleSheetsRequested = false;
+  bool MQTTReportRequested = false;
+  bool *ReportToGoogleSheets;
+  uint16_t *SheetsReportingFrequency;
+  uint8_t SheetsTriggerCounter = 0;
+  bool *ReportToMQTT;
+  uint16_t *MQTTReportFrequency;
+  uint16_t MQTTTriggerCounter = 0;
 };
