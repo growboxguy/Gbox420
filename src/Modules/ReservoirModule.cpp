@@ -12,7 +12,7 @@ struct ReservoirModuleResponse ReservoirModuleResponse1ToSend = {ReservoirMessag
 struct ReservoirResponse ReservoirResponse1ToSend = {ReservoirMessages::ReservoirResponse1};
 struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::ReservoirReset}; ///< Special response signaling the end of a message exchange to the Transmitter
 
-ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::ReservoirModuleSettings *DefaultSettings) : Module(Name)
+ReservoirModule::ReservoirModule(const __FlashStringHelper *Name, Settings::ReservoirModuleSettings *DefaultSettings) : Module(Name), Common(Name)
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
