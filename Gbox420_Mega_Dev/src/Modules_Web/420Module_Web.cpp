@@ -147,25 +147,32 @@ void Module_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/S", 2) == 0) //Settings tab
   {
-    WebServer.setArgInt(getComponentName(F("Debug")), *Debug);
-    WebServer.setArgInt(getComponentName(F("Metric")), *Metric);
-    WebServer.setArgInt(getComponentName(F("SerialF")), *SerialReportFrequency);
-    WebServer.setArgInt(getComponentName(F("Date")), *SerialReportDate);
-    WebServer.setArgInt(getComponentName(F("Mem")), *SerialReportMemory);
-    WebServer.setArgInt(getComponentName(F("JSON")), *SerialReportJSON);
-    WebServer.setArgInt(getComponentName(F("FJSON")), *SerialReportJSONFriendly);
-    WebServer.setArgInt(getComponentName(F("Wire")), *SerialReportWireless);
-    WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
-    WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
-    WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
-    WebServer.setArgBoolean(getComponentName(F("MQTT")), *ReportToMQTT);
-    WebServer.setArgInt(getComponentName(F("MQTTF")), *MQTTReportFrequency);
-    WebServer.setArgString(getComponentName(F("MPT")), ModuleSettings->MqttPubTopic);
-    WebServer.setArgString(getComponentName(F("MST")), ModuleSettings->MqttSubTopic);
-    WebServer.setArgString(getComponentName(F("MLT")), ModuleSettings->MqttLwtTopic);
-    WebServer.setArgString(getComponentName(F("MLM")), ModuleSettings->MqttLwtMessage);
-    WebServer.setArgBoolean(getComponentName(F("Sound")), getSoundObject()->getEnabledState());
+    WebServer.setArgInt(F("Debug"), *Debug);
+    WebServer.setArgInt(F("Metric"), *Metric);
+    WebServer.setArgInt(F("SerialF"), *SerialReportFrequency);
+    WebServer.setArgInt(F("Date"), *SerialReportDate);
+    WebServer.setArgInt(F("Mem"), *SerialReportMemory);
+    WebServer.setArgInt(F("JSON"), *SerialReportJSON);
+    WebServer.setArgInt(F("FJSON"), *SerialReportJSONFriendly);
+    WebServer.setArgInt(F("Wire"), *SerialReportWireless);
+    WebServer.setArgBoolean(F("Sheets"), *ReportToGoogleSheets);
+    WebServer.setArgInt(F("SheetsF"), *SheetsReportingFrequency);
+    WebServer.setArgString(F("Relay"), ModuleSettings->PushingBoxLogRelayID);
+    WebServer.setArgBoolean(F("MQTT"), *ReportToMQTT);
+    WebServer.setArgInt(F("MQTTF"), *MQTTReportFrequency);
+    WebServer.setArgString(F("MPT"), ModuleSettings->MqttPubTopic);
+    WebServer.setArgString(F("MST"), ModuleSettings->MqttSubTopic);
+    WebServer.setArgString(F("MLT"), ModuleSettings->MqttLwtTopic);
+    WebServer.setArgString(F("MLM"), ModuleSettings->MqttLwtMessage);
+    WebServer.setArgBoolean(F("Sound"), getSoundObject()->getEnabledState());
   }
+}
+
+void Module_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
+{
+  //All tabs
+  WebServer.setArgString(F("Time"), getFormattedTime(false));
+  WebServer.setArgJson(F("Log"), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 }
 
 /**

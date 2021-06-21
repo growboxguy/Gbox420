@@ -32,7 +32,7 @@ public:
   void websiteLoadEventTrigger(char *Url);
   void websiteRefreshEventTrigger(char *Url);
   virtual void websiteEvent_Load(__attribute__((unused)) char *url);
-  virtual void websiteEvent_Refresh(__attribute__((unused)) char *url){};
+  virtual void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void commandEventTrigger(char *command, char *data);
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);

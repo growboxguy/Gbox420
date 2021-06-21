@@ -172,7 +172,7 @@
 					<form>
 						<p>
 							<label>
-								<input style="width: 1em;" type="checkbox" name="Main1_Sound">
+								<input style="width: 1em;" type="checkbox" name="Sound">
 								Sound enabled </label>
 							<input class="setButton" type="submit" value="Set">
 						</p>
@@ -180,7 +180,7 @@
 					<form>
 						<p>
 							<label>
-								<input style="width: 1em;" type="checkbox" name="Main1_Debug"
+								<input style="width: 1em;" type="checkbox" name="Debug"
 									title="Print Debug messages to serial output(s)">
 								Debug </label>
 							<input class="setButton" type="submit" value="Set">
@@ -189,7 +189,7 @@
 					<form>
 						<p>
 							<label>
-								<input style="width: 1em;" type="checkbox" name="Main1_Metric"
+								<input style="width: 1em;" type="checkbox" name="Metric"
 									title="Use imperial units(F,PSI) or metric (C,bar)" />
 								Metric units </label>
 							<input class="setButton" type="submit" value="Set" />
@@ -203,7 +203,7 @@
 					<p>
 						<label>
 							Report every </label>
-						<input min=5 max=86400 step=5 name="Main1_SerialF" type="number" />sec
+						<input min=5 max=86400 step=5 name="SerialF" type="number" />sec
 						<!-- Serial reporting frequency-->
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -212,7 +212,7 @@
 					<form>
 						<p>
 							<label>
-								<input style="width: 1em;" type="checkbox" name="Main1_Date"
+								<input style="width: 1em;" type="checkbox" name="Date"
 									title="Enable/disable reporting the current time to the Serial output">
 								Date </label>
 							<input class="setButton" type="submit" value="Set">
@@ -221,7 +221,7 @@
 					<form>
 						<p>
 							<label>
-								<input style="width: 1em;" type="checkbox" name="Main1_Mem"
+								<input style="width: 1em;" type="checkbox" name="Mem"
 									title="Enable/disable reporting the remaining free memory to the Serial output">
 								Free memory </label>
 							<input class="setButton" type="submit" value="Set">
@@ -230,7 +230,7 @@
 					<form>
 						<p>
 							<label>
-								<input style="width: 1em;" type="checkbox" name="Main1_JSON"
+								<input style="width: 1em;" type="checkbox" name="JSON"
 									title="Enable/disable sending JSON formatted reports to the Serial output" />
 								JSON report </label>
 							<input class="setButton" type="submit" value="Set" />
@@ -239,7 +239,7 @@
 					<form>
 						<p>
 							<label>
-								<input style="width: 1em;" type="checkbox" name="Main1_FJSON"
+								<input style="width: 1em;" type="checkbox" name="FJSON"
 									title="Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial" />
 								Friendly JSON values </label>
 							<input class="setButton" type="submit" value="Set" />
@@ -248,7 +248,7 @@
 					<form>
 						<p>
 							<label>
-								<input style="width: 1em;" type="checkbox" name="Main1_Wire"
+								<input style="width: 1em;" type="checkbox" name="Wire"
 									title="Enable/disable sending wireless package exchange reports to the Serial output" />
 								Wireless report </label>
 							<input class="setButton" type="submit" value="Set" />
@@ -262,10 +262,10 @@
 				<form>
 					<p>
 						<label>
-							<input style="width: 1em;" type="checkbox" name="Main1_Sheets" />
+							<input style="width: 1em;" type="checkbox" name="Sheets" />
 							<!-- Enable/disable Google Sheets reporting via PushingBox (HTTP REST API) -->
 							Report every </label>
-						<input min=10 max=1440 step=5 name="Main1_SheetsF" type="number" />min
+						<input min=10 max=1440 step=5 name="SheetsF" type="number" />min
 						<!-- Reporting frequency-->
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -273,7 +273,7 @@
 				<form>
 					<p>
 						<label>RelayID</label>
-						<input type="text" name="Main1_Relay" style="width: 160px;" maxlength="31"
+						<input type="text" name="Relay" style="width: 160px;" maxlength="31"
 							title="DeviceID of the PushingBox logging scenario" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
@@ -286,16 +286,16 @@
 				<form>
 					<p>
 						<label>
-							<input style="width: 1em;" type="checkbox" name="Main1_MQTT" />
+							<input style="width: 1em;" type="checkbox" name="MQTT" />
 							Report every </label>
-						<input min=5 max=86400 step=5 name="Main1_MQTTF" type="number" />sec
+						<input min=5 max=86400 step=5 name="MQTTF" type="number" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
 						<label>Publish</label>
-						<input type="text" name="Main1_MPT" style="width: 205px;"
+						<input type="text" name="MPT" style="width: 205px;"
 							title="MQTT topic where a JSON formatted status report is sent too" maxlength="127" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
@@ -303,7 +303,7 @@
 				<form>
 					<p>
 						<label>Subscribe</label>
-						<input type="text" name="Main1_MST" style="width: 190px;"
+						<input type="text" name="MST" style="width: 190px;"
 							title="MQTT topic that the Gbox420 sketch listens on for incoming commands"
 							maxlength="127" />
 						<input class="setButton" type="submit" value="Set" />
@@ -312,7 +312,7 @@
 				<form>
 					<p>
 						<label>LWT topic</label>
-						<input type="text" name="Main1_MLT" style="width: 187px;" maxlength="127"
+						<input type="text" name="MLT" style="width: 187px;" maxlength="127"
 							title="Last Will and Testament topic when the Gbox420 stops reporting unexpectedly" />
 						<!-- https://www.hivemq.com/blog/mqtt-essentials-part-9-last-will-and-testament/ -->
 						<input class="setButton" type="submit" value="Set" />
@@ -321,25 +321,25 @@
 				<form>
 					<p>
 						<label>LWT message</label>
-						<input type="text" name="Main1_MLM" style="width: 160px;" maxlength="31"
+						<input type="text" name="MLM" style="width: 160px;" maxlength="31"
 							title="LWT message when the Gbox420 stops reporting unexpectedly" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 			</div>
 			<div class="card">
-				<h1><span id="Main1_Time"></span></h1>
-				<ul id="Main1_Log"></ul>
+				<h1><span id="Time"></span></h1>
+				<ul id="Log"></ul>
 				<form>
 					<p>
-						<button id="Main1_Refresh" type="button"
+						<button id="Refresh" type="button"
 							title="Force refreshing sensor readings">&#8635;</button>
 						Report to:
-						<button id="Main1_SerialRep" type="button"
+						<button id="SerialRep" type="button"
 							title="Report current status to Serial (ESP and Arduino)">Console</button>
-						<button id="Main1_SheetsRep" type="button"
+						<button id="SheetsRep" type="button"
 							title="Report current status to Google Sheets">Sheets</button>
-						<button id="Main1_MQTTRep" type="button"
+						<button id="MQTTRep" type="button"
 							title="Report current status to Google Sheets">MQTT</button>
 					</p>
 				</form>

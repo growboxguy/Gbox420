@@ -61,8 +61,10 @@ void Hempy_Standalone::report(bool FriendlyFormat)
 
 void Hempy_Standalone::websiteEvent_Load(char *url)
 {
-  if (strncmp(url, "/G", 2) == 0) //GrowBox tab
+  Module_Web::websiteEvent_Load(url);
+  if (strncmp(url, "/H", 2) == 0) //Hempy tab
   {
+    //Bucket 1
     WebServer.setArgString(getComponentName(F("B1ET")), Bucket1->getEvaporationTargetText());
     WebServer.setArgString(getComponentName(F("B1OF")), Bucket1->getOverflowTargetText());
     WebServer.setArgString(getComponentName(F("B1WL")), Bucket1->getWasteLimitText());
@@ -70,6 +72,7 @@ void Hempy_Standalone::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("B1T")), Pump1->getPumpTimeOut());
     WebServer.setArgInt(getComponentName(F("B1D")), Bucket1->getDrainWaitTime());
     WebServer.setArgString(getComponentName(F("B1DW")), Bucket1->getDryWeightText());
+    //Bucket 2
     WebServer.setArgString(getComponentName(F("B2ET")), Bucket2->getEvaporationTargetText());
     WebServer.setArgString(getComponentName(F("B2OF")), Bucket2->getOverflowTargetText());
     WebServer.setArgString(getComponentName(F("B2WL")), Bucket2->getWasteLimitText());
@@ -77,20 +80,13 @@ void Hempy_Standalone::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("B2T")), Pump2->getPumpTimeOut());
     WebServer.setArgInt(getComponentName(F("B2D")), Bucket2->getDrainWaitTime());
     WebServer.setArgString(getComponentName(F("B2DW")), Bucket2->getDryWeightText());
-  }
-  else
-  {
-    Module_Web::websiteEvent_Load(url);
-  }
+  }  
 }
 
 void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
-  //All tabs
-  WebServer.setArgString(getComponentName(F("Time")), getFormattedTime(false));
-  WebServer.setArgJson(getComponentName(F("Log")), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
-
-  if (strncmp(url, "/G", 2) == 0) //GrowBox tab
+  Module_Web::websiteEvent_Refresh(url);
+  if (strncmp(url, "/H", 2) == 0) //Hempy tab
   {
     //DHT1
     WebServer.setArgString(getComponentName(F("DT")), DHT1->getTempText(true)); ///< Shows the latest reading
