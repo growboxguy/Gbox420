@@ -25,7 +25,7 @@ extern ELClientRest PushingBoxRestAPI;
 
 ///< Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
-class MainModule : public Module_Web
+class MainModule : virtual public Common_Web, virtual public Module_Web
 {
 public:
   MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless); ///< constructor
@@ -51,35 +51,11 @@ public:
   void report(bool FriendlyFormat = false);
   void refresh_FiveSec();
   void refresh_Minute();
-  void reportToGoogleSheetsTrigger(bool ForceRun = false);
-  void reportToMQTTTrigger(bool ForceRun = false);
   bool getDayMode(); ///< Returns true if the lights are on or daylight is detected
   char *getDayModeText(bool FriendlyFormat = false);
 
 private:
-  void setDebug(bool DebugEnabled);
-  char *getDebugText(bool FriendlyFormat = false);
-  void setMetric(bool MetricEnabled);
-  char *getMetricText(bool FriendlyFormat = false);
-  void setSheetsReportingOnOff(bool State);
-  void setSheetsReportingFrequency(uint16_t Frequency);
-  void setPushingBoxLogRelayID(const char *ID);
-  void setMQTTReportingOnOff(bool State);
-  void setMQTTReportingFrequency(uint16_t Frequency);
-  void setMqttPublishTopic(const char *ID);
-  void setMqttSubscribeTopic(const char *ID);
-  void setMQTTLWTTopic(const char *ID);
-  void setMQTTLWTMessage(const char *ID);
-
+ 
 protected:
-  bool RefreshAllRequested = false;
-  bool ConsoleReportRequested = false;
-  bool ReportToGoogleSheetsRequested = false;
-  bool MQTTReportRequested = false;
-  bool *ReportToGoogleSheets;
-  uint16_t *SheetsReportingFrequency;
-  uint8_t SheetsTriggerCounter = 0;
-  bool *ReportToMQTT;
-  uint16_t *MQTTReportFrequency;
-  uint16_t MQTTTriggerCounter = 0;
+  
 };

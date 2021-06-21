@@ -9,7 +9,7 @@ struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::Reserv
 /**
 * @brief Constructor, creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Module_Web(Name)
+ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
 {
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;

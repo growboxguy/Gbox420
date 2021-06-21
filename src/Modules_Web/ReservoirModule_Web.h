@@ -12,11 +12,12 @@
  */
 
 #include "TimeLib.h" // Keeping track of time
+#include "420Common_Web.h"
 #include "420Module_Web.h"
 #include "../Modules_Web/MainModule_Web.h"
 #include "../WirelessCommands_Reservoir.h"
 
-class ReservoirModule_Web : public Module_Web
+class ReservoirModule_Web : public Common_Web
 {
 public:
   ReservoirModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ReservoirModuleSettings *DefaultSettings); ///< constructor

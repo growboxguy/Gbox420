@@ -6,15 +6,15 @@ static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storin
 /**
 * @brief Constructor: creates an instance of the class, and stores wireless transmitter object used to communicate with other modules
 */
-Module_Web::Module_Web(const __FlashStringHelper *Name) : Module(Name)
-{  
+Module_Web::Module_Web(const __FlashStringHelper *Name) : Common(Name), Module(Name)
+{
   //logToSerials(F("Module_Web ready"), true, 3);
 }
 
 /**
 * @brief Subscribe to the ESP-link website load event
 */
-void Module_Web::addToWebsiteQueue_Load(Module_Web *Subscriber)
+void Module_Web::addToWebsiteQueue_Load(Common_Web *Subscriber)
 {
   if (QueueDepth > WebsiteQueue_Load_Count)
     WebsiteQueue_Load[WebsiteQueue_Load_Count++] = Subscriber;
@@ -25,7 +25,7 @@ void Module_Web::addToWebsiteQueue_Load(Module_Web *Subscriber)
 /**
 * @brief Subscribe to the ESP-link website refresh event
 */
-void Module_Web::addToWebsiteQueue_Refresh(Module_Web *Subscriber)
+void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Subscriber)
 {
   if (QueueDepth > WebsiteQueue_Refresh_Count)
     WebsiteQueue_Refresh[WebsiteQueue_Refresh_Count++] = Subscriber;
@@ -36,7 +36,7 @@ void Module_Web::addToWebsiteQueue_Refresh(Module_Web *Subscriber)
 /**
 * @brief Subscribe to MQTT or ESP-link website commands  (Pressing a button, setting a value)
 */
-void Module_Web::addToCommandQueue(Module_Web *Subscriber)
+void Module_Web::addToCommandQueue(Common_Web *Subscriber)
 {
   if (QueueDepth > CommandQueue_Count)
     CommandQueue[CommandQueue_Count++] = Subscriber;
@@ -171,111 +171,112 @@ void Module_Web::websiteEvent_Load(char *url)
 /**
 * @brief Process commands received from MQTT subscription or from the ESP-link website
 */
+
 bool Module_Web::commandEvent(char *Command, char *Data)
-{  
-    //Sound1
-    if (strcmp_P(ShortMessage, (PGM_P)F("Sound")) == 0)
-    {
-      getSoundObject()->setSoundOnOff(toBool(Data));
-    }
-    //Report triggers
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsRep")) == 0)
-    {
-      ReportToGoogleSheetsRequested = true; ///< just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
-      addToLog(F("Reporting to Sheets"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SerialRep")) == 0)
-    {
-      ConsoleReportRequested = true;
-      addToLog(F("Reporting to Serial"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MQTTRep")) == 0)
-    {
-      MQTTReportRequested = true;
-      addToLog(F("Reporting to MQTT"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) ///< Website signals to refresh all sensor readings
-    {
-      RefreshAllRequested = true;
-      addToLog(F("Refresh triggered"), false);
-    }
-    //Settings
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0)
-    {
-      setDebug(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Metric")) == 0)
-    {
-      setMetric(toBool(Data));
-    }
-    //Settings - Serial reporting
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SerialF")) == 0)
-    {
-      setSerialReportingFrequency(toInt(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Date")) == 0)
-    {
-      setSerialReportDate(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Mem")) == 0)
-    {
-      setSerialReportMemory(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("JSON")) == 0)
-    {
-      setSerialReportJSON(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("FJSON")) == 0)
-    {
-      setSerialReportJSONFriendly(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Wire")) == 0)
-    {
-      setSerialReportWireless(toBool(Data));
-    }
-    //Settings - Google Sheets
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0)
-    {
-      setSheetsReportingOnOff(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsF")) == 0)
-    {
-      setSheetsReportingFrequency(toInt(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Relay")) == 0)
-    {
-      setPushingBoxLogRelayID(WebServer.getArgString());
-    }
-    //Settings - MQTT
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MQTT")) == 0)
-    {
-      setMQTTReportingOnOff(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MQTTF")) == 0)
-    {
-      setMQTTReportingFrequency(toInt(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MPT")) == 0)
-    {
-      setMqttPublishTopic(WebServer.getArgString());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MST")) == 0)
-    {
-      setMqttSubscribeTopic(WebServer.getArgString());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MLT")) == 0)
-    {
-      setMQTTLWTTopic(WebServer.getArgString());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MLM")) == 0)
-    {
-      setMQTTLWTMessage(WebServer.getArgString());
-    }
-    else
-    {
-      return false;  //Nothing matched
-    }
-    return true;  //Match found   
+{
+  //Sound1
+  if (strcmp_P(ShortMessage, (PGM_P)F("Sound")) == 0)
+  {
+    getSoundObject()->setSoundOnOff(toBool(Data));
+  }
+  //Report triggers
+  else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsRep")) == 0)
+  {
+    ReportToGoogleSheetsRequested = true; ///< just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
+    addToLog(F("Reporting to Sheets"), false);
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("SerialRep")) == 0)
+  {
+    ConsoleReportRequested = true;
+    addToLog(F("Reporting to Serial"), false);
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("MQTTRep")) == 0)
+  {
+    MQTTReportRequested = true;
+    addToLog(F("Reporting to MQTT"), false);
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) ///< Website signals to refresh all sensor readings
+  {
+    RefreshAllRequested = true;
+    addToLog(F("Refresh triggered"), false);
+  }
+  //Settings
+  else if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0)
+  {
+    setDebug(toBool(Data));
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("Metric")) == 0)
+  {
+    setMetric(toBool(Data));
+  }
+  //Settings - Serial reporting
+  else if (strcmp_P(ShortMessage, (PGM_P)F("SerialF")) == 0)
+  {
+    setSerialReportingFrequency(toInt(Data));
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("Date")) == 0)
+  {
+    setSerialReportDate(toBool(Data));
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("Mem")) == 0)
+  {
+    setSerialReportMemory(toBool(Data));
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("JSON")) == 0)
+  {
+    setSerialReportJSON(toBool(Data));
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("FJSON")) == 0)
+  {
+    setSerialReportJSONFriendly(toBool(Data));
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("Wire")) == 0)
+  {
+    setSerialReportWireless(toBool(Data));
+  }
+  //Settings - Google Sheets
+  else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0)
+  {
+    setSheetsReportingOnOff(toBool(Data));
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsF")) == 0)
+  {
+    setSheetsReportingFrequency(toInt(Data));
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("Relay")) == 0)
+  {
+    setPushingBoxLogRelayID(WebServer.getArgString());
+  }
+  //Settings - MQTT
+  else if (strcmp_P(ShortMessage, (PGM_P)F("MQTT")) == 0)
+  {
+    setMQTTReportingOnOff(toBool(Data));
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("MQTTF")) == 0)
+  {
+    setMQTTReportingFrequency(toInt(Data));
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("MPT")) == 0)
+  {
+    setMqttPublishTopic(WebServer.getArgString());
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("MST")) == 0)
+  {
+    setMqttSubscribeTopic(WebServer.getArgString());
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("MLT")) == 0)
+  {
+    setMQTTLWTTopic(WebServer.getArgString());
+  }
+  else if (strcmp_P(ShortMessage, (PGM_P)F("MLM")) == 0)
+  {
+    setMQTTLWTMessage(WebServer.getArgString());
+  }
+  else
+  {
+    return false; //Nothing matched
+  }
+  return true; //Match found
 }
 
 ///< Google Sheets functions - https://sites.google.com/site/growboxguy/esp-link/logging
@@ -334,7 +335,6 @@ void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
     }
   }
 }
-
 
 ///< Settings
 void Module_Web::setDebug(bool DebugEnabled)
