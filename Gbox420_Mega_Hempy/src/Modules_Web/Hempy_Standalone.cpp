@@ -8,7 +8,7 @@
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings, creates components that the instance controls, and subscribes to events
 */
-Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings) : Common_Web(Name), Common(Name), Module_Web()
+Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings) : Common(Name), Module_Web()
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
@@ -78,26 +78,9 @@ void Hempy_Standalone::websiteEvent_Load(char *url)
     WebServer.setArgInt(getComponentName(F("B2D")), Bucket2->getDrainWaitTime());
     WebServer.setArgString(getComponentName(F("B2DW")), Bucket2->getDryWeightText());
   }
-  else if (strncmp(url, "/S", 2) == 0) //Settings tab
+  else
   {
-    WebServer.setArgInt(getComponentName(F("Debug")), *Debug);
-    WebServer.setArgInt(getComponentName(F("Metric")), *Metric);
-    WebServer.setArgInt(getComponentName(F("SerialF")), *SerialReportFrequency);
-    WebServer.setArgInt(getComponentName(F("Date")), *SerialReportDate);
-    WebServer.setArgInt(getComponentName(F("Mem")), *SerialReportMemory);
-    WebServer.setArgInt(getComponentName(F("JSON")), *SerialReportJSON);
-    WebServer.setArgInt(getComponentName(F("FJSON")), *SerialReportJSONFriendly);
-    WebServer.setArgInt(getComponentName(F("Wire")), *SerialReportWireless);
-    WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
-    WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
-    WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
-    WebServer.setArgBoolean(getComponentName(F("MQTT")), *ReportToMQTT);
-    WebServer.setArgInt(getComponentName(F("MQTTF")), *MQTTReportFrequency);
-    WebServer.setArgString(getComponentName(F("MPT")), ModuleSettings->MqttPubTopic);
-    WebServer.setArgString(getComponentName(F("MST")), ModuleSettings->MqttSubTopic);
-    WebServer.setArgString(getComponentName(F("MLT")), ModuleSettings->MqttLwtTopic);
-    WebServer.setArgString(getComponentName(F("MLM")), ModuleSettings->MqttLwtMessage);
-    WebServer.setArgBoolean(getComponentName(F("Sound")), Sound1->getEnabledState());
+    Module_Web::websiteEvent_Load(url);
   }
 }
 
@@ -130,114 +113,166 @@ void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *url) /
 /**
 * @brief Process commands received from MQTT subscription or from the ESP-link website
 */
-void Hempy_Standalone::commandEvent(char *Command, char *Data)
+bool Hempy_Standalone::commandEvent(char *Command, char *Data)
 {
   if (!isThisMine(Command))
   {
-    return;
+    return false;
   }
   else
   {
-    //Sound1
-    if (strcmp_P(ShortMessage, (PGM_P)F("Sound")) == 0)
+    //Bucket1
+    if (Bucket1->commandEvent(Command, Data))
     {
-      Sound1->setSoundOnOff(toBool(Data));
+      ;
     }
-    //Report triggers
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsRep")) == 0)
+    else if (Bucket2->commandEvent(Command, Data))
     {
-      ReportToGoogleSheetsRequested = true; ///< just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
-      addToLog(F("Reporting to Sheets"), false);
+      ;
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SerialRep")) == 0)
+    else if (Module_Web::commandEvent(Command, Data))
     {
-      ConsoleReportRequested = true;
-      addToLog(F("Reporting to Serial"), false);
+      ;
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MQTTRep")) == 0)
+    else
     {
-      MQTTReportRequested = true;
-      addToLog(F("Reporting to MQTT"), false);
+      return false; //Nothing matched
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) ///< Website signals to refresh all sensor readings
-    {
-      RefreshAllRequested = true;
-      addToLog(F("Refresh triggered"), false);
-    }
-    //Settings
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0)
-    {
-      setDebug(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Metric")) == 0)
-    {
-      setMetric(toBool(Data));
-    }
-    //Settings - Serial reporting
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SerialF")) == 0)
-    {
-      setSerialReportingFrequency(toInt(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Date")) == 0)
-    {
-      setSerialReportDate(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Mem")) == 0)
-    {
-      setSerialReportMemory(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("JSON")) == 0)
-    {
-      setSerialReportJSON(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("FJSON")) == 0)
-    {
-      setSerialReportJSONFriendly(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Wire")) == 0)
-    {
-      setSerialReportWireless(toBool(Data));
-    }
-    //Settings - Google Sheets
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0)
-    {
-      setSheetsReportingOnOff(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsF")) == 0)
-    {
-      setSheetsReportingFrequency(toInt(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Relay")) == 0)
-    {
-      setPushingBoxLogRelayID(WebServer.getArgString());
-    }
-    //Settings - MQTT
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MQTT")) == 0)
-    {
-      setMQTTReportingOnOff(toBool(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MQTTF")) == 0)
-    {
-      setMQTTReportingFrequency(toInt(Data));
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MPT")) == 0)
-    {
-      setMqttPublishTopic(WebServer.getArgString());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MST")) == 0)
-    {
-      setMqttSubscribeTopic(WebServer.getArgString());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MLT")) == 0)
-    {
-      setMQTTLWTTopic(WebServer.getArgString());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("MLM")) == 0)
-    {
-      setMQTTLWTMessage(WebServer.getArgString());
-    }
+    return true; //Match found
   }
 }
+
+/*
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1On")) == 0)
+    {
+      HempyBucketCommand1ToSend.StartWatering = true;
+      addToLog(F("Watering HempyBucket 1"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Off")) == 0)
+    {
+      HempyBucketCommand1ToSend.StopWatering = true;
+      addToLog(F("Stop watering HempyBucket 1"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Dis")) == 0)
+    {
+      HempyBucketCommand1ToSend.Disable = true;
+      addToLog(F("Disabled HempyBucket 1"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareB")) == 0)
+    {
+      HempyBucketCommand1ToSend.TareWeightB = true;
+      addToLog(F("Taring Bucket 1 scale"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareDW")) == 0)
+    {
+      HempyBucketCommand1ToSend.TareWeightDW = true;
+      addToLog(F("Taring Bucket 1 Dry/Wet"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareWR")) == 0)
+    {
+      HempyBucketCommand1ToSend.TareWeightWR = true;
+      addToLog(F("Taring Bucket 1 waste scale"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1ET")) == 0)
+    {
+      DefaultSettings->EvaporationTarget_B1 = toFloat(Data);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1OF")) == 0)
+    {
+      DefaultSettings->OverflowTarget_B1 = toFloat(Data);
+      addToLog(F("Bucket 1 targets updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1WL")) == 0)
+    {
+      DefaultSettings->WasteLimit_B1 = toFloat(Data);
+      addToLog(F("Bucket 1 waste limit updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1PS")) == 0)
+    {
+      DefaultSettings->PumpSpeed_B1 = toInt(Data);
+      addToLog(F("Pump 1 speed updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1T")) == 0)
+    {
+      DefaultSettings->PumpTimeOut_B1 = toInt(Data);
+      addToLog(F("Pump 1 timeout updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1D")) == 0)
+    {
+      DefaultSettings->DrainWaitTime_B1 = toInt(Data);
+      addToLog(F("B1 Drain wait updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B1DW")) == 0)
+    {
+      HempyBucketCommand1ToSend.DryWeight = toFloat(Data);
+      addToLog(F("B1 dry weight updated"), false);
+    }
+    //Bucket
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2On")) == 0)
+    {
+      HempyBucketCommand2ToSend.StartWatering = true;
+      addToLog(F("Watering HempyBucket 2"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Off")) == 0)
+    {
+      HempyBucketCommand2ToSend.StopWatering = true;
+      addToLog(F("Stop watering HempyBucket 2"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Dis")) == 0)
+    {
+      HempyBucketCommand2ToSend.Disable = true;
+      addToLog(F("Disabled HempyBucket 2"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareB")) == 0)
+    {
+      HempyBucketCommand2ToSend.TareWeightB = true;
+      addToLog(F("Taring Bucket 2 scale"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareDW")) == 0)
+    {
+      HempyBucketCommand2ToSend.TareWeightDW = true;
+      addToLog(F("Taring Bucket 2 Dry/Wet"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareWR")) == 0)
+    {
+      HempyBucketCommand2ToSend.TareWeightWR = true;
+      addToLog(F("Taring Bucket 2 waste scale"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2ET")) == 0)
+    {
+      DefaultSettings->EvaporationTarget_B2 = toFloat(Data);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2OF")) == 0)
+    {
+      DefaultSettings->OverflowTarget_B2 = toFloat(Data);
+      addToLog(F("Bucket 2 targets updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2WL")) == 0)
+    {
+      DefaultSettings->WasteLimit_B2 = toFloat(Data);
+      addToLog(F("Bucket 2 waste limit updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2PS")) == 0)
+    {
+      DefaultSettings->PumpSpeed_B2 = toInt(Data);
+      addToLog(F("Pump 2 speed updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2T")) == 0)
+    {
+      DefaultSettings->PumpTimeOut_B2 = toInt(Data);
+      addToLog(F("Pump 2 timeout updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2D")) == 0)
+    {
+      DefaultSettings->DrainWaitTime_B2 = toInt(Data);
+      addToLog(F("B2 Drain wait updated"), false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("B2DW")) == 0)
+    {
+      HempyBucketCommand2ToSend.DryWeight = toFloat(Data);
+      addToLog(F("B2 dry weight updated"), false);
+    }
+    */
 
 void Hempy_Standalone::refresh_FiveSec()
 {
@@ -271,164 +306,3 @@ void Hempy_Standalone::refresh_Minute()
   Common::refresh_Minute();
   reportToGoogleSheetsTrigger();
 }
-
-///< Settings
-void Hempy_Standalone::setDebug(bool DebugEnabled)
-{
-  *Debug = DebugEnabled;
-  if (*Debug)
-  {
-    addToLog(F("Debug enabled"));
-    getSoundObject()->playOnSound();
-  }
-  else
-  {
-    addToLog(F("Debug disabled"));
-    getSoundObject()->playOffSound();
-  }
-}
-
-char *Hempy_Standalone::getDebugText(bool FriendlyFormat)
-{
-  if (FriendlyFormat)
-  {
-    return toText_onOff(*Debug);
-  }
-  else
-  {
-    return toText(*Debug);
-  }
-}
-
-void Hempy_Standalone::setMetric(bool MetricEnabled)
-{
-  if (MetricEnabled != *Metric)
-  { ///< if there was a change
-    *Metric = MetricEnabled;
-    RefreshAllRequested = true;
-  }
-  if (*Metric)
-    addToLog(F("Using Metric units"));
-  else
-    addToLog(F("Using Imperial units"));
-  getSoundObject()->playOnSound();
-}
-
-char *Hempy_Standalone::getMetricText(bool FriendlyFormat)
-{
-  if (FriendlyFormat)
-  {
-    return toText_onOff(*Metric);
-  }
-  else
-  {
-    return toText(*Metric);
-  }
-}
-
-///< Google Sheets reporting
-
-void Hempy_Standalone::setSheetsReportingOnOff(bool State)
-{
-  *ReportToGoogleSheets = State;
-  if (State)
-  {
-    addToLog(F("Google Sheets enabled"));
-    getSoundObject()->playOnSound();
-  }
-  else
-  {
-    addToLog(F("Google Sheets disabled"));
-    getSoundObject()->playOffSound();
-  }
-}
-
-void Hempy_Standalone::setSheetsReportingFrequency(uint16_t Frequency)
-{
-  *SheetsReportingFrequency = Frequency;
-  addToLog(F("Sheets freqency updated"));
-  getSoundObject()->playOnSound();
-}
-
-void Hempy_Standalone::setPushingBoxLogRelayID(const char *ID)
-{
-  strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
-  getSoundObject()->playOnSound();
-  addToLog(F("Sheets log relay ID updated"));
-}
-
-void Hempy_Standalone::reportToGoogleSheetsTrigger(bool ForceRun)
-{ ///< Handles custom reporting frequency for Google Sheets
-  if ((*ReportToGoogleSheets && SheetsTriggerCounter++ % (*SheetsReportingFrequency) == 0) || ForceRun)
-  {
-    addPushingBoxLogRelayID();         //Loads Pushingbox relay ID into LongMessage
-    runReport(false, true, true);      //Append the sensor readings in a JSON format to LongMessage buffer
-    relayToGoogleSheets(&LongMessage); //Sends it to Google Sheets
-  }
-}
-///< This is how a sent out message looks like:
-///< {parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
-
-void Hempy_Standalone::setMQTTReportingOnOff(bool State)
-{
-  *ReportToMQTT = State;
-  if (State)
-  {
-    addToLog(F("MQTT enabled"));
-    getSoundObject()->playOnSound();
-  }
-  else
-  {
-    addToLog(F("MQTT disabled"));
-    getSoundObject()->playOffSound();
-  }
-}
-
-void Hempy_Standalone::setMQTTReportingFrequency(uint16_t Frequency)
-{
-  *SheetsReportingFrequency = Frequency;
-  addToLog(F("MQTT freqency updated"));
-  getSoundObject()->playOnSound();
-}
-
-void Hempy_Standalone::setMqttPublishTopic(const char *Topic)
-{
-  strncpy(ModuleSettings->MqttPubTopic, Topic, MaxShotTextLength);
-  getSoundObject()->playOnSound();
-  addToLog(F("MQTT publish updated"));
-}
-
-void Hempy_Standalone::setMqttSubscribeTopic(const char *Topic)
-{
-  strncpy(ModuleSettings->MqttSubTopic, Topic, MaxShotTextLength);
-  getSoundObject()->playOnSound();
-  addToLog(F("MQTT subscribe updated"));
-}
-
-void Hempy_Standalone::setMQTTLWTTopic(const char *LWTTopic)
-{
-  strncpy(ModuleSettings->MqttLwtTopic, LWTTopic, MaxShotTextLength);
-  getSoundObject()->playOnSound();
-  addToLog(F("LWT topic updated"));
-}
-
-void Hempy_Standalone::setMQTTLWTMessage(const char *LWTMessage)
-{
-  strncpy(ModuleSettings->MqttLwtMessage, LWTMessage, MaxWordLength);
-  getSoundObject()->playOnSound();
-  addToLog(F("LWT message updated"));
-}
-
-void Hempy_Standalone::reportToMQTTTrigger(bool ForceRun)
-{ ///< Handles custom reporting frequency for MQTT
-  if ((*ReportToMQTT && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
-  {
-    runReport(true, true, true); //< Loads a JSON Log to LongMessage buffer
-    mqttPublish(&LongMessage);   //< and publish readings via ESP MQTT API
-    eventLogToJSON(true, true);  //< Loads the EventLog as a JSON with EventLog key
-    mqttPublish(&LongMessage);   //< Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
-  }
-}
-///< This is how the two sent out messages looks like:
-///< Gbox420/{"Log":{"IFan":{"S":"1"},"EFan":{"S":"1"},"APump1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"92","B":"92","T":"1","On":"10:20","Of":"02:20"},"LtSen1":{"R":"955","D":"0"},"DHT1":{"T":"25.60","H":"45.20"},"Pow1":{"P":"569.30","E":"636.74","V":"227.50","C":"2.62","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"19.12","WR1":"6.23","DW1":"18.60","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"21.13","WR2":"3.65","DW2":"19.19","WW2":"21.19","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"6.12","W":"17.53","Mi":"5.00","Ma":"7.00","AS":"1","LS":"6.22","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"1.84","T":"1110.70","W":"24.37","WT":"18.56","AT":"26.20","H":"39.40"},"Main1":{"M":"1","D":"1"}}}
-///< Gbox420/{"EventLog":["Event log entry 1","Event log entry 2","Event log entry 3","Event log entry 4"]}

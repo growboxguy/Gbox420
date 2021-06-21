@@ -17,7 +17,7 @@ extern ELClientRest PushingBoxRestAPI;
 
 ///< Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
-class Hempy_Standalone : virtual public Common_Web, public Module_Web
+class Hempy_Standalone : virtual public Common, public Module_Web
 {
 public:
   Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings);
@@ -33,37 +33,14 @@ public:
   WaterPump *Pump2 = NULL;        ///< Bucket 2 water pump
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Load(__attribute__((unused)) char *url);
-  void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
+  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report(bool FriendlyFormat = false);
   void refresh_FiveSec();
   void refresh_Minute();
-  void reportToGoogleSheetsTrigger(bool ForceRun = false);
-  void reportToMQTTTrigger(bool ForceRun = false);
+
 
 private:
-  void setDebug(bool DebugEnabled);
-  char *getDebugText(bool FriendlyFormat = false);
-  void setMetric(bool MetricEnabled);
-  char *getMetricText(bool FriendlyFormat = false);
-  void setSheetsReportingOnOff(bool State);
-  void setSheetsReportingFrequency(uint16_t Frequency);
-  void setPushingBoxLogRelayID(const char *ID);
-  void setMQTTReportingOnOff(bool State);
-  void setMQTTReportingFrequency(uint16_t Frequency);
-  void setMqttPublishTopic(const char *ID);
-  void setMqttSubscribeTopic(const char *ID);
-  void setMQTTLWTTopic(const char *ID);
-  void setMQTTLWTMessage(const char *ID);
 
 protected:
-  bool RefreshAllRequested = false;
-  bool ConsoleReportRequested = false;
-  bool ReportToGoogleSheetsRequested = false;
-  bool MQTTReportRequested = false;
-  bool *ReportToGoogleSheets;
-  uint16_t *SheetsReportingFrequency;
-  uint8_t SheetsTriggerCounter = 0;
-  bool *ReportToMQTT;
-  uint16_t *MQTTReportFrequency;
-  uint16_t MQTTTriggerCounter = 0;
+  
 };
