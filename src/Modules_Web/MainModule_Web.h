@@ -25,7 +25,7 @@ extern ELClientRest PushingBoxRestAPI;
 
 ///< Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
 
-class MainModule : virtual public Common_Web, public Module_Web
+class MainModule : virtual public Common, public Module_Web
 {
 public:
   MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless); ///< constructor
@@ -45,9 +45,9 @@ public:
   AeroModule_Web *AeroModule1 = NULL;           ///< <Represents the website controls and feedback for a AeroModule
   ReservoirModule_Web *ReservoirModule1 = NULL; ///< <Represents the website controls and feedback for a ReservoirModule
   HempyModule_Web *HempyModule1 = NULL;         ///< <Represents the website controls and feedback for a HempyModule
-  void websiteEvent_Load(char *url);
-  void websiteEvent_Refresh(char *url);
-  void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Load(__attribute__((unused)) char *url);
+  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report(bool FriendlyFormat = false);
   void refresh_FiveSec();
   void refresh_Minute();

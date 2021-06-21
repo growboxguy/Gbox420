@@ -11,7 +11,7 @@ struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};      
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
+HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::HempyModuleSettings *DefaultSettings) : Module_Web(Name)
 { ///< Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -125,11 +125,11 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
   }
 }
 
-void HempyModule_Web::commandEvent(char *Command, char *Data)
+bool HempyModule_Web::commandEvent(char *Command, char *Data)
 {
   if (!isThisMine(Command))
   {
-    return;
+    return false;
   }
   else
   {
@@ -263,6 +263,11 @@ void HempyModule_Web::commandEvent(char *Command, char *Data)
       HempyBucketCommand2ToSend.DryWeight = toFloat(Data);
       Parent->addToLog(F("B2 dry weight updated"), false);
     }
+    else
+    {
+      return false;
+    }
+    return true;
     SyncRequested = true;
   }
 }

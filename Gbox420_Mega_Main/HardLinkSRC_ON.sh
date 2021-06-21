@@ -24,8 +24,6 @@ ln ../src/WirelessCommands_Aero.h ./src
 ln ../src/WirelessCommands_Hempy.h ./src
 ln ../src/WirelessCommands_Reservoir.h ./src
 
-ln ../src/Modules_Web/420Common_Web.cpp ./src/Modules_Web
-ln ../src/Modules_Web/420Common_Web.h ./src/Modules_Web
 ln ../src/Modules_Web/420Module_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/420Module_Web.h ./src/Modules_Web
 ln ../src/Modules_Web/MainModule_Web.cpp ./src/Modules_Web

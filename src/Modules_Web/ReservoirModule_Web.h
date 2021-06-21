@@ -12,18 +12,17 @@
  */
 
 #include "TimeLib.h" // Keeping track of time
-#include "420Common_Web.h"
 #include "420Module_Web.h"
 #include "../Modules_Web/MainModule_Web.h"
 #include "../WirelessCommands_Reservoir.h"
 
-class ReservoirModule_Web : public Common_Web
+class ReservoirModule_Web : public Module_Web
 {
 public:
   ReservoirModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ReservoirModuleSettings *DefaultSettings); ///< constructor
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Load(__attribute__((unused)) char *url){}; //Not used
-  void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
+  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report(bool FriendlyFormat = false);
   void refresh_Sec();
   void refresh_FiveSec();

@@ -9,7 +9,7 @@ struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::Reserv
 /**
 * @brief Constructor, creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
+ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Module_Web(Name)
 {
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -63,11 +63,11 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
 /**
 * @brief Process commands received from MQTT subscription or from the ESP-link website
 */
-void ReservoirModule_Web::commandEvent(char *Command, char *Data)
+bool ReservoirModule_Web::commandEvent(char *Command, char *Data)
 { ///< When a button is pressed on the website
   if (!isThisMine(Command))
   {
-    return;
+    return false;
   }
   else
   {
@@ -76,6 +76,11 @@ void ReservoirModule_Web::commandEvent(char *Command, char *Data)
       ReservoirCommand1ToSend.TareWeight = true;
       Parent->addToLog(F("Taring reservoir scale"), false);
     }
+    else
+    {
+      return false;
+    }
+    return true;
     SyncRequested = true;
   }
 }

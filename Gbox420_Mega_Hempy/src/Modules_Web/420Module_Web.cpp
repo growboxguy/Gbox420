@@ -6,7 +6,7 @@ static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storin
 /**
 * @brief Constructor: creates an instance of the class, and stores wireless transmitter object used to communicate with other modules
 */
-Module_Web::Module_Web() : Common(Name), Module()
+Module_Web::Module_Web(const __FlashStringHelper *Name) : Common(Name), Module()
 {  
   //logToSerials(F("Module_Web ready"), true, 3);
 }

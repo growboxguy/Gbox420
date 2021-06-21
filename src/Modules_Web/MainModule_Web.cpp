@@ -15,7 +15,7 @@
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings, creates components that the instance controls, and subscribes to events
 */
-MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common_Web(Name), Common(Name), Module_Web()
+MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Module_Web(Name)
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
@@ -158,11 +158,11 @@ void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< ca
 /**
 * @brief Process commands received from MQTT subscription or from the ESP-link website
 */
-void MainModule::commandEvent(char *Command, char *Data)
+bool MainModule::commandEvent(char *Command, char *Data)
 {
   if (!isThisMine(Command))
   {
-    return;
+    return false;
   }
   else
   {
@@ -431,6 +431,11 @@ void MainModule::commandEvent(char *Command, char *Data)
     {
       setMQTTLWTMessage(WebServer.getArgString());
     }
+    else
+    {
+      return false;
+    }
+    return true;
   }
 }
 

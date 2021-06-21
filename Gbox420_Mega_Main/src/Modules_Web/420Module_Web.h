@@ -24,14 +24,14 @@ class Sound;
 class Module_Web : virtual public Common, virtual public Module
 {
 public:
-  Module_Web(); ///< constructor
+  Module_Web(const __FlashStringHelper *Name); ///< constructor
   void addToWebsiteQueue_Load(Module_Web *Subscriber);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
   void addToWebsiteQueue_Refresh(Module_Web *Subscriber); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   void addToCommandQueue(Module_Web *Subscriber);         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method
   void websiteLoadEventTrigger(char *Url);
   void websiteRefreshEventTrigger(char *Url);
   virtual void websiteEvent_Load(__attribute__((unused)) char *url);
-  virtual void websiteEvent_Refresh(__attribute__((unused)) char *url);  
+  virtual void websiteEvent_Refresh(__attribute__((unused)) char *url){};  
   void commandEventTrigger(char *command, char *data);
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);

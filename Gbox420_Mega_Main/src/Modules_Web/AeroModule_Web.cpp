@@ -11,7 +11,7 @@ struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};          
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
+AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::AeroModuleSettings *DefaultSettings) : Module_Web(Name)
 { ///< Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -120,11 +120,11 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
 /**
 * @brief Process commands received from MQTT subscription or from the ESP-link website
 */
-void AeroModule_Web::commandEvent(char *Command, char *Data)
+bool AeroModule_Web::commandEvent(char *Command, char *Data)
 { ///< When a button is pressed on the website
   if (!isThisMine(Command))
   {
-    return;
+    return false;
   }
   else
   {
@@ -235,6 +235,11 @@ void AeroModule_Web::commandEvent(char *Command, char *Data)
       DefaultSettings->MaxPressure = toFloat(Data);
       Parent->addToLog(F("Pressure limits updated"), false);
     }
+    else
+    {
+      return false;
+    }
+    return true;
     SyncRequested = true;
   }
 }
