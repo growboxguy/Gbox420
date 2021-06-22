@@ -95,14 +95,14 @@ void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *url) /
     WebServer.setArgString(getComponentName(F("B1W")), WeightB1->getWeightText(false, true));
     WebServer.setArgString(getComponentName(F("B1WR")), WeightWR1->getWeightText(false, true));
     WebServer.setArgString(getComponentName(F("B1DWW")), toText(Bucket1->getDryWeight(), Bucket1->getWetWeight(), "/"));
-    WebServer.setArgString(getComponentName(F("B1S")), Bucket1->getStateText());
-    WebServer.setArgString(getComponentName(F("B1P")), Pump1->getStateText());
+    WebServer.setArgString(getComponentName(F("B1S")), Bucket1->getStateText(true));
+    WebServer.setArgString(getComponentName(F("B1P")), Pump1->getStateText(true));
     //Bucket 2
     WebServer.setArgString(getComponentName(F("B2W")), WeightB2->getWeightText(false, true));
     WebServer.setArgString(getComponentName(F("B2WR")), WeightWR1->getWeightText(false, true));
     WebServer.setArgString(getComponentName(F("B2DWW")), toText(Bucket2->getDryWeight(), Bucket2->getWetWeight(), "/"));
-    WebServer.setArgString(getComponentName(F("B2S")), Bucket2->getStateText());
-    WebServer.setArgString(getComponentName(F("B2P")), Pump2->getStateText());
+    WebServer.setArgString(getComponentName(F("B2S")), Bucket2->getStateText(true));
+    WebServer.setArgString(getComponentName(F("B2P")), Pump2->getStateText(true));
   }
 }
 

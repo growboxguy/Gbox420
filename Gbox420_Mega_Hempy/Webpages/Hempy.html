@@ -165,21 +165,7 @@
 	<div class="pure-g" onload="showRefillButton()">
 		<div class="pure-u-1 pure-u-md-1-2">
 			<div class="card">
-				<h1><span id="Time"></span></h1>
-				<table class="tg">
-					<tr>
-						<th class="headerRows"><span>Power</span></th>
-						<th class="headerRows"><span>Energy</span></th>
-						<th class="headerRows"><span>Voltage</span></th>
-						<th class="headerRows"><span>Current</span></th>
-					</tr>
-					<tr>
-						<td id="Main1_PP" class="dataRows"></td>
-						<td id="Main1_PE" class="dataRows"></td>
-						<td id="Main1_PV" class="dataRows"></td>
-						<td id="Main1_PC" class="dataRows"></td>
-					</tr>
-				</table>
+				<h1><span id="Time"></span></h1>				
 				<ul id="Log"></ul>
 				<form>
 					<p>
@@ -439,19 +425,7 @@
 		//document.getElementsByName("FanE_SS")[0].value = document.getElementsByName("FanE_S")[0].value;
 		document.getElementsByName("Hemp1_B1PSS")[0].value = document.getElementsByName("Hemp1_B1PS")[0].value;
 		document.getElementsByName("Hemp1_B2PSS")[0].value = document.getElementsByName("Hemp1_B2PS")[0].value
-		document.getElementsByName("Main1_L1BS")[0].value = document.getElementsByName("Main1_L1B")[0].value;
-		document.getElementsByName("Main1_L2BS")[0].value = document.getElementsByName("Main1_L2B")[0].value
-		document.getElementsByName("Aero1_PumpSpS")[0].value = document.getElementsByName("Aero1_PS")[0].value
 	}, 1000) ///< Refresh every second
-
-
-	///< Duplicating the ON and OFF time of Light1
-	var Light1OnTime = document.getElementById("Main1_L1OnT");
-	var Light1OnHour = document.getElementsByName("Main1_L1OnH")[0];
-	var Light1OnMinute = document.getElementsByName("Main1_L1OnM")[0];
-	var Light1OffTime = document.getElementById("Main1_L1OfT");
-	var Light1OffHour = document.getElementsByName("Main1_L1OfH")[0];
-	var Light1OffMinute = document.getElementsByName("Main1_L1OfM")[0];
 
 	setInterval(function () {
 		if (Light1OnMinute.value.length === 1) {
