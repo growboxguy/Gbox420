@@ -40,7 +40,7 @@ public:
   void addPushingBoxLogRelayID();
   void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);
   void mqttPublish(char (*JSONData)[MaxLongTextLength]);
-  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
+  virtual bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void reportToGoogleSheetsTrigger(bool ForceRun = false);
   void reportToMQTTTrigger(bool ForceRun = false);
 

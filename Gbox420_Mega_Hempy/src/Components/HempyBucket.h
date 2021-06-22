@@ -22,6 +22,7 @@ public:
   void refresh_FiveSec();
   void report(bool FriendlyFormat = false);
   void updateState(HempyStates NewState);
+  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   HempyStates getState();
   char *getStateText(bool FriendlyFormat = false);
   void disable();

@@ -169,11 +169,11 @@
 				<ul id="Log"></ul>
 				<form>
 					<p>
-					<button id="Main1_Refresh" type="button" title="Force refreshing sensor readings">&#8635;</button>
+					<button id="Refresh" type="button" title="Force refreshing sensor readings">&#8635;</button>
 					Report to:
-					<button id="Main1_SerialRep" type="button" title="Report current status to Serial (ESP and Arduino)">Console</button>
-					<button id="Main1_SheetsRep" type="button" title="Report current status to Google Sheets">Sheets</button>
-					<button id="Main1_MQTTRep" type="button" title="Report current status to Google Sheets">MQTT</button>
+					<button id="SerialRep" type="button" title="Report current status to Serial (ESP and Arduino)">Console</button>
+					<button id="SheetsRep" type="button" title="Report current status to Google Sheets">Sheets</button>
+					<button id="MQTTRep" type="button" title="Report current status to Google Sheets">MQTT</button>
 					</p>
 				</form>
 			</div>
@@ -212,11 +212,11 @@
 				<form>
 					<p>
 						<label><b>Watering</b></label>
-						<button id="Hemp1_B1On" type="button" align="right"
+						<button id="Hemp1_B1_On" type="button" align="right"
 							title="Starts the pump and reset its status to OK">Start</button>
-						<button id="Hemp1_B1Off" type="button" align="right"
+						<button id="Hemp1_B1_Off" type="button" align="right"
 							title="Stops the pump and reset its status to OK">Stop</button>
-						<button id="Hemp1_B1Dis" type="button" align="right"
+						<button id="Hemp1_B1_Dis" type="button" align="right"
 							title="Stops and disables pump">Disable</button>
 					</p>
 				</form>
@@ -310,11 +310,11 @@
 				<form>
 					<p>
 						<label><b>Watering</b></label>
-						<button id="Hemp1_B2On" type="button" align="right"
+						<button id="Hemp1_B2_On" type="button" align="right"
 							title="Starts the pump and reset its status to OK">Start</button>
-						<button id="Hemp1_B2Off" type="button" align="right"
+						<button id="Hemp1_B2_Off" type="button" align="right"
 							title="Stops the pump and reset its status to OK">Stop</button>
-						<button id="Hemp1_B2Dis" type="button" align="right"
+						<button id="Hemp1_B2_Dis" type="button" align="right"
 							title="Stops and disables pump">Disable</button>
 					</p>
 				</form>
@@ -427,46 +427,6 @@
 		document.getElementsByName("Hemp1_B2PSS")[0].value = document.getElementsByName("Hemp1_B2PS")[0].value
 	}, 1000) ///< Refresh every second
 
-	setInterval(function () {
-		if (Light1OnMinute.value.length === 1) {
-			Light1OnTime.innerHTML = Light1OnHour.value + ":0" + Light1OnMinute.value;
-		}
-		else {
-			Light1OnTime.innerHTML = Light1OnHour.value + ":" + Light1OnMinute.value;
-		}
-
-		if (Light1OffMinute.value.length === 1) {
-			Light1OffTime.innerHTML = Light1OffHour.value + ":0" + Light1OffMinute.value;
-		}
-		else {
-			Light1OffTime.innerHTML = Light1OffHour.value + ":" + Light1OffMinute.value;
-		}
-	}, 1000) ///< Refresh every second
-
-	///< Duplicating the ON and OFF time of Light2
-	var Light2OnTime = document.getElementById("Main1_L2OnT");
-	var Light2OnHour = document.getElementsByName("Main1_L2OnH")[0];
-	var Light2OnMinute = document.getElementsByName("Main1_L2OnM")[0];
-	var Light2OffTime = document.getElementById("Main1_L2OfT");
-	var Light2OffHour = document.getElementsByName("Main1_L2OfH")[0];
-	var Light2OffMinute = document.getElementsByName("Main1_L2OfM")[0];
-
-	setInterval(function () {
-		if (Light2OnMinute.value.length === 1) {
-			Light2OnTime.innerHTML = Light2OnHour.value + ":0" + Light2OnMinute.value;
-		}
-		else {
-			Light2OnTime.innerHTML = Light2OnHour.value + ":" + Light2OnMinute.value;
-		}
-
-		if (Light2OffMinute.value.length === 1) {
-			Light2OffTime.innerHTML = Light2OffHour.value + ":0" + Light2OffMinute.value;
-		}
-		else {
-			Light2OffTime.innerHTML = Light2OffHour.value + ":" + Light2OffMinute.value;
-		}
-	}, 1000) ///< Refresh every second
-
 	///< Duplicating the status of the Hempy Module to both Buckets
 	setInterval(function () { document.getElementById("Hemp1_S2").innerHTML = document.getElementById("Hemp1_S").innerHTML; }, 5)  ///< Refresh every 5 seconds
 
@@ -512,12 +472,6 @@
 		refreshFormData();
 	}
 
-	function confirmDrain(source) {
-		if (confirm("This will completely drain the pressure tank!")) {
-			notifyButtonPressed(source.id);
-		}
-	}
-
 	function confirmTare(source) {
 		if (confirm("Only continue with an empty weight scale!")) {
 			notifyButtonPressed(source.id);
@@ -526,12 +480,6 @@
 
 	function confirmDryWetTare(source) {
 		if (confirm("This will zero out the Wet weight and restore Dry weight from Settings.h")) {
-			notifyButtonPressed(source.id);
-		}
-	}
-
-	function confirmSprayDisable(source) {
-		if (confirm("Only continue without plants, roots dry out fast!")) {
 			notifyButtonPressed(source.id);
 		}
 	}
@@ -550,43 +498,6 @@
 		link.href = 'https://lh3.googleusercontent.com/pw/ACtC-3fQYOltHeTzGQfCXJ9t4w69Q9He8OFV4ubiwdjXgfPK-BUnN2W0dONv5upYRst7UQRuFLnusYNft_qTRfPUtbBK-XnArFD5ulpKV_AXNayiaqemd0GdBPieLqpnPtEGhiLr-c0yuk9LrRaXTWPtH4gP=s671-no?authuser=0';
 		document.getElementsByTagName('head')[0].appendChild(link);
 	};
-
- 
-	/* function showRefillButton() {
-		//Hidden checkbox to signal if Pressure tank is present or not
-		var PressureTankAvailable = document.getElementById("Aero1_Tank");
-		// Get the output text
-		var TankTitle = document.getElementById("Aero1_TankTitle");
-		var RefillButton = document.getElementById("Aero1_Refill");
-		
-
-		// If the checkbox is checked, display the output text
-		if (PressureTankAvailable.checked == true){
-			TankTitle.style.display = "inline";
-			RefillButton.style.display = "inline";
-		} 
-		else {
-			TankTitle.style.display = "none";
-			RefillButton.style.display = "none";
-		}		
-	}
-	document.onload = showRefillButton(); 
-
-
-	function f_color(){
-	if (document.getElementById('Aero1_S').value = 'OK') {
-		document.getElementById('Aero1_S').style.color = "green";
-	}
-	else	{
-		document.getElementById('Aero1_S').style.color = "red";
-	}
-	}
-	document.getElementById('Aero1_S').onchange= f_color;
-	document.onload= f_color;
-
-	
-
-	*/
 
 </script>
 </body>

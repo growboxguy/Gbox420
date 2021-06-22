@@ -28,7 +28,7 @@ public:
   virtual void refresh_Sec();  ///< Called every second
   virtual void refresh_FiveSec(); ///< Called every five seconds
   virtual void refresh_Minute(); ///< Called every minute
-  virtual bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data){}; //Called then an external command arrives (From MQTT or User Interface)
+  virtual bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data){return false;}; //Called then an external command arrives (From MQTT or User Interface)
 
 private:
 protected:

@@ -31,8 +31,8 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   WeightWR1 = new WeightSensor(F("WeightWR1"), this, &ModuleSettings->WeightWR1); //< Waste reservoir weight sensor
   Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->Pump1);
   Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->Pump2);
-  Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1, WeightB1, WeightWR1, Pump1);
-  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2, WeightB2, WeightWR1, Pump2);
+  Bucket1 = new HempyBucket(F("B1"), this, &ModuleSettings->Bucket1, WeightB1, WeightWR1, Pump1);
+  Bucket2 = new HempyBucket(F("B2"), this, &ModuleSettings->Bucket2, WeightB2, WeightWR1, Pump2);
   addToReportQueue(this); //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   //addToRefreshQueue_Sec(this);     //< Attach to a trigger that fires every second and calls refresh_Sec()
   addToRefreshQueue_FiveSec(this); //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
@@ -117,16 +117,19 @@ bool Hempy_Standalone::commandEvent(char *Command, char *Data)
   }
   else
   {
+    char TempStorage[MaxShotTextLength] = "";
+    strncpy(TempStorage, ShortMessage, MaxShotTextLength);
+/*
     //Bucket1
-    if (Bucket1->commandEvent(Command, Data))
+    if (Bucket1->commandEvent(TempStorage, Data))
     {
       ;
     }
-    else if (Bucket2->commandEvent(Command, Data))
+    else if (Bucket2->commandEvent(TempStorage, Data))
     {
       ;
     }
-    else if (Module_Web::commandEvent(Command, Data))
+    else if (Module_Web::commandEvent(TempStorage, Data))
     {
       ;
     }
@@ -134,6 +137,7 @@ bool Hempy_Standalone::commandEvent(char *Command, char *Data)
     {
       return false; //Nothing matched
     }
+    */
     return true; //Match found
   }
 }
@@ -203,71 +207,7 @@ bool Hempy_Standalone::commandEvent(char *Command, char *Data)
       HempyBucketCommand1ToSend.DryWeight = toFloat(Data);
       addToLog(F("B1 dry weight updated"), false);
     }
-    //Bucket
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2On")) == 0)
-    {
-      HempyBucketCommand2ToSend.StartWatering = true;
-      addToLog(F("Watering HempyBucket 2"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Off")) == 0)
-    {
-      HempyBucketCommand2ToSend.StopWatering = true;
-      addToLog(F("Stop watering HempyBucket 2"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2Dis")) == 0)
-    {
-      HempyBucketCommand2ToSend.Disable = true;
-      addToLog(F("Disabled HempyBucket 2"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareB")) == 0)
-    {
-      HempyBucketCommand2ToSend.TareWeightB = true;
-      addToLog(F("Taring Bucket 2 scale"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareDW")) == 0)
-    {
-      HempyBucketCommand2ToSend.TareWeightDW = true;
-      addToLog(F("Taring Bucket 2 Dry/Wet"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2TareWR")) == 0)
-    {
-      HempyBucketCommand2ToSend.TareWeightWR = true;
-      addToLog(F("Taring Bucket 2 waste scale"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2ET")) == 0)
-    {
-      DefaultSettings->EvaporationTarget_B2 = toFloat(Data);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2OF")) == 0)
-    {
-      DefaultSettings->OverflowTarget_B2 = toFloat(Data);
-      addToLog(F("Bucket 2 targets updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2WL")) == 0)
-    {
-      DefaultSettings->WasteLimit_B2 = toFloat(Data);
-      addToLog(F("Bucket 2 waste limit updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2PS")) == 0)
-    {
-      DefaultSettings->PumpSpeed_B2 = toInt(Data);
-      addToLog(F("Pump 2 speed updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2T")) == 0)
-    {
-      DefaultSettings->PumpTimeOut_B2 = toInt(Data);
-      addToLog(F("Pump 2 timeout updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2D")) == 0)
-    {
-      DefaultSettings->DrainWaitTime_B2 = toInt(Data);
-      addToLog(F("B2 Drain wait updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B2DW")) == 0)
-    {
-      HempyBucketCommand2ToSend.DryWeight = toFloat(Data);
-      addToLog(F("B2 dry weight updated"), false);
-    }
+   
     */
 
 void Hempy_Standalone::refresh_FiveSec()
