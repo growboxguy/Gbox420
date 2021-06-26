@@ -48,6 +48,8 @@ unlink ./src/WirelessCommands_Dev.h > /dev/null 2>&1
 unlink ./src/WirelessCommands_Hempy.h > /dev/null 2>&1
 unlink ./src/WirelessCommands_Reservoir.h > /dev/null 2>&1
 
+unlink ./src/Components_Web/420Common_Web.h > /dev/null 2>&1
+
 unlink ./src/Components/420Common.h > /dev/null 2>&1
 unlink ./src/Components/420Common.cpp > /dev/null 2>&1
 unlink ./src/Components/420Module.h > /dev/null 2>&1

@@ -10,13 +10,10 @@
 #include "../../Settings.h"
 #include "../Helpers.h"
 #include "../Components/420Module.h"
-#include "420Common_Web.h"
+#include "../Components_Web/420Common_Web.h"
 
 ///< This class represents a complete Module_Web with all of its components
 ///< Responsible for setting up each module, updating their statuses and reporting it
-
-extern ELClientRest PushingBoxRestAPI;
-extern ELClientMqtt MqttAPI;
 
 class Module_Web : public Module
 {

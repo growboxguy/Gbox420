@@ -1,9 +1,9 @@
 #pragma once
 
 #include "DHT.h"
-#include "420Common_Web.h"
-#include "420Module_Web.h"
 #include "../Components/DHTSensor.h"
+#include "../Modules_Web/420Module_Web.h"
+#include "../Components_Web/420Common_Web.h"
 
 ///< Digital Humidity and Temperature sensor Web (DHT11 or DHT22) - website component
 

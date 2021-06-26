@@ -9,6 +9,7 @@ echo "Creating folders"
 mkdir ./src
 mkdir ./Webpages
 mkdir ./src/Components
+mkdir ./src/Components_Web
 mkdir ./src/Modules_Web
 
 echo "Creating hard links"
@@ -28,6 +29,8 @@ ln ../src/Modules_Web/420Module_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/420Module_Web.h ./src/Modules_Web
 ln ../src/Modules_Web/DevModule_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/DevModule_Web.h ./src/Modules_Web
+
+ln ../src/Components_Web/420Common_Web.h ./src/Components_Web
 
 ln ../src/Components/420Common.h ./src/Components
 ln ../src/Components/420Common.cpp ./src/Components

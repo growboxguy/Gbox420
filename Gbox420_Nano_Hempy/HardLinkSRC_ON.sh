@@ -8,6 +8,7 @@ ln ../HardLinkSRC_OFF.sh ./
 echo "Creating folders"
 mkdir ./src
 mkdir ./src/Components
+mkdir ./src/Components_Web
 mkdir ./src/Modules
 
 echo "Creating hard links"
@@ -20,6 +21,8 @@ ln ../src/Modules/HempyModule.h ./src/Modules
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
 ln ../src/WirelessCommands_Hempy.h ./src
+
+ln ../src/Components_Web/420Common_Web.h ./src/Components_Web
 
 ln ../src/Components/420Common.h ./src/Components
 ln ../src/Components/420Common.cpp ./src/Components

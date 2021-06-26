@@ -4,8 +4,8 @@
 ///< Allows controlling the AeroModule wirelessly and receiving a status report from it
 
 #include "TimeLib.h" // Keeping track of time
-#include "420Common_Web.h"
 #include "420Module_Web.h"
+#include "../Components_Web/420Common_Web.h"
 #include "../Modules_Web/MainModule_Web.h"
 #include "../WirelessCommands_Aero.h"
 
