@@ -1,7 +1,7 @@
 #pragma once
 
 #include "420Common_Web.h"
-#include "420Module_Web.h"
+#include "../Modules_Web/420Module_Web.h"
 #include "../Components/Fan.h"
 
 ///< Fan controller (2 speed) - website component

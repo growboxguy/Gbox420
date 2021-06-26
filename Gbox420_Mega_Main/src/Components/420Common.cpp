@@ -60,10 +60,8 @@ char *Common::getComponentName(const __FlashStringHelper *ComponentName)
   return ReturnChar;
 }
 
-bool Common::isThisMine(char const *lookupName) 
-{ 
-  ///< Returns true when the lookupName starts with the Name of the instance followed by _
- 
+bool Common::isThisMine(char const *lookupName) ///< Returns true when the lookupName starts with the Name of the instance followed by _
+{  
   ///< Serial.print("Component :");
   ///< Serial.println(lookupName);
   ///< Serial.print("Object :");

@@ -8,7 +8,7 @@ Aeroponics_NoTank_Web::Aeroponics_NoTank_Web(const __FlashStringHelper *Name, Mo
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
   Parent->addToWebsiteQueue_Field(this);
 }
 
@@ -43,7 +43,7 @@ void Aeroponics_NoTank_Web::websiteEvent_Refresh(__attribute__((unused)) char *u
 
 void Aeroponics_NoTank_Web::websiteEvent_Button(char *Button)
 {
-  if (!isThisMyComponent(Button))
+  if (!isThisMine(Button))
   {
     return;
   }

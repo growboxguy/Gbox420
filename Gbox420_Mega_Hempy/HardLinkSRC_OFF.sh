@@ -49,6 +49,10 @@ unlink ./src/WirelessCommands_Hempy.h > /dev/null 2>&1
 unlink ./src/WirelessCommands_Reservoir.h > /dev/null 2>&1
 
 unlink ./src/Components_Web/420Common_Web.h > /dev/null 2>&1
+unlink ./src/Components_Web/DHTSensor_Web.h > /dev/null 2>&1
+unlink ./src/Components_Web/DHTSensor_Web.cpp > /dev/null 2>&1
+unlink ./src/Components_Web/WeightSensor_Web.h > /dev/null 2>&1
+unlink ./src/Components_Web/WeightSensor_Web.cpp > /dev/null 2>&1
 
 unlink ./src/Components/420Common.h > /dev/null 2>&1
 unlink ./src/Components/420Common.cpp > /dev/null 2>&1

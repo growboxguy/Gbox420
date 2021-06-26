@@ -55,7 +55,7 @@ DEVModule_Web::DEVModule_Web(const __FlashStringHelper *Name, Settings::MainModu
   addToWebsiteQueue_Load(this);
   addToWebsiteQueue_Refresh(this);
   addToWebsiteQueue_Field(this);
-  addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
   logToSerials(Name, false, 0);
   logToSerials(F("refreshing"), true, 1);
   runAll();

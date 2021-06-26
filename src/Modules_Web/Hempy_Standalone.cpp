@@ -1,6 +1,6 @@
 #include "Hempy_Standalone.h"
 #include "../Components/Sound.h"
-#include "../Components/DHTSensor.h"
+#include "../Components_Web/DHTSensor_Web.h"
 #include "../Components/WeightSensor.h"
 #include "../Components/WaterPump.h"
 #include "../Components/HempyBucket.h"
@@ -24,7 +24,7 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   logToSerials(F(""), true, 0);                                   //<Line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;                                   ///< Pointer for child objects to use sound feedback
-  DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
+  DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);
   WeightB1 = new WeightSensor(F("WeightB1"), this, &ModuleSettings->WeightB1);    //< Bucket 1 weight sensor
   WeightB2 = new WeightSensor(F("WeightB2"), this, &ModuleSettings->WeightB2);    //< Bucket 2 weight sensor
   WeightNR1 = new WeightSensor(F("WeightNR1"), this, &ModuleSettings->WeightWR1); //< Nutrient reservoir weight sensor

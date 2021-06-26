@@ -26,7 +26,7 @@ void DistanceSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 
 void DistanceSensor_Web::websiteEvent_Button(char *Button)
 {
-  if (!isThisMyComponent(Button))
+  if (!isThisMine(Button))
   {
     return;
   }

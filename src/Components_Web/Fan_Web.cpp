@@ -7,7 +7,7 @@ Fan_Web::Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Minute(this);
   Parent->addToWebsiteQueue_Refresh(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
 }
 
 void Fan_Web::reportToJSON()
@@ -28,7 +28,7 @@ void Fan_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 
 void Fan_Web::websiteEvent_Button(char *Button)
 {
-  if (!isThisMyComponent(Button))
+  if (!isThisMine(Button))
   {
     return;
   }

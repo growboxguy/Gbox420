@@ -31,6 +31,8 @@ ln ../src/Modules_Web/Hempy_Standalone.h ./src/Modules_Web
 ln ../src/Components_Web/420Common_Web.h ./src/Components_Web
 ln ../src/Components_Web/DHTSensor_Web.h ./src/Components_Web
 ln ../src/Components_Web/DHTSensor_Web.cpp ./src/Components_Web
+ln ../src/Components_Web/WeightSensor_Web.h ./src/Components_Web
+ln ../src/Components_Web/WeightSensor_Web.cpp ./src/Components_Web
 
 ln ../src/Components/420Common.h ./src/Components
 ln ../src/Components/420Common.cpp ./src/Components

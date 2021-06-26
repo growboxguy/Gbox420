@@ -10,7 +10,7 @@ Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Sett
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToWebsiteQueue_Field(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
 }
 
 void Lights_Web::reportToJSON()
@@ -57,7 +57,7 @@ void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 
 void Lights_Web::websiteEvent_Button(char *Button)
 {
-  if (!isThisMyComponent(Button))
+  if (!isThisMine(Button))
   {
     return;
   }
@@ -88,7 +88,7 @@ void Lights_Web::websiteEvent_Button(char *Button)
 
 void Lights_Web::websiteEvent_Field(char *Field)
 {
-  if (!isThisMyComponent(Field))
+  if (!isThisMine(Field))
   {
     return;
   }

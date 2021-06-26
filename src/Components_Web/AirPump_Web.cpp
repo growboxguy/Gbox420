@@ -7,7 +7,7 @@ AirPump_Web::AirPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Se
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Minute(this);
   Parent->addToWebsiteQueue_Refresh(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
 }
 
 void AirPump_Web::reportToJSON()
@@ -28,7 +28,7 @@ void AirPump_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 
 void AirPump_Web::websiteEvent_Button(char *Button)
 {
-  if (!isThisMyComponent(Button))
+  if (!isThisMine(Button))
   {
     return;
   }

@@ -8,7 +8,7 @@
 
 // forward declaration of classes
 class Sound;
-class DHTSensor;
+class DHTSensor_Web;
 class WeightSensor;
 class WaterPump;
 class HempyBucket;
@@ -22,7 +22,7 @@ class Hempy_Standalone : public Module_Web
 public:
   Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings);
   Sound *Sound1 = NULL;           ///< Pointer to a Piezo speaker - sound feedback
-  DHTSensor *DHT1 = NULL;         ///< Humidity and temp sensor
+  DHTSensor_Web *DHT1 = NULL;     ///< Humidity and temp sensor
   WeightSensor *WeightNR1 = NULL; ///< Nutrient reservoir weight sensor
   WeightSensor *WeightWR1 = NULL; ///< Waste reservoir weight sensor                                                                                                     ///< Pointer to a Digital Humidity and Temp Sensor object
   WeightSensor *WeightB1 = NULL;  ///< Bucket 1 reservoir weight sensor

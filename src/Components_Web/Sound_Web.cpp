@@ -6,7 +6,7 @@ Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settin
   this->Name = Name;
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToWebsiteQueue_Load(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
   Parent->addToWebsiteQueue_Field(this);
 }
 
@@ -41,7 +41,7 @@ void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 
 void Sound_Web::websiteEvent_Button(char *Button)
 { ///< When a button is pressed on the website
-  if (!isThisMyComponent(Button))
+  if (!isThisMine(Button))
   {
     return;
   }
@@ -56,7 +56,7 @@ void Sound_Web::websiteEvent_Button(char *Button)
 
 void Sound_Web::websiteEvent_Field(char *Field)
 { ///< When the website field is submitted
-  if (!isThisMyComponent(Field))
+  if (!isThisMine(Field))
   {
     return;
   }

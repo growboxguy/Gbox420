@@ -8,7 +8,7 @@ Aeroponics_Tank_Web::Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module
   Parent->addToRefreshQueue_Sec(this);
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
   Parent->addToWebsiteQueue_Field(this);
 }
 
@@ -45,7 +45,7 @@ void Aeroponics_Tank_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
 
 void Aeroponics_Tank_Web::websiteEvent_Button(char *Button)
 {
-  if (!isThisMyComponent(Button))
+  if (!isThisMine(Button))
   {
     return;
   }
@@ -92,7 +92,7 @@ void Aeroponics_Tank_Web::websiteEvent_Button(char *Button)
 
 void Aeroponics_Tank_Web::websiteEvent_Field(char *Field)
 {
-  if (!isThisMyComponent(Field))
+  if (!isThisMine(Field))
   {
     return;
   }

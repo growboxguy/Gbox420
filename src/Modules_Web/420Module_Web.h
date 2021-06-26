@@ -29,11 +29,11 @@ public:
   void addToWebsiteQueue_Load(Common_Web *Subscriber);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
   void addToWebsiteQueue_Refresh(Common_Web *Subscriber); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
   void addToCommandQueue(Common_Web *Subscriber);         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method
-  void websiteLoadEventTrigger(char *Url);
-  void websiteRefreshEventTrigger(char *Url);
+  void websiteLoadEventTrigger(__attribute__((unused)) char *Url);
+  void websiteRefreshEventTrigger(__attribute__((unused)) char *Url);
   virtual void websiteEvent_Load(__attribute__((unused)) char *url);
   virtual void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void commandEventTrigger(char *command, char *data);
+  void commandEventTrigger(char *Command, char *Data);
   void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   void addToLog(const char *Text, uint8_t indent = 3);
   char *eventLogToJSON(bool IncludeKey = false, bool ClearBuffer = true); ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"] and loads it to LongMessage buffer

@@ -7,7 +7,7 @@ PressureSensor_Web::PressureSensor_Web(const __FlashStringHelper *Name, Module_W
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Minute(this);
   Parent->addToWebsiteQueue_Load(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
   Parent->addToWebsiteQueue_Field(this);
 }
 
@@ -22,7 +22,7 @@ void PressureSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 
 void PressureSensor_Web::websiteEvent_Button(char *Button)
 {
-  if (!isThisMyComponent(Button))
+  if (!isThisMine(Button))
   {
     return;
   }
@@ -37,7 +37,7 @@ void PressureSensor_Web::websiteEvent_Button(char *Button)
 
 void PressureSensor_Web::websiteEvent_Field(char *Field)
 {
-  if (!isThisMyComponent(Field))
+  if (!isThisMine(Field))
   {
     return;
   }

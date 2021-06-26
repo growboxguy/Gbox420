@@ -10,7 +10,7 @@ ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_W
   Parent->addToRefreshQueue_Minute(this);
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
   Parent->addToWebsiteQueue_Field(this);
 }
 
@@ -52,7 +52,7 @@ void ModuleSkeleton_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 
 void ModuleSkeleton_Web::websiteEvent_Button(char *Button)
 { ///< When a button is pressed on the website
-  if (!isThisMyComponent(Button))
+  if (!isThisMine(Button))
   {
     return;
   }
@@ -84,7 +84,7 @@ void ModuleSkeleton_Web::websiteEvent_Button(char *Button)
 
 void ModuleSkeleton_Web::websiteEvent_Field(char *Field)
 { ///< When a field is submitted on the website
-  if (!isThisMyComponent(Field))
+  if (!isThisMine(Field))
   {
     return;
   }

@@ -6,6 +6,7 @@
   \brief Store settings in EEPROM - Only updates changed bits
   \attention Use cautiously, EEPROM has a write limit of 100.000 cycles 
 */
+
 void saveSettings(Settings *ToSave)
 {
   eeprom_update_block((const void *)ToSave, (void *)0, sizeof(Settings)); // update_block only writes the bytes that changed

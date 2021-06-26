@@ -9,7 +9,7 @@ PHSensor_Web::PHSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, 
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToWebsiteQueue_Field(this);
-  Parent->addToWebsiteQueue_Button(this);
+  Parent->addToCommandQueue(this);
 }
 
 void PHSensor_Web::reportToJSON()
@@ -41,7 +41,7 @@ void PHSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 
 void PHSensor_Web::websiteEvent_Button(char *Button)
 { ///< When a button is pressed on the website
-  if (!isThisMyComponent(Button))
+  if (!isThisMine(Button))
   {
     return;
   }
@@ -56,7 +56,7 @@ void PHSensor_Web::websiteEvent_Button(char *Button)
 
 void PHSensor_Web::websiteEvent_Field(char *Field)
 {
-  if (!isThisMyComponent(Field))
+  if (!isThisMine(Field))
   {
     return;
   }

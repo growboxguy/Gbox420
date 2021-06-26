@@ -69,13 +69,13 @@ void Module_Web::websiteRefreshEventTrigger(char *url)
 /**
 * @brief Notify subscribed modules of a received MQTT/Website command
 */
-void Module_Web::commandEventTrigger(char *command, char *data)
+void Module_Web::commandEventTrigger(char *Command, char *Data)
 {
-  logToSerials(&command, false, 1);
-  logToSerials(&data, true, 2);
+  logToSerials(&Command, false, 1);
+  logToSerials(&Data, true, 2);
   for (int i = 0; i < CommandQueue_Count; i++)
   {
-    CommandQueue[i]->commandEvent(command, data);
+    CommandQueue[i]->commandEvent(Command, Data);
   }
 }
 
