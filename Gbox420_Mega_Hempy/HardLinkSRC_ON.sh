@@ -9,7 +9,9 @@ echo "Creating folders"
 mkdir ./src
 mkdir ./Webpages
 mkdir ./src/Components
+mkdir ./src/Components_Web
 mkdir ./src/Modules_Web
+
 
 echo "Creating hard links"
 ln ../Gbox420_Mega/Settings.cpp ./
@@ -34,8 +36,6 @@ ln ../src/Components/420Module.h ./src/Components
 ln ../src/Components/420Module.cpp ./src/Components
 ln ../src/Components/Sound.h ./src/Components
 ln ../src/Components/Sound.cpp ./src/Components
-ln ../src/Components/DHTSensor.h ./src/Components
-ln ../src/Components/DHTSensor.cpp ./src/Components
 ln ../src/Components/HempyBucket.h ./src/Components
 ln ../src/Components/HempyBucket.cpp ./src/Components
 ln ../src/Components/Switch.h ./src/Components
@@ -46,6 +46,13 @@ ln ../src/Components/WaterPump.h ./src/Components
 ln ../src/Components/WaterPump.cpp ./src/Components
 ln ../src/Components/WeightSensor.h ./src/Components
 ln ../src/Components/WeightSensor.cpp ./src/Components
+
+ln ../src/Components_Web/DHTSensor_Web.h ./src/Components_Web
+ln ../src/Components_Web/DHTSensor_Web.cpp ./src/Components_Web
+ln ../src/Components_Web/420Common_Web.h ./src/Components_Web
+ln ../src/Components_Web/420Common_Web.cpp ./src/Components_Web
+ln ../src/Components_Web/420Module_Web.h ./src/Components_Web
+ln ../src/Components_Web/420Module_Web.cpp ./src/Components_Web
 
 #echo "Done, press enter to exit"
 #read fakeinput 

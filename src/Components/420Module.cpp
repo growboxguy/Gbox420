@@ -3,6 +3,7 @@
 
 Module::Module(const __FlashStringHelper *Name) : Common(Name)
 {
+  //logToSerials(F("Module object created"), true, 3);
 }
 
 /* Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
