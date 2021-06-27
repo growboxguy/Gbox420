@@ -17,7 +17,7 @@ Common::Common()
 /**
 * @brief Report current state in a JSON format to the LongMessage buffer - Append the start of the JSON
 */
-void Common::report(bool FriendlyFormat)
+void Common::report(__attribute__((unused)) bool FriendlyFormat)
 {
   strcat_P(LongMessage, (PGM_P)F("\""));
   strcat_P(LongMessage, (PGM_P)Name);
@@ -51,28 +51,19 @@ void Common::refresh_Minute()
   }
 }
 
-char *Common::getComponentName(const __FlashStringHelper *ComponentName)
-{
-  static char ReturnChar[MaxWordLength] = "";
-  strcpy_P(ReturnChar, (PGM_P)Name);
-  strcat_P(ReturnChar, (PGM_P)F("_"));
-  strcat_P(ReturnChar, (PGM_P)ComponentName);
-  return ReturnChar;
-}
-
 bool Common::isThisMine(char const *lookupName) ///< Returns true when the lookupName starts with the Name of the instance followed by _
-{  
+{
   ///< Serial.print("Component :");
   ///< Serial.println(lookupName);
   ///< Serial.print("Object :");
   ///< Serial.println(Name);
 
   char *ReturnChar = ShortMessage; ///< return text will be loaded into a global temp buffer
-  uint8_t CharacterCount = 0;  //Tracks which character is currently getting compared 
-  char FlashCurrentChar;  // Character read back from the Flash storage (Name is stored in flash)
-  char RAMCurrentChar;   // Character read back from the RAM (lookupName is stored in RAM)
+  uint8_t CharacterCount = 0;      //Tracks which character is currently getting compared
+  char FlashCurrentChar;           // Character read back from the Flash storage (Name is stored in flash)
+  char RAMCurrentChar;             // Character read back from the RAM (lookupName is stored in RAM)
 
-  const char *FlashAddressPointer = (const char PROGMEM *)Name;  ///< Get the flash storage address of the first character of Name
+  const char *FlashAddressPointer = (const char PROGMEM *)Name; ///< Get the flash storage address of the first character of Name
   while (1)
   {
     FlashCurrentChar = pgm_read_byte(FlashAddressPointer++); ///< read the current character from the flash and increment the pointer to the next char
@@ -88,7 +79,7 @@ bool Common::isThisMine(char const *lookupName) ///< Returns true when the looku
     }
   }
   if (FlashCurrentChar == '\0' && RAMCurrentChar == '_') ///< End of the Name, _ sign at the lookupName
-  { ///< if instance name is confirmed: continue reading the remaining characters from the lookupName
+  {                                                      ///< if instance name is confirmed: continue reading the remaining characters from the lookupName
     int SafetyCount = 0;
     ///< Serial.print("Inside second check: ");
     while (1)
@@ -114,12 +105,30 @@ bool Common::isThisMine(char const *lookupName) ///< Returns true when the looku
   }
 }
 
-void Common::appendName(bool Clear)
+void Common::appendName(bool ClearBuffer)
 {
-  if (Clear)
+  if (ClearBuffer)
   {
-    memset(&ShortMessage[0], 0, MaxShotTextLength); //reset variable to store the Publish to path
+    memset(&ShortMessage[0], 0, MaxShotTextLength); //blank out the ShortMessage global buffer
   }
   strcpy_P(ShortMessage, (PGM_P)Name);
   strcat_P(ShortMessage, (PGM_P)F(" "));
+}
+
+/**
+  \brief Returns the name of the caller component
+  \param AppendToEnd Appended after the Name
+  \param UnderscoreSeparator true - Sparate the name and the AppendToEnd with an underscore, false (default): Use space
+*/
+
+char *Common::getName(const __FlashStringHelper *AppendToEnd, bool UnderscoreSeparator = false)
+{
+  static char ReturnChar[MaxWordLength] = "";
+  strcpy_P(ReturnChar, (PGM_P)Name);
+  if (UnderscoreSeparator)
+    strcat_P(ReturnChar, (PGM_P)F("_"));
+  else
+    strcat_P(ReturnChar, (PGM_P)F(" "));
+  strcat_P(ReturnChar, (PGM_P)AppendToEnd);
+  return ReturnChar;
 }

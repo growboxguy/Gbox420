@@ -1,19 +1,20 @@
 #include "DHTSensor_Web.h"
 
-DHTSensor_Web::DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::DHTSensorSettings *DefaultSettings) : Common(Name), DHTSensor(Name, Parent, DefaultSettings), Common_Web(Name)
+DHTSensor_Web::DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::DHTSensorSettings *DefaultSettings) : Common(Name), Common_Web(Name), DHTSensor(Name, Parent, DefaultSettings)
 {
   this->Parent = Parent;
-  this->Name = Name;
   Parent->addToWebsiteQueue_Refresh(this);
-  Parent->addToReportQueue(this);
-  Parent->addToRefreshQueue_FiveSec(this);
 }
 
 void DHTSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 { ///< When the website is refreshing
-  if (strncmp(url, "/G", 2) == 0)
+  if (strncmp(url, "/S", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("T")), getTempText(true)); ///< Shows the latest reading
-    WebServer.setArgString(getComponentName(F("H")), getHumidityText(true));
+    ;
+  }
+  else
+  {
+    WebServer.setArgString(getName(F("T"),true), getTempText(true)); ///< Shows the latest reading
+    WebServer.setArgString(getName(F("H"),true), getHumidityText(true));
   }
 }

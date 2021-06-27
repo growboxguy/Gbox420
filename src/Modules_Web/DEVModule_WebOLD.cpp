@@ -77,11 +77,11 @@ void DEVModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/S", 2) == 0)
   {
-    WebServer.setArgInt(getComponentName(F("Debug")), *Debug);
-    WebServer.setArgInt(getComponentName(F("Metric")), *Metric);
-    WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
-    WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
-    WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
+    WebServer.setArgInt(getName(F("Debug")), *Debug);
+    WebServer.setArgInt(getName(F("Metric")), *Metric);
+    WebServer.setArgBoolean(getName(F("Sheets")), *ReportToGoogleSheets);
+    WebServer.setArgInt(getName(F("SheetsF")), *SheetsReportingFrequency);
+    WebServer.setArgString(getName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
   }
 }
 

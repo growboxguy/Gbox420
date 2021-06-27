@@ -35,7 +35,7 @@ void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/S", 2) == 0)
   {
-    WebServer.setArgBoolean(getComponentName(F("Enabled")), *Enabled);
+    WebServer.setArgBoolean(getName(F("Enabled")), *Enabled);
   }
 }
 

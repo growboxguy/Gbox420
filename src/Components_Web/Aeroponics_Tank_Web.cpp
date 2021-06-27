@@ -23,12 +23,12 @@ void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgFloat(getComponentName(F("PresMin")), *MinPressure);
-    WebServer.setArgFloat(getComponentName(F("PresMax")), *MaxPressure);
-    WebServer.setArgInt(getComponentName(F("Timeout")), Pump->getPumpTimeOut());
-    WebServer.setArgInt(getComponentName(F("Priming")), Pump->getPrimingTime());
-    WebServer.setArgInt(getComponentName(F("Int")), *Interval);
-    WebServer.setArgFloat(getComponentName(F("Dur")), *Duration);
+    WebServer.setArgFloat(getName(F("PresMin")), *MinPressure);
+    WebServer.setArgFloat(getName(F("PresMax")), *MaxPressure);
+    WebServer.setArgInt(getName(F("Timeout")), Pump->getPumpTimeOut());
+    WebServer.setArgInt(getName(F("Priming")), Pump->getPrimingTime());
+    WebServer.setArgInt(getName(F("Int")), *Interval);
+    WebServer.setArgFloat(getName(F("Dur")), *Duration);
   }
 }
 
@@ -36,10 +36,10 @@ void Aeroponics_Tank_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("Pres")), FeedbackPressureSensor->getPressureText(false,true));
-    WebServer.setArgString(getComponentName(F("Spray")), sprayStateToText());
-    WebServer.setArgString(getComponentName(F("Pump")), Pump->getStateText());
-    WebServer.setArgString(getComponentName(F("LastSP")), getLastSprayPressureText(false));
+    WebServer.setArgString(getName(F("Pres")), FeedbackPressureSensor->getPressureText(false,true));
+    WebServer.setArgString(getName(F("Spray")), sprayStateToText());
+    WebServer.setArgString(getName(F("Pump")), Pump->getStateText());
+    WebServer.setArgString(getName(F("LastSP")), getLastSprayPressureText(false));
   }
 }
 

@@ -22,13 +22,15 @@ public:
   void refresh_FiveSec();
   void report(bool FriendlyFormat = false);
   void updateState(HempyStates NewState);
-  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   HempyStates getState();
-  char *getStateText(bool FriendlyFormat = false);
-  void disable();
-  void startWatering(); ///< Turn on water pump, run until StopWeight is reached
-  void stopWatering();  ///< Turn on water pump, run until StopWeight is reached
-  void setEvaporationTarget(float Weight);
+  char *getStateText(bool FriendlyFormat = false); ///< Retuns the numerical or text state of the Hempy bucket
+  void disable();        ///< Disable watering logic  - Takes time to apply
+  void disableRequest(); ///< Signals to disable the watering logic at the next refresh - Runs fast
+  void startWatering();  ///< Turn on water pump, run until StopWeight is reached
+  void startWateringRequest(); ///< Turn on water pump, run until StopWeight is reached - Runs fast
+  void stopWatering(); ///< Turn off water pump
+  void stopWateringRequest(); ///< Turn off water pump - Runs fast
+  void setEvaporationTarget(float Weight);  ///< Weight decrease between waterings
   char *getEvaporationTargetText(bool FriendlyFormat = false);
   void setOverflowTarget(float Weight);
   char *getOverflowTargetText(bool FriendlyFormat = false);
@@ -51,6 +53,9 @@ private:
   uint32_t StateTimer = millis();        ///< Measures how much time is spent in a state
   float WasteReservoirStartWeight = 0.0; ///< Store the waste reservoir weight at the start of watering
   float BucketStartWeight = 0.0;         ///< Store the bucket start weight at each watering cycle
+  bool DisableRequested = false;         ///< Signals to disable the watering logic
+  bool StartWateringRequested = false;   ///< Signals to start watering
+  bool StopWateringRequested = false;    ///< Signals to stop watering
 
 protected:
   Module *Parent;

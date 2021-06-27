@@ -21,6 +21,6 @@ void TDSSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("R")), getTDSText(false));  ///< Update the TDS reading on the web interface (Name_R)
+    WebServer.setArgString(getName(F("R")), getTDSText(false));  ///< Update the TDS reading on the web interface (Name_R)
   }
 }

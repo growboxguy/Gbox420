@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 3; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 4; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -94,8 +94,8 @@ typedef struct
     uint8_t Speed;             ///< Duty cycle of the PWM Motor speed
     uint8_t SpeedLowLimit;     ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
   };
-  struct WaterPumpSettings Pump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLowLimit = 30};
-  struct WaterPumpSettings Pump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLowLimit = 30};
+  struct WaterPumpSettings B1P = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLowLimit = 30};
+  struct WaterPumpSettings B2P = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLowLimit = 30};
 
   struct WeightSensorSettings ///< WeightSensor default settings
   {
@@ -105,10 +105,10 @@ typedef struct
     long Offset;    ///< Reading at 0 weight on the scale
     float Scale;    ///< Scale factor
   };
-  struct WeightSensorSettings WeightNR1 = {.DTPin = 24, .SCKPin = 25, .Offset = 378161, .Scale = -21484.20};    ///< Nutrient Reservoir Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
-  struct WeightSensorSettings WeightWR1 = {.DTPin = 26, .SCKPin = 27, .Offset = -182833, .Scale = -22089.00};   ///< Waste Reservoir Weight Sensor
-  struct WeightSensorSettings WeightB1 = {.DTPin = 28, .SCKPin = 29, .Offset = -76382, .Scale = -22697.10}; ///< Bucket 1 Weight Sensor
-  struct WeightSensorSettings WeightB2 = {.DTPin = 30, .SCKPin = 31, .Offset = 260682, .Scale = -22084.60}; ///< Bucket 2 Weight Sensor
+  struct WeightSensorSettings NRW = {.DTPin = 24, .SCKPin = 25, .Offset = 378161, .Scale = -21484.20};    ///< Nutrient Reservoir Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WRW = {.DTPin = 26, .SCKPin = 27, .Offset = -182833, .Scale = -22089.00};   ///< Waste Reservoir Weight Sensor
+  struct WeightSensorSettings B1W = {.DTPin = 28, .SCKPin = 29, .Offset = -76382, .Scale = -22697.10}; ///< Bucket 1 Weight Sensor
+  struct WeightSensorSettings B2W = {.DTPin = 30, .SCKPin = 31, .Offset = 260682, .Scale = -22084.60}; ///< Bucket 2 Weight Sensor
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;

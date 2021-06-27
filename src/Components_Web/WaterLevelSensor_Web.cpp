@@ -20,6 +20,6 @@ void WaterLevelSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *ur
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("Level")), getLevelGauge());
+    WebServer.setArgString(getName(F("Level")), getLevelGauge());
   }
 }

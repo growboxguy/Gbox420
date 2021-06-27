@@ -22,8 +22,8 @@ class Common
 public:
   const __FlashStringHelper *Name;         ///< Name of the instance
   bool isThisMine(char const *lookupName); ///< Checks if lookupName starts with the Name of the instance followed by _
-  char *getComponentName(const __FlashStringHelper *Name);
-  void appendName(bool Clear = true);                                           //< Adds the component name to the ShortMessage Buffor. If Clear=true flush the cache before adding the name
+  char *getName(const __FlashStringHelper *AppendToEnd, bool UnderscoreSeparator = false);
+  void appendName(bool ClearBuffer = true);                                           //< Adds the component name to the ShortMessage Buffor. If Clear=true flush the cache before adding the name
   virtual void report(__attribute__((unused)) bool FriendlyFormat = false) = 0; //Pure virtual function with body, must be implemented in child classes  https://www.learncpp.com/cpp-tutorial/pure-virtual-functions-abstract-base-classes-and-interface-classes/
   virtual void refresh_Sec();  ///< Called every second
   virtual void refresh_FiveSec(); ///< Called every five seconds

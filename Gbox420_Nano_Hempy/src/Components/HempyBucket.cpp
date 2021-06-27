@@ -49,105 +49,27 @@ void HempyBucket::refresh_Sec()
   {
     updateState(State);
   }
+  if (DisableRequested)
+  {
+    DisableRequested = false;
+    disable();
+  }
+  if (StartWateringRequested)
+  {
+    StartWateringRequested = false;
+    startWatering();
+  }
+  if (StopWateringRequested)
+  {
+    StopWateringRequested = false;
+    stopWatering();
+  }
 }
 
 void HempyBucket::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
   updateState(State);
-}
-
-/**
-* @brief Process commands received from MQTT subscription or from the ESP-link website
-*/
-bool HempyBucket::commandEvent(char *Command, char *Data)
-{
-  if (!isThisMine(Command))
-  {
-    return false;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("On")) == 0)
-    {
-      startWatering();
-     // appendName(true);
-      //strcat_P(ShortMessage, (PGM_P)F("watering"));
-      //Parent->addToLog(ShortMessage);
-      Parent->addToLog(F("Watering"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Off")) == 0)
-    {
-      stopWatering();
-      //appendName(true);
-      //strcat_P(ShortMessage, (PGM_P)F("stop watering"));
-      //Parent->addToLog(ShortMessage);
-      Parent->addToLog(F("Stop watering"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Dis")) == 0)
-    {
-      disable();
-      appendName(true);
-      strcat_P(ShortMessage, (PGM_P)F("disabled"));
-      Parent->addToLog(ShortMessage);      
-    }
-    /*
-    else if (strcmp_P(ShortMessage, (PGM_P)F("TareB")) == 0)
-    {
-      HempyBucketCommand2ToSend.TareWeightB = true;
-      addToLog(F("Taring Bucket 2 scale"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("TareDW")) == 0)
-    {
-      HempyBucketCommand2ToSend.TareWeightDW = true;
-      addToLog(F("Taring Bucket 2 Dry/Wet"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("TareWR")) == 0)
-    {
-      HempyBucketCommand2ToSend.TareWeightWR = true;
-      addToLog(F("Taring Bucket 2 waste scale"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("ET")) == 0)
-    {
-      DefaultSettings->EvaporationTarget_ = toFloat(Data);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("OF")) == 0)
-    {
-      DefaultSettings->OverflowTarget_ = toFloat(Data);
-      addToLog(F("Bucket 2 targets updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("WL")) == 0)
-    {
-      DefaultSettings->WasteLimit_ = toFloat(Data);
-      addToLog(F("Bucket 2 waste limit updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PS")) == 0)
-    {
-      DefaultSettings->PumpSpeed_ = toInt(Data);
-      addToLog(F("Pump 2 speed updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("T")) == 0)
-    {
-      DefaultSettings->PumpTimeOut_ = toInt(Data);
-      addToLog(F("Pump 2 timeout updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("D")) == 0)
-    {
-      DefaultSettings->DrainWaitTime_ = toInt(Data);
-      addToLog(F(" Drain wait updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("DW")) == 0)
-    {
-      HempyBucketCommand2ToSend.DryWeight = toFloat(Data);
-      addToLog(F(" dry weight updated"), false);
-    }
-    */
-    else
-    {
-      return false; //Nothing matched
-    }
-    return true; //Match found
-  }
 }
 
 void HempyBucket::updateState(HempyStates NewState)
@@ -245,10 +167,15 @@ void HempyBucket::updateState(HempyStates NewState)
   }
 }
 
-void HempyBucket::disable()
+void HempyBucket::disable()  //Takes time, do not call directly from an interupt (ESP-link website would timeout)
 {
   Parent->getSoundObject()->playOffSound();
   updateState(HempyStates::DISABLED);
+}
+
+void HempyBucket::disableRequest()  //Stores the request only, will apply the next time the Hempy Bucket is refreshing
+{
+  DisableRequested = true;
 }
 
 void HempyBucket::startWatering()
@@ -257,10 +184,20 @@ void HempyBucket::startWatering()
   updateState(HempyStates::WATERING);
 }
 
+void HempyBucket::startWateringRequest()  //Stores the request only, will apply the next time the Hempy Bucket is refreshing
+{
+  StartWateringRequested = true;
+}
+
 void HempyBucket::stopWatering()
 {
   Parent->getSoundObject()->playOnSound();
   updateState(HempyStates::IDLE);
+}
+
+void HempyBucket::stopWateringRequest()  //Stores the request only, will apply the next time the Hempy Bucket is refreshing
+{
+  StopWateringRequested = true;
 }
 
 void HempyBucket::setEvaporationTarget(float Weight)

@@ -32,11 +32,11 @@ void PowerSensorV3_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("P")), getPowerText(true));
-    WebServer.setArgString(getComponentName(F("E")), getEnergyText(true));
-    WebServer.setArgString(getComponentName(F("V")), getVoltageText(true));
-    WebServer.setArgString(getComponentName(F("C")), getCurrentText(true));
-    WebServer.setArgString(getComponentName(F("F")), getFrequencyText(true));
-    WebServer.setArgString(getComponentName(F("PF")), getPowerFactorText());
+    WebServer.setArgString(getName(F("P")), getPowerText(true));
+    WebServer.setArgString(getName(F("E")), getEnergyText(true));
+    WebServer.setArgString(getName(F("V")), getVoltageText(true));
+    WebServer.setArgString(getName(F("C")), getCurrentText(true));
+    WebServer.setArgString(getName(F("F")), getFrequencyText(true));
+    WebServer.setArgString(getName(F("PF")), getPowerFactorText());
   }
 }

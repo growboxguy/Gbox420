@@ -161,103 +161,105 @@
 
 	<h1
 		style="color:#333;background-color: #fc0;text-align: center;padding-top: 5px;padding-bottom: 2px;margin: 0px;line-height: 37px;">
-		GrowBox</h1>
+		Hempy</h1>
 	<div class="pure-g" onload="showRefillButton()">
 		<div class="pure-u-1 pure-u-md-1-2">
 			<div class="card">
-				<h1><span id="Time"></span></h1>				
+				<h1><span id="Time"></span></h1>
 				<ul id="Log"></ul>
 				<form>
 					<p>
-					<button id="Refresh" type="button" title="Force refreshing sensor readings">&#8635;</button>
-					Report to:
-					<button id="SerialRep" type="button" title="Report current status to Serial (ESP and Arduino)">Console</button>
-					<button id="SheetsRep" type="button" title="Report current status to Google Sheets">Sheets</button>
-					<button id="MQTTRep" type="button" title="Report current status to Google Sheets">MQTT</button>
+						<button id="Refresh" type="button" title="Force refreshing sensor readings">&#8635;</button>
+						Report to:
+						<button id="SerialRep" type="button"
+							title="Report current status to Serial (ESP and Arduino)">Console</button>
+						<button id="SheetsRep" type="button"
+							title="Report current status to Google Sheets">Sheets</button>
+						<button id="MQTTRep" type="button" title="Report current status to Google Sheets">MQTT</button>
 					</p>
 				</form>
 			</div>
 			<div class="card">
 				<h1 style="display: inline;">Hempy 1</h1>
-				<span style="float:right" id="Hemp1_S">CONNECTING...</span>
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span>State</span></th>
 						<th class="headerRows"><span>Pump</span></th>
 						<th class="headerRows"><span>Bucket</span>
-							<button id="Hemp1_B1TareB" onclick="confirmTare(this)"
+							<button id="B1_TareB" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 						<th class="headerRows"><span>Dry/Wet</span>
-							<button id="Hemp1_B1TareDW" onclick="confirmDryWetTare(this)"
+							<button id="B1_TareDW" onclick="confirmDryWetTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the last measured Wet weight and restore the Dry weight from Settings.h">Tare</button>
 						</th>
 						<th class="headerRows"><span>Waste</span>
-							<button id="Hemp1_B1TareWR" onclick="confirmTare(this)"
+							<button id="B1_TareWR" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 					</tr>
 					<tr>
-						<td id="Hemp1_B1S" class="dataRows"></td>
-						<td id="Hemp1_B1P" class="dataRows"></td>
-						<td id="Hemp1_B1W" class="dataRows"></td>
-						<td id="Hemp1_B1DWW" class="dataRows"></td>
-						<td id="Hemp1_B1WR" class="dataRows"></td>
+						<td id="B1_S" class="dataRows"></td>
+						<td id="B1_P" class="dataRows"></td>
+						<td id="B1_W" class="dataRows"></td>
+						<td id="B1_DWW" class="dataRows"></td>
+						<td id="B1_WR" class="dataRows"></td>
 
 					</tr>
 				</table>
 				<form>
 					<p>
 						<label><b>Watering</b></label>
-						<button id="Hemp1_B1_On" type="button" align="right"
+						<button id="B1__On" type="button" align="right"
 							title="Starts the pump and reset its status to OK">Start</button>
-						<button id="Hemp1_B1_Off" type="button" align="right"
+						<button id="B1__Off" type="button" align="right"
 							title="Stops the pump and reset its status to OK">Stop</button>
-						<button id="Hemp1_B1_Dis" type="button" align="right"
+						<button id="B1__Dis" type="button" align="right"
 							title="Stops and disables pump">Disable</button>
 					</p>
 				</form>
 				<p>
 					<span style=" padding-left: 0.5em;"></span>
 					<label>Next:</label>
-					<span id="Hemp1_B1_RemainingWater" style="font-weight:bold;"></span>
+					<span id="B1__RemainingWater" style="font-weight:bold;"></span>
 					<label>, Waste remaining:</label>
-					<label id="Hemp1_B1_RemainingWaste" style="font-weight:bold;"></label>
+					<label id="B1__RemainingWaste" style="font-weight:bold;"></label>
 					</span>
 				</p>
 				<form>
 					<p>
 						<label><b>Pump</b></label>
 						<label style="padding-left: 0em; text-align: right;">speed</label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Hemp1_B1PSS"
-							min="1" max="100" oninput="this.form.Hemp1_B1PS.value=this.value" />
-						<input type="number" name="Hemp1_B1PS" min="1" max="100"
-							oninput="this.form.Hemp1_B1PSS.value=this.value" />
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="B1_PSS"
+							min="1" max="100" oninput="this.form.B1_PS.value=this.value" />
+						<input type="number" name="B1_PS" min="1" max="100"
+							oninput="this.form.B1_PSS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
-						<input style="width: 45px;" min=1 max=9999 name="Hemp1_B1T" type="number"
+						<input style="width: 45px;" min=1 max=9999 name="B1_T" type="number"
 							title="Maximum total run time of the pump during the watering. Safety feature - disables the watering! The weight target should be reached sooner than this counter" />sec,
 						<label style="text-align: right;">Drain</label>
-						<input style="width: 45px;" name="Hemp1_B1D" type="number" value='0' step='1' min='0'
-								title="How long to wait between watering cycles. Drain time required by the nutrient solution to reach the waste reservoir."/>sec
+						<input style="width: 45px;" name="B1_D" type="number" value='0' step='1' min='0'
+							title="How long to wait between watering cycles. Drain time required by the nutrient solution to reach the waste reservoir." />sec
 						<input class=" setButton" type="submit" value="Set" />
 					</p>
 				</form>
-				<label><b>Weight based watering</b><button class="setButton" onclick="hempyWateringInfo()">?</button></label>
+				<label><b>Weight based watering</b><button class="setButton"
+						onclick="hempyWateringInfo()">?</button></label>
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: left;">Dry weight</label>
-						<input style="width: 57px;" name="Hemp1_B1DW" type="number" value='0' step='0.1' min='0'
+						<input style="width: 57px;" name="B1_DW" type="number" value='0' step='0.1' min='0'
 							title="Next watering weight, automatically calculated based on: Wet weight minus Evaporation target" />
 						<label style="text-align: right;">Waste limit</label>
-						<input style="width: 57px;" name="Hemp1_B1WL" type="number" value='0' step='0.1' min='0'
+						<input style="width: 57px;" name="B1_WL" type="number" value='0' step='0.1' min='0'
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -265,97 +267,97 @@
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; width: 2.2em;text-align: left;">Overflow</label>
-						<input style="width: 50px;" name="Hemp1_B1OF" type="number" value='0' step='0.1' min='0'
+						<input style="width: 50px;" name="B1_OF" type="number" value='0' step='0.1' min='0'
 							title="Dual purpose: 1: Amount of water that should drain into the Waste reservoir before stopping watering. 2: Amount of water that is pumped into the Bucket in one cycle" />
 						<label style="text-align: right;">Evaporation</label>
-						<input style="width: 50px;" name="Hemp1_B1ET" type="number" value='0' step='0.1' min='0'
+						<input style="width: 50px;" name="B1_ET" type="number" value='0' step='0.1' min='0'
 							title="Amount of water that should evaporate between waterings" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
-			</div>			
+			</div>
 		</div>
-		<div class="pure-u-1 pure-u-md-1-2">			
+		<div class="pure-u-1 pure-u-md-1-2">
 			<div class="card">
 				<h1 style="display: inline;">Hempy 2</h1>
-				<span style="float:right" id="Hemp1_S2">CONNECTING...</span>
 				<table class="tg">
 					<tr>
 						<th class="headerRows"><span>State</span></th>
 						<th class="headerRows"><span>Pump</span></th>
 						<th class="headerRows"><span>Bucket</span>
-							<button id="Hemp1_B2TareB" onclick="confirmTare(this)"
+							<button id="B2_TareB" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 						<th class="headerRows"><span>Dry/Wet</span>
-							<button id="Hemp1_B2TareDW" onclick="confirmDryWetTare(this)"
+							<button id="B2_TareDW" onclick="confirmDryWetTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the last measured Wet weight and restore the Dry weight from Settings.h">Tare</button>
 						</th>
 						<th class="headerRows"><span>Waste</span>
-							<button id="Hemp1_B2TareWR" onclick="confirmTare(this)"
+							<button id="B2_TareWR" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the waste reservoir weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 					</tr>
 					<tr>
-						<td id="Hemp1_B2S" class="dataRows"></td>
-						<td id="Hemp1_B2P" class="dataRows"></td>
-						<td id="Hemp1_B2W" class="dataRows"></td>
-						<td id="Hemp1_B2DWW" class="dataRows"></td>
-						<td id="Hemp1_B2WR" class="dataRows"></td>
+						<td id="B2_S" class="dataRows"></td>
+						<td id="B2_P" class="dataRows"></td>
+						<td id="B2_W" class="dataRows"></td>
+						<td id="B2_DWW" class="dataRows"></td>
+						<td id="B2_WR" class="dataRows"></td>
 					</tr>
 				</table>
 				<form>
 					<p>
 						<label><b>Watering</b></label>
-						<button id="Hemp1_B2_On" type="button" align="right"
+						<button id="B2__On" type="button" align="right"
 							title="Starts the pump and reset its status to OK">Start</button>
-						<button id="Hemp1_B2_Off" type="button" align="right"
+						<button id="B2__Off" type="button" align="right"
 							title="Stops the pump and reset its status to OK">Stop</button>
-						<button id="Hemp1_B2_Dis" type="button" align="right"
+						<button id="B2__Dis" type="button" align="right"
 							title="Stops and disables pump">Disable</button>
 					</p>
 				</form>
 				<p>
 					<span style=" padding-left: 0.5em;"></span>
 					<label>Next:</label>
-					<span id="Hemp1_B2_RemainingWater" style="font-weight:bold;"></span>
+					<span id="B2__RemainingWater" style="font-weight:bold;"></span>
 					<label>, Waste remaining:</label>
-					<label id="Hemp1_B2_RemainingWaste" style="font-weight:bold;"></label>
+					<label id="B2__RemainingWaste" style="font-weight:bold;"></label>
 					</span>
 				</p>
 				<form>
 					<p>
 						<label><b>Pump</b></label>
 						<label style="padding-left: 0em; text-align: right;">speed</label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Hemp1_B2PSS"
-							min="1" max="100" oninput="this.form.Hemp1_B2PS.value=this.value" />
-						<input type="number" name="Hemp1_B2PS" min="1" max="100"
-							oninput="this.form.Hemp1_B2PSS.value=this.value" />
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="B2_PSS"
+							min="1" max="100" oninput="this.form.B2_PS.value=this.value" />
+						<input type="number" name="B2_PS" min="1" max="100"
+							oninput="this.form.B2_PSS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
-						<input style="width: 45px;" min=1 max=9999 name="Hemp1_B2T" type="number"
-							title="Maximum total run time of the pump during the watering. Safety feature, The weight target should be reached sooner than this counter." />sec, 
+						<input style="width: 45px;" min=1 max=9999 name="B2_T" type="number"
+							title="Maximum total run time of the pump during the watering. Safety feature, The weight target should be reached sooner than this counter." />sec,
 						<label style="text-align: right;">Drain</label>
-						<input style="width: 45px;" name="Hemp1_B2D" type="number" value='0' step='1' min='0'
-							title="How long to wait between watering cycles. Drain time required by the nutrient solution to reach the waste reservoir."/>sec
+						<input style="width: 45px;" name="B2_D" type="number" value='0' step='1' min='0'
+							title="How long to wait between watering cycles. Drain time required by the nutrient solution to reach the waste reservoir." />sec
 						<input class=" setButton" type="submit" value="Set" />
 					</p>
 				</form>
-				<label><b>Weight based watering</b><button class="setButton" onclick="hempyWateringInfo()">?</button></label>
+				<label><b>Weight based watering</b><button class="setButton"
+						onclick="hempyWateringInfo()">?</button></label>
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: right;">Dry weight</label>
-						<input style="width: 57px;" name="Hemp1_B2DW" type="number" value='0' step='0.1' min='0'
+						<input style="width: 57px;" name="B2_DW" type="number" value='0' step='0.1' min='0'
 							title="Next watering weight, automatically calculated based on: Wet weight minus Evaporation target" />
 						<label style="text-align: right;">Waste limit</label>
-						<input style="width: 57px;" name="Hemp1_B2WL" type="number" value='0' step='0.1' min='0'
+						<input style="width: 57px;" name="B2_WL" type="number" value='0' step='0.1' min='0'
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -363,15 +365,15 @@
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; width: 2.2em;text-align: right;">Overflow</label>
-						<input style="width: 50px;" name="Hemp1_B2OF" type="number" value='0' step='0.1' min='0'
+						<input style="width: 50px;" name="B2_OF" type="number" value='0' step='0.1' min='0'
 							title="Dual purpose: 1: Amount of water that should drain into the Waste reservoir before stopping watering. 2: Amount of water that is pumped into the Bucket in one cycle" />
 						<label style="text-align: right;">Evaporation</label>
-						<input style="width: 50px;" name="Hemp1_B2ET" type="number" value='0' step='0.1' min='0'
+						<input style="width: 50px;" name="B2_ET" type="number" value='0' step='0.1' min='0'
 							title="Amount of water that should evaporate between waterings" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
-			</div>			
+			</div>
 		</div>
 	</div>
 </div>
@@ -423,41 +425,38 @@
 	setInterval(function () {
 		//document.getElementsByName("FanI_SS")[0].value = document.getElementsByName("FanI_S")[0].value;
 		//document.getElementsByName("FanE_SS")[0].value = document.getElementsByName("FanE_S")[0].value;
-		document.getElementsByName("Hemp1_B1PSS")[0].value = document.getElementsByName("Hemp1_B1PS")[0].value;
-		document.getElementsByName("Hemp1_B2PSS")[0].value = document.getElementsByName("Hemp1_B2PS")[0].value
+		document.getElementsByName("B1_PSS")[0].value = document.getElementsByName("B1_PS")[0].value;
+		document.getElementsByName("B2_PSS")[0].value = document.getElementsByName("B2_PS")[0].value
 	}, 1000) ///< Refresh every second
 
-	///< Duplicating the status of the Hempy Module to both Buckets
-	setInterval(function () { document.getElementById("Hemp1_S2").innerHTML = document.getElementById("Hemp1_S").innerHTML; }, 5)  ///< Refresh every 5 seconds
-
 	///< Calculate remaining water in Hempy Bucket 1
-	var Hempy1_Bucket1_Weight = document.getElementById("Hemp1_B1W");
-	var Hempy1_Bucket1_Waste = document.getElementById("Hemp1_B1WR");
-	var Hempy1_Bucket1_DryWeight = document.getElementsByName("Hemp1_B1DW")[0];
-	var Hempy1_Bucket1_WasteLimit = document.getElementsByName("Hemp1_B1WL")[0];
-	var Hempy1_Bucket1_RemainingWater = document.getElementById("Hemp1_B1_RemainingWater");
-	var Hempy1_Bucket1_RemainingWaste = document.getElementById("Hemp1_B1_RemainingWaste");
+	var Bucket1_Weight = document.getElementById("B1_W");
+	var Bucket1_Waste = document.getElementById("B1_WR");
+	var Bucket1_DryWeight = document.getElementsByName("B1_DW")[0];
+	var Bucket1_WasteLimit = document.getElementsByName("B1_WL")[0];
+	var Bucket1_RemainingWater = document.getElementById("B1__RemainingWater");
+	var Bucket1_RemainingWaste = document.getElementById("B1__RemainingWaste");
 	setInterval(function () {
-		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
-		var Unit = Hempy1_Bucket1_Weight.textContent.replaceAll(/[0-9.]/g, "");
-		Hempy1_Bucket1_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket1_Weight.textContent.slice(0, -1 * Unit.length) - Hempy1_Bucket1_DryWeight.value)).toFixed(1) + Unit;
-		Hempy1_Bucket1_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket1_WasteLimit.value - Hempy1_Bucket1_Waste.textContent.slice(0, -1 * Unit.length))).toFixed(1) + Unit;
-		///<  Math.trunc(Weight - Hempy1_Bucket1_DryWeight.value);
+		//var Weight = parseInt(Bucket1_Weight.value.slice(0,-2))
+		var Unit = Bucket1_Weight.textContent.replaceAll(/[0-9.]/g, "");
+		Bucket1_RemainingWater.innerHTML = (parseFloat(Bucket1_Weight.textContent.slice(0, -1 * Unit.length) - Bucket1_DryWeight.value)).toFixed(1) + Unit;
+		Bucket1_RemainingWaste.innerHTML = (parseFloat(Bucket1_WasteLimit.value - Bucket1_Waste.textContent.slice(0, -1 * Unit.length))).toFixed(1) + Unit;
+		///<  Math.trunc(Weight - Bucket1_DryWeight.value);
 	}, 1000)  ///< Refresh every second
 
 	///< Calculate remaining water in Hempy Bucket 2
-	var Hempy1_Bucket2_Weight = document.getElementById("Hemp1_B2W");
-	var Hempy1_Bucket2_Waste = document.getElementById("Hemp1_B2WR");
-	var Hempy1_Bucket2_DryWeight = document.getElementsByName("Hemp1_B2DW")[0];
-	var Hempy1_Bucket2_WasteLimit = document.getElementsByName("Hemp1_B2WL")[0];
-	var Hempy1_Bucket2_RemainingWater = document.getElementById("Hemp1_B2_RemainingWater");
-	var Hempy1_Bucket2_RemainingWaste = document.getElementById("Hemp1_B2_RemainingWaste");
+	var Bucket2_Weight = document.getElementById("B2_W");
+	var Bucket2_Waste = document.getElementById("B2_WR");
+	var Bucket2_DryWeight = document.getElementsByName("B2_DW")[0];
+	var Bucket2_WasteLimit = document.getElementsByName("B2_WL")[0];
+	var Bucket2_RemainingWater = document.getElementById("B2__RemainingWater");
+	var Bucket2_RemainingWaste = document.getElementById("B2__RemainingWaste");
 	setInterval(function () {
-		//var Weight = parseInt(Hempy1_Bucket1_Weight.value.slice(0,-2))
-		var Unit = Hempy1_Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
-		Hempy1_Bucket2_RemainingWater.innerHTML = (parseFloat(Hempy1_Bucket2_Weight.textContent.slice(0, -1 * Unit.length) - Hempy1_Bucket2_DryWeight.value)).toFixed(1) + Unit;
-		Hempy1_Bucket2_RemainingWaste.innerHTML = (parseFloat(Hempy1_Bucket2_WasteLimit.value - Hempy1_Bucket2_Waste.textContent.slice(0, -1 * Unit.length))).toFixed(1) + Unit;
-		///<  Math.trunc(Weight - Hempy1_Bucket1_DryWeight.value);
+		//var Weight = parseInt(Bucket1_Weight.value.slice(0,-2))
+		var Unit = Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
+		Bucket2_RemainingWater.innerHTML = (parseFloat(Bucket2_Weight.textContent.slice(0, -1 * Unit.length) - Bucket2_DryWeight.value)).toFixed(1) + Unit;
+		Bucket2_RemainingWaste.innerHTML = (parseFloat(Bucket2_WasteLimit.value - Bucket2_Waste.textContent.slice(0, -1 * Unit.length))).toFixed(1) + Unit;
+		///<  Math.trunc(Weight - Bucket1_DryWeight.value);
 	}, 1000)  ///< Refresh every second
 
 	if (window.addEventListener) {

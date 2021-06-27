@@ -51,43 +51,43 @@ void DevModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G", 2) == 0) //GrowBox tab
   {
-    //WebServer.setArgInt(getComponentName(F("FIS")), FanI->getSpeed()); ///< Internal PWM Fan speed
-    //WebServer.setArgInt(getComponentName(F("FES")), FanE->getSpeed()); ///< Exhaust PWM Fan speed
+    //WebServer.setArgInt(getName(F("FIS")), FanI->getSpeed()); ///< Internal PWM Fan speed
+    //WebServer.setArgInt(getName(F("FES")), FanE->getSpeed()); ///< Exhaust PWM Fan speed
   }
   else if (strncmp(url, "/S", 2) == 0) //Settings tab
   {
-    WebServer.setArgInt(getComponentName(F("Debug")), *Debug);
-    WebServer.setArgInt(getComponentName(F("Metric")), *Metric);
-    WebServer.setArgInt(getComponentName(F("SerialF")), *SerialReportFrequency);
-    WebServer.setArgInt(getComponentName(F("Date")), *SerialReportDate);
-    WebServer.setArgInt(getComponentName(F("Mem")), *SerialReportMemory);
-    WebServer.setArgInt(getComponentName(F("JSON")), *SerialReportJSON);
-    WebServer.setArgInt(getComponentName(F("FJSON")), *SerialReportJSONFriendly);
-    WebServer.setArgInt(getComponentName(F("Wire")), *SerialReportWireless);
-    WebServer.setArgBoolean(getComponentName(F("Sheets")), *ReportToGoogleSheets);
-    WebServer.setArgInt(getComponentName(F("SheetsF")), *SheetsReportingFrequency);
-    WebServer.setArgString(getComponentName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
-    WebServer.setArgBoolean(getComponentName(F("MQTT")), *ReportToMQTT);
-    WebServer.setArgInt(getComponentName(F("MQTTF")), *MQTTReportFrequency);
-    WebServer.setArgString(getComponentName(F("MPT")), ModuleSettings->MqttPubTopic);
-    WebServer.setArgString(getComponentName(F("MST")), ModuleSettings->MqttSubTopic);
-    WebServer.setArgString(getComponentName(F("MLT")), ModuleSettings->MqttLwtTopic);
-    WebServer.setArgString(getComponentName(F("MLM")), ModuleSettings->MqttLwtMessage);
-    WebServer.setArgBoolean(getComponentName(F("Sound")), Sound1->getEnabledState());
+    WebServer.setArgInt(getName(F("Debug")), *Debug);
+    WebServer.setArgInt(getName(F("Metric")), *Metric);
+    WebServer.setArgInt(getName(F("SerialF")), *SerialReportFrequency);
+    WebServer.setArgInt(getName(F("Date")), *SerialReportDate);
+    WebServer.setArgInt(getName(F("Mem")), *SerialReportMemory);
+    WebServer.setArgInt(getName(F("JSON")), *SerialReportJSON);
+    WebServer.setArgInt(getName(F("FJSON")), *SerialReportJSONFriendly);
+    WebServer.setArgInt(getName(F("Wire")), *SerialReportWireless);
+    WebServer.setArgBoolean(getName(F("Sheets")), *ReportToGoogleSheets);
+    WebServer.setArgInt(getName(F("SheetsF")), *SheetsReportingFrequency);
+    WebServer.setArgString(getName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
+    WebServer.setArgBoolean(getName(F("MQTT")), *ReportToMQTT);
+    WebServer.setArgInt(getName(F("MQTTF")), *MQTTReportFrequency);
+    WebServer.setArgString(getName(F("MPT")), ModuleSettings->MqttPubTopic);
+    WebServer.setArgString(getName(F("MST")), ModuleSettings->MqttSubTopic);
+    WebServer.setArgString(getName(F("MLT")), ModuleSettings->MqttLwtTopic);
+    WebServer.setArgString(getName(F("MLM")), ModuleSettings->MqttLwtMessage);
+    WebServer.setArgBoolean(getName(F("Sound")), Sound1->getEnabledState());
   }
 }
 
 void DevModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
   //All tabs
-  WebServer.setArgString(getComponentName(F("Time")), getFormattedTime(false));
-  WebServer.setArgJson(getComponentName(F("Log")), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
+  WebServer.setArgString(getName(F("Time")), getFormattedTime(false));
+  WebServer.setArgJson(getName(F("Log")), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 
   if (strncmp(url, "/G", 2) == 0) //GrowBox tab
   {
     //DHT1
-    WebServer.setArgString(getComponentName(F("DT")), DHT1->getTempText(true)); ///< Shows the latest reading
-    WebServer.setArgString(getComponentName(F("DH")), DHT1->getHumidityText(true));
+    WebServer.setArgString(getName(F("DT")), DHT1->getTempText(true)); ///< Shows the latest reading
+    WebServer.setArgString(getName(F("DH")), DHT1->getHumidityText(true));
   }
 }
 

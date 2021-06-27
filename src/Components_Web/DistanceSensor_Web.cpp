@@ -20,7 +20,7 @@ void DistanceSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 { ///< When the website is refreshing
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("Dis")), getDistanceText(true)); ///< Distance reading
+    WebServer.setArgString(getName(F("Dis")), getDistanceText(true)); ///< Distance reading
   }
 }
 

@@ -1,9 +1,9 @@
 #include "Hempy_Standalone.h"
 #include "../Components/Sound.h"
 #include "../Components_Web/DHTSensor_Web.h"
-#include "../Components/WeightSensor.h"
+#include "../Components_Web/WeightSensor_Web.h"
 #include "../Components/WaterPump.h"
-#include "../Components/HempyBucket.h"
+#include "../Components_Web/HempyBucket_Web.h"
 
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings, creates components that the instance controls, and subscribes to events
@@ -21,18 +21,18 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   ReportToMQTT = &DefaultSettings->ReportToMQTT;
   MQTTReportFrequency = &DefaultSettings->MQTTReportFrequency;
 
-  logToSerials(F(""), true, 0);                                   //<Line break
-  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
-  this->SoundFeedback = Sound1;                                   ///< Pointer for child objects to use sound feedback
-  DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);
-  WeightB1 = new WeightSensor(F("WeightB1"), this, &ModuleSettings->WeightB1);    //< Bucket 1 weight sensor
-  WeightB2 = new WeightSensor(F("WeightB2"), this, &ModuleSettings->WeightB2);    //< Bucket 2 weight sensor
-  WeightNR1 = new WeightSensor(F("WeightNR1"), this, &ModuleSettings->WeightWR1); //< Nutrient reservoir weight sensor
-  WeightWR1 = new WeightSensor(F("WeightWR1"), this, &ModuleSettings->WeightWR1); //< Waste reservoir weight sensor
-  Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->Pump1);
-  Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->Pump2);
-  Bucket1 = new HempyBucket(F("B1"), this, &ModuleSettings->Bucket1, WeightB1, WeightWR1, Pump1);
-  Bucket2 = new HempyBucket(F("B2"), this, &ModuleSettings->Bucket2, WeightB2, WeightWR1, Pump2);
+  logToSerials(F(""), true, 0);                                             //<Line break
+  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1);           ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  this->SoundFeedback = Sound1;                                             ///< Pointer for child objects to use sound feedback
+  DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);         ///< Humidity and temp sensor (not necessary)
+  B1W = new WeightSensor_Web(F("B1W"), this, &ModuleSettings->B1W);   ///< Bucket 1 Weight sensor
+  B2W = new WeightSensor_Web(F("B2W"), this, &ModuleSettings->B2W);   ///< Bucket 2 Weight sensor
+  NRW = new WeightSensor_Web(F("NRW"), this, &ModuleSettings->WRW); ///< Nutrient Reservoir Weight sensor
+  WRW = new WeightSensor_Web(F("WRW"), this, &ModuleSettings->WRW); ///< Waste Reservoir Weight sensor
+  B1P = new WaterPump(F("B1P"), this, &ModuleSettings->B1P);            ///< Bucket 1 pump
+  B2P = new WaterPump(F("B2P"), this, &ModuleSettings->B2P);            ///< Bucket 2 pump
+  //Bucket1 = new HempyBucket(F("B1"), this, &ModuleSettings->Bucket1, B1W, WRW, B1P); ///< Bucket 1
+  //Bucket2 = new HempyBucket(F("B2"), this, &ModuleSettings->Bucket2, B2W, WRW, B2P); ///< Bucket 1
   addToReportQueue(this); //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   //addToRefreshQueue_Sec(this);     //< Attach to a trigger that fires every second and calls refresh_Sec()
   addToRefreshQueue_FiveSec(this); //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
@@ -43,7 +43,7 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   addToLog(F("Hempy_Standalone ready"), 0);
   logToSerials(Name, false, 0);
   logToSerials(F("refreshing"), true, 1);
-  runAll();  
+  runAll();
 }
 
 /**
@@ -61,49 +61,12 @@ void Hempy_Standalone::report(bool FriendlyFormat)
 
 void Hempy_Standalone::websiteEvent_Load(char *url)
 {
-  Module_Web::websiteEvent_Load(url);
-  if (strncmp(url, "/H", 2) == 0) //Hempy tab
-  {
-    //Bucket 1
-    WebServer.setArgString(getComponentName(F("B1ET")), Bucket1->getEvaporationTargetText());
-    WebServer.setArgString(getComponentName(F("B1OF")), Bucket1->getOverflowTargetText());
-    WebServer.setArgString(getComponentName(F("B1WL")), Bucket1->getWasteLimitText());
-    WebServer.setArgInt(getComponentName(F("B1PS")), Pump1->getSpeed());
-    WebServer.setArgInt(getComponentName(F("B1T")), Pump1->getPumpTimeOut());
-    WebServer.setArgInt(getComponentName(F("B1D")), Bucket1->getDrainWaitTime());
-    WebServer.setArgString(getComponentName(F("B1DW")), Bucket1->getDryWeightText());
-    //Bucket 2
-    WebServer.setArgString(getComponentName(F("B2ET")), Bucket2->getEvaporationTargetText());
-    WebServer.setArgString(getComponentName(F("B2OF")), Bucket2->getOverflowTargetText());
-    WebServer.setArgString(getComponentName(F("B2WL")), Bucket2->getWasteLimitText());
-    WebServer.setArgInt(getComponentName(F("B2PS")), Pump2->getSpeed());
-    WebServer.setArgInt(getComponentName(F("B2T")), Pump2->getPumpTimeOut());
-    WebServer.setArgInt(getComponentName(F("B2D")), Bucket2->getDrainWaitTime());
-    WebServer.setArgString(getComponentName(F("B2DW")), Bucket2->getDryWeightText());
-  }  
+  Module_Web::websiteEvent_Load(url);  
 }
 
 void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
-  Module_Web::websiteEvent_Refresh(url);
-  if (strncmp(url, "/H", 2) == 0) //Hempy tab
-  {
-    //DHT1
-    WebServer.setArgString(getComponentName(F("DT")), DHT1->getTempText(true)); ///< Shows the latest reading
-    WebServer.setArgString(getComponentName(F("DH")), DHT1->getHumidityText(true));
-    //Bucket 1
-    WebServer.setArgString(getComponentName(F("B1W")), WeightB1->getWeightText(false, true));
-    WebServer.setArgString(getComponentName(F("B1WR")), WeightWR1->getWeightText(false, true));
-    WebServer.setArgString(getComponentName(F("B1DWW")), toText(Bucket1->getDryWeight(), Bucket1->getWetWeight(), "/"));
-    WebServer.setArgString(getComponentName(F("B1S")), Bucket1->getStateText(true));
-    WebServer.setArgString(getComponentName(F("B1P")), Pump1->getStateText(true));
-    //Bucket 2
-    WebServer.setArgString(getComponentName(F("B2W")), WeightB2->getWeightText(false, true));
-    WebServer.setArgString(getComponentName(F("B2WR")), WeightWR1->getWeightText(false, true));
-    WebServer.setArgString(getComponentName(F("B2DWW")), toText(Bucket2->getDryWeight(), Bucket2->getWetWeight(), "/"));
-    WebServer.setArgString(getComponentName(F("B2S")), Bucket2->getStateText(true));
-    WebServer.setArgString(getComponentName(F("B2P")), Pump2->getStateText(true));
-  }
+  Module_Web::websiteEvent_Refresh(url); 
 }
 
 /**
@@ -117,15 +80,16 @@ bool Hempy_Standalone::commandEvent(char *Command, char *Data)
   }
   else
   {
+    /*
     char TempStorage[MaxShotTextLength] = "";
     strncpy(TempStorage, ShortMessage, MaxShotTextLength);
-/*
-    //Bucket1
+    
+    //B1
     if (Bucket1->commandEvent(TempStorage, Data))
     {
       ;
     }
-    else if (Bucket2->commandEvent(TempStorage, Data))
+    else if (Bucket2>commandEvent(TempStorage, Data))
     {
       ;
     }

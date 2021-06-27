@@ -33,15 +33,15 @@ void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgInt(getComponentName(F("OnH")), *OnHour);            ///< On hour
-    WebServer.setArgInt(getComponentName(F("OnM")), *OnMinute);          ///< On minute
-    WebServer.setArgInt(getComponentName(F("OfH")), *OffHour);           ///< Off hour
-    WebServer.setArgInt(getComponentName(F("OfM")), *OffMinute);         ///< Off minute
-    WebServer.setArgInt(getComponentName(F("B")), *Brightness);          ///< Brightness percentage
-    // WebServer.setArgBoolean(getComponentName(F("F")), *FadingEnabled);   ///< Enable or disable Fade in/out
-    // WebServer.setArgInt(getComponentName(F("FInc")), *FadingIncrements); ///< Fade change (%)
-    // WebServer.setArgInt(getComponentName(F("FInt")), *FadingInterval);   ///< Fade step interval (sec)
-    WebServer.setArgInt(getComponentName(F("DD")), *DimmingDuration);    ///< Fade step interval (sec)
+    WebServer.setArgInt(getName(F("OnH")), *OnHour);            ///< On hour
+    WebServer.setArgInt(getName(F("OnM")), *OnMinute);          ///< On minute
+    WebServer.setArgInt(getName(F("OfH")), *OffHour);           ///< Off hour
+    WebServer.setArgInt(getName(F("OfM")), *OffMinute);         ///< Off minute
+    WebServer.setArgInt(getName(F("B")), *Brightness);          ///< Brightness percentage
+    // WebServer.setArgBoolean(getName(F("F")), *FadingEnabled);   ///< Enable or disable Fade in/out
+    // WebServer.setArgInt(getName(F("FInc")), *FadingIncrements); ///< Fade change (%)
+    // WebServer.setArgInt(getName(F("FInt")), *FadingInterval);   ///< Fade step interval (sec)
+    WebServer.setArgInt(getName(F("DD")), *DimmingDuration);    ///< Fade step interval (sec)
   }
 }
 
@@ -49,9 +49,9 @@ void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("S")), getStateText());                  ///< State
-    WebServer.setArgString(getComponentName(F("Br")), getCurrentBrightnessText(true)); ///< Timer on or off
-    WebServer.setArgString(getComponentName(F("T")), getTimerOnOffText(true));         ///< Timer on or off
+    WebServer.setArgString(getName(F("S")), getStateText());                  ///< State
+    WebServer.setArgString(getName(F("Br")), getCurrentBrightnessText(true)); ///< Timer on or off
+    WebServer.setArgString(getName(F("T")), getTimerOnOffText(true));         ///< Timer on or off
   }
 }
 

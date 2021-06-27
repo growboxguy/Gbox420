@@ -24,7 +24,7 @@ void Fan_PWM_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgInt(getComponentName(F("S")), *Speed);            ///< On hour
+    WebServer.setArgInt(getName(F("S")), *Speed);            ///< On hour
   }
 }
 
@@ -32,7 +32,7 @@ void Fan_PWM_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("C")), getSpeedText(true,true));
+    WebServer.setArgString(getName(F("C")), getSpeedText(true,true));
   }
 }
 

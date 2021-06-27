@@ -24,8 +24,8 @@ void LightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("D")), getDarkText(true));
-    WebServer.setArgString(getComponentName(F("R")), getReadingText(true));
+    WebServer.setArgString(getName(F("D")), getDarkText(true));
+    WebServer.setArgString(getName(F("R")), getReadingText(true));
   }
 }
 

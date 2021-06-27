@@ -9,9 +9,9 @@
 // forward declaration of classes
 class Sound;
 class DHTSensor_Web;
-class WeightSensor;
+class WeightSensor_Web;
 class WaterPump;
-class HempyBucket;
+class HempyBucket_Web;
 
 extern ELClientRest PushingBoxRestAPI;
 
@@ -23,14 +23,14 @@ public:
   Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings);
   Sound *Sound1 = NULL;           ///< Pointer to a Piezo speaker - sound feedback
   DHTSensor_Web *DHT1 = NULL;     ///< Humidity and temp sensor
-  WeightSensor *WeightNR1 = NULL; ///< Nutrient reservoir weight sensor
-  WeightSensor *WeightWR1 = NULL; ///< Waste reservoir weight sensor                                                                                                     ///< Pointer to a Digital Humidity and Temp Sensor object
-  WeightSensor *WeightB1 = NULL;  ///< Bucket 1 reservoir weight sensor
-  WeightSensor *WeightB2 = NULL;  ///< Bucket 2 reservoir weight sensor
-  HempyBucket *Bucket1 = NULL;    ///< Hempy bucket 1
-  HempyBucket *Bucket2 = NULL;    ///< Hempy bucket 2
-  WaterPump *Pump1 = NULL;        ///< Bucket 1 water pump
-  WaterPump *Pump2 = NULL;        ///< Bucket 2 water pump
+  WeightSensor_Web *NRW = NULL; ///< Nutrient reservoir weight sensor
+  WeightSensor_Web *WRW = NULL; ///< Waste reservoir weight sensor                                                                                                     ///< Pointer to a Digital Humidity and Temp Sensor object
+  WeightSensor_Web *B1W = NULL;  ///< Bucket 1 reservoir weight sensor
+  WeightSensor_Web *B2W = NULL;  ///< Bucket 2 reservoir weight sensor
+  WaterPump *B1P = NULL;        ///< Bucket 1 water pump
+  WaterPump *B2P = NULL;        ///< Bucket 2 water pump
+  HempyBucket_Web *Bucket1 = NULL;    ///< Hempy bucket 1
+  HempyBucket_Web *Bucket2 = NULL;    ///< Hempy bucket 2
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Load(__attribute__((unused)) char *url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);

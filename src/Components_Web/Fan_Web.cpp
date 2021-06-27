@@ -22,7 +22,7 @@ void Fan_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("S")), fanSpeedToText());
+    WebServer.setArgString(getName(F("S")), fanSpeedToText());
   }
 }
 
@@ -37,17 +37,17 @@ void Fan_Web::websiteEvent_Button(char *Button)
     if (strcmp_P(ShortMessage, (PGM_P)F("O")) == 0)
     {
       TurnOff();
-      WebServer.setArgString(getComponentName(F("S")), fanSpeedToText());
+      WebServer.setArgString(getName(F("S")), fanSpeedToText());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("L")) == 0)
     {
       SetLowSpeed();
-      WebServer.setArgString(getComponentName(F("S")), fanSpeedToText());
+      WebServer.setArgString(getName(F("S")), fanSpeedToText());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("H")) == 0)
     {
       SetHighSpeed();
-      WebServer.setArgString(getComponentName(F("S")), fanSpeedToText());
+      WebServer.setArgString(getName(F("S")), fanSpeedToText());
     }
   }
 }

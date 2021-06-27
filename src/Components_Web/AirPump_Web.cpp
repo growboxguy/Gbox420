@@ -22,7 +22,7 @@ void AirPump_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getComponentName(F("Stat")), getStateToText());
+    WebServer.setArgString(getName(F("Stat")), getStateToText());
   }
 }
 
