@@ -165,7 +165,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       HempyBucket1ResponseToSend.ConfirmStopWatering = false;
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightB && !HempyBucket1ResponseToSend.ConfirmTareWeightB)
     {
-      WeightB1->triggerTare();
+      WeightB1->tareRequest();
       HempyBucket1ResponseToSend.ConfirmTareWeightB = true;
     }
     else
@@ -179,7 +179,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       HempyBucket1ResponseToSend.ConfirmTareWeightDW = false;
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR && !HempyBucket1ResponseToSend.ConfirmTareWeightWR)
     {
-      WeightWR1->triggerTare();
+      WeightWR1->tareRequest();
       HempyBucket1ResponseToSend.ConfirmTareWeightWR = true;
     }
     else
@@ -240,7 +240,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     }
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightB && !HempyBucket2ResponseToSend.ConfirmTareWeightB)
     {
-      WeightB2->triggerTare();
+      WeightB2->tareRequest();
       HempyBucket2ResponseToSend.ConfirmTareWeightB = true;
     }
     else
@@ -258,7 +258,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     }
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR && !HempyBucket2ResponseToSend.ConfirmTareWeightWR)
     {
-      WeightWR2->triggerTare();
+      WeightWR2->tareRequest();
       HempyBucket2ResponseToSend.ConfirmTareWeightWR = true;
     }
     else

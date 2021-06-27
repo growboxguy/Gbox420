@@ -9,6 +9,9 @@ static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storin
 Module_Web::Module_Web(const __FlashStringHelper *Name) : Common(Name), Module(Name)
 {
   //logToSerials(F("Module_Web ready"), true, 3);
+  addToWebsiteQueue_Load(this);
+  addToWebsiteQueue_Refresh(this);
+  addToCommandQueue(this);
 }
 
 /**

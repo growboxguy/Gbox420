@@ -28,7 +28,7 @@ bool WeightSensor_Web::commandEvent(__attribute__((unused)) char *Command, __att
   else
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("T")) == 0)
-      triggerTare();
+      tareRequest();
     /*     else if (strcmp_P(ShortMessage, (PGM_P)F("Calibrate")) == 0)
       triggerCalibration(WebServer.getArgInt());
     else if (strcmp_P(ShortMessage, (PGM_P)F("Scale")) == 0)

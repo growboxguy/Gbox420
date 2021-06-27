@@ -82,7 +82,7 @@ char *WeightSensor::getWeightText(bool ReturnAverage, bool FriendlyFormat)
   }
 }
 
-void WeightSensor::triggerTare()
+void WeightSensor::tareRequest()
 {
   TareRequested = true;
 }

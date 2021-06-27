@@ -114,12 +114,12 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
     WebServer.setArgString(getName(F("S")), toText_onlineStatus(OnlineStatus));
     WebServer.setArgString(getName(F("B1W")), toText_weight(HempyBucketResponse1Received.WeightB));
     WebServer.setArgString(getName(F("B1WR")), toText_weight(HempyBucketResponse1Received.WeightWR));
-    WebServer.setArgString(getName(F("B1DWW")), toText(HempyBucketResponse1Received.DryWeight, HempyBucketResponse1Received.WetWeight, "/"));
+    WebServer.setArgString(getName(F("B1DWW")), toText(HempyBucketResponse1Received.DryWeight, "/", HempyBucketResponse1Received.WetWeight));
     WebServer.setArgString(getName(F("B1S")), toText_hempyState(HempyBucketResponse1Received.HempyState));
     WebServer.setArgString(getName(F("B1P")), toText_waterPumpState(HempyBucketResponse1Received.PumpState));
     WebServer.setArgString(getName(F("B2W")), toText_weight(HempyBucketResponse2Received.WeightB));
     WebServer.setArgString(getName(F("B2WR")), toText_weight(HempyBucketResponse2Received.WeightWR));
-    WebServer.setArgString(getName(F("B2DWW")), toText(HempyBucketResponse2Received.DryWeight, HempyBucketResponse2Received.WetWeight, "/"));
+    WebServer.setArgString(getName(F("B2DWW")), toText(HempyBucketResponse2Received.DryWeight, "/", HempyBucketResponse2Received.WetWeight));
     WebServer.setArgString(getName(F("B2S")), toText_hempyState(HempyBucketResponse2Received.HempyState));
     WebServer.setArgString(getName(F("B2P")), toText_waterPumpState(HempyBucketResponse2Received.PumpState));
   }

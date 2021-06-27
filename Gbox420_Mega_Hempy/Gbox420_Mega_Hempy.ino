@@ -161,12 +161,12 @@ void resetWebServer()
   else
     logToSerials(F("PushingBox RestAPI failed"), true, 2); ///< If begin returns a negative number the initialization failed
   WebServer.setup();
-  URLHandler *GrowBoxHandler = WebServer.createURLHandler("/Hempy.html.json");   ///< setup handling request from GrowBox.html
+  URLHandler *HempyHandler = WebServer.createURLHandler("/Hempy.html.json");   ///< setup handling request from GrowBox.html
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); ///< setup handling request from Settings.html
-  GrowBoxHandler->loadCb.attach(&loadCallback);        ///< GrowBox tab - Called then the website loads initially
-  GrowBoxHandler->refreshCb.attach(&refreshCallback);  ///< GrowBox tab - Called periodically to refresh website content
-  GrowBoxHandler->buttonCb.attach(&buttonCallback);    ///< GrowBox tab - Called when a button is pressed on the website
-  GrowBoxHandler->setFieldCb.attach(&fieldCallback);   ///< GrowBox tab - Called when a field is changed on the website
+  HempyHandler->loadCb.attach(&loadCallback);        ///< Hempy tab - Called then the website loads initially
+  HempyHandler->refreshCb.attach(&refreshCallback);  ///< Hempy tab - Called periodically to refresh website content
+  HempyHandler->buttonCb.attach(&buttonCallback);    ///< Hempy tab - Called when a button is pressed on the website
+  HempyHandler->setFieldCb.attach(&fieldCallback);   ///< Hempy tab - Called when a field is changed on the website
   SettingsHandler->loadCb.attach(&loadCallback);       ///< Settings tab - Called then the website loads initially
   SettingsHandler->refreshCb.attach(&refreshCallback); ///< Settings tab - Called periodically to refresh website content
   SettingsHandler->buttonCb.attach(&buttonCallback);   ///< Settings tab - Called when a button is pressed on the website
@@ -245,7 +245,7 @@ time_t getNtpTime()
     while (NTPResponse == 0 && millis() - LastRefresh < 15000)
     {
       NTPResponse = ESPCmd.GetTime();
-      delay(500);
+      delay(1000);
       logToSerials(F(""), false, 0);
       wdt_reset(); ///reset watchdog timeout
     }

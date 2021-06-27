@@ -21,5 +21,5 @@ public:
 
 private:
 protected:
-  Common_Web(const __FlashStringHelper *Name):Common(Name){} ///< Constructor, implemented in the header file
+  inline Common_Web(const __FlashStringHelper *Name):Common(Name){} ///< Constructor, implemented in the header file https://stackoverflow.com/questions/4761834/defining-constructor-in-header-file-vs-implementation-cpp-file
 };

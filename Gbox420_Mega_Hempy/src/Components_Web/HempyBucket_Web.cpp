@@ -39,7 +39,7 @@ void HempyBucket_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
     //WebServer.setArgFloat(getName(F("W"),true), BucketWeightSensor->getWeightText());
     //WebServer.setArgString(getName(F("W"),true), toText_weight(HempyBucketResponse1Received.WeightB));
     //WebServer.setArgString(getName(F("WR"),true), toText_weight(HempyBucketResponse1Received.WeightWR));
-    WebServer.setArgString(getName(F("DWW"),true), toText(getDryWeightText(), getWetWeightText(), "/"));
+    WebServer.setArgString(getName(F("DWW"),true), toText(getDryWeightText(), "/", getWetWeightText()));
     WebServer.setArgString(getName(F("S"),true), getStateText(true));
     //WebServer.setArgString(getName(F("P"),true), toText_waterPumpState(HempyBucketResponse1Received.PumpState));
   }
@@ -134,14 +134,10 @@ bool HempyBucket_Web::commandEvent(char *Command, char *Data)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Tare")) == 0)
     {
-      BucketWeightSensor->triggerTare();
+      BucketWeightSensor->tareRequest();
     }
     WebServer.setArgString(getName(F("DWW")), getDryWeightText(), getWetWeightText(), "/"));
-    */
-    else
-    {
-      return false; //Nothing matched
-    }
+    */   
     return true; //Match found
   }
 }

@@ -202,7 +202,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       Aero1Response2ToSend.ConfirmDrainPressureTank = false;
     if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight && !Aero1Response2ToSend.ConfirmTareWeight)
     {
-      Weight1->triggerTare();
+      Weight1->tareRequest();
       Aero1Response2ToSend.ConfirmTareWeight = true;
     }
     else

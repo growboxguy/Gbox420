@@ -268,7 +268,7 @@ time_t getNtpTime()
     while (NTPResponse == 0 && millis() - LastRefresh < 15000)
     {
       NTPResponse = ESPCmd.GetTime();
-      delay(500);
+      delay(1000);
       logToSerials(F(""), false, 0);
       wdt_reset(); ///reset watchdog timeout
     }

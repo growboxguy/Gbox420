@@ -15,7 +15,7 @@ public:
   float readWeight(bool ReturnAverage = true);
   float getWeight(bool ReturnAverage = true);
   char *getWeightText(bool ReturnAverage = true, bool FriendlyFormat = false);
-  void triggerTare();
+  void tareRequest();
   void triggerCalibration(int CalibrationWeight);
   void setScale(float Scale);
   float *Scale; ///< Calibration value: Raw reading of one unit

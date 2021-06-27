@@ -69,13 +69,13 @@ char *toText_floatDecimals(float Number)
   return ShortMessage;
 }
 
-char *toText(int Number1, int Number2, const char *Separator)
+char *toText(int Number1, const char *Separator, int Number2 )
 {
   snprintf(ShortMessage, 32, "%d%s%d", Number1, Separator, Number2);
   return ShortMessage;
 }
 
-char *toText(float Number1, float Number2, const char *Separator)
+char *toText(float Number1, const char *Separator, float Number2)
 { ///< function overloading: Same named function, different parameter type
   char Number2Char[MaxWordLength] = "";
   if (isnan(Number1))

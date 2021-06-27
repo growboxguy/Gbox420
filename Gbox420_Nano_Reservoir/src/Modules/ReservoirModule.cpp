@@ -119,7 +119,7 @@ bool ReservoirModule::processCommand(void *ReceivedCommand)
     }
     if (((ReservoirCommand *)ReceivedCommand)->TareWeight && !ReservoirResponse1ToSend.ConfirmTareWeight)
     {
-      Weight1->triggerTare();
+      Weight1->tareRequest();
       ReservoirResponse1ToSend.ConfirmTareWeight = true;
     }
     else

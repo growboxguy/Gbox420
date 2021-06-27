@@ -15,8 +15,6 @@ class HempyBucket_Web;
 
 extern ELClientRest PushingBoxRestAPI;
 
-///< Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
-
 class Hempy_Standalone : public Module_Web
 {
 public:
