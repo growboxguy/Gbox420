@@ -53,6 +53,8 @@ unlink ./src/Components_Web/DHTSensor_Web.h > /dev/null 2>&1
 unlink ./src/Components_Web/DHTSensor_Web.cpp > /dev/null 2>&1
 unlink ./src/Components_Web/HempyBucket_Web.h > /dev/null 2>&1
 unlink ./src/Components_Web/HempyBucket_Web.cpp > /dev/null 2>&1
+unlink ./src/Components_Web/Sound_Web.h > /dev/null 2>&1
+unlink ./src/Components_Web/Sound_Web.cpp > /dev/null 2>&1
 unlink ./src/Components_Web/WaterPump_Web.cpp.h > /dev/null 2>&1
 unlink ./src/Components_Web/WaterPump_Web.cpp.cpp > /dev/null 2>&1
 unlink ./src/Components_Web/WeightSensor_Web.h > /dev/null 2>&1

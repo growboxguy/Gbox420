@@ -7,6 +7,7 @@
  * 
  *  \todo Common Waste reservoir for all buckets
  *  \todo Add back MQTT support
+ *  \todo Sound setting
  */
 
 #include "Arduino.h"

@@ -164,7 +164,6 @@ void Module_Web::websiteEvent_Load(char *url)
     WebServer.setArgString(F("MST"), ModuleSettings->MqttSubTopic);
     WebServer.setArgString(F("MLT"), ModuleSettings->MqttLwtTopic);
     WebServer.setArgString(F("MLM"), ModuleSettings->MqttLwtMessage);
-    WebServer.setArgBoolean(F("Sound"), getSoundObject()->getEnabledState());
   }
 }
 
@@ -181,13 +180,8 @@ void Module_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< ca
 
 bool Module_Web::commandEvent(char *Command, char *Data)
 {
-  //Sound1
-  if (strcmp_P(ShortMessage, (PGM_P)F("Sound")) == 0)
-  {
-    getSoundObject()->setSoundOnOff(toBool(Data));
-  }
   //Report triggers
-  else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsRep")) == 0)
+  if (strcmp_P(ShortMessage, (PGM_P)F("SheetsRep")) == 0)
   {
     ReportToGoogleSheetsRequested = true; ///< just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
     addToLog(F("Reporting to Sheets"), false);

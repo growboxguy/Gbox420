@@ -109,7 +109,6 @@ void MainModule::websiteEvent_Load(char *url)
     WebServer.setArgString(getName(F("MST")), ModuleSettings->MqttSubTopic);
     WebServer.setArgString(getName(F("MLT")), ModuleSettings->MqttLwtTopic);
     WebServer.setArgString(getName(F("MLM")), ModuleSettings->MqttLwtMessage);
-    WebServer.setArgBoolean(getName(F("Sound")), Sound1->getEnabledState());
   }
 }
 
