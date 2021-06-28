@@ -33,6 +33,8 @@ ln ../src/Components_Web/DHTSensor_Web.h ./src/Components_Web
 ln ../src/Components_Web/DHTSensor_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/HempyBucket_Web.h ./src/Components_Web
 ln ../src/Components_Web/HempyBucket_Web.cpp ./src/Components_Web
+ln ../src/Components_Web/WaterPump_Web.h ./src/Components_Web
+ln ../src/Components_Web/WaterPump_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/WeightSensor_Web.h ./src/Components_Web
 ln ../src/Components_Web/WeightSensor_Web.cpp ./src/Components_Web
 

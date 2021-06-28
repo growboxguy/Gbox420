@@ -271,7 +271,7 @@ bool PressurePump::getEnabledState()
   return *PumpEnabled;
 }
 
-void PressurePump::setPumpTimeOut(int TimeOut)
+void PressurePump::setTimeOut(int TimeOut)
 {
   if (*this->PumpTimeOut != TimeOut && TimeOut > 0)
   {
@@ -280,7 +280,7 @@ void PressurePump::setPumpTimeOut(int TimeOut)
   }
 }
 
-int PressurePump::getPumpTimeOut()
+int PressurePump::getTimeOut()
 {
   return *PumpTimeOut;
 }

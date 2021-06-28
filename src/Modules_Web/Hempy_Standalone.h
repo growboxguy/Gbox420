@@ -10,7 +10,7 @@
 class Sound;
 class DHTSensor_Web;
 class WeightSensor_Web;
-class WaterPump;
+class WaterPump_Web;
 class HempyBucket_Web;
 
 extern ELClientRest PushingBoxRestAPI;
@@ -25,8 +25,8 @@ public:
   WeightSensor_Web *WRW = NULL; ///< Waste reservoir weight sensor                                                                                                     ///< Pointer to a Digital Humidity and Temp Sensor object
   WeightSensor_Web *B1W = NULL;  ///< Bucket 1 reservoir weight sensor
   WeightSensor_Web *B2W = NULL;  ///< Bucket 2 reservoir weight sensor
-  WaterPump *B1P = NULL;        ///< Bucket 1 water pump
-  WaterPump *B2P = NULL;        ///< Bucket 2 water pump
+  WaterPump_Web *B1P = NULL;        ///< Bucket 1 water pump
+  WaterPump_Web *B2P = NULL;        ///< Bucket 2 water pump
   HempyBucket_Web *Bucket1 = NULL;    ///< Hempy bucket 1
   HempyBucket_Web *Bucket2 = NULL;    ///< Hempy bucket 2
   void websiteEvent_Refresh(__attribute__((unused)) char *url);

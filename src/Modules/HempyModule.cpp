@@ -186,7 +186,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       HempyBucket1ResponseToSend.ConfirmTareWeightWR = false;
 
     Pump1->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
-    Pump1->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
+    Pump1->setTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
     Bucket1->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
     Bucket1->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
     Bucket1->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
@@ -265,7 +265,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     {
       HempyBucket2ResponseToSend.ConfirmTareWeightWR = false;
     }
-    Pump2->setPumpTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
+    Pump2->setTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
     Pump2->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
     Bucket2->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
     Bucket2->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);

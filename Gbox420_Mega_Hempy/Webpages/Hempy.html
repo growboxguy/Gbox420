@@ -186,28 +186,21 @@
 						<th class="headerRows"><span>State</span></th>
 						<th class="headerRows"><span>Pump</span></th>
 						<th class="headerRows"><span>Bucket</span>
-							<button id="B1_TareB" onclick="confirmTare(this)"
+							<button id="B1P_TareB" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 						<th class="headerRows"><span>Dry/Wet</span>
-							<button id="B1_TareDW" onclick="confirmDryWetTare(this)"
+							<button id="B1P_TareDW" onclick="confirmDryWetTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the last measured Wet weight and restore the Dry weight from Settings.h">Tare</button>
-						</th>
-						<th class="headerRows"><span>Waste</span>
-							<button id="B1_TareWR" onclick="confirmTare(this)"
-								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
-								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
-						</th>
+						</th>						
 					</tr>
 					<tr>
 						<td id="B1_S" class="dataRows"></td>
-						<td id="B1_P" class="dataRows"></td>
-						<td id="B1_W" class="dataRows"></td>
+						<td id="B1P_S" class="dataRows"></td>
+						<td id="B1W_W" class="dataRows"></td>
 						<td id="B1_DWW" class="dataRows"></td>
-						<td id="B1_WR" class="dataRows"></td>
-
 					</tr>
 				</table>
 				<form>
@@ -219,31 +212,25 @@
 							title="Stops the pump and reset its status to OK">Stop</button>
 						<button id="B1__Dis" type="button" align="right"
 							title="Stops and disables pump">Disable</button>
+						<label>Next:</label>
+						<span id="B1__RemainingWater" style="font-weight:bold;"></span>
 					</p>
 				</form>
-				<p>
-					<span style=" padding-left: 0.5em;"></span>
-					<label>Next:</label>
-					<span id="B1__RemainingWater" style="font-weight:bold;"></span>
-					<label>, Waste remaining:</label>
-					<label id="B1__RemainingWaste" style="font-weight:bold;"></label>
-					</span>
-				</p>
 				<form>
 					<p>
 						<label><b>Pump</b></label>
 						<label style="padding-left: 0em; text-align: right;">speed</label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="B1_PSS"
-							min="1" max="100" oninput="this.form.B1_PS.value=this.value" />
-						<input type="number" name="B1_PS" min="1" max="100"
-							oninput="this.form.B1_PSS.value=this.value" />
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="B1P_PSS"
+							min="1" max="100" oninput="this.form.B1P_PS.value=this.value" />
+						<input type="number" name="B1P_PS" min="1" max="100"
+							oninput="this.form.B1P_PSS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
-						<input style="width: 45px;" min=1 max=9999 name="B1_T" type="number"
+						<input style="width: 45px;" min=1 max=9999 name="B1P_T" type="number"
 							title="Maximum total run time of the pump during the watering. Safety feature - disables the watering! The weight target should be reached sooner than this counter" />sec,
 						<label style="text-align: right;">Drain</label>
 						<input style="width: 45px;" name="B1_D" type="number" value='0' step='1' min='0'
@@ -258,9 +245,6 @@
 						<label style=" padding-left: 0.5em;text-align: left;">Dry weight</label>
 						<input style="width: 57px;" name="B1_DW" type="number" value='0' step='0.1' min='0'
 							title="Next watering weight, automatically calculated based on: Wet weight minus Evaporation target" />
-						<label style="text-align: right;">Waste limit</label>
-						<input style="width: 57px;" name="B1_WL" type="number" value='0' step='0.1' min='0'
-							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
@@ -285,27 +269,21 @@
 						<th class="headerRows"><span>State</span></th>
 						<th class="headerRows"><span>Pump</span></th>
 						<th class="headerRows"><span>Bucket</span>
-							<button id="B2_TareB" onclick="confirmTare(this)"
+							<button id="B2P_TareB" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
 						<th class="headerRows"><span>Dry/Wet</span>
-							<button id="B2_TareDW" onclick="confirmDryWetTare(this)"
+							<button id="B2P_TareDW" onclick="confirmDryWetTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the last measured Wet weight and restore the Dry weight from Settings.h">Tare</button>
-						</th>
-						<th class="headerRows"><span>Waste</span>
-							<button id="B2_TareWR" onclick="confirmTare(this)"
-								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
-								title="Tare the waste reservoir weight scale. Do not have any weight on the scale!">Tare</button>
-						</th>
+						</th>						
 					</tr>
 					<tr>
 						<td id="B2_S" class="dataRows"></td>
-						<td id="B2_P" class="dataRows"></td>
-						<td id="B2_W" class="dataRows"></td>
+						<td id="B2P_S" class="dataRows"></td>
+						<td id="B2W_W" class="dataRows"></td>
 						<td id="B2_DWW" class="dataRows"></td>
-						<td id="B2_WR" class="dataRows"></td>
 					</tr>
 				</table>
 				<form>
@@ -317,31 +295,24 @@
 							title="Stops the pump and reset its status to OK">Stop</button>
 						<button id="B2__Dis" type="button" align="right"
 							title="Stops and disables pump">Disable</button>
+						<label>Next:</label><span id="B2__RemainingWater" style="font-weight:bold;"></span>
 					</p>
 				</form>
-				<p>
-					<span style=" padding-left: 0.5em;"></span>
-					<label>Next:</label>
-					<span id="B2__RemainingWater" style="font-weight:bold;"></span>
-					<label>, Waste remaining:</label>
-					<label id="B2__RemainingWaste" style="font-weight:bold;"></label>
-					</span>
-				</p>
 				<form>
 					<p>
 						<label><b>Pump</b></label>
 						<label style="padding-left: 0em; text-align: right;">speed</label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="B2_PSS"
-							min="1" max="100" oninput="this.form.B2_PS.value=this.value" />
-						<input type="number" name="B2_PS" min="1" max="100"
-							oninput="this.form.B2_PSS.value=this.value" />
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="B2P_PSS"
+							min="1" max="100" oninput="this.form.B2P_PS.value=this.value" />
+						<input type="number" name="B2P_PS" min="1" max="100"
+							oninput="this.form.B2P_PSS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style="padding-left: 0.5em;text-align: right;">Timeout</label>
-						<input style="width: 45px;" min=1 max=9999 name="B2_T" type="number"
+						<input style="width: 45px;" min=1 max=9999 name="B2P_T" type="number"
 							title="Maximum total run time of the pump during the watering. Safety feature, The weight target should be reached sooner than this counter." />sec,
 						<label style="text-align: right;">Drain</label>
 						<input style="width: 45px;" name="B2_D" type="number" value='0' step='1' min='0'
@@ -356,9 +327,6 @@
 						<label style=" padding-left: 0.5em;text-align: right;">Dry weight</label>
 						<input style="width: 57px;" name="B2_DW" type="number" value='0' step='0.1' min='0'
 							title="Next watering weight, automatically calculated based on: Wet weight minus Evaporation target" />
-						<label style="text-align: right;">Waste limit</label>
-						<input style="width: 57px;" name="B2_WL" type="number" value='0' step='0.1' min='0'
-							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
@@ -371,6 +339,38 @@
 						<input style="width: 50px;" name="B2_ET" type="number" value='0' step='0.1' min='0'
 							title="Amount of water that should evaporate between waterings" />
 						<input class="setButton" type="submit" value="Set">
+					</p>
+				</form>
+			</div>
+			<div class="card">
+				<h1 style="display: inline;">Reservoir</h1>
+				<table class="tg">
+					<tr>
+						<th class="headerRows"><span>Nutrient reservoir</span>
+							<button id="NRW_T" onclick="confirmTare(this)"
+								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
+								title="Tare the nutrient reservoir weight scale. Do not have any weight on the scale!">Tare</button>
+						</th>
+						<th class="headerRows"><span>Waste reservoir</span>
+							<button id="WRW_T" onclick="confirmTare(this)"
+								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
+								title="Tare the waste reservoir weight scale. Do not have any weight on the scale!">Tare</button>
+						</th>
+					</tr>
+					<tr>
+						<td id="NRW_W" class="dataRows"></td>
+						<td id="WRW_W" class="dataRows"></td>
+					</tr>
+				</table>
+				<form>
+					<p>
+						<label style="text-align: right;">Waste limit</label>
+						<!-- \TODO: Common waste handling for multiple buckets  -->
+						<input style="width: 57px;" name="B1_WL" type="number" value='0' step='0.1' min='0'
+							title="Disable pump when waste reservoir is full, 0-do not disable" />
+						<input class="setButton" type="submit" value="Set">
+						<label>Remaining:</label>
+						<label id="B1__RemainingWaste" style="font-weight:bold;"></label>
 					</p>
 				</form>
 			</div>
@@ -425,13 +425,13 @@
 	setInterval(function () {
 		//document.getElementsByName("FanI_SS")[0].value = document.getElementsByName("FanI_S")[0].value;
 		//document.getElementsByName("FanE_SS")[0].value = document.getElementsByName("FanE_S")[0].value;
-		document.getElementsByName("B1_PSS")[0].value = document.getElementsByName("B1_PS")[0].value;
-		document.getElementsByName("B2_PSS")[0].value = document.getElementsByName("B2_PS")[0].value
+		document.getElementsByName("B1P_PSS")[0].value = document.getElementsByName("B1P_PS")[0].value;
+		document.getElementsByName("B2P_PSS")[0].value = document.getElementsByName("B2P_PS")[0].value
 	}, 1000) ///< Refresh every second
 
 	///< Calculate remaining water in Hempy Bucket 1
-	var Bucket1_Weight = document.getElementById("B1_W");
-	var Bucket1_Waste = document.getElementById("B1_WR");
+	var Bucket1_Weight = document.getElementById("B1W_W");
+	var Bucket1_Waste = document.getElementById("WRW_W");
 	var Bucket1_DryWeight = document.getElementsByName("B1_DW")[0];
 	var Bucket1_WasteLimit = document.getElementsByName("B1_WL")[0];
 	var Bucket1_RemainingWater = document.getElementById("B1__RemainingWater");
@@ -445,17 +445,13 @@
 	}, 1000)  ///< Refresh every second
 
 	///< Calculate remaining water in Hempy Bucket 2
-	var Bucket2_Weight = document.getElementById("B2_W");
-	var Bucket2_Waste = document.getElementById("B2_WR");
+	var Bucket2_Weight = document.getElementById("B2W_W");
 	var Bucket2_DryWeight = document.getElementsByName("B2_DW")[0];
-	var Bucket2_WasteLimit = document.getElementsByName("B2_WL")[0];
 	var Bucket2_RemainingWater = document.getElementById("B2__RemainingWater");
-	var Bucket2_RemainingWaste = document.getElementById("B2__RemainingWaste");
 	setInterval(function () {
 		//var Weight = parseInt(Bucket1_Weight.value.slice(0,-2))
 		var Unit = Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
 		Bucket2_RemainingWater.innerHTML = (parseFloat(Bucket2_Weight.textContent.slice(0, -1 * Unit.length) - Bucket2_DryWeight.value)).toFixed(1) + Unit;
-		Bucket2_RemainingWaste.innerHTML = (parseFloat(Bucket2_WasteLimit.value - Bucket2_Waste.textContent.slice(0, -1 * Unit.length))).toFixed(1) + Unit;
 		///<  Math.trunc(Weight - Bucket1_DryWeight.value);
 	}, 1000)  ///< Refresh every second
 

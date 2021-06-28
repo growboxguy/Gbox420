@@ -123,7 +123,7 @@ void loop()
 
 void processTimeCriticalStuff()
 {
-  ESPLink.Process(); ///< Interrupt calls this every 0.5 sec to process any request coming from the ESP-Link hosted webpage
+  ESPLink.Process(); ///< Interrupt calls this every 0.5 sec to process any request coming from the ESP-Link hosted webpage. Uses Serial Line Internet Protocol (SLIP)
 }
 
 // Threads
@@ -132,7 +132,7 @@ void runSec()
 {
   wdt_reset();     ///< reset watchdog timeout
   HeartBeat();     ///< Blinks built-in led
-  DevModule_Web1->runSec(); ///< Calls the runSec() method in GrowBox.cpp
+  DevModule_Web1->runSec(); 
 }
 
 void runFiveSec()
@@ -169,7 +169,7 @@ void resetWebServer()
   while (!ESPLink.Sync())
   {
     logToSerials(F("."), false, 0);
-    delay(500);
+    delay(1000);
   };
   logToSerials(F(""), true, 0);                           ///< line break
   if (PushingBoxRestAPI.begin("api.pushingbox.com") == 0) ///< Pre-setup relay to Google Sheets

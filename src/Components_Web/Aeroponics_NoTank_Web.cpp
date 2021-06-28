@@ -23,7 +23,7 @@ void Aeroponics_NoTank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgInt(getName(F("Timeout")), Pump->getPumpTimeOut());
+    WebServer.setArgInt(getName(F("Timeout")), Pump->getTimeOut());
     WebServer.setArgInt(getName(F("Priming")), Pump->getPrimingTime());
     WebServer.setArgInt(getName(F("Int")), *Interval);
     WebServer.setArgFloat(getName(F("Dur")), *Duration);
@@ -96,7 +96,7 @@ void Aeroponics_NoTank_Web::websiteEvent_Field(__attribute__((unused)) char *Fie
 { ///< When a field is submitted using the Set button
   if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0)
   {
-    Pump->setPumpTimeOut(WebServer.getArgInt());
+    Pump->setTimeOut(WebServer.getArgInt());
   }
   else if (strcmp_P(ShortMessage, (PGM_P)F("Priming")) == 0)
   {

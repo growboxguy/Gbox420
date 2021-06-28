@@ -30,8 +30,8 @@ void *ReceivedMessage = malloc(WirelessPayloadSize); // Stores a pointer to the 
 uint32_t ReceivedMessageTimestamp = millis();        // Stores the timestamp when the last wireless package was received
 
 ///< Component initialization
-HardwareSerial &ArduinoSerial = Serial; // Reference to the Arduino Serial
-Settings *ModuleSettings;               // settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
+HardwareSerial &ArduinoSerial = Serial;       // Reference to the Arduino Serial
+Settings *ModuleSettings;                     // settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
 HempyModule *HempyMod1;                       // Represents a Hempy bucket with weight sensors and pumps
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); // Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 
@@ -118,9 +118,9 @@ void loop()
 
 void runSec()
 {
-  wdt_reset();
-  HeartBeat();         ///< Blinks built-in led
-  HempyMod1->runSec(); ///< Calls the runSec() method in GrowBox.cpp
+  wdt_reset(); ///< reset watchdog timeout
+  HeartBeat(); ///< Blinks built-in led
+  HempyMod1->runSec();
 }
 
 void runFiveSec()

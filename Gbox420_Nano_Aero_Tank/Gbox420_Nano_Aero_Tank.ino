@@ -120,9 +120,9 @@ void processTimeCriticalStuff() ///< Process things that need precise timing
 
 void runSec()
 {
-  wdt_reset();
-  HeartBeat();        ///< Blinks built-in led
-  AeroMod1->runSec(); ///< Calls the runSec() method in GrowBox.cpp
+  wdt_reset(); ///< reset watchdog timeout
+  HeartBeat(); ///< Blinks built-in led
+  AeroMod1->runSec();
 }
 
 void runFiveSec()

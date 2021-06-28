@@ -5,7 +5,8 @@
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
  *  \version   4.20
  * 
- *  \todo Proper doxygen documentation
+ *  \todo Common Waste reservoir for all buckets
+ *  \todo Add back MQTT support
  */
 
 #include "Arduino.h"
@@ -72,7 +73,7 @@ void setup()
   setSyncInterval(86400);            ///< Sync time every day
   if ((ModuleSettings->Hempy_Standalone1).ReportToMQTT)
   {
-    setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
+    //setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
   }
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   logToSerials(F("Setting up refresh threads"), false, 0);
@@ -106,7 +107,7 @@ void loop()
 
 void processTimeCriticalStuff()
 {
-  ESPLink.Process(); ///< Interrupt calls this every 0.5 sec to process any request coming from the ESP-Link hosted webpage
+  ESPLink.Process(); ///< Interrupt calls this every 0.5 sec to process any request coming from the ESP-Link hosted webpage. Uses Serial Line Internet Protocol (SLIP)
 }
 
 // Threads
@@ -115,7 +116,7 @@ void runSec()
 {
   wdt_reset();                 ///< reset watchdog timeout
   HeartBeat();                 ///< Blinks built-in led
-  Hempy_Standalone1->runSec(); ///< Calls the runSec() method in GrowBox.cpp
+  Hempy_Standalone1->runSec(); 
 }
 
 void runFiveSec()
@@ -151,7 +152,7 @@ void resetWebServer()
   while (!ESPLink.Sync())
   {
     logToSerials(F("."), false, 0);
-    delay(500);
+    delay(1000);
   };
   logToSerials(F(""), true, 0);                           ///< line break
   if (PushingBoxRestAPI.begin("api.pushingbox.com") == 0) ///< Pre-setup relay to Google Sheets

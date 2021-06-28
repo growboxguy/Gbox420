@@ -36,8 +36,8 @@ public:
 
   //void checkRelay(); ///< Flit the relay into the correct status ON/OFF based on PumpOn variable
 
-  void setPumpTimeOut(int NewTime);
-  int getPumpTimeOut();
+  void setTimeOut(int NewTime);
+  int getTimeOut();
   char *getTimeOutText(bool FriendlyFormat = false);
   void setPrimingTime(int NewTime);
   int getPrimingTime();

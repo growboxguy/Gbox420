@@ -15,7 +15,7 @@ void WeightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
   }
   else
   {
-    WebServer.setArgFloat(getName(F("W"),true), getWeight());
+    WebServer.setArgString(getName(F("W"),true), getWeightText(false,true));
   }
 }
 

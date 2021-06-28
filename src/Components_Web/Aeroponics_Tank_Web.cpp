@@ -25,7 +25,7 @@ void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
   {
     WebServer.setArgFloat(getName(F("PresMin")), *MinPressure);
     WebServer.setArgFloat(getName(F("PresMax")), *MaxPressure);
-    WebServer.setArgInt(getName(F("Timeout")), Pump->getPumpTimeOut());
+    WebServer.setArgInt(getName(F("Timeout")), Pump->getTimeOut());
     WebServer.setArgInt(getName(F("Priming")), Pump->getPrimingTime());
     WebServer.setArgInt(getName(F("Int")), *Interval);
     WebServer.setArgFloat(getName(F("Dur")), *Duration);
@@ -108,7 +108,7 @@ void Aeroponics_Tank_Web::websiteEvent_Field(char *Field)
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0)
     {
-      Pump->setPumpTimeOut(WebServer.getArgInt());
+      Pump->setTimeOut(WebServer.getArgInt());
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Priming")) == 0)
     {

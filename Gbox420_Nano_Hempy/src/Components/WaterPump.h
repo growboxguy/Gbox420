@@ -23,8 +23,8 @@ public:
   WaterPumpStates getState();                      ///< Get the current pump state
   char *getStateText(bool FriendlyFormat = false); ///< Text representation of the current state: DISABLED/IDLE/RUNNING..
   bool getEnabledState();                          ///< Pump ENABLED(1)/DISABLED(0)
-  void setPumpTimeOut(uint16_t NewTime);
-  int getPumpTimeOut();
+  void setTimeOut(uint16_t NewTime);
+  int getTimeOut();
   char *getTimeOutText(bool FriendlyFormat = false);
 
 private:

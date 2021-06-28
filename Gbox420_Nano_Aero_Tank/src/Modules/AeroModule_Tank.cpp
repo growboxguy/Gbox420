@@ -230,7 +230,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       Aero1Response2ToSend.ConfirmPumpDisable = false;    
 
     AeroT1->Pump->setSpeed(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed);
-    AeroT1->Pump->setPumpTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);
+    AeroT1->Pump->setTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);
     AeroT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime);
     break;
   case AeroMessages::AeroReset:                       ///< Used to get all Responses that do not have a corresponding Command

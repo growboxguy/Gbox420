@@ -165,7 +165,7 @@ bool WaterPump::getEnabledState()
   return *PumpEnabled;
 }
 
-void WaterPump::setPumpTimeOut(uint16_t TimeOut)
+void WaterPump::setTimeOut(uint16_t TimeOut)
 {
   if (*this->PumpTimeOut != TimeOut && TimeOut > 0)
   {
@@ -177,7 +177,7 @@ void WaterPump::setPumpTimeOut(uint16_t TimeOut)
   }
 }
 
-int WaterPump::getPumpTimeOut()
+int WaterPump::getTimeOut()
 {
   return *PumpTimeOut;
 }

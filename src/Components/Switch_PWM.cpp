@@ -26,6 +26,7 @@ void Switch_PWM::setDutyCycle(uint8_t DutyCycle)
 {
   if (*this->DutyCycle != DutyCycle)
   {
+    if(DutyCycle>100) DutyCycle = 100;
     *this->DutyCycle = DutyCycle;
   }
 }

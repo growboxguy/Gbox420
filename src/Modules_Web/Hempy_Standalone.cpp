@@ -2,7 +2,7 @@
 #include "../Components/Sound.h"
 #include "../Components_Web/DHTSensor_Web.h"
 #include "../Components_Web/WeightSensor_Web.h"
-#include "../Components/WaterPump.h"
+#include "../Components_Web/WaterPump_Web.h"
 #include "../Components_Web/HempyBucket_Web.h"
 
 /**
@@ -29,17 +29,17 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   B2W = new WeightSensor_Web(F("B2W"), this, &ModuleSettings->B2W);   ///< Bucket 2 Weight sensor
   NRW = new WeightSensor_Web(F("NRW"), this, &ModuleSettings->WRW); ///< Nutrient Reservoir Weight sensor
   WRW = new WeightSensor_Web(F("WRW"), this, &ModuleSettings->WRW); ///< Waste Reservoir Weight sensor
-  B1P = new WaterPump(F("B1P"), this, &ModuleSettings->B1P);            ///< Bucket 1 pump
-  B2P = new WaterPump(F("B2P"), this, &ModuleSettings->B2P);            ///< Bucket 2 pump
-  Bucket1 = new HempyBucket(F("B1"), this, &ModuleSettings->Bucket1, B1W, WRW, B1P); ///< Bucket 1
-  Bucket2 = new HempyBucket(F("B2"), this, &ModuleSettings->Bucket2, B2W, WRW, B2P); ///< Bucket 1
+  B1P = new WaterPump_Web(F("B1P"), this, &ModuleSettings->B1P);            ///< Bucket 1 pump
+  B2P = new WaterPump_Web(F("B2P"), this, &ModuleSettings->B2P);            ///< Bucket 2 pump
+  Bucket1 = new HempyBucket_Web(F("B1"), this, &ModuleSettings->Bucket1, B1W, WRW, B1P); ///< Bucket 1
+  Bucket2 = new HempyBucket_Web(F("B2"), this, &ModuleSettings->Bucket2, B2W, WRW, B2P); ///< Bucket 1
   addToReportQueue(this); //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   //addToRefreshQueue_Sec(this);     //< Attach to a trigger that fires every second and calls refresh_Sec()
   addToRefreshQueue_FiveSec(this); //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
   addToRefreshQueue_Minute(this);  //< Attach to a trigger that fires every second and calls refresh_Minute()
-  //addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
-  //addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
-  //addToCommandQueue(this);
+  addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
+  addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
+  addToCommandQueue(this);
   addToLog(F("Hempy_Standalone ready"), 0);
   logToSerials(Name, false, 0);
   logToSerials(F("refreshing"), true, 1);
@@ -59,14 +59,14 @@ void Hempy_Standalone::report(bool FriendlyFormat)
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
-void Hempy_Standalone::websiteEvent_Load(char *url)  ///< called when website is first opened
+void Hempy_Standalone::websiteEvent_Load(char *Url)  ///< called when website is first opened
 {
-  ;
+  Module_Web::websiteEvent_Load(Url);
 }
 
-void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed (5sec automatic)
+void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed (5sec automatic)
 {
-  ;
+  Module_Web::websiteEvent_Refresh(Url);
 }
 
 /**
