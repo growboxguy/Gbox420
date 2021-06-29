@@ -1,5 +1,5 @@
 #include "420Module_Web.h"
-#include "../Components/Sound.h"
+#include "../Components_Web/Sound_Web.h"
 
 static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
@@ -167,6 +167,7 @@ void Module_Web::settingsEvent_Load(__attribute__((unused)) char *Url)
   WebServer.setArgString(F("MST"), ModuleSettings->MqttSubTopic);
   WebServer.setArgString(F("MLT"), ModuleSettings->MqttLwtTopic);
   WebServer.setArgString(F("MLM"), ModuleSettings->MqttLwtMessage);
+  WebServer.setArgInt(getSoundObject()->getName(F("E"),true), getSoundObject()->getEnabledState());
 }
 
 void Module_Web::settingsEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
@@ -182,97 +183,105 @@ void Module_Web::settingsEvent_Refresh(__attribute__((unused)) char *Url) ///< c
 void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
   //Report triggers
-  if (strcmp_P(ShortMessage, (PGM_P)F("SheetsRep")) == 0)
+  if (strcmp_P(Command, (PGM_P)F("SheetsRep")) == 0)
   {
     ReportToGoogleSheetsRequested = true; ///< just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
     addToLog(F("Reporting to Sheets"), false);
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("SerialRep")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("SerialRep")) == 0)
   {
     ConsoleReportRequested = true;
     addToLog(F("Reporting to Serial"), false);
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("MQTTRep")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("MQTTRep")) == 0)
   {
     MQTTReportRequested = true;
     addToLog(F("Reporting to MQTT"), false);
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) ///< Website signals to refresh all sensor readings
+  else if (strcmp_P(Command, (PGM_P)F("Refresh")) == 0) ///< Website signals to refresh all sensor readings
   {
     RefreshAllRequested = true;
     addToLog(F("Refresh triggered"), false);
   }
   //Settings
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("Debug")) == 0)
   {
     setDebug(toBool(Data));
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Metric")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("Metric")) == 0)
   {
     setMetric(toBool(Data));
   }
   //Settings - Serial reporting
-  else if (strcmp_P(ShortMessage, (PGM_P)F("SerialF")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("SerialF")) == 0)
   {
     setSerialReportingFrequency(toInt(Data));
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Date")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("Date")) == 0)
   {
     setSerialReportDate(toBool(Data));
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Mem")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("Mem")) == 0)
   {
     setSerialReportMemory(toBool(Data));
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("JSON")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("JSON")) == 0)
   {
     setSerialReportJSON(toBool(Data));
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("FJSON")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("FJSON")) == 0)
   {
     setSerialReportJSONFriendly(toBool(Data));
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Wire")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("Wire")) == 0)
   {
     setSerialReportWireless(toBool(Data));
   }
   //Settings - Google Sheets
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("Sheets")) == 0)
   {
     setSheetsReportingOnOff(toBool(Data));
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsF")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("SheetsF")) == 0)
   {
     setSheetsReportingFrequency(toInt(Data));
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Relay")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("Relay")) == 0)
   {
     setPushingBoxLogRelayID(WebServer.getArgString());
   }
   //Settings - MQTT
-  else if (strcmp_P(ShortMessage, (PGM_P)F("MQTT")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("MQTT")) == 0)
   {
     setMQTTReportingOnOff(toBool(Data));
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("MQTTF")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("MQTTF")) == 0)
   {
     setMQTTReportingFrequency(toInt(Data));
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("MPT")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("MPT")) == 0)
   {
     setMqttPublishTopic(WebServer.getArgString());
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("MST")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("MST")) == 0)
   {
     setMqttSubscribeTopic(WebServer.getArgString());
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("MLT")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("MLT")) == 0)
   {
     setMQTTLWTTopic(WebServer.getArgString());
   }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("MLM")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("MLM")) == 0)
   {
     setMQTTLWTMessage(WebServer.getArgString());
+  }
+  else if (strcmp(Command, getSoundObject()->getName(F("E"),true)) == 0)
+  {
+    getSoundObject()->setSoundOnOff(toBool(Data));
+  }
+  else if (strcmp(Command, getSoundObject()->getName(F("Ee"),true)) == 0)
+  {
+    getSoundObject()->playEE();
   }
 }
 
@@ -493,3 +502,8 @@ void Module_Web::reportToMQTTTrigger(bool ForceRun)
 ///< This is how the two sent out messages looks like:
 ///< Gbox420/{"Log":{"IFan":{"S":"1"},"EFan":{"S":"1"},"APump1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"92","B":"92","T":"1","On":"10:20","Of":"02:20"},"LtSen1":{"R":"955","D":"0"},"DHT1":{"T":"25.60","H":"45.20"},"Pow1":{"P":"569.30","E":"636.74","V":"227.50","C":"2.62","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"19.12","WR1":"6.23","DW1":"18.60","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"21.13","WR2":"3.65","DW2":"19.19","WW2":"21.19","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"6.12","W":"17.53","Mi":"5.00","Ma":"7.00","AS":"1","LS":"6.22","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"1.84","T":"1110.70","W":"24.37","WT":"18.56","AT":"26.20","H":"39.40"},"Main1":{"M":"1","D":"1"}}}
 ///< Gbox420/{"EventLog":["Event log entry 1","Event log entry 2","Event log entry 3","Event log entry 4"]}
+
+Sound_Web *Module_Web::getSoundObject()
+{
+  return SoundFeedback;
+}

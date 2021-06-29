@@ -9,12 +9,12 @@ Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settin
 
 void Sound_Web::refresh_Sec()
 {
+  Sound::refresh_Sec();
   if (PlayEE)
   {
     PlayEE = false;
     EE();
-  }
-  Sound::refresh_Sec();
+  }  
 }
 
 void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *url)

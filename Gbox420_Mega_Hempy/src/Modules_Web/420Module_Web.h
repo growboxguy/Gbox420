@@ -20,7 +20,7 @@ extern ELClientWebServer WebServer;
 extern ELClientRest PushingBoxRestAPI;
 extern ELClientMqtt MqttAPI;
 extern bool MqttConnected;
-class Sound;
+class Sound_Web;
 
 class Module_Web : virtual public Common_Web, virtual public Module
 {
@@ -43,6 +43,7 @@ public:
   void reportToGoogleSheetsTrigger(bool ForceRun = false); ///< Google Sheets reporting - Handles custom reporting frequencies
   void mqttPublish(char (*JSONData)[MaxLongTextLength]);  ///< MQTT reporting - Send a JSON formatted report to an MQTT broker  
   void reportToMQTTTrigger(bool ForceRun = false); ///< MQTT reporting - Handles custom reporting frequencies
+  Sound_Web *getSoundObject();
 
 private:
 protected:
@@ -59,6 +60,7 @@ protected:
   void setMqttSubscribeTopic(const char *ID);
   void setMQTTLWTTopic(const char *ID);
   void setMQTTLWTMessage(const char *ID);
+  Sound_Web *SoundFeedback = NULL;
   Common_Web *WebsiteQueue_Load[QueueDepth] = {};
   Common_Web *WebsiteQueue_Refresh[QueueDepth] = {};
   Common_Web *CommandQueue[QueueDepth] = {};
