@@ -26,23 +26,23 @@ class Module_Web : virtual public Common_Web, virtual public Module
 {
 public:
   Module_Web(const __FlashStringHelper *Name);            ///< constructor
-  void addToWebsiteQueue_Load(Common_Web *Subscriber);    ///< Subscribing to the Website load event: Calls the websiteEvent_Load() method
-  void addToWebsiteQueue_Refresh(Common_Web *Subscriber); ///< Subscribing to the Website refresh event: Calls the websiteEvent_Refresh() method
-  void addToCommandQueue(Common_Web *Subscriber);         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent method
-  void websiteLoadEventTrigger(__attribute__((unused)) char *Url);
-  void websiteRefreshEventTrigger(__attribute__((unused)) char *Url);
-  virtual void websiteEvent_Load(__attribute__((unused)) char *url);
-  virtual void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void commandEventTrigger(char *Command, char *Data);
-  void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
-  void addToLog(const char *Text, uint8_t indent = 3);
+  void addToWebsiteQueue_Load(Common_Web *Subscriber);    ///< Calls the websiteEvent_Load() method of the Subscriber when an ESP-link website is loaded
+  void addToWebsiteQueue_Refresh(Common_Web *Subscriber); ///< Calls the websiteEvent_Refresh() method of the Subscriber when an ESP-link website is refreshing
+  void addToCommandQueue(Common_Web *Subscriber);         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method
+  void websiteLoadEventTrigger(__attribute__((unused)) char *Url);  ///< Notifies the subscribed components of a Load event. Passes the URL of the custom webpage that was opened (/Hempy.html or /Settings.html )
+  void websiteRefreshEventTrigger(__attribute__((unused)) char *Url); ///< Notifies the subscribed components of a Refresh event. Passes the URL of the custom webpage that was opened (/Hempy.html or /Settings.html )
+  void commandEventTrigger(char *Command, char *Data);   ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
+  void settingsEvent_Load(__attribute__((unused)) char *Url);  ///< Gets called when the /Settings.html is loaded. This page is for configuring the Gbox420 module settings (Console logging, Debug mode, MQTT reporting topic, Google Sheets relay...etc)
+  void settingsEvent_Refresh(__attribute__((unused)) char *Url); ///< Gets called when the /Settings.html is refreshed. 
+  void settingsEvent_Command(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data); ///< Gets called a button is clicked or a field is submitted on the /Settings.html page
+  void addToLog(const __FlashStringHelper *Text, uint8_t Indent = 3); ///< Add a Log entry that is displayed on the web interface
+  void addToLog(const char *Text, uint8_t Indent = 3);  ///< Add a Log entry that is displayed on the web interface
   char *eventLogToJSON(bool IncludeKey = false, bool ClearBuffer = true); ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"] and loads it to LongMessage buffer
-  void addPushingBoxLogRelayID();
-  void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);
-  void mqttPublish(char (*JSONData)[MaxLongTextLength]);
-  virtual bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
-  void reportToGoogleSheetsTrigger(bool ForceRun = false);
-  void reportToMQTTTrigger(bool ForceRun = false);
+  void addPushingBoxLogRelayID(); ///< Google Sheets reporting - Set PushingBox relay ID 
+  void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]); ///< Google Sheets reporting - Send a JSON formatted report via REST API to the PushingBox relay
+  void reportToGoogleSheetsTrigger(bool ForceRun = false); ///< Google Sheets reporting - Handles custom reporting frequencies
+  void mqttPublish(char (*JSONData)[MaxLongTextLength]);  ///< MQTT reporting - Send a JSON formatted report to an MQTT broker  
+  void reportToMQTTTrigger(bool ForceRun = false); ///< MQTT reporting - Handles custom reporting frequencies
 
 private:
 protected:

@@ -9,14 +9,7 @@ WeightSensor_Web::WeightSensor_Web(const __FlashStringHelper *Name, Module_Web *
 
 void WeightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/S", 2) == 0)
-  {
-    ;
-  }
-  else
-  {
-    WebServer.setArgString(getName(F("W"),true), getWeightText(false,true));
-  }
+  WebServer.setArgString(getName(F("W"), true), getWeightText(false, true));
 }
 
 bool WeightSensor_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)

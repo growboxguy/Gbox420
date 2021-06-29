@@ -45,38 +45,43 @@ void Module_Web::addToCommandQueue(Common_Web *Subscriber)
 }
 
 /**
-* @brief Notify subscribed modules of a website load event
+* @brief Notify subscribed components of a website load event
 */
-void Module_Web::websiteLoadEventTrigger(char *url)
+void Module_Web::websiteLoadEventTrigger(char *Url)
 { ///< called when website is loaded. Runs through all components that subscribed for this event
   for (int i = 0; i < WebsiteQueue_Load_Count; i++)
   {
-    WebsiteQueue_Load[i]->websiteEvent_Load(url);
+    WebsiteQueue_Load[i]->websiteEvent_Load(Url);
   }
 }
 
 /**
-* @brief Notify subscribed modules of a website refresh event
+* @brief Notify subscribed components of a website refresh event
 */
-void Module_Web::websiteRefreshEventTrigger(char *url)
+void Module_Web::websiteRefreshEventTrigger(char *Url)
 { ///< called when website is refreshed.
   for (int i = 0; i < WebsiteQueue_Refresh_Count; i++)
   {
-    WebsiteQueue_Refresh[i]->websiteEvent_Refresh(url);
+    WebsiteQueue_Refresh[i]->websiteEvent_Refresh(Url);
   }
 }
 
 /**
-* @brief Notify subscribed modules of a received MQTT/Website command
+* @brief Notify subscribed components of a received MQTT/Website command
 */
 void Module_Web::commandEventTrigger(char *Command, char *Data)
 {
   logToSerials(&Command, false, 1);
   logToSerials(&Data, true, 2);
+  bool NameMatchFound = false;
   for (int i = 0; i < CommandQueue_Count; i++)
   {
-    CommandQueue[i]->commandEvent(Command, Data);
+    NameMatchFound = CommandQueue[i]->commandEvent(Command, Data);
+    if (NameMatchFound)
+      break;
   }
+  if (!NameMatchFound) ///< None of the subscribed component Names matched the command. Try processing it as a Module settings command.
+    settingsEvent_Command(Command, Data);
 }
 
 /**
@@ -143,42 +148,38 @@ char *Module_Web::eventLogToJSON(bool IncludeKey, bool ClearBuffer)
 }
 
 ///< ESP-link web interface functions
-void Module_Web::websiteEvent_Load(char *url)
+void Module_Web::settingsEvent_Load(__attribute__((unused)) char *Url)
 {
-  if (strncmp(url, "/S", 2) == 0) //Settings tab
-  {
-    WebServer.setArgInt(F("Debug"), *Debug);
-    WebServer.setArgInt(F("Metric"), *Metric);
-    WebServer.setArgInt(F("SerialF"), *SerialReportFrequency);
-    WebServer.setArgInt(F("Date"), *SerialReportDate);
-    WebServer.setArgInt(F("Mem"), *SerialReportMemory);
-    WebServer.setArgInt(F("JSON"), *SerialReportJSON);
-    WebServer.setArgInt(F("FJSON"), *SerialReportJSONFriendly);
-    WebServer.setArgInt(F("Wire"), *SerialReportWireless);
-    WebServer.setArgBoolean(F("Sheets"), *ReportToGoogleSheets);
-    WebServer.setArgInt(F("SheetsF"), *SheetsReportingFrequency);
-    WebServer.setArgString(F("Relay"), ModuleSettings->PushingBoxLogRelayID);
-    WebServer.setArgBoolean(F("MQTT"), *ReportToMQTT);
-    WebServer.setArgInt(F("MQTTF"), *MQTTReportFrequency);
-    WebServer.setArgString(F("MPT"), ModuleSettings->MqttPubTopic);
-    WebServer.setArgString(F("MST"), ModuleSettings->MqttSubTopic);
-    WebServer.setArgString(F("MLT"), ModuleSettings->MqttLwtTopic);
-    WebServer.setArgString(F("MLM"), ModuleSettings->MqttLwtMessage);
-  }
+  WebServer.setArgInt(F("Debug"), *Debug);
+  WebServer.setArgInt(F("Metric"), *Metric);
+  WebServer.setArgInt(F("SerialF"), *SerialReportFrequency);
+  WebServer.setArgInt(F("Date"), *SerialReportDate);
+  WebServer.setArgInt(F("Mem"), *SerialReportMemory);
+  WebServer.setArgInt(F("JSON"), *SerialReportJSON);
+  WebServer.setArgInt(F("FJSON"), *SerialReportJSONFriendly);
+  WebServer.setArgInt(F("Wire"), *SerialReportWireless);
+  WebServer.setArgBoolean(F("Sheets"), *ReportToGoogleSheets);
+  WebServer.setArgInt(F("SheetsF"), *SheetsReportingFrequency);
+  WebServer.setArgString(F("Relay"), ModuleSettings->PushingBoxLogRelayID);
+  WebServer.setArgBoolean(F("MQTT"), *ReportToMQTT);
+  WebServer.setArgInt(F("MQTTF"), *MQTTReportFrequency);
+  WebServer.setArgString(F("MPT"), ModuleSettings->MqttPubTopic);
+  WebServer.setArgString(F("MST"), ModuleSettings->MqttSubTopic);
+  WebServer.setArgString(F("MLT"), ModuleSettings->MqttLwtTopic);
+  WebServer.setArgString(F("MLM"), ModuleSettings->MqttLwtMessage);
 }
 
-void Module_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
+void Module_Web::settingsEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
-  //All tabs
-  WebServer.setArgString(F("Time"), getFormattedTime(false));
+  WebServer.setArgString(F("Time"), getFormattedTime(false));  ///< Current time
   WebServer.setArgJson(F("Log"), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 }
 
 /**
-* @brief Process commands received from MQTT subscription or from the ESP-link website
+* @brief Process commands received from the ESP-link /Settings.html website
 */
 
-bool Module_Web::commandEvent(char *Command, char *Data)
+void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
   //Report triggers
   if (strcmp_P(ShortMessage, (PGM_P)F("SheetsRep")) == 0)
@@ -273,11 +274,6 @@ bool Module_Web::commandEvent(char *Command, char *Data)
   {
     setMQTTLWTMessage(WebServer.getArgString());
   }
-  else
-  {
-    return false; //Nothing matched
-  }
-  return true; //Match found
 }
 
 ///< Google Sheets functions - https://sites.google.com/site/growboxguy/esp-link/logging

@@ -7,14 +7,7 @@ DHTSensor_Web::DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent
 }
 
 void DHTSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
-{ ///< When the website is refreshing
-  if (strncmp(url, "/S", 2) == 0)
-  {
-    ;
-  }
-  else
-  {
-    WebServer.setArgString(getName(F("T"),true), getTempText(true)); ///< Shows the latest reading
-    WebServer.setArgString(getName(F("H"),true), getHumidityText(true));
-  }
+{                                                                   ///< When the website is refreshing
+  WebServer.setArgString(getName(F("T"), true), getTempText(true)); ///< Shows the latest reading
+  WebServer.setArgString(getName(F("H"), true), getHumidityText(true));
 }

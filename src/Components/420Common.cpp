@@ -121,7 +121,7 @@ void Common::appendName(bool ClearBuffer)
   \param UnderscoreSeparator true - Sparate the name and the AppendToEnd with an underscore, false (default): Use space
 */
 
-char *Common::getName(const __FlashStringHelper *AppendToEnd, bool UnderscoreSeparator = false)
+char *Common::getName(const __FlashStringHelper *AppendToEnd, bool UnderscoreSeparator)
 {
   static char ReturnChar[MaxWordLength] = "";
   strcpy_P(ReturnChar, (PGM_P)Name);

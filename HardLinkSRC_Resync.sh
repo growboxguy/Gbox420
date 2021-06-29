@@ -12,6 +12,9 @@ echo "Removing hard links to src folder"
 (cd ./Gbox420_Nano_Reservoir ; sh ./HardLinkSRC_OFF.sh)
 
 echo "------------------------------------"
+echo "Removed links, press enter to continue re-creating the links "
+read fakeinput
+echo "------------------------------------"
 echo "Creating hard links to src folder"
 
 (cd ./Gbox420_Mega_Dev ; sh ./HardLinkSRC_ON.sh)

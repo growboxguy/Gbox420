@@ -10,27 +10,13 @@ WaterPump_Web::WaterPump_Web(const __FlashStringHelper *Name, Module_Web *Parent
 
 void WaterPump_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/S", 2) == 0)
-  {
-    ;
-  }
-  else
-  {
-    WebServer.setArgInt(getName(F("PS"),true), getSpeed());
-    WebServer.setArgInt(getName(F("T"),true), getTimeOut());
-  }
+  WebServer.setArgInt(getName(F("PS"), true), getSpeed());
+  WebServer.setArgInt(getName(F("T"), true), getTimeOut());
 }
 
 void WaterPump_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/S", 2) == 0) ///< When the settings page is refreshed
-  {
-    ;
-  }
-  else
-  {
-    WebServer.setArgString(getName(F("S"),true), getStateText(true));
-  }
+  WebServer.setArgString(getName(F("S"), true), getStateText(true));
 }
 
 /**
@@ -59,7 +45,7 @@ bool WaterPump_Web::commandEvent(char *Command, char *Data)
     {
       disablePump();
       Parent->addToLog(getName(F("disabled")));
-    }   
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PS")) == 0)
     {
       setSpeed(toInt(Data));
@@ -69,7 +55,7 @@ bool WaterPump_Web::commandEvent(char *Command, char *Data)
     {
       setTimeOut(toInt(Data));
       Parent->addToLog(getName(F("timeout updated")));
-    }   
+    }
     return true;
   }
 }

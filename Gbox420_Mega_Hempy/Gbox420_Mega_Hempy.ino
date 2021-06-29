@@ -11,8 +11,8 @@
  */
 
 #include "Arduino.h"
-#include "avr/wdt.h"  // Watchdog timer for detecting a crash and automatically resetting the board
-#include "avr/boot.h" // Watchdog timer related bug fix
+#include "avr/wdt.h"                          // Watchdog timer for detecting a crash and automatically resetting the board
+#include "avr/boot.h"                         // Watchdog timer related bug fix
 #include "TimerThree.h"                       // Interrupt handling for webpage
 #include "ELClient.h"                         // ESP-link
 #include "ELClientWebServer.h"                // ESP-link - WebServer API
@@ -52,14 +52,14 @@ Thread MinuteThread = Thread();
 StaticThreadController<3> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread);
 
 void setup()
-{                                                      ///<  put your setup code here, to run once:
-  ArduinoSerial.begin(115200);                         ///< 2560mega console output
-  ESPSerial.begin(115200);                             ///< ESP WiFi console output
-  pinMode(LED_BUILTIN, OUTPUT);                        ///< onboard LED - Heartbeat every second to confirm code is running
-  logToSerials(F(""), true, 0);                        ///< New line
+{                                                        ///<  put your setup code here, to run once:
+  ArduinoSerial.begin(115200);                           ///< 2560mega console output
+  ESPSerial.begin(115200);                               ///< ESP WiFi console output
+  pinMode(LED_BUILTIN, OUTPUT);                          ///< onboard LED - Heartbeat every second to confirm code is running
+  logToSerials(F(""), true, 0);                          ///< New line
   logToSerials(F("Hempy module initializing"), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
-  wdt_enable(WDTO_8S);                                 ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
-  boot_rww_enable();                                   ///< fix watchdog not loading sketch after a reset error on Mega2560
+  wdt_enable(WDTO_8S);                                   ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
+  boot_rww_enable();                                     ///< fix watchdog not loading sketch after a reset error on Mega2560
 
   // Loading settings from EEPROM
   logToSerials(F("Loading settings"), true, 0);
@@ -115,9 +115,9 @@ void processTimeCriticalStuff()
 
 void runSec()
 {
-  wdt_reset();                 ///< reset watchdog timeout
-  HeartBeat();                 ///< Blinks built-in led
-  Hempy_Standalone1->runSec(); 
+  wdt_reset(); ///< reset watchdog timeout
+  HeartBeat(); ///< Blinks built-in led
+  Hempy_Standalone1->runSec();
 }
 
 void runFiveSec()
@@ -163,16 +163,16 @@ void resetWebServer()
   else
     logToSerials(F("PushingBox RestAPI failed"), true, 2); ///< If begin returns a negative number the initialization failed
   WebServer.setup();
-  URLHandler *HempyHandler = WebServer.createURLHandler("/Hempy.html.json");   ///< setup handling request from GrowBox.html
+  URLHandler *HempyHandler = WebServer.createURLHandler("/Hempy.html.json");       ///< setup handling request from Hempy.html
+  HempyHandler->loadCb.attach(&loadCallback);                                      ///< Hempy tab - Called then the website loads initially
+  HempyHandler->refreshCb.attach(&refreshCallback);                                ///< Hempy tab - Called periodically to refresh website content
+  HempyHandler->buttonCb.attach(&buttonCallback);                                  ///< Hempy tab - Called when a button is pressed on the website
+  HempyHandler->setFieldCb.attach(&fieldCallback);                                 ///< Hempy tab - Called when a field is changed on the website
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); ///< setup handling request from Settings.html
-  HempyHandler->loadCb.attach(&loadCallback);        ///< Hempy tab - Called then the website loads initially
-  HempyHandler->refreshCb.attach(&refreshCallback);  ///< Hempy tab - Called periodically to refresh website content
-  HempyHandler->buttonCb.attach(&buttonCallback);    ///< Hempy tab - Called when a button is pressed on the website
-  HempyHandler->setFieldCb.attach(&fieldCallback);   ///< Hempy tab - Called when a field is changed on the website
-  SettingsHandler->loadCb.attach(&loadCallback);       ///< Settings tab - Called then the website loads initially
-  SettingsHandler->refreshCb.attach(&refreshCallback); ///< Settings tab - Called periodically to refresh website content
-  SettingsHandler->buttonCb.attach(&buttonCallback);   ///< Settings tab - Called when a button is pressed on the website
-  SettingsHandler->setFieldCb.attach(&fieldCallback);  ///< Settings tab - Called when a field is changed on the website
+  SettingsHandler->loadCb.attach(&settingsLoadCallback);                           ///< Settings tab - Called then the website loads initially
+  SettingsHandler->refreshCb.attach(&settingsRefreshCallback);                     ///< Settings tab - Called periodically to refresh website content
+  SettingsHandler->buttonCb.attach(&settingsButtonCallback);                       ///< Settings tab - Called when a button is pressed on the website
+  SettingsHandler->setFieldCb.attach(&settingsFieldCallback);                      ///< Settings tab - Called when a field is changed on the website
   logToSerials(F("ESP-link ready"), true, 1);
 }
 
@@ -290,14 +290,7 @@ void buttonCallback(char *Button)
   {
     logToSerials(F("ESP button:"), false, 0);
   }
-  if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
-  {
-    restoreDefaults();
-  }
-  else
-  {
-    Hempy_Standalone1->commandEventTrigger(Button, NULL);
-  }
+  Hempy_Standalone1->commandEventTrigger(Button, NULL);
   saveSettings(ModuleSettings);
 }
 
@@ -312,5 +305,58 @@ void fieldCallback(char *Field)
     logToSerials(F("ESP field:"), false, 0);
   }
   Hempy_Standalone1->commandEventTrigger(Field, WebServer.getArgString());
+  saveSettings(ModuleSettings);
+}
+
+/**
+  \brief Called when the /Settings.html website is loading on the ESP-link webserver
+*/
+void settingsLoadCallback(__attribute__((unused)) char *Url)
+{
+  Hempy_Standalone1->settingsEvent_Load(Url); //Runs through all components that are subscribed to this event
+}
+
+/**
+  \brief Called when the /Settings.html website is refreshing on the ESP-link webserver
+*/
+void settingsRefreshCallback(__attribute__((unused)) char *Url)
+{
+  Hempy_Standalone1->settingsEvent_Refresh(Url);
+}
+
+/**
+  \brief Called when a button is pressed on the /Settings.html web page.
+  \param Button - ID of the button HTML element
+*/
+void settingsButtonCallback(char *Button)
+{
+  if (*Debug)
+  {
+    logToSerials(F("Settings button:"), false, 0);
+    logToSerials(&Button, true, 1);
+  }
+  if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
+  {
+    restoreDefaults();
+  }
+  else
+  {
+    Hempy_Standalone1->settingsEvent_Command(Button, NULL);
+  }
+  saveSettings(ModuleSettings);
+}
+
+/**
+  \brief Called when a field on the /Settings.html website is submitted
+  \param Field - Name of the input HTML element
+*/
+void settingsFieldCallback(char *Field)
+{
+  if (*Debug)
+  {
+    logToSerials(F("Settings field:"), false, 0);
+    logToSerials(&Field, true, 1);
+  }
+  Hempy_Standalone1->settingsEvent_Command(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
 }

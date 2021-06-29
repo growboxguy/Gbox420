@@ -10,7 +10,7 @@ class Sound_Web : public Common_Web, public Sound
 {
 public:
   Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings);
-  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Load(char *url);
   void websiteEvent_Field(char *Field);
   bool commandEvent(char *Command, char *Data);
   void refresh_Sec();

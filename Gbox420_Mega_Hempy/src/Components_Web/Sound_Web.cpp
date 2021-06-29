@@ -18,14 +18,11 @@ void Sound_Web::refresh_Sec()
 }
 
 void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *url)
-{
-  if (strncmp(url, "/S", 2) == 0)
-  {
-    WebServer.setArgBoolean(getName(F("E")), *Enabled);
-  }
+{  
+  WebServer.setArgBoolean(getName(F("E"), true), *Enabled);
 }
 
-bool Sound_Web::commandEvent(char *Command, char *Data)
+bool Sound_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 { ///< When the website field is submitted
   if (!isThisMine(Command))
   {
