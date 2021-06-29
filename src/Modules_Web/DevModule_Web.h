@@ -9,7 +9,7 @@
 #include "../WirelessCommands_Dev.h"
 
 // forward declaration of classes
-class Sound;
+class Sound_Web;
 class DHTSensor;
 
 extern ELClientRest PushingBoxRestAPI;
@@ -20,7 +20,7 @@ class DevModule_Web : public Module_Web
 {
 public:
   DevModule_Web(const __FlashStringHelper *Name, Settings::DevModule_WebSettings *DefaultSettings, RF24 *Wireless); ///< constructor
-  Sound *Sound1;                                                                                              ///< Pointer to a Piezo speaker - sound feedback
+  Sound_Web *Sound1;                                                                                              ///< Pointer to a Piezo speaker - sound feedback
   DHTSensor *DHT1;                       ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   void websiteEvent_Load(char *url);
   void websiteEvent_Refresh(char *url);

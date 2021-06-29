@@ -9,7 +9,7 @@
 
 // forward declaration of classes
 class Lights;
-class Sound;
+class Sound_Web;
 class Fan;
 class Fan_PWM;
 class AirPump;
@@ -30,7 +30,7 @@ class MainModule : virtual public Common_Web, virtual public Module_Web
 public:
   MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless); ///< constructor
   RF24 *Wireless = NULL;  //Pointer to NRF24L01 wireless transmitter
-  Sound *Sound1 = NULL;                                                                                              ///< Pointer to a Piezo speaker - sound feedback
+  Sound_Web *Sound1 = NULL;                                                                                              ///< Pointer to a Piezo speaker - sound feedback
   Fan *IFan = NULL;                                                                                                  ///< Internal fan
   Fan *EFan = NULL;
   Fan_PWM *FanI = NULL;       ///< Internal fan

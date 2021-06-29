@@ -2,7 +2,7 @@
 #include "HempyModule_Web.h"
 #include "AeroModule_Web.h"
 #include "ReservoirModule_Web.h"
-#include "../Components/Sound.h"
+#include "../Components_Web/Sound_Web.h"
 #include "../Components/DHTSensor.h"
 #include "../Components/Lights.h"
 #include "../Components/LightSensor.h"
@@ -30,7 +30,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
 
   logToSerials(F(""), true, 0); //<Line break
   this->Wireless = Wireless;
-  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;                                   ///< Pointer for child objects to use sound feedback
   IFan = new Fan(F("IFan"), this, &ModuleSettings->IFan);         ///< passing parameters: 1. Component name; 2. MainModule object the component belongs to; 3. Persistent settings stored in EEPROM)
   EFan = new Fan(F("EFan"), this, &ModuleSettings->EFan);

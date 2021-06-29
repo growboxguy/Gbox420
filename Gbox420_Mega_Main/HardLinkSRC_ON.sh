@@ -37,6 +37,8 @@ ln ../src/Modules_Web/ReservoirModule_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/ReservoirModule_Web.h ./src/Modules_Web
 
 ln ../src/Components_Web/420Common_Web.h ./src/Components_Web
+ln ../src/Components_Web/Sound_Web.h ./src/Components_Web
+ln ../src/Components_Web/Sound_Web.cpp ./src/Components_Web
 
 ln ../src/Components/420Common.h ./src/Components
 ln ../src/Components/420Common.cpp ./src/Components

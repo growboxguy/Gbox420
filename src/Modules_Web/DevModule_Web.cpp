@@ -1,5 +1,5 @@
 #include "DevModule_Web.h"
-#include "../Components/Sound.h"
+#include "../Components_Web/Sound_Web.h"
 #include "../Components/DHTSensor.h"
 
 /**
@@ -19,7 +19,7 @@ DevModule_Web::DevModule_Web(const __FlashStringHelper *Name, Settings::DevModul
   MQTTReportFrequency = &DefaultSettings->MQTTReportFrequency;
 
   logToSerials(F(""), true, 0);                                   //<Line break
-  Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;                                   ///< Pointer for child objects to use sound feedback
   DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
   addToReportQueue(this);          //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
