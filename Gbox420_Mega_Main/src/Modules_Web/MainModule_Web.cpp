@@ -98,7 +98,7 @@ void MainModule::websiteEvent_Load(char *url)
     WebServer.setArgInt(getName(F("Date")), *SerialReportDate);
     WebServer.setArgInt(getName(F("Mem")), *SerialReportMemory);
     WebServer.setArgInt(getName(F("JSON")), *SerialReportJSON);
-    WebServer.setArgInt(getName(F("FJSON")), *SerialReportJSONFriendly);
+    WebServer.setArgInt(getName(F("JSONF")), *SerialReportJSONFriendly);
     WebServer.setArgInt(getName(F("Wire")), *SerialReportWireless);
     WebServer.setArgBoolean(getName(F("Sheets")), *ReportToGoogleSheets);
     WebServer.setArgInt(getName(F("SheetsF")), *SheetsReportingFrequency);

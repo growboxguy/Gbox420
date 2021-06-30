@@ -3,27 +3,13 @@
 AirPump_Web::AirPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AirPumpSettings *DefaultSettings) : Common(Name), AirPump(Name, Parent, DefaultSettings), Common_Web(Name)
 {
   this->Parent = Parent;
-  this->Name = Name;
-  Parent->addToReportQueue(this);
-  Parent->addToRefreshQueue_Minute(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
 }
 
-void AirPump_Web::reportToJSON()
-{
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-  strcat(LongMessage, toText(getState()));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
-}
-
 void AirPump_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/G", 2) == 0)
-  {
-    WebServer.setArgString(getName(F("Stat")), getStateToText());
-  }
+  WebServer.setArgString(getName(F("Stat")), getStateToText());
 }
 
 void AirPump_Web::websiteEvent_Button(char *Button)

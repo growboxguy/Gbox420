@@ -11,10 +11,8 @@ class Fan_PWM_Web : public Fan_PWM, public Common_Web
 public:
   Fan_PWM_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::Fan_PWMSettings *DefaultSettings);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void websiteEvent_Button(char *Button);
   void websiteEvent_Load(__attribute__((unused)) char *url);    
-  void websiteEvent_Field(__attribute__((unused)) char *Field);
-  void reportToJSON();
+  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
 
 private:
 protected:

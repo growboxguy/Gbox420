@@ -62,7 +62,7 @@ void DevModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgInt(getName(F("Date")), *SerialReportDate);
     WebServer.setArgInt(getName(F("Mem")), *SerialReportMemory);
     WebServer.setArgInt(getName(F("JSON")), *SerialReportJSON);
-    WebServer.setArgInt(getName(F("FJSON")), *SerialReportJSONFriendly);
+    WebServer.setArgInt(getName(F("JSONF")), *SerialReportJSONFriendly);
     WebServer.setArgInt(getName(F("Wire")), *SerialReportWireless);
     WebServer.setArgBoolean(getName(F("Sheets")), *ReportToGoogleSheets);
     WebServer.setArgInt(getName(F("SheetsF")), *SheetsReportingFrequency);
@@ -148,7 +148,7 @@ bool DevModule_Web::commandEvent(char *Command, char *Data)
     {
       setSerialReportJSON(toBool(Data));
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("FJSON")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("JSONF")) == 0)
     {
       setSerialReportJSONFriendly(toBool(Data));
     }

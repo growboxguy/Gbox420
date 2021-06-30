@@ -100,10 +100,6 @@ bool Hempy_Standalone::commandEvent(__attribute__((unused))char *Command,__attri
     {
       ;
     }
-    else if (Module_Web::commandEvent(TempStorage, Data))
-    {
-      ;
-    }
     else
     {
       return false; //Nothing matched

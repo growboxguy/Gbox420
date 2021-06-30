@@ -12,9 +12,7 @@ public:
   Aeroponics_NoTank_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump); ///< constructor
   void websiteEvent_Load(char *url);
   void websiteEvent_Refresh(char *url);
-  void websiteEvent_Button(char *Button);
-  void websiteEvent_Field(char *Field);
-  void reportToJSON();
+  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
 
 private:
 protected:

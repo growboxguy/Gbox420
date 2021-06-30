@@ -3,36 +3,13 @@
 Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::LightsSettings *DefaultSettings) : Common(Name), Lights(Name, Parent, DefaultSettings), Common_Web(Name)
 {
   this->Parent = Parent;
-  this->Name = Name;
-  Parent->addToReportQueue(this);
-  Parent->addToRefreshQueue_Sec(this);
-  Parent->addToRefreshQueue_Minute(this);
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
-  Parent->addToWebsiteQueue_Field(this);
   Parent->addToCommandQueue(this);
-}
-
-void Lights_Web::reportToJSON()
-{
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-  strcat(LongMessage, getStatusText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"B\":\""));
-  strcat(LongMessage, getCurrentBrightnessText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
-  strcat(LongMessage, getTimerOnOffText(false));
-  strcat_P(LongMessage, (PGM_P)F("\",\"On\":\""));
-  strcat(LongMessage, getOnTimeText());
-  strcat_P(LongMessage, (PGM_P)F("\",\"Of\":\""));
-  strcat(LongMessage, getOffTimeText());
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
 }
 
 void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/G", 2) == 0)
-  {
     WebServer.setArgInt(getName(F("OnH")), *OnHour);            ///< On hour
     WebServer.setArgInt(getName(F("OnM")), *OnMinute);          ///< On minute
     WebServer.setArgInt(getName(F("OfH")), *OffHour);           ///< Off hour
@@ -42,22 +19,18 @@ void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
     // WebServer.setArgInt(getName(F("FInc")), *FadingIncrements); ///< Fade change (%)
     // WebServer.setArgInt(getName(F("FInt")), *FadingInterval);   ///< Fade step interval (sec)
     WebServer.setArgInt(getName(F("DD")), *DimmingDuration);    ///< Fade step interval (sec)
-  }
 }
 
 void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/G", 2) == 0)
-  {
     WebServer.setArgString(getName(F("S")), getStateText());                  ///< State
     WebServer.setArgString(getName(F("Br")), getCurrentBrightnessText(true)); ///< Timer on or off
     WebServer.setArgString(getName(F("T")), getTimerOnOffText(true));         ///< Timer on or off
-  }
 }
 
-void Lights_Web::websiteEvent_Button(char *Button)
+void Lights_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
-  if (!isThisMine(Button))
+  if (!isThisMine(Command))
   {
     return;
   }
@@ -83,18 +56,7 @@ void Lights_Web::websiteEvent_Button(char *Button)
     {
       dimLightsOnOff();
     }
-  }
-}
-
-void Lights_Web::websiteEvent_Field(char *Field)
-{
-  if (!isThisMine(Field))
-  {
-    return;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("B")) == 0)
+    else  if (strcmp_P(ShortMessage, (PGM_P)F("B")) == 0)
     {
       setBrightness(WebServer.getArgInt(), true, true);
     }

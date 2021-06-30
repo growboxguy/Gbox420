@@ -14,9 +14,7 @@ public:
   ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ModuleSkeletonSettings *DefaultSettings); ///< constructor
   void websiteEvent_Load(__attribute__((unused)) char *url);
   void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void websiteEvent_Button(char *Button);
-  void websiteEvent_Field(char *Field);
-  void reportToJSON();
+  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
 
 private:
 protected:

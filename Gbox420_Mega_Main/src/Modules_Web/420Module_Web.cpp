@@ -156,7 +156,7 @@ void Module_Web::settingsEvent_Load(__attribute__((unused)) char *Url)
   WebServer.setArgInt(F("Date"), *SerialReportDate);
   WebServer.setArgInt(F("Mem"), *SerialReportMemory);
   WebServer.setArgInt(F("JSON"), *SerialReportJSON);
-  WebServer.setArgInt(F("FJSON"), *SerialReportJSONFriendly);
+  WebServer.setArgInt(F("JSONF"), *SerialReportJSONFriendly);
   WebServer.setArgInt(F("Wire"), *SerialReportWireless);
   WebServer.setArgBoolean(F("Sheets"), *ReportToGoogleSheets);
   WebServer.setArgInt(F("SheetsF"), *SheetsReportingFrequency);
@@ -229,7 +229,7 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
   {
     setSerialReportJSON(toBool(Data));
   }
-  else if (strcmp_P(Command, (PGM_P)F("FJSON")) == 0)
+  else if (strcmp_P(Command, (PGM_P)F("JSONF")) == 0)
   {
     setSerialReportJSONFriendly(toBool(Data));
   }

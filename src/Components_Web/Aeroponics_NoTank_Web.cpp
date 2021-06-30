@@ -21,29 +21,23 @@ void Aeroponics_NoTank_Web::reportToJSON()
 
 void Aeroponics_NoTank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/G", 2) == 0)
-  {
     WebServer.setArgInt(getName(F("Timeout")), Pump->getTimeOut());
     WebServer.setArgInt(getName(F("Priming")), Pump->getPrimingTime());
     WebServer.setArgInt(getName(F("Int")), *Interval);
     WebServer.setArgFloat(getName(F("Dur")), *Duration);
-  }
 }
 
 void Aeroponics_NoTank_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
 {
-  if (strncmp(url, "/G", 2) == 0)
-  {
-    WebServer.setArgString(getName(F("Pres")), FeedbackPressureSensor->getPressureText(false,true));
+    WebServer.setArgString(getName(F("Pres")), FeedbackPressureSensor->getPressureText(false, true));
     WebServer.setArgString(getName(F("Spray")), sprayStateToText());
     WebServer.setArgString(getName(F("Pump")), Pump->getStateText());
     WebServer.setArgString(getName(F("LastSP")), toText_pressure(LastSprayPressure));
-  }
 }
 
-void Aeroponics_NoTank_Web::websiteEvent_Button(char *Button)
-{
-  if (!isThisMine(Button))
+void Aeroponics_NoTank_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
+{ ///< When a field is submitted using the Set button
+  if (!isThisMine(Command))
   {
     return;
   }
@@ -89,29 +83,25 @@ void Aeroponics_NoTank_Web::websiteEvent_Button(char *Button)
     {
       sprayOff();
     }
-  }
-}
-
-void Aeroponics_NoTank_Web::websiteEvent_Field(__attribute__((unused)) char *Field)
-{ ///< When a field is submitted using the Set button
-  if (strcmp_P(ShortMessage, (PGM_P)F("Timeout")) == 0)
-  {
-    Pump->setTimeOut(WebServer.getArgInt());
-  }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Priming")) == 0)
-  {
-    Pump->setPrimingTime(WebServer.getArgInt());
-  }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Dur")) == 0)
-  {
-    setSprayDuration(WebServer.getArgFloat());
-  }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Int")) == 0)
-  {
-    setSprayInterval(WebServer.getArgInt());
-  }
-  else if (strcmp_P(ShortMessage, (PGM_P)F("Spray")) == 0)
-  {
-    setSprayOnOff(WebServer.getArgBoolean());
+    else if (strcmp_P(Command, (PGM_P)F("Timeout")) == 0)
+    {
+      Pump->setTimeOut(WebServer.getArgInt());
+    }
+    else if (strcmp_P(Command, (PGM_P)F("Priming")) == 0)
+    {
+      Pump->setPrimingTime(WebServer.getArgInt());
+    }
+    else if (strcmp_P(Command, (PGM_P)F("Dur")) == 0)
+    {
+      setSprayDuration(WebServer.getArgFloat());
+    }
+    else if (strcmp_P(Command, (PGM_P)F("Int")) == 0)
+    {
+      setSprayInterval(WebServer.getArgInt());
+    }
+    else if (strcmp_P(Command, (PGM_P)F("Spray")) == 0)
+    {
+      setSprayOnOff(WebServer.getArgBoolean());
+    }
   }
 }
