@@ -59,20 +59,10 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
       Parent->addToLog(getName(F("disabled")));
     }
     /*  
-    else if (strcmp_P(ShortMessage, (PGM_P)F("TareB")) == 0)
-    {
-      HempyBucketCommand2ToSend.TareWeightB = true;
-      Parent->addToLog(F("Taring Bucket 2 scale"), false);
-    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("TareDW")) == 0)
     {
       HempyBucketCommand2ToSend.TareWeightDW = true;
       Parent->addToLog(F("Taring Bucket 2 Dry/Wet"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("TareWR")) == 0)
-    {
-      HempyBucketCommand2ToSend.TareWeightWR = true;
-      Parent->addToLog(F("Taring Bucket 2 waste scale"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("ET")) == 0)
     {
@@ -87,17 +77,7 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
     {
       DefaultSettings->WasteLimit_ = toFloat(Data);
       Parent->addToLog(F("Bucket 2 waste limit updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PS")) == 0)
-    {
-      DefaultSettings->PumpSpeed_ = toInt(Data);
-      Parent->addToLog(F("Pump 2 speed updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("T")) == 0)
-    {
-      DefaultSettings->PumpTimeOut_ = toInt(Data);
-      Parent->addToLog(F("Pump 2 timeout updated"), false);
-    }
+    }    
     else if (strcmp_P(ShortMessage, (PGM_P)F("D")) == 0)
     {
       DefaultSettings->DrainWaitTime_ = toInt(Data);
@@ -118,11 +98,7 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
     {
       BucketWeightSensor->setScale(WebServer.getArgFloat());
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Tare")) == 0)
-    {
-      BucketWeightSensor->tareRequest();
-    }
-    WebServer.setArgString(getName(F("DWW")), getDryWeightText(), getWetWeightText(), "/"));
+   
     */
     return true; //Match found
   }

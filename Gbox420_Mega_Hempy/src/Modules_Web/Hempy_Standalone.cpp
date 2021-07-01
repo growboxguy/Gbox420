@@ -81,66 +81,25 @@ void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *Url) /
 */
 bool Hempy_Standalone::commandEvent(__attribute__((unused))char *Command,__attribute__((unused)) char *Data)
 {
+  /*
   if (!isThisMine(Command))
   {
     return false;
   }
   else
-  {
-    /*
-    char TempStorage[MaxShotTextLength] = "";
-    strncpy(TempStorage, ShortMessage, MaxShotTextLength);
-    
-    //B1
-    if (Bucket1->commandEvent(TempStorage, Data))
-    {
-      ;
-    }
-    else if (Bucket2>commandEvent(TempStorage, Data))
-    {
-      ;
-    }
-    else
-    {
-      return false; //Nothing matched
-    }
-    */
-    
+  {    
     return true; //Match found
   }
+  */
 }
 
 /*
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1On")) == 0)
-    {
-      HempyBucketCommand1ToSend.StartWatering = true;
-      addToLog(F("Watering HempyBucket 1"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Off")) == 0)
-    {
-      HempyBucketCommand1ToSend.StopWatering = true;
-      addToLog(F("Stop watering HempyBucket 1"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1Dis")) == 0)
-    {
-      HempyBucketCommand1ToSend.Disable = true;
-      addToLog(F("Disabled HempyBucket 1"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareB")) == 0)
-    {
-      HempyBucketCommand1ToSend.TareWeightB = true;
-      addToLog(F("Taring Bucket 1 scale"), false);
-    }
+   
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareDW")) == 0)
     {
       HempyBucketCommand1ToSend.TareWeightDW = true;
       addToLog(F("Taring Bucket 1 Dry/Wet"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareWR")) == 0)
-    {
-      HempyBucketCommand1ToSend.TareWeightWR = true;
-      addToLog(F("Taring Bucket 1 waste scale"), false);
-    }
+    }   
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1ET")) == 0)
     {
       DefaultSettings->EvaporationTarget_B1 = toFloat(Data);
@@ -154,17 +113,7 @@ bool Hempy_Standalone::commandEvent(__attribute__((unused))char *Command,__attri
     {
       DefaultSettings->WasteLimit_B1 = toFloat(Data);
       addToLog(F("Bucket 1 waste limit updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1PS")) == 0)
-    {
-      DefaultSettings->PumpSpeed_B1 = toInt(Data);
-      addToLog(F("Pump 1 speed updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1T")) == 0)
-    {
-      DefaultSettings->PumpTimeOut_B1 = toInt(Data);
-      addToLog(F("Pump 1 timeout updated"), false);
-    }
+    }   
     else if (strcmp_P(ShortMessage, (PGM_P)F("B1D")) == 0)
     {
       DefaultSettings->DrainWaitTime_B1 = toInt(Data);

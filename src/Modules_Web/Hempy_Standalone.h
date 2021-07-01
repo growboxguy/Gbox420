@@ -29,8 +29,8 @@ public:
   WaterPump_Web *B2P = NULL;       ///< Bucket 2 water pump
   HempyBucket_Web *Bucket1 = NULL; ///< Hempy bucket 1
   HempyBucket_Web *Bucket2 = NULL; ///< Hempy bucket 2
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
   void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *url);  
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report(bool FriendlyFormat = false);
   void refresh_FiveSec();

@@ -167,35 +167,35 @@ void HempyBucket::updateState(HempyStates NewState)
   }
 }
 
-void HempyBucket::disable()  //Takes time, do not call directly from an interupt (ESP-link website would timeout)
+void HempyBucket::disable() //Takes time, do not call directly from an interupt (ESP-link website would timeout)
 {
-  Parent->getSoundObject()->playOffSound();
   updateState(HempyStates::DISABLED);
+  Parent->getSoundObject()->playOffSound();
 }
 
-void HempyBucket::disableRequest()  //Stores the request only, will apply the next time the Hempy Bucket is refreshing
+void HempyBucket::disableRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
 {
   DisableRequested = true;
 }
 
 void HempyBucket::startWatering()
 {
-  Parent->getSoundObject()->playOnSound();
   updateState(HempyStates::WATERING);
+  Parent->getSoundObject()->playOnSound();
 }
 
-void HempyBucket::startWateringRequest()  //Stores the request only, will apply the next time the Hempy Bucket is refreshing
+void HempyBucket::startWateringRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
 {
   StartWateringRequested = true;
 }
 
 void HempyBucket::stopWatering()
 {
-  Parent->getSoundObject()->playOnSound();
   updateState(HempyStates::IDLE);
+  Parent->getSoundObject()->playOnSound();
 }
 
-void HempyBucket::stopWateringRequest()  //Stores the request only, will apply the next time the Hempy Bucket is refreshing
+void HempyBucket::stopWateringRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
 {
   StopWateringRequested = true;
 }

@@ -24,7 +24,6 @@ ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
 ln ../src/WirelessCommands_Dev.h ./src
 
-ln ../src/Modules_Web/420Common_Web.h ./src/Modules_Web
 ln ../src/Modules_Web/420Module_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/420Module_Web.h ./src/Modules_Web
 ln ../src/Modules_Web/DevModule_Web.cpp ./src/Modules_Web
@@ -33,6 +32,8 @@ ln ../src/Modules_Web/DevModule_Web.h ./src/Modules_Web
 ln ../src/Components_Web/420Common_Web.h ./src/Components_Web
 ln ../src/Components_Web/Sound_Web.h ./src/Components_Web
 ln ../src/Components_Web/Sound_Web.cpp ./src/Components_Web
+ln ../src/Components_Web/DHTSensor_Web.h ./src/Components_Web
+ln ../src/Components_Web/DHTSensor_Web.cpp ./src/Components_Web
 
 ln ../src/Components/420Common.h ./src/Components
 ln ../src/Components/420Common.cpp ./src/Components

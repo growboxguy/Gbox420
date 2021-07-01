@@ -74,7 +74,7 @@ bool Common::isThisMine(char const *lookupName) ///< Returns true when the looku
       break; ///< reached the string termination sign
     if (FlashCurrentChar != RAMCurrentChar)
     {
-      ///< Serial.println("Not match");
+      ///< Serial.println("No match");
       return false; ///< stop the while loop
     }
   }
