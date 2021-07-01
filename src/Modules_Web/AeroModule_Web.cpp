@@ -81,15 +81,15 @@ void AeroModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgBoolean(getName(F("Tank")), AeroResponse1Received.PressureTankPresent);
-    WebServer.setArgString(getName(F("Dur")), toText(AeroCommand1ToSend.Duration));
-    WebServer.setArgInt(getName(F("DInt")), AeroCommand1ToSend.DayInterval);
-    WebServer.setArgInt(getName(F("NInt")), AeroCommand1ToSend.NightInterval);
-    WebServer.setArgString(getName(F("PMx")), toText(AeroCommand1ToSend.MaxPressure));
-    WebServer.setArgString(getName(F("PMn")), toText(AeroCommand1ToSend.MinPressure));
-    WebServer.setArgInt(getName(F("PS")), AeroCommand2ToSend.PumpSpeed);
-    WebServer.setArgInt(getName(F("PT")), AeroCommand2ToSend.PumpTimeOut);
-    WebServer.setArgInt(getName(F("PPT")), AeroCommand2ToSend.PumpPrimingTime);
+    WebServer.setArgBoolean(getName(F("Tank"),true), AeroResponse1Received.PressureTankPresent);
+    WebServer.setArgString(getName(F("Dur"),true), toText(AeroCommand1ToSend.Duration));
+    WebServer.setArgInt(getName(F("DInt"),true), AeroCommand1ToSend.DayInterval);
+    WebServer.setArgInt(getName(F("NInt"),true), AeroCommand1ToSend.NightInterval);
+    WebServer.setArgString(getName(F("PMx"),true), toText(AeroCommand1ToSend.MaxPressure));
+    WebServer.setArgString(getName(F("PMn"),true), toText(AeroCommand1ToSend.MinPressure));
+    WebServer.setArgInt(getName(F("PS"),true), AeroCommand2ToSend.PumpSpeed);
+    WebServer.setArgInt(getName(F("PT"),true), AeroCommand2ToSend.PumpTimeOut);
+    WebServer.setArgInt(getName(F("PPT"),true), AeroCommand2ToSend.PumpPrimingTime);
   }
 }
 
@@ -100,20 +100,20 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getName(F("S")), toText_onlineStatus(OnlineStatus));
+    WebServer.setArgString(getName(F("S"),true), toText_onlineStatus(OnlineStatus));
     if (AeroResponse1Received.PressureTankPresent)
     {
-      WebServer.setArgString(getName(F("AS")), toText_aeroTankState((AeroTankStates)AeroResponse1Received.AeroState));
+      WebServer.setArgString(getName(F("AS"),true), toText_aeroTankState((AeroTankStates)AeroResponse1Received.AeroState));
     }
     else
     {
-      WebServer.setArgString(getName(F("AS")), toText_aeroNoTankState((AeroNoTankStates)AeroResponse1Received.AeroState));
+      WebServer.setArgString(getName(F("AS"),true), toText_aeroNoTankState((AeroNoTankStates)AeroResponse1Received.AeroState));
     }
 
-    WebServer.setArgString(getName(F("P")), toText_pressurePumpState(AeroResponse1Received.PumpState));
-    WebServer.setArgString(getName(F("Pr")), toText_pressure(AeroResponse1Received.Pressure));
-    WebServer.setArgString(getName(F("LSP")), toText_pressure(AeroResponse1Received.LastSprayPressure));
-    WebServer.setArgString(getName(F("W")), toText_weight(AeroResponse1Received.Weight));
+    WebServer.setArgString(getName(F("P"),true), toText_pressurePumpState(AeroResponse1Received.PumpState));
+    WebServer.setArgString(getName(F("Pr"),true), toText_pressure(AeroResponse1Received.Pressure));
+    WebServer.setArgString(getName(F("LSP"),true), toText_pressure(AeroResponse1Received.LastSprayPressure));
+    WebServer.setArgString(getName(F("W"),true), toText_weight(AeroResponse1Received.Weight));
   }
 }
 

@@ -50,13 +50,13 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getName(F("S")), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getName(F("PH")), toText(ReservoirResponse1Received.PH));
-    WebServer.setArgString(getName(F("TDS")), toText_TDS(ReservoirResponse1Received.TDS));
-    WebServer.setArgString(getName(F("W")), toText_weight(ReservoirResponse1Received.Weight));
-    WebServer.setArgString(getName(F("WT")), toText_temp(ReservoirResponse1Received.WaterTemperature));
-    WebServer.setArgString(getName(F("AT")), toText_temp(ReservoirResponse1Received.AirTemperature));
-    WebServer.setArgString(getName(F("H")), toText_percentage(ReservoirResponse1Received.Humidity));
+    WebServer.setArgString(getName(F("S"),true), toText_onlineStatus(OnlineStatus));
+    WebServer.setArgString(getName(F("PH"),true), toText(ReservoirResponse1Received.PH));
+    WebServer.setArgString(getName(F("TDS"),true), toText_TDS(ReservoirResponse1Received.TDS));
+    WebServer.setArgString(getName(F("W"),true), toText_weight(ReservoirResponse1Received.Weight));
+    WebServer.setArgString(getName(F("WT"),true), toText_temp(ReservoirResponse1Received.WaterTemperature));
+    WebServer.setArgString(getName(F("AT"),true), toText_temp(ReservoirResponse1Received.AirTemperature));
+    WebServer.setArgString(getName(F("H"),true), toText_percentage(ReservoirResponse1Received.Humidity));
   }
 }
 

@@ -75,82 +75,82 @@ void MainModule::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G", 2) == 0) //GrowBox tab
   {
-    //WebServer.setArgInt(getName(F("FIS")), FanI->getSpeed()); ///< Internal PWM Fan speed
-    //WebServer.setArgInt(getName(F("FES")), FanE->getSpeed()); ///< Exhaust PWM Fan speed
+    //WebServer.setArgInt(getName(F("FIS"),true), FanI->getSpeed()); ///< Internal PWM Fan speed
+    //WebServer.setArgInt(getName(F("FES"),true), FanE->getSpeed()); ///< Exhaust PWM Fan speed
     //Light1
-    WebServer.setArgInt(getName(F("L1OnH")), *(Lt1->OnHour));    ///< On hour
-    WebServer.setArgInt(getName(F("L1OnM")), *(Lt1->OnMinute));  ///< On minute
-    WebServer.setArgInt(getName(F("L1OfH")), *(Lt1->OffHour));   ///< Off hour
-    WebServer.setArgInt(getName(F("L1OfM")), *(Lt1->OffMinute)); ///< Off minute
-    WebServer.setArgInt(getName(F("L1B")), *(Lt1->Brightness));  ///< Brightness percentage
+    WebServer.setArgInt(getName(F("L1OnH"),true), *(Lt1->OnHour));    ///< On hour
+    WebServer.setArgInt(getName(F("L1OnM"),true), *(Lt1->OnMinute));  ///< On minute
+    WebServer.setArgInt(getName(F("L1OfH"),true), *(Lt1->OffHour));   ///< Off hour
+    WebServer.setArgInt(getName(F("L1OfM"),true), *(Lt1->OffMinute)); ///< Off minute
+    WebServer.setArgInt(getName(F("L1B"),true), *(Lt1->Brightness));  ///< Brightness percentage
     //Light2
-    WebServer.setArgInt(getName(F("L2OnH")), *(Lt2->OnHour));    ///< On hour
-    WebServer.setArgInt(getName(F("L2OnM")), *(Lt2->OnMinute));  ///< On minute
-    WebServer.setArgInt(getName(F("L2OfH")), *(Lt2->OffHour));   ///< Off hour
-    WebServer.setArgInt(getName(F("L2OfM")), *(Lt2->OffMinute)); ///< Off minute
-    WebServer.setArgInt(getName(F("L2B")), *(Lt2->Brightness));  ///< Brightness percentage
+    WebServer.setArgInt(getName(F("L2OnH"),true), *(Lt2->OnHour));    ///< On hour
+    WebServer.setArgInt(getName(F("L2OnM"),true), *(Lt2->OnMinute));  ///< On minute
+    WebServer.setArgInt(getName(F("L2OfH"),true), *(Lt2->OffHour));   ///< Off hour
+    WebServer.setArgInt(getName(F("L2OfM"),true), *(Lt2->OffMinute)); ///< Off minute
+    WebServer.setArgInt(getName(F("L2B"),true), *(Lt2->Brightness));  ///< Brightness percentage
   }
   else if (strncmp(url, "/S", 2) == 0) //Settings tab
   {
-    WebServer.setArgInt(getName(F("Debug")), *Debug);
-    WebServer.setArgInt(getName(F("Metric")), *Metric);
-    WebServer.setArgInt(getName(F("SerialF")), *SerialReportFrequency);
-    WebServer.setArgInt(getName(F("Date")), *SerialReportDate);
-    WebServer.setArgInt(getName(F("Mem")), *SerialReportMemory);
-    WebServer.setArgInt(getName(F("JSON")), *SerialReportJSON);
-    WebServer.setArgInt(getName(F("JSONF")), *SerialReportJSONFriendly);
-    WebServer.setArgInt(getName(F("Wire")), *SerialReportWireless);
-    WebServer.setArgBoolean(getName(F("Sheets")), *ReportToGoogleSheets);
-    WebServer.setArgInt(getName(F("SheetsF")), *SheetsReportingFrequency);
-    WebServer.setArgString(getName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
-    WebServer.setArgBoolean(getName(F("MQTT")), *ReportToMQTT);
-    WebServer.setArgInt(getName(F("MQTTF")), *MQTTReportFrequency);
-    WebServer.setArgString(getName(F("MPT")), ModuleSettings->MqttPubTopic);
-    WebServer.setArgString(getName(F("MST")), ModuleSettings->MqttSubTopic);
-    WebServer.setArgString(getName(F("MLT")), ModuleSettings->MqttLwtTopic);
-    WebServer.setArgString(getName(F("MLM")), ModuleSettings->MqttLwtMessage);
+    WebServer.setArgInt(getName(F("Debug"),true), *Debug);
+    WebServer.setArgInt(getName(F("Metric"),true), *Metric);
+    WebServer.setArgInt(getName(F("SerialF"),true), *SerialReportFrequency);
+    WebServer.setArgInt(getName(F("Date"),true), *SerialReportDate);
+    WebServer.setArgInt(getName(F("Mem"),true), *SerialReportMemory);
+    WebServer.setArgInt(getName(F("JSON"),true), *SerialReportJSON);
+    WebServer.setArgInt(getName(F("JSONF"),true), *SerialReportJSONFriendly);
+    WebServer.setArgInt(getName(F("Wire"),true), *SerialReportWireless);
+    WebServer.setArgBoolean(getName(F("Sheets"),true), *ReportToGoogleSheets);
+    WebServer.setArgInt(getName(F("SheetsF"),true), *SheetsReportingFrequency);
+    WebServer.setArgString(getName(F("Relay"),true), ModuleSettings->PushingBoxLogRelayID);
+    WebServer.setArgBoolean(getName(F("MQTT"),true), *ReportToMQTT);
+    WebServer.setArgInt(getName(F("MQTTF"),true), *MQTTReportFrequency);
+    WebServer.setArgString(getName(F("MPT"),true), ModuleSettings->MqttPubTopic);
+    WebServer.setArgString(getName(F("MST"),true), ModuleSettings->MqttSubTopic);
+    WebServer.setArgString(getName(F("MLT"),true), ModuleSettings->MqttLwtTopic);
+    WebServer.setArgString(getName(F("MLM"),true), ModuleSettings->MqttLwtMessage);
   }
 }
 
 void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
   //All tabs
-  WebServer.setArgString(getName(F("Time")), getFormattedTime(false));
-  WebServer.setArgJson(getName(F("Log")), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
+  WebServer.setArgString(getName(F("Time"),true), getFormattedTime(false));
+  WebServer.setArgJson(getName(F("Log"),true), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 
   if (strncmp(url, "/G", 2) == 0) //GrowBox tab
   {
     //Air pump
-    WebServer.setArgString(getName(F("AP")), APump1->getStateText(true));
+    WebServer.setArgString(getName(F("AP"),true), APump1->getStateText(true));
     //DHT1
-    WebServer.setArgString(getName(F("DT")), DHT1->getTempText(true)); ///< Shows the latest reading
-    WebServer.setArgString(getName(F("DH")), DHT1->getHumidityText(true));
+    WebServer.setArgString(getName(F("DT"),true), DHT1->getTempText(true)); ///< Shows the latest reading
+    WebServer.setArgString(getName(F("DH"),true), DHT1->getHumidityText(true));
     //PWM FAN
-    //WebServer.setArgString(getName(F("FIST")), getSpeedText(true,true));  ///PWM Fan speed text
-    //WebServer.setArgString(getName(F("FEST")), getSpeedText(true,true));  ///PWM Fan speed text
+    //WebServer.setArgString(getName(F("FIST"),true), getSpeedText(true,true));  ///PWM Fan speed text
+    //WebServer.setArgString(getName(F("FEST"),true), getSpeedText(true,true));  ///PWM Fan speed text
     //Internal Fan
-    WebServer.setArgString(getName(F("IFS")), IFan->fanSpeedText(true));
+    WebServer.setArgString(getName(F("IFS"),true), IFan->fanSpeedText(true));
     //Exhaust Fan
-    WebServer.setArgString(getName(F("EFS")), EFan->fanSpeedText(true));
+    WebServer.setArgString(getName(F("EFS"),true), EFan->fanSpeedText(true));
     //Light1
-    WebServer.setArgString(getName(F("L1S")), Lt1->getStateText());                  ///< State
-    WebServer.setArgString(getName(F("L1Br")), Lt1->getCurrentBrightnessText(true)); ///< Timer on or off
-    WebServer.setArgString(getName(F("L1T")), Lt1->getTimerOnOffText(true));         ///< Timer on or off
+    WebServer.setArgString(getName(F("L1S"),true), Lt1->getStateText());                  ///< State
+    WebServer.setArgString(getName(F("L1Br"),true), Lt1->getCurrentBrightnessText(true)); ///< Timer on or off
+    WebServer.setArgString(getName(F("L1T"),true), Lt1->getTimerOnOffText(true));         ///< Timer on or off
     //Light2
-    WebServer.setArgString(getName(F("L2S")), Lt2->getStateText());                  ///< State
-    WebServer.setArgString(getName(F("L2Br")), Lt2->getCurrentBrightnessText(true)); ///< Timer on or off
-    WebServer.setArgString(getName(F("L2T")), Lt2->getTimerOnOffText(true));         ///< Timer on or off
+    WebServer.setArgString(getName(F("L2S"),true), Lt2->getStateText());                  ///< State
+    WebServer.setArgString(getName(F("L2Br"),true), Lt2->getCurrentBrightnessText(true)); ///< Timer on or off
+    WebServer.setArgString(getName(F("L2T"),true), Lt2->getTimerOnOffText(true));         ///< Timer on or off
     //LightSensor1
-    WebServer.setArgString(getName(F("LSD")), LtSen1->getDarkText(true));
-    WebServer.setArgString(getName(F("LSR")), LtSen1->getReadingText(true));
+    WebServer.setArgString(getName(F("LSD"),true), LtSen1->getDarkText(true));
+    WebServer.setArgString(getName(F("LSR"),true), LtSen1->getReadingText(true));
     //PowerSensor
-    WebServer.setArgString(getName(F("PP")), Pow1->getPowerText(true));
-    WebServer.setArgString(getName(F("PE")), Pow1->getEnergyText(true));
-    WebServer.setArgString(getName(F("PV")), Pow1->getVoltageText(true));
-    WebServer.setArgString(getName(F("PC")), Pow1->getCurrentText(true));
+    WebServer.setArgString(getName(F("PP"),true), Pow1->getPowerText(true));
+    WebServer.setArgString(getName(F("PE"),true), Pow1->getEnergyText(true));
+    WebServer.setArgString(getName(F("PV"),true), Pow1->getVoltageText(true));
+    WebServer.setArgString(getName(F("PC"),true), Pow1->getCurrentText(true));
     //PowerSensor V3
-    //WebServer.setArgString(getName(F("PF")), Pow1 -> getFrequencyText(true));
-    //WebServer.setArgString(getName(F("PPF")), Pow1 -> getPowerFactorText());
+    //WebServer.setArgString(getName(F("PF"),true), Pow1 -> getFrequencyText(true));
+    //WebServer.setArgString(getName(F("PPF"),true), Pow1 -> getPowerFactorText());
   }
 }
 

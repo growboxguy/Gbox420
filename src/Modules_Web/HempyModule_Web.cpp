@@ -90,20 +90,20 @@ void HempyModule_Web::websiteEvent_Load(char *url)
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getName(F("B1ET")), toText(HempyBucketCommand1ToSend.EvaporationTarget));
-    WebServer.setArgString(getName(F("B1OF")), toText(HempyBucketCommand1ToSend.OverflowTarget));
-    WebServer.setArgString(getName(F("B1WL")), toText(HempyBucketCommand1ToSend.WasteLimit));
-    WebServer.setArgInt(getName(F("B1PS")), HempyBucketCommand1ToSend.PumpSpeed);
-    WebServer.setArgInt(getName(F("B1T")), HempyBucketCommand1ToSend.PumpTimeOut);
-    WebServer.setArgInt(getName(F("B1D")), HempyBucketCommand1ToSend.DrainWaitTime);
-    WebServer.setArgString(getName(F("B1DW")), toText(HempyBucketResponse1Received.DryWeight));
-    WebServer.setArgString(getName(F("B2ET")), toText(HempyBucketCommand2ToSend.EvaporationTarget));
-    WebServer.setArgString(getName(F("B2OF")), toText(HempyBucketCommand2ToSend.OverflowTarget));
-    WebServer.setArgString(getName(F("B2WL")), toText(HempyBucketCommand2ToSend.WasteLimit));
-    WebServer.setArgInt(getName(F("B2PS")), HempyBucketCommand2ToSend.PumpSpeed);
-    WebServer.setArgInt(getName(F("B2T")), HempyBucketCommand2ToSend.PumpTimeOut);
-    WebServer.setArgInt(getName(F("B2D")), HempyBucketCommand2ToSend.DrainWaitTime);
-    WebServer.setArgString(getName(F("B2DW")), toText(HempyBucketResponse2Received.DryWeight));
+    WebServer.setArgString(getName(F("B1ET"),true), toText(HempyBucketCommand1ToSend.EvaporationTarget));
+    WebServer.setArgString(getName(F("B1OF"),true), toText(HempyBucketCommand1ToSend.OverflowTarget));
+    WebServer.setArgString(getName(F("B1WL"),true), toText(HempyBucketCommand1ToSend.WasteLimit));
+    WebServer.setArgInt(getName(F("B1PS"),true), HempyBucketCommand1ToSend.PumpSpeed);
+    WebServer.setArgInt(getName(F("B1T"),true), HempyBucketCommand1ToSend.PumpTimeOut);
+    WebServer.setArgInt(getName(F("B1D"),true), HempyBucketCommand1ToSend.DrainWaitTime);
+    WebServer.setArgString(getName(F("B1DW"),true), toText(HempyBucketResponse1Received.DryWeight));
+    WebServer.setArgString(getName(F("B2ET"),true), toText(HempyBucketCommand2ToSend.EvaporationTarget));
+    WebServer.setArgString(getName(F("B2OF"),true), toText(HempyBucketCommand2ToSend.OverflowTarget));
+    WebServer.setArgString(getName(F("B2WL"),true), toText(HempyBucketCommand2ToSend.WasteLimit));
+    WebServer.setArgInt(getName(F("B2PS"),true), HempyBucketCommand2ToSend.PumpSpeed);
+    WebServer.setArgInt(getName(F("B2T"),true), HempyBucketCommand2ToSend.PumpTimeOut);
+    WebServer.setArgInt(getName(F("B2D"),true), HempyBucketCommand2ToSend.DrainWaitTime);
+    WebServer.setArgString(getName(F("B2DW"),true), toText(HempyBucketResponse2Received.DryWeight));
   }
 }
 
@@ -111,17 +111,17 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
 {
   if (strncmp(url, "/G", 2) == 0)
   {
-    WebServer.setArgString(getName(F("S")), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getName(F("B1W")), toText_weight(HempyBucketResponse1Received.WeightB));
-    WebServer.setArgString(getName(F("B1WR")), toText_weight(HempyBucketResponse1Received.WeightWR));
-    WebServer.setArgString(getName(F("B1DWW")), toText(HempyBucketResponse1Received.DryWeight, "/", HempyBucketResponse1Received.WetWeight));
-    WebServer.setArgString(getName(F("B1S")), toText_hempyState(HempyBucketResponse1Received.HempyState));
-    WebServer.setArgString(getName(F("B1P")), toText_waterPumpState(HempyBucketResponse1Received.PumpState));
-    WebServer.setArgString(getName(F("B2W")), toText_weight(HempyBucketResponse2Received.WeightB));
-    WebServer.setArgString(getName(F("B2WR")), toText_weight(HempyBucketResponse2Received.WeightWR));
-    WebServer.setArgString(getName(F("B2DWW")), toText(HempyBucketResponse2Received.DryWeight, "/", HempyBucketResponse2Received.WetWeight));
-    WebServer.setArgString(getName(F("B2S")), toText_hempyState(HempyBucketResponse2Received.HempyState));
-    WebServer.setArgString(getName(F("B2P")), toText_waterPumpState(HempyBucketResponse2Received.PumpState));
+    WebServer.setArgString(getName(F("S"),true), toText_onlineStatus(OnlineStatus));
+    WebServer.setArgString(getName(F("B1W"),true), toText_weight(HempyBucketResponse1Received.WeightB));
+    WebServer.setArgString(getName(F("B1WR"),true), toText_weight(HempyBucketResponse1Received.WeightWR));
+    WebServer.setArgString(getName(F("B1DWW"),true), toText(HempyBucketResponse1Received.DryWeight, "/", HempyBucketResponse1Received.WetWeight));
+    WebServer.setArgString(getName(F("B1S"),true), toText_hempyState(HempyBucketResponse1Received.HempyState));
+    WebServer.setArgString(getName(F("B1P"),true), toText_waterPumpState(HempyBucketResponse1Received.PumpState));
+    WebServer.setArgString(getName(F("B2W"),true), toText_weight(HempyBucketResponse2Received.WeightB));
+    WebServer.setArgString(getName(F("B2WR"),true), toText_weight(HempyBucketResponse2Received.WeightWR));
+    WebServer.setArgString(getName(F("B2DWW"),true), toText(HempyBucketResponse2Received.DryWeight, "/", HempyBucketResponse2Received.WetWeight));
+    WebServer.setArgString(getName(F("B2S"),true), toText_hempyState(HempyBucketResponse2Received.HempyState));
+    WebServer.setArgString(getName(F("B2P"),true), toText_waterPumpState(HempyBucketResponse2Received.PumpState));
   }
 }
 

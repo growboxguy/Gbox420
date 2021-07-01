@@ -56,23 +56,7 @@ void DevModule_Web::websiteEvent_Load(char *url)
   }
   else if (strncmp(url, "/S", 2) == 0) //Settings tab
   {
-    WebServer.setArgInt(getName(F("Debug")), *Debug);
-    WebServer.setArgInt(getName(F("Metric")), *Metric);
-    WebServer.setArgInt(getName(F("SerialF")), *SerialReportFrequency);
-    WebServer.setArgInt(getName(F("Date")), *SerialReportDate);
-    WebServer.setArgInt(getName(F("Mem")), *SerialReportMemory);
-    WebServer.setArgInt(getName(F("JSON")), *SerialReportJSON);
-    WebServer.setArgInt(getName(F("JSONF")), *SerialReportJSONFriendly);
-    WebServer.setArgInt(getName(F("Wire")), *SerialReportWireless);
-    WebServer.setArgBoolean(getName(F("Sheets")), *ReportToGoogleSheets);
-    WebServer.setArgInt(getName(F("SheetsF")), *SheetsReportingFrequency);
-    WebServer.setArgString(getName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
-    WebServer.setArgBoolean(getName(F("MQTT")), *ReportToMQTT);
-    WebServer.setArgInt(getName(F("MQTTF")), *MQTTReportFrequency);
-    WebServer.setArgString(getName(F("MPT")), ModuleSettings->MqttPubTopic);
-    WebServer.setArgString(getName(F("MST")), ModuleSettings->MqttSubTopic);
-    WebServer.setArgString(getName(F("MLT")), ModuleSettings->MqttLwtTopic);
-    WebServer.setArgString(getName(F("MLM")), ModuleSettings->MqttLwtMessage);
+   
   }
 }
 
