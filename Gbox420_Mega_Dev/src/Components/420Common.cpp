@@ -132,3 +132,15 @@ char *Common::getName(const __FlashStringHelper *AppendToEnd, bool UnderscoreSep
   strcat_P(ReturnChar, (PGM_P)AppendToEnd);
   return ReturnChar;
 }
+
+char *Common::getName(char *AppendToEnd, bool UnderscoreSeparator)
+{
+  static char ReturnChar[MaxWordLength] = "";
+  strcpy_P(ReturnChar, (PGM_P)Name);
+  if (UnderscoreSeparator)
+    strcat_P(ReturnChar, (PGM_P)F("_"));
+  else
+    strcat_P(ReturnChar, (PGM_P)F(" "));
+  strcat(ReturnChar, AppendToEnd);
+  return ReturnChar;
+}

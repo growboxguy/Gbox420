@@ -53,9 +53,7 @@ void Fan::TurnOff()
   *State = false;
   *HighSpeed = false;
   checkFanStatus();
-  appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("OFF"));
-  Parent->addToLog(ShortMessage);
+  Parent->addToLog(getName(fanSpeedText(true)));
   Parent->getSoundObject()->playOffSound();
 }
 
@@ -64,9 +62,7 @@ void Fan::SetLowSpeed()
   *State = true;
   *HighSpeed = false;
   checkFanStatus();
-  appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("LOW"));
-  Parent->addToLog(ShortMessage);
+  Parent->addToLog(getName(fanSpeedText(true)));
   Parent->getSoundObject()->playOnSound();
 }
 
@@ -75,9 +71,7 @@ void Fan::SetHighSpeed()
   *State = true;
   *HighSpeed = true;
   checkFanStatus();
-  appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("HIGH"));
-  Parent->addToLog(ShortMessage);
+  Parent->addToLog(getName(fanSpeedText(true)));
   Parent->getSoundObject()->playOnSound();
 }
 
