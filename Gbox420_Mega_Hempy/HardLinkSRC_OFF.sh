@@ -55,10 +55,20 @@ unlink ./src/Components_Web/HempyBucket_Web.h > /dev/null 2>&1
 unlink ./src/Components_Web/HempyBucket_Web.cpp > /dev/null 2>&1
 unlink ./src/Components_Web/Sound_Web.h > /dev/null 2>&1
 unlink ./src/Components_Web/Sound_Web.cpp > /dev/null 2>&1
-unlink ./src/Components_Web/WaterPump_Web.cpp.h > /dev/null 2>&1
-unlink ./src/Components_Web/WaterPump_Web.cpp.cpp > /dev/null 2>&1
+unlink ./src/Components_Web/WaterPump_Web.h > /dev/null 2>&1
+unlink ./src/Components_Web/WaterPump_Web.cpp > /dev/null 2>&1
 unlink ./src/Components_Web/WeightSensor_Web.h > /dev/null 2>&1
 unlink ./src/Components_Web/WeightSensor_Web.cpp > /dev/null 2>&1
+unlink ./src/Components_Web/AirPump_Web.h > /dev/null 2>&1
+unlink ./src/Components_Web/AirPump_Web.cpp > /dev/null 2>&1
+unlink ./src/Components_Web/Fan_Web.h > /dev/null 2>&1
+unlink ./src/Components_Web/Fan_Web.cpp > /dev/null 2>&1
+unlink ./src/Components_Web/LightSensor_Web.h > /dev/null 2>&1
+unlink ./src/Components_Web/LightSensor_Web.cpp > /dev/null 2>&1
+unlink ./src/Components_Web/Lights_Web.h > /dev/null 2>&1
+unlink ./src/Components_Web/Lights_Web.cpp > /dev/null 2>&1
+unlink ./src/Components_Web/PowerSensorV3_Web.h > /dev/null 2>&1
+unlink ./src/Components_Web/PowerSensorV3_Web.cpp > /dev/null 2>&1
 
 unlink ./src/Components/420Common.h > /dev/null 2>&1
 unlink ./src/Components/420Common.cpp > /dev/null 2>&1

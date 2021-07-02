@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 9; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 10; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -89,9 +89,10 @@ typedef struct
     bool State = true;      ///< true - ON, false - OFF
     bool HighSpeed = false; ///< true - High speed, false - Low speed
   };
-  struct FanSettings IFan = {.OnOffPin = 25, .SpeedPin = 26};
-  struct FanSettings EFan = {.OnOffPin = 27, .SpeedPin = 28};
+  struct FanSettings FanI = {.OnOffPin = 25, .SpeedPin = 26};
+  struct FanSettings FanE = {.OnOffPin = 27, .SpeedPin = 28};
 
+/*
   // PWM adjusted AC signal - Need to move this to a dedicated module, Mega already uses interrupts to talk to ESP-link and it messes with counting the phase zero crossings
   struct Fan_PWMSettings ///< Fan default settings
   {
@@ -104,6 +105,7 @@ typedef struct
   };
   struct Fan_PWMSettings FanI = {.ZeroCrossingPin = 2, .PWMPin = 9, .State = true, .MinSpeed = 35, .Speed = 80};
   struct Fan_PWMSettings FanE = {.ZeroCrossingPin = 2, .PWMPin = 10, .State = true, .MinSpeed = 35, .Speed = 80};
+  */
 
   struct MainModuleSettings ///< MainModule default settings
   {
@@ -145,7 +147,7 @@ typedef struct
     uint8_t DigitalPin; ///< Light sensor D0 pin
     uint8_t AnalogPin;  ///< Light sensor A0 pin
   };
-  struct LightSensorSettings LtSen1 = {.DigitalPin = 4, .AnalogPin = A0};
+  struct LightSensorSettings Ls1 = {.DigitalPin = 4, .AnalogPin = A0};
 
   struct LightsSettings ///< Lights default settings
   {

@@ -32,23 +32,20 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   this->Wireless = Wireless;
   Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;                                       ///< Pointer for child objects to use sound feedback
-  /*
-  IFan = new Fan_Web(F("FanI"), this, &ModuleSettings->IFan);         ///< passing parameters: 1. Component name; 2. MainModule object the component belongs to; 3. Persistent settings stored in EEPROM)
-  EFan = new Fan_Web(F("FanE"), this, &ModuleSettings->EFan);
+  FanI = new Fan_Web(F("FanI"), this, &ModuleSettings->FanI);         ///< passing parameters: 1. Component name; 2. MainModule object the component belongs to; 3. Persistent settings stored in EEPROM)
+  FanE = new Fan_Web(F("FanE"), this, &ModuleSettings->FanE);
   //FanI = new Fan_PWM(F("FanI"), this, &ModuleSettings->FanI);
   //FanE = new Fan_PWM(F("FanE"), this, &ModuleSettings->FanE);
   APump1 = new AirPump_Web(F("Ap1"), this, &ModuleSettings->APump1);  ///< Air pump
   Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
   Lt2 = new Lights_Web(F("Lt2"), this, &ModuleSettings->Lt2);
-  LtSen1 = new LightSensor_Web(F("Ls1"), this, &ModuleSettings->LtSen1, Lt1); ///< Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
+  Ls1 = new LightSensor_Web(F("Ls1"), this, &ModuleSettings->Ls1, Lt1); ///< Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
   DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);
   //Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2); ///< For PZEM004T V1.0 or PZEM004T V2.0
   Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2);                                     ///< Only for PZEM004T V3.0
-  
   HempyModule1 = new HempyModule_Web(F("Hemp1"), this, &ModuleSettings->HempyModule1);         ///< Module used to relay Settings/MQTT/Website commands to the Hempy module and receive sensor readings
   AeroModule1 = new AeroModule_Web(F("Aero1"), this, &ModuleSettings->AeroModule1);            ///< Module used to relay Settings/MQTT/Website commands to the Aeroponics module and receive sensor readings
   ReservoirModule1 = new ReservoirModule_Web(F("Res1"), this, &ModuleSettings->ReservoirMod1); ///< Module used to relay Settings/MQTT/Website commands to the Reservoir module and receive sensor readings
-  */
   addToReportQueue(this);                                                                      //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   addToRefreshQueue_FiveSec(this);                                                             //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
   addToRefreshQueue_Minute(this);                                                              //< Attach to a trigger that fires every second and calls refresh_Sec()
@@ -107,8 +104,8 @@ void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< ca
     WebServer.setArgString(getName(F("L2Br"), true), Lt2->getCurrentBrightnessText(true)); ///< Timer on or off
     WebServer.setArgString(getName(F("L2T"), true), Lt2->getTimerOnOffText(true));         ///< Timer on or off
     //LightSensor1
-    WebServer.setArgString(getName(F("LSD"), true), LtSen1->getDarkText(true));
-    WebServer.setArgString(getName(F("LSR"), true), LtSen1->getReadingText(true));
+    WebServer.setArgString(getName(F("LSD"), true), Ls1->getDarkText(true));
+    WebServer.setArgString(getName(F("LSR"), true), Ls1->getReadingText(true));
     //PowerSensor
     WebServer.setArgString(getName(F("PP"), true), Pow1->getPowerText(true));
     WebServer.setArgString(getName(F("PE"), true), Pow1->getEnergyText(true));
@@ -323,7 +320,7 @@ void MainModule::refresh_Minute()
 
 bool MainModule::getDayMode()
 {
-  if (Lt1->getStatus() || Lt2->getStatus() || !(LtSen1->getDark()))
+  if (Lt1->getStatus() || Lt2->getStatus() || !(Ls1->getDark()))
   {
     return true; ///< Return true if any of the lights are on OR the light sensor is detecting light
   }
