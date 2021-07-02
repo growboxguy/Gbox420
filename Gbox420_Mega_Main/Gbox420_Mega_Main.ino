@@ -235,11 +235,8 @@ void mqttReceived(void *response)
   ELClientResponse *res = (ELClientResponse *)response;
   String mqttTopic = (*res).popString();
   String mqttData = (*res).popString();
-  if (*Debug)
-  {
-    logToSerials(F("MQTT"), false, 0);
-    logToSerials(&mqttTopic, false, 1);
-  }
+  logToSerials(F("MQTT"), false, 0);
+  logToSerials(&mqttTopic, false, 1);
   mqttTopic.remove(0, MqttSubTopicLength); //Cut the known command topic from the arrived topic
   mqttTopic.toCharArray(command, MaxShotTextLength);
   mqttData.toCharArray(data, MaxShotTextLength);
@@ -302,10 +299,7 @@ void refreshCallback(__attribute__((unused)) char *Url)
 */
 void buttonCallback(char *Button)
 {
-  if (*Debug)
-  {
-    logToSerials(F("ESP button:"), false, 0);
-  }
+  logToSerials(F("ESP button:"), false, 0);
   if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
   {
     restoreDefaults();
@@ -323,10 +317,7 @@ void buttonCallback(char *Button)
 */
 void fieldCallback(char *Field)
 { ///< Called when any field on the website is updated.
-  if (*Debug)
-  {
-    logToSerials(F("ESP field:"), false, 0);
-  }
+  logToSerials(F("ESP field:"), false, 0);
   Main1->commandEventTrigger(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
 }

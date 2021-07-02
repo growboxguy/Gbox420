@@ -8,22 +8,22 @@
  */
 
 #include "Arduino.h"
-#include "avr/wdt.h"                        // Watchdog timer for detecting a crash and automatically resetting the board
-#include "avr/boot.h"                       // Watchdog timer related bug fix
-#include "printf.h"                         // Printing the wireless status message from nRF24L01
-#include "TimerThree.h"                     // Interrupt handling for webpage
-#include "ELClient.h"                       // ESP-link
-#include "ELClientWebServer.h"              // ESP-link - WebServer API
-#include "ELClientCmd.h"                    // ESP-link - Get current time from the internet using NTP
-#include "ELClientRest.h"                   // ESP-link - REST API
-#include "ELClientMqtt.h"                   // ESP-link - MQTT protocol for sending and receiving IoT messages
-#include "Thread.h"                         // Splitting functions to threads for timing
-#include "StaticThreadController.h"         // Grouping threads
-#include "SerialLog.h"                      // Logging to the Serial console and to ESP-link's console
-#include "Settings.h"                       // EEPROM stored settings for every component
-#include "src/Modules_Web/DevModule_Web.h"  // Represents a complete box with all feautres
-#include "SPI.h"                            // allows you to communicate with SPI devices, with the Arduino as the master device
-#include "RF24.h"                           // https://github.com/maniacbug/RF24
+#include "avr/wdt.h"                       // Watchdog timer for detecting a crash and automatically resetting the board
+#include "avr/boot.h"                      // Watchdog timer related bug fix
+#include "printf.h"                        // Printing the wireless status message from nRF24L01
+#include "TimerThree.h"                    // Interrupt handling for webpage
+#include "ELClient.h"                      // ESP-link
+#include "ELClientWebServer.h"             // ESP-link - WebServer API
+#include "ELClientCmd.h"                   // ESP-link - Get current time from the internet using NTP
+#include "ELClientRest.h"                  // ESP-link - REST API
+#include "ELClientMqtt.h"                  // ESP-link - MQTT protocol for sending and receiving IoT messages
+#include "Thread.h"                        // Splitting functions to threads for timing
+#include "StaticThreadController.h"        // Grouping threads
+#include "SerialLog.h"                     // Logging to the Serial console and to ESP-link's console
+#include "Settings.h"                      // EEPROM stored settings for every component
+#include "src/Modules_Web/DevModule_Web.h" // Represents a complete box with all feautres
+#include "SPI.h"                           // allows you to communicate with SPI devices, with the Arduino as the master device
+#include "RF24.h"                          // https://github.com/maniacbug/RF24
 
 // Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
@@ -53,15 +53,15 @@ Thread MinuteThread = Thread();
 StaticThreadController<3> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread);
 
 void setup()
-{                                                       ///<  put your setup code here, to run once:
-  ArduinoSerial.begin(115200);                          ///< 2560mega console output
-  ESPSerial.begin(115200);                              ///< ESP WiFi console output
-  pinMode(LED_BUILTIN, OUTPUT);                         ///< onboard LED - Heartbeat every second to confirm code is running
-  printf_begin();                                       ///< Needed to print wireless status to Serial
-  logToSerials(F(""), true, 0);                         ///< New line
-  logToSerials(F("Dev module initializing"), true, 0);  ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
-  wdt_enable(WDTO_8S);                                  ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
-  boot_rww_enable();                                    ///< fix watchdog not loading sketch after a reset error on Mega2560
+{                                                      ///<  put your setup code here, to run once:
+  ArduinoSerial.begin(115200);                         ///< 2560mega console output
+  ESPSerial.begin(115200);                             ///< ESP WiFi console output
+  pinMode(LED_BUILTIN, OUTPUT);                        ///< onboard LED - Heartbeat every second to confirm code is running
+  printf_begin();                                      ///< Needed to print wireless status to Serial
+  logToSerials(F(""), true, 0);                        ///< New line
+  logToSerials(F("Dev module initializing"), true, 0); ///< logs to both Arduino and ESP serials, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
+  wdt_enable(WDTO_8S);                                 ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
+  boot_rww_enable();                                   ///< fix watchdog not loading sketch after a reset error on Mega2560
 
   // Loading settings from EEPROM
   logToSerials(F("Loading settings"), true, 0);
@@ -130,9 +130,9 @@ void processTimeCriticalStuff()
 
 void runSec()
 {
-  wdt_reset();     ///< reset watchdog timeout
-  HeartBeat();     ///< Blinks built-in led
-  DevModule_Web1->runSec(); 
+  wdt_reset(); ///< reset watchdog timeout
+  HeartBeat(); ///< Blinks built-in led
+  DevModule_Web1->runSec();
 }
 
 void runFiveSec()
@@ -240,11 +240,8 @@ void mqttReceived(void *response)
   ELClientResponse *res = (ELClientResponse *)response;
   String mqttTopic = (*res).popString();
   String mqttData = (*res).popString();
-  if (*Debug)
-  {
-    logToSerials(F("MQTT"), false, 0);
-    logToSerials(&mqttTopic, false, 1);
-  }
+  logToSerials(F("MQTT"), false, 0);
+  logToSerials(&mqttTopic, false, 1);
   mqttTopic.remove(0, MqttSubTopicLength); //Cut the known command topic from the arrived topic
   mqttTopic.toCharArray(command, MaxShotTextLength);
   mqttData.toCharArray(data, MaxShotTextLength);
@@ -307,10 +304,7 @@ void refreshCallback(__attribute__((unused)) char *Url)
 */
 void buttonCallback(char *Button)
 {
-  if (*Debug)
-  {
-    logToSerials(F("ESP button:"), false, 0);
-  }
+  logToSerials(F("ESP button:"), false, 0);
   if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
   {
     restoreDefaults();
@@ -328,14 +322,10 @@ void buttonCallback(char *Button)
 */
 void fieldCallback(char *Field)
 { ///< Called when any field on the website is updated.
-  if (*Debug)
-  {
-    logToSerials(F("ESP field:"), false, 0);
-  }
+  logToSerials(F("ESP field:"), false, 0);
   DevModule_Web1->commandEventTrigger(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
 }
-
 
 /**
   \brief Called when the /Settings.html website is loading on the ESP-link webserver
