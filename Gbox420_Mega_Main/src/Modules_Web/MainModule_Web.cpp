@@ -79,8 +79,8 @@ void MainModule::websiteEvent_Load(char *url)
 void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
   //All tabs
-  WebServer.setArgString(getName(F("Time"), true), getFormattedTime(false));
-  WebServer.setArgJson(getName(F("Log"), true), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
+  WebServer.setArgString(F("Time"), getFormattedTime(false));
+  WebServer.setArgJson(F("Log"), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 
 /*
     //Air pump

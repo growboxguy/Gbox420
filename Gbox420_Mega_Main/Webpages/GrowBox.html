@@ -174,10 +174,10 @@
 						<th class="headerRows"><span>Current</span></th>
 					</tr>
 					<tr>
-						<td id="Pow1_PP" class="dataRows"></td>
-						<td id="Pow1_PE" class="dataRows"></td>
-						<td id="Pow1_PV" class="dataRows"></td>
-						<td id="Pow1_PC" class="dataRows"></td>
+						<td id="Pow1_P" class="dataRows"></td>
+						<td id="Pow1_E" class="dataRows"></td>
+						<td id="Pow1_V" class="dataRows"></td>
+						<td id="Pow1_C" class="dataRows"></td>
 					</tr>
 				</table>
 				<ul id="Log"></ul>
@@ -342,19 +342,19 @@
 					</tr>
 					<tr>
 						<td id="Lt1_S" class="dataRows"></td><!-- Status ON/OFF -->
-						<td id="Lt1_B" class="dataRows"></td><!-- Brightness  -->
+						<td id="Lt1_Br" class="dataRows"></td><!-- Brightness  -->
 						<td id="Ls1_R" class="dataRows"></td><!-- Light sensor Reading -->
 						<td id="Lt1_T" class="dataRows"></td><!-- Timer Enabled/Disabled -->
 						<td id="Lt1_OnT" class="dataRows"></td>
 						<!--Light On Time 24h-->
-						<td id="L1_OfT" class="dataRows"></td>
+						<td id="Lt1_OfT" class="dataRows"></td>
 						<!--Light Off Time 24h -->
 					</tr>
 				</table>
 				<form>
 					<p>
-						<button id="L1_On" type="button" title="Turn grow lights ON">ON</button>
-						<button id="L1_Of" type="button" title="Turn grow lights OFF">OFF</button>
+						<button id="Lt1_On" type="button" title="Turn grow lights ON">ON</button>
+						<button id="Lt1_Of" type="button" title="Turn grow lights OFF">OFF</button>
 						<!--button id="Ls1_C" type="button"
 							title="Measure light reading in dark, 0 and 100% brightness">Calibrate</button-->
 					</p>
@@ -362,48 +362,48 @@
 				<form>
 					<p>
 						<label><b>Brightness</b></label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="L1_BS" min="1"
-							max="100" oninput="this.form.L1_B.value=this.value">
-						<input type="number" name="L1_B" min="1" max="100"
-							oninput="this.form.L1_BS.value=this.value" />
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Lt1_BS" min="1"
+							max="100" oninput="this.form.Lt1_B.value=this.value">
+						<input type="number" name="Lt1_B" min="1" max="100"
+							oninput="this.form.Lt1_BS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style="width: 3em;"><b>Timer </b></label>
-						<button id="L1_TOn" type="button" align="right" title="Enable light timer">Enable</button>
-						<button id="L1_TOff" type="button" align="right" title="Disable light timer">Disable</button>
+						<button id="Lt1_TOn" type="button" align="right" title="Enable light timer">Enable</button>
+						<button id="Lt1_TOff" type="button" align="right" title="Disable light timer">Disable</button>
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; width: 2em;">ON </label>
-						<input style="width: 2.5em;" min=0 max=23 name="L1_OnH" type="number" /> :
-						<input style="width: 2.5em;" min=0 max=59 name="L1_OnM" type="number" />
+						<input style="width: 2.5em;" min=0 max=23 name="Lt1_OnH" type="number" /> :
+						<input style="width: 2.5em;" min=0 max=59 name="Lt1_OnM" type="number" />
 						<input class="setButton" type="submit" value="Set" title="Set grow light ON time" />
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; width: 2em;">OFF </label>
-						<input style="width: 2.5em;" min=0 max=23 name="L1_OfH" type="number" /> :
-						<input style="width: 2.5em;" min=0 max=59 name="L1_OfM" type="number" />
+						<input style="width: 2.5em;" min=0 max=23 name="Lt1_OfH" type="number" /> :
+						<input style="width: 2.5em;" min=0 max=59 name="Lt1_OfM" type="number" />
 						<input class="setButton" type="submit" value="Set" title="Set grow light OFF time" />
 					</p>
 				</form>
 				<!-- <form>
 					<p>
-						<button id="L1_D" type="button" title="Dim the lights for X minutes to 1%">Dim</button>
+						<button id="Lt1_D" type="button" title="Dim the lights for X minutes to 1%">Dim</button>
 						<!- -- Temporary reduce the brightness to 1% while working on the plants -- ->
-						for <input style="width: 3em;" name="L1_DD" type="number" value='1' step='1' min='1' max='100'
+						for <input style="width: 3em;" name="Lt1_DD" type="number" value='1' step='1' min='1' max='100'
 							title="Dim Duration - How long should the temporary dimming last" />min
 						<input class="setButton" type="submit" value="Set">
 					</p>
 				</form>
 				<form>
 					<p>
-						<input type="checkbox" name="L1_F"
+						<input type="checkbox" name="Lt1_F"
 							title="Turn fading in and out the lights when changing ON/OFF state, adds smoother photosynthetic state transition" />
 						<b>Fade in/out</b>
 						<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
@@ -411,10 +411,10 @@
 				</form>		
 				<form style=" padding-left: 0.5em;">
 					<p>
-						<input style="padding-left: 0.5em; width: 2em;" name="L1_FInc" type="number" value='1' step='1'
+						<input style="padding-left: 0.5em; width: 2em;" name="Lt1_FInc" type="number" value='1' step='1'
 							min='1' max='100' title="Amount of Brightness increase/decrease at each step" />
 						<label>% every</label>
-						<input style="width: 3em;" name="L1_FInt" type="number" value='0' step='1' min='1'
+						<input style="width: 3em;" name="Lt1_FInt" type="number" value='0' step='1' min='1'
 							title="Increase/decrease frequency - Interval between the changes" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -431,59 +431,59 @@
 						<td class="headerRows"><span>OFF</span></td>
 					</tr>
 					<tr>
-						<td id="L2_S" class="dataRows"></td><!-- Status ON/OFF -->
-						<td id="L2_Br" class="dataRows"></td><!-- Brightness  -->
-						<td id="L2_T" class="dataRows"></td><!-- Timer Enabled/Disabled -->
-						<td id="L2_OnT" class="dataRows"></td>
+						<td id="Lt2_S" class="dataRows"></td><!-- Status ON/OFF -->
+						<td id="Lt2_Br" class="dataRows"></td><!-- Brightness  -->
+						<td id="Lt2_T" class="dataRows"></td><!-- Timer Enabled/Disabled -->
+						<td id="Lt2_OnT" class="dataRows"></td>
 						<!--Light On Time 24h-->
-						<td id="L2_OfT" class="dataRows"></td>
+						<td id="Lt2_OfT" class="dataRows"></td>
 						<!--Light Off Time 24h -->
 					</tr>
 				</table>
 				<form>
 					<p>
-						<button id="L2_On" type="button" title="Turn grow lights ON">ON</button>
-						<button id="L2_Of" type="button" title="Turn grow lights OFF">OFF</button>
+						<button id="Lt2_On" type="button" title="Turn grow lights ON">ON</button>
+						<button id="Lt2_Of" type="button" title="Turn grow lights OFF">OFF</button>
 					</p>
 				</form>
 				<form>
 					<p>
 						<label><b>Brightness</b></label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="L2_BS" min="1"
-							max="100" oninput="this.form.L2_B.value=this.value" />
-						<input type="number" name="L2_B" min="1" max="100"
-							oninput="this.form.L2_BS.value=this.value" />
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Lt2_BS" min="1"
+							max="100" oninput="this.form.Lt2_B.value=this.value" />
+						<input type="number" name="Lt2_B" min="1" max="100"
+							oninput="this.form.Lt2_BS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style="width: 3em;"><b>Timer</b></label>
-						<button id="L2_TOn" type="button" align="right" title="Enable light timer">Enable</button>
-						<button id="L2_TOff" type="button" align="right" title="Disable light timer">Disable</button>
+						<button id="Lt2_TOn" type="button" align="right" title="Enable light timer">Enable</button>
+						<button id="Lt2_TOff" type="button" align="right" title="Disable light timer">Disable</button>
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; width: 2em;">ON</label>
-						<input style="width: 2.5em;" min=0 max=23 name="L2_OnH" type="number" /> :
-						<input style="width: 2.5em;" min=0 max=59 name="L2_OnM" type="number" />
+						<input style="width: 2.5em;" min=0 max=23 name="Lt2_OnH" type="number" /> :
+						<input style="width: 2.5em;" min=0 max=59 name="Lt2_OnM" type="number" />
 						<input class="setButton" type="submit" value="Set" title="Set grow light ON time" />
 					</p>
 				</form>
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; width: 2em;">OFF</label>
-						<input style="width: 2.5em;" min=0 max=23 name="L2_OfH" type="number" /> :
-						<input style="width: 2.5em;" min=0 max=59 name="L2_OfM" type="number" />
+						<input style="width: 2.5em;" min=0 max=23 name="Lt2_OfH" type="number" /> :
+						<input style="width: 2.5em;" min=0 max=59 name="Lt2_OfM" type="number" />
 						<input class="setButton" type="submit" value="Set" title="Set grow light OFF time" />
 					</p>
 				</form>
 				<!-- <form>
 					<p>
-						<button id="L2_D" type="button" title="Dim the lights for X minutes to 1%">Dim</button>
+						<button id="Lt2_D" type="button" title="Dim the lights for X minutes to 1%">Dim</button>
 						<!- -- Temporary reduce the brightness to 1% while working on the plants -- ->
-						for <input style="width: 3em;" name="L2_DD" type="number" value='1' step='1' min='1' max='100'
+						for <input style="width: 3em;" name="Lt2_DD" type="number" value='1' step='1' min='1' max='100'
 							title="Dim Duration - How long should the temporary dimming last" />min
 						<input class="setButton" type="submit" value="Set"
 							title="Set how long should the temporary dimming should last">
@@ -491,7 +491,7 @@
 				</form>
 				<form>
 					<p>
-						<input type="checkbox" name="L2_F"
+						<input type="checkbox" name="Lt2_F"
 							title="Turn fading in and out the lights when changing ON/OFF state, adds smoother photosynthetic state transition" />
 						<b>Fade in/out</b>
 						<input class="setButton" type="submit" value="Set" title="Turn fading in/out ON or OFF"">
@@ -499,10 +499,10 @@
 				</form>		
 				<form style=" padding-left: 0.5em;">
 					<p>
-						<input style="width: 2em;" name="L2_FInc" type="number" value='1' step='1' min='1' max='100'
+						<input style="width: 2em;" name="Lt2_FInc" type="number" value='1' step='1' min='1' max='100'
 							title="How much to Change the brightness at each step (1% increments)" />
 						<label>% every</label>
-						<input style="width: 3em;" name="L2_FInt" type="number" value='0' step='1' min='1'
+						<input style="width: 3em;" name="Lt2_FInt" type="number" value='0' step='1' min='1'
 							title="How often Step to the next brightness level" />sec
 						<input class="setButton" type="submit" value="Set">
 					</p>
@@ -778,10 +778,10 @@
 				<form>
 					<p>
 						<label style="padding-left: 0.5em; text-align: right;">Motor speed</label>
-						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Aero1_PumpSpS"
-							min="1" max="100" oninput="this.form.Aero1_PumpSp.value=this.value" />
+						<input style="width:7em;margin-left:0.5em;margin-right:0.5em" type="range" name="Aero1_PSS"
+							min="1" max="100" oninput="this.form.Aero1_PS.value=this.value" />
 						<input type="number" name="Aero1_PS" min="1" max="100"
-							oninput="this.form.Aero1_PumpSpS.value=this.value" />
+							oninput="this.form.Aero1_PSS.value=this.value" />
 						<input class="setButton" type="submit" value="Set" />
 					</p>
 				</form>
@@ -878,20 +878,20 @@
 		//document.getElementsByName("FanI_SS")[0].value = document.getElementsByName("FanI_S")[0].value;
 		//document.getElementsByName("FanE_SS")[0].value = document.getElementsByName("FanE_S")[0].value;
 		document.getElementsByName("Hemp1_B1PSS")[0].value = document.getElementsByName("Hemp1_B1PS")[0].value;
-		document.getElementsByName("Hemp1_B2PSS")[0].value = document.getElementsByName("Hemp1_B2PS")[0].value
-		document.getElementsByName("L1_BS")[0].value = document.getElementsByName("L1_B")[0].value;
-		document.getElementsByName("L2_BS")[0].value = document.getElementsByName("L2_B")[0].value
-		document.getElementsByName("Aero1_PumpSpS")[0].value = document.getElementsByName("Aero1_PS")[0].value
+		document.getElementsByName("Hemp1_B2PSS")[0].value = document.getElementsByName("Hemp1_B2PS")[0].value;
+		document.getElementsByName("Lt1_BS")[0].value = document.getElementsByName("Lt1_B")[0].value;
+		document.getElementsByName("Lt2_BS")[0].value = document.getElementsByName("Lt2_B")[0].value;
+		document.getElementsByName("Aero1_PSS")[0].value = document.getElementsByName("Aero1_PS")[0].value;
 	}, 1000) ///< Refresh every second
 
 
 	///< Duplicating the ON and OFF time of Light1
-	var Light1OnTime = document.getElementById("L1_OnT");
-	var Light1OnHour = document.getElementsByName("L1_OnH")[0];
-	var Light1OnMinute = document.getElementsByName("L1_OnM")[0];
-	var Light1OffTime = document.getElementById("L1_OfT");
-	var Light1OffHour = document.getElementsByName("L1_OfH")[0];
-	var Light1OffMinute = document.getElementsByName("L1_OfM")[0];
+	var Light1OnTime = document.getElementById("Lt1_OnT");
+	var Light1OnHour = document.getElementsByName("Lt1_OnH")[0];
+	var Light1OnMinute = document.getElementsByName("Lt1_OnM")[0];
+	var Light1OffTime = document.getElementById("Lt1_OfT");
+	var Light1OffHour = document.getElementsByName("Lt1_OfH")[0];
+	var Light1OffMinute = document.getElementsByName("Lt1_OfM")[0];
 
 	setInterval(function () {
 		if (Light1OnMinute.value.length === 1) {
@@ -910,12 +910,12 @@
 	}, 1000) ///< Refresh every second
 
 	///< Duplicating the ON and OFF time of Light2
-	var Light2OnTime = document.getElementById("L2_OnT");
-	var Light2OnHour = document.getElementsByName("L2_OnH")[0];
-	var Light2OnMinute = document.getElementsByName("L2_OnM")[0];
-	var Light2OffTime = document.getElementById("L2_OfT");
-	var Light2OffHour = document.getElementsByName("L2_OfH")[0];
-	var Light2OffMinute = document.getElementsByName("L2_OfM")[0];
+	var Light2OnTime = document.getElementById("Lt2_OnT");
+	var Light2OnHour = document.getElementsByName("Lt2_OnH")[0];
+	var Light2OnMinute = document.getElementsByName("Lt2_OnM")[0];
+	var Light2OffTime = document.getElementById("Lt2_OfT");
+	var Light2OffHour = document.getElementsByName("Lt2_OfH")[0];
+	var Light2OffMinute = document.getElementsByName("Lt2_OfM")[0];
 
 	setInterval(function () {
 		if (Light2OnMinute.value.length === 1) {
