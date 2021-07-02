@@ -39,6 +39,6 @@ private:
 
 protected:
   MainModule *Parent;
-  const byte WirelessChannel[6];
+  byte WirelessChannel[6];
   Settings::ReservoirModuleSettings *DefaultSettings;
 };

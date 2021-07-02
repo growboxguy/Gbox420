@@ -52,7 +52,7 @@ void AirPump::TurnOn()
   checkStatus();
 }
 
-bool AirPump::setState(bool NewState)
+void AirPump::setState(bool NewState)
 {
   *State = NewState;
   checkStatus();

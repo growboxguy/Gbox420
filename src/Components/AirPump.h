@@ -13,7 +13,7 @@ public:
   void report(bool FriendlyFormat = false);
   void TurnOn();
   void TurnOff();
-  bool setState(bool NewState);
+  void setState(bool NewState);
   bool getState();
   char *getStateText(bool FriendlyFormat = false);
 

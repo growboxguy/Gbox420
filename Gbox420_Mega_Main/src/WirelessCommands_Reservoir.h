@@ -25,7 +25,7 @@ enum ReservoirMessages
    ReservoirReset /// Special command sent at the start and end of a multi-message exchange.
 }; ///< ReservoirReset should always be the last element. An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
-static const __FlashStringHelper *toText_reservoirSequenceID(uint8_t SequenceID)
+__attribute__((unused)) static const __FlashStringHelper *toText_reservoirSequenceID(uint8_t SequenceID)
 {
    switch (SequenceID)
    {

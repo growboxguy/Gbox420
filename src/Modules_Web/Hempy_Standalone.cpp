@@ -79,7 +79,7 @@ void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *Url) /
 /**
 * @brief Process commands received from MQTT subscription or from the ESP-link website
 */
-bool Hempy_Standalone::commandEvent(__attribute__((unused))char *Command,__attribute__((unused)) char *Data)
+bool Hempy_Standalone::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
   /*
   if (!isThisMine(Command))
@@ -93,69 +93,12 @@ bool Hempy_Standalone::commandEvent(__attribute__((unused))char *Command,__attri
   */
 }
 
-/*
-   
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1TareDW")) == 0)
-    {
-      HempyBucketCommand1ToSend.TareWeightDW = true;
-      addToLog(F("Taring Bucket 1 Dry/Wet"), false);
-    }   
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1ET")) == 0)
-    {
-      DefaultSettings->EvaporationTarget_B1 = toFloat(Data);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1OF")) == 0)
-    {
-      DefaultSettings->OverflowTarget_B1 = toFloat(Data);
-      addToLog(F("Bucket 1 targets updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1WL")) == 0)
-    {
-      DefaultSettings->WasteLimit_B1 = toFloat(Data);
-      addToLog(F("Bucket 1 waste limit updated"), false);
-    }   
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1D")) == 0)
-    {
-      DefaultSettings->DrainWaitTime_B1 = toInt(Data);
-      addToLog(F("B1 Drain wait updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("B1DW")) == 0)
-    {
-      HempyBucketCommand1ToSend.DryWeight = toFloat(Data);
-      addToLog(F("B1 dry weight updated"), false);
-    }
-   
-    */
-
 void Hempy_Standalone::refresh_FiveSec()
 {
-  Common::refresh_FiveSec();
-  reportToSerialTrigger();
-  reportToMQTTTrigger();
-  if (RefreshAllRequested)
-  {
-    RefreshAllRequested = false;
-    runAll();
-  }
-  if (ReportToGoogleSheetsRequested)
-  {
-    ReportToGoogleSheetsRequested = false;
-    reportToGoogleSheetsTrigger(true);
-  }
-  if (ConsoleReportRequested)
-  {
-    ConsoleReportRequested = false;
-    runReport();
-  }
-  if (MQTTReportRequested)
-  {
-    MQTTReportRequested = false;
-    reportToMQTTTrigger(true);
-  }
+  Module_Web::refresh_FiveSec();
 }
 
 void Hempy_Standalone::refresh_Minute()
 {
-  Common::refresh_Minute();
-  reportToGoogleSheetsTrigger();
+  Module_Web::refresh_Minute();
 }

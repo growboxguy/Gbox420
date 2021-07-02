@@ -84,6 +84,39 @@ void Module_Web::commandEventTrigger(char *Command, char *Data)
     settingsEvent_Command(Command, Data);
 }
 
+void Module_Web::refresh_FiveSec()
+{
+  Common::refresh_FiveSec();
+  reportToSerialTrigger();
+  reportToMQTTTrigger();
+  if (RefreshAllRequested)
+  {
+    RefreshAllRequested = false;
+    runAll();
+  }
+  if (ReportToGoogleSheetsRequested)
+  {
+    ReportToGoogleSheetsRequested = false;
+    reportToGoogleSheetsTrigger(true);
+  }
+  if (ConsoleReportRequested)
+  {
+    ConsoleReportRequested = false;
+    runReport();
+  }
+  if (MQTTReportRequested)
+  {
+    MQTTReportRequested = false;
+    reportToMQTTTrigger(true);
+  }
+}
+
+void Module_Web::refresh_Minute()
+{
+  Common::refresh_Minute();
+  reportToGoogleSheetsTrigger();
+}
+
 /**
 * @brief Adds a log entry to the top of the log and removes the oldest log entry
 */
@@ -167,7 +200,7 @@ void Module_Web::settingsEvent_Load(__attribute__((unused)) char *Url)
   WebServer.setArgString(F("MST"), ModuleSettings->MqttSubTopic);
   WebServer.setArgString(F("MLT"), ModuleSettings->MqttLwtTopic);
   WebServer.setArgString(F("MLM"), ModuleSettings->MqttLwtMessage);
-  WebServer.setArgInt(getSoundObject()->getName(F("E"),true), getSoundObject()->getEnabledState());
+  WebServer.setArgInt(getSoundObject()->getName(F("E"), true), getSoundObject()->getEnabledState());
 }
 
 void Module_Web::settingsEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
@@ -275,11 +308,11 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
   {
     setMQTTLWTMessage(WebServer.getArgString());
   }
-  else if (strcmp(Command, getSoundObject()->getName(F("E"),true)) == 0)
+  else if (strcmp(Command, getSoundObject()->getName(F("E"), true)) == 0)
   {
     getSoundObject()->setSoundOnOff(toBool(Data));
   }
-  else if (strcmp(Command, getSoundObject()->getName(F("Ee"),true)) == 0)
+  else if (strcmp(Command, getSoundObject()->getName(F("Ee"), true)) == 0)
   {
     getSoundObject()->playEE();
   }

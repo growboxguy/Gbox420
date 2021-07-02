@@ -9,7 +9,7 @@ struct ReservoirCommonTemplate ReservoirResetToSend = {ReservoirMessages::Reserv
 /**
 * @brief Constructor, creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
+ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::ReservoirModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 {
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -48,8 +48,6 @@ void ReservoirModule_Web::report(bool FriendlyFormat)
 
 void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
-  if (strncmp(url, "/G", 2) == 0)
-  {
     WebServer.setArgString(getName(F("S"),true), toText_onlineStatus(OnlineStatus));
     WebServer.setArgString(getName(F("PH"),true), toText(ReservoirResponse1Received.PH));
     WebServer.setArgString(getName(F("TDS"),true), toText_TDS(ReservoirResponse1Received.TDS));
@@ -57,13 +55,12 @@ void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url
     WebServer.setArgString(getName(F("WT"),true), toText_temp(ReservoirResponse1Received.WaterTemperature));
     WebServer.setArgString(getName(F("AT"),true), toText_temp(ReservoirResponse1Received.AirTemperature));
     WebServer.setArgString(getName(F("H"),true), toText_percentage(ReservoirResponse1Received.Humidity));
-  }
 }
 
 /**
 * @brief Process commands received from MQTT subscription or from the ESP-link website
 */
-bool ReservoirModule_Web::commandEvent(char *Command, char *Data)
+bool ReservoirModule_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 { ///< When a button is pressed on the website
   if (!isThisMine(Command))
   {

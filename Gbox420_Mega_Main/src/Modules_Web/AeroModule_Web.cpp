@@ -11,7 +11,7 @@ struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset};          
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
+AeroModule_Web::AeroModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::AeroModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///< Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -79,8 +79,6 @@ void AeroModule_Web::report(bool FriendlyFormat)
 */
 void AeroModule_Web::websiteEvent_Load(char *url)
 {
-  if (strncmp(url, "/G", 2) == 0)
-  {
     WebServer.setArgBoolean(getName(F("Tank"),true), AeroResponse1Received.PressureTankPresent);
     WebServer.setArgString(getName(F("Dur"),true), toText(AeroCommand1ToSend.Duration));
     WebServer.setArgInt(getName(F("DInt"),true), AeroCommand1ToSend.DayInterval);
@@ -90,7 +88,6 @@ void AeroModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgInt(getName(F("PS"),true), AeroCommand2ToSend.PumpSpeed);
     WebServer.setArgInt(getName(F("PT"),true), AeroCommand2ToSend.PumpTimeOut);
     WebServer.setArgInt(getName(F("PPT"),true), AeroCommand2ToSend.PumpPrimingTime);
-  }
 }
 
 /**
@@ -98,8 +95,6 @@ void AeroModule_Web::websiteEvent_Load(char *url)
 */
 void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
-  if (strncmp(url, "/G", 2) == 0)
-  {
     WebServer.setArgString(getName(F("S"),true), toText_onlineStatus(OnlineStatus));
     if (AeroResponse1Received.PressureTankPresent)
     {
@@ -114,7 +109,7 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
     WebServer.setArgString(getName(F("Pr"),true), toText_pressure(AeroResponse1Received.Pressure));
     WebServer.setArgString(getName(F("LSP"),true), toText_pressure(AeroResponse1Received.LastSprayPressure));
     WebServer.setArgString(getName(F("W"),true), toText_weight(AeroResponse1Received.Weight));
-  }
+
 }
 
 /**

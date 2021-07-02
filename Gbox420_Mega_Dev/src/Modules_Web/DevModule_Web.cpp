@@ -77,33 +77,10 @@ bool DevModule_Web::commandEvent(char *Command, char *Data)
 
 void DevModule_Web::refresh_FiveSec()
 {
-  Common::refresh_FiveSec();
-  reportToSerialTrigger();
-  reportToMQTTTrigger();
-  if (RefreshAllRequested)
-  {
-    RefreshAllRequested = false;
-    runAll();
-  }
-  if (ReportToGoogleSheetsRequested)
-  {
-    ReportToGoogleSheetsRequested = false;
-    reportToGoogleSheetsTrigger(true);
-  }
-  if (ConsoleReportRequested)
-  {
-    ConsoleReportRequested = false;
-    runReport();
-  }
-  if (MQTTReportRequested)
-  {
-    MQTTReportRequested = false;
-    reportToMQTTTrigger(true);
-  }
+  Module_Web::refresh_FiveSec();  
 }
 
 void DevModule_Web::refresh_Minute()
 {
-  Common::refresh_Minute();
-  reportToGoogleSheetsTrigger();
+  Module_Web::refresh_Minute();
 }

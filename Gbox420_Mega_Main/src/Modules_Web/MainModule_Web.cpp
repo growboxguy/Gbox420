@@ -3,19 +3,19 @@
 #include "AeroModule_Web.h"
 #include "ReservoirModule_Web.h"
 #include "../Components_Web/Sound_Web.h"
-#include "../Components/DHTSensor.h"
-#include "../Components/Lights.h"
-#include "../Components/LightSensor.h"
-#include "../Components/Fan.h"
-#include "../Components/Fan_PWM.h"
-#include "../Components/AirPump.h"
-//#include "../Components/PowerSensor.h"  ///< For PZEM004T V1.0 or PZEM004T V2.0
-#include "../Components/PowerSensorV3.h" ///< Only for PZEM004T V3.0
+#include "../Components_Web/DHTSensor_Web.h"
+#include "../Components_Web/Lights_Web.h"
+#include "../Components_Web/LightSensor_Web.h"
+#include "../Components_Web/Fan_Web.h"
+//#include "../Components_Web/Fan_PWM_Web.h"
+#include "../Components_Web/AirPump_Web.h"
+//#include "../Components_Web/PowerSensor_Web.h"  ///< For PZEM004T V1.0 or PZEM004T V2.0
+#include "../Components_Web/PowerSensorV3_Web.h" ///< Only for PZEM004T V3.0
 
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings, creates components that the instance controls, and subscribes to events
 */
-MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common_Web(Name), Common(Name), Module_Web(Name), Module(Name)
+MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Common_Web(Name), Module(Name), Module_Web(Name)
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
@@ -31,21 +31,24 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   logToSerials(F(""), true, 0); //<Line break
   this->Wireless = Wireless;
   Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
-  this->SoundFeedback = Sound1;                                   ///< Pointer for child objects to use sound feedback
-  IFan = new Fan(F("IFan"), this, &ModuleSettings->IFan);         ///< passing parameters: 1. Component name; 2. MainModule object the component belongs to; 3. Persistent settings stored in EEPROM)
-  EFan = new Fan(F("EFan"), this, &ModuleSettings->EFan);
+  this->SoundFeedback = Sound1;                                       ///< Pointer for child objects to use sound feedback
+  /*
+  IFan = new Fan_Web(F("FanI"), this, &ModuleSettings->IFan);         ///< passing parameters: 1. Component name; 2. MainModule object the component belongs to; 3. Persistent settings stored in EEPROM)
+  EFan = new Fan_Web(F("FanE"), this, &ModuleSettings->EFan);
   //FanI = new Fan_PWM(F("FanI"), this, &ModuleSettings->FanI);
   //FanE = new Fan_PWM(F("FanE"), this, &ModuleSettings->FanE);
-  APump1 = new AirPump(F("APump1"), this, &ModuleSettings->APump1);
-  Lt1 = new Lights(F("Lt1"), this, &ModuleSettings->Lt1);
-  Lt2 = new Lights(F("Lt2"), this, &ModuleSettings->Lt2);
-  LtSen1 = new LightSensor(F("LtSen1"), this, &ModuleSettings->LtSen1, Lt1); ///< Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
-  DHT1 = new DHTSensor(F("DHT1"), this, &ModuleSettings->DHT1);
-  //Pow1 = new PowerSensor(F("Pow1"), this, &Serial2); ///< For PZEM004T V1.0 or PZEM004T V2.0
-  Pow1 = new PowerSensorV3(F("Pow1"), this, &Serial2);                                         ///< Only for PZEM004T V3.0
+  APump1 = new AirPump_Web(F("Ap1"), this, &ModuleSettings->APump1);  ///< Air pump
+  Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);
+  Lt2 = new Lights_Web(F("Lt2"), this, &ModuleSettings->Lt2);
+  LtSen1 = new LightSensor_Web(F("Ls1"), this, &ModuleSettings->LtSen1, Lt1); ///< Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
+  DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);
+  //Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2); ///< For PZEM004T V1.0 or PZEM004T V2.0
+  Pow1 = new PowerSensorV3_Web(F("Pow1"), this, &Serial2);                                     ///< Only for PZEM004T V3.0
+  
   HempyModule1 = new HempyModule_Web(F("Hemp1"), this, &ModuleSettings->HempyModule1);         ///< Module used to relay Settings/MQTT/Website commands to the Hempy module and receive sensor readings
   AeroModule1 = new AeroModule_Web(F("Aero1"), this, &ModuleSettings->AeroModule1);            ///< Module used to relay Settings/MQTT/Website commands to the Aeroponics module and receive sensor readings
   ReservoirModule1 = new ReservoirModule_Web(F("Res1"), this, &ModuleSettings->ReservoirMod1); ///< Module used to relay Settings/MQTT/Website commands to the Reservoir module and receive sensor readings
+  */
   addToReportQueue(this);                                                                      //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   addToRefreshQueue_FiveSec(this);                                                             //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
   addToRefreshQueue_Minute(this);                                                              //< Attach to a trigger that fires every second and calls refresh_Sec()
@@ -73,85 +76,48 @@ void MainModule::report(bool FriendlyFormat)
 
 void MainModule::websiteEvent_Load(char *url)
 {
-  if (strncmp(url, "/G", 2) == 0) //GrowBox tab
-  {
-    //WebServer.setArgInt(getName(F("FIS"),true), FanI->getSpeed()); ///< Internal PWM Fan speed
-    //WebServer.setArgInt(getName(F("FES"),true), FanE->getSpeed()); ///< Exhaust PWM Fan speed
-    //Light1
-    WebServer.setArgInt(getName(F("L1OnH"),true), *(Lt1->OnHour));    ///< On hour
-    WebServer.setArgInt(getName(F("L1OnM"),true), *(Lt1->OnMinute));  ///< On minute
-    WebServer.setArgInt(getName(F("L1OfH"),true), *(Lt1->OffHour));   ///< Off hour
-    WebServer.setArgInt(getName(F("L1OfM"),true), *(Lt1->OffMinute)); ///< Off minute
-    WebServer.setArgInt(getName(F("L1B"),true), *(Lt1->Brightness));  ///< Brightness percentage
-    //Light2
-    WebServer.setArgInt(getName(F("L2OnH"),true), *(Lt2->OnHour));    ///< On hour
-    WebServer.setArgInt(getName(F("L2OnM"),true), *(Lt2->OnMinute));  ///< On minute
-    WebServer.setArgInt(getName(F("L2OfH"),true), *(Lt2->OffHour));   ///< Off hour
-    WebServer.setArgInt(getName(F("L2OfM"),true), *(Lt2->OffMinute)); ///< Off minute
-    WebServer.setArgInt(getName(F("L2B"),true), *(Lt2->Brightness));  ///< Brightness percentage
-  }
-  else if (strncmp(url, "/S", 2) == 0) //Settings tab
-  {
-    WebServer.setArgInt(getName(F("Debug"),true), *Debug);
-    WebServer.setArgInt(getName(F("Metric"),true), *Metric);
-    WebServer.setArgInt(getName(F("SerialF"),true), *SerialReportFrequency);
-    WebServer.setArgInt(getName(F("Date"),true), *SerialReportDate);
-    WebServer.setArgInt(getName(F("Mem"),true), *SerialReportMemory);
-    WebServer.setArgInt(getName(F("JSON"),true), *SerialReportJSON);
-    WebServer.setArgInt(getName(F("JSONF"),true), *SerialReportJSONFriendly);
-    WebServer.setArgInt(getName(F("Wire"),true), *SerialReportWireless);
-    WebServer.setArgBoolean(getName(F("Sheets"),true), *ReportToGoogleSheets);
-    WebServer.setArgInt(getName(F("SheetsF"),true), *SheetsReportingFrequency);
-    WebServer.setArgString(getName(F("Relay"),true), ModuleSettings->PushingBoxLogRelayID);
-    WebServer.setArgBoolean(getName(F("MQTT"),true), *ReportToMQTT);
-    WebServer.setArgInt(getName(F("MQTTF"),true), *MQTTReportFrequency);
-    WebServer.setArgString(getName(F("MPT"),true), ModuleSettings->MqttPubTopic);
-    WebServer.setArgString(getName(F("MST"),true), ModuleSettings->MqttSubTopic);
-    WebServer.setArgString(getName(F("MLT"),true), ModuleSettings->MqttLwtTopic);
-    WebServer.setArgString(getName(F("MLM"),true), ModuleSettings->MqttLwtMessage);
-  }
+  
 }
 
 void MainModule::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
   //All tabs
-  WebServer.setArgString(getName(F("Time"),true), getFormattedTime(false));
-  WebServer.setArgJson(getName(F("Log"),true), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
+  WebServer.setArgString(getName(F("Time"), true), getFormattedTime(false));
+  WebServer.setArgJson(getName(F("Log"), true), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 
-  if (strncmp(url, "/G", 2) == 0) //GrowBox tab
-  {
+/*
     //Air pump
-    WebServer.setArgString(getName(F("AP"),true), APump1->getStateText(true));
+    WebServer.setArgString(getName(F("AP"), true), APump1->getStateText(true));
     //DHT1
-    WebServer.setArgString(getName(F("DT"),true), DHT1->getTempText(true)); ///< Shows the latest reading
-    WebServer.setArgString(getName(F("DH"),true), DHT1->getHumidityText(true));
+    WebServer.setArgString(getName(F("DT"), true), DHT1->getTempText(true)); ///< Shows the latest reading
+    WebServer.setArgString(getName(F("DH"), true), DHT1->getHumidityText(true));
     //PWM FAN
     //WebServer.setArgString(getName(F("FIST"),true), getSpeedText(true,true));  ///PWM Fan speed text
     //WebServer.setArgString(getName(F("FEST"),true), getSpeedText(true,true));  ///PWM Fan speed text
     //Internal Fan
-    WebServer.setArgString(getName(F("IFS"),true), IFan->fanSpeedText(true));
+    WebServer.setArgString(getName(F("IFS"), true), IFan->fanSpeedText(true));
     //Exhaust Fan
-    WebServer.setArgString(getName(F("EFS"),true), EFan->fanSpeedText(true));
+    WebServer.setArgString(getName(F("EFS"), true), EFan->fanSpeedText(true));
     //Light1
-    WebServer.setArgString(getName(F("L1S"),true), Lt1->getStateText());                  ///< State
-    WebServer.setArgString(getName(F("L1Br"),true), Lt1->getCurrentBrightnessText(true)); ///< Timer on or off
-    WebServer.setArgString(getName(F("L1T"),true), Lt1->getTimerOnOffText(true));         ///< Timer on or off
+    WebServer.setArgString(getName(F("L1S"), true), Lt1->getStateText());                  ///< State
+    WebServer.setArgString(getName(F("L1Br"), true), Lt1->getCurrentBrightnessText(true)); ///< Timer on or off
+    WebServer.setArgString(getName(F("L1T"), true), Lt1->getTimerOnOffText(true));         ///< Timer on or off
     //Light2
-    WebServer.setArgString(getName(F("L2S"),true), Lt2->getStateText());                  ///< State
-    WebServer.setArgString(getName(F("L2Br"),true), Lt2->getCurrentBrightnessText(true)); ///< Timer on or off
-    WebServer.setArgString(getName(F("L2T"),true), Lt2->getTimerOnOffText(true));         ///< Timer on or off
+    WebServer.setArgString(getName(F("L2S"), true), Lt2->getStateText());                  ///< State
+    WebServer.setArgString(getName(F("L2Br"), true), Lt2->getCurrentBrightnessText(true)); ///< Timer on or off
+    WebServer.setArgString(getName(F("L2T"), true), Lt2->getTimerOnOffText(true));         ///< Timer on or off
     //LightSensor1
-    WebServer.setArgString(getName(F("LSD"),true), LtSen1->getDarkText(true));
-    WebServer.setArgString(getName(F("LSR"),true), LtSen1->getReadingText(true));
+    WebServer.setArgString(getName(F("LSD"), true), LtSen1->getDarkText(true));
+    WebServer.setArgString(getName(F("LSR"), true), LtSen1->getReadingText(true));
     //PowerSensor
-    WebServer.setArgString(getName(F("PP"),true), Pow1->getPowerText(true));
-    WebServer.setArgString(getName(F("PE"),true), Pow1->getEnergyText(true));
-    WebServer.setArgString(getName(F("PV"),true), Pow1->getVoltageText(true));
-    WebServer.setArgString(getName(F("PC"),true), Pow1->getCurrentText(true));
+    WebServer.setArgString(getName(F("PP"), true), Pow1->getPowerText(true));
+    WebServer.setArgString(getName(F("PE"), true), Pow1->getEnergyText(true));
+    WebServer.setArgString(getName(F("PV"), true), Pow1->getVoltageText(true));
+    WebServer.setArgString(getName(F("PC"), true), Pow1->getCurrentText(true));
     //PowerSensor V3
     //WebServer.setArgString(getName(F("PF"),true), Pow1 -> getFrequencyText(true));
     //WebServer.setArgString(getName(F("PPF"),true), Pow1 -> getPowerFactorText());
-  }
+  */
 }
 
 /**
@@ -165,6 +131,7 @@ bool MainModule::commandEvent(char *Command, char *Data)
   }
   else
   {
+    /*
     //Air pump
     if (strcmp_P(ShortMessage, (PGM_P)F("AP")) == 0)
     {
@@ -339,41 +306,19 @@ bool MainModule::commandEvent(char *Command, char *Data)
     {
       return false;
     }
+    */
     return true;
   }
 }
 
 void MainModule::refresh_FiveSec()
 {
-  Common::refresh_FiveSec();
-  reportToSerialTrigger();
-  reportToMQTTTrigger();
-  if (RefreshAllRequested)
-  {
-    RefreshAllRequested = false;
-    runAll();
-  }
-  if (ReportToGoogleSheetsRequested)
-  {
-    ReportToGoogleSheetsRequested = false;
-    reportToGoogleSheetsTrigger(true);
-  }
-  if (ConsoleReportRequested)
-  {
-    ConsoleReportRequested = false;
-    runReport();
-  }
-  if (MQTTReportRequested)
-  {
-    MQTTReportRequested = false;
-    reportToMQTTTrigger(true);
-  }
+  Module_Web::refresh_FiveSec();  
 }
 
 void MainModule::refresh_Minute()
 {
-  Common::refresh_Minute();
-  reportToGoogleSheetsTrigger();
+  Module_Web::refresh_Minute();
 }
 
 bool MainModule::getDayMode()

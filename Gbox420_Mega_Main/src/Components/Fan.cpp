@@ -81,7 +81,7 @@ void Fan::SetHighSpeed()
   Parent->getSoundObject()->playOnSound();
 }
 
-uint8_t *Fan::fanSpeed()
+uint8_t Fan::fanSpeed()
 {
   if (!*State)
     return 0;

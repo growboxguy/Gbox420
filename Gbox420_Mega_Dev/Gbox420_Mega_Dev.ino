@@ -336,6 +336,60 @@ void fieldCallback(char *Field)
   saveSettings(ModuleSettings);
 }
 
+
+/**
+  \brief Called when the /Settings.html website is loading on the ESP-link webserver
+*/
+void settingsLoadCallback(__attribute__((unused)) char *Url)
+{
+  DevModule_Web1->settingsEvent_Load(Url); //Runs through all components that are subscribed to this event
+}
+
+/**
+  \brief Called when the /Settings.html website is refreshing on the ESP-link webserver
+*/
+void settingsRefreshCallback(__attribute__((unused)) char *Url)
+{
+  DevModule_Web1->settingsEvent_Refresh(Url);
+}
+
+/**
+  \brief Called when a button is pressed on the /Settings.html web page.
+  \param Button - ID of the button HTML element
+*/
+void settingsButtonCallback(char *Button)
+{
+  if (*Debug)
+  {
+    logToSerials(F("Settings button:"), false, 0);
+    logToSerials(&Button, true, 1);
+  }
+  if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
+  {
+    restoreDefaults();
+  }
+  else
+  {
+    DevModule_Web1->settingsEvent_Command(Button, NULL);
+  }
+  saveSettings(ModuleSettings);
+}
+
+/**
+  \brief Called when a field on the /Settings.html website is submitted
+  \param Field - Name of the input HTML element
+*/
+void settingsFieldCallback(char *Field)
+{
+  if (*Debug)
+  {
+    logToSerials(F("Settings field:"), false, 0);
+    logToSerials(&Field, true, 1);
+  }
+  DevModule_Web1->settingsEvent_Command(Field, WebServer.getArgString());
+  saveSettings(ModuleSettings);
+}
+
 /**
   \brief Prints the nRF24L01+ wireless transceiver's status to the Serial log
 */

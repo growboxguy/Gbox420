@@ -11,7 +11,7 @@ struct HempyCommonTemplate HempyResetToSend = {HempyMessages::HempyReset};      
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings and subscribes to events
 */
-HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common_Web(Name), Common(Name)
+HempyModule_Web::HempyModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::HempyModuleSettings *DefaultSettings) : Common(Name), Common_Web(Name)
 { ///< Constructor
   this->Parent = Parent;
   this->DefaultSettings = DefaultSettings;
@@ -88,8 +88,6 @@ void HempyModule_Web::report(bool FriendlyFormat)
 
 void HempyModule_Web::websiteEvent_Load(char *url)
 {
-  if (strncmp(url, "/G", 2) == 0)
-  {
     WebServer.setArgString(getName(F("B1ET"),true), toText(HempyBucketCommand1ToSend.EvaporationTarget));
     WebServer.setArgString(getName(F("B1OF"),true), toText(HempyBucketCommand1ToSend.OverflowTarget));
     WebServer.setArgString(getName(F("B1WL"),true), toText(HempyBucketCommand1ToSend.WasteLimit));
@@ -104,13 +102,10 @@ void HempyModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgInt(getName(F("B2T"),true), HempyBucketCommand2ToSend.PumpTimeOut);
     WebServer.setArgInt(getName(F("B2D"),true), HempyBucketCommand2ToSend.DrainWaitTime);
     WebServer.setArgString(getName(F("B2DW"),true), toText(HempyBucketResponse2Received.DryWeight));
-  }
 }
 
 void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
-  if (strncmp(url, "/G", 2) == 0)
-  {
     WebServer.setArgString(getName(F("S"),true), toText_onlineStatus(OnlineStatus));
     WebServer.setArgString(getName(F("B1W"),true), toText_weight(HempyBucketResponse1Received.WeightB));
     WebServer.setArgString(getName(F("B1WR"),true), toText_weight(HempyBucketResponse1Received.WeightWR));
@@ -122,7 +117,6 @@ void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) //
     WebServer.setArgString(getName(F("B2DWW"),true), toText(HempyBucketResponse2Received.DryWeight, "/", HempyBucketResponse2Received.WetWeight));
     WebServer.setArgString(getName(F("B2S"),true), toText_hempyState(HempyBucketResponse2Received.HempyState));
     WebServer.setArgString(getName(F("B2P"),true), toText_waterPumpState(HempyBucketResponse2Received.PumpState));
-  }
 }
 
 bool HempyModule_Web::commandEvent(char *Command, char *Data)

@@ -75,206 +75,33 @@ void DEVModule_Web::reportToJSON()
 
 void DEVModule_Web::websiteEvent_Load(char *url)
 {
-  if (strncmp(url, "/S", 2) == 0)
-  {
-    WebServer.setArgInt(getName(F("Debug")), *Debug);
-    WebServer.setArgInt(getName(F("Metric")), *Metric);
-    WebServer.setArgBoolean(getName(F("Sheets")), *ReportToGoogleSheets);
-    WebServer.setArgInt(getName(F("SheetsF")), *SheetsReportingFrequency);
-    WebServer.setArgString(getName(F("Relay")), ModuleSettings->PushingBoxLogRelayID);
-  }
+  ;
 }
 
 void DEVModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
 {
   WebServer.setArgString(F("Time"), getFormattedTime(false));
-  WebServer.setArgJson(F("Log"), eventLogToJSON(false,true)); ///< Last events that happened in JSON format
+  WebServer.setArgJson(F("Log"), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 }
 
-void DEVModule_Web::websiteEvent_Button(char *Button)
+void DEVModule_Web::commandEvent(char *Button)
 { ///< When a button is pressed on the website
   if (!isThisMine(Button))
   {
-    return;
+    return false;
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("SheetsRep")) == 0)
-    {
-      ReportToGoogleSheetsRequested = true; ///< just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
-      addToLog(F("Reporting to Sheets"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SerialRep")) == 0)
-    {
-      ConsoleReportRequested = true;
-      addToLog(F("Reporting to Serial"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Refresh")) == 0) ///< Website signals to refresh all sensor readings
-    {
-      RefreshAllRequested = true;
-      addToLog(F("Refresh triggered"), false);
-    }
-  }
-}
-
-void DEVModule_Web::websiteEvent_Field(char *Field)
-{ ///< When the website field is submitted
-  if (!isThisMine(Field))
-  {
-    return;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("Debug")) == 0)
-    {
-      setDebug(WebServer.getArgBoolean());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Metric")) == 0)
-    {
-      setMetric(WebServer.getArgBoolean());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Sheets")) == 0)
-    {
-      setSheetsReportingOnOff(WebServer.getArgBoolean());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("SheetsF")) == 0)
-    {
-      setSheetsReportingFrequency(WebServer.getArgInt());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("PushingBoxLogRelayID")) == 0)
-    {
-      setPushingBoxLogRelayID(WebServer.getArgString());
-    }
+    return true;
   }
 }
 
 void DEVModule_Web::refresh_FiveSec()
 {
-  if (*Debug)
-  {
-    Common::refresh_FiveSec();
-    reportToSerialTrigger();
-  }
-  if (RefreshAllRequested)
-  {
-    RefreshAllRequested = false;
-    runAll();
-  }
-  if (ReportToGoogleSheetsRequested)
-  {
-    ReportToGoogleSheetsRequested = false;
-    reportToGoogleSheetsTrigger(true);
-  }
-  if (ConsoleReportRequested)
-  {
-    ConsoleReportRequested = false;
-    runReport();
-  }
+  Module_Web::refresh_FiveSec();
 }
 
 void DEVModule_Web::refresh_Minute()
 {
-Common::refresh_Minute();
-  reportToGoogleSheetsTrigger();
+  Module_Web::refresh_Minute()
 }
-
-///< Settings
-void DEVModule_Web::setDebug(bool DebugEnabled)
-{
-  *Debug = DebugEnabled;
-  if (*Debug)
-  {
-    addToLog(F("Debug enabled"));
-    getSoundObject()->playOnSound();
-  }
-  else
-  {
-    addToLog(F("Debug disabled"));
-    getSoundObject()->playOffSound();
-  }
-}
-
-void DEVModule_Web::setMetric(bool MetricEnabled)
-{
-  if (MetricEnabled != *Metric)
-  { ///< if there was a change
-    *Metric = MetricEnabled;
-    ///< ModuleSettings -> IFanSwitchTemp = convertBetweenTempUnits(ModuleSettings -> IFanSwitchTemp);
-    Pres1->Pressure->resetAverage();
-    RefreshAllRequested = true;
-  }
-  if (*Metric)
-    addToLog(F("Using Metric units"));
-  else
-    addToLog(F("Using Imperial units"));
-  getSoundObject()->playOnSound();
-}
-
-///< Google Sheets reporting
-
-void DEVModule_Web::setSheetsReportingOnOff(bool State)
-{
-  *ReportToGoogleSheets = State;
-  if (State)
-  {
-    addToLog(F("Google Sheets enabled"));
-    getSoundObject()->playOnSound();
-  }
-  else
-  {
-    addToLog(F("Google Sheets disabled"));
-    getSoundObject()->playOffSound();
-  }
-}
-
-void DEVModule_Web::setSheetsReportingFrequency(uint16_t Frequency)
-{
-  *SheetsReportingFrequency = Frequency;
-  addToLog(F("Reporting freqency updated"));
-  getSoundObject()->playOnSound();
-}
-
-void DEVModule_Web::reportToGoogleSheetsTrigger(bool ForceRun)
-{ ///< Handles custom reporting frequency for Google Sheets, called every 15 minutes
-  if (SheetsRefreshCounter == 96)
-    SheetsRefreshCounter = 0; ///< Reset the counter after one day (15 x 96 = 1440 = 24 hours)
-  if (SheetsRefreshCounter++ % (*SheetsReportingFrequency / 15) == 0 || ForceRun)
-  {
-    addPushingBoxLogRelayID();                     ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("{\"Log\":{")); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-    for (int i = 0; i < reportQueueItemCount;)
-    {
-      ReportQueue[i++]->SerialReportJSON();
-      if (i != reportQueueItemCount)
-        strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
-    }
-    strcat_P(LongMessage, (PGM_P)F("}}")); ///< closing both curly bracket
-    relayToGoogleSheets(&LongMessage);
-  }
-}
-
-void DEVModule_Web::setPushingBoxLogRelayID(const char *ID)
-{
-  strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
-  addToLog(F("Sheets log relay ID updated"));
-}
-
-/*
-void DEVModule_Web::relayToGoogleSheets(const __FlashStringHelper *Title, char (*JSONData)[MaxLongTextLength])
-{
-  char ValueToReport[MaxLongTextLength] = "";
-  strcat_P(ValueToReport, (PGM_P)F("/pushingbox?devid="));
-  strcat(ValueToReport, ModuleSettings -> PushingBoxLogRelayID);
-  strcat_P(ValueToReport, (PGM_P)F("&BoxData={\""));
-  strcat_P(ValueToReport, (PGM_P)Title);
-  strcat_P(ValueToReport, (PGM_P)F("\":"));
-  strcat(ValueToReport, *JSONData);
-  strcat_P(ValueToReport, (PGM_P)F("}"));
-  if (*Debug)
-  { ///< print the report command to console
-    logToSerials(F("api.pushingbox.com"), false, 4);
-    logToSerials(&ValueToReport, true, 0);
-  }
-  PushingBoxRestAPI.get(ValueToReport); ///< PushingBoxRestAPI will append http:///< api.pushingbox.com/ in front of the command
-}
-*/

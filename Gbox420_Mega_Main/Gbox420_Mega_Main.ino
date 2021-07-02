@@ -179,21 +179,16 @@ void resetWebServer()
   else
     logToSerials(F("PushingBox RestAPI failed"), true, 2); ///< If begin returns a negative number the initialization failed
   WebServer.setup();
-  URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json");   ///< setup handling request from GrowBox.html
+  URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json");       ///< setup handling request from GrowBox.html
+  GrowBoxHandler->loadCb.attach(&loadCallback);                                      ///< GrowBox tab - Called then the website loads initially
+  GrowBoxHandler->refreshCb.attach(&refreshCallback);                                ///< GrowBox tab - Called periodically to refresh website content
+  GrowBoxHandler->buttonCb.attach(&buttonCallback);                                  ///< GrowBox tab - Called when a button is pressed on the website
+  GrowBoxHandler->setFieldCb.attach(&fieldCallback);                                 ///< GrowBox tab - Called when a field is changed on the website
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); ///< setup handling request from Settings.html
-  //URLHandler *TestHandler = WebServer.createURLHandler("/Test.html.json");         ///< setup handling request from Test.html
-  GrowBoxHandler->loadCb.attach(&loadCallback);        ///< GrowBox tab - Called then the website loads initially
-  GrowBoxHandler->refreshCb.attach(&refreshCallback);  ///< GrowBox tab - Called periodically to refresh website content
-  GrowBoxHandler->buttonCb.attach(&buttonCallback);    ///< GrowBox tab - Called when a button is pressed on the website
-  GrowBoxHandler->setFieldCb.attach(&fieldCallback);   ///< GrowBox tab - Called when a field is changed on the website
-  SettingsHandler->loadCb.attach(&loadCallback);       ///< Settings tab - Called then the website loads initially
-  SettingsHandler->refreshCb.attach(&refreshCallback); ///< Settings tab - Called periodically to refresh website content
-  SettingsHandler->buttonCb.attach(&buttonCallback);   ///< Settings tab - Called when a button is pressed on the website
-  SettingsHandler->setFieldCb.attach(&fieldCallback);  ///< Settings tab - Called when a field is changed on the website
-  //TestHandler->loadCb.attach(&loadCallback);                                       ///< Test tab - Called then the website loads initially
-  //TestHandler->refreshCb.attach(&refreshCallback);                                 ///< Test tab - Called periodically to refresh website content
-  //TestHandler->buttonCb.attach(&buttonCallback);                              ///< Test tab - Called when a button is pressed on the website
-  //TestHandler->setFieldCb.attach(&fieldCallback);                               ///< Test tab - Called when a field is changed on the website
+  SettingsHandler->loadCb.attach(&settingsLoadCallback);                           ///< Settings tab - Called then the website loads initially
+  SettingsHandler->refreshCb.attach(&settingsRefreshCallback);                     ///< Settings tab - Called periodically to refresh website content
+  SettingsHandler->buttonCb.attach(&settingsButtonCallback);                       ///< Settings tab - Called when a button is pressed on the website
+  SettingsHandler->setFieldCb.attach(&settingsFieldCallback);                      ///< Settings tab - Called when a field is changed on the website
   logToSerials(F("ESP-link ready"), true, 1);
 }
 
@@ -214,20 +209,20 @@ void setupMqtt()
   MqttAPI.setup();
 }
 
-void mqttConnected(void *response)
+void mqttConnected( __attribute__((unused)) void *response)
 {
   MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
   MqttConnected = true;
   //if(*Debug) logToSerials(F("MQTT connected"), true);
 }
 
-void mqttDisconnected(void *response)
+void mqttDisconnected( __attribute__((unused)) void *response)
 {
   //if(*Debug) logToSerials(F("MQTT disconnected"), true);
   MqttConnected = false;
 }
 
-void mqttPublished(void *response)
+void mqttPublished( __attribute__((unused)) void *response)
 {
   //if(*Debug) logToSerials(F("MQTT published"), true);
 }
@@ -333,6 +328,60 @@ void fieldCallback(char *Field)
     logToSerials(F("ESP field:"), false, 0);
   }
   Main1->commandEventTrigger(Field, WebServer.getArgString());
+  saveSettings(ModuleSettings);
+}
+
+
+/**
+  \brief Called when the /Settings.html website is loading on the ESP-link webserver
+*/
+void settingsLoadCallback(__attribute__((unused)) char *Url)
+{
+  Main1->settingsEvent_Load(Url); //Runs through all components that are subscribed to this event
+}
+
+/**
+  \brief Called when the /Settings.html website is refreshing on the ESP-link webserver
+*/
+void settingsRefreshCallback(__attribute__((unused)) char *Url)
+{
+  Main1->settingsEvent_Refresh(Url);
+}
+
+/**
+  \brief Called when a button is pressed on the /Settings.html web page.
+  \param Button - ID of the button HTML element
+*/
+void settingsButtonCallback(char *Button)
+{
+  if (*Debug)
+  {
+    logToSerials(F("Settings button:"), false, 0);
+    logToSerials(&Button, true, 1);
+  }
+  if (strcmp_P(Button, (PGM_P)F("RestoreDef")) == 0)
+  {
+    restoreDefaults();
+  }
+  else
+  {
+    Main1->settingsEvent_Command(Button, NULL);
+  }
+  saveSettings(ModuleSettings);
+}
+
+/**
+  \brief Called when a field on the /Settings.html website is submitted
+  \param Field - Name of the input HTML element
+*/
+void settingsFieldCallback(char *Field)
+{
+  if (*Debug)
+  {
+    logToSerials(F("Settings field:"), false, 0);
+    logToSerials(&Field, true, 1);
+  }
+  Main1->settingsEvent_Command(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
 }
 

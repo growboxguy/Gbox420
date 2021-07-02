@@ -11,8 +11,8 @@ public:
   Fan(const __FlashStringHelper *Name, Module *Parent, Settings::FanSettings *DefaultSettings);
   void refresh_Minute();
   void report(bool FriendlyFormat = false);
+  uint8_t fanSpeed();
   char *fanSpeedText(bool FriendlyFormat = false);
-  uint8_t *fanSpeed();
   void TurnOff();
   void SetLowSpeed();
   void SetHighSpeed();
