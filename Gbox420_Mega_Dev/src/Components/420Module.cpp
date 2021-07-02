@@ -27,7 +27,7 @@ void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuf
 { ///< Handles custom reporting frequency for Serial
   if ((SerialTriggerCounter++ % (*SerialReportFrequency / 5) == 0) || ForceRun)
   {
-    runReport(ClearBuffer, KeepBuffer, JSONToBufferOnly);
+    runReport(ForceRun, ClearBuffer, KeepBuffer, JSONToBufferOnly);
   }
 }
 
@@ -45,18 +45,18 @@ void Module::setSerialReportingFrequency(uint16_t Frequency)
 * @param[ClearBuffer] true: Flush the LongMessage buffer before starting to report
 * @param[KeepBuffer] true: Stores the full JSON report in the LongMessage buffer - Only use this on the Mega2560 where LongMessage is large enough to store a complete report (Can be up to 1024kB)
 */
-void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
+void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
-  if (*SerialReportDate && !JSONToBufferOnly)
+  if ((*SerialReportDate || ForceRun) && !JSONToBufferOnly)
   {
     getFormattedTime(true);
   }
-  if (*SerialReportMemory && !JSONToBufferOnly)
+  if ((*SerialReportMemory || ForceRun) && !JSONToBufferOnly)
   {
     getFreeMemory();
   }
   /*
-  if (*SerialReportJSONFriendly && !JSONToBufferOnly)
+  if ((*SerialReportJSONFriendly  || ForceRun) && !JSONToBufferOnly)
   {
     logToSerials(reportQueueItemCount, false, 0); ///< Prints the number of items that will report
     logToSerials(F("reporting:"), true, 1);
@@ -66,7 +66,7 @@ void Module::runReport(bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
     }
   }
   */
-  if (*SerialReportJSON || JSONToBufferOnly)
+  if (*SerialReportJSON  || ForceRun || JSONToBufferOnly)
   {
     if (ClearBuffer)
     {
