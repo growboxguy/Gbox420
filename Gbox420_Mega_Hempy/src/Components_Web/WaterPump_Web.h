@@ -10,8 +10,8 @@ class WaterPump_Web : public Common_Web, public WaterPump
 {
 public:
   WaterPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WaterPumpSettings *DefaultSettings);
-  void websiteEvent_Load(__attribute__((unused)) char *url);
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Load(__attribute__((unused)) char *Url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
 
 private:

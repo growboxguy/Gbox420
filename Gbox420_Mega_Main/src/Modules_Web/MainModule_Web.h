@@ -45,8 +45,8 @@ public:
   AeroModule_Web *AeroModule1 = NULL;           ///< <Represents the website controls and feedback for a AeroModule
   ReservoirModule_Web *ReservoirModule1 = NULL; ///< <Represents the website controls and feedback for a ReservoirModule
   HempyModule_Web *HempyModule1 = NULL;         ///< <Represents the website controls and feedback for a HempyModule
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
+  void websiteEvent_Load(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report(bool FriendlyFormat = false);
   void refresh_FiveSec();

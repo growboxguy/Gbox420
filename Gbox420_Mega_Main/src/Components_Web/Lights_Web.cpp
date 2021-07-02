@@ -8,7 +8,7 @@ Lights_Web::Lights_Web(const __FlashStringHelper *Name, Module_Web *Parent, Sett
   Parent->addToCommandQueue(this);
 }
 
-void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
+void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
   WebServer.setArgInt(getName(F("OnH"), true), *OnHour);    ///< On hour
   WebServer.setArgInt(getName(F("OnM"), true), *OnMinute);  ///< On minute
@@ -21,7 +21,7 @@ void Lights_Web::websiteEvent_Load(__attribute__((unused)) char *url)
   // WebServer.setArgInt(getName(F("DD"),true), *DimmingDuration); ///< Fade step interval (sec)
 }
 
-void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void Lights_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("S"), true), getStateText());                  ///< State
   WebServer.setArgString(getName(F("Br"), true), getCurrentBrightnessText(true)); ///< Timer on or off

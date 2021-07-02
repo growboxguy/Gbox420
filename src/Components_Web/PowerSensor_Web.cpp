@@ -6,7 +6,7 @@ PowerSensor_Web::PowerSensor_Web(const __FlashStringHelper *Name, Module_Web *Pa
   Parent->addToWebsiteQueue_Refresh(this);
 }
 
-void PowerSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void PowerSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("P")), getPowerText(true));
   WebServer.setArgString(getName(F("E")), getEnergyText(true));

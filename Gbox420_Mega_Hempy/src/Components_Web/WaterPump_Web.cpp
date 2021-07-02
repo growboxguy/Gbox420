@@ -8,13 +8,13 @@ WaterPump_Web::WaterPump_Web(const __FlashStringHelper *Name, Module_Web *Parent
   Parent->addToCommandQueue(this);
 }
 
-void WaterPump_Web::websiteEvent_Load(__attribute__((unused)) char *url)
+void WaterPump_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
   WebServer.setArgInt(getName(F("PS"), true), getSpeed());
   WebServer.setArgInt(getName(F("T"), true), getTimeOut());
 }
 
-void WaterPump_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void WaterPump_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("S"), true), getStateText(true));
 }

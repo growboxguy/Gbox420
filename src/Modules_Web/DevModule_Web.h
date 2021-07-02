@@ -22,8 +22,8 @@ public:
   DevModule_Web(const __FlashStringHelper *Name, Settings::DevModule_WebSettings *DefaultSettings, RF24 *Wireless); ///< constructor
   Sound_Web *Sound1;                                                                                                ///< Pointer to a Piezo speaker - sound feedback
   DHTSensor_Web *DHT1;                                                                                              ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
-  void websiteEvent_Load(char *url);
-  void websiteEvent_Refresh(char *url);
+  void websiteEvent_Load(char *Url);
+  void websiteEvent_Refresh(char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report(bool FriendlyFormat = false);
   void refresh_FiveSec();

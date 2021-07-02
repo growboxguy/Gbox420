@@ -10,7 +10,7 @@ class PressureSensor_Web : public PressureSensor, public Common_Web
 {
 public:
   PressureSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::PressureSensorSettings *DefaultSettings);
-  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Load(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
 
 private:

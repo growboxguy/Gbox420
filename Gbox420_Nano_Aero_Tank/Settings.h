@@ -44,7 +44,7 @@ typedef struct
   //<initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct AeroponicsModuleSettings
   {
-    AeroponicsModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSONFriendly = true, bool SerialReportJSON = true, bool SerialReportWireless = true) : SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportJSON(SerialReportJSON), SerialReportWireless(SerialReportWireless) {}
+    AeroponicsModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSONFriendly = true, bool SerialReportJSON = true, bool SerialReportWireless = true) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportJSON(SerialReportJSON), SerialReportWireless(SerialReportWireless) {}
     uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)    
     bool SerialReportDate;   ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
@@ -89,7 +89,7 @@ typedef struct
 
   struct PressurePumpSettings ///< PressurePump default settings
   {
-    PressurePumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, uint16_t BypassSolenoidMaxOpenTime = 0, uint16_t BypassSolenoidClosingDelay = 0, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, uint16_t BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidMaxOpenTime(BypassSolenoidMaxOpenTime), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), BypassSolenoidClosingDelay(BypassSolenoidClosingDelay), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime) {}
+    PressurePumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, uint8_t BypassSolenoidPin = 0, bool BypassSolenoidNegativeLogic = false, uint16_t BypassSolenoidMaxOpenTime = 0, uint16_t BypassSolenoidClosingDelay = 0, bool PumpEnabled = false, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0, uint16_t PumpTimeOut = 0, uint16_t PrimingTime = 0, uint16_t BlowOffTime = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), BypassSolenoidPin(BypassSolenoidPin), BypassSolenoidNegativeLogic(BypassSolenoidNegativeLogic), BypassSolenoidMaxOpenTime(BypassSolenoidMaxOpenTime), BypassSolenoidClosingDelay(BypassSolenoidClosingDelay), PumpEnabled(PumpEnabled), Speed(Speed), SpeedLowLimit(SpeedLowLimit), PumpTimeOut(PumpTimeOut), PrimingTime(PrimingTime), BlowOffTime(BlowOffTime) {}
     uint8_t PumpPin;                     ///< Pump relay pin
     bool PumpPinNegativeLogic;           ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     uint8_t BypassSolenoidPin;           ///< Bypass solenoid relay pin

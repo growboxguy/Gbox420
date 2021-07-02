@@ -81,7 +81,6 @@ void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *Url) /
 */
 bool Hempy_Standalone::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
-  /*
   if (!isThisMine(Command))
   {
     return false;
@@ -90,7 +89,6 @@ bool Hempy_Standalone::commandEvent(__attribute__((unused)) char *Command, __att
   {    
     return true; //Match found
   }
-  */
 }
 
 void Hempy_Standalone::refresh_FiveSec()

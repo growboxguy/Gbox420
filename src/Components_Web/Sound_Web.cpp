@@ -17,7 +17,7 @@ void Sound_Web::refresh_Sec()
   }  
 }
 
-void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *url)
+void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {  
   WebServer.setArgBoolean(getName(F("E"), true), *Enabled);
 }

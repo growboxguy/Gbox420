@@ -7,7 +7,7 @@ LightSensor_Web::LightSensor_Web(const __FlashStringHelper *Name, Module_Web *Pa
   Parent->addToCommandQueue(this);
 }
 
-void LightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void LightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("D"),true), getDarkText(true));
   WebServer.setArgString(getName(F("R"),true), getReadingText(true));

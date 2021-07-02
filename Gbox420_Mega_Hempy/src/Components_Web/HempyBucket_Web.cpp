@@ -8,7 +8,7 @@ HempyBucket_Web::HempyBucket_Web(const __FlashStringHelper *Name, Module_Web *Pa
   Parent->addToCommandQueue(this);
 }
 
-void HempyBucket_Web::websiteEvent_Load(__attribute__((unused)) char *url)
+void HempyBucket_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("ET"), true), getEvaporationTargetText());
   WebServer.setArgString(getName(F("OF"), true), getOverflowTargetText());
@@ -19,7 +19,7 @@ void HempyBucket_Web::websiteEvent_Load(__attribute__((unused)) char *url)
   //WebServer.setArgInt(getName(F("T"),true), HempyBucketCommand1ToSend.PumpTimeOut);
 }
 
-void HempyBucket_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void HempyBucket_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   //WebServer.setArgFloat(getName(F("W"),true), BucketWeightSensor->getWeightText());
   //WebServer.setArgString(getName(F("W"),true), toText_weight(HempyBucketResponse1Received.WeightB));

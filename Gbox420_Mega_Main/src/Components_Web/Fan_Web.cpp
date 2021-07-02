@@ -7,7 +7,7 @@ Fan_Web::Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::
   Parent->addToCommandQueue(this);
 }
 
-void Fan_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void Fan_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("S"),true), fanSpeedText(true));
 }

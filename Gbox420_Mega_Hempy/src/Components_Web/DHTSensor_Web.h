@@ -11,7 +11,7 @@ class DHTSensor_Web : public Common_Web, public DHTSensor
 {
 public:
   DHTSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::DHTSensorSettings *DefaultSettings);
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
 
 private:
 protected:

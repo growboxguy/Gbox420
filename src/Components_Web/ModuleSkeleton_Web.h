@@ -12,8 +12,8 @@ class ModuleSkeleton_Web : virtual public ModuleSkeleton, virtual public Common_
 {
 public:
   ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::ModuleSkeletonSettings *DefaultSettings); ///< constructor
-  void websiteEvent_Load(__attribute__((unused)) char *url);
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Load(__attribute__((unused)) char *Url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
 
 private:

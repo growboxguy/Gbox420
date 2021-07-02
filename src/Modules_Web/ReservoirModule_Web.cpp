@@ -46,7 +46,7 @@ void ReservoirModule_Web::report(bool FriendlyFormat)
     strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
-void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
+void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
     WebServer.setArgString(getName(F("S"),true), toText_onlineStatus(OnlineStatus));
     WebServer.setArgString(getName(F("PH"),true), toText(ReservoirResponse1Received.PH));

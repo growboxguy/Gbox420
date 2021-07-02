@@ -6,25 +6,20 @@ DistanceSensor_Web::DistanceSensor_Web(const __FlashStringHelper *Name, Module_W
   Parent->addToWebsiteQueue_Refresh(this);
 }
 
-void DistanceSensor_Web::reportToJSON()
-{
-  Common_Web::reportToJSON();             ///< Adds a curly bracket {  that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
-}
-
-void DistanceSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void DistanceSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {                                                                   ///< When the website is refreshing
-  WebServer.setArgString(getName(F("Dis")), getDistanceText(true)); ///< Distance reading
+  WebServer.setArgString(getName(F("D"),true), getDistanceText(true)); ///< Distance reading
 }
 
-void DistanceSensor_Web::websiteEvent_Button(char *Button)
+void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
-  if (!isThisMine(Button))
+  if (!isThisMine(Command))
   {
-    return;
+    return false;
   }
   else
   {
+    return true;
     //if (strcmp_P(ShortMessage, (PGM_P)F("Emp")) == 0){setEmptyDistance();}    ///< Read the distance when the reservoir is empty
   }
 }

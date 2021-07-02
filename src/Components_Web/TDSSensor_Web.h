@@ -11,8 +11,7 @@ class TDSSensor_Web : public TDSSensor, public Common_Web
 {
 public:
   TDSSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::TDSSensorSettings *DefaultSettings, WaterTempSensor *WaterTempSensor1);
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
+  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
 
 private:
 protected:

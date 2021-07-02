@@ -77,7 +77,7 @@ void AeroModule_Web::report(bool FriendlyFormat)
 /**
 * @brief Set values on the ESP-link website when it loads
 */
-void AeroModule_Web::websiteEvent_Load(char *url)
+void AeroModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
     WebServer.setArgBoolean(getName(F("Tank"),true), AeroResponse1Received.PressureTankPresent);
     WebServer.setArgString(getName(F("Dur"),true), toText(AeroCommand1ToSend.Duration));
@@ -93,7 +93,7 @@ void AeroModule_Web::websiteEvent_Load(char *url)
 /**
 * @brief Set values on the ESP-link website when it refreshes
 */
-void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
+void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
     WebServer.setArgString(getName(F("S"),true), toText_onlineStatus(OnlineStatus));
     if (AeroResponse1Received.PressureTankPresent)
@@ -115,7 +115,7 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///
 /**
 * @brief Process commands received from MQTT subscription or from the ESP-link website
 */
-bool AeroModule_Web::commandEvent(char *Command, char *Data)
+bool AeroModule_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 { ///< When a button is pressed on the website
   if (!isThisMine(Command))
   {

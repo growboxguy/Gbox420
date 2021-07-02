@@ -8,7 +8,7 @@ Aeroponics_Tank_Web::Aeroponics_Tank_Web(const __FlashStringHelper *Name, Module
   Parent->addToCommandQueue(this);
 }
 
-void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
+void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
   WebServer.setArgFloat(getName(F("PresMin")), *MinPressure);
   WebServer.setArgFloat(getName(F("PresMax")), *MaxPressure);
@@ -18,7 +18,7 @@ void Aeroponics_Tank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
   WebServer.setArgFloat(getName(F("Dur")), *Duration);
 }
 
-void Aeroponics_Tank_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void Aeroponics_Tank_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("Pres")), FeedbackPressureSensor->getPressureText(false, true));
   WebServer.setArgString(getName(F("Spray")), sprayStateToText());

@@ -5,7 +5,7 @@
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings, creates components that the instance controls, and subscribes to events
 */
-DevModule_Web::DevModule_Web(const __FlashStringHelper *Name, Settings::DevModule_WebSettings *DefaultSettings, RF24 *Wireless) : Module_Web(Name), Module(Name), Common_Web(Name), Common(Name)
+DevModule_Web::DevModule_Web(const __FlashStringHelper *Name, Settings::DevModule_WebSettings *DefaultSettings, RF24 *Wireless) : Common(Name), Common_Web(Name), Module(Name), Module_Web(Name)
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
@@ -47,12 +47,12 @@ void DevModule_Web::report(bool FriendlyFormat)
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
-void DevModule_Web::websiteEvent_Load(char *url)
+void DevModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
  ;
 }
 
-void DevModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
+void DevModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
   WebServer.setArgString(getName(F("Time")), getFormattedTime(false));
   WebServer.setArgJson(getName(F("Log")), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
@@ -61,9 +61,8 @@ void DevModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///<
 /**
 * @brief Process commands received from MQTT subscription or from the ESP-link website
 */
-bool DevModule_Web::commandEvent(char *Command, char *Data)
+bool DevModule_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
-  /*
   if (!isThisMine(Command))
   {
     return false;
@@ -72,7 +71,6 @@ bool DevModule_Web::commandEvent(char *Command, char *Data)
   {    
     return true; //Match found
   }
-  */
 }
 
 void DevModule_Web::refresh_FiveSec()

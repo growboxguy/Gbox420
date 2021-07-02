@@ -6,7 +6,7 @@ WaterLevelSensor_Web::WaterLevelSensor_Web(const __FlashStringHelper *Name, Modu
   Parent->addToWebsiteQueue_Refresh(this);
 }
 
-void WaterLevelSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void WaterLevelSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("Level")), getLevelGauge());
 }

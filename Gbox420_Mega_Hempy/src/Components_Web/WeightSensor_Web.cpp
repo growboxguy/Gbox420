@@ -7,7 +7,7 @@ WeightSensor_Web::WeightSensor_Web(const __FlashStringHelper *Name, Module_Web *
   Parent->addToCommandQueue(this);
 }
 
-void WeightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void WeightSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("W"), true), getWeightText(false, true));
 }

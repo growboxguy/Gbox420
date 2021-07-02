@@ -7,17 +7,17 @@ PressureSensor_Web::PressureSensor_Web(const __FlashStringHelper *Name, Module_W
   Parent->addToCommandQueue(this);
 }
 
-void PressureSensor_Web::websiteEvent_Load(__attribute__((unused)) char *url)
+void PressureSensor_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgString(getName(F("Offset")), toText_floatDecimals(*Offset));
-  WebServer.setArgString(getName(F("Ratio")), toText_floatDecimals(*Ratio));
+  WebServer.setArgString(getName(F("Offset"),true), toText_floatDecimals(*Offset));
+  WebServer.setArgString(getName(F("Ratio"),true), toText_floatDecimals(*Ratio));
 }
 
-void PressureSensor_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
+bool PressureSensor_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
   if (!isThisMine(Command))
   {
-    return;
+    return false;
   }
   else
   {
@@ -33,5 +33,6 @@ void PressureSensor_Web::commandEvent(__attribute__((unused)) char *Command, __a
     {
       setRatio(WebServer.getArgFloat());
     }
+    return true;
   }
 }

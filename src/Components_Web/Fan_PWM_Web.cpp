@@ -5,15 +5,15 @@ Fan_PWM_Web::Fan_PWM_Web(const __FlashStringHelper *Name, Module_Web *Parent, Se
   this->Parent = Parent;
   Parent->addToCommandQueue(this);
   Parent->addToWebsiteQueue_Load(this);
-  Parent->addToWebsiteQueue_Field(this);
+  Parent->addToCommandQueue(this);
 }
 
-void Fan_PWM_Web::websiteEvent_Load(__attribute__((unused)) char *url)
+void Fan_PWM_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
   WebServer.setArgInt(getName(F("S")), *Speed);
 }
 
-void Fan_PWM_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void Fan_PWM_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("C")), getSpeedText(true, true));
 }

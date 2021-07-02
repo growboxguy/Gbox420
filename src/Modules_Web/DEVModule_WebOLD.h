@@ -65,8 +65,8 @@ public:
   //WeightSensor_Web *Weight2;
   //ModuleSkeleton_Web *ModuleSkeleton1; ///< Only for demonstration purposes
   //ModuleSkeleton_Web *ModuleSkeleton2; ///< Only for demonstration purposes
-  void websiteEvent_Load(char *url);
-  void websiteEvent_Refresh(char *url);
+  void websiteEvent_Load(char *Url);
+  void websiteEvent_Refresh(char *Url);
   void websiteEvent_Button(char *Button);
   void websiteEvent_Field(char *Field);
   void refresh_FiveSec();

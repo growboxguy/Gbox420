@@ -10,7 +10,7 @@ class WaterLevelSensor_Web : public WaterLevelSensor, public Common_Web
 {
 public:
   WaterLevelSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WaterLevelSensorSettings *DefaultSettings); ///< constructor
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
 
 private:
 protected:

@@ -6,7 +6,7 @@ WaterTempSensor_Web::WaterTempSensor_Web(const __FlashStringHelper *Name, Module
   Parent->addToWebsiteQueue_Refresh(this);
 }
 
-void WaterTempSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void WaterTempSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("T")), getTempText(true));
 }

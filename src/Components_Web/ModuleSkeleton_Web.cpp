@@ -11,50 +11,42 @@ ModuleSkeleton_Web::ModuleSkeleton_Web(const __FlashStringHelper *Name, Module_W
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
-  Parent->addToWebsiteQueue_Field(this);
 }
 
-void ModuleSkeleton_Web::reportToJSON()
-{
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
-}
-
-void ModuleSkeleton_Web::websiteEvent_Load(__attribute__((unused)) char *url)
+void ModuleSkeleton_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 { ///< When opening the website
   if (strcmp(url, "/Test.html.json") == 0)
   {
 
-    WebServer.setArgBoolean(getName(F("SetPersBool")), *PersistentBool);
-    WebServer.setArgInt(getName(F("SetPersInt")), *PersistentInt);
-    WebServer.setArgFloat(getName(F("SetPersFloat")), *PersistentFloat);
-    WebServer.setArgBoolean(getName(F("SetRunBool")), RuntimeBool);
+    WebServer.setArgBoolean(getName(F("SetPersBool"),true), *PersistentBool);
+    WebServer.setArgInt(getName(F("SetPersInt"),true), *PersistentInt);
+    WebServer.setArgFloat(getName(F("SetPersFloat"),true), *PersistentFloat);
+    WebServer.setArgBoolean(getName(F("SetRunBool"),true), RuntimeBool);
   }
 }
 
-void ModuleSkeleton_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
+void ModuleSkeleton_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 { ///< When refreshing the website (Automatic, every 5sec)
   if (strcmp(url, "/Test.html.json") == 0)
   {
-    WebServer.setArgBoolean(getName(F("PersistentBool")), *PersistentBool);
-    WebServer.setArgInt(getName(F("PersistentInt")), *PersistentInt);
-    WebServer.setArgFloat(getName(F("PersistentFloat")), *PersistentFloat);
-    WebServer.setArgBoolean(getName(F("RuntimeBool")), RuntimeBool);
-    WebServer.setArgInt(getName(F("RuntimeInt")), RuntimeInt);
-    WebServer.setArgFloat(getName(F("RuntimeFloat")), RuntimeFloat);
-    WebServer.setArgString(getName(F("RuntimeString")), RuntimeString);
-    WebServer.setArgBoolean(getName(F("RuntimeBool")), RuntimeBool);
-    WebServer.setArgInt(getName(F("RollingInt")), RollingInt->getInt(true));
-    WebServer.setArgFloat(getName(F("RollingFloat")), RollingFloat->getFloat(true));
+    WebServer.setArgBoolean(getName(F("PersistentBool"),true), *PersistentBool);
+    WebServer.setArgInt(getName(F("PersistentInt"),true), *PersistentInt);
+    WebServer.setArgFloat(getName(F("PersistentFloat"),true), *PersistentFloat);
+    WebServer.setArgBoolean(getName(F("RuntimeBool"),true), RuntimeBool);
+    WebServer.setArgInt(getName(F("RuntimeInt"),true), RuntimeInt);
+    WebServer.setArgFloat(getName(F("RuntimeFloat"),true), RuntimeFloat);
+    WebServer.setArgString(getName(F("RuntimeString"),true), RuntimeString);
+    WebServer.setArgBoolean(getName(F("RuntimeBool"),true), RuntimeBool);
+    WebServer.setArgInt(getName(F("RollingInt"),true), RollingInt->getInt(true));
+    WebServer.setArgFloat(getName(F("RollingFloat"),true), RollingFloat->getFloat(true));
   }
 }
 
-void ModuleSkeleton_Web::websiteEvent_Button(char *Button)
+bool ModuleSkeleton_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);n)
 { ///< When a button is pressed on the website
-  if (!isThisMine(Button))
+  if (!isThisMine(Command))
   {
-    return;
+    return false;
   }
   else
   {
@@ -79,18 +71,7 @@ void ModuleSkeleton_Web::websiteEvent_Button(char *Button)
     {
       RollingFloat->resetAverage();
     } ///< Signals to reset average counter at next reading
-  }
-}
-
-void ModuleSkeleton_Web::websiteEvent_Field(char *Field)
-{ ///< When a field is submitted on the website
-  if (!isThisMine(Field))
-  {
-    return;
-  }
-  else
-  {
-    if (strcmp_P(ShortMessage, (PGM_P)F("SetRunBool")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("SetRunBool")) == 0)
     {
       RuntimeBool = WebServer.getArgBoolean();
     } ///< Getting a bool
@@ -118,5 +99,18 @@ void ModuleSkeleton_Web::websiteEvent_Field(char *Field)
     {
       RollingFloat->updateAverage(WebServer.getArgFloat());
     } ///< Getting an float
+    return true;
+  }
+}
+
+void ModuleSkeleton_Web::websiteEvent_Field(char *Field)
+{ ///< When a field is submitted on the website
+  if (!isThisMine(Field))
+  {
+    return;
+  }
+  else
+  {
+    
   }
 }

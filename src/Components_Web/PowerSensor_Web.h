@@ -11,8 +11,7 @@ class PowerSensor_Web : public PowerSensor, public Common_Web
 {
 public:
   PowerSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort); ///< constructor
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
+  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
 
 private:
 protected:

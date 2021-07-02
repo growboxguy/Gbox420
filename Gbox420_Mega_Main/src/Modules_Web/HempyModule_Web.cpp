@@ -86,7 +86,7 @@ void HempyModule_Web::report(bool FriendlyFormat)
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
-void HempyModule_Web::websiteEvent_Load(char *url)
+void HempyModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
     WebServer.setArgString(getName(F("B1ET"),true), toText(HempyBucketCommand1ToSend.EvaporationTarget));
     WebServer.setArgString(getName(F("B1OF"),true), toText(HempyBucketCommand1ToSend.OverflowTarget));
@@ -104,7 +104,7 @@ void HempyModule_Web::websiteEvent_Load(char *url)
     WebServer.setArgString(getName(F("B2DW"),true), toText(HempyBucketResponse2Received.DryWeight));
 }
 
-void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
+void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
     WebServer.setArgString(getName(F("S"),true), toText_onlineStatus(OnlineStatus));
     WebServer.setArgString(getName(F("B1W"),true), toText_weight(HempyBucketResponse1Received.WeightB));

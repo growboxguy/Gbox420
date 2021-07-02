@@ -10,7 +10,7 @@ class Fan_Web : public Common_Web, public Fan
 {
 public:
   Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::FanSettings *DefaultSettings);
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
 
 private:

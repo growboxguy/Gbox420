@@ -3,36 +3,25 @@
 Aeroponics_NoTank_Web::Aeroponics_NoTank_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::AeroponicsSettings *DefaultSettings, PressureSensor *FeedbackPressureSensor, WaterPump *Pump) : Common(Name), Aeroponics_NoTank(Name, Parent, DefaultSettings, FeedbackPressureSensor, Pump), Common_Web(Name)
 {
   this->Parent = Parent;
-  this->Name = Name;
-  Parent->addToReportQueue(this);
-  Parent->addToRefreshQueue_Sec(this);
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToWebsiteQueue_Refresh(this);
   Parent->addToCommandQueue(this);
-  Parent->addToWebsiteQueue_Field(this);
 }
 
-void Aeroponics_NoTank_Web::reportToJSON()
+void Aeroponics_NoTank_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
-  Common_Web::reportToJSON(); ///< Adds a curly bracket {  that needs to be closed at the end
-
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket
+  WebServer.setArgInt(getName(F("Timeout")), Pump->getTimeOut());
+  WebServer.setArgInt(getName(F("Priming")), Pump->getPrimingTime());
+  WebServer.setArgInt(getName(F("Int")), *Interval);
+  WebServer.setArgFloat(getName(F("Dur")), *Duration);
 }
 
-void Aeroponics_NoTank_Web::websiteEvent_Load(__attribute__((unused)) char *url)
+void Aeroponics_NoTank_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
-    WebServer.setArgInt(getName(F("Timeout")), Pump->getTimeOut());
-    WebServer.setArgInt(getName(F("Priming")), Pump->getPrimingTime());
-    WebServer.setArgInt(getName(F("Int")), *Interval);
-    WebServer.setArgFloat(getName(F("Dur")), *Duration);
-}
-
-void Aeroponics_NoTank_Web::websiteEvent_Refresh(__attribute__((unused)) char *url)
-{
-    WebServer.setArgString(getName(F("Pres")), FeedbackPressureSensor->getPressureText(false, true));
-    WebServer.setArgString(getName(F("Spray")), sprayStateToText());
-    WebServer.setArgString(getName(F("Pump")), Pump->getStateText());
-    WebServer.setArgString(getName(F("LastSP")), toText_pressure(LastSprayPressure));
+  WebServer.setArgString(getName(F("Pres")), FeedbackPressureSensor->getPressureText(false, true));
+  WebServer.setArgString(getName(F("Spray")), sprayStateToText());
+  WebServer.setArgString(getName(F("Pump")), Pump->getStateText());
+  WebServer.setArgString(getName(F("LastSP")), toText_pressure(LastSprayPressure));
 }
 
 void Aeroponics_NoTank_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)

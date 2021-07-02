@@ -18,7 +18,7 @@ struct AeroResponse_P2 Aero1Response2ToSend = {AeroMessages::AeroResponse2};
 struct AeroCommonTemplate AeroResetToSend = {AeroMessages::AeroReset}; ///< Special response signaling the end of a message exchange to the Transmitter
 unsigned long LastMessageSent = 0;                                     //When was the last message sent
 
-AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModuleSettings *DefaultSettings) : Module(Name), Common(Name)
+AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModuleSettings *DefaultSettings) : Common(Name), Module(Name)
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;

@@ -13,8 +13,8 @@ class HempyModule_Web : public Common_Web
 {
 public:
   HempyModule_Web(const __FlashStringHelper *Name, MainModule *Parent, Settings::HempyModuleSettings *DefaultSettings); ///< constructor
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
-  void websiteEvent_Load(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
+  void websiteEvent_Load(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report(bool FriendlyFormat = false);
   void refresh_Sec();

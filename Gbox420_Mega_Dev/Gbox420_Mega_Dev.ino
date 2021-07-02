@@ -214,20 +214,20 @@ void setupMqtt()
   MqttAPI.setup();
 }
 
-void mqttConnected(void *response)
+void mqttConnected(__attribute__((unused)) void *response)
 {
   MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
   MqttConnected = true;
   //if(*Debug) logToSerials(F("MQTT connected"), true);
 }
 
-void mqttDisconnected(void *response)
+void mqttDisconnected(__attribute__((unused)) void *response)
 {
   MqttConnected = false;
   //if(*Debug) logToSerials(F("MQTT disconnected"), true);
 }
 
-void mqttPublished(void *response)
+void mqttPublished(__attribute__((unused)) void *response)
 {
   //if(*Debug) logToSerials(F("MQTT published"), true);
 }

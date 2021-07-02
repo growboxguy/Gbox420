@@ -10,7 +10,7 @@ class WeightSensor_Web : public WeightSensor, public Common_Web
 {
 public:
   WeightSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::WeightSensorSettings *DefaultSettings);
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
 
 private:

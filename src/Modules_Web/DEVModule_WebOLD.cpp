@@ -73,12 +73,12 @@ void DEVModule_Web::reportToJSON()
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
-void DEVModule_Web::websiteEvent_Load(char *url)
+void DEVModule_Web::websiteEvent_Load(char *Url)
 {
   ;
 }
 
-void DEVModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *url) ///< called when website is refreshed.
+void DEVModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
   WebServer.setArgString(F("Time"), getFormattedTime(false));
   WebServer.setArgJson(F("Log"), eventLogToJSON(false, true)); ///< Last events that happened in JSON format

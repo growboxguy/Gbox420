@@ -12,7 +12,7 @@ class PowerSensorV3_Web : public Common_Web, public PowerSensorV3
 {
 public:
   PowerSensorV3_Web(const __FlashStringHelper *Name, Module_Web *Parent, HardwareSerial *SerialPort); ///< constructor
-  void websiteEvent_Refresh(__attribute__((unused)) char *url);
+  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
 
 private:
 protected:
