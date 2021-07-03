@@ -35,7 +35,7 @@ public:
   Fan_Web *FanE = NULL;
   //Fan_PWM_Web *FanI = NULL;       ///< Internal fan
   //Fan_PWM_Web *FanE = NULL;       ///< Exhaust fan
-  AirPump_Web *APump1 = NULL;     ///< Air pump
+  AirPump_Web *Ap1 = NULL;     ///< Air pump
   Lights_Web *Lt1 = NULL;         ///< Pointer to a Light assembly No1
   Lights_Web *Lt2 = NULL;         ///< Pointer to a Light assembly No2
   LightSensor_Web *Ls1 = NULL; ///< Pointer to a Light Sensor object measuring light intensity in the grow box

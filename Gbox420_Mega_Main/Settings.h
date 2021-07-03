@@ -71,7 +71,7 @@ typedef struct
     uint8_t Pin; ///< Relay pin controlling AC power to the air pump
     bool State;  ///< true - ON, false - OFF
   };
-  struct AirPumpSettings APump1 = {.Pin = 23, .State = true};
+  struct AirPumpSettings Ap1 = {.Pin = 23, .State = true};
 
   struct DHTSensorSettings ///< DHTSensor default settings
   {
