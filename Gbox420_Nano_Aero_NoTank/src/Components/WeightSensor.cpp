@@ -111,9 +111,7 @@ void WeightSensor::calibrate() ///< Time intense, cannot be called straight from
   *Scale = (float)Sensor->get_value() / CalibrationWeight;
   Sensor->set_scale(*Scale);
   AverageWeight->reset();
-  appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("calibrated"));
-  Parent->addToLog(ShortMessage);
+  Parent->addToLog(getName(F("calibrated")));
   Parent->getSoundObject()->playOnSound();
 }
 

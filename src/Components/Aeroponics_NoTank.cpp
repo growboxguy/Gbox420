@@ -280,9 +280,7 @@ void Aeroponics_NoTank::setDuration(float duration)
   if (*Duration != duration && duration > 0)
   {
     *Duration = duration;
-    appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("duration updated"));
-    Parent->addToLog(ShortMessage);
+    Parent->addToLog(getName(F("duration updated")));
     Parent->getSoundObject()->playOnSound();
   }
 }
@@ -388,9 +386,7 @@ void Aeroponics_NoTank::setMaxPressure(float Pressure)
   if (*MaxPressure != Pressure && Pressure > 0)
   {
     *MaxPressure = Pressure;
-    appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("max pressure updated"));
-    Parent->addToLog(ShortMessage);
+    Parent->addToLog(getName(F("max pressure updated")));
     Parent->getSoundObject()->playOnSound();
   }
 }

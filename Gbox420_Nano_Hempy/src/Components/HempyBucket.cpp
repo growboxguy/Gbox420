@@ -358,8 +358,6 @@ void HempyBucket::tareDryWetWeight()
 {
   DryWeight = *InitialDryWeight;
   WetWeight = DryWeight + *EvaporationTarget - *OverflowTarget;
-  appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F("Dry/Wet tared"));
-  logToSerials(&ShortMessage, true, 3);
+  logToSerials(getName(F("Dry/Wet tared")), true, 3);
   Parent->getSoundObject()->playOnSound();
 }

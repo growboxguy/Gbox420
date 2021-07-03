@@ -72,16 +72,12 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
     if (RunTime > 0 && millis() - StateTimer > ((uint32_t)RunTime * 1000)) //< Check if it is time to stop
     {
       RunTime = 0;
-      appendName(true);
-      strcat_P(ShortMessage, (PGM_P)F("finished"));
-      logToSerials(&ShortMessage, true, 3);
+      logToSerials(getName(F("finished")), true, 3);
       updateState(WaterPumpStates::IDLE);
     }
     if (millis() - StateTimer > ((uint32_t)*PumpTimeOut * 1000)) ///< Safety feature, During normal operation this should never be reached. The caller that turned on the pump should stop it before timeout is reached
     {
-      appendName(true);
-      strcat_P(ShortMessage, (PGM_P)F("timeout"));
-      Parent->addToLog(ShortMessage);
+      Parent->addToLog(getName(F("timeout")));
       updateState(WaterPumpStates::DISABLED);
     }
     break;
@@ -97,9 +93,7 @@ void WaterPump::startPump(bool ResetState)
   }
   else
   {
-    appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("timeout"));
-    logToSerials(&ShortMessage, true, 1);
+    logToSerials(getName(F("timeout")), true, 1);
   }
 }
 
@@ -170,9 +164,7 @@ void WaterPump::setTimeOut(uint16_t TimeOut)
   if (*this->PumpTimeOut != TimeOut && TimeOut > 0)
   {
     *this->PumpTimeOut = TimeOut;
-    appendName(true);
-    strcat_P(ShortMessage, (PGM_P)F("timeout updated"));
-    logToSerials(&ShortMessage, true, 1);
+    logToSerials(getName(F("timeout updated")), true, 1);
     Parent->getSoundObject()->playOnSound();
   }
 }
