@@ -55,11 +55,10 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
     {
       disableRequest();      
     }
-    /*  
     else if (strcmp_P(ShortMessage, (PGM_P)F("TareDW")) == 0)
     {
       HempyBucketCommand2ToSend.TareWeightDW = true;
-      Parent->addToLog(F("Taring Bucket 2 Dry/Wet"), false);
+      Parent->addToLog(F("Taring Dry/Wet"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("ET")) == 0)
     {
@@ -68,24 +67,24 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
     else if (strcmp_P(ShortMessage, (PGM_P)F("OF")) == 0)
     {
       DefaultSettings->OverflowTarget_ = toFloat(Data);
-      Parent->addToLog(F("Bucket 2 targets updated"), false);
+      Parent->addToLog(F("Targets updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("WL")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("WL")) == 0)  ///TODO: Handle waste limit from multiple buckets to a single waste reservoir
     {
       DefaultSettings->WasteLimit_ = toFloat(Data);
-      Parent->addToLog(F("Bucket 2 waste limit updated"), false);
+      Parent->addToLog(F("Waste limit updated"), false);
     }    
     else if (strcmp_P(ShortMessage, (PGM_P)F("D")) == 0)
     {
       DefaultSettings->DrainWaitTime_ = toInt(Data);
-      Parent->addToLog(F(" Drain wait updated"), false);
+      Parent->addToLog(F("Drain wait updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("DW")) == 0)
     {
       HempyBucketCommand2ToSend.DryWeight = toFloat(Data);
-      Parent->addToLog(F(" dry weight updated"), false);
+      Parent->addToLog(F("Dry weight updated"), false);
     }
-
+    /*
     //Settings
     else if (strcmp_P(ShortMessage, (PGM_P)F("Calibrate")) == 0)
     {
