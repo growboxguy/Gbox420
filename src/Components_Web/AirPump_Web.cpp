@@ -23,17 +23,14 @@ bool AirPump_Web::commandEvent(__attribute__((unused)) char *Command, __attribut
     if (strcmp_P(ShortMessage, (PGM_P)F("On")) == 0)
     {
       TurnOn();
-      Parent->addToLog(getName(getStateText(true)), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Of")) == 0)
     {
       TurnOff();
-      Parent->addToLog(getName(getStateText(true)), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("S")) == 0)
     {
       setState(toBool(Data));
-      Parent->addToLog(getName(getStateText(true)), false);
     }
     return true;
   }

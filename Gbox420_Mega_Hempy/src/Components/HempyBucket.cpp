@@ -170,6 +170,7 @@ void HempyBucket::updateState(HempyStates NewState)
 void HempyBucket::disable() //Takes time, do not call directly from an interupt (ESP-link website would timeout)
 {
   updateState(HempyStates::DISABLED);
+  Parent->addToLog(getName(F("disabled")));
   Parent->getSoundObject()->playOffSound();
 }
 
@@ -181,6 +182,7 @@ void HempyBucket::disableRequest() //Stores the request only, will apply the nex
 void HempyBucket::startWatering()
 {
   updateState(HempyStates::WATERING);
+  Parent->addToLog(getName(F("watering")));
   Parent->getSoundObject()->playOnSound();
 }
 
@@ -192,6 +194,7 @@ void HempyBucket::startWateringRequest() //Stores the request only, will apply t
 void HempyBucket::stopWatering()
 {
   updateState(HempyStates::IDLE);
+  Parent->addToLog(getName(F("stopped")));
   Parent->getSoundObject()->playOnSound();
 }
 

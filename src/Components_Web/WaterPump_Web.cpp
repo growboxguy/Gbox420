@@ -33,18 +33,15 @@ bool WaterPump_Web::commandEvent(char *Command, char *Data)
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("ON")) == 0)
     {
-      startPump();
-      Parent->addToLog(getName(F("starting")));
+      startPumpRequest();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("OF")) == 0)
     {
-      stopPump();
-      Parent->addToLog(getName(F("stopping")));
+      stopPumpRequest();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("D")) == 0)
     {
-      disablePump();
-      Parent->addToLog(getName(F("disabled")));
+      disablePumpRequest();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("PS")) == 0)
     {

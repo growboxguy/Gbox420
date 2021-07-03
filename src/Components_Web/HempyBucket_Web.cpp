@@ -46,17 +46,14 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
     if (strcmp_P(ShortMessage, (PGM_P)F("On")) == 0)
     {
       startWateringRequest();
-      Parent->addToLog(getName(F("watering")));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Off")) == 0)
     {
-      stopWateringRequest();
-      Parent->addToLog(getName(F("stopping")));
+      stopWateringRequest();      
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Dis")) == 0)
     {
-      disableRequest();
-      Parent->addToLog(getName(F("disabled")));
+      disableRequest();      
     }
     /*  
     else if (strcmp_P(ShortMessage, (PGM_P)F("TareDW")) == 0)
