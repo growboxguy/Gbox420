@@ -4,11 +4,11 @@ echo "------------------------------------------"
 
 echo "Creating unlink command"
 ln ../HardLinkSRC_OFF.sh ./
+ln ../HardLinkSRC_OFF_Win.bat ./
 
 echo "Creating folders"
 mkdir ./src
 mkdir ./src/Components
-mkdir ./src/Components_Web
 mkdir ./src/Modules
 
 echo "Creating hard links"
@@ -21,8 +21,6 @@ ln ../src/Modules/AeroModule_NoTank.h ./src/Modules
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
 ln ../src/WirelessCommands_Aero.h ./src
-
-ln ../src/Components_Web/420Common_Web.h ./src/Components_Web
 
 ln ../src/Components/420Common.h ./src/Components
 ln ../src/Components/420Common.cpp ./src/Components
@@ -42,7 +40,6 @@ ln ../src/Components/Switch_PWM.h ./src/Components
 ln ../src/Components/Switch_PWM.cpp ./src/Components
 ln ../src/Components/WeightSensor.h ./src/Components
 ln ../src/Components/WeightSensor.cpp ./src/Components
-
 
 #echo "Done, press enter to exit"
 #read fakeinput

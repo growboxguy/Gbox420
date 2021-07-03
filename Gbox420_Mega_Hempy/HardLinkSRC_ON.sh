@@ -4,24 +4,24 @@ echo "------------------------------------------"
 
 echo "Creating unlink command"
 ln ../HardLinkSRC_OFF.sh ./
+ln ../HardLinkSRC_OFF_Win.bat ./
 
 echo "Creating folders"
 mkdir ./src
-mkdir ./Webpages
 mkdir ./src/Components
 mkdir ./src/Components_Web
 mkdir ./src/Modules_Web
+mkdir ./Webpages
 
 echo "Creating hard links"
-ln ../Gbox420_Mega/Settings.cpp ./
-ln ../Gbox420_Mega/SerialLog.cpp ./
-ln ../Gbox420_Mega/SerialLog.h ./
-
-ln ../Gbox420_Mega/Webpages/Settings.html ./Webpages/
-ln ../Gbox420_Mega/Webpages/Logs.html ./Webpages/
-
+ln ../src/Settings_Mega.cpp ./Settings.cpp
+ln ../src/SerialLog_Mega.cpp ./SerialLog.cpp
+ln ../src/SerialLog_Mega.h ./SerialLog.h
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
+
+ln ../src/Webpages/Logs.html ./Webpages/
+ln ../src/Webpages/Settings.html ./Webpages/
 
 ln ../src/Modules_Web/420Module_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/420Module_Web.h ./src/Modules_Web

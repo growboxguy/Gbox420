@@ -4,6 +4,7 @@ echo "------------------------------------------"
 
 echo "Creating unlink command"
 ln ../HardLinkSRC_OFF.sh ./
+ln ../HardLinkSRC_OFF_Win.bat ./
 
 echo "Creating folders"
 mkdir ./src
@@ -12,12 +13,12 @@ mkdir ./src/Components_Web
 mkdir ./src/Modules_Web
 
 echo "Creating hard links"
-ln ../Gbox420_Mega/Settings.cpp ./
-ln ../Gbox420_Mega/SerialLog.cpp ./
-ln ../Gbox420_Mega/SerialLog.h ./
+ln ../src/Settings_Mega.cpp ./Settings.cpp
+ln ../src/SerialLog_Mega.h ./SerialLog.h
+ln ../src/SerialLog_Mega.cpp ./SerialLog.cpp
 
-ln ../Gbox420_Mega/Webpages/Logs.html ./Webpages/
-ln ../Gbox420_Mega/Webpages/Settings.html ./Webpages/
+ln ../src/Webpages/Logs.html ./Webpages/
+ln ../src/Webpages/Settings.html ./Webpages/
 
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
@@ -25,16 +26,16 @@ ln ../src/WirelessCommands_Aero.h ./src
 ln ../src/WirelessCommands_Hempy.h ./src
 ln ../src/WirelessCommands_Reservoir.h ./src
 
-ln ../src/Modules_Web/420Module_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/420Module_Web.h ./src/Modules_Web
-ln ../src/Modules_Web/MainModule_Web.cpp ./src/Modules_Web
+ln ../src/Modules_Web/420Module_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/MainModule_Web.h ./src/Modules_Web
-ln ../src/Modules_Web/AeroModule_Web.cpp ./src/Modules_Web
+ln ../src/Modules_Web/MainModule_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/AeroModule_Web.h ./src/Modules_Web
-ln ../src/Modules_Web/HempyModule_Web.cpp ./src/Modules_Web
+ln ../src/Modules_Web/AeroModule_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/HempyModule_Web.h ./src/Modules_Web
-ln ../src/Modules_Web/ReservoirModule_Web.cpp ./src/Modules_Web
+ln ../src/Modules_Web/HempyModule_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/ReservoirModule_Web.h ./src/Modules_Web
+ln ../src/Modules_Web/ReservoirModule_Web.cpp ./src/Modules_Web
 
 ln ../src/Components_Web/420Common_Web.h ./src/Components_Web
 ln ../src/Components_Web/AirPump_Web.h ./src/Components_Web
