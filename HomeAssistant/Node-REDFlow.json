@@ -444,7 +444,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "payload.LtSen1",
+                "to": "payload.Ls1",
                 "tot": "msg"
             }
         ],
@@ -1229,7 +1229,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "$number(msg.payload.IFan.S)",
+                "to": "$number(msg.payload.FanI.S)",
                 "tot": "jsonata"
             }
         ],
@@ -1256,7 +1256,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "$number(msg.payload.EFan.S)",
+                "to": "$number(msg.payload.FanE.S)",
                 "tot": "jsonata"
             }
         ],
@@ -9939,7 +9939,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "$boolean($number(msg.payload))",
+                "to": "$boolean($number(msg.payload.D))",
                 "tot": "msg"
             },
             {
@@ -11450,7 +11450,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "msg.payload.APump1",
+                "to": "msg.payload.Ap1",
                 "tot": "jsonata"
             }
         ],
