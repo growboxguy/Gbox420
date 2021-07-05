@@ -44,13 +44,21 @@ bool Lights_Web::commandEvent(__attribute__((unused)) char *Command, __attribute
     {
       setLightOnOff(false, true);
     }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("S")) == 0)
+    {
+      setLightOnOff(toBool(Data), true);
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("TOn")) == 0)
     {
       setTimerOnOff(true);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("TOff")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("TOf")) == 0)
     {
       setTimerOnOff(false);
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("T")) == 0)
+    {
+      setTimerOnOff(toBool(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("D")) == 0)
     {

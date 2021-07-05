@@ -149,7 +149,7 @@ void Module::addToReportQueue(Common *Component)
   if (QueueDepth > reportQueueItemCount)
     ReportQueue[reportQueueItemCount++] = Component;
   else
-    logToSerials(F("OF"), true, 0); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
+    logToSerials(F("Report OF"), true, 0); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
 void Module::addToRefreshQueue_Sec(Common *Component)
@@ -157,7 +157,7 @@ void Module::addToRefreshQueue_Sec(Common *Component)
   if (QueueDepth > refreshQueueItemCount_Sec)
     RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
   else
-    logToSerials(F("OF"), true, 0);
+    logToSerials(F("Refresh 1s OF"), true, 0);
 }
 
 void Module::addToRefreshQueue_FiveSec(Common *Component)
@@ -165,7 +165,7 @@ void Module::addToRefreshQueue_FiveSec(Common *Component)
   if (QueueDepth > refreshQueueItemCount_FiveSec)
     RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
   else
-    logToSerials(F("OF"), true, 0);
+    logToSerials(F("Refresh 5s OF"), true, 0);
 }
 
 void Module::addToRefreshQueue_Minute(Common *Component)
@@ -173,7 +173,7 @@ void Module::addToRefreshQueue_Minute(Common *Component)
   if (QueueDepth > refreshQueueItemCount_Minute)
     RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
   else
-    logToSerials(F("OF"), true, 0);
+    logToSerials(F("Refresh 1m OF"), true, 0);
 }
 
 ///< Even logs to the Serial output

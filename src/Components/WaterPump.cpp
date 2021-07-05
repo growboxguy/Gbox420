@@ -38,6 +38,25 @@ void WaterPump::refresh_Sec()
 {
   Common::refresh_Sec();
   updateState(State);
+
+  if (StartPumpRequested)
+  {
+    StartPumpRequested = false;
+    startPump(true);
+    Parent->addToLog(getName(F("started")));
+  }
+  if (StopPumpRequested)
+  {
+    StopPumpRequested = false;
+    stopPump(true);
+    Parent->addToLog(getName(F("stopped")));
+  }
+  if (DisablePumpRequested)
+  {
+    DisablePumpRequested = false;
+    disablePump();
+    Parent->addToLog(getName(F("disabled")));
+  }
 }
 
 void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState parameter is passed it overwrites State
@@ -84,6 +103,11 @@ void WaterPump::updateState(WaterPumpStates NewState) ///< When NewState paramet
   }
 }
 
+void WaterPump::startPumpRequest() //Stores the request only, will apply the next time the Pump is refreshing
+{
+  StartPumpRequested = true;
+}
+
 void WaterPump::startPump(bool ResetState)
 {
   Parent->getSoundObject()->playOnSound();
@@ -95,6 +119,11 @@ void WaterPump::startPump(bool ResetState)
   {
     logToSerials(getName(F("timeout")), true, 1);
   }
+}
+
+void WaterPump::stopPumpRequest() //Stores the request only, will apply the next time the Pump is refreshing
+{
+  StopPumpRequested = true;
 }
 
 void WaterPump::stopPump(bool ResetState)
@@ -111,6 +140,11 @@ void WaterPump::stopPump(bool ResetState)
       updateState(WaterPumpStates::DISABLED);
     }
   }
+}
+
+void WaterPump::disablePumpRequest() //Stores the request only, will apply the next time the Pump is refreshing
+{
+  DisablePumpRequested = true;
 }
 
 void WaterPump::disablePump()

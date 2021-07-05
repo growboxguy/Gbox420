@@ -16,6 +16,9 @@ public:
   void setSpeed(uint8_t DutyCycle); //Set Motor speed - Adjust PWM duty cycle
   uint8_t getSpeed();
   char *getSpeedText(bool FriendlyFormat);
+  void startPumpRequest();
+  void stopPumpRequest();
+  void disablePumpRequest();
   void startPump(bool ResetState = false); ///< Turn the pump ON
   void stopPump(bool ResetState = false);  ///< Turn the pump OFF
   void disablePump();                      ///< Disable the pump
@@ -26,6 +29,9 @@ public:
   void setTimeOut(uint16_t NewTime);
   int getTimeOut();
   char *getTimeOutText(bool FriendlyFormat = false);
+  bool StartPumpRequested = false;   ///< Signals to start pump
+  bool StopPumpRequested = false;    ///< Signals to stop pump
+  bool DisablePumpRequested = false; ///< Signals to disable pump
 
 private:
   WaterPumpStates State = WaterPumpStates::IDLE;

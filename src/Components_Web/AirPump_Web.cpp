@@ -22,15 +22,15 @@ bool AirPump_Web::commandEvent(__attribute__((unused)) char *Command, __attribut
   {
     if (strcmp_P(ShortMessage, (PGM_P)F("On")) == 0)
     {
-      *State = true;
-      checkStatus();
-      Parent->addToLog(F("Air pump ON"), false);
+      TurnOn();
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Off")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Of")) == 0)
     {
-      *State = false;
-      checkStatus();
-      Parent->addToLog(F("Air pump OFF"), false);
+      TurnOff();
+    }
+    else if (strcmp_P(ShortMessage, (PGM_P)F("S")) == 0)
+    {
+      setState(toBool(Data));
     }
     return true;
   }

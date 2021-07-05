@@ -46,49 +46,45 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
     if (strcmp_P(ShortMessage, (PGM_P)F("On")) == 0)
     {
       startWateringRequest();
-      Parent->addToLog(getName(F("watering")));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Off")) == 0)
     {
-      stopWateringRequest();
-      Parent->addToLog(getName(F("stopping")));
+      stopWateringRequest();      
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Dis")) == 0)
     {
-      disableRequest();
-      Parent->addToLog(getName(F("disabled")));
+      disableRequest();      
     }
-    /*  
     else if (strcmp_P(ShortMessage, (PGM_P)F("TareDW")) == 0)
     {
-      HempyBucketCommand2ToSend.TareWeightDW = true;
-      Parent->addToLog(F("Taring Bucket 2 Dry/Wet"), false);
+      tareDryWetWeight();
+      Parent->addToLog(F("Taring Dry/Wet"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("ET")) == 0)
     {
-      DefaultSettings->EvaporationTarget_ = toFloat(Data);
+      setEvaporationTarget(toFloat(Data));
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("OF")) == 0)
     {
-      DefaultSettings->OverflowTarget_ = toFloat(Data);
-      Parent->addToLog(F("Bucket 2 targets updated"), false);
+      setOverflowTarget(toFloat(Data));
+      Parent->addToLog(F("Targets updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("WL")) == 0)
+    else if (strcmp_P(ShortMessage, (PGM_P)F("WL")) == 0)  ///TODO: Handle waste limit from multiple buckets to a single waste reservoir
     {
-      DefaultSettings->WasteLimit_ = toFloat(Data);
-      Parent->addToLog(F("Bucket 2 waste limit updated"), false);
+      setWasteLimit(toFloat(Data));
+      Parent->addToLog(F("Waste limit updated"), false);
     }    
     else if (strcmp_P(ShortMessage, (PGM_P)F("D")) == 0)
     {
-      DefaultSettings->DrainWaitTime_ = toInt(Data);
-      Parent->addToLog(F(" Drain wait updated"), false);
+      setDrainWaitTime(toInt(Data));
+      Parent->addToLog(F("Drain wait updated"), false);
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("DW")) == 0)
     {
-      HempyBucketCommand2ToSend.DryWeight = toFloat(Data);
-      Parent->addToLog(F(" dry weight updated"), false);
+      setDryWeight(toFloat(Data));
+      Parent->addToLog(F("Dry weight updated"), false);
     }
-
+    /*
     //Settings
     else if (strcmp_P(ShortMessage, (PGM_P)F("Calibrate")) == 0)
     {
