@@ -3,6 +3,7 @@
 #include "420Module.h"
 #include "Sound.h"
 #include "WeightSensor.h"
+#include "WasteReservoir.h"
 #include "WaterPump.h"
 
 ///< Weight sensor measures the bucket weight and watering is based on the measured weight
@@ -17,20 +18,20 @@ enum WateringMode
 class HempyBucket : virtual public Common
 {
 public:
-  HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WeightSensor *WasteReservoirWeightSensor, WaterPump *BucketPump);
+  HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WeightSensor *WasteReservoirWeightSensor, WasteReservoir *BucketWasteReservoir, WaterPump *BucketPump);
   void refresh_Sec();
   void refresh_FiveSec();
   void report(bool FriendlyFormat = false);
   void updateState(HempyStates NewState);
   HempyStates getState();
   char *getStateText(bool FriendlyFormat = false); ///< Retuns the numerical or text state of the Hempy bucket
-  void disable();        ///< Disable watering logic  - Takes time to apply
-  void disableRequest(); ///< Signals to disable the watering logic at the next refresh - Runs fast
-  void startWatering();  ///< Turn on water pump, run until StopWeight is reached
-  void startWateringRequest(); ///< Turn on water pump, run until StopWeight is reached - Runs fast
-  void stopWatering(); ///< Turn off water pump
-  void stopWateringRequest(); ///< Turn off water pump - Runs fast
-  void setEvaporationTarget(float Weight);  ///< Weight decrease between waterings
+  void disable();                                  ///< Disable watering logic  - Takes time to apply
+  void disableRequest();                           ///< Signals to disable the watering logic at the next refresh - Runs fast
+  void startWatering();                            ///< Turn on water pump, run until StopWeight is reached
+  void startWateringRequest();                     ///< Turn on water pump, run until StopWeight is reached - Runs fast
+  void stopWatering();                             ///< Turn off water pump
+  void stopWateringRequest();                      ///< Turn off water pump - Runs fast
+  void setEvaporationTarget(float Weight);         ///< Weight decrease between waterings
   char *getEvaporationTargetText(bool FriendlyFormat = false);
   void setOverflowTarget(float Weight);
   char *getOverflowTargetText(bool FriendlyFormat = false);
@@ -60,7 +61,8 @@ private:
 protected:
   Module *Parent;
   WeightSensor *BucketWeightSensor;         ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
-  WeightSensor *WasteReservoirWeightSensor; ///< Weight sensor to monitor the Hempy Bucket's waste reservoir, used to figure out when to stop watering
+  WeightSensor *BucketWasteWeightSensor; ///< Weight sensor to monitor the Hempy Bucket's waste reservoir, used to figure out when to stop watering
+  WasteReservoir *BucketWasteReservoir;       ///< Logic for sharing a Waste reservoir between multiple buckets
   WaterPump *BucketPump;                    ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
   HempyStates State = HempyStates::IDLE;
   float *EvaporationTarget; ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles

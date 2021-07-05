@@ -35,10 +35,10 @@ typedef struct
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
-  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/Hempy"};             ///< Publish MQTT messages to this topic. Ends with a forward slash
-  char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/Hempy/#"};         ///< Subscribe to messages of this topic and all sub-topic
-  char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/Hempy/"};          ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
-  char MqttLwtMessage[MaxWordLength] = {"Hempy Offline"};        ///< this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the MQTT client unexpectedly goes offline
+  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/Hempy"};        ///< Publish MQTT messages to this topic. Ends with a forward slash
+  char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/Hempy/#"};   ///< Subscribe to messages of this topic and all sub-topic
+  char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/Hempy/"};    ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
+  char MqttLwtMessage[MaxWordLength] = {"Hempy Offline"};          ///< this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the MQTT client unexpectedly goes offline
 
   struct DHTSensorSettings ///< DHTSensor default settings
   {
@@ -66,15 +66,14 @@ typedef struct
 
   struct HempyBucketSettings ///< HempyBucket default settings
   {
-    HempyBucketSettings(float EvaporationTarget = 0.0, float OverflowTarget = 0.0, float WasteLimit = 0.0, float InitialDryWeight = 0.0, uint16_t DrainWaitTime = 0) : EvaporationTarget(EvaporationTarget), OverflowTarget(OverflowTarget), WasteLimit(WasteLimit), InitialDryWeight(InitialDryWeight), DrainWaitTime(DrainWaitTime) {}
+    HempyBucketSettings(float EvaporationTarget = 0.0, float OverflowTarget = 0.0, float InitialDryWeight = 0.0, uint16_t DrainWaitTime = 0) : EvaporationTarget(EvaporationTarget), OverflowTarget(OverflowTarget), InitialDryWeight(InitialDryWeight), DrainWaitTime(DrainWaitTime) {}
     float EvaporationTarget; //< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
     float OverflowTarget;    //< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle
-    float WasteLimit;        ///< Waste reservoir full weight -> Pump gets disabled if reached
     float InitialDryWeight;  ///< (kg/lbs) When the module starts up start watering if Bucket weight is below this. Set to 0 to instantly start watering until OverflowTarget is reached.
     uint16_t DrainWaitTime;  ///< (sec) How long to wait after watering for the water to drain
   };
-  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
-  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .WasteLimit = 13.0, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
+  struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
 
   struct SoundSettings ///< Sound default settings
   {
@@ -83,6 +82,13 @@ typedef struct
     bool Enabled = true; ///< Enable/Disable sound
   };
   struct SoundSettings Sound1 = {.Pin = 2};
+
+  struct WasteReservoirSettings ///< WaterPump default settings
+  {
+    WasteReservoirSettings(float WasteLimit = 0.0) : WasteLimit(WasteLimit) {}
+    float WasteLimit; ///< Waste reservoir full weight -> Pump gets disabled if reached
+  };
+  struct WasteReservoirSettings WR1 = {.WasteLimit = 13.0};
 
   struct WaterPumpSettings ///< WaterPump default settings
   {
@@ -105,10 +111,10 @@ typedef struct
     long Offset;    ///< Reading at 0 weight on the scale
     float Scale;    ///< Scale factor
   };
-  struct WeightSensorSettings NRW = {.DTPin = 24, .SCKPin = 25, .Offset = 378161, .Scale = -21484.20};    ///< Nutrient Reservoir Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
-  struct WeightSensorSettings WRW = {.DTPin = 26, .SCKPin = 27, .Offset = -182833, .Scale = -22089.00};   ///< Waste Reservoir Weight Sensor
-  struct WeightSensorSettings B1W = {.DTPin = 28, .SCKPin = 29, .Offset = -76382, .Scale = -22697.10}; ///< Bucket 1 Weight Sensor
-  struct WeightSensorSettings B2W = {.DTPin = 30, .SCKPin = 31, .Offset = 260682, .Scale = -22084.60}; ///< Bucket 2 Weight Sensor
+  struct WeightSensorSettings NRW = {.DTPin = 24, .SCKPin = 25, .Offset = 378161, .Scale = -21484.20};  ///< Nutrient Reservoir Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WRW = {.DTPin = 26, .SCKPin = 27, .Offset = -182833, .Scale = -22089.00}; ///< Waste Reservoir Weight Sensor
+  struct WeightSensorSettings B1W = {.DTPin = 28, .SCKPin = 29, .Offset = -76382, .Scale = -22697.10};  ///< Bucket 1 Weight Sensor
+  struct WeightSensorSettings B2W = {.DTPin = 30, .SCKPin = 31, .Offset = 260682, .Scale = -22084.60};  ///< Bucket 2 Weight Sensor
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;
