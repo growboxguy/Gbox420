@@ -7,6 +7,7 @@
 #include "../Components/Sound.h"
 #include "../Components/WeightSensor.h"
 #include "../Components/WaterPump.h"
+#include "../Components/WasteReservoir.h"
 #include "../Components/HempyBucket.h"
 
 ///< Variables used during wireless communication
@@ -29,12 +30,12 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   this->SoundFeedback = Sound1;
   WeightB1 = new WeightSensor(F("WeightB1"), this, &ModuleSettings->WeightB1);
   WeightB2 = new WeightSensor(F("WeightB2"), this, &ModuleSettings->WeightB2);
-  WeightWR1 = new WeightSensor(F("WeightWR1"), this, &ModuleSettings->WeightWR1);
-  WeightWR2 = new WeightSensor(F("WeightWR2"), this, &ModuleSettings->WeightWR2);
+  WeightWR = new WeightSensor(F("WeightWR"), this, &ModuleSettings->WeightWR);
+  WasteRes = new WasteReservoir(F("WasteRes"), this, &ModuleSettings->WasteRes, WeightWR);
   Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->HempyPump1);
   Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->HempyPump2);
-  Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1, WeightB1, WeightWR1, Pump1);
-  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2, WeightB2, WeightWR2, Pump2);
+  Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1, WeightB1, WeightWR, WasteRes, Pump1);
+  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2, WeightB2, WeightWR, WasteRes, Pump2);
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
@@ -70,13 +71,12 @@ void HempyModule::updateResponse()
   HempyBucket1ResponseToSend.HempyState = Bucket1->getState();
   HempyBucket1ResponseToSend.PumpState = Pump1->getState();
   HempyBucket1ResponseToSend.WeightB = WeightB1->getWeight(false);
-  HempyBucket1ResponseToSend.WeightWR = WeightWR1->getWeight(false);
+  HempyBucket1ResponseToSend.WeightWR = WeightWR->getWeight(false);
   HempyBucket1ResponseToSend.DryWeight = Bucket1->getDryWeight();
   HempyBucket1ResponseToSend.WetWeight = Bucket1->getWetWeight();
   HempyBucket2ResponseToSend.HempyState = Bucket2->getState();
   HempyBucket2ResponseToSend.PumpState = Pump2->getState();
   HempyBucket2ResponseToSend.WeightB = WeightB2->getWeight(false);
-  HempyBucket2ResponseToSend.WeightWR = WeightWR2->getWeight(false);
   HempyBucket2ResponseToSend.DryWeight = Bucket2->getDryWeight();
   HempyBucket2ResponseToSend.WetWeight = Bucket2->getWetWeight();
 }
@@ -179,7 +179,7 @@ bool HempyModule::processCommand(void *ReceivedCommand)
       HempyBucket1ResponseToSend.ConfirmTareWeightDW = false;
     if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR && !HempyBucket1ResponseToSend.ConfirmTareWeightWR)
     {
-      WeightWR1->tareRequest();
+      WeightWR->tareRequest();
       HempyBucket1ResponseToSend.ConfirmTareWeightWR = true;
     }
     else
@@ -190,8 +190,8 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     Bucket1->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
     Bucket1->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
     Bucket1->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
-    Bucket1->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     Bucket1->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
+    WasteRes->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     break;
   case HempyMessages::HempyBucketCommand2:
     updateAckData(HempyMessages::HempyModuleResponse1); // update the next Message that will be copied to the buffer
@@ -256,21 +256,11 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     {
       HempyBucket2ResponseToSend.ConfirmTareWeightDW = false;
     }
-    if (((HempyBucketCommand *)ReceivedCommand)->TareWeightWR && !HempyBucket2ResponseToSend.ConfirmTareWeightWR)
-    {
-      WeightWR2->tareRequest();
-      HempyBucket2ResponseToSend.ConfirmTareWeightWR = true;
-    }
-    else
-    {
-      HempyBucket2ResponseToSend.ConfirmTareWeightWR = false;
-    }
     Pump2->setTimeOut(((HempyBucketCommand *)ReceivedCommand)->PumpTimeOut);
     Pump2->setSpeed(((HempyBucketCommand *)ReceivedCommand)->PumpSpeed);
     Bucket2->setDryWeight(((HempyBucketCommand *)ReceivedCommand)->DryWeight);
     Bucket2->setEvaporationTarget(((HempyBucketCommand *)ReceivedCommand)->EvaporationTarget);
     Bucket2->setOverflowTarget(((HempyBucketCommand *)ReceivedCommand)->OverflowTarget);
-    Bucket2->setWasteLimit(((HempyBucketCommand *)ReceivedCommand)->WasteLimit);
     Bucket2->setDrainWaitTime(((HempyBucketCommand *)ReceivedCommand)->DrainWaitTime);
     break;
   case HempyMessages::HempyReset:                       ///< Used to get all Responses that do not have a corresponding Command
