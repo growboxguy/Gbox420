@@ -19,6 +19,8 @@ public:
   void clearReservation(); ///< NEEDS TO BE CALLED at the end if the watering, makes the Waste Reservoir available
   bool getFull();
   char *getFullText(bool FriendlyFormat = false);
+  void setWasteLimit(float Weight);
+  char *getWasteLimitText(bool FriendlyFormat = false);
 
 private:
 protected:

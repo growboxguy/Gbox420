@@ -37,6 +37,8 @@ ln ../src/Components_Web/Sound_Web.h ./src/Components_Web
 ln ../src/Components_Web/Sound_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/WaterPump_Web.h ./src/Components_Web
 ln ../src/Components_Web/WaterPump_Web.cpp ./src/Components_Web
+ln ../src/Components_Web/WasteReservoir_Web.h ./src/Components_Web
+ln ../src/Components_Web/WasteReservoir_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/WeightSensor_Web.h ./src/Components_Web
 ln ../src/Components_Web/WeightSensor_Web.cpp ./src/Components_Web
 

@@ -36,8 +36,6 @@ void HempyBucket::report(bool FriendlyFormat)
   strcat(LongMessage, getEvaporationTargetText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"OF\":\""));
   strcat(LongMessage, getOverflowTargetText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\",\"WL\":\""));
-  strcat(LongMessage, getWasteLimitText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"DT\":\""));
   strcat(LongMessage, getDrainWaitTimeText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
@@ -132,7 +130,7 @@ void HempyBucket::updateState(HempyStates NewState)
       updateState(HempyStates::DRAINING);
       BlockOverWritingState = true;
     }
-    if (WateringTime > ((uint32_t)BucketPump->getTimeOut() * 1000) || BucketPump->getState() == WaterPumpStates::DISABLED || BucketWasteWeightSensor->getWeight() >= *WasteLimit) ///< Timeout before the waste target was reached
+    if (WateringTime > ((uint32_t)BucketPump->getTimeOut() * 1000) || BucketPump->getState() == WaterPumpStates::DISABLED || BucketWasteReservoir->getFull()) ///< Timeout before the waste target was reached
     {
       BucketWasteReservoir->clearReservation();
       updateState(HempyStates::DISABLED);
@@ -168,6 +166,8 @@ void HempyBucket::updateState(HempyStates NewState)
 
 void HempyBucket::disable() //Takes time, do not call directly from an interupt (ESP-link website would timeout)
 {
+  if (State == HempyStates::DRAINING || State == HempyStates::WATERING)
+    BucketWasteReservoir->clearReservation();
   updateState(HempyStates::DISABLED);
   Parent->addToLog(getName(F("disabled")));
   Parent->getSoundObject()->playOffSound();
@@ -180,9 +180,14 @@ void HempyBucket::disableRequest() //Stores the request only, will apply the nex
 
 void HempyBucket::startWatering()
 {
-  updateState(HempyStates::WATERING);
-  Parent->addToLog(getName(F("watering")));
-  Parent->getSoundObject()->playOnSound();
+  if (BucketWasteReservoir->setReserved())
+  {
+    Parent->addToLog(getName(F("watering")));
+    updateState(HempyStates::WATERING);
+    Parent->getSoundObject()->playOnSound();
+  }
+  else
+    Parent->addToLog(BucketWasteReservoir->getName(F("busy")));
 }
 
 void HempyBucket::startWateringRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
@@ -192,6 +197,8 @@ void HempyBucket::startWateringRequest() //Stores the request only, will apply t
 
 void HempyBucket::stopWatering()
 {
+  if (State == HempyStates::DRAINING || State == HempyStates::WATERING)
+    BucketWasteReservoir->clearReservation();
   updateState(HempyStates::IDLE);
   Parent->addToLog(getName(F("stopped")));
   Parent->getSoundObject()->playOnSound();
@@ -271,27 +278,6 @@ char *HempyBucket::getDrainWaitTimeText(bool FriendlyFormat)
   else
   {
     return toText(*DrainWaitTime);
-  }
-}
-
-void HempyBucket::setWasteLimit(float Weight)
-{
-  if (*WasteLimit != Weight)
-  {
-    *WasteLimit = Weight;
-    Parent->getSoundObject()->playOnSound();
-  }
-}
-
-char *HempyBucket::getWasteLimitText(bool FriendlyFormat)
-{
-  if (FriendlyFormat)
-  {
-    return toText_weight(*WasteLimit);
-  }
-  else
-  {
-    return toText(*WasteLimit);
   }
 }
 

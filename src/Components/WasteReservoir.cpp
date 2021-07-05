@@ -20,6 +20,8 @@ void WasteReservoir::report(bool FriendlyFormat)
   strcat(LongMessage, getReservedText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"F\":\"")); //< Full - Weight limit reached
   strcat(LongMessage, getFullText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"L\":\""));  //Limit
+  strcat(LongMessage, getWasteLimitText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
@@ -94,5 +96,26 @@ char *WasteReservoir::getFullText(bool FriendlyFormat)
   else
   {
     return toText(Full);
+  }
+}
+
+void WasteReservoir::setWasteLimit(float Weight)
+{
+  if (*WasteLimit != Weight)
+  {
+    *WasteLimit = Weight;
+    Parent->getSoundObject()->playOnSound();
+  }
+}
+
+char *WasteReservoir::getWasteLimitText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_weight(*WasteLimit);
+  }
+  else
+  {
+    return toText(*WasteLimit);
   }
 }

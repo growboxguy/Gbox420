@@ -12,7 +12,6 @@ void HempyBucket_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("ET"), true), getEvaporationTargetText());
   WebServer.setArgString(getName(F("OF"), true), getOverflowTargetText());
-  WebServer.setArgString(getName(F("WL"), true), getWasteLimitText());
   WebServer.setArgInt(getName(F("D"), true), getDrainWaitTime());
   WebServer.setArgString(getName(F("DW"), true), getDryWeightText());
   //WebServer.setArgInt(getName(F("PS"),true), HempyBucketCommand1ToSend.PumpSpeed);
@@ -68,12 +67,7 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
     {
       setOverflowTarget(toFloat(Data));
       Parent->addToLog(F("Targets updated"), false);
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("WL")) == 0)  ///TODO: Handle waste limit from multiple buckets to a single waste reservoir
-    {
-      setWasteLimit(toFloat(Data));
-      Parent->addToLog(F("Waste limit updated"), false);
-    }    
+    }      
     else if (strcmp_P(ShortMessage, (PGM_P)F("D")) == 0)
     {
       setDrainWaitTime(toInt(Data));

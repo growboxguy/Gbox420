@@ -3,6 +3,7 @@
 #include "../Components_Web/DHTSensor_Web.h"
 #include "../Components_Web/WeightSensor_Web.h"
 #include "../Components_Web/WaterPump_Web.h"
+#include "../Components_Web/WasteReservoir_Web.h"
 #include "../Components_Web/HempyBucket_Web.h"
 
 /**
@@ -29,7 +30,7 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   B2W = new WeightSensor_Web(F("B2W"), this, &ModuleSettings->B2W);                           ///< Bucket 2 Weight sensor
   NRW = new WeightSensor_Web(F("NRW"), this, &ModuleSettings->WRW);                           ///< Nutrient Reservoir Weight sensor
   WRW = new WeightSensor_Web(F("WRW"), this, &ModuleSettings->WRW);                           ///< Waste Reservoir Weight sensor
-  WR1 = new WasteReservoir(F("WR1"), this, &ModuleSettings->WR1, WRW);                        ///< Waste reservoir
+  WR1 = new WasteReservoir_Web(F("WR1"), this, &ModuleSettings->WR1, WRW);                    ///< Waste reservoir
   B1P = new WaterPump_Web(F("B1P"), this, &ModuleSettings->B1P);                              ///< Bucket 1 pump
   B2P = new WaterPump_Web(F("B2P"), this, &ModuleSettings->B2P);                              ///< Bucket 2 pump
   Bucket1 = new HempyBucket_Web(F("B1"), this, &ModuleSettings->Bucket1, B1W, WRW, WR1, B1P); ///< Bucket 1

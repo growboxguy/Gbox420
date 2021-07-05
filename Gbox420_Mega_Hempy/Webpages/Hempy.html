@@ -206,14 +206,14 @@
 				<form>
 					<p>
 						<label><b>Watering</b></label>
-						<button id="B1__On" type="button" align="right"
+						<button id="B1_On" type="button" align="right"
 							title="Starts the pump and reset its status to OK">Start</button>
-						<button id="B1__Off" type="button" align="right"
+						<button id="B1_Off" type="button" align="right"
 							title="Stops the pump and reset its status to OK">Stop</button>
-						<button id="B1__Dis" type="button" align="right"
+						<button id="B1_Dis" type="button" align="right"
 							title="Stops and disables pump">Disable</button>
 						<label>Next:</label>
-						<span id="B1__RemainingWater" style="font-weight:bold;"></span>
+						<span id="B1_RemainingWater" style="font-weight:bold;"></span>
 					</p>
 				</form>
 				<form>
@@ -289,13 +289,13 @@
 				<form>
 					<p>
 						<label><b>Watering</b></label>
-						<button id="B2__On" type="button" align="right"
+						<button id="B2_On" type="button" align="right"
 							title="Starts the pump and reset its status to OK">Start</button>
-						<button id="B2__Off" type="button" align="right"
+						<button id="B2_Off" type="button" align="right"
 							title="Stops the pump and reset its status to OK">Stop</button>
-						<button id="B2__Dis" type="button" align="right"
+						<button id="B2_Dis" type="button" align="right"
 							title="Stops and disables pump">Disable</button>
-						<label>Next:</label><span id="B2__RemainingWater" style="font-weight:bold;"></span>
+						<label>Next:</label><span id="B2_RemainingWater" style="font-weight:bold;"></span>
 					</p>
 				</form>
 				<form>
@@ -343,15 +343,15 @@
 				</form>
 			</div>
 			<div class="card">
-				<h1 style="display: inline;">Reservoir</h1>
+				<h1 style="display: inline;">Reservoirs</h1>
 				<table class="tg">
 					<tr>
-						<th class="headerRows"><span>Nutrient reservoir</span>
+						<th class="headerRows"><span>Nutrient</span>
 							<button id="NRW_T" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the nutrient reservoir weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
-						<th class="headerRows"><span>Waste reservoir</span>
+						<th class="headerRows"><span>Waste</span>
 							<button id="WRW_T" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the waste reservoir weight scale. Do not have any weight on the scale!">Tare</button>
@@ -372,11 +372,11 @@
 					<p>
 						<label style="text-align: right;">Waste limit</label>
 						<!-- \TODO: Common waste handling for multiple buckets  -->
-						<input style="width: 57px;" name="B1_WL" type="number" value='0' step='0.1' min='0'
+						<input style="width: 57px;" name="WR1_L" type="number" value='0' step='0.1' min='0'
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
 						<label>Remaining:</label>
-						<label id="B1__RemainingWaste" style="font-weight:bold;"></label>
+						<label id="B1_RemainingWaste" style="font-weight:bold;"></label>
 					</p>
 				</form>
 			</div>
@@ -439,9 +439,9 @@
 	var Bucket1_Weight = document.getElementById("B1W_W");
 	var Bucket1_Waste = document.getElementById("WRW_W");
 	var Bucket1_DryWeight = document.getElementsByName("B1_DW")[0];
-	var Bucket1_WasteLimit = document.getElementsByName("B1_WL")[0];
-	var Bucket1_RemainingWater = document.getElementById("B1__RemainingWater");
-	var Bucket1_RemainingWaste = document.getElementById("B1__RemainingWaste");
+	var Bucket1_WasteLimit = document.getElementsByName("WR1_L")[0];
+	var Bucket1_RemainingWater = document.getElementById("B1_RemainingWater");
+	var Bucket1_RemainingWaste = document.getElementById("B1_RemainingWaste");
 	setInterval(function () {
 		//var Weight = parseInt(Bucket1_Weight.value.slice(0,-2))
 		var Unit = Bucket1_Weight.textContent.replaceAll(/[0-9.]/g, "");
@@ -453,7 +453,7 @@
 	///< Calculate remaining water in Hempy Bucket 2
 	var Bucket2_Weight = document.getElementById("B2W_W");
 	var Bucket2_DryWeight = document.getElementsByName("B2_DW")[0];
-	var Bucket2_RemainingWater = document.getElementById("B2__RemainingWater");
+	var Bucket2_RemainingWater = document.getElementById("B2_RemainingWater");
 	setInterval(function () {
 		//var Weight = parseInt(Bucket1_Weight.value.slice(0,-2))
 		var Unit = Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
