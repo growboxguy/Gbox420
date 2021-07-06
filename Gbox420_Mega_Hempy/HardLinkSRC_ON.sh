@@ -59,6 +59,8 @@ ln ../src/Components/Switch_PWM.h ./src/Components
 ln ../src/Components/Switch_PWM.cpp ./src/Components
 ln ../src/Components/WaterPump.h ./src/Components
 ln ../src/Components/WaterPump.cpp ./src/Components
+ln ../src/Components/WasteReservoir.h ./src/Components
+ln ../src/Components/WasteReservoir.cpp ./src/Components
 ln ../src/Components/WeightSensor.h ./src/Components
 ln ../src/Components/WeightSensor.cpp ./src/Components
 

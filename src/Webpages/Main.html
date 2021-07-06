@@ -1,2 +1,36 @@
-<!-- This is for embedding a module's Web interface in other module -->
-<iframe src="http://192.168.9.101/Main.html" width="100%" height="4000" frameborder="0" scrolling="yes"></iframe>
+<!-- ESP-link will add header here -->
+<meta name="refresh-rate" content="5000" />
+<div class="content">
+    <style type="text/css">
+        html,
+        body,
+        #layout {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <iframe src="http://192.168.9.101/Main.html" height="100%" width="100%" frameborder="0" scrolling="yes"></iframe>
+</div>
+
+<script>
+    document.addEventListener("click", function () {
+        loadCounter = 0;
+        refreshFormData();
+    });
+
+    document.onload = replaceFavoritesIcon();
+    function replaceFavoritesIcon() {
+        var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+        link.type = 'image/x-icon';
+        link.rel = 'shortcut icon';
+        link.href = 'https://lh3.googleusercontent.com/pw/ACtC-3fQYOltHeTzGQfCXJ9t4w69Q9He8OFV4ubiwdjXgfPK-BUnN2W0dONv5upYRst7UQRuFLnusYNft_qTRfPUtbBK-XnArFD5ulpKV_AXNayiaqemd0GdBPieLqpnPtEGhiLr-c0yuk9LrRaXTWPtH4gP=s671-no?authuser=0';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    };
+</script>
+
+</body>
+
+</html>

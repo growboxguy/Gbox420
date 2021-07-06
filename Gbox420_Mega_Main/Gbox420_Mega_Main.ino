@@ -130,9 +130,9 @@ void processTimeCriticalStuff()
 
 void runSec()
 {
-  wdt_reset();     ///< reset watchdog timeout
-  HeartBeat();     ///< Blinks built-in led
-  Main1->runSec(); 
+  wdt_reset(); ///< reset watchdog timeout
+  HeartBeat(); ///< Blinks built-in led
+  Main1->runSec();
 }
 
 void runFiveSec()
@@ -179,16 +179,20 @@ void resetWebServer()
   else
     logToSerials(F("PushingBox RestAPI failed"), true, 2); ///< If begin returns a negative number the initialization failed
   WebServer.setup();
-  URLHandler *GrowBoxHandler = WebServer.createURLHandler("/Main.html.json");       ///< setup handling request from GrowBox.html
-  GrowBoxHandler->loadCb.attach(&loadCallback);                                      ///< GrowBox tab - Called then the website loads initially
-  GrowBoxHandler->refreshCb.attach(&refreshCallback);                                ///< GrowBox tab - Called periodically to refresh website content
-  GrowBoxHandler->buttonCb.attach(&buttonCallback);                                  ///< GrowBox tab - Called when a button is pressed on the website
-  GrowBoxHandler->setFieldCb.attach(&fieldCallback);                                 ///< GrowBox tab - Called when a field is changed on the website
+  URLHandler *GrowBoxHandler = WebServer.createURLHandler("/Main.html.json");      ///< setup handling request from GrowBox.html
+  GrowBoxHandler->loadCb.attach(&loadCallback);                                    ///< GrowBox tab - Called then the website loads initially
+  GrowBoxHandler->refreshCb.attach(&refreshCallback);                              ///< GrowBox tab - Called periodically to refresh website content
+  GrowBoxHandler->buttonCb.attach(&buttonCallback);                                ///< GrowBox tab - Called when a button is pressed on the website
+  GrowBoxHandler->setFieldCb.attach(&fieldCallback);                               ///< GrowBox tab - Called when a field is changed on the website
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); ///< setup handling request from Settings.html
   SettingsHandler->loadCb.attach(&settingsLoadCallback);                           ///< Settings tab - Called then the website loads initially
   SettingsHandler->refreshCb.attach(&settingsRefreshCallback);                     ///< Settings tab - Called periodically to refresh website content
   SettingsHandler->buttonCb.attach(&settingsButtonCallback);                       ///< Settings tab - Called when a button is pressed on the website
   SettingsHandler->setFieldCb.attach(&settingsFieldCallback);                      ///< Settings tab - Called when a field is changed on the website
+  URLHandler *HempyHandler = WebServer.createURLHandler("/Hempy.html.json");    ///< setup handling request from Hempy.html (embeds the Stand-alone Hempy module)
+  HempyHandler->loadCb.attach(NULL);                                            ///< Ignore event, handled by the Stand-alone Hempy module
+  HempyHandler->refreshCb.attach(NULL);                                         ///< Ignore event, handled by the Stand-alone Hempy module
+  
   logToSerials(F("ESP-link ready"), true, 1);
 }
 
@@ -209,20 +213,20 @@ void setupMqtt()
   MqttAPI.setup();
 }
 
-void mqttConnected( __attribute__((unused)) void *response)
+void mqttConnected(__attribute__((unused)) void *response)
 {
   MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
   MqttConnected = true;
   //if(*Debug) logToSerials(F("MQTT connected"), true);
 }
 
-void mqttDisconnected( __attribute__((unused)) void *response)
+void mqttDisconnected(__attribute__((unused)) void *response)
 {
   //if(*Debug) logToSerials(F("MQTT disconnected"), true);
   MqttConnected = false;
 }
 
-void mqttPublished( __attribute__((unused)) void *response)
+void mqttPublished(__attribute__((unused)) void *response)
 {
   //if(*Debug) logToSerials(F("MQTT published"), true);
 }
@@ -321,7 +325,6 @@ void fieldCallback(char *Field)
   Main1->commandEventTrigger(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
 }
-
 
 /**
   \brief Called when the /Settings.html website is loading on the ESP-link webserver

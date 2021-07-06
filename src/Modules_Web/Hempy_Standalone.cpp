@@ -66,8 +66,7 @@ void Hempy_Standalone::report(bool FriendlyFormat)
 */
 void Hempy_Standalone::websiteEvent_Load(__attribute__((unused)) char *Url) ///< called when website is first opened
 {
-  WebServer.setArgString(F("Time"), getFormattedTime(false));  ///< Current time
-  WebServer.setArgJson(F("Log"), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
+  ;
 }
 
 /**
@@ -75,7 +74,8 @@ void Hempy_Standalone::websiteEvent_Load(__attribute__((unused)) char *Url) ///<
 */
 void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed (5sec automatic)
 {
-  ;
+  WebServer.setArgString(F("Time"), getFormattedTime(false));  ///< Current time
+  WebServer.setArgJson(F("Log"), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 }
 
 /**
