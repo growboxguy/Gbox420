@@ -173,6 +173,9 @@ void resetWebServer()
   SettingsHandler->refreshCb.attach(&settingsRefreshCallback);                     ///< Settings tab - Called periodically to refresh website content
   SettingsHandler->buttonCb.attach(&settingsButtonCallback);                       ///< Settings tab - Called when a button is pressed on the website
   SettingsHandler->setFieldCb.attach(&settingsFieldCallback);                      ///< Settings tab - Called when a field is changed on the website
+  URLHandler *MainHandler = WebServer.createURLHandler("/Main.html.json");    ///< setup handling request from Main.html (embeds the Main module's web interface)
+  MainHandler->loadCb.attach(&ignoreCallback);                                            ///< Ignore event, handled by the Main module
+  MainHandler->refreshCb.attach(ignoreCallback);                                         ///< Ignore event, handled by the Main module
   logToSerials(F("ESP-link ready"), true, 1);
 }
 
@@ -351,3 +354,9 @@ void settingsFieldCallback(char *Field)
   Hempy_Standalone1->settingsEvent_Command(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
 }
+
+/**
+  \brief Ignores the incoming loa/refresh event. Used when embedding another module's web interface that already handles the event
+*/
+void ignoreCallback(__attribute__((unused)) char *Url)
+{}

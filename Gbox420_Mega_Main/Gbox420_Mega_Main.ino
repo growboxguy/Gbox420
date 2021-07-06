@@ -189,10 +189,10 @@ void resetWebServer()
   SettingsHandler->refreshCb.attach(&settingsRefreshCallback);                     ///< Settings tab - Called periodically to refresh website content
   SettingsHandler->buttonCb.attach(&settingsButtonCallback);                       ///< Settings tab - Called when a button is pressed on the website
   SettingsHandler->setFieldCb.attach(&settingsFieldCallback);                      ///< Settings tab - Called when a field is changed on the website
-  URLHandler *HempyHandler = WebServer.createURLHandler("/Hempy.html.json");    ///< setup handling request from Hempy.html (embeds the Stand-alone Hempy module)
-  HempyHandler->loadCb.attach(NULL);                                            ///< Ignore event, handled by the Stand-alone Hempy module
-  HempyHandler->refreshCb.attach(NULL);                                         ///< Ignore event, handled by the Stand-alone Hempy module
-  
+  URLHandler *HempyHandler = WebServer.createURLHandler("/Hempy.html.json");       ///< setup handling request from Hempy.html (embeds the Stand-alone Hempy module's web interface)
+  HempyHandler->loadCb.attach(&ignoreCallback);                                    ///< Ignore event, handled by the Stand-alone Hempy module
+  HempyHandler->refreshCb.attach(&ignoreCallback);                                 ///< Ignore event, handled by the Stand-alone Hempy module
+
   logToSerials(F("ESP-link ready"), true, 1);
 }
 
@@ -390,4 +390,11 @@ void getWirelessStatus()
     Wireless.printPrettyDetails();
     logToSerials(F(""), true, 0);
   }
+}
+
+/**
+  \brief Ignores the incoming loa/refresh event. Used when embedding another module's web interface that already handles the event
+*/
+void ignoreCallback(__attribute__((unused)) char *Url)
+{
 }
