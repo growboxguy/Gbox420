@@ -179,7 +179,7 @@ void resetWebServer()
   else
     logToSerials(F("PushingBox RestAPI failed"), true, 2); ///< If begin returns a negative number the initialization failed
   WebServer.setup();
-  URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json");       ///< setup handling request from GrowBox.html
+  URLHandler *GrowBoxHandler = WebServer.createURLHandler("/Main.html.json");       ///< setup handling request from GrowBox.html
   GrowBoxHandler->loadCb.attach(&loadCallback);                                      ///< GrowBox tab - Called then the website loads initially
   GrowBoxHandler->refreshCb.attach(&refreshCallback);                                ///< GrowBox tab - Called periodically to refresh website content
   GrowBoxHandler->buttonCb.attach(&buttonCallback);                                  ///< GrowBox tab - Called when a button is pressed on the website

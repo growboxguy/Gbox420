@@ -6,10 +6,7 @@ unlink ./SerialLog.cpp > /dev/null 2>&1
 unlink ./SerialLog.h > /dev/null 2>&1
 unlink ./Settings.cpp > /dev/null 2>&1
 
-unlink ./Webpages/Links.html > /dev/null 2>&1
-unlink ./Webpages/Logs.html > /dev/null 2>&1 
 unlink ./Webpages/Settings.html > /dev/null 2>&1
-unlink ./Webpages/Test.html > /dev/null 2>&1
 
 unlink ./src/Modules/HempyModule.h > /dev/null 2>&1 
 unlink ./src/Modules/HempyModule.cpp > /dev/null 2>&1

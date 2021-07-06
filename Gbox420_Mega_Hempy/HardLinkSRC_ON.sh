@@ -11,7 +11,7 @@ mkdir ./src
 mkdir ./src/Components
 mkdir ./src/Components_Web
 mkdir ./src/Modules_Web
-mkdir ./Webpages
+mkdir -p ./Webpages 
 
 echo "Creating hard links"
 ln ../src/Settings_Mega.cpp ./Settings.cpp
@@ -20,8 +20,9 @@ ln ../src/SerialLog_Mega.h ./SerialLog.h
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
 
-ln ../src/Webpages/Logs.html ./Webpages/
 ln ../src/Webpages/Settings.html ./Webpages/
+unlink ./Webpages/Main.html > /dev/null 2>&1
+ln ../src/Webpages/Main.html ./Webpages/
 
 ln ../src/Modules_Web/420Module_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/420Module_Web.h ./src/Modules_Web

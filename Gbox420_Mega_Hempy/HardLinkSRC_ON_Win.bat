@@ -12,7 +12,7 @@ mkdir .\src
 mkdir .\src\Components
 mkdir .\src\Components_Web
 mkdir .\src\Modules_Web
-mkdir .\Webpages
+mkdir .\Webpages > nul 2>&1
 
 echo "Creating hard links"
 mklink /h .\SerialLog.cpp ..\src\SerialLog_Mega.cpp
@@ -21,8 +21,9 @@ mklink /h .\Settings.cpp ..\src\Settings_Mega.cpp
 mklink /h .\src\Helpers.cpp ..\src\Helpers.cpp
 mklink /h .\src\Helpers.h ..\src\Helpers.h
 
-mklink /h .\Webpages\Logs.html ..\src\Webpages\Logs.html
 mklink /h .\Webpages\Settings.html ..\src\Webpages\Settings.html
+del .\Webpages\Main.html > nul 2>&1
+mklink /h .\Webpages\Main.html ..\src\Webpages\Main.html
 
 mklink /h .\src\Modules_Web\420Module_Web.h ..\src\Modules_Web\420Module_Web.h
 mklink /h .\src\Modules_Web\420Module_Web.cpp ..\src\Modules_Web\420Module_Web.cpp

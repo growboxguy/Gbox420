@@ -5,10 +5,7 @@ del .\SerialLog.cpp > nul 2>&1
 del .\SerialLog.h > nul 2>&1
 del .\Settings.cpp > nul 2>&1
 
-del .\Webpages\Links.html > nul 2>&1
-del .\Webpages\Logs.html > nul 2>&1 
 del .\Webpages\Settings.html > nul 2>&1
-del .\Webpages\Test.html > nul 2>&1
 
 del .\src\Modules\HempyModule.h > nul 2>&1 
 del .\src\Modules\HempyModule.cpp > nul 2>&1

@@ -22,7 +22,6 @@ mklink /h .\src\Helpers.cpp ..\src\Helpers.cpp
 mklink /h .\src\Helpers.h ..\src\Helpers.h
 mklink /h .\src\WirelessCommands_Dev.h ..\src\WirelessCommands_Dev.h
 
-mklink /h .\Webpages\Logs.html ..\src\Webpages\Logs.html
 mklink /h .\Webpages\Settings.html ..\src\Webpages\Settings.html
 
 mklink /h .\src\Modules_Web\420Module_Web.h ..\src\Modules_Web\420Module_Web.h
