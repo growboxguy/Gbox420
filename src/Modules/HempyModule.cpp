@@ -34,13 +34,13 @@ HempyModule::HempyModule(const __FlashStringHelper *Name, Settings::HempyModuleS
   WasteRes = new WasteReservoir(F("WasteRes"), this, &ModuleSettings->WasteRes, WeightWR);
   Pump1 = new WaterPump(F("Pump1"), this, &ModuleSettings->HempyPump1);
   Pump2 = new WaterPump(F("Pump2"), this, &ModuleSettings->HempyPump2);
-  Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1, WeightB1, WeightWR, WasteRes, Pump1);
-  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2, WeightB2, WeightWR, WasteRes, Pump2);
+  Bucket1 = new HempyBucket(F("Bucket1"), this, &ModuleSettings->Bucket1, WeightB1, WasteRes, Pump1);
+  Bucket2 = new HempyBucket(F("Bucket2"), this, &ModuleSettings->Bucket2, WeightB2, WasteRes, Pump2);
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
-  logToSerials(Name, false, 0);
-  logToSerials(F("refreshing"), true, 1);
+  //logToSerials(Name, false, 0);
+  //logToSerials(F("refreshing"), true, 1);
   runAll();
   addToLog(F("HempyModule initialized"), 0);
 }
@@ -50,10 +50,10 @@ void HempyModule::refresh_Sec()
   Common::refresh_Sec();
   if (NextSequenceID != HempyMessages::HempyModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   { ///< If there is a package exchange in progress, but a followup command was not received within the timeout
-    if (*Debug)
-    {
-      logToSerials(F("Message timeout"), true, 0);
-    }
+    //if (*Debug)
+    //{
+    // logToSerials(F("Message timeout"), true, 0);
+    //}
     Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     updateAckData(HempyMessages::HempyModuleResponse1);
   }
@@ -271,10 +271,10 @@ bool HempyModule::processCommand(void *ReceivedCommand)
     }
     break;
   default:
-    if (*SerialReportWireless)
-    {
-      logToSerials(F("SequenceID unknown"), true, 1);
-    }
+    //if (*SerialReportWireless)
+    //{
+    // logToSerials(F("SequenceID unknown"), true, 1);
+    //}
     Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     Wireless.flush_rx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     break;
