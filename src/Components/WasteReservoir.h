@@ -17,17 +17,21 @@ public:
   bool getReserved();
   char *getReservedText(bool FriendlyFormat = false);
   void clearReservation(); ///< NEEDS TO BE CALLED at the end if the watering, makes the Waste Reservoir available
+  void checkFull();        ///< Compares the waste reservoir weight against the WasteLimit. Sets Full flag once the limit is reached
   bool getFull();
   char *getFullText(bool FriendlyFormat = false);
   void setWasteLimit(float Weight);
   char *getWasteLimitText(bool FriendlyFormat = false);
+  bool checkTarget(float OverflowTarget); ///<Check if the OverflowTarget is reached
+  float getWeightIncrease();
 
 private:
 protected:
   Module *Parent;
   WeightSensor *WasteWeightSensor; ///< Weight sensor to monitor the Hempy Bucket's waste reservoir, used to figure out when to stop watering
   float *WasteLimit;
-  bool Full = false;     ///< If the WasteLimit is reached no further reservations are accepted
-  bool Reserved = false; ///< Before a Hempy bucket can start watering it needs to reserve the waste reservoir. Only one bucket can be watering at one time, this ensures accurate run-off weight measurement.
-  void checkLimit();    ///< Compare the weight to the WasteLimit
+  float StartWeight = 0.0; ///< When a reservation is made the current waste reservoir weight is stored here
+  bool Full = false;       ///< Flag when the WasteLimit is reached: no further reservations are accepted
+  bool Reserved = false;   ///< Before a Hempy bucket can start watering it needs to reserve the waste reservoir. Only one bucket can be watering at one time, this ensures accurate run-off weight measurement.
+  void checkLimit();       ///< Compare the weight to the WasteLimit
 };

@@ -15,12 +15,12 @@ WasteReservoir::WasteReservoir(const __FlashStringHelper *Name, Module *Parent, 
 */
 void WasteReservoir::report(bool FriendlyFormat)
 {
-  Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  strcat_P(LongMessage, (PGM_P)F("\"R\":\""));  //< Reserved
+  Common::report(FriendlyFormat);              //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
+  strcat_P(LongMessage, (PGM_P)F("\"R\":\"")); //< Reserved
   strcat(LongMessage, getReservedText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"F\":\"")); //< Full - Weight limit reached
   strcat(LongMessage, getFullText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\",\"L\":\""));  //Limit
+  strcat_P(LongMessage, (PGM_P)F("\",\"L\":\"")); //Limit
   strcat(LongMessage, getWasteLimitText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
@@ -28,10 +28,10 @@ void WasteReservoir::report(bool FriendlyFormat)
 void WasteReservoir::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
-  checkLimit();
+  checkFull();
 }
 
-void WasteReservoir::checkLimit()
+void WasteReservoir::checkFull()
 {
   if (WasteWeightSensor->getWeight() > *WasteLimit)
     Full = true;
@@ -39,6 +39,21 @@ void WasteReservoir::checkLimit()
     Full = false;
 }
 
+bool WasteReservoir::checkTarget(float OverflowTarget)
+{
+  if (Reserved)
+  {
+    if (WasteWeightSensor->readWeight(false) - StartWeight >= OverflowTarget)
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+* @brief Reserves the waste reservoir and store the start weight if the reservoir. Returns false if a reservation cannot be made
+*/
 bool WasteReservoir::setReserved()
 {
   if (Reserved || Full)
@@ -48,6 +63,7 @@ bool WasteReservoir::setReserved()
   else
   {
     Reserved = true;
+    StartWeight = WasteWeightSensor->getWeight();
     if (*Debug)
     {
       logToSerials(getName(F("reserved")), true, 3);
@@ -118,4 +134,9 @@ char *WasteReservoir::getWasteLimitText(bool FriendlyFormat)
   {
     return toText(*WasteLimit);
   }
+}
+
+float WasteReservoir::getWeightIncrease()
+{
+  return WasteWeightSensor->getWeight(false) - StartWeight;
 }
