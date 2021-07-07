@@ -92,7 +92,7 @@ typedef struct
   struct FanSettings FanI = {.OnOffPin = 25, .SpeedPin = 26};
   struct FanSettings FanE = {.OnOffPin = 27, .SpeedPin = 28};
 
-/*
+  /*
   // PWM adjusted AC signal - Need to move this to a dedicated module, Mega already uses interrupts to talk to ESP-link and it messes with counting the phase zero crossings
   struct Fan_PWMSettings ///< Fan default settings
   {
@@ -113,15 +113,15 @@ typedef struct
     uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
     bool SerialReportDate;             ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory;           ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool SerialReportJSON;           ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool SerialReportJSONFriendly;           ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
-    bool SerialReportWireless;   ///< Enable/disable sending wireless package exchange reports to the Serial output  
+    bool SerialReportJSON;             ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool SerialReportJSONFriendly;     ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
+    bool SerialReportWireless;         ///< Enable/disable sending wireless package exchange reports to the Serial output
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
     uint16_t SheetsReportingFrequency; ///< How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
     bool ReportToMQTT;                 ///< Enable/disable reporting sensor readings to an MQTT broker
     uint16_t MQTTReportFrequency;      ///< How often to report to MQTT. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
   };
-  struct MainModuleSettings Main1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless=true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportFrequency = 5};
+  struct MainModuleSettings Main1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportFrequency = 5};
 
   struct HempyModuleSettings ///< Hempy default settings
   {

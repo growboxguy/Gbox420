@@ -381,14 +381,13 @@ void Module_Web::setDebug(bool DebugEnabled)
   *Debug = DebugEnabled;
   if (*Debug)
   {
-    addToLog(F("Debug enabled"));
-    getSoundObject()->playOnSound();
+    addToLog(F("Debug ON"));
   }
   else
   {
-    addToLog(F("Debug disabled"));
-    getSoundObject()->playOffSound();
+    addToLog(F("Debug OFF"));
   }
+  getSoundObject()->playOnOffSound(*Debug);
 }
 
 char *Module_Web::getDebugText(bool FriendlyFormat)
@@ -434,16 +433,15 @@ char *Module_Web::getMetricText(bool FriendlyFormat)
 void Module_Web::setSheetsReportingOnOff(bool State)
 {
   *ReportToGoogleSheets = State;
-  if (State)
+  if (*ReportToGoogleSheets)
   {
-    addToLog(F("Google Sheets enabled"));
-    getSoundObject()->playOnSound();
+    addToLog(F("Sheets ON"));
   }
   else
   {
-    addToLog(F("Google Sheets disabled"));
-    getSoundObject()->playOffSound();
+    addToLog(F("Sheets OFF"));
   }
+  getSoundObject()->playOnOffSound(*ReportToGoogleSheets);
 }
 
 void Module_Web::setSheetsReportingFrequency(uint16_t Frequency)
@@ -464,9 +462,9 @@ void Module_Web::reportToGoogleSheetsTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets
   if ((*ReportToGoogleSheets && SheetsTriggerCounter++ % (*SheetsReportingFrequency) == 0) || ForceRun)
   {
-    addPushingBoxLogRelayID();         //Loads Pushingbox relay ID into LongMessage
-    runReport(false, false, true, true);      //Append the sensor readings in a JSON format to LongMessage buffer
-    relayToGoogleSheets(&LongMessage); //Sends it to Google Sheets
+    addPushingBoxLogRelayID();           //Loads Pushingbox relay ID into LongMessage
+    runReport(false, false, true, true); //Append the sensor readings in a JSON format to LongMessage buffer
+    relayToGoogleSheets(&LongMessage);   //Sends it to Google Sheets
   }
 }
 ///< This is how a sent out message looks like:
@@ -475,16 +473,15 @@ void Module_Web::reportToGoogleSheetsTrigger(bool ForceRun)
 void Module_Web::setMQTTReportingOnOff(bool State)
 {
   *ReportToMQTT = State;
-  if (State)
+  if (*ReportToMQTT)
   {
-    addToLog(F("MQTT enabled"));
-    getSoundObject()->playOnSound();
+    addToLog(F("MQTT ON"));
   }
   else
   {
-    addToLog(F("MQTT disabled"));
-    getSoundObject()->playOffSound();
+    addToLog(F("MQTT OFF"));
   }
+  getSoundObject()->playOnOffSound(*ReportToMQTT);
 }
 
 void Module_Web::setMQTTReportingFrequency(uint16_t Frequency)
@@ -527,9 +524,9 @@ void Module_Web::reportToMQTTTrigger(bool ForceRun)
   if ((*ReportToMQTT && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
   {
     runReport(false, true, true, true); //< Loads a JSON Log to LongMessage buffer
-    mqttPublish(&LongMessage);   //< and publish readings via ESP MQTT API
-    eventLogToJSON(true, true);  //< Loads the EventLog as a JSON with EventLog key
-    mqttPublish(&LongMessage);   //< Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
+    mqttPublish(&LongMessage);          //< and publish readings via ESP MQTT API
+    eventLogToJSON(true, true);         //< Loads the EventLog as a JSON with EventLog key
+    mqttPublish(&LongMessage);          //< Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
   }
 }
 ///< This is how the two sent out messages looks like:

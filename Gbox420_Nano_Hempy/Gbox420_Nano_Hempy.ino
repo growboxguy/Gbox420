@@ -81,7 +81,7 @@ void InitializeWireless(bool ForceReport)
 {
   //if (*Debug || ForceReport)
   //{
-   // logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
+  // logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
   //}
   pinMode(WirelessCSNPin, OUTPUT);
   digitalWrite(WirelessCSNPin, HIGH);
@@ -102,7 +102,7 @@ void InitializeWireless(bool ForceReport)
   Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
   //if (*Debug || ForceReport)
   //{
-    //logToSerials(F("done"), true, 3);
+  //logToSerials(F("done"), true, 3);
   //}
   ReceivedMessageTimestamp = millis(); ///< Reset timeout counter
 }

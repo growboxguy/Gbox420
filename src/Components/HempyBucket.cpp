@@ -77,15 +77,14 @@ void HempyBucket::updateState(HempyStates NewState)
   {
     StateTimer = millis();                         ///< Start measuring the time spent in the new State
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-    strcat_P(LongMessage, (PGM_P)Name);
-    strcat_P(LongMessage, (PGM_P)F(" state: "));
+    strcat(LongMessage, getName(F("state: ")));
     strcat(LongMessage, toText_hempyState(State));
     strcat_P(LongMessage, (PGM_P)F(" -> "));
     strcat(LongMessage, toText_hempyState(NewState));
     logToSerials(&LongMessage, true, 3);
   }
 
-  BucketWeightSensor->readWeight(false);      ///< Force Bucket weight update
+  BucketWeightSensor->readWeight(false); ///< Force Bucket weight update
 
   switch (NewState)
   {
@@ -166,7 +165,7 @@ void HempyBucket::disable() //Takes time, do not call directly from an interupt 
   if (State == HempyStates::DRAINING || State == HempyStates::WATERING)
     BucketWasteReservoir->clearReservation();
   updateState(HempyStates::DISABLED);
-  Parent->addToLog(getName(F("disabled")));
+  Parent->addToLog(getName(getStateText(true)));
   Parent->getSoundObject()->playOffSound();
 }
 

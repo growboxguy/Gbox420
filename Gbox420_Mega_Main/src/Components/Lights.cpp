@@ -162,7 +162,7 @@ void Lights::checkTimer()
       else // False: Light should be off
       {
         if (*Status)
-        {                              // If status is ON
+        {                             // If status is ON
           setLightOnOff(false, true); // Turn OFF the lights (First bool), and do not add it to the log (Second bool)
         }
       }
@@ -173,7 +173,7 @@ void Lights::checkTimer()
       {
         if (!*Status)
         {
-          setLightOnOff(true, true);         
+          setLightOnOff(true, true);
         }
       }
       else if (*Status)
@@ -210,7 +210,7 @@ void Lights::setLightOnOff(bool Status, bool LogThis)
   {
     if (LogThis)
     {
-      Parent->addToLog(getName(getStatusText(true)));      
+      Parent->addToLog(getName(getStatusText(true)));
     }
     Parent->getSoundObject()->playOnSound();
     if (*FadingEnabled && CurrentStatus != LightStates::FADEIN && CurrentStatus != LightStates::TURNEDON)
@@ -325,16 +325,15 @@ void Lights::setTimerOnOff(bool TimerState)
 {
   *(this->TimerEnabled) = TimerState;
   if (*TimerEnabled)
-  {    
+  {
     Parent->addToLog(getName(F("timer ON")));
-    Parent->getSoundObject()->playOnSound();
     checkTimer();
   }
   else
   {
     Parent->addToLog(getName(F("timer OFF")));
-    Parent->getSoundObject()->playOffSound();
-  }  
+  }
+  Parent->getSoundObject()->playOnOffSound(*TimerEnabled);
 }
 
 void Lights::setOnTime(char *OnTime)
@@ -361,7 +360,7 @@ void Lights::setOnHour(uint8_t OnHour)
 void Lights::setOnMinute(uint8_t OnMinute)
 {
   *(this->OnMinute) = OnMinute;
-  Parent->addToLog(getName(F("ON time updated"))); 
+  Parent->addToLog(getName(F("ON time updated")));
   Parent->getSoundObject()->playOnSound();
 }
 

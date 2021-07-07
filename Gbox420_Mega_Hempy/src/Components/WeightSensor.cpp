@@ -32,7 +32,7 @@ void WeightSensor::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
   if (TareRequested)
-  {    
+  {
     tare();
   }
   if (CalibrateRequested)
@@ -89,12 +89,11 @@ void WeightSensor::tareRequest()
 
 void WeightSensor::tare() ///< Time intense, cannot be called straight from the website. Response would time out.
 {
-  TareRequested = false;  ///< Clear the flag requesting a tare
+  TareRequested = false; ///< Clear the flag requesting a tare
   Sensor->tare();
   *Offset = Sensor->get_offset();
   AverageWeight->reset();
-  appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F(" offset "));
+  strcat(ShortMessage, getName(F("offset ")));
   sprintf(ShortMessage + strlen(ShortMessage), "%ld", *Offset);
   Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();

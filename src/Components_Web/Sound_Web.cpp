@@ -14,11 +14,11 @@ void Sound_Web::refresh_Sec()
   {
     PlayEE = false;
     EE();
-  }  
+  }
 }
 
 void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
-{  
+{
   WebServer.setArgBoolean(getName(F("E"), true), *Enabled);
 }
 

@@ -48,11 +48,11 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Off")) == 0)
     {
-      stopWateringRequest();      
+      stopWateringRequest();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Dis")) == 0)
     {
-      disableRequest();      
+      disableRequest();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("TareDW")) == 0)
     {
@@ -67,7 +67,7 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
     {
       setOverflowTarget(toFloat(Data));
       Parent->addToLog(F("Targets updated"), false);
-    }      
+    }
     else if (strcmp_P(ShortMessage, (PGM_P)F("D")) == 0)
     {
       setDrainWaitTime(toInt(Data));

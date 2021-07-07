@@ -8,7 +8,7 @@
 
 ///< The Main module is always the Transmitter, sending a Command defined in HempyMessages
 ///< The Hempy module is always the Receiver that instantly replies to an incoming message with a pre-cached Acknowledgement(ACK) package
-///< HempyReset is a special message: 
+///< HempyReset is a special message:
 ///<   -  Transmitter (Main module) always starts the multi-message exchange with this message
 ///<   -  When the Receiver gets this message it pre-loads the ACK message for the first "real" message it will receive from the Main module
 
@@ -25,7 +25,7 @@ enum HempyMessages
    HempyBucketCommand2,
    HempyBucketResponse2,
    HempyReset /// Special command sent at the start and end of a multi-message exchange.
-}; ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+};            ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 __attribute__((unused)) static const __FlashStringHelper *toText_hempySequenceID(uint8_t SequenceID)
 {
@@ -93,7 +93,7 @@ struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless comma
 {
    HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
    HempyBucketCommand(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) bool Disable, __attribute__((unused)) bool StartWatering, __attribute__((unused)) bool StopWatering, __attribute__((unused)) bool TareWeightB, __attribute__((unused)) bool TareWeightDW, __attribute__((unused)) bool TareWeightWR, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) uint16_t PumpTimeOut, __attribute__((unused)) float DryWeight, __attribute__((unused)) float EvaporationTarget, __attribute__((unused)) float OverflowTarget, __attribute__((unused)) float WasteLimit, __attribute__((unused)) uint16_t DrainWaitTime) : HempyCommonTemplate(SequenceID) {}
-   bool Disable = false;  ///< Flag to signal a request to disable the watering logic. Flag is kept true until the Receiver confirms processing the request.
+   bool Disable = false; ///< Flag to signal a request to disable the watering logic. Flag is kept true until the Receiver confirms processing the request.
    bool StartWatering = false;
    bool StopWatering = false;
    bool TareWeightB = false;  ///< Flag to signal a request to Tare bucket weight scale
@@ -111,10 +111,10 @@ struct HempyBucketCommand : HempyCommonTemplate ///< Hempy bucket wireless comma
 struct HempyBucketResponse : HempyCommonTemplate ///< Hempy bucket wireless response
 {
    HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID) : HempyCommonTemplate(SequenceID) {}
-   HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) HempyStates HempyState, __attribute__((unused)) WaterPumpStates PumpState,  __attribute__((unused)) bool ConfirmDisable, __attribute__((unused)) bool ConfirmStartWatering, __attribute__((unused)) bool ConfirmStopWatering, __attribute__((unused)) bool ConfirmTareWeightB, __attribute__((unused)) bool ConfirmTareWeightDW, __attribute__((unused)) bool ConfirmTareWeightWR, __attribute__((unused)) float WeightB, __attribute__((unused)) float WeightWR, __attribute__((unused)) float DryWeight, __attribute__((unused)) float WetWeight) : HempyCommonTemplate(SequenceID) {}
+   HempyBucketResponse(__attribute__((unused)) HempyMessages SequenceID, __attribute__((unused)) HempyStates HempyState, __attribute__((unused)) WaterPumpStates PumpState, __attribute__((unused)) bool ConfirmDisable, __attribute__((unused)) bool ConfirmStartWatering, __attribute__((unused)) bool ConfirmStopWatering, __attribute__((unused)) bool ConfirmTareWeightB, __attribute__((unused)) bool ConfirmTareWeightDW, __attribute__((unused)) bool ConfirmTareWeightWR, __attribute__((unused)) float WeightB, __attribute__((unused)) float WeightWR, __attribute__((unused)) float DryWeight, __attribute__((unused)) float WetWeight) : HempyCommonTemplate(SequenceID) {}
    HempyStates HempyState = HempyStates::DISABLED;
    WaterPumpStates PumpState = WaterPumpStates::DISABLED;
-   bool ConfirmDisable = false;  //Feedback to the Main module that the command was processed and it can turn off the request flag. 
+   bool ConfirmDisable = false; //Feedback to the Main module that the command was processed and it can turn off the request flag.
    bool ConfirmStartWatering = false;
    bool ConfirmStopWatering = false;
    bool ConfirmTareWeightB = false;

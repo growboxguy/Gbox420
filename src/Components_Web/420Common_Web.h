@@ -15,11 +15,11 @@ extern ELClientWebServer WebServer;
 class Common_Web : virtual public Common
 {
 public:
-  virtual void websiteEvent_Load(__attribute__((unused)) char *Url) {}; ///< Called when an ESP-link webpage is loading. The name of the page is passed in the URL attribute (example: /Settings.html)
-  virtual void websiteEvent_Refresh(__attribute__((unused)) char *Url) {}; ///< Called when an ESP-link webpage is refreshing (Automatic, every 5sec)
-  virtual bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data) {return false;}; ///< Called when an ESP-link Button is clicked (Command: Name of the button, Data: empty), or a Field is submitted (Command: Name of the field, Data: The submitted value as text) Return true if the Command matches the Name of the component followed by _
+  virtual void websiteEvent_Load(__attribute__((unused)) char *Url){};                                                    ///< Called when an ESP-link webpage is loading. The name of the page is passed in the URL attribute (example: /Settings.html)
+  virtual void websiteEvent_Refresh(__attribute__((unused)) char *Url){};                                                 ///< Called when an ESP-link webpage is refreshing (Automatic, every 5sec)
+  virtual bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data) { return false; }; ///< Called when an ESP-link Button is clicked (Command: Name of the button, Data: empty), or a Field is submitted (Command: Name of the field, Data: The submitted value as text) Return true if the Command matches the Name of the component followed by _
 
 private:
 protected:
-  inline Common_Web(const __FlashStringHelper *Name):Common(Name){} ///< Constructor, implemented in the header file https://stackoverflow.com/questions/4761834/defining-constructor-in-header-file-vs-implementation-cpp-file
+  inline Common_Web(const __FlashStringHelper *Name) : Common(Name) {} ///< Constructor, implemented in the header file https://stackoverflow.com/questions/4761834/defining-constructor-in-header-file-vs-implementation-cpp-file
 };

@@ -47,19 +47,19 @@ public:
   void tareDryWetWeight();
 
 private:
-  uint32_t PumpOnTimer = millis();       ///< Used to measure pump's ON time in a cycle
-  uint32_t WateringTime = 0;             ///< Measures total time the pump was ON during a watering (sum of multiple cycles)
-  uint32_t StateTimer = millis();        ///< Measures how much time is spent in a state
-  float BucketStartWeight = 0.0;         ///< Store the bucket start weight at each watering cycle
-  bool DisableRequested = false;         ///< Signals to disable the watering logic
-  bool StartWateringRequested = false;   ///< Signals to start watering
-  bool StopWateringRequested = false;    ///< Signals to stop watering
+  uint32_t PumpOnTimer = millis();     ///< Used to measure pump's ON time in a cycle
+  uint32_t WateringTime = 0;           ///< Measures total time the pump was ON during a watering (sum of multiple cycles)
+  uint32_t StateTimer = millis();      ///< Measures how much time is spent in a state
+  float BucketStartWeight = 0.0;       ///< Store the bucket start weight at each watering cycle
+  bool DisableRequested = false;       ///< Signals to disable the watering logic
+  bool StartWateringRequested = false; ///< Signals to start watering
+  bool StopWateringRequested = false;  ///< Signals to stop watering
 
 protected:
   Module *Parent;
-  WeightSensor *BucketWeightSensor;         ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
-  WasteReservoir *BucketWasteReservoir;       ///< Logic for sharing a Waste reservoir between multiple buckets
-  WaterPump *BucketPump;                    ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
+  WeightSensor *BucketWeightSensor;     ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
+  WasteReservoir *BucketWasteReservoir; ///< Logic for sharing a Waste reservoir between multiple buckets
+  WaterPump *BucketPump;                ///< Weight sensor to monitor the Hempy Bucket's weight, used to figure out when to start and stop watering
   HempyStates State = HempyStates::IDLE;
   float *EvaporationTarget; ///< (kg/lbs) Amount of water that should evaporate before starting the watering cycles
   float *OverflowTarget;    ///< (kg/lbs) Amount of water that should go to the waste reservoir after a watering cycle

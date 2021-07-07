@@ -66,7 +66,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
     }
   }
   */
-  if (*SerialReportJSON  || ForceRun || JSONToBufferOnly)
+  if (*SerialReportJSON || ForceRun || JSONToBufferOnly)
   {
     if (ClearBuffer)
     {
@@ -206,14 +206,7 @@ void Module::setDebug(bool DebugEnabled)
   if (DebugEnabled != *Debug)
   {
     *Debug = DebugEnabled;
-    if (*Debug)
-    {
-      getSoundObject()->playOnSound();
-    }
-    else
-    {
-      getSoundObject()->playOffSound();
-    }
+    getSoundObject()->playOnOffSound(*Debug);
   }
 }
 

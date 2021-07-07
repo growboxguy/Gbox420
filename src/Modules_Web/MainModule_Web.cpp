@@ -36,9 +36,9 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   FanE = new Fan_Web(F("FanE"), this, &ModuleSettings->FanE);         ///< Exhaust fan.
   //FanI = new Fan_PWM(F("FanI"), this, &ModuleSettings->FanI);
   //FanE = new Fan_PWM(F("FanE"), this, &ModuleSettings->FanE);
-  Ap1 = new AirPump_Web(F("Ap1"), this, &ModuleSettings->Ap1);  ///< Air pump
-  Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);///< Light1
-  Lt2 = new Lights_Web(F("Lt2"), this, &ModuleSettings->Lt2);///< Light2 (optional)
+  Ap1 = new AirPump_Web(F("Ap1"), this, &ModuleSettings->Ap1);          ///< Air pump
+  Lt1 = new Lights_Web(F("Lt1"), this, &ModuleSettings->Lt1);           ///< Light1
+  Lt2 = new Lights_Web(F("Lt2"), this, &ModuleSettings->Lt2);           ///< Light2 (optional)
   Ls1 = new LightSensor_Web(F("Ls1"), this, &ModuleSettings->Ls1, Lt1); ///< Passing an extra Light object as parameter: Calibrates the light sensor against the passed Light object
   DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);
   //Pow1 = new PowerSensor_Web(F("Pow1"), this, &Serial2); ///< For PZEM004T V1.0 or PZEM004T V2.0
@@ -92,14 +92,14 @@ bool MainModule::commandEvent(__attribute__((unused)) char *Command, __attribute
     return false;
   }
   else
-  {    
+  {
     return true;
   }
 }
 
 void MainModule::refresh_FiveSec()
 {
-  Module_Web::refresh_FiveSec();  
+  Module_Web::refresh_FiveSec();
 }
 
 void MainModule::refresh_Minute()

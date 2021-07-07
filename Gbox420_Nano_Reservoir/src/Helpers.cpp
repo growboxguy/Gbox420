@@ -69,7 +69,7 @@ char *toText_floatDecimals(float Number)
   return ShortMessage;
 }
 
-char *toText(int Number1, const char *Separator, int Number2 )
+char *toText(int Number1, const char *Separator, int Number2)
 {
   snprintf(ShortMessage, 32, "%d%s%d", Number1, Separator, Number2);
   return ShortMessage;

@@ -152,7 +152,7 @@
 			margin-top: 0px !important;
 			line-height: 1em;
 		}
-		
+
 		.WebpageHeader {
 			color: #333;
 			background-color: #fc0;
@@ -162,21 +162,28 @@
 			padding-bottom: 2px;
 			margin: 0px;
 			line-height: 37px;
-			padding-left:3em !important
+			padding-left: 3em !important
 		}
 	</style>
 
-    <h1 class="WebpageHeader">Settings		
+	<h1 class="WebpageHeader">Settings
 		<a target="_self" href="http://192.168.9.101/Main.html">
-			<img width="34" height="34" style="float: right; border:none;margin:0;padding:0px;margin-right:0.5em !important" src="https://lh3.googleusercontent.com/pw/AM-JKLUo4QRIAl7XnYqJ5oWIgoMK0Uk8I0Xgv9sT-AeJntKmYikBd8suc5gq78Jzv_e6HCkrUYJQY6-l0yetvMhyxJlKDpkjUS51zwaqK4CrKDf_evh17_gczDH65rV59SEJqeFa2IO-Zo7nUIbe6hO07y4d=s300-no">
-		</a>		
-		<a target="_blank" href="https://drive.google.com/open?authuser=0&id=162557mj4XdpdER_PC6Kbq_GGUgc5nV-MYzr7J0Ims4Q">
-			<img width="25" height="32"	style="float: right; border:none;margin:0;padding:0px;margin-right:0.3em !important" src="https://lh3.googleusercontent.com/pw/AM-JKLWRLOTdIdk9JZPY3ng73ms0U3MZofwKubH9Ar_3q4M64CFAl2aTWcdaMx3LiRmKo-zTJaALOJu3EZlKmnE0t4QTnECRmT8FsL-Q3OKPznnc-7bQMAXMEmmKwn2pKI4hGssjIEZvInPL_rmpPsSonNKS=w811-h1059-no">
-		</a>	
-		<a target="_blank" href="https://growboxguy.duckdns.org:8123/">
-			<img width="32" height="32"	style="float: right; border:none;margin:0;padding:0px;margin-right:0.5em !important" src="https://lh3.googleusercontent.com/pw/AM-JKLVbcNddIvsl-gBfYSAQjZsZPevCd6wrOnMIWbC8a-Yd8vsKVhK6ZzFzpcirUm0Sm_JYFdgdSzIY1e_UezVijcEG8lCN_WI61lQGNV4aB07iz0lSnQiTv62D76Mjj74WNGYGYLdF9qm_tRTqQ0WoMvCd=w897-h901-no">
+			<img width="34" height="34"
+				style="float: right; border:none;margin:0;padding:0px;margin-right:0.5em !important"
+				src="https://lh3.googleusercontent.com/pw/AM-JKLUo4QRIAl7XnYqJ5oWIgoMK0Uk8I0Xgv9sT-AeJntKmYikBd8suc5gq78Jzv_e6HCkrUYJQY6-l0yetvMhyxJlKDpkjUS51zwaqK4CrKDf_evh17_gczDH65rV59SEJqeFa2IO-Zo7nUIbe6hO07y4d=s300-no">
 		</a>
-    </h1>
+		<a target="_blank"
+			href="https://drive.google.com/open?authuser=0&id=162557mj4XdpdER_PC6Kbq_GGUgc5nV-MYzr7J0Ims4Q">
+			<img width="25" height="32"
+				style="float: right; border:none;margin:0;padding:0px;margin-right:0.3em !important"
+				src="https://lh3.googleusercontent.com/pw/AM-JKLWRLOTdIdk9JZPY3ng73ms0U3MZofwKubH9Ar_3q4M64CFAl2aTWcdaMx3LiRmKo-zTJaALOJu3EZlKmnE0t4QTnECRmT8FsL-Q3OKPznnc-7bQMAXMEmmKwn2pKI4hGssjIEZvInPL_rmpPsSonNKS=w811-h1059-no">
+		</a>
+		<a target="_blank" href="https://growboxguy.duckdns.org:8123/">
+			<img width="32" height="32"
+				style="float: right; border:none;margin:0;padding:0px;margin-right:0.5em !important"
+				src="https://lh3.googleusercontent.com/pw/AM-JKLVbcNddIvsl-gBfYSAQjZsZPevCd6wrOnMIWbC8a-Yd8vsKVhK6ZzFzpcirUm0Sm_JYFdgdSzIY1e_UezVijcEG8lCN_WI61lQGNV4aB07iz0lSnQiTv62D76Mjj74WNGYGYLdF9qm_tRTqQ0WoMvCd=w897-h901-no">
+		</a>
+	</h1>
 	<div class="pure-g">
 		<div class="pure-u-1 pure-u-md-1-2">
 			<div class="card">
@@ -246,7 +253,7 @@
 								Free memory </label>
 							<input class="setButton" type="submit" value="Set">
 						</p>
-					</form>					
+					</form>
 					<form>
 						<p>
 							<label>
@@ -352,15 +359,13 @@
 				<ul id="Log"></ul>
 				<form>
 					<p>
-						<button id="Refresh" type="button"
-							title="Force refreshing sensor readings">&#8635;</button>
+						<button id="Refresh" type="button" title="Force refreshing sensor readings">&#8635;</button>
 						Report to:
 						<button id="SerialRep" type="button"
 							title="Report current status to Serial (ESP and Arduino)">Console</button>
 						<button id="SheetsRep" type="button"
 							title="Report current status to Google Sheets">Sheets</button>
-						<button id="MQTTRep" type="button"
-							title="Report current status to Google Sheets">MQTT</button>
+						<button id="MQTTRep" type="button" title="Report current status to Google Sheets">MQTT</button>
 					</p>
 				</form>
 			</div>
