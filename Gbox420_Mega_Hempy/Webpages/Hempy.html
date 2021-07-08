@@ -170,6 +170,16 @@
 			font-size: 25px;
 		}
 
+		/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+		.active, .collapsButton:hover {
+		background-color: #ccc;
+		}
+
+		/* Style the collapsible content. Note: hidden by default */
+		.collapsibleContent {  
+		display: none;
+		}
+
 		.WebpageHeader {
 			color: #333;
 			background-color: #fc0;
@@ -225,7 +235,7 @@
 						<th class="headerRows"><span>State</span></th>
 						<th class="headerRows"><span>Pump</span></th>
 						<th class="headerRows"><span>Bucket</span>
-							<button id="B1P_TareB" onclick="confirmTare(this)"
+							<button id="B1W_T" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
@@ -276,8 +286,23 @@
 						<input class=" setButton" type="submit" value="Set" />
 					</p>
 				</form>
-				<label><b>Weight based watering</b><button class="setButton"
-						onclick="hempyWateringInfo()">?</button></label>
+				<div>
+					<b>Weight based watering</b>
+					<button type="button" class="setButton" onclick="hempyWateringInfo()">?</button>
+					<button type="button" class="collapsButton">Calibration</button>
+					<div class="collapsibleContent">
+						<form>
+							<p>
+								<button type="button" onclick="weightSensorCalibrationInfo()">?</button>
+								<button type="button" id="B1W_T_duplicate" onclick="document.getElementById('B1W_T').click()">Tare</button>
+								<label style=" padding-left: 0.5em;text-align: left;">Known weight</label>
+								<input style="width: 57px;" name="B1W_C" type="number" value='0' step='0.1' min='0'
+									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />						
+								<input style="width: 57px;" class="setButton" type="submit" value="Calibrate">
+							</p>
+						</form>
+					</div>				
+				</div>
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: left;">Dry weight</label>
@@ -307,7 +332,7 @@
 						<th class="headerRows"><span>State</span></th>
 						<th class="headerRows"><span>Pump</span></th>
 						<th class="headerRows"><span>Bucket</span>
-							<button id="B2P_TareB" onclick="confirmTare(this)"
+							<button id="B2W_T" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
@@ -357,8 +382,23 @@
 						<input class=" setButton" type="submit" value="Set" />
 					</p>
 				</form>
-				<label><b>Weight based watering</b><button class="setButton"
-						onclick="hempyWateringInfo()">?</button></label>
+				<div>
+					<b>Weight based watering</b>
+					<button type="button" class="setButton" onclick="hempyWateringInfo()">?</button>
+					<button type="button" class="collapsButton">Calibration</button>
+					<div class="collapsibleContent">
+						<form>
+							<p>
+								<button type="button" onclick="weightSensorCalibrationInfo()">?</button>
+								<button type="button" id="B2W_T_duplicate" onclick="document.getElementById('B2W_T').click()">Tare</button>
+								<label style=" padding-left: 0.5em;text-align: left;">Known weight</label>
+								<input style="width: 57px;" name="B2W_C" type="number" value='0' step='0.1' min='0'
+									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />						
+								<input style="width: 57px;" class="setButton" type="submit" value="Calibrate">
+							</p>
+						</form>
+					</div>				
+				</div>
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: right;">Dry weight</label>
@@ -526,6 +566,27 @@
 		if (confirm("Watering starts when the Hempy bucket's weight drops below the Dry weight.\n\nWatering runs in cycles: Pump a certain amount of nutrient solution, then wait for it to drain.\n\nOnce the waste reservoir's weight increases by the Overflow target the watering stops.\n")) {
 		}
 	}
+
+	function weightSensorCalibrationInfo() {
+		confirm("1. Remove everything from the weight scale and press the Tare button. The Offset should update itself in ~10sec.\n\n3. Enter the 'Known weight' and press the Calibrate button. Scale should update in ~10sec\n\n4. Update the default Scale and Offset parameters under Settings.h\n") 	
+	}
+
+	///< Handles collapsing/expanding sections
+	var coll = document.getElementsByClassName("collapsButton");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+	coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.display === "block") {
+		content.style.display = "none";
+		} else {
+		content.style.display = "block";
+		}
+	});
+	}
+
 
 	document.onload = replaceFavoritesIcon();
 

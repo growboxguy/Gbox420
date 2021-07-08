@@ -102,8 +102,8 @@ typedef struct
     long Offset;    ///< Reading at 0 weight on the scale
     float Scale;    ///< Scale factor
   };
-  struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = 378161, .Scale = -21484.20};   ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
-  struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = -182833, .Scale = -22089.00};  ///< Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightB1 = {.DTPin = 4, .SCKPin = 6, .Offset = -176647, .Scale = -20810.75};   ///< Bucket 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
+  struct WeightSensorSettings WeightB2 = {.DTPin = 7, .SCKPin = 8, .Offset = 387148, .Scale = -22333.25};  ///< Bucket 2 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyBucketPlatforms/Test-WeightSensor_HempyBucketPlatforms.ino
   struct WeightSensorSettings WeightWR = {.DTPin = A2, .SCKPin = A3, .Offset = 260682, .Scale = -22084.60}; ///< Waste Reservoir Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/blob/master/Test_Sketches/Test-WeightSensor_HempyWastePlatforms/Test-WeightSensor_HempyWastePlatforms.ino
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.

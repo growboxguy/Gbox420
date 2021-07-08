@@ -169,6 +169,15 @@
 			height: 33px;
 			font-size : 25px; 
 		}
+		/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+		.active, .collapsButton:hover {
+		background-color: #ccc;
+		}
+
+		/* Style the collapsible content. Note: hidden by default */
+		.collapsibleContent {  
+		display: none;
+}
 		.WebpageHeader {
 			color: #333;
 			background-color: #fc0;
@@ -710,7 +719,7 @@
 						<input class=" setButton" type="submit" value="Set" />
 					</p>
 				</form>
-				<label><b>Weight based watering</b><button class="setButton" onclick="hempyWateringInfo()">?</button></label>
+				<label><b>Weight based watering</b><button type="button" class="setButton" onclick="hempyWateringInfo()">?</button></label>
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: right;">Dry weight</label>
@@ -1036,6 +1045,26 @@
 	function hempyWateringInfo() {
 		if (confirm("Watering starts when the Hempy bucket's weight drops below the Dry weight.\n\nWatering runs in cycles: Pump a certain amount of nutrient solution, then wait for it to drain.\n\nOnce the waste reservoir's weight increases by the Overflow target the watering stops.\n")) {
 		}
+	}
+
+	function weightSensorCalibrationInfo() {
+		confirm("1. Remove everything from the weight scale and press the Tare button. The Offset should update itself in ~10sec.\n\n3. Enter the 'Known weight' and press the Calibrate button. Scale should update in ~10sec\n\n4. Update the default Scale and Offset parameters under Settings.h\n") 	
+	}
+
+	///< Handles collapsing/expanding sections
+	var coll = document.getElementsByClassName("collapsButton");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+	coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.display === "block") {
+		content.style.display = "none";
+		} else {
+		content.style.display = "block";
+		}
+	});
 	}
 
 	document.onload = replaceFavoritesIcon();

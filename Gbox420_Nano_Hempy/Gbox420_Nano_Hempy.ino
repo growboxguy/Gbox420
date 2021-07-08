@@ -61,7 +61,7 @@ void setup()
   Metric = &ModuleSettings->Metric;
 
   ///< Setting up wireless module
-  InitializeWireless(true);
+  InitializeWireless();
 
   ///< Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.setInterval(1000); ///< 1000ms
@@ -77,9 +77,9 @@ void setup()
   //logToSerials(F("Setup ready, starting loops:"), true, 0);
 }
 
-void InitializeWireless(bool ForceReport)
+void InitializeWireless()
 {
-  //if (*Debug || ForceReport)
+  //if (*Debug)
   //{
   // logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
   //}
@@ -100,7 +100,7 @@ void InitializeWireless(bool ForceReport)
   Wireless.powerUp();  ///< Not necessary, startListening should switch back to normal power mode
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
-  //if (*Debug || ForceReport)
+  //if (*Debug)
   //{
   //logToSerials(F("done"), true, 3);
   //}
@@ -161,7 +161,7 @@ void getWirelessData()
   }
   if (millis() - ReceivedMessageTimestamp > WirelessReceiveTimeout)
   {
-    InitializeWireless(false);
+    InitializeWireless();
   }
 }
 
