@@ -298,7 +298,7 @@
 								<label style=" padding-left: 0.5em;text-align: left;">Known weight</label>
 								<input style="width: 57px;" name="B1W_C" type="number" value='0' step='0.1' min='0'
 									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />						
-								<input style="width: 57px;" class="setButton" type="submit" value="Calibrate">
+								<input style="width: 5em;" class="setButton" type="submit" value="Calibrate">
 							</p>
 						</form>
 					</div>				
@@ -394,7 +394,7 @@
 								<label style=" padding-left: 0.5em;text-align: left;">Known weight</label>
 								<input style="width: 57px;" name="B2W_C" type="number" value='0' step='0.1' min='0'
 									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />						
-								<input style="width: 57px;" class="setButton" type="submit" value="Calibrate">
+								<input style="width: 5em;" class="setButton" type="submit" value="Calibrate">
 							</p>
 						</form>
 					</div>				
@@ -568,7 +568,7 @@
 	}
 
 	function weightSensorCalibrationInfo() {
-		confirm("1. Remove everything from the weight scale and press the Tare button. The Offset should update itself in ~10sec.\n\n3. Enter the 'Known weight' and press the Calibrate button. Scale should update in ~10sec\n\n4. Update the default Scale and Offset parameters under Settings.h\n") 	
+		confirm("Calibrating a weight scale requires two parameters: \n  Offset: Reading with no weigth on the scale\n  Scale: The change in reading when placing 1 unit(kg,lbs) on the scale.\n\nCalibration process:\n 1. Remove everything from the weight scale and press the Tare button. The Offset will be displayed in ~10sec (stored in EEPROM)\n2. Place an object with a known weight on the scale, specify the weight as 'Known weight' and press the Calibrate button. The Scale will be displayed in ~10sec (stored in EEPROM)\n3. Update the default Scale and Offset parameters under Settings.h - WeightSensorSettings section.") 	
 	}
 
 	///< Handles collapsing/expanding sections

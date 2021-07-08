@@ -23,7 +23,7 @@ bool WeightSensor_Web::commandEvent(__attribute__((unused)) char *Command, __att
     if (strcmp_P(ShortMessage, (PGM_P)F("T")) == 0)
       tareRequest();
     else if (strcmp_P(ShortMessage, (PGM_P)F("C")) == 0)
-      triggerCalibration(WebServer.getArgInt());
+      triggerCalibration(WebServer.getArgFloat());
     return true;
   }
 }

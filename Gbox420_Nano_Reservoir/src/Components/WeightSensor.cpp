@@ -93,7 +93,7 @@ void WeightSensor::tare() ///< Time intense, cannot be called straight from the 
   Sensor->tare();
   *Offset = Sensor->get_offset();
   AverageWeight->reset();
-  strcat(ShortMessage, getName(F("offset ")));
+  strcpy(ShortMessage, getName(F("offset ")));
   sprintf(ShortMessage + strlen(ShortMessage), "%ld", *Offset);
   Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
