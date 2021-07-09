@@ -126,7 +126,7 @@ void HempyBucket::updateState(HempyStates NewState)
       updateState(HempyStates::DRAINING);
       BlockOverWritingState = true;
     }
-    if (WateringTime > ((uint32_t)BucketPump->getTimeOut() * 1000) || BucketPump->getState() == WaterPumpStates::DISABLED || BucketWasteReservoir->getFull()) ///< Timeout before the waste target was reached
+    if (WateringTime > ((uint32_t)BucketPump->getTimeOut() * 1000) || BucketPump->getState() == WaterPumpStates::DISABLED || BucketWasteReservoir->getState() == WasteReservoirStates::FULL) ///< Disable watering if: Timeout before the waste target was reached, pump failed or the waste reservoir got full
     {
       BucketWasteReservoir->clearReservation();
       updateState(HempyStates::DISABLED);

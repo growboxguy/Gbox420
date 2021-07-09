@@ -16,10 +16,8 @@ WasteReservoir::WasteReservoir(const __FlashStringHelper *Name, Module *Parent, 
 void WasteReservoir::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat);              //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  strcat_P(LongMessage, (PGM_P)F("\"R\":\"")); //< Reserved
-  strcat(LongMessage, getReservedText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\",\"F\":\"")); //< Full - Weight limit reached
-  strcat(LongMessage, getFullText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\"")); //< Reserved
+  strcat(LongMessage, getStateText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"L\":\"")); //Limit
   strcat(LongMessage, getWasteLimitText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
@@ -34,21 +32,33 @@ void WasteReservoir::refresh_FiveSec()
 void WasteReservoir::checkFull()
 {
   if (WasteWeightSensor->getWeight() > *WasteLimit)
-    Full = true;
-  else
-    Full = false;
+    updateState(WasteReservoirStates::FULL);
+  else if (State != WasteReservoirStates::RESERVED)
+    updateState(WasteReservoirStates::IDLE);
 }
 
 bool WasteReservoir::checkTarget(float OverflowTarget)
 {
-  if (Reserved)
+  if (WasteWeightSensor->readWeight(false) - StartWeight >= OverflowTarget || State == WasteReservoirStates::FULL) ///< When the overflow target is reached or the reservoir is full: Signal back the target is reached
   {
-    if (WasteWeightSensor->readWeight(false) - StartWeight >= OverflowTarget)
-    {
-      return true;
-    }
+    return true;
   }
   return false;
+}
+
+void WasteReservoir::updateState(WasteReservoirStates NewState)
+{
+  if (State != NewState)
+  {
+    StateTimer = millis();                         ///< Start measuring the time spent in the new State
+    memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
+    strcat(LongMessage, getName(F("state: ")));
+    strcat(LongMessage, toText_wasteReservoirStates(State));
+    strcat_P(LongMessage, (PGM_P)F(" -> "));
+    strcat(LongMessage, toText_wasteReservoirStates(NewState));
+    logToSerials(&LongMessage, true, 3);
+    State = NewState;
+  }
 }
 
 /**
@@ -56,62 +66,38 @@ bool WasteReservoir::checkTarget(float OverflowTarget)
 */
 bool WasteReservoir::setReserved()
 {
-  if (Reserved || Full)
+  if (State == WasteReservoirStates::RESERVED || State == WasteReservoirStates::FULL)
   {
     return false; ///< Deny a new reservation when already reserved or full
   }
   else
   {
-    Reserved = true;
+    updateState(WasteReservoirStates::RESERVED);
     StartWeight = WasteWeightSensor->getWeight();
-    if (*Debug)
-    {
-      logToSerials(getName(F("reserved")), true, 3);
-    }
     return true; ///< Accept reservation
   }
 }
 
 void WasteReservoir::clearReservation()
 {
-  Reserved = false;
-  if (*Debug)
-  {
-    logToSerials(getName(F("released")), true, 3);
-  }
+  if (State == WasteReservoirStates::RESERVED)
+    updateState(WasteReservoirStates::IDLE);
 }
 
-bool WasteReservoir::getReserved()
+WasteReservoirStates WasteReservoir::getState()
 {
-  return Reserved;
+  return State;
 }
 
-char *WasteReservoir::getReservedText(bool FriendlyFormat)
+char *WasteReservoir::getStateText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_yesNo(Reserved);
+    return toText_wasteReservoirStates(State);
   }
   else
   {
-    return toText(Reserved);
-  }
-}
-
-bool WasteReservoir::getFull()
-{
-  return Full;
-}
-
-char *WasteReservoir::getFullText(bool FriendlyFormat)
-{
-  if (FriendlyFormat)
-  {
-    return toText_yesNo(Full);
-  }
-  else
-  {
-    return toText(Full);
+    return toText((int)State);
   }
 }
 

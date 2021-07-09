@@ -7,7 +7,6 @@
 #include "WaterPump.h"
 
 ///< Weight sensor measures the bucket weight and watering is based on the measured weight
-
 enum WateringMode
 {
   WEIGHT,

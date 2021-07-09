@@ -78,18 +78,7 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
       setDryWeight(toFloat(Data));
       Parent->addToLog(F("Dry weight updated"), false);
     }
-    /*
-    //Settings
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Calibrate")) == 0)
-    {
-      BucketWeightSensor->triggerCalibration(WebServer.getArgInt());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Scale")) == 0)
-    {
-      BucketWeightSensor->setScale(WebServer.getArgFloat());
-    }
    
-    */
     return true; //Match found
   }
 }

@@ -93,24 +93,27 @@ void WeightSensor::tare() ///< Time intense, cannot be called straight from the 
   Sensor->tare();
   *Offset = Sensor->get_offset();
   AverageWeight->reset();
-  strcat(ShortMessage, getName(F("offset ")));
+  strcpy(ShortMessage, getName(F("offset ")));
   sprintf(ShortMessage + strlen(ShortMessage), "%ld", *Offset);
   Parent->addToLog(ShortMessage);
   Parent->getSoundObject()->playOnSound();
 }
 
-void WeightSensor::triggerCalibration(int CalibrationWeight)
+void WeightSensor::triggerCalibration(float KnownWeight)
 {
-  this->CalibrationWeight = CalibrationWeight;
+  this->KnownWeight = KnownWeight;
   CalibrateRequested = true;
 }
 
 void WeightSensor::calibrate() ///< Time intense, cannot be called straight from the website. Response would time out.
 {
-  *Scale = (float)Sensor->get_value() / CalibrationWeight;
+  char LogEntry[MaxShotTextLength] = "";  
+  *Scale = Sensor->get_value() / KnownWeight; 
   Sensor->set_scale(*Scale);
   AverageWeight->reset();
-  Parent->addToLog(getName(F("calibrated")));
+  strcpy(LogEntry, getName(F("scale ")));
+  strcat(LogEntry, toText(*Scale));  
+  Parent->addToLog(LogEntry);
   Parent->getSoundObject()->playOnSound();
 }
 

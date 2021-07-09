@@ -270,7 +270,26 @@ char *toText_waterPumpState(WaterPumpStates State)
     return toText(F("RUNNING"));
     break;
   default:
-    return toText(F("UNKNOWN"));
+    return toText(F("?"));
+    break;
+  }
+}
+
+char *toText_wasteReservoirStates(WasteReservoirStates State)
+{
+  switch (State)
+  {
+  case WasteReservoirStates::FULL:
+    return toText(F("FULL"));
+    break;
+  case WasteReservoirStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case WasteReservoirStates::RESERVED:
+    return toText(F("RESERVED"));
+    break;
+  default:
+    return toText(F("?"));
     break;
   }
 }
@@ -304,7 +323,7 @@ char *toText_pressurePumpState(PressurePumpStates State)
     return toText(F("BYPASSOPEN"));
     break;
   default:
-    return toText(F("UNKNOWN"));
+    return toText(F("?"));
     break;
   }
 }
@@ -338,7 +357,7 @@ char *toText_aeroTankState(AeroTankStates State)
     return toText(F("MIX"));
     break;
   default:
-    return toText(F("UNKNOWN"));
+    return toText(F("?"));
     break;
   }
 }
@@ -366,7 +385,7 @@ char *toText_aeroNoTankState(AeroNoTankStates State)
     return toText(F("MIX"));
     break;
   default:
-    return toText(F("UNKNOWN"));
+    return toText(F("?"));
     break;
   }
 }
@@ -388,7 +407,7 @@ char *toText_hempyState(HempyStates State)
     return toText(F("DRAINING"));
     break;
   default:
-    return toText(F("UNKNOWN"));
+    return toText(F("?"));
     break;
   }
 }
@@ -413,7 +432,7 @@ char *toText_lightState(LightStates State)
     return toText(F("DIMMED"));
     break;
   default:
-    return toText(F("UNKNOWN"));
+    return toText(F("?"));
     break;
   }
 }
