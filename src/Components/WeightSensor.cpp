@@ -84,7 +84,8 @@ char *WeightSensor::getWeightText(bool ReturnAverage, bool FriendlyFormat)
 
 void WeightSensor::tareRequest()
 {
-  TareRequested = true;
+  TareRequested = true;  
+  Parent->getSoundObject()->playOnSound();
 }
 
 void WeightSensor::tare() ///< Time intense, cannot be called straight from the website. Response would time out.
@@ -96,13 +97,13 @@ void WeightSensor::tare() ///< Time intense, cannot be called straight from the 
   strcpy(ShortMessage, getName(F("offset ")));
   sprintf(ShortMessage + strlen(ShortMessage), "%ld", *Offset);
   Parent->addToLog(ShortMessage);
-  Parent->getSoundObject()->playOnSound();
 }
 
 void WeightSensor::triggerCalibration(float KnownWeight)
 {
   this->KnownWeight = KnownWeight;
-  CalibrateRequested = true;
+  CalibrateRequested = true;  
+  Parent->getSoundObject()->playOnSound();
 }
 
 void WeightSensor::calibrate() ///< Time intense, cannot be called straight from the website. Response would time out.
@@ -114,7 +115,6 @@ void WeightSensor::calibrate() ///< Time intense, cannot be called straight from
   strcpy(LogEntry, getName(F("scale ")));
   strcat(LogEntry, toText(*Scale));  
   Parent->addToLog(LogEntry);
-  Parent->getSoundObject()->playOnSound();
 }
 
 void WeightSensor::setScale(float NewScale)

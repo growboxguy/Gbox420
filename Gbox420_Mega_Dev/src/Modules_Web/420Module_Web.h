@@ -45,6 +45,7 @@ public:
   void reportToGoogleSheetsTrigger(bool ForceRun = false);                                               ///< Google Sheets reporting - Handles custom reporting frequencies
   void mqttPublish(char (*JSONData)[MaxLongTextLength]);                                                 ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
   void reportToMQTTTrigger(bool ForceRun = false);                                                       ///< MQTT reporting - Handles custom reporting frequencies
+  Sound_Web *SoundFeedback = NULL;
   Sound_Web *getSoundObject();
 
 private:
@@ -62,7 +63,6 @@ protected:
   void setMqttSubscribeTopic(const char *ID);
   void setMQTTLWTTopic(const char *ID);
   void setMQTTLWTMessage(const char *ID);
-  Sound_Web *SoundFeedback = NULL;
   Common_Web *WebsiteQueue_Load[QueueDepth] = {};
   Common_Web *WebsiteQueue_Refresh[QueueDepth] = {};
   Common_Web *CommandQueue[QueueDepth] = {};

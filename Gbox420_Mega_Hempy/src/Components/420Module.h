@@ -26,6 +26,7 @@ public:
   void addToRefreshQueue_FiveSec(Common *Component); ///< Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
   void addToRefreshQueue_Minute(Common *Component);  ///< Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
   char *getFormattedTime(bool PrintToSerials);
+  Sound *SoundFeedback = NULL;
   Sound *getSoundObject();
   uint16_t *SerialReportFrequency;   ///< Frequency of Serial reports in seconds
   uint16_t SerialTriggerCounter = 0; ///< Helps with timing when to send the Serial report out
@@ -46,7 +47,7 @@ protected:
   void setSerialReportJSONFriendly(bool State);         ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
   void setSerialReportWireless(bool State);             ///< Enable/disable sending wireless package exchange reports to the Serial output
 
-  Sound *SoundFeedback = NULL;
+  
   bool RunAllRequested = false;
   bool ConsoleReportRequested = false;
   Common *ReportQueue[QueueDepth] = {}; ///< aggregate initializer: Same as initializing to null pointers

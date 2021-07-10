@@ -279,11 +279,11 @@ char *toText_wasteReservoirStates(WasteReservoirStates State)
 {
   switch (State)
   {
-  case WasteReservoirStates::IDLE:
-    return toText(F("IDLE"));
-    break;
   case WasteReservoirStates::FULL:
     return toText(F("FULL"));
+    break;
+  case WasteReservoirStates::IDLE:
+    return toText(F("IDLE"));
     break;
   case WasteReservoirStates::RESERVED:
     return toText(F("RESERVED"));

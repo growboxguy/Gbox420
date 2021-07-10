@@ -265,16 +265,16 @@ time_t getNtpTime()
     {
       NTPResponse = ESPCmd.GetTime();
       delay(1000);
-      logToSerials(F(""), false, 0);
+      logToSerials(F("."), false, 0);
       wdt_reset(); ///reset watchdog timeout
     }
     SyncInProgress = false;
     if (NTPResponse == 0)
     {
-      logToSerials(F("NTP time sync failed"), true, 3);
+      logToSerials(F("sync failed"), true, 3);
     }
     else
-      logToSerials(F("time synchronized"), true, 3);
+      logToSerials(F("synchronized"), true, 3);
   }
   return NTPResponse;
 }

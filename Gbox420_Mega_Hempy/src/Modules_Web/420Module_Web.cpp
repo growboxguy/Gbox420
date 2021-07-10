@@ -220,21 +220,25 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
   {
     ReportToGoogleSheetsRequested = true; ///< just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
     addToLog(F("Reporting to Sheets"), false);
+    getSoundObject()->playOnSound();
   }
   else if (strcmp_P(Command, (PGM_P)F("SerialRep")) == 0)
   {
     ConsoleReportRequested = true;
     addToLog(F("Reporting to Serial"), false);
+    getSoundObject()->playOnSound();
   }
   else if (strcmp_P(Command, (PGM_P)F("MQTTRep")) == 0)
   {
     MQTTReportRequested = true;
     addToLog(F("Reporting to MQTT"), false);
+    getSoundObject()->playOnSound();
   }
   else if (strcmp_P(Command, (PGM_P)F("Refresh")) == 0) ///< Website signals to refresh all sensor readings
   {
     RefreshAllRequested = true;
-    addToLog(F("Refresh triggered"), false);
+    addToLog(F("Refreshing"), false);
+    getSoundObject()->playOnSound();
   }
   //Settings
   else if (strcmp_P(Command, (PGM_P)F("Debug")) == 0)
@@ -488,7 +492,6 @@ void Module_Web::setMQTTReportingFrequency(uint16_t Frequency)
 {
   *SheetsReportingFrequency = Frequency;
   addToLog(F("MQTT freqency updated"));
-  getSoundObject()->playOnSound();
 }
 
 void Module_Web::setMqttPublishTopic(const char *Topic)

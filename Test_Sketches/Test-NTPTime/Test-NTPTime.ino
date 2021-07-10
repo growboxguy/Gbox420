@@ -54,9 +54,9 @@ time_t getNtpTime()
     delay(50);
   }
   if (NTPResponse == 0)
-    Serial.println(F("NTP time sync failed"));
+    Serial.println(F("sync failed"));
   else
-    Serial.println(F("NTP time synchronized"));
+    Serial.println(F("NTP synchronized"));
   return NTPResponse;
 }
 

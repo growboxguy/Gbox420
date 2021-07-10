@@ -171,13 +171,14 @@
 		}
 
 		/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-		.active, .collapsButton:hover {
-		background-color: #ccc;
+		.active,
+		.collapsButton:hover {
+			background-color: #ccc;
 		}
 
 		/* Style the collapsible content. Note: hidden by default */
-		.collapsibleContent {  
-		display: none;
+		.collapsibleContent {
+			display: none;
 		}
 
 		.WebpageHeader {
@@ -294,14 +295,15 @@
 						<form>
 							<p>
 								<button type="button" onclick="weightSensorCalibrationInfo()">?</button>
-								<button type="button" id="B1W_T_duplicate" onclick="document.getElementById('B1W_T').click()">Tare</button>
+								<button type="button" id="B1W_T_duplicate"
+									onclick="document.getElementById('B1W_T').click()">Tare</button>
 								<label style=" padding-left: 0.5em;text-align: left;">Known weight</label>
 								<input style="width: 57px;" name="B1W_C" type="number" value='0' step='0.1' min='0'
-									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />						
+									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />
 								<input style="width: 5em;" class="setButton" type="submit" value="Calibrate">
 							</p>
 						</form>
-					</div>				
+					</div>
 				</div>
 				<form>
 					<p>
@@ -390,14 +392,15 @@
 						<form>
 							<p>
 								<button type="button" onclick="weightSensorCalibrationInfo()">?</button>
-								<button type="button" id="B2W_T_duplicate" onclick="document.getElementById('B2W_T').click()">Tare</button>
+								<button type="button" id="B2W_T_duplicate"
+									onclick="document.getElementById('B2W_T').click()">Tare</button>
 								<label style=" padding-left: 0.5em;text-align: left;">Known weight</label>
 								<input style="width: 57px;" name="B2W_C" type="number" value='0' step='0.1' min='0'
-									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />						
+									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />
 								<input style="width: 5em;" class="setButton" type="submit" value="Calibrate">
 							</p>
 						</form>
-					</div>				
+					</div>
 				</div>
 				<form>
 					<p>
@@ -445,7 +448,6 @@
 				<form>
 					<p>
 						<label style="text-align: right;">Waste limit</label>
-						<!-- \TODO: Common waste handling for multiple buckets  -->
 						<input style="width: 57px;" name="WR1_L" type="number" value='0' step='0.1' min='0'
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
@@ -453,6 +455,36 @@
 						<label id="B1_RemainingWaste" style="font-weight:bold;"></label>
 					</p>
 				</form>
+				<div>Weight sensor calibration:
+					<button type="button" class="collapsButton">Nutrient</button>
+					<div class="collapsibleContent">
+						<form>
+							<p>
+								<button type="button" onclick="weightSensorCalibrationInfo()">?</button>
+								<button type="button" id="NRW_T_duplicate"
+									onclick="document.getElementById('NRW_T').click()">Tare</button>
+								<label style=" padding-left: 0.5em;text-align: left;">Known weight</label>
+								<input style="width: 57px;" name="NRW_C" type="number" value='0' step='0.1' min='0'
+									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />
+								<input style="width: 5em;" class="setButton" type="submit" value="Calibrate">
+							</p>
+						</form>
+					</div>
+					<button type="button" class="collapsButton">Waste</button>
+					<div class="collapsibleContent">
+						<form>
+							<p>
+								<button type="button" onclick="weightSensorCalibrationInfo()">?</button>
+								<button type="button" id="WRW_T_duplicate"
+									onclick="document.getElementById('WRW_T').click()">Tare</button>
+								<label style=" padding-left: 0.5em;text-align: left;">Known weight</label>
+								<input style="width: 57px;" name="WRW_C" type="number" value='0' step='0.1' min='0'
+									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />
+								<input style="width: 5em;" class="setButton" type="submit" value="Calibrate">
+							</p>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -565,7 +597,7 @@
 	}
 
 	function weightSensorCalibrationInfo() {
-		confirm("Calibrating a weight scale requires two parameters: \n  Offset: Reading with no weigth on the scale\n  Scale: The change in reading when placing 1 unit(kg,lbs) on the scale.\n\nCalibration process:\n 1. Remove everything from the weight scale and press the Tare button. The Offset will be displayed in ~10sec (stored in EEPROM)\n2. Place an object with a known weight on the scale, specify the weight as 'Known weight' and press the Calibrate button. The Scale will be displayed in ~10sec (stored in EEPROM)\n3. Update the default Scale and Offset parameters under Settings.h - WeightSensorSettings section.") 	
+		confirm("Calibrating a weight scale requires two parameters: \n  Offset: Reading with no weigth on the scale\n  Scale: The change in reading when placing 1 unit(kg,lbs) on the scale.\n\nCalibration process:\n 1. Remove everything from the weight scale and press the Tare button. The Offset will be displayed in ~10sec (stored in EEPROM)\n2. Place an object with a known weight on the scale, specify the weight as 'Known weight' and press the Calibrate button. The Scale will be displayed in ~10sec (stored in EEPROM)\n3. Update the default Scale and Offset parameters under Settings.h - WeightSensorSettings section.")
 	}
 
 	///< Handles collapsing/expanding sections
@@ -573,15 +605,15 @@
 	var i;
 
 	for (i = 0; i < coll.length; i++) {
-	coll[i].addEventListener("click", function() {
-		this.classList.toggle("active");
-		var content = this.nextElementSibling;
-		if (content.style.display === "block") {
-		content.style.display = "none";
-		} else {
-		content.style.display = "block";
-		}
-	});
+		coll[i].addEventListener("click", function () {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.display === "block") {
+				content.style.display = "none";
+			} else {
+				content.style.display = "block";
+			}
+		});
 	}
 
 

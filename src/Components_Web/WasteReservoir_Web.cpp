@@ -15,8 +15,7 @@ void WasteReservoir_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 
 void WasteReservoir_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgString(getName(F("R"), true), getReservedText(true));
-  WebServer.setArgString(getName(F("F"), true), getFullText(true));
+  WebServer.setArgString(getName(F("S"), true), getStateText(true));
 }
 
 bool WasteReservoir_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)

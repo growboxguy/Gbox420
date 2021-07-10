@@ -92,21 +92,25 @@ void Module_Web::refresh_FiveSec()
   if (RefreshAllRequested)
   {
     RefreshAllRequested = false;
+    addToLog(F("Refresh triggered"), false);
     runAll();
   }
   if (ReportToGoogleSheetsRequested)
   {
     ReportToGoogleSheetsRequested = false;
+    addToLog(F("Reporting to Sheets"), false);
     reportToGoogleSheetsTrigger(true);
   }
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
+    addToLog(F("Reporting to Serial"), false);
     runReport(true);
   }
   if (MQTTReportRequested)
   {
     MQTTReportRequested = false;
+    addToLog(F("Reporting to MQTT"), false);
     reportToMQTTTrigger(true);
   }
 }
@@ -219,22 +223,18 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
   if (strcmp_P(Command, (PGM_P)F("SheetsRep")) == 0)
   {
     ReportToGoogleSheetsRequested = true; ///< just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
-    addToLog(F("Reporting to Sheets"), false);
   }
   else if (strcmp_P(Command, (PGM_P)F("SerialRep")) == 0)
   {
     ConsoleReportRequested = true;
-    addToLog(F("Reporting to Serial"), false);
   }
   else if (strcmp_P(Command, (PGM_P)F("MQTTRep")) == 0)
   {
     MQTTReportRequested = true;
-    addToLog(F("Reporting to MQTT"), false);
   }
   else if (strcmp_P(Command, (PGM_P)F("Refresh")) == 0) ///< Website signals to refresh all sensor readings
   {
-    RefreshAllRequested = true;
-    addToLog(F("Refresh triggered"), false);
+    RefreshAllRequested = true;    
   }
   //Settings
   else if (strcmp_P(Command, (PGM_P)F("Debug")) == 0)
