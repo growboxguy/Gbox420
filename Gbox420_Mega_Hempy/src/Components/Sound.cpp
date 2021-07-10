@@ -4,7 +4,6 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
 {
   this->Parent = Parent;
   Parent->SoundFeedback = this; ///< Pointer for child objects to use sound feedback
-
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
   pinMode(*Pin, OUTPUT);

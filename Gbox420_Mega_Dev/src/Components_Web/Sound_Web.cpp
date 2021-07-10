@@ -3,6 +3,7 @@
 Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name), Common_Web(Name), Sound(Name, Parent, DefaultSettings)
 {
   this->Parent = Parent;
+  Parent->SoundFeedback = this;
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToCommandQueue(this);
 }

@@ -47,7 +47,6 @@ protected:
   void setSerialReportJSONFriendly(bool State);         ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
   void setSerialReportWireless(bool State);             ///< Enable/disable sending wireless package exchange reports to the Serial output
 
-  
   bool RunAllRequested = false;
   bool ConsoleReportRequested = false;
   Common *ReportQueue[QueueDepth] = {}; ///< aggregate initializer: Same as initializing to null pointers

@@ -183,7 +183,10 @@ void HempyBucket::startWatering()
     Parent->getSoundObject()->playOnSound();
   }
   else
+  {
     Parent->addToLog(BucketWasteReservoir->getName(F("busy")));
+    updateState(HempyStates::IDLE);
+  }
 }
 
 void HempyBucket::startWateringRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
