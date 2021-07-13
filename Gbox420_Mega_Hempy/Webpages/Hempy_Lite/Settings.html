@@ -1,0 +1,139 @@
+<meta name="refresh-rate" content="5000" />
+<div class="content">
+	<style type="text/css">
+		.content {
+			margin: 0px;
+			padding: 0px;
+		}
+
+		h1 {
+			padding: 0px;
+			margin: 0px;
+			margin-bottom: 6px;
+		}
+
+		.Link {
+			float: right;
+			border: none;
+			margin: 0;
+			padding: 0px;
+			margin-right: 0.5em !important
+		}
+
+		p {
+			word-wrap: break-word;
+			margin-block-start: 0.1em !important;
+			margin-block-end: 0.1em !important;
+		}
+
+		.card {
+			padding: 0.2em !important;
+			width: 95%;
+		}
+
+		form {
+			padding: 0px;
+			margin: 0em;
+		}
+
+		.Head {
+			color: #333;
+			background-color: #fc0;
+			text-align: center;
+			float: center;
+			padding-top: 5px;
+			padding-bottom: 2px;
+			margin: 0px;
+			line-height: 37px;
+			padding-left: 2em !important
+		}
+	</style>
+
+	<h1 class="Head">Hempy lite
+		<a class="Link" target="_self" href="http://192.168.9.102/Settings.html"><img width="34" height="34"
+				src="https://lh3.googleusercontent.com/pw/AM-JKLUo4QRIAl7XnYqJ5oWIgoMK0Uk8I0Xgv9sT-AeJntKmYikBd8suc5gq78Jzv_e6HCkrUYJQY6-l0yetvMhyxJlKDpkjUS51zwaqK4CrKDf_evh17_gczDH65rV59SEJqeFa2IO-Zo7nUIbe6hO07y4d=s300-no"></a>
+		<a class="Link" target="_blank"
+			href="https://drive.google.com/open?authuser=0&id=162557mj4XdpdER_PC6Kbq_GGUgc5nV-MYzr7J0Ims4Q"><img
+				width="25" height="32"
+				src="https://lh3.googleusercontent.com/pw/AM-JKLWRLOTdIdk9JZPY3ng73ms0U3MZofwKubH9Ar_3q4M64CFAl2aTWcdaMx3LiRmKo-zTJaALOJu3EZlKmnE0t4QTnECRmT8FsL-Q3OKPznnc-7bQMAXMEmmKwn2pKI4hGssjIEZvInPL_rmpPsSonNKS=w811-h1059-no"></a>
+		<a class="Link" target="_blank" href="https://growboxguy.duckdns.org:8123/"><img width="32" height="32"
+				src="https://lh3.googleusercontent.com/pw/AM-JKLVbcNddIvsl-gBfYSAQjZsZPevCd6wrOnMIWbC8a-Yd8vsKVhK6ZzFzpcirUm0Sm_JYFdgdSzIY1e_UezVijcEG8lCN_WI61lQGNV4aB07iz0lSnQiTv62D76Mjj74WNGYGYLdF9qm_tRTqQ0WoMvCd=w897-h901-no"></a>
+	</h1>
+	<div class="card">
+		<h1><span id="Time"></span></h1>
+		<ul id="Log"></ul>
+		<span>
+			<button id="Refresh" type="button"">&#8635;</button>
+				Report to:
+				<button id=" SerialRep" type="button">Console</button>
+			<button id="SheetsRep" type="button">Sheets</button>
+			<button id="MQTTRep" type="button">MQTT</button>
+		</span>
+	</div>
+	<div class="card">
+		<h1>MQTT reporting</h1>
+		<form>
+			<p>
+				<label>
+					<input style="width: 1em;" type="checkbox" name="MQTT" />
+					Report every </label>
+				<input min=5 max=86400 step=5 name="MQTTF" type="number" />sec
+				<input class="setButton" type="submit" value="Set">
+			</p>
+		</form>
+		<form>
+			<p>
+				<label>Publish</label>
+				<input type="text" name="MPT" style="width: 205px;" maxlength="127" />
+				<input class="setButton" type="submit" value="Set" />
+			</p>
+		</form>
+		<form>
+			<p>
+				<label>Subscribe</label>
+				<input type="text" name="MST" style="width: 190px;" maxlength="127" />
+				<input class="setButton" type="submit" value="Set" />
+			</p>
+		</form>
+	</div>
+	<div class="card">
+		<h1>Load</h1>
+		<p id="load">Fetching..</p>
+	</div>
+	<div class="card">
+		<h1>Refresh</h1>
+		<p id="refresh">Fetching..</p>
+	</div>
+</div>
+
+<script>
+	window.addEventListener('load', function () { loadCounter = 0; refreshFormData(); })
+
+	setTimeout(function () {
+		hempyGetLoad();
+	}, 2000);
+
+	setTimeout(function () {
+		setInterval(function () { hempyGetRefresh(); }, 5000);
+		document.addEventListener("click", hempyGetRefresh());
+	}, 4000);
+
+	function hempyGetLoad() {
+		fetch(window.location.origin + "/Hempy.html.json?reason=load",
+			{ method: 'GET' }
+		)
+			.then(response => response.json())
+			.then(json => document.getElementById("load").innerHTML = JSON.stringify(json))
+	};
+
+	function hempyGetRefresh() {
+		fetch(window.location.origin + "/Hempy.html.json?reason=refresh",
+			{ method: 'GET' }
+		)
+			.then(response => response.json())
+			.then(json => document.getElementById("refresh").innerHTML = JSON.stringify(json))
+	}
+</script>
+</body>
+
+</html>

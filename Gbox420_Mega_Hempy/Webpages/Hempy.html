@@ -548,6 +548,7 @@
 	var Bucket1_WasteLimit = document.getElementsByName("WR1_L")[0];
 	var Bucket1_RemainingWater = document.getElementById("B1_RemainingWater");
 	var Bucket1_RemainingWaste = document.getElementById("B1_RemainingWaste");
+	
 	setInterval(function () {
 		//var Weight = parseInt(Bucket1_Weight.value.slice(0,-2))
 		var Unit = Bucket1_Weight.textContent.replaceAll(/[0-9.]/g, "");
@@ -615,7 +616,6 @@
 			}
 		});
 	}
-
 
 	document.onload = replaceFavoritesIcon();
 
