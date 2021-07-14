@@ -23,6 +23,8 @@ ln ../src/Helpers.h ./src
 ln ../src/Webpages/Settings.html ./Webpages/
 unlink ./Webpages/Main.html > /dev/null 2>&1
 ln ../src/Webpages/Main.html ./Webpages/
+unlink ./Webpages/Hempy_Lite/Main.html > /dev/null 2>&1
+ln ../src/Webpages/Main.html ./Webpages/Hempy_Lite/
 
 ln ../src/Modules_Web/420Module_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/420Module_Web.h ./src/Modules_Web
