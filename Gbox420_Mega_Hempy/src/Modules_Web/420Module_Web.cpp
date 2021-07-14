@@ -4,7 +4,7 @@
 static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
 /**
-* @brief Constructor: creates an instance of the class, and stores wireless transmitter object used to communicate with other modules
+* @brief Constructor: creates an instance of the class
 */
 Module_Web::Module_Web(const __FlashStringHelper *Name) : Common(Name), Module(Name)
 {
@@ -177,6 +177,51 @@ char *Module_Web::eventLogToJSON(bool IncludeKey, bool ClearBuffer)
   {
     strcat_P(LongMessage, (PGM_P)F("}")); ///< closing curly bracket
   }
+  return LongMessage;
+}
+
+/**
+* @brief Converts the module settings into a JSON object and loads it into the LongMessage buffer
+*/
+char *Module_Web::settingsToJSON()
+{
+  memset(&LongMessage[0], 0, MaxLongTextLength);
+  strcat_P(LongMessage, (PGM_P)F("{\"Settings\":{")); ///< Adds a curly bracket that needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"Debug\":\""));
+  strcat(LongMessage, toText(*Debug));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Metric\":\""));
+  strcat(LongMessage, toText(*Metric));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SerialF\":\""));
+  strcat(LongMessage, toText(*SerialReportFrequency));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Date\":\""));
+  strcat(LongMessage, toText(*SerialReportDate));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Mem\":\""));
+  strcat(LongMessage, toText(*SerialReportMemory));
+  strcat_P(LongMessage, (PGM_P)F("\",\"JSON\":\""));
+  strcat(LongMessage, toText(*SerialReportJSON));
+  strcat_P(LongMessage, (PGM_P)F("\",\"JSONF\":\""));
+  strcat(LongMessage, toText(*SerialReportJSONFriendly));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Wire\":\""));
+  strcat(LongMessage, toText(*SerialReportWireless));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Sheets\":\""));
+  strcat(LongMessage, toText(*ReportToGoogleSheets));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SheetsF\":\""));
+  strcat(LongMessage, toText(*SheetsReportingFrequency));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Relay\":\""));
+  strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
+  strcat_P(LongMessage, (PGM_P)F("\",\"MQTT\":\""));
+  strcat(LongMessage, toText(*ReportToMQTT));
+  strcat_P(LongMessage, (PGM_P)F("\",\"MQTTF\":\""));
+  strcat(LongMessage, toText(*MQTTReportFrequency));
+  strcat_P(LongMessage, (PGM_P)F("\",\"MPT\":\""));
+  strcat(LongMessage, ModuleSettings->MqttPubTopic);
+  strcat_P(LongMessage, (PGM_P)F("\",\"MST\":\""));
+  strcat(LongMessage, ModuleSettings->MqttSubTopic);
+  strcat_P(LongMessage, (PGM_P)F("\",\"MLT\":\""));
+  strcat(LongMessage, ModuleSettings->MqttLwtTopic);
+  strcat_P(LongMessage, (PGM_P)F("\",\"MLM\":\""));
+  strcat(LongMessage, ModuleSettings->MqttLwtMessage);
+  strcat_P(LongMessage, (PGM_P)F("\"}}")); ///< closing the curly brackets at the end of the JSON
   return LongMessage;
 }
 
@@ -360,14 +405,14 @@ void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 */
 void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
+  if (*Debug)
+  {
+    logToSerials(F("MQTT reporting:"), false, 2);
+    logToSerials(&(ModuleSettings->MqttPubTopic), false, 1);
+    logToSerials(JSONData, true, 0);
+  }
   if (MqttConnected)
   {
-    if (*Debug)
-    {
-      logToSerials(F("MQTT reporting:"), false, 2);
-      logToSerials(&(ModuleSettings->MqttPubTopic), false, 1);
-      logToSerials(JSONData, true, 0);
-    }
     MqttAPI.publish(ModuleSettings->MqttPubTopic, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
   }
   else
@@ -530,6 +575,8 @@ void Module_Web::reportToMQTTTrigger(bool ForceRun)
     mqttPublish(&LongMessage);          //< and publish readings via ESP MQTT API
     eventLogToJSON(true, true);         //< Loads the EventLog as a JSON with EventLog key
     mqttPublish(&LongMessage);          //< Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
+    settingsToJSON();                   //< Loads the module settings as a JSON to the LongMessage buffer
+    mqttPublish(&LongMessage);
   }
 }
 ///< This is how the two sent out messages looks like:

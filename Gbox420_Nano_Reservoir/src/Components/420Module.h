@@ -12,7 +12,6 @@ class Module : virtual public Common
 {
 public:
   Module(const __FlashStringHelper *Name); ///< constructor
-  //Module(const __FlashStringHelper *Name, Sound *SoundFeedback);
   void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false);
   void runReport(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false); ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.
   void runAll();
