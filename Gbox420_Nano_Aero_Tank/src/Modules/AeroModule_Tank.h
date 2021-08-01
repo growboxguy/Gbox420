@@ -15,7 +15,7 @@ class Sound;
 class Aeroponics_Tank;
 class PressureSensor;
 class PressurePump;
-class WeightSensor;
+//class WeightSensor;
 extern RF24 Wireless;
 
 class AeroModule : public Module
@@ -29,7 +29,7 @@ public:
   PressureSensor *Pres1 = NULL;                                                                     ///< Pressure sensor
   PressurePump *Pump1 = NULL;                                                                       ///< High pressure pump
   Aeroponics_Tank *AeroT1 = NULL;                                                                   ///< Logic to control the Aeroponics system with a pressure tank
-  WeightSensor *Weight1;                                                                            ///< Tote weight sensor
+  //WeightSensor *Weight1;                                                                            ///< Tote weight sensor
   void report(__attribute__((unused)) bool FriendlyFormat = false){};
   void refresh_Sec();
   void refresh_FiveSec();

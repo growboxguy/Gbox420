@@ -37,8 +37,8 @@ void AeroModule_Web::report(bool FriendlyFormat)
   strcat(LongMessage, FriendlyFormat ? toText_onlineStatus(OnlineStatus) : toText(OnlineStatus));
   strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroResponse1Received.Pressure) : toText(AeroResponse1Received.Pressure));
-  strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
-  strcat(LongMessage, FriendlyFormat ? toText_weight(AeroResponse1Received.Weight) : toText(AeroResponse1Received.Weight));
+  //strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
+  //strcat(LongMessage, FriendlyFormat ? toText_weight(AeroResponse1Received.Weight) : toText(AeroResponse1Received.Weight));
   strcat_P(LongMessage, (PGM_P)F("\",\"Ma\":\""));
   strcat(LongMessage, FriendlyFormat ? toText_pressure(AeroCommand1ToSend.MaxPressure) : toText(AeroCommand1ToSend.MaxPressure));
   if (AeroResponse1Received.PressureTankPresent)
@@ -108,7 +108,7 @@ void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///
   WebServer.setArgString(getName(F("P"), true), toText_pressurePumpState(AeroResponse1Received.PumpState));
   WebServer.setArgString(getName(F("Pr"), true), toText_pressure(AeroResponse1Received.Pressure));
   WebServer.setArgString(getName(F("LSP"), true), toText_pressure(AeroResponse1Received.LastSprayPressure));
-  WebServer.setArgString(getName(F("W"), true), toText_weight(AeroResponse1Received.Weight));
+  //WebServer.setArgString(getName(F("W"), true), toText_weight(AeroResponse1Received.Weight));
 }
 
 /**
@@ -162,11 +162,13 @@ bool AeroModule_Web::commandEvent(__attribute__((unused)) char *Command, __attri
       AeroCommand2ToSend.MixReservoir = true;
       Parent->addToLog(F("Mixing reservoir"), false);
     }
+    /*
     else if (strcmp_P(ShortMessage, (PGM_P)F("T")) == 0)
     {
       AeroCommand2ToSend.TareWeight = true;
       Parent->addToLog(F("Taring aero scale"), false);
     }
+    */
     else if (strcmp_P(ShortMessage, (PGM_P)F("Refill")) == 0)
     {
       if (AeroResponse1Received.PressureTankPresent)
@@ -336,7 +338,7 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           logToSerials(AeroResponse1Received.Pressure, false, 1);
           logToSerials(toText((int)AeroResponse1Received.PumpState), false, 1);
           logToSerials(AeroResponse1Received.LastSprayPressure, false, 1);
-          logToSerials(AeroResponse1Received.Weight, true, 1);
+         // logToSerials(AeroResponse1Received.Weight, true, 1);
         }
         if (AeroCommand1ToSend.SprayEnabled || AeroCommand1ToSend.SprayDisabled || AeroCommand1ToSend.SprayNow || AeroCommand1ToSend.SprayOff)
         {
@@ -361,9 +363,9 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           logToSerials(AeroResponse2Received.ConfirmMixReservoir, false, 1);
           logToSerials(AeroResponse2Received.ConfirmRefillPressureTank, false, 1);
           logToSerials(AeroResponse2Received.ConfirmDrainPressureTank, false, 1);
-          logToSerials(AeroResponse2Received.ConfirmTareWeight, true, 1);
+          //logToSerials(AeroResponse2Received.ConfirmTareWeight, true, 1);
         }
-        if (AeroCommand2ToSend.PumpOn || AeroCommand2ToSend.PumpOff || AeroCommand2ToSend.PumpDisable || AeroCommand2ToSend.MixReservoir || AeroCommand2ToSend.RefillPressureTank || AeroCommand2ToSend.DrainPressureTank || AeroCommand2ToSend.TareWeight)
+        if (AeroCommand2ToSend.PumpOn || AeroCommand2ToSend.PumpOff || AeroCommand2ToSend.PumpDisable || AeroCommand2ToSend.MixReservoir || AeroCommand2ToSend.RefillPressureTank || AeroCommand2ToSend.DrainPressureTank)
         {
           SyncRequested = true; ///< Force another message exchange when a command is active
         }
@@ -379,8 +381,8 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
           AeroCommand2ToSend.RefillPressureTank = false;
         if (AeroResponse2Received.ConfirmDrainPressureTank)
           AeroCommand2ToSend.DrainPressureTank = false;
-        if (AeroResponse2Received.ConfirmTareWeight)
-          AeroCommand2ToSend.TareWeight = false;
+        //if (AeroResponse2Received.ConfirmTareWeight)
+          //AeroCommand2ToSend.TareWeight = false;
         break;
       case AeroMessages::AeroReset:
         if (*(Parent->SerialReportWireless))
