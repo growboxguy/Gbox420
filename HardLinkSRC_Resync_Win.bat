@@ -11,6 +11,7 @@ cd ./Gbox420_Nano_Aero_NoTank & call HardLinkSRC_OFF_Win.bat & cd..
 cd ./Gbox420_Nano_Aero_Tank & call HardLinkSRC_OFF_Win.bat & cd..
 cd ./Gbox420_Nano_Hempy & call HardLinkSRC_OFF_Win.bat & cd..
 cd ./Gbox420_Nano_Reservoir & call HardLinkSRC_OFF_Win.bat & cd..
+cd ./Gbox420_Nano_ACMotor & call HardLinkSRC_OFF_Win.bat & cd..
 
 echo "------------------------------------"
 echo "Removed links, press enter to continue re-creating the links "
@@ -25,6 +26,7 @@ cd ./Gbox420_Nano_Aero_NoTank & call HardLinkSRC_ON_Win.bat & cd..
 cd ./Gbox420_Nano_Aero_Tank & call HardLinkSRC_ON_Win.bat & cd..
 cd ./Gbox420_Nano_Hempy & call HardLinkSRC_ON_Win.bat & cd..
 cd ./Gbox420_Nano_Reservoir & call HardLinkSRC_ON_Win.bat & cd..
+cd ./Gbox420_Nano_ACMotor & call HardLinkSRC_ON_Win.bat & cd..
 
 echo "------------------------------------"
 echo "Done, press enter to exit"
