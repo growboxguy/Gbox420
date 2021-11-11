@@ -10,20 +10,22 @@
 const byte PWM_Pin = 10;  //PWM signal that sets the Output (Mega2560: D2-D13 supported, Nano: D3,D5,D6,D9-D12 supported)
 const byte MinOutput = 30;
 const byte MaxOutput = 100;
-int Output = MaxOutput;  //Start with full power
+int Output = MinOutput;  //Start with minimum output
 bool isGettingHigh = true; //Direction to increase or decrease Output
 
 dimmerLamp PWMDimmer(PWM_Pin);   //Any device that can be controlled using AC PWM signals (AC Motors, Incandescent light bulb)
 
 void setup()
 {
+  PWMDimmer.begin(NORMAL_MODE, OFF); //dimmer initialisation: name.begin(Mode: NORMAL_MODE/TOGGLE_MODE, State:ON/OFF) 
   Serial.begin(115200);
   Serial.println(F("Sketch for testing AC PWM Output/controlling"));
   Serial.println();
 
-  PWMDimmer.begin(NORMAL_MODE, OFF); //dimmer initialisation: name.begin(Mode: NORMAL_MODE/TOGGLE_MODE, State:ON/OFF) 
+  
+  
+  Serial.println(F("Turning on device in 5 sec..."));
   delay(5000); //Wait 5 seconds
-  Serial.println(F("Turning on device..."));
   PWMDimmer.setPower(Output);
   PWMDimmer.setState(ON); //Turn on device
 
@@ -39,7 +41,7 @@ void loop()
   {
     PWMDimmer.setPower(Output); 
     
-    if (Output % 10 == 0)   //modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
+    if (Output % 2 == 0)   //modulo division, https://www.arduino.cc/reference/en/language/structure/arithmetic-operators/modulo/
     {
       Serial.print(Output);
       Serial.println("%");
