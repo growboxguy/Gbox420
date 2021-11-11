@@ -18,8 +18,8 @@ private:
 protected:
   Module *Parent;
   WaterTempSensor *WaterTempSensor1 = NULL;
-  uint8_t *Pin;       //A port - Analog tds reading
-  uint8_t *PowerPin;  //+ port - Power to the module is provided by an Arduino I/O pin (analog or digital) Up to 40mA supported (KS0429 needs 6mA). The module is only powered on while taking a reading - Else it messes with pH readings
+  uint8_t *Pin;      //A port - Analog tds reading
+  uint8_t *PowerPin; //+ port - Power to the module is provided by an Arduino I/O pin (analog or digital) Up to 40mA supported (KS0429 needs 6mA). The module is only powered on while taking a reading - Else it messes with pH readings
   float TDS;
   void updateTDS(bool ShowRaw);
 };

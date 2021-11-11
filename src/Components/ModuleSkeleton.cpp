@@ -32,7 +32,7 @@ void ModuleSkeleton::refresh_FiveSec()
 
 void ModuleSkeleton::refresh_Minute()
 {
-Common::refresh_Minute();
+  Common::refresh_Minute();
 }
 
 void ModuleSkeleton::report()

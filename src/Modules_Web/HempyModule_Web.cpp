@@ -88,35 +88,35 @@ void HempyModule_Web::report(bool FriendlyFormat)
 
 void HempyModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
-    WebServer.setArgString(getName(F("B1ET"),true), toText(HempyBucketCommand1ToSend.EvaporationTarget));
-    WebServer.setArgString(getName(F("B1OF"),true), toText(HempyBucketCommand1ToSend.OverflowTarget));
-    WebServer.setArgString(getName(F("B1WL"),true), toText(HempyBucketCommand1ToSend.WasteLimit));
-    WebServer.setArgInt(getName(F("B1PS"),true), HempyBucketCommand1ToSend.PumpSpeed);
-    WebServer.setArgInt(getName(F("B1T"),true), HempyBucketCommand1ToSend.PumpTimeOut);
-    WebServer.setArgInt(getName(F("B1D"),true), HempyBucketCommand1ToSend.DrainWaitTime);
-    WebServer.setArgString(getName(F("B1DW"),true), toText(HempyBucketResponse1Received.DryWeight));
-    WebServer.setArgString(getName(F("B2ET"),true), toText(HempyBucketCommand2ToSend.EvaporationTarget));
-    WebServer.setArgString(getName(F("B2OF"),true), toText(HempyBucketCommand2ToSend.OverflowTarget));
-    WebServer.setArgString(getName(F("B2WL"),true), toText(HempyBucketCommand2ToSend.WasteLimit));
-    WebServer.setArgInt(getName(F("B2PS"),true), HempyBucketCommand2ToSend.PumpSpeed);
-    WebServer.setArgInt(getName(F("B2T"),true), HempyBucketCommand2ToSend.PumpTimeOut);
-    WebServer.setArgInt(getName(F("B2D"),true), HempyBucketCommand2ToSend.DrainWaitTime);
-    WebServer.setArgString(getName(F("B2DW"),true), toText(HempyBucketResponse2Received.DryWeight));
+  WebServer.setArgString(getName(F("B1ET"), true), toText(HempyBucketCommand1ToSend.EvaporationTarget));
+  WebServer.setArgString(getName(F("B1OF"), true), toText(HempyBucketCommand1ToSend.OverflowTarget));
+  WebServer.setArgString(getName(F("B1WL"), true), toText(HempyBucketCommand1ToSend.WasteLimit));
+  WebServer.setArgInt(getName(F("B1PS"), true), HempyBucketCommand1ToSend.PumpSpeed);
+  WebServer.setArgInt(getName(F("B1T"), true), HempyBucketCommand1ToSend.PumpTimeOut);
+  WebServer.setArgInt(getName(F("B1D"), true), HempyBucketCommand1ToSend.DrainWaitTime);
+  WebServer.setArgString(getName(F("B1DW"), true), toText(HempyBucketResponse1Received.DryWeight));
+  WebServer.setArgString(getName(F("B2ET"), true), toText(HempyBucketCommand2ToSend.EvaporationTarget));
+  WebServer.setArgString(getName(F("B2OF"), true), toText(HempyBucketCommand2ToSend.OverflowTarget));
+  WebServer.setArgString(getName(F("B2WL"), true), toText(HempyBucketCommand2ToSend.WasteLimit));
+  WebServer.setArgInt(getName(F("B2PS"), true), HempyBucketCommand2ToSend.PumpSpeed);
+  WebServer.setArgInt(getName(F("B2T"), true), HempyBucketCommand2ToSend.PumpTimeOut);
+  WebServer.setArgInt(getName(F("B2D"), true), HempyBucketCommand2ToSend.DrainWaitTime);
+  WebServer.setArgString(getName(F("B2DW"), true), toText(HempyBucketResponse2Received.DryWeight));
 }
 
 void HempyModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
-    WebServer.setArgString(getName(F("S"),true), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getName(F("B1W"),true), toText_weight(HempyBucketResponse1Received.WeightB));
-    WebServer.setArgString(getName(F("B1WR"),true), toText_weight(HempyBucketResponse1Received.WeightWR));
-    WebServer.setArgString(getName(F("B1DWW"),true), toText(HempyBucketResponse1Received.DryWeight, "/", HempyBucketResponse1Received.WetWeight));
-    WebServer.setArgString(getName(F("B1S"),true), toText_hempyState(HempyBucketResponse1Received.HempyState));
-    WebServer.setArgString(getName(F("B1P"),true), toText_waterPumpState(HempyBucketResponse1Received.PumpState));
-    WebServer.setArgString(getName(F("B2W"),true), toText_weight(HempyBucketResponse2Received.WeightB));
-    WebServer.setArgString(getName(F("B2WR"),true), toText_weight(HempyBucketResponse2Received.WeightWR));
-    WebServer.setArgString(getName(F("B2DWW"),true), toText(HempyBucketResponse2Received.DryWeight, "/", HempyBucketResponse2Received.WetWeight));
-    WebServer.setArgString(getName(F("B2S"),true), toText_hempyState(HempyBucketResponse2Received.HempyState));
-    WebServer.setArgString(getName(F("B2P"),true), toText_waterPumpState(HempyBucketResponse2Received.PumpState));
+  WebServer.setArgString(getName(F("S"), true), toText_onlineStatus(OnlineStatus));
+  WebServer.setArgString(getName(F("B1W"), true), toText_weight(HempyBucketResponse1Received.WeightB));
+  WebServer.setArgString(getName(F("B1WR"), true), toText_weight(HempyBucketResponse1Received.WeightWR));
+  WebServer.setArgString(getName(F("B1DWW"), true), toText(HempyBucketResponse1Received.DryWeight, "/", HempyBucketResponse1Received.WetWeight));
+  WebServer.setArgString(getName(F("B1S"), true), toText_hempyState(HempyBucketResponse1Received.HempyState));
+  WebServer.setArgString(getName(F("B1P"), true), toText_waterPumpState(HempyBucketResponse1Received.PumpState));
+  WebServer.setArgString(getName(F("B2W"), true), toText_weight(HempyBucketResponse2Received.WeightB));
+  WebServer.setArgString(getName(F("B2WR"), true), toText_weight(HempyBucketResponse2Received.WeightWR));
+  WebServer.setArgString(getName(F("B2DWW"), true), toText(HempyBucketResponse2Received.DryWeight, "/", HempyBucketResponse2Received.WetWeight));
+  WebServer.setArgString(getName(F("B2S"), true), toText_hempyState(HempyBucketResponse2Received.HempyState));
+  WebServer.setArgString(getName(F("B2P"), true), toText_waterPumpState(HempyBucketResponse2Received.PumpState));
 }
 
 bool HempyModule_Web::commandEvent(char *Command, char *Data)
@@ -358,17 +358,23 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         {
           SyncRequested = true; ///< Force a second packet to actualize the response
         }
-        if(HempyBucketResponse1Received.ConfirmDisable) HempyBucketCommand1ToSend.Disable = false;  //Turn off the Flag once the Receiver confirms processing it 
-        if(HempyBucketResponse1Received.ConfirmStartWatering) HempyBucketCommand1ToSend.StartWatering = false;
-        if(HempyBucketResponse1Received.ConfirmStopWatering) HempyBucketCommand1ToSend.StopWatering = false;
-        if(HempyBucketResponse1Received.ConfirmTareWeightB) HempyBucketCommand1ToSend.TareWeightB = false;
-        if(HempyBucketResponse1Received.ConfirmTareWeightDW) HempyBucketCommand1ToSend.TareWeightDW = false;
-        if(HempyBucketResponse1Received.ConfirmTareWeightWR) HempyBucketCommand1ToSend.TareWeightWR = false;
+        if (HempyBucketResponse1Received.ConfirmDisable)
+          HempyBucketCommand1ToSend.Disable = false; //Turn off the Flag once the Receiver confirms processing it
+        if (HempyBucketResponse1Received.ConfirmStartWatering)
+          HempyBucketCommand1ToSend.StartWatering = false;
+        if (HempyBucketResponse1Received.ConfirmStopWatering)
+          HempyBucketCommand1ToSend.StopWatering = false;
+        if (HempyBucketResponse1Received.ConfirmTareWeightB)
+          HempyBucketCommand1ToSend.TareWeightB = false;
+        if (HempyBucketResponse1Received.ConfirmTareWeightDW)
+          HempyBucketCommand1ToSend.TareWeightDW = false;
+        if (HempyBucketResponse1Received.ConfirmTareWeightWR)
+          HempyBucketCommand1ToSend.TareWeightWR = false;
 
         if (!isnan(HempyBucketCommand1ToSend.DryWeight) && HempyBucketResponse1Received.DryWeight == HempyBucketCommand1ToSend.DryWeight)
         {
           HempyBucketCommand1ToSend.DryWeight = NAN;
-        }        
+        }
         break;
       case HempyMessages::HempyBucketResponse2:
         memcpy(&HempyBucketResponse2Received, ReceivedResponse, sizeof(struct HempyBucketResponse));
@@ -391,22 +397,28 @@ HempyMessages HempyModule_Web::sendCommand(void *CommandToSend)
         {
           SyncRequested = true; ///< Force another message exchange when a command is active
         }
-        if(HempyBucketResponse2Received.ConfirmDisable) HempyBucketCommand2ToSend.Disable = false;  //Turn off the Flag once the Receiver confirms processing it 
-        if(HempyBucketResponse2Received.ConfirmStartWatering) HempyBucketCommand2ToSend.StartWatering = false;
-        if(HempyBucketResponse2Received.ConfirmStopWatering) HempyBucketCommand2ToSend.StopWatering = false;
-        if(HempyBucketResponse2Received.ConfirmTareWeightB) HempyBucketCommand2ToSend.TareWeightB = false;
-        if(HempyBucketResponse2Received.ConfirmTareWeightDW) HempyBucketCommand2ToSend.TareWeightDW = false;
-        if(HempyBucketResponse2Received.ConfirmTareWeightWR) HempyBucketCommand2ToSend.TareWeightWR = false;
+        if (HempyBucketResponse2Received.ConfirmDisable)
+          HempyBucketCommand2ToSend.Disable = false; //Turn off the Flag once the Receiver confirms processing it
+        if (HempyBucketResponse2Received.ConfirmStartWatering)
+          HempyBucketCommand2ToSend.StartWatering = false;
+        if (HempyBucketResponse2Received.ConfirmStopWatering)
+          HempyBucketCommand2ToSend.StopWatering = false;
+        if (HempyBucketResponse2Received.ConfirmTareWeightB)
+          HempyBucketCommand2ToSend.TareWeightB = false;
+        if (HempyBucketResponse2Received.ConfirmTareWeightDW)
+          HempyBucketCommand2ToSend.TareWeightDW = false;
+        if (HempyBucketResponse2Received.ConfirmTareWeightWR)
+          HempyBucketCommand2ToSend.TareWeightWR = false;
 
         if (!isnan(HempyBucketCommand2ToSend.DryWeight) && HempyBucketResponse2Received.DryWeight == HempyBucketCommand2ToSend.DryWeight)
         {
           HempyBucketCommand2ToSend.DryWeight = NAN;
-        }        
+        }
         break;
       case HempyMessages::HempyReset:
         if (*(Parent->SerialReportWireless))
         {
-          logToSerials(F("-"), true, 1);  ///< Reset messages does not have any data
+          logToSerials(F("-"), true, 1); ///< Reset messages does not have any data
         }
         break;
       default:

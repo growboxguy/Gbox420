@@ -45,12 +45,12 @@ typedef struct
   struct ReservoirModuleSettings
   {
     ReservoirModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSONFriendly = true, bool SerialReportJSON = true, bool SerialReportWireless = true) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportJSON(SerialReportJSON), SerialReportWireless(SerialReportWireless) {}
-    uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
-    bool SerialReportDate;   ///< Enable/disable reporting the current time to the Serial output
-    bool SerialReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool SerialReportJSONFriendly; ///< Enable/disable sending Text formatted reports to the Serial output
-    bool SerialReportJSON; ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool SerialReportWireless;   ///< Enable/disable sending wireless package exchange reports to the Serial output
+    uint16_t SerialReportFrequency; ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
+    bool SerialReportDate;          ///< Enable/disable reporting the current time to the Serial output
+    bool SerialReportMemory;        ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool SerialReportJSONFriendly;  ///< Enable/disable sending Text formatted reports to the Serial output
+    bool SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool SerialReportWireless;      ///< Enable/disable sending wireless package exchange reports to the Serial output
   };
   struct ReservoirModuleSettings Res1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true};
 
@@ -74,7 +74,7 @@ typedef struct
   struct TDSSensorSettings ///< PHSensor default settings
   {
     TDSSensorSettings(uint8_t Pin = 0, uint8_t PowerPin = 0) : Pin(Pin), PowerPin(PowerPin) {}
-    uint8_t Pin; ///< TDS sensor A pin
+    uint8_t Pin;      ///< TDS sensor A pin
     uint8_t PowerPin; ///< TDS sensor A pin
   };
   struct TDSSensorSettings TDS1 = {.Pin = A1, .PowerPin = A2};

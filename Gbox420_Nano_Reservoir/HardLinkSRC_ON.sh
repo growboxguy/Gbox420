@@ -4,6 +4,7 @@ echo "------------------------------------------"
 
 echo "Creating unlink command"
 ln ../HardLinkSRC_OFF.sh ./
+ln ../HardLinkSRC_OFF_Win.bat ./
 
 echo "Creating folders"
 mkdir ./src

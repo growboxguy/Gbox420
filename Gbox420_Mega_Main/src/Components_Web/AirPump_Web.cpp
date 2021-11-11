@@ -9,7 +9,7 @@ AirPump_Web::AirPump_Web(const __FlashStringHelper *Name, Module_Web *Parent, Se
 
 void AirPump_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgString(getName(F("S"),true), getStateText(true));
+  WebServer.setArgString(getName(F("S"), true), getStateText(true));
 }
 
 bool AirPump_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)

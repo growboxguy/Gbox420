@@ -19,8 +19,9 @@ mklink /h .\SerialLog.cpp ..\src\SerialLog_Mega.cpp
 mklink /h .\SerialLog.h ..\src\SerialLog_Mega.h
 mklink /h .\Settings.cpp ..\src\Settings_Mega.cpp
 
-mklink /h .\Webpages\Logs.html ..\src\Webpages\Logs.html
 mklink /h .\Webpages\Settings.html ..\src\Webpages\Settings.html
+del .\Webpages\Hempy.html > nul 2>&1
+mklink /h .\Webpages\Hempy.html ..\src\Webpages\Hempy.html
 
 mklink /h .\src\Helpers.cpp ..\src\Helpers.cpp
 mklink /h .\src\Helpers.h ..\src\Helpers.h

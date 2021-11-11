@@ -56,10 +56,7 @@ void AirPump::setState(bool NewState)
 {
   *State = NewState;
   checkStatus();
-  if (*State)
-    Parent->getSoundObject()->playOnSound();
-  else
-    Parent->getSoundObject()->playOffSound();
+  Parent->getSoundObject()->playOnOffSound(*State);
   Parent->addToLog(getName(getStateText(true)));
 }
 

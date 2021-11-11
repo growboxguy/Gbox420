@@ -12,7 +12,7 @@ mkdir .\src
 mkdir .\src\Components
 mkdir .\src\Components_Web
 mkdir .\src\Modules_Web
-mkdir .\Webpages
+mkdir .\Webpages > nul 2>&1
 
 echo "Creating hard links"
 mklink /h .\SerialLog.cpp ..\src\SerialLog_Mega.cpp
@@ -21,8 +21,11 @@ mklink /h .\Settings.cpp ..\src\Settings_Mega.cpp
 mklink /h .\src\Helpers.cpp ..\src\Helpers.cpp
 mklink /h .\src\Helpers.h ..\src\Helpers.h
 
-mklink /h .\Webpages\Logs.html ..\src\Webpages\Logs.html
 mklink /h .\Webpages\Settings.html ..\src\Webpages\Settings.html
+del .\Webpages\Main.html > nul 2>&1
+mklink /h .\Webpages\Main.html ..\src\Webpages\Main.html
+del .\Webpages\Hempy_Lite\Main.html > nul 2>&1
+mklink /h .\Webpages\Main.html ..\src\Webpages\Hempy_Lite\Main.html
 
 mklink /h .\src\Modules_Web\420Module_Web.h ..\src\Modules_Web\420Module_Web.h
 mklink /h .\src\Modules_Web\420Module_Web.cpp ..\src\Modules_Web\420Module_Web.cpp
@@ -38,6 +41,8 @@ mklink /h .\src\Components_Web\Sound_Web.h ..\src\Components_Web\Sound_Web.h
 mklink /h .\src\Components_Web\Sound_Web.cpp ..\src\Components_Web\Sound_Web.cpp
 mklink /h .\src\Components_Web\WaterPump_Web.h ..\src\Components_Web\WaterPump_Web.h
 mklink /h .\src\Components_Web\WaterPump_Web.cpp ..\src\Components_Web\WaterPump_Web.cpp
+mklink /h .\src\Components_Web\WasteReservoir_Web.h ..\src\Components_Web\WasteReservoir_Web.h
+mklink /h .\src\Components_Web\WasteReservoir_Web.cpp ..\src\Components_Web\WasteReservoir_Web.cpp
 mklink /h .\src\Components_Web\WeightSensor_Web.h ..\src\Components_Web\WeightSensor_Web.h
 mklink /h .\src\Components_Web\WeightSensor_Web.cpp ..\src\Components_Web\WeightSensor_Web.cpp
 
@@ -57,6 +62,8 @@ mklink /h .\src\Components\Switch_PWM.h ..\src\Components\Switch_PWM.h
 mklink /h .\src\Components\Switch_PWM.cpp ..\src\Components\Switch_PWM.cpp
 mklink /h .\src\Components\WaterPump.h ..\src\Components\WaterPump.h
 mklink /h .\src\Components\WaterPump.cpp ..\src\Components\WaterPump.cpp
+mklink /h .\src\Components\WasteReservoir.h ..\src\Components\WasteReservoir.h
+mklink /h .\src\Components\WasteReservoir.cpp ..\src\Components\WasteReservoir.cpp
 mklink /h .\src\Components\WeightSensor.h ..\src\Components\WeightSensor.h
 mklink /h .\src\Components\WeightSensor.cpp ..\src\Components\WeightSensor.cpp
 

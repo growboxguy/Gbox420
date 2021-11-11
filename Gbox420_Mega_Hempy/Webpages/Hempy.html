@@ -157,11 +157,61 @@
 			margin-top: 0px !important;
 			line-height: 1em;
 		}
+
+		.btn {
+			background-color: rgb(47, 170, 64);
+			vertical-align: center;
+			align-items: center;
+			-webkit-appearance: button !important;
+			float: right;
+			margin: 0px;
+			margin-right: 0.5em !important;
+			height: 33px;
+			font-size: 25px;
+		}
+
+		/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+		.active,
+		.collapsButton:hover {
+			background-color: #ccc;
+		}
+
+		/* Style the collapsible content. Note: hidden by default */
+		.collapsibleContent {
+			display: none;
+		}
+
+		.WebpageHeader {
+			color: #333;
+			background-color: #fc0;
+			text-align: center;
+			float: center;
+			padding-top: 5px;
+			padding-bottom: 2px;
+			margin: 0px;
+			line-height: 37px;
+			padding-left: 2em !important
+		}
 	</style>
 
-	<h1
-		style="color:#333;background-color: #fc0;text-align: center;padding-top: 5px;padding-bottom: 2px;margin: 0px;line-height: 37px;">
-		Hempy</h1>
+	<h1 class="WebpageHeader">Hempy
+		<a target="_self" href="http://192.168.9.102/Hempy.html">
+			<img width="34" height="34"
+				style="float: right; border:none;margin:0;padding:0px;margin-right:0.5em !important"
+				src="https://lh3.googleusercontent.com/pw/AM-JKLUo4QRIAl7XnYqJ5oWIgoMK0Uk8I0Xgv9sT-AeJntKmYikBd8suc5gq78Jzv_e6HCkrUYJQY6-l0yetvMhyxJlKDpkjUS51zwaqK4CrKDf_evh17_gczDH65rV59SEJqeFa2IO-Zo7nUIbe6hO07y4d=s300-no">
+		</a>
+		<a target="_blank"
+			href="https://drive.google.com/open?authuser=0&id=162557mj4XdpdER_PC6Kbq_GGUgc5nV-MYzr7J0Ims4Q">
+			<img width="25" height="32"
+				style="float: right; border:none;margin:0;padding:0px;margin-right:0.3em !important"
+				src="https://lh3.googleusercontent.com/pw/AM-JKLWRLOTdIdk9JZPY3ng73ms0U3MZofwKubH9Ar_3q4M64CFAl2aTWcdaMx3LiRmKo-zTJaALOJu3EZlKmnE0t4QTnECRmT8FsL-Q3OKPznnc-7bQMAXMEmmKwn2pKI4hGssjIEZvInPL_rmpPsSonNKS=w811-h1059-no">
+		</a>
+		<a target="_blank" href="https://growboxguy.duckdns.org:8123/">
+			<img width="32" height="32"
+				style="float: right; border:none;margin:0;padding:0px;margin-right:0.5em !important"
+				src="https://lh3.googleusercontent.com/pw/AM-JKLVbcNddIvsl-gBfYSAQjZsZPevCd6wrOnMIWbC8a-Yd8vsKVhK6ZzFzpcirUm0Sm_JYFdgdSzIY1e_UezVijcEG8lCN_WI61lQGNV4aB07iz0lSnQiTv62D76Mjj74WNGYGYLdF9qm_tRTqQ0WoMvCd=w897-h901-no">
+		</a>
+	</h1>
 	<div class="pure-g" onload="showRefillButton()">
 		<div class="pure-u-1 pure-u-md-1-2">
 			<div class="card">
@@ -186,7 +236,7 @@
 						<th class="headerRows"><span>State</span></th>
 						<th class="headerRows"><span>Pump</span></th>
 						<th class="headerRows"><span>Bucket</span>
-							<button id="B1P_TareB" onclick="confirmTare(this)"
+							<button id="B1W_T" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
@@ -194,7 +244,7 @@
 							<button id="B1_TareDW" onclick="confirmDryWetTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the last measured Wet weight and restore the Dry weight from Settings.h">Tare</button>
-						</th>						
+						</th>
 					</tr>
 					<tr>
 						<td id="B1_S" class="dataRows"></td>
@@ -206,14 +256,13 @@
 				<form>
 					<p>
 						<label><b>Watering</b></label>
-						<button id="B1__On" type="button" align="right"
+						<button id="B1_On" type="button" align="right"
 							title="Starts the pump and reset its status to OK">Start</button>
-						<button id="B1__Off" type="button" align="right"
+						<button id="B1_Off" type="button" align="right"
 							title="Stops the pump and reset its status to OK">Stop</button>
-						<button id="B1__Dis" type="button" align="right"
-							title="Stops and disables pump">Disable</button>
+						<button id="B1_Dis" type="button" align="right" title="Stops and disables pump">Disable</button>
 						<label>Next:</label>
-						<span id="B1__RemainingWater" style="font-weight:bold;"></span>
+						<span id="B1_RemainingWater" style="font-weight:bold;"></span>
 					</p>
 				</form>
 				<form>
@@ -238,8 +287,24 @@
 						<input class=" setButton" type="submit" value="Set" />
 					</p>
 				</form>
-				<label><b>Weight based watering</b><button class="setButton"
-						onclick="hempyWateringInfo()">?</button></label>
+				<div>
+					<b>Weight based watering</b>
+					<button type="button" onclick="hempyWateringInfo()">?</button>
+					<button type="button" class="collapsButton">Calibration</button>
+					<div class="collapsibleContent">
+						<form>
+							<p>
+								<button type="button" onclick="weightSensorCalibrationInfo()">?</button>
+								<button type="button" id="B1W_T_duplicate"
+									onclick="document.getElementById('B1W_T').click()">Tare</button>
+								<label style=" padding-left: 0.5em;text-align: left;">Known weight</label>
+								<input style="width: 57px;" name="B1W_C" type="number" value='0' step='0.1' min='0'
+									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />
+								<input style="width: 5em;" class="setButton" type="submit" value="Calibrate">
+							</p>
+						</form>
+					</div>
+				</div>
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: left;">Dry weight</label>
@@ -269,7 +334,7 @@
 						<th class="headerRows"><span>State</span></th>
 						<th class="headerRows"><span>Pump</span></th>
 						<th class="headerRows"><span>Bucket</span>
-							<button id="B2P_TareB" onclick="confirmTare(this)"
+							<button id="B2W_T" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the bucket weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
@@ -277,7 +342,7 @@
 							<button id="B2_TareDW" onclick="confirmDryWetTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the last measured Wet weight and restore the Dry weight from Settings.h">Tare</button>
-						</th>						
+						</th>
 					</tr>
 					<tr>
 						<td id="B2_S" class="dataRows"></td>
@@ -289,13 +354,12 @@
 				<form>
 					<p>
 						<label><b>Watering</b></label>
-						<button id="B2__On" type="button" align="right"
+						<button id="B2_On" type="button" align="right"
 							title="Starts the pump and reset its status to OK">Start</button>
-						<button id="B2__Off" type="button" align="right"
+						<button id="B2_Off" type="button" align="right"
 							title="Stops the pump and reset its status to OK">Stop</button>
-						<button id="B2__Dis" type="button" align="right"
-							title="Stops and disables pump">Disable</button>
-						<label>Next:</label><span id="B2__RemainingWater" style="font-weight:bold;"></span>
+						<button id="B2_Dis" type="button" align="right" title="Stops and disables pump">Disable</button>
+						<label>Next:</label><span id="B2_RemainingWater" style="font-weight:bold;"></span>
 					</p>
 				</form>
 				<form>
@@ -320,8 +384,24 @@
 						<input class=" setButton" type="submit" value="Set" />
 					</p>
 				</form>
-				<label><b>Weight based watering</b><button class="setButton"
-						onclick="hempyWateringInfo()">?</button></label>
+				<div>
+					<b>Weight based watering</b>
+					<button type="button" onclick="hempyWateringInfo()">?</button>
+					<button type="button" class="collapsButton">Calibration</button>
+					<div class="collapsibleContent">
+						<form>
+							<p>
+								<button type="button" onclick="weightSensorCalibrationInfo()">?</button>
+								<button type="button" id="B2W_T_duplicate"
+									onclick="document.getElementById('B2W_T').click()">Tare</button>
+								<label style=" padding-left: 0.5em;text-align: left;">Known weight</label>
+								<input style="width: 57px;" name="B2W_C" type="number" value='0' step='0.1' min='0'
+									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />
+								<input style="width: 5em;" class="setButton" type="submit" value="Calibrate">
+							</p>
+						</form>
+					</div>
+				</div>
 				<form>
 					<p>
 						<label style=" padding-left: 0.5em;text-align: right;">Dry weight</label>
@@ -343,42 +423,68 @@
 				</form>
 			</div>
 			<div class="card">
-				<h1 style="display: inline;">Reservoir</h1>
+				<h1 style="display: inline;">Reservoirs</h1>
 				<table class="tg">
 					<tr>
-						<th class="headerRows"><span>Nutrient reservoir</span>
+						<th class="headerRows"><span>Nutrient</span>
 							<button id="NRW_T" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the nutrient reservoir weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
-						<th class="headerRows"><span>Waste reservoir</span>
+						<th class="headerRows"><span>Waste</span>
 							<button id="WRW_T" onclick="confirmTare(this)"
 								style="height: 1.4em; font-size: 0.8em; font-weight: normal;float: right;" type="button"
 								title="Tare the waste reservoir weight scale. Do not have any weight on the scale!">Tare</button>
 						</th>
-						<th class="headerRows"><span>Waste reserved</span>							
-						</th>
-						<th class="headerRows"><span>Waste full</span>
+						<th class="headerRows"><span>Waste state</span>
 						</th>
 					</tr>
 					<tr>
 						<td id="NRW_W" class="dataRows"></td>
 						<td id="WRW_W" class="dataRows"></td>
-						<td id="WR1_R" class="dataRows"></td>
-						<td id="WR1_F" class="dataRows"></td>
+						<td id="WR1_S" class="dataRows"></td>
 					</tr>
 				</table>
 				<form>
 					<p>
 						<label style="text-align: right;">Waste limit</label>
-						<!-- \TODO: Common waste handling for multiple buckets  -->
-						<input style="width: 57px;" name="B1_WL" type="number" value='0' step='0.1' min='0'
+						<input style="width: 57px;" name="WR1_L" type="number" value='0' step='0.1' min='0'
 							title="Disable pump when waste reservoir is full, 0-do not disable" />
 						<input class="setButton" type="submit" value="Set">
 						<label>Remaining:</label>
-						<label id="B1__RemainingWaste" style="font-weight:bold;"></label>
+						<label id="B1_RemainingWaste" style="font-weight:bold;"></label>
 					</p>
 				</form>
+				<div>Weight sensor calibration:
+					<button type="button" class="collapsButton">Nutrient</button>
+					<div class="collapsibleContent">
+						<form>
+							<p>
+								<button type="button" onclick="weightSensorCalibrationInfo()">?</button>
+								<button type="button" id="NRW_T_duplicate"
+									onclick="document.getElementById('NRW_T').click()">Tare</button>
+								<label style=" padding-left: 0.5em;text-align: left;">Known weight</label>
+								<input style="width: 57px;" name="NRW_C" type="number" value='0' step='0.1' min='0'
+									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />
+								<input style="width: 5em;" class="setButton" type="submit" value="Calibrate">
+							</p>
+						</form>
+					</div>
+					<button type="button" class="collapsButton">Waste</button>
+					<div class="collapsibleContent">
+						<form>
+							<p>
+								<button type="button" onclick="weightSensorCalibrationInfo()">?</button>
+								<button type="button" id="WRW_T_duplicate"
+									onclick="document.getElementById('WRW_T').click()">Tare</button>
+								<label style=" padding-left: 0.5em;text-align: left;">Known weight</label>
+								<input style="width: 57px;" name="WRW_C" type="number" value='0' step='0.1' min='0'
+									title="Known weight for calibrating the weight scale. After taring the scale place the known weight on it and press the Calibrate button" />
+								<input style="width: 5em;" class="setButton" type="submit" value="Calibrate">
+							</p>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -439,9 +545,10 @@
 	var Bucket1_Weight = document.getElementById("B1W_W");
 	var Bucket1_Waste = document.getElementById("WRW_W");
 	var Bucket1_DryWeight = document.getElementsByName("B1_DW")[0];
-	var Bucket1_WasteLimit = document.getElementsByName("B1_WL")[0];
-	var Bucket1_RemainingWater = document.getElementById("B1__RemainingWater");
-	var Bucket1_RemainingWaste = document.getElementById("B1__RemainingWaste");
+	var Bucket1_WasteLimit = document.getElementsByName("WR1_L")[0];
+	var Bucket1_RemainingWater = document.getElementById("B1_RemainingWater");
+	var Bucket1_RemainingWaste = document.getElementById("B1_RemainingWaste");
+	
 	setInterval(function () {
 		//var Weight = parseInt(Bucket1_Weight.value.slice(0,-2))
 		var Unit = Bucket1_Weight.textContent.replaceAll(/[0-9.]/g, "");
@@ -453,7 +560,7 @@
 	///< Calculate remaining water in Hempy Bucket 2
 	var Bucket2_Weight = document.getElementById("B2W_W");
 	var Bucket2_DryWeight = document.getElementsByName("B2_DW")[0];
-	var Bucket2_RemainingWater = document.getElementById("B2__RemainingWater");
+	var Bucket2_RemainingWater = document.getElementById("B2_RemainingWater");
 	setInterval(function () {
 		//var Weight = parseInt(Bucket1_Weight.value.slice(0,-2))
 		var Unit = Bucket2_Weight.textContent.replaceAll(/[0-9.]/g, "");
@@ -488,6 +595,26 @@
 	function hempyWateringInfo() {
 		if (confirm("Watering starts when the Hempy bucket's weight drops below the Dry weight.\n\nWatering runs in cycles: Pump a certain amount of nutrient solution, then wait for it to drain.\n\nOnce the waste reservoir's weight increases by the Overflow target the watering stops.\n")) {
 		}
+	}
+
+	function weightSensorCalibrationInfo() {
+		confirm("Calibrating a weight scale requires two parameters: \n  Offset: Reading with no weigth on the scale\n  Scale: The change in reading when placing 1 unit(kg,lbs) on the scale.\n\nCalibration process:\n 1. Remove everything from the weight scale and press the Tare button. The Offset will be displayed in ~10sec (stored in EEPROM)\n2. Place an object with a known weight on the scale, specify the weight as 'Known weight' and press the Calibrate button. The Scale will be displayed in ~10sec (stored in EEPROM)\n3. Update the default Scale and Offset parameters under Settings.h - WeightSensorSettings section.")
+	}
+
+	///< Handles collapsing/expanding sections
+	var coll = document.getElementsByClassName("collapsButton");
+	var i;
+
+	for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function () {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.display === "block") {
+				content.style.display = "none";
+			} else {
+				content.style.display = "block";
+			}
+		});
 	}
 
 	document.onload = replaceFavoritesIcon();

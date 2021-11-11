@@ -14,6 +14,7 @@
 
 class Sound;
 class WeightSensor;
+class WasteReservoir;
 class WaterPump;
 class HempyBucket;
 extern RF24 Wireless;
@@ -29,10 +30,10 @@ public:
   //DHTSensor *DHT1;          ///< Pointer to a Digital Humidity Sensor object measuring the internal temperature of the grow box
   WeightSensor *WeightB1 = NULL;
   WeightSensor *WeightB2 = NULL;
-  WeightSensor *WeightWR1 = NULL;
-  WeightSensor *WeightWR2 = NULL;
+  WeightSensor *WeightWR = NULL;
   HempyBucket *Bucket1 = NULL;
   HempyBucket *Bucket2 = NULL;
+  WasteReservoir *WasteRes = NULL;
   WaterPump *Pump1 = NULL;
   WaterPump *Pump2 = NULL;
   void report(__attribute__((unused)) bool FriendlyFormat = false){};

@@ -46,7 +46,7 @@ const __FlashStringHelper *sequenceIDToText(uint8_t SequenceID)
       return F("Reset");
       break;
    default:
-      return F("UNKNOWN");
+      return F("?");
       break;
    }
 }

@@ -3,6 +3,7 @@
 #include "../Components_Web/DHTSensor_Web.h"
 #include "../Components_Web/WeightSensor_Web.h"
 #include "../Components_Web/WaterPump_Web.h"
+#include "../Components_Web/WasteReservoir_Web.h"
 #include "../Components_Web/HempyBucket_Web.h"
 
 /**
@@ -21,20 +22,19 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   ReportToMQTT = &DefaultSettings->ReportToMQTT;
   MQTTReportFrequency = &DefaultSettings->MQTTReportFrequency;
 
-  logToSerials(F(""), true, 0);                                                               //<Line break
-  Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1);                         ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
-  this->SoundFeedback = Sound1;                                                               ///< Pointer for child objects to use sound feedback
-  DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);                           ///< Humidity and temp sensor (not necessary)
-  B1W = new WeightSensor_Web(F("B1W"), this, &ModuleSettings->B1W);                           ///< Bucket 1 Weight sensor
-  B2W = new WeightSensor_Web(F("B2W"), this, &ModuleSettings->B2W);                           ///< Bucket 2 Weight sensor
-  NRW = new WeightSensor_Web(F("NRW"), this, &ModuleSettings->WRW);                           ///< Nutrient Reservoir Weight sensor
-  WRW = new WeightSensor_Web(F("WRW"), this, &ModuleSettings->WRW);                           ///< Waste Reservoir Weight sensor
-  WR1 = new WasteReservoir(F("WR1"), this, &ModuleSettings->WR1, WRW);                        ///< Waste reservoir
-  B1P = new WaterPump_Web(F("B1P"), this, &ModuleSettings->B1P);                              ///< Bucket 1 pump
-  B2P = new WaterPump_Web(F("B2P"), this, &ModuleSettings->B2P);                              ///< Bucket 2 pump
-  Bucket1 = new HempyBucket_Web(F("B1"), this, &ModuleSettings->Bucket1, B1W, WRW, WR1, B1P); ///< Bucket 1
-  Bucket2 = new HempyBucket_Web(F("B2"), this, &ModuleSettings->Bucket2, B2W, WRW, WR1, B2P); ///< Bucket 1
-  addToReportQueue(this);                                                                     //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
+  logToSerials(F(""), true, 0);                                                          //<Line break
+  Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1);                    ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  DHT1 = new DHTSensor_Web(F("DHT1"), this, &ModuleSettings->DHT1);                      ///< Humidity and temp sensor (not necessary)
+  B1W = new WeightSensor_Web(F("B1W"), this, &ModuleSettings->NRW);                      ///< Bucket 1 Weight sensor \TODO: Change NRW back to B1W
+  B2W = new WeightSensor_Web(F("B2W"), this, &ModuleSettings->NRW);                      ///< Bucket 2 Weight sensor \TODO: Change NRW back to B2W
+  NRW = new WeightSensor_Web(F("NRW"), this, &ModuleSettings->NRW);                      ///< Nutrient Reservoir Weight sensor
+  WRW = new WeightSensor_Web(F("WRW"), this, &ModuleSettings->WRW);                      ///< Waste Reservoir Weight sensor
+  WR1 = new WasteReservoir_Web(F("WR1"), this, &ModuleSettings->WR1, WRW);               ///< Waste reservoir
+  B1P = new WaterPump_Web(F("B1P"), this, &ModuleSettings->B1P);                         ///< Bucket 1 pump
+  B2P = new WaterPump_Web(F("B2P"), this, &ModuleSettings->B2P);                         ///< Bucket 2 pump
+  Bucket1 = new HempyBucket_Web(F("B1"), this, &ModuleSettings->Bucket1, B1W, WR1, B1P); ///< Bucket 1
+  Bucket2 = new HempyBucket_Web(F("B2"), this, &ModuleSettings->Bucket2, B2W, WR1, B2P); ///< Bucket 2
+  addToReportQueue(this);                                                                //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   //addToRefreshQueue_Sec(this);     //< Attach to a trigger that fires every second and calls refresh_Sec()
   addToRefreshQueue_FiveSec(this); //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
   addToRefreshQueue_Minute(this);  //< Attach to a trigger that fires every second and calls refresh_Minute()
@@ -65,8 +65,7 @@ void Hempy_Standalone::report(bool FriendlyFormat)
 */
 void Hempy_Standalone::websiteEvent_Load(__attribute__((unused)) char *Url) ///< called when website is first opened
 {
-  WebServer.setArgString(F("Time"), getFormattedTime(false));  ///< Current time
-  WebServer.setArgJson(F("Log"), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
+  ;
 }
 
 /**
@@ -74,7 +73,8 @@ void Hempy_Standalone::websiteEvent_Load(__attribute__((unused)) char *Url) ///<
 */
 void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed (5sec automatic)
 {
-  ;
+  WebServer.setArgString(F("Time"), getFormattedTime(false));  ///< Current time
+  WebServer.setArgJson(F("Log"), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 }
 
 /**

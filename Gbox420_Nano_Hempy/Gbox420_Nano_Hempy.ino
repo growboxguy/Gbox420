@@ -61,7 +61,7 @@ void setup()
   Metric = &ModuleSettings->Metric;
 
   ///< Setting up wireless module
-  InitializeWireless(true);
+  InitializeWireless();
 
   ///< Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.setInterval(1000); ///< 1000ms
@@ -74,15 +74,15 @@ void setup()
   ///< Create the Hempy bucket object
   HempyMod1 = new HempyModule(F("Hempy1"), &ModuleSettings->Hemp1); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
-  logToSerials(F("Setup ready, starting loops:"), true, 0);
+  //logToSerials(F("Setup ready, starting loops:"), true, 0);
 }
 
-void InitializeWireless(bool ForceReport)
+void InitializeWireless()
 {
-  if (*Debug || ForceReport)
-  {
-    logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
-  }
+  //if (*Debug)
+  //{
+  // logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
+  //}
   pinMode(WirelessCSNPin, OUTPUT);
   digitalWrite(WirelessCSNPin, HIGH);
   pinMode(WirelessCEPin, OUTPUT);
@@ -100,10 +100,10 @@ void InitializeWireless(bool ForceReport)
   Wireless.powerUp();  ///< Not necessary, startListening should switch back to normal power mode
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
-  if (*Debug || ForceReport)
-  {
-    logToSerials(F("done"), true, 3);
-  }
+  //if (*Debug)
+  //{
+  //logToSerials(F("done"), true, 3);
+  //}
   ReceivedMessageTimestamp = millis(); ///< Reset timeout counter
 }
 
@@ -161,7 +161,7 @@ void getWirelessData()
   }
   if (millis() - ReceivedMessageTimestamp > WirelessReceiveTimeout)
   {
-    InitializeWireless(false);
+    InitializeWireless();
   }
 }
 
@@ -169,7 +169,7 @@ void getWirelessStatus()
 {
   if (*Debug)
   {
-    logToSerials(F("Wireless report:"), true, 0);
+    //logToSerials(F("Wireless report:"), true, 0);
     Wireless.printPrettyDetails();
     logToSerials(F(""), true, 0);
   }
@@ -182,10 +182,6 @@ time_t updateTime()
   {
     setTime(ReceivedTime);
     logToSerials(F("Clock synced"), true, 0);
-  }
-  else
-  {
-    logToSerials(F("Clock out of sync"), true, 0);
   }
   return ReceivedTime;
 }

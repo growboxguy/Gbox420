@@ -1,0 +1,36 @@
+<!-- EspLink will add header here -->
+<meta name="refresh-rate" content="5000" />
+<style type="text/css">
+	iframe {
+		display: block;
+		margin: 0;
+		padding: 0;
+		border: none;
+		width: 100%;
+		overflow: hidden;
+		height: 100vh;
+	}
+</style>
+
+<div>
+	<iframe src="http://192.168.1.228:1880/ui">
+	</iframe>
+</div>
+
+<script>
+
+	document.onload = replaceFavoritesIcon();
+
+	function replaceFavoritesIcon() {
+		var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+		link.type = 'image/x-icon';
+		link.rel = 'shortcut icon';
+		link.href = 'https://lh3.googleusercontent.com/pw/ACtC-3fQYOltHeTzGQfCXJ9t4w69Q9He8OFV4ubiwdjXgfPK-BUnN2W0dONv5upYRst7UQRuFLnusYNft_qTRfPUtbBK-XnArFD5ulpKV_AXNayiaqemd0GdBPieLqpnPtEGhiLr-c0yuk9LrRaXTWPtH4gP=s671-no?authuser=0';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	};
+
+</script>
+
+</body>
+
+</html>

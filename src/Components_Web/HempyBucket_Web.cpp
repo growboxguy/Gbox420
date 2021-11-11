@@ -1,6 +1,6 @@
 #include "HempyBucket_Web.h"
 
-HempyBucket_Web::HempyBucket_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WeightSensor *WasteReservoirWeightSensor, WasteReservoir *BucketWasteReservoir, WaterPump *BucketPump) : Common(Name), Common_Web(Name), HempyBucket(Name, Parent, DefaultSettings, BucketWeightSensor, WasteReservoirWeightSensor, BucketWasteReservoir, BucketPump)
+HempyBucket_Web::HempyBucket_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WasteReservoir *BucketWasteReservoir, WaterPump *BucketPump) : Common(Name), Common_Web(Name), HempyBucket(Name, Parent, DefaultSettings, BucketWeightSensor, BucketWasteReservoir, BucketPump)
 {
   this->Parent = Parent;
   Parent->addToWebsiteQueue_Load(this);
@@ -12,7 +12,6 @@ void HempyBucket_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
   WebServer.setArgString(getName(F("ET"), true), getEvaporationTargetText());
   WebServer.setArgString(getName(F("OF"), true), getOverflowTargetText());
-  WebServer.setArgString(getName(F("WL"), true), getWasteLimitText());
   WebServer.setArgInt(getName(F("D"), true), getDrainWaitTime());
   WebServer.setArgString(getName(F("DW"), true), getDryWeightText());
   //WebServer.setArgInt(getName(F("PS"),true), HempyBucketCommand1ToSend.PumpSpeed);
@@ -49,11 +48,11 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Off")) == 0)
     {
-      stopWateringRequest();      
+      stopWateringRequest();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("Dis")) == 0)
     {
-      disableRequest();      
+      disableRequest();
     }
     else if (strcmp_P(ShortMessage, (PGM_P)F("TareDW")) == 0)
     {
@@ -69,11 +68,6 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
       setOverflowTarget(toFloat(Data));
       Parent->addToLog(F("Targets updated"), false);
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("WL")) == 0)  ///TODO: Handle waste limit from multiple buckets to a single waste reservoir
-    {
-      setWasteLimit(toFloat(Data));
-      Parent->addToLog(F("Waste limit updated"), false);
-    }    
     else if (strcmp_P(ShortMessage, (PGM_P)F("D")) == 0)
     {
       setDrainWaitTime(toInt(Data));
@@ -84,18 +78,7 @@ bool HempyBucket_Web::commandEvent(__attribute__((unused)) char *Command, __attr
       setDryWeight(toFloat(Data));
       Parent->addToLog(F("Dry weight updated"), false);
     }
-    /*
-    //Settings
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Calibrate")) == 0)
-    {
-      BucketWeightSensor->triggerCalibration(WebServer.getArgInt());
-    }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Scale")) == 0)
-    {
-      BucketWeightSensor->setScale(WebServer.getArgFloat());
-    }
    
-    */
     return true; //Match found
   }
 }

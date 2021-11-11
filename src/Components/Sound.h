@@ -14,9 +14,10 @@ public:
   void refresh_Sec();
   void playOnSound();
   void playOffSound();
+  void playOnOffSound(bool State);
   void setSoundOnOff(bool State);
   bool getEnabledState();
-  char *getEnabledStateText(bool FriendlyFormat=false);
+  char *getEnabledStateText(bool FriendlyFormat = false);
 
 private:
 protected:

@@ -10,8 +10,8 @@ const byte WeightSensor2_DT = 7;
 const byte WeightSensor2_SCK = 8;
 
 //Weights used during the calibration
-const float WeightSensor1_CalibrationWeight = 10.0; //SET THIS TO the reference weight units (kg or lbs) that will be used during the calibration
-const float WeightSensor2_CalibrationWeight = 10.0; //SET THIS TO the reference weight units (kg or lbs) that will be used during the calibration
+const float WeightSensor1_CalibrationWeight = 4.0; //SET THIS TO the reference weight units (kg or lbs) that will be used during the calibration
+const float WeightSensor2_CalibrationWeight = 4.0; //SET THIS TO the reference weight units (kg or lbs) that will be used during the calibration
 
 //Initial calibration values, once the calibration you can update these values and change CalibrationComplete to true
 bool CalibrationComplete = false; //Set this to true to skip the calibration and use the Offset and Scale values defined in the sketch
