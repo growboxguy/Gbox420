@@ -16,6 +16,14 @@
 
 ///< State machine - Defining possible states
 
+enum class ACMotorStates
+{
+  IDLE,
+  FORWARD,
+  BACKWARD,
+  STOPPING  
+};
+
 enum class WasteReservoirStates
 {
   FULL,

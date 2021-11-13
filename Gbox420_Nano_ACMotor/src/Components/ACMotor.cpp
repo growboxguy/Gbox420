@@ -1,12 +1,8 @@
-#include "HempyBucket.h"
+#include "ACMotor.h"
 
-HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settings::HempyBucketSettings *DefaultSettings, WeightSensor *BucketWeightSensor, WasteReservoir *BucketWasteReservoir, WaterPump *BucketPump) : Common(Name)
+ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMotorSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
-  this->BucketWeightSensor = BucketWeightSensor;
-  this->BucketPump = BucketPump;
-  this->BucketWeightSensor = BucketWeightSensor;
-  this->BucketWasteReservoir = BucketWasteReservoir;
   EvaporationTarget = &DefaultSettings->EvaporationTarget;
   OverflowTarget = &DefaultSettings->OverflowTarget;
   InitialDryWeight = &DefaultSettings->InitialDryWeight;
@@ -22,7 +18,7 @@ HempyBucket::HempyBucket(const __FlashStringHelper *Name, Module *Parent, Settin
 /**
 * @brief Report current state in a JSON format to the LongMessage buffer
 */
-void HempyBucket::report(bool FriendlyFormat)
+void ACMotor::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
@@ -40,7 +36,7 @@ void HempyBucket::report(bool FriendlyFormat)
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
-void HempyBucket::refresh_Sec()
+void ACMotor::refresh_Sec()
 {
   Common::refresh_Sec();
   if (State == HempyStates::WATERING || State == HempyStates::DRAINING)
@@ -64,13 +60,13 @@ void HempyBucket::refresh_Sec()
   }
 }
 
-void HempyBucket::refresh_FiveSec()
+void ACMotor::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
   updateState(State);
 }
 
-void HempyBucket::updateState(HempyStates NewState)
+void ACMotor::updateState(HempyStates NewState)
 {
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState)
@@ -160,7 +156,7 @@ void HempyBucket::updateState(HempyStates NewState)
   }
 }
 
-void HempyBucket::disable() //Takes time, do not call directly from an interupt (ESP-link website would timeout)
+void ACMotor::disable() //Takes time, do not call directly from an interupt (ESP-link website would timeout)
 {
   if (State == HempyStates::DRAINING || State == HempyStates::WATERING)
     BucketWasteReservoir->clearReservation();
@@ -169,12 +165,12 @@ void HempyBucket::disable() //Takes time, do not call directly from an interupt 
   Parent->getSoundObject()->playOffSound();
 }
 
-void HempyBucket::disableRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
+void ACMotor::disableRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
 {
   DisableRequested = true;
 }
 
-void HempyBucket::startWatering()
+void ACMotor::startWatering()
 {
   if (BucketWasteReservoir->setReserved())
   {
@@ -189,12 +185,12 @@ void HempyBucket::startWatering()
   }
 }
 
-void HempyBucket::startWateringRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
+void ACMotor::startWateringRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
 {
   StartWateringRequested = true;
 }
 
-void HempyBucket::stopWatering()
+void ACMotor::stopWatering()
 {
   if (State == HempyStates::DRAINING || State == HempyStates::WATERING)
     BucketWasteReservoir->clearReservation();
@@ -203,12 +199,12 @@ void HempyBucket::stopWatering()
   Parent->getSoundObject()->playOnSound();
 }
 
-void HempyBucket::stopWateringRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
+void ACMotor::stopWateringRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
 {
   StopWateringRequested = true;
 }
 
-void HempyBucket::setEvaporationTarget(float Weight)
+void ACMotor::setEvaporationTarget(float Weight)
 {
   if (*EvaporationTarget != Weight)
   {
@@ -221,7 +217,7 @@ void HempyBucket::setEvaporationTarget(float Weight)
   }
 }
 
-char *HempyBucket::getEvaporationTargetText(bool FriendlyFormat)
+char *ACMotor::getEvaporationTargetText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
@@ -233,7 +229,7 @@ char *HempyBucket::getEvaporationTargetText(bool FriendlyFormat)
   }
 }
 
-void HempyBucket::setOverflowTarget(float Weight)
+void ACMotor::setOverflowTarget(float Weight)
 {
   if (*OverflowTarget != Weight)
   {
@@ -242,7 +238,7 @@ void HempyBucket::setOverflowTarget(float Weight)
   }
 }
 
-char *HempyBucket::getOverflowTargetText(bool FriendlyFormat)
+char *ACMotor::getOverflowTargetText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
@@ -254,7 +250,7 @@ char *HempyBucket::getOverflowTargetText(bool FriendlyFormat)
   }
 }
 
-void HempyBucket::setDrainWaitTime(uint16_t Seconds)
+void ACMotor::setDrainWaitTime(uint16_t Seconds)
 {
   if (*DrainWaitTime != Seconds)
   {
@@ -263,12 +259,12 @@ void HempyBucket::setDrainWaitTime(uint16_t Seconds)
   }
 }
 
-uint16_t HempyBucket::getDrainWaitTime()
+uint16_t ACMotor::getDrainWaitTime()
 {
   return *DrainWaitTime;
 }
 
-char *HempyBucket::getDrainWaitTimeText(bool FriendlyFormat)
+char *ACMotor::getDrainWaitTimeText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
@@ -280,12 +276,12 @@ char *HempyBucket::getDrainWaitTimeText(bool FriendlyFormat)
   }
 }
 
-HempyStates HempyBucket::getState()
+HempyStates ACMotor::getState()
 {
   return State;
 }
 
-char *HempyBucket::getStateText(bool FriendlyFormat)
+char *ACMotor::getStateText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
@@ -297,7 +293,7 @@ char *HempyBucket::getStateText(bool FriendlyFormat)
   }
 }
 
-void HempyBucket::setDryWeight(float Weight)
+void ACMotor::setDryWeight(float Weight)
 {
   if (!isnan(Weight) && DryWeight != Weight)
   {
@@ -308,12 +304,12 @@ void HempyBucket::setDryWeight(float Weight)
   }
 }
 
-float HempyBucket::getDryWeight()
+float ACMotor::getDryWeight()
 {
   return DryWeight;
 }
 
-char *HempyBucket::getDryWeightText(bool FriendlyFormat)
+char *ACMotor::getDryWeightText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
@@ -325,12 +321,12 @@ char *HempyBucket::getDryWeightText(bool FriendlyFormat)
   }
 }
 
-float HempyBucket::getWetWeight()
+float ACMotor::getWetWeight()
 {
   return WetWeight;
 }
 
-char *HempyBucket::getWetWeightText(bool FriendlyFormat)
+char *ACMotor::getWetWeightText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
@@ -342,7 +338,7 @@ char *HempyBucket::getWetWeightText(bool FriendlyFormat)
   }
 }
 
-void HempyBucket::tareDryWetWeight()
+void ACMotor::tareDryWetWeight()
 {
   DryWeight = *InitialDryWeight;
   WetWeight = DryWeight + *EvaporationTarget - *OverflowTarget;

@@ -23,7 +23,7 @@ ACMotorModule::ACMotorModule(const __FlashStringHelper *Name, Settings::ACMotorM
   logToSerials(F(""), true, 0);                                   // line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
-  Motor1 = new ACMotor(F("1"), this, &ModuleSettings->Motor1);
+  Motor1 = new ACMotor(F("Motor1"), this, &ModuleSettings->Motor1);
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
