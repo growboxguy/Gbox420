@@ -256,6 +256,28 @@ float toFloat(char *Float)
 
 //< State related functions
 
+char *toText_ACMotorState(ACMotorStates State)
+{
+  switch (State)
+  {
+  case ACMotorStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case ACMotorStates::FORWARD:
+    return toText(F("FORWARD"));
+    break;
+  case ACMotorStates::BACKWARD:
+    return toText(F("BACKWARD"));
+    break;
+  case ACMotorStates::STOPPING:
+    return toText(F("STOPPING"));
+    break;
+  default:
+    return toText(F("?"));
+    break;
+  }
+}
+
 char *toText_waterPumpState(WaterPumpStates State)
 {
   switch (State)

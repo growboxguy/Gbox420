@@ -95,7 +95,7 @@ struct ACMotorResponse : ACMotorCommonTemplate ///< ACMotor  wireless response
 {
    ACMotorResponse(__attribute__((unused)) ACMotorMessages SequenceID) : ACMotorCommonTemplate(SequenceID) {}
    ACMotorResponse(__attribute__((unused)) ACMotorMessages SequenceID, __attribute__((unused)) ACMotorStates ACMotorState, __attribute__((unused)) bool ConfirmForward, __attribute__((unused)) bool ConfirmBackward, __attribute__((unused)) bool ConfirmStop, __attribute__((unused)) float RPM) : ACMotorCommonTemplate(SequenceID) {}
-   ACMotorStates ACMotorState = ACMotorStates::DISABLED;
+   ACMotorStates ACMotorState = ACMotorStates::IDLE;
    bool ConfirmForward = false; //Feedback to the Main module that the command was processed and it can turn off the request flag.
    bool ConfirmBackward = false;
    bool ConfirmStop = false;

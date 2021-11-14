@@ -56,12 +56,15 @@ typedef struct
 
   struct ACMotorSettings ///< ACMotor default settings
   {
-    ACMotorSettings(bool State = false, bool RunForward = false, uint16_t Speed = 0) : State(State), RunForward(RunForward), Speed(Speed) {}
-    bool State;      //< true: Motor is ON, false: Motor is OFF
-    bool RunForward; //< true: Motor running forward, false: Motor running backward
+    ACMotorSettings(uint16_t Speed = 0, uint16_t SpinOffTime = 0, uint8_t OnOffPin = 0, uint8_t BrushPin = 0, uint8_t CoilPin1 = 0, uint8_t CoilPin2 = 0 ) : Speed(Speed), SpinOffTime(SpinOffTime), OnOffPin(OnOffPin),BrushPin(BrushPin), CoilPin1(CoilPin1), CoilPin2(CoilPin2) {}
     uint8_t Speed;   ///< Motor speed (0% - 100%)
+    uint16_t SpinOffTime;  ///< (sec) How long it takes for the motor to stop after cutting the power
+    uint8_t OnOffPin;  ///< Power intake relay pin - ON/OFF control 
+    uint8_t BrushPin;  ///< Motor brush relay pin - Direction control
+    uint8_t CoilPin1;  ///< Motor coil relay 1 pin - Direction control
+    uint8_t CoilPin2;   ///< Motor coil relay 2 pin - Direction control
   };
-  struct ACMotorSettings 1 = {.State = false, .RunForward = true, .Speed = 100};
+  struct ACMotorSettings Motor1 = {.Speed = 35, .SpinOffTime = 5, .OnOffPin = 3, .BrushPin1 = 4, .CoilPin1 = 5, .CoilPin2 = 6};
 
   struct SoundSettings ///< Sound default settings
   {
