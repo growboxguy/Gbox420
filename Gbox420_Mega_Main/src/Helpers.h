@@ -132,5 +132,7 @@ char *toText_minute(int Minute);
 char *toText_second(int Second);
 char *toText_distance(float Distance);
 char *toText_TDS(float TDS);
+char *toText_rpm(float RPM);
 bool toBool(char *Boolean);
-int t
+int toInt(char *Integer);
+float toFloat(char *Float);

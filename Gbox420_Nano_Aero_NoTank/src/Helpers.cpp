@@ -152,6 +152,13 @@ char *toText_percentage(int Number)
   return ShortMessage;
 }
 
+char *toText_rpm(float RPM)
+{
+  dtostrf(RPM, 4, 2, ShortMessage);
+  strcat_P(ShortMessage, (PGM_P)F("rpm"));
+  return ShortMessage;
+}
+
 char *toText_minute(int Minute)
 {
   itoa(Minute, ShortMessage, 10);
@@ -255,6 +262,28 @@ float toFloat(char *Float)
 }
 
 //< State related functions
+
+char *toText_ACMotorState(ACMotorStates State)
+{
+  switch (State)
+  {
+  case ACMotorStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case ACMotorStates::FORWARD:
+    return toText(F("FORWARD"));
+    break;
+  case ACMotorStates::BACKWARD:
+    return toText(F("BACKWARD"));
+    break;
+  case ACMotorStates::STOPPING:
+    return toText(F("STOPPING"));
+    break;
+  default:
+    return toText(F("?"));
+    break;
+  }
+}
 
 char *toText_waterPumpState(WaterPumpStates State)
 {

@@ -16,6 +16,14 @@
 
 ///< State machine - Defining possible states
 
+enum class ACMotorStates
+{
+  IDLE,
+  FORWARD,
+  BACKWARD,
+  STOPPING  
+};
+
 enum class WasteReservoirStates
 {
   FULL,
@@ -114,6 +122,7 @@ char *toText_enabledDisabled(bool Status);
 char *toText_onlineStatus(bool Status);
 char *toText_aeroTankState(AeroTankStates State);
 char *toText_aeroNoTankState(AeroNoTankStates State);
+char *toText_ACMotorState(ACMotorStates State);
 char *toText_wasteReservoirStates(WasteReservoirStates State);
 char *toText_waterPumpState(WaterPumpStates State);
 char *toText_pressurePumpState(PressurePumpStates State);
@@ -123,6 +132,7 @@ char *toText_minute(int Minute);
 char *toText_second(int Second);
 char *toText_distance(float Distance);
 char *toText_TDS(float TDS);
+char *toText_rpm(float RPM);
 bool toBool(char *Boolean);
 int toInt(char *Integer);
 float toFloat(char *Float);

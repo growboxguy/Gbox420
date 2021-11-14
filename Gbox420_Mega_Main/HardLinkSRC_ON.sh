@@ -23,6 +23,7 @@ ln ../src/Webpages/Hempy.html ./Webpages/
 
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
+ln ../src/WirelessCommands_ACMotor.h ./src
 ln ../src/WirelessCommands_Aero.h ./src
 ln ../src/WirelessCommands_Hempy.h ./src
 ln ../src/WirelessCommands_Reservoir.h ./src

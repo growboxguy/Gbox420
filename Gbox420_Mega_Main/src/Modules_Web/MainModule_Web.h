@@ -19,6 +19,7 @@ class LightSensor_Web;
 class DHTSensor_Web;
 class HempyModule_Web;
 class AeroModule_Web;
+class ACMotorModule_Web;
 class ReservoirModule_Web;
 
 extern ELClientRest PushingBoxRestAPI;
@@ -45,6 +46,7 @@ public:
   AeroModule_Web *AeroModule1 = NULL;           ///< <Represents the website controls and feedback for a AeroModule
   ReservoirModule_Web *ReservoirModule1 = NULL; ///< <Represents the website controls and feedback for a ReservoirModule
   HempyModule_Web *HempyModule1 = NULL;         ///< <Represents the website controls and feedback for a HempyModule
+  ACMotorModule_Web *ACMotorModule1 = NULL;         ///< <Represents the website controls and feedback for a AC Motor module
   void websiteEvent_Refresh(__attribute__((unused)) char *Url);
   void websiteEvent_Load(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);

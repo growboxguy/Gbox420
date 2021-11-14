@@ -65,6 +65,13 @@ typedef struct
   };
   struct AeroModuleSettings AeroModule1 = {.PressureTankPresent = false, .Duration = 3.0, .DayInterval = 6, .NightInterval = 10, .PumpSpeed = 100, .PumpTimeOut = 420, .PrimingTime = 10, .MaxPressure = 7.0, .MinPressure = 5.0};
 
+struct ACMotorModuleSettings ///< AeroModule default settings
+  {
+    ACMotorModuleSettings(uint8_t Speed = 0) : Speed(Speed) {}
+    uint8_t Speed;        ///< PWM duty cycle to adjust motor speed
+  };
+  struct ACMotorModuleSettings ACMotor1 = {.Speed = 50};
+
   struct AirPumpSettings ///< AirPump default settings
   {
     AirPumpSettings(uint8_t Pin = 0, bool State = false) : Pin(Pin), State(State) {}

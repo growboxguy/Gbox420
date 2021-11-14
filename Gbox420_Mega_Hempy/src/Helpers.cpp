@@ -152,6 +152,13 @@ char *toText_percentage(int Number)
   return ShortMessage;
 }
 
+char *toText_rpm(float RPM)
+{
+  dtostrf(RPM, 4, 2, ShortMessage);
+  strcat_P(ShortMessage, (PGM_P)F("rpm"));
+  return ShortMessage;
+}
+
 char *toText_minute(int Minute)
 {
   itoa(Minute, ShortMessage, 10);

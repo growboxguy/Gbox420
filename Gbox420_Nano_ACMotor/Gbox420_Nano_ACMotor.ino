@@ -72,7 +72,7 @@ void setup()
   MinuteThread.onRun(runMinute);
 
   ///< Create the ACMotor object
-  ACMotorMod1 = new ACMotorModule(F("ACMotor1"), &ModuleSettings->Hemp1); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  ACMotorMod1 = new ACMotorModule(F("ACMotor1"), &ModuleSettings->ACM1); ///< This is the object representing an AC Motor controller with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   //logToSerials(F("Setup ready, starting loops:"), true, 0);
 }

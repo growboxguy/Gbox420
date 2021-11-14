@@ -25,6 +25,7 @@ mklink /h .\Webpages\Hempy.html ..\src\Webpages\Hempy.html
 
 mklink /h .\src\Helpers.cpp ..\src\Helpers.cpp
 mklink /h .\src\Helpers.h ..\src\Helpers.h
+mklink /h .\src\WirelessCommands_ACMotor.h ..\src\WirelessCommands_ACMotor.h
 mklink /h .\src\WirelessCommands_Aero.h ..\src\WirelessCommands_Aero.h
 mklink /h .\src\WirelessCommands_Hempy.h ..\src\WirelessCommands_Hempy.h
 mklink /h .\src\WirelessCommands_Reservoir.h ..\src\WirelessCommands_Reservoir.h

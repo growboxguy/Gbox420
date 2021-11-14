@@ -1,5 +1,5 @@
 /**@file*/
-///< Supports speed and direction controlling an AC Induction Motor 
+///< Supports speed and direction controlling an AC Induction Motor
 ///< Runs autonomously on an Arduino Nano RF and communicates wirelessly with the main module
 
 #include "ACMotorModule.h"
@@ -23,7 +23,7 @@ ACMotorModule::ACMotorModule(const __FlashStringHelper *Name, Settings::ACMotorM
   logToSerials(F(""), true, 0);                                   // line break
   Sound1 = new Sound(F("Sound1"), this, &ModuleSettings->Sound1); ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
-  Motor1 = new ACMotor(F("1"), this, &ModuleSettings->Motor1);
+  Motor1 = new ACMotor(F("Motor1"), this, &ModuleSettings->Motor1);
   addToRefreshQueue_Sec(this);
   addToRefreshQueue_FiveSec(this);
   //addToRefreshQueue_Minute(this);
@@ -101,56 +101,42 @@ bool ACMotorModule::processCommand(void *ReceivedCommand)
     setSerialReportJSON(((ACMotorModuleCommand *)ReceivedCommand)->SerialReportJSON);
     setSerialReportWireless(((ACMotorModuleCommand *)ReceivedCommand)->SerialReportWireless);
     break;
+
   case ACMotorMessages::ACMotorCommand1:
-    updateAckData(ACMotorMessages::ACMotorResponse2); // update the next Message that will be copied to the buffer
+    updateAckData(ACMotorMessages::ACMotorReset); // update the next Message that will be copied to the buffer
     if (*SerialReportWireless)
     {
-      logToSerials(((ACMotorCommand1 *)ReceivedCommand)->PowerOn, false, 1);
-      logToSerials(((ACMotorCommand1 *)ReceivedCommand)->PowerOff, false, 1);
-      logToSerials(((ACMotorCommand1 *)ReceivedCommand)->Forward, false, 1);
-      logToSerials(((ACMotorCommand1 *)ReceivedCommand)->Backward, false, 1);
-      logToSerials(((ACMotorCommand1 *)ReceivedCommand)->Stop, false, 1);
-      logToSerials(((ACMotorCommand1 *)ReceivedCommand)->Speed, true, 1);
+      logToSerials(((ACMotorCommand *)ReceivedCommand)->Forward, false, 1);
+      logToSerials(((ACMotorCommand *)ReceivedCommand)->Backward, false, 1);
+      logToSerials(((ACMotorCommand *)ReceivedCommand)->Stop, false, 1);
+      logToSerials(((ACMotorCommand *)ReceivedCommand)->Speed, true, 1);
     }
-    if (((ACMotorCommand1 *)ReceivedCommand)->PowerOn && !ACMotor1ResponseToSend.ConfirmPowerOn)
-    {
-      Motor1->powerOn();
-      ACMotor1ResponseToSend.ConfirmPowerOn = true;
-    }
-    else
-      ACMotor1ResponseToSend.ConfirmPowerOn = false;
-    if (((ACMotorCommand1 *)ReceivedCommand)->PowerOff && !ACMotor1ResponseToSend.ConfirmPowerOff)
-    {
-      Motor1->powerOff();
-      ACMotor1ResponseToSend.ConfirmPowerOff = true;
-    }
-    else
-      ACMotor1ResponseToSend.ConfirmPowerOff = false;
-    if (((ACMotorCommand1 *)ReceivedCommand)->Forward && !ACMotor1ResponseToSend.ConfirmForward)
+
+    if (((ACMotorCommand *)ReceivedCommand)->Forward && !ACMotor1ResponseToSend.ConfirmForward)
     {
       Motor1->forward();
       ACMotor1ResponseToSend.ConfirmForward = true;
     }
     else
       ACMotor1ResponseToSend.ConfirmForward = false;
-    if (((ACMotorCommand1 *)ReceivedCommand)->Backward && !ACMotor1ResponseToSend.ConfirmBackward)
+    if (((ACMotorCommand *)ReceivedCommand)->Backward && !ACMotor1ResponseToSend.ConfirmBackward)
     {
       Motor1->backward();
       ACMotor1ResponseToSend.ConfirmBackward = true;
     }
     else
       ACMotor1ResponseToSend.ConfirmBackward = false;
-    if (((ACMotorCommand1 *)ReceivedCommand)->Stop && !ACMotor1ResponseToSend.ConfirmStop)
+    if (((ACMotorCommand *)ReceivedCommand)->Stop && !ACMotor1ResponseToSend.ConfirmStop)
     {
-      Motor11->stop();
+      Motor1->stop();
       ACMotor1ResponseToSend.ConfirmStop = true;
     }
     else
       ACMotor1ResponseToSend.ConfirmStop = false;
-   
-    Motor1->setSpeed(((ACMotorCommand1 *)ReceivedCommand)->Speed);
+
+    Motor1->setSpeed(((ACMotorCommand *)ReceivedCommand)->Speed);
     break;
-  
+
   case ACMotorMessages::ACMotorReset:                       ///< Used to get all Responses that do not have a corresponding Command
     updateAckData(ACMotorMessages::ACMotorModuleResponse1); ///< Load the first response for the next message exchange
     if (*SerialReportWireless)
@@ -183,7 +169,7 @@ void ACMotorModule::updateAckData(ACMotorMessages NewSequenceID)
     break;
   case ACMotorMessages::ACMotorResponse1:
     Wireless.writeAckPayload(1, &ACMotor1ResponseToSend, WirelessPayloadSize);
-    break; 
+    break;
   case ACMotorMessages::ACMotorReset: ///< ACMotorReset should always be the last element in the enum: Signals to stop the message exchange
     Wireless.writeAckPayload(1, &ACMotorResetToSend, WirelessPayloadSize);
     break;

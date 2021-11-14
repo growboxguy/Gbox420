@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 10; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -52,7 +52,7 @@ typedef struct
     bool SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
     bool SerialReportWireless;      ///< Enable/disable sending wireless package exchange reports to the Serial output
   };
-  struct ACMotorModuleSettings Hemp1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true};
+  struct ACMotorModuleSettings ACM1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true};
 
   struct ACMotorSettings ///< ACMotor default settings
   {
