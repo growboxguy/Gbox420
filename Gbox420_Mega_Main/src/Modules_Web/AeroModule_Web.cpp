@@ -233,8 +233,8 @@ bool AeroModule_Web::commandEvent(__attribute__((unused)) char *Command, __attri
     {
       return false;
     }
-    return true;
     SyncRequested = true;
+    return true;    
   }
 }
 

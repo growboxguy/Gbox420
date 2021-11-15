@@ -76,9 +76,9 @@ bool ReservoirModule_Web::commandEvent(__attribute__((unused)) char *Command, __
     else
     {
       return false;
-    }
-    return true;
+    }    
     SyncRequested = true;
+    return true;
   }
 }
 

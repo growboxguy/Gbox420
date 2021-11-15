@@ -55,7 +55,8 @@ void ACMotorModule::refresh_FiveSec()
 
 void ACMotorModule::updateResponse()
 {
-  ACMotor1ResponseToSend.RPM = Motor1->getSpeed();
+  ACMotor1ResponseToSend.RPM = Motor1->getRPM();
+  ACMotor1ResponseToSend.ACMotorState = Motor1->getState();
 }
 
 bool ACMotorModule::processCommand(void *ReceivedCommand)

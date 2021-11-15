@@ -260,9 +260,9 @@ bool HempyModule_Web::commandEvent(char *Command, char *Data)
     else
     {
       return false;
-    }
-    return true;
+    }    
     SyncRequested = true;
+    return true;
   }
 }
 

@@ -21,6 +21,7 @@ public:
   void setSpeed(uint8_t Speed);  
   uint8_t getSpeed(); 
   char *getSpeedText(bool FriendlyFormat = false);
+  float getRPM();
   char *getRPMText(bool FriendlyFormat = false);
 
 private:

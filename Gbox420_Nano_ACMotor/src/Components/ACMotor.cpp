@@ -189,6 +189,11 @@ char *ACMotor::getSpeedText(bool FriendlyFormat)
   }
 }
 
+float ACMotor::getRPM()
+{
+  return RPM;
+}
+
 char *ACMotor::getRPMText(bool FriendlyFormat)
 {
   return toText(RPM);

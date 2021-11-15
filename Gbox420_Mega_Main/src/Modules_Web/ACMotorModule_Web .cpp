@@ -50,6 +50,7 @@ void ACMotorModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 void ACMotorModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
   WebServer.setArgString(getName(F("S"), true), toText_onlineStatus(OnlineStatus));
+  WebServer.setArgString(getName(F("R"), true), toText_rpm(ACMotorResponse1Received.RPM));
   WebServer.setArgString(getName(F("St"), true), toText_ACMotorState(ACMotorResponse1Received.ACMotorState));
 }
 
@@ -75,13 +76,18 @@ bool ACMotorModule_Web::commandEvent(char *Command, char *Data)
     {
       ACMotorCommand1ToSend.Stop = true;
       Parent->addToLog(F("Motor stop"), false);
-    }   
+    }  
+    else if (strcmp_P(ShortMessage, (PGM_P)F("Sp")) == 0)
+    {
+      DefaultSettings->Speed = toInt(Data);
+      Parent->addToLog(F("Speed updated"), false);
+    }  
     else
     {
       return false;
     }
-    return true;
     SyncRequested = true;
+    return true;    
   }
 }
 
