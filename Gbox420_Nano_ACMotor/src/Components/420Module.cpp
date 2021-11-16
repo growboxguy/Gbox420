@@ -50,8 +50,8 @@ void Module::setSerialReportingFrequency(uint16_t Frequency)
   if (Frequency != *SerialReportFrequency)
   {
     *SerialReportFrequency = Frequency;
-  }
-  getSoundObject()->playOnSound();
+    getSoundObject()->playOnSound();
+  }  
 }
 
 /**
@@ -220,8 +220,9 @@ void Module::setDebug(bool DebugEnabled)
   if (DebugEnabled != *Debug)
   {
     *Debug = DebugEnabled;
+
+    getSoundObject()->playOnOffSound(*Debug);
   }
-  getSoundObject()->playOnOffSound(*Debug);
 }
 
 void Module::setMetric(bool MetricEnabled)
@@ -230,8 +231,8 @@ void Module::setMetric(bool MetricEnabled)
   { //if there was a change
     *Metric = MetricEnabled;
     RunAllRequested = true; ///< Force a full sensor reading refresh
+    getSoundObject()->playOnOffSound(*Metric);
   }
-  getSoundObject()->playOnOffSound(*Metric);
 }
 
 void Module::setSerialReportDate(bool State)
@@ -239,8 +240,8 @@ void Module::setSerialReportDate(bool State)
   if (State != *SerialReportDate)
   { //if there was a change
     *SerialReportDate = State;
+    getSoundObject()->playOnOffSound(*SerialReportDate);
   }
-  getSoundObject()->playOnOffSound(*SerialReportDate);
 }
 
 void Module::setSerialReportMemory(bool State)
@@ -248,8 +249,8 @@ void Module::setSerialReportMemory(bool State)
   if (State != *SerialReportMemory)
   { //if there was a change
     *SerialReportMemory = State;
+    getSoundObject()->playOnOffSound(*SerialReportMemory);
   }
-  getSoundObject()->playOnOffSound(*SerialReportMemory);
 }
 
 void Module::setSerialReportJSONFriendly(bool State)
@@ -257,8 +258,8 @@ void Module::setSerialReportJSONFriendly(bool State)
   if (State != *SerialReportJSONFriendly)
   { //if there was a change
     *SerialReportJSONFriendly = State;
+    getSoundObject()->playOnOffSound(*SerialReportJSONFriendly);
   }
-  getSoundObject()->playOnOffSound(*SerialReportJSONFriendly);
 }
 
 void Module::setSerialReportJSON(bool State)
@@ -266,8 +267,8 @@ void Module::setSerialReportJSON(bool State)
   if (State != *SerialReportJSON)
   { //if there was a change
     *SerialReportJSON = State;
+    getSoundObject()->playOnOffSound(*SerialReportJSON);
   }
-  getSoundObject()->playOnOffSound(*SerialReportJSON);
 }
 
 void Module::setSerialReportWireless(bool State)
@@ -275,6 +276,6 @@ void Module::setSerialReportWireless(bool State)
   if (State != *SerialReportWireless)
   { //if there was a change
     *SerialReportWireless = State;
+    getSoundObject()->playOnOffSound(*SerialReportWireless);
   }
-  getSoundObject()->playOnOffSound(*SerialReportWireless);
 }

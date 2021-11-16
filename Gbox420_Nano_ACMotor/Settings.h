@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 4; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -56,15 +56,19 @@ typedef struct
 
   struct ACMotorSettings ///< ACMotor default settings
   {
-    ACMotorSettings(uint16_t Speed = 0, uint16_t SpinOffTime = 0, uint8_t OnOffPin = 0, uint8_t BrushPin = 0, uint8_t CoilPin1 = 0, uint8_t CoilPin2 = 0 ) : Speed(Speed), SpinOffTime(SpinOffTime), OnOffPin(OnOffPin),BrushPin(BrushPin), CoilPin1(CoilPin1), CoilPin2(CoilPin2) {}
+    ACMotorSettings(uint16_t Speed = 0, uint16_t SpeedPWMPin = 0, uint8_t SpeedLimitLow = 0, uint8_t SpeedLimitHigh = 0, uint16_t SpinOffTime = 0, bool RelayNegativeLogic = false, uint8_t OnOffPin = 0, uint8_t BrushPin = 0, uint8_t Coil1Pin = 0, uint8_t Coil2Pin = 0 ) : Speed(Speed), SpeedPWMPin(SpeedPWMPin), SpeedLimitLow(SpeedLimitLow), SpeedLimitHigh(SpeedLimitHigh), SpinOffTime(SpinOffTime), RelayNegativeLogic(RelayNegativeLogic), OnOffPin(OnOffPin),BrushPin(BrushPin), Coil1Pin(Coil1Pin), Coil2Pin(Coil2Pin) {}
     uint8_t Speed;   ///< Motor speed (0% - 100%)
+    uint8_t SpeedPWMPin; ///< AC PWM controller 
+    uint8_t SpeedLimitLow;  ///< Lowest % allowed PWM speed 
+    uint8_t SpeedLimitHigh;  ///< Highest % allowed PWM speed 
     uint16_t SpinOffTime;  ///< (sec) How long it takes for the motor to stop after cutting the power
+    bool RelayNegativeLogic; ///< 4 port relay switching logic: true: HIGH turns port ON, false: LOW turns port ON
     uint8_t OnOffPin;  ///< Power intake relay pin - ON/OFF control 
     uint8_t BrushPin;  ///< Motor brush relay pin - Direction control
-    uint8_t CoilPin1;  ///< Motor coil relay 1 pin - Direction control
-    uint8_t CoilPin2;   ///< Motor coil relay 2 pin - Direction control
+    uint8_t Coil1Pin;  ///< Motor coil pole 1 relay pin - Direction control
+    uint8_t Coil2Pin;   ///< Motor coil pole 2 relay pin - Direction control
   };
-  struct ACMotorSettings Motor1 = {.Speed = 35, .SpinOffTime = 5, .OnOffPin = 3, .BrushPin1 = 4, .CoilPin1 = 5, .CoilPin2 = 6};
+  struct ACMotorSettings Motor1 = {.Speed = 35, .SpeedPWMPin=2, .SpeedLimitLow = 30, .SpeedLimitHigh = 40, .SpinOffTime = 5, .RelayNegativeLogic = true, .OnOffPin = 3, .BrushPin1 = 4, .Coil1Pin = 5, .Coil2Pin = 6};
 
   struct SoundSettings ///< Sound default settings
   {
@@ -72,7 +76,7 @@ typedef struct
     uint8_t Pin;  ///< Piezo Buzzer red(+) cable
     bool Enabled; ///< Enable/Disable sound
   };
-  struct SoundSettings Sound1 = {.Pin = 4, .Enabled = true};
+  struct SoundSettings Sound1 = {.Pin = 8, .Enabled = true};
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;

@@ -4,7 +4,7 @@
 #include "../../Settings.h"
 #include "../Helpers.h"
 
-//This class is the parent of all physical modules, like the Main / Hempy Bucket / Aeroponics / Environment module
+///< Common parent class of all modules
 
 class Sound;
 

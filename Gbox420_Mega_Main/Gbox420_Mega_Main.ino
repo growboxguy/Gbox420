@@ -42,7 +42,7 @@ Settings *ModuleSettings;                 ///< This object will store the settin
 bool *Debug;                              ///< True - Turns on extra debug messages on the Serial Output
 bool *Metric;                             ///< True - Use metric units, False - Use imperial units
 bool MqttConnected = false;               ///< Track the connection state to the MQTT broker configured on the ESP-link's REST/MQTT tab
-MainModule *Main1;                        ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
+MainModule *Main1;                        ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor, Aero/Hempy/Reservoir wireless modules,..etc)
 
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///< Wireless communication with Modules over nRF24L01+
 

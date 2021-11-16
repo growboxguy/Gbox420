@@ -24,8 +24,6 @@ class ReservoirModule_Web;
 
 extern ELClientRest PushingBoxRestAPI;
 
-///< Represents the complete box with lights,temp/humidity/ph/light sensors,power meter, etc..
-
 class MainModule : virtual public Common_Web, virtual public Module_Web
 {
 public:
