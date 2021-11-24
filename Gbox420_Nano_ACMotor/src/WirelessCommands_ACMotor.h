@@ -66,7 +66,7 @@ struct ACMotorModuleCommand : ACMotorCommonTemplate ///< ACMotor module wireless
    time_t Time = 0;
    bool Debug = true;
    bool Metric = true;
-   uint16_t SerialReportFrequency = 0;
+   uint16_t SerialReportFrequency = 15;
    bool SerialReportDate = true;
    bool SerialReportMemory = true;
    bool SerialReportJSONFriendly = true;

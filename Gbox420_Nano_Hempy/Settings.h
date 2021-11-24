@@ -76,16 +76,17 @@ typedef struct
 
   struct WaterPumpSettings ///< WaterPump default settings
   {
-    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint16_t PumpTimeOut = 0, uint8_t Speed = 100, uint8_t SpeedLowLimit = 0) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), PumpTimeOut(PumpTimeOut), Speed(Speed), SpeedLowLimit(SpeedLowLimit) {}
+    WaterPumpSettings(uint8_t PumpPin = 0, bool PumpPinNegativeLogic = false, bool PumpEnabled = false, uint16_t PumpTimeOut = 0, uint8_t Speed = 100, uint8_t SpeedLimitLow = 0, uint8_t SpeedLimitHigh = 100) : PumpPin(PumpPin), PumpPinNegativeLogic(PumpPinNegativeLogic), PumpEnabled(PumpEnabled), PumpTimeOut(PumpTimeOut), Speed(Speed), SpeedLimitLow(SpeedLimitLow), SpeedLimitHigh(SpeedLimitHigh) {}
     uint8_t PumpPin;           ///< Pump relay pin
     bool PumpPinNegativeLogic; ///< true - Relay turns on to LOW signal, false - Relay turns on to HIGH signal
     bool PumpEnabled;          ///< Enable/disable pump. false= Block running the pump
     uint16_t PumpTimeOut;      ///< (Sec) Max pump run time
     uint8_t Speed;             ///< Duty cycle of the PWM Motor speed
-    uint8_t SpeedLowLimit;     ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
+    uint8_t SpeedLimitLow;     ///< Duty cycle limit, does not allow lowering the speed too much. Avoids stalling the motor
+    uint8_t SpeedLimitHigh;     ///< Duty cycle limit, does not allow raising the speed too high
   };
-  struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLowLimit = 30};
-  struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLowLimit = 30};
+  struct WaterPumpSettings HempyPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
+  struct WaterPumpSettings HempyPump2 = {.PumpPin = 5, .PumpPinNegativeLogic = false, .PumpEnabled = true, .PumpTimeOut = 120, .Speed = 100, .SpeedLimitLow = 30, .SpeedLimitHigh = 100};
 
   struct WasteReservoirSettings ///< WaterPump default settings
   {

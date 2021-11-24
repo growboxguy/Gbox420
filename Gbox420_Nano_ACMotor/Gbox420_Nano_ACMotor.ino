@@ -72,17 +72,17 @@ void setup()
   MinuteThread.onRun(runMinute);
 
   ///< Create the ACMotor object
-  ACMotorMod1 = new ACMotorModule(F("ACMotor1"), &ModuleSettings->ACM1); ///< This is the object representing an AC Motor controller with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
-
-  //logToSerials(F("Setup ready, starting loops:"), true, 0);
+  ACMotorMod1 = new ACMotorModule(F("ACM1"), &ModuleSettings->ACM1); ///< This is the object representing an AC Motor controller with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  
+  logToSerials(F("Looping.."), true, 0);
 }
 
 void InitializeWireless()
 {
-  //if (*Debug)
-  //{
-  // logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
-  //}
+  if (*Debug)
+  {
+   logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
+  }
   pinMode(WirelessCSNPin, OUTPUT);
   digitalWrite(WirelessCSNPin, HIGH);
   pinMode(WirelessCEPin, OUTPUT);
@@ -100,10 +100,10 @@ void InitializeWireless()
   Wireless.powerUp();  ///< Not necessary, startListening should switch back to normal power mode
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
-  //if (*Debug)
-  //{
-  //logToSerials(F("done"), true, 3);
-  //}
+  if (*Debug)
+  {
+  logToSerials(F("done"), true, 3);
+  }
   ReceivedMessageTimestamp = millis(); ///< Reset timeout counter
 }
 
@@ -111,7 +111,7 @@ void loop()
 {                      ///< put your main code here, to run repeatedly:
   ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
   ///< If a control package is received from the main module
-  getWirelessData();
+  //getWirelessData();
 }
 
 ///< Threads
@@ -169,7 +169,7 @@ void getWirelessStatus()
 {
   if (*Debug)
   {
-    //logToSerials(F("Wireless report:"), true, 0);
+    logToSerials(F("Wireless report:"), true, 0);
     Wireless.printPrettyDetails();
     logToSerials(F(""), true, 0);
   }

@@ -4,6 +4,10 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
 {
   this->Parent = Parent;
   State = ACMotorStates::IDLE;
+  ForwardPin = &DefaultSettings->ForwardPin;
+  pinMode(*ForwardPin, INPUT_PULLUP);
+  BackwardPin = &DefaultSettings->BackwardPin;
+  pinMode(*BackwardPin, INPUT_PULLUP);
   Speed = &DefaultSettings->Speed;
   SpinOffTime = &DefaultSettings->SpinOffTime;
   OnOffSwitch = new Switch(F("OnOff"), DefaultSettings->OnOffPin, &DefaultSettings->RelayNegativeLogic);
@@ -34,16 +38,39 @@ void ACMotor::report(bool FriendlyFormat)
 void ACMotor::refresh_Sec()
 {
   Common::refresh_Sec();
+
+  if (digitalRead(*ForwardPin)) ///< Is the button currently pressed?
+  {
+    ForwardButtonPressed = true;
+    ForwardRequested = true;
+  }
+  else if (ForwardButtonPressed) ///< If not, but it was pressed the last time: turn off the motor
+  {
+    ForwardButtonPressed = false;
+    StopRequested = true;
+  }
+
+  if (digitalRead(*BackwardPin))
+  {
+    BackwardButtonPressed = true;
+    BackwardRequested = true;
+  }
+  else if (BackwardButtonPressed) ///< If not, but it was pressed the last time: turn off the motor
+  {
+    BackwardButtonPressed = false;
+    StopRequested = true;
+  }
+
   if (StopRequested)
   {
     StopRequested = false;
     stop();
   }
-  if (ForwardRequested)
+  if (ForwardRequested && State != ACMotorStates::STOPPING)
   {
     forward();
   }
-  if (BackwardRequested)
+  if (BackwardRequested && State != ACMotorStates::STOPPING)
   {
     backward();
   }
@@ -58,6 +85,7 @@ void ACMotor::updateState(ACMotorStates NewState)
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState)
   {
+    StateTimer = millis();                         ///< Start measuring the time spent in the new State
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat(LongMessage, getName(F("state: ")));
     strcat(LongMessage, toText_ACMotorState(State));
@@ -74,6 +102,7 @@ void ACMotor::updateState(ACMotorStates NewState)
   case ACMotorStates::FORWARD:
     if (getState() == ACMotorStates::IDLE)
     {
+      Parent->getSoundObject()->playOnSound();
       OnOffSwitch->turnOn();
       BrushSwitch->turnOff();
       Coil1Switch->turnOff();
@@ -90,6 +119,7 @@ void ACMotor::updateState(ACMotorStates NewState)
   case ACMotorStates::BACKWARD:
     if (getState() == ACMotorStates::IDLE)
     {
+      Parent->getSoundObject()->playOnSound();
       OnOffSwitch->turnOn();
       BrushSwitch->turnOn();
       Coil1Switch->turnOn();
@@ -103,24 +133,23 @@ void ACMotor::updateState(ACMotorStates NewState)
       BlockOverWritingState = true;
     }
     break;
-
   case ACMotorStates::STOPPING:
-      OnOffSwitch->turnOff();
-      BrushSwitch->turnOff();
-      Coil1Switch->turnOff();
-      Coil2Switch->turnOff();
+    OnOffSwitch->turnOff();
+    BrushSwitch->turnOff();
+    Coil1Switch->turnOff();
+    Coil2Switch->turnOff();
     if (millis() - StateTimer > ((uint32_t)*SpinOffTime * 1000)) ///< Waiting for the motor to stop spinning
     {
       updateState(ACMotorStates::IDLE);
       BlockOverWritingState = true;
     }
+
     break;
   }
 
   if (State != NewState && !BlockOverWritingState)
   {
     State = NewState;
-    StateTimer = millis();                         ///< Start measuring the time spent in the new State
   }
 }
 
@@ -141,7 +170,6 @@ void ACMotor::stopRequest() //Stores the request only, will apply the next time 
 void ACMotor::forward()
 {
   updateState(ACMotorStates::FORWARD);
-  Parent->getSoundObject()->playOnSound();
 }
 
 void ACMotor::forwardRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing
@@ -154,7 +182,6 @@ void ACMotor::forwardRequest() //Stores the request only, will apply the next ti
 void ACMotor::backward()
 {
   updateState(ACMotorStates::BACKWARD);
-  Parent->getSoundObject()->playOnSound();
 }
 
 void ACMotor::backwardRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing

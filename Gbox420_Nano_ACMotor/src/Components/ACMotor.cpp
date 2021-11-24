@@ -4,6 +4,10 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
 {
   this->Parent = Parent;
   State = ACMotorStates::IDLE;
+  ForwardPin = &DefaultSettings->ForwardPin;
+  pinMode(*ForwardPin, INPUT_PULLUP);
+  BackwardPin = &DefaultSettings->BackwardPin;
+  pinMode(*BackwardPin, INPUT_PULLUP);
   Speed = &DefaultSettings->Speed;
   SpinOffTime = &DefaultSettings->SpinOffTime;
   OnOffSwitch = new Switch(F("OnOff"), DefaultSettings->OnOffPin, &DefaultSettings->RelayNegativeLogic);
@@ -34,6 +38,31 @@ void ACMotor::report(bool FriendlyFormat)
 void ACMotor::refresh_Sec()
 {
   Common::refresh_Sec();
+
+  if (digitalRead(*ForwardPin) == HIGH) ///< Is the button currently pressed?
+  {
+    logToSerials(F("Forward down"));
+    ForwardButtonPressed = true;
+    ForwardRequested = true;
+  }
+  else if (ForwardButtonPressed) ///< If not, but it was pressed the last time: turn off the motor
+  {
+    ForwardButtonPressed = false;
+    StopRequested = true;
+  }
+
+  if (digitalRead(*BackwardPin) == HIGH)
+  {
+    logToSerials(F("Backward down"));
+    BackwardButtonPressed = true;
+    BackwardRequested = true;
+  }
+  else if (BackwardButtonPressed) ///< If not, but it was pressed the last time: turn off the motor
+  {
+    BackwardButtonPressed = false;
+    StopRequested = true;
+  }
+
   if (StopRequested)
   {
     StopRequested = false;
@@ -57,7 +86,7 @@ void ACMotor::updateState(ACMotorStates NewState)
 {
   bool BlockOverWritingState = false; //Used when a state transitions to a new state
   if (State != NewState)
-  {    
+  {
     StateTimer = millis();                         ///< Start measuring the time spent in the new State
     memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     strcat(LongMessage, getName(F("state: ")));
@@ -107,17 +136,14 @@ void ACMotor::updateState(ACMotorStates NewState)
     }
     break;
   case ACMotorStates::STOPPING:
-      OnOffSwitch->turnOff();
-      BrushSwitch->turnOff();
-      Coil1Switch->turnOff();
-      Coil2Switch->turnOff();
+    OnOffSwitch->turnOff();
+    BrushSwitch->turnOff();
+    Coil1Switch->turnOff();
+    Coil2Switch->turnOff();
     if (millis() - StateTimer > ((uint32_t)*SpinOffTime * 1000)) ///< Waiting for the motor to stop spinning
     {
       updateState(ACMotorStates::IDLE);
       BlockOverWritingState = true;
-    }
-    else{
-      logToSerials(F("Waiting.."));
     }
 
     break;
@@ -126,7 +152,6 @@ void ACMotor::updateState(ACMotorStates NewState)
   if (State != NewState && !BlockOverWritingState)
   {
     State = NewState;
-    logToSerials(F("Reset state time.."));
   }
 }
 
@@ -146,7 +171,7 @@ void ACMotor::stopRequest() //Stores the request only, will apply the next time 
 
 void ACMotor::forward()
 {
-  updateState(ACMotorStates::FORWARD);  
+  updateState(ACMotorStates::FORWARD);
 }
 
 void ACMotor::forwardRequest() //Stores the request only, will apply the next time the Hempy Bucket is refreshing

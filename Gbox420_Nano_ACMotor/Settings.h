@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 4; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 6; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -44,7 +44,7 @@ typedef struct
   // initialized via Designated initializer https://riptutorial.com/c/example/18609/using-designated-initializers
   struct ACMotorModuleSettings
   {
-    ACMotorModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSONFriendly = true, bool SerialReportJSON = true, bool SerialReportWireless = true) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportJSON(SerialReportJSON), SerialReportWireless(SerialReportWireless) {}
+    ACMotorModuleSettings(uint16_t SerialReportFrequency = 15, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSONFriendly = true, bool SerialReportJSON = true, bool SerialReportWireless = true) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportJSON(SerialReportJSON), SerialReportWireless(SerialReportWireless) {}
     uint16_t SerialReportFrequency; ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
     bool SerialReportDate;          ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory;        ///< Enable/disable reporting the remaining free memory to the Serial output
@@ -56,7 +56,7 @@ typedef struct
 
   struct ACMotorSettings ///< ACMotor default settings
   {
-    ACMotorSettings(uint16_t Speed = 0, uint16_t SpeedPWMPin = 0, uint8_t SpeedLimitLow = 0, uint8_t SpeedLimitHigh = 0, uint16_t SpinOffTime = 0, bool RelayNegativeLogic = false, uint8_t OnOffPin = 0, uint8_t BrushPin = 0, uint8_t Coil1Pin = 0, uint8_t Coil2Pin = 0 ) : Speed(Speed), SpeedPWMPin(SpeedPWMPin), SpeedLimitLow(SpeedLimitLow), SpeedLimitHigh(SpeedLimitHigh), SpinOffTime(SpinOffTime), RelayNegativeLogic(RelayNegativeLogic), OnOffPin(OnOffPin),BrushPin(BrushPin), Coil1Pin(Coil1Pin), Coil2Pin(Coil2Pin) {}
+    ACMotorSettings(uint16_t Speed = 0, uint16_t SpeedPWMPin = 0, uint8_t SpeedLimitLow = 0, uint8_t SpeedLimitHigh = 0, uint16_t SpinOffTime = 0, bool RelayNegativeLogic = false, uint8_t OnOffPin = 0, uint8_t BrushPin = 0, uint8_t Coil1Pin = 0, uint8_t Coil2Pin = 0, uint8_t ForwardPin = 0, uint8_t BackwardPin = 0 ) : Speed(Speed), SpeedPWMPin(SpeedPWMPin), SpeedLimitLow(SpeedLimitLow), SpeedLimitHigh(SpeedLimitHigh), SpinOffTime(SpinOffTime), RelayNegativeLogic(RelayNegativeLogic), OnOffPin(OnOffPin),BrushPin(BrushPin), Coil1Pin(Coil1Pin), Coil2Pin(Coil2Pin), ForwardPin(ForwardPin), BackwardPin(BackwardPin) {}
     uint8_t Speed;   ///< Motor speed (0% - 100%)
     uint8_t SpeedPWMPin; ///< AC PWM controller 
     uint8_t SpeedLimitLow;  ///< Lowest % allowed PWM speed 
@@ -67,8 +67,10 @@ typedef struct
     uint8_t BrushPin;  ///< Motor brush relay pin - Direction control
     uint8_t Coil1Pin;  ///< Motor coil pole 1 relay pin - Direction control
     uint8_t Coil2Pin;   ///< Motor coil pole 2 relay pin - Direction control
+    uint8_t ForwardPin;  ///< Pysical Button (optional) - Direction control
+    uint8_t BackwardPin;   ///< Pysical Button (optional) - Direction control
   };
-  struct ACMotorSettings Motor1 = {.Speed = 35, .SpeedPWMPin=2, .SpeedLimitLow = 30, .SpeedLimitHigh = 40, .SpinOffTime = 5, .RelayNegativeLogic = true, .OnOffPin = 3, .BrushPin1 = 4, .Coil1Pin = 5, .Coil2Pin = 6};
+  struct ACMotorSettings Motor1 = {.Speed = 32, .SpeedPWMPin=2, .SpeedLimitLow = 30, .SpeedLimitHigh = 40, .SpinOffTime = 5, .RelayNegativeLogic = true, .OnOffPin = 3, .BrushPin1 = 4, .Coil1Pin = 5, .Coil2Pin = 6, .ForwardPin = 12, .BackwardPin = 11};
 
   struct SoundSettings ///< Sound default settings
   {
