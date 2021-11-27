@@ -5,7 +5,7 @@
 ///< updating their statuses and reporting it to the Main module wirelessly
 ///< Listens and reacts to wireless commands from the main module
 
-#include "RF24.h" // https://github.com/maniacbug/RF24
+//WIRELESS DISBLED// #include "RF24.h" // https://github.com/maniacbug/RF24
 #include "../Components/420Common.h"
 #include "../Components/420Module.h"
 #include "../WirelessCommands_ACMotor.h"
@@ -14,7 +14,7 @@
 
 class Sound;
 class ACMotor;
-extern RF24 Wireless;
+//WIRELESS DISBLED// extern RF24 Wireless;
 
 class ACMotorModule : public Module
 {
@@ -29,12 +29,12 @@ public:
   void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();
-  bool processCommand(void *Command);
-  void updateResponse();
-  void updateAckData(ACMotorMessages NewSequenceID);
+  //WIRELESS DISBLED// bool processCommand(void *Command);
+  //WIRELESS DISBLED// void updateResponse();
+  //WIRELESS DISBLED// void updateAckData(ACMotorMessages NewSequenceID);
 
 private:
-  uint32_t LastMessageReceived = 0; //When was the last wireless message received
+  //WIRELESS DISBLED// uint32_t LastMessageReceived = 0; //When was the last wireless message received
 
 protected:
 };

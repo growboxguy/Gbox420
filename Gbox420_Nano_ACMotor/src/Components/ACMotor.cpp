@@ -9,12 +9,16 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
   BackwardPin = &DefaultSettings->BackwardPin;
   pinMode(*BackwardPin, INPUT_PULLUP);
   Speed = &DefaultSettings->Speed;
+  SpeedLimitLow = &DefaultSettings->SpeedLimitLow;
+  SpeedLimitHigh = &DefaultSettings->SpeedLimitHigh;
   SpinOffTime = &DefaultSettings->SpinOffTime;
   OnOffSwitch = new Switch(F("OnOff"), DefaultSettings->OnOffPin, &DefaultSettings->RelayNegativeLogic);
   BrushSwitch = new Switch(F("Brush"), DefaultSettings->BrushPin, &DefaultSettings->RelayNegativeLogic);
   Coil1Switch = new Switch(F("Coil1"), DefaultSettings->Coil1Pin, &DefaultSettings->RelayNegativeLogic);
   Coil2Switch = new Switch(F("Coil2"), DefaultSettings->Coil2Pin, &DefaultSettings->RelayNegativeLogic);
-  SpeedSwitchPWM = new Switch_PWM(F("Speed"), DefaultSettings->SpeedPWMPin, *Speed, &DefaultSettings->SpeedLimitLow, &DefaultSettings->SpeedLimitHigh);
+  PWMController = new dimmerLamp(DefaultSettings->SpeedPWMPin);
+  PWMController->begin(NORMAL_MODE, OFF); //dimmer initialisation: name.begin(Mode: NORMAL_MODE/TOGGLE_MODE, State:ON/OFF)
+  PWMController->setPower(*Speed);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("ACMotor ready"), true, 3);
@@ -39,27 +43,29 @@ void ACMotor::refresh_Sec()
 {
   Common::refresh_Sec();
 
-  if (digitalRead(*ForwardPin) == HIGH) ///< Is the button currently pressed?
+  if (digitalRead(*ForwardPin) == LOW) ///< Currently pressed
   {
-    logToSerials(F("Forward down"));
+    logToSerials(F("Forward down"), true, 1);
     ForwardButtonPressed = true;
     ForwardRequested = true;
   }
-  else if (ForwardButtonPressed) ///< If not, but it was pressed the last time: turn off the motor
+  else if (ForwardButtonPressed) ///< Currently not pressed, but it was pressed the last time: turn off the motor
   {
     ForwardButtonPressed = false;
+    ForwardRequested = false;
     StopRequested = true;
   }
 
-  if (digitalRead(*BackwardPin) == HIGH)
+  if (digitalRead(*BackwardPin) == LOW)
   {
-    logToSerials(F("Backward down"));
+    logToSerials(F("Backward down"), true, 1);
     BackwardButtonPressed = true;
     BackwardRequested = true;
   }
   else if (BackwardButtonPressed) ///< If not, but it was pressed the last time: turn off the motor
   {
     BackwardButtonPressed = false;
+    BackwardRequested = false;
     StopRequested = true;
   }
 
@@ -99,7 +105,11 @@ void ACMotor::updateState(ACMotorStates NewState)
   switch (NewState)
   {
   case ACMotorStates::IDLE:
-    digitalWrite(*OnOffPin, HIGH);
+    PWMController->setState(OFF);
+    OnOffSwitch->turnOff();
+    BrushSwitch->turnOff();
+    Coil1Switch->turnOff();
+    Coil2Switch->turnOff();
     break;
   case ACMotorStates::FORWARD:
     if (getState() == ACMotorStates::IDLE)
@@ -109,6 +119,7 @@ void ACMotor::updateState(ACMotorStates NewState)
       BrushSwitch->turnOff();
       Coil1Switch->turnOff();
       Coil2Switch->turnOff();
+      PWMController->setState(ON);
       ForwardRequested = false;
     }
     else if (State != NewState)
@@ -126,6 +137,7 @@ void ACMotor::updateState(ACMotorStates NewState)
       BrushSwitch->turnOn();
       Coil1Switch->turnOn();
       Coil2Switch->turnOn();
+      PWMController->setState(ON);
       BackwardRequested = false;
     }
     else if (State != NewState)
@@ -136,6 +148,7 @@ void ACMotor::updateState(ACMotorStates NewState)
     }
     break;
   case ACMotorStates::STOPPING:
+    PWMController->setState(OFF);
     OnOffSwitch->turnOff();
     BrushSwitch->turnOff();
     Coil1Switch->turnOff();

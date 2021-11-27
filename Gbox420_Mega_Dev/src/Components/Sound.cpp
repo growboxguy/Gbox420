@@ -6,6 +6,7 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
   Parent->SoundFeedback = this; ///< Pointer for child objects to use sound feedback
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
+  Tone1 = new TonePlayer(TCCR1A, TCCR1B, OCR1AH, OCR1AL, TCNT1H, TCNT1L);  // pin D9 (Uno/Nano), D11 (Mega)
   pinMode(*Pin, OUTPUT);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("Sound ready"), true, 3);
@@ -71,12 +72,12 @@ void Sound::OnSound()
 {
   if (*Enabled)
   {
-    tone(*Pin, 500);
+    Tone1->tone(500);
     delay(100);
-    noTone(*Pin);
-    tone(*Pin, 1000);
+    Tone1->noTone();
+    Tone1->tone(1000);
     delay(100);
-    noTone(*Pin);
+    Tone1->noTone();
   }
 }
 
@@ -84,12 +85,12 @@ void Sound::OffSound()
 {
   if (*Enabled)
   {
-    tone(*Pin, 1000);
+    Tone1->tone(1000);
     delay(100);
-    noTone(*Pin);
-    tone(*Pin, 500);
+    Tone1->noTone();
+    Tone1->tone(500);
     delay(100);
-    noTone(*Pin);
+    Tone1->noTone();
   }
 }
 

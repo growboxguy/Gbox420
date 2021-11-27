@@ -3,7 +3,7 @@
 #include "420Module.h"
 #include "Sound.h"
 #include "Switch.h"
-#include "Switch_PWM.h"
+#include "RBDdimmer.h"   //< For the AC PWM controller
 
 class ACMotor : virtual public Common
 {
@@ -44,8 +44,10 @@ protected:
   Switch *BrushSwitch;
   Switch *Coil1Switch;
   Switch *Coil2Switch;
-  Switch_PWM *SpeedSwitchPWM;
-  uint8_t *ForwardPin = NULL;
+  dimmerLamp *PWMController;   ///< Provided by the RBDdimmer library  
+  uint8_t *SpeedLimitLow;
+  uint8_t *SpeedLimitHigh;
+  uint8_t *ForwardPin = NULL;  
   bool ForwardButtonPressed = false;
   uint8_t *BackwardPin = NULL;
   bool BackwardButtonPressed = false;

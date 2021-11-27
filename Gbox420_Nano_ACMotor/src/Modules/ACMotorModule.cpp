@@ -7,10 +7,13 @@
 #include "../Components/ACMotor.h"
 
 ///< Variables used during wireless communication
+//WIRELESS DISBLED// 
+/*
 uint8_t NextSequenceID = ACMotorMessages::ACMotorModuleResponse1;
 struct ACMotorModuleResponse ACMotorModuleResponse1ToSend = {ACMotorMessages::ACMotorModuleResponse1};
 struct ACMotorResponse ACMotor1ResponseToSend = {ACMotorMessages::ACMotorResponse1};
 struct ACMotorCommonTemplate ACMotorResetToSend = {ACMotorMessages::ACMotorReset}; ///< Special response signaling the end of a message exchange to the Transmitter
+*/
 
 ACMotorModule::ACMotorModule(const __FlashStringHelper *Name, Settings::ACMotorModuleSettings *DefaultSettings) : Common(Name), Module(Name)
 {
@@ -35,6 +38,8 @@ ACMotorModule::ACMotorModule(const __FlashStringHelper *Name, Settings::ACMotorM
 void ACMotorModule::refresh_Sec()
 {
   Common::refresh_Sec();
+  //WIRELESS DISBLED// 
+  /*
   if (NextSequenceID != ACMotorMessages::ACMotorModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
   { ///< If there is a package exchange in progress, but a followup command was not received within the timeout
     //if (*Debug)
@@ -44,14 +49,18 @@ void ACMotorModule::refresh_Sec()
     Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
     updateAckData(ACMotorMessages::ACMotorModuleResponse1);
   }
+  */
 }
 
 void ACMotorModule::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
   reportToSerialTrigger();
-  updateResponse();
+  //WIRELESS DISBLED// updateResponse();
 }
+
+//WIRELESS DISBLED// 
+/*
 
 void ACMotorModule::updateResponse()
 {
@@ -179,3 +188,4 @@ void ACMotorModule::updateAckData(ACMotorMessages NewSequenceID)
     break;
   }
 }
+*/

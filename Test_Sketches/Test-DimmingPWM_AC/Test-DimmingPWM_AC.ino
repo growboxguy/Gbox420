@@ -7,7 +7,7 @@
 
 //Pins
 //const byte ZC_Pin = 2;   //Zero Cross detection pin - This pin is FIXED to D2 digital pin due to Interroupt handling (Mega2560 and Nano)
-const byte PWM_Pin = 10;  //PWM signal that sets the Output (Mega2560: D2-D13 supported, Nano: D3,D5,D6,D9-D12 supported)
+const byte PWM_Pin = 5;  //PWM signal that sets the Output (Mega2560: D2-D13 supported, Nano: D3,D5,D6,D9-D12 supported)
 const byte MinOutput = 30;
 const byte MaxOutput = 100;
 int Output = MinOutput;  //Start with minimum output

@@ -14,11 +14,11 @@
 #include "Thread.h"                 // Splitting functions to threads for timing
 #include "StaticThreadController.h" // Grouping threads
 #include "SPI.h"                    ///< communicate with SPI devices, with the Arduino as the master device
-#include "RF24.h"                   // https://github.com/maniacbug/RF24
+//WIRELESS DISBLED// #include "RF24.h"                   // https://github.com/maniacbug/RF24
 #include "SerialLog.h"              // Logging messages to Serial
 #include "Settings.h"
 #include "src/Modules/ACMotorModule.h"
-#include "src/WirelessCommands_ACMotor.h" // Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul
+//WIRELESS DISBLED// #include "src/WirelessCommands_ACMotor.h" // Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul
 
 // Global variable initialization
 bool *Debug;
@@ -26,14 +26,14 @@ bool *Metric;
 char LongMessage[MaxLongTextLength] = "";            // Temp storage for assembling long messages (REST API - Google Sheets reporting)
 char ShortMessage[MaxShotTextLength] = "";           // Temp storage for assembling short messages (Log entries, Error messages)
 char CurrentTime[MaxWordLength] = "";                // Buffer for storing current time in text format
-void *ReceivedMessage = malloc(WirelessPayloadSize); // Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
-uint32_t ReceivedMessageTimestamp = millis();        // Stores the timestamp when the last wireless package was received
+//WIRELESS DISBLED// void *ReceivedMessage = malloc(WirelessPayloadSize); // Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
+//WIRELESS DISBLED// uint32_t ReceivedMessageTimestamp = millis();        // Stores the timestamp when the last wireless package was received
 
 ///< Component initialization
 HardwareSerial &ArduinoSerial = Serial;       // Reference to the Arduino Serial
 Settings *ModuleSettings;                     // settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
 ACMotorModule *ACMotorMod1;                   // Represents a AC Incuction Motor with direction and speed control
-RF24 Wireless(WirelessCEPin, WirelessCSNPin); // Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
+//WIRELESS DISBLED// RF24 Wireless(WirelessCEPin, WirelessCSNPin); // Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 
 ///< Thread initialization
 Thread OneSecThread = Thread();
@@ -50,10 +50,10 @@ void setup()
   logToSerials(F("ACMotor module initializing"), true, 0); ///< logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
   wdt_enable(WDTO_8S);                                   ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
   boot_rww_enable();                                     ///< fix watchdog not loading sketch after a reset error on Mega2560
-  struct ACMotorModuleCommand BlankCommand = {ACMotorMessages::ACMotorModuleCommand1};
-  memcpy(ReceivedMessage, &BlankCommand, sizeof(struct ACMotorModuleCommand)); ///< Copy a blank command to the memory block pointed ReceivedMessage. Without this ReceivedMessage would contain random data
-  setSyncProvider(updateTime);
-  setSyncInterval(3600); //Sync time every hour with the main module
+  //WIRELESS DISBLED// struct ACMotorModuleCommand BlankCommand = {ACMotorMessages::ACMotorModuleCommand1};
+  //WIRELESS DISBLED// memcpy(ReceivedMessage, &BlankCommand, sizeof(struct ACMotorModuleCommand)); ///< Copy a blank command to the memory block pointed ReceivedMessage. Without this ReceivedMessage would contain random data
+  //WIRELESS DISBLED// setSyncProvider(updateTime);
+  //WIRELESS DISBLED// setSyncInterval(3600); //Sync time every hour with the main module
 
   ///< Loading settings from EEPROM
   ModuleSettings = loadSettings();
@@ -61,7 +61,7 @@ void setup()
   Metric = &ModuleSettings->Metric;
 
   ///< Setting up wireless module
-  InitializeWireless();
+  //WIRELESS DISBLED// InitializeWireless();
 
   ///< Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.setInterval(1000); ///< 1000ms
@@ -77,6 +77,8 @@ void setup()
   logToSerials(F("Looping.."), true, 0);
 }
 
+//WIRELESS DISBLED// 
+/*
 void InitializeWireless()
 {
   if (*Debug)
@@ -106,6 +108,7 @@ void InitializeWireless()
   }
   ReceivedMessageTimestamp = millis(); ///< Reset timeout counter
 }
+*/
 
 void loop()
 {                      ///< put your main code here, to run repeatedly:
@@ -133,7 +136,7 @@ void runMinute()
 {
   wdt_reset();
   ACMotorMod1->runMinute();
-  getWirelessStatus();
+  //WIRELESS DISBLED// getWirelessStatus();
 }
 
 void HeartBeat()
@@ -144,7 +147,8 @@ void HeartBeat()
 }
 
 ///< Wireless communication
-
+//WIRELESS DISBLED// 
+/*
 void getWirelessData()
 {
   if (Wireless.available())
@@ -185,3 +189,4 @@ time_t updateTime()
   }
   return ReceivedTime;
 }
+*/
