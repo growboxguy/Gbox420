@@ -4,6 +4,7 @@
 #include "Sound.h"
 #include "Switch.h"
 #include "RBDdimmer.h"   //< For the AC PWM controller
+#include "movingAvg.h"   ///< Moving average calculation for Speed adjuster 10kOhm Potentiometer
 
 class ACMotor : virtual public Common
 {
@@ -20,6 +21,7 @@ public:
   void forwardRequest();
   void backward();
   void backwardRequest();
+  void updateSpeed();  ///< Read 10kOhm potentiometer
   void setSpeed(uint8_t Speed);
   uint8_t getSpeed();
   char *getSpeedText(bool FriendlyFormat = false);
@@ -45,6 +47,8 @@ protected:
   Switch *Coil1Switch;
   Switch *Coil2Switch;
   dimmerLamp *PWMController;   ///< Provided by the RBDdimmer library  
+  uint8_t *SpeedPotPin;
+  movingAvg *AverageSpeedReading;
   uint8_t *SpeedLimitLow;
   uint8_t *SpeedLimitHigh;
   uint8_t *ForwardPin = NULL;  
@@ -52,5 +56,5 @@ protected:
   uint8_t *BackwardPin = NULL;
   bool BackwardButtonPressed = false;
   ACMotorStates State = ACMotorStates::IDLE;
-  uint8_t *Speed = NULL; ///< Motor speed (0% - 100%)
+  uint8_t Speed = 0; ///< Motor speed (0% - 100%)
 };

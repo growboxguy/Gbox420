@@ -8,7 +8,11 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
   pinMode(*ForwardPin, INPUT_PULLUP);
   BackwardPin = &DefaultSettings->BackwardPin;
   pinMode(*BackwardPin, INPUT_PULLUP);
-  Speed = &DefaultSettings->Speed;
+  SpeedPotPin = &DefaultSettings->SpeedPotPin;
+  pinMode(*SpeedPotPin, INPUT);
+  AverageSpeedReading = new movingAvg(MovingAverageDepth);
+  AverageSpeedReading->begin();
+  Speed = DefaultSettings->Speed;
   SpeedLimitLow = &DefaultSettings->SpeedLimitLow;
   SpeedLimitHigh = &DefaultSettings->SpeedLimitHigh;
   SpinOffTime = &DefaultSettings->SpinOffTime;
@@ -18,7 +22,7 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
   Coil2Switch = new Switch(F("Coil2"), DefaultSettings->Coil2Pin, &DefaultSettings->RelayNegativeLogic);
   PWMController = new dimmerLamp(DefaultSettings->SpeedPWMPin);
   PWMController->begin(NORMAL_MODE, OFF); //dimmer initialisation: name.begin(Mode: NORMAL_MODE/TOGGLE_MODE, State:ON/OFF)
-  PWMController->setPower(*Speed);
+  PWMController->setPower(Speed);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("ACMotor ready"), true, 3);
@@ -42,6 +46,8 @@ void ACMotor::report(bool FriendlyFormat)
 void ACMotor::refresh_Sec()
 {
   Common::refresh_Sec();
+
+  updateSpeed();
 
   if (digitalRead(*ForwardPin) == LOW) ///< Currently pressed
   {
@@ -206,29 +212,37 @@ void ACMotor::backwardRequest() //Stores the request only, will apply the next t
   BackwardRequested = true;
 }
 
+void ACMotor::updateSpeed()
+{
+  AverageSpeedReading->reading(map(analogRead(*SpeedPotPin), 0, 1023, *SpeedLimitLow, *SpeedLimitHigh)); //take a reading and map it between 0 - 100%
+  setSpeed(AverageSpeedReading->getAvg());
+}
+
 void ACMotor::setSpeed(uint8_t NewSpeed)
 {
-  if (*Speed != NewSpeed)
+  if (Speed != NewSpeed)
   {
-    *Speed = NewSpeed;
-    Parent->getSoundObject()->playOnSound();
+    Speed = NewSpeed;
+    logToSerials(F("Motor speed"),false,1);
+    logToSerials(Speed,true,1);
+    PWMController->setPower(Speed);
   }
 }
 
 uint8_t ACMotor::getSpeed()
 {
-  return *Speed;
+  return Speed;
 }
 
 char *ACMotor::getSpeedText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
   {
-    return toText_percentage(*Speed);
+    return toText_percentage(Speed);
   }
   else
   {
-    return toText(*Speed);
+    return toText(Speed);
   }
 }
 

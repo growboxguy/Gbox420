@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 7; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 9; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -56,9 +56,10 @@ typedef struct
 
   struct ACMotorSettings ///< ACMotor default settings
   {
-    ACMotorSettings(uint16_t Speed = 0, uint16_t ZCPin = 0, uint16_t SpeedPWMPin = 0, uint8_t SpeedLimitLow = 0, uint8_t SpeedLimitHigh = 0, uint16_t SpinOffTime = 0, bool RelayNegativeLogic = false, uint8_t OnOffPin = 0, uint8_t BrushPin = 0, uint8_t Coil1Pin = 0, uint8_t Coil2Pin = 0, uint8_t ForwardPin = 0, uint8_t BackwardPin = 0 ) : Speed(Speed), ZCPin(ZCPin), SpeedPWMPin(SpeedPWMPin), SpeedLimitLow(SpeedLimitLow), SpeedLimitHigh(SpeedLimitHigh), SpinOffTime(SpinOffTime), RelayNegativeLogic(RelayNegativeLogic), OnOffPin(OnOffPin),BrushPin(BrushPin), Coil1Pin(Coil1Pin), Coil2Pin(Coil2Pin), ForwardPin(ForwardPin), BackwardPin(BackwardPin) {}
+    ACMotorSettings(uint16_t Speed = 0, uint16_t ZCPin = 0, uint16_t SpeedPotPin = 0, uint16_t SpeedPWMPin = 0, uint8_t SpeedLimitLow = 0, uint8_t SpeedLimitHigh = 0, uint16_t SpinOffTime = 0, bool RelayNegativeLogic = false, uint8_t OnOffPin = 0, uint8_t BrushPin = 0, uint8_t Coil1Pin = 0, uint8_t Coil2Pin = 0, uint8_t ForwardPin = 0, uint8_t BackwardPin = 0 ) : Speed(Speed), ZCPin(ZCPin), SpeedPotPin(SpeedPotPin), SpeedPWMPin(SpeedPWMPin), SpeedLimitLow(SpeedLimitLow), SpeedLimitHigh(SpeedLimitHigh), SpinOffTime(SpinOffTime), RelayNegativeLogic(RelayNegativeLogic), OnOffPin(OnOffPin),BrushPin(BrushPin), Coil1Pin(Coil1Pin), Coil2Pin(Coil2Pin), ForwardPin(ForwardPin), BackwardPin(BackwardPin) {}
     uint8_t Speed;   ///< Motor speed (0% - 100%)
     uint8_t ZCPin; ///< Zero Corssing pin on AC controller , FIXED to port 2 for interrupt handling
+    uint8_t SpeedPotPin; ///< Analog pin connected to the center pin of a 10kOhm potentiometer. Left leg: GND and Right leg: +5V
     uint8_t SpeedPWMPin; ///< PWM pin on AC controller 
     uint8_t SpeedLimitLow;  ///< Lowest % allowed PWM speed 
     uint8_t SpeedLimitHigh;  ///< Highest % allowed PWM speed 
@@ -71,7 +72,7 @@ typedef struct
     uint8_t ForwardPin;  ///< Pysical Button (optional) - Direction control
     uint8_t BackwardPin;   ///< Pysical Button (optional) - Direction control
   };
-  struct ACMotorSettings Motor1 = {.Speed = 32, .ZCPin=2, .SpeedPWMPin=10, .SpeedLimitLow = 30, .SpeedLimitHigh = 40, .SpinOffTime = 5, .RelayNegativeLogic = true, .OnOffPin = 5, .BrushPin1 = 6, .Coil1Pin = 7, .Coil2Pin = 8, .ForwardPin = 4, .BackwardPin = 3};
+  struct ACMotorSettings Motor1 = {.Speed = 32, .ZCPin=2, .SpeedPotPin=A0, .SpeedPWMPin=10, .SpeedLimitLow = 30, .SpeedLimitHigh = 100, .SpinOffTime = 5, .RelayNegativeLogic = true, .OnOffPin = 5, .BrushPin1 = 6, .Coil1Pin = 7, .Coil2Pin = 8, .ForwardPin = 4, .BackwardPin = 3};
 
   struct SoundSettings ///< Sound default settings
   {
