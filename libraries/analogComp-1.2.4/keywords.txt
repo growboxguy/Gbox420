@@ -1,0 +1,22 @@
+#######################################
+# Syntax Coloring Map For analogComp
+####################################### 
+# Datatypes (KEYWORD1)
+#######################################
+
+analogComparator	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+setOn	KEYWORD2
+setOff	KEYWORD2
+enableInterrupt	KEYWORD2
+disableInterrupt	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+
