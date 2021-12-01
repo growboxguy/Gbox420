@@ -1,5 +1,7 @@
 #include "ACMotor.h"
 
+long ACMotor::TachoPulseCounter = 0;
+
 ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMotorSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
@@ -15,7 +17,10 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
   Speed = DefaultSettings->Speed;
   SpeedLimitLow = &DefaultSettings->SpeedLimitLow;
   SpeedLimitHigh = &DefaultSettings->SpeedLimitHigh;
+  TachoPulsesPerRevolution = &DefaultSettings->TachoPulsesPerRevolution;
   SpinOffTime = &DefaultSettings->SpinOffTime;
+  analogComparator.setOn(INTERNAL_REFERENCE, AIN1);                   // AINO (D6) , the external signal is connected to ANI1 (D7)
+  analogComparator.enableInterrupt(triggerRPM, RISING); // Call the trigger function when an intertupt is raised by the comperator (When ANT1 (D7) goes over AIN0)
   OnOffSwitch = new Switch(F("OnOff"), DefaultSettings->OnOffPin, &DefaultSettings->RelayNegativeLogic);
   BrushSwitch = new Switch(F("Brush"), DefaultSettings->BrushPin, &DefaultSettings->RelayNegativeLogic);
   Coil1Switch = new Switch(F("Coil1"), DefaultSettings->Coil1Pin, &DefaultSettings->RelayNegativeLogic);
@@ -48,6 +53,11 @@ void ACMotor::refresh_Sec()
   Common::refresh_Sec();
 
   updateSpeed();
+
+  //if (State == ACMotorStates::FORWARD || State == ACMotorStates::BACKWARD)
+  {
+    updateRPM();
+  }
 
   if (digitalRead(*ForwardPin) == LOW) ///< Currently pressed
   {
@@ -223,8 +233,8 @@ void ACMotor::setSpeed(uint8_t NewSpeed)
   if (Speed != NewSpeed)
   {
     Speed = NewSpeed;
-    logToSerials(F("Motor speed"),false,1);
-    logToSerials(Speed,true,1);
+    logToSerials(F("Motor speed"), false, 1);
+    logToSerials(Speed, true, 1);
     PWMController->setPower(Speed);
   }
 }
@@ -244,6 +254,24 @@ char *ACMotor::getSpeedText(bool FriendlyFormat)
   {
     return toText(Speed);
   }
+}
+
+void ACMotor::updateRPM()
+{
+  logToSerials(TachoPulseCounter, true, 1);
+  uint32_t ElapsedTime = millis() - RPMLastCalculation;
+  logToSerials(ElapsedTime, true, 1);
+  RPM = (float)TachoPulseCounter / ElapsedTime / *TachoPulsesPerRevolution * 60000;
+  TachoPulseCounter = 0;
+  RPMLastCalculation = millis();
+
+  logToSerials(F("Motor RPM:"), false, 1);
+  logToSerials(RPM, true, 1);
+}
+
+void ACMotor::triggerRPM()
+{
+  TachoPulseCounter++;
 }
 
 float ACMotor::getRPM()
