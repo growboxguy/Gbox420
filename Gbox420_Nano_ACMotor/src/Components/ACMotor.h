@@ -4,7 +4,7 @@
 #include "Sound.h"
 #include "Switch.h"
 #include "RBDdimmer.h"  //< For the AC PWM controller
-#include "analogComp.h" //< Internal comperator library
+#include "analogComp.h" //< Internal comparator library
 #include "movingAvg.h"  ///< Moving average calculation for Speed adjuster 10kOhm Potentiometer
 
 class ACMotor : virtual public Common
@@ -22,12 +22,12 @@ public:
   void forwardRequest();
   void backward();
   void backwardRequest();
-  void updateSpeed(); ///< Read 10kOhm potentiometer
+  void (); ///< Read 10kOhm potentiometer
   void setSpeed(uint8_t Speed);
   uint8_t getSpeed();
   char *getSpeedText(bool FriendlyFormat = false);
   void updateRPM();
-  static void triggerRPM();
+  static void tachoTrigger();
   float getRPM();
   char *getRPMText(bool FriendlyFormat = false);
 

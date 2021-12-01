@@ -20,7 +20,7 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
   TachoPulsesPerRevolution = &DefaultSettings->TachoPulsesPerRevolution;
   SpinOffTime = &DefaultSettings->SpinOffTime;
   analogComparator.setOn(INTERNAL_REFERENCE, AIN1);                   // AINO (D6) , the external signal is connected to ANI1 (D7)
-  analogComparator.enableInterrupt(triggerRPM, RISING); // Call the trigger function when an intertupt is raised by the comperator (When ANT1 (D7) goes over AIN0)
+  analogComparator.enableInterrupt(tachoTrigger, RISING); // Call the trigger function when an intertupt is raised by the comparator (When ANT1 (D7) goes over AIN0)
   OnOffSwitch = new Switch(F("OnOff"), DefaultSettings->OnOffPin, &DefaultSettings->RelayNegativeLogic);
   BrushSwitch = new Switch(F("Brush"), DefaultSettings->BrushPin, &DefaultSettings->RelayNegativeLogic);
   Coil1Switch = new Switch(F("Coil1"), DefaultSettings->Coil1Pin, &DefaultSettings->RelayNegativeLogic);
@@ -52,7 +52,7 @@ void ACMotor::refresh_Sec()
 {
   Common::refresh_Sec();
 
-  updateSpeed();
+  readSpeed();
 
   //if (State == ACMotorStates::FORWARD || State == ACMotorStates::BACKWARD)
   {
@@ -222,13 +222,13 @@ void ACMotor::backwardRequest() //Stores the request only, will apply the next t
   BackwardRequested = true;
 }
 
-void ACMotor::updateSpeed()
+void ACMotor::readSpeed()
 {
   AverageSpeedReading->reading(map(analogRead(*SpeedPotPin), 0, 1023, *SpeedLimitLow, *SpeedLimitHigh)); //take a reading and map it between 0 - 100%
   setSpeed(AverageSpeedReading->getAvg());
 }
 
-void ACMotor::setSpeed(uint8_t NewSpeed)
+void ACMotor::readSpeed(uint8_t NewSpeed)
 {
   if (Speed != NewSpeed)
   {
@@ -269,7 +269,7 @@ void ACMotor::updateRPM()
   logToSerials(RPM, true, 1);
 }
 
-void ACMotor::triggerRPM()
+void ACMotor::tachoTrigger()
 {
   TachoPulseCounter++;
 }
