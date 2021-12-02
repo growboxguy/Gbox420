@@ -1,33 +1,40 @@
 #include "ACMotor.h"
 
-long ACMotor::TachoPulseCounter = 0;
+volatile long ACMotor::TachoPulseCounter = 0;
 
 ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMotorSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
   State = ACMotorStates::IDLE;
-  ForwardPin = &DefaultSettings->ForwardPin;
-  pinMode(*ForwardPin, INPUT_PULLUP);
-  BackwardPin = &DefaultSettings->BackwardPin;
-  pinMode(*BackwardPin, INPUT_PULLUP);
-  SpeedPotPin = &DefaultSettings->SpeedPotPin;
-  pinMode(*SpeedPotPin, INPUT);
-  AverageSpeedReading = new movingAvg(MovingAverageDepth);
-  AverageSpeedReading->begin();
   Speed = DefaultSettings->Speed;
-  SpeedLimitLow = &DefaultSettings->SpeedLimitLow;
-  SpeedLimitHigh = &DefaultSettings->SpeedLimitHigh;
+  ForwardPin = &DefaultSettings->ForwardPin;
+  BackwardPin = &DefaultSettings->BackwardPin;
+  RPMTargetPin = &DefaultSettings->RPMTargetPin;
+  RPMTargetMin = &DefaultSettings->RPMTargetMin;
+  RPMTargetMax = &DefaultSettings->RPMTargetMax;
+  ACDimmerLimitMin = &DefaultSettings->ACDimmerLimitMin;
+  ACDimmerLimitMax = &DefaultSettings->ACDimmerLimitMax;
+  Kp = &DefaultSettings->Kp;
+  Ki = &DefaultSettings->Ki;
+  Kd = &DefaultSettings->Kd;
   TachoPulsesPerRevolution = &DefaultSettings->TachoPulsesPerRevolution;
   SpinOffTime = &DefaultSettings->SpinOffTime;
-  analogComparator.setOn(INTERNAL_REFERENCE, AIN1);                   // AINO (D6) , the external signal is connected to ANI1 (D7)
+  pinMode(*ForwardPin, INPUT_PULLUP);
+  pinMode(*BackwardPin, INPUT_PULLUP);
+  pinMode(*RPMTargetPin, INPUT);
+  PidController = new PID(&RPMCurrent, &Speed, &RPMTarget, *Kp, *Ki, *Kd, P_ON_M, DIRECT);
+  PidController->SetMode(AUTOMATIC); //turn the PID on
+  AverageRPMTarget = new movingAvg(MovingAverageDepth);
+  AverageRPMTarget->begin();
+  analogComparator.setOn(INTERNAL_REFERENCE, AIN1);       // AIN0: Internal 1.1V reference voltage , AIN1: external signal connected to D7
   analogComparator.enableInterrupt(tachoTrigger, RISING); // Call the trigger function when an intertupt is raised by the comparator (When ANT1 (D7) goes over AIN0)
   OnOffSwitch = new Switch(F("OnOff"), DefaultSettings->OnOffPin, &DefaultSettings->RelayNegativeLogic);
   BrushSwitch = new Switch(F("Brush"), DefaultSettings->BrushPin, &DefaultSettings->RelayNegativeLogic);
   Coil1Switch = new Switch(F("Coil1"), DefaultSettings->Coil1Pin, &DefaultSettings->RelayNegativeLogic);
   Coil2Switch = new Switch(F("Coil2"), DefaultSettings->Coil2Pin, &DefaultSettings->RelayNegativeLogic);
-  PWMController = new dimmerLamp(DefaultSettings->SpeedPWMPin);
-  PWMController->begin(NORMAL_MODE, OFF); //dimmer initialisation: name.begin(Mode: NORMAL_MODE/TOGGLE_MODE, State:ON/OFF)
-  PWMController->setPower(Speed);
+  ACDimmer = new dimmerLamp(DefaultSettings->ACDimmerPWMPin);
+  ACDimmer->begin(NORMAL_MODE, OFF); //dimmer initialisation: name.begin(Mode: NORMAL_MODE/TOGGLE_MODE, State:ON/OFF)
+  ACDimmer->setPower(Speed);
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("ACMotor ready"), true, 3);
@@ -45,16 +52,16 @@ void ACMotor::report(bool FriendlyFormat)
   strcat(LongMessage, getSpeedText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"R\":\""));
   strcat(LongMessage, getRPMText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"RT\":\""));
+  strcat(LongMessage, getRPMTargetText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 void ACMotor::refresh_Sec()
 {
   Common::refresh_Sec();
-
-  readSpeed();
-
-  //if (State == ACMotorStates::FORWARD || State == ACMotorStates::BACKWARD)
+  readRPMTarget();
+  if (State != ACMotorStates::IDLE)
   {
     updateRPM();
   }
@@ -121,7 +128,7 @@ void ACMotor::updateState(ACMotorStates NewState)
   switch (NewState)
   {
   case ACMotorStates::IDLE:
-    PWMController->setState(OFF);
+    ACDimmer->setState(OFF);
     OnOffSwitch->turnOff();
     BrushSwitch->turnOff();
     Coil1Switch->turnOff();
@@ -135,7 +142,7 @@ void ACMotor::updateState(ACMotorStates NewState)
       BrushSwitch->turnOff();
       Coil1Switch->turnOff();
       Coil2Switch->turnOff();
-      PWMController->setState(ON);
+      ACDimmer->setState(ON);
       ForwardRequested = false;
     }
     else if (State != NewState)
@@ -153,7 +160,7 @@ void ACMotor::updateState(ACMotorStates NewState)
       BrushSwitch->turnOn();
       Coil1Switch->turnOn();
       Coil2Switch->turnOn();
-      PWMController->setState(ON);
+      ACDimmer->setState(ON);
       BackwardRequested = false;
     }
     else if (State != NewState)
@@ -164,7 +171,7 @@ void ACMotor::updateState(ACMotorStates NewState)
     }
     break;
   case ACMotorStates::STOPPING:
-    PWMController->setState(OFF);
+    ACDimmer->setState(OFF);
     OnOffSwitch->turnOff();
     BrushSwitch->turnOff();
     Coil1Switch->turnOff();
@@ -222,20 +229,20 @@ void ACMotor::backwardRequest() //Stores the request only, will apply the next t
   BackwardRequested = true;
 }
 
-void ACMotor::readSpeed()
+void ACMotor::readRPMTarget()
 {
-  AverageSpeedReading->reading(map(analogRead(*SpeedPotPin), 0, 1023, *SpeedLimitLow, *SpeedLimitHigh)); //take a reading and map it between 0 - 100%
-  setSpeed(AverageSpeedReading->getAvg());
+  AverageRPMTarget->reading(map(analogRead(*RPMTargetPin), 0, 1023, *RPMTargetMin, *RPMTargetMax)); //take a reading and map it between 0 - 100%
+  RPMTarget = AverageRPMTarget->getAvg();
 }
 
-void ACMotor::readSpeed(uint8_t NewSpeed)
+void ACMotor::setSpeed(uint8_t NewSpeed)
 {
   if (Speed != NewSpeed)
   {
     Speed = NewSpeed;
     logToSerials(F("Motor speed"), false, 1);
     logToSerials(Speed, true, 1);
-    PWMController->setPower(Speed);
+    ACDimmer->setPower(Speed);
   }
 }
 
@@ -258,15 +265,14 @@ char *ACMotor::getSpeedText(bool FriendlyFormat)
 
 void ACMotor::updateRPM()
 {
-  logToSerials(TachoPulseCounter, true, 1);
   uint32_t ElapsedTime = millis() - RPMLastCalculation;
-  logToSerials(ElapsedTime, true, 1);
-  RPM = (float)TachoPulseCounter / ElapsedTime / *TachoPulsesPerRevolution * 60000;
+  RPMCurrent = (double)TachoPulseCounter / ElapsedTime / *TachoPulsesPerRevolution * 60000;
+  if (PidController->Compute())
+  {
+    ACDimmer->setPower(map(Speed, 0, 255, *ACDimmerLimitMin, *ACDimmerLimitMax));
+  }
   TachoPulseCounter = 0;
   RPMLastCalculation = millis();
-
-  logToSerials(F("Motor RPM:"), false, 1);
-  logToSerials(RPM, true, 1);
 }
 
 void ACMotor::tachoTrigger()
@@ -274,14 +280,25 @@ void ACMotor::tachoTrigger()
   TachoPulseCounter++;
 }
 
-float ACMotor::getRPM()
+double ACMotor::getRPM()
 {
-  return RPM;
+  return RPMCurrent;
 }
 
 char *ACMotor::getRPMText(bool FriendlyFormat)
 {
-  return toText(RPM);
+  if (FriendlyFormat)
+    return toText_rpm(RPMCurrent);
+  else
+    return toText(RPMCurrent);
+}
+
+char *ACMotor::getRPMTargetText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+    return toText_rpm(RPMTarget);
+  else
+    return toText(RPMTarget);
 }
 
 ACMotorStates ACMotor::getState()

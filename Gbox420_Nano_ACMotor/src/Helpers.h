@@ -108,6 +108,7 @@ char *toText(int);
 char *toText(long);
 char *toText(unsigned int);
 char *toText(float); ///< function overloading: Same named function, different parameter type
+char *toText(double);
 char *toText(int Number1, const char *Separator, int Number2);
 char *toText(float Number1, const char *Separator, float Number2);
 char *toText_floatDecimals(float Number);

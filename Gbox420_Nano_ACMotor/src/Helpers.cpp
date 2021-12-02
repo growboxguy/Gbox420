@@ -61,6 +61,14 @@ char *toText(float Number)
   return ShortMessage;
 }
 
+char *toText(double Number)
+{
+  if (isnan(Number))
+    Number = -1.0;
+  dtostrf(Number, 4, 2, ShortMessage); ///< minimum 4 char total length (Including decimal and possible - sign), with 2 digits after the decimal point
+  return ShortMessage;
+}
+
 char *toText_floatDecimals(float Number)
 {
   if (isnan(Number))

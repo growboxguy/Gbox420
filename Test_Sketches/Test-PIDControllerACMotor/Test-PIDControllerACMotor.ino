@@ -1,6 +1,6 @@
 /********************************************************
  * PID Basic Example
- * Reading analog input 0 to control analog PWM output 3
+ * Reading analog inpput 0 to control an AC motor
  ********************************************************/
 
 #include <PID_v1.h>
@@ -8,58 +8,55 @@
 #include "movingAvg.h"  ///< Moving average calculation for Speed adjuster 10kOhm Potentiometer
 #include "RBDdimmer.h"  //< For the AC PWM controller
 
-#define SpeedPotPin A0
-#define SpeedPWMPin 10
-#define OnOffRelay A4
-
+const uint8_t RPMRPMTargetPin = A0;
+const uint8_t OnOffRelay = A4;
+const uint8_t SpeedPWMPin = 10;
 const uint8_t TachoPulsesPerRevolution = 16;
+
 uint16_t RPMLimitLow = 2000;
 uint16_t RPMLimitHigh = 10000;
-uint16_t SpeedLimitLow = 28;
-uint16_t SpeedLimitHigh = 60;
+uint16_t ACDimmerLimitMin = 28;
+uint16_t ACDimmerLimitMax = 60;
+
+movingAvg *AverageRPMRPMTarget;
+dimmerLamp *ACDimmer;              //AC dimmer
 uint32_t RPMLastCalculation = millis(); ///< Timestamp of the last RPM calculation
-static long TachoPulseCounter;          //Count the total number of interrupts
-movingAvg *AverageSpeedReading;
-dimmerLamp *PWMController; //AC dimmer
-
-//Define Variables we'll be connecting to
-double Target, Input, Output;
-
-//Specify the links and initial tuning parameters
-double Kp = 0.1, Ki = 0.1, Kd = 0;
-PID myPID(&Input, &Output, &Target, Kp, Ki, Kd, P_ON_M, DIRECT);
+static long TachoPulseCounter;          //Count the total number of tacho pulses
+double RPMTarget, RPMCurrent, Speed;        //PID control related variables
+double Kp = 0.1, Ki = 0.1, Kd = 0;       //PID control: Specify the links and initial tuning parameters
+PID PidController(&RPMCurrent, &Speed, &RPMTarget, Kp, Ki, Kd, P_ON_M, DIRECT);
 
 void setup()
 {
-  pinMode(SpeedPotPin, INPUT);
+  pinMode(RPMRPMTargetPin, INPUT);
   pinMode(OnOffRelay, OUTPUT);
-  AverageSpeedReading = new movingAvg(10); //Create an average of the last 10 speed potentiometer readings
-  AverageSpeedReading->begin();
-  PWMController = new dimmerLamp(SpeedPWMPin);
-  PWMController->begin(NORMAL_MODE, OFF); //dimmer initialisation: name.begin(Mode: NORMAL_MODE/TOGGLE_MODE, State:ON/OFF)
-  PWMController->setPower(0);
+  AverageRPMRPMTarget = new movingAvg(10); //Create an average of the last 10 speed potentiometer readings
+  AverageRPMRPMTarget->begin();
+  ACDimmer = new dimmerLamp(SpeedPWMPin);
+  ACDimmer->begin(NORMAL_MODE, OFF); //dimmer initialisation: name.begin(Mode: NORMAL_MODE/TOGGLE_MODE, State:ON/OFF)
+  ACDimmer->setPower(0);
   TachoPulseCounter = 0;
   analogComparator.setOn(INTERNAL_REFERENCE, AIN1);       // AINO (D6) , the external signal is connected to ANI1 (D7)
   analogComparator.enableInterrupt(tachoTrigger, RISING); // Call the trigger function when an intertupt is raised by the comparator (When ANT1 (D7) goes over AIN0)
-  myPID.SetMode(AUTOMATIC);                               //turn the PID on
+  PidController.SetMode(AUTOMATIC);                               //turn the PID on
   Serial.begin(115200);
   Serial.println(F("Starting..."));
   digitalWrite(OnOffRelay, LOW);
-  PWMController->setState(ON);
+  ACDimmer->setState(ON);
 }
 
 void loop()
 {
-  Target = readSpeedTarget();
-  Input = readRPM();
-  myPID.Compute();
-  PWMController->setPower(map(Output,0,255,SpeedLimitLow,SpeedLimitHigh));
-  Serial.print(F("Target: "));
-  Serial.println(Target);
-  Serial.print(F("Feedback: "));
-  Serial.println(Input);
-  Serial.print(F("Output: "));
-  Serial.println(Output);
+  RPMTarget = readRPMTarget();
+  RPMCurrent = readRPM();
+  PidController.Compute();
+  ACDimmer->setPower(map(Speed, 0, 255, ACDimmerLimitMin, ACDimmerLimitMax));
+  Serial.print(F("RPMTarget: "));
+  Serial.println(RPMTarget);
+  Serial.print(F("RPMCurrent: "));
+  Serial.println(RPMCurrent);
+  Serial.print(F("Speed: "));
+  Serial.println(Speed);
   delay(200);
 
   if (Serial.available())
@@ -84,20 +81,20 @@ void loop()
     Serial.print(Ki);
     Serial.print(F(", Kd: "));
     Serial.println(Kd);
-    myPID.SetTunings(Kp, Ki, Kd);
+    PidController.SetTunings(Kp, Ki, Kd);
   }
 }
 
-uint16_t readSpeedTarget()
+uint16_t readRPMTarget()
 {
-  AverageSpeedReading->reading(map(analogRead(SpeedPotPin), 0, 1023, RPMLimitLow, RPMLimitHigh)); //take a reading and map it between 0 - 100%
-  return AverageSpeedReading->getAvg();
+  AverageRPMRPMTarget->reading(map(analogRead(RPMRPMTargetPin), 0, 1023, RPMLimitLow, RPMLimitHigh)); //take a reading and map it between 0 - 100%
+  return AverageRPMRPMTarget->getAvg();
 }
 
-float readRPM()
+double readRPM()
 {
   uint32_t ElapsedTime = millis() - RPMLastCalculation;
-  float RPM = (float)TachoPulseCounter / ElapsedTime / TachoPulsesPerRevolution * 60000;
+  double RPM = (double)TachoPulseCounter / ElapsedTime / TachoPulsesPerRevolution * 60000;
   TachoPulseCounter = 0;
   RPMLastCalculation = millis();
   return RPM;
