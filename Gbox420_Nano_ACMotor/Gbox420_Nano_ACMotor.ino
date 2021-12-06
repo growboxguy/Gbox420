@@ -36,10 +36,11 @@ ACMotorModule *ACMotorMod1;                   // Represents a AC Incuction Motor
 //WIRELESS DISBLED// RF24 Wireless(WirelessCEPin, WirelessCSNPin); // Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 
 ///< Thread initialization
+Thread TimeCriticalThread = Thread();
 Thread OneSecThread = Thread();
 Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
-StaticThreadController<3> ThreadControl(&OneSecThread, &FiveSecThread, &MinuteThread);
+StaticThreadController<4> ThreadControl(&TimeCriticalThread,&OneSecThread, &FiveSecThread, &MinuteThread);
 
 void setup()
 {                              // put your setup code here, to run once:
@@ -64,6 +65,8 @@ void setup()
   //WIRELESS DISBLED// InitializeWireless();
 
   ///< Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
+  TimeCriticalThread.setInterval(200); ///< 200ms, 0.2sec
+  TimeCriticalThread.onRun(processTimeCriticalStuff);
   OneSecThread.setInterval(1000); ///< 1000ms
   OneSecThread.onRun(runSec);
   FiveSecThread.setInterval(5000);
@@ -118,6 +121,11 @@ void loop()
 }
 
 ///< Threads
+
+void processTimeCriticalStuff() ///< Process things that need precise timing
+{
+  ACMotorMod1->processTimeCriticalStuff();
+}
 
 void runSec()
 {

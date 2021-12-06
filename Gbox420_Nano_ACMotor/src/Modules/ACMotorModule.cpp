@@ -35,6 +35,11 @@ ACMotorModule::ACMotorModule(const __FlashStringHelper *Name, Settings::ACMotorM
   addToLog(F("ACMotorModule initialized"), 0);
 }
 
+void ACMotorModule::processTimeCriticalStuff()
+{
+  Motor1->processTimeCriticalStuff();
+}
+
 void ACMotorModule::refresh_Sec()
 {
   Common::refresh_Sec();

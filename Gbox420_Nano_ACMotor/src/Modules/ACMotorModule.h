@@ -26,9 +26,9 @@ public:
   Sound *Sound1 = NULL;                                                                         ///< Pointer to a Piezo speaker - sound feedback
   ACMotor *Motor1 = NULL;  
   void report(__attribute__((unused)) bool FriendlyFormat = false){};
+  void processTimeCriticalStuff();                ///< Process things that cannot wait or need precise timing
   void refresh_Sec();
   void refresh_FiveSec();
-  //void refresh_Minute();
   //WIRELESS DISBLED// bool processCommand(void *Command);
   //WIRELESS DISBLED// void updateResponse();
   //WIRELESS DISBLED// void updateAckData(ACMotorMessages NewSequenceID);

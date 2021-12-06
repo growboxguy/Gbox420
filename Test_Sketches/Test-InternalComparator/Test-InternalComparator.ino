@@ -1,4 +1,4 @@
-//GrowBoxGuy - http://sites.google.com/site/growboxguy/
+ //GrowBoxGuy - http://sites.google.com/site/growboxguy/
 //Sketch for testing built in comperator
 //Library for the comperator: https://github.com/leomil72/analogComp
 /*

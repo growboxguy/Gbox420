@@ -7,6 +7,7 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
   this->Parent = Parent;
   State = ACMotorStates::IDLE;
   Speed = DefaultSettings->Speed;
+  ComparatorPin = &DefaultSettings->ComparatorPin;
   ForwardPin = &DefaultSettings->ForwardPin;
   BackwardPin = &DefaultSettings->BackwardPin;
   RPMTargetPin = &DefaultSettings->RPMTargetPin;
@@ -22,12 +23,15 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
   pinMode(*ForwardPin, INPUT_PULLUP);
   pinMode(*BackwardPin, INPUT_PULLUP);
   pinMode(*RPMTargetPin, INPUT);
+  pinMode(*ComparatorPin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(*ComparatorPin), tachoTrigger, RISING);
   PidController = new PID(&RPMCurrent, &Speed, &RPMTarget, *Kp, *Ki, *Kd, P_ON_M, DIRECT);
   PidController->SetMode(AUTOMATIC); //turn the PID on
   AverageRPMTarget = new movingAvg(MovingAverageDepth);
   AverageRPMTarget->begin();
-  analogComparator.setOn(INTERNAL_REFERENCE, AIN1);       // AIN0: Internal 1.1V reference voltage , AIN1: external signal connected to D7
-  analogComparator.enableInterrupt(tachoTrigger, RISING); // Call the trigger function when an intertupt is raised by the comparator (When ANT1 (D7) goes over AIN0)
+  //INTEGRATED COMPERATOR DISABLED//analogComparator.setOn(INTERNAL_REFERENCE, AIN1);       // AIN0: Internal 1.1V reference voltage , AIN1: external signal connected to D7
+  //INTEGRATED COMPERATOR DISABLED//analogComparator.enableInterrupt(tachoTrigger, RISING); // Call the trigger function when an intertupt is raised by the comparator (When ANT1 (D7) goes over AIN0)
+  
   OnOffSwitch = new Switch(F("OnOff"), DefaultSettings->OnOffPin, &DefaultSettings->RelayNegativeLogic);
   BrushSwitch = new Switch(F("Brush"), DefaultSettings->BrushPin, &DefaultSettings->RelayNegativeLogic);
   Coil1Switch = new Switch(F("Coil1"), DefaultSettings->Coil1Pin, &DefaultSettings->RelayNegativeLogic);
@@ -57,14 +61,19 @@ void ACMotor::report(bool FriendlyFormat)
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
+void ACMotor::processTimeCriticalStuff() ///< Called every 0.1sec
+{
+ if (State != ACMotorStates::IDLE)
+  {
+    updateRPM();
+  }
+}
+
 void ACMotor::refresh_Sec()
 {
   Common::refresh_Sec();
   readRPMTarget();
-  if (State != ACMotorStates::IDLE)
-  {
-    updateRPM();
-  }
+  
 
   if (digitalRead(*ForwardPin) == LOW) ///< Currently pressed
   {

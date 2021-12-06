@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 3; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -56,8 +56,8 @@ typedef struct
 
   struct ACMotorSettings ///< ACMotor default settings
   {
-    ACMotorSettings(double Speed = 0, uint8_t RPMTargetPin = 0, uint16_t RPMTargetMin = 0, uint16_t RPMTargetMax = 0, uint16_t ACDimmerZCPin = 0, uint16_t ACDimmerPWMPin = 0, uint8_t ACDimmerLimitMin = 0, uint8_t ACDimmerLimitMax = 0, uint8_t TachoPulsesPerRevolution = 0, double Kp = 0, double Ki = 0, double Kd = 0, uint16_t SpinOffTime = 0, bool RelayNegativeLogic = false, uint8_t OnOffPin = 0, uint8_t BrushPin = 0, uint8_t Coil1Pin = 0, uint8_t Coil2Pin = 0, uint8_t ForwardPin = 0, uint8_t BackwardPin = 0) : Speed(Speed), RPMTargetPin(RPMTargetPin), RPMTargetMin(RPMTargetMin), RPMTargetMax(RPMTargetMax), ACDimmerZCPin(ACDimmerZCPin), ACDimmerPWMPin(ACDimmerPWMPin), ACDimmerLimitMin(ACDimmerLimitMin), ACDimmerLimitMax(ACDimmerLimitMax), TachoPulsesPerRevolution(TachoPulsesPerRevolution), Kp(Kp), Ki(Ki), Kd(Kd), SpinOffTime(SpinOffTime), RelayNegativeLogic(RelayNegativeLogic), OnOffPin(OnOffPin), BrushPin(BrushPin), Coil1Pin(Coil1Pin), Coil2Pin(Coil2Pin), ForwardPin(ForwardPin), BackwardPin(BackwardPin) {}
-    double Speed;                    ///< Motor speed at startup (0% - 100%)
+    ACMotorSettings(double Speed = 0, uint8_t RPMTargetPin = 0, uint16_t RPMTargetMin = 0, uint16_t RPMTargetMax = 0, uint16_t ACDimmerZCPin = 0, uint16_t ACDimmerPWMPin = 0, uint8_t ACDimmerLimitMin = 0, uint8_t ACDimmerLimitMax = 0, uint8_t TachoPulsesPerRevolution = 0, double Kp = 0, double Ki = 0, double Kd = 0, uint16_t SpinOffTime = 0, bool RelayNegativeLogic = false, uint8_t OnOffPin = 0, uint8_t BrushPin = 0, uint8_t Coil1Pin = 0, uint8_t Coil2Pin = 0, uint8_t ForwardPin = 0, uint8_t BackwardPin = 0, uint8_t ComparatorPin = 0) : Speed(Speed), RPMTargetPin(RPMTargetPin), RPMTargetMin(RPMTargetMin), RPMTargetMax(RPMTargetMax), ACDimmerZCPin(ACDimmerZCPin), ACDimmerPWMPin(ACDimmerPWMPin), ACDimmerLimitMin(ACDimmerLimitMin), ACDimmerLimitMax(ACDimmerLimitMax), TachoPulsesPerRevolution(TachoPulsesPerRevolution), Kp(Kp), Ki(Ki), Kd(Kd), SpinOffTime(SpinOffTime), RelayNegativeLogic(RelayNegativeLogic), OnOffPin(OnOffPin), BrushPin(BrushPin), Coil1Pin(Coil1Pin), Coil2Pin(Coil2Pin), ForwardPin(ForwardPin), BackwardPin(BackwardPin), ComparatorPin(ComparatorPin) {}
+    double Speed;                     ///< Motor speed at startup (0% - 100%)
     uint8_t RPMTargetPin;             ///< Analog pin connected to the center pin of a 10kOhm potentiometer. Left leg: GND and Right leg: +5V
     uint16_t RPMTargetMin;            ///< Target speed when RPMTargetPin potentiometer is at the lowest position
     uint16_t RPMTargetMax;            ///< Target speed when RPMTargetPin potentiometer is at the highest position
@@ -66,19 +66,20 @@ typedef struct
     uint8_t ACDimmerLimitMin;         ///< Lowest % allowed PWM speed
     uint8_t ACDimmerLimitMax;         ///< Highest % allowed PWM speed
     uint8_t TachoPulsesPerRevolution; ///< How many Tachometer pulses are generated during a full turn of the motor shaft. Used during RPM calculations
-    double Kp;                         ///< PID controller - proportional gain
-    double Ki;                         ///< PID controller - integral gain
-    double Kd;                         ///< PID controller - derivative gain
+    double Kp;                        ///< PID controller - proportional gain
+    double Ki;                        ///< PID controller - integral gain
+    double Kd;                        ///< PID controller - derivative gain
     uint16_t SpinOffTime;             ///< (sec) How long it takes for the motor to stop after cutting the power
     bool RelayNegativeLogic;          ///< 4 port relay switching logic: true: HIGH turns port ON, false: LOW turns port ON
     uint8_t OnOffPin;                 ///< Power intake relay pin - ON/OFF control
     uint8_t BrushPin;                 ///< Motor brush relay pin - Direction control
     uint8_t Coil1Pin;                 ///< Motor coil pole 1 relay pin - Direction control
     uint8_t Coil2Pin;                 ///< Motor coil pole 2 relay pin - Direction control
-    uint8_t ForwardPin;               ///< Pysical Button (optional) - Direction control
-    uint8_t BackwardPin;              ///< Pysical Button (optional) - Direction control
+    uint8_t ForwardPin;               ///< Pysical Button - Direction control
+    uint8_t BackwardPin;              ///< Pysical Button - Direction control
+    uint8_t ComparatorPin;            ///< External comparator output -> triggers an interoupt (Nano supports this on D2 or D3 ports)
   };
-  struct ACMotorSettings Motor1 = {.Speed = 32, .RPMTargetPin = A0, .RPMTargetMin = 2000, .RPMTargetMax = 10000, .ACDimmerZCPin = 2, .ACDimmerPWMPin = 10, .ACDimmerLimitMin = 27, .ACDimmerLimitMax = 80, .TachoPulsesPerRevolution = 16, .Kp = 0.1, .Ki = 0.1, .Kd = 0, .SpinOffTime = 5, .RelayNegativeLogic = true, .OnOffPin = A4, .BrushPin1 = A3, .Coil1Pin = A2, .Coil2Pin = A1, .ForwardPin = 4, .BackwardPin = 3};
+  struct ACMotorSettings Motor1 = {.Speed = 32, .RPMTargetPin = A0, .RPMTargetMin = 2000, .RPMTargetMax = 10000, .ACDimmerZCPin = 2, .ACDimmerPWMPin = 10, .ACDimmerLimitMin = 27, .ACDimmerLimitMax = 80, .TachoPulsesPerRevolution = 16, .Kp = 0.05, .Ki = 0.05, .Kd = 0, .SpinOffTime = 5, .RelayNegativeLogic = true, .OnOffPin = A4, .BrushPin1 = A3, .Coil1Pin = A2, .Coil2Pin = A1, .ForwardPin = 4, .BackwardPin = 5, .ComparatorPin=3};
 
   struct SoundSettings ///< Sound default settings
   {
