@@ -73,9 +73,8 @@ uint32_t LastDebounce = millis();                                               
 volatile static long TachoPulseCounter;                                                      ///< Count the total number of tacho pulses, volatile: modified during an interupt (tachoTriggerInterrupt)
 double PID_TargetRPM = RPMLimitMin;                                                          ///< RPM the motor should reach
 double PID_CurrentRPM = 0;                                                                   ///< Actual RPM of the motor
-double PID_Output = TriacDelayMin;                                                           ///< Motor active time. Each PID calculation updates this value between TriacDelayMin - TriacDelayMax.
-double Delay = map(PID_Output, TriacDelayMin, TriacDelayMax, TriacDelayMax, TriacDelayMin);  ///< Calculating the delay after a zero crossing based on the Motor active time. (Inverting range)
-PID PidController(&PID_CurrentRPM, &PID_Output, &PID_TargetRPM, Kp, Ki, Kd, P_ON_M, DIRECT); ///< Initialize PID controller
+double PID_OutputDelay = TriacDelayMax;                                                           ///< Motor active time. Each PID calculation updates this value between TriacDelayMin - TriacDelayMax.
+PID PidController(&PID_CurrentRPM, &PID_OutputDelay, &PID_TargetRPM, Kp, Ki, Kd, P_ON_E , REVERSE); ///< Initialize PID controller
 uint16_t RelayDelay = 300;                                                                   ///< Time in milliseconds needed by the relays to change state
 uint8_t DebounceDelay = 50;                                                                  ///< Number of miliseconds to wait for the signal to stabilize after a button press
 bool ForwardButtonState = false;                                                             ///< Tracks current state of the Forward button - Used during debouncing
@@ -128,10 +127,7 @@ void loop()
     calculateRPM();
     if (PIDEnabled && MotorState)
     {
-      if (PidController.Compute()) ///< PID computation returns true when the PID_Output changes
-      {
-        Delay = map(PID_Output, TriacDelayMin, TriacDelayMax, TriacDelayMax, TriacDelayMin); ///< Calculate the TRIAC turn-on delay after a zero crossing
-      }
+      PidController.Compute();     
     }
     PIDTimer = millis();
   }
@@ -147,7 +143,7 @@ void loop()
     Serial.print(PID_CurrentRPM);
     Serial.print(F(","));
     // Serial.print(F(", Delay: "));
-    Serial.println(Delay);
+    Serial.println(PID_OutputDelay);
   }
 }
 
@@ -376,7 +372,7 @@ void zeroCrossingInterrupt() //zero cross detection circuit creates an interrupt
 {                            //AC signal crossed zero: start the delay before turning on the TRIAC
   TCCR1B = Prescale;         // prescale the
   TCNT1 = 0;                 // reset timer count from zero
-  OCR1A = Delay;             // set the compare register: triggers TIMER1_COMPA_vect when the tick counter reaches the TRIAC delay calculated by the PID controller
+  OCR1A = PID_OutputDelay;             // set the compare register: triggers TIMER1_COMPA_vect when the tick counter reaches the TRIAC delay calculated by the PID controller
 }
 
 ISR(TIMER1_COMPA_vect)
