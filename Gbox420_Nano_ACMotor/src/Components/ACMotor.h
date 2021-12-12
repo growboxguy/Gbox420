@@ -4,9 +4,7 @@
 #include "Sound.h"
 #include "Switch.h"
 #include "PID_v1.h"    ///< PID controller
-#include "RBDdimmer.h" ///< For the AC PWM controller
-//INTEGRATED COMPERATOR DISABLED// #include "analogComp.h" ///< Internal comparator library
-#include "movingAvg.h" ///< Moving average calculation for Speed adjuster 10kOhm potentiometer
+#include "movingAvg.h" ///< Moving average calculation for Speed adjuster 10kΩ potentiometer
 
 class ACMotor : virtual public Common
 {
@@ -24,51 +22,54 @@ public:
   void forwardRequest();
   void backward();
   void backwardRequest();
-
-  void setSpeed(uint8_t Speed);
-  uint8_t getSpeed();
-  char *getSpeedText(bool FriendlyFormat = false);
-  void updateRPM();
-  static void tachoTrigger();
+  void calculateRPM();
+  void tachoTrigger();
   double getRPM();
   char *getRPMText(bool FriendlyFormat = false);
-  void readRPMTarget(); ///< Read 10kOhm potentiometer
-  char *getRPMTargetText(bool FriendlyFormat = false);
+  void updateTargetRPM(); ///< Read 10kΩ potentiometer
+  char *getPID_TargetRPMText(bool FriendlyFormat = false);
+  void zeroCrossingInterrupt();
 
 private:
-  uint16_t *SpinOffTime = NULL;
-  uint32_t StateTimer = millis();         ///< Used to measure time spent in a state
   static volatile long TachoPulseCounter; ///< Count the total number of interrupts
-  double RPMCurrent = 0;                  ///< Calculated current RPM
-  double RPMTarget = 0;                   ///< Target RPM - Adjusted by 10k potentiometer
-  double *Kp = NULL;                      ///< PID tuning parameter - proportional gain
-  double *Ki = NULL;                      ///< PID tuning parameter - integral gain
-  double *Kd = NULL;                      ///< PID tuning parameter - derivative gain
-  uint32_t RPMLastCalculation = millis(); ///< Timestamp of the last RPM calculation
+  double PID_CurrentRPM = 0;                  ///< Calculated current RPM
+  double PID_TargetRPM = 0;                   ///< Target RPM - Adjusted by 10k potentiometer
+  double PID_Output = 0;                  ///< Inverted! The PID output shows the Active time of the TRIAC
+  double Delay = 0;                       ///< Delay after a zero crossing, before turning on the TRIAC. Calculated from PID_Output
+  uint32_t LastRPMCalculation = millis(); ///< Timestamp of the last RPM calculation
+  uint32_t StateTimer = millis();         ///< Used to measure time spent in a state
+  uint32_t LastDebounce = millis();       ///< Timestamp of the start of the last button press debounce
   bool StopRequested = false;             ///< Signals to stop the motor
   bool ForwardRequested = false;          ///< Signals to start the motor in forward direction
   bool BackwardRequested = false;         ///< Signals to start the motor in backward direction
+  bool ForwardButtonPressed = false;
+  bool BackwardButtonPressed = false;
 
 protected:
   Module *Parent = NULL;
   ACMotorStates State = ACMotorStates::IDLE;
-  double Speed = 0; ///< Motor speed (0% - 100%)
-  Switch *OnOffSwitch = NULL;
-  Switch *BrushSwitch = NULL;
-  Switch *Coil1Switch = NULL;
-  Switch *Coil2Switch = NULL;
-  dimmerLamp *ACDimmer = NULL;
   PID *PidController = NULL;
-  uint8_t *ACDimmerLimitMin = NULL;
-  uint8_t *ACDimmerLimitMax = NULL;
-  uint8_t *TachoPulsesPerRevolution = NULL;
-  uint8_t *ComparatorPin = NULL; ///< External comparator output -> triggers an interoupt (Nano supports this on D2 or D3 ports)
-  uint8_t *ForwardPin = NULL;    ///< Button pin
-  bool ForwardButtonPressed = false;
-  uint8_t *BackwardPin = NULL; ///< Button pin
-  bool BackwardButtonPressed = false;
-  uint8_t *RPMTargetPin = NULL;
-  movingAvg *AverageRPMTarget = NULL;
-  uint16_t *RPMTargetMin = NULL;
-  uint16_t *RPMTargetMax = NULL;
+  movingAvg *TargetRPM = NULL;
+  Switch *OnOffSwitch = NULL;               ///< Power intake relay pin - ON/OFF control
+  Switch *BrushSwitch = NULL;               ///< Motor brush relay pin - Direction control
+  Switch *Coil1Switch = NULL;               ///< Motor coil pole 1 relay pin - Direction control
+  Switch *Coil2Switch = NULL;               ///< Motor coil pole 2 relay pin - Direction control
+  uint8_t *TargetRPMPin = NULL;             ///< Analog pin connected to the center pin of a 10kΩ potentiometer. Left leg: GND and Right leg: +5V
+  uint8_t *ZeroCrossingPin = NULL;          ///< FIXED to Port2: AC dimmer - Zero Corssing pin for interrupt handling
+  uint8_t *ComparatorPin = NULL;            ///< FIXED to Port3: External comparator interupt pin for measuring tacho pulses -> needed for RPM counting
+  uint8_t *ForwardPin = NULL;               ///< Button pin
+  uint8_t *BackwardPin = NULL;              ///< Button pin
+  uint8_t *TriacPin = NULL;                 ///< AC dimmer - PWM pin
+  double *TriacDelayMin = NULL;             ///< Shortest delay after a zero crossing before turning on the TRIAC: The lower the delay the High the power output
+  double *TriacDelayMax = NULL;             ///< Longest delay after a zero crossing before turning on the TRIAC: Low power output. 15000 ticks -> 7.5ms
+  uint8_t *TriacGateCloseDelay = NULL;      ///< Keep the HIGH signal on the TRIAC gate for 20 timer ticks -> 10μs
+  uint8_t *TachoPulsesPerRevolution = NULL; ///< Shortest delay after a zero crossing before turning on the TRIAC: The lower the delay the High the power output
+  uint16_t *RPMLimitMin = NULL;             ///< Target speed when TargetRPMPin potentiometer is at the lowest position
+  uint16_t *RPMLimitMax = NULL;             ///< Target speed when TargetRPMPin potentiometer is at the highest position
+  double *Kp = NULL;                        ///< PID tuning parameter - proportional gain
+  double *Ki = NULL;                        ///< PID tuning parameter - integral gain
+  double *Kd = NULL;                        ///< PID tuning parameter - derivative gain
+  uint8_t *Prescale = NULL;                 ///< Timer1 Prescaler accepts the following values: 0x00 - Stop timer, 0x01 - No prescale (max ~4ms before overflow), 0x02: /8 prescale (max ~32ms), 0x03: /64 prescale, 0x04: /256 prescale,0x05: /1024 prescale  https://maxembedded.com/2011/06/avr-timers-timer1/
+  uint16_t *SpinOffTime = NULL;             ///< (sec) How long it takes for the motor to stop after cutting the power
+  uint8_t *DebounceDelay = NULL;            ///< Number of miliseconds to wait for the signal to stabilize after a button press
 };

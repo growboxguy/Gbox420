@@ -6,39 +6,54 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
 {
   this->Parent = Parent;
   State = ACMotorStates::IDLE;
-  Speed = DefaultSettings->Speed;
+  OnOffSwitch = new Switch(F("OnOff"), DefaultSettings->OnOffRelayPin, &DefaultSettings->RelayNegativeLogic);
+  BrushSwitch = new Switch(F("Brush"), DefaultSettings->BrushRelayPin, &DefaultSettings->RelayNegativeLogic);
+  Coil1Switch = new Switch(F("Coil1"), DefaultSettings->Coil1RelayPin, &DefaultSettings->RelayNegativeLogic);
+  Coil2Switch = new Switch(F("Coil2"), DefaultSettings->Coil2RelayPin, &DefaultSettings->RelayNegativeLogic);
+  TargetRPMPin = &DefaultSettings->TargetRPMPin;
+  ZeroCrossingPin = &DefaultSettings->ZeroCrossingPin;
   ComparatorPin = &DefaultSettings->ComparatorPin;
   ForwardPin = &DefaultSettings->ForwardPin;
   BackwardPin = &DefaultSettings->BackwardPin;
-  RPMTargetPin = &DefaultSettings->RPMTargetPin;
-  RPMTargetMin = &DefaultSettings->RPMTargetMin;
-  RPMTargetMax = &DefaultSettings->RPMTargetMax;
-  ACDimmerLimitMin = &DefaultSettings->ACDimmerLimitMin;
-  ACDimmerLimitMax = &DefaultSettings->ACDimmerLimitMax;
+  TriacPin = &DefaultSettings->TriacPin;
+  TriacDelayMin = &DefaultSettings->TriacDelayMin;
+  TriacDelayMax = &DefaultSettings->TriacDelayMax;
+  TriacGateCloseDelay = &DefaultSettings->TriacGateCloseDelay;
+  TachoPulsesPerRevolution = &DefaultSettings->TachoPulsesPerRevolution;
+  RPMLimitMin = &DefaultSettings->RPMLimitMin;
+  RPMLimitMax = &DefaultSettings->RPMLimitMax;
   Kp = &DefaultSettings->Kp;
   Ki = &DefaultSettings->Ki;
-  Kd = &DefaultSettings->Kd;
-  TachoPulsesPerRevolution = &DefaultSettings->TachoPulsesPerRevolution;
+  Kd = &DefaultSettings->Kd;  
   SpinOffTime = &DefaultSettings->SpinOffTime;
+  DebounceDelay = &DefaultSettings->DebounceDelay;
   pinMode(*ForwardPin, INPUT_PULLUP);
   pinMode(*BackwardPin, INPUT_PULLUP);
-  pinMode(*RPMTargetPin, INPUT);
+  pinMode(*TargetRPMPin, INPUT);
   pinMode(*ComparatorPin, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(*ComparatorPin), tachoTrigger, RISING);
-  PidController = new PID(&RPMCurrent, &Speed, &RPMTarget, *Kp, *Ki, *Kd, P_ON_M, DIRECT);
+  pinMode(*TriacPin, OUTPUT);
+  digitalWrite(*TriacPin, LOW);       ///< Turns TRIAC OFF
+  //attachInterrupt(digitalPinToInterrupt(*ComparatorPin), tachoTrigger, RISING);
+  PID_Output = *TriacDelayMin;
+  PidController = new PID(&PID_CurrentRPM, &PID_Output , &PID_TargetRPM, *Kp, *Ki, *Kd, P_ON_M, DIRECT);
+  PidController->SetOutputLimits(*TriacDelayMin, *TriacDelayMax);
   PidController->SetMode(AUTOMATIC); //turn the PID on
-  AverageRPMTarget = new movingAvg(MovingAverageDepth);
-  AverageRPMTarget->begin();
-  //INTEGRATED COMPERATOR DISABLED//analogComparator.setOn(INTERNAL_REFERENCE, AIN1);       // AIN0: Internal 1.1V reference voltage , AIN1: external signal connected to D7
-  //INTEGRATED COMPERATOR DISABLED//analogComparator.enableInterrupt(tachoTrigger, RISING); // Call the trigger function when an intertupt is raised by the comparator (When ANT1 (D7) goes over AIN0)
-  
-  OnOffSwitch = new Switch(F("OnOff"), DefaultSettings->OnOffPin, &DefaultSettings->RelayNegativeLogic);
-  BrushSwitch = new Switch(F("Brush"), DefaultSettings->BrushPin, &DefaultSettings->RelayNegativeLogic);
-  Coil1Switch = new Switch(F("Coil1"), DefaultSettings->Coil1Pin, &DefaultSettings->RelayNegativeLogic);
-  Coil2Switch = new Switch(F("Coil2"), DefaultSettings->Coil2Pin, &DefaultSettings->RelayNegativeLogic);
-  ACDimmer = new dimmerLamp(DefaultSettings->ACDimmerPWMPin);
-  ACDimmer->begin(NORMAL_MODE, OFF); //dimmer initialisation: name.begin(Mode: NORMAL_MODE/TOGGLE_MODE, State:ON/OFF)
-  ACDimmer->setPower(Speed);
+  TargetRPM = new movingAvg(MovingAverageDepth);
+  TargetRPM->begin();
+  TargetRPM->reading(*RPMLimitMin);
+  updateTargetRPM();
+  TachoPulseCounter = 0;
+  //INTEGRATED Comparator DISABLED//analogComparator.setOn(INTERNAL_REFERENCE, AIN1);       // AIN0: Internal 1.1V reference voltage , AIN1: external signal connected to D7
+  //INTEGRATED Comparator DISABLED//analogComparator.enableInterrupt(tachoTrigger, RISING); // Call the trigger function when an intertupt is raised by the comparator (When ANT1 (D7) goes over AIN0)
+ 
+  // set up Timer1
+  OCR1A = 100;   // initialize the comparator
+  TIMSK1 = 0x03; // enable comparator A and overflow interrupts
+  TCCR1A = 0x00; // timer control registers set for normal operation, timer disabled
+  TCCR1B = 0x00; // timer control registers set for normal operation, timer disabled
+  attachInterrupt(digitalPinToInterrupt(*ZeroCrossingPin), zeroCrossingInterrupt, RISING);
+  attachInterrupt(digitalPinToInterrupt(*ComparatorPin), tachoTrigger, RISING); 
+ 
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("ACMotor ready"), true, 3);
@@ -52,12 +67,10 @@ void ACMotor::report(bool FriendlyFormat)
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
   strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, getStateText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Sp\":\""));
-  strcat(LongMessage, getSpeedText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"R\":\""));
   strcat(LongMessage, getRPMText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"RT\":\""));
-  strcat(LongMessage, getRPMTargetText(FriendlyFormat));
+  strcat(LongMessage, getPID_TargetRPMText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
@@ -65,14 +78,14 @@ void ACMotor::processTimeCriticalStuff() ///< Called every 0.1sec
 {
  if (State != ACMotorStates::IDLE)
   {
-    updateRPM();
+    calculateRPM();
   }
 }
 
 void ACMotor::refresh_Sec()
 {
   Common::refresh_Sec();
-  readRPMTarget();
+  updateTargetRPM();
   
 
   if (digitalRead(*ForwardPin) == LOW) ///< Currently pressed
@@ -137,7 +150,7 @@ void ACMotor::updateState(ACMotorStates NewState)
   switch (NewState)
   {
   case ACMotorStates::IDLE:
-    ACDimmer->setState(OFF);
+    //ACDimmer->setState(OFF);
     OnOffSwitch->turnOff();
     BrushSwitch->turnOff();
     Coil1Switch->turnOff();
@@ -151,7 +164,7 @@ void ACMotor::updateState(ACMotorStates NewState)
       BrushSwitch->turnOff();
       Coil1Switch->turnOff();
       Coil2Switch->turnOff();
-      ACDimmer->setState(ON);
+      //ACDimmer->setState(ON);
       ForwardRequested = false;
     }
     else if (State != NewState)
@@ -169,7 +182,7 @@ void ACMotor::updateState(ACMotorStates NewState)
       BrushSwitch->turnOn();
       Coil1Switch->turnOn();
       Coil2Switch->turnOn();
-      ACDimmer->setState(ON);
+      //ACDimmer->setState(ON);
       BackwardRequested = false;
     }
     else if (State != NewState)
@@ -180,7 +193,7 @@ void ACMotor::updateState(ACMotorStates NewState)
     }
     break;
   case ACMotorStates::STOPPING:
-    ACDimmer->setState(OFF);
+    //ACDimmer->setState(OFF);
     OnOffSwitch->turnOff();
     BrushSwitch->turnOff();
     Coil1Switch->turnOff();
@@ -238,76 +251,39 @@ void ACMotor::backwardRequest() //Stores the request only, will apply the next t
   BackwardRequested = true;
 }
 
-void ACMotor::readRPMTarget()
+void ACMotor::updateTargetRPM()
 {
-  AverageRPMTarget->reading(map(analogRead(*RPMTargetPin), 0, 1023, *RPMTargetMin, *RPMTargetMax)); //take a reading and map it between 0 - 100%
-  RPMTarget = AverageRPMTarget->getAvg();
+  TargetRPM->reading(map(analogRead(*TargetRPMPin), 0, 1023, *RPMLimitMin, *RPMLimitMax)); //take a reading and map it between 0 - 100%
+  PID_TargetRPM = TargetRPM->getAvg();
 }
 
-void ACMotor::setSpeed(uint8_t NewSpeed)
+void ACMotor::calculateRPM()
 {
-  if (Speed != NewSpeed)
-  {
-    Speed = NewSpeed;
-    logToSerials(F("Motor speed"), false, 1);
-    logToSerials(Speed, true, 1);
-    ACDimmer->setPower(Speed);
-  }
-}
-
-uint8_t ACMotor::getSpeed()
-{
-  return Speed;
-}
-
-char *ACMotor::getSpeedText(bool FriendlyFormat)
-{
-  if (FriendlyFormat)
-  {
-    return toText_percentage(Speed);
-  }
-  else
-  {
-    return toText(Speed);
-  }
-}
-
-void ACMotor::updateRPM()
-{
-  uint32_t ElapsedTime = millis() - RPMLastCalculation;
-  RPMCurrent = (double)TachoPulseCounter / ElapsedTime / *TachoPulsesPerRevolution * 60000;
-  if (PidController->Compute())
-  {
-    ACDimmer->setPower(map(Speed, 0, 255, *ACDimmerLimitMin, *ACDimmerLimitMax));
-  }
+  uint32_t ElapsedTime = millis() - LastRPMCalculation;
+  PID_CurrentRPM = (double)TachoPulseCounter / ElapsedTime / *TachoPulsesPerRevolution * 60000; 
   TachoPulseCounter = 0;
-  RPMLastCalculation = millis();
-}
-
-void ACMotor::tachoTrigger()
-{
-  TachoPulseCounter++;
+  LastRPMCalculation = millis();
 }
 
 double ACMotor::getRPM()
 {
-  return RPMCurrent;
+  return PID_CurrentRPM;
 }
 
 char *ACMotor::getRPMText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
-    return toText_rpm(RPMCurrent);
+    return toText_rpm(PID_CurrentRPM);
   else
-    return toText(RPMCurrent);
+    return toText(PID_CurrentRPM);
 }
 
-char *ACMotor::getRPMTargetText(bool FriendlyFormat)
+char *ACMotor::getPID_TargetRPMText(bool FriendlyFormat)
 {
   if (FriendlyFormat)
-    return toText_rpm(RPMTarget);
+    return toText_rpm(PID_TargetRPM);
   else
-    return toText(RPMTarget);
+    return toText(PID_TargetRPM);
 }
 
 ACMotorStates ACMotor::getState()
@@ -325,4 +301,32 @@ char *ACMotor::getStateText(bool FriendlyFormat)
   {
     return toText((int)State);
   }
+}
+
+// Interrupt Service Routines
+static void ACMotor::zeroCrossingInterrupt()
+{                    //AC signal crossed zero: start the delay before turning on the TRIAC
+  TCCR1B = *Prescale; // prescale the
+  TCNT1 = 0;         // reset timer - count from zero
+  OCR1A = Delay;     // set the compare register: triggers TIMER1_COMPA_vect when the tick counter reaches the delay calculated by the PID controller
+}
+
+static ACMotor::ISR(TIMER1_COMPA_vect)
+{                 // comparator match: TRIAC delay reached after a zero crossing
+  if (MotorState) ///< If the motor should be running
+  {
+    digitalWrite(*TriacPin, HIGH);        // turn on TRIAC gate
+    TCNT1 = 65536 - *TriacGateCloseDelay; // trigger pulse width
+  }
+}
+
+static ACMotor::ISR(TIMER1_OVF_vect)
+{                              // timer1 overflow
+  digitalWrite(*TriacPin, LOW); // turn off TRIAC gate
+  TCCR1B = 0x00;               // disable timer stops unintended triggers
+}
+
+void ACMotor::tachoTrigger()
+{
+  TachoPulseCounter++;
 }

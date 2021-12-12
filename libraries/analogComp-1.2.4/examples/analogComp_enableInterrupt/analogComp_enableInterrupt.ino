@@ -8,7 +8,7 @@ This sketch enables an interrupt to be raised when on the analog input 0
 analog input 1 (pin AIN1). To test the sketch, build the following
 circuit:
 - connect pin AIN1 to pin 3V3
-- connect pin AIN0 to GND using a pull-down resistor (10Kohm or greater)
+- connect pin AIN0 to GND using a pull-down resistor (10kΩ or greater)
 - connect pin AIN0 to pin 5V to activate the interrupt
 
 

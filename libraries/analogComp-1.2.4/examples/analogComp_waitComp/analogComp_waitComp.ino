@@ -7,7 +7,7 @@ This sketch checks if the voltage on AIN0 will begin greater
 than the voltage on AIN1. To test the sketch, build the following
 circuit:
 - connect pin AIN1 to pin 3V3
-- connect pin AIN0 to GND using a pull-down resistor (10Kohm or greater)
+- connect pin AIN0 to GND using a pull-down resistor (10kΩ or greater)
 - connect pin AIN0 to pin 5V to activate the comparation.
 
 More info on the analog comparator can be found reading the datasheet.
