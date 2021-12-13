@@ -214,6 +214,61 @@ int roundToTenth(int Number)
   return (Number - SmallerMultiple > LargerMultiple - Number) ? LargerMultiple : SmallerMultiple;
 }
 
+void turnMotorOnOff(bool State, bool Direction)
+{
+  if (State != MotorState)
+  {
+    if (State) ///If motor is not on
+    {
+      startMotor(Direction);
+    }
+    else ///If motor is on
+    {
+      stopMotor();
+    }
+  }
+}
+
+void startMotor(bool Forward)
+{
+  if (!MotorState)
+  {
+    Serial.print(F("Starting motor "));
+    if (Forward)
+    {
+      Serial.println(F("forward"));
+      digitalWrite(BrushRelayPin, HIGH);
+      digitalWrite(Coil1RelayPin, HIGH);
+      digitalWrite(Coil2RelayPin, HIGH);
+    }
+    else
+    {
+      Serial.println(F("backward"));
+      digitalWrite(BrushRelayPin, LOW);
+      digitalWrite(Coil1RelayPin, LOW);
+      digitalWrite(Coil2RelayPin, LOW);
+    }
+    delay(RelayDelay); //Wait for the directon relays to turn on
+    digitalWrite(OnOffRelayPin, LOW);
+    delay(RelayDelay); //Wait for the on/off relay to turn on
+    MotorState = true;
+  }
+}
+
+void stopMotor()
+{
+  if (MotorState)
+  {
+    Serial.println(F("Stoppting motor"));
+  }
+  MotorState = false;
+  delay(RelayDelay);  ///< This is a bit overkill here, TRIAC closes faster than a relay
+  digitalWrite(OnOffRelayPin, HIGH);
+  digitalWrite(BrushRelayPin, HIGH);
+  digitalWrite(Coil1RelayPin, HIGH);
+  digitalWrite(Coil2RelayPin, HIGH);
+}
+
 /*
 Checks the serial input used to adjust the PID parameters
 */
@@ -372,59 +427,4 @@ void backwardButton_Latching()
     }
   }
   PreviousBackwardButtonState = NewButtonState;
-}
-
-void turnMotorOnOff(bool State, bool Direction)
-{
-  if (State != MotorState)
-  {
-    if (State) ///If motor is not on
-    {
-      startMotor(Direction);
-    }
-    else ///If motor is on
-    {
-      stopMotor();
-    }
-  }
-}
-
-void startMotor(bool Forward)
-{
-  if (!MotorState)
-  {
-    Serial.print(F("Starting motor "));
-    if (Forward)
-    {
-      Serial.println(F("forward"));
-      digitalWrite(BrushRelayPin, HIGH);
-      digitalWrite(Coil1RelayPin, HIGH);
-      digitalWrite(Coil2RelayPin, HIGH);
-    }
-    else
-    {
-      Serial.println(F("backward"));
-      digitalWrite(BrushRelayPin, LOW);
-      digitalWrite(Coil1RelayPin, LOW);
-      digitalWrite(Coil2RelayPin, LOW);
-    }
-    delay(RelayDelay); //Wait for the directon relays to turn on
-    digitalWrite(OnOffRelayPin, LOW);
-    delay(RelayDelay); //Wait for the on/off relay to turn on
-    MotorState = true;
-  }
-}
-
-void stopMotor()
-{
-  if (MotorState)
-  {
-    Serial.println(F("Stoppting motor"));
-  }
-  MotorState = false;
-  delay(300);
-  digitalWrite(OnOffRelayPin, HIGH);
-  digitalWrite(BrushRelayPin, HIGH);
-  digitalWrite(Coil1RelayPin, HIGH);
-  digitalWrite(Coil2RelayPin, HIGH);
 }
