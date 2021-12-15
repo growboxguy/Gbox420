@@ -9,7 +9,7 @@
 class ACMotor : virtual public Common
 {
 public:
-  ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMotorSettings *DefaultSettings);
+  ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMotorSettings *MotorSettings, Settings::RelaySettings *RelaySettings);
   void processTimeCriticalStuff(); ///< Process things that cannot wait or need precise timing
   void refresh_Sec();
   void report(bool FriendlyFormat = false);
@@ -32,8 +32,8 @@ public:
 
 private:
   static volatile long TachoPulseCounter; ///< Count the total number of interrupts
-  double PID_CurrentRPM = 0;                  ///< Calculated current RPM
-  double PID_TargetRPM = 0;                   ///< Target RPM - Adjusted by 10k potentiometer
+  double PID_CurrentRPM = 0;              ///< Calculated current RPM
+  double PID_TargetRPM = 0;               ///< Target RPM - Adjusted by 10k potentiometer
   double PID_Output = 0;                  ///< Inverted! The PID output shows the Active time of the TRIAC
   double Delay = 0;                       ///< Delay after a zero crossing, before turning on the TRIAC. Calculated from PID_Output
   uint32_t LastRPMCalculation = millis(); ///< Timestamp of the last RPM calculation
@@ -49,6 +49,7 @@ protected:
   Module *Parent = NULL;
   ACMotorStates State = ACMotorStates::IDLE;
   PID *PidController = NULL;
+  bool *PIDEnabled = false;                ///< Enable/disable motor speed stabilization under variable load based on RPM feedback
   movingAvg *TargetRPM = NULL;
   Switch *OnOffSwitch = NULL;               ///< Power intake relay pin - ON/OFF control
   Switch *BrushSwitch = NULL;               ///< Motor brush relay pin - Direction control
@@ -69,7 +70,7 @@ protected:
   double *Kp = NULL;                        ///< PID tuning parameter - proportional gain
   double *Ki = NULL;                        ///< PID tuning parameter - integral gain
   double *Kd = NULL;                        ///< PID tuning parameter - derivative gain
-  uint8_t *Prescale = NULL;                 ///< Timer1 Prescaler accepts the following values: 0x00 - Stop timer, 0x01 - No prescale (max ~4ms before overflow), 0x02: /8 prescale (max ~32ms), 0x03: /64 prescale, 0x04: /256 prescale,0x05: /1024 prescale  https://maxembedded.com/2011/06/avr-timers-timer1/
+  uint8_t *Prescale = NULL;                 ///< Timer1 Prescaler that divides the 16MHz timer (TCCR1B Register). Accepts the following values: 0 - Stop timer, 1 - No prescale (max ~4ms before overflow), 2 - /8 prescale (max ~32ms), 3 - /64 prescale, 4 - /256 prescale, 5 - /1024 prescale  https://maxembedded.com/2011/06/avr-timers-timer1/
   uint16_t *SpinOffTime = NULL;             ///< (sec) How long it takes for the motor to stop after cutting the power
   uint8_t *DebounceDelay = NULL;            ///< Number of miliseconds to wait for the signal to stabilize after a button press
 };

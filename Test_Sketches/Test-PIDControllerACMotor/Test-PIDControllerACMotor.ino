@@ -39,16 +39,16 @@ Notes on Timer1 used to control the TRIAC gate:
 #include <PID_v1.h> ///< PID controller
 
 //Physical pins
-const uint8_t ZeroCrossingPin = 2; ///< FIXED pin for incoming Zero Crossing interrupt
-const uint8_t ComperatorPin = 3;   ///< FIXED connected to the Output1 pin of an LM393 comperator. LM393 IN1- pin: Motor Tacho cable1, GND PIN: Motor tacho cable2 + Arduino GND, and 5V to IN1+
-const uint8_t BackwardPin = 4;     ///< Pin that needs to be pulled LOW to turn on the motor (Motor stops on releasing the button)
-const uint8_t ForwardPin = 5;      ///< Pin that needs to be pulled LOW to turn on the motor (Motor stops on pressing the button a second time)
-const uint8_t TriacPin = 7;        ///< Signal controlling the TRIAC's gate. When pulled HIGH the TRIAC turns on (and stays on until at least the next zero crossing even if the pin is set to LOW)
-const uint8_t TargetRPMPin = A0;   ///< Center leg of a 10kΩ potentiometer connected between GND and 5V. Adjusts the target motor RPM
-const uint8_t OnOffRelayPin = A1;  ///< Relay module - IN1 port: controlling AC power going into the TRIAC dimmer circuit - Negative logic: LOW turns relay on
-const uint8_t BrushRelayPin = A2;  ///< Relay module - IN2 port: Motor brush relay pin - Direction control - Negative logic: LOW turns relay on
-const uint8_t Coil1RelayPin = A3;  ///< Relay module - IN3 port: Motor coil pole 1 relay pin - Direction control - Negative logic: LOW turns relay on
-const uint8_t Coil2RelayPin = A4;  ///< Relay module - IN4 port: Motor coil pole 2 relay pin - Direction control - Negative logic: LOW turns relay on
+const uint8_t ZeroCrossingPin = 2;    ///< FIXED pin for incoming Zero Crossing interrupt
+const uint8_t ComperatorPin = 3;      ///< FIXED connected to the Output1 pin of an LM393 comperator. LM393 IN1- pin: Motor Tacho cable1, GND PIN: Motor tacho cable2 + Arduino GND, and 5V to IN1+
+const uint8_t BackwardPin = 4;        ///< Pin that needs to be pulled LOW to turn on the motor (Motor stops on releasing the button)
+const uint8_t ForwardPin = 5;         ///< Pin that needs to be pulled LOW to turn on the motor (Motor stops on pressing the button a second time)
+const uint8_t TriacPin = 7;           ///< Signal controlling the TRIAC's gate. When pulled HIGH the TRIAC turns on (and stays on until at least the next zero crossing even if the pin is set to LOW)
+const uint8_t TargetRPMPin = A0;      ///< Center leg of a 10kΩ potentiometer connected between GND and 5V. Adjusts the target motor RPM
+const uint8_t OnOffRelayPin = A1;     ///< Relay module - IN1 port: controlling AC power going into the TRIAC dimmer circuit - Negative logic: LOW turns relay on
+const uint8_t BrushRelayPin = A2;     ///< Relay module - IN2 port: Motor brush relay pin - Direction control - Negative logic: LOW turns relay on
+const uint8_t Coil1RelayPin = A3;     ///< Relay module - IN3 port: Motor coil pole 1 relay pin - Direction control - Negative logic: LOW turns relay on
+const uint8_t Coil2RelayPin = A4;     ///< Relay module - IN4 port: Motor coil pole 2 relay pin - Direction control - Negative logic: LOW turns relay on
 
 bool FriendlyMessages = true;                ///< Toggle between formatted (idal for reading) or raw (ideal for data logging) serial console outputs
 bool MotorState = false;                     ///< true: motor running, false: motor off

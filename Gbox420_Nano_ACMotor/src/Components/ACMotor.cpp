@@ -2,31 +2,34 @@
 
 volatile long ACMotor::TachoPulseCounter = 0;
 
-ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMotorSettings *DefaultSettings) : Common(Name)
+ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMotorSettings *MotorSettings, Settings::RelaySettings *RelaySettings) : Common(Name)
 {
   this->Parent = Parent;
   State = ACMotorStates::IDLE;
-  OnOffSwitch = new Switch(F("OnOff"), DefaultSettings->OnOffRelayPin, &DefaultSettings->RelayNegativeLogic);
-  BrushSwitch = new Switch(F("Brush"), DefaultSettings->BrushRelayPin, &DefaultSettings->RelayNegativeLogic);
-  Coil1Switch = new Switch(F("Coil1"), DefaultSettings->Coil1RelayPin, &DefaultSettings->RelayNegativeLogic);
-  Coil2Switch = new Switch(F("Coil2"), DefaultSettings->Coil2RelayPin, &DefaultSettings->RelayNegativeLogic);
-  TargetRPMPin = &DefaultSettings->TargetRPMPin;
-  ZeroCrossingPin = &DefaultSettings->ZeroCrossingPin;
-  ComparatorPin = &DefaultSettings->ComparatorPin;
-  ForwardPin = &DefaultSettings->ForwardPin;
-  BackwardPin = &DefaultSettings->BackwardPin;
-  TriacPin = &DefaultSettings->TriacPin;
-  TriacDelayMin = &DefaultSettings->TriacDelayMin;
-  TriacDelayMax = &DefaultSettings->TriacDelayMax;
-  TriacGateCloseDelay = &DefaultSettings->TriacGateCloseDelay;
-  TachoPulsesPerRevolution = &DefaultSettings->TachoPulsesPerRevolution;
-  RPMLimitMin = &DefaultSettings->RPMLimitMin;
-  RPMLimitMax = &DefaultSettings->RPMLimitMax;
-  Kp = &DefaultSettings->Kp;
-  Ki = &DefaultSettings->Ki;
-  Kd = &DefaultSettings->Kd;  
-  SpinOffTime = &DefaultSettings->SpinOffTime;
-  DebounceDelay = &DefaultSettings->DebounceDelay;
+  OnOffSwitch = new Switch(F("OnOff"), RelaySettings->OnOffRelayPin, &RelaySettings->NegativeLogic);
+  BrushSwitch = new Switch(F("Brush"), RelaySettings->BrushRelayPin, &RelaySettings->NegativeLogic);
+  Coil1Switch = new Switch(F("Coil1"), RelaySettings->Coil1RelayPin, &RelaySettings->NegativeLogic);
+  Coil2Switch = new Switch(F("Coil2"), RelaySettings->Coil2RelayPin, &RelaySettings->NegativeLogic);
+  ZeroCrossingPin = &MotorSettings->ZeroCrossingPin;
+  ComparatorPin = &MotorSettings->ComparatorPin;  
+  BackwardPin = &MotorSettings->BackwardPin;
+  ForwardPin = &MotorSettings->ForwardPin;
+  TriacPin = &MotorSettings->TriacPin;
+  TargetRPMPin = &MotorSettings->TargetRPMPin;
+  PIDEnabled = &MotorSettings->PIDEnabled;
+  Kp = &MotorSettings->Kp;
+  Ki = &MotorSettings->Ki;
+  Kd = &MotorSettings->Kd;  
+  TachoPulsesPerRevolution = &MotorSettings->TachoPulsesPerRevolution;
+  RPMLimitMin = &MotorSettings->RPMLimitMin;
+  RPMLimitMax = &MotorSettings->RPMLimitMax;
+  Prescale = &MotorSettings->Prescale;
+  TriacGateCloseDelay = &MotorSettings->TriacGateCloseDelay;  
+  TriacDelayMin = &MotorSettings->TriacDelayMin;
+  TriacDelayMax = &MotorSettings->TriacDelayMax;
+  
+  SpinOffTime = &MotorSettings->SpinOffTime;
+  DebounceDelay = &MotorSettings->DebounceDelay;
   pinMode(*ForwardPin, INPUT_PULLUP);
   pinMode(*BackwardPin, INPUT_PULLUP);
   pinMode(*TargetRPMPin, INPUT);
