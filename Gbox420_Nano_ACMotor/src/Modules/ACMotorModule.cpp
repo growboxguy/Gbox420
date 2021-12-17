@@ -42,7 +42,8 @@ void ACMotorModule::processTimeCriticalStuff()
 
 void ACMotorModule::refresh_Sec()
 {
-  Common::refresh_Sec();
+  Common::refresh_Sec();  
+  reportToSerialTrigger();
   //WIRELESS DISBLED// 
   /*
   if (NextSequenceID != ACMotorMessages::ACMotorModuleResponse1 && millis() - LastMessageReceived >= WirelessMessageTimeout)
@@ -60,7 +61,6 @@ void ACMotorModule::refresh_Sec()
 void ACMotorModule::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
-  reportToSerialTrigger();
   //WIRELESS DISBLED// updateResponse();
 }
 

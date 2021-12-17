@@ -24,10 +24,9 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
   RPMLimitMin = &MotorSettings->RPMLimitMin;
   RPMLimitMax = &MotorSettings->RPMLimitMax;
   Prescale = &MotorSettings->Prescale;
-  TriacGateCloseDelay = &MotorSettings->TriacGateCloseDelay;  
+  TriacActiveTicks = &MotorSettings->TriacActiveTicks;  
   TriacDelayMin = &MotorSettings->TriacDelayMin;
-  TriacDelayMax = &MotorSettings->TriacDelayMax;
-  
+  TriacDelayMax = &MotorSettings->TriacDelayMax;  
   SpinOffTime = &MotorSettings->SpinOffTime;
   DebounceDelay = &MotorSettings->DebounceDelay;
   pinMode(*ForwardPin, INPUT_PULLUP);
@@ -36,9 +35,8 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
   pinMode(*ComparatorPin, INPUT_PULLUP);
   pinMode(*TriacPin, OUTPUT);
   digitalWrite(*TriacPin, LOW);       ///< Turns TRIAC OFF
-  //attachInterrupt(digitalPinToInterrupt(*ComparatorPin), tachoTrigger, RISING);
-  PID_Output = *TriacDelayMin;
-  PidController = new PID(&PID_CurrentRPM, &PID_Output , &PID_TargetRPM, *Kp, *Ki, *Kd, P_ON_M, DIRECT);
+  PID_TriacDelay = *TriacDelayMax;
+  PidController = new PID(&PID_CurrentRPM, &PID_TriacDelay , &PID_TargetRPM, *Kp, *Ki, *Kd, P_ON_E, REVERSE);
   PidController->SetOutputLimits(*TriacDelayMin, *TriacDelayMax);
   PidController->SetMode(AUTOMATIC); //turn the PID on
   TargetRPM = new movingAvg(MovingAverageDepth);
@@ -48,16 +46,7 @@ ACMotor::ACMotor(const __FlashStringHelper *Name, Module *Parent, Settings::ACMo
   TachoPulseCounter = 0;
   //INTEGRATED Comparator DISABLED//analogComparator.setOn(INTERNAL_REFERENCE, AIN1);       // AIN0: Internal 1.1V reference voltage , AIN1: external signal connected to D7
   //INTEGRATED Comparator DISABLED//analogComparator.enableInterrupt(tachoTrigger, RISING); // Call the trigger function when an intertupt is raised by the comparator (When ANT1 (D7) goes over AIN0)
- 
-  // set up Timer1
-  OCR1A = 100;   // initialize the comparator
-  TIMSK1 = 0x03; // enable comparator A and overflow interrupts
-  TCCR1A = 0x00; // timer control registers set for normal operation, timer disabled
-  TCCR1B = 0x00; // timer control registers set for normal operation, timer disabled
-  attachInterrupt(digitalPinToInterrupt(*ZeroCrossingPin), zeroCrossingInterrupt, RISING);
-  attachInterrupt(digitalPinToInterrupt(*ComparatorPin), tachoTrigger, RISING); 
- 
-  Parent->addToReportQueue(this);
+   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("ACMotor ready"), true, 3);
 }
@@ -74,6 +63,8 @@ void ACMotor::report(bool FriendlyFormat)
   strcat(LongMessage, getRPMText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\",\"RT\":\""));
   strcat(LongMessage, getPID_TargetRPMText(FriendlyFormat));
+  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
+  strcat(LongMessage, toText_milisecond(PID_TriacDelay));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
@@ -153,7 +144,7 @@ void ACMotor::updateState(ACMotorStates NewState)
   switch (NewState)
   {
   case ACMotorStates::IDLE:
-    //ACDimmer->setState(OFF);
+    MotorRunning = false;
     OnOffSwitch->turnOff();
     BrushSwitch->turnOff();
     Coil1Switch->turnOff();
@@ -167,8 +158,8 @@ void ACMotor::updateState(ACMotorStates NewState)
       BrushSwitch->turnOff();
       Coil1Switch->turnOff();
       Coil2Switch->turnOff();
-      //ACDimmer->setState(ON);
-      ForwardRequested = false;
+      MotorRunning = true;
+      ForwardRequested = false;      
     }
     else if (State != NewState)
     {
@@ -185,7 +176,7 @@ void ACMotor::updateState(ACMotorStates NewState)
       BrushSwitch->turnOn();
       Coil1Switch->turnOn();
       Coil2Switch->turnOn();
-      //ACDimmer->setState(ON);
+      MotorRunning = true;
       BackwardRequested = false;
     }
     else if (State != NewState)
@@ -197,10 +188,12 @@ void ACMotor::updateState(ACMotorStates NewState)
     break;
   case ACMotorStates::STOPPING:
     //ACDimmer->setState(OFF);
-    OnOffSwitch->turnOff();
+    MotorRunning = false;
+    delay(20); //Wait a full AC signal    
     BrushSwitch->turnOff();
     Coil1Switch->turnOff();
     Coil2Switch->turnOff();
+    OnOffSwitch->turnOff();
     if (millis() - StateTimer > ((uint32_t)*SpinOffTime * 1000)) ///< Waiting for the motor to stop spinning
     {
       updateState(ACMotorStates::IDLE);
@@ -304,32 +297,4 @@ char *ACMotor::getStateText(bool FriendlyFormat)
   {
     return toText((int)State);
   }
-}
-
-// Interrupt Service Routines
-static void ACMotor::zeroCrossingInterrupt()
-{                    //AC signal crossed zero: start the delay before turning on the TRIAC
-  TCCR1B = *Prescale; // prescale the
-  TCNT1 = 0;         // reset timer - count from zero
-  OCR1A = Delay;     // set the compare register: triggers TIMER1_COMPA_vect when the tick counter reaches the delay calculated by the PID controller
-}
-
-static ACMotor::ISR(TIMER1_COMPA_vect)
-{                 // comparator match: TRIAC delay reached after a zero crossing
-  if (MotorState) ///< If the motor should be running
-  {
-    digitalWrite(*TriacPin, HIGH);        // turn on TRIAC gate
-    TCNT1 = 65536 - *TriacGateCloseDelay; // trigger pulse width
-  }
-}
-
-static ACMotor::ISR(TIMER1_OVF_vect)
-{                              // timer1 overflow
-  digitalWrite(*TriacPin, LOW); // turn off TRIAC gate
-  TCCR1B = 0x00;               // disable timer stops unintended triggers
-}
-
-void ACMotor::tachoTrigger()
-{
-  TachoPulseCounter++;
 }

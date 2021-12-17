@@ -131,6 +131,7 @@ char *toText_hempyState(HempyStates State);
 char *toText_lightState(LightStates State);
 char *toText_minute(int Minute);
 char *toText_second(int Second);
+char *toText_milisecond(int MiliSecond);
 char *toText_distance(float Distance);
 char *toText_TDS(float TDS);
 char *toText_rpm(float RPM);

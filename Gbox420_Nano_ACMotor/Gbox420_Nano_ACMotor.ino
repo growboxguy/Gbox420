@@ -15,7 +15,7 @@
 #include "StaticThreadController.h" // Grouping threads
 #include "SPI.h"                    ///< communicate with SPI devices, with the Arduino as the master device
 //WIRELESS DISBLED// #include "RF24.h"                   // https://github.com/maniacbug/RF24
-#include "SerialLog.h"              // Logging messages to Serial
+#include "SerialLog.h" // Logging messages to Serial
 #include "Settings.h"
 #include "src/Modules/ACMotorModule.h"
 //WIRELESS DISBLED// #include "src/WirelessCommands_ACMotor.h" // Structs for wireless communication via the nRF24L01 chip, defines the messages exchanged with the main modul
@@ -23,16 +23,16 @@
 // Global variable initialization
 bool *Debug;
 bool *Metric;
-char LongMessage[MaxLongTextLength] = "";            // Temp storage for assembling long messages (REST API - Google Sheets reporting)
-char ShortMessage[MaxShotTextLength] = "";           // Temp storage for assembling short messages (Log entries, Error messages)
-char CurrentTime[MaxWordLength] = "";                // Buffer for storing current time in text format
+char LongMessage[MaxLongTextLength] = "";  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
+char ShortMessage[MaxShotTextLength] = ""; // Temp storage for assembling short messages (Log entries, Error messages)
+char CurrentTime[MaxWordLength] = "";      // Buffer for storing current time in text format
 //WIRELESS DISBLED// void *ReceivedMessage = malloc(WirelessPayloadSize); // Stores a pointer to the latest received data. A void pointer is a pointer that has no associated data type with it. A void pointer can hold address of any type and can be typcasted to any type. Malloc allocates a fixed size memory section and returns the address of it.
 //WIRELESS DISBLED// uint32_t ReceivedMessageTimestamp = millis();        // Stores the timestamp when the last wireless package was received
 
 ///< Component initialization
-HardwareSerial &ArduinoSerial = Serial;       // Reference to the Arduino Serial
-Settings *ModuleSettings;                     // settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
-ACMotorModule *ACMotorMod1;                   // Represents a AC Incuction Motor with direction and speed control
+HardwareSerial &ArduinoSerial = Serial; // Reference to the Arduino Serial
+Settings *ModuleSettings;               // settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
+ACMotorModule *ACMotorMod1;             // Represents a AC Incuction Motor with direction and speed control
 //WIRELESS DISBLED// RF24 Wireless(WirelessCEPin, WirelessCSNPin); // Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 
 ///< Thread initialization
@@ -40,17 +40,17 @@ Thread TimeCriticalThread = Thread();
 Thread OneSecThread = Thread();
 Thread FiveSecThread = Thread();
 Thread MinuteThread = Thread();
-StaticThreadController<4> ThreadControl(&TimeCriticalThread,&OneSecThread, &FiveSecThread, &MinuteThread);
+StaticThreadController<4> ThreadControl(&TimeCriticalThread, &OneSecThread, &FiveSecThread, &MinuteThread);
 
 void setup()
 {                              // put your setup code here, to run once:
   ArduinoSerial.begin(115200); // Nano console output
   pinMode(LED_BUILTIN, OUTPUT);
   printf_begin();
-  logToSerials(F(""), true, 0);                          ///< New line
+  logToSerials(F(""), true, 0);                            ///< New line
   logToSerials(F("ACMotor module initializing"), true, 0); ///< logs to the Arduino serial, adds new line after the text (true), and uses no indentation (0). More on why texts are in F(""):  https://gist.github.com/sticilface/e54016485fcccd10950e93ddcd4461a3
-  wdt_enable(WDTO_8S);                                   ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
-  boot_rww_enable();                                     ///< fix watchdog not loading sketch after a reset error on Mega2560
+  wdt_enable(WDTO_8S);                                     ///< Watchdog timeout set to 8 seconds, if watchdog is not reset every 8 seconds it assumes a lockup and resets the sketch
+  boot_rww_enable();                                       ///< fix watchdog not loading sketch after a reset error on Mega2560
   //WIRELESS DISBLED// struct ACMotorModuleCommand BlankCommand = {ACMotorMessages::ACMotorModuleCommand1};
   //WIRELESS DISBLED// memcpy(ReceivedMessage, &BlankCommand, sizeof(struct ACMotorModuleCommand)); ///< Copy a blank command to the memory block pointed ReceivedMessage. Without this ReceivedMessage would contain random data
   //WIRELESS DISBLED// setSyncProvider(updateTime);
@@ -76,11 +76,21 @@ void setup()
 
   ///< Create the ACMotor object
   ACMotorMod1 = new ACMotorModule(F("ACM1"), &ModuleSettings->ACM1); ///< This is the object representing an AC Motor controller with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
-  
+
+  // set up Timer1
+  OCR1A = 100;   // initialize the comparator
+  TIMSK1 = 0x03; // enable comparator A and overflow interrupts
+  TCCR1A = 0x00; // timer control registers set for normal operation, timer disabled
+  TCCR1B = 0x00; // timer control registers set for normal operation, timer disabled
+
+  ///< Attach external interrupts
+  attachInterrupt(digitalPinToInterrupt(*(ACMotorMod1->Motor1->ZeroCrossingPin)), zeroCrossingInterrupt, RISING);
+  attachInterrupt(digitalPinToInterrupt(*(ACMotorMod1->Motor1->ComparatorPin)), tachoTrigger, RISING);  
+
   logToSerials(F("Looping.."), true, 0);
 }
 
-//WIRELESS DISBLED// 
+//WIRELESS DISBLED//
 /*
 void InitializeWireless()
 {
@@ -155,7 +165,7 @@ void HeartBeat()
 }
 
 ///< Wireless communication
-//WIRELESS DISBLED// 
+//WIRELESS DISBLED//
 /*
 void getWirelessData()
 {
@@ -198,3 +208,38 @@ time_t updateTime()
   return ReceivedTime;
 }
 */
+
+
+// Interrupt Service Routines - Keep these as simple as possible (interupts normal operation)
+
+
+void zeroCrossingInterrupt()  //called every 50Hz AC : 10ms, 60Hz AC : 8.3335ms
+{                    //AC signal crossed zero: start the delay before turning on the TRIAC
+  if (ACMotorMod1->Motor1->MotorRunning) ///< If the motor should be running
+  {
+  TCCR1B = *ACMotorMod1->Motor1->Prescale; // prescale the
+  TCNT1 = 0;         // reset timer - count from zero
+  OCR1A = ACMotorMod1->Motor1->PID_TriacDelay;     // set the compare register: triggers TIMER1_COMPA_vect when the tick counter reaches the delay calculated by the PID controller
+  }
+}
+
+ISR(TIMER1_COMPA_vect)  //called with a delay after each zeroCrossingInterrupt 
+{                 // comparator match: TRIAC delay reached after a zero crossing
+  if (ACMotorMod1->Motor1->MotorRunning) ///< If the motor should be running
+  {
+    digitalWrite(*(ACMotorMod1->Motor1->TriacPin), HIGH);        // turn on TRIAC gate
+    TCNT1 = 65536 - *(ACMotorMod1->Motor1->TriacActiveTicks); // trigger pulse width
+  }
+}
+
+ISR(TIMER1_OVF_vect)
+{                              // timer1 overflow
+  digitalWrite(*(ACMotorMod1->Motor1->TriacPin), LOW); // turn off TRIAC gate
+  TCCR1B = 0x00;               // disable timer stops unintended triggers
+}
+
+
+void tachoTrigger()
+{
+ ACMotorMod1->Motor1->TachoPulseCounter++;
+}

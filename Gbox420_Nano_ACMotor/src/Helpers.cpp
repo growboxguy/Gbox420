@@ -181,6 +181,13 @@ char *toText_second(int Second)
   return ShortMessage;
 }
 
+char *toText_milisecond(int MiliSecond)
+{
+  itoa(MiliSecond, ShortMessage, 10);
+  strcat_P(ShortMessage, (PGM_P)F("ms"));
+  return ShortMessage;
+}
+
 char *toText_distance(float Distance)
 {
   dtostrf(Distance, 4, 2, ShortMessage);

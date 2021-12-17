@@ -9,11 +9,12 @@
 #include "../Components/420Common.h"
 #include "../Components/420Module.h"
 #include "../WirelessCommands_ACMotor.h"
+#include "../Components/ACMotor.h"
 
 ///< forward declaration
 
 class Sound;
-class ACMotor;
+//class ACMotor;
 //WIRELESS DISBLED// extern RF24 Wireless;
 
 class ACMotorModule : public Module

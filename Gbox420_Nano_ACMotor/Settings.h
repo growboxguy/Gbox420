@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 3; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 2; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -56,7 +56,7 @@ typedef struct
 
   struct ACMotorSettings ///< ACMotor default settings
   {
-    ACMotorSettings(uint8_t ZeroCrossingPin = 0, uint8_t ComparatorPin = 0, uint8_t BackwardPin = 0, uint8_t ForwardPin = 0, uint8_t TriacPin = 0, uint8_t TargetRPMPin = 0, bool PIDEnabled = false, double Kp = 0, double Ki = 0, double Kd = 0, uint8_t TachoPulsesPerRevolution = 0, uint16_t RPMLimitMin = 0, uint16_t RPMLimitMax = 0, uint8_t Prescale = 0, double TriacDelayMin = 0, double TriacDelayMax = 0, uint8_t TriacGateCloseDelay = 0, uint16_t SpinOffTime = 0, uint8_t DebounceDelay = 0) : ZeroCrossingPin(ZeroCrossingPin), ComparatorPin(ComparatorPin), BackwardPin(BackwardPin), ForwardPin(ForwardPin), TriacPin(TriacPin), TargetRPMPin(TargetRPMPin), PIDEnabled(PIDEnabled), Kp(Kp), Ki(Ki), Kd(Kd),  TachoPulsesPerRevolution(TachoPulsesPerRevolution), RPMLimitMin(RPMLimitMin), RPMLimitMax(RPMLimitMax), Prescale(Prescale), TriacDelayMin(TriacDelayMin), TriacDelayMax(TriacDelayMax), TriacGateCloseDelay(TriacGateCloseDelay), SpinOffTime(SpinOffTime), DebounceDelay(DebounceDelay) {}
+    ACMotorSettings(uint8_t ZeroCrossingPin = 0, uint8_t ComparatorPin = 0, uint8_t BackwardPin = 0, uint8_t ForwardPin = 0, uint8_t TriacPin = 0, uint8_t TargetRPMPin = 0, bool PIDEnabled = false, double Kp = 0, double Ki = 0, double Kd = 0, uint8_t TachoPulsesPerRevolution = 0, uint16_t RPMLimitMin = 0, uint16_t RPMLimitMax = 0, uint8_t Prescale = 0, double TriacDelayMin = 0, double TriacDelayMax = 0, uint8_t TriacActiveTicks = 0, uint16_t SpinOffTime = 0, uint8_t DebounceDelay = 0) : ZeroCrossingPin(ZeroCrossingPin), ComparatorPin(ComparatorPin), BackwardPin(BackwardPin), ForwardPin(ForwardPin), TriacPin(TriacPin), TargetRPMPin(TargetRPMPin), PIDEnabled(PIDEnabled), Kp(Kp), Ki(Ki), Kd(Kd),  TachoPulsesPerRevolution(TachoPulsesPerRevolution), RPMLimitMin(RPMLimitMin), RPMLimitMax(RPMLimitMax), Prescale(Prescale), TriacDelayMin(TriacDelayMin), TriacDelayMax(TriacDelayMax), TriacActiveTicks(TriacActiveTicks), SpinOffTime(SpinOffTime), DebounceDelay(DebounceDelay) {}
     uint8_t ZeroCrossingPin;          ///< Zero Crossing interrupt - Only pin 2 or 3 allowed on Nano. https://www.arduino.cc/reference/en/language/functions/external-interrupts/attachinterrupt/
     uint8_t ComparatorPin;            ///< LM393 comparator interupt for measuring tacho pulses -> used for RPM counting. Connect the LM393 Output1 to pin 2 or 3, LM393 IN1- pin: Motor Tacho cable1, GND PIN: Motor tacho cable2 + Arduino GND, and 5V to IN1+
     uint8_t BackwardPin;              ///< Pysical Button - Direction control
@@ -73,11 +73,11 @@ typedef struct
     uint8_t Prescale;                 ///< Timer1 Prescaler accepts the following values: 0x00 - Stop timer, 0x01 - No prescale (max ~4ms before overflow), 0x02: /8 prescale (max ~32ms), 0x03: /64 prescale, 0x04: /256 prescale,0x05: /1024 prescale  https://maxembedded.com/2011/06/avr-timers-timer1/
     double TriacDelayMin;             ///< Shortest delay after a zero crossing before turning on the TRIAC: The lower the delay the High the power output
     double TriacDelayMax;             ///< Longest delay after a zero crossing before turning on the TRIAC: Low power output. 15000 ticks -> 7.5ms
-    uint8_t TriacGateCloseDelay;      ///< Keep the HIGH signal on the TRIAC gate for 20 timer ticks -> 10μs
+    uint8_t TriacActiveTicks;      ///< Keep the HIGH signal on the TRIAC gate for 20 timer ticks -> 10μs
     uint16_t SpinOffTime;             ///< (sec) How long it takes for the motor to stop after cutting the power
     uint8_t DebounceDelay;            ///< Number of miliseconds to wait for the signal to stabilize after a button press
   };
-  struct ACMotorSettings Motor1 = {.ZeroCrossingPin = 2, .ComparatorPin = 3, .BackwardPin = 4, .ForwardPin = 5, .TriacPin = 7, .TargetRPMPin = A0, .PIDEnabled = true, .Kp = 0.2, .Ki = 0.8, .Kd = 0.05, .TachoPulsesPerRevolution = 16, .RPMLimitMin = 2000, .RPMLimitMax = 10000, .Prescale = 2, .TriacDelayMin = 0, .TriacDelayMax = 16000, .TriacGateCloseDelay = 20, .SpinOffTime = 5, .DebounceDelay = 50};
+  struct ACMotorSettings Motor1 = {.ZeroCrossingPin = 2, .ComparatorPin = 3, .BackwardPin = 4, .ForwardPin = 5, .TriacPin = 7, .TargetRPMPin = A0, .PIDEnabled = true, .Kp = 1, .Ki = 1, .Kd = 0.01, .TachoPulsesPerRevolution = 16, .RPMLimitMin = 2000, .RPMLimitMax = 10000, .Prescale = 2, .TriacDelayMin = 0, .TriacDelayMax = 16000, .TriacActiveTicks = 20, .SpinOffTime = 5, .DebounceDelay = 50};
 
   struct RelaySettings ///< ACMotor default settings
   {
