@@ -28,7 +28,7 @@ public:
   void updateTargetRPM(); ///< Read 10kΩ potentiometer
   char *getPID_TargetRPMText(bool FriendlyFormat = false);
   static volatile long TachoPulseCounter; ///< Count the total number of tacho pulse interrupts
-  bool MotorRunning = false;              ///flag storing the current state of the motor
+  bool MotorState = false;              ///flag storing the current state of the motor
   uint8_t *Prescale = NULL;               ///< Timer1 Prescaler that divides the 16MHz timer (TCCR1B Register). Accepts the following values: 0 - Stop timer, 1 - No prescale (max ~4ms before overflow), 2 - /8 prescale (max ~32ms), 3 - /64 prescale, 4 - /256 prescale, 5 - /1024 prescale  https://maxembedded.com/2011/06/avr-timers-timer1/
   uint8_t *TriacPin = NULL;               ///< AC dimmer - PWM pin
   uint8_t *ZeroCrossingPin = NULL;        ///< FIXED to Port2: AC dimmer - Zero Corssing pin for interrupt handling

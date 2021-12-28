@@ -215,7 +215,7 @@ time_t updateTime()
 
 void zeroCrossingInterrupt()  //called every 50Hz AC : 10ms, 60Hz AC : 8.3335ms
 {                    //AC signal crossed zero: start the delay before turning on the TRIAC
-  if (ACMotorMod1->Motor1->MotorRunning) ///< If the motor should be running
+  if (ACMotorMod1->Motor1->MotorState) ///< If the motor should be running
   {
   TCCR1B = *ACMotorMod1->Motor1->Prescale; // prescale the
   TCNT1 = 0;         // reset timer - count from zero
@@ -225,7 +225,7 @@ void zeroCrossingInterrupt()  //called every 50Hz AC : 10ms, 60Hz AC : 8.3335ms
 
 ISR(TIMER1_COMPA_vect)  //called with a delay after each zeroCrossingInterrupt 
 {                 // comparator match: TRIAC delay reached after a zero crossing
-  if (ACMotorMod1->Motor1->MotorRunning) ///< If the motor should be running
+  if (ACMotorMod1->Motor1->MotorState) ///< If the motor should be running
   {
     digitalWrite(*(ACMotorMod1->Motor1->TriacPin), HIGH);        // turn on TRIAC gate
     TCNT1 = 65536 - *(ACMotorMod1->Motor1->TriacActiveTicks); // trigger pulse width

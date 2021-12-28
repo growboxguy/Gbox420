@@ -251,31 +251,6 @@ char *toText_onlineStatus(bool Status)
     return toText(F("OFFLINE"));
 }
 
-///Converting text
-
-bool toBool(char *Boolean)
-{
-  if (strcmp_P(Boolean, PSTR("on")) == 0)
-    return 1;
-  if (strcmp_P(Boolean, PSTR("1")) == 0)
-    return 1;
-  if (strcmp_P(Boolean, PSTR("true")) == 0)
-    return 1;
-  if (strcmp_P(Boolean, PSTR("yes")) == 0)
-    return 1;
-  return 0;
-}
-
-int toInt(char *Integer)
-{
-  return atoi(Integer);
-}
-
-float toFloat(char *Float)
-{
-  return atof(Float);
-}
-
 //< State related functions
 
 char *toText_ACMotorState(ACMotorStates State)
@@ -479,4 +454,38 @@ char *toText_lightState(LightStates State)
     return toText(F("?"));
     break;
   }
+}
+
+///Converting text to value
+
+bool toBool(char *Boolean)
+{
+  if (strcmp_P(Boolean, PSTR("on")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("1")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("true")) == 0)
+    return 1;
+  if (strcmp_P(Boolean, PSTR("yes")) == 0)
+    return 1;
+  return 0;
+}
+
+int toInt(char *Integer)
+{
+  return atoi(Integer);
+}
+
+float toFloat(char *Float)
+{
+  return atof(Float);
+}
+
+///Rounding numbers
+
+int roundToTenth(int Number)
+{
+  int SmallerMultiple = (Number / 10) * 10;
+  int LargerMultiple = SmallerMultiple + 10;
+  return (Number - SmallerMultiple > LargerMultiple - Number) ? LargerMultiple : SmallerMultiple;
 }

@@ -138,3 +138,4 @@ char *toText_rpm(float RPM);
 bool toBool(char *Boolean);
 int toInt(char *Integer);
 float toFloat(char *Float);
+int roundToTenth(int Number);

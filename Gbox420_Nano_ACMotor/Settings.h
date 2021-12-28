@@ -18,7 +18,7 @@ static const uint8_t MaxWordLength = 32;       ///< Default char * buffer length
 static const uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 128; ///< Default char * buffer length for storing a long text. Memory intense!
 static const uint8_t QueueDepth = 8;           ///< Limits the maximum number of active modules. Memory intense!
-static const uint8_t MovingAverageDepth = 8;   ///< Limits the maximum number of active modules. Memory intense!
+static const uint8_t MovingAverageDepth = 8;   ///< Number of previous readings to keep when calculating average. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
@@ -81,15 +81,15 @@ typedef struct
 
   struct RelaySettings ///< ACMotor default settings
   {
-    RelaySettings(bool NegativeLogic = false, uint8_t OnOffRelayPin = 0, uint8_t BrushRelayPin = 0, uint8_t Coil1RelayPin = 0, uint8_t Coil2RelayPin = 0) : NegativeLogic(NegativeLogic), OnOffRelayPin(OnOffRelayPin), BrushRelayPin(BrushRelayPin), Coil1RelayPin(Coil1RelayPin), Coil2RelayPin(Coil2RelayPin) {}
+    RelaySettings(bool NegativeLogic = false, uint16_t FlipDelay = 0, uint8_t OnOffRelayPin = 0, uint8_t BrushRelayPin = 0, uint8_t Coil1RelayPin = 0, uint8_t Coil2RelayPin = 0) : NegativeLogic(NegativeLogic), FlipDelay(FlipDelay), OnOffRelayPin(OnOffRelayPin), BrushRelayPin(BrushRelayPin), Coil1RelayPin(Coil1RelayPin), Coil2RelayPin(Coil2RelayPin) {}
     bool NegativeLogic;    ///< 4 port relay switching logic: true: HIGH turns port ON, false: LOW turns port ON
-    uint16_t Delay = 300;  ///< Time in milliseconds needed by the relays to change state
+    uint16_t FlipDelay;  ///< Time in milliseconds needed by the relays to change state
     uint8_t OnOffRelayPin; ///< Power intake relay pin - ON/OFF control
     uint8_t BrushRelayPin; ///< Motor brush relay pin - Direction control
     uint8_t Coil1RelayPin; ///< Motor coil pole 1 relay pin - Direction control
     uint8_t Coil2RelayPin; ///< Motor coil pole 2 relay pin - Direction control
   };
-  struct RelaySettings Relay1 = {.NegativeLogic = true, .OnOffRelayPin = A1, .BrushRelayPin1 = A2, .Coil1RelayPin = A3, .Coil2RelayPin = A4};
+  struct RelaySettings Relay1 = {.NegativeLogic = true, .FlipDelay = 300, .OnOffRelayPin = A1, .BrushRelayPin1 = A2, .Coil1RelayPin = A3, .Coil2RelayPin = A4};
 
   struct SoundSettings ///< Sound default settings
   {

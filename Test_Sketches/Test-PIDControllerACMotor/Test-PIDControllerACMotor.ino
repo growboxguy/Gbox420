@@ -40,20 +40,20 @@ Notes on Timer1 used to control the TRIAC gate:
 
 //Physical pins
 const uint8_t ZeroCrossingPin = 2; ///< FIXED pin for incoming Zero Crossing interrupt
-const uint8_t ComperatorPin = 3;   ///< FIXED connected to the Output1 pin of an LM393 comperator. LM393 IN1- pin: Motor Tacho cable1, GND PIN: Motor tacho cable2 + Arduino GND, and 5V to IN1+
-const uint8_t BackwardPin = 4;     ///< Pin that needs to be pulled LOW to turn on the motor (Motor stops on releasing the button)
-const uint8_t ForwardPin = 5;      ///< Pin that needs to be pulled LOW to turn on the motor (Motor stops on pressing the button a second time)
-const uint8_t TriacPin = 7;        ///< Signal controlling the TRIAC's gate. When pulled HIGH the TRIAC turns on (and stays on until at least the next zero crossing even if the pin is set to LOW)
+const uint8_t ComperatorPin = 3;   ///< FIXED connected to the Output1 pin of an LM393 comperator. LM393 IN1- pin: Motor Tacho cable1, LM393 IN1+ ping: Motor tacho cable2 + Arduino GND
+const uint8_t BackwardPin = 4;     ///< Pin that needs to be pulled LOW to turn on the motor spinning backward
+const uint8_t ForwardPin = 5;      ///< Pin that needs to be pulled LOW to turn on the motor spinning forward
+const uint8_t TriacPin = 7;        ///< Signal controlling the TRIAC's gate. When pulled HIGH the TRIAC turns on and stays on until at least the next zero crossing -> Signal is 
 const uint8_t TargetRPMPin = A0;   ///< Center leg of a 10kΩ potentiometer connected between GND and 5V. Adjusts the target motor RPM
 const uint8_t OnOffRelayPin = A1;  ///< Relay module - IN1 port: controlling AC power going into the TRIAC dimmer circuit - Negative logic: LOW turns relay on
 const uint8_t BrushRelayPin = A2;  ///< Relay module - IN2 port: Motor brush relay pin - Direction control - Negative logic: LOW turns relay on
 const uint8_t Coil1RelayPin = A3;  ///< Relay module - IN3 port: Motor coil pole 1 relay pin - Direction control - Negative logic: LOW turns relay on
 const uint8_t Coil2RelayPin = A4;  ///< Relay module - IN4 port: Motor coil pole 2 relay pin - Direction control - Negative logic: LOW turns relay on
 
-bool FriendlyMessages = true;                ///< Toggle between formatted (idal for reading) or raw (ideal for data logging) serial console outputs
-bool MotorState = false;                     ///< true: motor running, false: motor off
-bool PIDEnabled = true;                      ///< Enable/disable motor speed stabilization under variable load based on RPM feedback
-bool LatchingButtons = true;                ///< true: Button keeps its new state until it is pressed again. false: Only active while being held down
+bool FriendlyMessages = true;                ///< Toggle between formatted (idal for reading) or raw (ideal for data logging) serial console output
+bool MotorState = false;                     ///< Enable/Disable TRIAC to transmit AC power. true: motor running, false: motor off
+bool PIDEnabled = true;                      ///< Enable/disable RPM based motor speed stabilization -> Keeps the same RPM under various load.
+bool LatchingButtons = false;                ///< true: Buttons keep their new state until they are pressed again. false: Only active while being held down
 const double PIDTuningSteps = 0.05;          ///< Increment/decrement PID tuning parameters with this step based on serial input
 double Kp = 1;                               ///< Proportional term - PID controller tuning parameter
 double Ki = 1;                               ///< Integral term - PID controller tuning parameter
@@ -65,23 +65,23 @@ const int Prescale = 0x02;                   ///< Divides the 16MHz timer by /8 
 const float TicksPerMicroSec = 2.0;          ///< Based on the Prescale, how many ticks are in 1μs
 const double TriacDelayMin = 0;              ///< Minimum number of ticks after a zero crossing before turning on the TRIAC: The lower the delay the High the power output (0 turns on the TRIAC right at the zero crossing) - within this limit the PID controller tries to find an ideal delay to reach the target RPM
 const double TriacDelayMax = 16000;          ///< Maximum number of ticks after a zero crossing before turning on the TRIAC: Low power output. 16000 ticks -> 8ms . (If set too high motor will not get enough energy to start ) - within this limit the PID controller tries to find an ideal delay to reach the target RPM
-const int TriacActiveTicks = 20;          ///< Keep the HIGH signal on the TRIAC gate for 20 timer ticks -> 10μs. This gives time for the TRIAC to open. It will keeep conducting until the next zero crossing even after pulling the gate pin LOW
-
-uint32_t PIDTimer = millis();                                                                      ///< Timer for tracking PID re-calculation
-uint32_t OneSecondTimer = millis();                                                                ///< Timer for reporting to serial console
-uint32_t LastRPMCalculation = millis();                                                            ///< Timestamp of the last RPM calculation
-uint32_t LastDebounce = millis();                                                                  ///< Timestamp of the start of the last button press debounce
-volatile static long TachoPulseCounter;                                                            ///< Count the total number of tacho pulses, volatile: modified during an interupt (tachoTriggerInterrupt)
-double PID_TargetRPM = RPMLimitMin;                                                                ///< RPM the motor should reach
-double PID_CurrentRPM = 0;                                                                         ///< Actual RPM of the motor
+const int TriacActiveTicks = 20;             ///< Keep the HIGH signal on the TRIAC gate for 20 timer ticks -> 10μs. This gives time for the TRIAC to open. It will keeep conducting until the next zero crossing even after pulling the gate pin LOW
+uint16_t SpinOffTime = 3;                    ///< (sec) How long it takes for the motor to stop after cutting the power
+uint32_t PIDTimer = millis();                                                                     ///< Timer for tracking PID re-calculation
+uint32_t OneSecondTimer = millis();                                                               ///< Timer for reporting to serial console
+uint32_t LastRPMCalculation = millis();                                                           ///< Timestamp of the last RPM calculation
+uint32_t LastDebounce = millis();                                                                 ///< Timestamp of the start of the last button press debounce
+volatile static long TachoPulseCounter;                                                           ///< Count the total number of tacho pulses, volatile: modified during an interupt (tachoTriggerInterrupt)
+double PID_TargetRPM = RPMLimitMin;                                                               ///< RPM the motor should reach
+double PID_CurrentRPM = 0;                                                                        ///< Actual RPM of the motor
 double PID_TriacDelay = TriacDelayMax;                                                            ///< Output delay after a zero crossing. Each PID calculation updates this value between TriacDelayMin - TriacDelayMax.
 PID PidController(&PID_CurrentRPM, &PID_TriacDelay, &PID_TargetRPM, Kp, Ki, Kd, P_ON_E, REVERSE); ///< Initialize PID controller
-uint16_t RelayDelay = 300;                                                                         ///< Time in milliseconds needed by the relays to change state
-uint8_t DebounceDelay = 50;                                                                        ///< Number of miliseconds to wait for the signal to stabilize after a button press
-bool ForwardButtonState = false;                                                                   ///< Tracks current state of the Forward button - Used during debouncing
-bool PreviousForwardButtonState = false;                                                           ///< Tracks previous state of the Forward button - Used during debouncing
-bool BackwardButtonState = false;                                                                  ///< Tracks current state of the Backward button - Used during debouncing
-bool PreviousBackwardButtonState = false;                                                          ///< Tracks previous state of the Backward button - Used during debouncing
+uint16_t RelayDelay = 300;                                                                        ///< Time in milliseconds needed by the relays to change state
+uint8_t DebounceDelay = 50;                                                                       ///< Number of miliseconds to wait for the signal to stabilize after a button press
+bool ForwardButtonState = false;                                                                  ///< Tracks current state of the Forward button - Used during debouncing
+bool PreviousForwardButtonState = false;                                                          ///< Tracks previous state of the Forward button - Used during debouncing
+bool BackwardButtonState = false;                                                                 ///< Tracks current state of the Backward button - Used during debouncing
+bool PreviousBackwardButtonState = false;                                                         ///< Tracks previous state of the Backward button - Used during debouncing
 
 void setup()
 {
@@ -99,14 +99,11 @@ void setup()
   digitalWrite(Coil2RelayPin, HIGH); ///< Negative logic! - Turns relay OFF
   pinMode(TriacPin, OUTPUT);
   digitalWrite(TriacPin, LOW); ///< Turns TRIAC OFF
-  updateTargetRPM();
-  TachoPulseCounter = 0;
   PidController.SetOutputLimits(TriacDelayMin, TriacDelayMax);
-  PidController.SetMode(AUTOMATIC); //turn the PID on
-  OCR1A = 100;                      // Timer1 setup - Initialize the comparator
-  TIMSK1 = 0x03;                    // Timer1 setup - Enable comparator A and overflow interrupts
-  TCCR1A = 0x00;                    // Timer1 setup - Timer control registers set for normal operation, timer disabled
-  TCCR1B = 0x00;                    // Timer1 setup - Timer control registers set for normal operation, timer disabled
+  OCR1A = 100;   // Timer1 setup - Initialize the comparator
+  TIMSK1 = 0x03; // Timer1 setup - Enable comparator A and overflow interrupts
+  TCCR1A = 0x00; // Timer1 setup - Timer control registers set for normal operation, timer disabled
+  TCCR1B = 0x00; // Timer1 setup - Timer control registers set for normal operation, timer disabled
   attachInterrupt(digitalPinToInterrupt(ZeroCrossingPin), zeroCrossingInterrupt, RISING);
   attachInterrupt(digitalPinToInterrupt(ComperatorPin), tachoTriggerInterrupt, RISING);
   Serial.println(F("Ready... start motor by pressing the Forward or Backward button"));
@@ -128,9 +125,9 @@ void loop()
       backwardButton_Momentary();
       forwardButton_Momentary();
     }
-    calculateRPM();
     if (PIDEnabled && MotorState)
     {
+      calculateRPM();
       PidController.Compute();
     }
     PIDTimer = millis();
@@ -178,8 +175,8 @@ void zeroCrossingInterrupt() //zero cross detection circuit creates an interrupt
 {                            //AC signal crossed zero: start the delay before turning on the TRIAC
   if (MotorState)            ///< If the motor should be running
   {
-    TCCR1B = Prescale;       // prescale the
-    TCNT1 = 0;               // reset timer count from zero
+    TCCR1B = Prescale;      // prescale the
+    TCNT1 = 0;              // reset timer count from zero
     OCR1A = PID_TriacDelay; // set the compare register: triggers ISR(TIMER1_COMPA_vect) when the tick counter reaches the TRIAC delay calculated by the PID controller
   }
 }
@@ -188,7 +185,7 @@ ISR(TIMER1_COMPA_vect)
 {                 // comparator match: TRIAC delay reached after a zero crossing
   if (MotorState) ///< If the motor should be running
   {
-    digitalWrite(TriacPin, HIGH);        // turn on TRIAC gate
+    digitalWrite(TriacPin, HIGH);     // turn on TRIAC gate
     TCNT1 = 65536 - TriacActiveTicks; // set the timer1 to overflow after TriacActiveTicks's worth of timer ticks. Calls ISR(TIMER1_OVF_vect) at the overflow
   }
 }
@@ -244,6 +241,11 @@ void startMotor(bool Forward)
   if (!MotorState)
   {
     Serial.print(F("Starting motor "));
+    TachoPulseCounter = 0;            ///Reset RPM counter
+    PID_CurrentRPM = 0;               ///Reset RPM
+    LastRPMCalculation = millis();    ///Reset RPM timer
+    PID_TriacDelay = TriacDelayMax;   ///Reset triac delay
+    PidController.SetMode(AUTOMATIC); ///Turn the PID on
     if (Forward)
     {
       Serial.println(F("forward"));
@@ -271,12 +273,14 @@ void stopMotor()
   {
     Serial.println(F("Stoppting motor"));
   }
-  delay(20); //Wait a full AC signal  
-  delay(RelayDelay); ///< This is a bit overkill here, TRIAC closes faster than a relay
+  MotorState = false;  ///Cut power to the motor: Zero crossing interupt will no longer turn on the TRIAC
+  PidController.SetMode(MANUAL); //Turn the PID off
+  delay(SpinOffTime * 1000);     //Wait for the motor to stop
   digitalWrite(BrushRelayPin, HIGH);
   digitalWrite(Coil1RelayPin, HIGH);
   digitalWrite(Coil2RelayPin, HIGH);
   digitalWrite(OnOffRelayPin, HIGH);
+  delay(RelayDelay); //Wait for the relays to change state
 }
 
 /*
