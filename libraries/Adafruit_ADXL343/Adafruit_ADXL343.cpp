@@ -86,7 +86,7 @@ int16_t Adafruit_ADXL343::read16(uint8_t reg) {
 /**************************************************************************/
 uint8_t Adafruit_ADXL343::getDeviceID(void) {
   // Check device ID register
-  return readRegister(ADXL343_REG_DEVID);
+  return readRegister(ADXL3XX_REG_DEVID);
 }
 
 /**************************************************************************/
@@ -101,7 +101,7 @@ uint8_t Adafruit_ADXL343::getDeviceID(void) {
 /**************************************************************************/
 bool Adafruit_ADXL343::enableInterrupts(int_config cfg) {
   /* Update the INT_ENABLE register with 'config'. */
-  writeRegister(ADXL343_REG_INT_ENABLE, cfg.value);
+  writeRegister(ADXL3XX_REG_INT_ENABLE, cfg.value);
 
   /* ToDo: Add proper error checking! */
   return true;
@@ -119,7 +119,7 @@ bool Adafruit_ADXL343::enableInterrupts(int_config cfg) {
 /**************************************************************************/
 bool Adafruit_ADXL343::mapInterrupts(int_config cfg) {
   /* Update the INT_MAP register with 'config'. */
-  writeRegister(ADXL343_REG_INT_MAP, cfg.value);
+  writeRegister(ADXL3XX_REG_INT_MAP, cfg.value);
 
   /* ToDo: Add proper error checking! */
   return true;
@@ -134,7 +134,7 @@ bool Adafruit_ADXL343::mapInterrupts(int_config cfg) {
 */
 /**************************************************************************/
 uint8_t Adafruit_ADXL343::checkInterrupts(void) {
-  return readRegister(ADXL343_REG_INT_SOURCE);
+  return readRegister(ADXL3XX_REG_INT_SOURCE);
 }
 
 /**************************************************************************/
@@ -144,7 +144,7 @@ uint8_t Adafruit_ADXL343::checkInterrupts(void) {
     @return The 16-bit signed value for the X axis
 */
 /**************************************************************************/
-int16_t Adafruit_ADXL343::getX(void) { return read16(ADXL343_REG_DATAX0); }
+int16_t Adafruit_ADXL343::getX(void) { return read16(ADXL3XX_REG_DATAX0); }
 
 /**************************************************************************/
 /*!
@@ -153,7 +153,7 @@ int16_t Adafruit_ADXL343::getX(void) { return read16(ADXL343_REG_DATAX0); }
     @return The 16-bit signed value for the Y axis
 */
 /**************************************************************************/
-int16_t Adafruit_ADXL343::getY(void) { return read16(ADXL343_REG_DATAY0); }
+int16_t Adafruit_ADXL343::getY(void) { return read16(ADXL3XX_REG_DATAY0); }
 
 /**************************************************************************/
 /*!
@@ -162,7 +162,7 @@ int16_t Adafruit_ADXL343::getY(void) { return read16(ADXL343_REG_DATAY0); }
     @return The 16-bit signed value for the Z axis
 */
 /**************************************************************************/
-int16_t Adafruit_ADXL343::getZ(void) { return read16(ADXL343_REG_DATAZ0); }
+int16_t Adafruit_ADXL343::getZ(void) { return read16(ADXL3XX_REG_DATAZ0); }
 
 /**************************************************************************/
 /*!
@@ -174,7 +174,6 @@ int16_t Adafruit_ADXL343::getZ(void) { return read16(ADXL343_REG_DATAZ0); }
 /**************************************************************************/
 Adafruit_ADXL343::Adafruit_ADXL343(int32_t sensorID) {
   _sensorID = sensorID;
-  _i2c = true;
   _wire = &Wire;
 }
 
@@ -189,7 +188,6 @@ Adafruit_ADXL343::Adafruit_ADXL343(int32_t sensorID) {
 /**************************************************************************/
 Adafruit_ADXL343::Adafruit_ADXL343(int32_t sensorID, TwoWire *wireBus) {
   _sensorID = sensorID;
-  _i2c = true;
   _wire = wireBus;
 }
 
@@ -212,7 +210,7 @@ Adafruit_ADXL343::Adafruit_ADXL343(uint8_t clock, uint8_t miso, uint8_t mosi,
   _clk = clock;
   _do = mosi;
   _di = miso;
-  _i2c = false;
+  _wire = NULL;
 }
 
 /**************************************************************************/
@@ -224,7 +222,7 @@ Adafruit_ADXL343::Adafruit_ADXL343(uint8_t clock, uint8_t miso, uint8_t mosi,
 /**************************************************************************/
 bool Adafruit_ADXL343::begin(uint8_t i2caddr) {
 
-  if (_i2c) {
+  if (_wire) {
     if (i2c_dev) {
       delete i2c_dev; // remove old interface
     }
@@ -261,17 +259,17 @@ bool Adafruit_ADXL343::begin(uint8_t i2caddr) {
   // If only the single tap function is in use, the single tap interrupt
   // is triggered when the acceleration goes below the threshold, as
   // long as DUR has not been exceeded.
-  writeRegister(ADXL343_REG_INT_ENABLE, 0);  // Disable interrupts to start
-  writeRegister(ADXL343_REG_THRESH_TAP, 20); // 62.5 mg/LSB (so 0xFF = 16 g)
-  writeRegister(ADXL343_REG_DUR, 50);        // Max tap duration, 625 µs/LSB
-  writeRegister(ADXL343_REG_LATENT,
+  writeRegister(ADXL3XX_REG_INT_ENABLE, 0);  // Disable interrupts to start
+  writeRegister(ADXL3XX_REG_THRESH_TAP, 20); // 62.5 mg/LSB (so 0xFF = 16 g)
+  writeRegister(ADXL3XX_REG_DUR, 50);        // Max tap duration, 625 µs/LSB
+  writeRegister(ADXL3XX_REG_LATENT,
                 0); // Tap latency, 1.25 ms/LSB, 0=no double tap
-  writeRegister(ADXL343_REG_WINDOW,
+  writeRegister(ADXL3XX_REG_WINDOW,
                 0); // Waiting period,  1.25 ms/LSB, 0=no double tap
-  writeRegister(ADXL343_REG_TAP_AXES, 0x7); // Enable the XYZ axis for tap
+  writeRegister(ADXL3XX_REG_TAP_AXES, 0x7); // Enable the XYZ axis for tap
 
   // Enable measurements
-  writeRegister(ADXL343_REG_POWER_CTL, 0x08);
+  writeRegister(ADXL3XX_REG_POWER_CTL, 0x08);
 
   return true;
 }
@@ -280,13 +278,13 @@ bool Adafruit_ADXL343::begin(uint8_t i2caddr) {
 /*!
     @brief  Sets the g range for the accelerometer
 
-    @param range The range to set, based on range_t
+    @param range The range to set, based on adxl34x_range_t
 */
 /**************************************************************************/
-void Adafruit_ADXL343::setRange(range_t range) {
+void Adafruit_ADXL343::setRange(adxl34x_range_t range) {
   Adafruit_BusIO_Register data_format_reg =
       Adafruit_BusIO_Register(i2c_dev, spi_dev, AD8_HIGH_TOREAD_AD7_HIGH_TOINC,
-                              ADXL343_REG_DATA_FORMAT, 1);
+                              ADXL3XX_REG_DATA_FORMAT, 1);
 
   Adafruit_BusIO_RegisterBits range_bits =
       Adafruit_BusIO_RegisterBits(&data_format_reg, 2, 0);
@@ -307,47 +305,47 @@ void Adafruit_ADXL343::setRange(range_t range) {
 /*!
     @brief  Sets the g range for the accelerometer
 
-    @return The range_t value corresponding to the sensors range
+    @return The adxl34x_range_t value corresponding to the sensors range
 */
 /**************************************************************************/
-range_t Adafruit_ADXL343::getRange(void) {
+adxl34x_range_t Adafruit_ADXL343::getRange(void) {
   Adafruit_BusIO_Register data_format_reg =
       Adafruit_BusIO_Register(i2c_dev, spi_dev, AD8_HIGH_TOREAD_AD7_HIGH_TOINC,
-                              ADXL343_REG_DATA_FORMAT, 1);
+                              ADXL3XX_REG_DATA_FORMAT, 1);
 
   Adafruit_BusIO_RegisterBits range_bits =
       Adafruit_BusIO_RegisterBits(&data_format_reg, 2, 0);
-  return (range_t)range_bits.read();
+  return (adxl34x_range_t)range_bits.read();
 }
 
 /**************************************************************************/
 /*!
     @brief  Sets the data rate for the ADXL343 (controls power consumption)
 
-    @param dataRate The data rate to set, based on dataRate_t
+    @param dataRate The data rate to set, based on adxl3xx_dataRate_t
 */
 /**************************************************************************/
-void Adafruit_ADXL343::setDataRate(dataRate_t dataRate) {
+void Adafruit_ADXL343::setDataRate(adxl3xx_dataRate_t dataRate) {
   /* Note: The LOW_POWER bits are currently ignored and we always keep
      the device in 'normal' mode */
-  writeRegister(ADXL343_REG_BW_RATE, dataRate);
+  writeRegister(ADXL3XX_REG_BW_RATE, dataRate);
 }
 
 /**************************************************************************/
 /*!
     @brief  Sets the data rate for the ADXL343 (controls power consumption)
 
-    @return The current data rate, based on dataRate_t
+    @return The current data rate, based on adxl3xx_dataRate_t
 */
 /**************************************************************************/
-dataRate_t Adafruit_ADXL343::getDataRate(void) {
+adxl3xx_dataRate_t Adafruit_ADXL343::getDataRate(void) {
   Adafruit_BusIO_Register bw_rate_reg = Adafruit_BusIO_Register(
-      i2c_dev, spi_dev, AD8_HIGH_TOREAD_AD7_HIGH_TOINC, ADXL343_REG_BW_RATE, 1);
+      i2c_dev, spi_dev, AD8_HIGH_TOREAD_AD7_HIGH_TOINC, ADXL3XX_REG_BW_RATE, 1);
 
   Adafruit_BusIO_RegisterBits rate_bits =
       Adafruit_BusIO_RegisterBits(&bw_rate_reg, 4, 0);
 
-  return (dataRate_t)rate_bits.read();
+  return (adxl3xx_dataRate_t)rate_bits.read();
 }
 
 /**************************************************************************/
