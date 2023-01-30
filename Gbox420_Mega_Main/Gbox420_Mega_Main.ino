@@ -27,7 +27,7 @@
 
 // Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
-char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
+char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short text messages (Log entries, Error messages,etc)
 char CurrentTime[MaxWordLength] = "";      ///< Buffer for storing current time in text format
 
 // Component initialization
