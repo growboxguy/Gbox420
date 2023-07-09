@@ -18,10 +18,10 @@ void ModuleSkeleton_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
   if (strcmp(url, "/Test.html.json") == 0)
   {
 
-    WebServer.setArgBoolean(getName(F("SetPersBool"),true), *PersistentBool);
-    WebServer.setArgInt(getName(F("SetPersInt"),true), *PersistentInt);
-    WebServer.setArgFloat(getName(F("SetPersFloat"),true), *PersistentFloat);
-    WebServer.setArgBoolean(getName(F("SetRunBool"),true), RuntimeBool);
+    WebServer.setArgBoolean(getName(F("SetPersBool"), true), *PersistentBool);
+    WebServer.setArgInt(getName(F("SetPersInt"), true), *PersistentInt);
+    WebServer.setArgFloat(getName(F("SetPersFloat"), true), *PersistentFloat);
+    WebServer.setArgBoolean(getName(F("SetRunBool"), true), RuntimeBool);
   }
 }
 
@@ -29,16 +29,16 @@ void ModuleSkeleton_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 { ///< When refreshing the website (Automatic, every 5sec)
   if (strcmp(url, "/Test.html.json") == 0)
   {
-    WebServer.setArgBoolean(getName(F("PersistentBool"),true), *PersistentBool);
-    WebServer.setArgInt(getName(F("PersistentInt"),true), *PersistentInt);
-    WebServer.setArgFloat(getName(F("PersistentFloat"),true), *PersistentFloat);
-    WebServer.setArgBoolean(getName(F("RuntimeBool"),true), RuntimeBool);
-    WebServer.setArgInt(getName(F("RuntimeInt"),true), RuntimeInt);
-    WebServer.setArgFloat(getName(F("RuntimeFloat"),true), RuntimeFloat);
-    WebServer.setArgString(getName(F("RuntimeString"),true), RuntimeString);
-    WebServer.setArgBoolean(getName(F("RuntimeBool"),true), RuntimeBool);
-    WebServer.setArgInt(getName(F("RollingInt"),true), RollingInt->getInt(true));
-    WebServer.setArgFloat(getName(F("RollingFloat"),true), RollingFloat->getFloat(true));
+    WebServer.setArgBoolean(getName(F("PersistentBool"), true), *PersistentBool);
+    WebServer.setArgInt(getName(F("PersistentInt"), true), *PersistentInt);
+    WebServer.setArgFloat(getName(F("PersistentFloat"), true), *PersistentFloat);
+    WebServer.setArgBoolean(getName(F("RuntimeBool"), true), RuntimeBool);
+    WebServer.setArgInt(getName(F("RuntimeInt"), true), RuntimeInt);
+    WebServer.setArgFloat(getName(F("RuntimeFloat"), true), RuntimeFloat);
+    WebServer.setArgString(getName(F("RuntimeString"), true), RuntimeString);
+    WebServer.setArgBoolean(getName(F("RuntimeBool"), true), RuntimeBool);
+    WebServer.setArgInt(getName(F("RollingInt"), true), RollingInt->getInt(true));
+    WebServer.setArgFloat(getName(F("RollingFloat"), true), RollingFloat->getFloat(true));
   }
 }
 
@@ -111,6 +111,5 @@ void ModuleSkeleton_Web::websiteEvent_Field(char *Field)
   }
   else
   {
-    
   }
 }

@@ -32,7 +32,7 @@ void WeightSensor::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
   if (TareRequested)
-  {    
+  {
     tare();
   }
   if (CalibrateRequested)
@@ -84,35 +84,37 @@ char *WeightSensor::getWeightText(bool ReturnAverage, bool FriendlyFormat)
 
 void WeightSensor::tareRequest()
 {
-  TareRequested = true;
+  TareRequested = true;  
+  Parent->getSoundObject()->playOnSound();
 }
 
 void WeightSensor::tare() ///< Time intense, cannot be called straight from the website. Response would time out.
 {
-  TareRequested = false;  ///< Clear the flag requesting a tare
+  TareRequested = false; ///< Clear the flag requesting a tare
   Sensor->tare();
   *Offset = Sensor->get_offset();
   AverageWeight->reset();
-  appendName(true);
-  strcat_P(ShortMessage, (PGM_P)F(" offset "));
+  strcpy(ShortMessage, getName(F("offset ")));
   sprintf(ShortMessage + strlen(ShortMessage), "%ld", *Offset);
   Parent->addToLog(ShortMessage);
-  Parent->getSoundObject()->playOnSound();
 }
 
-void WeightSensor::triggerCalibration(int CalibrationWeight)
+void WeightSensor::triggerCalibration(float KnownWeight)
 {
-  this->CalibrationWeight = CalibrationWeight;
-  CalibrateRequested = true;
+  this->KnownWeight = KnownWeight;
+  CalibrateRequested = true;  
+  Parent->getSoundObject()->playOnSound();
 }
 
 void WeightSensor::calibrate() ///< Time intense, cannot be called straight from the website. Response would time out.
 {
-  *Scale = (float)Sensor->get_value() / CalibrationWeight;
+  char LogEntry[MaxShotTextLength] = "";  
+  *Scale = Sensor->get_value() / KnownWeight; 
   Sensor->set_scale(*Scale);
   AverageWeight->reset();
-  Parent->addToLog(getName(F("calibrated")));
-  Parent->getSoundObject()->playOnSound();
+  strcpy(LogEntry, getName(F("scale ")));
+  strcat(LogEntry, toText(*Scale));  
+  Parent->addToLog(LogEntry);
 }
 
 void WeightSensor::setScale(float NewScale)

@@ -3,6 +3,7 @@
 Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name), Common_Web(Name), Sound(Name, Parent, DefaultSettings)
 {
   this->Parent = Parent;
+  Parent->SoundFeedback = this;
   Parent->addToWebsiteQueue_Load(this);
   Parent->addToCommandQueue(this);
 }
@@ -14,11 +15,11 @@ void Sound_Web::refresh_Sec()
   {
     PlayEE = false;
     EE();
-  }  
+  }
 }
 
 void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
-{  
+{
   WebServer.setArgBoolean(getName(F("E"), true), *Enabled);
 }
 

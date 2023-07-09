@@ -45,12 +45,12 @@ typedef struct
   struct AeroponicsModuleSettings
   {
     AeroponicsModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSONFriendly = true, bool SerialReportJSON = true, bool SerialReportWireless = true) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportJSON(SerialReportJSON), SerialReportWireless(SerialReportWireless) {}
-    uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)    
-    bool SerialReportDate;   ///< Enable/disable reporting the current time to the Serial output
-    bool SerialReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool SerialReportJSONFriendly; ///< Enable/disable sending Text formatted reports to the Serial output
-    bool SerialReportJSON; ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool SerialReportWireless;   ///< Enable/disable sending wireless package exchange reports to the Serial output
+    uint16_t SerialReportFrequency; ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
+    bool SerialReportDate;          ///< Enable/disable reporting the current time to the Serial output
+    bool SerialReportMemory;        ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool SerialReportJSONFriendly;  ///< Enable/disable sending Text formatted reports to the Serial output
+    bool SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool SerialReportWireless;      ///< Enable/disable sending wireless package exchange reports to the Serial output
   };
   struct AeroponicsModuleSettings Aero1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSONFriendly = true, .SerialReportJSON = true, .SerialReportWireless = true};
 
@@ -105,6 +105,7 @@ typedef struct
   };
   struct PressurePumpSettings AeroPump1 = {.PumpPin = 3, .PumpPinNegativeLogic = false, .BypassSolenoidPin = 4, .BypassSolenoidNegativeLogic = true, .BypassSolenoidMaxOpenTime = 180, .BypassSolenoidClosingDelay = 600, .PumpEnabled = true, .Speed = 70, .SpeedLowLimit = 30, .PumpTimeOut = 420, .PrimingTime = 10, .BlowOffTime = 3};
 
+/*
   struct WeightSensorSettings ///< WeightSensor default settings
   {
     WeightSensorSettings(uint8_t DTPin = 0, uint8_t SCKPin = 0, long Offset = 0, float Scale = 0.0) : DTPin(DTPin), SCKPin(SCKPin), Offset(Offset), Scale(Scale) {}
@@ -114,9 +115,11 @@ typedef struct
     float Scale;    ///< Scale factor
   };
   struct WeightSensorSettings Weight1 = {.DTPin = A0, .SCKPin = A1, .Offset = -288069, .Scale = -22280.70}; ///< Waste Reservoir 1 Weight Sensor - Generate the calibration values using: https://github.com/growboxguy/Gbox420/tree/master/Test_Sketches/Test-WeightSensor_Aero
+*/
 
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;
+
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits

@@ -167,7 +167,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     if (*SerialReportWireless)
     {
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->MixReservoir, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, true, 1);      
+      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, true, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOn, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOff, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpDisable, false, 1);
@@ -181,7 +181,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       Aero1Response2ToSend.ConfirmMixReservoir = true;
     }
     else
-      Aero1Response2ToSend.ConfirmMixReservoir = false;      
+      Aero1Response2ToSend.ConfirmMixReservoir = false;
     if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight && !Aero1Response2ToSend.ConfirmTareWeight)
     {
       Weight1->tareRequest();
@@ -210,10 +210,10 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     }
     else
       Aero1Response2ToSend.ConfirmPumpDisable = false;
-    
+
     AeroNT1->Pump->setSpeed(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed);
     AeroNT1->Pump->setTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);
-    AeroNT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime);    
+    AeroNT1->Pump->setPrimingTime(((AeroCommand_P2 *)ReceivedCommand)->PumpPrimingTime);
     break;
   case AeroMessages::AeroReset:                       ///< Used to get all Responses that do not have a corresponding Command
     updateAckData(AeroMessages::AeroModuleResponse1); ///< Load the first response for the next message exchange

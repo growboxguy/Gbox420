@@ -7,8 +7,8 @@ DistanceSensor_Web::DistanceSensor_Web(const __FlashStringHelper *Name, Module_W
 }
 
 void DistanceSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
-{                                                                   ///< When the website is refreshing
-  WebServer.setArgString(getName(F("D"),true), getDistanceText(true)); ///< Distance reading
+{                                                                       ///< When the website is refreshing
+  WebServer.setArgString(getName(F("D"), true), getDistanceText(true)); ///< Distance reading
 }
 
 void commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)

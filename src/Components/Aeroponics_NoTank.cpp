@@ -200,14 +200,7 @@ void Aeroponics_NoTank::setDayMode(bool State)
   if (DayMode != State)
   {
     DayMode = State;
-    if (DayMode)
-    {
-      Parent->getSoundObject()->playOnSound();
-    }
-    else
-    {
-      Parent->getSoundObject()->playOffSound();
-    }
+    Parent->getSoundObject()->playOnOffSound(DayMode);
   }
 }
 

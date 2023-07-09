@@ -14,8 +14,8 @@ public:
   void report(bool FriendlyFormat = false);
   void turnOn();
   void turnOff();
-  void flip();          ///< invert the current state
-  bool getState();      ///< Pump ON(1)/OFF(0)
+  void flip();                                     ///< invert the current state
+  bool getState();                                 ///< Pump ON(1)/OFF(0)
   char *getStateText(bool FriendlyFormat = false); ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
 
 private:

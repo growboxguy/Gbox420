@@ -79,15 +79,15 @@ void AeroModule_Web::report(bool FriendlyFormat)
 */
 void AeroModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
-    WebServer.setArgBoolean(getName(F("Tank"),true), AeroResponse1Received.PressureTankPresent);
-    WebServer.setArgString(getName(F("Dur"),true), toText(AeroCommand1ToSend.Duration));
-    WebServer.setArgInt(getName(F("DInt"),true), AeroCommand1ToSend.DayInterval);
-    WebServer.setArgInt(getName(F("NInt"),true), AeroCommand1ToSend.NightInterval);
-    WebServer.setArgString(getName(F("PMx"),true), toText(AeroCommand1ToSend.MaxPressure));
-    WebServer.setArgString(getName(F("PMn"),true), toText(AeroCommand1ToSend.MinPressure));
-    WebServer.setArgInt(getName(F("PS"),true), AeroCommand2ToSend.PumpSpeed);
-    WebServer.setArgInt(getName(F("PT"),true), AeroCommand2ToSend.PumpTimeOut);
-    WebServer.setArgInt(getName(F("PPT"),true), AeroCommand2ToSend.PumpPrimingTime);
+  WebServer.setArgBoolean(getName(F("Tank"), true), AeroResponse1Received.PressureTankPresent);
+  WebServer.setArgString(getName(F("Dur"), true), toText(AeroCommand1ToSend.Duration));
+  WebServer.setArgInt(getName(F("DInt"), true), AeroCommand1ToSend.DayInterval);
+  WebServer.setArgInt(getName(F("NInt"), true), AeroCommand1ToSend.NightInterval);
+  WebServer.setArgString(getName(F("PMx"), true), toText(AeroCommand1ToSend.MaxPressure));
+  WebServer.setArgString(getName(F("PMn"), true), toText(AeroCommand1ToSend.MinPressure));
+  WebServer.setArgInt(getName(F("PS"), true), AeroCommand2ToSend.PumpSpeed);
+  WebServer.setArgInt(getName(F("PT"), true), AeroCommand2ToSend.PumpTimeOut);
+  WebServer.setArgInt(getName(F("PPT"), true), AeroCommand2ToSend.PumpPrimingTime);
 }
 
 /**
@@ -95,21 +95,20 @@ void AeroModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 */
 void AeroModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
-    WebServer.setArgString(getName(F("S"),true), toText_onlineStatus(OnlineStatus));
-    if (AeroResponse1Received.PressureTankPresent)
-    {
-      WebServer.setArgString(getName(F("AS"),true), toText_aeroTankState((AeroTankStates)AeroResponse1Received.AeroState));
-    }
-    else
-    {
-      WebServer.setArgString(getName(F("AS"),true), toText_aeroNoTankState((AeroNoTankStates)AeroResponse1Received.AeroState));
-    }
+  WebServer.setArgString(getName(F("S"), true), toText_onlineStatus(OnlineStatus));
+  if (AeroResponse1Received.PressureTankPresent)
+  {
+    WebServer.setArgString(getName(F("AS"), true), toText_aeroTankState((AeroTankStates)AeroResponse1Received.AeroState));
+  }
+  else
+  {
+    WebServer.setArgString(getName(F("AS"), true), toText_aeroNoTankState((AeroNoTankStates)AeroResponse1Received.AeroState));
+  }
 
-    WebServer.setArgString(getName(F("P"),true), toText_pressurePumpState(AeroResponse1Received.PumpState));
-    WebServer.setArgString(getName(F("Pr"),true), toText_pressure(AeroResponse1Received.Pressure));
-    WebServer.setArgString(getName(F("LSP"),true), toText_pressure(AeroResponse1Received.LastSprayPressure));
-    WebServer.setArgString(getName(F("W"),true), toText_weight(AeroResponse1Received.Weight));
-
+  WebServer.setArgString(getName(F("P"), true), toText_pressurePumpState(AeroResponse1Received.PumpState));
+  WebServer.setArgString(getName(F("Pr"), true), toText_pressure(AeroResponse1Received.Pressure));
+  WebServer.setArgString(getName(F("LSP"), true), toText_pressure(AeroResponse1Received.LastSprayPressure));
+  WebServer.setArgString(getName(F("W"), true), toText_weight(AeroResponse1Received.Weight));
 }
 
 /**
@@ -343,10 +342,14 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         {
           SyncRequested = true; ///< Force another message exchange when a command is active
         }
-        if(AeroResponse1Received.ConfirmSprayEnabled) AeroCommand1ToSend.SprayEnabled = false;  //Turn off the Flag once the Receiver confirms processing it 
-        if(AeroResponse1Received.ConfirmSprayDisabled) AeroCommand1ToSend.SprayDisabled = false;
-        if(AeroResponse1Received.ConfirmSprayNow) AeroCommand1ToSend.SprayNow = false;
-        if(AeroResponse1Received.ConfirmSprayOff) AeroCommand1ToSend.SprayOff = false;    
+        if (AeroResponse1Received.ConfirmSprayEnabled)
+          AeroCommand1ToSend.SprayEnabled = false; //Turn off the Flag once the Receiver confirms processing it
+        if (AeroResponse1Received.ConfirmSprayDisabled)
+          AeroCommand1ToSend.SprayDisabled = false;
+        if (AeroResponse1Received.ConfirmSprayNow)
+          AeroCommand1ToSend.SprayNow = false;
+        if (AeroResponse1Received.ConfirmSprayOff)
+          AeroCommand1ToSend.SprayOff = false;
         break;
       case AeroMessages::AeroResponse2:
         memcpy(&AeroResponse2Received, ReceivedResponse, sizeof(struct AeroResponse_P2));
@@ -364,18 +367,25 @@ AeroMessages AeroModule_Web::sendCommand(void *CommandToSend)
         {
           SyncRequested = true; ///< Force another message exchange when a command is active
         }
-        if(AeroResponse2Received.ConfirmPumpOn) AeroCommand2ToSend.PumpOn = false;  //Turn off the Flag once the Receiver confirms processing it 
-        if(AeroResponse2Received.ConfirmPumpOff) AeroCommand2ToSend.PumpOff = false;
-        if(AeroResponse2Received.ConfirmPumpDisable) AeroCommand2ToSend.PumpDisable = false;
-        if(AeroResponse2Received.ConfirmMixReservoir) AeroCommand2ToSend.MixReservoir = false;
-        if(AeroResponse2Received.ConfirmRefillPressureTank) AeroCommand2ToSend.RefillPressureTank = false;
-        if(AeroResponse2Received.ConfirmDrainPressureTank) AeroCommand2ToSend.DrainPressureTank = false;
-        if(AeroResponse2Received.ConfirmTareWeight) AeroCommand2ToSend.TareWeight = false;
+        if (AeroResponse2Received.ConfirmPumpOn)
+          AeroCommand2ToSend.PumpOn = false; //Turn off the Flag once the Receiver confirms processing it
+        if (AeroResponse2Received.ConfirmPumpOff)
+          AeroCommand2ToSend.PumpOff = false;
+        if (AeroResponse2Received.ConfirmPumpDisable)
+          AeroCommand2ToSend.PumpDisable = false;
+        if (AeroResponse2Received.ConfirmMixReservoir)
+          AeroCommand2ToSend.MixReservoir = false;
+        if (AeroResponse2Received.ConfirmRefillPressureTank)
+          AeroCommand2ToSend.RefillPressureTank = false;
+        if (AeroResponse2Received.ConfirmDrainPressureTank)
+          AeroCommand2ToSend.DrainPressureTank = false;
+        if (AeroResponse2Received.ConfirmTareWeight)
+          AeroCommand2ToSend.TareWeight = false;
         break;
       case AeroMessages::AeroReset:
         if (*(Parent->SerialReportWireless))
         {
-          logToSerials(F("-"), true, 1);  ///< Reset messages does not have any data
+          logToSerials(F("-"), true, 1); ///< Reset messages does not have any data
         }
         break;
       default:

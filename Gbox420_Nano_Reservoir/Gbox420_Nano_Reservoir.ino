@@ -30,8 +30,8 @@ void *ReceivedMessage = malloc(WirelessPayloadSize); // Stores a pointer to the 
 uint32_t ReceivedMessageTimestamp = millis();        // Stores the timestamp when the last wireless package was received
 
 // Component initialization
-HardwareSerial &ArduinoSerial = Serial; // Reference to the Arduino Serial
-Settings *ModuleSettings;               // settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
+HardwareSerial &ArduinoSerial = Serial;       // Reference to the Arduino Serial
+Settings *ModuleSettings;                     // settings loaded from the EEPROM. Persistent between reboots, defaults are in Settings.h
 ReservoirModule *ReservoirMod1;               // Represents a Reservoir tote with temp,PH,water level sensors
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); // Initialize the NRF24L01 wireless chip (CE, CSN pins are hard wired on the Arduino Nano RF)
 

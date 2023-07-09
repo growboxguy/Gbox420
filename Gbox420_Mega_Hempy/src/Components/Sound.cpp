@@ -3,6 +3,7 @@
 Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
+  Parent->SoundFeedback = this; ///< Pointer for child objects to use sound feedback
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
   pinMode(*Pin, OUTPUT);
@@ -17,7 +18,7 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
 void Sound::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, getEnabledStateText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
@@ -41,6 +42,14 @@ void Sound::checkEvents()
   PlayOffSound = false;
 }
 
+void Sound::playOnOffSound(bool State)
+{
+  if (State)
+    PlayOnSound = true;
+  else
+    PlayOffSound = true;
+}
+
 void Sound::playOnSound()
 {
   PlayOnSound = true;
@@ -53,19 +62,9 @@ void Sound::playOffSound()
 
 void Sound::setSoundOnOff(bool State)
 {
-  char* Message;
   *Enabled = State;
-  if (*Enabled)
-  {
-    playOnSound();
-    Message = getName(F("ON"));
-  }
-  else
-  {
-    playOffSound();
-    Message = getName(F("OFF"));
-  }
-  Parent->addToLog(Message);
+  playOnOffSound(*Enabled);
+  Parent->addToLog(getName(getEnabledStateText(true)));
 }
 
 void Sound::OnSound()

@@ -16,6 +16,13 @@
 
 ///< State machine - Defining possible states
 
+enum class WasteReservoirStates
+{
+  FULL,
+  IDLE,
+  RESERVED  
+};
+
 enum class WaterPumpStates
 {
   DISABLED,
@@ -107,6 +114,7 @@ char *toText_enabledDisabled(bool Status);
 char *toText_onlineStatus(bool Status);
 char *toText_aeroTankState(AeroTankStates State);
 char *toText_aeroNoTankState(AeroNoTankStates State);
+char *toText_wasteReservoirStates(WasteReservoirStates State);
 char *toText_waterPumpState(WaterPumpStates State);
 char *toText_pressurePumpState(PressurePumpStates State);
 char *toText_hempyState(HempyStates State);

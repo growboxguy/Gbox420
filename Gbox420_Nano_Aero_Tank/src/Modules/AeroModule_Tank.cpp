@@ -8,7 +8,7 @@
 #include "../Components/PressureSensor.h"
 #include "../Components/PressurePump.h"
 #include "../Components/Aeroponics_Tank.h"
-#include "../Components/WeightSensor.h"
+//#include "../Components/WeightSensor.h"
 
 ///< Variables used during wireless communication
 uint8_t NextSequenceID = AeroMessages::AeroModuleResponse1;
@@ -31,7 +31,7 @@ AeroModule::AeroModule(const __FlashStringHelper *Name, Settings::AeroponicsModu
   this->SoundFeedback = Sound1;
   Pres1 = new PressureSensor(F("Pres1"), this, &ModuleSettings->Pres1);
   Pump1 = new PressurePump(F("Pump1"), this, &ModuleSettings->AeroPump1);
-  Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
+  //Weight1 = new WeightSensor(F("Weight1"), this, &ModuleSettings->Weight1);
   AeroT1 = new Aeroponics_Tank(F("AeroT1"), this, &ModuleSettings->AeroT1, Pump1, Pres1); ///< Use this with a pressure tank
   Aero1Response1ToSend.PressureTankPresent = true;
 
@@ -171,7 +171,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->MixReservoir, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->RefillPressureTank, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->DrainPressureTank, false, 1);
-      logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, false, 1);
+      //logToSerials(((AeroCommand_P2 *)ReceivedCommand)->TareWeight, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOn, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpOff, false, 1);
       logToSerials(((AeroCommand_P2 *)ReceivedCommand)->PumpDisable, false, 1);
@@ -200,6 +200,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     }
     else
       Aero1Response2ToSend.ConfirmDrainPressureTank = false;
+      /*
     if (((AeroCommand_P2 *)ReceivedCommand)->TareWeight && !Aero1Response2ToSend.ConfirmTareWeight)
     {
       Weight1->tareRequest();
@@ -207,6 +208,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
     }
     else
       Aero1Response2ToSend.ConfirmTareWeight = false;
+      */
     if (((AeroCommand_P2 *)ReceivedCommand)->PumpOn && !Aero1Response2ToSend.ConfirmPumpOn)
     {
       AeroT1->refillTank();
@@ -227,7 +229,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       Aero1Response2ToSend.ConfirmPumpDisable = true;
     }
     else
-      Aero1Response2ToSend.ConfirmPumpDisable = false;    
+      Aero1Response2ToSend.ConfirmPumpDisable = false;
 
     AeroT1->Pump->setSpeed(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed);
     AeroT1->Pump->setTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);
@@ -260,7 +262,7 @@ void AeroModule::updateResponse()
   Aero1Response1ToSend.Pressure = AeroT1->FeedbackPressureSensor->getPressure();
   Aero1Response1ToSend.PumpState = AeroT1->Pump->getState();
   Aero1Response1ToSend.LastSprayPressure = AeroT1->getLastSprayPressure();
-  Aero1Response1ToSend.Weight = Weight1->getWeight();
+  //Aero1Response1ToSend.Weight = Weight1->getWeight();
 }
 
 void AeroModule::updateAckData(AeroMessages NewSequenceID)

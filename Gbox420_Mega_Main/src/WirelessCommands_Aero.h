@@ -8,7 +8,7 @@
 
 ///< The Main module is always the Transmitter, sending a Command defined in AeroMessages
 ///< The Aero module is always the Receiver that instantly replies to an incoming message with a pre-cached Acknowledgement(ACK) package
-///< AeroReset is a special message: 
+///< AeroReset is a special message:
 ///<   -  Transmitter (Main module) always starts the multi-message exchange with this message
 ///<   -  When the Receiver gets this message it pre-loads the ACK message for the first "real" message it will receive from the Main module
 
@@ -25,8 +25,8 @@ enum AeroMessages
    AeroResponse1,
    AeroCommand2,
    AeroResponse2,
-   AeroReset /// Special command sent at the start and end of a multi-message exchange. 
-}; ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+   AeroReset /// Special command sent at the start and end of a multi-message exchange.
+};           ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 __attribute__((unused)) static const __FlashStringHelper *toText_aeroSequenceID(uint8_t SequenceID)
 {
@@ -111,7 +111,7 @@ struct AeroCommand_P1 : AeroCommonTemplate ///< Aeroponics wireless commands - P
 struct AeroResponse_P1 : AeroCommonTemplate ///< Aeroponics wireless response - Part1
 {
    AeroResponse_P1(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroResponse_P1(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool ConfirmSprayEnabled, __attribute__((unused)) bool ConfirmSprayDisabled, __attribute__((unused)) bool ConfirmSprayNow, __attribute__((unused)) bool ConfirmSprayOff, __attribute__((unused)) int AeroState, __attribute__((unused)) bool PressureTankPresent, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) float Pressure, __attribute__((unused)) PressurePumpStates PumpState, __attribute__((unused)) float LastSprayPressure, __attribute__((unused)) float Weight) : AeroCommonTemplate(SequenceID) {}
+   AeroResponse_P1(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool ConfirmSprayEnabled, __attribute__((unused)) bool ConfirmSprayDisabled, __attribute__((unused)) bool ConfirmSprayNow, __attribute__((unused)) bool ConfirmSprayOff, __attribute__((unused)) int AeroState, __attribute__((unused)) bool PressureTankPresent, __attribute__((unused)) bool SprayEnabled, __attribute__((unused)) float Pressure, __attribute__((unused)) PressurePumpStates PumpState, __attribute__((unused)) float LastSprayPressure) : AeroCommonTemplate(SequenceID) {}
    bool ConfirmSprayEnabled = false;
    bool ConfirmSprayDisabled = false;
    bool ConfirmSprayNow = false;
@@ -122,13 +122,13 @@ struct AeroResponse_P1 : AeroCommonTemplate ///< Aeroponics wireless response - 
    float Pressure = 0.0;
    PressurePumpStates PumpState = PressurePumpStates::DISABLED;
    float LastSprayPressure = 0.0; // Used only without pressure tank. last spray pressure
-   float Weight = 0.0;
+   //float Weight = 0.0;
 };
 
 struct AeroCommand_P2 : AeroCommonTemplate ///< Aeroponics wireless commands - Part2
 {
    AeroCommand_P2(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroCommand_P2(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) bool DrainPressureTank, __attribute__((unused)) bool TareWeight, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) uint16_t PumpTimeOut) : AeroCommonTemplate(SequenceID) {}
+   AeroCommand_P2(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool PumpOn, __attribute__((unused)) bool PumpOff, __attribute__((unused)) bool PumpDisable, __attribute__((unused)) bool MixReservoir, __attribute__((unused)) bool RefillPressureTank, __attribute__((unused)) bool DrainPressureTank, __attribute__((unused)) uint8_t PumpSpeed, __attribute__((unused)) int PumpPrimingTime, __attribute__((unused)) uint16_t PumpTimeOut) : AeroCommonTemplate(SequenceID) {}
 
    bool PumpOn = false;
    bool PumpOff = false;
@@ -136,7 +136,7 @@ struct AeroCommand_P2 : AeroCommonTemplate ///< Aeroponics wireless commands - P
    bool MixReservoir = false;
    bool RefillPressureTank = false;
    bool DrainPressureTank = false;
-   bool TareWeight = false;
+   //bool TareWeight = false;
    uint8_t PumpSpeed = 0;
    int PumpPrimingTime = 0;
    uint16_t PumpTimeOut = 0;
@@ -145,12 +145,12 @@ struct AeroCommand_P2 : AeroCommonTemplate ///< Aeroponics wireless commands - P
 struct AeroResponse_P2 : AeroCommonTemplate ///< Aeroponics wireless response - Part2
 {
    AeroResponse_P2(__attribute__((unused)) AeroMessages SequenceID) : AeroCommonTemplate(SequenceID) {}
-   AeroResponse_P2(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool ConfirmPumpOn, __attribute__((unused)) bool ConfirmPumpOff, __attribute__((unused)) bool ConfirmPumpDisable, __attribute__((unused)) bool ConfirmMixReservoir, __attribute__((unused)) bool ConfirmRefillPressureTank, __attribute__((unused)) bool ConfirmDrainPressureTank, __attribute__((unused)) bool ConfirmTareWeight) : AeroCommonTemplate(SequenceID) {}
+   AeroResponse_P2(__attribute__((unused)) AeroMessages SequenceID, __attribute__((unused)) bool ConfirmPumpOn, __attribute__((unused)) bool ConfirmPumpOff, __attribute__((unused)) bool ConfirmPumpDisable, __attribute__((unused)) bool ConfirmMixReservoir, __attribute__((unused)) bool ConfirmRefillPressureTank, __attribute__((unused)) bool ConfirmDrainPressureTank) : AeroCommonTemplate(SequenceID) {}
    bool ConfirmPumpOn = false;
    bool ConfirmPumpOff = false;
    bool ConfirmPumpDisable = false;
    bool ConfirmMixReservoir = false;
    bool ConfirmRefillPressureTank = false;
    bool ConfirmDrainPressureTank = false;
-   bool ConfirmTareWeight = false;
+   //bool ConfirmTareWeight = false;
 };
