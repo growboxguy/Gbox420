@@ -6,6 +6,7 @@ include(pico_sdk_import.cmake)
 project(Gbox420_PicoW C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
+set(PICO_BOARD "pico_w")
 
 if (PICO_SDK_VERSION_STRING VERSION_LESS "1.3.0")
     message(FATAL_ERROR "Raspberry Pi Pico SDK version 1.3.0 (or later) required. Your version is ${PICO_SDK_VERSION_STRING}")
@@ -25,13 +26,10 @@ add_compile_options(-Wall
 add_executable(Gbox420_PicoW
         Gbox420_PicoW.c
         )
-target_compile_definitions(Gbox420_PicoW PRIVATE
-        WIFI_SSID=\"${WIFI_SSID}\"
-        WIFI_PASSWORD=\"${WIFI_PASSWORD}\"
-        )
 target_include_directories(Gbox420_PicoW PRIVATE 
         ${CMAKE_CURRENT_LIST_DIR}
         "C:/VSARM/sdk/pico/pico-examples/pico_w" # for our common lwipopts
+        "C:/Users/bitmu/Apps/sdk/pico/pico-examples/pico_w/wifi"
 )
 target_link_libraries(Gbox420_PicoW
         pico_cyw43_arch_lwip_threadsafe_background
