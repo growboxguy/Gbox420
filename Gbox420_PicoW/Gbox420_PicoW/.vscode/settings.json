@@ -1,5 +1,9 @@
 {
     "files.associations": {
-        "string.h": "c"
-    }
+        "string.h": "c",
+        "ntpclient.h": "c"
+    },
+    "cSpell.words": [
+        "TIMEZONEHOURDIFFERENCE"
+    ]
 }

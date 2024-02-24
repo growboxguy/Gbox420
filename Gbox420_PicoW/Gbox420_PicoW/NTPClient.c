@@ -1,51 +1,33 @@
-/*! \file
- *  \brief     Update built-in Real Time Clock with an NTP query
- *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/raspberry-pi-pico-w
- *  \version   4.20
- */
-
-#include <string.h>
-#include <time.h>
-#include "lwip/dns.h"
-#include "lwip/pbuf.h"
-#include "lwip/udp.h"
-
-// Initialize the built-in RTC
-void initializeRTC()
-{
-    printf("Initializing RTC...");
-    rtc_init();
-    ntp_update();
-}
-
-typedef struct NTP_T_
-{
-    ip_addr_t ntp_server_address;
-    bool dns_request_sent;
-    struct udp_pcb *ntp_pcb;
-    absolute_time_t ntp_test_time;
-    alarm_id_t ntp_resend_alarm;
-} NTP_T;
+#include "NTPClient.h"
 
 #define NTP_SERVER "pool.ntp.org"
+#define TIMEZONEHOURDIFFERENCE 1   //// UTC time and current timezone difference in hours
 #define NTP_MSG_LEN 48
 #define NTP_PORT 123
 #define NTP_DELTA 2208988800 // seconds between 1 Jan 1900 and 1 Jan 1970
 #define NTP_TEST_TIME (30 * 1000)
 #define NTP_RESEND_TIME (10 * 1000)
 
+// Initialize the built-in RTC
+static void initializeRTC()
+{
+    printf("Initializing RTC...");
+    rtc_init();
+    ntp_update();
+}
+
 // Called with results of operation
 static void ntp_result(NTP_T *state, int status, time_t *result)
 {
     if (status == 0 && result)
     {
-        struct tm *utc = gmtime(result);
+        struct tm *utc = gmtime(result);   // https://cplusplus.com/reference/ctime/tm/
         datetime_t timeTemp = {
-            .year = utc->tm_year + 1900,
-            .month = utc->tm_mon,
+            .year = utc->tm_year + 1900,  // tm_year: years since 1900
+            .month = utc->tm_mon +1,  // tm_mon: months since January (0-11)
             .day = utc->tm_mday,
-            .dotw = utc->tm_wday, // 0 is Sunday, so 4 is Thursday
-            .hour = utc->tm_hour,
+            .dotw = utc->tm_wday, // tm_wday: days since Sunday (0-6)
+            .hour = utc->tm_hour + TIMEZONEHOURDIFFERENCE,
             .min = utc->tm_min,
             .sec = utc->tm_sec};
 
@@ -69,10 +51,6 @@ static int64_t ntp_failed_handler(alarm_id_t id, void *user_data);
 // Make an NTP request
 static void ntp_request(NTP_T *state)
 {
-    // cyw43_arch_lwip_begin/end should be used around calls into lwIP to ensure correct locking.
-    // You can omit them if you are in a callback from lwIP. Note that when using pico_cyw_arch_poll
-    // these calls are a no-op and can be omitted, but it is a good practice to use them in
-    // case you switch the cyw43_arch type later.
     cyw43_arch_lwip_begin();
     struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, NTP_MSG_LEN, PBUF_RAM);
     uint8_t *req = (uint8_t *)p->payload;
@@ -134,7 +112,7 @@ static void ntp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_ad
     pbuf_free(p);
 }
 
-void ntp_update()
+static void ntp_update()
 {
     NTP_T *state = (NTP_T *)calloc(1, sizeof(NTP_T));
     state->ntp_pcb = udp_new_ip_type(IPADDR_TYPE_ANY);

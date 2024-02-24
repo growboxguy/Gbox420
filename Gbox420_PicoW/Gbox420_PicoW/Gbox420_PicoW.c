@@ -1,5 +1,5 @@
 /*! \file
- *  \brief     Wifi connection test
+ *  \brief     WiFi connection test using an NTP query to update the built-in Real Time Clock
  *  \details   
  *  \attention 
  *             update the WIFI_SSID and WIFI_PASSWORD in the Global constants section
