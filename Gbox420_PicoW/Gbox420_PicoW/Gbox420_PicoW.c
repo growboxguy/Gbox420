@@ -1,9 +1,9 @@
 /*! \file
  *  \brief     Wifi connection test
  *  \details   
- *  \attention cd build
- *             cmake .. -G "MinGW Makefiles"
- *             mingw32-make.exe
+ *  \attention 
+ *             update the WIFI_SSID and WIFI_PASSWORD in the Global constants section
+ *             run the builder.bat
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/raspberry-pi-pico-w
  *  \version   4.20
  */
@@ -14,14 +14,12 @@
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
 #include "pico/util/datetime.h"
-
 #include "NTPClient.c"
-
 
 // Global constants
 #define MaxShotTextLength 128 ///< Default char * buffer length for storing mutiple words. Memory intense!
-#define WIFI_SSID "GboxNet"   //Comment out this line and pass it as a parameter to cmake -DWIFI_SSID="WifiNetworkPasswordName"
-#define WIFI_PASSWORD "SuperSecretPassword"  //Comment out this line and pass cmake -DPICO_BOARD=pico_w -DWIFI_SSID="WifiNetworkPasswordName"
+#define WIFI_SSID "GboxNet"   //UPDATE THIS
+#define WIFI_PASSWORD "SuperSecretPassword"  //UPDATE THIS
 
 // Global variable initialization
 datetime_t CurrentTime;
@@ -33,7 +31,7 @@ void initializeWiFi()
     printf("Initializing WiFi...");
     if (cyw43_arch_init())
     {
-        printf("...failed\n");
+        printf("failed\n");
     }
     else
     {
