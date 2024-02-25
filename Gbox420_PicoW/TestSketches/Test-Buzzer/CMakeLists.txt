@@ -3,9 +3,10 @@ cmake_minimum_required(VERSION 3.12)
 # Pull in SDK (must be before project)
 include ($ENV{PICO_SDK_PATH}/pico_sdk_init.cmake)
 
-project(WiFiConnect C CXX ASM)
+project(Test-Buzzer C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
+set(PICO_BOARD "pico_w")
 
 if (PICO_SDK_VERSION_STRING VERSION_LESS "1.3.0")
     message(FATAL_ERROR "Raspberry Pi Pico SDK version 1.3.0 (or later) required. Your version is ${PICO_SDK_VERSION_STRING}")
@@ -22,25 +23,23 @@ add_compile_options(-Wall
         -Wno-maybe-uninitialized
         )       
 
-add_executable(WiFiConnect
-        WiFiConnect.c
+add_executable(Test-Buzzer
+        Test-Buzzer.c
         )
-target_compile_definitions(WiFiConnect PRIVATE
-        WIFI_SSID=\"${WIFI_SSID}\"
-        WIFI_PASSWORD=\"${WIFI_PASSWORD}\"
+target_compile_definitions(Test-Buzzer PRIVATE
         )
-target_include_directories(WiFiConnect PRIVATE 
+target_include_directories(Test-Buzzer PRIVATE 
         ${CMAKE_CURRENT_LIST_DIR}
-        $ENV{PICO_SDK_PATH}/../pico-examples/pico_w/wifi  #include "lwipopts_examples_common.h"
+        $ENV{PICO_SDK_PATH}/../pico-examples/pico_w/wifi   #include "lwipopts_examples_common.h"
 )
-target_link_libraries(WiFiConnect
-        pico_cyw43_arch_lwip_threadsafe_background
+target_link_libraries(Test-Buzzer
         pico_stdlib
+        hardware_pwm
         )
 
-pico_add_extra_outputs(WiFiConnect)
+pico_add_extra_outputs(Test-Buzzer)
 
 # enable usb output, disable uart output
-pico_enable_stdio_usb(WiFiConnect 1)
-pico_enable_stdio_uart(WiFiConnect 0)
+pico_enable_stdio_usb(Test-Buzzer 1)
+pico_enable_stdio_uart(Test-Buzzer 0)
 
