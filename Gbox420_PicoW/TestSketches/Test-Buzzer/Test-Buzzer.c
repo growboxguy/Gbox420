@@ -6,7 +6,11 @@
 #include "hardware/pwm.h"
 
 // Pins
-const int BuzzerOutPin = 2;    ///< Port connecting the + side of the buzzer, over a minimum 200ohm resistor
+const int BuzzerOutPin = 2; ///< Port connecting the + side of the buzzer, over a minimum 200ohm resistor
+
+// Global variables
+pwm_config cfg;
+int slice_num;
 
 // Global constants
 const int c = 261;
@@ -31,7 +35,7 @@ const int aH = 880;
 
 static inline void pwm_calcDivTop(pwm_config *c, int frequency, int sysClock)
 {
-  uint count = sysClock * 16 / frequency;
+  uint count = 2000000000 / frequency;  ///2000000000: system clock(125000000) x 16 
   uint div = count / 60000; // to be lower than 65535*15/16 (rounding error)
   if (div < 16)
     div = 16;
@@ -41,19 +45,13 @@ static inline void pwm_calcDivTop(pwm_config *c, int frequency, int sysClock)
 
 void beep(int note, int duration)
 {
-  pwm_config cfg = pwm_get_default_config();
-  int slice_num = pwm_gpio_to_slice_num(BuzzerOutPin);
+  pwm_calcDivTop(&cfg, note, 125000000);
+  pwm_init(slice_num, &cfg, true);
+  pwm_set_chan_level(slice_num, PWM_CHAN_A, cfg.top / 2);
+  pwm_set_enabled(slice_num, true);
+  sleep_ms(duration);
   pwm_set_chan_level(slice_num, PWM_CHAN_A, 0);
- 
-    pwm_set_enabled(slice_num, false);
-    // get new frequency
-    pwm_calcDivTop(&cfg, note, 125000000);
-    pwm_init(slice_num, &cfg, true);
-    pwm_set_chan_level(slice_num, PWM_CHAN_A, cfg.top / 2);
-    pwm_set_enabled(slice_num, true);
-    sleep_ms(duration);
-    pwm_set_chan_level(slice_num, PWM_CHAN_A, 0);
-    sleep_ms(50);
+  sleep_ms(50);
 }
 
 void firstSection()
@@ -108,14 +106,16 @@ void secondSection()
   sleep_ms(350);
 }
 
-
 int main()
 {
   gpio_set_function(BuzzerOutPin, GPIO_FUNC_PWM);
+  cfg = pwm_get_default_config();
+  slice_num = pwm_gpio_to_slice_num(BuzzerOutPin);
+  pwm_set_chan_level(slice_num, PWM_CHAN_A, 0);
+  pwm_set_enabled(slice_num, false);
 
   while (true)
   {
-    stdio_init_all();   
     printf("Playing song...\n");
     // Play first section
     firstSection();
