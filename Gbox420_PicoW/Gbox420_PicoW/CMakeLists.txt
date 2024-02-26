@@ -24,7 +24,7 @@ add_compile_options(-Wall
         )       
 
 add_executable(Gbox420_PicoW
-        Gbox420_PicoW.c
+        Gbox420_PicoW.cpp
         )
 target_include_directories(Gbox420_PicoW PRIVATE 
         ${CMAKE_CURRENT_LIST_DIR}
@@ -34,11 +34,11 @@ target_link_libraries(Gbox420_PicoW
         pico_cyw43_arch_lwip_threadsafe_background
         pico_stdlib
         hardware_rtc
+        hardware_pwm
         )
 
 pico_add_extra_outputs(Gbox420_PicoW)
 
-# enable usb output, disable uart output
-pico_enable_stdio_usb(Gbox420_PicoW 1)
-pico_enable_stdio_uart(Gbox420_PicoW 0)
+pico_enable_stdio_usb(Gbox420_PicoW 1) # enable usb output
+pico_enable_stdio_uart(Gbox420_PicoW 1) # enable uart output
 
