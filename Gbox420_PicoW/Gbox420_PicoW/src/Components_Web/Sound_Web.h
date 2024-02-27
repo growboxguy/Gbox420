@@ -9,7 +9,7 @@
 class Sound_Web : public Common_Web, public Sound
 {
 public:
-  Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings);
+  Sound_Web(const char *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings);
   void websiteEvent_Load(char *Url);
   void websiteEvent_Field(char *Field);
   bool commandEvent(char *Command, char *Data);
@@ -22,6 +22,6 @@ protected:
   void EE();
   void buzz(uint32_t frequency, uint32_t length);
   bool PlayEE = false;
-  const PROGMEM static int melody[];
-  const PROGMEM static uint8_t tempo[];
+  const static int melody[];
+  const static uint8_t tempo[];
 };

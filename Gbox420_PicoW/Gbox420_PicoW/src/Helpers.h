@@ -8,6 +8,9 @@
 #pragma once
 
 //#include "MemoryFree.h" // Checking remaining memory
+#include <cstring>
+#include <cstdlib>
+#include <cmath>
 #include "../Settings.h" // Storing/reading defaults
 
 ///< State machine - Defining possible states

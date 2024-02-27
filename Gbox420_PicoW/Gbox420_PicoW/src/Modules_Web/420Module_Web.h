@@ -1,5 +1,6 @@
 #pragma once
 
+/*
 #include "Arduino.h"
 #include "ELClient.h"          ///< ESP-link
 #include "ELClientWebServer.h" ///< ESP-link - WebServer API
@@ -8,6 +9,8 @@
 #include "ELClientCmd.h"       ///< ESP-link - Get current time from the internet using NTP
 #include "TimeLib.h"           // Keeping track of time
 #include "SPI.h"
+*/
+
 #include "../../Settings.h"
 #include "../Helpers.h"
 #include "../Components_Web/420Common_Web.h"
@@ -15,16 +18,16 @@
 
 ///< Extends the Module class with functions to interact with an HTTP / HTML based user interface hosted by the Main module 
 
-extern ELClientWebServer WebServer;
-extern ELClientRest PushingBoxRestAPI;
-extern ELClientMqtt MqttAPI;
-extern bool MqttConnected;
+//extern ELClientWebServer WebServer;
+//extern ELClientRest PushingBoxRestAPI;
+//extern ELClientMqtt MqttAPI;
+//extern bool MqttConnected;
 class Sound_Web;
 
 class Module_Web : virtual public Common_Web, virtual public Module
 {
 public:
-  Module_Web(const __FlashStringHelper *Name);                        ///< constructor
+  Module_Web(const char *Name);                        ///< constructor
   void addToWebsiteQueue_Load(Common_Web *Subscriber);                ///< Calls the websiteEvent_Load() method of the Subscriber when an ESP-link website is loaded
   void addToWebsiteQueue_Refresh(Common_Web *Subscriber);             ///< Calls the websiteEvent_Refresh() method of the Subscriber when an ESP-link website is refreshing
   void addToCommandQueue(Common_Web *Subscriber);                     ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method
@@ -37,7 +40,6 @@ public:
   void settingsEvent_Load(__attribute__((unused)) char *Url);                                            ///< Gets called when the /Settings.html is loaded. This page is for configuring the Gbox420 module settings (Console logging, Debug mode, MQTT reporting topic, Google Sheets relay...etc)
   void settingsEvent_Refresh(__attribute__((unused)) char *Url);                                         ///< Gets called when the /Settings.html is refreshed.
   void settingsEvent_Command(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data); ///< Gets called a button is clicked or a field is submitted on the /Settings.html page
-  void addToLog(const __FlashStringHelper *Text, uint8_t Indent = 3);                                    ///< Add a Log entry that is displayed on the web interface
   void addToLog(const char *Text, uint8_t Indent = 3);                                                   ///< Add a Log entry that is displayed on the web interface
   char *eventLogToJSON(bool IncludeKey = false, bool ClearBuffer = true);                                ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"] and loads it to LongMessage buffer
   void addPushingBoxLogRelayID();                                                                        ///< Google Sheets reporting - Set PushingBox relay ID

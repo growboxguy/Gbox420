@@ -23,8 +23,16 @@ add_compile_options(-Wall
         -Wno-maybe-uninitialized
         )       
 
+ file(GLOB_RECURSE SOURCES
+        src/*.h
+        src/*.cpp
+    )  
+
 add_executable(Gbox420_PicoW
         Gbox420_PicoW.cpp
+        Settings.cpp
+        Settings.h
+        ${SOURCES}
         )
 target_include_directories(Gbox420_PicoW PRIVATE 
         ${CMAKE_CURRENT_LIST_DIR}
@@ -36,6 +44,9 @@ target_link_libraries(Gbox420_PicoW
         hardware_rtc
         hardware_pwm
         )
+
+
+      
 
 pico_add_extra_outputs(Gbox420_PicoW)
 

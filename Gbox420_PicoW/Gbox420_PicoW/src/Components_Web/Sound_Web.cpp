@@ -1,6 +1,6 @@
 #include "Sound_Web.h"
 
-Sound_Web::Sound_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name), Common_Web(Name), Sound(Name, Parent, DefaultSettings)
+Sound_Web::Sound_Web(const char *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name), Common_Web(Name), Sound(Name, Parent, DefaultSettings)
 {
   this->Parent = Parent;
   Parent->SoundFeedback = this;
@@ -20,7 +20,7 @@ void Sound_Web::refresh_Sec()
 
 void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgBoolean(getName(F("E"), true), *Enabled);
+ // WebServer.setArgBoolean(getName("E"), true), *Enabled);
 }
 
 bool Sound_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
@@ -31,11 +31,11 @@ bool Sound_Web::commandEvent(__attribute__((unused)) char *Command, __attribute_
   }
   else
   {
-    if (strcmp_P(ShortMessage, (PGM_P)F("E")) == 0)
+    if (strcmp(ShortMessage, "E") == 0)
     {
-      setSoundOnOff(WebServer.getArgBoolean());
+     // setSoundOnOff(WebServer.getArgBoolean());
     }
-    else if (strcmp_P(ShortMessage, (PGM_P)F("Ee")) == 0)
+    else if (strcmp(ShortMessage, "Ee") == 0)
     {
       playEE();
     }
@@ -52,19 +52,22 @@ void Sound_Web::playEE()
 
 void Sound_Web::EE()
 {
-  Parent->addToLog(F("♬Easter egg♬"));
+  Parent->addToLog("♬Easter egg♬");
+  /*
   for (int thisNote = 0; thisNote < 134; thisNote++)
   {
     int noteDuration = 1000 / (uint8_t)pgm_read_word(&tempo[thisNote]); ///< tempo is stored in PROGMEM (Flash), cannot read from it as RAM array (temp[thisNote] would not work) ///< https://forum.arduino.cc/index.php?topic=106603.0
     buzz((int)pgm_read_word(&melody[thisNote]), noteDuration);
     delay(noteDuration);
     buzz(0, noteDuration);
-    wdt_reset(); ///< Reset Watchdog timeout to avoid Arduino reseting while playing the song
+    //wdt_reset(); ///< Reset Watchdog timeout to avoid Arduino reseting while playing the song
   }
+  */
 }
 
 void Sound_Web::buzz(uint32_t frequency, uint32_t length)
 {
+  /*
   digitalWrite(13, HIGH);
   uint32_t delayValue = 1000000 / frequency / 2;
   uint32_t numCycles = frequency * length / 1000;
@@ -76,9 +79,10 @@ void Sound_Web::buzz(uint32_t frequency, uint32_t length)
     delayMicroseconds(delayValue);
   }
   digitalWrite(13, LOW);
+  */
 }
 
-const PROGMEM int Sound_Web::melody[] = { ///< https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
+const int Sound_Web::melody[] = { ///< https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
     2637, 2637, 0, 2637,
     0, 2093, 2637, 0,
     3136, 0, 0, 0,
@@ -125,7 +129,7 @@ const PROGMEM int Sound_Web::melody[] = { ///< https://www.arduino.cc/reference/
     415, 311, 247,
     233, 220, 208};
 
-const PROGMEM uint8_t Sound_Web::tempo[] = {
+const uint8_t Sound_Web::tempo[] = {
     12, 12, 12, 12,
     12, 12, 12, 12,
     12, 12, 12, 12,

@@ -1,15 +1,17 @@
 #include "Hempy_Standalone.h"
 #include "../Components_Web/Sound_Web.h"
+/*
 #include "../Components_Web/DHTSensor_Web.h"
 #include "../Components_Web/WeightSensor_Web.h"
 #include "../Components_Web/WaterPump_Web.h"
 #include "../Components_Web/WasteReservoir_Web.h"
 #include "../Components_Web/HempyBucket_Web.h"
+*/
 
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings, creates components that the instance controls, and subscribes to events
 */
-Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::Hempy_StandaloneSettings *DefaultSettings) : Common(Name), Common_Web(Name), Module(Name), Module_Web(Name)
+Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneSettings *DefaultSettings) : Common(Name), Common_Web(Name), Module(Name), Module_Web(Name)
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
@@ -22,8 +24,8 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   ReportToMQTT = &DefaultSettings->ReportToMQTT;
   MQTTReportFrequency = &DefaultSettings->MQTTReportFrequency;
 
-  logToSerials(F(""), true, 0);                                                          //<Line break
-  Sound1 = new Sound_Web(F("Sound1"), this, &ModuleSettings->Sound1);                    ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  printf("\n");                                                          //<Line break
+  Sound1 = new Sound_Web("Sound1", this, &ModuleSettings->Sound1);                    ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
 
   addToReportQueue(this);                                                                //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   //addToRefreshQueue_Sec(this);     //< Attach to a trigger that fires every second and calls refresh_Sec()
@@ -32,9 +34,9 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
   addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
   addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
   addToCommandQueue(this);
-  addToLog(F("Hempy_Standalone ready"), 0);
-  logToSerials(Name, false, 0);
-  logToSerials(F("refreshing"), true, 1);
+  addToLog("Hempy_Standalone ready", 0);
+  printf(Name);
+  printf(" refreshing\n");
   runAll();
 }
 
@@ -44,11 +46,11 @@ Hempy_Standalone::Hempy_Standalone(const __FlashStringHelper *Name, Settings::He
 void Hempy_Standalone::report(bool FriendlyFormat)
 {
   Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"M\":\""));
+  strcat(LongMessage, "\"M\":\"");
   strcat(LongMessage, getMetricText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\",\"D\":\""));
+  strcat(LongMessage, "\",\"D\":\"");
   strcat(LongMessage, getDebugText(FriendlyFormat));
-  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
+  strcat(LongMessage, "\"}"); ///< closing the curly bracket at the end of the JSON
 }
 
 /**
@@ -64,8 +66,8 @@ void Hempy_Standalone::websiteEvent_Load(__attribute__((unused)) char *Url) ///<
 */
 void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed (5sec automatic)
 {
-  WebServer.setArgString(F("Time"), getFormattedTime(false));  ///< Current time
-  WebServer.setArgJson(F("Log"), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
+  //WebServer.setArgString("Time", getFormattedTime(false));  ///< Current time
+  //WebServer.setArgJson("Log", eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 }
 
 /**

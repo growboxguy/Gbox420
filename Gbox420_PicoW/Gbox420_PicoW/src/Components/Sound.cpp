@@ -7,9 +7,9 @@ Sound::Sound(const char *Name, Module *Parent, Settings::SoundSettings *DefaultS
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
   //Tone1 = new TonePlayer(TCCR1A, TCCR1B, OCR1AH, OCR1AL, TCNT1H, TCNT1L);  // pin D9 (Uno/Nano), D11 (Mega)
-  gpio_set_function(BuzzerOutPin, GPIO_FUNC_PWM);
+  gpio_set_function(*Pin, GPIO_FUNC_PWM);
   cfg = pwm_get_default_config();
-  slice_num = pwm_gpio_to_slice_num(BuzzerOutPin);
+  slice_num = pwm_gpio_to_slice_num(*Pin);
   pwm_set_chan_level(slice_num, PWM_CHAN_A, 0);
   pwm_set_enabled(slice_num, false);
   Parent->addToRefreshQueue_Sec(this);
@@ -72,6 +72,17 @@ void Sound::setSoundOnOff(bool State)
   Parent->addToLog(getName(getEnabledStateText(true)));
 }
 
+void inline Sound::pwm_calcDivTop(pwm_config *c, int frequency, int sysClock)
+{
+  uint count = 2000000000 / frequency;  ///2000000000: system clock(125000000) x 16 
+  uint div = count / 60000; // to be lower than 65535*15/16 (rounding error)
+  if (div < 16)
+    div = 16;
+  c->div = div;
+  c->top = count / div;
+}
+
+
 void Sound::beep(int note, int duration)
 {
   pwm_calcDivTop(&cfg, note, 125000000);
@@ -87,9 +98,9 @@ void Sound::OnSound()
 {
   if (*Enabled)
   {
-    beep(f, 350);
-    delay(100);
-    beep(a, 650);
+    beep(440, 350);
+    sleep_ms(100);
+    beep(880, 650);
   }
 }
 
@@ -97,9 +108,9 @@ void Sound::OffSound()
 {
   if (*Enabled)
   {
-    beep(f, 650);
-    delay(100);
-    beep(a, 350);
+    beep(880, 650);
+    sleep_ms(100);
+    beep(440, 350);
   }
 }
 

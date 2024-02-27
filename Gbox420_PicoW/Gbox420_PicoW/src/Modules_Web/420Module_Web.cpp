@@ -6,9 +6,9 @@ static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storin
 /**
 * @brief Constructor: creates an instance of the class
 */
-Module_Web::Module_Web(const __FlashStringHelper *Name) : Common(Name), Module(Name)
+Module_Web::Module_Web(const char *Name) : Common(Name), Module(Name)
 {
-  //logToSerials(F("Module_Web ready"), true, 3);
+  //printf("   Module_Web ready\n");
 }
 
 /**
@@ -19,7 +19,7 @@ void Module_Web::addToWebsiteQueue_Load(Common_Web *Subscriber)
   if (QueueDepth > WebsiteQueue_Load_Count)
     WebsiteQueue_Load[WebsiteQueue_Load_Count++] = Subscriber;
   else
-    logToSerials(F("WebsiteQueue_Load overflow!"), true, 0);
+    printf("WebsiteQueue_Load overflow!\n");
 }
 
 /**
@@ -30,7 +30,7 @@ void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Subscriber)
   if (QueueDepth > WebsiteQueue_Refresh_Count)
     WebsiteQueue_Refresh[WebsiteQueue_Refresh_Count++] = Subscriber;
   else
-    logToSerials(F("WebsiteQueue_Refresh overflow!"), true, 0);
+    printf("WebsiteQueue_Refresh overflow!\n");
 }
 
 /**
@@ -41,7 +41,7 @@ void Module_Web::addToCommandQueue(Common_Web *Subscriber)
   if (QueueDepth > CommandQueue_Count)
     CommandQueue[CommandQueue_Count++] = Subscriber;
   else
-    logToSerials(F("CommandQueue overflow!"), true, 0);
+    printf("CommandQueue overflow!\n");
 }
 
 /**
@@ -71,8 +71,8 @@ void Module_Web::websiteRefreshEventTrigger(char *Url)
 */
 void Module_Web::commandEventTrigger(char *Command, char *Data)
 {
-  logToSerials(&Command, false, 1);
-  logToSerials(&Data, true, 2);
+  printf(" %s",&Command);
+  printf("  %s\n",&Data);
   bool NameMatchFound = false;
   for (int i = 0; i < CommandQueue_Count; i++)
   {
@@ -122,7 +122,7 @@ void Module_Web::refresh_Minute()
 */
 void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) uint8_t Indent)
 { ///< adds a log entry that is displayed on the web interface
-  logToSerials(&LongMessage, true, Indent);
+  printf("%s\n",&LongMessage);
   for (uint8_t i = LogDepth - 1; i > 0; i--)
   {                                       ///< Shift every log entry one up, dropping the oldest
     memset(&Logs[i], 0, sizeof(Logs[i])); ///< clear variable
@@ -130,21 +130,6 @@ void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) uint8
   }
   memset(&Logs[0], 0, sizeof(Logs[0]));         ///< clear variable
   strncpy(Logs[0], LongMessage, MaxWordLength); ///< instert new log to [0]
-}
-
-/**
-* @brief Adds a log entry to the top of the log and removes the oldest log entry
-*/
-void Module_Web::addToLog(const __FlashStringHelper *LongMessage, __attribute__((unused)) uint8_t Indent)
-{ ///< function overloading: same function name, different parameter type
-  logToSerials(&LongMessage, true, Indent);
-  for (uint8_t i = LogDepth - 1; i > 0; i--)
-  {                                       ///< Shift every log entry one up, dropping the oldest
-    memset(&Logs[i], 0, sizeof(Logs[i])); ///< clear variable
-    strncpy(Logs[i], Logs[i - 1], MaxWordLength);
-  }
-  memset(&Logs[0], 0, sizeof(Logs[0]));                  ///< clear variable
-  strncpy_P(Logs[0], (PGM_P)LongMessage, MaxWordLength); ///< instert new log to [0]
 }
 
 /**
@@ -161,21 +146,21 @@ char *Module_Web::eventLogToJSON(bool IncludeKey, bool ClearBuffer)
   }
   if (IncludeKey)
   {
-    strcat_P(LongMessage, (PGM_P)F("{\"EventLog\":")); ///< Adds a curly bracket that needs to be closed at the end
+    strcat(LongMessage, "{\"EventLog\":"); ///< Adds a curly bracket that needs to be closed at the end
   }
-  strcat_P(LongMessage, (PGM_P)F("["));
+  strcat(LongMessage, "[");
   for (int i = LogDepth - 1; i >= 0; i--)
   {
-    strcat_P(LongMessage, (PGM_P)F("\""));
+    strcat(LongMessage, "\"");
     strcat(LongMessage, Logs[i]);
-    strcat_P(LongMessage, (PGM_P)F("\""));
+    strcat(LongMessage, "\"");
     if (i > 0)
-      strcat_P(LongMessage, (PGM_P)F(","));
+      strcat(LongMessage, ",");
   }
   LongMessage[strlen(LongMessage)] = ']';
   if (IncludeKey)
   {
-    strcat_P(LongMessage, (PGM_P)F("}")); ///< closing curly bracket
+    strcat(LongMessage, "}"); ///< closing curly bracket
   }
   return LongMessage;
 }
@@ -186,72 +171,76 @@ char *Module_Web::eventLogToJSON(bool IncludeKey, bool ClearBuffer)
 char *Module_Web::settingsToJSON()
 {
   memset(&LongMessage[0], 0, MaxLongTextLength);
-  strcat_P(LongMessage, (PGM_P)F("{\"Settings\":{")); ///< Adds a curly bracket that needs to be closed at the end
-  strcat_P(LongMessage, (PGM_P)F("\"Debug\":\""));
+  strcat(LongMessage, "{\"Settings\":{"); ///< Adds a curly bracket that needs to be closed at the end
+  strcat(LongMessage, "\"Debug\":\"");
   strcat(LongMessage, toText(*Debug));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Metric\":\""));
+  strcat(LongMessage, "\",\"Metric\":\"");
   strcat(LongMessage, toText(*Metric));
-  strcat_P(LongMessage, (PGM_P)F("\",\"SerialF\":\""));
+  strcat(LongMessage, "\",\"SerialF\":\"");
   strcat(LongMessage, toText(*SerialReportFrequency));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Date\":\""));
+  strcat(LongMessage, "\",\"Date\":\"");
   strcat(LongMessage, toText(*SerialReportDate));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Mem\":\""));
+  strcat(LongMessage, "\",\"Mem\":\"");
   strcat(LongMessage, toText(*SerialReportMemory));
-  strcat_P(LongMessage, (PGM_P)F("\",\"JSON\":\""));
+  strcat(LongMessage, "\",\"JSON\":\"");
   strcat(LongMessage, toText(*SerialReportJSON));
-  strcat_P(LongMessage, (PGM_P)F("\",\"JSONF\":\""));
+  strcat(LongMessage, "\",\"JSONF\":\"");
   strcat(LongMessage, toText(*SerialReportJSONFriendly));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Wire\":\""));
+  strcat(LongMessage, "\",\"Wire\":\"");
   strcat(LongMessage, toText(*SerialReportWireless));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Sheets\":\""));
+  strcat(LongMessage, "\",\"Sheets\":\"");
   strcat(LongMessage, toText(*ReportToGoogleSheets));
-  strcat_P(LongMessage, (PGM_P)F("\",\"SheetsF\":\""));
+  strcat(LongMessage, "\",\"SheetsF\":\"");
   strcat(LongMessage, toText(*SheetsReportingFrequency));
-  strcat_P(LongMessage, (PGM_P)F("\",\"Relay\":\""));
+  strcat(LongMessage, "\",\"Relay\":\"");
   strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
-  strcat_P(LongMessage, (PGM_P)F("\",\"MQTT\":\""));
+  strcat(LongMessage, "\",\"MQTT\":\"");
   strcat(LongMessage, toText(*ReportToMQTT));
-  strcat_P(LongMessage, (PGM_P)F("\",\"MQTTF\":\""));
+  strcat(LongMessage, "\",\"MQTTF\":\"");
   strcat(LongMessage, toText(*MQTTReportFrequency));
-  strcat_P(LongMessage, (PGM_P)F("\",\"MPT\":\""));
+  strcat(LongMessage, "\",\"MPT\":\"");
   strcat(LongMessage, ModuleSettings->MqttPubTopic);
-  strcat_P(LongMessage, (PGM_P)F("\",\"MST\":\""));
+  strcat(LongMessage, "\",\"MST\":\"");
   strcat(LongMessage, ModuleSettings->MqttSubTopic);
-  strcat_P(LongMessage, (PGM_P)F("\",\"MLT\":\""));
+  strcat(LongMessage, "\",\"MLT\":\"");
   strcat(LongMessage, ModuleSettings->MqttLwtTopic);
-  strcat_P(LongMessage, (PGM_P)F("\",\"MLM\":\""));
+  strcat(LongMessage, "\",\"MLM\":\"");
   strcat(LongMessage, ModuleSettings->MqttLwtMessage);
-  strcat_P(LongMessage, (PGM_P)F("\"}}")); ///< closing the curly brackets at the end of the JSON
+  strcat(LongMessage, "\"}}"); ///< closing the curly brackets at the end of the JSON
   return LongMessage;
 }
 
 ///< ESP-link web interface functions
 void Module_Web::settingsEvent_Load(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgInt(F("Debug"), *Debug);
-  WebServer.setArgInt(F("Metric"), *Metric);
-  WebServer.setArgInt(F("SerialF"), *SerialReportFrequency);
-  WebServer.setArgInt(F("Date"), *SerialReportDate);
-  WebServer.setArgInt(F("Mem"), *SerialReportMemory);
-  WebServer.setArgInt(F("JSON"), *SerialReportJSON);
-  WebServer.setArgInt(F("JSONF"), *SerialReportJSONFriendly);
-  WebServer.setArgInt(F("Wire"), *SerialReportWireless);
-  WebServer.setArgBoolean(F("Sheets"), *ReportToGoogleSheets);
-  WebServer.setArgInt(F("SheetsF"), *SheetsReportingFrequency);
-  WebServer.setArgString(F("Relay"), ModuleSettings->PushingBoxLogRelayID);
-  WebServer.setArgBoolean(F("MQTT"), *ReportToMQTT);
-  WebServer.setArgInt(F("MQTTF"), *MQTTReportFrequency);
-  WebServer.setArgString(F("MPT"), ModuleSettings->MqttPubTopic);
-  WebServer.setArgString(F("MST"), ModuleSettings->MqttSubTopic);
-  WebServer.setArgString(F("MLT"), ModuleSettings->MqttLwtTopic);
-  WebServer.setArgString(F("MLM"), ModuleSettings->MqttLwtMessage);
-  WebServer.setArgInt(getSoundObject()->getName(F("E"), true), getSoundObject()->getEnabledState());
+  /*
+  WebServer.setArgInt("Debug", *Debug);
+  WebServer.setArgInt("Metric", *Metric);
+  WebServer.setArgInt("SerialF", *SerialReportFrequency);
+  WebServer.setArgInt("Date", *SerialReportDate);
+  WebServer.setArgInt("Mem", *SerialReportMemory);
+  WebServer.setArgInt("JSON", *SerialReportJSON);
+  WebServer.setArgInt("JSONF", *SerialReportJSONFriendly);
+  WebServer.setArgInt("Wire", *SerialReportWireless);
+  WebServer.setArgBoolean("Sheets", *ReportToGoogleSheets);
+  WebServer.setArgInt("SheetsF", *SheetsReportingFrequency);
+  WebServer.setArgString("Relay", ModuleSettings->PushingBoxLogRelayID);
+  WebServer.setArgBoolean("MQTT", *ReportToMQTT);
+  WebServer.setArgInt("MQTTF", *MQTTReportFrequency);
+  WebServer.setArgString("MPT", ModuleSettings->MqttPubTopic);
+  WebServer.setArgString("MST", ModuleSettings->MqttSubTopic);
+  WebServer.setArgString("MLT", ModuleSettings->MqttLwtTopic);
+  WebServer.setArgString("MLM", ModuleSettings->MqttLwtMessage);
+  WebServer.setArgInt(getSoundObject()->getName("E", true), getSoundObject()->getEnabledState());
+  */
 }
 
 void Module_Web::settingsEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
-  WebServer.setArgString(F("Time"), getFormattedTime(false));  ///< Current time
-  WebServer.setArgJson(F("Log"), eventLogToJSON(false, true)); ///< Last events that happened in JSON format
+  /*
+  WebServer.setArgString("Time", getFormattedTime(false));  ///< Current time
+  WebServer.setArgJson("Log", eventLogToJSON(false, true)); ///< Last events that happened in JSON format
+  */
 }
 
 /**
@@ -261,107 +250,107 @@ void Module_Web::settingsEvent_Refresh(__attribute__((unused)) char *Url) ///< c
 void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
   //Report triggers
-  if (strcmp_P(Command, (PGM_P)F("SheetsRep")) == 0)
+  if (strcmp(Command, "SheetsRep") == 0)
   {
     ReportToGoogleSheetsRequested = true; ///< just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
-    addToLog(F("Reporting to Sheets"), false);
+    addToLog("Reporting to Sheets", false);
     getSoundObject()->playOnSound();
   }
-  else if (strcmp_P(Command, (PGM_P)F("SerialRep")) == 0)
+  else if (strcmp(Command, "SerialRep") == 0)
   {
     ConsoleReportRequested = true;
-    addToLog(F("Reporting to Serial"), false);
+    addToLog("Reporting to Serial", false);
     getSoundObject()->playOnSound();
   }
-  else if (strcmp_P(Command, (PGM_P)F("MQTTRep")) == 0)
+  else if (strcmp(Command, "MQTTRep") == 0)
   {
     MQTTReportRequested = true;
-    addToLog(F("Reporting to MQTT"), false);
+    addToLog("Reporting to MQTT", false);
     getSoundObject()->playOnSound();
   }
-  else if (strcmp_P(Command, (PGM_P)F("Refresh")) == 0) ///< Website signals to refresh all sensor readings
+  else if (strcmp(Command, "Refresh") == 0) ///< Website signals to refresh all sensor readings
   {
     RefreshAllRequested = true;
-    addToLog(F("Refreshing"), false);
+    addToLog("Refreshing", false);
     getSoundObject()->playOnSound();
   }
   //Settings
-  else if (strcmp_P(Command, (PGM_P)F("Debug")) == 0)
+  else if (strcmp(Command, "Debug") == 0)
   {
     setDebug(toBool(Data));
   }
-  else if (strcmp_P(Command, (PGM_P)F("Metric")) == 0)
+  else if (strcmp(Command, "Metric") == 0)
   {
     setMetric(toBool(Data));
   }
   //Settings - Serial reporting
-  else if (strcmp_P(Command, (PGM_P)F("SerialF")) == 0)
+  else if (strcmp(Command, "SerialF") == 0)
   {
     setSerialReportingFrequency(toInt(Data));
   }
-  else if (strcmp_P(Command, (PGM_P)F("Date")) == 0)
+  else if (strcmp(Command, "Date") == 0)
   {
     setSerialReportDate(toBool(Data));
   }
-  else if (strcmp_P(Command, (PGM_P)F("Mem")) == 0)
+  else if (strcmp(Command, "Mem") == 0)
   {
     setSerialReportMemory(toBool(Data));
   }
-  else if (strcmp_P(Command, (PGM_P)F("JSON")) == 0)
+  else if (strcmp(Command, "JSON") == 0)
   {
     setSerialReportJSON(toBool(Data));
   }
-  else if (strcmp_P(Command, (PGM_P)F("JSONF")) == 0)
+  else if (strcmp(Command, "JSONF") == 0)
   {
     setSerialReportJSONFriendly(toBool(Data));
   }
-  else if (strcmp_P(Command, (PGM_P)F("Wire")) == 0)
+  else if (strcmp(Command, "Wire") == 0)
   {
     setSerialReportWireless(toBool(Data));
   }
   //Settings - Google Sheets
-  else if (strcmp_P(Command, (PGM_P)F("Sheets")) == 0)
+  else if (strcmp(Command, "Sheets") == 0)
   {
     setSheetsReportingOnOff(toBool(Data));
   }
-  else if (strcmp_P(Command, (PGM_P)F("SheetsF")) == 0)
+  else if (strcmp(Command, "SheetsF") == 0)
   {
     setSheetsReportingFrequency(toInt(Data));
   }
-  else if (strcmp_P(Command, (PGM_P)F("Relay")) == 0)
+  else if (strcmp(Command, "Relay") == 0)
   {
-    setPushingBoxLogRelayID(WebServer.getArgString());
+    //setPushingBoxLogRelayID(WebServer.getArgString());
   }
   //Settings - MQTT
-  else if (strcmp_P(Command, (PGM_P)F("MQTT")) == 0)
+  else if (strcmp(Command, "MQTT") == 0)
   {
     setMQTTReportingOnOff(toBool(Data));
   }
-  else if (strcmp_P(Command, (PGM_P)F("MQTTF")) == 0)
+  else if (strcmp(Command, "MQTTF") == 0)
   {
     setMQTTReportingFrequency(toInt(Data));
   }
-  else if (strcmp_P(Command, (PGM_P)F("MPT")) == 0)
+  else if (strcmp(Command, "MPT") == 0)
   {
-    setMqttPublishTopic(WebServer.getArgString());
+    //setMqttPublishTopic(WebServer.getArgString());
   }
-  else if (strcmp_P(Command, (PGM_P)F("MST")) == 0)
+  else if (strcmp(Command, "MST") == 0)
   {
-    setMqttSubscribeTopic(WebServer.getArgString());
+    //setMqttSubscribeTopic(WebServer.getArgString());
   }
-  else if (strcmp_P(Command, (PGM_P)F("MLT")) == 0)
+  else if (strcmp(Command, "MLT") == 0)
   {
-    setMQTTLWTTopic(WebServer.getArgString());
+    //setMQTTLWTTopic(WebServer.getArgString());
   }
-  else if (strcmp_P(Command, (PGM_P)F("MLM")) == 0)
+  else if (strcmp(Command, "MLM") == 0)
   {
-    setMQTTLWTMessage(WebServer.getArgString());
+    //setMQTTLWTMessage(WebServer.getArgString());
   }
-  else if (strcmp(Command, getSoundObject()->getName(F("E"), true)) == 0)
+  else if (strcmp(Command, getSoundObject()->getName((char*)"E", true)) == 0)
   {
     getSoundObject()->setSoundOnOff(toBool(Data));
   }
-  else if (strcmp(Command, getSoundObject()->getName(F("Ee"), true)) == 0)
+  else if (strcmp(Command, getSoundObject()->getName((char*)"Ee", true)) == 0)
   {
     getSoundObject()->playEE();
   }
@@ -377,9 +366,9 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
 void Module_Web::addPushingBoxLogRelayID()
 {
   memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
-  strcat_P(LongMessage, (PGM_P)F("/pushingbox?devid="));
+  strcat(LongMessage, "/pushingbox?devid=");
   strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
-  strcat_P(LongMessage, (PGM_P)F("&BoxData="));
+  strcat(LongMessage, "&BoxData=");
 }
 
 /**
@@ -391,10 +380,10 @@ void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
   if (*Debug)
   {
-    logToSerials(F("REST API reporting: api.pushingbox.com"), false, 2);
-    logToSerials(JSONData, true, 0);
+    printf("  REST API reporting: api.pushingbox.com");
+    printf("%s\n",JSONData);
   }
-  PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
+  //PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
 }
 
 /**
@@ -407,19 +396,22 @@ void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
   if (*Debug)
   {
-    logToSerials(F("MQTT reporting:"), false, 2);
-    logToSerials(&(ModuleSettings->MqttPubTopic), false, 1);
-    logToSerials(JSONData, true, 0);
+    printf("  MQTT reporting: ");
+    //printf(&(ModuleSettings->MqttPubTopic));
+    printf("%s\n",JSONData);
   }
+  /*
   if (MqttConnected)
   {
     MqttAPI.publish(ModuleSettings->MqttPubTopic, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
   }
+
   else
+  */
   {
     if (*Debug)
     {
-      logToSerials(F("MQTT broker not connected"), true, 2);
+      printf("  MQTT broker not connected\n");
     }
   }
 }
@@ -430,11 +422,11 @@ void Module_Web::setDebug(bool DebugEnabled)
   *Debug = DebugEnabled;
   if (*Debug)
   {
-    addToLog(F("Debug ON"));
+    addToLog("Debug ON");
   }
   else
   {
-    addToLog(F("Debug OFF"));
+    addToLog("Debug OFF");
   }
   getSoundObject()->playOnOffSound(*Debug);
 }
@@ -459,9 +451,9 @@ void Module_Web::setMetric(bool MetricEnabled)
     RefreshAllRequested = true;
   }
   if (*Metric)
-    addToLog(F("Using Metric units"));
+    addToLog("Using Metric units");
   else
-    addToLog(F("Using Imperial units"));
+    addToLog("Using Imperial units");
   getSoundObject()->playOnSound();
 }
 
@@ -484,11 +476,11 @@ void Module_Web::setSheetsReportingOnOff(bool State)
   *ReportToGoogleSheets = State;
   if (*ReportToGoogleSheets)
   {
-    addToLog(F("Sheets ON"));
+    addToLog("Sheets ON");
   }
   else
   {
-    addToLog(F("Sheets OFF"));
+    addToLog("Sheets OFF");
   }
   getSoundObject()->playOnOffSound(*ReportToGoogleSheets);
 }
@@ -496,7 +488,7 @@ void Module_Web::setSheetsReportingOnOff(bool State)
 void Module_Web::setSheetsReportingFrequency(uint16_t Frequency)
 {
   *SheetsReportingFrequency = Frequency;
-  addToLog(F("Sheets freqency updated"));
+  addToLog("Sheets freqency updated");
   getSoundObject()->playOnSound();
 }
 
@@ -504,7 +496,7 @@ void Module_Web::setPushingBoxLogRelayID(const char *ID)
 {
   strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
   getSoundObject()->playOnSound();
-  addToLog(F("Sheets log relay ID updated"));
+  addToLog("Sheets log relay ID updated");
 }
 
 void Module_Web::reportToGoogleSheetsTrigger(bool ForceRun)
@@ -524,11 +516,11 @@ void Module_Web::setMQTTReportingOnOff(bool State)
   *ReportToMQTT = State;
   if (*ReportToMQTT)
   {
-    addToLog(F("MQTT ON"));
+    addToLog("MQTT ON");
   }
   else
   {
-    addToLog(F("MQTT OFF"));
+    addToLog("MQTT OFF");
   }
   getSoundObject()->playOnOffSound(*ReportToMQTT);
 }
@@ -536,35 +528,35 @@ void Module_Web::setMQTTReportingOnOff(bool State)
 void Module_Web::setMQTTReportingFrequency(uint16_t Frequency)
 {
   *SheetsReportingFrequency = Frequency;
-  addToLog(F("MQTT freqency updated"));
+  addToLog("MQTT freqency updated");
 }
 
 void Module_Web::setMqttPublishTopic(const char *Topic)
 {
   strncpy(ModuleSettings->MqttPubTopic, Topic, MaxShotTextLength);
   getSoundObject()->playOnSound();
-  addToLog(F("MQTT publish updated"));
+  addToLog("MQTT publish updated");
 }
 
 void Module_Web::setMqttSubscribeTopic(const char *Topic)
 {
   strncpy(ModuleSettings->MqttSubTopic, Topic, MaxShotTextLength);
   getSoundObject()->playOnSound();
-  addToLog(F("MQTT subscribe updated"));
+  addToLog("MQTT subscribe updated");
 }
 
 void Module_Web::setMQTTLWTTopic(const char *LWTTopic)
 {
   strncpy(ModuleSettings->MqttLwtTopic, LWTTopic, MaxShotTextLength);
   getSoundObject()->playOnSound();
-  addToLog(F("LWT topic updated"));
+  addToLog("LWT topic updated");
 }
 
 void Module_Web::setMQTTLWTMessage(const char *LWTMessage)
 {
   strncpy(ModuleSettings->MqttLwtMessage, LWTMessage, MaxWordLength);
   getSoundObject()->playOnSound();
-  addToLog(F("LWT message updated"));
+  addToLog("LWT message updated");
 }
 
 /**

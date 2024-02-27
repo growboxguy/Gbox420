@@ -6,11 +6,11 @@
   \details This class contains pure virtual functions forces implementing functions required to interact with the ESP-link website
 */
 
-#include "ELClientWebServer.h" ///< ESP-link - WebServer API
+//#include "ELClientWebServer.h" ///< ESP-link - WebServer API
 #include "../Components/420Common.h"
 
 ///< forward declaration
-extern ELClientWebServer WebServer;
+//extern ELClientWebServer WebServer;
 
 class Common_Web : virtual public Common
 {
@@ -21,5 +21,5 @@ public:
 
 private:
 protected:
-  inline Common_Web(const __FlashStringHelper *Name) : Common(Name) {} ///< Constructor, implemented in the header file https://stackoverflow.com/questions/4761834/defining-constructor-in-header-file-vs-implementation-cpp-file
+  inline Common_Web(const char *Name) : Common(Name) {} ///< Constructor, implemented in the header file https://stackoverflow.com/questions/4761834/defining-constructor-in-header-file-vs-implementation-cpp-file
 };

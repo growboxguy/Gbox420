@@ -7,21 +7,14 @@ Common::Common(const char *Name)
   printf(this->Name);
 }
 
-/*
-Common::Common()
-{
-  //printf(F("Initializing without name"), false, 2);
-}
-*/
-
 /**
  * @brief Report current state in a JSON format to the LongMessage buffer - Append the start of the JSON
  */
 void Common::report(__attribute__((unused)) bool FriendlyFormat)
 {
-  strcat_P(LongMessage, (PGM_P)F("\""));
-  strcat_P(LongMessage, (PGM_P)Name);
-  strcat_P(LongMessage, (PGM_P)F("\":{"));
+  strcat(LongMessage, "\"");
+  strcat(LongMessage, Name);
+  strcat(LongMessage, "\":{");
 }
 
 void Common::refresh_Sec()
@@ -63,6 +56,7 @@ bool Common::isThisMine(char const *lookupName) ///< Returns true when the looku
   char FlashCurrentChar;           // Character read back from the Flash storage (Name is stored in flash)
   char RAMCurrentChar;             // Character read back from the RAM (lookupName is stored in RAM)
 
+/*
   const char *FlashAddressPointer = (const char PROGMEM *)Name; ///< Get the flash storage address of the first character of Name
   while (1)
   {
@@ -92,7 +86,7 @@ bool Common::isThisMine(char const *lookupName) ///< Returns true when the looku
       if (SafetyCount++ > MaxWordLength)
       {
         *ReturnChar = '\0';
-        printf(F("Too long:"), false, 3);
+        printf("   Too long:");
         printf(lookupName, true, 1);
         return false;
       }
@@ -100,6 +94,7 @@ bool Common::isThisMine(char const *lookupName) ///< Returns true when the looku
     return true;
   }
   else
+  */
   {
     return false;
   }
@@ -111,8 +106,8 @@ void Common::appendName(bool ClearBuffer)
   {
     memset(&ShortMessage[0], 0, MaxShotTextLength); // blank out the ShortMessage global buffer
   }
-  strcpy_P(ShortMessage, (PGM_P)Name);
-  strcat_P(ShortMessage, (PGM_P)F(" "));
+  strcpy(ShortMessage, Name);
+  strcat(ShortMessage, " ");
 }
 
 /**

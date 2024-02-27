@@ -3,6 +3,8 @@
 ///< This is a virtual class from which all other classes inherit from (GrowBox, PH reader, Lights, DHTSensor..)
 ///< Enforces a set of Common functions shared by the components
 
+#include <stdio.h>
+#include <cstring>
 #include "../../Settings.h"  ///< for loading defaults and storing/reading user settings
 #include "../Helpers.h"      ///< global functions
 

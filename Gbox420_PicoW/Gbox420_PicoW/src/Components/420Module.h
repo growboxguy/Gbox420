@@ -11,6 +11,7 @@ class Sound;
 class Module : virtual public Common
 {
 public:
+  Module(const char *Name, Sound *SoundFeedback); ///< constructor
   Module(const char *Name); ///< constructor
   void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false);
   void runReport(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false); ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.

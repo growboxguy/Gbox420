@@ -1,6 +1,4 @@
-#include "Arduino.h"
 #include "Settings.h"
-#include "SerialLog.h"
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits
@@ -9,7 +7,8 @@
 
 void saveSettings(Settings *ToSave)
 {
-  eeprom_update_block((const void *)ToSave, (void *)0, sizeof(Settings)); // update_block only writes the bytes that changed
+  ;
+  //eeprom_update_block((const void *)ToSave, (void *)0, sizeof(Settings)); // update_block only writes the bytes that changed
 }
 
 /**
@@ -20,21 +19,23 @@ void saveSettings(Settings *ToSave)
 Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
 {
   Settings *DefaultSettings = new Settings();                              // This is where settings are stored, first it takes the sketch default settings defined in Settings.h
+  /*
   Settings EEPROMSettings;                                                 // temporary storage with "Settings" type
   eeprom_read_block((void *)&EEPROMSettings, (void *)0, sizeof(Settings)); // Load EEPROM stored settings into EEPROMSettings
   if (DefaultSettings->CompatibilityVersion != EEPROMSettings.CompatibilityVersion || ResetEEPROM)
   { // Making sure the EEPROM loaded settings are compatible with the sketch
-    logToSerials(F("Updating EEPROM"), false, 1);
+    printf(" Updating EEPROM");
     saveSettings(DefaultSettings); // overwrites EEPROM stored settings with defaults from this sketch
   }
   else
   {
-    logToSerials(F("Applying EEPROM settings"), false, 1);
+    printf(" Applying EEPROM settings");
     // DefaultSettings = EEPROMSettings; // overwrite sketch defaults with loaded settings
     memcpy(DefaultSettings, &EEPROMSettings, sizeof(Settings));
   }
-  logToSerials(F("Version"), false, 3);
-  logToSerials(DefaultSettings->CompatibilityVersion, true, 1);
+  */
+  printf("   Version ");
+  printf("%s\n",DefaultSettings->CompatibilityVersion);
   return DefaultSettings;
 }
 
@@ -44,8 +45,8 @@ Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments
 */
 void restoreDefaults()
 {
-  logToSerials(F("Forcing settings update at next restart"), true, 0);
+  printf("Forcing settings update at next restart\n");
   loadSettings(true);
-  logToSerials(F("Reseting the sketch"), true, 1);
-  __asm__ __volatile__("jmp 0x0000");
+  printf(" Reseting the sketch\n");
+  //__asm__ __volatile__("jmp 0x0000");  //TODO: Force a watchdog reboot here
 }

@@ -2,28 +2,28 @@
 #include "Sound.h"
 
 Module::Module(const char *Name) : Common(Name)
-{
-  //logToSerials(F("Module object created"), true, 3);
-}
+{ ///< Constructor
+  printf("   Module ready\n");
+} 
 
-/* Module::Module(const __FlashStringHelper *Name, Sound * SoundFeedback) : Common(Name)
+Module::Module(const char *Name, Sound * SoundFeedback) : Common(Name)
 { ///< Constructor
   this -> SoundFeedback = SoundFeedback;
-  logToSerials(F("Module ready"), true, 3);
-} */
+  printf("   Module ready\n");
+} 
 
 /**
 * @brief Run every thread
 */
 void Module::runAll()
 {
-  wdt_reset();
+  //wdt_reset();
   runSec();
-  wdt_reset();
+ // wdt_reset();
   runFiveSec();
-  wdt_reset();
+ // wdt_reset();
   runMinute();
-  wdt_reset();
+ // wdt_reset();
 }
 
 /**
@@ -74,8 +74,8 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
   /*
   if ((*SerialReportJSONFriendly  || ForceRun) && !JSONToBufferOnly)
   {
-    logToSerials(reportQueueItemCount, false, 0); ///< Prints the number of items that will report
-    logToSerials(F("reporting:"), true, 1);
+    printf(reportQueueItemCount); ///< Prints the number of items that will report
+    printf("reporting:");
     for (int i = 0; i < reportQueueItemCount; i++)
     {
       ReportQueue[i]->report(false);
@@ -91,7 +91,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
     strcat(LongMessage, "{\"Log\":{"); ///< Adds two curly brackets that needs to be closed at the end
     if (!KeepBuffer)
     {
-      logToSerials(&LongMessage, true, 0);
+      printf("%s\n",&LongMessage);
       memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     }
     for (int i = 0; i < reportQueueItemCount;)
@@ -101,13 +101,13 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
         strcat(LongMessage, ","); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
       {
-        logToSerials(&LongMessage, true, 0);
+        printf("%s\n",&LongMessage);
         memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
       }
     }
     strcat(LongMessage, "}}"); ///< closing both curly bracket
     if (!JSONToBufferOnly)
-      logToSerials(&LongMessage, true, 0);
+      printf("%s\n",&LongMessage);
   }
 }
 
@@ -124,7 +124,7 @@ void Module::runSec()
   {
     if (*Debug)
     {
-      logToSerials(F("1sec"), true, 1);
+      printf(" 1sec\n");
     }
     for (int i = 0; i < refreshQueueItemCount_Sec; i++)
     {
@@ -136,7 +136,7 @@ void Module::runSec()
 void Module::runFiveSec()
 {
   if (*Debug)
-    logToSerials(F("5sec"), true, 1);
+    printf(" 5sec\n");
   for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
   {
     RefreshQueue_FiveSec[i]->refresh_FiveSec();
@@ -146,7 +146,7 @@ void Module::runFiveSec()
 void Module::runMinute()
 {
   if (*Debug)
-    logToSerials(F("1min"), true, 1);
+    printf(" 1min\n");
   for (int i = 0; i < refreshQueueItemCount_Minute; i++)
   {
     RefreshQueue_Minute[i]->refresh_Minute();
@@ -165,7 +165,7 @@ void Module::addToReportQueue(Common *Component)
   if (QueueDepth > reportQueueItemCount)
     ReportQueue[reportQueueItemCount++] = Component;
   else
-    logToSerials(F("Report OF"), true, 0); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
+    printf("Report Overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
 void Module::addToRefreshQueue_Sec(Common *Component)
@@ -173,7 +173,7 @@ void Module::addToRefreshQueue_Sec(Common *Component)
   if (QueueDepth > refreshQueueItemCount_Sec)
     RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
   else
-    logToSerials(F("Refresh 1s OF"), true, 0);
+    printf("Refresh 1s Overflow\n");
 }
 
 void Module::addToRefreshQueue_FiveSec(Common *Component)
@@ -181,7 +181,7 @@ void Module::addToRefreshQueue_FiveSec(Common *Component)
   if (QueueDepth > refreshQueueItemCount_FiveSec)
     RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
   else
-    logToSerials(F("Refresh 5s OF"), true, 0);
+    printf("Refresh 5s Overflow\n");
 }
 
 void Module::addToRefreshQueue_Minute(Common *Component)
@@ -189,23 +189,26 @@ void Module::addToRefreshQueue_Minute(Common *Component)
   if (QueueDepth > refreshQueueItemCount_Minute)
     RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
   else
-    logToSerials(F("Refresh 1m OF"), true, 0);
+    printf("Refresh 1m Overflow\n");
 }
 
 ///< Even logs to the Serial output
 void Module::addToLog(const char *LongMessage, uint8_t Indent)
 {
-  logToSerials(&LongMessage, true, Indent);
+  printf("%s\n",&LongMessage);
 }
+
 
 ///< Time
 
-char *Module::getFormattedTime(bool PrintToSerials)
+char *Module::getFormattedTime(bool PrintToSerials)  // TODO: Fix this
 {
+  /*
   time_t Now = now();                                                                                                                          // Get the current time and date from the TimeLib library
   snprintf(CurrentTime, MaxWordLength, "%04d/%02d/%02d-%02d:%02d:%02d", year(Now), month(Now), day(Now), hour(Now), minute(Now), second(Now)); // YYYY/MM/DD-HH:mm:SS formatted time will be stored in CurrentTime global variable
   if (PrintToSerials)
-    logToSerials(&CurrentTime, true, 0);
+    printf("%s\n",&CurrentTime);
+    */
   return CurrentTime;
 }
 

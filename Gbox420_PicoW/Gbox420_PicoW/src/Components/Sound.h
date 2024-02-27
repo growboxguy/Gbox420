@@ -16,6 +16,7 @@ public:
   void refresh_Sec();
   void playOnSound();
   void playOffSound();
+  void inline pwm_calcDivTop(pwm_config *c, int frequency, int sysClock);
   void beep(int note, int duration); //Generate a PWM signal at the specified frequency for the specified duration
   void playOnOffSound(bool State);
   void setSoundOnOff(bool State);

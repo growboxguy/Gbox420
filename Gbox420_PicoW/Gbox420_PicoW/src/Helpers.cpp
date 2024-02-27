@@ -4,9 +4,9 @@
 /*
 void getFreeMemory()
 {
-  logToSerials(F("Free bytes:"), false, 0);
+  printf("Free bytes:");
   itoa(freeMemory(), ShortMessage, 10);
-  logToSerials(&ShortMessage, true, 1);
+  printf("%s\n",&ShortMessage);
 }
 */
 
@@ -50,17 +50,17 @@ char *toText(unsigned int Number)
 
 char *toText(float Number)
 {
-  if (isnan(Number))
+  if (std::isnan(Number))
     Number = -1.0;
-  dtostrf(Number, 4, 2, ShortMessage); ///< minimum 4 char total length (Including decimal and possible - sign), with 2 digits after the decimal point
+  sprintf(ShortMessage,"%.2f", Number); ///< with 2 digits after the decimal point
   return ShortMessage;
 }
 
 char *toText_floatDecimals(float Number)
 {
-  if (isnan(Number))
+  if (std::isnan(Number))
     Number = -1.0;
-  dtostrf(Number, 8, 6, ShortMessage); ///< minimum 8 char total length, with 6 decimals
+  sprintf(ShortMessage,"%.6f", Number); ///< with 6 decimals
   return ShortMessage;
 }
 
@@ -73,13 +73,13 @@ char *toText(int Number1, const char *Separator, int Number2)
 char *toText(float Number1, const char *Separator, float Number2)
 { ///< function overloading: Same named function, different parameter type
   char Number2Char[MaxWordLength] = "";
-  if (isnan(Number1))
+  if (std::isnan(Number1))
     Number1 = -1.0;
-  if (isnan(Number2))
+  if (std::isnan(Number2))
     Number2 = -1.0;
-  dtostrf(Number1, 4, 2, ShortMessage);
+  sprintf(ShortMessage,"%.2f", Number1);
   strcat(ShortMessage, Separator);
-  dtostrf(Number2, 4, 2, Number2Char);
+  sprintf(Number2Char,"%.2f", Number2);
   strcat(ShortMessage, Number2Char);
   return ShortMessage;
 }
@@ -92,42 +92,42 @@ char *toText_time(uint8_t Hour, uint8_t Minute)
 
 char *toText_temp(float Temp)
 {
-  dtostrf(Temp, 4, 2, ShortMessage);
+  sprintf(ShortMessage,"%.2f", Temp);
   if (*Metric)
   {
-    strcat_P(ShortMessage, (PGM_P)F("°C"));
+    strcat(ShortMessage, "°C");
   }
   else
   {
-    strcat_P(ShortMessage, (PGM_P)F("°F"));
+    strcat(ShortMessage, "°F");
   }
   return ShortMessage;
 }
 
 char *toText_pressure(float Pressure)
 {
-  dtostrf(Pressure, 4, 2, ShortMessage);
+  sprintf(ShortMessage,"%.2f", Pressure);
   if (*Metric)
   {
-    strcat_P(ShortMessage, (PGM_P)F("bar"));
+    strcat(ShortMessage, "bar");
   }
   else
   {
-    strcat_P(ShortMessage, (PGM_P)F("psi"));
+    strcat(ShortMessage, "psi");
   }
   return ShortMessage;
 }
 
 char *toText_weight(float Weight)
 {
-  dtostrf(Weight, 4, 2, ShortMessage);
+  sprintf(ShortMessage,"%.2f", Weight);
   if (*Metric)
   {
-    strcat_P(ShortMessage, (PGM_P)F("kg"));
+    strcat(ShortMessage, "kg");
   }
   else
   {
-    strcat_P(ShortMessage, (PGM_P)F("lbs"));
+    strcat(ShortMessage, "lbs");
   }
   return ShortMessage;
 }
@@ -135,88 +135,88 @@ char *toText_weight(float Weight)
 char *toText_percentage(float Number)
 {
   ///< static char * ReturnChar = malloc(MaxWordLength * sizeof(char));  ///< allocate memory for every run - need to take care of freeing up the memory  after use
-  dtostrf(Number, 4, 2, ShortMessage);
-  strcat_P(ShortMessage, (PGM_P)F("%"));
+  sprintf(ShortMessage,"%.2f", Number);
+  strcat(ShortMessage, "%");
   return ShortMessage;
 }
 
 char *toText_percentage(int Number)
 {
   itoa(Number, ShortMessage, 10);
-  strcat_P(ShortMessage, (PGM_P)F("%"));
+  strcat(ShortMessage, "%");
   return ShortMessage;
 }
 
 char *toText_rpm(float RPM)
 {
-  dtostrf(RPM, 4, 2, ShortMessage);
-  strcat_P(ShortMessage, (PGM_P)F("rpm"));
+  sprintf(ShortMessage,"%.2f", RPM);
+  strcat(ShortMessage, "rpm");
   return ShortMessage;
 }
 
 char *toText_minute(int Minute)
 {
   itoa(Minute, ShortMessage, 10);
-  strcat_P(ShortMessage, (PGM_P)F("min"));
+  strcat(ShortMessage, "min");
   return ShortMessage;
 }
 
 char *toText_second(int Second)
 {
   itoa(Second, ShortMessage, 10);
-  strcat_P(ShortMessage, (PGM_P)F("sec"));
+  strcat(ShortMessage, "sec");
   return ShortMessage;
 }
 
 char *toText_distance(float Distance)
 {
-  dtostrf(Distance, 4, 2, ShortMessage);
+  sprintf(ShortMessage,"%.2f", Distance);
   if (*Metric)
   {
-    strcat_P(ShortMessage, (PGM_P)F("cm"));
+    strcat(ShortMessage, "cm");
   }
   else
   {
-    strcat_P(ShortMessage, (PGM_P)F("inch"));
+    strcat(ShortMessage, "inch");
   }
   return ShortMessage;
 }
 
 char *toText_TDS(float TDS)
 {
-  dtostrf(TDS, 4, 2, ShortMessage);
-  strcat_P(ShortMessage, (PGM_P)F("ppm"));
+  sprintf(ShortMessage,"%.2f", TDS);
+  strcat(ShortMessage, "ppm");
   return ShortMessage;
 }
 
 char *toText_yesNo(bool Status)
 {
   if (Status)
-    return toText(F("YES"));
+    return (char*)"YES";
   else
-    return toText(F("NO"));
+    return (char*)"NO";
 }
 
 char *toText_enabledDisabled(bool Status)
 {
   if (Status)
-    return toText(F("ENABLED"));
+    return (char*)"ENABLED";
   else
-    return toText(F("DISABLED"));
+    return (char*)"DISABLED";
 }
 
 char *toText_onOff(bool Status)
 {
   if (Status)
-    return toText(F("ON"));
+    return (char*)"ON";
   else
-    return toText(F("OFF"));
+    return (char*)"OFF";
 }
 
 char *toText_onOffDisabled(bool Enabled, bool OnStatus)
 {
   if (!Enabled)
-    return toText(F("DISABLED"));
+    return (char*)"DISABLED";
   else
   {
     return toText_onOff(OnStatus);
@@ -226,22 +226,22 @@ char *toText_onOffDisabled(bool Enabled, bool OnStatus)
 char *toText_onlineStatus(bool Status)
 {
   if (Status)
-    return toText(F("ONLINE"));
+    return (char*)"ONLINE";
   else
-    return toText(F("OFFLINE"));
+    return (char*)"OFFLINE";
 }
 
 ///Converting text
 
 bool toBool(char *Boolean)
 {
-  if (strcmp_P(Boolean, PSTR("on")) == 0)
+  if (strcmp(Boolean, "on") == 0)
     return 1;
-  if (strcmp_P(Boolean, PSTR("1")) == 0)
+  if (strcmp(Boolean, "1") == 0)
     return 1;
-  if (strcmp_P(Boolean, PSTR("true")) == 0)
+  if (strcmp(Boolean, "true") == 0)
     return 1;
-  if (strcmp_P(Boolean, PSTR("yes")) == 0)
+  if (strcmp(Boolean, "yes") == 0)
     return 1;
   return 0;
 }
@@ -263,19 +263,19 @@ char *toText_ACMotorState(ACMotorStates State)
   switch (State)
   {
   case ACMotorStates::IDLE:
-    return toText(F("IDLE"));
+    return (char*)"IDLE";
     break;
   case ACMotorStates::FORWARD:
-    return toText(F("FORWARD"));
+    return (char*)"FORWARD";
     break;
   case ACMotorStates::BACKWARD:
-    return toText(F("BACKWARD"));
+    return (char*)"BACKWARD";
     break;
   case ACMotorStates::STOPPING:
-    return toText(F("STOPPING"));
+    return (char*)"STOPPING";
     break;
   default:
-    return toText(F("?"));
+    return (char*)"?";
     break;
   }
 }
@@ -285,16 +285,16 @@ char *toText_waterPumpState(WaterPumpStates State)
   switch (State)
   {
   case WaterPumpStates::DISABLED:
-    return toText(F("DISABLED"));
+    return (char*)"DISABLED";
     break;
   case WaterPumpStates::IDLE:
-    return toText(F("IDLE"));
+    return (char*)"IDLE";
     break;
   case WaterPumpStates::RUNNING:
-    return toText(F("RUNNING"));
+    return (char*)"RUNNING";
     break;
   default:
-    return toText(F("?"));
+    return (char*)"?";
     break;
   }
 }
@@ -304,16 +304,16 @@ char *toText_wasteReservoirStates(WasteReservoirStates State)
   switch (State)
   {
   case WasteReservoirStates::FULL:
-    return toText(F("FULL"));
+    return (char*)"FULL";
     break;
   case WasteReservoirStates::IDLE:
-    return toText(F("IDLE"));
+    return (char*)"IDLE";
     break;
   case WasteReservoirStates::RESERVED:
-    return toText(F("RESERVED"));
+    return (char*)"RESERVED";
     break;
   default:
-    return toText(F("?"));
+    return (char*)"?";
     break;
   }
 }
@@ -323,31 +323,31 @@ char *toText_pressurePumpState(PressurePumpStates State)
   switch (State)
   {
   case PressurePumpStates::DISABLED:
-    return toText(F("DISABLED"));
+    return (char*)"DISABLED";
     break;
   case PressurePumpStates::IDLE:
-    return toText(F("IDLE"));
+    return (char*)"IDLE";
     break;
   case PressurePumpStates::PRIMING:
-    return toText(F("PRIMING"));
+    return (char*)"PRIMING";
     break;
   case PressurePumpStates::RUNNING:
-    return toText(F("RUNNING"));
+    return (char*)"RUNNING";
     break;
   case PressurePumpStates::BLOWOFF:
-    return toText(F("BLOWOFF"));
+    return (char*)"BLOWOFF";
     break;
   case PressurePumpStates::MIX:
-    return toText(F("MIX"));
+    return (char*)"MIX";
     break;
   case PressurePumpStates::BYPASSCLOSE:
-    return toText(F("BYPASSCLOSE"));
+    return (char*)"BYPASSCLOSE";
     break;
   case PressurePumpStates::BYPASSOPEN:
-    return toText(F("BYPASSOPEN"));
+    return (char*)"BYPASSOPEN";
     break;
   default:
-    return toText(F("?"));
+    return (char*)"?";
     break;
   }
 }
@@ -357,31 +357,31 @@ char *toText_aeroTankState(AeroTankStates State)
   switch (State)
   {
   case AeroTankStates::DISABLED:
-    return toText(F("DISABLED"));
+    return (char*)"DISABLED";
     break;
   case AeroTankStates::IDLE:
-    return toText(F("IDLE"));
+    return (char*)"IDLE";
     break;
   case AeroTankStates::SPRAY:
-    return toText(F("SPRAY"));
+    return (char*)"SPRAY";
     break;
   case AeroTankStates::STOPSPRAY:
-    return toText(F("STOPSPRAY"));
+    return (char*)"STOPSPRAY";
     break;
   case AeroTankStates::RELEASE:
-    return toText(F("RELEASE"));
+    return (char*)"RELEASE";
     break;
   case AeroTankStates::REFILL:
-    return toText(F("REFILL"));
+    return (char*)"REFILL";
     break;
   case AeroTankStates::DRAIN:
-    return toText(F("DRAIN"));
+    return (char*)"DRAIN";
     break;
   case AeroTankStates::MIX:
-    return toText(F("MIX"));
+    return (char*)"MIX";
     break;
   default:
-    return toText(F("?"));
+    return (char*)"?";
     break;
   }
 }
@@ -391,25 +391,25 @@ char *toText_aeroNoTankState(AeroNoTankStates State)
   switch (State)
   {
   case AeroNoTankStates::DISABLED:
-    return toText(F("DISABLED"));
+    return (char*)"DISABLED";
     break;
   case AeroNoTankStates::PRIMING:
-    return toText(F("PRIMING"));
+    return (char*)"PRIMING";
     break;
   case AeroNoTankStates::IDLE:
-    return toText(F("IDLE"));
+    return (char*)"IDLE";
     break;
   case AeroNoTankStates::SPRAY:
-    return toText(F("SPRAY"));
+    return (char*)"SPRAY";
     break;
   case AeroNoTankStates::RELEASE:
-    return toText(F("RELEASE"));
+    return (char*)"RELEASE";
     break;
   case AeroNoTankStates::MIX:
-    return toText(F("MIX"));
+    return (char*)"MIX";
     break;
   default:
-    return toText(F("?"));
+    return (char*)"?";
     break;
   }
 }
@@ -419,19 +419,19 @@ char *toText_hempyState(HempyStates State)
   switch (State)
   {
   case HempyStates::DISABLED:
-    return toText(F("DISABLED"));
+    return (char*)"DISABLED";
     break;
   case HempyStates::IDLE:
-    return toText(F("IDLE"));
+    return (char*)"IDLE";
     break;
   case HempyStates::WATERING:
-    return toText(F("WATERING"));
+    return (char*)"WATERING";
     break;
   case HempyStates::DRAINING:
-    return toText(F("DRAINING"));
+    return (char*)"DRAINING";
     break;
   default:
-    return toText(F("?"));
+    return (char*)"?";
     break;
   }
 }
@@ -441,22 +441,22 @@ char *toText_lightState(LightStates State)
   switch (State)
   {
   case LightStates::TURNEDOFF:
-    return toText(F("OFF"));
+    return (char*)"OFF";
     break;
   case LightStates::TURNEDON:
-    return toText(F("ON"));
+    return (char*)"ON";
     break;
   case LightStates::FADEIN:
-    return toText(F("FADEIN"));
+    return (char*)"FADEIN";
     break;
   case LightStates::FADEOUT:
-    return toText(F("FADEOUT"));
+    return (char*)"FADEOUT";
     break;
   case LightStates::DIMMED:
-    return toText(F("DIMMED"));
+    return (char*)"DIMMED";
     break;
   default:
-    return toText(F("?"));
+    return (char*)"?";
     break;
   }
 }
