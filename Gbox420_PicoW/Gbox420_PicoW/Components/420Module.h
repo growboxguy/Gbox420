@@ -1,8 +1,8 @@
 #pragma once
 
 #include "420Common.h"
-#include "../../Settings.h"
-#include "../Helpers.h"
+#include  "../Settings.h"
+#include "Helpers.h"
 
 ///< Common parent class of all modules
 

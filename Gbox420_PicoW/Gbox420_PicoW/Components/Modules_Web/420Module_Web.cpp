@@ -1,3 +1,4 @@
+#pragma GCC diagnostic ignored "-Wstringop-truncation"
 #include "420Module_Web.h"
 #include "../Components_Web/Sound_Web.h"
 

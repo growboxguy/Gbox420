@@ -14,11 +14,12 @@ REM Do Windows CMD commands here... for example:
 SET StartDir=%cd%
 choice /C YN /T 5 /D Y /M "Keep previous build folder"
 if %ERRORLEVEL% EQU 1 GOTO KEEPFOLDER
-rmdir /S /Q "%StartDir%\build"
+rmdir /S /Q "%StartDir%\..\build"
 :KEEPFOLDER
-mkdir "%StartDir%\build"
+mkdir "%StartDir%\..\build"
 ECHO Rebuilding...
+cd ..
 cd build
-cmake .. -G "MinGW Makefiles"
+cmake %StartDir% -G "MinGW Makefiles"
 mingw32-make.exe
-cd..
+cd %StartDir%

@@ -11,10 +11,10 @@
 #include "SPI.h"
 */
 
-#include "../../Settings.h"
+#include  "../../Settings.h"
 #include "../Helpers.h"
 #include "../Components_Web/420Common_Web.h"
-#include "../Components/420Module.h"
+#include "../420Module.h"
 
 ///< Extends the Module class with functions to interact with an HTTP / HTML based user interface hosted by the Main module 
 

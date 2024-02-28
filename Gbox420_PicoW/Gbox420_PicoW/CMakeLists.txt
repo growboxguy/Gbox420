@@ -24,8 +24,8 @@ add_compile_options(-Wall
         )       
 
  file(GLOB_RECURSE SOURCES
-        src/*.h
-        src/*.cpp
+        Components/*.h
+        Components/*.cpp
     )  
 
 add_executable(Gbox420_PicoW

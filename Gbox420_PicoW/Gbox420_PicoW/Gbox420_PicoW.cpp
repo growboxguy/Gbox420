@@ -8,17 +8,16 @@
  *  \version   4.20
  */
 
-
-#include "hardware/rtc.h"
-#include "hardware/watchdog.h"
+#pragma GCC diagnostic ignored "-Wstringop-truncation"  //Surpress build warning of potential truncation of a string NULL terminator. During string operations the size is pre-defined in Settings.h: MaxWordLength/MaxShotTextLength/MaxLongTextLength 
+#include "hardware/rtc.h"   //Real Time Clock for storing current time (Updated over NTP)
+#include "hardware/watchdog.h" //Watchdog to auto-reboot in case of an error
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
 #include "pico/util/datetime.h"
 #include "Settings.h"                         // Settings for every component //TODO: Try passing these directly when creating an object?
-#include "src/NTPClient.h"
-#include "Settings.h"                         // Settings for every component //TODO: Try passing these directly when creating an object?
-#include "src/Components/Sound.h"
-#include "src/Modules_Web/Hempy_Standalone.h" // Represents a complete box with all feautres
+#include "Components/NTPClient.h"
+#include "Components/Sound.h"
+#include "Components/Modules_Web/Hempy_Standalone.h" // Represents a complete box with all feautres
 
 
 // Global variable initialization
