@@ -18,6 +18,7 @@ void saveSettings(Settings *ToSave)
 */
 Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
 {
+  printf("Loading settings");
   Settings *DefaultSettings = new Settings();                              // This is where settings are stored, first it takes the sketch default settings defined in Settings.h
   /*
   Settings EEPROMSettings;                                                 // temporary storage with "Settings" type
@@ -34,8 +35,8 @@ Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments
     memcpy(DefaultSettings, &EEPROMSettings, sizeof(Settings));
   }
   */
-  printf("   Version ");
-  printf("%s\n",DefaultSettings->CompatibilityVersion);
+  printf("   Done. Version: ");
+  printf("%hhu\n",DefaultSettings->CompatibilityVersion);
   return DefaultSettings;
 }
 

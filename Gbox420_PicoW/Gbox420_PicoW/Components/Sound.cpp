@@ -98,9 +98,9 @@ void Sound::OnSound()
 {
   if (*Enabled)
   {
-    beep(440, 350);
-    sleep_ms(100);
-    beep(880, 650);
+    beep(440, 150);
+    sleep_ms(10);
+    beep(880, 150);
   }
 }
 
@@ -108,9 +108,9 @@ void Sound::OffSound()
 {
   if (*Enabled)
   {
-    beep(880, 650);
-    sleep_ms(100);
-    beep(440, 350);
+    beep(880, 150);
+    sleep_ms(10);
+    beep(440, 150);
   }
 }
 

@@ -6,8 +6,6 @@
 
 #pragma once
 
-#define NTP_SERVER "pool.ntp.org"
-#define TIMEZONEHOURDIFFERENCE 1   //// UTC time and current timezone difference in hours
 #define NTP_MSG_LEN 48
 #define NTP_PORT 123
 #define NTP_DELTA 2208988800 // seconds between 1 Jan 1900 and 1 Jan 1970
@@ -22,6 +20,7 @@
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
 #include "hardware/rtc.h"
+#include "../Settings.h"
 
 typedef struct
 {

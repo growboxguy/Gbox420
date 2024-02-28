@@ -122,8 +122,7 @@ void Module_Web::refresh_Minute()
 * @brief Adds a log entry to the top of the log and removes the oldest log entry
 */
 void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) uint8_t Indent)
-{ ///< adds a log entry that is displayed on the web interface
-  printf("%s\n",&LongMessage);
+{ ///< adds a log entry that is displayed on the web interface  
   for (uint8_t i = LogDepth - 1; i > 0; i--)
   {                                       ///< Shift every log entry one up, dropping the oldest
     memset(&Logs[i], 0, sizeof(Logs[i])); ///< clear variable
@@ -131,6 +130,7 @@ void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) uint8
   }
   memset(&Logs[0], 0, sizeof(Logs[0]));         ///< clear variable
   strncpy(Logs[0], LongMessage, MaxWordLength); ///< instert new log to [0]
+  printf("%s\n",Logs[0]);
 }
 
 /**

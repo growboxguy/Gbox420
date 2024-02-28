@@ -24,7 +24,6 @@ Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneS
   ReportToMQTT = &DefaultSettings->ReportToMQTT;
   MQTTReportFrequency = &DefaultSettings->MQTTReportFrequency;
 
-  printf("\n");                                                          //<Line break
   Sound1 = new Sound_Web("Sound1", this, &ModuleSettings->Sound1);                    ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
 
   addToReportQueue(this);                                                                //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT

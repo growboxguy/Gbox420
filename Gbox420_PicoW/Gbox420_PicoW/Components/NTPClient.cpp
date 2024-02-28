@@ -8,7 +8,7 @@ void initializeRTC()
     ntp_update();
 }
 
-// Called with results of operation
+// Called in an interrupt with results of the NTP request
 void ntp_result(NTP_T *state, int status, time_t *result)
 {
     if (status == 0 && result)
@@ -19,12 +19,11 @@ void ntp_result(NTP_T *state, int status, time_t *result)
             .month = (int8_t)(utc->tm_mon +1),  // tm_mon: months since January (0-11)
             .day = (int8_t)utc->tm_mday,
             .dotw = (int8_t)utc->tm_wday, // tm_wday: days since Sunday (0-6)
-            .hour = (int8_t)(utc->tm_hour + TIMEZONEHOURDIFFERENCE),
+            .hour = (int8_t)(utc->tm_hour + TIMEZONEDIFFERENCE),
             .min = (int8_t)utc->tm_min,
             .sec = (int8_t)utc->tm_sec};
 
         rtc_set_datetime(&timeTemp);
-        printf("RTC updated\n");
     }
 
     if (state->ntp_resend_alarm > 0)
@@ -56,7 +55,7 @@ void ntp_request(NTP_T *state)
 int64_t ntp_failed_handler(alarm_id_t id, void *user_data)
 {
     NTP_T *state = (NTP_T *)user_data;
-    printf("ntp request failed\n");
+    printf("NTP request failed\n");
     ntp_result(state, -1, NULL);
     return 0;
 }
@@ -73,7 +72,7 @@ void ntp_dns_found(const char *hostname, const ip_addr_t *ipaddr, void *arg)
     }
     else
     {
-        printf("ntp dns request failed\n");
+        printf("NTP DNS request failed\n");
         ntp_result(state, -1, NULL);
     }
 }
@@ -98,7 +97,7 @@ void ntp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *a
     }
     else
     {
-        printf("invalid ntp response\n");
+        printf("Invalid NTP response\n");
         ntp_result(state, -1, NULL);
     }
     pbuf_free(p);
