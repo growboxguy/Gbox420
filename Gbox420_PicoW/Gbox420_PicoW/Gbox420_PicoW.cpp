@@ -17,7 +17,7 @@
 #include "Settings.h"                         // Settings for every component //TODO: Try passing these directly when creating an object?
 #include "Components/NTPClient.h"
 #include "Components/Sound.h"
-#include "Components/Modules_Web/Hempy_Standalone.h" // Represents a complete box with all feautres
+#include "Components/Hempy_Standalone.h" // Represents a complete box with all feautres
 
 
 // Global variable initialization

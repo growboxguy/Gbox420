@@ -1,8 +1,8 @@
 #pragma once
 
 #include "420Common_Web.h"
-#include "../Modules_Web/420Module_Web.h"
-#include "../Sound.h"
+#include "420Module_Web.h"
+#include "Sound.h"
 
 ///< Sound feedback buzzer - website component
 

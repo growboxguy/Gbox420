@@ -1,11 +1,11 @@
 #include "Hempy_Standalone.h"
-#include "../Components_Web/Sound_Web.h"
+#include "Sound_Web.h"
 /*
-#include "../Components_Web/DHTSensor_Web.h"
-#include "../Components_Web/WeightSensor_Web.h"
-#include "../Components_Web/WaterPump_Web.h"
-#include "../Components_Web/WasteReservoir_Web.h"
-#include "../Components_Web/HempyBucket_Web.h"
+#include "DHTSensor_Web.h"
+#include "WeightSensor_Web.h"
+#include "WaterPump_Web.h"
+#include "WasteReservoir_Web.h"
+#include "HempyBucket_Web.h"
 */
 
 /**
