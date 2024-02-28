@@ -19,8 +19,8 @@ static const uint8_t Version = 1; ///< Increment this after changing the stuctur
 ///< Global constants
 #define WIFI_SSID "GboxNet"                     // UPDATE THIS
 #define WIFI_PASSWORD "SuperSecretPassword"     // UPDATE THIS
-#define NTP_SERVER "pool.ntp.org"  // NTP Server
-#define TIMEZONEDIFFERENCE 1   // UTC time and current timezone difference
+#define NTP_SERVER "pool.ntp.org"               // NTP Server
+#define TIMEZONEDIFFERENCE 1                    // UTC time and current timezone difference
 static const uint8_t MaxWordLength = 32;        ///< Default char * buffer length for storing a word + null terminator. Memory intense!
 static const uint8_t MaxShotTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 1024; ///< Default char * buffer length for storing a long text. Memory intense!

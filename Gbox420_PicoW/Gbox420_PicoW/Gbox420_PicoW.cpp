@@ -2,7 +2,7 @@
  *  \brief     WiFi connection test using an NTP query to update the built-in Real Time Clock
  *  \details
  *  \attention
- *             update the WIFI_SSID and WIFI_PASSWORD in the Global constants section
+ *             update the WIFI_SSID and WIFI_PASSWORD in Settings.h
  *             run the builder.bat
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/raspberry-pi-pico-w
  *  \version   4.20
@@ -67,6 +67,39 @@ void getRTC()
   printf("%s", ShortMessage);
 }
 
+///< Blink built-in LED on Pico W
+void HeartBeat()
+{
+  static bool ledStatus;
+  ledStatus = !ledStatus;
+  cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus);
+}
+
+///< Threads
+
+bool runSec(struct repeating_timer *t)
+{
+  watchdog_update();
+  HeartBeat(); ///< Blinks built-in led
+  Hempy_Standalone1->runSec();
+  return true;
+}
+
+bool runFiveSec(struct repeating_timer *t)
+{
+  watchdog_update();
+  Hempy_Standalone1->runFiveSec();
+  return true;
+}
+
+bool runMinute(struct repeating_timer *t)
+{
+  watchdog_update();
+  Hempy_Standalone1->runMinute();
+  // getWirelessStatus();
+  return true;
+}
+
 int main()
 {
   stdio_init_all();
@@ -87,7 +120,7 @@ int main()
   watchdog_update();
 
   // Loading settings from EEPROM
-   ModuleSettings = loadSettings();
+  ModuleSettings = loadSettings();
   Debug = &ModuleSettings->Debug;
   Metric = &ModuleSettings->Metric;
 
@@ -104,9 +137,18 @@ int main()
   printf("Setup ready, starting loops:\n");
   watchdog_update();
   // run_ntp_test();
-  absolute_time_t LastRefresh = get_absolute_time();
+
+  struct repeating_timer Timer1sec;
+  struct repeating_timer Timer5sec;
+  struct repeating_timer Timer1min;
+  add_repeating_timer_ms(-1000, runSec, NULL, &Timer1sec);
+  add_repeating_timer_ms(-5000, runFiveSec, NULL, &Timer5sec);
+  add_repeating_timer_ms(-60000, runMinute, NULL, &Timer1min);
+
+  // absolute_time_t LastRefresh = get_absolute_time();
   while (1)
   {
+    /*
     if (absolute_time_diff_us(LastRefresh, get_absolute_time()) > 5000000) // 5sec
     {
       watchdog_update();
@@ -114,10 +156,23 @@ int main()
       printf(" Running...\n");
       LastRefresh = get_absolute_time();
     }
+    */
   }
   cyw43_arch_deinit();
   return 0;
 }
+
+/*
+void getWirelessStatus()
+{
+  if (*Debug)
+  {
+    //printf("Wireless report:\n");
+    cyw43_wifi_link_status();
+    printf("\n");
+  }
+}
+*/
 
 /**
   \brief Sets up the MQTT relay: Configures callbacks for MQTT events and sets the Last Will and Testament in case the ESP-link goes offline
