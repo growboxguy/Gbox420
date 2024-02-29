@@ -13,7 +13,7 @@ public:
   void websiteEvent_Load(char *Url);
   void websiteEvent_Field(char *Field);
   bool commandEvent(char *Command, char *Data);
-  void refresh_Sec();
+  void refresh();
   void playEE();
 
 private:

@@ -13,20 +13,6 @@ Module::Module(const char *Name, Sound * SoundFeedback) : Common(Name)
 } 
 
 /**
-* @brief Run every thread
-*/
-void Module::runAll()
-{
-  //wdt_reset();
-  runSec();
- // wdt_reset();
-  runFiveSec();
- // wdt_reset();
-  runMinute();
- // wdt_reset();
-}
-
-/**
 * @brief Handles custom reporting frequency for Serial
 * @param ForceRun Send a report instantly, even when regular reports are disabled
 * @param ClearBuffer Flush the LongMessage buffer before starting to report
@@ -113,43 +99,23 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
 
 ///< Refresh queues: Refresh components inside the Module
 
-void Module::runSec()
+void Module::run()
 {
-  if (RunAllRequested)
+  if (RunRequested)
   {
-    RunAllRequested = false;
-    runAll();
+    RunRequested = false;
+    run();
   }
   else
   {
     if (*Debug)
     {
-      printf(" 1sec\n");
+      printf(" Refreshing\n");
     }
-    for (int i = 0; i < refreshQueueItemCount_Sec; i++)
+    for (int i = 0; i < refreshQueueItemCount; i++)
     {
-      RefreshQueue_Sec[i]->refresh_Sec();
+      RefreshQueue[i]->refresh();
     }
-  }
-}
-
-void Module::runFiveSec()
-{
-  if (*Debug)
-    printf(" 5sec\n");
-  for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
-  {
-    RefreshQueue_FiveSec[i]->refresh_FiveSec();
-  }
-}
-
-void Module::runMinute()
-{
-  if (*Debug)
-    printf(" 1min\n");
-  for (int i = 0; i < refreshQueueItemCount_Minute; i++)
-  {
-    RefreshQueue_Minute[i]->refresh_Minute();
   }
 }
 
@@ -158,38 +124,22 @@ Sound *Module::getSoundObject()
   return SoundFeedback;
 }
 
-///< Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes to one or more refresh queues using these methods
+///< Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes
 
 void Module::addToReportQueue(Common *Component)
 {
   if (QueueDepth > reportQueueItemCount)
     ReportQueue[reportQueueItemCount++] = Component;
   else
-    printf("Report Overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
+    printf("Report queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
-void Module::addToRefreshQueue_Sec(Common *Component)
+void Module::addToRefreshQueue(Common *Component)
 {
-  if (QueueDepth > refreshQueueItemCount_Sec)
-    RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
+  if (QueueDepth > refreshQueueItemCount)
+    RefreshQueue[refreshQueueItemCount++] = Component; ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
   else
-    printf("Refresh 1s Overflow\n");
-}
-
-void Module::addToRefreshQueue_FiveSec(Common *Component)
-{
-  if (QueueDepth > refreshQueueItemCount_FiveSec)
-    RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
-  else
-    printf("Refresh 5s Overflow\n");
-}
-
-void Module::addToRefreshQueue_Minute(Common *Component)
-{
-  if (QueueDepth > refreshQueueItemCount_Minute)
-    RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
-  else
-    printf("Refresh 1m Overflow\n");
+    printf("Refresh queue overflow\n");
 }
 
 ///< Even logs to the Serial output
@@ -227,7 +177,7 @@ void Module::setMetric(bool MetricEnabled)
   if (MetricEnabled != *Metric)
   { //if there was a change
     *Metric = MetricEnabled;
-    RunAllRequested = true; ///< Force a full sensor reading refresh
+    RunRequested = true; ///< Force a full sensor reading refresh
   }
   getSoundObject()->playOnOffSound(*Metric);
 }

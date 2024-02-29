@@ -8,9 +8,9 @@ Sound_Web::Sound_Web(const char *Name, Module_Web *Parent, Settings::SoundSettin
   Parent->addToCommandQueue(this);
 }
 
-void Sound_Web::refresh_Sec()
+void Sound_Web::refresh()
 {
-  Sound::refresh_Sec();
+  Sound::refresh();
   if (PlayEE)
   {
     PlayEE = false;

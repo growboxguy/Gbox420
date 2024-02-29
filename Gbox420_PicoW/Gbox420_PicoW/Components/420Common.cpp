@@ -17,30 +17,12 @@ void Common::report(__attribute__((unused)) bool FriendlyFormat)
   strcat(LongMessage, "\":{");
 }
 
-void Common::refresh_Sec()
+void Common::refresh()
 {
+  RefreshCounter++;
   if (*Debug)
   {
-    printf("  %s", Name);
-    printf(" - 1sec\n"); ///< Prints "COMPONENTNAME refreshing (1 sec)" to the console
-  }
-}
-
-void Common::refresh_FiveSec()
-{
-  if (*Debug)
-  {
-    printf("  %s", Name);
-    printf(" - 5sec\n"); ///< Prints "COMPONENTNAME refreshing (5 sec)" to the console
-  }
-}
-
-void Common::refresh_Minute()
-{
-  if (*Debug)
-  {
-    printf("  %s", Name);
-    printf(" - 1min\n"); ///< Prints "COMPONENTNAME refreshing (1 min)" to the console
+    printf("  %s refreshing\n", Name); ///< Prints "COMPONENTNAME refreshing" to the console
   }
 }
 

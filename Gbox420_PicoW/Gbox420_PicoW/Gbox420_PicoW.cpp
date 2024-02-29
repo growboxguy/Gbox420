@@ -26,7 +26,6 @@ char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long
 char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
 bool *Debug;                               ///< True - Turns on extra debug messages on the Serial Output
 bool *Metric;                              ///< True - Use metric units, False - Use imperial units
-bool MqttConnected = false;                ///< Track the connection state to the MQTT broker configured on the ESP-link's REST/MQTT tab
 
 // Component initialization/declaration
 /*ELClient ESPLink(&ESPSerial);             ///< ESP-link. Both SLIP and debug messages are sent to ESP over the ESP Serial link
@@ -75,28 +74,12 @@ void HeartBeat()
   cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus);
 }
 
-///< Threads
-
-bool runSec(struct repeating_timer *t)
+///< This function gets called every 
+bool runRepeatedly(struct repeating_timer *t)
 {
   watchdog_update();
   HeartBeat(); ///< Blinks built-in led
-  Hempy_Standalone1->runSec();
-  return true;
-}
-
-bool runFiveSec(struct repeating_timer *t)
-{
-  watchdog_update();
-  Hempy_Standalone1->runFiveSec();
-  return true;
-}
-
-bool runMinute(struct repeating_timer *t)
-{
-  watchdog_update();
-  Hempy_Standalone1->runMinute();
-  // getWirelessStatus();
+  Hempy_Standalone1->run();
   return true;
 }
 
@@ -124,11 +107,6 @@ int main()
   Debug = &ModuleSettings->Debug;
   Metric = &ModuleSettings->Metric;
 
-  if ((ModuleSettings->Hempy_Standalone1).ReportToMQTT)
-  {
-    // setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
-  }
-
   // Create the Module objects
   printf("Creating Hempy module\n");
   Hempy_Standalone1 = new Hempy_Standalone("Hemp1", &ModuleSettings->Hempy_Standalone1); ///< This is the dev object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
@@ -139,27 +117,7 @@ int main()
   // run_ntp_test();
 
   struct repeating_timer Timer1sec;
-  struct repeating_timer Timer5sec;
-  struct repeating_timer Timer1min;
-  add_repeating_timer_ms(-1000, runSec, NULL, &Timer1sec);
-  add_repeating_timer_ms(-5000, runFiveSec, NULL, &Timer5sec);
-  add_repeating_timer_ms(-60000, runMinute, NULL, &Timer1min);
-
-  // absolute_time_t LastRefresh = get_absolute_time();
-  while (1)
-  {
-    /*
-    if (absolute_time_diff_us(LastRefresh, get_absolute_time()) > 5000000) // 5sec
-    {
-      watchdog_update();
-      getRTC();
-      printf(" Running...\n");
-      LastRefresh = get_absolute_time();
-    }
-    */
-  }
-  cyw43_arch_deinit();
-  return 0;
+  add_repeating_timer_ms(-1000, runRepeatedly, NULL, &Timer1sec);  // Calls runRepeatedly every second
 }
 
 /*
@@ -173,69 +131,3 @@ void getWirelessStatus()
   }
 }
 */
-
-/**
-  \brief Sets up the MQTT relay: Configures callbacks for MQTT events and sets the Last Will and Testament in case the ESP-link goes offline
-*/
-void setupMqtt()
-{
-  /*
-    MqttAPI.connectedCb.attach(mqttConnected);
-    MqttAPI.disconnectedCb.attach(mqttDisconnected);
-    MqttAPI.publishedCb.attach(mqttPublished);
-    MqttAPI.dataCb.attach(mqttReceived);
-
-    memset(&ShortMessage[0], 0, MaxShotTextLength); //reset variable to store the Publish to path
-    strcat(ShortMessage, ModuleSettings->MqttLwtTopic);
-    MqttAPI.lwt(ShortMessage, ModuleSettings->MqttLwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
-    MqttAPI.setup();
-    */
-}
-
-/**
-  \brief Called when connection to the MQTT broker is established
-*/
-void mqttConnected(__attribute__((unused)) void *response)
-{
-  // MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
-  MqttConnected = true;
-  // if(*Debug) printf("MQTT connected\n");
-}
-
-/**
-  \brief Called when connection to the MQTT broker is lost
-*/
-void mqttDisconnected(__attribute__((unused)) void *response)
-{
-  MqttConnected = false;
-  // if(*Debug) printf("MQTT disconnected\n");
-}
-
-/**
-  \brief Called after an MQTT message is sent out - Not used
-*/
-void mqttPublished(__attribute__((unused)) void *response)
-{
-  // if(*Debug) printf("MQTT published\n");
-}
-
-/**
-  \brief Called when an MQTT command is received. Extracts the command from the MQTT topic and gets the data passed along the command
-  \param response The MQTT message object passed by ESP-link (type: ELClientResponse)
-*/
-void mqttReceived(void *response)
-{
-  // static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1; //Get length of the command topic
-  static char command[MaxShotTextLength];
-  static char data[MaxShotTextLength];
-  // ELClientResponse *res = (ELClientResponse *)response;
-  // String mqttTopic = (*res).popString();
-  // String mqttData = (*res).popString();
-  printf("MQTT\n");
-  //  printf(" %s",&mqttTopic);
-  // mqttTopic.remove(0, MqttSubTopicLength); //Cut the known command topic from the arrived topic
-  // mqttTopic.toCharArray(command, MaxShotTextLength);
-  // mqttData.toCharArray(data, MaxShotTextLength);
-  Hempy_Standalone1->commandEventTrigger(command, data);
-  Hempy_Standalone1->reportToMQTTTrigger(true); // send out a fresh report
-}

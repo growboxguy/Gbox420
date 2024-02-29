@@ -13,7 +13,7 @@ public:
   Sound(const char *Name, Module *Parent, Settings::SoundSettings *DefaultSettings);
   void report(bool FriendlyFormat = false);
   void checkEvents();
-  void refresh_Sec();
+  void refresh();
   void playOnSound();
   void playOffSound();
   void inline pwm_calcDivTop(pwm_config *c, int frequency, int sysClock);

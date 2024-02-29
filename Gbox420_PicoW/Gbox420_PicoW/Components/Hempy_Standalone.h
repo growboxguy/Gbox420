@@ -27,9 +27,8 @@ public:
   void websiteEvent_Refresh(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report(bool FriendlyFormat = false);
-  void refresh_FiveSec();
-  void refresh_Minute();
-
+  void refresh();
+  
 private:
 protected:
 };

@@ -20,7 +20,7 @@ static const uint8_t Version = 1; ///< Increment this after changing the stuctur
 #define WIFI_SSID "GboxNet"                     // UPDATE THIS
 #define WIFI_PASSWORD "SuperSecretPassword"     // UPDATE THIS
 #define NTP_SERVER "pool.ntp.org"               // NTP Server
-#define TIMEZONEDIFFERENCE 1                    // UTC time and current timezone difference
+#define TIMEZONEDIFFERENCE 1                    // UPDATE THIS - UTC time and current timezone difference
 static const uint8_t MaxWordLength = 32;        ///< Default char * buffer length for storing a word + null terminator. Memory intense!
 static const uint8_t MaxShotTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 1024; ///< Default char * buffer length for storing a long text. Memory intense!
@@ -42,10 +42,6 @@ typedef struct
   bool Metric = true; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
 
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
-  char MqttPubTopic[MaxShotTextLength] = {"Gbox420/Hempy/"};       ///< Publish MQTT messages to this topic. Ends with a forward slash
-  char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/Hempy/#"};   ///< Subscribe to messages of this topic and all sub-topic
-  char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/Hempy/"};    ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
-  char MqttLwtMessage[MaxWordLength] = {"Hempy Offline"};          ///< this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the MQTT client unexpectedly goes offline
 
   struct DHTSensorSettings ///< DHTSensor default settings
   {
@@ -63,11 +59,9 @@ typedef struct
     bool SerialReportJSONFriendly;     ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
     bool SerialReportWireless;         ///< Enable/disable sending wireless package exchange reports to the Serial output
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
-    uint16_t SheetsReportingFrequency; ///< How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
-    bool ReportToMQTT;                 ///< Enable/disable reporting sensor readings to an MQTT broker
-    uint16_t MQTTReportFrequency;      ///< How often to report to MQTT. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
+    uint16_t SheetsReportingFrequency; ///< In seconds - How often to report to Google Sheets
   };
-  struct Hempy_StandaloneSettings Hempy_Standalone1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMQTT = true, .MQTTReportFrequency = 5};
+  struct Hempy_StandaloneSettings Hempy_Standalone1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 1800};
 
   struct HempyBucketSettings ///< HempyBucket default settings
   {
@@ -78,6 +72,19 @@ typedef struct
   };
   struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
   struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
+
+  struct MQTTSettings ///< MQTT default settings
+  {
+    bool Enabled = true;                                       ///< Enable/Disable MQTT
+    char Address[MaxShotTextLength];                           ///< MQTT server address
+    uint16_t Port;                                             ///< MQTT port
+    uint16_t ReportingFrequency;                               ///< In seconds - How often report the current status
+    char PubTopic[MaxShotTextLength] = {"Gbox420/Hempy/"};     ///< Publish MQTT messages to this topic. Ends with a forward slash
+    char SubTopic[MaxShotTextLength] = {"Gbox420CMD/Hempy/#"}; ///< Subscribe to messages of this topic and all sub-topic
+    char LwtTopic[MaxShotTextLength] = {"Gbox420LWT/Hempy/"};  ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
+    char LwtMessage[MaxShotTextLength] = {"Hempy Offline"};        ///< Subscribers will get this message under the topic specified by LwtTopic when the MQTT client goes offline
+  };
+  struct MQTTSettings MQTTHiveMQ = {.Address = "e2f9a473ea8048518e5964f6adaea88d.s1.eu.hivemq.cloud", .Port = 8883, .ReportingFrequency = 30}; // UPDATE THIS
 
   struct SoundSettings ///< Sound default settings
   {

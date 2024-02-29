@@ -15,15 +15,10 @@ public:
   Module(const char *Name); ///< constructor
   void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false);
   void runReport(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false); ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.
-  void runAll();
-  void runSec();
-  void runFiveSec();
-  void runMinute();
+  void run();
   virtual void addToLog(const char *Text, uint8_t indent = 3);
   void addToReportQueue(Common *Component);          ///< Subscribing to the report queue: Calls the report() method
-  void addToRefreshQueue_Sec(Common *Component);     ///< Subscribing to the 1 sec refresh queue: Calls the refresh_Sec() method
-  void addToRefreshQueue_FiveSec(Common *Component); ///< Subscribing to the 5 sec refresh queue: Calls the refresh_FiveSec() method
-  void addToRefreshQueue_Minute(Common *Component);  ///< Subscribing to the 1 minute refresh queue: Calls the refresh_Minute() method
+  void addToRefreshQueue(Common *Component);     ///< Subscribing to the 1 sec refresh queue: Calls the refresh() method 
   char *getFormattedTime(bool PrintToSerials);
   Sound *SoundFeedback = NULL;
   Sound *getSoundObject();
@@ -46,14 +41,10 @@ protected:
   void setSerialReportJSONFriendly(bool State);         ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
   void setSerialReportWireless(bool State);             ///< Enable/disable sending wireless package exchange reports to the Serial output
 
-  bool RunAllRequested = false;
+  bool RunRequested = false;
   bool ConsoleReportRequested = false;
   Common *ReportQueue[QueueDepth] = {}; ///< aggregate initializer: Same as initializing to null pointers
-  Common *RefreshQueue_Sec[QueueDepth] = {};
-  Common *RefreshQueue_FiveSec[QueueDepth] = {};
-  Common *RefreshQueue_Minute[QueueDepth] = {};
+  Common *RefreshQueue[QueueDepth] = {};
   uint8_t reportQueueItemCount = 0; ///< Tracking queue item count
-  uint8_t refreshQueueItemCount_Sec = 0;
-  uint8_t refreshQueueItemCount_FiveSec = 0;
-  uint8_t refreshQueueItemCount_Minute = 0;
+  uint8_t refreshQueueItemCount = 0;
 };

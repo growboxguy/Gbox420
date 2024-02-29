@@ -5,16 +5,16 @@
 static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log histroy displayed on the website (array of char arrays)
 
 /**
-* @brief Constructor: creates an instance of the class
-*/
+ * @brief Constructor: creates an instance of the class
+ */
 Module_Web::Module_Web(const char *Name) : Common(Name), Module(Name)
 {
-  //printf("   Module_Web ready\n");
+  // printf("   Module_Web ready\n");
 }
 
 /**
-* @brief Subscribe to the ESP-link website load event
-*/
+ * @brief Subscribe to the ESP-link website load event
+ */
 void Module_Web::addToWebsiteQueue_Load(Common_Web *Subscriber)
 {
   if (QueueDepth > WebsiteQueue_Load_Count)
@@ -24,8 +24,8 @@ void Module_Web::addToWebsiteQueue_Load(Common_Web *Subscriber)
 }
 
 /**
-* @brief Subscribe to the ESP-link website refresh event
-*/
+ * @brief Subscribe to the ESP-link website refresh event
+ */
 void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Subscriber)
 {
   if (QueueDepth > WebsiteQueue_Refresh_Count)
@@ -35,8 +35,8 @@ void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Subscriber)
 }
 
 /**
-* @brief Subscribe to MQTT or ESP-link website commands  (Pressing a button, setting a value)
-*/
+ * @brief Subscribe to MQTT or ESP-link website commands  (Pressing a button, setting a value)
+ */
 void Module_Web::addToCommandQueue(Common_Web *Subscriber)
 {
   if (QueueDepth > CommandQueue_Count)
@@ -46,8 +46,8 @@ void Module_Web::addToCommandQueue(Common_Web *Subscriber)
 }
 
 /**
-* @brief Notify subscribed components of a website load event
-*/
+ * @brief Notify subscribed components of a website load event
+ */
 void Module_Web::websiteLoadEventTrigger(char *Url)
 { ///< called when website is loaded. Runs through all components that subscribed for this event
   for (int i = 0; i < WebsiteQueue_Load_Count; i++)
@@ -57,8 +57,8 @@ void Module_Web::websiteLoadEventTrigger(char *Url)
 }
 
 /**
-* @brief Notify subscribed components of a website refresh event
-*/
+ * @brief Notify subscribed components of a website refresh event
+ */
 void Module_Web::websiteRefreshEventTrigger(char *Url)
 { ///< called when website is refreshed.
   for (int i = 0; i < WebsiteQueue_Refresh_Count; i++)
@@ -68,12 +68,12 @@ void Module_Web::websiteRefreshEventTrigger(char *Url)
 }
 
 /**
-* @brief Notify subscribed components of a received MQTT/Website command
-*/
+ * @brief Notify subscribed components of a received MQTT/Website command
+ */
 void Module_Web::commandEventTrigger(char *Command, char *Data)
 {
-  printf(" %s",&Command);
-  printf("  %s\n",&Data);
+  printf(" %s", &Command);
+  printf("  %s\n", &Data);
   bool NameMatchFound = false;
   for (int i = 0; i < CommandQueue_Count; i++)
   {
@@ -85,44 +85,38 @@ void Module_Web::commandEventTrigger(char *Command, char *Data)
     settingsEvent_Command(Command, Data);
 }
 
-void Module_Web::refresh_FiveSec()
+void Module_Web::refresh()   // TODO: Rework module refreshing logic, move Google Sheets to its own Component
 {
-  Common::refresh_FiveSec();
-  reportToSerialTrigger();
-  reportToMQTTTrigger();
-  if (RefreshAllRequested)
+  if (RefreshCounter % 5 == 0)
   {
-    RefreshAllRequested = false;
-    runAll();
+    Common::refresh();
+    reportToSerialTrigger();
+    reportToMQTTTrigger();
+    if (RefreshRequested)
+    {
+      RefreshRequested = false;
+      run();
+    }
+    if (ReportToGoogleSheetsRequested)
+    {
+      ReportToGoogleSheetsRequested = false;
+      reportToGoogleSheetsTrigger(true);
+    }
+    if (ConsoleReportRequested)
+    {
+      ConsoleReportRequested = false;
+      runReport(true);
+    }
+    
   }
-  if (ReportToGoogleSheetsRequested)
-  {
-    ReportToGoogleSheetsRequested = false;
-    reportToGoogleSheetsTrigger(true);
-  }
-  if (ConsoleReportRequested)
-  {
-    ConsoleReportRequested = false;
-    runReport(true);
-  }
-  if (MQTTReportRequested)
-  {
-    MQTTReportRequested = false;
-    reportToMQTTTrigger(true);
-  }
-}
-
-void Module_Web::refresh_Minute()
-{
-  Common::refresh_Minute();
   reportToGoogleSheetsTrigger();
 }
 
 /**
-* @brief Adds a log entry to the top of the log and removes the oldest log entry
-*/
+ * @brief Adds a log entry to the top of the log and removes the oldest log entry
+ */
 void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) uint8_t Indent)
-{ ///< adds a log entry that is displayed on the web interface  
+{ ///< adds a log entry that is displayed on the web interface
   for (uint8_t i = LogDepth - 1; i > 0; i--)
   {                                       ///< Shift every log entry one up, dropping the oldest
     memset(&Logs[i], 0, sizeof(Logs[i])); ///< clear variable
@@ -130,15 +124,15 @@ void Module_Web::addToLog(const char *LongMessage, __attribute__((unused)) uint8
   }
   memset(&Logs[0], 0, sizeof(Logs[0]));         ///< clear variable
   strncpy(Logs[0], LongMessage, MaxWordLength); ///< instert new log to [0]
-  printf("%s\n",Logs[0]);
+  printf("%s\n", Logs[0]);
 }
 
 /**
-* @brief Converts the log entries to a JSON object
-* IncludeKey false: ["Log1","Log2","Log3",...,"LogN"], 
-* IncludeKey true:  {"EventLog"\["Log1","Log2","Log3",...,"LogN"]}
-* Append false: Clear the LongMessage buffer before
-*/
+ * @brief Converts the log entries to a JSON object
+ * IncludeKey false: ["Log1","Log2","Log3",...,"LogN"],
+ * IncludeKey true:  {"EventLog"\["Log1","Log2","Log3",...,"LogN"]}
+ * Append false: Clear the LongMessage buffer before
+ */
 char *Module_Web::eventLogToJSON(bool IncludeKey, bool ClearBuffer)
 {
   if (ClearBuffer)
@@ -167,8 +161,8 @@ char *Module_Web::eventLogToJSON(bool IncludeKey, bool ClearBuffer)
 }
 
 /**
-* @brief Converts the module settings into a JSON object and loads it into the LongMessage buffer
-*/
+ * @brief Converts the module settings into a JSON object and loads it into the LongMessage buffer
+ */
 char *Module_Web::settingsToJSON()
 {
   memset(&LongMessage[0], 0, MaxLongTextLength);
@@ -195,18 +189,20 @@ char *Module_Web::settingsToJSON()
   strcat(LongMessage, toText(*SheetsReportingFrequency));
   strcat(LongMessage, "\",\"Relay\":\"");
   strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
+  /*
   strcat(LongMessage, "\",\"MQTT\":\"");
   strcat(LongMessage, toText(*ReportToMQTT));
   strcat(LongMessage, "\",\"MQTTF\":\"");
   strcat(LongMessage, toText(*MQTTReportFrequency));
   strcat(LongMessage, "\",\"MPT\":\"");
-  strcat(LongMessage, ModuleSettings->MqttPubTopic);
+  strcat(LongMessage, ModuleSettings->PubTopic);
   strcat(LongMessage, "\",\"MST\":\"");
-  strcat(LongMessage, ModuleSettings->MqttSubTopic);
+  strcat(LongMessage, ModuleSettings->SubTopic);
   strcat(LongMessage, "\",\"MLT\":\"");
-  strcat(LongMessage, ModuleSettings->MqttLwtTopic);
+  strcat(LongMessage, ModuleSettings->LwtTopic);
   strcat(LongMessage, "\",\"MLM\":\"");
-  strcat(LongMessage, ModuleSettings->MqttLwtMessage);
+  strcat(LongMessage, ModuleSettings->LwtMessage);
+  */
   strcat(LongMessage, "\"}}"); ///< closing the curly brackets at the end of the JSON
   return LongMessage;
 }
@@ -228,10 +224,10 @@ void Module_Web::settingsEvent_Load(__attribute__((unused)) char *Url)
   WebServer.setArgString("Relay", ModuleSettings->PushingBoxLogRelayID);
   WebServer.setArgBoolean("MQTT", *ReportToMQTT);
   WebServer.setArgInt("MQTTF", *MQTTReportFrequency);
-  WebServer.setArgString("MPT", ModuleSettings->MqttPubTopic);
-  WebServer.setArgString("MST", ModuleSettings->MqttSubTopic);
-  WebServer.setArgString("MLT", ModuleSettings->MqttLwtTopic);
-  WebServer.setArgString("MLM", ModuleSettings->MqttLwtMessage);
+  WebServer.setArgString("MPT", ModuleSettings->PubTopic);
+  WebServer.setArgString("MST", ModuleSettings->SubTopic);
+  WebServer.setArgString("MLT", ModuleSettings->LwtTopic);
+  WebServer.setArgString("MLM", ModuleSettings->LwtMessage);
   WebServer.setArgInt(getSoundObject()->getName("E", true), getSoundObject()->getEnabledState());
   */
 }
@@ -245,12 +241,12 @@ void Module_Web::settingsEvent_Refresh(__attribute__((unused)) char *Url) ///< c
 }
 
 /**
-* @brief Process commands received from the ESP-link /Settings.html website
-*/
+ * @brief Process commands received from the ESP-link /Settings.html website
+ */
 
 void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
-  //Report triggers
+  // Report triggers
   if (strcmp(Command, "SheetsRep") == 0)
   {
     ReportToGoogleSheetsRequested = true; ///< just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
@@ -271,11 +267,11 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
   }
   else if (strcmp(Command, "Refresh") == 0) ///< Website signals to refresh all sensor readings
   {
-    RefreshAllRequested = true;
+    RefreshRequested = true;
     addToLog("Refreshing", false);
     getSoundObject()->playOnSound();
   }
-  //Settings
+  // Settings
   else if (strcmp(Command, "Debug") == 0)
   {
     setDebug(toBool(Data));
@@ -284,7 +280,7 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
   {
     setMetric(toBool(Data));
   }
-  //Settings - Serial reporting
+  // Settings - Serial reporting
   else if (strcmp(Command, "SerialF") == 0)
   {
     setSerialReportingFrequency(toInt(Data));
@@ -309,7 +305,7 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
   {
     setSerialReportWireless(toBool(Data));
   }
-  //Settings - Google Sheets
+  // Settings - Google Sheets
   else if (strcmp(Command, "Sheets") == 0)
   {
     setSheetsReportingOnOff(toBool(Data));
@@ -320,38 +316,38 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
   }
   else if (strcmp(Command, "Relay") == 0)
   {
-    //setPushingBoxLogRelayID(WebServer.getArgString());
+    // setPushingBoxLogRelayID(WebServer.getArgString());
   }
-  //Settings - MQTT
+  // Settings - MQTT
   else if (strcmp(Command, "MQTT") == 0)
   {
-    setMQTTReportingOnOff(toBool(Data));
+   // setMQTTReportingOnOff(toBool(Data));
   }
   else if (strcmp(Command, "MQTTF") == 0)
   {
-    setMQTTReportingFrequency(toInt(Data));
+   // setMQTTReportingFrequency(toInt(Data));
   }
   else if (strcmp(Command, "MPT") == 0)
   {
-    //setMqttPublishTopic(WebServer.getArgString());
+    // setMqttPublishTopic(WebServer.getArgString());
   }
   else if (strcmp(Command, "MST") == 0)
   {
-    //setMqttSubscribeTopic(WebServer.getArgString());
+    // setMqttSubscribeTopic(WebServer.getArgString());
   }
   else if (strcmp(Command, "MLT") == 0)
   {
-    //setMQTTLWTTopic(WebServer.getArgString());
+    // setLwtTopic(WebServer.getArgString());
   }
   else if (strcmp(Command, "MLM") == 0)
   {
-    //setMQTTLWTMessage(WebServer.getArgString());
+    // setLwtMessage(WebServer.getArgString());
   }
-  else if (strcmp(Command, getSoundObject()->getName((char*)"E", true)) == 0)
+  else if (strcmp(Command, getSoundObject()->getName((char *)"E", true)) == 0)
   {
     getSoundObject()->setSoundOnOff(toBool(Data));
   }
-  else if (strcmp(Command, getSoundObject()->getName((char*)"Ee", true)) == 0)
+  else if (strcmp(Command, getSoundObject()->getName((char *)"Ee", true)) == 0)
   {
     getSoundObject()->playEE();
   }
@@ -360,10 +356,10 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
 ///< Google Sheets functions - https://sites.google.com/site/growboxguy/esp-link/logging
 
 /**
-* @brief Loads the PushingBox device ID to the LongMessage buffer. Pushingbox is a relay service that is used to send reports to Google Sheets: https://sites.google.com/site/growboxguy/esp-link/logging
-* Example
-* /pushingbox?devid=v755877CF53383E1&BoxData=
-*/
+ * @brief Loads the PushingBox device ID to the LongMessage buffer. Pushingbox is a relay service that is used to send reports to Google Sheets: https://sites.google.com/site/growboxguy/esp-link/logging
+ * Example
+ * /pushingbox?devid=v755877CF53383E1&BoxData=
+ */
 void Module_Web::addPushingBoxLogRelayID()
 {
   memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
@@ -373,38 +369,38 @@ void Module_Web::addPushingBoxLogRelayID()
 }
 
 /**
-* @brief Send a JSON formatted report to Google Sheets
-* Example
-* REST API reporting: api.pushingbox.com/pushingbox?devid=v755877CF53383E1&BoxData={"Log":{"FanI":{"S":"1"},"FanE":{"S":"1"},"Ap1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"Ls1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"44.50"},"Pow1":{"P":"572.20","E":"665.26","V":"228.00","C":"2.62","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.44","WR1":"6.85","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.71","WR2":"5.28","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.68","W":"23.31","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.77","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.28","T":"1082.70","W":"14.63","WT":"19.13","AT":"27.20","H":"37.90"},"Main1":{"M":"1","D":"0","RD":"0","RM":"0","RT":"0","RJ":"0"}}}
-*/
+ * @brief Send a JSON formatted report to Google Sheets
+ * Example
+ * REST API reporting: api.pushingbox.com/pushingbox?devid=v755877CF53383E1&BoxData={"Log":{"FanI":{"S":"1"},"FanE":{"S":"1"},"Ap1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"Ls1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"44.50"},"Pow1":{"P":"572.20","E":"665.26","V":"228.00","C":"2.62","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.44","WR1":"6.85","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.71","WR2":"5.28","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.68","W":"23.31","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.77","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.28","T":"1082.70","W":"14.63","WT":"19.13","AT":"27.20","H":"37.90"},"Main1":{"M":"1","D":"0","RD":"0","RM":"0","RT":"0","RJ":"0"}}}
+ */
 void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
   if (*Debug)
   {
     printf("  REST API reporting: api.pushingbox.com");
-    printf("%s\n",JSONData);
+    printf("%s\n", JSONData);
   }
-  //PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
+  // PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
 }
 
 /**
-* @brief Publish an MQTT message containing a JSON formatted report
-* Examples:
-* MQTT reporting: Gbox420/Hempy/{"Log":{"FanI":{"S":"1"},"FanE":{"S":"1"},"Ap1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"Ls1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"45.20"},"Pow1":{"P":"573.60","E":"665.47","V":"227.20","C":"2.64","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.45","WR1":"6.77","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.69","WR2":"5.31","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.41","W":"23.57","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.50","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.41","T":"1071.30","W":"14.64","WT":"19.13","AT":"27.30","H":"38.50"},"Main1":{"M":"1","D":"0","RD":"0","RM":"1","RT":"0","RJ":"1"}}}
-* MQTT reporting: char MqttPubTopic[MaxShotTextLength]Hempy/{"EventLog":["","","Module initialized","Lt2 brightness updated"]}
-*/
+ * @brief Publish an MQTT message containing a JSON formatted report
+ * Examples:
+ * MQTT reporting: Gbox420/Hempy/{"Log":{"FanI":{"S":"1"},"FanE":{"S":"1"},"Ap1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"Ls1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"45.20"},"Pow1":{"P":"573.60","E":"665.47","V":"227.20","C":"2.64","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.45","WR1":"6.77","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.69","WR2":"5.31","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.41","W":"23.57","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.50","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.41","T":"1071.30","W":"14.64","WT":"19.13","AT":"27.30","H":"38.50"},"Main1":{"M":"1","D":"0","RD":"0","RM":"1","RT":"0","RJ":"1"}}}
+ * MQTT reporting: char PubTopic[MaxShotTextLength]Hempy/{"EventLog":["","","Module initialized","Lt2 brightness updated"]}
+ */
 void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
   if (*Debug)
   {
     printf("  MQTT reporting: ");
-    //printf(&(ModuleSettings->MqttPubTopic));
-    printf("%s\n",JSONData);
+    // printf(&(ModuleSettings->PubTopic));
+    printf("%s\n", JSONData);
   }
   /*
   if (MqttConnected)
   {
-    MqttAPI.publish(ModuleSettings->MqttPubTopic, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
+    MqttAPI.publish(ModuleSettings->PubTopic, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
   }
 
   else
@@ -449,7 +445,7 @@ void Module_Web::setMetric(bool MetricEnabled)
   if (MetricEnabled != *Metric)
   { ///< if there was a change
     *Metric = MetricEnabled;
-    RefreshAllRequested = true;
+    RefreshRequested = true;
   }
   if (*Metric)
     addToLog("Using Metric units");
@@ -504,64 +500,17 @@ void Module_Web::reportToGoogleSheetsTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets
   if ((*ReportToGoogleSheets && SheetsTriggerCounter++ % (*SheetsReportingFrequency) == 0) || ForceRun)
   {
-    addPushingBoxLogRelayID();           //Loads Pushingbox relay ID into LongMessage
-    runReport(false, false, true, true); //Append the sensor readings in a JSON format to LongMessage buffer
-    relayToGoogleSheets(&LongMessage);   //Sends it to Google Sheets
+    addPushingBoxLogRelayID();           // Loads Pushingbox relay ID into LongMessage
+    runReport(false, false, true, true); // Append the sensor readings in a JSON format to LongMessage buffer
+    relayToGoogleSheets(&LongMessage);   // Sends it to Google Sheets
   }
 }
 ///< This is how a sent out message looks like:
 ///< {parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
 
-void Module_Web::setMQTTReportingOnOff(bool State)
-{
-  *ReportToMQTT = State;
-  if (*ReportToMQTT)
-  {
-    addToLog("MQTT ON");
-  }
-  else
-  {
-    addToLog("MQTT OFF");
-  }
-  getSoundObject()->playOnOffSound(*ReportToMQTT);
-}
-
-void Module_Web::setMQTTReportingFrequency(uint16_t Frequency)
-{
-  *SheetsReportingFrequency = Frequency;
-  addToLog("MQTT freqency updated");
-}
-
-void Module_Web::setMqttPublishTopic(const char *Topic)
-{
-  strncpy(ModuleSettings->MqttPubTopic, Topic, MaxShotTextLength);
-  getSoundObject()->playOnSound();
-  addToLog("MQTT publish updated");
-}
-
-void Module_Web::setMqttSubscribeTopic(const char *Topic)
-{
-  strncpy(ModuleSettings->MqttSubTopic, Topic, MaxShotTextLength);
-  getSoundObject()->playOnSound();
-  addToLog("MQTT subscribe updated");
-}
-
-void Module_Web::setMQTTLWTTopic(const char *LWTTopic)
-{
-  strncpy(ModuleSettings->MqttLwtTopic, LWTTopic, MaxShotTextLength);
-  getSoundObject()->playOnSound();
-  addToLog("LWT topic updated");
-}
-
-void Module_Web::setMQTTLWTMessage(const char *LWTMessage)
-{
-  strncpy(ModuleSettings->MqttLwtMessage, LWTMessage, MaxWordLength);
-  getSoundObject()->playOnSound();
-  addToLog("LWT message updated");
-}
 
 /**
-  \brief Triggers sending out a sequence of MQTT messages to the MqttPubTopic specified in Settings.h.
+  \brief Triggers sending out a sequence of MQTT messages to the PubTopic specified in Settings.h.
   Sample messages:
   Gbox420/Hempy/{"Log":{"DHT1":{"T":"29.00","H":"52.00"},"B1W":{"W":"19.35"},"B2W":{"W":"19.75"},"NRW":{"W":"43.30"},"WRW":{"W":"1.87"},"WR1":{"S":"1","L":"13.00"},"B1P":{"S":"1","T":"120"},"B2P":{"S":"1","T":"120"},"B1":{"S":"1","DW":"18.00","WW":"19.70","ET":"2.00","OF":"0.30","DT":"180"},"B2":{"S":"1","DW":"18.00","WW":"19.70","ET":"2.00","OF":"0.30","DT":"180"},"Hemp1":{"M":"1","D":"1"}}}
   Gbox420/Hempy/{"EventLog":["","","","Hempy_Standalone ready"]}

@@ -96,7 +96,7 @@ void Module_Web::refresh_FiveSec()
   }
   if (ReportToGoogleSheetsRequested)
   {
-    ReportToGoogleSheetsRequested = false;
+     = false;
     reportToGoogleSheetsTrigger(true);
   }
   if (ConsoleReportRequested)

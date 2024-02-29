@@ -38,7 +38,7 @@ typedef struct
   char MqttPubTopic[MaxShotTextLength] = {"Gbox420/Hempy/"};        ///< Publish MQTT messages to this topic. Ends with a forward slash
   char MqttSubTopic[MaxShotTextLength] = {"Gbox420CMD/Hempy/#"};   ///< Subscribe to messages of this topic and all sub-topic
   char MqttLwtTopic[MaxShotTextLength] = {"Gbox420LWT/Hempy/"};    ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
-  char MqttLwtMessage[MaxWordLength] = {"Hempy Offline"};          ///< this is the message subscribers will get under the topic specified by MqttLwtTopic variable when the MQTT client unexpectedly goes offline
+  char MqttLwtMessage[MaxWordLength] = {"Hempy Offline"};          ///< Subscribers will get this message under the topic specified by MqttLwtTopic when the MQTT client goes offline
 
   struct DHTSensorSettings ///< DHTSensor default settings
   {

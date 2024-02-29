@@ -12,7 +12,7 @@ Sound::Sound(const char *Name, Module *Parent, Settings::SoundSettings *DefaultS
   slice_num = pwm_gpio_to_slice_num(*Pin);
   pwm_set_chan_level(slice_num, PWM_CHAN_A, 0);
   pwm_set_enabled(slice_num, false);
-  Parent->addToRefreshQueue_Sec(this);
+  Parent->addToRefreshQueue(this);
   printf("   Sound ready\n");
   checkEvents();
 }
@@ -28,9 +28,9 @@ void Sound::report(bool FriendlyFormat)
   strcat(LongMessage, "\"}"); ///< closing the curly bracket at the end of the JSON
 }
 
-void Sound::refresh_Sec()
+void Sound::refresh()
 {
-  Common::refresh_Sec();
+  Common::refresh();
   checkEvents();
 }
 

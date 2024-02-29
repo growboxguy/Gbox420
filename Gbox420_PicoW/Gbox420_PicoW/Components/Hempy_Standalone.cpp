@@ -21,22 +21,19 @@ Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneS
   SerialReportWireless = &DefaultSettings->SerialReportWireless;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
-  ReportToMQTT = &DefaultSettings->ReportToMQTT;
-  MQTTReportFrequency = &DefaultSettings->MQTTReportFrequency;
+
 
   Sound1 = new Sound_Web("Sound1", this, &ModuleSettings->Sound1);                    ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
 
   addToReportQueue(this);                                                                //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
-  //addToRefreshQueue_Sec(this);     //< Attach to a trigger that fires every second and calls refresh_Sec()
-  addToRefreshQueue_FiveSec(this); //< Attach to a trigger that fires every five seconds and calls refresh_FiveSec()
-  addToRefreshQueue_Minute(this);  //< Attach to a trigger that fires every second and calls refresh_Minute()
+  addToRefreshQueue(this);     //< Attach to a trigger that fires every second and calls refresh()
   addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
   addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
   addToCommandQueue(this);
   addToLog("Hempy_Standalone ready", 0);
   printf(Name);
   printf(" refreshing\n");
-  runAll();
+  run();
 }
 
 /**
@@ -84,12 +81,7 @@ bool Hempy_Standalone::commandEvent(__attribute__((unused)) char *Command, __att
   }
 }
 
-void Hempy_Standalone::refresh_FiveSec()
+void Hempy_Standalone::refresh()
 {
-  Module_Web::refresh_FiveSec();
-}
-
-void Hempy_Standalone::refresh_Minute()
-{
-  Module_Web::refresh_Minute();
+  Module_Web::refresh();
 }
