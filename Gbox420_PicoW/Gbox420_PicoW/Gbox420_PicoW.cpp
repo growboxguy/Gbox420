@@ -49,7 +49,7 @@ void initializeWiFi()
   {
     cyw43_arch_enable_sta_mode(); // Enables Wi-Fi STA (Station) mode
     printf("Connecting to %s", WIFI_SSID);
-    if (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, 5000)) // Max 5sec
+    if (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, 7000)) // Max 7sec
     {
       printf("...failed\n");
     }
@@ -74,7 +74,7 @@ void HeartBeat()
   cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus);
 }
 
-///< This function gets called every 
+///< This function gets called every
 bool runRepeatedly(struct repeating_timer *t)
 {
   watchdog_update();
@@ -117,7 +117,21 @@ int main()
   // run_ntp_test();
 
   struct repeating_timer Timer1sec;
-  add_repeating_timer_ms(-1000, runRepeatedly, NULL, &Timer1sec);  // Calls runRepeatedly every second
+  add_repeating_timer_ms(-1000, runRepeatedly, NULL, &Timer1sec); // Calls runRepeatedly every second  
+
+  absolute_time_t LastRefresh = get_absolute_time();
+  while (1)
+  {    
+    if (absolute_time_diff_us(LastRefresh, get_absolute_time()) > 5000000) // 5sec
+    {
+      watchdog_update();
+      getRTC();
+      printf(" Running...\n");
+      LastRefresh = get_absolute_time();
+    }
+  }
+  cyw43_arch_deinit();
+  return 0;
 }
 
 /*

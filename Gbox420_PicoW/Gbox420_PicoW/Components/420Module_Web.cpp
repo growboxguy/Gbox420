@@ -2,7 +2,7 @@
 #include "420Module_Web.h"
 #include "Sound_Web.h"
 
-static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log histroy displayed on the website (array of char arrays)
+static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log history displayed on the website (array of char arrays)
 
 /**
  * @brief Constructor: creates an instance of the class
@@ -91,7 +91,9 @@ void Module_Web::refresh()   // TODO: Rework module refreshing logic, move Googl
   {
     Common::refresh();
     reportToSerialTrigger();
-    reportToMQTTTrigger();
+    //reportToMQTTTrigger();
+
+    /*
     if (RefreshRequested)
     {
       RefreshRequested = false;
@@ -107,9 +109,10 @@ void Module_Web::refresh()   // TODO: Rework module refreshing logic, move Googl
       ConsoleReportRequested = false;
       runReport(true);
     }
+    */
     
   }
-  reportToGoogleSheetsTrigger();
+  //reportToGoogleSheetsTrigger();
 }
 
 /**
@@ -521,11 +524,13 @@ void Module_Web::reportToMQTTTrigger(bool ForceRun)
   if ((*ReportToMQTT && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
   {
     runReport(false, true, true, true); //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
+    /*
     mqttPublish(&LongMessage);          //< Publish Log via ESP MQTT API
     eventLogToJSON(true, true);         //< Loads the EventLog as a JSON
     mqttPublish(&LongMessage);          //< Publish the EventLog via ESP MQTT API
     settingsToJSON();                   //< Loads the module settings as a JSON to the LongMessage buffer
     mqttPublish(&LongMessage);          //< Publish the Settings via ESP MQTT API
+    */
   }
 }
 

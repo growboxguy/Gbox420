@@ -30,7 +30,7 @@ void Sound::report(bool FriendlyFormat)
 
 void Sound::refresh()
 {
-  Common::refresh();
+  //Common::refresh();
   checkEvents();
 }
 

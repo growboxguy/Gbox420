@@ -24,15 +24,15 @@ Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneS
 
 
   Sound1 = new Sound_Web("Sound1", this, &ModuleSettings->Sound1);                    ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
+  MQTTHiveMQ = new MQTT("HiveHQ",this,&ModuleSettings->MQTTHiveMQ,&MQTTCommandReceived);
+
 
   addToReportQueue(this);                                                                //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   addToRefreshQueue(this);     //< Attach to a trigger that fires every second and calls refresh()
-  addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
-  addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
-  addToCommandQueue(this);
+  //addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
+  //addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
+  //addToCommandQueue(this);
   addToLog("Hempy_Standalone ready", 0);
-  printf(Name);
-  printf(" refreshing\n");
   run();
 }
 
@@ -48,6 +48,23 @@ void Hempy_Standalone::report(bool FriendlyFormat)
   strcat(LongMessage, getDebugText(FriendlyFormat));
   strcat(LongMessage, "\"}"); ///< closing the curly bracket at the end of the JSON
 }
+
+/**
+* @brief Called when an MQTT command is received
+*/
+void Hempy_Standalone::MQTTCommandReceived(char *topic, uint8_t topicLen, char *data, uint32_t dataLen) ///< called when website is first opened
+{
+  uint8_t strTopic[topicLen + 1];
+	memcpy(strTopic, topic, topicLen);
+	strTopic[topicLen] = '\0';
+
+	uint8_t strData[dataLen + 1];
+	memcpy(strData, data, dataLen);
+	strData[dataLen] = '\0';
+
+	printf("Topic: %s, Data: %s", strTopic, strData);
+}
+
 
 /**
 * @brief Called when an ESP-link website is loading

@@ -1,9 +1,10 @@
 #include "MQTT.h"
 
-MQTT::MQTT(const char *Name, Module *Parent, Settings::MQTTSettings *DefaultSettings) : Common(Name)
+MQTT::MQTT(const char *Name, Module *Parent, Settings::MQTTSettings *DefaultSettings,mqttReceivedCallback fn) : Common(Name)
 {
   this->Parent = Parent;
   Enabled = &DefaultSettings->Enabled;
+  Address = &DefaultSettings->Address;
   Port = &DefaultSettings->Port;
   ReportingFrequency = &DefaultSettings->ReportingFrequency;
   PubTopic = &DefaultSettings->PubTopic;
@@ -11,6 +12,7 @@ MQTT::MQTT(const char *Name, Module *Parent, Settings::MQTTSettings *DefaultSett
   LwtTopic = &DefaultSettings->LwtTopic;
   LwtMessage = &DefaultSettings->LwtMessage;
   setupMqtt();
+  Parent->addToReportQueue(this);
   Parent->addToRefreshQueue(this);
   printf("   MQTT ready\n");
 }
@@ -41,11 +43,38 @@ void MQTT::refresh()
   }
 }
 
+//Called by dns_gethostbyname() when the IP address of MQTT server is found
+void MQTT::setupMqtt_dnsFound(const char *hostname, const ip_addr_t *ipaddr, void *arg)
+ {
+    if (ipaddr)
+    {
+        //server = *ipaddr;
+        printf("MQTT address %s\n", ipaddr_ntoa(ipaddr));
+        //ntp_request(state);
+    }
+    else
+    {
+        printf("MQTT DNS request failed\n");
+        //ntp_result(state, -1, NULL);
+    }
+ }
+
 /**
   \brief Sets up the MQTT relay: Configures callbacks for MQTT events and sets the Last Will and Testament in case the ESP-link goes offline
 */
 void MQTT::setupMqtt()
 {
+  ip_addr_t server;
+ dns_gethostbyname(NTP_SERVER, &server, setupMqtt_dnsFound,NULL);
+
+/*
+
+  struct ip_addr serverIp;
+	IP4_ADDR(&serverIp, 192,168,100,140);
+
+	mqttInit(&mqtt, serverIp, 1883, &mqttAppMsgReceived, "Stellaris");
+  */
+
   /*
     MqttAPI.connectedCb.attach(mqttConnected);
     MqttAPI.disconnectedCb.attach(mqttDisconnected);

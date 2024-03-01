@@ -101,22 +101,10 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
 
 void Module::run()
 {
-  if (RunRequested)
-  {
-    RunRequested = false;
-    run();
-  }
-  else
-  {
-    if (*Debug)
-    {
-      printf(" Refreshing\n");
-    }
     for (int i = 0; i < refreshQueueItemCount; i++)
     {
       RefreshQueue[i]->refresh();
-    }
-  }
+    }    
 }
 
 Sound *Module::getSoundObject()

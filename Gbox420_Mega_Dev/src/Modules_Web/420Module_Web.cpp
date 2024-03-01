@@ -1,7 +1,7 @@
 #include "420Module_Web.h"
 #include "../Components_Web/Sound_Web.h"
 
-static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log histroy displayed on the website (array of char arrays)
+static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log history displayed on the website (array of char arrays)
 
 /**
 * @brief Constructor: creates an instance of the class
