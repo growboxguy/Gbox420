@@ -140,7 +140,7 @@ void processTimeCriticalStuff() ///< Process things that need precise timing
 void runSec()
 {
   wdt_reset(); ///< reset watchdog timeout
-  HeartBeat(); ///< Blinks built-in led
+  heartBeat(); ///< Blinks built-in led
   ACMotorMod1->runSec();
 }
 
@@ -157,7 +157,7 @@ void runMinute()
   //WIRELESS DISBLED// getWirelessStatus();
 }
 
-void HeartBeat()
+void heartBeat()
 {
   static bool ledStatus;
   ledStatus = !ledStatus;

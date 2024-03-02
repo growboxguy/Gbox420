@@ -20,6 +20,6 @@ mkdir "%StartDir%\..\build"
 ECHO Rebuilding...
 cd ..
 cd build
-cmake %StartDir% -G "MinGW Makefiles"
+cmake %StartDir% -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=MinSizeRel
 mingw32-make.exe
 cd %StartDir%

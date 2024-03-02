@@ -122,7 +122,7 @@ void processTimeCriticalStuff()
 void runSec()
 {
   wdt_reset(); ///< reset watchdog timeout
-  HeartBeat(); ///< Blinks built-in led
+  heartBeat(); ///< Blinks built-in led
   Hempy_Standalone1->runSec();
 }
 
@@ -147,7 +147,7 @@ void runMinute()
 /**
   \brief Turns the integrated LED on the Arduino board ON/OFF 
 */
-void HeartBeat()
+void heartBeat()
 {
   static bool ledStatus;
   ledStatus = !ledStatus;

@@ -121,7 +121,7 @@ void processTimeCriticalStuff() ///< Process things that need precise timing
 void runSec()
 {
   wdt_reset(); ///< reset watchdog timeout
-  HeartBeat(); ///< Blinks built-in led
+  heartBeat(); ///< Blinks built-in led
   AeroMod1->runSec();
 }
 
@@ -138,7 +138,7 @@ void runMinute()
   getWirelessStatus();
 }
 
-void HeartBeat()
+void heartBeat()
 {
   static bool ledStatus;
   ledStatus = !ledStatus;

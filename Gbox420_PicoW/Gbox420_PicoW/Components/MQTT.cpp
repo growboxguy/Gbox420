@@ -1,6 +1,6 @@
 #include "MQTT.h"
 
-MQTT::MQTT(const char *Name, Module *Parent, Settings::MQTTSettings *DefaultSettings,mqttReceivedCallback fn) : Common(Name)
+MQTT::MQTT(const char *Name, Module *Parent, Settings::MQTTSettings *DefaultSettings, mqttReceivedCallback fn) : Common(Name)
 {
   this->Parent = Parent;
   Enabled = &DefaultSettings->Enabled;
@@ -11,7 +11,7 @@ MQTT::MQTT(const char *Name, Module *Parent, Settings::MQTTSettings *DefaultSett
   SubTopic = &DefaultSettings->SubTopic;
   LwtTopic = &DefaultSettings->LwtTopic;
   LwtMessage = &DefaultSettings->LwtMessage;
-  setupMqtt();
+  //setupMqtt();
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue(this);
   printf("   MQTT ready\n");
@@ -43,37 +43,25 @@ void MQTT::refresh()
   }
 }
 
-//Called by dns_gethostbyname() when the IP address of MQTT server is found
-void MQTT::setupMqtt_dnsFound(const char *hostname, const ip_addr_t *ipaddr, void *arg)
- {
-    if (ipaddr)
-    {
-        //server = *ipaddr;
-        printf("MQTT address %s\n", ipaddr_ntoa(ipaddr));
-        //ntp_request(state);
-    }
-    else
-    {
-        printf("MQTT DNS request failed\n");
-        //ntp_result(state, -1, NULL);
-    }
- }
-
+/*
 /**
   \brief Sets up the MQTT relay: Configures callbacks for MQTT events and sets the Last Will and Testament in case the ESP-link goes offline
 */
-void MQTT::setupMqtt()
-{
-  ip_addr_t server;
- dns_gethostbyname(NTP_SERVER, &server, setupMqtt_dnsFound,NULL);
 
 /*
+void MQTT::setupMqtt()
+{
+  /*
+  ip_addr_t server;
+  dns_gethostbyname(NTP_SERVER, &server, setupMqtt_dnsFound, NULL);
+*/
+  /*
 
-  struct ip_addr serverIp;
-	IP4_ADDR(&serverIp, 192,168,100,140);
+    struct ip_addr serverIp;
+    IP4_ADDR(&serverIp, 192,168,100,140);
 
-	mqttInit(&mqtt, serverIp, 1883, &mqttAppMsgReceived, "Stellaris");
-  */
+    mqttInit(&mqtt, serverIp, 1883, &mqttAppMsgReceived, "Stellaris");
+    */
 
   /*
     MqttAPI.connectedCb.attach(mqttConnected);
@@ -85,36 +73,28 @@ void MQTT::setupMqtt()
     strcat(ShortMessage, ModuleSettings->LwtTopic);
     MqttAPI.lwt(ShortMessage, ModuleSettings->LwtMessage, 0, 1); //(topic,message,qos,retain) declares what message should be sent on it's behalf by the broker after Gbox420 has gone offline.
     MqttAPI.setup();
-    */
+    
 }
+*/
 
 /*
-  \brief Called when connection to the MQTT broker is established
-*/
-void MQTT::mqttConnected(__attribute__((unused)) void *response)
+// Called by dns_gethostbyname() when the IP address of MQTT server is found
+void MQTT::setupMqtt_dnsFound(const char *hostname, const ip_addr_t *ipaddr, void *arg)
 {
-  // MqttAPI.subscribe(ModuleSettings->SubTopic);
-  MqttConnected = true;
-  // if(*Debug) printf("MQTT connected\n");
+  if (ipaddr)
+  {
+    printf("MQTT address %s\n", ipaddr_ntoa(ipaddr));
+    mqttConnect(ipaddr);
+  }
+  else
+  {
+    printf("MQTT DNS request failed\n");
+  }
 }
 
-/**
-  \brief Called when connection to the MQTT broker is lost
 */
-void MQTT::mqttDisconnected(__attribute__((unused)) void *response)
-{
-  MqttConnected = false;
-  if (*Debug)
-    printf("MQTT disconnected\n");
-}
 
-/**
-  \brief Called after an MQTT message is sent out - Not used
-*/
-void MQTT::mqttPublished(__attribute__((unused)) void *response)
-{
-  // if(*Debug) printf("MQTT published\n");
-}
+
 
 /**
   \brief Called when an MQTT command is received. Extracts the command from the MQTT topic and gets the data passed along the command
@@ -133,8 +113,8 @@ void MQTT::mqttReceived(void *response)
   // mqttTopic.remove(0, SubTopicLength); //Cut the known command topic from the arrived topic
   // mqttTopic.toCharArray(command, MaxShotTextLength);
   // mqttData.toCharArray(data, MaxShotTextLength);
-  //Hempy_Standalone1->commandEventTrigger(command, data);
-  //Hempy_Standalone1->reportToMQTTTrigger(true); // send out a fresh report
+  // Hempy_Standalone1->commandEventTrigger(command, data);
+  // Hempy_Standalone1->reportToMQTTTrigger(true); // send out a fresh report
 }
 
 void MQTT::setMQTTOnOff(bool State)

@@ -43,10 +43,7 @@ target_link_libraries(Gbox420_PicoW
         pico_stdlib
         hardware_rtc
         hardware_pwm
-        )
-
-
-      
+        )      
 
 pico_add_extra_outputs(Gbox420_PicoW)
 

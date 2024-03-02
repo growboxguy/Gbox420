@@ -67,7 +67,7 @@ void getRTC()
 }
 
 ///< Blink built-in LED on Pico W
-void HeartBeat()
+void heartBeat()
 {
   static bool ledStatus;
   ledStatus = !ledStatus;
@@ -78,7 +78,7 @@ void HeartBeat()
 bool runRepeatedly(struct repeating_timer *t)
 {
   watchdog_update();
-  HeartBeat(); ///< Blinks built-in led
+  heartBeat(); ///< Blinks built-in led
   Hempy_Standalone1->run();
   return true;
 }

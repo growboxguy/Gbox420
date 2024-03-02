@@ -119,7 +119,7 @@ void loop()
 void runSec()
 {
   wdt_reset(); ///< reset watchdog timeout
-  HeartBeat(); ///< Blinks built-in led
+  heartBeat(); ///< Blinks built-in led
   HempyMod1->runSec();
 }
 
@@ -136,7 +136,7 @@ void runMinute()
   getWirelessStatus();
 }
 
-void HeartBeat()
+void heartBeat()
 {
   static bool ledStatus;
   ledStatus = !ledStatus;
