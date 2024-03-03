@@ -44,18 +44,16 @@ void MQTT::refresh()
 }
 
 /*
-/**
   \brief Sets up the MQTT relay: Configures callbacks for MQTT events and sets the Last Will and Testament in case the ESP-link goes offline
 */
 
 /*
 void MQTT::setupMqtt()
 {
-  /*
+
   ip_addr_t server;
   dns_gethostbyname(NTP_SERVER, &server, setupMqtt_dnsFound, NULL);
-*/
-  /*
+
 
     struct ip_addr serverIp;
     IP4_ADDR(&serverIp, 192,168,100,140);

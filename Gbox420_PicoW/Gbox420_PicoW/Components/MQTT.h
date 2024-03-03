@@ -11,7 +11,6 @@
 
 #include "420Common.h"
 #include "420Module.h"
-#include "MQTTBackend.h"
 
 class MQTT : virtual public Common
 {

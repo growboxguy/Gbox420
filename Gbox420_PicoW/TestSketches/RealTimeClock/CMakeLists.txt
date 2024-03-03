@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.12)
 
 # Pull in SDK (must be before project)
-include(pico_sdk_import.cmake)
+include ($ENV{PICO_SDK_PATH}/pico_sdk_init.cmake)
 
 project(RealTimeClock C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
+set(PICO_BOARD "pico_w")
 
 if (PICO_SDK_VERSION_STRING VERSION_LESS "1.3.0")
     message(FATAL_ERROR "Raspberry Pi Pico SDK version 1.3.0 (or later) required. Your version is ${PICO_SDK_VERSION_STRING}")
@@ -23,7 +24,7 @@ add_compile_options(-Wall
         )       
 
 add_executable(RealTimeClock
-        RealTimeClock.c
+        RealTimeClock.cpp
         )
 target_compile_definitions(RealTimeClock PRIVATE
         )
@@ -38,7 +39,6 @@ target_link_libraries(RealTimeClock
 
 pico_add_extra_outputs(RealTimeClock)
 
-# enable usb output, disable uart output
-pico_enable_stdio_usb(RealTimeClock 1)
-pico_enable_stdio_uart(RealTimeClock 0)
+pico_enable_stdio_usb(RealTimeClock 1) # enable usb output
+pico_enable_stdio_uart(RealTimeClock 1) # enable uart output
 

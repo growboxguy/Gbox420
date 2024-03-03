@@ -2,8 +2,8 @@
  *  \brief     Wifi connection test
  *  \details   Requires 2 parameters -DWIFI_SSID="WifiNetworkPasswordName" -DWIFI_PASSWORD="WifiNetworkPassword"
  *  \attention cd build
- *             cmake -DPICO_BOARD=pico_w -DWIFI_SSID="WifiNetworkPasswordName" -DWIFI_PASSWORD="WifiNetworkPassword" .. -G "MinGW Makefiles"
- *             mingw32-make.exe
+ *             cmake -DPICO_BOARD=pico_w -DWIFI_SSID="WifiNetworkPasswordName" -DWIFI_PASSWORD="WifiNetworkPassword"
+ *             ninja
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/raspberry-pi-pico-w
  *  \version   4.20
  */

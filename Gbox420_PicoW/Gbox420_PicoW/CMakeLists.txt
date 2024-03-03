@@ -36,7 +36,6 @@ add_executable(Gbox420_PicoW
         )
 target_include_directories(Gbox420_PicoW PRIVATE 
         ${CMAKE_CURRENT_LIST_DIR}
-        $ENV{PICO_SDK_PATH}/../pico-examples/pico_w/wifi  #include "lwipopts_examples_common.h"
 )
 target_link_libraries(Gbox420_PicoW
         pico_cyw43_arch_lwip_threadsafe_background

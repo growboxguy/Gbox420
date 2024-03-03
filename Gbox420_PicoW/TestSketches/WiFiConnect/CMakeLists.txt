@@ -6,6 +6,7 @@ include ($ENV{PICO_SDK_PATH}/pico_sdk_init.cmake)
 project(WiFiConnect C CXX ASM)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
+set(PICO_BOARD "pico_w")
 
 if (PICO_SDK_VERSION_STRING VERSION_LESS "1.3.0")
     message(FATAL_ERROR "Raspberry Pi Pico SDK version 1.3.0 (or later) required. Your version is ${PICO_SDK_VERSION_STRING}")
@@ -23,7 +24,7 @@ add_compile_options(-Wall
         )       
 
 add_executable(WiFiConnect
-        WiFiConnect.c
+        WiFiConnect.cpp
         )
 target_compile_definitions(WiFiConnect PRIVATE
         WIFI_SSID=\"${WIFI_SSID}\"
@@ -31,7 +32,6 @@ target_compile_definitions(WiFiConnect PRIVATE
         )
 target_include_directories(WiFiConnect PRIVATE 
         ${CMAKE_CURRENT_LIST_DIR}
-        $ENV{PICO_SDK_PATH}/../pico-examples/pico_w/wifi  #include "lwipopts_examples_common.h"
 )
 target_link_libraries(WiFiConnect
         pico_cyw43_arch_lwip_threadsafe_background
@@ -40,7 +40,5 @@ target_link_libraries(WiFiConnect
 
 pico_add_extra_outputs(WiFiConnect)
 
-# enable usb output, disable uart output
-pico_enable_stdio_usb(WiFiConnect 1)
-pico_enable_stdio_uart(WiFiConnect 0)
-
+pico_enable_stdio_usb(WiFiConnect 1) # enable usb output
+pico_enable_stdio_uart(WiFiConnect 1) # enable uart output

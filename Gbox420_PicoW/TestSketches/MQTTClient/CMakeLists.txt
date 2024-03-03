@@ -31,7 +31,6 @@ add_executable(MqttTest
 
 target_include_directories(MqttTest PRIVATE 
         ${CMAKE_CURRENT_LIST_DIR}
-        $ENV{PICO_SDK_PATH}/../pico-examples/pico_w/wifi  #include "lwipopts_examples_common.h"
 )
 target_link_libraries(MqttTest
         pico_cyw43_arch_lwip_threadsafe_background

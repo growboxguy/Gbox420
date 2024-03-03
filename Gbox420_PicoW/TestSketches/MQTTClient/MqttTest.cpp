@@ -135,7 +135,7 @@ int main()
             strcat(FakeDataJSON, "{\"Humidity\":\"");
             strcat(FakeDataJSON, intToChar(rand() % 100)); // random int 0-99
             strcat(FakeDataJSON, "\",\"Speed\":\"");
-            strcat(FakeDataJSON, intToChar(rand() % 10)); // random int 0-99
+            strcat(FakeDataJSON, intToChar(rand() % 10)); // random int 0-9
             strcat(FakeDataJSON, "\",\"LightOn\":\"");
             strcat(FakeDataJSON, intToChar(rand() % 2)); // random 0 or 1
             strcat(FakeDataJSON, "\"}");                 // closing the JSON
