@@ -1,8 +1,8 @@
 #include "MqttAPI.h"
 
-MqttAPI::MqttAPI(MQTTClientSettings *DefaultSettings, void *DataCallback)
+MqttAPI::MqttAPI(MQTTClientSettings *DefaultSettings, void *Callback)
 {
-    this->DataCallback = DataCallback;
+    DataCallback = Callback;
     MQTTServerPort = DefaultSettings->MQTTServerPort;
     Client = mqtt_client_new();                 // Allocate memory for the Stuct storing the MQTT client, store the pointer to it
     memset(&ClientInfo, 0, sizeof(ClientInfo)); // Allocate memory for the ClientInfo
@@ -77,7 +77,7 @@ void MqttAPI::mqttConnect()
 {
     printf("Connecting to MQTT server...");
     cyw43_arch_lwip_begin();
-    err_t err = mqtt_client_connect(Client, &ServerIP, MQTTServerPort, mqttConnect_Callback, NULL, &ClientInfo);
+    err_t err = mqtt_client_connect(Client, &ServerIP, MQTTServerPort, mqttConnect_Callback, DataCallback, &ClientInfo);
     cyw43_arch_lwip_end();
 
     if (err != ERR_OK)

@@ -58,7 +58,10 @@ int main()
             strcat(FakeDataJSON, intToChar(rand() % 2)); // random 0 or 1
             strcat(FakeDataJSON, "\"}");                 // closing the JSON
             printf("Fakedata: %s\n", FakeDataJSON);
+
             Server1->mqttPublish(MQTTServer1.PubTopic, FakeDataJSON, MQTTServer1.QoS, MQTTServer1.PublishRetain); // Publish the fake JSON to the MQTT server under PubTopic
+            Server2->mqttPublish(MQTTServer2.PubTopic, FakeDataJSON, MQTTServer2.QoS, MQTTServer2.PublishRetain); // Publish the fake JSON to the MQTT server under PubTopic
+            
             LastRefresh = get_absolute_time();
         }
     }
