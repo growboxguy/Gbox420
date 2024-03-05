@@ -1,3 +1,4 @@
+#pragma once
 // #include and #define commands moved to the MqttTest.cpp for better overview
 
 int main();                                                                 ///< Test logic: Initialize WiFi -> Resolve MQTT server IP -> Connect to MQTT server -> Subscribe to a test topic (defined by SubTopic) -> Publish a fake JSON to an MQTT topic (defined by PubTopic)

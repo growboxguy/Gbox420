@@ -74,13 +74,13 @@ void heartBeat()
   cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus);
 }
 
-///< This function gets called every
+///< This function gets called infinitely at a rate defined by repeating_timer
 bool runRepeatedly(struct repeating_timer *t)
 {
-  watchdog_update();
-  heartBeat(); ///< Blinks built-in led
+  watchdog_update(); ///< Pet watchdog
+  heartBeat();       ///< Blinks built-in led
   Hempy_Standalone1->run();
-  return true;
+  return true; // true to continue repeating, false to stop.
 }
 
 int main()
@@ -117,11 +117,11 @@ int main()
   // run_ntp_test();
 
   struct repeating_timer Timer1sec;
-  add_repeating_timer_ms(-1000, runRepeatedly, NULL, &Timer1sec); // Calls runRepeatedly every second  
+  add_repeating_timer_ms(-1000, runRepeatedly, NULL, &Timer1sec); // Calls runRepeatedly every second
 
   absolute_time_t LastRefresh = get_absolute_time();
   while (1)
-  {    
+  {
     if (absolute_time_diff_us(LastRefresh, get_absolute_time()) > 5000000) // 5sec
     {
       watchdog_update();

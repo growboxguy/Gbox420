@@ -6,18 +6,11 @@
  *  \version   4.20
  */
 
-#include <stdio.h>
-#include <string.h>
 #include "pico/cyw43_arch.h"
-#include "pico/stdlib.h"
 #include "pico/stdio.h"
-#include "pico/time.h"
 #include "lwip/err.h"
 #include "lwip/ip_addr.h"
 #include "lwip/dns.h"
-#include "lwip/prot/iana.h"
-#include "lwip/apps/mqtt_opts.h"
-#include "lwip/apps/mqtt.h"
 #include "MqttTest.h"
 #include "MqttAPI.h"
 
@@ -36,7 +29,7 @@
 #define LwtMessage "Hempy Offline"               ///< Last Will and Testament message: Subscribers will get this message under the topic specified by LwtTopic when the MQTT client goes offline
 #define LwtRetain 1                              ///< Last Will and Testament retention: 0:No retention, 1:Broker keeps the message and sends it to future subscribers (recommended)
 #define PublishRetain 0                          ///< Should the MQTT server retain Publish messages: 0:No retention (recommended), 1:Broker keeps the message and sends it to future subscribers
-#define QoS 1                                    ///< Quality of Service levels: 0:No QoS, 1: Broker ensures to send the message to the subscribers (recommended)
+#define QoS 1                                    ///< Quality of Service levels: 0:No QoS, 1: Broker ensures to send the message to the subscribers (recommended), 2: Broker ensures to send the message to the subscribers exactly once   https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/
 #define KeepAliveSeconds 30                      ///< Ping the MQTT broker every X seconds. Else the broker executes the Last Will and Testament
 
 bool dnsLookupInProgress = false; ///< If MQTTServerDNS is specified the IP address needs to be resolved. true: DNS lookup in progress
@@ -140,14 +133,14 @@ int main()
             strcat(FakeDataJSON, intToChar(rand() % 2)); // random 0 or 1
             strcat(FakeDataJSON, "\"}");                 // closing the JSON
             printf("Fakedata: %s\n", FakeDataJSON);
-            mqttPublish(Client, PubTopic, FakeDataJSON, QoS, PublishRetain);  // Publish the fake JSON to the MQTT server under PubTopic
+            mqttPublish(Client, PubTopic, FakeDataJSON, QoS, PublishRetain); // Publish the fake JSON to the MQTT server under PubTopic
             LastRefresh = get_absolute_time();
         }
     }
 
-    //This section will never be reached
+    // This section will never be reached
     mqttSubscribe_Unsubscribe(Client, SubTopic, QoS, false); // Unsubscribe
-    mqttDisconnect(Client);  // Disconnect from the MQTT server
+    mqttDisconnect(Client);                                  // Disconnect from the MQTT server
     cyw43_arch_deinit();
     return 0;
 }
@@ -157,7 +150,7 @@ void mqttReceivedData(const u8_t *Data, u16_t Len)
     printf("%s\n", Data); // Print the message received on the subscribed topic
 }
 
-void mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *Arg)  // DNS lookup callback
+void mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *Arg) // DNS lookup callback
 {
     dnsLookupInProgress = false;
     if (Ipaddr)
