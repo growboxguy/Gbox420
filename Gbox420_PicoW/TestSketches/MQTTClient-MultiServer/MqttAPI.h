@@ -8,7 +8,7 @@
 
 #define MaxWordLength 128 ///< Default char * buffer length for storing a word + null terminator. Memory intense!
 
-struct MQTTClientSettings ///< DHTSensor default settings
+struct MQTTClientSettings ///< MQTT client settings
 {
     char MQTTServerDNS[MaxWordLength];      ///< MQTT server DNS name, "" to use MQTTServerIP instead
     char MQTTServerIP[MaxWordLength];       ///< MQTT server IP. Used when MQTTServerDNS is empty, or the DNS lookup fails
@@ -23,7 +23,7 @@ struct MQTTClientSettings ///< DHTSensor default settings
     bool LwtRetain;                         ///< Last Will and Testament retention: 0:No retention, 1:Broker keeps the message and sends it to future subscribers (recommended)
     bool PublishRetain;                     ///< Should the MQTT server retain Publish messages: 0:No retention (recommended), 1:Broker keeps the message and sends it to future subscribers
     uint8_t QoS;                            ///< Quality of Service levels: 0:No QoS, 1: Broker ensures to send the message to the subscribers (recommended), 2: Broker ensures to send the message to the subscribers exactly once   https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/
-    uint32_t KeepAliveSeconds;
+    uint32_t KeepAliveSeconds;              ///< Ping the MQTT server every X seconds to keep the connection active
 };
 
 class MqttAPI
@@ -39,15 +39,14 @@ public:
     void mqttSubscribe_Unsubscribe(const char *SubTopic, u8_t QoS, bool Subscribe);     ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
 
 private:
-    ///< If MQTTServerDNS is specified the IP address needs to be resolved. true: DNS lookup in progress
+    bool dnsLookupInProgress; ///< If MQTTServerDNS is specified the IP address needs to be resolved. true: DNS lookup in progress
 
 protected:
     mqtt_client_t *Client;
     mqtt_connect_client_info_t ClientInfo;
     ip_addr_t ServerIP;
     u16_t MQTTServerPort;
-    void *DataCallback; //Pointer to the callback function (Callback_type)
-    bool dnsLookupInProgress;
+    void *DataCallback;                                                                                  ///< Pointer to the callback function (Callback_type)
     static void mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *Arg);                   ///< Called When the IP address of the MQTT server is found
     static void mqttPublish_Callback(void *Arg, err_t Result);                                           ///< Callback with the publish result
     static void mqttSubscribe_Callback(void *Arg, err_t Result);                                         ///< Callback with the subscription result: 0: Success

@@ -1,8 +1,8 @@
 #include "MqttAPI.h"
 
-MqttAPI::MqttAPI(MQTTClientSettings *DefaultSettings, void *Callback)
+MqttAPI::MqttAPI(MQTTClientSettings *DefaultSettings, void *DataCallback)
 {
-    DataCallback = Callback;
+    this->DataCallback = DataCallback;
     MQTTServerPort = DefaultSettings->MQTTServerPort;
     Client = mqtt_client_new();                 // Allocate memory for the Stuct storing the MQTT client, store the pointer to it
     memset(&ClientInfo, 0, sizeof(ClientInfo)); // Allocate memory for the ClientInfo
@@ -138,7 +138,7 @@ void MqttAPI::mqttSubscribe_Callback(void *Arg, err_t Result)
 {
     if (Result == 0)
     {
-        printf("%s - done\n",Arg);
+        printf("%s - done\n", Arg);
     }
     else
     {
