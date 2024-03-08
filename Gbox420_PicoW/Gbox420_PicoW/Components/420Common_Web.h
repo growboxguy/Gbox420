@@ -1,16 +1,16 @@
 #pragma once ///< header guard, same as the ifndef/define guard  https://en.wikipedia.org/wiki/Pragma_once
 
 /**
-  \brief Extends the Component class with fuctions required to communicate with the ESP-link website 
-  \attention Each Command needs to be unique 
+  \brief Extends the Component class with fuctions required to communicate with the ESP-link website
+  \attention Each Command needs to be unique
   \details This class contains pure virtual functions forces implementing functions required to interact with the ESP-link website
 */
 
-//#include "ELClientWebServer.h" ///< ESP-link - WebServer API
+// #include "ELClientWebServer.h" ///< ESP-link - WebServer API
 #include "420Common.h"
 
 ///< forward declaration
-//extern ELClientWebServer WebServer;
+// extern ELClientWebServer WebServer;
 
 class Common_Web : virtual public Common
 {

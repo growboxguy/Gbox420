@@ -6,7 +6,7 @@ Sound::Sound(const char *Name, Module *Parent, Settings::SoundSettings *DefaultS
   Parent->SoundFeedback = this; ///< Pointer for child objects to use sound feedback
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
-  //Tone1 = new TonePlayer(TCCR1A, TCCR1B, OCR1AH, OCR1AL, TCNT1H, TCNT1L);  // pin D9 (Uno/Nano), D11 (Mega)
+  // Tone1 = new TonePlayer(TCCR1A, TCCR1B, OCR1AH, OCR1AL, TCNT1H, TCNT1L);  // pin D9 (Uno/Nano), D11 (Mega)
   gpio_set_function(*Pin, GPIO_FUNC_PWM);
   cfg = pwm_get_default_config();
   slice_num = pwm_gpio_to_slice_num(*Pin);
@@ -18,8 +18,8 @@ Sound::Sound(const char *Name, Module *Parent, Settings::SoundSettings *DefaultS
 }
 
 /**
-* @brief Report current state in a JSON format to the LongMessage buffer
-*/
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
 void Sound::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
@@ -30,7 +30,7 @@ void Sound::report(bool FriendlyFormat)
 
 void Sound::refresh()
 {
-  //Common::refresh();
+  // Common::refresh();
   checkEvents();
 }
 
@@ -74,14 +74,13 @@ void Sound::setSoundOnOff(bool State)
 
 void inline Sound::pwm_calcDivTop(pwm_config *c, int frequency, int sysClock)
 {
-  uint count = 2000000000 / frequency;  ///2000000000: system clock(125000000) x 16 
-  uint div = count / 60000; // to be lower than 65535*15/16 (rounding error)
+  uint count = 2000000000 / frequency; /// 2000000000: system clock(125000000) x 16
+  uint div = count / 60000;            // to be lower than 65535*15/16 (rounding error)
   if (div < 16)
     div = 16;
   c->div = div;
   c->top = count / div;
 }
-
 
 void Sound::beep(int note, int duration)
 {

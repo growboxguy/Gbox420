@@ -13,10 +13,10 @@ void ntp_result(NTP_T *state, int status, time_t *result)
 {
     if (status == 0 && result)
     {
-        struct tm *utc = gmtime(result);   // https://cplusplus.com/reference/ctime/tm/
+        struct tm *utc = gmtime(result); // https://cplusplus.com/reference/ctime/tm/
         datetime_t timeTemp = {
-            .year = (int16_t)(utc->tm_year + 1900),  // tm_year: years since 1900
-            .month = (int8_t)(utc->tm_mon +1),  // tm_mon: months since January (0-11)
+            .year = (int16_t)(utc->tm_year + 1900), // tm_year: years since 1900
+            .month = (int8_t)(utc->tm_mon + 1),     // tm_mon: months since January (0-11)
             .day = (int8_t)utc->tm_mday,
             .dotw = (int8_t)utc->tm_wday, // tm_wday: days since Sunday (0-6)
             .hour = (int8_t)(utc->tm_hour + TIMEZONEDIFFERENCE),
@@ -33,7 +33,7 @@ void ntp_result(NTP_T *state, int status, time_t *result)
     }
     state->ntp_test_time = make_timeout_time_ms(NTP_TEST_TIME);
     state->dns_request_sent = false;
-       
+
     free(state);
 }
 

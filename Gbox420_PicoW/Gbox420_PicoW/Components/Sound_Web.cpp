@@ -20,7 +20,7 @@ void Sound_Web::refresh()
 
 void Sound_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
- // WebServer.setArgBoolean(getName("E"), true), *Enabled);
+  // WebServer.setArgBoolean(getName("E"), true), *Enabled);
 }
 
 bool Sound_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
@@ -33,7 +33,7 @@ bool Sound_Web::commandEvent(__attribute__((unused)) char *Command, __attribute_
   {
     if (strcmp(ShortMessage, "E") == 0)
     {
-     // setSoundOnOff(WebServer.getArgBoolean());
+      // setSoundOnOff(WebServer.getArgBoolean());
     }
     else if (strcmp(ShortMessage, "Ee") == 0)
     {

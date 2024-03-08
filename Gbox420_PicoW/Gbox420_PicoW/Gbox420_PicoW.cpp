@@ -20,8 +20,8 @@
 #include "Components/Hempy_Standalone.h" // Represents a complete box with all feautres
 
 // Global variable initialization
-datetime_t CurrentDateTime;                ///<   calling getRTC() function it will update this variable
-//char CurrentTime[MaxWordLength] = "";      ///< calling getRTC() function it will update this variable   //TODO: Remove this, return it instead in getRTC()
+datetime_t CurrentDateTime; ///<   calling getRTC() function it will update this variable
+// char CurrentTime[MaxWordLength] = "";      ///< calling getRTC() function it will update this variable   //TODO: Remove this, return it instead in getRTC()
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
 char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
 bool *Debug;                               ///< True - Turns on extra debug messages on the Serial Output

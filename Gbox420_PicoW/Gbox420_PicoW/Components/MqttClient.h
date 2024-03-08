@@ -15,9 +15,9 @@ class MqttClient
 
 public:
     MqttClient(Settings::MqttClientSettings *DefaultSettings, void *DataCallback);
-    void mqttConnect();                                                                 ///< Initiate connection to the MQTT server
-    void mqttDisconnect();                                                              ///< Disconnect from MQTT server
-    bool mqttIsConnected();                                                             ///< true: Connected to MQTT server, false: not connected
+    void mqttConnect();                                                                    ///< Initiate connection to the MQTT server
+    void mqttDisconnect();                                                                 ///< Disconnect from MQTT server
+    bool mqttIsConnected();                                                                ///< true: Connected to MQTT server, false: not connected
     void mqttPublish(const char *PubTopic, const char *PubData, uint8_t QoS, bool Retain); ///< Publish a message to the PubTopic
     void mqttSubscribe_Unsubscribe(const char *SubTopic, uint8_t QoS, bool Subscribe);     ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
 
@@ -34,6 +34,6 @@ protected:
     static void mqttPublish_Callback(void *Arg, err_t Result);                                           ///< Callback with the publish result
     static void mqttSubscribe_Callback(void *Arg, err_t Result);                                         ///< Callback with the subscription result: 0: Success
     static void mqttConnect_Callback(mqtt_client_t *Client, void *Arg, mqtt_connection_status_t Status); ///< Callback with the connection result
-    static void mqttIncomingTopic_Callback(void *Arg, const char *Topic, uint32_t Tot_len);                 ///< Callback when a new message is received on a subscribed topic: Gets the topic
-    static void mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint16_t Len, uint8_t Flags);           ///< Callback when a new message is received on a subscribed topic: Gets the payload
+    static void mqttIncomingTopic_Callback(void *Arg, const char *Topic, uint32_t Tot_len);              ///< Callback when a new message is received on a subscribed topic: Gets the topic
+    static void mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint16_t Len, uint8_t Flags);  ///< Callback when a new message is received on a subscribed topic: Gets the payload
 };

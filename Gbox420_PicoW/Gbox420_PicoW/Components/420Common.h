@@ -29,7 +29,7 @@ public:
 
 private:
 protected:
-  Common(const char *Name); ///< Constructor
-  uint8_t RefreshCounter = 0;  ///< incremented every time refresh() is called.
+  Common(const char *Name);   ///< Constructor
+  uint8_t RefreshCounter = 0; ///< incremented every time refresh() is called.
   // Common();
 };

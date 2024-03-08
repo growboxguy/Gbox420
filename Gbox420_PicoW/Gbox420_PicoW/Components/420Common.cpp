@@ -38,45 +38,45 @@ bool Common::isThisMine(char const *lookupName) ///< Returns true when the looku
   char FlashCurrentChar;           // Character read back from the Flash storage (Name is stored in flash)
   char RAMCurrentChar;             // Character read back from the RAM (lookupName is stored in RAM)
 
-/*
-  const char *FlashAddressPointer = (const char PROGMEM *)Name; ///< Get the flash storage address of the first character of Name
-  while (1)
-  {
-    FlashCurrentChar = pgm_read_byte(FlashAddressPointer++); ///< read the current character from the flash and increment the pointer to the next char
-    RAMCurrentChar = lookupName[CharacterCount++];           ///< read the character at the same position from the lookupName
-    ///< Serial.print(FlashCurrentChar);
-    ///< Serial.print(RAMCurrentChar);
-    if (FlashCurrentChar == '\0')
-      break; ///< reached the string termination sign
-    if (FlashCurrentChar != RAMCurrentChar)
-    {
-      ///< Serial.println("No match");
-      return false; ///< stop the while loop
-    }
-  }
-  if (FlashCurrentChar == '\0' && RAMCurrentChar == '_') ///< End of the Name, _ sign at the lookupName
-  {                                                      ///< if instance name is confirmed: continue reading the remaining characters from the lookupName
-    int SafetyCount = 0;
-    ///< Serial.print("Inside second check: ");
+  /*
+    const char *FlashAddressPointer = (const char PROGMEM *)Name; ///< Get the flash storage address of the first character of Name
     while (1)
     {
-      RAMCurrentChar = lookupName[CharacterCount++]; ///< read the next lookName character from RAM
+      FlashCurrentChar = pgm_read_byte(FlashAddressPointer++); ///< read the current character from the flash and increment the pointer to the next char
+      RAMCurrentChar = lookupName[CharacterCount++];           ///< read the character at the same position from the lookupName
+      ///< Serial.print(FlashCurrentChar);
       ///< Serial.print(RAMCurrentChar);
-      *ReturnChar++ = RAMCurrentChar;
-      if (RAMCurrentChar == '\0')
+      if (FlashCurrentChar == '\0')
         break; ///< reached the string termination sign
-      if (SafetyCount++ > MaxWordLength)
+      if (FlashCurrentChar != RAMCurrentChar)
       {
-        *ReturnChar = '\0';
-        printf("   Too long:");
-        printf(lookupName, true, 1);
-        return false;
+        ///< Serial.println("No match");
+        return false; ///< stop the while loop
       }
     }
-    return true;
-  }
-  else
-  */
+    if (FlashCurrentChar == '\0' && RAMCurrentChar == '_') ///< End of the Name, _ sign at the lookupName
+    {                                                      ///< if instance name is confirmed: continue reading the remaining characters from the lookupName
+      int SafetyCount = 0;
+      ///< Serial.print("Inside second check: ");
+      while (1)
+      {
+        RAMCurrentChar = lookupName[CharacterCount++]; ///< read the next lookName character from RAM
+        ///< Serial.print(RAMCurrentChar);
+        *ReturnChar++ = RAMCurrentChar;
+        if (RAMCurrentChar == '\0')
+          break; ///< reached the string termination sign
+        if (SafetyCount++ > MaxWordLength)
+        {
+          *ReturnChar = '\0';
+          printf("   Too long:");
+          printf(lookupName, true, 1);
+          return false;
+        }
+      }
+      return true;
+    }
+    else
+    */
   {
     return false;
   }

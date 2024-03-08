@@ -24,8 +24,8 @@ class Hempy_Standalone : public Module_Web
 {
 public:
   Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneSettings *DefaultSettings, Settings::MqttClientSettings *MqttSettings);
-  MqttClient *MqttHiveMQ = NULL;  ///< Pointer to MQTT handler
-  Sound_Web *Sound1 = NULL; ///< Pointer to a Piezo speaker - sound feedback
+  MqttClient *MqttHiveMQ = NULL; ///< Pointer to MQTT handler
+  Sound_Web *Sound1 = NULL;      ///< Pointer to a Piezo speaker - sound feedback
   void websiteEvent_Load(__attribute__((unused)) char *Url);
   void websiteEvent_Refresh(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
@@ -35,5 +35,4 @@ public:
 
 private:
 protected:
-  
 };

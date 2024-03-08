@@ -11,23 +11,23 @@
 #include "SPI.h"
 */
 
-#include  "../Settings.h"
+#include "../Settings.h"
 #include "Helpers.h"
 #include "420Common_Web.h"
 #include "420Module.h"
 
-///< Extends the Module class with functions to interact with an HTTP / HTML based user interface hosted by the Main module 
+///< Extends the Module class with functions to interact with an HTTP / HTML based user interface hosted by the Main module
 
-//extern ELClientWebServer WebServer;
-//extern ELClientRest PushingBoxRestAPI;
-//extern ELClientMqtt MqttAPI;
-//extern bool MqttConnected;
+// extern ELClientWebServer WebServer;
+// extern ELClientRest PushingBoxRestAPI;
+// extern ELClientMqtt MqttAPI;
+// extern bool MqttConnected;
 class Sound_Web;
 
 class Module_Web : virtual public Common_Web, virtual public Module
 {
 public:
-  Module_Web(const char *Name);                        ///< constructor
+  Module_Web(const char *Name);                                       ///< constructor
   void addToWebsiteQueue_Load(Common_Web *Subscriber);                ///< Calls the websiteEvent_Load() method of the Subscriber when an ESP-link website is loaded
   void addToWebsiteQueue_Refresh(Common_Web *Subscriber);             ///< Calls the websiteEvent_Refresh() method of the Subscriber when an ESP-link website is refreshing
   void addToCommandQueue(Common_Web *Subscriber);                     ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method
@@ -35,7 +35,7 @@ public:
   void websiteRefreshEventTrigger(__attribute__((unused)) char *Url); ///< Notifies the subscribed components of a Refresh event. Passes the URL of the custom webpage that was opened (/Hempy.html or /Settings.html )
   void commandEventTrigger(char *Command, char *Data);                ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
   void refresh();
-  char * settingsToJSON();
+  char *settingsToJSON();
   void settingsEvent_Load(__attribute__((unused)) char *Url);                                            ///< Gets called when the /Settings.html is loaded. This page is for configuring the Gbox420 module settings (Console logging, Debug mode, MQTT reporting topic, Google Sheets relay...etc)
   void settingsEvent_Refresh(__attribute__((unused)) char *Url);                                         ///< Gets called when the /Settings.html is refreshed.
   void settingsEvent_Command(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data); ///< Gets called a button is clicked or a field is submitted on the /Settings.html page

@@ -73,11 +73,11 @@ typedef struct
   struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
   struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
 
-struct MqttClientSettings ///< MQTT client settings
-{
+  struct MqttClientSettings ///< MQTT client settings
+  {
     char MqttServerDNS[MaxWordLength];      ///< MQTT server DNS name, "" to use MqttServerIP instead
     char MqttServerIP[MaxWordLength];       ///< MQTT server IP. Used when MqttServerDNS is empty, or the DNS lookup fails
-    uint16_t MqttServerPort;                   ///< MQTT server Port
+    uint16_t MqttServerPort;                ///< MQTT server Port
     char MqttServerUser[MaxWordLength];     ///< MQTT server username, "" if not needed
     char MqttServerPassword[MaxWordLength]; ///< MQTT server password, "" if not needed
     char ClientID[MaxWordLength];           ///< Should be unique across the MQTT server
@@ -89,8 +89,8 @@ struct MqttClientSettings ///< MQTT client settings
     bool PublishRetain;                     ///< Should the MQTT server retain Publish messages: 0:No retention (recommended), 1:Broker keeps the message and sends it to future subscribers
     uint8_t QoS;                            ///< Quality of Service levels: 0:No QoS, 1: Broker ensures to send the message to the subscribers (recommended), 2: Broker ensures to send the message to the subscribers exactly once   https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/
     uint32_t KeepAliveSeconds;              ///< Ping the MQTT server every X seconds to keep the connection active
-};
- struct MqttClientSettings HempyMqttServer1 = {.MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .ClientID = "Hempy", .PubTopic = "Gbox420/Hempy/", .SubTopic = "Gbox420CMD/Hempy/#", .LwtTopic = "Gbox420LWT/Hempy/", .LwtMessage = "Hempy Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
+  };
+  struct MqttClientSettings HempyMqttServer1 = {.MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .ClientID = "Hempy", .PubTopic = "Gbox420/Hempy/", .SubTopic = "Gbox420CMD/Hempy/#", .LwtTopic = "Gbox420LWT/Hempy/", .LwtMessage = "Hempy Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
 
   struct SoundSettings ///< Sound default settings
   {

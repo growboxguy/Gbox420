@@ -2,13 +2,13 @@
 
 /**
   \brief Store settings in EEPROM - Only updates changed bits
-  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles 
+  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles
 */
 
 void saveSettings(Settings *ToSave)
 {
   ;
-  //eeprom_update_block((const void *)ToSave, (void *)0, sizeof(Settings)); // update_block only writes the bytes that changed
+  // eeprom_update_block((const void *)ToSave, (void *)0, sizeof(Settings)); // update_block only writes the bytes that changed
 }
 
 /**
@@ -19,7 +19,7 @@ void saveSettings(Settings *ToSave)
 Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
 {
   printf("Loading settings");
-  Settings *DefaultSettings = new Settings();                              // This is where settings are stored, first it takes the sketch default settings defined in Settings.h
+  Settings *DefaultSettings = new Settings(); // This is where settings are stored, first it takes the sketch default settings defined in Settings.h
   /*
   Settings EEPROMSettings;                                                 // temporary storage with "Settings" type
   eeprom_read_block((void *)&EEPROMSettings, (void *)0, sizeof(Settings)); // Load EEPROM stored settings into EEPROMSettings
@@ -36,12 +36,12 @@ Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments
   }
   */
   printf("   Done. Version: ");
-  printf("%hhu\n",DefaultSettings->CompatibilityVersion);
+  printf("%hhu\n", DefaultSettings->CompatibilityVersion);
   return DefaultSettings;
 }
 
 /**
-  \brief Load sketch default settings into EEPROM 
+  \brief Load sketch default settings into EEPROM
   \attention Restarts the Arduino sketch!
 */
 void restoreDefaults()

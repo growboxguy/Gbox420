@@ -85,13 +85,13 @@ void Module_Web::commandEventTrigger(char *Command, char *Data)
     settingsEvent_Command(Command, Data);
 }
 
-void Module_Web::refresh()   // TODO: Rework module refreshing logic, move Google Sheets to its own Component
+void Module_Web::refresh() // TODO: Rework module refreshing logic, move Google Sheets to its own Component
 {
   if (RefreshCounter % 5 == 0)
   {
     Common::refresh();
     reportToSerialTrigger();
-    //reportToMQTTTrigger();
+    // reportToMQTTTrigger();
 
     /*
     if (RefreshRequested)
@@ -110,9 +110,8 @@ void Module_Web::refresh()   // TODO: Rework module refreshing logic, move Googl
       runReport(true);
     }
     */
-    
   }
-  //reportToGoogleSheetsTrigger();
+  // reportToGoogleSheetsTrigger();
 }
 
 /**
@@ -324,11 +323,11 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
   // Settings - MQTT
   else if (strcmp(Command, "MQTT") == 0)
   {
-   // setMQTTReportingOnOff(toBool(Data));
+    // setMQTTReportingOnOff(toBool(Data));
   }
   else if (strcmp(Command, "MQTTF") == 0)
   {
-   // setMQTTReportingFrequency(toInt(Data));
+    // setMQTTReportingFrequency(toInt(Data));
   }
   else if (strcmp(Command, "MPT") == 0)
   {
@@ -510,7 +509,6 @@ void Module_Web::reportToGoogleSheetsTrigger(bool ForceRun)
 }
 ///< This is how a sent out message looks like:
 ///< {parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
-
 
 /**
   \brief Triggers sending out a sequence of MQTT messages to the PubTopic specified in Settings.h.

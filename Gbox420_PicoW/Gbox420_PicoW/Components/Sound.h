@@ -3,7 +3,7 @@
 #include "420Common.h"
 #include "420Module.h"
 #include "hardware/pwm.h"
-//#include "TonePlayer.h"  ///< http://www.gammon.com.au/forum/?id=11504&reply=11#reply11
+// #include "TonePlayer.h"  ///< http://www.gammon.com.au/forum/?id=11504&reply=11#reply11
 
 ///< Sound feedback buzzer
 
@@ -17,7 +17,7 @@ public:
   void playOnSound();
   void playOffSound();
   void inline pwm_calcDivTop(pwm_config *c, int frequency, int sysClock);
-  void beep(int note, int duration); //Generate a PWM signal at the specified frequency for the specified duration
+  void beep(int note, int duration); // Generate a PWM signal at the specified frequency for the specified duration
   void playOnOffSound(bool State);
   void setSoundOnOff(bool State);
   bool getEnabledState();
@@ -26,7 +26,7 @@ public:
 private:
 protected:
   Module *Parent;
-  //TonePlayer *Tone1;
+  // TonePlayer *Tone1;
   void OnSound();
   void OffSound();
   uint8_t *Pin;             ///< Pin connecting the piezo Sound positive(+) side over a 330Ω resistor)

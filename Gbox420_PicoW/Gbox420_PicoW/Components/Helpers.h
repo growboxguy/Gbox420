@@ -1,4 +1,4 @@
-/*! \file 
+/*! \file
  *  \brief     Set of common functions any class can use
  *  \details   During conversion the result is always copied into the ShortMessage global char array
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
@@ -7,7 +7,7 @@
 
 #pragma once
 
-//#include "MemoryFree.h" // Checking remaining memory
+// #include "MemoryFree.h" // Checking remaining memory
 #include <cstring>
 #include <cstdlib>
 #include <cmath>
@@ -15,18 +15,19 @@
 
 ///< State machine - Defining possible states
 
-enum class ACMotorStates {
+enum class ACMotorStates
+{
   IDLE,
   FORWARD,
   BACKWARD,
-  STOPPING  
+  STOPPING
 };
 
 enum class WasteReservoirStates
 {
   FULL,
   IDLE,
-  RESERVED  
+  RESERVED
 };
 
 enum class WaterPumpStates
@@ -96,7 +97,7 @@ extern bool *Debug;
 extern bool *Metric;
 
 // Class specific variables
-//void getFreeMemory();
+// void getFreeMemory();
 float convertBetweenTempUnits(float);
 float convertBetweenPressureUnits(float);
 char *toText(int);
