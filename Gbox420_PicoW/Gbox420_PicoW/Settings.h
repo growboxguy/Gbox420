@@ -73,18 +73,24 @@ typedef struct
   struct HempyBucketSettings Bucket1 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
   struct HempyBucketSettings Bucket2 = {.EvaporationTarget = 2.0, .OverflowTarget = 0.3, .InitialDryWeight = 18.0, .DrainWaitTime = 180};
 
-  struct MQTTSettings ///< MQTT default settings
-  {
-    bool Enabled = true;                                       ///< Enable/Disable MQTT
-    char Address[MaxShotTextLength];                           ///< MQTT server address
-    uint16_t Port;                                             ///< MQTT port
-    uint16_t ReportingFrequency;                               ///< In seconds - How often report the current status
-    char PubTopic[MaxShotTextLength] = {"Gbox420/Hempy/"};     ///< Publish MQTT messages to this topic. Ends with a forward slash
-    char SubTopic[MaxShotTextLength] = {"Gbox420CMD/Hempy/#"}; ///< Subscribe to messages of this topic and all sub-topic
-    char LwtTopic[MaxShotTextLength] = {"Gbox420LWT/Hempy/"};  ///< When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
-    char LwtMessage[MaxShotTextLength] = {"Hempy Offline"};        ///< Subscribers will get this message under the topic specified by LwtTopic when the MQTT client goes offline
-  };
-  struct MQTTSettings MQTTHiveMQ = {.Address = "e2f9a473ea8048518e5964f6adaea88d.s1.eu.hivemq.cloud", .Port = 8883, .ReportingFrequency = 30}; // UPDATE THIS
+struct MqttClientSettings ///< MQTT client settings
+{
+    char MqttServerDNS[MaxWordLength];      ///< MQTT server DNS name, "" to use MqttServerIP instead
+    char MqttServerIP[MaxWordLength];       ///< MQTT server IP. Used when MqttServerDNS is empty, or the DNS lookup fails
+    uint16_t MqttServerPort;                   ///< MQTT server Port
+    char MqttServerUser[MaxWordLength];     ///< MQTT server username, "" if not needed
+    char MqttServerPassword[MaxWordLength]; ///< MQTT server password, "" if not needed
+    char ClientID[MaxWordLength];           ///< Should be unique across the MQTT server
+    char PubTopic[MaxWordLength];           ///< Publish MQTT messages to this topic. Ends with a forward slash/
+    char SubTopic[MaxWordLength];           ///< Subscribe to messages of this topic and all sub-topics
+    char LwtTopic[MaxWordLength];           ///< Last Will and Testament topic: When the connection is lost the MQTT broker will publish a final message to this topic. Ends with a forward slash
+    char LwtMessage[MaxWordLength];         ///< Last Will and Testament message: Subscribers will get this message under the topic specified by LwtTopic when the MQTT client goes offline
+    bool LwtRetain;                         ///< Last Will and Testament retention: 0:No retention, 1:Broker keeps the message and sends it to future subscribers (recommended)
+    bool PublishRetain;                     ///< Should the MQTT server retain Publish messages: 0:No retention (recommended), 1:Broker keeps the message and sends it to future subscribers
+    uint8_t QoS;                            ///< Quality of Service levels: 0:No QoS, 1: Broker ensures to send the message to the subscribers (recommended), 2: Broker ensures to send the message to the subscribers exactly once   https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/
+    uint32_t KeepAliveSeconds;              ///< Ping the MQTT server every X seconds to keep the connection active
+};
+ struct MqttClientSettings HempyMqttServer1 = {.MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .ClientID = "Hempy", .PubTopic = "Gbox420/Hempy/", .SubTopic = "Gbox420CMD/Hempy/#", .LwtTopic = "Gbox420LWT/Hempy/", .LwtMessage = "Hempy Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
 
   struct SoundSettings ///< Sound default settings
   {

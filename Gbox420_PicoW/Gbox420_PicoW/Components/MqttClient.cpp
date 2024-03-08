@@ -1,14 +1,14 @@
-#include "MqttAPI.h"
+#include "MqttClient.h"
 
-MqttAPI::MqttAPI(MQTTClientSettings *DefaultSettings, void *DataCallback)
+MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *DataCallback)
 {
     this->DataCallback = DataCallback;
-    MQTTServerPort = DefaultSettings->MQTTServerPort;
+    MQTTServerPort = DefaultSettings->MqttServerPort;
     Client = mqtt_client_new();                 // Allocate memory for the Stuct storing the MQTT client, store the pointer to it
     memset(&ClientInfo, 0, sizeof(ClientInfo)); // Allocate memory for the ClientInfo
     ClientInfo.client_id = DefaultSettings->ClientID;
-    ClientInfo.client_user = DefaultSettings->MQTTServerUser;
-    ClientInfo.client_pass = DefaultSettings->MQTTServerPassword;
+    ClientInfo.client_user = DefaultSettings->MqttServerUser;
+    ClientInfo.client_pass = DefaultSettings->MqttServerPassword;
     ClientInfo.keep_alive = DefaultSettings->KeepAliveSeconds;
     ClientInfo.will_topic = DefaultSettings->LwtTopic;
     ClientInfo.will_msg = DefaultSettings->LwtMessage;
@@ -16,11 +16,11 @@ MqttAPI::MqttAPI(MQTTClientSettings *DefaultSettings, void *DataCallback)
     ClientInfo.will_retain = DefaultSettings->LwtRetain;
 
     absolute_time_t LastRefresh = get_absolute_time();      // Used to track timeouts
-    ip4addr_aton(DefaultSettings->MQTTServerIP, &ServerIP); // If MQTTServerDNS is defined and the DNS lookup is successful this will be overwritten
-    if (DefaultSettings->MQTTServerDNS[0] != '\0')          // If an MQTT server DNS name is specified -> Look up the IP
+    ip4addr_aton(DefaultSettings->MqttServerIP, &ServerIP); // If MQTTServerDNS is defined and the DNS lookup is successful this will be overwritten
+    if (DefaultSettings->MqttServerDNS[0] != '\0')          // If an MQTT server DNS name is specified -> Look up the IP
     {
-        printf("Looking up IP for %s...", DefaultSettings->MQTTServerDNS);
-        err_t err = dns_gethostbyname(DefaultSettings->MQTTServerDNS, &ServerIP, mqttIpFound, this);
+        printf("Looking up IP for %s...", DefaultSettings->MqttServerDNS);
+        err_t err = dns_gethostbyname(DefaultSettings->MqttServerDNS, &ServerIP, mqttIpFound, this);
 
         if (err == ERR_OK) // DNS name found in cache
         {
@@ -59,13 +59,13 @@ MqttAPI::MqttAPI(MQTTClientSettings *DefaultSettings, void *DataCallback)
         mqttSubscribe_Unsubscribe(DefaultSettings->SubTopic, DefaultSettings->QoS, true); // Subscribe to MQTT messages in the SubTopic topic.
 }
 
-void MqttAPI::mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *Arg) // DNS lookup callback
+void MqttClient::mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *Arg) // DNS lookup callback
 {
-    ((MqttAPI *)Arg)->dnsLookupInProgress = false;
+    ((MqttClient *)Arg)->dnsLookupInProgress = false;
     if (Ipaddr)
     {
         printf("Found address: %s\n", ipaddr_ntoa(Ipaddr));
-        ((MqttAPI *)Arg)->ServerIP = *Ipaddr;
+        ((MqttClient *)Arg)->ServerIP = *Ipaddr;
     }
     else
     {
@@ -73,7 +73,7 @@ void MqttAPI::mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *A
     }
 }
 
-void MqttAPI::mqttConnect()
+void MqttClient::mqttConnect()
 {
     printf("Connecting to MQTT server...");
     cyw43_arch_lwip_begin();
@@ -90,12 +90,12 @@ void MqttAPI::mqttConnect()
     }
 }
 
-void MqttAPI::mqttDisconnect()
+void MqttClient::mqttDisconnect()
 {
     mqtt_disconnect(Client);
 }
 
-void MqttAPI::mqttConnect_Callback(mqtt_client_t *Client, void *Arg, mqtt_connection_status_t Status)
+void MqttClient::mqttConnect_Callback(mqtt_client_t *Client, void *Arg, mqtt_connection_status_t Status)
 {
     if (Status == MQTT_CONNECT_ACCEPTED)
     {
@@ -109,7 +109,7 @@ void MqttAPI::mqttConnect_Callback(mqtt_client_t *Client, void *Arg, mqtt_connec
     }
 }
 
-bool MqttAPI::mqttIsConnected()
+bool MqttClient::mqttIsConnected()
 {
     if (mqtt_client_is_connected(Client) == 1)
         return true;
@@ -117,7 +117,7 @@ bool MqttAPI::mqttIsConnected()
         return false;
 }
 
-void MqttAPI::mqttSubscribe_Unsubscribe(const char *SubTopic, u8_t QoS, bool Subscribe)
+void MqttClient::mqttSubscribe_Unsubscribe(const char *SubTopic, uint8_t QoS, bool Subscribe)
 {
     if (Subscribe)
     {
@@ -134,7 +134,7 @@ void MqttAPI::mqttSubscribe_Unsubscribe(const char *SubTopic, u8_t QoS, bool Sub
     }
 }
 
-void MqttAPI::mqttSubscribe_Callback(void *Arg, err_t Result)
+void MqttClient::mqttSubscribe_Callback(void *Arg, err_t Result)
 {
     if (Result == 0)
     {
@@ -146,12 +146,12 @@ void MqttAPI::mqttSubscribe_Callback(void *Arg, err_t Result)
     }
 }
 
-void MqttAPI::mqttIncomingTopic_Callback(void *Arg, const char *Topic, u32_t Tot_len)
+void MqttClient::mqttIncomingTopic_Callback(void *Arg, const char *Topic, uint32_t Tot_len)
 {
     printf("Incoming topic: %s ,total length: %u\n", Topic, (unsigned int)Tot_len);
 }
 
-void MqttAPI::mqttIncomingData_Callback(void *Arg, const u8_t *Data, u16_t Len, u8_t Flags)
+void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint16_t Len, uint8_t Flags)
 {
     printf("Incoming payload with length %d, flags %u\n", Len, (unsigned int)Flags);
 
@@ -165,7 +165,7 @@ void MqttAPI::mqttIncomingData_Callback(void *Arg, const u8_t *Data, u16_t Len, 
     }
 }
 
-void MqttAPI::mqttPublish(const char *PubTopic, const char *PubData, u8_t QoS, bool Retain)
+void MqttClient::mqttPublish(const char *PubTopic, const char *PubData, uint8_t QoS, bool Retain)
 {
     printf("Publishing data to %s ...", PubTopic);
     err_t err = mqtt_publish(Client, PubTopic, PubData, strlen(PubData), QoS, Retain, mqttPublish_Callback, &PubTopic);
@@ -175,7 +175,7 @@ void MqttAPI::mqttPublish(const char *PubTopic, const char *PubData, u8_t QoS, b
     }
 }
 
-void MqttAPI::mqttPublish_Callback(void *Arg, err_t Result)
+void MqttClient::mqttPublish_Callback(void *Arg, err_t Result)
 {
     if (Result != ERR_OK)
     {

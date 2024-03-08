@@ -26,7 +26,7 @@ add_compile_options(-Wall
 
 add_executable(MqttTestMulti
         MqttTestMulti.cpp
-        MqttAPI.cpp       
+        MqttClient.cpp       
         )
 
 target_include_directories(MqttTestMulti PRIVATE 

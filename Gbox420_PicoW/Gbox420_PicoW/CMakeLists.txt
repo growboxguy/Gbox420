@@ -40,6 +40,7 @@ target_include_directories(Gbox420_PicoW PRIVATE
 target_link_libraries(Gbox420_PicoW
         pico_cyw43_arch_lwip_threadsafe_background
         pico_stdlib
+        pico_lwip_mqtt
         hardware_rtc
         hardware_pwm
         )      

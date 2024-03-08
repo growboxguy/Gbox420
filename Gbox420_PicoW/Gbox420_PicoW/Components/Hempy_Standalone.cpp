@@ -11,7 +11,7 @@
 /**
 * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings, creates components that the instance controls, and subscribes to events
 */
-Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneSettings *DefaultSettings) : Common(Name), Common_Web(Name), Module(Name), Module_Web(Name)
+Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneSettings *DefaultSettings, Settings::MqttClientSettings *MqttSettings) : Common(Name), Common_Web(Name), Module(Name), Module_Web(Name)
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
@@ -24,7 +24,7 @@ Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneS
 
 
   Sound1 = new Sound_Web("Sound1", this, &ModuleSettings->Sound1);                    ///< Passing ModuleSettings members as references: Changes get written back to ModuleSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&ModuleSettings) + offsetof(Settings, VARIABLENAME))
-  MQTTHiveMQ = new MQTT("HiveHQ",this,&ModuleSettings->MQTTHiveMQ,&MQTTCommandReceived);
+  MqttHiveMQ = new MqttClient(&ModuleSettings->HempyMqttServer1,(void *)mqttReceivedData);
 
 
   addToReportQueue(this);                                                                //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
@@ -52,17 +52,9 @@ void Hempy_Standalone::report(bool FriendlyFormat)
 /**
 * @brief Called when an MQTT command is received
 */
-void Hempy_Standalone::MQTTCommandReceived(char *topic, uint8_t topicLen, char *data, uint32_t dataLen) ///< called when website is first opened
+void Hempy_Standalone::mqttReceivedData(const uint8_t *Data, uint16_t Len)
 {
-  uint8_t strTopic[topicLen + 1];
-	memcpy(strTopic, topic, topicLen);
-	strTopic[topicLen] = '\0';
-
-	uint8_t strData[dataLen + 1];
-	memcpy(strData, data, dataLen);
-	strData[dataLen] = '\0';
-
-	printf("Topic: %s, Data: %s", strTopic, strData);
+  printf("%s\n", Data); // Print the message received on the subscribed topic
 }
 
 

@@ -7,8 +7,8 @@ int main()
     sleep_ms(10000);                        // Not needed, gives time to open a Serial Monitor
     initializeWiFi();                       // Connect to the WiFi network
 
-    Server1 = new MqttAPI(&MQTTServer1, (void *)mqttReceivedData); // Create MQTT client object and pass the settings struct and the callback function's address
-    Server2 = new MqttAPI(&MQTTServer2, (void *)mqttReceivedData); // Create MQTT client object and pass the settings struct and the callback function's address
+    Server1 = new MqttClient(&MQTTServer1, (void *)mqttReceivedData); // Create MQTT client object. pass the settings struct and the callback function's address
+    Server2 = new MqttClient(&MQTTServer2, (void *)mqttReceivedData); // Create MQTT client object. and pass the settings struct and the callback function's address
 
     absolute_time_t LastRefresh = get_absolute_time(); // Used to track timeouts
     while (1)

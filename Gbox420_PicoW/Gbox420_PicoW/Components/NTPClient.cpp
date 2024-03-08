@@ -78,7 +78,7 @@ void ntp_dns_found(const char *hostname, const ip_addr_t *ipaddr, void *arg)
 }
 
 // NTP data received
-void ntp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, u16_t port)
+void ntp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port)
 {
     NTP_T *state = (NTP_T *)arg;
     uint8_t mode = pbuf_get_at(p, 0) & 0x7;

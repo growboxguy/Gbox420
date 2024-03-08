@@ -21,7 +21,7 @@
 
 // Global variable initialization
 datetime_t CurrentDateTime;                ///<   calling getRTC() function it will update this variable
-char CurrentTime[MaxWordLength] = "";      ///< calling getRTC() function it will update this variable   //TODO: Remove this, return it instead in getRTC()
+//char CurrentTime[MaxWordLength] = "";      ///< calling getRTC() function it will update this variable   //TODO: Remove this, return it instead in getRTC()
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
 char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
 bool *Debug;                               ///< True - Turns on extra debug messages on the Serial Output
@@ -109,7 +109,7 @@ int main()
 
   // Create the Module objects
   printf("Creating Hempy module\n");
-  Hempy_Standalone1 = new Hempy_Standalone("Hemp1", &ModuleSettings->Hempy_Standalone1); ///< This is the dev object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  Hempy_Standalone1 = new Hempy_Standalone("Hemp1", &ModuleSettings->Hempy_Standalone1, &ModuleSettings->HempyMqttServer1); ///< This is the dev object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   //   sendEmailAlert("Grow%20box%20(re)started");
   printf("Setup ready, starting loops:\n");

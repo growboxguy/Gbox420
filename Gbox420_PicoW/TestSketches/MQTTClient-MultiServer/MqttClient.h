@@ -26,12 +26,12 @@ struct MQTTClientSettings ///< MQTT client settings
     uint32_t KeepAliveSeconds;              ///< Ping the MQTT server every X seconds to keep the connection active
 };
 
-class MqttAPI
+class MqttClient
 {
     typedef void (*Callback_type)(const u8_t *Data, u16_t Len); // Defines how the DataCallback function in mqttConnect should look like
 
 public:
-    MqttAPI(MQTTClientSettings *DefaultSettings, void *DataCallback);
+    MqttClient(MQTTClientSettings *DefaultSettings, void *DataCallback);
     void mqttConnect();                                                                 ///< Initiate connection to the MQTT server
     void mqttDisconnect();                                                              ///< Disconnect from MQTT server
     bool mqttIsConnected();                                                             ///< true: Connected to MQTT server, false: not connected
