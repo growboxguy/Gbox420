@@ -22,6 +22,7 @@
 #include "hardware/rtc.h"
 #include "pico/util/datetime.h"
 #include "../Settings.h"
+#include "DnsClient.h"
 
 typedef struct
 {

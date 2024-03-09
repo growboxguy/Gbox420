@@ -1,4 +1,4 @@
-#include "NTPClient.h"
+#include "NtpClient.h"
 
 // Initialize the built-in RTC
 void initializeRTC()
@@ -15,6 +15,42 @@ void getRTC()
     rtc_get_datetime(&CurrentDateTime);
     datetime_to_str(ShortMessage, MaxShotTextLength, &CurrentDateTime);
     printf("%s", ShortMessage);
+}
+
+void ntp_update()
+{
+    NTP_T *state = (NTP_T *)calloc(1, sizeof(NTP_T));
+    state->ntp_pcb = udp_new_ip_type(IPADDR_TYPE_ANY);
+    udp_recv(state->ntp_pcb, ntp_recv, state);
+
+    state->ntp_resend_alarm = add_alarm_in_ms(NTP_RESEND_TIME, ntp_failed_handler, state, true);
+
+    if (DnsLookup(NTP_SERVER, &state->ntp_server_address))
+    {
+        ntp_request(state);
+    }
+    else
+    {
+        printf("NTP DNS request failed\n");
+        ntp_result(state, -1, NULL);
+    }
+}
+
+// Call back with a DNS result
+void ntp_dns_found(const char *hostname, const ip_addr_t *ipaddr, void *arg)
+{
+    NTP_T *state = (NTP_T *)arg;
+    if (ipaddr)
+    {
+        state->ntp_server_address = *ipaddr;
+        // printf("ntp address %s\n", ipaddr_ntoa(ipaddr));
+        ntp_request(state);
+    }
+    else
+    {
+        printf("NTP DNS request failed\n");
+        ntp_result(state, -1, NULL);
+    }
 }
 
 // Called in an interrupt with results of the NTP request
@@ -69,23 +105,6 @@ int64_t ntp_failed_handler(alarm_id_t id, void *user_data)
     return 0;
 }
 
-// Call back with a DNS result
-void ntp_dns_found(const char *hostname, const ip_addr_t *ipaddr, void *arg)
-{
-    NTP_T *state = (NTP_T *)arg;
-    if (ipaddr)
-    {
-        state->ntp_server_address = *ipaddr;
-        // printf("ntp address %s\n", ipaddr_ntoa(ipaddr));
-        ntp_request(state);
-    }
-    else
-    {
-        printf("NTP DNS request failed\n");
-        ntp_result(state, -1, NULL);
-    }
-}
-
 // NTP data received
 void ntp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port)
 {
@@ -110,16 +129,4 @@ void ntp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *a
         ntp_result(state, -1, NULL);
     }
     pbuf_free(p);
-}
-
-void ntp_update()
-{
-    NTP_T *state = (NTP_T *)calloc(1, sizeof(NTP_T));
-    state->ntp_pcb = udp_new_ip_type(IPADDR_TYPE_ANY);
-    udp_recv(state->ntp_pcb, ntp_recv, state);
-
-    state->ntp_resend_alarm = add_alarm_in_ms(NTP_RESEND_TIME, ntp_failed_handler, state, true);
-    cyw43_arch_lwip_begin();
-    dns_gethostbyname(NTP_SERVER, &state->ntp_server_address, ntp_dns_found, state);
-    cyw43_arch_lwip_end();
 }

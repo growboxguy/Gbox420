@@ -14,7 +14,7 @@
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
 #include "Settings.h" // Settings for every component //TODO: Try passing these directly when creating an object?
-#include "Components/NTPClient.h"
+#include "Components/NtpClient.h"
 #include "Components/Sound.h"
 #include "Components/Hempy_Standalone.h" // Represents a complete box with all feautres
 
@@ -117,7 +117,7 @@ int main()
       printf(" Running...\n");
       LastRefresh = get_absolute_time();
     }
-  }
+  }  
   cyw43_arch_deinit();
   return 0;
 }

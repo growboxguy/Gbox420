@@ -6,6 +6,7 @@
 #include "lwip/dns.h"
 #include "lwip/err.h"
 #include "../Settings.h" ///< for loading defaults and storing/reading user settings
+#include "DnsClient.h"
 
 #define MaxWordLength 128 ///< Default char * buffer length for storing a word + null terminator. Memory intense!
 
@@ -22,8 +23,7 @@ public:
     void mqttSubscribe_Unsubscribe(const char *SubTopic, uint8_t QoS, bool Subscribe);     ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
 
 private:
-    bool dnsLookupInProgress; ///< If MQTTServerDNS is specified the IP address needs to be resolved. true: DNS lookup in progress
-
+    
 protected:
     mqtt_client_t *Client;
     mqtt_connect_client_info_t ClientInfo;

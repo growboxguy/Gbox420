@@ -15,38 +15,15 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *Data
     ClientInfo.will_qos = DefaultSettings->QoS;
     ClientInfo.will_retain = DefaultSettings->LwtRetain;
 
-    absolute_time_t LastRefresh = get_absolute_time();      // Used to track timeouts
     ip4addr_aton(DefaultSettings->MqttServerIP, &ServerIP); // If MQTTServerDNS is defined and the DNS lookup is successful this will be overwritten
     if (DefaultSettings->MqttServerDNS[0] != '\0')          // If an MQTT server DNS name is specified -> Look up the IP
     {
-        printf("Looking up IP for %s...", DefaultSettings->MqttServerDNS);
-        err_t err = dns_gethostbyname(DefaultSettings->MqttServerDNS, &ServerIP, mqttIpFound, this);
-
-        if (err == ERR_OK) // DNS name found in cache
-        {
-            printf("Found cached address\n");
-            dnsLookupInProgress = false;
-        }
-        else
-        {
-            dnsLookupInProgress = true;
-        }
-
-        while (dnsLookupInProgress) // Waiting for the DNS lookup to finish
-        {
-            sleep_ms(100);
-            if (absolute_time_diff_us(LastRefresh, get_absolute_time()) > 10000000) // 10sec timeout
-            {
-                printf("DNS lookup timeout\n");
-                break;
-            }
-        }
+        DnsLookup(DefaultSettings->MqttServerDNS, &ServerIP);
     }
 
+    absolute_time_t LastRefresh = get_absolute_time(); // Used to track timeouts
     mqttConnect();
-
-    LastRefresh = get_absolute_time(); // Reset the timeout counter
-    while (!mqttIsConnected())         // Waiting for the MQTT connection to establish
+    while (!mqttIsConnected()) // Waiting for the MQTT connection to establish
     {
         sleep_ms(100);
         if (absolute_time_diff_us(LastRefresh, get_absolute_time()) > 10000000) // 10sec timeout
@@ -57,20 +34,6 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *Data
     }
     if (mqttIsConnected())
         mqttSubscribe_Unsubscribe(DefaultSettings->SubTopic, DefaultSettings->QoS, true); // Subscribe to MQTT messages in the SubTopic topic.
-}
-
-void MqttClient::mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *Arg) // DNS lookup callback
-{
-    ((MqttClient *)Arg)->dnsLookupInProgress = false;
-    if (Ipaddr)
-    {
-        printf("Found address: %s\n", ipaddr_ntoa(Ipaddr));
-        ((MqttClient *)Arg)->ServerIP = *Ipaddr;
-    }
-    else
-    {
-        printf("DNS lookup failed\n");
-    }
 }
 
 void MqttClient::mqttConnect()
