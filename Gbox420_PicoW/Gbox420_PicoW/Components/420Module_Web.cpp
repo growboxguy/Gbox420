@@ -34,16 +34,6 @@ void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Subscriber)
     printf("WebsiteQueue_Refresh overflow!\n");
 }
 
-/**
- * @brief Subscribe to MQTT or ESP-link website commands  (Pressing a button, setting a value)
- */
-void Module_Web::addToCommandQueue(Common_Web *Subscriber)
-{
-  if (QueueDepth > CommandQueue_Count)
-    CommandQueue[CommandQueue_Count++] = Subscriber;
-  else
-    printf("CommandQueue overflow!\n");
-}
 
 /**
  * @brief Notify subscribed components of a website load event
@@ -67,23 +57,7 @@ void Module_Web::websiteRefreshEventTrigger(char *Url)
   }
 }
 
-/**
- * @brief Notify subscribed components of a received MQTT/Website command
- */
-void Module_Web::commandEventTrigger(char *Command, char *Data)
-{
-  printf(" %s", &Command);
-  printf("  %s\n", &Data);
-  bool NameMatchFound = false;
-  for (int i = 0; i < CommandQueue_Count; i++)
-  {
-    NameMatchFound = CommandQueue[i]->commandEvent(Command, Data);
-    if (NameMatchFound)
-      break;
-  }
-  if (!NameMatchFound) ///< None of the subscribed component Names matched the command. Try processing it as a Module settings command.
-    settingsEvent_Command(Command, Data);
-}
+
 
 void Module_Web::refresh() // TODO: Rework module refreshing logic, move Google Sheets to its own Component
 {

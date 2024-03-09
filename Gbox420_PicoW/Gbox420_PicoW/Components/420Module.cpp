@@ -28,6 +28,24 @@ void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuf
 }
 
 /**
+ * @brief Notify subscribed components of a received MQTT/Website command
+ */
+void Module::commandEventTrigger(char *Command, char *Data)
+{
+  printf(" %s", &Command);
+  printf("  %s\n", &Data);
+  bool NameMatchFound = false;
+  for (int i = 0; i < CommandQueueItemCount; i++)
+  {
+    NameMatchFound = CommandQueue[i]->commandEvent(Command, Data);
+    if (NameMatchFound)
+      break;
+  }
+  //if (!NameMatchFound) ///< None of the subscribed component Names matched the command. Try processing it as a Module settings command.
+   // settingsEvent_Command(Command, Data); // TODO: The module should subscribe to the commandEvent callback the same way as any other component
+}
+
+/**
  * @brief Set how often a report should be sent to the Serial output (Arduino and ESP)
  * @param Frequency Send a report every X seconds
  */
@@ -114,6 +132,9 @@ Sound *Module::getSoundObject()
 
 ///< Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes
 
+/**
+ * @brief Subscribe to report() calls
+ */
 void Module::addToReportQueue(Common *Component)
 {
   if (QueueDepth > reportQueueItemCount)
@@ -122,6 +143,10 @@ void Module::addToReportQueue(Common *Component)
     printf("Report queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
+
+/**
+ * @brief Subscribe to refresh() calls
+ */
 void Module::addToRefreshQueue(Common *Component)
 {
   if (QueueDepth > refreshQueueItemCount)
@@ -129,6 +154,18 @@ void Module::addToRefreshQueue(Common *Component)
   else
     printf("Refresh queue overflow\n");
 }
+
+/**
+ * @brief Subscribe to commandEvent(char *Command, char *Data) calls  (MQTT command)
+ */
+void Module::addToCommandQueue(Common *Subscriber)
+{
+  if (QueueDepth > CommandQueueItemCount)
+    CommandQueue[CommandQueueItemCount++] = Subscriber;
+  else
+    printf("CommandQueue overflow!\n");
+}
+
 
 ///< Even logs to the Serial output
 void Module::addToLog(const char *LongMessage, uint8_t Indent)

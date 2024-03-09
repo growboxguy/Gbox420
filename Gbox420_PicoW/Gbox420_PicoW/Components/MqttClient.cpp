@@ -86,7 +86,7 @@ void MqttClient::mqttConnect()
     }
     else
     {
-        printf("initiated, waiting for connected callback...");
+        printf("initiated, waiting for callback...");
     }
 }
 

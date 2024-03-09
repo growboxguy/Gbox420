@@ -14,7 +14,9 @@ public:
   Module(const char *Name, Sound *SoundFeedback); ///< constructor
   Module(const char *Name);                       ///< constructor
   void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false);
-  void runReport(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false); ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.
+  void commandEventTrigger(char *Command, char *Data);                ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
+   void runReport(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false); ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.
+  void addToCommandQueue(Common *Subscriber);                     ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method
   void run();
   virtual void addToLog(const char *Text, uint8_t indent = 3);
   void addToReportQueue(Common *Component);  ///< Subscribing to the report queue: Calls the report() method
@@ -45,6 +47,8 @@ protected:
   bool ConsoleReportRequested = false;
   Common *ReportQueue[QueueDepth] = {}; ///< aggregate initializer: Same as initializing to null pointers
   Common *RefreshQueue[QueueDepth] = {};
+  Common *CommandQueue[QueueDepth] = {};  
   uint8_t reportQueueItemCount = 0; ///< Tracking queue item count
   uint8_t refreshQueueItemCount = 0;
+  uint8_t CommandQueueItemCount = 0;
 };

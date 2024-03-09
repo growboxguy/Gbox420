@@ -20,6 +20,7 @@
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
 #include "hardware/rtc.h"
+#include "pico/util/datetime.h"
 #include "../Settings.h"
 
 typedef struct
@@ -31,10 +32,11 @@ typedef struct
     alarm_id_t ntp_resend_alarm;
 } NTP_T;
 
-void initializeRTC();                                                                                // Initialize the Real Time Clock and do an NTP update
-void ntp_result(NTP_T *state, int status, time_t *result);                                           // Called with the NTP results, updates the Real Time Clock
-void ntp_request(NTP_T *state);                                                                      // Make an NTP request
-int64_t ntp_failed_handler(alarm_id_t id, void *user_data);                                          // In case NTP query fails
-void ntp_dns_found(const char *hostname, const ip_addr_t *ipaddr, void *arg);                        // When the IP address of NTP server is found initiates an ntp_request
-void ntp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port); // NTP data received
-void ntp_update();                                                                                   // Initiate an NTP Server query for getting the current time
+void initializeRTC();                                                                                ///< Initialize the Real Time Clock and do an NTP update
+void getRTC();                                                                                       ///< Print the current time to stdout
+void ntp_result(NTP_T *state, int status, time_t *result);                                           ///< Called with the NTP results, updates the Real Time Clock
+void ntp_request(NTP_T *state);                                                                      ///< Make an NTP request
+int64_t ntp_failed_handler(alarm_id_t id, void *user_data);                                          ///< In case NTP query fails
+void ntp_dns_found(const char *hostname, const ip_addr_t *ipaddr, void *arg);                        ///< When the IP address of NTP server is found initiates an ntp_request
+void ntp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port); ///< NTP data received
+void ntp_update();                                                                                   ///< Initiate an NTP Server query for getting the current time

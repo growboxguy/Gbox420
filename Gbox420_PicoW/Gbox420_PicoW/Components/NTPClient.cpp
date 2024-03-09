@@ -4,8 +4,17 @@
 void initializeRTC()
 {
     printf("Initializing RTC...");
-    rtc_init();
+    rtc_init(); // Initialize "hardware/rtc.h"
     ntp_update();
+}
+
+// Query current time from local RTC
+void getRTC()
+{
+    datetime_t CurrentDateTime;
+    rtc_get_datetime(&CurrentDateTime);
+    datetime_to_str(ShortMessage, MaxShotTextLength, &CurrentDateTime);
+    printf("%s", ShortMessage);
 }
 
 // Called in an interrupt with results of the NTP request

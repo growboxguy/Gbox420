@@ -13,14 +13,12 @@
 #include "hardware/watchdog.h"                         //Watchdog to auto-reboot in case of an error
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
-#include "pico/util/datetime.h"
 #include "Settings.h" // Settings for every component //TODO: Try passing these directly when creating an object?
 #include "Components/NTPClient.h"
 #include "Components/Sound.h"
 #include "Components/Hempy_Standalone.h" // Represents a complete box with all feautres
 
 // Global variable initialization
-datetime_t CurrentDateTime; ///<   calling getRTC() function it will update this variable
 // char CurrentTime[MaxWordLength] = "";      ///< calling getRTC() function it will update this variable   //TODO: Remove this, return it instead in getRTC()
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
 char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
@@ -58,14 +56,6 @@ void initializeWiFi()
   }
 }
 
-// Query current time from local RTC
-void getRTC()
-{
-  rtc_get_datetime(&CurrentDateTime);
-  datetime_to_str(ShortMessage, MaxShotTextLength, &CurrentDateTime);
-  printf("%s", ShortMessage);
-}
-
 ///< Blink built-in LED on Pico W
 void heartBeat()
 {
@@ -94,14 +84,10 @@ int main()
   {
     printf("\nClean boot\n");
   }
-  printf("\nHempy module initializing\n");
-  watchdog_enable(0x7fffff, 1); // Maximum of 0x7fffff, which is approximately 8.3 seconds
-
+  printf("\nHempy module initializing\n");  
   initializeWiFi();
-  watchdog_update();
   initializeRTC();
-  watchdog_update();
-
+  
   // Loading settings from EEPROM
   ModuleSettings = loadSettings();
   Debug = &ModuleSettings->Debug;
@@ -110,10 +96,12 @@ int main()
   // Create the Module objects
   printf("Creating Hempy module\n");
   Hempy_Standalone1 = new Hempy_Standalone("Hemp1", &ModuleSettings->Hempy_Standalone1, &ModuleSettings->HempyMqttServer1); ///< This is the dev object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  
+  watchdog_enable(0x7fffff, 1); // Maximum of 0x7fffff, which is approximately 8.3 seconds
+  printf("Watchdog active\n");
 
   //   sendEmailAlert("Grow%20box%20(re)started");
   printf("Setup ready, starting loops:\n");
-  watchdog_update();
   // run_ntp_test();
 
   struct repeating_timer Timer1sec;

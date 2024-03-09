@@ -30,10 +30,8 @@ public:
   Module_Web(const char *Name);                                       ///< constructor
   void addToWebsiteQueue_Load(Common_Web *Subscriber);                ///< Calls the websiteEvent_Load() method of the Subscriber when an ESP-link website is loaded
   void addToWebsiteQueue_Refresh(Common_Web *Subscriber);             ///< Calls the websiteEvent_Refresh() method of the Subscriber when an ESP-link website is refreshing
-  void addToCommandQueue(Common_Web *Subscriber);                     ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method
   void websiteLoadEventTrigger(__attribute__((unused)) char *Url);    ///< Notifies the subscribed components of a Load event. Passes the URL of the custom webpage that was opened (/Hempy.html or /Settings.html )
   void websiteRefreshEventTrigger(__attribute__((unused)) char *Url); ///< Notifies the subscribed components of a Refresh event. Passes the URL of the custom webpage that was opened (/Hempy.html or /Settings.html )
-  void commandEventTrigger(char *Command, char *Data);                ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
   void refresh();
   char *settingsToJSON();
   void settingsEvent_Load(__attribute__((unused)) char *Url);                                            ///< Gets called when the /Settings.html is loaded. This page is for configuring the Gbox420 module settings (Console logging, Debug mode, MQTT reporting topic, Google Sheets relay...etc)
@@ -60,10 +58,8 @@ protected:
   void setPushingBoxLogRelayID(const char *ID);
   Common_Web *WebsiteQueue_Load[QueueDepth] = {};
   Common_Web *WebsiteQueue_Refresh[QueueDepth] = {};
-  Common_Web *CommandQueue[QueueDepth] = {};
   uint8_t WebsiteQueue_Load_Count = 0;
-  uint8_t WebsiteQueue_Refresh_Count = 0;
-  uint8_t CommandQueue_Count = 0;
+  uint8_t WebsiteQueue_Refresh_Count = 0;  
   bool RefreshRequested = false;
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;
