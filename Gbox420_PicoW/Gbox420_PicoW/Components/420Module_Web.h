@@ -59,7 +59,7 @@ protected:
   Common_Web *WebsiteQueue_Load[QueueDepth] = {};
   Common_Web *WebsiteQueue_Refresh[QueueDepth] = {};
   uint8_t WebsiteQueue_Load_Count = 0;
-  uint8_t WebsiteQueue_Refresh_Count = 0;  
+  uint8_t WebsiteQueue_Refresh_Count = 0;
   bool RefreshRequested = false;
   bool ConsoleReportRequested = false;
   bool ReportToGoogleSheetsRequested = false;

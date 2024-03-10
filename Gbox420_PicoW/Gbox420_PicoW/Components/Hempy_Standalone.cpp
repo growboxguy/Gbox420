@@ -22,7 +22,7 @@ Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneS
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
 
-  Sound1 = new Sound_Web(this, &ModuleSettings->Sound1); ///< Passing DefaultSettings members as references: Changes get written back to DefaultSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&DefaultSettings) + offsetof(Settings, VARIABLENAME))
+  Sound1 = new Sound(this, &ModuleSettings->Sound1); ///< Passing DefaultSettings members as references: Changes get written back to DefaultSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&DefaultSettings) + offsetof(Settings, VARIABLENAME))
   MqttHiveMQ = new MqttClient(&ModuleSettings->HempyMqttServer1, (void *)mqttReceivedData);
 
   addToReportQueue(this);  //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
@@ -50,9 +50,10 @@ void Hempy_Standalone::report(bool FriendlyFormat)
 /**
  * @brief Called when an MQTT command is received
  */
-void Hempy_Standalone::mqttReceivedData(const uint8_t *Data, uint16_t Len)
+void Hempy_Standalone::mqttReceivedData(const char *Topic, uint16_t TopicLength, char *Data, uint16_t DataLength)
 {
-  printf("%s\n", Data); // Print the message received on the subscribed topic
+  printf("[%u]%s\n", TopicLength, Topic); // Print the topic the subscribed message was received in
+  printf("[%u]%s\n", DataLength, Data);   // Print the message received on the subscribed topic
 }
 
 /**

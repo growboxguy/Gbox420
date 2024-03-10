@@ -28,6 +28,26 @@ void Sound::report(bool FriendlyFormat)
   strcat(LongMessage, "\"}"); ///< closing the curly bracket at the end of the JSON
 }
 
+bool Sound::commandEvent(char *Command, char *Data)
+{ ///< When the website field is submitted
+  if (!isThisMine(Command))
+  {
+    return false;
+  }
+  else
+  {
+    if (strcmp(ShortMessage, "E") == 0)
+    {
+      // setSoundOnOff(WebServer.getArgBoolean());
+    }
+    else if (strcmp(ShortMessage, "Ee") == 0)
+    {
+      playEE();
+    }
+    return true;
+  }
+}
+
 void Sound::refresh()
 {
   // Common::refresh();
@@ -42,9 +62,12 @@ void Sound::checkEvents()
       OffSound();
     if (PlayOnSound)
       OnSound();
+    if (PlayEE)
+      EE();
   }
   PlayOnSound = false;
   PlayOffSound = false;
+  PlayEE = false;
 }
 
 void Sound::playOnOffSound(bool State)
@@ -65,6 +88,11 @@ void Sound::playOffSound()
   PlayOffSound = true;
 }
 
+void Sound::playEE()
+{
+  PlayEE = true;
+}
+
 void Sound::setSoundOnOff(bool State)
 {
   *Enabled = State;
@@ -82,7 +110,7 @@ void inline Sound::pwm_calcDivTop(pwm_config *c, int frequency, int sysClock)
   c->top = count / div;
 }
 
-void Sound::beep(int note, int duration)
+void Sound::beep(const int note, const int duration)
 {
   pwm_calcDivTop(&cfg, note, 125000000);
   pwm_init(slice_num, &cfg, true);
@@ -113,6 +141,17 @@ void Sound::OffSound()
   }
 }
 
+void Sound::EE()
+{
+  printf("Easter egg\n");
+
+  for (int thisNote = 0; thisNote < 134; thisNote++)
+  {
+    beep(melody[thisNote], tempo[thisNote]);
+    //  watchdog_update(); ///< Reset Watchdog timeout to avoid Arduino reseting while playing the song
+  }
+}
+
 bool Sound::getEnabledState()
 {
   return *Enabled;
@@ -129,3 +168,94 @@ char *Sound::getEnabledStateText(bool FriendlyFormat)
     return toText(*Enabled);
   }
 }
+
+const int Sound::melody[] = { ///< https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
+    2637, 2637, 0, 2637,
+    0, 2093, 2637, 0,
+    3136, 0, 0, 0,
+    1568, 0, 0, 0,
+
+    2093, 0, 0, 1568,
+    0, 0, 1319, 0,
+    0, 1760, 0, 1976,
+    0, 1865, 1760, 0,
+
+    1568, 2637, 3136,
+    3520, 0, 2794, 3136,
+    0, 2637, 0, 2093,
+    2349, 1976, 0, 0,
+
+    2093, 0, 0, 1568,
+    0, 0, 1319, 0,
+    0, 1760, 0, 1976,
+    0, 1865, 1760, 0,
+
+    1568, 2637, 3136,
+    3520, 0, 2794, 3136,
+    0, 2637, 0, 2093,
+    2349, 1976, 0, 0,
+
+    0, 0, 0,
+
+    262, 523, 220, 440,
+    233, 466, 0,
+    0,
+    262, 523, 220, 440,
+    233, 466, 0,
+    0,
+    175, 349, 147, 294,
+    156, 311, 0,
+    0,
+    175, 349, 147, 294,
+    156, 311, 0,
+    0, 311, 277, 294,
+    277, 311,
+    311, 208,
+    196, 277,
+    262, 370, 349, 165, 466, 440,
+    415, 311, 247,
+    233, 220, 208};
+
+const uint16_t Sound::tempo[] = {
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+
+    90, 90, 90,
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+
+    90, 90, 90,
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+    120, 120, 120, 120,
+
+    300, 300, 300,
+
+    120, 120, 120, 120,
+    120, 120, 60, 30,
+    120, 120, 120, 120,
+    120, 120, 60, 30,
+    120, 120, 120, 120,
+    120, 120, 60, 30,
+    120, 120, 120, 120,
+    120, 120, 60,
+    60, 180, 180, 180,
+    60, 60,
+    60, 60,
+    60, 60,
+    180, 180, 180, 180, 180, 180,
+    100, 100, 100,
+    100, 100, 100};

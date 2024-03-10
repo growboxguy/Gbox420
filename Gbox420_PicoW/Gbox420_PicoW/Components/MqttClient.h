@@ -12,7 +12,7 @@
 
 class MqttClient
 {
-    typedef void (*Callback_type)(const uint8_t *Data, uint16_t Len); // Defines how the DataCallback function in mqttConnect should look like
+    typedef void (*Callback_type)(const char *Topic, uint16_t TopicLength, char *Data, uint16_t DataLength); // Defines how the DataCallback function in mqttConnect should look like
 
 public:
     MqttClient(Settings::MqttClientSettings *DefaultSettings, void *DataCallback);
@@ -29,6 +29,8 @@ protected:
     mqtt_connect_client_info_t ClientInfo;
     ip_addr_t MqttServerAddress;
     uint16_t *MqttServerPort;
+    char LastReceivedTopic[MaxShotTextLength];
+    const char *LastReceivedData = NULL;
     void *DataCallback;                                                                                  ///< Pointer to the callback function (Callback_type)
     static void mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *Arg);                   ///< Called When the IP address of the MQTT server is found
     static void mqttPublish_Callback(void *Arg, err_t Result);                                           ///< Callback with the publish result

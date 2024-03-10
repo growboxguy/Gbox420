@@ -33,7 +33,7 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *Data
         sleep_ms(100);
     }
 
-    if (DefaultSettings->SubTopic[0] != '\0' && mqttIsConnected())  //If a SubTopic was configured -> Subscribe to it
+    if (DefaultSettings->SubTopic[0] != '\0' && mqttIsConnected()) // If a SubTopic was configured -> Subscribe to it
     {
         NextRefresh = make_timeout_time_ms(5000); // 5sec
         SubscribeInProgress = true;
@@ -55,7 +55,7 @@ void MqttClient::mqttConnect()
 {
     printf("Connecting to MQTT server...");
     cyw43_arch_lwip_begin();
-    err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, DataCallback, &ClientInfo);
+    err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, this, &ClientInfo);
     cyw43_arch_lwip_end();
 
     if (err != ERR_OK)
@@ -122,21 +122,24 @@ void MqttClient::mqttSubscribe_Callback(void *Arg, err_t Result)
     {
         printf("failed: %s\n", Result);
     }
-    ((MqttClient*)Arg)->SubscribeInProgress = false;
+    ((MqttClient *)Arg)->SubscribeInProgress = false;
 }
 
 void MqttClient::mqttIncomingTopic_Callback(void *Arg, const char *Topic, uint32_t Tot_len)
 {
-    printf("Incoming topic: %s ,total length: %u\n", Topic, (unsigned int)Tot_len);
+    strcpy(((MqttClient *)Arg)->LastReceivedTopic, Topic);
+    // printf("MQTT incoming topic: %s\n", Topic);
 }
 
 void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint16_t Len, uint8_t Flags)
 {
-    printf("Incoming payload with length %d, flags %u\n", Len, (unsigned int)Flags);
+    char TempData[Len + 1] = {}; // The +1 character is the null terminator
+    memcpy(TempData, Data, Len);
+    printf("MQTT incoming[%u] - Topic[%zu]: %s - Payload[%d]: %s\n", (unsigned int)Flags, strlen(((MqttClient *)Arg)->LastReceivedTopic), ((MqttClient *)Arg)->LastReceivedTopic, Len, TempData);
 
     if (Flags == 1) // Last fragment of payload received (or the whole payload fits receive buffer (MQTT_VAR_HEADER_BUFFER_LEN, MQTT_DATA_FLAG_LAST)
     {
-        ((Callback_type)Arg)(Data, Len);
+        ((Callback_type)((MqttClient *)Arg)->DataCallback)(((MqttClient *)Arg)->LastReceivedTopic, strlen(((MqttClient *)Arg)->LastReceivedTopic), TempData, Len); // Passing the data back
     }
     else
     {

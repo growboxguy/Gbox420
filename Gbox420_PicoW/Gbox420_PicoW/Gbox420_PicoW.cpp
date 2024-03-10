@@ -32,7 +32,7 @@ ELClientCmd ESPCmd(&ESPLink);             ///< ESP-link - Helps getting the curr
 ELClientRest PushingBoxRestAPI(&ESPLink); ///< ESP-link - REST API
 ELClientMqtt MqttAPI(&ESPLink);           ///< ESP-link - MQTT protocol for sending and receiving messages
 */
-Settings *ModuleSettings;           ///< This object will store the settings loaded from the EEPROM. Persistent between reboots. //TODO: Find a solution to store this (NO EEPROM on Pico)
+Settings *ModuleSettings;            ///< This object will store the settings loaded from the EEPROM. Persistent between reboots. //TODO: Find a solution to store this (NO EEPROM on Pico)
 NtpClient *NtpClient1;               ///< Pointer to
 Hempy_Standalone *Hempy_Standalone1; ///< Represents a Grow Box with all components (LED lights, DHT sensors, Power sensor, Hempy Buckets, Water pants..etc)
 
@@ -85,17 +85,17 @@ int main()
   {
     printf("\nClean boot\n");
   }
-  printf("\nHempy module initializing\n");
-  initializeWiFi();
+  printf("\nGbox420 initializing\n");
 
   // Loading settings from EEPROM
   ModuleSettings = loadSettings();
   Debug = &ModuleSettings->Debug;
   Metric = &ModuleSettings->Metric;
 
+  initializeWiFi();
+
   // Create the Module objects
-  printf("Creating Hempy module\n");
-  NtpClient1 = new NtpClient(&ModuleSettings->NTPServer1);  // TODO: After Real Time Clock is updated delete the NtpClient object
+  NtpClient1 = new NtpClient(&ModuleSettings->NTPServer1);                                                                  // TODO: After Real Time Clock is updated delete the NtpClient object
   Hempy_Standalone1 = new Hempy_Standalone("Hemp1", &ModuleSettings->Hempy_Standalone1, &ModuleSettings->HempyMqttServer1); ///< This is the dev object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
   watchdog_enable(0x7fffff, 1); // Maximum of 0x7fffff, which is approximately 8.3 seconds

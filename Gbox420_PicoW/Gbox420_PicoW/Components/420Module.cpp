@@ -41,8 +41,8 @@ void Module::commandEventTrigger(char *Command, char *Data)
     if (NameMatchFound)
       break;
   }
-  //if (!NameMatchFound) ///< None of the subscribed component Names matched the command. Try processing it as a Module settings command.
-   // settingsEvent_Command(Command, Data); // TODO: The module should subscribe to the commandEvent callback the same way as any other component
+  // if (!NameMatchFound) ///< None of the subscribed component Names matched the command. Try processing it as a Module settings command.
+  //  settingsEvent_Command(Command, Data); // TODO: The module should subscribe to the commandEvent callback the same way as any other component
 }
 
 /**
@@ -143,7 +143,6 @@ void Module::addToReportQueue(Common *Component)
     printf("Report queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
-
 /**
  * @brief Subscribe to refresh() calls
  */
@@ -165,7 +164,6 @@ void Module::addToCommandQueue(Common *Subscriber)
   else
     printf("CommandQueue overflow!\n");
 }
-
 
 ///< Even logs to the Serial output
 void Module::addToLog(const char *LongMessage, uint8_t Indent)

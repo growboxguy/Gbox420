@@ -14,14 +14,9 @@ public:
   void websiteEvent_Field(char *Field);
   bool commandEvent(char *Command, char *Data);
   void refresh();
-  void playEE();
 
 private:
 protected:
   Module_Web *Parent;
-  void EE();
   void buzz(uint32_t frequency, uint32_t length);
-  bool PlayEE = false;
-  const static int melody[];
-  const static uint8_t tempo[];
 };

@@ -34,7 +34,6 @@ void Module_Web::addToWebsiteQueue_Refresh(Common_Web *Subscriber)
     printf("WebsiteQueue_Refresh overflow!\n");
 }
 
-
 /**
  * @brief Notify subscribed components of a website load event
  */
@@ -56,8 +55,6 @@ void Module_Web::websiteRefreshEventTrigger(char *Url)
     WebsiteQueue_Refresh[i]->websiteEvent_Refresh(Url);
   }
 }
-
-
 
 void Module_Web::refresh() // TODO: Rework module refreshing logic, move Google Sheets to its own Component
 {
