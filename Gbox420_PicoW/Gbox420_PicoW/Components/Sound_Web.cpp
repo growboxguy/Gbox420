@@ -1,6 +1,6 @@
 #include "Sound_Web.h"
 
-Sound_Web::Sound_Web(const char *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name), Common_Web(Name), Sound(Name, Parent, DefaultSettings)
+Sound_Web::Sound_Web(Module_Web *Parent, Settings::SoundSettings *DefaultSettings) : Common(DefaultSettings->Name), Common_Web(DefaultSettings->Name), Sound(Parent, DefaultSettings)
 {
   this->Parent = Parent;
   Parent->SoundFeedback = this;

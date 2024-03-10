@@ -17,16 +17,14 @@ static const uint8_t Version = 1; ///< Increment this after changing the stuctur
 ///< NOT SAVED TO EEPROM
 
 ///< Global constants
-#define WIFI_SSID "GboxNet"                             // UPDATE THIS
-#define WIFI_PASSWORD "SuperSecretPassword"             // UPDATE THIS
-static const uint8_t MaxWordLength = 32;                ///< Default char * buffer length for storing a word + null terminator. Memory intense!
-static const uint8_t MaxShotTextLength = 128;           ///< Default char * buffer length for storing mutiple words. Memory intense!
-static const uint16_t MaxLongTextLength = 1024;         ///< Default char * buffer length for storing a long text. Memory intense!
-static const uint8_t LogDepth = 4;                      ///< Show X number of log entries on website. Be careful, Max 1024 bits can be passed during a Website Refresh/Load event
-static const uint8_t QueueDepth = 32;                   ///< Limits the maximum number of components within a module. Memory intense!
-static const uint8_t MovingAverageDepth = 10;           ///< Number of previous readings to keep when calculating average. Memory intense!
-#define TIMEZONEDIFFERENCE 1                            // UPDATE THIS - UTC time and current timezone difference
-static char NTP_SERVER[MaxWordLength] = "pool.ntp.org"; // NTP Server
+#define WIFI_SSID "GboxNet"                     // UPDATE THIS
+#define WIFI_PASSWORD "SuperSecretPassword"     // UPDATE THIS
+static const uint8_t MaxWordLength = 32;        ///< Default char * buffer length for storing a word + null terminator. Memory intense!
+static const uint8_t MaxShotTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
+static const uint16_t MaxLongTextLength = 1024; ///< Default char * buffer length for storing a long text. Memory intense!
+static const uint8_t LogDepth = 4;              ///< Show X number of log entries on website. Be careful, Max 1024 bits can be passed during a Website Refresh/Load event
+static const uint8_t QueueDepth = 32;           ///< Limits the maximum number of components within a module. Memory intense!
+static const uint8_t MovingAverageDepth = 10;   ///< Number of previous readings to keep when calculating average. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
@@ -92,12 +90,23 @@ typedef struct
   };
   struct MqttClientSettings HempyMqttServer1 = {.MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .ClientID = "Hempy", .PubTopic = "Gbox420/Hempy/", .SubTopic = "Gbox420CMD/Hempy/#", .LwtTopic = "Gbox420LWT/Hempy/", .LwtMessage = "Hempy Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
 
+  struct NtpClientSettings ///< MQTT client settings
+  {
+    char NtpServerDNS[MaxWordLength]; ///< NTP server DNS name, "" to use MqttServerIP instead
+    char NtpServerIP[MaxWordLength];  ///< NTP server IP. Used when MqttServerDNS is empty, or the DNS lookup fails
+    uint16_t NtpServerPort;           ///< NTP server Port
+    int8_t TimeZoneDifference;        ///<  UTC time and current timezone difference
+    uint32_t TimeoutSeconds;          ///< Duration in seconds that an NTP client waits for a response from an NTP server
+  };
+  struct NtpClientSettings NTPServer1 = {.NtpServerDNS = "pool.ntp.org", .NtpServerIP = "", .NtpServerPort = 123, .TimeZoneDifference = -7, .TimeoutSeconds = 15};
+
   struct SoundSettings ///< Sound default settings
   {
-    uint8_t Pin;         ///< Piezo Buzzer red(+) cable
-    bool Enabled = true; ///< Enable/Disable sound
+    char Name[MaxWordLength]; ///< Must be unique
+    uint8_t Pin;              ///< Piezo Buzzer red(+) cable
+    bool Enabled = true;      ///< Enable/Disable sound
   };
-  struct SoundSettings Sound1 = {.Pin = 2};
+  struct SoundSettings Sound1 = {.Name = "Sound1", .Pin = 2};
 
   struct WasteReservoirSettings ///< WaterPump default settings
   {

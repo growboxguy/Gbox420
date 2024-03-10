@@ -1,119 +1,67 @@
 #include "NtpClient.h"
 
 // Initialize the built-in RTC
-void initializeRTC()
+NtpClient::NtpClient(Settings::NtpClientSettings *DefaultSettings)
 {
+    NtpServerPort = &DefaultSettings->NtpServerPort;
+    TimeZoneDifference = &DefaultSettings->TimeZoneDifference;
+
     printf("Initializing RTC...");
     rtc_init(); // Initialize "hardware/rtc.h"
-    ntp_update();
+
+    NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY);
+    udp_recv(NtpPcb, ntpReceived, this);
+
+    ip4addr_aton(DefaultSettings->NtpServerIP, &NtpServerAddress); // If NtpServerDNS is defined and the DNS lookup is successful this will be overwritten
+    if (DefaultSettings->NtpServerDNS[0] != '\0')                  // If an NTP server DNS name is specified -> Look up the IP
+    {
+        DnsLookup(DefaultSettings->NtpServerDNS, &NtpServerAddress);
+    }
+
+    NtpRefreshInprogress = true;
+    ntpRequest();
+    absolute_time_t TimeoutTime = make_timeout_time_ms(DefaultSettings->TimeoutSeconds * 1000); // Used to track timeouts
+    while (NtpRefreshInprogress)                                                                // Waiting for the MQTT connection to establish
+    {
+        if (get_absolute_time() > TimeoutTime) // No response from the server
+        {
+            ntpResult(-1, NULL);
+            break;
+        }
+    }
+    getRTC();
 }
 
 // Query current time from local RTC
-void getRTC()
+void NtpClient::getRTC()
 {
     datetime_t CurrentDateTime;
     rtc_get_datetime(&CurrentDateTime);
     datetime_to_str(ShortMessage, MaxShotTextLength, &CurrentDateTime);
-    printf("%s", ShortMessage);
+    printf("%s\n", ShortMessage);
 }
-
-void ntp_update()
-{
-    NTP_T *state = (NTP_T *)calloc(1, sizeof(NTP_T));
-    state->ntp_pcb = udp_new_ip_type(IPADDR_TYPE_ANY);
-    udp_recv(state->ntp_pcb, ntp_recv, state);
-
-    state->ntp_resend_alarm = add_alarm_in_ms(NTP_RESEND_TIME, ntp_failed_handler, state, true);
-
-    if (DnsLookup(NTP_SERVER, &state->ntp_server_address))
-    {
-        ntp_request(state);
-    }
-    else
-    {
-        printf("NTP DNS request failed\n");
-        ntp_result(state, -1, NULL);
-    }
-}
-
-// Call back with a DNS result
-void ntp_dns_found(const char *hostname, const ip_addr_t *ipaddr, void *arg)
-{
-    NTP_T *state = (NTP_T *)arg;
-    if (ipaddr)
-    {
-        state->ntp_server_address = *ipaddr;
-        // printf("ntp address %s\n", ipaddr_ntoa(ipaddr));
-        ntp_request(state);
-    }
-    else
-    {
-        printf("NTP DNS request failed\n");
-        ntp_result(state, -1, NULL);
-    }
-}
-
-// Called in an interrupt with results of the NTP request
-void ntp_result(NTP_T *state, int status, time_t *result)
-{
-    if (status == 0 && result)
-    {
-        struct tm *utc = gmtime(result); // https://cplusplus.com/reference/ctime/tm/
-        datetime_t timeTemp = {
-            .year = (int16_t)(utc->tm_year + 1900), // tm_year: years since 1900
-            .month = (int8_t)(utc->tm_mon + 1),     // tm_mon: months since January (0-11)
-            .day = (int8_t)utc->tm_mday,
-            .dotw = (int8_t)utc->tm_wday, // tm_wday: days since Sunday (0-6)
-            .hour = (int8_t)(utc->tm_hour + TIMEZONEDIFFERENCE),
-            .min = (int8_t)utc->tm_min,
-            .sec = (int8_t)utc->tm_sec};
-
-        rtc_set_datetime(&timeTemp);
-    }
-
-    if (state->ntp_resend_alarm > 0)
-    {
-        cancel_alarm(state->ntp_resend_alarm);
-        state->ntp_resend_alarm = 0;
-    }
-    state->ntp_test_time = make_timeout_time_ms(NTP_TEST_TIME);
-    state->dns_request_sent = false;
-
-    free(state);
-}
-
-int64_t ntp_failed_handler(alarm_id_t id, void *user_data);
 
 // Make an NTP request
-void ntp_request(NTP_T *state)
+void NtpClient::ntpRequest()
 {
     cyw43_arch_lwip_begin();
     struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, NTP_MSG_LEN, PBUF_RAM);
     uint8_t *req = (uint8_t *)p->payload;
     memset(req, 0, NTP_MSG_LEN);
     req[0] = 0x1b;
-    udp_sendto(state->ntp_pcb, p, &state->ntp_server_address, NTP_PORT);
+    udp_sendto(NtpPcb, p, &NtpServerAddress, *NtpServerPort);
     pbuf_free(p);
     cyw43_arch_lwip_end();
 }
 
-int64_t ntp_failed_handler(alarm_id_t id, void *user_data)
-{
-    NTP_T *state = (NTP_T *)user_data;
-    printf("NTP request failed\n");
-    ntp_result(state, -1, NULL);
-    return 0;
-}
-
 // NTP data received
-void ntp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port)
+void NtpClient::ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port)
 {
-    NTP_T *state = (NTP_T *)arg;
     uint8_t mode = pbuf_get_at(p, 0) & 0x7;
     uint8_t stratum = pbuf_get_at(p, 1);
 
     // Check the result
-    if (ip_addr_cmp(addr, &state->ntp_server_address) && port == NTP_PORT && p->tot_len == NTP_MSG_LEN &&
+    if (ip_addr_cmp(addr, &((NtpClient *)arg)->NtpServerAddress) && port == *((NtpClient *)arg)->NtpServerPort && p->tot_len == NTP_MSG_LEN &&
         mode == 0x4 && stratum != 0)
     {
         uint8_t seconds_buf[4] = {0};
@@ -121,12 +69,43 @@ void ntp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *a
         uint32_t seconds_since_1900 = seconds_buf[0] << 24 | seconds_buf[1] << 16 | seconds_buf[2] << 8 | seconds_buf[3];
         uint32_t seconds_since_1970 = seconds_since_1900 - NTP_DELTA;
         time_t epoch = seconds_since_1970;
-        ntp_result(state, 0, &epoch);
+        ((NtpClient *)arg)->ntpResult(0, &epoch);
     }
     else
     {
-        printf("Invalid NTP response\n");
-        ntp_result(state, -1, NULL);
+        ((NtpClient *)arg)->ntpResult(-1, NULL);
     }
     pbuf_free(p);
+}
+
+// Called in an interrupt with results of the NTP request
+void NtpClient::ntpResult(int status, time_t *result)
+{
+    datetime_t timeTemp;
+    if (status == 0 && result)
+    {
+        struct tm *utc = gmtime(result); // https://cplusplus.com/reference/ctime/tm/
+        timeTemp = {
+            .year = (int16_t)(utc->tm_year + 1900), // utc->tm_year: years since 1900
+            .month = (int8_t)(utc->tm_mon + 1),     // utc->tm_mon: months since January (0-11)
+            .day = (int8_t)utc->tm_mday,
+            .dotw = (int8_t)utc->tm_wday, // utc->tm_wday: days since Sunday (0-6)
+            .hour = (int8_t)(utc->tm_hour + *TimeZoneDifference),
+            .min = (int8_t)utc->tm_min,
+            .sec = (int8_t)utc->tm_sec};
+    }
+    else // NTP failed, set a fixed date
+    {
+        printf("Invalid NTP response");
+        timeTemp = {
+            .year = 2024, // tm_year: years since 1900
+            .month = 4,   // tm_mon: months since January (0-11)
+            .day = 20,
+            .dotw = 5, // tm_wday: days since Sunday (0-6)
+            .hour = 16,
+            .min = 20,
+            .sec = 00};
+    }
+    rtc_set_datetime(&timeTemp);
+    NtpRefreshInprogress = false;
 }

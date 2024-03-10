@@ -9,7 +9,7 @@
 class Sound_Web : public Common_Web, public Sound
 {
 public:
-  Sound_Web(const char *Name, Module_Web *Parent, Settings::SoundSettings *DefaultSettings);
+  Sound_Web(Module_Web *Parent, Settings::SoundSettings *DefaultSettings);
   void websiteEvent_Load(char *Url);
   void websiteEvent_Field(char *Field);
   bool commandEvent(char *Command, char *Data);

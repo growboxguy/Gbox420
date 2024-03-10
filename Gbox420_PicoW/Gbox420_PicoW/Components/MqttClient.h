@@ -21,14 +21,14 @@ public:
     bool mqttIsConnected();                                                                ///< true: Connected to MQTT server, false: not connected
     void mqttPublish(const char *PubTopic, const char *PubData, uint8_t QoS, bool Retain); ///< Publish a message to the PubTopic
     void mqttSubscribe_Unsubscribe(const char *SubTopic, uint8_t QoS, bool Subscribe);     ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
+    bool SubscribeInProgress;
 
 private:
-    
 protected:
     mqtt_client_t *Client;
     mqtt_connect_client_info_t ClientInfo;
-    ip_addr_t ServerIP;
-    uint16_t MQTTServerPort;
+    ip_addr_t MqttServerAddress;
+    uint16_t *MqttServerPort;
     void *DataCallback;                                                                                  ///< Pointer to the callback function (Callback_type)
     static void mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *Arg);                   ///< Called When the IP address of the MQTT server is found
     static void mqttPublish_Callback(void *Arg, err_t Result);                                           ///< Callback with the publish result

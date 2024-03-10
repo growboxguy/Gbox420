@@ -1,6 +1,6 @@
 #include "Sound.h"
 
-Sound::Sound(const char *Name, Module *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name)
+Sound::Sound(Module *Parent, Settings::SoundSettings *DefaultSettings) : Common(DefaultSettings->Name)
 {
   this->Parent = Parent;
   Parent->SoundFeedback = this; ///< Pointer for child objects to use sound feedback

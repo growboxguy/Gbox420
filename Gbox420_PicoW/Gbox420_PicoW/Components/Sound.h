@@ -10,7 +10,7 @@
 class Sound : virtual public Common
 {
 public:
-  Sound(const char *Name, Module *Parent, Settings::SoundSettings *DefaultSettings);
+  Sound(Module *Parent, Settings::SoundSettings *DefaultSettings);
   void report(bool FriendlyFormat = false);
   void checkEvents();
   void refresh();

@@ -3,7 +3,7 @@
 MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *DataCallback)
 {
     this->DataCallback = DataCallback;
-    MQTTServerPort = DefaultSettings->MqttServerPort;
+    MqttServerPort = &DefaultSettings->MqttServerPort;
     Client = mqtt_client_new();                 // Allocate memory for the Stuct storing the MQTT client, store the pointer to it
     memset(&ClientInfo, 0, sizeof(ClientInfo)); // Allocate memory for the ClientInfo
     ClientInfo.client_id = DefaultSettings->ClientID;
@@ -15,32 +15,47 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *Data
     ClientInfo.will_qos = DefaultSettings->QoS;
     ClientInfo.will_retain = DefaultSettings->LwtRetain;
 
-    ip4addr_aton(DefaultSettings->MqttServerIP, &ServerIP); // If MQTTServerDNS is defined and the DNS lookup is successful this will be overwritten
-    if (DefaultSettings->MqttServerDNS[0] != '\0')          // If an MQTT server DNS name is specified -> Look up the IP
+    ip4addr_aton(DefaultSettings->MqttServerIP, &MqttServerAddress); // If MqttServerDNS is defined and the DNS lookup is successful this will be overwritten
+    if (DefaultSettings->MqttServerDNS[0] != '\0')                   // If an MQTT server DNS name is specified -> Look up the IP
     {
-        DnsLookup(DefaultSettings->MqttServerDNS, &ServerIP);
+        DnsLookup(DefaultSettings->MqttServerDNS, &MqttServerAddress);
     }
 
-    absolute_time_t LastRefresh = get_absolute_time(); // Used to track timeouts
+    absolute_time_t NextRefresh = make_timeout_time_ms(10000); // 10sec - Used to track timeouts
     mqttConnect();
     while (!mqttIsConnected()) // Waiting for the MQTT connection to establish
     {
-        sleep_ms(100);
-        if (absolute_time_diff_us(LastRefresh, get_absolute_time()) > 10000000) // 10sec timeout
+        if (get_absolute_time() > NextRefresh) // 10sec timeout
         {
             printf("MQTT connect timeout\n");
             break;
         }
+        sleep_ms(100);
     }
-    if (mqttIsConnected())
+
+    if (DefaultSettings->SubTopic[0] != '\0' && mqttIsConnected())  //If a SubTopic was configured -> Subscribe to it
+    {
+        NextRefresh = make_timeout_time_ms(5000); // 5sec
+        SubscribeInProgress = true;
         mqttSubscribe_Unsubscribe(DefaultSettings->SubTopic, DefaultSettings->QoS, true); // Subscribe to MQTT messages in the SubTopic topic.
+
+        while (SubscribeInProgress)
+        {
+            if (get_absolute_time() > NextRefresh) // 10sec timeout
+            {
+                printf("MQTT connect timeout\n");
+                break;
+            }
+            sleep_ms(100);
+        }
+    }
 }
 
 void MqttClient::mqttConnect()
 {
     printf("Connecting to MQTT server...");
     cyw43_arch_lwip_begin();
-    err_t err = mqtt_client_connect(Client, &ServerIP, MQTTServerPort, mqttConnect_Callback, DataCallback, &ClientInfo);
+    err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, DataCallback, &ClientInfo);
     cyw43_arch_lwip_end();
 
     if (err != ERR_OK)
@@ -84,16 +99,16 @@ void MqttClient::mqttSubscribe_Unsubscribe(const char *SubTopic, uint8_t QoS, bo
 {
     if (Subscribe)
     {
-        printf("Subscribing to %s\n", SubTopic);
+        printf("Subscribing to %s...", SubTopic);
     }
     else
     {
-        printf("Unsubscribing from %s\n", SubTopic);
+        printf("Unsubscribing from %s...", SubTopic);
     }
-    err_t err = mqtt_sub_unsub(Client, SubTopic, QoS, mqttSubscribe_Callback, &SubTopic, Subscribe);
+    err_t err = mqtt_sub_unsub(Client, SubTopic, QoS, mqttSubscribe_Callback, this, Subscribe);
     if (err != ERR_OK)
     {
-        printf("mqttSubscribe error: %d\n", err);
+        printf("error: %d\n", err);
     }
 }
 
@@ -101,12 +116,13 @@ void MqttClient::mqttSubscribe_Callback(void *Arg, err_t Result)
 {
     if (Result == 0)
     {
-        printf("%s - done\n", Arg);
+        printf("done\n");
     }
     else
     {
-        printf("%s - failed: %s\n", Arg, Result);
+        printf("failed: %s\n", Result);
     }
+    ((MqttClient*)Arg)->SubscribeInProgress = false;
 }
 
 void MqttClient::mqttIncomingTopic_Callback(void *Arg, const char *Topic, uint32_t Tot_len)

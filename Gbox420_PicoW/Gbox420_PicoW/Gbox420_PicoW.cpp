@@ -32,7 +32,8 @@ ELClientCmd ESPCmd(&ESPLink);             ///< ESP-link - Helps getting the curr
 ELClientRest PushingBoxRestAPI(&ESPLink); ///< ESP-link - REST API
 ELClientMqtt MqttAPI(&ESPLink);           ///< ESP-link - MQTT protocol for sending and receiving messages
 */
-Settings *ModuleSettings;            ///< This object will store the settings loaded from the EEPROM. Persistent between reboots. //TODO: Find a solution to store this (NO EEPROM on Pico)
+Settings *ModuleSettings;           ///< This object will store the settings loaded from the EEPROM. Persistent between reboots. //TODO: Find a solution to store this (NO EEPROM on Pico)
+NtpClient *NtpClient1;               ///< Pointer to
 Hempy_Standalone *Hempy_Standalone1; ///< Represents a Grow Box with all components (LED lights, DHT sensors, Power sensor, Hempy Buckets, Water pants..etc)
 
 // Initialize WiFi and Connect to local network
@@ -84,10 +85,9 @@ int main()
   {
     printf("\nClean boot\n");
   }
-  printf("\nHempy module initializing\n");  
+  printf("\nHempy module initializing\n");
   initializeWiFi();
-  initializeRTC();
-  
+
   // Loading settings from EEPROM
   ModuleSettings = loadSettings();
   Debug = &ModuleSettings->Debug;
@@ -95,8 +95,9 @@ int main()
 
   // Create the Module objects
   printf("Creating Hempy module\n");
+  NtpClient1 = new NtpClient(&ModuleSettings->NTPServer1);  // TODO: After Real Time Clock is updated delete the NtpClient object
   Hempy_Standalone1 = new Hempy_Standalone("Hemp1", &ModuleSettings->Hempy_Standalone1, &ModuleSettings->HempyMqttServer1); ///< This is the dev object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
-  
+
   watchdog_enable(0x7fffff, 1); // Maximum of 0x7fffff, which is approximately 8.3 seconds
   printf("Watchdog active\n");
 
@@ -107,17 +108,14 @@ int main()
   struct repeating_timer Timer1sec;
   add_repeating_timer_ms(-1000, runRepeatedly, NULL, &Timer1sec); // Calls runRepeatedly every second
 
-  absolute_time_t LastRefresh = get_absolute_time();
+  absolute_time_t NextRefresh = make_timeout_time_ms(5000); // 5sec
   while (1)
   {
-    if (absolute_time_diff_us(LastRefresh, get_absolute_time()) > 5000000) // 5sec
-    {
-      watchdog_update();
-      getRTC();
-      printf(" Running...\n");
-      LastRefresh = get_absolute_time();
-    }
-  }  
+    sleep_until(NextRefresh);
+    watchdog_update();
+    NtpClient1->getRTC();
+    NextRefresh = make_timeout_time_ms(5000); // 5sec
+  }
   cyw43_arch_deinit();
   return 0;
 }
