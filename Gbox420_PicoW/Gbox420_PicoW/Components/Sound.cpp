@@ -6,13 +6,10 @@ Sound::Sound(Module *Parent, Settings::SoundSettings *DefaultSettings) : Common(
   Parent->SoundFeedback = this; ///< Pointer for child objects to use sound feedback
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
-  // Tone1 = new TonePlayer(TCCR1A, TCCR1B, OCR1AH, OCR1AL, TCNT1H, TCNT1L);  // pin D9 (Uno/Nano), D11 (Mega)
-  gpio_set_function(*Pin, GPIO_FUNC_PWM);
-  cfg = pwm_get_default_config();
-  slice_num = pwm_gpio_to_slice_num(*Pin);
-  pwm_set_chan_level(slice_num, PWM_CHAN_A, 0);
-  pwm_set_enabled(slice_num, false);
+  gpio_init(*Pin);
+  gpio_set_dir(*Pin, GPIO_OUT);
   Parent->addToRefreshQueue(this);
+  Parent->addToCommandQueue(this);
   printf("   Sound ready\n");
   checkEvents();
 }
@@ -38,7 +35,7 @@ bool Sound::commandEvent(char *Command, char *Data)
   {
     if (strcmp(ShortMessage, "E") == 0)
     {
-      // setSoundOnOff(WebServer.getArgBoolean());
+      toggleSoundOnOff();
     }
     else if (strcmp(ShortMessage, "Ee") == 0)
     {
@@ -47,6 +44,14 @@ bool Sound::commandEvent(char *Command, char *Data)
     return true;
   }
 }
+
+/*
+void Sound::websiteEvent_Load(__attribute__((unused)) char *Url)
+{
+  // WebServer.setArgBoolean(getName("E"), true), *Enabled);
+}
+
+*/
 
 void Sound::refresh()
 {
@@ -100,34 +105,33 @@ void Sound::setSoundOnOff(bool State)
   Parent->addToLog(getName(getEnabledStateText(true)));
 }
 
-void inline Sound::pwm_calcDivTop(pwm_config *c, int frequency, int sysClock)
+void Sound::toggleSoundOnOff()
 {
-  uint count = 2000000000 / frequency; /// 2000000000: system clock(125000000) x 16
-  uint div = count / 60000;            // to be lower than 65535*15/16 (rounding error)
-  if (div < 16)
-    div = 16;
-  c->div = div;
-  c->top = count / div;
+  *Enabled = !(*Enabled);
+  playOnOffSound(*Enabled);
+  Parent->addToLog(getName(getEnabledStateText(true)));
 }
 
-void Sound::beep(const int note, const int duration)
+void Sound::buzz(uint32_t frequency, uint32_t length)
 {
-  pwm_calcDivTop(&cfg, note, 125000000);
-  pwm_init(slice_num, &cfg, true);
-  pwm_set_chan_level(slice_num, PWM_CHAN_A, cfg.top / 2);
-  pwm_set_enabled(slice_num, true);
-  sleep_ms(duration);
-  pwm_set_chan_level(slice_num, PWM_CHAN_A, 0);
-  sleep_ms(50);
+  uint32_t delayValue = 2200000 / frequency / 2;
+  uint32_t numCycles = frequency * length / 120;
+  for (uint32_t i = 0; i < numCycles; i++)
+  {
+    gpio_put(*Pin, true);
+    busy_wait_us_32(delayValue);
+    gpio_put(*Pin, false);
+    busy_wait_us_32(delayValue);
+  }
 }
 
 void Sound::OnSound()
 {
   if (*Enabled)
   {
-    beep(440, 150);
+    buzz(500, 10);
     sleep_ms(10);
-    beep(880, 150);
+    buzz(2000, 10);
   }
 }
 
@@ -135,20 +139,9 @@ void Sound::OffSound()
 {
   if (*Enabled)
   {
-    beep(880, 150);
+    buzz(500, 10);
     sleep_ms(10);
-    beep(440, 150);
-  }
-}
-
-void Sound::EE()
-{
-  printf("Easter egg\n");
-
-  for (int thisNote = 0; thisNote < 134; thisNote++)
-  {
-    beep(melody[thisNote], tempo[thisNote]);
-    //  watchdog_update(); ///< Reset Watchdog timeout to avoid Arduino reseting while playing the song
+    buzz(2000, 10);
   }
 }
 
@@ -169,7 +162,18 @@ char *Sound::getEnabledStateText(bool FriendlyFormat)
   }
 }
 
-const int Sound::melody[] = { ///< https://www.arduino.cc/reference/en/language/variables/utilities/progmem/
+///< EE Section, can delete everything below if you need to save space
+void Sound::EE()
+{
+  printf("Easter egg\n");
+  for (int thisNote = 0; thisNote < 134; thisNote++)
+  {
+    buzz(melody[thisNote], tempo[thisNote]);
+    watchdog_update(); ///< Reset Watchdog timeout to avoid a force restart while playing the song
+  }
+}
+
+const uint16_t Sound::melody[] = {
     2637, 2637, 0, 2637,
     0, 2093, 2637, 0,
     3136, 0, 0, 0,
@@ -216,46 +220,49 @@ const int Sound::melody[] = { ///< https://www.arduino.cc/reference/en/language/
     415, 311, 247,
     233, 220, 208};
 
-const uint16_t Sound::tempo[] = {
-    120, 120, 120, 120,
-    120, 120, 120, 120,
-    120, 120, 120, 120,
-    120, 120, 120, 120,
+const uint8_t Sound::tempo[] = {
+    12, 12, 12, 12,
+    12, 12, 12, 12,
+    12, 12, 12, 12,
+    12, 12, 12, 12,
 
-    120, 120, 120, 120,
-    120, 120, 120, 120,
-    120, 120, 120, 120,
-    120, 120, 120, 120,
+    12, 12, 12, 12,
+    12, 12, 12, 12,
+    12, 12, 12, 12,
+    12, 12, 12, 12,
 
-    90, 90, 90,
-    120, 120, 120, 120,
-    120, 120, 120, 120,
-    120, 120, 120, 120,
+    9, 9, 9,
+    12, 12, 12, 12,
+    12, 12, 12, 12,
+    12, 12, 12, 12,
 
-    120, 120, 120, 120,
-    120, 120, 120, 120,
-    120, 120, 120, 120,
-    120, 120, 120, 120,
+    12, 12, 12, 12,
+    12, 12, 12, 12,
+    12, 12, 12, 12,
+    12, 12, 12, 12,
 
-    90, 90, 90,
-    120, 120, 120, 120,
-    120, 120, 120, 120,
-    120, 120, 120, 120,
+    9, 9, 9,
+    12, 12, 12, 12,
+    12, 12, 12, 12,
+    12, 12, 12, 12,
 
-    300, 300, 300,
+    30, 30, 30,
 
-    120, 120, 120, 120,
-    120, 120, 60, 30,
-    120, 120, 120, 120,
-    120, 120, 60, 30,
-    120, 120, 120, 120,
-    120, 120, 60, 30,
-    120, 120, 120, 120,
-    120, 120, 60,
-    60, 180, 180, 180,
-    60, 60,
-    60, 60,
-    60, 60,
-    180, 180, 180, 180, 180, 180,
-    100, 100, 100,
-    100, 100, 100};
+    12, 12, 12, 12,
+    12, 12, 6,
+    3,
+    12, 12, 12, 12,
+    12, 12, 6,
+    3,
+    12, 12, 12, 12,
+    12, 12, 6,
+    3,
+    12, 12, 12, 12,
+    12, 12, 6,
+    6, 18, 18, 18,
+    6, 6,
+    6, 6,
+    6, 6,
+    18, 18, 18, 18, 18, 18,
+    10, 10, 10,
+    10, 10, 10};

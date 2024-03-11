@@ -1,6 +1,6 @@
 #pragma GCC diagnostic ignored "-Wstringop-truncation"
 #include "420Module_Web.h"
-#include "Sound_Web.h"
+#include "Sound.h"
 
 static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log history displayed on the website (array of char arrays)
 
@@ -503,7 +503,7 @@ void Module_Web::reportToMQTTTrigger(bool ForceRun)
   }
 }
 
-Sound_Web *Module_Web::getSoundObject()
+Sound *Module_Web::getSoundObject()
 {
   return SoundFeedback;
 }

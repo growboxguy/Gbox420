@@ -88,7 +88,7 @@ typedef struct
     uint8_t QoS;                            ///< Quality of Service levels: 0:No QoS, 1: Broker ensures to send the message to the subscribers (recommended), 2: Broker ensures to send the message to the subscribers exactly once   https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/
     uint32_t KeepAliveSeconds;              ///< Ping the MQTT server every X seconds to keep the connection active
   };
-  struct MqttClientSettings HempyMqttServer1 = {.MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .ClientID = "Hempy", .PubTopic = "Gbox420/Hempy/", .SubTopic = "Gbox420CMD/Hempy/#", .LwtTopic = "Gbox420LWT/Hempy/", .LwtMessage = "Hempy Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
+  struct MqttClientSettings HempyMqttServer1 = {.MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .ClientID = "Hempy", .PubTopic = "Gbox420/Hempy/", .SubTopic = "Gbox420CMD/Hempy/#", .LwtTopic = "Gbox420LWT/Hempy/", .LwtMessage = "Hempy Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
 
   struct NtpClientSettings ///< MQTT client settings
   {
@@ -98,7 +98,7 @@ typedef struct
     int8_t TimeZoneDifference;        ///<  UTC time and current timezone difference
     uint32_t TimeoutSeconds;          ///< Duration in seconds that an NTP client waits for a response from an NTP server
   };
-  struct NtpClientSettings NTPServer1 = {.NtpServerDNS = "pool.ntp.org", .NtpServerIP = "", .NtpServerPort = 123, .TimeZoneDifference = -7, .TimeoutSeconds = 15};
+  struct NtpClientSettings NTPServer1 = {.NtpServerDNS = "pool.ntp.org", .NtpServerIP = "192.168.1.100", .NtpServerPort = 123, .TimeZoneDifference = -7, .TimeoutSeconds = 15};
 
   struct SoundSettings ///< Sound default settings
   {

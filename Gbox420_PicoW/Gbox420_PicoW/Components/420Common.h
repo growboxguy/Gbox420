@@ -5,8 +5,9 @@
 
 #include <stdio.h>
 #include <cstring>
-#include "../Settings.h" ///< for loading defaults and storing/reading user settings
-#include "Helpers.h"     ///< global functions
+#include "hardware/watchdog.h" //Watchdog to auto-reboot in case of an error
+#include "../Settings.h"       ///< for loading defaults and storing/reading user settings
+#include "Helpers.h"           ///< global functions
 
 ///< forward declaration
 extern char LongMessage[MaxLongTextLength];

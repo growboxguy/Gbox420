@@ -8,7 +8,6 @@ NtpClient::NtpClient(Settings::NtpClientSettings *DefaultSettings)
 
     printf("Initializing RTC...");
     rtc_init(); // Initialize "hardware/rtc.h"
-
     NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY);
     udp_recv(NtpPcb, ntpReceived, this);
 
@@ -23,6 +22,7 @@ NtpClient::NtpClient(Settings::NtpClientSettings *DefaultSettings)
     absolute_time_t TimeoutTime = make_timeout_time_ms(DefaultSettings->TimeoutSeconds * 1000); // Used to track timeouts
     while (NtpRefreshInprogress)                                                                // Waiting for the MQTT connection to establish
     {
+        sleep_ms(100);
         if (get_absolute_time() > TimeoutTime) // No response from the server
         {
             ntpResult(-1, NULL);
@@ -96,7 +96,7 @@ void NtpClient::ntpResult(int status, time_t *result)
     }
     else // NTP failed, set a fixed date
     {
-        printf("Invalid NTP response");
+        printf("NTP failed, setting fallback: ");
         timeTemp = {
             .year = 2024, // tm_year: years since 1900
             .month = 4,   // tm_mon: months since January (0-11)

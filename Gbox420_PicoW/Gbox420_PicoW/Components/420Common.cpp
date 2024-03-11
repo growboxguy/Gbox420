@@ -26,57 +26,54 @@ void Common::refresh()
   }
 }
 
-bool Common::isThisMine(char const *lookupName) ///< Returns true when the lookupName starts with the Name of the instance followed by _
+bool Common::isThisMine(char const *LookupName) ///< Returns true when the LookupName starts with the Name of the instance followed by _
 {
-  ///< Serial.print("Component :");
-  ///< Serial.println(lookupName);
-  ///< Serial.print("Object :");
-  ///< Serial.println(Name);
+  printf("LookupName :");
+  printf("%s\n", LookupName);
+  printf("Object :");
+  printf("%s\n", Name);
 
   char *ReturnChar = ShortMessage; ///< return text will be loaded into a global temp buffer
   uint8_t CharacterCount = 0;      // Tracks which character is currently getting compared
-  char FlashCurrentChar;           // Character read back from the Flash storage (Name is stored in flash)
-  char RAMCurrentChar;             // Character read back from the RAM (lookupName is stored in RAM)
+  char NameCurrentChar;            // Current Name character being compared
+  char LookupCurrentChar;          // Current LookupName character being compared
 
-  /*
-    const char *FlashAddressPointer = (const char PROGMEM *)Name; ///< Get the flash storage address of the first character of Name
+  while (1)
+  {
+    NameCurrentChar = Name[CharacterCount];           ///< read the current character from the flash and increment the pointer to the next char
+    LookupCurrentChar = LookupName[CharacterCount++]; ///< read the character at the same position from the LookupName
+    // printf("%s - %s ",NameCurrentChar,LookupCurrentChar);
+
+    if (NameCurrentChar == '\0')
+      break; ///< reached the string termination sign, stop the while loop
+    if (NameCurrentChar != LookupCurrentChar)
+    {
+      // printf(": No match\n");
+      return false; ///< Stop function and return false
+    }
+  }
+  if (NameCurrentChar == '\0' && LookupCurrentChar == '_') ///< End of the Name, _ sign at the LookupName
+  {                                                        ///< if instance name is confirmed: continue reading the remaining characters from the LookupName
+    int SafetyCount = 0;
+    ///< printf("Inside second check: ");
     while (1)
     {
-      FlashCurrentChar = pgm_read_byte(FlashAddressPointer++); ///< read the current character from the flash and increment the pointer to the next char
-      RAMCurrentChar = lookupName[CharacterCount++];           ///< read the character at the same position from the lookupName
-      ///< Serial.print(FlashCurrentChar);
-      ///< Serial.print(RAMCurrentChar);
-      if (FlashCurrentChar == '\0')
+      LookupCurrentChar = LookupName[CharacterCount++]; ///< read the next LookupName character
+      ///< printf(LookupCurrentChar);
+      *ReturnChar++ = LookupCurrentChar;
+      if (LookupCurrentChar == '\0')
         break; ///< reached the string termination sign
-      if (FlashCurrentChar != RAMCurrentChar)
+      if (SafetyCount++ > MaxWordLength)
       {
-        ///< Serial.println("No match");
-        return false; ///< stop the while loop
+        *ReturnChar = '\0';
+        printf("   Too long:");
+        printf(LookupName, true, 1);
+        return false;
       }
     }
-    if (FlashCurrentChar == '\0' && RAMCurrentChar == '_') ///< End of the Name, _ sign at the lookupName
-    {                                                      ///< if instance name is confirmed: continue reading the remaining characters from the lookupName
-      int SafetyCount = 0;
-      ///< Serial.print("Inside second check: ");
-      while (1)
-      {
-        RAMCurrentChar = lookupName[CharacterCount++]; ///< read the next lookName character from RAM
-        ///< Serial.print(RAMCurrentChar);
-        *ReturnChar++ = RAMCurrentChar;
-        if (RAMCurrentChar == '\0')
-          break; ///< reached the string termination sign
-        if (SafetyCount++ > MaxWordLength)
-        {
-          *ReturnChar = '\0';
-          printf("   Too long:");
-          printf(lookupName, true, 1);
-          return false;
-        }
-      }
-      return true;
-    }
-    else
-    */
+    return true;
+  }
+  else
   {
     return false;
   }

@@ -22,7 +22,7 @@
 // extern ELClientRest PushingBoxRestAPI;
 // extern ELClientMqtt MqttAPI;
 // extern bool MqttConnected;
-class Sound_Web;
+class Sound;
 
 class Module_Web : virtual public Common_Web, virtual public Module
 {
@@ -44,8 +44,8 @@ public:
   void reportToGoogleSheetsTrigger(bool ForceRun = false);                                               ///< Google Sheets reporting - Handles custom reporting frequencies
   void mqttPublish(char (*JSONData)[MaxLongTextLength]);                                                 ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
   void reportToMQTTTrigger(bool ForceRun = false);                                                       ///< MQTT reporting - Handles custom reporting frequencies
-  Sound_Web *SoundFeedback = NULL;
-  Sound_Web *getSoundObject();
+  Sound *SoundFeedback = NULL;
+  Sound *getSoundObject();
 
 private:
 protected:

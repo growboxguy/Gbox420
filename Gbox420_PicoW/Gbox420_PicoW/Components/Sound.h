@@ -3,6 +3,7 @@
 #include "420Common.h"
 #include "420Module.h"
 #include "hardware/pwm.h"
+#include "hardware/gpio.h"
 // #include "TonePlayer.h"  ///< http://www.gammon.com.au/forum/?id=11504&reply=11#reply11
 
 ///< Sound feedback buzzer
@@ -18,12 +19,14 @@ public:
   void playOnSound();
   void playOffSound();
   void playEE();
-  void inline pwm_calcDivTop(pwm_config *c, int frequency, int sysClock);
-  void beep(int note, int duration); // Generate a PWM signal at the specified frequency for the specified duration
+  void buzz(uint32_t frequency, uint32_t length);
   void playOnOffSound(bool State);
   void setSoundOnOff(bool State);
+  void toggleSoundOnOff();
   bool getEnabledState();
   char *getEnabledStateText(bool FriendlyFormat = false);
+  // void websiteEvent_Load(char *Url);
+  // void websiteEvent_Field(char *Field);
 
 private:
 protected:
@@ -40,6 +43,6 @@ protected:
   pwm_config cfg;
   int slice_num;
 
-  const static int melody[];
-  const static uint16_t tempo[];
+  const static uint16_t melody[];
+  const static uint8_t tempo[];
 };
