@@ -1,17 +1,17 @@
 #include "Hempy_Standalone.h"
 #include "Sound.h"
 /*
-#include "DHTSensor_Web.h"
-#include "WeightSensor_Web.h"
-#include "WaterPump_Web.h"
-#include "WasteReservoir_Web.h"
-#include "HempyBucket_Web.h"
+#include "DHTSensor.h"
+#include "WeightSensor.h"
+#include "WaterPump.h"
+#include "WasteReservoir.h"
+#include "HempyBucket.h"
 */
 
 /**
  * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings, creates components that the instance controls, and subscribes to events
  */
-Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneSettings *DefaultSettings, Settings::MqttClientSettings *MqttSettings) : Common(Name), Common_Web(Name), Module(Name), Module_Web(Name)
+Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneSettings *DefaultSettings, Settings::MqttClientSettings *MqttSettings) : Common(Name), Module(Name)
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
@@ -23,7 +23,7 @@ Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneS
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
 
   Sound1 = new Sound(this, &ModuleSettings->Sound1); ///< Passing DefaultSettings members as references: Changes get written back to DefaultSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&DefaultSettings) + offsetof(Settings, VARIABLENAME))
-  MqttHiveMQ = new MqttClient(&ModuleSettings->HempyMqttServer1, (void *)mqttReceivedData);
+  MqttHiveMQ = new MqttClient(&ModuleSettings->HempyMqttServer1, (void *)mqttDataReceived);
 
   addToReportQueue(this);  //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   addToRefreshQueue(this); //< Attach to a trigger that fires every second and calls refresh()
@@ -31,7 +31,7 @@ Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneS
   // addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
   // addToCommandQueue(this);
   addToLog("Hempy_Standalone ready", 0);
-  run();
+  runAll();
 }
 
 /**
@@ -45,15 +45,6 @@ void Hempy_Standalone::report(bool FriendlyFormat)
   strcat(LongMessage, "\",\"D\":\"");
   strcat(LongMessage, getDebugText(FriendlyFormat));
   strcat(LongMessage, "\"}"); ///< closing the curly bracket at the end of the JSON
-}
-
-/**
- * @brief Called when an MQTT command is received
- */
-void Hempy_Standalone::mqttReceivedData(const char *Topic, uint16_t TopicLength, char *Data, uint16_t DataLength)
-{
-  printf("[%u]%s\n", TopicLength, Topic); // Print the topic the subscribed message was received in
-  printf("[%u]%s\n", DataLength, Data);   // Print the message received on the subscribed topic
 }
 
 /**
@@ -86,9 +77,4 @@ bool Hempy_Standalone::commandEvent(__attribute__((unused)) char *Command, __att
   {
     return true; // Match found
   }
-}
-
-void Hempy_Standalone::refresh()
-{
-  Module_Web::refresh();
 }

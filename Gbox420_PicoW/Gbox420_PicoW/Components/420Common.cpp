@@ -17,14 +17,37 @@ void Common::report(__attribute__((unused)) bool FriendlyFormat)
   strcat(LongMessage, "\":{");
 }
 
-void Common::refresh()
+void Common::run1sec()
 {
-  RefreshCounter++;
   if (*Debug)
   {
-    printf("  %s refreshing\n", Name); ///< Prints "COMPONENTNAME refreshing" to the console
+    printf("  1sec - %s\n", Name);
   }
 }
+
+void Common::run5sec()
+{
+  if (*Debug)
+  {
+    printf("  5sec - %s\n", Name);
+  }
+}
+
+void Common::run1min()
+{
+  if (*Debug)
+  {
+    printf("  1min - %s\n", Name);
+  }
+}
+
+void Common::runAll()
+{
+ run1sec();
+ run5sec();
+ run1min();
+}
+
 
 bool Common::isThisMine(char const *LookupName) ///< Returns true when the LookupName starts with the Name of the instance followed by _
 {

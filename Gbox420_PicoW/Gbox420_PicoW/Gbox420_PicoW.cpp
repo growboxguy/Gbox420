@@ -66,11 +66,28 @@ void heartBeat()
 }
 
 ///< This function gets called infinitely at a rate defined by repeating_timer
-bool runRepeatedly(struct repeating_timer *t)
+bool run1sec(struct repeating_timer *t)
 {
   watchdog_update(); ///< Pet watchdog
   heartBeat();       ///< Blinks built-in led
-  Hempy_Standalone1->run();
+  Hempy_Standalone1->run1sec();
+  return true; // true to continue repeating, false to stop.
+}
+
+///< This function gets called infinitely at a rate defined by repeating_timer
+bool run5sec(struct repeating_timer *t)
+{
+  watchdog_update(); ///< Pet watchdog
+  NtpClient1->getRTC();  // Prints current time
+  Hempy_Standalone1->run5sec();
+  return true; // true to continue repeating, false to stop.
+}
+
+///< This function gets called infinitely every minute
+bool run1min(struct repeating_timer *t)
+{
+  watchdog_update(); ///< Pet watchdog
+  Hempy_Standalone1->run1min();
   return true; // true to continue repeating, false to stop.
 }
 
@@ -106,15 +123,18 @@ int main()
   // run_ntp_test();
 
   struct repeating_timer Timer1sec;
-  add_repeating_timer_ms(-1000, runRepeatedly, NULL, &Timer1sec); // Calls runRepeatedly every second
+  add_repeating_timer_ms(-1000, run1sec, NULL, &Timer1sec); // Calls runRepeatedly every second
+struct repeating_timer Timer5sec;
+  add_repeating_timer_ms(-5000, run5sec, NULL, &Timer5sec); // Calls runRepeatedly every second
+  struct repeating_timer Timer1min;
+  add_repeating_timer_ms(-60000, run1min, NULL, &Timer1min); // Calls runRepeatedly every minute
 
-  absolute_time_t NextRefresh = make_timeout_time_ms(5000); // 5sec
+  absolute_time_t NextRefresh = make_timeout_time_ms(5000); // 5sec from now
   while (1)
   {
-    sleep_until(NextRefresh);
-    watchdog_update();
-    NtpClient1->getRTC();
-    NextRefresh = make_timeout_time_ms(5000); // 5sec
+    sleep_until(NextRefresh); // The microcontroller is in sleep mode, only wakes up when a repeating_timer triggers.
+    watchdog_update();  // Pet watchdog    
+    NextRefresh = make_timeout_time_ms(5000); // 5sec from now
   }
   cyw43_arch_deinit();
   return 0;
