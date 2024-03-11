@@ -68,11 +68,11 @@ void setup()
   TimeCriticalThread.setInterval(100); ///< 100ms, 0.1sec
   TimeCriticalThread.onRun(processTimeCriticalStuff);
   OneSecThread.setInterval(1000); ///< 1000ms, 1sec
-  OneSecThread.onRun(runSec);
+  OneSecThread.onRun(run1sec);
   FiveSecThread.setInterval(5000);
-  FiveSecThread.onRun(runFiveSec);
+  FiveSecThread.onRun(run5sec);
   MinuteThread.setInterval(60000);
-  MinuteThread.onRun(runMinute);
+  MinuteThread.onRun(run1min);
 
   ///< Create the Aeroponics object
   AeroMod1 = new AeroModule(F("Aero1"), &ModuleSettings->Aero1); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
@@ -106,7 +106,7 @@ void InitializeWireless()
 
 void loop()
 {                      ///< put your main code here, to run repeatedly:
-  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
+  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (run1sec(), run5sec(),run1min()..etc)
   ///< If a control package is received from the main module
   getWirelessData();
 }
@@ -118,23 +118,23 @@ void processTimeCriticalStuff() ///< Process things that need precise timing
   AeroMod1->processTimeCriticalStuff();
 }
 
-void runSec()
+void run1sec()
 {
   wdt_reset(); ///< reset watchdog timeout
   heartBeat(); ///< Blinks built-in led
-  AeroMod1->runSec();
+  AeroMod1->run1sec();
 }
 
-void runFiveSec()
+void run5sec()
 {
   wdt_reset();
-  AeroMod1->runFiveSec();
+  AeroMod1->run5sec();
 }
 
-void runMinute()
+void run1min()
 {
   wdt_reset();
-  AeroMod1->runMinute();
+  AeroMod1->run1min();
   getWirelessStatus();
 }
 

@@ -15,9 +15,9 @@ public:
   void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false);
   void runReport(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false); ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.
   void runAll();
-  void runSec();
-  void runFiveSec();
-  void runMinute();
+  void run1sec();
+  void run5sec();
+  void run1min();
   virtual void addToLog(const __FlashStringHelper *Text, uint8_t indent = 3);
   virtual void addToLog(const char *Text, uint8_t indent = 3);
   void addToReportQueue(Common *Component);          ///< Subscribing to the report queue: Calls the report() method
@@ -52,8 +52,8 @@ protected:
   Common *RefreshQueue_Sec[QueueDepth] = {};
   Common *RefreshQueue_FiveSec[QueueDepth] = {};
   Common *RefreshQueue_Minute[QueueDepth] = {};
-  uint8_t reportQueueItemCount = 0; ///< Tracking queue item count
-  uint8_t refreshQueueItemCount_Sec = 0;
-  uint8_t refreshQueueItemCount_FiveSec = 0;
-  uint8_t refreshQueueItemCount_Minute = 0;
+  uint8_t ReportQueueItemCount = 0; ///< Tracking queue item count
+  uint8_t RefreshQueueItemCount_Sec = 0;
+  uint8_t RefreshQueueItemCount_FiveSec = 0;
+  uint8_t RefreshQueueItemCount_Minute = 0;
 };

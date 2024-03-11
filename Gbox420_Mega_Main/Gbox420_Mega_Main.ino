@@ -81,11 +81,11 @@ void setup()
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   logToSerials(F("Setting up refresh threads"), false, 0);
   OneSecThread.setInterval(1000);
-  OneSecThread.onRun(runSec);
+  OneSecThread.onRun(run1sec);
   FiveSecThread.setInterval(5000);
-  FiveSecThread.onRun(runFiveSec);
+  FiveSecThread.onRun(run5sec);
   MinuteThread.setInterval(60000);
-  MinuteThread.onRun(runMinute);
+  MinuteThread.onRun(run1min);
   logToSerials(F("done"), true, 3);
 
   // Start interrupts to handle request from ESP-link firmware
@@ -118,7 +118,7 @@ void setup()
 
 void loop()
 {
-  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
+  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (run1sec(), run5sec(),run1min()..etc)
 }
 
 void processTimeCriticalStuff()
@@ -128,23 +128,23 @@ void processTimeCriticalStuff()
 
 // Threads
 
-void runSec()
+void run1sec()
 {
   wdt_reset(); ///< reset watchdog timeout
   heartBeat(); ///< Blinks built-in led
-  Main1->runSec();
+  Main1->run1sec();
 }
 
-void runFiveSec()
+void run5sec()
 {
   wdt_reset();
-  Main1->runFiveSec();
+  Main1->run5sec();
 }
 
-void runMinute()
+void run1min()
 {
   wdt_reset();
-  Main1->runMinute();
+  Main1->run1min();
   getWirelessStatus();
 }
 

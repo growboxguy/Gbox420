@@ -68,11 +68,11 @@ void setup()
   TimeCriticalThread.setInterval(200); ///< 200ms, 0.2sec
   TimeCriticalThread.onRun(processTimeCriticalStuff);
   OneSecThread.setInterval(1000); ///< 1000ms
-  OneSecThread.onRun(runSec);
+  OneSecThread.onRun(run1sec);
   FiveSecThread.setInterval(5000);
-  FiveSecThread.onRun(runFiveSec);
+  FiveSecThread.onRun(run5sec);
   MinuteThread.setInterval(60000);
-  MinuteThread.onRun(runMinute);
+  MinuteThread.onRun(run1min);
 
   ///< Create the ACMotor object
   ACMotorMod1 = new ACMotorModule(F("ACM1"), &ModuleSettings->ACM1); ///< This is the object representing an AC Motor controller with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
@@ -125,7 +125,7 @@ void InitializeWireless()
 
 void loop()
 {                      ///< put your main code here, to run repeatedly:
-  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
+  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (run1sec(), run5sec(),run1min()..etc)
   ///< If a control package is received from the main module
   //getWirelessData();
 }
@@ -137,23 +137,23 @@ void processTimeCriticalStuff() ///< Process things that need precise timing
   ACMotorMod1->processTimeCriticalStuff();
 }
 
-void runSec()
+void run1sec()
 {
   wdt_reset(); ///< reset watchdog timeout
   heartBeat(); ///< Blinks built-in led
-  ACMotorMod1->runSec();
+  ACMotorMod1->run1sec();
 }
 
-void runFiveSec()
+void run5sec()
 {
   wdt_reset();
-  ACMotorMod1->runFiveSec();
+  ACMotorMod1->run5sec();
 }
 
-void runMinute()
+void run1min()
 {
   wdt_reset();
-  ACMotorMod1->runMinute();
+  ACMotorMod1->run1min();
   //WIRELESS DISBLED// getWirelessStatus();
 }
 

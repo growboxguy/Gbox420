@@ -76,11 +76,11 @@ void setup()
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   logToSerials(F("Setting up refresh threads"), false, 0);
   OneSecThread.setInterval(1000);
-  OneSecThread.onRun(runSec);
+  OneSecThread.onRun(run1sec);
   FiveSecThread.setInterval(5000);
-  FiveSecThread.onRun(runFiveSec);
+  FiveSecThread.onRun(run5sec);
   MinuteThread.setInterval(60000);
-  MinuteThread.onRun(runMinute);
+  MinuteThread.onRun(run1min);
   logToSerials(F("done"), true, 3);
 
   // Start interrupts to handle request from ESP-link firmware
@@ -99,7 +99,7 @@ void setup()
 }
 
 /**
-  \brief Checks if it is time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
+  \brief Checks if it is time to trigger one of the threads (run1sec(), run5sec(),run1min()..etc)
 */
 void loop()
 {
@@ -119,29 +119,29 @@ void processTimeCriticalStuff()
 /**
   \brief Thread triggering every second
 */
-void runSec()
+void run1sec()
 {
   wdt_reset(); ///< reset watchdog timeout
   heartBeat(); ///< Blinks built-in led
-  Hempy_Standalone1->runSec();
+  Hempy_Standalone1->run1sec();
 }
 
 /**
   \brief Thread triggering every 5 seconds
 */
-void runFiveSec()
+void run5sec()
 {
   wdt_reset();
-  Hempy_Standalone1->runFiveSec();
+  Hempy_Standalone1->run5sec();
 }
 
 /**
   \brief Thread triggering every Minute
 */
-void runMinute()
+void run1min()
 {
   wdt_reset();
-  Hempy_Standalone1->runMinute();
+  Hempy_Standalone1->run1min();
 }
 
 /**

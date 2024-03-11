@@ -18,11 +18,11 @@ Module::Module(const __FlashStringHelper *Name) : Common(Name)
 void Module::runAll()
 {
   wdt_reset();
-  runSec();
+  run1sec();
   wdt_reset();
-  runFiveSec();
+  run5sec();
   wdt_reset();
-  runMinute();
+  run1min();
   wdt_reset();
 }
 
@@ -74,9 +74,9 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
   /*
   if ((*SerialReportJSONFriendly  || ForceRun) && !JSONToBufferOnly)
   {
-    logToSerials(reportQueueItemCount, false, 0); ///< Prints the number of items that will report
+    logToSerials(ReportQueueItemCount, false, 0); ///< Prints the number of items that will report
     logToSerials(F("reporting:"), true, 1);
-    for (int i = 0; i < reportQueueItemCount; i++)
+    for (int i = 0; i < ReportQueueItemCount; i++)
     {
       ReportQueue[i]->report(false);
     }
@@ -94,10 +94,10 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
       logToSerials(&LongMessage, true, 0);
       memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     }
-    for (int i = 0; i < reportQueueItemCount;)
+    for (int i = 0; i < ReportQueueItemCount;)
     {
       ReportQueue[i++]->report(JSONToBufferOnly || KeepBuffer ? false : *SerialReportJSONFriendly);
-      if (i != reportQueueItemCount)
+      if (i != ReportQueueItemCount)
         strcat_P(LongMessage, (PGM_P)F(",")); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
       {
@@ -113,7 +113,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
 
 ///< Refresh queues: Refresh components inside the Module
 
-void Module::runSec()
+void Module::run1sec()
 {
   if (RunAllRequested)
   {
@@ -126,28 +126,28 @@ void Module::runSec()
     {
       logToSerials(F("1sec"), true, 1);
     }
-    for (int i = 0; i < refreshQueueItemCount_Sec; i++)
+    for (int i = 0; i < RefreshQueueItemCount_Sec; i++)
     {
       RefreshQueue_Sec[i]->refresh_Sec();
     }
   }
 }
 
-void Module::runFiveSec()
+void Module::run5sec()
 {
   if (*Debug)
     logToSerials(F("5sec"), true, 1);
-  for (int i = 0; i < refreshQueueItemCount_FiveSec; i++)
+  for (int i = 0; i < RefreshQueueItemCount_FiveSec; i++)
   {
     RefreshQueue_FiveSec[i]->refresh_FiveSec();
   }
 }
 
-void Module::runMinute()
+void Module::run1min()
 {
   if (*Debug)
     logToSerials(F("1min"), true, 1);
-  for (int i = 0; i < refreshQueueItemCount_Minute; i++)
+  for (int i = 0; i < RefreshQueueItemCount_Minute; i++)
   {
     RefreshQueue_Minute[i]->refresh_Minute();
   }
@@ -162,32 +162,32 @@ Sound *Module::getSoundObject()
 
 void Module::addToReportQueue(Common *Component)
 {
-  if (QueueDepth > reportQueueItemCount)
-    ReportQueue[reportQueueItemCount++] = Component;
+  if (QueueDepth > ReportQueueItemCount)
+    ReportQueue[ReportQueueItemCount++] = Component;
   else
     logToSerials(F("Report OF"), true, 0); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
 }
 
 void Module::addToRefreshQueue_Sec(Common *Component)
 {
-  if (QueueDepth > refreshQueueItemCount_Sec)
-    RefreshQueue_Sec[refreshQueueItemCount_Sec++] = Component;
+  if (QueueDepth > RefreshQueueItemCount_Sec)
+    RefreshQueue_Sec[RefreshQueueItemCount_Sec++] = Component;
   else
     logToSerials(F("Refresh 1s OF"), true, 0);
 }
 
 void Module::addToRefreshQueue_FiveSec(Common *Component)
 {
-  if (QueueDepth > refreshQueueItemCount_FiveSec)
-    RefreshQueue_FiveSec[refreshQueueItemCount_FiveSec++] = Component;
+  if (QueueDepth > RefreshQueueItemCount_FiveSec)
+    RefreshQueue_FiveSec[RefreshQueueItemCount_FiveSec++] = Component;
   else
     logToSerials(F("Refresh 5s OF"), true, 0);
 }
 
 void Module::addToRefreshQueue_Minute(Common *Component)
 {
-  if (QueueDepth > refreshQueueItemCount_Minute)
-    RefreshQueue_Minute[refreshQueueItemCount_Minute++] = Component;
+  if (QueueDepth > RefreshQueueItemCount_Minute)
+    RefreshQueue_Minute[RefreshQueueItemCount_Minute++] = Component;
   else
     logToSerials(F("Refresh 1m OF"), true, 0);
 }
