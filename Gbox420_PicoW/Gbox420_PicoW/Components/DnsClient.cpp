@@ -3,7 +3,7 @@
 bool DnsLookup(char *DnsName, ip_addr_t *ResultIP)
 {
     dnsLookupSuccess = false;
-    absolute_time_t LastRefresh = get_absolute_time(); // Used to track timeouts
+    absolute_time_t Timeout = make_timeout_time_ms(10000); // 10sec from now
     printf("Looking up IP for %s...", DnsName);
     err_t err = dns_gethostbyname(DnsName, ResultIP, DnsLookupResult, ResultIP);
 
@@ -19,13 +19,13 @@ bool DnsLookup(char *DnsName, ip_addr_t *ResultIP)
     }
 
     while (dnsLookupInProgress) // Waiting for the DNS lookup to finish and DnsLookupResult callback to trigger
-    {
-        sleep_ms(100);
-        if (absolute_time_diff_us(LastRefresh, get_absolute_time()) > 10000000) // 10sec timeout
+    {       
+        if (get_absolute_time() > Timeout) // 10sec timeout
         {
             printf("DNS lookup timeout\n");
             return false;
         }
+        sleep_ms(500);
     }
     return dnsLookupSuccess;
 }

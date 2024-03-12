@@ -21,13 +21,13 @@ NtpClient::NtpClient(Settings::NtpClientSettings *DefaultSettings)
     ntpRequest();
     absolute_time_t TimeoutTime = make_timeout_time_ms(DefaultSettings->TimeoutSeconds * 1000); // Used to track timeouts
     while (NtpRefreshInprogress)                                                                // Waiting for the MQTT connection to establish
-    {
-        sleep_ms(100);
+    {       
         if (get_absolute_time() > TimeoutTime) // No response from the server
         {
             ntpResult(-1, NULL);
             break;
         }
+        sleep_ms(500);
     }
     getRTC();
 }

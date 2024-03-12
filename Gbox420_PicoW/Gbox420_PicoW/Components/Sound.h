@@ -1,10 +1,14 @@
+/*!
+ *  \brief     Sound feedback using a piezo buzzer  
+ *  \author    GrowBoxGuy
+ *  \version   4.20
+ */
+
 #pragma once
 
 #include "420Common.h"
 #include "420Module.h"
-#include "hardware/pwm.h"
 #include "hardware/gpio.h"
-// #include "TonePlayer.h"  ///< http://www.gammon.com.au/forum/?id=11504&reply=11#reply11
 
 ///< Sound feedback buzzer
 
@@ -31,7 +35,6 @@ public:
 private:
 protected:
   Module *Parent;
-  // TonePlayer *Tone1;
   void OnSound();
   void OffSound();
   void EE();
@@ -39,8 +42,7 @@ protected:
   bool *Enabled;            ///< Sound ON or OFF
   bool PlayOnSound = true;  ///< Play on beep flag - website controls it
   bool PlayOffSound = true; ///< Play off beep flag - website controls it
-  bool PlayEE = false;
-  pwm_config cfg;
+  bool PlayEE = true;
   int slice_num;
 
   const static uint16_t melody[];

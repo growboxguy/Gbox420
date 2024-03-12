@@ -21,21 +21,21 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *Data
         DnsLookup(DefaultSettings->MqttServerDNS, &MqttServerAddress);
     }
 
-    absolute_time_t NextRefresh = make_timeout_time_ms(10000); // 10sec - Used to track timeouts
+    absolute_time_t NextRefresh = make_timeout_time_ms(10000); // 10sec from now - Used to track timeouts
     mqttConnect();
     while (!mqttIsConnected()) // Waiting for the MQTT connection to establish
-    {
+    {        
         if (get_absolute_time() > NextRefresh) // 10sec timeout
         {
             printf("MQTT connect timeout\n");
             break;
         }
-        sleep_ms(100);
+        sleep_ms(500);        
     }
 
     if (DefaultSettings->SubTopic[0] != '\0' && mqttIsConnected()) // If a SubTopic was configured -> Subscribe to it
     {
-        NextRefresh = make_timeout_time_ms(5000); // 5sec
+        NextRefresh = make_timeout_time_ms(5000); // 5sec from now
         SubscribeInProgress = true;
         mqttSubscribe_Unsubscribe(DefaultSettings->SubTopic, DefaultSettings->QoS, true); // Subscribe to MQTT messages in the SubTopic topic.
 
@@ -46,7 +46,7 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *Data
                 printf("MQTT connect timeout\n");
                 break;
             }
-            sleep_ms(100);
+            sleep_ms(500);
         }
     }
 }

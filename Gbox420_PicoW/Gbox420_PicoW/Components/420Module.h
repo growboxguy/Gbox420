@@ -8,7 +8,6 @@
 #pragma once
 
 /*
-#include "Arduino.h"
 #include "ELClient.h"          ///< ESP-link
 #include "ELClientWebServer.h" ///< ESP-link - WebServer API
 #include "ELClientRest.h"      ///< ESP-link - REST API
@@ -34,19 +33,22 @@ class Sound;
 class Module : virtual public Common
 {
 public:
-  Module(const char *Name, Sound *SoundFeedback);                                                         ///< constructor
-  Module(const char *Name);                                                                               ///< constructor
-  static void mqttDataReceived(const char *Topic, uint16_t TopicLength, char *Data, uint16_t DataLength); ///< MQTT data received from the Subscribed topic
-  void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false);
-  void commandEventTrigger(char *Command, char *Data);                                                            ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
+  Module(const char *Name, Sound *SoundFeedback);                                                                 ///< constructor
+  Module(const char *Name);                                                                                       ///< constructor
   void runReport(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false); ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.
-  void addToCommandQueue(Common *Subscriber);                                                                     ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method
   void run1sec();                                                                                                 ///< Called every second
   void run5sec();                                                                                                 ///< Called every 5 seconds
   void run1min();                                                                                                 ///< Called every minute
-  void addToLog(const char *Text, uint8_t Indent = 3); ///< Add a Log entry that is displayed on the web interface
-  void addToReportQueue(Common *Component);  ///< Subscribing to the report queue: Calls the report() method
-  void addToRefreshQueue(Common *Component); ///< Subscribing to the 1 sec refresh queue: Calls the refresh() method
+  void addToLog(const char *Text, uint8_t Indent = 3);                                                            ///< Add a Log entry that is displayed on the web interface
+  void addToReportQueue(Common *Component);                                                                       ///< Subscribing to the report queue: Calls the report() method
+  void addToRefreshQueue_1sec(Common *Component);                                                                 ///< Subscribing to the 1 second refresh queue: Calls the run1sec() method
+  void addToRefreshQueue_5sec(Common *Component);                                                                 ///< Subscribing to the 5 second refresh queue: Calls the run5sec() method
+  void addToRefreshQueue_1min(Common *Component);                                                                 ///< Subscribing to the 1 minute refresh queue: Calls the run1min() method
+  void addToCommandQueue(Common *Subscriber);                                                                     ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method
+  void commandEventTrigger(char *Command, char *Data);                                                            ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
+  void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false);
+  static void mqttDataReceived(const char *Topic, uint16_t TopicLength, char *Data, uint16_t DataLength); ///< MQTT data received from the Subscribed topic
+
   char *getFormattedTime(bool PrintToSerials);
   Sound *SoundFeedback = NULL;
   Sound *getSoundObject();
@@ -87,10 +89,14 @@ protected:
   bool RunRequested = false;
   bool ConsoleReportRequested = false;
   Common *ReportQueue[QueueDepth] = {}; ///< aggregate initializer: Same as initializing to null pointers
-  Common *RefreshQueue[QueueDepth] = {};
+  Common *RefreshQueue_1sec[QueueDepth] = {};
+  Common *RefreshQueue_5sec[QueueDepth] = {};
+  Common *RefreshQueue_1min[QueueDepth] = {};
   Common *CommandQueue[QueueDepth] = {};
   uint8_t ReportQueueItemCount = 0; ///< Tracking queue item count
-  uint8_t RefreshQueueItemCount = 0;
+  uint8_t RefreshQueue_1sec_ItemCount = 0;
+  uint8_t RefreshQueue_5sec_ItemCount = 0;
+  uint8_t RefreshQueue_1min_ItemCount = 0;
   uint8_t CommandQueueItemCount = 0;
 
   char *getDebugText(bool FriendlyFormat = false);

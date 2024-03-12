@@ -13,5 +13,5 @@
 
 bool DnsLookup(char *DnsName, ip_addr_t *ResultIP);                               ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
 void DnsLookupResult(const char *Hostname, const ip_addr_t *ResultIP, void *Arg); ///< Callback with the lookup result
-static bool dnsLookupInProgress = false;                                          ///< true: DNS lookup in progress
-static bool dnsLookupSuccess = false;                                             ///< true: DNS lookup resulted in an IP
+static bool __attribute__((unused)) dnsLookupInProgress = false;                  ///< true: DNS lookup in progress
+static bool __attribute__((unused)) dnsLookupSuccess = false;                     ///< true: DNS lookup resulted in an IP

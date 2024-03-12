@@ -20,7 +20,7 @@ Module::Module(const char *Name, Sound *SoundFeedback) : Common(Name)
  * @param ForceRun Send a report instantly, even when regular reports are disabled
  * @param ClearBuffer Flush the LongMessage buffer before starting to report
  * @param KeepBuffer Stores the full JSON report in the LongMessage buffer - Only use this on the Mega2560 where LongMessage is large enough to store a complete report (Can be up to 1024kB)
- * @param JSONToBufferOnly Do not print anyting on the serial output, only fll the LongMessage buffer with the JSON report
+ * @param JSONToBufferOnly Do not print anything on the serial output, only fll the LongMessage buffer with the JSON report
  */
 void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
@@ -49,7 +49,7 @@ void Module::commandEventTrigger(char *Command, char *Data)
 }
 
 /**
- * @brief Set how often a report should be sent to the Serial output (Arduino and ESP)
+ * @brief Set how often a report should be sent to stdout
  * @param Frequency Send a report every X seconds
  */
 void Module::setSerialReportingFrequency(uint16_t Frequency)
@@ -62,11 +62,11 @@ void Module::setSerialReportingFrequency(uint16_t Frequency)
 }
 
 /**
- * @brief Reports sensor readings to the Serial output (Arduino and ESP) or to the LongMessage bufer
+ * @brief Reports sensor readings to stdout or to the LongMessage buffer
  * @param ForceRun Send a report instantly, even when regular reports are disabled
  * @param ClearBuffer Flush the LongMessage buffer before starting to report
  * @param KeepBuffer Stores the full JSON report in the LongMessage buffer - Only use this on the Mega2560 where LongMessage is large enough to store a complete report (Can be up to 1024kB)
- * @param JSONToBufferOnly Do not print anyting on the serial output, only fll the LongMessage buffer with the JSON report
+ * @param JSONToBufferOnly Do not print anything on the serial output, only fll the LongMessage buffer with the JSON report
  */
 void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
@@ -140,13 +140,31 @@ void Module::addToReportQueue(Common *Component)
 
 /**
  * @brief Subscribe to refresh() calls
+ * 
+ * @param Component Pointer to the object subscribing
  */
-void Module::addToRefreshQueue(Common *Component)
+void Module::addToRefreshQueue_1sec(Common *Component)
 {
-  if (QueueDepth > RefreshQueueItemCount)
-    RefreshQueue[RefreshQueueItemCount++] = Component; ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
+  if (QueueDepth > RefreshQueue_1sec_ItemCount)
+    RefreshQueue_1sec[RefreshQueue_1sec_ItemCount++] = Component;
   else
-    printf("Refresh queue overflow\n");
+    printf("Refresh queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
+}
+
+void Module::addToRefreshQueue_5sec(Common *Component)
+{
+  if (QueueDepth > RefreshQueue_5sec_ItemCount)
+    RefreshQueue_5sec[RefreshQueue_5sec_ItemCount++] = Component;
+  else
+    printf("Refresh queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
+}
+
+void Module::addToRefreshQueue_1min(Common *Component)
+{
+  if (QueueDepth > RefreshQueue_1min_ItemCount)
+    RefreshQueue_1min[RefreshQueue_1min_ItemCount++] = Component;
+  else
+    printf("Refresh queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
 }
 
 /**
@@ -314,8 +332,8 @@ void Module::run1sec()
 void Module::run5sec()
 {
   Common::run5sec();
-  //reportToSerialTrigger();
-  //reportToMQTTTrigger();
+  // reportToSerialTrigger();
+  // reportToMQTTTrigger();
 
   if (RefreshRequested)
   {
@@ -332,7 +350,7 @@ void Module::run5sec()
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
-   // runReport(true);
+    // runReport(true);
   }
   // reportToGoogleSheetsTrigger();
 }
@@ -638,7 +656,6 @@ void Module::mqttPublish(char (*JSONData)[MaxLongTextLength])
 }
 
 ///< Settings
-
 
 char *Module::getDebugText(bool FriendlyFormat)
 {

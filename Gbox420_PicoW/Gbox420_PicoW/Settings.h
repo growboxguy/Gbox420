@@ -4,7 +4,7 @@
 #pragma once
 
 /*!
- *  \brief     Default Settings for each component within the module. Loaded when the Arduino starts.
+ *  \brief     Default Settings for each component within the module. Loaded when the Pico W starts.
  *  \details   Settings are stored in EEPROM and kept between reboots. Stored values are updated by the website controls on user interaction.
  *  \warning   EEPROM has a write limit of 100.000 cycles, constantly updating the variables inside a loop would wear out the EEPROM memory!
  *  \attention Update the Version number when you change the structure of the settings. This will overwrite the EEPROM stored settings with the sketch defaults from this file.
@@ -12,7 +12,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 1; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -32,7 +32,7 @@ extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling shor
 extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
 
 ///< SAVED TO EEPROM - Settings struct
-///< If you change things here, increase the Version variable in line 12
+///< If you change things here, increase the Version variable
 
 typedef struct
 {

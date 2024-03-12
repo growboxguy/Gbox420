@@ -26,10 +26,12 @@ Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneS
   MqttHiveMQ = new MqttClient(&ModuleSettings->HempyMqttServer1, (void *)mqttDataReceived);
 
   addToReportQueue(this);  //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
-  addToRefreshQueue(this); //< Attach to a trigger that fires every second and calls refresh()
+  addToRefreshQueue_1sec(this); //< Attach to a trigger that fires every second and calls refresh()
+  addToRefreshQueue_5sec(this); //< Attach to a trigger that fires every second and calls refresh()
+  addToRefreshQueue_1min(this); //< Attach to a trigger that fires every second and calls refresh()
   // addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
   // addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
-  // addToCommandQueue(this);
+  addToCommandQueue(this);
   addToLog("Hempy_Standalone ready", 0);
   runAll();
 }
