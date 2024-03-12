@@ -4,6 +4,8 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *Data
 {
     this->DataCallback = DataCallback;
     MqttServerPort = &DefaultSettings->MqttServerPort;
+    PubTopic = DefaultSettings->PubTopic;
+    PublishRetain = &DefaultSettings->PublishRetain;
     Client = mqtt_client_new();                 // Allocate memory for the Stuct storing the MQTT client, store the pointer to it
     memset(&ClientInfo, 0, sizeof(ClientInfo)); // Allocate memory for the ClientInfo
     ClientInfo.client_id = DefaultSettings->ClientID;
@@ -14,6 +16,7 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *Data
     ClientInfo.will_msg = DefaultSettings->LwtMessage;
     ClientInfo.will_qos = DefaultSettings->QoS;
     ClientInfo.will_retain = DefaultSettings->LwtRetain;
+    
 
     ip4addr_aton(DefaultSettings->MqttServerIP, &MqttServerAddress); // If MqttServerDNS is defined and the DNS lookup is successful this will be overwritten
     if (DefaultSettings->MqttServerDNS[0] != '\0')                   // If an MQTT server DNS name is specified -> Look up the IP
@@ -147,10 +150,10 @@ void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint1
     }
 }
 
-void MqttClient::mqttPublish(const char *PubTopic, const char *PubData, uint8_t QoS, bool Retain)
+void MqttClient::mqttPublish(char *PubTopic, char *PubData)
 {
     printf("Publishing data to %s ...", PubTopic);
-    err_t err = mqtt_publish(Client, PubTopic, PubData, strlen(PubData), QoS, Retain, mqttPublish_Callback, &PubTopic);
+    err_t err = mqtt_publish(Client, PubTopic, PubData, strlen(PubData), ClientInfo.will_qos, *PublishRetain, mqttPublish_Callback, &PubTopic);
     if (err != ERR_OK)
     {
         printf("Publish err: %d\n", err);

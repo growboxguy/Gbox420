@@ -11,6 +11,8 @@
 #include <cstring>
 #include <cstdlib>
 #include <cmath>
+#include "hardware/rtc.h"
+#include "pico/util/datetime.h"
 #include "../Settings.h" // Storing/reading defaults
 
 ///< State machine - Defining possible states
@@ -98,6 +100,8 @@ extern bool *Metric;
 
 // Class specific variables
 // void getFreeMemory();
+// Query current time from local RTC
+char *getCurrentTime(bool PrintToSerial);
 float convertBetweenTempUnits(float);
 float convertBetweenPressureUnits(float);
 char *toText(int);

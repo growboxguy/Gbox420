@@ -20,10 +20,14 @@ Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneS
   SerialReportJSON = &DefaultSettings->SerialReportJSON;
   SerialReportWireless = &DefaultSettings->SerialReportWireless;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
-  SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
+  ReportToMqtt = &DefaultSettings->ReportToMqtt;
+  SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;  
+
 
   Sound1 = new Sound(this, &ModuleSettings->Sound1); ///< Passing DefaultSettings members as references: Changes get written back to DefaultSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&DefaultSettings) + offsetof(Settings, VARIABLENAME))
-  MqttHiveMQ = new MqttClient(&ModuleSettings->HempyMqttServer1, (void *)mqttDataReceived);
+  this->SoundFeedback = Sound1;
+  MosquittoMqtt = new MqttClient(&ModuleSettings->HempyMqttServer1, (void *)mqttDataReceived);
+  this->DefaultMqttClient = MosquittoMqtt;
 
   addToReportQueue(this);  //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   addToRefreshQueue_1sec(this); //< Attach to a trigger that fires every second and calls refresh()
@@ -62,7 +66,7 @@ void Hempy_Standalone::websiteEvent_Load(__attribute__((unused)) char *Url) ///<
  */
 void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed (5sec automatic)
 {
-  // WebServer.setArgString("Time", getFormattedTime(false));  ///< Current time
+  // WebServer.setArgString("Time", getCurrentTime(false));  ///< Current time
   // WebServer.setArgJson("Log", eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 }
 

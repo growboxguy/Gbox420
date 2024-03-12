@@ -8,6 +8,7 @@ Sound::Sound(Module *Parent, Settings::SoundSettings *DefaultSettings) : Common(
   Enabled = &DefaultSettings->Enabled;
   gpio_init(*Pin);
   gpio_set_dir(*Pin, GPIO_OUT);
+  Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_1sec(this);
   Parent->addToCommandQueue(this);
   printf("   Sound ready\n");

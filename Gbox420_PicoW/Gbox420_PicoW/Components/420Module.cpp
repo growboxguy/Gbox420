@@ -9,18 +9,12 @@ Module::Module(const char *Name) : Common(Name)
   printf("   Module ready\n");
 }
 
-Module::Module(const char *Name, Sound *SoundFeedback) : Common(Name)
-{ ///< Constructor
-  this->SoundFeedback = SoundFeedback;
-  printf("   Module ready\n");
-}
-
 /**
  * @brief Handles custom reporting frequency for Serial
  * @param ForceRun Send a report instantly, even when regular reports are disabled
  * @param ClearBuffer Flush the LongMessage buffer before starting to report
- * @param KeepBuffer Stores the full JSON report in the LongMessage buffer - Only use this on the Mega2560 where LongMessage is large enough to store a complete report (Can be up to 1024kB)
- * @param JSONToBufferOnly Do not print anything on the serial output, only fll the LongMessage buffer with the JSON report
+ * @param KeepBuffer Stores the full JSON report in the LongMessage buffer (up to 1024kB)
+ * @param JSONToBufferOnly Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
  */
 void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
@@ -66,29 +60,26 @@ void Module::setSerialReportingFrequency(uint16_t Frequency)
  * @param ForceRun Send a report instantly, even when regular reports are disabled
  * @param ClearBuffer Flush the LongMessage buffer before starting to report
  * @param KeepBuffer Stores the full JSON report in the LongMessage buffer - Only use this on the Mega2560 where LongMessage is large enough to store a complete report (Can be up to 1024kB)
- * @param JSONToBufferOnly Do not print anything on the serial output, only fll the LongMessage buffer with the JSON report
+ * @param JSONToBufferOnly Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
  */
 void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
 {
   if ((*SerialReportDate || ForceRun) && !JSONToBufferOnly)
   {
-    getFormattedTime(true);
+    getCurrentTime(true);
   }
   if ((*SerialReportMemory || ForceRun) && !JSONToBufferOnly)
   {
     // getFreeMemory();
   }
-  /*
   if ((*SerialReportJSONFriendly  || ForceRun) && !JSONToBufferOnly)
   {
-    printf(ReportQueueItemCount); ///< Prints the number of items that will report
-    printf("reporting:");
+    printf("%u items reporting:\n",ReportQueueItemCount); ///< Prints the number of items that will report
     for (int i = 0; i < ReportQueueItemCount; i++)
     {
       ReportQueue[i]->report(false);
     }
   }
-  */
   if (*SerialReportJSON || ForceRun || JSONToBufferOnly)
   {
     if (ClearBuffer)
@@ -191,19 +182,6 @@ void Module::addToLog(const char *LongMessage, __attribute__((unused)) uint8_t I
   memset(&Logs[0], 0, sizeof(Logs[0]));         ///< clear variable
   strncpy(Logs[0], LongMessage, MaxWordLength); ///< instert new log to [0]
   printf("%s\n", Logs[0]);
-}
-
-///< Time
-
-char *Module::getFormattedTime(bool PrintToSerials) // TODO: Fix this
-{
-  /*
-  time_t Now = now();                                                                                                                          // Get the current time and date from the TimeLib library
-  snprintf(CurrentTime, MaxWordLength, "%04d/%02d/%02d-%02d:%02d:%02d", year(Now), month(Now), day(Now), hour(Now), minute(Now), second(Now)); // YYYY/MM/DD-HH:mm:SS formatted time will be stored in CurrentTime global variable
-  if (PrintToSerials)
-    printf("%s\n",&CurrentTime);
-    */
-  return CurrentTime;
 }
 
 ///< Settings
@@ -332,8 +310,8 @@ void Module::run1sec()
 void Module::run5sec()
 {
   Common::run5sec();
-  // reportToSerialTrigger();
-  // reportToMQTTTrigger();
+   reportToSerialTrigger();
+   reportToMqttTrigger();
 
   if (RefreshRequested)
   {
@@ -433,7 +411,7 @@ char *Module::settingsToJSON()
   strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
   /*
   strcat(LongMessage, "\",\"MQTT\":\"");
-  strcat(LongMessage, toText(*ReportToMQTT));
+  strcat(LongMessage, toText(*ReportToMqtt));
   strcat(LongMessage, "\",\"MQTTF\":\"");
   strcat(LongMessage, toText(*MQTTReportFrequency));
   strcat(LongMessage, "\",\"MPT\":\"");
@@ -464,7 +442,7 @@ void Module::settingsEvent_Load(__attribute__((unused)) char *Url)
   WebServer.setArgBoolean("Sheets", *ReportToGoogleSheets);
   WebServer.setArgInt("SheetsF", *SheetsReportingFrequency);
   WebServer.setArgString("Relay", ModuleSettings->PushingBoxLogRelayID);
-  WebServer.setArgBoolean("MQTT", *ReportToMQTT);
+  WebServer.setArgBoolean("MQTT", *ReportToMqtt);
   WebServer.setArgInt("MQTTF", *MQTTReportFrequency);
   WebServer.setArgString("MPT", ModuleSettings->PubTopic);
   WebServer.setArgString("MST", ModuleSettings->SubTopic);
@@ -477,7 +455,7 @@ void Module::settingsEvent_Load(__attribute__((unused)) char *Url)
 void Module::settingsEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
   /*
-  WebServer.setArgString("Time", getFormattedTime(false));  ///< Current time
+  WebServer.setArgString("Time", getCurrentTime(false));  ///< Current time
   WebServer.setArgJson("Log", eventLogToJSON(false, true)); ///< Last events that happened in JSON format
   */
 }
@@ -631,22 +609,22 @@ void Module::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
  * MQTT reporting: Gbox420/Hempy/{"Log":{"FanI":{"S":"1"},"FanE":{"S":"1"},"Ap1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"Ls1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"45.20"},"Pow1":{"P":"573.60","E":"665.47","V":"227.20","C":"2.64","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.45","WR1":"6.77","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.69","WR2":"5.31","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.41","W":"23.57","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.50","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.41","T":"1071.30","W":"14.64","WT":"19.13","AT":"27.30","H":"38.50"},"Main1":{"M":"1","D":"0","RD":"0","RM":"1","RT":"0","RJ":"1"}}}
  * MQTT reporting: char PubTopic[MaxShotTextLength]Hempy/{"EventLog":["","","Module initialized","Lt2 brightness updated"]}
  */
-void Module::mqttPublish(char (*JSONData)[MaxLongTextLength])
+void Module::mqttPublish(MqttClient Client, char (*JSONData)[MaxLongTextLength])
 {
-  if (*Debug)
+  //if (*Debug)
   {
     printf("  MQTT reporting: ");
-    // printf(&(ModuleSettings->PubTopic));
+    printf("%s\n",DefaultMqttClient->PubTopic);
     printf("%s\n", JSONData);
   }
-  /*
-  if (MqttConnected)
+  
+  if (DefaultMqttClient->mqttIsConnected())
   {
-    MqttAPI.publish(ModuleSettings->PubTopic, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
+    DefaultMqttClient->mqttPublish(DefaultMqttClient->PubTopic, *JSONData); //(topic,message,qos (Only level 0 supported),retain )
   }
 
   else
-  */
+  
   {
     if (*Debug)
     {
@@ -706,7 +684,7 @@ void Module::setSheetsReportingFrequency(uint16_t Frequency)
 
 void Module::setPushingBoxLogRelayID(const char *ID)
 {
-  strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
+ // strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
   getSoundObject()->playOnSound();
   addToLog("Sheets log relay ID updated");
 }
@@ -730,17 +708,16 @@ void Module::reportToGoogleSheetsTrigger(bool ForceRun)
   Gbox420/Hempy/{"EventLog":["","","","Hempy_Standalone ready"]}
   Gbox420/Hempy/{"Settings":{"Debug":"1","Metric":"1","SerialF":"15","Date":"1","Mem":"1","JSON":"1","JSONF":"1","Wire":"1","Sheets":"1","SheetsF":"30","Relay":"v755877CF53383E1","MQTT":"1","MQTTF":"5","MPT":"Gbox420/Hempy","MST":"Gbox420CMD/Hempy/#","MLT":"Gbox420LWT/Hempy/","MLM":"Hempy Offline"}}
 */
-void Module::reportToMQTTTrigger(bool ForceRun)
+void Module::reportToMqttTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
-  if ((*ReportToMQTT && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
+printf("Mqtt reporting starting...\n");
+  if (*ReportToMqtt || ForceRun)
   {
     runReport(false, true, true, true); //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
-    /*
-    mqttPublish(&LongMessage);          //< Publish Log via ESP MQTT API
+    mqttPublish(*DefaultMqttClient,&LongMessage);          //< Publish Log via ESP MQTT API
     eventLogToJSON(true, true);         //< Loads the EventLog as a JSON
-    mqttPublish(&LongMessage);          //< Publish the EventLog via ESP MQTT API
+    mqttPublish(*DefaultMqttClient,&LongMessage);          //< Publish the EventLog via ESP MQTT API
     settingsToJSON();                   //< Loads the module settings as a JSON to the LongMessage buffer
-    mqttPublish(&LongMessage);          //< Publish the Settings via ESP MQTT API
-    */
+    mqttPublish(*DefaultMqttClient,&LongMessage);          //< Publish the Settings via ESP MQTT API
   }
 }

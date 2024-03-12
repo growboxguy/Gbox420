@@ -10,6 +10,19 @@ void getFreeMemory()
 }
 */
 
+// Current time from local RTC
+char *getCurrentTime(bool PrintToSerial)
+{
+  datetime_t CurrentDateTime;
+  rtc_get_datetime(&CurrentDateTime);
+  datetime_to_str(ShortMessage, MaxShotTextLength, &CurrentDateTime);
+  if (PrintToSerial)
+  {
+    printf("%s\n",ShortMessage);
+  }
+  return ShortMessage;
+}
+
 ///< Conversions
 
 float convertBetweenTempUnits(float Value)

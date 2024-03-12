@@ -19,6 +19,7 @@
 #include "420Common.h"
 #include "../Settings.h"
 #include "Helpers.h"
+#include "MqttClient.h"
 
 ///< Common parent class of all modules
 ///<
@@ -33,7 +34,6 @@ class Sound;
 class Module : virtual public Common
 {
 public:
-  Module(const char *Name, Sound *SoundFeedback);                                                                 ///< constructor
   Module(const char *Name);                                                                                       ///< constructor
   void runReport(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false); ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.
   void run1sec();                                                                                                 ///< Called every second
@@ -48,10 +48,11 @@ public:
   void commandEventTrigger(char *Command, char *Data);                                                            ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
   void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false);
   static void mqttDataReceived(const char *Topic, uint16_t TopicLength, char *Data, uint16_t DataLength); ///< MQTT data received from the Subscribed topic
-
-  char *getFormattedTime(bool PrintToSerials);
+  void mqttPublish(MqttClient Client, char (*JSONData)[MaxLongTextLength]);                                                 ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
+  
   Sound *SoundFeedback = NULL;
   Sound *getSoundObject();
+  MqttClient *DefaultMqttClient = NULL;
   uint16_t *SerialReportFrequency;   ///< Frequency of Serial reports in seconds
   uint16_t SerialTriggerCounter = 0; ///< Helps with timing when to send the Serial report out
   bool *SerialReportDate;            ///< Enable/disable reporting the current time to the Serial output
@@ -73,8 +74,7 @@ public:
   void addPushingBoxLogRelayID();                                                                        ///< Google Sheets reporting - Set PushingBox relay ID
   void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);                                         ///< Google Sheets reporting - Send a JSON formatted report via REST API to the PushingBox relay
   void reportToGoogleSheetsTrigger(bool ForceRun = false);                                               ///< Google Sheets reporting - Handles custom reporting frequencies
-  void mqttPublish(char (*JSONData)[MaxLongTextLength]);                                                 ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
-  void reportToMQTTTrigger(bool ForceRun = false);                                                       ///< MQTT reporting - Handles custom reporting frequencies
+ void reportToMqttTrigger(bool ForceRun = false);                                                       ///< MQTT reporting - Handles custom reporting frequencies
 
 private:
 protected:
@@ -114,7 +114,7 @@ protected:
   bool *ReportToGoogleSheets;
   uint16_t *SheetsReportingFrequency;
   uint8_t SheetsTriggerCounter = 0;
-  bool *ReportToMQTT;
+  bool *ReportToMqtt;
   uint16_t *MQTTReportFrequency;
   uint16_t MQTTTriggerCounter = 0;
 };

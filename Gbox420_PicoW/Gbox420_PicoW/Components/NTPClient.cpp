@@ -29,16 +29,7 @@ NtpClient::NtpClient(Settings::NtpClientSettings *DefaultSettings)
         }
         sleep_ms(500);
     }
-    getRTC();
-}
-
-// Query current time from local RTC
-void NtpClient::getRTC()
-{
-    datetime_t CurrentDateTime;
-    rtc_get_datetime(&CurrentDateTime);
-    datetime_to_str(ShortMessage, MaxShotTextLength, &CurrentDateTime);
-    printf("%s\n", ShortMessage);
+    getCurrentTime(true);
 }
 
 // Make an NTP request

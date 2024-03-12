@@ -16,12 +16,15 @@ class MqttClient
 
 public:
     MqttClient(Settings::MqttClientSettings *DefaultSettings, void *DataCallback);
-    void mqttConnect();                                                                    ///< Initiate connection to the MQTT server
-    void mqttDisconnect();                                                                 ///< Disconnect from MQTT server
-    bool mqttIsConnected();                                                                ///< true: Connected to MQTT server, false: not connected
-    void mqttPublish(const char *PubTopic, const char *PubData, uint8_t QoS, bool Retain); ///< Publish a message to the PubTopic
-    void mqttSubscribe_Unsubscribe(const char *SubTopic, uint8_t QoS, bool Subscribe);     ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
+    void mqttConnect();                                                                ///< Initiate connection to the MQTT server
+    void mqttDisconnect();                                                             ///< Disconnect from MQTT server
+    bool mqttIsConnected();                                                            ///< true: Connected to MQTT server, false: not connected
+    void mqttPublish(char *PubTopic, char *PubData);                       ///< Publish a message to the PubTopic
+    void mqttSubscribe_Unsubscribe(const char *SubTopic, uint8_t QoS, bool Subscribe); ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
     bool SubscribeInProgress;
+    char *PubTopic; ///< Default topic to publish messages
+    bool *PublishRetain; ///< Should the MQTT server retain Publish messages: 0:No retention (recommended), 1:Broker keeps the message and sends it to future subscribers
+  
 
 private:
 protected:

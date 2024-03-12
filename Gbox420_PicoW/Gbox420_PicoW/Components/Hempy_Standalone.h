@@ -24,7 +24,7 @@ class Hempy_Standalone : public Module
 {
 public:
   Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneSettings *DefaultSettings, Settings::MqttClientSettings *MqttSettings);
-  MqttClient *MqttHiveMQ = NULL; ///< Pointer to MQTT handler
+  MqttClient *MosquittoMqtt = NULL; ///< Pointer to MQTT handler
   Sound *Sound1 = NULL;          ///< Pointer to a Piezo speaker - sound feedback
   void websiteEvent_Load(__attribute__((unused)) char *Url);
   void websiteEvent_Refresh(__attribute__((unused)) char *Url);

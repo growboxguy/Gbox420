@@ -27,7 +27,6 @@ class NtpClient
 {
 public:
     NtpClient(Settings::NtpClientSettings *DefaultSettings);                                                       ///< Initialize the Real Time Clock and do an NTP update
-    void getRTC();                                                                                                 ///< Print the current time to stdout
     void ntpResult(int status, time_t *result);                                                                    ///< Called with the NTP results, updates the Real Time Clock
     void ntpRequest();                                                                                             ///< Make an NTP request
     static void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port); ///< NTP data received

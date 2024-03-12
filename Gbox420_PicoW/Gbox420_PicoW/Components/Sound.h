@@ -42,7 +42,7 @@ protected:
   bool *Enabled;            ///< Sound ON or OFF
   bool PlayOnSound = true;  ///< Play on beep flag - website controls it
   bool PlayOffSound = true; ///< Play off beep flag - website controls it
-  bool PlayEE = true;
+  bool PlayEE = false;
   int slice_num;
 
   const static uint16_t melody[];

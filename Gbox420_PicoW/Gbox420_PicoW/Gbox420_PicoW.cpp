@@ -1,25 +1,24 @@
 /*! \file
- *  \brief     WiFi connection test using an NTP query to update the built-in Real Time Clock
+ *  \brief     Gbox420 port for Pico W - Development in progress
  *  \details
  *  \attention
  *             update the WIFI_SSID and WIFI_PASSWORD in Settings.h
- *             run the builder.bat
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/raspberry-pi-pico-w
  *  \version   4.20
  */
 
 #pragma GCC diagnostic ignored "-Wstringop-truncation" // Surpress build warning of potential truncation of a string NULL terminator. During string operations the size is pre-defined in Settings.h: MaxWordLength/MaxShotTextLength/MaxLongTextLength
-#include "hardware/rtc.h"                              //Real Time Clock for storing current time (Updated over NTP)
-#include "hardware/watchdog.h"                         //Watchdog to auto-reboot in case of an error
+#include "hardware/rtc.h"                              // Real Time Clock for storing current time (Updated over NTP)
+#include "hardware/watchdog.h"                         // Watchdog to auto-reboot in case of an error
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
 #include "Settings.h" // Settings for every component //TODO: Try passing these directly when creating an object?
+#include "Components/Helpers.h"
 #include "Components/NtpClient.h"
 #include "Components/Sound.h"
 #include "Components/Hempy_Standalone.h" // Represents a complete box with all feautres
 
 // Global variable initialization
-// char CurrentTime[MaxWordLength] = "";      ///< calling getRTC() function it will update this variable   //TODO: Remove this, return it instead in getRTC()
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
 char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
 bool *Debug;                               ///< True - Turns on extra debug messages on the Serial Output
@@ -77,8 +76,8 @@ bool run1sec(struct repeating_timer *t)
 ///< This function gets called infinitely at a rate defined by repeating_timer
 bool run5sec(struct repeating_timer *t)
 {
-  watchdog_update(); ///< Pet watchdog
-  NtpClient1->getRTC();  // Prints current time
+  watchdog_update();    ///< Pet watchdog
+  getCurrentTime(true); // Prints current time
   Hempy_Standalone1->run5sec();
   return true; // true to continue repeating, false to stop.
 }
@@ -124,7 +123,7 @@ int main()
 
   struct repeating_timer Timer1sec;
   add_repeating_timer_ms(-1000, run1sec, NULL, &Timer1sec); // Calls runRepeatedly every second
-struct repeating_timer Timer5sec;
+  struct repeating_timer Timer5sec;
   add_repeating_timer_ms(-5000, run5sec, NULL, &Timer5sec); // Calls runRepeatedly every second
   struct repeating_timer Timer1min;
   add_repeating_timer_ms(-60000, run1min, NULL, &Timer1min); // Calls runRepeatedly every minute
@@ -132,8 +131,8 @@ struct repeating_timer Timer5sec;
   absolute_time_t NextRefresh = make_timeout_time_ms(5000); // 5sec from now
   while (1)
   {
-    sleep_until(NextRefresh); // The microcontroller is in sleep mode, only wakes up when a repeating_timer triggers.
-    watchdog_update();  // Pet watchdog    
+    sleep_until(NextRefresh);                 // The microcontroller is in sleep mode, only wakes up when a repeating_timer triggers.
+    watchdog_update();                        // Pet watchdog
     NextRefresh = make_timeout_time_ms(5000); // 5sec from now
   }
   cyw43_arch_deinit();
