@@ -69,7 +69,7 @@ void setup()
   resetWebServer();                  ///< reset the WebServer
   setSyncProvider(getNtpTime);       ///< Points to method for updating time from NTP server
   setSyncInterval(86400);            ///< Sync time every day
-  if ((ModuleSettings->Hempy_Standalone1).ReportToMQTT)
+  if ((ModuleSettings->Hempy_Standalone1).ReportToMqtt)
   {
     //setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
   }
@@ -253,7 +253,7 @@ void mqttReceived(void *response)
   mqttTopic.toCharArray(command, MaxShotTextLength);
   mqttData.toCharArray(data, MaxShotTextLength);
   Hempy_Standalone1->commandEventTrigger(command, data);
-  Hempy_Standalone1->reportToMQTTTrigger(true); //send out a fresh report
+  Hempy_Standalone1->reportToMqttTrigger(true); //send out a fresh report
 }
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress

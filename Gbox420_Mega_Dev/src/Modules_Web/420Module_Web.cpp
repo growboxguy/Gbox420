@@ -88,7 +88,7 @@ void Module_Web::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
   reportToSerialTrigger();
-  reportToMQTTTrigger();
+  reportToMqttTrigger();
   if (RefreshAllRequested)
   {
     RefreshAllRequested = false;
@@ -107,7 +107,7 @@ void Module_Web::refresh_FiveSec()
   if (MQTTReportRequested)
   {
     MQTTReportRequested = false;
-    reportToMQTTTrigger(true);
+    reportToMqttTrigger(true);
   }
 }
 
@@ -210,7 +210,7 @@ char *Module_Web::settingsToJSON()
   strcat_P(LongMessage, (PGM_P)F("\",\"Relay\":\""));
   strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
   strcat_P(LongMessage, (PGM_P)F("\",\"MQTT\":\""));
-  strcat(LongMessage, toText(*ReportToMQTT));
+  strcat(LongMessage, toText(*ReportToMqtt));
   strcat_P(LongMessage, (PGM_P)F("\",\"MQTTF\":\""));
   strcat(LongMessage, toText(*MQTTReportFrequency));
   strcat_P(LongMessage, (PGM_P)F("\",\"MPT\":\""));
@@ -239,7 +239,7 @@ void Module_Web::settingsEvent_Load(__attribute__((unused)) char *Url)
   WebServer.setArgBoolean(F("Sheets"), *ReportToGoogleSheets);
   WebServer.setArgInt(F("SheetsF"), *SheetsReportingFrequency);
   WebServer.setArgString(F("Relay"), ModuleSettings->PushingBoxLogRelayID);
-  WebServer.setArgBoolean(F("MQTT"), *ReportToMQTT);
+  WebServer.setArgBoolean(F("MQTT"), *ReportToMqtt);
   WebServer.setArgInt(F("MQTTF"), *MQTTReportFrequency);
   WebServer.setArgString(F("MPT"), ModuleSettings->MqttPubTopic);
   WebServer.setArgString(F("MST"), ModuleSettings->MqttSubTopic);
@@ -521,8 +521,8 @@ void Module_Web::reportToGoogleSheetsTrigger(bool ForceRun)
 
 void Module_Web::setMQTTReportingOnOff(bool State)
 {
-  *ReportToMQTT = State;
-  if (*ReportToMQTT)
+  *ReportToMqtt = State;
+  if (*ReportToMqtt)
   {
     addToLog(F("MQTT ON"));
   }
@@ -530,7 +530,7 @@ void Module_Web::setMQTTReportingOnOff(bool State)
   {
     addToLog(F("MQTT OFF"));
   }
-  getSoundObject()->playOnOffSound(*ReportToMQTT);
+  getSoundObject()->playOnOffSound(*ReportToMqtt);
 }
 
 void Module_Web::setMQTTReportingFrequency(uint16_t Frequency)
@@ -574,9 +574,9 @@ void Module_Web::setMQTTLWTMessage(const char *LWTMessage)
   Gbox420/Hempy/{"EventLog":["","","","Hempy_Standalone ready"]}
   Gbox420/Hempy/{"Settings":{"Debug":"1","Metric":"1","SerialF":"15","Date":"1","Mem":"1","JSON":"1","JSONF":"1","Wire":"1","Sheets":"1","SheetsF":"30","Relay":"v755877CF53383E1","MQTT":"1","MQTTF":"5","MPT":"Gbox420/Hempy","MST":"Gbox420CMD/Hempy/#","MLT":"Gbox420LWT/Hempy/","MLM":"Hempy Offline"}}
 */
-void Module_Web::reportToMQTTTrigger(bool ForceRun)
+void Module_Web::reportToMqttTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
-  if ((*ReportToMQTT && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
+  if ((*ReportToMqtt && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
   {
     runReport(false, true, true, true); //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
     mqttPublish(&LongMessage);          //< Publish Log via ESP MQTT API

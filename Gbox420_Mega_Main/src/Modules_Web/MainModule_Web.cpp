@@ -26,7 +26,7 @@ MainModule::MainModule(const __FlashStringHelper *Name, Settings::MainModuleSett
   SerialReportWireless = &DefaultSettings->SerialReportWireless;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
-  ReportToMQTT = &DefaultSettings->ReportToMQTT;
+  ReportToMqtt = &DefaultSettings->ReportToMqtt;
   MQTTReportFrequency = &DefaultSettings->MQTTReportFrequency;
 
   logToSerials(F(""), true, 0); //<Line break

@@ -116,7 +116,7 @@ struct ACMotorModuleSettings ///< AeroModule default settings
 
   struct MainModuleSettings ///< MainModule default settings
   {
-    MainModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSON = true, bool SerialReportJSONFriendly = true, bool SerialReportWireless = true, bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMQTT = false, uint16_t MQTTReportFrequency = 0) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSON(SerialReportJSON), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportWireless(SerialReportWireless), ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMQTT(ReportToMQTT), MQTTReportFrequency(MQTTReportFrequency) {}
+    MainModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSON = true, bool SerialReportJSONFriendly = true, bool SerialReportWireless = true, bool ReportToGoogleSheets = false, uint16_t SheetsReportingFrequency = 0, bool ReportToMqtt = false, uint16_t MQTTReportFrequency = 0) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSON(SerialReportJSON), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportWireless(SerialReportWireless), ReportToGoogleSheets(ReportToGoogleSheets), SheetsReportingFrequency(SheetsReportingFrequency), ReportToMqtt(ReportToMqtt), MQTTReportFrequency(MQTTReportFrequency) {}
     uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
     bool SerialReportDate;             ///< Enable/disable reporting the current time to the Serial output
     bool SerialReportMemory;           ///< Enable/disable reporting the remaining free memory to the Serial output
@@ -125,7 +125,7 @@ struct ACMotorModuleSettings ///< AeroModule default settings
     bool SerialReportWireless;         ///< Enable/disable sending wireless package exchange reports to the Serial output
     bool ReportToGoogleSheets;         ///< Enable/disable reporting sensor readings to Google Sheets
     uint16_t SheetsReportingFrequency; ///< How often to report to Google Sheets. Use 15 minute increments only! Min 15min, Max 1440 (1day)
-    bool ReportToMQTT;                 ///< Enable/disable reporting sensor readings to an MQTT broker
+    bool ReportToMqtt;                 ///< Enable/disable reporting sensor readings to an MQTT broker
     uint16_t MQTTReportFrequency;      ///< How often to report to MQTT. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
   };
   struct MainModuleSettings Main1 = {.SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToGoogleSheets = true, .SheetsReportingFrequency = 30, .ReportToMqtt = true, .MQTTReportFrequency = 5};

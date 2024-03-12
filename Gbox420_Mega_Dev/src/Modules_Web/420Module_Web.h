@@ -44,7 +44,7 @@ public:
   void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);                                         ///< Google Sheets reporting - Send a JSON formatted report via REST API to the PushingBox relay
   void reportToGoogleSheetsTrigger(bool ForceRun = false);                                               ///< Google Sheets reporting - Handles custom reporting frequencies
   void mqttPublish(char (*JSONData)[MaxLongTextLength]);                                                 ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
-  void reportToMQTTTrigger(bool ForceRun = false);                                                       ///< MQTT reporting - Handles custom reporting frequencies
+  void reportToMqttTrigger(bool ForceRun = false);                                                       ///< MQTT reporting - Handles custom reporting frequencies
   Sound_Web *SoundFeedback = NULL;
   Sound_Web *getSoundObject();
 
@@ -76,7 +76,7 @@ protected:
   bool *ReportToGoogleSheets;
   uint16_t *SheetsReportingFrequency;
   uint8_t SheetsTriggerCounter = 0;
-  bool *ReportToMQTT;
+  bool *ReportToMqtt;
   uint16_t *MQTTReportFrequency;
   uint16_t MQTTTriggerCounter = 0;
 };
