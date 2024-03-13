@@ -3,12 +3,12 @@ views:
   - panel: true
     title: Grafana
     path: Grafana
-    icon: 'mdi:desktop-mac-dashboard'
+    icon: 'mdi:chart-histogram'
     badges: []
     cards:
       - type: iframe
         url: >-
-          https://growboxguy.duckdns.org:3000/api/hassio_ingress/TOpyF6QeW2rUUYsm4VJzNO6-vgmEl0mOizlrCfpUcdA/d/x84g-i9Gz/gbox420?orgId=1&refresh=10s&kiosk=tv&from=now-7d&to=now
+          https://growboxguy.duckdns.org:8123/api/hassio_ingress/TOpyF6QeW2rUUYsm4VJzNO6-vgmEl0mOizlrCfpUcdA/d/x84g-i9Gz/gbox420?orgId=1&refresh=10s&kiosk=tv&from=now-7d&to=now
         aspect_ratio: 100%
   - title: Node-RED
     path: NodeRED
