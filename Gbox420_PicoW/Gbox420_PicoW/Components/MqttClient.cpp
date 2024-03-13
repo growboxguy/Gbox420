@@ -151,9 +151,8 @@ void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint1
 }
 
 void MqttClient::mqttPublish(char *PubTopic, char *PubData)
-{
-    printf("Publishing data to %s ...", PubTopic);
-    err_t err = mqtt_publish(Client, PubTopic, PubData, strlen(PubData), ClientInfo.will_qos, *PublishRetain, mqttPublish_Callback, &PubTopic);
+{    
+    err_t err = mqtt_publish(Client, PubTopic, PubData, strlen(PubData), ClientInfo.will_qos, *PublishRetain, mqttPublish_Callback, PubTopic);
     if (err != ERR_OK)
     {
         printf("Publish err: %d\n", err);
@@ -164,10 +163,10 @@ void MqttClient::mqttPublish_Callback(void *Arg, err_t Result)
 {
     if (Result != ERR_OK)
     {
-        printf("Publish error: %d\n", Result);
+        printf("Mqtt publish to %s failed: %d\n", Arg, Result);
     }
     else
     {
-        printf("done\n");
+        printf("Mqtt publish to %s done\n", Arg);
     }
 }

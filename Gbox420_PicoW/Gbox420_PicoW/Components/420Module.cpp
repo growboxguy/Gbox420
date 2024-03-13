@@ -72,9 +72,9 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
   {
     // getFreeMemory();
   }
-  if ((*SerialReportJSONFriendly  || ForceRun) && !JSONToBufferOnly)
+  if ((*SerialReportJSONFriendly || ForceRun) && !JSONToBufferOnly)
   {
-    printf("%u items reporting:\n",ReportQueueItemCount); ///< Prints the number of items that will report
+    printf("%u items reporting:\n", ReportQueueItemCount); ///< Prints the number of items that will report
     for (int i = 0; i < ReportQueueItemCount; i++)
     {
       ReportQueue[i]->report(false);
@@ -131,7 +131,7 @@ void Module::addToReportQueue(Common *Component)
 
 /**
  * @brief Subscribe to refresh() calls
- * 
+ *
  * @param Component Pointer to the object subscribing
  */
 void Module::addToRefreshQueue_1sec(Common *Component)
@@ -310,8 +310,8 @@ void Module::run1sec()
 void Module::run5sec()
 {
   Common::run5sec();
-   reportToSerialTrigger();
-   reportToMqttTrigger();
+  reportToSerialTrigger();
+  reportToMqttTrigger();
 
   if (RefreshRequested)
   {
@@ -611,20 +611,17 @@ void Module::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
  */
 void Module::mqttPublish(MqttClient Client, char (*JSONData)[MaxLongTextLength])
 {
-  //if (*Debug)
-  {
-    printf("  MQTT reporting: ");
-    printf("%s\n",DefaultMqttClient->PubTopic);
-    printf("%s\n", JSONData);
-  }
-  
+
   if (DefaultMqttClient->mqttIsConnected())
   {
+    // if (*Debug)
+    {
+      printf("  MQTT reporting to %s - %s\n", DefaultMqttClient->PubTopic, JSONData);
+    }
     DefaultMqttClient->mqttPublish(DefaultMqttClient->PubTopic, *JSONData); //(topic,message,qos (Only level 0 supported),retain )
   }
 
   else
-  
   {
     if (*Debug)
     {
@@ -684,7 +681,7 @@ void Module::setSheetsReportingFrequency(uint16_t Frequency)
 
 void Module::setPushingBoxLogRelayID(const char *ID)
 {
- // strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
+  // strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
   getSoundObject()->playOnSound();
   addToLog("Sheets log relay ID updated");
 }
@@ -710,14 +707,13 @@ void Module::reportToGoogleSheetsTrigger(bool ForceRun)
 */
 void Module::reportToMqttTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
-printf("Mqtt reporting starting...\n");
   if (*ReportToMqtt || ForceRun)
   {
-    runReport(false, true, true, true); //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
-    mqttPublish(*DefaultMqttClient,&LongMessage);          //< Publish Log via ESP MQTT API
-    eventLogToJSON(true, true);         //< Loads the EventLog as a JSON
-    mqttPublish(*DefaultMqttClient,&LongMessage);          //< Publish the EventLog via ESP MQTT API
-    settingsToJSON();                   //< Loads the module settings as a JSON to the LongMessage buffer
-    mqttPublish(*DefaultMqttClient,&LongMessage);          //< Publish the Settings via ESP MQTT API
+    runReport(false, true, true, true);            //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
+    mqttPublish(*DefaultMqttClient, &LongMessage); //< Publish Log via ESP MQTT API
+    eventLogToJSON(true, true);                    //< Loads the EventLog as a JSON
+    mqttPublish(*DefaultMqttClient, &LongMessage); //< Publish the EventLog via ESP MQTT API
+    settingsToJSON();                              //< Loads the module settings as a JSON to the LongMessage buffer
+    mqttPublish(*DefaultMqttClient, &LongMessage); //< Publish the Settings via ESP MQTT API
   }
 }
