@@ -1,10 +1,11 @@
 #include "MqttClient.h"
 
-MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *DataCallback)
+MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, Callback_type DataCallback)
 {
     this->DataCallback = DataCallback;
     MqttServerPort = &DefaultSettings->MqttServerPort;
     PubTopic = DefaultSettings->PubTopic;
+    SubTopic = DefaultSettings->SubTopic;
     PublishRetain = &DefaultSettings->PublishRetain;
     Client = mqtt_client_new();                 // Allocate memory for the Stuct storing the MQTT client, store the pointer to it
     memset(&ClientInfo, 0, sizeof(ClientInfo)); // Allocate memory for the ClientInfo
@@ -16,7 +17,6 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *Data
     ClientInfo.will_msg = DefaultSettings->LwtMessage;
     ClientInfo.will_qos = DefaultSettings->QoS;
     ClientInfo.will_retain = DefaultSettings->LwtRetain;
-    
 
     ip4addr_aton(DefaultSettings->MqttServerIP, &MqttServerAddress); // If MqttServerDNS is defined and the DNS lookup is successful this will be overwritten
     if (DefaultSettings->MqttServerDNS[0] != '\0')                   // If an MQTT server DNS name is specified -> Look up the IP
@@ -27,13 +27,13 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, void *Data
     absolute_time_t NextRefresh = make_timeout_time_ms(10000); // 10sec from now - Used to track timeouts
     mqttConnect();
     while (!mqttIsConnected()) // Waiting for the MQTT connection to establish
-    {        
+    {
         if (get_absolute_time() > NextRefresh) // 10sec timeout
         {
             printf("MQTT connect timeout\n");
             break;
         }
-        sleep_ms(500);        
+        sleep_ms(500);
     }
 
     if (DefaultSettings->SubTopic[0] != '\0' && mqttIsConnected()) // If a SubTopic was configured -> Subscribe to it
@@ -131,31 +131,47 @@ void MqttClient::mqttSubscribe_Callback(void *Arg, err_t Result)
 void MqttClient::mqttIncomingTopic_Callback(void *Arg, const char *Topic, uint32_t Tot_len)
 {
     strcpy(((MqttClient *)Arg)->LastReceivedTopic, Topic);
-    // printf("MQTT incoming topic: %s\n", Topic);
+    //printf("MQTT incoming topic: %s\n", ((MqttClient *)Arg)->LastReceivedTopic);
 }
 
-void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint16_t Len, uint8_t Flags)
+/// @brief Callback when MQTT data arrives on a Subscribed topic
+/// @param Arg Contains a pointer to an MqttClient object
+/// @param Data Pointer to the memory address of the first character in the received data
+/// @param DataLength Number of characters received (Not null terminated!)
+/// @param Flags 0 - More data packages to follow, 1 - Last data package
+void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint16_t DataLength, uint8_t Flags)
 {
-    char TempData[Len + 1] = {}; // The +1 character is the null terminator
-    memcpy(TempData, Data, Len);
-    printf("MQTT incoming[%u] - Topic[%zu]: %s - Payload[%d]: %s\n", (unsigned int)Flags, strlen(((MqttClient *)Arg)->LastReceivedTopic), ((MqttClient *)Arg)->LastReceivedTopic, Len, TempData);
-
-    if (Flags == 1) // Last fragment of payload received (or the whole payload fits receive buffer (MQTT_VAR_HEADER_BUFFER_LEN, MQTT_DATA_FLAG_LAST)
+    if (Flags == 1 && DataLength < MaxLongTextLength) // Last fragment of payload received (or the whole payload fits receive buffer)
     {
-        ((Callback_type)((MqttClient *)Arg)->DataCallback)(((MqttClient *)Arg)->LastReceivedTopic, strlen(((MqttClient *)Arg)->LastReceivedTopic), TempData, Len); // Passing the data back
+        char TopicReceived[MaxShotTextLength] = {};                                  // Initialize null terminated Topic storage
+        size_t SubTopicLength = strlen(((MqttClient *)Arg)->SubTopic) - 1;           // Get length of the subscribed topic, minus the # sign (# is wildcard for any subtopic)
+        size_t ReceivedTopicLength = strlen(((MqttClient *)Arg)->LastReceivedTopic); // Get length of the received topic
+        if (SubTopicLength < ReceivedTopicLength)
+        {
+            memcpy(TopicReceived, ((MqttClient *)Arg)->LastReceivedTopic + SubTopicLength, ReceivedTopicLength - SubTopicLength + 1); // Chop the pre-known part of the Topic. Example: Subscribed topic: Gbox420CMD/#  Received: Gbox420CMD/Light1_ON --> Light1_ON
+        }
+        char DataReceived[MaxLongTextLength] = {}; // Initialize null terminated Data storage
+        memcpy(DataReceived, Data, DataLength);    // Copy data to null terminated buffer
+
+        /*
+        printf("TopicMQTT: %s\n", ((MqttClient *)Arg)->LastReceivedTopic);
+        printf("TopicMQTTShort: %s\n",TopicReceived);
+        printf("DataMQTT: %s\n", DataReceived);
+        */
+        ((MqttClient *)Arg)->DataCallback(TopicReceived, DataReceived); // Passing the data back by calling DataCallback. Passing parameters: Topic,Data and DataLength
     }
     else
     {
-        printf("Max payload exceeded"); /// TODO: Implement multiple package handling
+        printf("MQTT data exceeded buffer"); /// TODO: Implement multiple package handling? Not really needed, since incoming data is small
     }
 }
 
 void MqttClient::mqttPublish(char *PubTopic, char *PubData)
-{    
+{
     err_t err = mqtt_publish(Client, PubTopic, PubData, strlen(PubData), ClientInfo.will_qos, *PublishRetain, mqttPublish_Callback, PubTopic);
     if (err != ERR_OK)
     {
-        printf("Publish err: %d\n", err);
+        printf("  MQTT publish error: %d\n", err); // Failed to send out publish request
     }
 }
 
@@ -163,10 +179,12 @@ void MqttClient::mqttPublish_Callback(void *Arg, err_t Result)
 {
     if (Result != ERR_OK)
     {
-        printf("Mqtt publish to %s failed: %d\n", Arg, Result);
+        printf("  MQTT publish to %s failed: %d\n", Arg, Result); // Server rejected publish request
     }
+    /*
     else
     {
-        printf("Mqtt publish to %s done\n", Arg);
+        printf("  MQTT published to %s\n", Arg);
     }
+    */
 }

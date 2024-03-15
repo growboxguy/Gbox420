@@ -305,6 +305,18 @@ void Module::websiteRefreshEventTrigger(char *Url)
 void Module::run1sec()
 {
   Common::run1sec();
+  if (RunAllRequested)
+  {
+    RunAllRequested = false;
+    runAll();
+  }
+  else
+  {
+    for (int i = 0; i < RefreshQueue_1sec_ItemCount; i++)
+    {
+      RefreshQueue_1sec[i]->run1sec();
+    }
+  }
 }
 
 void Module::run5sec()
@@ -313,38 +325,56 @@ void Module::run5sec()
   reportToSerialTrigger();
   reportToMqttTrigger();
 
-  if (RefreshRequested)
-  {
-    RefreshRequested = false;
-    runAll();
-  }
+  for (int i = 0; i < RefreshQueue_5sec_ItemCount; i++)
+    {
+      RefreshQueue_5sec[i]->run5sec();
+    }
+
   /*
   if (ReportToGoogleSheetsRequested)
   {
     ReportToGoogleSheetsRequested = false;
     reportToGoogleSheetsTrigger(true);
   }
-  */
+  
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
-    // runReport(true);
+    runReport(true);
   }
-  // reportToGoogleSheetsTrigger();
+   reportToGoogleSheetsTrigger();
+   */
 }
 
 void Module::run1min() // TODO: Rework module refreshing logic, move Google Sheets to its own Component
 {
   Common::run1min();
+  for (int i = 0; i < RefreshQueue_1min_ItemCount; i++)
+    {
+      RefreshQueue_1min[i]->run1min();
+    }
+
+}
+
+void Module::runAll()
+{
+  run1sec();
+  run5sec();
+  run1min();
 }
 
 /**
  * @brief Called when an MQTT command is received
  */
-void Module::mqttDataReceived(const char *Topic, uint16_t TopicLength, char *Data, uint16_t DataLength)
-{
-  printf("[%u]%s\n", TopicLength, Topic); // Print the topic the subscribed message was received in
-  printf("[%u]%s\n", DataLength, Data);   // Print the message received on the subscribed topic
+void Module::mqttDataReceived(char *Topic, char *Data)
+{   
+  printf("Topic: %s\n", Topic); // Print the topic the subscribed message was received in
+  printf("Data: %s\n",  Data);   // Print the message received on the subscribed topic
+  commandEventTrigger(Topic, Data);
+/*
+  //
+  //reportToMqttTrigger(true); //send out a fresh report
+*/
 }
 
 /**

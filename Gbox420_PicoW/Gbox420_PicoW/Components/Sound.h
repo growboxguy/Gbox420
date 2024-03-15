@@ -19,7 +19,7 @@ public:
   void report(bool FriendlyFormat = false);
   bool commandEvent(char *Command, char *Data);
   void checkEvents();
-  void refresh();
+  void run1sec();
   void playOnSound();
   void playOffSound();
   void playEE();

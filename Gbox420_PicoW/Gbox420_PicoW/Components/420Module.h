@@ -39,6 +39,7 @@ public:
   void run1sec();                                                                                                 ///< Called every second
   void run5sec();                                                                                                 ///< Called every 5 seconds
   void run1min();                                                                                                 ///< Called every minute
+  void runAll();
   void addToLog(const char *Text, uint8_t Indent = 3);                                                            ///< Add a Log entry that is displayed on the web interface
   void addToReportQueue(Common *Component);                                                                       ///< Subscribing to the report queue: Calls the report() method
   void addToRefreshQueue_1sec(Common *Component);                                                                 ///< Subscribing to the 1 second refresh queue: Calls the run1sec() method
@@ -47,7 +48,7 @@ public:
   void addToCommandQueue(Common *Subscriber);                                                                     ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method
   void commandEventTrigger(char *Command, char *Data);                                                            ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
   void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false);
-  static void mqttDataReceived(const char *Topic, uint16_t TopicLength, char *Data, uint16_t DataLength); ///< MQTT data received from the Subscribed topic
+  void mqttDataReceived(char *Topic, char *Data); ///< MQTT data received from the Subscribed topic
   void mqttPublish(MqttClient Client, char (*JSONData)[MaxLongTextLength]);                                                 ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
   
   Sound *SoundFeedback = NULL;
@@ -86,7 +87,7 @@ protected:
   void setSerialReportJSON(bool State);                 ///< Enable/disable sending JSON formatted reports to the Serial output
   void setSerialReportJSONFriendly(bool State);         ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
   void setSerialReportWireless(bool State);             ///< Enable/disable sending wireless package exchange reports to the Serial output
-  bool RunRequested = false;
+  bool RunAllRequested = false;
   bool ConsoleReportRequested = false;
   Common *ReportQueue[QueueDepth] = {}; ///< aggregate initializer: Same as initializing to null pointers
   Common *RefreshQueue_1sec[QueueDepth] = {};

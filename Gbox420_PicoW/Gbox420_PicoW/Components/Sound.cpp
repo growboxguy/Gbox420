@@ -33,7 +33,7 @@ bool Sound::commandEvent(char *Command, char *Data)
     return false;
   }
   else
-  {
+  {   
     if (strcmp(ShortMessage, "E") == 0)
     {
       toggleSoundOnOff();
@@ -54,9 +54,9 @@ void Sound::websiteEvent_Load(__attribute__((unused)) char *Url)
 
 */
 
-void Sound::refresh()
+void Sound::run1sec()
 {
-  // Common::refresh();
+  Common::run1sec();
   checkEvents();
 }
 

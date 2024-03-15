@@ -1,3 +1,4 @@
+#include <functional>
 #include "Hempy_Standalone.h"
 #include "Sound.h"
 /*
@@ -26,13 +27,11 @@ Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneS
 
   Sound1 = new Sound(this, &ModuleSettings->Sound1); ///< Passing DefaultSettings members as references: Changes get written back to DefaultSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&DefaultSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
-  MosquittoMqtt = new MqttClient(&ModuleSettings->HempyMqttServer1, (void *)mqttDataReceived);
+  std::function<void(char *, char *)> callbackFunctionPtr = std::bind(&Hempy_Standalone::mqttDataReceived, this, std::placeholders::_1, std::placeholders::_2);
+  MosquittoMqtt = new MqttClient(&ModuleSettings->HempyMqttServer1, callbackFunctionPtr);
   this->DefaultMqttClient = MosquittoMqtt;
 
   addToReportQueue(this);  //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
-  addToRefreshQueue_1sec(this); //< Attach to a trigger that fires every second and calls refresh()
-  addToRefreshQueue_5sec(this); //< Attach to a trigger that fires every second and calls refresh()
-  addToRefreshQueue_1min(this); //< Attach to a trigger that fires every second and calls refresh()
   // addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
   // addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
   addToCommandQueue(this);

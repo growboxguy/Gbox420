@@ -56,7 +56,7 @@ bool Common::isThisMine(char const *LookupName) ///< Returns true when the Looku
   printf("Object :");
   printf("%s\n", Name);
 
-  char *ReturnChar = ShortMessage; ///< return text will be loaded into a global temp buffer
+  char *Command = ShortMessage; ///< return text will be loaded into a global temp buffer
   uint8_t CharacterCount = 0;      // Tracks which character is currently getting compared
   char NameCurrentChar;            // Current Name character being compared
   char LookupCurrentChar;          // Current LookupName character being compared
@@ -83,17 +83,18 @@ bool Common::isThisMine(char const *LookupName) ///< Returns true when the Looku
     {
       LookupCurrentChar = LookupName[CharacterCount++]; ///< read the next LookupName character
       ///< printf(LookupCurrentChar);
-      *ReturnChar++ = LookupCurrentChar;
+      *Command++ = LookupCurrentChar;
       if (LookupCurrentChar == '\0')
         break; ///< reached the string termination sign
       if (SafetyCount++ > MaxWordLength)
       {
-        *ReturnChar = '\0';
+        *Command = '\0';
         printf("   Too long:");
         printf(LookupName, true, 1);
         return false;
       }
     }
+    printf("Match on %s, command: %s\n",Name,ShortMessage);
     return true;
   }
   else
