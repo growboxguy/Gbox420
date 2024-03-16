@@ -17,7 +17,6 @@
 #include "pico/util/datetime.h"
 #include "../Settings.h"
 #include "420Common.h"
-#include "DnsClient.h"
 
 #define NTP_MSG_LEN 48
 #define NTP_DELTA 2208988800 // seconds between 1 Jan 1900 and 1 Jan 1970
