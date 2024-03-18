@@ -11,6 +11,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <cmath>
+#include "hardware/watchdog.h"                         // Watchdog to auto-reboot in case of an error
 #include "hardware/rtc.h"
 #include "pico/cyw43_arch.h"
 #include "lwip/err.h"
@@ -126,6 +127,7 @@ char *toText_onOff(bool Status);
 char *toText_yesNo(bool Status);
 char *toText_enabledDisabled(bool Status);
 char *toText_onlineStatus(bool Status);
+char *toText_connectedStatus(bool Status);
 char *toText_aeroTankState(AeroTankStates State);
 char *toText_aeroNoTankState(AeroNoTankStates State);
 char *toText_ACMotorState(ACMotorStates State);

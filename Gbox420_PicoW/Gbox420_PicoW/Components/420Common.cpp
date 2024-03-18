@@ -10,7 +10,7 @@ Common::Common(const char *Name)
 /**
  * @brief Report current state in a JSON format to the LongMessage buffer - Append the start of the JSON
  */
-void Common::report(__attribute__((unused)) bool FriendlyFormat)
+void Common::report(bool FriendlyFormat)
 {
   strcat(LongMessage, "\"");
   strcat(LongMessage, Name);

@@ -9,7 +9,6 @@
 
 #pragma GCC diagnostic ignored "-Wstringop-truncation" // Surpress build warning of potential truncation of a string NULL terminator. During string operations the size is pre-defined in Settings.h: MaxWordLength/MaxShotTextLength/MaxLongTextLength
 #include "hardware/rtc.h"                              // Real Time Clock for storing current time (Updated over NTP)
-#include "hardware/watchdog.h"                         // Watchdog to auto-reboot in case of an error
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
 #include "Settings.h" // Settings for every component //TODO: Try passing these directly when creating an object?
@@ -56,6 +55,17 @@ void initializeWiFi()
   }
 }
 
+
+void checkWiFi()
+{  
+  printf("WiFi status:%d\n",cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA));
+  if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) != CYW43_LINK_UP) // Returns the status of the wifi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to wifi,CYW43_LINK_NOIP(2)-Connected to wifi, but no IP address,CYW43_LINK_UP  (3)-Connect to wifi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authenticatation failure
+  {
+    cyw43_arch_wifi_connect_async(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK); //Try connecting again in the background
+    printf("Reconnecting WiFi: %s\n",WIFI_SSID);
+  };
+}
+
 ///< Blink built-in LED on Pico W
 void heartBeat()
 {
@@ -86,6 +96,7 @@ bool run5sec(struct repeating_timer *t)
 bool run1min(struct repeating_timer *t)
 {
   watchdog_update(); ///< Pet watchdog
+  checkWiFi();
   Hempy_Standalone1->run1min();
   return true; // true to continue repeating, false to stop.
 }

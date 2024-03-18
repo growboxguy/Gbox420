@@ -1,6 +1,7 @@
 #include <functional>
 #include "Hempy_Standalone.h"
 #include "Sound.h"
+#include "MqttClient.h"
 /*
 #include "DHTSensor.h"
 #include "WeightSensor.h"
@@ -28,7 +29,7 @@ Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneS
   Sound1 = new Sound(this, &ModuleSettings->Sound1); ///< Passing DefaultSettings members as references: Changes get written back to DefaultSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&DefaultSettings) + offsetof(Settings, VARIABLENAME))
   this->SoundFeedback = Sound1;
   std::function<void(char *, char *)> callbackFunctionPtr = std::bind(&Hempy_Standalone::mqttDataReceived, this, std::placeholders::_1, std::placeholders::_2);
-  MosquittoMqtt = new MqttClient(&ModuleSettings->HempyMqttServer1, callbackFunctionPtr);
+  MosquittoMqtt = new MqttClient(this,&ModuleSettings->HempyMqttServer1, callbackFunctionPtr);
   this->DefaultMqttClient = MosquittoMqtt;
 
   addToReportQueue(this);  //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT

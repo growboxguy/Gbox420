@@ -74,6 +74,7 @@ typedef struct
 
   struct MqttClientSettings ///< MQTT client settings
   {
+    char Name[MaxWordLength]; ///< Must be unique
     char MqttServerDNS[MaxWordLength];      ///< MQTT server DNS name, "" to use MqttServerIP instead
     char MqttServerIP[MaxWordLength];       ///< MQTT server IP. Used when MqttServerDNS is empty, or the DNS lookup fails
     uint16_t MqttServerPort;                ///< MQTT server Port
@@ -89,7 +90,7 @@ typedef struct
     uint8_t QoS;                            ///< Quality of Service levels: 0:No QoS, 1: Broker ensures to send the message to the subscribers (recommended), 2: Broker ensures to send the message to the subscribers exactly once   https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/
     uint32_t KeepAliveSeconds;              ///< Ping the MQTT server every X seconds to keep the connection active
   };
-  struct MqttClientSettings HempyMqttServer1 = {.MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .ClientID = "Hempy", .PubTopic = "Gbox420/Hempy/", .SubTopic = "Gbox420CMD/Hempy/#", .LwtTopic = "Gbox420LWT/Hempy/", .LwtMessage = "Hempy Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
+  struct MqttClientSettings HempyMqttServer1 = {.Name = "MQTT1", .MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .ClientID = "Hempy", .PubTopic = "Gbox420/Hempy/", .SubTopic = "Gbox420CMD/Hempy/#", .LwtTopic = "Gbox420LWT/Hempy/", .LwtMessage = "Hempy Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
 
   struct NtpClientSettings ///< MQTT client settings
   {
@@ -105,9 +106,9 @@ typedef struct
   {
     char Name[MaxWordLength]; ///< Must be unique
     uint8_t Pin;              ///< Piezo Buzzer red(+) cable
-    bool Enabled = true;      ///< Enable/Disable sound
+    bool Enabled;      ///< Enable/Disable sound
   };
-  struct SoundSettings Sound1 = {.Name = "Sound1", .Pin = 2};
+  struct SoundSettings Sound1 = {.Name = "Sound1", .Pin = 2, .Enabled=true};
 
   struct WasteReservoirSettings ///< WaterPump default settings
   {

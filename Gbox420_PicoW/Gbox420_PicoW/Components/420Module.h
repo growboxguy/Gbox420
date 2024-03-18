@@ -19,7 +19,6 @@
 #include "420Common.h"
 #include "../Settings.h"
 #include "Helpers.h"
-#include "MqttClient.h"
 
 ///< Common parent class of all modules
 ///<
@@ -30,6 +29,7 @@
 // extern bool MqttConnected;
 
 class Sound;
+class MqttClient;
 
 class Module : virtual public Common
 {

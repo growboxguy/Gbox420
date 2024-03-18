@@ -1,6 +1,7 @@
 #pragma GCC diagnostic ignored "-Wstringop-truncation"
 #include "420Module.h"
 #include "Sound.h"
+#include "MqttClient.h"
 
 static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log history displayed on the website (array of char arrays)
 
