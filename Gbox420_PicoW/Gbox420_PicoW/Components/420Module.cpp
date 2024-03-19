@@ -114,7 +114,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
 
 Sound *Module::getSoundObject()
 {
-  return SoundFeedback;
+  return DefaultSound;
 }
 
 ///< Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes
@@ -439,20 +439,20 @@ char *Module::settingsToJSON()
   strcat(LongMessage, "\",\"SheetsF\":\"");
   strcat(LongMessage, toText(*SheetsReportingFrequency));
   strcat(LongMessage, "\",\"Relay\":\"");
-  strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
+  strcat(LongMessage, GboxSettings->PushingBoxLogRelayID);
   /*
   strcat(LongMessage, "\",\"MQTT\":\"");
   strcat(LongMessage, toText(*ReportToMqtt));
   strcat(LongMessage, "\",\"MQTTF\":\"");
   strcat(LongMessage, toText(*MQTTReportFrequency));
   strcat(LongMessage, "\",\"MPT\":\"");
-  strcat(LongMessage, ModuleSettings->PubTopic);
+  strcat(LongMessage, GboxSettings->PubTopic);
   strcat(LongMessage, "\",\"MST\":\"");
-  strcat(LongMessage, ModuleSettings->SubTopic);
+  strcat(LongMessage, GboxSettings->SubTopic);
   strcat(LongMessage, "\",\"MLT\":\"");
-  strcat(LongMessage, ModuleSettings->LwtTopic);
+  strcat(LongMessage, GboxSettings->LwtTopic);
   strcat(LongMessage, "\",\"MLM\":\"");
-  strcat(LongMessage, ModuleSettings->LwtMessage);
+  strcat(LongMessage, GboxSettings->LwtMessage);
   */
   strcat(LongMessage, "\"}}"); ///< closing the curly brackets at the end of the JSON
   return LongMessage;
@@ -472,13 +472,13 @@ void Module::settingsEvent_Load(__attribute__((unused)) char *Url)
   WebServer.setArgInt("Wire", *SerialReportWireless);
   WebServer.setArgBoolean("Sheets", *ReportToGoogleSheets);
   WebServer.setArgInt("SheetsF", *SheetsReportingFrequency);
-  WebServer.setArgString("Relay", ModuleSettings->PushingBoxLogRelayID);
+  WebServer.setArgString("Relay", GboxSettings->PushingBoxLogRelayID);
   WebServer.setArgBoolean("MQTT", *ReportToMqtt);
   WebServer.setArgInt("MQTTF", *MQTTReportFrequency);
-  WebServer.setArgString("MPT", ModuleSettings->PubTopic);
-  WebServer.setArgString("MST", ModuleSettings->SubTopic);
-  WebServer.setArgString("MLT", ModuleSettings->LwtTopic);
-  WebServer.setArgString("MLM", ModuleSettings->LwtMessage);
+  WebServer.setArgString("MPT", GboxSettings->PubTopic);
+  WebServer.setArgString("MST", GboxSettings->SubTopic);
+  WebServer.setArgString("MLT", GboxSettings->LwtTopic);
+  WebServer.setArgString("MLM", GboxSettings->LwtMessage);
   WebServer.setArgInt(getSoundObject()->getName("E", true), getSoundObject()->getEnabledState());
   */
 }
@@ -615,7 +615,7 @@ void Module::addPushingBoxLogRelayID()
 {
   memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
   strcat(LongMessage, "/pushingbox?devid=");
-  strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
+  strcat(LongMessage, GboxSettings->PushingBoxLogRelayID);
   strcat(LongMessage, "&BoxData=");
 }
 
@@ -712,7 +712,7 @@ void Module::setSheetsReportingFrequency(uint16_t Frequency)
 
 void Module::setPushingBoxLogRelayID(const char *ID)
 {
-  // strncpy(ModuleSettings->PushingBoxLogRelayID, ID, MaxWordLength);
+  // strncpy(GboxSettings->PushingBoxLogRelayID, ID, MaxWordLength);
   getSoundObject()->playOnSound();
   addToLog("Sheets log relay ID updated");
 }
@@ -733,7 +733,7 @@ void Module::reportToGoogleSheetsTrigger(bool ForceRun)
   \brief Triggers sending out a sequence of MQTT messages to the PubTopic specified in Settings.h.
   Sample messages:
   Gbox420/Hempy/{"Log":{"DHT1":{"T":"29.00","H":"52.00"},"B1W":{"W":"19.35"},"B2W":{"W":"19.75"},"NRW":{"W":"43.30"},"WRW":{"W":"1.87"},"WR1":{"S":"1","L":"13.00"},"B1P":{"S":"1","T":"120"},"B2P":{"S":"1","T":"120"},"B1":{"S":"1","DW":"18.00","WW":"19.70","ET":"2.00","OF":"0.30","DT":"180"},"B2":{"S":"1","DW":"18.00","WW":"19.70","ET":"2.00","OF":"0.30","DT":"180"},"Hemp1":{"M":"1","D":"1"}}}
-  Gbox420/Hempy/{"EventLog":["","","","Hempy_Standalone ready"]}
+  Gbox420/Hempy/{"EventLog":["","","","HempyModule ready"]}
   Gbox420/Hempy/{"Settings":{"Debug":"1","Metric":"1","SerialF":"15","Date":"1","Mem":"1","JSON":"1","JSONF":"1","Wire":"1","Sheets":"1","SheetsF":"30","Relay":"v755877CF53383E1","MQTT":"1","MQTTF":"5","MPT":"Gbox420/Hempy","MST":"Gbox420CMD/Hempy/#","MLT":"Gbox420LWT/Hempy/","MLM":"Hempy Offline"}}
 */
 void Module::reportToMqttTrigger(bool ForceRun)

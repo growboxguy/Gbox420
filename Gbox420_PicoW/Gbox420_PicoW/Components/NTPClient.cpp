@@ -98,5 +98,6 @@ void NtpClient::ntpResult(int status, time_t *result)
             .sec = 00};
     }
     rtc_set_datetime(&timeTemp);
+    sleep_ms(200); //Wait for the RTC to update
     NtpRefreshInprogress = false;
 }

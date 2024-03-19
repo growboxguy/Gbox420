@@ -1,5 +1,5 @@
 #include <functional>
-#include "Hempy_Standalone.h"
+#include "HempyModule.h"
 #include "Sound.h"
 #include "MqttClient.h"
 /*
@@ -13,7 +13,7 @@
 /**
  * @brief Constructor: creates an instance of the class, loads the EEPROM stored persistent settings, creates components that the instance controls, and subscribes to events
  */
-Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneSettings *DefaultSettings, Settings::MqttClientSettings *MqttSettings) : Common(Name), Module(Name)
+HempyModule::HempyModule(Settings::HempyModuleSettings *DefaultSettings, Settings *GboxSettings) : Common(DefaultSettings->Name), Module(DefaultSettings->Name)
 {
   SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
   SerialReportDate = &DefaultSettings->SerialReportDate;
@@ -26,24 +26,24 @@ Hempy_Standalone::Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneS
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;  
 
 
-  Sound1 = new Sound(this, &ModuleSettings->Sound1); ///< Passing DefaultSettings members as references: Changes get written back to DefaultSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&DefaultSettings) + offsetof(Settings, VARIABLENAME))
-  this->SoundFeedback = Sound1;
-  std::function<void(char *, char *)> callbackFunctionPtr = std::bind(&Hempy_Standalone::mqttDataReceived, this, std::placeholders::_1, std::placeholders::_2);
-  MosquittoMqtt = new MqttClient(this,&ModuleSettings->HempyMqttServer1, callbackFunctionPtr);
+  Sound1 = new Sound(this, &GboxSettings->Sound1); ///< Passing DefaultSettings members as references: Changes get written back to DefaultSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&DefaultSettings) + offsetof(Settings, VARIABLENAME))
+  this->DefaultSound = Sound1;
+  std::function<void(char *, char *)> callbackFunctionPtr = std::bind(&HempyModule::mqttDataReceived, this, std::placeholders::_1, std::placeholders::_2);
+  MosquittoMqtt = new MqttClient(this,&GboxSettings->HempyMqttServer1, callbackFunctionPtr);
   this->DefaultMqttClient = MosquittoMqtt;
 
   addToReportQueue(this);  //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   // addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened
   // addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
   addToCommandQueue(this);
-  addToLog("Hempy_Standalone ready", 0);
+  addToLog("HempyModule ready", 0);
   runAll();
 }
 
 /**
  * @brief Report current state in a JSON format to the LongMessage buffer
  */
-void Hempy_Standalone::report(bool FriendlyFormat)
+void HempyModule::report(bool FriendlyFormat)
 {
   Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
   strcat(LongMessage, "\"M\":\"");
@@ -56,7 +56,7 @@ void Hempy_Standalone::report(bool FriendlyFormat)
 /**
  * @brief Called when an ESP-link website is loading
  */
-void Hempy_Standalone::websiteEvent_Load(__attribute__((unused)) char *Url) ///< called when website is first opened
+void HempyModule::websiteEvent_Load(__attribute__((unused)) char *Url) ///< called when website is first opened
 {
   ;
 }
@@ -64,7 +64,7 @@ void Hempy_Standalone::websiteEvent_Load(__attribute__((unused)) char *Url) ///<
 /**
  * @brief Called when an ESP-link website is refreshing
  */
-void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed (5sec automatic)
+void HempyModule::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed (5sec automatic)
 {
   // WebServer.setArgString("Time", getCurrentTime(false));  ///< Current time
   // WebServer.setArgJson("Log", eventLogToJSON(false, true)); ///< Last events that happened in JSON format
@@ -73,7 +73,7 @@ void Hempy_Standalone::websiteEvent_Refresh(__attribute__((unused)) char *Url) /
 /**
  * @brief Process commands received from MQTT subscription or from the ESP-link website
  */
-bool Hempy_Standalone::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
+bool HempyModule::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
   if (!isThisMine(Command))
   {

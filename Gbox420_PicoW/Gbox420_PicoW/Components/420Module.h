@@ -51,7 +51,7 @@ public:
   void mqttDataReceived(char *Topic, char *Data); ///< MQTT data received from the Subscribed topic
   void mqttPublish(MqttClient Client, char (*JSONData)[MaxLongTextLength]);                                                 ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
   
-  Sound *SoundFeedback = NULL;
+  Sound *DefaultSound = NULL;
   Sound *getSoundObject();
   MqttClient *DefaultMqttClient = NULL;
   uint16_t *SerialReportFrequency;   ///< Frequency of Serial reports in seconds

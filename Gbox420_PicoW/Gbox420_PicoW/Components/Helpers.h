@@ -11,7 +11,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <cmath>
-#include "hardware/watchdog.h"                         // Watchdog to auto-reboot in case of an error
+#include "hardware/watchdog.h" // Watchdog to auto-reboot in case of an error
 #include "hardware/rtc.h"
 #include "pico/cyw43_arch.h"
 #include "lwip/err.h"
@@ -99,7 +99,7 @@ enum class LightStates
 extern char CurrentTime[MaxWordLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
-extern Settings *ModuleSettings;
+extern Settings *GboxSettings;
 extern bool *Debug;
 extern bool *Metric;
 
@@ -107,8 +107,10 @@ extern bool *Metric;
 // void getFreeMemory();
 // Query current time from local RTC
 char *getCurrentTime(bool PrintToSerial);
-bool DnsLookup(char *DnsName, ip_addr_t *ResultIP);                               ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
-void DnsLookupResult(const char *Hostname, const ip_addr_t *ResultIP, void *Arg); ///< Callback with the lookup result
+bool DnsLookup(char *DnsName, ip_addr_t *ResultIP);                                     ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
+void DnsLookupResult(const char *Hostname, const ip_addr_t *ResultIP, void *Arg);       ///< Callback with the lookup result
+bool DnsLookup_Async(char *DnsName, ip_addr_t *ResultIP);                               ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
+void DnsLookupResult_Async(const char *Hostname, const ip_addr_t *ResultIP, void *Arg); ///< Callback with the lookup result
 float convertBetweenTempUnits(float);
 float convertBetweenPressureUnits(float);
 char *toText(int);

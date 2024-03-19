@@ -20,10 +20,10 @@ class HempyBucket;
 
 // extern ELClientRest PushingBoxRestAPI;
 
-class Hempy_Standalone : public Module
+class HempyModule : public Module
 {
 public:
-  Hempy_Standalone(const char *Name, Settings::Hempy_StandaloneSettings *DefaultSettings, Settings::MqttClientSettings *MqttSettings);
+  HempyModule(Settings::HempyModuleSettings *DefaultSettings, Settings *GboxSettings);
   MqttClient *MosquittoMqtt = NULL; ///< Pointer to MQTT handler
   Sound *Sound1 = NULL;          ///< Pointer to a Piezo speaker - sound feedback
   void websiteEvent_Load(__attribute__((unused)) char *Url);

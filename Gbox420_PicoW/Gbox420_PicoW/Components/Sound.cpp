@@ -3,7 +3,7 @@
 Sound::Sound(Module *Parent, Settings::SoundSettings *DefaultSettings) : Common(DefaultSettings->Name)
 {
   this->Parent = Parent;
-  Parent->SoundFeedback = this; ///< Pointer for child objects to use sound feedback
+  Parent->DefaultSound = this; ///< Pointer for child objects to use sound feedback
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
   gpio_init(*Pin);

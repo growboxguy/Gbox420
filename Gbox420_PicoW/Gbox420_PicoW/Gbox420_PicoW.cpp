@@ -15,7 +15,7 @@
 #include "Components/Helpers.h"
 #include "Components/NtpClient.h"
 #include "Components/Sound.h"
-#include "Components/Hempy_Standalone.h" // Represents a complete box with all feautres
+#include "Components/HempyModule.h" // Represents a complete box with all feautres
 
 // Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
@@ -30,9 +30,9 @@ ELClientCmd ESPCmd(&ESPLink);             ///< ESP-link - Helps getting the curr
 ELClientRest PushingBoxRestAPI(&ESPLink); ///< ESP-link - REST API
 ELClientMqtt MqttAPI(&ESPLink);           ///< ESP-link - MQTT protocol for sending and receiving messages
 */
-Settings *ModuleSettings;            ///< This object will store the settings loaded from the EEPROM. Persistent between reboots. //TODO: Find a solution to store this (NO EEPROM on Pico)
-NtpClient *NtpClient1;               ///< Pointer to
-Hempy_Standalone *Hempy_Standalone1; ///< Represents a Grow Box with all components (LED lights, DHT sensors, Power sensor, Hempy Buckets, Water pants..etc)
+Settings *GboxSettings;    ///< This object will store the settings loaded from the EEPROM. Persistent between reboots. //TODO: Find a solution to store this (NO EEPROM on Pico)
+NtpClient *NtpClient1;     ///< Pointer to
+HempyModule *HempyModule1; ///< Represents a Grow Box with all components (LED lights, DHT sensors, Power sensor, Hempy Buckets, Water pants..etc)
 
 // Initialize WiFi and Connect to local network
 void initializeWiFi()
@@ -55,14 +55,13 @@ void initializeWiFi()
   }
 }
 
-
 void checkWiFi()
-{  
-  printf("WiFi status:%d\n",cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA));
+{
+  printf("WiFi status:%d\n", cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA));
   if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) != CYW43_LINK_UP) // Returns the status of the wifi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to wifi,CYW43_LINK_NOIP(2)-Connected to wifi, but no IP address,CYW43_LINK_UP  (3)-Connect to wifi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authenticatation failure
   {
-    cyw43_arch_wifi_connect_async(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK); //Try connecting again in the background
-    printf("Reconnecting WiFi: %s\n",WIFI_SSID);
+    cyw43_arch_wifi_connect_async(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK); // Try connecting again in the background
+    printf("Reconnecting WiFi: %s\n", WIFI_SSID);
   };
 }
 
@@ -79,7 +78,7 @@ bool run1sec(struct repeating_timer *t)
 {
   watchdog_update(); ///< Pet watchdog
   heartBeat();       ///< Blinks built-in led
-  Hempy_Standalone1->run1sec();
+  HempyModule1->run1sec();
   return true; // true to continue repeating, false to stop.
 }
 
@@ -88,7 +87,7 @@ bool run5sec(struct repeating_timer *t)
 {
   watchdog_update();    ///< Pet watchdog
   getCurrentTime(true); // Prints current time
-  Hempy_Standalone1->run5sec();
+  HempyModule1->run5sec();
   return true; // true to continue repeating, false to stop.
 }
 
@@ -97,7 +96,7 @@ bool run1min(struct repeating_timer *t)
 {
   watchdog_update(); ///< Pet watchdog
   checkWiFi();
-  Hempy_Standalone1->run1min();
+  HempyModule1->run1min();
   return true; // true to continue repeating, false to stop.
 }
 
@@ -115,15 +114,15 @@ int main()
   printf("\nGbox420 initializing\n");
 
   // Loading settings from EEPROM
-  ModuleSettings = loadSettings();
-  Debug = &ModuleSettings->Debug;
-  Metric = &ModuleSettings->Metric;
+  GboxSettings = loadSettings();
+  Debug = &GboxSettings->Debug;
+  Metric = &GboxSettings->Metric;
 
   initializeWiFi();
 
   // Create the Module objects
-  NtpClient1 = new NtpClient(&ModuleSettings->NTPServer1);                                                                  // TODO: After Real Time Clock is updated delete the NtpClient object
-  Hempy_Standalone1 = new Hempy_Standalone("Hemp1", &ModuleSettings->Hempy_Standalone1, &ModuleSettings->HempyMqttServer1); ///< This is the dev object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
+  NtpClient1 = new NtpClient(&GboxSettings->NTPServer1); // TODO: Auto NTP update time every 24h
+  HempyModule1 = new HempyModule(&GboxSettings->HempyModule1,GboxSettings);         ///< This is the object representing an entire Grow Box with all components in it. Receives its settings loaded from Settings.h
 
   watchdog_enable(0x7fffff, 1); // Maximum of 0x7fffff, which is approximately 8.3 seconds
   printf("Watchdog active\n");

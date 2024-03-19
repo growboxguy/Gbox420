@@ -13,7 +13,7 @@
 extern char LongMessage[MaxLongTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char CurrentTime[MaxWordLength];
-extern Settings *ModuleSettings;
+extern Settings *GboxSettings;
 extern bool *Debug;
 extern bool *Metric;
 

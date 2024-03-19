@@ -23,14 +23,14 @@ MqttClient::MqttClient(Module *Parent, Settings::MqttClientSettings *DefaultSett
     ClientInfo->will_qos = DefaultSettings->QoS;
     ClientInfo->will_retain = DefaultSettings->LwtRetain;
 
-    mqttConnect();
+    mqttConnect(true);                                         // Connect to the MQTT server
     absolute_time_t NextRefresh = make_timeout_time_ms(10000); // 10sec from now
     while (InProgress_ConnectAndSubscribe)                     // Waiting for the MQTT connection to establish
     {
         if (get_absolute_time() > NextRefresh) // 10sec timeout
         {
             printf("MQTT connect timeout\n");
-            break;
+            break; ///< Stop waiting for the callback, processing will continue. Once a Connected callback arrives the result will be printed to stdout
         }
         sleep_ms(500);
     }
@@ -43,7 +43,7 @@ void MqttClient::report(bool FriendlyFormat)
 {
     Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
     strcat(LongMessage, "\"S\":\"");
-    strcat(LongMessage, toText_connectedStatus(mqttIsConnectedText(FriendlyFormat)));
+    strcat(LongMessage, mqttIsConnectedText(FriendlyFormat));
     strcat(LongMessage, "\"}"); ///< closing the curly bracket at the end of the JSON
 }
 
@@ -53,35 +53,42 @@ void MqttClient::run1min()
     mqttCheck();
 }
 
+/// @brief Call to check mqtt status and reconnect to server if needed.
 void MqttClient::mqttCheck()
 {
     if (!mqttIsConnected())
     {
-        mqttConnect();
-    }
-    else
-    {
-        printf("   MQTT server OK\n");
+        mqttConnect(false);
     }
 }
 
-void MqttClient::mqttConnect()
+/// @brief Connect to MQTT server, if MqttServerDNS is specified an extra DNS lookup is also needed
+/// @param WaitForIP true: Wait for the DNS lookup result before attempting to connect (Cannot be called from a callback like run1sec/run5sec/run1min/report). false: Start DNS lookup in the background, and in the meantime attempt to connect using MqttServerAddress. The next time mqttConnect() is called the DNS lookup result should be already cached
+void MqttClient::mqttConnect(bool WaitForIP)
 {
-    InProgress_ConnectAndSubscribe = true;
-    printf("   (re)Connecting to MQTT server...");
-
-    ip4addr_aton(MqttServerIP, &MqttServerAddress); // If MqttServerDNS is defined and the DNS lookup is successful this will be overwritten
-    if (MqttServerDNS[0] != '\0')                   // If an MQTT server DNS name is specified -> Look up the IP
+    if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) == CYW43_LINK_UP) // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
     {
-        DnsLookup(MqttServerDNS, &MqttServerAddress); // Resolve DNS name, can take up to one sec
+        printf("Connecting to MQTT server...");
+        InProgress_ConnectAndSubscribe = true;
+        ip4addr_aton(MqttServerIP, &MqttServerAddress); // If MqttServerDNS is defined and the DNS lookup is successful this will be overwritten
+        if (MqttServerDNS[0] != '\0')                   // If an MQTT server DNS name is specified -> Look up the IP
+        {
+            if (WaitForIP)
+                DnsLookup(MqttServerDNS, &MqttServerAddress); // Resolve DNS name, can take up to one sec
+            else
+                DnsLookup_Async(MqttServerDNS, &MqttServerAddress); // Start resolving DNS name, if cached result is available it is instantly returned to MqttServerAddress
+        }
+        cyw43_arch_lwip_begin();
+        err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, this, ClientInfo);
+        cyw43_arch_lwip_end();
+        if (err != ERR_OK)
+        {
+            printf("error: %d\n", err);
+        }
     }
-
-    cyw43_arch_lwip_begin();
-    err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, this, ClientInfo);
-    cyw43_arch_lwip_end();
-    if (err != ERR_OK)
+    else
     {
-        printf("error: %d\n", err);
+        printf("   Failed to connect, no WiFi\n");
     }
 }
 
@@ -106,34 +113,59 @@ void MqttClient::mqttDisconnect()
 
 bool MqttClient::mqttIsConnected()
 {
-    return mqtt_client_is_connected(Client);
+    if (mqtt_client_is_connected(Client) == 1)
+        return true;
+    else
+        return false;
 }
 
 char *MqttClient::mqttIsConnectedText(bool FriendlyFormat)
 {
     if (FriendlyFormat)
     {
-        return toText_connectedStatus(mqtt_client_is_connected(Client));
+        return toText_connectedStatus(mqttIsConnected());
     }
     else
     {
-        return toText(mqtt_client_is_connected(Client));
+        return toText(mqttIsConnected());
     }
 }
 
 void MqttClient::mqttSubscribe()
 {
     InProgress_ConnectAndSubscribe = true;
-    printf("Subscribing to %s...", SubTopic);
     mqtt_set_inpub_callback(Client, mqttIncomingTopic_Callback, mqttIncomingData_Callback, this); // Set callback functions
     err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttSubscribe_Callback, this, true);       // Initiate subscription
+    if (err != ERR_OK)
+    {
+        printf("Error subscribing to %s - Error: %s\n", SubTopic, err);
+    }
+}
+
+void MqttClient::mqttSubscribe_Callback(void *Arg, err_t Result)
+{
+    if (Result == 0)
+    {
+        printf("Subscribed to %s\n", ((MqttClient *)Arg)->SubTopic);
+    }
+    else
+    {
+        printf("Failed to subscribe to %s - Error: %s\n", ((MqttClient *)Arg)->SubTopic, Result);
+    }
+    ((MqttClient *)Arg)->InProgress_ConnectAndSubscribe = false;
+}
+
+void MqttClient::mqttUnsubscribe()
+{
+    printf("Unsubscribing from %s...", SubTopic);
+    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttUnsubscribe_Callback, this, false);
     if (err != ERR_OK)
     {
         printf("error: %d\n", err);
     }
 }
 
-void MqttClient::mqttSubscribe_Callback(void *Arg, err_t Result)
+void MqttClient::mqttUnsubscribe_Callback(void *Arg, err_t Result)
 {
     if (Result == 0)
     {
@@ -142,18 +174,6 @@ void MqttClient::mqttSubscribe_Callback(void *Arg, err_t Result)
     else
     {
         printf("failed: %s\n", Result);
-    }
-    ((MqttClient *)Arg)->InProgress_ConnectAndSubscribe = false;
-}
-
-void MqttClient::mqttUnsubscribe()
-{
-    InProgress_ConnectAndSubscribe = true;
-    printf("Unsubscribing from %s...", SubTopic);
-    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttSubscribe_Callback, this, false);
-    if (err != ERR_OK)
-    {
-        printf("error: %d\n", err);
     }
 }
 
