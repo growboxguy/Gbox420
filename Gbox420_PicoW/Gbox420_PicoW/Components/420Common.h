@@ -23,12 +23,13 @@ public:
   const char *Name;                        ///< Name of the instance
   bool isThisMine(char const *lookupName); ///< Checks if lookupName starts with the Name of the instance followed by _
   char *getName(char *AppendToEnd, bool UnderscoreSeparator = false);
-  void appendName(bool ClearBuffer = true); ///< Adds the component name to the ShortMessage Buffer. If Clear=true flush the cache before adding the name
-  virtual void report(bool FriendlyFormat = false) = 0; ///< Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body, must be implemented in child classes  https://www.learncpp.com/cpp-tutorial/pure-virtual-functions-abstract-base-classes-and-interface-classes/
+  void appendName(bool ClearBuffer = true);         ///< Adds the component name to the ShortMessage Buffer. If Clear=true flush the cache before adding the name
+  virtual void report(bool FriendlyFormat = false); ///< Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body, must be implemented in child classes  https://www.learncpp.com/cpp-tutorial/pure-virtual-functions-abstract-base-classes-and-interface-classes/
   virtual void run1sec();                           ///< Called every second
   virtual void run5sec();                           ///< Called every 5 seconds
   virtual void run1min();                           ///< Called every minute
-  void runAll();
+  virtual void run30min();                          ///< Called every 30 minutes
+  virtual void runAll();
   virtual bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data) { return false; }; ///< Called then an external command arrives (From MQTT or User Interface)
   virtual void websiteEvent_Load(__attribute__((unused)) char *Url){};                                                    ///< Called when an ESP-link webpage is loading. The name of the page is passed in the URL attribute (example: /Settings.html)
   virtual void websiteEvent_Refresh(__attribute__((unused)) char *Url){};                                                 ///< Called when an ESP-link webpage is refreshing (Automatic, every 5sec)

@@ -18,14 +18,12 @@ char *getCurrentTime(bool PrintToSerial)
   datetime_to_str(ShortMessage, MaxShotTextLength, &CurrentDateTime);
   if (PrintToSerial)
   {
-    printf("%s\n",ShortMessage);
+    printf("%s\n", ShortMessage);
   }
   return ShortMessage;
 }
 
 ///< DNS client
-static bool __attribute__((unused)) dnsLookupInProgress = false;                  ///< true: DNS lookup in progress
-static bool __attribute__((unused)) dnsLookupSuccess = false;                     ///< true: DNS lookup resulted in an IP
 
 /// @brief Lookup a DNS name while blocking processing until a result is received. Cannot be called from a timer interrupt like run1sec,run5sec,run1min,report
 /// @param DnsName Pointer to char containing the name to lookup
@@ -33,79 +31,85 @@ static bool __attribute__((unused)) dnsLookupSuccess = false;                   
 /// @return true: Lookup successful, false: lookup failed
 bool DnsLookup(char *DnsName, ip_addr_t *ResultIP)
 {
-    dnsLookupSuccess = false;
-    dnsLookupInProgress = true;    
-    printf("Looking up IP for %s...", DnsName);
-    err_t err = dns_gethostbyname(DnsName, ResultIP, DnsLookupResult, ResultIP);
-    if (err == ERR_OK) // DNS name found in cache and loaded into ResultIP
+  dnsLookupSuccess = false;
+  dnsLookupInProgress = true;
+  printf("   Looking up IP for %s...", DnsName);
+  err_t err = dns_gethostbyname(DnsName, ResultIP, DnsLookupResult, ResultIP);
+  if (err == ERR_OK) // DNS name found in cache and loaded into ResultIP
+  {
+    printf("Found cached address");
+    return true;
+  }
+  absolute_time_t Timeout = make_timeout_time_ms(15000); // 15sec from now
+  while (dnsLookupInProgress)                            // Waiting for the DNS lookup to finish and DnsLookupResult callback to trigger
+  {
+    if (get_absolute_time() > Timeout)
     {
-        printf("Found cached address\n");
-        return true;
+      printf("DNS lookup timeout");
+      return false;
     }
-    absolute_time_t Timeout = make_timeout_time_ms(15000); // 15sec from now  
-    while (dnsLookupInProgress) // Waiting for the DNS lookup to finish and DnsLookupResult callback to trigger
-    {       
-        if (get_absolute_time() > Timeout)
-        {
-            printf("DNS lookup timeout\n");
-            return false;
-        }
-        watchdog_update();
-        busy_wait_ms(500);
-    }
-    return dnsLookupSuccess;
+    watchdog_update();
+    busy_wait_ms(500);
+  }
+  return dnsLookupSuccess;
 }
 
 /// @brief Callback when DNS lookup is finished
 /// @param Hostname The DNS name
 /// @param FoundIP The IP for the Name
-/// @param ResultIP 
+/// @param ResultIP
 void DnsLookupResult(const char *Hostname, const ip_addr_t *FoundIP, void *ResultIP) // DNS lookup callback
 {
-    if (FoundIP)
-    {
-        printf("Found address: %s\n", ipaddr_ntoa(FoundIP));
-        ip_addr_copy(*(ip_addr_t *)ResultIP, *FoundIP);
-        dnsLookupSuccess = true;
-    }
-    else
-    {
-        printf("DNS lookup failed\n");
-    }
-    dnsLookupInProgress = false;
+  if (FoundIP)
+  {
+    printf("Found address: %s  ", ipaddr_ntoa(FoundIP));
+    ip_addr_copy(*(ip_addr_t *)ResultIP, *FoundIP);
+    dnsLookupSuccess = true;
+  }
+  else
+  {
+    printf("DNS lookup failed  ");
+  }
+  dnsLookupInProgress = false;
 }
 
-
-/// @brief Lookup a DNS name in the background, result will be copied to ResultIP 
-/// @param DnsName Pointer to char containing the name to lookup
-/// @param ResultIP Pointer to the ip_addr_t object where the lookup result will be stored
+/// @brief Lookup a DNS name in the background, result will be copied to ResultIP
+/// @param DnsName Containing the name to lookup
+/// @param ResultIP ip_addr_t object where the lookup result will be stored
+/// @param DataCallback Callback function for when DNS result is ready
 /// @return true: IP already available, false: Lookup started, no cached IP found
-bool DnsLookup_Async(char *DnsName, ip_addr_t *ResultIP)
+// Implementation of the wrapper function
+bool DnsLookup_Async(char *DnsName, ip_addr_t *ResultIP, std::function<void(ip_addr_t *)> DataCallback)
 {
-    dnsLookupSuccess = false;
-    dnsLookupInProgress = true;    
-    printf("Looking up IP for %s\n", DnsName);
-    err_t err = dns_gethostbyname(DnsName, ResultIP, DnsLookupResult_Async, ResultIP);
-    if (err == ERR_OK) // DNS name found in cache and loaded into ResultIP
-    {
-        return true;
-    } 
-    return false;  
+  dnsLookupSuccess = false;
+  dnsLookupInProgress = true;
+  printf("   Looking up IP for %s\n", DnsName);
+  DnsCallbackData *callbackData = new DnsCallbackData{DataCallback};                     // Create an instance of the callback data structure
+  err_t err = dns_gethostbyname(DnsName, ResultIP, DnsLookupResult_Async, callbackData); // Initiate the DNS lookup, passing the callback function and its associated data
+  if (err == ERR_OK)
+  {                      // ERR_OK: DNS name found in cache and loaded into ResultIP
+    delete callbackData; // Clean up callback data if the lookup is already completed
+    return true;
+  }
+  return false;
 }
 
-void DnsLookupResult_Async(const char *Hostname, const ip_addr_t *FoundIP, void *ResultIP) // DNS lookup callback
+void DnsLookupResult_Async(const char *Hostname, const ip_addr_t *FoundIP, void *DataCallback) // DNS lookup callback
 {
-    if (FoundIP)
-    {
-        printf("%s address: %s\n", Hostname, ipaddr_ntoa(FoundIP));
-        ip_addr_copy(*(ip_addr_t *)ResultIP, *FoundIP);
-    }
-    else
-    {
-        printf("%s lookup failed\n", Hostname);
-    }
-}
+  DnsCallbackData *DnsCallback = static_cast<DnsCallbackData *>(DataCallback);
+  if (FoundIP)
+  {
 
+    printf("%s address: %s\n", Hostname, ipaddr_ntoa(FoundIP));
+    ip_addr_t ResultIP;
+    ip_addr_copy(ResultIP, *FoundIP);
+    DnsCallback->callback(&ResultIP);
+  }
+  else
+  {
+    printf("%s lookup failed\n", Hostname);
+  }
+}
 
 ///< Conversions
 

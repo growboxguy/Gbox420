@@ -3,8 +3,7 @@
 Common::Common(const char *Name)
 {
   this->Name = Name;
-  printf("  Initializing ");
-  printf(this->Name);
+  printf("  Initializing %s", Name);
 }
 
 /**
@@ -41,25 +40,35 @@ void Common::run1min()
   }
 }
 
-void Common::runAll()
+void Common::run30min()
 {
- run1sec();
- run5sec();
- run1min();
+  if (*Debug)
+  {
+    printf("  30min - %s\n", Name);
+  }
 }
 
+void Common::runAll()
+{
+  run1sec();
+  run5sec();
+  run1min();
+  run30min();
+}
 
 bool Common::isThisMine(char const *LookupName) ///< Returns true when the LookupName starts with the Name of the instance followed by _
 {
+  /*
   printf("LookupName :");
   printf("%s\n", LookupName);
   printf("Object :");
   printf("%s\n", Name);
+  */
 
   char *Command = ShortMessage; ///< return text will be loaded into a global temp buffer
-  uint8_t CharacterCount = 0;      // Tracks which character is currently getting compared
-  char NameCurrentChar;            // Current Name character being compared
-  char LookupCurrentChar;          // Current LookupName character being compared
+  uint8_t CharacterCount = 0;   // Tracks which character is currently getting compared
+  char NameCurrentChar;         // Current Name character being compared
+  char LookupCurrentChar;       // Current LookupName character being compared
 
   while (1)
   {
@@ -94,7 +103,7 @@ bool Common::isThisMine(char const *LookupName) ///< Returns true when the Looku
         return false;
       }
     }
-    printf("Match on %s, command: %s\n",Name,ShortMessage);
+    printf("Match on %s, command: %s\n", Name, ShortMessage);
     return true;
   }
   else

@@ -1,34 +1,79 @@
 #include "NtpClient.h"
 
 // Initialize the built-in RTC
-NtpClient::NtpClient(Settings::NtpClientSettings *DefaultSettings)
+NtpClient::NtpClient(Settings::NtpClientSettings *DefaultSettings) : Common(DefaultSettings->Name)
 {
+    NtpServerIP = DefaultSettings->NtpServerIP;
+    NtpServerDNS = DefaultSettings->NtpServerDNS;
     NtpServerPort = &DefaultSettings->NtpServerPort;
     TimeZoneDifference = &DefaultSettings->TimeZoneDifference;
-
-    printf("Initializing RTC...");
-    rtc_init(); // Initialize "hardware/rtc.h"
+    TimeoutSeconds = &DefaultSettings->TimeoutSeconds;
     NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY);
     udp_recv(NtpPcb, ntpReceived, this);
+    rtc_init(); // Initialize "hardware/rtc.h"
+    rtcUpdateTrigger(true);
+    printf("   NtpClient ready - ");
+    getCurrentTime(true);
+}
 
-    ip4addr_aton(DefaultSettings->NtpServerIP, &NtpServerAddress); // If NtpServerDNS is defined and the DNS lookup is successful this will be overwritten
-    if (DefaultSettings->NtpServerDNS[0] != '\0')                  // If an NTP server DNS name is specified -> Look up the IP
+void NtpClient::rtcUpdateTrigger(bool WaitForResult)
+{
+    if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) == CYW43_LINK_UP) // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
     {
-        DnsLookup(DefaultSettings->NtpServerDNS, &NtpServerAddress);
+        ip4addr_aton(NtpServerIP, &NtpServerAddress); // If NtpServerDNS is defined and the DNS lookup is successful this will be overwritten
+        if (NtpServerDNS[0] != '\0')                  // If an NTP server DNS name is specified -> Look up the IP
+        {
+            if (WaitForResult)
+            {
+                DnsLookup(NtpServerDNS, &NtpServerAddress);
+                rtcUpdate(WaitForResult);
+            }
+            else
+            {
+                std::function<void(ip_addr_t *)> callbackFunctionPtr = std::bind(&NtpClient::rtcDNSResolvedCallback, this, std::placeholders::_1);
+                DnsLookup_Async(NtpServerDNS, &NtpServerAddress, callbackFunctionPtr);
+            }
+        }
     }
+    else
+    {
+        ntpResult(-1, NULL);
+    }
+}
 
+void NtpClient::rtcUpdate(bool WaitForResult)
+{
     NtpRefreshInprogress = true;
     ntpRequest();
-    absolute_time_t TimeoutTime = make_timeout_time_ms(DefaultSettings->TimeoutSeconds * 1000); // Used to track timeouts
-    while (NtpRefreshInprogress)                                                                // Waiting for the MQTT connection to establish
-    {       
-        if (get_absolute_time() > TimeoutTime) // No response from the server
+    if (WaitForResult)
+    {
+        absolute_time_t TimeoutTime = make_timeout_time_ms(*TimeoutSeconds * 1000); // Used to track timeouts
+        while (NtpRefreshInprogress)                                                // Waiting for the MQTT connection to establish
         {
-            ntpResult(-1, NULL);
-            break;
+            if (get_absolute_time() > TimeoutTime) // No response from the server
+            {
+                ntpResult(-1, NULL);
+                break;
+            }
+            sleep_ms(500);
         }
-        sleep_ms(500);
     }
+}
+
+void NtpClient::rtcDNSResolvedCallback(ip_addr_t *ServerIP)
+{
+    if (ServerIP)
+    {
+        NtpServerAddress = *ServerIP;
+        rtcUpdate(false);
+    }
+}
+
+/**
+ * @brief Report current state in a JSON format to the LongMessage buffer
+ */
+void NtpClient::run30min()
+{
     getCurrentTime(true);
 }
 
@@ -87,7 +132,7 @@ void NtpClient::ntpResult(int status, time_t *result)
     }
     else // NTP failed, set a fixed date
     {
-        printf("NTP failed, setting fallback: ");
+
         timeTemp = {
             .year = 2024, // tm_year: years since 1900
             .month = 4,   // tm_mon: months since January (0-11)
@@ -96,8 +141,9 @@ void NtpClient::ntpResult(int status, time_t *result)
             .hour = 16,
             .min = 20,
             .sec = 00};
+        printf("   NTP sync failed, fallback set");
     }
     rtc_set_datetime(&timeTemp);
-    sleep_ms(200); //Wait for the RTC to update
+    sleep_ms(200); // Wait for the RTC to update
     NtpRefreshInprogress = false;
 }

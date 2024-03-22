@@ -34,23 +34,25 @@ class MqttClient;
 class Module : virtual public Common
 {
 public:
-  Module(const char *Name);                                                                                       ///< constructor
-  void runReport(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false); ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.
-  void run1sec();                                                                                                 ///< Called every second
-  void run5sec();                                                                                                 ///< Called every 5 seconds
-  void run1min();                                                                                                 ///< Called every minute
-  void runAll();
-  void addToLog(const char *Text, uint8_t Indent = 3);                                                            ///< Add a Log entry that is displayed on the web interface
-  void addToReportQueue(Common *Component);                                                                       ///< Subscribing to the report queue: Calls the report() method
-  void addToRefreshQueue_1sec(Common *Component);                                                                 ///< Subscribing to the 1 second refresh queue: Calls the run1sec() method
-  void addToRefreshQueue_5sec(Common *Component);                                                                 ///< Subscribing to the 5 second refresh queue: Calls the run5sec() method
-  void addToRefreshQueue_1min(Common *Component);                                                                 ///< Subscribing to the 1 minute refresh queue: Calls the run1min() method
-  void addToCommandQueue(Common *Subscriber);                                                                     ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method
-  void commandEventTrigger(char *Command, char *Data);                                                            ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
-  void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false);
-  void mqttDataReceived(char *Topic, char *Data); ///< MQTT data received from the Subscribed topic
-  void mqttPublish(MqttClient Client, char (*JSONData)[MaxLongTextLength]);                                                 ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
-  
+  Module(const char *Name);                                                                                                           ///< constructor
+  void runReport(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false);                     ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.
+  void run1sec();                                                                                                                     ///< Called every second
+  void run5sec();                                                                                                                     ///< Called every 5 seconds
+  void run1min();                                                                                                                     ///< Called every minute
+  void run30min();                                                                                                                    ///< Called every 30 minutes
+  void runAll();                                                                                                                      ///< Triggers all runs
+  void addToLog(const char *Text, uint8_t Indent = 3);                                                                                ///< Add a Log entry that is displayed on the web interface
+  void addToReportQueue(Common *Component);                                                                                           ///< Subscribing to the report queue: Calls the report() method
+  void addToRefreshQueue_1sec(Common *Component);                                                                                     ///< Subscribing to the 1 second refresh queue: Calls the run1sec() method
+  void addToRefreshQueue_5sec(Common *Component);                                                                                     ///< Subscribing to the 5 second refresh queue: Calls the run5sec() method
+  void addToRefreshQueue_1min(Common *Component);                                                                                     ///< Subscribing to the 1 minute refresh queue: Calls the run1min() method
+  void addToRefreshQueue_30min(Common *Component);                                                                                    ///< Subscribing to the 30 minute refresh queue: Calls the run30min() method
+  void addToCommandQueue(Common *Subscriber);                                                                                         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method
+  void commandEventTrigger(char *Command, char *Data);                                                                                ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
+  void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false); ///< Print report to stdout or to a JSON for MQTT reporting. Report is loaded into LongMessage buffer
+  void mqttDataReceived(char *Topic, char *Data);                                                                                     ///< MQTT data received from the Subscribed topic
+  void mqttPublish(MqttClient Client, char (*JSONData)[MaxLongTextLength]);                                                           ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
+
   Sound *DefaultSound = NULL;
   Sound *getSoundObject();
   MqttClient *DefaultMqttClient = NULL;
@@ -75,7 +77,7 @@ public:
   void addPushingBoxLogRelayID();                                                                        ///< Google Sheets reporting - Set PushingBox relay ID
   void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);                                         ///< Google Sheets reporting - Send a JSON formatted report via REST API to the PushingBox relay
   void reportToGoogleSheetsTrigger(bool ForceRun = false);                                               ///< Google Sheets reporting - Handles custom reporting frequencies
- void reportToMqttTrigger(bool ForceRun = false);                                                       ///< MQTT reporting - Handles custom reporting frequencies
+  void reportToMqttTrigger(bool ForceRun = false);                                                       ///< MQTT reporting - Handles custom reporting frequencies
 
 private:
 protected:
@@ -93,11 +95,13 @@ protected:
   Common *RefreshQueue_1sec[QueueDepth] = {};
   Common *RefreshQueue_5sec[QueueDepth] = {};
   Common *RefreshQueue_1min[QueueDepth] = {};
+  Common *RefreshQueue_30min[QueueDepth] = {};
   Common *CommandQueue[QueueDepth] = {};
   uint8_t ReportQueueItemCount = 0; ///< Tracking queue item count
   uint8_t RefreshQueue_1sec_ItemCount = 0;
   uint8_t RefreshQueue_5sec_ItemCount = 0;
   uint8_t RefreshQueue_1min_ItemCount = 0;
+  uint8_t RefreshQueue_30min_ItemCount = 0;
   uint8_t CommandQueueItemCount = 0;
 
   char *getDebugText(bool FriendlyFormat = false);

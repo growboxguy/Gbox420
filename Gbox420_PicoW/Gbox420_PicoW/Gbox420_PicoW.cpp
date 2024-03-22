@@ -97,6 +97,15 @@ bool run1min(struct repeating_timer *t)
   watchdog_update(); ///< Pet watchdog
   checkWiFi();
   HempyModule1->run1min();
+  NtpClient1->run1min();
+  return true; // true to continue repeating, false to stop.
+}
+
+///< This function gets called infinitely every minute
+bool run30min(struct repeating_timer *t)
+{
+  watchdog_update(); ///< Pet watchdog
+  NtpClient1->run30min();
   return true; // true to continue repeating, false to stop.
 }
 
@@ -121,8 +130,8 @@ int main()
   initializeWiFi();
 
   // Create the Module objects
-  NtpClient1 = new NtpClient(&GboxSettings->NTPServer1); // TODO: Auto NTP update time every 24h
-  HempyModule1 = new HempyModule(&GboxSettings->HempyModule1,GboxSettings);         ///< This is the object representing an entire Grow Box with all components in it. Receives its settings loaded from Settings.h
+  NtpClient1 = new NtpClient(&GboxSettings->NTPServer1);                     // TODO: Auto NTP update time every 24h
+  HempyModule1 = new HempyModule(&GboxSettings->HempyModule1, GboxSettings); ///< This is the object representing an entire Grow Box with all components in it. Receives its settings loaded from Settings.h
 
   watchdog_enable(0x7fffff, 1); // Maximum of 0x7fffff, which is approximately 8.3 seconds
   printf("Watchdog active\n");
@@ -137,6 +146,8 @@ int main()
   add_repeating_timer_ms(-5000, run5sec, NULL, &Timer5sec); // Calls runRepeatedly every second
   struct repeating_timer Timer1min;
   add_repeating_timer_ms(-60000, run1min, NULL, &Timer1min); // Calls runRepeatedly every minute
+  struct repeating_timer Timer30min;
+  add_repeating_timer_ms(-60000, run30min, NULL, &Timer30min); // Calls runRepeatedly every minute
 
   absolute_time_t NextRefresh = make_timeout_time_ms(5000); // 5sec from now
   while (1)

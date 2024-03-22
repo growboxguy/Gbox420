@@ -1,5 +1,5 @@
 /*!
- *  \brief     Sound feedback using a piezo buzzer  
+ *  \brief     Sound feedback using a piezo buzzer
  *  \author    GrowBoxGuy
  *  \version   4.20
  */

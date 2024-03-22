@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <functional>
 #include "lwip/apps/mqtt.h"
 #include "pico/cyw43_arch.h"
 #include "lwip/ip_addr.h"
@@ -17,17 +16,19 @@
 #include "420Common.h"
 #include "420Module.h"
 
-#define MaxWordLength 128                                  ///< Default char * buffer length for storing a word + null terminator. Memory intense!
-typedef std::function<void(char *, char *)> Callback_type; // Defines how the DataCallback function in mqttConnect should look like
+#define MaxWordLength 128                                      ///< Default char * buffer length for storing a word + null terminator. Memory intense!
+typedef std::function<void(char *, char *)> CallbackType_mqtt; // Defines how the DataCallback function in mqttConnectTrigger should look like
 
 class MqttClient : virtual public Common
 {
 
 public:
-    MqttClient(Module *Parent, Settings::MqttClientSettings *DefaultSettings, Callback_type DataCallback);
+    MqttClient(Module *Parent, Settings::MqttClientSettings *DefaultSettings, CallbackType_mqtt DataCallback);
     void report(bool FriendlyFormat = false);
     void run1min();
-    void mqttConnect(bool WaitForDnsLookup = false);        ///< Initiate connection to the MQTT server
+    void mqttConnectTrigger(bool WaitForDnsLookup = false); ///< Initiate connection to the MQTT server: Check WiFi and lookup DNS before calling mqttConnect
+    void mqttConnect();                                     ///< Actually connect to the MQTT server
+    void mqttDNSResolvedCallback(ip_addr_t *ServerIP);      ///< Callback when IP of the MQTT server is found
     void mqttCheck();                                       ///< Check connected status - Reconnect to MQTT server in the background if disconnected
     void mqttDisconnect();                                  ///< Disconnect from MQTT server
     bool mqttIsConnected();                                 ///< true: Connected to MQTT server, false: not connected
@@ -52,7 +53,7 @@ protected:
     uint16_t *MqttServerPort;
     uint8_t *QoS = NULL;
     char LastReceivedTopic[MaxShotTextLength];
-    Callback_type DataCallback;                                                        ///< Pointer to the callback function (Callback_type)
+    CallbackType_mqtt DataCallback;                                                    ///< Pointer to the callback function (CallbackType_mqtt)
     static void mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *Arg); ///< Called When the IP address of the MQTT server is found
     static void mqttPublish_Callback(void *Arg, err_t Result);                         ///< Callback with the publish result
     static void mqttSubscribe_Callback(void *Arg, err_t Result);                       ///< Callback with the subscription result: 0: Success

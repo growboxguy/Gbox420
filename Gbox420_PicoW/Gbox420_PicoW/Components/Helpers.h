@@ -18,6 +18,7 @@
 #include "lwip/ip_addr.h"
 #include "lwip/dns.h"
 #include "pico/util/datetime.h"
+#include <functional>
 #include "../Settings.h" // Storing/reading defaults
 
 ///< State machine - Defining possible states
@@ -103,14 +104,23 @@ extern Settings *GboxSettings;
 extern bool *Debug;
 extern bool *Metric;
 
+///< DNS client
+struct DnsCallbackData
+{ ///< Stucture that holds an object function pointer (Can be passed to LWIP DNS as a void* pointer)
+  std::function<void(ip_addr_t *)> callback;
+};
+static bool __attribute__((unused)) dnsLookupInProgress = false; ///< true: DNS lookup in progress
+static bool __attribute__((unused)) dnsLookupSuccess = false;    ///< true: DNS lookup resulted in an IP
+
 // Class specific variables
 // void getFreeMemory();
 // Query current time from local RTC
 char *getCurrentTime(bool PrintToSerial);
-bool DnsLookup(char *DnsName, ip_addr_t *ResultIP);                                     ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
-void DnsLookupResult(const char *Hostname, const ip_addr_t *ResultIP, void *Arg);       ///< Callback with the lookup result
-bool DnsLookup_Async(char *DnsName, ip_addr_t *ResultIP);                               ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
-void DnsLookupResult_Async(const char *Hostname, const ip_addr_t *ResultIP, void *Arg); ///< Callback with the lookup result
+bool DnsLookup(char *DnsName, ip_addr_t *ResultIP);                                                      ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
+void DnsLookupResult(const char *Hostname, const ip_addr_t *ResultIP, void *Arg);                        ///< Callback with the lookup result
+bool DnsLookup_Async(char *DnsName, ip_addr_t *ResultIP, std::function<void(ip_addr_t *)> DataCallback); ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
+void DnsLookupResult_Async(const char *Hostname, const ip_addr_t *ResultIP, void *DataCallback);         ///< Callback with the lookup result
+
 float convertBetweenTempUnits(float);
 float convertBetweenPressureUnits(float);
 char *toText(int);

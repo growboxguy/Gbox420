@@ -30,8 +30,6 @@ void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuf
  */
 void Module::commandEventTrigger(char *Command, char *Data)
 {
-  printf(" %s", &Command);
-  printf("  %s\n", &Data);
   bool NameMatchFound = false;
   for (int i = 0; i < CommandQueueItemCount; i++)
   {
@@ -140,7 +138,7 @@ void Module::addToRefreshQueue_1sec(Common *Component)
   if (QueueDepth > RefreshQueue_1sec_ItemCount)
     RefreshQueue_1sec[RefreshQueue_1sec_ItemCount++] = Component;
   else
-    printf("Refresh queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
+    printf("1sec queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
 }
 
 void Module::addToRefreshQueue_5sec(Common *Component)
@@ -148,7 +146,7 @@ void Module::addToRefreshQueue_5sec(Common *Component)
   if (QueueDepth > RefreshQueue_5sec_ItemCount)
     RefreshQueue_5sec[RefreshQueue_5sec_ItemCount++] = Component;
   else
-    printf("Refresh queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
+    printf("5sec queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
 }
 
 void Module::addToRefreshQueue_1min(Common *Component)
@@ -156,7 +154,15 @@ void Module::addToRefreshQueue_1min(Common *Component)
   if (QueueDepth > RefreshQueue_1min_ItemCount)
     RefreshQueue_1min[RefreshQueue_1min_ItemCount++] = Component;
   else
-    printf("Refresh queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
+    printf("1min queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
+}
+
+void Module::addToRefreshQueue_30min(Common *Component)
+{
+  if (QueueDepth > RefreshQueue_30min_ItemCount)
+    RefreshQueue_30min[RefreshQueue_30min_ItemCount++] = Component;
+  else
+    printf("30min queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
 }
 
 /**
@@ -327,17 +333,17 @@ void Module::run5sec()
   reportToMqttTrigger();
 
   for (int i = 0; i < RefreshQueue_5sec_ItemCount; i++)
-    {
-      RefreshQueue_5sec[i]->run5sec();
-    }
+  {
+    RefreshQueue_5sec[i]->run5sec();
+  }
 
   /*
-  if (ReportToGoogleSheetsRequested)
+  if (ReportToGoogleSheetsRequested)   // TODO: move Google Sheets to its own Component
   {
     ReportToGoogleSheetsRequested = false;
     reportToGoogleSheetsTrigger(true);
   }
-  
+
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
@@ -347,14 +353,22 @@ void Module::run5sec()
    */
 }
 
-void Module::run1min() // TODO: Rework module refreshing logic, move Google Sheets to its own Component
+void Module::run1min()
 {
   Common::run1min();
   for (int i = 0; i < RefreshQueue_1min_ItemCount; i++)
-    {
-      RefreshQueue_1min[i]->run1min();
-    }
+  {
+    RefreshQueue_1min[i]->run1min();
+  }
+}
 
+void Module::run30min()
+{
+  Common::run30min();
+  for (int i = 0; i < RefreshQueue_30min_ItemCount; i++)
+  {
+    RefreshQueue_30min[i]->run30min();
+  }
 }
 
 void Module::runAll()
@@ -362,20 +376,21 @@ void Module::runAll()
   run1sec();
   run5sec();
   run1min();
+  run30min();
 }
 
 /**
  * @brief Called when an MQTT command is received
  */
 void Module::mqttDataReceived(char *Topic, char *Data)
-{   
+{
   printf("Topic: %s\n", Topic); // Print the topic the subscribed message was received in
-  printf("Data: %s\n",  Data);   // Print the message received on the subscribed topic
+  printf("Data: %s\n", Data);   // Print the message received on the subscribed topic
   commandEventTrigger(Topic, Data);
-/*
-  //
-  //reportToMqttTrigger(true); //send out a fresh report
-*/
+  /*
+    //
+    //reportToMqttTrigger(true); //send out a fresh report
+  */
 }
 
 /**
@@ -593,14 +608,6 @@ void Module::settingsEvent_Command(__attribute__((unused)) char *Command, __attr
   else if (strcmp(Command, "MLM") == 0)
   {
     // setLwtMessage(WebServer.getArgString());
-  }
-  else if (strcmp(Command, getSoundObject()->getName((char *)"E", true)) == 0)
-  {
-    getSoundObject()->setSoundOnOff(toBool(Data));
-  }
-  else if (strcmp(Command, getSoundObject()->getName((char *)"Ee", true)) == 0)
-  {
-    getSoundObject()->playEE();
   }
 }
 

@@ -33,7 +33,7 @@ bool Sound::commandEvent(char *Command, char *Data)
     return false;
   }
   else
-  {   
+  {
     if (strcmp(ShortMessage, "E") == 0)
     {
       toggleSoundOnOff();
@@ -116,7 +116,7 @@ void Sound::toggleSoundOnOff()
 void Sound::buzz(uint32_t frequency, uint32_t length)
 {
   uint32_t delayValue = 2200000 / frequency / 2;
-  uint32_t numCycles = frequency * length / 120;
+  uint32_t numCycles = frequency * length / 1000;
   for (uint32_t i = 0; i < numCycles; i++)
   {
     gpio_put(*Pin, true);
@@ -130,9 +130,9 @@ void Sound::OnSound()
 {
   if (*Enabled)
   {
-    buzz(500, 10);
+    buzz(500, 100);
     sleep_ms(10);
-    buzz(2000, 10);
+    buzz(2000, 100);
   }
 }
 
@@ -140,9 +140,9 @@ void Sound::OffSound()
 {
   if (*Enabled)
   {
-    buzz(500, 10);
+    buzz(500, 100);
     sleep_ms(10);
-    buzz(2000, 10);
+    buzz(2000, 100);
   }
 }
 
@@ -169,8 +169,12 @@ void Sound::EE()
   printf("Easter egg\n");
   for (int thisNote = 0; thisNote < 134; thisNote++)
   {
-    buzz(melody[thisNote], tempo[thisNote]);
-    watchdog_update(); ///< Reset Watchdog timeout to avoid a force restart while playing the song
+    uint32_t noteDuration = 800 / tempo[thisNote];
+    buzz(melody[thisNote], noteDuration);
+    busy_wait_ms(noteDuration);
+    buzz(0, noteDuration);
+    if (thisNote % 25)   ///< At every 25th note
+      watchdog_update(); ///< Reset Watchdog timeout to avoid a force restart while playing the song
   }
 }
 

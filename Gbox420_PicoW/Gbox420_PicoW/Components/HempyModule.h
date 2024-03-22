@@ -25,7 +25,7 @@ class HempyModule : public Module
 public:
   HempyModule(Settings::HempyModuleSettings *DefaultSettings, Settings *GboxSettings);
   MqttClient *MosquittoMqtt = NULL; ///< Pointer to MQTT handler
-  Sound *Sound1 = NULL;          ///< Pointer to a Piezo speaker - sound feedback
+  Sound *Sound1 = NULL;             ///< Pointer to a Piezo speaker - sound feedback
   void websiteEvent_Load(__attribute__((unused)) char *Url);
   void websiteEvent_Refresh(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
@@ -35,7 +35,7 @@ public:
   void run5sec();
   void run1min();
   */
- 
+
 private:
 protected:
 };

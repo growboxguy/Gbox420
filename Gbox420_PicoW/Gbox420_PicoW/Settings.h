@@ -95,13 +95,14 @@ typedef struct
 
   struct NtpClientSettings ///< MQTT client settings
   {
+    char Name[MaxWordLength];         ///< Must be unique
     char NtpServerDNS[MaxWordLength]; ///< NTP server DNS name, "" to use MqttServerIP instead
     char NtpServerIP[MaxWordLength];  ///< NTP server IP. Used when MqttServerDNS is empty, or the DNS lookup fails
     uint16_t NtpServerPort;           ///< NTP server Port
     int8_t TimeZoneDifference;        ///<  UTC time and current timezone difference
     uint32_t TimeoutSeconds;          ///< Duration in seconds that an NTP client waits for a response from an NTP server
   };
-  struct NtpClientSettings NTPServer1 = {.NtpServerDNS = "pool.ntp.org", .NtpServerIP = "192.168.1.100", .NtpServerPort = 123, .TimeZoneDifference = -7, .TimeoutSeconds = 15};
+  struct NtpClientSettings NTPServer1 = {.Name = "NTP1", .NtpServerDNS = "pool.ntp.org", .NtpServerIP = "192.168.1.100", .NtpServerPort = 123, .TimeZoneDifference = -7, .TimeoutSeconds = 15};
 
   struct SoundSettings ///< Sound default settings
   {
