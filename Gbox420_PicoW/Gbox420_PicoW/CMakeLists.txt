@@ -34,6 +34,7 @@ add_executable(Gbox420_PicoW
         Settings.h
         ${SOURCES}
         )
+        
 target_include_directories(Gbox420_PicoW PRIVATE 
         ${CMAKE_CURRENT_LIST_DIR}
 )
