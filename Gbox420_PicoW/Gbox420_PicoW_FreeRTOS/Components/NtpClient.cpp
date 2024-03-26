@@ -8,6 +8,9 @@ NtpClient::NtpClient(Settings::NtpClientSettings *DefaultSettings) : Common(Defa
     NtpServerPort = &DefaultSettings->NtpServerPort;
     TimeZoneDifference = &DefaultSettings->TimeZoneDifference;
     TimeoutSeconds = &DefaultSettings->TimeoutSeconds;
+
+    sntp_setservername(0, DefaultSettings->NtpServerDNS);
+
     NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY);
     udp_recv(NtpPcb, ntpReceived, this);
     rtc_init(); // Initialize "hardware/rtc.h"

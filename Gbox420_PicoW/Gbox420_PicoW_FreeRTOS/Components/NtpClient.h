@@ -6,15 +6,21 @@
 
 #pragma once
 
+/*
 #include <string.h>
-#include <time.h>
 //#include "lwip/dns.h"
 //#include "lwip/pbuf.h"
 //#include "lwip/udp.h"
+*/
+#include <stdlib.h>
 #include "pico/stdlib.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include <time.h>
+#include "pico/util/datetime.h"
 #include "pico/cyw43_arch.h"
 #include "hardware/rtc.h"
-#include "pico/util/datetime.h"
+#include "lwip/apps/sntp.h"
 #include "../Settings.h"
 #include "420Common.h"
 

@@ -11,7 +11,6 @@
 #include <cstring>
 #include <cstdlib>
 #include <cmath>
-#include "hardware/watchdog.h" // Watchdog to auto-reboot in case of an error
 #include "hardware/rtc.h"
 #include "pico/cyw43_arch.h"
 #include "lwip/err.h"

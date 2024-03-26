@@ -27,7 +27,7 @@ target_compile_definitions(Gbox420_PicoW_FreeRTOS PRIVATE)
 
 target_include_directories(Gbox420_PicoW_FreeRTOS PRIVATE ${CMAKE_CURRENT_LIST_DIR})
  
-# pull in common dependencies
+
 target_link_libraries(Gbox420_PicoW_FreeRTOS
     pico_stdlib
     pico_cyw43_arch_lwip_sys_freertos
