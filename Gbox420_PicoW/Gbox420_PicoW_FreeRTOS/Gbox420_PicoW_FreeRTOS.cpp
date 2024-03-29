@@ -69,19 +69,19 @@ void connectWiFi()
   int WifiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, 10000); // Max 10sec
   if (WifiConnectResult != 0)
   {
-    printf("Connecting to %d failed: \n", WifiConnectResult);
+    printf("Connecting to %s failed: %d\n", WIFI_SSID, WifiConnectResult);
   }
   else
   {
     char *IPAddress = ipaddr_ntoa(netif_ip4_addr(&cyw43_state.netif[0]));
-    printf("Connected to %s - %s\n", WIFI_SSID,IPAddress);
+    printf("Connected to %s - %s\n", WIFI_SSID, IPAddress);
   }
 }
 
 void rtcTask(void *pvParameters)
 {
   printf("Initializing RTC...\n");
-  NtpClient1 = new NtpClient(&GboxSettings->NTPServer1);                     // TODO: Auto NTP update time every 24h
+  NtpClient1 = new NtpClient(&GboxSettings->NTPServer1); // TODO: Auto NTP update time every 24h
   while (1)
   {
     vTaskDelay(10000 / portTICK_PERIOD_MS); // Delay for 10sec
