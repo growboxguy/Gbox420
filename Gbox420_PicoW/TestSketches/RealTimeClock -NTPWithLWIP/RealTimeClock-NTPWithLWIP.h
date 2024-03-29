@@ -1,6 +1,6 @@
 /*! \file
  *  \brief     Test setting the integrated Real Time Clock using NTP via LWIP
- *  \details   FreeRTOS 
+ *  \details   DOES NOT WORK! updateRTC never gets called, even though the LWIP SNTP client gets the result from the NTP server
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/raspberry-pi-pico-w
  *  \version   4.20
  */
