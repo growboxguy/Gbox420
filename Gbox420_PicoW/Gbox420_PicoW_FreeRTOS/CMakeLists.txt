@@ -16,12 +16,13 @@ pico_sdk_init()
 #enables almost all compiler warnings
 add_compile_options(-Wall)    
 
-file(GLOB_RECURSE COMPONENTS
-Components/*.h
-Components/*.cpp
-) 
+# Collect all .cpp and .h files in the specified directory
+file(GLOB SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+file(GLOB HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+file(GLOB COMPONENT_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/Components/*.cpp")
+file(GLOB COMPONENT_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Components/*.h")
 
-add_executable(Gbox420_PicoW_FreeRTOS Gbox420_PicoW_FreeRTOS.cpp)
+add_executable(Gbox420_PicoW_FreeRTOS Gbox420_PicoW_FreeRTOS.cpp ${SOURCES} ${HEADERS} ${COMPONENT_SOURCES} ${COMPONENT_HEADERS})
 
 target_compile_definitions(Gbox420_PicoW_FreeRTOS PRIVATE)
 

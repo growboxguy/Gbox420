@@ -156,7 +156,7 @@ void MqttClient::mqttSubscribe()
     err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttSubscribe_Callback, this, true);       // Initiate subscription
     if (err != ERR_OK)
     {
-        printf("Error subscribing to %s - Error: %s\n", SubTopic, err);
+        printf("Error subscribing to %s - Error: %d\n", SubTopic, err);
     }
 }
 
@@ -168,7 +168,7 @@ void MqttClient::mqttSubscribe_Callback(void *Arg, err_t Result)
     }
     else
     {
-        printf("Failed to subscribe to %s - Error: %s\n", ((MqttClient *)Arg)->SubTopic, Result);
+        printf("Failed to subscribe to %s - Error: %d\n", ((MqttClient *)Arg)->SubTopic, Result);
     }
     ((MqttClient *)Arg)->InProgress_ConnectAndSubscribe = false;
 }
@@ -191,7 +191,7 @@ void MqttClient::mqttUnsubscribe_Callback(void *Arg, err_t Result)
     }
     else
     {
-        printf("failed: %s\n", Result);
+        printf("failed: %d\n", Result);
     }
 }
 
@@ -247,7 +247,7 @@ void MqttClient::mqttPublish_Callback(void *Arg, err_t Result)
 {
     if (Result != ERR_OK)
     {
-        printf("  MQTT publish to %s failed: %d\n", Arg, Result); // Server rejected publish request
+        printf("  MQTT publish to %s failed: %d\n", (char*)Arg, Result); // Server rejected publish request
     }
     /*
     else

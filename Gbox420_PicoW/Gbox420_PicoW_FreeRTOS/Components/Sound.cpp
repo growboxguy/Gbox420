@@ -173,8 +173,6 @@ void Sound::EE()
     buzz(melody[thisNote], noteDuration);
     busy_wait_ms(noteDuration);
     buzz(0, noteDuration);
-    if (thisNote % 25)   ///< At every 25th note
-      watchdog_update(); ///< Reset Watchdog timeout to avoid a force restart while playing the song
   }
 }
 

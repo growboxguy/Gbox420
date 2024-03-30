@@ -1,6 +1,6 @@
 /*! \file
  *  \brief     Test setting the integrated Real Time Clock using NTP via LWIP
- *  \details   DOES NOT WORK! updateRTC never gets called, even though the LWIP SNTP client gets the result from the NTP server
+ *  \details   DOES NOT WORK! updateRTC never gets called, even though the LWIP SNTP client gets the result from the NTP server. Related to SNTP_SET_SYSTEM_TIME_NTP
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/raspberry-pi-pico-w
  *  \version   4.20
  */
@@ -13,7 +13,7 @@
 #define TASK_PRIORITY_L1 (tskIDLE_PRIORITY + 1UL) // Lower means less important
 #define TASK_PRIORITY_L2 (tskIDLE_PRIORITY + 2UL) // Higher means more important
 #define TASK_PRIORITY_L3 (tskIDLE_PRIORITY + 3UL) // Higher means more important
-#define SNTP_STARTUP_DELAY 0
+#define SNTP_STARTUP_DELAY 15000
 #define SNTP_SET_SYSTEM_TIME_NTP(sec,frac) updateRTC(sec,frac)
 
 #include "pico/stdlib.h"

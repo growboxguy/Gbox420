@@ -27,9 +27,9 @@ static const uint8_t QueueDepth = 32;           ///< Limits the maximum number o
 static const uint8_t MovingAverageDepth = 10;   ///< Number of previous readings to keep when calculating average. Memory intense!
 
 ///< Global variables
-extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
-extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages)
-extern char CurrentTime[MaxWordLength];      // Buffer for storing current time in text format
+extern char LongMessage[MaxLongTextLength];     // Temp storage for assembling long messages (REST API - Google Sheets reporting) //TODO Use Mutex to protect the content getting overwritten by a parallel write to LongMessage
+extern char ShortMessage[MaxShotTextLength];    // Temp storage for assembling short messages (Log entries, Error messages) //TODO Use Mutex to protect the content getting overwritten by a parallel write to LongMessage
+extern char CurrentTimeText[MaxShotTextLength]; // Buffer for storing current time in text format
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable
@@ -99,10 +99,11 @@ typedef struct
     char NtpServerDNS[MaxWordLength]; ///< NTP server DNS name, "" to use MqttServerIP instead
     char NtpServerIP[MaxWordLength];  ///< NTP server IP. Used when MqttServerDNS is empty, or the DNS lookup fails
     uint16_t NtpServerPort;           ///< NTP server Port
-    int8_t TimeZoneDifference;        ///<  UTC time and current timezone difference
+    int8_t TimeZoneDifference;        ///< UTC time and current timezone difference
+    uint8_t StartupDelaySeconds;      ///< Delay the first NTP request, to allow time for WiFi connection to establish
     uint32_t TimeoutSeconds;          ///< Duration in seconds that an NTP client waits for a response from an NTP server
   };
-  struct NtpClientSettings NTPServer1 = {.Name = "NTP1", .NtpServerDNS = "pool.ntp.org", .NtpServerIP = "192.168.1.100", .NtpServerPort = 123, .TimeZoneDifference = -7, .TimeoutSeconds = 15};
+  struct NtpClientSettings NtpServer1 = {.Name = "NTP1", .NtpServerDNS = "pool.ntp.org", .NtpServerIP = "192.168.1.100", .NtpServerPort = 123, .TimeZoneDifference = -7, .StartupDelaySeconds = 15, .TimeoutSeconds = 15};
 
   struct SoundSettings ///< Sound default settings
   {
@@ -145,68 +146,6 @@ typedef struct
   uint8_t CompatibilityVersion = Version; ///< Should always be the last value stored.
 } Settings;
 
-/**
-  \brief Store settings in EEPROM - Only updates changed bits
-  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles
-*/
-//void saveSettings(Settings *ToSave);
-/**
-  \brief Load settings from EEPROM
-  \param ResetEEPROM - Force loading the defaults from the sketch and overwriting the EEPROM with it
-  \return Reference to Settings object
-*/
-//Settings *loadSettings(bool ResetEEPROM = false);
-//void restoreDefaults();
-
-
-/**
-  \brief Store settings in EEPROM - Only updates changed bits
-  \attention Use cautiously, EEPROM has a write limit of 100.000 cycles
-*/
-
-void saveSettings(Settings *ToSave)
-{
-  ;
-  // eeprom_update_block((const void *)ToSave, (void *)0, sizeof(Settings)); // update_block only writes the bytes that changed
-}
-
-/**
-  \brief Load settings from EEPROM
-  \param ResetEEPROM - Force loading the defaults from the sketch and overwriting the EEPROM with it
-  \return Reference to Settings object
-*/
-Settings *loadSettings(bool ResetEEPROM) ///< if the function contains arguments with default values, they must be declared strictly before they are called, otherwise there is a compilation error: '<function name> was not declared in this scope. https://forum.arduino.cc/index.php?topic=606678.0
-{
-  printf("Loading settings...");
-  Settings *DefaultSettings = new Settings(); // This is where settings are stored, first it takes the sketch default settings defined in Settings.h
-  /*
-  Settings EEPROMSettings;                                                 // temporary storage with "Settings" type
-  eeprom_read_block((void *)&EEPROMSettings, (void *)0, sizeof(Settings)); // Load EEPROM stored settings into EEPROMSettings
-  if (DefaultSettings->CompatibilityVersion != EEPROMSettings.CompatibilityVersion || ResetEEPROM)
-  { // Making sure the EEPROM loaded settings are compatible with the sketch
-    printf(" Updating EEPROM");
-    saveSettings(DefaultSettings); // overwrites EEPROM stored settings with defaults from this sketch
-  }
-  else
-  {
-    printf(" Applying EEPROM settings");
-    // DefaultSettings = EEPROMSettings; // overwrite sketch defaults with loaded settings
-    memcpy(DefaultSettings, &EEPROMSettings, sizeof(Settings));
-  }
-  */
-  printf("done. Version: ");
-  printf("%hhu\n", DefaultSettings->CompatibilityVersion);
-  return DefaultSettings;
-}
-
-/**
-  \brief Load sketch default settings into EEPROM
-  \attention Restarts the program!
-*/
-void restoreDefaults()
-{
-  printf("Forcing settings update at next restart\n");
-  loadSettings(true);
-  printf(" Reseting the sketch\n");
-  //__asm__ __volatile__("jmp 0x0000");  //TODO: Force a watchdog reboot here
-}
+void saveSettings(Settings *ToSave);      ///< eeprom_update_block((const void *)ToSave, (void *)0, sizeof(Settings)); // update_block only writes the bytes that chang
+Settings *loadSettings(bool ResetEEPROM); ///< Load settings from EEPROM, Force loading the defaults from the sketch and overwriting the EEPROM with it
+void restoreDefaults();                   ///< Load sketch default settings into EEPROM

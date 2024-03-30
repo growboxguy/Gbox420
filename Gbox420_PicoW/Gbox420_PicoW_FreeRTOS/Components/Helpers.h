@@ -18,6 +18,8 @@
 #include "lwip/dns.h"
 #include "pico/util/datetime.h"
 #include <functional>
+#include "FreeRTOS.h"
+#include "task.h"
 #include "../Settings.h" // Storing/reading defaults
 
 ///< State machine - Defining possible states
@@ -96,7 +98,7 @@ enum class LightStates
   DIMMED
 };
 
-extern char CurrentTime[MaxWordLength];
+extern char CurrentTimeText[MaxShotTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
 extern Settings *GboxSettings;
@@ -113,8 +115,7 @@ static bool __attribute__((unused)) dnsLookupSuccess = false;    ///< true: DNS 
 
 // Class specific variables
 // void getFreeMemory();
-// Query current time from local RTC
-char *getCurrentTime(bool PrintToSerial);
+char *getCurrentTime(bool PrintToSerial);                                                                ///< Query current time from local RTC
 bool DnsLookup(char *DnsName, ip_addr_t *ResultIP);                                                      ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
 void DnsLookupResult(const char *Hostname, const ip_addr_t *ResultIP, void *Arg);                        ///< Callback with the lookup result
 bool DnsLookup_Async(char *DnsName, ip_addr_t *ResultIP, std::function<void(ip_addr_t *)> DataCallback); ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful

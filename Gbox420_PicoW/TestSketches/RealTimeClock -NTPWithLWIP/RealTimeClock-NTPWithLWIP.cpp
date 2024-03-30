@@ -58,7 +58,7 @@ void connectWiFi()
 
 void rtcTask(void *pvParameters)
 {
-    vTaskDelay(10000 / portTICK_PERIOD_MS); // Delay for 10sec to give time to WiFi to connect
+    vTaskDelay(SNTP_STARTUP_DELAY / portTICK_PERIOD_MS); // Delay for 10sec to give time to WiFi to connect
     printf("Initializing RTC...\n");
     ip_addr_t NTPServerIP;
     DnsLookup(NTPServer1.NtpServerDNS, &NTPServerIP);

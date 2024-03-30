@@ -45,11 +45,10 @@ bool DnsLookup(char *DnsName, ip_addr_t *ResultIP)
   {
     if (get_absolute_time() > Timeout)
     {
-      printf("DNS lookup timeout");
+      printf("DNS lookup timeout\n");
       return false;
     }
-    watchdog_update();
-    busy_wait_ms(500);
+    vTaskDelay(500);
   }
   return dnsLookupSuccess;
 }
@@ -62,13 +61,13 @@ void DnsLookupResult(const char *Hostname, const ip_addr_t *FoundIP, void *Resul
 {
   if (FoundIP)
   {
-    printf("Found address: %s  ", ipaddr_ntoa(FoundIP));
+    printf("Found address: %s\n", ipaddr_ntoa(FoundIP));
     ip_addr_copy(*(ip_addr_t *)ResultIP, *FoundIP);
     dnsLookupSuccess = true;
   }
   else
   {
-    printf("DNS lookup failed  ");
+    printf("DNS lookup failed\n");
   }
   dnsLookupInProgress = false;
 }
