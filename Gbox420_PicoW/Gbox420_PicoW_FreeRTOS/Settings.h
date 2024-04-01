@@ -17,8 +17,10 @@ static const uint8_t Version = 1; ///< Increment this after changing the stuctur
 ///< NOT SAVED TO EEPROM
 
 ///< Global constants
-#define WIFI_SSID "GboxNet"                     // UPDATE THIS
-#define WIFI_PASSWORD "SuperSecretPassword"     // UPDATE THIS
+#define WIFI_SSID "GboxNet"                 ///< UPDATE THIS
+#define WIFI_PASSWORD "SuperSecretPassword" ///< UPDATE THIS
+#define WIFI_TIMEOUTSEC 15                  ///< WiFi connection timeout in seconds. Also used as the connectivity check / connection retry frequency
+
 static const uint8_t MaxWordLength = 32;        ///< Default char * buffer length for storing a word + null terminator. Memory intense!
 static const uint8_t MaxShotTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 1024; ///< Default char * buffer length for storing a long text. Memory intense!

@@ -37,7 +37,7 @@ bool DnsLookup(char *DnsName, ip_addr_t *ResultIP)
   err_t err = dns_gethostbyname(DnsName, ResultIP, DnsLookupResult, ResultIP);
   if (err == ERR_OK) // DNS name found in cache and loaded into ResultIP
   {
-    printf("Found cached address");
+    printf("Found cached address: %s\n", ipaddr_ntoa(ResultIP));
     return true;
   }
   absolute_time_t Timeout = make_timeout_time_ms(15000); // 15sec from now

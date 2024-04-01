@@ -16,10 +16,10 @@ int main()
   Debug = &GboxSettings->Debug;
   Metric = &GboxSettings->Metric;
   printf("Creating tasks\n");
-  xTaskCreate(watchdogTask, "Watchdog", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L3, NULL);   ///< Blink built-in LED
-  xTaskCreate(wifiTask, "WiFi checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL);   ///< Connect-ReConnect to WiFi
-  xTaskCreate(ntpTask, "NTP update", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL);      ///< Update Real Time Clock using NTP
-  xTaskCreate(heartbeatTask, "Heartbeat", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL); ///< Blink built-in LED
+  xTaskCreate(watchdogTask, "Watchdog", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L3, NULL);                 ///< Pet the watchdog
+  xTaskCreate(connectivityTask, "Connectivity checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL); ///< Connect-ReConnect to WiFi, Sync the Real Time Clock using NTP, Make sure MQTT server is connected
+  // xTaskCreate(hempyTask, "Hempy module", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);               ///< Update Hempy Module
+  xTaskCreate(heartbeatTask, "Heartbeat", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL); ///< Blink built-in LED
   printf("Starting scheduler\n");
   vTaskStartScheduler();
 
@@ -34,12 +34,12 @@ void watchdogTask(void *pvParameters)
   printf("done\n");
   while (1)
   {
-    vTaskDelay(7000 / portTICK_PERIOD_MS); // Delay for 7sec
-    watchdog_update();                     // Pet watchdog
+    vTaskDelay(pdMS_TO_TICKS(7000)); // Delay 7sec
+    watchdog_update();               // Pet watchdog
   }
 }
 
-void wifiTask(void *pvParameters)
+void connectivityTask(void *pvParameters)
 {
   int WifiInitResult = cyw43_arch_init();
   if (WifiInitResult != 0)
@@ -49,10 +49,14 @@ void wifiTask(void *pvParameters)
   else
   {
     printf("WiFi initialized\n");
+    NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY);  // Create Protocol Control Block for NTP
+    udp_recv(NtpPcb, ntpReceived, NULL);
+    rtc_init(); // Initialize "hardware/rtc.h"
     connectWiFi();
     while (1)
     {
-      vTaskDelay(30000 / portTICK_PERIOD_MS);                                            // Delay for 30sec
+      vTaskDelay(pdMS_TO_TICKS(WIFI_TIMEOUTSEC * 1000)); // Delay
+      getCurrentTime(true);
       printf("WiFi status: %d\n", cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
       if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) != CYW43_LINK_UP)
       {
@@ -62,45 +66,41 @@ void wifiTask(void *pvParameters)
   }
 }
 
+
 // Initialize WiFi and Connect to local network
-void connectWiFi()
+bool connectWiFi()
 {
-  cyw43_arch_enable_sta_mode();                                                                                         // Enables Wi-Fi STA (Station) mode
-  int WifiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, 10000); // Max 10sec
+  cyw43_arch_enable_sta_mode();                                                                                                   // Enables Wi-Fi STA (Station) mode
+  int WifiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMEOUTSEC * 1000); // Try connecting to WiFi. If the timeout elapses, the attempt may still succeed afterward.
   if (WifiConnectResult != 0)
   {
     printf("Connecting to %s failed: %d\n", WIFI_SSID, WifiConnectResult);
+    return false;
   }
   else
   {
     char *IPAddress = ipaddr_ntoa(netif_ip4_addr(&cyw43_state.netif[0]));
     printf("Connected to %s - %s\n", WIFI_SSID, IPAddress);
-  }
-}
-
-void ntpTask(void *pvParameters)
-{
-  vTaskDelay(GboxSettings->NtpServer1.StartupDelaySeconds * 1000 / portTICK_PERIOD_MS); // Delay to allow time for WiFi connection to establish
-  printf("Initializing RTC...\n");
-  DnsLookup(GboxSettings->NtpServer1.NtpServerDNS, &NtpServerIP);
-  NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY);
-  udp_recv(NtpPcb, ntpReceived, NULL);
-  rtc_init(); // Initialize "hardware/rtc.h"
-  ntpRequest();
-  while (1)
-  {
-    vTaskDelay(10000 / portTICK_PERIOD_MS); // Delay for 10sec
-    getCurrentTime(true);
+    ntpRequest();
+    return true;
   }
 }
 
 // Make an NTP request
 void ntpRequest()
 {
+  if (GboxSettings->NtpServer1.NtpServerIP[0] != '\0')
+  {
+    ip4addr_aton(GboxSettings->NtpServer1.NtpServerIP, &NtpServerIP); // If MQTTServerDNS is defined and the DNS lookup is successful this will be overwritten
+  }
+  if (GboxSettings->NtpServer1.NtpServerDNS[0] != '\0')
+  {
+    DnsLookup(GboxSettings->NtpServer1.NtpServerDNS, &NtpServerIP);
+  }
   cyw43_arch_lwip_begin();
-  struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, NTP_MSG_LEN, PBUF_RAM);
+  struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, 48, PBUF_RAM); // 48 is the NTP message length
   uint8_t *req = (uint8_t *)p->payload;
-  memset(req, 0, NTP_MSG_LEN);
+  memset(req, 0, 48);
   req[0] = 0x1b;
   udp_sendto(NtpPcb, p, &NtpServerIP, GboxSettings->NtpServer1.NtpServerPort);
   pbuf_free(p);
@@ -114,12 +114,12 @@ void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t
   uint8_t stratum = pbuf_get_at(p, 1);
   datetime_t timeTemp;
   // Check the result
-  if (ip_addr_cmp(addr, &NtpServerIP) && port == GboxSettings->NtpServer1.NtpServerPort && p->tot_len == NTP_MSG_LEN && mode == 0x4 && stratum != 0)
+  if (ip_addr_cmp(addr, &NtpServerIP) && port == GboxSettings->NtpServer1.NtpServerPort && p->tot_len == 48 && mode == 0x4 && stratum != 0)
   {
     uint8_t seconds_buf[4] = {0};
     pbuf_copy_partial(p, seconds_buf, sizeof(seconds_buf), 40);
     uint32_t seconds_since_1900 = seconds_buf[0] << 24 | seconds_buf[1] << 16 | seconds_buf[2] << 8 | seconds_buf[3];
-    uint32_t seconds_since_1970 = seconds_since_1900 - NTP_DELTA;
+    uint32_t seconds_since_1970 = seconds_since_1900 - 2208988800; //  2208988800 seconds between 1 Jan 1900 and 1 Jan 1970
     time_t epoch = seconds_since_1970;
     struct tm *utc = gmtime(&epoch); // https://cplusplus.com/reference/ctime/tm/
     timeTemp = {
@@ -157,7 +157,7 @@ void heartbeatTask(void *pvParameters)
 {
   while (1)
   {
-    vTaskDelay(1000);
+    vTaskDelay(pdMS_TO_TICKS(1000));
     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus);
     ledStatus = !ledStatus;
   }
