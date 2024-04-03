@@ -11,19 +11,17 @@ int main()
   {
     printf("\nClean boot\n");
   }
-  printf("\nGbox420 initializing\n");
+  printf("\nGbox420 FreeRTOS initializing\n");
   GboxSettings = loadSettings(false);
   Debug = &GboxSettings->Debug;
   Metric = &GboxSettings->Metric;
   printf("Creating tasks\n");
-  xTaskCreate(watchdogTask, "Watchdog", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L3, NULL);                 ///< Pet the watchdog
+  xTaskCreate(watchdogTask, "Watchdog", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L3, NULL);                 ///< Watchdog for crash detection and automatic restart
   xTaskCreate(connectivityTask, "Connectivity checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL); ///< Connect-ReConnect to WiFi, Sync the Real Time Clock using NTP, Make sure MQTT server is connected
-  // xTaskCreate(hempyTask, "Hempy module", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);               ///< Update Hempy Module
+  // xTaskCreate(hempyTask, "Hempy module", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);                ///< Update Hempy Module
   xTaskCreate(heartbeatTask, "Heartbeat", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL); ///< Blink built-in LED
   printf("Starting scheduler\n");
   vTaskStartScheduler();
-
-  cyw43_arch_deinit();
   return 0;
 }
 
@@ -39,6 +37,17 @@ void watchdogTask(void *pvParameters)
   }
 }
 
+///< Blink built-in LED on Pico W - Requires WiFi initialization cyw43_arch_init() , since the LED is connected to the WiFi controller
+void heartbeatTask(void *pvParameters)
+{
+  while (1)
+  {
+    vTaskDelay(pdMS_TO_TICKS(1000));
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus);
+    ledStatus = !ledStatus;
+  }
+}
+
 void connectivityTask(void *pvParameters)
 {
   int WifiInitResult = cyw43_arch_init();
@@ -49,29 +58,39 @@ void connectivityTask(void *pvParameters)
   else
   {
     printf("WiFi initialized\n");
-    NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY);  // Create Protocol Control Block for NTP
+    rtcInit();
+    NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY); // Create Protocol Control Block for NTP
     udp_recv(NtpPcb, ntpReceived, NULL);
-    rtc_init(); // Initialize "hardware/rtc.h"
     connectWiFi();
     while (1)
     {
-      vTaskDelay(pdMS_TO_TICKS(WIFI_TIMEOUTSEC * 1000)); // Delay
+      vTaskDelay(pdMS_TO_TICKS(WIFI_TIMER * 1000)); // Delay
       getCurrentTime(true);
-      printf("WiFi status: %d\n", cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
+      printf("WiFi status: %s\n", toText_WiFiStatus(cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA))); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
       if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) != CYW43_LINK_UP)
       {
         connectWiFi();
+      }
+      else // WiFi is up and has an IP
+      {
+        if (!ntpSynced) // if NTP is not synced
+        {
+          ntpRequest();
+        }
+        else
+        {
+          ntpSynced++; // ntpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec
+        }
       }
     }
   }
 }
 
-
 // Initialize WiFi and Connect to local network
 bool connectWiFi()
 {
-  cyw43_arch_enable_sta_mode();                                                                                                   // Enables Wi-Fi STA (Station) mode
-  int WifiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMEOUTSEC * 1000); // Try connecting to WiFi. If the timeout elapses, the attempt may still succeed afterward.
+  cyw43_arch_enable_sta_mode();                                                                                                     // Enables Wi-Fi STA (Station) mode
+  int WifiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMER * 1000); // Try connecting to WiFi. If the timeout elapses, the attempt may still succeed afterward.
   if (WifiConnectResult != 0)
   {
     printf("Connecting to %s failed: %d\n", WIFI_SSID, WifiConnectResult);
@@ -86,9 +105,28 @@ bool connectWiFi()
   }
 }
 
+// Initialize Real Time Clock and set a pre-defined 'starting' date
+void rtcInit()
+{
+  rtc_init(); // Initialize "hardware/rtc.h"
+  datetime_t timeTemp = {
+      .year = 2024, // tm_year: years since 1900
+      .month = 4,   // tm_mon: months since January (0-11)
+      .day = 20,
+      .dotw = 5, // tm_wday: days since Sunday (0-6)
+      .hour = 16,
+      .min = 20,
+      .sec = 00};
+  if (rtc_set_datetime(&timeTemp))
+    printf("RTC initialized\n");
+  else
+    printf("RTC failed to init\n");
+}
+
 // Make an NTP request
 void ntpRequest()
 {
+  ntpSynced = 0;
   if (GboxSettings->NtpServer1.NtpServerIP[0] != '\0')
   {
     ip4addr_aton(GboxSettings->NtpServer1.NtpServerIP, &NtpServerIP); // If MQTTServerDNS is defined and the DNS lookup is successful this will be overwritten
@@ -130,35 +168,20 @@ void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t
         .hour = (int8_t)(utc->tm_hour + GboxSettings->NtpServer1.TimeZoneDifference),
         .min = (int8_t)utc->tm_min,
         .sec = (int8_t)utc->tm_sec};
-  }
-  else
-  {
-    timeTemp = {
-        .year = 2024, // tm_year: years since 1900
-        .month = 4,   // tm_mon: months since January (0-11)
-        .day = 20,
-        .dotw = 5, // tm_wday: days since Sunday (0-6)
-        .hour = 16,
-        .min = 20,
-        .sec = 00};
-    printf("Invalid NTP response, fallback set\n");
-  }
-  datetime_to_str(CurrentTimeText, sizeof(CurrentTimeText), &timeTemp);
-  printf("Setting RTC to: %s ", CurrentTimeText);
-  if (rtc_set_datetime(&timeTemp))
-    printf("done\n");
-  else
-    printf("failed\n");
-  pbuf_free(p);
-}
+    datetime_to_str(CurrentTimeText, sizeof(CurrentTimeText), &timeTemp);
+    printf("Setting RTC to: %s ", CurrentTimeText);
+    if (rtc_set_datetime(&timeTemp))
+    {
 
-///< Blink built-in LED on Pico W - Requires WiFi initialization cyw43_arch_init() , since the LED is connected to the WiFi controller
-void heartbeatTask(void *pvParameters)
-{
-  while (1)
-  {
-    vTaskDelay(pdMS_TO_TICKS(1000));
-    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus);
-    ledStatus = !ledStatus;
+      printf("done\n");
+      ntpSynced = 1;
+    }
+    else
+      printf("failed\n");
   }
+  else
+  {
+    printf("Invalid NTP response\n");
+  }
+  pbuf_free(p);
 }

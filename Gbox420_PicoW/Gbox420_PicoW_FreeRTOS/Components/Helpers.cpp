@@ -568,3 +568,34 @@ char *toText_lightState(LightStates State)
     break;
   }
 }
+
+char *toText_WiFiStatus(int Status)
+{
+  switch (Status)
+  {
+  case CYW43_LINK_DOWN:
+    return (char *)"DOWN";
+    break;
+  case CYW43_LINK_JOIN:
+    return (char *)"JOIN";
+    break;
+  case CYW43_LINK_NOIP:
+    return (char *)"NOIP";
+    break;
+  case CYW43_LINK_UP:
+    return (char *)"UP";
+    break;
+  case CYW43_LINK_FAIL:
+    return (char *)"FAIL";
+    break;
+  case CYW43_LINK_NONET:
+    return (char *)"NONET";
+    break;
+  case CYW43_LINK_BADAUTH:
+    return (char *)"BADAUTH";
+    break;
+  default:
+    return (char *)"?";
+    break;
+  }
+}

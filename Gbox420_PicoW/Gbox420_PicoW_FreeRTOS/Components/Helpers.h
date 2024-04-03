@@ -153,6 +153,7 @@ char *toText_second(int Second);
 char *toText_distance(float Distance);
 char *toText_TDS(float TDS);
 char *toText_rpm(float RPM);
+char *toText_WiFiStatus(int Status);
 bool toBool(char *Boolean);
 int toInt(char *Integer);
 float toFloat(char *Float);

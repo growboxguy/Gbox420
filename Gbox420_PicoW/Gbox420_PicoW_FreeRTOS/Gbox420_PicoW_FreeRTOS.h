@@ -20,6 +20,8 @@ int main(); ///< Entry point. Loads settings, create tasks and starts FreeRTOS s
 void watchdogTask(void *pvParameters);                                                                         ///< Initialize watchdog and periodically pet it - Crash detection and reboot
 void connectivityTask(void *pvParameters);                                                                     ///< Initialize WiFi, periodically check the connection and reconnect if needed. Use NTP to update the Real Time Clock
 bool connectWiFi();                                                                                            ///< Connect to a WiFi network
+void rtcInit();                                                                                                //< Initialize the Real Time Clock and set a stating date
+uint8_t ntpSynced = 0;                                                                                         ///< 0: Not synced with an NTP server
 void ntpRequest();                                                                                             ///< Make an NTP request
 static void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port); ///< NTP data received
 void heartbeatTask(void *pvParameters);                                                                        ///< Blink built-in LED on Pico W - Requires WiFi initialization cyw43_arch_init() , since the LED is connected to the WiFi controller

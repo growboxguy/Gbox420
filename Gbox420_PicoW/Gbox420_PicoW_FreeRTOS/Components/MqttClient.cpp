@@ -247,7 +247,7 @@ void MqttClient::mqttPublish_Callback(void *Arg, err_t Result)
 {
     if (Result != ERR_OK)
     {
-        printf("  MQTT publish to %s failed: %d\n", (char*)Arg, Result); // Server rejected publish request
+        printf("  MQTT publish to %s failed: %d\n", (char *)Arg, Result); // Server rejected publish request
     }
     /*
     else

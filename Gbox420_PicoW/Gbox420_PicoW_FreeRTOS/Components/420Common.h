@@ -5,8 +5,8 @@
 
 #include <stdio.h>
 #include <cstring>
-#include "../Settings.h"       ///< for loading defaults and storing/reading user settings
-#include "Helpers.h"           ///< global functions
+#include "../Settings.h" ///< for loading defaults and storing/reading user settings
+#include "Helpers.h"     ///< global functions
 
 ///< forward declaration
 extern char LongMessage[MaxLongTextLength];
