@@ -65,7 +65,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
 {
   if ((*SerialReportDate || ForceRun) && !JSONToBufferOnly)
   {
-    getCurrentTime(true);
+    rtcGetCurrentTime(true);
   }
   if ((*SerialReportMemory || ForceRun) && !JSONToBufferOnly)
   {
@@ -501,7 +501,7 @@ void Module::settingsEvent_Load(__attribute__((unused)) char *Url)
 void Module::settingsEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
   /*
-  WebServer.setArgString("Time", getCurrentTime(false));  ///< Current time
+  WebServer.setArgString("Time", rtcGetCurrentTime(false));  ///< Current time
   WebServer.setArgJson("Log", eventLogToJSON(false, true)); ///< Last events that happened in JSON format
   */
 }

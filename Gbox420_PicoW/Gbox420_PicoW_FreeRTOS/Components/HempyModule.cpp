@@ -65,7 +65,7 @@ void HempyModule::websiteEvent_Load(__attribute__((unused)) char *Url) ///< call
  */
 void HempyModule::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed (5sec automatic)
 {
-  // WebServer.setArgString("Time", getCurrentTime(false));  ///< Current time
+  // WebServer.setArgString("Time", rtcGetCurrentTime(false));  ///< Current time
   // WebServer.setArgJson("Log", eventLogToJSON(false, true)); ///< Last events that happened in JSON format
 }
 

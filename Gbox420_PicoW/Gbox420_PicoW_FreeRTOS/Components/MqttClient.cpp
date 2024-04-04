@@ -80,7 +80,7 @@ void MqttClient::mqttConnectTrigger(bool WaitForIP)
         {
             if (WaitForIP)
             {
-                if (DnsLookup(MqttServerDNS, &MqttServerAddress)) // Resolve DNS name, can take up to one sec
+                if (dnsLookup(MqttServerDNS, &MqttServerAddress)) // Resolve DNS name, can take up to one sec
                 {
                     mqttConnect();
                 }
@@ -88,7 +88,7 @@ void MqttClient::mqttConnectTrigger(bool WaitForIP)
             else
             {
                 std::function<void(ip_addr_t *)> callbackFunctionPtr = std::bind(&MqttClient::mqttDNSResolvedCallback, this, std::placeholders::_1);
-                DnsLookup_Async(MqttServerDNS, &MqttServerAddress, callbackFunctionPtr); // Start resolving DNS name, if cached result is available it is instantly returned to MqttServerAddress
+                dnsLookup_Async(MqttServerDNS, &MqttServerAddress, callbackFunctionPtr); // Start resolving DNS name, if cached result is available it is instantly returned to MqttServerAddress
             }
         }
     }

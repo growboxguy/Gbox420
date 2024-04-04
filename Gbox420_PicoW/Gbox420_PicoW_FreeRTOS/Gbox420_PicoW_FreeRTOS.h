@@ -15,12 +15,14 @@
 #define TASK_PRIORITY_L2 (tskIDLE_PRIORITY + 2UL) // Higher means more important
 #define TASK_PRIORITY_L3 (tskIDLE_PRIORITY + 3UL) // Higher means more important
 
-int main(); ///< Entry point. Loads settings, create tasks and starts FreeRTOS scheduler
-
+int main();                                                                                                    ///< Entry point. Loads settings, create tasks and starts FreeRTOS scheduler
 void watchdogTask(void *pvParameters);                                                                         ///< Initialize watchdog and periodically pet it - Crash detection and reboot
 void connectivityTask(void *pvParameters);                                                                     ///< Initialize WiFi, periodically check the connection and reconnect if needed. Use NTP to update the Real Time Clock
 bool connectWiFi();                                                                                            ///< Connect to a WiFi network
+bool dnsLookup(char *DnsName, ip_addr_t *ResultIP);                                                            ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
+void dnsLookupResult(const char *Hostname, const ip_addr_t *ResultIP, void *Arg);                              ///< Callback with the lookup result
 void rtcInit();                                                                                                //< Initialize the Real Time Clock and set a stating date
+char *rtcGetCurrentTime(bool PrintToSerial);                                                                   ///< Query current time from local RTC
 uint8_t ntpSynced = 0;                                                                                         ///< 0: Not synced with an NTP server
 void ntpRequest();                                                                                             ///< Make an NTP request
 static void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port); ///< NTP data received
