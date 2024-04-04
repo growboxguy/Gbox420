@@ -88,7 +88,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
     strcat(LongMessage, "{\"Log\":{"); ///< Adds two curly brackets that needs to be closed at the end
     if (!KeepBuffer)
     {
-      printf("%s\n", *(char(*)[MaxLongTextLength])&LongMessage);
+      printf("%s\n", LongMessage);
       memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     }
     for (int i = 0; i < ReportQueueItemCount;)
@@ -98,13 +98,13 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
         strcat(LongMessage, ","); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
       {
-        printf("%s\n", *(char(*)[MaxLongTextLength])&LongMessage);
+        printf("%s\n", LongMessage);
         memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
       }
     }
     strcat(LongMessage, "}}"); ///< closing both curly bracket
     if (!JSONToBufferOnly)
-      printf("%s\n", *(char(*)[MaxLongTextLength])&LongMessage);
+      printf("%s\n", LongMessage);
   }
 }
 
