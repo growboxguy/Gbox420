@@ -88,7 +88,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
     strcat(LongMessage, "{\"Log\":{"); ///< Adds two curly brackets that needs to be closed at the end
     if (!KeepBuffer)
     {
-      printf("%s\n", &LongMessage);
+      printf("%s\n", *(char(*)[MaxLongTextLength])&LongMessage);
       memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     }
     for (int i = 0; i < ReportQueueItemCount;)
@@ -98,13 +98,13 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
         strcat(LongMessage, ","); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
       {
-        printf("%s\n", &LongMessage);
+        printf("%s\n", *(char(*)[MaxLongTextLength])&LongMessage);
         memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
       }
     }
     strcat(LongMessage, "}}"); ///< closing both curly bracket
     if (!JSONToBufferOnly)
-      printf("%s\n", &LongMessage);
+      printf("%s\n", *(char(*)[MaxLongTextLength])&LongMessage);
   }
 }
 
@@ -636,7 +636,7 @@ void Module::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
   if (*Debug)
   {
     printf("  REST API reporting: api.pushingbox.com");
-    printf("%s\n", JSONData);
+    printf("%s\n", *(char(*)[MaxLongTextLength])JSONData);
   }
   // PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
 }
@@ -654,7 +654,7 @@ void Module::mqttPublish(MqttClient Client, char (*JSONData)[MaxLongTextLength])
   {
     // if (*Debug)
     {
-      printf("  MQTT reporting to %s - %s\n", DefaultMqttClient->PubTopic, JSONData);
+      printf("  MQTT reporting to %s - %s\n", DefaultMqttClient->PubTopic, *(char(*)[MaxLongTextLength])JSONData);
     }
     DefaultMqttClient->mqttPublish(DefaultMqttClient->PubTopic, *JSONData); //(topic,message,qos (Only level 0 supported),retain )
   }

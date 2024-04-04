@@ -150,7 +150,7 @@ void ntpRequest()
   ntpSynced = 0;
   if (GboxSettings->NtpServer1.NtpServerIP[0] != '\0')
   {
-    ip4addr_aton(GboxSettings->NtpServer1.NtpServerIP, &NtpServerIP); // If MQTTServerDNS is defined and the DNS lookup is successful this will be overwritten
+    ip4addr_aton(GboxSettings->NtpServer1.NtpServerIP, &NtpServerIP); // If NtpServerDNS is defined and the DNS lookup is successful this will be overwritten
   }
   if (GboxSettings->NtpServer1.NtpServerDNS[0] != '\0')
   {
