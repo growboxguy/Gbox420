@@ -19,7 +19,7 @@ static const uint8_t Version = 1; ///< Increment this after changing the stuctur
 ///< Global constants
 #define WIFI_SSID "GboxNet"                 ///< UPDATE THIS
 #define WIFI_PASSWORD "SuperSecretPassword" ///< UPDATE THIS
-#define WIFI_TIMER 15                       ///< In seconds. For both the WiFi connectivity check frequency and connection timeout.
+#define WIFI_TIMER 15                       ///< In seconds. For WiFi connectivity check frequency, retry frequency and connection timeout.
 
 static const uint8_t MaxWordLength = 32;        ///< Default char * buffer length for storing a word + null terminator. Memory intense!
 static const uint8_t MaxShotTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
@@ -80,9 +80,10 @@ typedef struct
     char Name[MaxWordLength];               ///< Must be unique
     char MqttServerDNS[MaxWordLength];      ///< MQTT server DNS name, "" to use MqttServerIP instead
     char MqttServerIP[MaxWordLength];       ///< MQTT server IP. Used when MqttServerDNS is empty, or the DNS lookup fails
-    uint16_t MqttServerPort;                ///< MQTT server Port
+    uint16_t MqttServerPort;                ///< MQTT server Port    
     char MqttServerUser[MaxWordLength];     ///< MQTT server username, "" if not needed
     char MqttServerPassword[MaxWordLength]; ///< MQTT server password, "" if not needed
+    uint8_t MqttServerTimeoutSec; ///< MQTT server connection timeout in seconds, indicating the duration to wait before deeming the server unresponsive
     char ClientID[MaxWordLength];           ///< Should be unique across the MQTT server
     char PubTopic[MaxWordLength];           ///< Publish MQTT messages to this topic. Ends with a forward slash/
     char SubTopic[MaxWordLength];           ///< Subscribe to messages of this topic and all sub-topics
@@ -93,7 +94,7 @@ typedef struct
     uint8_t QoS;                            ///< Quality of Service levels: 0:No QoS, 1: Broker ensures to send the message to the subscribers (recommended), 2: Broker ensures to send the message to the subscribers exactly once   https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/
     uint32_t KeepAliveSeconds;              ///< Ping the MQTT server every X seconds to keep the connection active
   };
-  struct MqttClientSettings HempyMqttServer1 = {.Name = "MQTT1", .MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .ClientID = "Hempy", .PubTopic = "Gbox420/Hempy/", .SubTopic = "Gbox420CMD/Hempy/#", .LwtTopic = "Gbox420LWT/Hempy/", .LwtMessage = "Hempy Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
+  struct MqttClientSettings HempyMqttServer1 = {.Name = "MQTT1", .MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .MqttServerTimeoutSec = 10,.ClientID = "Hempy", .PubTopic = "Gbox420/Hempy/", .SubTopic = "Gbox420CMD/Hempy/#", .LwtTopic = "Gbox420LWT/Hempy/", .LwtMessage = "Hempy Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
 
   struct NtpClientSettings ///< MQTT client settings
   {

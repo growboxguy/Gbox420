@@ -4,22 +4,25 @@ Clean boot
 
 Gbox420 FreeRTOS initializing
 Loading settings...done. Version: 1
+Initializing RTC...done
 Creating tasks...done
 Initializing Watchdog...done
-Initializing RTC...done
-Initializing WiFi...Connecting to GboxNet failed: -1
-Friday 20 April 16:20:31 2024
-WiFi status: NONET
-Initializing WiFi...Connecting to GboxNet failed: -1
-Friday 20 April 16:21:01 2024
-WiFi status: NONET
-Initializing WiFi...Connecting to GboxNet failed: -1
-Friday 20 April 16:21:31 2024
-WiFi status: NONET
 Initializing WiFi...Connected to GboxNet - 192.168.1.34
-   Looking up IP for pool.ntp.org...Found address: 195.228.75.149
-RTC synced: Thursday 4 April 14:01:15 2024
-Thursday 4 April 14:01:30 2024
+   Looking up IP for pool.ntp.org...Found address: 92.249.148.253
+   Looking up IP for mqttserver.gbox420.net...Found address: 192.168.1.100
+RTC synced: Saturday 6 April 15:12:37 2024
+Connecting to MQTT server...MQTT Connected
+Subscribed to Gbox420CMD/Hempy/#
+Saturday 6 April 15:12:54 2024
 WiFi status: UP
-Thursday 4 April 14:01:45 2024
+Saturday 6 April 15:13:09 2024
 WiFi status: UP
+Saturday 6 April 15:13:24 2024
+WiFi status: UP
+Saturday 6 April 15:13:39 2024
+WiFi status: UP
+MQTT topic: Test
+MQTT data: fe
+Saturday 6 April 15:13:54 2024
+WiFi status: UP
+

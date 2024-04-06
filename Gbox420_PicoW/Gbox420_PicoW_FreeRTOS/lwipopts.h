@@ -89,4 +89,7 @@
 #define SLIP_DEBUG LWIP_DBG_OFF
 #define DHCP_DEBUG LWIP_DBG_OFF
 
-#endif
+#define MEMP_NUM_SYS_TIMEOUT (LWIP_NUM_SYS_TIMEOUT_INTERNAL + 1) /* Needed for MQTT - Plus one per each MQTT server */
+#define MQTT_REQ_MAX_IN_FLIGHT (5)                               /* Needed for MQTT - Maximum subscribe requests */
+
+#endif /* __LWIPOPTS_H__ */

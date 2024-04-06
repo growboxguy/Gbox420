@@ -187,7 +187,7 @@ void Module::addToLog(const char *LongMessage, __attribute__((unused)) uint8_t I
     strncpy(Logs[i], Logs[i - 1], MaxWordLength);
   }
   memset(&Logs[0], 0, sizeof(Logs[0]));         ///< clear variable
-  strncpy(Logs[0], LongMessage, MaxWordLength); ///< instert new log to [0]
+  strncpy(Logs[0], LongMessage, MaxWordLength); ///< insert new log to [0]
   printf("%s\n", Logs[0]);
 }
 
@@ -713,7 +713,7 @@ void Module::setSheetsReportingOnOff(bool State)
 void Module::setSheetsReportingFrequency(uint16_t Frequency)
 {
   *SheetsReportingFrequency = Frequency;
-  addToLog("Sheets freqency updated");
+  addToLog("Sheets frequency updated");
   getSoundObject()->playOnSound();
 }
 

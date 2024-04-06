@@ -11,22 +11,28 @@
 #include "lwip/ip_addr.h"
 #include "lwip/dns.h"
 #include "lwip/err.h"
-#include "../Settings.h" ///< for loading defaults and storing/reading user settings
-#include "Helpers.h"
-#include "420Common.h"
-#include "420Module.h"
+#include "Settings.h" ///< for loading defaults and storing/reading user settings
+#include <functional>
+#include "FreeRTOS.h"
+#include "task.h"
+//#include "Helpers.h"
+//#include "420Common.h"
+//#include "420Module.h"
 
 #define MaxWordLength 128                                      ///< Default char * buffer length for storing a word + null terminator. Memory intense!
 typedef std::function<void(char *, char *)> CallbackType_mqtt; // Defines how the DataCallback function in mqttConnectTrigger should look like
 
-class MqttClient : virtual public Common
+extern bool dnsLookup(char *DnsName, ip_addr_t *ResultIP);
+
+
+class MqttClient
 {
 
 public:
-    MqttClient(Module *Parent, Settings::MqttClientSettings *DefaultSettings, CallbackType_mqtt DataCallback);
+    MqttClient(Settings::MqttClientSettings *DefaultSettings, CallbackType_mqtt DataCallback);
     void report(bool FriendlyFormat = false);
-    void run1min();
-    void mqttConnectTrigger(bool WaitForDnsLookup = false); ///< Initiate connection to the MQTT server: Check WiFi and lookup DNS before calling mqttConnect
+   // void run1min();
+    void mqttConnectTrigger(); ///< Initiate connection to the MQTT server: Check WiFi and lookup DNS before calling mqttConnect
     void mqttConnect();                                     ///< Actually connect to the MQTT server
     void mqttDNSResolvedCallback(ip_addr_t *ServerIP);      ///< Callback when IP of the MQTT server is found
     void mqttCheck();                                       ///< Check connected status - Reconnect to MQTT server in the background if disconnected
@@ -40,7 +46,7 @@ public:
     char *PubTopic;                                         ///< Topic to publish messages
     bool *PublishRetain;                                    ///< Should the MQTT server retain Publish messages: 0:No retention (recommended), 1:Broker keeps the message and sends it to future subscribers
 
-private:
+private:    
     bool InProgress_ConnectAndSubscribe = false;
     bool InProgress_Publish = false;
 

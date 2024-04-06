@@ -1,6 +1,6 @@
 #include "MqttClient.h"
 
-MqttClient::MqttClient(Module *Parent, Settings::MqttClientSettings *DefaultSettings, CallbackType_mqtt DataCallback) : Common(DefaultSettings->Name)
+MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, CallbackType_mqtt DataCallback)
 {
     this->DataCallback = DataCallback;
     MqttServerDNS = DefaultSettings->MqttServerDNS;
@@ -9,8 +9,6 @@ MqttClient::MqttClient(Module *Parent, Settings::MqttClientSettings *DefaultSett
     SubTopic = DefaultSettings->SubTopic;
     PublishRetain = &DefaultSettings->PublishRetain;
     QoS = &DefaultSettings->QoS;
-    Parent->addToRefreshQueue_1min(this);
-    Parent->addToReportQueue(this);
 
     Client = mqtt_client_new(); // Allocate memory for the Stuct storing the MQTT client, store the pointer to it
     ClientInfo = new mqtt_connect_client_info_t();
@@ -23,8 +21,8 @@ MqttClient::MqttClient(Module *Parent, Settings::MqttClientSettings *DefaultSett
     ClientInfo->will_qos = DefaultSettings->QoS;
     ClientInfo->will_retain = DefaultSettings->LwtRetain;
 
-    mqttConnectTrigger(true);                                  // Connect to the MQTT server
-    absolute_time_t NextRefresh = make_timeout_time_ms(10000); // 10sec from now
+    mqttConnectTrigger();                                      // Connect to the MQTT server
+    absolute_time_t NextRefresh = make_timeout_time_ms(DefaultSettings->MqttServerTimeoutSec*1000); // 10sec from now
     while (InProgress_ConnectAndSubscribe)                     // Waiting for the MQTT connection to establish
     {
         if (get_absolute_time() > NextRefresh) // 10sec timeout
@@ -32,7 +30,7 @@ MqttClient::MqttClient(Module *Parent, Settings::MqttClientSettings *DefaultSett
             printf("MQTT connect timeout\n");
             break; ///< Stop waiting for the callback, processing will continue. Once a Connected callback arrives the result will be printed to stdout
         }
-        sleep_ms(500);
+         vTaskDelay(pdMS_TO_TICKS(500));
     }
 }
 
@@ -41,24 +39,26 @@ MqttClient::MqttClient(Module *Parent, Settings::MqttClientSettings *DefaultSett
  */
 void MqttClient::report(bool FriendlyFormat)
 {
-    Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
+    // Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
     strcat(LongMessage, "\"S\":\"");
     strcat(LongMessage, mqttIsConnectedText(FriendlyFormat));
     strcat(LongMessage, "\"}"); ///< closing the curly bracket at the end of the JSON
 }
 
+/*
 void MqttClient::run1min()
 {
-    Common::run1min();
+    //Common::run1min();
     mqttCheck();
 }
+*/
 
 /// @brief Call to check mqtt status and reconnect to server if needed.
 void MqttClient::mqttCheck()
 {
     if (!mqttIsConnected())
     {
-        mqttConnectTrigger(false);
+        mqttConnectTrigger();
     }
 }
 
@@ -70,7 +70,7 @@ void MqttClient::mqttDNSResolvedCallback(ip_addr_t *ServerIP)
 
 /// @brief Connect to MQTT server, if MqttServerDNS is specified an extra DNS lookup is also needed
 /// @param WaitForIP true: Wait for the DNS lookup result before attempting to connect (Cannot be called from a callback like run1sec/run5sec/run1min/report). false: Start DNS lookup in the background, and in the meantime attempt to connect using MqttServerAddress. The next time mqttConnectTrigger() is called the DNS lookup result should be already cached
-void MqttClient::mqttConnectTrigger(bool WaitForIP)
+void MqttClient::mqttConnectTrigger()
 {
     if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) == CYW43_LINK_UP) // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
     {
@@ -78,19 +78,9 @@ void MqttClient::mqttConnectTrigger(bool WaitForIP)
         ip4addr_aton(MqttServerIP, &MqttServerAddress); // If MqttServerDNS is defined and the DNS lookup is successful this will be overwritten
         if (MqttServerDNS[0] != '\0')                   // If an MQTT server DNS name is specified -> Look up the IP
         {
-            if (WaitForIP)
-            {
-                if (dnsLookup(MqttServerDNS, &MqttServerAddress)) // Resolve DNS name, can take up to one sec
-                {
-                    mqttConnect();
-                }
-            }
-            else
-            {
-                std::function<void(ip_addr_t *)> callbackFunctionPtr = std::bind(&MqttClient::mqttDNSResolvedCallback, this, std::placeholders::_1);
-                dnsLookup_Async(MqttServerDNS, &MqttServerAddress, callbackFunctionPtr); // Start resolving DNS name, if cached result is available it is instantly returned to MqttServerAddress
-            }
+           dnsLookup(MqttServerDNS, &MqttServerAddress);
         }
+        mqttConnect();
     }
     else
     {
@@ -141,11 +131,17 @@ char *MqttClient::mqttIsConnectedText(bool FriendlyFormat)
 {
     if (FriendlyFormat)
     {
-        return toText_connectedStatus(mqttIsConnected());
+        if (mqttIsConnected())
+            return (char *)"CONNECTED";
+        else
+            return (char *)"DISCONNECTED";
     }
     else
-    {
-        return toText(mqttIsConnected());
+    {     
+        if (mqttIsConnected())
+            return (char *)"1";
+        else
+            return (char *)"0";
     }
 }
 

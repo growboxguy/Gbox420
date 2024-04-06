@@ -32,6 +32,7 @@ target_include_directories(Gbox420_PicoW_FreeRTOS PRIVATE ${CMAKE_CURRENT_LIST_D
 target_link_libraries(Gbox420_PicoW_FreeRTOS
     pico_stdlib
     pico_cyw43_arch_lwip_sys_freertos
+    pico_lwip_mqtt
     FreeRTOS-Kernel
     FreeRTOS-Kernel-Heap4
     hardware_rtc

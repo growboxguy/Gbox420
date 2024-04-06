@@ -15,15 +15,41 @@ int main()
   GboxSettings = loadSettings(false);
   Debug = &GboxSettings->Debug;
   Metric = &GboxSettings->Metric;
+  rtcInit(); ///< Initialize Real Time Clock and set a pre-defined starting date
+  // HempyModule1 = new HempyModule(&GboxSettings->HempyModule1, GboxSettings);
   printf("Creating tasks...");
   xTaskCreate(watchdogTask, "Watchdog", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L3, NULL);                 ///< Watchdog for crash detection and automatic restart
   xTaskCreate(connectivityTask, "Connectivity checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL); ///< Connect-ReConnect to WiFi, Sync the Real Time Clock using NTP, Make sure MQTT server is connected
-  // xTaskCreate(hempyTask, "Hempy module", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);                ///< Update Hempy Module
-  xTaskCreate(heartbeatTask, "Heartbeat", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL); ///< Blink built-in LED
+  xTaskCreate(heartbeatTask, "Heartbeat", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL);               ///< Blink built-in LED
+  xTimerStart(xTimerCreate("1Sec", pdMS_TO_TICKS(1000), pdTRUE, (void *)1, run1Sec), 0);                         ///< Create 1sec software timer
+  xTimerStart(xTimerCreate("5Sec", pdMS_TO_TICKS(5000), pdTRUE, (void *)2, run5Sec), 0);                         ///< Create 5sec software timer
+  xTimerStart(xTimerCreate("1Min", pdMS_TO_TICKS(60000), pdTRUE, (void *)3, run1Min), 0);                        ///< Create 1min software timer
+  xTimerStart(xTimerCreate("30Min", pdMS_TO_TICKS(1800000), pdTRUE, (void *)4, run30Min), 0);                    ///< Create 30min software timer
   printf("done\n");
   vTaskStartScheduler();
-  cyw43_arch_deinit(); // Processing will not get here unless a task calls vTaskEndScheduler ()
+  cyw43_arch_deinit(); ///< Processing will not get here unless a task calls vTaskEndScheduler()
   return 0;
+}
+
+// Runs every 1 sec
+void run1Sec(TimerHandle_t xTimer)
+{
+  // HempyModule1->run1sec();
+}
+///< Runs every 5 sec
+void run5Sec(TimerHandle_t xTimer)
+{
+  // HempyModule1->run5sec();
+}
+///< Runs every 1 min
+void run1Min(TimerHandle_t xTimer)
+{
+  // HempyModule1->run1min();
+}
+///< Runs every 30 min
+void run30Min(TimerHandle_t xTimer)
+{
+  // HempyModule1->run30min();
 }
 
 // Monitor program execution, If the program fails to reset the timer periodically, it indicates a fault, triggering a system reset
@@ -53,35 +79,34 @@ void heartbeatTask(void *pvParameters)
 void connectivityTask(void *pvParameters)
 {
   int WifiInitResult = cyw43_arch_init();
-  if (WifiInitResult != 0)
+  while (WifiInitResult != 0)
   {
     printf("WiFi init failed: %d\n", WifiInitResult);
+    vTaskDelay(pdMS_TO_TICKS(WIFI_TIMER * 1000));
+    WifiInitResult = cyw43_arch_init();
   }
-  else
+  NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY); // NTP: Creates a new UDP Protocol Control Block (PCB) with both IPv4 and IPv6 support
+  udp_recv(NtpPcb, ntpReceived, NULL);       // NTP: Register the callback function to handle incoming UDP packets received on the UDP PCB
+  connectWiFi();
+  MqttClientDefault = new MqttClient(&GboxSettings->HempyMqttServer1, mqttDataReceived);
+  while (1)
   {
-    rtcInit();
-    NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY); // Create Protocol Control Block for NTP
-    udp_recv(NtpPcb, ntpReceived, NULL);
-    connectWiFi();
-    while (1)
+    vTaskDelay(pdMS_TO_TICKS(WIFI_TIMER * 1000));
+    rtcGetCurrentTime(true);
+    printf("WiFi status: %s\n", toText_WiFiStatus(cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA))); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
+    if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) != CYW43_LINK_UP)
     {
-      vTaskDelay(pdMS_TO_TICKS(WIFI_TIMER * 1000)); // Delay
-      rtcGetCurrentTime(true);
-      printf("WiFi status: %s\n", toText_WiFiStatus(cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA))); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
-      if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) != CYW43_LINK_UP)
+      connectWiFi();
+    }
+    else // WiFi is up and has an IP
+    {
+      if (!NtpSynced) // if NTP is not synced
       {
-        connectWiFi();
+        ntpRequest();
       }
-      else // WiFi is up and has an IP
+      else
       {
-        if (!ntpSynced) // if NTP is not synced
-        {
-          ntpRequest();
-        }
-        else
-        {
-          ntpSynced++; // ntpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec
-        }
+        NtpSynced++; // NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec
       }
     }
   }
@@ -105,6 +130,12 @@ bool connectWiFi()
     ntpRequest();
     return true;
   }
+}
+
+///< MQTT callback when a data arrives on a Subscribed topic
+void mqttDataReceived(char *TopicReceived, char *DataReceived)
+{
+  printf("MQTT topic: %s\nMQTT data: %s\n", TopicReceived, DataReceived);
 }
 
 ///< Real Time Clock (RTC) section
@@ -147,7 +178,7 @@ char *rtcGetCurrentTime(bool PrintToSerial)
 // Make an NTP request
 void ntpRequest()
 {
-  ntpSynced = 0;
+  NtpSynced = 0;
   if (GboxSettings->NtpServer1.NtpServerIP[0] != '\0')
   {
     ip4addr_aton(GboxSettings->NtpServer1.NtpServerIP, &NtpServerIP); // If NtpServerDNS is defined and the DNS lookup is successful this will be overwritten
@@ -189,11 +220,11 @@ void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t
         .hour = (int8_t)(utc->tm_hour + GboxSettings->NtpServer1.TimeZoneDifference),
         .min = (int8_t)utc->tm_min,
         .sec = (int8_t)utc->tm_sec};
-    datetime_to_str(CurrentTimeText, sizeof(CurrentTimeText), &timeTemp);    
+    datetime_to_str(CurrentTimeText, sizeof(CurrentTimeText), &timeTemp);
     if (rtc_set_datetime(&timeTemp))
     {
       printf("RTC synced: %s\n", CurrentTimeText);
-      ntpSynced = 1;
+      NtpSynced = 1;
     }
     else
       printf("RTC update failed\n");

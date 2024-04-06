@@ -118,8 +118,6 @@ static bool __attribute__((unused)) dnsLookupSuccess = false;    ///< true: DNS 
 extern char *rtcGetCurrentTime(bool PrintToSerial);                                                                ///< Query current time from local RTC
 extern bool dnsLookup(char *DnsName, ip_addr_t *ResultIP);                                                      ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
 extern void dnsLookupResult(const char *Hostname, const ip_addr_t *ResultIP, void *Arg);                        ///< Callback with the lookup result
-bool dnsLookup_Async(char *DnsName, ip_addr_t *ResultIP, std::function<void(ip_addr_t *)> DataCallback); ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
-void dnsLookupResult_Async(const char *Hostname, const ip_addr_t *ResultIP, void *DataCallback);         ///< Callback with the lookup result
 
 float convertBetweenTempUnits(float);
 float convertBetweenPressureUnits(float);

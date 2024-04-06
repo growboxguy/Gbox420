@@ -10,45 +10,6 @@ void getFreeMemory()
 }
 */
 
-
-/// @brief Lookup a DNS name in the background, result will be copied to ResultIP
-/// @param DnsName Containing the name to lookup
-/// @param ResultIP ip_addr_t object where the lookup result will be stored
-/// @param DataCallback Callback function for when DNS result is ready
-/// @return true: IP already available, false: Lookup started, no cached IP found
-// Implementation of the wrapper function
-bool dnsLookup_Async(char *DnsName, ip_addr_t *ResultIP, std::function<void(ip_addr_t *)> DataCallback)
-{
-  dnsLookupSuccess = false;
-  dnsLookupInProgress = true;
-  printf("   Looking up IP for %s\n", DnsName);
-  DnsCallbackData *callbackData = new DnsCallbackData{DataCallback};                     // Create an instance of the callback data structure
-  err_t err = dns_gethostbyname(DnsName, ResultIP, dnsLookupResult_Async, callbackData); // Initiate the DNS lookup, passing the callback function and its associated data
-  if (err == ERR_OK)
-  {                      // ERR_OK: DNS name found in cache and loaded into ResultIP
-    delete callbackData; // Clean up callback data if the lookup is already completed
-    return true;
-  }
-  return false;
-}
-
-void dnsLookupResult_Async(const char *Hostname, const ip_addr_t *FoundIP, void *DataCallback) // DNS lookup callback
-{
-  DnsCallbackData *DnsCallback = static_cast<DnsCallbackData *>(DataCallback);
-  if (FoundIP)
-  {
-
-    printf("%s address: %s\n", Hostname, ipaddr_ntoa(FoundIP));
-    ip_addr_t ResultIP;
-    ip_addr_copy(ResultIP, *FoundIP);
-    DnsCallback->callback(&ResultIP);
-  }
-  else
-  {
-    printf("%s lookup failed\n", Hostname);
-  }
-}
-
 ///< Conversions
 
 float convertBetweenTempUnits(float Value)
