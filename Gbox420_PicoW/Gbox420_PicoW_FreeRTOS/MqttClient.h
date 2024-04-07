@@ -15,11 +15,10 @@
 #include <functional>
 #include "FreeRTOS.h"
 #include "task.h"
-//#include "Helpers.h"
+#include "Components/Helpers.h"
 //#include "420Common.h"
 //#include "420Module.h"
-
-#define MaxWordLength 128                                      ///< Default char * buffer length for storing a word + null terminator. Memory intense!
+                                 
 typedef std::function<void(char *, char *)> CallbackType_mqtt; // Defines how the DataCallback function in mqttConnectTrigger should look like
 
 extern bool dnsLookup(char *DnsName, ip_addr_t *ResultIP);
@@ -49,6 +48,8 @@ public:
 private:    
     bool InProgress_ConnectAndSubscribe = false;
     bool InProgress_Publish = false;
+    char ReceivedTopicShort[MaxShotTextLength]; ///< Last received MQTT messages's topic, excludes the subscribed topic name (example: TestSubtopic)
+   
 
 protected:
     mqtt_client_t *Client;
@@ -58,7 +59,7 @@ protected:
     ip_addr_t MqttServerAddress;
     uint16_t *MqttServerPort;
     uint8_t *QoS = NULL;
-    char LastReceivedTopic[MaxShotTextLength];
+    char ReceivedTopicLong[MaxShotTextLength];  ///< Last received MQTT messages's topic, includes the full subscribed topic name (example: Gbox420CMD/Hempy/TestSubtopic)
     CallbackType_mqtt DataCallback;                                                    ///< Pointer to the callback function (CallbackType_mqtt)
     static void mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *Arg); ///< Called When the IP address of the MQTT server is found
     static void mqttPublish_Callback(void *Arg, err_t Result);                         ///< Callback with the publish result

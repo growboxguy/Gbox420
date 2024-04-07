@@ -10,19 +10,19 @@ Initializing Watchdog...done
 Initializing WiFi...Connected to GboxNet - 192.168.1.34
    Looking up IP for pool.ntp.org...Found address: 92.249.148.253
    Looking up IP for mqttserver.gbox420.net...Found address: 192.168.1.100
-RTC synced: Saturday 6 April 15:12:37 2024
+RTC synced: Sunday 7 April 2:26:16 2024
 Connecting to MQTT server...MQTT Connected
 Subscribed to Gbox420CMD/Hempy/#
-Saturday 6 April 15:12:54 2024
+Sunday 7 April 2:26:32 2024
 WiFi status: UP
-Saturday 6 April 15:13:09 2024
+MQTT status: CONNECTED
+Sunday 7 April 2:26:47 2024
 WiFi status: UP
-Saturday 6 April 15:13:24 2024
-WiFi status: UP
-Saturday 6 April 15:13:39 2024
-WiFi status: UP
+MQTT status: CONNECTED
+TopicMQTT: Test - Gbox420CMD/Hempy/Test
+DataMQTT[9]: blablabla
 MQTT topic: Test
-MQTT data: fe
-Saturday 6 April 15:13:54 2024
+MQTT data: blablabla
+Sunday 7 April 2:27:02 2024
 WiFi status: UP
-
+MQTT status: CONNECTED

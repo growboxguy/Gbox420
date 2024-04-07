@@ -108,6 +108,12 @@ void connectivityTask(void *pvParameters)
       {
         NtpSynced++; // NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec
       }
+      
+      printf("MQTT status: %s\n", MqttClientDefault->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
+      if (!MqttClientDefault->mqttIsConnected())
+      {
+        MqttClientDefault->mqttConnectTrigger();
+      }
     }
   }
 }
