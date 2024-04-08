@@ -49,6 +49,11 @@
 #define LWIP_TCP 1
 #define LWIP_UDP 1
 #define LWIP_DNS 1
+/*
+#define LWIP_HTTPD_SSI   ///< HTTP Server - Enable Server Side Include support
+#define LWIP_HTTPD_CGI    ///< HTTP Server - Enable Common Gateway Interface support
+#define LWIP_HTTPD_DYNAMIC_HEADERS  ///< HTTP Server - Insert the headers automatically based on the extension of the file being served
+*/
 #define LWIP_TCP_KEEPALIVE 1
 #define LWIP_NETIF_TX_SINGLE_PBUF 1
 #define DHCP_DOES_ARP_CHECK 0

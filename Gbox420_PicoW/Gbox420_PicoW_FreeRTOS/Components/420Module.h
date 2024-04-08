@@ -30,6 +30,7 @@
 
 class Sound;
 class MqttClient;
+extern MqttClient *MqttClientDefault;
 
 class Module : virtual public Common
 {
@@ -51,11 +52,10 @@ public:
   void commandEventTrigger(char *Command, char *Data);                                                                                ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
   void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false); ///< Print report to stdout or to a JSON for MQTT reporting. Report is loaded into LongMessage buffer
   void mqttDataReceived(char *Topic, char *Data);                                                                                     ///< MQTT data received from the Subscribed topic
-  void mqttPublish(MqttClient Client, char (*JSONData)[MaxLongTextLength]);                                                           ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
+  void mqttPublish(MqttClient *Client, char *JSONData);                                                                               ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
 
-  Sound *DefaultSound = NULL;
+  Sound *DefaultSound = nullptr;
   Sound *getSoundObject();
-  MqttClient *DefaultMqttClient = NULL;
   uint16_t *SerialReportFrequency;   ///< Frequency of Serial reports in seconds
   uint16_t SerialTriggerCounter = 0; ///< Helps with timing when to send the Serial report out
   bool *SerialReportDate;            ///< Enable/disable reporting the current time to the Serial output

@@ -34,7 +34,7 @@ void ntpRequest();                                                              
 static void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port); ///< NTP data received
 void mqttDataReceived(char *TopicReceived, char *DataReceived);                                                ///< Callback when MQTT data is received on a subscribed topic
 Settings *GboxSettings;                                                                                        ///< This object will store the settings loaded from the Settings.h. //TODO: Find a solution to Pico W not having EEPROM
-MqttClient *MqttClientDefault = NULL;                                                                          ///< Pointer to MQTT handler
+MqttClient *MqttClientDefault = nullptr;                                                                          ///< Pointer to MQTT handler
 HempyModule *HempyModule1;                                                                                     ///< Represents a Hempy module with all of its components
 ip_addr_t NtpServerIP;                                                                                         ///< Store the resolved IP address of the NTP server
 struct udp_pcb *NtpPcb;                                                                                        ///< UDP control block for NTP

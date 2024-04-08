@@ -54,11 +54,11 @@ private:
 protected:
     mqtt_client_t *Client;
     mqtt_connect_client_info_t *ClientInfo;
-    char *MqttServerIP = NULL;
-    char *MqttServerDNS = NULL;
+    char *MqttServerIP = nullptr;
+    char *MqttServerDNS = nullptr;
     ip_addr_t MqttServerAddress;
     uint16_t *MqttServerPort;
-    uint8_t *QoS = NULL;
+    uint8_t *QoS = nullptr;
     char ReceivedTopicLong[MaxShotTextLength];  ///< Last received MQTT messages's topic, includes the full subscribed topic name (example: Gbox420CMD/Hempy/TestSubtopic)
     CallbackType_mqtt DataCallback;                                                    ///< Pointer to the callback function (CallbackType_mqtt)
     static void mqttIpFound(const char *Hostname, const ip_addr_t *Ipaddr, void *Arg); ///< Called When the IP address of the MQTT server is found

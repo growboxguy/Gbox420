@@ -16,11 +16,12 @@ int main()
   Debug = &GboxSettings->Debug;
   Metric = &GboxSettings->Metric;
   rtcInit(); ///< Initialize Real Time Clock and set a pre-defined starting date
-  // HempyModule1 = new HempyModule(&GboxSettings->HempyModule1, GboxSettings);
+  HempyModule1 = new HempyModule(&GboxSettings->HempyModule1, GboxSettings);
   printf("Creating tasks...");
   xTaskCreate(watchdogTask, "Watchdog", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L3, NULL);                 ///< Watchdog for crash detection and automatic restart
   xTaskCreate(connectivityTask, "Connectivity checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL); ///< Connect-ReConnect to WiFi, Sync the Real Time Clock using NTP, Make sure MQTT server is connected
   xTaskCreate(heartbeatTask, "Heartbeat", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL);               ///< Blink built-in LED
+  xTaskCreate(heartbeatTask, "HempyModule", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);               ///< Blink built-in LED
   xTimerStart(xTimerCreate("1Sec", pdMS_TO_TICKS(1000), pdTRUE, (void *)1, run1Sec), 0);                         ///< Create 1sec software timer
   xTimerStart(xTimerCreate("5Sec", pdMS_TO_TICKS(5000), pdTRUE, (void *)2, run5Sec), 0);                         ///< Create 5sec software timer
   xTimerStart(xTimerCreate("1Min", pdMS_TO_TICKS(60000), pdTRUE, (void *)3, run1Min), 0);                        ///< Create 1min software timer
@@ -34,22 +35,22 @@ int main()
 // Runs every 1 sec
 void run1Sec(TimerHandle_t xTimer)
 {
-  // HempyModule1->run1sec();
+   HempyModule1->run1sec();
 }
 ///< Runs every 5 sec
 void run5Sec(TimerHandle_t xTimer)
 {
-  // HempyModule1->run5sec();
+   HempyModule1->run5sec();
 }
 ///< Runs every 1 min
 void run1Min(TimerHandle_t xTimer)
 {
-  // HempyModule1->run1min();
+   HempyModule1->run1min();
 }
 ///< Runs every 30 min
 void run30Min(TimerHandle_t xTimer)
 {
-  // HempyModule1->run30min();
+   HempyModule1->run30min();
 }
 
 // Monitor program execution, If the program fails to reset the timer periodically, it indicates a fault, triggering a system reset
@@ -141,7 +142,8 @@ bool connectWiFi()
 ///< MQTT callback when a data arrives on a Subscribed topic
 void mqttDataReceived(char *TopicReceived, char *DataReceived)
 {
-  printf("MQTT topic: %s\nMQTT data: %s\n", TopicReceived, DataReceived);
+  //printf("MQTT topic: %s\nMQTT data: %s\n", TopicReceived, DataReceived);
+  HempyModule1->mqttDataReceived(TopicReceived,DataReceived);
 }
 
 ///< Real Time Clock (RTC) section

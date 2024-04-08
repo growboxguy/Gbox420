@@ -221,7 +221,7 @@ void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint1
             size_t ReceivedTopicLength = strlen(((MqttClient *)Arg)->ReceivedTopicLong); // Get length of the received topic
             if (SubTopicLength < ReceivedTopicLength)
             {
-                memcpy(((MqttClient *)Arg)->ReceivedTopicShort, ((MqttClient *)Arg)->ReceivedTopicLong + SubTopicLength, ReceivedTopicLength - SubTopicLength + 1); // Chop the pre-known part of the Topic. Example: Subscribed topic: Gbox420CMD/#  Received: Gbox420CMD/Light1_ON --> Light1_ON
+                strncpy(((MqttClient *)Arg)->ReceivedTopicShort, ((MqttClient *)Arg)->ReceivedTopicLong + SubTopicLength, ReceivedTopicLength - SubTopicLength + 1); // Chop the pre-known part of the Topic. Example: Subscribed topic: Gbox420CMD/#  Received: Gbox420CMD/Light1_ON --> Light1_ON
             }
             char DataReceived[MaxLongTextLength] = {}; // Initialize null terminated Data storage
             memcpy(DataReceived, Data, DataLength);    // Copy data to null terminated buffer

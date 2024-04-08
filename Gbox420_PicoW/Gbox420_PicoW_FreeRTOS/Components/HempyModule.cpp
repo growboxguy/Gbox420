@@ -34,7 +34,6 @@ HempyModule::HempyModule(Settings::HempyModuleSettings *DefaultSettings, Setting
   // addToWebsiteQueue_Refresh(this); //< Attach to the ESP-link website refresh event: Calls websiteEvent_Refresh() when an ESP-link webpage is refreshing
   addToCommandQueue(this);
   addToLog("HempyModule ready", 0);
-  runAll();
 }
 
 /**
