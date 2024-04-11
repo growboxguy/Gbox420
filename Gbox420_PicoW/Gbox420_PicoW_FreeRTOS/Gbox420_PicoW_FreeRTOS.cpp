@@ -21,7 +21,7 @@ int main()
   xTaskCreate(watchdogTask, "Watchdog", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L3, NULL);                 ///< Watchdog for crash detection and automatic restart
   xTaskCreate(connectivityTask, "Connectivity checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL); ///< Connect-ReConnect to WiFi, Sync the Real Time Clock using NTP, Make sure MQTT server is connected
   xTaskCreate(heartbeatTask, "Heartbeat", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL);               ///< Blink built-in LED
-  xTaskCreate(heartbeatTask, "HempyModule", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);               ///< Blink built-in LED
+  xTaskCreate(heartbeatTask, "HempyModule", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);             ///< Blink built-in LED
   xTimerStart(xTimerCreate("1Sec", pdMS_TO_TICKS(1000), pdTRUE, (void *)1, run1Sec), 0);                         ///< Create 1sec software timer
   xTimerStart(xTimerCreate("5Sec", pdMS_TO_TICKS(5000), pdTRUE, (void *)2, run5Sec), 0);                         ///< Create 5sec software timer
   xTimerStart(xTimerCreate("1Min", pdMS_TO_TICKS(60000), pdTRUE, (void *)3, run1Min), 0);                        ///< Create 1min software timer
@@ -35,22 +35,22 @@ int main()
 // Runs every 1 sec
 void run1Sec(TimerHandle_t xTimer)
 {
-   HempyModule1->run1sec();
+  HempyModule1->run1sec();
 }
 ///< Runs every 5 sec
 void run5Sec(TimerHandle_t xTimer)
 {
-   HempyModule1->run5sec();
+  HempyModule1->run5sec();
 }
 ///< Runs every 1 min
 void run1Min(TimerHandle_t xTimer)
 {
-   HempyModule1->run1min();
+  HempyModule1->run1min();
 }
 ///< Runs every 30 min
 void run30Min(TimerHandle_t xTimer)
 {
-   HempyModule1->run30min();
+  HempyModule1->run30min();
 }
 
 // Monitor program execution, If the program fails to reset the timer periodically, it indicates a fault, triggering a system reset
@@ -79,6 +79,7 @@ void heartbeatTask(void *pvParameters)
 
 void connectivityTask(void *pvParameters)
 {
+  printf("Initializing WiFi\n");
   int WifiInitResult = cyw43_arch_init();
   while (WifiInitResult != 0)
   {
@@ -109,7 +110,7 @@ void connectivityTask(void *pvParameters)
       {
         NtpSynced++; // NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec
       }
-      
+
       printf("MQTT status: %s\n", MqttClientDefault->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
       if (!MqttClientDefault->mqttIsConnected())
       {
@@ -122,7 +123,6 @@ void connectivityTask(void *pvParameters)
 // Initialize WiFi and Connect to local network
 bool connectWiFi()
 {
-  printf("Initializing WiFi...");
   cyw43_arch_enable_sta_mode();                                                                                                     // Enables Wi-Fi STA (Station) mode
   int WifiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMER * 1000); // Try connecting to WiFi. If the timeout elapses, the attempt may still succeed afterward.
   if (WifiConnectResult != 0)
@@ -142,8 +142,8 @@ bool connectWiFi()
 ///< MQTT callback when a data arrives on a Subscribed topic
 void mqttDataReceived(char *TopicReceived, char *DataReceived)
 {
-  //printf("MQTT topic: %s\nMQTT data: %s\n", TopicReceived, DataReceived);
-  HempyModule1->mqttDataReceived(TopicReceived,DataReceived);
+  // printf("MQTT topic: %s\nMQTT data: %s\n", TopicReceived, DataReceived);
+  HempyModule1->mqttDataReceived(TopicReceived, DataReceived);
 }
 
 ///< Real Time Clock (RTC) section
@@ -255,7 +255,7 @@ bool dnsLookup(char *DnsName, ip_addr_t *ResultIP)
 {
   dnsLookupSuccess = false;
   dnsLookupInProgress = true;
-  printf("   Looking up IP for %s...", DnsName);
+  printf("Looking up IP for %s\n", DnsName);
   err_t err = dns_gethostbyname(DnsName, ResultIP, dnsLookupResult, ResultIP);
   if (err == ERR_OK) // DNS name found in cache and loaded into ResultIP
   {
@@ -283,13 +283,13 @@ void dnsLookupResult(const char *Hostname, const ip_addr_t *FoundIP, void *Resul
 {
   if (FoundIP)
   {
-    printf("Found address: %s\n", ipaddr_ntoa(FoundIP));
+    printf("Found address: %s for %s\n", ipaddr_ntoa(FoundIP), Hostname);
     ip_addr_copy(*(ip_addr_t *)ResultIP, *FoundIP);
     dnsLookupSuccess = true;
   }
   else
   {
-    printf("DNS lookup failed\n");
+    printf("DNS lookup failed for %s\n", Hostname);
   }
   dnsLookupInProgress = false;
 }

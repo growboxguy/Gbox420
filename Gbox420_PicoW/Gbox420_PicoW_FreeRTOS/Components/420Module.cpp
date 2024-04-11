@@ -26,7 +26,7 @@ void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuf
 }
 
 /**
- * @brief Notify subscribed components of a received MQTT/Website command
+ * @brief Notify subscribed components of a received MQTT command
  */
 void Module::commandEventTrigger(char *Command, char *Data)
 {
@@ -37,8 +37,6 @@ void Module::commandEventTrigger(char *Command, char *Data)
     if (NameMatchFound)
       break;
   }
-  // if (!NameMatchFound) ///< None of the subscribed component Names matched the command. Try processing it as a Module settings command.
-  //  settingsEvent_Command(Command, Data); // TODO: The module should subscribe to the commandEvent callback the same way as any other component
 }
 
 /**
@@ -204,6 +202,11 @@ void Module::setDebug(bool DebugEnabled)
     addToLog("Debug OFF");
   }
   getSoundObject()->playOnOffSound(*Debug);
+}
+
+void Module::toggleDebug()
+{
+  setDebug(!*Debug);
 }
 
 void Module::setMetric(bool MetricEnabled)

@@ -91,7 +91,7 @@
 
 /* Software timer related definitions. */
 #define configUSE_TIMERS                        1
-#define configTIMER_TASK_PRIORITY               ( configMAX_PRIORITIES - 2 )
+#define configTIMER_TASK_PRIORITY               ( tskIDLE_PRIORITY + 1UL )
 #define configTIMER_QUEUE_LENGTH                10
 #define configTIMER_TASK_STACK_DEPTH            1024
 

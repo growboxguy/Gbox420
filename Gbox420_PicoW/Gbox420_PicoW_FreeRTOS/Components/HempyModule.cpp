@@ -77,6 +77,16 @@ bool HempyModule::commandEvent(__attribute__((unused)) char *Command, __attribut
   }
   else
   {
+    if (strcmp(ShortMessage, "D") == 0)
+    {
+      toggleDebug();
+    }
+    /*
+    else if (strcmp(ShortMessage, "M") == 0)
+    {
+      playEE();
+    }
+    */
     return true; // Match found
   }
 }

@@ -81,8 +81,9 @@ public:
 
 private:
 protected:
-  void setDebug(bool State);
-  void setMetric(bool MetricEnabled);
+  void setDebug(bool State); ///< Turn debug messages printed to stdout ON or OFF
+  void toggleDebug();  ///< Invert the state of printing debug messages
+  void setMetric(bool MetricEnabled); ///< Metric or Imperial mode
   void setSerialReportingFrequency(uint16_t Frequency); ///< Set the of Frequency of Serial reports in seconds (5 sec increments, 5 sec minimum)
   void setSerialReportDate(bool State);                 ///< Enable/disable reporting the current time to the Serial output
   void setSerialReportMemory(bool State);               ///< Enable/disable reporting the remaining free memory to the Serial output
