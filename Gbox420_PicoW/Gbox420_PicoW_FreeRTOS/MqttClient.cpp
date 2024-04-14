@@ -25,7 +25,7 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, CallbackTy
     absolute_time_t NextRefresh = make_timeout_time_ms(DefaultSettings->MqttServerTimeoutSec * 1000); // 10sec from now
     while (InProgress_ConnectAndSubscribe)                                                            // Waiting for the MQTT connection to establish
     {
-        if (get_absolute_time() > NextRefresh) // 10sec timeout
+        if (absolute_time_diff_us(get_absolute_time(), NextRefresh) > 0) // 10sec timeout
         {
             printf("MQTT connect timeout\n");
             break; ///< Stop waiting for the callback, processing will continue. Once a Connected callback arrives the result will be printed to stdout
@@ -116,12 +116,17 @@ void MqttClient::mqttConnect_Callback(mqtt_client_t *Client, void *Arg, mqtt_con
 
 void MqttClient::mqttDisconnect()
 {
+    cyw43_arch_lwip_begin();
     mqtt_disconnect(Client);
+    cyw43_arch_lwip_end();
 }
 
 bool MqttClient::mqttIsConnected()
 {
-    if (mqtt_client_is_connected(Client) == 1)
+    cyw43_arch_lwip_begin();
+    bool connectionStatus = mqtt_client_is_connected(Client);
+    cyw43_arch_lwip_end();
+    if (connectionStatus)
         return true;
     else
         return false;
@@ -148,8 +153,10 @@ char *MqttClient::mqttIsConnectedText(bool FriendlyFormat)
 void MqttClient::mqttSubscribe()
 {
     InProgress_ConnectAndSubscribe = true;
+    cyw43_arch_lwip_begin();
     mqtt_set_inpub_callback(Client, mqttIncomingTopic_Callback, mqttIncomingData_Callback, this); // Set callback functions
     err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttSubscribe_Callback, this, true);       // Initiate subscription
+    cyw43_arch_lwip_end();
     if (err != ERR_OK)
     {
         printf("Error subscribing to %s - Error: %d\n", SubTopic, err);
@@ -172,7 +179,9 @@ void MqttClient::mqttSubscribe_Callback(void *Arg, err_t Result)
 void MqttClient::mqttUnsubscribe()
 {
     printf("Unsubscribing from %s...", SubTopic);
+    cyw43_arch_lwip_begin();
     err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttUnsubscribe_Callback, this, false);
+    cyw43_arch_lwip_end();
     if (err != ERR_OK)
     {
         printf("error: %d\n", err);
@@ -212,7 +221,7 @@ void MqttClient::mqttIncomingTopic_Callback(void *Arg, const char *Topic, uint32
 /// @param Flags 0 - More data packages to follow, 1 - Last data package
 void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint16_t DataLength, uint8_t Flags)
 {
-    //if (Flags == 1)  //// Last fragment of payload received, one fragment can contain up to 103 characters of Data
+    // if (Flags == 1)  //// Last fragment of payload received, one fragment can contain up to 103 characters of Data
     {
         if (DataLength < MaxLongTextLength) // The whole payload fits receive buffer
         {
@@ -242,7 +251,9 @@ void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint1
 
 void MqttClient::mqttPublish(char *PubTopic, char *PubData)
 {
+    cyw43_arch_lwip_begin();
     err_t err = mqtt_publish(Client, PubTopic, PubData, strlen(PubData), ClientInfo->will_qos, *PublishRetain, mqttPublish_Callback, PubTopic);
+    cyw43_arch_lwip_end();
     if (err != ERR_OK)
     {
         printf("  MQTT publish error: %d\n", err); // Failed to send out publish request

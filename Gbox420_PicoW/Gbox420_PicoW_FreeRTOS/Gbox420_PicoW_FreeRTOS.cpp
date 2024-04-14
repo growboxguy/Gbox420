@@ -123,8 +123,10 @@ void connectivityTask(void *pvParameters)
 // Initialize WiFi and Connect to local network
 bool connectWiFi()
 {
+  cyw43_arch_lwip_begin();    
   cyw43_arch_enable_sta_mode();                                                                                                     // Enables Wi-Fi STA (Station) mode
   int WifiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMER * 1000); // Try connecting to WiFi. If the timeout elapses, the attempt may still succeed afterward.
+  cyw43_arch_lwip_end();
   if (WifiConnectResult != 0)
   {
     printf("Connecting to %s failed: %d\n", WIFI_SSID, WifiConnectResult);
@@ -256,7 +258,9 @@ bool dnsLookup(char *DnsName, ip_addr_t *ResultIP)
   dnsLookupSuccess = false;
   dnsLookupInProgress = true;
   printf("Looking up IP for %s\n", DnsName);
+  cyw43_arch_lwip_begin();
   err_t err = dns_gethostbyname(DnsName, ResultIP, dnsLookupResult, ResultIP);
+  cyw43_arch_lwip_end();
   if (err == ERR_OK) // DNS name found in cache and loaded into ResultIP
   {
     printf("Found cached address: %s\n", ipaddr_ntoa(ResultIP));
@@ -265,7 +269,7 @@ bool dnsLookup(char *DnsName, ip_addr_t *ResultIP)
   absolute_time_t Timeout = make_timeout_time_ms(15000); // 15sec from now
   while (dnsLookupInProgress)                            // Waiting for the DNS lookup to finish and dnsLookupResult callback to trigger
   {
-    if (get_absolute_time() > Timeout)
+    if (absolute_time_diff_us(get_absolute_time(), Timeout) > 0)
     {
       printf("DNS lookup timeout\n");
       return false;
