@@ -25,7 +25,7 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, CallbackTy
     absolute_time_t NextRefresh = make_timeout_time_ms(DefaultSettings->MqttServerTimeoutSec * 1000); // 10sec from now
     while (InProgress_ConnectAndSubscribe)                                                            // Waiting for the MQTT connection to establish
     {
-        if (absolute_time_diff_us(get_absolute_time(), NextRefresh) > 0) // 10sec timeout
+        if (absolute_time_diff_us(NextRefresh,get_absolute_time()) > 0) // 10sec timeout
         {
             printf("MQTT connect timeout\n");
             break; ///< Stop waiting for the callback, processing will continue. Once a Connected callback arrives the result will be printed to stdout
@@ -90,13 +90,13 @@ void MqttClient::mqttConnectTrigger()
 
 void MqttClient::mqttConnect()
 {
-    printf("Connecting to MQTT server...");
+    printf("Connecting to MQTT server\n");
     cyw43_arch_lwip_begin();
     err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, this, ClientInfo);
     cyw43_arch_lwip_end();
     if (err != ERR_OK)
     {
-        printf("error: %d\n", err);
+        printf("MQTT error: %d\n", err);
     }
 }
 

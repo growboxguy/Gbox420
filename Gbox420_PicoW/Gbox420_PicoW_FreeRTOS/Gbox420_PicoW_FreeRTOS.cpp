@@ -16,20 +16,30 @@ int main()
   Debug = &GboxSettings->Debug;
   Metric = &GboxSettings->Metric;
   rtcInit(); ///< Initialize Real Time Clock and set a pre-defined starting date
-  HempyModule1 = new HempyModule(&GboxSettings->HempyModule1, GboxSettings);
   printf("Creating tasks...");
   xTaskCreate(watchdogTask, "Watchdog", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L3, NULL);                 ///< Watchdog for crash detection and automatic restart
   xTaskCreate(connectivityTask, "Connectivity checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL); ///< Connect-ReConnect to WiFi, Sync the Real Time Clock using NTP, Make sure MQTT server is connected
-  xTaskCreate(heartbeatTask, "Heartbeat", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL);               ///< Blink built-in LED
-  xTaskCreate(heartbeatTask, "HempyModule", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);             ///< Blink built-in LED
-  xTimerStart(xTimerCreate("1Sec", pdMS_TO_TICKS(1000), pdTRUE, (void *)1, run1Sec), 0);                         ///< Create 1sec software timer
-  xTimerStart(xTimerCreate("5Sec", pdMS_TO_TICKS(5000), pdTRUE, (void *)2, run5Sec), 0);                         ///< Create 5sec software timer
-  xTimerStart(xTimerCreate("1Min", pdMS_TO_TICKS(60000), pdTRUE, (void *)3, run1Min), 0);                        ///< Create 1min software timer
-  xTimerStart(xTimerCreate("30Min", pdMS_TO_TICKS(1800000), pdTRUE, (void *)4, run30Min), 0);                    ///< Create 30min software timer
+                                                                                                                 // xTaskCreate(hempyTask, "Hempy checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);               ///< Hempy module
   printf("done\n");
   vTaskStartScheduler();
   cyw43_arch_deinit(); ///< Processing will not get here unless a task calls vTaskEndScheduler()
   return 0;
+}
+
+// Hempy module
+void hempyTask(void *pvParameters)
+{
+  HempyModule1 = new HempyModule(&GboxSettings->HempyModule1, GboxSettings);
+  xTimerStart(xTimerCreate("1Sec", pdMS_TO_TICKS(1000), pdTRUE, (void *)1, run1Sec), 1);      ///< Create 1sec software timer
+  xTimerStart(xTimerCreate("5Sec", pdMS_TO_TICKS(5000), pdTRUE, (void *)2, run5Sec), 1);      ///< Create 5sec software timer
+  xTimerStart(xTimerCreate("1Min", pdMS_TO_TICKS(60000), pdTRUE, (void *)3, run1Min), 1);     ///< Create 1min software timer
+  xTimerStart(xTimerCreate("30Min", pdMS_TO_TICKS(1800000), pdTRUE, (void *)4, run30Min), 1); ///< Create 30min software timer
+
+  // Task should not exit
+  while (1)
+  {
+    vTaskDelay(portMAX_DELAY);
+  }
 }
 
 // Runs every 1 sec
@@ -66,17 +76,6 @@ void watchdogTask(void *pvParameters)
   }
 }
 
-///< Blink built-in LED on Pico W - Requires WiFi initialization cyw43_arch_init() , since the LED is connected to the WiFi controller
-void heartbeatTask(void *pvParameters)
-{
-  while (1)
-  {
-    vTaskDelay(pdMS_TO_TICKS(1000));
-    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus);
-    ledStatus = !ledStatus;
-  }
-}
-
 void connectivityTask(void *pvParameters)
 {
   printf("Initializing WiFi\n");
@@ -84,50 +83,57 @@ void connectivityTask(void *pvParameters)
   while (WifiInitResult != 0)
   {
     printf("WiFi init failed: %d\n", WifiInitResult);
-    vTaskDelay(pdMS_TO_TICKS(WIFI_TIMER * 1000));
+    vTaskDelay(pdMS_TO_TICKS(WIFI_TIMEOUT * 1000));
     WifiInitResult = cyw43_arch_init();
   }
   NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY); // NTP: Creates a new UDP Protocol Control Block (PCB) with both IPv4 and IPv6 support
   udp_recv(NtpPcb, ntpReceived, NULL);       // NTP: Register the callback function to handle incoming UDP packets received on the UDP PCB
   connectWiFi();
   MqttClientDefault = new MqttClient(&GboxSettings->HempyMqttServer1, mqttDataReceived);
+  uint8_t ConnectivityCounter = WIFI_TIMEOUT; // Count the seconds since the last WiFi connectivity check
   while (1)
   {
-    vTaskDelay(pdMS_TO_TICKS(WIFI_TIMER * 1000));
-    rtcGetCurrentTime(true);
-    printf("WiFi status: %s\n", toText_WiFiStatus(cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA))); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
-    if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) != CYW43_LINK_UP)
+    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus); // Blink Internal LED
+    ledStatus = !ledStatus;
+    if (++ConnectivityCounter >= WIFI_TIMEOUT)
     {
-      connectWiFi();
-    }
-    else // WiFi is up and has an IP
-    {
-      if (!NtpSynced) // if NTP is not synced
+      ConnectivityCounter = 0;
+      rtcGetCurrentTime(true);
+      printf("WiFi status: %s\n", toText_WiFiStatus(cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA))); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
+      if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) != CYW43_LINK_UP)
       {
-        ntpRequest();
+        connectWiFi();
       }
-      else
+      else // WiFi is up and has an IP
       {
-        NtpSynced++; // NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec
-      }
+        if (!NtpSynced) // if NTP is not synced
+        {
+          ntpRequest();
+        }
+        else
+        {
+          NtpSynced++; // NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec
+        }
 
-      printf("MQTT status: %s\n", MqttClientDefault->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
-      if (!MqttClientDefault->mqttIsConnected())
-      {
-        MqttClientDefault->mqttConnectTrigger();
+        printf("MQTT status: %s\n", MqttClientDefault->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
+        if (!MqttClientDefault->mqttIsConnected())
+        {
+          MqttClientDefault->mqttConnectTrigger();
+        }
       }
     }
+    vTaskDelay(pdMS_TO_TICKS(1000)); // Wait one sec
   }
 }
 
 // Initialize WiFi and Connect to local network
 bool connectWiFi()
 {
-  cyw43_arch_lwip_begin();    
-  cyw43_arch_enable_sta_mode();                                                                                                     // Enables Wi-Fi STA (Station) mode
-  int WifiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMER * 1000); // Try connecting to WiFi. If the timeout elapses, the attempt may still succeed afterward.
+  cyw43_arch_lwip_begin();
+  cyw43_arch_enable_sta_mode();                                                                                                       // Enables Wi-Fi STA (Station) mode
+  int WifiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMEOUT * 1000); // Try connecting to WiFi. If the timeout elapses, the attempt may still succeed afterward.
   cyw43_arch_lwip_end();
-  if (WifiConnectResult != 0)
+  if (WifiConnectResult != 0)  //OK:0,TIMEOUT:-1,GENERIC:-2,NO_DATA:-3,NOT_PERMITTED:-4,INVALID_ARG:-5,IO:-6,BADAUTH:-7,CONNECT_FAILED:-8,INSUFFICIENT_RESOURCES:-9
   {
     printf("Connecting to %s failed: %d\n", WIFI_SSID, WifiConnectResult);
     return false;
@@ -263,15 +269,15 @@ bool dnsLookup(char *DnsName, ip_addr_t *ResultIP)
   cyw43_arch_lwip_end();
   if (err == ERR_OK) // DNS name found in cache and loaded into ResultIP
   {
-    printf("Found cached address: %s\n", ipaddr_ntoa(ResultIP));
+    printf("Found cached address: %s - %s\n", ipaddr_ntoa(ResultIP), DnsName);
     return true;
   }
-  absolute_time_t Timeout = make_timeout_time_ms(15000); // 15sec from now
+  absolute_time_t Timeout = make_timeout_time_ms(DNS_TIMEOUT * 1000);
   while (dnsLookupInProgress)                            // Waiting for the DNS lookup to finish and dnsLookupResult callback to trigger
   {
-    if (absolute_time_diff_us(get_absolute_time(), Timeout) > 0)
+    if (absolute_time_diff_us(Timeout, get_absolute_time()) > 0)
     {
-      printf("DNS lookup timeout\n");
+      printf("DNS lookup timeout - %s\n", DnsName);
       return false;
     }
     vTaskDelay(500);
