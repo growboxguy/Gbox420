@@ -129,10 +129,8 @@ void connectivityTask(void *pvParameters)
 // Initialize WiFi and Connect to local network
 bool connectWiFi()
 {
-  cyw43_arch_lwip_begin();
   cyw43_arch_enable_sta_mode();                                                                                                       // Enables Wi-Fi STA (Station) mode
   int WifiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMEOUT * 1000); // Try connecting to WiFi. If the timeout elapses, the attempt may still succeed afterward.
-  cyw43_arch_lwip_end();
   if (WifiConnectResult != 0)  //OK:0,TIMEOUT:-1,GENERIC:-2,NO_DATA:-3,NOT_PERMITTED:-4,INVALID_ARG:-5,IO:-6,BADAUTH:-7,CONNECT_FAILED:-8,INSUFFICIENT_RESOURCES:-9
   {
     printf("Connecting to %s failed: %d\n", WIFI_SSID, WifiConnectResult);

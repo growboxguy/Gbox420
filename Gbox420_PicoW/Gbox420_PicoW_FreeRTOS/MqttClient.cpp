@@ -25,7 +25,7 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, CallbackTy
     absolute_time_t NextRefresh = make_timeout_time_ms(DefaultSettings->MqttServerTimeoutSec * 1000); // 10sec from now
     while (InProgress_ConnectAndSubscribe)                                                            // Waiting for the MQTT connection to establish
     {
-        if (absolute_time_diff_us(NextRefresh,get_absolute_time()) > 0) // 10sec timeout
+        if (absolute_time_diff_us(NextRefresh, get_absolute_time()) > 0) // 10sec timeout
         {
             printf("MQTT connect timeout\n");
             break; ///< Stop waiting for the callback, processing will continue. Once a Connected callback arrives the result will be printed to stdout
@@ -90,7 +90,7 @@ void MqttClient::mqttConnectTrigger()
 
 void MqttClient::mqttConnect()
 {
-    printf("Connecting to MQTT server\n");
+    printf("Connecting to MQTT server: %s\n", mqttGetServerName());
     cyw43_arch_lwip_begin();
     err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, this, ClientInfo);
     cyw43_arch_lwip_end();
@@ -104,12 +104,12 @@ void MqttClient::mqttConnect_Callback(mqtt_client_t *Client, void *Arg, mqtt_con
 {
     if (Status == MQTT_CONNECT_ACCEPTED)
     {
-        printf("MQTT Connected\n");
+        printf("MQTT connected to: %s\n", ((MqttClient *)Arg)->mqttGetServerName());
         ((MqttClient *)Arg)->mqttSubscribe(); // Once connected subscribe to incoming messages
     }
     else
     {
-        printf("MQTT Disconnected, reason: %d\n", Status); // 0: Accepted, 1:Protocol version refused, 2:Identifier refused, 3:Server refused, 4:Credentials refused, 5:Not authorized, 256:MQTT Disconnect, 257:Timeout
+        printf("MQTT Disconnected from %s, reason: %d\n", ((MqttClient *)Arg)->mqttGetServerName(), Status); // 0: Accepted, 1:Protocol version refused, 2:Identifier refused, 3:Server refused, 4:Credentials refused, 5:Not authorized, 256:MQTT Disconnect, 257:Timeout
         ((MqttClient *)Arg)->InProgress_ConnectAndSubscribe = false;
     }
 }
@@ -148,6 +148,14 @@ char *MqttClient::mqttIsConnectedText(bool FriendlyFormat)
         else
             return (char *)"0";
     }
+}
+
+char *MqttClient::mqttGetServerName()
+{
+    if (MqttServerDNS[0] != '\0')
+        return MqttServerDNS;
+    else
+        return MqttServerIP;
 }
 
 void MqttClient::mqttSubscribe()

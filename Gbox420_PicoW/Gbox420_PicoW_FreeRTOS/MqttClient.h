@@ -41,6 +41,7 @@ public:
     void mqttPublish(char *PubTopic, char *PubData);        ///< Publish a message to the PubTopic
     void mqttSubscribe();                                   ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
     void mqttUnsubscribe();                                 ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
+    char *mqttGetServerName(); ///< Returns the configured server's DNS name (if configured) or IP in text format
     char *SubTopic;                                         ///< Subscribe topic
     char *PubTopic;                                         ///< Topic to publish messages
     bool *PublishRetain;                                    ///< Should the MQTT server retain Publish messages: 0:No retention (recommended), 1:Broker keeps the message and sends it to future subscribers
