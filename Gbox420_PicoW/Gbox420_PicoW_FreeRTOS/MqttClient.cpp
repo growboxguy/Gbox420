@@ -3,6 +3,7 @@
 MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, CallbackType_mqtt DataCallback)
 {
     this->DataCallback = DataCallback;
+    MqttServerIP = DefaultSettings->MqttServerIP;
     MqttServerDNS = DefaultSettings->MqttServerDNS;
     MqttServerPort = &DefaultSettings->MqttServerPort;
     PubTopic = DefaultSettings->PubTopic;
@@ -84,13 +85,13 @@ void MqttClient::mqttConnectTrigger()
     }
     else
     {
-        printf("   MQTT failed, no WiFi\n");
+        printf("MQTT failed, no WiFi\n");
     }
 }
 
 void MqttClient::mqttConnect()
 {
-    printf("Connecting to MQTT server: %s\n", mqttGetServerName());
+    printf("MQTT connecting to: %s %s\n", mqttGetServerName(), mqttGetServerIP());
     cyw43_arch_lwip_begin();
     err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, this, ClientInfo);
     cyw43_arch_lwip_end();
@@ -104,12 +105,12 @@ void MqttClient::mqttConnect_Callback(mqtt_client_t *Client, void *Arg, mqtt_con
 {
     if (Status == MQTT_CONNECT_ACCEPTED)
     {
-        printf("MQTT connected to: %s\n", ((MqttClient *)Arg)->mqttGetServerName());
+        printf("MQTT connected to: %s %s\n", ((MqttClient *)Arg)->mqttGetServerName(), ((MqttClient *)Arg)->mqttGetServerIP());
         ((MqttClient *)Arg)->mqttSubscribe(); // Once connected subscribe to incoming messages
     }
     else
     {
-        printf("MQTT Disconnected from %s, reason: %d\n", ((MqttClient *)Arg)->mqttGetServerName(), Status); // 0: Accepted, 1:Protocol version refused, 2:Identifier refused, 3:Server refused, 4:Credentials refused, 5:Not authorized, 256:MQTT Disconnect, 257:Timeout
+        printf("MQTT disconnected from %s %s, reason: %d\n", ((MqttClient *)Arg)->mqttGetServerName(), ((MqttClient *)Arg)->mqttGetServerIP(), Status); // 0: Accepted, 1:Protocol version refused, 2:Identifier refused, 3:Server refused, 4:Credentials refused, 5:Not authorized, 256:MQTT Disconnect, 257:Timeout
         ((MqttClient *)Arg)->InProgress_ConnectAndSubscribe = false;
     }
 }
@@ -150,12 +151,17 @@ char *MqttClient::mqttIsConnectedText(bool FriendlyFormat)
     }
 }
 
-char *MqttClient::mqttGetServerName()
+const char *MqttClient::mqttGetServerName()
 {
     if (MqttServerDNS[0] != '\0')
         return MqttServerDNS;
     else
-        return MqttServerIP;
+        return "";
+}
+
+char *MqttClient::mqttGetServerIP()
+{
+    return ipaddr_ntoa(&MqttServerAddress);
 }
 
 void MqttClient::mqttSubscribe()

@@ -1,7 +1,6 @@
 #pragma once
 
-///< A two bucket Hempy setup with common nutrient and waste reservoirs
-///< Responsible for setting up each module, updating their statuses and reporting it
+///< Core module - Contains a single Sound component only. In case you would like to create your own module this is a good starting point
 
 #include "420Module.h"
 #include "MQTTClient.h"
@@ -10,23 +9,14 @@
 // forward declaration of classes
 class Sound;
 class MqttClient;
-/*
-class DHTSensor;
-class WeightSensor;
-class WasteReservoir;
-class WaterPump;
-class HempyBucket;
-*/
 
 // extern ELClientRest PushingBoxRestAPI;
 
-class HempyModule : public Module
+class GboxModule : public Module
 {
 public:
-  HempyModule(Settings::HempyModuleSettings *DefaultSettings, Settings *GboxSettings);
+  GboxModule(Settings::GboxModuleSettings *DefaultSettings, Settings *GboxSettings);
   Sound *Sound1 = nullptr;             ///< Pointer to a Piezo speaker - sound feedback
-  void websiteEvent_Load(__attribute__((unused)) char *Url);
-  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report(bool FriendlyFormat = false);
   /*

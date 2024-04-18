@@ -189,12 +189,12 @@ char *toText_TDS(float TDS)
   return ShortMessage;
 }
 
-char *toText_yesNo(bool Status)
+char *toText_onOff(bool Status)
 {
   if (Status)
-    return (char *)"YES";
+    return (char *)"ON";
   else
-    return (char *)"NO";
+    return (char *)"OFF";
 }
 
 char *toText_enabledDisabled(bool Status)
@@ -205,38 +205,38 @@ char *toText_enabledDisabled(bool Status)
     return (char *)"DISABLED";
 }
 
-char *toText_onOff(bool Status)
+const char *toText_yesNo(bool Status)
 {
   if (Status)
-    return (char *)"ON";
+    return "YES";
   else
-    return (char *)"OFF";
+    return "NO";
 }
 
-char *toText_onOffDisabled(bool Enabled, bool OnStatus)
+const char *toText_onOffDisabled(bool Enabled, bool OnStatus)
 {
   if (!Enabled)
-    return (char *)"DISABLED";
+    return "DISABLED";
   else
   {
     return toText_onOff(OnStatus);
   }
 }
 
-char *toText_onlineStatus(bool Status)
+const char *toText_onlineStatus(bool Status)
 {
   if (Status)
-    return (char *)"ONLINE";
+    return "ONLINE";
   else
-    return (char *)"OFFLINE";
+    return "OFFLINE";
 }
 
-char *toText_connectedStatus(bool Status)
+const char *toText_connectedStatus(bool Status)
 {
   if (Status)
-    return (char *)"CONNECTED";
+    return "CONNECTED";
   else
-    return (char *)"DISCONNECTED";
+    return "DISCONNECTED";
 }
 
 /// Converting text
@@ -266,236 +266,277 @@ float toFloat(char *Float)
 
 //< State related functions
 
-char *toText_ACMotorState(ACMotorStates State)
+const char *toText_ACMotorState(ACMotorStates State)
 {
   switch (State)
   {
   case ACMotorStates::IDLE:
-    return (char *)"IDLE";
+    return "IDLE";
     break;
   case ACMotorStates::FORWARD:
-    return (char *)"FORWARD";
+    return "FORWARD";
     break;
   case ACMotorStates::BACKWARD:
-    return (char *)"BACKWARD";
+    return "BACKWARD";
     break;
   case ACMotorStates::STOPPING:
-    return (char *)"STOPPING";
+    return "STOPPING";
     break;
   default:
-    return (char *)"?";
+    return "?";
     break;
   }
 }
 
-char *toText_waterPumpState(WaterPumpStates State)
+const char *toText_waterPumpState(WaterPumpStates State)
 {
   switch (State)
   {
   case WaterPumpStates::DISABLED:
-    return (char *)"DISABLED";
+    return "DISABLED";
     break;
   case WaterPumpStates::IDLE:
-    return (char *)"IDLE";
+    return "IDLE";
     break;
   case WaterPumpStates::RUNNING:
-    return (char *)"RUNNING";
+    return "RUNNING";
     break;
   default:
-    return (char *)"?";
+    return "?";
     break;
   }
 }
 
-char *toText_wasteReservoirStates(WasteReservoirStates State)
+const char *toText_wasteReservoirStates(WasteReservoirStates State)
 {
   switch (State)
   {
   case WasteReservoirStates::FULL:
-    return (char *)"FULL";
+    return "FULL";
     break;
   case WasteReservoirStates::IDLE:
-    return (char *)"IDLE";
+    return "IDLE";
     break;
   case WasteReservoirStates::RESERVED:
-    return (char *)"RESERVED";
+    return "RESERVED";
     break;
   default:
-    return (char *)"?";
+    return "?";
     break;
   }
 }
 
-char *toText_pressurePumpState(PressurePumpStates State)
+const char *toText_pressurePumpState(PressurePumpStates State)
 {
   switch (State)
   {
   case PressurePumpStates::DISABLED:
-    return (char *)"DISABLED";
+    return "DISABLED";
     break;
   case PressurePumpStates::IDLE:
-    return (char *)"IDLE";
+    return "IDLE";
     break;
   case PressurePumpStates::PRIMING:
-    return (char *)"PRIMING";
+    return "PRIMING";
     break;
   case PressurePumpStates::RUNNING:
-    return (char *)"RUNNING";
+    return "RUNNING";
     break;
   case PressurePumpStates::BLOWOFF:
-    return (char *)"BLOWOFF";
+    return "BLOWOFF";
     break;
   case PressurePumpStates::MIX:
-    return (char *)"MIX";
+    return "MIX";
     break;
   case PressurePumpStates::BYPASSCLOSE:
-    return (char *)"BYPASSCLOSE";
+    return "BYPASSCLOSE";
     break;
   case PressurePumpStates::BYPASSOPEN:
-    return (char *)"BYPASSOPEN";
+    return "BYPASSOPEN";
     break;
   default:
-    return (char *)"?";
+    return "?";
     break;
   }
 }
 
-char *toText_aeroTankState(AeroTankStates State)
+const char *toText_aeroTankState(AeroTankStates State)
 {
   switch (State)
   {
   case AeroTankStates::DISABLED:
-    return (char *)"DISABLED";
+    return "DISABLED";
     break;
   case AeroTankStates::IDLE:
-    return (char *)"IDLE";
+    return "IDLE";
     break;
   case AeroTankStates::SPRAY:
-    return (char *)"SPRAY";
+    return "SPRAY";
     break;
   case AeroTankStates::STOPSPRAY:
-    return (char *)"STOPSPRAY";
+    return "STOPSPRAY";
     break;
   case AeroTankStates::RELEASE:
-    return (char *)"RELEASE";
+    return "RELEASE";
     break;
   case AeroTankStates::REFILL:
-    return (char *)"REFILL";
+    return "REFILL";
     break;
   case AeroTankStates::DRAIN:
-    return (char *)"DRAIN";
+    return "DRAIN";
     break;
   case AeroTankStates::MIX:
-    return (char *)"MIX";
+    return "MIX";
     break;
   default:
-    return (char *)"?";
+    return "?";
     break;
   }
 }
 
-char *toText_aeroNoTankState(AeroNoTankStates State)
+const char *toText_aeroNoTankState(AeroNoTankStates State)
 {
   switch (State)
   {
   case AeroNoTankStates::DISABLED:
-    return (char *)"DISABLED";
+    return "DISABLED";
     break;
   case AeroNoTankStates::PRIMING:
-    return (char *)"PRIMING";
+    return "PRIMING";
     break;
   case AeroNoTankStates::IDLE:
-    return (char *)"IDLE";
+    return "IDLE";
     break;
   case AeroNoTankStates::SPRAY:
-    return (char *)"SPRAY";
+    return "SPRAY";
     break;
   case AeroNoTankStates::RELEASE:
-    return (char *)"RELEASE";
+    return "RELEASE";
     break;
   case AeroNoTankStates::MIX:
-    return (char *)"MIX";
+    return "MIX";
     break;
   default:
-    return (char *)"?";
+    return "?";
     break;
   }
 }
 
-char *toText_hempyState(HempyStates State)
+const char *toText_hempyState(HempyStates State)
 {
   switch (State)
   {
   case HempyStates::DISABLED:
-    return (char *)"DISABLED";
+    return "DISABLED";
     break;
   case HempyStates::IDLE:
-    return (char *)"IDLE";
+    return "IDLE";
     break;
   case HempyStates::WATERING:
-    return (char *)"WATERING";
+    return "WATERING";
     break;
   case HempyStates::DRAINING:
-    return (char *)"DRAINING";
+    return "DRAINING";
     break;
   default:
-    return (char *)"?";
+    return "?";
     break;
   }
 }
 
-char *toText_lightState(LightStates State)
+const char *toText_lightState(LightStates State)
 {
   switch (State)
   {
   case LightStates::TURNEDOFF:
-    return (char *)"OFF";
+    return "OFF";
     break;
   case LightStates::TURNEDON:
-    return (char *)"ON";
+    return "ON";
     break;
   case LightStates::FADEIN:
-    return (char *)"FADEIN";
+    return "FADEIN";
     break;
   case LightStates::FADEOUT:
-    return (char *)"FADEOUT";
+    return "FADEOUT";
     break;
   case LightStates::DIMMED:
-    return (char *)"DIMMED";
+    return "DIMMED";
     break;
   default:
-    return (char *)"?";
+    return "?";
     break;
   }
 }
 
-char *toText_WiFiStatus(int Status)
+//0:OK,-1:TIMEOUT,-2:GENERIC,-3:NO_DATA,-4:NOT_PERMITTED,-5:INVALID_ARG,-6:IO:,-7:BADAUTH,-8:CONNECT_FAILED,-9:INSUFFICIENT_RESOURCES
+const char*toText_WifiConnectResult(int Status)
+{
+  switch (Status)
+  {
+  case 0:
+    return "OK";
+    break;
+  case -1:
+    return "TIMEOUT";
+    break;
+  case -2:
+    return "GENERIC";
+    break;
+  case -3:
+    return "NODATA";
+    break;
+  case -4:
+    return "NOT_PERMITTED";
+    break;
+  case -5:
+    return "INVALID_ARG";
+    break;
+  case -6:
+    return "IO";
+    break;
+  case -7:
+    return "BADAUTH";
+    break;
+  case -8:
+    return "CONNECT_FAILED";
+    break;
+  case -9:
+    return "INSUFFICIENT_RESOURCES";
+    break;
+  default:
+    return "?";
+    break;
+  }
+}
+
+const char *toText_WiFiStatus(int Status)
 {
   switch (Status)
   {
   case CYW43_LINK_DOWN:
-    return (char *)"DOWN";
+    return "DOWN";
     break;
   case CYW43_LINK_JOIN:
-    return (char *)"JOIN";
+    return "JOIN";
     break;
   case CYW43_LINK_NOIP:
-    return (char *)"NOIP";
+    return "NOIP";
     break;
   case CYW43_LINK_UP:
-    return (char *)"UP";
+    return "UP";
     break;
   case CYW43_LINK_FAIL:
-    return (char *)"FAIL";
+    return "FAIL";
     break;
   case CYW43_LINK_NONET:
-    return (char *)"NONET";
+    return "NONET";
     break;
   case CYW43_LINK_BADAUTH:
-    return (char *)"BADAUTH";
+    return "BADAUTH";
     break;
   default:
-    return (char *)"?";
+    return "?";
     break;
   }
 }

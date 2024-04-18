@@ -13,19 +13,25 @@ int main()
   }
   printf("\nGbox420 FreeRTOS initializing\n");
   GboxSettings = loadSettings(false);
-  Debug = &GboxSettings->Debug;
-  Metric = &GboxSettings->Metric;
   rtcInit(); ///< Initialize Real Time Clock and set a pre-defined starting date
+ // GboxModule1 = new GboxModule(&GboxSettings->Gbox1, GboxSettings); ///< Stripped down core module only containing a Sound component  
+  printf("Starting timers...");
+  xTimerStart(xTimerCreate("1Sec", pdMS_TO_TICKS(1000), pdTRUE, (void *)1, run1Sec), 1);      ///< Create 1sec software timer
+  xTimerStart(xTimerCreate("5Sec", pdMS_TO_TICKS(5000), pdTRUE, (void *)2, run5Sec), 1);      ///< Create 5sec software timer
+  xTimerStart(xTimerCreate("1Min", pdMS_TO_TICKS(60000), pdTRUE, (void *)3, run1Min), 1);     ///< Create 1min software timer
+  xTimerStart(xTimerCreate("30Min", pdMS_TO_TICKS(1800000), pdTRUE, (void *)4, run30Min), 1); ///< Create 30min software timer
+  printf("done\n");
   printf("Creating tasks...");
   xTaskCreate(watchdogTask, "Watchdog", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L3, NULL);                 ///< Watchdog for crash detection and automatic restart
   xTaskCreate(connectivityTask, "Connectivity checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL); ///< Connect-ReConnect to WiFi, Sync the Real Time Clock using NTP, Make sure MQTT server is connected
-                                                                                                                 // xTaskCreate(hempyTask, "Hempy checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);               ///< Hempy module
+  // xTaskCreate(hempyTask, "Hempy checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);               ///< Hempy module
   printf("done\n");
   vTaskStartScheduler();
   cyw43_arch_deinit(); ///< Processing will not get here unless a task calls vTaskEndScheduler()
   return 0;
 }
 
+/*
 // Hempy module
 void hempyTask(void *pvParameters)
 {
@@ -41,26 +47,35 @@ void hempyTask(void *pvParameters)
     vTaskDelay(portMAX_DELAY);
   }
 }
+*/
 
 // Runs every 1 sec
 void run1Sec(TimerHandle_t xTimer)
 {
-  HempyModule1->run1sec();
+  printf("1sec\n");
+  //GboxModule1->run1sec();
+  //HempyModule1->run1sec();
 }
 ///< Runs every 5 sec
 void run5Sec(TimerHandle_t xTimer)
 {
-  HempyModule1->run5sec();
+  printf("5sec\n");
+  //GboxModule1->run5sec();
+  //HempyModule1->run5sec();
 }
 ///< Runs every 1 min
 void run1Min(TimerHandle_t xTimer)
 {
-  HempyModule1->run1min();
+  printf("1min\n");
+  //GboxModule1->run1min();
+  //HempyModule1->run1min();
 }
 ///< Runs every 30 min
 void run30Min(TimerHandle_t xTimer)
 {
-  HempyModule1->run30min();
+  printf("30min\n");
+  //GboxModule1->run30min();
+  //HempyModule1->run30min();
 }
 
 // Monitor program execution, If the program fails to reset the timer periodically, it indicates a fault, triggering a system reset
@@ -76,6 +91,7 @@ void watchdogTask(void *pvParameters)
   }
 }
 
+// Initialize everything network related, then periodically check their status (reconnect if needed). After the initialization is done the internal LED should start blinking every second
 void connectivityTask(void *pvParameters)
 {
   printf("Initializing WiFi\n");
@@ -94,8 +110,8 @@ void connectivityTask(void *pvParameters)
   while (1)
   {
     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus); // Blink Internal LED
-    ledStatus = !ledStatus;
-    if (++ConnectivityCounter >= WIFI_TIMEOUT)
+    ledStatus = !ledStatus;                                // Blink Internal LED
+    if (++ConnectivityCounter >= WIFI_TIMEOUT)  //Is it time to do a new WiFi check?
     {
       ConnectivityCounter = 0;
       rtcGetCurrentTime(true);
@@ -116,7 +132,7 @@ void connectivityTask(void *pvParameters)
         }
 
         printf("MQTT status: %s\n", MqttClientDefault->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
-        if (!MqttClientDefault->mqttIsConnected())
+        if (!MqttClientDefault->mqttIsConnected()) // If MQTT server is not connected
         {
           MqttClientDefault->mqttConnectTrigger();
         }
@@ -131,9 +147,9 @@ bool connectWiFi()
 {
   cyw43_arch_enable_sta_mode();                                                                                                       // Enables Wi-Fi STA (Station) mode
   int WifiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMEOUT * 1000); // Try connecting to WiFi. If the timeout elapses, the attempt may still succeed afterward.
-  if (WifiConnectResult != 0)  //OK:0,TIMEOUT:-1,GENERIC:-2,NO_DATA:-3,NOT_PERMITTED:-4,INVALID_ARG:-5,IO:-6,BADAUTH:-7,CONNECT_FAILED:-8,INSUFFICIENT_RESOURCES:-9
+  if (WifiConnectResult != 0)
   {
-    printf("Connecting to %s failed: %d\n", WIFI_SSID, WifiConnectResult);
+    printf("Connecting to %s failed: %d %s\n", WIFI_SSID, WifiConnectResult,toText_WifiConnectResult(WifiConnectResult));
     return false;
   }
   else
@@ -271,7 +287,7 @@ bool dnsLookup(char *DnsName, ip_addr_t *ResultIP)
     return true;
   }
   absolute_time_t Timeout = make_timeout_time_ms(DNS_TIMEOUT * 1000);
-  while (dnsLookupInProgress)                            // Waiting for the DNS lookup to finish and dnsLookupResult callback to trigger
+  while (dnsLookupInProgress) // Waiting for the DNS lookup to finish and dnsLookupResult callback to trigger
   {
     if (absolute_time_diff_us(Timeout, get_absolute_time()) > 0)
     {

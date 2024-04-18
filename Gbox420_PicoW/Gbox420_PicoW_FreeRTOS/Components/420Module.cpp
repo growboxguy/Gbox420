@@ -333,7 +333,7 @@ void Module::run5sec()
 {
   Common::run5sec();
   reportToSerialTrigger();
-  reportToMqttTrigger();
+  //reportToMqttTrigger();
 
   for (int i = 0; i < RefreshQueue_5sec_ItemCount; i++)
   {
@@ -747,10 +747,10 @@ void Module::reportToMqttTrigger(bool ForceRun)
   if (*ReportToMqtt || ForceRun)
   {
     runReport(false, true, true, true); //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
-    mqttPublish(MqttClientDefault, LongMessage); //< Publish Log via ESP MQTT API
-    eventLogToJSON(true, true);                    //< Loads the EventLog as a JSON
-    mqttPublish(MqttClientDefault, LongMessage); //< Publish the EventLog via ESP MQTT API
-    settingsToJSON(); //< Loads the module settings as a JSON to the LongMessage buffer
-    mqttPublish(MqttClientDefault, LongMessage); //< Publish the Settings via ESP MQTT API
+    //mqttPublish(MqttClientDefault, LongMessage); //< Publish Log via ESP MQTT API
+    //eventLogToJSON(true, true);                    //< Loads the EventLog as a JSON
+    //mqttPublish(MqttClientDefault, LongMessage); //< Publish the EventLog via ESP MQTT API
+    //settingsToJSON(); //< Loads the module settings as a JSON to the LongMessage buffer
+   // mqttPublish(MqttClientDefault, LongMessage); //< Publish the Settings via ESP MQTT API
   }
 }
