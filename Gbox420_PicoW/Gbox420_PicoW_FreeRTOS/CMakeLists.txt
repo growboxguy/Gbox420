@@ -42,6 +42,6 @@ target_link_libraries(Gbox420_PicoW_FreeRTOS
 pico_add_extra_outputs(Gbox420_PicoW_FreeRTOS)
 
 # enable usb output, enable uart output
-pico_enable_stdio_usb(Gbox420_PicoW_FreeRTOS 0)
+pico_enable_stdio_usb(Gbox420_PicoW_FreeRTOS 1)
 pico_enable_stdio_uart(Gbox420_PicoW_FreeRTOS 1)
 

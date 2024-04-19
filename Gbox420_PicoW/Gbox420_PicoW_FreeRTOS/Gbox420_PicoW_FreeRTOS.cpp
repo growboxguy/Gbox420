@@ -108,7 +108,6 @@ void connectivityTask(void *pvParameters)
   udp_recv(NtpPcb, ntpReceived, NULL);       // NTP: Register the callback function to handle incoming UDP packets received on the UDP PCB
   connectWiFi();
   MqttClientDefault = new MqttClient(&GboxSettings->HempyMqttServer1, mqttDataReceived);
-  uint8_t ConnectivityCounter = WIFI_TIMEOUT; // Count the seconds since the last WiFi connectivity check
   while (1)
   {
     if (++ConnectivityCounter >= WIFI_TIMEOUT) // Is it time to do a new WiFi check?
@@ -179,7 +178,7 @@ bool connectWiFi()
   {
     char *IPAddress = ipaddr_ntoa(netif_ip4_addr(&cyw43_state.netif[0]));
     printf("Connected to %s - %s\n", WIFI_SSID, IPAddress);
-    ntpRequest();
+    ConnectivityCounter = WIFI_TIMEOUT; // Force a connectivity check
     return true;
   }
 }

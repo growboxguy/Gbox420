@@ -25,6 +25,7 @@ void run5Sec(TimerHandle_t xTimer);                                             
 void run1Min(TimerHandle_t xTimer);                                                                            ///< Runs every 1 min
 void run30Min(TimerHandle_t xTimer);                                                                           ///< Runs every 30 min
 void connectivityTask(void *pvParameters);                                                                     ///< Initialize WiFi, periodically check the connection and reconnect if needed. Use NTP to update the Real Time Clock
+uint8_t ConnectivityCounter = WIFI_TIMEOUT;                                                                    // Count the seconds since the last WiFi connectivity check
 void heartbeat();                                                                                              ///< Controls the onboard LED, blink every sec: MQTT connected, blink every 0,5sec: MQTT disconnected. !! Makes the caller task delay a total of 1 sec !!
 bool connectWiFi();                                                                                            ///< Connect to a WiFi network
 bool dnsLookup(char *DnsName, ip_addr_t *ResultIP);                                                            ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
@@ -47,4 +48,4 @@ char LongMessage[MaxLongTextLength] = "";                                       
 char ShortMessage[MaxShotTextLength] = "";                                                                     ///< Temp storage for assembling short messages (Log entries, Error messages)
 bool *Debug;                                                                                                   ///< True - Turns on extra debug messages on the Serial Output
 bool *Metric;                                                                                                  ///< True - Use metric units, False - Use imperial units
-bool ledStatus = true;                                                                                        ///< Track the current state of the built-in LED
+bool ledStatus = true;                                                                                         ///< Track the current state of the built-in LED
