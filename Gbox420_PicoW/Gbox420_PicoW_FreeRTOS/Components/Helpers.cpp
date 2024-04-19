@@ -470,7 +470,7 @@ const char *toText_lightState(LightStates State)
 }
 
 //0:OK,-1:TIMEOUT,-2:GENERIC,-3:NO_DATA,-4:NOT_PERMITTED,-5:INVALID_ARG,-6:IO:,-7:BADAUTH,-8:CONNECT_FAILED,-9:INSUFFICIENT_RESOURCES
-const char*toText_WifiConnectResult(int Status)
+const char*toText_WiFiConnectResult(int Status)
 {
   switch (Status)
   {
@@ -514,26 +514,60 @@ const char *toText_WiFiStatus(int Status)
 {
   switch (Status)
   {
-  case CYW43_LINK_DOWN:
+  case 0:
     return "DOWN";
     break;
-  case CYW43_LINK_JOIN:
+  case 1:
     return "JOIN";
     break;
-  case CYW43_LINK_NOIP:
+  case 2:
     return "NOIP";
     break;
-  case CYW43_LINK_UP:
+  case 3:
     return "UP";
     break;
-  case CYW43_LINK_FAIL:
+  case -1:
     return "FAIL";
     break;
-  case CYW43_LINK_NONET:
+  case -2:
     return "NONET";
     break;
-  case CYW43_LINK_BADAUTH:
+  case -3:
     return "BADAUTH";
+    break;
+  default:
+    return "?";
+    break;
+  }
+}
+
+const char *toText_MqttStatus(int Status)
+{
+  switch (Status)
+  {
+  case 0:
+    return "ACCEPTED ";
+    break;
+  case 1:
+    return "REFUSED_PROTOCOL";
+    break;
+  case 2:
+    return "REFUSED_IDENTIFIER";
+    break;
+  case 3:
+    return "REFUSED_UNAUTHORIZED";
+    break;
+  case 4:
+    return "NOT_PERMITTED";
+    break;
+  case 5:
+    return "INVALID_ARG";
+    break;
+  case 256:
+    return "DISCONNECTED";
+    break;
+  case 257:
+    return "TIMEOUT";
     break;
   default:
     return "?";

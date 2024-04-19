@@ -110,7 +110,7 @@ void MqttClient::mqttConnect_Callback(mqtt_client_t *Client, void *Arg, mqtt_con
     }
     else
     {
-        printf("MQTT disconnected from %s %s, reason: %d\n", ((MqttClient *)Arg)->mqttGetServerName(), ((MqttClient *)Arg)->mqttGetServerIP(), Status); // 0: Accepted, 1:Protocol version refused, 2:Identifier refused, 3:Server refused, 4:Credentials refused, 5:Not authorized, 256:MQTT Disconnect, 257:Timeout
+        printf("MQTT disconnected from %s %s, reason: %s\n", ((MqttClient *)Arg)->mqttGetServerName(), ((MqttClient *)Arg)->mqttGetServerIP(), toText_MqttStatus(Status)); // 0: Accepted, 1:Protocol version refused, 2:Identifier refused, 3:Server refused, 4:Credentials refused, 5:Not authorized, 256:MQTT Disconnect, 257:Timeout
         ((MqttClient *)Arg)->InProgress_ConnectAndSubscribe = false;
     }
 }

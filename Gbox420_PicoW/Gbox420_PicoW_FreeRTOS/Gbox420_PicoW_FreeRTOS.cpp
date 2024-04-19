@@ -13,8 +13,10 @@ int main()
   }
   printf("\nGbox420 FreeRTOS initializing\n");
   GboxSettings = loadSettings(false);
-  rtcInit(); ///< Initialize Real Time Clock and set a pre-defined starting date
- // GboxModule1 = new GboxModule(&GboxSettings->Gbox1, GboxSettings); ///< Stripped down core module only containing a Sound component  
+  Debug = &GboxSettings->Debug;   // Set global variable
+  Metric = &GboxSettings->Metric; // Set global variable
+  rtcInit();                      ///< Initialize Real Time Clock and set a pre-defined starting date
+                                  // GboxModule1 = new GboxModule(&GboxSettings->Gbox1, GboxSettings); ///< Stripped down core module only containing a Sound component
   printf("Starting timers...");
   xTimerStart(xTimerCreate("1Sec", pdMS_TO_TICKS(1000), pdTRUE, (void *)1, run1Sec), 1);      ///< Create 1sec software timer
   xTimerStart(xTimerCreate("5Sec", pdMS_TO_TICKS(5000), pdTRUE, (void *)2, run5Sec), 1);      ///< Create 5sec software timer
@@ -53,29 +55,29 @@ void hempyTask(void *pvParameters)
 void run1Sec(TimerHandle_t xTimer)
 {
   printf("1sec\n");
-  //GboxModule1->run1sec();
-  //HempyModule1->run1sec();
+  // GboxModule1->run1sec();
+  // HempyModule1->run1sec();
 }
 ///< Runs every 5 sec
 void run5Sec(TimerHandle_t xTimer)
 {
   printf("5sec\n");
-  //GboxModule1->run5sec();
-  //HempyModule1->run5sec();
+  // GboxModule1->run5sec();
+  // HempyModule1->run5sec();
 }
 ///< Runs every 1 min
 void run1Min(TimerHandle_t xTimer)
 {
   printf("1min\n");
-  //GboxModule1->run1min();
-  //HempyModule1->run1min();
+  // GboxModule1->run1min();
+  // HempyModule1->run1min();
 }
 ///< Runs every 30 min
 void run30Min(TimerHandle_t xTimer)
 {
   printf("30min\n");
-  //GboxModule1->run30min();
-  //HempyModule1->run30min();
+  // GboxModule1->run30min();
+  // HempyModule1->run30min();
 }
 
 // Monitor program execution, If the program fails to reset the timer periodically, it indicates a fault, triggering a system reset
@@ -95,12 +97,12 @@ void watchdogTask(void *pvParameters)
 void connectivityTask(void *pvParameters)
 {
   printf("Initializing WiFi\n");
-  int WifiInitResult = cyw43_arch_init();
-  while (WifiInitResult != 0)
+  int WiFiInitResult = cyw43_arch_init();
+  while (WiFiInitResult != 0)
   {
-    printf("WiFi init failed: %d\n", WifiInitResult);
+    printf("WiFi init failed: %d\n", WiFiInitResult);
     vTaskDelay(pdMS_TO_TICKS(WIFI_TIMEOUT * 1000));
-    WifiInitResult = cyw43_arch_init();
+    WiFiInitResult = cyw43_arch_init();
   }
   NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY); // NTP: Creates a new UDP Protocol Control Block (PCB) with both IPv4 and IPv6 support
   udp_recv(NtpPcb, ntpReceived, NULL);       // NTP: Register the callback function to handle incoming UDP packets received on the UDP PCB
@@ -109,9 +111,7 @@ void connectivityTask(void *pvParameters)
   uint8_t ConnectivityCounter = WIFI_TIMEOUT; // Count the seconds since the last WiFi connectivity check
   while (1)
   {
-    cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus); // Blink Internal LED
-    ledStatus = !ledStatus;                                // Blink Internal LED
-    if (++ConnectivityCounter >= WIFI_TIMEOUT)  //Is it time to do a new WiFi check?
+    if (++ConnectivityCounter >= WIFI_TIMEOUT) // Is it time to do a new WiFi check?
     {
       ConnectivityCounter = 0;
       rtcGetCurrentTime(true);
@@ -132,24 +132,47 @@ void connectivityTask(void *pvParameters)
         }
 
         printf("MQTT status: %s\n", MqttClientDefault->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
-        if (!MqttClientDefault->mqttIsConnected()) // If MQTT server is not connected
+        if (!MqttClientDefault->mqttIsConnected())                                 // If MQTT server is not connected
         {
           MqttClientDefault->mqttConnectTrigger();
         }
       }
     }
+    heartbeat(); // Blinks the onboard LED, and delays the next While loop by 1sec
+  }
+}
+
+// Controls the onboard LED, blink every sec: MQTT connected, blink every 0,5sec: MQTT disconnected. !! Makes the caller task delay a total of 1 sec !!
+void heartbeat()
+{
+  cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus); // Blink Internal LED
+  ledStatus = !ledStatus;                                // Blink Internal LED
+  if (MqttClientDefault->mqttIsConnected())
+  {
     vTaskDelay(pdMS_TO_TICKS(1000)); // Wait one sec
+  }
+  else // If MQTT server is not connected: Blink the LED rapidly (every 0.25 sec)
+  {
+    for (int i = 0; i < 4; i++)
+    {
+      vTaskDelay(pdMS_TO_TICKS(250));                        // Wait one sec
+      cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus); // Blink Internal LED
+      ledStatus = !ledStatus;
+    }
+    vTaskDelay(pdMS_TO_TICKS(250)); // Wait one sec
   }
 }
 
 // Initialize WiFi and Connect to local network
 bool connectWiFi()
 {
-  cyw43_arch_enable_sta_mode();                                                                                                       // Enables Wi-Fi STA (Station) mode
-  int WifiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMEOUT * 1000); // Try connecting to WiFi. If the timeout elapses, the attempt may still succeed afterward.
-  if (WifiConnectResult != 0)
+  cyw43_arch_enable_sta_mode(); // Enables Wi-Fi STA (Station) mode
+  ledStatus = true;             // Turn on onboard LED to indicate the start of the WiFi connection attempt
+  cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus);
+  int WiFiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMEOUT * 1000); // Try connecting to WiFi. If the timeout elapses, the attempt may still succeed afterward.
+  if (WiFiConnectResult != 0)
   {
-    printf("Connecting to %s failed: %d %s\n", WIFI_SSID, WifiConnectResult,toText_WifiConnectResult(WifiConnectResult));
+    printf("Connecting to %s failed: %d %s\n", WIFI_SSID, WiFiConnectResult, toText_WiFiConnectResult(WiFiConnectResult));
     return false;
   }
   else
