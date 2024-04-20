@@ -71,7 +71,7 @@ void HempyModule::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< c
  */
 bool HempyModule::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
-  if (!isThisMine(Command))
+  if (!isThisForMe(Command))
   {
     return false;
   }

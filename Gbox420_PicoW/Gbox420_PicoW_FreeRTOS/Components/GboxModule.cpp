@@ -33,7 +33,7 @@ void GboxModule::report(bool FriendlyFormat)
  */
 bool GboxModule::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
-  if (!isThisMine(Command))
+  if (!isThisForMe(Command))
   {
     return false;
   }

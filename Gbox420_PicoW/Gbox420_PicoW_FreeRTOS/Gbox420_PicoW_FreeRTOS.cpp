@@ -54,28 +54,32 @@ void hempyTask(void *pvParameters)
 // Runs every 1 sec
 void run1Sec(TimerHandle_t xTimer)
 {
-  printf("1sec\n");
+  if (*Debug)
+    printf("1sec\n");
   // GboxModule1->run1sec();
   // HempyModule1->run1sec();
 }
 ///< Runs every 5 sec
 void run5Sec(TimerHandle_t xTimer)
 {
-  printf("5sec\n");
+  if (*Debug)
+    printf("5sec\n");
   // GboxModule1->run5sec();
   // HempyModule1->run5sec();
 }
 ///< Runs every 1 min
 void run1Min(TimerHandle_t xTimer)
 {
-  printf("1min\n");
+  if (*Debug)
+    printf("1min\n");
   // GboxModule1->run1min();
   // HempyModule1->run1min();
 }
 ///< Runs every 30 min
 void run30Min(TimerHandle_t xTimer)
 {
-  printf("30min\n");
+  if (*Debug)
+    printf("30min\n");
   // GboxModule1->run30min();
   // HempyModule1->run30min();
 }
@@ -127,7 +131,7 @@ void connectivityTask(void *pvParameters)
         }
         else
         {
-          NtpSynced++; // NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec
+          NtpSynced++; // NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec. If NtpSynced is changed to uint16_t the sync delay is ~11 days
         }
 
         printf("MQTT status: %s\n", MqttClientDefault->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
@@ -183,11 +187,32 @@ bool connectWiFi()
   }
 }
 
-///< MQTT callback when a data arrives on a Subscribed topic
-void mqttDataReceived(char *TopicReceived, char *DataReceived)
+/**
+ * @brief MQTT callback when a data arrives on a Subscribed topic
+ *
+ * @param SubTopicReceived The subtopic of the arrived command (The known part of the subscribed topic is already stripped at this point)
+ * @param DataReceived Additional data (if any) passed along the command
+ */
+void mqttDataReceived(char *SubTopicReceived, char *DataReceived)
 {
   // printf("MQTT topic: %s\nMQTT data: %s\n", TopicReceived, DataReceived);
-  HempyModule1->mqttDataReceived(TopicReceived, DataReceived);
+  if (isThisForMe("Gbox", SubTopicReceived)) //< If the topic starts with Gbox_ -> process the command
+  {
+    if (strcmp(ShortMessage, "D") == 0)
+    {
+      *Debug = !*Debug;
+    }
+    /*
+    else if (strcmp(ShortMessage, "Ee") == 0)
+    {
+     playEE();
+    }
+    */
+  }
+  else //Pass along the command
+  {
+    //HempyModule1->mqttDataReceived(SubTopicReceived, DataReceived);  //TODO: mqttDataReceived should return true if the command was processed within the module
+  }
 }
 
 ///< Real Time Clock (RTC) section

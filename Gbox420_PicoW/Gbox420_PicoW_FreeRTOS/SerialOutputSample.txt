@@ -1,4 +1,5 @@
-/// Sample UART and USB output
+/// Sample UART and USB output - Using Debug build
+/// Scenario: Debug output disabled, then turned on via MQTT command
 
 Clean boot
 
@@ -9,37 +10,22 @@ Starting timers...done
 Creating tasks...done
 Initializing Watchdog...done
 Initializing WiFi
-1sec
-1sec
-1sec
-1sec
-5sec
-1sec
-1sec
 Connected to GboxNet - 192.168.1.34
-Looking up IP for pool.ntp.org
-Found address: 80.249.164.125 for pool.ntp.org
-1sec
 Looking up IP for mqttserver.gbox420.net
 Found address: 192.168.1.100 for mqttserver.gbox420.net
-RTC synced: Thursday 18 April 13:51:20 2024
 MQTT connecting to: mqttserver.gbox420.net 192.168.1.100
-1sec
 MQTT connected to: mqttserver.gbox420.net 192.168.1.100
-Subscribed to Gbox420CMD/Hempy/#
-Thursday 18 April 13:51:22 2024
+Subscribed to Gbox420CMD/#
+Friday 20 April 16:20:05 2024
+WiFi status: UP
+Looking up IP for pool.ntp.org
+Found address: 62.112.195.26 for pool.ntp.org
+MQTT status: CONNECTED
+RTC synced: Saturday 20 April 9:18:04 2024
+Saturday 20 April 9:18:20 2024
 WiFi status: UP
 MQTT status: CONNECTED
-1sec
-5sec
-1sec
-1sec
-1sec
-1sec
-1sec
-5sec
-1sec
-1sec
+Match on Gbox, command: D
 1sec
 1sec
 1sec
@@ -48,33 +34,14 @@ MQTT status: CONNECTED
 1sec
 1sec
 1sec
-Thursday 18 April 13:51:37 2024
+1sec
+5sec
+1sec
+1sec
+1sec
+TopicMQTT: Gbox_D - Gbox420CMD/Gbox_D
+DataMQTT[3]: Test123
+Match on Gbox, command: D
+Saturday 20 April 9:18:35 2024
 WiFi status: UP
 MQTT status: CONNECTED
-1sec
-5sec
-1sec
-1sec
-1sec
-1sec
-1sec
-5sec
-1sec
-1sec
-1sec
-1sec
-1sec
-5sec
-1sec
-1sec
-1sec
-1sec
-Thursday 18 April 13:51:52 2024
-WiFi status: UP
-MQTT status: CONNECTED
-1sec
-5sec
-1sec
-1sec
-1sec
-1sec

@@ -28,7 +28,7 @@ void Sound::report(bool FriendlyFormat)
 
 bool Sound::commandEvent(char *Command, char *Data)
 { ///< When the website field is submitted
-  if (!isThisMine(Command))
+  if (!isThisForMe(Command))
   {
     return false;
   }

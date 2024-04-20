@@ -10,6 +10,66 @@ void getFreeMemory()
 }
 */
 
+///< Comparing the Objects name to an incoming command. Object name Sound1, incoming command: Sound1_Ee will return true. The remaining command "Ee" will be copied to ShortMessage buffer
+bool isThisForMe(char const *Name, char const *LookupName) ///< Returns true when the LookupName starts with the Name of the instance followed by _
+{
+  /*
+  if(Debug >= 2)  //< Only print this on debug level 2
+  {
+  printf("LookupName :");
+  printf("%s\n", LookupName);
+  printf("Object :");
+  printf("%s\n", Name);
+  }
+  */
+
+  char *Command = ShortMessage; ///< return text will be loaded into a global temp buffer
+  uint8_t CharacterCount = 0;   // Tracks which character is currently getting compared
+  char NameCurrentChar;         // Current Name character being compared
+  char LookupCurrentChar;       // Current LookupName character being compared
+
+  while (1)
+  {
+    NameCurrentChar = Name[CharacterCount];           ///< read the current character from the flash and increment the pointer to the next char
+    LookupCurrentChar = LookupName[CharacterCount++]; ///< read the character at the same position from the LookupName
+    // printf("%s - %s ",NameCurrentChar,LookupCurrentChar);
+
+    if (NameCurrentChar == '\0')
+      break; ///< reached the string termination sign, stop the while loop
+    if (NameCurrentChar != LookupCurrentChar)
+    {
+      // printf(": No match\n");
+      return false; ///< Stop function and return false
+    }
+  }
+  if (NameCurrentChar == '\0' && LookupCurrentChar == '_') ///< End of the Name, _ sign at the LookupName
+  {                                                        ///< if instance name is confirmed: continue reading the remaining characters from the LookupName
+    int SafetyCount = 0;
+    ///< printf("Inside second check: ");
+    while (1)
+    {
+      LookupCurrentChar = LookupName[CharacterCount++]; ///< read the next LookupName character
+      ///< printf(LookupCurrentChar);
+      *Command++ = LookupCurrentChar;
+      if (LookupCurrentChar == '\0')
+        break; ///< reached the string termination sign
+      if (SafetyCount++ > MaxWordLength)
+      {
+        *Command = '\0';
+        printf("   Too long:");
+        printf(LookupName, true, 1);
+        return false;
+      }
+    }
+    printf("Match on %s, command: %s\n", Name, ShortMessage);
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
 ///< Conversions
 
 float convertBetweenTempUnits(float Value)
@@ -469,8 +529,8 @@ const char *toText_lightState(LightStates State)
   }
 }
 
-//0:OK,-1:TIMEOUT,-2:GENERIC,-3:NO_DATA,-4:NOT_PERMITTED,-5:INVALID_ARG,-6:IO:,-7:BADAUTH,-8:CONNECT_FAILED,-9:INSUFFICIENT_RESOURCES
-const char*toText_WiFiConnectResult(int Status)
+// 0:OK,-1:TIMEOUT,-2:GENERIC,-3:NO_DATA,-4:NOT_PERMITTED,-5:INVALID_ARG,-6:IO:,-7:BADAUTH,-8:CONNECT_FAILED,-9:INSUFFICIENT_RESOURCES
+const char *toText_WiFiConnectResult(int Status)
 {
   switch (Status)
   {

@@ -32,10 +32,10 @@ bool dnsLookup(char *DnsName, ip_addr_t *ResultIP);                             
 void dnsLookupResult(const char *Hostname, const ip_addr_t *ResultIP, void *Arg);                              ///< Callback with the lookup result
 void rtcInit();                                                                                                //< Initialize the Real Time Clock and set a stating date
 char *rtcGetCurrentTime(bool PrintToSerial);                                                                   ///< Query current time from local RTC
-uint8_t NtpSynced = 0;                                                                                         ///< 0: Not synced with an NTP server
+uint8_t NtpSynced = 0;                                                                                         ///< 0: Not synced with an NTP server. NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec. If NtpSynced is changed to uint16_t the sync delay is ~11 days
 void ntpRequest();                                                                                             ///< Make an NTP request
 static void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port); ///< NTP data received
-void mqttDataReceived(char *TopicReceived, char *DataReceived);                                                ///< Callback when MQTT data is received on a subscribed topic
+void mqttDataReceived(char *SubTopicReceived, char *DataReceived);                                                ///< Callback when MQTT data is received on a subscribed topic
 Settings *GboxSettings;                                                                                        ///< This object will store the settings loaded from the Settings.h. //TODO: Find a solution to Pico W not having EEPROM
 MqttClient *MqttClientDefault = nullptr;                                                                       ///< Pointer to MQTT handler
 GboxModule *GboxModule1;                                                                                       ///< Core module, provides Sound feedback
