@@ -6,7 +6,7 @@
 *              - Connecting to an MQTT server defined in Settings.h (MqttClientSettings MqttServer1) and subscribing to a topic and all of it's subtopics. The MQTT server connection is regularly monitored for reconnection
 *              - DNS lookup for finding the NTP and MQTT servers by name (MqttServerDNS, NtpServerDNS)
 *              - Onboard LED control: Always on: WiFi connection attempt in progress, Rapid (0.25sec) blinking: MQTT server not connected, Slow blinking (1sec): MQTT server connected
-*              - UART and USB logging, check out SerialOutputSample.txt
+*              - UART and USB logging, check out UartOutputSample.txt
 *              - Built on top of FreeRTOS (using tasks and timers currently, will include semaphores too)
 *             Missing:
 *              - Everything related to monitoring a grow tent (Modules and Components)
