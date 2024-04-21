@@ -39,13 +39,13 @@ extern char CurrentTimeText[MaxShotTextLength]; // Buffer for storing current ti
 
 typedef struct
 {
-  bool Debug;  ///< Logs debug messages to serial and web outputs
-  bool Metric; ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
+  bool Debug;                                                      ///< Logs debug messages to serial and web outputs
+  bool Metric;                                                     ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
   char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
 
   struct GboxModuleSettings ///< Stripped down core module only containing a Sound component
   {
-    char Name[MaxWordLength];          ///< Must be unique
+    char Name[MaxWordLength]; ///< Must be unique
   };
   struct GboxModuleSettings Gbox1 = {.Name = "Gbox1"};
 
@@ -100,7 +100,7 @@ typedef struct
     uint8_t QoS;                            ///< Quality of Service levels: 0:No QoS, 1: Broker ensures to send the message to the subscribers (recommended), 2: Broker ensures to send the message to the subscribers exactly once   https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/
     uint32_t KeepAliveSeconds;              ///< Ping the MQTT server every X seconds to keep the connection active
   };
-  struct MqttClientSettings HempyMqttServer1 = {.Name = "MQTT1", .MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .MqttServerTimeoutSec = 10, .ClientID = "Gbox420", .PubTopic = "Gbox420/", .SubTopic = "Gbox420CMD/#", .LwtTopic = "Gbox420LWT/", .LwtMessage = "Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
+  struct MqttClientSettings MqttServer1 = {.Name = "MQTT1", .MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .MqttServerTimeoutSec = 10, .ClientID = "Gbox420", .PubTopic = "Gbox420/", .SubTopic = "Gbox420CMD/#", .LwtTopic = "Gbox420LWT/", .LwtMessage = "Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
 
   struct NtpClientSettings ///< MQTT client settings
   {

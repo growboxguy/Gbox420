@@ -115,9 +115,9 @@ static bool __attribute__((unused)) dnsLookupSuccess = false;    ///< true: DNS 
 
 // Class specific variables
 // void getFreeMemory();
-extern char *rtcGetCurrentTime(bool PrintToSerial);                                                                ///< Query current time from local RTC
-extern bool dnsLookup(char *DnsName, ip_addr_t *ResultIP);                                                      ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
-extern void dnsLookupResult(const char *Hostname, const ip_addr_t *ResultIP, void *Arg);                        ///< Callback with the lookup result
+extern char *rtcGetCurrentTime(bool PrintToSerial);                                      ///< Query current time from local RTC
+extern bool dnsLookup(char *DnsName, ip_addr_t *ResultIP);                               ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
+extern void dnsLookupResult(const char *Hostname, const ip_addr_t *ResultIP, void *Arg); ///< Callback with the lookup result
 
 bool isThisForMe(char const *Name, char const *lookupName); ///< Checks if lookupName starts with the Name of the instance followed by _  Example: Object name Sound1, incoming command: Sound1_Ee will return true. The remaining command "Ee" will be copied to ShortMessage buffer
 float convertBetweenTempUnits(float);

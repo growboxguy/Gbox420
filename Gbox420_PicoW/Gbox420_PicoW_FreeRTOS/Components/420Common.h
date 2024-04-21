@@ -21,7 +21,7 @@ extern bool isThisForMe(char const *lookupName); ///< Checks if lookupName start
 class Common
 {
 public:
-  const char *Name;                        ///< Name of the instance  
+  const char *Name; ///< Name of the instance
   char *getName(char *AppendToEnd, bool UnderscoreSeparator = false);
   void appendName(bool ClearBuffer = true);         ///< Adds the component name to the ShortMessage Buffer. If Clear=true flush the cache before adding the name
   virtual void report(bool FriendlyFormat = false); ///< Report the current state into a JSON stored by LongMessage buffer. Pure virtual function with body, must be implemented in child classes  https://www.learncpp.com/cpp-tutorial/pure-virtual-functions-abstract-base-classes-and-interface-classes/

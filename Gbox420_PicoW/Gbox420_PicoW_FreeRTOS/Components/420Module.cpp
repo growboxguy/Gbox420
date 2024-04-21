@@ -333,7 +333,7 @@ void Module::run5sec()
 {
   Common::run5sec();
   reportToSerialTrigger();
-  //reportToMqttTrigger();
+  // reportToMqttTrigger();
 
   for (int i = 0; i < RefreshQueue_5sec_ItemCount; i++)
   {
@@ -387,10 +387,10 @@ void Module::runAll()
  */
 void Module::mqttDataReceived(char *Topic, char *Data)
 {
-  //printf("Topic: %s\n", Topic); // Print the topic the subscribed message was received in, minus the pre-known part of the Topic. Example: Subscribed topic: Gbox420CMD/#  Received: Gbox420CMD/Light1_ON --> Light1_ON 
-  //printf("Data: %s\n", Data);   // Print the message received on the subscribed topic
+  // printf("Topic: %s\n", Topic); // Print the topic the subscribed message was received in, minus the pre-known part of the Topic. Example: Subscribed topic: Gbox420CMD/#  Received: Gbox420CMD/Light1_ON --> Light1_ON
+  // printf("Data: %s\n", Data);   // Print the message received on the subscribed topic
   commandEventTrigger(Topic, Data);
-  reportToMqttTrigger(true); //send out a fresh report
+  reportToMqttTrigger(true); // send out a fresh report
 }
 
 /**
@@ -647,8 +647,8 @@ void Module::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
  * MQTT reporting: Gbox420/Hempy/{"Log":{"FanI":{"S":"1"},"FanE":{"S":"1"},"Ap1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"Ls1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"45.20"},"Pow1":{"P":"573.60","E":"665.47","V":"227.20","C":"2.64","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.45","WR1":"6.77","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.69","WR2":"5.31","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.41","W":"23.57","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.50","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.41","T":"1071.30","W":"14.64","WT":"19.13","AT":"27.30","H":"38.50"},"Main1":{"M":"1","D":"0","RD":"0","RM":"1","RT":"0","RJ":"1"}}}
  * MQTT reporting: char PubTopic[MaxShotTextLength]Hempy/{"EventLog":["","","Module initialized","Lt2 brightness updated"]}
  */
-void Module::mqttPublish(MqttClient *Client, char* JSONData)
-{   
+void Module::mqttPublish(MqttClient *Client, char *JSONData)
+{
   if (Client != nullptr && Client->mqttIsConnected())
   {
     if (*Debug)
@@ -662,7 +662,7 @@ void Module::mqttPublish(MqttClient *Client, char* JSONData)
   {
     if (*Debug)
     {
-      printf("  MQTT broker not connected - %s\n",JSONData);
+      printf("  MQTT broker not connected - %s\n", JSONData);
     }
   }
 }
@@ -746,11 +746,11 @@ void Module::reportToMqttTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
   if (*ReportToMqtt || ForceRun)
   {
-    runReport(false, true, true, true); //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
+    runReport(false, true, true, true);          //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
     mqttPublish(MqttClientDefault, LongMessage); //< Publish Log via ESP MQTT API
-    eventLogToJSON(true, true);                    //< Loads the EventLog as a JSON
+    eventLogToJSON(true, true);                  //< Loads the EventLog as a JSON
     mqttPublish(MqttClientDefault, LongMessage); //< Publish the EventLog via ESP MQTT API
-    settingsToJSON(); //< Loads the module settings as a JSON to the LongMessage buffer
+    settingsToJSON();                            //< Loads the module settings as a JSON to the LongMessage buffer
     mqttPublish(MqttClientDefault, LongMessage); //< Publish the Settings via ESP MQTT API
   }
 }

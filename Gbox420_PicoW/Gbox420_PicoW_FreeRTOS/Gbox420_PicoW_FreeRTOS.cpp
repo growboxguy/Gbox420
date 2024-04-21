@@ -111,7 +111,7 @@ void connectivityTask(void *pvParameters)
   NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY); // NTP: Creates a new UDP Protocol Control Block (PCB) with both IPv4 and IPv6 support
   udp_recv(NtpPcb, ntpReceived, NULL);       // NTP: Register the callback function to handle incoming UDP packets received on the UDP PCB
   connectWiFi();
-  MqttClientDefault = new MqttClient(&GboxSettings->HempyMqttServer1, mqttDataReceived);
+  MqttClientDefault = new MqttClient(&GboxSettings->MqttServer1, mqttDataReceived);
   while (1)
   {
     if (++ConnectivityCounter >= WIFI_TIMEOUT) // Is it time to do a new WiFi check?
@@ -145,7 +145,7 @@ void connectivityTask(void *pvParameters)
   }
 }
 
-// Controls the onboard LED, blink every sec: MQTT connected, blink every 0,5sec: MQTT disconnected. !! Makes the caller task delay a total of 1 sec !!
+// Controls the onboard LED, blink every sec: MQTT connected, blink every 0.5sec: MQTT disconnected. !! Makes the caller task delay a total of 1 sec !!
 void heartbeat()
 {
   cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus); // Blink Internal LED
@@ -156,22 +156,22 @@ void heartbeat()
   }
   else // If MQTT server is not connected: Blink the LED rapidly (every 0.25 sec)
   {
-    for (int i = 0; i < 4; i++)
+    for (uint8_t i = 0; i < 4; i++) // Run 3 times, with a total of ~750ms
     {
-      vTaskDelay(pdMS_TO_TICKS(250));                        // Wait one sec
+      vTaskDelay(pdMS_TO_TICKS(250));                        // Wait 0.25 sec
       cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus); // Blink Internal LED
-      ledStatus = !ledStatus;
+      ledStatus = !ledStatus;                                // Invert status for the next loop
     }
-    vTaskDelay(pdMS_TO_TICKS(250)); // Wait one sec
+    vTaskDelay(pdMS_TO_TICKS(250)); // Wait 0.25 sec
   }
 }
 
 // Initialize WiFi and Connect to local network
 bool connectWiFi()
 {
-  cyw43_arch_enable_sta_mode(); // Enables Wi-Fi STA (Station) mode
-  ledStatus = true;             // Turn on onboard LED to indicate the start of the WiFi connection attempt
-  cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus);
+  cyw43_arch_enable_sta_mode();                                                                                                       // Enables Wi-Fi STA (Station) mode
+  ledStatus = true;                                                                                                                   // Turn on onboard LED to indicate the start of the WiFi connection attempt
+  cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus);                                                                              // Onboard LED constantly on: WiFi connection in progress.
   int WiFiConnectResult = cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMEOUT * 1000); // Try connecting to WiFi. If the timeout elapses, the attempt may still succeed afterward.
   if (WiFiConnectResult != 0)
   {
@@ -209,9 +209,9 @@ void mqttDataReceived(char *SubTopicReceived, char *DataReceived)
     }
     */
   }
-  else //Pass along the command
+  else // Pass along the command
   {
-    //HempyModule1->mqttDataReceived(SubTopicReceived, DataReceived);  //TODO: mqttDataReceived should return true if the command was processed within the module
+    // HempyModule1->mqttDataReceived(SubTopicReceived, DataReceived);  //TODO: mqttDataReceived should return true if the command was processed within the module
   }
 }
 

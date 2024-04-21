@@ -29,11 +29,14 @@ void GboxModule::report(bool FriendlyFormat)
 }
 
 /**
- * @brief Process commands received from MQTT subscription or from the ESP-link website
+ * @brief Process commands received from MQTT subscription. Command format: Name_Command, Example: Sound1_Ee
+ *
+ * @return true : The Name matched with the object's name and the Command was processed
+ * @return false : The command was not intended for the object
  */
-bool GboxModule::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
+bool GboxModule::commandEvent(char *Name_Command, char *Data)
 {
-  if (!isThisForMe(Command))
+  if (!isThisForMe(Name_Command)) // Compares the incoming Cop
   {
     return false;
   }

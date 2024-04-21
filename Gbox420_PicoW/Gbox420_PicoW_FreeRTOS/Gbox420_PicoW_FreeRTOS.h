@@ -1,3 +1,22 @@
+/*!
+ *  \brief     Gbox420 port for Raspberry Pico W (UNDER DEVELOPMENT)
+*  \details   Currently, only the core of Gbox420 is ported from Arduino:
+*              - Connecting to a WiFi network defined in Settings.h (WIFI_SSID,WIFI_PASSWORD), and periodically checking if the connection is up (WIFI_TIMEOUT), reconnecting if needed
+*              - Syncing the Pico's built-in Real-Time Clock (RTC) using an NTP query and periodically re-syncing
+*              - Connecting to an MQTT server defined in Settings.h (MqttClientSettings MqttServer1) and subscribing to topic and all of it's subtopics. The MQTT server connection is regularly monitored for reconnection
+*              - DNS lookup for finding the NTP and MQTT servers by name (MqttServerDNS, NtpServerDNS)
+*              - Onboard LED control: Always on: WiFi connection attempt in progress, Rapid (0.25sec) blinking: MQTT server not connected, Slow blinking (1sec): MQTT server connected
+*              - UART and USB logging, check out SerialOutputSample.txt
+*             Missing:
+*              - Everything related to monitoring a grow tent (Modules and Components)
+*              - Self-hosted website
+*              - Sound support via piezo buzzer
+*              - EEPROM : Since the Pico W lacks EEPROM to retain settings changes between reboots, defaults are loaded from Settings.h upon every boot
+*  \author    GrowBoxGuy
+*  \version   4.20
+
+ */
+
 #pragma once
 
 #include "pico/stdlib.h"
@@ -35,7 +54,7 @@ char *rtcGetCurrentTime(bool PrintToSerial);                                    
 uint8_t NtpSynced = 0;                                                                                         ///< 0: Not synced with an NTP server. NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec. If NtpSynced is changed to uint16_t the sync delay is ~11 days
 void ntpRequest();                                                                                             ///< Make an NTP request
 static void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port); ///< NTP data received
-void mqttDataReceived(char *SubTopicReceived, char *DataReceived);                                                ///< Callback when MQTT data is received on a subscribed topic
+void mqttDataReceived(char *SubTopicReceived, char *DataReceived);                                             ///< Callback when MQTT data is received on a subscribed topic
 Settings *GboxSettings;                                                                                        ///< This object will store the settings loaded from the Settings.h. //TODO: Find a solution to Pico W not having EEPROM
 MqttClient *MqttClientDefault = nullptr;                                                                       ///< Pointer to MQTT handler
 GboxModule *GboxModule1;                                                                                       ///< Core module, provides Sound feedback

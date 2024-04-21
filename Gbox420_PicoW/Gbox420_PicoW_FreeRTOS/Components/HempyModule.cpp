@@ -27,7 +27,6 @@ HempyModule::HempyModule(Settings::HempyModuleSettings *DefaultSettings, Setting
 
   Sound1 = new Sound(this, &GboxSettings->Sound1); ///< Passing DefaultSettings members as references: Changes get written back to DefaultSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&DefaultSettings) + offsetof(Settings, VARIABLENAME))
   this->DefaultSound = Sound1;
- 
 
   addToReportQueue(this); //< Attach to the report event: When triggered the module reports to the Serial Console or to MQTT
   // addToWebsiteQueue_Load(this);    //< Attach to the ESP-link website load event: Calls websiteEvent_Load() when an ESP-link webpage is opened

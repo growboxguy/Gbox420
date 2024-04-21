@@ -16,8 +16,8 @@ class GboxModule : public Module
 {
 public:
   GboxModule(Settings::GboxModuleSettings *DefaultSettings, Settings *GboxSettings);
-  Sound *Sound1 = nullptr;             ///< Pointer to a Piezo speaker - sound feedback
-  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
+  Sound *Sound1 = nullptr; ///< Pointer to a Piezo speaker - sound feedback
+  bool commandEvent(char *Command, char *Data);
   void report(bool FriendlyFormat = false);
   /*
   void run1sec();
