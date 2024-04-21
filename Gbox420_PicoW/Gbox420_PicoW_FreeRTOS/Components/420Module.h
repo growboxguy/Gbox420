@@ -31,6 +31,7 @@
 class Sound;
 class MqttClient;
 extern MqttClient *MqttClientDefault;
+extern void mqttPublish(MqttClient *Client, char *Data);
 
 class Module : virtual public Common
 {

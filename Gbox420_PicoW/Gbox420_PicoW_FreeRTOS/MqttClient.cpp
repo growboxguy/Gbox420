@@ -263,10 +263,10 @@ void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint1
     }
 }
 
-void MqttClient::mqttPublish(char *PubTopic, char *PubData)
+void MqttClient::mqttPublish(const char *PubTopic, const char *PubData)
 {
     cyw43_arch_lwip_begin();
-    err_t err = mqtt_publish(Client, PubTopic, PubData, strlen(PubData), ClientInfo->will_qos, *PublishRetain, mqttPublish_Callback, PubTopic);
+    err_t err = mqtt_publish(Client, PubTopic, PubData, strlen(PubData), ClientInfo->will_qos, *PublishRetain, mqttPublish_Callback, (void *)PubTopic);
     cyw43_arch_lwip_end();
     if (err != ERR_OK)
     {

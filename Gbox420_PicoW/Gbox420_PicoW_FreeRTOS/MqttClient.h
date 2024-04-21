@@ -37,7 +37,7 @@ public:
     void mqttDisconnect();                                  ///< Disconnect from MQTT server
     bool mqttIsConnected();                                 ///< true: Connected to MQTT server, false: not connected
     char *mqttIsConnectedText(bool FriendlyFormat = false); ///< true: Connected to MQTT server, false: not connected
-    void mqttPublish(char *PubTopic, char *PubData);        ///< Publish a message to the PubTopic
+    void mqttPublish(const char *PubTopic, const char *PubData);        ///< Publish a message to the PubTopic
     void mqttSubscribe();                                   ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
     void mqttUnsubscribe();                                 ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
     const char *mqttGetServerName();                        ///< Returns the configured server's DNS name (if configured) or ""
