@@ -26,8 +26,7 @@ add_executable(Gbox420_PicoW_FreeRTOS Gbox420_PicoW_FreeRTOS.cpp ${SOURCES} ${HE
 
 target_compile_definitions(Gbox420_PicoW_FreeRTOS PRIVATE)
 
-target_include_directories(Gbox420_PicoW_FreeRTOS PRIVATE ${CMAKE_CURRENT_LIST_DIR})
- 
+target_include_directories(Gbox420_PicoW_FreeRTOS PRIVATE ${CMAKE_CURRENT_LIST_DIR}) 
 
 target_link_libraries(Gbox420_PicoW_FreeRTOS
     pico_stdlib
@@ -38,10 +37,7 @@ target_link_libraries(Gbox420_PicoW_FreeRTOS
     hardware_rtc
     )
 
-# create map/bin/hex/uf2 file etc.
-pico_add_extra_outputs(Gbox420_PicoW_FreeRTOS)
+pico_add_extra_outputs(Gbox420_PicoW_FreeRTOS) # create map/bin/hex/uf2 file etc.
 
-# enable usb output, enable uart output
-pico_enable_stdio_usb(Gbox420_PicoW_FreeRTOS 1)
-pico_enable_stdio_uart(Gbox420_PicoW_FreeRTOS 1)
-
+pico_enable_stdio_usb(Gbox420_PicoW_FreeRTOS 1) # enable usb output,
+pico_enable_stdio_uart(Gbox420_PicoW_FreeRTOS 1) # enable uart output

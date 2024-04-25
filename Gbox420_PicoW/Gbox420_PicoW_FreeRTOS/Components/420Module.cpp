@@ -453,9 +453,9 @@ char *Module::settingsToJSON()
   strcat(LongMessage, toText(*ReportToGoogleSheets));
   strcat(LongMessage, "\",\"SheetsF\":\"");
   strcat(LongMessage, toText(*SheetsReportingFrequency));
-  strcat(LongMessage, "\",\"Relay\":\"");
-  strcat(LongMessage, GboxSettings->PushingBoxLogRelayID);
   /*
+  strcat(LongMessage, "\",\"Relay\":\"");
+  strcat(LongMessage, GboxSettings->PushingBoxLogRelayID);  
   strcat(LongMessage, "\",\"MQTT\":\"");
   strcat(LongMessage, toText(*ReportToMqtt));
   strcat(LongMessage, "\",\"MQTTF\":\"");
@@ -469,7 +469,7 @@ char *Module::settingsToJSON()
   strcat(LongMessage, "\",\"MLM\":\"");
   strcat(LongMessage, GboxSettings->LwtMessage);
   */
-  strcat(LongMessage, "\"}}"); ///< closing the curly brackets at the end of the JSON
+  strcat(LongMessage, "\"}}"); ///< Appending the closing string indicator and the closing curly brackets for the JSON object
   return LongMessage;
 }
 
@@ -618,6 +618,7 @@ void Module::settingsEvent_Command(__attribute__((unused)) char *Command, __attr
  * Example
  * /pushingbox?devid=v755877CF53383E1&BoxData=
  */
+/*
 void Module::addPushingBoxLogRelayID()
 {
   memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
@@ -625,6 +626,7 @@ void Module::addPushingBoxLogRelayID()
   strcat(LongMessage, GboxSettings->PushingBoxLogRelayID);
   strcat(LongMessage, "&BoxData=");
 }
+*/
 
 /**
  * @brief Send a JSON formatted report to Google Sheets

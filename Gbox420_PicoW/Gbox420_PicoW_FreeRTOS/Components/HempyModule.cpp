@@ -68,7 +68,7 @@ void HempyModule::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< c
 /**
  * @brief Process commands received from MQTT subscription or from the ESP-link website
  */
-bool HempyModule::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
+bool HempyModule::commandEvent(char *Command, char *Data)
 {
   if (!isThisForMe(Command))
   {

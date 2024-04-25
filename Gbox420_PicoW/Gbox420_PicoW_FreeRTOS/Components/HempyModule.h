@@ -27,7 +27,7 @@ public:
   Sound *Sound1 = nullptr; ///< Pointer to a Piezo speaker - sound feedback
   void websiteEvent_Load(__attribute__((unused)) char *Url);
   void websiteEvent_Refresh(__attribute__((unused)) char *Url);
-  bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
+  bool commandEvent(char *Command, char *Data);
   void report(bool FriendlyFormat = false);
   /*
   void run1sec();

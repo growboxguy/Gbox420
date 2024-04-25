@@ -26,6 +26,7 @@ int main()
   printf("Creating tasks...");
   xTaskCreate(watchdogTask, "Watchdog", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L3, NULL);                 ///< Watchdog for crash detection and automatic restart
   xTaskCreate(connectivityTask, "Connectivity checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL); ///< Connect-ReConnect to WiFi, Sync the Real Time Clock using NTP, Make sure MQTT server is connected
+  xTaskCreate(serialReadTask, "Serial checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL);         ///< Waits for an incoming message on stdin
   // xTaskCreate(hempyTask, "Hempy checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);               ///< Hempy module
   printf("done\n");
   vTaskStartScheduler();
@@ -66,8 +67,8 @@ void run5Sec(TimerHandle_t xTimer)
     printf("5sec\n");
   // GboxModule1->run5sec();
   // HempyModule1->run5sec();
-  mqttPublish(NULL,"BlaBlaBla"); //Publish to the default topic from Settings.h (PubTopic)
-  mqttPublish("NotDefaultTopic","BlaBlaBla2");
+  mqttPublish(NULL, "BlaBlaBla");               // Publish to the default topic from Settings.h (PubTopic)
+  mqttPublish("NotDefaultTopic", "BlaBlaBla2"); // Publish to a specified topic
 }
 ///< Runs every 1 min
 void run1Min(TimerHandle_t xTimer)
@@ -96,6 +97,19 @@ void watchdogTask(void *pvParameters)
   {
     vTaskDelay(pdMS_TO_TICKS(7000)); // Delay 7sec
     watchdog_update();               // Pet watchdog
+  }
+}
+
+/// @brief Process incoming command sent from the Serial Monitor Expected text command format: NAME_COMMAND , where NAME is the objects's name from Settings.h example: Sound1_EE   Line ending: LF
+void serialReadTask(void *pvParameters)
+{
+  char Message[MaxShotTextLength];
+  while (1)
+  {
+    fgets(Message, MaxShotTextLength, stdin); // Blocking code! Waits until Serial input is received. Only triggers if the incoming data ends with LF (Line feed \n), make sure the Serial monitor's line ending is set to LF
+    printf("Serial input: %s", Message);
+    Message[strcspn(Message, "\n")] = '\0'; // Remove the newline character from the end of Message
+    mqttDataReceived(Message, NULL);        // Fake an incoming MQTT command. TODO: Add support for passing data along the command
   }
 }
 
@@ -198,11 +212,12 @@ bool connectWiFi()
 void mqttDataReceived(char *SubTopicReceived, char *DataReceived)
 {
   // printf("MQTT topic: %s\nMQTT data: %s\n", TopicReceived, DataReceived);
-  if (isThisForMe("Gbox", SubTopicReceived)) //< If the topic starts with Gbox_ -> process the command
+  if (isThisForMe(GboxSettings->Name, SubTopicReceived)) //< If the topic starts with Gbox_ -> process the command
   {
     if (strcmp(ShortMessage, "D") == 0)
     {
       *Debug = !*Debug;
+      printf("Debug %s\n", toText_enabledDisabled(*Debug));
     }
     /*
     else if (strcmp(ShortMessage, "Ee") == 0)
@@ -230,7 +245,7 @@ void mqttPublish(const char *Topic, const char *Data)
     const char *TopicToPublishTo = nullptr;
     if (Topic == NULL || *Topic == '\0')
     {
-      TopicToPublishTo = MqttClientDefault->PubTopic; //If a topic is not specified, use the default PubTopic from Settings.h
+      TopicToPublishTo = MqttClientDefault->PubTopic; // If a topic is not specified, use the default PubTopic from Settings.h
     }
     else
     {

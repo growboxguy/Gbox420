@@ -39,9 +39,10 @@ extern char CurrentTimeText[MaxShotTextLength]; // Buffer for storing current ti
 
 typedef struct
 {
-  bool Debug;                                                      ///< Logs debug messages to serial and web outputs
-  bool Metric;                                                     ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
-  char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
+  char Name[MaxWordLength] = "Gbox"; ///< Must be unique across the network (If running multiple Pico Ws)
+  bool Debug = true;                 ///< Logs debug messages to serial and web outputs
+  bool Metric = true;                ///< Switch between Imperial/Metric units. If changed update the default temp and pressure values below too.
+  // char PushingBoxLogRelayID[MaxWordLength] = {"v755877CF53383E1"}; ///< UPDATE THIS DeviceID of the PushingBox logging scenario: https://sites.google.com/site/growboxguy/arduino/logging
 
   struct GboxModuleSettings ///< Stripped down core module only containing a Sound component
   {

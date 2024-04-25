@@ -40,6 +40,7 @@
 int main();                                                                                                    ///< Entry point. Loads settings, create tasks and starts FreeRTOS scheduler
 void watchdogTask(void *pvParameters);                                                                         ///< Initialize watchdog and periodically pet it - Crash detection and reboot
 void hempyTask(void *pvParameters);                                                                            ///< Hempy module refresh task
+void serialReadTask(void *pvParameters);                                                                       ///< Read incoming stdin messages and try to process then as MQTT commands
 void run1Sec(TimerHandle_t xTimer);                                                                            ///< Runs every 1 sec
 void run5Sec(TimerHandle_t xTimer);                                                                            ///< Runs every 5 sec
 void run1Min(TimerHandle_t xTimer);                                                                            ///< Runs every 1 min
@@ -56,7 +57,7 @@ uint8_t NtpSynced = 0;                                                          
 void ntpRequest();                                                                                             ///< Make an NTP request
 static void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port); ///< NTP data received
 void mqttDataReceived(char *SubTopicReceived, char *DataReceived);                                             ///< Callback when MQTT data is received on a subscribed topic
-void mqttPublish(const char *Topic, const char *Data);                                                                     ///< Publish data to an MQTT topic
+void mqttPublish(const char *Topic, const char *Data);                                                         ///< Publish data to an MQTT topic
 Settings *GboxSettings;                                                                                        ///< This object will store the settings loaded from the Settings.h. //TODO: Find a solution to Pico W not having EEPROM
 MqttClient *MqttClientDefault = nullptr;                                                                       ///< Pointer to MQTT handler
 GboxModule *GboxModule1;                                                                                       ///< Core module, provides Sound feedback
