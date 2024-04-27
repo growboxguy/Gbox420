@@ -46,12 +46,12 @@ void run5Sec(TimerHandle_t xTimer);                                             
 void run1Min(TimerHandle_t xTimer);                                                                            ///< Runs every 1 min
 void run30Min(TimerHandle_t xTimer);                                                                           ///< Runs every 30 min
 void connectivityTask(void *pvParameters);                                                                     ///< Initialize WiFi, periodically check the connection and reconnect if needed. Use NTP to update the Real Time Clock
-uint8_t ConnectivityCounter = WIFI_TIMEOUT;                                                                    // Count the seconds since the last WiFi connectivity check
+uint8_t ConnectivityCounter = WIFI_TIMEOUT;                                                                    ///< Count the seconds since the last WiFi connectivity check
 void heartbeat();                                                                                              ///< Controls the onboard LED, blink every sec: MQTT connected, blink every 0,5sec: MQTT disconnected. !! Makes the caller task delay a total of 1 sec !!
 bool connectWiFi();                                                                                            ///< Connect to a WiFi network
 bool dnsLookup(char *DnsName, ip_addr_t *ResultIP);                                                            ///< Start a DNS lookup for DnsName, update ResultIP with the result. Returns true if DNS lookup was successful
 void dnsLookupResult(const char *Hostname, const ip_addr_t *ResultIP, void *Arg);                              ///< Callback with the lookup result
-void rtcInit();                                                                                                //< Initialize the Real Time Clock and set a stating date
+void rtcInit();                                                                                                ///< Initialize the Real Time Clock and set a stating date
 char *rtcGetCurrentTime(bool PrintToSerial);                                                                   ///< Query current time from local RTC
 uint8_t NtpSynced = 0;                                                                                         ///< 0: Not synced with an NTP server. NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec. If NtpSynced is changed to uint16_t the sync delay is ~11 days
 void ntpRequest();                                                                                             ///< Make an NTP request
@@ -59,7 +59,7 @@ static void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip
 void mqttDataReceived(char *SubTopicReceived, char *DataReceived);                                             ///< Callback when MQTT data is received on a subscribed topic
 void mqttPublish(const char *Topic, const char *Data);                                                         ///< Publish data to an MQTT topic
 Settings *GboxSettings;                                                                                        ///< This object will store the settings loaded from the Settings.h. //TODO: Find a solution to Pico W not having EEPROM
-MqttClient *MqttClientDefault = nullptr;                                                                       ///< Pointer to MQTT handler
+MqttClient *DefaultMqttClient = nullptr;                                                                       ///< Pointer to MQTT handler
 GboxModule *GboxModule1;                                                                                       ///< Core module, provides Sound feedback
 HempyModule *HempyModule1;                                                                                     ///< Represents a Hempy module with all of its components
 ip_addr_t NtpServerIP;                                                                                         ///< Store the resolved IP address of the NTP server

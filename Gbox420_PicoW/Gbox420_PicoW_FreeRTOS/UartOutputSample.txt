@@ -1,71 +1,57 @@
-/// Sample UART and USB output - Using Debug build
-/// Scenario: Startup with debug output disabled, then debug turned on via MQTT command: Gbox420CMD/Gbox_D and eventually debug turned off again by sending the same command
+/// Sample UART and USB output
 
 Clean boot
 
 Gbox420 FreeRTOS initializing
 Loading settings...done. Version: 1
 Initializing RTC...done
+Initializing Watchdog...done
 Starting timers...done
 Creating tasks...done
-Initializing Watchdog...done
 Initializing WiFi
-Connected to GboxNet - 192.168.1.34
+1sec
+1sec
+1sec
+Connected to GboxNet - 192.168.1.149
 Looking up IP for mqttserver.gbox420.net
 Found address: 192.168.1.100 for mqttserver.gbox420.net
+1sec
 MQTT connecting to: mqttserver.gbox420.net 192.168.1.100
 MQTT connected to: mqttserver.gbox420.net 192.168.1.100
 Subscribed to Gbox420CMD/#
-Friday 20 April 16:20:08 2024
+5sec
+  MQTT broker not connected - BlaBlaBla
+1sec
+Friday 20 April 16:20:06 2024
 WiFi status: UP
 Looking up IP for pool.ntp.org
-Found address: 81.0.124.200 for pool.ntp.org
+Found address: 162.159.200.123 for pool.ntp.org
 MQTT status: CONNECTED
-RTC synced: Sunday 21 April 15:04:11 2024
-Sunday 21 April 15:04:27 2024
-WiFi status: UP
-MQTT status: CONNECTED
-Sunday 21 April 15:04:42 2024
-WiFi status: UP
-MQTT status: CONNECTED
-Match on Gbox, command: D
-5sec
-  MQTT reporting to Gbox420/ - BlaBlaBla
-  MQTT reporting to NotDefaultTopic - BlaBlaBla2
-1sec
+RTC synced: Saturday 27 April 13:59:31 2024
 1sec
 1sec
 1sec
 1sec
 5sec
   MQTT reporting to Gbox420/ - BlaBlaBla
-  MQTT reporting to NotDefaultTopic - BlaBlaBla2
 1sec
+  MQTT published to Gbox420/
 1sec
 1sec
 1sec
 1sec
 5sec
   MQTT reporting to Gbox420/ - BlaBlaBla
-  MQTT reporting to NotDefaultTopic - BlaBlaBla2
+1sec
+  MQTT published to Gbox420/
 1sec
 1sec
 1sec
-1sec
-Sunday 21 April 15:04:57 2024
-WiFi status: UP
-MQTT status: CONNECTED
 1sec
 5sec
   MQTT reporting to Gbox420/ - BlaBlaBla
-  MQTT reporting to NotDefaultTopic - BlaBlaBla2
 1sec
-TopicMQTT: Gbox_D - Gbox420CMD/Gbox_D
-DataMQTT[0]: 
-Match on Gbox, command: D
-Sunday 21 April 15:05:12 2024
-WiFi status: UP
-MQTT status: CONNECTED
-Sunday 21 April 15:05:27 2024
+  MQTT published to Gbox420/
+Saturday 27 April 13:59:47 2024
 WiFi status: UP
 MQTT status: CONNECTED

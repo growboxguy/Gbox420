@@ -455,7 +455,7 @@ char *Module::settingsToJSON()
   strcat(LongMessage, toText(*SheetsReportingFrequency));
   /*
   strcat(LongMessage, "\",\"Relay\":\"");
-  strcat(LongMessage, GboxSettings->PushingBoxLogRelayID);  
+  strcat(LongMessage, GboxSettings->PushingBoxLogRelayID);
   strcat(LongMessage, "\",\"MQTT\":\"");
   strcat(LongMessage, toText(*ReportToMqtt));
   strcat(LongMessage, "\",\"MQTTF\":\"");
@@ -723,10 +723,10 @@ void Module::reportToMqttTrigger(bool ForceRun)
   if (*ReportToMqtt || ForceRun)
   {
     runReport(false, true, true, true);          //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
-    mqttPublish(MqttClientDefault, LongMessage); //< Publish Log via ESP MQTT API
+    mqttPublish(DefaultMqttClient, LongMessage); //< Publish Log via ESP MQTT API
     eventLogToJSON(true, true);                  //< Loads the EventLog as a JSON
-    mqttPublish(MqttClientDefault, LongMessage); //< Publish the EventLog via ESP MQTT API
+    mqttPublish(DefaultMqttClient, LongMessage); //< Publish the EventLog via ESP MQTT API
     settingsToJSON();                            //< Loads the module settings as a JSON to the LongMessage buffer
-    mqttPublish(MqttClientDefault, LongMessage); //< Publish the Settings via ESP MQTT API
+    mqttPublish(DefaultMqttClient, LongMessage); //< Publish the Settings via ESP MQTT API
   }
 }

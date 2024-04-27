@@ -12,11 +12,14 @@ int main()
     printf("\nClean boot\n");
   }
   printf("\nGbox420 FreeRTOS initializing\n");
-  GboxSettings = loadSettings(false);
-  Debug = &GboxSettings->Debug;   // Set global variable
-  Metric = &GboxSettings->Metric; // Set global variable
-  rtcInit();                      ///< Initialize Real Time Clock and set a pre-defined starting date
-                                  // GboxModule1 = new GboxModule(&GboxSettings->Gbox1, GboxSettings); ///< Stripped down core module only containing a Sound component
+  GboxSettings = loadSettings(false); ///< Load the default settings from Settings.h
+  Debug = &GboxSettings->Debug;       ///< Set global variable
+  Metric = &GboxSettings->Metric;     ///< Set global variable
+  rtcInit();                          ///< Initialize Real Time Clock and set a pre-defined starting date
+  ///< GboxModule1 = new GboxModule(&GboxSettings->Gbox1, GboxSettings); ///< Stripped down core module only containing a Sound component
+  printf("Initializing Watchdog..."); ///< Watchdog should be the last to initialize
+  watchdog_enable(0x7fffff, 1);       ///< Maximum of 0x7fffff, which is approximately 8.3 seconds
+  printf("done\n");
   printf("Starting timers...");
   xTimerStart(xTimerCreate("1Sec", pdMS_TO_TICKS(1000), pdTRUE, (void *)1, run1Sec), 1);      ///< Create 1sec software timer
   xTimerStart(xTimerCreate("5Sec", pdMS_TO_TICKS(5000), pdTRUE, (void *)2, run5Sec), 1);      ///< Create 5sec software timer
@@ -24,9 +27,8 @@ int main()
   xTimerStart(xTimerCreate("30Min", pdMS_TO_TICKS(1800000), pdTRUE, (void *)4, run30Min), 1); ///< Create 30min software timer
   printf("done\n");
   printf("Creating tasks...");
-  xTaskCreate(watchdogTask, "Watchdog", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L3, NULL);                 ///< Watchdog for crash detection and automatic restart
   xTaskCreate(connectivityTask, "Connectivity checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL); ///< Connect-ReConnect to WiFi, Sync the Real Time Clock using NTP, Make sure MQTT server is connected
-  xTaskCreate(serialReadTask, "Serial checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL);         ///< Waits for an incoming message on stdin
+  xTaskCreate(serialReadTask, "Serial checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L2, NULL);         ///< Waits for incoming commands from stdin (Serial port)
   // xTaskCreate(hempyTask, "Hempy checker", configMINIMAL_STACK_SIZE, NULL, TASK_PRIORITY_L1, NULL);               ///< Hempy module
   printf("done\n");
   vTaskStartScheduler();
@@ -60,16 +62,19 @@ void run1Sec(TimerHandle_t xTimer)
   // GboxModule1->run1sec();
   // HempyModule1->run1sec();
 }
+
 ///< Runs every 5 sec
 void run5Sec(TimerHandle_t xTimer)
 {
   if (*Debug)
     printf("5sec\n");
+  watchdog_update(); // Pet watchdog
   // GboxModule1->run5sec();
   // HempyModule1->run5sec();
-  mqttPublish(NULL, "BlaBlaBla");               // Publish to the default topic from Settings.h (PubTopic)
-  mqttPublish("NotDefaultTopic", "BlaBlaBla2"); // Publish to a specified topic
+  mqttPublish(NULL, "BlaBlaBla"); // Publish to the default topic from Settings.h (PubTopic)
+  // mqttPublish("NotDefaultTopic", "BlaBlaBla");               // Publish to the default topic from Settings.h (PubTopic)
 }
+
 ///< Runs every 1 min
 void run1Min(TimerHandle_t xTimer)
 {
@@ -78,6 +83,7 @@ void run1Min(TimerHandle_t xTimer)
   // GboxModule1->run1min();
   // HempyModule1->run1min();
 }
+
 ///< Runs every 30 min
 void run30Min(TimerHandle_t xTimer)
 {
@@ -87,19 +93,6 @@ void run30Min(TimerHandle_t xTimer)
   // HempyModule1->run30min();
 }
 
-// Monitor program execution, If the program fails to reset the timer periodically, it indicates a fault, triggering a system reset
-void watchdogTask(void *pvParameters)
-{
-  printf("Initializing Watchdog...");
-  watchdog_enable(0x7fffff, 1); // Maximum of 0x7fffff, which is approximately 8.3 seconds
-  printf("done\n");
-  while (1)
-  {
-    vTaskDelay(pdMS_TO_TICKS(7000)); // Delay 7sec
-    watchdog_update();               // Pet watchdog
-  }
-}
-
 /// @brief Process incoming command sent from the Serial Monitor Expected text command format: NAME_COMMAND , where NAME is the objects's name from Settings.h example: Sound1_EE   Line ending: LF
 void serialReadTask(void *pvParameters)
 {
@@ -107,9 +100,9 @@ void serialReadTask(void *pvParameters)
   while (1)
   {
     fgets(Message, MaxShotTextLength, stdin); // Blocking code! Waits until Serial input is received. Only triggers if the incoming data ends with LF (Line feed \n), make sure the Serial monitor's line ending is set to LF
-    printf("Serial input: %s", Message);
-    Message[strcspn(Message, "\n")] = '\0'; // Remove the newline character from the end of Message
-    mqttDataReceived(Message, NULL);        // Fake an incoming MQTT command. TODO: Add support for passing data along the command
+    Message[strcspn(Message, "\n")] = '\0';   // Remove the newline character from the end of Message
+    printf("Serial input: %s\n", Message);
+    mqttDataReceived(Message, NULL); // Fake an incoming MQTT command. TODO: Add support for passing data along the command
   }
 }
 
@@ -127,7 +120,7 @@ void connectivityTask(void *pvParameters)
   NtpPcb = udp_new_ip_type(IPADDR_TYPE_ANY); // NTP: Creates a new UDP Protocol Control Block (PCB) with both IPv4 and IPv6 support
   udp_recv(NtpPcb, ntpReceived, NULL);       // NTP: Register the callback function to handle incoming UDP packets received on the UDP PCB
   connectWiFi();
-  MqttClientDefault = new MqttClient(&GboxSettings->MqttServer1, mqttDataReceived);
+  DefaultMqttClient = new MqttClient(&GboxSettings->MqttServer1, mqttDataReceived); ///< Create an MQTT client object settings from Settings.h , and set a callback function when data is received from a subscribed topic
   while (1)
   {
     if (++ConnectivityCounter >= WIFI_TIMEOUT) // Is it time to do a new WiFi check?
@@ -150,10 +143,10 @@ void connectivityTask(void *pvParameters)
           NtpSynced++; // NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec. If NtpSynced is changed to uint16_t the sync delay is ~11 days
         }
 
-        printf("MQTT status: %s\n", MqttClientDefault->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
-        if (!MqttClientDefault->mqttIsConnected())                                 // If MQTT server is not connected
+        printf("MQTT status: %s\n", DefaultMqttClient->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
+        if (!DefaultMqttClient->mqttIsConnected())                                 // If MQTT server is not connected -> Trigger a connection attempt
         {
-          MqttClientDefault->mqttConnectTrigger();
+          DefaultMqttClient->mqttConnectTrigger();
         }
       }
     }
@@ -161,12 +154,12 @@ void connectivityTask(void *pvParameters)
   }
 }
 
-// Controls the onboard LED, blink every sec: MQTT connected, blink every 0.5sec: MQTT disconnected. !! Makes the caller task delay a total of 1 sec !!
+// Controls the onboard LED, blink every sec: MQTT connected, blink every 0.25sec: MQTT disconnected. !! Makes the caller task delay a total of 1 sec !!
 void heartbeat()
 {
   cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, ledStatus); // Blink Internal LED
   ledStatus = !ledStatus;                                // Blink Internal LED
-  if (MqttClientDefault->mqttIsConnected())
+  if (DefaultMqttClient->mqttIsConnected())
   {
     vTaskDelay(pdMS_TO_TICKS(1000)); // Wait one sec
   }
@@ -233,31 +226,16 @@ void mqttDataReceived(char *SubTopicReceived, char *DataReceived)
 }
 
 /**
- * @brief Publish an MQTT message containing a JSON formatted report
- * Examples:
+ * @brief Publish an MQTT message to a Topic containing a JSON formatted Data
+ * Example:
  * MQTT reporting: Gbox420/Hempy/{"Log":{"FanI":{"S":"1"},"FanE":{"S":"1"},"Ap1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"Ls1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"45.20"},"Pow1":{"P":"573.60","E":"665.47","V":"227.20","C":"2.64","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.45","WR1":"6.77","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.69","WR2":"5.31","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.41","W":"23.57","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.50","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.41","T":"1071.30","W":"14.64","WT":"19.13","AT":"27.30","H":"38.50"},"Main1":{"M":"1","D":"0","RD":"0","RM":"1","RT":"0","RJ":"1"}}}
- * MQTT reporting: char PubTopic[MaxShotTextLength]Hempy/{"EventLog":["","","Module initialized","Lt2 brightness updated"]}
  */
 void mqttPublish(const char *Topic, const char *Data)
 {
-  if (MqttClientDefault != nullptr && MqttClientDefault->mqttIsConnected())
+  if (DefaultMqttClient != nullptr && DefaultMqttClient->mqttIsConnected())
   {
-    const char *TopicToPublishTo = nullptr;
-    if (Topic == NULL || *Topic == '\0')
-    {
-      TopicToPublishTo = MqttClientDefault->PubTopic; // If a topic is not specified, use the default PubTopic from Settings.h
-    }
-    else
-    {
-      TopicToPublishTo = Topic;
-    }
-    if (*Debug)
-    {
-      printf("  MQTT reporting to %s - %s\n", TopicToPublishTo, Data);
-    }
-    MqttClientDefault->mqttPublish(TopicToPublishTo, Data); //(topic,message,qos (Only level 0 supported),retain )
+    DefaultMqttClient->mqttPublish(Topic, Data);
   }
-
   else
   {
     if (*Debug)

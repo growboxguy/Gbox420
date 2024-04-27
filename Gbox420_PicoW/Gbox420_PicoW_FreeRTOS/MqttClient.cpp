@@ -6,7 +6,7 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, CallbackTy
     MqttServerIP = DefaultSettings->MqttServerIP;
     MqttServerDNS = DefaultSettings->MqttServerDNS;
     MqttServerPort = &DefaultSettings->MqttServerPort;
-    PubTopic = DefaultSettings->PubTopic;
+    PubTopicDefault = DefaultSettings->PubTopic;
     SubTopic = DefaultSettings->SubTopic;
     PublishRetain = &DefaultSettings->PublishRetain;
     QoS = &DefaultSettings->QoS;
@@ -21,6 +21,8 @@ MqttClient::MqttClient(Settings::MqttClientSettings *DefaultSettings, CallbackTy
     ClientInfo->will_msg = DefaultSettings->LwtMessage;
     ClientInfo->will_qos = DefaultSettings->QoS;
     ClientInfo->will_retain = DefaultSettings->LwtRetain;
+
+    MqttPublishMutex = xSemaphoreCreateMutex();
 
     mqttConnectTrigger();                                                                             // Connect to the MQTT server
     absolute_time_t NextRefresh = make_timeout_time_ms(DefaultSettings->MqttServerTimeoutSec * 1000); // 10sec from now
@@ -101,6 +103,10 @@ void MqttClient::mqttConnect()
     }
 }
 
+/// @brief Callback when the MQTT server connection attempt is done
+/// @param Client Pointer to the MQTT client object - LWIP
+/// @param Arg Pointer to the MQTT client object - Gbox420. Since mqttConnect_Callback is static it does not know which instance of the MqttClient class is calling it, the caller's pointer is passed as an argument to mqtt_client_connect
+/// @param Status Contains the current status of the MQTT connection: ACCEPTED, REFUSED, DISCONNECTED, TIMEOUT, etc... see toText_MqttStatus in Helpers.cpp
 void MqttClient::mqttConnect_Callback(mqtt_client_t *Client, void *Arg, mqtt_connection_status_t Status)
 {
     if (Status == MQTT_CONNECT_ACCEPTED)
@@ -169,7 +175,7 @@ void MqttClient::mqttSubscribe()
     InProgress_ConnectAndSubscribe = true;
     cyw43_arch_lwip_begin();
     mqtt_set_inpub_callback(Client, mqttIncomingTopic_Callback, mqttIncomingData_Callback, this); // Set callback functions
-    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttSubscribe_Callback, this, true);       // Initiate subscription
+    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttSubscribe_Callback, this, 1);          // Initiate subscription
     cyw43_arch_lwip_end();
     if (err != ERR_OK)
     {
@@ -194,7 +200,7 @@ void MqttClient::mqttUnsubscribe()
 {
     printf("Unsubscribing from %s...", SubTopic);
     cyw43_arch_lwip_begin();
-    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttUnsubscribe_Callback, this, false);
+    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttUnsubscribe_Callback, this, 0);
     cyw43_arch_lwip_end();
     if (err != ERR_OK)
     {
@@ -263,27 +269,53 @@ void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint1
     }
 }
 
-void MqttClient::mqttPublish(const char *PubTopic, const char *PubData)
+/// @brief Publish an MQTT message ()
+/// @param Topic Topic to publish the message to
+/// @param Data Data to publish to the topic
+void MqttClient::mqttPublish(const char *Topic, const char *Data)
 {
-    cyw43_arch_lwip_begin();
-    err_t err = mqtt_publish(Client, PubTopic, PubData, strlen(PubData), ClientInfo->will_qos, *PublishRetain, mqttPublish_Callback, (void *)PubTopic);
-    cyw43_arch_lwip_end();
-    if (err != ERR_OK)
+    // if (xSemaphoreTake(MqttPublishMutex, portMAX_DELAY) == pdTRUE) // Take the mutex: Block other threads from publishing to the MQTT server
     {
-        printf("  MQTT publish error: %d\n", err); // Failed to send out publish request
+        if (Topic == NULL || *Topic == '\0') // If a topic is not specified -> Publish to the default PubTopic from Settings.h
+        {
+            PubTopic = PubTopicDefault; // If a topic is not specified, use the default PubTopic from Settings.h
+        }
+        else
+        {
+            PubTopic = (char *)Topic;
+        }
+        if (*Debug)
+        {
+            printf("  MQTT reporting to %s - %s\n", PubTopic, Data);
+        }
+
+        cyw43_arch_lwip_begin();
+        err_t err = mqtt_publish(Client, PubTopic, Data, strlen(Data), ClientInfo->will_qos, *PublishRetain, mqttPublish_Callback, this);
+        cyw43_arch_lwip_end();
+        if (err != ERR_OK)
+        {
+            printf("  MQTT publish error: %d\n", err); // Failed to send out publish request
+            // xSemaphoreGive(MqttPublishMutex);          // Release the mutex: Allow another thread to publish to the MQTT server
+        }
     }
+    /*
+    else
+    {
+        printf("  MQTT busy, publish failed to: %s\n", PubTopic); // Failed to take the mutex, some other thread is currently publishing
+    }
+    */
 }
 
 void MqttClient::mqttPublish_Callback(void *Arg, err_t Result)
 {
     if (Result != ERR_OK)
     {
-        printf("  MQTT publish to %s failed: %d\n", (char *)Arg, Result); // Server rejected publish request
+        printf("  MQTT publish to %s failed: %d\n", ((MqttClient *)Arg)->PubTopic, Result); // Server rejected publish request
     }
-    /*
     else
     {
-        printf("  MQTT published to %s\n", Arg);
+        if (*Debug)
+            printf("  MQTT published to %s\n", ((MqttClient *)Arg)->PubTopic);
     }
-    */
+    // xSemaphoreGive(((MqttClient *)Arg)->MqttPublishMutex); // Release the mutex: Allow another thread to publish to the MQTT server
 }
