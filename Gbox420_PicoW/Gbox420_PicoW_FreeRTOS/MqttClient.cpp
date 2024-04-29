@@ -93,7 +93,7 @@ void MqttClient::mqttConnectTrigger()
 
 void MqttClient::mqttConnect()
 {
-    printf("MQTT connecting to: %s %s\n", mqttGetServerName(), mqttGetServerIP());
+    printf("MQTT connecting to %s %s\n", mqttGetServerName(), mqttGetServerIP());
     cyw43_arch_lwip_begin();
     err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, this, ClientInfo);
     cyw43_arch_lwip_end();
@@ -111,7 +111,7 @@ void MqttClient::mqttConnect_Callback(mqtt_client_t *Client, void *Arg, mqtt_con
 {
     if (Status == MQTT_CONNECT_ACCEPTED)
     {
-        printf("MQTT connected to: %s %s\n", ((MqttClient *)Arg)->mqttGetServerName(), ((MqttClient *)Arg)->mqttGetServerIP());
+        printf("MQTT connected to %s %s\n", ((MqttClient *)Arg)->mqttGetServerName(), ((MqttClient *)Arg)->mqttGetServerIP());
         ((MqttClient *)Arg)->mqttSubscribe(); // Once connected subscribe to incoming messages
     }
     else
@@ -187,7 +187,7 @@ void MqttClient::mqttSubscribe_Callback(void *Arg, err_t Result)
 {
     if (Result == 0)
     {
-        printf("Subscribed to %s\n", ((MqttClient *)Arg)->SubTopic);
+        printf("MQTT subscribed to %s\n", ((MqttClient *)Arg)->SubTopic);
     }
     else
     {
@@ -274,7 +274,7 @@ void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint1
 /// @param Data Data to publish to the topic
 void MqttClient::mqttPublish(const char *Topic, const char *Data)
 {
-    // if (xSemaphoreTake(MqttPublishMutex, portMAX_DELAY) == pdTRUE) // Take the mutex: Block other threads from publishing to the MQTT server
+    if (xSemaphoreTake(MqttPublishMutex, pdMS_TO_TICKS(2000)) == pdTRUE) // Take the mutex: Block other threads from publishing to the MQTT server
     {
         if (Topic == NULL || *Topic == '\0') // If a topic is not specified -> Publish to the default PubTopic from Settings.h
         {
@@ -284,38 +284,50 @@ void MqttClient::mqttPublish(const char *Topic, const char *Data)
         {
             PubTopic = (char *)Topic;
         }
-        if (*Debug)
+        // if (*Debug)
         {
-            printf("  MQTT reporting to %s - %s\n", PubTopic, Data);
+            printf(" MQTT reporting to %s - %s\n", PubTopic, Data);
         }
-
-        cyw43_arch_lwip_begin();
-        err_t err = mqtt_publish(Client, PubTopic, Data, strlen(Data), ClientInfo->will_qos, *PublishRetain, mqttPublish_Callback, this);
-        cyw43_arch_lwip_end();
-        if (err != ERR_OK)
+        if (mqttIsConnected())
         {
-            printf("  MQTT publish error: %d\n", err); // Failed to send out publish request
-            // xSemaphoreGive(MqttPublishMutex);          // Release the mutex: Allow another thread to publish to the MQTT server
+
+            cyw43_arch_lwip_begin();
+            err_t err = mqtt_publish(Client, PubTopic, Data, strlen(Data), ClientInfo->will_qos, *PublishRetain, mqttPublish_Callback, this);
+            cyw43_arch_lwip_end();
+            if (err != ERR_OK)
+            {
+                printf(" MQTT publish error: %d , %s - %s\n", err, PubTopic, Data); // Failed to send out publish request
+                xSemaphoreGive(MqttPublishMutex);                                   // Release the mutex: Allow another thread to publish to the MQTT server
+            }
+        }
+        else
+        {
+            if (*Debug)
+            {
+                printf(" MQTT broker not connected %s - %s\n", PubTopic, Data);
+            }
+            xSemaphoreGive(MqttPublishMutex); // Release the mutex: Allow another thread to publish to the MQTT server
         }
     }
-    /*
     else
     {
-        printf("  MQTT busy, publish failed to: %s\n", PubTopic); // Failed to take the mutex, some other thread is currently publishing
+        printf(" MQTT busy, publish failed to %s\n", PubTopic); // Failed to take the mutex, some other thread is currently publishing
     }
-    */
 }
 
 void MqttClient::mqttPublish_Callback(void *Arg, err_t Result)
 {
     if (Result != ERR_OK)
     {
-        printf("  MQTT publish to %s failed: %d\n", ((MqttClient *)Arg)->PubTopic, Result); // Server rejected publish request
+        printf(" MQTT publish to %s failed: %d\n", ((MqttClient *)Arg)->PubTopic, Result); // Server rejected publish request
     }
     else
     {
-        if (*Debug)
-            printf("  MQTT published to %s\n", ((MqttClient *)Arg)->PubTopic);
+        if (Debug)
+        {
+            printf(" MQTT published to %s\n", ((MqttClient *)Arg)->PubTopic);
+        }
     }
-    // xSemaphoreGive(((MqttClient *)Arg)->MqttPublishMutex); // Release the mutex: Allow another thread to publish to the MQTT server
+    //vTaskDelay(pdMS_TO_TICKS(100));                        // Wait 0.1sec before releasing the mutex
+    xSemaphoreGive(((MqttClient *)Arg)->MqttPublishMutex); // Release the mutex: Allow another thread to publish to the MQTT server
 }

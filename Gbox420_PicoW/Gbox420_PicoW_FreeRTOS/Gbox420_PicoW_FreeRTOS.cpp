@@ -71,8 +71,8 @@ void run5Sec(TimerHandle_t xTimer)
   watchdog_update(); // Pet watchdog
   // GboxModule1->run5sec();
   // HempyModule1->run5sec();
-  mqttPublish(NULL, "BlaBlaBla"); // Publish to the default topic from Settings.h (PubTopic)
-  // mqttPublish("NotDefaultTopic", "BlaBlaBla");               // Publish to the default topic from Settings.h (PubTopic)
+  mqttPublish(NULL, "{\"Gbox420\":{\"Debug\":1,\"Metric\":1\"}}"); // Publish to the default topic from Settings.h (PubTopic)
+  //mqttPublish("NotDefaultTopic/", "{\"Gbox420\":{\"Debug\":0,\"Metric\":0\"}}");               // Publish to the default topic from Settings.h (PubTopic)
 }
 
 ///< Runs every 1 min
@@ -232,16 +232,9 @@ void mqttDataReceived(char *SubTopicReceived, char *DataReceived)
  */
 void mqttPublish(const char *Topic, const char *Data)
 {
-  if (DefaultMqttClient != nullptr && DefaultMqttClient->mqttIsConnected())
+  if (DefaultMqttClient != nullptr)
   {
     DefaultMqttClient->mqttPublish(Topic, Data);
-  }
-  else
-  {
-    if (*Debug)
-    {
-      printf("  MQTT broker not connected - %s\n", Data);
-    }
   }
 }
 
@@ -360,7 +353,7 @@ bool dnsLookup(char *DnsName, ip_addr_t *ResultIP)
   cyw43_arch_lwip_end();
   if (err == ERR_OK) // DNS name found in cache and loaded into ResultIP
   {
-    printf("Found cached address: %s - %s\n", ipaddr_ntoa(ResultIP), DnsName);
+    printf("Found cached address %s - %s\n", ipaddr_ntoa(ResultIP), DnsName);
     return true;
   }
   absolute_time_t Timeout = make_timeout_time_ms(DNS_TIMEOUT * 1000);
@@ -384,7 +377,7 @@ void dnsLookupResult(const char *Hostname, const ip_addr_t *FoundIP, void *Resul
 {
   if (FoundIP)
   {
-    printf("Found address: %s for %s\n", ipaddr_ntoa(FoundIP), Hostname);
+    printf("Found address %s for %s\n", ipaddr_ntoa(FoundIP), Hostname);
     ip_addr_copy(*(ip_addr_t *)ResultIP, *FoundIP);
     dnsLookupSuccess = true;
   }

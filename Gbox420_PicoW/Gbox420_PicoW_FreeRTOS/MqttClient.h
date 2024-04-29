@@ -30,28 +30,28 @@ public:
     MqttClient(Settings::MqttClientSettings *DefaultSettings, CallbackType_mqtt DataCallback);
     void report(bool FriendlyFormat = false);
     // void run1min();
-    void mqttConnectTrigger();                                   ///< Initiate connection to the MQTT server: Check WiFi and lookup DNS before calling mqttConnect
-    void mqttConnect();                                          ///< Actually connect to the MQTT server
-    void mqttDNSResolvedCallback(ip_addr_t *ServerIP);           ///< Callback when IP of the MQTT server is found
-    void mqttCheck();                                            ///< Check connected status - Reconnect to MQTT server in the background if disconnected
-    void mqttDisconnect();                                       ///< Disconnect from MQTT server
-    bool mqttIsConnected();                                      ///< true: Connected to MQTT server, false: not connected
-    char *mqttIsConnectedText(bool FriendlyFormat = false);      ///< true: Connected to MQTT server, false: not connected
-    void mqttPublish(const char *PubTopic, const char *PubData); ///< Publish a message to the PubTopic
-    void mqttSubscribe();                                        ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
-    void mqttUnsubscribe();                                      ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
-    const char *mqttGetServerName();                             ///< Returns the configured server's DNS name (if configured) or ""
-    char *mqttGetServerIP();                                     ///< Returns the configured server's IP in text format
-    char *SubTopic;                                              ///< Subscribe topic
-    char *PubTopicDefault;                                       ///< Default topic to publish messages
-    char *PubTopic;                                              ///< Topic to publish messages
-    bool *PublishRetain;                                         ///< Should the MQTT server retain Publish messages: 0:No retention (recommended), 1:Broker keeps the message and sends it to future subscribers
+    void mqttConnectTrigger();                              ///< Initiate connection to the MQTT server: Check WiFi and lookup DNS before calling mqttConnect
+    void mqttConnect();                                     ///< Actually connect to the MQTT server
+    void mqttDNSResolvedCallback(ip_addr_t *ServerIP);      ///< Callback when IP of the MQTT server is found
+    void mqttCheck();                                       ///< Check connected status - Reconnect to MQTT server in the background if disconnected
+    void mqttDisconnect();                                  ///< Disconnect from MQTT server
+    bool mqttIsConnected();                                 ///< true: Connected to MQTT server, false: not connected
+    char *mqttIsConnectedText(bool FriendlyFormat = false); ///< true: Connected to MQTT server, false: not connected
+    void mqttPublish(const char *Topic, const char *Data);  ///< Publish a message to the PubTopic
+    void mqttSubscribe();                                   ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
+    void mqttUnsubscribe();                                 ///< bool Subscribe=true: Subscribe to a topic, bool Subscribe=false: Unsubscribe from a topic
+    const char *mqttGetServerName();                        ///< Returns the configured server's DNS name (if configured) or ""
+    char *mqttGetServerIP();                                ///< Returns the configured server's IP in text format
+    char *SubTopic;                                         ///< Subscribe topic
+    char *PubTopicDefault;                                  ///< Default topic to publish messages
+    char *PubTopic;                                         ///< Topic to publish messages
+    bool *PublishRetain;                                    ///< Should the MQTT server retain Publish messages: 0:No retention (recommended), 1:Broker keeps the message and sends it to future subscribers
 
 private:
     bool InProgress_ConnectAndSubscribe = false;
     bool InProgress_Publish = false;
     char ReceivedTopicShort[MaxShotTextLength]; ///< Last received MQTT messages's topic, excludes the subscribed topic name (example: TestSubtopic)
-    SemaphoreHandle_t MqttPublishMutex;         ///< Mutex to prevent multiple threads from simultaneously publishing MQTT messages. Locks when an mqttPublish() is started, and unlocks when mqttPublish_Callback() is called
+    SemaphoreHandle_t MqttPublishMutex;  ///< Mutex to prevent multiple threads from simultaneously publishing MQTT messages. Locks when an mqttPublish() is started, and unlocks when mqttPublish_Callback() is called
 
 protected:
     mqtt_client_t *Client;
