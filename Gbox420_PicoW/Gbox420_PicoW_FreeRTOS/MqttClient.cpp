@@ -275,7 +275,7 @@ void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint1
 /// @param Data Data to publish to the topic
 void MqttClient::mqttPublish(const char *Topic, const char *Data)
 {
-    if (MqttPublishSemaphore != nullptr && xSemaphoreTake(MqttPublishSemaphore, portMAX_DELAY) == pdTRUE) // Take the mutex: Block other threads from publishing to the MQTT server
+    if (MqttPublishSemaphore != nullptr && xSemaphoreTake(MqttPublishSemaphore, pdMS_TO_TICKS(1000)) == pdTRUE) // Take the semaphore: Block other threads from publishing to the MQTT server
     {
         if (Topic == NULL || *Topic == '\0') // If a topic is not specified -> Publish to the default PubTopic from Settings.h
         {
@@ -298,7 +298,7 @@ void MqttClient::mqttPublish(const char *Topic, const char *Data)
             if (err != ERR_OK)
             {
                 printf(" MQTT publish error: %d , %s - %s\n", err, PubTopic, Data); // Failed to send out publish request
-                xSemaphoreGive(MqttPublishSemaphore);                                   // Release the mutex: Allow another thread to publish to the MQTT server
+                xSemaphoreGive(MqttPublishSemaphore);                                   // Release the semaphore: Allow another thread to publish to the MQTT server
             }
         }
         else
@@ -307,12 +307,12 @@ void MqttClient::mqttPublish(const char *Topic, const char *Data)
             {
                 printf(" MQTT broker not connected %s - %s\n", PubTopic, Data);
             }
-            xSemaphoreGive(MqttPublishSemaphore); // Release the mutex: Allow another thread to publish to the MQTT server
+            xSemaphoreGive(MqttPublishSemaphore); // Release the semaphore: Allow another thread to publish to the MQTT server
         }
     }
     else
     {
-        printf(" MQTT busy, publish failed to %s\n", PubTopic); // Failed to take the mutex, some other thread is currently publishing
+        printf(" MQTT publish failed to %s - %s\n", PubTopic, Data); // Failed to take the semaphore, some other thread is currently publishing
     }
 }
 
@@ -329,6 +329,6 @@ void MqttClient::mqttPublish_Callback(void *Arg, err_t Result)
             printf(" MQTT published to %s\n", ((MqttClient *)Arg)->PubTopic);
         }
     }
-    // vTaskDelay(pdMS_TO_TICKS(100));                        // Wait 0.1sec before releasing the mutex
-    xSemaphoreGive(((MqttClient *)Arg)->MqttPublishSemaphore); // Release the mutex: Allow another thread to publish to the MQTT server
+    // vTaskDelay(pdMS_TO_TICKS(100));                        // Wait 0.1sec before releasing the semaphore
+    xSemaphoreGive(((MqttClient *)Arg)->MqttPublishSemaphore); // Release the semaphore: Allow another thread to publish to the MQTT server
 }
