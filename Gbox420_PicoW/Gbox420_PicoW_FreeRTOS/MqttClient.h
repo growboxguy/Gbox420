@@ -51,7 +51,7 @@ private:
     bool InProgress_ConnectAndSubscribe = false;
     bool InProgress_Publish = false;
     char ReceivedTopicShort[MaxShotTextLength]; ///< Last received MQTT messages's topic, excludes the subscribed topic name (example: TestSubtopic)
-    SemaphoreHandle_t MqttPublishMutex;  ///< Mutex to prevent multiple threads from simultaneously publishing MQTT messages. Locks when an mqttPublish() is started, and unlocks when mqttPublish_Callback() is called
+    SemaphoreHandle_t MqttPublishSemaphore = nullptr;  ///< Mutex to prevent multiple threads from simultaneously publishing MQTT messages. Locks when an mqttPublish() is started, and unlocks when mqttPublish_Callback() is called
 
 protected:
     mqtt_client_t *Client;
