@@ -58,6 +58,7 @@ void ntpRequest();                                                              
 static void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port); ///< NTP data received
 void mqttDataReceived(char *SubTopicReceived, char *DataReceived);                                             ///< Callback when MQTT data is received on a subscribed topic
 void mqttPublish(const char *Topic, const char *Data);                                                         ///< Publish data to an MQTT topic
+SemaphoreHandle_t MqttPublishSemaphore = nullptr;  ///< Semaphore to prevent multiple threads from simultaneously publishing MQTT messages. Locks when an mqttPublish() is started, and unlocks when mqttPublish_Callback() is called
 Settings *GboxSettings;                                                                                        ///< This object will store the settings loaded from the Settings.h. //TODO: Find a solution to Pico W not having EEPROM
 MqttClient *DefaultMqttClient = nullptr;                                                                       ///< Pointer to MQTT handler
 GboxModule *GboxModule1;                                                                                       ///< Core module, provides Sound feedback

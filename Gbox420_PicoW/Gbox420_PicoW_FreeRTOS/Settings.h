@@ -30,8 +30,8 @@ static const uint8_t QueueDepth = 32;           ///< Limits the maximum number o
 static const uint8_t MovingAverageDepth = 10;   ///< Number of previous readings to keep when calculating average. Memory intense!
 
 ///< Global variables
-extern char LongMessage[MaxLongTextLength];     // Temp storage for assembling long messages (REST API - Google Sheets reporting) //TODO Use Mutex to protect the content getting overwritten by a parallel write to LongMessage
-extern char ShortMessage[MaxShotTextLength];    // Temp storage for assembling short messages (Log entries, Error messages) //TODO Use Mutex to protect the content getting overwritten by a parallel write to LongMessage
+extern char LongMessage[MaxLongTextLength];     // Temp storage for assembling long messages (REST API - Google Sheets reporting) //TODO Use Semaphore to protect the content getting overwritten by a parallel write to LongMessage
+extern char ShortMessage[MaxShotTextLength];    // Temp storage for assembling short messages (Log entries, Error messages) //TODO Use Semaphore to protect the content getting overwritten by a parallel write to LongMessage
 extern char CurrentTimeText[MaxShotTextLength]; // Buffer for storing current time in text format
 
 ///< SAVED TO EEPROM - Settings struct
@@ -101,7 +101,7 @@ typedef struct
     uint8_t QoS;                            ///< Quality of Service levels: 0:No QoS, 1: Broker ensures to send the message to the subscribers (recommended), 2: Broker ensures to send the message to the subscribers exactly once   https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/
     uint32_t KeepAliveSeconds;              ///< Ping the MQTT server every X seconds to keep the connection active
   };
-  struct MqttClientSettings MqttServer1 = {.Name = "MQTT1", .MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .MqttServerTimeoutSec = 10, .ClientID = "Gbox420", .PubTopic = "Gbox420/", .SubTopic = "Gbox420CMD/#", .LwtTopic = "Gbox420LWT/", .LwtMessage = "Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 30};
+  struct MqttClientSettings MqttServer1 = {.Name = "MQTT1", .MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .MqttServerTimeoutSec = 10, .ClientID = "Gbox420", .PubTopic = "Gbox420/", .SubTopic = "Gbox420CMD/#", .LwtTopic = "Gbox420LWT/", .LwtMessage = "Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 3600}; //TODO reduce KeepAliveSeconds to ~30sec
 
   struct NtpClientSettings ///< MQTT client settings
   {

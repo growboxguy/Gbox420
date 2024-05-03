@@ -23,6 +23,7 @@
 typedef std::function<void(char *, char *)> CallbackType_mqtt; // Defines how the DataCallback function in mqttConnectTrigger should look like
 
 extern bool dnsLookup(char *DnsName, ip_addr_t *ResultIP);
+extern SemaphoreHandle_t MqttPublishSemaphore;  ///< Semaphore to prevent multiple threads from simultaneously publishing MQTT messages. Locks when an mqttPublish() is started, and unlocks when mqttPublish_Callback() is called
 
 class MqttClient
 {
@@ -51,8 +52,7 @@ private:
     bool InProgress_ConnectAndSubscribe = false;
     bool InProgress_Publish = false;
     char ReceivedTopicShort[MaxShotTextLength]; ///< Last received MQTT messages's topic, excludes the subscribed topic name (example: TestSubtopic)
-    SemaphoreHandle_t MqttPublishSemaphore = nullptr;  ///< Mutex to prevent multiple threads from simultaneously publishing MQTT messages. Locks when an mqttPublish() is started, and unlocks when mqttPublish_Callback() is called
-
+    
 protected:
     mqtt_client_t *Client;
     mqtt_connect_client_info_t *ClientInfo;
