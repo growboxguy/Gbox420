@@ -95,6 +95,18 @@
 #define DHCP_DEBUG LWIP_DBG_OFF
 
 #define MEMP_NUM_SYS_TIMEOUT (LWIP_NUM_SYS_TIMEOUT_INTERNAL + 1) /* Needed for MQTT - Plus one per each MQTT server */
-#define MQTT_REQ_MAX_IN_FLIGHT (5)                               /* Needed for MQTT - Maximum subscribe requests */
+//Redefining MQTT Options from https://www.nongnu.org/lwip/2_1_x/group__mqtt__opts.html
+#undef MQTT_OUTPUT_RINGBUF_SIZE
+#define MQTT_OUTPUT_RINGBUF_SIZE 1152  /* Output ring-buffer size, must be able to fit largest outgoing publish message topic (MaxShotTextLength) + payloads (MaxLongTextLength) */
+#undef MQTT_VAR_HEADER_BUFFER_LEN
+#define MQTT_VAR_HEADER_BUFFER_LEN 1160    /* Number of bytes in receive buffer, set length to max incoming topic length (MaxShotTextLength)  + max payload length (MaxLongTextLength) + 8 */
+#undef MQTT_REQ_MAX_IN_FLIGHT
+#define MQTT_REQ_MAX_IN_FLIGHT 1  /* Maximum number of pending subscribe, unsubscribe and publish requests to server */
+#undef MQTT_CYCLIC_TIMER_INTERVAL
+#define MQTT_CYCLIC_TIMER_INTERVAL 1 /* Seconds between each cyclic timer call. */
+#undef MQTT_REQ_TIMEOUT
+#define MQTT_REQ_TIMEOUT 10 /* Publish, subscribe and unsubscribe request timeout in seconds */
+#undef MQTT_CONNECT_TIMOUT
+#define MQTT_CONNECT_TIMOUT 10 /*Seconds for MQTT connect response timeout after sending connect request*/
 
 #endif /* __LWIPOPTS_H__ */
