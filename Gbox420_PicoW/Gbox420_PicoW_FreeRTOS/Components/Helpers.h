@@ -11,6 +11,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <cmath>
+#include <vector>
 #include "hardware/rtc.h"
 #include "pico/cyw43_arch.h"
 #include "lwip/err.h"

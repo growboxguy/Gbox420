@@ -26,7 +26,7 @@ static const uint8_t MaxWordLength = 32;        ///< Default char * buffer lengt
 static const uint8_t MaxShotTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 1024; ///< Default char * buffer length for storing a long text. Memory intense!
 static const uint8_t LogDepth = 4;              ///< Show X number of log entries on website. Be careful, Max 1024 bits can be passed during a Website Refresh/Load event
-static const uint8_t QueueDepth = 32;           ///< Limits the maximum number of components within a module. Memory intense!
+//static const uint8_t QueueDepth = 32;           ///< Limits the maximum number of components within a module. Memory intense!
 static const uint8_t MovingAverageDepth = 10;   ///< Number of previous readings to keep when calculating average. Memory intense!
 
 ///< Global variables

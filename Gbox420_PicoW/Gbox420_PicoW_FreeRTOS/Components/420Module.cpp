@@ -31,9 +31,10 @@ void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuf
 void Module::commandEventTrigger(char *Command, char *Data)
 {
   bool NameMatchFound = false;
-  for (int i = 0; i < CommandQueueItemCount; i++)
+
+  for (auto Component : CommandQueue)
   {
-    NameMatchFound = CommandQueue[i]->commandEvent(Command, Data);
+    NameMatchFound = Component->commandEvent(Command, Data);
     if (NameMatchFound)
       break;
   }
@@ -71,10 +72,10 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
   }
   if ((*SerialReportJSONFriendly || ForceRun) && !JSONToBufferOnly)
   {
-    printf("%u items reporting:\n", ReportQueueItemCount); ///< Prints the number of items that will report
-    for (int i = 0; i < ReportQueueItemCount; i++)
+    printf("%u items reporting:\n", ReportQueue.size()); ///< Prints the number of items that will report
+        for (auto Component : ReportQueue)
     {
-      ReportQueue[i]->report(false);
+      Component->report(false);
     }
   }
   if (*SerialReportJSON || ForceRun || JSONToBufferOnly)
@@ -89,10 +90,11 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
       printf("%s\n", LongMessage);
       memset(&LongMessage[0], 0, MaxLongTextLength); ///< clear variable
     }
-    for (int i = 0; i < ReportQueueItemCount;)
+    size_t ReportQueueSize = ReportQueue.size();
+    for (size_t i = 0; i < ReportQueueSize;)
     {
       ReportQueue[i++]->report(JSONToBufferOnly || KeepBuffer ? false : *SerialReportJSONFriendly);
-      if (i != ReportQueueItemCount)
+      if (i != ReportQueueSize)
         strcat(LongMessage, ","); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
       {
@@ -115,63 +117,37 @@ Sound *Module::getSoundObject()
 
 ///< Queue subscriptions: When a component needs to get refreshed at certain intervals it subscribes
 
-/**
- * @brief Subscribe to report() calls
- */
-void Module::addToReportQueue(Common *Component)
+void Module::addToReportQueue(Common *Component) // Subscribe to report() callbacks
 {
-  if (QueueDepth > ReportQueueItemCount)
-    ReportQueue[ReportQueueItemCount++] = Component;
-  else
-    printf("Report queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h , or shift components to a different queue
+  RefreshQueue_5sec.push_back(Component);
+}
+
+void Module::addToRefreshQueue_1sec(Common *Component) // Subscribe to run1sec() callbacks
+{
+  RefreshQueue_1sec.push_back(Component);
+}
+
+void Module::addToRefreshQueue_5sec(Common *Component) // Subscribe to run5sec() callbacks
+{
+  RefreshQueue_5sec.push_back(Component);
+}
+
+void Module::addToRefreshQueue_1min(Common *Component) // Subscribe to run1min() callbacks
+{
+  RefreshQueue_1min.push_back(Component);
+}
+
+void Module::addToRefreshQueue_30min(Common *Component) // Subscribe to run30min() callbacks
+{
+  RefreshQueue_30min.push_back(Component);
 }
 
 /**
- * @brief Subscribe to refresh() calls
- *
- * @param Component Pointer to the object subscribing
+ * @brief
  */
-void Module::addToRefreshQueue_1sec(Common *Component)
+void Module::addToCommandQueue(Common *Component) // Subscribe to commandEvent(char *Command, char *Data) calls  (MQTT command)
 {
-  if (QueueDepth > RefreshQueue_1sec_ItemCount)
-    RefreshQueue_1sec[RefreshQueue_1sec_ItemCount++] = Component;
-  else
-    printf("1sec queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
-}
-
-void Module::addToRefreshQueue_5sec(Common *Component)
-{
-  if (QueueDepth > RefreshQueue_5sec_ItemCount)
-    RefreshQueue_5sec[RefreshQueue_5sec_ItemCount++] = Component;
-  else
-    printf("5sec queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
-}
-
-void Module::addToRefreshQueue_1min(Common *Component)
-{
-  if (QueueDepth > RefreshQueue_1min_ItemCount)
-    RefreshQueue_1min[RefreshQueue_1min_ItemCount++] = Component;
-  else
-    printf("1min queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
-}
-
-void Module::addToRefreshQueue_30min(Common *Component)
-{
-  if (QueueDepth > RefreshQueue_30min_ItemCount)
-    RefreshQueue_30min[RefreshQueue_30min_ItemCount++] = Component;
-  else
-    printf("30min queue overflow\n"); ///< Too many components are added to the queue, increase "QueueDepth" variable in Settings.h
-}
-
-/**
- * @brief Subscribe to commandEvent(char *Command, char *Data) calls  (MQTT command)
- */
-void Module::addToCommandQueue(Common *Subscriber)
-{
-  if (QueueDepth > CommandQueueItemCount)
-    CommandQueue[CommandQueueItemCount++] = Subscriber;
-  else
-    printf("CommandQueue overflow!\n");
+  CommandQueue.push_back(Component);
 }
 
 /**
@@ -237,6 +213,7 @@ void Module::setSerialReportWireless(bool State)
 /**
  * @brief Subscribe to the ESP-link website load event
  */
+/*
 void Module::addToWebsiteQueue_Load(Common *Subscriber)
 {
   if (QueueDepth > WebsiteQueue_Load_Count)
@@ -244,10 +221,12 @@ void Module::addToWebsiteQueue_Load(Common *Subscriber)
   else
     printf("WebsiteQueue_Load overflow!\n");
 }
+*/
 
 /**
  * @brief Subscribe to the ESP-link website refresh event
  */
+/*
 void Module::addToWebsiteQueue_Refresh(Common *Subscriber)
 {
   if (QueueDepth > WebsiteQueue_Refresh_Count)
@@ -255,10 +234,12 @@ void Module::addToWebsiteQueue_Refresh(Common *Subscriber)
   else
     printf("WebsiteQueue_Refresh overflow!\n");
 }
+*/
 
 /**
  * @brief Notify subscribed components of a website load event
  */
+/*
 void Module::websiteLoadEventTrigger(char *Url)
 { ///< called when website is loaded. Runs through all components that subscribed for this event
   for (int i = 0; i < WebsiteQueue_Load_Count; i++)
@@ -266,10 +247,12 @@ void Module::websiteLoadEventTrigger(char *Url)
     WebsiteQueue_Load[i]->websiteEvent_Load(Url);
   }
 }
+*/
 
 /**
  * @brief Notify subscribed components of a website refresh event
  */
+/*
 void Module::websiteRefreshEventTrigger(char *Url)
 { ///< called when website is refreshed.
   for (int i = 0; i < WebsiteQueue_Refresh_Count; i++)
@@ -277,6 +260,7 @@ void Module::websiteRefreshEventTrigger(char *Url)
     WebsiteQueue_Refresh[i]->websiteEvent_Refresh(Url);
   }
 }
+*/
 
 void Module::run1sec()
 {
@@ -288,9 +272,9 @@ void Module::run1sec()
   }
   else
   {
-    for (int i = 0; i < RefreshQueue_1sec_ItemCount; i++)
+    for (auto Component : RefreshQueue_1sec)
     {
-      RefreshQueue_1sec[i]->run1sec();
+      Component->run1sec();
     }
   }
 }
@@ -301,9 +285,9 @@ void Module::run5sec()
   reportToSerialTrigger();
   // reportToMqttTrigger();
 
-  for (int i = 0; i < RefreshQueue_5sec_ItemCount; i++)
+  for (auto Component : RefreshQueue_5sec)
   {
-    RefreshQueue_5sec[i]->run5sec();
+    Component->run5sec();
   }
 
   /*
@@ -325,18 +309,18 @@ void Module::run5sec()
 void Module::run1min()
 {
   Common::run1min();
-  for (int i = 0; i < RefreshQueue_1min_ItemCount; i++)
+  for (auto Component : RefreshQueue_1min)
   {
-    RefreshQueue_1min[i]->run1min();
+    Component->run1min();
   }
 }
 
 void Module::run30min()
 {
   Common::run30min();
-  for (int i = 0; i < RefreshQueue_30min_ItemCount; i++)
+  for (auto Component : RefreshQueue_30min)
   {
-    RefreshQueue_30min[i]->run30min();
+    Component->run30min();
   }
 }
 
@@ -502,7 +486,7 @@ void Module::settingsEvent_Command(__attribute__((unused)) char *Command, __attr
     RefreshRequested = true;
     addToLog("Refreshing", false);
     getSoundObject()->playOnSound();
-  } 
+  }
   // Settings - Serial reporting
   else if (strcmp(Command, "SerialF") == 0)
   {
@@ -599,7 +583,6 @@ void Module::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
   }
   // PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
 }
-
 
 ///< Google Sheets reporting
 

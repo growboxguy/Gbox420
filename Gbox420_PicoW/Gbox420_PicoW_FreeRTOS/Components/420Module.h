@@ -49,7 +49,7 @@ public:
   void addToRefreshQueue_5sec(Common *Component);                                                                                     ///< Subscribing to the 5 second refresh queue: Calls the run5sec() method
   void addToRefreshQueue_1min(Common *Component);                                                                                     ///< Subscribing to the 1 minute refresh queue: Calls the run1min() method
   void addToRefreshQueue_30min(Common *Component);                                                                                    ///< Subscribing to the 30 minute refresh queue: Calls the run30min() method
-  void addToCommandQueue(Common *Subscriber);                                                                                         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method
+  void addToCommandQueue(Common *Component);                                                                                         ///< Subscribing to commands from external systems (MQTT, HTTP): Calls the commandEvent() method
   void commandEventTrigger(char *Command, char *Data);                                                                                ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
   void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false); ///< Print report to stdout or to a JSON for MQTT reporting. Report is loaded into LongMessage buffer
   void mqttDataReceived(char *Topic, char *Data);                                                                                     ///< MQTT data received from the Subscribed topic
@@ -91,27 +91,20 @@ protected:
   void setSerialReportWireless(bool State);             ///< Enable/disable sending wireless package exchange reports to the Serial output
   bool RunAllRequested = false;
   bool ConsoleReportRequested = false;
-  Common *ReportQueue[QueueDepth] = {}; ///< aggregate initializer: Same as initializing to null pointers
-  Common *RefreshQueue_1sec[QueueDepth] = {};
-  Common *RefreshQueue_5sec[QueueDepth] = {};
-  Common *RefreshQueue_1min[QueueDepth] = {};
-  Common *RefreshQueue_30min[QueueDepth] = {};
-  Common *CommandQueue[QueueDepth] = {};
-  uint8_t ReportQueueItemCount = 0; ///< Tracking queue item count
-  uint8_t RefreshQueue_1sec_ItemCount = 0;
-  uint8_t RefreshQueue_5sec_ItemCount = 0;
-  uint8_t RefreshQueue_1min_ItemCount = 0;
-  uint8_t RefreshQueue_30min_ItemCount = 0;
-  uint8_t CommandQueueItemCount = 0;
-
+  std::vector<Common*>ReportQueue; ///< aggregate initializer: Same as initializing to null pointers
+  std::vector<Common*>RefreshQueue_1sec;
+  std::vector<Common*>RefreshQueue_5sec;
+  std::vector<Common*>RefreshQueue_1min;
+  std::vector<Common*>RefreshQueue_30min;
+  std::vector<Common*>CommandQueue;
 
   void setSheetsReportingOnOff(bool State);
   void setSheetsReportingFrequency(uint16_t Frequency);
   void setPushingBoxLogRelayID(const char *ID);
-  Common *WebsiteQueue_Load[QueueDepth] = {};
-  Common *WebsiteQueue_Refresh[QueueDepth] = {};
-  uint8_t WebsiteQueue_Load_Count = 0;
-  uint8_t WebsiteQueue_Refresh_Count = 0;
+  //Common *WebsiteQueue_Load[QueueDepth] = {};
+  //Common *WebsiteQueue_Refresh[QueueDepth] = {};
+  //uint8_t WebsiteQueue_Load_Count = 0;
+  //uint8_t WebsiteQueue_Refresh_Count = 0;
   bool RefreshRequested = false;
   bool ReportToGoogleSheetsRequested = false;
   bool MQTTReportRequested = false;
