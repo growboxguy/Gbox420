@@ -16,7 +16,7 @@ int main()
   Debug = &GboxSettings->Debug;       ///< Set global variable
   Metric = &GboxSettings->Metric;     ///< Set global variable
   rtcInit();                          ///< Initialize Real Time Clock and set a pre-defined starting date
-  ///< GboxModule1 = new GboxModule(&GboxSettings->Gbox1, GboxSettings); ///< Stripped down core module only containing a Sound component
+  GboxModule1 = new GboxModule(&GboxSettings->Gbox1, GboxSettings); ///< Stripped down core module only containing a Sound component
   MqttPublishSemaphore = xSemaphoreCreateBinary(); ///< Initialize a semaphore used during MQTT publish
   xSemaphoreGive(MqttPublishSemaphore); ///< Make sure the semaphore is available
   timer_hw->dbgpause = 0; //Do not pause HW timer when debug is active
@@ -63,7 +63,7 @@ void run1Sec(TimerHandle_t xTimer)
   if (*Debug)
     printf("1sec\n");  
   watchdog_update(); // Pet watchdog
-  // GboxModule1->run1sec();
+  GboxModule1->run1sec();
   // HempyModule1->run1sec();
 }
 
@@ -73,10 +73,10 @@ void run5Sec(TimerHandle_t xTimer)
   if (*Debug)
     printf("5sec\n");
   watchdog_update(); // Pet watchdog
-  // GboxModule1->run5sec();
+  GboxModule1->run5sec();
   // HempyModule1->run5sec();
-  mqttPublish(NULL, "{\"Gbox420\":{\"Debug\":1,\"Metric\":1\"}}");               // Publish to the default topic from Settings.h (PubTopic)
-  //mqttPublish("NotDefaultTopic/", "{\"Gbox420\":{\"Debug\":0,\"Metric\":0\"}}"); // Publish to the default topic from Settings.h (PubTopic)
+  //mqttPublish(NULL, "{\"Gbox420\":{\"Debug\":1,\"Metric\":1\"}}");               // Publish to the default topic from Settings.h (PubTopic)
+  //mqttPublish("NotDefaultTopic/", "{\"Gbox420\":{\"Debug\":0,\"Metric\":0\"}}"); // Publish to a specified topic
 }
 
 ///< Runs every 1 min
@@ -85,7 +85,7 @@ void run1Min(TimerHandle_t xTimer)
   if (*Debug)
     printf("1min\n");
   watchdog_update(); // Pet watchdog
-  // GboxModule1->run1min();
+  GboxModule1->run1min();
   // HempyModule1->run1min();
 }
 
@@ -95,7 +95,7 @@ void run30Min(TimerHandle_t xTimer)
   if (*Debug)
     printf("30min\n");
   watchdog_update(); // Pet watchdog
-  // GboxModule1->run30min();
+  GboxModule1->run30min();
   // HempyModule1->run30min();
 }
 

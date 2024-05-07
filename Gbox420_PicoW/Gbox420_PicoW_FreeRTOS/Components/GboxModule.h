@@ -27,4 +27,9 @@ public:
 
 private:
 protected:
+  void setDebug(bool State);          ///< Turn debug messages printed to stdout ON or OFF
+  void toggleDebug();                 ///< Invert the state of printing debug messages
+  void setMetric(bool MetricEnabled); ///< Metric or Imperial mode
+    char *getDebugText(bool FriendlyFormat = false);
+  char *getMetricText(bool FriendlyFormat = false);
 };

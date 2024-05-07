@@ -25,7 +25,7 @@ void GboxModule::report(bool FriendlyFormat)
   strcat(LongMessage, getMetricText(FriendlyFormat));
   strcat(LongMessage, "\",\"D\":\"");
   strcat(LongMessage, getDebugText(FriendlyFormat));
-  strcat(LongMessage, "\"}"); ///< closing the curly bracket at the end of the JSON
+  strcat(LongMessage, "\"}"); ///< closing the curly bracket at the end of the JSON  
 }
 
 /**
@@ -34,9 +34,9 @@ void GboxModule::report(bool FriendlyFormat)
  * @return true : The Name matched with the object's name and the Command was processed
  * @return false : The command was not intended for the object
  */
-bool GboxModule::commandEvent(char *Name_Command, char *Data)
+bool GboxModule::commandEvent(char *Command, char *Data)
 {
-  if (!isThisForMe(Name_Command)) // Compares the incoming Cop
+  if (!isThisForMe(Command)) // Compares the incoming Command against the object's Name. If the command starts with the objects name followed by a _  the command is extracted to ShotMessage buffer
   {
     return false;
   }
@@ -50,6 +50,70 @@ bool GboxModule::commandEvent(char *Name_Command, char *Data)
     {
       getSoundObject()->playEE();
     }
+    else if (strcmp(ShortMessage, "M") == 0)
+    {
+      setMetric(!*Metric);
+    }
     return true; // Match found
   }
+}
+
+///< Settings
+
+char *GboxModule::getDebugText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_onOff(*Debug);
+  }
+  else
+  {
+    return toText(*Debug);
+  }
+}
+
+char *GboxModule::getMetricText(bool FriendlyFormat)
+{
+  if (FriendlyFormat)
+  {
+    return toText_onOff(*Metric);
+  }
+  else
+  {
+    return toText(*Metric);
+  }
+}
+
+///< Settings
+void GboxModule::setDebug(bool DebugEnabled)
+{
+  *Debug = DebugEnabled;
+  if (*Debug)
+  {
+    addToLog("Debug ON");
+  }
+  else
+  {
+    addToLog("Debug OFF");
+  }
+  getSoundObject()->playOnOffSound(*Debug);
+}
+
+void GboxModule::toggleDebug()
+{
+  setDebug(!*Debug);
+}
+
+void GboxModule::setMetric(bool MetricEnabled)
+{
+  if (MetricEnabled != *Metric)
+  { ///< if there was a change
+    *Metric = MetricEnabled;
+    RefreshRequested = true;
+  }
+  if (*Metric)
+    addToLog("Using Metric units");
+  else
+    addToLog("Using Imperial units");
+  getSoundObject()->playOnSound();
 }

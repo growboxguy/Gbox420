@@ -40,12 +40,7 @@ HempyModule::HempyModule(Settings::HempyModuleSettings *DefaultSettings, Setting
  */
 void HempyModule::report(bool FriendlyFormat)
 {
-  Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-  strcat(LongMessage, "\"M\":\"");
-  strcat(LongMessage, getMetricText(FriendlyFormat));
-  strcat(LongMessage, "\",\"D\":\"");
-  strcat(LongMessage, getDebugText(FriendlyFormat));
-  strcat(LongMessage, "\"}"); ///< closing the curly bracket at the end of the JSON
+ ;
 }
 
 /**
@@ -78,7 +73,7 @@ bool HempyModule::commandEvent(char *Command, char *Data)
   {
     if (strcmp(ShortMessage, "D") == 0)
     {
-      toggleDebug();
+      //toggleDebug();
     }
     /*
     else if (strcmp(ShortMessage, "M") == 0)

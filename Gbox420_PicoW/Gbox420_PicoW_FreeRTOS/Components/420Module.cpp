@@ -189,40 +189,6 @@ void Module::addToLog(const char *LongMessage, __attribute__((unused)) uint8_t I
   printf("%s\n", Logs[0]);
 }
 
-///< Settings
-void Module::setDebug(bool DebugEnabled)
-{
-  *Debug = DebugEnabled;
-  if (*Debug)
-  {
-    addToLog("Debug ON");
-  }
-  else
-  {
-    addToLog("Debug OFF");
-  }
-  getSoundObject()->playOnOffSound(*Debug);
-}
-
-void Module::toggleDebug()
-{
-  setDebug(!*Debug);
-}
-
-void Module::setMetric(bool MetricEnabled)
-{
-  if (MetricEnabled != *Metric)
-  { ///< if there was a change
-    *Metric = MetricEnabled;
-    RefreshRequested = true;
-  }
-  if (*Metric)
-    addToLog("Using Metric units");
-  else
-    addToLog("Using Imperial units");
-  getSoundObject()->playOnSound();
-}
-
 void Module::setSerialReportDate(bool State)
 {
   if (State != *SerialReportDate)
@@ -536,16 +502,7 @@ void Module::settingsEvent_Command(__attribute__((unused)) char *Command, __attr
     RefreshRequested = true;
     addToLog("Refreshing", false);
     getSoundObject()->playOnSound();
-  }
-  // Settings
-  else if (strcmp(Command, "Debug") == 0)
-  {
-    setDebug(toBool(Data));
-  }
-  else if (strcmp(Command, "Metric") == 0)
-  {
-    setMetric(toBool(Data));
-  }
+  } 
   // Settings - Serial reporting
   else if (strcmp(Command, "SerialF") == 0)
   {
@@ -643,31 +600,6 @@ void Module::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
   // PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
 }
 
-///< Settings
-
-char *Module::getDebugText(bool FriendlyFormat)
-{
-  if (FriendlyFormat)
-  {
-    return toText_onOff(*Debug);
-  }
-  else
-  {
-    return toText(*Debug);
-  }
-}
-
-char *Module::getMetricText(bool FriendlyFormat)
-{
-  if (FriendlyFormat)
-  {
-    return toText_onOff(*Metric);
-  }
-  else
-  {
-    return toText(*Metric);
-  }
-}
 
 ///< Google Sheets reporting
 

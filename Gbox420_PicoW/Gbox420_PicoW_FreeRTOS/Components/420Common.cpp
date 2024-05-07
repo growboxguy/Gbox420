@@ -83,3 +83,8 @@ char *Common::getName(char *AppendToEnd, bool UnderscoreSeparator)
   strcat(ReturnChar, AppendToEnd);
   return ReturnChar;
 }
+
+bool Common::isThisForMe(char const *Command)
+{
+  return ::isThisForMe((char const *)Name,Command);
+}

@@ -11,27 +11,27 @@ void getFreeMemory()
 */
 
 ///< Comparing the Objects name to an incoming command. Object name Sound1, incoming command: Sound1_Ee will return true. The remaining command "Ee" will be copied to ShortMessage buffer
-bool isThisForMe(char const *Name, char const *LookupName) ///< Returns true when the LookupName starts with the Name of the instance followed by _
+bool isThisForMe(char const *Name, char const *Command) ///< Returns true when the Command starts with the Name of the instance followed by _
 {
   /*
   if(Debug >= 2)  //< Only print this on debug level 2
   {
-  printf("LookupName :");
-  printf("%s\n", LookupName);
+  printf("Command :");
+  printf("%s\n", Command);
   printf("Object :");
   printf("%s\n", Name);
   }
   */
 
-  char *Command = ShortMessage; ///< return text will be loaded into a global temp buffer
+  char *ReturnCommand = ShortMessage; ///< The command without the object name will be loaded into a global temp buffer
   uint8_t CharacterCount = 0;   // Tracks which character is currently getting compared
   char NameCurrentChar;         // Current Name character being compared
-  char LookupCurrentChar;       // Current LookupName character being compared
+  char LookupCurrentChar;       // Current Command character being compared
 
   while (1)
   {
     NameCurrentChar = Name[CharacterCount];           ///< read the current character from the flash and increment the pointer to the next char
-    LookupCurrentChar = LookupName[CharacterCount++]; ///< read the character at the same position from the LookupName
+    LookupCurrentChar = Command[CharacterCount++]; ///< read the character at the same position from the Command
     // printf("%s - %s ",NameCurrentChar,LookupCurrentChar);
 
     if (NameCurrentChar == '\0')
@@ -42,22 +42,22 @@ bool isThisForMe(char const *Name, char const *LookupName) ///< Returns true whe
       return false; ///< Stop function and return false
     }
   }
-  if (NameCurrentChar == '\0' && LookupCurrentChar == '_') ///< End of the Name, _ sign at the LookupName
-  {                                                        ///< if instance name is confirmed: continue reading the remaining characters from the LookupName
+  if (NameCurrentChar == '\0' && LookupCurrentChar == '_') ///< End of the Name, _ sign at the Command
+  {                                                        ///< if instance name is confirmed: continue reading the remaining characters from the Command
     int SafetyCount = 0;
     ///< printf("Inside second check: ");
     while (1)
     {
-      LookupCurrentChar = LookupName[CharacterCount++]; ///< read the next LookupName character
+      LookupCurrentChar = Command[CharacterCount++]; ///< read the next Command character
       ///< printf(LookupCurrentChar);
-      *Command++ = LookupCurrentChar;
+      *ReturnCommand++ = LookupCurrentChar;
       if (LookupCurrentChar == '\0')
         break; ///< reached the string termination sign
       if (SafetyCount++ > MaxWordLength)
       {
-        *Command = '\0';
+        *ReturnCommand = '\0';
         printf("   Too long:");
-        printf(LookupName, true, 1);
+        printf(Command, true, 1);
         return false;
       }
     }
