@@ -11,21 +11,6 @@ Module::Module(const char *Name) : Common(Name)
 }
 
 /**
- * @brief Handles custom reporting frequency for Serial
- * @param ForceRun Send a report instantly, even when regular reports are disabled
- * @param ClearBuffer Flush the LongMessage buffer before starting to report
- * @param KeepBuffer Stores the full JSON report in the LongMessage buffer (up to 1024kB)
- * @param JSONToBufferOnly Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
- */
-void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
-{
-  if ((SerialTriggerCounter++ % (*SerialReportFrequency / 5) == 0) || ForceRun)
-  {
-    runReport(ForceRun, ClearBuffer, KeepBuffer, JSONToBufferOnly);
-  }
-}
-
-/**
  * @brief Notify subscribed components of a received MQTT command
  */
 void Module::commandEventTrigger(char *Command, char *Data)
@@ -54,23 +39,38 @@ void Module::setSerialReportingFrequency(uint16_t Frequency)
 }
 
 /**
+ * @brief Handles custom reporting frequency for Serial
+ * @param ForceRun Send a report instantly, even when regular reports are disabled
+ * @param ClearBuffer Flush the LongMessage buffer before starting to report
+ * @param KeepBuffer Stores the full JSON report in the LongMessage buffer (up to MaxLongTextLength)
+ * @param JSONToBufferOnly Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
+ */
+void Module::reportToSerialTrigger(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
+{
+  if ((SerialTriggerCounter++ % (*SerialReportFrequency / 5) == 0) || ForceRun)
+  {
+    reportToSerial(ForceRun, ClearBuffer, KeepBuffer, JSONToBufferOnly);
+  }
+}
+
+/**
  * @brief Reports sensor readings to stdout or to the LongMessage buffer
  * @param ForceRun Send a report instantly, even when regular reports are disabled
  * @param ClearBuffer Flush the LongMessage buffer before starting to report
- * @param KeepBuffer Stores the full JSON report in the LongMessage buffer - Can be up to 1024kB
- * @param JSONToBufferOnly Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
+ * @param KeepBuffer Stores the full JSON report in the LongMessage buffer - Can be up to MaxLongTextLength
+ * @param OnlyJSON Do not print anything on the serial output, only fill the LongMessage buffer with the JSON report
  */
-void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JSONToBufferOnly)
+void Module::reportToSerial(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool OnlyJSON)
 {
-  if ((*SerialReportDate || ForceRun) && !JSONToBufferOnly)
+  if ((*SerialReportDate || ForceRun) && !OnlyJSON)
   {
     rtcGetCurrentTime(true);
   }
-  if ((*SerialReportMemory || ForceRun) && !JSONToBufferOnly)
+  if ((*SerialReportMemory || ForceRun) && !OnlyJSON)
   {
     // getFreeMemory();
   }
-  if ((*SerialReportJSONFriendly || ForceRun) && !JSONToBufferOnly)
+  if ((*SerialReportJSONFriendly || ForceRun) && !OnlyJSON)
   {
     printf("%u items reporting:\n", ReportQueue.size()); ///< Prints the number of items that will report
         for (auto Component : ReportQueue)
@@ -78,7 +78,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
       Component->report(false);
     }
   }
-  if (*SerialReportJSON || ForceRun || JSONToBufferOnly)
+  if (*SerialReportJSON || ForceRun || OnlyJSON)
   {
     if (ClearBuffer)
     {
@@ -93,7 +93,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
     size_t ReportQueueSize = ReportQueue.size();
     for (size_t i = 0; i < ReportQueueSize;)
     {
-      ReportQueue[i++]->report(JSONToBufferOnly || KeepBuffer ? false : *SerialReportJSONFriendly);
+      ReportQueue[i++]->report(OnlyJSON || KeepBuffer ? false : *SerialReportJSONFriendly);
       if (i != ReportQueueSize)
         strcat(LongMessage, ","); ///< < Unless it was the last element add a , separator
       if (!KeepBuffer)
@@ -103,7 +103,7 @@ void Module::runReport(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bool JS
       }
     }
     strcat(LongMessage, "}}"); ///< closing both curly bracket
-    if (!JSONToBufferOnly)
+    if (!OnlyJSON)
       printf("%s\n", LongMessage);
   }
 }
@@ -119,7 +119,7 @@ Sound *Module::getSoundObject()
 
 void Module::addToReportQueue(Common *Component) // Subscribe to report() callbacks
 {
-  RefreshQueue_5sec.push_back(Component);
+  ReportQueue.push_back(Component);
 }
 
 void Module::addToRefreshQueue_1sec(Common *Component) // Subscribe to run1sec() callbacks
@@ -282,13 +282,13 @@ void Module::run1sec()
 void Module::run5sec()
 {
   Common::run5sec();
-  reportToSerialTrigger();
-  // reportToMqttTrigger();
-
   for (auto Component : RefreshQueue_5sec)
   {
-    Component->run5sec();
+   Component->run5sec();
   }
+
+  reportToSerialTrigger(); // Report the readings to stdout
+  reportToMqttTrigger(); // Report the readings to MQTT
 
   /*
   if (ReportToGoogleSheetsRequested)   // TODO: move Google Sheets to its own Component
@@ -300,7 +300,7 @@ void Module::run5sec()
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
-    runReport(true);
+    reportToSerial(true);
   }
    reportToGoogleSheetsTrigger();
    */
@@ -399,11 +399,11 @@ char *Module::settingsToJSON()
   strcat(LongMessage, toText(*SerialReportJSONFriendly));
   strcat(LongMessage, "\",\"Wire\":\"");
   strcat(LongMessage, toText(*SerialReportWireless));
+  /*
   strcat(LongMessage, "\",\"Sheets\":\"");
   strcat(LongMessage, toText(*ReportToGoogleSheets));
   strcat(LongMessage, "\",\"SheetsF\":\"");
-  strcat(LongMessage, toText(*SheetsReportingFrequency));
-  /*
+  strcat(LongMessage, toText(*SheetsReportingFrequency));  
   strcat(LongMessage, "\",\"Relay\":\"");
   strcat(LongMessage, GboxSettings->PushingBoxLogRelayID);
   strcat(LongMessage, "\",\"MQTT\":\"");
@@ -423,10 +423,10 @@ char *Module::settingsToJSON()
   return LongMessage;
 }
 
+/*
 ///< ESP-link web interface functions
 void Module::settingsEvent_Load(__attribute__((unused)) char *Url)
 {
-  /*
   WebServer.setArgInt("Debug", *Debug);
   WebServer.setArgInt("Metric", *Metric);
   WebServer.setArgInt("SerialF", *SerialReportFrequency);
@@ -445,21 +445,20 @@ void Module::settingsEvent_Load(__attribute__((unused)) char *Url)
   WebServer.setArgString("MLT", GboxSettings->LwtTopic);
   WebServer.setArgString("MLM", GboxSettings->LwtMessage);
   WebServer.setArgInt(getSoundObject()->getName("E", true), getSoundObject()->getEnabledState());
-  */
 }
 
 void Module::settingsEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
-  /*
   WebServer.setArgString("Time", rtcGetCurrentTime(false));  ///< Current time
   WebServer.setArgJson("Log", eventLogToJSON(false, true)); ///< Last events that happened in JSON format
-  */
 }
+*/
 
 /**
  * @brief Process commands received from the ESP-link /Settings.html website
  */
 
+/*
 void Module::settingsEvent_Command(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
 {
   // Report triggers
@@ -551,6 +550,7 @@ void Module::settingsEvent_Command(__attribute__((unused)) char *Command, __attr
     // setLwtMessage(WebServer.getArgString());
   }
 }
+*/
 
 ///< Google Sheets functions - https://sites.google.com/site/growboxguy/esp-link/logging
 
@@ -574,6 +574,7 @@ void Module::addPushingBoxLogRelayID()
  * Example
  * REST API reporting: api.pushingbox.com/pushingbox?devid=v755877CF53383E1&BoxData={"Log":{"FanI":{"S":"1"},"FanE":{"S":"1"},"Ap1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"Ls1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"44.50"},"Pow1":{"P":"572.20","E":"665.26","V":"228.00","C":"2.62","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.44","WR1":"6.85","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.71","WR2":"5.28","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.68","W":"23.31","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.77","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.28","T":"1082.70","W":"14.63","WT":"19.13","AT":"27.20","H":"37.90"},"Main1":{"M":"1","D":"0","RD":"0","RM":"0","RT":"0","RJ":"0"}}}
  */
+/*
 void Module::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 {
   if (*Debug)
@@ -582,8 +583,9 @@ void Module::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
     printf("%s\n", *(char(*)[MaxLongTextLength])JSONData);
   }
   // PushingBoxRestAPI.get(*JSONData); ///< PushingBoxRestAPI will append http://api.pushingbox.com/ in front of the command
-}
+}*/
 
+/*
 ///< Google Sheets reporting
 
 void Module::setSheetsReportingOnOff(bool State)
@@ -619,12 +621,14 @@ void Module::reportToGoogleSheetsTrigger(bool ForceRun)
   if ((*ReportToGoogleSheets && SheetsTriggerCounter++ % (*SheetsReportingFrequency) == 0) || ForceRun)
   {
     addPushingBoxLogRelayID();           // Loads Pushingbox relay ID into LongMessage
-    runReport(false, false, true, true); // Append the sensor readings in a JSON format to LongMessage buffer
+    reportToSerial(false, false, true, true); // Append the sensor readings in a JSON format to LongMessage buffer
     relayToGoogleSheets(&LongMessage);   // Sends it to Google Sheets
   }
 }
 ///< This is how a sent out message looks like:
 ///< {parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
+*/
+
 
 /**
   \brief Triggers sending out a sequence of MQTT messages to the PubTopic specified in Settings.h.
@@ -637,11 +641,11 @@ void Module::reportToMqttTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
   if (*ReportToMqtt || ForceRun)
   {
-    runReport(false, true, true, true);          //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
-    mqttPublish(DefaultMqttClient, LongMessage); //< Publish Log via ESP MQTT API
+    reportToSerial(false, true, true, true);          //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
+    mqttPublish(NULL, LongMessage); //< Publish Log via ESP MQTT API
     eventLogToJSON(true, true);                  //< Loads the EventLog as a JSON
-    mqttPublish(DefaultMqttClient, LongMessage); //< Publish the EventLog via ESP MQTT API
+    mqttPublish("EventLog", LongMessage); //< Publish the EventLog via ESP MQTT API
     settingsToJSON();                            //< Loads the module settings as a JSON to the LongMessage buffer
-    mqttPublish(DefaultMqttClient, LongMessage); //< Publish the Settings via ESP MQTT API
+    mqttPublish("Settings", LongMessage); //< Publish the Settings via ESP MQTT API
   }
 }

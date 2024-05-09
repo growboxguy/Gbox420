@@ -102,7 +102,7 @@ void Module_Web::refresh_FiveSec()
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
-    runReport(true);
+    reportToSerial(true);
   }
   if (MQTTReportRequested)
   {
@@ -512,7 +512,7 @@ void Module_Web::reportToGoogleSheetsTrigger(bool ForceRun)
   if ((*ReportToGoogleSheets && SheetsTriggerCounter++ % (*SheetsReportingFrequency) == 0) || ForceRun)
   {
     addPushingBoxLogRelayID();           //Loads Pushingbox relay ID into LongMessage
-    runReport(false, false, true, true); //Append the sensor readings in a JSON format to LongMessage buffer
+    reportToSerial(false, false, true, true); //Append the sensor readings in a JSON format to LongMessage buffer
     relayToGoogleSheets(&LongMessage);   //Sends it to Google Sheets
   }
 }
@@ -578,7 +578,7 @@ void Module_Web::reportToMqttTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
   if ((*ReportToMqtt && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
   {
-    runReport(false, true, true, true); //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
+    reportToSerial(false, true, true, true); //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
     mqttPublish(&LongMessage);          //< Publish Log via ESP MQTT API
     eventLogToJSON(true, true);         //< Loads the EventLog as a JSON
     mqttPublish(&LongMessage);          //< Publish the EventLog via ESP MQTT API

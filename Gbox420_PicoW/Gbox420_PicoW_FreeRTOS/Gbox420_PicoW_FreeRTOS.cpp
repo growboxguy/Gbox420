@@ -75,7 +75,7 @@ void run5Sec(TimerHandle_t xTimer)
   watchdog_update(); // Pet watchdog
   GboxModule1->run5sec();
   // HempyModule1->run5sec();
-  //mqttPublish(NULL, "{\"Gbox420\":{\"Debug\":1,\"Metric\":1\"}}");               // Publish to the default topic from Settings.h (PubTopic)
+  mqttPublish(NULL, "{\"Gbox420\":{\"Debug\":1,\"Metric\":1\"}}");               // Publish to the default topic from Settings.h (PubTopic)
   //mqttPublish("NotDefaultTopic/", "{\"Gbox420\":{\"Debug\":0,\"Metric\":0\"}}"); // Publish to a specified topic
 }
 

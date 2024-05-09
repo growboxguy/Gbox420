@@ -7,6 +7,13 @@
  */
 GboxModule::GboxModule(Settings::GboxModuleSettings *DefaultSettings, Settings *GboxSettings) : Common(DefaultSettings->Name), Module(DefaultSettings->Name)
 {
+  SerialReportFrequency = &DefaultSettings->SerialReportFrequency;
+  SerialReportDate = &DefaultSettings->SerialReportDate;
+  SerialReportMemory = &DefaultSettings->SerialReportMemory;
+  SerialReportJSONFriendly = &DefaultSettings->SerialReportJSONFriendly;
+  SerialReportJSON = &DefaultSettings->SerialReportJSON;
+  SerialReportWireless = &DefaultSettings->SerialReportWireless;
+  ReportToMqtt = &DefaultSettings->ReportToMqtt;
   Sound1 = new Sound(this, &GboxSettings->Sound1); // Passing DefaultSettings members as references: Changes get written back to DefaultSettings and saved to EEPROM. (uint8_t *)(((uint8_t *)&DefaultSettings) + offsetof(Settings, VARIABLENAME))
   this->DefaultSound = Sound1;
 

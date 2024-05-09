@@ -47,8 +47,15 @@ typedef struct
   struct GboxModuleSettings ///< Stripped down core module only containing a Sound component
   {
     char Name[MaxWordLength]; ///< Must be unique
+    uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 65535 (1day)
+    bool SerialReportDate;             ///< Enable/disable reporting the current time to the Serial output
+    bool SerialReportMemory;           ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool SerialReportJSON;             ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool SerialReportJSONFriendly;     ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
+    bool SerialReportWireless;         ///< Enable/disable sending wireless package exchange reports to the Serial output
+    bool ReportToMqtt;                 ///< Enable/disable reporting sensor readings to an MQTT broker
   };
-  struct GboxModuleSettings Gbox1 = {.Name = "Gbox1"};
+  struct GboxModuleSettings Gbox1 = {.Name = "Gbox1", .SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToMqtt = true};
 
   struct DHTSensorSettings ///< DHTSensor default settings
   {

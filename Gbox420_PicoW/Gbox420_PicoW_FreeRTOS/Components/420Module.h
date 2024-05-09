@@ -31,13 +31,13 @@
 class Sound;
 class MqttClient;
 extern MqttClient *DefaultMqttClient;
-extern void mqttPublish(MqttClient *Client, char *Data);
+extern void mqttPublish(const char *Topic, const char *Data);
 
 class Module : virtual public Common
 {
 public:
   Module(const char *Name);                                                                                                           ///< constructor
-  void runReport(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false);                     ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.
+  void reportToSerial(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONOnly = false);                     ///< Generate a text log of all sensor readings to the Serial output and/or to the LongMessage buffer.
   void run1sec();                                                                                                                     ///< Called every second
   void run5sec();                                                                                                                     ///< Called every 5 seconds
   void run1min();                                                                                                                     ///< Called every minute
@@ -53,8 +53,7 @@ public:
   void commandEventTrigger(char *Command, char *Data);                                                                                ///< Notifies the subscribed components of an incoming command. Command: combination of the Name of the component and a command (like Pump1_On, Light1_Brightness). Data: Optional value, passed as a character array (can be parsed to int/float/boolean)
   void reportToSerialTrigger(bool ForceRun = false, bool ClearBuffer = true, bool KeepBuffer = false, bool JSONToBufferOnly = false); ///< Print report to stdout or to a JSON for MQTT reporting. Report is loaded into LongMessage buffer
   void mqttDataReceived(char *Topic, char *Data);                                                                                     ///< MQTT data received from the Subscribed topic
-  void mqttPublish(MqttClient *Client, char *JSONData);                                                                               ///< MQTT reporting - Send a JSON formatted report to an MQTT broker
-
+ 
   Sound *DefaultSound = nullptr;
   Sound *getSoundObject();
   uint16_t *SerialReportFrequency;   ///< Frequency of Serial reports in seconds
@@ -65,19 +64,23 @@ public:
   bool *SerialReportJSON;            ///< Enable/disable sending JSON formatted reports to the Serial output
   bool *SerialReportWireless;        ///< Enable/disable sending wireless package exchange reports to the Serial output
 
+/*
   void addToWebsiteQueue_Load(Common *Subscriber);                    ///< Calls the websiteEvent_Load() method of the Subscriber when an ESP-link website is loaded
   void addToWebsiteQueue_Refresh(Common *Subscriber);                 ///< Calls the websiteEvent_Refresh() method of the Subscriber when an ESP-link website is refreshing
   void websiteLoadEventTrigger(__attribute__((unused)) char *Url);    ///< Notifies the subscribed components of a Load event. Passes the URL of the custom webpage that was opened (/Hempy.html or /Settings.html )
   void websiteRefreshEventTrigger(__attribute__((unused)) char *Url); ///< Notifies the subscribed components of a Refresh event. Passes the URL of the custom webpage that was opened (/Hempy.html or /Settings.html )
-  void refresh();
-  char *settingsToJSON();
   void settingsEvent_Load(__attribute__((unused)) char *Url);                                            ///< Gets called when the /Settings.html is loaded. This page is for configuring the Gbox420 module settings (Console logging, Debug mode, MQTT reporting topic, Google Sheets relay...etc)
   void settingsEvent_Refresh(__attribute__((unused)) char *Url);                                         ///< Gets called when the /Settings.html is refreshed.
   void settingsEvent_Command(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data); ///< Gets called a button is clicked or a field is submitted on the /Settings.html page
+  */
+  void refresh();
+  char *settingsToJSON();
   char *eventLogToJSON(bool IncludeKey = false, bool ClearBuffer = true);                                ///< Creates a JSON array: ["Log1","Log2","Log3",...,"LogN"] and loads it to LongMessage buffer
+  /*
   void addPushingBoxLogRelayID();                                                                        ///< Google Sheets reporting - Set PushingBox relay ID
   void relayToGoogleSheets(char (*JSONData)[MaxLongTextLength]);                                         ///< Google Sheets reporting - Send a JSON formatted report via REST API to the PushingBox relay
   void reportToGoogleSheetsTrigger(bool ForceRun = false);                                               ///< Google Sheets reporting - Handles custom reporting frequencies
+*/
   void reportToMqttTrigger(bool ForceRun = false);                                                       ///< MQTT reporting - Handles custom reporting frequencies
 
 private:
@@ -98,19 +101,21 @@ protected:
   std::vector<Common*>RefreshQueue_30min;
   std::vector<Common*>CommandQueue;
 
+  /*
   void setSheetsReportingOnOff(bool State);
   void setSheetsReportingFrequency(uint16_t Frequency);
   void setPushingBoxLogRelayID(const char *ID);
+  */
   //Common *WebsiteQueue_Load[QueueDepth] = {};
   //Common *WebsiteQueue_Refresh[QueueDepth] = {};
   //uint8_t WebsiteQueue_Load_Count = 0;
   //uint8_t WebsiteQueue_Refresh_Count = 0;
   bool RefreshRequested = false;
-  bool ReportToGoogleSheetsRequested = false;
+  //bool ReportToGoogleSheetsRequested = false;
   bool MQTTReportRequested = false;
-  bool *ReportToGoogleSheets;
-  uint16_t *SheetsReportingFrequency;
-  uint8_t SheetsTriggerCounter = 0;
+  //bool *ReportToGoogleSheets;
+  //uint16_t *SheetsReportingFrequency;
+  //uint8_t SheetsTriggerCounter = 0;
   bool *ReportToMqtt;
   uint16_t *MQTTReportFrequency;
   uint16_t MQTTTriggerCounter = 0;
