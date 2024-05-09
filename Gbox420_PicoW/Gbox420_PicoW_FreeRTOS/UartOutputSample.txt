@@ -1,6 +1,6 @@
 /// Sample UART and USB output
 
-Clean boot
+Rebooted by Watchdog!
 
 Gbox420 FreeRTOS initializing
 Loading settings...done. Version: 1
@@ -21,12 +21,18 @@ Initializing WiFi
 1sec
   1sec - Gbox1
   1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
 Connected to GboxNet - 192.168.1.34
 Looking up IP for mqttserver.gbox420.net
 Found address 192.168.1.100 for mqttserver.gbox420.net
+1sec
+  1sec - Gbox1
+  1sec - Sound1
+MQTT connecting to mqttserver.gbox420.net 192.168.1.100
+MQTT connected to mqttserver.gbox420.net 192.168.1.100
+MQTT subscribed to Gbox420CMD/#
+Friday 20 April 16:20:06 2024
+WiFi status: UP
+Looking up IP for pool.ntp.org
 5sec
   5sec - Gbox1
 Friday 20 April 16:20:06 2024
@@ -35,106 +41,8 @@ Friday 20 April 16:20:06 2024
 "Sound1":{"S":"ENABLED"},
 "Gbox1":{"M":"ON","D":"ON"}
 }}
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-MQTT connecting to mqttserver.gbox420.net 192.168.1.100
-MQTT connected to mqttserver.gbox420.net 192.168.1.100
-MQTT subscribed to Gbox420CMD/#
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-Friday 20 April 16:20:08 2024
-WiFi status: UP
-Looking up IP for pool.ntp.org
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-5sec
-  5sec - Gbox1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-Found address 193.6.222.20 for pool.ntp.org
-MQTT status: CONNECTED
-RTC synced: Thursday 9 May 11:50:56 2024
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-5sec
-  5sec - Gbox1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-5sec
-  5sec - Gbox1
-Thursday 9 May 11:51:03 2024
-2 items reporting:
-{"Log":{
-"Sound1":{"S":"ENABLED"},
-"Gbox1":{"M":"ON","D":"ON"}
-}}
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-5sec
-  5sec - Gbox1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-Thursday 9 May 11:51:12 2024
-WiFi status: UP
-MQTT status: CONNECTED
-1sec
-  1sec - Gbox1
-  1sec - Sound1
-5sec
-  5sec - Gbox1
+ MQTT reporting: Gbox420/ - {"Log":{"Sound1":{"S":"1"},"Gbox1":{"M":"1","D":"1"}}}
+ MQTT published to Gbox420/
+ MQTT reporting: EventLog - {"EventLog":["","","","GboxModule ready"]}
+ MQTT published to EventLog
+ MQTT reporting: Settings - {"Settings":{"Debug":"1","Metric":"1","SerialF":"15","Date":"1","Mem":"1","JSON":"1","JSONF":"1","Wire":"1"}}
