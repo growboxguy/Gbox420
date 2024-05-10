@@ -73,7 +73,7 @@ void Module::reportToSerial(bool ForceRun, bool ClearBuffer, bool KeepBuffer, bo
   if ((*SerialReportJSONFriendly || ForceRun) && !OnlyJSON)
   {
     printf("%u items reporting:\n", ReportQueue.size()); ///< Prints the number of items that will report
-        for (auto Component : ReportQueue)
+    for (auto Component : ReportQueue)
     {
       Component->report(false);
     }
@@ -284,11 +284,11 @@ void Module::run5sec()
   Common::run5sec();
   for (auto Component : RefreshQueue_5sec)
   {
-   Component->run5sec();
+    Component->run5sec();
   }
 
   reportToSerialTrigger(); // Report the readings to stdout
-  reportToMqttTrigger(); // Report the readings to MQTT
+  reportToMqttTrigger();   // Report the readings to MQTT
 
   /*
   if (ReportToGoogleSheetsRequested)   // TODO: move Google Sheets to its own Component
@@ -383,27 +383,27 @@ char *Module::settingsToJSON()
 {
   memset(&LongMessage[0], 0, MaxLongTextLength);
   strcat(LongMessage, "{\"Settings\":{"); ///< Adds a curly bracket that needs to be closed at the end
-  strcat(LongMessage, "\"Debug\":\"");
+  strcat(LongMessage, "\"D\":\"");
   strcat(LongMessage, toText(*Debug));
-  strcat(LongMessage, "\",\"Metric\":\"");
+  strcat(LongMessage, "\",\"M\":\"");
   strcat(LongMessage, toText(*Metric));
-  strcat(LongMessage, "\",\"SerialF\":\"");
+  strcat(LongMessage, "\",\"RF\":\"");
   strcat(LongMessage, toText(*SerialReportFrequency));
-  strcat(LongMessage, "\",\"Date\":\"");
+  /*
+  strcat(LongMessage, "\",\"RD\":\"");
   strcat(LongMessage, toText(*SerialReportDate));
-  strcat(LongMessage, "\",\"Mem\":\"");
+  strcat(LongMessage, "\",\"RM\":\"");
   strcat(LongMessage, toText(*SerialReportMemory));
-  strcat(LongMessage, "\",\"JSON\":\"");
+  strcat(LongMessage, "\",\"RJ\":\"");
   strcat(LongMessage, toText(*SerialReportJSON));
-  strcat(LongMessage, "\",\"JSONF\":\"");
+  strcat(LongMessage, "\",\"RJ\":\"");
   strcat(LongMessage, toText(*SerialReportJSONFriendly));
   strcat(LongMessage, "\",\"Wire\":\"");
   strcat(LongMessage, toText(*SerialReportWireless));
-  /*
   strcat(LongMessage, "\",\"Sheets\":\"");
   strcat(LongMessage, toText(*ReportToGoogleSheets));
   strcat(LongMessage, "\",\"SheetsF\":\"");
-  strcat(LongMessage, toText(*SheetsReportingFrequency));  
+  strcat(LongMessage, toText(*SheetsReportingFrequency));
   strcat(LongMessage, "\",\"Relay\":\"");
   strcat(LongMessage, GboxSettings->PushingBoxLogRelayID);
   strcat(LongMessage, "\",\"MQTT\":\"");
@@ -629,23 +629,22 @@ void Module::reportToGoogleSheetsTrigger(bool ForceRun)
 ///< {parameter={Log={"Report":{"InternalTemp":"20.84","ExternalTemp":"20.87","InternalHumidity":"38.54","ExternalHumidity":"41.87","InternalFan":"0","ExhaustFan":"0","Lt1_Status":"0","Lt1_Brightness":"15","LightReading":"454","Dark":"1","WaterLevel":"0","WaterTemp":"20.56","PH":"17.73","Pressure":"-0.18","Power":"-1.00","Energy":"-0.00","Voltage":"-1.00","Current":"-1.00","Lt1_Timer":"1","Lt1_OnTime":"04:20","Lt1_OffTime":"16:20","AeroInterval":"15","AeroDuration":"2"},"Settings":{"Metric":"1"}}}, contextPath=, contentLength=499, queryString=, parameters={Log=[Ljava.lang.Object;@60efa46b}, postData=FileUpload}
 */
 
-
 /**
   \brief Triggers sending out a sequence of MQTT messages to the PubTopic specified in Settings.h.
   Sample messages:
-  Gbox420/Hempy/{"Log":{"DHT1":{"T":"29.00","H":"52.00"},"B1W":{"W":"19.35"},"B2W":{"W":"19.75"},"NRW":{"W":"43.30"},"WRW":{"W":"1.87"},"WR1":{"S":"1","L":"13.00"},"B1P":{"S":"1","T":"120"},"B2P":{"S":"1","T":"120"},"B1":{"S":"1","DW":"18.00","WW":"19.70","ET":"2.00","OF":"0.30","DT":"180"},"B2":{"S":"1","DW":"18.00","WW":"19.70","ET":"2.00","OF":"0.30","DT":"180"},"Hemp1":{"M":"1","D":"1"}}}
-  Gbox420/Hempy/{"EventLog":["","","","HempyModule ready"]}
-  Gbox420/Hempy/{"Settings":{"Debug":"1","Metric":"1","SerialF":"15","Date":"1","Mem":"1","JSON":"1","JSONF":"1","Wire":"1","Sheets":"1","SheetsF":"30","Relay":"v755877CF53383E1","MQTT":"1","MQTTF":"5","MPT":"Gbox420/Hempy","MST":"Gbox420CMD/Hempy/#","MLT":"Gbox420LWT/Hempy/","MLM":"Hempy Offline"}}
+  Gbox420/Hempy/{"Log":{"Sound1":{"S":"1"},"Gbox1":{"M":"1","D":"1"}}}
+  Gbox420/Hempy/{"EventLog":["","","Debug ENABLED","HempyModule ready"]}
+  Gbox420/Hempy/{"Settings":{"D":"1","M":"1","RF":"15"}}
 */
 void Module::reportToMqttTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
   if (*ReportToMqtt || ForceRun)
   {
-    reportToSerial(false, true, true, true);          //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
-    mqttPublish(NULL, LongMessage); //< Publish Log via ESP MQTT API
-    eventLogToJSON(true, true);                  //< Loads the EventLog as a JSON
-    mqttPublish("EventLog", LongMessage); //< Publish the EventLog via ESP MQTT API
-    settingsToJSON();                            //< Loads the module settings as a JSON to the LongMessage buffer
-    mqttPublish("Settings", LongMessage); //< Publish the Settings via ESP MQTT API
+    reportToSerial(false, true, true, true); //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
+    mqttPublish(NULL, LongMessage);          //< Publish Log via ESP MQTT API
+    eventLogToJSON(true, true);              //< Loads the EventLog as a JSON
+    mqttPublish("EventLog/", LongMessage);   //< Publish the EventLog via ESP MQTT API
+    //settingsToJSON();                        //< Loads the module settings as a JSON to the LongMessage buffer
+    //mqttPublish("Settings/", LongMessage);   //< Publish the Settings via ESP MQTT API
   }
 }

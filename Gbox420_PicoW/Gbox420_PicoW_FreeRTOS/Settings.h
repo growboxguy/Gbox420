@@ -32,7 +32,6 @@ static const uint8_t MovingAverageDepth = 10;   ///< Number of previous readings
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];     // Temp storage for assembling long messages (REST API - Google Sheets reporting) //TODO Use Semaphore to protect the content getting overwritten by a parallel write to LongMessage
 extern char ShortMessage[MaxShotTextLength];    // Temp storage for assembling short messages (Log entries, Error messages) //TODO Use Semaphore to protect the content getting overwritten by a parallel write to LongMessage
-extern char CurrentTimeText[MaxShotTextLength]; // Buffer for storing current time in text format
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable

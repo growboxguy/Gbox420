@@ -11,7 +11,6 @@
 ///< forward declaration
 extern char LongMessage[MaxLongTextLength];
 extern char ShortMessage[MaxShotTextLength];
-extern char CurrentTimeText[MaxShotTextLength];
 extern Settings *GboxSettings;
 extern bool *Debug;
 extern bool *Metric;

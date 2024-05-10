@@ -40,7 +40,7 @@
  * See http://www.freertos.org/a00110.html
  *----------------------------------------------------------*/
 
-/* Scheduler Related */
+/* Scheduler related */
 #define configUSE_PREEMPTION                    1
 #define configUSE_TICKLESS_IDLE                 0
 #define configUSE_IDLE_HOOK                     0
@@ -52,7 +52,10 @@
 
 #define configIDLE_SHOULD_YIELD                 1
 
-/* Synchronization Related */
+/* Message Buffer related*/
+#define configUSE_SB_COMPLETED_CALLBACK         1  /* Enable send and receive completed callbacks */
+
+/* Synchronization related */
 #define configUSE_MUTEXES                       1
 #define configUSE_RECURSIVE_MUTEXES             1
 #define configUSE_APPLICATION_TASK_TAG          0

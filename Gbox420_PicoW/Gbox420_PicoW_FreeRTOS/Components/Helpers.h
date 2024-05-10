@@ -99,7 +99,6 @@ enum class LightStates
   DIMMED
 };
 
-extern char CurrentTimeText[MaxShotTextLength];
 extern char ShortMessage[MaxShotTextLength];
 extern char LongMessage[MaxLongTextLength];
 extern Settings *GboxSettings;

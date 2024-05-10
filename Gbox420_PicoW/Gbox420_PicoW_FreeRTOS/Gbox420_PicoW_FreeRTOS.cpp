@@ -39,24 +39,6 @@ int main()
   return 0;
 }
 
-/*
-// Hempy module
-void hempyTask(void *pvParameters)
-{
-  HempyModule1 = new HempyModule(&GboxSettings->HempyModule1, GboxSettings);
-  xTimerStart(xTimerCreate("1Sec", pdMS_TO_TICKS(1000), pdTRUE, (void *)1, run1Sec), 1);      ///< Create 1sec software timer
-  xTimerStart(xTimerCreate("5Sec", pdMS_TO_TICKS(5000), pdTRUE, (void *)2, run5Sec), 1);      ///< Create 5sec software timer
-  xTimerStart(xTimerCreate("1Min", pdMS_TO_TICKS(60000), pdTRUE, (void *)3, run1Min), 1);     ///< Create 1min software timer
-  xTimerStart(xTimerCreate("30Min", pdMS_TO_TICKS(1800000), pdTRUE, (void *)4, run30Min), 1); ///< Create 30min software timer
-
-  // Task should not exit
-  while (1)
-  {
-    vTaskDelay(portMAX_DELAY);
-  }
-}
-*/
-
 // Runs every 1 sec
 void run1Sec(TimerHandle_t xTimer)
 {
@@ -75,7 +57,7 @@ void run5Sec(TimerHandle_t xTimer)
   watchdog_update(); // Pet watchdog
   GboxModule1->run5sec();
   // HempyModule1->run5sec();
-  mqttPublish(NULL, "{\"Gbox420\":{\"Debug\":1,\"Metric\":1\"}}");               // Publish to the default topic from Settings.h (PubTopic)
+  //mqttPublish(NULL, "{\"Gbox420\":{\"Debug\":1,\"Metric\":1\"}}");               // Publish to the default topic from Settings.h (PubTopic)
   //mqttPublish("NotDefaultTopic/", "{\"Gbox420\":{\"Debug\":0,\"Metric\":0\"}}"); // Publish to a specified topic
 }
 
@@ -234,7 +216,7 @@ void mqttDataReceived(char *SubTopicReceived, char *DataReceived)
 /**
  * @brief Publish an MQTT message to a Topic containing a JSON formatted Data
  * Example:
- * MQTT reporting: Gbox420/Hempy/{"Log":{"FanI":{"S":"1"},"FanE":{"S":"1"},"Ap1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"Ls1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"45.20"},"Pow1":{"P":"573.60","E":"665.47","V":"227.20","C":"2.64","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.45","WR1":"6.77","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.69","WR2":"5.31","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.41","W":"23.57","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.50","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.41","T":"1071.30","W":"14.64","WT":"19.13","AT":"27.30","H":"38.50"},"Main1":{"M":"1","D":"0","RD":"0","RM":"1","RT":"0","RJ":"1"}}}
+ * MQTT reporting: Gbox420/{"Log":{"Sound1":{"S":"1"},"Gbox1":{"M":"1","D":"1"}}}
  */
 void mqttPublish(const char *Topic, const char *Data)
 {
@@ -309,6 +291,7 @@ void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t
   uint8_t mode = pbuf_get_at(p, 0) & 0x7;
   uint8_t stratum = pbuf_get_at(p, 1);
   datetime_t timeTemp;
+  char CurrentTimeText[MaxShotTextLength];   ///< Store current time in text format
   // Check the result
   if (ip_addr_cmp(addr, &NtpServerIP) && port == GboxSettings->NtpServer1.NtpServerPort && p->tot_len == 48 && mode == 0x4 && stratum != 0)
   {
