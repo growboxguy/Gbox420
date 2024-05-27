@@ -11,7 +11,7 @@ Sound::Sound(Module *Parent, Settings::SoundSettings *DefaultSettings) : Common(
   Parent->addToReportQueue(this);
   Parent->addToRefreshQueue_1sec(this);
   Parent->addToCommandQueue(this);
-  printf("   Sound ready\n");
+  printf("Sound ready\n");
   checkEvents();
 }
 
@@ -131,7 +131,7 @@ void Sound::OnSound()
   if (*Enabled)
   {
     buzz(500, 100);
-    sleep_ms(10);
+    busy_wait_us_32(10000);
     buzz(2000, 100);
   }
 }
@@ -141,7 +141,7 @@ void Sound::OffSound()
   if (*Enabled)
   {
     buzz(500, 100);
-    sleep_ms(10);
+    busy_wait_us_32(10000);
     buzz(2000, 100);
   }
 }

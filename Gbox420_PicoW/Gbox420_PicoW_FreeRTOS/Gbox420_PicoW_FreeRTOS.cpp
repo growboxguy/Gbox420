@@ -14,14 +14,19 @@ int main()
   printf("\nGbox420 FreeRTOS initializing\n");
   GboxSettings = loadSettings(false); ///< Load the default settings from Settings.h
   Debug = &GboxSettings->Debug;       ///< Set global variable
-  Metric = &GboxSettings->Metric;     ///< Set global variable
-  rtcInit();                          ///< Initialize Real Time Clock and set a pre-defined starting date
+  if (Debug)
+  {
+    printf("Debug ENABLED, last DebugMessage: %s\n", DebugMessage); ///< If debug is enabled, print the last stored debug message
+  }
+  strcpy(DebugMessage, "Gbox420 running");
+  Metric = &GboxSettings->Metric;                                   ///< Set global variable
+  MqttPublishSemaphore = xSemaphoreCreateBinary();                        ///< Initialize a semaphore used during network operations
+  xSemaphoreGive(MqttPublishSemaphore);                                   ///< Make sure the semaphore is available
+  rtcInit();                                                        ///< Initialize Real Time Clock and set a pre-defined starting date
   GboxModule1 = new GboxModule(&GboxSettings->Gbox1, GboxSettings); ///< Stripped down core module only containing a Sound component
-  MqttPublishSemaphore = xSemaphoreCreateBinary(); ///< Initialize a semaphore used during MQTT publish
-  xSemaphoreGive(MqttPublishSemaphore); ///< Make sure the semaphore is available
-  timer_hw->dbgpause = 0; //Do not pause HW timer when debug is active
-  printf("Initializing Watchdog..."); ///< Watchdog should be the last to initialize
-  watchdog_enable(0x7fffff, 1);       ///< Maximum of 0x7fffff, which is approximately 8.3 seconds
+  timer_hw->dbgpause = 0;                                           // Do not pause HW timer when debug is active
+  printf("Initializing Watchdog...");                               ///< Watchdog should be the last to initialize
+  watchdog_enable(0x7fffff, true);                                  ///< Maximum of 0x7fffff, which is approximately 8.3 seconds. true: Pause on debug
   printf("done\n");
   printf("Starting timers...");
   xTimerStart(xTimerCreate("1Sec", pdMS_TO_TICKS(1000), pdTRUE, (void *)1, run1Sec), 1);      ///< Create 1sec software timer
@@ -43,7 +48,7 @@ int main()
 void run1Sec(TimerHandle_t xTimer)
 {
   if (*Debug)
-    printf("1sec\n");  
+    printf("1sec\n");
   watchdog_update(); // Pet watchdog
   GboxModule1->run1sec();
   // HempyModule1->run1sec();
@@ -57,8 +62,8 @@ void run5Sec(TimerHandle_t xTimer)
   watchdog_update(); // Pet watchdog
   GboxModule1->run5sec();
   // HempyModule1->run5sec();
-  //mqttPublish(NULL, "{\"Gbox420\":{\"Debug\":1,\"Metric\":1\"}}");               // Publish to the default topic from Settings.h (PubTopic)
-  //mqttPublish("NotDefaultTopic/", "{\"Gbox420\":{\"Debug\":0,\"Metric\":0\"}}"); // Publish to a specified topic
+  // mqttPublish(NULL, "{\"Gbox420\":{\"Debug\":1,\"Metric\":1\"}}");               // Publish to the default topic from Settings.h (PubTopic)
+  // mqttPublish("NotDefaultTopic/", "{\"Gbox420\":{\"Debug\":0,\"Metric\":0\"}}"); // Publish to a specified topic
 }
 
 ///< Runs every 1 min
@@ -113,29 +118,31 @@ void connectivityTask(void *pvParameters)
   {
     if (++ConnectivityCounter >= WIFI_TIMEOUT) // Is it time to do a new WiFi check?
     {
-      ConnectivityCounter = 0;
-      rtcGetCurrentTime(true);
-      printf("WiFi status: %s\n", toText_WiFiStatus(cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA))); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
-      if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) != CYW43_LINK_UP)
-      {
-        connectWiFi();
-      }
-      else // WiFi is up and has an IP
-      {
-        if (!NtpSynced) // if NTP is not synced
+        ConnectivityCounter = 0;
+        rtcGetCurrentTime(true);
+        cyw43_arch_lwip_begin();
+        int CurrentWiFiStatus = cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA);
+        cyw43_arch_lwip_end();
+        printf("WiFi status: %s\n", toText_WiFiStatus(CurrentWiFiStatus)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
+        if (CurrentWiFiStatus != CYW43_LINK_UP)
         {
-          ntpRequest();
+          connectWiFi();
         }
-        else
+        else // WiFi is up and has an IP
         {
-          NtpSynced++; // NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec. If NtpSynced is changed to uint16_t the sync delay is ~11 days
-        }
-
-        printf("MQTT status: %s\n", DefaultMqttClient->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
-        if (!DefaultMqttClient->mqttIsConnected())                                 // If MQTT server is not connected -> Trigger a connection attempt
-        {
-          DefaultMqttClient->mqttConnectTrigger();
-        }
+          if (!NtpSynced) // if NTP is not synced
+          {
+            ntpRequest();
+          }
+          else
+          {
+            NtpSynced++; // NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec. If NtpSynced is changed to uint16_t the sync delay is ~11 days
+          }
+          printf("MQTT status: %s\n", DefaultMqttClient->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
+          if (!DefaultMqttClient->mqttIsConnected())                                 // If MQTT server is not connected -> Trigger a connection attempt
+          {
+            DefaultMqttClient->mqttConnectTrigger();
+          }
       }
     }
     heartbeat(); // Blinks the onboard LED, and delays the next While loop by 1sec
@@ -209,6 +216,7 @@ void mqttDataReceived(char *SubTopicReceived, char *DataReceived)
   }
   else // Pass along the command
   {
+    GboxModule1->mqttDataReceived(SubTopicReceived, DataReceived);
     // HempyModule1->mqttDataReceived(SubTopicReceived, DataReceived);  //TODO: mqttDataReceived should return true if the command was processed within the module
   }
 }
@@ -274,7 +282,7 @@ void ntpRequest()
   if (GboxSettings->NtpServer1.NtpServerDNS[0] != '\0')
   {
     dnsLookup(GboxSettings->NtpServer1.NtpServerDNS, &NtpServerIP);
-  }
+  }  
   cyw43_arch_lwip_begin();
   struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, 48, PBUF_RAM); // 48 is the NTP message length
   uint8_t *req = (uint8_t *)p->payload;
@@ -291,7 +299,7 @@ void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t
   uint8_t mode = pbuf_get_at(p, 0) & 0x7;
   uint8_t stratum = pbuf_get_at(p, 1);
   datetime_t timeTemp;
-  char CurrentTimeText[MaxShotTextLength];   ///< Store current time in text format
+  char CurrentTimeText[MaxShotTextLength]; ///< Store current time in text format
   // Check the result
   if (ip_addr_cmp(addr, &NtpServerIP) && port == GboxSettings->NtpServer1.NtpServerPort && p->tot_len == 48 && mode == 0x4 && stratum != 0)
   {
@@ -338,13 +346,13 @@ bool dnsLookup(char *DnsName, ip_addr_t *ResultIP)
   dnsLookupInProgress = true;
   printf("Looking up IP for %s\n", DnsName);
   cyw43_arch_lwip_begin();
-  err_t err = dns_gethostbyname(DnsName, ResultIP, dnsLookupResult, ResultIP);
-  cyw43_arch_lwip_end();
+  err_t err = dns_gethostbyname(DnsName, ResultIP, dnsLookupResult, ResultIP);  
   if (err == ERR_OK) // DNS name found in cache and loaded into ResultIP
   {
     printf("Found cached address %s - %s\n", ipaddr_ntoa(ResultIP), DnsName);
     return true;
-  }
+  }  
+  cyw43_arch_lwip_end();
   absolute_time_t Timeout = make_timeout_time_ms(DNS_TIMEOUT * 1000);
   while (dnsLookupInProgress) // Waiting for the DNS lookup to finish and dnsLookupResult callback to trigger
   {
@@ -353,7 +361,7 @@ bool dnsLookup(char *DnsName, ip_addr_t *ResultIP)
       printf("DNS lookup timeout - %s\n", DnsName);
       return false;
     }
-    vTaskDelay(500);
+    vTaskDelay(pdMS_TO_TICKS(500));
   }
   return dnsLookupSuccess;
 }

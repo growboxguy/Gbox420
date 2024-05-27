@@ -7,7 +7,7 @@ static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storin
 
 Module::Module(const char *Name) : Common(Name)
 { ///< Constructor
-  printf("   Module ready\n");
+  printf("Module ready\n");
 }
 
 /**
@@ -304,6 +304,7 @@ void Module::run5sec()
   }
    reportToGoogleSheetsTrigger();
    */
+  //strcpy(DebugMessage,"5sec ended");
 }
 
 void Module::run1min()
@@ -640,11 +641,12 @@ void Module::reportToMqttTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
   if (*ReportToMqtt || ForceRun)
   {
-    reportToSerial(false, true, true, true); //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
+    reportToSerial(false, true, true, true); //< Loads a JSON Log to LongMessage buffer
     mqttPublish(NULL, LongMessage);          //< Publish Log via ESP MQTT API
     eventLogToJSON(true, true);              //< Loads the EventLog as a JSON
     mqttPublish("EventLog/", LongMessage);   //< Publish the EventLog via ESP MQTT API
     //settingsToJSON();                        //< Loads the module settings as a JSON to the LongMessage buffer
     //mqttPublish("Settings/", LongMessage);   //< Publish the Settings via ESP MQTT API
+    //strcpy(DebugMessage, "mqtt trigger ended");
   }
 }

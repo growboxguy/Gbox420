@@ -3,7 +3,7 @@
 Common::Common(const char *Name)
 {
   this->Name = Name;
-  printf("Initializing %s", Name);
+  printf("Initializing %s...", Name);
 }
 
 /**

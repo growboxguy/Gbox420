@@ -70,10 +70,11 @@ void MqttClient::mqttDNSResolvedCallback(ip_addr_t *ServerIP)
 }
 
 /// @brief Connect to MQTT server, if MqttServerDNS is specified an extra DNS lookup is also needed
-/// @param WaitForIP true: Wait for the DNS lookup result before attempting to connect (Cannot be called from a callback like run1sec/run5sec/run1min/report). false: Start DNS lookup in the background, and in the meantime attempt to connect using MqttServerAddress. The next time mqttConnectTrigger() is called the DNS lookup result should be already cached
+/// @param WaitForIP true: Wait for the DNS lookup result before attempting to connect (Cannot be called from a callback like run1sec//run1min/report). false: Start DNS lookup in the background, and in the meantime attempt to connect using MqttServerAddress. The next time mqttConnectTrigger() is called the DNS lookup result should be already cached
 void MqttClient::mqttConnectTrigger()
 {
-    if (cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA) == CYW43_LINK_UP) // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
+    int CurrentWiFiStatus = cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA);
+    if (CurrentWiFiStatus == CYW43_LINK_UP) // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
     {
         InProgress_ConnectAndSubscribe = true;
         ip4addr_aton(MqttServerIP, &MqttServerAddress); // If MqttServerDNS is defined and the DNS lookup is successful this will be overwritten
@@ -93,12 +94,12 @@ void MqttClient::mqttConnect()
 {
     printf("MQTT connecting to %s %s\n", mqttGetServerName(), mqttGetServerIP());
     cyw43_arch_lwip_begin();
-    err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, this, ClientInfo);
-    cyw43_arch_lwip_end();
+    err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, this, ClientInfo);    
     if (err != ERR_OK)
     {
         printf("MQTT error: %d\n", err);
     }
+    cyw43_arch_lwip_end();
 }
 
 /// @brief Callback when the MQTT server connection attempt is done
@@ -128,7 +129,10 @@ void MqttClient::mqttDisconnect()
 
 bool MqttClient::mqttIsConnected()
 {
-    if (mqtt_client_is_connected(Client))
+    cyw43_arch_lwip_begin();
+    u8_t CurrentMQTTStatus = mqtt_client_is_connected(Client);
+    cyw43_arch_lwip_end();
+    if (CurrentMQTTStatus)
         return true;
     else
         return false;
@@ -170,12 +174,12 @@ void MqttClient::mqttSubscribe()
     InProgress_ConnectAndSubscribe = true;
     cyw43_arch_lwip_begin();
     mqtt_set_inpub_callback(Client, mqttIncomingTopic_Callback, mqttIncomingData_Callback, this); // Set callback functions
-    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttSubscribe_Callback, this, 1);          // Initiate subscription
-    cyw43_arch_lwip_end();
+    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttSubscribe_Callback, this, 1);          // Initiate subscription    
     if (err != ERR_OK)
     {
         printf("Error subscribing to %s - Error: %d\n", SubTopic, err);
     }
+    cyw43_arch_lwip_end();
 }
 
 void MqttClient::mqttSubscribe_Callback(void *Arg, err_t Result)
@@ -195,12 +199,12 @@ void MqttClient::mqttUnsubscribe()
 {
     printf("Unsubscribing from %s...", SubTopic);
     cyw43_arch_lwip_begin();
-    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttUnsubscribe_Callback, this, 0);
-    cyw43_arch_lwip_end();
+    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttUnsubscribe_Callback, this, 0);    
     if (err != ERR_OK)
     {
         printf("error: %d\n", err);
     }
+    cyw43_arch_lwip_end();
 }
 
 void MqttClient::mqttUnsubscribe_Callback(void *Arg, err_t Result)
@@ -269,7 +273,7 @@ void MqttClient::mqttIncomingData_Callback(void *Arg, const uint8_t *Data, uint1
 /// @param Data Data to publish to the topic
 void MqttClient::mqttPublish(const char *Topic, const char *Data)
 {
-    if (MqttPublishSemaphore != nullptr && xSemaphoreTake(MqttPublishSemaphore, pdMS_TO_TICKS(1000)) == pdTRUE) // Take the semaphore: Block other threads from publishing to the MQTT server
+    if (xSemaphoreTake(MqttPublishSemaphore, 1000) == pdTRUE) // Take the semaphore: Block other threads from publishing to the MQTT server
     {
         if (Topic == NULL || *Topic == '\0') // If a topic is not specified -> Publish to the default PubTopic from Settings.h
         {
@@ -283,23 +287,25 @@ void MqttClient::mqttPublish(const char *Topic, const char *Data)
         {
             printf(" MQTT reporting: %s - %s\n", PubTopic, Data);
             cyw43_arch_lwip_begin();
+            // strcpy(DebugMessage, "cyw43 running");
             err_t err = mqtt_publish(Client, PubTopic, Data, strlen(Data), ClientInfo->will_qos, *PublishRetain, mqttPublish_Callback, this);
-            cyw43_arch_lwip_end();
+            // strcpy(DebugMessage, "cyw43 ended");
             if (err != ERR_OK)
             {
                 printf(" MQTT publish error: %d , %s - %s\n", err, PubTopic, Data); // Failed to send out publish request
-                xSemaphoreGive(MqttPublishSemaphore);                               // Release the semaphore: Allow another thread to publish to the MQTT server
+                xSemaphoreGive(MqttPublishSemaphore);                                     // Release the semaphore: Allow another thread to publish to the MQTT server
             }
+            cyw43_arch_lwip_end();
         }
         else
         {
             printf(" MQTT disconnected, %s - %s\n", (Topic == NULL || *Topic == '\0') ? PubTopicDefault : Topic, Data);
-            xSemaphoreGive(MqttPublishSemaphore);  
+            xSemaphoreGive(MqttPublishSemaphore);
         }
     }
     else
     {
-        printf(" MQTT locked, %s - %s\n", PubTopic, Data); // Failed to take the semaphore, some other thread is currently publishing
+        printf(" Network locked, %s - %s\n", PubTopic, Data); // Failed to take the semaphore, some other thread is currently publishing
     }
 }
 

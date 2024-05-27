@@ -20,6 +20,8 @@
 // #include "420Common.h"
 // #include "420Module.h"
 
+extern char DebugMessage[MaxShotTextLength]; //Stored between watchdog restarts and printed at startup
+
 typedef std::function<void(char *, char *)> CallbackType_mqtt; // Defines how the DataCallback function in mqttConnectTrigger should look like
 
 extern bool dnsLookup(char *DnsName, ip_addr_t *ResultIP);

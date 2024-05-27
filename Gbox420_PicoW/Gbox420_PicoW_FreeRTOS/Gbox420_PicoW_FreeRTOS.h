@@ -22,6 +22,7 @@
 
 #include "pico/stdlib.h"           // Standard Library of C programming language
 #include "hardware/watchdog.h"     // Watchdog to auto-reboot in case of an error
+#include "lwipopts.h"              // Configuration header  for lightweight IP
 #include "pico/cyw43_arch.h"       // Pico W network library - https://www.raspberrypi.com/documentation/pico-sdk/networking.html#pico_cyw43_arch
 #include "FreeRTOS.h"              // Real-time operating system kernel for embedded devices - https://www.freertos.org/index.html
 #include "task.h"                  // FreeRTOS tasks - Each task executes within its own context with no coincidental dependency on other tasks within the system or the RTOS scheduler itself - https://www.freertos.org/taskandcr.html
@@ -58,16 +59,17 @@ void ntpRequest();                                                              
 static void ntpReceived(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr, uint16_t port); ///< NTP data received
 void mqttDataReceived(char *SubTopicReceived, char *DataReceived);                                             ///< Callback when MQTT data is received on a subscribed topic
 void mqttPublish(const char *Topic, const char *Data);                                                         ///< Publish data to an MQTT topic
-SemaphoreHandle_t MqttPublishSemaphore = nullptr;                                                              ///< Semaphore to prevent multiple threads from simultaneously publishing MQTT messages. Locks when an mqttPublish() is started, and unlocks when mqttPublish_Callback() is called
+SemaphoreHandle_t MqttPublishSemaphore = nullptr;                                                              ///< Semaphore to prevent multiple threads from simultaneously accessing network functions
 Settings *GboxSettings;                                                                                        ///< This object will store the settings loaded from the Settings.h. //TODO: Find a solution to Pico W not having EEPROM
 MqttClient *DefaultMqttClient = nullptr;                                                                       ///< Pointer to MQTT handler
 GboxModule *GboxModule1;                                                                                       ///< Test module, provides Sound feedback
 // HempyModule *HempyModule1;                                                                                  ///< Represents a Hempy module with all of its components
-ip_addr_t NtpServerIP;                     ///< Store the resolved IP address of the NTP server
-struct udp_pcb *NtpPcb;                    ///< UDP control block for NTP
-datetime_t CurrentTime;                    ///< Used when getting/setting the Real Time Clock
-char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting) //TODO: Use Message buffers instead
-char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages) //TODO: Use Message buffers instead
-bool *Debug;                               ///< True - Turns on extra debug messages on the Serial Output
-bool *Metric;                              ///< True - Use metric units, False - Use imperial units
-bool ledStatus = true;                     ///< Track the current state of the built-in LED
+ip_addr_t NtpServerIP;                                        ///< Store the resolved IP address of the NTP server
+struct udp_pcb *NtpPcb;                                       ///< UDP control block for NTP
+datetime_t CurrentTime;                                       ///< Used when getting/setting the Real Time Clock
+char LongMessage[MaxLongTextLength] = "";                     ///< Temp storage for assembling long messages (REST API, MQTT reporting) //TODO: Use Message buffers instead
+char ShortMessage[MaxShotTextLength] = "";                    ///< Temp storage for assembling short messages (Log entries, Error messages) //TODO: Use Message buffers instead
+bool *Debug;                                                  ///< True - Turns on extra debug messages on the Serial Output
+__attribute__((noinit)) char DebugMessage[MaxShotTextLength]; ///< Not zero initialized, keeps value from last watchdog reset
+bool *Metric;                                                 ///< True - Use metric units, False - Use imperial units
+bool ledStatus = true;                                        ///< Track the current state of the built-in LED

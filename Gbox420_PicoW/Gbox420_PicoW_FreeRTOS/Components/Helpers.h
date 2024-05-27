@@ -8,6 +8,7 @@
 #pragma once
 
 // #include "MemoryFree.h" // Checking remaining memory
+#include <stdio.h>
 #include <cstring>
 #include <cstdlib>
 #include <cmath>
