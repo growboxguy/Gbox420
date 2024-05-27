@@ -32,7 +32,7 @@ void GboxModule::report(bool FriendlyFormat)
   strcat(LongMessage, getMetricText(FriendlyFormat));
   strcat(LongMessage, "\",\"D\":\"");
   strcat(LongMessage, getDebugText(FriendlyFormat));
-  strcat(LongMessage, "\"}"); ///< closing the curly bracket at the end of the JSON  
+  strcat(LongMessage, "\"}"); ///< closing the curly bracket at the end of the JSON
 }
 
 /**

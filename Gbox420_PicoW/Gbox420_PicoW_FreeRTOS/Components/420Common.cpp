@@ -86,5 +86,5 @@ char *Common::getName(char *AppendToEnd, bool UnderscoreSeparator)
 
 bool Common::isThisForMe(char const *Command)
 {
-  return ::isThisForMe((char const *)Name,Command);
+  return ::isThisForMe((char const *)Name, Command);
 }

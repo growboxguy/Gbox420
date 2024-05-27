@@ -24,13 +24,13 @@ bool isThisForMe(char const *Name, char const *Command) ///< Returns true when t
   */
 
   char *ReturnCommand = ShortMessage; ///< The command without the object name will be loaded into a global temp buffer
-  uint8_t CharacterCount = 0;   // Tracks which character is currently getting compared
-  char NameCurrentChar;         // Current Name character being compared
-  char LookupCurrentChar;       // Current Command character being compared
+  uint8_t CharacterCount = 0;         // Tracks which character is currently getting compared
+  char NameCurrentChar;               // Current Name character being compared
+  char LookupCurrentChar;             // Current Command character being compared
 
   while (1)
   {
-    NameCurrentChar = Name[CharacterCount];           ///< read the current character from the flash and increment the pointer to the next char
+    NameCurrentChar = Name[CharacterCount];        ///< read the current character from the flash and increment the pointer to the next char
     LookupCurrentChar = Command[CharacterCount++]; ///< read the character at the same position from the Command
     // printf("%s - %s ",NameCurrentChar,LookupCurrentChar);
 

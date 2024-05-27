@@ -20,12 +20,12 @@
 // #include "420Common.h"
 // #include "420Module.h"
 
-extern char DebugMessage[MaxShotTextLength]; //Stored between watchdog restarts and printed at startup
+extern char DebugMessage[MaxShotTextLength]; // Stored between watchdog restarts and printed at startup
 
 typedef std::function<void(char *, char *)> CallbackType_mqtt; // Defines how the DataCallback function in mqttConnectTrigger should look like
 
 extern bool dnsLookup(char *DnsName, ip_addr_t *ResultIP);
-extern SemaphoreHandle_t MqttPublishSemaphore;  ///< Semaphore to prevent multiple threads from simultaneously publishing MQTT messages. Locks when an mqttPublish() is started, and unlocks when mqttPublish_Callback() is called
+extern SemaphoreHandle_t MqttPublishSemaphore; ///< Semaphore to prevent multiple threads from simultaneously publishing MQTT messages. Locks when an mqttPublish() is started, and unlocks when mqttPublish_Callback() is called
 
 class MqttClient
 {
@@ -54,7 +54,7 @@ private:
     bool InProgress_ConnectAndSubscribe = false;
     bool InProgress_Publish = false;
     char ReceivedTopicShort[MaxShotTextLength]; ///< Last received MQTT messages's topic, excludes the subscribed topic name (example: TestSubtopic)
-    
+
 protected:
     mqtt_client_t *Client;
     mqtt_connect_client_info_t *ClientInfo;

@@ -20,8 +20,8 @@ int main()
   }
   strcpy(DebugMessage, "Gbox420 running");
   Metric = &GboxSettings->Metric;                                   ///< Set global variable
-  MqttPublishSemaphore = xSemaphoreCreateBinary();                        ///< Initialize a semaphore used during network operations
-  xSemaphoreGive(MqttPublishSemaphore);                                   ///< Make sure the semaphore is available
+  MqttPublishSemaphore = xSemaphoreCreateBinary();                  ///< Initialize a semaphore used during network operations
+  xSemaphoreGive(MqttPublishSemaphore);                             ///< Make sure the semaphore is available
   rtcInit();                                                        ///< Initialize Real Time Clock and set a pre-defined starting date
   GboxModule1 = new GboxModule(&GboxSettings->Gbox1, GboxSettings); ///< Stripped down core module only containing a Sound component
   timer_hw->dbgpause = 0;                                           // Do not pause HW timer when debug is active
@@ -118,31 +118,31 @@ void connectivityTask(void *pvParameters)
   {
     if (++ConnectivityCounter >= WIFI_TIMEOUT) // Is it time to do a new WiFi check?
     {
-        ConnectivityCounter = 0;
-        rtcGetCurrentTime(true);
-        cyw43_arch_lwip_begin();
-        int CurrentWiFiStatus = cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA);
-        cyw43_arch_lwip_end();
-        printf("WiFi status: %s\n", toText_WiFiStatus(CurrentWiFiStatus)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
-        if (CurrentWiFiStatus != CYW43_LINK_UP)
+      ConnectivityCounter = 0;
+      rtcGetCurrentTime(true);
+      cyw43_arch_lwip_begin();
+      int CurrentWiFiStatus = cyw43_tcpip_link_status(&cyw43_state, CYW43_ITF_STA);
+      cyw43_arch_lwip_end();
+      printf("WiFi status: %s\n", toText_WiFiStatus(CurrentWiFiStatus)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
+      if (CurrentWiFiStatus != CYW43_LINK_UP)
+      {
+        connectWiFi();
+      }
+      else // WiFi is up and has an IP
+      {
+        if (!NtpSynced) // if NTP is not synced
         {
-          connectWiFi();
+          ntpRequest();
         }
-        else // WiFi is up and has an IP
+        else
         {
-          if (!NtpSynced) // if NTP is not synced
-          {
-            ntpRequest();
-          }
-          else
-          {
-            NtpSynced++; // NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec. If NtpSynced is changed to uint16_t the sync delay is ~11 days
-          }
-          printf("MQTT status: %s\n", DefaultMqttClient->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
-          if (!DefaultMqttClient->mqttIsConnected())                                 // If MQTT server is not connected -> Trigger a connection attempt
-          {
-            DefaultMqttClient->mqttConnectTrigger();
-          }
+          NtpSynced++; // NtpSynced is uint8_t, overflows after 255 checks -> Forces an NTP update every hour with WIFI_TIMER set to 15sec. If NtpSynced is changed to uint16_t the sync delay is ~11 days
+        }
+        printf("MQTT status: %s\n", DefaultMqttClient->mqttIsConnectedText(true)); // Returns the status of the WiFi link: CYW43_LINK_DOWN(0)-link is down,CYW43_LINK_JOIN(1)-Connected to WiFi,CYW43_LINK_NOIP(2)-Connected to WiFi, but no IP address,CYW43_LINK_UP  (3)-Connect to WiFi with an IP address,CYW43_LINK_FAIL(-1)-Connection failed,CYW43_LINK_NONET(-2)-No matching SSID found (could be out of range, or down),CYW43_LINK_BADAUTH(-3)-Authentication failure
+        if (!DefaultMqttClient->mqttIsConnected())                                 // If MQTT server is not connected -> Trigger a connection attempt
+        {
+          DefaultMqttClient->mqttConnectTrigger();
+        }
       }
     }
     heartbeat(); // Blinks the onboard LED, and delays the next While loop by 1sec
@@ -282,7 +282,7 @@ void ntpRequest()
   if (GboxSettings->NtpServer1.NtpServerDNS[0] != '\0')
   {
     dnsLookup(GboxSettings->NtpServer1.NtpServerDNS, &NtpServerIP);
-  }  
+  }
   cyw43_arch_lwip_begin();
   struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, 48, PBUF_RAM); // 48 is the NTP message length
   uint8_t *req = (uint8_t *)p->payload;
@@ -346,12 +346,12 @@ bool dnsLookup(char *DnsName, ip_addr_t *ResultIP)
   dnsLookupInProgress = true;
   printf("Looking up IP for %s\n", DnsName);
   cyw43_arch_lwip_begin();
-  err_t err = dns_gethostbyname(DnsName, ResultIP, dnsLookupResult, ResultIP);  
+  err_t err = dns_gethostbyname(DnsName, ResultIP, dnsLookupResult, ResultIP);
   if (err == ERR_OK) // DNS name found in cache and loaded into ResultIP
   {
     printf("Found cached address %s - %s\n", ipaddr_ntoa(ResultIP), DnsName);
     return true;
-  }  
+  }
   cyw43_arch_lwip_end();
   absolute_time_t Timeout = make_timeout_time_ms(DNS_TIMEOUT * 1000);
   while (dnsLookupInProgress) // Waiting for the DNS lookup to finish and dnsLookupResult callback to trigger

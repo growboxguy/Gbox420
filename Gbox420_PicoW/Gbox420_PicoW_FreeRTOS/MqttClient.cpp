@@ -94,7 +94,7 @@ void MqttClient::mqttConnect()
 {
     printf("MQTT connecting to %s %s\n", mqttGetServerName(), mqttGetServerIP());
     cyw43_arch_lwip_begin();
-    err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, this, ClientInfo);    
+    err_t err = mqtt_client_connect(Client, &MqttServerAddress, *MqttServerPort, mqttConnect_Callback, this, ClientInfo);
     if (err != ERR_OK)
     {
         printf("MQTT error: %d\n", err);
@@ -174,7 +174,7 @@ void MqttClient::mqttSubscribe()
     InProgress_ConnectAndSubscribe = true;
     cyw43_arch_lwip_begin();
     mqtt_set_inpub_callback(Client, mqttIncomingTopic_Callback, mqttIncomingData_Callback, this); // Set callback functions
-    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttSubscribe_Callback, this, 1);          // Initiate subscription    
+    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttSubscribe_Callback, this, 1);          // Initiate subscription
     if (err != ERR_OK)
     {
         printf("Error subscribing to %s - Error: %d\n", SubTopic, err);
@@ -199,7 +199,7 @@ void MqttClient::mqttUnsubscribe()
 {
     printf("Unsubscribing from %s...", SubTopic);
     cyw43_arch_lwip_begin();
-    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttUnsubscribe_Callback, this, 0);    
+    err_t err = mqtt_sub_unsub(Client, SubTopic, *QoS, mqttUnsubscribe_Callback, this, 0);
     if (err != ERR_OK)
     {
         printf("error: %d\n", err);
@@ -293,7 +293,7 @@ void MqttClient::mqttPublish(const char *Topic, const char *Data)
             if (err != ERR_OK)
             {
                 printf(" MQTT publish error: %d , %s - %s\n", err, PubTopic, Data); // Failed to send out publish request
-                xSemaphoreGive(MqttPublishSemaphore);                                     // Release the semaphore: Allow another thread to publish to the MQTT server
+                xSemaphoreGive(MqttPublishSemaphore);                               // Release the semaphore: Allow another thread to publish to the MQTT server
             }
             cyw43_arch_lwip_end();
         }

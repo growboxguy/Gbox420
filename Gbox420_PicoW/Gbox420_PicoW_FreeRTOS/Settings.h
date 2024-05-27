@@ -26,12 +26,12 @@ const uint8_t MaxWordLength = 32;        ///< Default char * buffer length for s
 const uint8_t MaxShotTextLength = 128;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 const uint16_t MaxLongTextLength = 1024; ///< Default char * buffer length for storing a long text. Memory intense!
 const uint8_t LogDepth = 4;              ///< Show X number of log entries on website. Be careful, Max 1024 bits can be passed during a Website Refresh/Load event
-//const uint8_t QueueDepth = 32;           ///< Limits the maximum number of components within a module. Memory intense!
-const uint8_t MovingAverageDepth = 10;   ///< Number of previous readings to keep when calculating average. Memory intense!
+// const uint8_t QueueDepth = 32;           ///< Limits the maximum number of components within a module. Memory intense!
+const uint8_t MovingAverageDepth = 10; ///< Number of previous readings to keep when calculating average. Memory intense!
 
 ///< Global variables
-extern char LongMessage[MaxLongTextLength];     // Temp storage for assembling long messages (REST API - Google Sheets reporting) //TODO Use Semaphore to protect the content getting overwritten by a parallel write to LongMessage
-extern char ShortMessage[MaxShotTextLength];    // Temp storage for assembling short messages (Log entries, Error messages) //TODO Use Semaphore to protect the content getting overwritten by a parallel write to LongMessage
+extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting) //TODO Use Semaphore to protect the content getting overwritten by a parallel write to LongMessage
+extern char ShortMessage[MaxShotTextLength]; // Temp storage for assembling short messages (Log entries, Error messages) //TODO Use Semaphore to protect the content getting overwritten by a parallel write to LongMessage
 
 ///< SAVED TO EEPROM - Settings struct
 ///< If you change things here, increase the Version variable
@@ -45,14 +45,14 @@ typedef struct
 
   struct GboxModuleSettings ///< Stripped down core module only containing a Sound component
   {
-    char Name[MaxWordLength]; ///< Must be unique
-    uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 65535 (1day)
-    bool SerialReportDate;             ///< Enable/disable reporting the current time to the Serial output
-    bool SerialReportMemory;           ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool SerialReportJSON;             ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool SerialReportJSONFriendly;     ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
-    bool SerialReportWireless;         ///< Enable/disable sending wireless package exchange reports to the Serial output
-    bool ReportToMqtt;                 ///< Enable/disable reporting sensor readings to an MQTT broker
+    char Name[MaxWordLength];       ///< Must be unique
+    uint16_t SerialReportFrequency; ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 65535 (1day)
+    bool SerialReportDate;          ///< Enable/disable reporting the current time to the Serial output
+    bool SerialReportMemory;        ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool SerialReportJSONFriendly;  ///< Enable/disable sending JSON report with friendly values (Sec,%,Min,kg/lbs..etc appended) to Serial
+    bool SerialReportWireless;      ///< Enable/disable sending wireless package exchange reports to the Serial output
+    bool ReportToMqtt;              ///< Enable/disable reporting sensor readings to an MQTT broker
   };
   struct GboxModuleSettings Gbox1 = {.Name = "Gbox1", .SerialReportFrequency = 15, .SerialReportDate = true, .SerialReportMemory = true, .SerialReportJSON = true, .SerialReportJSONFriendly = true, .SerialReportWireless = true, .ReportToMqtt = true};
 
@@ -107,7 +107,7 @@ typedef struct
     uint8_t QoS;                            ///< Quality of Service levels: 0:No QoS, 1: Broker ensures to send the message to the subscribers (recommended), 2: Broker ensures to send the message to the subscribers exactly once   https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/
     uint32_t KeepAliveSeconds;              ///< Ping the MQTT server every X seconds to keep the connection active
   };
-  struct MqttClientSettings MqttServer1 = {.Name = "MQTT1", .MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .MqttServerTimeoutSec = 10, .ClientID = "Gbox420", .PubTopic = "Gbox420/", .SubTopic = "Gbox420CMD/#", .LwtTopic = "Gbox420LWT/", .LwtMessage = "Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 3600}; //TODO reduce KeepAliveSeconds to ~30sec
+  struct MqttClientSettings MqttServer1 = {.Name = "MQTT1", .MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .MqttServerTimeoutSec = 10, .ClientID = "Gbox420", .PubTopic = "Gbox420/", .SubTopic = "Gbox420CMD/#", .LwtTopic = "Gbox420LWT/", .LwtMessage = "Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 3600}; // TODO reduce KeepAliveSeconds to ~30sec
 
   struct NtpClientSettings ///< MQTT client settings
   {
