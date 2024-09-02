@@ -44,6 +44,13 @@ int main()
   return 0;
 }
 
+/*
+void vTaskDelete( TaskHandle_t xTask )
+{
+printf("NICE TRY\n");
+}
+*/
+
 // Runs every 1 sec
 void run1Sec(TimerHandle_t xTimer)
 {

@@ -24,6 +24,7 @@
 #include "hardware/watchdog.h"     // Watchdog to auto-reboot in case of an error
 #include "lwipopts.h"              // Configuration header  for lightweight IP
 #include "pico/cyw43_arch.h"       // Pico W network library - https://www.raspberrypi.com/documentation/pico-sdk/networking.html#pico_cyw43_arch
+#include "FreeRTOSConfig.h"        // FreeRTOS configuration file
 #include "FreeRTOS.h"              // Real-time operating system kernel for embedded devices - https://www.freertos.org/index.html
 #include "task.h"                  // FreeRTOS tasks - Each task executes within its own context with no coincidental dependency on other tasks within the system or the RTOS scheduler itself - https://www.freertos.org/taskandcr.html
 #include "timers.h"                // FreeRTOS timers -  https://www.freertos.org/FreeRTOS-Software-Timer-API-Functions.html
@@ -37,7 +38,7 @@
 #define RUN_FREERTOS_ON_CORE 0
 #define TASK_PRIORITY_L1 (tskIDLE_PRIORITY + 1UL) // Lower means less important
 #define TASK_PRIORITY_L2 (tskIDLE_PRIORITY + 2UL) // Higher means more important
-#define TASK_PRIORITY_L3 (tskIDLE_PRIORITY + 3UL) // Higher means more important
+#define TASK_PRIORITY_L3 (tskIDLE_PRIORITY + 3UL) // Reserved for Timer Service Task Priority (#define configTIMER_TASK_PRIORITY). xTimer callbacks (run1Sec, run5Sec, run1Min, and run30Min) use this priority
 
 int main();                                                                                                    ///< Entry point. Loads settings, create tasks and starts FreeRTOS scheduler
 void watchdogTask(void *pvParameters);                                                                         ///< Initialize watchdog and periodically pet it - Crash detection and reboot
@@ -47,6 +48,7 @@ void run1Sec(TimerHandle_t xTimer);                                             
 void run5Sec(TimerHandle_t xTimer);                                                                            ///< Runs every 5 sec
 void run1Min(TimerHandle_t xTimer);                                                                            ///< Runs every 1 min
 void run30Min(TimerHandle_t xTimer);                                                                           ///< Runs every 30 min
+//void vTaskDelete( TaskHandle_t xTask );
 uint8_t ConnectivityCounter = WIFI_TIMEOUT;                                                                    ///< Count the seconds since the last WiFi connectivity check
 void heartbeat();                                                                                              ///< Controls the onboard LED, slow blink (1sec): MQTT connected, rapid blink (0.25sec): MQTT disconnected, continuous: WiFi connection attempt in progress !! Makes the caller task delay a total of 1 sec !!
 bool connectWiFi();                                                                                            ///< Connect to a WiFi network

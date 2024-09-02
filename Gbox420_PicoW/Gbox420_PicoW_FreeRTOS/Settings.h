@@ -107,7 +107,7 @@ typedef struct
     uint8_t QoS;                            ///< Quality of Service levels: 0:No QoS, 1: Broker ensures to send the message to the subscribers (recommended), 2: Broker ensures to send the message to the subscribers exactly once   https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/
     uint32_t KeepAliveSeconds;              ///< Ping the MQTT server every X seconds to keep the connection active
   };
-  struct MqttClientSettings MqttServer1 = {.Name = "MQTT1", .MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .MqttServerTimeoutSec = 10, .ClientID = "Gbox420", .PubTopic = "Gbox420/", .SubTopic = "Gbox420CMD/#", .LwtTopic = "Gbox420LWT/", .LwtMessage = "Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 1, .KeepAliveSeconds = 3600}; // TODO reduce KeepAliveSeconds to ~30sec
+  struct MqttClientSettings MqttServer1 = {.Name = "MQTT1", .MqttServerDNS = "mqttserver.gbox420.net", .MqttServerIP = "192.168.1.100", .MqttServerPort = 1883, .MqttServerUser = "MqttUser", .MqttServerPassword = "SuperSecretPassword", .MqttServerTimeoutSec = 10, .ClientID = "Gbox420", .PubTopic = "Gbox420/", .SubTopic = "Gbox420CMD/#", .LwtTopic = "Gbox420LWT/", .LwtMessage = "Offline", .LwtRetain = true, .PublishRetain = true, .QoS = 0, .KeepAliveSeconds = 3600}; // TODO reduce KeepAliveSeconds to ~30sec
 
   struct NtpClientSettings ///< MQTT client settings
   {

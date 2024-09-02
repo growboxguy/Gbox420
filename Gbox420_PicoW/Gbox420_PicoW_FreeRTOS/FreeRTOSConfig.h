@@ -94,7 +94,7 @@
 
 /* Software timer related definitions. */
 #define configUSE_TIMERS                        1
-#define configTIMER_TASK_PRIORITY               ( tskIDLE_PRIORITY + 1UL )
+#define configTIMER_TASK_PRIORITY               ( tskIDLE_PRIORITY + 3UL ) //xTimer callbacks (run1Sec, run5Sec, run1Min, and run30Min) use this priority
 #define configTIMER_QUEUE_LENGTH                10
 #define configTIMER_TASK_STACK_DEPTH            1024
 
@@ -124,7 +124,7 @@
 to exclude the API function. */
 #define INCLUDE_vTaskPrioritySet                1
 #define INCLUDE_uxTaskPriorityGet               1
-#define INCLUDE_vTaskDelete                     1
+#define INCLUDE_vTaskDelete                     0
 #define INCLUDE_vTaskSuspend                    1
 #define INCLUDE_vTaskDelayUntil                 1
 #define INCLUDE_vTaskDelay                      1
