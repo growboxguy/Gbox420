@@ -8,10 +8,10 @@ PowerSensorV3_Web::PowerSensorV3_Web(const __FlashStringHelper *Name, Module_Web
 
 void PowerSensorV3_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgString(getName(F("P"),true), getPowerText(true));
-  WebServer.setArgString(getName(F("E"),true), getEnergyText(true));
-  WebServer.setArgString(getName(F("V"),true), getVoltageText(true));
-  WebServer.setArgString(getName(F("C"),true), getCurrentText(true));
-  WebServer.setArgString(getName(F("F"),true), getFrequencyText(true));
-  WebServer.setArgString(getName(F("PF"),true), getPowerFactorText());
+  WebServer.setArgString(getName(F("P"), true), getPowerText(true));
+  WebServer.setArgString(getName(F("E"), true), getEnergyText(true));
+  WebServer.setArgString(getName(F("V"), true), getVoltageText(true));
+  WebServer.setArgString(getName(F("C"), true), getCurrentText(true));
+  WebServer.setArgString(getName(F("F"), true), getFrequencyText(true));
+  WebServer.setArgString(getName(F("PF"), true), getPowerFactorText());
 }

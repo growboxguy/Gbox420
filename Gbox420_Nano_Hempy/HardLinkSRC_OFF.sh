@@ -6,10 +6,7 @@ unlink ./SerialLog.cpp > /dev/null 2>&1
 unlink ./SerialLog.h > /dev/null 2>&1
 unlink ./Settings.cpp > /dev/null 2>&1
 
-unlink ./Webpages/Links.html > /dev/null 2>&1
-unlink ./Webpages/Logs.html > /dev/null 2>&1 
 unlink ./Webpages/Settings.html > /dev/null 2>&1
-unlink ./Webpages/Test.html > /dev/null 2>&1
 
 unlink ./src/Modules/HempyModule.h > /dev/null 2>&1 
 unlink ./src/Modules/HempyModule.cpp > /dev/null 2>&1
@@ -59,6 +56,8 @@ unlink ./src/Components_Web/WaterPump_Web.h > /dev/null 2>&1
 unlink ./src/Components_Web/WaterPump_Web.cpp > /dev/null 2>&1
 unlink ./src/Components_Web/WeightSensor_Web.h > /dev/null 2>&1
 unlink ./src/Components_Web/WeightSensor_Web.cpp > /dev/null 2>&1
+unlink ./src/Components_Web/WasteReservoir_Web.h > /dev/null 2>&1
+unlink ./src/Components_Web/WasteReservoir_Web.cpp > /dev/null 2>&1
 unlink ./src/Components_Web/AirPump_Web.h > /dev/null 2>&1
 unlink ./src/Components_Web/AirPump_Web.cpp > /dev/null 2>&1
 unlink ./src/Components_Web/Fan_Web.h > /dev/null 2>&1
@@ -122,10 +121,13 @@ unlink ./src/Components/WaterPump.h > /dev/null 2>&1
 unlink ./src/Components/WaterPump.cpp > /dev/null 2>&1
 unlink ./src/Components/WaterTempSensor.h > /dev/null 2>&1
 unlink ./src/Components/WaterTempSensor.cpp > /dev/null 2>&1
+unlink ./src/Components/WasteReservoir.h > /dev/null 2>&1
+unlink ./src/Components/WasteReservoir.cpp > /dev/null 2>&1
 unlink ./src/Components/WeightSensor.h > /dev/null 2>&1
 unlink ./src/Components/WeightSensor.cpp > /dev/null 2>&1
 
 unlink ./HardLinkSRC_OFF.sh
+unlink ./HardLinkSRC_OFF_Win.bat
 
 
 echo "Cleaning up empty folders"

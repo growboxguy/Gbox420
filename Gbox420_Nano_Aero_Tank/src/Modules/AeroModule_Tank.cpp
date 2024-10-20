@@ -227,7 +227,7 @@ bool AeroModule::processCommand(void *ReceivedCommand)
       Aero1Response2ToSend.ConfirmPumpDisable = true;
     }
     else
-      Aero1Response2ToSend.ConfirmPumpDisable = false;    
+      Aero1Response2ToSend.ConfirmPumpDisable = false;
 
     AeroT1->Pump->setSpeed(((AeroCommand_P2 *)ReceivedCommand)->PumpSpeed);
     AeroT1->Pump->setTimeOut(((AeroCommand_P2 *)ReceivedCommand)->PumpTimeOut);

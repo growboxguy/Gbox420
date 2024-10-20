@@ -74,18 +74,18 @@ void setup()
   resetWebServer();                  ///< reset the WebServer
   setSyncProvider(getNtpTime);       ///< Points to method for updating time from NTP server
   setSyncInterval(86400);            ///< Sync time every day
-  if ((ModuleSettings->DevModule_Web1).ReportToMQTT)
+  if ((ModuleSettings->DevModule_Web1).ReportToMqtt)
   {
     setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
   }
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   logToSerials(F("Setting up refresh threads"), false, 0);
   OneSecThread.setInterval(1000);
-  OneSecThread.onRun(runSec);
+  OneSecThread.onRun(run1sec);
   FiveSecThread.setInterval(5000);
-  FiveSecThread.onRun(runFiveSec);
+  FiveSecThread.onRun(run5sec);
   MinuteThread.setInterval(60000);
-  MinuteThread.onRun(runMinute);
+  MinuteThread.onRun(run1min);
   logToSerials(F("done"), true, 3);
 
   // Start interrupts to handle request from ESP-link firmware
@@ -118,7 +118,7 @@ void setup()
 
 void loop()
 {
-  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
+  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (run1sec(), run5sec(),run1min()..etc)
 }
 
 void processTimeCriticalStuff()
@@ -128,30 +128,30 @@ void processTimeCriticalStuff()
 
 // Threads
 
-void runSec()
+void run1sec()
 {
   wdt_reset(); ///< reset watchdog timeout
-  HeartBeat(); ///< Blinks built-in led
-  DevModule_Web1->runSec();
+  heartBeat(); ///< Blinks built-in led
+  DevModule_Web1->run1sec();
 }
 
-void runFiveSec()
+void run5sec()
 {
   wdt_reset();
-  DevModule_Web1->runFiveSec();
+  DevModule_Web1->run5sec();
 }
 
-void runMinute()
+void run1min()
 {
   wdt_reset();
-  DevModule_Web1->runMinute();
+  DevModule_Web1->run1min();
   getWirelessStatus();
 }
 
 /**
   \brief Turns the integrated LED on the Arduino board ON/OFF 
 */
-void HeartBeat()
+void heartBeat()
 {
   static bool ledStatus;
   ledStatus = !ledStatus;
@@ -246,7 +246,7 @@ void mqttReceived(void *response)
   mqttTopic.toCharArray(command, MaxShotTextLength);
   mqttData.toCharArray(data, MaxShotTextLength);
   DevModule_Web1->commandEventTrigger(command, data);
-  DevModule_Web1->reportToMQTTTrigger(true); //send out a fresh report
+  DevModule_Web1->reportToMqttTrigger(true); //send out a fresh report
 }
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress
@@ -266,16 +266,16 @@ time_t getNtpTime()
     {
       NTPResponse = ESPCmd.GetTime();
       delay(1000);
-      logToSerials(F(""), false, 0);
+      logToSerials(F("."), false, 0);
       wdt_reset(); ///reset watchdog timeout
     }
     SyncInProgress = false;
     if (NTPResponse == 0)
     {
-      logToSerials(F("NTP time sync failed"), true, 3);
+      logToSerials(F("sync failed"), true, 3);
     }
     else
-      logToSerials(F("time synchronized"), true, 3);
+      logToSerials(F("synchronized"), true, 3);
   }
   return NTPResponse;
 }

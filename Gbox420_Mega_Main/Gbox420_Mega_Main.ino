@@ -27,7 +27,7 @@
 
 // Global variable initialization
 char LongMessage[MaxLongTextLength] = "";  ///< Temp storage for assembling long messages (REST API, MQTT reporting)
-char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short messages (Log entries, Error messages)
+char ShortMessage[MaxShotTextLength] = ""; ///< Temp storage for assembling short text messages (Log entries, Error messages,etc)
 char CurrentTime[MaxWordLength] = "";      ///< Buffer for storing current time in text format
 
 // Component initialization
@@ -42,7 +42,7 @@ Settings *ModuleSettings;                 ///< This object will store the settin
 bool *Debug;                              ///< True - Turns on extra debug messages on the Serial Output
 bool *Metric;                             ///< True - Use metric units, False - Use imperial units
 bool MqttConnected = false;               ///< Track the connection state to the MQTT broker configured on the ESP-link's REST/MQTT tab
-MainModule *Main1;                        ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor..etc)
+MainModule *Main1;                        ///< Represents a Grow Box with all components (Lights, DHT sensors, Power sensor, Aero/Hempy/Reservoir wireless modules,..etc)
 
 RF24 Wireless(WirelessCEPin, WirelessCSNPin); ///< Wireless communication with Modules over nRF24L01+
 
@@ -74,18 +74,18 @@ void setup()
   resetWebServer();                  ///< reset the WebServer
   setSyncProvider(getNtpTime);       ///< Points to method for updating time from NTP server
   setSyncInterval(86400);            ///< Sync time every day
-  if ((ModuleSettings->Main1).ReportToMQTT)
+  if ((ModuleSettings->Main1).ReportToMqtt)
   {
     setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
   }
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   logToSerials(F("Setting up refresh threads"), false, 0);
   OneSecThread.setInterval(1000);
-  OneSecThread.onRun(runSec);
+  OneSecThread.onRun(run1sec);
   FiveSecThread.setInterval(5000);
-  FiveSecThread.onRun(runFiveSec);
+  FiveSecThread.onRun(run5sec);
   MinuteThread.setInterval(60000);
-  MinuteThread.onRun(runMinute);
+  MinuteThread.onRun(run1min);
   logToSerials(F("done"), true, 3);
 
   // Start interrupts to handle request from ESP-link firmware
@@ -118,7 +118,7 @@ void setup()
 
 void loop()
 {
-  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
+  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (run1sec(), run5sec(),run1min()..etc)
 }
 
 void processTimeCriticalStuff()
@@ -128,30 +128,30 @@ void processTimeCriticalStuff()
 
 // Threads
 
-void runSec()
+void run1sec()
 {
-  wdt_reset();     ///< reset watchdog timeout
-  HeartBeat();     ///< Blinks built-in led
-  Main1->runSec(); 
+  wdt_reset(); ///< reset watchdog timeout
+  heartBeat(); ///< Blinks built-in led
+  Main1->run1sec();
 }
 
-void runFiveSec()
+void run5sec()
 {
   wdt_reset();
-  Main1->runFiveSec();
+  Main1->run5sec();
 }
 
-void runMinute()
+void run1min()
 {
   wdt_reset();
-  Main1->runMinute();
+  Main1->run1min();
   getWirelessStatus();
 }
 
 /**
   \brief Turns the integrated LED on the Arduino board ON/OFF 
 */
-void HeartBeat()
+void heartBeat()
 {
   static bool ledStatus;
   ledStatus = !ledStatus;
@@ -179,16 +179,20 @@ void resetWebServer()
   else
     logToSerials(F("PushingBox RestAPI failed"), true, 2); ///< If begin returns a negative number the initialization failed
   WebServer.setup();
-  URLHandler *GrowBoxHandler = WebServer.createURLHandler("/GrowBox.html.json");       ///< setup handling request from GrowBox.html
-  GrowBoxHandler->loadCb.attach(&loadCallback);                                      ///< GrowBox tab - Called then the website loads initially
-  GrowBoxHandler->refreshCb.attach(&refreshCallback);                                ///< GrowBox tab - Called periodically to refresh website content
-  GrowBoxHandler->buttonCb.attach(&buttonCallback);                                  ///< GrowBox tab - Called when a button is pressed on the website
-  GrowBoxHandler->setFieldCb.attach(&fieldCallback);                                 ///< GrowBox tab - Called when a field is changed on the website
+  URLHandler *GrowBoxHandler = WebServer.createURLHandler("/Main.html.json");      ///< setup handling request from GrowBox.html
+  GrowBoxHandler->loadCb.attach(&loadCallback);                                    ///< GrowBox tab - Called then the website loads initially
+  GrowBoxHandler->refreshCb.attach(&refreshCallback);                              ///< GrowBox tab - Called periodically to refresh website content
+  GrowBoxHandler->buttonCb.attach(&buttonCallback);                                ///< GrowBox tab - Called when a button is pressed on the website
+  GrowBoxHandler->setFieldCb.attach(&fieldCallback);                               ///< GrowBox tab - Called when a field is changed on the website
   URLHandler *SettingsHandler = WebServer.createURLHandler("/Settings.html.json"); ///< setup handling request from Settings.html
   SettingsHandler->loadCb.attach(&settingsLoadCallback);                           ///< Settings tab - Called then the website loads initially
   SettingsHandler->refreshCb.attach(&settingsRefreshCallback);                     ///< Settings tab - Called periodically to refresh website content
   SettingsHandler->buttonCb.attach(&settingsButtonCallback);                       ///< Settings tab - Called when a button is pressed on the website
   SettingsHandler->setFieldCb.attach(&settingsFieldCallback);                      ///< Settings tab - Called when a field is changed on the website
+  URLHandler *HempyHandler = WebServer.createURLHandler("/Hempy.html.json");       ///< setup handling request from Hempy.html (embeds the Stand-alone Hempy module's web interface)
+  HempyHandler->loadCb.attach(&ignoreCallback);                                    ///< Ignore event, handled by the Stand-alone Hempy module
+  HempyHandler->refreshCb.attach(&ignoreCallback);                                 ///< Ignore event, handled by the Stand-alone Hempy module
+
   logToSerials(F("ESP-link ready"), true, 1);
 }
 
@@ -209,20 +213,20 @@ void setupMqtt()
   MqttAPI.setup();
 }
 
-void mqttConnected( __attribute__((unused)) void *response)
+void mqttConnected(__attribute__((unused)) void *response)
 {
   MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
   MqttConnected = true;
   //if(*Debug) logToSerials(F("MQTT connected"), true);
 }
 
-void mqttDisconnected( __attribute__((unused)) void *response)
+void mqttDisconnected(__attribute__((unused)) void *response)
 {
   //if(*Debug) logToSerials(F("MQTT disconnected"), true);
   MqttConnected = false;
 }
 
-void mqttPublished( __attribute__((unused)) void *response)
+void mqttPublished(__attribute__((unused)) void *response)
 {
   //if(*Debug) logToSerials(F("MQTT published"), true);
 }
@@ -241,7 +245,7 @@ void mqttReceived(void *response)
   mqttTopic.toCharArray(command, MaxShotTextLength);
   mqttData.toCharArray(data, MaxShotTextLength);
   Main1->commandEventTrigger(command, data);
-  Main1->reportToMQTTTrigger(true); //send out a fresh report
+  Main1->reportToMqttTrigger(true); //send out a fresh report
 }
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress
@@ -261,16 +265,16 @@ time_t getNtpTime()
     {
       NTPResponse = ESPCmd.GetTime();
       delay(1000);
-      logToSerials(F(""), false, 0);
+      logToSerials(F("."), false, 0);
       wdt_reset(); ///reset watchdog timeout
     }
     SyncInProgress = false;
     if (NTPResponse == 0)
     {
-      logToSerials(F("NTP time sync failed"), true, 3);
+      logToSerials(F("sync failed"), true, 3);
     }
     else
-      logToSerials(F("time synchronized"), true, 3);
+      logToSerials(F("synchronized"), true, 3);
   }
   return NTPResponse;
 }
@@ -321,7 +325,6 @@ void fieldCallback(char *Field)
   Main1->commandEventTrigger(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
 }
-
 
 /**
   \brief Called when the /Settings.html website is loading on the ESP-link webserver
@@ -387,4 +390,11 @@ void getWirelessStatus()
     Wireless.printPrettyDetails();
     logToSerials(F(""), true, 0);
   }
+}
+
+/**
+  \brief Ignores the incoming loa/refresh event. Used when embedding another module's web interface that already handles the event
+*/
+void ignoreCallback(__attribute__((unused)) char *Url)
+{
 }

@@ -3,8 +3,10 @@
 Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSettings *DefaultSettings) : Common(Name)
 {
   this->Parent = Parent;
+  Parent->SoundFeedback = this; ///< Pointer for child objects to use sound feedback
   Pin = &DefaultSettings->Pin;
   Enabled = &DefaultSettings->Enabled;
+  Tone1 = new TonePlayer(TCCR1A, TCCR1B, OCR1AH, OCR1AL, TCNT1H, TCNT1L);  // pin D9 (Uno/Nano), D11 (Mega)
   pinMode(*Pin, OUTPUT);
   Parent->addToRefreshQueue_Sec(this);
   logToSerials(F("Sound ready"), true, 3);
@@ -17,7 +19,7 @@ Sound::Sound(const __FlashStringHelper *Name, Module *Parent, Settings::SoundSet
 void Sound::report(bool FriendlyFormat)
 {
   Common::report(FriendlyFormat); //< Load the objects name to the LongMessage buffer a the beginning of a JSON :  "Name":{
-  strcat_P(LongMessage, (PGM_P)F("\"En\":\""));
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
   strcat(LongMessage, getEnabledStateText(FriendlyFormat));
   strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
@@ -41,6 +43,14 @@ void Sound::checkEvents()
   PlayOffSound = false;
 }
 
+void Sound::playOnOffSound(bool State)
+{
+  if (State)
+    PlayOnSound = true;
+  else
+    PlayOffSound = true;
+}
+
 void Sound::playOnSound()
 {
   PlayOnSound = true;
@@ -53,31 +63,21 @@ void Sound::playOffSound()
 
 void Sound::setSoundOnOff(bool State)
 {
-  char* Message;
   *Enabled = State;
-  if (*Enabled)
-  {
-    playOnSound();
-    Message = getName(F("ON"));
-  }
-  else
-  {
-    playOffSound();
-    Message = getName(F("OFF"));
-  }
-  Parent->addToLog(Message);
+  playOnOffSound(*Enabled);
+  Parent->addToLog(getName(getEnabledStateText(true)));
 }
 
 void Sound::OnSound()
 {
   if (*Enabled)
   {
-    tone(*Pin, 500);
+    Tone1->tone(500);
     delay(100);
-    noTone(*Pin);
-    tone(*Pin, 1000);
+    Tone1->noTone();
+    Tone1->tone(1000);
     delay(100);
-    noTone(*Pin);
+    Tone1->noTone();
   }
 }
 
@@ -85,12 +85,12 @@ void Sound::OffSound()
 {
   if (*Enabled)
   {
-    tone(*Pin, 1000);
+    Tone1->tone(1000);
     delay(100);
-    noTone(*Pin);
-    tone(*Pin, 500);
+    Tone1->noTone();
+    Tone1->tone(500);
     delay(100);
-    noTone(*Pin);
+    Tone1->noTone();
   }
 }
 

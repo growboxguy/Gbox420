@@ -19,11 +19,13 @@ mklink /h .\SerialLog.cpp ..\src\SerialLog_Mega.cpp
 mklink /h .\SerialLog.h ..\src\SerialLog_Mega.h
 mklink /h .\Settings.cpp ..\src\Settings_Mega.cpp
 
-mklink /h .\Webpages\Logs.html ..\src\Webpages\Logs.html
 mklink /h .\Webpages\Settings.html ..\src\Webpages\Settings.html
+del .\Webpages\Hempy.html > nul 2>&1
+mklink /h .\Webpages\Hempy.html ..\src\Webpages\Hempy.html
 
 mklink /h .\src\Helpers.cpp ..\src\Helpers.cpp
 mklink /h .\src\Helpers.h ..\src\Helpers.h
+mklink /h .\src\WirelessCommands_ACMotor.h ..\src\WirelessCommands_ACMotor.h
 mklink /h .\src\WirelessCommands_Aero.h ..\src\WirelessCommands_Aero.h
 mklink /h .\src\WirelessCommands_Hempy.h ..\src\WirelessCommands_Hempy.h
 mklink /h .\src\WirelessCommands_Reservoir.h ..\src\WirelessCommands_Reservoir.h

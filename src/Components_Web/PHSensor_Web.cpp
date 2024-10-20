@@ -12,13 +12,13 @@ void PHSensor_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
   ///< WebServer.setArgString(F("PHAlertLow"), toText(GBox -> Reservoir -> PHAlertLow));
   ///< WebServer.setArgString(F("PHAlertHigh"), toText(GBox -> ModuleSettings -> PHAlertHigh));
-  WebServer.setArgString(getName(F("Slope"),true), toText_floatDecimals(*Slope));
-  WebServer.setArgString(getName(F("Intercept"),true), toText_floatDecimals(*Intercept));
+  WebServer.setArgString(getName(F("Slope"), true), toText_floatDecimals(*Slope));
+  WebServer.setArgString(getName(F("Intercept"), true), toText_floatDecimals(*Intercept));
 }
 
 void PHSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgString(getName(F("PH"),true), getPHText(false));
+  WebServer.setArgString(getName(F("PH"), true), getPHText(false));
 }
 
 bool PHSensor_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)

@@ -9,8 +9,8 @@ PressureSensor_Web::PressureSensor_Web(const __FlashStringHelper *Name, Module_W
 
 void PressureSensor_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgString(getName(F("Offset"),true), toText_floatDecimals(*Offset));
-  WebServer.setArgString(getName(F("Ratio"),true), toText_floatDecimals(*Ratio));
+  WebServer.setArgString(getName(F("Offset"), true), toText_floatDecimals(*Offset));
+  WebServer.setArgString(getName(F("Ratio"), true), toText_floatDecimals(*Ratio));
 }
 
 bool PressureSensor_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)

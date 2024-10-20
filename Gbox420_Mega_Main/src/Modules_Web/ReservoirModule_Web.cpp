@@ -28,33 +28,33 @@ ReservoirModule_Web::ReservoirModule_Web(const __FlashStringHelper *Name, MainMo
 */
 void ReservoirModule_Web::report(bool FriendlyFormat)
 {
-    Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
-    strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_onlineStatus(OnlineStatus) : toText(OnlineStatus));
-    strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
-    strcat(LongMessage, toText(ReservoirResponse1Received.PH));
-    strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_TDS(ReservoirResponse1Received.TDS) : toText(ReservoirResponse1Received.TDS));
-    strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_weight(ReservoirResponse1Received.Weight) : toText(ReservoirResponse1Received.Weight));
-    strcat_P(LongMessage, (PGM_P)F("\",\"WT\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_temp(ReservoirResponse1Received.WaterTemperature) : toText(ReservoirResponse1Received.WaterTemperature));
-    strcat_P(LongMessage, (PGM_P)F("\",\"AT\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_temp(ReservoirResponse1Received.AirTemperature) : toText(ReservoirResponse1Received.AirTemperature));
-    strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
-    strcat(LongMessage, FriendlyFormat ? toText_percentage(ReservoirResponse1Received.Humidity) : toText(ReservoirResponse1Received.Humidity));
-    strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
+  Common::report(true); ///< Adds "NAME":{  to the LongMessage buffer. The curly bracket { needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"S\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_onlineStatus(OnlineStatus) : toText(OnlineStatus));
+  strcat_P(LongMessage, (PGM_P)F("\",\"P\":\""));
+  strcat(LongMessage, toText(ReservoirResponse1Received.PH));
+  strcat_P(LongMessage, (PGM_P)F("\",\"T\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_TDS(ReservoirResponse1Received.TDS) : toText(ReservoirResponse1Received.TDS));
+  strcat_P(LongMessage, (PGM_P)F("\",\"W\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_weight(ReservoirResponse1Received.Weight) : toText(ReservoirResponse1Received.Weight));
+  strcat_P(LongMessage, (PGM_P)F("\",\"WT\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_temp(ReservoirResponse1Received.WaterTemperature) : toText(ReservoirResponse1Received.WaterTemperature));
+  strcat_P(LongMessage, (PGM_P)F("\",\"AT\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_temp(ReservoirResponse1Received.AirTemperature) : toText(ReservoirResponse1Received.AirTemperature));
+  strcat_P(LongMessage, (PGM_P)F("\",\"H\":\""));
+  strcat(LongMessage, FriendlyFormat ? toText_percentage(ReservoirResponse1Received.Humidity) : toText(ReservoirResponse1Received.Humidity));
+  strcat_P(LongMessage, (PGM_P)F("\"}")); ///< closing the curly bracket at the end of the JSON
 }
 
 void ReservoirModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
 {
-    WebServer.setArgString(getName(F("S"),true), toText_onlineStatus(OnlineStatus));
-    WebServer.setArgString(getName(F("PH"),true), toText(ReservoirResponse1Received.PH));
-    WebServer.setArgString(getName(F("TDS"),true), toText_TDS(ReservoirResponse1Received.TDS));
-    WebServer.setArgString(getName(F("W"),true), toText_weight(ReservoirResponse1Received.Weight));
-    WebServer.setArgString(getName(F("WT"),true), toText_temp(ReservoirResponse1Received.WaterTemperature));
-    WebServer.setArgString(getName(F("AT"),true), toText_temp(ReservoirResponse1Received.AirTemperature));
-    WebServer.setArgString(getName(F("H"),true), toText_percentage(ReservoirResponse1Received.Humidity));
+  WebServer.setArgString(getName(F("S"), true), toText_onlineStatus(OnlineStatus));
+  WebServer.setArgString(getName(F("PH"), true), toText(ReservoirResponse1Received.PH));
+  WebServer.setArgString(getName(F("TDS"), true), toText_TDS(ReservoirResponse1Received.TDS));
+  WebServer.setArgString(getName(F("W"), true), toText_weight(ReservoirResponse1Received.Weight));
+  WebServer.setArgString(getName(F("WT"), true), toText_temp(ReservoirResponse1Received.WaterTemperature));
+  WebServer.setArgString(getName(F("AT"), true), toText_temp(ReservoirResponse1Received.AirTemperature));
+  WebServer.setArgString(getName(F("H"), true), toText_percentage(ReservoirResponse1Received.Humidity));
 }
 
 /**
@@ -76,9 +76,9 @@ bool ReservoirModule_Web::commandEvent(__attribute__((unused)) char *Command, __
     else
     {
       return false;
-    }
-    return true;
+    }    
     SyncRequested = true;
+    return true;
   }
 }
 
@@ -119,7 +119,7 @@ void ReservoirModule_Web::sendMessages()
 ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
 {
   ReservoirMessages SequenceIDToSend = ((ReservoirCommonTemplate *)CommandToSend)->SequenceID;
-  ReservoirMessages ReceivedSequenceID = NULL;
+  ReservoirMessages ReceivedSequenceID;
   if (*(Parent->SerialReportWireless))
   {
     logToSerials(F("Sending:"), false, 1);
@@ -167,12 +167,13 @@ ReservoirMessages ReservoirModule_Web::sendCommand(void *CommandToSend)
         {
           SyncRequested = true; ///< Force another message exchange when a command is active
         }
-        if(ReservoirResponse1Received.ConfirmTareWeight) ReservoirCommand1ToSend.TareWeight = false;  //Turn off the Flag once the Receiver confirms processing it 
+        if (ReservoirResponse1Received.ConfirmTareWeight)
+          ReservoirCommand1ToSend.TareWeight = false; //Turn off the Flag once the Receiver confirms processing it
         break;
       case ReservoirMessages::ReservoirReset:
         if (*(Parent->SerialReportWireless))
         {
-          logToSerials(F("-"), true, 1);  ///< Reset messages does not have any data
+          logToSerials(F("-"), true, 1); ///< Reset messages does not have any data
         }
         break;
       default:

@@ -1,10 +1,12 @@
-#include <Adafruit_SPIDevice.h>
-#include <Arduino.h>
+#include "Adafruit_SPIDevice.h"
+
+#if !defined(SPI_INTERFACES_COUNT) ||                                          \
+    (defined(SPI_INTERFACES_COUNT) && (SPI_INTERFACES_COUNT > 0))
 
 //#define DEBUG_SERIAL Serial
 
 /*!
- *    @brief  Create an SPI device with the given CS pin and settins
+ *    @brief  Create an SPI device with the given CS pin and settings
  *    @param  cspin The arduino pin number to use for chip select
  *    @param  freq The SPI clock frequency to use, defaults to 1MHz
  *    @param  dataOrder The SPI data order to use for bits within each byte,
@@ -13,8 +15,8 @@
  *    @param  theSPI The SPI bus to use, defaults to &theSPI
  */
 Adafruit_SPIDevice::Adafruit_SPIDevice(int8_t cspin, uint32_t freq,
-                                       BitOrder dataOrder, uint8_t dataMode,
-                                       SPIClass *theSPI) {
+                                       BusIOBitOrder dataOrder,
+                                       uint8_t dataMode, SPIClass *theSPI) {
   _cs = cspin;
   _sck = _mosi = _miso = -1;
   _spi = theSPI;
@@ -26,7 +28,7 @@ Adafruit_SPIDevice::Adafruit_SPIDevice(int8_t cspin, uint32_t freq,
 }
 
 /*!
- *    @brief  Create an SPI device with the given CS pin and settins
+ *    @brief  Create an SPI device with the given CS pin and settings
  *    @param  cspin The arduino pin number to use for chip select
  *    @param  sckpin The arduino pin number to use for SCK
  *    @param  misopin The arduino pin number to use for MISO, set to -1 if not
@@ -40,7 +42,7 @@ Adafruit_SPIDevice::Adafruit_SPIDevice(int8_t cspin, uint32_t freq,
  */
 Adafruit_SPIDevice::Adafruit_SPIDevice(int8_t cspin, int8_t sckpin,
                                        int8_t misopin, int8_t mosipin,
-                                       uint32_t freq, BitOrder dataOrder,
+                                       uint32_t freq, BusIOBitOrder dataOrder,
                                        uint8_t dataMode) {
   _cs = cspin;
   _sck = sckpin;
@@ -299,11 +301,23 @@ bool Adafruit_SPIDevice::write(uint8_t *buffer, size_t len,
 
   digitalWrite(_cs, LOW);
   // do the writing
-  for (size_t i = 0; i < prefix_len; i++) {
-    transfer(prefix_buffer[i]);
-  }
-  for (size_t i = 0; i < len; i++) {
-    transfer(buffer[i]);
+#if defined(ARDUINO_ARCH_ESP32)
+  if (_spi) {
+    if (prefix_len > 0) {
+      _spi->transferBytes(prefix_buffer, nullptr, prefix_len);
+    }
+    if (len > 0) {
+      _spi->transferBytes(buffer, nullptr, len);
+    }
+  } else
+#endif
+  {
+    for (size_t i = 0; i < prefix_len; i++) {
+      transfer(prefix_buffer[i]);
+    }
+    for (size_t i = 0; i < len; i++) {
+      transfer(buffer[i]);
+    }
   }
   digitalWrite(_cs, HIGH);
 
@@ -394,8 +408,17 @@ bool Adafruit_SPIDevice::write_then_read(uint8_t *write_buffer,
 
   digitalWrite(_cs, LOW);
   // do the writing
-  for (size_t i = 0; i < write_len; i++) {
-    transfer(write_buffer[i]);
+#if defined(ARDUINO_ARCH_ESP32)
+  if (_spi) {
+    if (write_len > 0) {
+      _spi->transferBytes(write_buffer, nullptr, write_len);
+    }
+  } else
+#endif
+  {
+    for (size_t i = 0; i < write_len; i++) {
+      transfer(write_buffer[i]);
+    }
   }
 
 #ifdef DEBUG_SERIAL
@@ -437,3 +460,33 @@ bool Adafruit_SPIDevice::write_then_read(uint8_t *write_buffer,
 
   return true;
 }
+
+/*!
+ *    @brief  Write some data and read some data at the same time from SPI
+ * into the same buffer. This is basicaly a wrapper for transfer() with
+ * CS-pin and transaction management.
+ * This /does/ transmit-receive at the same time!
+ *    @param  buffer Pointer to buffer of data to write/read to/from
+ *    @param  len Number of bytes from buffer to write/read.
+ *    @return Always returns true because there's no way to test success of SPI
+ * writes
+ */
+bool Adafruit_SPIDevice::write_and_read(uint8_t *buffer, size_t len) {
+  if (_spi) {
+    _spi->beginTransaction(*_spiSetting);
+  }
+
+  digitalWrite(_cs, LOW);
+
+  transfer(buffer, len);
+
+  digitalWrite(_cs, HIGH);
+
+  if (_spi) {
+    _spi->endTransaction();
+  }
+
+  return true;
+}
+
+#endif // SPI exists

@@ -8,5 +8,5 @@ TDSSensor_Web::TDSSensor_Web(const __FlashStringHelper *Name, Module_Web *Parent
 
 void TDSSensor_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
-    WebServer.setArgString(getName(F("R"),true), getTDSText(false));  ///< Update the TDS reading on the web interface (Name_R)
+  WebServer.setArgString(getName(F("R"), true), getTDSText(false)); ///< Update the TDS reading on the web interface (Name_R)
 }

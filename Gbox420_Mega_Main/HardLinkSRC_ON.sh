@@ -17,11 +17,13 @@ ln ../src/Settings_Mega.cpp ./Settings.cpp
 ln ../src/SerialLog_Mega.h ./SerialLog.h
 ln ../src/SerialLog_Mega.cpp ./SerialLog.cpp
 
-ln ../src/Webpages/Logs.html ./Webpages/
 ln ../src/Webpages/Settings.html ./Webpages/
+unlink ./Webpages/Hempy.html > /dev/null 2>&1
+ln ../src/Webpages/Hempy.html ./Webpages/
 
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
+ln ../src/WirelessCommands_ACMotor.h ./src
 ln ../src/WirelessCommands_Aero.h ./src
 ln ../src/WirelessCommands_Hempy.h ./src
 ln ../src/WirelessCommands_Reservoir.h ./src

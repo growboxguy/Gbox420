@@ -15,7 +15,7 @@ DevModule_Web::DevModule_Web(const __FlashStringHelper *Name, Settings::DevModul
   SerialReportWireless = &DefaultSettings->SerialReportWireless;
   ReportToGoogleSheets = &DefaultSettings->ReportToGoogleSheets;
   SheetsReportingFrequency = &DefaultSettings->SheetsReportingFrequency;
-  ReportToMQTT = &DefaultSettings->ReportToMQTT;
+  ReportToMqtt = &DefaultSettings->ReportToMqtt;
   MQTTReportFrequency = &DefaultSettings->MQTTReportFrequency;
 
   logToSerials(F(""), true, 0);                                       //<Line break
@@ -49,7 +49,7 @@ void DevModule_Web::report(bool FriendlyFormat)
 
 void DevModule_Web::websiteEvent_Load(__attribute__((unused)) char *Url)
 {
- ;
+  ;
 }
 
 void DevModule_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url) ///< called when website is refreshed.
@@ -68,14 +68,14 @@ bool DevModule_Web::commandEvent(__attribute__((unused)) char *Command, __attrib
     return false;
   }
   else
-  {    
+  {
     return true; //Match found
   }
 }
 
 void DevModule_Web::refresh_FiveSec()
 {
-  Module_Web::refresh_FiveSec();  
+  Module_Web::refresh_FiveSec();
 }
 
 void DevModule_Web::refresh_Minute()

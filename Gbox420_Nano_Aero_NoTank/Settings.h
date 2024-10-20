@@ -9,7 +9,7 @@
  *  \version   4.20
  */
 
-static const uint8_t Version = 9; ///< Increment this after changing the stucture of the SAVED TO EEPROM secton to force overwriting the stored settings in the Arduino's EEPROM.
+static const uint8_t Version = 9; ///< Increment this after changing the stucture of the SAVED TO EEPROM section to force overwriting the stored settings in the Arduino's EEPROM.
 
 ///< NOT SAVED TO EEPROM
 
@@ -18,7 +18,7 @@ static const uint8_t MaxWordLength = 32;       ///< Default char * buffer length
 static const uint8_t MaxShotTextLength = 64;   ///< Default char * buffer length for storing mutiple words. Memory intense!
 static const uint16_t MaxLongTextLength = 256; ///< Default char * buffer length for storing a long text. Memory intense!
 static const uint8_t QueueDepth = 8;           ///< Limits the maximum number of components within a module. Memory intense!
-static const uint8_t MovingAverageDepth = 10;  ///< Smooth out sensor readings by calculating the average of the last X results. Memory intense!
+static const uint8_t MovingAverageDepth = 10;  ///< Number of previous readings to keep when calculating average. Memory intense!
 
 ///< Global variables
 extern char LongMessage[MaxLongTextLength];  // Temp storage for assembling long messages (REST API - Google Sheets reporting)
@@ -45,15 +45,14 @@ typedef struct
   struct AeroponicsModuleSettings
   {
     AeroponicsModuleSettings(uint16_t SerialReportFrequency = 0, bool SerialReportDate = true, bool SerialReportMemory = true, bool SerialReportJSONFriendly = true, bool SerialReportJSON = true, bool SerialReportWireless = true) : SerialReportFrequency(SerialReportFrequency), SerialReportDate(SerialReportDate), SerialReportMemory(SerialReportMemory), SerialReportJSONFriendly(SerialReportJSONFriendly), SerialReportJSON(SerialReportJSON), SerialReportWireless(SerialReportWireless) {}
-    uint16_t SerialReportFrequency;    ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
-    bool SerialReportDate;   ///< Enable/disable reporting the current time to the Serial output
-    bool SerialReportMemory; ///< Enable/disable reporting the remaining free memory to the Serial output
-    bool SerialReportJSONFriendly; ///< Enable/disable sending Text formatted reports to the Serial output
-    bool SerialReportJSON; ///< Enable/disable sending JSON formatted reports to the Serial output
-    bool SerialReportWireless;   ///< Enable/disable sending wireless package exchange reports to the Serial output
-
+    uint16_t SerialReportFrequency; ///< How often to report to Serial console. Use 5 Sec increments, Min 5sec, Max 86400 (1day)
+    bool SerialReportDate;          ///< Enable/disable reporting the current time to the Serial output
+    bool SerialReportMemory;        ///< Enable/disable reporting the remaining free memory to the Serial output
+    bool SerialReportJSONFriendly;  ///< Enable/disable sending Text formatted reports to the Serial output
+    bool SerialReportJSON;          ///< Enable/disable sending JSON formatted reports to the Serial output
+    bool SerialReportWireless;      ///< Enable/disable sending wireless package exchange reports to the Serial output
   };
-  struct AeroponicsModuleSettings Aero1 = {.SerialReportFrequency = 15, .SerialReportDate = false, .SerialReportMemory = false, .SerialReportJSONFriendly = false, .SerialReportJSON = false, .SerialReportWireless=true};
+  struct AeroponicsModuleSettings Aero1 = {.SerialReportFrequency = 15, .SerialReportDate = false, .SerialReportMemory = false, .SerialReportJSONFriendly = false, .SerialReportJSON = false, .SerialReportWireless = true};
 
   struct AeroponicsSettings
   {

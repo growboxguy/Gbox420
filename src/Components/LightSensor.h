@@ -12,11 +12,11 @@ public:
   LightSensor(const __FlashStringHelper *Name, Module *Parent, Settings::LightSensorSettings *DefaultSettings, Lights *LightSource);
   void refresh_FiveSec();
   void report(bool FriendlyFormat = false);
-  void triggerCalibration();          ///< Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger
-  void getCalibrationReadings();      ///< Light reading at dark,0,10,20...100%
-  int getReading();                   ///< Light sensor analog feedback: 0(darkest) to 1023 (brightest)
+  void triggerCalibration();                 ///< Website signals to calibrate the Dark/Min/Max readings at the next refresh trigger
+  void getCalibrationReadings();             ///< Light reading at dark,0,10,20...100%
+  int getReading();                          ///< Light sensor analog feedback: 0(darkest) to 1023 (brightest)
   char *getReadingText(bool FriendlyFormat); ///< returns the current light sensor reading
-  bool getDark();                     ///< Light sensor digital feedback: True(Dark) or False(Bright)
+  bool getDark();                            ///< Light sensor digital feedback: True(Dark) or False(Bright)
   char *getDarkText(bool UseWords);
 
 private:

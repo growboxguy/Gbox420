@@ -5,9 +5,6 @@
  *  \author    GrowBoxGuy  - https://sites.google.com/site/growboxguy/
  *  \version   4.20
  * 
- *  \todo Common Waste reservoir for all buckets
- *  \todo Add back MQTT support
- *  \todo Sound setting
  */
 
 #include "Arduino.h"
@@ -72,18 +69,18 @@ void setup()
   resetWebServer();                  ///< reset the WebServer
   setSyncProvider(getNtpTime);       ///< Points to method for updating time from NTP server
   setSyncInterval(86400);            ///< Sync time every day
-  if ((ModuleSettings->Hempy_Standalone1).ReportToMQTT)
+  if ((ModuleSettings->Hempy_Standalone1).ReportToMqtt)
   {
     //setupMqtt(); //MQTT message relay setup. Logs "ConnectedCB is XXXX" to serial if successful
   }
   // Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   logToSerials(F("Setting up refresh threads"), false, 0);
   OneSecThread.setInterval(1000);
-  OneSecThread.onRun(runSec);
+  OneSecThread.onRun(run1sec);
   FiveSecThread.setInterval(5000);
-  FiveSecThread.onRun(runFiveSec);
+  FiveSecThread.onRun(run5sec);
   MinuteThread.setInterval(60000);
-  MinuteThread.onRun(runMinute);
+  MinuteThread.onRun(run1min);
   logToSerials(F("done"), true, 3);
 
   // Start interrupts to handle request from ESP-link firmware
@@ -101,41 +98,56 @@ void setup()
   logToSerials(F("Setup ready, starting loops:"), true, 0);
 }
 
+/**
+  \brief Checks if it is time to trigger one of the threads (run1sec(), run5sec(),run1min()..etc)
+*/
 void loop()
 {
-  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
+  ThreadControl.run();
 }
 
+/**
+  \brief Interrupt calls this every 0.5 sec to process any request coming from the ESP-link hosted webpage. Uses Serial Line Internet Protocol (SLIP)
+*/
 void processTimeCriticalStuff()
 {
-  ESPLink.Process(); ///< Interrupt calls this every 0.5 sec to process any request coming from the ESP-Link hosted webpage. Uses Serial Line Internet Protocol (SLIP)
+  ESPLink.Process();
 }
 
 // Threads
 
-void runSec()
+/**
+  \brief Thread triggering every second
+*/
+void run1sec()
 {
   wdt_reset(); ///< reset watchdog timeout
-  HeartBeat(); ///< Blinks built-in led
-  Hempy_Standalone1->runSec();
+  heartBeat(); ///< Blinks built-in led
+  Hempy_Standalone1->run1sec();
 }
 
-void runFiveSec()
+/**
+  \brief Thread triggering every 5 seconds
+*/
+void run5sec()
 {
   wdt_reset();
-  Hempy_Standalone1->runFiveSec();
+  Hempy_Standalone1->run5sec();
 }
 
-void runMinute()
+/**
+  \brief Thread triggering every Minute
+*/
+void run1min()
 {
   wdt_reset();
-  Hempy_Standalone1->runMinute();
+  Hempy_Standalone1->run1min();
 }
 
 /**
   \brief Turns the integrated LED on the Arduino board ON/OFF 
 */
-void HeartBeat()
+void heartBeat()
 {
   static bool ledStatus;
   ledStatus = !ledStatus;
@@ -173,11 +185,14 @@ void resetWebServer()
   SettingsHandler->refreshCb.attach(&settingsRefreshCallback);                     ///< Settings tab - Called periodically to refresh website content
   SettingsHandler->buttonCb.attach(&settingsButtonCallback);                       ///< Settings tab - Called when a button is pressed on the website
   SettingsHandler->setFieldCb.attach(&settingsFieldCallback);                      ///< Settings tab - Called when a field is changed on the website
+  URLHandler *MainHandler = WebServer.createURLHandler("/Main.html.json");         ///< setup handling request from Main.html (embeds the Main module's web interface)
+  MainHandler->loadCb.attach(&ignoreCallback);                                     ///< Ignore event, handled by the Main module
+  MainHandler->refreshCb.attach(ignoreCallback);                                   ///< Ignore event, handled by the Main module
   logToSerials(F("ESP-link ready"), true, 1);
 }
 
 /**
-  \brief Sets up the MQTT relay
+  \brief Sets up the MQTT relay: Configures callbacks for MQTT events and sets the Last Will and Testament in case the ESP-link goes offline 
 */
 void setupMqtt()
 {
@@ -193,6 +208,9 @@ void setupMqtt()
   MqttAPI.setup();
 }
 
+/**
+  \brief Called when connection to the MQTT broker is established
+*/
 void mqttConnected(__attribute__((unused)) void *response)
 {
   MqttAPI.subscribe(ModuleSettings->MqttSubTopic);
@@ -200,17 +218,27 @@ void mqttConnected(__attribute__((unused)) void *response)
   //if(*Debug) logToSerials(F("MQTT connected"), true);
 }
 
+/**
+  \brief Called when connection to the MQTT broker is lost
+*/
 void mqttDisconnected(__attribute__((unused)) void *response)
 {
   MqttConnected = false;
   //if(*Debug) logToSerials(F("MQTT disconnected"), true);
 }
 
+/**
+  \brief Called after an MQTT message is sent out - Not used
+*/
 void mqttPublished(__attribute__((unused)) void *response)
 {
   //if(*Debug) logToSerials(F("MQTT published"), true);
 }
 
+/**
+  \brief Called when an MQTT command is received. Extracts the command from the MQTT topic and gets the data passed along the command
+  \param response The MQTT message object passed by ESP-link (type: ELClientResponse)
+*/
 void mqttReceived(void *response)
 {
   static uint8_t MqttSubTopicLength = strlen(ModuleSettings->MqttSubTopic) - 1; //Get length of the command topic
@@ -225,13 +253,13 @@ void mqttReceived(void *response)
   mqttTopic.toCharArray(command, MaxShotTextLength);
   mqttData.toCharArray(data, MaxShotTextLength);
   Hempy_Standalone1->commandEventTrigger(command, data);
-  Hempy_Standalone1->reportToMQTTTrigger(true); //send out a fresh report
+  Hempy_Standalone1->reportToMqttTrigger(true); //send out a fresh report
 }
 
 static bool SyncInProgress = false; ///< True if an time sync is in progress
 
 /**
-  \brief Update the time over ESP-link using NTP (Network Time Protocol)
+  \brief Update the time over ESP-link using NTP (Network Time Protocol) - 15sec timeout
 */
 time_t getNtpTime()
 {
@@ -245,23 +273,23 @@ time_t getNtpTime()
     {
       NTPResponse = ESPCmd.GetTime();
       delay(1000);
-      logToSerials(F(""), false, 0);
+      logToSerials(F("."), false, 0);
       wdt_reset(); ///reset watchdog timeout
     }
     SyncInProgress = false;
     if (NTPResponse == 0)
     {
-      logToSerials(F("NTP time sync failed"), true, 3);
+      logToSerials(F("sync failed"), true, 3);
     }
     else
-      logToSerials(F("time synchronized"), true, 3);
+      logToSerials(F("synchronized"), true, 3);
   }
   return NTPResponse;
 }
 
 /**
   \brief Called when a website is loading on the ESP-link webserver
-  \param Url - HTML filename that is getting loaded
+  \param Url HTML filename that is getting loaded
 */
 void loadCallback(__attribute__((unused)) char *Url)
 {
@@ -270,7 +298,7 @@ void loadCallback(__attribute__((unused)) char *Url)
 
 /**
   \brief Called when a website is refreshing on the ESP-link webserver
-  \param Url - HTML filename that is refreshinging
+  \param Url HTML filename that is getting loaded
 */
 void refreshCallback(__attribute__((unused)) char *Url)
 {
@@ -279,7 +307,7 @@ void refreshCallback(__attribute__((unused)) char *Url)
 
 /**
   \brief Called when a button is pressed.
-  \param Button - ID of the button HTML element
+  \param Button ID of the button HTML element
 */
 void buttonCallback(char *Button)
 {
@@ -290,10 +318,10 @@ void buttonCallback(char *Button)
 
 /**
   \brief Called when a field on the website is submitted
-  \param Field - Name of the input HTML element
+  \param Field Name of the input HTML element
 */
 void fieldCallback(char *Field)
-{ ///< Called when any field on the website is updated.
+{
   logToSerials(F("ESP field:"), false, 0);
   Hempy_Standalone1->commandEventTrigger(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
@@ -301,6 +329,7 @@ void fieldCallback(char *Field)
 
 /**
   \brief Called when the /Settings.html website is loading on the ESP-link webserver
+  \param Url HTML filename that is getting loaded
 */
 void settingsLoadCallback(__attribute__((unused)) char *Url)
 {
@@ -309,6 +338,7 @@ void settingsLoadCallback(__attribute__((unused)) char *Url)
 
 /**
   \brief Called when the /Settings.html website is refreshing on the ESP-link webserver
+  \param Url HTML filename that is getting loaded
 */
 void settingsRefreshCallback(__attribute__((unused)) char *Url)
 {
@@ -317,7 +347,7 @@ void settingsRefreshCallback(__attribute__((unused)) char *Url)
 
 /**
   \brief Called when a button is pressed on the /Settings.html web page.
-  \param Button - ID of the button HTML element
+  \param Button ID of the button HTML element
 */
 void settingsButtonCallback(char *Button)
 {
@@ -339,7 +369,7 @@ void settingsButtonCallback(char *Button)
 
 /**
   \brief Called when a field on the /Settings.html website is submitted
-  \param Field - Name of the input HTML element
+  \param Field Name of the input HTML element
 */
 void settingsFieldCallback(char *Field)
 {
@@ -350,4 +380,12 @@ void settingsFieldCallback(char *Field)
   }
   Hempy_Standalone1->settingsEvent_Command(Field, WebServer.getArgString());
   saveSettings(ModuleSettings);
+}
+
+/**
+  \brief Ignores the incoming load/refresh event from the Web UI. Used when embedding another module's web interface that already handles the event
+  \param Url HTML filename that is getting loaded
+*/
+void ignoreCallback(__attribute__((unused)) char *Url)
+{
 }

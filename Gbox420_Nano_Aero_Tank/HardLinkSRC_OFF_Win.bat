@@ -5,10 +5,7 @@ del .\SerialLog.cpp > nul 2>&1
 del .\SerialLog.h > nul 2>&1
 del .\Settings.cpp > nul 2>&1
 
-del .\Webpages\Links.html > nul 2>&1
-del .\Webpages\Logs.html > nul 2>&1 
 del .\Webpages\Settings.html > nul 2>&1
-del .\Webpages\Test.html > nul 2>&1
 
 del .\src\Modules\HempyModule.h > nul 2>&1 
 del .\src\Modules\HempyModule.cpp > nul 2>&1
@@ -56,6 +53,8 @@ del .\src\Components_Web\Sound_Web.h > nul 2>&1
 del .\src\Components_Web\Sound_Web.cpp > nul 2>&1
 del .\src\Components_Web\WaterPump_Web.h > nul 2>&1
 del .\src\Components_Web\WaterPump_Web.cpp > nul 2>&1
+del .\src\Components_Web\WasteReservoir_Web.h > nul 2>&1
+del .\src\Components_Web\WasteReservoir_Web.cpp > nul 2>&1
 del .\src\Components_Web\WeightSensor_Web.h > nul 2>&1
 del .\src\Components_Web\WeightSensor_Web.cpp > nul 2>&1
 del .\src\Components_Web\AirPump_Web.h > nul 2>&1
@@ -119,6 +118,8 @@ del .\src\Components\WaterLevelSensor.h > nul 2>&1
 del .\src\Components\WaterLevelSensor.cpp > nul 2>&1
 del .\src\Components\WaterPump.h > nul 2>&1
 del .\src\Components\WaterPump.cpp > nul 2>&1
+del .\src\Components\WasteReservoir.h > nul 2>&1
+del .\src\Components\WasteReservoir.cpp > nul 2>&1
 del .\src\Components\WaterTempSensor.h > nul 2>&1
 del .\src\Components\WaterTempSensor.cpp > nul 2>&1
 del .\src\Components\WeightSensor.h > nul 2>&1

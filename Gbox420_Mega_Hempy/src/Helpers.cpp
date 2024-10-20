@@ -69,7 +69,7 @@ char *toText_floatDecimals(float Number)
   return ShortMessage;
 }
 
-char *toText(int Number1, const char *Separator, int Number2 )
+char *toText(int Number1, const char *Separator, int Number2)
 {
   snprintf(ShortMessage, 32, "%d%s%d", Number1, Separator, Number2);
   return ShortMessage;
@@ -149,6 +149,13 @@ char *toText_percentage(int Number)
 {
   itoa(Number, ShortMessage, 10);
   strcat_P(ShortMessage, (PGM_P)F("%"));
+  return ShortMessage;
+}
+
+char *toText_rpm(float RPM)
+{
+  dtostrf(RPM, 4, 2, ShortMessage);
+  strcat_P(ShortMessage, (PGM_P)F("rpm"));
   return ShortMessage;
 }
 
@@ -256,6 +263,28 @@ float toFloat(char *Float)
 
 //< State related functions
 
+char *toText_ACMotorState(ACMotorStates State)
+{
+  switch (State)
+  {
+  case ACMotorStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case ACMotorStates::FORWARD:
+    return toText(F("FORWARD"));
+    break;
+  case ACMotorStates::BACKWARD:
+    return toText(F("BACKWARD"));
+    break;
+  case ACMotorStates::STOPPING:
+    return toText(F("STOPPING"));
+    break;
+  default:
+    return toText(F("?"));
+    break;
+  }
+}
+
 char *toText_waterPumpState(WaterPumpStates State)
 {
   switch (State)
@@ -270,7 +299,26 @@ char *toText_waterPumpState(WaterPumpStates State)
     return toText(F("RUNNING"));
     break;
   default:
-    return toText(F("UNKNOWN"));
+    return toText(F("?"));
+    break;
+  }
+}
+
+char *toText_wasteReservoirStates(WasteReservoirStates State)
+{
+  switch (State)
+  {
+  case WasteReservoirStates::FULL:
+    return toText(F("FULL"));
+    break;
+  case WasteReservoirStates::IDLE:
+    return toText(F("IDLE"));
+    break;
+  case WasteReservoirStates::RESERVED:
+    return toText(F("RESERVED"));
+    break;
+  default:
+    return toText(F("?"));
     break;
   }
 }
@@ -304,7 +352,7 @@ char *toText_pressurePumpState(PressurePumpStates State)
     return toText(F("BYPASSOPEN"));
     break;
   default:
-    return toText(F("UNKNOWN"));
+    return toText(F("?"));
     break;
   }
 }
@@ -338,7 +386,7 @@ char *toText_aeroTankState(AeroTankStates State)
     return toText(F("MIX"));
     break;
   default:
-    return toText(F("UNKNOWN"));
+    return toText(F("?"));
     break;
   }
 }
@@ -366,7 +414,7 @@ char *toText_aeroNoTankState(AeroNoTankStates State)
     return toText(F("MIX"));
     break;
   default:
-    return toText(F("UNKNOWN"));
+    return toText(F("?"));
     break;
   }
 }
@@ -388,7 +436,7 @@ char *toText_hempyState(HempyStates State)
     return toText(F("DRAINING"));
     break;
   default:
-    return toText(F("UNKNOWN"));
+    return toText(F("?"));
     break;
   }
 }
@@ -413,7 +461,7 @@ char *toText_lightState(LightStates State)
     return toText(F("DIMMED"));
     break;
   default:
-    return toText(F("UNKNOWN"));
+    return toText(F("?"));
     break;
   }
 }

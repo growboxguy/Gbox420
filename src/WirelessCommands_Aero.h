@@ -8,7 +8,7 @@
 
 ///< The Main module is always the Transmitter, sending a Command defined in AeroMessages
 ///< The Aero module is always the Receiver that instantly replies to an incoming message with a pre-cached Acknowledgement(ACK) package
-///< AeroReset is a special message: 
+///< AeroReset is a special message:
 ///<   -  Transmitter (Main module) always starts the multi-message exchange with this message
 ///<   -  When the Receiver gets this message it pre-loads the ACK message for the first "real" message it will receive from the Main module
 
@@ -25,8 +25,8 @@ enum AeroMessages
    AeroResponse1,
    AeroCommand2,
    AeroResponse2,
-   AeroReset /// Special command sent at the start and end of a multi-message exchange. 
-}; ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
+   AeroReset /// Special command sent at the start and end of a multi-message exchange.
+};           ///< An enum has an underlying integer type (the type used to store the value of the enum), and the enum value can be implicitly converted to that integer type's value. https://stackoverflow.com/questions/10644754/is-passing-an-enum-value-to-an-int-parameter-non-standard/10644824
 
 __attribute__((unused)) static const __FlashStringHelper *toText_aeroSequenceID(uint8_t SequenceID)
 {

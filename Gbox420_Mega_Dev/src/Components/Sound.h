@@ -2,6 +2,7 @@
 
 #include "420Common.h"
 #include "420Module.h"
+#include "TonePlayer.h"  ///< http://www.gammon.com.au/forum/?id=11504&reply=11#reply11
 
 ///< Sound feedback buzzer
 
@@ -14,13 +15,15 @@ public:
   void refresh_Sec();
   void playOnSound();
   void playOffSound();
+  void playOnOffSound(bool State);
   void setSoundOnOff(bool State);
   bool getEnabledState();
-  char *getEnabledStateText(bool FriendlyFormat=false);
+  char *getEnabledStateText(bool FriendlyFormat = false);
 
 private:
 protected:
   Module *Parent;
+  TonePlayer *Tone1;
   void OnSound();
   void OffSound();
   uint8_t *Pin;             ///< Pin connecting the piezo Sound positive(+) side over a 330Ω resistor)

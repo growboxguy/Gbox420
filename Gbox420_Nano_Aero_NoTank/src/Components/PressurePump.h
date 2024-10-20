@@ -31,8 +31,8 @@ public:
   void startBlowOff();
 
   PressurePumpStates getState();
-  char *getStateText(bool FriendlyFormat = false);   ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
-  bool getEnabledState(); ///< Pump ENABLED(1)/DISABLED(0)
+  char *getStateText(bool FriendlyFormat = false); ///< Text representation of the current state: DISABLED/IDLE/RUNNING...
+  bool getEnabledState();                          ///< Pump ENABLED(1)/DISABLED(0)
 
   //void checkRelay(); ///< Flit the relay into the correct status ON/OFF based on PumpOn variable
 

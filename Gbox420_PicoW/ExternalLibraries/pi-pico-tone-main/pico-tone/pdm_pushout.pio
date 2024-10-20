@@ -1,0 +1,22 @@
+
+.program pdm_pushout
+
+	set pins, 0
+.wrap_target
+	jmp restart
+loop:
+	nop					
+	jmp !OSRE jumpoverpull  ; manual pull to prevent accidental autopull on very last word in case x%32 == 0. 
+	pull
+	jmp jumpin
+jumpoverpull:
+	nop [1]
+jumpin:
+	out pins, 1		; here is the action! Always on the 6th tick. 
+	jmp x-- loop
+restart:
+	pull
+	out x, 32
+	pull
+	jmp x-- jumpin
+.wrap

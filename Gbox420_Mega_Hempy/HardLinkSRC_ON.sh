@@ -11,7 +11,7 @@ mkdir ./src
 mkdir ./src/Components
 mkdir ./src/Components_Web
 mkdir ./src/Modules_Web
-mkdir ./Webpages
+mkdir -p ./Webpages 
 
 echo "Creating hard links"
 ln ../src/Settings_Mega.cpp ./Settings.cpp
@@ -20,8 +20,11 @@ ln ../src/SerialLog_Mega.h ./SerialLog.h
 ln ../src/Helpers.cpp ./src
 ln ../src/Helpers.h ./src
 
-ln ../src/Webpages/Logs.html ./Webpages/
 ln ../src/Webpages/Settings.html ./Webpages/
+unlink ./Webpages/Main.html > /dev/null 2>&1
+ln ../src/Webpages/Main.html ./Webpages/
+unlink ./Webpages/Hempy_Lite/Main.html > /dev/null 2>&1
+ln ../src/Webpages/Main.html ./Webpages/Hempy_Lite/
 
 ln ../src/Modules_Web/420Module_Web.cpp ./src/Modules_Web
 ln ../src/Modules_Web/420Module_Web.h ./src/Modules_Web
@@ -37,6 +40,8 @@ ln ../src/Components_Web/Sound_Web.h ./src/Components_Web
 ln ../src/Components_Web/Sound_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/WaterPump_Web.h ./src/Components_Web
 ln ../src/Components_Web/WaterPump_Web.cpp ./src/Components_Web
+ln ../src/Components_Web/WasteReservoir_Web.h ./src/Components_Web
+ln ../src/Components_Web/WasteReservoir_Web.cpp ./src/Components_Web
 ln ../src/Components_Web/WeightSensor_Web.h ./src/Components_Web
 ln ../src/Components_Web/WeightSensor_Web.cpp ./src/Components_Web
 
@@ -56,6 +61,8 @@ ln ../src/Components/Switch_PWM.h ./src/Components
 ln ../src/Components/Switch_PWM.cpp ./src/Components
 ln ../src/Components/WaterPump.h ./src/Components
 ln ../src/Components/WaterPump.cpp ./src/Components
+ln ../src/Components/WasteReservoir.h ./src/Components
+ln ../src/Components/WasteReservoir.cpp ./src/Components
 ln ../src/Components/WeightSensor.h ./src/Components
 ln ../src/Components/WeightSensor.cpp ./src/Components
 

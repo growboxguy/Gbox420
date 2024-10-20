@@ -1,10 +1,10 @@
 #include "420Module_Web.h"
 #include "../Components_Web/Sound_Web.h"
 
-static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log histroy displayed on the website (array of char arrays)
+static char Logs[LogDepth][MaxWordLength]; ///< two dimensional array for storing log history displayed on the website (array of char arrays)
 
 /**
-* @brief Constructor: creates an instance of the class, and stores wireless transmitter object used to communicate with other modules
+* @brief Constructor: creates an instance of the class
 */
 Module_Web::Module_Web(const __FlashStringHelper *Name) : Common(Name), Module(Name)
 {
@@ -88,7 +88,7 @@ void Module_Web::refresh_FiveSec()
 {
   Common::refresh_FiveSec();
   reportToSerialTrigger();
-  reportToMQTTTrigger();
+  reportToMqttTrigger();
   if (RefreshAllRequested)
   {
     RefreshAllRequested = false;
@@ -96,18 +96,18 @@ void Module_Web::refresh_FiveSec()
   }
   if (ReportToGoogleSheetsRequested)
   {
-    ReportToGoogleSheetsRequested = false;
+     = false;
     reportToGoogleSheetsTrigger(true);
   }
   if (ConsoleReportRequested)
   {
     ConsoleReportRequested = false;
-    runReport(true);
+    reportToSerial(true);
   }
   if (MQTTReportRequested)
   {
     MQTTReportRequested = false;
-    reportToMQTTTrigger(true);
+    reportToMqttTrigger(true);
   }
 }
 
@@ -180,6 +180,51 @@ char *Module_Web::eventLogToJSON(bool IncludeKey, bool ClearBuffer)
   return LongMessage;
 }
 
+/**
+* @brief Converts the module settings into a JSON object and loads it into the LongMessage buffer
+*/
+char *Module_Web::settingsToJSON()
+{
+  memset(&LongMessage[0], 0, MaxLongTextLength);
+  strcat_P(LongMessage, (PGM_P)F("{\"Settings\":{")); ///< Adds a curly bracket that needs to be closed at the end
+  strcat_P(LongMessage, (PGM_P)F("\"Debug\":\""));
+  strcat(LongMessage, toText(*Debug));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Metric\":\""));
+  strcat(LongMessage, toText(*Metric));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SerialF\":\""));
+  strcat(LongMessage, toText(*SerialReportFrequency));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Date\":\""));
+  strcat(LongMessage, toText(*SerialReportDate));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Mem\":\""));
+  strcat(LongMessage, toText(*SerialReportMemory));
+  strcat_P(LongMessage, (PGM_P)F("\",\"JSON\":\""));
+  strcat(LongMessage, toText(*SerialReportJSON));
+  strcat_P(LongMessage, (PGM_P)F("\",\"JSONF\":\""));
+  strcat(LongMessage, toText(*SerialReportJSONFriendly));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Wire\":\""));
+  strcat(LongMessage, toText(*SerialReportWireless));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Sheets\":\""));
+  strcat(LongMessage, toText(*ReportToGoogleSheets));
+  strcat_P(LongMessage, (PGM_P)F("\",\"SheetsF\":\""));
+  strcat(LongMessage, toText(*SheetsReportingFrequency));
+  strcat_P(LongMessage, (PGM_P)F("\",\"Relay\":\""));
+  strcat(LongMessage, ModuleSettings->PushingBoxLogRelayID);
+  strcat_P(LongMessage, (PGM_P)F("\",\"MQTT\":\""));
+  strcat(LongMessage, toText(*ReportToMqtt));
+  strcat_P(LongMessage, (PGM_P)F("\",\"MQTTF\":\""));
+  strcat(LongMessage, toText(*MQTTReportFrequency));
+  strcat_P(LongMessage, (PGM_P)F("\",\"MPT\":\""));
+  strcat(LongMessage, ModuleSettings->MqttPubTopic);
+  strcat_P(LongMessage, (PGM_P)F("\",\"MST\":\""));
+  strcat(LongMessage, ModuleSettings->MqttSubTopic);
+  strcat_P(LongMessage, (PGM_P)F("\",\"MLT\":\""));
+  strcat(LongMessage, ModuleSettings->MqttLwtTopic);
+  strcat_P(LongMessage, (PGM_P)F("\",\"MLM\":\""));
+  strcat(LongMessage, ModuleSettings->MqttLwtMessage);
+  strcat_P(LongMessage, (PGM_P)F("\"}}")); ///< closing the curly brackets at the end of the JSON
+  return LongMessage;
+}
+
 ///< ESP-link web interface functions
 void Module_Web::settingsEvent_Load(__attribute__((unused)) char *Url)
 {
@@ -194,7 +239,7 @@ void Module_Web::settingsEvent_Load(__attribute__((unused)) char *Url)
   WebServer.setArgBoolean(F("Sheets"), *ReportToGoogleSheets);
   WebServer.setArgInt(F("SheetsF"), *SheetsReportingFrequency);
   WebServer.setArgString(F("Relay"), ModuleSettings->PushingBoxLogRelayID);
-  WebServer.setArgBoolean(F("MQTT"), *ReportToMQTT);
+  WebServer.setArgBoolean(F("MQTT"), *ReportToMqtt);
   WebServer.setArgInt(F("MQTTF"), *MQTTReportFrequency);
   WebServer.setArgString(F("MPT"), ModuleSettings->MqttPubTopic);
   WebServer.setArgString(F("MST"), ModuleSettings->MqttSubTopic);
@@ -220,21 +265,25 @@ void Module_Web::settingsEvent_Command(__attribute__((unused)) char *Command, __
   {
     ReportToGoogleSheetsRequested = true; ///< just signal that a report should be sent, do not actually run it: Takes too long from an interrupt
     addToLog(F("Reporting to Sheets"), false);
+    getSoundObject()->playOnSound();
   }
   else if (strcmp_P(Command, (PGM_P)F("SerialRep")) == 0)
   {
     ConsoleReportRequested = true;
     addToLog(F("Reporting to Serial"), false);
+    getSoundObject()->playOnSound();
   }
   else if (strcmp_P(Command, (PGM_P)F("MQTTRep")) == 0)
   {
     MQTTReportRequested = true;
     addToLog(F("Reporting to MQTT"), false);
+    getSoundObject()->playOnSound();
   }
   else if (strcmp_P(Command, (PGM_P)F("Refresh")) == 0) ///< Website signals to refresh all sensor readings
   {
     RefreshAllRequested = true;
-    addToLog(F("Refresh triggered"), false);
+    addToLog(F("Refreshing"), false);
+    getSoundObject()->playOnSound();
   }
   //Settings
   else if (strcmp_P(Command, (PGM_P)F("Debug")) == 0)
@@ -351,19 +400,19 @@ void Module_Web::relayToGoogleSheets(char (*JSONData)[MaxLongTextLength])
 /**
 * @brief Publish an MQTT message containing a JSON formatted report
 * Examples:
-* MQTT reporting: Gbox420/{"Log":{"FanI":{"S":"1"},"FanE":{"S":"1"},"Ap1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"Ls1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"45.20"},"Pow1":{"P":"573.60","E":"665.47","V":"227.20","C":"2.64","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.45","WR1":"6.77","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.69","WR2":"5.31","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.41","W":"23.57","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.50","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.41","T":"1071.30","W":"14.64","WT":"19.13","AT":"27.30","H":"38.50"},"Main1":{"M":"1","D":"0","RD":"0","RM":"1","RT":"0","RJ":"1"}}}
-* MQTT reporting: Gbox420/{"EventLog":["","","Module initialized","Lt2 brightness updated"]}
+* MQTT reporting: Gbox420/Hempy/{"Log":{"FanI":{"S":"1"},"FanE":{"S":"1"},"Ap1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"95","B":"95","T":"1","On":"10:20","Of":"02:20"},"Ls1":{"R":"959","D":"0"},"DHT1":{"T":"26.70","H":"45.20"},"Pow1":{"P":"573.60","E":"665.47","V":"227.20","C":"2.64","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"21.45","WR1":"6.77","DW1":"19.00","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"19.69","WR2":"5.31","DW2":"19.30","WW2":"0.00","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"5.41","W":"23.57","Mi":"5.00","Ma":"7.00","AS":"1","LS":"5.50","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"2.41","T":"1071.30","W":"14.64","WT":"19.13","AT":"27.30","H":"38.50"},"Main1":{"M":"1","D":"0","RD":"0","RM":"1","RT":"0","RJ":"1"}}}
+* MQTT reporting: char MqttPubTopic[MaxShotTextLength]Hempy/{"EventLog":["","","Module initialized","Lt2 brightness updated"]}
 */
 void Module_Web::mqttPublish(char (*JSONData)[MaxLongTextLength])
 {
+  if (*Debug)
+  {
+    logToSerials(F("MQTT reporting:"), false, 2);
+    logToSerials(&(ModuleSettings->MqttPubTopic), false, 1);
+    logToSerials(JSONData, true, 0);
+  }
   if (MqttConnected)
   {
-    if (*Debug)
-    {
-      logToSerials(F("MQTT reporting:"), false, 2);
-      logToSerials(&(ModuleSettings->MqttPubTopic), false, 1);
-      logToSerials(JSONData, true, 0);
-    }
     MqttAPI.publish(ModuleSettings->MqttPubTopic, *JSONData, 0, 1); //(topic,message,qos (Only level 0 supported),retain )
   }
   else
@@ -381,14 +430,13 @@ void Module_Web::setDebug(bool DebugEnabled)
   *Debug = DebugEnabled;
   if (*Debug)
   {
-    addToLog(F("Debug enabled"));
-    getSoundObject()->playOnSound();
+    addToLog(F("Debug ON"));
   }
   else
   {
-    addToLog(F("Debug disabled"));
-    getSoundObject()->playOffSound();
+    addToLog(F("Debug OFF"));
   }
+  getSoundObject()->playOnOffSound(*Debug);
 }
 
 char *Module_Web::getDebugText(bool FriendlyFormat)
@@ -434,16 +482,15 @@ char *Module_Web::getMetricText(bool FriendlyFormat)
 void Module_Web::setSheetsReportingOnOff(bool State)
 {
   *ReportToGoogleSheets = State;
-  if (State)
+  if (*ReportToGoogleSheets)
   {
-    addToLog(F("Google Sheets enabled"));
-    getSoundObject()->playOnSound();
+    addToLog(F("Sheets ON"));
   }
   else
   {
-    addToLog(F("Google Sheets disabled"));
-    getSoundObject()->playOffSound();
+    addToLog(F("Sheets OFF"));
   }
+  getSoundObject()->playOnOffSound(*ReportToGoogleSheets);
 }
 
 void Module_Web::setSheetsReportingFrequency(uint16_t Frequency)
@@ -464,9 +511,9 @@ void Module_Web::reportToGoogleSheetsTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for Google Sheets
   if ((*ReportToGoogleSheets && SheetsTriggerCounter++ % (*SheetsReportingFrequency) == 0) || ForceRun)
   {
-    addPushingBoxLogRelayID();         //Loads Pushingbox relay ID into LongMessage
-    runReport(false, false, true, true);      //Append the sensor readings in a JSON format to LongMessage buffer
-    relayToGoogleSheets(&LongMessage); //Sends it to Google Sheets
+    addPushingBoxLogRelayID();           //Loads Pushingbox relay ID into LongMessage
+    reportToSerial(false, false, true, true); //Append the sensor readings in a JSON format to LongMessage buffer
+    relayToGoogleSheets(&LongMessage);   //Sends it to Google Sheets
   }
 }
 ///< This is how a sent out message looks like:
@@ -474,24 +521,22 @@ void Module_Web::reportToGoogleSheetsTrigger(bool ForceRun)
 
 void Module_Web::setMQTTReportingOnOff(bool State)
 {
-  *ReportToMQTT = State;
-  if (State)
+  *ReportToMqtt = State;
+  if (*ReportToMqtt)
   {
-    addToLog(F("MQTT enabled"));
-    getSoundObject()->playOnSound();
+    addToLog(F("MQTT ON"));
   }
   else
   {
-    addToLog(F("MQTT disabled"));
-    getSoundObject()->playOffSound();
+    addToLog(F("MQTT OFF"));
   }
+  getSoundObject()->playOnOffSound(*ReportToMqtt);
 }
 
 void Module_Web::setMQTTReportingFrequency(uint16_t Frequency)
 {
   *SheetsReportingFrequency = Frequency;
   addToLog(F("MQTT freqency updated"));
-  getSoundObject()->playOnSound();
 }
 
 void Module_Web::setMqttPublishTopic(const char *Topic)
@@ -522,19 +567,25 @@ void Module_Web::setMQTTLWTMessage(const char *LWTMessage)
   addToLog(F("LWT message updated"));
 }
 
-void Module_Web::reportToMQTTTrigger(bool ForceRun)
+/**
+  \brief Triggers sending out a sequence of MQTT messages to the MqttPubTopic specified in Settings.h.
+  Sample messages:
+  Gbox420/Hempy/{"Log":{"DHT1":{"T":"29.00","H":"52.00"},"B1W":{"W":"19.35"},"B2W":{"W":"19.75"},"NRW":{"W":"43.30"},"WRW":{"W":"1.87"},"WR1":{"S":"1","L":"13.00"},"B1P":{"S":"1","T":"120"},"B2P":{"S":"1","T":"120"},"B1":{"S":"1","DW":"18.00","WW":"19.70","ET":"2.00","OF":"0.30","DT":"180"},"B2":{"S":"1","DW":"18.00","WW":"19.70","ET":"2.00","OF":"0.30","DT":"180"},"Hemp1":{"M":"1","D":"1"}}}
+  Gbox420/Hempy/{"EventLog":["","","","Hempy_Standalone ready"]}
+  Gbox420/Hempy/{"Settings":{"Debug":"1","Metric":"1","SerialF":"15","Date":"1","Mem":"1","JSON":"1","JSONF":"1","Wire":"1","Sheets":"1","SheetsF":"30","Relay":"v755877CF53383E1","MQTT":"1","MQTTF":"5","MPT":"Gbox420/Hempy","MST":"Gbox420CMD/Hempy/#","MLT":"Gbox420LWT/Hempy/","MLM":"Hempy Offline"}}
+*/
+void Module_Web::reportToMqttTrigger(bool ForceRun)
 { ///< Handles custom reporting frequency for MQTT
-  if ((*ReportToMQTT && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
+  if ((*ReportToMqtt && MQTTTriggerCounter++ % (*MQTTReportFrequency / 5) == 0) || ForceRun)
   {
-    runReport(false, true, true, true); //< Loads a JSON Log to LongMessage buffer
-    mqttPublish(&LongMessage);   //< and publish readings via ESP MQTT API
-    eventLogToJSON(true, true);  //< Loads the EventLog as a JSON with EventLog key
-    mqttPublish(&LongMessage);   //< Load the event log in JSON format to LongMessage and publish the log via ESP MQTT API
+    reportToSerial(false, true, true, true); //< Loads a JSON Log to LongMessage buffer  \TODO: Should call this Readings instead of Log
+    mqttPublish(&LongMessage);          //< Publish Log via ESP MQTT API
+    eventLogToJSON(true, true);         //< Loads the EventLog as a JSON
+    mqttPublish(&LongMessage);          //< Publish the EventLog via ESP MQTT API
+    settingsToJSON();                   //< Loads the module settings as a JSON to the LongMessage buffer
+    mqttPublish(&LongMessage);          //< Publish the Settings via ESP MQTT API
   }
 }
-///< This is how the two sent out messages looks like:
-///< Gbox420/{"Log":{"FanI":{"S":"1"},"FanE":{"S":"1"},"Ap1":{"S":"1"},"Lt1":{"S":"1","CB":"85","B":"85","T":"1","On":"14:20","Of":"02:20"},"Lt2":{"S":"1","CB":"92","B":"92","T":"1","On":"10:20","Of":"02:20"},"Ls1":{"R":"955","D":"0"},"DHT1":{"T":"25.60","H":"45.20"},"Pow1":{"P":"569.30","E":"636.74","V":"227.50","C":"2.62","F":"50.00","PF":"0.96"},"Hemp1":{"S":"1","H1":"1","P1":"1","PS1":"100","PT1":"120","DT1":"300","WB1":"19.12","WR1":"6.23","DW1":"18.60","WW1":"0.00","ET1":"2.00","OT1":"0.20","WL1":"13.00","H2":"1","P2":"1","PS2":"100","PT2":"120","DT2":"300","WB2":"21.13","WR2":"3.65","DW2":"19.19","WW2":"21.19","ET2":"2.00","OT2":"0.20","WL2":"13.00"},"Aero1":{"S":"1","P":"6.12","W":"17.53","Mi":"5.00","Ma":"7.00","AS":"1","LS":"6.22","PSt":"1","PS":"100","PT":"420","PP":"10","SE":"1","D":"3.00","DI":"6","NI":"10"},"Res1":{"S":"1","P":"1.84","T":"1110.70","W":"24.37","WT":"18.56","AT":"26.20","H":"39.40"},"Main1":{"M":"1","D":"1"}}}
-///< Gbox420/{"EventLog":["Event log entry 1","Event log entry 2","Event log entry 3","Event log entry 4"]}
 
 Sound_Web *Module_Web::getSoundObject()
 {

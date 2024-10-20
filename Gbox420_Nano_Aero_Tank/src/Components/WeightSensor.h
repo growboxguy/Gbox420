@@ -16,7 +16,7 @@ public:
   float getWeight(bool ReturnAverage = true);
   char *getWeightText(bool ReturnAverage = true, bool FriendlyFormat = false);
   void tareRequest();
-  void triggerCalibration(int CalibrationWeight);
+  void triggerCalibration(float KnownWeight);
   void setScale(float Scale);
   float *Scale; ///< Calibration value: Raw reading of one unit
   long *Offset; ///< Read value at no weight on the scale
@@ -31,7 +31,7 @@ protected:
   void tare();
   void calibrate();
 
-  int CalibrationWeight;
+  float KnownWeight;
   bool TareRequested = false;
   bool CalibrateRequested = false;
 };

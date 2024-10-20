@@ -34,10 +34,10 @@ public:
   void refresh_Sec();
   void refresh_FiveSec();
   //void refresh_Minute();
-  void processTimeCriticalStuff();    ///< Process things that cannot wait or need precise timing
-  bool processCommand(void *Command); ///< Process a received wireless command, returns true when the last message in the exchange sequence was processed
-  void updateResponse();              ///< Updates the wireless response package content
-  void updateAckData(AeroMessages NewSequenceID);               ///< pre-loads the ACK buffer that gets sent back when receiving a wireless message
+  void processTimeCriticalStuff();                ///< Process things that cannot wait or need precise timing
+  bool processCommand(void *Command);             ///< Process a received wireless command, returns true when the last message in the exchange sequence was processed
+  void updateResponse();                          ///< Updates the wireless response package content
+  void updateAckData(AeroMessages NewSequenceID); ///< pre-loads the ACK buffer that gets sent back when receiving a wireless message
 
 private:
   unsigned long LastMessageReceived = 0; ///< Timestamp of the last received wireless message

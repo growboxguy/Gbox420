@@ -61,28 +61,28 @@ void setup()
   Metric = &ModuleSettings->Metric;
 
   ///< Setting up wireless module
-  InitializeWireless(true);
+  InitializeWireless();
 
   ///< Threads - Setting up how often threads should be triggered and what functions to call when the trigger fires
   OneSecThread.setInterval(1000); ///< 1000ms
-  OneSecThread.onRun(runSec);
+  OneSecThread.onRun(run1sec);
   FiveSecThread.setInterval(5000);
-  FiveSecThread.onRun(runFiveSec);
+  FiveSecThread.onRun(run5sec);
   MinuteThread.setInterval(60000);
-  MinuteThread.onRun(runMinute);
+  MinuteThread.onRun(run1min);
 
   ///< Create the Hempy bucket object
   HempyMod1 = new HempyModule(F("Hempy1"), &ModuleSettings->Hemp1); ///< This is the main object representing an entire Grow Box with all components in it. Receives its name and the settings loaded from the EEPROM as parameters
 
-  logToSerials(F("Setup ready, starting loops:"), true, 0);
+  //logToSerials(F("Setup ready, starting loops:"), true, 0);
 }
 
-void InitializeWireless(bool ForceReport)
+void InitializeWireless()
 {
-  if (*Debug || ForceReport)
-  {
-    logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
-  }
+  //if (*Debug)
+  //{
+  // logToSerials(F("(re)Initializing wireless transceiver"), false, 0);
+  //}
   pinMode(WirelessCSNPin, OUTPUT);
   digitalWrite(WirelessCSNPin, HIGH);
   pinMode(WirelessCEPin, OUTPUT);
@@ -100,43 +100,43 @@ void InitializeWireless(bool ForceReport)
   Wireless.powerUp();  ///< Not necessary, startListening should switch back to normal power mode
   Wireless.flush_tx(); ///< Dump all previously cached but unsent ACK messages from the TX FIFO buffer (Max 3 are saved)
   Wireless.flush_rx(); ///< Dump all previously received messages from the RX FIFO buffer (Max 3 are saved)
-  if (*Debug || ForceReport)
-  {
-    logToSerials(F("done"), true, 3);
-  }
+  //if (*Debug)
+  //{
+  //logToSerials(F("done"), true, 3);
+  //}
   ReceivedMessageTimestamp = millis(); ///< Reset timeout counter
 }
 
 void loop()
 {                      ///< put your main code here, to run repeatedly:
-  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (runSec(), runFiveSec(),runMinute()..etc)
+  ThreadControl.run(); ///< loop only checks if it's time to trigger one of the threads (run1sec(), run5sec(),run1min()..etc)
   ///< If a control package is received from the main module
   getWirelessData();
 }
 
 ///< Threads
 
-void runSec()
+void run1sec()
 {
   wdt_reset(); ///< reset watchdog timeout
-  HeartBeat(); ///< Blinks built-in led
-  HempyMod1->runSec();
+  heartBeat(); ///< Blinks built-in led
+  HempyMod1->run1sec();
 }
 
-void runFiveSec()
+void run5sec()
 {
   wdt_reset();
-  HempyMod1->runFiveSec();
+  HempyMod1->run5sec();
 }
 
-void runMinute()
+void run1min()
 {
   wdt_reset();
-  HempyMod1->runMinute();
+  HempyMod1->run1min();
   getWirelessStatus();
 }
 
-void HeartBeat()
+void heartBeat()
 {
   static bool ledStatus;
   ledStatus = !ledStatus;
@@ -161,7 +161,7 @@ void getWirelessData()
   }
   if (millis() - ReceivedMessageTimestamp > WirelessReceiveTimeout)
   {
-    InitializeWireless(false);
+    InitializeWireless();
   }
 }
 
@@ -169,7 +169,7 @@ void getWirelessStatus()
 {
   if (*Debug)
   {
-    logToSerials(F("Wireless report:"), true, 0);
+    //logToSerials(F("Wireless report:"), true, 0);
     Wireless.printPrettyDetails();
     logToSerials(F(""), true, 0);
   }
@@ -182,10 +182,6 @@ time_t updateTime()
   {
     setTime(ReceivedTime);
     logToSerials(F("Clock synced"), true, 0);
-  }
-  else
-  {
-    logToSerials(F("Clock out of sync"), true, 0);
   }
   return ReceivedTime;
 }

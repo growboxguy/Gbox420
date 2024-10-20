@@ -10,6 +10,7 @@
 class Sound_Web;
 class DHTSensor_Web;
 class WeightSensor_Web;
+class WasteReservoir_Web;
 class WaterPump_Web;
 class HempyBucket_Web;
 
@@ -27,10 +28,11 @@ public:
   WeightSensor_Web *B2W = NULL;    ///< Bucket 2 reservoir weight sensor
   WaterPump_Web *B1P = NULL;       ///< Bucket 1 water pump
   WaterPump_Web *B2P = NULL;       ///< Bucket 2 water pump
+  WasteReservoir_Web *WR1 = NULL;  ///< Waste reservoir
   HempyBucket_Web *Bucket1 = NULL; ///< Hempy bucket 1
   HempyBucket_Web *Bucket2 = NULL; ///< Hempy bucket 2
   void websiteEvent_Load(__attribute__((unused)) char *Url);
-  void websiteEvent_Refresh(__attribute__((unused)) char *Url);  
+  void websiteEvent_Refresh(__attribute__((unused)) char *Url);
   bool commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data);
   void report(bool FriendlyFormat = false);
   void refresh_FiveSec();

@@ -9,7 +9,7 @@ Fan_Web::Fan_Web(const __FlashStringHelper *Name, Module_Web *Parent, Settings::
 
 void Fan_Web::websiteEvent_Refresh(__attribute__((unused)) char *Url)
 {
-  WebServer.setArgString(getName(F("S"),true), fanSpeedText(true));
+  WebServer.setArgString(getName(F("S"), true), fanSpeedText(true));
 }
 
 bool Fan_Web::commandEvent(__attribute__((unused)) char *Command, __attribute__((unused)) char *Data)
