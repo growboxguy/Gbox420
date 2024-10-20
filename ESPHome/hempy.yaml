@@ -1,0 +1,221 @@
+external_components:
+  - source:
+      type: local
+      path: components
+  #- source:  //TODO: Uncomment this and remove local component once development is completed
+      #type: git
+      #url: https://github.com/Growboxguy/Gbox420
+      #ref: main
+      #path: ESPHome/components 
+    #components: [ hempy ]
+    #refresh: 60s 
+
+esphome:
+  name: hempy
+  friendly_name: Hempy
+  build_path: "../config/esphome/build"
+  on_boot:
+    priority: 10
+    then:
+      #-  lambda: |-
+      #      hempy::HempyBucket *hempy1;
+      #      App.pre_setup("hempy", "Hempy", "", "", __DATE__ ", " __TIME__, false);
+      #      hempy1 = new hempy::HempyBucket(bucket1_weight_sensor, bucket1_start_watering_weight, bucket1_max_watering_weight, bucket1_waterpump);
+      #      hempy1->set_update_interval(5000);
+      #      hempy1->set_component_source("hempy");
+      #      App.register_component(hempy1);
+      #     auto hempy1 = new hempy::HempyBucket(id(bucket1_weight_sensor), id(bucket1_start_watering_weight), id(bucket1_max_watering_weight), id(bucket1_waterpump));
+      #     App.register_component(hempy1);
+      #src/esphome/components/hempy/hempy.h:23:3: note: candidate: 'esphome::hempy::HempyBucket::HempyBucket(esphome::sensor::Sensor*, esphome::number::Number*, esphome::number::Number*, int)'
+      - rtttl.play:
+          rtttl: 'mario:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p,8g,8p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,16p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16c7,16p,16c7,16c7,p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16d#6,8p,16d6,8p,16c6'
+
+rp2040:
+  board: rpipicow
+  framework:
+    # Required until https://github.com/platformio/platform-raspberrypi/pull/36 is merged
+    platform_version: https://github.com/maxgerhardt/platform-raspberrypi.git
+
+logger:
+  level: DEBUG
+
+debug:
+  update_interval: 60s
+
+text_sensor:
+  - platform: debug
+    device:
+      name: "Device Info"
+    reset_reason:
+      name: "Reset Reason"
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret hempy_encryption_key
+
+# Enable Over The Air updates
+ota:
+  - platform: esphome
+    password: !secret hempy_ota_password
+
+# Setup WiFi connection
+wifi:
+  ssid: !secret hempy_wifi_ssid
+  password: !secret hempy_wifi_password
+
+# Enable fallback hotspot in case WiFi connection fails
+  ap:
+    ssid: "Hempy Fallback Hotspot"
+    password: !secret hempy_wifi_password
+
+output:
+  - platform: gpio # Pico W built-in LED
+    pin: 32
+    id: led
+  - platform: rp2040_pwm     # Buzzer. For ESP chips use platform: esp8266_pwm
+    pin: 2
+    id: buzzer
+  - platform: gpio  # Relay to power water pump for Bucket 1
+    pin: 10  # Relay's IN pin
+    id: bucket1_relay
+    inverted: true   # Negative logic (false turns it on)
+
+switch:
+  - platform: output
+    id: bucket1_waterpump
+    name: "Pump 1"
+    output: bucket1_relay
+
+rtttl:  #Ring Tone Text Transfer Language
+  output: buzzer
+  on_finished_playback:
+    - logger.log: 'Song ended!'
+
+interval:
+  - interval: 2000ms # Heart beat - Blink built-in LED every 2sec
+    then:
+      - output.turn_on: led
+      - delay: 1000ms
+      - output.turn_off: led
+
+sensor:
+  #Debug
+  - platform: debug
+    loop_time:
+      name: "Loop Time"    
+  #HX711 - Bucket 1 weight sensor
+  - platform: hx711
+    id: bucket1_weight_sensor
+    name: "Weight"
+    unit_of_measurement: "kg"
+    icon: "mdi:weight-kilogram"
+    dout_pin: 7
+    clk_pin: 6
+    gain: 128
+    update_interval: 1s
+    accuracy_decimals: 2   
+    filters:
+      - calibrate_linear:
+          - -73300 -> 0  #Raw reading when the weight sensor has no weigth on it
+          - -221100 -> 2  #Raw reading of an object with a known wight  
+      - median:
+          window_size: 5  # Take the median of the last 5 readings
+          send_every: 1   # Send every 1 reading
+          send_first_at: 1   
+   #Internal temperature sensor
+  - platform: internal_temperature
+    name: "Internal temp"
+    unit_of_measurement: "°C"
+    icon: "mdi:temperature-celsius"
+    device_class: "temperature"
+    state_class: "measurement"
+    accuracy_decimals: 1
+    update_interval: 5s
+    filters:
+      - sliding_window_moving_average:
+          window_size: 15
+          send_every: 15
+      # - median:
+      #   window_size: 10 #calculate median based on the last 10 readings
+
+number:
+  - platform: template
+    name: "Start watering weight" # When the bucket weight drops below this -> Start the watering process
+    id: bucket1_start_watering_weight
+    unit_of_measurement: "kg"
+    icon: "mdi:weight-kilogram"
+    min_value: 0
+    max_value: 25
+    step: 0.1
+    optimistic: true
+    restore_value: true  # Restore the value from flash storage
+    initial_value: 2.2   # Set default value if no value is stored
+  - platform: template
+    name: "Watering increments" # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
+    id: bucket1_watering_increments
+    unit_of_measurement: "kg"
+    icon: "mdi:water-plus"
+    min_value: 0
+    max_value: 1
+    step: 0.1
+    optimistic: true
+    restore_value: true  # Restore the value from flash storage
+    initial_value: 0.2   # (0.2 liter) Set default value if no value is stored    
+  - platform: template
+    name: "Max watering weight" # Safety limit: Disable watering when bucket weight goes above this -> Consider the drain hose clogged and disable the watering logic
+    id: bucket1_max_watering_weight
+    unit_of_measurement: "kg"
+    icon: "mdi:beaker-alert"
+    min_value: 0
+    max_value: 25
+    step: 0.1
+    optimistic: true
+    restore_value: true  # Restore the value from flash storage
+    initial_value: 10   # Set default value if no value is stored
+  - platform: template
+    name: "Max watering time" # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
+    id: bucket1_max_watering_time
+    unit_of_measurement: "sec"
+    icon: "mdi:timer-alert-outline"
+    min_value: 0
+    max_value: 120
+    step: 1
+    optimistic: true
+    restore_value: true  # Restore the value from flash storage
+    initial_value: 60   # Set default value if no value is stored 
+  - platform: template
+    name: "Drain wait time"  # How long to wait between watering cycles for the water to drain in to the waste reservoir
+    id: bucket1_drain_wait_time
+    unit_of_measurement: "sec"
+    icon: "mdi:timer-pause"
+    min_value: 0
+    max_value: 600
+    step: 5
+    optimistic: true
+    restore_value: true  # Restore the value from flash storage
+    initial_value: 60  # Set default value if no value is stored  
+  - platform: template
+    name: "Drain target weight"  # How much water should drain before considering the watering done (drain to waste)
+    id: bucket1_drain_target_weight
+    unit_of_measurement: "kg"
+    icon: "mdi:water-minus"
+    min_value: 0
+    max_value: 1
+    step: 0.1
+    optimistic: true
+    restore_value: true  # Restore the value from flash storage
+    initial_value: 0.1  # Set default value if no value is stored
+ 
+
+hempy:
+  id: hempy1
+  weight_sensor: bucket1_weight_sensor  # Reference the weight sensor by its ID
+  start_watering_weight: bucket1_start_watering_weight
+  watering_increments: bucket1_watering_increments
+  max_watering_weight: bucket1_max_watering_weight
+  max_watering_time: bucket1_max_watering_time
+  drain_wait_time: bucket1_drain_wait_time
+  drain_target_weight: bucket1_drain_target_weight
+  waterpump: bucket1_waterpump
+  update_interval: 5s
