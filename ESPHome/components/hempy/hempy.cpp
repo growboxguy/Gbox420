@@ -13,17 +13,22 @@ namespace esphome
     {
       update_state(State);
       StateSensor->publish_state(to_text_state(State)); // Publish the current state to Home Assistant
-      ESP_LOGI("hempy", "State: %s, Weight: %.2f kg, (start: %.1f, increment: %.1f, max: %.1f), DrainTarget:%.1f (%d sec), EvaporationTarget:%.1f",
-               to_text_state(State), WeightSensor->state, StartWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state); // Log the weight in kg (or the unit configured)
+      ESP_LOGI("hempy", "State: %s, Weight: %.2fkg (StartWatering: %.1f, Increment: %.1f, Max: %.1f), DrainTarget:%.1fkg (%.0fsec), EvaporationTarget:%.1fkg, DryWeight:%.1fkg",
+               to_text_state(State), WeightSensor->state, StartWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state, DryWeight);
     }
 
-    void HempyBucket::update_state(HempyStates NewState)
+    void HempyBucket::update_state(HempyStates NewState, bool Force)
     {
+      if (UpdateInProgress && !Force)
+      {
+        return; // Exit if an update is already in progress
+      }
+      UpdateInProgress = true;
       bool BlockOverWritingState = false; // Used when a state transitions to a new state
       uint32_t CurrentTime = millis();
       if (State != NewState)
       {
-        StateTimer = CurrentTime; ///< Start measuring the time spent in the new State
+        StateTimer = CurrentTime; // Start measuring the time spent in the new State
         ESP_LOGI("hempy", "State: %s -> %s", to_text_state(State), to_text_state(NewState));
       }
 
@@ -36,22 +41,16 @@ namespace esphome
       case HempyStates::IDLE:
         if (WaterPump->state)
           WaterPump->turn_off();
-        if (StartWateringWeight->state <= 0 || WeightSensor->state <= StartWateringWeight->state)
+        if ((StartWateringWeight->state > 0 && WeightSensor->state <= StartWateringWeight->state) || (EvaporationTargetWeight->state > 0 && DryWeight > 0 && WeightSensor->state <= DryWeight))
         {
-          // if (BucketWeightSensor->getWeight() >= DryWeight - DrainTargetWeight->state) ///< Filters out waterings triggered by a disconnected weight sensor
-          {
-            // if (BucketWasteReservoir->setReserved())
-            {
-              update_state(HempyStates::WATERING);
-              BlockOverWritingState = true;
-            }
-          }
+          update_state(HempyStates::WATERING, true);
+          BlockOverWritingState = true;
         }
         break;
       case HempyStates::WATERING:
         if (State != NewState)
         {
-          BucketStartWeight = WeightSensor->state;                          // Store the bucket weight before starting the pump
+          BucketStateWeight = WeightSensor->state;                          // Store the bucket weight before starting the pump
           if (State == HempyStates::IDLE || State == HempyStates::DISABLED) // First time entering the WATERING-DRAINING cycles
           {
             PumpOnTimer = CurrentTime; /// Start measuring the pump ON time for this cycle
@@ -63,47 +62,39 @@ namespace esphome
           }
           WaterPump->turn_on();
         }
-        if (WeightSensor->state >= MaxWateringWeight->state) // TODO: add new logic instead of: && BucketWeightSensor->getWeight(false) - BucketStartWeight + BucketWasteReservoir->getWeightIncrease() >= DrainTargetWeight->state) //Wet weight reached AND Target overflow's worth of water was added, wait for it to drain
+        if (WeightSensor->state >= MaxWateringWeight->state || (WeightSensor->state >= BucketStateWeight + WateringIncrements->state)) // Max weight reached OR WateringIncrements's worth of water was added, wait for it to drain
         {
           WateringTimer += CurrentTime - PumpOnTimer;
-          update_state(HempyStates::DRAINING);
+          update_state(HempyStates::DRAINING, true);
           BlockOverWritingState = true;
         }
-        if (WeightSensor->state >= MaxWateringWeight->state) // TODO: add new logic instead of: && BucketWeightSensor->getWeight(false) - BucketStartWeight + BucketWasteReservoir->getWeightIncrease() >= *DrainTarget) //Wet weight reached AND Target overflow's worth of water was added, wait for it to drain
+        else if ((CurrentTime - PumpOnTimer) > MaxWateringTime->state * 1000) // Disable watering in case MaxWateringTime is reached: Consider the pump broken
         {
-          WateringTimer += CurrentTime - PumpOnTimer;
-          update_state(HempyStates::DRAINING);
+          ESP_LOGW("hempy", "Timeout, pump DISABLED");
+          update_state(HempyStates::DISABLED, true);
           BlockOverWritingState = true;
         }
-        /* TODO: Add timeout for water pump
-        if (WateringTimer > ((uint32_t)BucketPump->getTimeOut() * 1000) || BucketPump->getState() == WaterPumpStates::DISABLED || BucketWasteReservoir->getState() == WasteReservoirStates::FULL) ///< Disable watering if: Timeout before the waste target was reached, pump failed or the waste reservoir got full
-        {
-          BucketWasteReservoir->clearReservation();
-          update_state(HempyStates::DISABLED);
-          BlockOverWritingState = true;
-        }
-        */
         break;
       case HempyStates::DRAINING:
         if (WaterPump->state)
           WaterPump->turn_off();
-        State = HempyStates::DRAINING;                                // Store the new state immediately - Only important when DrainWaitTime is set to 0
-        if (CurrentTime - StateTimer > (DrainWaitTime->state * 1000)) ///< Waiting for the water to drain
+        if (State != NewState)
         {
-          /*
-          if (BucketWasteReservoir->checkTarget(DrainTargetWeight->state)) //Check if target overflow weight is reached
+          BucketStateWeight = WeightSensor->state;
+          //ESP_LOGW("hempy", "Stored drain start weight: %.2f", BucketStateWeight);
+        }
+        if (CurrentTime - StateTimer >= (DrainWaitTime->state * 1000)) // Waiting for the water to drain
+        {
+          //ESP_LOGW("hempy", "if %.2f <=  %.2f - %.2f ", WeightSensor->state, BucketStateWeight, DrainTargetWeight->state);
+          if (WeightSensor->state <= (BucketStateWeight - DrainTargetWeight->state)) // Check if enough water was drained into the waste reservoir
           {
-            WetWeight = BucketWeightSensor->getWeight(); //Measure wet weight
-            DryWeight = WetWeight - *EvaporationTargetWeight;  //Calculate next watering weight
-            BucketWasteReservoir->clearReservation();    ///< Free up the waste reservoir
-            update_state(HempyStates::IDLE);
+            DryWeight = WeightSensor->state - EvaporationTargetWeight->state; // Calculate next watering weight
+            update_state(HempyStates::IDLE, true);
           }
           else
           {
-            update_state(HempyStates::WATERING); /// Continue watering
+            update_state(HempyStates::WATERING, true); /// Continue watering
           }
-          */
-          update_state(HempyStates::IDLE); // TODO: Create new logic for measuring the weight of water that drained away
           BlockOverWritingState = true;
         }
         break;
@@ -113,6 +104,7 @@ namespace esphome
       {
         State = NewState;
       }
+      UpdateInProgress = false;
     }
 
     const char *HempyBucket::to_text_state(HempyStates state)
