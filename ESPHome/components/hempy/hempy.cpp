@@ -12,8 +12,9 @@ namespace esphome
     void HempyBucket::update()
     {
       update_state(State);
-      ESP_LOGI("hempy", "State: %s, Weight: %.2f kg, (start: %.1f, increment: %.1f, max: %.1f), DrainTarget:%.1f (%d sec)",
-               to_text_state(State), WeightSensor->state, StartWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state); // Log the weight in kg (or the unit configured)
+      StateSensor->publish_state(to_text_state(State)); // Publish the current state to Home Assistant
+      ESP_LOGI("hempy", "State: %s, Weight: %.2f kg, (start: %.1f, increment: %.1f, max: %.1f), DrainTarget:%.1f (%d sec), EvaporationTarget:%.1f",
+               to_text_state(State), WeightSensor->state, StartWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state); // Log the weight in kg (or the unit configured)
     }
 
     void HempyBucket::update_state(HempyStates NewState)
@@ -86,14 +87,14 @@ namespace esphome
       case HempyStates::DRAINING:
         if (WaterPump->state)
           WaterPump->turn_off();
-        State = HempyStates::DRAINING;                                   // Store the new state immediately - Only important when DrainWaitTime is set to 0
+        State = HempyStates::DRAINING;                                // Store the new state immediately - Only important when DrainWaitTime is set to 0
         if (CurrentTime - StateTimer > (DrainWaitTime->state * 1000)) ///< Waiting for the water to drain
         {
           /*
           if (BucketWasteReservoir->checkTarget(DrainTargetWeight->state)) //Check if target overflow weight is reached
           {
             WetWeight = BucketWeightSensor->getWeight(); //Measure wet weight
-            DryWeight = WetWeight - *EvaporationTarget;  //Calculate next watering weight
+            DryWeight = WetWeight - *EvaporationTargetWeight;  //Calculate next watering weight
             BucketWasteReservoir->clearReservation();    ///< Free up the waste reservoir
             update_state(HempyStates::IDLE);
           }

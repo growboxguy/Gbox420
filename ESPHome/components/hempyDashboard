@@ -5,6 +5,7 @@ views:
       - type: entities
         title: Hempy bucket
         entities:
+          - entity: sensor.hempy_state
           - entity: sensor.hempy_weight
             name: Weight
           - entity: sensor.hempy_internal_temp
@@ -23,7 +24,7 @@ views:
               service_data: {}
           - type: button
             name: Water now
-            icon: mdi:power-cycle
+            icon: mdi:watering-can-outline
             tap_action:
               action: call-service
               service: esphome.hempy_water_now
@@ -42,6 +43,7 @@ views:
             name: Drain wait
           - entity: number.hempy_drain_target_weight
             name: Drain target
+          - entity: number.hempy_evaporation_target_weight
           - type: section
             label: About
           - type: weblink

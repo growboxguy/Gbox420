@@ -47,7 +47,12 @@ text_sensor:
     device:
       name: "Device Info"
     reset_reason:
-      name: "Reset Reason"
+      name: "Reset Reason"      
+  - platform: template
+    id: bucket1_state_sensor
+    name: "State"
+    icon: "mdi:state-machine"
+
 
 # Enable Home Assistant API
 api:
@@ -206,10 +211,21 @@ number:
     optimistic: true
     restore_value: true  # Restore the value from flash storage
     initial_value: 0.1  # Set default value if no value is stored
- 
+  - platform: template
+    name: "Evaporation target weight" # How much weight should the bucket loose before starting another watering. When a watering is complete the wet weight - Evaporation target will give the next start watering weight.
+    id: bucket1_evaporation_target_weight
+    unit_of_measurement: "kg"
+    icon: "mdi:waves-arrow-up"
+    min_value: 0
+    max_value: 5
+    step: 0.1
+    optimistic: true
+    restore_value: false  # Do not restore the value from flash storage - Calculated after every watering. After boot, before the first watering "start_watering_weight" is used.
+    initial_value: 0.4   # Set default value if no value is stored
 
 hempy:
   id: hempy1
+  state_sensor: bucket1_state_sensor
   weight_sensor: bucket1_weight_sensor  # Reference the weight sensor by its ID
   start_watering_weight: bucket1_start_watering_weight
   watering_increments: bucket1_watering_increments
@@ -217,5 +233,6 @@ hempy:
   max_watering_time: bucket1_max_watering_time
   drain_wait_time: bucket1_drain_wait_time
   drain_target_weight: bucket1_drain_target_weight
+  evaporation_target_weight: bucket1_evaporation_target_weight
   waterpump: bucket1_waterpump
   update_interval: 5s
