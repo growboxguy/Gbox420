@@ -1,0 +1,49 @@
+views:
+  - title: Hempy
+    path: hempy
+    cards:
+      - type: vertical-stack
+        title: Hempy bucket 1
+        cards:
+          - graph: line
+            type: sensor
+            entity: sensor.hempy_weight
+            detail: 1
+            hours_to_show: 24
+            name: Weight
+          - type: entities
+            entities:
+              - entity: sensor.hempy_state
+              - entity: sensor.hempy_weight
+                name: Weight
+              - entity: sensor.hempy_internal_temp
+                name: Internal temp
+              - type: divider
+              - type: button
+                name: Start/stop watering
+                icon: mdi:watering-can-outline
+                tap_action:
+                  action: call-service
+                  service: esphome.hempy_toggle_watering
+                  service_data: {}
+              - entity: switch.hempy_watering_logic
+              - type: section
+                label: Watering
+              - entity: number.hempy_start_watering_weight
+                name: Start watering
+              - entity: number.hempy_watering_increments
+                name: Watering increments
+              - entity: number.hempy_max_watering_weight
+                name: Max weight
+              - entity: number.hempy_max_watering_time
+                name: Watering timeout
+              - entity: number.hempy_drain_wait_time
+                name: Drain wait
+              - entity: number.hempy_drain_target_weight
+                name: Drain target
+              - entity: number.hempy_evaporation_target_weight
+              - type: section
+                label: About
+              - type: weblink
+                name: Gbox420 - Hempy bucket
+                url: https://sites.google.com

@@ -13,8 +13,13 @@ namespace esphome
     {
       update_state(State);
       StateSensor->publish_state(to_text_state(State)); // Publish the current state to Home Assistant
-      ESP_LOGI("hempy", "State: %s, Weight: %.2fkg (StartWatering: %.1f, Increment: %.1f, Max: %.1f), DrainTarget:%.1fkg (%.0fsec), EvaporationTarget:%.1fkg, DryWeight:%.1fkg",
-               to_text_state(State), WeightSensor->state, StartWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state, DryWeight);
+      static uint8_t LogScheduler = 0;
+      if (LogScheduler++ == 5) // Only report every 5sec  (update is called every second)
+      {
+        LogScheduler = 0;
+        ESP_LOGI("hempy", "State: %s, Weight: %.2fkg (StartWatering: %.1f, Increment: %.1f, Max: %.1f), DrainTarget:%.1fkg (%.0fsec), EvaporationTarget:%.1fkg, DryWeight:%.1fkg",
+                 to_text_state(State), WeightSensor->state, StartWateringWeight->state, WateringIncrements->state, MaxWateringWeight->state, DrainTargetWeight->state, DrainWaitTime->state, EvaporationTargetWeight->state, DryWeight);
+      }
     }
 
     void HempyBucket::update_state(HempyStates NewState, bool Force)
@@ -81,11 +86,11 @@ namespace esphome
         if (State != NewState)
         {
           BucketStateWeight = WeightSensor->state;
-          //ESP_LOGW("hempy", "Stored drain start weight: %.2f", BucketStateWeight);
+          // ESP_LOGW("hempy", "Stored drain start weight: %.2f", BucketStateWeight);
         }
         if (CurrentTime - StateTimer >= (DrainWaitTime->state * 1000)) // Waiting for the water to drain
         {
-          //ESP_LOGW("hempy", "if %.2f <=  %.2f - %.2f ", WeightSensor->state, BucketStateWeight, DrainTargetWeight->state);
+          // ESP_LOGW("hempy", "if %.2f <=  %.2f - %.2f ", WeightSensor->state, BucketStateWeight, DrainTargetWeight->state);
           if (WeightSensor->state <= (BucketStateWeight - DrainTargetWeight->state)) // Check if enough water was drained into the waste reservoir
           {
             DryWeight = WeightSensor->state - EvaporationTargetWeight->state; // Calculate next watering weight
@@ -122,6 +127,33 @@ namespace esphome
       default:
         return "?";
       }
+    }
+
+    bool HempyBucket::is_watering_active()
+    {
+      return State != HempyStates::DISABLED;
+    }
+
+    void HempyBucket::toggle_watering_logic(int8_t RequestedState)
+    {
+      if ((RequestedState == -1 && State == HempyStates::DISABLED) || RequestedState)
+      {
+        update_state(HempyStates::IDLE, true);
+        ESP_LOGW("hempy", "Watering logic enabled");
+      }
+      else
+      {
+        update_state(HempyStates::DISABLED, true);
+        ESP_LOGW("hempy", "Watering logic disabled");
+      }
+    }
+
+    void HempyBucket::toggle_watering()
+    {
+      if (State != HempyStates::WATERING) // If watering is not in progress: start watering
+        update_state(HempyStates::WATERING, true);
+      else
+        update_state(HempyStates::IDLE); // If watering is in progress: stop it (second click stops watering)
     }
 
   } // namespace hempy

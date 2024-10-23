@@ -28,8 +28,12 @@ namespace esphome
       void setup() override;
       void update() override;
       void update_state(HempyStates NewState, bool Force = false);
-      const char *to_text_state(HempyStates state);
-
+      const char *to_text_state(HempyStates state);      
+      bool is_watering_active();
+      void toggle_watering_logic(int8_t  RequestedState = -1);  //Enables or disables weight based watering (Useful when working with the plant). SuspendForMinutes: Automatically re-enable watering after (X minutes)
+      void toggle_watering(); //Triggers watering immediately (automatically re-enables watering logic), or stops watering if it is in progress
+      HempyStates State{HempyStates::IDLE};    // Stores the current state of the hempy bucket
+      
     private:
       text_sensor::TextSensor *StateSensor;    // Register a sensor to publish current state: IDLE/WATERING/DRAINING/DISABLED
       sensor::Sensor *WeightSensor;            // Weight sensor object
@@ -39,9 +43,8 @@ namespace esphome
       number::Number *MaxWateringTime;         // Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
       number::Number *DrainWaitTime;           // How long to wait between watering cycles for the water to drain in to the waste reservoir
       number::Number *DrainTargetWeight;       // How much water should drain before considering the watering done (drain to waste)
-      number::Number *EvaporationTargetWeight; //  How much weight should the bucket loose before starting another watering. When a watering is complete the wet weight - Evaporation target will give the next start watering weight. Calculated after every watering. After boot, before the first watering "start_watering_weight" is used.
+      number::Number *EvaporationTargetWeight; // How much weight should the bucket loose before starting another watering. When a watering is complete the wet weight - Evaporation target will give the next start watering weight. Calculated after every watering. After boot, before the first watering "start_watering_weight" is used.
       switch_::Switch *WaterPump;              // Reference to the relay controlling the water pump
-      HempyStates State{HempyStates::IDLE};    // Stores the current state of the hempy bucket
       uint32_t StateTimer = 0;                 // Track how much time is spent in one State
       uint32_t PumpOnTimer = 0;                // Track how long watering pump is on continuously (one water-drain cycle)
       uint32_t WateringTimer = 0;              // Track how long watering pump is on in total (all water-drain cycles)

@@ -1,15 +1,3 @@
-external_components:
-  - source:
-      type: local
-      path: components
-  #- source:  //TODO: Uncomment this and remove local component once development is completed
-      #type: git
-      #url: https://github.com/Growboxguy/Gbox420
-      #ref: main
-      #path: ESPHome/components 
-    #components: [ hempy ]
-    #refresh: 60s 
-
 esphome:
   name: hempy
   friendly_name: Hempy
@@ -17,29 +5,29 @@ esphome:
   on_boot:
     priority: 10
     then:
-      #-  lambda: |-
-      #      hempy::HempyBucket *hempy1;
-      #      App.pre_setup("hempy", "Hempy", "", "", __DATE__ ", " __TIME__, false);
-      #      hempy1 = new hempy::HempyBucket(bucket1_weight_sensor, bucket1_start_watering_weight, bucket1_max_watering_weight, bucket1_waterpump);
-      #      hempy1->set_update_interval(5000);
-      #      hempy1->set_component_source("hempy");
-      #      App.register_component(hempy1);
-      #     auto hempy1 = new hempy::HempyBucket(id(bucket1_weight_sensor), id(bucket1_start_watering_weight), id(bucket1_max_watering_weight), id(bucket1_waterpump));
-      #     App.register_component(hempy1);
-      #src/esphome/components/hempy/hempy.h:23:3: note: candidate: 'esphome::hempy::HempyBucket::HempyBucket(esphome::sensor::Sensor*, esphome::number::Number*, esphome::number::Number*, int)'
       - rtttl.play:
-          rtttl: 'mario:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p,8g' #rtttl: 'mario:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p,8g,8p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,16p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16c7,16p,16c7,16c7,p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16d#6,8p,16d6,8p,16c6'
+          rtttl: 'start:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p'
+
 rp2040:
   board: rpipicow
-  framework:
-    # Required until https://github.com/platformio/platform-raspberrypi/pull/36 is merged
-    platform_version: https://github.com/maxgerhardt/platform-raspberrypi.git
 
 logger:
   level: DEBUG
 
 debug:
   update_interval: 60s
+
+external_components:
+  #- source:
+  #    type: local
+  #    path: components
+  - source:
+      type: git
+      url: https://github.com/Growboxguy/Gbox420
+      ref: master
+      path: ESPHome/components 
+    components: [ hempy ]
+    refresh: 1d 
 
 text_sensor:
   - platform: debug
@@ -52,11 +40,21 @@ text_sensor:
     name: "State"
     icon: "mdi:state-machine"
 
-
 # Enable Home Assistant API
 api:
   encryption:
     key: !secret hempy_encryption_key
+  services:   
+    - service: toggle_watering  # Triggers watering immediately (automatically re-enables watering logic), or stops watering if it is already in progress
+      then:
+       - lambda: |-
+            id(hempy1).toggle_watering();
+    #- service: set_start_watering_weight
+    #  variables:
+    #    value: float
+    #  then:
+    #    - lambda: |-
+    #        id(hempy1).set_start_watering_weight(value);
 
 # Enable Over The Air updates
 ota:
@@ -71,7 +69,7 @@ wifi:
 # Enable fallback hotspot in case WiFi connection fails
   ap:
     ssid: "Hempy Fallback Hotspot"
-    password: !secret hempy_wifi_password
+    password: !secret hempy_wifi_password  
 
 output:
   - platform: gpio # Pico W built-in LED
@@ -86,10 +84,25 @@ output:
     inverted: true   # Negative logic (false turns it on)
 
 switch:
-  - platform: output
+  - platform: output    # Reference to the relay controlling the water pump
     id: bucket1_waterpump
     name: "Pump 1"
     output: bucket1_relay
+  - platform: template  # Enable/Disable watering logic
+    name: "Watering logic"
+    id: hempy_watering_logic
+    icon: "mdi:water-check"
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    lambda: |-
+      return id(hempy1).is_watering_active();
+    turn_off_action:
+       - lambda: |-
+            id(hempy1).toggle_watering_logic(false);
+    turn_on_action:
+       - lambda: |-
+            id(hempy1).toggle_watering_logic(true);    
+   
 
 rtttl:  #Ring Tone Text Transfer Language
   output: buzzer
