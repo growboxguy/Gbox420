@@ -8,8 +8,8 @@ views:
           - graph: line
             type: sensor
             entity: sensor.hempy_weight
-            detail: 1
-            hours_to_show: 24
+            detail: 2
+            hours_to_show: 168
             name: Weight
           - type: entities
             entities:

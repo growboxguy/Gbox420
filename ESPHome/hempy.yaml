@@ -27,7 +27,7 @@ external_components:
       ref: master
       path: ESPHome/components 
     components: [ hempy ]
-    refresh: 1d 
+    refresh: 60s 
 
 text_sensor:
   - platform: debug
@@ -167,7 +167,7 @@ number:
     step: 0.1
     optimistic: true
     restore_value: true  # Restore the value from flash storage
-    initial_value: 2.2   # Set default value if no value is stored
+    initial_value: 13.0   # Set default value if no value is stored
   - platform: template
     name: "Watering increments" # How much water to pump in one cycle, then wait for DrainWaitTime seconds before either starting a new pump cycle (DrainTargetWeight not reached) or considering the watering done (DrainTargetWeight reached)
     id: bucket1_watering_increments
@@ -189,7 +189,7 @@ number:
     step: 0.1
     optimistic: true
     restore_value: true  # Restore the value from flash storage
-    initial_value: 10   # Set default value if no value is stored
+    initial_value: 16   # Set default value if no value is stored
   - platform: template
     name: "Max watering time" # Safety limit: Maximum total time the pump can run during watering. If the drain target is not hit before the timeout -> Consider the pump broken and disable the watering logic
     id: bucket1_max_watering_time
